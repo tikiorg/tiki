@@ -225,11 +225,25 @@ small {
 	border: 1px solid #d3d3d3;
 }
 
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
 /* #Header */
 
-#sitetitle,
-#sitesubtitle {
-	padding-left: 20px;
+#top_modules .box-logo {
+	float: left;
+	margin: 10px;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 15px;
 }
 
 #sitetitle {
@@ -248,7 +262,13 @@ small {
 
 /* Look & Feel options */
 #top_modules {
-	padding: 26px 0 0 0;
+	padding: 0;
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 
 #top_modules .box-login_box {
@@ -283,11 +303,6 @@ small {
 	margin-bottom: 0;
 }
 
-/* Middle */
-#middle {
-
-}
-
 #c1c2 {
 	text-align: left;
 	font-size: 1em;
@@ -300,12 +315,11 @@ small {
 #c1c2 #wrapper .marginright {
 	margin-right: 214px;
 }
-
-#showhide_columns,
+/*
 #tiki-columns {
 	border-top: 1px solid #aaa;
 	padding: 2px 2px 0 2px;
-}
+}*/
 
 a.flip,
 a.flip:visited {
@@ -314,11 +328,6 @@ a.flip:visited {
 
 a.flip:hover {
 	color: #505050;
-}
-
-.tellafriend,
-.share {
-	margin-right: 2px;
 }
 
 .actions span.share {
@@ -518,7 +527,8 @@ a.flip:hover {
 	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */
 }
 
-#tiki-top a > .sf-sub-indicator {
+#tiki-top a > .sf-sub-indicator,
+.box-secondary_site_menu a > .sf-sub-indicator {
 	bottom: 0.5em;
 }
 
@@ -603,13 +613,6 @@ h3.box-title {
 	
 img.flipmodimage:hover {
 	border: 1px solid #aaa !important;
-}
-
-.opaque {
-	border-top: 1px solid #d3d3d3;
-	border-bottom: 1px solid #d3d3d3;
-	padding: 7px;
-	margin: 0;
 }
 
 .box-data {
@@ -859,6 +862,10 @@ tr.diffheader {
 
 .commentbloc {
 	text-align: left;
+}
+
+.statuson {
+	background: #bfbfbf;	
 }
 
 /*** Feature-specific selectors ***/
@@ -1122,26 +1129,15 @@ body.tiki_blogs .post .title h2 {
 }
 
 body.tiki_blogs .post .postbody {
+	background: none;
+	border: 0;
 	margin-right: 8px;
 	line-height: 1.4em;
 	margin-bottom: 1em;
 }
 
-body.tiki_blogs .post .postbody {
-	background: none;
-	border: 0;
-}
-
 body.tiki_blogs .actions {
 	background: none;
-}
-
-body.tiki_blogs .author_info {
-}
-
-.postbody-title {
-	background: none;
-	border: 0;
 }
 
 body.tiki_blogs .postbody-title {
@@ -1178,6 +1174,7 @@ body.tiki_blogs .postfooter .actions {
 	float: none;
 	margin-top: 0;
 	margin-bottom: auto;
+	border: 0;
 	border-bottom: 1px solid #acccdd;
 	background: #e0eaf4;
 }
@@ -1476,6 +1473,8 @@ caltrack a:visited {
 }
 
 .opaque {
+	padding: 7px;
+	margin: 0;
 	background: #fff;
 	border-left: 1px solid #a9a9a9;
 	border-top: 1px solid #a9a9a9;
@@ -1520,13 +1519,10 @@ caltrack a:visited {
 
 /*****  Polls  *****/
 .pollresults {
+	width: 100%;
 	margin-top: 5px;
 	font-size: 1.2em;
 	padding: 0 5px;
-}
-
-.pollresults {
-	width: 100%;
 }
 
 .pollr {

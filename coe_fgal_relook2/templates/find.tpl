@@ -24,6 +24,7 @@
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... />
+	* find_other : If value != '', show an input box label with find_other
 	*
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
@@ -31,7 +32,7 @@
 
 <div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
-		{if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
+		{if !isset($filegals_manager) || $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 
@@ -61,7 +62,7 @@
 	</label>
 {/if}
 
-{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' ) }
+{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
 	<select name="type" class="findtypes">
 		<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
 		{section name=t loop=$types}
@@ -83,7 +84,7 @@
 	</select>
 {/if}
 
-{if $find_show_languages eq 'y' and $prefs.feature_multilingual eq 'y'}
+{if (isset($find_show_languages) && $find_show_languages eq 'y') and $prefs.feature_multilingual eq 'y'}
 	<span class="findlang">
 		<select name="lang" class="in">
 			<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
@@ -112,7 +113,7 @@
 	</span>
 {/if}
 
-{if $find_show_date_range eq 'y'}
+{if isset($find_show_date_range) && $find_show_date_range eq 'y'}
 	<div id="date_range_find">
 		<span class="findDateFrom">
 			{tr}From{/tr}
@@ -125,7 +126,7 @@
 	</div>
 {/if}
 
-{if ($find_show_categories eq 'y' or $find_show_categories_multi eq 'y') and $prefs.feature_categories eq 'y' and !empty($categories)}
+{if ((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)}
 	<div class="category_find">
 	<div id="category_singleselect_find" style="display: {if $find_show_categories_multi eq 'y' && $find_cat_categories|@count > 1}none{else}block{/if};">
 		<select name="categId" class="findcateg">
@@ -160,7 +161,7 @@
 	</div>
 {/if}
 
-{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
+{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox'}
 	<div class="findtypes">
 		<ul>
 			<li>
@@ -207,7 +208,14 @@
 	</label>
 {/if}
 
-{if $find_show_num_rows eq 'y'}
+{if !empty($find_other) }
+	<label class="find_other" for="find_other">
+		   {tr}{$find_other}{/tr}
+		   <input type="text" name="find_other" id="find_other" value="{$find_other_val|escape}"/>
+	</label>
+{/if}
+
+{if isset($find_show_num_rows) && $find_show_num_rows eq 'y'}
 	<label class="findnumrows" for="findnumrows">
 			{tr}Number of displayed rows{/tr}
 			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
@@ -221,10 +229,10 @@
 			<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords='' find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
 	{/if}
-	{if $gmapbuttons and $mapview}
+	{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
 		<input type="submit" name="searchlist" value="{tr}List View{/tr}" />
 		<input type="hidden" name="mapview" value="y" />
-	{elseif $gmapbuttons}
+	{elseif (isset($gmapbuttons) && $gmapbuttons)}
 		<input type="submit" name="searchmap" value="{tr}Map View{/tr}" />
 		<input type="hidden" name="mapview" value="n" />
 	{/if}

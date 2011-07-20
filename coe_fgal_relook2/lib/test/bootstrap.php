@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 define( 'CUSTOM_ERROR_LEVEL', defined( 'E_DEPRECATED' ) ? E_ALL ^ E_DEPRECATED : E_ALL );
 
@@ -23,18 +28,40 @@ function __autoload( $name ) {
 	@ include_once( $path );
 }
 
-$tikidomain = '';
-$api_tiki = null;
-require 'db/local.php';
-
-if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
-	require_once('db/tiki-db-pdo.php');
-} else {
-	require_once('db/tiki-db-adodb.php');
+if (!is_file(dirname(__FILE__) . '/local.php')) {
+	die("\nYou need setup a new database, install Tiki on it and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
 }
 
-$db = TikiDb::get();
-$db->setServerType( $db_tiki );
+require_once(dirname(__FILE__) . '/local.php');
+
+require_once ('lib/adodb/adodb.inc.php');
+include_once ('lib/adodb/adodb-pear.inc.php');
+
+$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+
+// for now the unit test suite only works with adodb
+// using pdo generate an error when phpunit tries to serialize the globals variables
+// since it is not possible to serialize a PDO object
+$dbTiki = ADONewConnection($db_tiki);
+
+if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+	die("\nUnable to connect to the database\n\n");
+}
+
+require_once('lib/core/TikiDb/Adodb.php');
+TikiDb::set(new TikiDb_Adodb($dbTiki));
+
+// update db if needed
+include_once ('installer/installlib.php');
+$installer = new Installer;
+
+if (!$installer->tableExists('tiki_preferences')) {
+	echo "Installing Tiki database...\n";
+	$installer->cleanInstall();
+} else if ($installer->requiresUpdate()) {
+	echo "Updating Tiki database...\n";
+	$installer->update();
+}
 
 $pwd = getcwd();
 chdir( dirname(__FILE__) . '/../..' );
@@ -55,6 +82,16 @@ $_SESSION = array(
 	)
 );
 chdir($pwd);
+
+global $systemConfiguration;
+$systemConfiguration = new Zend_Config(
+	array(
+		'preference' => array(),
+		'rules' => array(),
+	),
+	array('readOnly' => false)
+);
+
 global $user_overrider_prefs;
 $user_overrider_prefs = array();
 require_once 'lib/setup/prefs.php';

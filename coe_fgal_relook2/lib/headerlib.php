@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -612,30 +612,55 @@ class HeaderLib
 	private function process_themegen_files($files) {
 		global $prefs, $tikidomainslash, $in_installer;
 		
-		if (empty($in_installer) && $prefs['feature_themegenerator'] === 'y' && !empty($prefs['themegenerator_theme'])) {
+		if (empty($in_installer) && $prefs['themegenerator_feature'] === 'y' && !empty($prefs['themegenerator_theme'])) {
 			global $themegenlib; include_once 'lib/themegenlib.php';
 			
 			$data = $themegenlib->getCurrentTheme()->getData();
 			$themename = $themegenlib->getCurrentTheme()->getName();
 			if (count($data['files'])) {
 				foreach ($data['files'] as $file => $swaps) {
+					$hash = md5( $file );
+					$target = 'temp/public/'.$tikidomainslash;
+					$ofile = $target . "themegen_{$themename}_$hash.css";
+
 					$i = array_search($file, $files['screen']);
 					if ($i !== false) {
-						$css = $themegenlib->processCSSFile($file, $swaps);
-					
-						$hash = md5( $file );
-						$target = 'temp/public/'.$tikidomainslash;
-						$ofile = $target . "themegen_{$themename}_$hash.css";
-						
-						file_put_contents( $ofile, $css );
-						chmod($ofile, 0644);
-						
+						if (!file_exists($ofile) || !empty($_SESSION['tg_preview'])) {
+							$css = $themegenlib->processCSSFile($file, $swaps);
+							file_put_contents( $ofile, $css );
+							chmod($ofile, 0644);
+						}
 						$files['screen'][$i] = $ofile;
 					}
 				}
 			}
 		}
 		return $files;
+	}
+
+	function remove_themegen_files( $all = true ) {
+		global $tikidomainslash;
+		$target = 'temp/public/'.$tikidomainslash;
+		if ( $all ) {
+			foreach( glob( $target . 'themegen_*' ) as $file ) {
+				unlink($file);
+			}
+		}
+	}
+
+	function add_map() {
+		// Annoying notice with copyrights still remain in google
+		//$this->add_jsfile('http://maps.google.com/maps/api/js?v=3.3&sensor=false', 'external');
+		$this->add_jsfile('http://openlayers.org/api/2.10/OpenLayers.js', 'external');
+		$this->add_js('$(".map-container:not(.done)").addClass("done").createMap();');
+	}
+	
+	function add_dracula() {
+		// Because they are only used in this file, they are marked as external so they
+		// are not included in the minify
+		$this->add_jsfile( 'lib/dracula/raphael-min.js', 'external' );
+		$this->add_jsfile( 'lib/dracula/graffle.js', 'external' );
+		$this->add_jsfile( 'lib/dracula/graph.js', 'external' );
 	}
 }
 

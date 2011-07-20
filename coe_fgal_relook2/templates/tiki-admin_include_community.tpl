@@ -40,6 +40,7 @@
 					{preference name=feature_wiki_userpage_prefix}
 				</div>
 				{preference name=feature_group_transition}
+				{preference name=user_favorites}
 			</div>
 		{/tab}
 
@@ -90,9 +91,11 @@
 			{preference name=users_prefs_display_timezone}
 			{preference name=users_prefs_user_information}
 			{preference name=users_prefs_user_dbl}
+			{preference name=users_prefs_display_12hr_clock}
 
 			{preference name=users_prefs_show_mouseover_user_info}
 			{preference name=users_prefs_tasks_maxRecords}
+			{preference name=users_prefs_diff_versions}
 
 
 		</fieldset>

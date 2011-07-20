@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -256,10 +256,7 @@ class CacheLibFileSystem
 
 	function cacheItem($key, $data, $type='') {
 		$key = $type.md5($key);
-		$fw = fopen($this->folder."/$key","w+");
-		fwrite($fw,$data);
-		fclose($fw);
-		chmod($this->folder."/$key", 0644);
+		@file_put_contents($this->folder."/$key",$data);
 		return true;
 	}
 
@@ -270,16 +267,11 @@ class CacheLibFileSystem
 
 	function getCached($key, $type='') {
 		$key = $type.md5($key);
-		if ( !file_exists($this->folder."/$key")) { 	
+		if (is_readable($this->folder."/$key")) {
+			return @file_get_contents($this->folder."/$key");
+		} else {
 			return false;
-		} 
-		$fw = fopen($this->folder."/$key","r");
-		if ($l = filesize($this->folder."/$key"))
-			$data = fread($fw, $l);
-		else
-			$data = '';
-		fclose($fw);
-		return $data;
+		}
 	}
 
 	function invalidate($key, $type='') {

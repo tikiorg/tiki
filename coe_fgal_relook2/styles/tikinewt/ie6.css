@@ -49,12 +49,10 @@ td.third {
 }
 
 .wikitopline table {
+	font-size: 1.2em;
 	width: 97%;
 }
 
-.wikitopline table {
-	font-size: 1.2em;
-}
 .post .postbody {
 	font-size: 11px;
 }

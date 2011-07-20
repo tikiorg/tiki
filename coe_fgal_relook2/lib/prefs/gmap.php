@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,18 +13,21 @@ function prefs_gmap_list() {
 			'size' => 87,
 			'help' => 'http://code.google.com/apis/maps/signup.html',
 			'filter' => 'striptags',
+			'default' => '',
 		),
 		'gmap_defaultx' => array(
 			'name' => tra('Default x for map center'),
 			'type' => 'text',
 			'size' => 20,
 			'filter' => 'striptags',
+			'default' => '0',
 		),
 		'gmap_defaulty' => array(
 			'name' => tra('Default y for map center'),
 			'type' => 'text',
 			'size' => 20,
 			'filter' => 'striptags',
+			'default' => '0',
 		),
 		'gmap_defaultz' => array(
 			'name' => tra('Default zoom level'),
@@ -50,7 +53,8 @@ function prefs_gmap_list() {
 				18 => 18,
 				19 => 19,
 				20 => tra('max zoom'),
-			)
+			),
+			'default' => '1',
 		),
 		'gmap_article_list' => array(
 			'name' => tra('Show map mode buttons in articles list'),
@@ -58,6 +62,7 @@ function prefs_gmap_list() {
 			'dependencies' => array(
 				'feature_gmap',
 			),
+			'default' => 'n',
 		),
 		'gmap_page_list' => array(
 			'name' => tra('Show map mode buttons in page list'),
@@ -65,6 +70,7 @@ function prefs_gmap_list() {
 			'dependencies' => array(
 				'feature_gmap',
 			),
+			'default' => 'n',
 		),
 	);	
 }

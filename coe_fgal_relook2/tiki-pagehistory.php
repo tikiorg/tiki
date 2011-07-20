@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -214,8 +214,6 @@ if (isset($_REQUEST['bothver_idx'])) {
 	$_REQUEST['newver_idx'] = $_REQUEST['bothver_idx'];
 	if ($_REQUEST['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['bothver_idx']])) {
 		$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'];
-	} else {
-		//$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'] - 2;
 	}
 }
 if (isset($_REQUEST['newver_idx'])) {
@@ -393,27 +391,19 @@ $not_comparing = empty($_REQUEST['compare']) ? 'true' : 'false';
 
 $headerlib->add_jq_onready(<<<JS
 \$("input[name=oldver], input[name=newver]").change(function () {
-	var ver = \$(this).val(), ver2;
+	var ver = parseInt(\$(this).val(), 10), ver2;
 	if (ver == 0) { ver = $current_version; }
 	if (\$(this).attr("name") == "oldver") {
 		\$("input[name=newver]").each(function () {
-			ver2 = \$(this).val();
+			ver2 = parseInt(\$(this).val(), 10);
 			if (ver2 == 0) { ver2 = $current_version; }
-			if (ver2 <= ver) {
-				\$(this).attr("disabled", "disabled");
-			} else {
-				\$(this).attr("disabled", "");
-			}
+			\$(this).attr("disabled", (ver2 <= ver));
 		});
 	} else if (\$(this).attr("name") == "newver") {
 		\$("input[name=oldver]").each(function () {
-			ver2 = \$(this).val();
+			ver2 = parseInt(\$(this).val(), 10);
 			if (ver2 == 0) { ver2 = $current_version; }
-			if (ver2 >= ver) {
-				\$(this).attr("disabled", "disabled");
-			} else {
-				\$(this).attr("disabled", "");
-			}
+			\$(this).attr("disabled", (ver2 >= ver));
 		});
 	}
 });

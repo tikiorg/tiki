@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -16,6 +16,7 @@ function prefs_messu_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => '0',
 		),
 		'messu_archive_size' => array(
 			'name' => tra('Maximum mail archive size (messages, 0=unlimited)'),
@@ -26,6 +27,7 @@ function prefs_messu_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => '200',
 		),
 		'messu_sent_size' => array(
 			'name' => tra('Maximum sent box size (messages, 0=unlimited)'),
@@ -36,6 +38,7 @@ function prefs_messu_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => '200',
 		),
 	);
 }

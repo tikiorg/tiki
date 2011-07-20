@@ -1,9 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: $
+// $Id$
 
 $section = 'accounting';
 require_once ('tiki-setup.php');
@@ -110,7 +110,7 @@ if (is_array($result)) {
 	    $debitAccount=array();
 	    $debitAmount=array();
 	    $debitText=array();
-	    for($i=0;$i<sizeof($stackEntry['debit']);$i++) {
+	    for($i=0, $iCountStackEntryDebit = count($stackEntry['debit']); $i<$iCountStackEntryDebit; $i++) {
 	    	$debitAccount[]=$stackEntry['debit'][$i]['stackItemAccountId'];
 	    	$debitAmount[]=$stackEntry['debit'][$i]['stackItemAmount'];
 	    	$debitText[]=$stackEntry['debit'][$i]['stackItemText'];
@@ -118,7 +118,7 @@ if (is_array($result)) {
 	    $creditAccount=array();
 	    $creditAmount=array();
 	    $creditText=array();
-	    for($i=0;$i<sizeof($stackEntry['credit']);$i++) {
+	    for($i=0, $iCountStackEntryCredit = count($stackEntry['credit']);$i<$iCountStackEntryCredit; $i++) {
 	    	$creditAccount[]=$stackEntry['credit'][$i]['stackItemAccountId'];
 	    	$creditAmount[]=$stackEntry['credit'][$i]['stackItemAmount'];
 	    	$creditText[]=$stackEntry['credit'][$i]['stackItemText'];

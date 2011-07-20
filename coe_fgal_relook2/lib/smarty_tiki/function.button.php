@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -98,6 +98,7 @@ function smarty_function_button($params, &$smarty) {
 	
 	unset($params['_class']);
 
+
 	if (!$disabled) {
 		$flip_id = '';
 		if ( ! empty($params['_flip_id']) ) {
@@ -170,5 +171,10 @@ function smarty_function_button($params, &$smarty) {
 	}
 
 	$auto_query_args = $auto_query_args_orig;
-	return '<span class="'.(!empty($params['_noborder']) ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
+		$html = '<span class="'.(!empty($params['_noborder']) ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+	} else {
+		$html = preg_replace('/<a /', '<a  data-role="button" ', $html);
+	}
+	return $html;
 }

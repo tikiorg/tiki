@@ -1,3 +1,4 @@
+{* $Id$ *}
 <table>
 	<tr>
 		{foreach from=$column item=col}

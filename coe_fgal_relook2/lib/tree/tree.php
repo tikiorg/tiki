@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -67,7 +67,9 @@ class TreeMaker
 
 			$ind = "";
 			//
+			$count = -1;
 			foreach ($cli as $i) {
+				$count++;
 				$child_result = $this->make_tree_r($i["id"], $tmp);
 
 				$have_childs = (strlen($child_result) > 0);
@@ -80,9 +82,9 @@ class TreeMaker
 				
 				if ($have_childs) {
 					$flipper = $this->node_flipper_code($i);
-					$nsc = $this->node_start_code_flip($i);
+					$nsc = $this->node_start_code_flip($i, $count);
 				} else {
-					$nsc = $this->node_start_code($i);
+					$nsc = $this->node_start_code($i, $count);
 					$flipper = '';
 				}	
 
@@ -138,11 +140,11 @@ class TreeMaker
 		return '';
 	}
 	
-	function node_start_code($nodeinfo) {
+	function node_start_code($nodeinfo, $count=0) {
 		return '';
 	}
 
-	function node_start_code_flip($nodeinfo) {
+	function node_start_code_flip($nodeinfo, $count=0) {
 		return '';
 	}
 	

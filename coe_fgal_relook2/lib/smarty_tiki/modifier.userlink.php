@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -47,6 +47,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 	}
 
 	$star = '';
+	$metadata = '';
 	$info = array();
 	if ($prefs['feature_community_mouseover'] || $prefs['feature_score']) {
 		$info = $userlib->get_user_info($other_user);
@@ -168,21 +169,35 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 		} else {
 			$url = preg_replace(array('/%userId%/', '/%user%/'), array($info['userId'], $info['login']),  $prefs['urlOnUsername']);
 		}
+
+		$lat = $userlib->get_user_preference($other_user, 'lat');
+		$lon = $userlib->get_user_preference($other_user, 'lon');
+		$zoom = $userlib->get_user_preference($other_user, 'zoom');
+
+		if ($lat || $lon) {
+			$class .= " geolocated";
+			$metadata .= " data-geo-lat='$lat' data-geo-lon='$lon'";
+			
+			if ($zoom) {
+				$metadata .= " data-geo-zoom='$zoom'";
+			}
+		}
+
 		if (is_numeric($idletime) && empty($mouseover)) {
-			$ret = "<a class=\"$class\" target=\"_top\" href=\"{$url}\" title=\"".tr('More info about %0 (idle for %1)', $ou, $idletime.tra(' seconds'))."\">$ou</a>$friend$star";
+			$ret = "<a class=\"$class\" target=\"_top\" href=\"{$url}\" $metadata title=\"".tr('More info about %0 (idle for %1)', $ou, $idletime.tra(' seconds'))."\">$ou</a>$friend$star";
 			$cachelib->cacheItem($cacheItem, $ret);
 			return $ret;
 		} else {
 			if ($show_mouseover && !empty($mouseover)) {
-				$ret = "<a class='$class titletips' title=\"$mouseover\" href='{$url}' >$ou</a>$friend$star";
+				$ret = "<a class='$class titletips' title=\"$mouseover\" $metadata href='{$url}' >$ou</a>$friend$star";
 			} else {
-				$ret = "<a class='$class' href='{$url}' >$ou</a>$friend$star";
+				$ret = "<a class='$class' $metadata href='{$url}' >$ou</a>$friend$star";
 			}
 			$cachelib->cacheItem($cacheItem, $ret);
 			return $ret;
 		}
 	} else {
-		$ret = "<span class='$class'>$ou</span>$friend$star";
+		$ret = "<span class='$class' $metadata>$ou</span>$friend$star";
 		$cachelib->cacheItem($cacheItem, $ret);
 		return $ret;
 	}

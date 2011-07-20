@@ -1,4 +1,10 @@
 <?php // -*- coding:utf-8 -*-
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /** \brief This table associates language country (flag name) and language name in the current language
 * PLEASE : Translators, update this file with your flag for your own language (if applicable)
 **/

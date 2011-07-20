@@ -1,50 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Displays an attachment or a list of attachments
-// Currently works with wiki pages and tracker items.
-// Parameters:
-// 	See help text.
-// Examples:
-// 	{ATTACH(name=>foobar.zip)}  -- make link to foobar.zip
-// 	{ATTACH(showdesc=>1,bullets=>1)} -- make links to all attachments as a bullet list
-// 	{ATTACH(all=>1,bullets=>1)} -- make links to *all* attachments in the whole wiki as a bullet list
-
-function wikiplugin_attach_help() {
-	$help  = tra("Displays an attachment or a list of them");
-	$help .= "<br />";
-	$help .= "~np~{ATTACH(name|file=file.ext, page=WikiPage, showdesc=0|1, bullets=>0|1, image=>0|1, inline=0|1, id=1|num=1, dls=0|1, icon=0|1,)}" . tra("Comment") . "{ATTACH}~/np~ ";
-	$help .= "<br />";
-	$help .= "name => " . tra("Gives the name of the attached file to link to");
-	$help .= "<br />";
-	$help .= "file =>" . tra("Same as name");
-	$help .= "<br />";
-	$help .= "page => " . tra("Gives the name of another page the attached file is on. The file on that page is linked to instead. Only works with wiki pages");
-	$help .= "<br />";
-	$help .= "showdesc => " . tra("Shows the description as the link text instead of the file name");
-	$help .= "<br />";
-	$help .= "bullets => " . tra("Makes the list of attachments a bulleted list");
-	$help .= "<br />";
-	$help .= "image =>" . tra("Says that this file is an image, and should be displayed inline using the img tag");
-	$help .= "<br />";
-	$help .= "inline =>" . tra("Makes the text between the {ATTACH} tags the link text instead of the file name or description");
-	$help .= "<br />";
-	$help .= "all => " . tra("Shows all attachments from the whole wiki");
-	$help .= "<br />";
-	$help .= "num => " . tra("Gives the number, in the list of attachments, of the attachment to link to");
-	$help .= "<br />";
-	$help .= "id => " . tra("Gives the actual id of the attachment to link in. You probably should never use this");
-	$help .= "<br />";
-	$help .= "dls => " . tra("Puts the number of downloads in the alt comment");
-	$help .= "<br />";
-	$help .= "icon =>" . tra("Shows a file icon");
-
-	return $help;
-}
 
 function wikiplugin_attach_info() {
 	return array(

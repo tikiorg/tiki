@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -57,11 +57,8 @@ function tiki_mail_setup() {
 		return;
 	}
 
-	require_once 'lib/core/Zend/Mail.php';
-
 	global $prefs;
 	if( $prefs['zend_mail_handler'] == 'smtp' ) {
-		require_once 'lib/core/Zend/Mail/Transport/Smtp.php';
 		$options = array();
 
 		if( $prefs['zend_mail_smtp_auth'] ) {

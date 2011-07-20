@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_validated_faq_questions_info() {
 	return array(
-		'name' => tra('Last Validated FAQs Questions'),
+		'name' => tra('Newest Validated FAQ Questions'),
 		'description' => tra('Displays the specified number of validated questions FAQs from newest to oldest.'),
 		'prefs' => array("feature_faqs"),
 		'params' => array(

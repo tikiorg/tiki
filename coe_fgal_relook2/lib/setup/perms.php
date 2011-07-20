@@ -1,50 +1,11 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// $Id$// (c) Copyright 2002-2009 by authors of the Tiki Wiki CMS Groupware Project
 
 //this script may only be included - so its better to die if called directly.
-if (! $allperms = $cachelib->getSerialized("allperms")) {
-	$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
-	$cachelib->cacheItem("allperms", serialize($allperms));
-}
-$permissionList = array();
-$adminPermissions = array();
-
-foreach( $allperms['data'] as $row ) {
-	$valid = false;
-
-	if( ! $row['feature_check'] ) {
-		$valid = true;
-	} else {
-		foreach( explode( ',', $row['feature_check'] ) as $feature ) {
-			if( isset($prefs[$feature]) && $prefs[$feature] == 'y' ) {
-				$valid = true;
-				break;
-			}
-		}
-	}
-
-	if( $valid ) {
-		$permissionList[] = $row['permName'];
-
-		if( $row['admin'] == 'y' ) {
-			$adminPermissions[ $row['type'] ] = substr( $row['permName'], strlen( 'tiki_p_' ) );
-		}
-	}
-}
-
-// Create a map from the permission to the admin permission
-$map = array();
-foreach( $allperms['data'] as $row ) {
-	$type = $row['type'];
-	if( isset( $adminPermissions[$type] ) && $row['admin'] != 'y' ) {
-		$permName = substr( $row['permName'], strlen( 'tiki_p_' ) );
-		$map[ $permName ] = $adminPermissions[$type];
-	}
-}
 
 $groupList = $tikilib->get_user_groups( $user );
 $is_token_access = false;
@@ -53,10 +14,29 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	$token = $_REQUEST['TOKEN'];
 		
 	unset( $_GET['TOKEN'] );
+	unset( $_POST['TOKEN'] );
 	unset( $_REQUEST['TOKEN'] );
+	$tokenParams = $_GET;
+
+ 	/**
+ 	 * Shared 'Upload File' case
+ 	 */
+	if ( isset($isUpload) && $isUpload && ! empty($_POST['galleryId']) && empty($_GET['galleryId']) ) {
+		foreach ( (array) $_POST['galleryId'] as $v ) {
+			if ( ! empty( $tokenParams['galleryId'] ) ) {
+				if ( $tokenParams['galleryId'] == $v ) {
+					continue;
+				} else {
+					unset( $tokenParams['galleryId'] );
+					break;
+				}
+			}
+			$tokenParams['galleryId'] = $v;
+		}
+	}
 
 	$tokenlib = AuthTokens::build( $prefs );
-	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $_GET ) ) {
+	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $tokenParams ) ) {
 	 	$groupList = $groups;
 	 	$detailtoken = $tokenlib->getToken($token);
 	 	$is_token_access = true;	
@@ -122,40 +102,31 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	}
 }
 
-$sequence = array(
-	$globalAdminCheck = new Perms_Check_Alternate( 'admin' ),
-	new Perms_Check_Direct,
-	new Perms_Check_Indirect( $map ),
-);
+$allperms = $userlib->get_enabled_permissions();
+$permissionList = array_keys($allperms);
 
-if( $user ) {
-	$sequence[] = new Perms_Check_Creator( $user );
-}
+$builder = new Perms_Builder;
+$perms = $builder
+	->withCategories($prefs['feature_categories'] == 'y')
+	->withDefinitions($allperms)
+	->build();
 
-$factories = array();
-$factories[] = new Perms_ResolverFactory_ObjectFactory;
-if( $prefs['feature_categories'] == 'y' ) {
-	$factories[] = new Perms_ResolverFactory_CategoryFactory;
-}
-$factories[] = new Perms_ResolverFactory_GlobalFactory;
-
-$perms = new Perms;
 $perms->setGroups( $groupList );
-$perms->setPrefix( 'tiki_p_' );
-$perms->setCheckSequence( $sequence );
-$perms->setResolverFactories( $factories );
 Perms::set( $perms );
 
-$globalperms = Perms::get();
-$globalAdminCheck->setResolver( $globalperms->getResolver() );
-
-function remove_tiki_p_prefix( $name ) {
-	return substr( $name, 7 );
+if (! function_exists('remove_tiki_p_prefix')) {
+	function remove_tiki_p_prefix( $name ) {
+		return substr( $name, 7 );
+	}
 }
 
 $shortPermList = array_map( 'remove_tiki_p_prefix', $permissionList );
 
+$globalperms = Perms::get();
 $globalperms->globalize( $shortPermList, $smarty, false );
-$smarty->assign( 'globalperms', $globalperms );
+if (is_object($smarty)) {
+	$smarty->assign( 'globalperms', $globalperms );
+}
 
 unset($allperms);
+unset($tokenParams);

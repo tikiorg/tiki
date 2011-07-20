@@ -39,7 +39,17 @@
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$groups_g}
 			<tr class="{cycle}">
-				<td class="text">{$groups_g[ix].groupName|escape}</td>
+				<td class="text">
+					{$groups_g[ix].groupName|escape}
+					{if count($groups_g[ix].additional_groups)}
+						<div>
+							{tr}Groups included through inheritence:{/tr}
+							{foreach from=$groups_g[ix].additional_groups item=groupName}
+								{$groupName|escape}
+							{/foreach}
+						</div>
+					{/if}
+				</td>
 				<td class="action">
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
@@ -121,7 +131,7 @@
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
 			<td class="checkbox">
-				<input type="checkbox" name="checked[]" value="{$channels[user].code}" {if $smarty.request.checked and in_array($channels[user].code, $smarty.request.checked) }checked="checked"{/if} />
+				<input type="checkbox" name="checked[]" value="{$channels[user].code}" {if $smarty.request.checked and in_array($channels[user].code, $smarty.request.checked)}checked="checked"{/if} />
 			</td>
 			<td class="username">
 				{if $channels[user].isUser == "y"}
@@ -133,6 +143,8 @@
 			<td class="text">
 				{if $channels[user].valid == "n"}
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
+				{elseif $channels[user].valid == "x"}
+					{tr}Unsubscribed{/tr}
 				{else}
 					{tr}Yes{/tr}
 				{/if}
@@ -319,8 +331,13 @@
 						<option value="{$groups[x]|escape}">{$groups[x]|escape}</option>
 					{/section}
 				</select>
-				<br />
-				<i>{tr}Included group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
+				<label>
+					<input type="checkbox" name="include_groups" value="y"/>
+					{tr}Including group inheritence{/tr}
+				</label>
+				<div>
+					<i>{tr}Including group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -367,7 +384,7 @@
 				<input type="text" name="wikiPageName" value="" size="60" />
 				<br />
 				<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
-				{jq}$("input[name=wikiPageName]").tiki("autocomplete", "pagename");{/jq}
+				{autocomplete element='input[name=wikiPageName]' type='pagename'}
 			</td>
 		</tr>
 		<tr>

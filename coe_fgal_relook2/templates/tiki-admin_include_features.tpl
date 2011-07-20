@@ -10,7 +10,7 @@
 
 {tabset name="admin_features"}
 {*
- * The following section is typically for features that act like Tikiwiki
+ * The following section is typically for features that act like Tiki
  * sections and add a configuration icon to the sections list
  *}
 {* ---------- Main features ------------ *}
@@ -27,12 +27,13 @@
 				{preference name=feature_forums}
 				{preference name=feature_trackers}
 				{preference name=feature_polls}
+				{preference name=feature_sheet}
 				{preference name=feature_calendar}
 				{preference name=feature_newsletters}
 				{preference name=feature_banners}
 				{preference name=feature_categories}
 				{preference name=feature_freetags}
-				{preference name=feature_search_fulltext}
+				{preference name=feature_search}
 			</div>
 
 		</fieldset>
@@ -40,7 +41,7 @@
 		<fieldset>
 			<legend>{tr}Additional{/tr}</legend>
 
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				{preference name=feature_surveys}
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
@@ -54,13 +55,23 @@
 				{preference name=feature_score}
 				{preference name=feature_fullscreen}
 				{preference name=feature_dynamic_content}
+				{preference name=bigbluebutton_feature}
+					<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
+						{preference name=bigbluebutton_server_location}
+						{preference name=bigbluebutton_server_salt}
+					</div>
+				{preference name=feature_perspective}
+				{preference name=payment_feature}
+				{preference name=feature_sefurl}
+				{preference name=feature_webmail}
+				{preference name=feature_kaltura}
 			</div>
 		</fieldset>
 
 		<fieldset>
 			<legend>{tr}Watches{/tr}</legend>
 
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				{preference name=feature_user_watches}
 				{preference name=feature_group_watches}
 				{preference name=feature_daily_report_watches}
@@ -73,14 +84,14 @@
 {/tab}
 			
 {tab name="{tr}Interface{/tr}"}
-			<fieldset class="admin featurelist">
-				<legend> {tr}AJAX{/tr} </legend>	
+			<fieldset class="admin clearfix featurelist">
+				<legend> {tr}Ajax{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
 				</div>
 			</fieldset>
-			<fieldset class="admin featurelist">
+			<fieldset class="admin clearfix featurelist">
 				<legend> {tr}jQuery plugins and add-ons{/tr} </legend>
 				{preference name=feature_jquery_autocomplete}
 				{preference name=feature_jquery_media}
@@ -90,14 +101,13 @@
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
-				<hr />
+				<hr class="floatleft" />
 				<div class="floatleft">
 					<div class="adminoptionbox">
 						<em>{tr}Experimental:{/tr}</em> {icon _id=bug_error}
 					</div>
 					<div class="adminoptionboxchild">	
 						{preference name=feature_jquery_carousel}
-						{preference name=feature_jquery_jqs5}
 						{preference name=feature_jquery_tablesorter}
 					</div>
 				</div>
@@ -105,13 +115,14 @@
 {/tab}
 
 {tab name="{tr}Programmer{/tr}"}
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				{preference name=feature_integrator}
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
 				{preference name=disableJavascript}
 				{preference name=smarty_compilation}
+				{preference name=feature_webservices}
 			</div>
 
 			<div class="adminoptionbox">
@@ -142,32 +153,47 @@
 				</fieldset>
 			</div>
 			
+			<fieldset>
+				<legend>{tr}Event Hooks{/tr}</legend>
+				{remarksbox type=note title="{tr}New Feature{/tr}"}
+					{tr}Please note that this is a relatively new feature that still needs to be deployed all around. Expect more events to be added over time.{/tr}
+				{/remarksbox}
+				<p>{tr}If you need to add behaviors to Tiki, there are several event hooks you can attach to. Here are the events and the inheritence.{/tr}</p>
+				{$headerlib->add_dracula()}
+				<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
+				<a href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</a>
+				{jq}
+				$('#graph-draw').click( function( e ) {
+					$(this).hide();
+					$('#graph-canvas').drawGraph();
+					return false;
+				} );
+				{/jq}
+			</fieldset>
 {/tab}
 
 {* ---------- New features ------------ *}
 {tab name="{tr}New{/tr}"}
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
-					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
-						{preference name=bigbluebutton_feature}
-						<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
-							{preference name=bigbluebutton_server_location}
-							{preference name=bigbluebutton_server_salt}
-						</div>
+ 					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
 						{preference name=feature_invite}
-						{preference name=feature_kaltura}
-						{preference name=feature_perspective}
-						{preference name=feature_print_indexed}
 						{preference name=feature_quick_object_perms}
-						{preference name=feature_sefurl}
-						{preference name=feature_sheet}
 						{preference name=feature_webdav}
-						{preference name=feature_webmail}
-						{preference name=feature_webservices}
-						{preference name=feature_wiki_mindmap}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_accounting}
+						{preference name=zotero_enabled}
+						<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
+							{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
+								{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
+							{/if}
+
+							{preference name=zotero_client_key}
+							{preference name=zotero_client_secret}
+							{preference name=zotero_group_id}
+							{preference name=zotero_style}
+						</div>
 				</fieldset>
 			</div>
 
@@ -176,7 +202,7 @@
 
 {* ---------- Experimental features ------------ *}
 {tab name="{tr}Experimental{/tr}"}
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 
 				<!--<fieldset>
 					<legend class="heading">{icon _id="bricks"} <span>{tr}Getting there...{/tr}</span></legend>
@@ -185,13 +211,30 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="new"} <span>{tr}Fresh out of the oven{/tr}</span></legend>
+					{preference name=feature_syntax_highlighter}
 					{preference name=feature_credits}
 					{preference name=feature_loadbalancer}
 					{preference name=feature_socialnetworks}
 					{preference name=feature_watershed}
 					{preference name=feature_file_galleries_save_draft}
 					{preference name=feature_file_galleries_templates}
-					{preference name=feature_syntax_highlighter}
+					{preference name=feature_draw}
+					{preference name=feature_slideshow}
+					{preference name=mobile_feature}
+					{preference name=feature_invoice}
+					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
+						{preference name=mobile_perspectives}
+						<fieldset>
+							<legend>{tr}Mobile Themes{/tr}</legend>
+						{preference name=mobile_theme_header}
+						{preference name=mobile_theme_content}
+						{preference name=mobile_theme_footer}
+						{preference name=mobile_theme_modules}
+						{preference name=mobile_theme_menus}
+						{preference name=mobile_use_latest_lib}
+						</fieldset>
+					</div>
+					{preference name=connect_feature}
 				</fieldset>
 
 				<fieldset>
@@ -206,6 +249,15 @@
 					{preference name=feature_intertiki}
 					{preference name=feature_mailin}
 					{preference name=feature_morcego}
+					{preference name=feature_wiki_mindmap}
+					{preference name=feature_print_indexed}
+					{preference name=feature_breadcrumbs}
+					<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
+						{preference name=feature_siteloclabel}
+						{preference name=feature_siteloc}
+						{preference name=feature_sitetitle}
+						{preference name=feature_sitedesc}
+					</div>
 				</fieldset>
 
 				<fieldset>

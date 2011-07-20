@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 require_once 'lib/shipping/shippinglib.php';
 
@@ -33,8 +38,8 @@ class ShippingProvider_Ups implements ShippingProvider
 			$auth = $this->getAuth();
 			$request = $this->getRequest( $from, $to, $packages, $service );
 
-			require_once 'Zend/Http/Client.php';
-			$client = new Zend_Http_Client( 'https://www.ups.com/ups.app/xml/Rate' );
+			$client = TikiLib::lib('tiki')->get_http_client();
+			$client->setUri( 'https://www.ups.com/ups.app/xml/Rate' );
 			$client->setRawData( $auth . $request );
 
 			$response = $client->request( 'POST' );
@@ -54,7 +59,7 @@ class ShippingProvider_Ups implements ShippingProvider
 		return array(
 			'provider' => 'UPS',
 			'service' => 'UPS_CODE_' . $xp->query( 'Service/Code', $node )->item(0)->textContent,
-			'readable' => tra( 'UPS_CODE_' . $xp->query( 'Service/Code', $node )->item(0)->textContent ),
+			'readable' => tr( 'UPS_CODE_%0', $xp->query( 'Service/Code', $node )->item(0)->textContent ),
 			'cost' => $xp->query( 'TotalCharges/MonetaryValue', $node )->item(0)->textContent,
 			'currency' => $xp->query( 'TotalCharges/CurrencyCode', $node )->item(0)->textContent,
 		);
@@ -121,66 +126,10 @@ class ShippingProvider_Ups implements ShippingProvider
 		$type->appendChild( $dom->createElement( 'Code', '00' ) );
 		$package->appendChild( $packageWeight = $dom->createElement( 'PackageWeight' ) );
 		$packageWeight->appendChild( $unit = $dom->createElement( 'UnitOfMeasurement' ) );
-		$unit->appendChild( $code = $dom->createElement( 'Code', 'KGS' ) );
+		$unit->appendChild( $code = $dom->createElement( 'Code', 'LBS' ) );
 		$packageWeight->appendChild( $weight = $dom->createElement( 'Weight' ) );
 
-		$weight->appendChild( $dom->createTextNode( $data['weight'] ) );
+		$weight->appendChild( $dom->createTextNode( $data['weight'] * 2.20462262 ) );
 	}
-
-	/*
-	function getRates( array $from, array $to, array $packages ) {
-		if( ! class_exists( 'SoapClient' ) ) {
-			return array();
-		}
-
-		$wsdl = dirname(__FILE__) . '/ups-wsdl/RateWS.wsdl';
-
-		try {
-			$client = new SoapClient( $wsdl, array('trace' => 1) );
-			$client->__setSoapHeaders( new SoapHeader( 'http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0', 'UPSSecurity', array(
-				'UsernameToken' => array(
-					'Username' => $this->username,
-					'Password' => $this->password,
-				),
-				'ServiceAccessToken' => array(
-					'AccessLicenseNumber' => $this->license,
-				),
-			) ) );
-
-			$rates = $client->ProcessRate( array(
-				'Request' => array(
-					'RequestOption' => 'Rate',
-				),
-				'Shipment' => array(
-					'Shipper' => array(
-						'Address' => array(
-							'CountryCode' => 'CA',
-							'PostalCode' => 'H2J 1L8',
-						),
-					),
-					'ShipTo' => array(
-						'Address' => array(
-							'CountryCode' => 'CA',
-							'PostalCode' => 'J7P 1T3',
-						),
-					),
-					'Package' => array(
-						array( 'PackagingType' => array( 'Code' => '00' ), 'PackageWeight' => array( 'Weight' => 3, 'UnitOfMeasurement' => array( 'Code' => 'KGS' ) ) ),
-					),
-				),
-			) );
-
-			var_dump($client->__getLastRequest());
-			var_dump($client->__getLastResponse());
-
-			var_dump( $rates );
-		} catch( SoapFault $e ) {
-			var_dump($client->__getLastRequest());
-			var_dump($client->__getLastResponse());
-			echo $e;
-			return array();
-		}
-	}
-	*/
 }
 

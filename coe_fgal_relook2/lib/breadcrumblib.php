@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -231,8 +231,27 @@ function _breadcrumb_getTitle($crumbs, $loc) {
 	$len = count($crumbs);
 	
     if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
+		require_once 'lib/smarty_tiki/modifier.sefurl.php';
+		if (! function_exists('smarty_modifier_escape')) {
+			require_once 'lib/smarty_tiki/modifier.escape.php';
+		}
+
         $class = "pagetitle";
-        $ret = '<strong><a class="'.$class.'" title="'.tra("refresh").'" href="javascript:self.location=self.location;">';
+		$metadata = '';
+
+		$current = current_object();
+		$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $current['object'], $current['type'] ) );
+
+		if ($coordinates = TikiLib::lib('geo')->get_coordinates($current['type'], $current['object'])) {
+			$class = ' geolocated primary';
+			$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
+			
+			if (isset($coordinates['zoom'])) {
+				$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";
+			}
+		}
+
+        $ret = '<strong><a class="'.$class.'"' . $metadata . ' title="'.tra("refresh").'" href="' . $escapedHref . '">';
     } else {
         $class = "crumblink";
         $ret = '<a class="'.$class.'" title="';

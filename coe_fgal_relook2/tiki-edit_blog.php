@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,7 +26,7 @@ $tikilib->get_perm_object($blogId, 'blog');
 $smarty->assign('blogId', $blogId);
 $smarty->assign('title', '');
 $smarty->assign('description', '');
-$smarty->assign('public', 'n');
+$smarty->assign('public', 'y');
 $smarty->assign('use_find', 'y');
 $smarty->assign('add_date', 'y');
 $smarty->assign('use_title', 'y');
@@ -128,7 +128,7 @@ $category_needed = false;
 if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['feature_blog_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
 		$category_needed = true;
 		$smarty->assign('category_needed', 'y');
-} elseif (isset($_REQUEST["save"])) {
+} elseif (isset($_REQUEST["save"]) || isset($_REQUEST['preview'])) {
 	check_ticket('edit-blog');
 	if (isset($_REQUEST["public"]) && $_REQUEST["public"] == 'on') {
 		$public = 'y';
@@ -150,21 +150,23 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$add_date = isset($_REQUEST['add_date']) ? 'y' : 'n';
 	$alwaysOwner = isset($_REQUEST['alwaysOwner']) ? 'y' : 'n';
 
-	$bid = $bloglib->replace_blog($_REQUEST["title"],
-	    $_REQUEST["description"], $_REQUEST["creator"], $public,
-	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
-	    $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find,
-	    $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt);
+	if (isset($_REQUEST["save"])) {
+		$bid = $bloglib->replace_blog($_REQUEST["title"],
+			$_REQUEST["description"], $_REQUEST["creator"], $public,
+			$_REQUEST["maxPosts"], $_REQUEST["blogId"],
+			$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find,
+			$allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt);
 
-	$cat_type = 'blog';
-	$cat_objid = $bid;
-	$cat_desc = substr($_REQUEST["description"], 0, 200);
-	$cat_name = $_REQUEST["title"];
-	$cat_href = "tiki-view_blog.php?blogId=" . $cat_objid;
-	include_once ("categorize.php");
+		$cat_type = 'blog';
+		$cat_objid = $bid;
+		$cat_desc = substr($_REQUEST["description"], 0, 200);
+		$cat_name = $_REQUEST["title"];
+		$cat_href = "tiki-view_blog.php?blogId=" . $cat_objid;
+		include_once ("categorize.php");
 
-	header ("location: tiki-list_blogs.php?blogId=$bid");
-	die;
+		header ("location: tiki-list_blogs.php?blogId=$bid");
+		die;
+	}
 }
 
 if (isset($_REQUEST['preview']) || $category_needed) {
@@ -188,9 +190,35 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('heading', $heading);
 	$smarty->assign('creator', $_REQUEST["creator"]);
 
+	$smarty->assign('blog_data', array(
+			'title' => $_REQUEST["title"],
+			'description' => $_REQUEST["description"],
+			'creator' => $_REQUEST["creator"],
+			'public' => $public,
+			'maxPosts' => $_REQUEST["maxPosts"],
+			'blogId' => $_REQUEST["blogId"],
+			'heading' => $heading,
+			'use_title' => $use_title,
+			'use_title_in_post' => $use_title_in_post,
+			'use_description' => $use_description,
+			'use_breadcrumbs' => $use_breadcrumbs,
+			'use_author' => $use_author,
+			'add_date' => $add_date,
+			'use_find' => $use_find,
+			'allow_comments' => $allow_comments,
+			'show_avatar' => $show_avatar,
+			'always_owner' => $alwaysOwner,
+			'post_heading' => $post_heading,
+			'show_related' => $show_related,
+			'related_max' => $related_max,
+			'use_excerpt' => $use_excerpt
+	));
+
 	// display heading preview
-	$_SESSION['tiki_cookie_jar']['show_blog_heading_preview'] = 'y';
+	$smarty->assign('show_blog_heading_preview', 'y');
 	$cookietab = 2;
+} else {
+	$smarty->assign('show_blog_heading_preview', 'n');
 }
 
 

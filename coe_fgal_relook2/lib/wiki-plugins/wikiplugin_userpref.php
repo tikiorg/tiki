@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,7 +10,7 @@ function wikiplugin_userpref_info() {
 		'name' => tra('User Preference'),
 		'documentation' => 'PluginUserpref',
 		'description' => tra('Display contents based on user preference settings'),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
+		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the conditions.'),
 		'prefs' => array('wikiplugin_userpref'),
 		'filter' => 'wikicontent',
 		'extraparams' => true,

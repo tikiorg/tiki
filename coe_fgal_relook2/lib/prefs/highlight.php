@@ -1,18 +1,19 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 
-function prefs_highlight_list() {
+function prefs_highlight_list($partial = false) {
 	return array(
 		'highlight_group' => array(
 			'name' => tra('Highlight group'),
 			'help' => 'Groups',
 			'type' => 'list',
-			'options' => highlight_group_values(),
+			'options' => highlight_group_values($partial),
+			'default' => '0',
 		),
 	);
 }
@@ -23,9 +24,13 @@ function prefs_highlight_list() {
  * @access public
  * @return array: group list with '0' => None as added value
  */
-function highlight_group_values()
+function highlight_group_values($partial)
 {
 	global $prefs, $userlib;
+
+	if ($partial) {
+		return false;
+	}
 
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 

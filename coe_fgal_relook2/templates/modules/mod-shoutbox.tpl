@@ -45,10 +45,10 @@
 			<table>{include file="antibot.tpl"}</table>
 		{/if}
 		{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
-			{if $prefs.socialnetworks_twitter_consumer_key neq '' && $tweet }
+			{if $prefs.socialnetworks_twitter_consumer_key neq '' && $tweet}
 			<div><input type="hidden" name="tweet" value="-1" /><input type="checkbox" name="shout_tweet" value='1' /> {tr}Tweet with twitter{/tr}</div>
             {/if}
-			{if $prefs.socialnetworks_facebook_application_id neq '' && $facebook }
+			{if $prefs.socialnetworks_facebook_application_id neq '' && $facebook}
 			<div><input type="hidden" name="facebook" value="-1" /><input type="checkbox" name="shout_facebook" value='1' /> {tr}Post on my facebook wall{/tr}</div>
             {/if}
         {/if}
@@ -70,7 +70,7 @@
           <b>{strip}{$userlink}{/strip}</b>, {$cdate}:
         {/if}
         {$shout_msgs[ix].message}
-        {if $tiki_p_admin_shoutbox eq 'y' || $user == $shout_msgs[ix].user }
+        {if $tiki_p_admin_shoutbox eq 'y' || $user == $shout_msgs[ix].user}
           {if 0 and $prefs.feature_ajax eq 'y'}
             [<a onclick="removeShout({$shout_msgs[ix].msgId});return false" href="#" class="linkmodule tips" title="|{tr}Delete this shout{/tr}">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule tips" title="|{tr}Edit this shout{/tr}">e</a>]
           {else}

@@ -21,6 +21,8 @@ h3.box-title,
 
 .box {
 	border: none;
+	padding-top: 3px;
+	margin-top: 13px;
 }
 
 #secondary_site_menu li,
@@ -187,9 +189,6 @@ h1, .pagetitle {
 	margin-bottom: 2px;
 	padding-bottom: 2px;
 	background: none;
-}
-
-.separator {
 	color: #b1b299;
 	text-decoration: none;
 	font-size: 1em;
@@ -211,11 +210,6 @@ h1, .pagetitle {
 .option a:hover,
 .separator a:hover {
 	color: #000;
-}
-
-.box {
-	padding-top: 3px;
-	margin-top: 13px;
 }
 
 h3.box-title {
@@ -259,6 +253,13 @@ tr.diffheader {
   border: 1px solid #676767;
   padding-left: 2px;
   padding-right: 5px;
+}
+
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+    color: #000;
 }
 
 tr.odd td,
@@ -326,6 +327,9 @@ li.even:hover {
 	background: #f0ead8;
 }
 
+.statuson {
+	background: #f0c040;
+}
 
 .titleb,
 .articletrailer {

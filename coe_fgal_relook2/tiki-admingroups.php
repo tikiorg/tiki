@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,7 +14,8 @@ $auto_query_args = array('group');
 if (!isset($cookietab)) { $cookietab = '1'; }
 list($trackers, $ag_utracker, $ag_ufield, $ag_gtracker, $ag_gfield, $ag_rufields) = array(array() ,	0, 0, 0, 0, '');
 if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
-	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trklib = TikiLib::lib('trk');
+	$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
 		$ag_gtracker = $_REQUEST["groupstracker"];
@@ -24,7 +25,8 @@ if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
 	}
 }
 if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
-	if (!isset($trackerlist)) $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trklib = TikiLib::lib('trk');
+	if (!isset($trackerlist)) $trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
 		$ag_utracker = $_REQUEST["userstracker"];
@@ -111,7 +113,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
-		$access->check_authenticity(tra('Remove group: ') . htmlspecialchars($_REQUEST['group']));
+		$access->check_authenticity(tra('Remove group: ') . $_REQUEST['group']);
 		$userlib->remove_group($_REQUEST["group"]);
 		$logslib->add_log('admingroups', 'removed group ' . $_REQUEST["group"]);
 		unset($_REQUEST['group']);

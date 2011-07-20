@@ -1,20 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/* Tiki-Wiki plugin SNARF
- * 
- * This plugin replaces itself with the body (HTML) text at the URL given in the url argument.
- *
- */
-
-
-function wikiplugin_snarf_help() {
-    return tra("The SNARF plugin replaces itself with the HTML body of a URL.  Arbitrary regex replacement can be done on this content using regex and regexres, the latter being used as the second argument to preg_replace.").":<br />~np~{SNARF(url=>http://www.lojban.org,regex=>;.*<!-- Content -->(.*)<!-- /Content -->.*;, regexres=>$1)}".tra("This data is put in a CODE caption.")."{SNARF}~/np~";
-}
 
 function wikiplugin_snarf_info() {
 	return array(
@@ -37,12 +26,14 @@ function wikiplugin_snarf_info() {
 				'name' => tra('Regular Expression Pattern'),
 				'description' => tra('PCRE-compliant regular expression pattern to find the parts you want changed'),
 				'default' => '',
+				'filter' => 'striptags'
 			),
 			'regexres' => array(
 				'required' => false,
 				'name' => tra('Regular Expression Replacement'),
 				'description' => tra('PCRE-compliant regular expression replacement syntax showing what the content should be changed to'),
 				'default' => '',
+				'filter' => 'striptags'
 			),
 			'wrap' => array(
 				'required' => false,
@@ -53,13 +44,15 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int',
 			),
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
 				'description' => tra('Syntax highlighting to use for code snippets. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
-				'default' => NULL
+				'default' => NULL,
+				'filter' => 'striptags'
 			),
 			'ln' => array(
 				'required' => false,
@@ -70,7 +63,8 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int'
 			),
 			'wiki' => array(
 				'required' => false,
@@ -81,7 +75,8 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int',
 			),
 			'rtl' => array(
 				'required' => false,
@@ -92,7 +87,8 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int'
 			),
 			'ishtml' => array(
 				'required' => false,
@@ -103,19 +99,22 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int'
 			),
 			'cache' => array(
 				'required' => false,
 				'name' => tra('Cache Url'),
 				'description' => tra('Cache time in minutes. Default is to use site preference, Set to 0 for no cache.'),
 				'default' => '',
+				'filter' => 'int'
 			),
 			'ajax' => array(
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Text to click on to fetch the url via ajax'),
 				'default' => '',
+				'filter' => 'striptags'
 			),
 		),
 	);
@@ -140,9 +139,9 @@ function wikiplugin_snarf($data, $params)
 				continue;
 			}
 			if (!empty($params['href'])) {
-				$params['href'] .= '&';
+				$params['href'] .= '&amp;';
 			}
-			$params['href'] .= $key.'='.$value;
+			$params['href'] .= $key.'='.urlencode($value);
 		}
 		$smarty->assign('snarfParams', $params);
 		return $smarty->fetch('wiki-plugins/wikiplugin_snarf.tpl');

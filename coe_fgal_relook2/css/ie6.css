@@ -14,8 +14,6 @@
 	height: 1%;
 }
 
-#sitetitle {}
-
 #siteloginbar_popup {
 	width: 300px;
 }
@@ -111,9 +109,6 @@ img.flipmodimage {
 	margin-top: 2.4ex;
 }
 
-.wikiactions .icons,
-.wikiactions form {/*display: inline*/}
-
 /* IE6 doesn't do position fixed, override with absolute */
 .plugin-form-float {
 	position: absolute;
@@ -123,11 +118,6 @@ img.flipmodimage {
 #tikihelp {
 	position: absolute;
 }
-
-.bloginfo table {}
-	
-.post .postbody {}
-.postbody table {}
 
 .galtable {
 	width: 97%;

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -115,7 +115,7 @@ $date_max = isset($_REQUEST['date_max']) ? $_REQUEST['date_max'] : $tikilib->now
 $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], true, $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => ($listpages["data"][$i]["wysiwyg"]=='y'?TRUE:FALSE)));
+	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => true));
 	if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}

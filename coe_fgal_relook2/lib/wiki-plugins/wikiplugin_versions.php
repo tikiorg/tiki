@@ -1,31 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/*
- * Versions plugin: Split the text in parts visible only under some conditions:
- * 
- * Syntax:
- * {VERSIONS(nav=>y| n, title=>y| n, default=>)}text{VERSIONS}
- * 
- * Documentation
- * http://doc.tiki.org/PluginVersions
- */
-function wikiplugin_versions_help()
-{
-	return tra("Split the text in parts visible only under some conditions") . ":<br />"
-            . "~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}"
-            . tra("This is the default text") . "<br />"
-            . "---" . tra("(version 3)") . "-----------------------------" . "<br />" 
-            . tra("This is version 3 info") . "<br />"
-            . "---" . tra("(version 2)") . "-----------------------------" . "<br />"
-            . tra("This is version 2 info") . "<br />"
-            . "---" . tra("(version 1)") . "-----------------------------" . "<br />"
-            . tra("This is version 1 info") ."{VERSIONS}~/np~";
-}
 
 function wikiplugin_versions_info()
 {
@@ -114,7 +92,7 @@ if (!isset($_REQUEST['preview'])){
 			$data = substr($data, 0, strpos($data, '---('));
 		}
 		if ($nav == 'n' and $title == 'y') { $data = "<b class='versiontitle'>". $default .'</b>'.$data; }
-		$data = ltrim(substr($data, strpos("\n", $data)));
+		$data = "\n" . ltrim(substr($data, strpos("\n", $data)));
 	} elseif (isset($v[1][$p-1]) and strpos($data, '---('.$v[1][$p-1])) {
 		if ($nav == 'n' and $title == 'y') {
 			$data = substr($data, strpos($data, '---('.$v[1][$p-1]));

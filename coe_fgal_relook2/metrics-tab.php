@@ -71,7 +71,7 @@ else {
 	$date_field = substr($date_field, 0, COLUMN_MAXLEN);
 }
 if (!is_numeric($tab_id)) {
-	print tra("ERROR: Invalid tab_id received. Numeric format expected, got $tab_id.");
+	print tr("ERROR: Invalid tab_id received. Numeric format expected, got %0.", $tab_id);
 	die;
 }
 

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -32,7 +32,7 @@ class TikiImporter_Wiki extends TikiImporter
 	static public function importOptions()
 	{
 		$options  = array(
-	        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => tra('Number of page revisions to import (0 for all revisions)')),
+	        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => tra('Number of page revisions to import (0 for all revisions):')),
 	        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => tra('What to do with page names that already exists in TikiWiki?'),
 	            'options' => array(
 	                array('name' => 'doNotImport', 'label' => tra('Do not import')),
@@ -98,15 +98,15 @@ class TikiImporter_Wiki extends TikiImporter
 
         $countParsedData = count($parsedData);
         
-        $this->saveAndDisplayLog("\n" . tra("$countParsedData pages parsed. Starting to insert those pages into Tiki:") . "\n");
+        $this->saveAndDisplayLog("\n" . tr("%0 pages parsed. Starting to insert those pages into Tiki:", $countParsedData) . "\n");
 
         if (!empty($parsedData)) {
             foreach ($parsedData as $page) {
                 if ($this->insertPage($page)) {
                     $countPages++;
-                    $this->saveAndDisplayLog(tra("Page ${page['name']} sucessfully imported") . "\n");
+                    $this->saveAndDisplayLog(tr('Page %0 sucessfully imported', $page['name']) . "\n");
                 } else {
-                    $this->saveAndDisplayLog(tra("Page ${page['name']} NOT imported (there was already a page with the same name)") . "\n");
+                    $this->saveAndDisplayLog(tr('Page %0 NOT imported (there was already a page with the same name)', $page['name']) . "\n");
                 }
             }
         }
@@ -162,23 +162,23 @@ class TikiImporter_Wiki extends TikiImporter
                 if ($first) {
                     $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
 						$rev['comment'], $rev['user'], $rev['ip'], '', '',
-						isset($rev['is_html']) ? $rev['is_html'] : false);
-                    if (!empty($rev['categories'])) {
-                        global $categlib; include_once('lib/categories/categlib.php');
-                        foreach ($rev['categories'] as $cat) {
-                            $categId = $categlib->get_category_id($cat);
-                            if (empty($categId)) {
-                                $categId = $categlib->add_category(0, $cat, '');
-                            }
-                            $categlib->categorize_page( $page['name'], $categId);
-                        }
-                    }
+						isset($rev['is_html']) ? $rev['is_html'] : true);
                 } else {
                     $tikilib->cache_page_info = null;
                     $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
-                        $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
+                        $rev['ip'], '', $rev['minor'], '', isset($rev['is_html']) ? $rev['is_html'] : true, null, $rev['lastModif']);
                 }
                 $first = false;
+            }
+            if (!empty($rev['categories'])) {
+                global $categlib; include_once('lib/categories/categlib.php');
+                foreach ($rev['categories'] as $cat) {
+                    $categId = $categlib->get_category_id($cat);
+                    if (empty($categId)) {
+                       $categId = $categlib->add_category(0, $cat, '');
+                    }
+                    $categlib->categorize_page( $page['name'], $categId);
+                }
             }
         }
 

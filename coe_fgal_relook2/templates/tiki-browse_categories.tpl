@@ -1,9 +1,9 @@
 {* $Id$ *}
 
-{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name|escape}{else}{tr}Categories{/tr}{/if}{/title}
+{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name|tr_if}{else}{tr}Categories{/tr}{/if}{/title}
 
 {if $parentId and $p_info.description}
-	<div class="description">{$p_info.description}</div>
+	<div class="description">{$p_info.description|escape|nl2br}</div>
 {/if}
 <div class="categbar">
 	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
@@ -36,7 +36,7 @@
 
 	{if $prefs.feature_file_galleries eq 'y'}
 		<span class="button">
-			<a {if $type eq 'file gallery'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=file+gallery&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}File galleries{/tr}</a>
+			<a {if $type eq 'file gallery'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=file+gallery&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}File Galleries{/tr}</a>
 		</span>
 
 		<span class="button">
@@ -77,7 +77,7 @@
 		</span>
 	{/if}
 
-{	if $prefs.feature_directory eq 'y'}
+	{if $prefs.feature_directory eq 'y'}
 		<span class="button">
 			<a {if $type eq 'directory'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=directory&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Directory{/tr}</a>
 		</span>
@@ -176,7 +176,7 @@
 						<tr class="{cycle}">
 							<td class="text">
 								<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
-								<div class="subcomment">{$objects[ix].description}</div>
+								<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>
 							</td>
 							<td class="text">
 								{tr}{$objects[ix].type|replace:"wiki page":"wiki"|replace:"trackeritem":"tracker item"}{/tr}
@@ -201,4 +201,4 @@
 	</tr>
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}

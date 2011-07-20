@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_Indexer
 {
@@ -8,6 +13,8 @@ class Search_Indexer
 
 	private $cacheGlobals = null;
 	private $cacheTypes = array();
+
+	private $contentFilters = array();
 
 	function __construct(Search_Index_Interface $searchIndex)
 	{
@@ -22,6 +29,11 @@ class Search_Indexer
 	function addGlobalSource(Search_GlobalSource_Interface $globalSource)
 	{
 		$this->globalSources[] = $globalSource;
+	}
+
+	function addContentFilter(Zend_Filter_Interface $filter)
+	{
+		$this->contentFilters[] = $filter;
 	}
 
 	/**
@@ -99,7 +111,25 @@ class Search_Indexer
 			'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
 		);
 
-		$this->searchIndex->addDocument(array_merge(array_filter($data), $base));
+		$data = array_merge(array_filter($data), $base);
+		$data = $this->applyFilters($data);
+
+		$this->searchIndex->addDocument($data);
+	}
+
+	private function applyFilters($data)
+	{
+		$keys = array_keys($data);
+
+		foreach ($keys as $key) {
+			$value = $data[$key];
+
+			if (is_callable(array($value, 'filter'))) {
+				$data[$key] = $value->filter($this->contentFilters);
+			}
+		}
+
+		return $data;
 	}
 
 	private function getGlobalContent(array & $data, $globalFields)

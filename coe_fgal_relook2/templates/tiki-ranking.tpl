@@ -28,11 +28,11 @@
 		</tr>
 		{section name=xi loop=$rankings[ix].data}
 			<tr class="{cycle}">
-				<td>{$smarty.section.xi.index_next}</td>
-				<td>
+				<td class="id">{$smarty.section.xi.index_next}</td>
+				<td class="text">
 					<a class="link" href="{$rankings[ix].data[xi].href}">{if $rankings[ix].data[xi].name eq ""}-{else}{$rankings[ix].data[xi].name|escape}{/if}</a>
 				</td>
-				<td>
+				<td class="date">
 					{if $rankings[ix].type eq 'nb'}{$rankings[ix].data[xi].hits}{else}{$rankings[ix].data[xi].hits|tiki_long_datetime}{/if}
 				</td>
 			</tr>

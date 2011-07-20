@@ -43,9 +43,9 @@
 	<a href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">{icon _id='cross' hspace="5" vspace="1"}</a>
 		
 	{if $catree[dx].has_perm eq 'y'}
-		<a title="{tr}Edit permissions for this category{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'urlencode'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
+		<a title="{tr}Edit permissions for this category{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'urlencode'}&amp;permType=category">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
 	{else}
-		<a title="{tr}Assign Permissions{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'url'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
+		<a title="{tr}Assign Permissions{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'url'}&amp;permType=category">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
 	{/if}
 		
 	<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
@@ -111,7 +111,7 @@
 		{/tab}
 	{/if}
 	{tab name="{tr}Objects in category{/tr}"}
-		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</b></h2>
+		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</h2>
 		{if $objects}
 			<table class="findtable">
 				<tr>
@@ -154,7 +154,7 @@
 			{/section}
 		</table>
 
-		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 	
 	{if $parentId !=0}

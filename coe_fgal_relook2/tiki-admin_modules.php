@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -34,7 +34,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
     $smarty->assign('wysiwyg', 'y');
 }
 $access->check_permission(array('tiki_p_admin_modules'));
-$auto_query_args = array();
+$auto_query_args = array('show_hidden_modules');
 
 $access->check_feature( array('feature_jquery_ui') );
 
@@ -62,7 +62,7 @@ if (!empty($_REQUEST['edit_assign'])) {
     check_ticket('admin-modules');
     $info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
     $grps = '';
-    if ($info["groups"]) {
+    if (!empty($info['groups'])) {
         $module_groups = unserialize($info["groups"]);
         foreach($module_groups as $amodule) {
             $grps = $grps . ' $amodule ';
@@ -86,15 +86,20 @@ if (!empty($_REQUEST['edit_assign'])) {
     }
 
 	$modinfo = $modlib->get_module_info( $info['name'] );
-	$modlib->dispatchValues( $info['params'], $modinfo['params'] );
 	if ($modinfo["type"] != "function") {
 		$smarty->assign_by_ref('assign_rows', $info["rows"]);
-		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style modules
+		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style (user) modules
 	} else {
-		if (isset($modinfo['params']['rows']))
+		if (empty($info['params'])) $info['params'] = array();
+		$modlib->dispatchValues( $info['params'], $modinfo['params'] );
+		if (isset($modinfo['params']['rows'])) {
 			$modinfo['params']['rows']['value'] = $info["rows"];
+		}
 	}
 	$smarty->assign('assign_info', $modinfo);
+}
+if (isset($_REQUEST['edit_assign']) || isset($_REQUEST['preview'])) {	// will be 0 for a new assignment
+	$cookietab = 2;
 }
 if (!empty($_REQUEST['unassign'])) {
     check_ticket('admin-modules');
@@ -143,7 +148,7 @@ if (isset($_REQUEST["um_update"])) {
     $smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
     $smarty->assign_by_ref('um_parse', $_REQUEST["um_parse"]);
     $modlib->replace_user_module($_REQUEST["um_name"], $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
-    $logslib->add_log('adminmodules', 'changed user module ' . $_REQUEST["um_name"]);
+    $logslib->add_log('adminmodules', 'changed custom module ' . $_REQUEST["um_name"]);
 }
 if (!isset($_REQUEST["groups"])) {
     $_REQUEST["groups"] = array();
@@ -151,9 +156,11 @@ if (!isset($_REQUEST["groups"])) {
 if (isset($_REQUEST["assign"]) || isset($_REQUEST["preview"])) { // Verify that required parameters are present
 	$missing_params = array();
 	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
-	foreach($modinfo["params"] as $pname => $param) {
-		if ($param["required"] && empty($_REQUEST["assign_params"][$pname]))
-			$missing_params[] = $param["name"];
+	if ($_REQUEST['moduleId'] > 0) {
+		foreach($modinfo["params"] as $pname => $param) {
+			if ($param["required"] && empty($_REQUEST["assign_params"][$pname]))
+				$missing_params[] = $param["name"];
+		}
 	}
 	$smarty->assign('missing_params', $missing_params);
 }
@@ -180,8 +187,8 @@ if (isset($_REQUEST["preview"])) {
 	else
 		$module_rows = 10;
 
-    if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
-        $info = $tikilib->get_user_module($_REQUEST["assign_name"]);
+    if ($modlib->is_user_module($_REQUEST["assign_name"])) {
+        $info = $modlib->get_user_module($_REQUEST["assign_name"]);
         $smarty->assign_by_ref('user_title', $info["title"]);
         if ($info["parse"] == "y") {
             $parse_data = $tikilib->parse_data($info["data"]);
@@ -215,8 +222,10 @@ if (isset($_REQUEST["preview"])) {
         }
     }
     if (!empty($_REQUEST['moduleId'])) {
-        $smarty->assign_by_ref('moduleId', $_REQUEST['moduleId']);
-    }
+        $smarty->assign('moduleId', $_REQUEST['moduleId']);
+    } else {
+		$smarty->assign('moduleId', 0);
+	}
     $smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
     $smarty->assign_by_ref('assign_params', $_REQUEST["assign_params"]);
     $smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);
@@ -270,15 +279,15 @@ if (isset($_REQUEST["assign"])) {
 
 if (isset($_REQUEST["um_remove"])) {
     $_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);
-	$access->check_authenticity(tra('Are you sure you want to delete this User Module?') . '&nbsp;&nbsp;(&quot;' . $_REQUEST["um_remove"] . '&quot;)');
+	$access->check_authenticity(tra('Are you sure you want to delete this Custom Module?') . '&nbsp;&nbsp;(&quot;' . $_REQUEST["um_remove"] . '&quot;)');
     $modlib->remove_user_module($_REQUEST["um_remove"]);
-    $logslib->add_log('adminmodules', 'removed user module ' . $_REQUEST["um_remove"]);
+    $logslib->add_log('adminmodules', 'removed custom module ' . $_REQUEST["um_remove"]);
 	$cookietab = 1;
 }
 if (isset($_REQUEST["um_edit"])) {
     check_ticket('admin-modules');
     $_REQUEST["um_edit"] = urldecode($_REQUEST["um_edit"]);
-    $um_info = $tikilib->get_user_module($_REQUEST["um_edit"]);
+    $um_info = $modlib->get_user_module($_REQUEST["um_edit"]);
     $smarty->assign_by_ref('um_name', $um_info["name"]);
     $smarty->assign_by_ref('um_title', $um_info["title"]);
     $smarty->assign_by_ref('um_data', $um_info["data"]);
@@ -286,15 +295,28 @@ if (isset($_REQUEST["um_edit"])) {
 }
 $user_modules = $modlib->list_user_modules();
 $smarty->assign_by_ref('user_modules', $user_modules["data"]);
+
 $all_modules = $modlib->get_all_modules();
 sort($all_modules);
 $smarty->assign_by_ref('all_modules', $all_modules);
 $all_modules_info = array_combine( 
 	$all_modules, 
 	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
-) ;
-asort($all_modules_info);
-$smarty->assign( 'all_modules_info', $all_modules_info);
+);
+foreach ($all_modules_info as &$mod) {
+	$mod['enabled'] = true;
+	foreach ($mod['prefs'] as $pf) {
+		if ($prefs[$pf] !== 'y') {
+			$mod['enabled'] = false;
+		}
+	}
+}
+uasort($all_modules_info, 'compare_names');
+$smarty->assign_by_ref( 'all_modules_info', $all_modules_info);
+if (!empty($_REQUEST['module_list_show_all'])) {
+	$smarty->assign('module_list_show_all', true);
+}
+
 $orders = array();
 for ($i = 1;$i < 50;$i++) {
     $orders[] = $i;
@@ -355,20 +377,25 @@ $smarty->assign( 'maxRecords', $maxRecords );
 $smarty->assign( 'offset', $offset );
 $smarty->assign( 'maximum', $maximum );
 
-$left = $tikilib->get_assigned_modules('l');
-$right = $tikilib->get_assigned_modules('r');
-$smarty->assign_by_ref('left', $left);
-$smarty->assign_by_ref('right', $right);
-$top = $tikilib->get_assigned_modules('t');
-$bottom = $tikilib->get_assigned_modules('b');
-$smarty->assign_by_ref('top', $top);
-$smarty->assign_by_ref('bottom', $bottom);
-$pagetop = $tikilib->get_assigned_modules('p');
-$pagebottom = $tikilib->get_assigned_modules('q');
-$smarty->assign_by_ref('pagetop', $pagetop);
-$smarty->assign_by_ref('pagebottom', $pagebottom);
-$topbar = $tikilib->get_assigned_modules('o');
-$smarty->assign_by_ref('topbar', $topbar);
+$assigned_modules = $modlib->get_assigned_modules();
+$module_zones = array();
+foreach( $modlib->module_zones as $initial => $zone) {
+	$module_zones[$initial] = array(
+		'id' => $zone,
+		'name' => substr($zone, 0, strpos($zone, '_'))
+	);
+}
+$smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
+$smarty->assign_by_ref( 'module_zones', $module_zones );
+
+$prefs['module_zones_top'] = 'fixed';
+$prefs['module_zones_topbar'] = 'fixed';
+$prefs['module_zones_pagetop'] = 'fixed';
+$prefs['feature_left_column'] = 'fixed';
+$prefs['feature_right_column'] = 'fixed';
+$prefs['module_zones_pagebottom'] = 'fixed';
+$prefs['module_zones_bottom'] = 'fixed';
+
 $headerlib->add_css('.module:hover {
 	cursor: move;
 	background-color: #ffa;

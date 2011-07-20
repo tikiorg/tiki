@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -131,15 +131,6 @@ if ($tiki_p_view_poll_voters == 'y' && !empty($_REQUEST['list']) && isset($_REQU
 	$list_votes = $tikilib->list_votes('poll' . $_REQUEST['pollId'], $_REQUEST['offset'], $prefs['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title', $vote_from_date, $vote_to_date);
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
 	$smarty->assign_by_ref('cant_pages', $list_votes['cant']);
-}
-// Poll comments
-if ($prefs['feature_poll_comments'] == 'y' && isset($_REQUEST['pollId'])) {
-	$comments_per_page = $prefs['poll_comments_per_page'];
-	$thread_sort_mode = $prefs['poll_comments_default_ordering'];
-	$comments_vars = array('pollId');
-	$comments_prefix_var = 'poll:';
-	$comments_object_var = 'pollId';
-	include_once ('comments.php');
 }
 $smarty->assign_by_ref('poll_info_arr', $poll_info_arr);
 $smarty->assign_by_ref('start_year', $start_year);

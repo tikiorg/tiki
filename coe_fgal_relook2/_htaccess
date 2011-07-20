@@ -1,4 +1,4 @@
-# $Id$ [This line is used to check that this htaccess file is up to date. Do not edit this line and leave it as the first line.]
+# $Id: _htaccess 33755 2011-04-01 17:01:37Z sylvieg $ [This line is used to check that this htaccess file is up to date. Do not edit this line and leave it as the first line.]
 # These are suggested Rewrite Rules for use with Tiki.
 # They enhance security and permit short URLs.
 # In your Tiki instance, visit tiki-admin.php?page=sefurl
@@ -114,7 +114,7 @@ RewriteRule ^blog([0-9]+)\-.*$     blog$1
 RewriteRule ^blogpost([0-9]+)\-.*$ blogpost$1
 RewriteRule ^article([0-9]+)(.*)   tiki-read_article.php?articleId=$1$2     [QSA,L]
 RewriteRule ^art([0-9]+)(.*)       tiki-read_article.php?articleId=$1$2     [QSA,L]
-RewriteRule ^cat([0-9]+)(.*)       tiki-browse_categories.php?parentId=$1$2 [QSA,L]
+RewriteRule ^cat([0-9]+)\-?[^&]*(.*)       tiki-browse_categories.php?parentId=$1$2 [QSA,L]
 RewriteRule ^blog([0-9]+)(.*)      tiki-view_blog.php?blogId=$1$2           [QSA,L]
 RewriteRule ^blogpost([0-9]+)(.*)  tiki-view_blog_post.php?postId=$1$2      [QSA,L]
 RewriteRule ^browseimage([0-9]+)(.*) tiki-browse_image.php?imageId=$1$2     [QSA,L]
@@ -163,6 +163,9 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 # increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
 #php_value max_execution_time 90
 
+# increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)
+#php_value upload_max_filesize 10M
+
 # In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
 # The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
 #php_value include_path "." 
@@ -174,6 +177,6 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 #Require valid-user 
 
 <IfModule mod_dir.c>
-	DirectoryIndex tiki-index.php
+	DirectoryIndex index.php
 </IfModule>
 

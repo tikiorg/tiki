@@ -14,6 +14,9 @@
 		{/if}
 	{/if}
 	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}
+	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
+		{button href="tiki-list_invite.php" _text="{tr}Invitation List{/tr}"}
+	{/if}
 </div>
 
 {tabset name='tabs_admingroups'}
@@ -39,6 +42,7 @@
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
 			</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
+			<th>{tr}Homepage{/tr}</th>			
 			<th>{tr}User Choice{/tr}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
@@ -56,8 +60,14 @@
 				<td class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</td>
 				<td class="text">
 					{section name=ix loop=$users[user].included}
-						{$users[user].included[ix]|escape}<br />
+						{if !in_array($users[user].included[ix], $users[user].included_direct)}<i>{/if}
+						{$users[user].included[ix]|escape}
+						{if !in_array($users[user].included[ix], $users[user].included_direct)}</i>{/if}
+						<br />
 					{/section}
+				</td>
+				<td class="text">
+					<a class="link" href="tiki-index.php?page={$users[user].groupHome|escape:"url"}" title="{tr}Group Homepage{/tr}">{tr}{$users[user].groupHome}{/tr}</a>
 				</td>
 				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 				<td class="text">
@@ -134,7 +144,7 @@
 					{if $indirectly_inherited_groups|@count > 0}
 						{*	PROBLEM WITH FOREACH BELOW... *}
 						{foreach key=num item=gr from=$indirectly_inherited_groups}
-							{$gr};
+							{$gr|escape};
 						{/foreach}
 					{else}
 						{tr}None{/tr}						
@@ -152,11 +162,7 @@
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
 							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
 						{/remarksbox}
-						{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-							{jq}
-								$("#groups_home").tiki("autocomplete", "pagename");
-							{/jq}
-						{/if}
+						{autocomplete element='#groups_home' type='pagename'}
 					</td>
 				</tr>
 			{/if}

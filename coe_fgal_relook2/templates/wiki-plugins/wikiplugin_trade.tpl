@@ -13,7 +13,7 @@
 		{if $user}
 			<input type="submit" value="{$wp_trade_action}"/>
 		{else}
-			{remarksbox type="info", title="{tr}Login{/tr}"}
+			{remarksbox type="info" title="{tr}Login{/tr}"}
 				{tr}Please login first{/tr} 
 				{button _script="tiki-login_scr.php" _text="{tr}Click here{/tr}"}
 			{/remarksbox}

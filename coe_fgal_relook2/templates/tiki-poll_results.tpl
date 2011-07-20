@@ -109,28 +109,29 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
 <tr class="{cycle}">
-	<td>{$list_votes[ix].user|userlink}</td>
-	<td>{$list_votes[ix].ip|escape}</td>
-	<td>{$list_votes[ix].title|escape}</td>
-	<td>{$list_votes[ix].time|tiki_short_date}</td>
-	{if $tiki_p_admin eq 'y'}<td>{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
+	<td class="username">{$list_votes[ix].user|userlink}</td>
+	<td class="text">{$list_votes[ix].ip|escape}</td>
+	<td class="text">{$list_votes[ix].title|escape}</td>
+	<td class="date">{$list_votes[ix].time|tiki_short_date}</td>
+	{if $tiki_p_admin eq 'y'}<td class="action">{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
 </tr>
 {sectionelse}
 	{norecords _colspan=4}
 {/section}
 </table>
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/if}
 
 {*---------------------- comments *}
 {if $prefs.feature_poll_comments == 'y' && !empty($pollId)
-  && (($tiki_p_read_comments  == 'y'
-    && $comments_cant != 0)
+  && ($tiki_p_read_comments  == 'y'
   ||  $tiki_p_post_comments  == 'y'
-  ||  $tiki_p_edit_comments  == 'y')
-}
+  ||  $tiki_p_edit_comments  == 'y')}
   <div id="page-bar" class="clearfix">
-  	   {include file='comments_button.tpl'}
+		<span class="button"><a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=poll&amp;objectId={$pollId|escape:'url'}#comment-container">{tr}Comments{/tr}</a></span>
+		{jq}
+			$('#comment-toggle').comment_toggle();
+		{/jq}
   </div>
-  {include file='comments.tpl'}
+  <div id="comment-container"></div>
 {/if}

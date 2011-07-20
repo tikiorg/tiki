@@ -40,7 +40,7 @@
 		{initials_filter_links _initial='tr_initial'}
 	{/if}
 
-	{if $checkbox && $items|@count gt 0 && empty($tpl)}<form method="post" action="{if empty($checkbox.action)}#{else}$checkbox.action{/if}">{/if}
+	{if $checkbox && $items|@count gt 0 && empty($tpl)}<form method="post" action="{if empty($checkbox.action)}#{else}{$checkbox.action}{/if}">{/if}
 
 	{if $trackerlistmapview}
 		{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}
@@ -53,7 +53,8 @@
 {/if}
 
 <table class="normal wikiplugin_trackerlist"
-	{if $displaysheet eq 'true'}title="{$tracker_info.name}"{/if}
+	{if $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
+	{if $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>
 
 		{if $showfieldname ne 'n' and empty($tpl)}
@@ -114,8 +115,8 @@
 				{cycle values="odd,even" print=false}
 				{foreach from=$items[user].field_values item=f}
 					{if in_array($f.fieldId, $popupfields)}
-						{capture name=popupl}{include file='tracker_item_field_value.tpl' field_value=$f item=$items[user]}{/capture}
-						{if !empty($smarty.capture.popupl) }
+						{capture name=popupl}{trackeroutput field=$f item=$items[user] url=$url}{/capture}
+						{if !empty($smarty.capture.popupl)}
 							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td class="{cycle}">{$smarty.capture.popupl}</td></tr>
 						{/if}
 					{/if}
@@ -147,24 +148,24 @@
 
 {* ------------------------------------ *}
 			{if !isset($list_mode)}{assign var=list_mode value="y"}{/if}
-			{section name=ix loop=$items[user].field_values}
-				{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'c' 
-					or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'
-					and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password') 
-					and (empty($items[user].field_values[ix].visibleBy) or in_array($default_group, $items[user].field_values[ix].visibleBy) or $tiki_p_admin_trackers eq 'y')}
-		<td class={if $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'q' or $items[user].field_values[ix].type eq 'b'}"numeric"{else}"auto"{/if}
-					{if $items[user].field_values[ix].type eq 'b'} style="padding-right:5px"{/if}>
-					{if $items[user].field_values[ix].isHidden eq 'c' and $items[user].itemUser ne $user and $tiki_p_admin_trackers ne 'y'}
+			{foreach from=$items[user].field_values item=field}
+				{if $field.isPublic eq 'y' and ($field.isHidden eq 'n' or $field.isHidden eq 'c' 
+					or $field.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $field.type ne 'x' and $field.type ne 'h'
+					and in_array($field.fieldId, $listfields) and ($field.type ne 'p' or $field.options_array[0] ne 'password') 
+					and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+		<td class={if $field.type eq 'n' or $field.type eq 'q' or $field.type eq 'b'}"numeric"{else}"auto"{/if}
+					{if $field.type eq 'b'} style="padding-right:5px"{/if}>
+					{if $field.isHidden eq 'c' and $fieldr and $tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
-						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode
-						tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
-						tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup url=$url
+								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
+								tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
 					{else}
-						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode reloff=$itemoff}
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup url=$url}
 					{/if}
 		</td>
 				{/if}
-			{/section}
+			{/foreach}
 {* ------------------------------------ *}
 
 			{if $showcreated eq 'y'}
@@ -184,7 +185,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 			{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 		<td>
 				{if $tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
-					{self_link delete=`$items[user].itemId`}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
+					{self_link delete=$items[user].itemId}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
 				{/if}
 		</td>
 			{/if}
@@ -192,7 +193,8 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		{assign var=itemoff value=$itemoff+1}
 		{else}{* a pretty tpl *}
 {* ------------------------------------ *}
-   			{include file='tracker_pretty_item.tpl' fields=$items[user].field_values item=$items[user] wiki=$tpl}
+   			{assign var=itemoff value=$itemoff+1}
+			{include file='tracker_pretty_item.tpl' fields=$items[user].field_values item=$items[user] wiki=$tpl}
 			{trackerheader level=-1 title='' inTable=''}
 		{/if}
 	{/section}
@@ -212,8 +214,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 						<td class="numeric" style="padding-right:2px">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
 							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$computedField list_mode=$list_mode}<br />
-							{if !$smarty.foreach.computedField.last}{/if}
+							{trackeroutput field=$computedField item=$items[user] list_mode=$list_mode url=$url}<br/>
 						{/foreach}
 						</td>
 					{else}

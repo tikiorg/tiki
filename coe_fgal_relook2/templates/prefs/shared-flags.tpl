@@ -13,20 +13,21 @@
 	</a>
 {/if}
 
-{if $p.value neq $p.default_val}
+{if $p.modified and $p.available}
 	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none" />
-	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default_val|escape}" />
+	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default|escape}" />
 {/if}
 
 {jq}
 $('.pref-reset')
 	.change( function() {
+		var c = $(this).attr('checked') === "checked";
 		var $el = $(this).closest('.adminoptionbox').find('input:not(:hidden),select,textarea')
-			.not('.system').attr( 'disabled', $(this).attr('checked') ? "disabled" : "" )
-			.css("opacity", $(this).attr('checked') ? .6 : 1 );
+			.not('.system').attr( 'disabled', c )
+			.css("opacity", c ? .6 : 1 );
 		var defval = $("#" + $(this).val() + "_default").val();
 		if ($el.attr("type") == "checkbox") {
-			$el.attr('checked', $(this).attr('checked') ? (defval == "y" ? "checked" : "") : ($el.attr('checked') ? "" : "checked" ));
+			$el.attr('checked', defval === "y" ? c : !c);
 		} else {
 			var temp = $("[name=" + $(this).val() + "]").val();
 			$el.val( defval );
@@ -36,7 +37,7 @@ $('.pref-reset')
 	} )
 	.wrap('<span/>')
 	.closest('span')
-		.append('{{icon _id=arrow_undo alt="{tr}Reset to default{/tr}" href=#}}')
+		.append('{{icon _id=arrow_undo alt="{tr}Reset to default{/tr}" href="#"}}')
 		.find('a')
 			.click( function() {
 				var box = $(this).closest('span').find(':checkbox');

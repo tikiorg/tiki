@@ -20,6 +20,13 @@ body {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
 #main {
 	text-align: left;
 }
@@ -123,10 +130,6 @@ legend {
 	color: #000;
 }
 
-.navbar {
-	line-height: 220%;
-}
-
 .button a,
 .button a:visited,
 button,
@@ -183,14 +186,45 @@ input[type="submit"]:active,
 
 /***** Site Header & Identity *****/
 
+.header {
+	margin: 0;
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -16px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 8px;
+}
+
+#top_modules .box-logo {
+	float: left;
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	margin: 10% 20px;
+	padding-left: 20px;
+}
 
 #sitetitles {
 	font-weight: bold;
-	padding-bottom: 15px;
 }
 
 #sitetitle {
 	font-size: 2.4em;
+}
+
+#sitetitle a,
+#sitetitle a:hover {
+	text-decoration: none;
 }
 
 #sitesubtitle {
@@ -198,15 +232,14 @@ input[type="submit"]:active,
 	margin-top: 10px;
 }
 
-#header .box-login_box {
-	float: right;
-	margin-right: 10px;
+#top_modules .box-login_box {
+	position: absolute;
+	right: 30px;
+	bottom: 0;
 }
 
-#top_modules .siteloginbar_popup {
-	position: absolute;
-	right: 10px;
-	bottom: 0;
+.box-login_box .siteloginbar_poppedup {
+	margin-top: -14px;
 }
 
 #tiki-top {
@@ -232,8 +265,9 @@ input[type="submit"]:active,
 	position: absolute;
 	right: 10px;
 	top: 0;
+	z-index: 1;
 }
-	
+
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
@@ -247,7 +281,7 @@ input[type="submit"]:active,
 }
 
 .cssmenu_vert ul a,
-.cssmenu_horiz li ul li a,
+.cssmenu_horiz ul li a,
 .cssmenu_horiz li:hover ul li a {
 	background: #ded6c6;
 	text-decoration: none;
@@ -280,30 +314,26 @@ input[type="submit"]:active,
 	bottom: 0;
 }*/
 
-#tiki-top .cssmenu_horiz li a {
+#topbar_modules .cssmenu_horiz li a {
 	padding: 3px 1em;
 	font-size: 12px;
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz li.menuSection a {
-	padding-right: 20px !important;
-}
-
-#tiki-top .cssmenu_horiz ul {
+#topbar_modules .cssmenu_horiz ul {
 	margin-top: -14px;
 }
 
-#tiki-top .cssmenu_horiz ul ul {
+#topbar_modules .cssmenu_horiz ul ul {
 	margin-top: -1px;
 }
-#tiki-top .cssmenu_horiz ul li a {
+#topbar_modules .cssmenu_horiz ul li a {
 	color: #222;
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz li.menuSection a {
-	padding-right: 20px;
+.cssmenu_horiz li.menuSection a {
+	padding-right: 20px !important;
 }
 
 /* next 5, left column width */
@@ -423,10 +453,6 @@ h3.box-title,
 	border-bottom: none !important;
 }
 	
-.errors {
-	background: none;
-}
-
 .errors .rbox-title,
 .errors .rbox-data {
 	color: #cd0a0a;
@@ -450,6 +476,7 @@ h3.box-title,
 }
 
 .errors {
+	background: none;
 	color: #cd0a0a;
 }
 
@@ -538,12 +565,13 @@ li.even,
 
 .tabmark a,
 .tabmark a:visited {
-	padding: 0.5em 1em;
+/*	padding: 0.5em 1em;*/
+	display: block;
 	color: #555555;
 	font-weight: normal;
 }
 
-.tabinactive:hover,
+/*.tabinactive:hover,*/
 .tabactive {
 	border-bottom-width: 0;
 	padding-bottom: 1px;
@@ -553,15 +581,19 @@ li.even,
 	color: #212121;
 	outline: none;
 }
-
+/*
 .tabactive a:hover,
 .tabinactive a:hover {
 	background: none;
-}
+}*/
 
 .tabcontent {
 	background: #fff;
 	border-top: none !important;
+}
+
+.statuson {
+	background: #e6e6e6;
 }
 
 /***** Wiki *****/
@@ -638,6 +670,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 }
 
 .navbar {
+	line-height: 220%;
 	margin: 5px 0;
 }
 .postbody-title {

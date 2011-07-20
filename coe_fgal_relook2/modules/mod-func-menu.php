@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_menu_info() {
 	return array(
 		'name' => tra('Menu'),
-		'description' => tra('Horizonatal or vertical menu.'),
+		'description' => tra('Horizontal or vertical menu.'),
 		'params' => array(
 			'id' => array(
 				'name' => tra('Menu Id'),
@@ -39,7 +39,14 @@ function module_menu_info() {
 				'name' => tra('CSS class'),
 				'description' => tra('Class of the menu container'),
 			),
-		)
+			'sectionLevel' => array(
+				'name' => tra('Limit low visibles levels'),
+				'description' => tra('All the submenus beginning at this level will be displayed if the url matches one of the option of this level or above or below.'),
+			),
+			'toLevel' => array(
+				'name' => tra('Limit top visible levels'),
+				'description' => tra('Do not display options higher than this level.'),
+			),		)
 	);
 }
 

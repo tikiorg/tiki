@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -16,6 +16,9 @@ if (!isset($bannerlib)) {
 
 $access->check_feature('feature_banners');
 $access->check_permission('tiki_p_admin_banners');
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$info = $bannerlib->get_banner($_REQUEST["bannerId"]);
@@ -56,6 +59,8 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("Dsat", $info["sat"]);
 	$smarty->assign("Dsun", $info["sun"]);
 	$smarty->assign("use", $info["which"]);
+	$smarty->assign('onlyInURIs', $info['onlyInURIs']);
+	$smarty->assign('exceptInURIs', $info['exceptInURIs']);
 	$smarty->assign("zone", $info["zone"]);
 	if ($info["which"] == 'useFlash') {
 		$movie = unserialize($info['HTMLData']);
@@ -105,6 +110,8 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign('Dsun', 'y');
 	$smarty->assign('bannerId', 0);
 	$smarty->assign('zone', '');
+	$smarty->assign('onlyInURIS', '');
+	$smarty->assign('exceptInURIS', '');
 	$smarty->assign('use', 'useHTML');
 	$smarty->assign('HTMLData', '');
 	$smarty->assign('fixedURLData', '');
@@ -124,6 +131,13 @@ if (isset($_REQUEST["removeZone"])) {
 // Now assign if the set button was pressed
 if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	check_ticket('edit-banner');
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['fromTimeMeridian'])) {
+		$_REQUEST['fromTimeHour'] = date('H', strtotime($_REQUEST['fromTimeHour'] . ':00 ' . $_REQUEST['fromTimeMeridian']));
+	}
+	if (!empty($_REQUEST['toTimeMeridian'])) {
+		$_REQUEST['toTimeHour'] = date('H', strtotime($_REQUEST['toTimeHour'] . ':00 ' . $_REQUEST['toTimeMeridian']));
+	}
 	$fromDate = mktime(0, 0, 0, $_REQUEST["fromDate_Month"], $_REQUEST["fromDate_Day"], $_REQUEST["fromDate_Year"]);
 	$toDate = mktime(0, 0, 0, $_REQUEST["toDate_Month"], $_REQUEST["toDate_Day"], $_REQUEST["toDate_Year"]);
 	$fromTime = ''.$_REQUEST["fromTimeHour"].$_REQUEST["fromTimeMinute"].'';
@@ -145,7 +159,8 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	} else {
 		$smarty->assign('zone', '');
 	}
-
+	$smarty->assign('onlyInURIs', $_REQUEST['onlyInURIs']);
+	$smarty->assign('exceptInURIs', $_REQUEST['exceptInURIs']);
 	$smarty->assign('url', $_REQUEST["url"]);
 
 	if (isset($_REQUEST["use"])) {
@@ -295,7 +310,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
 			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
-			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"], $_REQUEST["maxUserImpressions"]);
+			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"], $_REQUEST["maxUserImpressions"], $_REQUEST['onlyInURIs'], $_REQUEST['exceptInURIs']);
 
 		header("location:tiki-list_banners.php");
 		

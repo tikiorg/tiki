@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {literal}
 <script language="javascript">
 
@@ -88,7 +88,7 @@ var account='';
 		<fieldset>
 			<legend>{tr}Debit{/tr}</legend>
 			<table id="tbl_debit">
-{section name=debit loop=$debitAccount}{assign var='i' value=`$smarty.section.debit.iteration-1`}
+{section name=debit loop=$debitAccount}{assign var='i' value=$smarty.section.debit.iteration-1}
 	 			<tr {if $i==0}id="Row_StartDebit" {/if}>
 	   				<td>
 	   					<label>{tr}Text{/tr}</label>
@@ -118,7 +118,7 @@ var account='';
 		<fieldset>
 			<legend>{tr}Credit{/tr}</legend>
 			<table id="tbl_credit">
-{section name=credit loop=$creditAccount}{assign var='i' value=`$smarty.section.credit.iteration-1`}
+{section name=credit loop=$creditAccount}{assign var='i' value=$smarty.section.credit.iteration-1}
 				<tr {if $i==0}id="Row_StartCredit" {/if}>
 					<td>
 						<label>{tr}Text{/tr}</label>
@@ -150,5 +150,5 @@ var account='';
 	</form>
 </div>
 <div id="journal" style="clear: both;">
-{include file="tiki-accounting_journal.tpl}
+{include file='tiki-accounting_journal.tpl'}
 </div>

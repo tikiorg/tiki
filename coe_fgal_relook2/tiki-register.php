@@ -1,10 +1,18 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'email' => 'email',
+		'name' => 'text',
+		'pass' => 'text',
+		'passAgain' => 'text', 
+	) )
+);
 require_once ('tiki-setup.php');
 require_once ('lib/registration/registrationlib.php');
 if (is_a($registrationlib->merged_prefs, "RegistrationError")) register_error($registrationlib->merged_prefs->msg);
@@ -53,12 +61,15 @@ if (isset($_REQUEST['register'])) {
 
 	$result=$registrationlib->register_new_user($_REQUEST);
 	if (is_a($result,"RegistrationError")) {
-		if ($result->field == 'email' && $result->field == 'email_not_valid') // i'm not sure why email is a special case..
+		if ($result->field == 'email') // i'm not sure why email is a special case..
 			$email_valid='n';
 		else
 			register_error($result->msg);
 	} else if (is_string($result)) {
 		$smarty->assign('msg', $result);
+		$smarty->assign('showmsg', 'y');
+	} elseif (!empty($result['msg'])) {
+		$smarty->assign('msg', $result['msg']);
 		$smarty->assign('showmsg', 'y');
 	}
 
@@ -78,7 +89,7 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		} else {
 			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y'));
 		}
-		$tr = $tikilib->get_tracker($re['usersTrackerId']);
+		$tr = TikiLib::lib('trk')->get_tracker($re['usersTrackerId']);
 		if (!empty($tr['description'])) {
 			$smarty->assign('userTrackerHasDescription', true);
 		}

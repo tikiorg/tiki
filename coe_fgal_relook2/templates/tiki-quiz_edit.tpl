@@ -26,9 +26,9 @@
 						<tr>
 							<td>
 								{if $quiz->online eq 'y'}
-									{html_radios name=quiz.online options=$tpl.online_choices selected=online}
+									{html_radios name="quiz.online" options=$tpl.online_choices selected=online}
 								{else}
-									{html_radios name=quiz.online options=$tpl.online_choices selected=offline}
+									{html_radios name="quiz.online" options=$tpl.online_choices selected=offline}
 								{/if}
 							</td>
 						</tr>
@@ -66,13 +66,15 @@
 						<tr>
       				<td>{tr}Publication Date{/tr}</td>
       				<td>
-								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone} 
+								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$prefs.display_field_order} 
+								{tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false use_24_hours=$use_24hr_clock} HRS&nbsp;{$tpl.siteTimeZone} 
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}Expiration Date{/tr}</td>
 							<td>
-								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
+								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$prefs.display_field_order} 
+								{tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false use_24_hours=$use_24hr_clock} HRS&nbsp;{$tpl.siteTimeZone}
 							</td>
 						</tr>
 						<tr>
@@ -107,7 +109,7 @@
 							<td><input type="checkbox" name=quiz.multiSession id="quiz-multi-session" {if $quiz->multiSession eq 'y'}checked="checked"{/if} /><label for="quiz-multi-session">{tr}Allow students to store partial results and return to quiz.{/tr}</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name=quiz.canRepeat id="repeat" {if $quiz->canRepeat eq 'y'}checked="checked"{/if} /><label for="repeat">{tr}Allow students to retake this quiz {/tr}</label>
+							<td><input type="checkbox" name="quiz.canRepeat" id="repeat"{if $quiz->canRepeat eq 'y'} checked="checked"{/if} /><label for="repeat">{tr}Allow students to retake this quiz {/tr}</label>
 							<select name=quiz.repetitions id="quiz-repeat">{html_options values=$tpl.repetitions selected=$quiz->repetitions output=$tpl.repetitions}</select> {tr}times{/tr}</td>
 						</tr>
 					</table>
@@ -149,7 +151,7 @@
  				<div id="after-test" style="display:none;">
 					<table class="formcolor">
 						<tr>
-							<td><input type=checkbox name=quiz.additionalQuestions {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if} /><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
+							<td><input type='checkbox' name='quiz.additionalQuestions' {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if} /><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
 						</tr>
 					</table>
 					<table class="normal">

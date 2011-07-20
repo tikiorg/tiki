@@ -1,7 +1,7 @@
 {title help="Spreadsheet"}{$title}{/title}
 
 <p>
-  {$description}
+  {$description|escape}
 </p>
 
 {if ($mode eq 'graph')}
@@ -154,10 +154,14 @@ function _renValRad( name )
 	</tr>
 {/section}
 	<tr>
-		<td colspan="2"><input type="submit" value="{tr}Show{/tr}" /></td>
+		<td colspan="2"><input type="submit" value="{tr}Show{/tr}" class="button" /></td>
 	</tr>
 </table>
-{$dataGrid}
+<div class="tiki_sheet">
+	{$dataGrid}
+</div>
+{button _id="edit_button" _text="{tr}Edit Spreadsheet{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" parse="edit" _auto_args="*"  _class="" _onclick="document.location = 'tiki-view_sheets.php?sheetId=$sheetId&parse=edit'; return false;"}
+{button href="tiki-sheets.php" _text="{tr}List Spreadsheets{/tr}"}
 </form>
 <h2>{tr}Wiki plug-in{/tr}</h2>
 <div id="plugin-desc"></div>

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -103,6 +103,12 @@ if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] 
 
 	$stat = $unifiedsearchlib->rebuild();
 	$smarty->assign_by_ref('stat', $stat);
+}
+
+if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
+	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
+
+	$stat = $unifiedsearchlib->getIndex()->optimize();
 }
 
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {

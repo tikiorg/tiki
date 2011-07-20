@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -16,25 +16,28 @@ function module_calendar_new_info() {
 		'name' => tra('Calendar'),
 		'description' => tra('Includes a calendar or a list of calendar events.'),
 		'prefs' => array( 'feature_calendar' ),
+		'documentation' => 'Module calendar_new',
 		'params' => array(
 			'calIds' => array(
 				'name' => tra('Calendars filter'),
-				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by vertical bars ("|"), commas (",") or colons (":").') . " " . tra('Example values:') . '"13", "4,7", "31:49". ' . tra('Not set by default.')
+				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by vertical bars ("|"), commas (",") or colons (":"). Example values: "13", "4,7", "31:49". Not set by default.')
 			),
 			'month_delta' => array(
 				'name' => tra('Displayed month (relative)'),
-				'description' => tra('Distance in month to the month to display. A distance of -1 would display the previous month. Setting this option implies a calendar view type with a month time span.') . ' ' . tra('Example values:') . ' 2, 0, -2, -12.',
+				'description' => tra('Distance in month to the month to display. A distance of -1 would display the previous month. Setting this option implies a calendar view type with a month time span. Example values: 2, 0, -2, -12.'),
 				'filter' => 'int'
 			),
 			'viewlist' => array(
 				'name' => tra('View type'),
-				'description' => tra('Determines how to show events.') . ' ' . tra('Possible values:') . ' ' . 'table, list. ',
+				'description' => tr('Determines how to show events. Possible values: %0, %1.', 'table', 'list'),
 				'filter' => 'word',
-				'default' => 'the url param viewlist, otherwise table',
+				'default' => 'table',
 			),
 			'viewmode' => array(
 				'name' => tra('Calendar view type time span'),
-				'description' => tra('If in calendar (or "table") view type, determines the time span displayed by the calendar.') . ' ' . tra('Possible values:') . ' year, semester, quarter, month, week, day. A user changing this time span in the calendar can change the time span the module displays for him.',
+				'description' => tr('If in calendar (or "table") view type, determines the time span displayed by the calendar. Possible values: %0, %1, %2, %3 ,%4, %5. A user changing this time span in the calendar can change the time span the module displays for him.',
+					'year', 'semester', 'quarter', 'month', 'week', 'day'
+				),
 				'filter' => 'word',
 				'default' => 'month',
 			),
@@ -122,13 +125,12 @@ function module_calendar_new( $mod_reference, $module_params ) {
 	}
 
 	if ( !empty($calIds) ) {
-		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
+		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day', 'events', true);
 		if ($_REQUEST['viewlistmodule'] == 'list') {
 			foreach ($tc_infos['listevents'] as $i=>$e) {
 				$tc_infos['listevents'][$i]['head'] = '';
 				$tc_infos['listevents'][$i]['group_description'] ='';
 			}
-			$tc_infos['listevents'] = array_unique($tc_infos['listevents']);	
 		}
 
 		foreach ( $tc_infos as $tc_key => $tc_val ) {

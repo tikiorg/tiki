@@ -1,4 +1,4 @@
-{title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title|escape}{/title}
+{title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title}{/title}
 
 <div class="navbar">
 	{button href="tiki-admin_polls.php" _text="{tr}List polls{/tr}"}

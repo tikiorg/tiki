@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -82,6 +82,12 @@ class AuthTokens
 			$hits = $this->maxHits;
 		}
 
+		if (isset($arguments['email'])) {
+			$email = $arguments['email'];
+		} else {
+			$email = '';
+		}
+		
 		$this->db->query( 'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email ) VALUES( ?, ?, ?, ?, ?, ?, ? )', array(
 			(int) $timeout,
 			(int) $hits,
@@ -89,7 +95,7 @@ class AuthTokens
 			$entry,
 			json_encode( $parameters ),
 			json_encode( $groups ),
-			$arguments['email']
+			$email
 		) );
 		$max = $this->db->getOne( 'SELECT MAX(tokenId) FROM tiki_auth_tokens' );
 

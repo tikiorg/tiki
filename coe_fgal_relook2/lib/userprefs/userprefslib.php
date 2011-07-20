@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -103,6 +103,16 @@ class UserPrefsLib extends TikiLib
 		} else {
 			return(NULL);
 		}
+	}
+	
+	function get_user_clock_pref($user) {
+		global $prefs; global $tikilib;
+		$userclock = $tikilib->get_user_preference($user, 'display_12hr_clock');
+		$use_24hr_clock = true;
+		if ((isset($userclock) && $userclock == 'y') || (!isset($userclock) && $prefs['users_prefs_display_12hr_clock'] == 'y')) {
+			$use_24hr_clock = false;
+		}
+		return $use_24hr_clock;
 	}
 }
 $userprefslib = new UserPrefsLib;

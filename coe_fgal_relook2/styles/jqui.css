@@ -20,6 +20,12 @@ html > body,
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
 	 	 	 	
 #main {
 	text-align: left
@@ -111,6 +117,7 @@ legend {
 }
 
 .navbar {
+	margin: 5px 0;
 	line-height: 220%;
 }
 
@@ -170,34 +177,49 @@ input[type="submit"]:hover,
 
 
 /***** Site Header & Identity *****/
-#header {
-	min-height: 40px;
+.header {
+	min-height: 100%;
+	height: 100% !important;
 }
 
-#sitetitles {
+.header_fixedwidth {
+	height: auto;
+}
+
+#top_modules {
+	height: 100%;
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+}
+
+#top_modules .box-logo {
+	height: 100%;
+}
+
+#top_modules #sitetitles {
 	font-weight: bold;
+	margin-left: 20px;
+	margin-top: 3%;
+	margin-bottom: 2%;
 }
 
-#sitetitle {
-	margin-top: 20px;
+#top_modules #sitetitle {
 	font-size: 2.4em;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 1.2em;
-	margin-top: 10px;
+	padding-top: 5px;
 }
 
-#top_modules .box-login_box {
-	float: right;
-	margin-right: 20px;
-	margin-top: 40px;
-	color: #f5f5f5;
-}
-
-
-#siteloginbar_popup {
+#top_modules .siteloginbar_popup {
+	position: absolute;
 	bottom: 1px;
+	right: 20px;
 }
 
 #tiki-top {
@@ -209,13 +231,26 @@ input[type="submit"]:hover,
 	font-size: 1.1em;
 }
 
+#topbar_modules {
+	min-height: 34px;
+} 
+
 #topbar_modules .box-search {
 	position: absolute;
-	top: 10px;
+	top: 0px;
 	right: 20px;
 	height: 34px;
 	line-height: 34px;
 }
+
+#top_modules .box-quickadmin {
+	border: 1px solid #999;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+
 	
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -231,8 +266,8 @@ input[type="submit"]:hover,
 	padding: .5em 1em;
 }
 
-.cssmenu_horiz li ul li,
-.cssmenu_vert li ul li {
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {
 	background: #e2e2e2;
 	border: 1px solid #aaa;
 	border-top: 0;
@@ -263,15 +298,15 @@ input[type="submit"]:hover,
 	top: 44px;
 }
 
-#secondary_site_menu .cssmenu_horiz li:hover ul,
-#secondary_site_menu .cssmenu_horiz li.sfHover ul {
+.secondary_site_menu .cssmenu_horiz li:hover ul,
+.secondary_site_menu .cssmenu_horiz li.sfHover ul {
 	top: 22px;
 }
 
 #tiki-top .cssmenu_horiz li:hover ul ul,
 #tiki-top .cssmenu_horiz li.sfHover ul ul,
-#secondary_site_menu .cssmenu_horiz li:hover ul ul,
-#secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
+.secondary_site_menu .cssmenu_horiz li:hover ul ul,
+.secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
 	top: -1px;
 }
 
@@ -324,7 +359,7 @@ a .sf-sub-indicator {
 	top: 7px;
 }
 
-#secondary_site_menu a .sf-sub-indicator {
+.secondary_site_menu a .sf-sub-indicator {
 	top: 8px;
 }
 
@@ -347,7 +382,8 @@ a .sf-sub-indicator {
 
 h3.box-title,
 .cbox-title {
-	padding: .5em .3em .3em 1em; position: relative;
+	padding: .5em .3em .3em 1em;
+	position: relative;
 	border: 1px solid #aaa;
 	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #363636;
@@ -380,14 +416,9 @@ h3.box-title,
 	color: #363636;
 }
 
-.rbox-title {
-	border-bottom: none !important;
-}
-	
-
-
 .errors {
 	background: none;
+	color: #cd0a0a;
 }
 
 .errors .rbox-title,
@@ -408,10 +439,6 @@ h3.box-title,
 	border: 1px solid #666;
 	background-color: #cccccc;
 	color: #363636;
-}
-
-.errors {
-	color: #cd0a0a;
 }
 
 /***** Tables, Tabs *****/
@@ -505,6 +532,10 @@ li.even {
 	outline: none;
 }
 
+.statuson {
+	background: #ccc;
+}
+
 /***** Wiki *****/
 
 /* code plugin */
@@ -572,16 +603,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	border: 1px solid #aaa;
 	padding: 6px;
 }
-/*
-.post .author {}
-	
-.post .author_post_info:first-child {}
-.post .postbody-title .title a.link {}
-*/
 
-.navbar {
-	margin: 5px 0;
-}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
@@ -611,9 +633,11 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 }
 
 .forum_actions {
-	background: #363636;
-	color: #fff;
+	background: #ddd url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 0% 0% repeat-x;
+	border: 1px solid #aaa;
+	color: #333;
 	padding: 3px;
+	margin: 10px 0 0;
 }
 .forum_actions .title {
 	font-weight: bold;
@@ -774,7 +798,8 @@ h3.box-title,
 .post .postbody,
 body.tiki_admin .simplebox,
 a.admbox,
-a.admbox.off {
+a.admbox.off,
+.forum_actions {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -783,6 +808,7 @@ a.admbox.off {
 .rbox-title {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
+	border-bottom: none !important;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
 	-webkit-border-top-left-radius: 4px;

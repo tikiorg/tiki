@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 {
@@ -84,6 +89,14 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 			)),
 			$this->parser->parse('3'),
 		)), $result);
+	}
+
+	function testEquivalenceBetweenPlusAndAnd()
+	{
+		$result = $this->parser->parse('a php + framework');
+		$expect = $this->parser->parse('a php and framework');
+
+		$this->assertEquals($expect, $result);
 	}
 
 	function testSequenceWithOr()

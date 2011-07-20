@@ -1,4 +1,4 @@
-{title help="FAQs"}{tr}{$faq_info.title|escape}{/tr}{/title}
+{title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
 <div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
@@ -62,8 +62,7 @@
 			&& (($tiki_p_read_comments == 'y'
 			&& $comments_cant != 0)
 		|| $tiki_p_post_comments == 'y'
-		|| $tiki_p_edit_comments == 'y')
-	}
+		|| $tiki_p_edit_comments == 'y')}
 		{include file='comments_button.tpl'}
 	{/if}
 </div>
@@ -132,9 +131,12 @@
 {/if}
 
 {if $prefs.feature_faq_comments == 'y'
-&& (($tiki_p_read_comments == 'y'
-&& $comments_cant != 0)
+&& ($tiki_p_read_comments == 'y'
 || $tiki_p_post_comments == 'y'
 || $tiki_p_edit_comments == 'y')}
-	{include file='comments.tpl'}
+<div id="comment-container" data-target="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=faq&amp;objectId={$faqId|escape:'url'}"></div>
+{jq}
+	var id = '#comment-container';
+	$(id).comment_load($(id).data('target'));
+{/jq}
 {/if}

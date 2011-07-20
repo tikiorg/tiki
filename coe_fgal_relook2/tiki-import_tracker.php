@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -27,7 +27,9 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 				isset($_REQUEST['add_items']) ? false : true,
 				isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '',
 				isset($_REQUEST['encoding'])? $_REQUEST['encoding']: 'UTF8',
-				isset($_REQUEST['separator'])? $_REQUEST['separator']:',');
+				isset($_REQUEST['separator'])? $_REQUEST['separator']:',',
+				isset($_REQUEST['updateLastModif']) ? true : false
+				);
 	}
 	fclose($fp);
 	if (!is_numeric($total)) {

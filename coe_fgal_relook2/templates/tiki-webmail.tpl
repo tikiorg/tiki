@@ -3,7 +3,7 @@
 {title help="Webmail" admpage="webmail"}{tr}Webmail{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
-<table width="100%" border=0>
+<table width="100%" border="0">
 	<tr>
 		<td>
 			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}
@@ -267,6 +267,10 @@
 										{/if}
 									</td>
 								</tr>
+							{/if}
+
+							{if $tiki_p_admin_group_webmail eq 'y'}
+								{include file='categorize.tpl'}
 							{/if}
 		
 							<tr>
@@ -591,7 +595,7 @@
 					<tr>
 						<td>{tr}Use HTML mail{/tr}</td>
 						<td colspan="3">
-							<input type="checkbox" name="useHTML"{if $useHTML eq "y"} checked="checked"{/if} />
+							<input type="checkbox" name="useHTML"{if $useHTML eq "y" || $smarty.session.wysiwyg eq "y"} checked="checked"{/if} />
 						</td>
 					</tr>
 				</table>

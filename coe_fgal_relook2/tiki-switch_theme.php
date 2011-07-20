@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,6 +29,14 @@ if (isset($_REQUEST['theme'])) {
 			if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') ) && empty($group_style)) {
 				$tikilib->set_user_preference($user, 'theme-option', $prefs['site_style_option']);
 			}
+			if ($prefs['themegenerator_feature'] === 'y') {
+				$prefs['themegenerator_theme'] = $prefs['site_themegenerator_theme'];
+				$_SESSION['s_prefs']['themegenerator_theme'] = $prefs['site_themegenerator_theme'];
+				if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-themegen') ) && empty($group_style)) {
+					$tikilib->set_user_preference($user, 'theme-themegen', $prefs['site_themegenerator_theme']);
+				}
+				unset($_REQUEST['theme-themegen']);
+			}
 		} else {
 			$prefs['style'] = $new_theme;
 		}
@@ -45,6 +53,14 @@ if (isset($_REQUEST['theme-option'])) {
 			  $prefs['style_option'] = $new_theme_option;
 			  $_SESSION['s_prefs']['style_option'] = $new_theme_option;
 		}
+	}
+}
+
+if ($prefs['themegenerator_feature'] === 'y' && isset($_REQUEST['theme-themegen'])) {
+	if ($prefs['change_theme'] == 'y') {
+		$themegen_theme = $_REQUEST['theme-themegen'];
+		$prefs['themegenerator_theme'] = $themegen_theme;
+		$_SESSION['s_prefs']['themegenerator_theme'] = $themegen_theme;
 	}
 }
 header("location: $orig_url");

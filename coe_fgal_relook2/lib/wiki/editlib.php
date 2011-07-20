@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -33,7 +33,7 @@ class EditLib
 			             "<b>$page</b>.\n<p>\n";
 			$error_msg .= tra("That page is an alias for the following pages").": ";
 			foreach ($aliases as $an_alias) {
-				$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage']).'">'.$an_alias['fromPage'].'</a>, ';
+				$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage'], false).'">'.$an_alias['fromPage'].'</a>, ';
 			}
 			$error_msg .= "\n<p>\n";
 			$error_msg .= tra("If you want to create the page, you must first edit each the pages above, and remove the alias link it may contain. This link should look something like this");
@@ -211,17 +211,22 @@ class EditLib
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
+		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
 		
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
 														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki),
-														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki)));
+														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki),
+														'process_double_brackets' => 'n'));
 		
 		if ($prefs['wysiwyg_htmltowiki'] === 'n' && $fromWiki) {
 			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 		// Workaround Wysiwyg Image Plugin Editor in IE7 erases image on insert http://dev.tiki.org/item3615 
-		$parsed = preg_replace('/(<span class=\"tiki_plugin\".*?plugin=\"img\".*?><\/span>)<\/p>/is','$1<span>&nbsp;</span></p>', $parsed);
+		$parsed2 = preg_replace('/(<span class=\"tiki_plugin\".*?plugin=\"img\".*?><\/span>)<\/p>/is','$1<span>&nbsp;</span></p>', $parsed);
+		if ($parsed2 !== null) {
+			$parsed = $parsed2;
+		}
 		// Fix IE7 wysiwyg editor always adding absolute path
 		$search = '/(<a[^>]+href=\")https?\:\/\/' . preg_quote($_SERVER['HTTP_HOST'].$tikiroot, '/') . '([^>]+_cke_saved_href)/i'; 
 		$parsed = preg_replace($search, '$1$2', $parsed);
@@ -248,7 +253,7 @@ class EditLib
 		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
 		
 		// strip totally empty <p> tags generated in ckeditor 3.4
-		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "!$1\n", $ret);
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "$1\n", $ret);
 		return $ret;
 	}
 	
@@ -269,6 +274,7 @@ class EditLib
 	                       ['first_tr'] = flag: 'is <table> was just before this <tr>'
 	 */
 	function walk_and_parse(&$c, &$src, &$p, $head_url ) {
+		global $prefs;
 		// If no string
 		if(!$c) { return; }
 		
@@ -301,7 +307,7 @@ class EditLib
 								if ($more_spans === 0) {
 									break;
 								}
-							} else if ($c[$j]['data']['name'] == 'br' && $more_spans === 1 && $other_elements === 0) {
+//							} else if ($c[$j]['data']['name'] == 'br' && $more_spans === 1 && $other_elements === 0) {
 							} else if ($c[$j]['data']['name'] == $elem_type && $c[$j]['data']['type'] == 'open') {
 								$more_spans++;
 							} else if ($c[$j]['data']['type'] == 'open' && $c[$j]['data']['name'] != 'br' && $c[$j]['data']['name'] != 'img' && $c[$j]['data']['name'] != 'input') {

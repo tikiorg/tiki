@@ -1,27 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Displays the data using the Tikiwiki odd/even table style
-//
-// Usage:
-//	- The data is given one row per line, with columns
-//   separated by |. (~|~ was used as a separator before 4.0 and is also accepted)
-//	- Head rows separated by >> 
-//  - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
-//
-// Example:
-// {FANCYTABLE( head=" head r1c1 | head r1c2 | head r1c3>>head r2c1 | head r2c2 | head r2c3", headclass=xx, 
-// 				headaligns= , headvaligns= , colwidths= , colaligns= , colvaligns= , sortable= , sortList= )}
-// row 1 column 1 | row 1 column 2 | row 1 column 3
-// row 2 column 1 | row 2 column 2 | row 2 column 3
-// {FANCYTABLE}
-function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by |")."''";
-}
 
 function wikiplugin_fancytable_info() {
 	return array(
@@ -47,7 +29,7 @@ function wikiplugin_fancytable_info() {
 			'headaligns' => array(
 				'required' => false,
 				'name' => tra('Header Horizontal Align'),
-				'description' => tra('Horizonatal alignments for header cells separated by |. Choices: left, right, center, justify.'),
+				'description' => tra('Horizontal alignments for header cells separated by |. Choices: left, right, center, justify.'),
 				'default' => '',
 			),
 			'headvaligns' => array(
@@ -99,64 +81,64 @@ function wikiplugin_fancytable($data, $params) {
 	global $tikilib, $prefs;
 	static $iFancytable = 0;
 	++$iFancytable;
-	//Patterns to keep | within external and internal links from being treated as column separators
-	$patterns[0] = '/(\[[^\](~|~)]+)\~\|\~([^\[(~|~)]+\])/'; //for [ | ]
-	$patterns[1] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | ))
-	$patterns[2] = '/(\[[^\](~|~)]+)\~\|\~([^\[(~|~)]+)\~\|\~([^(~|~)]+\])/'; // for [ | | ]
-	$patterns[3] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | | ))
-	$replace[0] = '$1|$2';
-	$replace[1] = '$1|$2';
-	$replace[2] = '$1|$2|$3';
-	$replace[3] = '$1|$2|$3';
 	extract ($params,EXTR_SKIP);
 	if (empty($sortable)) $sortable = 'n';
-	$tdend = '</td>';
-	$trbeg = "\r\t\t<tr>";
-	$trend = "\r\t\t</tr>";
 
 	// Start the table
 	$wret = '<table class="normal'.($sortable=='y'? ' fancysort':'').'" id="fancytable_'.$iFancytable.'">' . "\r\t";
 	
-	//header rows
-  	if (isset($head)) {
-  		//Although user can set | as column separators, program uses only ~|~
-		//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
-		if (strpos($head, '~|~') == FALSE) {
-			$head = str_replace('|', '~|~', $head);
-			$head = preg_replace($patterns, $replace , $head);	
-		}	
+	//mask tiki tag content during processing and bring back at the end so that any pipes (| or ~|~) 
+	//inside of tags aren't mistaken for cell dividers
+	//pattern covers (( )), [ ], ~np~ ~/np~, ~tc~ ~/tc~, ~hc~ ~/hc~, { = } (plugins with parameters)
+	$pattern = '/(\(\([^\)\)]+\)\)|\[[^\]]+\]|~np~(?:(?!~\/np~).)*~\/np~|~tc~(?:(?!~\/tc~).)*~\/tc~'
+				. '|~hc~(?:(?!~\/hc~).)*~\/hc~|\{[^\=]+[\=]+[^\=\}]+\})/';
+	//process header
+	if (isset($head)) {
 		if (!empty($headclass)) {
 			$tdhdr = "\r\t\t\t<th class=\"$headclass\"";
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}
-		$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
-		$haligns = isset($headaligns) ?  explode('|', $headaligns) : '';
-		$hvaligns = isset($headvaligns)?  explode('|', $headvaligns) : '';
-		$hlines = explode('>>', $head);
-		$rowheads = process_lines($hlines, '~|~', 'h', $tdhdr, '</th>', $colsw, $haligns, $hvaligns);
-		$wret .= '<thead>' . $rowheads . "\r\t" . '</thead>' . "\r\t" . '<tbody>' ;
-	} 
-	
-	//table body rows
-	//Although user can set | as column separators, program uses only ~|~
-	//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
-	if (strpos($data, '~|~') == FALSE) {
-		$data = str_replace('|', '~|~', $data);
-		$data = preg_replace($patterns, $replace , $data);
-	}	
-	$lines = explode("\n", $data);
-	$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
-	$caligns = isset($colaligns) ?  explode('|', $colaligns) : '';
-	$cvaligns = isset($colvaligns)?  explode('|', $colvaligns) : '';
-	$wret .= process_lines($lines, '~|~', 'r', '', '</td>', $colsw, $caligns, $cvaligns);
+		preg_match_all($pattern, $head, $head_matches);
+		//replace all tiki tags in the header with numbered strings while being processed
+		$head = preg_replace_callback($pattern, 'replace_head', $head);
+		//process header rows
+		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', 
+					isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+		//bring the tiki tags back into the header. static veriable needed in case of multiple tables
+		static $hh = 0;
+		foreach ($head_matches[0] as $head_match) {
+			$headrows = str_replace('~~~head' . $hh . '~~~', $head_match, $headrows);
+			$hh++;
+		}
+		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
+	}
+	//process body
+	preg_match_all($pattern, $data, $body_matches);
+	//replace all tiki tags in the body with numbered strings while being processed
+	$data = preg_replace_callback($pattern, 'replace_body', $data);
+	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
+		$type = 's';	//sortable rows - do not assign odd/even class to these since jquery will do it
+	} else {
+		$type = 'r';	//plain rows
+	}
+	//process table body rows
+	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
+				isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
+	static $bb = 0;
+	foreach ($body_matches[0] as $body_match) {
+		$bodyrows = str_replace('~~~body' . $bb . '~~~', $body_match, $bodyrows);
+		$bb++;
+	}
+	$wret .= $bodyrows;
 
-	// End the table
+	//end the table
 	if (isset($head)) {
 		$wret .= "\r\t" . '</tbody>';
 	}
 	$wret .= "\r" . '</table>' . "\r";
-	if ($sortable == 'y' && $prefs['javascript_enabled'] == 'y') {
+	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n') {
 		if ($prefs['feature_jquery_tablesorter'] != 'y') {
 			$wret .= tra('The feature must be activated:').' feature_jquery_tablesorter';
 		}
@@ -171,8 +153,28 @@ function wikiplugin_fancytable($data, $params) {
 	return $wret;
 }
 
-//Header and body rows are processed with this function
- function process_lines($lines, $separator, $type, $cellbeg, $cellend, $widths, $aligns, $valigns) {
+//preg_replace_callback functions to number replacements so they can be identified and undone later
+//for the header
+function replace_head($matches) {
+	static $h = 0;
+	$ret = '~~~head' . $h . '~~~';
+	$h++;
+	return $ret;
+}
+//for the body
+function replace_body($matches) {
+	static $b = 0;
+	$ret = '~~~body' . $b . '~~~';
+	$b++;
+	return $ret;
+}
+//function to process header and body
+function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns) {
+	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
+	$lines = explode($line_sep, $data);
+	$widths = !empty($widths) ?  explode('|', $widths) : '';
+	$aligns = !empty($aligns) ?  explode('|', $aligns) : '';
+	$valigns = !empty($valigns)?  explode('|', $valigns) : '';
 	$trbeg = "\r\t\t<tr>";
 	$trend = "\r\t\t</tr>";
 	$l = 0;
@@ -195,7 +197,11 @@ function wikiplugin_fancytable($data, $params) {
 					$cellbeg = "\r\t\t\t" . '<td class="even"';
 					$row_is_odd = true;
 				}
-			}	
+			//don't set odd/even class if tablesorter is on because jquery will add it
+			//and the classes won't alternate correctly if added here too
+			} elseif ($type == 's') {
+				$cellbeg = "\r\t\t\t" . '<td';
+			}
 			$c = 0;
 			$row = '';
 			$parts = explode($separator, $line);
@@ -229,15 +235,16 @@ function wikiplugin_fancytable($data, $params) {
 						${$colnum}['span'] = $rnum;
 					}
 				}
-				if (isset($widths) || isset($aligns) || isset($valigns)) {
+				$colstyle = '';
+				if (!empty($widths) || !empty($aligns) || !empty($valigns)) {
 					//If there's another rowspan still in force, bump up the column number
 					if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c && ($l > ${$colnum}['line'])) {
 						if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
 					}
 					$colstyle = ' style="';
-					$colstyle .= !empty($widths) ? ' width: ' . $widths[$c] . ';' : '';
-					$colstyle .= !empty($aligns) ? ' text-align: ' . $aligns[$c] . ';' : '';
-					$colstyle .= !empty($valigns) ? ' vertical-align: ' . $valigns[$c] : '';
+					$colstyle .= !empty($widths[$c]) ? ' width: ' . $widths[$c] . ';' : '';
+					$colstyle .= !empty($aligns[$c]) ? ' text-align: ' . $aligns[$c] . ';' : '';
+					$colstyle .= !empty($valigns[$c]) ? ' vertical-align: ' . $valigns[$c] : '';
 					$colstyle .= '"';
 					$c++;   //increment column number
 				}
@@ -248,4 +255,4 @@ function wikiplugin_fancytable($data, $params) {
 		$l++;   //increment row number
 	}
 	return $wret;
-}  
+}

@@ -150,6 +150,13 @@
 			<th>{tr}Categories{/tr}</th>
 		{/if}
 
+		{if $prefs.wiki_list_rating eq 'y'}
+			{assign var='cntcol' value=$cntcol+1}
+			<th>
+				{self_link _sort_arg='sort_mode' _sort_field='rating' _title="{tr}Ratings{/tr}"}{tr}Ratings{/tr}{/self_link}
+			</th>
+		{/if}
+
 		{if $show_actions eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>{tr}Actions{/tr}</th>
@@ -177,9 +184,7 @@
 
 		{if $prefs.wiki_list_name eq 'y'}
 			<td class="text">
-				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">
-					{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
-				</a>
+				{object_link type=wiki id=$listpages[changes].pageName url=$listpages[changes].pageName|sefurl:'wiki':'':$all_langs title=$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}
 				{if $prefs.wiki_list_description eq 'y' && $listpages[changes].description neq ""}
 					<div class="subcomment">
 						{$listpages[changes].description|truncate:$prefs.wiki_list_description_len:"...":true}
@@ -308,6 +313,12 @@
 			</td>
 		{/if}
 
+		{if $prefs.wiki_list_rating eq 'y'}
+			<td class="integer">
+				{$listpages[changes].rating}
+			</td>
+		{/if}
+
 		{if $show_actions eq 'y'}
 			<td class="action">
 				{if $listpages[changes].perms.tiki_p_edit eq 'y'}
@@ -330,7 +341,6 @@
 				{/if}
 			</td>
 		{/if}
-		{cycle print=false}
 		</tr>
 	{sectionelse}
 		{capture assign='find_htmlescaped'}{$find|escape}{/capture}

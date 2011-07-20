@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -86,6 +86,12 @@ class QuantifyLib extends TikiLib
 		", array( $pageId, $pageId ) );
 
 		return floor( $value * 100 ); 
+	}
+
+	function wiki_update($arguments)
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$this->recordChangeSize($arguments['page_id'], $arguments['version'], $arguments['old_data'], $arguments['data']);
 	}
 }
 $quantifylib = new QuantifyLib;

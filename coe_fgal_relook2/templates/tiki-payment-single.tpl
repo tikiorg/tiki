@@ -27,7 +27,7 @@
 					<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}" />
 					<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}" />
 					<input type="hidden" name="invoice" value="{$prefs.payment_invoice_prefix|escape}{$payment_info.paymentRequestId|escape}" />
-					<input type="hidden" name="return" value="{$payment_info.url|escape}" />
+					<input type="hidden" name="return" value="{$payment_info.returnurl|escape}" />
 					{*<input type="hidden" name="rm" value="2" />*}
 					{if $prefs.payment_paypal_ipn eq 'y'}
 						<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}" />
@@ -71,10 +71,10 @@
 						</tr>
 						{foreach key=id item=data from=$userpaycredits}
 						<tr>
-							<td>{$data.display_text|escape}</td>
-							<td>{$data.remain|escape}</td>
-							<td>{$data.price|escape}</td>
-							<td><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
+							<td class="text">{$data.display_text|escape}</td>
+							<td class="text">{$data.remain|escape}</td>
+							<td class="integer">{$data.price|escape}</td>
+							<td class="text"><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
 						</tr>
 						{/foreach}
 						<tr>
@@ -100,13 +100,13 @@
 			{foreach from=$payment_info.payments item=payment}
 				<li>
 					{if $payment.type eq 'user'}
-						{include file=tiki-payment-user.tpl payment=$payment currency=$payment_info.currency}
+						{include file='tiki-payment-user.tpl' payment=$payment currency=$payment_info.currency}
 					{elseif $payment.type eq 'paypal'}
-						{include file=tiki-payment-paypal.tpl payment=$payment}
+						{include file='tiki-payment-paypal.tpl' payment=$payment}
 					{elseif $payment.type eq 'cclite'}
-						{include file=tiki-payment-cclite.tpl payment=$payment}
+						{include file='tiki-payment-cclite.tpl' payment=$payment}
 					{elseif $payment.type eq 'tikicredits'}
-						{include file=tiki-payment-tikicredits.tpl payment=$payment}
+						{include file='tiki-payment-tikicredits.tpl' payment=$payment}
 					{/if}
 				</li>
 			{/foreach}

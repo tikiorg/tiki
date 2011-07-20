@@ -16,35 +16,53 @@
 	margin-left: 0;
 }
 
-.wikiactions .icons,
-.wikiactions form {/*display: inline*/}
-
 .codelisting {
 	padding-bottom: 1.8em;
 }
 
-#editpageform {
+body.fixed_width #editpageform {
 	width: 520px;
 }
 
-#header-top {
+#header {
+	z-index: 5;
+}
+
+#top_modules {
+	position: relative;
+	z-index: 5
+}
+
+#topbar_modules {
+	position: relative;
 	z-index: 4;
 }
 
-#tiki-top {
+#col2,
+#col3 {
+	z-index: 2;
 	position: relative;
-	z-index: 3;
 }
 
-#middle {
+#col1 {
 	z-index: 1;
 	position: relative;
 }
 
 h3.box-title {
-	z-index: 0;
+	z-index: 2;
+	line-height: 1;
 }
 
 .cssmenu_vert ul li {
 	width: inherit;
+}
+
+#wrapper {
+	z-index: auto; /* fixes IE7 'z-index bug' for suckerfish menus etc */
+	position: relative;
+}
+
+#middle {
+	display: table;
 }

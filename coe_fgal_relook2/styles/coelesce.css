@@ -197,15 +197,13 @@ label {
 	color: #2d2d2d;
 	font-size: 1.05em;
 }
-/*
-#header {
-	text-align: left;
-	background: #96bce3;
-}*/
 
 #middle {
 	background: white;
-	margin-bottom: 20px;
+}
+
+#topbar_modules {
+	margin-bottom: 20px;	
 }
 
 #c1c2 #wrapper .marginleft {
@@ -262,23 +260,34 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	text-align: right;
 	font-size: .9em;
 	border-top: 1px solid #517ba5;
-}
-
-.footerbgtrap {
-	border-top: 1px solid #ebf5ff;
 	background: #ccdceb;
 }
 
 /* Site Header & Identity */
-#top_modules {
+.header_container {
 	background: url(coelesce/pagebg.jpg) repeat-x 0 100%;
-	position: relative;
-	min-height: 80px;
-	
 }
 
-#sitelogo {
-	padding: 8px 0 0 0;
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
+#top_modules {
+	position: relative;
+	min-height: 80px;
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .box-logo {
+	float: left;
+	padding: 8px 0;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -286,6 +295,11 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 #sitelogo,
 #sitelogo * {
 	float: left;
+}
+
+#sitelogo,
+#sitetitles {
+	margin-left: 8px;
 }
 
 #top_modules .box-login_box {
@@ -300,30 +314,7 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 #top_modules .box-login_box a:visited {
 	color: #fff;
 }
-/*
-#topbar_modules .box-search {
-	position: absolute;
-	right: 30px;
-	top: 0;
-	text-align: right;
-	color: #fff;
-	padding: 0;
-	padding-right: 0;
-	text-align: left;
-	background: url(coelesce/search_wide4.png) 0 100% no-repeat;
-	color: #517ea7;
-	height: 32px;
-}
 
-#topbar_modules .box-search form {
-	background: url(coelesce/search_wide4.png) 100% 0 no-repeat;
-	padding-right: 40px;
-	padding-top: 6px;
-	margin-left: 15px;
-	margin-right: -15px;
-	height: 32px;
-}
-*/
 #top_modules .box-search,
 #topbar_modules .box-search {
 	position: absolute;
@@ -360,19 +351,21 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	background: none;
 }
 
-#sitesearchbar form {
+.box-search form {
 	padding-top: 8px;
 	margin-right: 8px;
 	font-size: 12px;
 	white-space: nowrap;
 }
 
-#sitesearchbar ul.cssmenu * {
+.box-search ul.cssmenu * {
 	width: 40px;
 }
 
-#sitesearchbar .findtitle input {
+.box-search .findtitle input,
+.box-search input#search_mod_input_1 {
 	border: none;
+	background: none;
 }
 
 select[name="where"] {
@@ -464,6 +457,7 @@ input[name="search"] {
 /* centercolumn */
 #showhide_columns {
 	min-width: 100%;
+	margin: 0 -30px;
 }
 
 a.flip,
@@ -483,7 +477,7 @@ a.flip:hover,
 
 .tellafriend,
 .share {
-	padding: 0 30px;
+	padding: 0;
 }
 
 .actions .share {
@@ -566,8 +560,8 @@ small.date {
 	color: #5a7ea2;
 }
 
-#header .cssmenu_horiz li a:link,
-#header .cssmenu_horiz li a:visited {
+.header .cssmenu_horiz li a:link,
+.header .cssmenu_horiz li a:visited {
 	text-decoration: none;
 	background: inherit;
 	color: #cfe3fb;
@@ -620,6 +614,7 @@ small.date {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
 	padding: 9px 1em 10px 1em;
+	color: #ccdceb;
 }
 
 #tiki-top .cssmenu_horiz li.menuSection a {
@@ -893,12 +888,17 @@ a.forumnameread {
 }
 
 /** Tabs **/
+/* reset what's in layout.css */
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 .tabs {
-margin: 10px 2px -18px 2px; /* override layout */
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
 	background: #5a7ea2;
 	border-bottom: solid 1px #4a6a90 !important;
-	padding: 0 5px !important;
-	z-index: 201;
 }
 
 .tabmark {
@@ -959,6 +959,11 @@ margin: 10px 2px -18px 2px; /* override layout */
 	background: #fff;
 }
 
+.statuson {
+	background: #ecf5ff;
+	border: 1px inset #ecf5ff;	
+}
+
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
 body.tiki_wiki_page #comments {
@@ -1005,9 +1010,6 @@ h1 a:hover {
 
 body.tiki_wiki_page .wikitopline {
 	margin-bottom: 10px;
-}
-
-.wikitopline .content br {
 }
 
 #description,

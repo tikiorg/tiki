@@ -32,7 +32,7 @@
 {/literal}
 {/jq}
 {if isset($new_user_validation) && $new_user_validation eq 'y'}
-	{title}{tr}Your account has been validated.{/tr}<br />{tr}You have to choose a password to use this account.{/tr}{/title}
+	{title}{tr}Your account has been validated.{/tr} {tr}You have to choose a password to use this account.{/tr}{/title}
 {else}
 	{assign var='new_user_validation' value='n'}
 	{title}{tr}Change password enforced{/tr}{/title}

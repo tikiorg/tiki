@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -31,7 +31,8 @@ $fgal_listing_conf = array(
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
 	'backlinks' => array('name' => tra('Backlinks')),
 	'deleteAfter' => array('name'=>tra('Delete After')),
-	'share' => array('name'=>tra('Share with'))
+	'share' => array('name'=>tra('Share with')),
+	'source' => array('name' => tra('Source')),
 );
 
 if (isset($section) && $section == 'admin') {

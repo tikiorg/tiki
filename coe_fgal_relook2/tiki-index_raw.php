@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -102,17 +102,6 @@ if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 }
 
 $pageRenderer->useRaw();
-
-// Comments engine!
-if ($prefs['feature_wiki_comments'] == 'y') {
-	$comments_per_page = $prefs['wiki_comments_per_page'];
-
-	$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-	$comments_vars = array('page');
-	$comments_prefix_var = 'wiki page:';
-	$comments_object_var = 'page';
-	include_once ("comments.php");
-}
 
 include_once ('tiki-section_options.php');
 $pageRenderer->runSetups();

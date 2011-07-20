@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,15 +10,14 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_trackers');
 
-include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 }
-include_once ("lib/filegals/filegallib.php");
-include_once ('lib/notifications/notificationlib.php');
+$filegallib = TikiLib::lib('filegal');
+$notificationlib = TikiLib::lib('notification');
 if ($prefs['feature_groupalert'] == 'y') {
-	include_once ('lib/groupalert/groupalertlib.php');
+	$groupalertlib = TikiLib::lib('groupalert');
 }
 $auto_query_args = array(
 	'offset',
@@ -47,24 +46,29 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 			$_REQUEST['trackerId'] = $utid['usersTrackerId'];
 			$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'], $utid['usersFieldId'], $user);
 			if ($_REQUEST['itemId'] == NULL) {
-				$addit['data'][0]['fieldId'] = $utid['usersFieldId'];
-				$addit['data'][0]['type'] = 'u';
-				$addit['data'][0]['value'] = $user;
-				$i = 1;
+				$addit = array();
+				$addit[] = array(
+					'fieldId' => $utid['usersFieldId'],
+					'type' => 'u',
+					'value' => $user,
+				);
 				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", '1%')) {
 					if ($f != $utid['usersFieldId']) {
-						$addit['data'][1]['fieldId'] = $f;
-						$addit['data'][1]['type'] = 'u';
-						$addit['data'][1]['value'] = $user;
-						++$i;
+						$addit[] = array(
+							'fieldId' => $f,
+							'type' => 'u',
+							'value' => $user,
+						);
 					}
 				}
 				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
-					$addit['data'][$i]['fieldId'] = $f;
-					$addit['data'][$i]['type'] = 'g';
-					$addit['data'][$i]['value'] = $group;
+					$addit[] = array(
+						'fieldId' => $f,
+						'type' => 'g',
+						'value' => $group,
+					);
 				}
-				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'o');
+				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, array('data' => $addit), 'o');
 			}
 			$special = 'user';
 		}
@@ -83,9 +87,11 @@ if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 			$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
 			$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'], $gtid['groupFieldId'], $group);
 			if ($_REQUEST['itemId'] == NULL) {
-				$addit['data'][0]['fieldId'] = $gtid['groupFieldId'];
-				$addit['data'][0]['type'] = 'g';
-				$addit['data'][0]['value'] = $group;
+				$addit = array('data' => array(
+					'fieldId' => $gtid['groupFieldId'],
+					'type' => 'g',
+					'value' => $group,
+				));
 				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'o');
 			}
 			$special = 'group';
@@ -134,7 +140,10 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->display("error.tpl");
 	die;
 }
-$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+
+$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+$xfields = array('data' => $definition->getFields());
+
 if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"]) and !isset($_REQUEST["offset"])) {
 	$smarty->assign('msg', tra("No item indicated"));
 	$smarty->display("error.tpl");
@@ -193,57 +202,7 @@ if (isset($_REQUEST['filterfield'])) {
 		$tryexactvalue = preg_split('/\s*:\s*/', $_REQUEST['exactvalue']);
 	}
 }
-//Management of the field type 'User subscribe' (U)
-//when user clic on (un)subscribe
-if (isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])) {
-	$temp = $userlib->get_user_info($user);
-	$id_user = $temp['userId'];
-	$id_tiki_user = $temp['userId'];
-	$U_query = "SELECT value FROM `tiki_tracker_item_fields` WHERE `itemId`=? AND `fieldId`=?";
-	$U_fieldId = $_REQUEST['U_fieldId'];
-	$U_value = $trklib->getOne($U_query, array(
-		(int)$_REQUEST['itemId'],
-		(int)$U_fieldId
-	));
-	$U_maxsubscriptions = substr($U_value, 0, strpos($U_value, '#'));
-	$pattern = "/(\d+)\[(\d+)\]/";
-	preg_match_all($pattern, $U_value, $match);
-	$users_array2 = array();
-	$user_subscription = FALSE;
-	foreach($match[1] as $i => $id_user) {
-		$temp = $userlib->get_userId_info($id_user);
-		if ($id_user == $id_tiki_user) {
-			$user_subscription = TRUE;
-		} else {
-			array_push($users_array2, array(
-				'id' => $id_user,
-				'login' => $temp['login'],
-				'friends' => $match[2][$i]
-			));
-		}
-	}
-	$match = NULL;
-	if (isset($_REQUEST['user_subscribe'])) {
-		array_push($users_array2, array(
-			'id' => $id_tiki_user,
-			'login' => $user,
-			'friends' => intval($_POST['user_friends'])
-		));
-	}
-	$sql_value = $U_maxsubscriptions . "#";
-	$sql_value2 = "";
-	foreach($users_array2 as $U) {
-		$sql_value2.= $U['id'] . "[" . $U['friends'] . "],";
-	}
-	$sql_value.= $sql_value2 ? substr($sql_value2, 0, strlen($sql_value2) - 1) : "";
-	$xfield = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '', true, array(
-		'fieldId' => array(
-			$U_fieldId
-		)
-	));
-	$xfield['data'][0]['value'] = $sql_value;
-	$trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $xfield);
-}
+
 //*********** handle prev/next links *****************
 if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['move'])) {
@@ -276,7 +235,9 @@ if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['cant'])) {
 		$cant = $_REQUEST['cant'];
 	} else {
-		$tryfiltervalue = array_values($tryfiltervalue);
+		if (is_array($tryfiltervalue)) {
+			$tryfiltervalue = array_values($tryfiltervalue);
+		}
 		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 		if (isset($trymove['data'][0]['itemId'])) {
 			// Autodetect itemId if not specified
@@ -307,8 +268,9 @@ $smarty->assign('item', array(
 ));
 $cat_objid = $_REQUEST['itemId'];
 $cat_type = 'trackeritem';
-$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"])) $tracker_info = array_merge($tracker_info, $t);
+
+$tracker_info = $definition->getInformation();
+
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }
@@ -333,7 +295,7 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
 	if ($perms->create_tracker_items) {
 		$trklib->move_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $_REQUEST['moveto']);
-		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId']));
+		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId'], $smarty));
 		exit;
 	} else {
 		$smarty->assign('errortype', 401);
@@ -348,250 +310,65 @@ $smarty->assign('status_types', $status_types);
 $fields = array();
 $ins_fields = array();
 $usecategs = false;
-$ins_categs = array();
-$textarea_options = false;
-$tabi = 1;
+$cookietab = 1;
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
 $plugins_loaded = false;
-foreach($xfields["data"] as $i => $array) {
-	$fid = $xfields["data"][$i]["fieldId"];
+
+if (empty($tracker_info)) {
+	$item_info = array();
+}
+$fieldFactory = new Tracker_Field_Factory($definition);
+
+foreach($xfields["data"] as $i => $current_field) {
+	$fid = $current_field["fieldId"];
+
 	$ins_id = 'ins_' . $fid;
-	$xfields["data"][$i]["ins_id"] = $ins_id;
 	$filter_id = 'filter_' . $fid;
-	$xfields["data"][$i]["filter_id"] = $filter_id;
-	if (!isset($mainfield) and $xfields["data"][$i]['isMain'] == 'y') {
+
+	$current_field["ins_id"] = $ins_id;
+	$current_field["filter_id"] = $filter_id;
+	$xfields['data'][$i] = $current_field;
+
+	$current_field_ins = null;
+	$current_field_fields = null;
+
+	if (!isset($mainfield) and $current_field['isMain'] == 'y') {
 		$mainfield = $i;
 	}
-	if ($xfields["data"][$i]['type'] == 's' && $xfields["data"][$i]['name'] == 'Rating') {
+	if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
 		if ($tiki_p_tracker_view_ratings == 'y') {
-			$ins_fields["data"][$i] = $xfields["data"][$i];
-			$rateFieldId = $fid;
-			//$fields["data"][$i] = $xfields["data"][$i];
+			$current_field_ins = $current_field;
 
 		}
-	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
-		$ins_fields["data"][$i] = $xfields["data"][$i];
-		$fields["data"][$i] = $xfields["data"][$i];
-		if ($fields["data"][$i]["type"] == 'f') {
-			if (isset($_REQUEST[$ins_id.'Month']) || isset($_REQUEST[$ins_id.'Hour'])) { // new value
-				$ins_fields['data'][$i]['value'] = $trklib->build_date($_REQUEST, $fields['data'][$i], $ins_id);
-			}
-		} elseif ($fields["data"][$i]["type"] == 'e') {
-			include_once ('lib/categories/categlib.php');
-			$k = $ins_fields["data"][$i]['options_array'][0];
-			$fields["data"][$i]["$k"] = $categlib->get_viewable_child_categories($k);
-			$categId = "ins_cat_$fid";
-			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
-				$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
-			}
-			$ins_fields["data"][$i]["value"] = '';
-		} elseif ($fields["data"][$i]["type"] == 'c') {
-			if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
-				$ins_fields["data"][$i]["value"] = 'y';
-			} else {
-				$ins_fields["data"][$i]["value"] = 'n';
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-		} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]['options_array'][0]) and $user) {
-			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				if ($fields["data"][$i]['options_array'][0] == 2) {
-					$ins_fields["data"][$i]["value"] = $user;
-				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
-					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
-						$tracker_info["authorfield"] = $fid;
-					}
-					if (isset($tracker_info['userCanTakeOwnership']) && $tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
-						$ins_fields['data'][$i]['value'] = $user; // the user appropiate the item
-					} elseif ($tiki_p_admin_trackers != 'y') {
-						unset($ins_fields['data'][$i]['fieldId']);
-					}
-				} else {
-					$ins_fields["data"][$i]["value"] = '';
-				}
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-		} elseif ($fields["data"][$i]["type"] == 'I' and isset($fields["data"][$i]['options_array'][0]) and isset($IP)) {
-			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				if ($fields["data"][$i]['options_array'][0] == 2) {
-					$ins_fields["data"][$i]["value"] = $IP;
-				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
-					unset($ins_fields['data'][$i]['fieldId']);
-				} else {
-					$ins_fields["data"][$i]["value"] = '';
-				}
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-		} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]['options_array'][0]) and $group) {
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				if ($fields["data"][$i]['options_array'][0] == 2) {
-					$ins_fields["data"][$i]["value"] = $group;
-				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
-					if (isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
-						$tracker_info["authorgroupfield"] = $fid;
-					}
-					unset($ins_fields["data"][$i]["fieldId"]);
-				} else {
-					$ins_fields["data"][$i]["value"] = '';
-				}
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-		} elseif ($fields["data"][$i]["type"] == 'a') {
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				$ins_fields["data"][$i]["value"] = '';
-			}
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				$ins_fields["data"][$i]["value"] = '';
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-			if ($fields["data"][$i]["options_array"][0]) {
-				$textarea_options = true;
-				if (!$plugins_loaded) {
-					global $wikilib;
-					include_once ('lib/wiki/wikilib.php');
-					$plugins = $wikilib->list_plugins(true, 'area_' . $fields["data"][$i]["fieldId"]);
-					$smarty->assign_by_ref('plugins', $plugins);
-					$plugins_loaded = 'y';
-					$smarty->assign('show_wiki_help', 'y');
-				}
-			}
-			if ($fields["data"][$i]["isMultilingual"] == 'y') {
-				$ins_fields["data"][$i]['isMultilingual'] = 'y';
-				foreach($prefs['available_languages'] as $num => $tmplang) {
-					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$fid])) $_REQUEST["$fid$lang"] = $_REQUEST[$fid];
-					$ins_fields["data"][$i]['lingualvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) $ins_fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
-					$ins_fields['data'][$i]['lingualpvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) $ins_fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
-				}
-			}
-		} elseif ($fields["data"][$i]["type"] == 'y') { // country list
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			}
-			// Get flags here
-			if (isset($ins_fields['data'][$i]['options_array'][1]) && $ins_fields['data'][$i]['options_array'][1] == 1) {
-				$ins_fields["data"][$i]['flags'] = $trklib->get_flags(true, true, false); // Sort in english names order
+	} elseif ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
+		$current_field_ins = $current_field;
+		$current_field_fields = $current_field;
 
-			} else {
-				$ins_fields["data"][$i]['flags'] = $trklib->get_flags(true, true, true); // Sort in translated names order (default)
+		$handler = $fieldFactory->getHandler($current_field, $item_info);
 
-			}
-		} else {
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				$ins_fields["data"][$i]["value"] = '';
-			}
-			if ($ins_fields['data'][$i]['type'] == 'D' && !empty($_REQUEST['other_' . $ins_id])) { // drop down with other
-				$ins_fields['data'][$i]['value'] = $_REQUEST['other_' . $ins_id];
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-			if ($fields["data"][$i]["type"] == 'M') {
-				if ($fields["data"][$i]["options_array"][0] >= '3') {
-					if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
-						$fp = fopen($_FILES["$ins_id"]['tmp_name'], 'rb');
-						$data = '';
-						while (!feof($fp)) {
-							$data.= fread($fp, 8192 * 16);
-						}
-						fclose($fp);
-						$ins_fields["data"][$i]["value"] = $data;
-						$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
-						$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
-						$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
-					}
-				}
-			}
-			if ($fields['data'][$i]['type'] == 'i' || $fields['data'][$i]['type'] == 'A') {
-				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
-					if ($fields['data'][$i]['type'] == 'i' && !empty($prefs['gal_match_regex'])) {
-						if (!preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES["$ins_id"]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					if ($fields['data'][$i]['type'] == 'i' && !empty($prefs['gal_nmatch_regex'])) {
-						if (preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES["$ins_id"]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					$fp = fopen($_FILES["$ins_id"]['tmp_name'], 'rb');
-					$data = '';
-					while (!feof($fp)) {
-						$data.= fread($fp, 8192 * 16);
-					}
-					fclose($fp);
-					if (!empty($_REQUEST['itemId'])) {
-						$ins_fields['data'][$i]['old_value'] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $fields['data'][$i]['fieldId']);
-					}
-					$ins_fields["data"][$i]["value"] = $data;
-					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type']; //mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
-					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
-					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
-				}
-			}
-			if (($fields["data"][$i]["isMultilingual"] == 'y') && $fields["data"][$i]["type"] == 't') {
-				$ins_fields["data"][$i]['isMultilingual'] = 'y';
-				foreach($prefs['available_languages'] as $num => $lang) {
-					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id][$lang]) && isset($_REQUEST[$fid])) $_REQUEST["$fid$lang"] = $_REQUEST[$fid];
-					$ins_fields['data'][$i]['lingualvalue'][$num]['lang'] = $lang;
-					if (isset($_REQUEST[$ins_id][$lang])) $ins_fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$lang];
-					$ins_fields['data'][$i]['lingualpvalue'][$num]['lang'] = $lang;
-					if (isset($_REQUEST[$ins_id][$lang])) $ins_fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$lang]));
-				}
+		if ($handler) {
+			$insert_values = $handler->getFieldData($_REQUEST);
+
+			if ($insert_values) {
+				$current_field_ins = array_merge($current_field_ins, $insert_values);
+				$current_field_fields = array_merge($current_field_fields, $insert_values);
 			}
 		}
-	} elseif ($xfields["data"][$i]["type"] == "u" and isset($xfields["data"][$i]['options_array'][0]) and $user and $xfields["data"][$i]['options_array'][0] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
-		// even if field is hidden need to pick up user for perm
-		$tracker_info["authorfield"] = $fid;
-	} elseif ($xfields["data"][$i]["type"] == "g" and isset($xfields["data"][$i]['options_array'][0]) and $group and $xfields["data"][$i]['options_array'][0] == 1 and isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
-		// even if field hidden need to pick up the group for perm
-		$tracker_info["authorgroupfield"] = $fid;
+	}
+
+	if (! empty($current_field_ins)) {
+		$ins_fields['data'][$i] = $current_field_ins;
+	}
+
+	if (! empty($current_field_fields)) {
+		$fields['data'][$i] = $current_field_fields;
 	}
 }
-if (isset($tracker_info["authorfield"])) {
-	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $tracker_info["authorfield"]);
+
+$authorfield = $definition->getAuthorField();
+if ($authorfield) {
+	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $authorfield);
 	if (($user && $tracker_info['authorindiv'] == $user) or ($user && $tracker_info['userCanTakeOwnership'] == 'y' && empty($tracker_info['authorindiv']))) {
 		$tiki_p_modify_tracker_items = 'y';
 		$smarty->assign("tiki_p_modify_tracker_items", "y");
@@ -622,9 +399,10 @@ if ($tiki_p_admin_trackers == 'y' || ($tiki_p_remove_tracker_items == 'y' && $it
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
+$rateFieldId = $definition->getRateField();
 if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c') || $special) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
-		global $captchalib; include_once 'lib/captcha/captchalib.php';
+		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
 			$smarty->assign('errortype', 'no_redirect_login');
@@ -634,14 +412,7 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
-		$ins_categs = array();
-		$categorized_fields = array();
-		while (list($postVar, $postVal) = each($_REQUEST)) {
-			if (preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-				foreach($postVal as $v) $ins_categs[] = $v;
-				$categorized_fields[] = $m[1];
-			}
-		}
+		$categorized_fields = $definition->getCategorizedFields();
 		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
@@ -655,11 +426,11 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 			if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 			}
-			$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"], $ins_categs);
+			$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"]);
 			if (isset($rateFieldId) && isset($_REQUEST["ins_$rateFieldId"])) {
 				$trklib->replace_rating($_REQUEST["trackerId"], $_REQUEST["itemId"], $rateFieldId, $user, $_REQUEST["ins_$rateFieldId"]);
 			}
-			$mainfield = $ins_fields["data"][$mainfield]["value"];
+			$mainvalue = $ins_fields["data"][$mainfield]["value"];
 			$_REQUEST['show'] = 'view';
 			foreach($fields["data"] as $i => $array) {
 				if (isset($fields["data"][$i])) {
@@ -670,12 +441,15 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 			}
 			$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 			$smarty->assign('item_info', $item_info);
-			$trklib->categorized_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $mainfield, $ins_categs);
 		} else {
 			$error = $ins_fields;
-			$tabi = "2";
-			if ($tracker_info['useAttachments'] == 'y') ++$tabi;
-			if ($tracker_info['useComments'] == 'y') ++$tabi;
+			$cookietab = "2";
+			if ($tracker_info['useAttachments'] == 'y') {
+				++$cookietab;
+			}
+			if ($tracker_info['useComments'] == 'y') {
+				++$cookietab;
+			}
 			$smarty->assign('input_err', '1'); // warning to display
 			// can't go back if there are errors
 			if (isset($_REQUEST['save_return'])) {
@@ -724,7 +498,9 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' an
 }
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
-	if (!isset($info['trackerId'])) $info['trackerId'] = $_REQUEST['trackerId'];
+	if (!isset($info['trackerId'])) {
+		$info['trackerId'] = $_REQUEST['trackerId'];
+	}
 	if ((isset($info['status']) and $info['status'] == 'p' && $tiki_p_view_trackers_pending != 'y') || (isset($info['status']) and $info['status'] == 'c' && $tiki_p_view_trackers_closed != 'y') || ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' && (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) && (!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) && ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser) && !$special)) {
 		$itemGroup = $trklib->get_item_group_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 		if (empty($itemGroup) || !$userlib->user_is_in_group($user, $itemGroup)) {
@@ -737,273 +513,42 @@ if ($_REQUEST["itemId"]) {
 	$last = array();
 	$lst = '';
 	$tracker_item_main_value = '';
-	foreach($xfields["data"] as $i => $array) {
-		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
-			$fields["data"][$i] = $xfields["data"][$i];
-			if ($fields['data'][$i]['type'] == 'f' || $fields['data'][$i]['type'] == 'j') {
-				$dateFields[] = $fields['data'][$i]['fieldId'];
-			}
-			if ($fields["data"][$i]["type"] != 'h') {
-				$fid = $fields["data"][$i]["fieldId"];
-				$ins_fields["data"][$i]["id"] = $fid;
-				if ($fields["data"][$i]["type"] == 'c') {
-					if (!isset($info["$fid"])) $info["$fid"] = 'n';
-				} else {
-					if (!isset($info["$fid"])) $info["$fid"] = '';
-				}
-				if ($fields['data'][$i]["type"] == 'e') {
-					global $categlib;
-					include_once ('lib/categories/categlib.php');
-					$k = $fields["data"][$i]['options_array'][0];
-					if (isset($fields['data'][$i]['options_array'][3]) && $fields['data'][$i]['options_array'][3] == 1) {
-						$all_descends = true;
-					} else {
-						$all_descends = false;
-					}
-					$ins_fields['data'][$i]["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
-					if (!isset($cat)) {
-						$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
-					}
-					if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
-						foreach($ins_fields["data"][$i]["$k"] as $c) {
-							if (in_array($c['categId'], $ins_categs)) {
-								$ins_fields['data'][$i]['cat'][$c['categId']] = 'y';
-								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c['categId']);
-								$cpath = $categlib->get_category_path_string($c['categId']);
-								$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
-								$ins_fields['data'][$i]['categs'][count($ins_fields['data'][$i]['categs']) - 1]['categpath'] = $cpath;
-							}
-						}
-					} else {
-						// displayed when viewing tracker item
-						// amazingly, for tiki-view_tracker_item the fields are all rendered out using totally different smarty
-						// but only for the edit tab - view tab uses tracker_item_field_value.tpl as usual!!?!!!
-					
-						foreach($ins_fields["data"][$i]["$k"] as $c) {
-							if (in_array($c['categId'], $cat)) {
-								$ins_fields['data'][$i]['cat'][$c['categId']] = 'y';
-								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c['categId']);
-								$cpath = $categlib->get_category_path_string($c['categId']);
-								$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
-								$ins_fields['data'][$i]['categs'][count($ins_fields['data'][$i]['categs']) - 1]['categpath'] = $cpath;
-							}
-						}
-						
-					}
-				} elseif ($fields["data"][$i]["type"] == 'l') {
-					if (isset($fields["data"][$i]["options_array"][3])) {
-						$l = explode(':', $fields["data"][$i]["options_array"][1]);
-						$finalFields = explode('|', $fields['data'][$i]['options_array'][3]);
-						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['trackerId'], $_REQUEST['itemId'], array_merge(array(
-							$fields["data"][$i]["options_array"][2]
-						) , $l, array(
-							$fields["data"][$i]["options_array"][3]
-									  )) , $fields["data"][$i]["options_array"][0], $finalFields, ' ', empty($fields['data'][$i]['options_array'][5])?'':$fields['data'][$i]['options_array'][5]);
-						if (count($ins_fields["data"][$i]['links']) == 1) {
-							foreach($ins_fields["data"][$i]['links'] as $linkItemId => $linkValue) {
-								if (is_numeric($ins_fields["data"][$i]['links'][$linkItemId])) { //if later a computed field use this field
-									$info[$fields['data'][$i]['fieldId']] = $linkValue;
-								}
-							}
-						}
-						$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
-						if (!isset($tracker_options_l[$fields["data"][$i]["options_array"][0]])) {
-							$tracker_options_l[$fields["data"][$i]["options_array"][0]] = $trklib->get_tracker_options($fields["data"][$i]["options_array"][0]);
-						}
-						$ins_fields["data"][$i]['tracker_options'] = $tracker_options_l[$fields["data"][$i]["options_array"][0]];
-					}
-				} elseif ($fields["data"][$i]["type"] == 'r') {
-					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $info[$fid]);
-					$ins_fields["data"][$i]["value"] = $info[$fid];
-					if (!isset($fields["data"][$i]["options_array"][3])) {
-						$ins_fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], 'poc', false));
-					} 
-					else {	
-						$ins_fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1]);	
-					}
-					if (isset($fields["data"][$i]["options_array"][3])) {
-						$ins_fields["data"][$i]["displayedvalue"] = $trklib->concat_item_from_fieldslist($fields["data"][$i]["options_array"][0], $trklib->get_item_id($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $info[$fid]) , $fields["data"][$i]["options_array"][3]);
-						$ins_fields["data"][$i]["listdisplay"] = $trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3]);
-					}
-				} elseif ($fields["data"][$i]["type"] == 'u') {
-					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
-						$ins_fields["data"][$i]["defvalue"] = $user;
-					}
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-				} elseif ($fields["data"][$i]["type"] == 'G') {
-					if (!empty($info["$fid"])) {
-						$ins_fields["data"][$i]["value"] = $info["$fid"];
-						$first_comma = strpos($info["$fid"], ',');
-						$second_comma = strpos($info["$fid"], ',', $first_comma + 1);
-						if ($second_comma === false) {
-							$second_comma = strlen($info["$fid"]);
-							$ins_fields["data"][$i]["value"].= ",11";
-						}
-						$ins_fields["data"][$i]["x"] = substr($ins_fields["data"][$i]["value"], 0, $first_comma);
-						$ins_fields["data"][$i]["y"] = substr($ins_fields["data"][$i]["value"], $first_comma + 1, $second_comma - $first_comma - 1);
-						$ins_fields["data"][$i]["z"] = substr($ins_fields["data"][$i]["value"], $second_comma + 1);
-					} else {
-						$ins_fields["data"][$i]["value"] = null;
-						$ins_fields["data"][$i]["x"] = null;
-						$ins_fields["data"][$i]["y"] = null;
-					}
-					if (empty($ins_fields["data"][$i]["z"])) {
-						$ins_fields["data"][$i]["z"] = 1;
-					}
-				} elseif ($fields["data"][$i]["type"] == 'U') {
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-					$temp = $userlib->get_user_info($user);
-					$id_user = $temp['userId'];
-					$id_tiki_user = $temp['userId'];
-					$pattern = "/(\d+)\[(\d+)\]/";
-					preg_match_all($pattern, $ins_fields["data"][$i]["value"], $match);
-					$users_array = array();
-					$ins_fields["data"][$i]["user_subscription"] = FALSE;
-					$U_nb_users = 0;
-					$ins_fields["data"][$i]["user_nb_friends"] = 0;
-					foreach($match[1] as $j => $id_user) {
-						$temp = $userlib->get_userId_info($id_user);
-						array_push($users_array, array(
-							'id' => $id_user,
-							'login' => $temp['login'],
-							'friends' => $match[2][$j]
-						));
-						$U_nb_users+= $match[2][$j] + 1;
-						if ($id_user == $id_tiki_user) {
-							$ins_fields["data"][$i]["user_subscription"] = TRUE;
-							$ins_fields["data"][$i]["user_nb_friends"] = $match[2][$j];
-						}
-					}
-					$ins_fields["data"][$i]["users_array"] = array();
-					$ins_fields["data"][$i]["users_array"] = $users_array;
-					$U_maxsubscriptions = substr($info["$fid"], 0, strpos($info["$fid"], '#'));
-					$ins_fields["data"][$i]["maxsubscriptions"] = $U_maxsubscriptions;
-					$U_liste = NULL;
-					$U_othersubscriptions = $ins_fields["data"][$i]["user_nb_friends"];
-					if (!$ins_fields["data"][$i]["user_subscription"]) {
-						$U_othersubscriptions--;
-					}
-					if ($U_maxsubscriptions) {
-						for ($j = 0; $j <= $U_maxsubscriptions - $U_nb_users + $U_othersubscriptions; $j++) {
-							$U_liste[$j] = $j;
-						}
-					}
-					$smarty->assign("U_liste", $U_liste);
-				} elseif ($fields["data"][$i]["type"] == 'C') {
-					$calc = preg_replace('/#([0-9]+)/', '$info[\1]', $fields["data"][$i]['options_array'][0]);
-					eval('$computed = ' . $calc . ';');
-					$ins_fields["data"][$i]["value"] = $computed;
-					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
-					$infoComputed = $trklib->get_computed_info($fields["data"][$i]['options_array'][0], $_REQUEST['trackerId'], $fields['data']);
-					if (!empty($infoComputed)) {
-						$ins_fields['data'][$i] = array_merge($infoComputed, $ins_fields['data'][$i]);
-					}
-				} elseif ($fields["data"][$i]["type"] == 'g') {
-					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
-						$ins_fields["data"][$i]["defvalue"] = $group;
-					}
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-				} elseif ($fields["data"][$i]["type"] == 'a' || $fields["data"][$i]["type"] == 't') {
-					if ($fields["data"][$i]["isMultilingual"] == 'y') {
-						global $multilinguallib;
-						include_once ('lib/multilingual/multilinguallib.php');
-						$multi_languages = $prefs['available_languages'];
-						$smarty->assign('multi_languages', $multi_languages);
-						$ins_fields["data"][$i]['isMultilingual'] = 'y';
-						$compteur = 0;
-						foreach($multi_languages as $num => $lang) {
-							//Case convert normal -> multilingual
-							if (!isset($info["$fid$lang"]) && isset($info["$fid"])) $info["$fid$lang"] = $info["$fid"];
-							$ins_fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
-							$ins_fields["data"][$i]["lingualvalue"][$num]["value"] = $info["$fid$lang"];
-							$ins_fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
-							$ins_fields["data"][$i]["lingualpvalue"][$num]["value"] = $tikilib->parse_data(htmlspecialchars($info["$fid$lang"]));
-						}
-						//For display only
-						$ins_fields["data"][$i]["value"] = $info[$fid . $prefs['language']];
-						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info[$fid . $prefs['language']]));
-					} else {
-						$ins_fields["data"][$i]["value"] = $info["$fid"];
-						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
-					}
-				} elseif ($fields['data'][$i]['type'] == 'usergroups' && !empty($itemUser)) {
-					$ins_fields['data'][$i]['value'] = $tikilib->get_user_groups($itemUser);
-				} elseif ($fields['data'][$i]['type'] == 'p' && !empty($itemUser)) {
-					if ($fields['data'][$i]['options_array'][0] == 'email') {
-						$ins_fields['data'][$i]['value'] = $userlib->get_user_email($itemUser);
-					} else {
-						$ins_fields['data'][$i]['value'] = $userlib->get_user_preference($itemUser, $fields['data'][$i]['options_array'][0]);
-					}
-				} elseif ($fields['data'][$i]['type'] == 'N' && !empty($itemUser)) {
-					$ins_fields['data'][$i]['value'] = $trklib->in_group_value($fields['data'][$i], $itemUser);
-				} elseif ($fields['data'][$i]['type'] == 'F') {
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-					global $freetaglib;
-					if (!is_object($freetaglib)) {
-						include_once('lib/freetag/freetaglib.php');
-					}
-					$ins_fields['data'][$i]["freetags"] = $freetaglib->_parse_tag($info["$fid"]);
-					$ins_fields['data'][$i]["tag_suggestion"] = $freetaglib->get_tag_suggestion($ins_fields['data'][$i]["freetags"],$prefs['freetags_browse_amount_tags_suggestion']);
-				} else {
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-				}
-				if ($fields['data'][$i]['type'] == 'M') {
-					global $filegallib, $prefs;
-					if ($prefs['URLAppend'] == '') {
-						list($val1, $val2) = explode('=', $ins_fields["data"][$i]["value"]);
-					} else {
-						$val2 = $ins_fields["data"][$i]["value"];
-					}
-					$res = $filegallib->get_file_info($val2);
-					if ($res["filetype"] == "video/x-flv") {
-						$ModeVideo = 'y';
-					} else {
-						$ModeVideo = 'n';
-					};
-					$smarty->assign('ModeVideo', $ModeVideo);
-				}
-				if ($fields['data'][$i]['type'] == 'i' && !empty($ins_fields["data"][$i]['options_array'][2]) && !empty($ins_fields['data'][$i]['value'])) {
-					global $imagegallib;
-					include_once ('lib/imagegals/imagegallib.php');
-					if ($imagegallib->readimagefromfile($ins_fields['data'][$i]['value'])) {
-						$imagegallib->getimageinfo();
-						if (!isset($ins_fields["data"][$i]['options_array'][3])) $ins_fields["data"][$i]['options_array'][3] = 0;
-						$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $ins_fields["data"][$i]['options_array'][2], $ins_fields["data"][$i]['options_array'][3]);
-						$ins_fields['data'][$i]['options_array'][2] = $t * $imagegallib->xsize;
-						$ins_fields['data'][$i]['options_array'][3] = $t * $imagegallib->ysize;
-					}
-				}
-				if (isset($ins_fields["data"][$i]["value"])) {
-					$last[$fid] = $ins_fields["data"][$i]["value"];
+
+	$fieldFactory = new Tracker_Field_Factory($definition);
+
+	foreach($xfields["data"] as $i => $current_field) {
+		$current_field_fields = null;
+		$current_field_ins = array();
+
+		$handler = $fieldFactory->getHandler($current_field, $info);
+
+		if ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
+			$current_field_fields = $current_field;
+
+			if ($handler) {
+				$insert_values = $handler->getFieldData();
+
+				if ($insert_values) {
+					$current_field_ins = array_merge($current_field_ins, $insert_values);
+					$current_field_fields = array_merge($current_field_fields, $insert_values);
 				}
 			}
-			if ($fields['data'][$i]['type'] == 'A') {
-				if (!empty($ins_fields['data'][$i]['value'])) {
-					$ins_fields['data'][$i]['info'] = $trklib->get_item_attachment($ins_fields['data'][$i]['value']);
-				}
-			} elseif (($fields['data'][$i]['type'] == 's' && $fields['data'][$i]['name'] == 'Rating') || $fields['data'][$i]['type'] == '*') {
-				$fields['data'][$i]['value'] = $info[$fid];
-				if ($fields['data'][$i]['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($_REQUEST['itemId']) && isset($_REQUEST['ins_'.$fields['data'][$i]['fieldId']])) {
-					$trklib->replace_star($_REQUEST['ins_'.$fields['data'][$i]['fieldId']], $_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i], $user, true);
-				} else {
-					$trklib->update_star_field($_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i]);
-					if (!empty($ins_fields['data'][$i]['numVotes'])) {
-						$smarty->assign('itemHasVotes', 'y');
-					}
-				}
-			}
-			if ($fields['data'][$i]['isMain'] == 'y') {
-				$tracker_item_main_value .= (empty($tracker_item_main_value) ? '' : ' ') . $ins_fields['data'][$i]['value']; 
-			}
+
+		}
+
+		if ($current_field_fields) {
+			$fields["data"][$i] = $current_field_fields;
+		}
+
+		if (! empty($current_field_ins)) {
+			$ins_fields['data'][$i] = array_merge($ins_fields['data'][$i], $current_field_ins);
 		}
 	}
-	if (!empty($tracker_item_main_value)) {
-		$smarty->assign('tracker_item_main_value', $tracker_item_main_value);
-	}
+	$smarty->assign('tracker_item_main_value', $trklib->get_isMain_value($_REQUEST['trackerId'], $_REQUEST['itemId']));
 }
 //restore types values if there is an error
 if (isset($error)) {
-	foreach($ins_fields["data"] as $i => $array) {
+	foreach($ins_fields["data"] as $i => $current_field) {
 		if (isset($error["data"][$i]["value"])) {
 			$ins_fields["data"][$i]["value"] = $error["data"][$i]["value"];
 		}
@@ -1014,12 +559,6 @@ $id_fields = array();
 foreach($xfields['data'] as $sid => $onefield) {
 	$id_fields[$xfields['data'][$sid]['fieldId']] = $sid;
 }
-foreach($ins_fields['data'] as $sid => $onefield) {
-	if ($ins_fields['data'][$sid]['type'] == 'w') {
-		$trklib->prepare_dynamic_items_list($ins_fields['data'][$sid], $ins_fields['data']);
-	}
-}
-
 // Pull realname for user.
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
 $info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');
@@ -1030,10 +569,6 @@ $smarty->assign('tracker_info', $tracker_info);
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
-$users = $userlib->list_all_users();
-$smarty->assign_by_ref('users', $users);
-$groups = $userlib->list_all_groups();
-$smarty->assign_by_ref('groups', $groups);
 if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 	if ($user and isset($_REQUEST['watch'])) {
 		check_ticket('view-trackers');
@@ -1066,52 +601,16 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		}
 	}
 }
-if ($tracker_info["useComments"] == 'y') {
-	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
-		$access->check_authenticity();
-		$trklib->remove_item_comment($_REQUEST["remove_comment"]);
+if (isset($_REQUEST["removeattach"])) {
+	check_ticket('view-trackers-items');
+	$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
+	if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
+		$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
+		$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 	}
-	if (isset($_REQUEST["commentId"])) {
-		$comment_info = $trklib->get_item_comment($_REQUEST["commentId"]);
-		$smarty->assign('comment_title', $comment_info["title"]);
-		$smarty->assign('comment_data', $comment_info["data"]);
-		$tabi = 2;
-	} else {
-		$_REQUEST["commentId"] = 0;
-		$smarty->assign('comment_title', '');
-		$smarty->assign('comment_data', '');
-	}
-	$smarty->assign('commentId', $_REQUEST["commentId"]);
-	if ($_REQUEST["commentId"] && $tiki_p_admin_trackers != 'y') {
-		$_REQUEST["commentId"] = 0;
-	}
-	if ($tiki_p_comment_tracker_items == 'y') {
-		if (isset($_REQUEST["save_comment"])) {
-			check_ticket('view-trackers-items');
-			if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-				$smarty->assign('msg', $captchalib->getErrors());
-				$smarty->assign('errortype', 'no_redirect_login');
-				$smarty->display("error.tpl");
-				die;
-			}
-			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user, $tracker_info);
-			$smarty->assign('comment_title', '');
-			$smarty->assign('comment_data', '');
-			$smarty->assign('commentId', 0);
-		}
-	}
-	$comments = $trklib->list_item_comments($_REQUEST["itemId"], 0, -1, 'posted_desc', '');
-	$smarty->assign_by_ref('comments', $comments["data"]);
-	$smarty->assign_by_ref('commentCount', $comments["cant"]);
 }
 if ($tracker_info["useAttachments"] == 'y') {
 	if (isset($_REQUEST["removeattach"])) {
-		check_ticket('view-trackers-items');
-		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
-		if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
-			$access->check_authenticity();
-			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
-		}
 		$_REQUEST["show"] = "att";
 	}
 	if (isset($_REQUEST["editattach"])) {
@@ -1139,11 +638,11 @@ if ($tracker_info["useAttachments"] == 'y') {
 				}
 			}
 			while (!feof($fp)) {
-				if ($prefs['t_use_db'] == 'y') {
-					$data.= fread($fp, 8192 * 16);
-				} else {
+				if ($prefs['t_use_db'] == 'n') {
 					$data = fread($fp, 8192 * 16);
 					fwrite($fw, $data);
+				} else {
+					$data.= fread($fp, 8192 * 16);
 				}
 			}
 			fclose($fp);
@@ -1176,26 +675,24 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('attextra', $attextra);
 }
 if (isset($_REQUEST['moveto']) && empty($_REQUEST['moveto'])) {
-	$trackers = $tikilib->list_trackers();
+	$trackers = $trklib->list_trackers();
 	$smarty->assign_by_ref('trackers', $trackers['data']);
 	$_REQUEST['show'] = 'mod';
 }
 if (isset($_REQUEST['show'])) {
 	if ($_REQUEST['show'] == 'view') {
-		$tabi = 1;
+		$cookietab = 1;
 	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'com') {
-		$tabi = 2;
+		$cookietab = 2;
 	} elseif ($_REQUEST['show'] == "mod") {
-		$tabi = 2;
-		if ($tracker_info["useAttachments"] == 'y') $tabi++;
-		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi++;
+		$cookietab = 2;
+		if ($tracker_info["useAttachments"] == 'y') $cookietab++;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $cookietab++;
 	} elseif ($_REQUEST['show'] == "att") {
-		$tabi = 2;
-		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi = 3;
+		$cookietab = 2;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $cookietab = 3;
 	}
 }
-setcookie("tab", "$tabi");
-$smarty->assign('cookietab', $tabi);
 if (isset($_REQUEST['from'])) {
 	$from = $_REQUEST['from'];
 } else {
@@ -1206,13 +703,14 @@ if (isset($_REQUEST['status'])) $smarty->assign_by_ref('status', $_REQUEST['stat
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');
 ask_ticket('view-trackers-items');
-global $logslib; include_once('lib/logs/logslib.php');
-$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+if ($prefs['feature_actionlog'] == 'y') {
+	$logslib = TikiLib::lib('logs');
+	$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+}
 
 // Generate validation js
 if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
-	global $validatorslib;
-	include_once('lib/validatorslib.php');
+	$validatorslib = TikiLib::lib('validators');
 	$validationjs = $validatorslib->generateTrackerValidateJS( $fields['data'] );
 	$smarty->assign('validationjs', $validationjs);
 }

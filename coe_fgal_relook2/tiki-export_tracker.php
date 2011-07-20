@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -223,6 +223,7 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 	$smarty->assign_by_ref('items', $items["data"]);
 
 	$data = $smarty->fetch('tiki-export_tracker_item.tpl');
+	$data = preg_replace("/^\n/", "", $data);
 	if (empty($_REQUEST['encoding']) || $_REQUEST['encoding'] == 'ISO-8859-1') {
 		$data = utf8_decode($data);
 	}

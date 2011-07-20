@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -162,9 +162,13 @@ function smarty_function_treetable($params, &$smarty) {
 	}
 	
 	$_sortColumn = empty($_sortColumn) ? '' : $_sortColumn;
+	$_groupColumn = empty($_groupColumn) ? '' : $_groupColumn;
 	
 	if ($_sortColumn) {
 		sort2d($_data, $_sortColumn);
+	} elseif ($_groupColumn) {
+		sort2d($_data, $_groupColumn, false);
+		$_sortColumn = $_groupColumn;
 	}
 	
 	$class = empty($class) ? 'treeTable' : $class;	// treetable
@@ -244,7 +248,7 @@ $("#'.$id.'_showSelected").click( function () {
 		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
-						array('checkbox_names'=>$_checkbox[$i].'[]',
+						array('checkbox_names'=>array($_checkbox[$i].'[]'),
 							  'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])), $smarty);
 			$html .= '</th>';
 		}
@@ -392,13 +396,17 @@ $("#'.$id.'_showSelected").click( function () {
 // WARNING: $sort must be associative
 function sort2d( &$arrIn, $index = null, $sort = 'asort') {
 	// pseudo-secure--never allow user input into $sort
-	if (strpos($sort, 'sort') === false) {$sort = 'asort';}
 	$arrTemp = Array();
 	$arrOut = Array();
 	foreach ( $arrIn as $key=>$value ) {
 		$arrTemp[$key] = is_null($index) ? reset($value) : $value[$index];
 	}
-	$sort($arrTemp);
+
+	if ($sort) {
+		if (strpos($sort, 'sort') === false) {$sort = 'asort';}
+		$sort($arrTemp);
+	}
+
 	foreach ( $arrTemp as $key=>$value ) {
 		$arrOut[$key] = $arrIn[$key];
 	}

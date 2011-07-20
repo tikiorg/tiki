@@ -1,4 +1,4 @@
-{title}{tr}Stats for survey:{/tr} {$survey_info.name|escape}{/title}
+{title}{tr}Stats for survey:{/tr} {$survey_info.name}{/title}
 
 <div class="navbar">
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
@@ -13,7 +13,7 @@
 <br />
 
 {section name=ix loop=$channels}
-  <table class="normal">
+  <table class="formcolor">
   <tr>
     <th colspan="4">{$channels[ix].question|escape|nl2br}</th>
   </tr>

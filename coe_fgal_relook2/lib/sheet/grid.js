@@ -8,7 +8,7 @@ inlineMenu.find(".qt-picker").attr("instance", $.sheet.I());
 
 $.sheet = $.extend({
 	saveSheet: function( tikiSheet, fn ) {
-		var jS = tikiSheet.sheetInstance;
+		var jS = tikiSheet.getSheet();
 		jS.evt.cellEditDone();
 			
 		var s = $.sheet.exportSheet(jS);
@@ -44,89 +44,93 @@ $.sheet = $.extend({
 			}
 		});
 	},
-	exportSheet: function(sheetInstance) {	// diverged from jQuery.sheet 1.1 / Tiki 6
-		var sheetClone = sheetInstance.sheetDecorateRemove(true);
+	exportSheet: function(jS) {	// diverged from jQuery.sheet 1.1 / Tiki 6
+		var sheetClone = jS.sheetDecorateRemove(true);
 		var documents = []; //documents
 		
 		$(sheetClone).each(function() {
-			var document = {}; //document
-			document.metadata = {};
-			document.data = {};
-			
-			//This preserves the width for postback, very important for styles
-			//<DO_NOT_REMOVE>
-			var table = $(this);
-			var trFirst = table.find("tr:first");
-			table.find("col").each(function(i){
-				//because css isnt always set correctly, we need to check the width attribute as well
-				//we also sanitize width string here
-				var w = parseInt((jQuery(this).css("width") + "").replace("px",""), 10);
-				var w2 = parseInt((jQuery(this).attr("width") + "").replace("px",""), 10);
+			if (!$(this).attr('readonly')) {
+				var document = {}; //document
+				document.metadata = {};
+				document.data = {};
 				
-				w = (w > w2 ? w : w2);
-				
-				trFirst.find("td").eq(i)
-					.css("width", w + "px")
-					.attr("width", w);
-			});
-			//</DO_NOT_REMOVE>
-			
-			var trs = table.find("tr");
-			var rowCount = trs.length;
-			var colCount = 0;
-			var col_widths = "";
-			
-			trs.each(function(i) {
-				var tr = $(this);
-				var tds = tr.find("td");
-				colCount = tds.length;
-				
-				document.data["r" + i] = {};
-				
-				var h = tr.css("height");
-				document.data["r" + i].height = (h ? h : tr.attr("height"));
-				
-				tds.each(function(j) {
-					var td = jQuery(this);
-					var colSpan = td.attr("colspan");
-					colSpan = (colSpan > 1 ? colSpan : null);
-	
-					document.data["r" + i]["c" + j] = {
-						value: td.html(),
-						formula: td.attr("formula"),
-						stl: td.attr("style"),
-						colspan: colSpan,
-						cl: td.attr("class")
-					};
+				//This preserves the width for postback, very important for styles
+				//<DO_NOT_REMOVE>
+				var table = $(this);
+				var trFirst = table.find("tr:first");
+				table.find("col").each(function(i){
+					//because css isnt always set correctly, we need to check the width attribute as well
+					//we also sanitize width string here
+					var w = parseInt((jQuery(this).css("width") + "").replace("px",""), 10);
+					var w2 = parseInt((jQuery(this).attr("width") + "").replace("px",""), 10);
 					
-					var sp = td.attr("colSpan");
-					if (sp > 1) {
-						doc.data["r" + i]["c" + j].width = sp;
-					}
-					sp = td.attr("rowSpan");	// TODO in .sheet
-					if (sp > 1) {
-						doc.data["r" + i]["c" + j].height = sp;
-					}
+					w = (w > w2 ? w : w2);
+					
+					trFirst.find("td").eq(i)
+						.css("width", w + "px")
+						.attr("width", w);
 				});
-			});
+				//</DO_NOT_REMOVE>
 				
-			var id = table.attr("rel");
-			id = id ? id.match(/sheetId(\d+)/) : null;
-			id = id && id.length > 0 ? id[1] : 0;
-	
-			document.metadata = {
-				"columns": parseInt(colCount, 10), //length is 1 based, index is 0 based
-				"rows": parseInt(rowCount, 10), //length is 1 based, index is 0 based
-				"title": table.attr("title"),
-				"col_widths": {},
-				"sheetId": id
-			};
-			
-			table.find("colgroup").children().each(function(i) {
-				document.metadata.col_widths["c" + i] = ($(this).attr("width") + "").replace("px", "");
-			});
-			
-			documents.push(document); //append to documents
+				var trs = table.find("tr");
+				var rowCount = trs.length;
+				var colCount = 0;
+				var col_widths = "";
+				
+				trs.each(function(i) {
+					var tr = $(this);
+					var tds = tr.find("td");
+					colCount = tds.length;
+					
+					document.data["r" + i] = {};
+					
+					var h = tr.css("height");
+					document.data["r" + i].height = (h ? h : tr.attr("height"));
+					
+					tds.each(function(j) {
+						var td = jQuery(this);
+		
+						document.data["r" + i]["c" + j] = {
+							value: td.html(),
+							formula: td.attr("formula"),
+							stl: td.attr("style"),
+							cl: td.attr("class")
+						};
+						
+						var sp = td.attr("colspan");
+						if (sp) {
+							if (sp > 1) {
+								document.data["r" + i]["c" + j].width = sp;
+							}
+						}
+						
+						sp = td.attr("rowspan");	// TODO in .sheet
+						if (sp) {
+							if (sp > 1) {
+								document.data["r" + i]["c" + j].height = sp;
+							}
+						}
+					});
+				});
+					
+				var id = table.attr("rel");
+				id = id ? id.match(/sheetId(\d+)/) : null;
+				id = id && id.length > 0 ? id[1] : 0;
+		
+				document.metadata = {
+					"columns": parseInt(colCount, 10), //length is 1 based, index is 0 based
+					"rows": parseInt(rowCount, 10), //length is 1 based, index is 0 based
+					"title": table.attr("title"),
+					"col_widths": {},
+					"sheetId": id
+				};
+				
+				table.find("colgroup").children().each(function(i) {
+					document.metadata.col_widths["c" + i] = ($(this).attr("width") + "").replace("px", "");
+				});
+				
+				documents.push(document); //append to documents
+			}
 		});
 		return documents;
 	},
@@ -148,12 +152,12 @@ $.sheet = $.extend({
 				url = "tiki-view_sheets.php?type=" + tikiSheet.type + "&file=" + tikiSheet.file + "&sheetonly=y&parse=" + parse;
 			}
 			$.get(url, function (o) {
-				tikiSheet.sheetInstance.saveSheet = function(){};
-				tikiSheet.sheetInstance.toggleState(o);
+				tikiSheet.getSheet().saveSheet = function(){};
+				tikiSheet.getSheet().toggleState(o);
 				$.sheet.manageState(tikiSheet);
 			});
 		} else {
-			if (tikiSheet.sheetInstance.s.editable) {
+			if (tikiSheet.getSheet().s.editable) {
 				$("#jSheetControls").show();
 				$("#saveState").show();
 				$("#editState").hide();
@@ -244,11 +248,112 @@ $.sheet = $.extend({
 		window.location = "tiki-history_sheets.php?sheetId=" + sheetId + "&" + sheetReadDates;
 	
 		return false;
+	},
+	link: {
+		setupUI: function(tikiSheet) {
+			tikiSheet
+				.unbind("switchSpreadsheet")
+				.bind("switchSpreadsheet", function(e, i) {
+					var jS = tikiSheet.getSheet();
+					
+					if (i < 0) {
+						var switchSheetMsg = $("div.switchSheet").first().clone();
+						var msg;
+						jS.switchSpreadsheet(i);
+						//below to be added in 7.1
+						switchSheetMsg.find("input.newSpreadsheet").click(function() {
+							switchSheetMsg.dialog("close").remove();
+							jS.switchSpreadsheet(i);
+						});
+						switchSheetMsg.find("input.addSpreadsheet").click(function() {
+							switchSheetMsg.dialog("close").remove();
+							msg = $("<div />").load("tiki-sheets.php #role_main .tabcontent:first table", function() {
+								msg.dialog({
+									width: tikiSheet.width(),
+									height: tikiSheet.height(),
+									modal: true
+								});
+								msg.find("a.sheetLink").each(function() {
+									$(this).click(function() {
+										msg.dialog("close").remove();
+										$.sheet.link.make("spreadsheet", $(this).attr("sheetId"), tikiSheet);
+										return false;
+									});
+								});
+							});
+						});
+						switchSheetMsg.find("input.addTracker").click(function() {
+							switchSheetMsg.dialog("close").remove();
+							msg = $("<div />").load("tiki-list_trackers.php #role_main table", function() {
+								msg.dialog({
+									width: tikiSheet.width(),
+									height: tikiSheet.height(),
+									modal: true
+								});
+								msg.find("a.trackerLink").each(function() {
+									$(this).click(function() {
+										msg.dialog("close").remove();
+										$.sheet.link.make("tracker", $(this).attr("trackerId"), tikiSheet);
+										return false;
+									});
+								});
+							});
+						});
+						switchSheetMsg.find("input.addFile").click(function() {
+							switchSheetMsg.dialog("close").remove();
+							msg = $("<div />").load("tiki-list_file_gallery.php #fgalform", function() {
+								msg.dialog({
+									width: tikiSheet.width(),
+									height: tikiSheet.height(),
+									modal: true
+								});
+								msg.find("a.fileLink").each(function() {
+									$(this).click(function() {
+										msg.dialog("close").remove();
+										$.sheet.link.make("file", $(this).attr("fileId"), tikiSheet);
+										return false;
+									});
+								});
+							});
+						
+						});
+						
+						switchSheetMsg
+							.dialog({
+								title: switchSheetMsg.attr("title"),
+								modal: true,
+								resizable: false
+							});
+					} else {
+						jS.switchSpreadsheet(i);
+					}
+				});
+		},
+		make: function(type, id, tikiSheet) {
+			try {
+			switch (type) {
+				case "spreadsheet":
+					break;
+				case "file":
+					break;
+				case "tracker":
+					$.get("tiki-view_sheets.php", {
+						sheetId: tikiSheet.id,
+						trackerId: id,
+						relate: "add"
+					}, function() {
+						window.location.reload();
+					});
+					break;
+			}
+			} catch(e) {}
+			return false;
+		}
 	}
 }, $.sheet);
 
 window.toggleFullScreen = function(areaname) {
-	tikiSheet.sheetInstance.toggleFullScreen();
+	$('div.tiki_sheet').getSheet().toggleFullScreen();
 };
 
 window.showFeedback = function(message, delay, redirect) {

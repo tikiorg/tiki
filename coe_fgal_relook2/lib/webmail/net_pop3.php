@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -744,10 +744,6 @@ class Net_POP3
                     $headers[$name] = $value;
                 }
             }
-            // Fix up Message-ID header
-			if (!array_key_exists('Message-ID',$headers)) {
-				
-			}
             return $headers;
         }
 

@@ -1,11 +1,16 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function wikiplugin_list_info()
 {
 	return array(
 		'name' => tra('List'),
 		'documentation' => 'PluginList',
-		'description' => tra('Pull object lists from the search index based on various search criteria and formatting rules'),
+		'description' => tra('Create lists of Tiki objects based on custom search criteria and formatting'),
 		'prefs' => array('wikiplugin_list'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
@@ -17,11 +22,14 @@ function wikiplugin_list_info()
 
 function wikiplugin_list($data, $params)
 {
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+
 	$alternate = null;
 	$output = null;
 	$subPlugins = array();
 
 	$query = new Search_Query;
+	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
 
 	if (isset($_REQUEST['offset'])) {
 		$query->setRange($_REQUEST['offset']);
@@ -32,12 +40,13 @@ function wikiplugin_list($data, $params)
 
 	foreach ($matches as $match) {
 		$name = $match->getName();
+		$arguments = $argumentParser->parse($match->getArguments());
 
-		foreach ($argumentParser->parse($match->getArguments()) as $key => $value) {
+		foreach ($arguments as $key => $value) {
 			$function = "wpquery_{$name}_{$key}";
 
 			if (function_exists($function)) {
-				$function($query, $value);
+				$function($query, $value, $arguments);
 			}
 
 			$function = "wpformat_{$name}_{$key}";
@@ -62,7 +71,6 @@ function wikiplugin_list($data, $params)
 		$query->setOrder($_REQUEST['sort_mode']);
 	}
 
-	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 	$index = $unifiedsearchlib->getIndex();
 
 	$result = $query->search($index);
@@ -122,9 +130,15 @@ function wpquery_filter_deepcategories($query, $value)
 	$query->filterCategory($value, true);
 }
 
-function wpquery_filter_content($query, $value)
+function wpquery_filter_content($query, $value, array $arguments)
 {
-	$query->filterContent($value);
+	if (isset($arguments['field'])) {
+		$fields = explode(',', $arguments['field']);
+	} else {
+		$fields = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+	}
+
+	$query->filterContent($value, $fields);
 }
 
 function wpquery_filter_language($query, $value)

@@ -16,7 +16,7 @@
 	{button href="tiki-list_integrator_repositories.php" _text="{tr}List Repositories{/tr}"}
 	{button href="tiki-admin_integrator.php" _text="{tr}New Repository{/tr}"}
 	{if isset($repID) and $repID ne '0'}
-		{assign var=thisrepID value=$repID|escape }
+		{assign var=thisrepID value=$repID|escape}
 		{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View Repository{/tr}"}
   {/if}
 </div>

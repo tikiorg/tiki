@@ -1,18 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-/* 
- * Params
- *     notonready = bool (default: false) - set to true if you want it _not_ to execute on document ready
- */
-function wikiplugin_jq_help() {
-	return tra("Insert JQuery javascript code.")."<br />~np~{JQ(nojquery='<p>You need JQuery for this!</p>')}".tra("jquery code e.g. \$(\"img\").click(function() {\n  \$(this).hide(\"slow\").show(\"fast\");\n});")."{JQ}~/np~";
-}
-
-//By default this is only executed after jQuery determines that the DOM is fully loaded.
 
 function wikiplugin_jq_info() {
 	return array(

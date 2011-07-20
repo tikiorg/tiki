@@ -1,4 +1,4 @@
-/* (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+/* (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
  * 
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -22,7 +22,8 @@ CKEDITOR.plugins.add('tikiwiki',{
 		this.editor = editor;								// which expects these references too
 		this.dataFilter = editor.dataProcessor.dataFilter;
 			
-		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, html ); };
+		oldToDataFormat = editor.dataProcessor.toDataFormat ;
+		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, oldToDataFormat( html, fixForBody ) ); };
 		editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return twplugin.toHtmlFormat( editor, data ); };
 		
 		// button stuff goes here?

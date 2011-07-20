@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -11,14 +11,17 @@ function prefs_directory_list() {
 			'name' => tra('Show Country Flag'),
 			'description' => tra('Show the country flag'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'directory_cool_sites' => array(
 			'name' => tra('Enable cool sites'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'directory_validate_urls' => array(
 			'name' => tra('Validate URLs'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'directory_columns' => array(
                        'name' => tra('Number of columns per page when listing directory categories'),
@@ -32,10 +35,12 @@ function prefs_directory_list() {
                        		'5' => tra('5'),
                        		'6' => tra('6'),
 				),
+			'default' => 3,
 			),
 		'directory_links_per_page' => array(
 			'name' => tra('Links per page'),
 			'type' => 'text',
+			'default' => 20,
 			),
 		'directory_open_links' => array(
                        'name' => tra('Method to Open Directory Links'),
@@ -46,6 +51,7 @@ function prefs_directory_list() {
                		        'n' => tra('new window'),
                        		'f' => tra('inline frame'),
 				),
+			'default' => 'n',
 			),
 	);
 }

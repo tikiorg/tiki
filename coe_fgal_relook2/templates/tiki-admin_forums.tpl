@@ -33,7 +33,7 @@
 		{assign var=numbercol value=8}
 		<tr>
 			{if $channels}
-				{assign var=numbercol value=`$numbercol+1`}
+				{assign var=numbercol value=$numbercol+1}
 				<th style="text-align:center">
 					{select_all checkbox_names='checked[]'}
 				</th>
@@ -172,14 +172,14 @@
 				<td>{tr}Moderator user:{/tr}</td>
 				<td>
 					<input id="moderator_user" type="text" name="moderator" value="{$moderator|escape}"/>
-					{jq}$('#moderator_user').tiki('autocomplete', 'username');{/jq}
+					{autocomplete element='#moderator_user' type='username'}
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Moderator group:{/tr}</td>
 				<td>
 					<input id="moderator_group" type="text" name="moderator_group" value="{$moderator_group|escape}"/>
-					{jq}$('#moderator_group').tiki('autocomplete', 'groupname');{/jq}
+					{autocomplete element='#moderator_group' type='groupname'}
 				</td>
 			</tr>
 			<tr>

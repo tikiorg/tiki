@@ -1,4 +1,4 @@
-{title help="Quiz"}{tr}Stats for quiz:{/tr} {$quiz_info.name|escape}{/title}
+{title help="Quiz"}{tr}Stats for quiz:{/tr} {$quiz_info.name}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"} 
@@ -42,11 +42,11 @@ Set the names of the table headings to reflect the names of the db
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr class="{cycle}">
-  <td>{$channels[user].user|userlink}</td>
-  <td>{$channels[user].timestamp|tiki_short_datetime}</td>
-  <td>{$channels[user].timeTaken} secs</td>
-  <td>{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
-  <td>
+  <td class="username">{$channels[user].user|userlink}</td>
+  <td class="date">{$channels[user].timestamp|tiki_short_datetime}</td>
+  <td class="date">{$channels[user].timeTaken} secs</td>
+  <td class="integer">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
+  <td class="action">
     {if $tiki_p_view_user_results eq 'y'}
       <a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
       {if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}
@@ -90,10 +90,10 @@ Set the names of the table headings to reflect the names of the db
 <!-- begin looping of data from data base -->
 {*second section beginning *}
   {section name=jx loop=$questions[ix].options}
-  <tr>
-    <td class="odd">{$questions[ix].options[jx].optionText|escape}</td>
-    <td class="odd">{$questions[ix].options[jx].votes}</td>
-    <td class="odd">{$questions[ix].options[jx].avg|string_format:"%.2f"}%</td>
+  <tr class="odd">
+    <td class="text">{$questions[ix].options[jx].optionText|escape}</td>
+    <td class="text">{$questions[ix].options[jx].votes}</td>
+    <td class="integer">{$questions[ix].options[jx].avg|string_format:"%.2f"}%</td>
   </tr>
 {*second section end *}
   {/section}

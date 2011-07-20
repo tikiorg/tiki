@@ -119,17 +119,16 @@
 		{/tab}
 
 		{tab name="{tr}Sessions{/tr}"}
-				{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
-					{tr}Note that storing session data in the database is an advanced systems administration option, and is for admins who have comprehensive access and understanding of the database, in order to deal with any unexpected effects.{/tr}
-				{/remarksbox}
-				<div style="padding:.5em;" align="left">
-					{icon _id=information style="vertical-align:middle"} {tr}Changing this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
-				</div>
-				{preference name=session_storage}
-				{preference name=session_lifetime}
-				{preference name=session_cookie_name}
 				{preference name=session_silent}
 				{preference name=tiki_cachecontrol_nosession}
+		{/tab}
+
+		{tab name="{tr}Newsletter{/tr}"}
+			{preference name=newsletter_throttle}
+			<div class="adminoptionboxchild" id="newsletter_throttle_childcontainer">
+				{preference name=newsletter_pause_length}
+				{preference name=newsletter_batch_size}
+			</div>
 		{/tab}
 {/tabset}
 		

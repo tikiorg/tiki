@@ -25,4 +25,6 @@ lang = {
 //	"Do not match" : "Do not match",
 //	"Advanced options" : "Advanced options",
 //	"Pick a file." : "Pick a file.",
+	"Add Field" : "Ajouter un champ",
+	"Removing the field will result in data loss. Are you sure?" : "La suppression du champ entrainera la perte des données. Êtes-vous sur ?",
 };

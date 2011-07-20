@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -61,9 +61,9 @@ if (isset($_REQUEST['send'])) {
 		die;
 	}
 	// Parse the to, cc and bcc fields into an array
-	$arr_to = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['to']);
-	$arr_cc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['cc']);
-	$arr_bcc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['bcc']);
+	$arr_to = preg_split('/\s*(?<!\\\)[;,]\s*/', $_REQUEST['to']);
+	$arr_cc = preg_split('/\s*(?<!\\\)[;,]\s*/', $_REQUEST['cc']);
+	$arr_bcc = preg_split('/\s*(?<!\\\)[;,]\s*/', $_REQUEST['bcc']);
 	if ($prefs['user_selector_realnames_messu'] == 'y') {
 		$groups = '';
 		$arr_to = $userlib->find_best_user($arr_to, $groups, 'login');

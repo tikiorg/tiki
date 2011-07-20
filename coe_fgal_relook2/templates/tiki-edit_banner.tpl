@@ -42,6 +42,15 @@
 				<td>
 					<input type="text" name="maxClicks" value="{$maxClicks|escape}" size="7" /><i>{tr}-1 for unlimited{/tr}</i>
 				</td>
+			</tr>
+			<tr>
+				<td>{tr}URIs where the banner appears only{/tr}</td>
+				<td><input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}" /><br /><i>Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#</i>
+			</tr>
+			<tr>
+				<td>{tr}URIs where the banner will not appear {/tr}</td>
+				<td><input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}" /><br /><i>Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#</i>
+			</tr>
 			<tr>
 				<td>{tr}Zone:{/tr}</td>
 				<td>
@@ -95,11 +104,11 @@
 			</tr>
 			<tr>
 				<td>{tr}from:{/tr}</td>
-				<td>{html_select_time time=$fromTime display_seconds=false prefix='fromTime'}</td>
+				<td>{html_select_time time=$fromTime display_seconds=false prefix='fromTime' use_24_hours=$use_24hr_clock}</td>
 			</tr>
 			<tr>
 				<td>{tr}to:{/tr}</td>
-				<td>{html_select_time time=$toTime display_seconds=false prefix='toTime'}</td>
+				<td>{html_select_time time=$toTime display_seconds=false prefix='toTime' use_24_hours=$use_24hr_clock}</td>
 			</tr>
 		</table>
 	</div>
@@ -259,8 +268,8 @@
 			{cycle print=false values="even,odd"}
 			{section name=ix loop=$zones}
 				<tr class="{cycle}">
-					<td>{$zones[ix].zone|escape}</td>
-					<td>
+					<td class="text">{$zones[ix].zone|escape}</td>
+					<td class="action">
 						<a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					</td>
 				</tr>

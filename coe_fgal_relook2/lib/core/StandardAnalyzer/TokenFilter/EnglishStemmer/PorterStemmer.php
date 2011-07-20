@@ -43,16 +43,25 @@ class PorterStemmer
 	 */
 	public static function Stem($word)
 	{
+		static $cache = array();
+
 		if (strlen($word) <= 2) {
 			return $word;
 		}
 
+		if (isset($cache[$word])) {
+			return $cache[$word];
+		}
+
+		$initial = $word;
 		$word = self::step1ab($word);
 		$word = self::step1c($word);
 		$word = self::step2($word);
 		$word = self::step3($word);
 		$word = self::step4($word);
 		$word = self::step5($word);
+
+		$cache[$initial] = $word;
 
 		return $word;
 	}

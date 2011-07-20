@@ -2,7 +2,7 @@
 {title}{tr}{$title}{/tr}{/title}
 
 <div>
-	{$description}
+	{$description|escape}
 </div>
 
 <div class="navbar">

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -83,7 +83,7 @@ class BanLib extends TikiLib
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
-		$query = "select `banId` from `tiki_banning` where `use_dates`=? and `date_to` < ?";
+		$query = "select `banId` from `tiki_banning` where `use_dates`=? and `date_to` < FROM_UNIXTIME(?)";
 		$result = $this->query($query,array('y',$this->now));
 
 		while ($res = $result->fetchRow()) {
@@ -119,8 +119,8 @@ class BanLib extends TikiLib
   			`ip3`=?,
   			`ip4`=?,
   			`user`=?,
-  			`date_from` = ?,
-  			`date_to` = ?,
+  			`date_from` = FROM_UNIXTIME(?),
+  			`date_to` = FROM_UNIXTIME(?),
   			`use_dates` = ?,
   			`message` = ?
   			where `banId`=?
@@ -129,7 +129,7 @@ class BanLib extends TikiLib
 			$this->query($query,array($title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$banId));
 		} else {
 			$query = "insert into `tiki_banning`(`mode`,`title`,`ip1`,`ip2`,`ip3`,`ip4`,`user`,`date_from`,`date_to`,`use_dates`,`message`,`created`)
-		values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		values(?,?,?,?,?,?,?,FROM_UNIXTIME(?),FROM_UNIXTIME(?),?,?,?)";
 			$this->query($query,array($mode,$title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$this->now));
 			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?",array($this->now));
 		}

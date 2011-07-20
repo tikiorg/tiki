@@ -19,7 +19,7 @@
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
 				<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{icon _id='page_edit' alt="{tr}Edit Blog{/tr}"}</a>
 				{if $allow_comments eq 'y'}
-					<a class='bloglink' href='tiki-list_comments.php?types_section=blogs&blogId={$blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
+					<a class='bloglink' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
 				{/if}
 			{/if}
 

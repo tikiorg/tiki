@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,6 +26,10 @@ function smarty_function_menu($params, &$smarty)
 	global $tikilib, $user, $headerlib, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');
 	$default = array('css' => 'y');
+	if (isset($params['params'])) {
+		$params = array_merge($params, $params['params']);
+		unset($params['params']);
+	}
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
@@ -91,7 +95,14 @@ function smarty_function_menu($params, &$smarty)
 	$data = $smarty->fetch($tpl);
 	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
 	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);
-	return '<nav class="role_navigation">' . $data . '</nav>';
+	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
+		return '<nav class="role_navigation">' . $data . '</nav>';
+	} else {
+		$data = preg_replace('/<ul ([^>]*)>/Umi', '<ul $1 data-role="listview" data-theme="'.$prefs['mobile_theme_menus'].'">', $data, 1);
+		// crude but effective hack for loading menu items via ajax - hopefully to be replaced by something more elegant soon
+		$data = preg_replace('/<a ([^>]*)>/Umi', '<a $1 rel="external">', $data);
+		return $data;
+	}
 }
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }

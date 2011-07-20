@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * smarty_function_select_all: Display a checkbox that allows users with javascript to select multiple checkboxes in one click
  *
  * params:
- *  - checkbox_names: comma separated list of the values of the 'name' HTML attribute of the checkboxes to check/uncheck
+ *  - checkbox_names: Values of the 'name' HTML attribute of the checkboxes to check/uncheck, either as an array or as a comma-separated list 
  *	- label: text to display on the right side of the checkbox. If empty, no default text is displayed
  */
 function smarty_function_select_all($params, &$smarty) {
@@ -31,8 +31,16 @@ function smarty_function_select_all($params, &$smarty) {
 		$id = '';
 	}
 	$onclick = '';
-	$checkbox_names = explode(',', $params['checkbox_names']);
-	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(addslashes($cn)) . "',this.checked);";
+	$checkbox_names = $params['checkbox_names'];
+	if (!is_array($checkbox_names)) {
+		$checkbox_names = explode(',', $checkbox_names);
+	}
+
+   if (! function_exists('smarty_modifier_escape')) {
+      require_once 'lib/smarty_tiki/modifier.escape.php';
+   }
+
+	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked);";
 
 	return "<div>\n"
 		. '<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"'

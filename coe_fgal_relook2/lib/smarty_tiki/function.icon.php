@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -37,7 +37,7 @@ function smarty_function_icon($params, &$smarty) {
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
-	$cache_key = 'icons_' . md5( $serialized_params );
+	$cache_key = 'icons_' . $prefs['language'] . '_' . md5( $serialized_params );
 	if( $cached = $cachelib->getCached( $cache_key ) ) {
 		return $cached;
 	}
@@ -143,8 +143,6 @@ function smarty_function_icon($params, &$smarty) {
 	}
 
 	// default values for some params
-	if ( ! isset($params['border']) )
-		$params['style'] = 'border: none';
 
 	if ( isset($params['path_prefix']) ) {
 		$params['basedir'] = $tikipath;

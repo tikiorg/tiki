@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_Expr_Parser
 {
@@ -28,6 +33,7 @@ class Search_Expr_Parser
 		$tokens = $this->applyOperator($tokens, 'OR', 'buildOr');
 		$tokens = $this->applyOperator($tokens, 'AND', 'buildAnd');
 		$tokens = $this->applyOperator($tokens, '+', 'buildAnd');
+		$tokens = array_values($tokens);
 
 		if (count($tokens) === 1) {
 			return reset($tokens);

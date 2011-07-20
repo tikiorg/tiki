@@ -4,7 +4,7 @@
 {if $prefs.feature_breadcrumbs ne 'y'}
   {title help="Directory" url="tiki-directory_browse.php?parent=$parent"}
   	{if $parent}
-		{tr}Directory:{/tr} {$parent_name|escape}
+		{tr}Directory:{/tr} {$parent_name}
 	{else}
 		{tr}Directory{/tr}
 	{/if}

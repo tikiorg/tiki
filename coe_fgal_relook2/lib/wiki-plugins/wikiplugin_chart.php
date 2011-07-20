@@ -1,17 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/* Tiki-Wiki plugin chart
- *
- * Displays a chart from a tikisheet.
- */
-function wikiplugin_chart_help() {
-	return tra("Chart").":<br />~np~{CHART(id=>, type=>, width=>, height=>, value=> )}".tra("title")."{CHART}~/np~";
-}
 
 function wikiplugin_chart_info() {
 	return array(
@@ -60,22 +52,22 @@ function wikiplugin_chart_info() {
 			'y1' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'y2' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'y3' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'y4' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'color' => array(
 				'required' => false,

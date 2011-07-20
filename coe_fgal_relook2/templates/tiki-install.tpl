@@ -1,19 +1,28 @@
-<div id="outer_wrapper">
-		<div id="header_outer">
-			<div id="header_container">
-				<header id="header">
-					<div id="header_fixedwidth" class="clearfix fixedwidth">
-						<div class="content clearfix modules" id="top_modules">
-							<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;margin-bottom: 24px; vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
-								<span style="vertical-align:middle; margin-left: 120px; color: #fff; padding-top: 30px;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+<div id="fixedwidth" class="fixedwidth"> {* enables fixed-width layouts *}
+	<div class="header_outer">
+		<div class="header_container">
+			<div class="header_fixedwidth fixedwidth">
+				<header class="header" id="header">
+					<div class="content clearfix modules" id="top_modules" style="min-height: 168px;">
+						<div id="sitelogo" style="float: left">
+							<img alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
+						</div>
+						<div id="sitetitles" style="float: left;">
+							<div id="sitetitle" style="font-size: 42px;">
+								{tr}Tiki installer{/tr}
 							</div>
-						<div id="tiki-top" style="position: static"></div> {* added for background image consistency *}
+							<div id="sitesubtitle" style="font-size: 30px; margin-top: 16px;">
+								{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>
+							</div>
 						</div>
 					</div>
 				</header>
 			</div>
 		</div>
-<div id="middle" class="clearfix">
+	</div>
+<div class="middle_outer">
+<div class="fixedwidth">
+<div id="middle" class="clearfix fixedwidth" style="padding-top: 55px">
 	<div id="c1c2" class="clearfix">
 		<div id="wrapper" class="clearfix">
 			<div id="col1" class="marginleft">
@@ -101,7 +110,7 @@
 	<div>
 	<form action="tiki-install.php#mail" method="post">
 		<div style="padding:1em 7em;">
-			<label for="admin_email_test">{tr}Test email:{/tr}</label>
+			<label for="email_test_to">{tr}Test email:{/tr}</label>
 			<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}" />
 			{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
 			{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
@@ -178,7 +187,8 @@
 	<div align="center" style="padding:1em">
 		<p>
 			<img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;" />
-			{tr}Tiki found an existing database connection in your local.php file.{/tr}
+			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br />
+			<em>{tr 0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
 		</p>
 		<form action="tiki-install.php" method="post">
 			<input type="hidden" name="install_step" value="4" />
@@ -283,9 +293,13 @@
 	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
-	  {if $database_charset neq 'utf8' and $tikidb_created}
+	  {if ($database_charset neq 'utf8' or isset($legacy_collation)) and $tikidb_created}
 	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
-			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
+	  		{if isset($legacy_collation)}
+				<strong style="color: red">Something is wrong with the database encoding.</strong> The schema has UTF-8 as default encoding but some tables in the schema have a different collation, {$legacy_collation}. Converting to UTF-8 may solve this but may also make matters worse. You should investigate what happened or only proceed with backups.
+			{else}
+				{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
+			{/if}
 			<p><a href="http://doc.tiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
 
 			<form method="post" action="">
@@ -312,7 +326,7 @@
 	<tr>
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
-				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>{/if}
+				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr 0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}</p>{/if}
 				{if $tikidb_created}
 				<script type='text/javascript'><!--//--><![CDATA[//><!--
 				{literal}
@@ -411,17 +425,24 @@
 
 <div id="sql_failed_log" style="display:none">
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
-{assign var='patch' value=''} 
+{assign var='patch' value=''}
 {foreach from=$installer->failures item=item}
-{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" /><label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label></p>
-<textarea rows="6" cols="80">{assign var='patch' value=$item[2]}{/if}
-{$item[0]}
-{$item[1]}
-
+	{if $patch ne $item[2]}
+		{if $patch ne ''}
+			</textarea>
+		{/if}
+		<p>
+			<input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" />
+			<label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label>
+		</p>
+		<textarea rows="6" cols="80">{assign var='patch' value=$item[2]}
+	{/if}
+	{$item[0]}
+	{$item[1]}
 {/foreach}
 </textarea>
 <p>If you think that the errors of a patch can be ignored, please check the checkbox associated to it before clicking on continue.</p>
-
+<p>{select_all checkbox_names='validPatches[]' label="{tr}Check all errors{/tr}"}</p>
 </div>
 {/if}
 
@@ -470,12 +491,12 @@
 		<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 			<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 			<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
-			<option value="encouraged"{if $prefs.https_login eq 'encouraged' or ($prefs.https_login eq '' and $detected_https eq 'on' ) } selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
+			<option value="encouraged"{if $prefs.https_login eq 'encouraged' or ($prefs.https_login eq '' and $detected_https eq 'on' )} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
 			<option value="force_nocheck"{if $prefs.https_login eq 'force_nocheck'} selected="selected"{/if}>{tr}Consider we are always in HTTPS, but do not check{/tr}</option>
 			<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
 		</select>
 	</div>
-	<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or ( $prefs.https_login eq '' and $detected_https eq '') }none{else}block{/if};">
+	<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or ( $prefs.https_login eq '' and $detected_https eq '')}none{else}block{/if};">
 		<div style="padding:5px">
 			<label for="https_port">{tr}HTTPS port:{/tr}</label> <input type="text" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}" />
 		</div>
@@ -593,7 +614,7 @@
 {if $install_type eq 'update'}
 	{if $double_encode_fix_attempted eq 'y'}
 		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
-	{else}
+	{elseif not isset($legacy_collation)}
 		<form method="post" action="#" onsubmit="return confirm('{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}');" style="padding-top: 100px;">
 			<fieldset>
 				<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>
@@ -734,8 +755,9 @@
 		</div>
 	</div>
 </div>			
-			
+</div>			
 	  	</div>
+	</div>
 </div>
 <footer id="footer">
 	<div class="footer_liner">
@@ -746,4 +768,5 @@
 </footer>
 
 		</div>{* -- END of main -- *}
-	</div> {* -- END of puterwrapper -- *}
+	</div> {* -- END of outerwrapper -- *}
+</div> {* -- END of fixedwidth -- *}

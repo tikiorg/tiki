@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1061,6 +1061,10 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		  $option['sefurl'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id']), $smarty);
 		  $option['position'] = $cant + $cumul;
 		  $option['sectionLevel'] = $sectionLevel;
+		  
+		  $option['url'] = str_replace('&amp;', '&', $option['url']);			// as of Tiki 7 menu items get encoded later
+		  $option['sefurl'] = str_replace('&amp;', '&', $option['sefurl']);
+		  
 		  ++$cant;
 		  $options[] = $option;
 		  if (!empty($channel['sub'])) {

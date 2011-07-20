@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -98,7 +98,27 @@ $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 $re = false;
 $default_api_tiki = $api_tiki;
 $api_tiki = '';
-if ( file_exists($local_php) ) $re = include($local_php);
+if ( file_exists($local_php) ) {
+	$re = include($local_php);
+}
+
+global $systemConfiguration;
+$systemConfiguration = new Zend_Config(array(
+	'preference' => array(),
+	'rules' => array(),
+), array(
+	'readOnly' => false,
+));
+if (isset ($system_configuration_file)) {
+	if (! is_readable($system_configuration_file)) {
+		die('Configuration file could not be read.');
+	}
+	if (! isset($system_configuration_identifier)) {
+		$system_configuration_identifier = null;
+	}
+	$systemConfiguration = $systemConfiguration->merge(new Zend_Config_Ini($system_configuration_file, $system_configuration_identifier));
+}
+
 if ( empty( $api_tiki ) ) {
 	$api_tiki_forced = false;
 	$api_tiki = $default_api_tiki;
@@ -118,7 +138,6 @@ if ( $re === false ) {
 
 if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
-require_once 'lib/core/TikiDb/ErrorHandler.php';
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
 	function handle( TikiDb $db, $query, $values, $result ) // {{{

@@ -1,4 +1,8 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
@@ -33,6 +37,8 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
             $return = htmlspecialchars($string, ENT_QUOTES, $char_set);
 	    // Convert back sanitization tags into real tags to avoid them to be displayed
             $return = str_replace('&lt;x&gt;', '<x>', $return);
+            // Convert back sanitization tags into real tags for no wrap space
+            $return = str_replace('&amp;nbsp;', '&nbsp;', $return);
 	    return $return;
 
         case 'htmlall':
@@ -97,6 +103,9 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
                }
            }
            return $_res;
+
+        case 'unescape':
+            return rawurldecode($string);
 
         default:
             return $string;

@@ -9,7 +9,8 @@ html {
 }
 body   {
 	background: #9fda58;
-	font-family: Segoe UI, Helvetica, Arial, sans-serif; font-size: 1.2em;
+	font-family: Segoe UI, Helvetica, Arial, sans-serif;
+	font-size: 1.2em;
 	color: #454545;
 }
 
@@ -57,7 +58,7 @@ body.cke_show_borders {
 	color: #000;
 }
 
-#siteheader {
+.header {
 	background: #c6e99c;
 }
 #tiki-top {
@@ -163,7 +164,8 @@ th,
 td.heading,
 tr.diffheader {
 	border: 1px solid #000;
-	background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x; color: #222222;
+	background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
+	color: #222222;
 	font-weight: bold;
 	color: #222;
 }
@@ -233,7 +235,8 @@ li.even {
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 }
 
-.tabmark {
+.tabmark,
+.statuson {
 	border: 1px solid #1b1613;
 	background: #0a0a0a url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
 	font-weight: bold;

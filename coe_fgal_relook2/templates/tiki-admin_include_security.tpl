@@ -17,12 +17,18 @@
 			{preference name=smarty_security}
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
-			{preference name=menus_item_names_raw}
+			{preference name=menus_item_names_raw_teaser}
+			<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">	
+				{preference name=menus_item_names_raw}
+			</div>
 			
 			{preference name=session_protected}
 
 			{tr}Please also see:{/tr} <a href="tiki-admin.php?page=login">{tr}HTTPS (SSL) and other login preferences{/tr}</a>
-			
+
+			{preference name=newsletter_external_client}
+
+			{preference name=tiki_check_file_content}
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">

@@ -22,6 +22,13 @@ html>body {font-size: .7em !important}
 
  /***** Layout (overrides layout.css
 		and styles page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
 #middle {padding-top: 8px}
 
 #c1c2 {
@@ -161,21 +168,6 @@ input[type=reset] {
 	font-weight: normal;
 	padding: 0 4px}
 
-* html input#sl-login-user,
-* html input#sl-login-pass,
-* html input#fuser,
-* html input#login-user,
-* html input#login-pass,
-* html input#login-switchuser {
-	background: #586858;
-	border: 1px solid;
-	border-color: #5a5a62 #b5b5c3 #b5b5c3 #5a5a62;
-	color: #b2b2b2;
-	padding: 0 4px;
-	margin-right: 3px}
-	
-* html .wikitopline select {font-size: .9em}
-
 select {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #BDCEC3;
@@ -224,58 +216,54 @@ body.cke_show_borders {
 	font-size: 1.3em}
 
 /***** Site Header & Identity *****/
-#header {
+/* Enable header and footer content to widen when middle has wide content. */ 
+
+.header {
 	background: transparent;
 	padding-top: 0}
+	
+#top_modules {
+	height: 100%;
+}
 
-.floatright img {margin-right: 40px}
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
 
-/* id is no longer used but this is retained as possible reference for banner module CSS */
-#sitead {
-	clear: none;
-	text-align: center;
-	font-size: 11px;
-	font-family: Geneva, Arial, Helvetica, sans-serif;
-	max-width: 460px;
-	margin-top: .8em}
-
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
 	bottom: 0;
 }
 
-/*.siteloginbar_popup ul.cssmenu_horiz li ul {
-	padding: 0;
-	background: none;
-	margin-top: -12px;
-}*/
+.floatright img {margin-right: 40px}
 
-#sitetitles {
+#top_modules .box-logo {
+	float: left;
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
 	padding-left: 20px;
-	margin-bottom: 14px;}
+}
 
 #sitetitle {
 	font-size: 2.4em;
-	padding-top: 10px}
+}
 
 #sitesubtitle {font-size: 1.6em}
-* html #subtitle {font-size: 1.8em}
-
-* html #sitesubtitle {
-	font-size: 1em;
-	padding-left: 3em}
-
-#header .box-login_box,
-#topbar_modules .box-search {
-	float: right;
-	margin-right: 10px;
-	font-size: 90%;
-}
 
 #topbar_modules .box-search {
 	float: none;
 	position: absolute;
+	font-size: 90%;
+	margin-right: 10px;
 	right: 10px;
 	top: 0;
 }
@@ -614,6 +602,9 @@ li.tabmark {
 
 .tabmark a:active {color: #636466}
 
+.tabs .tabmark a {
+	text-decoration: none;
+}
 
 .tabmark a:hover,
 .tabactive {
@@ -679,8 +670,14 @@ textarea.wikiedit {font-size: 1.25em}
 	color: #fff;
 	background: #000}
 
-#helptool {background: #86a48a; padding: 2px}
-#helptool a.link {color: #000}
+#helptool {
+	background: #86a48a;
+	padding: 2px;
+}
+
+#helptool a.link {
+	color: #000;
+}
 
 /** Wiki plugins **/
 /* Code plugin  */
@@ -813,10 +810,6 @@ h1.blogtitle {
 	margin-top: 2em;
 	margin-bottom: 2em}
  
-.postinfo {
-	margin-bottom: 6px;
-	padding: 2px}
-
 a.blogt,
 a.blog:visited {
 	border: 0;
@@ -826,22 +819,20 @@ a.blogt:hover {
 	color: #FFF;
 	border-bottom: 1px dotted #FFF}
 
-.postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
-
-.posthead {
-	text-align: left;
-	padding: 3px;
-	background: #010101 url(abse/menubg.jpg) repeat-y;
-	margin-bottom: 1em}
 
 .postinfo {
 	margin-bottom: 20px;
 	margin-top: 10px;
+	padding: 2px;
 	font-size: 1.2em}
 
 .posthead {
 	display: block;
+	text-align: left;
+	padding: 3px;
+	background: #010101 url(abse/menubg.jpg) repeat-y;
+	margin-bottom: 1em;
 	font-weight: bold;
 	letter-spacing: .4pt}
  
@@ -1017,8 +1008,8 @@ a.blogt:hover {
 /***** Trackers *****/
 
 .statuson {
-	border: 1px inset #666;
-	background: #bbaa99}
+	border: 1px inset #b5b5c3;
+	background: #586858}
 
 /***** Categories *****/
 .categpath {font-size: x-small}

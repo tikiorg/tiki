@@ -1,4 +1,4 @@
-{title help="FeaturedLinksAdmin"}{tr}Featured links{/tr}{/title}
+{title help="FeaturedLinksAdmin"}{tr}Featured Links{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use these links, you must assign the featured_links <a class="rbox-link" href="tiki-admin_modules.php">module</a>.{/tr}{/remarksbox}
 

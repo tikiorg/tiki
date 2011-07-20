@@ -1,16 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Wiki plugin to display the number of hits per object
-// Franck Martin 2005
-
-function wikiplugin_objecthits_help() {
-        return tra("Displays object hit info by object and days").":<br />~np~{OBJECTHITS(object=>,type=>,days=>)/}~/np~";
-}
 
 function wikiplugin_objecthits_info() {
 	return array(

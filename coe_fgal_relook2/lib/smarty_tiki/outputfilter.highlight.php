@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -81,6 +81,9 @@ function smarty_outputfilter_highlight($source, &$smarty) {
 
 	if ( ! $result )
 		return $source;
+	if (strlen($matches[2]) > ini_get('pcre.backtrack_limit')) {
+		return $source;
+	}
 
 	if ( ! isset( $matches[3] ) )
 		$matches[3] = '';

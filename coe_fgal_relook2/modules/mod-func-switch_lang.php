@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -16,17 +16,12 @@ function module_switch_lang_info()
 	return array(
 		'name' => tra('Switch Language'),
 		'description' => tra('Displays a language picker to change the language of the site.'),
-		'prefs' => array( 'change_language' ),
+		'prefs' => array( 'feature_multilingual', 'change_language' ),
 		'params' => array(
 			'mode' => array(
 				'name' => tra('Display mode'),
 				'description' => tra('Changes how the list of languages is displayed. Possible values are droplist, flags and words. Defaults to droplist.'),
 				'filter' => 'alpha',
-			),
-			'prefix' => array(
-				'name' => tra('Prefix'),
-				'description' => tra('Changes the default displayed prefix from \"Site Language:\"'),
-				'filter' => 'striptags',
 			),
 		),
 	);
@@ -67,6 +62,5 @@ function module_switch_lang( $mod_reference, $module_params )
 		}
 	}
 	$smarty->assign_by_ref('languages', $languages);
-	$smarty->clear_assign('tpl_module_title'); // TPL overrides default title
 }
 

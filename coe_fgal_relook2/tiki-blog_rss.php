@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -45,7 +45,8 @@ if ($output["data"] == "EMPTY") {
 	include_once ('tiki-sefurl.php');
 	foreach($changes["data"] as $data) {
 		$data["$descId"] = $tikilib->parse_data($data[$descId], array(
-			'print' => true
+			'print' => true,
+			'is_html' => true,
 		));
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']) , $smarty, 'blogpost', $data['title']);
 		$tmp[] = $data;

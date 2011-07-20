@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -42,16 +42,6 @@ class CalRecurrence extends TikiLib
 	private $user;
 	private $created;
 	private $lastModif;
-
-    #region reminder
-
-    private $reminderType;
-    private $reminderFixedDate;
-    private $reminderTimeOffset;
-    private $reminderRelatedTo;
-    private $reminderWhenRun;
-
-    #endregion reminder
 
 	public function CalRecurrence($param = -1) {
 		parent::__construct();
@@ -152,15 +142,6 @@ class CalRecurrence extends TikiLib
 	public function delete($fromTime=null) {
 		if (is_null($fromTime))
 			$fromTime = time();
-
-        #region reminder
-
-		$query = "DELETE FROM custom_calendar_reminder WHERE calendar_item_id IN (SELECT calitemId FROM tiki_calendar_items WHERE recurrenceId = ? AND start > ?)";
-		$bindvars = array((int)$this->getId(),$fromTime);
-		$this->query($query,$bindvars);
-
-        #endregion reminder
-
 		$query = "DELETE FROM tiki_calendar_items WHERE recurrenceId = ? AND start > ?";
 		$bindvars = array((int)$this->getId(),$fromTime);
 		$this->query($query,$bindvars);
@@ -387,17 +368,7 @@ class CalRecurrence extends TikiLib
 							'lastmodif'=>$this->getCreated(),
 							'allday'=>$this->isAllday(),
 							'recurrenceId'=>$this->getId(),
-							'changed'=>0,
-
-                            #region reminder
-
-                            'reminderType' => $this->getReminderType(),
-                            'reminderFixedDate' => $this->getReminderFixedDate(),
-                            'reminderTimeOffset' => $this->getReminderTimeOffset(),
-                            'reminderRelatedTo' => $this->getReminderRelatedTo(),
-                            'reminderWhenRun' => $this->getReminderWhenRun()
-
-                            #endregion reminder
+							'changed'=>0
 						 );
 
 			$calendarlib = new calendarlib($this->db);
@@ -448,13 +419,11 @@ class CalRecurrence extends TikiLib
 			foreach ($theEventsToBeChanged as $anEvtId) {
 				$anEvt = $theEvents[$anEvtId];
 				$tmp = array();
-                $bindvars = array();
 				$doWeChangeTimeIfNeeded = true;
 				foreach($changedFields as $aField) {
-					if (substr($aField,0,1) != "_") {
-						$tmp[] = $aField . " = ?";
-                        $bindvars[] = $this->$aField;
-					} else {
+					if (substr($aField,0,1) != "_")
+						$tmp[] = $aField . " = '" . $this->$aField . "'";
+					else {
 						$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
 						$anEvtStart = explode('/',$anEvtStart);
 						$newStartHour = floor($this->getStart()/100);
@@ -487,10 +456,8 @@ class CalRecurrence extends TikiLib
 							}
 							if (!is_null($advanced)) {
 								$daysOffsetEvent = $this->getWeekday() - TikiLib::date_format2('w',TikiLib::make_time(0,0,0,$anEvtStart[1],$anEvtStart[2],$anEvtStart[0]));
-								$tmp[] = "start=?";
-                                $bindvars[] = TikiLib::make_time($newStartHour,$newStartMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]);
-								$tmp[] = "end=?";
-                                $bindvars[] = TikiLib::make_time($newEndHour,$newEndMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]);
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour,$newStartMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour,$newEndMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]) . "'";
 							}
 						}
 						// - for monthly events :
@@ -517,19 +484,15 @@ class CalRecurrence extends TikiLib
 
 							if ($advanced) {
 								// we are on the same month
-								$tmp[] = "start=?";
-                                $bindvars[] = TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $this->getDayOfMonth(), $anEvtStart[0]);
-								$tmp[] = "end=?";
-                                $bindvars[] = TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1], $this->getDayOfMonth(), $anEvtStart[0]);
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $this->getDayOfMonth(), $anEvtStart[0]) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1], $this->getDayOfMonth(), $anEvtStart[0]) . "'";
 							} else {
 								// if the new day is after the old one, we are on the same month; instead, we are on the next month.
 								$offsetMonth = 0;
 								if ($this->getDayOfMonth() < ($oldRec->getDayOfMonth()))
 									$offsetMonth = 1;
-								$tmp[] = "start=?";
-                                $bindvars[] = TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1] + $offsetMonth, $this->getDayOfMonth(), $anEvtStart[0]);
-								$tmp[] = "end=?";
-                                $bindvars[] = TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1] + $offsetMonth, $this->getDayOfMonth(), $anEvtStart[0]);
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1] + $offsetMonth, $this->getDayOfMonth(), $anEvtStart[0]) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1] + $offsetMonth, $this->getDayOfMonth(), $anEvtStart[0]) . "'";
 							}
 						}
 						// - for yearly events :
@@ -557,20 +520,17 @@ class CalRecurrence extends TikiLib
 								$advanced = false;
 							}
 							if ($advanced) {
-								$tmp[] = "start=?";
-                                $bindvars[] = TikiLib::make_time($newStartHour, $newStartMin, 0,substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0]);
-								$tmp[] = "end=?";
-                                $bindvars[] = TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0]);
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0,substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0]) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0]) . "'";
 							} else {
 								$offsetYear = 0;
 								if ($this->getDateOfYear() < $oldRec->getDateOfYear())
 									$offsetYear = 1;
-								$tmp[] = "start=?";
-                                $bindvars[] = TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear);
-								$tmp[] = "end=?";
-                                $bindvars[] = TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear);
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear) . "'";
 							}
 						}
+						
 /*						 elseif ($aField == "_start") {
 							// on fera la modif si les trois précédents n'ont pas été concernés
 						} elseif ($aField == "_end") {
@@ -584,37 +544,21 @@ class CalRecurrence extends TikiLib
 					$anEvtStart = explode('/',$anEvtStart);
 					$newStartHour = floor($this->getStart()/100);
 					$newStartMin = $this->getStart() - 100*$newStartHour;
-					$tmp[] = "start=?";
-                    $bindvars[] = TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]);
+					$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]) . "'";
 				}
 				if (in_array("_end",$changedFields) && $doWeChangeTimeIfNeeded) {
 					$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
 					$anEvtStart = explode('/',$anEvtStart);
 					$newEndHour = floor($this->getEnd()/100);
 					$newEndMin = $this->getEnd() - 100*$newEndHour;
-					$tmp[] = "end=?";
-                    $bindvars[] = TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]);
+					$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]) . "'";
 				}
 				if (count($tmp) > 0) {
 					$query = "UPDATE tiki_calendar_items SET " . implode(',',$tmp) . " WHERE calitemId = ?";
-					$bindvars[] = (int) $anEvt['calitemId'];
+					$bindvars = array((int)$anEvt['calitemId']);
 					$this->query($query,$bindvars);
 				}
 
-                #region reminder
-
-                $reminder = array();
-
-                $reminder['reminder_type'] = $this->getReminderType();
-                $reminder['reminder_fixed_date'] = $this->getReminderFixedDate();
-                $reminder['reminder_time_offset'] = $this->getReminderTimeOffset();
-                $reminder['reminder_related_to'] = $this->getReminderRelatedTo();
-                $reminder['reminder_when_run'] = $this->getReminderWhenRun();
-
-			    $calendarlib = new calendarlib($this->db);
-                $calendarlib->persistReminder($anEvt['calitemId'], $reminder);
-
-                #endregion reminder
 			}
 		}
 
@@ -717,17 +661,7 @@ class CalRecurrence extends TikiLib
 		'endPeriod' => $this->getEndPeriod(),
 		'user' => $this->getUser(),
 		'created' => $this->getCreated(),
-		'lastModif' => $this->getLastModif(),
-
-        #region reminder
-
-        'reminderType' => $this->getReminderType(),
-        'reminderFixedDate' => $this->getReminderFixedDate(),
-        'reminderTimeOffset' => $this->getReminderTimeOffset(),
-        'reminderRelatedTo' => $this->getReminderRelatedTo(),
-        'reminderWhenRun' => $this->getReminderWhenRun()
-
-        #endregion reminder
+		'lastModif' => $this->getLastModif()
 		);
 	}
 
@@ -808,23 +742,4 @@ class CalRecurrence extends TikiLib
 
 	public function getLastModif() { return $this->lastModif; }
 	public function setLastModif($value) { $this->lastModif = $value; }
-
-    #region reminder
-
-    public function getReminderType() { return $this->reminderType; }
-    public function setReminderType($value) { $this->reminderType = $value; }
-
-    public function getReminderFixedDate() { return $this->reminderFixedDate; }
-    public function setReminderFixedDate($value) { $this->reminderFixedDate = $value; }
-
-    public function getReminderTimeOffset() { return $this->reminderTimeOffset; }
-    public function setReminderTimeOffset($value) { $this->reminderTimeOffset = $value; }
-
-    public function getReminderRelatedTo() { return $this->reminderRelatedTo; }
-    public function setReminderRelatedTo($value) { $this->reminderRelatedTo = $value; }
-
-    public function getReminderWhenRun() { return $this->reminderWhenRun; }
-    public function setReminderWhenRun($value) { $this->reminderWhenRun = $value; }
-
-    #endregion reminder
 }

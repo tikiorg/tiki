@@ -4,7 +4,7 @@
 
 body {font-size: 11px !important}
 
-#header {height: 122px}
+.header {height: 122px}
 
 #footer {height: 90px}
 .wikitopline select {font-size: .9em}
@@ -21,10 +21,11 @@ input[type="submit"] {
 .findtable input {font-size: 1em}
 
 #sitetitle {
+	margin-top: 10px;
 	font-size: 26px;
-	height: 34px}
+	height: 34px;
+}
 	
-#sitetitle {margin-top: 10px}
 #tiki-top {font-size: 11px}
 
 #col2 .cssmenu_vert {
@@ -39,7 +40,12 @@ input[type="submit"] {
 
 h3.box-title {position: static}
 img.flipmodimage {border: 0}
-td {	font-size: 11px; color: #f4f4f4}
+
+td {
+	font-size: 11px;
+	color: #f4f4f4;
+}
+
 .postbody table {font-size: 11px}
 body .galtable {width: 97%}
 .addevent {padding: 0}

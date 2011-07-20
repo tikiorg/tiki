@@ -1,4 +1,4 @@
-{* $Id $ *}
+{* $Id$ *}
 {* params:
  *   autoloaddelay in seconds (default = 1, -1 = off)
  *

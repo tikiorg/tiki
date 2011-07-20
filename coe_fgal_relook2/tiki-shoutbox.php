@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -19,7 +19,7 @@ if ($_REQUEST["msgId"]) {
 	$info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
 	$owner = $info["user"];
 	if ($tiki_p_admin_shoutbox != 'y' && $owner != $user) {
-		$smarty->assign('msg', tra("You do not have permission to edit messages $owner"));
+		$smarty->assign('msg', tr("You do not have permission to edit messages %0", $owner));
 		$smarty->display("error.tpl");
 		die;
 	}

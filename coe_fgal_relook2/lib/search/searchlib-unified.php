@@ -1,16 +1,45 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class UnifiedSearchLib
 {
-	private $incrementalQueue = array();
+	const INCREMENT_QUEUE = 'search-increment';
 
-	function processUpdateQueue()
+	function processUpdateQueue($count = 10)
 	{
-		if (count($this->incrementalQueue)) {
-			$indexer = $this->buildIndexer($this->getIndex());
-			$indexer->update($this->incrementalQueue);
-			$this->incrementalQueue = array();
+		if ($this->rebuildInProgress()) {
+			return;
 		}
+
+		$queuelib = TikiLib::lib('queue');
+		$toProcess = $queuelib->pull(self::INCREMENT_QUEUE, $count);
+		$errlib = TikiLib::lib('errorreport');
+
+		if (count($toProcess)) {
+			try {
+				$indexer = $this->buildIndexer($this->getIndex());
+				$indexer->update($toProcess);
+			} catch (Zend_Search_Lucene_Exception $e) {
+				// Re-queue pulled messages for next update
+				foreach ($toProcess as $message) {
+					$queuelib->push(self::INCREMENT_QUEUE, $message);
+				}
+
+				$errlib->report(tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
+								'<br />' . $e->getMessage());
+			}
+		}
+	}
+
+	private function rebuildInProgress() {
+		global $prefs;
+		$tempName = $prefs['unified_lucene_location'] . '-new';
+
+		return file_exists($tempName);
 	}
 
 	function rebuild()
@@ -25,7 +54,11 @@ class UnifiedSearchLib
 			die('Unsupported');
 		}
 
+		@ini_set('max_execution_time', 0);
+		@ini_set('memory_limit', -1);
+
 		// Build in -new
+		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$indexer = $this->buildIndexer($index);
 		$stat = $indexer->rebuild();
 
@@ -44,18 +77,73 @@ class UnifiedSearchLib
 			// Destroy old
 			$this->destroyDirectory($swapName);
 		}
+
+		// Process the documents updated while we were processing the update
+		$this->processUpdateQueue(1000);
+
 		return $stat;
 	}
 
 	function invalidateObject($type, $objectId)
 	{
-		$this->incrementalQueue[] = array('object_type' => $type, 'object_id' => $objectId);
+		TikiLib::lib('queue')->push(self::INCREMENT_QUEUE, array(
+			'object_type' => $type,
+			'object_id' => $objectId
+		));
+	}
+
+	public function getSupportedTypes()
+	{
+		global $prefs;
+		$types = array();
+
+		if ($prefs['feature_wiki'] == 'y') {
+			$types['wiki page'] = tra('wiki page');
+		}
+
+		if ($prefs['feature_blogs'] == 'y') {
+			$types['blog post'] = tra('blog post');
+		}
+		
+		if ($prefs['feature_articles'] == 'y') {
+			$types['article'] = tra('article');
+		}
+
+		if ($prefs['feature_file_galleries'] == 'y') {
+			$types['file'] = 'file';
+		}
+
+		if ($prefs['feature_forums'] == 'y') {
+			$types['forum post'] = tra('forum post');
+		}
+
+		if ($prefs['feature_trackers'] == 'y') {
+			$types['trackeritem'] = tra('trackeritem');
+		}
+
+		if ($prefs['feature_sheet'] == 'y') {
+			$types['sheet'] = tra('sheet');
+		}
+
+		if ($prefs['feature_wiki_comments'] == 'y'
+			|| $prefs['feature_article_comments'] == 'y'
+			|| $prefs['feature_poll_comments'] == 'y'
+			|| $prefs['feature_file_galleries_comments'] == 'y') {
+			$types['comment'] = tra('comment');
+		}
+
+		return $types;
 	}
 
 	private function buildIndexer($index)
 	{
+		global $prefs;
 		$indexer = new Search_Indexer($index);
 		$this->addSources($indexer);
+		
+		if ($prefs['unified_tokenize_version_numbers'] == 'y') {
+			$indexer->addContentFilter(new Search_ContentFilter_VersionNumber);
+		}
 
 		return $indexer;
 	}
@@ -64,29 +152,54 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 
+		$types = $this->getSupportedTypes();
+
 		// Content Sources
-		if ($prefs['feature_wiki'] == 'y') {
+		if (isset ($types['wiki page'])) {
 			$aggregator->addContentSource('wiki page', new Search_ContentSource_WikiSource);
 		}
 
-		if ($prefs['feature_forums'] == 'y') {
+		if (isset ($types['forum post'])) {
 			$aggregator->addContentSource('forum post', new Search_ContentSource_ForumPostSource);
 		}
 
-		if ($prefs['feature_blogs'] == 'y') {
+		if (isset ($types['blog post'])) {
 			$aggregator->addContentSource('blog post', new Search_ContentSource_BlogPostSource);
 		}
 
-		if ($prefs['feature_articles'] == 'y') {
+		if (isset ($types['article'])) {
 			$aggregator->addContentSource('article', new Search_ContentSource_ArticleSource);
 		}
 
-		if ($prefs['feature_file_galleries'] == 'y') {
+		if (isset ($types['file'])) {
 			$aggregator->addContentSource('file', new Search_ContentSource_FileSource);
+			$aggregator->addGlobalSource(new Search_GlobalSource_FileAttachmentSource);
 		}
 
-		if ($prefs['feature_trackers'] == 'y') {
+		if (isset ($types['trackeritem'])) {
 			$aggregator->addContentSource('trackeritem', new Search_ContentSource_TrackerItemSource);
+		}
+
+		if (isset ($types['sheet'])) {
+			$aggregator->addContentSource('sheet', new Search_ContentSource_SheetSource);
+		}
+
+		if (isset($types['comment'])) {
+			$commentTypes = array();
+			if ($prefs['feature_wiki_comments'] == 'y') {
+				$commentTypes[] = 'wiki page';
+			}
+			if ($prefs['feature_article_comments'] == 'y') {
+				$commentTypes[] = 'article';
+			}
+			if ($prefs['feature_poll_comments'] == 'y') {
+				$commentTypes[] = 'poll';
+			}
+			if ($prefs['feature_file_galleries_comments'] == 'y') {
+				$commentTypes[] = 'file gallery';
+			}
+
+			$aggregator->addContentSource('comment', new Search_ContentSource_CommentSource($commentTypes));
 		}
 
 		// Global Sources
@@ -103,7 +216,8 @@ class UnifiedSearchLib
 		}
 
 		if ($mode == 'indexing') {
-			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
+			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
+			$aggregator->addGlobalSource(new Search_GlobalSource_RelationSource);
 		}
 	}
 
@@ -112,7 +226,7 @@ class UnifiedSearchLib
 		global $prefs;
 
 		if ($prefs['unified_engine'] == 'lucene') {
-			$index = new Search_Index_Lucene($prefs['unified_lucene_location']);
+			$index = new Search_Index_Lucene($prefs['unified_lucene_location'], $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 
 			return $index;
 		}
@@ -126,11 +240,31 @@ class UnifiedSearchLib
 		return $dataSource;
 	}
 
+	function getWeightCalculator()
+	{
+		global $prefs;
+
+		$lines = explode("\n", $prefs['unified_field_weight']);
+
+		$weights = array();
+		foreach ($lines as $line) {
+			$parts = explode(':', $line, 2);
+			if (count($parts) == 2) {
+				$parts = array_map('trim', $parts);
+
+				$weights[$parts[0]] = $parts[1];
+			}
+		}
+
+		return new Search_Query_WeightCalculator_Field($weights);
+	}
+
 	function buildQuery(array $filter)
 	{
-		global $categlib; require_once 'lib/categories/categlib.php';
+		$categlib = TikiLib::lib('categ');
 
 		$query = new Search_Query;
+		$query->setWeightCalculator($this->getWeightCalculator());
 		$query->filterPermissions(Perms::get()->getGroups());
 
 		if ($jail = $categlib->get_jail()) {
@@ -150,17 +284,38 @@ class UnifiedSearchLib
 		}
 
 		if (isset($filter['content']) && $filter['content']) {
-			$query->filterContent($filter['content']);
+			$query->filterContent($filter['content'], TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true));
+		}
+
+		if (isset($filter['autocomplete']) && $filter['autocomplete']) {
+			$query->filterInitial($filter['autocomplete']);
 		}
 
 		if (isset($filter['language']) && $filter['language']) {
-			$q = "\"{$filter['language']}\"";
+			$q = $filter['language'];
+			if (preg_match("/^\w+\-\w+$/", $q)) {
+				$q = "\"$q\"";
+			}
 
 			if (isset($filter['language_unspecified'])) {
-				$q .= ' or unknown';
+				$q = "($q) or unknown";
 			}
 
 			$query->filterLanguage($q);
+		}
+
+		unset($filter['type']);
+		unset($filter['categories']);
+		unset($filter['deep']);
+		unset($filter['tags']);
+		unset($filter['content']);
+		unset($filter['language']);
+		unset($filter['autocomplete']);
+
+		foreach ($filter as $key => $value) {
+			if ($value) {
+				$query->filterContent($value, $key);
+			}
 		}
 
 		return $query;

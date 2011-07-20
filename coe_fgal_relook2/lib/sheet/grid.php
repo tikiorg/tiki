@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -155,16 +160,23 @@ class TikiSheet
 	var $rangeBeginCol = -1;
 	var $rangeEndCol = -1;
 	
-	function getRangeBeginRow() {
+	function getRangeBeginRow()
+	{
 		return $this->rangeBeginRow > -1 ? $this->rangeBeginRow : 0;
 	}
-	function getRangeEndRow() {
+
+	function getRangeEndRow()
+	{
 		return $this->rangeEndRow > -1 ? $this->rangeEndRow : $this->getRowCount();
 	}
-	function getRangeBeginCol() {
+
+	function getRangeBeginCol()
+	{
 		return $this->rangeBeginCol > -1 ? $this->rangeBeginCol : 0;
 	}
-	function getRangeEndCol() {
+
+	function getRangeEndCol()
+	{
 		return $this->rangeEndCol > -1 ? $this->rangeEndCol : $this->getColumnCount();
 	}
 	
@@ -182,7 +194,7 @@ class TikiSheet
 			'TikiSheetSerializeHandler',
 			'TikiSheetCSVHandler',
             'TikiSheetCSVExcelHandler',
-			'TikiSheetExcelHandler'
+			//'TikiSheetExcelHandler'
 		);
 	}// }}}2
 	
@@ -327,7 +339,8 @@ class TikiSheet
 	 * @param bool $incsubs Include sub-sheets
 	 * @param timestamp $date Date (revision) to read sub-sheets from
 	 */
-	function getTableHtml( $incsubs = true, $date = null, $fromDb = true ) {
+	function getTableHtml( $incsubs = true, $date = null, $fromDb = true )
+	{
 		global $prefs, $sheetlib;
 		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
@@ -497,7 +510,8 @@ class TikiSheet
 	 * Limits display (so far)
 	 * a given range (ex: A1:B9)
 	 */
-	function setRange( $range ) {
+	function setRange( $range )
+	{
 		if( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) ) {
 			$this->rangeBeginRow = $parts[2] - 1;
 			$this->rangeEndRow = $parts[4] - 1;
@@ -514,13 +528,15 @@ class TikiSheet
 		return $this->rowCount;
 	}
 	
-	function getTitle() {
+	function getTitle()
+	{
 		global $sheetlib;
 		$info = $sheetlib->get_sheet_info($this->sheetId);
 		return $info['title'];
 	}
 	
-	function getInstance() {
+	function getInstance()
+	{
 		return $this->instance;
 	}
 	
@@ -729,6 +745,9 @@ class TikiSheetDataHandler
 	 * @return true on success.
 	 * @abstract
 	 */
+	var $maxrows = 300;
+    var $maxcols = 26;
+    
 	function _load( &$sheet )
 	{
 		trigger_error( "Abstract method call. _load() not defined in " . get_class( $this ), E_USER_ERROR );
@@ -774,6 +793,33 @@ class TikiSheetDataHandler
 	function version()
 	{
 		trigger_error( "Abstract method call. version() not defined in " . get_class( $this ), E_USER_ERROR );
+	}
+	
+	function parseCsv( &$sheet )
+	{
+		$rows = explode("\n", $this->data);
+		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
+			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
+			
+			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
+				$sheet->initCell( $i, $j );
+				$sheet->setValue( $cols[$j] );
+				
+				if ( isset($cols[$j]) ) {
+					if (strlen( $cols[$j] )) {
+						if ($cols[$j][0] == '=' ) {
+							$sheet->setCalculation( substr($cols[$j], 1) );
+						}
+					}
+				}
+				
+				$sheet->setSize( 1, 1 );
+			}
+		}
+		
+		if ($i >= $this->maxrows || $j >= $this->maxcols) $this->truncated = true;
+		
+		return true;
 	}
 } // }}}1
 
@@ -1060,42 +1106,14 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	{
 		$this->file = $file;
 		$this->lineLen = $lineLen;
+		$this->data = strip_tags( file_get_contents($this->file) );
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
 	// _load {{{2
 	function _load( &$sheet )
 	{
-		if( $file = @fopen( $this->file, "r" ) )
-		{
-			$row = 0;
-			while( $data = @fgetcsv( $file, $this->lineLen ) )
-			{
-				foreach( $data as $col=>$value )
-				{
-					$sheet->initCell( $row, $col );
-					$cellValue = $this->encoding->convert_encoding ( $value );
-					$sheet->setValue( $cellValue );
-                	
-					if ( isset($cellValue) ) {
-						if (strlen( $cellValue )) {
-							if ($cellValue[0] == '=' ) {
-								$sheet->setCalculation( substr($cellValue, 1) );
-							}
-						}
-					}
-					$sheet->setSize( 1, 1 );
-				}
-
-				$row++;
-			}
-
-			@fclose( $file );
-
-			return true;
-		}
-		else
-			return false;
+		return $this->parseCSV( $sheet );
 	}
 
 	// _save {{{2
@@ -1162,6 +1180,64 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	}
  } // }}}1
  
+ /** TikiSheetCSVHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object.
+ */
+class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
+{
+	var $file;
+	
+	/** Constructor {{{2
+	 * Initializes the the serializer on a file.
+	 * @param $file The file path to save or load from.
+	 */
+	function TikiSheetFileGalleryCSVHandler( $fileId = 0 , $maxrows = 300, $maxcols = 26)
+	{
+		include_once('lib/filegals/filegallib.php');
+		global $prefs, $headerlib, $filegallib;
+		$fileInfo = $filegallib->get_file_info( $fileId );
+		
+		if ($fileInfo['filetype'] != 'text/csv') return false;
+		
+		$this->data = $fileInfo['data'];
+		$this->maxrows = $maxrows;
+		$this->maxcols = $maxcols;
+		$this->truncated = false;
+	}
+	
+	// _load {{{2
+	function _load( &$sheet )
+	{
+		return $this->parseCsv($sheet);
+	}
+
+	// _save {{{2
+	function _save( &$sheet )
+	{
+		
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "CSV File from Tiki Gallery";
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_LOAD_DATA ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "1.0-test";
+	}
+ } // }}}1
+ 
+ 
  /** TikiSheetCSVExcelHandler {{{1
  * Class that stores the sheet representation in a
  * standard text file as a serialized PHP object. The difference
@@ -1180,44 +1256,15 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     {
         $this->file = $file;
         $this->lineLen = $lineLen;
+        $this->data = strip_tags(file_get_contents($this->file));
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
     }
 
-    // _load {{{2
-    function _load( &$sheet )
-    {
-        if( $file = @fopen( $this->file, "r" ) )
-        {
-            $row = 0;
-            while( $data = @fgetcsv( $file, $this->lineLen , ";", '"') )
-            {
-                foreach( $data as $col=>$value )
-                {
-                    $sheet->initCell( $row, $col );
-                	$cellValue = $this->encoding->convert_encoding ( $value );
-					$sheet->setValue( $cellValue );
-                	
-					if ( isset($cellValue) ) {
-						if (strlen( $cellValue )) {
-							if ($cellValue[0] == '=' ) {
-								$sheet->setCalculation( substr($cellValue, 1) );
-							}
-						}
-					}
-					
-                    $sheet->setSize( 1, 1 );
-                }
-
-                $row++;
-            }
-
-            @fclose( $file );
-
-            return true;
-        }
-        else
-            return false;
-    }
+// _load {{{2
+	function _load( &$sheet )
+	{
+		return $this->parseCsv( $sheet );
+	}
 
     // _save {{{2
     function _save( &$sheet )
@@ -1510,7 +1557,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 class TikiSheetExcelHandler extends TikiSheetDataHandler
 {
 	var $file;
-	
+	var $disabled = true;
 	/** Constructor {{{2
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
@@ -1833,7 +1880,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
-		$title = " title='{$sheet->getTitle()}'";
+		$title = " title='" . htmlspecialchars($sheet->getTitle(), ENT_QUOTES) . "'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		echo "<table{$class}{$id}{$sub}{$title}>\n";
 
@@ -1906,7 +1953,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					$append .= " rowspan='{$height}'";
 				
 				if (!empty($sheet->calcGrid[$i][$j])) {
-					$append .= ' formula="='.$sheet->calcGrid[$i][$j].'"';
+					$append .= ' formula="='.str_replace('"', "'", $sheet->calcGrid[$i][$j]).'"';
 				}
 
 				if( isset( $sheet->dataGrid[$i][$j] ) )
@@ -2133,7 +2180,8 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 	}
 
 	// _load {{{2
-	function _load( TikiSheet &$sheet ) {
+	function _load( TikiSheet &$sheet )
+	{
 
 		$d = $this->data;
 		
@@ -2218,6 +2266,39 @@ class SheetLib extends TikiLib
 		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
 
 		return $result->fetchRow();
+	}
+	
+	function add_related_tracker($sheetdId, $trackerId) {
+		global $relationlib; require_once('lib/attributes/relationlib.php');
+		$relationlib->add_relation("tiki.sheet.tracker", "sheetId", $sheetdId, "trackerId", $trackerId);
+	}
+	
+	function remove_related_tracker($sheetdId, $trackerId) {
+		global $relationlib; require_once('lib/attributes/relationlib.php');
+		$trackerIds = array();
+		foreach($relationlib->get_relations_from("sheetId", $sheetdId, "tiki.sheet.tracker") as $result) {
+			if ($result['itemId'] == $trackerId) {
+				$relationlib->remove_relation($result['relationId']);
+			}
+		} 
+	}
+	
+	function get_related_tracker_ids($sheetdId) {
+		global $relationlib; require_once('lib/attributes/relationlib.php');
+		$trackerIds = array();
+		foreach($relationlib->get_relations_from("sheetId", $sheetdId, "tiki.sheet.tracker") as $result) {
+			$trackerIds[] = $result['itemId'];
+		}
+		return $trackerIds;
+	}
+	
+	function get_related_trackers_as_html($sheetId) {
+		$trackerHtml = '';
+		require_once ('lib/wiki-plugins/wikiplugin_trackerlist.php');
+		foreach($this->get_related_tracker_ids($sheetId) as $trackerId) {
+			$trackerHtml .= wikiplugin_trackerlist(null, array("trackerId" => $trackerId, "tableassheet" => "y"));
+		}
+		return $trackerHtml;
 	}
 	
 	function get_sheet_subsheets( $sheetId ) // {{{2
@@ -2324,13 +2405,15 @@ class SheetLib extends TikiLib
 		return $sheetId;
 	}
 	
-	function set_sheet_title( $sheetId, $title ) {
+	function set_sheet_title( $sheetId, $title )
+	{
 		if ( $sheetId ) {
 			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
 		}
 	}
 	
-	function setup_jquery_sheet() {
+	function setup_jquery_sheet()
+	{
 		global $headerlib;
 		if (!$this->setup_jQuery_sheet_files) {
 			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
@@ -2351,7 +2434,8 @@ class SheetLib extends TikiLib
 		}
 	}
 	
-	function sheet_history( $sheetId ) {
+	function sheet_history( $sheetId )
+	{
 		return $this->fetchAll( "
 			SELECT DISTINCT
 				`tiki_sheet_values`.`begin` as stamp,
@@ -2363,7 +2447,8 @@ class SheetLib extends TikiLib
 			ORDER BY begin DESC", array( $sheetId, $sheetId ) );
 	}
 	
-	function rollback_sheet($id, $readdate=null) {
+	function rollback_sheet($id, $readdate=null)
+	{
 		global $user, $sheetlib;
 		
 		if ($readdate) {
@@ -2402,7 +2487,8 @@ class SheetLib extends TikiLib
 		return $id;
 	}
 	
-	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0) {
+	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0)
+	{
 		global $user, $prefs;
 		
 		if (!isset($readdate)) {
@@ -2485,7 +2571,8 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function save_sheet($data, $id, $file, $type = 'db') {
+	function save_sheet($data, $id, $file, $type = 'db')
+	{
 		global $user, $sheetlib;
 		
 		$sheets =  json_decode($data);
@@ -2523,8 +2610,8 @@ class SheetLib extends TikiLib
 					}
 				}
 			}
-		} else {
-			/*
+		} /*else {
+			
 			$grid = new TikiSheet();
 			if ($type == 'csv') {
 				foreach ($sheets as $sheet) {
@@ -2542,8 +2629,8 @@ class SheetLib extends TikiLib
 						$rc .= tra("file - ").$file;
 					}
 				}
-			}*/
-		}
+			}
+		}*/
 		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
@@ -2552,7 +2639,8 @@ class SheetLib extends TikiLib
 	 * @param $style A simple css style string used with an html dom object
 	 * @param $attr The name of the css attribute you'd like to extract from $style
 	 */
-	function get_attr_from_css_string($style, $attr, $default) {
+	function get_attr_from_css_string($style, $attr, $default)
+	{
 		global $sheetlib;
 		$style = strtolower($style);
 		$style = str_replace(' ', '', $style);
@@ -2724,13 +2812,15 @@ class SheetLib extends TikiLib
 		return array($result1, $result2);
 	}
 	
-	function user_can_view($sheetId) {
+	function user_can_view($sheetId)
+	{
 		global $user;
 		$objectperms = Perms::get( 'sheet', $sheetId );
 		return ( $objectperms->view_sheet || $objectperms->admin );
 	}
 	
-	function user_can_edit($sheetId) {
+	function user_can_edit($sheetId)
+	{
 		global $user;
 		$objectperms = Perms::get( 'sheet', $sheetId );
 		return ( $objectperms->edit_sheet || $objectperms->admin );

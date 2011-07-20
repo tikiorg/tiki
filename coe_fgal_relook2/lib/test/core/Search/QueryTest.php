@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_QueryTest extends PHPUnit_Framework_TestCase
 {
@@ -206,6 +211,56 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 			new Search_Expr_And(array(
 				new Search_Expr_Token('1', 'multivalue', 'freetags'),
 				new Search_Expr_Token('2', 'multivalue', 'freetags'),
+			)),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
+
+	function testFilterContentSpanMultipleFields()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->filterContent('hello world', array('contents', 'title'));
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			new Search_Expr_Or(array(
+				new Search_Expr_Or(array(
+					new Search_Expr_Token('hello', 'plaintext', 'contents'),
+					new Search_Expr_Token('world', 'plaintext', 'contents'),
+				)),
+				new Search_Expr_Or(array(
+					new Search_Expr_Token('hello', 'plaintext', 'title'),
+					new Search_Expr_Token('world', 'plaintext', 'title'),
+				)),
+			)),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
+
+	function testApplyWeight()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->setWeightCalculator(new Search_Query_WeightCalculator_Field(array(
+			'title' => 5.5,
+			'allowed_groups' => 0.0001,
+		)));
+		$query->filterContent('hello', array('contents', 'title'));
+		$query->filterPermissions(array('Anonymous'));
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			new Search_Expr_Or(array(
+				new Search_Expr_Token('hello', 'plaintext', 'contents', 1.0),
+				new Search_Expr_Token('hello', 'plaintext', 'title', 5.5),
+			)),
+			new Search_Expr_Or(array(
+				new Search_Expr_Token('Anonymous', 'multivalue', 'allowed_groups', 0.0001),
 			)),
 		));
 

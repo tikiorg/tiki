@@ -100,7 +100,7 @@
 			{/remarksbox}
 		{/if}
 		{if !empty($custom_ok)}
-			{remarksbox title="{tr}ok{/tr}" }
+			{remarksbox title="{tr}ok{/tr}"}
 				{tr}The file has been saved{/tr}
 			{/remarksbox}
 		{/if}

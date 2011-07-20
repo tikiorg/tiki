@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -17,7 +17,7 @@ require_once ("Net/LDAP2.php");
 class TikiLdapLib
 {
 
-	// var to hold a esablished connection
+	// var to hold a established connection
 	protected $ldaplink = NULL;
 
 	// var for ldap configuration parameters
@@ -44,12 +44,10 @@ class TikiLdapLib
 		'groupoc' => 'groupOfNames',
 		'groupnameattr' => '',
 		'groupdescattr' => '',
-		//neu
 		'groupmemberattr' => '',
 		'groupmemberisdn' => true,
 		'usergroupattr' => '',
 		'groupgroupattr' => '',
-		// end neu
 		'debug' => false
 	);
 
@@ -173,7 +171,7 @@ class TikiLdapLib
 				}
 		}
 
-		// Set the bindnpw with the options['password']
+		// Set the bindpw with the options['password']
 		if ($this->options['bind_type'] != 'explicit') {
 			$this->options['bindpw'] = $this->options['password'];
 		}
@@ -346,7 +344,7 @@ class TikiLdapLib
 		$this->get_user_attributes($force_reload);
 
 		// ensure we have a connection to the ldap server
-		if (!$this->bind()) {
+		if ($this->bind() != 'LDAP_SUCCESS') {
 			$this->add_log('ldap', 'Reuse of ldap connection failed: ' . $this->ldaplink->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 			return false;
 		}
@@ -463,7 +461,7 @@ class TikiLdapLib
 	}
 
 	/**
-	 * Setter to set an otpion value
+	 * Setter to set an option value
 	 * @param string $name The name of the option
 	 * @param mixed $value The value
 	 * @return void
@@ -471,13 +469,11 @@ class TikiLdapLib
 	 */
 	public function setOption ($name, $value = null)
 	{
-		try {
-			if (isset($this->options[$name])) {
-				$this->options[$name] = $value;
-			} else {
-				throw new Exception(sprintf("Undefined option: %s \n", $name), E_USER_WARNING);
-			}
-		} catch (Exception $e) { }
+		if (isset($this->options[$name])) {
+			$this->options[$name] = $value;
+		} else {
+			throw new Exception(sprintf("Undefined option: %s \n", $name), E_USER_WARNING);
+		}
 	}
 
 	/**

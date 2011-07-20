@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -90,13 +90,6 @@ foreach( array_reverse( $pages ) as $id => $info )
 
 	if( $tiki_p_view == 'y' ) {
 		$renderer->runSetups();
-
-		$comments_per_page = $prefs['wiki_comments_per_page'];
-		$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-		$comments_vars=Array('page');
-		$comments_objectId = 'wiki page:' . $info['pageName'];
-		$_REQUEST['page'] = $info['pageName'];
-		include('comments.php');
 
 		$contents[] = $smarty->fetch('tiki-show_page.tpl');
 

@@ -1,10 +1,9 @@
 <?php
-
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-index.php 29292 2010-09-16 14:39:15Z sept_7 $
+// $Id$
 
 $inputConfiguration = array(array(
 	'staticKeyFilters' => array(
@@ -48,7 +47,7 @@ if (isset($_POST['action'])) {
 	}
 
 	$objects = $categlib->list_category_objects($_REQUEST['categId'], 0, 1, 'name_asc');
-	echo json_encode(array(
+	$access->output_serialized(array(
 		'count' => $objects['cant'],
 	));
 	exit;

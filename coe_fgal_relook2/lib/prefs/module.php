@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -19,6 +19,7 @@ function prefs_module_list() {
 //				'user' => tra('User Decides'),
 				'n' => tra('Never'),
 			),
+			'default' => 'y',
 		),
 		'module_zones_topbar' => array(
 			'name' => tra('Topbar module zone'),
@@ -32,6 +33,7 @@ function prefs_module_list() {
 //				'user' => tra('User Decides'),
 				'n' => tra('Never'),
 			),
+			'default' => 'y',
 		),
 		'module_zones_pagetop' => array(
 			'name' => tra('Page top module zone'),
@@ -45,6 +47,7 @@ function prefs_module_list() {
 //				'user' => tra('User Decides'),
 				'n' => tra('Never'),
 			),
+			'default' => 'y',
 		),
 		'module_zones_bottom' => array(
 			'name' => tra('Bottom module zone'),
@@ -58,6 +61,7 @@ function prefs_module_list() {
 //				'user' => tra('User Decides'),
 				'n' => tra('Never'),
 			),
+			'default' => 'y',
 		),
 		'module_zones_pagebottom' => array(
 			'name' => tra('Page bottom module zone'),
@@ -71,6 +75,7 @@ function prefs_module_list() {
 //				'user' => tra('User Decides'),
 				'n' => tra('Never'),
 			),
+			'default' => 'y',
 		),
 	);
 }

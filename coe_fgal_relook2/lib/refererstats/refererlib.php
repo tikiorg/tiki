@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -23,9 +23,8 @@ class RefererLib extends TikiLib
 	function list_referer_stats($offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
 			$mid = " where (`referer` like ?)";
-			$bindvars = array($findesc);
+			$bindvars[] = '%' . $find . '%';
 		} else {
 			$mid = "";
 		}

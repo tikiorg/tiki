@@ -21,6 +21,12 @@ body {
 	font-size: 1em;
 }
 
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
 #middle {
 	text-align: left;
 	font-size: 1em;
@@ -265,12 +271,12 @@ label {
 }
 
 /***** Site Header & Identity *****/
-#header {
+.header {
 	background: #e9ecef;
 }
 
-#header a,
-#header a:visited {
+.header a,
+.header a:visited {
 	text-decoration: none;
 }
 
@@ -279,7 +285,23 @@ label {
 	padding-top: 2px;
 }
 
-#sitetitles {
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 40px;
+}
+
+#top_modules .box-logo {
+	float: left;
+	margin: 10px;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 15px;
 	font-weight: bold;
 }
 
@@ -291,11 +313,6 @@ label {
 	font-size: 1.2em;
 }
 
-#sitelogo {
-	margin: auto;
-	overflow: hidden;
-}
-
 #top_modules .box-login_box {
 	text-align: right;
 	position: absolute;
@@ -304,25 +321,29 @@ label {
 	font-size: 90%;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	bottom: 3px;
 }
 
-#siteloginbar div {
+.siteloginbar div {
 	text-align: right;
 }
 
-#siteloginbar_popup {
+.siteloginbar_popup {
 	bottom: 4px;
 }
 
-#siteloginbar_popup li.login_link {
+.siteloginbar_popup .tabmark {
+	float: left;
+}
+
+.siteloginbar_popup li.login_link {
 	border: 1px solid #8cacbb;
 	padding: 0;
 }
 
-#siteloginbar_popup .cssmenu_horiz li ul {
-	margin-top: -4px;
+.siteloginbar_popup .cssmenu_horiz li ul {
+	margin-top: 5px;
 }
 
 #tiki-top {
@@ -342,6 +363,7 @@ label {
 	font-size: .95em;
 	text-align: right;
 	float: right;
+	margin-right: 20px;
 }
 
 /****** Menus, Links ******/
@@ -502,8 +524,7 @@ a.flip:hover {
 .share {
 	font-size: 80%;
 	text-align: right;
-	margin-right: 1em;
-	margin: 3px 1em -1px 3px;
+	margin: 3px 3px -1px 3px;
 }
 
 .tellafriend a,
@@ -923,31 +944,32 @@ td.third {
 }
 
 /** Tabs **/
-.tab1 form {
-	display: inline;
-}
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
-	padding: 0 !important;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	position:relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 0 0;
+	border: none;
 }
 
-.tabmark {
-	display: inline;
-	font-size: .95em;
-	background: #ddd;
-	border: 1px solid #666;
-	margin: 0;
-	margin-right: 5px;
-	padding: 2px 0;
+.tabs span {
+	display: block;
+	float: left;
 }
 
-.tabmark a {
+.tabmark a,
+.tabmark a:visited {
+	padding: 0.5em 1em;
 	border-bottom: 0;
 	color: #666;
 	font-weight: bold;
-	padding: 1px 5px;
 }
 
 .tabmark a:active {
@@ -1159,12 +1181,9 @@ img.externallink {
 	border-top: 1px solid #8cacbb;
 	border-bottom: 1px solid #8cacbb;
 	color: #000;
+	background: #eee;
 	padding: 2px 0;
-	margin-bottom: 2px;
-}
-
-.tocnavlink {
-	color: #000;
+	margin-bottom: 16px;
 }
 
 .toc {
@@ -1177,11 +1196,6 @@ img.externallink {
 	background: url(../img/icons2/corner-dots.gif) no-repeat;
 	margin-top: 3px;
 	padding-left: 16px;
-}
-
-.tocnav {
-	background: #eee;
-	margin-bottom: 16px;
 }
 
 .tocnav a {
@@ -1445,23 +1459,12 @@ body.tiki_blogs .post {
 }
 
 body.tiki_blogs .post .postbody {
-	border: 1px solid #AEAEAE;
-	border-bottom: 1px solid #AEAEAE;
-	color: black;
-	padding: 10px;
-}
-
-body.tiki_blogs .post .postbody {
 	background: #f9fcff;
 	border: 1px solid #8cacbb;
+	border-bottom: 1px solid #AEAEAE;
 	color: #000;
 	padding: 0;
 	margin: 5px 0;
-}
-
-.postbody-title {
-	background: none;
-	border: 0;
 }
 
 body.tiki_blogs .postbody-title {
@@ -1505,6 +1508,7 @@ body.tiki_blogs .postfooter {
 	display: block;
 	clear: both;
 	background: #e0eaf4;
+	border: 0;
 	border-bottom: 1px solid #8cacbb;
 	padding-bottom: 4px;
 }
@@ -1770,15 +1774,7 @@ a.namealias {
 
 /***** Trackers (etc.) *****/
 .statuson {
-	border: 1px inset #666;
-	vertical-align: middle;
-	background: #bbaa99;
-}
-
-.statusoff {
-	padding: 1px;
-	margin: 2px;
-	vertical-align: middle;
+	border: 1px solid #8cacbb;
 }
 
 /***** Categories, Tags *****/
@@ -1929,13 +1925,10 @@ ul.catitems li {
 
 /*****  Polls  *****/
 .pollresults {
+	width: 100%;
 	margin-top: 5px;
 	font-size: 1.2em;
 	padding: 0 5px;
-}
-
-.pollresults {
-	width: 100%;
 }
 
 .pollr {

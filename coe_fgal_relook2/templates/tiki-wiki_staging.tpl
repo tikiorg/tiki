@@ -1,4 +1,5 @@
-{if $beingStaged eq 'y'}
+{* $Id$ *}
+{if isset($beingStaged) && $beingStaged eq 'y'}
 <div class="tocnav">
 {tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
 {if $outOfSync eq 'y'}
@@ -28,13 +29,13 @@
 </div>
 {/if} {*beingStaged*}
 
-{if $needsFirstApproval == 'y' and $canApproveStaging == 'y'}
+{if ( isset($needsFirstApproval) && $needsFirstApproval == 'y') and $canApproveStaging == 'y'}
 	<div class="tocnav">
 		{tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
 	</div>
 {/if}
 
-{if $canEditStaging eq 'y' and $hasStaging eq 'y'}
+{if ( isset($canEditStaging) && $canEditStaging eq 'y' ) and $hasStaging eq 'y'}
 	<div class="tocnav">
 	  {tr}There is a staging page (not yet approved) for this page.{/tr}
 	 </div>

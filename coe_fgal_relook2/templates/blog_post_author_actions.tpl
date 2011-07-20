@@ -8,7 +8,7 @@
 			{if $blog_post_context eq 'view_blog'}
 				<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;savenotepad={$post_info.postId}">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
 			{else}
-				<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
+				<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
 			{/if}
 		{/if}
 	{/if}

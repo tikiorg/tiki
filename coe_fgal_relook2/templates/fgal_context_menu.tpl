@@ -9,7 +9,7 @@
 		{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[changes].id _onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"}{tr}Properties{/tr}{/self_link}
 	{/if}
 
-	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' ) }
+	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' )}
 		<a href="tiki-upload_file.php?galleryId={$files[changes].id}"{if $filegals_manager neq ''} onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"{/if}>{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
 	{/if}
 
@@ -49,12 +49,21 @@
 		{/if}
 	{/if}
 
-	{if $files[changes].type|truncate:6:'':true eq 'image/' }
+	{if $files[changes].type|truncate:6:'':true eq 'image/'}
 		<a href="{$files[changes].id|sefurl:display}" target="_new">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
+		{if $files[changes].type eq 'image/svg+xml'}
+			<a href="tiki-edit_draw.php?fileId={$files[changes].id}&galleryId={$files[changes].galleryId}">
+			{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
+			</a>
+		{/if}
+	{elseif $files[changes].type eq 'text/csv'}
+		<a href="tiki-view_sheets.php?fileId={$files[changes].id}">
+		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+		</a>
 	{/if}
-
+	
 	{if (isset($files[changes].p_download_files) and  $files[changes].p_download_files eq 'y')
 	 or (!isset($files[changes].p_download_files) and $files[changes].perms.tiki_p_download_files eq 'y')}
 		{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
@@ -93,7 +102,7 @@
 	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gallery *}
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
-		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
+		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y'))}
 		{if $files[changes].archiveId == 0}
 			{if $prefs.feature_file_galleries_save_draft eq 'y' and $files[changes].nbDraft gt 0}
 				{self_link _icon='accept' _menu_text=$menu_text _menu_icon=$menu_icon validate=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Validate your draft{/tr}{/self_link}
@@ -109,6 +118,7 @@
 				{if $prefs.fgal_display_replace eq 'y'}
 					<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{$replace_action_title}">
 						<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
+                        <input type="hidden" name="fileId" value="{$files[changes].fileId}" />
 						<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
 					</div>
 
@@ -168,7 +178,7 @@
 	{/if}
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
-		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or ($files[changes].perms.tiki_p_edit_gallery_file eq 'y' and $files[changes].perms.tiki_p_remove_file eq 'y'))) }
+		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or ($files[changes].perms.tiki_p_edit_gallery_file eq 'y' and $files[changes].perms.tiki_p_remove_file eq 'y')))}
 			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon remove=$files[changes].fileId galleryId=$files[changes].galleryId _onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"}{tr}Delete{/tr}{/self_link}
 	{/if}
 

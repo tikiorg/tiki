@@ -1,7 +1,6 @@
 {* $Id$ *}
-
-<h2>{tr}Export Tracker Items{/tr}</h2>
-<div>
+{tab name="{tr}Export Tracker Items{/tr}"}
+<h3>{tr}Tracker Items Export{/tr}</h3>
 <form action="tiki-view_tracker.php?trackerId={$trackerId}&amp;cookietab=3" method="post">
 <table class="formcolor">
 <tr>
@@ -48,9 +47,9 @@
 	<td>{tr}Info{/tr}</td>
 	<td>
 		<input name="showItemId" id="showItemId" type="checkbox" checked="checked" /><label for="showItemId">{tr}itemId{/tr}</label>
-		<input type="checkbox" name="showStatus" id="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} /><label for="showStatus">{tr}status{/tr}</label>
-		<input type="checkbox" name="showCreated" id="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} /><label for="showCreated">{tr}created{/tr}</label>
-		<input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="showLastModif">{tr}lastModif{/tr}</label>
+		<input type="checkbox" name="showStatus" id="showStatus"{if isset($info) && $info.showStatus eq 'y'} checked="checked"{/if} /><label for="showStatus">{tr}status{/tr}</label>
+		<input type="checkbox" name="showCreated" id="showCreated"{if isset($info) && $info.showCreated eq 'y'} checked="checked"{/if} /><label for="showCreated">{tr}created{/tr}</label>
+		<input type="checkbox" name="showLastModif" id="showLastModif"{if isset($info) && $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="showLastModif">{tr}lastModif{/tr}</label>
 	</td>
 </tr>
 <tr>
@@ -94,7 +93,7 @@
 		</td>
 	</tr>
 {/if}
-<tr><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /> <input type="submit" name="zip" id="zip_button" value="{if $info.useAttachmnet eq 'y'}{tr}Zip export with attachments{/tr}{else}{tr}Zip Export{/tr}{/if}" /></td>
+<tr><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /> <input type="submit" name="zip" id="zip_button" value="{if isset($info.useAttachmnet) && $info.useAttachmnet eq 'y'}{tr}Zip export with attachments{/tr}{else}{tr}Zip Export{/tr}{/if}" /></td>
 </tr>
 </table>
 </form>
@@ -155,11 +154,12 @@ exportProgress = function () {
 	});
 }
 {/jq}
-{remarksbox type="note" title="Note"}Please note: Using AJAX export function - please report any issues{/remarksbox}
+{remarksbox type="note" title="Note"}Using AJAX export function - please report any issues{/remarksbox}
 {/if}
-</div>
+{/tab}
 {if $tiki_p_tracker_dump eq "y" or $tiki_p_admin eq "y"}
-	<h2>{tr}Dump All Tracker Items{/tr}</h2>
+	{tab name="{tr}Dump All Tracker Items{/tr}"}
+	<h3>{tr}Tracker Items Dump{/tr}</h3>
 	<div>
 		<form action="{$smarty.server.PHP_SELF}" method="post">
 			<table class="formcolor">
@@ -194,4 +194,5 @@ exportProgress = function () {
 			</table>
 		</form>
 	</div>
+	{/tab}
 {/if}

@@ -20,6 +20,13 @@
 	{/remarksbox}
 {/if}
 
+{if $mailto_link}
+	{remarksbox type=info title="External Client"}
+		{tr}You can also send newsletters using an external client:{/tr}
+		<a href="{$mailto_link|escape}">{tr}Compose{/tr}</a>
+	{/remarksbox}
+{/if}
+
 {if $emited eq 'y'}
 	{remarksbox type="note" title="{tr}Notice{/tr}" icon="lock"}
 		{tr}The newsletter was sent to {$sent} email addresses{/tr}
@@ -64,7 +71,7 @@
 			<input type="hidden" name="cookietab" value="3" />
 			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}" />
 			<input type="hidden" name="replyto" value="{$replyto|escape}" />
-			<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
+			<input type="hidden" name="wysiwyg" value="{$info.wysiwyg|escape}" />
 			<input type="submit" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';" />
 			<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />
 			{foreach from=$info.files item=newsletterfile key=fileid}
@@ -99,7 +106,7 @@
 	<h3>{tr}HTML version{/tr}</h3>
 	<div class="simplebox wikitext">{$previewdata}</div>
 
-	{if $allowTxt eq 'y' }
+	{if $allowTxt eq 'y'}
 		<h3>{tr}Text version{/tr}</h3>
 		{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 		{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
@@ -126,7 +133,20 @@
 
 	<div id="sendingArea" style="display:none">
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
+		<div id="confirmed"></div>
 		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
+		{jq}
+			$('#resultIframe').bind('load', function () {
+				var root = this.contentDocument.documentElement, iframe = this;
+				$('#confirmed').append($('.confirmation', root));
+				$('.throttle', root).each(function () {
+					var url = 'tiki-send_newsletters.php?resume=' + $(this).data('edition');
+					setTimeout(function () {
+						$(iframe).attr('src', url);
+					}, parseInt($(this).data('rate'), 10) * 1000);
+				});
+			});
+		{/jq}
 	</div>
 
 {else}
@@ -138,7 +158,7 @@
 		<h3>{tr}HTML version{/tr}</h3>
 		<div class="simplebox wikitext">{$previewdata}</div>
 
-		{if $allowTxt eq 'y' }
+		{if $allowTxt eq 'y'}
 			<h3>{tr}Text version{/tr}</h3>
 			{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 			{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
@@ -305,7 +325,7 @@
 		{assign var=find_bak value=$ed_find}
 		{assign var=tab value=2}
 		<h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
-		{include file='sent_newsletters.tpl' }
+		{include file='sent_newsletters.tpl'}
 	{/tab}
 
 	{tab name="{tr}Sent editions{/tr}&nbsp;($cant_editions)"}
@@ -327,7 +347,7 @@
 		{assign var=find_bak value=$dr_find}
 		{assign var=tab value=3}
 		<h2>{tr}Sent editions{/tr}&nbsp;({$cant_editions})</h2>
-		{include file='sent_newsletters.tpl' }
+		{include file='sent_newsletters.tpl'}
 		{/tab}
 	{/tabset}
 {/if}

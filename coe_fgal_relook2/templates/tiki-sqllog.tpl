@@ -21,11 +21,11 @@
 	<tr>
 	{foreach from=$logs item=log}
 		<tr>
-			<td>{$log.created|escape}</td>
-			<td>{$log.sql1|escape}</td>
-			<td>{$log.params|escape}</td>
-			<td>{$log.tracer|escape}</td>
-			<td>{$log.timer|escape}</td>
+			<td class="text">{$log.created|escape}</td>
+			<td class="text">{$log.sql1|escape}</td>
+			<td class="text">{$log.params|escape}</td>
+			<td class="text">{$log.tracer|escape}</td>
+			<td class="date">{$log.timer|escape}</td>
 		</tr>
 	{/foreach}
 </table>

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -80,7 +80,7 @@ class WikiLib extends TikiLib
 			return $ret;
 		}
 
-		$query = "select `user`, MAX(`version`) as `vsn` from `tiki_history` where `pageName`='HomePage' group by `user` order by `vsn` desc";
+		$query = "select `user`, MAX(`version`) as `vsn` from `tiki_history` where `pageName`=? group by `user` order by `vsn` desc";
 		// jb fixed 110115 - please check intended behaviour remains
 		// was: $query =  "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
 		$result = $this->query($query,array($page));
@@ -166,7 +166,7 @@ class WikiLib extends TikiLib
 		global $prefs, $tikilib;
 		// if page already exists, stop here
 		$newName = trim($newName);
-		if ($this->page_exists($newName)) {
+		if ($this->get_page_info($newName, false, true)) {
 			// if it is a case change of same page: allow it, else stop here
 			if (strcasecmp(trim($oldName), $newName) <> 0 ) throw new Exception("Page already exists", 2);
 		}
@@ -378,10 +378,10 @@ class WikiLib extends TikiLib
 			$parse_options['suppress_icons'] = true;
 		}
 
-		$wiki_cache = !empty($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
-		if ($wiki_cache > 0 && empty($user) ) {
+		$wiki_cache = !is_null($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
+		if ($wiki_cache > 0 && (empty($user) || $prefs['wiki_cache'] == 0) ) {
 			$cache_info = $this->get_cache_info($page);
-			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
+			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $wiki_cache >= $this->now) {
 				$content = $cache_info['cache'];
 				// get any cached JS and add to headerlib JS
 				$headerlib->add_js( implode( "\n", $headerlib->getJsFromHTML( $content )));
@@ -756,11 +756,11 @@ class WikiLib extends TikiLib
 		if (!empty($user)) {
 			$info = $tikilib->get_page_info($page);
 
-			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-			$result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
-
 			$query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
 			$result = $this->query($query, array($user, tra('Page locked'), $info['version'] + 1, $page));
+			
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($page,(int) $info['version'] + 1,(int) $info['lastModif'],$user,$info['ip'],tra('Page locked'),$info['data'],$info['description']));
 		}
 
 		return true;
@@ -774,12 +774,12 @@ class WikiLib extends TikiLib
 
 		if (isset($user)) {
 			$info = $tikilib->get_page_info($page);
-
-			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-			$result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
-
+			
 			$query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
 			$result = $this->query($query, array($user, tra('Page unlocked'), $info['version'] + 1, $page));
+			
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($page,(int) $info['version'] + 1,(int) $info['lastModif'],$user,$info['ip'],tra('Page unlocked'),$info['data'],$info['description']));
 		}
 
 		return true;

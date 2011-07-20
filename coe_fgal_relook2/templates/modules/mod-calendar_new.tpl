@@ -44,15 +44,20 @@
 							{assign var=over value=$cell[w][d].items[0].over}{else}{assign var=over value=""}
 						{/if}
 						{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}
-							<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$date}&amp;viewmode={$viewmodelink}" 
-							{if $sticky_popup eq 'y' or ($prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId)}
+							{if empty($calendar_popup) or $calendar_popup eq "y"}
+								<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$date}&amp;viewmode={$viewmodelink}" 
+								{if $sticky_popup eq 'y' or ($prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId)}
 									{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 								{else}
 									{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 								{/if}
 								>
 								{$day_cursor}
-							</a>
+								</a>
+							{else}
+								{$day_cursor}
+								{$over}
+							{/if}
 						{elseif $linkall eq 'y'}
 							<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode={$viewmodelink}">{$day_cursor}</a>
 						{else}

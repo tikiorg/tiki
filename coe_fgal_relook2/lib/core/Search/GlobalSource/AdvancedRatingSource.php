@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_GlobalSource_AdvancedRatingSource implements Search_GlobalSource_Interface
 {
@@ -7,14 +12,13 @@ class Search_GlobalSource_AdvancedRatingSource implements Search_GlobalSource_In
 
 	function __construct()
 	{
-		global $ratinglib; require_once 'lib/rating/ratinglib.php';
-		$this->ratinglib = $ratinglib;
+		$this->ratinglib = TikiLib::lib('rating');
 	}
 
 	function getProvidedFields()
 	{
 		if (is_null($this->fields)) {
-			global $ratingconfiglib; require_once 'lib/rating/configlib.php';
+			$ratingconfiglib = TikiLib::lib('ratingconfig');
 
 			$this->fields = array();
 			foreach ($ratingconfiglib->get_configurations() as $config) {

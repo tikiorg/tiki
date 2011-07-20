@@ -42,31 +42,31 @@
 		<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 		 
 		{if $prefs.forum_list_topics eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
 		{/if}	
 
 		{if $prefs.forum_list_posts eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
 		{/if}	
 
 		{if $prefs.forum_list_ppd eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}PPD{/tr}</th>
 		{/if}	
 
 		{if $prefs.forum_list_lastpost eq 'y'}	
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
 		{/if}
 
 		{if $prefs.forum_list_visits eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
 		{/if}	
 		
-		{assign var=numbercol value=`$numbercol+1`}
+		{assign var=numbercol value=$numbercol+1}
 		<th>{tr}Actions{/tr}</th>
 	</tr>
 
@@ -88,7 +88,7 @@
 		{/if}
 
 		<tr class="{cycle}">
-			<td>
+			<td class="text">
 				<span style="float:left">
 					{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
 						<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name|escape}</a>
@@ -118,7 +118,7 @@
 				<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 			{/if}
 			{if $prefs.forum_list_lastpost eq 'y'}	
-				<td>
+				<td class="text">
 					{if isset($channels[user].lastPost)}
 						{$channels[user].lastPost|tiki_short_datetime}<br />
 						{if $prefs.forum_reply_notitle neq 'y'}<small><i>{$channels[user].lastPostData.title|escape}</i>{/if}

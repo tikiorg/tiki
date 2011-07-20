@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -66,7 +66,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		if (!isset($selectors)) $selectors = ".$id table tr";
 			
 		$content = "
-\$('#$id').keypress( function() {
+\$('#$id').keyup( function() {
 	var criterias = this.value.toLowerCase().split( /\s+/ );
 	
 	\$('$selectors').each( function() {

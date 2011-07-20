@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,7 +26,6 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 
 $auto_query_args = array( 'galleryId'
-												, 'fileId'
 												, 'offset'
 												, 'find'
 												, 'find_creator'
@@ -41,6 +40,14 @@ $auto_query_args = array( 'galleryId'
 												, 'show_details'
 												, 'view'
 												);
+if (!empty($_REQUEST['find_other'])) {
+	$info = $filegallib->get_file_info($_REQUEST['find_other']);
+	if (!empty($info)) {
+		$_REQUEST['galleryId'] = $info['galleryId'];
+		$smarty->assign('find_other_val', $_REQUEST['find_other']);
+	}
+}
+
 $gal_info = '';
 
 if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
@@ -235,7 +242,7 @@ if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft']
 		}
 	}
 
-	$access->check_authenticity(tra('Validate draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+	$access->check_authenticity(tra('Validate draft: ') . (!empty($info['name']) ? $info['name'] . ' - ' : '') . $info['filename']);
 	$filegallib->validate_draft($info['fileId']);
 }
 
@@ -393,6 +400,12 @@ if (isset($_REQUEST['edit'])) {
 	$_REQUEST['sortorder'] = isset($_REQUEST['sortorder']) ? $_REQUEST['sortorder'] : 'created';
 	$_REQUEST['sortdirection'] = isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc' ? 'asc' : 'desc';
 	if (isset($_REQUEST['fileId'])) {
+		$infoOverride = $filegallib->get_file_info( $_REQUEST['fileId'] );
+		
+		$_REQUEST['fname'] = (isset($_REQUEST['fname']) ? $_REQUEST['fname'] : $infoOverride['name']);
+		$_REQUEST['fdescription'] = (isset($_REQUEST['fdescription']) ? $_REQUEST['fdescription'] : $infoOverride['description']);
+		$info['data'] = (isset($_REQUEST['data']) ? $_REQUEST['data'] : $info['data']);
+		
 		$fid = $filegallib->replace_file( $_REQUEST['fileId']
 																		, $_REQUEST['fname']
 																		, $_REQUEST['fdescription']
@@ -457,7 +470,8 @@ if (isset($_REQUEST['edit'])) {
 											'image_max_size_y'	=> $_REQUEST['image_max_size_y'],
 											'backlinkPerms'			=> isset($_REQUEST['backlinkPerms'])? 'y': 'n',
 											'show_backlinks'		=> $_REQUEST['fgal_list_backlinks'],
-											'wiki_syntax'			=> $_REQUEST['wiki_syntax']
+											'wiki_syntax'			=> $_REQUEST['wiki_syntax'],
+											'show_source'			=> $_REQUEST['fgal_list_source'],
 										);
 
 		if ($prefs['feature_file_galleries_templates'] == 'y' && isset($_REQUEST['fgal_template']) && !empty($_REQUEST['fgal_template'])) {
@@ -564,7 +578,7 @@ if (!empty($_REQUEST['removegal'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$access->check_authenticity(tra('Remove file gallery: ') . ' ' . htmlspecialchars($gal_info['name']));
+	$access->check_authenticity(tra('Remove file gallery: ') . $gal_info['name']);
 	$filegallib->remove_file_gallery($_REQUEST['removegal'], $_REQUEST['removegal']);
 }
 
@@ -587,13 +601,17 @@ if (!empty($_FILES)) {
 			exit;
 		}
 
+        if (empty($fileInfo) && !empty($_REQUEST['fileId'])) {
+			$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
+        }
+
 		$fileId = $filegallib->replace_file($fileInfo['fileId']
 											, $fileInfo['name']
 											, $fileInfo['description']
-											, $result['name']
+											, $result['filename']
 											, $result['data']
 											, $result['size']
-											, $type['type']
+											, $result['type']
 											, $user
 											, $result['fhash']
 											, $fileInfo['comment']
@@ -794,15 +812,6 @@ if (isset($_GET['slideshow'])) {
 // Browse view
 $smarty->assign('thumbnail_size', $prefs['fgal_thumb_max_size']);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
-// Set comments config
-if ($prefs['feature_file_galleries_comments'] == 'y') {
-	$comments_per_page = $prefs['file_galleries_comments_per_page'];
-	$thread_sort_mode = $prefs['file_galleries_comments_default_ordering'];
-	$comments_vars = array('galleryId', 'offset', 'sort_mode', 'find');
-	$comments_prefix_var = 'file gallery:';
-	$comments_object_var = 'galleryId';
-	include_once ('comments.php');
-}
 
 $options_sortorder = array( tra('Creation Date') => 'created'
 													, tra('Name') => 'name'

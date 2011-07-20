@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_ContentSource_ArticleSource implements Search_ContentSource_Interface
 {
@@ -11,12 +16,12 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT articleId x, articleId FROM tiki_articles'));
+		return $this->db->table('tiki_articles')->fetchColumn('articleId', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		global $artlib; require_once 'lib/articles/artlib.php';
+		$artlib = TikiLib::lib('art');
 		
 		$article = $artlib->get_article($objectId, false);
 

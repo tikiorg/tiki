@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,7 +13,7 @@ class Image extends ImageAbstract
 	var $gdversion;
 	var $havegd = false;
 
-	function __construct($image, $isfile = false) {
+	function __construct($image, $isfile = false, $format = 'jpeg') {
 
 		// Which GD Version do we have?
 		$exts = get_loaded_extensions();
@@ -26,6 +26,7 @@ class Image extends ImageAbstract
 				$this->loaded = false;
 			} else {
 				parent::__construct($image, false);
+				$this->format = $format;
 				$this->loaded = false;
 			}
 		} else {

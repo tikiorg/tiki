@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -495,7 +495,7 @@ class RankLib extends TikiLib
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Top articles");
+		$retval["title"] = tra("Top Articles");
 		$retval["y"] = tra("Reads");
 		$retval["type"] = "nb";
 		return $retval;
@@ -543,7 +543,7 @@ class RankLib extends TikiLib
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Most active blogs");
+		$retval["title"] = tra("Most-active Blogs");
 		$retval["y"] = tra("Activity");
 		$retval["type"] = "nb";
 		return $retval;

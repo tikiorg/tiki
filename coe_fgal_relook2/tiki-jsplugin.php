@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -20,11 +20,8 @@ header('content-type: application/x-javascript');
 header('Cache-Control: no-cache, pre-check=0, post-check=0');
 header('Expires: ' . gmdate('D, d M Y H:i:s', time()+3600*24*365*10) . ' GMT');
 
-require_once('lib/init/initlib.php');
-TikiInit::appendIncludePath(dirname(__FILE__) . '/lib/core');
+require_once 'tiki-filter-base.php';
 
-// Apply filters on the body
-include 'lib/core/TikiFilter.php';
 $filter = TikiFilter::get('xss');
 $_REQUEST['plugin'] = isset($_GET['plugin']) ? $_GET['plugin'] = $filter->filter($_GET['plugin']) : '';
 $filter = TikiFilter::get('alpha');

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -107,9 +107,6 @@ if (!empty($prefs['freetags_cloud_colors'])) {
 			$i = 0;
 		} elseif (count($colors) == 2) {
 			$i = $prev ? 0 : 1;
-		} else {
-			while (($i = rand(0, count($colors) - 1)) == $prev) {
-			}
 		}
 		$most_popular_tags[$id]['color'] = $colors[$i];
 		$prev = $i;

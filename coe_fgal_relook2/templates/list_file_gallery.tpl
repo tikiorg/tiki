@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' ) or ( $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y' ) }
+{if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' ) or ( $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y' )}
 
 	<div class="fgal_top_bar" style="height:16px; vertical-align:middle">
 
@@ -35,8 +35,8 @@
 <table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
 	<tr>
 		{if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
-			<td width="25%" class="fgalexplorer" id="fgalexplorer" style="{if ( isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' ) }display:none;{/if} width: 25%">
-				<div style="overflow-x:auto; overflow-y:hidden">
+			<td width="25%" class="fgalexplorer" id="fgalexplorer" style="{if ( isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' )}display:none;{/if} width: 25%">
+				<div>
 					{include file='file_galleries.tpl'}
 				</div>
 			</td>
@@ -56,6 +56,7 @@
 			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" enctype="multipart/form-data">
 				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 				<input type="hidden" name="find" value="{$find|escape}" />
+				{if !empty($smarty.request.show_details)}<input type="hidden" name="show_details" value="{$smarty.request.show_details}" />{/if}
 
 				{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y" />{/if}
 				{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
@@ -75,7 +76,10 @@
 					{include file='list_file_gallery_content.tpl'}
 				{/if}
 
-				{if $files and $gal_info.show_checked neq 'n' and $prefs.fgal_checked eq 'y' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y') and $filegals_manager eq ''}
+				{if $files and $gal_info.show_checked neq 'n' and $prefs.fgal_checked eq 'y' and
+						($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')
+						and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')
+						and $filegals_manager eq ''}
 					<div id="sel">
 						<div>
 							{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y' or !isset($file_info) or $tiki_p_admin_file_galleries eq 'y' or $prefs.fgal_display_zip_option eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y'}
@@ -129,7 +133,7 @@
 							</select>
 							<select name="groups[]" multiple="multiple" size="5">
 								{section name=grp loop=$groups}
-									<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
+									<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName}selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 								{/section}
 							</select>
 							<input type="submit" name="permsel" value="{tr}Assign{/tr}" />

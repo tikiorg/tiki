@@ -1,28 +1,16 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Display wiki text if user is in one of listed groups or group of friends
-// Usage:
-// {GROUP(groups=>Admins|Developers,friends=>foo|johndoe)}wiki text{GROUP}
-
-function wikiplugin_group_help() {
-	$help = tra("Display wiki text if user is in one of listed groups or group of friends").":\n";
-	$help.= "~np~<br />{GROUP(groups=>Admins|Developers)}wiki text{GROUP}<br />
-	{GROUP(notgroups=>Developers)}wiki text for other groups{GROUP}<br />	
-	{GROUP(groups=>Registered,friends=johndoe)}wiki text{ELSE}alternate text for other groups{GROUP}~/np~";
-	return $help;
-}
 
 function wikiplugin_group_info() {
 	return array(
 		'name' => tra('Group'),
 		'documentation' => 'PluginGroup',
 		'description' => tra('Display content based on the user\'s groups or friends'),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
+		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the conditions.'),
 		'prefs' => array('wikiplugin_group'),
 		'icon' => 'pics/icons/group.png',
 		'filter' => 'wikicontent',
@@ -53,7 +41,7 @@ function wikiplugin_group_info() {
 }
 
 function wikiplugin_group($data, $params) {
-	global $user, $prefs, $tikilib;
+	global $user, $prefs, $tikilib, $smarty;
 	$dataelse = '';
 	if (strpos($data,'{ELSE}')) {
 		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
@@ -102,8 +90,10 @@ function wikiplugin_group($data, $params) {
 		foreach ($userGroups as $grp) {
 		    if (in_array($grp, $groups)) {
 				$ok = true;
+				$smarty->assign('groupValid', 'y');
 				break;
 			}
+			$smarty->assign('groupValid', 'n');
 		}
 		if (!$ok)
 			return $dataelse;
@@ -113,12 +103,15 @@ function wikiplugin_group($data, $params) {
 		foreach ($userGroups as $grp) {
 		    if (in_array($grp, $notgroups)) {
 				$ok = false;
+				$smarty->assign('notgroupValid', 'y');
 				break;
 			}
+			$smarty->assign('notgroupValid', 'n');
 		}
 		if (!$ok)
 			return $dataelse;
 	}
 		
+	
 	return $data;
 }

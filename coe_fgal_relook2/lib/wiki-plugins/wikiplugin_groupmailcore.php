@@ -1,16 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Wiki plugin to display controls etc for GroupMail 
-// Started: jonnybradley July 2009
-
-function wikiplugin_groupmailcore_help() {
-        return tra("Displays GroupMail functions on a wiki page").":<br />~np~{groupmail_core()}{groupmail}~/np~";
-}
 
 function wikiplugin_groupmailcore_info() {
 	return array(

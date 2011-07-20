@@ -137,8 +137,8 @@ input[type="submit"],
 
 .button a:hover,
 button:hover,
-input[type="reset"] :hover,
-input[type="submit"] :hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox a:hover {
 	background: url(business/nav_h.gif) repeat-x;
@@ -176,23 +176,58 @@ hr {
 }
 
 /***** Site Header & Identity *****/
-#header {
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
+.header {
 	position: relative;
 }
 
-#header_fixedwidth {
+.header_fixedwidth {
 	background: #003371 url(business/header.png) repeat-x bottom;
 	color: #91bef5;
 	padding: 0;
 }
 
-#header a,
-#header a:visited {
+.header a,
+.header a:visited {
 	color: #91bef5;
 }
-
+/*
 #top_modules {
 	min-height: 130px;
+}*/
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -6px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz > li > a {
+	background: none;
+}
+
+#top_modules .box-logo {
+	float: left;
+	margin-left: 10px;
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	margin: 10% 10px 10% 23px;
+	height: 100%;
 }
 
 #sitetitle,
@@ -200,14 +235,7 @@ hr {
 	display: inline-block;
 }
 
-* html #sitetitle,
-* html #sitesubtitle {
-	display: inline;
-}
-
 #sitetitle {
-	margin-left: 23px;
-	padding-top: 30px;
 	font: bold 24px helvetica,arial,sans-serif;
 }
 
@@ -265,15 +293,28 @@ hr {
 	background: url(business/input.gif) repeat-x;
 }
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
-	bottom: 0;
+	bottom: 1px;
 }
 
-.siteloginbar_popup .tabmark {
+.siteloginbar_popup .tabmark,
+.siteloginbar_popup .tabmark:hover {
 	background: none;
 	border: none;
+	display: block;
+}
+
+.siteloginbar_popup .cssmenu_horiz > li > div > a {
+	background: url(business/nav_h.gif) repeat-x;
+	color: #fff;
+}
+
+.siteloginbar_popup .cssmenu_horiz > li > div > a:hover {
+	background: url(business/nav_h.gif) 0 100% repeat-x;
+	color: #fff;
+	text-decoration: underline;
 }
 
 /****** Menus, Links ******/
@@ -282,8 +323,7 @@ hr {
 /* default and topbar dropdown typography (colors) and padding */
 .cssmenu_horiz a,
 .cssmenu_vert a,
-#header .cssmenu_horiz li ul li a,
-#header .cssmenu_horiz li:hover ul li a {
+.cssmenu_horiz ul li a {
 	color: #0082e0;
 	background: #fff;
 	font-weight: normal;
@@ -293,18 +333,13 @@ hr {
 
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover,
-#header .cssmenu_horiz li ul li a:hover {
+.header .cssmenu_horiz li ul li a:hover {
 	text-decoration: underline;
 	color: #0082e0;
 }
 
 /* default backgrounds */
-/*.cssmenu_horiz li,*/
-.cssmenu_vert li,
-#header .cssmenu_horiz li:hover ul li,
-#header .cssmenu_horiz li:hover ul li a {
-	background: #fff;
-}
+
 
 .cssmenu_horiz ul li a {
 	border-right: 0;
@@ -314,7 +349,7 @@ hr {
 	margin-left: 48px;
 }
 
-#tiki-top .cssmenu_horiz li a {
+#tiki-top .cssmenu_horiz > li > a {
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
@@ -326,7 +361,7 @@ hr {
 	text-transform: uppercase;
 }
 
-#tiki-top .cssmenu_horiz li:hover a {
+#tiki-top .cssmenu_horiz > li:hover > a {
 	color: #fff;
 	background: url(business/nav_h.gif) repeat-x;
 	text-decoration: none;
@@ -402,7 +437,12 @@ hr {
 	top: 1.8em;
 }
 
-#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
+#secondary_site_menu .cssmenu_horiz .sf-sub-indicator {
+	bottom: .4em;
+}
+
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator,
+#secondary_site_menu .cssmenu_horiz li ul li .sf-sub-indicator {
 	top: .5em;
 	background: url(business/arrows-467aa7.png) no-repeat;
 }
@@ -602,6 +642,10 @@ td.odd a, td.odd a:visited {
 	margin: 0 2px;
 }
 
+.tabs .container {
+	margin-right: 35px;
+}
+
 /* reset layout.css */
 .tabactive,
 .tabinactive,
@@ -640,6 +684,10 @@ td.odd a, td.odd a:visited {
 .tabinactive {
 	border: solid .1em #abcdef !important;
 	border-bottom: 1px solid #dddddd !important;
+}
+
+.statuson {
+	background: #3778c9;
 }
 
 .tabcontent {
@@ -713,15 +761,6 @@ body.tiki_blogs .post {
 body.tiki_blogs .postbody {
 	padding: 0 1em 1em;
 }
-/*
-body.tiki_blogs .author_actions {
-	width: 40%;
-	float: right;
-	border: 2px solid #fff;
-	background: #fbfbfb;
-	margin-right: -1em;
-	margin-top: -6px;
-}*/
 
 /***** Forums *****/
 
@@ -734,9 +773,6 @@ body.tiki_blogs .author_actions {
 .post .author {
 	border: 2px solid #fff;
 	background: #fbfbfb;
-}
-
-.post .author_post_info:first-child {
 }
 
 .post .postbody-title .title a.link {

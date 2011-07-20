@@ -1,21 +1,10 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* Insert the bookmark button from ShareThis (www.sharethis.com). ShareThis account is not necessary.
-// Developed by Andrew Hafferman for Tiki CMS
-//
-// 2008-11-25 SEWilco
-//   Convert comments to WikiSyntax comments.
-// 2009-07-11 lindon
-//   Update for changes in ShareThis and fix bugs
-*/
-function wikiplugin_sharethis_help() {
-	return tra('Insert a ShareThis button from www.sharethis.com').":<br />~np~{SHARETHIS(sendsvcs=> , postfirst=> ,  rotateimage=> y|n, buttontext=> , headertitle=> , headerbg=> , headertxtcolor=> , linkfg=> , popup=> true|false, embed=> true|false)}{SHARETHIS} ~/np~ <br /> ";
-}
 function wikiplugin_sharethis_info() {
 	return array(
 		'name' => tra('ShareThis'),
@@ -135,9 +124,10 @@ function wikiplugin_sharethis_info() {
 	);
 }
 function wikiplugin_sharethis($data, $params) {
-
+	global $headerlib; include_once('lib/headerlib.php');
 	extract ($params,EXTR_SKIP);
 	$sharethis_options = array();
+	$iconcode = '';
 	$sep = '&amp;';
 	$comma = '%2C';
 	$lb = '%23';
@@ -179,11 +169,9 @@ function wikiplugin_sharethis($data, $params) {
 		}
 	}
 	if (!empty($multiple)) {
-		$iconcode = '<style type="text/css">
-					body {font-family:helvetica,sans-serif;font-size:12px;}
-					a.stbar.chicklet img {border:0;height:16px;width:16px;margin-right:3px;vertical-align:middle;}
-					a.stbar.chicklet {height:16px;line-height:16px;}
-					</style>';
+		$headerlib->add_css('body {font-family:helvetica,sans-serif;font-size:12px;}');
+		$headerlib->add_css('a.stbar.chicklet img {border:0;height:16px;width:16px;margin-right:3px;vertical-align:middle;}');
+		$headerlib->add_css('a.stbar.chicklet {height:16px;line-height:16px;}');
 		$icons = explode('|',$multiple);
 		foreach ($icons as $icon) {
 			$iconcode .= '<a id="ck_' . $icon . '" class="stbar chicklet" href="javascript:void(0);">' 
@@ -193,8 +181,7 @@ function wikiplugin_sharethis($data, $params) {
 			}
 			$iconcode .= '</a>'; 
 		}
-		$iconcode .= '<script type="text/javascript">
-						var shared_object = SHARETHIS.addEntry({
+		$headerlib->add_js('	var shared_object = SHARETHIS.addEntry({
 						title: document.title,
 						url: document.location.href
 					});
@@ -203,7 +190,7 @@ function wikiplugin_sharethis($data, $params) {
 					shared_object.attachChicklet("email", document.getElementById("ck_email"));
 					shared_object.attachChicklet("facebook", document.getElementById("ck_facebook"));
 					shared_object.attachChicklet("twitter", document.getElementById("ck_twitter"));
-					</script>';
+					');
 	}
 	
 	// set button text

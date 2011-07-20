@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -18,6 +18,7 @@ require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
 require_once ( 'lib/smarty/libs/Smarty.class.php');
+require_once 'lib/init/initlib.php';
 require_once ('installer/installlib.php');
 
 class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
@@ -112,7 +113,10 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "// \$client_charset='utf8';\n";
 		$filetowrite .= "// See http://tiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tiki.org/Understanding+Encoding for more info\n\n";
 		$filetowrite .= "// If your php installation does not not have pdo extension\n";
-		$filetowrite .= "// \$api_tiki = 'adodb';\n";
+		$filetowrite .= "// \$api_tiki = 'adodb';\n\n";
+		$filetowrite .= "// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration\n";
+		$filetowrite .= "// \$system_configuration_file = '/etc/tiki.ini';\n";
+		$filetowrite .= "// \$system_configuration_identifier = 'example.com';\n\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
@@ -404,14 +408,14 @@ function list_disable_accounts() {
 }
 
 function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_charset, &$dbTiki ) {
-	global $tikifeedback;
+	global $tikifeedback, $smarty;
 	$dbcon = false;
 
 	if ( ( isset($api) && $api == 'adodb' ) || ! extension_loaded('pdo') ) {
 		$api = 'adodb';
 		$dbTiki = ADONewConnection( $driver );
 		$db = new TikiDb_Adodb( $dbTiki );
-		if ( $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
+		if (! $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
 			$tikifeedback[] = array( 'num' => 1, 'mes' => $dbTiki->ErrorMsg() );
 		}
 	} else {
@@ -714,6 +718,7 @@ if (
 
 if ( $dbcon ) {
 	$smarty->assign('dbcon', 'y');
+	$smarty->assign('dbname', $dbs_tiki);
 } else {
 	$smarty->assign('dbcon', 'n');
 }
@@ -971,9 +976,7 @@ jqueryTiki.replection = false;
 jqueryTiki.tablesorter = false;
 jqueryTiki.colorbox = false;
 jqueryTiki.cboxCurrent = "{current} / {total}";
-jqueryTiki.sheet = false;
 jqueryTiki.carousel = false;
-jqueryTiki.jqs5 = false;
 
 jqueryTiki.effect = "";
 jqueryTiki.effect_direction = "";
@@ -1015,8 +1018,7 @@ if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding'
 
 if( $install_step == '4' ) {
 	$value = '';
-	if ($db = TikiDB::get()) {
-		$result = $db->fetchAll( 'show variables like "character_set_database"' );
+	if ( ($db = TikiDB::get()) && ($result = $db->fetchAll( 'show variables like "character_set_database"') )) {
 		$res = reset( $result );
 		$variable = array_shift( $res );
 		$value = array_shift( $res );
@@ -1024,6 +1026,14 @@ if( $install_step == '4' ) {
 	$smarty->assign( 'database_charset', $value );
 	
 }
+
+if (((isset($value) && $value == 'utf8') || $install_step == '7') && $db = TikiDB::get()) {
+	$result = $db->fetchAll( 'SELECT TABLE_COLLATION FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_COLLATION NOT LIKE "utf8%"', $dbs_tiki );
+	if(!empty ($result) ) {
+		$smarty->assign('legacy_collation', $result[0]['TABLE_COLLATION']);
+	}
+}
+
 if ($install_step == '6') {
 	$smarty->assign('disableAccounts', list_disable_accounts());
 }

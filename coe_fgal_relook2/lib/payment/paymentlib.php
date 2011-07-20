@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -100,6 +100,15 @@ class PaymentLib extends TikiDb_Bridge
 			$info['url'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
 				'invoice' => $info['paymentRequestId'],
 			) );
+			$info['returnurl'] = $info['url'];
+			// Add token if feature is activated (need prefs
+			if ($prefs['auth_token_access'] == 'y' && (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] = 'y' && !Perms::get('payment', $info['paymentRequestId'])->manual_payment)) {
+				require_once('lib/wiki-plugins/wikiplugin_getaccesstoken.php');
+				$info['returnurl'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
+					'invoice' => $info['paymentRequestId'],
+					'TOKEN' => wikiplugin_getaccesstoken( '', array('entry' => 'tiki-payment.php', 'keys' => array('invoice'), 'values' => array($info['paymentRequestId'])) ),
+				) );
+			} 
 			$info['paypal_ipn'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
 				'ipn' => 1,
 				'invoice' => $info['paymentRequestId'],

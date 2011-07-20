@@ -68,15 +68,49 @@
   border-top: 1px solid #CFCFCF;
 }
 
-.brosho-bottom { bottom: 0; left: 0; width: 100%; }
-.brosho-top { top: 0; left: 0; width: 100%; }
-.brosho-top textarea, .brosho-bottom textarea { height: 30px; }
-.brosho-top #brosho-controls li, .brosho-bottom #brosho-controls li { float: left; margin-right: 20px; }
+.brosho-bottom {
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
 
-.brosho-left { top: 0; left: 0; width: 20%; }
-.brosho-right { top: 0; right: 0; width: 20%; }
-.brosho-left textarea, .brosho-right textarea { height: 200px; }
-.brosho-left #brosho-controls li, .brosho-right #brosho-controls li { float: auto; margin: 15px 0 15px 0; }
+.brosho-top {
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.brosho-top textarea
+	, .brosho-bottom textarea {
+		height: 30px;
+}
+
+.brosho-top #brosho-controls li
+	, .brosho-bottom #brosho-controls li { 
+		float: left;
+		margin-right: 20px;
+}
+
+.brosho-left {
+	top: 0;
+	left: 0;
+	width: 20%;
+}
+
+.brosho-right {
+	top: 0;
+	right: 0;
+	width: 20%;
+}
+
+.brosho-left textarea, .brosho-right textarea {
+	height: 200px;
+}
+
+.brosho-left #brosho-controls li, .brosho-right #brosho-controls li {
+	float: auto; 
+	margin: 15px 0 15px 0;
+}
 
 .brosho-element-hover { border: 3px solid red; }
 

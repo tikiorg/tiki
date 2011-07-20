@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,7 +9,6 @@ $section = 'categories';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/tree/categ_browse_tree.php');
-$smarty->assign('headtitle', tra('Categories'));
 $access->check_feature('feature_categories');
 $access->check_permission('tiki_p_view_category');
 
@@ -23,8 +22,10 @@ if (!isset($_REQUEST['parentId'])) {
 	$_REQUEST['parentId'] = 0;
 }
 $smarty->assign('parentId', $_REQUEST['parentId']);
-if (isset($_REQUEST['maxRecords']) && $_REQUEST['maxRecords'] >= 1) {
+if (isset($_REQUEST['maxRecords']) && ($_REQUEST['maxRecords'] >= 1 || $_REQUEST['maxRecords'] == -1)) {
 	$maxRecords = $_REQUEST['maxRecords'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
 if (!isset($_REQUEST['sort_mode'])) {
 	$sort_mode = 'name_asc';
@@ -69,6 +70,7 @@ if (is_array($_REQUEST['parentId'])) {
 		}
 	}
 	$smarty->assign('paths', $paths);
+	$smarty->assign('headtitle', tra('Categories'));
 } else {
 	// If the parent category is not zero get the category path
 	if ($_REQUEST['parentId']) {
@@ -79,10 +81,12 @@ if (is_array($_REQUEST['parentId'])) {
 		$father = $p_info['parentId'];
 		$smarty->assign_by_ref('p_info', $p_info);
 		$canView = $perms->view_category;
+		$smarty->assign('headtitle', tra($p_info['name']));
 	} else {
 		$path = tra('TOP');
 		$father = 0;
 		$canView = true;
+		$smarty->assign('headtitle', tra('Categories'));
 	}
 	$smarty->assign('path', $path);
 	$smarty->assign('father', $father);
@@ -138,7 +142,7 @@ foreach($ctall as $c) {
 		'id' => $c['categId'],
 		'parent' => $c['parentId'],
 		'data' => '<span class="object-count">'.$c['objects'].'</span>' . $c['eyes'].' <a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '&amp;deep=' . $deep . '&amp;type=' 
-					. urlencode($type) . '">' . htmlspecialchars($c['name']) .'</a> ', 
+					. urlencode($type) . '">' . htmlspecialchars(tr($c['name'])) .'</a> ', 
 	);
 }
 $tm = new CatBrowseTreeMaker('categ');
@@ -153,6 +157,7 @@ if ($deep == 'on') {
 
 $smarty->assign_by_ref('objects', $objects['data']);
 $smarty->assign_by_ref('cant_pages', $objects['cant']);
+$smarty->assign_by_ref('maxRecords', $maxRecords);
 include_once ('tiki-section_options.php');
 ask_ticket('browse-categories');
 

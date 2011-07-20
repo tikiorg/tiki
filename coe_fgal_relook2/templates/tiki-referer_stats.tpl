@@ -21,13 +21,13 @@
   {cycle values="odd,even" print=false}
   {section name=user loop=$channels}
     <tr class="{cycle}">
-      <td>{$channels[user].referer}</td>
-      <td>{$channels[user].hits}</td>
-      <td>{$channels[user].last|tiki_short_datetime}</td>
+      <td class="text">{$channels[user].referer}</td>
+      <td class="integer">{$channels[user].hits}</td>
+      <td class="date">{$channels[user].last|tiki_short_datetime}</td>
     </tr>
   {sectionelse}
 		{norecords _colspan=3}
   {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

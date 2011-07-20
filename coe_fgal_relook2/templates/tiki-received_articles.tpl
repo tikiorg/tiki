@@ -130,7 +130,8 @@
 			<tr>
 				<td>{tr}Publishing date:{/tr}</td>
 				<td>
-					{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} at {html_select_time time=$publishDate display_seconds=false}
+					{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} at 
+					{html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
 				</td>
 			</tr>
 			<tr>
@@ -196,14 +197,14 @@
 		{cycle values="even,odd" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>{$channels[user].receivedArticleId}</td>
-				<td>{$channels[user].title|escape}
+				<td class="id">{$channels[user].receivedArticleId}</td>
+				<td class="text">{$channels[user].title|escape}
 					{if $channels[user].type eq 'Review'}(r){/if}
 				</td>
-				<td>{$channels[user].receivedDate|tiki_short_datetime}</td>
-				<td>{$channels[user].receivedFromSite}</td>
-				<td>{$channels[user].receivedFromUser|escape}</td>
-				<td>
+				<td class="date">{$channels[user].receivedDate|tiki_short_datetime}</td>
+				<td class="text">{$channels[user].receivedFromSite}</td>
+				<td class="text">{$channels[user].receivedFromUser|escape}</td>
+				<td class="action">
 					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a> 
 					&nbsp;
 					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
@@ -213,8 +214,5 @@
 			{norecords _colspan=6}
 		{/section}
 	</table>
-
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-
 </div>
-

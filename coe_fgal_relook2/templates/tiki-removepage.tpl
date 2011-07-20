@@ -1,4 +1,4 @@
-{title}{tr}Remove page:{/tr} {$page|escape} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version:{/tr} {$version}{/if}){/title}
+{title}{tr}Remove page:{/tr} {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version:{/tr} {$version}{/if}){/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:'url'}

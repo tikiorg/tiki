@@ -3,13 +3,7 @@
 {title help="Trackers" admpage="trackers"}{tr}Admin Trackers{/tr}{/title}
 
 <div class="navbar">
-	{if  $tiki_p_list_trackers eq 'y'}
-		 {button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
-	{/if}
-	{if $trackerId}
-		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit This Tracker's Fields{/tr}"}
-		{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
-	{/if}
+	{include file="tracker_actions.tpl"}
 </div>
 
 {tabset name='tabs_admtrackers'}
@@ -39,12 +33,12 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td class="id">
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
 				<td class="text">
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
-				{if $channels[user].descriptionIsParsed eq 'y' }
+				{if $channels[user].descriptionIsParsed eq 'y'}
 					<td class="text">{wiki}{$channels[user].description}{/wiki}</td>
 				{else}
 					<td class="text">{$channels[user].description|escape|nl2br}</td>
@@ -53,7 +47,7 @@
 				<td class="date">{$channels[user].lastModif|tiki_short_date}</td>
 				<td class="integer">{$channels[user].items}</td>
 				<td class="action">
-					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod">{icon _id='page_edit'}</a>
+					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2">{icon _id='page_edit'}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 					{if $channels[user].individual eq 'y'}
@@ -118,7 +112,7 @@
 				<tr>
 					<td>{tr}Auto create corresponding categories{/tr}</td>
 					<td>
-						<input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} />
+						<input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y'}checked="checked"{/if} />
 					</td>
 				</tr>
 			{/if}
@@ -129,7 +123,7 @@
 						<label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label>
 					</td>
 					<td>
-						<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');toggleTrTd('autoCreateGroupOptions4');"/>
+						<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y'}checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');toggleTrTd('autoCreateGroupOptions4');"/>
 					</td>
 				<tr id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
@@ -138,7 +132,7 @@
 						<select id="autoCreateGroupInc" name="autoCreateGroupInc">
 							<option value="">{tr}None{/tr}</option>
 							{foreach item=gr from=$all_groupIds}
-								<option value="{$gr.id|escape}" {if $gr.id eq $info.autoCreateGroupInc} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
+								<option value="{$gr.id|escape}" {if $gr.id eq $info.autoCreateGroupInc} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."|escape}</option>
 							{/foreach}
 						</select>
 					</td>
@@ -167,7 +161,7 @@
 				<tr id="autoCreateGroupOptions5"{if ($info.autoCreateGroup ne 'y' or $info.autoAssignGroupItem ne 'y') and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
-						<label for="autoCopyGroup">{tr}But copy the default group in this fiedlId before updating the group{/tr}</label>
+						<label for="autoCopyGroup">{tr}But copy the default group in this fieldId before updating the group{/tr}</label>
 						<input type="text" name="autoCopyGroup" id="autoCopyGroup" value="{$info.autoCopyGroup}" />
 					</td>
 				</tr>
@@ -182,7 +176,7 @@
 				<td>{tr}Default status displayed in list mode{/tr}</td>
 				<td>
 					{foreach key=st item=stdata from=$status_types}
-						<input type="checkbox" name="defaultStatus[]" value="{$st}"{if $defaultStatusList.$st} checked="checked"{/if} />
+						<input type="checkbox" name="defaultStatus[]" value="{$st}"{if isset($defaultStatusList.$st)} checked="checked"{/if} />
 						{$stdata.label}
 						<br />
 					{/foreach}
@@ -407,15 +401,15 @@
 							<td>{tr}User{/tr}</td>
 						</tr>
 						<tr>
-							<td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
-							<td><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
-							<td><input type="text" size="2" name="ui[hits]" value="{$ui.hits}" /></td>
-							<td><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
-							<td><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
-							<td><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
-							<td><input type="text" size="2" name="ui[filetype]" value="{$ui.filetype}" /></td>
-							<td><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
-							<td><input type="text" size="2" name="ui[user]" value="{$ui.user}" /></td>
+							<td><input type="text" size="2" name="ui[filename]" value="{if isset($ui.filename)}{$ui.filename}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[created]" value="{if isset($ui.created)}{$ui.created}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[hits]" value="{if isset($ui.hits)}{$ui.hits}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[comment]" value="{if isset($ui.comment)}{$ui.comment}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[filesize]" value="{if isset($ui.filesize)}{$ui.filesize}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[version]" value="{if isset($ui.version)}{$ui.version}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[filetype]" value="{if isset($ui.filetype)}{$ui.filetype}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[longdesc]" value="{if isset($ui.longdesc)}{$ui.longdesc}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[user]" value="{if isset($ui.user)}{$ui.user}{/if}" /></td>
 						</tr>
 					</table>
 				</td>
@@ -424,17 +418,17 @@
 			<tr>
 				<td>{tr}Items can be created only during a certain time{/tr}</td>
 				<td>
-					{tr}After:{/tr} 
+					&nbsp;&nbsp;&nbsp;&nbsp;{tr}After:{/tr} 
 					<input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> 
 					{html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10" field_order=$prefs.display_field_order} 
-					<span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}</span>
-					&nbsp;{$siteTimeZone}
+					<span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false use_24_hours=$use_24hr_clock}</span>
+					&nbsp;{if isset($siteTimeZone)}{$siteTimeZone}{/if}
 					<br />
 					{tr}Before:{/tr}
 					<input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> 
 					{html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10" field_order=$prefs.display_field_order} 
-					<span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}</span>
-					&nbsp;{$siteTimeZone}
+					<span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false use_24_hours=$use_24hr_clock}</span>
+					&nbsp;{if isset($siteTimeZone)}{$siteTimeZone}{/if}
 				</td>
 			</tr>
 
@@ -518,7 +512,7 @@
 					<label>
 						{tr}From{/tr}
 						<select name="todo_from">
-							<option value="" />
+							<option value=""></option>
 							{foreach key=st item=stdata from=$status_types}
 								<option value="{$st|escape}">{$stdata.label|escape}</option>
 							{/foreach}
@@ -527,7 +521,7 @@
 					<label>
 						{tr}To{/tr}
 						<select name="todo_to">
-							<option value="" />
+							<option value=""></option>
 							{foreach key=st item=stdata from=$status_types}
 								<option value="{$st|escape}">{$stdata.label|escape}</option>
 							{/foreach}
@@ -555,11 +549,13 @@
 	</form>
 {/tab}
 
-{jq}if ($.ui && $(".tabs").length) { $("#content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
+<h2>{tr}Tracker Import/Export{/tr}</h2>
+{tabset}
 {* --- tab with raw form --- *}
-<h2>{tr}Import/export trackers{/tr}</h2>
-	<div>
+{tab name="{tr}Import/export trackers{/tr}"}
+	
+	<h3>{tr}Tracker Definition{/tr}</h3>
 	<form action="tiki-admin_trackers.php" method="post">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 		<input type="hidden" name="import" value="1" />
@@ -598,16 +594,17 @@ categories = {$catsdump}
 		<br />
 		<input type="submit" name="save" value="{tr}Import{/tr}" />
 	</form>
-	</div>
+	{if $trackerId}
+		<h3>{tr}Export for profile{/tr}</h3>
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
+	{/if}
+	{/tab}
 	
 	{if $trackerId}
-		<h2>Export for profile</h2>
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
-
 		{include file='tiki-export_tracker.tpl'}
 
-		<h2>{tr}Import CSV data{/tr}</h2>
-		<div>
+		{tab name="{tr}Import CSV data{/tr}"}
+		<h3>{tr}Tracker Items Import{/tr}</h3>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 			<table class="formcolor">
 				<tr>
@@ -622,6 +619,9 @@ categories = {$catsdump}
 						<br />
 						<input type="radio" name="dateFormat" value="dd/mm/yyyy" />
 						{tr}day{/tr}/{tr}month{/tr}/{tr}year{/tr}(31/01/2008)
+						<br />
+						<input type="radio" name="dateFormat" value="yyyy-mm-dd" />
+						{tr}year{/tr}-{tr}month{/tr}-{tr}day{/tr}(2008-01-31)
 						<br />
 						<input type="radio" name="dateFormat" value="" />{tr}timestamp{/tr}
 					</td>
@@ -644,6 +644,10 @@ categories = {$catsdump}
 					<td><input type="checkbox" name="add_items" /></td>
 				</tr>
 				<tr>
+					<td>{tr}Update lastModif date if updating items (status and created are updated only if the fields are specified in the csv):{/tr}</td>
+					<td><input type="checkbox" name="updateLastModif" checked="checked" /></td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td><input type="submit" name="save" value="{tr}Import{/tr}" /></td>
 				</tr>
@@ -656,8 +660,9 @@ categories = {$catsdump}
 				<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
 			</ul>
 		{/remarksbox}
-		</div>
+		{/tab}
 	{/if}
+{/tabset}
 {/tab}
 
 {tab name="{tr}Duplicate Tracker{/tr}"}
@@ -689,11 +694,11 @@ categories = {$catsdump}
 				<td>{tr}Tracker{/tr}</td>
 				<td>
 					{section name=ix loop=$trackers}
-						{if $smarty.section.ix.first }
+						{if $smarty.section.ix.first}
 							<select name="trackerId">
 						{/if}
 						<option value="{$trackers[ix].trackerId}"{if $trackerId eq $trackers[ix].trackerId} selected="selected"{/if}>{$trackers[ix].name|escape}</option>
-						{if $smarty.section.ix.last }
+						{if $smarty.section.ix.last}
 							</select>
 						{/if}
 					{/section}

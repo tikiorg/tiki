@@ -24,42 +24,42 @@
  </tr>
  {foreach from=$authors item="stats" key="author" name="authors"}
  <tr class="{cycle values="odd,even"}">
-  <td style="text-align: right;"><span class="{$stats.style}">{$author}</span></td>
-  <td style="text-align: right;">{$stats.words}</td>
-  <td style="text-align: right;">({$stats.words_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.deleted_words}</td>
-  <td style="text-align: right;">({$stats.deleted_words_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.whitespaces}</td>
-  <td style="text-align: right;">({$stats.whitespaces_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.deleted_whitespaces}</td>
-  <td style="text-align: right;">({$stats.deleted_whitespaces_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.characters}</td>
-  <td style="text-align: right;">({$stats.characters_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.deleted_characters}</td>
-  <td style="text-align: right;">({$stats.deleted_characters_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.printables}</td>
-  <td style="text-align: right;">({$stats.printables_percent|percent}%)</td>
-  <td style="text-align: right;">{$stats.deleted_printables}</td>
-  <td style="text-align: right;">({$stats.deleted_printables_percent|percent}%)</td>
+  <td class="text"><span class="{$stats.style}">{$author}</span></td>
+  <td class="text">{$stats.words}</td>
+  <td class="text">({$stats.words_percent|percent}%)</td>
+  <td class="text">{$stats.deleted_words}</td>
+  <td class="text">({$stats.deleted_words_percent|percent}%)</td>
+  <td class="text">{$stats.whitespaces}</td>
+  <td class="text">({$stats.whitespaces_percent|percent}%)</td>
+  <td class="text">{$stats.deleted_whitespaces}</td>
+  <td class="text">({$stats.deleted_whitespaces_percent|percent}%)</td>
+  <td class="text">{$stats.characters}</td>
+  <td class="text">({$stats.characters_percent|percent}%)</td>
+  <td class="text">{$stats.deleted_characters}</td>
+  <td class="text">({$stats.deleted_characters_percent|percent}%)</td>
+  <td class="text">{$stats.printables}</td>
+  <td class="text">({$stats.printables_percent|percent}%)</td>
+  <td class="text">{$stats.deleted_printables}</td>
+  <td class="text">({$stats.deleted_printables_percent|percent}%)</td>
  </tr>{/foreach}
   <tr class="{cycle}">
-  <td style="text-align: right;"><strong>{tr}Total{/tr}</strong></td>
-  <td style="text-align: right;"><strong>{$total.words}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.deleted_words}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.whitespaces}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.deleted_whitespaces}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.characters}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.deleted_characters}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.printables}</strong></td>
-  <td style="text-align: right;"><strong>(100.0%)</strong></td>
-  <td style="text-align: right;"><strong>{$total.deleted_printables}</strong></td>
-  <td style="text-align: right;"><strong>(100 %)</strong></td>
+  <td class="text"><strong>{tr}Total{/tr}</strong></td>
+  <td class="text"><strong>{$total.words}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.deleted_words}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.whitespaces}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.deleted_whitespaces}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.characters}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.deleted_characters}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.printables}</strong></td>
+  <td class="text"><strong>(100.0%)</strong></td>
+  <td class="text"><strong>{$total.deleted_printables}</strong></td>
+  <td class="text"><strong>(100 %)</strong></td>
  </tr>
 </table>
 {/if}

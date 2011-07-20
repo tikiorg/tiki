@@ -1,31 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Displays a graphical GAUGE
-// Usage:
-// {GAUGE(params)}description{GAUGE}
-// Description is optional and will be displayed below the gauge if present
-// Parameters:
-//   color      bar color
-//   bgcolor	background color
-//   max	    maximum possible value (default=100, when value > max, max=value)   
-//   value	    current value (REQUIRED)
-//   size	    Bar size 
-//   label      label leftside of bar
-//   labelsize  labelsize
-//   perc	    If true then a percentage is displayed
-//   height	    Bar height
-// EXAMPLE:
-//
-// {GAUGE(perc=>true,label=>happy users,labelsize=>90,value=>35,bgcolor=>#EEEEEE,height=>20)}happy users over total{GAUGE}
-
-function wikiplugin_gauge_help() {
-	return tra("Displays a graphical GAUGE").":<br />~np~{GAUGE(color=>,bgcolor=>,max=>,value=>,size=>,label=>,labelsize=>,perc=>,height=>)}".tra("description")."{GAUGE}~/np~";
-}
 
 function wikiplugin_gauge_info() {
 	return array(
@@ -136,18 +114,14 @@ function wikiplugin_gauge($data, $params) {
 		$color = '#FF0000';
 	}
 
-	if (!isset($showvalue)) {
-		$showvalue = true;
-	}
-	
 	if (!isset($perc)) {
 		$perc = false;
 	}
 
-	if (!isset($showvalue)) {
-		$showvalue = true;
+	if (isset($showvalue) && $showvalue == 'false') {
+		$showvalue = false;
 	} else {
-		$showvalue = (bool) $showvalue;
+		$showvalue = true;
 	}
 	
 	if (!isset($max) or !$max) {

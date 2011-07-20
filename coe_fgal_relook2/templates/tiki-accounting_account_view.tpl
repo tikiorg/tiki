@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {title help="accounting"}
 	{$book.bookName}:
 	{tr}View account{/tr} {$account.accountId} {$account.accountName}
@@ -20,7 +20,7 @@
 	<div><div class="aclabel">{tr}Notes{/tr}</div>
 	{$account.accountNotes}</div>
 	<div><div class="aclabel">{tr}Budget{/tr}</div>
-	{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$account.accountBudget:currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}</div>
+	{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$account.accountBudget|currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}</div>
 	<div><div class="aclabel">{tr}Locked{/tr}</div>
 	{if $account.accountLocked==1}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</div>
 	{button href="tiki-accounting.php?bookId=$bookId" _text="Back to book page"} 
@@ -30,7 +30,7 @@
 	{/if}
 </div>
 {if isset($journal)}<div id="account_journal>
-{include file="tiki-accounting_journal.tpl}
+{include file='tiki-accounting_journal.tpl'}
 </div>
 {/if}
  

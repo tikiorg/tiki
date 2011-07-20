@@ -19,7 +19,7 @@
 </p>
 {/if}
  
-<table width="95%" class="normal">
+<table width="95%" class="formcolor">
  <tr>
 	<th>{tr}Wiki Syntax{/tr}</th>
 </tr>
@@ -98,7 +98,7 @@
 {tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
 </table>
 
-{if $prefs.feature_wiki_paragraph_formatting eq 'y' }
+{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
 <p>{tr}Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines.{/tr}</p>
 {else}
 <p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>

@@ -51,7 +51,8 @@
 		<tr>
 			<td>{tr}Publishing date:{/tr}</td>
 			<td>
-				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}</td>
+				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} 
+				{tr}at{/tr} {html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -83,20 +84,20 @@
     <th>{tr}Action{/tr}</th>
   </tr>
 	{section name=changes loop=$listpages}
-		<tr>
-			{if $actual eq $listpages[changes].publishDate}
-				{assign var=class value=third}
+		{if $actual eq $listpages[changes].publishDate}
+			{assign var=class value=third}
+		{else}
+			{if $actual > $listpages[changes].publishDate}
+				{assign var=class value=odd}
 			{else}
-				{if $actual > $listpages[changes].publishDate}
-					{assign var=class value=odd}
-				{else}
-					{assign var=class value=even}
-				{/if}
+				{assign var=class value=even}
 			{/if}
-			<td class="{$class}">&nbsp;{$listpages[changes].pId}&nbsp;</td>
-			<td class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
-			<td class="{$class}">&nbsp;{$listpages[changes].data|escape:'html'|nl2br}&nbsp;</td>
-			<td class="{$class}">
+		{/if}
+		<tr class="{$class}">
+			<td class="id">&nbsp;{$listpages[changes].pId}&nbsp;</td>
+			<td class="date">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
+			<td class="text">&nbsp;{$listpages[changes].data|escape:'html'|nl2br}&nbsp;</td>
+			<td class="action">
 				<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
 				<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}" title="{tr}Remove{/tr}">{icon _id=cross alt="{tr}Remove{/tr}"}</a>
 			</td>

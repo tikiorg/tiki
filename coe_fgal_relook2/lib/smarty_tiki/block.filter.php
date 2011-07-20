@@ -1,9 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: block.permission.php 25202 2010-02-14 18:16:23Z changi67 $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -12,33 +12,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_block_filter($params, $content, &$smarty, $repeat) {
-	global $prefs, $tikilib;
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	
 	if (! isset($params['action'])) {
 		$params['action'] = '';
 	}
 
-	$types = array();
-
-	if ($prefs['feature_wiki'] == 'y') {
-		$types[] = 'wiki page';
-	}
-
-	if ($prefs['feature_blogs'] == 'y') {
-		$types[] = 'blog post';
-	}
-	
-	if ($prefs['feature_articles'] == 'y') {
-		$types[] = 'article';
-	}
-
-	if ($prefs['feature_forums'] == 'y') {
-		$types[] = 'forum post';
-	}
-
-	if ($prefs['feature_trackers'] == 'y') {
-		$types[] = 'trackeritem';
-	}
+	$types = $unifiedsearchlib->getSupportedTypes();
 
 	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
@@ -47,7 +29,7 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 
 	$smarty->assign('filter_content', isset($filter['content']) ? $filter['content'] : '');
 	$smarty->assign('filter_type', isset($filter['type']) ? $filter['type'] : '');
-	$smarty->assign('filter_types', array_combine($types, array_map('tra', $types)));
+	$smarty->assign('filter_types', $types);
 
 	// Categories
 	if ($prefs['feature_categories'] == 'y') {

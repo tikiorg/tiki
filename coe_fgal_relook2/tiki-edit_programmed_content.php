@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -34,6 +34,10 @@ if (isset($_REQUEST["remove"])) {
 
 $smarty->assign('data', '');
 $smarty->assign('publishDate', $tikilib->now);
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
+
 $smarty->assign('actual', '');
 
 if (isset($_REQUEST["save"])) {
@@ -45,6 +49,9 @@ if (isset($_REQUEST["save"])) {
 		$content = $_REQUEST['data'];
 	}
 
+	if (!empty($_REQUEST['Time_Meridian'])) {
+		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
+	}
 	$publishDate = TikiLib::make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 																   0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 

@@ -1,24 +1,24 @@
 {* $Id$ *}
 
 {title help="File+Galleries" admpage="fgal"}
-	{strip}
-		{if $edit_mode eq 'y' and $galleryId eq 0}
-			{tr}Create a File Gallery{/tr}
-		{else}
-			{if $edit_mode eq 'y'}
-				{tr}Edit Gallery:{/tr}&nbsp;
-			{/if}
+	{if $edit_mode eq 'y' and $galleryId eq 0}
+		{tr}Create a File Gallery{/tr}
+	{else}
+		{if $edit_mode eq 'y'}
+			{tr}Edit Gallery:{/tr}
+		{/if}
+		{strip} 
 			{if $gal_info.type eq 'user'}
 				{if $gal_info.user eq $user}
 					{tr}My Files{/tr}
 				{else}
-					{tr}Files of $user{/tr}
+					{tr}Files of {$gal_info.user}{/tr}
 				{/if}
 			{else}
-				{$name|escape}
+				{$name}
 			{/if}
-		{/if}
-	{/strip}
+		{/strip}
+	{/if}
 {/title}
 
 {if $edit_mode neq 'y' and $gal_info.description neq ''}
@@ -100,7 +100,11 @@
 			{if $tiki_p_upload_files eq 'y'}
 				{button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php?galleryId=$galleryId"}
 			{/if}
-
+			
+			{if $prefs.feature_draw eq 'y'}
+				{button _text="{tr}Create a drawing{/tr}" href="tiki-edit_draw.php?galleryId=$galleryId"}
+			{/if}
+			
 			{if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
 				{button _text="{tr}Directory Batch{/tr}" href="tiki-batch_upload_files.php?galleryId=$galleryId"}
 			{/if}
@@ -108,7 +112,7 @@
 
 	{else}
 
-		{if $treeRootId eq $prefs.fgal_root_id && ( $edit_mode eq 'y' or $dup_mode eq 'y') }
+		{if $treeRootId eq $prefs.fgal_root_id && ( $edit_mode eq 'y' or $dup_mode eq 'y')}
 			{button _text="{tr}List Galleries{/tr}" href='?'}
 		{/if}
 
@@ -170,7 +174,7 @@
 	{include file='duplicate_file_gallery.tpl'}
 {else}
 	{if $prefs.fgal_search eq 'y'}
-		{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y'}
+		{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="Gallery of this fileId"}
 	{/if}
 	{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 		<div class="findtable">
@@ -195,7 +199,7 @@
 			{/if}
 			
 			{if $prefs.fgal_quota_show neq 'text_only'}
-				{quotabar length='100' value=`$smarty.capture.use`}
+				{quotabar length='100' value=$smarty.capture.use}
 			{/if}			
 		</div>
 	{/if}
@@ -204,16 +208,18 @@
 
 	{if $galleryId gt 0
 		&& $prefs.feature_file_galleries_comments == 'y'
-		&& (($tiki_p_read_comments == 'y'
-		&& $comments_cant != 0)
+		&& ($tiki_p_read_comments == 'y'
 		|| $tiki_p_post_comments == 'y'
 		|| $tiki_p_edit_comments == 'y')}
 
 		<div id="page-bar" class="clearfix">
-			{include file='comments_button.tpl'}
+			<span class="button"><a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=file+gallery&amp;objectId={$galleryId|escape:'url'}#comment-container">{tr}Comments{/tr}</a></span>
+			{jq}
+				$('#comment-toggle').comment_toggle();
+			{/jq}
 		</div>
 
-		{include file='comments.tpl'}
+		<div id="comment-container"></div>
 	{/if}
 {/if}
 

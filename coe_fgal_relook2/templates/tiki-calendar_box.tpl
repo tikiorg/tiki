@@ -27,9 +27,9 @@
 	{$cellstart|tiki_short_date} ({tr}All day{/tr})
 {else}
   {if ($cellend - $cellstart < 86400)}
-	{$cellstart|tiki_date_format:"%H:%M"} &ndash; {$cellend|tiki_date_format:"%H:%M"}
+	{$cellstart|tiki_short_time} &ndash; {$cellend|tiki_short_time}
   {else}
-	{$cellstart|tiki_date_format:"%e %B (%H:%M)"} &ndash; {$cellend|tiki_date_format:"%e %B (%H:%M)"}
+	{$cellstart|tiki_short_date}&nbsp;({$cellstart|tiki_short_time}) &ndash; {$cellend|tiki_short_date}&nbsp;({$cellend|tiki_short_time})
   {/if}
 {/if}
 </strong>

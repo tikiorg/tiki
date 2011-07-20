@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -59,10 +59,10 @@ class WikiRenderer
 	function applyPermissions() // {{{
 	{
 		global $userlib;
-		$permDescs = $userlib->get_permissions( 0, -1, 'permName_desc', '', 'wiki' );
+		$permNames = $userlib->get_permission_names_for('wiki');
 		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $this->page ) );
 
-		foreach( $permDescs['data'] as $name ) {
+		foreach( $permNames as $name ) {
 			$name = $name['permName'];
 			$this->setGlobal( $name, $objectperms->$name ? 'y' : 'n' );
 		}
@@ -471,7 +471,7 @@ class WikiRenderer
 			}
 			if ($prefs['category_morelikethis_algorithm'] != '') {
 				global $freetaglib; include_once('lib/freetag/freetaglib.php');
-				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, $prefs['maxRecords'], null, 'category');
+				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, empty($prefs['category_morelikethis_mincommon_max'])?$prefs['maxRecords']: $prefs['category_morelikethis_mincommon_max'], null, 'category');
 				$this->smartyassign('category_related_objects', $category_related_objects);
 			}
 			if ($prefs['feature_categorypath'] == 'y') {	

@@ -13,66 +13,66 @@
 	{assign var=numbercol value=0}
 	<tr>
 		{if $prefs.art_list_title eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_topic eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_date eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_size eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th style="text-align:right;">
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_img eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}Img{/tr}</th>
 		{/if}
 		{if $prefs.art_list_author eq 'y'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a>
 			</th>
 		{/if}
-		{assign var=numbercol value=`$numbercol+1`}
+		{assign var=numbercol value=$numbercol+1}
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$listpages}
 		<tr class="{cycle}">
 			{if $prefs.art_list_title eq 'y'}
-				<td>
+				<td class="text">
 					<a class="link" title="{$listpages[changes].title|escape}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}</a>
 				</td>
 			{/if}
 			{if $prefs.art_list_topic eq 'y'}
-				<td>{$listpages[changes].topicName|escape}</td>
+				<td class="text">{$listpages[changes].topicName|escape}</td>
 			{/if}
 			{if $prefs.art_list_date eq 'y'}
-				<td>{$listpages[changes].publishDate|tiki_short_datetime}</td>
+				<td class="date">{$listpages[changes].publishDate|tiki_short_datetime}</td>
 			{/if}
 			{if $prefs.art_list_size eq 'y'}
-				<td style="text-align:right;">{$listpages[changes].size|kbsize}</td>
+				<td class="integer">{$listpages[changes].size|kbsize}</td>
 			{/if}
 			{if $prefs.art_list_img eq 'y'}
-				<td>{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
+				<td class="text">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 			{/if}
 			{if $prefs.art_list_author eq 'y'}
-				<td>{$listpages[changes].author|escape}</td>
+				<td class="text">{$listpages[changes].author|escape}</td>
 			{/if}
-			<td>
+			<td class="action">
 				{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
 					<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
 				{/if}

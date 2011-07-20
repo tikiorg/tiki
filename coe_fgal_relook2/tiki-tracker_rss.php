@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -38,7 +38,7 @@ if (isset($_REQUEST['sort_mode'])) {
 }
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
-	$tmp = $tikilib->get_tracker($_REQUEST["$id"]);
+	$tmp = $trklib->get_tracker($_REQUEST["$id"]);
 	if (empty($tmp)) {
 		$errmsg = tra("Incorrect param");
 		require_once ('tiki-rss_error.php');
@@ -106,9 +106,7 @@ if ($output["data"] == "EMPTY") {
 		$aux_subject = null;
 		foreach($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
-				$smarty->assign_by_ref('field_value', $data2);
-				$smarty->assign_by_ref('item', $data);
-				$data2['value'] = $smarty->fetch('tracker_item_field_value.tpl');
+				$data2['value'] = $trklib->get_field_handler($field, $item)->renderOutput();
 				if ($data2['value'] == '') {
 					$data2['value'] = '(' . tra('empty') . ')';
 				} else {

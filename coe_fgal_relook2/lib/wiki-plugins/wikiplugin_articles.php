@@ -1,22 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Includes articles listing in a wiki page
-// Usage:
-// {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
-
-function wikiplugin_articles_help()
-{
-        $help = tra("Includes articles listing into a wiki page");
-        $help .= "<br />";
-        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n, titleonly=>y|n}{ARTICLES}~/np~");
-
-        return $help;
-}
 
 function wikiplugin_articles_info()
 {
@@ -42,7 +29,7 @@ function wikiplugin_articles_info()
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Displayed'),
-				'description' => tra('The number of articles to display in the list (no max set by default)') . tra('If Pagination is set to y (Yes), this will determine the amount of artilces per page'),
+				'description' => tra('The number of articles to display in the list (no max set by default)') . tra('If Pagination is set to y (Yes), this will determine the amount of articles per page'),
 				'filter' => 'int',
 				'default' => -1
 			),
@@ -145,6 +132,24 @@ function wikiplugin_articles_info()
 				'filter' => 'date',
 				'default' => ''
 			),
+			'periodQuantity' => array(
+				'required' => false,
+				'name' => tr('Period quantity'),
+				'description' => tr('Numeric value to display only last articles published within a user defined time-frame. Used in conjunction with the next parameter "Period unit", this parameter indicates how many of those units are to be considered to define the time frame. If this parameter is set, "Start Date" and "End date" are ignored.'),
+				'filter' => 'int',
+				'default' => '',
+			),
+			'periodUnit' => array(
+				'required' => false,
+				'name' => tr('Period unit'),
+				'description' => tr('Time unit used with "Period quantity"'),
+				'filter' => 'word',
+				'options' => array(
+					array('text' => tr('Day'), 'value' => 'day'),
+					array('text' => tr('Week'), 'value' => 'week'),
+					array('text' => tr('Month'), 'value' => 'month'),
+				),
+			),
 			'overrideDates' => array(
 				'required' => false,
 				'name' => tra('Override Dates'),
@@ -178,7 +183,7 @@ function wikiplugin_articles_info()
 			),
 			'urlparam' => array(
 				'required' => false,
-				'name' => tra('Additional URL Param'),
+				'name' => tra('Additional URL Param to the link to read article'),
 				'filter' => 'striptags',
 				'default' => ''
 			),
@@ -205,15 +210,17 @@ function wikiplugin_articles($data, $params)
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'translationOrphan' => '', 'showtable' => 'n');
+	$auto_args = array('lang', 'topicId', 'topic', 'sort', 'type', 'lang', 'categId');
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
 	$filter = '';
-	if (($prefs['feature_articles'] !=  'y') || (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y'))) {
+	if ($prefs['feature_articles'] !=  'y') {
 		//	the feature is disabled or the user can't read articles, not even article headings
 		return("");
 	}
 
+	$urlnext = '';
 	if($usePagination == 'y')
 	{
 		//Set offset when pagniation is used
@@ -227,18 +234,54 @@ function wikiplugin_articles($data, $params)
 		if(($max == -1)){
 			$countPagination = 10;
 		}
+		foreach ($auto_args as $arg) {
+			if (!empty($$arg))
+				$paramsnext[$arg] = $$arg;
+		}
+		$paramsnext['_type'] = 'absolute_path';
+		require_once $smarty->_get_plugin_filepath('function', 'query');
+		$urlnext = smarty_function_query($paramsnext, $smarty);
 	}
 
 	$smarty->assign_by_ref('quiet', $quiet);
 	$smarty->assign_by_ref('urlparam', $urlparam);
+	$smarty->assign_by_ref('urlnext', $urlnext);
 	
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
+
+	$dateStartTS = 0;
+	$dateEndTS = 0;
 	
-	if (isset($dateStart)) 	$dateStartTS = strtotime($dateStart);
-	if (isset($dateEnd))	$dateEndTS = strtotime($dateEnd);
-	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
-	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : 0;
+	// if a period of time is set, date start and end are ignored
+	if (isset($periodQuantity)) {
+		switch ($periodUnit) {
+			case 'day':
+				$periodUnit = 86400;
+				break;
+			case 'week':
+				$periodUnit = 604800;
+				break;
+			case 'month':
+				$periodUnit = 2628000;
+				break;
+			default:
+				break;
+		}
+		
+		if (is_int($periodUnit)) {
+			$dateStartTS = $tikilib->now - ($periodQuantity * $periodUnit);
+			$dateEndTS = $tikilib->now;
+		}
+	} else {
+		if (isset($dateStart)) {
+			$dateStartTS = strtotime($dateStart);
+		}
+		
+		if (isset($dateEnd)) {
+			$dateEndTS = strtotime($dateEnd);
+		}
+	}
 	
 	if (isset($fullbody) && $fullbody == 'y') {
 		$smarty->assign('fullbody', 'y');
@@ -264,9 +307,9 @@ function wikiplugin_articles($data, $params)
 	}
 
 	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
-		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"], array('min_one_paragraph' => true));
 		if ($fullbody == 'y') {
-			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"]);
+			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"], array('min_one_paragraph' => true));
 		}
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];

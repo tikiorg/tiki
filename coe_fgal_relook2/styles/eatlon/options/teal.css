@@ -43,13 +43,19 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
 
 #middle {
 	text-align: left;
 	min-height: 450px/*;
 	height: auto !important*/}
 
-#header_fixedwidth {
+.header_fixedwidth {
 	text-align: left;
 	height: 190px;
 	background: #fff url(teal/head_bg.gif);
@@ -167,12 +173,23 @@ input[type=radio] {border: 0}
 input[type="text"],
 input[type="password"] {
 	background-color: #d2d9e3;
-	color: #000}
+	color: #000;
+}
 
 input[type="submit"],
 input[type="file"],
 input[type="reset"],
-select {background: #d2d9e3; color: #000}
+select {
+	background: #d2d9e3;
+	color: #000;
+}
+
+#topbar_modules input#fuser,
+#topbar_modules #search_mod_input_1 {
+	background: #5e9b9b;
+	color: #fff;
+}
+
 
 
 .button a,
@@ -227,7 +244,6 @@ ul, ol {text-align: left}
 tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
-#header {position: static}
 	
 #top_modules {
 	height: 140px;
@@ -240,10 +256,10 @@ tt {font-size: 1.2em}
 
 #sitelogo img { margin-top: 0; }
 
-.box-login_box {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 20px;
-	bottom: 20px;
+	bottom: 0;
 }
 
 input[id="sl-login-user"],
@@ -278,7 +294,10 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 #sitetitle a,
 #sitetitle a:visited {color: #8f8f8f}
 
-#sitetitle a:hover {color: #8f8f8f; text-decoration: none}
+#sitetitle a:hover {
+	color: #8f8f8f;
+	text-decoration: none;
+}
 
 #sitesubtitle {
 	font-size: 1em;
@@ -300,10 +319,6 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	margin-top: 0;
 	margin-right: 30px}
 	
-#tiki-top .wrapper .navigation {
-
-}
-
 .box-search {
 	position: absolute;
 	right: 40px;
@@ -541,10 +556,6 @@ td.even,
 [class].tabinactive {top: 0 !important}
 
 .tabs {
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	position: relative;
 	padding: .2em .2em 0;
 	margin:0 0.2em 1px 0;
 	border-bottom: 1px solid #ccc}
@@ -559,7 +570,6 @@ td.even,
 }
 
 .tabmark {
-	list-style-image: none;
 	float: left;
 	background: #afafaf url(teal/menu_bg.png) 1000px -15px;
 	color: #fff;
@@ -572,15 +582,14 @@ td.even,
 	border-right: 1px solid #878689;
 	color: #fff}
 
-/*.tabmark a:active {
-	background: url(teal/menu_bg.png) 1000px -15px;
-	color: red}*/
-
 .tabmark a:hover {
 	background: url(teal/menu_bg.png) 1000px 0;
 	color: #ececec}
 
-.tabactive a {color: #d7e5f3; font-weight: bold}
+.tabactive a {
+	color: #d7e5f3;
+	font-weight: bold;
+}
 
 .tabcontent {
 	border-left: 1px solid #a9a9a9;
@@ -990,10 +999,6 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 90%;
 	background: inherit}
 
-.caldark .calfocus {background: inherit}
-
-.calfocuson + .calcontent {background: #e6eff8}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1014,7 +1019,6 @@ Caltrack a:visited {color: #00BD02}
 
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
-.calnavigation a:hover {background: red}
 
 #caltable .calfocuson,
 .box-data .fc a.today,
@@ -1047,17 +1051,47 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 1em}
 
 .event {background: #f5f5f5}
-.addevent {padding: 0 5px; float: right}
-* html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid #a9a9a9}
-.calodd {background: #ececec}
-* html .calodd {padding: 0}
-.caleven {background: #f5f5f5}
-* html .caleven {padding: 0}
-.caldark {background: #c4cdda}
-.caldark .calfocus {background: #c4cdda}
-* html .caldark {padding: 0}
-.caldark .calfocus {background: #c4cdda}
+
+.addevent {
+	padding: 0 5px;
+	float: right;
+}
+
+* html .addevent {
+	padding: 0;
+}
+
+.calodd, .caleven {
+	border: 1px solid #a9a9a9;
+}
+
+.calodd {
+	background: #ececec;
+}
+
+* html .calodd {
+	padding: 0;
+}
+
+.caleven {
+	background: #f5f5f5;
+}
+
+* html .caleven {
+	padding: 0;
+}
+
+.caldark {
+	background: #c4cdda;
+}
+
+* html .caldark {
+	padding: 0;
+}
+
+.caldark .calfocus {
+	background: #c4cdda;
+}
 
 div#calscreen .calfocuson {
 	background: #d2d9e3;

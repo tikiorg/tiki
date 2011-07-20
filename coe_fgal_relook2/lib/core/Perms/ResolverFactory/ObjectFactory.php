@@ -1,11 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-require_once 'lib/core/Perms/ResolverFactory.php';
 
 /**
  * Obtains the object permissions for each object. Bulk loading provides
@@ -17,7 +15,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 
 	function getHash( array $context ) {
 		if( isset( $context['type'], $context['object'] ) ) {
-			return 'object:' . $context['type'] . ':' . strtolower( $context['object'] );
+			return 'object:' . $context['type'] . ':' . $this->cleanObject( $context['object'] );
 		} else {
 			return '';
 		}
@@ -40,7 +38,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 			$hash = $this->getHash( array_merge( $baseContext, array( 'object' => $v ) ) );
 			if( ! isset( $this->known[$hash] ) ) {
 				$this->known[$hash] = array();
-				$key = md5( $baseContext['type'] . strtolower( $v ) );
+				$key = md5( $baseContext['type'] . $this->cleanObject( $v ) );
 				$objects[$key] = $v;
 				$hashes[$key] = $hash;
 			}
@@ -87,7 +85,6 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		if( count( $perms ) == 0 ) {
 			return null;
 		} else {
-			require_once 'lib/core/Perms/Resolver/Static.php';
 			return new Perms_Resolver_Static( $perms, 'object' );
 		}
 	}
@@ -98,5 +95,9 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		} else {
 			return $name;
 		}
+	}
+
+	private function cleanObject($name) {
+		return strtolower(trim($name));
 	}
 }

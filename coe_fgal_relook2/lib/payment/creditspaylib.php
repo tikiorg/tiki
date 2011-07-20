@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class UserPayCredits extends CreditsLib
 {
@@ -53,7 +58,7 @@ class UserPayCredits extends CreditsLib
 		}
 		$credits_amount = $amount * $this->credits[$creditType]['xcrate'];
 		if ($this->useCredits($userId, $creditType, $credits_amount)) {
-			$msg = tr("Tiki credits payment done on %0 for $amount (using $creditType)", $tikilib->get_short_datetime($tikilib->now));
+			$msg = tr("Tiki credits payment done on %0 for %1 (using %2)", $tikilib->get_short_datetime($tikilib->now), $amount, $creditType);
 			$paymentlib->enter_payment( $invoice, $amount, 'tikicredits', array('info' => $msg, 'username' => $user, 'creditType' => $creditType, 'creditAmount' => $credits_amount));
 			return true;
 		} else {

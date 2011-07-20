@@ -17,26 +17,29 @@
 {/if}
 
 {if ($info.creator eq $user or $info.user eq $user or $admin_mode) and ($info.task_version eq $info.last_version)}
-{ if ($info.taskId > 0 and $info.creator ne $info.user) }
+	{if ($info.taskId > 0 and $info.creator ne $info.user)}
     <span class="tabbut">
-    {html_image file='img/icons2/tick.gif' width='15' height='15' alt="{tr}Accept{/tr}"}
+		{icon _id='accept' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
     </span>
     <span class="tabbut">
-    {html_image file='img/icons2/error.gif' width='14' height='14' alt="{tr}Red{/tr}"}
+		{icon _id='delete' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
     </span>
-{/if}
-{ if $info.deleted }
+	{/if}
+	{if $info.deleted}
     <span class="tabbut">
-    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;remove_from_trash=on" class="tablink">{tr}Remove from Trash{/tr}</a>
+		<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;remove_from_trash=on" class="tablink">
+			{icon _id='basket_remove' title="{tr}Remove from Trash{/tr}" alt="{tr}Remove from Trash{/tr}"} {tr}Remove from Trash{/tr}
+		</a>
     </span>
-{else}
+	{else}
     <span class="tabbut">
-	{html_image file='img/icons/trash.gif' width='16' height='16' alt="{tr}Trash{/tr}"}
-    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">{tr}Move into Trash{/tr}</a>
+		<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">
+			{icon _id='basket_put' title="{tr}Move to trash{/tr}" alt="{tr}Move to trash{/tr}"} {tr}Move to Trash{/tr}
+		</a>
     </span>
-{/if}
+	{/if}
 {/if}
 <table class="formcolor">
 <colgroup><col width="25%" span="4" /></colgroup>
@@ -65,19 +68,25 @@
 	<td>{tr}Created by{/tr}</td> 
 	<td colspan="2">
 		<b>{$info.creator|escape}</b>
-		&nbsp;&nbsp; <b>{$info.created|date_format:"%d/%m/%Y -- %H:%M"}</b>
+		&nbsp;&nbsp; <b>{$info.created|tiki_short_date}&nbsp;--&nbsp;{$info.created|tiki_short_time}</b>
 		&nbsp;&nbsp; 
-		{if ($info.task_version > 0) } 
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">{icon _id='resultset_previous' align="middle"}</a>
+		{if ($info.task_version > 0)} 
+			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">
+				{icon _id='resultset_previous' align="middle"}
+			</a>
   		{/if}
 		{tr}Version:{/tr} <b>{$info.task_version+1}</b>
-		{if $info.task_version < $info.last_version } 
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">{icon _id='resultset_next' align="middle"}</a>
+		{if $info.task_version < $info.last_version} 
+			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">
+				{icon _id='resultset_next' align="middle"}
+			</a>
   		{/if}
 		
 		&nbsp;&nbsp; 
 		
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">{tr}Last Version:{/tr} {$info.last_version+1}</a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">
+			{tr}Last Version:{/tr} {$info.last_version+1}
+		</a>
 	</td>
 	<td colspan="2">
 		<div align="right">{tr}taskId:{/tr}
@@ -89,10 +98,17 @@
   	<td>{tr}Task user{/tr}</td> 
   		<td colspan="3">
 			{if ($receive_users)} 
-				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode) } disabled="disabled"> <option value="{$info.user}">{$info.user}</option></select><input type="hidden" name="task_user" value="{$info.user}" />{else}>
+				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode)} disabled="disabled">
+					 <option value="{$info.user}">
+						{$info.user}
+					</option>
+				</select>
+				<input type="hidden" name="task_user" value="{$info.user}" />
+			{else}
+				>
 				{section name=user_i loop=$receive_users} 
 					<option value="{$receive_users[user_i].login|escape}" 
-						{if ( $receive_users[user_i].login eq $info.user) } selected="selected" {/if}>
+						{if ( $receive_users[user_i].login eq $info.user)} selected="selected" {/if}>
 							{$receive_users[user_i].login|escape}
 					</option>
 				{/section}
@@ -101,7 +117,7 @@
 			{else}
 			<input type="text" name="task_user" value="{$info.user|escape}" />
 			{/if}
-			{if (($info.user ne $info.creator) or ($taskId eq 0)) } 
+			{if (($info.user ne $info.creator) or ($taskId eq 0))} 
 				&nbsp;
 				<input {if $info.creator ne $user} disabled="disabled" {/if} 
 				{if $info.rights_by_creator eq 'y'} checked="checked" {/if}  name="rights_by_creator" type="checkbox" />
@@ -127,7 +143,7 @@
 		<td colspan="3">
 			{html_select_date time=$start_date prefix="start_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;
-			{html_select_time minute_interval=10 time=$start_date prefix="start_" display_seconds=false use_24_hours=true}
+			{html_select_time minute_interval=10 time=$start_date prefix="start_" display_seconds=false use_24_hours=$use_24hr_clock}
 			&nbsp;<input name="use_start_date" {if $info.start or $taskId eq  0} checked="checked" {/if} type="checkbox" />
 			&nbsp;{tr}Use start date and time{/tr}
 		</td>
@@ -136,7 +152,7 @@
 		<td colspan="3">
 			{html_select_date time=$end_date prefix="end_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;
-			{html_select_time minute_interval=10 time=$end_date prefix="end_" display_seconds=false use_24_hours=true}
+			{html_select_time minute_interval=10 time=$end_date prefix="end_" display_seconds=false use_24_hours=$use_24hr_clock}
 			&nbsp;<input name="use_end_date" {if $info.end} checked="checked" {/if} type="checkbox" />
 			&nbsp;{tr}Use end date and time{/tr}
 		</td>
@@ -149,7 +165,7 @@
 		{/if}
 		{/if}
 		&nbsp;&nbsp;
-		<b>{$info.completed|date_format:"%d/%m/%Y -- %H:%M"}</b>
+		<b>{$info.completed|tiki_short_date}&nbsp;--&nbsp;{$info.completed|tiki_short_time}</b>
 		</td>
 	</tr>  
 	
@@ -169,9 +185,11 @@
 		<td>{tr}Percentage completed{/tr}</td>
 		<td colspan="3">  
 			 <select name="percentage">
-					<option value="w" {if $info.percentage_null } selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
+					<option value="w" {if $info.percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
 				{section name=zz loop=$percs}
-					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > {$percs[zz]}% </option>	
+					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > 
+						{$percs[zz]}% 
+					</option>	
 				{/section}
       		</select>
 		</td>
@@ -182,7 +200,7 @@
 			<option></option>
 		{section name=groups_i loop=$receive_groups} 
 			<option value="{$receive_groups[groups_i].groupName|escape}" 
-				{if ( $receive_groups[groups_i].groupName eq $info.public_for_group) } selected="selected" {/if}>
+				{if ( $receive_groups[groups_i].groupName eq $info.public_for_group)} selected="selected" {/if}>
 					{$receive_groups[groups_i].groupName|escape}
 			</option>
 		{/section}
@@ -219,19 +237,19 @@
 		<td>{tr}Modified by{/tr}</td>
 		<td colspan="3">
 			<b>{$info.lasteditor}</b>
-			&nbsp;&nbsp;<b>{$info.changes|date_format:"%d/%m/%Y -- %H:%M"}</b>
+			&nbsp;&nbsp;<b>{$info.changes|tiki_short_date}&nbsp;--&nbsp;{$info.changes|tiki_short_time}</b>
 		</td>
 	</tr>  
 	{/if}
 	
 	{if $info.deleted}
 	<tr><td>{tr}Marked as deleted{/tr}</td>
-		<td colspan="3"><b>{$info.deleted|date_format:"%d/%m/%Y -- %H:%M"}</b></td>
+		<td colspan="3"><b>{$info.deleted|tiki_short_date}&nbsp;--&nbsp;{$info.deleted|tiki_short_time}</b></td>
 	</tr> 
 	{/if}
 	<tr>
-	{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version) }
-{if $info.taskId eq 0 }
+	{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version)}
+{if $info.taskId eq 0}
 	<td colspan="4">
         <div align="center">
 			<input checked="checked" type="checkbox" name="send_email_newtask" />{tr}Inform task user by email{/tr}

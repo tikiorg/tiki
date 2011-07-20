@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -100,7 +100,7 @@ class LogsLib extends TikiLib
 	}
 	function clean_logs($date)
 	{
-		$query = "delete from `tiki_actionlog` where `object`='system' and `objectType`='system' and `lastModif`<=?";
+		$query = "delete from `tiki_actionlog` where `objectType`='system' and `lastModif`<=?";
 		$this->query($query, array((int)$date));
 	}
 
@@ -156,7 +156,11 @@ class LogsLib extends TikiLib
 			$ip = $this->get_ip_address();
 		}
 		if ($client == '') {
-			$client = NULL;
+			if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+				$client = substr($_SERVER['HTTP_USER_AGENT'],0,200);
+			} else {
+				$client = NULL;
+			}
 		} else {
 			$client = substr($client,0,200);
 		}
@@ -170,11 +174,13 @@ class LogsLib extends TikiLib
 			}
 		}
 		$actions = array();
-		if ($logObject && !$logCateg) {
+		if ( $logObject ) {
+			$param = substr( $param, 0, '200' );
+			if (!$logCateg) {
 			$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`) values(?,?,?,?,?,?,?,?)";
 			$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
 			$actions[] = $this->lastInsertId();
-		} elseif ($logObject) {
+		} else {
 			if (count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `categId`, `client`) values(?,?,?,?,?,?,?,?,?)";
@@ -186,6 +192,7 @@ class LogsLib extends TikiLib
 				$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
 				$actions[] = $this->lastInsertId();
 			}
+		}
 		}
 		if (!empty($contributions)) {
 			foreach ($actions as $a) {
@@ -581,7 +588,7 @@ class LogsLib extends TikiLib
 			$name = $action['action'].'/'.$action['objectType'];
 			if ( ($index = array_search($name,$actions_name)) !== false ) {
 				if ($field == 'object') {
-					$stats[$key]['link'] = $action['link'];
+					$stats[$key]['link'] = isset($action['link']) ? $action['link'] : null;
 				}
 				++$stats[$key][$name];
 			}

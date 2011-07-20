@@ -25,12 +25,10 @@
 		{/if}
 		
 			<label class="findtitle">
-				{tr}Search{/tr} <input id="highlight{$iSearch}" name="words" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Search{/tr} <input id="highlight{$iSearch}" name="highlight" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
-			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
-				{jq}
-					$("#highlight{{$iSearch}}").tiki("autocomplete", "pagename");
-				{/jq}
+			{if $prefs.search_autocomplete eq 'y'}
+				{autocomplete element="#highlight$iSearch" type='pagename'}
 			{/if}			
 				{if !( $searchStyle eq "menu" )}
 				<label class="searchboolean" for="boolean">
@@ -107,7 +105,7 @@
 			{/if}
 			
 			{if $prefs.feature_search_show_object_filter eq 'y'}
-				{if $searchStyle eq "menu" }
+				{if $searchStyle eq "menu"}
 					<span class='searchMenu'>
 						{tr}in{/tr}
 						<select name="where">
@@ -171,7 +169,7 @@
 </div><!--nohighlight-->
 	{* do not change the comment above, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
-{if $searchStyle ne 'menu' and ! $searchNoResults }
+{if $searchStyle ne 'menu' and ! $searchNoResults}
 	<div class="nohighlight simplebox" style="width:300px">
 		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
 			{if $where_forum}
@@ -182,7 +180,7 @@
 	</div><!--nohighlight-->
 {/if}
 
-{if ! $searchNoResults }
+{if ! $searchNoResults}
 	<ul class="searchresults">
 		{section name=search loop=$results}
 		<li>

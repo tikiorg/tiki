@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
+include_once ('lib/wiki-plugins/wikiplugin_slideshow.php');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -17,6 +18,10 @@ if ($prefs['feature_wiki'] != 'y') {
 	$smarty->display("error_raw.tpl");
 	die;
 }
+
+//make the other things know we are loading a slideshow
+$tikilib->is_slideshow = true;
+$smarty->assign('is_slideshow' , 'y');
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
@@ -37,10 +42,14 @@ $page = $_REQUEST['page'];
 $smarty->assign('page', $page);
 
 // If the page doesn't exist then display an error
-if (!($info = $tikilib->get_page_info($page))) {
-	$smarty->assign('msg', tra("Page cannot be found"));
-	$smarty->display("error_raw.tpl");
+if (!($info = $tikilib->page_exists($page))) {
+	include_once ('tiki-index.php');
 	die;
+}
+
+if (isset($_REQUEST['theme'])) {
+	print_r(getSlideshowTheme($_REQUEST['theme'], true));
+	die; 
 }
 
 // Now check permissions to access this page
@@ -81,30 +90,6 @@ if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
-
-// Verify lock status
-if ($info["flag"] == 'L') {
-	$smarty->assign('lock', true);
-} else {
-	$smarty->assign('lock', false);
-}
-
-// If not locked and last version is user version then can undo
-$smarty->assign('canundo', 'n');
-
-if ($info["flag"] != 'L' && (($tiki_p_edit == 'y' && $info["user"] == $user) || ($tiki_p_remove == 'y'))) {
-	$smarty->assign('canundo', 'y');
-}
-
-if ($tiki_p_admin_wiki == 'y') {
-	$smarty->assign('canundo', 'y');
-}
-
-// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-$preparsed = array();
-$noparsed = array();
-$tikilib->parse_first( $info["data"], $preparsed, $noparsed );
-
 $pdata = $tikilib->parse_data_raw($info["data"]);
 
 if (!isset($_REQUEST['pagenum']))
@@ -113,22 +98,6 @@ if (!isset($_REQUEST['pagenum']))
 $pages = $wikilib->get_number_of_pages($pdata);
 $pdata = $wikilib->get_page($pdata, $_REQUEST['pagenum']);
 $smarty->assign('pages', $pages);
-
-if ($pages > $_REQUEST['pagenum']) {
-	$smarty->assign('next_page', $_REQUEST['pagenum'] + 1);
-} else {
-	$smarty->assign('next_page', $_REQUEST['pagenum']);
-}
-
-if ($_REQUEST['pagenum'] > 1) {
-	$smarty->assign('prev_page', $_REQUEST['pagenum'] - 1);
-} else {
-	$smarty->assign('prev_page', 1);
-}
-
-$smarty->assign('first_page', 1);
-$smarty->assign('last_page', $pages);
-$smarty->assign('pagenum', $_REQUEST['pagenum']);
 
 // Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
 $tikilib->replace_preparse( $info["data"], $preparsed, $noparsed );
@@ -144,22 +113,69 @@ if (empty($info["user"])) {
 
 $smarty->assign_by_ref('lastUser', $info["user"]);
 
-// Comments engine!
-if ($prefs['feature_wiki_comments'] == 'y') {
-	$comments_per_page = $prefs['wiki_comments_per_page'];
-
-	$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-	$comments_vars = array('page');
-	$comments_prefix_var = 'wiki page:';
-	$comments_object_var = 'page';
-	include_once ("comments.php");
-}
-
 include_once ('tiki-section_options.php');
+
+$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
+$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
+$headerlib->add_jq_onready( '
+	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
+	
+	$.s5.start($.extend(window.s5Settings, {
+		menu: function() {
+			return $("#tiki_slideshow_buttons").show();
+		},
+		noteMenu: function() {
+			var menu =  $("#tiki_slideshowNote_buttons").clone().show();
+			
+			menu.find(".tiki-slideshow-theme")
+				.s5ThemeHandler()
+				.change(function() {
+					$(".tiki-slideshow-theme").val($(this).val());
+				});
+			
+			return menu;
+		},
+		themeName: "default"
+	}));
+	
+	$("#main").hide();
+	
+	$.fn.extend({
+		s5ThemeHandler: function(s) {
+			return this
+				.val(window.s5Settings.themeName)
+				.change(function() {
+					var theme = $(this).val();
+					theme = (theme ? theme : "default");
+					
+					window.s5Settings.themeName = theme;
+					$.get("tiki-slideshow.php", {theme: theme}, function(o) {
+						theme = $.parseJSON(o);
+						$.s5.makeTheme(theme);
+					}); 
+				});
+		}
+	});
+	
+	$(".tiki-slideshow-theme")
+		.s5ThemeHandler()
+		.change(function() {
+			if (!$.s5.note) return;
+			if (!$.s5.note.document) return;
+			
+			$($.s5.note.document).find(".tiki-slideshow-theme").val($(this).val());
+		});
+	
+	if (window.s5Settings.themeName == "default") {
+		$(".tiki-slideshow-theme").change();
+	}
+');
+
 ask_ticket('index-raw');
 
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
 $smarty->assign('mid','tiki-show_page_raw.tpl');
+
 // use tiki_full to include include CSS and JavaScript
 $smarty->display("tiki_full.tpl");

@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title admpage="wiki"}{tr}History:{/tr} {$page|escape}{/title}
+{title admpage="wiki"}{tr}History:{/tr} {$page}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
@@ -14,7 +14,7 @@
 	{/if}
 </div>
 
-{include file=tiki-wiki_staging.tpl}
+{include file='tiki-wiki_staging.tpl'}
 
 {if $preview}
 	<h2>{tr}Preview of version:{/tr} {$preview}
@@ -67,9 +67,9 @@
 	<div>
 		{if !isset($noHistory)}
 		  	{if isset($show_all_versions) and $show_all_versions eq "n"}
-				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
 			{else}
-				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
 			{/if}
 		{/if}
 	</div>
@@ -144,14 +144,14 @@ $("#toggle_diffs a").click(function(){
 				{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
 				{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
 			</div>
-			<table class="normal">
+			<table class="formcolor">
 				<tr>
 					{if $tiki_p_remove eq 'y'}<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
 					<th>{tr}Information{/tr}</th>
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 					<th>{tr}Version{/tr}</th>
-					<th>&nbsp;</th>
+					<th>{icon _id="html"}</th>
 					<th>{tr}Action{/tr}</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">

@@ -75,8 +75,8 @@ function toggleCols(id,zeromargin,maincol) {
 }
 
 function toggle_dynamic_var(name) {
-	name1 = 'dyn_'+name+'_display';
-	name2 = 'dyn_'+name+'_edit';
+	var name1 = 'dyn_'+name+'_display';
+	var name2 = 'dyn_'+name+'_edit';
 	if(document.getElementById(name1).style.display == "none") {
 		document.getElementById(name2).style.display = "none";
 		document.getElementById(name1).style.display = "inline";
@@ -108,7 +108,7 @@ function chgArtType() {
 	if (typeof articleCustomAttributes != 'undefined') {
 		propertyList = propertyList.concat(articleCustomAttributes);
 	}
-	var l = propertyList.length, property, value;
+	var l = propertyList.length, property, value, display;
 	for (var i=0; i<l; i++) {
 		property = propertyList[i++];
 		value = propertyList[i];
@@ -122,7 +122,7 @@ function chgArtType() {
 		if (document.getElementById(property)) {
 			document.getElementById(property).style.display = display;
 		} else {
-			j = 1;
+			var j = 1;
 			while (document.getElementById(property+'_'+j)) {
 				document.getElementById(property+'_'+j).style.display = display;
 				j++;
@@ -284,7 +284,7 @@ function setMenuCon(foo) {
 }
 
 function genPass(w1) {
-	vo = "aeiouAEU";
+	var vo = "aeiouAEU", co, s, l, p, i, letter;
 
 	co = "bcdfgjklmnprstvwxzBCDFGHJKMNPQRSTVWXYZ0123456789_$%#";
 	s = Math.round(Math.random());
@@ -317,43 +317,7 @@ function replaceLimon(vec) {
 }
 
 function setSelectionRange(textarea, selectionStart, selectionEnd) {
-	if (typeof textarea.setSelectionRange != 'undefined') {
-		textarea.focus();
-		
-		if (!$(textarea).hasClass('codeMirror'))
-			textarea.setSelectionRange(selectionStart, selectionEnd);
-	} else if (document.selection.createRange) {	// IE
-		var val = textarea.value, c = 0;
-		var isWin = val.indexOf("\r") > -1;
-		textarea.focus();
-		var range =  document.selection.createRange();
-		range.collapse();
-		if (selectionEnd > 1) {
-			if (isWin) {
-				for (var i = 0; i < selectionEnd; i++) {
-					if (val[i] == "\n") {
-						c++;
-					}
-				}
-			}
-			range.moveEnd('character', selectionEnd - c);
-		}
-		range.collapse(false);
-		if (selectionStart < selectionEnd) {
-			c = 0;
-			if (isWin) {
-				for (i = selectionEnd; i > selectionStart; i--) {
-					if (val[i] == "\n") {
-						c++;
-					}
-				}
-			}
-			range.moveStart('character', selectionStart - selectionEnd - c);
-		}
-		try {
-			range.select();
-		} catch (e) {}
-	}
+	$(textarea).selection(selectionStart, selectionEnd);
 }
 
 function getTASelection( textarea ) {
@@ -362,7 +326,7 @@ function getTASelection( textarea ) {
 		return $textareaEditor.selection();
 	}
 	
-	var ta_id = $(textarea).attr("id"), r, cked;
+	var ta_id = $(textarea).attr("id"), r, cked, output;
 	if ($('#cke_contents_' + ta_id).length !== 0) {
 		// get selection from ckeditor
 		cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[ta_id] : null;
@@ -378,7 +342,7 @@ function getTASelection( textarea ) {
 			}
 		}
 	} else {
-		if (typeof $(textarea).attr("selectionStartSaved") === 'string' && $(textarea).attr("selectionStartSaved")) { // forgetful firefox
+		if (typeof $(textarea).attr("selectionStartSaved") != 'undefined' && $(textarea).attr("selectionStartSaved")) { // forgetful firefox/IE now
 			return textarea.value.substring($(textarea).attr("selectionStartSaved"), $(textarea).attr("selectionEndSaved"));
 		} else if (typeof textarea.selectionStart != 'undefined') {
 			return textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
@@ -386,6 +350,21 @@ function getTASelection( textarea ) {
 			r = document.selection.createRange();
 			return r.text;
 		}
+	}
+}
+
+var ieFirstTimeInsertKludge = null;
+
+function storeTASelection( area_id ) {
+	if ($('#cke_contents_' + area_id).length === 0) {
+		var $el = $("#" + area_id);
+		var sel = $el.selection();
+		$el.attr("selectionStartSaved", sel.start)
+				.attr("selectionEndSaved", sel.end)
+				.attr("scrollTopSaved", $el.attr("scrollTop"));
+	}
+	if (ieFirstTimeInsertKludge === null) {
+		ieFirstTimeInsertKludge = true;
 	}
 }
 
@@ -428,9 +407,42 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	var toBeReplaced = /text|page|area_id/g; //substrings in replaceString to be replaced by the selection if a selection was done
 	var hiddenParents = $textarea.parents('fieldset:hidden:last');
 	if (hiddenParents.length) { hiddenParents.show(); }
-
-	// get ckeditor handling out of the way - can only be simple text insert for now
-	if ($('#cke_contents_' + elementId).length !== 0) {
+	
+	if ($textareaEditor) {
+	 	var handle = $textareaEditor.cursorLine();
+		var selection = $textareaEditor.selection();
+	 	var cursor = $textareaEditor.cursorPosition();
+		
+		var newString = '';
+		
+	 	if (perLine) { //for bullets
+			if (selection) {//we kill all content because we already have the selection, and when we split it and re-insert, we get the lines again
+				$textareaEditor.replaceSelection('');
+			} else {
+				selection = $textareaEditor.lineContent(handle);
+			}
+			var lines = selection.split(/\n/g);
+			$(lines).each(function(i){
+				newString += replaceString.replace(toBeReplaced, this + '') + (i == lines.length - 1 ? '' : '\n');
+			});
+			
+			if ($textareaEditor.selection()) {
+				$textareaEditor.replaceSelection(newString);
+			} else {
+				$textareaEditor.setLineContent(handle, newString);
+			}
+		} else if (blockLevel && toBeReplaced) {
+			selection = $textareaEditor.lineContent(handle);
+			$textareaEditor.setLineContent(handle, replaceString.replace(toBeReplaced, selection));
+	 	} else if (replaceString) {
+			$textareaEditor.replaceSelection(replaceString.replace(toBeReplaced, selection));
+	 	} else {
+	 		$textareaEditor.insertIntoLine($textareaEditor.lastLine(), 'end', newString);
+	 	}
+	 	
+		return;
+	 // get ckeditor handling out of the way - can only be simple text insert for now
+	} else if ($('#cke_contents_' + elementId).length !== 0) {
 		// get selection from ckeditor
 		var cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[elementId] : null;
 		if (cked) {
@@ -502,45 +514,71 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	}
 	
 	if (!$textarea.length && elementId === "fgal_picker") {	// ckeditor file browser
-		$(".cke_dialog_contents").find("input:first").val(replaceString);
+		$(".cke_dialog_contents").find("input:first").val(replaceString.replace("&amp;", "&"));
+		return;
+	} else if ($textarea.is(":input") && elementId === "fgal_picker_id") {
+		$textarea.val(replaceString);
 		return;
 	}
 
-	($textareaEditor ? $textareaEditor : $textarea).focus();
+	$textarea.focus();
 	
 	var val = $textarea.val();
-	var selection = ( $textareaEditor ? $textareaEditor : $textarea ).selection();
-
-	var selectionStart = selection.start;
-	var selectionEnd = selection.end;
+	var selection = $textarea.selection();
 	var scrollTop=$textarea[0].scrollTop;
-
-	if (selectionStart < 0 || (selectionStart == val.length && selectionStart == selectionEnd)) {	// couldn't get textarea selection via jq
-		if (typeof $textarea.attr("selectionStartSaved") === 'string' && $textarea.attr("selectionStartSaved")) {	// forgetful firefox
-			selectionStart = $textarea.attr("selectionStartSaved");
-			selectionEnd = $textarea.attr("selectionEndSaved");
+	
+	if (selection.start === 0 && selection.end === 0 &&
+					typeof $textarea.attr("selectionStartSaved") != 'undefined') {	// get saved textarea selection
+		if ($textarea.attr("selectionStartSaved")) {	// forgetful firefox/IE
+			selection.start = $textarea.attr("selectionStartSaved");
+			selection.end = $textarea.attr("selectionEndSaved");
+			if ($textarea.attr("scrollTopSaved")) {
+				scrollTop = $textarea.attr("scrollTopSaved");
+				$textarea.attr("scrollTopSaved", "");
+			}
+			$textarea.attr("selectionStartSaved", "").attr("selectionEndSaved", "");
 		} else {
-			selectionStart = getCaretPos($textarea[0]);
-			selectionEnd = selectionStart;
+			selection.start = getCaretPos($textarea[0]);
+			selection.end = selection.start;
 		}
 	}
+
+	// deal with IE's two char line ends
+	var lines, startoff = 0, endoff = 0;
+	if ($textarea[0].createTextRange && $textarea[0].value !== val) {
+		val = $textarea[0].value;	// use raw value of the textarea
+		if (val.substring(selection.start, selection.start + 1) === "\n") {
+			selection.start++;
+		}
+		lines = val.substring(0, selection.start).match(/\r\n/g);
+		if (lines) {
+			startoff -= lines.length;	// remove one char per line for IE
+		}
+	}
+	var selectionStart = selection.start;
+	var selectionEnd = selection.end;
 
 	if( blockLevel ) {
 		// Block level operations apply to entire lines
 
 		// +1 and -1 to handle end of line caret position correctly
 		selectionStart = val.lastIndexOf( "\n", selectionStart - 1 ) + 1;
-		selectionEnd = val.indexOf( "\n", selectionEnd );
+		var blockEnd = val.indexOf( "\r", selectionEnd ); // check for IE first
+		if (blockEnd < 0) {
+			selectionEnd = val.indexOf( "\n", selectionEnd );
+		} else {
+			selectionEnd = blockEnd;
+		}
 		if (selectionEnd < 0) {
 			selectionEnd = val.length;
 		}
 	}
 
+	var newString = '';
 	if ((selectionStart != selectionEnd) && !$textareaEditor) { // has there been a selection
-		var newString = '';
 		if( perLine ) {
-			var lines = val.substring(selectionStart, selectionEnd).split("\n");
-			for( k = 0; lines.length > k; ++k ) {
+			lines = val.substring(selectionStart, selectionEnd).split("\n");
+			for( var k = 0; lines.length > k; ++k ) {
 				if( lines[k].length !== 0 ) {
 					newString += replaceString.replace(toBeReplaced, lines[k]);
 				}
@@ -562,57 +600,40 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 						+ newString
 						+ val.substring(selectionEnd)
 					);
-		setSelectionRange($textarea[0], selectionStart, selectionStart + newString.length);
-		
-	} else if ($textareaEditor) {
-		var handle = $textareaEditor.cursorLine();
-		var cursor = $textareaEditor.cursorPosition();
-		
-		if (blockLevel) {
-			selection = $textareaEditor.lineContent(handle);
+		lines = newString.match(/\r\n/g);
+		if (lines) {
+			endoff   -= lines.length;	// lines within the replacement for IE
 		}
+		setSelectionRange($textarea[0], selectionStart + startoff, selectionStart + startoff + newString.length + endoff);
 		
-		var newString = '';
-		
-		if( perLine ) {
-			var lines = selection.split("\n");
-			for( k = 0; lines.length > k; ++k ) {
-				if( lines[k].length !== 0 ) {
-					newString += replaceString.replace(toBeReplaced, lines[k]);
-				}
-				if( k != lines.length - 1 ) {
-					newString += "\n";
-				}
-			}
-		} else {
-			if (replaceSelection) {
-				newString = replaceString;
-			} else if (replaceString.match(toBeReplaced)) {
-				newString = replaceString.replace(toBeReplaced, selection);
-			} else {
-				newString = replaceString + '\n' + selection;
-			}
-		}
-		
-		if (blockLevel) {
-			$textareaEditor.setLineContent(handle, newString);
-		} else if (handle) {
-			$textareaEditor.replaceSelection(newString);
-		} else {
-			$textareaEditor.insertIntoLine($textareaEditor.lastLine(), 'end', newString);
-		}
 	} else { // insert at caret
 		$textarea.val(val.substring(0, selectionStart)
 						+ replaceString
 						+ val.substring(selectionEnd)
 					);
-		setCaretToPos($textarea[0], selectionStart + replaceString.length);
+		lines = replaceString.match(/\r\n/g);
+		if (lines) {
+			endoff   -= lines.length;	// lines within the replacement for IE
+		}
+		setCaretToPos($textarea[0], selectionStart + startoff + replaceString.length + endoff);
+
 	}
-	$textarea[0].scrollTop=scrollTop;
+	$textarea.attr("scrollTop", scrollTop);
+	if ($.browser.msie && ieFirstTimeInsertKludge) {
+		setTimeout(function(){		// not only does IE reset the scrollTop and selection the first time a dialog is used
+			if (newString.length) {	// but somehow all the ints have been converted into strings...
+				setSelectionRange($textarea[0], parseInt(selectionStart,10) + parseInt(startoff,10),
+						parseInt(selectionStart,10) + parseInt(startoff,10) + newString.length + parseInt(endoff,10));
+			}
+			$textarea.attr("scrollTop", scrollTop);
+		}, 1000);
+		ieFirstTimeInsertKludge = false;
+	}
 
 	if (hiddenParents.length) { hiddenParents.hide(); }
-	if (typeof auto_save_id != "undefined" && auto_save_id.length > 0 && typeof auto_save == 'function') {  auto_save(); }
-
+	if (typeof auto_save_id != "undefined" && auto_save_id.length > 0 && typeof auto_save == 'function') {
+		auto_save( elementId, auto_save_id[0]);
+	}
 }
 
 function setUserModuleFromCombo(id, textarea) {
@@ -651,37 +672,24 @@ function flip_class(itemid, class1, class2) {
 	}
 }
 
-function tikitabs(focus,max,ini) {
-	var didit = false, didone = false;
-	if (!ini) {
-		ini = 1;
+function tikitabs( focus, tabElement) {
+	var container;
+	if (typeof tabElement === "undefined") {
+		container = $(".tabset:first");
+	} else {
+		container = $(tabElement).parents(".tabset:first");
 	}
-	for (var i = ini; i <= max; i++) {
-		var tabname = 'tab' + i;
-		var content = 'content' + i;
-		if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {
-			if (i == focus) {
-				// show(tabname);
-				show(content);
-				setCookie('tab',focus);
-				document.getElementById(tabname).className = 'tabmark';
-				document.getElementById(tabname).className += ' tabactive';
-				didit = true;
-			} else {
-				// hide(tabname);
-				hide(content);
-				document.getElementById(tabname).className = 'tabmark';
-				document.getElementById(tabname).className += ' tabinactive';
-			}
-			if (!didone) { didone = true; }
-		}
+
+	if (focus > $("> .tabs .tabmark", container).length) {
+		focus = 1;	// limit to number of tabs - somehow getting set to 222 sometimes
 	}
-	if (didone && !didit) {
-		show('content'+ini);
-		setCookie('tab',ini);
-		document.getElementById('tab'+ini).className = 'tabmark';
-		document.getElementById('tab'+ini).className += ' tabactive';
-	}
+
+	$("> .tabs .tabmark:not(.tab" + focus + ":first)", container).removeClass("tabactive");		// may need .addClass("tabinactive");
+	$("> .tabs .tabmark.tab" + focus + ":first", container).addClass("tabactive");				// and .removeClass("tabinactive");
+	$("> .tabcontent:not(.content" + focus + ":first)", container).hide();
+	$("> .tabcontent.content" + focus + ":first", container).show();
+	setCookie( $(".tabs:first", container).data("name"), focus, "tabs", "session");
+
 }
 
 /* foo: name of the menu
@@ -727,6 +735,7 @@ function setheadingstate(foo) {
 }
 
 function setsectionstate(foo, def, img, status) {
+	var src;
 	if (!status) {
 		status = getCookie(foo, "menu", "o");
 	}
@@ -747,20 +756,20 @@ function setsectionstate(foo, def, img, status) {
 
 function icntoggle(foo, img) {
 	if (!img) {
-		if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/)) {
-			img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
+		if ($("#icn" + foo).attr("src").search(/[\\\/]/)) {
+			img = $("#icn" + foo).attr("src").replace(/.*[\\\/]([^\\\/]*)$/, "$1");
 		} else {
 			img = 'folder.png';
 		}
 	}
-	if (document.getElementById(foo).style.display == "none") {
+	if ($("#" + foo + ":hidden").length) {
 		show(foo, true, "menu");
-		document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, 'o' + img);
+		$("#icn" + foo).attr("src", $("#icn" + foo).attr("src").replace(/[^\\\/]*$/, 'o' + img));
 
 	} else {
 		hide(foo, true, "menu");
 		img = img.replace(/(^|\/|\\)o(.*)$/, '$1$2');
-		document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, img);
+		$("#icn" + foo).attr("src", $("#icn" + foo).attr("src").replace(/[^\\\/]*$/, img));
 	}
 }
 
@@ -848,8 +857,8 @@ function setCookie(name, value, section, expires, path, domain, secure) {
 }
 function setCookieBrowser(name, value, section, expires, path, domain, secure) {
 	if (section) {
-		valSection = getCookie(section);
-		name2 = "@" + name + ":";
+		var valSection = getCookie(section);
+		var name2 = "@" + name + ":";
 		if (valSection) {
 			if (new RegExp(name2).test(valSection)) {
 				valSection  = valSection.replace(new RegExp(name2 + "[^@;]*"), name2 + value);
@@ -929,8 +938,8 @@ function getCookieBrowser(name, section, defval) {
 // * path and domain default if assigned null or omitted if no explicit argument proceeds
 function deleteCookie(name, section, expires, path, domain, secure) {
 	if (section) {
-		valSection = getCookieBrowser(section);
-		name2 = "@" + name + ":";
+		var valSection = getCookieBrowser(section);
+		var name2 = "@" + name + ":";
 		if (valSection) {
 			if (new RegExp(name2).test(valSection)) {
 				valSection  = valSection.replace(new RegExp(name2 + "[^@;]*"), "");
@@ -960,45 +969,46 @@ function fixDate(date) {
 	}
 }
 
-//Set client timezone
-//Added 7/25/03 by Jeremy Jongsma (jjongsma@tickchat.com)
-//Updated 11/04/07 by Nyloth to get timezone name instead of timezone offset
-//Updated feb 2010 by jonnyb (had stopped working)
 
-function inArray(item, array) {
-    for (var i in array) {
-        if (array[i] === item) {
-            return i;
-        }
-    }
-    return false;
-}
+//Expand/collapse lists
 
-var allTimeZoneCodes = ["A","ACDT","ACST","ADT","AEDT","AEST","AKDT","AKST","AST","AWDT","AWST","B","BST","C","CDT","CDT","CEDT","CEST","CET","CST","CST","CST","CXT","D","E","EDT","EDT","EEDT","EEST","EET","EST","EST","EST","F","G","GMT","H","HAA","HAC","HADT","HAE","HAP","HAR","HAST","HAT","HAY","HNA","HNC","HNE","HNP","HNR","HNT","HNY","HST","I","IST","K","L","M","MDT","MESZ","MEZ","MSD","MSK","MST","N","NDT","NFT","NST","O","P","PDT","PST","Q","R","S","T","U","UTC","V","W","WDT","WEDT","WEST","WET","WST","WST","X","Y","Z"];
-var expires = new Date();
-var local_tz = "";
-var local_dates = expires.toLocaleString().match(/[A-Za-z]{1,4}/g);	// split into alpha strings
-if (local_dates !== null) {
-	for (var i = local_dates.length - 1; i > -1; i--) {					// iterate through backwards
-		var cx = inArray(local_dates[i], allTimeZoneCodes);
-		if (cx) {
-			local_tz = allTimeZoneCodes[cx];							// until you find a matching timezone
-			break;
-		}
+function flipWithSign(foo) {
+	if (document.getElementById(foo).style.display == "none") {
+		show(foo, true, "showhide_headings");
+		collapseSign("flipper" + foo);
+	} else {
+		hide(foo, true, "showhide_headings");
+		expandSign("flipper" + foo);
 	}
 }
-if (!local_tz) {													// some browsers only do the tz in toString()
-	local_dates = expires.toString().match(/[A-Za-z]{1,4}/g);
-	for (i = local_dates.length - 1; i > -1; i--) {
-		cx = inArray(local_dates[i], allTimeZoneCodes);
-		if (cx) {
-			local_tz = allTimeZoneCodes[cx];
-			break;
-		}
+
+//set the state of a flipped entry after page reload
+function setFlipWithSign(foo) {
+	if (getCookie(foo, "showhide_headings", "o") == "o") {
+		collapseSign("flipper" + foo);
+
+		show(foo);
+	} else {
+		expandSign("flipper" + foo);
+
+		hide(foo);
 	}
 }
-expires.setFullYear(expires.getFullYear() + 1);
-setCookie("local_tz", local_tz, null, expires, "/");
+
+function expandSign(foo) {
+	if (document.getElementById(foo)) {
+		document.getElementById(foo).firstChild.nodeValue = "[+]";
+	}
+}
+
+function collapseSign(foo) {
+	if (document.getElementById(foo)) {
+		document.getElementById(foo).firstChild.nodeValue = "[-]";
+	}
+} // flipWithSign()
+
+// Set client timezone
+// moved to js_detect.php
 
 //function added for use in navigation dropdown
 //example :
@@ -1007,7 +1017,7 @@ setCookie("local_tz", local_tz, null, expires, "/");
 //</select>
 function go(o) {
 	if (o.options[o.selectedIndex].value !== "") {
-		location = o.options[o.selectedIndex].value;
+		location.replace(o.options[o.selectedIndex].value);
 
 		o.options[o.selectedIndex] = 1;
 	}
@@ -1037,7 +1047,7 @@ function targetBlank(url,mode) {
 	default:
 		break;
 	}
-	blankWin = window.open(url,'_blank',features);
+	window.open(url,'_blank',features);
 }
 
 //function: confirmTheLink
@@ -1065,19 +1075,19 @@ function confirmTheLink(theLink, theMsg)
  * 
  */
 function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
-	textarea = $('#' + elementId)[0];
-	fileup   = $('input[name=' + fileId + ']')[0];
-	oldfile  = $('input[name=' + oldfileId + ']')[0];
-	prefixEl = $('input[name=prefix]')[0];
-	prefix   = "img/wiki_up/";
+	var textarea = $('#' + elementId)[0];
+	var fileup   = $('input[name=' + fileId + ']')[0];
+	var oldfile  = $('input[name=' + oldfileId + ']')[0];
+	var prefixEl = $('input[name=prefix]')[0];
+	var prefix   = "img/wiki_up/";
 
 	if (!textarea || ! fileup) {
 		return;
 	}
 	if ( prefixEl) { prefix= prefixEl.value; }
 
-	filename = fileup.value;
-	oldfilename = oldfile.value;
+	var filename = fileup.value, dirs, str;
+	var oldfilename = oldfile.value;
 
     if (filename == oldfilename || filename === "" ) { // insert only if name really changed
 		return;
@@ -1112,7 +1122,7 @@ function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
 }
 
 /* add new upload image form in page edition */
-var img_form_count = 2;
+var img_form_count = 2, needToConfirm = false;
 function addImgForm() {
 	var new_text = document.createElement('span');
 	new_text.setAttribute('id','picfile' + img_form_count);
@@ -1142,7 +1152,7 @@ window.name = 'tiki';
 /* Count the number of words (spearated with space) */
 function wordCount(maxSize, source, cpt, message) {
 	var formcontent = source.value;
-	str = formcontent.replace(/^\s+|\s+$/g, '') ;
+	var str = formcontent.replace(/^\s+|\s+$/g, '') ;
 	formcontent = str.split(/[^\S]+/);
 	if (maxSize > 0 && formcontent.length > maxSize) {
 		alert(message);
@@ -1223,8 +1233,8 @@ function popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyConte
 		var params = [];
 		var edit = edit_icon;
 
-		for(i=0; i<form.elements.length; i++){
-			element = form.elements[i].name;
+		for(var i=0; i<form.elements.length; i++){
+			var element = form.elements[i].name;
 
 			var matches = element.match(/params\[(.*)\]/);
 
@@ -1241,7 +1251,7 @@ function popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyConte
 			}
 		}
 
-		var blob
+		var blob;
 		if (typeof form.content != 'undefined' && form.content.length > 0) {
 			blob = '{' + type.toUpperCase() + '(' + params.join(' ') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
 		} else {
@@ -1307,9 +1317,15 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 
 	var desc = document.createElement( 'div' );
 	desc.innerHTML = meta.description;
+	if (meta.documentation) {
+		desc.innerHTML += ' <a href="http://doc.tiki.org/' + meta.documentation + '" target="tikihelp" class="tikihelp" tabIndex="-1">' +
+				'<img src="pics/icons/help.png" alt="Help" width="16" height="16" class="icon" title="Help" class="icon">' +
+			'</a>';
+
+	}
 	form.appendChild( desc );
 
-	var table = document.createElement( 'table' );
+	var table = document.createElement( 'table' ), param;
 	table.className = 'normal';
 	table.id = 'plugin_params';
 	form.appendChild( table );
@@ -1338,7 +1354,7 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 		}
 	}
 
-	var potentiallyExtraPluginArgs = pluginArgs;
+	var potentiallyExtraPluginArgs = pluginArgs, extraArg;
 
 	var rowNumber = 0;
 	var rowNumberAdvanced = 0;
@@ -1422,7 +1438,7 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 		label.style.fontStyle = 'italic';
 	}
 
-	var input;
+	var input, icon;
 	if (paramDef && paramDef.options) {
 		input = document.createElement('select');
 		input.name = 'params[' + name + ']';
@@ -1647,7 +1663,7 @@ function runPassword(strPassword, strFieldID)
 	{
 		strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Secure' />";
 		strText = tr("Secure");
-		vstrColor = "#0ca908";
+		strColor = "#0ca908";
 	}
 	// -- Very Strong
 	else if (nScore >= 70)
@@ -1692,7 +1708,7 @@ function runPassword(strPassword, strFieldID)
 function countContain(strPassword, strCheck)
 {
 	// Declare variables
-	var nCount = 0;
+	var nCount = 0, i;
 
 	for (i = 0; i < strPassword.length; i++)
 	{
@@ -1780,7 +1796,7 @@ function adjustThumbnails() {
 function open_webdav(url) {
 	// Works only in IE
 	if (typeof ActiveXObject != 'undefined') {
-		EditDocumentButton = new ActiveXObject("SharePoint.OpenDocuments.1");
+		var EditDocumentButton = new ActiveXObject("SharePoint.OpenDocuments.1");
 		EditDocumentButton.EditDocument(url); 
 	} else {
 		prompt(tr('URL to open this file with WebDAV'), url);

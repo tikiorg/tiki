@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter_blog.php');
@@ -39,14 +44,15 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
     }
 
-    public function testInsertDataCallInsertPageFourTimes()
+    public function testInsertData_shouldCallInsertItemSixTimes()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertPost', 'createBlog'));
+        $obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createBlog'));
         $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->exactly(2))->method('insertPage');
-        $obj->expects($this->exactly(4))->method('insertPost');
+        $obj->expects($this->exactly(6))->method('insertItem');
         
-		$parsedData = array(
+        $obj->permalinks = array('not empty');
+        
+		$obj->parsedData = array(
 			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name'),
@@ -61,30 +67,31 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 			'categories' => array(),
 		);
 		
-        $obj->insertData($parsedData);
+        $obj->insertData();
     }
 
-    public function testInsertDataShouldNotCallInsertPage()
+    public function testInsertData_shouldNotCallInsertItem()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage'));
-        $obj->expects($this->never())->method('insertPage');
-        $parsedData = array(
+        $obj = $this->getMock('TikiImporter_Blog', array('insertItem'));
+        $obj->expects($this->never())->method('insertItem');
+        $obj->parsedData = array(
         	'pages' => array(),
         	'posts' => array(),
         	'tags' => array(),
         	'categories' => array(),
         );
-        $obj->insertData($parsedData);
+        $obj->insertData();
     }
 
-    public function testInsertDataShouldReturnCountData()
+    public function testInsertData_shouldReturnCountData()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertPost', 'createBlog'));
+        $obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createBlog'));
         $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->exactly(2))->method('insertPage')->will($this->onConsecutiveCalls(true, true));
-        $obj->expects($this->exactly(4))->method('insertPost')->will($this->onConsecutiveCalls(true, true, false, true));
+        $obj->expects($this->exactly(6))->method('insertItem')->will($this->onConsecutiveCalls(true, true, true, true, false, true));
 
-		$parsedData = array(
+        $obj->permalinks = array('not empty');
+        
+		$obj->parsedData = array(
 			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name'),
@@ -99,79 +106,77 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 			'categories' => array(),
 		);
 
-        $countData = $obj->insertData($parsedData);
-        $expectedResult = array('importedPages' => 2, 'importedPosts' => 3, 'importedTags' => 0, 'importedCategories' => 0);
-
-        $this->assertEquals($expectedResult, $countData);
-	}
-	
-	public function testInsertDataShouldCallInsertComments()
-	{
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertComments'));
-        $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls('Any name', 'Any name', false, 'Any name', false, 'Any name'));
-        $obj->expects($this->exactly(3))->method('insertComments')->with('Any name', 'wiki page');
-
-		$parsedData = array(
-			'pages' => array(
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2)),
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array()),
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-			),
-			'posts' => array(),
-			'tags' => array(),
-			'categories' => array(),
-		);
-
-        $countData = $obj->insertData($parsedData);
-        $expectedResult = array('importedPages' => 4, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
-
-        $this->assertEquals($expectedResult, $countData);
-		
-        $obj2 = $this->getMock('TikiImporter_Blog', array('insertPost', 'createBlog', 'insertComments'));
-        $obj2->expects($this->once())->method('createBlog');
-        $obj2->expects($this->exactly(2))->method('insertPost')->will($this->onConsecutiveCalls('Any name', 'Any name'));
-        $obj2->expects($this->exactly(2))->method('insertComments')->with('Any name', 'blog post');
-
-		$parsedData = array(
-			'posts' => array(
-				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2)),
-			),
-			'pages' => array(),
-			'tags' => array(),
-			'categories' => array(),
-		);
-
-        $countData = $obj2->insertData($parsedData);
-        $expectedResult = array('importedPages' => 0, 'importedPosts' => 2, 'importedTags' => 0, 'importedCategories' => 0);
+        $countData = $obj->insertData();
+        $expectedResult = array('importedPages' => 1, 'importedPosts' => 4, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
 	}
 
-	public function testInsertDataShouldNotCreateBlogIfNoPosts()
+	public function testInsertData_shouldNotCreateBlogIfNoPosts()
 	{
-		$obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertComments', 'createTags', 'createCategories', 'createBlog'));
-        $obj->expects($this->exactly(0))->method('insertPage');
-        $obj->expects($this->exactly(0))->method('insertComments');
+		$obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createTags', 'createCategories', 'createBlog'));
+        $obj->expects($this->exactly(0))->method('insertItem');
         $obj->expects($this->exactly(0))->method('createTags');
         $obj->expects($this->exactly(0))->method('createCategories');
         $obj->expects($this->exactly(0))->method('createBlog');
 
-		$parsedData = array(
+		$obj->parsedData = array(
 			'pages' => array(),
 			'posts' => array(),
 			'tags' => array(),
 			'categories' => array(),
 		);
 
-        $countData = $obj->insertData($parsedData);
+        $countData = $obj->insertData();
         $expectedResult = array('importedPages' => 0, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
+	}
 		
+	public function testInsertItem_shouldCallInsertCommentsForPage()
+	{
+        $obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPage'));
+        $obj->expects($this->once())->method('insertComments')->with('Any name', 'wiki page');
+        $obj->expects($this->once())->method('insertPage')->will($this->onConsecutiveCalls(true));
+
+		$page = array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3));
+
+        $obj->insertItem($page);
+	}
+
+	public function testInsertItem_shouldCallInsertCommentsForPost()
+	{
+        $obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPost'));
+        $obj->expects($this->once())->method('insertComments')->with('Any name', 'blog post');
+        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(true));
+        
+		$post = array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2));
+
+        $obj->insertItem($post);
+	}
+	
+	public function testInsertItem_shouldReturnObjId()
+	{
+		$obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPost'));
+        $obj->expects($this->once())->method('insertComments')->with(22, 'blog post', array(1, 2));
+        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(22));
+        
+		$post = array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2));
+
+        $objId = $obj->insertItem($post);
+		$this->assertEquals(22, $objId);
+	}
+	
+	public function testInsertItem_shoudReturnNull()
+	{
+		$obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPost'));
+        $obj->expects($this->exactly(0))->method('insertComments');
+        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(null));
+        
+		$post = array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2));
+
+        $objId = $obj->insertItem($post);
+		$this->assertEquals(null, $objId);
 	}
 	
 	public function testInsertComments()
@@ -183,8 +188,25 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 			'', 1234, '', '');
 		
 		$comments = array(
-			array('data' => 'asdf', 'created' => 1234),
-			array('data' => 'asdf', 'created' => 1234),
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
+		);
+		
+		$this->obj->insertComments(2, 'wiki page', $comments);
+	}
+	
+	public function testInsertCommentsShouldConsiderIfCommentIsApprovedOrNot()
+	{
+		global $commentslib; require_once('lib/comments/commentslib.php');
+		
+		$commentslib = $this->getMock('Comments', array('post_new_comment', 'approve_comment'));
+		$commentslib->expects($this->exactly(2))->method('post_new_comment')->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '',
+			'', 1234, '', '')->will($this->returnValue(22));
+		$commentslib->expects($this->once())->method('approve_comment')->with(22, 'n');
+		
+		$comments = array(
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 0),
 		);
 		
 		$this->obj->insertComments(2, 'wiki page', $comments);

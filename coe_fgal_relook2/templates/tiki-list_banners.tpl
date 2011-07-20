@@ -35,7 +35,7 @@
 <td class="username">{$listpages[changes].client|username}</td>
 <td class="text">{$listpages[changes].url}</td>
 <td class="text">{$listpages[changes].zone|escape}</td>
-<td class="date">$listpages[changes].created|tiki_short_date}</td>
+<td class="date">{$listpages[changes].created|tiki_short_date}</td>
 <td class="text">{$listpages[changes].which}</td>
 <td class="integer">{$listpages[changes].useDates}</td>
 <td class="integer">{$listpages[changes].maxImpressions}</td>

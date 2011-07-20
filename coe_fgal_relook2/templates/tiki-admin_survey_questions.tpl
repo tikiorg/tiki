@@ -1,4 +1,4 @@
-{title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name|escape}{/title}
+{title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name}{/title}
 
 <div class="navbar">
 	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" _text="{tr}Add a New Question{/tr}"}

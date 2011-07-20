@@ -1,23 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/*
- * Tikiwiki QUOTE plugin.
- * 
- * Syntax:
- * 
- *  {QUOTE([replyto=>name])}
- *   Content inside box
- *  {QUOTE}
- * 
- */
-function wikiplugin_quote_help() {
-	return tra("Quote text by surrounding the text with a box, like the [QUOTE] BBCode").":<br />~np~{QUOTE(replyto=>name)}".tra("text")."{QUOTE}~/np~";
-}
 
 function wikiplugin_quote_info() {
 	return array(

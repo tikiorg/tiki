@@ -21,6 +21,16 @@
 			{/section}
 		</select>
 		{/if}
+		{if $prefs.themegenerator_feature eq "y"}
+			<select name="theme-themegen" onchange="this.form.submit();"{if !empty($tc_theme)} disabled="disabled"{/if}>
+					<option value="">{tr}None{/tr}</option>
+					{section name=ix loop=$themegen_list}
+						{if !empty($themegen_list[ix])}
+							<option value="{$themegen_list[ix]|escape}"{if $prefs.themegenerator_theme eq $themegen_list[ix]} selected="selected"{/if}>{$themegen_list[ix]|truncate:15|ucwords}</option>
+						{/if}
+					{/section}
+			</select>
+		{/if}
 		<noscript>
 			<button type="submit">{tr}Switch{/tr}</button>
 		</noscript>

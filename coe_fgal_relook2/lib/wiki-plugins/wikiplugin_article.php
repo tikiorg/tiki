@@ -1,24 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Includes an article field
-// Usage:
-// {ARTICLE(Id=>articleId, Field=>FieldName)}{ARTICLE}
-// FieldName can be any field in the tiki_articles table, but title,heading, or body are probably the most useful.
-
-function wikiplugin_article_help() {
-        $help = tra("Includes an article");
-        $help .="<br />";
-        $help .= tra("~np~{ARTICLE(Field=>[,Id=>])}{ARTICLE}~/np~");
-        $help .= "<br />";
-        $help .= tra("Id is optional. If not given, last article is used. Default field is heading.");
-
-        return $help;
-}
 
 function wikiplugin_article_info() {
 	return array(
@@ -27,6 +12,7 @@ function wikiplugin_article_info() {
 		'description' => tra('Display a field of an article'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
 		'icon' => 'pics/icons/layout_content.png',
+		'format' => 'html',
 		'params' => array(
 			'Field' => array(
 				'required' => false,
@@ -70,6 +56,6 @@ function wikiplugin_article($data, $params) {
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$article_data = $artlib->get_article($Id);
 	if (isset($article_data[$Field])) {
-		return $article_data[$Field].$add;
+		return $tikilib->parse_data($article_data[$Field]) . $add;
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,8 +26,11 @@ require_once ('tiki-setup.php');
 include_once ('lib/quizzes/quizlib.php');
 
 $access->check_feature('feature_quizzes');
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
-// quizId of 0 is used as a place holder; There should NEVER be a row in the
+// quizId of 0 is used as a placeholder; There should NEVER be a row in the
 //   tiki_quizzes table with an id of zero.
 if (!isset($_REQUEST["quizId"])) {
 	$_REQUEST["quizId"] = 0;
@@ -43,21 +46,22 @@ include_once ("categorize_list.php");
 if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"]) || isset($_REQUEST["textview"])) {
 	echo "line: " . __LINE__ . "<br>";
 	echo "Sorry, preview, xmlview and textview are not supported in this version.<br>";
-	// 	foreach ($_REQUEST as $key => $request){
-	// 		echo $key." = ".$request."<br>";
-	// 	}
 	die;
 }
 $quiz = $quizlib->quiz_fetch($_REQUEST["quizId"]);
-function fetchYNOption(&$quiz, $_REQUEST, $option) {
+
+function fetchYNOption(&$quiz, $_REQUEST, $option)
+{
 	if (isset($_REQUEST[$option]) && $_REQUEST[$option] == 'on') {
 		$quiz[$option] = 'y';
 	} else {
 		$quiz[$option] = 'n';
 	}
 }
+
 // Load the data from the
-function quiz_data_load() {
+function quiz_data_load()
+{
 	global $_REQUEST;
 	$quiz_data = array();
 	foreach($_REQUEST as $key => $val) {
@@ -71,44 +75,58 @@ function quiz_data_load() {
 	} else if ($quiz_data["online"] == "offline") {
 		$quiz_data["online"] = "n";
 	}
-	$quiz_data["datePub"] = TikiLib::make_time($quiz_data["publish_Hour"], $quiz_data["publish_Minute"], 0, $quiz_data["publish_Month"], $quiz_data["publish_Day"], $quiz_data["publish_Year"]);
-	$quiz_data["dateExp"] = TikiLib::make_time($quiz_data["expire_Hour"], $quiz_data["expire_Minute"], 0, $quiz_data["expire_Month"], $quiz_data["expire_Day"], $quiz_data["expire_Year"]);
-	$fields = array('nQuestion', 'shuffleAnswers', 'shuffleQuestions', 'multiSession', 'additionalQuestions', 'limitDisplay', 'timeLimited', 'canRepeat', 'additionalQuestions', 'forum');
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['publish_Meridian'])) {
+		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
+	}
+	if (!empty($_REQUEST['expire_Meridian'])) {
+		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
+	}
+	
+	$quiz_data["datePub"] = TikiLib::make_time($quiz_data["publish_Hour"]
+																						, $quiz_data["publish_Minute"]
+																						, 0
+																						, $quiz_data["publish_Month"]
+																						, $quiz_data["publish_Day"]
+																						, $quiz_data["publish_Year"]
+																						);
+	$quiz_data["dateExp"] = TikiLib::make_time($quiz_data["expire_Hour"]
+																						, $quiz_data["expire_Minute"]
+																						, 0
+																						, $quiz_data["expire_Month"]
+																						, $quiz_data["expire_Day"]
+																						, $quiz_data["expire_Year"]
+																						);
+	$fields = array('nQuestion'
+								, 'shuffleAnswers'
+								, 'shuffleQuestions'
+								, 'multiSession'
+								, 'additionalQuestions'
+								, 'limitDisplay'
+								, 'timeLimited'
+								, 'canRepeat'
+								, 'additionalQuestions'
+								, 'forum'
+								);
 	foreach($fields as $field) {
 		fetchYNOption($quiz_data, $quiz_data, $field);
-		// echo '$quiz_data["'.$field.'"] = '.$quiz_data[$field]."<br>";
 		
 	}
 	return $quiz_data;
 }
+
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
-	// 	echo __FILE__." line ".__LINE__."<br />";
-	// 	foreach($_REQUEST as $key => $val){
-	// 		if (preg_match("/^quiz_/",$key)){
-	// 			echo $key." = ".$val."<br />";
-	// 		}
-	// 	}
-	// 	die;
 	$quiz_data = quiz_data_load();
-	// 	foreach($quiz_data as $key => $val){
-	// 		echo $key." = ".$val."<br />";
-	// 	}
-	// 	die;
 	$quizNew = new Quiz;
 	$quizNew->data_load($quiz_data);
-	// echo __FILE__." line: ".__LINE__."<br />";
 	// if the id is 0, use just save the new data
 	// otherwise we compare the data to what was there before.
 	if ($quiz->id == 0 || ($quizNew != $quiz)) {
 		$quizlib->quiz_store($quizNew);
 		// tell user changes were stored (new quiz stored with id of x or quiz x modified), return to list of admin quizzes
 		
-	} else {
-		// tell user no changes were stored, return to list of admin quizzes
-		
-	}
-	// This way for including questions is was too complicated.  Need to think of a simpler way.
+	} 
 	die;
 	echo "line: " . __LINE__ . "<br>";
 	echo "Sorry, this is only a prototype at present.<br>";
@@ -121,21 +139,11 @@ if (isset($_REQUEST["save"])) {
 	}
 	die;
 }
-// Scaffolding
-// The taken and history stuff has to come from version and studentAttempts fields in
-//  the tiki_quiz table in the database.
-// $quiz->taken = 'y';
-// $quiz->history = array();
-// $quiz->history[] = "and so on...";
-// $quiz->history[] = "Version 3 (date stamp) was attempted by students 3 time(s).";
-// $quiz->history[] = "Version 2 (date stamp) was attempted by students 2 time(s).";
-// $quiz->history[] = "Version 1 (date stamp) was attempted by students 1 time(s).";
+
 $smarty->assign('quiz', $quiz);
-// echo __LINE__."<br>";
-// echo '$quiz->id = '.$quiz->id."<br>";
-// die;
-function setup_options(&$tpl) {
-	//	global $smarty;
+
+function setup_options(&$tpl)
+{
 	global $tikilib;
 	global $user;
 	$tpl['online_choices'] = array('online' => 'Online', 'offline' => 'Offline');
@@ -150,8 +158,9 @@ function setup_options(&$tpl) {
 	$optionsShowScore[] = "never";
 	$tpl['optionsShowScore'] = $optionsShowScore;
 	// FIXME - This needs to be limited to the session timeout in php.ini
+	$limit = ini_get('max_execution_time');
 	$mins = array();
-	for ($i = 1; $i <= 20; $i++) {
+	for ($i = 1; $i <= $limit; $i++) {
 		$mins[] = $i;
 	}
 	$tpl['mins'] = $mins;
@@ -167,6 +176,7 @@ function setup_options(&$tpl) {
 	$tpl['qpp'] = $qpp;
 	$tpl['siteTimeZone'] = $prefs['display_timezone'];
 }
+
 $tpl = array();
 setup_options($tpl);
 $smarty->assign('tpl', $tpl);

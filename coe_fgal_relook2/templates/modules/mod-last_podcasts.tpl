@@ -5,7 +5,7 @@
 		{if isset($module_rows) && $module_rows gt 0 }
 			{eval var="{tr}Last `$module_rows` Podcasts{/tr}" assign="tpl_module_title"}
 		{else}
-			{eval var="{tr}Last Podcasts{/tr}" assign="tpl_module_title"}
+			{eval var="{tr}Newest Podcasts{/tr}" assign="tpl_module_title"}
 		{/if}
 	{/if}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="last_podcasts" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
@@ -40,7 +40,7 @@
 			{/section}
 		{if $nonums != 'y'}</ol>{else}</ul>{/if}
 
-		{if $link_url neq "" }
+		{if $link_url neq ""}
 			<div class="lastlinkmodule" >
 				<a class="linkmodule" href="{$link_url}" >{if $link_text neq ""}{tr}{$link_text}{/tr}{else}{$link_url}{/if}</a>
 			</div>

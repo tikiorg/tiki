@@ -40,22 +40,22 @@
 	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}">
 		{if $menu_info.type ne 'd'}
 			{if empty($menu_info.icon)}
-				{icon _id="ofolder" alt='Toggle' name="$icon_name"}
+				{icon _id="ofolder" alt='Toggle' name="$icon_name" id="$icon_name"}
 			{else}
-				<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
+				<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name" />
 			{/if}
 		{else}
 			{if empty($menu_info.icon)}
 				{if isset($chdata.open) and $chdata.open}
-					{icon _id="ofolder" alt='Toggle' name="$icon_name"}
+					{icon _id="ofolder" alt='Toggle' name="$icon_name" id="$icon_name"}
 				{else}
-					{icon _id="folder" alt='Toggle' name="$icon_name"}
+					{icon _id="folder" alt='Toggle' name="$icon_name" id="$icon_name"}
 				{/if}
 			{else}
 				{if isset($chdata.open) and $chdata.open}
-					<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
+					<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name" />
 				{else}
-					<img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
+					<img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name" />
 				{/if}
 			{/if}
 		{/if}
@@ -88,7 +88,7 @@
 {/if}
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}">
+<div class="option{$chdata.optionId} option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}">
 	<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="linkmenu">
 		{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}
 			{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}

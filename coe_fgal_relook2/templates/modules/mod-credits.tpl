@@ -1,3 +1,4 @@
+{* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="credits" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{foreach key=id item=data from=$tiki_user_credits}
 			<div>

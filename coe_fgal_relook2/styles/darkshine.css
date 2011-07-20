@@ -32,14 +32,23 @@ body.fullscreen #tiki-center {
 	margin: 1em;
 	margin-top: 0}
 	
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+	
 .fixed_width .fixedwidth {
 	width: 880px;
 }
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
 
-.fixed_width #main {
+
+.fixed_width #main,
+#fixedwidth {
     margin-top: 0;
 }
 
@@ -178,7 +187,7 @@ tt {font-size: 110%}
 	float: none !important;
 }
 
-#sitetitle {
+#top_modules #sitetitle {
 	display: block;
 	margin: 0 auto;
 	padding-top: 30px;
@@ -187,13 +196,14 @@ tt {font-size: 110%}
 	font-family: 'trebuchet ms',georgia,'lucidia grande';
 	font-size: 3.6em;
 	color: #FE9B27;
-	letter-spacing: 8px}
+	letter-spacing: 8px;
+}
 	
-#sitetitle a {
+#top_modules #sitetitle a {
 	color: #FE9B27;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 13px;
 	font-weight: bold;
 	letter-spacing: 1px;
@@ -201,6 +211,78 @@ tt {font-size: 110%}
 	margin: 10px auto auto;
 	text-align: center}
 
+/***** Dark Shine-specific page top *****/
+	
+#topbar_modules {
+	width: 100% !important;
+	background: url(darkshine/stripes_small.gif) repeat-x;
+	color: #fff;
+	min-height: 28px;
+	font: normal 10px/32px arial, verdana, helvetica, sans-serif;
+}
+
+#contenttop strong {
+	font: bold 11px arial;
+	margin-left: 2px;
+	margin-right: 6px}
+
+#search a,
+#sitesearchbar,
+#topbar_modules .box-search {
+	background: #199B2C url(darkshine/green.png) no-repeat;
+	border-right: 2px solid #000;
+	float: right;
+	height: 28px;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
+	display: block;
+	padding-left: 8px;
+}
+
+#topbar_modules .box-search input[type="submit"]  {
+	background: none;
+	border: none;
+}
+
+#topbar_modules h3 {
+	margin-top: 0;
+}
+
+#sitesearchbar {
+	padding: 0 4px;
+	line-height: 28px;
+}
+
+#topbar_modules .box-search form {
+	margin-top: 4px;
+}
+
+.darkshine_adspace {
+	background: #71201b url(darkshine/ad.gif) repeat-x;
+	border-bottom: 0;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: 28px;
+}
+
+.darkshine_adspace .wrapper {
+	border-left: 1px solid #A5514B;
+	border-right: 1px solid #5B1D1B;
+	border-top: 1px solid #CA807C;
+	border-bottom: 1px solid #3E1B19;
+}
+
+.darkshine_adspace img {margin: .7em auto}
+
+.darkshine_sitead {
+	border-left: 1px solid #A5514B;
+	border-right: 1px solid #5B1D1B;
+	border-top: 1px solid #CA807C;
+	border-bottom: 1px solid #3E1B19}
+	
 #top_modules .box-menu {
 	text-align: center;
 	background: #000;
@@ -208,20 +290,36 @@ tt {font-size: 110%}
 	width: 100%;
 }
 
-.siteloginbar,
-.siteloginbar_popup {
+#topbar_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#topbar_modules .box-login_box {
 	position: static;
 	float: right;
 	height: 28px !important;
 	padding: 0 4px;
 }
 
-.siteloginbar_popup .tabmark a {
-	background: url(darkshine/orange.jpg) repeat-x;
+#topbar_modules .box-login_box
+/*.siteloginbar_popup .tabmark a*/ {
+	background: url(darkshine/orange.png) repeat-x;
 	border: none;
 	padding: 7px;
 	line-height: normal;
 	color: #fff;
+}
+
+#topbar_modules .box-search input {
+	background: transparent;
+	color: #fff;
+	border: none;
+}
+
+.box-search .search_mod_magnifier {
+	margin-bottom: -4px;
 }
 
 .sitesearchbar .findtable {
@@ -251,6 +349,29 @@ li#register_link {
 .siteloginbar_popup .tabmark {
 	border: 0;
 	background: none;
+}
+
+input[id="fuser"],
+select[name="where"],
+#sitesearchbar input.wikiaction,
+#topbar_modules .box-search .ac_input {
+	background: #21C336;
+	color: #fff;
+	border: none;
+}
+
+#topbar_modules .box-login_box .tabmark {
+	background: none;
+	border: none;
+	margin-top: -4px;
+}
+
+#topbar_modules .box-login_box .tabmark a.login_link {
+	color: #fff;
+}
+
+#topbar_modules .box-login_box .siteloginbar_poppedup {
+	margin-top: -12px;
 }
 
 /****** Menus, Links ******/
@@ -296,16 +417,14 @@ li#register_link {
 	text-align: left;
 }
 
-#tiki-top ul.cssmenu_horiz li a,
-#listcontainer ul.cssmenu_horiz li a {
+#tiki-top ul.cssmenu_horiz li a {
 	color: #fff;
 	text-decoration: none;
 	font: bold 11px verdana, arial, helvetica, sans-serif;
 	padding: 12px 10px;
 	margin: 0}
 
-#tiki-top ul.cssmenu_horiz li a:hover,
-#listcontainer ul.cssmenu_horiz li a:hover {
+#tiki-top ul.cssmenu_horiz li a:hover {
 	color: #fff;
 	background: #101010 url(darkshine/nav.gif) repeat-x;
 	background-position: 0 -40px}
@@ -332,34 +451,37 @@ li#register_link {
 	top: 3.2em;
 }
 
-#secondary_site_menu .cssmenu_horiz li a,
-#secondary_site_menu .cssmenu_horiz li a:visited {
+.secondary_site_menu .cssmenu_horiz li a,
+.secondary_site_menu .cssmenu_horiz li a:visited {
 	color: #fff;
 	background: none;
-	padding: 7px 1em 3px;
+	padding-top: 7px;
+	padding-left: 1em;
+	padding-bottom: 7px;
 }
 
-#secondary_site_menu .cssmenu_horiz li.menuSection a {
-	padding-right: 20px;
-}
-
-#secondary_site_menu ul.cssmenu_horiz ul li a,
-#secondary_site_menu ul.cssmenu_horiz ul li a:visited {
+.secondary_site_menu .cssmenu_horiz ul li a,
+.secondary_site_menu .cssmenu_horiz ul li a:visited {
 	color: #000;
 }
 
-#secondary_site_menu .cssmenu_horiz li ul,
-#siteloginbar_popup .cssmenu_horiz li ul {
+.secondary_site_menu .cssmenu_horiz li ul,
+.siteloginbar_popup .cssmenu_horiz li ul {
 	margin-top: -7px;
 }
 
-#secondary_site_menu .cssmenu_horiz li ul ul {
+.secondary_site_menu .cssmenu_horiz li ul ul {
 	margin-top: 0;
+}
+
+.secondary_site_menu .sf-sub-indicator {
+	bottom: .5em;
 }
 
 
 /** Links in other menus **/
-.separator, .separatorline {
+.separator,
+.separatorline {
 	color: #600000;
 	display: block;
 	line-height: 2em;
@@ -380,119 +502,6 @@ li#register_link {
 
 .menuSection .option {padding-left: 22px}
 
-/***** Dark Shine-specific page top *****/
-	
-#topbar_modules {
-	width: 100% !important;
-	background: url(darkshine/stripes_small.gif) repeat-x;
-	color: #fff;
-	min-height: 28px;
-	font: normal 10px/32px arial, verdana, helvetica, sans-serif;
-}
-
-#contenttop strong {
-	font: bold 11px arial;
-	margin-left: 2px;
-	margin-right: 6px}
-
-/*
-#contenttop ul li a, #contenttop ul li,
-#topcontent li {
-	text-decoration: none;
-	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
-}
-
-#topcontent li#blue a,
-#topcontent li#blue a:visited {
-	display: block;
-	background: #0086EE url(darkshine/blue.png) no-repeat}
-
-#topcontent li#red a,
-#topcontent li#red a:visited {
-	display: block;
-	background: #F41100 url(darkshine/red.png) no-repeat}
-
-#topcontent li#orange a,
-#topcontent li#orange a:visited {
-	display: block;
-	background: #ED700D url(darkshine/orange.png) no-repeat}
-*/
-#search a,
-#sitesearchbar,
-#topbar_modules .box-search {
-	background: #199B2C url(darkshine/green.png) no-repeat;
-	border-right: 2px solid #000;
-	float: right;
-	height: 28px;
-	text-align: center;
-	text-decoration: none;
-	color: #fff;
-	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
-	display: block;
-	padding-left: 8px;
-}
-
-#topbar_modules .box-search input[type="submit"]  {
-	background: none;
-	border: none;
-}
-
-#topbar_modules h3 {
-	margin-top: 0;
-}
-
-#sitesearchbar {
-	padding: 0 4px;
-	line-height: 28px;
-}
-
-#topbar_modules .box-search form {
-	margin-top: 4px;
-}
-
-input[id="fuser"],
-select[name="where"],
-#sitesearchbar input.wikiaction,
-#topbar_modules .box-search .ac_input {
-	background: #21C336;
-	color: #fff;
-	border: none;}
-	
-#topbar_modules .siteloginbar_popup {
-	background: url(darkshine/orange.png) no-repeat;
-}
-
-#topbar_modules .box-login_box .tabmark {
-	background: none;
-	border: none;
-}
-
-#topbar_modules .box-login_box .tabmark a.login_link {
-	color: #fff;
-}
-
-#adspace {
-	background: #71201b url(darkshine/ad.gif) repeat-x;
-	border-bottom: 0;
-	text-align: center;
-	width: 100%;
-	padding-top: 28px;
-}
-
-#adspace .wrapper {
-	border-left: 1px solid #A5514B;
-	border-right: 1px solid #5B1D1B;
-	border-top: 1px solid #CA807C;
-	border-bottom: 1px solid #3E1B19;
-}
-	
-#adspace img {margin: .7em auto}
-
-#sitead {
-	border-left: 1px solid #A5514B;
-	border-right: 1px solid #5B1D1B;
-	border-top: 1px solid #CA807C;
-	border-bottom: 1px solid #3E1B19}
 
 /***** Misc. Center Col. *****/
 #tiki-center {background: #F3F3F3;}
@@ -675,6 +684,10 @@ td.even {
 	border-bottom-width: 0;
 }
 
+.statuson {
+	background: #dcdcdc;
+}
+
 .tabcontent {
 	border: 1px solid #7c7b7d;
 	background: #ececec;
@@ -768,8 +781,6 @@ a.pagetitle {
 #tocnavicons {float: left}
 #tocnavaddpage{float: right}
 #tocnavlinks {clear: both}
-.fancytoclevel {}
-li.toclevel {}
 
 /* TOC */
 .toc {
@@ -799,7 +810,6 @@ li.toclevel {}
 .titleb {font-size: 1.0em}
 .articlesubtitle {font-size: 0.9em}
 .articleheading {margin-top: 6px}
-.articleheadingtext {}
 
 img.topicimage,
 img.articleimagenofloat,
@@ -861,10 +871,6 @@ img.articleimage {
 
 .postinfo div {margin-top: 30%}
 
-.posthead {
-	text-align: left;
-	padding: 3px}
-
 .postinfo {
 	margin-bottom: 20px;
 	margin-top: 10px;
@@ -872,6 +878,8 @@ img.articleimage {
 
 .posthead {
 	display: block;
+	text-align: left;
+	padding: 3px;
 	font-weight: bold;
 	letter-spacing: .4pt}
 
@@ -929,7 +937,6 @@ body.tiki_forums .normal {margin: auto}
 .postbody-title .title a,
 .postbody-title .title a:visited {color: #000}
 	
-.post .postbody-title .title a.link {}
 .postbody-title br.clear {display: none}
 
 .post .author {
@@ -1041,7 +1048,13 @@ body.tiki_forums .normal {margin: auto}
 .subcomment {margin-left: 10px}
 
 /* Help box*/
-.commentsedithelp {background: #ffcfcf; color: black; border: 1px solid #ff0000; text-align: center; font-weight: bold}
+.commentsedithelp {
+	background: #ffcfcf;
+	color: black;
+	border: 1px solid #ff0000;
+	text-align: center;
+	font-weight: bold;
+}
 
 /**** Image Galleries ****/
 .oddthumb {border-collapse: collapse}
@@ -1114,6 +1127,7 @@ img.athumb {
 	padding: 0}
 
 .calfocus {
+	border-bottom: 0;
 	font-size:90%;
 	background: transparent}
 
@@ -1155,7 +1169,10 @@ img.athumb {
 	color: #fff;
 	padding: 3px}
 
-.opaque .box-data  {background: white; padding: 3px}
+.opaque .box-data {
+	background: white;
+	padding: 3px;
+}
 
 .searchresults {display: inline}
 
@@ -1205,7 +1222,6 @@ img.athumb {
 .caldark {background: #dcdcdc}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #dcdcdc}
-.calfocus {border-bottom: 0}
 /*today focus*/
 .calfocuson {
 	font-size: 100%;

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -56,6 +56,9 @@ $smarty->assign('showTitle', $info["showTitle"]);
 $smarty->assign('showPubDate', $info["showPubDate"]);
 if (isset($_REQUEST["refresh"])) {
 	$rsslib->refresh_rss_module($_REQUEST["refresh"]);
+}
+if (isset($_REQUEST['clear'])) {
+	$rsslib->clear_rss_cache($_REQUEST['clear']);
 }
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();

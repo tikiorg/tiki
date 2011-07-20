@@ -17,16 +17,6 @@ h3.box-title,
 	background: none;
 }
 
-.box {
-	border: none;
-}
-
-/* may need to change these 
-#tiki-top {
-color:#fff;
-font-size:1.1em;
-}
-*/
 h1, h2, h3, h4, h5 {
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -117,8 +107,6 @@ input[type="submit"], input[type="file"], select {
 	border: solid 1px #24880c;
 	background: #eef5ee;
 	color: #24880c;
-/*	height: 2em;
-	vertical-align: middle;*/
 }
 
 .button a,
@@ -179,24 +167,6 @@ h1 a.pagetitle:hover {
 	padding-left: 3px;
 	text-decoration: none;
 }
-/*
-h1 a {
-	font-size: large;
-	font-weight: normal;
-	text-decoration: none;
-	font-size: 25px;
-	text-align: center;
-	color: #fff;
-	margin-top: 0px;
-	padding-top: 4px;
-	padding-bottom: 4px; 
-	padding-left: 3px;
-}
-
-h1 a:hover {
-	background-color: transparent;
-	color: #86BE7D;
-}*/
 
 .box {
 	background-color: #eef5ee;
@@ -380,6 +350,13 @@ tr.diffheader {
 	border: solid 1px #24880c;
 	font-size: 1em;
 	width: 15px;
+}
+
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+    color: #fff;
 }
 
 

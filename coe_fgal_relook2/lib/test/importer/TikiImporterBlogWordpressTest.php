@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter_blog_wordpress.php');
@@ -14,16 +19,24 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 		date_default_timezone_set('UTC');
         $this->obj = new TikiImporter_Blog_Wordpress;
     }
+    
+    protected function tearDown()
+	{
+		TikiDb::get()->query('DELETE FROM tiki_pages WHERE pageName = "materia"');
+		TikiDb::get()->query('DELETE FROM tiki_blog_posts WHERE postId = 10');
+		unset($GLOBALS['prefs']['feature_sefurl']);
+		unset($GLOBALS['base_url']);
+	}
 
     public function testImport()
     {
-        $parsedData = 'Some text';
-
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'setupTiki', 'extractPermalinks'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
-        $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
-        $obj->expects($this->once())->method('insertData')->with($parsedData);
+        $obj->expects($this->once())->method('parseData');
+        $obj->expects($this->once())->method('insertData');
+        $obj->expects($this->once())->method('setupTiki');
+        $obj->expects($this->once())->method('extractPermalinks');
 
         $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $_FILES['importFile']['type'] = 'text/xml'; 
@@ -36,14 +49,14 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 	
 	public function testImportShouldHandleAttachments()
     {
-        $parsedData = 'Some text';
-
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments', 'setupTiki', 'extractPermalinks'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
-        $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
-        $obj->expects($this->once())->method('insertData')->with($parsedData);
+        $obj->expects($this->once())->method('parseData');
+        $obj->expects($this->once())->method('insertData');
         $obj->expects($this->once())->method('downloadAttachments');
+        $obj->expects($this->once())->method('setupTiki');
+        $obj->expects($this->once())->method('extractPermalinks');
         $_POST['importAttachments'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
@@ -56,8 +69,76 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractTags', 'extractCategories'));
         $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array('posts' => array(), 'pages' => array())));
 		$this->expectOutputString("\nExtracting data from XML file:\n");
-		$parsedData = $obj->parseData();
-        $this->assertEquals(4, count($parsedData));
+		$obj->parseData();
+        $this->assertEquals(4, count($obj->parsedData));
+	}
+	
+	public function testExtractPermalinks()
+	{
+		$this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+        $this->obj->blogInfo['link'] = 'http://example.com';
+        
+        $expectedResult = array(
+        	107 => array(
+        		'oldLinks' => array(
+        			'http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+        			'/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+        			'http://example.com/?p=107',
+        			'/?p=107',
+        		),
+        	),
+        	36 => array(
+        		'oldLinks' => array(
+	        		'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'http://example.com/?p=36',
+	        		'/?p=36',
+        		),
+        	),
+        	73 => array(
+        		'oldLinks' => array(
+	        		'http://example.com/2008/02/23/lo-mas-importante-son-los-veinte/',
+	        		'/2008/02/23/lo-mas-importante-son-los-veinte/',
+	        		'http://example.com/?p=73',
+	        		'/?p=73',
+        		),
+        	),
+        	10 => array(
+        		'oldLinks' => array(
+	        		'http://example.com/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
+	        		'/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
+        		),
+        	),
+        );
+        
+        $this->assertEquals($expectedResult, $this->obj->extractPermalinks());
+	}
+
+	public function testIdentifyInternalLinks()
+	{   
+		$this->obj->permalinks = array(
+        	107 => array(
+        		'oldLinks' => array(
+	        		'http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+	        		'http://example.com/?p=107',
+        		),
+        	),
+        	36 => array(
+        		'oldLinks' => array(
+	        		'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'http://example.com/?p=36',
+        		),
+        	),
+        );
+		
+		$item['wp_id'] = 10;
+        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/">Teste</a> E continua o texto por aqui.';
+        $this->assertTrue($this->obj->identifyInternalLinks($item));
+        
+        $item['wp_id'] = 11;
+        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://example.com/2007/03/11/outra-materia/">Teste</a> E continua o texto por aqui.';
+        $this->assertFalse($this->obj->identifyInternalLinks($item));
 	}
 	
 	public function testExtractItems()
@@ -65,10 +146,10 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractInfo'));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
-        $obj->expects($this->exactly(5))->method('extractInfo')->will($this->returnValue(array()));
+        $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
         
         $expectedResult = array(
-        	'posts' => array(array(), array(), array(), array()),
+        	'posts' => array(array(), array(), array()),
         	'pages' => array(array()),
         );
         
@@ -120,9 +201,12 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 	
 	public function testExtractInfoPost()
 	{
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment', 'parseContent'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment', 'parseContent', 'identifyInternalLinks'));
 		$obj->expects($this->exactly(3))->method('extractComment')->will($this->returnValue(true));
 		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
+		$obj->expects($this->once())->method('identifyInternalLinks')->will($this->returnValue(true));
+		
+		$obj->permalinks = array('not empty');
 		
 		$expectedResult = array(
 			'categories' => array(
@@ -144,8 +228,10 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
+			'wp_id' => 73,
 			'created' => '1203784780',
 			'type' => 'post',
+			'hasInternalLinks' => true,
 		);
 
 		$obj->dom = new DOMDocument;
@@ -157,8 +243,12 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractInfoPage()
 	{
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('parseContent'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComments', 'parseContent', 'identifyInternalLinks'));
+		$obj->expects($this->exactly(0))->method('extractComment')->will($this->returnValue(true));
 		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
+		$obj->expects($this->once())->method('identifyInternalLinks')->will($this->returnValue(true));
+		
+		$obj->permalinks = array('not empty');
 		
 		$expectedResult = array(
 			'categories' => array(
@@ -177,8 +267,10 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
+			'wp_id' => 107,
 			'created' => 1173636811,
 			'type' => 'page',
+			'hasInternalLinks' => true,
 			'revisions' => array(
 				array(
 					'data' => 'Test',
@@ -252,7 +344,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	public function testExtractBlogInfo()
 	{
 		$expectedResult = array(
-			'title' => 'rodrigo.utopia.org.br',
+			'title' => 'example.com',
+			'link' => 'http://example.com',
 			'desc' => 'Software livre, cicloativismo, montanhismo e quem sabe permacultura',
 			'lastModif' => 1284989827,
 			'created' => 1173636811,
@@ -273,7 +366,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$expectedResult = array(
 			array(
 				'name' => 'Parte da tela de administração do TinyMCE Advanced',
-				'link' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg',
+				'link' => 'http://example.com/files/tadv2.jpg',
 				'created' => '1241461850',
 				'author' => 'rodrigo',
 				'fileName' => 'tadv2.jpg',
@@ -292,7 +385,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			),
 			array(
 				'name' => 'Hostelaria Las Torres',
-				'link' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+				'link' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
 				'created' => '1242095082',
 				'author' => 'rodrigo',
 				'fileName' => '1881232-hostelaria-las-torres-0.jpg',
@@ -311,7 +404,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			),
 			array(
 				'name' => 'Caminhando no gelo no Vale do Silêncio',
-				'link' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'link' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
 				'created' => '1242095085',
 				'author' => 'rodrigo',
 				'fileName' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
@@ -392,7 +485,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $expectedResult = array(
         	array(
         		'fileId' => 1,
-        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg',
+        		'oldUrl' => 'http://example.com/files/tadv2.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
 						'name' => 'tadv2-150x150.jpg',
@@ -408,7 +501,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         	),
         	array(
         		'fileId' => 1,
-        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+        		'oldUrl' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
@@ -424,7 +517,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         	),
         	array(
         		'fileId' => 1,
-        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+        		'oldUrl' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
@@ -505,7 +598,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$this->obj->newFiles = array(
 			array(
 				'fileId' => 2,
-				'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'oldUrl' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
 				'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
@@ -521,7 +614,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			),
 			array(
 				'fileId' => 1,
-				'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+				'oldUrl' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
 				'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
@@ -579,11 +672,14 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	public function testMatchWordpressShortcodes()
 	{
 		$content = "[my-shortcode] [my-shortcode/] [my-shortcode foo='bar' bar='foo'] [my-shortcode foo='bar'/]
-			[my-shortcode]content[/my-shortcode] [my-shortcode foo='bar' bar='foo']content[/my-shortcode]";
+			[my-shortcode2]content[/my-shortcode2] [my-shortcode2 foo='bar' bar='foo']content[/my-shortcode2] 
+			[my-shortcode2 foo='bar' bar='foo']\n\ncontent\n\n[/my-shortcode2] [youtube width=\"625\" height=\"517\"]http://www.youtube.com/watch?v=4UCOWCfUkKU[/youtube]";
 		
 		$expectedResult = array(
-			array("[my-shortcode foo='bar' bar='foo']content[/my-shortcode]", 'my-shortcode', " foo='bar' bar='foo'", 'content'),
-			array('[my-shortcode]content[/my-shortcode]', 'my-shortcode', '', 'content'),
+			array('[youtube width="625" height="517"]http://www.youtube.com/watch?v=4UCOWCfUkKU[/youtube]', 'youtube', ' width="625" height="517"', 'http://www.youtube.com/watch?v=4UCOWCfUkKU'),
+			array("[my-shortcode2 foo='bar' bar='foo']\n\ncontent\n\n[/my-shortcode2]", 'my-shortcode2', " foo='bar' bar='foo'", "\n\ncontent\n\n"),
+			array("[my-shortcode2 foo='bar' bar='foo']content[/my-shortcode2]", 'my-shortcode2', " foo='bar' bar='foo'", 'content'),
+			array('[my-shortcode2]content[/my-shortcode2]', 'my-shortcode2', '', 'content'),
 			array("[my-shortcode foo='bar' bar='foo']", 'my-shortcode', " foo='bar' bar='foo'"),
 			array("[my-shortcode foo='bar'/]", 'my-shortcode', " foo='bar'"),
 			array('[my-shortcode/]', 'my-shortcode', ''),
@@ -598,5 +694,196 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_shortcodes.txt');
 		$expectedResult = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_shortcodes_parsed.txt');
 		$this->assertEquals($expectedResult, $this->obj->parseWordpressShortcodes($content));
+	}
+	
+	public function testInsertItem_shouldCallStoreNewLink()
+	{
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('storeNewLink', 'insertPost'));
+		$obj->expects($this->once())->method('storeNewLink');
+		$obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(false));
+		
+		$item = array('type' => 'post', 'name' => 'Any name');
+		
+		$obj->insertItem($item);
+	}
+	
+	public function testStoreNewLinkWithSefUrlEnabled()
+	{
+		global $prefs, $base_url;
+		$prefs['feature_sefurl'] = 'y';
+		$base_url = 'http://localhost/tiki';
+		
+		$this->obj->permalinks = array(
+			107 => array(
+				'oldLinks' => array(
+					'http://example.com/materia/',
+					'http://example.com/?p=107',
+				),
+			),
+			36 => array(
+				'oldLinks' => array(
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
+				),
+			),
+		);
+		
+		$expectedResult = $this->obj->permalinks;
+		$expectedResult[107]['newLink'] = 'http://localhost/tiki/materia';
+		$expectedResult[36]['newLink'] =  'http://localhost/tiki/blogpost10';
+		
+		$this->obj->storeNewLink('materia', array('wp_id' => 107, 'type' => 'page'));
+		$this->obj->storeNewLink(10, array('wp_id' => 36, 'type' => 'post'));
+		
+		$this->assertEquals($expectedResult, $this->obj->permalinks);
+	}
+	
+	public function testStoreNewLinkWithSefUrlDisabled()
+	{
+		global $prefs, $base_url;
+		$prefs['feature_sefurl'] = 'n';
+		$base_url = 'http://localhost/tiki';
+		
+		$this->obj->permalinks = array(
+			107 => array(
+				'oldLinks' => array(
+					'http://example.com/materia/',
+					'http://example.com/?p=107',
+				),
+			),
+			36 => array(
+				'oldLinks' => array(
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
+				),
+			),
+		);
+		
+		$expectedResult = $this->obj->permalinks;
+		$expectedResult[107]['newLink'] = 'http://localhost/tiki/tiki-index.php?page=materia';
+		$expectedResult[36]['newLink'] =  'http://localhost/tiki/tiki-view_blog_post.php?postId=10';
+		
+		$this->obj->storeNewLink('materia', array('wp_id' => 107, 'type' => 'page'));
+		$this->obj->storeNewLink(10, array('wp_id' => 36, 'type' => 'post'));
+		
+		$this->assertEquals($expectedResult, $this->obj->permalinks);
+	}
+	
+	public function testInsertData_shouldSetObjIdOnItemsArray()
+	{
+		$_POST['replaceInternalLinks'] = 'on';
+		
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('insertItem', 'createBlog', 'replaceInternalLinks'));
+        $obj->expects($this->once())->method('createBlog');
+        $obj->expects($this->exactly(2))->method('insertItem')->will($this->onConsecutiveCalls(2, 'Page name'));
+
+        $obj->permalinks = array('not empty');
+        
+		$obj->parsedData = array(
+			'pages' => array(
+				array('type' => 'page', 'name' => 'Page name'),
+			),
+			'posts' => array(
+				array('type' => 'post', 'name' => 'Post title'),
+			),
+			'tags' => array(),
+			'categories' => array(),
+		);
+
+		$expectedResult = array(
+			array('type' => 'post', 'name' => 'Post title', 'objId' => 2),
+			array('type' => 'page', 'name' => 'Page name', 'objId' => 'Page name'),
+		);
+		
+		$obj->expects($this->once())->method('replaceInternalLinks')->with($expectedResult);
+		
+        $obj->insertData();
+        
+		unset($_POST['replaceInternalLinks']);
+	}
+	
+	public function testInsertData_shouldNotCallReplaceInternalLinks()
+	{
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('insertItem', 'createBlog', 'replaceInternalLinks'));
+        $obj->expects($this->once())->method('createBlog');
+        $obj->expects($this->exactly(2))->method('insertItem')->will($this->onConsecutiveCalls(2, 'Page name'));
+        $obj->expects($this->exactly(0))->method('replaceInternalLinks');
+		
+        $obj->parsedData = array(
+			'pages' => array(
+				array('type' => 'page', 'name' => 'Page name'),
+			),
+			'posts' => array(
+				array('type' => 'post', 'name' => 'Post title'),
+			),
+			'tags' => array(),
+			'categories' => array(),
+		);
+        
+        $obj->insertData();
+	}
+	
+	public function testReplaceInternalLinks()
+	{
+		$this->obj->permalinks = array(
+			36 => array(
+				'oldLinks' => array(
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
+				),
+				'newLink' => 'http://localhost/tiki/tiki-view_blog_post.php?postId=10',
+			),
+		);
+
+		$items = array(
+			array('type' => 'page', 'name' => 'materia', 'hasInternalLinks' => true, 'objId' => 'materia'),
+			array('type' => 'post', 'name' => 'Any name', 'hasInternalLinks' => true, 'objId' => 10),
+			array('type' => 'post', 'name' => 'Any name', 'hasInternalLinks' => false, 'objId' => 11),
+		);
+		
+		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links.txt');
+		
+		TikiDb::get()->query('INSERT INTO tiki_pages (pageName, data) VALUES (?, ?)',
+			array('materia', $content));
+		TikiDb::get()->query('INSERT INTO tiki_blog_posts (postId, data) VALUES (?, ?)',
+			array(10, $content));
+		
+		$this->obj->replaceInternalLinks($items);
+        
+		$newPageContent = TikiDb::get()->getOne('SELECT data FROM tiki_pages WHERE pageName = "materia"');
+		$newPostContent = TikiDb::get()->getOne('SELECT data FROM tiki_blog_posts WHERE postId = 10');
+		
+		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
+			$newPageContent);
+		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
+			$newPostContent);
+	}
+	
+	public function testGetHtaccessRules()
+	{
+		$this->obj->permalinks = array(
+			array(
+				'oldLinks' => array(
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
+					'/?p=36',
+				),
+				'newLink' => 'http://localhost/tiki/tiki-view_blog_post.php?postId=10',
+			),
+			array(
+				'oldLinks' => array(
+					'http://example.com/contato/',
+					'/contato-tiki/',
+				),
+				'newLink' => 'http://localhost/tiki70/tiki-index.php?page=contato tiki',
+			),
+		);
+
+		$expectedResult = "Redirect 301 /2008/01/20/circuito-grande-torres-del-paine/ http://localhost/tiki/tiki-view_blog_post.php?postId=10\n"
+			. "Redirect 301 /?p=36 http://localhost/tiki/tiki-view_blog_post.php?postId=10\n"
+			. "Redirect 301 /contato-tiki/ http://localhost/tiki70/tiki-index.php?page=contato+tiki\n";
+		
+		$this->assertEquals($expectedResult, $this->obj->getHtaccessRules());
 	}
 }

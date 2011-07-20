@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -95,6 +95,7 @@ $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
 $smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
+$smarty->assign('title', $post_info['title'] . ' : ' . $blog_data['title']);
 
 if (!isset($_REQUEST['offset'])) $_REQUEST['offset'] = 0;
 if (!isset($_REQUEST['sort_mode'])) $_REQUEST['sort_mode'] = 'created_desc';
@@ -105,7 +106,7 @@ $smarty->assign('find', $_REQUEST["find"]);
 $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
-$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => ($post_info["wysiwyg"]=='y'?TRUE:FALSE)));
+$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => true));
 if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
 $pages = $bloglib->get_number_of_pages($parsed_data);
 $post_info['parsed_data'] = $bloglib->get_page($parsed_data, $_REQUEST['page']);
@@ -124,21 +125,6 @@ $post_info['first_page'] = 1;
 $post_info['last_page'] = $pages;
 $post_info['pagenum'] = $_REQUEST['page'];
 $smarty->assign('post_info', $post_info);
-
-if ($prefs['feature_blogposts_comments'] == 'y') {
-	$comments_per_page = $prefs['blog_comments_per_page'];
-	$thread_sort_mode = $prefs['blog_comments_default_ordering'];
-	$comments_vars = array(
-		'postId',
-		'offset',
-		'find',
-		'sort_mode',
-		'blogId'
-	);
-	$comments_prefix_var = 'blog post:';
-	$comments_object_var = 'postId';
-	include_once ("comments.php");
-}
 
 $cat_type = 'blog';
 $cat_objid = $blogId;

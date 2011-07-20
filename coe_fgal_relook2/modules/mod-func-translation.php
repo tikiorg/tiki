@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -159,8 +159,7 @@ function module_translation( $mod_reference, $module_params ) {
 		$smarty->assign( 'mod_translation_equivalent_other', $other );
 	
 		if( $prefs['quantify_changes'] == 'y' ) {
-			global $quantifylib;
-			include_once 'lib/wiki/quantifylib.php';
+			$quantifylib = TikiLib::lib('quantify');
 			include_once 'lib/wiki-plugins/wikiplugin_gauge.php';
 			$numeric = $quantifylib->getCompleteness( $transinfo['page_id'] );
 			$smarty->assign( 'mod_translation_quantification', $numeric );

@@ -1,20 +1,16 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-function wikiplugin_kaltura_help() {
-        return tra("Displays a KALTURA video on the wiki page").":<br />~np~{KALTURA(id=\"entry_id_of_video\")}{KALTURA}~/np~";
-}
 
 function wikiplugin_kaltura_info() {
 	return array(
 		'name' => tra('Kaltura Video'),
 		'documentation' => 'PluginKaltura',
 		'description' => tra('Display a video created through the Kaltura feature'),
-		'prefs' => array('wikiplugin_kaltura'),
+		'prefs' => array('wikiplugin_kaltura', 'feature_kaltura'),
 		'extraparams' => true,
 		'icon' => 'pics/icons/film_edit.png',
 		'params' => array(

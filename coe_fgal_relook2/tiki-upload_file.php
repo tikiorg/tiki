@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -12,6 +12,10 @@ if ( isset($_GET['upload']) or isset($_REQUEST['upload']) ) {
 	$isUpload = true;
 	unset($_GET['upload']);
 	unset($_REQUEST['upload']);
+}
+
+if ( isset($_POST['PHPSESSID']) && $_POST['PHPSESSID'] != '' ){
+	session_id($_POST['PHPSESSID']);
 }
 
 require_once ('tiki-setup.php');
@@ -27,22 +31,9 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $auto_query_args = array('galleryId', 'fileId', 'filegals_manager', 'view', 'simpleMode');
-function print_progress($msg) {
-	global $prefs;
-	if ($prefs['javascript_enabled'] == 'y') {
-		echo $msg;
-		ob_flush();
-	}
-}
 
-function print_msg($msg, $id) {
-	global $prefs;
-	if ($prefs['javascript_enabled'] == 'y') {
-		echo "<script type='text/javascript'><!--//--><![CDATA[//><!--\n";
-		echo "parent.progress('$id','" . htmlentities($msg, ENT_QUOTES, "UTF-8") . "')\n";
-		echo "//--><!]]></script>\n";
-		ob_flush();
-	}
+if ( $prefs['auth_token_access'] == 'y' && !empty($token) ) {
+	$smarty->assign('token_id', $token);
 }
 
 $requestGalleryId = null;
@@ -72,6 +63,11 @@ if ( ! empty( $_REQUEST['fileId'] ) ) {
 
 if (isset($_REQUEST['galleryId'][0])) {
 	$gal_info = $filegallib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
+	if (empty($gal_info)) {
+		$smarty->assign('msg', tra('Incorrect file gallery'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	$tikilib->get_perm_object($_REQUEST['galleryId'][0], 'file gallery', $gal_info, true);
 	$smarty->assign_by_ref('gal_info', $gal_info);
 }
@@ -186,6 +182,15 @@ if ( empty( $fileId ) ) {
 	$galleries = $filegallib->getSubGalleries( $requestGalleryId, true, 'upload_files' );
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 	$smarty->assign( 'treeRootId', $galleries['parentId'] );
+
+	if ( $prefs['fgal_upload_progressbar'] == 'ajax_flash' ) {
+		$headerlib->add_jsfile('lib/swfupload/src/swfupload.js');
+		$headerlib->add_jsfile('lib/swfupload/js/swfupload.swfobject.js');
+		$headerlib->add_jsfile('lib/swfupload/js/swfupload.queue.js');
+		$headerlib->add_jsfile('lib/swfupload/js/fileprogress.js');
+		$headerlib->add_jsfile('lib/swfupload/js/handlers.js');								
+		$smarty->assign('PHPSESSID', session_id());
+	}
 }
 
 if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {

@@ -1,3 +1,4 @@
+{* $Id$ *}
 <table>
  <tr>
   <th>{tr}Account{/tr}</th>

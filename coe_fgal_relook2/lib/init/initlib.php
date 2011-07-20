@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -181,9 +181,9 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	case E_RECOVERABLE_ERROR:
 		$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
 		$back.= "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
-		$back.= "<tt><b>File:</b></tt> $errfile<br />";
-		$back.= "<tt><b>Line:</b></tt> $errline<br />";
-		$back.= "<tt><b>Type:</b></tt> $errstr";
+		$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
+		$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
+		$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
 		$back.= "</div>";
 		$phpErrors[] = $back;
 		break;
@@ -197,9 +197,9 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 				break;
 			$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
 			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($err[$errno]):</b><br />";
-			$back.= "<tt><b>File:</b></tt> $errfile<br />";
-			$back.= "<tt><b>Line:</b></tt> $errline<br />";
-			$back.= "<tt><b>Type:</b></tt> $errstr";
+			$back.= "<b style='font-family: monospace'>File:</b> $errfile<br />";
+			$back.= "<b style='font-family: monospace'>Line:</b> $errline<br />";
+			$back.= "<b style='font-family: monospace'>Type:</b> $errstr";
 			$back.= "</div>";
 			$phpErrors[] = $back;
 		}

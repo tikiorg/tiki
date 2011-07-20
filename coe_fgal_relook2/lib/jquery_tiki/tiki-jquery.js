@@ -1,16 +1,21 @@
 // $Id$
-// JavaScript glue for jQuery (1.3.2 - 1.4.3) in TikiWiki (3.0+)
+// JavaScript glue for jQuery in Tiki
 //
 // Tiki 6 - $ is now initialised in jquery.js
 // but let's keep $jq available too for legacy custom code
 
 var $jq = $;
 
+// Escape a string for use as a jQuery selector value, for example an id or a class
+function escapeJquery(str) {
+	return str.replace(/([\!"#\$%&'\(\)\*\+,\.\/:;\?@\[\\\]\^`\{\|\}\~=>])/g, "\\$1");
+}
+
 // Check / Uncheck all Checkboxes - overriden from tiki-js.js
 function switchCheckboxes (tform, elements_name, state) {
-  // checkboxes need to have the same name elements_name
-  // e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
-	$(tform).contents().find('input[name="' + elements_name + '"]:visible').attr('checked', state).change();
+	// checkboxes need to have the same name elements_name
+	// e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
+	$(tform).contents().find('input[name="' + escapeJquery(elements_name) + '"]:visible').attr('checked', state).change();
 }
 
 
@@ -31,7 +36,7 @@ function show(foo, f, section) {
 			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		}
 	}
-	if (f) { setCookie(foo, "o", section); }
+	if (f) {setCookie(foo, "o", section);}
 }
 
 function hide(foo, f, section) {
@@ -63,11 +68,11 @@ function flip(foo, style) {
 	} else {
 		if ($("#" + foo).css("display") === "none") {
 			setSessionVar('show_' + escape(foo), 'y');
-			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			show(foo);
 		}
 		else {
 			setSessionVar('show_' + escape(foo), 'n');
-			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			hide(foo);
 		}
 	}
 }
@@ -89,7 +94,7 @@ function showJQ(selector, effect, speed, dir) {
 	} else if (effect === 'fade') {
 		$(selector).fadeIn(speed);
 	} else if (effect.match(/(.*)_ui$/).length > 1) {
-		$(selector).show(effect.match(/(.*)_ui$/)[1], {direction: dir }, speed);
+		$(selector).show(effect.match(/(.*)_ui$/)[1], {direction: dir}, speed);
 	} else {
 		$(selector).show();
 	}
@@ -105,7 +110,7 @@ function hideJQ(selector, effect, speed, dir) {
 	} else if (effect === 'fade') {
 		$(selector).fadeOut(speed);
 	} else if (effect.match(/(.*)_ui$/).length > 1) {
-		$(selector).hide(effect.match(/(.*)_ui$/)[1], {direction: dir }, speed);
+		$(selector).hide(effect.match(/(.*)_ui$/)[1], {direction: dir}, speed);
 	} else {
 		$(selector).hide();
 	}
@@ -114,13 +119,13 @@ function hideJQ(selector, effect, speed, dir) {
 // override overlib
 function convertOverlib(element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 	
-	if ($(element).data('processed') || typeof $(element).cluetip != "function") { return false; }
-	if (typeof params == "undefined") { params = []; }
+	if ($(element).data('processed') || typeof $(element).cluetip != "function") {return false;}
+	if (typeof params == "undefined") {params = [];}
 	
 	var options = {};
 	options.clickThrough = true;
 	for (var param = 0; param < params.length; param++) {
-		var val = "";
+		var val = "", pam;
 		var i = params[param].indexOf("=");
 		if (i > -1) {
 			var arr = params[param].split("=", 2);
@@ -185,11 +190,11 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 		element.tipWidth = options.width;
 	}
 	
-	prefix = "|";
+	var prefix = "|";
 	$(element).attr('title', prefix + tip);
 
 	if (options.activation !== 'click') {
-		options.hoverIntent = { sensitivity: 3, interval: 300, timeout: 0};
+		options.hoverIntent = {sensitivity: 3, interval: 300, timeout: 0};
 	}
 	$(element).data('processed', true);	
 
@@ -201,7 +206,7 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 	} else {
 		$(element).trigger('mouseover');
 	}
-	setTimeout(function () { $("#cluetip").show(); }, 200);	// IE doesn't necessarily display
+	setTimeout(function () {$("#cluetip").show();}, 200);	// IE doesn't necessarily display
 	$(element).attr("title", "");	// remove temporary title attribute to avoid built in browser tips
 	return false;
 }
@@ -262,14 +267,16 @@ function ajaxLoadingHide() {
 }
 
 function setUpClueTips() {
-	var ctOptions = { splitTitle: '|', cluezIndex: 2000, width: 'auto', fx: { open: 'fadeIn', openSpeed: 'fast' },
-		clickThrough: true, hoverIntent: { sensitivity: 3, interval: 600, timeout: 0} };
-	$.cluetip.setup({ insertionType: 'insertBefore', insertionElement: '#main' });
+	var ctOptions = {splitTitle: '|', cluezIndex: 2000, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'},
+		clickThrough: true, hoverIntent: {sensitivity: 3, interval: 600, timeout: 0}};
+	$.cluetip.setup({insertionType: 'insertBefore', insertionElement: '#main'});
 	
 	$('.tips[title!=""]').cluetip($.extend(ctOptions, {}));
 	$('.titletips[title!=""]').cluetip($.extend(ctOptions, {}));
-	$('.tikihelp[title!=""]').cluetip($.extend(ctOptions, { splitTitle: ':' })); // , width: '150px'
-	$('.stickytips').cluetip($.extend(ctOptions, { showTitle: false, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml' }));
+	$('.tikihelp[title!=""]').cluetip($.extend(ctOptions, {splitTitle: ':'})); // , width: '150px'
+	
+	// unused?
+	$('.stickytips').cluetip($.extend(ctOptions, {showTitle: false, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml'}));
 	
 	// repeats for "tiki" buttons as you cannot set the class and title on the same element with that function (it seems?)
 	//$('span.button.tips a').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
@@ -431,7 +438,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 		});
 		
 		/* Shadowbox params compatibility extracted using regexp functions */
-		
+		var re, ret;
 		// rel containg title param overrides title attribute of the link (shadowbox compatible)
 		$("#col1 a[rel*='box'][rel*='title=']").colorbox({
 			title: function () {
@@ -459,7 +466,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 		
 		// links generated by the {COLORBOX} plugin
 		if (jqueryTiki.colorbox) {
-			$("a[rel^='shadowbox[colorbox']").each(function () { $(this).attr('savedTitle', $(this).attr('title')); });
+			$("a[rel^='shadowbox[colorbox']").each(function () {$(this).attr('savedTitle', $(this).attr('title'));});
 			if (jqueryTiki.tooltips) {
 				$("a[rel^='shadowbox[colorbox']").cluetip({
 					splitTitle: '<br />', 
@@ -527,6 +534,10 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 		alert("dev notice: no jq.ui here?");
         return popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyContent, edit_icon); // ??
     }
+	if ($("#" + area_id).length && $("#" + area_id)[0].createTextRange) {	// save selection for IE
+		storeTASelection(area_id);
+	}
+
     var container = $('<div class="plugin"></div>');
 
     if (!index) {
@@ -544,7 +555,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 		bodyContent = "";
 		
 		dialogSelectElement( area_id, '{' + type.toUpperCase(), '{' + type.toUpperCase() + '}' ) ;
-		var sel = ( textareaEditor ? textareaEditor.selection() : getTASelection( textarea ) );
+		var sel = getTASelection( textarea );
 		if (sel && sel.length > 0) {
 			sel = sel.replace(/^\s\s*/, "").replace(/\s\s*$/g, "");	// trim
 			//alert(sel.length);
@@ -604,9 +615,9 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 
 	var pfc = container.find('table tr').length;	// number of rows (plugin form contents)
 	var t = container.find('textarea:visible').length;
-	if (t) { pfc += t * 3; }
-	if (pfc > 9) { pfc = 9; }
-	if (pfc < 2) { pfc = 2; }
+	if (t) {pfc += t * 3;}
+	if (pfc > 9) {pfc = 9;}
+	if (pfc < 2) {pfc = 2;}
 	pfc = pfc / 10;			// factor to scale dialog height
 	
 	var btns = {};
@@ -623,7 +634,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
         var emptyRequiredParam = false;
         
         for (var i = 0; i < form.elements.length; i++) {
-            element = form.elements[i].name;
+            var element = form.elements[i].name;
             
             var matches = element.match(/params\[(.*)\]/);
             
@@ -636,20 +647,23 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
             var val = form.elements[i].value;
             
             // check if fields that are required and visible are not empty
-            if (meta.params[param].required) {
-            	if (val === '' && $(form.elements[i]).is(':visible')) {
-	            	$(form.elements[i]).css('border-color', 'red');
-	            	if ($(form.elements[i]).next('.required_param').length === 0) {
-	            		$(form.elements[i]).after('<div class="required_param" style="font-size: x-small; color: red;">(required)</div>');
-	            	}
-	            	emptyRequiredParam = true;
-	            } else {
-	            	// remove required feedback if present
-	            	$(form.elements[i]).css('border-color', '');
-	            	$(form.elements[i]).next('.required_param').remove();
-	            }
-            }
-            
+			if (meta.params[param]) {
+				if (meta.params[param].required) {
+					if (val === '' && $(form.elements[i]).is(':visible')) {
+						$(form.elements[i]).css('border-color', 'red');
+						if ($(form.elements[i]).next('.required_param').length === 0) {
+							$(form.elements[i]).after('<div class="required_param" style="font-size: x-small; color: red;">(required)</div>');
+						}
+						emptyRequiredParam = true;
+					}
+					else {
+						// remove required feedback if present
+						$(form.elements[i]).css('border-color', '');
+						$(form.elements[i]).next('.required_param').remove();
+					}
+				}
+			}
+			
             if (val !== '') {
                 params.push(param + '="' + val + '"');
             }
@@ -659,9 +673,9 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
         	return false;
         }
        
-		var blob;
-		if (typeof form.content != 'undefined' && form.content.value.length > 0) {
-			blob = '{' + type.toUpperCase() + '(' + params.join(' ') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+		var blob, cont = $("[name=content]", form).val();
+		if (cont.length > 0) {
+			blob = '{' + type.toUpperCase() + '(' + params.join(' ') + ')}' + cont + '{' + type.toUpperCase() + '}';
 		} else {
 			blob = '{' + type.toLowerCase() + ' ' + params.join(' ') + '}';
 		}
@@ -696,21 +710,26 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 			$('div.plugin input[name="type"][value="' + type + '"]').parent().parent().remove();		
 
 			var ta = $('#' + area_id);
-			if (ta) { ta.focus(); }
-		},
-		onChange: function() {
-			alert('t');
+			if (ta) {ta.focus();}
 		}
 	}).dialog('option', 'buttons', btns).dialog("open");
 	
 	
 	//This allows users to create plugin snippets for any plugin using the jQuery event 'plugin_#type#_ready' for document
-	$(document).trigger({
-		type: 'plugin_' + type + '_ready',
-		container: container,
-		arguments: arguments,
-		btns: btns
-	});
+	$(document)
+		.trigger({
+			type: 'plugin_' + type + '_ready',
+			container: container,
+			arguments: arguments,
+			btns: btns
+		})
+		.trigger({
+			type: 'plugin_ready',
+			container: container,
+			arguments: arguments,
+			btns: btns,
+			type: type
+		});
 }
 
 /*
@@ -725,18 +744,18 @@ function handlePluginFieldsHierarchy(type) {
 	
 	$.each(pluginParams, function(paramName, paramValues) {
 		if (paramValues.parent) {
-			parent = $('.wikiplugin_edit').find('[name$="params[' + paramValues.parent.name + ']"]');
+			var $parent = $('[name$="params[' + paramValues.parent.name + ']"]', '.wikiplugin_edit');
 			
 			$('.wikiplugin_edit').find('#param_' + paramName).addClass('parent_' + paramValues.parent.name + '_' + paramValues.parent.value);
 			
-			if (parent.val() != paramValues.parent.value) {
+			if ($parent.val() != paramValues.parent.value) {
 				$('.wikiplugin_edit').find('#param_' + paramName).hide();
 			}
 			
 			if (!parents[paramValues.parent.name]) {
 				parents[paramValues.parent.name] = {};
 				parents[paramValues.parent.name]['children'] = [];
-				parents[paramValues.parent.name]['parentElement'] = parent;
+				parents[paramValues.parent.name]['parentElement'] = $parent;
 			}
 			
 			parents[paramValues.parent.name]['children'].push(paramName);
@@ -773,7 +792,7 @@ function toggleFullScreen(area_id) {
 	if (textareaEditor) {
 		var toolbar = $('#' + area_id + '_toolbar');
 		//the variables to be used
-		var parentId, code, codeMirrorContainer;
+		var parentId, code, codeMirrorContainer, $codeMirrorEditorObject;
 		var $window = $(window);
 		
 		if ($ta.hasClass('fullscreen')) {
@@ -975,18 +994,18 @@ function toggleFullScreen(area_id) {
 			$("#diff_history").height(h - vh).width(w).css("left", w + grippy_width);
 			$edit_form.css("position","absolute").css("left", w + grippy_width).width(w - grippy_width);
 			
-			$grippy = $("<div id='fs_grippy_" + area_id +"' />").css({"background-image": "url(pics/icons/shading.png)",
+			var $grippy = $("<div id='fs_grippy_" + area_id +"' />").css({"background-image": "url(pics/icons/shading.png)",
 											"background-repeat": "repeat-y",
 											"background-position": -3,
 											"position": "absolute",
 											"left": w + "px",
 											"top": 0,
 											"cursor": "col-resize"})
-									.width(grippy_width).height(h).draggable({ axis: 'x', drag: function(event, ui) {
+									.width(grippy_width).height(h).draggable({axis: 'x', drag: function(event, ui) {
 										$diff.find("div,table").width(ui.offset.left - grippy_width);
 										$edit_form.css("left", ui.offset.left + grippy_width).find("#edit-zone, table.normal, textarea, fieldset")
 												.width($(window).width() - ui.offset.left);
-									} });
+									}});
 			$diff.after($grippy);
 			
 		}
@@ -1011,48 +1030,42 @@ function toggleFullScreen(area_id) {
 /* Simple tiki plugin for jQuery
  * Helpers for autocomplete and sheet
  */
+var xhrCache = {}, lastXhr;	// for jq-ui autocomplete
 
 $.fn.tiki = function(func, type, options) {
-	var opts;
+	var opts = {}, opt;
 	switch (func) {
 		case "autocomplete":
 			if (jqueryTiki.autocomplete) {
-				if (typeof type !== 'undefined') { // func and type given
-					options = options || {};		// some default options for autocompletes in tiki
-					opts = {extraParams: {"httpaccept": "text/javascript"},
-								multiple: false,
-								dataType: "json",
-								parse: parseAutoJSON,
-								formatItem: function(row) { return row; },
-								selectFirst: false,
-								max: 15
-							};
-					for(opt in options) {
-						opts[opt] = options[opt];
-					}
+				if (typeof type === 'undefined') { // func and type given
+					// setup error - alert here?
+					return null;
 				}
-				var data = "";
+				options = options || {};
+				var requestData = {};
+
+				var url = "";
 				switch (type) {
 					case "pagename":
-						data = "tiki-listpages.php?listonly";
+						url = "tiki-listpages.php?listonly";
 						break;
 					case "groupname":
-						data = "tiki-ajax_services.php?listonly=groups";
+						url = "tiki-ajax_services.php?listonly=groups";
 						break;
 					case "username":
-						data = "tiki-ajax_services.php?listonly=users";
+						url = "tiki-ajax_services.php?listonly=users";
 						break;
 					case "usersandcontacts":
-						data = "tiki-ajax_services.php?listonly=usersandcontacts";
+						url = "tiki-ajax_services.php?listonly=usersandcontacts";
 						break;
 					case "userrealname":
-						data = "tiki-ajax_services.php?listonly=userrealnames";
+						url = "tiki-ajax_services.php?listonly=userrealnames";
 						break;
 					case "tag":
-						data = "tiki-ajax_services.php?listonly=tags&separator=+";
+						url = "tiki-ajax_services.php?listonly=tags&separator=+";
 						break;
 					case "icon":
-						data = "tiki-ajax_services.php?listonly=icons&max=" + opts.max;
+						url = "tiki-ajax_services.php?listonly=icons&max=" + (opts.max ? opts.max: 10);
 						opts.formatItem = function(data, i, n, value) {
 							var ps = value.lastIndexOf("/");
 							var pd = value.lastIndexOf(".");
@@ -1063,36 +1076,47 @@ $.fn.tiki = function(func, type, options) {
 						};
 						break;
 					case 'trackername':
-						data = "tiki-ajax_services.php?listonly=trackername";
+						url = "tiki-ajax_services.php?listonly=trackername";
+						break;
+					case 'trackervalue':
+						if (typeof options.fieldId === "undefined") {
+							// error
+							return null;
+						}
+						$.extend( requestData, options );
+						options = {};
+						url = "list-tracker_field_values_ajax.php";
 						break;
 				}
-		 		return this.each(function() {
-					$(this).autocomplete(data, opts).click( function () {
-						$(".ac_results").hide();	// hide the drop down if input clicked on again
-					});
-		
+				$.extend( opts, {		//  default options for autocompletes in tiki
+					minLength: 2,
+					source: function( request, response ) {
+						if (options.tiki_replace_term) {
+							request.term = options.tiki_replace_term.apply(null, [request.term]);
+						}
+						var cacheKey = "ac." + type + "." + request.term;
+						if ( cacheKey in xhrCache ) {
+							response( xhrCache[ cacheKey ] );
+							return;
+						}
+						request.q = request.term;
+						$.extend( request, requestData );
+						lastXhr = $.getJSON( url, request, function( data, status, xhr ) {
+							xhrCache[ cacheKey ] = data;
+							if ( xhr === lastXhr ) {
+								response( data );
+							}
+						});
+					}
 				});
-			}
-			break;
-		case "s5":
-			if (jqueryTiki.jqs5) {
-				$(this).s5($.extend({
-					menu: function() {
-						return (
-							'<a href="#" onclick="jQuery.s5.go(\'first\'); return false;" title="First"><img src="lib/jquery/jquery.s5/images/resultset_first.png" alt="First" /></a> ' + 
-							'<a href="#" onclick="jQuery.s5.go(\'prev\'); return false;" title="Prev"><img src="lib/jquery/jquery.s5/images/resultset_previous.png" alt="Prev" /></a> ' + 
-							'<a href="#" onclick="jQuery.s5.go(\'next\'); return false;" title="Next"><img src="lib/jquery/jquery.s5/images/resultset_next.png" alt="Next" /></a> ' + 
-							'<a href="#" onclick="jQuery.s5.go(\'last\'); return false;" title="Last"><img src="lib/jquery/jquery.s5/images/resultset_last.png" alt="Last" /></a> ' +
-							'<a href="#" onclick="jQuery.s5.listSlideTitles(); return false;" title="Jump To Slide" class="listSlideTitlesAnchor"><img src="lib/jquery/jquery.s5/images/layers.png" alt="Jump To Slide" /></a> ' +
-							'<a href="#" onclick="jQuery.s5.autoPlay(true); return false;" title="Play"><img src="lib/jquery/jquery.s5/images/control_play_blue.png" alt="Play" /></a> ' +
-							'<a href="#" onclick="jQuery.s5.s.pause = true; return false;" title="Pause"><img src="lib/jquery/jquery.s5/images/control_pause_blue.png" alt="Pause" /></a> ' +
-							'<a href="#" onclick="jQuery.s5.s.pause = true; go(\'first\'); return false;" title="Stop"><img src="lib/jquery/jquery.s5/images/control_stop_blue.png" alt="Stop" /></a> ' +
-							'<a href="#" onclick="jQuery.s5.getNote(); return false;" title="Notes"><img src="lib/jquery/jquery.s5/images/note.png" alt="Notes" /></a> ' +
-							'<a href="#" onclick="jQuery.s5.toggleLoop(); return false;" title="Toggle Loop"><img src="lib/jquery/jquery.s5/images/arrow_rotate_clockwise.png" alt="Toggle Loop" /></a>'
-						);
-					},
-					slideDuration: 10000 //10 seconds
-				},options));
+				$.extend(opts, options);
+
+		 		return this.each(function() {
+					$(this).autocomplete(opts);
+//					.click( function () {
+//						$(".ac_results").hide();	// hide the drop down if input clicked on again
+//					});
+				});
 			}
 			break;
 		case "carousel":
@@ -1124,7 +1148,8 @@ $.fn.tiki = function(func, type, options) {
 							dateFormat: "yy-mm-dd",
 							showButtonPanel: true,
 							altFormat: "@",
-							onSelect: function(dateText, inst) {
+							onClose: function(dateText, inst) {
+								$.datepicker._updateAlternate(inst);	// make sure the hidden field is up to date
 								$(inst.settings.altField).val(parseInt($(inst.settings.altField).val() / 1000, 10));
 							}
 						};
@@ -1210,7 +1235,9 @@ function displayDialog( ignored, list, area_id, url, title, subLevel, onOpenFunc
 	if ( typeof CKEDITOR !== "undefined" && CKEDITOR.env.ie ) {
 		var editor = CKEDITOR.instances[area_id];
 		var selection = editor.getSelection();
-		if (selection) { selection.lock(); }
+		if (selection) {selection.lock();}
+	} else if ($("#" + area_id)[0].createTextRange) {	// save selection for IE
+		storeTASelection(area_id);
 	}
 
 	if (!obj) { obj = {}; }
@@ -1255,15 +1282,19 @@ function displayDialog( ignored, list, area_id, url, title, subLevel, onOpenFunc
 }
 
 window.pickerData = [];
-var pickerDiv;
+var pickerDiv = {};
 
 function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
-	if (pickerDiv) {
-		$('div.toolbars-picker').remove();	// simple toggle
-		pickerDiv = false;
-		return;
+	$('div.toolbars-picker').remove();	// simple toggle
+	var $closeTo = $(closeTo);
+	
+	if ($closeTo.hasClass('toolbars-picker-open')) {
+		$('.toolbars-picker-open').removeClass('toolbars-picker-open');
+		return false;
 	}
-	textarea = $('#' +  area_id);
+	
+	$closeTo.addClass('toolbars-picker-open');
+	var textarea = $('#' +  area_id);
 	
 	//codemirror interation and preservation
 	var textareaEditor = getCodeMirrorFromInput(textarea);
@@ -1273,36 +1304,47 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 		handle = textareaEditor.cursorLine();
 	}
 	
-	pickerDiv = document.createElement('div');
-	document.body.appendChild( pickerDiv );
+	var coord = $closeTo.offset();
+	coord.bottom = coord.top + $closeTo.height();
+	
+	pickerDiv = $('<div class="toolbars-picker ' + list + '" />')
+		.css('left', coord.left + 'px')
+		.css('top', (coord.bottom + 8) + 'px')
+		.appendTo('body');
 
-	var coord = $(closeTo).offset();
-	coord.bottom = coord.top + $(closeTo).height();
-
-	pickerDiv.className = 'toolbars-picker';
-	pickerDiv.style.left = coord.left + 'px';
-	pickerDiv.style.top = (coord.bottom + 8) + 'px';
-
-	var prepareLink = function( link, ins, disp ) {
-		if (!link) { return; }
+	var prepareLink = function(ins, disp ) {
+		disp = $(disp);
 		
-		link.innerHTML = disp.replace('\/', '/');
-		link.href = 'javascript:void(0)';
+		var link = $( '<a href="#" />' ).append(disp);
+			
+		if (disp.attr('reset') && isSheet) {
+			var bgColor = $('div.tiki_sheet:first').css(styleType);
+			var color = $('div.tiki_sheet:first').css(styleType == 'color' ? 'background-color' : 'color');
+			disp
+				.css('background-color', bgColor)
+				.css('color', color);
+			
+			link
+				.addClass('toolbars-picker-reset');
+		}
 		
 		if ( isSheet ) {
-			link.onclick = function() {
-				var o = $(link);
-				var I = $(closeTo).attr('instance');
-				I = parseInt( I ? I : 0, 10 );
-				$.sheet.instance[ I ].cellChangeStyle(styleType, o.children().first().css('background-color'));
-				
-				$('div.toolbars-picker').remove();
-				pickerDiv = false;
-				
-				return false;
-			};
+			link
+				.click(function() {
+					var I = $(closeTo).attr('instance');
+					I = parseInt( I ? I : 0, 10 );
+					
+					if (disp.attr('reset')) {
+						$.sheet.instance[I].cellChangeStyle(styleType, '');
+					} else {
+						$.sheet.instance[I].cellChangeStyle(styleType, disp.css('background-color'));
+					}
+					
+					$closeTo.click();
+					return false;
+				});
 		} else {
-			link.onclick = function() {
+			link.click(function() {
 				if (textareaEditor) { //codemirror behavior
 					var newCursor = textareaEditor.cursorPosition(); //it could have possibly change, just double check
 					if (newCursor.character != cursor.character) {
@@ -1321,21 +1363,19 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 						textareaEditor.insertIntoLine(handle, 'end', ins);
 					}
 					
-					$('div.toolbars-picker').remove();
-					pickerDiv = false;
+					$closeTo.click();
 				}
 				else { //normal behavior
 					insertAt(area_id, ins);
 					
-					textarea = $('#' + area_id);
+					var textarea = $('#' + area_id);
 					// quick fix for Firefox 3.5 losing selection on changes to popup
 					if (typeof textarea.selectionStart != 'undefined') {
 						var tempSelectionStart = textarea.selectionStart;
 						var tempSelectionEnd = textarea.selectionEnd;
 					}
 					
-					$('div.toolbars-picker').remove();
-					pickerDiv = false;
+					$closeTo.click();
 					
 					// quick fix for Firefox 3.5 losing selection on changes to popup
 					if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
@@ -1346,17 +1386,20 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 					}
 				}
 				return false;
-			};
+			});
 		}
+		return link;
 	};
-
+	var chr, $a;
 	for( var i in window.pickerData[list] ) {
-		var chr = window.pickerData[list][i];
-		var link = document.createElement( 'a' );
-
-		//pickerDiv.appendChild( document.createTextNode(' ') );
-		prepareLink( link, i, chr );
-		pickerDiv.appendChild( link );
+		chr = window.pickerData[list][i];
+		if (list === "specialchar") {
+			chr = $("<span>" + chr + "</span>");
+		}
+		$a = prepareLink( i, chr );
+		if ($a.length) {
+			pickerDiv.append($a);
+		}
 	}
 	
 	return false;
@@ -1364,7 +1407,7 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 
 
 function dialogSelectElement( area_id, elementStart, elementEnd ) {
-	if ($('#cke_contents_' + area_id).length !== 0) { return; }	// TODO for ckeditor
+	if ($('#cke_contents_' + area_id).length !== 0) {return;}	// TODO for ckeditor
 	
 	var $textarea = $('#' + area_id);
 	var textareaEditor = getCodeMirrorFromInput($textarea);
@@ -1804,10 +1847,18 @@ function dialogReplaceReplace( area_id ) {
 				}
 				msg = "<p class='description comment-info'>" + msg + tr("Tip: Leave the first line as it is, starting with \";note:\". This is required") + "</p>";
 				$(textarea).parent().append($(msg));
-				
+
 				hiddenParents = $(textarea).parents(":hidden");
 				$(textarea).parents().fadeIn(100);
-				$(textarea).val(';note:' + annotation + "\n\n").focus().scroll();
+				
+				var $textareaEditor = getCodeMirrorFromInput($(textarea));
+				if ($textareaEditor) {
+					$textareaEditor.setCode(';note:' + annotation + "\n\n");
+					$textareaEditor.focus();
+					$(textarea).scroll();
+				} else {
+					$(textarea).val(';note:' + annotation + "\n\n").focus().scroll();
+				}
 				if (typeof $(textarea).selection == 'function') {	// only there if autocomplete enabled
 					var len = $(textarea).val().length;
 					$(textarea).selection(len, len);
@@ -1855,8 +1906,9 @@ function dialogReplaceReplace( area_id ) {
 			$('.treenode:not(.done)', this)
 				.addClass('done')
 				.each(function () {
-					if ($('ul:first', this).hide().length) {
-						$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-e" style="float: left;"/>');
+					if ($('ul:first', this).length) {
+						var dir = $('ul:first', this).css('display') === 'block' ? 's' : 'e';
+						$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;"/>');
 					} else {
 						$(this).prepend('<span style="float:left;width:16px;height:16px;"/>');
 					}
@@ -1870,9 +1922,11 @@ function dialogReplaceReplace( area_id ) {
 					if ('block' === body.css('display')) {
 						$(this).removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
 						body.hide('fast');
+						setCookie(body.data("catid"), "", body.data("prefix"));
 					} else {
 						$(this).removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
 						body.show('fast');
+						setCookie(body.data("catid"), "o", body.data("prefix"));
 					}
 				});
 		});
@@ -1963,6 +2017,553 @@ function dialogReplaceReplace( area_id ) {
 		return this;
 	};
 
+	var mapNumber = 0;
+	$.fn.createMap = function () {
+		var markerIcon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', new OpenLayers.Size(21,25), new OpenLayers.Pixel(-10, -25));
+
+		this.each(function () {
+			var id = $(this).attr('id'), container = this;
+
+			if (! id) {
+				++mapNumber;
+				id = 'openlayers' + mapNumber;
+				$(this).attr('id', id);
+			}
+
+			setTimeout(function () {
+				var map = container.map = new OpenLayers.Map(id);
+				container.layer = new OpenLayers.Layer.OSM();
+				container.markers = new OpenLayers.Layer.Markers();
+				map.addLayer(container.layer);
+				map.addLayer(container.markers);
+				map.zoomToMaxExtent();
+
+				if (navigator.geolocation && navigator.geolocation.getCurrentPosition) {
+					$(container).after($('<a/>')
+						.css('display', 'block')
+						.css('cursor', 'pointer')
+						.click(function () {
+							navigator.geolocation.getCurrentPosition(function (position) {
+								var lonlat = new OpenLayers.LonLat(position.coords.longitude, position.coords.latitude).transform(
+									new OpenLayers.Projection("EPSG:4326"),
+									map.getProjectionObject()
+								);
+
+								map.setCenter(lonlat);
+								map.zoomToScale(position.coords.accuracy * OpenLayers.INCHES_PER_UNIT.m);
+							});
+							return false;
+						})
+						.text(tr('To My Location')));
+				}
+
+				$(container).after($('<a/>')
+					.css('display', 'block')
+					.css('cursor', 'pointer')
+					.click(function () {
+						var address = prompt(tr('What address are you looking for?', ''));
+
+						if (address) {
+							$.getJSON('tiki-ajax_services.php', {geocode: address}, function (data) {
+								var lonlat = new OpenLayers.LonLat(data.lon, data.lat).transform(
+									new OpenLayers.Projection("EPSG:4326"),
+									map.getProjectionObject()
+								);
+
+								map.setCenter(lonlat);
+								map.zoomToScale(data.accuracy * OpenLayers.INCHES_PER_UNIT.m);
+							});
+						}
+						return false;
+					})
+					.text(tr('Search Location')));
+
+				var field = $(container).data('target-field');
+				var central = null;
+
+				if (field) {
+					container.locationMarker = null;
+
+					field = $($(container).closest('form')[0][field]);
+					if (! field.attr('disabled')) {
+						map.events.register('click', map, function (e) {
+							var lonlat = map.getLonLatFromViewPortPx(e.xy).transform(
+								map.getProjectionObject(),
+								new OpenLayers.Projection("EPSG:4326")
+							);
+							field.val(lonlat.lon + ',' + lonlat.lat + ',' + map.getZoom()).change();
+							if (container.locationMarker) {
+								container.markers.removeMarker(container.locationMarker);
+							}
+
+							container.locationMarker = new OpenLayers.Marker(map.getLonLatFromViewPortPx(e.xy), markerIcon.clone());
+							container.markers.addMarker(container.locationMarker);
+						});
+					}
+
+					var value = field.val();
+					var matching = value.match(/^(-?[0-9]*(\.[0-9]+)?),(-?[0-9]*(\.[0-9]+)?)(,(.*))?$/);
+					
+					if (matching) {
+						var lat = parseFloat(matching[3]);
+						var lon = parseFloat(matching[1]);
+						var zoom = matching[6] ? parseInt(matching[6], 10) : 0;
+
+						central = {lat: lat, lon: lon, zoom: zoom};
+					}
+				}
+
+				if ($(container).data('marker-filter')) {
+					var filter = $(container).data('marker-filter');
+					$(filter).each(function () {
+						var lat = $(this).data('geo-lat');
+						var lon = $(this).data('geo-lon');
+						var zoom = $(this).data('geo-zoom');
+						var content = $(this).clone().data({}).wrap('<span/>').parent().html();
+
+						if ($(this).hasClass('primary') || this.href === document.location.href) {
+							central = {lat: lat, lon: lon, zoom: zoom ? zoom : 0};
+						} else {
+							var lonlat = new OpenLayers.LonLat(lon, lat).transform(
+								new OpenLayers.Projection("EPSG:4326"),
+								map.getProjectionObject()
+							);
+
+							var marker = new OpenLayers.Marker(lonlat, markerIcon.clone());
+							container.markers.addMarker(marker);
+
+							marker.events.register('click', marker, function () {
+								if (container.activePopup) {
+									map.removePopup(container.activePopup);
+								}
+
+								container.activePopup = new OpenLayers.Popup('marker', lonlat, null, content);
+								container.activePopup.autoSize = true;
+								map.addPopup(container.activePopup);
+							});
+						}
+					});
+				}
+
+				if (central) {
+					var lonlat = new OpenLayers.LonLat(central.lon, central.lat).transform(
+						new OpenLayers.Projection("EPSG:4326"),
+						map.getProjectionObject()
+					);
+
+					map.setCenter(lonlat, central.zoom);
+					container.locationMarker = new OpenLayers.Marker(lonlat, markerIcon.clone());
+					container.markers.addMarker(container.locationMarker);
+				}
+			}, 250);
+		});
+
+		return this;
+	};
+
+	$.fn.drawGraph = function () {
+		this.each(function () {
+			var $this = $(this);
+			var width = $this.width();
+			var height = Math.ceil( width * 9 / 16 );
+			var nodes = $this.data('graph-nodes');
+			var edges = $this.data('graph-edges');
+
+			var g = new Graph;
+			$.each(nodes, function (k, i) {
+				g.addNode(i);
+			});
+			$.each(edges, function (k, i) {
+				var style = { directed: true };
+				if( i.preserve ) {
+					style.color = 'red';
+				}
+				g.addEdge( i.from, i.to, style );
+			});
+
+			var layouter = new Graph.Layout.Spring(g);
+			layouter.layout();
+			
+			var renderer = new Graph.Renderer.Raphael($this.attr('id'), g, width, height );
+			renderer.draw();
+		});
+
+		return this;
+	};
+
+	/**
+	 * Handle textarea and input text selections
+	 * Code from:
+	 *
+	 * jQuery Autocomplete plugin 1.1
+	 * Copyright (c) 2009 Jörn Zaefferer
+	 *
+	 * Dual licensed under the MIT and GPL licenses:
+	 *   http://www.opensource.org/licenses/mit-license.php
+	 *   http://www.gnu.org/licenses/gpl.html
+	 *
+	 * Now deprecated and replaced in Tiki 7 by jquery-ui autocomplete
+	 */
+	$.fn.selection = function(start, end) {
+		if (start !== undefined) {
+			return this.each(function() {
+				if( this.createTextRange ){
+					var selRange = this.createTextRange();
+					if (end === undefined || start == end) {
+						selRange.move("character", start);
+						selRange.select();
+					} else {
+						selRange.collapse(true);
+						selRange.moveStart("character", start);
+						selRange.moveEnd("character", end - start);	// moveEnd is relative
+						selRange.select();
+					}
+				} else if( this.setSelectionRange ){
+					this.setSelectionRange(start, end);
+				} else if( this.selectionStart ){
+					this.selectionStart = start;
+					this.selectionEnd = end;
+				}
+			});
+		}
+		var field = this[0];
+		if ( field.createTextRange ) {
+			// from http://the-stickman.com/web-development/javascript/finding-selection-cursor-position-in-a-textarea-in-internet-explorer/
+			// The current selection
+			var range = document.selection.createRange();
+			// We'll use this as a 'dummy'
+			var stored_range = range.duplicate();
+			// Select all text
+			stored_range.moveToElementText( field );
+			// Now move 'dummy' end point to end point of original range
+			stored_range.setEndPoint( 'EndToEnd', range );
+			// Now we can calculate start and end points
+			var selectionStart = stored_range.text.length - range.text.length;
+			var selectionEnd = selectionStart + range.text.length;
+			return {
+				start: selectionStart,
+				end: selectionEnd
+			}
+		
+		} else if( field.selectionStart !== undefined ){
+			return {
+				start: field.selectionStart,
+				end: field.selectionEnd
+			}
+		}
+	};
+
+	$.fn.comment_toggle = function () {
+		this.each(function () {
+			var $target = $(this.hash);
+			$target.hide();
+
+			$(this).click(function () {
+				if ($target.is(':visible')) {
+					$target.hide(function () {
+						$(this).empty();
+					});
+				} else {
+					$target.comment_load($(this).attr('href'));
+				}
+
+				return false;
+			});
+		});
+
+		return this;
+	};
+
+	$.fn.comment_load = function (url) {
+		this.each(function () {
+			var comment_container = this;
+			$(this).load(url, function (response, status) {
+				$(this).show();
+
+				$('.comment-form a', this).click(function () {
+					$(this).parent().empty().removeClass('button').load($(this).attr('href'), function () {
+						$('form', this).submit(function () {
+							var form = this, errors;
+							$.post('tiki-ajax_services.php', $(this).serialize(), function (data, st) {
+								if (data.threadId) {
+									$(comment_container).empty().comment_load(url);
+								} else {
+									errors = $('ol.errors', form).empty();
+									if (! errors.length) {
+										$(':submit', form).after(errors = $('<ol class="errors"/>'));
+									}
+									
+									$.each(data.errors, function (k, v) {
+										errors.append($('<li/>').text(v));
+									});
+								}
+							}, 'json');
+							return false;
+						});
+					});
+					return false;
+				});
+
+				$('.confirm-prompt', this).click(function () {
+					var link = this;
+					if (confirm ($(this).data('confirm'))) {
+						$.post($(this).attr('href'), { "confirm": 1 }, function (data) {
+							if (data.status === 'DONE') {
+								$(comment_container).empty().comment_load(url);
+							}
+						}, 'json');
+					}
+					return false;
+				});
+			});
+		});
+
+		return this;
+	};
+
+	$.fn.input_csv = function (operation, separator, value) {
+		this.each(function () {
+			var values = $(this).val().split(separator);
+			if (values[0] === '') {
+				values.shift();
+			}
+
+			if (operation === 'add') {
+				values.push(value);
+			} else if (operation === 'delete') {
+				value = String(value);
+				while (-1 !== values.indexOf(value)) {
+					values.splice(values.indexOf(value), 1);
+				}
+			}
+
+			$(this).val(values.join(separator));
+		});
+
+		return this;
+	};
+
+	$.fn.showError = function (message) {
+		if (message.responseText) {
+			var data = $.parseJSON(message.responseText);
+			message = data.message;
+		}
+		this.each(function () {
+			var validate = $(this).closest('form').validate(), errors = {};
+
+			if (validate) {
+				if (! $(this).attr('name')) {
+					$(this).attr('name', $(this).attr('id'));
+				}
+				
+				errors[$(this).attr('name')] = message;
+				validate.showErrors(errors);
+
+				setTimeout(function () {
+					$('#error_report li').filter(function () {
+						return $(this).text() === message;
+					}).remove();
+
+					if ($('#error_report ul').is(':empty')) {
+						$('#error_report').empty();
+					}
+				}, 100);
+			}
+		});
+
+		return this;
+	};
+
+	$.fn.clearError = function () {
+		this.each(function () {
+			$(this).closest('form').find('label.error[for="' + $(this).attr('name') + '"]').remove();
+		});
+
+		return this;
+	};
+
+	$.fn.object_selector = function (filter, threshold) {
+		var input = this;
+		this.each(function () {
+			$.getJSON('tiki-searchindex.php', {
+				filter: filter
+			}, function (data) {
+				var $select = $('<select/>'), $autocomplete = $('<input type="text"/>');
+				$(input).wrap('<div class="object_selector"/>');
+				$(input).hide();
+				$select.append('<option/>');
+				$.each(data, function (key, value) {
+					$select.append($('<option/>').attr('value', value.object_type + ':' + value.object_id).text(value.title));
+				});
+
+				$(input).after($select);
+				$select.change(function () {
+					$(input).data('label', $select.find('option:selected').text());
+					$(input).val($select.val()).change();
+				});
+
+				if ($select.children().length > threshold) {
+					var filterField = $('<input type="text"/>').width(120);
+
+					$(input).after(filterField);
+					filterField.wrap('<label/>').before(tr('Filter:'));
+
+					filterField.keypress(function (e) {
+						var field = this;
+
+						if (e.which === 0 || e.which === 13) {
+							return false;
+						}
+
+						if (this.searching) {
+							clearTimeout(this.searching);
+							this.searching = null;
+						}
+
+						if (this.ajax) {
+							this.ajax.abort();
+							this.ajax = null;
+						}
+
+						this.searching = setTimeout(function () {
+							var loaded = $(field).val();
+							if (loaded.length >= 3 && loaded !== $select.data('loaded')) {
+								field.ajax = $.getJSON('tiki-searchindex.php', {
+									filter: $.extend(filter, {autocomplete: loaded})
+								}, function (data) {
+									$select.empty();
+									$select.data('loaded', loaded);
+									$select.append('<option/>');
+									$.each(data, function (key, value) {
+										$select.append($('<option/>').attr('value', value.object_type + ':' + value.object_id).text(value.title));
+									});
+								});
+							}
+						}, 500);
+					});
+				}
+			});
+		});
+
+		return this;
+	};
+
+	$.fn.sortList = function () {
+		var list = $(this), items = list.children('li').get();
+
+		items.sort(function(a, b) {
+			var compA = $(a).text().toUpperCase();
+			var compB = $(b).text().toUpperCase();
+			return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+		})
+
+		$.each(items, function(idx, itm) {
+			list.append(itm);
+		});
+	};
+	$.localStorage = {
+		store: function (key, value) {
+			if (window.localStorage) {
+				window.localStorage[key] = JSON.stringify(favoriteList);
+			}
+		},
+		load: function (key, callback, fetch) {
+			if (window.localStorage && window.localStorage[key]) {
+				callback($.parseJSON(window.localStorage[key]));
+			} else {
+				fetch(function (data) {
+					window.localStorage[key] = JSON.stringify(data);
+					callback(data);
+				});
+			}
+		}
+	};
+
+	var favoriteList = [];
+	$.fn.favoriteToggle = function () {
+		this.find('a')
+			.each(function () {
+				var type, obj, isFavorite, link = this;
+				type = $(this).queryParam('type');
+				obj = $(this).queryParam('object');
+
+				function isFavorite() {
+					var ret = false;
+					$.each(favoriteList, function (k, v) {
+						if (v === type + ':' + obj) {
+							ret = true;
+							return false;
+						}
+					});
+
+					return ret;
+				}
+
+				$(this).empty();
+				$(this).append(tr('Favorite'));
+				$(this).prepend($('<img/>').attr('src', isFavorite() ? 'pics/icons/star.png' : 'pics/icons/star_grey.png'));
+
+				$(this)
+					.filter(':not(".register")')
+					.addClass('register')
+					.click(function () {
+						$.getJSON($(this).attr('href'), {
+							target: isFavorite() ? 0 : 1
+						}, function (data) {
+							favoriteList = data.list;
+							$.localStorage.store('favorites', favoriteList);
+
+							$(link).parent().favoriteToggle();
+						});
+						return false;
+					});
+			});
+
+		return this;
+	};
+
+	$.fn.queryParam = function (name) {
+		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+		var results = regex.exec(this[0].href);
+
+		if(results == null) {
+			return "";
+		} else {
+			return decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+	};
+
+	$(function () {
+		var list = $('.favorite-toggle');
+
+		if (list.length > 0) {
+			$.localStorage.load(
+				'favorites',
+				function (data) {
+					favoriteList = data;
+					list
+						.favoriteToggle()
+						.removeClass('favorite-toggle');
+				}, 
+				function (recv) {
+					$.getJSON('tiki-ajax_services.php', {
+						controller: 'favorite',
+						action: 'list'
+					}, recv);
+				}
+			);
+		}
+	});
+
+	$.ajaxSetup({
+		complete: function () {
+			$('.favorite-toggle')
+				.favoriteToggle()
+				.removeClass('favorite-toggle');
+		}
+	});
+
 })($jq);
 
 // Prevent memory leaks in IE
@@ -1993,3 +2594,86 @@ if ( window.attachEvent && !window.addEventListener ) {
 		}
 	});
 }
+
+$.modal = function(msg) {
+	return $('body').modal(msg, window);
+};
+
+//Makes modal over window or object so ajax can load and user can't prevent action
+$.fn.modal = function(msg, obj) {
+	var modal = $('#boxes');
+	var spinner = $('<img src="img/spinner.gif" />');
+	
+	if (!msg) {
+		modal
+			.fadeOut(function() {
+				$(this).remove();
+			});
+		return;
+	}
+	
+	if (modal.length) {
+		modal
+			.find('#dialog')
+			.html(spinner)
+			.append(msg);
+		return;
+	}
+	
+	modal = $('<div id="boxes">' +
+			'<style>' +
+				'#mask {' +
+				  'position:absolute;' +
+				  'z-index:99999;' +
+				  'background-color:#FFFFFF;' +
+				  'display:none;' +
+				'}' +
+				
+				'#boxes .window {' +
+				  'position:absolute;' +
+				  'width:440px;' +
+				  'height:200px;' +
+				  'z-index:999999;' +
+				  'padding:20px;' +
+				'}' +
+				
+				'#boxes #dialog {' +
+				  'width:375px;' +
+				  'height:203px;' +
+				  'font-weight: bold;' +
+				  'text-align: center;' +
+				'}' +
+			'</style>' +
+		    '<div id="dialog" class="window"></div>' +
+		    '<div id="mask"></div>' +
+		'</div>')
+		.appendTo('body');
+	 
+	//Get the screen height and width
+	var maskHeight = $(document).height();
+	var maskWidth = $(window).width();
+	 
+	//Set height and width to mask to fill up the whole screen
+	modal.find('#mask')
+		.css({
+				width:maskWidth,
+				height:maskHeight,
+				position: 'absolute',
+				top: $(this).position().top + 'px',
+				left: $(this).position().left + 'px'
+		})
+		.fadeTo(1,0.01)
+		.show()
+		.fadeTo(1000,0.8);
+	 
+	//Get the window height and width
+	var winH = $(window).height();
+	var winW = $(window).width();
+	
+	var dialog = modal.find('#dialog');
+	dialog
+		.append(spinner)
+		.append(msg)
+		.css('top',  ((winH / 2) - (dialog.height() / 2)) + 'px')
+		.css('left', ((winW / 2) - (dialog.width() / 2)) + 'px');
+};

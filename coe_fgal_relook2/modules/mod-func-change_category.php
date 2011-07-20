@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,8 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_change_category_info() {
 	return array(
 		'name' => tra('Change Category'),
-		'description' => tra('Enables to categorize an object.') . ' This module currently only supports Wiki pages. Some combinations of Multiple categories, Detailed, Unassign and Assign may challenge intuition or be simply broken.',
-		'prefs' => array( 'feature_categories', 'feature_wiki' ),
+		'description' => tra('Enables to categorize an object.') . tra('This module currently only supports Wiki pages. Some combinations of Multiple categories, Detailed, Unassign and Assign may challenge intuition or be simply broken.'),
+		'prefs' => array('feature_categories', 'feature_wiki'),
+		'documentation' => 'Module change_category',
 		'params' => array(
 			'id' => array(
 				'name' => tra('Category identifier'),
@@ -40,7 +41,7 @@ function module_change_category_info() {
 			),
 			'shy' => array(
 				'name' => tra('Shy'),
-				'description' => tra('If set to "y", the module is not shown on pages which are not already categorized.' . " " . tra('Not set by default.')),
+				'description' => tra('If set to "y", the module is not shown on pages which are not already categorized.') . " " . tra('Not set by default.'),
 			),
 			'detail' => array(
 				'name' => tra('Detailed'),
@@ -61,11 +62,11 @@ function module_change_category_info() {
 			),
 			'imgUrlNotIn' => array(
 				'name' => tra('Image URL not in category'),
-				'description' => tra('Very particular parameter. If both this and "Image URL in the category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is not in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/redcross.png.',
+				'description' => tra('Very particular parameter. If both this and "Image URL in category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is not in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/redcross.png.',
 			),
 			'imgUrlIn' => array(
 				'name' => tra('Image URL in category'),
-				'description' => tra('Very particular parameter. If both this and "Image URL not in the category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/bigplus.png.',
+				'description' => tra('Very particular parameter. If both this and "Image URL not in category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/bigplus.png.',
 			),
 		),
 	);
@@ -162,10 +163,12 @@ function module_change_category( $mod_reference, $module_params ) {
 			$objectperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
 			if ($objectperms->modify_object_categories) {
 				$assignedCategs = Perms::filter( array( 'type' => 'category' ), 'object', $assignedCategs, array( 'object' => 'category' ), 'add_object' );
-
+				global $wikilib;
 				$categlib->categorize_page($cat_objid, $assignedCategs);
+				$categlib->notify_add($assignedCategs, $cat_objid, 'wiki page', $wikilib->sefurl($cat_objid));
 				if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
 					$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
+					$categlib->notify_remove($unassignedCategs, $cat_objid, 'wiki page', $wikilib->sefurl($cat_objid));
 				}
 			}
 			header('Location: '.$_SERVER['REQUEST_URI']);

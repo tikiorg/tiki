@@ -1,24 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/* to have some statistiques about a tracker
- * will returns a table with for each tracker field, the list of values and the number of times the values occurs
- * trackerId = the id of the tracker
- * fields = the iof of the fields you wnat the stat - the fields must be public
- * show_percent : optionnal - to show a percent
- * show_bar : optionnal to show a bar(length 100 pixels)
- * status : optionnal to filter on the status ( a combinaison of letters c:close, o:open, p:pending)
- */
-function wikiplugin_trackerstat_help()
-{
-	$help = tra("Displays some stat of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERSTAT(trackerId=>1,fields=>2:4:5,show_percent=>y,show_bar=>n,status=>o|c|p|op|oc|pc|opc,show_link=n)}Title{TRACKERSTAT}~/np~";
-	return $help;
-}
 
 function wikiplugin_trackerstat_info()
 {

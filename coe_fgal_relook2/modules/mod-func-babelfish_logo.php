@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,8 +13,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_babelfish_logo_info() {
 	return array(
-		'name' => tra('Babel Fish Logo'),
-		'description' => tra(''),
+		'name' => tra('Babel Fish icon link'),
+		'description' => tra('Offers an icon linked to the Yahoo! Babel Fish translation service'),
+		'prefs' => array( 'feature_babelfish_logo' ),		
 		'params' => array(),
 	);
 }

@@ -1,11 +1,10 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Special values
 define('WIKIPLUGIN_FILE_PAGE_LAST_MOD', 'PAGE_LAST_MOD');
 define('WIKIPLUGIN_FILE_PAGE_VIEW_DATE', 'PAGE_VIEW_DATE');
 

@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_ContentSource_ForumPostSource implements Search_ContentSource_Interface
 {
@@ -11,13 +16,15 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT threadId x, threadId FROM tiki_comments WHERE objectType = "forum" AND parentId = 0'));
+		return $this->db->table('tiki_comments')->fetchColumn('threadId', array(
+			'objectType' => 'forum',
+			'parentId' => 0,
+		));
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		require_once 'lib/comments/commentslib.php';
-		$commentslib = new Comments;
+		$commentslib = TikiLib::lib('comments');
 		$comment = $commentslib->get_comment($objectId);
 
 		$lastModification = $comment['commentDate'];

@@ -12,9 +12,10 @@
 		{tr}All day{/tr}
 	{else}
 	  {if ($evt.endTimeStamp - $evt.startTimeStamp < 86400)}
-		{$evt.startTimeStamp|tiki_date_format:"%H:%M"} &gt {$evt.endTimeStamp|tiki_date_format:"%H:%M"}
+		{$evt.startTimeStamp|tiki_short_time} &gt {$evt.endTimeStamp|tiki_short_time}
 	  {else}
-		{$evt.startTimeStamp|tiki_date_format:"%e %B (%H:%M)"} &gt {$evt.endTimeStamp|tiki_date_format:"%e %B (%H:%M)"}
+		{$evt.startTimeStamp|tiki_short_date}&nbsp;({{$evt.startTimeStamp|tiki_short_time}) &gt 
+		{$evt.endTimeStamp|tiki_short_date}&nbsp;({{$evt.endTimeStamp|tiki_short_time})
 	  {/if}
 	{/if}
 	</strong>

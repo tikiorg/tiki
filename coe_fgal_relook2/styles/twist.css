@@ -1,7 +1,7 @@
 /* $Id$
 	Twist for TikiWiki CMS/Broupware 1.9 was created by Gary Griffin and
 	contributed for downloading at http://themes.tiki.org.
-	The Twist theme has been updated and
+	The Twist theme was updated and
 	committed to the Tiki Subversion repository by Gary Cunningham-Lee (chibaguy).
 */
 
@@ -13,16 +13,17 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
-	background: #0F1644 url(twist/background.gif);
+	background: #0f1644 url(twist/background.gif);
 	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: black;
 }
 
 /* next two: fixed-width: 800px */
-body.fixed_width #fixedwidth {
+.fixed_width #fixedwidth {
+	margin-top: 0;
 	margin-bottom: 20px;
 	width: 800px;
-	background: #fff;
+	background: #0F1644 url(twist/background.gif);
 }
 
 body.cke_show_borders {
@@ -34,14 +35,14 @@ body.cke_show_borders {
 	margin-top: 0;
 }
 
+.middle_outer {
+	background: #fff;
+}
+
 *:first-child+html #c1c2 {
 	margin-left: 0;
 	padding-left: 0}
 
-#middle {
-	
-}
-	
 #c1c2 {
 	text-align: left;
 	background: #fff;
@@ -75,10 +76,6 @@ body.cke_show_borders {
 	width: 190px;
 }
 
-#c1c2 #col2 .content {
-	/*margin: 0;
-	padding: 0 4px 4px*/}
-
 #col3 {
 	background: #efefef;
 	padding-top: 20px;
@@ -95,7 +92,7 @@ body.cke_show_borders {
 	margin-top: 0;
 	padding-bottom: 8px;
 	padding-top: 7px}
-
+	
 /***** XHTML Elements (other than body tag) ******/
 a,
 a:visited {text-decoration: none}
@@ -192,79 +189,88 @@ input[type="submit"]:active,
 .submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845}
 
 input[type=checkbox] {border: 0}
-form.admin input[name="features"] {margin-bottom: 3px !important}
-select[name="theme"] {width: 125px}
 
 /***** Site Header & Identity *****/
-#header_fixedwidth {
-	background: url(twist/header.jpg) no-repeat 100% 100%;
+.fixed_width .header_fixedwidth {
+	width: auto !important;
+}
+
+.header_fixedwidth {
+	background: url(twist/header_bg.jpg) no-repeat 100% 100%;
 	color: #fff;
+	padding-right: 30px;
 }
 	
 #header {
-	background: url(twist/header.jpg) no-repeat 0 100%;
-	margin-right: 22px;
-	padding-left: 30px;
-	width: inherit;
+	background: url(twist/header_bg.jpg) no-repeat 0 100%;
+	text-align: left;
+	padding-left: 22px;
 }
 
-#header a,
-#header a:visited {color: #fff}
+.header a,
+.header a:visited {color: #fff}
 
 #top_modules {
 	min-height: 82px;
-	padding: 30px 0 0 0;
 	margin: 0;
+	height: 100%;
 }
 
-.siteloginbar_popup {
-	color: #fff;
-	bottom: 0;
-	position: absolute;
+#top_modules .box-logo {
+	height: 100%;
+}
+
+#top_modules #sitelogo img {
 	margin: 10px;
 }
 
-#siteloginbar a,
-#siteloginbar a:visited {
+#top_modules #sitetitles {
+	margin: 4% 0 2% 10px;
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	bottom: 4px;
+	right: 10px;
+}
+
+#top_modules .box-login_box {
+	color: #fff;
+	position: absolute;
+	top: 0;
+	right: 10px;
+}
+
+.siteloginbar_popup .tabmark {
+	float: left;
+	background: none;
+	border: 1px solid #3a759d;
+}
+
+.siteloginbar_popup .tabmark a,
+.siteloginbar_popup .tabmark a:hover,
+.siteloginbar_popup label {
+	color: white;
+}
+
+.siteloginbar_popup .tabmark a:hover {
+	background: none;
+}
+
+.siteloginbar a,
+.siteloginbar a:visited {
 	text-decoration: none;
 	color: #fff;
 }
 
-#siteloginbar input,
-#sitesearchbar input,
-#sitesearchbar select {
-	background: #185981;
-	color: #fff;
-	border: 1px solid #083c6e;
+.siteloginbar_popup .cssmenu_horiz ul li {
+	background: url(twist/background.gif) !important;
 }
 
-#siteloginbar_popup li {
-	background: #eee;
+.siteloginbar_poppedup {
+	margin-top: -10px;
 }
 
-#siteloginbar_popup .cssmenu_horiz li ul {
-	margin-top: -6px;
-}
-
-#siteloginbar_popup ul ul li a,
-#siteloginbar_popup ul ul li a:visited {
-	color: #990066;
-}
-
-#siteloginbar_popup li.login_link,
-#siteloginbar_popup li.login_link a:hover {
-	background: none;
-}
-
-#sitesearchbar select option {
-	color: #fff;
-}
-/*
-#sitetitles {
-	position: absolute;
-	left: 0;
-	bottom: 0}
-*/
 #sitetitle {
 	font-size: 2.4em;
 	color: #fff;
@@ -278,17 +284,23 @@ select[name="theme"] {width: 125px}
 
 #tiki-top {
 	position: absolute;
-	bottom: 13px;
-	right: 18px;
+	bottom: 0;
+	left: 300px;
 	font-weight: bold;
 	font-size: 11px;
 	color: #fff;
 	height: 26px}
 
 #tiki-top a,
-#tiki-top a:visited {
+#tiki-top a:visited,
+.secondary_site_menu .cssmenu_horiz ul li a,
+.secondary_site_menu .cssmenu_horiz ul li a:visited {
 	color: black !important;
 	text-decoration: none !important}
+	
+#secondary_site_menu .cssmenu_horiz > li:hover {
+	background: none;
+}
 	
 #tiki-top .findtable {
 	margin-bottom: 0;
@@ -299,6 +311,20 @@ select[name="theme"] {width: 125px}
 	max-width: 360px;
 	color: #fff;
 	margin-right: 10px;
+}
+
+.middle {
+	background: url(twist/topbar_bg.jpg) no-repeat 100% 0;	
+}
+
+#topbar_modules {
+	background: url(twist/topbar_bg.jpg) no-repeat;
+	min-height: 26px;
+	padding-left: 22px;
+}
+
+#topbar_modules .box-menu {
+	float: right;
 }
 
 #topbar_custom_code {
@@ -523,7 +549,11 @@ ol.module {
 	margin-left: 0}
 	
 *:first-child+html .box-data ul {margin-left: 2em}
-*:first-child+html .box-data ol {margin-left: 2.5em; padding-right: 0; margin-right: -2em}
+*:first-child+html .box-data ol {
+	margin-left: 2.5em;
+	padding-right: 0;
+	margin-right: -2em;
+}
 
 .halffloat .box,
 .wikitext .halffloat .box {
@@ -728,13 +758,13 @@ a.sortheader:visited {
 	text-decoration: underline;
 	font-weight: bold}
 	
-
+th a,
+td.heading a,
+tr.diffheader a,
 .heading a.link,
 .heading a.link:visited {
 	color: #fff;
 	text-decoration: underline}
-
-.form {padding: 0.2em}
 
 .findtable {
 	margin-bottom: 20px;
@@ -768,6 +798,11 @@ a.sortheader:visited {
 
 .tabcontent {
 	border: 1px solid #abcdef;
+}
+
+.statuson {
+	background: #abcdef;
+	border: 1px inset #abcdef;
 }
 
 /***** Wiki *****/
@@ -1052,8 +1087,6 @@ body.tiki_blogs .postbody {
 	margin: 0px;
 	border-spacing: 0px}
 
-.categpath {}
-
 .subcats {
 	padding: 20px 0;
 	width: 100%;
@@ -1161,10 +1194,6 @@ td.dirfooter {font-size: .95em}
 .Calfaq a,
 .Calfaq a:visited {color: #822222}
 
-.Calfgal,
-.Calfgal a,
-.Calfgal a:visited {}
-
 .Calforum,
 .Calforum a,
 .Calforum a:visited {color: #808000}
@@ -1201,7 +1230,6 @@ Caltrack a:visited {color: #00BD02}
 	padding: 0}
 
 .calfocus {font-size: 90%}
-.calfocuson {font-size: 100%}
 
 .calprio1 a,
 .calprio2 a,
@@ -1217,7 +1245,6 @@ Caltrack a:visited {color: #00BD02}
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
 
-.calnavigation a:hover {background: red}
 #caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
@@ -1257,6 +1284,7 @@ Caltrack a:visited {color: #00BD02}
 
 .calfocuson {
 	background: #D4D0C8;
+	font-size: 100%;
 }
 
 .calfocuson a {

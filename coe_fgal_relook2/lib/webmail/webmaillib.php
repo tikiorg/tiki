@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -320,7 +320,7 @@ class WebMailLib extends TikiLib
 				
 				$wmail['from'] = $headers['from'];
 				$wmail['to'] = $headers['to'];
-				$wmail['subject'] = utf8_encode($headers['subject']);
+                                $wmail['subject'] = $headers['subject'];
 				$wmail['date'] = $headers['date'];
 				$wmail["timestamp"] = strtotime($headers['date']);
 				
@@ -409,7 +409,54 @@ class WebMailLib extends TikiLib
 		require_once 'lib/core/Zend/Mail/Storage/Exception.php';
 		throw new Zend_Mail_Storage_Exception('No server to check');
 	}	// end get_mail_storage()
-	
+	/**
+	 * @param $part - a part a message or the message itself
+	 * @return array with the decoded body of the part
+	 */
+	private function decode_mail_part($part) {
+            $result = null;
+            $c = $part->getContent();
+            // deal with transfer encoding
+            try {	// no headerExists() func a part (why?)
+                    $enc = $part->contentTransferEncoding;
+            } catch (Zend_Mail_Exception $e) {
+                    $enc = '';
+            }
+            try {	// no headerExists() func a part (why?)
+                    $ct = $part->contentType;
+            } catch (Zend_Mail_Exception $e) {
+                    $ct = '';
+            }
+            try {
+                    switch ($enc) {
+                            case 'quoted-printable':
+                                    $c = quoted_printable_decode($c);
+                                    break;
+                            case 'base64':
+                                    $c = base64_decode($c);
+                                    break;
+                            case '7bit':
+                            case '8bit':
+                            default:
+                                    $c = $c;
+                    }
+                    // deal with charset
+                    if (preg_match('/charset\s*=\s*[\'"](.*)[\'"]/i', $ct, $m) && count($m) > 1) {
+                            $charset = $m[1];
+                    }
+                    if (!empty($charset) && strtolower($charset) != 'utf-8') {
+                            $c = utf8_encode($c);
+                    }
+                    $result = array('body' => trim($c), 'contentType' => strtok($ct, ';'));
+
+                    if (strtok($ct, ';') == 'text/plain' && !$getAllParts) {
+                            return $result;
+                }
+            } catch (Zend_Mail_Exception $e) {
+            // ignore?
+            }
+            return $result;
+        }
 	/**
 	 * @param $user			current user
 	 * @param $accountid	can be 0
@@ -448,55 +495,10 @@ class WebMailLib extends TikiLib
 
 		// parse parts - initially from http://framework.zend.com/manual/en/zend.mail.read.html
 		foreach (new RecursiveIteratorIterator($message) as $part) {
-
-			$c = $part->getContent();
-			// deal with transfer encoding
-			try {	// no headerExists() func a part (why?)
-				$enc = $part->contentTransferEncoding;	
-			} catch (Zend_Mail_Exception $e) {
-				$enc = '';
-			}
-			try {	// no headerExists() func a part (why?)
-				$ct = $part->contentType;	
-			} catch (Zend_Mail_Exception $e) {
-				$ct = '';
-			}
-			try {
-				switch ($enc) {
-					case 'quoted-printable':
-						$c = quoted_printable_decode($c);
-						break;
-					case 'base64':
-						$c = base64_decode($c);
-						break;
-					case '7bit':
-					case '8bit':
-					default:
-						$c = $c;
-				}
-				// deal with charset
-				if (preg_match('/charset\s*=\s*[\'"](.*)[\'"]/i', $ct, $m) && count($m) > 1) {
-					$charset = $m[1];
-				}
-				if (!empty($charset) && strtolower($charset) != 'utf-8') {
-					$c = utf8_encode($c);
-				}
-				$cont[] = array('body' => trim($c), 'contentType' => strtok($ct, ';'));
-				
-				if (strtok($ct, ';') == 'text/plain' && !$getAllParts) {
-					break;
-			    }
-			} catch (Zend_Mail_Exception $e) {
-		    	// ignore?
-			}
+                      $cont[] = $this->decode_mail_part($part);
 		}
 		if (empty($cont)) {
-			$cont[] = array('body' => $message->getContent());	// no parts, so try the whole message
-			try {	// no headerExists() func a part (why?)
-				$cont[0]['contentType'] = strtok($message->contentType, ';');	
-			} catch (Zend_Mail_Exception $e) {
-				$cont[0]['contentType'] = 'text/plain';
-			}
+			$cont[] = $this->decode_mail_part($message);	// no parts, so try the whole message
 		}
 		if (empty($cont)) {
 			$cont[] = array('body' => tra('No mail body found'), 'contentType' => 'text/plain');

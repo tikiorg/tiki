@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -19,6 +19,8 @@ if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y'
 $access->check_user($user);
 
 $auto_query_args = array('userId', 'view_user');
+
+$headerlib->add_map();
 
 // Make sure user preferences uses https if set
 if (!$https_mode && isset($https_login) && $https_login == 'required') {
@@ -122,6 +124,13 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'user_dbl', 'n');
 		$smarty->assign('user_dbl', 'n');
 	}
+	if (isset($_REQUEST['display_12hr_clock']) && $_REQUEST['display_12hr_clock'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'display_12hr_clock', 'y');
+		$smarty->assign('display_12hr_clock', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'display_12hr_clock', 'n');
+		$smarty->assign('display_12hr_clock', 'n');
+	}
 	if (isset($_REQUEST['diff_versions']) && $_REQUEST['diff_versions'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'diff_versions', 'y');
 		$smarty->assign('diff_versions', 'y');
@@ -156,33 +165,17 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		if (isset($_REQUEST["gender"])) $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
 	}
 	if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
-	if (isset($_REQUEST["lat"])) {
-		if (is_numeric($_REQUEST["lat"])) {
-			$lat = floatval($_REQUEST["lat"]);
-		} else {
-			$lat = NULL;
+
+	if (isset($_REQUEST['location'])) {
+		if ($coords = TikiLib::lib('geo')->parse_coordinates($_REQUEST['location'])) {
+			$tikilib->set_user_preference($userwatch, 'lat', $coords['lat']);
+			$tikilib->set_user_preference($userwatch, 'lon', $coords['lon']);
+			if (isset($coords['zoom'])) {
+				$tikilib->set_user_preference($userwatch, 'zoom', $coords['zoom']);
+			}
 		}
-		$smarty->assign('lat', $lat);
-		$tikilib->set_user_preference($userwatch, 'lat', $lat);
 	}
-	if (isset($_REQUEST["lon"])) {
-		if (is_numeric($_REQUEST["lon"])) {
-			$lon = floatval($_REQUEST["lon"]);
-		} else {
-			$lon = NULL;
-		}
-		$smarty->assign('lon', $lon);
-		$tikilib->set_user_preference($userwatch, 'lon', $lon);
-	}
-	if (isset($_REQUEST["zoom"])) {
-		if (is_numeric($_REQUEST["zoom"])) {
-			$zoom = intval($_REQUEST["zoom"]);
-		} else {
-			$zoom = NULL;
-		}
-		$smarty->assign('zoom', $zoom);
-		$tikilib->set_user_preference($userwatch, 'zoom', $zoom);
-	}
+
 	// Custom fields
 	foreach($customfields as $custpref => $prefvalue) {
 		// print $customfields[$custpref]['prefName'];
@@ -320,6 +313,17 @@ if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
    }
    die();
 } 
+
+$location = array(
+	'lat' => (float) $tikilib->get_user_preference($userwatch, 'lat', ''),
+	'lon' => (float) $tikilib->get_user_preference($userwatch, 'lon', ''),
+	'zoom' => (int) $tikilib->get_user_preference($userwatch, 'zoom', ''),
+);
+
+$location = TikiLib::lib('geo')->build_location_string($location);
+
+$smarty->assign('location', $location);
+
 $tikilib->get_user_preference($userwatch, 'mytiki_pages', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_blogs', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_gals', 'y');
@@ -340,9 +344,6 @@ if ($prefs['feature_community_gender'] == 'y') {
 	$tikilib->get_user_preference($userwatch, 'gender', 'Hidden');
 }
 $tikilib->get_user_preference($userwatch, 'country', 'Other');
-$tikilib->get_user_preference($userwatch, 'lat', '');
-$tikilib->get_user_preference($userwatch, 'lon', '');
-$tikilib->get_user_preference($userwatch, 'zoom', '');
 $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
 $tikilib->get_user_preference($userwatch, 'homePage', '');
 $tikilib->get_user_preference($userwatch, 'email is public', 'n');
@@ -351,6 +352,7 @@ if (isset($user_preferences[$userwatch]['email is public'])) {
 }
 $tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']);
 $tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
+$tikilib->get_user_preference($userwatch, 'display_12hr_clock', 'n');
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
 $llist = array();
@@ -366,7 +368,7 @@ $user_blogs = $bloglib->list_user_blogs($userwatch, false);
 $smarty->assign_by_ref('user_blogs', $user_blogs);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_galleries', $user_galleries);
-$user_items = $tikilib->get_user_items($userwatch);
+$user_items = TikiLib::lib('trk')->get_user_items($userwatch);
 $smarty->assign_by_ref('user_items', $user_items);
 $flags = $tikilib->get_flags();
 $smarty->assign_by_ref('flags', $flags);

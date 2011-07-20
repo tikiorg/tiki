@@ -3,17 +3,20 @@
 var auto_save_id = [];
 var auto_save_refs = [];
 var auto_save_data = [];
-var submit = 0;
+var auto_save_submit = false;
 var sending_auto_save = false;
+var auto_save_timeoutId = 0;
+var auto_save_timeout_interval = 60000;
+var auto_save_debug = false;	// for development use
 
 function remove_save(editorId, autoSaveId) {
-	if (typeof editorId !== 'string' || !editorId || !autoSaveId || submit === 1) {
+	if (typeof editorId !== 'string' || !editorId || !autoSaveId || auto_save_submit) {
 		return;	// seems to get jQuery events arriving here or has been submitted before
 	}
 	if (sending_auto_save) {	// wait if autosaving
 		setTimeout(function () { remove_save(editorId, autoSaveId); }, 100);
 	}
-	submit = 1;
+	auto_save_submit = true;
 	$.ajax({
 		url: 'tiki-auto_save.php',
 		data: 'command=auto_remove&editor_id=' + editorId + '&data=&referer=' + autoSaveId,
@@ -25,7 +28,9 @@ function remove_save(editorId, autoSaveId) {
 		},
 		// bad callback - no good info in the params :(
 		error: function(req, status, error) {
-			//alert(tr("Auto Save removal returned an error: ") + error);
+			if (error && auto_save_debug) {
+				alert(tr("Auto Save removal returned an error: ") + error);
+			}
 		}
 	});
 }
@@ -33,6 +38,7 @@ function remove_save(editorId, autoSaveId) {
 function toggle_autosaved(editorId, autoSaveId) {
 	if (typeof autoSaveId === 'undefined') { autoSaveId = ''; }
 	var output = '', prefix = '';
+	var $codeMirrorEditor = getCodeMirrorFromInput($('#' + editorId));
 	var cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[editorId] : null;
 	if ($("#"+editorId+"_original").length === 0) {	// no save version already?
 		if (cked) { prefix = 'cke_contents_'; }
@@ -50,6 +56,8 @@ function toggle_autosaved(editorId, autoSaveId) {
 					append($("<input type='hidden' id='"+editorId+"_original' value='"+escape($("#"+editorId).val())+"' />"));
 				if (cked) {
 					cked.setData(output);
+				} else if ($codeMirrorEditor) {
+					$codeMirrorEditor.setCode(output);
 				} else if ($("#"+editorId).length) {	// wiki editor
 					$("#"+editorId).val(output);
 				}
@@ -57,13 +65,17 @@ function toggle_autosaved(editorId, autoSaveId) {
 			},
 			// bad callback - no good info in the params :(
 			error: function(req, status, error) {
-				alert(tr("Auto Save get returned an error: ") + error);
+			if (error && auto_save_debug) {
+					alert(tr("Auto Save get returned an error: ") + error);
+				}
 			}
 		});
 	} else {	// toggle back to original
 		output = unescape($("#"+editorId+"_original").val());
 		if (cked) {
 			cked.setData(output);	// cked leaves the original content in the ta
+		} else if ($codeMirrorEditor) {
+			$codeMirrorEditor.setCode(output);
 		} else if ($("#"+editorId).length) {	// wiki editor
 			$("#"+editorId).val(output);
 		}
@@ -79,14 +91,20 @@ function toggle_autosaved(editorId, autoSaveId) {
 
 function auto_save( editorId, autoSaveId ) {
 	if (!autoSaveId) { autoSaveId = auto_save_refs[0]; }
-	if (submit === 0 && editorId && autoSaveId && !sending_auto_save) {
+	if ( !auto_save_submit && editorId && autoSaveId && !sending_auto_save) {
 		var data = $('#' + editorId).val();
-		if (auto_save_data[editorId] !== data) {
+		var allowHtml = $('#allowhtml:checked').length;
+		if (auto_save_timeoutId > 0) {
+			clearTimeout(auto_save_timeoutId);	// can be triggered by textarea onChange event
+			auto_save_timeoutId = 0;			// so reset timer
+		}
+		if (auto_save_data[editorId] !== data || $('#' + editorId).attr("old_allowhtml") != allowHtml) {
 			auto_save_data[editorId] = data;
 			sending_auto_save = true;
 			$.ajax({
 				url: 'tiki-auto_save.php',
-				data: 'command=auto_save&editor_id=' + editorId + '&data=' + encodeURIComponent(data) + '&referer=' + autoSaveId,
+				data: 'command=auto_save&editor_id=' + editorId + '&data=' + encodeURIComponent(data) + '&referer=' + autoSaveId
+									+ "&allowHtml=" + allowHtml,
 				type: "POST",
 				// good callback
 				success: function(data) {
@@ -96,17 +114,20 @@ function auto_save( editorId, autoSaveId ) {
 					} else {
 						ajax_preview( editorId, autoSaveId, true );
 					}
-					setTimeout(auto_save, 60000);
+					$('#' + editorId).attr("old_allowhtml", allowHtml);
+					auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 					sending_auto_save = false;
 				},
 				// bad callback - no good info in the params :(
 				error: function(req, status, error) {
-					if (error) {
+					if (error && auto_save_debug) {
 						alert(tr("Auto Save error: ") + error);
 					}
 					sending_auto_save = false;
 				}
 			});
+		} else {	// not changed, reset timeout
+			auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 		}
 	}
 }
@@ -115,6 +136,7 @@ function register_id( editorId, autoSaveId ) {
 	auto_save_id[auto_save_id.length] = editorId;
 	auto_save_refs[editorId] = autoSaveId;
 	auto_save_data[editorId] = $('#' + editorId).val();
+	auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 	$('#' + editorId).parents('form').submit(function() { remove_save(editorId, autoSaveId); });
 	$('#' + editorId).change(function () { auto_save( editorId, autoSaveId ); });
 }
@@ -123,6 +145,7 @@ var ajaxPreviewWindow;
 
 function ajax_preview(editorId, autoSaveId, inPage) {
 	if (editorId) {
+		var allowHtml = $('#allowhtml:checked').length;
 		if (!ajaxPreviewWindow) {
 			if (inPage) {
 				var $prvw = $("#autosave_preview:visible");
@@ -132,9 +155,10 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 					h = h && h.length ? h[1] : "";
 					$.get("tiki-auto_save.php", {
 						editor_id: editorId,
-						autoSaveId: escape(autoSaveId),
+						autoSaveId: autoSaveId,
 						inPage: true,
-						hdr: h
+						hdr: h,
+						allowHtml: allowHtml
 					}, function(data) {
 						// remove JS and disarm links
 						data = data.replace(/\shref/gi, " tiki_href").
@@ -158,7 +182,9 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 			}
 		}
 	} else {
-		alert("Auto save data not found");
+		if (auto_save_debug) {
+			alert("Auto save data not found");
+		}
 	}
 	
 }

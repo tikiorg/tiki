@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,11 +13,13 @@ function prefs_memcache_list() {
 			'type' => 'flag',
 			'hint' => tra('Requires the PHP memcache extension.'),
 			'extensions' => array( 'memcache' ),
+			'default' => 'n',
 		),
 		'memcache_compress' => array(
 			'name' => tra('Memcache compression'),
 			'description' => tra('Enable compression for memcache storage.'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'memcache_servers' => array(
 			'name' => tra('Memcache servers'),
@@ -28,6 +30,7 @@ function prefs_memcache_list() {
 			'serialize' => 'prefs_memcache_serialize_servers',
 			'unserialize' => 'prefs_memcache_unserialize_servers',
 			'size' => 10,
+			'default' => false,
 		),
 		'memcache_prefix' => array(
 			'name' => tra('Memcache key prefix'),
@@ -35,6 +38,7 @@ function prefs_memcache_list() {
 			'filter' => 'word',
 			'size' => 10,
 			'type' => 'text',
+			'default' => 'tiki_',
 		),
 		'memcache_expiration' => array(
 			'name' => tra('Memcache expiration'),
@@ -42,18 +46,22 @@ function prefs_memcache_list() {
 			'type' => 'text',
 			'size' => 10,
 			'filter' => 'digits',
+			'default' => 3600,
 		),
 		'memcache_wiki_data' => array(
 			'name' => tra('Cache wiki data in memcache'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'memcache_wiki_output' => array(
 			'name' => tra('Cache wiki output in memcache'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'memcache_forum_output' => array(
 			'name' => tra('Cache forum output in memcache'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 	);
 }

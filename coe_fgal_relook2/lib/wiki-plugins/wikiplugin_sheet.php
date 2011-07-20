@@ -1,28 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/* Tiki-Wiki plugin example 
- *
- * This is an example plugin to let you know how to create
- * a plugin. Plugins are called using the syntax
- * {NAME(params)}content{NAME}
- * Name must be in uppercase!
- * params is in the form: name=>value,name2=>value2 (don't use quotes!)
- * If the plugin doesn't use params use {NAME()}content{NAME}
- *
- * The function will receive the plugin content in $data and the params
- * in the asociative array $params (using extract to pull the arguments
- * as in the example is a good practice)
- * The function returns some text that will replace the content in the
- * wiki page.
- */
-function wikiplugin_sheet_help() {
-	return tra("TikiSheet").":<br />~np~{SHEET(id=>x, simple=>n, height=>h)}".tra("Sheet Heading")."{SHEET}~/np~";
-}
 
 function wikiplugin_sheet_info() {
 	return array(
@@ -80,7 +61,7 @@ function wikiplugin_sheet_info() {
 				'description' => tra('Height in pixels or percentage. Default value is complete spreadsheet height.'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
-				'default' => 'Spreadsheet heigth',
+				'default' => 'Spreadsheet height',
 				'since' => '5.0'
 			),
 			'editable' => array(
@@ -221,7 +202,23 @@ EOF;
 	}
 	
 	// Grab sheet output
-	$ret = $sheet->getTableHtml( $subsheets );
+	if (isset($url)) {
+		$file = file_get_contents($url);
+		$pathInfo = pathinfo($url);
+		if ($pathInfo['extension'] == 'csv') {
+			$handler = new TikiSheetCSVHandler( $url );
+			$grid = new TikiSheet();
+			$grid->import( $handler );
+			$ret = $grid->getTableHtml( true , null, false );
+
+		} else {
+			$ret = file_get_contents( $url );
+		}
+	} else {
+		$ret = ($sheet->getTableHtml( $subsheets ));
+	}
+	
+	
 	
 	if (!isset($simple) || $simple != 'y') {
 		global $headerlib;
@@ -229,9 +226,7 @@ EOF;
 		$headerlib->add_jq_onready('
 			$("div.tiki_sheet").each(function() {
 				$(this).sheet($.extend($.sheet.tikiOptions,{
-					editable:false'. ( isset($url) ? ',
-					urlGet: "'.$url.'",
-					buildSheet: false': '' ) .'
+					editable:false
 				}));
 			});
 		');

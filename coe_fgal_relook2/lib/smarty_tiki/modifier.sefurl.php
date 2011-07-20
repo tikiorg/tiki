@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y' ) {
+function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y', $title='' ) {
 	global $prefs, $tikilib, $wikilib, $smarty;
 	require_once('lib/wiki/wikilib.php');
 
@@ -61,7 +61,8 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'trackeritem':
 		$replacementpage = '';
 		if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y') {
-			$replacementpage = $tikilib->get_trackeritem_pagealias($source);
+			$trklib = TikiLib::lib('trk');
+			$replacementpage = $trklib->get_trackeritem_pagealias($source);
 		}
 		if ($replacementpage) {
 			return $wikilib->sefurl($replacementpage, $with_next, $all_langs);
@@ -82,6 +83,12 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'image':
 		$href = 'tiki-browse_image.php?imageId='.$source;
 		break;
+	case 'sheet':
+		$href = $sefurl ? "sheet$source" : "tiki-view_sheets.php?sheetId=$source";
+		break;
+	case 'category':
+		$href = $sefurl ? "cat$source": "tiki-browse_categories.php?parentId=$source";
+		break;
 	default:
 		$href = $source;
 		break;
@@ -91,7 +98,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	}
 	if ($prefs['feature_sefurl'] == 'y' && $smarty) {
 		include_once('tiki-sefurl.php');
-		return filter_out_sefurl($href, $smarty, $type, '', $with_next, $with_title);
+		return filter_out_sefurl($href, $smarty, $type, $title, $with_next, $with_title);
 	} else {
 		return $href;
 	}

@@ -5,11 +5,11 @@
 {if $smod_params.tiki_search neq 'none'}
     <form id="search-module-form{$search_mod_usage_counter}" method="get" action="#"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
     	<div>
-		    <input id="search_mod_input_{$search_mod_usage_counter}" name="find"{if !empty($smod_params.input_size)} style="width:{$smod_params.input_size}em"{/if} type="text" accesskey="s" value="{$smod_params.input_value}" /> 
+		    <input id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}"{if !empty($smod_params.input_size)} style="width:{$smod_params.input_size}em"{/if} type="text" accesskey="s" value="{$smod_params.input_value}" />
 			
 		 	{if $smod_params.show_object_filter eq 'y'}
 				{tr}in:{/tr}
-			    <select name="where" style="width:{$smod_params.select_size}em;">
+			    <select name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" style="width:{$smod_params.select_size}em;">
 				    <option value="pages">{tr}Entire Site{/tr}</option>
 				    {if $prefs.feature_wiki eq 'y'}<option value="wikis"{if $smod_params.where eq "wikis"} selected="selected"{/if}>{tr}Wiki Pages{/tr}</option>{/if}
 				    {if $prefs.feature_directory eq 'y'}<option value="directory"{if $smod_params.where eq "directory"} selected="selected"{/if}>{tr}Directory{/tr}</option>{/if}
@@ -28,7 +28,7 @@
 				    {if $prefs.feature_trackers eq 'y'}<option value="trackers"{if $smod_params.where eq "trackers"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
 			    </select>
 			{elseif !empty($prefs.search_default_where)}
-				<input type="hidden" name="where" value="{$prefs.search_default_where|escape}" />
+				<input type="hidden" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" value="{$prefs.search_default_where|escape}" />
 		    {/if}
 		    
 			{if $smod_params.tiki_search neq 'y'}
@@ -47,25 +47,43 @@
 					{/add_help}
 				{/if}
 			{/if}
-		    {if $smod_params.show_search_button eq 'y'}
-		    	<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'search'} button_default{/if}"
-		    			name = "search" value = "{tr}{$smod_params.search_submit}{/tr}"
-		    			title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action}');" />
-		    {/if}
-		    {if $smod_params.show_go_button eq 'y'}
-		    	<input type="hidden" name="exact_match" />
-		    	<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'go'} button_default{/if}"
-		    			name = "go" value = "{tr}{$smod_params.go_submit}{/tr}"
-		    			title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}');" />
-		    {/if}
-		    {if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
-		    	<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
-		    			name = "edit" value = "{tr}{$smod_params.edit_submit}{/tr}"
-		    			title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!=find]').attr('name', ''); $('#search-module-form{$search_mod_usage_counter} input[name=find]').attr('name', 'page'); $('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action}');" />
-		    {/if}
+			{if $smod_params.compact eq "y"}
+				{icon _id="magnifier" class="search_mod_magnifier icon"}
+				<div class="search_mod_buttons box" style="display:none; position: absolute; right: 0; padding: 0 1em; z-index: 2;">
+			{/if}
+			{if $smod_params.show_search_button eq 'y'}
+					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'search'} button_default{/if}"
+						   name = "search" value = "{$smod_params.search_submit}"
+							title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
+							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action}').attr('page_selected','');" />
+				{/if}
+			{if $smod_params.show_go_button eq 'y'}
+					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'go'} button_default{/if}"
+						   name = "go" value = "{$smod_params.go_submit}"
+							title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
+							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}').attr('page_selected','');" />
+					<input type="hidden" name="exact_match" value="" />
+				{/if}
+			{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
+					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
+						   name = "edit" value = "{$smod_params.edit_submit}"
+							title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
+							onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!=find]').attr('name', ''); $('#search-module-form{$search_mod_usage_counter} input[name=find]').attr('name', 'page'); $('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action}').attr('page_selected','');" />
+				{/if}
+			{if $smod_params.compact eq "y"}
+				</div>
+				{jq}$(".search_mod_magnifier").mouseover( function () {
+					$(".search_mod_buttons", $(this).parent())
+						.show('fast')
+						.mouseleave( function () {
+							$(this).hide('fast');
+						});
+				}).click( function () {
+					$(this).parents("form").submit();
+				});
+				$("#search_mod_input_{{$search_mod_usage_counter}}")
+					.keydown( function () { $(".search_mod_magnifier", $(this).parent()).mouseover();} );{/jq}
+			{/if}
 	    </div>
     </form>
     {jq notonready=true}
@@ -79,10 +97,16 @@ function submitSearch{{$search_mod_usage_counter}}() {
 	return true;
 }
     {/jq}
-	{if $smod_params.use_autocomplete eq 'y'}{jq}
-$("#search_mod_input_{{$search_mod_usage_counter}}").tiki("autocomplete", "pagename").result(function(event, item) {
-	$('#search-module-form{{$search_mod_usage_counter}}').attr('page_selected', item);
-});{/jq}{/if}
+	{if $smod_params.use_autocomplete eq 'y'}
+		{capture name="selectFn"}select: function(event, item) {ldelim}
+	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value).find("input[name=exact_match]").val("On");
+{rdelim}, open: function(event, item) {ldelim}
+	$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").hide();
+{rdelim}, close: function(event, item) {ldelim}
+	$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").show();
+{rdelim}{/capture}
+		{autocomplete element="#search_mod_input_"|cat:$search_mod_usage_counter type="pagename" options=$smarty.capture.selectFn}
+	{/if}
 {/if}
 {/tikimodule}
 {/if}

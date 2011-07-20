@@ -1,22 +1,11 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_group.php 25177 2010-02-13 17:34:48Z changi67 $
-
-// Display wiki text if a parameter is set in URL
-// Usage:
-// {PARAM(name=>Date|Version)}wiki text{PARAM}
+// $Id$
 
 define('WIKIPLUGIN_PARAM_REQUEST', 'request');
-
-function wikiplugin_param_help() {
-	$help = tra("Display wiki text if all keys are existing URL parameters").":\n";
-	$help.= "~np~<br />{param(name=>Date|Version)}wiki text{param}<br />
-	{PARAM(name=>Date|Version)}wiki text{ELSE}alternate text when parameters do not exist{PARAM}~/np~";
-	return $help;
-}
 
 function wikiplugin_param_info() {
 	return array(
@@ -24,7 +13,7 @@ function wikiplugin_param_info() {
 		'documentation' => 'PluginParam',
 		'description' => tra('Display content based on URL parameters'),
 		'prefs' => array( 'wikiplugin_param' ),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
+		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed if conditions are not met.'),
 		'icon' => 'pics/icons/page_gear.png',
 		'params' => array(
 			'name' => array(

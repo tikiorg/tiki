@@ -29,7 +29,7 @@ header, nav, article, footer, address {
 } 
 
 /* general #fixedwidth wrapper when fixed width is off */
-#fixedwidth {
+.fixedwidth {
 	display: table;
 	margin: auto;
 	margin-top: 0;
@@ -38,10 +38,25 @@ header, nav, article, footer, address {
 }
 
 /* when fixed width is set to on */
-.fixed_width #fixedwidth {
+.fixed_width .fixedwidth {
+	display: table;
+}
+
+.fixed_width > .fixedwidth {
 	width: 990px;
 	margin-top: 18px;
 	margin-bottom: 5px;
+}
+
+/* avoid table-like height properties in .header_fixedwidth */
+.header_container .fixedwidth {
+	display: block;
+	width: auto;
+	margin-left: 0; /* so header contents stay left rather than centered when wide middle content extends page to the right. */
+}
+
+body.fixed_width .fixedwidth .fixedwidth {
+	margin: 0 auto;
 }
 
 .fixed_width .fixedwidth[id] {
@@ -144,35 +159,31 @@ img {
 	clear: none;
 }
 
+/* default minimum height in case only login, etc. (absolutely positioned) is assigned */
+#top_modules {
+	min-height: 20px;
+}
+
+/* Siteloginbar (no popup, items arranged horizontally) */
+#top_modules .box-login_box {
+	position: absolute;
+	right: 10px;
+	bottom: 5px;
+}
+
 .siteloginbar div {
-	display: inline;
-}
-
-.siteloginbar #register,
-.siteloginbar #pass {
-	float: right;
-	padding-left: 5px;
-}
-	
-.siteloginbar * {
-	white-space: nowrap;
-}
-
-.siteloginbar form {
-	padding-right: 0;
+	display: inline-block;
 }
 
 /* Sitelogin Popup */
-.tiki_register_login {
-	bottom: 3px;
+#top_modules .tiki_register_login {
+	bottom: 1px;
 	position: absolute;
 	right: 10px;
 }
 
-.siteloginbar_popup {
-/*	bottom: 0;
-	position: absolute;
-	right: 4em;*/
+.siteloginbar_poppedup {
+	margin-left: -20%;
 }
 
 .siteloginbar_popup .tabcontent fieldset {
@@ -185,6 +196,10 @@ img {
 	font-size: 1em;
 	font-weight: normal;
 	margin: auto;
+}
+
+.siteloginbar_poppedup div {
+	text-align: right;
 }
 
 li#register_link {
@@ -238,25 +253,21 @@ li#register_link {
 	margin-bottom: 4px;
 }
 
+#sitetitle,
 #sitesubtitle { 
-	line-height: 0.9em;
+	line-height: 1;
 }
-	/*
-li#login_link .register {
-	display: none;
-}*/
 
 li#logout_link a {
 	padding-right: 40px;
 }
 
-/* from r27359 */
 .siteloginbar_popup #logout_link .cbox {
 	text-align: center;
 }
 
-.siteloginbar_popup .cssmenu_horiz div {
-	
+.siteloginbar_popup .cssmenu_horiz div a.login_link {
+	display: block;
 }
 
 .siteloginbar_popup .cssmenu_horiz div a {
@@ -274,7 +285,8 @@ li#logout_link a {
 }
 
 .siteloginbar_popup .cbox label {
-	clear: both; float: left;
+	clear: both;
+	float: left;
 }
 
 .siteloginbar_popup .cbox div {
@@ -339,14 +351,15 @@ li#logout_link a {
 	white-space: nowrap;
 }
 
-/****** Menus_links ******/
-/** CSS (suckerfish) menus **/
+#top_modules .box-quickadmin {
+	position: absolute;
+	right: 1em;
+	top: 40%;
+	padding: 0 .5em .2em 0;
+}
 
-/** Links in other menus **/
-
-.linkmenu,
-.linkmenu:visited {
-	/*display: block;*/
+#bottom_modules .box-rsslist br {
+	display: none;
 }
 
 /***** Misc. *****/
@@ -373,12 +386,6 @@ li#logout_link a {
 .minimize-modules-right #col3 .box .menuLevel1 .menuText,
 .minimize-modules-right #col3 .separatoricon-url {
   display: inline !important;
-  /* overflow: visible !important;      /* ###trebly:B10115: -> test pb overflow menulvel1     */
-}
-
-.minimize-modules-left #col2 .box,
-.minimize-modules-right #col3 .box {
-	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
 }
 
 .moduleflip-vert {
@@ -528,15 +535,6 @@ ul.jumplinks,
 }
 
 /****** Misc. Global Classes (layout and style) ****/
-.hidden {
-	position: absolute;
-	left: -10000px;
-	top: 0;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-}
-
 .floatlist {
 	clear: left;
 	list-style-type: none;
@@ -715,14 +713,31 @@ a.toolbar {			/* each tool button */
 	line-height: 12px;
 }
 
+.toolbars-picker.specialchar {	/* colours, smilies etc */
+	width: 25em;
+}
+
 .toolbars-picker a {
-	padding: 0;
+	padding: 0px;
+	margin: 0px;
 	display: inline-block;
 	border: #fff 1px solid;
+	overflow: hidden;
+}
+
+.toolbars-picker.color a ,.toolbars-picker.bgcolor a {
+	width: 14px;
+	height: 12px;
 }
 
 .toolbars-picker a:hover {
 	border: #f00 1px solid;
+}
+
+.toolbars-picker-reset {
+	width: 100% !important;
+	text-align: center;
+	border: none !important;
 }
 
 /* New Help section */
@@ -737,15 +752,9 @@ a.toolbar {			/* each tool button */
 	height: 500px;
 }
 
-.help_section {
-}
-
-.help_sections h3 {
-}
-
 .help_sections > div {
 	font-size: .9em;
-	height: 100%;
+	height: 90%;
 	overflow: auto;
 }
 
@@ -782,12 +791,8 @@ a.toolbar {			/* each tool button */
 }
 
 /* use default col width from *lite.css for modules in centre section */
-#tiki-center .module {
+#role_main .module {
 	max-width: 180px;
-}
-
-.box {
-/*	overflow: hidden; */
 }
 
 h3.box-title {
@@ -871,7 +876,7 @@ h3.box-title {
 	width: auto;
 	z-index: 1;
 	position: relative;
-	bottom: -1px;
+	bottom: 0;
 }
 	
 .rbox-title .icon {
@@ -880,8 +885,8 @@ h3.box-title {
 }
 	
 .rbox-data {
-	position: relative;
-	top: 0;
+	position: relative;	
+	top: -.37em;
 	z-index: 0;
 }
 
@@ -947,7 +952,7 @@ tr.diffheader {
 
 /** Tabs **/
 .tabs {
-	margin: 10px 3px -1px 3px;
+	margin: 10px 3px 0 3px;
 	padding: 0;
 	position: relative;
 	z-index: 2;
@@ -957,9 +962,28 @@ tr.diffheader {
 	display: none;
 }
 
+.tabstoggle {
+	font-size: .8em;
+	position: relative;
+	width: 15%;
+	margin-top: 2px;
+	clear: none;
+}
+
+.tabstoggle .button {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 0;
+}
+
 .tabs .container {
 	float: left;
-	width: 92%;
+	width: 84%;
+}
+
+.tabs .full_width {
+	width: 100%;
 }
 
 .tabmark {
@@ -967,7 +991,7 @@ tr.diffheader {
 	margin: 0;
 	margin-right: 5px;
 	padding: 1px 0;
-	cursor: pointer;
+	white-space: nowrap;
 }
 	
 .tabmark a {
@@ -994,6 +1018,8 @@ tr.diffheader {
 	position: relative;
 	padding: 4px;
 	top: 0;
+	border-top: none;
+	margin: 0px;
 }
 
 .tabcontent table {
@@ -1009,11 +1035,16 @@ tr.diffheader {
 	padding: 5px;
 }
 
-/***** Wiki *****/
-#description,
-.description {
-	display: block;
+/* avoid applying menu styles to popup links */
+.siteloginbar_popup .cssmenu_horiz ul.siteloginbar_poppedup li a,
+.siteloginbar_popup .cssmenu_horiz ul.siteloginbar_poppedup li a:hover,
+.siteloginbar_popup .cssmenu_horiz li:hover ul.siteloginbar_poppedup li a {
+	background: none;
+	border: none;
+	text-transform: none;
 }
+
+/***** Wiki *****/
 
 #pageid {
 	float: left;
@@ -1086,7 +1117,7 @@ tr.diffheader {
 
 /* wikiplugin tracker */
 table.wikiplugin_tracker td {
-	vertical-align: middle;
+	vertical-align: top;
 	padding-bottom:1.2em;
 }
 	
@@ -1414,9 +1445,6 @@ body.tiki_forums .normal {
 
 .postfooter-nav {
 	width: 100%;
-}
-
-.postfooter-nav {
 	display: block;
 	margin-top: 1em;
 }
@@ -1537,11 +1565,6 @@ textarea#editpost2 {
 	margin-left: 10px;
 }
 
-/*
-.subcomment_lblogs {}
-.commentsedithelp {}
-*/
-
 /**** Image Galleries ****/
 .galtable {
 	width: 100%;
@@ -1588,10 +1611,6 @@ img.athumb {
 	margin-left: 10px;
 }
 
-#browse_image {
-	width: 100%
-}
-
 /* Random image module - top and bottom margin better
 when module used without decorations. */
 #random_image {
@@ -1620,18 +1639,13 @@ body.filegal_popup #tiki-center {
 }
 
 /***** Trackers (etc.) *****/
-.statuson {
-	padding: 1px;
-	margin: 1px;
+.statuson,
+.statusoff {
+	padding: 3px 2px 0px 2px;
 	vertical-align: middle;
+	height: 15px;
 }
 
-.statusoff {
-	padding: 1px;
-	margin: 2px;
-	vertical-align: middle;
-}
-	
 /* also for categorize.tpl */
 .multiselect {
 	vertical-align: middle;
@@ -1693,11 +1707,6 @@ body.filegal_popup #tiki-center {
 	padding: 0;
 }
 
-.trackerfilter-result {
-	max-height: 120ex;
-	overflow: auto;
-}
-
 /***** Categories, Tags *****/
 
 .catlists .catitems {
@@ -1712,9 +1721,6 @@ body.filegal_popup #tiki-center {
 	padding: 10px 5px 5px 0px;
 	display: block;
 }
-/*
-.cattitle {
-}*/
 
 .categpath {
 	display: block;
@@ -1878,6 +1884,9 @@ ul.freetagged li {
 /***** TikiSheets *****/
 .tiki_sheet table td { /* override .tabcontent table td */
 	padding: 0;
+	border-color: #909090;
+	border-width: 1px;
+	border-style: solid;
 }
 
 .plugin-desc {
@@ -1984,19 +1993,6 @@ ul.freetagged li {
 	.tikihelp, .navbar, categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
-.tabstoggle {
-	font-size: .8em;
-	position: relative;
-	width: 8%;
-	margin-top: 2px;
-}
-
-.tabstoggle .button {
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	right: 0;
-}
 
 /* treeTable definitions - used in object-perms so far */
 
@@ -2042,6 +2038,15 @@ ul.freetagged li {
 	float: left;
 }
 
+.tree li {
+	display: block;
+	width: 98%;
+}
+
+.tree li ul li {
+	width: auto;
+}
+
 /* jquery-ui dialogs help */
 
 .ui-dialog label {
@@ -2058,16 +2063,21 @@ ul.freetagged li {
 
 /* Preferences        */
 .pref_dependency {
-	margin-left: 20px;
+	margin-left: 33px;
 	font-size: 95%;
 }
 
-/* Perspectives (edit) */
-.dropzone {
+img.pref_dependency {
+	opacity: 0.25;
 }
 
-.dropzone > div:hover {
-} 
+.pref_note {
+	margin-left: 33px;
+	font-size: 90%;
+	font-style: italic;
+}
+
+/* Perspectives (edit) */
 
 .podcast {
 	margin-left: -25px;
@@ -2154,6 +2164,9 @@ div.aclabel, span.aclabel, label.aclabel {
 /* Fancy filter */
 .filter .fancyfilter {
 	min-height: 1.5em;
+	min-width: 20em;
+	float: left;
+	margin-right: 5px;
 	border: thin solid black;
 	padding: 0.1em;
 	cursor: text;
@@ -2170,6 +2183,10 @@ div.aclabel, span.aclabel, label.aclabel {
 	cursor: pointer;
 }
 
+.filter .category-picker {
+	display:none;
+}
+
 .Zend_Tag_Cloud li, .Zend_Tag_Cloud {
 	display: inline-block;
 	padding: 0;
@@ -2177,4 +2194,35 @@ div.aclabel, span.aclabel, label.aclabel {
 	list-style: none;
 }
 
+.minimap {
+	height: 180px;
+}
+
+/* FileGals Flash Upload */
+.flashButton {
+	display: inline;
+	overflow: hidden;
+}
+.flashButtonText {
+	position: absolute;
+	z-index: 1;
+}
+.flashButton object {
+	opacity: 0;
+	position: absolute;
+	z-index: 2;
+}
+/* tiki-wiki_topline.tpl Backlinks button */
+.backlinks_button {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+.backlinks_button .cssmenu_horiz ul li {
+	border: 1px solid #999;
+	background: white;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
 /* End of File */

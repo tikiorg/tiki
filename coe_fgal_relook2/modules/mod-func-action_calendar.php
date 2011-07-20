@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_action_calendar_info() {
 	return array(
-		'name' => tra('Action calendar'),
+		'name' => tra('Action Calendar'),
 		'description' => tra('Displays a calendar of system events, such as wiki page modifications, forum posts and article publications. Days with events show links to the action calendar page.'),
 		'prefs' => array( 'feature_action_calendar' ),
 		'params' => array(

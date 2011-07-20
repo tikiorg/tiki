@@ -1,16 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// \brief Wiki plugin to redirect to another page.
-// @author damian aka damosoft 30 March 2004
-
-function wikiplugin_redirect_help() {
-        return tra("Redirects you to another wiki page").":<br />~np~{REDIRECT(page=pagename [,url=http://foobar])/}~/np~";
-}
 
 function wikiplugin_redirect_info() {
 	return array(
@@ -25,12 +18,21 @@ function wikiplugin_redirect_info() {
 				'required' => false,
 				'name' => tra('Page Name'),
 				'description' => tra('Wiki page name to redirect to.'),
+				'filter' => 'pagename',
 				'default' => '',
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('Complete URL, internal or external.'),
+				'filter' => 'url',
+				'default' => '',
+			),
+			'perspective' => array(
+				'required' => false,
+				'name' => tra('Perspective'),
+				'description' => tra('The ID of a perspective to switch to (requires feature_perspective).'),
+				'filter' => 'int',
 				'default' => '',
 			),
 		),
@@ -43,10 +45,12 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 	$areturn = '';
 
 	if (!isset($page)) {$areturn = "REDIRECT plugin: No page specified!";}
-	if (!isset($url)) {$areturn += "REDIRECT plugin: No url specified!";}
-	$location = isset($page) ? $page : $url;
+	if (!isset($url)) {$areturn .= "REDIRECT plugin: No url specified!";}
+	$location = isset($page) ? $page : isset($url) ? $url : isset($perspective) ? tra('perspective ') . $perspective : tra('nowhere');
 	if ($just_saved) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled just after saving the page."), $location);
+	} else if ($options['indexing']) {
+		return;
 	} else if ($options['preview_mode']) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled in preview mode. "), $location);
 	} else if ((isset($_REQUEST['redirectpage']))) {
@@ -55,6 +59,24 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 		$info = $tikilib->get_page_info( $location );
 		return $tikilib->parse_data($info['data'], $options);
 	} else {
+
+		if (isset($perspective)) {
+			global $access, $perspectivelib, $base_host;
+			require_once 'lib/perspectivelib.php';
+			$access->check_feature( 'feature_perspective' );
+
+			if ($_SESSION['current_perspective'] !== $perspective) {
+		
+				if( $perspectivelib->perspective_exists( $perspective ) ) {
+					$_SESSION['need_reload_prefs'] = true;
+					$_SESSION['current_perspective'] = $perspective;
+				}
+				if (empty($page) && empty($url)) {
+					$url =  $base_host . $_SERVER['REQUEST_URI'];
+				}
+			}
+			$areturn = '';	// errors set above not relevant if using perspective
+		}
 		/* SEO: Redirect with HTTP status 301 - Moved Permanently than default 302 - Found */
 		if (isset($page)) {
 			header("Location: tiki-index.php?page=$page&redirectpage=".$_REQUEST['page'], true, 301);

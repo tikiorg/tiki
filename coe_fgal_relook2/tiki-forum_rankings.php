@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -25,7 +25,7 @@ $allrankings = array(
 	'value' => 'forums_ranking_last_replied_topics'
 ),
 	array(
-	'name' => tra('Most read topics'),
+	'name' => tra('Most-Read Forum Topics'),
 	'value' => 'forums_ranking_most_read_topics'
 ),
 	array(
@@ -37,7 +37,7 @@ $allrankings = array(
 	'value' => 'forums_ranking_most_commented_forum'
 ),
 	array(
-	'name' => tra('Most visited forums'),
+	'name' => tra('Most-Visited Forums'),
 	'value' => 'forums_ranking_most_visited_forums'
 )
 );

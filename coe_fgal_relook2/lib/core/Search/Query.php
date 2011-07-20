@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_Query
 {
@@ -7,6 +12,7 @@ class Search_Query
 	private $sortOrder;
 	private $start = 0;
 	private $count = 50;
+	private $weightCalculator = null;
 
 	function __construct($query = null)
 	{
@@ -35,10 +41,18 @@ class Search_Query
 		$this->addPart($query, 'plaintext', $field);
 	}
 
-	function filterType($type)
+	function filterType($types)
 	{
-		$token = new Search_Expr_Token($type);
-		$this->addPart($token, 'identifier', 'object_type');
+		if (is_array($types)) {
+			foreach ($types as $type) {
+				$tokens[] = new Search_Expr_Token($type);
+			}
+			$or =  new Search_Expr_Or($tokens);
+			$this->addPart($or, 'identifier', 'object_type');
+		} else {
+			$token = new Search_Expr_Token($types);
+			$this->addPart($token, 'identifier', 'object_type');
+		}
 	}
 
 	function filterCategory($query, $deep = false)
@@ -73,12 +87,34 @@ class Search_Query
 		$this->expr->addPart(new Search_Expr_Range($from, $to, 'timestamp', $field));
 	}
 
-	private function addPart($query, $type, $field)
+	function filterInitial($initial, $field = 'title')
+	{
+		$this->expr->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), 'plaintext', $field));
+	}
+
+	function filterRelation($query, array $invertable = array())
 	{
 		$query = $this->parse($query);
-		$query->setType($type);
-		$query->setField($field);
-		$this->expr->addPart($query);
+		$replacer = new Search_Query_RelationReplacer($invertable);
+		$query = $query->walk(array($replacer, 'visit'));
+		$this->addPart($query, 'multivalue', 'relations');
+	}
+
+	private function addPart($query, $type, $field)
+	{
+		$parts = array();
+		foreach ((array) $field as $f) {
+			$part = $this->parse($query);
+			$part->setType($type);
+			$part->setField($f);
+			$parts[] = $part;
+		}
+		
+		if (count($parts) === 1) {
+			$this->expr->addPart($parts[0]);
+		} else {
+			$this->expr->addPart(new Search_Expr_Or($parts));
+		}
 	}
 
 	function setOrder($order)
@@ -99,12 +135,21 @@ class Search_Query
 		}
 	}
 
+	function setWeightCalculator(Search_Query_WeightCalculator_Interface $calculator)
+	{
+		$this->weightCalculator = $calculator;
+	}
+
 	function search(Search_Index_Interface $index)
 	{
 		if ($this->sortOrder) {
 			$sortOrder = $this->sortOrder;
 		} else {
 			$sortOrder = Search_Query_Order::getDefault();
+		}
+
+		if ($this->weightCalculator) {
+			$this->expr->walk(array($this->weightCalculator, 'calculate'));
 		}
 
 		return $index->find($this->expr, $sortOrder, $this->start, $this->count);

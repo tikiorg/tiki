@@ -16,5 +16,5 @@
 }
 
 .colorpicker {
-	z-index: 1010;	/* to appear over jqui dialogs */
+	z-index: 1500;	/* to appear over jqui dialogs */
 }

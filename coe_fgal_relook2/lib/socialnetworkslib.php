@@ -1,9 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id $
+// $Id$
 
 // this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -446,7 +446,9 @@ class SocialNetworksLib extends LogsLib
 		if ($key=='') {
 			return false;
 		}
-		$httpclient = new Zend_Http_Client("http://api.bit.ly/$action");
+
+		$httpclient = TikiLib::lib('tiki')->get_http_client();
+		$httpclient->setUri("http://api.bit.ly/$action");
 		
 		$params['login']=$login;
 		$params['apiKey']=$key;

@@ -1,19 +1,16 @@
 <?php
-// Usage:
-// {PERM(perms=>tiki_p_someperm|tiki_p_otherperm)}wiki text{PERM}
-
-function wikiplugin_perm_help() {
-	$help = tra("Display wiki text if user has one of listed permissions").":\n";
-	$help.= "~np~{PERM(perms=>tiki_p_someperm|tiki_p_otherperm)}wiki text{PERM}~/np~";
-	return $help;
-}
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function wikiplugin_perm_info() {
 	return array(
 		'name' => tra('Permissions'),
 		'documentation' => 'PluginPerm',
 		'description' => tra('Display content based on permission settings'),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed if conditions are not met.'),
+		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the conditions.'),
 		'prefs' => array('wikiplugin_perm'),
 		'filter' => 'wikicontent',
 		'icon' => 'pics/icons/.png',

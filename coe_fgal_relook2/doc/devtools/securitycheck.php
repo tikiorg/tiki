@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -17,74 +17,50 @@ if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
-	'\./lib/pear.*',
-	'\./lib/smarty.*',
-	'\./lib/adodb.*',
-	'\./lib/debug.*',
-	'\./lib/diff.*',
-	'\./lib/pdflib.*',
-	'\./lib/ckeditor/.*',
-	'\./lib/graph-engine/.*',
-	'\./lib/core/Zend.*',
-	'\./lib/htmlparser/,*',
-	'\./lib/htmlpurifier/,*',
-	'\./lib/ical.*',
-	'\./lib/images.*',
-	'\./lib/feedcreator.*',
-	'\./lib/sheet.*',
-	'\./lib/Horde/Yaml.*',
-	'\./lib/core/DeclFilter.*',
-	'\./lib/core/JitFilter.*',
-	'\./lib/core/Multilingual.*',
-        '\./lib/core/TikiFilter.*',
-	'\./lib/core/WikiParser.*',
-	'\./lib/core/test/.*',
-	'\./lib/core/WikiParser.*',
 	'\./lib.*', /* as per NKO 4:18 19-MAY-09 */
-);
+				/* jb 110715 Tiki 7.1 - so everything in lib is protected by the .htaccess file, right? */
 
-/* NOt in build
-        '\./lib/core/test/.*',
-	'\./db/convertscripts/.*',
-	'\./doc/devtools/.*', 
-	'\./db/local.php/.*', 
-*/
+);
 
 /*
 The following need to be added as features
-FIX LATER
+FIX LATER (FIXED < 7.1?)
  ./tiki-login_openid.php
-
-The following are DELIBERATELY PUBLIC.
- ./tiki-change_password.php
- ./tiki-cookie-jar.php
- ./tiki-error_simple.php
- ./tiki-information.php
- ./tiki-install.php
- ./tiki-jsplugin.php
- ./tiki-live_support_chat_frame.php
- ./tiki-login_scr.php
 
 
 The following do actually have features, but the fix check checker 
 needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
  ./tiki-orphan_pages.php
  ./tiki-plugins.php
-./tiki-switch_perspective.php
+ ./tiki-switch_perspective.php
 
-The following need to be refactored to a lib
- ./tiki-testGD.php
-
-This file is just comments
- ./about.php
-
- 
 */
 
 $safePaths = array(
-	'\./lib/wiki-plugins.*',
-	'\./lib/wiki-plugins-dist.*',
-	'\./lib/tree.*',
+
+	/* Not in build */
+	'\./doc/devtools/.*',
+	'\./db/local.php',
+	'\./db/virtuals.inc',
+
+	/* The following are DELIBERATELY PUBLIC. */
+	'\./tiki-change_password.php;',
+	'\./tiki-cookie-jar.php',
+	'\./tiki-error_simple.php',
+	'\./tiki-information.php',
+	'\./tiki-install.php',
+	'\./tiki-jsplugin.php',
+	'\./tiki-live_support_chat_frame.php',
+	'\./tiki-login_scr.php',
+	'\./tiki-channel.php',			// does it's own checks
+
+	/* This file is just comments */
+	'./about.php',
+
+	/* The following need to be refactored to a lib */
+	'\./tiki-testGD.php',
+
+
 );
 
 if( !file_exists( 'tiki-setup.php' ) )
@@ -195,22 +171,22 @@ function scanfiles( $folder, &$files ) // {{{
 
 // TODO This is an inefficient function, but more flexible than in_array
 function regex_match ( $path, $regex_possibles ) {
-  //  print "Checking $path in ".join($regex_possibles, ",")."\n";
 
-  foreach ($regex_possibles as $possible)  {
-    //    print "Matching $path against $possible\n";
-    if (preg_match( '%'.$possible.'%', $path)) {
-      //print "Matches $possible\n\n";
-      return true;
-    }
-  }
-  return false;
+	foreach ($regex_possibles as $possible)  {
+		//    print "Matching $path against $possible\n";
+		if (preg_match( '%'.$possible.'%', $path)) {
+			//print "Matches $possible\n\n";
+			print "<!-- Found $path in ".join($regex_possibles, ",")."-->\n";
+			return true;
+		}
+	}
+	return false;
 }
 
 function analyse_file_path( $path ) // {{{
 {
-	global $thirdpartyLibs;
-	global $safePaths;
+	global $thirdpartyLibs, $safePaths;
+	
 	$type = 'unknown';
 	$name = basename( $path );
 	if( strpos( $name, '.' ) !== false )
@@ -222,20 +198,20 @@ function analyse_file_path( $path ) // {{{
 		$type = 'cvs';
 	elseif( strpos( $path, './templates_c/' ) === 0 )
 		$type = 'cache';
+	elseif( regex_match( $path, $safePaths ) )
+		$type = 'safe';
 	elseif( $extension == 'php' || $extension == 'inc' )
 	{
 		if( $name == 'index.php' )
-			$type = 'blocker';
+		$type = 'blocker';
 		elseif( $name == 'language.php' )
-			$type = 'lang';
+		$type = 'lang';
 		elseif( strpos( $path, './lib/wiki-plugins' ) === 0 )
-			$type = 'wikiplugin';
+		$type = 'wikiplugin';
 		elseif( strpos( $path, './lib/' ) === 0 )
 		{
 			if( regex_match( $path, $thirdpartyLibs ) )
-				$type = '3dparty';
-			elseif( regex_match( $path, $safePaths ) )
-				$type = 'safe';
+			$type = '3dparty';
 			else
 				$type = 'lib';
 		}

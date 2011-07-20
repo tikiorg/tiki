@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 /** 
  * @group unit
@@ -355,6 +360,18 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 			'a=3',
 			'a=4Hello World',
 		), $obtained);
+	}
+
+	function testWithPrettyVariablePrior()
+	{
+		$strings = '{$f_13}{foo hello=world}';
+
+		$matches = WikiParser_PluginMatcher::match($strings);
+		foreach($matches as $m) {
+			$m->replaceWith('X');
+		}
+
+		$this->assertEquals('{$f_13}X', $matches->getText());
 	}
 /*
 	// TODO : Replacement re-find existing

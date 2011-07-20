@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Each element of $events is an array with (dependent features, category, event name, translated description, default score, default expiration)
 $events = array(
-array("","General","login",tra("Login"),2,0), // tiki-login.php
+array("","General","login",tra("Log In"),2,0), // tiki-login.php
 //array("","General","login_remain",tra("Stay logged"),2,60),
 
 array("","General","profile_see",tra("See other users' profiles"),2,0), // tiki-user_information.php
@@ -27,10 +27,10 @@ array("feature_articles","Articles","article_read",tra("Read an article"),2,0), 
 array("feature_articles","Articles","article_new",tra("Publish an article"),20,0), 
 array("feature_articles","Articles","article_is_read",tra("Have your article read"),1,0), // tikilib.php
 
-array("feature_file_galleries","File galleries","fgallery_new",tra("Create New File Gallery"),10,0),  // filegallib.php
-array("feature_file_galleries","File galleries","fgallery_new_file",tra("Upload new file to gallery"),10,0),  // filegallib.php
-array("feature_file_galleries","File galleries","fgallery_download",tra("Download other user's file"),5,0),  // tikilib.php
-array("feature_file_galleries","File galleries","fgallery_is_downloaded",tra("Have your file downloaded"),5,0), // tikilib.php
+array("feature_file_galleries","File Galleries","fgallery_new",tra("Create New File Gallery"),10,0),  // filegallib.php
+array("feature_file_galleries","File Galleries","fgallery_new_file",tra("Upload new file to gallery"),10,0),  // filegallib.php
+array("feature_file_galleries","File Galleries","fgallery_download",tra("Download other user's file"),5,0),  // tikilib.php
+array("feature_file_galleries","File Galleries","fgallery_is_downloaded",tra("Have your file downloaded"),5,0), // tikilib.php
 
 array("feature_galleries","Image galleries","igallery_new",tra("Create a new image gallery"),10,0), // imagegallib.php
 array("feature_galleries","Image galleries","igallery_new_img",tra("Upload new image to gallery"),6,0), // imagegallib.php

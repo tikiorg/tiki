@@ -1,32 +1,36 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_home_list() {
+function prefs_home_list($partial = false) {
 
 	return array(
 		'home_blog' => array(
 			'name' => tra('Home Blog (main blog)'),
 			'type' => 'list',
-			'options' => listblog_pref(),
+			'options' => $partial ? array() : listblog_pref(),
+			'default' => 0,
 		),
 		'home_forum' => array(
 			'name' => tra('Home Forum (main forum)'),
 			'type' => 'list',
-			'options' => listforum_pref(),
+			'options' => $partial ? array() : listforum_pref(),
+			'default' => 0,
 		),
 		'home_file_gallery' => array(
 			'name' => tra('Home File Gallery (main file gallery)'),
 			'type' => 'list',
-			'options' => listfgal_pref(),
+			'options' => $partial ? array() : listfgal_pref(),
+			'default' => 1,
 		),
 		'home_gallery' => array(
 			'name' => tra('Home Gallery (main gallery)'),
 			'type' => 'list',
-			'options' => listimgal_pref(),
+			'options' => $partial ? array() : listimgal_pref(),
+			'default' => 0,
 		),
 	);
 }

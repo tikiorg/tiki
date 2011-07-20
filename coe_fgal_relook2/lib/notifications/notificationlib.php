@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -93,6 +93,13 @@ class NotificationLib extends TikiLib
 			'type' => 'article',
 			'url' => '',
 			'available' => $prefs['feature_articles'] == 'y'
+		);
+		$watches['blog_post'] = array(
+			'label' => tra('A new blog post is published') ,
+			'type' => 'blog',
+			'url' => '',
+			'available' => $prefs['feature_blogs'] == 'y',
+			'object' => '*'
 		);
 		$watches['wiki_page_changes'] = array(
 			'label' => tra('A wiki page is created, deleted or edited, except for minor changes.') ,

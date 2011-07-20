@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 define('PATTERN_TO_CLEAN_TEXT', '/[^0-9a-zA-Z_]/');
 define('CLEAN_CHAR', '-');
 define('TITLE_SEPARATOR', '-');
-function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $with_next = null, $with_title='y') {
+function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = '', $with_next = null, $with_title='y') {
 	global $sefurl_regex_out, $tikilib, $prefs, $base_url;
 	if ($prefs['feature_sefurl'] != 'y' or ( preg_match('#^http(|s)://#',$tpl_output) and strpos($tpl_output, $base_url) !== 0 ) ) {
 		return $tpl_output;
@@ -34,11 +34,10 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 			$cachelib->cacheItem('sefurl_regex_out', serialize($sefurl_regex_out));
 		}
 	}
-	$title = '';
 	if ($type == 'article' && $prefs['feature_sefurl_title_article'] == 'y' && empty($with_next) && $with_title == 'y') {
 		global $artlib;
 		include_once ('lib/articles/artlib.php');
-		if (preg_match('/articleId=([0-9]+)/', $tpl_output, $matches)) {
+		if (preg_match('/articleId=([0-9]+)/', $tpl_output, $matches) || preg_match('/article([0-9]+)/', $tpl_output, $matches)) {
 			if (empty($title)) $title = $artlib->get_title($matches[1]);
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
 			$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
@@ -48,7 +47,7 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 	if ($type == 'blog' && $prefs['feature_sefurl_title_blog'] == 'y' && empty($with_next) && $with_title == 'y') {
 		global $bloglib;
 		include_once ('lib/blogs/bloglib.php');
-		if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches)) {
+		if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches) || preg_match('/blog([0-9]+)/', $tpl_output, $matches)) {
 			if (empty($title)) $title = $bloglib->get_title($matches[1]);
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
 			$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
@@ -69,10 +68,16 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 	}
 	if ($type == 'tracker item' || $type == 'trackeritem') {
 		if (preg_match('/itemId=([0-9]+)/', $tpl_output, $matches)) {
-			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $pagealias = $tikilib->get_trackeritem_pagealias($matches[1])){
+			$trklib = TikiLib::lib('trk');
+			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $pagealias = $trklib->get_trackeritem_pagealias($matches[1])){
 				$tpl_output = "./tiki-index.php?page=" . $pagealias;
 			}
 		}
+	}
+	if ($type == 'category' && !empty($title)) {
+		$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+		$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
+		$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);	
 	}
 	foreach($sefurl_regex_out as $regex) {
 		if (empty($type) || $type == $regex['type']) {

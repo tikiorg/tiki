@@ -33,47 +33,46 @@ body.filegal_popup {
  /***** Layout *****/
 
 /*#fixedwidth*/
-#fixedwidth {
+.fixedwidth {
 	margin: 0;
 }
 
-body.fixed_width #fixedwidth {
+body.fixed_width .fixedwidth {
 	width: 100%;
 	margin: 0;
 }
 
-/* fixed width */
-#header_fixedwidth,
-#middle_fixedwidth,
-.footerbgtrap {
+.fixed_width .fixedwidth .fixedwidth {
 	width: 990px;
 	margin: 0 auto;
 }
 
-#header_outer {		/* whole width div containing the header strip */
+.header_outer {		/* whole width div containing the header strip */
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
 /*	height: 220px;*/
 }
 
-#header_container {	/* 2nd whole width div for background image tricks */
+.header_container {	/* 2nd whole width div for background image tricks */
 	background: url(fivealive/header_left.png) 0 100% no-repeat;
 
 }
 
-#header_fixedwidth {			/* main whole width div */
-/*	height: 220px;*/
+/* keep header content in page center (override layout.css)*/
+.header_container .fixedwidth {
+    margin-left: auto;
 }
-	
-#header {	/* inner <header> element that gets .fixedwidth class applied */
+
+.header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
 }
 
 #top_modules {		/* inner div that contains the modules */
-	height: 168px;
+/*	height: 168px;*/
 }
 
 #tiki-top {
+	height: 50px;
 	width: 100%;
 }
 
@@ -222,15 +221,8 @@ body.fixed_width #fixedwidth {
 	padding-top: 8px;
 }
 
-#footer .box {
-
-}
-
 #footer .box:first-child {
 	margin-left: 0;
-}
-
-#custom_site_footer {
 }
 
 #custom_site_footer h3 {
@@ -412,21 +404,27 @@ input[type="password"],
 select {
 	margin: 2px;
 }
-#newItemForm input[type="text"], #editItemForm input[type="text"], .wikiplugin_tracker  input[type="text"] {
+#newItemForm input[type="text"],
+#editItemForm input[type="text"],
+.wikiplugin_tracker  input[type="text"] {
         width: 99%;
 }
-.wikiplugin_tracker {width: 100%;}
-
+.wikiplugin_tracker, #editItemForm .formcolor {width: 100%;}
+#editItemForm .formcontent {width: 70%;}
+#editItemForm .formlabel {width: 30%;}
 
 /***** Site Header & Identity *****/
 
-#header-top {
+/*#header-top {
 	min-height: 170px;
 	position: relative;
 	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
-}
+}*/
 
-#quickadmin {
+#top_modules .box-quickadmin {
+	position: absolute;
+	right: 10px;
+	top: 30px;
 	background: #fff;
 	border: 1px solid #696969;
 	border-top: 0;
@@ -439,14 +437,16 @@ select {
 	padding: 0 6px 2px 0;
 }
 
-#secondary_site_menu {
+#top_modules #secondary_site_menu {
 	height: 30px;
 	line-height: 30px;
-	float: right;
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 
-#secondary_site_menu a,
-#secondary_site_menu a:visited {
+#top_modules #secondary_site_menu a,
+#top_modules #secondary_site_menu a:visited {
 	color: #fff;
 	font-weight: bold;
 	text-decoration: none;
@@ -513,36 +513,49 @@ select {
 	color: #000;
 } /* end search form filter dropdown */
 
-#sitelogo img {
+#top_modules .box-logo {
+	float: left;
+	margin-left: 10px;
+	margin-bottom: 18px;
+}
+
+#top_modules #sitelogo {
+	width: 235px;
+}
+
+#top_modules #sitelogo img {
 	margin-top: 16px;
 }
 
-#sitetitles {
-	position: absolute;
-	top: 75px;
-	left: 415px;
+#top_modules #sitetitles {
+	margin-top: 55px;
+	margin-left: 135px;
 	font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+	white-space: nowrap;
 }
 
-#sitetitle,
-#sitesubtitle {
+#top_modules #sitetitle,
+#top_modules #sitesubtitle {
 	color: #fff;
 	text-shadow: #143c64 3px 2px 0;
 }
 
-#sitetitle {
+#top_modules #sitetitle {
 	font-size: 52px;
+	/*margin-top: 2%;
+	line-height: 1;*/
 }
 
-#sitetitle a,
-#sitetitle a:visited {
+#top_modules #sitetitle a,
+#top_modules #sitetitle a:visited {
 	color: #fff;
 	text-decoration: none;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 30px;
-	margin-top: 24px;
+/*	margin-top: 24px;
+	line-height: 1.2;*/
 }
 
 /* Sitelogin Popup */
@@ -550,22 +563,17 @@ select {
 #top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 10px;
-	bottom: 0;
+	bottom: -5px;
 	width: 10em;
-	height: 26px;
-	line-height: 26px;
+/*	height: 26px;*/
+	line-height: 1;
 	z-index: 1;
 }
 
-/*.siteloginbar_popup {
-	position: inherit;
-	right: auto;
-	bottom: auto;
-}*/
-
 .siteloginbar_popup fieldset {
 	border: none;
-	margin: 0; padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .siteloginbar_popup .tabmark {
@@ -583,19 +591,18 @@ select {
 	background-color: #969696;
 }
 
-.siteloginbar_popup .cssmenu_horiz #login_link,
-.siteloginbar_popup .cssmenu_horiz #logout_link {
+.siteloginbar_popup .cssmenu_horiz .tabmark {
 	background-color: #070707;
 }
 
-.siteloginbar_popup .cbox {
+.siteloginbar_poppedup li {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	color: #2098CD;
 }
 
-#header .siteloginbar_popup .cbox a {
+.siteloginbar_poppedup a {
 	color: #2098CD !important;
 }
 
@@ -605,6 +612,10 @@ select {
 
 #sl-openid {
 	background-color: #fff;
+}
+
+.siteloginbar_poppedup input.button {
+	margin: 6px 0;
 }
 
 /* new modules revamp login */
@@ -633,7 +644,7 @@ a.login_link {
 	font-weight: bold;
 	font-size: 12px;
 	text-transform: uppercase;
-	margin-bottom: -1px !important;
+/*	margin-bottom: -1px !important;*/
 }
 .siteloginbar_popup .cssmenu_horiz ul {
 	margin-top: -5px;
@@ -663,11 +674,10 @@ li.login_link ul li a {
 }
 /* end Sitelogin Popup */
 
-#tiki-top {
-	height: 50px;
-	background: #000 url('fivealive/topbar.jpg') repeat-x;
+#tiki-top[id] {
+	height: auto;
+	min-height: 50px;
 }
-#tiki-top[id] {height: auto; min-height: 50px;}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -676,8 +686,8 @@ li.login_link ul li a {
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
+.box-menu .cssmenu_horiz li ul a,
+.box-menu .cssmenu_horiz li:hover ul a,
 #topbar_modules .cssmenu_horiz li ul a,
 #topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #153c64;
@@ -688,7 +698,7 @@ li.login_link ul li a {
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
+.box-menu .cssmenu_horiz li ul a:hover,
 #topbar_modules .cssmenu_horiz li ul a:hover {
 	background: #128bc9;
 	text-decoration: none;
@@ -701,7 +711,7 @@ li.login_link ul li a {
 	padding: .75em 1em;
 }
 
-#header .cssmenu_horiz li a,
+.box-menu .cssmenu_horiz li a,
 #topbar_modules .cssmenu_horiz li a {
 	font-weight: bold;
 	text-decoration: none;
@@ -709,7 +719,7 @@ li.login_link ul li a {
 	color: #fff;
 }
 
-#header #secondary_site_menu .cssmenu_horiz li a {
+.header #secondary_site_menu .cssmenu_horiz li a {
 	font-weight: 400;
 	padding: 8px .7em;
 }
@@ -922,8 +932,9 @@ th,
 td.heading,
 tr.diffheader,
 .calHeading,
-.weeks {
-	background: #1d90c5;
+.weeks,
+th.header {
+	background-color: #1d90c5;
 	color: #d6f3fa;
 }
 
@@ -932,7 +943,8 @@ th a:visited,
 td.heading a,
 td.heading a:visited,
 .normal th a.link, 
-.normal th a {
+.normal th a,
+th.header {
 	color: #fff
 }
 
@@ -944,6 +956,7 @@ fieldset.admin label,
 	color: #1174a5;
 }
 
+.admin .button a,
 .tabstoggle .button a,
 .tabstoggle .button a:visited {
 	color: #fff;
@@ -958,10 +971,6 @@ fieldset.admin label,
 [class].tabinactive {top: 0 !important}
 
 .tabs {
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-	position:relative;
 	padding: .2em .2em 0;
 	margin:0 0.2em 0 0;
 	border: none;
@@ -972,11 +981,14 @@ fieldset.admin label,
 	float: left;
 }
 
+.tabcontent .tabmark {
+	border: 1px solid #11597e;
+}
+
 .tabmark {
-	list-style-image: none;
 	float: left;
 	border: 1px solid #11597e;
-	background: #126692;
+	background: #2098cd;
 	border-bottom-width: 0 !important;
 	margin: 0 .2em 0 0;
 	color: #fff;
@@ -1006,6 +1018,10 @@ a.register_link {
 	background: #a9d6eb;
 }
 
+.tabinactive:hover {
+	background: #126692;
+}
+
 .tabinactive:hover a,
 .tabactive a,
 .tabactive a:visited {
@@ -1021,18 +1037,14 @@ a.register_link {
 	-moz-border-radius-topright: 4px;
 	padding: 4px;
 }
+
+.statuson {
+	background: white;
+}
 	
 legend.heading {
 	background: transparent;
 }
-/*	
-.admin a.link,
-.admin a,
-.admin label,
-fieldset.admin label,
-.cbox fieldset.admin a {
-	color: #fff;
-}*/
 
 fieldset.admin .adminoptionbox label,
 fieldset.admin .adminoptionlabel {
@@ -1148,40 +1160,17 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 /***** File Galleries *****/
 /***** Trackers *****/
 /***** Categories, Tags *****/
-.catlist_title {
-/* Moved to layout.css some features can be altered here to fit with the particular style
-//	padding: 9px 5px 5px 0px;
-//	display: block;
-//	font-weight: bold;
-//	font-size: 110%;
-//	border: 1px solid #d7d7d7;
-//	border-bottom: 1px solid #ededed;
-//	background: #ededed;
-*/
-}
 
 .cattitle {
-/* Moved to layout.css some features can be altered here to fit with the particular style
-//	padding: 9px 5px 5px 0px;
-//	display: block;
-//	font-weight: bold;
-//	font-size: 110%;
-//	border: 1px solid #d7d7d7;
-//	border-bottom: 1px solid #ededed;
-*/	background: #ededed;
+	background: #ededed;
 }
-/***** Tags (freetags) *****/
-/*****  Polls  *****/
-/***** FAQs *****/
-/***** Quizzes *****/
-/***** Shoutbox *****/
+
 /***** Directory *****/
 a.dirsitelink,
 a.dirsublink {
 	font-weight: bold;
 }
-/***** Messages *****/
-/***** TikiSheets *****/
+
 /***** Calendar *****/
 .caltable .days {
 	color: #fff;
@@ -1201,18 +1190,6 @@ a.dirsublink {
 }
 
 /***** Admin *****/
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {}
-
-.toolbars-admin .full li,
-.toolbars-admin .rows .row,
-.textarea-toolbar,
-.toolbar-list,
-.toolbar-list,
-a.toolbar,
-a.qt-inline {}
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/

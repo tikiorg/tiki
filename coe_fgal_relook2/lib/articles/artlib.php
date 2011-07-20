@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1354,9 +1354,9 @@ class ArtLib extends TikiLib
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '')
 	{
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findPattern = '%' . $find . '%';
 			$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
-			$bindvars = array($findesc, $findesc, $findesc);
+			$bindvars = array($findPattern, $findPattern, $findPattern);
 		} else {
 			$mid = '';
 			$bindvars = array();

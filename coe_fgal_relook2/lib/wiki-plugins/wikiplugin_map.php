@@ -1,19 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Displays an inline map
-// Use:
-// {MAP()}
-//  (mapfile=>) 
-//  (extents=>)
-
-function wikiplugin_map_help() {
-	return tra("Displays a map").":<br />~np~{MAP(mapfile=>,extents=>,size=>,width=>,height=>) /}~/np~";
-}
 
 function wikiplugin_map_info() {
 	return array(

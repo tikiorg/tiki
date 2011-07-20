@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function prefs_flaggedrev_list()
 {
@@ -8,6 +13,7 @@ function prefs_flaggedrev_list()
 			'description' => tra('Uses flagged revisions to hide unapproved wiki page revisions from users with lower privileges.'),
 			'type' => 'flag',
 			'perspective' => false,
+			'default' => 'n',
 		),
 		'flaggedrev_approval_categories' => array(
 			'name' => tra('Revision Approval Categories'),
@@ -18,6 +24,7 @@ function prefs_flaggedrev_list()
 			'dependencies' => array(
 				'feature_categories',
 			),
+			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 	);
 }

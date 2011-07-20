@@ -1,17 +1,15 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display a proposal acceptance widget
-
 function wikiplugin_proposal_info() {
 	return array(
 		'name' => tra('Proposal'),
 		'documentation' => 'PluginProposal',
-		'description' => tra('Create a widget for users to vote on a proposal and view the current decision.'),
+		'description' => tra('Allow users to vote on a proposal and view the results'),
 		'prefs' => array( 'wikiplugin_proposal' ),
 		'body' => tra('The list of votes cast. One vote per line. Either 0, +1 or -1 followed by a username.'),
 		'icon' => 'pics/icons/thumb_up.png',

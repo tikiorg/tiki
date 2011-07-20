@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -325,7 +325,7 @@ class CreditsLib extends TikiLib
 
 			return 0;
 		} else {
-			$this->query( "UPDATE `tiki_credits` SET `used_amount` = `total_amount` WHERE `creditId `= ?", 
+			$this->query( "UPDATE `tiki_credits` SET `used_amount` = `total_amount` WHERE `creditId`= ?", 
 				array( $creditId ) );
 
 			return $amount - $available;

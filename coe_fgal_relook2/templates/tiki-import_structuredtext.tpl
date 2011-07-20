@@ -32,12 +32,11 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$lines}
 <tr class="{cycle}">
-  <td>{$lines[ix].page}</td>
-  <td>{$lines[ix].ex}</td>
-  <td>{$lines[ix].msg}</td>
-  <td>{$lines[ix].body}</td>
+  <td class="text">{$lines[ix].page}</td>
+  <td class="text">{$lines[ix].ex}</td>
+  <td class="text">{$lines[ix].msg}</td>
+  <td class="text">{$lines[ix].body}</td>
 </tr>
 {/section}
 </table>
-<br /><br />
 {/if}

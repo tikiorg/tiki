@@ -1,15 +1,5 @@
 /* hack for IE http://www.wellstyled.com/css-underscore-hack.html */
-#calendar {
-}
 
-.tabrow {
-	position: relative;
-	left: 0;
-	font-size: 1em;
-	height: 24px !important;
-/*	width: 720px;*/
-	padding-top: 11px;
-}
 .tabrowLeft {
 	position: absolute;
 	top: 0;
@@ -17,6 +7,7 @@
 	width: 23px;
 	height: 24px !important;
 }
+
 .tabrowRight {
 	position: absolute;
 	top: 0;
@@ -26,39 +17,40 @@
 }
 
 .tabrow {
+	position: relative;
+	left: 0;
 	margin: 0;
+	height: 24px !important;
 	font-size: 11px;
 	padding: 1px 10px 4px 10px;
 	clear: both;
 }
+
 .tabrow a {
 	text-decoration: none;
 }
-.tabrow .viewmode { float: left; }
-.tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
-.tabrow .daterow { border: 1px #ddd; }
+
+.tabrow .viewmode {
+	float: left;
+}
+
+.tabrow .jscalrow {
+	float: right;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.tabrow .daterow {
+	border: 1px #ddd;
+}
 
 .calHeading,
 .calHeadingOn {
 	height: 36px;
 	text-align: center;
 	vertical-align: middle;
-/*	color: #483b3b;
-	border-bottom: 1px #cfd0d0 solid;*/
 }
-.calHeading a,
-.calHeading a:visited {
-/*	color: #483b3b; let theme handle links
-	text-decoration: none;*/
-}
-.calHeadingOn a {
-	/*color: #06f;
-	text-decoration: none;*/
-}
-.calHeading a:hover,
-.calHeadingOn a:hover {
-	/*text-decoration: underline;*/
-}
+
 .calHours {
 	vertical-align: middle;
 	text-align: center;
@@ -66,16 +58,15 @@
 	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid;
 }
+
 .calDay {
 	padding: 0;
 	border-width: 0 1px 1px 1px;
-/*	background-color: #fcfefd;
-	border-color: #cfd0d0 #a1a19f;*/
 	border-style: solid;
 }
+
 .calWeek {
 	border-width: 1px 1px 0 1px;
-/*	background-color: #fcfefd;*/
 	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid;
 }
@@ -85,7 +76,9 @@
 	border-color: transparent;
 }
 
-.Cal0, .Cal1, .Cal2 {
+.Cal0,
+.Cal1,
+.Cal2 {
 	color: #425262;
 	font-size: 10px;
 	padding-right: 0;
@@ -105,35 +98,47 @@
 	font-weight: bold;
 	color: #425262;
 }
+
 .calcheckbox {
 	background: #ffffff;
 }
+
 .caltoggle {
 	font-size: 9px;
 	margin-bottom: 7px;
 }
-.calfocus {
-	font-size: 9px;
-	background: transparent;
-}
+
 .calfocus a,
 .calfocus a:visited {
 	text-decoration: none;
 	font-weight: normal;
 	color: #000000;
 }
+
 .calfocuson {
 	font-size: 9px;
 	background: #f3e498;
 }
+
 .calfocuson a {
 	text-decoration: none;
 	font-weight: normal;
 	color: #000000;
 }
 
-.Calwiki, .Calblog, .Calgal, .Calart, .Calforum, .Caldir, .Calfgal,
-.Calfaq, .Calquiz, .Caltrack, .Calsurv, .Calnl, .Calchart {
+.Calwiki,
+.Calblog,
+.Calgal,
+.Calart,
+.Calforum,
+.Caldir,
+.Calfgal,
+.Calfaq,
+.Calquiz,
+.Caltrack,
+.Calsurv,
+.Calnl,
+.Calchart {
 	border-top: 1px dashed #CCCCCC;
 	font-size: 10px;
 	padding: 0 3px;
@@ -144,119 +149,145 @@
 	color: #443f39;
 	font-weight: normal;
 }
+
 .Calwiki:before {
 	content: "w";
 	font-family:  monospace;
 	background: #ffffff;
 }
+
 .Calblog a {
 	color: #443f39;
 	font-weight: normal;
 }
+
 .Calblog:before {
 	content: "b";
 	font-family: monospace;
 	background: #ffffff;
 }
+
 .Calgal a {
 	font-weight: normal;
 	color: #303f49;
 }
+
 .Calgal:before {
 	content: "i";
 	font-family: monospace;
 	background: #ffffff;
 }
+
 .Calart a {
 	color: #304f30;
 	font-weight: normal;
 }
+
 .Calart:before {
 	content: "a";
 	font-family: monospace;
 	background: #ffffff;
 }
+
 .Calforum a {
 	color: #304f30;
 	font-weight: normal;
 }
+
 .Calforum:before {
 	content: "fo";
 	font-family: monospace;
 	background: #ffffff;
 }
+
 .Caldir a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Caldir:before {
 	content: "d";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Calfgal a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Calfgal:before {
 	content: "fi";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Calfaq a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Calfaq:before {
 	content: "fq";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Calquiz a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Calquiz:before {
 	content: "q";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Caltrack a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Caltrack:before {
 	content: "t";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Calsurv a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Calsurv:before {
 	content: "s";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Calnl a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Calnl:before {
 	content: "n";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .Calchart a {
 	color: #304F30;
 	font-weight: normal;
 }
+
 .Calchart:before {
 	content: "ch";
 	font-family: monospace;
 	background: #FFFFFF;
 }
+
 .calweb {
 	font-weight: bold;
 	font-size: 10px;
@@ -265,43 +296,62 @@
 	padding-right: 3px;
 	color: #336699;
 }
+
 .calweb:hover {
 	color: #996633;
 }
+
 #calprio {
 	margin-left: 7px;
 	padding: 0 5px;
 	color: black;
 }
+
 .calprio1 {
 	background: #DAE0E0;
 }
+
 .calprio2 {
 	background: #DADCDC;
 }
+
 .calprio3 {
 	background: #DAD0D0;
 }
+
 .calprio4 {
 	background: #DACACA;
 }
+
 .calprio5 {
 	background: #DAC0D0;
 }
+
 .calprio6 {
 	background: #DABABA;
 }
+
 .calprio7 {
 	background: #DAB0B0;
 }
+
 .calprio8 {
 	background: #DAAAAA;
 }
+
 .calprio9 {
 	background: #DA9A9A;
 }
-.calprio1 a, .calprio2 a, .calprio3 a, .calprio4 a, .calprio5 a,
-.calprio6 a, .calprio7 a, .calprio8 a, .calprio9 a {
+
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
 	color: #000000;
 	font-weight: normal;
 }
@@ -316,32 +366,40 @@
 	vertical-align: middle;
 	margin: 7px 0;
 }
+
 .calnavigation a {
 	padding: 0 20px 4px 20px;
 	line-height: 11px;
 }
+
 .calnavigation a:hover {
 	background: #FE3;
 }
+
 .calnavigation a.prev {
 	float: left;
 }
+
 .calnavigation a.next {
 	float: right;
 }
+
 .middle {
 	vertical-align: middle;
 }
+
 .mininotes {
 	font-size: 9px;
 	color: #666666;
 }
+
 .opaque {
 	background: #FFFFFF;
 	width: auto;
 	border: 1px solid #666666;
 	padding: 5px;
 }
+
 .opaque .box-title,
 .opaque .box-data {
 	width: auto;
@@ -361,9 +419,11 @@
 .viewmodeon {
 	padding: 0;
 }
+
 .viewmodeoff {
 	padding-left: 0;
 }
+
 a.viewmodeon img {
 	margin: 0;
 	padding: 0;
@@ -385,26 +445,32 @@ a.viewmodeoff img {
 * html a.viewmodeoff img {
 	padding-left: 0;
 }
+
 .caltable {
 	border-collapse: collapse;
 	border-bottom: 1px solid #CFD0D0;
 }
+
 .caltable .days {
 	height: 20px;
 	text-align: center;
 	border: 0;
 	border-bottom: 1px solid #999;
 }
+
 .caltable .weeks {
 	border-right: 1px solid #999;
 	font-size: 8px;
 	color: #666;
 	vertical-align: middle;
 }
-.caltable .odd, .caltable .even {
+
+.caltable .odd,
+.caltable .even {
 	margin: 1px !important;
 	border: 0 !important;
 }
+
 .addevent {
 	padding: 0 5px;
 	float: right;
@@ -424,14 +490,9 @@ a.viewmodeoff img {
 	background: #DEF;
 }
 
-.caldark {
-	background: #E0E0E0; /* #eee */
-	border: 1px dotted #D6DBDe;
-}
-
 .calodd,
 .caleven {
-	background: none;
+	border: 1px solid #8CACBB;
 }
 
 .calodd .calfocus,
@@ -444,16 +505,11 @@ a.viewmodeoff img {
 	padding-left: 2px;
 }
 
-.caldark .calfocus {
-	background: none;
-	border-width: 0;
-}
-
 #configlinks {
 	width: 100%;
-/*	background-color: #fff;*/
 	padding: 5px;
 }
+
 * html .addevent,
 * html .calodd,
 * html .caleven,
@@ -468,11 +524,13 @@ a.viewmodeoff img {
 	border: 1px solid #000;
 	right: 190px;
 }
+
 #filtercal .caltitle,
 #filtercal .caltoggle,
 #filtercal .calcheckbox {
 	padding: 0 10px;
 }
+
 #filtercal .calinput {
 	padding: 10px;
 }
@@ -504,30 +562,99 @@ a.viewmodeoff img {
 	border: 1px solid #AAA;
 	color: #999;
 }
-.status0     { background: #FF6; border: 1px solid #000; color: #000; }
-.status1     { background: #6F6; border: 1px solid #000; color: #000; }
-.status2     { background: #F66; border: 1px solid #000; color: #000; }
 
-select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
-.caltable, #calscreen .normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
-.caltable td { padding: 2px; }
-#calscreen td {vertical-align: top;}
-#calscreen td a {text-decoration: none;}
-.days { font-size: 11px; font-weight: bold; color: #555555; }
-.calodd, .caleven { border: 1px solid #8CACBB; }
-.calfocus a:hover { background: transparent; }
-.calfocuson a:hover { background: transparent; }
-a.addevent:hover {}
-.calfocus, .calfocuson { padding-bottom: 4px; }
-.calfocus { border-bottom: 1px dotted #8CACBB; background: #b4d0ec; }
-.caldark a { display: none; }
-.caldark { border: 1px dotted #8CACBB; background: transparent; }
-.caldark .calfocus { background: #DEF; }
-.calfocuson + .calcontent {background: none; }
-.html_select_time { white-space: nowrap; }
+.status0 {
+	background: #FF6;
+	border: 1px solid #000;
+	color: #000;
+}
 
-.tabrowLeft {  }
-.tabrowRight {  }
+.status1 {
+	background: #6F6;
+	border: 1px solid #000;
+	color: #000;
+}
+
+.status2 {
+	background: #F66;
+	border: 1px solid #000;
+	color: #000;
+}
+
+select[name=start_Hour],
+select[name=start_Minute],
+select[name=end_Hour],
+select[name=end_Minute] {
+		min-width: 40px;
+}
+
+.caltable,
+#calscreen .normal {
+		clear: both;
+		border-collapse: collapse;
+		margin-top: 5px;
+		width: 100%;
+		font-size: 11px;
+}
+
+.caltable td {
+	padding: 2px;
+}
+
+#calscreen td.odd, #calscreen td.even {
+	vertical-align: top;
+}
+
+#calscreen td a {
+	text-decoration: none;
+}
+
+.days {
+	font-size: 11px;
+	font-weight: bold;
+	color: #555555;
+}
+
+.calfocus a:hover {
+	background: transparent;
+}
+
+.calfocuson a:hover {
+	background: transparent;
+}
+
+.calfocus,
+.calfocuson {
+	padding-bottom: 4px;
+}
+
+.calfocus {
+	border-bottom: 1px dotted #8CACBB;
+	background: #b4d0ec;
+	font-size: 9px;
+}
+
+.caldark a {
+	display: none;
+}
+
+.caldark {
+	border: 1px dotted #8CACBB;
+	background: transparent;
+}
+
+.caldark .calfocus {
+	background: #DEF;
+	border-width: 0;
+}
+
+.calfocuson + .calcontent {
+	background: none;
+}
+
+.html_select_time {
+	white-space: nowrap;
+}
 
 .viewmode {
 	line-height: 1em;
@@ -536,16 +663,15 @@ a.addevent:hover {}
 	padding: 1px;
 }
 
-.viewmode div {display: inline;}
-.calbuttonBox {  }
-.calbuttonLeft {  }
-.calbuttonRight {  }
+.viewmode div {
+	display: inline;
+}
 
-.calbuttonoff , 
-.calbuttonon , 
-a.prev img ,
+.calbuttonoff,
+.calbuttonon,
+a.prev img,
 a.next img {
-	vertical-align: middle;  
+	vertical-align: middle;
 }
 
 /* Smaller icons inside calendar headers, in order to have no impact on the position of items on the week and day views */

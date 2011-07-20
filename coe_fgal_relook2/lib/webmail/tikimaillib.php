@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -79,6 +79,10 @@ class TikiMail extends HtmlMimeMail
 			parent::setHtml($html, $text , $images_dir);
 	}
 	function setText($text = '') {
+		global $prefs;
+		if (!empty($prefs['email_footer'])) {
+			$text .= CRLF . $prefs['email_footer'];
+		}
 		if ($this->charset != "utf-8")
 			parent::setText(encodeString($this->encodeNonInCharset($text, false), $this->charset));
 		else

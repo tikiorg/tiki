@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -48,14 +48,23 @@ class Smarty_Tiki extends Smarty
 
 		$this->security_settings['MODIFIER_FUNCS'] = array_merge(
 			$this->security_settings['MODIFIER_FUNCS'],
-			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags')
+			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode')
 		);
 		$this->security_settings['IF_FUNCS'] = array_merge(
 			$this->security_settings['IF_FUNCS'],
-			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'in_array')
+			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'in_array', 'json_encode')
 		);
-		$secure_dirs[] = 'img/icons2';
-		$this->secure_dir = $secure_dirs;
+		$this->secure_dir = array(
+			'img/icons',
+			'img/icons2',
+			'img/flags',
+			'img/trackers',
+			'images/',
+			'pics/',
+			'pics/icons',
+			'pics/icons/mime',
+			'pics/large',
+		);
 		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
 
 		$this->url_overriding_prefix_stack = array();
@@ -121,7 +130,7 @@ class Smarty_Tiki extends Smarty
 				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
 					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
-					$this->assign('headtitle', tra('Admin ' . $str));
+					$this->assign('headtitle', 'Admin ' . $str);
 					// get_strings tra('Admin Calendar') tra('Admin Actionlog') tra('Admin Banners') tra('Admin Calendars') tra('Admin Categories') tra('Admin Content Templates')
 					//			tra('Admin Contribution') tra('Admin Cookies') tra('Admin Dsn') tra('Admin External Wikis') tra('Admin Forums') tra('Admin Hotwords') tra('Admin Html Page Content')
 					//			tra('Admin Html Pages') tra('Admin Integrator Rules') tra('Admin Integrator') tra('Admin Keywords') tra('Admin Layout') tra('Admin Links') tra('Admin Mailin')
@@ -131,14 +140,14 @@ class Smarty_Tiki extends Smarty
 				} else if (strpos($script_name, 'tiki-list') === 0) {
 					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
-					$this->assign('headtitle', tra('List ' . $str));
+					$this->assign('headtitle', 'List ' . $str);
 					// get_strings tra('List Articles') tra('List Banners') tra('List Blogs') tra('List Cache') tra('List Comments') tra('List Contents') tra('List Faqs') tra('List File Gallery')
 					//			tra('List Gallery') tra('List Integrator Repositories') tra('List Kaltura Entries') tra('List Object Permissions') tra('List Posts') tra('List Quizzes') tra('List Submissions')
 					//			tra('List Surveys') tra('List Trackers') tra('List Users') tra('List Pages')
 				} else if (strpos($script_name, 'tiki-view') === 0) {
 					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
-					$this->assign('headtitle', tra('View ' . $str));
+					$this->assign('headtitle', 'View ' . $str);
 					// get_strings tra('View Articles') tra('View Banner') tra('View Blog Post Image') tra('View Blog Post') tra('View Blog') tra('View Cache') tra('View Faq') tra('View Forum Thread')
 					//			 tra('View Minical Topic') tra('View Sheets') tra('View Tracker Item') tra('View Tracker More Info') tra('View Tracker')
 				} else { // still not set? guess...
@@ -148,34 +157,34 @@ class Smarty_Tiki extends Smarty
 				}
 			}
 
-			// Enable Template Zoom
-			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
-				if ( ! isset($_REQUEST['zoom']) && isset($_REQUEST['zoom_value']) && isset($_REQUEST['zoom_x']) && isset($_REQUEST['zoom_y']) ) {
-					// Hack for IE6 when using an image input to submit the zoom value
-					//  (IE will only send zoom_x and zoom_y params without the value instead of zoom)
-					//  In this case, and if we have set a hidden field 'zoom_value', we use it's value
-					//
-					$_REQUEST['zoom'] = $_REQUEST['zoom_value'];
-				}
-				if ( isset($_REQUEST['zoom']) && is_array($zoom_templates) && in_array($_REQUEST['zoom'], $zoom_templates) ) {
-					$_smarty_tpl_file = 'tiki_full.tpl';
-					$tpl = $_REQUEST['zoom'].'.tpl';
-					$prefs['feature_fullscreen'] = 'n';
-					$this->assign('zoom_mode', 'y');
-				}
-			}
-
 			if ( $_smarty_tpl_file == 'tiki-print.tpl' ) {
 				$this->assign('print_page', 'y');
 			}
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
 
 			$this->assign('mid_data', $data);
-			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
-				include_once('tiki-modules.php');
+
+			// Enable AJAX
+			if ( $prefs['feature_ajax'] === 'y' && $prefs['mobile_feature'] === 'y' && $_smarty_display ) {
+				global $ajaxlib; require_once( 'lib/ajax/ajaxlib.php' );
+				$ajaxlib->registerTemplate( $tpl );
+				$ajaxlib->processRequests( $data, $tpl );
+			}
+
+			include_once('tiki-modules.php');
 
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
+			if ( $prefs['feature_obzip'] == 'y' ) {
+				ob_start('ob_gzhandler');
+			}
+
+			// Enable AJAX
+			if ( $prefs['feature_ajax'] === 'y' && $prefs['mobile_feature'] === 'y' && $_smarty_display ) {
+				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
+				$ajaxlib->registerTemplate($_smarty_tpl_file);
+				$ajaxlib->processRequests();
+			}
 
 			include_once('tiki-modules.php');
 

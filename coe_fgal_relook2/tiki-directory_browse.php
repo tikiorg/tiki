@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,7 +29,7 @@ $dirlib->dir_add_category_hit($_REQUEST['parent']);
 // Now get the path to the parent category
 $path = $dirlib->dir_get_category_path_browse($_REQUEST["parent"]);
 $smarty->assign_by_ref('path', $path);
-$crumbs[] = new Breadcrumb('Directory', '', 'tiki-directory_browse.php?parent=0', 'Directory', 'How to use Directory');
+$crumbs[] = new Breadcrumb(tra('Directory'), '', 'tiki-directory_browse.php?parent=0', 'Directory', tra('How to use Directory'));
 // Now append the path to the parent category
 array_splice($crumbs, count($crumbs) , 0, $dirlib->dir_build_breadcrumb_trail($_REQUEST["parent"]));
 $smarty->assign('trail', $crumbs);

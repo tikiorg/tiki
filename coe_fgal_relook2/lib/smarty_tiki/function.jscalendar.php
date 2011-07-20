@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -28,24 +28,51 @@ function smarty_function_jscalendar($params, &$smarty) {
 		} else {
 			$name = '';
 		}
-		if (!isset($params['date'])) {
+		if (!isset($params['date'])) {	// if date is provided empty then show a blank date (for filters)
 			$params['date'] = $tikilib->now;
 		}
 		$datepicker_options = '{ altField: "#' . $params['id'] . '"';
 		if (!empty($params['goto'])) {
 			$datepicker_options .= ', onSelect: function(dateText, inst) { window.location="'.$params['goto'].'".replace("%s",$("#'.$params['id'].'").val()/1000); }';
 		}
-		$datepicker_options .= '}';
+		static $datepicker_options_common;
+
+		if (! $datepicker_options_common) {
+			$first = $prefs['calendar_firstDayofWeek'] == 'user'? tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!'): $prefs['calendar_firstDayofWeek'];
+			if (!is_numeric($first) || !in_array($first, array(0,1,2,3,4,5,6))) {
+				$first = 0;
+			}
+			
+			$datepicker_options_common .= ', firstDay: '.$first;
+			$datepicker_options_common .= ", closeText: '".smarty_function_jscalendar_tra('Done')."'";
+			$datepicker_options_common .= ", prevText: '".smarty_function_jscalendar_tra('Prev')."'";
+			$datepicker_options_common .= ", nextText: '".smarty_function_jscalendar_tra('Next')."'";
+			$datepicker_options_common .= ", currentText: '".smarty_function_jscalendar_tra('Today')."'";
+			$datepicker_options_common .= ", weekHeader: '".smarty_function_jscalendar_tra('Wk')."'";
+			$datepicker_options_common .= ", dayNames: ['".smarty_function_jscalendar_tra('Sunday')."','".smarty_function_jscalendar_tra('Monday')."','".smarty_function_jscalendar_tra('Tuesday')."','".smarty_function_jscalendar_tra('Wednesday')."','".smarty_function_jscalendar_tra('Thursday')."','".smarty_function_jscalendar_tra('Friday')."','".smarty_function_jscalendar_tra('Saturday')."']";
+			$datepicker_options_common .= ", dayNamesMin: ['".smarty_function_jscalendar_tra('Su')."','".smarty_function_jscalendar_tra('Mo')."','".smarty_function_jscalendar_tra('Tu')."','".smarty_function_jscalendar_tra('We')."','".smarty_function_jscalendar_tra('Th')."','".smarty_function_jscalendar_tra('Fr')."','".smarty_function_jscalendar_tra('Sa')."']";
+			$datepicker_options_common .= ", dayNamesShort: ['".smarty_function_jscalendar_tra('Sun')."','".smarty_function_jscalendar_tra('Mon')."','".smarty_function_jscalendar_tra('Tue')."','".smarty_function_jscalendar_tra('Wed')."','".smarty_function_jscalendar_tra('Thu')."','".smarty_function_jscalendar_tra('Fri')."','".smarty_function_jscalendar_tra('Sat')."']";
+			$datepicker_options_common .= ", monthNames: ['".smarty_function_jscalendar_tra('January')."','".smarty_function_jscalendar_tra('February')."','".smarty_function_jscalendar_tra('March')."','".smarty_function_jscalendar_tra('April')."','".smarty_function_jscalendar_tra('May')."','".smarty_function_jscalendar_tra('June')."','".smarty_function_jscalendar_tra('July')."','".smarty_function_jscalendar_tra('August')."','".smarty_function_jscalendar_tra('September')."','".smarty_function_jscalendar_tra('October')."','".smarty_function_jscalendar_tra('November')."','".smarty_function_jscalendar_tra('December')."']";
+			$datepicker_options_common .= ", monthNamesShort: ['".smarty_function_jscalendar_tra('Jan')."','".smarty_function_jscalendar_tra('Feb')."','".smarty_function_jscalendar_tra('Mar')."','".smarty_function_jscalendar_tra('Apr')."','".smarty_function_jscalendar_tra('May')."','".smarty_function_jscalendar_tra('Jun')."','".smarty_function_jscalendar_tra('Jul')."','".smarty_function_jscalendar_tra('Aug')."','".smarty_function_jscalendar_tra('Sep')."','".smarty_function_jscalendar_tra('Oct')."','".smarty_function_jscalendar_tra('Nov')."','".smarty_function_jscalendar_tra('Dec')."']";
+			$datepicker_options_common .= '}';
+		}
+
+		$datepicker_options .= $datepicker_options_common;
+
 		$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
 		$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
 		// TODO use a parsed version of $prefs['short_date_format']
 		// Note: JS timestamp is in milliseconds - php is seconds
-		$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val($.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))).tiki("datepicker", "jscalendar", '.$datepicker_options.');');
+		$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
+		$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val('.$js_val.').tiki("datepicker", "jscalendar", '.$datepicker_options.');');
 		return $html;
 		
 	} else {
 		echo smarty_function_jscalendar_body($params, $smarty);
 	}
+}
+function smarty_function_jscalendar_tra($str) {
+	return str_replace("'", "\\'", tra($str));
 }
 
 function smarty_function_jscalendar_body($params, &$smarty) {
@@ -75,7 +102,7 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 		} else {
 			$minutes_interval = 5;
 		}
-		if ($minutes_interval > 1) {
+		if ($minutes_interval > 1 && !empty($date)) {
 			$sec = $minutes_interval*60;
 			$date = (ceil($date/$sec))*$sec;
 		}
@@ -92,7 +119,11 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 		}
 	}
 
-	$formatted_date = $tikilib->date_format($format,(int)$date);
+	if (!empty($date)) {
+		$formatted_date = $tikilib->date_format($format,(int)$date);
+	} else {
+		$formatted_date = '';
+	}
 	
 	if (isset($params['id'])) {
 		$id =  preg_replace('/"/','\"',$params['id']);

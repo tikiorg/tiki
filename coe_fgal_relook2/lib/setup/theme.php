@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -17,7 +17,7 @@ if ( isset($_SESSION['try_style']) ) {
 }
 
 if ($prefs['feature_fixed_width'] === 'y') {
-	$headerlib->add_css('.fixed_width .fixedwidth { width:' . (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') . '; }');
+	$headerlib->add_css('.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' . (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') . '; }');
 }
 
 if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {

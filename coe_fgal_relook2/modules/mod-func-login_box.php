@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,9 +13,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_login_box_info() {
 	return array(
-		'name' => tra('Login'),
-		'description' => tra('Login box'),
+		'name' => tra('Log In'),
+		'description' => tra('Log-in box'),
 		'prefs' => array(),
+		'documentation' => 'Module login_box',
 		'params' => array(
 			'input_size' => array(
 				'name' => tra('Input size'),
@@ -47,6 +48,14 @@ function module_login_box_info() {
 
 function module_login_box( $mod_reference, &$module_params ) {
 	global $smarty, $prefs;
+	
+	static $module_logo_instance = 0;
+	
+	$module_logo_instance++;
+	
+	$smarty->assign('module_logo_instance', $module_logo_instance);
+	$smarty->assign('mode', isset($module_params['mode']) ? $module_params['mode'] : 'module');
+	
 	$smarty->assign('registration', 'n');	// stops the openid form appearing in the module, only on tiki-login_scr.php
 	
 	if ($prefs['allowRegister'] === 'y' && (empty($module_params['register']) || $module_params['register'] === 'y')) {

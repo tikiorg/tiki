@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -69,7 +69,7 @@ class AttributeTest extends TikiTestCase
 		$this->assertTrue( $lib->set_attribute( 'test', 'HelloWorld', 'tiki . test . aaa55bBb', 121.22 ) );
 		
 		$this->assertEquals( array(
-			'tiki.test.aaabbb' => 121.22,
+			'tiki.test.aaa55bbb' => 121.22,
 		), $lib->get_attributes( 'test', 'HelloWorld' ) );
 	}
 

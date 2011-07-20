@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -48,13 +48,15 @@ $base_url_https = 'https://'.$url_host.(($prefs['https_port']!='')?':'.$prefs['h
 // for <base> tag, which needs the " absolute URI that acts as the base URI for resolving relative URIs", not just the root of the site
 $base_uri = !empty($_SERVER['REDIRECT_SCRIPT_URI']) ? $_SERVER['REDIRECT_SCRIPT_URI'] : isset($_SERVER['SCRIPT_URI']) ? $_SERVER['SCRIPT_URI'] : $base_url;
 global $smarty;
-$smarty->assign('base_uri', $base_uri);
+if (is_object($smarty)) {
+	$smarty->assign('base_uri', $base_uri);
+}
 
 // SSL options
 
 if ( isset($_REQUEST['stay_in_ssl_mode_present']) || isset($_REQUEST['stay_in_ssl_mode']) ) {
 	// We stay in HTTPS / SSL mode if 'stay_in_ssl_mode' has an 'y' or 'on' value
-	$stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+	$stay_in_ssl_mode = ( (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'y') || (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on' ) ) ? 'y' : 'n';
 } else {
 	// Set default value of 'stay_in_ssl_mode' to the current mode state
 	$stay_in_ssl_mode = $https_mode ? 'y' : 'n';

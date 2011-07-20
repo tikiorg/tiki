@@ -1,16 +1,16 @@
-{title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title|escape}{/if}{/title}
+{title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title}{/if}{/title}
 
 <div class="navbar">
 	{if $postId > 0}
 		{button href=$postId|sefurl:blogpost _text="{tr}View post{/tr}"}
 	{/if}
 
-	{if $blogId gt 0 }
+	{if $blogId gt 0}
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
 	{/if}
 
-	{if $blogs|@count gt 1 }
+	{if $blogs|@count gt 1}
 		{* No need for users to go to blog list if they are already looking at the only blog *}
 		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 	{/if}
@@ -112,6 +112,17 @@
 				{/if}
 			{/if}
 
+			{if $prefs.geo_locate_blogpost eq 'y'}
+				<tr>
+					<td>{tr}Location{/tr}</td>
+					<td>
+						{$headerlib->add_map()}
+						<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+						<input type="hidden" name="geolocation" value="{$geolocation_string}" />
+					</td>
+				</tr>
+			{/if}
+
 			<tr>
 				<td class="editblogform">{tr}Mark entry as private:{/tr}</td>
 				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td>
@@ -121,7 +132,7 @@
 					<td>{tr}Publish Date{/tr}</td>
 					<td>
 						{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
-						{html_select_time prefix="publish_" time=$post_info.created display_seconds=false}
+						{html_select_time prefix="publish_" time=$post_info.created display_seconds=false use_24_hours=$use_24hr_clock}
 					</td>
 				</tr>
 			{/if}

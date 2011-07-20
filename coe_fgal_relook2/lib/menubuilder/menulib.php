@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -71,6 +71,42 @@ class MenuLib extends TikiLib
 
 		$result = $this->query($query,$bindvars);
 		return true;
+	}
+
+	function clone_menu($menuId) {
+		$menus = $this->table('tiki_menus');
+		$row = $menus->fetchFullRow( array( 'menuId' => $menuId ));
+		$row['menuId'] = null;
+		$row['name'] = $row['name'] . ' ' . tra('(copy)');
+		$newId = $menus->insert( $row );
+
+		$menuoptions = $this->table('tiki_menu_options');
+		$oldoptions = $menuoptions->fetchAll( $menuoptions->all(), array( 'menuId' => $menuId ));
+		$row = null;
+
+		foreach( $oldoptions as $row ) {
+			$row['optionId'] = null;
+			$row['menuId'] = $newId;
+			$menuoptions->insert( $row );
+		}
+	}
+
+	/*
+	 * Replace the current menu options for id 42 with what's in tiki.sql
+	 */
+	function reset_app_menu() {
+		$tiki_sql = file_get_contents('db/tiki.sql');
+		preg_match_all('/^INSERT (?:INTO )?`tiki_menu_options` .*$/mi', $tiki_sql, $matches);
+
+		if ($matches && count($matches[0])) {
+			$menuoptions = $this->table('tiki_menu_options');
+			$menuoptions->deleteMultiple( array( 'menuId' => 42 ));
+			
+			foreach ($matches[0] as $query) {
+				$this->query($query);
+			}
+			$this->empty_menu_cache($menuId);
+		}
 	}
 
 	function get_max_option($menuId)
@@ -236,7 +272,7 @@ class MenuLib extends TikiLib
 		if (empty($option['url'])) {
 			return false;
 		}
-		$url = urldecode($_SERVER['REQUEST_URI']);
+		$url = str_replace('+', ' ', str_replace('&amp;', '&', urldecode($_SERVER['REQUEST_URI'])));
 		$option['url'] = str_replace('+', ' ', str_replace('&amp;', '&', urldecode($option['url'])));
 		if (strstr($option['url'], 'structure=') && !strstr($url, 'structure=')) { // try to find al the occurence of the page in structures
 			$option['url'] = preg_replace('/&structure=.*/', '', $option['url']);
@@ -245,6 +281,11 @@ class MenuLib extends TikiLib
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			$homePage = $wikilib->get_default_wiki_page();
 			$url .= "?page=$homePage";
+		}
+		if (preg_match('/.*tiki.index.php$/', $option['url'])) {
+			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$homePage = $wikilib->get_default_wiki_page();
+			$option['url'] .= "?page=$homePage";
 		}
 		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
 			$pos = strpos($url, '/'. str_replace('&amp;', '&', urldecode($option['sefurl']))); // position in $url
@@ -304,6 +345,7 @@ class MenuLib extends TikiLib
 				}
 			}
 			if (!empty($subMenu) && $findUrl && $cant) {
+				$subMenu = $this->lower($subMenu);
 				$channels['data'] = $subMenu;
 				$channels['cant'] = $cant;
 			} else {
@@ -362,22 +404,61 @@ class MenuLib extends TikiLib
 			}
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
-		// set sections open/close according to cookie
-		if (!empty($params['id'])) {
-			global $prefs;
-			foreach ($channels['data'] as $position => &$option) {
-				$option['open'] = false;
-				if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
-					if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
-						$option['open'] = true;
-					}
-				} elseif ($option['type'] == 's') {
-					$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
-					$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
+		if (!empty($params['subMenu'])) {
+			$subMenu = array();
+			$cant = 0;
+			$in = false;
+			$optionLevel = $level = 0;
+			foreach ($channels['data'] as $position=>$option) {
+				if (is_numeric($option['type'])) {
+					$optionLevel = $option['type'];
+				} else if ($option['type'] == '-') {
+					$optionLevel = $optionLevel - 1;
+				} else if ($option['type'] == 'r' || $option['type'] == 's') {
+					$optionLevel = 0;
 				}
+				if ($in && $optionLevel <= $level) {
+					break;
+				} elseif ($in) {
+					$subMenu[] = $option;
+					$cant++;
+				} elseif (!$in && $option['optionId'] == $params['subMenu']) {
+					$level = $optionLevel;
+					$in = true;
+				} 
+				if ($option['type'] != '-' && $option['type'] != 'o') {
+					++$optionLevel;
+				}
+			}
+			$channels = array('data'=>$this->lower($subMenu), 'cant'=>$cant);
+		}
+		// set sections open/close according to cookie
+			global $prefs;
+		foreach ($channels['data'] as $position => &$option) {
+			$option['open'] = false;
+			if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
+				if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
+					$option['open'] = true;
+				}
+			} elseif ($option['type'] == 's') {
+				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
+				$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
 			}
 		}
 		return $channels;
+	}
+	function lower($subMenu)
+	{
+		$lower = false;
+		foreach ($subMenu as $i=>$option) {// begin all the secrtion at 0 to have a nice display
+			if (is_numeric($option['type'])) {
+				if ($lower === false) {
+					$lower = $option['type'];
+				}
+				$subMenu[$i]['type'] -= $lower;
+			}
+		}
+		return $subMenu;
 	}
 	
 	// check if a option belongs to a menu

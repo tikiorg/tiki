@@ -1,9 +1,17 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'user' => 'text',
+		'username' => 'text',
+		'pass' => 'text',
+	) )
+);
 
 $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
@@ -62,8 +70,9 @@ if ($tiki_p_admin == 'y') {
 			exit;
 		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
-			$_SESSION[$user_cookie_site] = $_REQUEST['username'];
-			$smarty->assign_by_ref('user', $_REQUEST['username']);
+			$username = $userlib->get_user_real_case($_REQUEST['username']);
+			$_SESSION[$user_cookie_site] = $username;
+			$smarty->assign_by_ref('user', $username);
 		}
 		header('location: ' . $_SESSION['loginfrom']);
 		// Unset session variable for the next su
@@ -176,12 +185,15 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	}
 } else {
 	// Verify user is valid
-	list($isvalid, $user, $error) = $userlib->validate_user($user, $pass, $challenge, $response);
+	$ret = $userlib->validate_user($user, $pass, $challenge, $response);
+	if (count($ret) == 3)
+		$ret[] = null;
+	list($isvalid, $user, $error, $method) = $ret;
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
 	// The user must re-nter the old password so no security risk here
 	if ($isvalid) {
-		$isdue = $userlib->is_due($user);
+		$isdue = $userlib->is_due($user, $method);
 		if ($user != 'admin') { // admin has not necessarely an email
 			$isEmailDue = $userlib->is_email_due($user, 'email');
 			// Update some user details from LDAP
@@ -307,7 +319,10 @@ if ($isvalid) {
 					//
 					if ($prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex'] || ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage)) || ($tikiIndex_full != '' && basename($url_path) == $tikiIndex_full)) {
 						$groupHome = $userlib->get_user_default_homepage($user);
-						if ($groupHome != '') $url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : 'tiki-index.php?page=' . urlencode($groupHome);
+						if ($groupHome != '') {
+							include_once('tiki-sefurl.php');
+							$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome), $smarty);
+						}
 					}
 				}
 				// Unset session variable in case user su's

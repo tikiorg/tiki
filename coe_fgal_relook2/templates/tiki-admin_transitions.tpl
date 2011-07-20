@@ -1,4 +1,4 @@
-{title help="Category Transitions"}{tr}Transitions{/tr}{/title}
+{title help="Transitions"}{tr}Transitions{/tr}{/title}
 
 {tabset}
 	{tab name="{tr}Subset Selection{/tr}"}
@@ -38,13 +38,13 @@
 					{/if}
 				</ul>
 				<p>
-					<label for="transition-group-auto">{tr}Group name{/tr}</label>
-					<input type="text" id="transition-group-auto"/>
+					<label for="transition-group-auto">{tr}Type in a group name and click "enter"{/tr}</label>
+					<input type="text" id="transition-group-auto"/> 
 				</p>
 			</fieldset>
 
 			<p>
-				<input type="submit" value="{tr}Select{/tr}"/>
+				{tr}Once you have selected at least two, click:{/tr} <input type="submit" value="{tr}Select{/tr}"/> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
 			</p>
 		</form>
 		{jq}
@@ -80,34 +80,14 @@
 	{/tab}
 	{if $available_states|@count > 0}
 	{tab name="{tr}Transitions{/tr}"}
-		<div id="graph-canvas"></div>
+		{$headerlib->add_dracula()}
+		<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$graph_nodes|escape}" data-graph-edges="{$graph_edges|escape}"></div>
 		<a href="#" id="graph-draw" class="button">{tr}Draw Transition Diagram{/tr}</a>
 		{jq}
 		$('#graph-draw').click( function( e ) {
-			e.preventDefault();
 			$(this).hide();
-			var width = $('#graph-canvas').width();
-			var height = Math.ceil( width * 9 / 16 );
-			var nodes = {{$graph_nodes}};
-			var edges = {{$graph_edges}};
-
-			var g = new Graph;
-			for( k in nodes ) {
-				g.addNode( nodes[k] );
-			}
-			for( k in edges ) {
-				var style = { directed: true };
-				if( edges[k].preserve ) {
-					style.color = 'red';
-				}
-				g.addEdge( edges[k].from, edges[k].to, style );
-			}
-
-			var layouter = new Graph.Layout.Spring(g);
-			layouter.layout();
-			
-			var renderer = new Graph.Renderer.Raphael('graph-canvas', g, width, height );
-			renderer.draw();
+			$('#graph-canvas').drawGraph();
+			return false;
 		} );
 		{/jq}
 		<table class="normal">

@@ -11,7 +11,7 @@ require dirname(__FILE__) . '/svntools.php';
 info( "Verifying..." );
 
 if( ! isset( $_SERVER['argc'] ) || $_SERVER['argc'] != 2 )
-	error( "Missing argument. Expecting branch to merge as argument.\n\nExamples:\n\tbranches/2.0\n\ttrunk" );
+	error( "Missing argument. Expecting branch to merge as argument.\n\nExamples:\n\tbranches/7.x\n\ttrunk" );
 
 $local = get_info( '.' );
 

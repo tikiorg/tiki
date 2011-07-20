@@ -1,12 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-function wikiplugin_addtogooglecal_help() {
-	return tra('Create an icon for a user to add an event to Google Calendar').":<br />~np~{ADDTOGOOGLECAL(calitemid=1) /}~/np~";;
-}
+// $Id$
 
 function wikiplugin_addtogooglecal_info() {
 	return array(

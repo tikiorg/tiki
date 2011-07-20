@@ -20,7 +20,7 @@
 	{/if}
 	<div class="articletitle">
 		<h2>
-			{$arttitle|escape}
+			{object_link type=article id=$articleId title=$arttitle}
 		</h2>
 		{if $show_subtitle eq 'y' and $subtitle}
 			<div class="articlesubtitle">{$subtitle|escape}</div>
@@ -53,7 +53,7 @@
 		</form>
 	{/if}
 
-	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl}{/if}
+	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if}
 
 	<div class="articleheading">
 		<table cellpadding="0" cellspacing="0" width="100%">
@@ -108,7 +108,7 @@
 					{if $article_attributes}
 						<div class="articleattributes">
 							{foreach from=$article_attributes key=attname item=attvalue}
-							{tr}{$attname|escape}:{/tr} {$attvalue|escape}<br />
+							{$attname|escape}: {$attvalue|escape}<br />
 							{/foreach}
 						</div>
 					{/if}
@@ -119,7 +119,7 @@
 		</table>
 	</div>
 
-	{if $prefs.art_trailer_pos eq 'between'}{include file='article_trailer.tpl}{/if}
+	{if $prefs.art_trailer_pos eq 'between'}{include file='article_trailer.tpl'}{/if}
 
 	<div class="articlebody clearfix">
 		{if $tiki_p_read_article eq 'y'}

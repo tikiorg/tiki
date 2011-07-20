@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,6 +13,7 @@ function prefs_category_list() {
 			'separator' => ',',
 			'type' => 'text',
 			'filter' => 'int',
+			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 		'category_defaults' => array(
 			'name' => tra('Category Defaults'),
@@ -23,6 +24,7 @@ function prefs_category_list() {
 			'size' => 5,
 			'serialize' => 'prefs_category_serialize_defaults',
 			'unserialize' => 'prefs_category_unserialize_defaults',
+			'default' => false,
 		),
 		'category_i18n_sync' => array(
 			'name' => tra('Synchronize multilingual categories'),
@@ -34,6 +36,7 @@ function prefs_category_list() {
 				'whitelist' => tra('Only those specified'),
 				'blacklist' => tra('All but those specified'),
 			),
+			'default' => 'n',
 		),
 		'category_i18n_synced' => array(
 			'name' => tra('Synchronized categories'),
@@ -41,6 +44,7 @@ function prefs_category_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'separator' => ',',
+			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 		'category_autogeocode_within' => array(
 			'name' => tra('Automatically geocode items when categorized in'),
@@ -48,16 +52,19 @@ function prefs_category_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+			'default' => '',
 		),
 		'category_autogeocode_replace' => array(
 			'name' => tra('Replace existing geocode if any'),
 			'description' => tra('When automatically geocoding items based on category name, replace existing geocode if any'),
 			'type' => 'flag',		
+			'default' => 'n',
 		),
 		'category_autogeocode_fudge' => array(
 			'name' => tra('Use approximate geocode location'),
 			'description' => tra('When automatically geocoding items based on category name, use randomly approximated location instead of precise location'),
 			'type' => 'flag',		
+			'default' => 'n',
 		),
 		'category_morelikethis_algorithm' => array(
 			'name' => tra('"More Like This" algorithm for categories'),
@@ -67,6 +74,7 @@ function prefs_category_list() {
 				'basic' => tra('Basic'),
 				'weighted' => tra('Weighted'),
 			),
+			'default' => '',
 		),
 		'category_morelikethis_mincommon' => array(
 			'name' => tra('Minimum number of categories in common'),
@@ -83,7 +91,20 @@ function prefs_category_list() {
 				'9' => tra('9'),
 				'10' => tra('10'),
 			),
+			'default' => 2, 
 		),
+		'category_morelikethis_mincommon_orless' => array(
+			'name' => tra('Or look for the maximum less categories in common if no objects with the above number of common categories'),
+			'type' => 'flag',
+			'default' => 'y',
+			),
+		'category_morelikethis_mincommon_max' => array(
+			'name' => tra('Maximum of objects more like this, otherwise use the default max records'),
+			'type' => 'text',
+			'size' => 3,
+			'filter' => 'int',
+			'default' => 0,
+			),
 	);
 }
 
@@ -93,8 +114,10 @@ function prefs_category_serialize_defaults( $data ) {
 	}
 
 	$out = '';
-	foreach( $data as $row ) {
-		$out .= implode( ',', $row['categories'] ) . '/' . $row['default'] . "\n";
+	if ( is_array( $data ) ) {
+		foreach( $data as $row ) {
+			$out .= implode( ',', $row['categories'] ) . '/' . $row['default'] . "\n";
+		}
 	}
 
 	return trim( $out );

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -54,8 +54,9 @@ if ($prefs['feature_categories'] == 'y') {
 
 if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
+} else {
+	$smarty->assign('machine_translate_to_lang', '');
 }
-
 $access->check_feature( 'feature_wiki' );
 
 if(!isset($_SESSION['thedate'])) {
@@ -94,9 +95,9 @@ $use_best_language = $multilinguallib->useBestLanguage();
 $info = null;
 
 $structs_with_perm = array(); 
+$structure = 'n';
+$smarty->assign('structure',$structure);
 if( $prefs['feature_wiki_structure'] == 'y' ) {
-	$structure = 'n';
-	$smarty->assign('structure',$structure);
 	// Feature checks made in the function for structure language
 	if (!$use_best_language) {
 		$info = $tikilib->get_page_info($_REQUEST["page"]);
@@ -321,15 +322,6 @@ $objectperms = $pageRenderer->applyPermissions();
 
 if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objectperms->wiki_view_latest) {
 	$pageRenderer->forceLatest();
-}
-
-if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
-    $comments_per_page = $prefs['wiki_comments_per_page'];
-    $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-    $comments_vars=Array('page');
-    $comments_prefix_var='wiki page:';
-    $comments_object_var='page';
-    include_once('comments.php');
 }
 
 require_once 'lib/cache/pagecache.php';

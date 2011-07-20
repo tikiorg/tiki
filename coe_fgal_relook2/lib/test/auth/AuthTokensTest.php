@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 /** 
  * @group integration
@@ -42,7 +47,7 @@ class AuthTokensTest extends PHPUnit_Framework_TestCase
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ), array( 'timeout' => 5 ) );
 
 		$this->assertEquals( $data, $this->db->query( 'SELECT tokenId, timeout, entry, parameters, groups FROM tiki_auth_tokens' )->fetchRow() );
-		$this->assertEquals( 32, strlen( $token ) );
+		$this->assertEquals( 32, strlen( $token['token'] ) );
 	}
 
 	function testTokenMatchesCompleteHash() {
@@ -52,13 +57,13 @@ class AuthTokensTest extends PHPUnit_Framework_TestCase
 
 		$row = $this->db->query( 'SELECT tokenId, creation, timeout, entry, parameters, groups FROM tiki_auth_tokens' )->fetchRow();
 
-		$this->assertEquals( md5( implode('', $row) ), $token );
+		$this->assertEquals( md5( implode('', $row) ), $token['token'] );
 	}
 
 	function testRetrieveGroupsForToken() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ) );
-		$this->assertEquals( array( 'Registered' ), $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') ) );
+		$this->assertEquals( array( 'Registered' ), $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') ) );
 	}
 
 	function testAccessExpiredToken() {
@@ -72,37 +77,37 @@ class AuthTokensTest extends PHPUnit_Framework_TestCase
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ) );
 		$this->db->query( 'UPDATE tiki_auth_tokens SET groups = \'["Admins"]\'' );
-		$this->assertNull( $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') ) );
 	}
 
 	function testExtraDataCancels() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ) );
-		$this->assertNull( $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage', 'hello' => 'world') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage', 'hello' => 'world') ) );
 	}
 
 	function testMissingDataCancels() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage', 'foobar' => 'baz'), array( 'Registered' ) );
-		$this->assertNull( $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') ) );
 	}
 
 	function testDifferingEntryCancels() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ) );
-		$this->assertNull( $lib->getGroups( $token, 'tiki-print.php', array('page' => 'HomePage') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-print.php', array('page' => 'HomePage') ) );
 	}
 
 	function testDifferingValueCancels() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ) );
-		$this->assertNull( $lib->getGroups( $token, 'tiki-index.php', array('page' => 'Home') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'Home') ) );
 	}
 
 	function testNoParamerers() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array(), array( 'Registered' ) );
-		$this->assertEquals( array( 'Registered' ), $lib->getGroups( $token, 'tiki-index.php', array() ) );
+		$this->assertEquals( array( 'Registered' ), $lib->getGroups( $token['token'], 'tiki-index.php', array() ) );
 	}
 
 	function testMaximumTimeout() {
@@ -117,19 +122,19 @@ class AuthTokensTest extends PHPUnit_Framework_TestCase
 	function testSameTokenTwice() {
 		$lib = new AuthTokens( $this->db );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ) );
-		$lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') );
+		$lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') );
 
-		$this->assertNull( $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') ) );
 	}
 
 	function testAllowMultipleHits() {
 		$lib = new AuthTokens( $this->db, array( 'maxHits' => 100 ) );
 		$token = $lib->createToken( 'tiki-index.php', array('page' => 'HomePage'), array( 'Registered' ), array( 'hits' => 3 ) );
-		$lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') );
-		$lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') );
+		$lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') );
+		$lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') );
 
-		$this->assertEquals( array( 'Registered' ), $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') ) );
-		$this->assertNull( $lib->getGroups( $token, 'tiki-index.php', array('page' => 'HomePage') ) );
+		$this->assertEquals( array( 'Registered' ), $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') ) );
+		$this->assertNull( $lib->getGroups( $token['token'], 'tiki-index.php', array('page' => 'HomePage') ) );
 	}
 
 	function testLimitOnAccessCount() {

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -188,10 +188,8 @@ if ($prefs['feature_theme_control'] == 'y') {
 }
 // now set it if needed
 if ($popup) {
-	$prefs['feature_top_bar'] = 'n';
 	$prefs['feature_left_column'] = 'n';
 	$prefs['feature_right_column'] = 'n';
-	$prefs['feature_bot_bar'] = 'n';
 }
 ask_ticket('browse-image');
 //add a hit

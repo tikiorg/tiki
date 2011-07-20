@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -30,6 +30,10 @@ $auto_query_args = array(
 );
 
 $_REQUEST["questionsPerPage"] = 999;
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
+
 
 $info = array();
 $info["name"] = '';
@@ -51,7 +55,14 @@ $info["timeLimit"] = 60 * 60;
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz');
 
- 	# convert from the displayed 'site' time to 'server' time
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['publish_Meridian'])) {
+		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
+	}
+	if (!empty($_REQUEST['expire_Meridian'])) {
+		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
+	}
+	# convert from the displayed 'site' time to 'server' time
  	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
  	$expireDate = $tikilib->make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 

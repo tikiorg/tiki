@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -7,7 +7,6 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
-include_once ('lib/tree/categ_admin_tree.php');
 
 $access->check_feature('feature_categories');
 $access->check_permission('tiki_p_admin_categories');
@@ -25,7 +24,7 @@ if (!isset($_REQUEST["parentId"])) {
 $smarty->assign('parentId', $_REQUEST["parentId"]);
 
 if (!empty($_REQUEST['unassign'])) {
-	$access->check_authenticity(tra('Are you sure you want to unassign the objects of this category: ') . htmlspecialchars($info['name']));
+	$access->check_authenticity(tra('Are you sure you want to unassign the objects of this category: ') . $info['name']);
 	$categlib->unassign_all_objects($_REQUEST['parentId']);
 }
 if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
@@ -176,7 +175,7 @@ if (isset($_REQUEST["removeObject"])) {
 	$categlib->notify($values);
 }
 if (isset($_REQUEST["removeCat"]) && ($info = $categlib->get_category($_REQUEST['removeCat']))) {
-	$access->check_authenticity(tra('Click here to delete the category:') . ' ' . htmlspecialchars($info['name']));
+	$access->check_authenticity(tra('Click here to delete the category:') . ' ' . $info['name']);
 	$categlib->remove_category($_REQUEST["removeCat"]);
 }
 if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["name"]) > 0) {
@@ -375,8 +374,8 @@ if( $prefs['feature_wiki'] == 'y' ) {
 			$pages_not_in_cat[] = $pg;
 		}
 	}
+	$pages['cant'] = $pages['cant']- count($pages['data']) + count($pages_not_in_cat);
 	$pages['data'] = $pages_not_in_cat;
-	$pages['cant'] = count($pages_not_in_cat);
 }
 
 if( $prefs['feature_faqs'] == 'y' ) {

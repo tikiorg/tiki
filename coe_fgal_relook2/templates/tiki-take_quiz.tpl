@@ -36,7 +36,7 @@ settimeleft(itid);
   <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].options[jx].optionText|escape}<br />
   {/section}
 </div>  
-{if $questions[ix].type eq "f" }
+{if $questions[ix].type eq "f"}
 <br />
 <div class="quizupload">
 Supporting Documentation: <input name="question_upload_{$questions[ix].questionId}" type="file" />

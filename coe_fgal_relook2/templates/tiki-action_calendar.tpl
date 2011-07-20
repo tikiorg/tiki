@@ -37,7 +37,7 @@
 {include file='tiki-calendar_nav.tpl'}
 
 {if $viewlist eq 'list'}
-{include file='tiki-calendar_listmode.tpl''}
+{include file='tiki-calendar_listmode.tpl'}
 {else}
 {include file='tiki-calendar_calmode.tpl'}
 {/if}

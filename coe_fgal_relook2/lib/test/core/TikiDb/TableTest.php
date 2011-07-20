@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 {
@@ -6,7 +11,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 	{
 		$mock = $this->getMock('TikiDb');
 
-		$query = 'INSERT INTO `my_table` (`label`) VALUES (?)';
+		$query = 'INSERT IGNORE INTO `my_table` (`label`) VALUES (?)';
 
 		$mock->expects($this->once())
 			->method('query')
@@ -20,7 +25,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 		$this->assertEquals(42, $table->insert(array(
 			'label' => 'hello',
-		)));
+		), true));
 	}
 
 	function testInsertWithMultipleValues()
@@ -150,6 +155,26 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$table = new TikiDb_Table($mock, 'my_table');
 		$table->updateMultiple(array(
+			'title' => 'hello world',
+			'description' => 'foobar',
+		), array(
+			'objectType' => 'wiki page',
+			'objectId' => 'HomePage',
+		));
+	}
+
+	function testInsertOrUpdate()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'INSERT INTO `my_table` (`title`, `description`, `objectType`, `objectId`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage', 'hello world', 'foobar')));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->insertOrUpdate(array(
 			'title' => 'hello world',
 			'description' => 'foobar',
 		), array(
@@ -432,6 +457,14 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($table->expr('$$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3)));
 	}
 
+	function testInWithDataNotSensitive()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('BINARY $$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3), true));
+	}
+
 	function testExactMatch()
 	{
 		$mock = $this->getMock('TikiDb');
@@ -470,6 +503,28 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('MAX(`hits`)', array()), $table->max('hits'));
+	}
+
+	function testFindIn()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('(`a` LIKE ? OR `b` LIKE ? OR `c` LIKE ?)', array("%X%", "%X%", "%X%")), $table->findIn('X', array('a', 'b', 'c')));
+	}
+	
+	function testEmptyConcat()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+		$this->assertEquals($table->expr('', array()), $table->concatFields(array()));
+	}
+	
+	function testEmptyConcatWithMultiple()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+		$this->assertEquals($table->expr('CONCAT(`a`, `b`, `c`)', array()), $table->concatFields(array('a', 'b', 'c')));
 	}
 }
 

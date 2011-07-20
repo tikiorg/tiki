@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -42,9 +42,6 @@ if (!$histlib->version_exists($page, $version)) {
 $tikilib->get_perm_object($page, 'wiki page', $info);
 $access->check_permission( array('tiki_p_rollback', 'tiki_p_edit') );
 
-$version = $histlib->get_version($page, $version);
-$version["data"] = $tikilib->parse_data($version["data"], array('preview_mode' => true));
-$smarty->assign_by_ref('preview', $version);
 if (isset($_REQUEST["rollback"])) {
 	require_once('lib/diff/difflib.php');
 	require_once('lib/categories/categlib.php');
@@ -52,6 +49,9 @@ if (isset($_REQUEST["rollback"])) {
 	header("location: tiki-index.php?page=" . urlencode($page));
 	die;
 }
+$version = $histlib->get_version($page, $version);
+$version["data"] = $tikilib->parse_data($version["data"], array('preview_mode' => true, 'is_html' => $version['is_html']));
+$smarty->assign_by_ref('preview', $version);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-rollback.tpl');

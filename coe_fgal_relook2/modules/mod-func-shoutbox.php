@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -32,6 +32,7 @@ function module_shoutbox_info() {
 		'name' => tra('Shoutbox'),
 		'description' => tra('The shoutbox is a quick messaging tool. Messages reload each time the page changes. Anyone with the right permission can see all messages. Another permission allows to send messages.'),
 		'prefs' => array( 'feature_shoutbox' ),
+		'documentation' => 'Module shoutbox',
 		'params' => array(
 			'tooltip' => array(
 				'name' => tra('Tooltip'),

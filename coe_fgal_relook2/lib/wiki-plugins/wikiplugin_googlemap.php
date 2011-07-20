@@ -1,12 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-function wikiplugin_googlemap_help() {
-	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item|objectlist,trackerfield, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14, controls=n, trackerfieldid=xxx, trackerinputid=xxx)}{GOOGLEMAP}~/np~";
-}
+// $Id$
 
 function wikiplugin_googlemap_info() {
 	return array(
@@ -14,7 +11,7 @@ function wikiplugin_googlemap_info() {
 		'documentation' => 'PluginGoogleMap',
 		'description' => tra('Display a Google map'),
 		'prefs' => array( 'wikiplugin_googlemap' ),
-//		'validate' => 'all',
+		'format' => 'html',
 		'icon' => 'pics/icons/google.png',
 		'params' => array(
 			'type' => array(
@@ -434,12 +431,13 @@ function wikiplugin_googlemap($data, $params) {
 			return tra("No such object");
 		}
 		$viewPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'view');
-		if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $viewPermNeeded)) {
+		if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $viewPermNeeded) && !($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"]))) {
+			// tracker item perms checked below so no need to check here
 			return '';
 		}
 		if ($type == 'locator') {
 			$editPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'edit');
-			if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded)) {
+			if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded) && !($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"]))) {
 				// if no perm to edit, even if type is set to locator, locator is disabled
 				$type = 'item';
 			}
@@ -497,7 +495,7 @@ function wikiplugin_googlemap($data, $params) {
 						if ($markertext) {
 							$markertext .= '<br /><br />';	
 						}
-						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m]));					
+						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m], ENT_QUOTES));					
 					}
 				}
 			}
@@ -559,7 +557,7 @@ function wikiplugin_googlemap($data, $params) {
 			if (!empty($obj['href'])) {
 				$popup .= '<a href="' . $obj['href']  . '">';
 			}
-			$popup .= htmlspecialchars($obj['title']);
+			$popup .= htmlspecialchars($obj['title'], ENT_QUOTES);
 			if (!empty($obj['href'])) {
 				$popup .= '</a>';	
 			}
@@ -598,7 +596,7 @@ function wikiplugin_googlemap($data, $params) {
 		$smarty->assign('gmaphidden', 1);
 	}
 			
-	$ret = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl') . '~/np~';
+	$ret = $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl');
 	return $ret;
 
 }

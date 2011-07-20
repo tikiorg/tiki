@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,21 +13,24 @@ function prefs_print_list() {
 			'type' => 'list',
 			'options' => array(
 				'none' => tra('Disabled'),
-				'webkit' => tra('Webkit (wkhtmltopdf)'),
+				'webkit' => tra('WebKit (wkhtmltopdf)'),
 				'webservice' => tra('Webservice'),
 			),
+			'default' => 'none',
 		),
 		'print_pdf_webservice_url' => array(
 			'name' => tra('Webservice URL'),
 			'description' => tra('URL to a service taking a URL as the query string and returns a PDF document.'),
 			'type' => 'text',
 			'size' => 50,
+			'default' => '',
 		),
 		'print_pdf_webkit_path' => array(
-			'name' => tra('Webkit path'),
+			'name' => tra('WebKit path'),
 			'description' => tra('Full path to the wkhtmltopdf executable to generate the PDF document with.'),
 			'type' => 'text',
 			'size' => 50,
+			'default' => '',
 		),
 	);
 }

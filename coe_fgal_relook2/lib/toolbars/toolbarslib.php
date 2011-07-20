@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -90,7 +90,8 @@ abstract class Toolbar
 			'table',
 			'rule',
 			'pagebreak',
-			'blockquote',
+			'box',
+			'email',			
 			'h1',
 			'h2',
 			'h3',
@@ -132,6 +133,8 @@ abstract class Toolbar
 			'switcheditor',
 			'autosave',
 			'nonparsed',
+			'bidiltr',
+			'bidirtl',
 		
 			'sheetsave',	// spreadsheet ones
 			'addrow',
@@ -526,6 +529,10 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'ShowBlocks' );
 		case 'anchor':
 			return new self( 'Anchor' );
+		case 'bidiltr':
+			return new self( 'BidiLtr' );
+		case 'bidirtl':
+			return new self( 'BidiRtl' );
 		}
 	} // }}}
 
@@ -667,12 +674,18 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
-		case 'blockquote':
-			$label = tra('Block Quote');
+		case 'box':
+			$label = tra('Box');
 			$icon = tra('pics/icons/box.png');
-			$wysiwyg = 'Blockquote';
+			$wysiwyg = 'Box';
 			$syntax = '^text^';
 			break;
+		case 'email':
+			$label = tra('Email');
+			$icon = tra('pics/icons/email.png');
+			$wysiwyg = null;			
+			$syntax = '[mailto:email@example.com|text]';
+			break;				
 		case 'h1':
 		case 'h2':
 		case 'h3':
@@ -769,7 +782,7 @@ class ToolbarPicker extends Toolbar
 	
 	public static function fromName( $tagName ) // {{{
 	{
-		global $headerlib;
+		global $headerlib, $section;
 		$prefs = array();
 		$styleType = '';
 		
@@ -805,7 +818,7 @@ class ToolbarPicker extends Toolbar
 			
 		$hex = array('0', '3', '6', '8', '9', 'C', 'F');
 			$count_hex = count($hex);
-
+			
 			for ($r = 0; $r < $count_hex; $r+=2){ // red
 				for ($g = 0; $g < $count_hex; $g+=2){ // green
 					for ($b = 0; $b < $count_hex; $b+=2){ // blue
@@ -815,10 +828,14 @@ class ToolbarPicker extends Toolbar
 				}
 			}
 			
-			$list = array();
+			$list = array();	
 			foreach( $rawList as $color) {
 				$list["~~#$color:text~~"] = "<span style='background-color: #$color' title='#$color' />&nbsp;</span>";
 			}
+			
+			if ($section == 'sheet')
+				$list['reset'] = "<span title='".tra("Reset Colors")."' class='toolbars-picker-reset' reset='true'>".tra("Reset")."</span>";
+			
 			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
@@ -830,7 +847,7 @@ class ToolbarPicker extends Toolbar
 			
 			$hex = array('0', '3', '6', '8', '9', 'C', 'F');
 			$count_hex = count($hex);
-
+			
 			for ($r = 0; $r < $count_hex; $r+=2){ // red
 				for ($g = 0; $g < $count_hex; $g+=2){ // green
 					for ($b = 0; $b < $count_hex; $b+=2){ // blue
@@ -844,6 +861,9 @@ class ToolbarPicker extends Toolbar
 			foreach( $rawList as $color) {
 				$list["~~black,#$color:text~~"] = "<span style='background-color: #$color' title='#$color' />&nbsp;</span>";
 			}
+			if ($section == 'sheet')
+				$list['reset'] = "<span title='".tra("Reset Colors")."' class='toolbars-picker-reset' reset='true'>".tra("Reset")."</span>";
+			
 			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
@@ -1191,7 +1211,7 @@ class ToolbarHelptool extends Toolbar
 			$plugins = $wikilib->list_plugins(true, $areaId);
 		}
 		if ($section == 'sheet') {
-			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl');
+			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl') . $smarty->fetch('tiki-edit_help_sheet_interface.tlp');
 		} else {
 			$sheethelp = '';
 		}
@@ -1255,7 +1275,7 @@ class ToolbarFileGallery extends Toolbar
 	{
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
-				->setWysiwygToken( '' )	/* disabling this by default for wysiwyg - make a custom tool with tikiimage as the wysiwyg token to override */
+				->setWysiwygToken( 'tikiimage' )
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
@@ -1423,7 +1443,12 @@ JS
 	
 	function isAccessible() // {{{
 	{
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && ! isset($_REQUEST['hdr']);	// no switch editor if zoom of section edit
+		global $tiki_p_edit_switch_mode;
+
+		return parent::isAccessible() &&
+				! isset($_REQUEST['zoom']) &&		// no switch editor if zoom of section edit (dead - remove)
+				! isset($_REQUEST['hdr']) &&		// or in section edit
+				$tiki_p_edit_switch_mode === 'y';	// or no perm (new in 7.1)
 	} // }}}
 	
 /*	function getLabel() // {{{
@@ -1525,7 +1550,11 @@ class ToolbarSheet extends Toolbar
 			case 'sheetsave':
 				$label = tra('Save Sheet');
 				$icon = tra('pics/icons/disk.png');
-				$syntax = '$.sheet.saveSheet();';
+				$syntax = '
+					$("#saveState").hide();
+					$.sheet.saveSheet($.sheet.tikiSheet, function() {
+						$.sheet.manageState($.sheet.tikiSheet, true);
+					});';
 				break;
 			case 'addrow':
 				$label = tra('Add Row After Selection Or To End If No Selection');
@@ -1570,7 +1599,7 @@ class ToolbarSheet extends Toolbar
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
 				$icon = tra('pics/icons/sheet_get_range.png');
-				$syntax = 'sheetInstance.appendToFormula(sheetInstance.getTdRange());';
+				$syntax = 'sheetInstance.getTdRange(null, sheetInstance.obj.formula().val()); return false;';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');

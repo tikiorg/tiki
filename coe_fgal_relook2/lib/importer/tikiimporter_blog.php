@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -50,6 +50,13 @@ class TikiImporter_Blog extends TikiImporter
 	public $blogId = '';
 
 	/**
+	 * The data extracted and parsed from the Wordpress
+	 * XML file.
+	 * @var array   
+	 */
+	public $parsedData = array();
+	
+	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
 	static public function importOptions()
@@ -68,16 +75,17 @@ class TikiImporter_Blog extends TikiImporter
 	 * and start the importing proccess by calling the functions to
 	 * validate, parse and insert the data.
 	 *  
-	 * @return void 
+	 * @return null 
 	 */
 	function import()
 	{
 		$this->setupTiki();
 		
 		// child classes must implement this method
-		$parsedData = $this->parseData();
+		// and it should set $this->parsedData
+		$this->parseData();
 
-		$importFeedback = $this->insertData($parsedData);
+		$importFeedback = $this->insertData();
 
 		$this->saveAndDisplayLog("\n" . tra('Importation completed!'));
 
@@ -104,65 +112,44 @@ class TikiImporter_Blog extends TikiImporter
 	}
 	
 	/**
-	 * Insert the imported data into Tiki.
+	 * Insert the imported data into Tiki. 
 	 * 
-	 * @param array $parsedData the return of $this->parseData()
+	 * @param array $parsedData the return of $this->parseData() (all the data that will be imported)
 	 *
 	 * @return array $countData stats about the content that has been imported
 	 */
-	function insertData($parsedData)
+	function insertData()
 	{
 		$countData = array();
 
-		$countPosts = count($parsedData['posts']);
-		$countPages = count($parsedData['pages']);
-		$countTags = count($parsedData['tags']);
-		$countCategories = count($parsedData['categories']);
+		$countPosts = count($this->parsedData['posts']);
+		$countPages = count($this->parsedData['pages']);
+		$countTags = count($this->parsedData['tags']);
+		$countCategories = count($this->parsedData['categories']);
 		
-		$this->saveAndDisplayLog("\n" . tra("Found $countPosts posts, $countPages pages, $countTags tags and $countCategories categories. Inserting them into Tiki:") . "\n");
+		$this->saveAndDisplayLog("\n" . tr("Found %0 posts, %1 pages, %2 tags and %3 categories. Inserting them into Tiki:", $countPosts, $countPages, $countTags, $countCategories) . "\n");
 
-		if (!empty($parsedData['posts'])) {
+		if (!empty($this->parsedData['posts'])) {
 			$this->createBlog();
 		}
 
-		if (!empty($parsedData)) {
-			if (!empty($parsedData['tags'])) {
-				$this->createTags($parsedData['tags']);
+		if (!empty($this->parsedData)) {
+			if (!empty($this->parsedData['tags'])) {
+				$this->createTags($this->parsedData['tags']);
 			}
 			
-			if (!empty($parsedData['categories'])) {
-				$this->createCategories($parsedData['categories']);
+			if (!empty($this->parsedData['categories'])) {
+				$this->createCategories($this->parsedData['categories']);
 			}
 			
-			$items = array_merge($parsedData['posts'], $parsedData['pages']);
+			$items = array_merge($this->parsedData['posts'], $this->parsedData['pages']);
 			
 			if (!empty($items)) {
-				//TODO: move this foreach to a function (insertItems())
-				foreach ($items as $item) {
-					$methodName = 'insert' . ucfirst($item['type']);
-	
-					if ($objId = $this->$methodName($item)) {
-						if ($item['type'] == 'page') {
-							$type = 'wiki page';
-							$msg = tra("Page \"${item['name']}\" sucessfully imported");
-						} else if ($item['type'] == 'post') {
-							$type = 'blog post';
-							$msg = tra("Post \"${item['name']}\" sucessfully imported");
-						}
-						
-						if (!empty($item['comments'])) {
-							$this->insertComments($objId, $type, $item['comments']);
-						}
-						
-						if (!empty($item['tags'])) {
-							$this->linkObjectWithTags($objId, $type, $item['tags']);
-						}
-						
-						if (!empty($item['categories'])) {
-							$this->linkObjectWithCategories($objId, $type, $item['categories']);
-						}
-						
-						$this->saveAndDisplayLog($msg . "\n");					
+				foreach ($items as $key => $item) {
+					if ($objId = $this->insertItem($item)) {
+						// discover the item key in the $this->parsedData array
+						$itemKey = array_search($item, $this->parsedData[$item['type'] . 's']);
+						$this->parsedData[$item['type'] . 's'][$itemKey]['objId'] = $objId;
 					} else {
 						//TODO: improve feedback reporting the difference between the number of items found and items imported
 						if ($item['type'] == 'page') {
@@ -171,7 +158,7 @@ class TikiImporter_Blog extends TikiImporter
 							$countPosts--;
 						}
 						
-						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" NOT imported (there was already a item with the same name)") . "\n");
+						$this->saveAndDisplayLog(tr('Item "%0" NOT imported (there was already a item with the same name)', $item['name']) . "\n");
 					}
 				}
 			}
@@ -184,7 +171,45 @@ class TikiImporter_Blog extends TikiImporter
 		
 		return $countData;
 	}
+	
+	/**
+	 * Insert a page or post and its comments and link it with 
+	 * categories and tags.
+	 * 
+	 * @param array $item a page or post
+	 * @return int|string page name or post id
+	 */
+	function insertItem($item)
+	{
+		$methodName = 'insert' . ucfirst($item['type']);
 
+		if ($objId = $this->$methodName($item)) {
+			if ($item['type'] == 'page') {
+				$type = 'wiki page';
+				$msg = tr('Page "%0" sucessfully imported', $item['name']);
+			} else if ($item['type'] == 'post') {
+				$type = 'blog post';
+				$msg = tr('Post "%0" sucessfully imported', $item['name']);
+			}
+			
+			if (!empty($item['comments'])) {
+				$this->insertComments($objId, $type, $item['comments']);
+			}
+			
+			if (!empty($item['tags'])) {
+				$this->linkObjectWithTags($objId, $type, $item['tags']);
+			}
+			
+			if (!empty($item['categories'])) {
+				$this->linkObjectWithCategories($objId, $type, $item['categories']);
+			}
+			
+			$this->saveAndDisplayLog($msg . "\n");
+
+			return $objId;
+		}
+	}
+	
 	/**
 	 * Create blog based on $this->blogInfo and 
 	 * set new blog as Tiki home page if option selected.
@@ -363,8 +388,12 @@ class TikiImporter_Blog extends TikiImporter
 				$comment['author_url'] = '';
 			}
 
-			$commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
+			$commentId = $commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
 				$comment['author'], $comment['created'], $comment['author_email'], $comment['author_url']);
+				
+			if ($comment['approved'] == 0) {
+				$commentslib->approve_comment($commentId, 'n');
+			}
 		}
 	}
 	

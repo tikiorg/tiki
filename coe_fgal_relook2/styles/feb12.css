@@ -183,7 +183,7 @@ ul span, ol span {
 	font-size: 1.24em;
 }
 
-#header {
+.header {
 	text-align: left;
 }
 
@@ -240,11 +240,38 @@ ul span, ol span {
 }
 
 /* Site Header & Identity */
-#header_fixedwidth {
-	background: url(feb12/header.jpg) repeat-x bottom;
-	height: auto;
-	min-height: 98px;
+/*.header_fixedwidth {
+	margin: 0;
+}*/
+
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
 }
+
+.header_container {
+	background: url(feb12/header.jpg) repeat-x bottom;
+}
+
+#top_modules {
+	min-height: 98px;	
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -20px;
+}
+
+#top_modules .secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
 
 #sitelogo {
 	margin-top: 0;
@@ -253,23 +280,24 @@ ul span, ol span {
 	padding: 0 10px;
 }
 
-#sitead {
-	margin-top: 10px;
-}
 
 .floatright img {
 	margin-right: 40px;
 }
 
-#bannertopright {
-	padding-right: 1em;
-}
-
+/*
 .box-login_box {
 	float: right;
 	margin-right: 20px;
 	margin-top: 40px;
 	color: #f5f5f5;
+}
+*/
+
+#top_modules .box-login_box {
+	position: absolute;
+	right: 20px;
+	bottom: 0;
 }
 
 /* give every sub-element of #siteloginbar some padding */
@@ -277,37 +305,36 @@ ul span, ol span {
 	padding: 2px;
 }
 
-#siteloginbar a:link,
-#siteloginbar a:visited {
+.siteloginbar a:link,
+.siteloginbar a:visited {
 	color: #fff;
 	text-decoration: none;
 }
 
-#siteloginbar div {
+.siteloginbar div {
 	text-align: right;
 }
 
-#siteloginbar_popup ul li ul {
+.siteloginbar_popup ul li ul {
 	margin-top: -14px;
 }
 
-#siteloginbar_popup .tabcontent {
-	background: none;
+/* Site title and subtitle */
+#top_modules .box-logo {
+	margin-left: 20px;
+	height: 100%;
 }
 
-/* Site title and subtitle */
-#sitetitles {
-	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
-	font-weight: bold;
-	height: 4em;
-	margin: 0;
-	position: relative;
+#top_modules #sitetitles {
+	margin: 3% 20px 2% 20px;
 }
 
 #sitetitle {
 	font-size: 2.2em;
-	position: relative;
-	top: 0.5em;
+	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
 }
 
 #sitetitle a,
@@ -325,9 +352,7 @@ ul span, ol span {
 #sitesubtitle {
 	color: #fff;
 	font-size: 1.3em;
-	padding-top: 4em;
-	position: relative;
-	margin-top: -3em;
+	line-height: 1.5;
 }
 
 /* tiki-top_bar.tpl - menu and search */
@@ -554,10 +579,6 @@ a.linkmodule {
 	margin-bottom: 1.5em;
 }
 
-.wikitext .box {
-	width: 95%;
-}
-
 h3.box-title {
 	border-bottom: 1px solid #57A5D0;
 }
@@ -722,12 +743,12 @@ tr.diffheader {
 	border-bottom-width: 0 !important;
 }
 
-.tabmark a {
+.tabmark > a {
 	color: #a8cce2;
 	border: none;
 }
 
-.tabmark a:hover {
+.tabmark > a:hover {
 	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #eee !important;
 	text-decoration: none;
@@ -750,6 +771,10 @@ tr.diffheader {
 
 .admin #content1 .tabcontent .cbox {
 	background: transparent;
+}
+
+.statuson {
+	border: 1px solid #225566;
 }
 
 /*** Feature-specific selectors ***/

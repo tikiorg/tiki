@@ -1,19 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Displays a list of users
-// Use:
-// {USERLIST(sep=>", ",max=>10,sort=>asc|desc,layout=>table)}substring{USERLIST}
-//
-// If no pattern is given returns all users or all that contain 'substring'
-
-function wikiplugin_userlist_help() {
-        return tra("Displays a list of registered users").":<br />~np~{USERLIST(sep=>\"SEPARATOR\",max=>MAXROWS,sort=>asc|desc,layout=>table)}substring{USERLIST}~/np~";
-}
 
 function wikiplugin_userlist_info() {
 	return array(
@@ -100,7 +90,7 @@ function wikiplugin_userlist_info() {
 }
 
 function wikiplugin_userlist($data, $params) {
-    global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users;
+    global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users, $user;
 
     extract ($params,EXTR_SKIP);
 
@@ -116,12 +106,6 @@ function wikiplugin_userlist($data, $params) {
         $mid = '1';
         $bindvars=array();
     }
-    if (isset($sort)) {
-    	$sort=strtolower($sort);
-        if (($sort=='asc') || ($sort=='desc')) {
-            $mid .= ' ORDER BY `login` '.$sort;
-        }
-    }
     $pre=''; $post='';
     if (isset($layout)) {
         if ($layout=='table') {
@@ -135,6 +119,12 @@ function wikiplugin_userlist($data, $params) {
 		$mid .= ' and uug.`groupName` = ? and uu.`userId` = uug.`userId`';
 		$bindvars[] = $group;
 	}
+    if (isset($sort)) {
+    	$sort=strtolower($sort);
+        if (($sort=='asc') || ($sort=='desc')) {
+            $mid .= ' ORDER BY `login` '.$sort;
+        }
+    }
     
     $query = "select `login`, uu.`userId` from `users_users` uu $from where $mid";
     $result = $tikilib->query($query, $bindvars, $numRows);

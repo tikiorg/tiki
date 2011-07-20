@@ -52,7 +52,7 @@
 <form action="tiki-directory_admin_related.php">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
-  <table class="normal">
+  <table class="formcolor">
     <tr>
       <th>{tr}Directory Category{/tr}</th>
       <th>{tr}Action{/tr}</th>
@@ -60,19 +60,14 @@
     {cycle values="odd,even" print=false}
     {section name=user loop=$items}
     <tr class="{cycle}">
-      <td><select name="categId">
-          
-{section name=ix loop=$categs}
-      
-          <option value="{$categs[ix].categId|escape}" {if $categs[ix].categId eq $items[user].relatedTo}selected="selected"{/if}>{$categs[ix].path}</option>
-          
-{/section}
-
-        </select>
+      <td>
+			<select name="categId">
+				{section name=ix loop=$categs}
+					<option value="{$categs[ix].categId|escape}" {if $categs[ix].categId eq $items[user].relatedTo}selected="selected"{/if}>{$categs[ix].path}</option>
+				{/section}
+			</select>
       </td>
-      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" />
-        <input type="submit" name="update" value="{tr}Update{/tr}" />
-      </td>
+      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" /><input type="submit" name="update" value="{tr}Update{/tr}" /></td>
     </tr>
     {sectionelse}
 		{norecords _colspan=2}

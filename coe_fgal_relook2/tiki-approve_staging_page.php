@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -120,7 +120,7 @@ $smarty->assign('staging_page', $staging_page);
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	if (isset($info["lang"]) && $info['lang'] != $staging_info['lang'])
-		$multilinguallib->updatePageLang('wiki page', $info['page_id'], $staging_info['lang'], true);
+		$multilinguallib->updateObjectLang('wiki page', $info['page_id'], $staging_info['lang'], true);
 }
 
 // make sure approved page has approved category set, and sync categories

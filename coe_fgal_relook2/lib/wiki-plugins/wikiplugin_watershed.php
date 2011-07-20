@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function wikiplugin_watershed_info() {
 	return array(
@@ -131,14 +136,14 @@ function wikiplugin_watershed( $data, $params ) {
 	$smarty->assign('wsd_brandId', $channels[0]["brandId"]);
 	$smarty->assign('wsd_channelCode', $channels[0]["channelCode"]);
 	if ($params['type'] == 'broadcaster') {
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedbroadcaster.tpl' ) . '~/np~';		
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedbroadcaster.tpl' );		
 	} else if ($params['type'] == 'chat') {
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedchat.tpl' ) . '~/np~';
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedchat.tpl' );
 	} else if ($params['type'] == 'archive') {
 		$smarty->assign('wsd_videoId', $params["videoId"]);
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedarchive.tpl' ) . '~/np~';
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedarchive.tpl' );
 	} else {
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedviewer.tpl' ) . '~/np~';
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedviewer.tpl' );
 	}
 }
 

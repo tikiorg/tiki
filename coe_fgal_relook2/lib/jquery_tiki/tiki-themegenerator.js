@@ -20,7 +20,7 @@ function initThemeGenDialog() {	// closure for colorpicker code
 	var colorInput = "input.tgValue";
 
 	var colorPickerListItem = null;		// still sort of globals really
-	var colorPickerPreviews = null;		// need to know what was clicked from "inside" colorpicker
+	var tgLivePreviews = [];		// need to know what was clicked from "inside" colorpicker
 
 	var opts = {
 		color: '#888',
@@ -35,6 +35,7 @@ function initThemeGenDialog() {	// closure for colorpicker code
 			$(this).ColorPickerSetColor(c);
 
 			if ($(".tgLivePreview:checked", $(colorPickerListItem).parent().parent()).length) {
+				tgLivePreviews = []
 				m = $(colorInput, colorPickerListItem).attr("name");
 				m = m.match(/\[(.*?)\]/);	// colour type
 				if (m) {m = m[1];}
@@ -45,18 +46,15 @@ function initThemeGenDialog() {	// closure for colorpicker code
 				} else if (m === "bordercolors") {
 					m = ["border-top-color", "border-right-color", "border-bottom-color", "border-left-color", "border-color", "border"];
 				}
-				colorPickerPreviews = [];
 				var zall = $(":visible");
 				for (var t in m) {
 					for (var i = 0; i < zall.length; i++) {
 						var $el = $(zall[i]);
 						if ($el.length && $el.css(m[t]) && $.Color($el.css(m[t])).toHEX() == c) {
-							colorPickerPreviews.push( [ m[t], $el[0] ] );
+							tgLivePreviews.push( [ m[t], $el[0] ] );
 						}
 					}
 				}
-			} else {
-				colorPickerPreviews = null;
 			}
 		},
 		onShow: function (colpkr) {
@@ -84,7 +82,7 @@ function initThemeGenDialog() {	// closure for colorpicker code
 			$(colorPickerListItem).addClass('changed');
 
 			if ($(".tgLivePreview:checked", $(colorPickerListItem).parent().parent()).length) {
-				$(colorPickerPreviews).each(function () {
+				$(tgLivePreviews).each(function () {
 					$(this[1]).css( this[0], '#' + hex);
 				});
 			}
@@ -94,9 +92,9 @@ function initThemeGenDialog() {	// closure for colorpicker code
 		}
 	};	// end opts for colorpicker
 
-	$(".tgItem > div", "#tg_section_colors").each(function() {
+	$(".colorSelector").each(function() {
 		var colorItem = this;
-		$(this).ColorPicker(opts);			
+		$(this).parent().ColorPicker(opts);			
 	});
 
 	// checkboxes to select items
@@ -145,12 +143,116 @@ function initThemeGenDialog() {	// closure for colorpicker code
 	});
 
 	if (jqueryTiki.ui) {
+		$(function() {
+			var $div;
+			$(".tgSize", "#themegenerator_container").each (function () {
+			}).focus( function () {
+
+				if ($div) { $div.fadeOut("fast").remove(); }
+				var $input = $(this);
+				var unit = getUnit($input);
+				var val = getNumber($input);
+				var pxVal = val;
+				if (unit == "em") {
+					pxVal = $(parseFloat(val)).toPx();
+				} else if (unit == "%") {
+					pxVal = $(parseFloat(val / 100.0)).toPx();
+				}
+				var options = {
+//					range: "min",
+					min: -2,
+					max: val * 5,
+					step: 1,
+					value: val,
+					slide: function () {
+						setNumber($input, $(this).slider("value"));
+//					},
+//					change: function () {
+//						setNumber($input, $(this).slider("value"));
+						if ($(".tgLivePreview:checked", $(this).parents(".tgItems").parent()).length) {
+							$(tgLivePreviews).each(function () {
+								$(this[1]).css( this[0], $input.val());
+							});
+						}
+					}
+				}
+				if ("em|ex|in|cm|mm".indexOf(unit) > -1 ) {
+					options.min = 0;
+					options.max = val * 5;
+					options.step = 0.01;
+				} else if ("%".indexOf(unit) > -1 ) {
+					options.min = val * 0.8;
+					options.max = val * 1.2;
+				}
+
+				if ($(".tgLivePreview:checked", $(this).parents(".tgItems").parent()).length) {
+					tgLivePreviews = [];
+					var m = $(this).attr("name");
+					m = m.match(/\[(.*?)\]/);	// size type
+					if (m) {m = m[1];}
+					if (m === "fontsize") {
+						m = ["font-size"];
+					} else if (m === "borderwidths") {
+						m = ["border-top-width", "border-right-width", "border-bottom-width", "border-left-width"];
+					} else if (m === "lineheight") {
+						m = ["line-height"];
+					} else if (m === "borderradii") {
+						m = ["border-radius", "-webkit-border-radius", "-moz-border-radius",
+								"border-top-left-radius", "-webkit-border-top-left-radius", "-moz-border-radius-topleft",
+								"border-top-right-radius", "-webkit-border-top-right-radius", "-moz-border-radius-topright",
+								"border-bottom-left-radius", "-webkit-border-bottom-left-radius", "-moz-border-radius-bottomleft",
+								"border-bottom-right-radius", "-webkit-border-bottom-right-radius", "-moz-border-radius-bottomright",
+								];
+					}
+					var zall = $(":visible:not(#themegenerator_container *)");
+					for (var t in m) {
+						for (var i = 0; i < zall.length; i++) {
+							var $el = $(zall[i]);
+							if ($el.length && $el.css(m[t])) {
+								var  s = $el.css(m[t]).match(/([\d\.\-+]+)(?:px|em|ex|%|in|cm|mm|pt|pc)?/);
+								if (s && s[1] && Math.round(s[1]) == pxVal) {
+									tgLivePreviews.push( [ m[t], $el[0] ] );
+								}
+							}
+						}
+					}
+				}
+
+
+				$div = $("<div style='position:absolute;width:" +  $input.parent().width() + "px; height:11px;right:0;" +
+						"top:" + $input.height() * 2 + "px;display:none;' />");
+				$div.slider(options);
+				$input.parent().append($div);
+				$div.show("fast");
+			}).blur( function () {
+				//if ($div) { $div.remove(); }
+			});
+			var getNumber = function ($el) {
+				var m = $el.val().match(/([\d\.\-+]+)(?:px|em|ex|%|in|cm|mm|pt|pc)?/);
+				if (m) {
+					return m[1];
+				} else {
+					return 0;
+				}
+			}
+			var setNumber = function ($el, val) {
+				$el.val(val + getUnit($el));
+			}
+			var getUnit = function ($el) {
+				var m = $el.val().match(/[\d\.\-+]+(px|em|ex|%|in|cm|mm|pt|pc)?/);
+				if (m) {
+					return m[1];
+				} else {
+					return "";
+				}
+			}
+		});
 	}
 
-	// disable for now
-	$("input[type=checkbox].tgLivePreview", "#tg_section_typography")
-		.attr("checked", "")
-		.attr("disabled", "disabled");
+//	// disable for now
+//	$("input[type=checkbox].tgLivePreview", "#tg_section_typography")
+//		.attr("checked", "")
+//		.attr("disabled", "disabled");
 
 	$("label", "#themegenerator_container").each( function() {	// labels go 100% width in dialog
 		$(this).css("width", ($(this).text().length * 0.6) + "em");

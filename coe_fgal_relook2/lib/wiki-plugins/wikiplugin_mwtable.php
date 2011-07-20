@@ -1,85 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-//
-// Written by billferrett@wellbehavedsystems.co.uk   January 2009
-//
-// Amended by billferrett@wellbehavedsystems.co.uk   January 2009
-//   Included styling of <col> elements (not supported by MediaWiki syntax).
-//   Include styling of <caption>.
-//   Corrected parsing of html attributes in $data.
-//   Corrected setting of default wiki classes.
-//
-// Description:
-// Displays a table using (sort of) MediaWiki syntax.  
-// MWTable doesn't support things like templates or the !row heading syntax.
-//   <col> styling overcomes the latter to a degree but, for cross-browser 
-//   consistency, you are limited to by HTML to border=, background=, width=  
-//   and visibility=.  You can also use span= so that a <col> definition can  
-//   apply to adjacent columns. <tr> and <td> styling overrides <col>.
-//
-// As the code base was FANCYTABLE, it seemed fair to keep odd/even styling in.
-// If a class is not specified for an element and fancy=false 
-//   then 'wikitable' or 'wikicell' is used as appropriate.
-//
-// Parameters:
-//   fancy = true | false (default is false)
-//   wiki_classes = true | false (default is true)
-//
-// Note: wiki classes (wikitable and wikicell) and fancy classes (odd and even)
-//         do not work together so fancy takes precedence.
-//
-// Usage:
-//   Optionally, first line (prior to |) contains html attributes for <table>.
-//   Optionally, next line can specify a <caption>; line starts |+ followed by
-//     optional html attributes that end with a | followed by the caption text.
-//   Optionally, html attributes for <col> elements can be specified next on
-//     one or more lines starting with a ?.
-//   Each column's attributes start on a new line with ? or on the same line 
-//     preceeded by ?? and become a <col>. 
-//   Optionally, column headings can be specified next on one or more lines
-//     starting with a !.
-//   Each column heading starts on a new line with ! or on the same line 
-//     preceeded by !!.  Optional html attributes for <th> end with a | 
-//     followed by heading text that becomes the text of a <th>.
-//   Each row, including the first, starts on a new line with |-, 
-//     optionally followed by html attributes for <tr>
-//   Each cell starts on a new line with | or on the same line preceeded by ||.
-//     Optional html attributes for <td> end with a | followed by the cell text
-//     (so data for one cell can have 1 or 2 | characters.  Any other |
-//     characters are assumed to be part of the cell text.)
-//
-// Example 1: The minimalist approach
-// {MWTABLE()}
-// |- 
-// |Bill
-// |The little house
-// |-
-// |Carol || The big house
-// {MWTABLE}
-//
-// Example 2: Most of the bells and whistles
-// {MWTABLE( wiki_classes=false )} style="width:50%", class="myclass"
-// |+style="font-style:italic;"|My caption
-// ? width="30%;" ?? style="background-color:yellow;"
-// ! style="background-color:grey;"| Name
-// ! Address
-// |- style="background-color: red"
-// | style="color: blue;" | Bill
-// | The little house
-// |-
-// | Carol || The big house
-// {MWTABLE}
-//
-
-function wikiplugin_mwtable_help() {
-	return tra("Displays the data using (sort of) MediaWiki syntax").
-                   ":<br />~np~{MWTABLE(fancy=>true|false,wiki_classes=>true|false)}".tra("data")."{MWTABLE}~/np~";
-}
 
 function wikiplugin_mwtable_info() {
 	return array(

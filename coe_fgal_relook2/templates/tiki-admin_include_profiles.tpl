@@ -220,7 +220,7 @@ function showDetails( id, domain, profile ) { // {{{
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tiki.org">{tr}Tiki Profiles{/tr}</a>{/remarksbox}
 
-{if $profilefeedback}
+{if isset($profilefeedback)}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{cycle values="odd,even" print=false}
 		{tr}The following list of changes has been applied:{/tr}
@@ -236,7 +236,7 @@ function showDetails( id, domain, profile ) { // {{{
 {tabset name='tabs_admin-profiles'}
 	{tab name="{tr}Apply Profiles{/tr}"}
 	
-		<h3>Configure Tiki in 3 easy steps using Profiles</h3>
+		<h3>{tr}Configure Tiki in 3 easy steps using Profiles{/tr}</h3>
 		{if $prefs.javascript_enabled eq 'y'}
 				{if $openSources == 'some'}
 					{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
@@ -247,7 +247,7 @@ function showDetails( id, domain, profile ) { // {{{
 				<fieldset><legend>{tr}Profiles{/tr}</legend>
 				<form method="get" action="tiki-admin.php">
 					<div class="adminoptionbox">
-						<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply</b>
+						<b>{tr}Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply{/tr}</b>
 						<table class="normal">
 							<tr>
 								<th width="50%" class="quickmode_notes">{tr}Option 1: Quick Filter{/tr}</th>
@@ -263,26 +263,26 @@ function showDetails( id, domain, profile ) { // {{{
 									
 									<p>
 										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">Featured Profiles</a>
-										<br />Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">{tr}Featured Profiles{/tr}</a>
+										<br />{tr}Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
 									</p>
 									
 									<p>
 										{assign var=profilesFilterUrlFullProfiles value='Full+profile+(out+of+the+box+%26+ready+to+go)'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}">Full Profiles</a>
-										<br />Full Profiles are full featured out of the box solutions. 
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}">{tr}Full Profiles{/tr}</a>
+										<br />{tr}Full Profiles are full featured out of the box solutions.{/tr} 
 									</p>
 		
 									<p>
 										{assign var=profilesFilterUrlMiniProfiles value='Mini-profile+(can+be+included+in+other)'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}">Mini Profiles</a>
-										<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}">{tr}Mini Profiles{/tr}</a>
+										<br />{tr}Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration.{/tr} 
 									</p>
 		
 									<p>
 										{assign var=profilesFilterUrlLearningProfiles value='Learning+profile+(just+to+show+off+feature)'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">Learning Profiles</a>
-										<br />Learning Profiles will allow you to quickly evaluate specific features in Tiki.
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">{tr}Learning Profiles{/tr}</a>
+										<br />{tr}Learning Profiles will allow you to quickly evaluate specific features in Tiki.{/tr}
 									</p>
 		
 								</td>
@@ -291,7 +291,7 @@ function showDetails( id, domain, profile ) { // {{{
 										<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
 										<div class="adminoptionlabel">
 											<label for="profile">{tr}Profile:{/tr} </label>
-											<input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+											<input type="text" name="profile" id="profile" value="{if isset($profile)}{$profile|escape}{/if}" /></div>
 											{if isset($category_list) and count($category_list) gt 0}
 												<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
 													<select multiple="multiple" name="categories[]" id="categories" style="max-height: 10em">
@@ -306,7 +306,7 @@ function showDetails( id, domain, profile ) { // {{{
 											<select name="repository" id="repository">
 												<option value="">{tr}All{/tr}</option>
 												{foreach item=source from=$sources}
-													<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
+													<option value="{$source.url|escape}"{if isset($repository) && $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
 												{/foreach}
 											</select>
 										</div>
@@ -336,7 +336,7 @@ $("#repository, #categories").change(function(){
 	        <a name="step2"></a>
 	<br />	
 		
-	       {if $result|@count neq '0'}
+	       {if isset($result) && $result|@count != '0'}
 	
 	        <b>Step 2: Click on a Profile to review and see description</b>
 			<table class="normal">
@@ -388,7 +388,70 @@ $("#repository, #categories").change(function(){
 	{/remarksbox}
 {/if}
 {/tab}
-
+{tab name="{tr}Export{/tr}"}
+	<form action="tiki-admin.php?page=profiles" method="post">
+		<fieldset id="export_to_yaml">
+			<legend>{tr}Export YAML{/tr}</legend>
+			{if !empty($export_yaml)}
+				{$export_yaml}
+			{/if}
+			<div class="navbar">
+				<label for="export_type">{tr}Object type:{/tr}</label>
+				<select name="export_type" id="export_type">
+					<option value="prefs"{if $export_type eq "prefs"} checked="checked"{/if}>
+						{tr}Preferences{/tr}
+					</option>
+				</select>
+			</div>
+			<fieldset>
+				<legend>{tr}Export modified preferences as YAML{/tr}</legend>
+				<div class="navbar">
+					{listfilter selectors="#prefs_to_export_list > li"}
+					<label for="select_all_prefs_to_export">{tr}Toggle Visible{/tr}</label>
+					<input type="checkbox" id="select_all_prefs_to_export" />
+					<label for="export_show_added">{tr}Show added preferences{/tr}</label>
+					<input type="checkbox" name="export_show_added" id="export_show_added"
+							{if !empty($smarty.request.export_show_added)} checked="checked"{/if} />
+				</div>
+				<ul id="prefs_to_export_list">
+					{cycle values="odd,even" print=false}
+					{foreach from=$modified_list  key="name" item="data"}
+						<li class="{cycle}">
+							<input type="checkbox" name="prefs_to_export[{$name}]" value="{$data.cur|escape}"
+									 id="checkbox_{$name}"{if isset($prefs_to_export[$name])} checked="checked"{/if} />
+							<label for="checkbox_{$name}">
+								{$name} = <strong>{$data.cur|truncate:40:"...":true|escape}</strong>
+								<em>
+									&nbsp;&nbsp;
+									{if isset($data.def)}
+										{if empty($data.def)}
+											('')
+										{else}
+											({$data.def|truncate:20:"...":true|escape})
+										{/if}
+									{else}
+										({tr}no default{/tr})
+									{/if}
+								</em>
+							</label>
+						</li>
+					{/foreach}
+				</ul>
+				{jq}
+$("#select_all_prefs_to_export").click( function () {
+	$("input[name^=prefs_to_export]:visible").click();
+});
+$("#export_show_added, #export_type").click( function () {
+	$(this)[0].form.submit();
+});
+				{/jq}
+				<div class="input_submit_container">
+					<input type="submit" name="export" value="{tr}Export{/tr}" />
+				</div>
+			</fieldset>
+		</fieldset>
+	</form>
+{/tab}
 {tab name="{tr}Advanced{/tr}"}
 
 <fieldset><legend>{tr}Repositories{/tr}</legend>

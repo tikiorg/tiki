@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,9 +29,13 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar) {
-		global $headerlib;
-		
-		$r = '<ul class="tree root">'."\n";
+		global $headerlib, $prefs;
+
+		if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+			$r = '<ul class="tree root" data-role="listview" data-inset="true">'."\n";
+		} else {
+			$r = '<ul class="tree root">'."\n";
+		}
 
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 
@@ -63,15 +67,11 @@ class CatBrowseTreeMaker extends TreeMaker
 		return "\t\t";
 	}
 	
-	function node_start_code_flip($nodeinfo) {
-		static $count = 0;
-		++$count;
+	function node_start_code_flip($nodeinfo, $count=0) {
 		return "\t" . '<li class="treenode withflip ' . (($count % 2) ? 'odd' : 'even') . '">';
 	}
 
-	function node_start_code($nodeinfo) {
-		static $count = 0;
-		++$count;
+	function node_start_code($nodeinfo, $count=0) {
 		return "\t" . '<li class="treenode ' . (($count % 2) ? 'odd' : 'even') . '">';
 	}
 
@@ -92,7 +92,9 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	//
 	function node_child_start_code($nodeinfo) {
-		return '<ul class="tree" id="' . $this->itemID . '">';
+		$style = getCookie($nodeinfo['id'], $this->prefix) !== 'o' ? ' style="display:none"' : '';
+		return '<ul class="tree" data-catid="' . $nodeinfo['id'] .
+			   		'" data-prefix="' . $this->prefix . '"' . $style .'>';
 	}
 
 	//

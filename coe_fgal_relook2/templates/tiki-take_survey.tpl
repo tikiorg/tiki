@@ -1,7 +1,7 @@
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
-  {if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name|escape}{/title}{/if}
+  {if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name}{/title}{/if}
 	{if $error_msg neq ''}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
 	{/if}
@@ -41,7 +41,7 @@
               	&nbsp;
               </td>
               <td valign="top">
-                {toolbars area_id=question_$area qtnum='2'}
+                {toolbars area_id="question_$area" qtnum='2'}
                 <textarea id="question_{$questions[ix].questionId}" name="question_{$questions[ix].questionId}" rows="{$textrows}" cols="{$textcols}"></textarea>
               </td>
             </tr>

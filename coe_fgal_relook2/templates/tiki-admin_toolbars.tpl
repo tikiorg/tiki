@@ -35,8 +35,8 @@
 			<div class="adminoptionbox">
 				<input name="load" type="submit" value="{tr}Load{/tr}"/>
 				<input type="submit" name="save" value="{tr}Save{/tr}"/>
-				{if $loaded neq 'global' and $not_global }<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
-				{if $loaded eq 'global' and $not_default }<input type="submit" name="reset_global" value="{tr}Reset to defaults{/tr}"/>{/if}
+				{if $loaded neq 'global' and $not_global}<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
+				{if $loaded eq 'global' and $not_default}<input type="submit" name="reset_global" value="{tr}Reset to defaults{/tr}"/>{/if}
 				<label for="autoreload">{tr}Auto Reloading{/tr}</label>
 				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
 			</div>
@@ -53,7 +53,7 @@
 				{/foreach}
 			{/foreach}
 			{if $smarty.foreach.line.last and $rowCount gt 1}
-				{assign var=total value=`$smarty.foreach.line.total+1`}
+				{assign var=total value=$smarty.foreach.line.total+1}
 				</ul>
 				<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
 					<ul id="row-{$total|escape}" class="row">
@@ -120,7 +120,7 @@
 					<input type="hidden" name="autoreload" value="{if $autoreload}on{/if}"/>
 				</fieldset>
 			</form>
-			{jq}$('#tool_icon').tiki('autocomplete', 'icon');{/jq}
+			{autocomplete element='#tool_icon' type='icon'}
 		</div>
 		<label for="full-list-c">{tr}Custom Tools:{/tr}</label>{icon _id="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
 		<ul id="full-list-c" class="full">

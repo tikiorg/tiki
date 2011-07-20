@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -74,7 +74,7 @@ function wikiplugin_trackertimeline_info() {
 			'scale1' => array(
 				'required' => false,
 				'name' => tra('Primary Scale Unit'),
-				'description' => tra('Unit of time to use for the primary scale (default to hour)'),
+				'description' => tra('Unit of time to use for the primary scale (default to hour - * denotes SIMILE only)'),
 				'filter' => 'alpha',
 				'default' => 'hour',
 				'options' => array(
@@ -83,13 +83,15 @@ function wikiplugin_trackertimeline_info() {
 					array('text' => tra('Day'), 'value' => 'day'), 
 					array('text' => tra('Week'), 'value' => 'week'), 
 					array('text' => tra('Month'), 'value' => 'month'), 
-					array('text' => tra('Year'), 'value' => 'year')
+					array('text' => tra('Year'), 'value' => 'year'),
+					array('text' => tra('Decade *'), 'value' => 'decade'),
+					array('text' => tra('Century *'), 'value' => 'century'),
 				)
 			),
 			'scale2' => array(
 				'required' => false,
 				'name' => tra('Secondary Scale Unit'),
-				'description' => tra('Unit of time to use for the secondary scale (default to empty)'),
+				'description' => tra('Unit of time to use for the secondary scale (default to empty - * denotes SIMILE only)'),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -98,7 +100,9 @@ function wikiplugin_trackertimeline_info() {
 					array('text' => tra('Day'), 'value' => 'day'), 
 					array('text' => tra('Week'), 'value' => 'week'), 
 					array('text' => tra('Month'), 'value' => 'month'), 
-					array('text' => tra('Year'), 'value' => 'year')
+					array('text' => tra('Year'), 'value' => 'year'),
+					array('text' => tra('Decade *'), 'value' => 'decade'),
+					array('text' => tra('Century *'), 'value' => 'century'),
 				)
 			),
 			'link_group' => array(
@@ -119,7 +123,25 @@ function wikiplugin_trackertimeline_info() {
 				'description' => tra('Tracker Field ID containing the page name for item details.'),
 				'filter' => 'digits',
 				'default' => '',
-			)
+			),
+			'simile_timeline' => array(
+				'required' => false,
+				'name' => tra('SIMILE Timeline'),
+				'description' => tra('Use the SIMILE Timeline Widget.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
+			'image_field' => array(
+				'required' => false,
+				'name' => tra('Image Field'),
+				'description' => tra('Tracker Field ID containing in image.'),
+				'filter' => 'digits',
+				'default' => '',
+			),
 		)
 	);
 }
@@ -131,9 +153,9 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	if( ! isset( $params['tracker'] ) )
 		return "^" . tr("Missing parameter: %0", 'tracker') . "^";
 
-	$default = array('scale1'=>'hour');
+	$default = array('scale1' => 'hour', 'simile_timeline' => 'n');
 	$params = array_merge($default, $params);
-	$formats = array('hour'=>'H:i', 'day'=>'j', 'month'=>'m', 'year'=>'y');
+	$formats = array('hour'=>'H:i', 'day'=>'jS', 'week' => 'jS', 'month'=>'m', 'year'=>'y');
 
 	$start = strtotime( $params['lower'] );
 	$end = strtotime( $params['upper'] );
@@ -141,17 +163,21 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 	if( $size <= 0 )
 		return "^" . tr("Start date after end date.") . "^";
-	
-	$fieldIds = array( 
-		$params['title'] => 'title', 
-		$params['summary'] => 'summary', 
-		$params['start'] => 'start', 
-		$params['end'] => 'end', 
+
+	$fieldIds = array(
+		$params['title'] => 'title',
+		$params['summary'] => 'summary',
+		$params['start'] => 'start',
+		$params['end'] => 'end',
 		$params['group'] => 'group',
 	);
 
 	if( isset($params['link_page']) ) {
 		$fieldIds[ $params['link_page'] ] = 'link';
+	}
+
+	if( !empty($params['image_field']) ) {
+		$fieldIds[ $params['image_field'] ] = 'image';
 	}
 
 	$fields = array();
@@ -169,10 +195,19 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		}
 
 		// Filter elements
-		if( $detail['start'] >= $detail['end'] )
-			continue;
-		if( $detail['end'] <= $start || $detail['start'] > $end )
-			continue;
+		if ($params['simile_timeline'] !== 'y') {
+			if( $detail['start'] >= $detail['end'] )
+				continue;
+			if( $detail['end'] <= $start || $detail['start'] > $end )
+				continue;
+		} else {
+			if( !empty($detail['end']) && $detail['start'] > $detail['end'] ) {
+				continue;
+			}
+			if( (!empty($detail['end']) && $detail['end'] < $start) || $detail['start'] > $end ) {
+				continue;
+			}
+		}
 
 		$detail['lstart'] = max( $start, $detail['start'] );
 		$detail['lend'] = min( $end, $detail['end'] );
@@ -190,26 +225,145 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$data[ $detail['group'] ][] = $detail;
 	}
 
-	$new = array();
-	foreach( $data as $group => &$list ) {
-		wp_ttl_organize( $group, $start, $size, $list, $new );
+	if ($params['simile_timeline'] !== 'y') {
+		$new = array();
+		foreach( $data as $group => &$list ) {
+			wp_ttl_organize( $group, $start, $size, $list, $new );
+		}
+		$data = array_merge( $data, $new );
+		ksort($data);
+
+		$smarty->assign( 'wp_ttl_data', $data );
+		$layouts = array();
+		if( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) ) {
+			$layouts[] = $layout;
+		}
+		$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
+		$smarty->assign( 'layouts', $layouts );
+		$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
+		return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
+
+	} else {	// SIMILE Timeline Widget setup
+
+		global $headerlib;
+
+		// the simile api has to be included in the head to work it seems (tiki js files live at end of body now)
+		$headerlib->add_js('
+(function() {
+var head = document.getElementsByTagName("head")[0];
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.language = "JavaScript";
+script.src = "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true";
+head.appendChild(script);
+})();
+');
+
+		// prepare the data for SIMILE widget - to be included in the page for now (ajax feed to come)
+		$ttl_data = array();
+		$events = array();
+		foreach( $data as $group => $list ) {	// ignoring group for now
+			foreach( $list as $item) {
+				$event = array(
+					'title' => $item['title'],
+					'start' => date('r', $item['start']),
+					'description' => $item['summary'],
+				);
+				if (!empty( $item['end'])) {
+					$event['end'] = date('r', $item['end']);
+					$event['isDuration'] = true;
+				}
+				if (!empty( $item['link'])) {
+					$event['link'] = $item['link'];
+				}
+				if (!empty( $item['image'])) {
+					$event['image'] = $item['image'];
+				}
+				$events[] = $event;
+			}
+			$ttl_data = array(
+				'dateTimeFormat' => '',	// iso8601
+//				'wikiURL' => '',
+//				'wikiSection' => '',
+				'events' => $events,
+			);
+		}
+		$js = 'ajaxLoadingShow("ttl_timeline");';
+		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
+
+		$js .= '
+var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline, ttlInit = function() {
+	// wait for Timeline to be loaded
+	if (ttlInitCount < 12 && (typeof window.Timeline === "undefined" ||
+			typeof window.Timeline.createBandInfo === "undefined" ||
+			typeof window.Timeline.DateTime === "undefined" ||
+			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
+			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" )) {
+
+		if (ttlInitCount > 10) {	// at least 5 secs - reload
+			location.replace(location.href);
+		}
+		window.setTimeout( function() { ttlInit(); }, 500);
+		ttlInitCount++;
+		return;
 	}
-	$data = array_merge( $data, $new );
-	ksort($data);
 
-	$smarty->assign( 'wp_ttl_data', $data );
-
-	$layouts = array();
-
-	if( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) )
-		$layouts[] = $layout;
+	if (!ttlTimelineReady) {	// just seems to need a little bit longer...
+		ttlTimelineReady = true;
+		window.setTimeout( function() { ttlInit(); }, 500);
+		return;
+	}
 	
-	$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
+	var ttl_eventSource = new Timeline.DefaultEventSource();
+	ttl_eventSource.loadJSON(ttl_eventData, ".");	// The data
+	
+	var bandInfos = [
+		window.Timeline.createBandInfo({
+			width:          "' . (empty($params['scale2']) ? '100%' : '70%' ) . '",
+			intervalUnit:   window.Timeline.DateTime.' . (strtoupper($params['scale1'])) . ',
+			eventSource:	ttl_eventSource,
+			intervalPixels: 100
+		})';
+		if (!empty($params['scale2'])) {
+			$js .= ',
+		window.Timeline.createBandInfo({
+			width:          "30%",
+			intervalUnit:   window.Timeline.DateTime.' . (strtoupper($params['scale2'])) . ',
+			eventSource:	ttl_eventSource,
+			intervalPixels: 200,
+			layout:			"overview"
+		})';
+		}
+		$js .= '];';
+		if (!empty($params['scale2'])) {
+			$js .= '
+	bandInfos[1].syncWith = 0;
+	bandInfos[1].highlight = true;
+	//bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());
+';
+		}
+		$js .= '
+	ttlTimeline = window.Timeline.create(document.getElementById("ttl_timeline"), bandInfos);
+	ajaxLoadingHide();
+	ttlTimeline.layout(); // display the Timeline
 
-	$smarty->assign( 'layouts', $layouts );
-	$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
+}	// end ttlInit
+ttlInit();
 
-	return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
+var ttlResizeTimerID = null;
+$(window).resize( function () {
+	if (ttlTimeline && ttlResizeTimerID == null) {
+		ttlResizeTimerID = window.setTimeout(function() {
+			resizeTimerID = null;
+			ttlTimeline.layout();
+		}, 500);
+	}
+});';
+
+		$headerlib->add_jq_onready( $js, 10);
+		$out = '<div id="ttl_timeline" style="height: 250px; border: 1px solid #aaa"></div>';
+		return $out;
+	}
 }
 
 function wp_ttl_organize( $name, $base, $size, &$list, &$new ) {

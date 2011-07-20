@@ -60,7 +60,7 @@
 
 					{preference name=zend_mail_smtp_auth}
 					<div class="adminoptionboxchild zend_mail_smtp_auth_childcontainer login plain crammd5">
-						<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
+						<p>{tr}These values will be stored in plain text in the database:{/tr}</p>
 						{preference name=zend_mail_smtp_user}
 						{preference name=zend_mail_smtp_pass}
 					</div>
@@ -72,6 +72,7 @@
 					<label for="testMail">{tr}Email to send a test mail{/tr}</label>
 					<input type="text" name="testMail" id="testMail" />
 				</div>
+				{preference name=email_footer}
 			</fieldset>
 
 			<fieldset>
@@ -102,7 +103,12 @@
 				<div class="adminoptionboxchild" id="use_proxy_childcontainer">
 					{preference name=proxy_host}
 					{preference name=proxy_port}
+
+					{preference name=proxy_user}
+					{preference name=proxy_pass}
 				</div>
+
+				{preference name=http_skip_frameset}
 			</fieldset>
 
 			<fieldset>
@@ -111,6 +117,19 @@
 				<div class="adminoptionboxchild" id="multidomain_active_childcontainer">
 					{preference name=multidomain_config}
 				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Sessions{/tr}</legend>
+				{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
+					{tr}Note that storing session data in the database is an advanced systems administration option, and is for admins who have comprehensive access and understanding of the database, in order to deal with any unexpected effects.{/tr}
+				{/remarksbox}
+				<div style="padding:.5em;" align="left">
+					{icon _id=information style="vertical-align:middle"} {tr}Changing this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+				</div>
+				{preference name=session_storage}
+				{preference name=session_lifetime}
+				{preference name=session_cookie_name}
 			</fieldset>
 
 			<fieldset>
@@ -189,7 +208,7 @@
 				{preference name=tikiIndex defaul=$prefs.site_tikiIndex}
 
 				{preference name=useUrlIndex}
-				<div class="adminoptionboxchild">
+				<div class="adminoptionboxchild" id="useUrlIndex_childcontainer">
 					{preference name=urlIndex}
 				</div>
 			</fieldset>
@@ -246,6 +265,7 @@
 			<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
 
 			{preference name=display_field_order}
+			{preference name=users_prefs_display_12hr_clock}
 			{preference name=tiki_same_day_time_only}
 
 			<div class="adminoptionbox">

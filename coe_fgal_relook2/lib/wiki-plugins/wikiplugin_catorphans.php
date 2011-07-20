@@ -1,25 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/*
- * Tikiwiki CATORPHANS plugin.
- * 
- * Syntax:
- * 
- * {CATORPHANS(
- *			objects=>wiki		#types of objects to display; defaults to 'wiki'
- *         )}
- * {CATORPHANS}
- * 
- * Currently only displays wiki pages; very much a work in progress
- */
-function wikiplugin_catorphans_help() {
-	return tra("Display Tiki objects that have not been categorized").":<br />~np~{CATORPHANS(objects=>wiki|article|blog|faq|fgal|forum|igal|newsletter|poll|quizz|survey|tracker)}{CATORPHANS}~/np~";
-}
 
 function wikiplugin_catorphans_info() {
 	return array(

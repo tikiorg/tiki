@@ -1,12 +1,12 @@
 <?php 
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 require_once ('tiki-setup.php');
-require_once('lib/language/Language.php');
+require_once('lib/language/LanguageTranslations.php');
 
 $access->check_feature('lang_use_db');
 $access->check_permission('tiki_p_edit_languages');
@@ -26,12 +26,12 @@ if (!empty($_REQUEST['interactive_translation_mode'])) {
  * Save strings translated using interactive translation to database.
  */ 
 if( isset( $_REQUEST['source'], $_REQUEST['trans'] ) && count($_REQUEST['source']) == count($_REQUEST['trans']) ) {
-	$language = new Language;
+	$translations = new LanguageTranslations;
 	
 	foreach( $_REQUEST['trans'] as $k => $translation ) {
 		$source = $_REQUEST['source'][$k];
 
-		$language->updateTrans( $source, $translation );
+		$translations->updateTrans( $source, $translation );
 	}
 
 	exit;

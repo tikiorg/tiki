@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -15,14 +15,15 @@ $auto_query_args = array(
 	'parse',
 	'simple',
 	'height',
-	'type',
 	'file',
+	'fileId'
 );
 $access->check_feature('feature_sheet');
+$access->check_feature('feature_jquery_ui');
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
 
-if (empty($info) && !isset( $_REQUEST['file'])) {
+if (empty($info) && !isset( $_REQUEST['file']) && !isset($_REQUEST['fileId'])) {
 	$smarty->assign('Incorrect parameter');
 	$smarty->display('error.tpl');
 	die;
@@ -71,6 +72,13 @@ if ( $_REQUEST['parse'] == 'edit' && !$sheetlib->user_can_edit( $_REQUEST['sheet
 	die;
 }
 
+//check to see if we are to do something other than view a file, which is not allowed
+if ( $_REQUEST['parse'] != 'y' && ( isset($_REQUEST['file']) || isset($_REQUEST['fileId']) ) ) {
+	$smarty->assign('msg', tra("Files are read only at this time"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST['sheetId'];
 	include_once ('contribution.php');
@@ -82,8 +90,6 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	if ( $_REQUEST['sheetId'] ) {
 		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 		
-	} elseif ( $_REQUEST['type'] && $_REQUEST['file'] ) {
-		$result = $sheetlib->save_sheet( $_REQUEST['s'], null, $_REQUEST['file'], $_REQUEST['type'] );
 	}
 	die($result);
 //Clone
@@ -116,16 +122,34 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 }
 
 //Edit & View
-if ( isset($_REQUEST['file']) && isset($_REQUEST['type'])) {
+if ( isset($_REQUEST['file']) ) {
 	//File sheets
-	switch ( $_REQUEST['type'] ) {
-		case 'excelcsv': $handler = new TikiSheetCSVExcelHandler( $_REQUEST['file'] ); break;
-		case 'csv':  $handler = new TikiSheetCSVHandler( $_REQUEST['file'] ); break;
-	}
+	$handler = new TikiSheetCSVHandler( $_REQUEST['file'] );
+	$grid = new TikiSheet();
+	$grid->import( $handler );
+	$tableHtml[0] = $grid->getTableHtml( true , null, false );
+	$smarty->assign('notEditable', 'true');
+	
+	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
+} elseif ( isset($_REQUEST['fileId']) ) {
+	include_once('lib/filegals/filegallib.php');
+	$access->check_feature('feature_file_galleries');
+	$handler = new TikiSheetFileGalleryCSVHandler($_REQUEST['fileId']);
 	
 	$grid = new TikiSheet();
 	$grid->import( $handler );
 	$tableHtml[0] = $grid->getTableHtml( true , null, false );
+	$smarty->assign('notEditable', 'true');
+	
+	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
+} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
+	if ( $_REQUEST['relate'] == 'add' ) {
+		$sheetlib->add_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
+		$smarty->assign('msg', tra("Tracker Added To Spreadsheet"));
+	} elseif( $_REQUEST['relate'] == 'remove' ) {
+		$sheetlib->remove_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
+		$smarty->assign('msg', tra("Tracker Removed From Spreadsheet"));
+	}
 } else {
 	//Database sheet
 	$handler = new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
@@ -148,8 +172,12 @@ if ( isset($_REQUEST['file']) && isset($_REQUEST['type'])) {
 	$smarty->assign('parseValues', $grid->parseValues);
 			
 	$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
+	
+	$relatedTrackersAsHtml = $sheetlib->get_related_trackers_as_html( $_REQUEST["sheetId"] );
+	if (strlen($relatedTrackersAsHtml) > 0) {
+		$tableHtml[0] = $tableHtml[0] . $relatedTrackersAsHtml;
+	}
 }
-
 	
 if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 	foreach( $tableHtml as $table ) {
@@ -160,32 +188,45 @@ if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 
 $smarty->assign('grid_content', $tableHtml);
 
+if (empty($tableHtml) == false) {
+	$smarty->assign('menu', $smarty->fetch('tiki-view_sheets_menu.tpl'));
+}
+
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready('
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
-		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false)
+		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false),
+		menu: $("#sheetMenu").html()
 	});
 	
-	var tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
-	tikiSheet.id = "'.$_REQUEST['sheetId'].'";
-	tikiSheet.type = "'.$_REQUEST['type'].'";
-	tikiSheet.file = "'.$_REQUEST['file'].'";
+	$.sheet.tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
 	
-	$.sheet.manageState(tikiSheet);
+	$.sheet.tikiSheet.id = "'.$_REQUEST['sheetId'].'";
+	$.sheet.tikiSheet.file = "'.$_REQUEST['file'].'";
+	
+	$.sheet.link.setupUI($.sheet.tikiSheet);
+	$.sheet.manageState($.sheet.tikiSheet);
 	
 	$("#edit_button a")
 		.click(function() {
-			$.sheet.manageState(tikiSheet, true, "edit");
+			$.sheet.manageState($.sheet.tikiSheet, true, "edit");
 			return false;
 		});
 						
 	$("#save_button a")
 		.click( function () {
-			$.sheet.saveSheet(tikiSheet, function() {
-				$.sheet.manageState(tikiSheet, true, "");
+			$("#saveState").hide();
+			
+			$.sheet.saveSheet($.sheet.tikiSheet, function() {
+				$.sheet.manageState($.sheet.tikiSheet, true, "");
 			});
 			
 			return false;
+		});
+	
+	$("#cancel_button")
+		.click(function() {
+			$("#saveState").hide();
 		});
 ');
 

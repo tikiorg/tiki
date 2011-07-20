@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interface
 {
@@ -11,12 +16,12 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT postId x, postId FROM tiki_blog_posts'));
+		return $this->db->table('tiki_blog_posts')->fetchColumn('postId', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		global $bloglib; require_once 'lib/blogs/bloglib.php';
+		$bloglib = TikiLib::lib('blog');
 		
 		$post = $bloglib->get_post($objectId);
 

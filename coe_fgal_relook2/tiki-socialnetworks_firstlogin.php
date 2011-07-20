@@ -1,14 +1,19 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 require_once ('tiki-setup.php');
 $access->check_user($user);
 	
-if (0 and $prefs['feature_ajax'] == 'y') {	// AJAX_TODO
+//if (0 and $prefs['feature_ajax'] == 'y') {	// AJAX_TODO
 //	include_once ('register_ajax.php');
 //	$ajaxlib->registerFunction('chkRegName');
 //	$ajaxlib->registerFunction('chkRegEmail');
 //	$ajaxlib->registerTemplate('tiki-register.tpl');
-}
+//}
 
 $smarty->assign('msg', '');
 $smarty->assign('alldone', false);

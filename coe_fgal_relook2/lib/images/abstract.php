@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -15,6 +15,12 @@ class ImageAbstract
 	var $filename = null;
 	var $thumb = null;
 	var $loaded = false;
+	var $header = null;
+	var $otherinfo = null;
+	var $iptc = null;
+	var $exif = null;
+	var $xmp = null;
+	var $xmp_array;
 
 	function __construct($image, $isfile = false) {
 		if ( ! empty($image) || $this->filename !== null ) {
@@ -207,5 +213,34 @@ class ImageAbstract
 			$this->width = $this->_get_width();
 		}
 		return $this->width;
+	}
+
+	function set_img_info($image, $isfile = true, $xmp = false) {
+		$tempfile = '';
+		$cwd = '';
+		//getimagesize requires a filename so create a temporary one
+		//if the image is in the database
+		if (!$isfile) {
+			$cwd = getcwd(); 								//get current working directory
+			$tempfile = tempnam("$cwd/tmp", 'temp_image_');	//create tempfile and return the path/name
+			$temphandle = fopen($tempfile, 'w');			//open for writing
+			fwrite($temphandle, $image); 					//write image to tempfile
+			fclose($temphandle);
+			$image = $tempfile;
+		}
+		$this->header = getimagesize($image, $otherinfo);
+		$this->width = $this->header[0];
+		$this->height = $this->header[1];
+		$this->otherinfo = $otherinfo;
+		$this->exif = $this->header['mime'] == 'image/jpeg' ? exif_read_data($image, 0, true) : false;
+		if ($xmp) {
+			$content = file_get_contents($image);
+			//$otherinfo doesn't have xmp data in it so extract in a separate function
+			include_once ('lib/metadata.php');
+			$this->xmp = get_xmp($content, $this->header['mime']);
+		}
+		if (!empty($tempfile)) {
+			unlink($tempfile);
+		}
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -32,7 +32,7 @@ $hours_minmax = '';
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
 if ($rawcals['cant'] == 0 && $tiki_p_admin_calendar == 'y') {
-	$smarty->assign('msg', tra('You need to <a href="tiki-admin_calendars.php">create a calendar</a>'));
+	$smarty->assign('msg', tra('You need to <a href="tiki-admin_calendars.php?cookietab=2">create a calendar</a>'));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -110,8 +110,8 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
 	}
-
-    $save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
+	
+	$save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
 	if (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') {
 		$save['start'] = TikiLib::make_time(
 			0,
@@ -137,8 +137,9 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
 	} else {
-		if (!empty($_REQUEST['start_Meridian']) && $_REQUEST['start_Meridian'] == 'pm') {
-			$_REQUEST['start_Hour'] += 12;
+		//Convert 12-hour clock hours to 24-hour scale to compute time
+		if (!empty($_REQUEST['start_Meridian'])) {
+			$_REQUEST['start_Hour'] = date('H', strtotime($_REQUEST['start_Hour'] . ':00 ' . $_REQUEST['start_Meridian']));
 		}
 		$save['start'] = TikiLib::make_time(
 			$_REQUEST['start_Hour'],
@@ -153,8 +154,9 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
-			if (!empty($_REQUEST['end_Meridian']) && $_REQUEST['end_Meridian'] == 'pm') {
-				$_REQUEST['end_Hour'] += 12;
+			//Convert 12-hour clock hours to 24-hour scale to compute time
+			if (!empty($_REQUEST['end_Meridian'])) {
+				$_REQUEST['end_Hour'] = date('H', strtotime($_REQUEST['end_Hour'] . ':00 ' . $_REQUEST['end_Meridian']));
 			}
 			$save['end'] = TikiLib::make_time(
 				$_REQUEST['end_Hour'],
@@ -166,25 +168,6 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			);
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
-		
-		#region reminder
-
-    $save['reminder_fixed_date'] = TikiLib::make_time(
-        $_REQUEST['reminder_fixed_date_Hour'],
-        $_REQUEST['reminder_fixed_date_Minute'],
-        0,
-        $_REQUEST['reminder_fixed_date_Month'],
-        $_REQUEST['reminder_fixed_date_Day'],
-        $_REQUEST['reminder_fixed_date_Year']
-    );
-
-    $rem_offset_days = $_REQUEST['reminder_time_offset_days'];
-    $rem_offset_hours = $_REQUEST['reminder_time_offset_hours'];
-    $rem_offset_minutes = $_REQUEST['reminder_time_offset_minutes'];
-    $save['reminder_time_offset'] = $rem_offset_days * 86400 + $rem_offset_hours * 3600 + $rem_offset_minutes * 60;
-
-    #endregion reminder
-
 	}
 }
 
@@ -266,13 +249,6 @@ if (isset($_POST['act'])) {
 					$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
 				}
 				$calRecurrence->setUser($save['user']);
-				#region reminder
-        $calRecurrence->setReminderType($save['reminder_type']);
-        $calRecurrence->setReminderFixedDate($save['reminder_fixed_date']);
-        $calRecurrence->setReminderTimeOffset($save['reminder_time_offset']);
-        $calRecurrence->setReminderRelatedTo($save['reminder_related_to']);
-        $calRecurrence->setReminderWhenRun($save['reminder_when_run']);
-        #endregion reminder
 				$calRecurrence->save($_POST['affect'] == 'all');
 					// Save the ip at the log for the addition of new calendar items when done by anonymous users
 					if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
@@ -379,7 +355,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		$calendar = $calendarlib->get_calendar($calitem['calendarId']);
   }
 	$smarty->assign('edit',true);
-	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+	$hour_minmax = abs(ceil(($calendar['startday']-1)/(60*60))) . '-' . ceil(($calendar['endday'])/(60*60));
 } elseif (isset($_REQUEST['preview']) || $impossibleDates) {
 	$save['parsed'] = $tikilib->parse_data($save['description']);
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
@@ -424,13 +400,36 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+//Add event buttons - either button on top of page or one of the buttons on a specific day
 } elseif (isset($calID) and $tiki_p_add_events == 'y') {
+	$calendar = $calendarlib->get_calendar($calID);
 	if (isset($_REQUEST['todate'])) {
 		$now = $_REQUEST['todate'];
 	} else {
 		$now = $tikilib->now;
 	}
-	$calendar = $calendarlib->get_calendar($calID);
+	//if current time of day is within the calendar day (between startday and endday), then use now as start, otherwise use beginning of calendar day
+	$now_start = TikiLib::make_time(
+		abs(ceil($calendar['startday']/(60*60))),
+		0,
+		0,
+		TikiLib::date_format('%m', $now),
+		TikiLib::date_format('%d', $now),
+		TikiLib::date_format('%Y', $now)
+	);
+	$now_end = TikiLib::make_time(
+		abs(ceil($calendar['endday']/(60*60))),
+		0,
+		0,
+		TikiLib::date_format('%m', $now),
+		TikiLib::date_format('%d', $now),
+		TikiLib::date_format('%Y', $now)
+	);
+	$now_start = ($now_start <= $now && ($now_start + (60*60)) < $now_end) ? $now : $now_start;
+	
+	//if $now_end is midnight, make it one second before
+	$now_end = TikiLib::date_format('%H%M%s', $now_start + (60*60)) == '000000' ? $now_start + (60*60) -1 : $now_start + (60*60);
+	
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
@@ -442,14 +441,14 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'locationId'=>0,
 		'categoryId'=>0,
 		'nlId'=>0,
-		'start'=>$now,
-		'end'=>$now+(60*60),
+		'start'=>$now_start,
+		'end'=>$now_end,
 		'duration'=>(60*60),
 		'recurrenceId'=>0,
 		);
+	$hour_minmax = abs(ceil(($calendar['startday']-1)/(60*60))). '-' . ceil(($calendar['endday'])/(60*60));
 	$id = 0;
 	$smarty->assign('edit',true);
-	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
   $smarty->assign('errortype', 401);
   $smarty->assign('msg', tra("You do not have permission to view this page"));
@@ -473,6 +472,9 @@ if ($calendar['customlocations'] == 'y') {
 	$listlocs = array();
 }
 $smarty->assign('listlocs', $listlocs);
+
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if ($calendar['customcategories'] == 'y') {
 	$listcats = $calendarlib->list_categories($calID);
@@ -538,25 +540,6 @@ $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $calID);
 if (array_key_exists('CalendarViewGroups',$_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView',$_SESSION['CalendarViewGroups'][0]);
-
-#region reminder
-
-$reminder_time_offset_days = 0;
-$reminder_time_offset_hours = 1;
-$reminder_time_offset_minutes = 0;
-
-if ($calitem['reminder_type'] == 2)
-{
-    $reminder_time_offset_days = floor($calitem['reminder_time_offset'] / 86400);
-    $reminder_time_offset_hours = floor(($calitem['reminder_time_offset'] % 86400) / 3600);
-    $reminder_time_offset_minutes = floor(($calitem['reminder_time_offset'] % 3600) / 60);
-}
-
-$smarty->assign('reminder_time_offset_days', $reminder_time_offset_days);
-$smarty->assign('reminder_time_offset_hours', $reminder_time_offset_hours);
-$smarty->assign('reminder_time_offset_minutes', $reminder_time_offset_minutes);
-
-#endregion reminder
 
 global $wikilib; include_once('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins(true, 'editwiki');

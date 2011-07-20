@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,6 +9,8 @@
  * $Id: /cvsroot/tikiwiki/tiki/get_strings.php
  * \brief Update the language.php files
  * call example: get_strings.php?lang=fr&close
+ * or on commande line: php get_strings.php \param lang=fr module
+
 
  * \param lang=xx    : Only translate lang 'xx' - if the parameter is not given all languages are translated
 
@@ -40,6 +42,14 @@
 
  */
 
+require_once('lib/init/initlib.php');
+$tikipath = dirname(__FILE__) . '/';
+TikiInit::prependIncludePath($tikipath.'lib/pear');
+TikiInit::appendIncludePath($tikipath.'lib/core');
+TikiInit::appendIncludePath($tikipath);
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance()->registerNamespace('TikiDb');
+
 require_once('lib/language/Language.php');
 
 ////////////////////////////////////////////////////////////////////////////
@@ -52,94 +62,6 @@ require_once('lib/language/Language.php');
 $script_mode = ! isset( $_SERVER['REQUEST_METHOD'] ) && isset($_SERVER['argc']);
 
 $punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
-
-/**
- * Reads all the permission descriptions in tiki database and writes
- *   it to the file $file. All the strings will be surrounded by smarty translate tags
- *     ex: {tr}perm description{/tr}
- *
- * @param $file string: target file for the perms
- * @returns: nothing but creates the file with the perms (take care about the acl's in the target directory !)
- */
-function collect_perms_desc($file)
-{
-	global $tikilib;
-	if ( isset($tikilib) ) {
-
-		$result = $tikilib->query("SELECT DISTINCT(permDesc) FROM users_permissions ORDER BY permDesc");
-
-		$perm_strings = array();
-		while( $row = $result->fetchRow() )
-			$perm_strings[] = $row['permDesc'];
-
-	} elseif ( is_readable('db/tiki.sql') ) {
-
-		// Used when called in $script_mode if no DB has been found
-		$matches = array();
-		preg_match_all(
-				'/insert\s+into\s+\`?users_permissions\`?\s*\([^\)]+\)\s*values\s*\(\'(tiki_p_[^\'"]+)\',\s*\'(.*)\',/Uim',
-				file_get_contents('db/tiki.sql'),
-				$matches
-				);
-
-		foreach ( $matches[2] as $permDesc ) {
-			$perm_strings[] = str_replace("\'", "'", $permDesc);
-		}
-		unset($matches);
-
-	} else {
-		die('File db/tiki.sql is missing');
-	}
-
-	$pstr = fopen($file,'w');
-	if (!$pstr) {
-		echo "The file $file can not be written";
-	} else {
-		foreach ($perm_strings as $strg)
-		{
-			fwrite ($pstr,  "{tr}" . $strg . "{/tr}" . "\n");
-		}
-		fclose($pstr);
-	}
-}
-
-/**
- * Get all preferences names from get_default_prefs() function or reads them all from tiki database
- * and writes it to the file $file. All the strings will be surrounded by smarty translate tags
- *     ex: {tr}preference name{/tr}
- *
- * @param $file string: target file for the pref names
- * @returns: nothing but creates the file with the pref names (take care about the acl's in the target directory !)
- */
-function collect_prefs_names($file) {
-
-	global $tikilib;
-	if ( isset($tikilib) ) {
-
-		$prefs_strings = array();
-		$result = $tikilib->query("select `name` from `tiki_preferences`");
-		while ( $row = $result->fetchRow() ) $prefs_strings[] = $row['name'];
-
-	} elseif ( function_exists('get_default_prefs') ) {
-
-		// Used when called in $script_mode if no DB has been found
-		$prefs_strings = array_keys(get_default_prefs());
-
-	} else {
-		die("No 'get_default_prefs' function is available");
-	}
-
-	$pstr = fopen($file,'w');
-	if (!$pstr) {
-		echo "The file $file can not be written";
-	} else {
-		foreach ($prefs_strings as $strg)
-		{
-			fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
-		}
-		fclose($pstr);
-	}
-}
 
 function hardwire_file ($file) {
 	global $files, $completion, $script_mode, $quiet;
@@ -248,7 +170,7 @@ function formatted_print($string) {
 ////////////////////////////////////////////////////////////////////////////
 
 if ( $script_mode ) {
-
+	
 	$_REQUEST = array();
 	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
 		@list($key, $value) = explode('=', $_SERVER['argv'][$k], 2);
@@ -267,6 +189,7 @@ if ( $script_mode ) {
 		require_once('db/tiki-db.php');
 		$tikilib = TikiDb::get();
 	} else {
+		require_once('lib/init/tra.php');
 		require_once('lib/setup/prefs.php'); // Used to get default prefs
 	}
 
@@ -341,17 +264,10 @@ collect_files ('.');
 hardwire_file ('./lang/langmapping.php');
 hardwire_file ('./img/flags/flagnames.php');
 
-## Adding a file in ./temp which contains all the perms descriptions
-## This file is called permstrings.tpl. The extension has to be .tpl in order to be
+## Adding a file in ./temp which contains all the preferences names
+## This file is called prefnames.tpl. The extension has to be .tpl in order to be
 ##   taken in charge by the script (tpl or php)
 ## This file is, of course, temporary and will be deleted during the next cache clear !
-
-$permsfile = "./temp/permstrings.tpl";
-$permsstrgs = collect_perms_desc($permsfile);
-$prefsfile = "./temp/prefnames.tpl";
-collect_prefs_names($prefsfile);
-hardwire_file ($permsfile);
-hardwire_file ($prefsfile);
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
@@ -442,7 +358,7 @@ foreach ($languages as $ksel => $sel) {
 	if (!$nohelp && !$completion) {
 		// Good to have instructions for translators in the release file.
 		// The comments get filtered away by Smarty anyway
-		writeFile_and_User ($fw, "// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project\n");
+		writeFile_and_User ($fw, "// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project\n");
 		writeFile_and_User ($fw, "// \n");
 		writeFile_and_User ($fw, "// All Rights Reserved. See copyright.txt for details and a complete list of authors.\n");
 		writeFile_and_User ($fw, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n");
@@ -498,6 +414,11 @@ foreach ($languages as $ksel => $sel) {
 		writeFile_and_User ($fw, "// Usefull mode when preparing a translation for distribution.\n\n");
 		writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?nohelp&nosections\n");
 		writeFile_and_User ($fw, "// Prepare all languages for release\n\n\n");
+		
+		writeFile_and_User ($fw, "//  or on commande line:\n");
+		writeFile_and_User ($fw, "//  php get_strings.php \param lang=fr module\n\n");
+		writeFile_and_User ($fw, "\n");
+	
 
 		writeFile_and_User ($fw, "// ### Note for translators about translation of text ending with punctuation\n");
 		writeFile_and_User ($fw, "// ###\n");
@@ -512,7 +433,7 @@ foreach ($languages as $ksel => $sel) {
 		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Login' and ':' separately.\n");
 		writeFile_and_User ($fw, "// ### This allows to have only one translation for \"{tr}Login{/tr}\" and \"{tr}Login:{/tr}\"\n");
 		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that\n");
-		writeFile_and_User ($fw, "// ### need it (like french)\n");
+		writeFile_and_User ($fw, "// ### need it (like French)\n");
 
 		// Start generating the lang array
 		writeFile_and_User ($fw, "\n\$lang=Array(\n");  
@@ -541,6 +462,7 @@ foreach ($languages as $ksel => $sel) {
 			$data = preg_replace ("!^\s*//get_strings(.*)\$!m", "$1", $data);
 			$data = preg_replace ("!^\s*//.*\$!m", "", $data); // C++ comments
 			$data = preg_replace ("!^\s*\#.*\$!m", "", $data); // shell comments
+			$data = preg_replace('/\Wtra?\s*\((["\'])\1\)/', '', $data); // remove empty calls to tra() (tra('') or tra(""))
 
 			// Only extract tra () and hawtra () in .php-files
 			// tr() function also exists for strings with arguments
@@ -564,7 +486,7 @@ foreach ($languages as $ksel => $sel) {
 
 			// Only extract {tr} ... {/tr} in .tpl-files
 			// Also match {tr [args]} ...{/tr}
-			preg_match_all ('/(?s)\{tr[^\}]*\}(.+?)\{\/tr\}/', $data, $uqwords);
+			preg_match_all ('/\{tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/s', $data, $uqwords);
 		}
 
 		// Transfer unquoted words (if any) to the words array
@@ -605,8 +527,8 @@ foreach ($languages as $ksel => $sel) {
 			} else {
 
 				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
-				// For example, if word == 'Login:', we don't keep it if we also have a string 'Login'
-				//   (except if we already have an explicit translation for 'Login:')
+				// For example, if word == 'Login:', we don't keep it if we also have a string 'Log In'
+				//   (except if we already have an explicit translation for 'Log In:')
 				//
 				$word_length = strlen($word);
 				$word_last_char = $word[$word_length - 1];

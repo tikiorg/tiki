@@ -1,13 +1,10 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_mediaplayer_help() {
-	return tra('Inline Flash mp3 and flv Player.')."<br />~np~{MEDIAPLAYER(mp3=\"url_to_mp3\", flv=\"url_to_flv\",style=normal) /}"; 
-}
 function wikiplugin_mediaplayer_info() {
 	return array(
 		'name' => tra('Media Player'),

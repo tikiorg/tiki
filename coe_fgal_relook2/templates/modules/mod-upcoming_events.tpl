@@ -1,5 +1,5 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="upcoming_events" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-{if $modUpcomingEvents[0] neq ''}
+{if count($modUpcomingEvents)}
 	{if isset($module_params.date_format)}
 		{assign var=date_format value=$module_params.date_format}
 	{else}

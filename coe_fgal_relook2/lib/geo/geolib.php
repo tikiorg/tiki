@@ -1,28 +1,102 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class GeoLib
 {
+	function get_coordinates($type, $itemId) {
+		$attributelib = TikiLib::lib('attribute');
+
+		$attributes = $attributelib->get_attributes($type, $itemId);
+
+		if (isset($attributes['tiki.geo.lat'], $attributes['tiki.geo.lon'])) {
+			$coords = array(
+				'lat' => $attributes['tiki.geo.lat'],
+				'lon' => $attributes['tiki.geo.lon'],
+			);
+
+			if (! empty($attributes['tiki.geo.google.zoom'])) {
+				$coords['zoom'] = $attributes['tiki.geo.google.zoom'];
+			}
+
+			return $coords;
+		}
+	}
+
+	function get_coordinates_string($type, $itemId) {
+		if ($coords = $this->get_coordinates($type, $itemId)) {
+			return $this->build_location_string($coords);
+		}
+	}
+	
+	function build_location_string($coords) {
+		if (! empty($coords['lat']) && ! empty($coords['lon'])) {
+			$string = "{$coords['lon']},{$coords['lat']}";
+
+			if (! empty($coords['zoom'])) {
+				$string .= ",{$coords['zoom']}";
+			}
+
+			return $string;
+		}
+	}
+
+	function set_coordinates($type, $itemId, $coordinates) {
+		if (is_string($coordinates)) {
+			$coordinates = $this->parse_coordinates($coordinates);
+		}
+
+		if (isset($coordinates['lat'], $coordinates['lon'])) {
+			$attributelib = TikiLib::lib('attribute');
+			$attributelib->set_attribute($type, $itemId, 'tiki.geo.lat', $coordinates['lat']);
+			$attributelib->set_attribute($type, $itemId, 'tiki.geo.lon', $coordinates['lon']);
+
+			if (isset($coordinates['zoom'])) {
+				$attributelib->set_attribute($type, $itemId, 'tiki.geo.google.zoom', $coordinates['zoom']);
+			}
+		}
+	}
+
+	function parse_coordinates($string) {
+		if (preg_match("/^(-?\d*(\.\d+)?),(-?\d*(\.\d+)?)(,(\d+))?$/", $string, $parts)) {
+			$coords = array(
+				'lat' => $parts[3],
+				'lon' => $parts[1],
+			);
+
+			if (! empty($parts[6])) {
+				$coords['zoom'] = $parts[6];
+			}
+
+			return $coords;
+		}
+	}
 	
 	function geocode($where) {
-		global $prefs;
-		$where = stripslashes($where);
-		$whereurl = urlencode($where);
-		$googlekey = $prefs["gmap_key"];
-		if (!$googlekey) {
+		$url = 'http://maps.googleapis.com/maps/api/geocode/json?' . http_build_query(array(
+			'address' => $where,
+			'sensor' => 'false',
+		), '', '&');
+
+		$response = TikiLib::lib('tiki')->httprequest($url);
+		$data = json_decode($response);
+
+		if ($data->status !== 'OK') {
 			return false;
 		}
-		$location = file("http://maps.google.com/maps/geo?q=$whereurl&output=csv&key=$googlekey");
-		list ($stat,$acc,$north,$east) = explode(",",$location[0]);
-		$ret = array(
-			'status' => $stat,
-			'accuracy' => $acc,
-			'lat' => $north,
-			'lon' => $east,
+
+		$first = reset($data->results);
+
+		return array(
+			'status' => 'OK',
+			'accuracy' => 500,
+			'label' => $first->formatted_address,
+			'lat' => $first->geometry->location->lat,
+			'lon' => $first->geometry->location->lng,
 		);
-		if ($stat != '200') {
-			return false;
-		}
-		return $ret;
 	}
 	
 	function geofudge($geo) {

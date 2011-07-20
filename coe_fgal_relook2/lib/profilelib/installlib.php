@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -389,7 +389,11 @@ abstract class Tiki_Profile_InstallHandler // {{{
 		if( empty( $id ) ) {
 			die( 'Handler failure: ' . get_class( $this ) . "\n" );
 		}
-
+		
+		//Helper to return items that were installed - first used with cart items
+		global $record_profile_items_created;
+		$record_profile_items_created[] = $id;
+		
 		$this->obj->setValue( $id );
 	}
 
@@ -535,12 +539,10 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			$options[$key] = $value;
 		}
 
-		global $trklib;
-		if( ! $trklib )
-			require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
 		
-		// using false as trackerId stops multiple trackers of same name being created
-		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
+		$trackerId = $trklib->get_tracker_by_name($name);
+		return $trklib->replace_tracker( $trackerId, $name, $description, $options, 'y' );
 	} // }}}
 
 	function _export($trackerId) // {{{
@@ -593,7 +595,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			$res = array_merge($res, $prof->_export($field));
 		}
 		return implode("\n", $res);
-	} // {{{
+	} // }}}
 
 } // }}}
 
@@ -699,7 +701,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'mandatory' => 'isMandatory',
 			'multilingual' => 'isMultilingual',
 		);
-	} //{{{
+	} // }}}
 
 	function canInstall()
 	{
@@ -723,13 +725,13 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		$data = array_merge( $this->getDefaultValues(), $data );
 
-		global $trklib;
-		if( ! $trklib )
-			require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
+
+		$fieldId = $trklib->get_field_id($data['tracker'], $data['name']);
 
 		return $trklib->replace_tracker_field(
 			$data['tracker'],
-			false,
+			$fieldId,
 			$data['name'],
 			$data['type'],
 			$data['link'],
@@ -1406,7 +1408,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 		$modtitle = $data['title'];
 		}		
 		
-		// Set up module only as a user module if position is set to 'none'
+		// Set up module only as a custom module if position is set to 'none'
 		if( $data['position'] == 'none' )
 		{
 		// but still allow module_arguments	but keep it simple and don't include the $key=
@@ -2838,15 +2840,16 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {
 			//here we convert the array to that of what is acceptable to the sheet lib
 			$parentSheetId;
 			$sheets = array();
-			
-			for ($sheetI = 0; $sheetI < count($this->data); $sheetI++)
+			$nbsheets = count($this->data);	
+			for ($sheetI = 0; $sheetI < $nbsheets; $sheetI++)
 			{
 				$title = $this->data[$sheetI]['title'];
 				$title = ($title ? $title : "Untitled - From Profile Import");
-				
-				for ($r = 0; $r < count($this->data[$sheetI]); $r++)
+				$nbdatasheetI = count($this->data[$sheetI]);	
+				for ($r = 0; $r < $nbdatasheetI; $r++)
 				{
-					for ($c = 0; $c < count($this->data[$sheetI][$r]); $c++)
+					$nbdatasheetIr = count($this->data[$sheetI][$r]);
+					for ($c = 0; $c < $nbdatasheetIr; $c++)
 					{
 						$value = "";
 						$formula = "";

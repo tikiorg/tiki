@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -106,7 +106,10 @@ function module_search_info() {
 				'name' => tra('Category identifier'),
 				'description' => tra('If set to a category identifier, pages created through the module are automatically categorized in the specified category.') . " " . tra('Not set by default.')
 			),
-			
+			'compact' => array(
+				'name' => tra('Compact mode'),
+				'description' => tra('Makes the three buttons only appear on mouse-over.') . " " . tra('Default:') . ' "n"'
+			),
 			
 		)
 	);
@@ -159,6 +162,7 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 		'search_heading' => '',
 		'templateId' => '',
 		'categId' => '',
+		'compact' => 'n',
 	);
 	
 	$smod_params = array_merge($defaults, $smod_params);
@@ -199,7 +203,7 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 			$smod_params['show_edit_button']   = 'n';
 			$smod_params['go_submit'] = tra("Go");
 			$smod_params['default_button'] = 'go';
-			$smod_params['title']   = tra('Search Wiki Page');
+			$smod_params['title']   = tra('Search for Wiki Page');
 			break;
 			
 		case '':
@@ -231,6 +235,8 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 		$smod_params['input_value'] = $_REQUEST['words'];
 	} else if (!empty($_REQUEST['find'])) {
 		$smod_params['input_value'] = $_REQUEST['find'];
+	} else if (!empty($_REQUEST['filter']['content'])) {
+		$smod_params['input_value'] = $_REQUEST['filter']['content'];
 	} else {
 		$smod_params['input_value'] = '';
 	}

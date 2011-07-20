@@ -1,3 +1,4 @@
+{* $Id$ *}
 <a class="icon" href="tiki-accounting_export.php?action=print&what=stack&bookId={$bookId}" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
 <a class="icon" href="tiki-accounting_export.php?action=settings&what=stack&bookId={$bookId}">{icon _id="table" alt="{tr}export table{/tr}"}</a>
 <table class="normal">
@@ -17,14 +18,14 @@
   <th>{tr}Amount{/tr}</th>
   <th>{tr}Text{/tr}</th>
  </tr>
-{foreach from=$stack" item=s}{cycle values="odd,even" assign="style"}
+{foreach from=$stack item=s}{cycle values="odd,even" assign="style"}
  <tr class="{$style}">
   <td class="journal"{if $s.maxcount>1} rowspan="{$s.maxcount}"{/if} style="text-align:right">
    <a href="tiki-accounting_stack.php?bookId={$bookId}&stackId={$s.stackId}">{$s.stackId}</a>
   </td>
   <td class="journal"{if $s.maxcount>1} rowspan="{$s.maxcount}"{/if} style="text-align:right">{$s.stackDate|date_format:"%Y-%m-%d"}</td>
   <td class="journal"{if $s.maxcount>1} rowspan="{$s.maxcount}"{/if}>{$s.stackDescription|escape}</td>
-{section name=posts loop=$s.maxcount}{assign var='i' value=`$smarty.section.posts.iteration-1`}
+{section name=posts loop=$s.maxcount}{assign var='i' value=$smarty.section.posts.iteration-1}
  {if !$smarty.section.posts.first}<tr class="{$style}">{/if}
   <td class="journal" style="text-align:right">{if $i<$s.debitcount}{$j.debit[$i].stackItemAccountId}{/if}&nbsp;</td>
   <td class="journal" style="text-align:right">{if $i<$s.debitcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$s.debit[$i].stackItemAmount|currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>

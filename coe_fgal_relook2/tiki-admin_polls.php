@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,6 +14,10 @@ $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_admin_polls');
 
 $auto_query_args = array('pollId', 'sort_mode', 'offset', 'find');
+
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (!isset($_REQUEST["pollId"])) {
 	$_REQUEST["pollId"] = 0;
@@ -37,6 +41,10 @@ if (isset($_REQUEST["remove"])) {
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-polls');
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['Time_Meridian'])) {
+		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
+	}
 	$publishDate = $tikilib->make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"], 0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 	if (!isset($_REQUEST['voteConsiderationSpan'])) $_REQUEST['voteConsiderationSpan'] = 0;
 	$pid = $polllib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate, $_REQUEST['voteConsiderationSpan']);
@@ -89,6 +97,7 @@ if ($_REQUEST["pollId"]) {
 	$info['voteConsiderationSpan'] = 0;
 	$options = array();
 }
+
 $smarty->assign('info', $info);
 $smarty->assign('options', $options);
 if (!isset($_REQUEST["sort_mode"])) {

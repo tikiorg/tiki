@@ -42,7 +42,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}Upcoming events{/tr}</td>
+			<td>{tr}Upcoming Events{/tr}</td>
 			<td>
 				<select name="minical_upcoming">
 					{html_options output=$upcoming values=$upcoming selected=$minical_upcoming}
@@ -85,7 +85,7 @@
 
 <h2>{tr}Admin Topics{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			<td>{tr}Name:{/tr}</td><td><input type="text" name="name" /></td>
 		</tr>

@@ -45,7 +45,7 @@
 	</h2>
 	<form method="post" action="tiki-newsletters.php">
 		<input type="hidden" name="nlId" value="{$nlId|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
 				<td class="even">{tr}Name:{/tr}</td>
 				<td class="even"><strong>{$nl_info.name|escape}</strong></td>
@@ -80,7 +80,7 @@
 {if $showlist eq 'y'}
 	<h2>{tr}Available Newsletters{/tr}</h2>
 
-	{if $channels or $find ne''}
+	{if $channels or $find ne ''}
 		{include file='find.tpl'}
 	{/if}
 

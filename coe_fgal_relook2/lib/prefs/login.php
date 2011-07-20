@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -11,6 +11,7 @@ function prefs_login_list() {
 			'name' => tra('Use email as username'),
 			'description' => tra('Instead of creating new usernames, use the user\'s email address for authentication.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'login_is_email_obscure' => array(
 			'name' => tra('Obscure email when using email as username if possible (coverage will not be complete)'),
@@ -19,6 +20,7 @@ function prefs_login_list() {
 			'dependencies' => array(
 				'login_is_email',
 			),
+			'default' => 'n',
 		),
 	);
 }

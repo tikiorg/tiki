@@ -1,4 +1,4 @@
-{if $blog_post_context eq 'view_blog_post' }
+{if $blog_post_context eq 'view_blog_post'}
 	<div class="postfooter-nav clearfix">
 		{if $post_info.adjacent.prev}
 			<div class="postfooter-nav-prev">

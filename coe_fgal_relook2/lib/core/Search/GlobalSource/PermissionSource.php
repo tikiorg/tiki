@@ -1,14 +1,17 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interface
 {
 	private $perms;
-	private $additionalCheck;
 
-	function __construct(Perms $perms, $additionalCheck = null)
+	function __construct(Perms $perms)
 	{
 		$this->perms = $perms;
-		$this->additionalCheck = $additionalCheck;
 	}
 
 	function getProvidedFields()
@@ -39,6 +42,14 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 			$groups = array_merge($groups, $this->getAllowedGroups($objectType, $objectId, $viewPermission));
 		}
 
+		// Used for comments - must see the parent view permission in addition to a global permission to view comments
+		if (isset($data['global_view_permission'])) {
+			$globalPermission = $data['global_view_permission'];
+			$globalPermission = is_object($globalPermission) ? $globalPermission->getValue() : $globalPermission;
+			$groups = $this->getGroupExpansion($groups);
+			$groups = $this->filterWithGlobalPermission($groups, $globalPermission);
+		}
+
 		return array(
 			'allowed_groups' => $typeFactory->multivalue(array_unique($groups)),
 		);
@@ -63,15 +74,45 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		return $groups;
 	}
 
-	private function getCheckList($accessor)
+	private function filterWithGlobalPermission($groups, $permission)
 	{
-		$toCheck = $accessor->getResolver()->applicableGroups();
+		$out = array();
+		$accessor = $this->perms->getAccessor();
 
-		if ($this->additionalCheck) {
-			$toCheck[] = $this->additionalCheck;
+		foreach ($groups as $group) {
+			$accessor->setGroups(array($group));
+
+			if ($accessor->$permission) {
+				$out[] = $group;
+			}
 		}
 
+		return $out;
+	}
+
+	private function getCheckList($accessor)
+	{
+		$toCheck = $accessor->applicableGroups();
+
 		return $toCheck;
+	}
+
+	private function getGroupExpansion($groups)
+	{
+		static $expansions = array();
+		$tikilib = TikiLib::lib('tiki');
+
+		$out = $groups;
+
+		foreach ($groups as $group) {
+			if (! isset($expansions[$group])) {
+				$expansions[$group] = $tikilib->get_groups_all($group);
+			}
+
+			$out = array_merge($out, $expansions[$group]);
+		}
+
+		return $out;
 	}
 }
 

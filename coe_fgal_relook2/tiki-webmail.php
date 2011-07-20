@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -15,30 +15,50 @@ $access->check_permission_either( array('tiki_p_use_webmail', 'tiki_p_use_group_
 
 require_once ('lib/webmail/net_pop3.php');
 require_once ('lib/mail/mimelib.php');
-include_once ('lib/webmail/class.rc4crypt.php');
 include_once ('lib/webmail/tikimaillib.php');
 
 function handleWebmailRedirect($inUrl) {		// AJAX_TODO
-	global $prefs;
-	
-//	if ($prefs['ajax_xajax'] != 'y' || empty($_REQUEST['xjxfun'])) {
-//		header ('location: tiki-webmail.php?'.$inUrl);
-//		die();
-//	} else {
-//	    global $ajaxlib, $headerlib;
-////			$objResponse = new xajaxResponse('UTF-8');					// should be possible server-side, no?
-////			$objResponse->Redirect('tiki-webmail.php?'.$urlq);
-//	    $headerlib->add_js('window.location.replace("tiki-webmail.php?'.$inUrl.'")');
-//	    $ajaxlib->registerTemplate('tiki-webmail.tpl');
-////   	    $ajaxlib->registerTemplate('error.tpl');
-////	    $ajaxlib->registerFunction('loadComponent');
-//		$ajaxlib->processRequests();
-//		die();
-//	}
-	
+	header ('location: tiki-webmail.php?'.$inUrl);
+	exit;
 }
 
 $access->check_user($user);
+
+// check category permissions on group accounts
+if (isset($_REQUEST['locSection']) && $_REQUEST['locSection'] == 'settings') {
+	$id = false;
+	if (isset($_REQUEST['accountId'])) {
+		$id = $_REQUEST['accountId'];
+	} else if (isset($_REQUEST['remove'])) {
+		$id = $_REQUEST['remove'];
+	} else if (isset($_REQUEST['current'])) {
+		$id = $_REQUEST['current'];
+	}
+	if ($id) {
+		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $id ) );
+		$acct = $webmaillib->get_webmail_account($user, $id);
+		if (!isset($_REQUEST['current']))
+		{
+			if ($acct['flagsPublic'] == 'y' && !$objectperms->admin_group_webmail) {
+				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to admin the requested webmail account.'));
+			}
+		} else {
+			if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
+				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to use the requested webmail account.'));
+			}
+		}
+	}
+} else
+{
+	$acct = $webmaillib->get_current_webmail_account($user);
+	if ($acct)
+	{
+		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
+		if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
+			handleWebmailRedirect('locSection=settings&msg=' . tra('You no longer have permission to use your active webmail account.'));
+		}
+	}
+}
 
 $auto_query_args = array(
     'msgid',
@@ -126,9 +146,9 @@ if ($_REQUEST['locSection'] == 'read') {
 	
 		$attachments = array();
 		
-		if ($message->isMultipart()) {
-			// TODO	deal with attachments here??	
-		}
+//		if ($message->isMultipart()) {
+//			TODO	deal with attachments here??	
+//		}
 		
 		$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST['msgid'], true);
 
@@ -155,9 +175,9 @@ if ($_REQUEST['locSection'] == 'read') {
 				// reply text
 				$smarty->assign('plainbody', format_email_reply($bodies[$i]['body'], $aux['from'], $aux['date']));
 				$bodies[$i]['body'] = nl2br( $bodies[$i]['body'] );
-			} else {
+			}// else {
 				// attachments?
-			}
+			//}
 		}
 		
 		array_multisort($bodies);	// this doesn't do what we need properly but seems to fluke it mostly - TODO a manual re-sort
@@ -229,9 +249,9 @@ if ($_REQUEST['locSection'] == 'read') {
 			$aux['delivery-date'] = $aux['date'];
 		}
 		$aux['timestamp'] = strtotime($aux['delivery-date']);
-		
-		//$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
-		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : ''; // the commented out line above doesn't work
+	
+		// the subject needs to be decoded	
+		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : '';
 		$aux['from']    = isset($aux['from'])    ? utf8_encode($aux['from']) : '';
 		$aux['to']      = isset($aux['to'])      ? utf8_encode($aux['to']) : '';
 		$aux['cc']      = isset($aux['cc'])      ? utf8_encode($aux['cc']) : '';
@@ -297,7 +317,6 @@ END;
 
 		$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
 		handleWebmailRedirect($urlq);
-		return;
 	}
 
 	// connecting with Zend
@@ -367,7 +386,6 @@ END;
 	
 			$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
 			handleWebmailRedirect($urlq);
-			return;
 		}
 
 	}
@@ -423,6 +441,7 @@ END;
 
 		for ($i = 0; $i < $mailsum; $i++) {
 			$aux = $webmail_list[$i];
+			$aux['subject'] = mb_decode_mimeheader($aux['subject']); // Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied'])
 				= $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
@@ -595,12 +614,17 @@ END;
 					$_REQUEST['smtpPort'], $_REQUEST['flagsPublic'], $_REQUEST['autoRefresh'],
 					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n', $_REQUEST['fromEmail']);
 		}
+
+		$cat_type = 'webmail account';
+		$cat_objid = $_REQUEST['accountId'];
+		$cat_name = $_REQUEST['account'];
+		$cat_href = 'tiki-webmail.php?locSection=settings&accountId=' . $cat_objid;
+		$cat_object_exists = (bool) $_REQUEST['accountId'];
+		include_once ('categorize.php');
+
 		unset($_REQUEST['accountId']);
 	}
 	
-//	if (empty($_REQUEST['accountId']) || isset($_REQUEST['new_acc']) && $webmaillib->count_webmail_accounts($user) > 0) {
-//		$headerlib->add_jq_onready('$("#settingsFormDiv").hide();');
-//	}
 	// The red cross was pressed
 	if (isset($_REQUEST['remove'])) {
 		check_ticket('webmail');
@@ -616,6 +640,12 @@ END;
 
 	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
 	$smarty->assign('userEmail', trim($userlib->get_user_email($user)));
+
+	$cat_type = 'webmail account';
+	$cat_objid = (int) $_REQUEST['accountId'];
+	$categories = array();
+	$cat_object_exists = (bool) $_REQUEST['accountId'];
+	include_once ('categorize_list.php');
 
 	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
@@ -645,7 +675,18 @@ END;
 	$smarty->assign('accounts', $accounts['data']);
 	
 	$pubAccounts = $webmaillib->list_webmail_group_accounts($user, 0, -1, 'account_asc', '');
-	$smarty->assign('pubAccounts', $pubAccounts['data']);
+	$accounts = array();
+	foreach ($pubAccounts['data'] as $acct) {
+		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
+		if ($objectperms->use_group_webmail || $objectperms->admin_group_webmail) {
+			$accounts[] = $acct;
+		}
+	}
+	$smarty->assign('pubAccounts', $accounts);
+
+	if (isset($_GET['msg'])) {
+		$smarty->assign( 'display_msg', $_GET['msg'] );
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

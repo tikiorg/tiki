@@ -7,7 +7,7 @@
 		
 	<item>
 		<title>Parte da tela de administração do TinyMCE Advanced</title>
-		<link>http://rodrigo.utopia.org.br/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/tadv2/</link>
+		<link>http://example.com/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/tadv2/</link>
 		<pubDate>Mon, 04 May 2009 18:30:50 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -15,7 +15,7 @@
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/tadv2.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/tadv2.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -31,7 +31,7 @@
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/tadv2.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/tadv2.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
 		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"761";s:6:"height";s:3:"434";s:14:"hwstring_small";s:23:"height='72' width='128'";s:4:"file";s:9:"tadv2.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:17:"tadv2-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:17:"tadv2-300x171.jpg";s:5:"width";s:3:"300";s:6:"height";s:3:"171";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
@@ -48,7 +48,7 @@
 
 	<item>
 		<title>Hostelaria Las Torres</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881232-hostelaria-las-torres-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881232-hostelaria-las-torres-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:42 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -56,7 +56,7 @@
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881232-hostelaria-las-torres-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada.]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -72,7 +72,7 @@
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881232-hostelaria-las-torres-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[2008/01/20/1881232-hostelaria-las-torres-0.jpg]]></wp:meta_value>
@@ -89,7 +89,7 @@
 	
 	<item>
 		<title>Caminhando no gelo no Vale do Silêncio</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:45 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -97,7 +97,7 @@
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[Caminhando no gelo no Vale do Silêncio]]></content:encoded>
 		<excerpt:encoded><![CDATA[Caminhando no gelo no Vale do Silêncio]]></excerpt:encoded>
@@ -113,7 +113,7 @@
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg]]></wp:meta_value>

@@ -1,25 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/**
- * RANDOMINCLUDE plugin
- * Includes a random wiki page in another.
- *
- * Usage:
- * {RANDOMINCLUDE()}{RANDOMINCLUDE}
- *
- * @package Tiki
- * @subpackage TikiPlugins
- * @version $Revision: 1.00 $
- */
-
-function wikiplugin_randominclude_help() {
-	return tra("Include a random page").":<br />~np~{RANDOMINCLUDE()}{RANDOMINCLUDE}~/np~";
-}
 
 function wikiplugin_randominclude_info() {
 	return array(

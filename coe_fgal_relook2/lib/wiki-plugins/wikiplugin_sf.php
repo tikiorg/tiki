@@ -1,16 +1,11 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 define('SF_CACHE',48); # in hours
-
-function wikiplugin_sf_help() {
-	return tra('Creates a link to SourceForge tracker items (bugs, feature requests, patches and support requests) with the title of the item as the link text.') 
-			. ':<br />~np~{SF(groupid=> , trackerid=> , itemid=> , title=> )}{SF}~/np~';
-}
 
 function wikiplugin_sf_info() {
 	return array(

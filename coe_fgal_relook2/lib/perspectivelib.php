@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -200,15 +200,13 @@ class PerspectiveLib
 		return $list;
 	}
 
-	//Returns a list of perspectives with the given name, filtered by perms
-	function get_perspectives_with_given_name ( $name ) {
+	// Returns one of the perspectives with the given name
+	function get_perspective_with_given_name ( $name ) {
 	    $db = TikiDb::get();
 
-	    $list = $db->getOne( "SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ) );
+	    return $db->getOne( "SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ) );
 
 	    //$list = Perms::filter( array ( 'type' => 'perspective'), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
-
-	    return $list;
 	}
 }
 

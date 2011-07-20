@@ -1,11 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Displays a snippet of code
 
 function wikiplugin_code_info() {
 	return array(
@@ -15,6 +13,7 @@ function wikiplugin_code_info() {
 		'prefs' => array('wikiplugin_code'),
 		'body' => tra('Code'),
 		'icon' => 'pics/icons/page_white_code.png',
+		'filter' => 'rawhtml_unsafe',
 		'params' => array(
 			'caption' => array(
 				'required' => false,
@@ -97,12 +96,15 @@ function wikiplugin_code_info() {
 }
 
 function wikiplugin_code($data, $params) {
+	global $prefs;
 	static $code_count;
 	$default = array('cpy' => 0);
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
 	$code = trim($data);
+	$code = str_replace('&lt;x&gt;', '', $code);
+	$code = str_replace('<x>', '', $code);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
 	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
@@ -123,7 +125,7 @@ function wikiplugin_code($data, $params) {
 	}
 
 	// If 'color' is specified and GeSHI installed, use syntax highlighting with GeSHi
-	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') ) {
+	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') && $prefs['feature_syntax_highlighter'] != 'y') {
 
 		$geshi = new GeSHi($code, $colors);
 
@@ -142,11 +144,9 @@ function wikiplugin_code($data, $params) {
 
 		// Remove first <pre> tag
 		if ( $out != '' ) {
-			$out = preg_replace('/^<pre[^>]*>(.*)<\/pre>$/', '\\1', $out);
+			$out = preg_replace('/^<pre[^>]*>(.*)<\/pre>$/mis', '\\1', $out);
 			$out = trim($out);
 		}
-
-		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
 
 	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
@@ -163,8 +163,6 @@ function wikiplugin_code($data, $params) {
 		$out = preg_replace("/^\s*(<[^>]+>)\n/", '\\1', $out);
 		$out = trim($out);
 
-		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
-
 	} else {
 
 		$out = trim($code);
@@ -179,9 +177,9 @@ function wikiplugin_code($data, $params) {
 		} else {
 			$out = $code;
 		}
-
-		if ( $escape_html ) $out = htmlentities($out,ENT_COMPAT,"utf-8");
 	}
+
+	if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
 
 	if ( isset($wrap) && $wrap == 1 ) {
 		// Force wrapping in <pre> tag through a CSS hack
@@ -203,7 +201,9 @@ function wikiplugin_code($data, $params) {
 		.(($cpy && ($code_count < 1)) ? '<script type="text/javascript" src="lib/ZeroClipboard.js"></script>' : '')
 		.(( $cpy ) ? '<script language="JavaScript">var clip = new ZeroClipboard.Client();var elem = document.getElementById ("'.$id.'");clip.setText( elem.innerText || elem.textContent );clip.glue( \'d_clip_button'.$id.'\' );clip.addEventListener( \'complete\', function(client, text) {alert("The code has been copied to the clipboard.");} );</script>' : '');
 
-		$out = '<div class="plugincode">'.((isset($caption)) ? '<div class="codecaption">'.$caption.'</div>' : '').(( $cpy ) ? '<div class="codecaption" id="d_clip_button'.$id.'">Copy To Clipboard</div>' : '').$out.'</div>';
+		$out = '<div class="plugincode" '. (isset($colors) ? 'parse="'.$colors.'"' : '') . '>'.
+			((isset($caption)) ? '<div class="codecaption">'.$caption.'</div>' : '').(( $cpy ) ? '<div class="codecaption" id="d_clip_button'.$id.'">Copy To Clipboard</div>' : '').$out.
+		'</div>';
 	$code_count++;
 	return $out;
 }

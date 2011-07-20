@@ -3,7 +3,6 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" href="styles/slideshows/{$prefs.slide_style}" />
 		<title>{$page_info.pageName}</title>
 		<script type="text/javascript" src="lib/tiki-js.js"></script>
 	</head>

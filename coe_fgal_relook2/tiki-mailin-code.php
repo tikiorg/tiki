@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,7 +9,6 @@ require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 include_once ('lib/mailin/mailinlib.php');
 require_once ("lib/webmail/net_pop3.php");
-include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/tikimaillib.php");
 include_once ('lib/wiki/wikilib.php');
@@ -217,7 +216,6 @@ foreach($accs['data'] as $acc) {
 									}
 								}
 								mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
-							} elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
 							} elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
 								// This is used to UPDATE wiki pages
 								$body = mailin_get_body($output);

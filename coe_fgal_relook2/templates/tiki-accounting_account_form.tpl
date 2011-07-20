@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {title help="accounting"}
 	{$book.bookName}:
 	{if $action=="new"}{tr}Create new account{/tr}{else}{tr}Edit Account{/tr}{/if}
@@ -38,7 +38,7 @@
 </form>
 </div>
 {if isset($journal)}<div id="account_journal>
-{include file="tiki-accounting_journal.tpl}
+{include file='tiki-accounting_journal.tpl'}
 </div>
 {/if}
  

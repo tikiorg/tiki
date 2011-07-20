@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class WikiParser_OutputLinkTest extends TikiTestCase
 {
@@ -123,7 +128,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="http://example.com/Test" class="wiki external">Test</a>',
+			'<a href="http://example.com/Test" class="wiki external out">Test</a>',
 			$link->getHtml() );
 	}
 
@@ -137,7 +142,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="http://example.com/Test" class="wiki external">ABC</a>',
+			'<a href="http://example.com/Test" class="wiki external out">ABC</a>',
 			$link->getHtml() );
 	}
 

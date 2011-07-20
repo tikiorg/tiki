@@ -1,18 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Includes rss feed output in a wiki page
-// Usage:
-// {RSS(id=>feedId,max=>3,date=>1,author=>1,desc=>1)}{RSS}
-//
-
-function wikiplugin_events_help() {
-	return tra("~np~{~/np~EVENTS(calendarid=1|2,maxdays=365,max=-1,datetime=1,desc=1)}{EVENTS} Insert rss feed output into a wikipage");
-}
 
 function wikiplugin_events_info() {
 	return array(
@@ -136,7 +127,7 @@ function wikiplugin_events($data,$params) {
 	if (count($events)<$max) $max = count($events);
 
 	$repl .= '<table class="normal">';
-	$repl .= '<tr class="heading"><td colspan="2">'.tra("Upcoming events").'</td></tr>';
+	$repl .= '<tr class="heading"><td colspan="2">'.tra("Upcoming Events").'</td></tr>';
 	for ($j = 0; $j < $max; $j++) {
 	  if ($datetime!=1) {
 			$eventStart=str_replace(" ","&nbsp;",strftime($tikilib->get_short_date_format(),$events[$j]["start"]));

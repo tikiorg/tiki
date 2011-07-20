@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_ResultSet extends ArrayObject
 {
@@ -45,6 +50,8 @@ class Search_ResultSet extends ArrayObject
 			foreach ($content as $key => $value) {
 				if ($key != 'object_type' // Skip internal values
 				 && $key != 'object_id'
+				 && $key != 'parent_object_type'
+				 && $key != 'parent_object_id'
 				 && $key != 'relevance'
 				 && $key != 'url'
 				 && ! empty($value) // Skip empty

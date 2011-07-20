@@ -28,7 +28,7 @@
 				<select name="categId">
 					{section name=ix loop=$categories}
 						<option value="{$categories[ix].categId|escape}" {if $categId eq $categories[ix].categId}selected="selected"{/if}>
-							{$categories[ix].name} ({$categories[ix].categId})
+							{$categories[ix].name|escape} ({$categories[ix].categId})
 						</option>
 					{/section}
 				</select>
@@ -77,11 +77,11 @@
 	{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>
+				<td class="checkbox">
 					<input type="checkbox" name="categ[{$channels[user].categId}]" />
 				</td>
-				<td>{$channels[user].name} ({$channels[user].categId})</td>
-				<td>{$channels[user].theme}</td>
+				<td class="text">{$channels[user].name|escape} ({$channels[user].categId})</td>
+				<td class="text">{$channels[user].theme}</td>
 			</tr>
 		{/section}
 	</table>

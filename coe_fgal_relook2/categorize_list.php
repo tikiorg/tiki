@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -18,11 +18,6 @@ $catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) 
 $smarty->assign('mandatory_category', '-1');
 if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)) {
 	global $categlib, $user; include_once ('lib/categories/categlib.php');
-	$smarty->assign('cat_categorize', 'n');
-
-	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
-		$smarty->assign('cat_categorize', 'y');
-	}
 
 	if( ! isset( $cat_object_exists ) ) {
 		$cat_object_exists = (bool) $cat_objid;
@@ -75,12 +70,11 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 			$categories[$i]["incat"] = 'n';
 			$categories[$i]['canchange'] = $can && $catperms->add_object;
 		}
-		if (isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
+		if (!$cat_object_exists && isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
 			if (in_array($categories[$i]["categId"], $_REQUEST["cat_categories"])) {
 				$categories[$i]["incat"] = 'y';
 				// allow to preselect categories when creating a new article
 				// like this: /tiki-edit_article.php?cat_categories[]=1&cat_categorize=on
-				$smarty->assign('categ_checked', 'y');
 			} else {
 				$categories[$i]["incat"] = 'n';
 			}
@@ -92,12 +86,4 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 	if (!empty($cats))
 		$smarty->assign('catsdump', implode(',',$cats));
 	$smarty->assign_by_ref('categories', $categories);
-
-	// check if this page is categorized
-	if ($categlib->is_categorized($cat_type, $cat_objid)) {
-		$cat_categorize = 'y';
-	} else {
-		$cat_categorize = 'n';
-	}
-	$smarty->assign('cat_categorize', $cat_categorize);
 }

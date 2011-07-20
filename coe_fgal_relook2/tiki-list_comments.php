@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -82,7 +82,7 @@ if (isset($_REQUEST['checked'])) {
 	check_ticket('list_comments');
 	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
 	// Delete comment(s)
-	if (isset($_REQUEST['remove'])) {
+	if (isset($_REQUEST['remove']) || isset($_REQUEST['remove_x'])) {
 		$access->check_authenticity(tra('Delete comments'));
 		foreach($checked as $id) {
 			$commentslib->remove_comment($id);

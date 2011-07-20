@@ -34,7 +34,7 @@
 						{/foreach}
 					</div>
 				{else}
-					{tr}None{/tr} {button href="tiki-admin_calendars.php?show=mod" _text="{tr}Create calendar{/tr}"}
+					{tr}None{/tr} {button href="tiki-admin_calendars.php?cookietab=2" _text="{tr}Create calendar{/tr}"}
 				{/if}
 			</div>
 		</div>

@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class WikiParser_OutputLink
 {
@@ -6,6 +11,7 @@ class WikiParser_OutputLink
 	private $identifier;
 	private $language;
 	private $qualifier;
+	private $anchor;
 
 	private $externals = array();
 	private $handlePlurals = false;
@@ -45,6 +51,10 @@ class WikiParser_OutputLink
 		$this->handlePlurals = (bool) $handle;
 	}
 
+	function setAnchor( $anchor ) {
+		$this->anchor = $anchor;
+	}
+
 	function getHtml() {
 		$page = $this->identifier;
 		$description = $this->identifier;
@@ -52,10 +62,10 @@ class WikiParser_OutputLink
 			$description = $this->description;
 		}
 
-		if( $link = $this->handleExternal( $page, $description ) ) {
+		if( $link = $this->handleExternal( $page, $description, $class ) ) {
 			return $this->outputLink( $description, array(
-				'href' => $link,
-				'class' => 'wiki external',
+				'href' => $link . $this->anchor,
+				'class' => $class,
 			) );
 		} elseif( $info = $this->findWikiPage( $page ) ) {
 			if (!empty($info['pageName'])) {
@@ -67,7 +77,7 @@ class WikiParser_OutputLink
 			}
 
 			return $this->outputLink( $description, array(
-				'href' => call_user_func( $this->wikiBuilder, $page ),
+				'href' => call_user_func( $this->wikiBuilder, $page ) . $this->anchor,
 				'title' => $title,
 				'class' => 'wiki',
 			) );
@@ -87,10 +97,10 @@ class WikiParser_OutputLink
 
 		$string = '<a';
 		foreach( $attributes as $attr => $val ) {
-			$string .= " $attr=\"" . htmlentities( $val, ENT_QUOTES, 'UTF-8' ) . '"';
+			$string .= " $attr=\"" . htmlentities( $val, ENT_QUOTES, 'UTF-8', false ) . '"';
 		}
 		
-		$string .= '>' . htmlentities( $text, ENT_QUOTES, 'UTF-8' ) . '</a>';
+		$string .= '>' . htmlentities( $text, ENT_QUOTES, 'UTF-8', false ) . '</a>';
 
 		return $string;
 	}
@@ -105,19 +115,21 @@ class WikiParser_OutputLink
 		return $url;
 	}
 
-	private function handleExternal( & $page, & $description ) {
+	private function handleExternal( & $page, & $description, & $class ) {
 		$parts = explode( ':', $page );
 
 		if( count( $parts ) == 2 ) {
 			list( $token, $remotePage ) = $parts;
+			$token = strtolower($token);
 
-			if( isset( $this->externals[strtolower($token)] ) ) {
+			if( isset( $this->externals[$token] ) ) {
 				if( $page == $description ) {
 					$description = $remotePage;
 				}
 
 				$page = $remotePage;
-				$pattern = $this->externals[strtolower($token)];
+				$pattern = $this->externals[$token];
+				$class = 'wiki external ' . $token;
 				return str_replace( '$page', urlencode( $page ), $pattern );
 			}
 		}

@@ -5,13 +5,9 @@
 
 {* Command prompt form *}
 <form method="post" action="{$console_father|escape}">
-<table border="0" >
-  <tr><td colspan="2">
-    <b>{tr}Tiki Debugger Console{/tr}</b>
-    </td>
-    <td align="right" valign="top">
-      {icon _id='img/icons/close.gif' onclick='toggle("debugconsole");' _title="{tr}Close{/tr}" width=13 height=13}
-  </td></tr>
+<b>{tr}Debugger Console{/tr}</b>
+<span style="float: right">{icon _id='img/icons/close.gif' onclick='toggle("debugconsole");' _title="{tr}Close{/tr}" width=13 height=13}</span>
+<table>
   <tr>
     <td class="formcolor"><small>{tr}Current URL:{/tr}</small></td>
     <td class="formcolor">{$console_father|escape}</td>

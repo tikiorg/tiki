@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -30,6 +30,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
+	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+		$params['_toolbars'] = 'n';
+	}
 	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 
 	if (!isset($params['_wysiwyg'])) {	// should not be set usually(?)
@@ -45,16 +48,21 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+
+	//codemirror integration
+	if ($prefs['feature_syntax_highlighter'] === 'y') {
+		$params['data-codemirror'] = isset($params['codemirror']) ? $params['codemirror'] : '';
+		$params['data-syntax'] = isset($params['syntax']) ? $params['syntax'] : '';
+	}
+	//keep params html5 friendly
+	unset($params['codemirror']);
+	unset($params['syntax']);
 	
-	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
+	// mainly for modules admin - preview is for the module, not the custom module so don;t need to confirmExit
 	$params['_previewConfirmExit'] = isset($params['_previewConfirmExit']) ? $params['_previewConfirmExit'] : 'y';
 	
 	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
 	
-	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
-		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
-		$prefs['feature_template_zoom'] = 'n';
-	}
 	if ( ! isset($params['section']) ) {
 		global $section;
 		$params['section'] = $section ? $section: 'wiki page';
@@ -68,7 +76,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$as_id = $params['id'];
 	
 	include_once('lib/smarty_tiki/block.remarksbox.php');
-	if ($params['_simple'] === 'n' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
+	$editWarning = $prefs['wiki_timeout_warning'] == 'y' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox';
+	if ($params['_simple'] === 'n' && $editWarning) {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
 				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
@@ -170,6 +179,7 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
+window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
 register_id("'.$as_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
@@ -197,7 +207,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	language: "'.$prefs['language'].'",
 	customConfig: "",
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
-	font_names: "' . $prefs['wysiwyg_fonts'] . '",
+	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
 	contentsCss: ["' . $ckstyle . '"],
@@ -209,9 +219,9 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 });
 ', 20);	// after dialog tools init (10)
 
-		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;';	// missing closing quotes, closed in condition
 		if (empty($params['cols'])) {	
-			$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
+			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
 		} else {
 			$html .= '" cols="'.$params['cols'].'"';
 		}
@@ -246,10 +256,6 @@ function CKeditor_OnComplete() {
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
-			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
-		}
-		
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : $params['_simple'] === 'y' ? 'y' : 'n');
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
@@ -265,7 +271,7 @@ function CKeditor_OnComplete() {
 	$js_editconfirm = '';
 	$js_editlock = '';
 
-	if ($params['_simple'] == 'n') {
+	if ($params['_simple'] == 'n' && (isset($params['comments']) && $params['comments'] !== 'y')) {
 // Display edit time out
 
 		$js_editlock .= "
@@ -383,7 +389,7 @@ function switchEditor(mode, form) {
 ";
 		}
 			
-		if( $prefs['wiki_timeout_warning'] == 'y' ) {
+		if( $editWarning ) {
 			$headerlib->add_js($js_editlock);
 		}
 		$headerlib->add_js($js_editconfirm);

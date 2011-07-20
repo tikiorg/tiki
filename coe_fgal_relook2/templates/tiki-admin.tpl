@@ -1,8 +1,44 @@
 {* $Id$ *}
 
-{title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
+{title help="$helpUrl"}{$admintitle}{/title}
 
-{if $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
+<form method="post" action="">
+	<fieldset>
+		<legend>{tr}Preference Filters{/tr}</legend>
+		{foreach from=$pref_filters key=name item=info}
+			<label>
+				<input type="checkbox" class="preffilter {$info.type|escape}" name="pref_filters[]" value="{$name|escape}" {if $info.selected}checked="checked"{/if}/>
+				{$info.label|escape}
+			</label>
+		{/foreach}
+
+		<input type="submit" value="{tr}Set as my default{/tr}"/>
+	</fieldset>
+</form>
+
+{jq}
+	var updateVisible = function() {
+		var filters = [];
+		$('.adminoptionbox.preference').hide();
+		$('.preffilter').each(function () {
+			var targets = $('.adminoptionbox.preference.' + $(this).val());
+			if ($(this).is(':checked')) {
+				filters.push($(this).val());
+				targets.show();
+			} else if ($(this).is('.negative:not(:checked)')) {
+				targets.hide();
+			}
+		});
+		$('.adminoptionbox.preference.modified').show();
+
+		$('input[name="filters"]').val(filters.join(' '));
+	};
+
+	updateVisible();
+	$('.preffilter').change(updateVisible);
+{/jq}
+
+{if !isset($smarty.get.page) or $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
 	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
@@ -10,6 +46,7 @@
 	<p>
 		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/></label>
 		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
+		<input type="hidden" name="filters"/>
 	</p>
 </form>
 {if $lm_error}
@@ -40,7 +77,7 @@
 *}
 {if $db_requires_update}
 	{remarksbox type="errors" title="{tr}Database Version Problem{/tr}"}
-	{tr}Your database requires an update to match the current Tiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
+	{tr}Your database requires an update to match the current Tiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provokes errors.{/tr}
 	{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr} php installer/shell.php
 	{/remarksbox}
 {/if}

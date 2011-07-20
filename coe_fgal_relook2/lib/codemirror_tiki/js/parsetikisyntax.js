@@ -36,7 +36,10 @@ var TWParser = Editor.Parser = (function() {
 					if (source.lookAhead("(", true)) {
 						setState(wikiLink);
 						return null;
+					} else {
+						normalGo = true;
 					}
+					break;
 				case "[":// Weblink
 					setState(inWeblink);
 					return null;
@@ -352,7 +355,7 @@ var TWParser = Editor.Parser = (function() {
 		function inPluginComma(source, setState) {
 			if (!source.endOfLine()) {
 				var ch = source.next();
-				if (ch == ",") {
+				if (ch == ',') {
 					setState(inPluginAttributes);
 				} else {
 					setState(inPluginContainer);
@@ -366,7 +369,7 @@ var TWParser = Editor.Parser = (function() {
 			var endOfLine = false;
 			while (!endOfLine) {
 				var ch = source.next();
-				if (source.lookAhead("=")) {
+				if (source.lookAhead("=") || source.lookAhead("->")) {
 					setState(inPluginAttributeEquals);
 					break;
 				}
@@ -428,7 +431,13 @@ var TWParser = Editor.Parser = (function() {
 		function inPluginAttributeParenthesesRight(source, setState) {
 			if (!source.endOfLine()) {
 				var ch = source.next();
-				setState(inPluginComma);
+				if (source.lookAhead(',')) {
+					setState(inPluginComma);
+				} else if (source.lookAhead(')')) {
+					setState(inPluginContainer);
+				} else {
+					setState(inPluginAttributes);
+				}
 				return "tw-plugin-attribute-parentheses";
 			} else {
 				setState(normal);

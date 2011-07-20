@@ -52,21 +52,22 @@
 							</div>
 							<a href="javascript://Add Option"	onclick="pollsAddOption()">{tr}Add Option{/tr}</a>
 							{remarksbox type="tip" title="{tr}Tip{/tr}"}
-								{tr}Leave box empty for deleting an option.{/tr}
+								{tr}Leave box empty to delete an option.{/tr}
 							{/remarksbox}
 						</div>
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
 				<tr>
-					<td>{tr}PublishDate:{/tr}</td>
+					<td>{tr}Publish Date:{/tr}</td>
 					<td>
-						{html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$info.publishDate display_seconds=false}
+						{html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} 
+						{html_select_time time=$info.publishDate display_seconds=false use_24_hours=$use_24hr_clock}
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label id="voteConsiderationSpan">{tr}Votes older than these days are no more considered{/tr}</label>
+						<label id="voteConsiderationSpan">{tr}Votes older than these days are not considered{/tr}</label>
 					</td>
 					<td>
 						<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}"/>
@@ -91,8 +92,8 @@
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='title' title="{tr}Title{/tr}"}{tr}Title{/tr}{/self_link}</th>
-				{if $prefs.poll_list_categories eq 'y'}<th>{tr}Categories{/tr}</th>{assign var=numbercol value=`$numbercol+1`}{/if}
-				{if $prefs.poll_list_objects eq 'y'}<th>{tr}Objects{/tr}</th>{assign var=numbercol value=`$numbercol+1`}{/if}
+				{if $prefs.poll_list_categories eq 'y'}<th>{tr}Categories{/tr}</th>{assign var=numbercol value=$numbercol+1}{/if}
+				{if $prefs.poll_list_objects eq 'y'}<th>{tr}Objects{/tr}</th>{assign var=numbercol value=$numbercol+1}{/if}
 				<th>{self_link _sort_arg='sort_mode' _sort_field='active' title="{tr}Active{/tr}"}{tr}Active{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='votes' title="{tr}Votes{/tr}"}{tr}Votes{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='publishDate' title="{tr}Publish{/tr}"}{tr}Publish{/tr}{/self_link}</th>
@@ -143,7 +144,7 @@
 	         {norecords _colspan=$numbercol}
 			{/section}
 		</table>
-		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 
 	{tab name="{tr}Add poll to pages{/tr}"}

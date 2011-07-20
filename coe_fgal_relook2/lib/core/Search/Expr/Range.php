@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Search_Expr_Range implements Search_Expr_Interface
 {
@@ -6,6 +11,7 @@ class Search_Expr_Range implements Search_Expr_Interface
 	private $to;
 	private $type;
 	private $field;
+	private $weight = 1.0;
 
 	function __construct($from, $to, $type = null, $field = null)
 	{
@@ -32,6 +38,16 @@ class Search_Expr_Range implements Search_Expr_Interface
 	function setField($field = 'global')
 	{
 		$this->field = $field;
+	}
+
+	function setWeight($weight)
+	{
+		$this->weight = (float) $weight;
+	}
+
+	function getWeight()
+	{
+		return $this->weight;
 	}
 
 	function walk($callback)

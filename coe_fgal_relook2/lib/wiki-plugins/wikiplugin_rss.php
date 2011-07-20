@@ -1,14 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// Includes rss feed output in a wiki page
-// Usage:
-// {RSS(id=>feedId,max=>3,date=>1,author=>1,desc=>1,icon=>http://jbotcan.org/favicon.ico)}{RSS}
-//
 
 function wikiplugin_rss_info() {
 	return array(
@@ -104,7 +99,7 @@ function wikiplugin_rss($data,$params) {
 		'desc' => 0,
 		'author' => 0,
 		'icon' => '',
-                'showtitle' => 1,
+		'showtitle' => 1,
 	), $params );
 
 	if ( ! isset( $params['id'] ) ) {

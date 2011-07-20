@@ -20,10 +20,6 @@ h3.box-title,
 	background: none;
 }
 
-.box {
-	border: none;
-}
-
 /* end reset */
 
 body {
@@ -491,6 +487,10 @@ li.even,
 
 .tabactive a {
 	color: #000 !important;	
+}
+
+.statuson {
+	background: #676767;
 }
 
 .tabcontent {

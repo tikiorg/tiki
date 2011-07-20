@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,11 +14,18 @@ elseif (isset($_SERVER['HTTP_REFERER'])) $orig_url = $_SERVER['HTTP_REFERER'];
 else $orig_url = $prefs['tikiIndex'];
 
 if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) { 
-        if (!preg_match('/article[0-9]+-?/', $orig_url)) {
-                $orig_url = preg_replace('#\/([^\/]+)$#', '/tiki-index.php?page=$1', $orig_url);
-        } else {
-                $orig_url = preg_replace('#\/article([0-9]+)(.*)#', '/tiki-read_article.php?articleId=$1', $orig_url);
-        }
+	if (preg_match('/cat[0-9]+-?/', $orig_url)) {
+		include_once('tiki-sefurl.php');
+		$orig_url = filter_out_sefurl(preg_replace('#(.*)\/cat([0-9]+)(.*)#', '/tiki-browse_categories.php?parentId=$2$3', $orig_url), $smarty, 'category');
+	} elseif (preg_match('/article[0-9]+-?/', $orig_url)) {
+		$orig_url = preg_replace('#\/article([0-9]+)(.*)#', '/tiki-read_article.php?articleId=$1', $orig_url);
+	} else {
+		$orig_url = preg_replace('#\/([^\/]+)$#', '/tiki-index.php?page=$1', $orig_url);
+	}
+} elseif (!strstr($orig_url, '.php')) {
+        $params = parse_url($orig_url);
+        if (empty($params['query']))
+                $orig_url = $prefs['tikiIndex'];
 }
 
 if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {

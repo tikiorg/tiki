@@ -25,74 +25,77 @@
 {if (not $show_form)} 
   {include file='find.tpl'}
 {/if}
-
-<span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>
+{if $cant eq 1}
+	<span class="taskcount">{$cant}&nbsp;{tr}Task{/tr}</span>
+{else}
+	<span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>
+{/if}
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 <table width="100%">
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		{icon _id='task_received' align="middle"} 
+		{icon _id='task_received' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
 	</td>
 	<td>
-		{tr}Received task{/tr}. {tr}You received this task, please read and execute it{/tr}.
+		{tr}You received this task{/tr}.
 	</td>
 </tr>
 {/if}
 {if $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		{icon _id='task_submitted' align="middle"} 
+		{icon _id='task_submitted' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
 	</td>
 	<td>
-		{tr}Send task{/tr}. {tr}You send this task to a other user{/tr}.
+		{tr}You sent this task to another user{/tr}.
 	</td>
 </tr>
 {/if}
 {if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		{icon _id='task_shared' align="middle"} 
+		{icon _id='group' title="{tr}Task shared by a group{/tr}" alt="{tr}Task shared by a group{/tr}"} 
 	</td>
 	<td>
-		{tr}Shared task{/tr}. {tr}This task is public to a special group{/tr}.
+		{tr}Task is shared by a group{/tr}.
 	</td>
 </tr>
 {/if}
 <tr>
 	<td>
-		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title="{tr}Accepted by Task User and Creator{/tr}" alt="{tr}Accepted User and Creator{/tr}" />
+		{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
 	</td>
 	<td>
-		{tr}Task is accepted by user and creator{/tr}.
+		{tr}Task has been accepted by user and creator{/tr}.
 	</td>
 </tr>
 <tr>
 	<td>
-		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title="{tr}Not Accepted by One User{/tr}" alt="{tr}Not Accepted User{/tr}" />
+		{icon _id='delete' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
 	</td>
 	<td>
-		{tr}Task is rejected by one user{/tr}.
+		{tr}Task has been rejected by a user{/tr}.
 	</td>
 </tr>
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" alt="{tr}Waiting for Me{/tr}" title="{tr}Waiting for Me{/tr}" />
+		{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
 	</td>
 	<td>
-		{tr}Task is not accepted by you, read the task and accept or reject it{/tr}.
+		{tr}Task has not yet been accepted or rejected by you{/tr}.
 	</td>
 </tr>
 {/if}
 {if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" alt="{tr}Waiting for Other User{/tr}" title="{tr}Waiting for Other User{/tr}" />
+		{icon _id='user_comment' title="{tr}Waiting for other user{/tr}" alt="{tr}Waiting for other user{/tr}"}
 	</td>
 	<td>
-		{tr}Task is not accepted/rejected by other user{/tr}.
+		{tr}Task has not yet been accepted or rejected by another user{/tr}.
 	</td>
 </tr>
 {/if}

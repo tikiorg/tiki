@@ -108,7 +108,7 @@
 								<td>{tr}Recipient(s){/tr}</td>
 								<td>
 									{if $prefs.feature_jquery_autocomplete == 'y'}
-										{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' style='width:95%' user_selector_threshold=1}
+										{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' style='width:95%' user_selector_threshold=0}
 										<br />
 										<em>{tr}Separate multiple email addresses with a comma and a space{/tr}</em>
 									{else}
@@ -286,9 +286,13 @@
 								<tr>
 									<td>{tr}Recipient(s){/tr}</td>
 									<td>
-										<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}"/>
+										{if $prefs.feature_jquery_autocomplete == 'y'}
+											{user_selector user = '' editable='y' multiple='true' name='messageto' style='width:95%' user_selector_threshold=0}
+										{else}
+											<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}"/>
+										{/if}
 										<br />
-										<em>{tr}Separate multiple recipients with a comma.{/tr}</em>
+										<em>{tr}Separate multiple recipients with a semicolon.{/tr}</em>
 									</td>
 								</tr>
 								<tr>

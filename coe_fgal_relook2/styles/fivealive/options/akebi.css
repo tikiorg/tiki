@@ -30,11 +30,11 @@ hr {
 	background: #18a3bb;
 }
 
-#header_outer {
-	background: url(akebi/headertile.jpg) 0 0 no-repeat;
+.header_outer {
+	background: url(akebi/siteheadertile.jpg) 0 0 no-repeat;
 }
 
-#header_fixedwidth {
+.header {
 	background: url(akebi/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -102,8 +102,8 @@ input[type="submit"]:hover,
 
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
+.header .cssmenu_horiz li ul a,
+.header .cssmenu_horiz li:hover ul a,
 #topbar_modules .cssmenu_horiz li ul a,
 #topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #005064;
@@ -111,19 +111,19 @@ input[type="submit"]:hover,
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
+.header .cssmenu_horiz li ul a:hover,
 #topbar_modules .cssmenu_horiz li ul a:hover {
 	background: #14a1bb;
 }
 
-#header .cssmenu_horiz li.selected a,
+.header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
 	color: #b4f3fb;
 }
 
-#header .cssmenu_horiz li.selected li a,
+.header .cssmenu_horiz li.selected li a,
 #topbar_modules .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {
@@ -182,7 +182,8 @@ th,
 td.heading,
 tr.diffheader,
 .calHeading,
-.weeks {
+.weeks,
+th.header {
 	background: #1296a9;
 	color: #ddf8f9;
 }

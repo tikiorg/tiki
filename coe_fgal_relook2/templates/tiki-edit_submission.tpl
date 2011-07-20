@@ -7,7 +7,7 @@
 {/if}
 
 {if $subId}
-	{title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title|escape}{/title}
+	{title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title}{/title}
 {else}
 	{title help="Articles"}{tr}Submit article{/tr}{/title}
 {/if}
@@ -237,7 +237,7 @@
 				{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				{tr}at{/tr}
 				<span dir="ltr">
-					{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+					{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false use_24_hours=$use_24hr_clock}
 					&nbsp;
 					{$siteTimeZone}
 				</span>
@@ -250,7 +250,7 @@
 				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				{tr}at{/tr} 
 				<span dir="ltr">
-					{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+					{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false use_24_hours=$use_24hr_clock}
 					&nbsp;
 					{$siteTimeZone}
 				</span>
@@ -263,7 +263,7 @@
 			{assign var='attfullname' value=$att.itemId}
 			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{$attname|escape}</td>
-				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" /></td>
+				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" maxlength="255" /></td>
 			</tr>
 			{/foreach}
 		{/if}

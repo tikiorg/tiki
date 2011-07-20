@@ -86,12 +86,12 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>
+				<td class="checkbox">
 					<input type="checkbox" name="obj[{$channels[user].objId}]" />
 				</td>
-				<td>{$channels[user].type}</td>
-				<td>{$channels[user].name}</td>
-				<td>{$channels[user].theme}</td>
+				<td class="text">{$channels[user].type}</td>
+				<td class="text">{$channels[user].name}</td>
+				<td class="text">{$channels[user].theme}</td>
 			</tr>
 		{/section}
 	</table>

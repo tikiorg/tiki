@@ -1,33 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/*
-DEV NOTE
-that plugin is not finished !! -- mose
-\todo put message in an external file or source
-\todo use smarty templates rather than hardcode html
-*/
-
-// Includes a miniquiz form
-
-// fields to use in trackers to prepare miniquiz
-// Question   the question
-// Answer     correct answer
-// Option a   false answer 
-// Option b   false answer 
-// Option c   false answer 
-// Option d   false answer 
-// Valid      indicates that the tracker item is to be used as a quiz item
-
-function wikiplugin_miniquiz_help() {
-	$help = tra("Displays a miniquiz").":\n";
-	$help.= "~np~{MINIQUIZ(trackerId=>1)}Instructions::Feedback{MINIQUIZ}~/np~";
-	return $help;
-}
 
 function wikiplugin_miniquiz_info() {
 	return array(
@@ -60,7 +36,7 @@ function wikiplugin_miniquiz($data, $params) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 
-	$items = $tikilib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
+	$items = $trklib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
 	foreach ($items['data'] as $it) {
 		$id = $it['itemId'];
 		foreach ($it['field_values'] as $val) {

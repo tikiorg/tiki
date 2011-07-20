@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -23,10 +23,10 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'unstable';
+		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '7.0 SVN trunk';
+		$this->version 	= '8.0 SVN';	// needs to have no spaces for releases
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -49,24 +49,25 @@ class TWVersion
 	// Returns an array of all used Tiki stars.
 	function tikiStars() {
 		return array(
-				1=>'Spica',
-				2=>'Shaula',
-				3=>'Ras Algheti',
-				4=>'Capella',
-				5=>'Antares',
-				6=>'Pollux',
-				7=>'Mira',
-				8=>'Regulus',
-				9=>'Tau Ceti',
-				10=>'Era Carinae',
-				11=>'Polaris',
-				12=>'Sirius',
-				13=>'Arcturus',
-				14=>'Betelgeuse',
-				15=>'Aldebaran',
-				16=>'Vulpeculae',
-				17=>'Rigel'
-				);
+				1=>'Spica',			// 0.9
+				2=>'Shaula',		// 0.95
+				3=>'Ras Algheti',	// 1.0.x
+				4=>'Capella',		// 1.1.x
+				5=>'Antares',		// 1.2.x
+				6=>'Pollux',		// 1.3.x
+				7=>'Mira',			// 1.4.x
+				8=>'Regulus',		// 1.5.x
+				9=>'Tau Ceti',		// 1.6.x
+				10=>'Era Carinae',	// 1.7.x
+				11=>'Polaris',		// 1.8.x
+				12=>'Sirius',		// 1.9.x
+				13=>'Arcturus',		// 2.x
+				14=>'Betelgeuse',	// 3.x
+				15=>'Aldebaran',	// 4.x
+				16=>'Vulpeculae',	// 5.x
+				17=>'Rigel',		// 6.x
+				18=>'Electra',		// 7.x
+		);
 	}
 
 	// Returns an array of all valid versions of Tikiwiki.
@@ -139,6 +140,11 @@ class TWVersion
 				'6.1beta2',
 				'6.1RC1',
 				'6.1',
+				'7.0beta1',
+				'7.0beta2',
+				'7.0RC1',
+				'7.0',
+				'7.1RC1',
 			);
 	}
 

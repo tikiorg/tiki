@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -277,7 +277,10 @@ if (isset($_REQUEST['send'])) {
 		if (isset($_REQUEST['do_message']) and $_REQUEST['do_message']==1) {
 			$messageSent=sendMessage($_REQUEST['messageto'], $subject);
 			$smarty->assign('messageSent', $messageSent);
-			$ok = $ok && $messageSent;
+			$ok = $ok || $messageSent;
+			if ($messageSent) {
+				$errors = array();
+			}
 		} // do_message
 		if (isset($_REQUEST['do_forum']) and $_REQUEST['do_forum']==1) {
 			if (isset($_REQUEST['forumId'])) {
@@ -444,14 +447,14 @@ function sendMessage($recipients, $subject) {
 	$users = array_unique($users);
 	$txt = $smarty->fetch('mail/share.tpl');
 	foreach($users as $a_user) {
-		$messulib->post_message($a_user, $user, $a_user, '', $subject, $txt, $_REQUEST['priority'], $_REQUEST['replyto_hash']);
+		$messulib->post_message($a_user, $user, $a_user, '', $subject, $txt, $_REQUEST['priority'], isset($_REQUEST['replyto_hash']) ? $_REQUEST['replyto_hash'] : '');
 		if ($prefs['feature_score'] == 'y') {
 			$tikilib->score_event($user, 'message_send');
 			$tikilib->score_event($a_user, 'message_receive');
 		}
 	}
 	// Insert a copy of the message in the sent box of the sender
-	$messulib->save_sent_message($user, $user, $recipients, '', $subject, $txt, $_REQUEST['priority'], $_REQUEST['replyto_hash']);
+	$messulib->save_sent_message($user, $user, $recipients, '', $subject, $txt, $_REQUEST['priority'], isset($_REQUEST['replyto_hash']) ? $_REQUEST['replyto_hash'] : '');
 	if ($prefs['feature_actionlog'] == 'y') {
 		$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
 	}

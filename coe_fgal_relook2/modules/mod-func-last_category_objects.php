@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_category_objects_info() {
 	return array(
-		'name' => tra('Last category objects'),
+		'name' => tra('Newest Category Items'),
 		'description' => tra('Lists the specified number of objects of the given type in the given category, starting from the most recently created.'),
 		'prefs' => array( 'feature_categories' ),
 		'params' => array(

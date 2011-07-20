@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -118,8 +118,8 @@ JS
 }
 
 /* Theme generator for Tiki 7+ */
-
-if ($prefs['feature_themegenerator'] === 'y') {
+$reload = false;
+if ($prefs['themegenerator_feature'] === 'y') {
 	include_once 'lib/themegenlib.php';
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
