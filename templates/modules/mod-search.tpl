@@ -9,24 +9,37 @@
 			
 		 	{if $smod_params.show_object_filter eq 'y'}
 				{tr}in:{/tr}
-			    <select name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" style="width:{$smod_params.select_size}em;">
-				    <option value="pages">{tr}Entire Site{/tr}</option>
-				    {if $prefs.feature_wiki eq 'y'}<option value="wikis"{if $smod_params.where eq "wikis"} selected="selected"{/if}>{tr}Wiki Pages{/tr}</option>{/if}
-				    {if $prefs.feature_directory eq 'y'}<option value="directory"{if $smod_params.where eq "directory"} selected="selected"{/if}>{tr}Directory{/tr}</option>{/if}
-				    {if $prefs.feature_galleries eq 'y'}
-				    	<option value="galleries"{if $smod_params.where eq "galleries"} selected="selected"{/if}>{tr}Image Gals{/tr}</option>
-				    	<option value="images"{if $smod_params.where eq "images"} selected="selected"{/if}>{tr}Images{/tr}</option>
-				    {/if}
-				    {if $prefs.feature_file_galleries eq 'y'}<option value="files"{if $smod_params.where eq "files"} selected="selected"{/if}>{tr}Files{/tr}</option>{/if}
-				    {if $prefs.feature_articles eq 'y'}<option value="articles"{if $smod_params.where eq "articles"} selected="selected"{/if}>{tr}Articles{/tr}</option>{/if}
-				    {if $prefs.feature_forums eq 'y'}<option value="forums"{if $smod_params.where eq "forums"} selected="selected"{/if}>{tr}Forums{/tr}</option>{/if}
-				    {if $prefs.feature_blogs eq 'y'}
-				    	<option value="blogs"{if $smod_params.where eq "blogs"} selected="selected"{/if}>{tr}Blogs{/tr}</option>
-				    	<option value="posts"{if $smod_params.where eq "posts"} selected="selected"{/if}>{tr}Blog Posts{/tr}</option>
-				    {/if}
-				    {if $prefs.feature_faqs eq 'y'}<option value="faqs"{if $smod_params.where eq "faqs"} selected="selected"{/if}>{tr}FAQs{/tr}</option>{/if}
-				    {if $prefs.feature_trackers eq 'y'}<option value="trackers"{if $smod_params.where eq "trackers"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
-			    </select>
+			 	{if $smod_params.search_action eq 'tiki-searchindex.php'}
+					<select name="filter~type" style="width:{$smod_params.select_size}em;">
+						<option value="">{tr}Entire Site{/tr}</option>
+						{if $prefs.feature_wiki eq 'y'}<option value="wiki page"{if $smod_params.where eq "wiki page"} selected="selected"{/if}>{tr}Wiki Pages{/tr}</option>{/if}
+						{if $prefs.feature_blogs eq 'y'}<option value="blog post"{if $smod_params.where eq "blog post"} selected="selected"{/if}>{tr}Blog Posts{/tr}</option>{/if}
+						{if $prefs.feature_articles eq 'y'}<option value="article"{if $smod_params.where eq "article"} selected="selected"{/if}>{tr}Articles{/tr}</option>{/if}
+						{if $prefs.feature_file_galleries eq 'y'}<option value="file"{if $smod_params.where eq "file"} selected="selected"{/if}>{tr}Files{/tr}</option>{/if}
+						{if $prefs.feature_forums eq 'y'}<option value="forum post"{if $smod_params.where eq "forum post"} selected="selected"{/if}>{tr}Forums{/tr}</option>{/if}
+						{if $prefs.feature_trackers eq 'y'}<option value="trackeritem"{if $smod_params.where eq "trackeritem"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
+						{if $prefs.feature_sheet eq 'y'}<option value="sheet"{if $smod_params.where eq "sheet"} selected="selected"{/if}>{tr}Spreadsheets{/tr}</option>{/if}
+					 </select>
+				{else}
+					 <select name="where" style="width:{$smod_params.select_size}em;">
+						 <option value="pages">{tr}Entire Site{/tr}</option>
+						 {if $prefs.feature_wiki eq 'y'}<option value="wikis"{if $smod_params.where eq "wikis"} selected="selected"{/if}>{tr}Wiki Pages{/tr}</option>{/if}
+						 {if $prefs.feature_directory eq 'y'}<option value="directory"{if $smod_params.where eq "directory"} selected="selected"{/if}>{tr}Directory{/tr}</option>{/if}
+						 {if $prefs.feature_galleries eq 'y'}
+							 <option value="galleries"{if $smod_params.where eq "galleries"} selected="selected"{/if}>{tr}Image Gals{/tr}</option>
+							 <option value="images"{if $smod_params.where eq "images"} selected="selected"{/if}>{tr}Images{/tr}</option>
+						 {/if}
+						 {if $prefs.feature_file_galleries eq 'y'}<option value="files"{if $smod_params.where eq "files"} selected="selected"{/if}>{tr}Files{/tr}</option>{/if}
+						 {if $prefs.feature_articles eq 'y'}<option value="articles"{if $smod_params.where eq "articles"} selected="selected"{/if}>{tr}Articles{/tr}</option>{/if}
+						 {if $prefs.feature_forums eq 'y'}<option value="forums"{if $smod_params.where eq "forums"} selected="selected"{/if}>{tr}Forums{/tr}</option>{/if}
+						 {if $prefs.feature_blogs eq 'y'}
+							  <option value="blogs"{if $smod_params.where eq "blogs"} selected="selected"{/if}>{tr}Blogs{/tr}</option>
+							  <option value="posts"{if $smod_params.where eq "posts"} selected="selected"{/if}>{tr}Blog Posts{/tr}</option>
+						 {/if}
+						 {if $prefs.feature_faqs eq 'y'}<option value="faqs"{if $smod_params.where eq "faqs"} selected="selected"{/if}>{tr}FAQs{/tr}</option>{/if}
+						 {if $prefs.feature_trackers eq 'y'}<option value="trackers"{if $smod_params.where eq "trackers"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
+					  </select>
+				{/if}
 			{elseif !empty($prefs.search_default_where)}
 				<input type="hidden" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" value="{$prefs.search_default_where|escape}" />
 		    {/if}

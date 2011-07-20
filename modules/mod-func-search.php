@@ -242,6 +242,8 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 	}
 	if (!empty($_REQUEST['where'])) {
 		$smod_params['where'] = $_REQUEST['where'];
+	} else if (!empty($_REQUEST['filter']['type'])) {
+		$smod_params['where'] = $_REQUEST['filter']['type'];
 	} else {
 		$smod_params['where'] = '';
 	}
