@@ -28,7 +28,11 @@ if (isset($_REQUEST['invoice'])) {
 	$smarty->assign("invoice", end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['invoice'])));
 	
 	$invoiceItems = $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['invoice']), null, array("Invoice Id"));
+} else {
+	$_REQUEST['invoice'] = 0;
 }
+
+(int)$_REQUEST['invoice'] = $_REQUEST['invoice'];
 
 //we add an extra item to the end of invoiceItems, so we can duplicate it on the page
 $invoiceItems[] = array(
@@ -41,11 +45,64 @@ $smarty->assign("invoiceItems", $invoiceItems);
 
 //we are updating or adding
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	//testing post back
-	print_r($_REQUEST);
-	die;
-	$invoicesFieldIds = $trklib->get_fields_by_names("Invoices", array(
-		"Invoice Id",
+	/*This is what an array will look like on post back:
+	Array
+	(
+		[ClientId] => 6336
+		[InvoiceNumber] => 123
+		[DateIssued] => 4/4/2012
+		[Quantity] => Array
+			(
+				[0] => 3
+				[1] => 30
+			)
+	 
+		[WorkDescription] => Array
+			(
+				[0] => Hourly Rate
+				[1] => Hourly Rate 2
+			)
+	 
+		[Taxable] => Array
+			(
+				[0] => n
+				[1] => y
+			)
+	 
+		[Amount] => Array
+			(
+				[0] => 100
+				[1] => 100
+			)
+	 
+		[InvoiceNote] => Invoice Note
+		[submit] => Save Invoice
+		[invoice] => 0
+	)
+	*/
+	//This part doesn't yet work, to update or save invoice
+	
+	function processItem($trackerName, $fieldNames, $idFieldName, $i) {
+		global $trklib;
+		$fieldIds = $trklib->get_fields_by_names($trackerName, $fieldNames);
+		$fieldData = array();
+		
+		foreach($fieldNames as $fieldName) {
+			$fieldVal = (isset($i) ? $_REQUEST[str_replace(" ", "", $fieldName)][$i] : $_REQUEST[str_replace(" ", "", $fieldName)]);
+			array_push($fieldData, formToTrackerField($fieldIds[$fieldName], $fieldVal));
+		}
+		
+		return $fieldData;
+	}
+	
+	function formToTrackerField($id, $val) {
+		return array(
+			'fieldId' => $id,
+			'value' => $val
+		);
+	}
+	
+	$invoice = processItem("Invoices", array(
 		"Client Id",
 		"Invoice Number",
 		"Date Issued",
@@ -57,22 +114,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		"Invoice Note",
 		"Days Payment Due",
 		"Client Name",
-		"Item Amounts",
-		"Item Quantities",
 		"Amounts Paid",
 	));
-
-	$invoiceItemsFieldIds = $trklib->get_fields_by_names("Invoice Items", array(
-		"Invoice Item Id",
-		"Invoice Id",
-		"Amount",
-		"Quantity",
-		"Work Description",
-		"Taxable",
-	));
 	
-	//This part doesn't yet work, to update or save invoice
+	$invoiceItems = array();
 	
+	for($i = 0; $i < count($_REQUEST["Amount"]); $i++) {
+		array_push($invoiceItems, processItem("Invoice Items", array(
+			"Invoice Id",
+			"Amount",
+			"Quantity",
+			"Work Description",
+			"Taxable",
+		), $i));
+	}
+	
+	
+	print_r($invoiceItems);
+	die;
 	if (isset($_REQUEST['invoice'])) { //edit
 		
 	} else { //new
@@ -85,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			);
 		}
 		
-		$_REQUEST['invoice'] = $trklib->replace_item($trklib->get_tracker_by_name("Invoices"), 0, array('data' => $newInvoice));
+		$_REQUEST['invoice'] = $trklib->replace_item($trklib->get_tracker_by_name("Invoices"), $_REQUEST['invoice'], array('data' => $newInvoice));
 	}
 }
 
@@ -114,7 +173,7 @@ $headerlib->add_jq_onready("
 		var lastInvoiceItem = $('.InvoiceItem:last');
 		var newInvoiceItem = lastInvoiceItem.clone();
 		
-		newInvoiceItem.find(':input').val('');
+		newInvoiceItem.find(':input').not(':checkbox,:button').val('');
 		
 		newInvoiceItem.insertAfter(lastInvoiceItem);
 		
@@ -128,6 +187,17 @@ $headerlib->add_jq_onready("
 			}
 			return false;
 		}
+	});
+	
+	$('#InvoiceForm').submit(function() {
+		$('.InvoiceTaxable').each(function() {
+			var InvoiceTaxable = $(this);
+			if (!InvoiceTaxable.is(':checked')) {
+				InvoiceTaxable
+					.val('n')
+					.attr('checked', 'true');
+			}
+		});
 	});
 ");
 
