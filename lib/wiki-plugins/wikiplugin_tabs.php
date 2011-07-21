@@ -45,6 +45,7 @@ function wikiplugin_tabs($data, $params) {
 		return "''".tra("No tab title specified. At least one has to be set to make the tabs appear.")."''";
 	}
 	if (!empty($data)) {
+		$data = $tikilib->parse_data($data, array('suppress_icons' => true));
 		$tabData = explode('/////', $data);
 	}
 	
