@@ -334,6 +334,14 @@ function wikiplugin_trackerlist_info() {
 				'advanced' => true,
 				'default' => '',
 			),
+			'tplwiki' => array(
+				'required' => false,
+				'name' => tra('Template file in a Wiki page'),
+				'description' => tra('Use content of the wiki page as template to display the item but with as little parsing on the content as with a tpl on disk. The page should have the permission tiki_p_use_as_template set, and that page should be only open for edition to fully trusted users such as other site admins'),
+				'filter' => 'pagename',
+				'advanced' => true,
+				'default' => '',
+			),
 			'view_user' => array(
 				'required' => false,
 				'name' => tra('View User'),
@@ -675,9 +683,11 @@ function wikiplugin_trackerlist($data, $params) {
 			if ($sort == 'y') {
 				$allfields = $trklib->sort_fields($allfields, $listfields);
 			}
-		} elseif (!empty($wiki) || !empty($tpl)) {
+		} elseif (!empty($wiki) || !empty($tpl) || !empty($tplwiki)) {
 				if (!empty($wiki)) {
 					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
+				} elseif (!empty($tplwiki)) {
+					$listfields = $trklib->get_pretty_fieldIds($tplwiki, 'wiki', $outputPretty);
 				} else {
 					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty);
 				}
@@ -1370,6 +1380,13 @@ function wikiplugin_trackerlist($data, $params) {
 						$smarty->assign('showpopup', 'n');
 						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
 					}
+					if (!empty($tplwiki)) {
+						$smarty->assign('fields', $item['field_values']);
+						$smarty->assign('item', $item);
+						$smarty->assign('wiki', "tplwiki:$tplwiki");
+						$smarty->assign('showpopup', 'n');
+						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
+					}
 					if (empty($items['data'][$i]['over'])) {
 						$items['data'][$i]['over'] = $trklib->get_isMain_value($trackerId, $item['itemId']);
 					}
@@ -1402,8 +1419,10 @@ function wikiplugin_trackerlist($data, $params) {
 				$headerlib->add_cssfile('css/calendar.css',20);
 				return '~np~'.$smarty->fetch('modules/mod-calendar_new.tpl').'~/np~';
 			}
-			if (!isset($tpl) && !empty($wiki)) {
+			if (!empty($wiki)) {
 				$tpl = "wiki:$wiki";
+			} elseif (!empty($tplwiki)) {
+				$tpl = "tplwiki:$tplwiki";
 			} elseif (empty($tpl)) {
 				$tpl = '';
 			}
