@@ -580,7 +580,7 @@ class CalendarLib extends TikiLib
 		if ($fhandle = fopen($fname, 'r')) {
 			$fields = fgetcsv($fhandle, 1000);
 		}
-		if ($fields === false) {
+		if ($fields === false || !array_search('name', $fields)) {
 			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
 			$smarty->display("error.tpl");
 			die;

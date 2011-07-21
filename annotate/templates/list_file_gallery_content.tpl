@@ -17,6 +17,10 @@
 				{self_link _sort_arg=$sort_arg _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}
 			</th>
 		{/if}
+		{if $show_thumb eq 'y'}
+			<th>
+			</th>
+		{/if}
 
 		{foreach from=$fgal_listing_conf item=item key=propname}
 			{if isset($item.key)}
@@ -234,6 +238,11 @@
 			{if $show_parentName eq 'y'}
 				<td>
 					<a href="tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}">{$files[changes].parentName|escape}</a>
+				</td>
+			{/if}
+			{if $show_thumb eq 'y'}
+				<td>
+					<a href="tiki-download_file.php?fileId={$files[changes].fileId}&display"><img src="tiki-download_file.php?fileId={$files[changes].fileId}&thumbnail" /></a>
 				</td>
 			{/if}
 

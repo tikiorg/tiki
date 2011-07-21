@@ -292,6 +292,18 @@ function wikiplugin_files_info() {
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'showthumb' => array(
+				'required' => false,
+				'name' => tra('Show Image Thumb'),
+				'description' => tra('Show IMage thumb'),
+				'default' => 'n',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'creator' => array(
 				'required' => false,
 				'name' => tra('Creator'),
@@ -320,7 +332,7 @@ function wikiplugin_files($data, $params) {
 		return('');
 	}
 	global $filegallib; include_once('lib/filegals/filegallib.php');
-	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n');
+	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n', 'showthumb' => 'n');
 	$params = array_merge($default, $params);
 	$filter = '';
 	extract($params, EXTR_SKIP);
@@ -347,6 +359,7 @@ function wikiplugin_files($data, $params) {
 		$show_parentName = $showgallery;
 	}
 	$smarty->assign('show_parentName', $show_parentName);
+	$smarty->assign('show_thumb', $showthumb);
 
 	$filter = empty($creator)?'':array('creator'=>$creator);
 	if (!isset($sort))
