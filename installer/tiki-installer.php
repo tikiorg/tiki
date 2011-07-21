@@ -411,6 +411,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	global $tikifeedback, $smarty;
 	$dbcon = false;
 
+	// This section handles the case of adodb (not the preferred case)
 	if ( ( isset($api) && $api == 'adodb' ) || ! extension_loaded('pdo') ) {
 		$api = 'adodb';
 		$dbTiki = ADONewConnection( $driver );
@@ -418,6 +419,34 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		if (! $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
 			$tikifeedback[] = array( 'num' => 1, 'mes' => $dbTiki->ErrorMsg() );
 		}
+
+		// Attempt to create database. This might work if the $user has create database permissions.
+		if ( ! $dbcon ) {
+			$dbh = ADONewConnection( $driver );
+			if ( @$dbh->Connect($host, $user, $pass) ) {
+				$dbname_clean = preg_replace('/[^a-z0-9$_]/',"",$dbname);
+				$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+				$dbcon=$dbh->Execute($sql);
+				if ( $dbcon ) {
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` was created.") );
+				} else {
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` creation failed. You need to create the database.") );
+				}
+			} else {
+				$tikifeedback[] = array( 'num' => 1, 'mes' => $dbh->ErrorMsg() );
+			}
+
+			if ( $dbcon ) {
+				$dbTiki = ADONewConnection( $driver );
+				$db = new TikiDb_Adodb( $dbTiki );
+				if (! $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
+					$tikifeedback[] = array( 'num' => 1, 'mes' => $dbTiki->ErrorMsg() );
+				}
+			}
+
+		}
+
+	// This section handles the case of PDO (preferred case)
 	} else {
 		$db_hoststring = "host=$host";
 
