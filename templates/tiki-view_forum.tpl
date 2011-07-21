@@ -202,12 +202,7 @@
 				<td>{tr}Edit{/tr}
 				</td>
 				<td>					
-					{if $prefs.feature_forum_parse eq 'y' and $prefs.javascript_enabled eq "n"}
-						{toolbars area_id='editpost'}
-					{/if}
-					{textarea id='editpost' name="comments_data" rows=$rows cols=$cols}{$comment_data}{/textarea}
-					<input type="hidden" name="rows" value="{$rows}"/>
-					<input type="hidden" name="cols" value="{$cols}"/>
+					{textarea id='editpost' name="comments_data" _simple="y" _toolbars=$prefs.feature_forum_parse}{$comment_data}{/textarea}
 				</td>
 			</tr>
 				{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_forum eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
