@@ -14,16 +14,10 @@ function wikiplugin_slider_info() {
 		'body' => tra('Content content separated by /////'),
 		'icon' => 'pics/icons/cool.gif',
 		'params' => array(
-			'name' => array(
+			'titles' => array(
 				'required' => false,
-				'name' => tra('Tabset Name'),
-				'description' => tra('Unique tabset name (if you want it to remember its last state). Ex: user_profile_tabs'),
-				'default' => '',
-			),
-			'tabs' => array(
-				'required' => true,
-				'name' => tra('Tab Titles'),
-				'description' => tra('Pipe separated list of tab titles. Ex: tab 1|tab 2|tab 3'),
+				'name' => tra('Slider Titles'),
+				'description' => tra('Pipe separated list of slider titles. Ex: slider 1|slider 2|slider 3'),
 				'default' => '',
 			),
 			'width' => array(
@@ -318,6 +312,11 @@ function wikiplugin_slider($data, $params) {
 	$headerlib->add_jsfile( 'lib/jquery/anythingslider/js/jquery.anythingslider.fx.js' );
 	$headerlib->add_jsfile( 'lib/jquery/anythingslider/js/jquery.anythingslider.video.js' );
 	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/anythingslider.css' );
+	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-construction.css' );
+	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-cs-portfolio.css' );
+	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-metallic.css' );
+	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-minimalist-round.css' );
+	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-minimalist-square.css' );
 	
 	if (isset($theme) && !empty($theme)) {
 		switch (strtolower($theme)) {
@@ -401,9 +400,9 @@ function wikiplugin_slider($data, $params) {
 		});
 	");
 	
-	$tabs = array();
-	if (!empty($params['tabs'])) {
-		$tabs = explode('|', $params['tabs']);
+	$titles = array();
+	if (!empty($titles)) {
+		$titles = explode('|', $titles);
 	}
 	
 	$sliderData = array();
@@ -415,7 +414,7 @@ function wikiplugin_slider($data, $params) {
 	$ret = '';
 	foreach($sliderData as $i => $slide) {
 		$ret .= "<div>
-			".(isset($tabs[$i]) ? "<span class='tiki-slider-title' style='display: none;'>".$tabs[$i]."</span>" : "")."
+			".(isset($titles[$i]) ? "<span class='tiki-slider-title' style='display: none;'>".$titles[$i]."</span>" : "")."
 			$slide
 		</div>";
 	}
