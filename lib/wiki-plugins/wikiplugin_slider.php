@@ -37,7 +37,7 @@ function wikiplugin_slider_info() {
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height in pixels or percentage. Default value is complete spreadsheet height.'),
+				'description' => tra('Height in pixels or percentage. Default value is complete slider height.'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Slider height',
