@@ -302,6 +302,9 @@ $smarty = new Smarty_Tikiwiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('pre', 'jq');
 
+include_once('lib/smarty_tiki/resource.tplwiki.php');
+$smarty->register_resource('tplwiki', array('smarty_resource_tplwiki_source', 'smarty_resource_tplwiki_timestamp', 'smarty_resource_tplwiki_secure', 'smarty_resource_tplwiki_trusted'));
+
 include_once('lib/smarty_tiki/resource.wiki.php');
 $smarty->register_resource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
 
