@@ -428,9 +428,9 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 				$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 				$dbcon=$dbh->Execute($sql);
 				if ( $dbcon ) {
-					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` was created.") );
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` was created.",'',false,array($dbname_clean)) );
 				} else {
-					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` creation failed. You need to create the database.") );
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` creation failed. You need to create the database.",'',false,array($dbname_clean)) );
 				}
 			} else {
 				$tikifeedback[] = array( 'num' => 1, 'mes' => $dbh->ErrorMsg() );
@@ -473,9 +473,9 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 				$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 				$dbcon=$dbh->exec($sql);
 				if ( $dbcon ) {
-					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` was created.") );
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` was created.",'',false,array($dbname_clean)) );
 				} else {
-					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` creation failed. You need to create the database.") );
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` creation failed. You need to create the database.",'',false,array($dbname_clean)) );
 				}
 			} catch ( PDOException $e ) {
 				$dbcon = false;
