@@ -57,9 +57,14 @@ function module_months_links( $mod_reference, $module_params ) {
 	}
 	
 	if ( isset($link)) {
-		global $tikilib, $bloglib, $artlib;
-		include_once ('lib/blogs/bloglib.php');
-		include_once ('lib/articles/artlib.php');
+		global $tikilib;
+		if ( $module_params['feature'] == 'blogs' ) {
+			global $bloglib;
+			include_once ('lib/blogs/bloglib.php');
+		} elseif ( $module_params['feature'] == 'cms' ) {
+			global $artlib;
+			include_once ('lib/articles/artlib.php');
+		}
 		$month_names = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 		$current_month_num = TikiLib::date_format("%m", $tikilib->now);
 		$current_year = TikiLib::date_format("%Y", $tikilib->now);
@@ -85,7 +90,7 @@ function module_months_links( $mod_reference, $module_params ) {
 					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 				}
 			} elseif ( $module_params['feature'] == 'cms' ) {
-				$posts_of_month = $artlib->list_articles(0,-1,publishDate_desc,'',$timestamp_month_start,$timestamp_month_end,false,'','',y,'','','','','','','',false,'');
+				$posts_of_month = $artlib->list_articles(0,-1,'publishDate_desc','',$timestamp_month_start,$timestamp_month_end,false,'','','y','','','','','','','',false,'','');
 				if( $posts_of_month["cant"] > 0 ) {
 					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 				}
