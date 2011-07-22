@@ -150,6 +150,7 @@ class Tracker_Definition
 
 	function getRateField()
 	{
+		// This is here to support some legacy code for the deprecated 's' type rating field. It is not meant to be generically apply to the newer stars rating field
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 's' && $field['name'] == 'Rating') {
 				return $field['fieldId'];

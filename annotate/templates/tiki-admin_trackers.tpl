@@ -337,7 +337,7 @@
 			</tr>
 
 			<tr>
-				<td>{tr}Tracker items allow ratings?{/tr}</td>
+				<td>{tr}Tracker items allow ratings?{/tr}<br />{tr}(Deprecated, not needed to use new rating field){/tr}</td>
 				<td>
 					<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleTrTd('ratingoptions');toggleTrTd('ratinginlisting');" />
 				</td>

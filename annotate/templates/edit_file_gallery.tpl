@@ -272,7 +272,7 @@ $('#fgal_template').change( function() {
 								<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" />
 							</td>
 						</tr>
-						<tr
+						<tr>
 							<td colspan="2">{tr}Select which items to display when listing galleries:{/tr}
 								<table>
 									{include file='fgal_listing_conf.tpl'}

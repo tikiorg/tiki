@@ -2299,8 +2299,8 @@ function dialogReplaceReplace( area_id ) {
 				values.push(value);
 			} else if (operation === 'delete') {
 				value = String(value);
-				while (-1 !== values.indexOf(value)) {
-					values.splice(values.indexOf(value), 1);
+				while (-1 !== $.inArray(value, values)) {
+					values.splice($.inArray(value, values), 1);
 				}
 			}
 

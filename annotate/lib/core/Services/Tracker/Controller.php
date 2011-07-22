@@ -361,7 +361,6 @@ EXPORT;
 				$values = explode(',', $input->$key->none());
 				$filter = TikiFilter::get($filter);
 				$values = array_map(array($filter, 'filter'), $values);
-				$values = array_filter($values);
 			} else {
 				$values = array($input->$key->$filter());
 			}
@@ -385,7 +384,18 @@ EXPORT;
 
 		foreach ($typeInfo['params'] as $key => $info) {
 			if (isset($info['count']) && $info['count'] === '*') {
-				$out[$key] = implode(',', $raw);
+				// There is a possibility that * does not mean all of the remaining, to apply reasonable heuristic
+				$filter = TikiFilter::get($info['filter']);
+				$outarray = array(); 
+				foreach ($raw as $r) {
+					$filtered = $filter->filter($r);
+					if (strcmp($filtered, $r) == 0) {
+						$outarray[] = array_shift($raw); 
+					} else {
+						break;
+					} 
+				}
+				$out[$key] = implode(',', $outarray);
 			} else {
 				$out[$key] = array_shift($raw);
 			}

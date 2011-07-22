@@ -39,6 +39,7 @@ if(!isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
 }
 $cookietab = $_REQUEST['cookietab'];
 $smarty->assign('newsletters', $newsletters["data"]);
+$smarty->assign('absurl', 'y');
 if ($_REQUEST["nlId"]) {
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
 	if (!isset($_REQUEST["editionId"])) $_REQUEST["editionId"] = 0;

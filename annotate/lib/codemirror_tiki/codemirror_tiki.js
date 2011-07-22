@@ -5,7 +5,26 @@ jQuery.fn.extend({
 		settings = jQuery.extend({
 			parse: ["tiki"],
 			changeText: "Change Highlighter",
-			languages: ["csharp","css","html","java","javascript","lua","ometa","sparql","php","plsql","python","r","scheme","sql","tiki","xml","xquery"],
+			languages: [
+				"clike",
+				"css",
+				"diff",
+				"haskell",
+				"htmlmixed",
+				"javascript",
+				"lua",
+				"php",
+				"plsql",
+				"python",
+				"rst",
+				"r",
+				"scheme",
+				"smalltalk",
+				"stex",
+				"tiki",
+				"xml",
+				"yaml"
+			],
 			buttonText: {
 				update: "Update",
 				cancel: "Cancel"
@@ -17,6 +36,33 @@ jQuery.fn.extend({
 			width: '100%',
 			force: false
 		}, settings);
+		
+		var l = "lib/codemirror/mode/";
+		var parserLocs = {
+			clike: 		{js: l + "clike/clike.js"},
+			css: 		{js: l + "css/css.js"},
+			diff: 		{
+							js: l + "diff/diff.js",
+							css: l + "diff/diff.css"
+						},
+			haskell: 	{js: l + "haskell/haskell.js"},
+			htmlmixed: 	{js: l + "htmlmixed/htmlmixed.js"},
+			javascript: {js: l + "javascript/javascript.js"},
+			lua: 		{js: l + "lua/lua.js"},
+			php: 		{js: l + "php/php.js"},
+			plsql: 		{js: l + "plsql/plsql.js"},
+			python: 	{js: l + "python/python.js"},
+			rst: 		{
+							js: l + "rst/rst.js",
+							css: l + "rst/rst.css"
+						},
+			//r: 			{js: l + "clike/clike.js"},
+			scheme: 	{js: l + "scheme/scheme.js"},
+			smalltalk: 	{js: l + "smalltalk/smalltalk.js"},
+			stex: 		{js: l + "stex/stex.js"},
+			xml: 		{js: l + "xml/xml.js"},
+			yaml:		{js: l + "yaml/yaml.js"}
+		};
 		
 		jQuery(this).each(function() {
 			var o = jQuery(this);
@@ -53,99 +99,22 @@ jQuery.fn.extend({
 			
 			if (!$.isArray(parse)) parse = [parse];
 			
-			function addParser(type, isContrib, hasTokenizer, hasColors) {
-				var src = '';
-				if (isContrib) {
-					src = '../contrib/' + type + '/js/';
-				}
-				
-				if (hasTokenizer) {
-					parserfiles.push(src + 'tokenize' + type + '.js');
-				}
-				
-				parserfiles.push(src + 'parse' + type + '.js');
-				
-				if (hasColors)
-					addStylesheet(type, isContrib);
-			}
-			
-			function addStylesheet(type, isContrib) {
-				var src = 'lib/codemirror/';
-				if (isContrib) {
-					src += 'contrib/' + type + '/css/';
-				} else {
-					src += 'css/';
-				}
-				
-				stylesheet.push(src + type + 'colors.css');
-			}
+			jQuery('style.tiki-codemirror-style').remove();
 			
 			jQuery(parse).each(function(i) {
-				switch (parse[i]) {
-					case "csharp":
-						addParser(parse[i], true, true, true);
-						break;
-					case "css": 		
-						addParser(parse[i], false, false, true);
-						break;
-					case "html":
-						addParser(parse[i] + 'mixed');
-						addParser('xml', false, false, true);
-						break;
-					case "java":
-						addParser(parse[i], true, true, true);
-						break;
-					case "javascript":
-						addParser(parse[i], false, true);
-						addStylesheet('js');
-						break;
-					case "lua":
-						addParser(parse[i], true, false, true);
-						break;
-					case "ometa": 
-						addParser(parse[i], true, true, true);
-						break;
-					case "sparql": 
-						addParser(parse[i], false, false, true);
-						break;
-					case "php":
-						addParser(parse[i], true, true, true);
-						break;
-					case "plsql":
-						addParser(parse[i], true, false, true);
-						break;
-					case "python":
-						addParser(parse[i], false, false, true); 
-						break;
-					case "r": 			
-						parserfiles.push('../../codemirror_tiki/js/parsersplus.js'); 
-						stylesheet.push('lib/codemirror_tiki/css/rspluscolors.css'); 
-						break;
-					case "scheme":
-						addParser(parse[i], true, true, true);
-						break;
-					case "sql": 		
-						addParser(parse[i], true, false, true); 
-						break;
-					case "tiki":
-						parserfiles.push('../../codemirror_tiki/js/parsetikisyntax.js');
-						stylesheet.push('lib/codemirror_tiki/css/tikiwikisyntaxcolors.css');
-						break;
-					case "xml":
-						addParser(parse[i], false, false, true);
-						break;
-					case "xquery": 
-						addParser(parse[i], true, true);
-						stylesheet.push('lib/codemirror/contrib/xquery/css/xqcolors.css');
-						break;
+				if (parserLocs[this]) {
+					if (parserLocs[this].css) {
+						jQuery('head').append('<link rel="stylesheet" class="tiki-codemirror-style" href="' + parserLocs[this].css + '">');
+					}
+					if (parserLocs[this].js) {
+						jQuery.addScript(parserLocs[this].js);
+					}
 				}
 			});
 			
 			var editor = CodeMirror.fromTextArea(textarea[0], {
 				width: settings.width,
 				height: settings.height,
-				path: 'lib/codemirror/js/',
-				parserfile: (parserfiles.length ? parserfiles : ['parsedummy.js']), //if no parser is loaded, load the dummy so that they can at least edit
 				stylesheet: stylesheet,
 				onChange: function() {
 					//Setup codemirror to send the text back to the textarea

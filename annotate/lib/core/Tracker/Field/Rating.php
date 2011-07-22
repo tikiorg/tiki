@@ -10,10 +10,39 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 	public static function getTypes()
 	{
 		return array(
+			'STARS' => array(
+				'name' => tr('Rating'),
+                                'description' => tr('A rating of the tracker item'),
+                                'readonly' => true,
+                                'params' => array(
+                                        'option' => array(
+                                                'name' => tr('Option'),
+                                                'description' => tr('The possible options (comma separated integers) for the rating.'),
+                                                'filter' => 'int',
+                                                'count' => '*', 
+                                        ),
+					'mode' => array(
+						'name' => tr('Mode'),
+						'description' => tr('Display rating options as:'),
+						'filter' => 'text',
+						'options' => array(
+                                                        'stars' => tr('Stars'),
+                                                        'radio' => tr('Radio Buttons'),
+                                                ), 
+					),
+					'labels' => array(
+                                                'name' => tr('Labels'),
+                                                'description' => tr('The text labels for the possible options.'),
+                                                'filter' => 'text',
+                                                'count' => '*',
+                                        ),	
+                                ),
+                        ), 
 			'*' => array(
-				'name' => tr('Stars'),
+				'name' => tr('Stars (deprecated)'),
 				'description' => tr('Displays a star rating'),
 				'readonly' => true,
+				'deprecated' => true,
 				'params' => array(
 					'option' => array(
 						'name' => tr('Option'),
@@ -46,13 +75,36 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 
 		$trklib = TikiLib::lib('trk');
 		$ins_id = $this->getInsertId();
+		$mode = 'stars'; // default is stars for legacy reasons
 
+		$options_array = $this->getConfiguration('options_array');
+		foreach ($options_array as $k => $v) {
+			if (!is_numeric($v)) {
+				$mode = $v;
+				$labelstartkey = $k + 1;
+				$rating_option_num = $k;
+				break;
+			}					
+		}
+		if ($mode == 'radio') {
+			for ($i = $labelstartkey; $i < count($options_array); $i++) {
+				$labels_array[] = $options_array[$i]; 
+			} 
+		} else {
+			$labels_array = array(); 
+		}
+		if (isset($rating_option_num)) {
+			$rating_options = array_slice($options_array, 0, $rating_option_num);
+		} else {
+			$rating_options = $options_array;
+		}
 		$data = array(
 			'fieldId' => $this->getConfiguration('fieldId'),
 			'type' => $this->getConfiguration('type'),
 			'name' => $this->getConfiguration('name'),
-			'value' => $this->getValue(),
-			'options_array' => $this->getConfiguration('options_array'),
+			'value' => $this->getValue(), 
+			'options_array' => $options_array,
+			'rating_options' => $rating_options,
 		);
 
 		if (isset($requestData['vote']) && isset($requestData['itemId'])) {
@@ -69,6 +121,9 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				? $requestData[$ins_id]
 				: null,
 			'value' => $data['value'],
+			'mode' => $mode,
+			'labels' => $labels_array,      
+                        'rating_options' => $rating_options,
 		);
 	}
 

@@ -35,8 +35,12 @@ function tiki_syntax_highlighter_base()
 	global $headerlib, $prefs;
 
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		$headerlib->add_cssfile( 'lib/codemirror/lib/codemirror.css' );
+		$headerlib->add_cssfile( 'lib/codemirror/theme/default.css' );
+		
 		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
-		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );
+		
+		$headerlib->add_jsfile( 'lib/codemirror/lib/codemirror.js' );
 		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
 		
 		$headerlib->add_jq_onready("
