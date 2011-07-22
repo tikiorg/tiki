@@ -1,0 +1,1 @@
+{button _class="favorite-toggle" href="tiki-ajax_services.php?controller=favorite&amp;action=toggle&amp;type=`$wikiplugin_favorite_objectType`&amp;object=`$wikiplugin_favorite_objectType`" _text="{tr}Toggle Favorite{/tr}"}
