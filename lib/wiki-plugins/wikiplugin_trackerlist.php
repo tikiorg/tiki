@@ -800,7 +800,7 @@ function wikiplugin_trackerlist($data, $params) {
 						$trklib->replace_rating($trackerId, $_REQUEST['itemId'], $i, $user, $_REQUEST["ins_$i"]);
 						$hasVoted = true; 
 					}
-				} elseif ($f['type'] == '*') {
+				} elseif ($f['type'] == '*' || $f['type'] == 'STARS') {
 					$i = $f['fieldId'];
 					if (isset($_REQUEST["ins_$i"])) {
 						$trklib->replace_star($_REQUEST["ins_$i"], $trackerId, $_REQUEST['itemId'], $f, $user);
