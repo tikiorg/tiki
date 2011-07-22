@@ -2365,8 +2365,7 @@ class FileGalLib extends TikiLib
 			$bindvars = array_merge($bindvars, $galleryId);
 		} elseif ( $galleryId >= -1 ) {
 			$galleryId_str = '=?';
-			if ( $with_files ) $bindvars[] = $galleryId;
-			if ( $with_subgals ) $bindvars[] = $galleryId;
+			$bindvars[] = $galleryId;
 		}
 		if ( $galleryId_str != '' ) {
 			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
@@ -2406,7 +2405,12 @@ class FileGalLib extends TikiLib
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
-				if (is_array($galleryId) && $with_subgals) $bindvars = array_merge($bindvars, $galleryId);
+				if ($with_files) { // f_query is not used if !with_files
+					if (is_array($galleryId))
+						$bindvars = array_merge($bindvars, $galleryId);
+					else
+						$bindvars[] = $galleryId;
+				}
 			}
 			$g_query .= $g_mid;
 
