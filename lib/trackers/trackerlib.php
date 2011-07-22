@@ -1314,7 +1314,7 @@ class TrackerLib extends TikiLib
 		$old_values = $fil;
 
 		$tracker_definition = Tracker_Definition::get($trackerId);
-		$tracekr_info = $tracker_definition->getInformation();
+		$tracker_info = $tracker_definition->getInformation();
 
 		if (!empty($itemId)) {
 			$new_itemId = 0;
@@ -3630,7 +3630,7 @@ class TrackerLib extends TikiLib
 		$the_data = $this->generate_watch_data($old_values, $new_values, $trackerId, $itemId, $args['version']);
 
 		$tracker_definition = Tracker_Definition::get($trackerId);
-		$tracekr_info = $tracker_definition->getInformation();
+		$tracker_info = $tracker_definition->getInformation();
 
 		$watchers = $this->get_notification_emails($trackerId, $itemId, $tracker_info, $new_values['status'], $old_values['status']);
 
