@@ -2370,6 +2370,7 @@ class FileGalLib extends TikiLib
 		}
 		if ( $galleryId_str != '' ) {
 			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
+			if (is_array($galleryId) && $with_subgals) $bindvars = array_merge($bindvars, $galleryId);
 		}
 		
 		if ( $with_subgals ) {
