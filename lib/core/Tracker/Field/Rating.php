@@ -28,11 +28,12 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 						'options' => array(
                                                         'stars' => tr('Stars'),
                                                         'radio' => tr('Radio Buttons'),
+							'like' => tr('Single Option: e.g. Like'),
                                                 ), 
 					),
 					'labels' => array(
                                                 'name' => tr('Labels'),
-                                                'description' => tr('The text labels for the possible options.'),
+                                                'description' => tr('The text labels (comma separated) for the possible options.'),
                                                 'filter' => 'text',
                                                 'count' => '*',
                                         ),	
@@ -86,18 +87,21 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				break;
 			}					
 		}
-		if ($mode == 'radio') {
+		if ($mode == 'stars') {
+			$labels_array = array();
+		} else { 
 			for ($i = $labelstartkey; $i < count($options_array); $i++) {
 				$labels_array[] = $options_array[$i]; 
 			} 
-		} else {
-			$labels_array = array(); 
 		}
-		if (isset($rating_option_num)) {
+		if ($mode == 'like') {
+			$rating_options = array(0,1);				
+		} elseif (isset($rating_option_num)) {
 			$rating_options = array_slice($options_array, 0, $rating_option_num);
 		} else {
 			$rating_options = $options_array;
 		}
+
 		$data = array(
 			'fieldId' => $this->getConfiguration('fieldId'),
 			'type' => $this->getConfiguration('type'),
