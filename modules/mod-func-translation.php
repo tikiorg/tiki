@@ -76,16 +76,7 @@ function module_translation( $mod_reference, $module_params ) {
 		else
 			$pageLang = '';
 	
-		if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
-		// temporary fix: simply use info of staging page
-		// TODO: better system of dealing with translations with approval
-			$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
-			$smarty->assign('stagingPageName', $stagingPageName);
-			$smarty->assign('hasStaging', 'y');
-			$transinfo = $tikilib->get_page_info( $stagingPageName );	
-		} else {
-			$transinfo = $tikilib->get_page_info( $page );
-		}
+		$transinfo = $tikilib->get_page_info( $page );
 	
 		$tempList = $multilinguallib->getTranslations( 'wiki page', $transinfo['page_id'] );
 		$completeList = array();

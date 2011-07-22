@@ -261,42 +261,6 @@
 		{preference name=geo_locate_wiki}
 	{/tab}
 
-	{tab name="{tr}Staging &amp; Approval{/tr}"}
-		<input type="hidden" name="wikiapprovalprefs" />    
-			{preference name=feature_wikiapproval}
-			<div class="adminoptionboxchild" id="feature_wikiapproval_childcontainer">
-				{preference name=wikiapproval_block_editapproved}
-				{preference name=wikiapproval_delete_staging}
-				{preference name=wikiapproval_master_group}
-
-					<fieldset>
-						<legend>{tr}Page name{/tr}</legend>
-						{preference name=wikiapproval_prefix}
-						{preference name=wikiapproval_hideprefix}
-					</fieldset>
-
-					<fieldset>
-						<legend>{tr}Category{/tr}</legend>
-						{preference name=wikiapproval_staging_category}
-						{preference name=wikiapproval_approved_category}
-						{preference name=wikiapproval_outofsync_category}
-						{preference name=wikiapproval_sync_categories}
-					</fieldset>
-
-					<fieldset>
-						<legend>{tr}Freetags{/tr}</legend>
-						<div class="adminoptionbox clearfix">
-							{if $prefs.feature_freetags ne 'y'}
-								<br />
-								{icon _id=information}{tr}Freetags are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-							{/if}
-						</div>
-						{preference name=wikiapproval_update_freetags}
-						{preference name=wikiapproval_combine_freetags}
-					</fieldset>
-			</div>
-	{/tab}
-
 	{tab name="{tr}Flagged Revision{/tr}"}
 		<fieldset>
 			<legend>{tr}Revision Approval{/tr}</legend>

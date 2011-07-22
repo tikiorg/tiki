@@ -23,11 +23,6 @@ if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id'])
 include_once("lang/langmapping.php");
 
 if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST['type'] == 'wiki') && isset($_REQUEST['page']) && $_REQUEST['page']) {
-	if ( $tikilib->get_approved_page($_REQUEST['page']) ) {		
-		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
-		$smarty->display("error.tpl");
-		die;
-	}
 	$info = $tikilib->get_page_info($_REQUEST['page']);
 	if (empty($info)) {
 		$smarty->assign('msg',tra("Page cannot be found"));
@@ -123,11 +118,7 @@ $smarty->assign('langpage', $langpage);
 
 if ($type == "wiki page") {
   $tikilib->get_perm_object($name, 'wiki page', $info, true);	
-  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit')) {
-		$allowed_for_staging_only = 'y';
-		$smarty->assign('allowed_for_staging_only', 'y');
-  }  
-  if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
+  if ( !($tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
 	  $smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to edit this page."));
 		$smarty->display("error.tpl");
@@ -135,20 +126,12 @@ if ($type == "wiki page") {
 	}
 }
 
-if (!isset($allowed_for_staging_only)) {
-// people blocked from approved page cannot access the following settings
-
 if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId']) && $tiki_p_detach_translation == 'y') { // detach from a translation set
 	check_ticket('edit-translation');
 	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
 }
  else if (isset($_REQUEST['set']) && !empty($_REQUEST['srcName'])) { // attach to a translation set
 	check_ticket('edit-translation');
-	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->get_approved_page($_REQUEST['srcName']) ) {
-		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
-		$smarty->display("error.tpl");
-		die;
-	}	
 	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
 		$smarty->assign('error', $error);
@@ -203,8 +186,6 @@ else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 	$smarty->assign('srcId', $_REQUEST['srcId']);
 }
 
-} // end of if $allowed_for_staging_only == 'y'
-
 if ($type == "wiki page") {
 	// Fetches the list of pages with a langage assigned
 	// that is different than those already included in the
@@ -242,16 +223,6 @@ if ($type == "wiki page") {
   while( $row = $result->fetchRow() )
     $pages['data'][] = $row;
 
-  if ($prefs['feature_wikiapproval'] == 'y') {
-  	// staging pages should be excluded from list as translation always happens only from the approved pages
-  	$pages_data = array();
-  	foreach($pages["data"] as $p) {
-  		if ( $tikilib->get_staging_page($p['pageName']) ) {
-			$t_pages_data[] = $p;
-  		}
-  	}
-  	$pages["data"] = $t_pages_data;
-  }  
 	$smarty->assign_by_ref('pages', $pages["data"]);
 }
 else if ($type == "article") {

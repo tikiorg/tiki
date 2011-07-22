@@ -31,37 +31,11 @@
 });{/jq}
 {/if}
 {if $translation_mode eq 'n'}
-	{if (isset($beingStaged) && $beingStaged eq 'y') and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
-	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp}{if $pageAlias ne ''}&nbsp;({$pageAlias}){/if}{/title}
+	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$page}{if $pageAlias ne ''}&nbsp;({$pageAlias}){/if}{/title}
 {else}
    {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
-{if isset($beingStaged) && $beingStaged eq 'y'}
-	<div class="tocnav">{icon _id=information style="vertical-align:middle" align="left"} 
-		{if $approvedPageExists}
-			{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
-		{else}
-			{tr}This is a new staging page that has not been approved before.{/tr}
-		{/if}
-			{if $outOfSync eq 'y'}
-				{tr}The current staging copy may contain changes that have yet to be approved.{/tr}
-			{/if}
-		{if $lastSyncVersion}
-			<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}" target="_blank">{tr}View changes since last approval.{/tr}</a>
-		{/if}
-	</div>
-{/if}
-{if isset($needsStaging) && $needsStaging eq 'y'}
-	<div class="tocnav">
-		{icon _id=information style="vertical-align:middle" align="left"} 
-		{tr}You are editing the approved copy of this page.{/tr}
-		{if $outOfSync eq 'y'}
-			{tr}There are currently changes in the staging copy that have yet to be approved.{/tr}
-		{/if}
-		{tr}Are you sure you do not want to edit{/tr} <a class="link" href="tiki-editpage.php?page={$stagingPageName|escape:'url'}">{tr}the staging copy{/tr}</a> {tr}instead?{/tr}
-	</div>
-{/if}
 {if isset($data.draft)}
 	{tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
 	{if $data.draft.lastModif < $data.lastModif}
@@ -164,7 +138,7 @@
 	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}" />{/if}
 	{if $add_child}<input type="hidden" name="add_child" value="true" />{/if}
 	
-	{if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
+	{if $preview or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
 			{include file='wiki_edit_actions.tpl'}
 		</div>

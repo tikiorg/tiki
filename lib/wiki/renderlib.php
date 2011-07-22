@@ -37,7 +37,6 @@ class WikiRenderer
 		'setupCategories',
 		'setupPoll',
 		'setupBreadcrumbs',
-		'setupStaging',
 	);
 
 	private $toRestore = array();
@@ -185,13 +184,13 @@ class WikiRenderer
 
 	private function setupMultilingual() // {{{
 	{
-		global $multilinguallib, $tikilib, $prefs;
+		global $prefs;
 
 		if ($prefs['feature_multilingual'] != 'y')
 			return;
 
-		include_once('lib/multilingual/multilinguallib.php');
-		require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+		$tikilib = TikiLib::lib('tiki');
+		$multilinguallib = TikiLib::lib('multilingual');
 		
 		if( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
@@ -207,26 +206,11 @@ class WikiRenderer
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
 				
-		$stagingEnabled = (
-			$prefs['feature_wikiapproval'] == 'y' 
-			&& $tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page) );
-
-		if ( $stagingEnabled ) {
-			// temporary fix: simply use info of staging page to determine critical translation bits
-			// TODO: better system of dealing with translation bits with approval		
-			$stagingPageId = $tikilib->get_page_id_from_name($prefs['wikiapproval_prefix'] . $this->page);
-			$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $stagingPageId, 'critical', true );	
-		} else {
-			$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $this->info['page_id'], 'critical', true );
-		}
+		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $this->info['page_id'], 'critical', true );
 		
 		$alertData = array();
 		foreach( $bits as $translationBit ) {
-			if ( $stagingEnabled ) {
-				$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit, $stagingPageId );
-			} else {
-				$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit, $this->info['page_id'] );
-			}
+			$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit, $this->info['page_id'] );
 		}
 
 		$this->smartyassign( 'translation_alert', $alertData );
@@ -520,54 +504,6 @@ class WikiRenderer
 		$headtitle = breadcrumb_buildHeadTitle($prefs['site_title_breadcrumb'] == 'invertfull'? array_reverse($crumbsLocal): $crumbsLocal);
 		$this->smartyassign('headtitle', $headtitle);
 		$this->smartyassign('trail', $crumbs);
-	} // }}}
-
-	function setupStaging() // {{{
-	{
-		global $prefs, $tikilib, $categlib, $histlib, $tiki_p_edit;
-		require_once 'lib/categories/categlib.php';
-		if ($prefs['feature_wikiapproval'] != 'y')
-			return;
-
-		$cats = $categlib->get_object_categories('wiki page',$this->page);
-
-		if ($tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
-			$this->smartyassign('hasStaging', 'y');
-		}
-		if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit == 'y' || $prefs['wikiapproval_approved_category'] > 0 && $categlib->has_edit_permission($this->user, $prefs['wikiapproval_approved_category'])) {
-			$canApproveStaging = 'y';
-			$this->smartyassign('canApproveStaging', $canApproveStaging);
-		}		
-		if ( $approved = $tikilib->get_approved_page( $this->page ) ) {
-			$approvedPageName = $approved;
-			$this->smartyassign('beingStaged', 'y');
-			$this->smartyassign('approvedPageName', $approvedPageName);	
-			$approvedPageExists = $tikilib->page_exists($approvedPageName);
-			$this->smartyassign('approvedPageExists', $approvedPageExists);
-		} elseif ($prefs['wikiapproval_approved_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_approved_category'], $cats)) {
-			$stagingPageName = $prefs['wikiapproval_prefix'] . $this->page;
-			$this->smartyassign('needsStaging', 'y');
-			$this->smartyassign('stagingPageName', $stagingPageName);	
-			if ($tikilib->user_has_perm_on_object($this->user,$stagingPageName,'wiki page','tiki_p_edit')) {
-				$this->smartyassign('canEditStaging', 'y');
-			} 	
-		} elseif ($prefs['wikiapproval_staging_category'] > 0 && !empty($cats) && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page)) {
-			$this->smartyassign('needsFirstApproval', 'y');		
-		}
-		if ($prefs['wikiapproval_outofsync_category'] == 0 || $prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
-			if (isset($approvedPageName)) $this->smartyassign('outOfSync', 'y');
-			if ($canApproveStaging == 'y' && isset($approvedPageName)) {
-				include_once('lib/wiki/histlib.php');
-				$approvedPageInfo = $histlib->get_page_from_history($approvedPageName, 0);
-				if ($approvedPageInfo && $this->info['lastModif'] > $approvedPageInfo['lastModif']) {
-					$lastSyncVersion = $histlib->get_version_by_time($this->page, $approvedPageInfo['lastModif']);
-					// get very first version if unable to get last sync version.
-					if ($lastSyncVersion == 0) $lastSyncVersion = $histlib->get_version_by_time($this->page, 0, 'after');
-					// if really not possible, just give up.
-					if ($lastSyncVersion > 0) $this->smartyassign('lastSyncVersion', $lastSyncVersion );
-				}
-			}		
-		}
 	} // }}}
 
 	private function setGlobal( $name, $value ) // {{{

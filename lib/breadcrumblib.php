@@ -236,7 +236,7 @@ function _breadcrumb_getTitle($crumbs, $loc) {
 			require_once 'lib/smarty_tiki/modifier.escape.php';
 		}
 
-        $class = "pagetitle";
+		$class = "pagetitle";
 		$metadata = '';
 
 		$current = current_object();
@@ -251,10 +251,10 @@ function _breadcrumb_getTitle($crumbs, $loc) {
 			}
 		}
 
-        $ret = '<strong><a class="'.$class.'"' . $metadata . ' title="'.tra("refresh").'" href="' . $escapedHref . '">';
+		$ret = '<strong><a class="'.$class.'"' . $metadata . ' title="'.tra("refresh").'" href="' . $escapedHref . '">';
     } else {
-        $class = "crumblink";
-        $ret = '<a class="'.$class.'" title="';
+		$class = "crumblink";
+		$ret = '<a class="'.$class.'" title="';
 		if ( ($structure == 'y') && $info ) {
 			$cnt = count($structure_path);
 		} else {
@@ -265,25 +265,22 @@ function _breadcrumb_getTitle($crumbs, $loc) {
 		include_once('tiki-sefurl.php');
 		$ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url, $smarty).'">';
     }
-    if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
-        $ret .= tra("Administration:")." ";
-        if ($prefs['wikiapproval_hideprefix'] == 'y' && $approved = $tikilib->get_approved_page( $crumbs[$len-1]->title ) ) { 
-        	$crumbs[$len-1]->title = $approved;
+	if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
+		$ret .= tra("Administration:")." ";
+		if (!empty($prefs['wiki_pagename_strip'])) {
+			include_once('lib/smarty_tiki/modifier.pagename.php');
+			$ret .= tra(smarty_modifier_pagename($crumbs[$len-1]->title)).'</a>';
+		} else {
+			$ret .= htmlentities(tra($crumbs[$len-1]->title), ENT_QUOTES, 'UTF-8').'</a>';
 		}
-    			if (!empty($prefs['wiki_pagename_strip'])) {
-    				include_once('lib/smarty_tiki/modifier.pagename.php');
-    				$ret .= tra(smarty_modifier_pagename($crumbs[$len-1]->title)).'</a>';
-    			} else {
-    				$ret .= htmlentities(tra($crumbs[$len-1]->title), ENT_QUOTES, 'UTF-8').'</a>';
-    			}
-    $ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
-    if( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {
-        $ret .= ' <img src="pics/icons/lock.png" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
-    }
-    if( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
-        $ret .= '</strong>';          
-    }
-    return $ret;
+	$ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
+	if( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {
+		$ret .= ' <img src="pics/icons/lock.png" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
+	}
+	if( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
+		$ret .= '</strong>';          
+	}
+	return $ret;
 }
 
 /**
@@ -293,23 +290,23 @@ function _breadcrumb_getTitle($crumbs, $loc) {
  */
 /* static */
 function breadcrumb_getDescription($crumbs, $loc) {
-    global $prefs, $info;
-    $len = count($crumbs);
-    if ($prefs['feature_breadcrumbs'] == 'y') {
-        if ($loc == 'page' && ($prefs['feature_sitedesc'] == 'page' || ($prefs['feature_wiki_description'] == 'y' && $info) )) {
-            return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
-        } else if ($loc == 'site' && $prefs['feature_sitedesc'] == 'y' ) {
-            return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
-        } else if ($loc == 'head') {
+	global $prefs, $info;
+	$len = count($crumbs);
+	if ($prefs['feature_breadcrumbs'] == 'y') {
+		if ($loc == 'page' && ($prefs['feature_sitedesc'] == 'page' || ($prefs['feature_wiki_description'] == 'y' && $info) )) {
+			return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
+		} else if ($loc == 'site' && $prefs['feature_sitedesc'] == 'y' ) {
+			return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
+		} else if ($loc == 'head') {
 			return tra($crumbs[$len-1]->description);
 		}
-    } else if ( !($prefs['feature_wiki_description'] == 'n' && $info)) {
-        return tra($crumbs[$len-1]->description);
-    }
+	} else if ( !($prefs['feature_wiki_description'] == 'n' && $info)) {
+		return tra($crumbs[$len-1]->description);
+	}
 }
 
 /* private */
 function _is_assoc($var) {
    return is_array($var) && array_keys($var)!==range(0,count($var)-1);
 }
-		
+

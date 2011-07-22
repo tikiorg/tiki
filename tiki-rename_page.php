@@ -23,11 +23,6 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 	$smarty->assign('newname', $_REQUEST["page"]);
 }
-if ( $tikilib->get_approved_page( $page ) ) {
-	$smarty->assign('msg', tra("You cannot rename staging pages. Please rename the approved page instead."));
-	$smarty->display("error.tpl");
-	die;
-}
 if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra('Page cannot be found'));
 	$smarty->display('error.tpl');
@@ -69,17 +64,6 @@ if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 	}
 
 	if ($result) {
-		if ($prefs['feature_wikiapproval'] == 'y') {
-			$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
-			if ($tikilib->page_exists($stagingPageName)) {
-				$newStagingPageName = $prefs['wikiapproval_prefix'] . $newName;
-				if (!$wikilib->wiki_rename_page($stagingPageName, $newStagingPageName)) {
-					$smarty->assign('msg', tra("Cannot rename page because maybe new staging page name already exists"));
-					$smarty->display("error.tpl");
-					die;
-				}
-			}
-		}
 		global $perspectivelib; require_once 'lib/perspectivelib.php';
 		$perspectivelib->replace_preference ('wsHomepage', $page, $newName ) ;
 		if ($prefs['feature_sefurl'] == 'y') {

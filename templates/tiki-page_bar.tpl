@@ -4,10 +4,6 @@
 
 	{assign var=thispage value=$page|escape:"url"}
 
-	{if isset($beingStaged) and $beingStaged eq 'y'}
-		{assign var=thisapprovedPageName value=$approvedPageName|escape:"url"}
-	{/if}
-
 	{capture assign=page_bar}
 		{if $prefs.user_favorites eq 'y' and $user}
 			{button _class="favorite-toggle" href="tiki-ajax_services.php?controller=favorite&amp;action=toggle&amp;type=wiki+page&amp;object=`$thispage`" _text="{tr}Toggle Favorite{/tr}"}
@@ -16,11 +12,7 @@
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y' or (isset($canEditStaging) and $canEditStaging eq 'y')}
-				{if isset($needsStaging) and $needsStaging eq 'y'}
-					{assign var=thisPageName value=$stagingPageName|escape:"url"}
-				{else}
-					{assign var=thisPageName value=$thispage}
-				{/if}
+				{assign var=thisPageName value=$thispage}
 				{if $page_ref_id and $needsStaging neq 'y'}
 					{assign var=thisPageRefId value="&amp;page_ref_id=$page_ref_id"}
 				{else}
@@ -48,11 +40,7 @@
 				{/if}
 
 				{if $tiki_p_rename eq 'y' && $editable}
-					{if isset($beingStaged) and $beingStaged eq 'y'}
-						{button href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
-					{else}
-						{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
-					{/if}
+					{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
 				{/if}
 
 				{if $prefs.feature_wiki_usrlock eq 'y' and isset($user) and $user and $tiki_p_lock eq 'y'}
@@ -150,11 +138,7 @@
 				{/if}{* attachments *}
 
 				{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y' or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
-					{if $beingStaged == 'y'}
-						{button href="tiki-edit_translation.php?page=$thisapprovedPageName" _text="{tr}Translate{/tr}"}
-					{else}
-						{button href="tiki-edit_translation.php?page=$thispage" _text="{tr}Translate{/tr}"}
-					{/if}
+					{button href="tiki-edit_translation.php?page=$thispage" _text="{tr}Translate{/tr}"}
 				{/if}
 
 				{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}

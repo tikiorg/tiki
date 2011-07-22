@@ -37,13 +37,11 @@ $('#autosave_preview').resizable({
 }).height(getCookie("wiki", "preview", ""));
 $("#autosave_preview>div").height(getCookie("wiki", "preview", ""));
 {/jq}{/if}
-<h2>{tr}Preview{/tr} {if isset($staging_preview) && $staging_preview eq 'y'}of current staging copy{/if}: {if isset($beingStaged) && $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
+<h2>{tr}Preview{/tr}: {$page|escape}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
-{if !isset($staging_preview) || $staging_preview neq 'y'}
 <div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
-{/if}
 <div  class="wikitext">
 {$parsed}
 </div>

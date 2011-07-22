@@ -30,15 +30,6 @@ class RankLib extends TikiLib
 			$mid .= ")";
 		}
 		
-		if ($prefs['feature_wikiapproval'] == 'y') {
-			if ($mid) {
-				$mid .= " AND tp.`pageName` not like ?";
-			} else {
-				$mid .= " WHERE tp.`pageName` not like ?";	
-			}
-			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
-		}
-		
 		$query = "select distinct tp.`pageName`, tp.`hits`, tp.`lang`, tp.`page_id` from `tiki_pages` tp $mid order by `hits` desc";
 
 		$result = $this->query($query, $bindvals);
@@ -98,14 +89,6 @@ class RankLib extends TikiLib
 			}
 			$mid .= ")";
 		}
-		if ($prefs['feature_wikiapproval'] == 'y') {
-			if ($mid) {
-				$mid .= " AND tp.`pageName` not like ?";
-			} else {
-				$mid .= " WHERE tp.`pageName` not like ?";	
-			}
-			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
-		}
 		
 		$query = "select tp.`pageName`, tp.`pageRank` from `tiki_pages` tp $mid order by `pageRank` desc";
 		
@@ -144,14 +127,6 @@ class RankLib extends TikiLib
 			}
 			$mid .= ")";
 		}
-		if ($prefs['feature_wikiapproval'] == 'y') {
-			if ($mid) {
-				$mid .= " AND tp.`pageName` not like ?";
-			} else {
-				$mid .= " WHERE tp.`pageName` not like ?";	
-			}
-			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
-		}
 		
 		$query = "select tp.`pageName`, tp.`lastModif`, tp.`hits` from `tiki_pages` tp $mid order by `lastModif` desc";
 
@@ -183,10 +158,8 @@ class RankLib extends TikiLib
 	
 	function forums_ranking_last_posts($limit, $toponly=false, $forumId='')
 	{
-		global $user, $commentslib; require_once 'lib/comments/commentslib.php';
-		if (! $commentslib) {
-			$commentslib = new Comments;
-		}
+		global $user;
+		$commentslib = TikiLib::lib('comments');
 		$offset=0;
 		$count = 0;
 		$ret = array();

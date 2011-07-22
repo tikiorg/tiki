@@ -8198,37 +8198,6 @@ JS;
 		return $result;
 	}
 
-	/**
-	 * Returns the approved page name or null if not a staging page or staging is disabled.
-	 */
-	function get_approved_page( $page ) {
-		global $prefs;
-		$prefixLen = strlen( $prefs['wikiapproval_prefix'] );
-		$prefix = substr( $page, 0, $prefixLen );
-
-		if( $prefs['feature_wikiapproval'] == 'y' && $prefix == $prefs['wikiapproval_prefix'] ) {
-			return substr($page, $prefixLen );
-		}
-	}
-
-	function get_staging_page( $page ) {
-		global $prefs;
-		$prefixLen = strlen( $prefs['wikiapproval_prefix'] );
-		$prefix = substr( $page, 0, $prefixLen );
-
-		if( $prefs['feature_wikiapproval'] == 'y' && $prefix != $prefs['wikiapproval_prefix'] ) {
-			return $prefs['wikiapproval_prefix'] . $page;
-		}
-	}
-
-	function get_approved_page_or_self( $page ) {
-		if( $app = $this->get_approved_page( $page ) ) {
-			return $app;
-		} else {
-			return $page;
-		}
-	}
-
 	protected function rename_object( $type, $old, $new ) {
 		global $prefs;
 
