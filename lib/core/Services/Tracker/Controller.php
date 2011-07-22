@@ -361,7 +361,6 @@ EXPORT;
 				$values = explode(',', $input->$key->none());
 				$filter = TikiFilter::get($filter);
 				$values = array_map(array($filter, 'filter'), $values);
-				$values = array_filter($values);
 			} else {
 				$values = array($input->$key->$filter());
 			}
