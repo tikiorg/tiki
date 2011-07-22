@@ -114,6 +114,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			'value' => '',
 			'itemIds' => implode(',', $items),
 			'items' => $list,
+			'num' => count($list),
 			'links' => $generateLinks,
 		);
 	}
