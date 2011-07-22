@@ -11,9 +11,9 @@
 
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
-			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y' or (isset($canEditStaging) and $canEditStaging eq 'y')}
+			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y'}
 				{assign var=thisPageName value=$thispage}
-				{if $page_ref_id and $needsStaging neq 'y'}
+				{if $page_ref_id}
 					{assign var=thisPageRefId value="&amp;page_ref_id=$page_ref_id"}
 				{else}
 					{assign var=thisPageRefId value=""}
@@ -89,7 +89,7 @@
 				{button href="tiki-export_wiki_pages.php?page=$thispage" _text="{tr}Export{/tr}"}
 			{/if}
 
-			{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y' && $tiki_p_forum_post eq 'y'}
+			{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y'}
 				{capture name='wiki_discussion_string'}{include file='wiki-discussion.tpl'}{/capture}
 				{assign var=thiswiki_discussion_string value=$smarty.capture.wiki_discussion_string|escape:"url"}
 				{button href="tiki-view_forum.php?forumId=`$prefs.wiki_forum_id`&amp;comments_postComment=post&amp;comments_title=$thispage&amp;comments_data=$thiswiki_discussion_string%3A+%5Btiki-index.php%3Fpage=$thispage%7C$thispage%5D&amp;comment_topictype=n" _text="{tr}Discuss{/tr}"}

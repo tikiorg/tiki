@@ -44,8 +44,6 @@ if (empty($info)) {
 	$smarty->display('error.tpl');
 	die;
 }
-$pageRenderer = new WikiRenderer( $info, $user);
-$pageRenderer->setupStaging();
 
 if (isset($_REQUEST['preview'], $_REQUEST['flaggedrev'], $_REQUEST['page']) && $prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
 	$targetFlag = null;

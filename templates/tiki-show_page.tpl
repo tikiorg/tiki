@@ -52,7 +52,7 @@
 								{$translation_alert[i][j].page|escape}
 							</a>
 							({$translation_alert[i][j].lang})
-							{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' or $canEditStaging eq 'y'} 
+							{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'} 
 								<a href="tiki-editpage.php?page={$page|escape:'url'}&amp;source_page={$translation_alert[i][j].page|escape:'url'}&amp;oldver={$translation_alert[i][j].last_update|escape:'url'}&amp;newver={$translation_alert[i][j].current_version|escape:'url'}&amp;diff_style=htmldiff" title="{tr}update from it{/tr}">
 									{icon _id=arrow_refresh alt="{tr}update from it{/tr}" style="vertical-align:middle"}
 								</a>
