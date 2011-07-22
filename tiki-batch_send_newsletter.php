@@ -11,7 +11,7 @@ if (empty($argv)) { // can only be used in a cron or line command
 include('tiki-setup.php');
 
 $access->check_feature('feature_newsletters');
-$access->check_permission('tiki_p_send_newsletters');
+//$access->check_permission('tiki_p_send_newsletters');
 
 global $nllib; include_once('lib/newsletters/nllib.php');
 
@@ -36,6 +36,7 @@ if (!($nl_info = $nllib->get_newsletter($edition_info['nlId']))) {
 $edition_info['editionId'] = 0;
 $sent = $errors = array();
 $logFileName = '';
+$edition_info['begin'] = 'y';
 $nllib->send($nl_info, $edition_info, false, $sent, $errors, $logFileName);
 if (!empty($errors)) {
 	echo "Errors\n";
