@@ -242,7 +242,7 @@
 			{/if}
 			{if $show_thumb eq 'y'}
 				<td>
-					<a href="tiki-download_file.php?fileId={$files[changes].fileId}&display"><img src="tiki-download_file.php?fileId={$files[changes].fileId}&thumbnail" /></a>
+					<a href="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&display"><img src="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&thumbnail" /></a>
 				</td>
 			{/if}
 
