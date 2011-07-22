@@ -330,8 +330,32 @@ function wikiplugin_files_info() {
 				'default' => -1,
 				'advanced' => true,
 			),
-
-	 	)
+			'recursive' => array(
+				'required' => false,
+				'name' => tra('Recursive'),
+				'description' => tra('Recursive'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'withsubgals' => array(
+				'required' => false,
+				'name' => tra('With sub-galleries'),
+				'description' => tra('With sub-galleries'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),	 	)
 	 );
 }
 function wikiplugin_files($data, $params) {
@@ -340,7 +364,7 @@ function wikiplugin_files($data, $params) {
 		return('');
 	}
 	global $filegallib; include_once('lib/filegals/filegallib.php');
-	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n', 'max' => -1, 'showthumb' => 'n');
+	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n', 'max' => -1, 'showthumb' => 'n', 'recursive' => 'n', 'withsubgals'=>'y');
 	$params = array_merge($default, $params);
 	$filter = '';
 	extract($params, EXTR_SKIP);
@@ -400,7 +424,7 @@ function wikiplugin_files($data, $params) {
 			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId[0]&amp;find_creator=" . urlencode($creator) . "&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
-		$fs = $filegallib->get_files(0, $max, $sort, $find, $galleryId, false, true, true, true, false, $show_parentName=='y', true, false, '', true, false, false, $filter);
+		$fs = $filegallib->get_files(0, $max, $sort, $find, $galleryId, false, $withsubgals=='y', false, true, false, $show_parentName=='y', true, $recursive, '', false, false, false, $filter);
 		if (isset($categId)) {
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 			$objects_in_categs = array();
@@ -442,7 +466,7 @@ function wikiplugin_files($data, $params) {
 				$p_edit_gallery_file = 'y';
 			}
 
-			$fs = $filegallib->get_files(0, $max, $sort, '', $og['itemId'], false, true, false, true, false, $show_parentName=='y', true, false, '', true, false, false, $filter);			                                                      
+			$fs = $filegallib->get_files(0, $max, $sort, '', $og['itemId'], false, $withsubgals=='y', false, true, false, $show_parentName=='y', true, $recursive, '', false, false, false, $filter);			                                                      
 			if ($fs['cant']) {
 				for ($i = 0; $i < $fs['cant']; ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];
