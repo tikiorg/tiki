@@ -2370,7 +2370,6 @@ class FileGalLib extends TikiLib
 		}
 		if ( $galleryId_str != '' ) {
 			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
-			if (is_array($galleryId) && $with_subgals) $bindvars = array_merge($bindvars, $galleryId);
 		}
 		
 		if ( $with_subgals ) {
@@ -2407,7 +2406,7 @@ class FileGalLib extends TikiLib
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
-				// Note: no bindvars here because earlier there is already a bindvars for $f_query which equally applies here for $g_query 
+				if (is_array($galleryId) && $with_subgals) $bindvars = array_merge($bindvars, $galleryId);
 			}
 			$g_query .= $g_mid;
 
