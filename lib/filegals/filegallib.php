@@ -2227,13 +2227,16 @@ class FileGalLib extends TikiLib
 			$galleryId = -2;
 		}
 
-		if ( $recursive && ! is_array($galleryId) ) {
+		if ( $recursive ) {
 			$idTree = array();
-			$this->getGalleryIds( $idTree, $galleryId, 'list' );
+			if (is_array($galleryId)) {
+				foreach ($galleryId as $galId) {
+					$this->getGalleryIds( $idTree, $galId, 'list' );
+				}
+			} else {
+				$this->getGalleryIds( $idTree, $galleryId, 'list' );
+			}
 			$galleryId =& $idTree;
-		} else {
-			// recursive mode is only available for one parent gallery (i.e. not implemented when $galleryId is an array of multiple ids)
-			$recursive = false;
 		}
 
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
