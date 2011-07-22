@@ -2414,12 +2414,12 @@ class TrackerLib extends TikiLib
 
 	function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true) {
 		global $tiki_p_tracker_vote_ratings, $tiki_p_tracker_revote_ratings; 
-		if ($field['type'] != '*') {
+		if ($field['type'] != '*' && $field['type'] != 'STARS') {
 			return;
-		}
-		if ($userValue != 'NULL' && !in_array($userValue, $field['options_array'])) {
+		} 
+		if ($userValue != 'NULL' && !in_array($userValue, $field['rating_options'])) {
 			return;
-		}
+		} 
 		if ($tiki_p_tracker_vote_ratings != 'y') {
 			return;
 		}
@@ -2444,14 +2444,13 @@ class TrackerLib extends TikiLib
 		$votings = $this->table('tiki_user_votings');
 
 		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
-			$key = 'tracker.'.$trackerId.'.'.$itemId;
-			$field['numvotes'] = $votings->fetchCount(array('id' => $key));
-			$field['voteavg'] = ( $field['numvotes'] > 0 ) ? round(($field['value'] / $field['numvotes'])) : '';
-		} elseif ($field['type'] == '*') { // field rating - value is the average of the votes
-			$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
-			$field['numvotes'] = $votings->fetchCount(array('id' => $key));
-			$field['voteavg'] = isset($field['value'])? round($field['value']):'';
+			$key = 'tracker.'.$trackerId.'.'.$itemId; 
+		} elseif ($field['type'] == '*' || $field['type'] == 'STARS') { // field rating - value is the average of the votes
+			$key = "tracker.$trackerId.$itemId.".$field['fieldId']; 
 		}
+		$field['numvotes'] = $votings->fetchCount(array('id' => $key));
+		$total = $votings->sum('optionId', array('id' => $key));
+		$field['voteavg'] = $total/$field['numvotes'];
 		// be careful optionId is the value - not the optionId
 		$field['my_rate'] = $votings->fetchOne('optionId', array('id' => $key, 'user' => $user));
 	}

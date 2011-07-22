@@ -17,32 +17,32 @@
 		{capture name=myvote}{tr}My rating:{/tr} {$field.my_rate}{/capture}
 		<span class="rating">
 		<span style="white-space:nowrap">
-		{section name=i loop=$field.options_array}
-			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($field.my_rate) and $field.options_array[i] === $field.my_rate}
+		{section name=i loop=$field.rating_options}
+			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($field.my_rate) and $field.rating_options[i] === $field.my_rate}
 				<b class="highlight">
-					{if $field.numvotes && $field.voteavg >= $field.options_array[i]}
-				   		{icon _id='star' alt=$field.options_array[i] title=$smarty.capture.myvote}
+					{if $field.numvotes && $field.voteavg >= $field.rating_options[i]}
+				   		{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.myvote}
 					{else}
-						{icon _id='star_grey' alt=$field.options_array[i] title=$smarty.capture.myvote}
+						{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{if $field.mode eq 'radio'}{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.myvote}{else}{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.myvote}{/if}
 					{/if}
 				</b>
 			{else}
 				{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
 					($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
-					{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field.options_array[i]}{/capture}
-					<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}={$field.options_array[i]}&amp;vote=y">
+					{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field.rating_options[i]}{/capture}
+					<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}={$field.rating_options[i]}&amp;vote=y">
 				{/if}
-				{if $field.numvotes && $field.voteavg >= $field.options_array[i]}
-					{icon _id='star' alt=$field.options_array[i] title=$smarty.capture.thisvote}
+				{if $field.numvotes && $field.voteavg >= $field.rating_options[i]}
+					{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{if $field.mode eq 'radio'}{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}{else}{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.thisvote}{/if}
 				{else}
-					{icon _id='star_grey' alt=$field.options_array[i] title=$smarty.capture.thisvote}
+					{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
 				{/if}
 				{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
 					($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
 					</a>
 				{/if}	
 			{/if}
-			{assign var='previousvote' value=$field.options_array[i]}
+			{assign var='previousvote' value=$field.rating_options[i]}
 		{/section}
 		</span>
 		{if $item.itemId}
