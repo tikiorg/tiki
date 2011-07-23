@@ -98,7 +98,7 @@ Add a value in first check when you create a new admin page. *}
   {assign var="include" value="list_sections"}
 {/if}
 {if $include != "list_sections"}
-  <div class="simplebox adminanchors clearfix" >{include file='tiki-admin_include_anchors.tpl'}</div>
+  <div class="simplebox adminanchors clearfix" >{include file='admin/include_anchors.tpl'}</div>
 {/if}
 
 {if $prefs.tiki_needs_upgrade eq 'y'}
@@ -137,7 +137,7 @@ if $pagetop_msg}
 	{/remarksbox}
 {/if*}
 
-{include file="tiki-admin_include_$include.tpl"}
+{include file="admin/include_$include.tpl"}
 
 <br style="clear:both" />
 {remarksbox type="tip" title="{tr}Crosslinks to other features and settings{/tr}"}
