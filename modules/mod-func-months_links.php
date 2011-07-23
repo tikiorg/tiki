@@ -79,7 +79,7 @@ function module_months_links( $mod_reference, $module_params ) {
 	
 			$month_name = ucfirst(tra($month_names[$current_month_num - 1])).' '.$current_year;
 			if ( $timestamp_month_start > 0 ) {
-				$timestamp_month_end = $timestamp_month_start - 1;
+				$timestamp_month_end = $timestamp_month_start - 1; // Optimisation to save one make_time() call per iteration
 			} else {
 				$timestamp_month_end = $tikilib->make_time(0, 0, 0, $current_month_num + 1, 1, $current_year) - 1;
 			}
