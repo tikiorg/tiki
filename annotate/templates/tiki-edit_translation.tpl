@@ -139,26 +139,24 @@ function validate_translation_request() {
 		</table>
 {/if}
 
-{if !isset($allowed_for_staging_only)}
-	{if ($articles and ($articles|@count ge '1')) or ($pages|@count ge '1')}
-		{* only show if there are articles or pages to select *}
-		<form action="tiki-edit_translation.php" method="post">
-			<fieldset>
-				<input type="hidden" name="id" value="{$id}" />
-				<input type="hidden" name="type" value="{$type|escape}" />
-				<p>{if isset($articles)}{tr}Mark existing article as a translation of this one:{/tr}{else}{tr}Add existing page as a translation of this page:{/tr}{/if}<br />
-	
-				{if $articles}
-					<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true|escape}</option>{/if}{/section}</select>
-				{else}
-					<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true|escape} ({$pages[ix].lang|escape})</option>{/section}</select>
-				{/if}
-				&nbsp;
-				<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
-				</p>
-			</fieldset>
-		</form>
-	{/if}
+{if ($articles and ($articles|@count ge '1')) or ($pages|@count ge '1')}
+	{* only show if there are articles or pages to select *}
+	<form action="tiki-edit_translation.php" method="post">
+		<fieldset>
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="type" value="{$type|escape}" />
+			<p>{if isset($articles)}{tr}Mark existing article as a translation of this one:{/tr}{else}{tr}Add existing page as a translation of this page:{/tr}{/if}<br />
+
+			{if $articles}
+				<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true|escape}</option>{/if}{/section}</select>
+			{else}
+				<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true|escape} ({$pages[ix].lang|escape})</option>{/section}</select>
+			{/if}
+			&nbsp;
+			<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
+			</p>
+		</fieldset>
+	</form>
 {/if}
 
 <br />

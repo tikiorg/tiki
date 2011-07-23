@@ -27,21 +27,6 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 	if ( !isset($_REQUEST["cat_categorize"]) || $_REQUEST["cat_categorize"] != 'on' || (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
 		$_REQUEST['cat_categories'] = NULL;
 	}
-	if ( $cat_type == 'wiki page' && $tikilib->get_approved_page($cat_objid) ) {		
-		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
-			$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_approved_category']));
-		}
-		if ($prefs['wikiapproval_staging_category'] > 0 && !in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories'])) {	
-			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_staging_category'];	
-		}
-		if ($prefs['wikiapproval_outofsync_category'] > 0 && !in_array($prefs['wikiapproval_outofsync_category'], $_REQUEST['cat_categories'])) {	
-			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_outofsync_category'];	
-		}
-	}
-	if ($cat_type == 'wiki page' && $tikilib->get_staging_page($cat_objid) && in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories']) && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
-		// Drop the staging category if page without staging prefix is attempted to be categorized in both staging category and approved category
-		$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_staging_category']));
-	}
 	$categlib->update_object_categories(isset($_REQUEST['cat_categories'])?$_REQUEST['cat_categories']:'', $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, $_REQUEST['cat_managed']);
 
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);

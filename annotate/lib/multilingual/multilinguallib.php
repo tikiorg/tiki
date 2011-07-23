@@ -29,23 +29,6 @@ class MultilingualLib extends TikiLib
 	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang) {
 		global $prefs;
 
-		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
-			$srcPageName = $this->get_page_name_from_id($srcId);
-			$objPageName = $this->get_page_name_from_id($objId);
-			if ( ($stagingSrc = $this->get_staging_page( $srcPageName )) && ($stagingObj = $this->get_staging_page( $objPageName )) ) {
-				$srcStagingPageName = $stagingSrc;
-				$objStagingPageName = $stagingObj;
-
-				if ($this->page_exists($srcStagingPageName) && $this->page_exists($objStagingPageName)) {
-					$this->insertTranslation($type,
-					$this->get_page_id_from_name($srcStagingPageName),
-																				$srcLang,
-																				$this->get_page_id_from_name($objStagingPageName),
-																				$objLang
-																			);
-				}
-			}
-		}
 		$srcTrads = $this->getTrads($type, $srcId);
 		$objTrads = $this->getTrads($type, $objId);
 
@@ -91,22 +74,6 @@ class MultilingualLib extends TikiLib
 	 */
 	function updateTranslation($type, $srcId, $objId, $objLang)
 	{
-		global $prefs;
-		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
-			$srcPageName = $this->get_page_name_from_id($srcId);
-			$objPageName = $this->get_page_name_from_id($objId);
-			if ( ($stagingSrc = $this->get_staging_page( $srcPageName )) && ($stagingObj = $this->get_staging_page( $objPageName )) ) {
-				$srcStagingPageName = $stagingSrc;
-				$objStagingPageName = $stagingObj;
-				if ($this->page_exists($srcStagingPageName) && $this->page_exists($objStagingPageName)) {
-					$this->updateTranslation($type,
-																	$this->get_page_id_from_name($srcStagingPageName),
-																	$this->get_page_id_from_name($objStagingPageName),
-																	$objLang
-																	);
-				}
-			}
-		}
 		$query = "update `tiki_translated_objects` set `objId`=? where `type`=? and `srcId`=? and `lang`=?";
 		$this->query($query, array($objId, $type, $srcId, $objLang));
 	}
@@ -209,16 +176,6 @@ class MultilingualLib extends TikiLib
 	 */
 	function detachTranslation($type, $objId)
 	{
-		global $prefs;
-		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {			
-			$objPageName = $this->get_page_name_from_id($objId);
-			if ( $stagingObj = $this->get_staging_page( $objPageName ) ) {
-				$objStagingPageName = $stagingObj;
-				if ($this->page_exists($objStagingPageName)) {
-					$this->detachTranslation($type, $this->get_page_id_from_name($objStagingPageName));
-				}
-			}
-		}
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
 		$this->query($query,array($type, $objId));
 		//@@TODO: delete the set if only one remaining object - not necesary but will clean the table
@@ -671,12 +628,7 @@ class MultilingualLib extends TikiLib
 		$pages = array();
 		global $prefs;			
 		while ( $row = $result->fetchRow() ) {
-			// add pagename of approved page if it is a staging page
-			if ( $approved = $this->get_approved_page( $row['page'] ) ) {
-				$row['approvedPage'] = $approved;
-			}
-
-			if ( $prefs['feature_urgent_translation_master_only'] != 'y' || $row['lang'] == $prefs['site_language'] ) {
+			if ( $row['lang'] == $prefs['site_language'] ) {
 				$pages[] = $row;
 			}
 		}

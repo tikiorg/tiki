@@ -29,15 +29,6 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		$cats = $categlib->get_default_categories();
 	}
 	
-	if ($prefs['wikiapproval_sync_categories'] == 'y' && !$cats
-	 && $cat_type == 'wiki page' && ( $approved = $tikilib->get_approved_page($cat_objid) )
-	 && !$tikilib->page_exists($cat_objid) ) {
-	 	// to pre-populate categories of original page if this is the first creation of a staging page
-		$approvedPageName = $approved;
-		$cats = $categlib->get_object_categories($cat_type, $approvedPageName);
-		$cats = array_diff($cats,Array($prefs['wikiapproval_approved_category']));		
-	}
-	
 	if ($cat_type == 'wiki page' || $cat_type == 'blog' || $cat_type == 'image gallery' || $cat_type == 'mypage') {
 		$ext = ($cat_type == 'wiki page')? 'wiki':str_replace(' ', '_', $cat_type);
 		$pref = 'feature_'.$ext.'_mandatory_category';

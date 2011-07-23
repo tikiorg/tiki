@@ -62,11 +62,6 @@ class HistLib extends TikiLib
 		$res = $result->fetchRow();
 		
 		global $prefs;
-		if ($prefs['feature_wikiapproval'] == 'y') {
-			// for approval and staging feature to work properly, one has to use real commit time of rollbacks
-			//TODO: make this feature to set rollback time as current time as more general optional feature
-			$res["lastModif"] = time();
-		}
 		// add rollback comment to existing one (after truncating if needed)
 		$ver_comment = " [" . tra("rollback version ") . $version . "]";
 		$too_long = 200 - strlen($res["comment"] . $ver_comment);
@@ -1204,31 +1199,5 @@ function rollback_page_to_version($page, $version, $check_key = true, $keep_last
 	}		
 	$histlib->use_version($page, $version, '', $keep_lastModif);
 	
-	if ( ($approved = $tikilib->get_approved_page($page)) && $prefs['wikiapproval_outofsync_category'] > 0) {
-		
-		$approved_page = $histlib->get_page_from_history($approved, 0, true);
-		$staging_page = $histlib->get_page_from_history($page, $version, true);
-		$cat_type='wiki page';	
-		$staging_cats = $categlib->get_object_categories($cat_type, $page);
-		$s_cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($staging_info["description"],0,200) : '';
-		$s_cat_objid = $page;
-		$s_cat_name = $page;
-		$s_cat_href="tiki-index.php?page=".urlencode($s_cat_objid);
-		
-		//Instead of firing up diff, just check if the pages share the same exact data, drop the staging
-		//copy out of the review category if so
-		if ( $approved_page["data"] != $staging_page["data"] ) //compare these only once
-		$pages_diff = true;
-		if ( in_array($prefs['wikiapproval_outofsync_category'], $staging_cats) )
-		$in_staging_cat = true;
-
-		if ( !$pages_diff && $in_staging_cat ) {
-			$staging_cats = array_diff($staging_cats,Array($prefs['wikiapproval_outofsync_category']));
-			$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
-		} elseif ( $pages_diff && !$in_staging_cat ) {
-			$staging_cats[] = $prefs['wikiapproval_outofsync_category'];
-			$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
-		}
-	}	
 	$tikilib->invalidate_cache( $page );
 }

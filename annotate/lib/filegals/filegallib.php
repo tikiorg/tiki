@@ -2227,13 +2227,16 @@ class FileGalLib extends TikiLib
 			$galleryId = -2;
 		}
 
-		if ( $recursive && ! is_array($galleryId) ) {
+		if ( $recursive ) {
 			$idTree = array();
-			$this->getGalleryIds( $idTree, $galleryId, 'list' );
+			if (is_array($galleryId)) {
+				foreach ($galleryId as $galId) {
+					$this->getGalleryIds( $idTree, $galId, 'list' );
+				}
+			} else {
+				$this->getGalleryIds( $idTree, $galleryId, 'list' );
+			}
 			$galleryId =& $idTree;
-		} else {
-			// recursive mode is only available for one parent gallery (i.e. not implemented when $galleryId is an array of multiple ids)
-			$recursive = false;
 		}
 
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
@@ -2362,8 +2365,7 @@ class FileGalLib extends TikiLib
 			$bindvars = array_merge($bindvars, $galleryId);
 		} elseif ( $galleryId >= -1 ) {
 			$galleryId_str = '=?';
-			if ( $with_files ) $bindvars[] = $galleryId;
-			if ( $with_subgals ) $bindvars[] = $galleryId;
+			$bindvars[] = $galleryId;
 		}
 		if ( $galleryId_str != '' ) {
 			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
@@ -2403,7 +2405,12 @@ class FileGalLib extends TikiLib
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
-				// Note: no bindvars here because earlier there is already a bindvars for $f_query which equally applies here for $g_query 
+				if ($with_files) { // f_query is not used if !with_files
+					if (is_array($galleryId))
+						$bindvars = array_merge($bindvars, $galleryId);
+					else
+						$bindvars[] = $galleryId;
+				}
 			}
 			$g_query .= $g_mid;
 

@@ -222,8 +222,6 @@ class Services_Language_TranslationController
 			return $info['author'] == $user && $info['creator_edit'] == 'y';
 		}
 
-		// FIXME : Include staging & approval if we decide to keep it
-
 		return $perms->admin;
 	}
 

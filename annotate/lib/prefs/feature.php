@@ -771,12 +771,6 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'feature_urgent_translation_master_only' => array(
-			'name' => tra('Only allow urgent translation from site language'),
-			'description' => tra('Use the site language as a master language and prevent translations from sending critical updates.'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'feature_translation_incomplete_notice' => array(
 			'name' => tra('Incomplete translation notice'),
 			'description' => tra('When a page is translated to a new language, a notice will be automatically inserted into the page to indicate that the translation is not yet complete.'),
@@ -1822,19 +1816,6 @@ function prefs_feature_list($partial = false) {
 		'feature_wiki_print' => array(
 			'name' => tra('Print'),
 			'type' => 'flag',
-			'default' => 'n',
-		),
-		'feature_wikiapproval' => array(
-			'name' => tra('Use wiki page staging and approval'),
-			'type' => 'flag',
-			'help' => 'Wiki+Page+Staging+and+Approval',
-			'perspective' => false,
-                        'dependencies' => array (
-                                'feature_categories'
-                        ),
-			'warning' => tra('This feature is experimental'),
-			'tags' => array('experimental'),
-			'description' => tra('Allows wiki pages to be staged (drafted) before they are approved (published)'),
 			'default' => 'n',
 		),
 		'feature_listorphanStructure' => array(

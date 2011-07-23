@@ -19,14 +19,14 @@
 				{if $structure_path[ix].page_alias}
 					{$structure_path[ix].page_alias}
 				{else}
-					{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName}{else}{$structure_path[ix].pageName}{/if}
+					{$structure_path[ix].pageName}
 				{/if}
 				{if $structure_path[ix].pageName ne $page or $structure_path[ix].page_alias ne $page_info.page_alias}
 					</a>
 				{/if}
 			{/section}
 		{else}
-			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName}{else}{$page}{/if}
+			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {$page|escape}
 			{elseif $title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$title}
 			{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
 			{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}{/if}

@@ -1,75 +1,122 @@
-.cm-s-default span.cm-emphasis {
-    font-style: italic;
+.cm-editbox {
+	margin: .cm-4em;
+	padding: 0;
+	font-family: Helvetica;
+	font-size: 10pt;
+	color: #000000;
 }
 
-.cm-s-default span.cm-strong {
-    font-weight: bold;
+pre.code, .editbox {
+	color: #000000;
 }
 
-.cm-s-default span.cm-interpreted {
-    color: #33cc66;
+.cm-editbox p {
+	margin: 0;
 }
 
-.cm-s-default span.cm-inline {
-    color: #3399cc;
+.cm-tw-text {
+	color: #000000;
 }
 
-.cm-s-default span.cm-role {
-    color: #666699;
+.cm-tw-syntaxerror {
+	color: #FFFFFF;
+	background-color: #990000;
 }
 
-.cm-s-default span.cm-list {
-    color: #cc0099;
-    font-weight: bold;
+.cm-tw-comment {
+	color: #999999;
 }
 
-.cm-s-default span.cm-body {
-    color: #6699cc;
+.cm-tw-bolditalic {
+	color: #000000;
+	font-weight: bold; 
+	font-style: italic;
 }
 
-.cm-s-default span.cm-verbatim {
-    color: #3366ff;
+.cm-tw-bold {
+	color: #000000;
+	font-weight: bold; 
 }
 
-.cm-s-default span.cm-comment {
-    color: #aa7700;
+.cm-tw-italic {
+	color: #000000;
+	font-style: italic;
 }
 
-.cm-s-default span.cm-directive {
-    font-weight: bold;
-    color: #3399ff;
+.cm-tw-file {
+	color: #FF6600;
 }
 
-.cm-s-default span.cm-hyperlink {
-    font-weight: bold;
-    color: #3366ff;
+.cm-tw-link {
+	color: #006600;
 }
 
-.cm-s-default span.cm-footnote {
-    font-weight: bold;
-    color: #3333ff;
+.cm-tw-weblink {
+	color: #000099;
 }
 
-.cm-s-default span.cm-citation {
-    font-weight: bold;
-    color: #3300ff;
+.cm-tw-table {
+	color: #339999;
 }
 
-.cm-s-default span.cm-replacement {
-    color: #9933cc;
+.cm-tw-titlebar {
+	color: navy;
+	font-weight: bold;
+}
+.cm-tw-deleted {
+	text-decoration: line-through;
+	color: #999999;
+}
+.cm-tw-header1 {
+	font-size: 1.cm-3em;
+	font-weight: bold;
+}
+.cm-tw-header2 {
+	font-size: 1.cm-2em;
+	font-weight: bold;
+}
+.cm-tw-header3 {
+	font-size: 1.cm-1em;
+	font-weight: bold;
+}
+.cm-tw-header4 {
+	font-weight: bold;
+
+}
+.cm-tw-header5 {
+	font-weight: bold;
+}
+.cm-tw-listitem {
+	padding-left: 10px;
+	color: green;
 }
 
-.cm-s-default span.cm-section {
-    font-weight: bold;
-    color: #cc0099;
+.cm-tw-center {
+	color: purple;
 }
 
-.cm-s-default span.cm-directive-marker {
-    font-weight: bold;
-    color: #3399ff;
+.cm-tw-plugin-container {
+	color: blue;
 }
 
-.cm-s-default span.cm-verbatim-marker {
-    font-weight: bold;
-    color: #9900ff;
+.cm-tw-plugin-attributes {
+	color: #000066;
+}
+
+.cm-tw-plugin-attribute-parentheses {
+	color: #CC66CC;
+}
+
+.cm-tw-plugin-attribute-value {
+	color: #FF0033;
+}
+
+.cm-tw-box {
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+}
+
+.cm-tw-underline {
+	text-decoration: underline;
 }
