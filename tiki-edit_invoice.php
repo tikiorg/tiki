@@ -9,10 +9,11 @@ global $tikilib, $trklib, $trkqrylib;
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
+print_r($trkqrylib->tracker_query_by_names("Invoice Items"));
 
 //check if profile is created
 $installer = new Tiki_Profile_Installer();
-$profile = Tiki_Profile::fromNames( "profiles.tiki.org","Invoice" );
+$profile = Tiki_Profile::fromNames( "profiles.tiki.org", "Invoice" );
 if (!$installer->isInstalled( $profile )) {
 	$smarty->assign('msg', tra('You need to apply the "Invoice" profile'));
 	$smarty->display("error.tpl");
@@ -21,6 +22,7 @@ if (!$installer->isInstalled( $profile )) {
 
 $smarty->assign("clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
 $smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
+print_r($trkqrylib->tracker_query_by_names("Invoices"));
 $invoiceItems = array();
 
 //we are editing an invoice here
@@ -45,64 +47,22 @@ $smarty->assign("invoiceItems", $invoiceItems);
 
 //we are updating or adding
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	/*This is what an array will look like on post back:
-	Array
-	(
-		[ClientId] => 6336
-		[InvoiceNumber] => 123
-		[DateIssued] => 4/4/2012
-		[Quantity] => Array
-			(
-				[0] => 3
-				[1] => 30
-			)
-	 
-		[WorkDescription] => Array
-			(
-				[0] => Hourly Rate
-				[1] => Hourly Rate 2
-			)
-	 
-		[Taxable] => Array
-			(
-				[0] => n
-				[1] => y
-			)
-	 
-		[Amount] => Array
-			(
-				[0] => 100
-				[1] => 100
-			)
-	 
-		[InvoiceNote] => Invoice Note
-		[submit] => Save Invoice
-		[invoice] => 0
-	)
-	*/
-	//This part doesn't yet work, to update or save invoice
-	
-	function processItem($trackerName, $fieldNames, $idFieldName, $i) {
+	//form to tracker item transformation
+	function processItem($trackerName, $fieldNames, $fieldValues, $itemId, $i) {
 		global $trklib;
-		$fieldIds = $trklib->get_fields_by_names($trackerName, $fieldNames);
-		$fieldData = array();
 		
-		foreach($fieldNames as $fieldName) {
-			$fieldVal = (isset($i) ? $_REQUEST[str_replace(" ", "", $fieldName)][$i] : $_REQUEST[str_replace(" ", "", $fieldName)]);
-			array_push($fieldData, formToTrackerField($fieldIds[$fieldName], $fieldVal));
+		$fields = $trklib->list_tracker_fields($trklib->get_tracker_by_name($trackerName));
+		foreach($fields['data'] as $key => $field) {
+			$fieldName = $field['name'];	
+			$fieldValue = (isset($i) ? $fieldValues[str_replace(" ", "", $fieldName)][$i] : $fieldValues[str_replace(" ", "", $fieldName)]);
+			$fields['data'][$key]['value'] = (empty($fieldValue) ? '' : $fieldValue);
 		}
 		
-		return $fieldData;
+		return $trklib->replace_item($trklib->get_tracker_by_name($trackerName), $itemId, $fields, 'o');
 	}
 	
-	function formToTrackerField($id, $val) {
-		return array(
-			'fieldId' => $id,
-			'value' => $val
-		);
-	}
-	
-	$invoice = processItem("Invoices", array(
+	//start invoice
+	$_REQUEST['invoice'] = processItem("Invoices", array(
 		"Client Id",
 		"Invoice Number",
 		"Date Issued",
@@ -113,39 +73,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		"Tax 2 Rate",
 		"Invoice Note",
 		"Days Payment Due",
-		"Client Name",
-		"Amounts Paid",
-	));
+	), $_REQUEST, $_REQUEST['invoice']);
+	//end invoice
 	
+	//start invoice items
 	$invoiceItems = array();
 	
 	for($i = 0; $i < count($_REQUEST["Amount"]); $i++) {
-		array_push($invoiceItems, processItem("Invoice Items", array(
+		$invoiceItem = processItem("Invoice Items", array(
 			"Invoice Id",
 			"Amount",
 			"Quantity",
 			"Work Description",
 			"Taxable",
-		), $i));
+		), $_REQUEST, $_REQUEST['InvoiceItemId'][$i], $i);
+		
+		array_push($invoiceItems, $invoiceItem);
 	}
 	
-	
-	print_r($invoiceItems);
-	die;
-	if (isset($_REQUEST['invoice'])) { //edit
-		
-	} else { //new
-		$newInvoice = array();
-		
-		foreach($invoicesFieldIds as $invoicesFieldId) {
-			$newInvoice[] = array(
-				'fieldId' => $invoicesFieldId,
-				'value' => 99999
-			);
-		}
-		
-		$_REQUEST['invoice'] = $trklib->replace_item($trklib->get_tracker_by_name("Invoices"), $_REQUEST['invoice'], array('data' => $newInvoice));
-	}
+	print_r(array($_REQUEST['invoice'] => $invoiceItems));
+	//end invoice items
 }
 
 $headerlib->add_jq_onready("
@@ -197,6 +144,11 @@ $headerlib->add_jq_onready("
 					.val('n')
 					.attr('checked', 'true');
 			}
+		});
+		
+		$('.InvoiceItemId').each(function() {
+			var InvoiceItemId = $(this);
+			InvoiceItemId.val(InvoiceItemId.val() ? InvoiceItemId.val() : 0);
 		});
 	});
 ");

@@ -39,7 +39,7 @@
 
 		{foreach from=$invoiceItems item=invoiceItem}
 			<tr class='InvoiceItem'>
-				<input name='InvoiceItemId' class='InvoiceItemId' type='hidden' value='{$invoiceItem.$InvoiceItemId}'
+				<input name='InvoiceItemId' class='InvoiceItemId' type='hidden' value='{$invoiceItem.$InvoiceItemId}' />
 				<td><input name='Quantity[]' class='InvoiceQuantity' type='text' value='{$invoiceItem.Quantity}' /></td>
 				<td><textarea name='WorkDescription[]' class='InvoiceWorkDescription'>{$invoiceItem.$WorkDescription}</textarea></td>
 				<td><input name='Taxable[]' class='InvoiceTaxable' type='checkbox' value='y' {if $invoiceItem.Taxable eq 'y'} checked='true' {/if} /></td>
