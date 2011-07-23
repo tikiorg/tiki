@@ -595,7 +595,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		// Add all live properties to stored properties
 		foreach ( $this->handledLiveProperties as $property )
 		{
-			$storage->attach( $this->getProperty( $path, $property ) );
+			$prop = $this->getProperty( $path, $property );
+			if ( !empty($prop) ) {
+				$storage->attach( $this->getProperty( $path, $property ) );
+			}
 		}
 
 		return $storage;

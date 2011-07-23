@@ -1903,11 +1903,13 @@ class FileGalLib extends TikiLib
 				), array('fileId' => 'DESC'));
 			}
 
-			if ( $result ) {
+			if ( is_array($result) ) {
 				$res = reset($result);
 				if ( ! empty($res) ) {
 					return array('type' => 'file', 'id' => $res['fileId']);
 				}
+			} elseif ( !empty($result) ) {
+					return array('type' => 'file', 'id' => $result);
 			}
 		}
 
