@@ -393,7 +393,7 @@ function wikiplugin_files($data, $params) {
 				$objects_in_categs[] = $o['itemId'];
 			}
 		}
-		for ($i = 0; $i < $fs['cant']; ++$i) {
+		for ($i = 0; $i < count($fs['data']); ++$i) {
 			if (isset($categId)) { // filter the files
 				if (!in_array($fs['data'][$i]['fileId'], $objects_in_categs)) {
 					continue;
@@ -429,7 +429,7 @@ function wikiplugin_files($data, $params) {
 
 			$fs = $filegallib->get_files(0, $max, $sort, '', $og['itemId'], false, true, false, true, false, $show_parentName=='y', true, false, '', true, false, false, $filter);			                                                      
 			if ($fs['cant']) {
-				for ($i = 0; $i < $fs['cant']; ++$i) {
+				for ($i = 0; $i < count($fs['data']); ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];
 					$fs['data'][$i]['galleryId'] = $gal_info['galleryId'];
 					$fs['data'][$i]['p_download_files'] = $p_download_files;
