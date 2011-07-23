@@ -2330,6 +2330,10 @@ class FileGalLib extends TikiLib
 			$f_jail_where = '';
 			$f_jail_bind = array();
 		}
+		if ($with_parent_name && !$with_subgals) {
+			$f2g_corresp['tfgp.`name` as `parentName`'] = '';
+			$f_table .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tf.`galleryId` = tfgp.`galleryId`)';
+		}
 
 		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where . $f_where;
 		$bindvars = array();
