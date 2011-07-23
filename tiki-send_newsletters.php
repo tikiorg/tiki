@@ -247,7 +247,7 @@ if (isset($_REQUEST["preview"])) {
 	$previewdata = $info['dataparsed'];
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
-		$txtArticleClip = generateTxtVersion($articleClip);
+		$txtArticleClip = $nllib->generateTxtVersion($articleClip);
 		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 		$previewdata = str_replace("~~~articleclip~~~", $articleClip, $previewdata);
 	}
@@ -288,7 +288,7 @@ if (isset($_REQUEST["save"])) {
 	$previewdata = $parsed;
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
-		$txtArticleClip = generateTxtVersion($articleClip);
+		$txtArticleClip = $nllib->generateTxtVersion($articleClip, $parsed);
 		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 		$previewdata = str_replace("~~~articleclip~~~", $articleClip, $previewdata);
 	}
@@ -308,13 +308,13 @@ if (!empty($_REQUEST['datatxt'])) { $txt = $_REQUEST['datatxt']; }
 if (empty($txt) && !empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = $_REQUEST["data"];
-	$txt = generateTxtVersion($txt);
+	$txt = $nllib->generateTxtVersion($txt);
 	$info["datatxt"] = $txt;
 	$smarty->assign('datatxt', $txt);
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		if (!isset($txtArticleClip)) {
 			$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
-			$txtArticleClip = generateTxtVersion($articleClip);
+			$txtArticleClip = $nllib->generateTxtVersion($articleClip);
 		}
 		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 	}
@@ -503,17 +503,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
 
-function generateTxtVersion($txt) {
-	global $parsed, $tikilib;
-	
-	if (empty($parsed)) {
-		$txt = $tikilib->parse_data($txt, array('absolute_links' => true, 'suppress_icons' => true));
-	} else {
-		$txt = $parsed;
-	}
-	$txt = str_replace('&nbsp;', ' ', $txt);
-	$txt = strip_tags($txt);
-	
-	$txt = html_entity_decode($txt);
-	return $txt;
-}

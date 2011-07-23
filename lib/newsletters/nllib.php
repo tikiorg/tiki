@@ -1001,7 +1001,7 @@ class NlLib extends TikiLib
 
 	private function get_edition_mail($editionId, $target)
 	{
-		global $prefs;
+		global $prefs, $base_url;
 		static $mailcache = array();
 
 		if (! isset($mailcache[$editionId])) {
@@ -1024,7 +1024,7 @@ class NlLib extends TikiLib
 
 			if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
 				$articleClip = $this->clip_articles($nl_info['nlId']);
-				$txtArticleClip = generateTxtVersion($articleClip);
+				$txtArticleClip = $this->generateTxtVersion($articleClip);
 				$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
 				$html = str_replace('~~~articleclip~~~', $articleClip, $html);
 			}
@@ -1228,6 +1228,20 @@ class NlLib extends TikiLib
 		if ($logFileHandle) {
 			@fclose( $logFileHandle );
 		}
+	}
+	function generateTxtVersion($txt, $parsed=null) {
+		global $tikilib;
+	
+		if (empty($parsed)) {
+			$txt = $tikilib->parse_data($txt, array('absolute_links' => true, 'suppress_icons' => true));
+		} else {
+			$txt = $parsed;
+		}
+		$txt = str_replace('&nbsp;', ' ', $txt);
+		$txt = strip_tags($txt);
+	
+		$txt = html_entity_decode($txt);
+		return $txt;
 	}
 
 

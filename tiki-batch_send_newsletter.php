@@ -36,6 +36,7 @@ if (!($nl_info = $nllib->get_newsletter($edition_info['nlId']))) {
 $edition_info['editionId'] = 0;
 $sent = $errors = array();
 $logFileName = '';
+$edition_info['begin'] = 'y';
 $nllib->send($nl_info, $edition_info, false, $sent, $errors, $logFileName);
 if (!empty($errors)) {
 	echo "Errors\n";
