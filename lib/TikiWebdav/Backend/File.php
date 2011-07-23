@@ -786,7 +786,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		print_debug("-> getCollectionMembers\ngalleryId:$galleryId\n");
 		if ( $galleryId !== false ) {
-			$files = $filegallib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, 'admin', true, false);
+			$files = $filegallib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, '', true, false, false, '','');
 
 			foreach ( $files['data'] as $fileInfo ) {
 				if ( $fileInfo['isgal'] == '1' ) {
