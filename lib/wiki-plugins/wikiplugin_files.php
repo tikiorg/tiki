@@ -295,7 +295,7 @@ function wikiplugin_files_info() {
 			'showthumb' => array(
 				'required' => false,
 				'name' => tra('Show Image Thumb'),
-				'description' => tra('Show IMage thumb'),
+				'description' => tra('Show Image thumb'),
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
