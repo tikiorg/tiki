@@ -82,7 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	//end invoice items
 
 	//here I need to delete items that were deleted on the page
-	//:)
+	foreach($itemsToDelete as $itemId) {
+		$trklib->remove_tracker_item($itemId);
+	}
 	//end delete
 	
 	header( 'Location: tiki-view_invoice.php?InvoiceId='.$_REQUEST['InvoiceId'] ) ;
