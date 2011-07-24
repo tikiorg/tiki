@@ -69,7 +69,7 @@
 		<div id="mod-{$smarty.capture.name}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_params.style}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
 {else}{* $module_nobox eq 'y' *}
 		<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name} clearfix">
-			<div id="mod-{$smarty.capture.name}">
+			<div id="mod-{$smarty.capture.name}" class="clearfix">
 {/if}
 {$module_content}
 {$module_error}
