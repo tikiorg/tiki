@@ -18,7 +18,7 @@
 					{preference name=share_display_name_and_email}
 					{preference name=share_can_choose_how_much_time_access}
 					<div class="adminoptionboxchild" id="share_can_choose_how_much_time_access_childcontainer">
-						{remarksbox type="remark" title="Default"}
+						{remarksbox type="remark" title="{tr}Default{/tr}"}
 							{tr}If you don't want to limit, an input will be display else it wille be a select{/tr}
 						{/remarksbox}
 						{preference name=share_max_access_time}
