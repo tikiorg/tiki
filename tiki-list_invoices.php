@@ -18,51 +18,47 @@ if (!$installer->isInstalled( $profile )) {
 	die;
 }
 
-$invoices = $trkqrylib->tracker_query_by_names("Invoices");
-$clients = $trkqrylib->tracker_query_by_names("Invoices Clients");
-$settings = end($trkqrylib->tracker_query_by_names("Invoice Settings"));
+$Invoices = $trkqrylib->tracker_query_by_names("Invoices");
 
-
-foreach($invoices as $key => $invoice) {
-	$amount = 0;
-	$paid = 0;
-	$status = "";
+foreach($Invoices as $I => $Invoice) {
+	$Amount = 0;
+	$Paid = 0;
+	$Status = "";
 	
-	if (is_array($invoice["Item Amounts"])) {
-		foreach($invoice["Item Amounts"] as $key => $sum) {
-			$amount += $invoice["Item Amounts"][$key] * $invoice["Item Quantities"][$key];
+	if (is_array($Invoice["Item Amounts"])) {
+		foreach($Invoice["Item Amounts"] as $Key => $sum) {
+			$Amount += $Invoice["Item Amounts"][$Key] * $Invoice["Item Quantities"][$Key];
 		}
 	} else {
-		$amount = $invoice["Item Amounts"] * $invoice["Item Quantities"];
+		$Amount = $Invoice["Item Amounts"] * $Invoice["Item Quantities"];
 	}
 	
-	$invoice["Amount"] = $amount;
+	$Invoices[$I]["Amount"] = $Amount;
 	
-	if (is_array($invoice["Amounts Paid"])) {
-		foreach($invoice["Amounts Paid"] as $sum) {
-			$paid += $sum;
+	if (is_array($Invoice["Amounts Paid"])) {
+		foreach($Invoice["Amounts Paid"] as $Sum) {
+			$Paid += $Sum;
 		}
 	} else {
-		$paid = $invoice["Amounts Paid"];
+		$Paid = $Invoice["Amounts Paid"];
 	}
 	
-	$invoice["Paid"] = $paid;
+	$Invoices[$I]["Paid"] = $Paid;
 	
-	if ($amount == $paid) {	
-		$status = "Paid";
+	if ($Amount == $Paid) {	
+		$Status = "Paid";
 	} else {
-		$status = "Open";
+		$Status = "Open";
 	}
 	
-	$invoice["Status"] = $status;
+	$Invoices[$I]["Status"] = $Status;
 }
 
-$smarty->assign("invoices", $invoices);
-$smarty->assign("clients", $clients);
-$smarty->assign("settings", $settings);
-$smarty->assign("amount", $amount);
-$smarty->assign("paid", $paid);
-$smarty->assign("status", $status);
+$smarty->assign("Invoices", $Invoices);
+$smarty->assign("Settings", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
+$smarty->assign("Amount", $Amount);
+$smarty->assign("Paid", $Paid);
+$smarty->assign("Status", $Status);
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_invoices.tpl');

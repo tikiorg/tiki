@@ -102,6 +102,11 @@ if (!empty($_REQUEST['InvoiceId'])) {
 	$_REQUEST['InvoiceId'] = 0;
 }
 
+//give the user the last invoice number 
+$LastInvoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, null, null, null, null, null, null, 0, 1, true, false));
+$NewInvoiceNumber = (isset($LastInvoice["Invoice Number"]) ? $LastInvoice["Invoice Number"] + 1 : 1);
+$smarty->assign("NewInvoiceNumber", $NewInvoiceNumber);
+
 $smarty->assign("InvoiceId", $_REQUEST['InvoiceId']);
 $smarty->assign("clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
 $smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));

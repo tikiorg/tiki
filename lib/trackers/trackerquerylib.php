@@ -229,7 +229,7 @@ class TrackerQueryLib extends TikiLib
 	 * 		)
 	 * )
 	 */
-	function tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status = "opc", $sort, $limit, $offset, $byName, $includeTrackerDetails = true, $delimiter = "[{|!|}]") {
+	function tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status = "opc", $sort, $limit, $offset, $byName, $includeTrackerDetails = true, $desc = true, $delimiter = "[{|!|}]") {
 		global $tikilib;
 		$debug = false;
 		$params = array();
@@ -361,7 +361,7 @@ class TrackerQueryLib extends TikiLib
 			".(isset($status_safe) && !empty($status_safe) ? $status_safe : "")."
 			
 			GROUP BY
-				tiki_tracker_item_fields.itemId
+				tiki_tracker_item_fields.itemId ".($desc == true ? 'DESC' : 'ASC')."
 			ORDER BY 
 				tiki_tracker_items.lastModif
 			".(isset($limit) && !empty($limit) ? 
@@ -409,7 +409,7 @@ class TrackerQueryLib extends TikiLib
 	
 	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
 	*/
-	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, $includeTrackerDetails = true) {
+	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, $includeTrackerDetails) {
 		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails);
 	}
 	

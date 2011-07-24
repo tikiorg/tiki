@@ -1,8 +1,8 @@
-<ul class="tiki-invoice-menu">
-	<li><a href="tiki-list_invoices.php">Invoice Summary</a></li>
-	<li><a href="tiki-edit_invoice.php">New Invoice</a></li>
-	<li><a href="tiki-list_invoices.php">Invoices</a></td>
-	<li><a href="tiki-list_invoice_clients.php">Clients</a></td>
-	<li><a href="tiki-invoice_reports.php">Reports</a></td>
-	<li><a href="tiki-admin_invoices.php">Settings</a></li>
-</ul>
+<div class="TikiInvoiceMenu">
+	{button href="tiki-list_invoices.php" 	_text="{tr}Invoices{/tr}"}
+	{button href="tiki-edit_invoice.php" 	_text="{tr}New Invoice{/tr}"}
+	{button href="tiki-list_invoice_clients.php" _text="{tr}Clients{/tr}"}
+	{button href="tiki-edit_invoice_client.php" _text="{tr}New Client{/tr}"}
+	{button href="tiki-invoice_reports.php" _text="{tr}Reports{/tr}"}
+	{button href="tiki-admin_invoices.php" 	_text="{tr}Settings{/tr}"}
+</div>

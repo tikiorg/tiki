@@ -20,10 +20,10 @@
 		{/foreach}
 	</select>
 
-	<table class='InvoiceDetails'>
+	<table class='InvoiceDetails' border="0" style='width: 100%;'>
 		<tr>
 			<td>
-				{tr}Invoice Number{/tr} <input name='InvoiceNumber' id='InvoiceNumber' type='text' value='{$invoice.$InvoiceNumber}' />
+				{tr}Invoice Number{/tr} <input name='InvoiceNumber' id='InvoiceNumber' type='text' value='{if $invoice.$InvoiceNumber}{$invoice.$InvoiceNumber}{else}{$NewInvoiceNumber}{/if}' />
 				<br />
 				{tr}Date Issued{/tr} <input name='DateIssued' id='DateIssued' value='{$invoice.$DateIssued}' />
 			</td>
