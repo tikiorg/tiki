@@ -11,7 +11,7 @@ function wikiplugin_slider_info() {
 		'documentation' => 'PluginSlider',
 		'description' => tra('Arrange content in a sliding area'),
 		'prefs' => array( 'wikiplugin_slider' ),
-		'body' => tra('Content content separated by /////'),
+		'body' => tra('Content separated by /////'),
 		'icon' => 'pics/icons/cool.gif',
 		'params' => array(
 			'titles' => array(
@@ -237,7 +237,7 @@ function wikiplugin_slider_info() {
 			'autoplaydelayed' => array(
 				'required' => false,
 				'name' => tra('Auto Play Delayed'),
-				'description' => tra('if y, starting a slideshow will delay advancing slides; if n, the slider will immediately advance to the next slide when slideshow starts‰'),
+				'description' => tra('if y, starting a slideshow will delay advancing slides; if n, the slider will immediately advance to the next slide when slideshow startsï¿½'),
 				'filter' => 'alpha',
 				'accepted' => 'y or n',
 				'default' => 'n',
