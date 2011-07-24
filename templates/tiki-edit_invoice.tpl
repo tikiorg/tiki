@@ -9,8 +9,11 @@
 {assign var=DateIssued value="Date Issued"}
 {assign var=InvoiceNote value="Invoice Note"}
 {assign var=InvoiceItemId value="Invoice Item Id"}
+{assign var=ItemIds value="Item Ids"}
 
 <form action="tiki-edit_invoice.php" method="post" id="InvoiceForm">
+	<input type='hidden' value={$InvoiceId} name='InvoiceId' id='InvoiceId' />
+	<input type='hidden' value='{$invoice.$ItemIds}' name='InvoiceItemIds' id='InvoiceItemIds' />
 	{tr}Client{/tr} <select name="ClientId" class="InvoiceClientId">
 		{foreach from=$clients key=k item=client}
 			<option value='{$client.$ClientId}' {if $client.$ClientId eq $invoice.$ClientId} selected='true' {/if}>{$client.Name}</option>
@@ -39,7 +42,7 @@
 
 		{foreach from=$invoiceItems item=invoiceItem}
 			<tr class='InvoiceItem'>
-				<input name='InvoiceItemId' class='InvoiceItemId' type='hidden' value='{$invoiceItem.$InvoiceItemId}' />
+				<input name='InvoiceItemId[]' class='InvoiceItemId' type='hidden' value='{$invoiceItem.$InvoiceItemId}' />
 				<td><input name='Quantity[]' class='InvoiceQuantity' type='text' value='{$invoiceItem.Quantity}' /></td>
 				<td><textarea name='WorkDescription[]' class='InvoiceWorkDescription'>{$invoiceItem.$WorkDescription}</textarea></td>
 				<td><input name='Taxable[]' class='InvoiceTaxable' type='checkbox' value='y' {if $invoiceItem.Taxable eq 'y'} checked='true' {/if} /></td>

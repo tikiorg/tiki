@@ -9,7 +9,6 @@ global $tikilib, $trklib, $trkqrylib;
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
-print_r($trkqrylib->tracker_query_by_names("Invoice Items"));
 
 //check if profile is created
 $installer = new Tiki_Profile_Installer();
@@ -20,32 +19,9 @@ if (!$installer->isInstalled( $profile )) {
 	die;
 }
 
-$smarty->assign("clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
-$smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
-print_r($trkqrylib->tracker_query_by_names("Invoices"));
-$invoiceItems = array();
+(int)$_REQUEST['InvoiceId'] = $_REQUEST['InvoiceId'];
 
-//we are editing an invoice here
-if (isset($_REQUEST['invoice'])) {
-	$smarty->assign("invoice", end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['invoice'])));
-	
-	$invoiceItems = $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['invoice']), null, array("Invoice Id"));
-} else {
-	$_REQUEST['invoice'] = 0;
-}
-
-(int)$_REQUEST['invoice'] = $_REQUEST['invoice'];
-
-//we add an extra item to the end of invoiceItems, so we can duplicate it on the page
-$invoiceItems[] = array(
-	"Quantity" => "",
-	"Work Description" => "",
-	"Taxable" => "",
-	"Amount" => "",
-);
-$smarty->assign("invoiceItems", $invoiceItems);
-
-//we are updating or adding
+//handle saving data (edit or update)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	//form to tracker item transformation
 	function processItem($trackerName, $fieldNames, $fieldValues, $itemId, $i) {
@@ -62,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	
 	//start invoice
-	$_REQUEST['invoice'] = processItem("Invoices", array(
+	$_REQUEST['InvoiceId'] = processItem("Invoices", array(
 		"Client Id",
 		"Invoice Number",
 		"Date Issued",
@@ -73,27 +49,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		"Tax 2 Rate",
 		"Invoice Note",
 		"Days Payment Due",
-	), $_REQUEST, $_REQUEST['invoice']);
+	), $_REQUEST, $_REQUEST['InvoiceId']);
 	//end invoice
 	
 	//start invoice items
 	$invoiceItems = array();
 	
-	for($i = 0; $i < count($_REQUEST["Amount"]); $i++) {
+	$_TEMP = $_REQUEST;
+	$itemsToDelete = array();
+	foreach(explode(',', $_REQUEST['InvoiceItemIds']) as $itemId) {
+		$itemsToDelete[$itemId] = $itemId;
+	}
+	
+	$_TEMP['InvoiceId'] = array();
+	for($i = 0; $i < count($_REQUEST['InvoiceItemId']); $i++) {
+		$_TEMP['InvoiceId'][$i] = $_REQUEST['InvoiceId'];
+		
 		$invoiceItem = processItem("Invoice Items", array(
 			"Invoice Id",
 			"Amount",
 			"Quantity",
 			"Work Description",
 			"Taxable",
-		), $_REQUEST, $_REQUEST['InvoiceItemId'][$i], $i);
+		), $_TEMP, $_REQUEST['InvoiceItemId'][$i], $i);
+		
+		if (isset($itemsToDelete[$_REQUEST['InvoiceItemId'][$i]])) {
+			unset($itemsToDelete[$_REQUEST['InvoiceItemId'][$i]]);
+		}
 		
 		array_push($invoiceItems, $invoiceItem);
 	}
-	
-	print_r(array($_REQUEST['invoice'] => $invoiceItems));
 	//end invoice items
+
+	//here I need to delete items that were deleted on the page
+	//:)
+	//end delete
+	
+	header( 'Location: tiki-view_invoice.php?InvoiceId='.$_REQUEST['InvoiceId'] ) ;
+	die;
 }
+
+$invoiceItems = array();
+if (!empty($_REQUEST['InvoiceId'])) {
+	$invoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['InvoiceId']));
+	$invoice['Item Ids'] = implode(',', $invoice['Item Ids']);
+	$smarty->assign("invoice", $invoice);
+	
+	$invoiceItems = $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['InvoiceId']), null, array("Invoice Id"));
+} else {
+	$_REQUEST['InvoiceId'] = 0;
+}
+
+$smarty->assign("InvoiceId", $_REQUEST['InvoiceId']);
+$smarty->assign("clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
+$smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
+
+//we add an extra item to the end of invoiceItems, so we can duplicate it on the page
+if (count($invoiceItems) < 1) {
+	$invoiceItems[] = array(
+		"Quantity" => "",
+		"Work Description" => "",
+		"Taxable" => "",
+		"Amount" => "",
+	);
+}
+$smarty->assign("invoiceItems", $invoiceItems);
 
 $headerlib->add_jq_onready("
 	function setupTotal() {
@@ -148,8 +168,11 @@ $headerlib->add_jq_onready("
 		
 		$('.InvoiceItemId').each(function() {
 			var InvoiceItemId = $(this);
-			InvoiceItemId.val(InvoiceItemId.val() ? InvoiceItemId.val() : 0);
+			InvoiceItemId.val(InvoiceItemId.val() ? InvoiceItemId.val() : '0');
 		});
+		
+		var InvoiceId = $('#InvoiceId');
+		InvoiceId.val(InvoiceId.val() ? InvoiceId.val() : 0);
 	});
 ");
 

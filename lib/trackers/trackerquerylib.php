@@ -239,14 +239,14 @@ class TrackerQueryLib extends TikiLib
 		
 		$params[] = $tracker;
 		
-		if ($start && !$search) $params[] = $start;
-		if ($end && !$search) $params[] = $end;
-		if ($itemId && !$search) $params[] = $itemId;
+		if (isset($start) && !empty($start) && !$search) $params[] = $start;
+		if (isset($end) && !empty($end) && !$search) $params[] = $end;
+		if (isset($itemId) && !empty($itemId) && !$search) $params[] = $itemId;
 		
-		if(isset($byName)) {
+		if(isset($byName) && !empty($byName)) {
 			$fieldIds = array();
 			foreach($fields as $field) {
-				$fields[] = $tikilib->getOne("
+				$fieldIds[] = $tikilib->getOne("
 					SELECT fieldId
 					FROM tiki_tracker_fields
 					LEFT JOIN tiki_trackers ON (
@@ -301,11 +301,11 @@ class TrackerQueryLib extends TikiLib
 			}
 		}
 		
-		if ( isset($limit) == true && is_numeric($limit) == false) {
+		if ( isset($limit) && !empty($limit) && is_numeric($limit) == false) {
 			unset($limit);
 		}
 		
-		if ( isset($offset) == true && is_numeric($offset) == false) {
+		if ( isset($offset) && !empty($offset) && is_numeric($offset) == false) {
 			unset($offset);
 		}
 		
@@ -352,20 +352,20 @@ class TrackerQueryLib extends TikiLib
 			 
 			
 			WHERE
-			".(isset($byName) ? "tiki_trackers.name" : "tiki_trackers.trackerId")." = ?
+			".(isset($byName) && !empty($byName) ? "tiki_trackers.name" : "tiki_trackers.trackerId")." = ?
 			
-			".(isset($start) && !$search ? 								" AND tiki_tracker_items.lastModif > ? " : "")."
-			".(isset($end) && !$search ? 								" AND tiki_tracker_items.lastModif < ? " : "")."
-			".(isset($itemId) && !$search ? 							" AND tiki_tracker_item_fields.itemId = ? " : "")."
-			".(isset($fields_safe) ? $fields_safe : "")."
-			".(isset($status_safe) ? $status_safe : "")."
+			".(isset($start) && !empty($start) && !$search ? 								" AND tiki_tracker_items.lastModif > ? " : "")."
+			".(isset($end) && !empty($end) && !$search ? 								" AND tiki_tracker_items.lastModif < ? " : "")."
+			".(isset($itemId) && !empty($itemId) && !$search ? 							" AND tiki_tracker_item_fields.itemId = ? " : "")."
+			".(isset($fields_safe) && !empty($fields_safe) ? $fields_safe : "")."
+			".(isset($status_safe) && !empty($status_safe) ? $status_safe : "")."
 			
 			GROUP BY
 				tiki_tracker_item_fields.itemId
 			ORDER BY 
 				tiki_tracker_items.lastModif
-			".(isset($limit) ? 
-				" LIMIT ".(isset($offset) ? "$offset, " : "")." $limit"
+			".(isset($limit) && !empty($limit) ? 
+				" LIMIT ".(isset($offset) && !empty($offset) ? "$offset, " : "")." $limit"
 				: ""
 			);
 		

@@ -3,13 +3,13 @@
 {include file='tiki-invoice_menu.tpl'}
 
 {* vars to deal with keys that have spaces *}
-{assign var=clientId value="Client Id"}
-{assign var=itemAmounts value="Item Amounts"}
-{assign var=workDescription value="Work Description"}
-{assign var=invoiceNumber value="Invoice Number"}
-{assign var=dateIssued value="Date Issued"}
-{assign var=invoiceNote value="Invoice Note"}
-{assign var=invoiceId value="Invoice Id"}
+{assign var=ClientId value="Client Id"}
+{assign var=ItemAmounts value="Item Amounts"}
+{assign var=WorkDescription value="Work Description"}
+{assign var=InvoiceNumber value="Invoice Number"}
+{assign var=DateIssued value="Date Issued"}
+{assign var=InvoiceNote value="Invoice Note"}
+{assign var=InvoiceId value="Invoice Id"}
 
 <table>
 	<tr>
@@ -22,11 +22,11 @@
 
 	{foreach from=$invoices key=k item=invoice}
 		<tr>
-			<td><a href='tiki-view_invoice.php?invoice={$invoice.$invoiceId}'>{$invoice.$invoiceNumber}</a></td>
-			<td><a href='tiki-view_invoice.php?invoice={$invoice.$invoiceId}'>{$invoice.$dateIssued}</a></td>
-			<td><a href='tiki-view_invoice_client.php?invoice={$invoice.$clientId}'>{$invoice.$clientName}</a></td>
-			<td><a href='tiki-view_invoice.php?invoice={$invoice.$invoiceId}'>{$invoice.Amount}</a></td>
-			<td><a href='tiki-view_invoice.php?invoice={$invoice.$invoiceId}'>{$invoice.Status}</a></td>
+			<td><a href='tiki-view_invoice.php?InvoiceId={$invoice.$InvoiceId}'>{$invoice.$InvoiceNumber}</a></td>
+			<td><a href='tiki-view_invoice.php?InvoiceId={$invoice.$InvoiceId}'>{$invoice.$DateIssued}</a></td>
+			<td><a href='tiki-view_invoice_client.php?invoice={$invoice.$ClientId}'>{$invoice.$ClientName}</a></td>
+			<td><a href='tiki-view_invoice.php?InvoiceId={$invoice.$InvoiceId}'>{$invoice.Amount}</a></td>
+			<td><a href='tiki-view_invoice.php?InvoiceId={$invoice.$InvoiceId}'>{$invoice.Status}</a></td>
 		</tr>
 	{/foreach}
 

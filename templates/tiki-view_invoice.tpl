@@ -44,7 +44,7 @@
 		<td>{$invoiceItem.Quantity}</td>
 		<td>{$invoiceItem.$workDescription}</td>
 		<td>{$invoiceItem.Amount}</td>
-		<td>{$invoiceItem.Amount} {$invoiceItem.Quantity}</td>
+		<td>{$invoiceItem.Amount*$invoiceItem.Quantity}</td>
 	</tr>
 {/foreach}
 
@@ -52,3 +52,6 @@
 Amount: {$amount}<br />
 Total: {$amount}<br />
 Payment Terms: {$invoice.$paymentTerm}
+<br />
+<br />
+<a href="tiki-edit_invoice?InvoiceId={$InvoiceId}">{tr}Edit Invoice{/tr}</a>

@@ -18,8 +18,11 @@ if (!$installer->isInstalled( $profile )) {
 	die;
 }
 
-$invoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['invoice']));
+(int)$_REQUEST['InvoiceId'] = $_REQUEST['InvoiceId'];
+$smarty->assign('InvoiceId', $_REQUEST['InvoiceId']);
+$invoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['InvoiceId']));
 $amount = 0;
+
 if (is_array($invoice["Item Amounts"])) {
 	foreach($invoice["Item Amounts"] as $key => $sum) {
 		$amount += $invoice["Item Amounts"][$key] * $invoice["Item Quantities"][$key];
@@ -32,7 +35,7 @@ $smarty->assign("invoice", $invoice);
 $smarty->assign("amount", $amount);
 $smarty->assign("client", end($trkqrylib->tracker_query_by_names("Invoice Clients", null, null, null, array($invoice['Client Id']), null, array("Client Id"))));
 $smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
-$smarty->assign("invoiceItems", $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['invoice']), null, array("Invoice Id")));
+$smarty->assign("invoiceItems", $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['InvoiceId']), null, array("Invoice Id")));
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_invoice.tpl');
