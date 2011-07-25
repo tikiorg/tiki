@@ -765,7 +765,7 @@ background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icon
 
 /** input widget **/
 .ui-widget input {
-	color: whiteSmoke;
+	color: #f5f5f5;
 }
 
 .ui-button-text {
@@ -1113,6 +1113,7 @@ background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_c
     background: #474747;
     border: 1px solid #aaaaaa;
     color: #d8d8d8;
+}
 
 .tabmark a {
 	border: 1px solid transparent;
@@ -1580,7 +1581,6 @@ body.tiki_blogs .postfooter .actions {
 	margin-top: 6px;
 	width: 99%;
 	min-height: 22px;
-	_height: 22px; /*for IE6*/
 	text-align: left;
 	font-size: 90%;
 }
