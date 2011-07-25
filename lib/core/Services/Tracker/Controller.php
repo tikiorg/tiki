@@ -313,7 +313,6 @@ class Services_Tracker_Controller
 	function action_clone_remote($input)
 	{
 		global $prefs;
-		$tikilib = TikiLib::lib('tiki');
 
 		if ($prefs['tracker_remote_sync'] != 'y') {
 			throw new Services_Exception_Disabled('tracker_remote_sync');
@@ -324,52 +323,23 @@ class Services_Tracker_Controller
 
 		if ($url) {
 			$serviceUrl = rtrim($url, '/') . '/tiki-ajax_services.php?';
+			$tracker = $this->findTrackerInfo($serviceUrl, $remoteTracker);
 
-			$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
-				'controller' => 'tracker',
-				'action' => 'list_trackers',
-			), '', '&'));
-			$client->setHeaders('Accept', 'application/json');
-
-			$response = $client->request();
-
-			if (! $response->isSuccessful()) {
-				throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
-			}
-
-			$trackers = json_decode($response->getBody(), true);
-			$client->resetParameters();
-
-			if (! isset($trackers['list'][$remoteTracker])) {
+			if (! $tracker) {
+				// Prepare the list for tracker selection
+				$trackers = $this->getRemoteTrackerList($serviceUrl);
 				return array(
 					'url' => $url,
 					'list' => $trackers['list'],
 				);
 			} else {
-				$tracker = null;
-				foreach ($trackers['data'] as $info) {
-					if ($info['trackerId'] == $remoteTracker) {
-						$tracker = $info;
-						unset($tracker['trackerId']);
-						break;
-					}
-				}
-
-				$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
-					'controller' => 'tracker',
-					'action' => 'export_fields',
-					'trackerId' => $remoteTracker,
-				), '', '&'));
-				$client->setHeaders('Accept', 'application/json');
-				$response = $client->request();
-
-				$export = json_decode($response->getBody(), true);
+				// Proceed with the tracker import
+				$export = $this->getRemoteTrackerFieldExport($serviceUrl, $remoteTracker);
 
 				$trackerId = $this->createTracker($tracker);
 				$this->action_import_fields(new JitFilter(array(
 					'trackerId' => 'trackerId',
-					'raw' => $export['export'],
-					'preserve_ids' => 0,
+					'raw' => $export,
 				)));
 
 				return array(
@@ -592,6 +562,59 @@ EXPORT;
 	private function createTracker($data)
 	{
 		return 0; // TODO
+	}
+
+	private function getRemoteTrackerList($serviceUrl)
+	{
+		static $cache = array();
+		if (isset($cache[$serviceUrl])) {
+			return $cache[$serviceUrl];
+		}
+
+		$tikilib = TikiLib::lib('tiki');
+		$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
+			'controller' => 'tracker',
+			'action' => 'list_trackers',
+		), '', '&'));
+		$client->setHeaders('Accept', 'application/json');
+
+		$response = $client->request();
+
+		if (! $response->isSuccessful()) {
+			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
+		}
+
+		return $cache[$serviceUrl] = json_decode($response->getBody(), true);
+	}
+
+	private function getRemoteTrackerFieldExport($serviceUrl, $trackerId)
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
+			'controller' => 'tracker',
+			'action' => 'export_fields',
+			'trackerId' => $trackerId,
+		), '', '&'));
+		$client->setHeaders('Accept', 'application/json');
+		$response = $client->request();
+
+		if (! $response->isSuccessful()) {
+			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
+		}
+
+		$export = json_decode($response->getBody(), true);
+		return $export['export'];
+	}
+
+	private function findTrackerInfo($serviceUrl, $trackerId)
+	{
+		$trackers = $this->getRemoteTrackerList($serviceUrl);
+		foreach ($trackers['data'] as $info) {
+			if ($info['trackerId'] == $trackerId) {
+				unset($info['trackerId']);
+				return $info;
+			}
+		}
 	}
 }
 
