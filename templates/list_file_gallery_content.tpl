@@ -242,7 +242,9 @@
 			{/if}
 			{if $show_thumb eq 'y'}
 				<td>
-					<a href="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&display"><img src="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&thumbnail" /></a>
+					{if $files[changes].isgal == 0}
+						<a href="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&display"><img src="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&thumbnail" /></a>
+					{/if}
 				</td>
 			{/if}
 
