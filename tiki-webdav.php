@@ -54,7 +54,6 @@ if ($debug === true) {
 
 $access->check_feature('feature_webdav');
 
-print_debug("\n=== _SERVER() ===\n".print_r($_SERVER,true)."\n");
 // Check if we come here with a browser
 if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVER['SCRIPT_NAME'] ) {
 	$smarty->assign('mid','tiki-webdav.tpl');
@@ -65,6 +64,12 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 	require_once 'lib/TikiWebdav/Backend/File.php';
 	require_once 'lib/TikiWebdav/PathFactories/File.php';
 	require_once 'lib/TikiWebdav/Auth/Default.php';
+
+	if ( empty($_SERVER['PATH_INFO']) ) {
+		$_SERVER['PATH_INFO'] = '/';
+	}
+
+	print_debug("\n=== _SERVER() ===\n".print_r($_SERVER,true)."\n");
 
 	$server = TikiWebdav_Server::getInstance();
 	$server->options->realm = tra('Tiki WebDAV access');
