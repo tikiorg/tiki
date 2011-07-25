@@ -254,7 +254,8 @@ class TikiAccessLib extends TikiLib
 			break;
 		default:
 			$errortype = (int) $errortype;
-			header("HTTP/1.0 $errortype {$detail['errortitle']}");
+			$title = strip_tags($detail['errortitle']);
+			header("HTTP/1.0 $errortype $title");
 			break;
 		}
 

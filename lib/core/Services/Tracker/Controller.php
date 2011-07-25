@@ -22,6 +22,7 @@ class Services_Tracker_Controller
 		}
 
 		$name = $input->name->text();
+		$permName = $input->permName->word();
 		$type = $input->type->text();
 		$description = $input->description->text();
 		$wikiparse = $input->description_parse->int();
@@ -39,16 +40,21 @@ class Services_Tracker_Controller
 
 		if ($input->type->word()) {
 			if (empty($name)) {
-				throw new Services_Exception(tr('Field name cannot be empty'), 409);
+				throw new Services_Exception_MissingValue('name');
 			}
 
-			if ($trklib->get_field_id($trackerId, $name)) {
-				throw new Services_Exception(tr('Field name already exists in the tracker'), 409);
+			if ($definition->getFieldFromName($name)) {
+				throw new Services_Exception_DuplicateValue('name', $name);
+			}
+
+			if ($definition->getFieldFromPermName($permName)) {
+				throw new Services_Exception_DuplicateValue('permName', $permName);
 			}
 
 			$fieldId = $this->createField(array(
 				'trackerId' => $trackerId,
 				'name' => $name,
+				'permName' => $permName,
 				'type' => $type,
 				'description' => $description,
 				'descriptionIsParsed' => $wikiparse,
@@ -59,6 +65,7 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'fieldId' => $fieldId,
 			'name' => $name,
+			'permName' => $permName,
 			'type' => $type,
 			'types' => $types,
 			'description' => $description,
@@ -142,6 +149,13 @@ class Services_Tracker_Controller
 		$types = $this->getFieldTypes($description);
 		$typeInfo = $types[$field['type']];
 
+		$permName = $input->permName->word();
+		if ($field['permName'] != $permName) {
+			if ($definition->getFieldFromPermName($permName)) {
+				throw new Services_Exception_DuplicateValue('permName', $permName);
+			}
+		}
+
 		if ($input->name->text()) {
 			$input->replaceFilters(array(
 				'visible_by' => 'groupname',
@@ -162,6 +176,7 @@ class Services_Tracker_Controller
 				'editableBy' => array_filter(array_map('trim', $editableBy)),
 				'isHidden' => $input->visibility->alpha(),
 				'errorMsg' => $input->error_message->text(),
+				'permName' => $permName,
 			));
 		}
 
@@ -300,6 +315,7 @@ class Services_Tracker_Controller
 
 		$data = array(
 			'name' => $field->name->text(),
+			'permName' => $field->permName->word(),
 			'type' => $field->type->word(),
 			'position' => $field->position->int(),
 			'options' => $field->options->none(),
@@ -335,6 +351,7 @@ class Services_Tracker_Controller
 [FIELD{$field['fieldId']}]
 fieldId = {$field['fieldId']}
 name = {$field['name']}
+permName = {$field['permName']}
 position = {$field['position']}
 type = {$field['type']}
 options = {$field['options']}
@@ -432,7 +449,12 @@ EXPORT;
 			'',
 			null,
 			null,
-			$data['descriptionIsParsed'] ? 'y' : 'n');
+			$data['descriptionIsParsed'] ? 'y' : 'n',
+			'',
+			'',
+			'',
+			$data['permName']
+		);
 	}
 
 	private function updateField($trackerId, $fieldId, array $properties)
@@ -463,7 +485,8 @@ EXPORT;
 			isset($properties['descriptionIsParsed']) ? $properties['descriptionIsParsed'] : $field['descriptionIsParsed'],
 			isset($properties['validation']) ? $properties['validation'] : $field['validation'],
 			isset($properties['validationParam']) ? $properties['validationParam'] : $field['validationParam'],
-			isset($properties['validationMessage']) ? $properties['validationMessage'] : $field['validationMessage']
+			isset($properties['validationMessage']) ? $properties['validationMessage'] : $field['validationMessage'],
+			isset($properties['permName']) ? $properties['permName'] : $field['permName']
 		);
 	}
 }

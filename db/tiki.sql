@@ -2183,6 +2183,7 @@ CREATE TABLE `tiki_tracker_fields` (
   `fieldId` int(12) NOT NULL auto_increment,
   `trackerId` int(12) NOT NULL default '0',
   `name` varchar(255) default NULL,
+  `permName` VARCHAR(100) NULL,
   `options` text,
   `type` varchar(15) default NULL,
   `isMain` char(1) default NULL,
@@ -2203,7 +2204,8 @@ CREATE TABLE `tiki_tracker_fields` (
   `validationParam` varchar(255) default '',
   `validationMessage` varchar(255) default '',
   PRIMARY KEY (`fieldId`),
-  INDEX `trackerId` (`trackerId`)
+  INDEX `trackerId` (`trackerId`),
+  UNIQUE `permName` (`permName`, `trackerId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_tracker_item_attachments`;

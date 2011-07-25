@@ -2,7 +2,7 @@
 	<h4>{tr}General{/tr}</h4>
 	<label>
 		{tr}Name:{/tr}
-		<input type="text" name="name" value="{$field.name|escape}"/>
+		<input type="text" name="name" value="{$field.name|escape}" required="required"/>
 	</label>
 	<label>
 		{tr}Description:{/tr}
@@ -104,6 +104,16 @@
 	<label>
 		{tr}Error Message{/tr}
 		<input type="text" name="error_message" value="{$field.errorMsg|escape}"/>
+	</label>
+
+	<h4>{tr}Advanced{/tr}</h4>
+
+	<label>
+		{tr}Permanent Name:{/tr}
+		<input type="text" name="permName" value="{$field.permName|escape}" pattern="[a-zA-Z0-9_]+"/>
+		<div class="description">
+			{tr}Changing the permanent name may have consequences in integrated systems.{/tr}
+		</div>
 	</label>
 
 	<div>

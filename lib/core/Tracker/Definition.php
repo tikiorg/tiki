@@ -87,6 +87,19 @@ class Tracker_Definition
 		}
 	}
 
+	function getFieldFromPermName($name)
+	{
+		if (empty($name)) {
+			return null;
+		}
+
+		foreach ($this->getFields() as $f) {
+			if ($f['permName'] == $name) {
+				return $f;
+			}
+		}
+	}
+
 	function getPopupFields()
 	{
 		if (!empty($this->trackerInfo['showPopup'])) {

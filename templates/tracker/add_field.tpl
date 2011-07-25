@@ -1,7 +1,11 @@
 <form class="simple" method="post" action="tiki-ajax_services.php">
 	<label>
 		{tr}Name:{/tr}
-		<input type="text" name="name" value="{$name|escape}"/>
+		<input type="text" name="name" value="{$name|escape}" required="required"/>
+	</label>
+	<label>
+		{tr}Permanent Name:{/tr}
+		<input type="text" name="permName" value="{$permName|escape}" pattern="[a-zA-Z0-9_]+"/>
 	</label>
 	<label>
 		{tr}Type:{/tr}
