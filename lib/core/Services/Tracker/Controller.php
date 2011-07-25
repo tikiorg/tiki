@@ -251,14 +251,14 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker not found'), 404);
 		}
 
+		if ($fields) {
+			$fields = $this->getFieldsFromIds($definition, $fields);
+		} else {
+			$fields = $definition->getFields();
+		}
+
 		$data = "";
-		foreach ($fields as $fieldId) {
-			$field = $field = $definition->getField($fieldId);
-
-			if (! $field) {
-				throw new Services_Exception(tr('Field does not exist in tracker'), 404);
-			}
-
+		foreach ($fields as $field) {
 			$data .= $this->exportField($field);
 		}
 
@@ -297,6 +297,89 @@ class Services_Tracker_Controller
 
 		return array(
 			'trackerId' => $trackerId,
+		);
+	}
+
+	function action_list_trackers($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trklib = TikiLib::lib('trk');
+		return $trklib->list_trackers();
+	}
+
+	function action_clone_remote($input)
+	{
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
+
+		if ($prefs['tracker_remote_sync'] != 'y') {
+			throw new Services_Exception_Disabled('tracker_remote_sync');
+		}
+
+		$url = $input->url->url();
+		$remoteTracker = $input->remote_tracker_id->int();
+
+		if ($url) {
+			$serviceUrl = rtrim($url, '/') . '/tiki-ajax_services.php?';
+
+			$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
+				'controller' => 'tracker',
+				'action' => 'list_trackers',
+			), '', '&'));
+			$client->setHeaders('Accept', 'application/json');
+
+			$response = $client->request();
+
+			if (! $response->isSuccessful()) {
+				throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
+			}
+
+			$trackers = json_decode($response->getBody(), true);
+			$client->resetParameters();
+
+			if (! isset($trackers['list'][$remoteTracker])) {
+				return array(
+					'url' => $url,
+					'list' => $trackers['list'],
+				);
+			} else {
+				$tracker = null;
+				foreach ($trackers['data'] as $info) {
+					if ($info['trackerId'] == $remoteTracker) {
+						$tracker = $info;
+						unset($tracker['trackerId']);
+						break;
+					}
+				}
+
+				$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
+					'controller' => 'tracker',
+					'action' => 'export_fields',
+					'trackerId' => $remoteTracker,
+				), '', '&'));
+				$client->setHeaders('Accept', 'application/json');
+				$response = $client->request();
+
+				$export = json_decode($response->getBody(), true);
+
+				$trackerId = $this->createTracker($tracker);
+				$this->action_import_fields(new JitFilter(array(
+					'trackerId' => 'trackerId',
+					'raw' => $export['export'],
+					'preserve_ids' => 0,
+				)));
+
+				return array(
+					'trackerId' => $trackerId,
+				);
+			}
+		}
+
+		return array(
+			'url' => $url,
 		);
 	}
 
@@ -488,6 +571,27 @@ EXPORT;
 			isset($properties['validationMessage']) ? $properties['validationMessage'] : $field['validationMessage'],
 			isset($properties['permName']) ? $properties['permName'] : $field['permName']
 		);
+	}
+
+	private function getFieldsFromIds($definition, $fieldIds)
+	{
+		$fields = array();
+		foreach ($fieldIds as $fieldId) {
+			$field = $field = $definition->getField($fieldId);
+
+			if (! $field) {
+				throw new Services_Exception(tr('Field does not exist in tracker'), 404);
+			}
+
+			$fields[] = $field;
+		}
+
+		return $fields;
+	}
+
+	private function createTracker($data)
+	{
+		return 0; // TODO
 	}
 }
 

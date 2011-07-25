@@ -232,7 +232,7 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		
 		$config = array(
-			'timeout' => 5,
+			'timeout' => 10,
 			'keepalive' => true,
 		);
 

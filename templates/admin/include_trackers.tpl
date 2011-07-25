@@ -5,6 +5,7 @@
 	{preference name=user_selector_threshold}
 	{preference name=tracker_field_computed}
 	{preference name=user_selector_realnames_tracker}
+	{preference name="tracker_remote_sync"}
    	<div class="heading input_submit_container" style="text-align: right">
 	<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div> 
