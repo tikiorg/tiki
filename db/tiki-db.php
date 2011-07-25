@@ -178,8 +178,8 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 	} // }}}
 	function log($msg) {
 		global $user, $tikilib;
-		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`) values (?,?,?,?,?,?,?)';
-		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(),  $tikilib->now, $msg));
+		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`, `client`) values (?,?,?,?,?,?,?,?)';
+		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(),  $tikilib->now, $msg, substr($_SERVER['HTTP_USER_AGENT'],0,200)));
 	} // }}}
 }
 
