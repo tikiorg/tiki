@@ -810,7 +810,14 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 			if ($hasVoted) {
 				// Must strip NULL for remove my vote case
-				$url = preg_replace('/[(\?)|&]vote=y/', '$1', preg_replace('/[(\?)|&]itemId=[0-9]+/', '$1', preg_replace('/[(\?)|&]ins_[0-9]+=-?[0-9|N|U|L]*/', '$1', $_SERVER['REQUEST_URI'])));
+				$url = preg_replace('/[(\?)|&]vote=y/', '$1', preg_replace('/[(\?)|&]ins_[0-9]+=-?[0-9|N|U|L]*/', '$1', $_SERVER['REQUEST_URI']));
+				// reduce duplicate itemIds in query string
+				$occurences = preg_match_all('/[(\?)|&]itemId=[0-9]+/', $url, $matches);
+				if ($params['list_mode'] == 'y' && $occurences > 0) {
+					$url = preg_replace('/[(\?)|&]itemId=[0-9]+/', '$1', $url, $occurences);	
+				} elseif ($occurences > 1) {
+					$url = preg_replace('/&itemId=[0-9]+/', '', $url, $occurences - 1);	
+				}
 				header("Location: $url");
 				die;
 			}
