@@ -216,9 +216,8 @@ if ($prefs['javascript_enabled'] != 'n') {
 	}
 
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
-	// This creates JSON.stringify and JSON.parse where no native JSON object exists (IE 7)
-	$headerlib->add_jsfile( 'lib/jquery_tiki/json2.js' );
-	
+	$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');	
+
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
 		require_once('lib/codemirror_tiki/codemirror_tiki.php');
 		tiki_syntax_highlighter_base();

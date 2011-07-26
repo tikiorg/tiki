@@ -402,7 +402,6 @@ $headerlib->add_css('.module:hover {
 }');
 $headerlib->add_cssfile('css/admin.css');
 $headerlib->add_jsfile('lib/modules/tiki-admin_modules.js');
-$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
 
 $sameurl_elements = array(
     'offset',
