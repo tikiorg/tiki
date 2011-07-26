@@ -1037,7 +1037,7 @@ function wikiplugin_img_info() {
 		$javaset = '';
 	}
 	// Set link to user setting or to image itself if thumb is set
-	if (!empty($imgdata['link']) || !empty($imgdata['thumb'])) {
+	if (!empty($imgdata['link']) || (!empty($imgdata['thumb']) && !(isset($params['link']) && empty($params['link'])))) {
 		$mouseover = '';
 		if (!empty($imgdata['link'])) {
 			$link = $imgdata['link'];
