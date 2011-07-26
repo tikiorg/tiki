@@ -718,6 +718,19 @@ categories = {$catsdump}
 			</tr>
 		</table>
 	</form>
+	
+	{if $prefs.tracker_remote_sync eq 'y'}
+		<h2>{tr}Duplicate Remote Tracker{/tr}</h2>
+		<form class="simple" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=clone_remote">
+			<label>
+				{tr}URL:{/tr}
+				<input type="url" name="url" required="required"/>
+			</label>
+			<div>
+				<input type="submit" value="{tr}Search for trackers to clone{/tr}"/>
+			</div>
+		</form>
+	{/if}
 {/tab}
 
 {/tabset}

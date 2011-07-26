@@ -266,6 +266,44 @@
 		{* -------------------------------------------------- tab with export (and dump if perms) --- *}
 		{include file='tiki-export_tracker.tpl'}
 	{/if}
+
+	{if $tracker_sync}
+		{tab name="{tr}Synchronization{/tr}"}
+			<p>
+				{tr 0="`$tracker_sync.provider`/tracker`$tracker_sync.source`"}This tracker is a remote copy of <a href="%0">%0</a>.{/tr}
+				{if $tracker_sync.last}
+					{tr 0=$tracker_sync.last|tiki_short_date}It was last updated on %0.{/tr}
+				{/if}
+			</p>
+			{permission name=tiki_p_admin_trackers}
+				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_refresh">
+					<div class="submit">
+						<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
+						<input type="hidden" name="confirm" value="1"/>
+						<input type="submit" name="submit" value="{tr}Refresh{/tr}"/>
+					</div>
+				</form>
+				{jq}
+					$('.sync-refresh').submit(function () {
+						var form = this;
+						$.ajax({
+							type: 'post',
+							url: $(form).attr('action'),
+							dataType: 'json',
+							data: $(form).serialize(),
+							error: function (jqxhr) {
+								$(':submit', form).showError(jqxhr);
+							},
+							success: function () {
+								document.location.reload();
+							}
+						});
+						return false;
+					});
+				{/jq}
+			{/permission}
+		{/tab}
+	{/if}
 {/tabset}
 
 

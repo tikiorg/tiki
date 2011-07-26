@@ -181,6 +181,8 @@ $xfields = array('data' => $trackerDefinition->getFields());
 $popupFields = $trackerDefinition->getPopupFields();
 $smarty->assign_by_ref('popupFields', $popupFields);
 
+$smarty->assign('tracker_sync', $trackerDefinition->getSyncInformation());
+
 $orderkey = false;
 $listfields = array();
 $usecategs = false;

@@ -216,5 +216,27 @@ class Tracker_Definition
 		global $trklib;
 		return $trklib->get_item_creator($this->trackerInfo['trackerId'], $itemId);
 	}
+
+	function getSyncInformation()
+	{
+		global $prefs;
+
+		if ($prefs['tracker_remote_sync'] != 'y') {
+			return false;
+		}
+
+		$attributelib = TikiLib::lib('attribute');
+		$attributes = $attributelib->get_attributes('tracker', $this->getConfiguration('trackerId'));
+
+		if (! isset($attributes['tiki.sync.provider'])) {
+			return false;
+		}
+
+		return array(
+			'provider' => $attributes['tiki.sync.provider'],
+			'source' => $attributes['tiki.sync.source'],
+			'last' => isset($attributes['tiki.sync.last']) ? $attributes['tiki.sync.last'] : null,
+		);
+	}
 }
 
