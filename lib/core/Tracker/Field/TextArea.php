@@ -91,6 +91,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $this->renderTemplate('trackerinput/textarea.tpl', $context);
 	}
 
+	/*
 	function handleSave($value, $oldValue)
 	{
 		$length = $this->getOption(3);
@@ -108,5 +109,6 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			'value' => $value,
 		);
 	}
+	*/
 }
 
