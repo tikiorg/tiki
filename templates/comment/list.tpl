@@ -44,7 +44,7 @@
 	</ol>
 {else}
 	{remarksbox type=info title="{tr}No comments{/tr}"}
-		{tr}There are no comments at this time. Come back later or start a discussion.{/tr}
+		{tr}There are no comments at this time.{/tr}
 	{/remarksbox}
 {/if}
 
