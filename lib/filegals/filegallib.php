@@ -1892,14 +1892,16 @@ class FileGalLib extends TikiLib
 		if ( count($pathParts) < 3 ) {
 			// If we ask for a previous version (name?version)
 			if ( preg_match('/^([^?]*)\?(\d*)$/', $pathParts[1], $matches) ) {
-				$result = $files->fetchAll('fileId', array(
+				$result = $files->fetchAll(array('fileId'), array(
 					'name' => $matches[1],
 					'galleryId' => (int) $parentId,
+					'archiveId' => $files->greaterThan(0),
 				), 1, $matches[2], array('fileId' => 'ASC'));
 			} else {
 				$result = $files->fetchOne('fileId', array(
 					'name' => $pathParts[1],
 					'galleryId' => (int) $parentId,
+					'archiveId' => 0,
 				), array('fileId' => 'DESC'));
 			}
 
