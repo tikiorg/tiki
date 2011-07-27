@@ -110,5 +110,10 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		);
 	}
 	*/
+
+	protected function attemptParse($text)
+	{
+		return TikiLib::lib('tiki')->parse_data(htmlspecialchars($text));
+	}
 }
 

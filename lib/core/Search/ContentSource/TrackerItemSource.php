@@ -76,6 +76,10 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			// Make all fields sortable, except for textarea
 			$type = ($field['type'] == 'a') ? 'wikitext' : 'sortable';
 
+			if (in_array($field['type'], array('a', 't')) && $field['isMultilingual'] == 'y') {
+				$value = implode("\n", json_decode($value, true));
+			}
+
 			$data['tracker_field_' . $fieldId] = $typeFactory->$type($value);
 		}
 

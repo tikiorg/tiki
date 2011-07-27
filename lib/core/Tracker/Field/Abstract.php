@@ -197,13 +197,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return isset($this->definition[$key]) ? $this->definition[$key] : $default;
 	}
 
-	protected function getValue($default = '', $keySuffix = '')
+	protected function getValue($default = '')
 	{
 		$key = $this->getConfiguration('fieldId');
-		$keyWithSuffix = $key . $keySuffix;
 		
-		if (isset($this->itemData[$keyWithSuffix])) {
-			$value =$this->itemData[$keyWithSuffix];
+		if (isset($this->itemData[$key])) {
+			$value =$this->itemData[$key];
 		} else {
 			$value = isset($this->itemData[$key]) ? $this->itemData[$key] : null;
 		}

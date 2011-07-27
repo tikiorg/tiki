@@ -94,68 +94,82 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		return $pre . parent::renderInnerOutput($context) . $post;
 	}
 
+	function renderOutput($context = array())
+	{
+		if (isset($context['history']) && $context['history'] == 'y' && is_array($this->getConfiguration('value'))) {
+			return $this->renderTemplate('trackeroutput/text_history.tpl');
+		} else {
+			return parent::renderOutput($context);
+		}
+	}
+
 	protected function processMultilingual($requestData, $id_string) {
 		global $prefs;
 		$language = $prefs['language'];
 		$multilingual = $this->getConfiguration('isMultilingual') == 'y';
 
 		if (!isset($requestData[$id_string])) {
-			$requestData[$id_string] = $this->getValue('', $multilingual ? $language : '');
+			$value = $this->getValue();
+			if ($multilingual) {
+				$requestData[$id_string] = @json_decode($value, true);
+
+				if ($requestData[$id_string] === false) {
+					$requestData[$id_string] = $value;
+				}
+			} else {
+				$requestData[$id_string] = $value;
+			}
 		}
 		
-		if (is_array($requestData[$id_string])) {
-			$thisVal = $requestData[$id_string][$language];
+		$data['raw'] = $requestData[$id_string];
+
+		if (is_array($data['raw'])) {
+			$thisVal = $data['raw'][$language];
 		} else {
-			$thisVal = $requestData[$id_string];
+			$thisVal = $data['raw'];
 		}
 
 		$data = array(
-			'value' => $thisVal,
-			'pvalue' => $thisVal,
+			'value' => $data['raw'],
+			'pvalue' => trim($this->attemptParse($thisVal), "\n"),
 			'lingualvalue' => array(),
 			'lingualpvalue' => array(),
 		);
 
-		if ($this->getConfiguration('type') != 't') {	// textareas are parsed, text not
-			$data['pvalue'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal));
-		}
-		// Trim ending \n added by parsing
-		$data['pvalue'] = trim($data['pvalue'], "\n");
-
-		if ($this->getConfiguration("isMultilingual") == 'y') {
-			if (! is_array($requestData[$id_string])) {
-				$out = array();
-				foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
-					if (!isset($out[$tmplang])) {	// Case convert normal -> multilingual
-						$out[$tmplang] = $this->getValue($data['value'], $tmplang);
-					}
+		if ($multilingual) {
+			foreach($prefs['available_languages'] as $num => $lang) { // TODO add a limit on number of langs - 40+ makes this blow up
+				if (!isset($data['raw'][$lang])) {
+					$data['raw'][$lang] = $thisVal;
 				}
 
-				$requestData[$id_string] = $out;
-			}
-
-			foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
-				if (!isset($requestData[$id_string][$tmplang])) {	// Case convert normal -> multilingual
-					$requestData[$id_string][$tmplang] = $this->getValue($data['value'], $tmplang);
-				}
-
-				$data['lingualvalue'][$num]['lang'] = $tmplang;
-				$data['lingualvalue'][$num]['value'] = $requestData[$id_string][$tmplang];
-				$data['lingualpvalue'][$num]['lang'] = $tmplang;
-				if ($this->getConfiguration('type') != 't') {	// textareas are parsed, text not
-					$data['lingualpvalue'][$num]['value'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string][$tmplang]));
-				} else {
-					$data['lingualpvalue'][$num]['value'] = $requestData[$id_string][$tmplang];
-				}
-
-				if ($prefs['language'] == $tmplang) {
-					$data['value'] = $data['lingualvalue'][$num]['value'];
-					$data['pvalue'] = $data['lingualpvalue'][$num]['value'];
-				}
+				$data['lingualvalue'][$num]['lang'] = $lang;
+				$data['lingualvalue'][$num]['value'] = $requestData[$id_string][$lang];
+				$data['lingualpvalue'][$num]['lang'] = $lang;
+				$data['lingualpvalue'][$num]['value'] = $this->attemptParse($requestData[$id_string][$lang]);
 			}
 		}
+
+		unset($data['raw']);
 
 		return $data;
+	}
+
+	protected function attemptParse($text)
+	{
+		return $text;
+	}
+
+	function handleSave($value, $oldValue)
+	{
+		if (is_array($value)) {
+			return array(
+				'value' => json_encode($value),
+			);
+		} else {
+			return array(
+				'value' => $value,
+			);
+		}
 	}
 }
 

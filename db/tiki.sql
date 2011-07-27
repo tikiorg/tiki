@@ -2232,11 +2232,9 @@ CREATE TABLE `tiki_tracker_item_fields` (
   `itemId` int(12) NOT NULL default '0',
   `fieldId` int(12) NOT NULL default '0',
   `value` text,
-  `lang` char(16) default NULL,
-  PRIMARY KEY (`itemId`,`fieldId`,`lang`),
+  PRIMARY KEY (`itemId`,`fieldId`),
   INDEX `fieldId` (`fieldId`),
   INDEX value (value(250)),
-  INDEX lang (lang),
   FULLTEXT KEY `ft` (value)
 ) ENGINE=MyISAM;
 
