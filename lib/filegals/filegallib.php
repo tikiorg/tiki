@@ -2242,7 +2242,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
-		if ( $my_user == '' ) $my_user = $user;
+		if ( empty($my_user) ) $my_user = $user;
 
 		$f_table = '`tiki_files` as tf';
 		$g_table = '`tiki_file_galleries` as tfg';
@@ -2416,7 +2416,7 @@ class FileGalLib extends TikiLib
 			// If the user is not admin then select it's own galleries or public galleries
 			if ( $tiki_p_admin !== 'y' && $tiki_p_admin_file_galleries !== 'y' && empty($parentId) ) {
 				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
-				$bindvars[] = $user;
+				$bindvars[] = $my_user;
 			}
 			$g_query .= $g_mid;
 
