@@ -49,6 +49,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
 	$params['comments'] = isset($params['comments']) ? $params['comments'] : 'n';
+	$params['autosave'] = isset($params['autosave']) ? $params['autosave'] : 'y';
 
 	//codemirror integration
 	if ($prefs['feature_syntax_highlighter'] === 'y') {
@@ -89,7 +90,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		}
 	}
 
-	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
+	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n' && $params['autosave'] == 'y') {	// retrieve autosaved content
 		require_once("lib/ajax/autosave.php");
 		include_once('lib/smarty_tiki/block.self_link.php');
 		$auto_save_referrer = ensureReferrer();
@@ -173,7 +174,7 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
 		}
-		if ($prefs['feature_ajax'] === 'y' && $prefs['ajax_autosave'] === 'y') {
+		if ($prefs['feature_ajax'] === 'y' && $prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
 			$headerlib->add_jq_onready('
 // --- config settings for the autosave plugin ---
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
