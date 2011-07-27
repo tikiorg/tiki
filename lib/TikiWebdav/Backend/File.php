@@ -535,7 +535,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 			case 'displayname':
 				$property = new ezcWebdavDisplayNameProperty(
-						$tikiInfo['name']
+						$isCollection ? $tikiInfo['name'] : $tikiInfo['filename']
 						);
 				print_debug("-> " . $tikiInfo['name'] ."\n");
 				return $property;
@@ -806,7 +806,31 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		print_debug("-> getCollectionMembers\ngalleryId:$galleryId\n");
 		if ( $galleryId !== false ) {
-			$files = $filegallib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, '', true, false, false, '','');
+			if ( $gal_info = $filegallib->get_file_gallery((int)$galleryId )) {
+				$tikilib->get_perm_object($galleryId, 'file gallery', $gal_info);
+			}
+
+			$files = $filegallib->get_files( 0
+					, -1
+					, 'name_desc'
+					, null
+					, (int)$galleryId
+					, true
+					, true
+					, false
+					, true
+					, false
+					, false
+					, false
+					, false
+					, null
+					, true
+					, false
+					, ($gal_info['show_backlinks']!='n')
+					, ''
+					, ''
+					);
+
 
 			foreach ( $files['data'] as $fileInfo ) {
 				if ( $fileInfo['isgal'] == '1' ) {

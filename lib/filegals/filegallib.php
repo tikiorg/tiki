@@ -2391,13 +2391,6 @@ class FileGalLib extends TikiLib
 				$g_group_by = ' GROUP BY tfg.`galleryId`'; 
 			}
 
-			// If $user is admin then get ALL galleries, if not only user galleries are shown
-			// If the user is not admin then select it's own galleries or public galleries
-			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && empty($parentId) ) {
-				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
-				$bindvars[] = $my_user;
-			}
-
 			if( $jail ) {
 				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
 			} else {
@@ -2417,6 +2410,13 @@ class FileGalLib extends TikiLib
 					else
 						$bindvars[] = $galleryId;
 				}
+			}
+
+			// If $user is admin then get ALL galleries, if not only user galleries are shown
+			// If the user is not admin then select it's own galleries or public galleries
+			if ( $tiki_p_admin !== 'y' && $tiki_p_admin_file_galleries !== 'y' && empty($parentId) ) {
+				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
+				$bindvars[] = $user;
 			}
 			$g_query .= $g_mid;
 
@@ -2464,11 +2464,15 @@ class FileGalLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		//TODO: perms cache for file perms (now we are using cache only for file gallery perms)
 		$cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
-		$cacheType = 'fgals_perms_'.$galleryId."_";
-		if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
-			$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+		if ( !is_array($galleryId) ) {
+			$cacheType = 'fgals_perms_'.$galleryId."_";
+			if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
+				$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+			} else {
+				$fgal_perms = array();
+			}
 		} else {
-			$fgal_perms = array();
+				$fgal_perms = array();
 		}
 		foreach( $result as $res ) {
 			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
