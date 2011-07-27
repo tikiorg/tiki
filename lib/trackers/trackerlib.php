@@ -4058,6 +4058,30 @@ class TrackerLib extends TikiLib
 
 		$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs);
 	}
+	
+	public function field_render_value( $params ) {
+		$field = $params['field'];
+		$item = isset($params['item']) ? $params['item'] : array();
+		
+		$item[$field['fieldId']] = $field['value'];
+		$handler = $this->get_field_handler($field, $item);
+
+		if (isset($params['process']) && $params['process'] == 'y') {
+			$field = array_merge($field, $handler->getFieldData($field));
+			$handler = $this->get_field_handler($field, $item);
+		}
+
+		if ($handler) {
+			$context = $params;
+			unset($context['item']);
+			unset($context['field']);
+			if (!isset($context['list_mode'])) {
+				$context['list_mode'] = 'n';
+			} 
+			$r = $handler->renderOutput($context);
+			return $r;
+		}
+	}
 }
 
 global $trklib;
