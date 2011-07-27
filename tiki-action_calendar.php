@@ -49,7 +49,10 @@ if ($calendarViewMode['casedefault'] == 'day') {
 } else {
 	$smarty->assign('currMonth', $focusdate);
 }
-
+$smarty->assign('daysnames', $daysnames);
+$smarty->assign('daysnames_abr', $daysnames_abr);
+$viewdays = array(0,1,2,3,4,5,6);
+$smarty->assign('viewdays', $viewdays);
 $smarty->assign('hrows', $hrows);
 $smarty->assign('hours', $hours);
 
