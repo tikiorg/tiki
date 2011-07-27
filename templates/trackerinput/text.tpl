@@ -1,6 +1,6 @@
 {if $field.isMultilingual ne 'y'}
 	{*prepend*}{if isset($field.options_array[2])}<span class="formunit">{$field.options_array[2]}&nbsp;</span>{/if}
-	<input type="text" id="{$field.ins_id|replace:'[':'_'|replace:']':''}" name="{$field.ins_id}" {if isset($field.options_array[1])}size="{$field.options_array[1]}"{/if} {if isset($field.options_array[4])}maxlength="{$field.options_array[4]}"{/if} value="{if $field.value}{$field.value|escape}{else}{if isset($field.defaultvalue)}{$field.defaultvalue|escape}{/if}{/if}" />
+	<input type="text" id="{$field.ins_id|replace:'[':'_'|replace:']':''}" name="{$field.ins_id}" {if $field.options_array[1]}size="{$field.options_array[1]}"{/if} {if $field.options_array[4]}maxlength="{$field.options_array[4]}"{/if} value="{if $field.value}{$field.value|escape}{else}{if isset($field.defaultvalue)}{$field.defaultvalue|escape}{/if}{/if}" />
 	{*append*}{if isset($field.options_array[3])}<span class="formunit">&nbsp;{$field.options_array[3]}</span>{/if}
 	{if (isset($field.options_array[5]) && $field.options_array[5] eq 'y') && $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 		{if !empty($item)}

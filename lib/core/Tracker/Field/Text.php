@@ -163,13 +163,29 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 	{
 		if (is_array($value)) {
 			return array(
-				'value' => json_encode($value),
+				'value' => json_encode(array_map(array($this, 'filterValue'), $value)),
 			);
 		} else {
 			return array(
-				'value' => $value,
+				'value' => $this->filterValue($value),
 			);
 		}
+	}
+
+	function filterValue($value)
+	{
+		$length = $this->getOption('max');
+
+		if ($length) {
+			$f_len = function_exists('mb_strlen') ? 'mb_strlen' : 'strlen';
+			$f_substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
+
+			if ($f_len($value) > $length) {
+				return $f_substr($value, 0, $length);
+			}
+		}
+
+		return $value;
 	}
 }
 

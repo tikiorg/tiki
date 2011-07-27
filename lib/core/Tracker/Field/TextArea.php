@@ -91,26 +91,6 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $this->renderTemplate('trackerinput/textarea.tpl', $context);
 	}
 
-	/*
-	function handleSave($value, $oldValue)
-	{
-		$length = $this->getOption(3);
-
-		if ($length) {
-			$f_len = function_exists('mb_strlen') ? 'mb_strlen' : 'strlen';
-			$f_substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
-
-			if ($f_len($value) > $length) {
-				$value = $f_substr($value, 0, $length);
-			}
-		}
-
-		return array(
-			'value' => $value,
-		);
-	}
-	*/
-
 	protected function attemptParse($text)
 	{
 		return TikiLib::lib('tiki')->parse_data(htmlspecialchars($text));

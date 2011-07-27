@@ -225,6 +225,20 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	 */
 	protected function getOption($number, $default = false)
 	{
+		if (! is_numeric($number)) {
+			$type = $this->getConfiguration('type');
+			$class = get_class($this);
+
+			$info = call_user_func(array($class, 'getTypes'));
+			$params = array_keys($info[$type]['params']);
+
+			$number = array_search($number, $params);
+
+			if ($number === false) {
+				return $default;
+			}
+		}
+
 		return isset($this->definition['options_array'][(int) $number]) ?
 			$this->definition['options_array'][(int) $number] :
 			$default;
