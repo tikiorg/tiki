@@ -22,6 +22,7 @@ if ( isset($_REQUEST['noautosave']) === true ) {
 function auto_save_name($id, $referer = '', $only_md5 = false) {
 	global $user;
 	$referer = preg_replace('/(\?|\&)noautosave=y/', '', ensureReferrer($referer));
+	$referer = rawurldecode($referer); // this is needed to ensure consistency whether coming from js or php
 	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
 }
 function auto_save_log($id, $referer = '', $action = '') {
@@ -80,18 +81,15 @@ function ensureReferrer($referer = '') {
 		$referer .= ':';
 		if ($section == 'wiki page') {
 			if (isset($_REQUEST['page'])) {
-				$referer .= 'wiki_page:' . $_REQUEST['page'];
+				$referer .= 'wiki_page:' . rawurlencode($_REQUEST['page']);
 			}
 		} else if ($section == 'blogs') {
 			if (isset($_REQUEST['postId'])) {
 				$referer .= 'blog:' . $_REQUEST['postId'];
 			}
 		} else {
-			$referer .= $section;	// better than nothing?
+			$referer .= rawurlencode($_SERVER['REQUEST_URI']);
 		}
-	}
-	if (empty($referer)) {
-		$referer = $_SERVER['REQUEST_URI'];
 	}
 	return $referer;
 }
