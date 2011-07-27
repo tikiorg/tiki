@@ -96,7 +96,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if (empty($_REQUEST['autosave'])) {
 			$_REQUEST['autosave'] = 'n';
 		}
-		if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
+		if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?  
 			$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
 			if ( strcmp($auto_saved, $content) === 0 ) {
 				$auto_saved = '';
@@ -104,8 +104,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			if (empty($auto_saved) || (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y')) {	// switching modes, ignore auto save
 				remove_save($as_id, $auto_save_referrer);
 			} else {
-				$msg = '<div class="mandatory_star"><span class="autosave_message">'.tra('There is an autosaved version of this content, to use it instead of this saved one').'</span>&nbsp;' .
-							'<span class="autosave_message_2" style="display:none;">'.tra('If you want the saved version instead of this autosaved draft').'</span>' .
+				$msg = '<div class="mandatory_star"><span class="autosave_message">'.tra('There is an autosaved draft of your recent edits, to use it instead of what is current displayed').'</span>&nbsp;' .
+							'<span class="autosave_message_2" style="display:none;">'.tra('If you want the original version instead of the autosaved draft of your edits').'</span>' .
 							smarty_block_self_link( array( '_ajax'=>'n', '_onclick' => 'toggle_autosaved(\''.$as_id.'\',\''.$auto_save_referrer.'\');return false;'), tra('click here'), $smarty)."</div>";
 				$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 			}
