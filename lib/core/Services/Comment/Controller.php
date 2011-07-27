@@ -119,6 +119,10 @@ class Services_Comment_Controller
 				}
 			}
 
+			if ($prefs['comments_notitle'] == 'y') {
+				$title = 'Untitled ' . TikiLib::lib('tiki')->get_long_datetime(TikiLib::lib('tikidate')->getTime()); 
+			}
+
 			if (count($errors) === 0) {
 				$message_id = ''; // By ref
 				$threadId = $commentslib->post_new_comment("$type:$objectId", $parentId, $user, $title, $data, $message_id, $parent ? $parent['message_id'] : '', 'n', '', '', $contributions, $anonymous_name, '', $anonymous_email, $anonymous_website);
