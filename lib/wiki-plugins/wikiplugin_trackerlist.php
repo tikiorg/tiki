@@ -219,7 +219,7 @@ function wikiplugin_trackerlist_info() {
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Items'),
-				'description' => tra('Maximum number of items to display. Defaults to max records preference, if set.'),
+				'description' => tra('Maximum number of items to display or -1 for all values. Defaults to max records preference, if set.'),
 				'filter' => 'int',
 				'default' => '',
 			),
