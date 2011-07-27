@@ -82,6 +82,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'trk':
 			global $trklib; require_once('lib/trackers/trackerlib.php');
 			return $libraries[$name] = $trklib;
+		case 'trkqry':
+			global $trkqrylib; require_once('lib/trackers/trackerquerylib.php');
+			return $libraries[$name] = $trkqrylib;
 		case 'wiki':
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			return $libraries[$name] = $wikilib;

@@ -1,11 +1,7 @@
 <?php
 require_once('tiki-setup.php');
-require_once('lib/profilelib/installlib.php');
-require_once('lib/profilelib/profilelib.php');
-require_once('lib/trackers/trackerlib.php');
-require_once('lib/trackers/trackerquerylib.php');
-
-global $tikilib, $trklib, $trkqrylib;
+$trklib = TikiLib::lib('trk');
+$trkqrylib = TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');

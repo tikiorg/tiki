@@ -1,18 +1,13 @@
 <?php
 require_once('tiki-setup.php');
-require_once('lib/profilelib/installlib.php');
-require_once('lib/profilelib/profilelib.php');
-require_once('lib/trackers/trackerquerylib.php');
-
-global $tikilib, $trkqrylib;
+$trklib = TikiLib::lib('trk');
+$trkqrylib = TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
 
 //check if profile is created
-$installer = new Tiki_Profile_Installer();
-$profile = Tiki_Profile::fromNames( "profiles.tiki.org","Invoice" );
-if (!$installer->isInstalled( $profile )) {
+if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 	$smarty->assign('msg', tra('You need to apply the "Invoice" profile'));
 	$smarty->display("error.tpl");
 	die;
