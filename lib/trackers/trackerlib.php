@@ -2453,8 +2453,12 @@ class TrackerLib extends TikiLib
 		} elseif ($field['type'] == '*' || $field['type'] == 'STARS') { // field rating - value is the average of the votes
 			$key = "tracker.$trackerId.$itemId.".$field['fieldId']; 
 		}
-		$field['numvotes'] = $votings->fetchCount(array('id' => $key));
-		$total = $votings->sum('optionId', array('id' => $key));
+		$data = $votings->fetchRow(array(
+                        'count' => $votings->count(),
+                        'total' => $votings->sum('optionId'),
+                ), array('id' => $key));
+		$field['numvotes'] = $data['count'];
+		$total = $data['total']; 
 		$field['voteavg'] = $total/$field['numvotes'];
 		// be careful optionId is the value - not the optionId
 		$field['my_rate'] = $votings->fetchOne('optionId', array('id' => $key, 'user' => $user));
