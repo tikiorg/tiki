@@ -12,33 +12,33 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		return array(
 			'STARS' => array(
 				'name' => tr('Rating'),
-                                'description' => tr('A rating of the tracker item'),
-                                'readonly' => true,
-                                'params' => array(
-                                        'option' => array(
-                                                'name' => tr('Option'),
-                                                'description' => tr('The possible options (comma separated integers) for the rating.'),
-                                                'filter' => 'int',
-                                                'count' => '*', 
-                                        ),
+				'description' => tr('A rating of the tracker item'),
+				'readonly' => true,
+				'params' => array(
+					'option' => array(
+						'name' => tr('Option'),
+						'description' => tr('The possible options (comma separated integers) for the rating.'),
+						'filter' => 'int',
+						'count' => '*', 
+					),
 					'mode' => array(
 						'name' => tr('Mode'),
 						'description' => tr('Display rating options as:'),
 						'filter' => 'text',
 						'options' => array(
-                                                        'stars' => tr('Stars'),
-                                                        'radio' => tr('Radio Buttons'),
+							'stars' => tr('Stars'),
+							'radio' => tr('Radio Buttons'),
 							'like' => tr('Single Option: e.g. Like'),
-                                                ), 
+						), 
 					),
 					'labels' => array(
-                                                'name' => tr('Labels'),
-                                                'description' => tr('The text labels (comma separated) for the possible options.'),
-                                                'filter' => 'text',
-                                                'count' => '*',
-                                        ),	
-                                ),
-                        ), 
+						'name' => tr('Labels'),
+						'description' => tr('The text labels (comma separated) for the possible options.'),
+						'filter' => 'text',
+						'count' => '*',
+					),	
+				),
+			), 
 			'*' => array(
 				'name' => tr('Stars (deprecated)'),
 				'description' => tr('Displays a star rating'),
@@ -85,7 +85,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				$labelstartkey = $k + 1;
 				$rating_option_num = $k;
 				break;
-			}					
+			}
 		}
 		if ($mode == 'stars') {
 			$labels_array = array();
@@ -95,7 +95,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			} 
 		}
 		if ($mode == 'like') {
-			$rating_options = array(0,1);				
+			$rating_options = array(0,1);
 		} elseif (isset($rating_option_num)) {
 			$rating_options = array_slice($options_array, 0, $rating_option_num);
 		} else {
@@ -127,7 +127,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			'value' => $data['value'],
 			'mode' => $mode,
 			'labels' => $labels_array,      
-                        'rating_options' => $rating_options,
+			'rating_options' => $rating_options,
 		);
 	}
 
