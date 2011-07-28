@@ -1893,13 +1893,13 @@ class FileGalLib extends TikiLib
 			// If we ask for a previous version (name?version)
 			if ( preg_match('/^([^?]*)\?(\d*)$/', $pathParts[1], $matches) ) {
 				$result = $files->fetchAll(array('fileId'), array(
-					'name' => $matches[1],
+					'filename' => $matches[1],
 					'galleryId' => (int) $parentId,
 					'archiveId' => $files->greaterThan(0),
 				), 1, $matches[2], array('fileId' => 'ASC'));
 			} else {
 				$result = $files->fetchOne('fileId', array(
-					'name' => $pathParts[1],
+					'filename' => $pathParts[1],
 					'galleryId' => (int) $parentId,
 					'archiveId' => 0,
 				), array('fileId' => 'DESC'));
@@ -1945,9 +1945,10 @@ class FileGalLib extends TikiLib
 				break;
 
 			case 'file': default:
-				$res = $this->table('tiki_files')->fetchRow(array('name', 'parentId' => 'galleryId'), array(
+				$res = $this->table('tiki_files')->fetchRow(array('filename', 'parentId' => 'galleryId'), array(
 					'fileId' => (int) $id,
 				));
+				$res['name'] = $res['filename'];
 		}
 
 		if ($res) {

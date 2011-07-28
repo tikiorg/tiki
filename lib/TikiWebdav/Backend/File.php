@@ -537,7 +537,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$property = new ezcWebdavDisplayNameProperty(
 						$isCollection ? $tikiInfo['name'] : $tikiInfo['filename']
 						);
-				print_debug("-> " . $tikiInfo['name'] ."\n");
+				print_debug("-> " . ($isCollection ? $tikiInfo['name'] : $tikiInfo['filename']) ."\n");
 				return $property;
 
 			case 'getcontenttype':
@@ -813,7 +813,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$files = $filegallib->get_files( 0
 					, -1
 					, 'name_desc'
-					, null
+					, ''
 					, (int)$galleryId
 					, true
 					, true
@@ -823,7 +823,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					, false
 					, false
 					, false
-					, null
+					, ''
 					, true
 					, false
 					, ($gal_info['show_backlinks']!='n')
@@ -839,7 +839,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				} else {
 					// Add files without content
 					//$contents[] = new ezcWebdavResource( $path . $fileInfo['name'] . ( $fileInfo['nbArchives'] > 0 ? "?".$fileInfo['nbArchives'] : '') );
-					$contents[] = new ezcWebdavResource( $path . $fileInfo['name'] );
+					$contents[] = new ezcWebdavResource( $path . $fileInfo['filename'] );
 				}
 			}
 		}
