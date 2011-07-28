@@ -276,9 +276,14 @@
 				{/if}
 			</p>
 			{permission name=tiki_p_admin_trackers}
-				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_refresh">
+				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_new&amp;trackerId={$trackerId|escape:'url'}">
+					<p>{tr}Items added locally{/tr}</p>
+					<ul class="load-items">
+					</ul>
+					<p><input type="submit" value="{tr}Push new items{/tr}"/></p>
+				</form>
+				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_refresh&amp;trackerId={$trackerId|escape:'url'}">
 					<div class="submit">
-						<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
 						<input type="hidden" name="confirm" value="1"/>
 						<input type="submit" name="submit" value="{tr}Refresh{/tr}"/>
 					</div>
@@ -299,6 +304,20 @@
 							}
 						});
 						return false;
+					});
+					$('.load-items').each(function () {
+						var list = this;
+						$.getJSON($(this).closest('form').attr('action'), function (data) {
+							$.each(data.result, function (k, info) {
+								var li = $('<li/>');
+								li.append($('<label/>')
+									.text(info.title)
+									.prepend($('<input type="checkbox" name="items[]"/>').attr('value', info.itemId))
+								);
+
+								$(list).append(li);
+							});
+						});
 					});
 				{/jq}
 			{/permission}

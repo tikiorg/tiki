@@ -354,6 +354,7 @@ class Services_Tracker_Controller
 					'options' => $this->buildOptions(array(
 						'prepend' => $url . '/item',
 					), 't'),
+					'isMandatory' => false,
 				));
 
 				$this->registerSynchronization($trackerId, $url, $remoteTracker);
@@ -410,6 +411,66 @@ class Services_Tracker_Controller
 		return array();
 	}
 
+	function action_sync_new($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		$syncInfo = $definition->getSyncInformation();
+
+		if (! $syncInfo) {
+			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
+		}
+
+		$items = $input->items->int();
+		
+		$trklib = TikiLib::lib('trk');
+		$syncField = $definition->getFieldFromPermName('syncSource');
+		$itemIds = $trklib->get_items_list($trackerId, $syncField['fieldId'], '', 'opc');
+
+		if ($items) {
+			$itemIds = array_intersect($itemIds, $items);
+			$table = TikiDb::get()->table('tiki_tracker_items');
+			$items = $this->getItems(array(
+				'trackerId' => $trackerId,
+				'itemId' => $table->in($itemIds),
+			));
+
+			foreach ($items as $item) {
+				$remoteItemId = $this->insertRemoteItem($syncInfo, $item);
+
+				if ($remoteItemId) {
+					$item['fields']['syncSource'] = $remoteItemId;
+					$this->updateItem($definition, $item);
+				}
+			}
+
+			return array(
+			);
+		} else {
+			$out = array();
+			foreach ($itemIds as $itemId) {
+				$out[] = array(
+					'itemId' => $itemId,
+					'title' => $trklib->get_isMain_value(null, $itemId),
+				);
+			}
+
+			return array(
+				'trackerId' => $trackerId,
+				'result' => $out,
+			);
+		}
+	}
+
 	function action_list_items($input)
 	{
 		// TODO : Eventually, this method should filter according to the actual permissions, but because
@@ -429,27 +490,40 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker does not exist'), 404);
 		}
 
-		$keyMap = array();
-		foreach ($definition->getFields() as $field) {
-			if (! empty($field['permName'])) {
-				$keyMap[$field['fieldId']] = $field['permName'];
-			}
-		}
-
-		$table = TikiDb::get()->table('tiki_tracker_items');
-		$items = $table->fetchAll(array('itemId', 'status'), array(
+		$items = $this->getItems(array(
 			'trackerId' => $trackerId,
 		), $maxRecords, $offset);
-
-		foreach ($items as & $item) {
-			$item['fields'] = $this->getItemFields($item['itemId'], $keyMap);
-		}
 
 		return array(
 			'trackerId' => $trackerId,
 			'offset' => $offset,
 			'maxRecords' => $maxRecords,
 			'result' => $items,
+		);
+	}
+
+	function action_insert_item($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		// TODO : Eventually, this method should check the track permissions
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$itemId = $this->insertItem($definition, array(
+			'status' => $input->status->word(),
+			'fields' => $input->fields->none(),
+		));
+
+		return array(
+			'trackerId' => $trackerId,
+			'itemId' => $itemId,
 		);
 	}
 
@@ -602,7 +676,7 @@ EXPORT;
 			'n',
 			'y',
 			'n',
-			'y',
+			isset($data['isMandatory']) ? ($data['isMandatory'] ? 'y' : 'n') : 'y',
 			$trklib->get_last_position($data['trackerId']) + 10,
 			isset($data['options']) ? $data['options'] : '',
 			$data['description'],
@@ -692,15 +766,8 @@ EXPORT;
 			'controller' => 'tracker',
 			'action' => 'list_trackers',
 		), '', '&'));
-		$client->setHeaders('Accept', 'application/json');
 
-		$response = $client->request();
-
-		if (! $response->isSuccessful()) {
-			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
-		}
-
-		return $cache[$serviceUrl] = json_decode($response->getBody(), true);
+		return $cache[$serviceUrl] = $this->getJson($client);
 	}
 
 	private function getRemoteTrackerFieldExport($serviceUrl, $trackerId)
@@ -711,14 +778,7 @@ EXPORT;
 			'action' => 'export_fields',
 			'trackerId' => $trackerId,
 		), '', '&'));
-		$client->setHeaders('Accept', 'application/json');
-		$response = $client->request();
-
-		if (! $response->isSuccessful()) {
-			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
-		}
-
-		$export = json_decode($response->getBody(), true);
+		$export = $this->getJson($client);
 		return $export['export'];
 	}
 
@@ -769,6 +829,45 @@ EXPORT;
 		);
 	}
 
+	private function insertRemoteItem($syncInfo, $item)
+	{
+		unset($item['fields']['syncSource']);
+		$item['trackerId'] = $syncInfo['source'];
+
+		$tikilib = TikiLib::lib('tiki');
+		$client = $tikilib->get_http_client($syncInfo['provider'] . '/tiki-ajax_services.php?' . http_build_query(array(
+			'controller' => 'tracker',
+			'action' => 'insert_item',
+		), '', '&'));
+
+		$client->setParameterPost($item);
+		$data = $this->getJson($client);
+		
+		if (isset($data['itemId']) && $data['itemId']) {
+			return $data['itemId'];
+		}
+	}
+
+	private function getItems(array $conditions, $maxRecords = -1, $offset = -1)
+	{
+		$keyMap = array();
+		$definition = Tracker_Definition::get($conditions['trackerId']);
+		foreach ($definition->getFields() as $field) {
+			if (! empty($field['permName'])) {
+				$keyMap[$field['fieldId']] = $field['permName'];
+			}
+		}
+
+		$table = TikiDb::get()->table('tiki_tracker_items');
+		$items = $table->fetchAll(array('itemId', 'status'), $conditions, $maxRecords, $offset);
+
+		foreach ($items as & $item) {
+			$item['fields'] = $this->getItemFields($item['itemId'], $keyMap);
+		}
+
+		return $items;
+	}
+
 	private function getItemFields($itemId, $keyMap)
 	{
 		$table = TikiDb::get()->table('tiki_tracker_item_fields');
@@ -791,18 +890,43 @@ EXPORT;
 
 	private function insertItem($definition, $item)
 	{
+		$newItem = $this->replaceItem($definition, 0, $item['status'], $item['fields']); 
+
+		return $newItem;
+	}
+
+	private function updateItem($definition, $item)
+	{
+		$this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields']);
+	}
+
+	private function replaceItem($definition, $itemId, $status, $fieldMap)
+	{
 		$trackerId = $definition->getConfiguration('trackerId');
 		$fields = array();
 
-		foreach ($item['fields'] as $key => $value) {
-			$field = $definition->getFieldFromPermName($key);
-			$field['value'] = $value;
-			$fields[$field['fieldId']] = $field;
+		foreach ($fieldMap as $key => $value) {
+			if ($field = $definition->getFieldFromPermName($key)) {
+				$field['value'] = $value;
+				$fields[$field['fieldId']] = $field;
+			}
 		}
 
 		$trklib = TikiLib::lib('trk');
-		$newItem = $trklib->replace_item($trackerId, 0, array('data' => $fields), $item['status'], 0, true);
+		$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
 		return $newItem;
+	}
+
+	private function getJson($client)
+	{
+		$client->setHeaders('Accept', 'application/json');
+		$response = $client->request('POST');
+
+		if (! $response->isSuccessful()) {
+			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
+		}
+
+		return json_decode($response->getBody(), true);
 	}
 }
 
