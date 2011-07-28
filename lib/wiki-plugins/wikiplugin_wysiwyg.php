@@ -10,7 +10,6 @@ function wikiplugin_wysiwyg_info() {
 		'name' => 'WYSIWYG',
 		//'documentation' => 'PluginWYSIWYG',
 		'description' => tra('Experimental: Purify the HTML content.'),
-		'format' => 'wiki',
 		'prefs' => array('wikiplugin_wysiwyg'),
 		'params' => array(),
 		'filter' => 'purifier',
@@ -20,6 +19,9 @@ function wikiplugin_wysiwyg_info() {
 
 
 function wikiplugin_wysiwyg($data, $params) {
-	return $data;
-} // wikiplugin_wysiwyg()
+	global $tikilib;
 
+	$html = $tikilib->parse_data( $data, array('is_html' => true));
+	return $html;
+	
+} // wikiplugin_wysiwyg()
