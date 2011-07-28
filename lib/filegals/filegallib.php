@@ -1810,22 +1810,26 @@ class FileGalLib extends TikiLib
 		if ( count($pathParts) < 3 ) {
 			// If we ask for a previous version (name?version)
 			if ( preg_match('/^([^?]*)\?(\d*)$/', $pathParts[1], $matches) ) {
-				$result = $files->fetchAll('fileId', array(
-					'name' => $matches[1],
+				$result = $files->fetchAll(array('fileId'), array(
+					'filename' => $matches[1],
 					'galleryId' => (int) $parentId,
+					'archiveId' => $files->greaterThan(0),
 				), 1, $matches[2], array('fileId' => 'ASC'));
 			} else {
 				$result = $files->fetchOne('fileId', array(
-					'name' => $pathParts[1],
+					'filename' => $pathParts[1],
 					'galleryId' => (int) $parentId,
+					'archiveId' => 0,
 				), array('fileId' => 'DESC'));
 			}
 
-			if ( $result ) {
+			if ( is_array($result) ) {
 				$res = reset($result);
 				if ( ! empty($res) ) {
 					return array('type' => 'file', 'id' => $res['fileId']);
 				}
+			} elseif ( !empty($result) ) {
+					return array('type' => 'file', 'id' => $result);
 			}
 		}
 
@@ -1859,9 +1863,10 @@ class FileGalLib extends TikiLib
 				break;
 
 			case 'file': default:
-				$res = $this->table('tiki_files')->fetchRow(array('name', 'parentId' => 'galleryId'), array(
+				$res = $this->table('tiki_files')->fetchRow(array('filename', 'parentId' => 'galleryId'), array(
 					'fileId' => (int) $id,
 				));
+				$res['name'] = $res['filename'];
 		}
 
 		if ($res) {
@@ -2155,7 +2160,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$with_subgals_size = ( $with_subgals && $with_subgals_size );
-		if ( $my_user == '' ) $my_user = $user;
+		if ( empty($my_user) ) $my_user = $user;
 
 		$f_table = '`tiki_files` as tf';
 		$g_table = '`tiki_file_galleries` as tfg';
@@ -2301,13 +2306,6 @@ class FileGalLib extends TikiLib
 				$g_group_by = ' GROUP BY tfg.`galleryId`'; 
 			}
 
-			// If $user is admin then get ALL galleries, if not only user galleries are shown
-			// If the user is not admin then select it's own galleries or public galleries
-			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && empty($parentId) ) {
-				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
-				$bindvars[] = $my_user;
-			}
-
 			if( $jail ) {
 				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
 			} else {
@@ -2321,6 +2319,13 @@ class FileGalLib extends TikiLib
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
+			}
+
+			// If $user is admin then get ALL galleries, if not only user galleries are shown
+			// If the user is not admin then select it's own galleries or public galleries
+			if ( $tiki_p_admin !== 'y' && $tiki_p_admin_file_galleries !== 'y' && empty($parentId) ) {
+				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
+				$bindvars[] = $my_user;
 			}
 			$g_query .= $g_mid;
 
@@ -2368,11 +2373,15 @@ class FileGalLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		//TODO: perms cache for file perms (now we are using cache only for file gallery perms)
 		$cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
-		$cacheType = 'fgals_perms_'.$galleryId."_";
-		if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
-			$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+		if ( !is_array($galleryId) ) {
+			$cacheType = 'fgals_perms_'.$galleryId."_";
+			if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
+				$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+			} else {
+				$fgal_perms = array();
+			}
 		} else {
-			$fgal_perms = array();
+				$fgal_perms = array();
 		}
 		foreach( $result as $res ) {
 			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');

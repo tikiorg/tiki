@@ -3244,6 +3244,7 @@ class TikiLib extends TikiDb_Bridge
 		$userlib = TikiLib::lib('user');
 
 		$perms = Perms::get( array( 'type' => $objectType, 'object' => $objectId ) );
+		$perms->setGroups($this->get_user_groups($user));
 		$permDescs = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 
 		$ret = array();

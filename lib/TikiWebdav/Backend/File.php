@@ -235,7 +235,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$mime = tiki_get_mime($name, 'application/octet-stream', $this->root . '/' . $fhash);
 		} else {
 			$fhash = '';
-			$mime = ($objectId['type'] != 'file') ? 'inode/directory' : tiki_get_mime_from_content($content);
+			$mime = tiki_get_mime_from_content($content,'application/octet-stream', $name);
 		}
 
 		$fileId = $filegallib->insert_file(
@@ -289,7 +289,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$mime = tiki_get_mime($name,  'application/octet-stream', $this->root . '/' . $fhash);
 		} else {
 			$fhash = '';
-			$mime = ($objectId['type'] != 'file') ? 'inode/directory' : tiki_get_mime_from_content($content);
+			$mime = tiki_get_mime_from_content($content,'application/octet-stream', $name);
 		}
 
 		print_debug("setResourceContents : $path/$fhash \n");
@@ -349,29 +349,51 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 	///TODO
 	protected function getPropertyStorage( $path )
 	{
-		print_debug("getPropertyStorage method \n");
-		if ( @file_exists($storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path)) ) {
-			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom( @file_get_contents($storagePath) );
-		} else {
-			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom();
-		}
-		$handler = new ezcWebdavPropertyHandler(
-				new ezcWebdavXmlTool()
-				);
-		try {
-			$handler->extractProperties($xml->getElementsByTagNameNS('DAV:','*'),$this->propertyStorage);
-		}
-		catch ( Exception $e ) {
+		//print_debug("getPropertyStorage method \n");
+		$storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path);
+		// If no properties has been stored yet, just return an empty property
+		// storage.
+		if ( !is_file( $storagePath ) )
+		{
+			return new ezcWebdavBasicPropertyStorage();
 		}
 
-		print_debug("getPropertyStorage method end\n");
-		return $this->propertyStorage;
+		// Create handler structure to read properties
+		$handler = new ezcWebdavPropertyHandler(
+				$xml = new ezcWebdavXmlTool()
+				);
+		$storage = new ezcWebdavBasicPropertyStorage();
+
+		// Read document
+		try
+		{
+			$doc = $xml->createDom( file_get_contents( $storagePath ) );
+		}
+		catch ( ezcWebdavInvalidXmlException $e )
+		{
+			throw new ezcWebdavFileBackendBrokenStorageException(
+					"Could not open XML as DOMDocument: '{$storage}'."
+					);
+		}
+
+		// Get property node from document
+		$properties = $doc->getElementsByTagname( 'properties' )->item( 0 )->childNodes;
+
+		// Extract and return properties
+		$handler->extractProperties(
+				$properties,
+				$storage
+				);
+
+
+		print_debug("getPropertyStorage method end " . print_r($properties,true) ."\n");
+		return $storage;
 	}
 
 	protected function storeProperties( $path, ezcWebdavBasicPropertyStorage $storage )
 	{
-		print_debug("storeProperties method \n");
 		$storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path);
+		print_debug("storeProperties method $storagePath\n");
 
 		// Create handler structure to read properties
 		$handler = new ezcWebdavPropertyHandler(
@@ -384,10 +406,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$properties = $doc->createElement( 'properties' );
 		$doc->appendChild( $properties );
 
-		// Store and store properties
-		foreach ($this->handledLiveProperties as $propName) {
-			$storage->detach($propName);
-		}
 		$handler->serializeProperties(
 				$storage,
 				$properties
@@ -457,7 +475,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $tikilib, $prefs;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 
-		print_debug("GetProperty($path, $propertyName, $namespace)");
+		print_debug("GetProperty($path, $propertyName, $namespace)\n");
 		if ( ( $objectId = $filegallib->get_objectid_from_virtual_path($path) ) === false ) {
 			return false;
 		}
@@ -517,9 +535,9 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 			case 'displayname':
 				$property = new ezcWebdavDisplayNameProperty(
-						$tikiInfo['name']
+						$isCollection ? $tikiInfo['name'] : $tikiInfo['filename']
 						);
-				print_debug("-> " . $tikiInfo['name'] ."\n");
+				print_debug("-> " . ($isCollection ? $tikiInfo['name'] : $tikiInfo['filename']) ."\n");
 				return $property;
 
 			case 'getcontenttype':
@@ -528,7 +546,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 						'httpd/unix-directory' :
 						( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] )
 						);
-				print_debug("-> " . ( $isCollection ?  'httpd/unix-directory' : ( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] ) ) ."\n");
+				print_debug("-> " . ( $isCollection ?  'httpd/unix-directory' : ( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] ) ) ."\n" . print_r($property,true) . "\n");
 				return $property;
 
 			case 'getetag':
@@ -575,14 +593,15 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	private function getContentLength( $path )
 	{
-		print_debug("getContentLength $path". $this->getProperty( $path, 'getcontentlength' )->contentlength ."\n");
-		return $this->getProperty( $path, 'getcontentlength' )->contentlength;
+		$contentlength = $this->getProperty( $path, 'getcontentlength' );
+		print_debug("getContentLength $path". $getcontentlength->contentlength ."\n");
+		return $getcontentlength->contentlength;
 	}
 
 	protected function getETag( $path )
 	{
 		if ( $etag = $this->getProperty( $path, 'getetag' ) ) {
-			return $this->getProperty( $path, 'getetag' )->etag;
+			return $etag->etag;
 		} else {
 			return md5($path);
 		}
@@ -595,7 +614,8 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		// Add all live properties to stored properties
 		foreach ( $this->handledLiveProperties as $property )
 		{
-			$storage->attach( $this->getProperty( $path, $property ) );
+				$storage->attach( $this->getProperty( $path, $property ) );
+				$this->storeProperties( $path, $storage );
 		}
 
 		return $storage;
@@ -786,7 +806,31 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		print_debug("-> getCollectionMembers\ngalleryId:$galleryId\n");
 		if ( $galleryId !== false ) {
-			$files = $filegallib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, 'admin', true, false);
+			if ( $gal_info = $filegallib->get_file_gallery((int)$galleryId )) {
+				$tikilib->get_perm_object($galleryId, 'file gallery', $gal_info);
+			}
+
+			$files = $filegallib->get_files( 0
+					, -1
+					, 'name_desc'
+					, ''
+					, (int)$galleryId
+					, true
+					, true
+					, false
+					, true
+					, false
+					, false
+					, false
+					, false
+					, ''
+					, true
+					, false
+					, ($gal_info['show_backlinks']!='n')
+					, ''
+					, ''
+					);
+
 
 			foreach ( $files['data'] as $fileInfo ) {
 				if ( $fileInfo['isgal'] == '1' ) {
@@ -795,7 +839,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				} else {
 					// Add files without content
 					//$contents[] = new ezcWebdavResource( $path . $fileInfo['name'] . ( $fileInfo['nbArchives'] > 0 ? "?".$fileInfo['nbArchives'] : '') );
-					$contents[] = new ezcWebdavResource( $path . $fileInfo['name'] );
+					$contents[] = new ezcWebdavResource( $path . $fileInfo['filename'] );
 				}
 			}
 		}

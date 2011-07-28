@@ -105,12 +105,12 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 		global $tikilib;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 		print_debug("Authorize...PATH=$path ACCESS=".($access == self::ACCESS_READ?'READ':'WRITE')."\n");
-		$path = dirname(urldecode($path));
-		if ( $path === '/' && $access === self::ACCESS_READ ) return true;
-		$fgal = $filegallib->get_objectid_from_virtual_path($path);
+		$dir_path = dirname(urldecode($path));
+		if ( $dir_path === '/' && $access === self::ACCESS_READ ) return true;
+		$fgal = $filegallib->get_objectid_from_virtual_path($dir_path);
 		$id = $fgal['id'];
 		if (!$id) {
-			print_debug("Authorize...PATH=$path does not exist\n");
+			print_debug("Authorize...PATH=$dir_path does not exist\n");
 			return false;
 		}
 
