@@ -12,12 +12,7 @@ include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/wiki-plugins/wikiplugin_slideshow.php');
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
-	$smarty->display("error_raw.tpl");
-	die;
-}
+$access->check_feature('feature_wiki');
 
 //make the other things know we are loading a slideshow
 $tikilib->is_slideshow = true;
