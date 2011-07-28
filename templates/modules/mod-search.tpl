@@ -73,14 +73,19 @@
 					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'go'} button_default{/if}"
 						   name = "go" value = "{$smod_params.go_submit}"
 							title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
-							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}').attr('page_selected','');" />
+							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}').attr('page_selected','');
+										{if $smod_params.search_action eq 'tiki-searchindex.php'}
+											$('#search-module-form{$search_mod_usage_counter} input[name=\'filter~content\']').attr('name', 'find');
+										{/if}" />
 					<input type="hidden" name="exact_match" value="" />
 				{/if}
 			{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
 					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
 						   name = "edit" value = "{$smod_params.edit_submit}"
 							title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
-							onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!=find]').attr('name', ''); $('#search-module-form{$search_mod_usage_counter} input[name=find]').attr('name', 'page'); $('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action}').attr('page_selected','');" />
+							onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', '');
+										$('#search-module-form{$search_mod_usage_counter} input[name={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', 'page');
+										$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action}').attr('page_selected','');" />
 				{/if}
 			{if $smod_params.compact eq "y"}
 				</div>
