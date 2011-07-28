@@ -283,9 +283,18 @@
 					<p><input type="submit" value="{tr}Push new items{/tr}"/></p>
 				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_refresh&amp;trackerId={$trackerId|escape:'url'}">
+					{if $tracker_sync.modified}
+						{remarksbox type=warning title="{tr}Local changes will be lost{/tr}"}
+							<p>{tr}When reloading the data from the source, all local changes will be lost.{/tr}</p>
+							<ul>
+								<li>{tr}New items that must be preserved should be pushed using the above controls.{/tr}</li>
+								<li>{tr}Modified items should be edited manually on the source tracker (until a better solution).{/tr}</li>
+							</ul>
+						{/remarksbox}
+					{/if}
 					<div class="submit">
 						<input type="hidden" name="confirm" value="1"/>
-						<input type="submit" name="submit" value="{tr}Refresh{/tr}"/>
+						<input type="submit" name="submit" value="{tr}Reload data from source{/tr}"/>
 					</div>
 				</form>
 				{jq}
@@ -317,6 +326,10 @@
 
 								$(list).append(li);
 							});
+
+							if (data.result.length === 0) {
+								$(list).closest('form').hide();
+							}
 						});
 					});
 				{/jq}

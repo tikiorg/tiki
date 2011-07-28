@@ -426,7 +426,7 @@ class Services_Tracker_Controller
 			$this->insertItem($definition, $item);
 		}
 
-		$this->registerSynchronization($trackerId, $syncInfo['provider'], $syncInfo['source'], time());
+		$this->registerSynchronization($trackerId, $syncInfo['provider'], $syncInfo['source']);
 		return array();
 	}
 
@@ -812,12 +812,12 @@ EXPORT;
 		}
 	}
 
-	private function registerSynchronization($localTrackerId, $serviceUrl, $remoteTrackerId, $last = 0)
+	private function registerSynchronization($localTrackerId, $serviceUrl, $remoteTrackerId)
 	{
 		$attributelib = TikiLib::lib('attribute');
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.provider', rtrim($serviceUrl, '/'));
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.source', $remoteTrackerId);
-		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', $last);
+		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', time());
 	}
 
 	private function clearTracker($trackerId)

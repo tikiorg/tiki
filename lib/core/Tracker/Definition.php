@@ -235,7 +235,8 @@ class Tracker_Definition
 		return array(
 			'provider' => $attributes['tiki.sync.provider'],
 			'source' => $attributes['tiki.sync.source'],
-			'last' => isset($attributes['tiki.sync.last']) ? $attributes['tiki.sync.last'] : null,
+			'last' => $attributes['tiki.sync.last'],
+			'modified' => $this->getConfiguration('lastModif') > $attributes['tiki.sync.last'],
 		);
 	}
 }
