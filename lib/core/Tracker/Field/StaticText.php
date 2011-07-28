@@ -11,7 +11,7 @@
  * Letter key: ~S~
  *
  */
-class Tracker_Field_StaticText extends Tracker_Field_Abstract
+class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -63,6 +63,16 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract
 		return array(
 			'value' => false,
 		);
+	}
+
+	function import($value)
+	{
+		return '';
+	}
+
+	function export($value)
+	{
+		return '';
 	}
 }
 

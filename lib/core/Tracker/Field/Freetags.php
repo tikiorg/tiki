@@ -11,7 +11,7 @@
  * Letter key: ~F~
  *
  */
-class Tracker_Field_Freetags extends Tracker_Field_Abstract
+class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -83,4 +83,15 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract
 	{
 		return $this->renderTemplate('trackeroutput/freetags.tpl', $context);
 	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
+	}
 }
+

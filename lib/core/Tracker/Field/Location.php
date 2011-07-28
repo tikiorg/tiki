@@ -11,7 +11,7 @@
  * Letter key: ~G~
  *
  */
-class Tracker_Field_Location extends Tracker_Field_Abstract
+class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -76,6 +76,16 @@ class Tracker_Field_Location extends Tracker_Field_Abstract
 			TikiLib::lib('header')->add_map();
 			return $this->renderTemplate('trackeroutput/location.tpl', $context);
 		}
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
 	}
 }
 

@@ -11,7 +11,7 @@
  * Letter key: ~f~
  *
  */
-class Tracker_Field_DateTime extends Tracker_Field_Abstract
+class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -110,6 +110,16 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		$new = TikiLib::lib('tiki')->date_format($dformat, (int)$new);
 
 		return parent::watchCompare($old, $new);
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
 	}
 }
 

@@ -11,7 +11,7 @@
  * Letter key: ~h~
  *
  */
-class Tracker_Field_Header extends Tracker_Field_Abstract
+class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -119,6 +119,16 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 				$data_toggle .' style="display:none;"></span>';
 		
 		return $html;
+	}
+
+	function import($value)
+	{
+		return '';
+	}
+
+	function export($value)
+	{
+		return '';
 	}
 }
 

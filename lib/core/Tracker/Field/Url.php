@@ -10,7 +10,7 @@
  * 
  * - url key ~L~
  */
-class Tracker_Field_Url extends Tracker_Field_Abstract
+class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -55,6 +55,16 @@ class Tracker_Field_Url extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate("trackerinput/url.tpl", $context);
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
 	}
 }
 
