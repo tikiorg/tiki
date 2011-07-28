@@ -19,7 +19,7 @@ function tr($content) {
 	return tra( $content, '', false, array_slice( $args, 1 ) );
 }
 
-function tra($content, $lg='', $no_interactive = false, $args = array()) {
+function tra($content, $lg='', $unused = false, $args = array()) {
 	global $prefs;
 	static $languages = array();
 
@@ -38,7 +38,7 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 		init_language( $lang );
 	}
 
-	$out = tra_impl( $content, $lang, $no_interactive, $args );
+	$out = tra_impl( $content, $lang, $args );
 
 	record_string( $content, $out );
 
@@ -74,7 +74,7 @@ function init_language( $lg ) {
 	}
 }
 
-function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
+function tra_impl($content, $lg='', $args = array()) {
 	global $prefs, $tikilib;
 
 	if (empty($content)) {
