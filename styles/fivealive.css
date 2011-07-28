@@ -454,6 +454,15 @@ select {
 	font-size: 12px;
 }
 
+#top_modules #secondary_site_menu ul ul a,
+#top_modules #secondary_site_menu ul ul a:visited {
+	color: #fff;
+	font-weight: normal;
+	text-decoration: none;
+	text-transform: none;
+	font-size: 12px;
+}
+
 #sitesearchbar {
 	color: #fff;
 	height: 45px;
@@ -762,7 +771,8 @@ li.login_link ul li a {
 	text-transform: none;
 }
 
-#tiki-top .cssmenu_horiz ul li:hover a {
+#tiki-top .cssmenu_horiz ul li:hover a,
+#secondary_site_menu .cssmenu_horiz ul li:hover a {
 	text-decoration: none;
 }
 

@@ -89,9 +89,9 @@ function wikiplugin_fancytable($data, $params) {
 	
 	//mask tiki tag content during processing and bring back at the end so that any pipes (| or ~|~) 
 	//inside of tags aren't mistaken for cell dividers
-	//pattern covers (( )), [ ], ~np~ ~/np~, ~tc~ ~/tc~, ~hc~ ~/hc~, { = } (plugins with parameters)
+	//pattern covers (( )), [ ], ~np~ ~/np~, ~tc~ ~/tc~, ~hc~ ~/hc~, { }
 	$pattern = '/(\(\([^\)\)]+\)\)|\[[^\]]+\]|~np~(?:(?!~\/np~).)*~\/np~|~tc~(?:(?!~\/tc~).)*~\/tc~'
-				. '|~hc~(?:(?!~\/hc~).)*~\/hc~|\{[^\=]+[\=]+[^\=\}]+\})/';
+				. '|~hc~(?:(?!~\/hc~).)*~\/hc~|\{(?:(?!\}).)*\})/';
 	//process header
 	if (isset($head)) {
 		if (!empty($headclass)) {
