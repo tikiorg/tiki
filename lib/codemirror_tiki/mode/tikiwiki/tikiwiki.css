@@ -2,7 +2,6 @@
 	margin: .cm-4em;
 	padding: 0;
 	font-family: Helvetica;
-	font-size: 10pt;
 	color: #000000;
 }
 
@@ -68,15 +67,12 @@ pre.code, .editbox {
 	color: #999999;
 }
 .cm-tw-header1 {
-	font-size: 1.cm-3em;
 	font-weight: bold;
 }
 .cm-tw-header2 {
-	font-size: 1.cm-2em;
 	font-weight: bold;
 }
 .cm-tw-header3 {
-	font-size: 1.cm-1em;
 	font-weight: bold;
 }
 .cm-tw-header4 {

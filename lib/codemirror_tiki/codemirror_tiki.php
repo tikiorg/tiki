@@ -11,15 +11,15 @@ function tiki_syntax_highlighter_flex() {
 
 		$headerlib->add_jq_onready("
 			$('textarea')
-				.flexibleCodeMirror({
+				.flexibleSyntaxHighlighter({
 					changeText: '".tra("Change Highlighter")."'
 				});
 			
 			$('.codelisting')
 				.each(function() {
-					$(this).flexibleCodeMirror({
+					$(this).flexibleSyntaxHighlighter({
 						readOnly: true,
-						parse: ['javascript'],
+						mode: 'tikiwiki',
 						width: $(this).width() + 'px',
 						height: $(this).parent().height() + 'px'
 					});
@@ -42,13 +42,6 @@ function tiki_syntax_highlighter_base()
 		
 		$headerlib->add_jsfile( 'lib/codemirror/lib/codemirror.js' );
 		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
-		
-		$headerlib->add_jq_onready("
-			$('#editwiki_toolbar')
-				.css('width', '100%')
-				.nextAll()
-				.css('width', '100%');
-		");
 	}
 }
 
@@ -61,8 +54,8 @@ function tiki_syntax_highlighter_html()
 				.bind('plugin_html_ready', function(args) {
 					var code = args.container.find('textarea:first');
 					
-					code.flexibleCodeMirror({
-						parse: ['xml', 'css', 'javascript', 'html'],
+					code.flexibleSyntaxHighlighter({
+						mode: 'php',
 						lineNumbers: true,
 						changeText: '".tra("Change Highlighter")."',
 						force: true
@@ -81,8 +74,8 @@ function tiki_syntax_highlighter_code()
 				.bind('plugin_code_ready', function(args) {
 					var code = args.container.find('textarea:first');
 					
-					code.flexibleCodeMirror({
-						parse: ['xml', 'css', 'javascript', 'html'],
+					code.flexibleSyntaxHighlighter({
+						mode: 'php',
 						lineNumbers: true,
 						changeText: '".tra("Change Highlighter")."',
 						force: true
@@ -100,8 +93,8 @@ function tiki_syntax_highlighter_r() {
 				.bind('plugin_r_ready', function(args) {
 					var r = args.container.find('textarea:first');
 				
-					r.flexibleCodeMirror({
-						parse: ['r'],
+					r.flexibleSyntaxHighlighter({
+						mode: 'r',
 						lineNumbers: true,
 						changeText: '".tra("Change Highlighter")."',
 						force: true
@@ -119,8 +112,8 @@ function tiki_syntax_highlighter_rr() {
 				.bind('plugin_rr_ready', function(args) {
 					var rr = args.container.find('textarea:first');
 
-					rr.flexibleCodeMirror({
-						parse: ['r'],
+					rr.flexibleSyntaxHighlighter({
+						mode: 'r',
 						lineNumbers: true,
 						changeText: '".tra("Change Highlighter")."',
 						force: true
