@@ -277,6 +277,7 @@ class Services_Tracker_Controller
 
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
+		$syncOnly = $input->synchronizableOnly->int();
 
 		if (! $definition) {
 			throw new Services_Exception(tr('Tracker not found'), 404);
@@ -291,7 +292,16 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Invalid data provided'), 400);
 		}
 
+		$factory = new Tracker_Field_Factory($definition);
 		foreach ($data as $info) {
+			// When used from remote clone, skip fields that do not support what is needed
+			if ($syncOnly) {
+				$handler = $factory->getHandler($info);
+				if (! $handler instanceof Tracker_Field_Synchronizable) {
+					continue;
+				}
+			}
+
 			$this->importField($trackerId, new JitFilter($info), $preserve);
 		}
 
@@ -343,6 +353,7 @@ class Services_Tracker_Controller
 				$trackerId = $this->createTracker($tracker);
 				$this->action_import_fields(new JitFilter(array(
 					'trackerId' => $trackerId,
+					'synchronizableOnly' => 1,
 					'raw' => $export,
 				)));
 				$this->createField(array(
@@ -402,7 +413,15 @@ class Services_Tracker_Controller
 
 		$this->clearTracker($trackerId);
 		
+		$factory = new Tracker_Field_Factory($definition);
 		foreach ($this->getRemoteItems($syncInfo) as $item) {
+			foreach ($item['fields'] as $key => & $value) {
+				if ($field = $definition->getFieldFromPermName($key)) {
+					$handler = $factory->getHandler($field);
+					$value = $handler->import($value);
+				}
+			}
+
 			$item['fields']['syncSource'] = $item['itemId'];
 			$this->insertItem($definition, $item);
 		}
@@ -445,7 +464,7 @@ class Services_Tracker_Controller
 			));
 
 			foreach ($items as $item) {
-				$remoteItemId = $this->insertRemoteItem($syncInfo, $item);
+				$remoteItemId = $this->insertRemoteItem($definition, $syncInfo, $item);
 
 				if ($remoteItemId) {
 					$item['fields']['syncSource'] = $remoteItemId;
@@ -829,10 +848,17 @@ EXPORT;
 		);
 	}
 
-	private function insertRemoteItem($syncInfo, $item)
+	private function insertRemoteItem($definition, $syncInfo, $item)
 	{
 		unset($item['fields']['syncSource']);
 		$item['trackerId'] = $syncInfo['source'];
+
+		$factory = new Tracker_Field_Factory($definition);
+		foreach ($item['fields'] as $key => & $value) {
+			$field = $definition->getFieldFromPermName($key);
+			$handler = $factory->getHandler($field);
+			$value = $handler->export($value);
+		}
 
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client($syncInfo['provider'] . '/tiki-ajax_services.php?' . http_build_query(array(
@@ -905,6 +931,7 @@ EXPORT;
 		$trackerId = $definition->getConfiguration('trackerId');
 		$fields = array();
 
+		$factory = new Tracker_Field_Factory($definition);
 		foreach ($fieldMap as $key => $value) {
 			if ($field = $definition->getFieldFromPermName($key)) {
 				$field['value'] = $value;

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tracker_Field_Language extends Tracker_Field_Abstract
+class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	const OPT_AUTOASSIGN = 0;
 
@@ -100,6 +100,16 @@ class Tracker_Field_Language extends Tracker_Field_Abstract
 	{
 		$languages = $this->getLanguages();
 		return isset($languages[$lang]);
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
 	}
 }
 

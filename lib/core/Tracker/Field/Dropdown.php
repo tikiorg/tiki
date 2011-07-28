@@ -11,7 +11,7 @@
  * Letter key: ~d~ ~D~
  *
  */
-class Tracker_Field_Dropdown extends Tracker_Field_Abstract
+class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	private $type;
 
@@ -93,6 +93,16 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate('trackerinput/dropdown.tpl', $context);
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
 	}
 }
 
