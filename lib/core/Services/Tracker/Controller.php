@@ -345,6 +345,16 @@ class Services_Tracker_Controller
 					'trackerId' => $trackerId,
 					'raw' => $export,
 				)));
+				$this->createField(array(
+					'trackerId' => $trackerId,
+					'type' => 't',
+					'name' => tr('Remote Source'),
+					'permName' => 'syncSource',
+					'description' => tr('Automatically generated field for synchronized trackers. Contains the itemId of the remote item.'),
+					'options' => $this->buildOptions(array(
+						'prepend' => $url . '/item',
+					), 't'),
+				));
 
 				$this->registerSynchronization($trackerId, $url, $remoteTracker);
 
@@ -392,6 +402,7 @@ class Services_Tracker_Controller
 		$this->clearTracker($trackerId);
 		
 		foreach ($this->getRemoteItems($syncInfo) as $item) {
+			$item['fields']['syncSource'] = $item['itemId'];
 			$this->insertItem($definition, $item);
 		}
 
@@ -511,6 +522,15 @@ EXPORT;
 
 	private function buildOptions($input, $typeInfo)
 	{
+		if (is_string($typeInfo)) {
+			$types = $this->getFieldTypes($description);
+			$typeInfo = $types[$typeInfo];
+		}
+
+		if (is_array($input)) {
+			$input = new JitFilter($input);
+		}
+
 		$parts = array();
 
 		foreach ($typeInfo['params'] as $key => $info) {
@@ -584,7 +604,7 @@ EXPORT;
 			'n',
 			'y',
 			$trklib->get_last_position($data['trackerId']) + 10,
-			'',
+			isset($data['options']) ? $data['options'] : '',
 			$data['description'],
 			'',
 			null,
