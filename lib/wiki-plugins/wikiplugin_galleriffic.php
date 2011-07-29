@@ -132,5 +132,6 @@ JQ;
 
 	$headerlib->add_jq_onready($jq);
 	$smarty->assign('images', $files['data']);
+	$smarty->assign('imgWidth', $imgWidth-50);// arbritary number to allow some padding
 	return $smarty->fetch('wiki-plugins/wikiplugin_galleriffic.tpl');
 }
