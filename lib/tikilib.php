@@ -6752,7 +6752,7 @@ if( \$('#$id') ) {
 					// >X( >X[ >:[ >X-( >X-[ >:-[
 					'/(\s|^)\>[:X]-?\(/' => "$1<img alt=\">:[\" title=\"".tra('mad')."\" src=\"img/smiles/icon_mad.gif\" />",
 					// =D =-D
-					'/(\s|^)[=]-?D/' => "$1<img alt=\"=D\" title=\"".tra('mr. green laughing')."\" src=\"img/smiles/icon_mrgreen.gif\" />",
+					'/(\s|^)[=]-?D/' => "$1<img alt=\"=D\" title=\"".tra('Mr. Green laughing')."\" src=\"img/smiles/icon_mrgreen.gif\" />",
 				);
 			}
 
