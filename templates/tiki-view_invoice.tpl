@@ -13,12 +13,12 @@
 <table style='width: 100%;'>
 	<tr>
 		<td>
-			Invoice {$invoice.$invoiceNumber}
+			{tr 0=$invoice.$invoiceNumber}Invoice %0{/tr}
 			<br />
-			Date Issued {$invoice.$dateIssued}
+			{tr 0=$invoice.$dateIssued}Date Issued %0{/tr} 
 			<br />
 			<br />
-			Status 
+			{tr}Status{/tr} 
 		</td>
 		<td>
 			{if $setting.Logo neq ''}<img src='{$setting.Logo}' /><br />{/if}
@@ -49,9 +49,9 @@
 {/foreach}
 
 </table>
-Amount: {$amount}<br />
-Total: {$amount}<br />
-Payment Terms: {$invoice.$paymentTerm}
+{tr 0=$amount}Amount: %0{/tr}<br />
+{tr 0=$amount}Total: %0{/tr}<br />
+{tr 0=$invoice.$paymentTerm}Payment Terms: %0{/tr}
 <br />
 <br />
-<a href="tiki-edit_invoice?InvoiceId={$InvoiceId}">{tr}Edit Invoice{/tr}</a>
+<a href="tiki-edit_invoice.php?InvoiceId={$InvoiceId}">{tr}Edit Invoice{/tr}</a>
