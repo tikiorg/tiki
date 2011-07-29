@@ -3965,6 +3965,8 @@ class TrackerLib extends TikiLib
 		global $user, $group;
 		$trackerId = $args['trackerId'];
 		$itemId = $args['object'];
+		$new_itemId = $args['new_itemId'];
+		$tracker_info = $args['tracker_info'];
 		$definition = Tracker_Definition::get($trackerId);
 
 		if ($definition->isEnabled('autoCreateGroup')) {
