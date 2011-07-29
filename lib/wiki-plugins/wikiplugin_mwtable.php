@@ -7,7 +7,7 @@
 
 function wikiplugin_mwtable_info() {
 	return array(
-		'name' => tra('Media Wiki Table'),
+		'name' => tra('MediaWiki Table'),
 		'documentation' => 'PluginMWTable',
 		'description' => tra('Display a table using MediaWiki syntax (experimental - may change in future versions)'),
 		'prefs' => array( 'wikiplugin_mwtable' ),
