@@ -3692,18 +3692,18 @@ class TrackerLib extends TikiLib
 		$newStatus = $new['status'];
 
 		$the_data = '';
-		if (!empty($oldStatus) || !empty($status)) {
-			if (!empty($itemId) && $oldStatus != $status) {
+		if (!empty($oldStatus) || !empty($newStatus)) {
+			if (!empty($itemId) && $oldStatus != $newStatus) {
 			   $this->log($version, $itemId, -1, $oldStatus);
 			}
 			$the_data .= '-[Status]-: ';
 			$statusTypes = $this->status_types();
-			if (isset($oldStatus) && $oldStatus != $status) {
+			if (isset($oldStatus) && $oldStatus != $newStatus) {
 				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
 			}
 
-			if (!empty($status)) {
-				$the_data .= $statusTypes[$status]['label'];
+			if (!empty($newStatus)) {
+				$the_data .= $statusTypes[$newStatus]['label'];
 			}
 			$the_data .=  "\n----------\n";
 		}
@@ -3914,7 +3914,8 @@ class TrackerLib extends TikiLib
 
 		$new_categs = array_diff($current_categories, $old_categories);
 		$del_categs = array_diff($old_categories, $current_categories);
-		
+
+		global $prefs;
 		$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
 		$sig_add = array_intersect($sig_catids, $new_categs);
 		$sig_del = array_intersect($sig_catids, $del_categs);
