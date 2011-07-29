@@ -4,7 +4,7 @@
 	cursor: text;
 }
 /*from the codemirror website*/
- .fullscreen {
+.CodeMirror-fullscreen {
 	display: block;
 	position: absolute;
 	top: 0;
@@ -16,8 +16,6 @@
 	padding: 0;
 	border: 0px solid #BBBBBB;
 	opacity: 1;
-}
-.CodeMirror-fullscreen {
 	width: 100%;
 	height: 100%;
 	position: absolute;
