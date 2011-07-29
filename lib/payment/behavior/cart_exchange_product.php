@@ -59,7 +59,7 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 			$eventStartDate = $trklib->get_item_value($eventsTrackerId, $eventId, $eventStartFieldId);
 			$eventEndDate = $trklib->get_item_value($eventsTrackerId, $eventId, $eventEndFieldId);
 			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventStartFieldId, 'value' => $eventStartDate);
-			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventEndFieldId, 'value' => $eventEndFieldDate);
+			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventEndFieldId, 'value' => $eventEndDate);
 			
 		}
 	}
