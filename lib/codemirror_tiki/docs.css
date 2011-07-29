@@ -3,6 +3,7 @@
 	border: 1px solid gray;
 	cursor: text;
 	font: 1em Arial,Helvetica,sans-serif ! important;
+	font-size: 1em ! important;
 }
 
 /*from the codemirror website*/
