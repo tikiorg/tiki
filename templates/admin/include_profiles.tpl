@@ -338,7 +338,7 @@ $("#repository, #categories").change(function(){
 		
 	       {if isset($result) && $result|@count != '0'}
 	
-	        <b>Step 2: Click on a Profile to review and see description</b>
+	        <b>{tr}Step 2: Click on a Profile to review and see description{/tr}</b>
 			<table class="normal">
 				<tr>
 					<th>{tr}Profile{/tr}</th>
