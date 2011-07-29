@@ -170,7 +170,7 @@
 								<p>{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.</p>
 							</div>
 						{/if}
-						{textarea codemirror='true' syntax='tikiwiki'}{$pagedata}{/textarea}
+						{textarea codemirror='true' syntax='tiki'}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
 								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>

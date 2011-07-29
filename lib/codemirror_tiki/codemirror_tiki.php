@@ -19,7 +19,7 @@ function tiki_syntax_highlighter_flex() {
 				.each(function() {
 					$(this).flexibleSyntaxHighlighter({
 						readOnly: true,
-						mode: 'tikiwiki',
+						mode: 'tiki',
 						width: $(this).width() + 'px',
 						height: $(this).parent().height() + 'px'
 					});
