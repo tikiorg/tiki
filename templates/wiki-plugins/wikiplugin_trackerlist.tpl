@@ -95,7 +95,7 @@
 			{if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 		<th style="width:5%">{tr}atts{/tr}</th>
 			{/if}
-			{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
+			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 		<th>{tr}Action{/tr}</th>
 			{/if}
 
@@ -189,6 +189,27 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 				{/if}
 		</td>
 			{/if}
+			{if $showcloseitem eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
+		<td>
+				{if $tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
+					{self_link closeitem=`$items[user].itemId`}{tr}Close item{/tr}{/self_link}
+				{/if}
+		</td>
+			{/if}
+			{if $showopenitem eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
+		<td>
+				{if $tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
+					{self_link openitem=`$items[user].itemId`}{tr}Open item{/tr}{/self_link}
+				{/if}
+		</td>
+			{/if}
+			{if $showpenditem eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
+		<td>
+				{if $tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
+					{self_link penditem=`$items[user].itemId`}{tr}Pend item{/tr}{/self_link}
+				{/if}
+		</td>
+			{/if}			
 	</tr>
 		{assign var=itemoff value=$itemoff+1}
 		{else}{* a pretty tpl *}
