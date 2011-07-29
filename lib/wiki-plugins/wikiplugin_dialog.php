@@ -86,6 +86,13 @@ function wikiplugin_dialog_info() {
 				'filter' => 'pagename',
 				'default' => '',
 			),
+			'openAction' => array(
+				'required' => false,
+				'name' => tra('Open Action'),
+				'description' => tra('JS to exectute when dialog opens.'),
+				'filter' => 'rawhtml_unsafe',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -119,22 +126,35 @@ function wikiplugin_dialog($data, $params) {
 	if (!empty($params['showAnim'])) { $options['show'] = $params['showAnim']; }
 	if (!empty($params['hideAnim'])) { $options['hide'] = $params['hideAnim']; }
 
-	$buttons = '{';	// buttons need functions attached and json_encode cannot deal with them ;(
+	$buttons = '';	// buttons need functions attached and json_encode cannot deal with them ;(
 
 	$nbuts = count($params['buttons']);
-	for ($i = 0; $i < $nbuts; $i++) {
-		if (!isset($params['actions'][$i])) { $params['actions'][$i] = '$(this).dialog("close");'; }
-		if (strpos($params['actions'][$i], '$(this).dialog("close");') === false) {
-			$params['actions'][$i] .= ';$(this).dialog("close");';
+	if ($nbuts > 0) {
+		$buttons = '{';
+		for ($i = 0; $i < $nbuts; $i++) {
+			if (!isset($params['actions'][$i])) { $params['actions'][$i] = '$(this).dialog("close");'; }
+			if (strpos($params['actions'][$i], '$(this).dialog("close");') === false) {
+				$params['actions'][$i] .= ';$(this).dialog("close");';
+			}
+			$buttons .= strlen($buttons) > 1 ? ',' : '';
+			$buttons .= json_encode($params['buttons'][$i]);
+			$buttons .= ': function(){' . $params['actions'][$i] . '}';
 		}
-		$buttons .= strlen($buttons) > 1 ? ',' : '';
-		$buttons .= json_encode($params['buttons'][$i]);
-		$buttons .= ': function(){' . $params['actions'][$i] . '}';
+		$buttons .= '}';
+		$options['buttons'] = 'buttonsdummy';
 	}
-	$buttons .= '}';
-	$options['buttons'] = 'buttonsdummy';
+	$opens = '';
+	if (!empty($params['openAction'])) {
+		$opens = 'function(){' . $params['openAction'] . '}';
+		$options['open'] = 'opendummy';
+	}
 	$optString = json_encode($options);
-	$optString = str_replace('"buttonsdummy"', $buttons, $optString);
+	if (!empty($buttons)) {
+		$optString = str_replace('"buttonsdummy"', $buttons, $optString);
+	}
+	if (!empty($opens)) {
+		$optString = str_replace('"opendummy"', $opens, $optString);
+	}
 
 	$js = '$("#'.$params['id'].'").dialog(' . $optString . ');';
 	$headerlib->add_js('$(function() {' . $js . '});');
