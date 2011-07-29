@@ -1140,8 +1140,10 @@ class TrackerLib extends TikiLib
 				$fieldIds[] = $k;	// sometimes filterfields are provided with the fieldId only on the array keys
 			}
 		}
-				
-		$mid .= ' AND ' . $this->in('ttif.fieldId', $fieldIds, $bindvars);
+
+		if (!empty($fieldIds)) {
+			$mid .= ' AND ' . $this->in('ttif.fieldId', $fieldIds, $bindvars);
+		}
 
 		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
 				.', '.( ($numsort) ? "right(lpad($csort_mode,40,'0'),40)" : $csort_mode).' as `sortvalue`'
