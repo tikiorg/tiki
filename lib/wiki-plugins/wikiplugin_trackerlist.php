@@ -449,6 +449,42 @@ function wikiplugin_trackerlist_info() {
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'showopenitem' => array(
+					'required' => false,
+					'name' => tra('Show Open Item'),
+					'description' => tra('Show an open item  option (not shown by default)'),
+					'filter' => 'alpha',
+					'default' => 'n',
+					'options' => array(
+							array('text' => '', 'value' => ''),
+							array('text' => tra('Yes'), 'value' => 'y'),
+							array('text' => tra('No'), 'value' => 'n')
+					)
+			),
+			'showcloseitem' => array(
+					'required' => false,
+					'name' => tra('Show Close Item'),
+					'description' => tra('Show a close item option (not shown by default)'),
+					'filter' => 'alpha',
+					'default' => 'n',
+					'options' => array(
+							array('text' => '', 'value' => ''),
+							array('text' => tra('Yes'), 'value' => 'y'),
+							array('text' => tra('No'), 'value' => 'n')
+					)
+			),
+			'showpenditem' => array(
+					'required' => false,
+					'name' => tra('Show Pend Item'),
+					'description' => tra('Show a pend item option (not shown by default)'),
+					'filter' => 'alpha',
+					'default' => 'n',
+					'options' => array(
+							array('text' => '', 'value' => ''),
+							array('text' => tra('Yes'), 'value' => 'y'),
+							array('text' => tra('No'), 'value' => 'n')
+					)
+			),
 			'showwatch' => array(
 				'required' => false,
 				'name' => tra('Show Watch Button'),
@@ -914,6 +950,18 @@ function wikiplugin_trackerlist($data, $params) {
 			$showdelete = 'n';
 		}
 		$smarty->assign_by_ref('showdelete', $showdelete);
+		if (!isset($showpenditem)) {
+			$showpenditem = 'n';
+		}
+		$smarty->assign_by_ref('showpenditem', $showpenditem);
+		if (!isset($showcloseitem)) {
+			$showcloseitem = 'n';
+		}
+		$smarty->assign_by_ref('showcloseitem', $showcloseitem);
+		if (!isset($showopenitem)) {
+			$showopenitem = 'n';
+		}
+		$smarty->assign_by_ref('showopenitem', $showopenitem);
 		if (!isset($showpagination)) {
 			$showpagination = 'y';
 		}
@@ -1300,6 +1348,36 @@ function wikiplugin_trackerlist($data, $params) {
 					|| ($perms['tiki_p_remove_tracker_items_pending'] == 'y' && $item_info['status'] == 'p')
 					|| ($perms['tiki_p_remove_tracker_items_closed'] == 'y' && $item_info['status'] == 'c')	) {
 					$trklib->remove_tracker_item($_REQUEST['delete']);
+				}
+			}
+		}
+		if (!empty($_REQUEST['closeitem'])) {
+			if (($item_info = $trklib->get_item_info($_REQUEST['closeitem'])) && $trackerId == $item_info['trackerId']) {
+				if ($tiki_p_admin_trackers == 'y'
+					|| ($perms['tiki_p_modify_tracker_items'] == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+					|| ($perms['tiki_p_modify_tracker_items_pending'] == 'y' && $item_info['status'] == 'p')
+					|| ($perms['tiki_p_modify_tracker_items_closed'] == 'y' && $item_info['status'] == 'c') ) {
+					$trklib->change_status(array(array('itemId' => $_REQUEST['closeitem'])), 'c');
+				}
+			}
+		}
+		if (!empty($_REQUEST['penditem'])) {
+			if (($item_info = $trklib->get_item_info($_REQUEST['penditem'])) && $trackerId == $item_info['trackerId']) {
+				if ($tiki_p_admin_trackers == 'y'
+					|| ($perms['tiki_p_modify_tracker_items'] == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+					|| ($perms['tiki_p_modify_tracker_items_pending'] == 'y' && $item_info['status'] == 'p')
+					|| ($perms['tiki_p_modify_tracker_items_closed'] == 'y' && $item_info['status'] == 'c') ) {
+					$trklib->change_status(array(array('itemId' => $_REQUEST['penditem'])), 'p');
+				}
+			}
+		}
+		if (!empty($_REQUEST['openitem'])) {
+			if (($item_info = $trklib->get_item_info($_REQUEST['openitem'])) && $trackerId == $item_info['trackerId']) {
+				if ($tiki_p_admin_trackers == 'y'
+					|| ($perms['tiki_p_modify_tracker_items'] == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c')
+					|| ($perms['tiki_p_modify_tracker_items_pending'] == 'y' && $item_info['status'] == 'p')
+					|| ($perms['tiki_p_modify_tracker_items_closed'] == 'y' && $item_info['status'] == 'c') ) {
+					$trklib->change_status(array(array('itemId' => $_REQUEST['openitem'])), 'o');
 				}
 			}
 		}
