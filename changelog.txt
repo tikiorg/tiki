@@ -30,6 +30,14 @@ Version 7.1
 ------------------
 
 ----------------------------------------------
+r35764 | changi67 | 2011-07-31 22:50:46 +0200 (Sun, 31 Jul 2011) | 1 line
+
+[FIX] wrong variable
+----------------------------------------------
+r35763 | changi67 | 2011-07-31 22:48:26 +0200 (Sun, 31 Jul 2011) | 1 line
+
+[FIX] get_logs return a string with commit that are not sort. Just add a sort on that log
+----------------------------------------------
 r35758 | lindonb | 2011-07-31 17:02:53 +0200 (Sun, 31 Jul 2011) | 1 line
 
 [FIX] Remove css rule that was squeezing the login popup in the darkroom theme.
