@@ -367,6 +367,31 @@ body.fixed_width .fixedwidth .fixedwidth {
 .siteloginbar_poppedup {
     width: 13em !important;
 }
+
+.siteloginbar_popup .tabmark {
+	float: left;
+	padding: 4px 8px;
+	margin-right: 0;
+}
+
+.siteloginbar_popup a > .sf-sub-indicator {
+	bottom: 1px;
+}
+
+.siteloginbar_poppedup {
+	margin-top: -8px;
+}
+
+.siteloginbar_popup .cssmenu_horiz li:hover {
+	background: #474747;
+}
+
+
+.siteloginbar_popup .pass a:hover,
+.siteloginbar_popup .register a:hover {
+	color: #d8d8d8;
+	text-decoration: underline;
+}
 /*
 .siteloginbar * {
 	padding: 2px;

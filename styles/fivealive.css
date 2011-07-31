@@ -572,7 +572,7 @@ select {
 #top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 10px;
-	bottom: -5px;
+	bottom: -1px;
 	width: 10em;
 /*	height: 26px;*/
 	line-height: 1;
@@ -656,8 +656,9 @@ a.login_link {
 /*	margin-bottom: -1px !important;*/
 }
 .siteloginbar_popup .cssmenu_horiz ul {
-	margin-top: -5px;
+	margin-top: -2px;
 }
+
 .siteloginbar_popup .cssmenu_horiz #register_link ul {
 	margin-left: -4em;
 }

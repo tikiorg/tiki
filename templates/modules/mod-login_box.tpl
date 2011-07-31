@@ -144,7 +144,7 @@ function doChallengeResponse() {
 			{if $prefs.rememberme eq 'always'}
 				<input type="hidden" name="rme" id="login-remember-module-input_{$module_logo_instance}" value="on" />
 			{else}
-				<div style="text-align: center">
+				<div style="text-align: center" class="rme">
 					<input type="checkbox" name="rme" id="login-remember-module_{$module_logo_instance}" value="on" />
 					<label for="login-remember-module_{$module_logo_instance}">{tr}Remember me{/tr}</label>
 					({tr}for{/tr}
@@ -181,11 +181,11 @@ function doChallengeResponse() {
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div>
 				{strip}
-				{if $module_params.show_register eq 'y'}
-					<div><a {*class="linkmodule"*} href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
-				{/if}
 				{if $module_params.show_forgot eq 'y'}
-					<div><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
+					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password.{/tr}</a></div>
+				{/if}
+				{if $module_params.show_register eq 'y'}
+					<div class="register"><a {*class="linkmodule"*} href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
 				{/if}
 				{/strip}
 			</div>
