@@ -30,6 +30,208 @@ Version 7.1
 ------------------
 
 ----------------------------------------------
+r35758 | lindonb | 2011-07-31 17:02:53 +0200 (Sun, 31 Jul 2011) | 1 line
+
+[FIX] Remove css rule that was squeezing the login popup in the darkroom theme.
+----------------------------------------------
+r35757 | chibaguy | 2011-07-31 11:18:17 +0200 (Sun, 31 Jul 2011) | 1 line
+
+[FIX] Link/background contrast in logged-in site header login dropdown.
+----------------------------------------------
+r35756 | chibaguy | 2011-07-31 11:10:34 +0200 (Sun, 31 Jul 2011) | 1 line
+
+[FIX] Site header login popup layout improved (some classes were missing in the .tpl and some CSS rules needed updating. Thanks to Lindon for reporting.
+----------------------------------------------
+r35751 | nkoth | 2011-07-30 00:28:56 +0200 (Sat, 30 Jul 2011) | 1 line
+
+[FIX] Fix problem when using trackerfilter, when you change the page to a later page, and then add a filter, that there will be no results shown if there are less results than the number of pages originally paginated to.
+----------------------------------------------
+r35745 | nkoth | 2011-07-29 20:36:12 +0200 (Fri, 29 Jul 2011) | 1 line
+
+[FIX] Handle case where a cancel payment receives a payment (e.g when a user is delayed at Paypal when cancellation happens or other such cases)
+----------------------------------------------
+r35741 | nkoth | 2011-07-29 18:01:31 +0200 (Fri, 29 Jul 2011) | 1 line
+
+[FIX] Associated event end date not storing properly when exchanging products
+----------------------------------------------
+r35712 | sept_7 | 2011-07-28 16:11:52 +0200 (Thu, 28 Jul 2011) | 20 lines
+
+[FIX] Fix WebDAV in Tiki7 backport of fixes from trunk
+
+[FIX/bp r35619 ] fix permission checking in Tikilib::get_perm_object(), it seems that the line :
+  $perms->setGroups($userlib->list_all_groups());
+is needed, it should be in the method Perms::get() I suppose but isn't for some reason...
+[FIX/bp r35619] Clean up the call to get_files() in WebDAV...
+[FIX/bp r35620] Fix WebDAV after revamp of some function in filegallib.php
+[FIX/bp r35621] Fix get_perm_object with correct group setting...
+r35637 | sept_7 | 2011-07-24 18:38:07 +0200 (dim. 24 juil. 2011) | 3 lignes
+[FIX/bp r35637] Fix WebDAV for propall, some pb with the storage of
+properties... more work to optimize all this but at least it works ! ;p
+[FIX/bp r35655] Fix WebDAV miem-type on ressource creation...
+[FIX/bp r35656] WebDAV fix more contentype and make sure PATH_INFO is at least '/' (makes pb with nautilus :( thanx Xavi for noticing)
+[FIX/bp r35657] WebDAV better handling of mimetype on upload
+[FIX/bp r35682] WebDAV : fix miss placed sub query string in filegallib.php responsible for empty collection for users != admin
+[EHN/bp r35682] WebDAV for file use filename instead of name
+[FIX/bp r35683] Filegals small cleanup and use of $my_user instead of $user, broken with my last commit
+[FIX/bp r35692] WebDAV, fix access to archived files...
+[FIX/bp r35710] WebDAV really use filename for files...
+
+----------------------------------------------
+r35708 | jonnybradley | 2011-07-28 12:09:18 +0200 (Thu, 28 Jul 2011) | 1 line
+
+[FIX] search module: More recovery from unified search changes (titles and edit buttons)
+----------------------------------------------
+r35707 | jonnybradley | 2011-07-28 11:39:50 +0200 (Thu, 28 Jul 2011) | 1 line
+
+[FIX] html base tag: Use REQUEST_URI if other server vars not set, and don't use it at all if not found as using $base_url instead produces incorrect results on in-page anchors (thanks Sylvie)
+----------------------------------------------
+r35691 | sylvieg | 2011-07-27 20:52:44 +0200 (Wed, 27 Jul 2011) | 1 line
+
+[ENH]newsletter: a div around article clip to be able to design
+----------------------------------------------
+r35680 | sylvieg | 2011-07-27 13:56:09 +0200 (Wed, 27 Jul 2011) | 1 line
+
+[FIX]action calendar: quick fix to see something (action calendar must be merged with calendar or removed?
+----------------------------------------------
+r35679 | jonnybradley | 2011-07-27 11:41:34 +0200 (Wed, 27 Jul 2011) | 1 line
+
+[FIX] jslint warnings
+----------------------------------------------
+r35673 | lindonb | 2011-07-27 04:40:18 +0200 (Wed, 27 Jul 2011) | 1 line
+
+[FIX] Pattern was messing up tables with complex syntax. Regression introduced with r34417.
+----------------------------------------------
+r35661 | sylvieg | 2011-07-26 17:50:08 +0200 (Tue, 26 Jul 2011) | 1 line
+
+[FIX]IMG: do no generate a link if thumb=y and link=''
+----------------------------------------------
+r35658 | chibaguy | 2011-07-26 11:30:51 +0200 (Tue, 26 Jul 2011) | 1 line
+
+[FIX] Secondary site menu dropdowns should have same appearance/behavior as main horizontal menu (text-transform, selected link and its children, etc.).
+----------------------------------------------
+r35653 | sampaioprimo | 2011-07-25 23:13:25 +0200 (Mon, 25 Jul 2011) | 2 lines
+
+[bp/35651]adding tiki-index_p.php to robots.txt
+
+----------------------------------------------
+r35644 | xavidp | 2011-07-25 10:17:59 +0200 (Mon, 25 Jul 2011) | 1 line
+
+[FIX]oups: Adding svn Id keyword
+----------------------------------------------
+r35642 | lindonb | 2011-07-25 06:40:02 +0200 (Mon, 25 Jul 2011) | 1 line
+
+[FIX] Db errors were missing client information in the tiki-syslog
+----------------------------------------------
+r35640 | chibaguy | 2011-07-25 03:32:36 +0200 (Mon, 25 Jul 2011) | 1 line
+
+[FIX] Missing end bracket caused parse error that caused forum and blog posts to not be styled. Thanks, Lindon. (Three CSS2.1 validation errors in file found and removed.)
+----------------------------------------------
+r35623 | sylvieg | 2011-07-23 22:28:55 +0200 (Sat, 23 Jul 2011) | 1 line
+
+[FIX]FILES: do not return extra empty lines
+----------------------------------------------
+r35600 | sylvieg | 2011-07-22 20:39:22 +0200 (Fri, 22 Jul 2011) | 1 line
+
+oops: fix 35587
+----------------------------------------------
+r35598 | chealer | 2011-07-22 20:11:28 +0200 (Fri, 22 Jul 2011) | 1 line
+
+fix Id
+----------------------------------------------
+r35597 | chealer | 2011-07-22 20:09:47 +0200 (Fri, 22 Jul 2011) | 1 line
+
+[FIX] avoid error when cleaning up tiki_sefurl_regex_out UNIQUE INDEX left mess when INDEX doesn't exist
+----------------------------------------------
+r35595 | chealer | 2011-07-22 19:20:44 +0200 (Fri, 22 Jul 2011) | 1 line
+
+[bp/r35579][FIX] Edit Gallery: broken display in Display Properties tab
+----------------------------------------------
+r35590 | sylvieg | 2011-07-22 16:35:23 +0200 (Fri, 22 Jul 2011) | 1 line
+
+[FIX]newsletter: move function clip as called also in nllib. TODO: check that the optim is still effitient without the global
+----------------------------------------------
+r35587 | sylvieg | 2011-07-22 16:00:08 +0200 (Fri, 22 Jul 2011) | 1 line
+
+[FIX]newsletter: fix batch since the throttle add-on
+----------------------------------------------
+r35586 | jyhem | 2011-07-22 15:55:46 +0200 (Fri, 22 Jul 2011) | 1 line
+
+[ENH] Memory savings: Don't load unused libraries
+----------------------------------------------
+r35571 | sylvieg | 2011-07-21 21:57:53 +0200 (Thu, 21 Jul 2011) | 1 line
+
+[ENH]FILES: max param
+----------------------------------------------
+r35559 | xavidp | 2011-07-21 17:40:23 +0200 (Thu, 21 Jul 2011) | 1 line
+
+[FIX]Fix parsing of scripts through PluginR by adding a method to prevent parsing of smarty when using pretty trackers. A new smarty resource and trackerlist param called 'tplwiki' is added which allows using content in a wiki page as if it was a tpl on disk. Almost the same as previous smarty resource and trackerlist param 'wiki', but with no parsing (as trackerlsit param 'tpl' on disk). Thanks heaps sylvieg!
+----------------------------------------------
+r35554 | xavidp | 2011-07-21 10:39:56 +0200 (Thu, 21 Jul 2011) | 1 line
+
+[FIX]Fix listing also months links for articles. Thanks Jyhem for the pointer about where to fix it.
+----------------------------------------------
+r35552 | jonnybradley | 2011-07-21 09:47:06 +0200 (Thu, 21 Jul 2011) | 1 line
+
+[FIX] forums: Better fix for topic size issue, still using {textarea} object. Also fix incorrect toolbar showing under wrong circumstances and remove dead row and col code.
+----------------------------------------------
+r35551 | chealer | 2011-07-21 05:35:08 +0200 (Thu, 21 Jul 2011) | 2 lines
+
+[FIX] Forums: When using the non-WYSIWYG mode, the New Forum Topic textarea default size is only 1 row tall and 12 characters wide (reverts r30595 on tiki-view_forum.tpl)
+Ref: http://article.gmane.org/gmane.comp.cms.tiki.cvs/65556
+----------------------------------------------
+r35547 | jonnybradley | 2011-07-20 22:19:05 +0200 (Wed, 20 Jul 2011) | 2 lines
+
+[FIX] search: $prefs['feature_search_fulltext'] not always set at this point
+
+----------------------------------------------
+r35534 | sylvieg | 2011-07-20 20:24:29 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[bp/r35413][FIX]sefurl: better fix to 33975 when switching with url cat111-xxx
+----------------------------------------------
+r35521 | sylvieg | 2011-07-20 15:46:56 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[FIX]FILES: fix showfilename=n && showname=n
+----------------------------------------------
+r35518 | sylvieg | 2011-07-20 14:49:38 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[FIX]FILES: fix showgallery param
+----------------------------------------------
+r35515 | jonnybradley | 2011-07-20 14:08:55 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[FIX] search: Better fix for search_default_where pref taking into account the object types are named differently in the different searches. Also add missing types to unified search list.
+----------------------------------------------
+r35514 | jonnybradley | 2011-07-20 13:59:42 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[FIX] search: Complete updating of search object types in search module for unified search
+----------------------------------------------
+r35512 | jonnybradley | 2011-07-20 13:16:41 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[FIX] search: Default object type should be 'wiki page' not 'wikis' and also 'trackeritem' not trackers (thanks Xavi for the clue)
+----------------------------------------------
+r35508 | nkoth | 2011-07-20 00:34:05 +0200 (Wed, 20 Jul 2011) | 1 line
+
+[FIX] >=, <=, >, <  filters not working for numeric fields in tracker filter. It was only matching exact matches.
+----------------------------------------------
+r35504 | sylvieg | 2011-07-19 22:07:18 +0200 (Tue, 19 Jul 2011) | 1 line
+
+[FIX]articleclip: sort on publish date desc
+----------------------------------------------
+r35503 | sylvieg | 2011-07-19 21:32:15 +0200 (Tue, 19 Jul 2011) | 1 line
+
+[FIX]articleclip: a warning to explain the perm problem
+----------------------------------------------
+r35497 | jonnybradley | 2011-07-19 18:33:59 +0200 (Tue, 19 Jul 2011) | 1 line
+
+[FIX] autosave: html encoding on non-allow_html pages broke again, resulting in html encoded entities appearing in autosaved markup
+----------------------------------------------
+r35471 | sylvieg | 2011-07-18 21:57:17 +0200 (Mon, 18 Jul 2011) | 1 line
+
+[FIX]cache: the parsiong can be called 2 times if the page is in a menupage and when viewing the page
+----------------------------------------------
+r35457 | jonnybradley | 2011-07-18 12:35:40 +0200 (Mon, 18 Jul 2011) | 1 line
+
+[FIX] edit: Error - missing var
+----------------------------------------------
 r35405 | jonnybradley | 2011-07-15 20:01:37 +0200 (Fri, 15 Jul 2011) | 1 line
 
 [FIX] Missing features and perms checks and update test script.
