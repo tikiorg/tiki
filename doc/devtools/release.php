@@ -761,7 +761,7 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 		
 		foreach ( $mycommits as $commitnum => $commitinfo ) {
 			if ( $lastLogRevision > 0 && $commitnum != $lastLogRevision - 1 && $lastLogRevision != $maxRevision ) {
-				print "\nProblem with commit ".( $lastLogRevision - 1 )."\n (trying {$logEntry[1]} after $lastLogRevision)";
+				print "\nProblem with commit ".( $lastLogRevision - 1 )."\n (trying {$commitnum} after $lastLogRevision)";
 				die;
 			}
 
