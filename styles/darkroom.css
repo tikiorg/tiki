@@ -388,7 +388,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 
 .siteloginbar_popup .pass a:hover,
-.siteloginbar_popup .register a:hover {
+.siteloginbar_popup .register a:hover,
+#logout_link_1 a:hover {
 	color: #d8d8d8;
 	text-decoration: underline;
 }
