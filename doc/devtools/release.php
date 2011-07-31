@@ -755,26 +755,31 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 	echo "\rRetrieving logs from revision $minByStep to $maxRevision ...\t\t\t";
 	$logs = get_logs( $path, $minByStep, $maxRevision);
 	if ( preg_match_all('/^r(\d+) \|\s([^\|]+)\s\|\s(\d+-\d+-\d+)\s.*\n\n(.*)\-+\n/Ums', $logs, $matches, PREG_SET_ORDER) ) {
-		foreach ( $matches as $logEntry ) {
-			if ( $lastLogRevision > 0 && $logEntry[1] != $lastLogRevision - 1 && $lastLogRevision != $maxRevision ) {
+		foreach ( $matches as $logEntry ) 
+			$mycommits[$logEntry[1]]= array($logEntry[2],$logEntry[3]);
+		krsort($mycommits);
+		
+		foreach ( $mycommits as $commitnum => $commitinfo ) {
+			if ( $lastLogRevision > 0 && $commitnum != $lastLogRevision - 1 && $lastLogRevision != $maxRevision ) {
 				print "\nProblem with commit ".( $lastLogRevision - 1 )."\n (trying {$logEntry[1]} after $lastLogRevision)";
 				die;
 			}
-			$lastLogRevision = $logEntry[1];
-			$author = strtolower($logEntry[2]);
+
+			$lastLogRevision = $commitnum;
+			$author = strtolower($commitinfo[0]);
 
 			// Remove empty author or authors like (no author), which may be translated depending on server locales
 			if ( empty( $author ) || $author{0} == '(' ) continue;
 
 			if ( !isset($contributors[$author]) ) $contributors[$author] = array();
 
-			$contributors[$author]['Author'] = $logEntry[2];
-			$contributors[$author]['First Commit'] = $logEntry[3];
+			$contributors[$author]['Author'] = $commitinfo[0];
+			$contributors[$author]['First Commit'] = $commitinfo[1];
 
 			if ( isset($contributors[$author]['Number of Commits']) ) {
 				$contributors[$author]['Number of Commits']++;
 			} else {
-				$contributors[$author]['Last Commit'] = $logEntry[3];
+				$contributors[$author]['Last Commit'] = $commitinfo[1];
 				$nbCommiters++;
 				$contributors[$author]['Number of Commits'] = 1;
 			}
