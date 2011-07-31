@@ -364,10 +364,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	line-height: 50%;
 }
 
-.siteloginbar_poppedup {
-    width: 13em !important;
-}
-
 .siteloginbar_popup .tabmark {
 	float: left;
 	padding: 4px 8px;
