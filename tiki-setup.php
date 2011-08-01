@@ -220,7 +220,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
 		require_once('lib/codemirror_tiki/codemirror_tiki.php');
-		tiki_syntax_highlighter_base();
 		tiki_syntax_highlighter_flex();
 	}
 	

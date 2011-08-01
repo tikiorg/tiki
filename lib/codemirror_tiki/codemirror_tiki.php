@@ -8,7 +8,7 @@
 function tiki_syntax_highlighter_flex() {
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
-
+		tiki_syntax_highlighter_base();
 		$headerlib->add_jq_onready("
 			$('textarea')
 				.flexibleSyntaxHighlighter({
@@ -30,25 +30,25 @@ function tiki_syntax_highlighter_flex() {
 	}
 }
 
-function tiki_syntax_highlighter_base()
-{
+function tiki_syntax_highlighter_base() {
 	global $headerlib, $prefs;
 
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		//add codemirror stuff
 		$headerlib->add_cssfile( 'lib/codemirror/lib/codemirror.css' );
 		$headerlib->add_cssfile( 'lib/codemirror/theme/default.css' );
-		
-		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
-		
 		$headerlib->add_jsfile( 'lib/codemirror/lib/codemirror.js' );
+		
+		//add tiki stuff
+		$headerlib->add_cssfile( 'lib/codemirror_tiki/codemirror_tiki.css' );
 		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
 	}
 }
 
-function tiki_syntax_highlighter_html()
-{
+function tiki_syntax_highlighter_html() {
 	global $headerlib, $prefs;
-	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {		
+	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		tiki_syntax_highlighter_base();
 		$headerlib->add_jq_onready("
 			$(document)
 				.bind('plugin_html_ready', function(args) {
@@ -65,10 +65,10 @@ function tiki_syntax_highlighter_html()
 	}
 }
 
-function tiki_syntax_highlighter_code()
-{
+function tiki_syntax_highlighter_code() {
 	global $headerlib, $prefs;
-	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {		
+	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		tiki_syntax_highlighter_base();
 		$headerlib->add_jq_onready("
 			$(document)
 				.bind('plugin_code_ready', function(args) {
@@ -88,6 +88,7 @@ function tiki_syntax_highlighter_code()
 function tiki_syntax_highlighter_r() {	
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		tiki_syntax_highlighter_base();
 		$headerlib->add_jq_onready("
 			$(document)
 				.bind('plugin_r_ready', function(args) {
@@ -106,7 +107,8 @@ function tiki_syntax_highlighter_r() {
 
 function tiki_syntax_highlighter_rr() {
 	global $headerlib, $prefs;
-	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {	
+	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		tiki_syntax_highlighter_base();
 		$headerlib->add_jq_onready("
 			$(document)
 				.bind('plugin_rr_ready', function(args) {
