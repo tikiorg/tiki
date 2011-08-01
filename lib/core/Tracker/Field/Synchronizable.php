@@ -10,5 +10,7 @@ interface Tracker_Field_Synchronizable extends Tracker_Field_Interface
 	function import($value);
 
 	function export($value);
+
+	function importField(array $info);
 }
 

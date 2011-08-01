@@ -99,5 +99,10 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 	{
 		return $value;
 	}
+
+	function importField(array $info)
+	{
+		return $info;
+	}
 }
 

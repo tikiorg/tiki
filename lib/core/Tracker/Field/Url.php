@@ -66,5 +66,10 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 	{
 		return $value;
 	}
+
+	function importField(array $info)
+	{
+		return $info;
+	}
 }
 

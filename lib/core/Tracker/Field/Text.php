@@ -197,5 +197,10 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 	{
 		return $value;
 	}
+
+	function importField(array $info)
+	{
+		return $info;
+	}
 }
 

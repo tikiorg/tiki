@@ -284,7 +284,6 @@ class Services_Tracker_Controller
 
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
-		$syncOnly = $input->synchronizableOnly->int();
 
 		if (! $definition) {
 			throw new Services_Exception(tr('Tracker not found'), 404);
@@ -301,14 +300,6 @@ class Services_Tracker_Controller
 
 		$factory = new Tracker_Field_Factory($definition);
 		foreach ($data as $info) {
-			// When used from remote clone, skip fields that do not support what is needed
-			if ($syncOnly) {
-				$handler = $factory->getHandler($info);
-				if (! $handler instanceof Tracker_Field_Synchronizable) {
-					continue;
-				}
-			}
-
 			$this->utilities->importField($trackerId, new JitFilter($info), $preserve);
 		}
 
@@ -358,11 +349,7 @@ class Services_Tracker_Controller
 				$export = $this->getRemoteTrackerFieldExport($serviceUrl, $remoteTracker);
 
 				$trackerId = $this->utilities->createTracker($tracker);
-				$this->action_import_fields(new JitFilter(array(
-					'trackerId' => $trackerId,
-					'synchronizableOnly' => 1,
-					'raw' => $export,
-				)));
+				$this->createSynchronizedFields($trackerId, $export);
 				$this->utilities->createField(array(
 					'trackerId' => $trackerId,
 					'type' => 't',
@@ -551,6 +538,24 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
 		);
+	}
+
+	private function createSynchronizedFields($trackerId, $raw)
+	{
+		$data = TikiLib::lib('tiki')->read_raw($raw);
+
+		if (! $data) {
+			throw new Services_Exception(tr('Invalid data provided'), 400);
+		}
+
+		$factory = new Tracker_Field_Factory($definition);
+		foreach ($data as $info) {
+			$handler = $factory->getHandler($info);
+			if ($handler instanceof Tracker_Field_Synchronizable) {
+				$importable = $handler->importField($info);
+				$this->utilities->importField($trackerId, new JitFilter($importable), false);
+			}
+		}
 	}
 
 	private function getRemoteTrackerList($serviceUrl)

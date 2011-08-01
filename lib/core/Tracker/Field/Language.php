@@ -111,5 +111,10 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 	{
 		return $value;
 	}
+
+	function importField(array $info)
+	{
+		return $info;
+	}
 }
 

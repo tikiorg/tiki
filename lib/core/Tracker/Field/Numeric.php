@@ -151,5 +151,10 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 	{
 		return $value;
 	}
+
+	function importField(array $info)
+	{
+		return $info;
+	}
 }
 

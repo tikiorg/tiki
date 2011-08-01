@@ -74,5 +74,10 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 	{
 		return '';
 	}
+
+	function importField(array $info)
+	{
+		return $info;
+	}
 }
 
