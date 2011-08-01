@@ -136,7 +136,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return $value;
 	}
 
-	function importField(array $info)
+	function importField(array $info, array $syncInfo)
 	{
 		$info['type'] = 't';
 		$info['options'] = '';

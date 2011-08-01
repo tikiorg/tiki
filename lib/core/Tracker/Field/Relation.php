@@ -181,7 +181,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract implements Tracker_F
 		return $value;
 	}
 
-	function importField(array $info)
+	function importField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

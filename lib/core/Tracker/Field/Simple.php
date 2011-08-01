@@ -123,7 +123,7 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 		return $value;
 	}
 
-	function importField(array $info)
+	function importField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

@@ -131,7 +131,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		return '';
 	}
 
-	function importField(array $info)
+	function importField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

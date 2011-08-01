@@ -75,7 +75,7 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 		return '';
 	}
 
-	function importField(array $info)
+	function importField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

@@ -100,7 +100,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 		return $value;
 	}
 
-	function importField(array $info)
+	function importField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

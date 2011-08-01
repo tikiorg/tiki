@@ -334,22 +334,26 @@ class Services_Tracker_Controller
 		$remoteTracker = $input->remote_tracker_id->int();
 
 		if ($url) {
-			$serviceUrl = rtrim($url, '/') . '/tiki-ajax_services.php?';
-			$tracker = $this->findTrackerInfo($serviceUrl, $remoteTracker);
+			$url = rtrim($url, '/');
+			$tracker = $this->findTrackerInfo($url, $remoteTracker);
 
 			if (! $tracker) {
 				// Prepare the list for tracker selection
-				$trackers = $this->getRemoteTrackerList($serviceUrl);
+				$trackers = $this->getRemoteTrackerList($url);
 				return array(
 					'url' => $url,
 					'list' => $trackers['list'],
 				);
 			} else {
 				// Proceed with the tracker import
-				$export = $this->getRemoteTrackerFieldExport($serviceUrl, $remoteTracker);
+				$export = $this->getRemoteTrackerFieldExport($url, $remoteTracker);
 
 				$trackerId = $this->utilities->createTracker($tracker);
-				$this->createSynchronizedFields($trackerId, $export);
+				$this->createSynchronizedFields($trackerId, $export, array(
+					'provider' => $url,
+					'source' => $remoteTracker,
+					'last' => 0,
+				));
 				$this->utilities->createField(array(
 					'trackerId' => $trackerId,
 					'type' => 't',
@@ -540,7 +544,7 @@ class Services_Tracker_Controller
 		);
 	}
 
-	private function createSynchronizedFields($trackerId, $raw)
+	private function createSynchronizedFields($trackerId, $raw, $syncInfo)
 	{
 		$data = TikiLib::lib('tiki')->read_raw($raw);
 
@@ -552,7 +556,7 @@ class Services_Tracker_Controller
 		foreach ($data as $info) {
 			$handler = $factory->getHandler($info);
 			if ($handler instanceof Tracker_Field_Synchronizable) {
-				$importable = $handler->importField($info);
+				$importable = $handler->importField($info, $syncInfo);
 				$this->utilities->importField($trackerId, new JitFilter($importable), false);
 			}
 		}
@@ -565,24 +569,17 @@ class Services_Tracker_Controller
 			return $cache[$serviceUrl];
 		}
 
-		$tikilib = TikiLib::lib('tiki');
-		$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
-			'controller' => 'tracker',
-			'action' => 'list_trackers',
-		), '', '&'));
-
-		return $cache[$serviceUrl] = $this->getJson($client);
+		$controller = new Services_RemoteController($serviceUrl, 'tracker');
+		$data = $controller->list_trackers();
+		return $cache[$serviceUrl] = $data;
 	}
 
 	private function getRemoteTrackerFieldExport($serviceUrl, $trackerId)
 	{
-		$tikilib = TikiLib::lib('tiki');
-		$client = $tikilib->get_http_client($serviceUrl . http_build_query(array(
-			'controller' => 'tracker',
-			'action' => 'export_fields',
+		$controller = new Services_RemoteController($serviceUrl, 'tracker');
+		$export = $controller->export_fields(array(
 			'trackerId' => $trackerId,
-		), '', '&'));
-		$export = $this->getJson($client);
+		));
 		return $export['export'];
 	}
 
@@ -607,16 +604,10 @@ class Services_Tracker_Controller
 
 	private function getRemoteItems($syncInfo)
 	{
-		$tikilib = TikiLib::lib('tiki');
-		$client = $tikilib->get_http_client($syncInfo['provider'] . '/tiki-ajax_services.php?' . http_build_query(array(
-			'controller' => 'tracker',
-			'action' => 'list_items',
+		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
+		return $controller->getResultLoader('list_items', array(
 			'trackerId' => $syncInfo['source'],
-		), '', '&'));
-		return new Services_ResultLoader(
-			array(new Services_ResultLoader_WebService($client, 'offset', 'maxRecords', 'result'), '__invoke'),
-			20
-		);
+		), 'offset', 'maxRecords', 'result');
 	}
 
 	private function insertRemoteItem($definition, $syncInfo, $item)
@@ -631,30 +622,12 @@ class Services_Tracker_Controller
 			$value = $handler->export($value);
 		}
 
-		$tikilib = TikiLib::lib('tiki');
-		$client = $tikilib->get_http_client($syncInfo['provider'] . '/tiki-ajax_services.php?' . http_build_query(array(
-			'controller' => 'tracker',
-			'action' => 'insert_item',
-		), '', '&'));
-
-		$client->setParameterPost($item);
-		$data = $this->getJson($client);
+		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
+		$data = $controller->insert_item($item);
 		
 		if (isset($data['itemId']) && $data['itemId']) {
 			return $data['itemId'];
 		}
-	}
-
-	private function getJson($client)
-	{
-		$client->setHeaders('Accept', 'application/json');
-		$response = $client->request('POST');
-
-		if (! $response->isSuccessful()) {
-			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatus()), 400);
-		}
-
-		return json_decode($response->getBody(), true);
 	}
 }
 
