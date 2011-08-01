@@ -1119,7 +1119,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Referer Search Highlighting'),
 			'type' => 'flag',
 			'help' => 'Referer+Search+Highlighting',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_search_stats' => array(
 			'name' => tra('Search stats'),
