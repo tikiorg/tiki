@@ -244,7 +244,7 @@ function prefs_wiki_list($partial = false) {
 		'wiki_edit_icons_toggle' => array(
 			'name' => tra('Toggle display of section and plugin edit icons'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'wiki_edit_minor' => array(
 			'name' => tra('Allow minor edits'),
