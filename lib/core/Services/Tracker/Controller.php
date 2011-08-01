@@ -7,6 +7,13 @@
 
 class Services_Tracker_Controller
 {
+	private $utilities;
+
+	function __construct()
+	{
+		$this->utilities = new Services_Tracker_Utilities;
+	}
+
 	function action_add_field($input)
 	{
 		if (! Perms::get()->admin_trackers) {
@@ -28,7 +35,7 @@ class Services_Tracker_Controller
 		$wikiparse = $input->description_parse->int();
 		$fieldId = 0;
 
-		$types = $this->getFieldTypes($description);
+		$types = $this->utilities->getFieldTypes($description);
 
 		if (empty($type)) {
 			$type = 't';
@@ -51,7 +58,7 @@ class Services_Tracker_Controller
 				throw new Services_Exception_DuplicateValue('permName', $permName);
 			}
 
-			$fieldId = $this->createField(array(
+			$fieldId = $this->utilities->createField(array(
 				'trackerId' => $trackerId,
 				'name' => $name,
 				'permName' => $permName,
@@ -90,7 +97,7 @@ class Services_Tracker_Controller
 
 		return array(
 			'fields' => $definition->getFields(),
-			'types' => $this->getFieldTypes(),
+			'types' => $this->utilities->getFieldTypes(),
 		);
 	}
 
@@ -119,7 +126,7 @@ class Services_Tracker_Controller
 				'isMandatory' => $value->isMandatory->int() ? 'y' : 'n',
 			);
 
-			$this->updateField($trackerId, $fieldId, $fields[$fieldId]);
+			$this->utilities->updateField($trackerId, $fieldId, $fields[$fieldId]);
 		}
 
 		return array(
@@ -146,7 +153,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker field not found in specified tracker'), 404);
 		}
 
-		$types = $this->getFieldTypes($description);
+		$types = $this->utilities->getFieldTypes($description);
 		$typeInfo = $types[$field['type']];
 
 		$permName = $input->permName->word();
@@ -163,11 +170,11 @@ class Services_Tracker_Controller
 			));
 			$visibleBy = $input->asArray('visible_by', ',');
 			$editableBy = $input->asArray('editable_by', ',');
-			$this->updateField($trackerId, $fieldId, array(
+			$this->utilities->updateField($trackerId, $fieldId, array(
 				'name' => $input->name->text(),
 				'description' => $input->description->text(),
 				'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
-				'options' => $this->buildOptions($input->option, $typeInfo),
+				'options' => $this->utilities->buildOptions($input->option, $typeInfo),
 				'validation' => $input->validation_type->word(),
 				'validationParam' => $input->validation_parameter->none(),
 				'validationMessage' => $input->validation_message->text(),
@@ -183,7 +190,7 @@ class Services_Tracker_Controller
 		return array(
 			'field' => $field,
 			'info' => $typeInfo,
-			'options' => $this->parseOptions($field['options_array'], $typeInfo),
+			'options' => $this->utilities->parseOptions($field['options_array'], $typeInfo),
 			'validation_types' => array(
 				'' => tr('None'),
 				'captcha' => tr('Captcha'),
@@ -252,14 +259,14 @@ class Services_Tracker_Controller
 		}
 
 		if ($fields) {
-			$fields = $this->getFieldsFromIds($definition, $fields);
+			$fields = $this->utilities->getFieldsFromIds($definition, $fields);
 		} else {
 			$fields = $definition->getFields();
 		}
 
 		$data = "";
 		foreach ($fields as $field) {
-			$data .= $this->exportField($field);
+			$data .= $this->utilities->exportField($field);
 		}
 
 		return array(
@@ -302,7 +309,7 @@ class Services_Tracker_Controller
 				}
 			}
 
-			$this->importField($trackerId, new JitFilter($info), $preserve);
+			$this->utilities->importField($trackerId, new JitFilter($info), $preserve);
 		}
 
 		return array(
@@ -350,19 +357,19 @@ class Services_Tracker_Controller
 				// Proceed with the tracker import
 				$export = $this->getRemoteTrackerFieldExport($serviceUrl, $remoteTracker);
 
-				$trackerId = $this->createTracker($tracker);
+				$trackerId = $this->utilities->createTracker($tracker);
 				$this->action_import_fields(new JitFilter(array(
 					'trackerId' => $trackerId,
 					'synchronizableOnly' => 1,
 					'raw' => $export,
 				)));
-				$this->createField(array(
+				$this->utilities->createField(array(
 					'trackerId' => $trackerId,
 					'type' => 't',
 					'name' => tr('Remote Source'),
 					'permName' => 'syncSource',
 					'description' => tr('Automatically generated field for synchronized trackers. Contains the itemId of the remote item.'),
-					'options' => $this->buildOptions(array(
+					'options' => $this->utilities->buildOptions(array(
 						'prepend' => $url . '/item',
 					), 't'),
 					'isMandatory' => false,
@@ -411,7 +418,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
 		}
 
-		$this->clearTracker($trackerId);
+		$this->utilities->clearTracker($trackerId);
 		
 		$factory = new Tracker_Field_Factory($definition);
 		foreach ($this->getRemoteItems($syncInfo) as $item) {
@@ -423,7 +430,7 @@ class Services_Tracker_Controller
 			}
 
 			$item['fields']['syncSource'] = $item['itemId'];
-			$this->insertItem($definition, $item);
+			$this->utilities->insertItem($definition, $item);
 		}
 
 		$this->registerSynchronization($trackerId, $syncInfo['provider'], $syncInfo['source']);
@@ -458,7 +465,7 @@ class Services_Tracker_Controller
 		if ($items) {
 			$itemIds = array_intersect($itemIds, $items);
 			$table = TikiDb::get()->table('tiki_tracker_items');
-			$items = $this->getItems(array(
+			$items = $this->utilities->getItems(array(
 				'trackerId' => $trackerId,
 				'itemId' => $table->in($itemIds),
 			));
@@ -468,7 +475,7 @@ class Services_Tracker_Controller
 
 				if ($remoteItemId) {
 					$item['fields']['syncSource'] = $remoteItemId;
-					$this->updateItem($definition, $item);
+					$this->utilities->updateItem($definition, $item);
 				}
 			}
 
@@ -509,7 +516,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker does not exist'), 404);
 		}
 
-		$items = $this->getItems(array(
+		$items = $this->utilities->getItems(array(
 			'trackerId' => $trackerId,
 		), $maxRecords, $offset);
 
@@ -535,7 +542,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
 		}
 
-		$itemId = $this->insertItem($definition, array(
+		$itemId = $this->utilities->insertItem($definition, array(
 			'status' => $input->status->word(),
 			'fields' => $input->fields->none(),
 		));
@@ -543,233 +550,6 @@ class Services_Tracker_Controller
 		return array(
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
-		);
-	}
-
-	private function importField($trackerId, $field, $preserve)
-	{
-		$fieldId = $field->fieldId->int();
-
-		if (! $preserve) {
-			$fieldId = 0;
-		}
-
-		$description = $field->descriptionStaticText->text();
-		if (! $description) {
-			$description = $field->description->text();
-		}
-
-		$data = array(
-			'name' => $field->name->text(),
-			'permName' => $field->permName->word(),
-			'type' => $field->type->word(),
-			'position' => $field->position->int(),
-			'options' => $field->options->none(),
-
-			'isMain' => $field->isMain->alpha(),
-			'isSearchable' => $field->isSearchable->alpha(),
-			'isTblVisible' => $field->isTblVisible->alpha(),
-			'isPublic' => $field->isPublic->alpha(),
-			'isHidden' => $field->isHidden->alpha(),
-			'isMandatory' => $field->isMandatory->alpha(),
-			'isMultilingual' => $field->isMultilingual->alpha(),
-
-			'description' => $description,
-			'descriptionIsParsed' => $field->descriptionIsParsed->alpha(),
-
-			'validation' => $field->validation->word(),
-			'validationParam' => $field->validationParam->none(),
-			'validationMessage' => $field->validationMessage->text(),
-
-			'itemChoices' => '',
-
-			'editableBy' => $field->editableBy->groupname(),
-			'visibleBy' => $field->visibleBy->groupname(),
-			'errorMsg' => $field->errorMsg->text(),
-		);
-
-		$this->updateField($trackerId, $fieldId, $data);
-	}
-
-	private function exportField($field)
-	{
-		return <<<EXPORT
-[FIELD{$field['fieldId']}]
-fieldId = {$field['fieldId']}
-name = {$field['name']}
-permName = {$field['permName']}
-position = {$field['position']}
-type = {$field['type']}
-options = {$field['options']}
-isMain = {$field['isMain']}
-isTblVisible = {$field['isTblVisible']}
-isSearchable = {$field['isSearchable']}
-isPublic = {$field['isPublic']}
-isHidden = {$field['isHidden']}
-isMandatory = {$field['isMandatory']}
-description = {$field['description']}
-descriptionIsParsed = {$field['descriptionIsParsed']}
-
-EXPORT;
-	}
-
-	private function buildOptions($input, $typeInfo)
-	{
-		if (is_string($typeInfo)) {
-			$types = $this->getFieldTypes($description);
-			$typeInfo = $types[$typeInfo];
-		}
-
-		if (is_array($input)) {
-			$input = new JitFilter($input);
-		}
-
-		$parts = array();
-
-		foreach ($typeInfo['params'] as $key => $info) {
-			$filter = $info['filter'];
-
-			if (isset($info['count']) && $info['count'] === '*') {
-				$values = explode(',', $input->$key->none());
-				$filter = TikiFilter::get($filter);
-				$values = array_map(array($filter, 'filter'), $values);
-			} else {
-				$values = array($input->$key->$filter());
-			}
-
-			foreach ($values as $value) {
-				if (isset($info['options']) && ! isset($info['options'][$value])) {
-					$value = null;
-				}
-
-				$parts[] = $value;
-			}
-		}
-
-		$rawOptions = implode(',', $parts);
-		return rtrim($rawOptions, ',');
-	}
-
-	private function parseOptions($raw, $typeInfo)
-	{
-		$out = array();
-
-		foreach ($typeInfo['params'] as $key => $info) {
-			if (isset($info['count']) && $info['count'] === '*') {
-				// There is a possibility that * does not mean all of the remaining, to apply reasonable heuristic
-				$filter = TikiFilter::get($info['filter']);
-				$outarray = array(); 
-				foreach ($raw as $r) {
-					$filtered = $filter->filter($r);
-					if (strcmp($filtered, $r) == 0) {
-						$outarray[] = array_shift($raw); 
-					} else {
-						break;
-					} 
-				}
-				$out[$key] = implode(',', $outarray);
-			} else {
-				$out[$key] = array_shift($raw);
-			}
-		}
-
-		return $out;
-	}
-
-	private function getFieldTypes($description)
-	{
-		$factory = new Tracker_Field_Factory($description);
-		return $factory->getFieldTypes();
-	}
-
-	private function createField(array $data)
-	{
-		$trklib = TikiLib::lib('trk');
-		return $trklib->replace_tracker_field(
-			$data['trackerId'],
-			0,
-			$data['name'],
-			$data['type'],
-			'n',
-			'n',
-			'n',
-			'y',
-			'n',
-			isset($data['isMandatory']) ? ($data['isMandatory'] ? 'y' : 'n') : 'y',
-			$trklib->get_last_position($data['trackerId']) + 10,
-			isset($data['options']) ? $data['options'] : '',
-			$data['description'],
-			'',
-			null,
-			'',
-			null,
-			null,
-			$data['descriptionIsParsed'] ? 'y' : 'n',
-			'',
-			'',
-			'',
-			$data['permName']
-		);
-	}
-
-	private function updateField($trackerId, $fieldId, array $properties)
-	{
-		$definition = Tracker_Definition::get($trackerId);
-
-		$field = $definition->getField($fieldId);
-		$trklib = TikiLib::lib('trk');
-		$trklib->replace_tracker_field(
-			$trackerId,
-			$fieldId,
-			isset($properties['name']) ? $properties['name'] : $field['name'],
-			isset($properties['type']) ? $properties['type'] : $field['type'],
-			isset($properties['isMain']) ? $properties['isMain'] : $field['isMain'],
-			isset($properties['isSearchable']) ? $properties['isSearchable'] : $field['isSearchable'],
-			isset($properties['isTblVisible']) ? $properties['isTblVisible'] : $field['isTblVisible'],
-			isset($properties['isPublic']) ? $properties['isPublic'] : $field['isPublic'],
-			isset($properties['isHidden']) ? $properties['isHidden'] : $field['isHidden'],
-			isset($properties['isMandatory']) ? $properties['isMandatory'] : $field['isMandatory'],
-			isset($properties['position']) ? $properties['position'] : $field['position'],
-			isset($properties['options']) ? $properties['options'] : $field['options'],
-			isset($properties['description']) ? $properties['description'] : $field['description'],
-			isset($properties['isMultilingual']) ? $properties['isMultilingual'] : $field['isMultilingual'],
-			'', // itemChoices
-			isset($properties['errorMsg']) ? $properties['errorMsg'] : $field['errorMsg'],
-			isset($properties['visibleBy']) ? $properties['visibleBy'] : $field['visibleBy'],
-			isset($properties['editableBy']) ? $properties['editableBy'] : $field['editableBy'],
-			isset($properties['descriptionIsParsed']) ? $properties['descriptionIsParsed'] : $field['descriptionIsParsed'],
-			isset($properties['validation']) ? $properties['validation'] : $field['validation'],
-			isset($properties['validationParam']) ? $properties['validationParam'] : $field['validationParam'],
-			isset($properties['validationMessage']) ? $properties['validationMessage'] : $field['validationMessage'],
-			isset($properties['permName']) ? $properties['permName'] : $field['permName']
-		);
-	}
-
-	private function getFieldsFromIds($definition, $fieldIds)
-	{
-		$fields = array();
-		foreach ($fieldIds as $fieldId) {
-			$field = $field = $definition->getField($fieldId);
-
-			if (! $field) {
-				throw new Services_Exception(tr('Field does not exist in tracker'), 404);
-			}
-
-			$fields[] = $field;
-		}
-
-		return $fields;
-	}
-
-	private function createTracker($data)
-	{
-		$trklib = TikiLib::lib('trk');
-		return $trklib->replace_tracker(
-			0,
-			$data['name'],
-			$data['description'],
-			array(),
-			$data['descriptionIsParsed']
 		);
 	}
 
@@ -820,20 +600,6 @@ EXPORT;
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', time());
 	}
 
-	private function clearTracker($trackerId)
-	{
-		$table = TikiDb::get()->table('tiki_tracker_items');
-		$trklib = TikiLib::lib('trk');
-
-		$items = $table->fetchColumn('itemId', array(
-			'trackerId' => $trackerId,
-		));
-
-		foreach ($items as $itemId) {
-			$trklib->remove_tracker_item($itemId);
-		}
-	}
-
 	private function getRemoteItems($syncInfo)
 	{
 		$tikilib = TikiLib::lib('tiki');
@@ -872,76 +638,6 @@ EXPORT;
 		if (isset($data['itemId']) && $data['itemId']) {
 			return $data['itemId'];
 		}
-	}
-
-	private function getItems(array $conditions, $maxRecords = -1, $offset = -1)
-	{
-		$keyMap = array();
-		$definition = Tracker_Definition::get($conditions['trackerId']);
-		foreach ($definition->getFields() as $field) {
-			if (! empty($field['permName'])) {
-				$keyMap[$field['fieldId']] = $field['permName'];
-			}
-		}
-
-		$table = TikiDb::get()->table('tiki_tracker_items');
-		$items = $table->fetchAll(array('itemId', 'status'), $conditions, $maxRecords, $offset);
-
-		foreach ($items as & $item) {
-			$item['fields'] = $this->getItemFields($item['itemId'], $keyMap);
-		}
-
-		return $items;
-	}
-
-	private function getItemFields($itemId, $keyMap)
-	{
-		$table = TikiDb::get()->table('tiki_tracker_item_fields');
-		$dataMap = $table->fetchMap('fieldId', 'value', array(
-			'fieldId' => $table->in(array_keys($keyMap)),
-			'itemId' => $itemId,
-		));
-
-		$out = array();
-		foreach ($keyMap as $fieldId => $name) {
-			if (isset($dataMap[$fieldId])) {
-				$out[$name] = $dataMap[$fieldId];
-			} else {
-				$out[$name] = '';
-			}
-		}
-
-		return $out;
-	}
-
-	private function insertItem($definition, $item)
-	{
-		$newItem = $this->replaceItem($definition, 0, $item['status'], $item['fields']); 
-
-		return $newItem;
-	}
-
-	private function updateItem($definition, $item)
-	{
-		$this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields']);
-	}
-
-	private function replaceItem($definition, $itemId, $status, $fieldMap)
-	{
-		$trackerId = $definition->getConfiguration('trackerId');
-		$fields = array();
-
-		$factory = new Tracker_Field_Factory($definition);
-		foreach ($fieldMap as $key => $value) {
-			if ($field = $definition->getFieldFromPermName($key)) {
-				$field['value'] = $value;
-				$fields[$field['fieldId']] = $field;
-			}
-		}
-
-		$trklib = TikiLib::lib('trk');
-		$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
-		return $newItem;
 	}
 
 	private function getJson($client)
