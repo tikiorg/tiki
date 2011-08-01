@@ -7,30 +7,33 @@
 }
 
 /*from the codemirror website*/
+.CodeMirror-fullscreen  #editwiki_toolbar{
+	width: 100% ! important;
+}
+
+.CodeMirror-fullscreen  .CodeMirror-scroll{
+	height: inherit;
+}
+
 .CodeMirror-fullscreen {
 	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 9999;
 	margin: 0;
 	padding: 0;
 	border: 0px solid #BBBBBB;
 	opacity: 1;
 	width: 100%;
-	height: 100%;
-	position: absolute;
 	top: 0px ! important;
 	left: 0px ! important;
-	z-index: 99999 ! important;
 	position: fixed;
 	top: expression(eval(document.body.scrollTop + 15) + "px");
 	/*left: expression(eval(document.body.scrollLeft) + "px");*/
+	background-color: gray;
 }
-.CodeMirror-fullscreen * {
-	z-index: 99999 ! important;
+
+.CodeMirror {
+	height: inherit;
 }
 .noScroll
 {
