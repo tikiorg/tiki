@@ -301,7 +301,8 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 .siteloginbar_popup .tabcontent a,
-.siteloginbar_popup .tabcontent a:visited {
+.siteloginbar_popup .tabcontent a:visited,
+.siteloginbar_popup label {
 	color: #fff;
 }
 
