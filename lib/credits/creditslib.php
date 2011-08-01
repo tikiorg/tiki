@@ -177,6 +177,9 @@ class CreditsLib extends TikiLib
 	 */
 	function addCredits( $userId, $creditType, $amount, $expirationDate = null, $validFrom = null ) // {{{
 	{
+		if( !$amount )
+			return false;
+		
 		if( !empty( $expirationDate ) )
 			$expirationDate = date( 'Y-m-d H:i:s', $time = strtotime( $expirationDate ) );
 
