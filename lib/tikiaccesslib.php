@@ -399,10 +399,6 @@ class TikiAccessLib extends TikiLib
 		if( ! $tikidomain ) {
 			$tikidomain = "Default";
 		}
-		if (empty($_SERVER['PHP_AUTH_USER']) && !empty($_REQUEST['user']) && !empty($_REQUEST['pass'])) {
-			$_SERVER['PHP_AUTH_USER'] = $_REQUEST['user'];
-			$_SERVER['PHP_AUTH_PW'] = $_REQUEST['pass'];
-		}
 
 		if (! isset($_SERVER['PHP_AUTH_USER']) ) {
 			header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');

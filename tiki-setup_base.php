@@ -440,28 +440,6 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	}
 } else {
 	$user = NULL;
-	// if everything failed, check for user+pass params in the URL
-	// this is needed for access to things like RSS feeds that are configured to be
-	// be visible to registered users and/or certain groups
-	// #####################################################################################
-	// Note: if you uncomment the following section, people are allowed to log in using
-	// GET (username and password in URL). That is some kind of insecure, because
-	// password and username are not encrypted and visible and browser caches etc, besides
-	// that someone could try to break in with brute force attacks. So uncomment this only
-	// if you are in a trusted environment (maybe intranet) and want to ignore the risks.
-	// #####################################################################################
-	// 	$isvalid = false;
-	// 	if (isset($_REQUEST["user"]) && isset($_REQUEST["pass"])) {
-	// 		$isvalid = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '');
-	// 		if ($isvalid) {
-	// 			$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
-	// 			$user = $_REQUEST["user"];
-	// 			$smarty->assign_by_ref('user', $user);
-	// 			// Now since the user is valid we put the user provpassword as the password
-	// 			$userlib->confirm_user($user);
-	// 		}
-	// }
-
 
 	if ($prefs['login_http_basic'] === 'always' ||
 		($prefs['login_http_basic'] === 'ssl' && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) {
