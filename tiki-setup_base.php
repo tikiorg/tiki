@@ -461,7 +461,19 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// 			$userlib->confirm_user($user);
 	// 		}
 	// }
-	
+
+
+	if ($prefs['login_http_basic'] === 'always' ||
+		($prefs['login_http_basic'] === 'ssl' && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) {
+
+		// Authenticate if the credentials are present, do nothing otherwise
+		if (isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+			if ($userlib->validate_user($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+				$user = $_SERVER['PHP_AUTH_USER'];
+				$userlib->confirm_user($user);
+			}
+		}
+	}
 }
 
 if (is_object($smarty)) {

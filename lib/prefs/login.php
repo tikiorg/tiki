@@ -22,6 +22,18 @@ function prefs_login_list() {
 			),
 			'default' => 'n',
 		),
+		'login_http_basic' => array(
+			'name' => tr('HTTP Basic Authentication'),
+			'description' => tr('Check credentials from HTTP Basic Authentication, useful to allow webservices to use credentials.'),
+			'type' => 'list',
+			'filter' => 'alpha',
+			'default' => 'n',
+			'options' => array(
+				'n' => tr('Disable'),
+				'ssl' => tr('SSL Only (Recommended)'),
+				'always' => tr('Always'),
+			),
+		),
 	);
 }
 

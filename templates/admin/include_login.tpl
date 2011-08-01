@@ -98,6 +98,7 @@
 				{preference name=feature_challenge}
 
 				{preference name=https_login}
+				{preference name=login_http_basic}
 
 				<div class="adminoptionboxchild https_login_childcontainer allowed encouraged force_nocheck required">
 					{preference name=feature_show_stay_in_ssl_mode}
