@@ -2128,11 +2128,13 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Accounting',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
 		),
 		'feature_syntax_highlighter' => array(
 			'name' => tra('Syntax Highlighter (CodeMirror)'),
 			'type' => 'flag',
 			'help' => 'CodeMirror',
+			'keywords' => 'Code Mirror',
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
 			'default' => 'n',
 			'warning' => tra('Experimental. This feature is still under development.'),
