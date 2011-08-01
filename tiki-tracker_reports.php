@@ -200,7 +200,7 @@ $headerlib->add_jq_onready('
 		valFromDesignerToUrl(".trackerFieldListSearch_active", "fields", null, "|");
 		valFromDesignerToUrl(".search_active", "q", null, "|");
 		
-		alert("tiki-tracker_export_join.php" + reportUrl);
+		document.location = ("tiki-tracker_export_join.php" + reportUrl);
 		
 		return false;
 	});
