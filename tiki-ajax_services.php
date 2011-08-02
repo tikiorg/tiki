@@ -21,6 +21,7 @@ $controllerMap = array(
 	'tracker' => 'Services_Tracker_Controller',
 	'favorite' => 'Services_Favorite_Controller',
 	'translation' => 'Services_Language_TranslationController',
+	'user' => 'Services_User_Controller',
 );
 
 $inputConfiguration = array(array(

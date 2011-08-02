@@ -59,13 +59,15 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		$data = array();
 		
+		$autoassign = (int) $this->getOption(0);
+
 		if ( isset($requestData[$ins_id])) {
-			if ($this->getOption(0) < 1 || $tiki_p_admin_trackers === 'y') {
+			if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
 				$data['value'] = $requestData[$ins_id];
 			} else {
-				if ($this->getOption(0) == 2) {
+				if ($autoassign == 2) {
 					$data['value'] = $user;
-				} elseif ($this->getOption(0) == 1) {
+				} elseif ($autoassign == 1) {
 					if (!$this->getItemId() || ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership')  == 'y' && !$this->getValue())) {
 						$data['value'] = $user; // the user appropiate the item
 					} else {
@@ -89,15 +91,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$smarty = TikiLib::lib('smarty');
 		
 		$value = $this->getConfiguration('value');
-		if ($value === false && ($this->getOption(0) == 1 || $this->getOption(0) == 2)) {
+		$autoassign = (int) $this->getOption(0);
+		if ($value === false && ($autoassign == 1 || $autoassign == 2)) {
 			$value = $user;
 		}
 		
-		if ($this->getOption(0) == 0 || $tiki_p_admin_trackers === 'y') {
-			$groupIds = '';
-			if ($this->getOption(2)) {
-				$groupIds = $this->getOption(2);
-			}
+		if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
+			$groupIds = $this->getOption(2, '');
 
 			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
 			return smarty_function_user_selector(
@@ -138,8 +138,27 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	function importField(array $info, array $syncInfo)
 	{
-		$info['type'] = 't';
-		$info['options'] = '';
+		$groupIds = $this->getOption(2, '');
+		$groupIds = array_filter(explode('|', $groupIds));
+		$groupIds = array_map('intval', $groupIds);
+
+		$controller = new Services_RemoteController($syncInfo['provider'], 'user');
+		$users = $controller->getResultLoader('list_users', array(
+			'groupIds' => $groupIds,
+		));
+
+		$list = array();
+		foreach ($users as $user) {
+			$list[] = $user['login'];
+		}
+
+		if (count($list)) {
+			$info['type'] = 'd';
+			$info['options'] = implode(',', $list);
+		} else {
+			$info['type'] = 't';
+			$info['options'] = '';
+		}
 
 		return $info;
 	}

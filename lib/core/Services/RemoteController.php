@@ -26,7 +26,7 @@ class Services_RemoteController
 		return $this->getJson($action, $arguments);
 	}
 
-	function getResultLoader($action, $arguments, $offsetKey, $maxRecordsKey, $resultKey, $perPage = 20)
+	function getResultLoader($action, $arguments, $offsetKey = 'offset', $maxRecordsKey = 'maxRecords', $resultKey = 'result', $perPage = 20)
 	{
 		$client = $this->getClient($action, $arguments);
 		return new Services_ResultLoader(

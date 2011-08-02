@@ -1569,7 +1569,7 @@ class UsersLib extends TikiLib
 			'object' => $group,
 		));
 
-		if (!$perms->group_view_members && $tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') {
+		if (! $perms->group_view_members && ! $perms->list_users && ! $perms->admin_users) {
 			return array();
 		}
 
@@ -1619,6 +1619,14 @@ class UsersLib extends TikiLib
 
 		foreach ( $ret as &$res ) {
 			$aux = array();
+
+			if (! $perms->admin_users) {
+				// Filter out sensitive data
+				unset($res['email']);
+				unset($res['hash']);
+				unset($res['password']);
+				unset($res['provpass']);
+			}
 
 			$res["user"] = $res["login"];
 			$user = $res["user"];
