@@ -24,7 +24,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('An option'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
 						'filter' => 'text',
 						'count' => '*',
 					),
@@ -36,7 +36,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('An option'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
 						'filter' => 'text',
 						'count' => '*',
 					),
@@ -48,7 +48,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('An option'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
 						'filter' => 'text',
 						'count' => '*',
 					),
@@ -87,12 +87,32 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		} else {
 			$value = $this->getValue();
 		}
-		return array('value' => $value);
+
+		return array(
+			'value' => $value,
+			'possibilities' => $this->getPossibilities(),
+		);
 	}
 	
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate('trackerinput/dropdown.tpl', $context);
+	}
+
+	function renderInnerOutput($context)
+	{
+		$value = $this->getConfiguration('value');
+		return $this->getValueLabel($value);
+	}
+
+	private function getValueLabel($value)
+	{
+		$possibilities = $this->getConfiguration('possibilities');
+		if (isset($possibilities[$value])) {
+			return $possibilities[$value];
+		} else {
+			return $value;
+		}
 	}
 
 	function import($value)
@@ -108,6 +128,22 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 	function importField(array $info, array $syncInfo)
 	{
 		return $info;
+	}
+
+	private function getPossibilities()
+	{
+		$options = $this->getConfiguration('options_array');
+		$out = array();
+		foreach ($options as $value) {
+			if (false === strpos($value, '=')) {
+				$out[$value] = $value;
+			} else {
+				list($value, $label) = explode('=', $value, 2);
+				$out[$value] = $label;
+			}
+		}
+
+		return $out;
 	}
 }
 
