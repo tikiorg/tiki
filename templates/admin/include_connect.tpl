@@ -20,7 +20,7 @@
 
 		<fieldset>
 			<legend>{tr}Tiki Connect{/tr}</legend>
-			{remarksbox type="info" title="New Feature" icon="bricks"}
+			{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 				{tr}Please note: Work in progress, not functioning as yet (r33357){/tr}
 			{/remarksbox}
 			{preference name="connect_feature"}
