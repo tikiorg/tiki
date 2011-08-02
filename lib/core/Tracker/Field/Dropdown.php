@@ -52,19 +52,24 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 					),
 				),
 			),
+			'M' => array(
+				'name' => tr('Multiselect'),
+				'description' => tr('Allows a user to select multiple values from a specified set of options'),
+				'params' => array(
+					'options' => array(
+						'name' => tr('Option'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
+						'filter' => 'text',
+						'count' => '*',
+					),
+				),
+			),
 		);
 	}
 
 	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
 	{
-		switch ($type) {
-			case 'd':
-				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
-			case 'D':
-				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
-			case 'R':
-				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
-		}
+		return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
 	}
 	
 	function getFieldData(array $requestData = array())
@@ -75,13 +80,14 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		if (!empty($requestData['other_'.$this->getInsertId()])) {
 			$value = $requestData['other_'.$this->getInsertId()];
 		} elseif (isset($requestData[$this->getInsertId()])) {
-			$value = $requestData[$this->getInsertId()];
+			$value = implode(',', (array) $requestData[$this->getInsertId()]);
 		} else {
 			$value = $this->getValue($this->getDefaultValue());
 		}
 
 		return array(
 			'value' => $value,
+			'selected' => explode(',', $value),
 			'possibilities' => $this->getPossibilities(),
 		);
 	}
@@ -93,8 +99,8 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 	function renderInnerOutput($context)
 	{
-		$value = $this->getConfiguration('value');
-		return $this->getValueLabel($value);
+		$labels = array_map(array($this, 'getValueLabel'), $this->getConfiguration('selected'));
+		return implode(', ', $labels);
 	}
 
 	private function getValueLabel($value)
@@ -137,16 +143,17 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$options = $this->getConfiguration('options_array');
 		
+		$parts = array();
 		$last = false;
 		foreach ($options as $opt) {
 			if ($last === $opt) {
-				return $this->getValuePortion($opt);
-			} else {
-				$last = $opt;
+				$parts[] = $this->getValuePortion($opt);
 			}
+
+			$last = $opt;
 		}
 
-		return null;
+		return implode(',', $parts);
 	}
 
 	private function getValuePortion($value)
