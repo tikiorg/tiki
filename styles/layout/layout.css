@@ -2217,12 +2217,22 @@ div.aclabel, span.aclabel, label.aclabel {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
+	background: none;
+	width: 0px;
 }
 .backlinks_button .cssmenu_horiz ul li {
 	border: 1px solid #999;
-	background: white;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+}
+.backlinks_button li.tabmark {
+	background: none;
+	border: 0px;
+	top: 0px;
+	padding: 0px;
+}
+.backlinks_button .clearfix:after {
+	display: inline-block;
 }
 /* End of File */
