@@ -413,10 +413,12 @@ class Services_Tracker_Controller
 		
 		$itemMap = array();
 
-		$factory = new Tracker_Field_Factory($definition);
+		$remoteDefinition = $this->getRemoteDefinition($definition);
+		$factory = new Tracker_Field_Factory($remoteDefinition);
 		foreach ($this->getRemoteItems($syncInfo) as $item) {
 			foreach ($item['fields'] as $key => & $value) {
-				if ($field = $definition->getFieldFromPermName($key)) {
+				$field = $remoteDefinition->getFieldFromPermName($key);
+				if ($field && $definition->getFieldFromPermName($key)) {
 					$handler = $factory->getHandler($field);
 					$value = $handler->import($value);
 				}
@@ -469,8 +471,9 @@ class Services_Tracker_Controller
 				'itemId' => $table->in($itemIds),
 			));
 
+			$remoteDefinition = $this->getRemoteDefinition($definition);
 			foreach ($items as $item) {
-				$remoteItemId = $this->insertRemoteItem($definition, $syncInfo, $item);
+				$remoteItemId = $this->insertRemoteItem($remoteDefinition, $definition, $syncInfo, $item);
 
 				if ($remoteItemId) {
 					$item['fields']['syncSource'] = $remoteItemId;
@@ -552,10 +555,8 @@ class Services_Tracker_Controller
 		);
 	}
 
-	private function createSynchronizedFields($trackerId, $raw, $syncInfo)
+	private function createSynchronizedFields($trackerId, $data, $syncInfo)
 	{
-		$data = TikiLib::lib('tiki')->read_raw($raw);
-
 		if (! $data) {
 			throw new Services_Exception(tr('Invalid data provided'), 400);
 		}
@@ -588,7 +589,8 @@ class Services_Tracker_Controller
 		$export = $controller->export_fields(array(
 			'trackerId' => $trackerId,
 		));
-		return $export['export'];
+
+		return TikiLib::lib('tiki')->read_raw($export['export']);
 	}
 
 	private function findTrackerInfo($serviceUrl, $trackerId)
@@ -618,16 +620,18 @@ class Services_Tracker_Controller
 		), 'offset', 'maxRecords', 'result');
 	}
 
-	private function insertRemoteItem($definition, $syncInfo, $item)
+	private function insertRemoteItem($remoteDefinition, $definition, $syncInfo, $item)
 	{
 		unset($item['fields']['syncSource']);
 		$item['trackerId'] = $syncInfo['source'];
 
 		$factory = new Tracker_Field_Factory($definition);
 		foreach ($item['fields'] as $key => & $value) {
-			$field = $definition->getFieldFromPermName($key);
-			$handler = $factory->getHandler($field);
-			$value = $handler->export($value);
+			$field = $remoteDefinition->getFieldFromPermName($key);
+			if ($field && $definition->getFieldFromPermName($key)) {
+				$handler = $factory->getHandler($field);
+				$value = $handler->export($value);
+			}
 		}
 
 		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
@@ -675,6 +679,16 @@ class Services_Tracker_Controller
 		}
 
 		return $out;
+	}
+
+	private function getRemoteDefinition($definition)
+	{
+		$syncInfo = $definition->getSyncInformation();
+
+		return Tracker_Definition::createFake(
+			$definition->getInformation(),
+			$this->getRemoteTrackerFieldExport($syncInfo['provider'], $syncInfo['source'])
+		);
 	}
 }
 

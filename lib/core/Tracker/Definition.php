@@ -36,6 +36,14 @@ class Tracker_Definition
 		return self::$definitions[$trackerId] = $definition;
 	}
 
+	public static function createFake(array $trackerInfo, array $fields)
+	{
+		$def = new self($trackerInfo);
+		$def->fields = $fields;
+
+		return $def;
+	}
+
 	private function __construct($trackerInfo)
 	{
 		$this->trackerInfo = $trackerInfo;
