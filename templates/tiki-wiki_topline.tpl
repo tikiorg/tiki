@@ -92,14 +92,14 @@
 							{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 								<div class="backlinks_button">
 									<ul class="clearfix cssmenu_horiz">
-										<li>
-											{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}"}
+										<li class="tabmark">
+											{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}" class="icon"}
 											<ul class="backlinks_poppedup">
 												<li class="tabcontent">
 													{section name=back loop=$backlinks}
-													<a href="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage|escape}">
+													<a href="tiki-index.php?page={$backlinks[back].fromPage|escape:url}" title="{$backlinks[back].fromPage|escape}">
 														{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
-													</a>			
+													</a>
 													{/section}
 												</li>
 											</ul>
