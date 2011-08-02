@@ -13,8 +13,6 @@
  */
 class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
-	private $type;
-
 	public static function getTypes()
 	{
 		return array(
@@ -63,18 +61,12 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			case 'd':
 				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
 			case 'D':
-				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition, 'other');
+				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
 			case 'R':
-				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition, 'radio');
+				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
 		}
 	}
 	
-	function __construct($fieldInfo, $itemData, $trackerDefinition, $type = '')
-	{
-		$this->type = $type;
-		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
-	}
-
 	function getFieldData(array $requestData = array())
 	{
 		
@@ -85,7 +77,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		} elseif (isset($requestData[$this->getInsertId()])) {
 			$value = $requestData[$this->getInsertId()];
 		} else {
-			$value = $this->getValue();
+			$value = $this->getValue($this->getDefaultValue());
 		}
 
 		return array(
@@ -135,15 +127,44 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		$options = $this->getConfiguration('options_array');
 		$out = array();
 		foreach ($options as $value) {
-			if (false === strpos($value, '=')) {
-				$out[$value] = $value;
-			} else {
-				list($value, $label) = explode('=', $value, 2);
-				$out[$value] = $label;
-			}
+			$out[$this->getValuePortion($value)] = $this->getLabelPortion($value);
 		}
 
 		return $out;
+	}
+	
+	private function getDefaultValue()
+	{
+		$options = $this->getConfiguration('options_array');
+		
+		$last = false;
+		foreach ($options as $opt) {
+			if ($last === $opt) {
+				return $this->getValuePortion($opt);
+			} else {
+				$last = $opt;
+			}
+		}
+
+		return null;
+	}
+
+	private function getValuePortion($value)
+	{
+		if (false === $pos = strpos($value, '=')) {
+			return $value;
+		} else {
+			return substr($value, 0, $pos);
+		}
+	}
+
+	private function getLabelPortion($value)
+	{
+		if (false === $pos = strpos($value, '=')) {
+			return $value;
+		} else {
+			return substr($value, $pos + 1);
+		}
 	}
 }
 

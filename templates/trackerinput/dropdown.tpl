@@ -1,8 +1,8 @@
 {strip}
-{if $field.type eq 'radio' or $field.type eq 'R'}
+{if $field.type eq 'R'}
 	{foreach from=$field.possibilities key=value item=label}
 		<label>
-			<input type="radio" name="{$field.ins_id|escape}" value="{$value|escape}" {if $field.value eq $value or (empty($item.itemId) and $field.defaultvalue eq $value)}checked="checked"{/if} />
+			<input type="radio" name="{$field.ins_id|escape}" value="{$value|escape}" {if $field.value eq $value}checked="checked"{/if} />
 			{$label|tr_if|escape}
 		</label>
 	{/foreach}
@@ -14,7 +14,7 @@
 		{/if}
 		{foreach from=$field.possibilities key=value item=label}
 			<option value="{$value|escape}" 
-			{if !empty($item.itemId) && ($field.value eq $value or (isset($field.isset) && $field.isset == 'n' && $field.defaultvalue eq $value))}{assign var=otherValue value=''}selected="selected"{elseif (empty($item.itemId) || !isset($field.value)) && $field.defaultvalue eq $value}selected="selected"{/if}>
+			{if $field.value eq $value}selected="selected"{/if}>
 				{$label|tr_if|escape}
 			</option>
 		{/foreach}
@@ -24,7 +24,7 @@
 		<br />
 		<label>
 			{tr}Other:{/tr}
-			<input type="text" name="other_{$field.ins_id}" value="{$otherValue|escape}" />
+			<input type="text" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$value])}{$value|escape}{/if}" />
 		</label>
 	{/if}
 

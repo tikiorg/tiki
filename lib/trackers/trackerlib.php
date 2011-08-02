@@ -2133,15 +2133,8 @@ class TrackerLib extends TikiLib
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
 			$res['editableBy'] = ($res['editableBy'] != '') ? unserialize($res['editableBy']) : array();
-			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en')
+			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
 				$res['name'] = tra($res['name']);
-			if (in_array($res['type'], array('d', 'D', 'R'))) { // drop down
-				if ($prefs['feature_multilingual'] == 'y') {
-					foreach ($res['options_array'] as $key=>$l) {
-						$res['options_array'][$key] = $l;
-					}
-				}
-				$res = $this->set_default_dropdown_option($res);
 			}
 			if ($res['type'] == 'p' && $res['options_array'][0] == 'language') {
 				$smarty->assign('languages', $this->list_languages());	
@@ -2877,22 +2870,6 @@ class TrackerLib extends TikiLib
 			));
 		}
 		return $newTrackerId;
-	}
-	// look for default value: a default value is 2 consecutive same value
-	function set_default_dropdown_option($field) {
-		$nbio = count($field['options_array']);
-		for ($io = 0; $io < $nbio; ++$io) {
-			if ($io > 0 && $field['options_array'][$io] == $field['options_array'][$io - 1]) {
-				$field['defaultvalue'] = $field['options_array'][$io];
-				$nbprevio = count($field['options_array']) - 1;
-				for (; $io < $nbprevio; ++$io) {
-					$field['options_array'][$io] = $field['options_array'][$io + 1];
-				}
-				unset($field['options_array'][$io]);
-				break;
-			}
-		}
-		return $field;
 	}
 	function get_notification_emails($trackerId, $itemId, $options, $status='', $oldStatus='') {
 		global $prefs;
