@@ -2218,7 +2218,7 @@ div.aclabel, span.aclabel, label.aclabel {
 	display: inline-block;
 	vertical-align: middle;
 	background: none;
-	width: 0px;
+	width: 20px;
 }
 .backlinks_button .cssmenu_horiz ul li {
 	border: 1px solid #999;
