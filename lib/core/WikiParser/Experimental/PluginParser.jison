@@ -9,17 +9,21 @@ PLUGIN_ID   [A-Z]+
 	%{
 		if (!yy.pluginStack) yy.pluginStack = [];
 		if (!yy.pluginBodyStack) yy.pluginBodyStack = [];
-		yy.pluginStack.push(yytext.match(/^\{([A-Z]+)/)[1])
-		return 'PLUGIN_START'
+		var pluginName = yytext.match(/^\{([A-Z]+)/)[1];
+		yy.pluginStack.push({
+			name: pluginName,
+			permission: isPermissible(pluginName)
+		});
+		return 'PLUGIN_START';
 	%}
 
 "{"{PLUGIN_ID}"}"
 	%{
 		if (
 			yy.pluginStack && yy.pluginStack.length &&
-			yytext.match(yy.pluginStack[yy.pluginStack.length-1])
+			yytext.match(yy.pluginStack[yy.pluginStack.length - 1].name)
 		) {
-			var returnPluginVal = plugin(yy.pluginStack.pop(), yy.pluginBodyStack.pop(), yytext);
+			var returnPluginVal = plugin(yy.pluginStack.pop(), yy.pluginBodyStack.pop());
 			
 			if (yy.pluginStack.length) {
 				yy.pluginBodyStack[yy.pluginBodyStack.length - 1].push(returnPluginVal);

@@ -23,18 +23,36 @@
 				$('#output').html(body);
 			}
 			
-			function plugin(pluginName, pluginBody) {
-				var wikiPluginName = "wikiplugin_" + pluginName.toLowerCase();
-				if (window[wikiPluginName]) {
-					return window[wikiPluginName](pluginBody.join(' '));
+			function isPermissible(pluginName) {
+				var permission = false;
+				switch(pluginName) {
+					case "BLUE":
+						permission = false;
+						break;
+					default:
+						permission = true;
 				}
-				return pluginBody.join(' ');
+				
+				alert(pluginName + ' ' + permission);
+				return permission;
+			}
+			
+			function plugin(plugin, pluginBody) {
+				if (plugin.permission) {
+					var wikiPluginName = "wikiplugin_" + plugin.name.toLowerCase();
+					if (window[wikiPluginName]) {
+						return window[wikiPluginName](pluginBody.join(' '));
+					}
+					return pluginBody.join(' ');
+				} else {
+					return '';
+				}
 			}
 			
 			function tryParse() {
-				try {
+				//try {
 					PluginParser.parse($('#wiki').val());
-				} catch (e) {}
+				//} catch (e) {}
 			}
 			
 			$(function(){
