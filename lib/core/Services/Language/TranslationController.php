@@ -7,6 +7,13 @@
 
 class Services_Language_TranslationController
 {
+	private $utilities;
+
+	function __construct()
+	{
+		$this->utilities = new Services_Language_Utilities;
+	}
+
 	function action_manage($input)
 	{
 		global $prefs;
@@ -32,7 +39,7 @@ class Services_Language_TranslationController
 			'type' => $type,
 			'source' => $object,
 			'filters' => $this->getSearchFilters($type, $object),
-			'translations' => $this->getTranslations($type, $object),
+			'translations' => $this->utilities->getTranslations($type, $object),
 			'canAttach' => $this->canAttach($type, $object),
 			'canDetach' => $this->canDetach($type, $object),
 		);
@@ -66,7 +73,7 @@ class Services_Language_TranslationController
 			throw new Services_Exception(tr('Not allowed to attach the selected translations'), 403);
 		}
 
-		$succeeded = $this->insertTranslation($type, $source, $target);
+		$succeeded = $this->utilities->insertTranslation($type, $source, $target);
 
 		if (! $succeeded) {
 			throw new Services_Exception(tr('Could not attach the translations.'), 409);
@@ -116,7 +123,7 @@ class Services_Language_TranslationController
 			);
 		}
 
-		$this->detachTranslation($type, $source, $target);
+		$this->utilities->detachTranslation($type, $source, $target);
 
 		return array(
 			'FORWARD' => array(
@@ -140,14 +147,14 @@ class Services_Language_TranslationController
 
 	private function getSearchFilters($type, $object)
 	{
-		$translations = $this->getTranslations($type, $object);
+		$translations = $this->utilities->getTranslations($type, $object);
 		$languages = TikiLib::get_language_map();
 
 		foreach ($translations as $trans) {
 			unset($languages[$trans['lang']]);
 		}
 
-		unset($languages[$this->getLanguage($type, $object)]);
+		unset($languages[$this->utilities->getLanguage($type, $object)]);
 
 		$language = '"' . implode('" OR "', array_keys($languages)) . '"';
 		if ($language == '""') {
@@ -165,37 +172,6 @@ class Services_Language_TranslationController
 		}
 
 		return $filters;
-	}
-
-	private function getTranslations($type, $object)
-	{
-		$multilinguallib = TikiLib::lib('multilingual');
-		$tikilib = TikiLib::lib('tiki');
-
-		$objId = $this->toInternalId($type, $object);
-
-		$translations = $multilinguallib->getTrads($type, $objId);
-		$languages = $tikilib->get_language_map();
-
-		foreach ($translations as & $trans) {
-			if ($type == 'wiki page') {
-				$trans['objId'] = $tikilib->get_page_name_from_id($trans['objId']);
-			}
-
-			$trans['language'] = $languages[$trans['lang']];
-		}
-		
-		return $translations;
-	}
-
-	private function toInternalId($type, $object)
-	{
-		if ($type == 'wiki page') {
-			$tikilib = TikiLib::lib('tiki');
-			return $tikilib->get_page_id_from_name($object);
-		} else {
-			return $object;
-		}
 	}
 
 	private function canAttach($type, $object)
@@ -231,55 +207,5 @@ class Services_Language_TranslationController
 		return $perms->detach_translation;
 	}
 
-	private function insertTranslation($type, $source, $target)
-	{
-		$multilinguallib = TikiLib::lib('multilingual');
-		$sourceLang = $this->getLanguage($type, $source);
-		$sourceId = $this->toInternalId($type, $source);
-
-		$targetLang = $this->getLanguage($type, $target);
-		$targetId = $this->toInternalId($type, $target);
-
-		$out = $multilinguallib->insertTranslation($type, $sourceId, $sourceLang, $targetId, $targetLang);
-
-		return ! $out;
-	}
-
-	private function detachTranslation($type, $source, $target)
-	{
-		$multilinguallib = TikiLib::lib('multilingual');
-		$targetId = $this->toInternalId($type, $target);
-
-		$multilinguallib->detachTranslation($type, $targetId);
-	}
-
-	private function getLanguage($type, $object)
-	{
-		$lang = null;
-		switch ($type) {
-			case 'wiki page':
-				$info = TikiLib::lib('tiki')->get_page_info($object);
-				$lang = $info['lang'];
-				break;
-			case 'article':
-				$info = TikiLib::lib('art')->get_article($object);
-				$lang = $info['lang'];
-				break;
-			case 'trackeritem':
-				$info = TikiLib::lib('trk')->get_tracker_item($object);
-				$definition = Tracker_Definition::get($info['trackerId']);
-				
-				if ($field = $definition->getLanguageField()) {
-					$lang = $info[$field];
-				}
-				break;
-		}
-
-		if (! $lang) {
-			throw new Services_Exception(tr('Object has no language and cannot be translated'), 400);
-		}
-
-		return $lang;
-	}
 }
 

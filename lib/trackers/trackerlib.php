@@ -2052,6 +2052,10 @@ class TrackerLib extends TikiLib
 		$this->remove_item_log($itemId);
 		$todolib = TikiLib::lib('todo');
 		$todolib->delObjectTodo('trackeritem', $itemId);
+
+		$multilinguallib = TikiLib::lib('multilingual');
+		$multilinguallib->detachTranslation('trackeritem', $itemId);
+
 		return true;
 	}
 

@@ -411,6 +411,8 @@ class Services_Tracker_Controller
 
 		$this->utilities->clearTracker($trackerId);
 		
+		$itemMap = array();
+
 		$factory = new Tracker_Field_Factory($definition);
 		foreach ($this->getRemoteItems($syncInfo) as $item) {
 			foreach ($item['fields'] as $key => & $value) {
@@ -421,7 +423,13 @@ class Services_Tracker_Controller
 			}
 
 			$item['fields']['syncSource'] = $item['itemId'];
-			$this->utilities->insertItem($definition, $item);
+			$newItem = $this->utilities->insertItem($definition, $item);
+
+			$itemMap[ $item['itemId'] ] = $newItem;
+		}
+
+		if ($definition->getLanguageField()) {
+			$this->attachTranslations($syncInfo, 'trackeritem', $itemMap);
 		}
 
 		$this->registerSynchronization($trackerId, $syncInfo['provider'], $syncInfo['source']);
@@ -628,6 +636,45 @@ class Services_Tracker_Controller
 		if (isset($data['itemId']) && $data['itemId']) {
 			return $data['itemId'];
 		}
+	}
+
+	private function attachTranslations($syncInfo, $type, $objectMap)
+	{
+		$unprocessed = $objectMap;
+		$utilities = new Services_Language_Utilities;
+
+		while (reset($unprocessed)) {
+			$remoteSource = key($unprocessed);
+			
+			unset($unprocessed[$remoteSource]);
+
+			$translations = $this->getRemoteTranslations($syncInfo, $type, $remoteSource);
+			foreach ($translations as $remoteTarget) {
+				unset($unprocessed[$remoteTarget]);
+				$utilities->insertTranslation($type, $objectMap[ $remoteSource ], $objectMap[ $remoteTarget ]);
+			}
+		}
+	}
+
+	private function getRemoteTranslations($syncInfo, $type, $remoteSource)
+	{
+		$controller = new Services_RemoteController($syncInfo['provider'], 'translation');
+		$data = $controller->manage(array(
+			'type' => $type,
+			'source' => $remoteSource,
+		));
+
+		$out = array();
+
+		if ($data['translations']) {
+			foreach ($data['translations'] as $translation) {
+				if ($translation['objId'] != $remoteSource) {
+					$out[] = $translation['objId'];
+				}
+			}
+		}
+
+		return $out;
 	}
 }
 
