@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tracker_Field_Relation extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Relation extends Tracker_Field_Abstract
 {
 	const OPT_RELATION = 0;
 	const OPT_FILTER = 1;
@@ -169,21 +169,6 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return $data;
-	}
-
-	function import($value)
-	{
-		return $value;
-	}
-
-	function export($value)
-	{
-		return $value;
-	}
-
-	function importField(array $info, array $syncInfo)
-	{
-		return $info;
 	}
 }
 
