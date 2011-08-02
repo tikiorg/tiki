@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<script src="../../../jquery/jquery.js"></script> 
+		<script src="PluginParser.js"></script>
+		<script>
+			function wikiplugin_li(body) {
+				return "<ul><li>" + body + "</li></ul>";
+			}
+			
+			function wikiplugin_red(body) {
+				return "<div style='color: red; border: 1px solid red;'>" + body + "</div>";
+			}
+			
+			function wikiplugin_blue(body) {
+				return "<div style='color: blue; border: 1px solid blue;'>" + body + "</div>";
+			}
+			
+			function wikiplugin_bgyellow(body) {
+				return "<div style='background-color: yellow;'>" + body + "</div>";
+			}
+			
+			function sendcontent(body) {
+				$('#output').html(body);
+			}
+			
+			function plugin(pluginName, pluginBody) {
+				var wikiPluginName = "wikiplugin_" + pluginName.toLowerCase();
+				if (window[wikiPluginName]) {
+					return window[wikiPluginName](pluginBody.join(' '));
+				}
+				return pluginBody.join(' ');
+			}
+			
+			function tryParse() {
+				try {
+					PluginParser.parse($('#wiki').val());
+				} catch (e) {}
+			}
+			
+			$(function(){
+				$('#runParser')
+					.click(function() {
+						tryParse();
+					});
+				$('#wiki')
+					.change(function() {
+						tryParse();
+					})
+					.keyup(function() {
+						tryParse();
+					})
+					.change();
+			});
+		</script>
+	</head>
+	<body>
+	This is an example plugin parsing syntax for using with Jison's parser for wiki syntax in javascript, this is a temporary file and is only a proof of concept.
+	<textarea id="wiki" style="width: 100%; height: 150px;">
+{BGYELLOW()}
+	{LI()}
+		This is just some text
+			{RED()}My plugin message!{RED}
+		And after too.
+		{BLUE()}
+			This is nested within the first plugin.
+		{BLUE}
+		{LI()}
+			Hello World 1!
+			{LI()}
+				Hello World! 2
+			{LI}
+			
+			{BLUE()}
+				This is nested within the second hello world li.
+			{BLUE}
+			
+			End Hello World 1
+		{LI}
+		And at the end.
+	{LI}
+	I'm in the yellow!
+{BGYELLOW}
+	</textarea>
+	<input type="button" value="Submit" id="runParser"/>
+	<div id="output"></div>
+	</body>
+</html>
