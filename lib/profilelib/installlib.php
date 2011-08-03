@@ -2666,6 +2666,9 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 			global $user;
 			$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
 			$options = isset($calendar['options']) ? $calendar['options']  : array();
+			if (!isset($calendar['options']) && !isset($calendar['customflags']) && !empty($calendar['calendarId'])) {
+				return $calendar['calendarId']; //only pick up the id
+			}
 			$id = $calendarlib->set_calendar($calendar['calendarId'], $user, $calendar['name'], $calendar['description'], $customflags,$options);
 			return $id;
 		}
