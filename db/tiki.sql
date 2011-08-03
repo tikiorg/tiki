@@ -2647,12 +2647,12 @@ CREATE TABLE `users_groups` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `users_objectpermissions`;
-CREATE TABLE `users_objectpermissions` (
+CREATE TABLE ` (
   `groupName` varchar(255) NOT NULL default '',
   `permName` varchar(40) NOT NULL default '',
   `objectType` varchar(20) NOT NULL default '',
   `objectId` varchar(32) NOT NULL default '',
-  PRIMARY KEY (`objectId`, `objectType`, `groupName`(30),`permName`)
+  PRIMARY KEY `uo` (`objectId`, `objectType`, `groupName`(170),`permName`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `users_permissions`;
