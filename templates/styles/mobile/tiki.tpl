@@ -138,7 +138,7 @@
 								{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 									<hr class="hidden" />{* for semantic separation of center and side columns *}
 									{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
-										<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{else} block{/if}{* mobile *};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										<div id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{else} block{/if}{* mobile *};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<h2 class="hidden">Sidebar</h2>
 											<div id="left_modules" class="content modules">
 												<div data-role="collapsible-set" data-theme="{$prefs.mobile_theme_modules}">{* mobile *}
@@ -147,13 +147,13 @@
 													{/section}
 												</div>{* mobile *}
 											</div>
-										</aside>
+										</div>
 									{/if}
 								{/if}
 							</div>{* -- END of #c1c2 -- *}
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
-									<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{else} block{/if}{* mobile *};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{else} block{/if}{* mobile *};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										<h2 class="hidden">Sidebar</h2>
 										<div id="right_modules" class="content modules">
 											<div data-role="collapsible-set" data-theme="{$prefs.mobile_theme_modules}">{* mobile *}
@@ -176,7 +176,7 @@
 												{/section}
 											</div>{* mobile *}
 										</div>
-									</aside>
+									</div>
 									<br style="clear:both" />
 								{/if}
 							{/if}
