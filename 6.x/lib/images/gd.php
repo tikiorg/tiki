@@ -13,7 +13,7 @@ class Image extends ImageAbstract
 	var $gdversion;
 	var $havegd = false;
 
-	function __construct($image, $isfile = false) {
+	function __construct($image, $isfile = false, $format = 'jpeg') {
 
 		// Which GD Version do we have?
 		$exts = get_loaded_extensions();
@@ -26,6 +26,7 @@ class Image extends ImageAbstract
 				$this->loaded = false;
 			} else {
 				parent::__construct($image, false);
+				$this->format = $format;
 				$this->loaded = false;
 			}
 		} else {

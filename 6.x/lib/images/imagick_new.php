@@ -10,7 +10,7 @@ require_once('lib/images/abstract.php');
 class Image extends ImageAbstract
 {
 
-	function __construct($image, $isfile = false) {
+	function __construct($image, $isfile = false, $format = 'jpeg') {
 		if ( $isfile ) {
 			$this->filename = $image;
 			parent::__construct(NULL, false);
