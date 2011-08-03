@@ -8,11 +8,11 @@ PLUGIN_ID   [A-Z]+
 "{"{PLUGIN_ID}"(".*?")}"
 	%{
 		if (!yy.pluginStack) yy.pluginStack = [];
-		if (!yy.pluginBodyStack) yy.pluginBodyStack = [];
 		var pluginName = yytext.match(/^\{([A-Z]+)/)[1];
 		yy.pluginStack.push({
 			name: pluginName,
-			permission: isPermissible(pluginName)
+			permission: isPermissible(pluginName),
+			body: []
 		});
 		return 'PLUGIN_START';
 	%}
@@ -23,12 +23,12 @@ PLUGIN_ID   [A-Z]+
 			yy.pluginStack && yy.pluginStack.length &&
 			yytext.match(yy.pluginStack[yy.pluginStack.length - 1].name)
 		) {
-			var returnPluginVal = plugin(yy.pluginStack.pop(), yy.pluginBodyStack.pop());
+			var returnPluginVal = plugin(yy.pluginStack.pop());
 			
 			if (yy.pluginStack.length) {
-				yy.pluginBodyStack[yy.pluginBodyStack.length - 1].push(returnPluginVal);
+				yy.pluginStack[yy.pluginStack.length - 1].body.push(returnPluginVal);
 			} else {
-				sendcontent(returnPluginVal);
+				yy.returnValue = returnPluginVal;
 			}
 			return 'PLUGIN_END';
 		} else {
@@ -38,10 +38,8 @@ PLUGIN_ID   [A-Z]+
 
 (.|\n)+?/("{"{PLUGIN_ID})
 	%{
-		if (!yy.pluginBodyStack[yy.pluginStack.length - 1]) {
-			yy.pluginBodyStack[yy.pluginStack.length - 1] = [yytext];
-		} else {
-			yy.pluginBodyStack[yy.pluginStack.length - 1].push(yytext);
+		if (yy.pluginStack[yy.pluginStack.length - 1]) {
+			yy.pluginStack[yy.pluginStack.length - 1].body.push(yytext);
 		}
 		
 		return 'CONTENT';

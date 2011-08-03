@@ -2,7 +2,11 @@
 	<head>
 		<script src="../../../jquery/jquery.js"></script> 
 		<script src="PluginParser.js"></script>
-		<script>
+		<script style="text/javascript">
+			function wikiplugin_purple(body) {
+				return "{RED()}This is nested: " + body + "{RED}";
+			}
+			
 			function wikiplugin_li(body) {
 				return "<ul><li>" + body + "</li></ul>";
 			}
@@ -19,10 +23,6 @@
 				return "<div style='background-color: yellow;'>" + body + "</div>";
 			}
 			
-			function sendcontent(body) {
-				$('#output').html(body);
-			}
-			
 			function isPermissible(pluginName) {
 				var permission = false;
 				switch(pluginName) {
@@ -32,40 +32,59 @@
 					default:
 						permission = true;
 				}
-				
-				alert(pluginName + ' ' + permission);
 				return permission;
 			}
 			
-			function plugin(plugin, pluginBody) {
+			function plugin(plugin) {
 				if (plugin.permission) {
 					var wikiPluginName = "wikiplugin_" + plugin.name.toLowerCase();
 					if (window[wikiPluginName]) {
-						return window[wikiPluginName](pluginBody.join(' '));
+						var thisOutput = window[wikiPluginName](plugin.body.join(' '));
+						if (thisOutput) {
+							var newOutput = tryParse(thisOutput);
+							
+							return (newOutput ? newOutput : thisOutput);
+						} else {
+							return '';
+						}
 					}
-					return pluginBody.join(' ');
+					return plugin.body.join(' ');
 				} else {
 					return '';
 				}
 			}
 			
-			function tryParse() {
-				//try {
-					PluginParser.parse($('#wiki').val());
-				//} catch (e) {}
+			function tryParse(val) {
+				try {
+					//ready the sheet's parser
+					function Lexer () {}
+					Lexer.prototype = PluginParser.lexer;
+
+					function Parser () {
+						this.lexer = new Lexer();
+						this.yy = {};
+					}
+					Parser.prototype = PluginParser;
+					
+					var parser = (new Parser);
+					var o = parser.parse(val);
+					return parser.yy.returnValue;
+				} catch (e) {
+					alert(e);
+				}
 			}
 			
 			$(function(){
 				$('#runParser')
 					.click(function() {
-						tryParse();
+						$('#output').html(tryParse($('#wiki').val()));
 					});
 				$('#wiki')
 					.change(function() {
-						tryParse();
+						$('#output').html(tryParse($('#wiki').val()));
 					})
 					.keyup(function() {
-						tryParse();
+						$('#output').html(tryParse($('#wiki').val()));
 					})
 					.change();
 			});
@@ -75,6 +94,9 @@
 	This is an example plugin parsing syntax for using with Jison's parser for wiki syntax in javascript, this is a temporary file and is only a proof of concept.
 	<textarea id="wiki" style="width: 100%; height: 150px;">
 {BGYELLOW()}
+	{LI()}
+		{PURPLE()}purple returns a nested plugin!{PURPLE}
+	{LI}
 	{LI()}
 		This is just some text
 			{RED()}My plugin message!{RED}
