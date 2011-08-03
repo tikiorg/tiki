@@ -209,7 +209,7 @@ $smarty->assign('eventstatus', array(
 ));
 $smarty->assign_by_ref('info', $info);
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_desc';
+	$sort_mode = 'name_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
