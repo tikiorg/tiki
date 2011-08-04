@@ -3195,6 +3195,8 @@ class UsersLib extends TikiLib
 				$g = serialize($g);
 				$this->query($query, array($g, $res['editableBy']));
 			}
+			$query = 'update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttf.`fieldId`=ttif.`fieldId`) set ttif.`value`=? where ttif.`value`=? and ttf.`type`=?';
+			$this->query($query, array($group, $olgroup, 'g'));
 
 			$cachelib->invalidate('grouplist');
 			$cachelib->invalidate('group_theme_'.$group);
