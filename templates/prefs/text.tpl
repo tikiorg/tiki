@@ -1,5 +1,5 @@
 <div class="adminoptionbox preference clearfix {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}">
-	<label for="{$p.id|escape}">{$p.name|escape}:</label>
+	<label for="{$p.id|escape}">{$p.name|escape}{tr}:{/tr}</label>
 	{if is_array( $p.value )}
 		<input name="{$p.preference|escape}" id="{$p.id|escape}" value="{$p.value|@implode:$p.separator|escape}" size="{$p.size|default:40|escape}" 
 			type="text" {$p.params}/>
