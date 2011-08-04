@@ -286,7 +286,6 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 				}
 		
 				if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-	  				if ( ! empty($info['path']) ) {
 					if ( ! empty($info['path']) ) {
 						$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
 					} else {
