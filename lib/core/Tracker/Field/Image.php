@@ -65,7 +65,7 @@ class Tracker_field_Image extends Tracker_Field_File
 					),
 					'imageMissingIcon' => array(
 						'name' => tr('Missing Icon'),
-						'description' => tr('Icon to use when no images have been uplaoded.'),
+						'description' => tr('Icon to use when no images have been uploaded.'),
 						'filter' => 'url',
 					),
 				),
