@@ -26,5 +26,6 @@ lang = {
 	"Advanced options" : "Options avancées",
 //	"Pick a file." : "Pick a file.",
 	"Add Field" : "Ajouter un champ",
+	"Edit Field" : "Modifier le champ",
 	"Removing the field will result in data loss. Are you sure?" : "La suppression du champ entrainera la perte des données. Êtes-vous sur ?",
 };
