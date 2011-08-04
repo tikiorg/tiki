@@ -124,7 +124,7 @@ class CategLib extends ObjectLib
 				$tepath[] = tra($cat['name']);
 			}
 			$categpath = implode("::",$tepath);
-			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
+			$categpathforsort = implode("!!",$tepath) . '!!'; // needed to prevent cat::subcat to be sorted after cat2::subcat 
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
 			$res["deep"] = count($tepath);
