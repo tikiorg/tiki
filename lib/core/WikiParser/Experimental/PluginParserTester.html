@@ -3,6 +3,10 @@
 		<script src="../../../jquery/jquery.js"></script> 
 		<script src="PluginParser.js"></script>
 		<script style="text/javascript">
+			function wikiplugin_nobody() {
+				return "This plugin has no body";
+			}
+			
 			function wikiplugin_purple(body) {
 				return "{RED()}This is nested: " + body + "{RED}";
 			}
@@ -36,22 +40,18 @@
 			}
 			
 			function plugin(plugin) {
-				if (plugin.permission) {
-					var wikiPluginName = "wikiplugin_" + plugin.name.toLowerCase();
-					if (window[wikiPluginName]) {
-						var thisOutput = window[wikiPluginName](plugin.body.join(' '));
-						if (thisOutput) {
-							var newOutput = tryParse(thisOutput);
-							
-							return (newOutput ? newOutput : thisOutput);
-						} else {
-							return '';
-						}
+				if (!isPermissible(plugin.name)) return "";
+			
+				var wikiPluginName = "wikiplugin_" + plugin.name.toLowerCase();
+				if (window[wikiPluginName]) {
+					var thisOutput = window[wikiPluginName](plugin.body);
+					if (thisOutput) {
+						var newOutput = tryParse(thisOutput);
+						
+						return (newOutput ? newOutput : thisOutput);
 					}
-					return plugin.body.join(' ');
-				} else {
-					return '';
 				}
+				return plugin.body;
 			}
 			
 			function tryParse(val) {
@@ -67,10 +67,9 @@
 					Parser.prototype = PluginParser;
 					
 					var parser = (new Parser);
-					var o = parser.parse(val);
-					return parser.yy.returnValue;
+					return parser.parse(val);
 				} catch (e) {
-					alert(e);
+				//	alert(e);
 				}
 			}
 			
@@ -93,7 +92,15 @@
 	<body>
 	This is an example plugin parsing syntax for using with Jison's parser for wiki syntax in javascript, this is a temporary file and is only a proof of concept.
 	<textarea id="wiki" style="width: 100%; height: 150px;">
-{BGYELLOW()}
+!Header
+(test|test)
+[test|test]
+((test))
+
+||Table|Talbe||
+
+{nobody param1="100" /}
+{BGYELLOW(testVar1="Test")}
 	{LI()}
 		{PURPLE()}purple returns a nested plugin!{PURPLE}
 	{LI}
@@ -104,6 +111,7 @@
 		{BLUE()}
 			This is nested within the first plugin.
 		{BLUE}
+		{nobody /}
 		{LI()}
 			Hello World 1!
 			{LI()}

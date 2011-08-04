@@ -1,47 +1,54 @@
-
 %lex
 
-PLUGIN_ID   [A-Z]+
+PLUGIN_ID   					[A-Z]+
+INLINE_PLUGIN_ID				[a-z]+
 
 %%
+\s+								{/* skip whitespace */}
+
+"{"{INLINE_PLUGIN_ID}.*?"}"
+	%{
+		var pluginName = yytext.match(/^\{([a-z]+)/)[1];
+		var pluginParams =  yytext.match(/[ ].*?[}]|[/}]/);
+		yytext = {
+			name: pluginName,
+			params: pluginParams,
+			body: ''
+		};
+		return 'INLINE_PLUGIN';
+	%}
 
 "{"{PLUGIN_ID}"(".*?")}"
 	%{
-		if (!yy.pluginStack) yy.pluginStack = [];
 		var pluginName = yytext.match(/^\{([A-Z]+)/)[1];
+		var pluginParams =  yytext.match(/[(].*?[)]/);
+		
+		if (!yy.pluginStack) yy.pluginStack = [];
 		yy.pluginStack.push({
 			name: pluginName,
-			permission: isPermissible(pluginName),
-			body: []
+			params: pluginParams
 		});
+		
 		return 'PLUGIN_START';
 	%}
 
 "{"{PLUGIN_ID}"}"
 	%{
-		if (
-			yy.pluginStack && yy.pluginStack.length &&
-			yytext.match(yy.pluginStack[yy.pluginStack.length - 1].name)
-		) {
-			var returnPluginVal = plugin(yy.pluginStack.pop());
-			
-			if (yy.pluginStack.length) {
-				yy.pluginStack[yy.pluginStack.length - 1].body.push(returnPluginVal);
-			} else {
-				yy.returnValue = returnPluginVal;
+		if (yy.pluginStack) {
+			if (
+				yy.pluginStack.length &&
+				yytext.match(yy.pluginStack[yy.pluginStack.length - 1].name)
+			) {
+				var readyPlugin = yy.pluginStack.pop();
+				yytext = readyPlugin;
+				return 'PLUGIN_END';
 			}
-			return 'PLUGIN_END';
-		} else {
-			return 'CONTENT';
 		}
+		return 'CONTENT';
 	%}
 
-(.|\n)+?/("{"{PLUGIN_ID})
+(.|\n)+?/("{"{PLUGIN_ID}|"{"{INLINE_PLUGIN_ID}.*?"}")
 	%{
-		if (yy.pluginStack[yy.pluginStack.length - 1]) {
-			yy.pluginStack[yy.pluginStack.length - 1].body.push(yytext);
-		}
-		
 		return 'CONTENT';
 	%}
 
@@ -54,16 +61,34 @@ PLUGIN_ID   [A-Z]+
 
 wiki
  : wiki_contents EOF
+	{return $1;}
  ;
 
 wiki_contents
  :
  | content
- | wiki_contents PLUGIN_START wiki_contents PLUGIN_END
- | wiki_contents PLUGIN_START wiki_contents PLUGIN_END content
+	{$$ = $1;}
+ | wiki_contents plugin
+	{$$ = ($1 ? $1 : '') + ($2 ? $2 : '');}
+ | wiki_contents plugin content
+	{$$ = ($1 ? $1 : '') + ($2 ? $2 : '') + ($3 ? $3 : '');}
  ;
 
 content
  : CONTENT
+	{$$ = $1;}
  | content CONTENT
+	{$$ = $1 + $2;}
+ ;
+
+plugin
+ : INLINE_PLUGIN
+	{
+		$$ = plugin($1);
+	}
+ | PLUGIN_START wiki_contents PLUGIN_END
+	{
+		$3.body = $2;
+		$$ = plugin($3);
+	}
  ;
