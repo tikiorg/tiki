@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id$ patch to match 34344 2011-05-10 12:25:29Z jonnybradley 
 
 $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
@@ -16,6 +16,8 @@ if (!empty($_REQUEST['page'])) {
 	} else {
 		$out_page = '';
 	}
+} else if ($prefs['useGroupHome'] === 'y') {
+	$out_page = $userlib->get_group_home('Anonymous');
 } elseif ($prefs["feature_sefurl"] == 'y' && $prefs['site_tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
 	global $wikilib; include_once( 'lib/wiki/wikilib.php');
 	$out_page = $wikilib->sefurl($prefs['wikiHomePage']);
