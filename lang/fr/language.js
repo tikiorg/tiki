@@ -34,4 +34,8 @@ lang = {
 	"Delete" : "Supprimer",	
 	"Unassign module" : "Supprimer le module",
 	"Edit module" : "Modifier le module",
+	"Favorite" : "Favoris",
+	"What address are you looking for?" : "Quelle adresse recherchez-vous ?",
+	"Filter:" : "Filtre&nbsp;:",
+	"Please enter a page name" : "Veuillez entrer un nom de page",
 };
