@@ -72,7 +72,7 @@ if ( $s != "" && strpos($sn, $s) !== FALSE) {
 	$phpsettings['upload_tmp_dir'] = array(
 		'risk' => tra('unsafe') ,
 		'setting' => $s,
-		'message' => tra('upload_tmp_dir is probably within your Tikiwiki directory. There is a risk that someone can upload any file to this directory and access them via web browser')
+		'message' => tra('upload_tmp_dir is probably within your Tiki directory. There is a risk that someone can upload any file to this directory and access them via web browser')
 	);
 } else {
 	$phpsettings['upload_tmp_dir'] = array(
@@ -288,7 +288,7 @@ function md5_check_dir($dir, &$result) { // save all suspicious files in $result
 					}
 				}
 				if ($is_tikifile == false) {
-					$result[$entry] = tra('This is not a Tikiwiki file. Check if this file was uploaded and if it is dangerous.');
+					$result[$entry] = tra('This is not a Tiki file. Check if this file was uploaded and if it is dangerous.');
 				} else if ($is_tikifile == true && count($is_tikiver) == 0) {
 					$result[$entry] = tra('This is a modified File. Cannot check version. Check if it is dangerous.');
 				} else {
@@ -307,7 +307,7 @@ function md5_check_dir($dir, &$result) { // save all suspicious files in $result
 					}
 					// use result of most_recent to decide
 					if ($most_recent == false) {
-						$result[$entry] = tra('This file is from another Tikiwiki version: ') . implode(' ' . tra('or') . ' ', $is_tikiver);
+						$result[$entry] = tra('This file is from another Tiki version: ') . implode(' ' . tra('or') . ' ', $is_tikiver);
 					}
 				}
 			}

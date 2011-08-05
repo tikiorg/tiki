@@ -72,7 +72,7 @@ function prefs_tiki_list() {
 		),
 		'tiki_cdn' => array(
 			'name' => tra('Content Delivery Network'),
-			'description' => tra('Use an alternate domain name to serve static files from tikiwiki to avoid sending cookies, improve local caching and generally improve user experience performance.'),
+			'description' => tra('Use an alternate domain name to serve static files from tiki to avoid sending cookies, improve local caching and generally improve user experience performance.'),
 			'hint' => tra('Prefix to include before the static files, for example: http://cdn.example.com'),
 			'help' => 'Content+Delivery+Network',
 			'type' => 'text',
@@ -82,7 +82,7 @@ function prefs_tiki_list() {
 		),
 		'tiki_cdn_ssl' => array(
 			'name' => tra('Content Delivery Network (in SSL)'),
-			'description' => tra('Use an alternate domain name to serve static files from tikiwiki to avoid sending cookies, improve local caching and generally improve user experience performance. Leave empty to disable CDN in SSL mode.'),
+			'description' => tra('Use an alternate domain name to serve static files from tiki to avoid sending cookies, improve local caching and generally improve user experience performance. Leave empty to disable CDN in SSL mode.'),
 			'hint' => tra('Prefix to include before the static files, for example: https://cdn.example.com'),
 			'help' => 'Content+Delivery+Network',
 			'type' => 'text',
