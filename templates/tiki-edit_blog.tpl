@@ -30,7 +30,7 @@
       <table class="formcolor">
         <tr class="editblogform">
           <td><label for="blog-title">{tr}Title{/tr}</label></td>
-          <td><input type="text" name="title" id="blog-title" value="{$title|escape}" /></td>
+          <td><input type="text" size="61" maxlength="200" name="title" id="blog-title" value="{$title|escape}" /></td>
         </tr>
         <tr class="editblogform">
           <td>
@@ -55,23 +55,23 @@
           </td>
         </tr>
         <tr class="editblogform">
+          <td class="checkbox"><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
           <td><label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}</label></td>
-          <td><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
         </tr>	
         <tr class="editblogform">
+          <td class="checkbox"><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
           <td><label for="blogs-always_owner">{tr}If others post to blog, author should always be owner{/tr}</label></td>
-          <td><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
         </tr>
         <tr class="editblogform">
+          <td class="checkbox"><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
           <td><label for="blogs-search">{tr}Allow search{/tr}</label></td>
-          <td><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
         </tr>
         <tr class="editblogform">
-          <td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td>
-          <td>
+          <td class="checkbox">
             <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if}{if $prefs.feature_blogposts_comments ne 'y'} disabled="disabled"{/if} />
             {if $prefs.feature_blogposts_comments ne 'y'}Global post-level comments is disabled.{/if}
           </td>
+          <td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td>
         </tr>
 
         {include file='categorize.tpl'}
