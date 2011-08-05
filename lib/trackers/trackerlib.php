@@ -2064,6 +2064,9 @@ class TrackerLib extends TikiLib
 		$multilinguallib = TikiLib::lib('multilingual');
 		$multilinguallib->detachTranslation('trackeritem', $itemId);
 
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('trackeritem', $itemId);
+
 		return true;
 	}
 
