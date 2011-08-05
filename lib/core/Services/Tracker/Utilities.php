@@ -111,6 +111,13 @@ class Services_Tracker_Utilities
 		}
 
 		$table = TikiDb::get()->table('tiki_tracker_items');
+
+		if (! empty($conditions['status'])) {
+			$conditions['status'] = $table->in(str_split($conditions['status'], 1));
+		} else {
+			unset($conditions['status']);
+		}
+
 		$items = $table->fetchAll(array('itemId', 'status'), $conditions, $maxRecords, $offset);
 
 		foreach ($items as & $item) {
@@ -118,6 +125,22 @@ class Services_Tracker_Utilities
 		}
 
 		return $items;
+	}
+
+	function processValues($definition, $item)
+	{
+		$trklib = TikiLib::lib('trk');
+
+		foreach ($item['fields'] as $permName => $rawValue) {
+			$field = $definition->getFieldFromPermName($permName);
+			$field['value'] = $rawValue;
+			$item['fields'][$permName] = $trklib->field_render_value(array(
+				'field' => $field,
+				'process' => 'y',
+			));
+		}
+
+		return $item;
 	}
 
 	private function getItemFields($itemId, $keyMap)

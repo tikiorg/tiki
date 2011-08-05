@@ -11,7 +11,7 @@
  * Letter key: ~r~
  *
  */
-class Tracker_Field_ItemLink extends Tracker_Field_Abstract
+class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -118,7 +118,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 				TikiLib::lib('trk')->get_all_items(
 					$this->getOption(0),
 					$this->getOption(1),
-					$this->getOption(4, 'poc'),
+					$this->getOption(4, 'opc'),
 					false
 				)
 			);
@@ -126,19 +126,67 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 			$data['list'] = TikiLib::lib('trk')->get_all_items(
 				$this->getOption(0),
 				$this->getOption(1),
-				$this->getOption(4, 'poc'),
+				$this->getOption(4, 'opc'),
 				false
 			);
 			$data['listdisplay'] = array_unique(
 				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
 					$this->getOption(0),
 					$this->getOption(3),
-					$this->getOption(4, 'poc')
+					$this->getOption(4, 'opc')
 				)
 			);
 		}
 
 		return $data;
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
+	}
+
+	function importField(array $info, array $syncInfo)
+	{
+		$sourceOptions = explode(',', $info['options']);
+		$trackerId = isset($sourceOptions[0]) ? (int) $sourceOptions[0] : 0;
+		$fieldId = isset($sourceOptions[1]) ? (int) $sourceOptions[1] : 0;
+		$status = isset($sourceOptions[4]) ? (int) $sourceOptions[4] : 'opc';
+
+		$info['type'] = 'd';
+		$info['options'] = $this->getRemoteItemLinks($syncInfo, $trackerId, $fieldId, $status);
+
+		return $info;
+	}
+
+	private function getRemoteItemLinks($syncInfo, $trackerId, $fieldId, $status)
+	{
+		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
+		$items = $controller->getResultLoader('list_items', array(
+			'trackerId' => $trackerId,
+			'status' => $status,
+		));
+		$result = $controller->edit_field(array(
+			'trackerId' => $trackerId,
+			'fieldId' => $fieldId,
+		));
+
+		$permName = $result['field']['permName'];
+		if (empty($permName)) {
+			return '';
+		}
+
+		$parts = array();
+		foreach ($items as $item) {
+			$parts[] = $item['itemId'] . '=' . $item['fields'][$permName];
+		}
+
+		return implode(',', $parts);
 	}
 }
 

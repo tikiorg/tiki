@@ -511,6 +511,8 @@ class Services_Tracker_Controller
 		$trackerId = $input->trackerId->int();
 		$offset = $input->offset->int();
 		$maxRecords = $input->maxRecords->int();
+		$status = $input->status->word();
+		$format = $input->format->word();
 		
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -520,7 +522,14 @@ class Services_Tracker_Controller
 
 		$items = $this->utilities->getItems(array(
 			'trackerId' => $trackerId,
+			'status' => $status,
 		), $maxRecords, $offset);
+
+		if ($format !== 'raw') {
+			foreach ($items as & $item) {
+				$item = $this->utilities->processValues($definition, $item);
+			}
+		}
 
 		return array(
 			'trackerId' => $trackerId,
@@ -617,6 +626,7 @@ class Services_Tracker_Controller
 		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
 		return $controller->getResultLoader('list_items', array(
 			'trackerId' => $syncInfo['source'],
+			'format' => 'raw',
 		), 'offset', 'maxRecords', 'result');
 	}
 
