@@ -330,7 +330,7 @@ function checkAddresses($recipients) {
 			$ok = $ret[0];
 		}
 		if (!$ok) {
-			$e[] = tra('One of the email addresses you typed is invalid') . ': ' . $recipient;
+			$e[] = tra('One of the email addresses you typed is invalid:') . '&nbsp;' . $recipient;
 		}
 	}
 	if(count($e) != 0) {
