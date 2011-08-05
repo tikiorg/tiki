@@ -379,6 +379,52 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_sync_meta($input)
+	{
+		global $prefs;
+
+		if ($prefs['tracker_remote_sync'] != 'y') {
+			throw new Services_Exception_Disabled('tracker_remote_sync');
+		}
+
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		$syncInfo = $definition->getSyncInformation();
+
+		if (! $syncInfo) {
+			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
+		}
+
+		$export = $this->getRemoteTrackerFieldExport($syncInfo['provider'], $syncInfo['source']);
+
+		$factory = new Tracker_Field_Factory($definition);
+		foreach ($export as $info) {
+			$localField = $definition->getFieldFromPermName($info['permName']);
+			if (! $localField) {
+				continue;
+			}
+
+			$handler = $factory->getHandler($info);
+			if (! $handler instanceof Tracker_Field_Synchronizable) {
+				continue;
+			}
+
+			$importable = $handler->importField($info, $syncInfo);
+			$this->utilities->updateField($trackerId, $localField['fieldId'], $importable);
+		}
+
+		return array();
+	}
+
 	function action_sync_refresh($input)
 	{
 		global $prefs;

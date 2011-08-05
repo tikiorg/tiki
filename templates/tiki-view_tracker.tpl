@@ -276,6 +276,9 @@
 				{/if}
 			</p>
 			{permission name=tiki_p_admin_trackers}
+				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_meta&amp;trackerId={$trackerId|escape:'url'}">
+					<p><input type="submit" value="{tr}Reload field definitions{/tr}"/></p>
+				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=sync_new&amp;trackerId={$trackerId|escape:'url'}">
 					<p>{tr}Items added locally{/tr}</p>
 					<ul class="load-items">
