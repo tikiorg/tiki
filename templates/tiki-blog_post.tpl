@@ -62,7 +62,7 @@
 
 			<tr>
 				<td class="editblogform">{tr}Title:{/tr}</td><td class="editblogform">
-					<input type="text" size="80" name="title" value="{$post_info.title|escape}" />
+					<input type="text" size="80" maxlength="255" name="title" value="{$post_info.title|escape}" />
 				</td>
 			</tr>
 
