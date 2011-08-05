@@ -52,7 +52,7 @@ if (!@$dbTiki->Execute('select login from users_users limit 1')) {
 				"				<li><p>".tra("Did you complete the <a href='tiki-install.php' >Tiki Installer?")."</a></p></li>\n" .
 				"			</ol>\n" .
 				"		</div>\n" .
-				"		<p>".tra("Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.")."</p>\n";
+				"		<p>".tra("Please see <a href=\"http://doc.tiki.org/\">the documentation</a> for more information.")."</p>\n";
 	$dberror = true;
 	include_once('tiki-install.php');
 }
