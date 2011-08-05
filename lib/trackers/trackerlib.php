@@ -654,18 +654,17 @@ class TrackerLib extends TikiLib
 	function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ') {
 		$res='';
 		$sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		$definition = Tracker_Definition::get($trackerId);
 		foreach ($sts as $field){
-			$myfield=$this->get_tracker_field($field);
-			$is_date=($myfield['type']=='f');
-			$is_trackerlink=($myfield['type']=='r');
+			$myfield = $definition->getField($field);
 
-			$tmp=$this->get_item_value($trackerId,$itemId,$field);
-			if ($is_trackerlink){
-				$options = preg_split('/,/', $myfield["options"]);
-				$tmp=$this->concat_item_from_fieldslist($options[0],$tmp,$options[3]);
-			}
-			if ($is_date) $tmp=$this->date_format("%e/%m/%y",$tmp);
-			$res.=$separator.$tmp;
+			$myfield['value'] = $this->get_item_value($trackerId,$itemId,$field);
+
+			$res .= $separator;
+			$res .= trim($this->field_render_value(array(
+				'field' => $myfield,
+				'process' => 'y',
+			)));
 		}
 		return $res;
 	}
@@ -741,10 +740,19 @@ class TrackerLib extends TikiLib
 		if ($needToCheckCategPerms) {
 			$ret = $this->filter_categ_items($ret);
 		}
+		$definition = Tracker_Definition::get($trackerId);
+		$field = $definition->getField($fieldId);
 		$ret2 = array();
 		foreach ($ret as $res) {
 			$k = $res['itemId'];
-			$ret2[$k] = $res['value'];
+			$field['value'] = $res['value'];
+
+			$rendered = $this->field_render_value(array(
+				'field' => $field,
+				'process' => 'y',
+			));
+
+			$ret2[$k] = trim(strip_tags($rendered));
 		}
 		return $ret2;
 	}
@@ -4049,7 +4057,10 @@ class TrackerLib extends TikiLib
 		$field = $params['field'];
 		$item = isset($params['item']) ? $params['item'] : array();
 		
-		$item[$field['fieldId']] = $field['value'];
+		if (isset($field['value'])) {
+			$item[$field['fieldId']] = $field['value'];
+		}
+
 		$handler = $this->get_field_handler($field, $item);
 
 		if (isset($params['process']) && $params['process'] == 'y') {
