@@ -211,6 +211,12 @@ class TikiLib extends TikiDb_Bridge
 		case 'access':
 			global $access; require_once 'lib/tikiaccesslib.php';
 			return $libraries[$name] = $access;
+		case 'reports':
+			global $reportslib; require_once('lib/reportslib.php');
+			return $libraries[$name] = $reportslib;
+		case 'calendar':
+			global $calendarlib; require_once('lib/calendar/calendarlib.php');
+			return $libraries[$name] = $calendarlib;
 		}
 	}
 

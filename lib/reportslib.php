@@ -171,7 +171,12 @@ class reportsLib extends TikiLib
 						$body .= "<u>".$change['data']['user']."</u> <a href=\"$tikiUrl/tiki-view_forum_thread.php?forumId=".$change['data']['forumId']."&comments_parentId=".$change['data']['topicId']."#threadId".$change['data']['threadId']."\">".tra("replied")."</a> ".tra("to the topic")." <a href=\"$tikiUrl/tiki-view_forum_thread.php?comments_parentId=".$change['data']['topicId']."&forumId=".$change['data']['forumId']."\">".$parent_topic['title']."</a>.";
 					} elseif ($change['event'] == 'wiki_file_attached') {
 						$body .= "<u>".$change['data']['user']."</u> ".tra('uploaded the file') . " <a href=\"$tikiUrl/tiki-download_wiki_attachment.php?attId=".$change['data']['attId']."\">".$change['data']['filename']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a>.";
+					} elseif ($change['event'] == 'calendar_changed') {
+						$calendarlib = TikiLib::lib('calendar');
+						$item = $calendarlib->get_item($change['data']['calitemId']);
+						$body .= tr('%0 added or updated event %1', "<u>{$change['data']['user']}</u>", "<a href='$tikiUrl/tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>");
 					}
+					
 					if ($key==0)
 						$body .= "</b>";
 						
