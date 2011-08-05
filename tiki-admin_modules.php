@@ -382,7 +382,7 @@ $module_zones = array();
 foreach( $modlib->module_zones as $initial => $zone) {
 	$module_zones[$initial] = array(
 		'id' => $zone,
-		'name' => substr($zone, 0, strpos($zone, '_'))
+		'name' => tra(substr($zone, 0, strpos($zone, '_')))
 	);
 }
 $smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
