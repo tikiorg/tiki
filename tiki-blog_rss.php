@@ -48,7 +48,7 @@ if ($output["data"] == "EMPTY") {
 			'print' => true,
 			'is_html' => true,
 		));
-		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']) , $smarty, 'blogpost', $data['title']);
+		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']) , $smarty, 'blogpost', urlencode($data['title']));
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;

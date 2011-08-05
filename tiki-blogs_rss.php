@@ -53,7 +53,7 @@ if ($output["data"] == "EMPTY") {
 		$data["$descId"] = $tikilib->parse_data($data[$descId], array(
 			'print' => true
 		));
-		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']) , $smarty, 'blogpost', $data['title']);
+		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']) , $smarty, 'blogpost', urlencode($data['title']));
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;
