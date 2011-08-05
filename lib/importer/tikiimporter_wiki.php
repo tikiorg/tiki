@@ -33,7 +33,7 @@ class TikiImporter_Wiki extends TikiImporter
 	{
 		$options  = array(
 	        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => tra('Number of page revisions to import (0 for all revisions):')),
-	        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => tra('What to do with page names that already exists in TikiWiki?'),
+	        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => tra('What to do with page names that already exists in Tiki?'),
 	            'options' => array(
 	                array('name' => 'doNotImport', 'label' => tra('Do not import')),
 	                array('name' => 'override', 'label' => tra('Override')),
