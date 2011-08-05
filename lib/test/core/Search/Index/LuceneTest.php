@@ -166,6 +166,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(0, 'filterInitial', 'Fuzzy');
 		$this->assertResultCount(0, 'filterInitial', 'Ham');
 		$this->assertResultCount(0, 'filterInitial', 'HomePagd');
+		$this->assertResultCount(0, 'filterInitial', 'Home Page');
 	}
 
 	function testFilterRelations()

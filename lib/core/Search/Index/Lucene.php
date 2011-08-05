@@ -169,13 +169,22 @@ class Search_Index_Lucene implements Search_Index_Interface
 		} elseif ($node instanceof Search_Expr_Range) {
 			$from = $node->getToken('from');
 			$to = $node->getToken('to');
-			$range = new Zend_Search_Lucene_Search_Query_Range(
-				$this->buildTerm($from)->getTerm(),
-				$this->buildTerm($to)->getTerm(),
-				true // inclusive
-			);
 
-			$term = $range;
+			$from = $this->buildTerm($from);
+			$to = $this->buildTerm($to);
+
+			// Range search not supported for phrases, so revert to normal token matching
+			if (method_exists($from, 'getTerm')) {
+				$range = new Zend_Search_Lucene_Search_Query_Range(
+					$from->getTerm(),
+					$to->getTerm(),
+					true // inclusive
+				);
+
+				$term = $range;
+			} else {
+				$term = $from;
+			}
 		} elseif ($node instanceof Search_Expr_Token) {
 			$term = $this->buildTerm($node);
 		}
