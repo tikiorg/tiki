@@ -2883,10 +2883,22 @@ class TrackerLib extends TikiLib
 		return $newTrackerId;
 	}
 	function get_notification_emails($trackerId, $itemId, $options, $status='', $oldStatus='') {
-		global $prefs;
+		global $prefs, $user;
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
 		$watchers_local = $this->get_local_notifications($itemId, $status, $oldStatus);
-		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
+		$watchers_item = $itemId ? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)) : array();
+		
+		// use daily reports feature only if tracker item has been added or updated
+		if ($prefs['feature_daily_report_watches'] == 'y' && !empty($status)) {
+			$reportslib = TikiLib::lib('reports');
+			$reportslib->makeReportCache($watchers_global,
+				array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+			);
+			$reportslib->makeReportCache($watchers_item,
+				array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+			);
+		}
+		
 		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
 			$emails3 = preg_split('/,/', $options['outboundEmail']);
@@ -2900,7 +2912,7 @@ class TrackerLib extends TikiLib
 				$watchers_outbound[] = array('email'=>$w, 'user'=>$u, 'language'=>$user_preferences[$u]['language'], 'mailCharset'=>$user_preferences[$u]['mailCharset']);
 			}
 		}
-		//echo "<pre>GLOBAL ";print_r($watchers_global);echo 'LOCAL ';print_r($watchers_local); echo 'ITEM ';print_r($watchers_item); echo 'OUTBOUND ';print_r($watchers_outbound);
+
 		$emails = array();
 		$watchers = array();
 		foreach (array('watchers_global', 'watchers_local', 'watchers_item', 'watchers_outbound') as $ws) {

@@ -175,6 +175,14 @@ class reportsLib extends TikiLib
 						$calendarlib = TikiLib::lib('calendar');
 						$item = $calendarlib->get_item($change['data']['calitemId']);
 						$body .= tr('%0 added or updated event %1', "<u>{$change['data']['user']}</u>", "<a href='$tikiUrl/tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>");
+					} elseif ($change['event'] == 'tracker_item_modified') {
+						$trklib = TikiLib::lib('trk');
+						$tracker = $trklib->get_tracker($change['data']['trackerId']);
+						$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
+							"<u>{$change['data']['user']}</u>",
+							"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId={$change['data']['itemId']}'>{$change['data']['itemId']}</a>",
+							"<a href='$tikiUrl/tiki-view_tracker.php?trackerId={$change['data']['trackerId']}'>{$tracker['name']}</a>"
+						);
 					}
 					
 					if ($key==0)
