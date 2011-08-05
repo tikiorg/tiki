@@ -11,7 +11,7 @@
  * Letter key: ~e~
  *
  */
-class Tracker_Field_Category extends Tracker_Field_Abstract
+class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
@@ -193,6 +193,50 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 	private function getCategories()
 	{
 		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
+	}
+
+	function import($value)
+	{
+		return $value;
+	}
+
+	function export($value)
+	{
+		return $value;
+	}
+
+	function importField(array $info, array $syncInfo)
+	{
+		$sourceOptions = explode(',', $info['options']);
+		$parentId = isset($sourceOptions[0]) ? (int) $sourceOptions[0] : 0;
+		$fieldType = isset($sourceOptions[1]) ? $sourceOptions[1] : 'd';
+		$desc = isset($sourceOptions[3]) ? (int) $sourceOptions[3] : 0;
+
+		$info['options'] = $this->getRemoteCategoriesAsOptions($syncInfo, $parentId, $desc);
+
+		if ($fieldType == 'm' || $fieldType == 'checkbox') {
+			$info['type'] = 'M';
+		} else {
+			$info['type'] = 'd';
+		}
+
+		return $info;
+	}
+
+	private function getRemoteCategoriesAsOptions($syncInfo, $parentId, $descending)
+	{
+		$controller = new Services_RemoteController($syncInfo['provider'], 'category');
+		$categories = $controller->list_categories(array(
+			'parentId' => $parentId,
+			'descends' => $descending,
+		));
+
+		$parts = array();
+		foreach ($categories as $categ) {
+			$parts[] = $categ['categId'] . '=' . $categ['name'];
+		}
+
+		return implode(',', $parts);
 	}
 }
 

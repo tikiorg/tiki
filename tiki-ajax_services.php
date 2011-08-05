@@ -22,6 +22,7 @@ $controllerMap = array(
 	'favorite' => 'Services_Favorite_Controller',
 	'translation' => 'Services_Language_TranslationController',
 	'user' => 'Services_User_Controller',
+	'category' => 'Services_Category_Controller',
 );
 
 $inputConfiguration = array(array(
