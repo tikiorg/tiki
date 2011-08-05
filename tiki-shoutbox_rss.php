@@ -40,7 +40,7 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-shoutbox.php?get=%s";
 
-	$changes = $shoutboxlib -> list_shoutbox(0, $prefs['feed_articles_max'], $id.'_desc');
+	$changes = $shoutboxlib -> list_shoutbox(0, $prefs['feed_articles_max'], $id.'_desc', false);
 	$tmp = null;
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
