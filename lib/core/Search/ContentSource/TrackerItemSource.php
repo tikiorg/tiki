@@ -22,6 +22,8 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
+		global $prefs;
+
 		/*
 			If you wonder why this method uses straight SQL and not trklib, it's because
 			trklib performs no meaningful work when extracting the data and strips all
@@ -69,15 +71,18 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 				continue;
 			}
 
-			if ($field['isMain'] == 'y') {
-				$title .= ' ' . $value;
-			}
-
 			// Make all fields sortable, except for textarea
 			$type = ($field['type'] == 'a') ? 'wikitext' : 'sortable';
 
 			if (in_array($field['type'], array('a', 't')) && $field['isMultilingual'] == 'y') {
-				$value = implode("\n", json_decode($value, true));
+				$decoded = json_decode($value, true);
+				$value = implode("\n", $decoded);
+
+				if ($field['isMain'] == 'y') {
+					$title .= ' ' . $decoded[$prefs['language']];
+				}
+			} elseif ($field['isMain'] == 'y') {
+				$title .= ' ' . $value;
 			}
 
 			$data['tracker_field_' . $fieldId] = $typeFactory->$type($value);
