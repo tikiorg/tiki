@@ -32,4 +32,6 @@ lang = {
 	"Save" : "Enregistrer",
 	"Cancel" : "Annuler",
 	"Delete" : "Supprimer",	
+	"Unassign module" : "Supprimer le module",
+	"Edit module" : "Modifier le module",
 };
