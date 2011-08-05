@@ -3241,20 +3241,25 @@ class FileGalLib extends TikiLib
 	function upload_single_file($gal_info, $name, $size, $type, $data)
 	{
 		global $user;
-		$this->convert_from_data($gal_info, $fhash, $data);
+		if ($this->convert_from_data($gal_info, $fhash, $data)) {
+			$data = null;
+		}
 
 		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
 	}
 
-	private function convert_from_data($gal_info, & $fhash, & $data) {
+	private function convert_from_data($gal_info, & $fhash, $data) {
 		$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $galInfo);
 		$fhash = '';
 
 		if ($savedir) {
 			$fhash = $this->find_unique_name($savedir, $name);
 			file_put_contents($savedir . $fhash, $data);
-			$data = null;
+
+			return true;
 		}
+
+		return false;
 	}
 
 	function get_info_from_url($url, $lastCheck = false, $eTag = false)
@@ -3453,7 +3458,9 @@ class FileGalLib extends TikiLib
 		}
 
 		$gal_info = $this->get_file_gallery_info($info['galleryId']);
-		$this->convert_from_data($gal_info, $fhash, $data);
+		if ($this->convert_from_data($gal_info, $fhash, $data)) {
+			$data = null;
+		}
 		return (bool) $this->replace_file($fileId, $name, $info['description'], $remote['name'], $data, $remote['size'], $remote['type'], null, $fhash, tra('Automatic revision from source'), $gal_info, true);
 	}
 
