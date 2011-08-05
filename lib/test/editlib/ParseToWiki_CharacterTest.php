@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: ParserTest.php 33195 2011-03-02 17:43:40Z changi67 $
 
-
 require_once 'lib/wiki/editlib.php';
 
 class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
@@ -32,14 +31,14 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 		
 	
 	/**
-	 * Font
+	 * Font family
 	 * 
-	 * => {DIV(type="span", font-family="tahoma")}text{DIV}
+	 * => {FONT(type="span", font-family="tahoma")}text{FONT}
 	 * - 'font-family'
 	 */
 	function testFont() {
 		
-		$ex = 'CODE{(type="span", font-family="tahoma")}text{CODE}';
+		$ex = '{FONT(type="span", font-family="tahoma")}text{FONT}';
 		
 		$inData = '<span style="font-family:tahoma;">text<span>';
 		$out = $this->el->parseToWiki($inData);
@@ -50,7 +49,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 	/**
 	 * Size
 	 * 
-	 * => {DIV(type="span", font-size="tahoma")}text{DIV}
+	 * => {FONT(type="span", font-size="tahoma")}text{FONT}
 	 * 'font-size'
 	 * 
 	 */
@@ -60,7 +59,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 		/*
 		 * px
 		 */
-		$ex = 'CODE{(type="span", font-size="12px")}text{CODE}';
+		$ex = '{FONT(type="span", font-size="12px")}text{FONT}';
 		
 		$inData = '<span style="font-size:12px;">text<span>';
 		$out = $this->el->parseToWiki($inData);
@@ -70,7 +69,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 		/*
 		 * pt
 		 */
-		$ex = 'CODE{(type="span", font-size="12pt")}text{CODE}';
+		$ex = '{FONT(type="span", font-size="12pt")}text{FONT}';
 		
 		$inData = '<span style="font-size:12pt;">text<span>';
 		$out = $this->el->parseToWiki($inData);
@@ -80,7 +79,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 		/*
 		 * em
 		 */
-		$ex = 'CODE{(type="span", font-size="1.2em")}text{CODE}';
+		$ex = '{FONT(type="span", font-size="1.2em")}text{FONT}';
 		
 		$inData = '<span style="font-size:1.2em;">text<span>';
 		$out = $this->el->parseToWiki($inData);

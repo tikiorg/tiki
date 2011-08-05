@@ -167,6 +167,105 @@ class EditLib
 		return true;
 	} 
 	
+	
+	/**
+	 * Parse a html style definition into an array
+	 * 
+	 * @param string $style The value of the style attribute
+	 * @param array $parsed key/value pairs
+	 */	
+	function parseStyleAttribute(&$style, &$parsed) {
+		
+		$matches = array();
+		preg_match_all('/ *([^ :]+) *: *([^;]+) *;?/', $style, $matches);
+		
+		for ($i=0; $i<count($matches[0]); $i++) {
+			$key = $matches[1][$i];
+			$value = trim($matches[2][$i]);
+			
+			$parsed[$key] = $value;
+		}
+	}
+	
+
+	/**
+	 * Utility for walk_and_parse to process span arguments
+	 * 
+	 * @param array $args the arguments of the span
+	 * @param string $src output string
+	 * @param array $p ['stack'] = closing strings stack
+	 */
+	private function processSpanTag(&$args, &$src, &$p) {
+		
+		if (isset($args['style'])) {
+			$style = array();
+			$this->parseStyleAttribute($args['style']['value'], $style);
+			
+			
+			/*
+			 * First, the colors need to be processed
+			 */
+			//isset($style['color']);
+			//isset($style['background']);
+			//isset($style['background-color']);
+/*
+			
+											$contrast = '000000';
+									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$bgcol = str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT );
+										
+									} else if (preg_match( "/background(\-color)?:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$bgcol = $parts[2];
+									}
+									if (preg_match( "/\bcolor: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$fgcol = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
+									} else if (preg_match( "/^color:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$fgcol = $parts[1];
+									}
+									if (!empty($bgcol) || !empty($fgcol)) {
+										$src .= "~~#" . (!empty($fgcol) ? $fgcol : $contrast);
+										$src .= (empty($bgcol) ? '' : ',#' . $bgcol);
+										$src .= ':';
+										$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+									}			
+			*/
+			
+			
+			/*
+			 * Process the remaining format definitions
+			 */
+			foreach (array_keys($style) as $format) {
+				switch ($format) {
+					case 'font-weight':
+						if ($style[$format] == 'bold') {
+							$src .= '__'; 
+							$p['stack'][] = array('tag' => 'strong', 'string' => '__');
+						}
+						break;
+				} // switch format
+			} // foreach style
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		} // style
+		
+		$tmp = 0;
+	}
+	
+	
 	function saveCompleteTranslation() {
 		global $multilinguallib, $tikilib;
 		
@@ -348,6 +447,9 @@ class EditLib
 							break;
 						case "span":
 							if( isset($c[$i]['pars'])) {
+								
+								//$this->processSpanTag($c[$i]['pars'], $src, $p);
+
 								if (isset($c[$i]['pars']['style'])) {	// colours
 									$contrast = '000000';
 									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
