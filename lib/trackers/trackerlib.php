@@ -3553,7 +3553,7 @@ class TrackerLib extends TikiLib
 		}
 
 		$trackerId = $args['trackerId'];
-		$itemId = $args['itemId'];
+		$itemId = $args['object'];
 
 		$new_values = $args['values'];
 		$old_values = $args['old_values'];
