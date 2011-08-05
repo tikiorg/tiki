@@ -28,4 +28,8 @@ lang = {
 	"Add Field" : "Ajouter un champ",
 	"Edit Field" : "Modifier le champ",
 	"Removing the field will result in data loss. Are you sure?" : "La suppression du champ entrainera la perte des données. Êtes-vous sur ?",
+	"Edit module:" : "Édition du module&nbsp;:",
+	"Save" : "Enregistrer",
+	"Cancel" : "Annuler",
+	"Delete" : "Supprimer",	
 };
