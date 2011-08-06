@@ -3817,6 +3817,17 @@ class TrackerLib extends TikiLib
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
 		$watchers_local = $this->get_local_notifications($itemId, $newItemId, $status, $oldStatus);
 		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
+		// use daily reports feature only if tracker item has been added or updated
+		if ($prefs['feature_daily_report_watches'] == 'y' && !empty($status)) {
+			global $reportslib; require_once('lib/reportslib.php');
+			$reportslib->makeReportCache($watchers_global,
+				array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+			);
+			$reportslib->makeReportCache($watchers_item,
+				array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+			);
+		}
+		
 		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
 			$emails3 = preg_split('/,/', $options['outboundEmail']);
