@@ -6,7 +6,6 @@ INLINE_PLUGIN_ID				[a-z]+
 %s bold italic
 
 %%
-\s								{return ' '}
 
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
@@ -46,21 +45,17 @@ INLINE_PLUGIN_ID				[a-z]+
 				return 'PLUGIN_END';
 			}
 		}
-		return 'CONTENT3';
+		return 'CONTENT';
 	%}
 
-(.|\n)+?/("{"{PLUGIN_ID}|"{"{INLINE_PLUGIN_ID}.*?"}"|[_'][_'])
-	%{
-		return 'CONTENT1';
-	%}
+<italic>("__")	this.popState();			return 'ITALIC_END'
+("__")			this.begin('italic');		return 'ITALIC_START'
+<bold>['][']	this.popState();			return 'BOLD_END'
+['][']			this.begin('bold');			return 'BOLD_START'
 
-<italic>("__") this.popState();      return 'ITALIC_END'
-("__")         this.begin('italic'); return 'ITALIC_START'
-<bold>[']['] this.popState();      return 'BOLD_END'
-['][']      this.begin('bold');   return 'BOLD_START'
+(.|\n)										return 'CONTENT'
 
-(.|\n)                         return 'CONTENT2'
-<<EOF>>                         return 'EOF'
+<<EOF>>                         			return 'EOF'
 
 /lex
 
@@ -99,14 +94,10 @@ contents
  ;
 
 content
- : ITALIC_START wiki_contents ITALIC_END
+ : CONTENT
+	{$$ = $1;}
+ | ITALIC_START wiki_contents ITALIC_END
 	{$$ = "<i>" + $2 + "</i>";}
  | BOLD_START wiki_contents BOLD_END
 	{$$ = "<b>" + $2 + "</b>";}
- | CONTENT1
-	{$$ = '<u style="background-color: red;">' + $1 + '</u>';}
- | CONTENT2
-	{$$ = '<u style="background-color: green;">' + $1 + '</u>';}
- | CONTENT3
-	{$$ = '<u style="background-color: blue;">' + $1 + '</u>';}
  ;
