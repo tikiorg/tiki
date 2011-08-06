@@ -1,6 +1,12 @@
 <html>
 	<head>
-		<script src="../../../jquery/jquery.js"></script> 
+		<script src="../../../jquery/jquery.js"></script>
+		<link rel="stylesheet" href="../../../codemirror/lib/codemirror.css" type="text/css" />
+		<link rel="stylesheet" href="../../../codemirror/theme/default.css" type="text/css" />
+
+		<script src="../../../codemirror/lib/codemirror.js"></script>
+		<script src="../../../codemirror_tiki/codemirror_tiki.js"></script>
+		
 		<script src="PluginParser.js"></script>
 		<script style="text/javascript">
 			function wikiplugin_nobody() {
@@ -40,7 +46,7 @@
 			}
 			
 			function plugin(plugin) {
-				if (!isPermissible(plugin.name)) return "";
+				if (!isPermissible(plugin.name)) return "<div style='background-color: red; color: white;'>Plugin " + plugin.name + " Not Permissible</div>";
 			
 				var wikiPluginName = "wikiplugin_" + plugin.name.toLowerCase();
 				if (window[wikiPluginName]) {
@@ -56,34 +62,38 @@
 			
 			function tryParse(val) {
 				try {
-					//ready the sheet's parser
-					function Lexer () {}
-					Lexer.prototype = PluginParser.lexer;
+					function PLexer () {}
+					PLexer.prototype = PluginParser.lexer;
 
-					function Parser () {
-						this.lexer = new Lexer();
+					function PParser () {
+						this.lexer = new PLexer();
 						this.yy = {};
 					}
-					Parser.prototype = PluginParser;
+					PParser.prototype = PluginParser;
 					
-					var parser = (new Parser);
-					return parser.parse(val);
+					var pparser = (new PParser);
+					
+					return pparser.parse(val);
 				} catch (e) {
-				//	alert(e);
+					alert(e);
 				}
 			}
 			
 			$(function(){
+				syntaxHighlighter.ready($('#wiki'), {readOnly: false, changeText: ''});
+				
+				var editor = syntaxHighlighter.get($('#wiki'));
+				
 				$('#runParser')
 					.click(function() {
-						$('#output').html(tryParse($('#wiki').val()));
+						$('#output').html(tryParse(editor.getValue()));
 					});
 				$('#wiki')
 					.change(function() {
-						$('#output').html(tryParse($('#wiki').val()));
+						$('#output').html(tryParse(editor.getValue()));
 					})
 					.keyup(function() {
-						$('#output').html(tryParse($('#wiki').val()));
+						$('#output').html(tryParse(editor.getValue()));
 					})
 					.change();
 			});
@@ -96,7 +106,9 @@
 (test|test)
 [test|test]
 ((test))
-
+''bold''
+__italics__
+''bold __with nested italics__ very cool!''
 ||Table|Talbe||
 
 {nobody param1="100" /}
