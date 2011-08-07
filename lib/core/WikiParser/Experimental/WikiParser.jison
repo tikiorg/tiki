@@ -49,12 +49,12 @@ INLINE_PLUGIN_ID				[a-z]+
 	%}
 
 
-<bold>['][']		this.popState();		return 'BOLD_END'
-['][']				this.begin('bold');		return 'BOLD_START'
+<bold>[__][__]		this.popState();		return 'BOLD_END'
+[__][__]				this.begin('bold');		return 'BOLD_START'
 <box>[\^]			this.popState();		return 'BOX_END'
 [\^]				this.begin('box');		return 'BOX_START'
-<italic>[_][_]		this.popState();		return 'ITALIC_END'
-[_][_]				this.begin('italic');	return 'ITALIC_START'
+<italic>['][']		this.popState();		return 'ITALIC_END'
+['][']				this.begin('italic');	return 'ITALIC_START'
 <titlebar>[=][-]	this.popState();		return 'TITLEBAR_END'
 [-][=]				this.begin('titlebar');	return 'TITLEBAR_START'
 
