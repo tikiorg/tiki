@@ -10,7 +10,7 @@
 		<script src="../../../codemirror/lib/codemirror.js"></script>
 		<script src="../../../codemirror_tiki/codemirror_tiki.js"></script>
 		
-		<script src="PluginParser.js"></script>
+		<script src="WikiParser.js"></script>
 		<script style="text/javascript">
 			function wikiplugin_nobody() {
 				return "This plugin has no body";
@@ -65,18 +65,18 @@
 			
 			function tryParse(val) {
 				try {
-					function PLexer () {}
-					PLexer.prototype = PluginParser.lexer;
+					function Lexer () {}
+					Lexer.prototype = WikiParser.lexer;
 
-					function PParser () {
-						this.lexer = new PLexer();
+					function Parser () {
+						this.lexer = new Lexer();
 						this.yy = {};
 					}
-					PParser.prototype = PluginParser;
+					Parser.prototype = WikiParser;
 					
-					var pparser = (new PParser);
+					var wikiParser = (new Parser);
 					
-					return pparser.parse(val);
+					return wikiParser.parse(val);
 				} catch (e) {
 					if ($('#errorsOn').is(':checked')) {
 						$('<pre />')
