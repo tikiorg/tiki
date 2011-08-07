@@ -40,12 +40,12 @@ $fcts = array(
 foreach($fcts as $fct) {
 	if (function_exists($fct)) {
 		$phpfunctions[$fct] = array(
-			'setting' => tr('on') ,
+			'setting' => tr('Enabled') ,
 			'risk' => tra('risky')
 		);
 	} else {
 		$phpfunctions[$fct] = array(
-			'setting' => tr('off') ,
+			'setting' => tr('Disabled') ,
 			'risk' => tra('safe')
 		);
 	}
@@ -129,98 +129,98 @@ if ($prefs['feature_galleries'] == 'y' && !empty($prefs['gal_use_dir']) && subst
 if ($prefs['feature_edit_templates'] == 'y') {
 	$tikisettings['edit_templates'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The feature "Edit Templates" is switched on. Do not allow anyone you cannot trust to use this feature. It can easily be used to inject php code.')
 	);
 }
 if ($prefs['wikiplugin_snarf'] == 'y') {
 	$tikisettings['wikiplugin_snarf'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Snarf Wikiplugin" is activated. It can be used by wiki editors to include pages from the local network and via regex replacement create any html.')
 	);
 }
 if ($prefs['wikiplugin_regex'] == 'y') {
 	$tikisettings['wikiplugin_regex'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Regex Wikiplugin" is activated. It can be used by wiki editors to create any html via regex replacement.')
 	);
 }
 if ($prefs['wikiplugin_lsdir'] == 'y') {
 	$tikisettings['wikiplugin_lsdir'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Lsdir Wikiplugin" is activated. It can be used by wiki editors to view the contents of any directory.')
 	);
 }
 if ($prefs['wikiplugin_bloglist'] == 'y') {
 	$tikisettings['wikiplugin_bloglist'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Bloglist Wikiplugin" is activated. It can be used by wiki editors to disclose private blog posts.')
 	);
 }
 if ($prefs['wikiplugin_iframe'] == 'y') {
 	$tikisettings['wikiplugin_iframe'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "iframe Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.')
 	);
 }
 if ($prefs['wikiplugin_js'] == 'y') {
 	$tikisettings['wikiplugin_js'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "js Wikiplugin" is activated. It can be used by wiki editors to use Javascript, which can be used to do all kind of nasty things like cross site scripting attacks, etc.')
 	);
 }
 if ($prefs['wikiplugin_jq'] == 'y') {
 	$tikisettings['wikiplugin_jq'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "JQ Wikiplugin" is activated. It can be used by wiki editors to use Javascript, which can be used to do all kind of nasty things like cross site scripting attacks, etc.')
 	);
 }
 if ($prefs['wikiplugin_redirect'] == 'y') {
 	$tikisettings['wikiplugin_redirect'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Redirect Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.')
 	);
 }
 if ($prefs['wikiplugin_module'] == 'y') {
 	$tikisettings['wikiplugin_module'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Module Wikiplugin" is activated. It can be used by wiki editors to add modules which permit to access information (see module list).')
 	);
 }
 if ($prefs['wikiplugin_userlist'] == 'y') {
 	$tikisettings['wikiplugin_userlist'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Userlist Wikiplugin" is activated. It can be used by wiki editors to display the list of users.')
 	);
 }
 if ($prefs['wikiplugin_usercount'] == 'y') {
 	$tikisettings['wikiplugin_usercount'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "Usercount Wikiplugin" is activated. It can be used by wiki editors to display a count of the number of users.')
 	);
 }
 if ($prefs['wikiplugin_sql'] == 'y') {
 	$tikisettings['wikiplugin_sql'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('The "SQL Wikiplugin" is activated. It can be used by wiki editors to execute SQL commands.')
 	);
 }
 if ($prefs['feature_clear_passwords'] == 'y') {
 	$tikisettings['feature_clear_passwords'] = array(
 		'risk' => tra('unsafe') ,
-		'setting' => tra('on') ,
+		'setting' => tra('Enabled') ,
 		'message' => tra('Store passwords in plain text is activated. You should never set this unless you know what you are doing.')
 	);
 }
