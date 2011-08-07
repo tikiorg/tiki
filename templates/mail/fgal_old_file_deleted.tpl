@@ -3,7 +3,7 @@
 {tr}Gallery:{/tr} {$galInfo.name}
 {tr}GalleryId:{/tr} {$galInfo.galleryId}
 
-{tr}FileId:{/tr} {$fileInfo.fileId}
+{tr}Identifier:{/tr} {$fileInfo.fileId}
 {tr}Filename:{/tr} {$fileInfo.filename}
 {tr}Name:{/tr} {$fileInfo.name}
 {tr}Description:{/tr} {$fileInfo.description}
