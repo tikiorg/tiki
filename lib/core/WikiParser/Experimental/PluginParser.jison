@@ -3,7 +3,7 @@
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 
-%s bold italic
+%s bold box italic titlebar
 
 %%
 
@@ -48,12 +48,24 @@ INLINE_PLUGIN_ID				[a-z]+
 		return 'CONTENT';
 	%}
 
-<italic>("__")	this.popState();			return 'ITALIC_END'
-("__")			this.begin('italic');		return 'ITALIC_START'
-<bold>['][']	this.popState();			return 'BOLD_END'
-['][']			this.begin('bold');			return 'BOLD_START'
 
-(.|\n)										return 'CONTENT'
+<bold>['][']		this.popState();		return 'BOLD_END'
+['][']				this.begin('bold');		return 'BOLD_START'
+<box>[\^]			this.popState();		return 'BOX_END'
+[\^]				this.begin('box');		return 'BOX_START'
+<italic>[_][_]		this.popState();		return 'ITALIC_END'
+[_][_]				this.begin('italic');	return 'ITALIC_START'
+<titlebar>[=][-]	this.popState();		return 'TITLEBAR_END'
+[-][=]				this.begin('titlebar');	return 'TITLEBAR_START'
+
+
+"<"(.|\n)*?">"								return 'HTML'
+(.)											return 'CONTENT'
+(\n)
+	%{
+		yytext = yytext.replace(/\n/g, '<br />');
+		return 'CONTENT';
+	%}
 
 <<EOF>>                         			return 'EOF'
 
@@ -96,8 +108,14 @@ contents
 content
  : CONTENT
 	{$$ = $1;}
- | ITALIC_START wiki_contents ITALIC_END
-	{$$ = "<i>" + $2 + "</i>";}
+ | HTML
+	{$$ = $1;} 
  | BOLD_START wiki_contents BOLD_END
 	{$$ = "<b>" + $2 + "</b>";}
+ | BOX_START wiki_contents BOX_END
+	{$$ = "<div style='border: solid 1px black;'>" + $2 + "</div>";}
+ | ITALIC_START wiki_contents ITALIC_END
+	{$$ = "<i>" + $2 + "</i>";}
+ | TITLEBAR_START wiki_contents TITLEBAR_END
+	{$$ = "<h1>" + $2 + "</h1>";}
  ;
