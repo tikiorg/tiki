@@ -3373,7 +3373,7 @@ $lang=Array(
 // "Enable shipping rate calculation through FedEx APIs" => "Enable shipping rate calculation through FedEx APIs",
 // "FedEx Meter Number" => "FedEx Meter Number",
 // "Enable shipping rate calculation using the UPS carrier" => "Enable shipping rate calculation using the UPS carrier",
-"'),\n\t\t\t'type" => "list" => "'),\n\t\t\t'type' => 'list",
+// "'),\n\t\t\t'type" => "list" => "'),\n\t\t\t'type' => 'list",
 // "Allow execution of computed fields. Consider using webservices or javascript to perform the task instead of using this type" => "Allow execution of computed fields. Consider using webservices or javascript to perform the task instead of using this type",
 // "This feature is still in place for backwards compatibility. While there are no flaws associated to it, it could be used as a vector for attacks causing a lot of damage. Webservice field or custom javascript is recommended instead of this field" => "This feature is still in place for backwards compatibility. While there are no flaws associated to it, it could be used as a vector for attacks causing a lot of damage. Webservice field or custom javascript is recommended instead of this field",
 // "Search engine used to index the content of your Tiki. Some engines are more suitable for larger sites, but require additional software on the server" => "Search engine used to index the content of your Tiki. Some engines are more suitable for larger sites, but require additional software on the server",
