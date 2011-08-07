@@ -89,7 +89,7 @@ function smarty_function_treetable($params, &$smarty) {
 			$_checkboxColumnIndex = preg_split('/,/', trim($_checkboxColumnIndex));
 		}
 		if (count($_checkbox) != count($_checkboxColumnIndex)) {
-			return tra('Number of items in _checkboxColumnIndex doesn not match items in _checkbox');
+			return 'Number of items in _checkboxColumnIndex doesn not match items in _checkbox';
 		}
 	}
 	if (!empty($_checkboxTitles)) {
@@ -101,7 +101,7 @@ function smarty_function_treetable($params, &$smarty) {
 			}
 		}
 		if (count($_checkbox) != count($_checkboxTitles)) {
-			return tra('Number of items in _checkboxTitles doesn not match items in _checkbox');
+			return 'Number of items in _checkboxTitles doesn not match items in _checkbox';
 		}
 	}
 	$_checkboxColumnIndex = empty($_checkboxColumnIndex) ? 0 : $_checkboxColumnIndex;
