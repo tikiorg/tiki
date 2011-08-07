@@ -5,6 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: ParserTest.php 33195 2011-03-02 17:43:40Z changi67 $
 
+/**
+ * @group unit
+ *
+ */
+
 require_once 'lib/wiki/editlib.php';
 
 class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
@@ -36,7 +41,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 	 * => {FONT(type="span", font-family="tahoma")}text{FONT}
 	 * - 'font-family'
 	 */
-	function testFont() {
+	function testFontFamily() {
 		
 		$ex = '{FONT(type="span", font-family="tahoma")}text{FONT}';
 		
@@ -53,7 +58,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 	 * 'font-size'
 	 * 
 	 */
-	function testSize() {
+	function testFontSize() {
 
 		
 		/*
@@ -185,7 +190,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 		
-		$inData = '<span style="text-decoration:underline;">strikethrough</span>';
+		$inData = '<span style="text-decoration:line-through;">strikethrough</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);				
 	}
@@ -280,37 +285,37 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 		 */
 		$ex = '~~ ,#FFFF00:color~~';
 		
-		$inData = '<span style="backround:#FFFF00;">color</span>';
+		$inData = '<span style="background:#FFFF00;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
-		$inData = '<span style="backround-color:#FFFF00;">color</span>';
+		$inData = '<span style="background-color:#FFFF00;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
+
 		
 		/*
 		 * text and background
 		 */
 		$ex = '~~#FF0000,#0000FF:color~~';
 
-		$inData = '<span style="color:rgb(255, 0, 0);backround-color:rgb(0, 0, 255);">color</span>';
+		$inData = '<span style="color:rgb(255, 0, 0);background-color:rgb(0, 0, 255);">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 				
-		$inData = '<span style="color:#FF0000;backround-color:#0000FF:color;">color</span>';
+		$inData = '<span style="color:#FF0000;background-color:#0000FF;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
-		$inData = '<span style="color:#FF0000;backround:#0000FF:color;">color</span>';
+		$inData = '<span style="color:#FF0000;background:#0000FF;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
-		$inData = '<span style="backround-color:#0000FF:color;color:#FF0000;">color</span>';
+		$inData = '<span style="background-color:#0000FF;color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
-		$inData = '<span style="backround:#0000FF:color;color:#FF0000;">color</span>';
+		$inData = '<span style="background:#0000FF;color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 	}

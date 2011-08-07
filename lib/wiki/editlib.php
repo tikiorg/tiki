@@ -169,7 +169,97 @@ class EditLib
 	
 	
 	/**
+	 * Convert rgb() color definiton to hex color definiton
+	 * 
+	 * @param unknown_type $col
+	 * @return The hex representation
+	 */
+	function parseColor(&$col) {
+		
+		if (preg_match( "/^rgb\( *(\d+) *, *(\d+) *, *(\d+) *\)$/", $col, $parts ) ) {
+			$hex = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
+			     . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+				 . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
+			$hex = '#' . strtoupper($hex);
+		} else {
+			$hex = $col;
+		}
+		
+		return $hex;
+	}
+	
+	
+	/**
+	 * Utility for walk_and_parse to process span arguments
+	 * 
+	 * @param array $args the arguments of the span
+	 * @param string $src output string
+	 * @param array $p ['stack'] = closing strings stack
+	 */
+	private function parseSpanTag(&$args, &$src, &$p) {
+		
+		if (isset($args['style'])) {
+			$style = array();
+			$this->parseStyleAttribute($args['style']['value'], $style);
+			
+			
+			/*
+			 * The colors need to be handeled separatly; two style definitions become
+			 * one single wiki markup.
+			 */
+			$fcol = '';
+			$bcol = '';
+			
+			if (isset($style['color'])) {
+				$fcol = $this->parseColor($style['color']);
+				unset($style['color']);
+			}
+			if (isset($style['background-color'])) { // background: color-def have been converted to background-color
+				$bcol = $this->parseColor($style['background-color']);
+				unset($style['background-color']);
+			}
+			
+			if ($fcol || $bcol) {
+				$src .= "~~";
+				$src .= ($fcol ? $fcol : '');
+				$src .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
+				$src .= ($bcol ? ','.$bcol : '');
+				$src .= ':';
+				$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+			}
+			
+			
+			/*
+			 * Process the remaining format definitions
+			 */
+			foreach (array_keys($style) as $format) {
+				switch ($format) {
+					case 'font-weight':
+						if ($style[$format] == 'bold') {
+							$src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__');
+						}
+						break;
+					case 'font-style': 
+						if ($style[$format] == 'italic') {
+							$src .= '\'\''; $p['stack'][] = array('tag' => 'strong', 'string' => '\'\'');
+						}
+					case 'text-decoration':
+						if ($style[$format] == 'line-through') {
+							$src .= '--'; $p['stack'][] = array('tag' => 'strong', 'string' => '--');
+						} else if ($style[$format] == 'underline') {
+							$src .= '==='; $p['stack'][] = array('tag' => 'strong', 'string' => '===');
+						}
+				} // switch format
+			} // foreach style
+		} // style
+	}
+		
+	
+	/**
 	 * Parse a html style definition into an array
+	 * 
+	 * This method tries to expand the shorthand definitions, such as 'background:',
+	 * to the correspoinding key/value paris. If a definition is unknown, it is kept. 
 	 * 
 	 * @param string $style The value of the style attribute
 	 * @param array $parsed key/value pairs
@@ -183,86 +273,54 @@ class EditLib
 			$key = $matches[1][$i];
 			$value = trim($matches[2][$i]);
 			
-			$parsed[$key] = $value;
-		}
+			/*
+			 * shortand list 'background:'
+			 * - set 'background-color'
+			 */
+			if ($key == 'background') {
+				
+				$unprocessed = '';
+				$shorthand = array();
+				$this->parseStyleList($value, $shorthand);
+				
+				foreach ($shorthand as $s) {
+
+					switch ($s) {
+						case preg_match('/^#(\w{3,6})$/', $s) > 0:
+							$parsed['background-color'] = $s; break;
+						case preg_match('/^rgb\(.*\)$/', $s) > 0:
+							$parsed['background-color'] = $s; break;
+						default:
+							$unprocessed .= ' ' . $s;
+					}
+				} // foreach shorthand
+				
+				// keep unprocessed list entries
+				$value = trim($unprocessed);
+				
+			} // background:
+			
+			// save the result			
+			if ($value) {
+				$parsed[$key] = $value;
+			}
+		} // style definitions
 	}
 	
-
+	
 	/**
-	 * Utility for walk_and_parse to process span arguments
-	 * 
-	 * @param array $args the arguments of the span
-	 * @param string $src output string
-	 * @param array $p ['stack'] = closing strings stack
+	 * Parse a space separated list of html styles
+	 *
+	 * Example: "rgb( 1, 2, 3) url(background.gif)"
+	 *
+	 * @param string $list List of styles
+	 * @param array $parsed The parsed list
 	 */
-	private function processSpanTag(&$args, &$src, &$p) {
+	function parseStyleList(&$list, &$parsed) {
 		
-		if (isset($args['style'])) {
-			$style = array();
-			$this->parseStyleAttribute($args['style']['value'], $style);
-			
-			
-			/*
-			 * First, the colors need to be processed
-			 */
-			//isset($style['color']);
-			//isset($style['background']);
-			//isset($style['background-color']);
-/*
-			
-											$contrast = '000000';
-									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$bgcol = str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT );
-										
-									} else if (preg_match( "/background(\-color)?:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$bgcol = $parts[2];
-									}
-									if (preg_match( "/\bcolor: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$fgcol = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
-									} else if (preg_match( "/^color:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$fgcol = $parts[1];
-									}
-									if (!empty($bgcol) || !empty($fgcol)) {
-										$src .= "~~#" . (!empty($fgcol) ? $fgcol : $contrast);
-										$src .= (empty($bgcol) ? '' : ',#' . $bgcol);
-										$src .= ':';
-										$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
-									}			
-			*/
-			
-			
-			/*
-			 * Process the remaining format definitions
-			 */
-			foreach (array_keys($style) as $format) {
-				switch ($format) {
-					case 'font-weight':
-						if ($style[$format] == 'bold') {
-							$src .= '__'; 
-							$p['stack'][] = array('tag' => 'strong', 'string' => '__');
-						}
-						break;
-				} // switch format
-			} // foreach style
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		} // style
-		
-		$tmp = 0;
+		$matches = array();
+		preg_match_all('/(?:[[:graph:]]+\([^\)]*\))|(?:[^ ]+)/', $list, $matches);
+		$parsed = $matches[0];
 	}
 	
 	
@@ -448,8 +506,12 @@ class EditLib
 						case "span":
 							if( isset($c[$i]['pars'])) {
 								
-								//$this->processSpanTag($c[$i]['pars'], $src, $p);
+								$this->parseSpanTag($c[$i]['pars'], $src, $p);
 
+								
+								/*
+								 * deactivated by mauriz, will be replaced by the method call above
+								 * 
 								if (isset($c[$i]['pars']['style'])) {	// colours
 									$contrast = '000000';
 									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
@@ -474,6 +536,7 @@ class EditLib
 										$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
 									}
 								}
+								 */
 							}
 							break;
 						case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
@@ -519,6 +582,8 @@ class EditLib
 						case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
 						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
+						case "tt" : $src .= '{DIV(type="tt")}'; $p['stack'][] = array('tag' => 'tt', 'string' => "{DIV}"); break;
+						case "s"  : $src .= '--'; $p['stack'][] = array('tag' => 's', 'string' => "--"); break;
 						// Table parser
 						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
 						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true; break;
@@ -657,7 +722,8 @@ class EditLib
 		
 		return $out_data;
 	}	// end parse_html
-
+	
+	
 	function get_new_page_attributes_from_parent_pages($page, $page_info) {
 		global $wikilib, $tikilib;
 		$new_page_attrs = array();
