@@ -8016,6 +8016,7 @@ if( \$('#$id') ) {
 	}
 
 	function urlencode_accent($str) {
+		$convs = array();
 		preg_match_all('/[\x80-\xFF| ]/', $str, $matches);
 		$accents = $matches[0];
 		foreach ($accents as $a) {
