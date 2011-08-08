@@ -114,13 +114,11 @@
 		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</h2>
 		{if $objects}
 			<form method="get" action="tiki-admin_categories.php">
-				<label>{tr}Find:{/tr}
-					<input type="text" name="find" />
-					<input type="hidden" name="parentId" value="{$parentId|escape}" />
-					<input type="submit" value="{tr}OK{/tr}" name="search" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-					<input type="hidden" name="find_objects" value="{$find_objects|escape}" />
-				</label>
+				<label>{tr}Find:{/tr}<input type="text" name="find" /></label>
+				<input type="hidden" name="parentId" value="{$parentId|escape}" />
+				<input type="submit" value="{tr}OK{/tr}" name="search" />
+				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+				<input type="hidden" name="find_objects" value="{$find_objects|escape}" />
 			</form>
 		{/if}
 		<table class="normal">
@@ -177,21 +175,14 @@
 				
 		{tab name="{tr}Add objects to category{/tr}"}
 			<h2>{tr}Add objects to category:{/tr} <b>{$categ_name|escape}</b></h2>
-			<table class="findtable">
-				<tr>
-					<td class="findtable">{tr}Find{/tr}</td>
-					<td>
-						<form method="get" action="tiki-admin_categories.php">
-							<input type="text" name="find_objects" />
-							<input type="hidden" name="parentId" value="{$parentId|escape}" />
-							<input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
-							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-							<input type="hidden" name="offset" value="{$offset|escape}" />
-							<input type="hidden" name="find" value="{$find|escape}" />
-						</form>
-					</td>
-				</tr>
-			</table>
+			<form method="get" action="tiki-admin_categories.php">
+				<label>{tr}Find:{/tr}<input type="text" name="find_objects" /></label>
+				<input type="hidden" name="parentId" value="{$parentId|escape}" />
+				<input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
+				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+				<input type="hidden" name="offset" value="{$offset|escape}" />
+				<input type="hidden" name="find" value="{$find|escape}" />
+			</form>
 			{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 			<form action="tiki-admin_categories.php" method="post">
 				<input type="hidden" name="parentId" value="{$parentId|escape}" />
