@@ -22,7 +22,7 @@
 			</label>
 		{/if}
 		<div>
-			<input type="hidden" name="controller" value="tracker"/>
+			<input type="hidden" name="controller" value="tracker_sync"/>
 			<input type="hidden" name="action" value="clone_remote"/>
 			{if $list}
 				<input type="submit" value="{tr}Clone{/tr}"/>

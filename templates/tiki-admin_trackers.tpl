@@ -721,7 +721,7 @@ categories = {$catsdump}
 	
 	{if $prefs.tracker_remote_sync eq 'y'}
 		<h2>{tr}Duplicate Remote Tracker{/tr}</h2>
-		<form class="simple" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=clone_remote">
+		<form class="simple" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=clone_remote">
 			<label>
 				{tr}URL:{/tr}
 				<input type="url" name="url" required="required"/>

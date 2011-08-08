@@ -19,6 +19,7 @@ $controllerMap = array(
 	'file' => 'Services_File_Controller',
 	'auth_source' => 'Services_AuthSource_Controller',
 	'tracker' => 'Services_Tracker_Controller',
+	'tracker_sync' => 'Services_Tracker_SyncController',
 	'favorite' => 'Services_Favorite_Controller',
 	'translation' => 'Services_Language_TranslationController',
 	'user' => 'Services_User_Controller',
@@ -31,6 +32,10 @@ $inputConfiguration = array(array(
 		'controller' => 'word',
 	),
 ));
+
+if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
+	$inputConfiguration[] = array('catchAllUnset' => null);
+}
 
 require_once ('tiki-setup.php');
 
