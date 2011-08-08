@@ -116,7 +116,7 @@
 			<form method="get" action="tiki-admin_categories.php">
 				<label>{tr}Find:{/tr}<input type="text" name="find" /></label>
 				<input type="hidden" name="parentId" value="{$parentId|escape}" />
-				<input type="submit" value="{tr}OK{/tr}" name="search" />
+				<input type="submit" value="{tr}Filter{/tr}" name="search" />
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 				<input type="hidden" name="find_objects" value="{$find_objects|escape}" />
 			</form>

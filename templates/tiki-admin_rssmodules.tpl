@@ -156,12 +156,12 @@
 				<td class="text">
 					<strong>{$channels[chan].name|escape}</strong><br />
 					{if $channels[chan].description}{$channels[chan].description|escape|nl2br}<br />{/if}
-					Site: <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br />
-					Feed: <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br />
+					{tr}Site:{/tr} <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br />
+					{tr}Feed:{/tr} <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br />
 				</td>
 				<td class="text">
 					{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}<br />
-					Refresh rate: {$channels[chan].refresh|duration}
+					{tr}Refresh rate:{/tr} {$channels[chan].refresh|duration}
 				</td>
 				<td class="text">{$channels[chan].showTitle|escape}</td>
 				<td class="text">{$channels[chan].showPubDate|escape}</td>

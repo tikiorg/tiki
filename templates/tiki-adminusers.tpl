@@ -31,7 +31,7 @@
 {/if}
 
 {if $added != "" or $discarded != "" or $discardlist != ''}
-	{remarksbox type="feedback" title="Batch Upload Results"}
+	{remarksbox type="feedback" title="{tr}Batch Upload Results{/tr}"}
 		{tr}Updated users:{/tr} {$added}
 		{if $discarded != ""}- {tr}Rejected users:{/tr} {$discarded}{/if}
 		<br />

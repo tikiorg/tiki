@@ -131,7 +131,7 @@
 	</div>
 </div>
 <div class="clearfix">
-{remarksbox title='Tips'}
+{remarksbox title='{tr}Tips{/tr}'}
 {tr}To configure the toolbars on the various text editing areas select the section, and optionally check the comments checkbox, you want to edit and drag the icons from the left hand box to the toolbars on the right.<br />
 Drag icons back from the toolbar rows onto the full list to remove them.<br />
 Icons with <strong>bold</strong> labels are for wiki text areas, those that are <em>italic</em> are for WYSIWYG mode, and those that are <strong><em>bold and italic</em></strong> are for both.<br />
