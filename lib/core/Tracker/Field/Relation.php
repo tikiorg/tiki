@@ -88,7 +88,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		if ($this->getOption(self::OPT_READONLY)) {
-			return tra('Read only');
+			return tra('Read-only');
 		}
 
 		$context['labels'] = array();
