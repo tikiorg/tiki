@@ -4,7 +4,23 @@ PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SMILE							[a-z]+
 
-%s bold box center colortext italic link strikethrough table titlebar underscore wikilink
+%s 
+	bold box
+	center
+	colortext
+	italic
+	header6
+	header5
+	header4
+	header3
+	header2
+	header1
+	link
+	strikethrough
+	table
+	titlebar
+	underscore
+	wikilink
 
 %%
 
@@ -83,6 +99,18 @@ SMILE							[a-z]+
 [:][:]						this.begin('center');			return 'CENTER_START'
 <colortext>[\~][\~]			this.popState();				return 'COLORTEXT_END'
 [\~][\~][#]					this.begin('colortext');		return 'COLORTEXT_START'
+<header6>[\n]				this.popState();				return 'HEADER6_END'
+[\n]("!!!!!!")				this.begin('header6');			return 'HEADER6_START'
+<header5>[\n]				this.popState();				return 'HEADER5_END'
+[\n]("!!!!!")				this.begin('header5');			return 'HEADER5_START'
+<header4>[\n]				this.popState();				return 'HEADER4_END'
+[\n]("!!!!")				this.begin('header4');			return 'HEADER4_START'
+<header3>[\n]				this.popState();				return 'HEADER3_END'
+[\n]("!!!")					this.begin('header3');			return 'HEADER3_START'
+<header2>[\n]				this.popState();				return 'HEADER2_END'
+[\n]("!!")					this.begin('header2');			return 'HEADER2_START'
+<header1>[\n]				this.popState();				return 'HEADER1_END'
+[\n]("!")					this.begin('header1');			return 'HEADER1_START'
 <italic>['][']				this.popState();				return 'ITALIC_END'
 ['][']						this.begin('italic');			return 'ITALIC_START'
 <link>("]")					this.popState();				return 'LINK_END'
@@ -105,7 +133,7 @@ SMILE							[a-z]+
 		yytext = yytext.replace(/\n/g, '<br />');
 		return 'CONTENT';
 	%}
-
+	
 <<EOF>>                         			return 'EOF'
 
 /lex
@@ -172,6 +200,18 @@ content
 	}
  | ITALIC_START wiki_contents ITALIC_END
 	{$$ = "<i>" + $2 + "</i>";}
+ | HEADER6_START wiki_contents HEADER6_END
+	{$$ = "<h6>" + $2 + "</h6>";}
+ | HEADER5_START wiki_contents HEADER5_END
+	{$$ = "<h5>" + $2 + "</h5>";}
+ | HEADER4_START wiki_contents HEADER4_END
+	{$$ = "<h4>" + $2 + "</h4>";}
+ | HEADER3_START wiki_contents HEADER3_END
+	{$$ = "<h3>" + $2 + "</h3>";}
+ | HEADER2_START wiki_contents HEADER2_END
+	{$$ = "<h2>" + $2 + "</h2>";}
+ | HEADER1_START wiki_contents HEADER1_END
+	{$$ = "<h1>" + $2 + "</h1>";}
  | LINK_START wiki_contents LINK_END
 	{
 		var link = $2.split('|');
