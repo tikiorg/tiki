@@ -285,6 +285,11 @@
 					</ul>
 					<p><input type="submit" value="{tr}Push new items{/tr}"/></p>
 				</form>
+				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_edit&amp;trackerId={$trackerId|escape:'url'}">
+					<p>{tr}Items modified locally{/tr}</p>
+					<ul class="load-items">
+					</ul>
+				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_refresh&amp;trackerId={$trackerId|escape:'url'}">
 					{if $tracker_sync.modified}
 						{remarksbox type=warning title="{tr}Local changes will be lost{/tr}"}

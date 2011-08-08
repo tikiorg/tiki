@@ -80,22 +80,10 @@ class Services_Tracker_SyncController
 
 	function action_sync_meta($input)
 	{
-		$trackerId = $input->trackerId->int();
-		$definition = Tracker_Definition::get($trackerId);
-
-		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
-		}
-
-		$syncInfo = $definition->getSyncInformation();
-
-		if (! $syncInfo) {
-			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
-		}
+		list($trackerId, $definition, $syncInfo) = $this->readTracker($input);
+		$factory = new Tracker_Field_Factory($definition);
 
 		$export = $this->getRemoteTrackerFieldExport($syncInfo['provider'], $syncInfo['source']);
-
-		$factory = new Tracker_Field_Factory($definition);
 		foreach ($export as $info) {
 			$localField = $definition->getFieldFromPermName($info['permName']);
 			if (! $localField) {
@@ -116,23 +104,7 @@ class Services_Tracker_SyncController
 
 	function action_sync_refresh($input)
 	{
-		$trackerId = $input->trackerId->int();
-		$confirm = $input->confirm->int();
-		$definition = Tracker_Definition::get($trackerId);
-
-		if (! $confirm) {
-			throw new Services_Exception(tr('Missing input parameters'), 400);
-		}
-
-		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
-		}
-
-		$syncInfo = $definition->getSyncInformation();
-
-		if (! $syncInfo) {
-			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
-		}
+		list($trackerId, $definition, $syncInfo) = $this->readTracker($input);
 
 		set_time_limit(0); // Expected to take a while on larger trackers
 
@@ -168,18 +140,7 @@ class Services_Tracker_SyncController
 
 	function action_sync_new($input)
 	{
-		$trackerId = $input->trackerId->int();
-		$definition = Tracker_Definition::get($trackerId);
-
-		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
-		}
-
-		$syncInfo = $definition->getSyncInformation();
-
-		if (! $syncInfo) {
-			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
-		}
+		list($trackerId, $definition, $syncInfo) = $this->readTracker($input);
 
 		$items = $input->items->int();
 		
@@ -209,19 +170,28 @@ class Services_Tracker_SyncController
 			return array(
 			);
 		} else {
-			$out = array();
-			foreach ($itemIds as $itemId) {
-				$out[] = array(
-					'itemId' => $itemId,
-					'title' => $trklib->get_isMain_value(null, $itemId),
-				);
-			}
-
 			return array(
 				'trackerId' => $trackerId,
-				'result' => $out,
+				'result' => $this->getItemList($itemIds),
 			);
 		}
+	}
+
+	function action_sync_edit($input)
+	{
+		list($trackerId, $definition, $syncInfo) = $this->readTracker($input);
+
+		$items = TikiDb::get()->table('tiki_tracker_items');
+		$itemIds = $items->fetchColumn('itemId', array(
+			'trackerId' => $trackerId,
+			'created' => $items->lesserThan($syncInfo['last']),
+			'lastModif' => $items->greaterThan($syncInfo['last']),
+		));
+
+		return array(
+			'trackerId' => $trackerId,
+			'result' => $this->getItemList($itemIds),
+		);
 	}
 
 	private function createSynchronizedFields($trackerId, $data, $syncInfo)
@@ -278,7 +248,7 @@ class Services_Tracker_SyncController
 		$attributelib = TikiLib::lib('attribute');
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.provider', rtrim($serviceUrl, '/'));
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.source', $remoteTrackerId);
-		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', time());
+		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', time()); // Real sync time, not tiki initial load
 	}
 
 	private function getRemoteItems($syncInfo)
@@ -359,6 +329,39 @@ class Services_Tracker_SyncController
 			$definition->getInformation(),
 			$this->getRemoteTrackerFieldExport($syncInfo['provider'], $syncInfo['source'])
 		);
+	}
+
+	private function readTracker($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		$syncInfo = $definition->getSyncInformation();
+
+		if (! $syncInfo) {
+			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
+		}
+
+		return array($trackerId, $definition, $syncInfo);
+	}
+	
+	private function getItemList($itemIds)
+	{
+		$trklib = TikiLib::lib('trk');
+
+		$out = array();
+		foreach ($itemIds as $itemId) {
+			$out[] = array(
+				'itemId' => $itemId,
+				'title' => $trklib->get_isMain_value(null, $itemId),
+			);
+		}
+
+		return $out;
 	}
 }
 
