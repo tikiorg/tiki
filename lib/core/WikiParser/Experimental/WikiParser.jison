@@ -7,6 +7,12 @@ INLINE_PLUGIN_ID				[a-z]+
 
 %%
 
+"~np~"(.|\n)*?"~/np~"
+	%{
+		yytext = yytext.substring(4, yytext.length - 5);
+		return 'NP_CONTENT';
+	%}
+
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
 		var pluginName = yytext.match(/^\{([a-z]+)/)[1];
@@ -48,16 +54,14 @@ INLINE_PLUGIN_ID				[a-z]+
 		return 'CONTENT';
 	%}
 
-
-<bold>[_][_]		this.popState();		return 'BOLD_END'
-[_][_]				this.begin('bold');		return 'BOLD_START'
-<box>[\^]			this.popState();		return 'BOX_END'
-[\^]				this.begin('box');		return 'BOX_START'
-<italic>['][']		this.popState();		return 'ITALIC_END'
-['][']				this.begin('italic');	return 'ITALIC_START'
-<titlebar>[=][-]	this.popState();		return 'TITLEBAR_END'
-[-][=]				this.begin('titlebar');	return 'TITLEBAR_START'
-
+<bold>[_][_]				this.popState();				return 'BOLD_END'
+[_][_]						this.begin('bold');				return 'BOLD_START'
+<box>[\^]					this.popState();				return 'BOX_END'
+[\^]						this.begin('box');				return 'BOX_START'
+<italic>['][']				this.popState();				return 'ITALIC_END'
+['][']						this.begin('italic');			return 'ITALIC_START'
+<titlebar>[=][-]			this.popState();				return 'TITLEBAR_END'
+[-][=]						this.begin('titlebar');			return 'TITLEBAR_START'
 
 "<"(.|\n)*?">"								return 'HTML'
 (.)											return 'CONTENT'
@@ -101,7 +105,11 @@ plugin
 contents
  : content
 	{$$ = $1;}
+ | np_content
+	{$$ = $1;}
  | contents content
+	{$$ = $1 + $2;}
+ | contents np_content
 	{$$ = $1 + $2;}
  ;
 
@@ -109,7 +117,7 @@ content
  : CONTENT
 	{$$ = $1;}
  | HTML
-	{$$ = $1;} 
+	{$$ = isHtmlPermissible($1);} 
  | BOLD_START wiki_contents BOLD_END
 	{$$ = "<b>" + $2 + "</b>";}
  | BOX_START wiki_contents BOX_END
@@ -117,5 +125,10 @@ content
  | ITALIC_START wiki_contents ITALIC_END
 	{$$ = "<i>" + $2 + "</i>";}
  | TITLEBAR_START wiki_contents TITLEBAR_END
-	{$$ = "<h1>" + $2 + "</h1>";}
+	{$$ = "<div class='titlebar'>" + $2 + "</div>";}
+ ;
+
+np_content
+ : NP_CONTENT
+	{$$ = $1;}
  ;
