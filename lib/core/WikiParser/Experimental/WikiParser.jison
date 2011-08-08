@@ -54,6 +54,15 @@ INLINE_PLUGIN_ID				[a-z]+
 		return 'CONTENT';
 	%}
 
+"["(.|\n)*?"|"(.|\n)*?"]"
+	%{
+		var link = yytext.substring(1, yytext.length - 1).split('|');
+		if (link.length) {
+			yytext = "<a href='" + link[0] + "'>" + link[1] + "</a>";
+			return 'LINK';
+		}
+	%}
+
 <bold>[_][_]				this.popState();				return 'BOLD_END'
 [_][_]						this.begin('bold');				return 'BOLD_START'
 <box>[\^]					this.popState();				return 'BOX_END'
@@ -117,7 +126,9 @@ content
  : CONTENT
 	{$$ = $1;}
  | HTML
-	{$$ = isHtmlPermissible($1);} 
+	{$$ = isHtmlPermissible($1);}
+ | LINK
+	{$$ = $1;}
  | BOLD_START wiki_contents BOLD_END
 	{$$ = "<b>" + $2 + "</b>";}
  | BOX_START wiki_contents BOX_END
