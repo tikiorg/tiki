@@ -68,8 +68,11 @@
 // ### If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // ### then Tiki tries to translate 'Login' and ':' separately.
 // ### This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
-// ### and it still allows to translate ":" as "&nbsp;:" for languages that
+// ### and it still allows to translate ":" as " :" for languages that
 // ### need it (like French)
+// ### Note: the difference is invisible but " :" has an utf-8
+// ### non-breaking-space, not a regular space. This allows displaying correct emails
+// ### as well as web pages.
 
 $lang=Array(
 // ### Start of unused words
@@ -10795,8 +10798,7 @@ $lang=Array(
 "not in" => "pas dans",
 "any category" => "toutes catégories",
 "Multiple select" => "Sélection multiple",
-"in:" => "dans :",
-":" => "&nbsp;:",
+":" => " :",
 "Orphans" => "Orphelins",
 "Number of displayed rows" => "Nombre de lignes affichées",
 "Clear Filter" => "Effacer le filtre",
