@@ -118,6 +118,12 @@ class Services_Tracker_Utilities
 			unset($conditions['status']);
 		}
 
+		if (! empty($conditions['modifiedSince'])) {
+			$conditions['lastModif'] = $table->greaterThan($conditions['modifiedSince']);
+		}
+
+		unset($conditions['modifiedSince']);
+
 		$items = $table->fetchAll(array('itemId', 'status'), $conditions, $maxRecords, $offset);
 
 		foreach ($items as & $item) {

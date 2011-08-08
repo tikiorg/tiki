@@ -323,10 +323,6 @@ class Services_Tracker_Controller
 		return $trklib->list_trackers();
 	}
 
-
-
-
-
 	function action_list_items($input)
 	{
 		// TODO : Eventually, this method should filter according to the actual permissions, but because
@@ -341,6 +337,7 @@ class Services_Tracker_Controller
 		$maxRecords = $input->maxRecords->int();
 		$status = $input->status->word();
 		$format = $input->format->word();
+		$modifiedSince = $input->modifiedSince->int();
 		
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -351,6 +348,7 @@ class Services_Tracker_Controller
 		$items = $this->utilities->getItems(array(
 			'trackerId' => $trackerId,
 			'status' => $status,
+			'modifiedSince' => $modifiedSince,
 		), $maxRecords, $offset);
 
 		if ($format !== 'raw') {
@@ -393,5 +391,35 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_update_item($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		// TODO : Eventually, this method should check the track permissions
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		if (! $itemId = $input->itemId->int()) {
+			throw new Services_Exception_MissingValue('itemId');
+		}
+
+		$this->utilities->updateItem($definition, array(
+			'itemId' => $itemId,
+			'status' => $input->status->word(),
+			'fields' => $input->fields->none(),
+		));
+		TikiLib::lib('unifiedsearch')->processUpdateQueue();
+
+		return array(
+			'trackerId' => $trackerId,
+			'itemId' => $itemId,
+		);
+	}
 }
 

@@ -281,14 +281,22 @@
 				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_new&amp;trackerId={$trackerId|escape:'url'}">
 					<p>{tr}Items added locally{/tr}</p>
-					<ul class="load-items">
+					<ul class="load-items items">
 					</ul>
 					<p><input type="submit" value="{tr}Push new items{/tr}"/></p>
 				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_edit&amp;trackerId={$trackerId|escape:'url'}">
-					<p>{tr}Items modified locally{/tr}</p>
-					<ul class="load-items">
-					</ul>
+					<div class="item-block">
+						<p>{tr}Items modified locally without conflicts{/tr}</p>
+						<ul class="load-items automatic">
+						</ul>
+					</div>
+					<div class="item-block">
+						<p>{tr}Items modified locally with conflicts (selecting these will cause the remote changes to be lost, manual update recommended){/tr}</p>
+						<ul class="load-items manual">
+						</ul>
+					</div>
+					<p><input type="submit" value="{tr}Push local changes{/tr}"/></p>
 				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_refresh&amp;trackerId={$trackerId|escape:'url'}">
 					{if $tracker_sync.modified}
@@ -322,22 +330,29 @@
 						});
 						return false;
 					});
-					$('.load-items').each(function () {
-						var list = this;
-						$.getJSON($(this).closest('form').attr('action'), function (data) {
-							$.each(data.result, function (k, info) {
-								var li = $('<li/>');
-								li.append($('<label/>')
-									.text(info.title)
-									.prepend($('<input type="checkbox" name="items[]"/>').attr('value', info.itemId))
-								);
+					$('.load-items').closest('form').each(function () {
+						var form = this;
+						$(form).hide();
+						$.getJSON($(this).attr('action'), function (data) {
+							$.each(data.sets, function (k, name) {
+								var list = $(form).find('.load-items.' + name)[0];
 
-								$(list).append(li);
+								$.each(data[name], function (k, info) {
+									var li = $('<li/>');
+									li.append($('<label/>')
+										.text(info.title)
+										.prepend($('<input type="checkbox" name="' + name + '[]"/>').attr('value', info.itemId))
+									);
+
+									$(list).append(li);
+								});
+
+								if (data[name].length === 0) {
+									$(list).closest('.item-block').hide();
+								} else {
+									$(form).show();
+								}
 							});
-
-							if (data.result.length === 0) {
-								$(list).closest('form').hide();
-							}
 						});
 					});
 				{/jq}

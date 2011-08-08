@@ -149,6 +149,7 @@ class Services_Tracker_SyncController
 		$itemIds = $trklib->get_items_list($trackerId, $syncField['fieldId'], '', 'opc');
 
 		if ($items) {
+			set_time_limit(30 + 10*count($items)); // 10 sec per item plus some initial overhead
 			$itemIds = array_intersect($itemIds, $items);
 			$table = TikiDb::get()->table('tiki_tracker_items');
 			$items = $this->utilities->getItems(array(
@@ -158,7 +159,7 @@ class Services_Tracker_SyncController
 
 			$remoteDefinition = $this->getRemoteDefinition($definition);
 			foreach ($items as $item) {
-				$remoteItemId = $this->insertRemoteItem($remoteDefinition, $definition, $syncInfo, $item);
+				$remoteItemId = $this->insertRemoteItem($remoteDefinition, $definition, $item);
 
 				if ($remoteItemId) {
 					$item['fields']['syncSource'] = $remoteItemId;
@@ -172,7 +173,8 @@ class Services_Tracker_SyncController
 		} else {
 			return array(
 				'trackerId' => $trackerId,
-				'result' => $this->getItemList($itemIds),
+				'sets' => array('items'),
+				'items' => $this->getItemList($itemIds),
 			);
 		}
 	}
@@ -181,6 +183,7 @@ class Services_Tracker_SyncController
 	{
 		list($trackerId, $definition, $syncInfo) = $this->readTracker($input);
 
+		// Collect local IDs that were modified
 		$items = TikiDb::get()->table('tiki_tracker_items');
 		$itemIds = $items->fetchColumn('itemId', array(
 			'trackerId' => $trackerId,
@@ -188,9 +191,38 @@ class Services_Tracker_SyncController
 			'lastModif' => $items->greaterThan($syncInfo['last']),
 		));
 
+		// Collect remote IDs that were modified
+		$remoteItems = $this->getRemoteItems($syncInfo, array(
+			'modifiedSince' => $syncInfo['last'],
+		));
+
+		$modifiedIds = array();
+		foreach ($remoteItems as $item) {
+			$modifiedIds[] = $item['itemId'];
+		}
+
+		// Map from remote ID to local ID
+		$syncField = $definition->getFieldFromPermName('syncSource');
+		$fields = TikiDb::get()->table('tiki_tracker_item_fields');
+		$modifiedIds = $fields->fetchColumn('itemId', array(
+			'fieldId' => $syncField['fieldId'],
+			'value' => $fields->in($modifiedIds),
+		));
+
+		$automatic = array_diff($itemIds, $modifiedIds);
+		$manual = array_intersect($itemIds, $modifiedIds);
+
+		set_time_limit(30 + 10*count($automatic) + 10*count($manual)); // 10 sec per item plus some initial overhead
+
+		$remoteDefinition = $this->getRemoteDefinition($definition);
+		$this->processUpdates('automatic', $automatic, $input, $definition, $remoteDefinition);
+		$this->processUpdates('manual', $manual, $input, $definition, $remoteDefinition);
+
 		return array(
 			'trackerId' => $trackerId,
-			'result' => $this->getItemList($itemIds),
+			'sets' => array('automatic', 'manual'),
+			'automatic' => $this->getItemList($automatic),
+			'manual' => $this->getItemList($manual),
 		);
 	}
 
@@ -251,28 +283,21 @@ class Services_Tracker_SyncController
 		$attributelib->set_attribute('tracker', $localTrackerId, 'tiki.sync.last', time()); // Real sync time, not tiki initial load
 	}
 
-	private function getRemoteItems($syncInfo)
+	private function getRemoteItems($syncInfo, array $conditions = array())
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
-		return $controller->getResultLoader('list_items', array(
+		return $controller->getResultLoader('list_items', array_merge($conditions, array(
 			'trackerId' => $syncInfo['source'],
 			'format' => 'raw',
-		), 'offset', 'maxRecords', 'result');
+		)), 'offset', 'maxRecords', 'result');
 	}
 
-	private function insertRemoteItem($remoteDefinition, $definition, $syncInfo, $item)
+	private function insertRemoteItem($remoteDefinition, $definition, $item)
 	{
-		unset($item['fields']['syncSource']);
-		$item['trackerId'] = $syncInfo['source'];
+		$syncInfo = $definition->getSyncInformation();
 
-		$factory = new Tracker_Field_Factory($definition);
-		foreach ($item['fields'] as $key => & $value) {
-			$field = $remoteDefinition->getFieldFromPermName($key);
-			if ($field && $definition->getFieldFromPermName($key)) {
-				$handler = $factory->getHandler($field);
-				$value = $handler->export($value);
-			}
-		}
+		$item['trackerId'] = $syncInfo['source'];
+		$item['fields'] = $this->exportFields($item['fields'], $remoteDefinition, $definition);
 
 		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
 		$data = $controller->insert_item($item);
@@ -280,6 +305,34 @@ class Services_Tracker_SyncController
 		if (isset($data['itemId']) && $data['itemId']) {
 			return $data['itemId'];
 		}
+	}
+
+	private function updateRemoteItem($remoteDefinition, $definition, $item)
+	{
+		$syncInfo = $definition->getSyncInformation();
+
+		$item['itemId'] = $item['fields']['syncSource'];
+		$item['trackerId'] = $syncInfo['source'];
+
+		$item['fields'] = $this->exportFields($item['fields'], $remoteDefinition, $definition);
+
+		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
+		$controller->update_item($item);
+	}
+
+	private function exportFields($fields, $remoteDefinition, $definition)
+	{
+		unset($fields['syncSource']);
+		$factory = new Tracker_Field_Factory($definition);
+		foreach ($fields as $key => & $value) {
+			$field = $remoteDefinition->getFieldFromPermName($key);
+			if ($field && $definition->getFieldFromPermName($key)) {
+				$handler = $factory->getHandler($field);
+				$value = $handler->export($value);
+			}
+		}
+		
+		return $fields;
 	}
 
 	private function attachTranslations($syncInfo, $type, $objectMap)
@@ -362,6 +415,26 @@ class Services_Tracker_SyncController
 		}
 
 		return $out;
+	}
+	
+	private function processUpdates($inputType, & $list, $input, $definition, $remoteDefinition)
+	{
+		$values = $input->$inputType->int();
+		if (! is_array($values)) {
+			return;
+		}
+
+		$toProcess = array_intersect($list, $values);
+		$list = array_diff($list, $values);
+
+		$table = TikiDb::get()->table('tiki_tracker_items');
+		$itemList = $this->utilities->getItems(array(
+			'trackerId' => $definition->getConfiguration('trackerId'),
+			'itemId' => $table->in($toProcess),
+		));
+		foreach ($itemList as $item) {
+			$this->updateRemoteItem($remoteDefinition, $definition, $item);
+		}
 	}
 }
 
