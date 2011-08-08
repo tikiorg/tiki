@@ -75,7 +75,6 @@ function wikiplugin_galleriffic($data, $params)
 	}
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('lib/jquery/galleriffic/css/galleriffic-2.css');
-	$headerlib->add_jsfile('lib/jquery/galleriffic/js/jquery-1.3.2.js');
 	$headerlib->add_jsfile('lib/jquery/galleriffic/js/jquery.galleriffic.js');
 	$headerlib->add_jsfile('lib/jquery/galleriffic/js/jquery.opacityrollover.js');
 	$playLinkText = tra('Play Slideshow');
