@@ -455,6 +455,8 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker is not synchronized with a remote source.'), 409);
 		}
 
+		set_time_limit(0); // Expected to take a while on larger trackers
+
 		$this->utilities->clearTracker($trackerId);
 		
 		$itemMap = array();
@@ -481,6 +483,7 @@ class Services_Tracker_Controller
 		}
 
 		$this->registerSynchronization($trackerId, $syncInfo['provider'], $syncInfo['source']);
+		TikiLib::lib('unifiedsearch')->processUpdateQueue(count($itemMap) * 3); // Process lots of inserts
 		return array();
 	}
 
@@ -526,6 +529,7 @@ class Services_Tracker_Controller
 					$this->utilities->updateItem($definition, $item);
 				}
 			}
+			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 
 			return array(
 			);
@@ -603,6 +607,7 @@ class Services_Tracker_Controller
 			'status' => $input->status->word(),
 			'fields' => $input->fields->none(),
 		));
+		TikiLib::lib('unifiedsearch')->processUpdateQueue();
 
 		return array(
 			'trackerId' => $trackerId,

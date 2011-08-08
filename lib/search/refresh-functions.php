@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function refresh_index($object_type, $object_id = null) {
+function refresh_index($object_type, $object_id = null, $process = true) {
 	global $prefs;
 
 	// First process unified search, then process the legacy indexing if required.
@@ -23,7 +23,10 @@ function refresh_index($object_type, $object_id = null) {
 		try {
 			global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 			$unifiedsearchlib->invalidateObject( $unified_type, $object_id );
-			$unifiedsearchlib->processUpdateQueue();
+
+			if ($process) {
+				$unifiedsearchlib->processUpdateQueue();
+			}
 
 		} catch (Zend_Search_Lucene_Exception $e) {
 

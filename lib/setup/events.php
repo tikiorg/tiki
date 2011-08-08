@@ -77,6 +77,7 @@ $events->bind('tiki.trackeritem.save', 'tiki.save');
 
 function tiki_save_refresh_index($args) {
 	require_once('lib/search/refresh-functions.php');
-	refresh_index($args['type'], $args['object']);
+	$isBulk = isset($args['bulk_import']) && $args['bulk_import'];
+	refresh_index($args['type'], $args['object'], ! $isBulk);
 }
 

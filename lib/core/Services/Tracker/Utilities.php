@@ -185,7 +185,7 @@ class Services_Tracker_Utilities
 		));
 
 		foreach ($items as $itemId) {
-			$trklib->remove_tracker_item($itemId);
+			$trklib->remove_tracker_item($itemId, true);
 		}
 	}
 

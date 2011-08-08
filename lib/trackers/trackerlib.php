@@ -1962,7 +1962,7 @@ class TrackerLib extends TikiLib
 		return $res;
 	}
 
-	function remove_tracker_item($itemId) {
+	function remove_tracker_item($itemId, $bulk_mode = false) {
 		global $user, $prefs;
 		$res = $this->items()->fetchFullRow(array('itemId' => (int) $itemId));
 		$trackerId = $res['trackerId'];
@@ -1976,35 +1976,38 @@ class TrackerLib extends TikiLib
 				$imgList[] = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
 			}
 		}
-		$watchers = $this->get_notification_emails($trackerId, $itemId, $this->get_tracker_options( $trackerId));
-		if (count($watchers > 0)) {
-			$smarty = TikiLib::lib('smarty');
-			$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
-			$smarty->assign('mail_date', $this->now);
-			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_action', 'deleted');
-			$smarty->assign('mail_itemId', $itemId);
-			$smarty->assign('mail_trackerId', $trackerId);
-			$smarty->assign('mail_trackerName', $trackerName);
-			$smarty->assign('mail_data', '');
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix( true ). $foo["path"];
-			$smarty->assign('mail_machine', $machine);
-			$parts = explode('/', $foo['path']);
-			if (count($parts) > 1)
-				unset ($parts[count($parts) - 1]);
-			$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
-			if (!isset($_SERVER["SERVER_NAME"])) {
-				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-			}
-			include_once ('lib/webmail/tikimaillib.php');
-			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
-			foreach ($watchers as $w) {
-				$mail = new TikiMail($w['user']);
-				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
-				$mail->send(array($w['email']));
+
+		if (! $bulk_mode) {
+			$watchers = $this->get_notification_emails($trackerId, $itemId, $this->get_tracker_options( $trackerId));
+			if (count($watchers > 0)) {
+				$smarty = TikiLib::lib('smarty');
+				$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
+				$smarty->assign('mail_date', $this->now);
+				$smarty->assign('mail_user', $user);
+				$smarty->assign('mail_action', 'deleted');
+				$smarty->assign('mail_itemId', $itemId);
+				$smarty->assign('mail_trackerId', $trackerId);
+				$smarty->assign('mail_trackerName', $trackerName);
+				$smarty->assign('mail_data', '');
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $this->httpPrefix( true ). $foo["path"];
+				$smarty->assign('mail_machine', $machine);
+				$parts = explode('/', $foo['path']);
+				if (count($parts) > 1)
+					unset ($parts[count($parts) - 1]);
+				$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
+				if (!isset($_SERVER["SERVER_NAME"])) {
+					$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+				}
+				include_once ('lib/webmail/tikimaillib.php');
+				$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
+				foreach ($watchers as $w) {
+					$mail = new TikiMail($w['user']);
+					$mail->setHeader("From", $prefs['sender_email']);
+					$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+					$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
+					$mail->send(array($w['email']));
+				}
 			}
 		}
 
@@ -2065,7 +2068,7 @@ class TrackerLib extends TikiLib
 		$multilinguallib->detachTranslation('trackeritem', $itemId);
 
 		require_once('lib/search/refresh-functions.php');
-		refresh_index('trackeritem', $itemId);
+		refresh_index('trackeritem', $itemId, ! $bulk_mode);
 
 		return true;
 	}
