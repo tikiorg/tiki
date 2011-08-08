@@ -7,14 +7,19 @@
 
 class Services_Favorite_Controller
 {
-	function action_list($input)
+	function setUp()
 	{
-		global $user, $prefs;
-		
+		global $prefs;
+
 		if ($prefs['user_favorites'] !== 'y') {
 			throw new Services_Exception(tr('Feature disabled'), 403);
 		}
+	}
 
+	function action_list($input)
+	{
+		global $user;
+		
 		if (! $user) {
 			return array();
 		}
@@ -30,11 +35,7 @@ class Services_Favorite_Controller
 
 	function action_toggle($input)
 	{
-		global $user, $prefs;
-
-		if ($prefs['user_favorites'] !== 'y') {
-			throw new Services_Exception(tr('Feature disabled'), 403);
-		}
+		global $user;
 
 		if (! $user) {
 			throw new Services_Exception(tr('Must be authenticated'), 403);

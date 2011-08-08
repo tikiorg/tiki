@@ -46,6 +46,10 @@ class Services_Broker
 			$method = 'action_' . $action;
 
 			if (method_exists($handler, $method)) {
+				if (method_exists($handler, 'setUp')) {
+					$handler->setUp();
+				}
+
 				return $handler->$method($request);
 			} else {
 				throw new Services_Exception(tr('Controller not found (%0)', $controller), 404);

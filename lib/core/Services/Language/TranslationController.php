@@ -14,14 +14,17 @@ class Services_Language_TranslationController
 		$this->utilities = new Services_Language_Utilities;
 	}
 
-	function action_manage($input)
+	function setUp()
 	{
 		global $prefs;
 
 		if ($prefs['feature_multilingual'] != 'y') {
 			throw new Services_Exception(tr('Feature Disabled'), 403);
 		}
+	}
 
+	function action_manage($input)
+	{
 		$type = $input->type->text();
 		$objectFilter = $this->getObjectFilter($type);
 
@@ -47,12 +50,6 @@ class Services_Language_TranslationController
 
 	function action_attach($input)
 	{
-		global $prefs;
-
-		if ($prefs['feature_multilingual'] != 'y') {
-			throw new Services_Exception(tr('Feature Disabled'), 403);
-		}
-
 		$type = $input->type->text();
 		$objectFilter = $this->getObjectFilter($type);
 
@@ -90,12 +87,6 @@ class Services_Language_TranslationController
 
 	function action_detach($input)
 	{
-		global $prefs;
-
-		if ($prefs['feature_multilingual'] != 'y') {
-			throw new Services_Exception(tr('Feature Disabled'), 403);
-		}
-
 		$type = $input->type->text();
 		$objectFilter = $this->getObjectFilter($type);
 		$confirmed = $input->confirm->int();

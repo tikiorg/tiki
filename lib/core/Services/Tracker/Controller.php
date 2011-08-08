@@ -14,6 +14,15 @@ class Services_Tracker_Controller
 		$this->utilities = new Services_Tracker_Utilities;
 	}
 
+	function setUp()
+	{
+		global $prefs;
+
+		if ($prefs['feature_trackers'] != 'y') {
+			throw new Services_Exception_Disabled('feature_trackers');
+		}
+	}
+
 	function action_add_field($input)
 	{
 		if (! Perms::get()->admin_trackers) {

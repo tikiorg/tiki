@@ -7,6 +7,15 @@
 
 class Services_File_Controller
 {
+	function setUp()
+	{
+		global $prefs;
+
+		if ($prefs['feature_file_galleries'] != 'y') {
+			throw new Services_Exception_Disabled('feature_file_galleries');
+		}
+	}
+
 	function action_upload($input) {
 		$gal_info = $this->checkTargetGallery($input);
 

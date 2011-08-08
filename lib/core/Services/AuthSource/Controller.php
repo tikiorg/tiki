@@ -7,7 +7,7 @@
 
 class Services_AuthSource_Controller
 {
-	private function check()
+	function setUp()
 	{
 		if (! Perms::get()->admin) {
 			throw new Services_Exception(tr('Permission Denied'), 403);
@@ -21,15 +21,11 @@ class Services_AuthSource_Controller
 
 	function action_list($input)
 	{
-		$this->check();
-
 		return $this->sources()->fetchColumn('identifier', array());
 	}
 
 	function action_save($input)
 	{
-		$this->check();
-
 		$url = $input->url->url();
 		$info = parse_url($url);
 
@@ -54,8 +50,6 @@ class Services_AuthSource_Controller
 
 	function action_fetch($input)
 	{
-		$this->check();
-
 		$data = $this->sources()->fetchFullRow(array(
 			'identifier' => $input->identifier->text(),
 		));

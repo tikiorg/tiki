@@ -7,16 +7,21 @@
 
 class Services_Category_Controller
 {
+	function setUp()
+	{
+		global $prefs;
+
+		if ($prefs['feature_categories'] != 'y') {
+			throw new Services_Exception_Disabled('feature_categories');
+		}
+	}
+
 	function action_list_categories($input)
 	{
 		global $prefs;
 
 		$parentId = $input->parentId->int();
 		$descends = $input->descends->int();
-
-		if ($prefs['feature_categories'] != 'y') {
-			throw new Services_Exception_Disabled('feature_categories');
-		}
 
 		if (! $parentId) {
 			throw new Services_Exception_MissingValue('parentId');
