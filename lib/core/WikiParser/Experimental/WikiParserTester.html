@@ -121,14 +121,51 @@
 			<tr>
 				<td style="vertical-align: top; width: 50%;">
 <textarea id="wiki" style="width: 100%; height: 150px;">''italics''
+
 __bold__
 
 ''__Here is bold and italics!__''
 
 ''__Here is bold and italics!__ and this part is just italics'' 
 
--=Title=-
+===This is underscore===
 
+--This is strikethrough--
+
+~~#FF0:Yellow text~~
+
+||a1|b1|c1
+a2|b2|c2
+a3|b3|c3||
+
+Wiki link to ((HomePage))
+
+Wiki link to HomePage with ((HomePage|with different label))
+
+Some smileys: (:biggrin:) (:confused:) (:cool:)
+
+! Header 1
+
+!! Header 2
+
+!!! Header 3
+
+::center::
+
+# item1
+# item2
+# item3
+
+-=Title bar=-
+
+* bullet 
+* bullet
+* bullet
+
+{HTML()}<center> There is some HTML here that shouldn't be interpreted. </center>{HTML}
+
+and now a horizontal bar:
+---
 
 ^I am a box^
 
@@ -138,8 +175,18 @@ __bold__
 
 And now, let's go for a hyperlink to [http://tiki.org|tiki.org]
 
+And now, hyperlink with no label: [http://tiki.org]
+
+And now, hyperlink without brackets: http://tiki.org
+
+And now, just www.tiki.org (which should become a link)
+
 ~np~__This is unparsed wiki syntax__ {TEST()} :) {TEST} ~/np~
 
+~np~ Doc: Use [[foo] to show [foo]. ~/np~
+
+ [[foo] 
+ 
 {nobody param1="100" /}
 {BGYELLOW(testVar1="Test")}
 	{LI()}{PURPLE()}purple returns a nested plugin!{PURPLE}{LI}
