@@ -217,7 +217,7 @@ class CartLib
 		$actual_prices_paid = array();
 		
 		foreach( $_SESSION['cart'] as $info ) {
-			if ( $info[$giftCertificateTypeLink] == $this->gift_certificate_type_reference || $giftCertificateTypeLink == '' && !$info['is_gift_certificate']) {
+			if ( $info[$giftCertificateTypeLink] == $this->gift_certificate_type_reference || $giftCertificateTypeLink == '' && (!isset($info['is_gift_certificate']) || !$info['is_gift_certificate'])) {
 				$products[] = $info;
 				$productTotal += floatval( $info['quantity'] ) * floatval( $info['price'] );
 				$giftCertificateApplies = true;
@@ -522,6 +522,8 @@ class CartLib
 	}
 
 	function generate_item_description( $item, $parentCode = 0 ) {
+		$wiki = '';
+		
 		if( $item['href'] ) {
 			$label = "[{$item['href']}|{$item['description']}]";
 		} else {
@@ -553,7 +555,7 @@ class CartLib
 		$wiki = "||__{$id_label}__|__{$product_label}__|__{$quantity_label}__|__{$price_label}__\n";
 
 		foreach( $this->get_content() as $item ) {
-			if ( !$item['is_gift_certificate'] ) {
+			if ( !isset($item['is_gift_certificate']) || !$item['is_gift_certificate'] ) {
 				$wiki .= $this->generate_item_description( $item );
 				if ($bundledProducts = $this->get_bundled_products( $item['code'] )) { 
 					foreach ($bundledProducts as $b) {
@@ -637,8 +639,8 @@ class CartLib
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
 		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
-				global $access;				
-				$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
+			$access = TikiLib::lib('access');				
+			$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
 		}
 				
 		$total = $this->get_total();
@@ -731,12 +733,18 @@ class CartLib
 		$content = $this->get_content();
 
 		foreach( $content as $info ) {
-			if (!$info['is_gift_certificate']) {
+			if (!isset($info['is_gift_certificate']) || !$info['is_gift_certificate']) {
 				$process_info = $this->process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile);
 			}
 		}
 		$email_template_ids = array();
-		$product_classes = array_unique($process_info['product_classes']);
+		
+		if (isset($process_info['product_classes']) && is_array($process_info['product_classes'])) {
+			$product_classes = array_unique($process_info['product_classes']);
+		} else {
+			$product_classes = array();
+		}
+		
 		foreach ($product_classes as $pc) {
 			if ($email_template_id = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Email Template ID', $pc)) {
 				$email_template_ids[] = $email_template_id;
@@ -802,7 +810,8 @@ class CartLib
 		if ($parentQuantity) {
 			$info['quantity'] = $info['quantity'] * $parentQuantity;
 		}
-		if ($info['productclass']) {
+		$product_classes = array();
+		if (isset($info['productclass']) && $info['productclass']) {
 			$product_classes[] = $info['productclass'];
 		}
 		if (!empty($info['onbehalf'])) {
@@ -830,12 +839,14 @@ class CartLib
 		}
 
 		$this->change_inventory($info['code'], -1 * $info['quantity'], false);
-		if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {	
+		if ((isset($info['exchangetoproductid']) && $info['exchangetoproductid'])
+			&& (isset($info['exchangeorderamount']) && $info['exchangeorderamount'])) {	
 			$this->change_inventory($info['exchangetoproductid'], -1 * $info['exchangeorderamount'], false);
 		}
 		if ($total > 0) {
 			$paymentlib->register_behavior( $invoice, 'cancel', 'replace_inventory', array( $info['code'], $info['quantity'] ) );
-			if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
+			if ((isset($info['exchangetoproductid']) && $info['exchangetoproductid'])
+				&& (isset($info['exchangeorderamount']) && $info['exchangeorderamount'])) {
 				$paymentlib->register_behavior( $invoice, 'cancel', 'replace_inventory', array( $info['exchangetoproductid'], $info['exchangeorderamount'] ) );
 			}
 		}
