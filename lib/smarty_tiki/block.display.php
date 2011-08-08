@@ -40,7 +40,7 @@ function smarty_block_display($params, $content, &$smarty)
 	} elseif (empty($params['error']) && isset($groups)) {
 		$errmsg = '';
 	} else {
-		$errmsg = tra('Smarty block.display.php: Missing error param');
+		$errmsg = 'Smarty block.display.php: Missing error param';
 	}
 	
 	$anon = false; // see the workaround to exclude Registered below
