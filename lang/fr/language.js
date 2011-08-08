@@ -6,14 +6,14 @@
  */
 
 lang = {
-//	"Very Secure" : "Very Secure",
-//	"Secure" : "Secure",
+	"Very Secure" : "Très sécurisé",
+	"Secure" : "Sécurisé",
 	"Very Strong" : "Très fort",
 	"Strong" : "Fort",
 	"Average" : "Moyenne",
 	"Weak" : "Faible",
 	"Very Weak" : "Très failbe",
-	"Strength" : "Robuste",
+	"Strength" : "Robustesse",
 //	"Valid User Name" : "Valid User Name",
 	"Passwords match" : "Les mots de passe concordent",
 //	"Valid Email" : "Valid Email",
@@ -38,4 +38,5 @@ lang = {
 	"What address are you looking for?" : "Quelle adresse recherchez-vous ?",
 	"Filter:" : "Filtre&nbsp;:",
 	"Please enter a page name" : "Veuillez entrer un nom de page",
+	"Are you sure you want to unassign this module?" : "Êtes-vous sur de vouloir supprimer ce module ?",
 };
