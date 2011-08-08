@@ -2294,6 +2294,15 @@ class TrackerLib extends TikiLib
 		} else {
 			$data['trackerId'] = (int) $trackerId;
 			$fieldId = $fields->insert($data);
+			
+			if (! $permName) {
+				// Apply a default value to perm name when not specified
+				$fields->update(array(
+					'permName' => 'f_' . $fieldId,
+				), array(
+					'fieldId' => $fieldId,
+				));
+			}
 
 			$itemFields = $this->itemFields();
 			foreach ($this->get_all_tracker_items($trackerId) as $itemId) {

@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once( 'lib/Horde/Yaml.php' );
-require_once( 'lib/Horde/Yaml/Loader.php' );
-require_once( 'lib/Horde/Yaml/Node.php' );
-require_once( 'lib/Horde/Yaml/Exception.php' );
-
-
 class Tiki_Profile
 {
 	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';

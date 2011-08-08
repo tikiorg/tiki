@@ -637,6 +637,10 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'visby' => '',     //just adding this as a placeholder for now - format seems quite complex
 			'editby' => '',    //just adding this as a placeholder for now - format seems quite complex
 			'descparsed' => 'n',			
+			'validation' => '',
+			'validation_param' => '',
+			'validation_message' => '',
+			'permname' => $this->obj->getRef(), // Use the profile reference as the name by default
 		);
 	} // }}}
 
@@ -748,7 +752,12 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			$data['errordesc'],
 			$data['visby'],
 			$data['editby'],
-			$data['descparsed'] );
+			$data['descparsed'],
+			$data['validation'],
+			$data['validation_param'],
+			$data['validation_message'],
+			$data['permname']
+		);
 	}
 
 	function _export($info)
