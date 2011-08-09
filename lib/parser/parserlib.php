@@ -22,10 +22,7 @@
  * @since		8
  */
 
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-
- class ParserLib
+class ParserLib extends TikiDb_Bridge
 {
 	var $parser;
 	
@@ -2624,7 +2621,8 @@ if( \$('#$id') ) {
 	//*
 	function parser_helper_wiki_info_getter( $pageName ) {
 		global $prefs;
-		$page_info = $this->get_page_info($pageName, false);
+		$tikilib = TikiLib::lib('tiki');
+		$page_info = $tikilib->get_page_info($pageName, false);
 		
 		if ( $page_info !== false ) {
 			return $page_info;
@@ -2669,7 +2667,7 @@ if( \$('#$id') ) {
 					// If feature_likePages is NOT set, then trying to display the first one is fine
 					// $pageName is by ref so it does get replaced 
 					$pageName = $links[0]['fromPage'];
-					return $this->get_page_info( $pageName );
+					return $tikilib->get_page_info( $pageName );
 				}
 			} elseif (count($links)) {
 				// there is exactly one match
@@ -2677,7 +2675,7 @@ if( \$('#$id') ) {
 					return true;
 				} else {
 					$pageName = $links[0]['fromPage'];
-					return $this->get_page_info( $pageName );
+					return $tikilib->get_page_info( $pageName );
 				} 
 			}
 		}
@@ -2801,4 +2799,3 @@ if( \$('#$id') ) {
 	}
 }
 
-$parserlib = new ParserLib;
