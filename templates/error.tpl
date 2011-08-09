@@ -58,7 +58,7 @@ close();
 					{if $prefs.feature_search_fulltext eq 'y'}
 						{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
 					{else}
-						{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page"}
+						{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page" filter=$filter}
 					{/if}
 				{/if}
 				{if $prefs.feature_likePages ne 'y' and !($prefs.feature_search eq 'y' && $tiki_p_search eq 'y')}

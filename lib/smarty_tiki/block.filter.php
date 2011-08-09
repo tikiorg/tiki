@@ -23,6 +23,9 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 	$types = $unifiedsearchlib->getSupportedTypes();
 
 	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
+	if (isset($params['filter'])) {
+		$filter = array_merge($filter, $params['filter']);
+	}
 
 	// General
 	$smarty->assign('filter_action', $params['action']);

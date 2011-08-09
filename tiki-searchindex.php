@@ -92,6 +92,8 @@ if (count($filter)) {
 	}
 }
 
+$smarty->assign('filter', $filter);
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-searchindex.tpl');

@@ -207,7 +207,7 @@ class ObjectLib extends TikiLib
 
 		$info = $this->get_info($type, $id);
 
-		if ($info) {
+		if (isset($info['title'])) {
 			return $info['title'];
 		}
 	}

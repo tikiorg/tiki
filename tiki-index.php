@@ -278,6 +278,9 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
 	$smarty->assign('create', $isUserPage? 'n': 'y');
+	$smarty->assign('filter', array(
+		'content' => $page,
+	));
 	$access->display_error( $page, tra('Page cannot be found'), '404' );
 }
 
