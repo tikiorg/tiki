@@ -43,7 +43,7 @@
 			<a class="tag-lookup" href="#">{tr}Lookup{/tr}</a>
 		</fieldset>
 
-		<div class="tag-picker" title="{tr}Select Tag{/tr}">
+		<div class="tag-picker" title="{tr}Select Tags{/tr}">
 			{$filter_tags_picker}
 		</div>
 	{/if}

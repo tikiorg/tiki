@@ -15961,7 +15961,7 @@ $lang=Array(
 "Displays to logged in users the number of new or updated objects since their last login date and time" => "Affiche aux utilisateurs authentifiés le nombre d'objets nouveaux ou modifiés depuis leurs dernières connexions",
 "Displays to logged in users new or updated objects since a point in time, by default their last login date and time" => "Affiche aux utilisateurs authentifiés les éléments nouveaux ou modifiés depuis un certain moment, par défaut le moment de leur dernière connexion",
 "Displays the most commented objects of a certain type" => "Affiche les objets d'un certain type les plus commentés",
-"Select Tag" => "Choisir un/des mot(s)-clé(s)",
+"Select Tags" => "Choisir un/des mot(s)-clé(s)",
 "You need to <a href=\"tiki-admin_calendars.php?cookietab=2\">create a calendar</a>" => "Vous devez <a href=\"tiki-admin_calendars.php?cookietab=2\">créer un calendrier</a>",
 "Lookup" => "Rechercher",
 "No pages found with" => "Aucune pages trouvées avec",
