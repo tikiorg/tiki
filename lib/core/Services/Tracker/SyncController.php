@@ -204,25 +204,35 @@ class Services_Tracker_SyncController
 		// Map from remote ID to local ID
 		$syncField = $definition->getFieldFromPermName('syncSource');
 		$fields = TikiDb::get()->table('tiki_tracker_item_fields');
-		$modifiedIds = $fields->fetchColumn('itemId', array(
+		$itemMap = $fields->fetchMap('itemId', 'value', array(
 			'fieldId' => $syncField['fieldId'],
 			'value' => $fields->in($modifiedIds),
 		));
 
+		$modifiedIds = array_keys($itemMap);
 		$automatic = array_diff($itemIds, $modifiedIds);
 		$manual = array_intersect($itemIds, $modifiedIds);
 
 		set_time_limit(30 + 10*count($automatic) + 10*count($manual)); // 10 sec per item plus some initial overhead
 
-		$remoteDefinition = $this->getRemoteDefinition($definition);
-		$this->processUpdates('automatic', $automatic, $input, $definition, $remoteDefinition);
-		$this->processUpdates('manual', $manual, $input, $definition, $remoteDefinition);
+		if ($input->automatic->int() || $input->manual->int()) {
+			$remoteDefinition = $this->getRemoteDefinition($definition);
+			$this->processUpdates('automatic', $automatic, $input, $definition, $remoteDefinition);
+			$this->processUpdates('manual', $manual, $input, $definition, $remoteDefinition);
+		}
+
+		$manualList = $this->getItemList($manual);
+		require_once 'lib/smarty_tiki/modifier.sefurl.php';
+		foreach ($manualList as & $item) {
+			$itemId = $item['itemId'];
+			$item['remoteUrl'] = $syncInfo['provider'] . '/' . smarty_modifier_sefurl($itemMap[$itemId], 'trackeritem');
+		}
 
 		return array(
 			'trackerId' => $trackerId,
 			'sets' => array('automatic', 'manual'),
 			'automatic' => $this->getItemList($automatic),
-			'manual' => $this->getItemList($manual),
+			'manual' => $manualList,
 		);
 	}
 
@@ -405,12 +415,14 @@ class Services_Tracker_SyncController
 	private function getItemList($itemIds)
 	{
 		$trklib = TikiLib::lib('trk');
+		require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
 		$out = array();
 		foreach ($itemIds as $itemId) {
 			$out[] = array(
 				'itemId' => $itemId,
 				'title' => $trklib->get_isMain_value(null, $itemId),
+				'localUrl' => smarty_modifier_sefurl($itemId, 'trackeritem'),
 			);
 		}
 

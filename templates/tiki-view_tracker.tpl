@@ -351,6 +351,16 @@
 										.prepend($('<input type="checkbox" name="' + name + '[]"/>').attr('value', info.itemId))
 									);
 
+									$.each({localUrl: "{tr}Local{/tr}", remoteUrl: "{tr}Remote{/tr}"}, function (key, label) {
+										if (info[key]) {
+											li
+												.append(' ')
+												.append($('<a/>')
+													.attr('href', info[key])
+													.text(label));
+										}
+									});
+
 									$(list).append(li);
 								});
 
