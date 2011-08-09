@@ -526,7 +526,7 @@ class WikiParserLexer {
 		
 		switch($avoiding_name_collisions) {
 			case 0:
-					$yy_->yytext = substr($yy_->yytext, 4, strlen($yy_->yytext) - 5);
+					$yy_->yytext = substr($yy_->yytext, 4, -5);
 					return 52;
 				
 			break;
@@ -578,14 +578,14 @@ class WikiParserLexer {
 				
 			break;
 			case 5:
-					$smile = substr($yy_->yytext, 2, strlen($yy_.yytext) - 2);
-					$yy_->yytext = "<img src='img/smiles/icon_" + $smile + ".gif' alt='" + $smile + "' />";
+					$smile = substr($yy_->yytext, 2, -2);
+					$yy_->yytext = "<img src='img/smiles/icon_" . $smile . ".gif' alt='" . $smile . "' />";
 					return 17;
 				
 			break;
 			case 6:
-					$smile = substr($yy_->yytext, 2, strlen($yy_->yytext) - 2);
-					$yy_->yytext = "<img src='img/smiles/icon_" + $smile + ".gif' alt='" + $smile + "' />";
+					$smile = substr($yy_->yytext, 2, -2);
+					$yy_->yytext = "<img src='img/smiles/icon_" . $smile . ".gif' alt='" . $smile . "' />";
 					return 13;
 		
 			break;

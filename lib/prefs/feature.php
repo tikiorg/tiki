@@ -2140,5 +2140,15 @@ function prefs_feature_list($partial = false) {
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'tags' => array('experimental'),		
 		),
+		'feature_jison_wiki_parser' => array(
+			'name' => tra('Jison Wiki Parser'),
+			'type' => 'flag',
+			'help' => 'JisonWikiParser',
+			'keywords' => 'parser',
+			'description' => tra('Is a new strategy for parsing wiki pages more like a programming language'),
+			'default' => 'n',
+			'warning' => tra('Experimental. This feature is still under development.'),
+			'tags' => array('experimental'),
+		),
 	);
 }

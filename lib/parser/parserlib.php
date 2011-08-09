@@ -42,9 +42,16 @@ class ParserLib extends TikiDb_Bridge
 	function plugin($pluginDetails) {
 		$name = $pluginDetails->name;
 		$body = $pluginDetails->body;
-		$params = $this->pluginArgumentParser($pluginDetails->params);
+		$args = $this->pluginArgumentParser($pluginDetails->params);
 		
-		return "";
+		$pluginBodyParser = new WikiParser;
+		
+		//nested parsing!
+		$pluginOutput = $pluginBodyParser->parse(
+			$this->plugin_execute($name, $body, $args)
+		);
+		
+		return $pluginOutput;
 	}
 	
 	function parse($data) {
@@ -1285,9 +1292,6 @@ if( \$('#$id') ) {
 			}
 		}
 		
-		//Testing new parser ;)
-		//return $this->parse($data);
-		
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
@@ -1317,6 +1321,13 @@ if( \$('#$id') ) {
 			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
 		}
+		
+		//The following will stop and return based off new parser
+		if ($prefs['feature_jison_wiki_parser'] == 'y') {
+			//Testing new parser ;)
+			return $this->parse($data);
+		}
+		
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}

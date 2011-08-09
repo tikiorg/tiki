@@ -217,6 +217,7 @@
 					{preference name=feature_slideshow}
 					{preference name=mobile_feature}
 					{preference name=feature_invoice}
+					{preference name=feature_jison_wiki_parser}
 					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
 						{preference name=mobile_perspectives}
 						<fieldset>
