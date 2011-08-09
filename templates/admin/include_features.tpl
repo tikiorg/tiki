@@ -101,16 +101,11 @@
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
-				<hr class="floatleft" />
-				<div class="floatleft">
-					<div class="adminoptionbox">
-						<em>{tr}Experimental:{/tr}</em> {icon _id=bug_error}
-					</div>
-					<div class="adminoptionboxchild">	
-						{preference name=feature_jquery_carousel}
-						{preference name=feature_jquery_tablesorter}
-					</div>
-				</div>
+				<fieldset class="admin clearfix featurelist">
+					<legend> {tr}Experimental:{/tr} {icon _id=bug_error}</legend>
+					{preference name=feature_jquery_carousel}
+					{preference name=feature_jquery_tablesorter}
+				</fieldset>
 			</fieldset>
 {/tab}
 

@@ -19,12 +19,16 @@
 {jq}
 	var updateVisible = function() {
 		var filters = [];
-		$('.adminoptionbox.preference').hide();
+		var prefs = $('.adminoptionbox.preference').hide();
+		prefs.parents('fieldset:not(.tabcontent)').hide();
+		prefs.closest('fieldset.tabcontent').removeClass('filled');
 		$('.preffilter').each(function () {
 			var targets = $('.adminoptionbox.preference.' + $(this).val());
 			if ($(this).is(':checked')) {
 				filters.push($(this).val());
 				targets.show();
+				targets.parents('fieldset:not(.tabcontent)').show();
+				targets.closest('fieldset.tabcontent').addClass('filled');
 			} else if ($(this).is('.negative:not(:checked)')) {
 				targets.hide();
 			}
@@ -32,6 +36,11 @@
 		$('.adminoptionbox.preference.modified').show();
 
 		$('input[name="filters"]').val(filters.join(' '));
+		$('.tabset .tabmark a').each(function () {
+			var selector = 'fieldset.tabcontent.' + $(this).attr('href').substring(1);
+			var content = $(this).closest('.tabset').find(selector);
+			$(this).parent().toggle(content.is('.filled'));
+		});
 	};
 
 	updateVisible();
