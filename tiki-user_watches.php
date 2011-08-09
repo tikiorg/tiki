@@ -141,7 +141,7 @@ if ( $prefs['feature_user_watches_languages'] == 'y') {
 	);
 }
 $rawEvents = $tikilib->get_watches_events();
-$event = array();
+$events = array();
 foreach($rawEvents as $event) {
 	if (array_key_exists($event, $notification_types)) {
 		$events[$event] = $notification_types[$event]['label'];
