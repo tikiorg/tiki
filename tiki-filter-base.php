@@ -93,7 +93,7 @@ TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance()
-	->registerNamespace('Horde_Yaml')
+	->registerNamespace('Horde')
 	->registerNamespace('TikiFilter')
 	->registerNamespace('DeclFilter')
 	->registerNamespace('JitFilter')
