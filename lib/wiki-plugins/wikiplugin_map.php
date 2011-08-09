@@ -14,12 +14,6 @@ function wikiplugin_map_info() {
 		'prefs' => array( 'wikiplugin_map' ),
 		'icon' => 'pics/icons/map.png',
 		'params' => array(
-			'mapfile' => array(
-				'required' => false,
-				'name' => tra('Map File'),
-				'description' => tra('Map file identifier'),
-				'filter' => 'url',
-			),
 			'scope' => array(
 				'required' => false,
 				'name' => tr('Scope'),
@@ -50,6 +44,13 @@ function wikiplugin_map_info() {
 				'name' => tra('Height'),
 				'description' => tra('Height of the map'),
 				'filter' => 'int',
+			),
+			'mapfile' => array(
+				'required' => false,
+				'name' => tra('MapServer File'),
+				'description' => tra('MapServer file identifier. Only fill this in if you are using MapServer.'),
+				'filter' => 'url',
+				'advanced' => true,
 			),
 		),
 	);
