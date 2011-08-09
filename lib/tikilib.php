@@ -217,6 +217,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'calendar':
 			global $calendarlib; require_once('lib/calendar/calendarlib.php');
 			return $libraries[$name] = $calendarlib;
+		case 'parser':
+			global $parserlib; require_once('lib/parser/parserlib.php');
+			return $libraries[$name] = $parserlib;
 		}
 	}
 
