@@ -6,6 +6,7 @@
 // $Id$
 
 require_once('tiki-setup.php');
+global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $prefs;
