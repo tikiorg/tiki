@@ -42,6 +42,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 	 * - 'font-family'
 	 */
 	function testFontFamily() {
+		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '{FONT(type="span", font-family="tahoma")}text{FONT}';
 		
@@ -59,7 +60,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 	 * 
 	 */
 	function testFontSize() {
-
+		$this->markTestIncomplete('Work in progress.');
 		
 		/*
 		 * px

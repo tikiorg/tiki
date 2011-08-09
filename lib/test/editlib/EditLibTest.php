@@ -202,6 +202,7 @@ class EditLibTest extends TikiTestCase {
 	
 	
 	function testParseToWiki() {
+		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new EditLib();
 		
