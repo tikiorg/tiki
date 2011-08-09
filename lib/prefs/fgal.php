@@ -55,7 +55,7 @@ function prefs_fgal_list() {
 			'type' => 'flag',
 			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
 			'help' => 'File+Gallery+config',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'fgal_upload_progressbar' => array(
 			'name' => tra('Upload progressbar'),
