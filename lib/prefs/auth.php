@@ -9,7 +9,7 @@ function prefs_auth_list() {
 	return array(
 		'auth_method' => array(
 			'name' => tra('Authentication method'),
-			'description' => tra('Multiple authentication backends are supported by Tiki. The default value is to use the internal user database.'),
+			'description' => tra('Tiki supports several authentication methods. The default value is to use the internal user database.'),
 			'type' => 'list',
 			'help' => 'External+Authentication',
 			'perspective' => false,
