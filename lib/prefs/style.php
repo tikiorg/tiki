@@ -37,6 +37,7 @@ function prefs_style_list($partial = false) {
 			'description' => tra('Style options'),
 			'options' => $style_options,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 	);	
 }

@@ -36,6 +36,7 @@ function prefs_global_list($partial = false) {
 			'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tiki.org for more Tiki themes.'),
 			'options' => $styles,
 			'default' => 'fivealive.css',
+			'tags' => array('basic'),
 		),
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
@@ -52,6 +53,7 @@ function prefs_global_list($partial = false) {
 				'sender_email',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'wikiHomePage' => array(
 			'name' => tra('Home page'),
@@ -86,6 +88,7 @@ function prefs_global_list($partial = false) {
 			'type' => 'list',
 			'options' => $map,
 			'default' => 'en',
+			'tags' => array('basic'),
 		),
 		'cachepages' => array(
 			'name' => tra('Cache external pages'),
