@@ -51,11 +51,11 @@ class WikiParser {
 			break;
 			case 5:$thisS = ($S[$O-2] ? $S[$O-2] : '') . ($S[$O-1] ? $S[$O-1] : '') . ($S[$O] ? $S[$O] : '');
 			break;
-			case 6:$thisS = $this->plugin($S[$O]);
+			case 6:$thisS = $this->cmd->plugin($S[$O]);
 			break;
 			case 7:
 					$S[$O]->body = $S[$O-1];
-					$thisS = $this->plugin($S[$O]);
+					$thisS = $this->cmd->plugin($S[$O]);
 				
 			break;
 			case 8:$thisS = $S[$O];
@@ -520,7 +520,7 @@ class WikiParserLexer {
 		]['rules'];
 	}
 	
-	function performAction($yy, $yy_, $avoiding_name_collisions, $YY_START = null) {
+	function performAction(&$yy, $yy_, $avoiding_name_collisions, $YY_START = null) {
 
 		$YYSTATE = $YY_START;
 		
@@ -531,23 +531,23 @@ class WikiParserLexer {
 				
 			break;
 			case 1:
-					$pluginName = $yy_->yytext->match('/^\{([a-z]+)/')/*[1]*/;
-					$pluginParams =  $yy_->yytext->match('/[ ].*?[}]|[/}]/');
+					preg_match('/^\{([a-z]+)/', $yy_->yytext, $pluginName);
+					preg_match('/[ ].*?[}]|[/}]/', $yy_->yytext, $pluginParams);
 					$yy_->yytext = array(
-						"name"=> pluginName,
-						"params"=> pluginParams,
+						"name"=> $pluginName[0],
+						"params"=> $pluginParams,
 						"body"=> ''
 					);
 					return 8;
 				
 			break;
 			case 2:
-					$pluginName = $yy_->yytext.match('/^\{([A-Z]+)/')/*[1]*/;
-					$pluginParams =  $yy_->yytext.match('/[(].*?[)]/');
+					preg_match('/^\{([A-Z]+)/', $yy_->yytext, $pluginName);
+					preg_match('/[(].*?[)]/', $yy_->yytext, $pluginParams);
 					
 					if (!isset($yy->pluginStack)) $yy->pluginStack = array();
-					array_push($yy->pluginStack, array(
-						"name"=> $pluginName,
+					array_push($yy->pluginStack, (object)array(
+						"name"=> $pluginName[0],
 						"params"=> $pluginParams
 					));
 					
@@ -556,11 +556,13 @@ class WikiParserLexer {
 			break;
 			case 3:
 					if ($yy->pluginStack) {
+						preg_match('/'.$yy->pluginStack[count($yy->pluginStack) - 1]->name.'/', $yy_->yytext, $pluginExists);
+						
 						if (
-							strlen($yy->pluginStack) &&
-							$yy_->yytext->match($yy->pluginStack[strlen($yy->pluginStack) - 1]->name)
+							count($yy->pluginStack) &&
+							!empty($pluginExists)
 						) {
-							$readyPlugin = $yy->pluginStack.pop();
+							$readyPlugin = array_pop($yy->pluginStack);
 							$yy_->yytext = $readyPlugin;
 							return 10;
 						}
@@ -658,7 +660,7 @@ class WikiParserLexer {
 			case 42:return 13;
 			break;
 			case 43:
-					$yy_->yytext = str_replace('\n', '<br />', $yy_->yytext);
+					$yy_->yytext = nl2br($yy_->yytext);
 					return 13;
 				
 			break;

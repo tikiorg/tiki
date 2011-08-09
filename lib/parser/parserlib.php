@@ -22,18 +22,20 @@
  * @since		8
  */
 
- class ParserLib extends TikiLib
+ class ParserLib
 {
 	var $parser;
 	function ParserLib() {
 		include_once "WikiParser.php";
 		$this->parser = new WikiParser;
-		$this->parser->plugin = $this->plugin;
+		
+		//private methods
+		$this->parser->cmd = $this;
 	}
 	
 	function plugin($pluginDetails) {
-	
-	
+		//call_user_func
+		print_r($pluginDetails);
 	}
 	
 	function parse($wikiSyntax) {
