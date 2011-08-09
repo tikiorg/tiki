@@ -40,10 +40,10 @@
 
 			<fieldset>
 				<legend>{tr}Site Identity{/tr}</legend>
+				{preference name=sender_email}
 				{preference name=browsertitle}
 				{preference name=site_title_location}
 				{preference name=site_title_breadcrumb}
-				{preference name=sender_email}
 
 				<div class="adminoptionbox">
 					{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look & Feel</strong></a> section for additional site related customization preferences{/tr}.
