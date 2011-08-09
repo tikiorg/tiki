@@ -47,10 +47,11 @@ ini_set('display_errors', 1);
 		$body = $pluginDetails->body;
 		$params = $this->pluginArgumentParser($pluginDetails->params);
 		
+		return "";
 	}
 	
-	function parse($wikiSyntax) {
-		return $this->parser->parse($wikiSyntax);
+	function parse($data) {
+		return $this->parser->parse($data);
 	}
 	
 	//NEED MIGRATION
@@ -433,7 +434,7 @@ if( \$('#$id') ) {
 				$content = substr($data, $start + 4, $end - $start - 4);
 
 				// ~pp~ type "plugins"
-				$key = "§".md5($this->genPass())."§";
+				$key = "§".md5($tikilib->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
 				$noparsed["data"][] = '<pre>'.$content.'</pre>';
 				$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
@@ -1085,12 +1086,13 @@ if( \$('#$id') ) {
 
 	//*
 	function quotesplit( $splitter = ',', $repl_string = '' ) {
+		global $tikilib;
 		$matches = preg_match_all( '/"[^"]*"/', $repl_string, $quotes );
 
 		$quote_keys = array();
 		if( $matches ) {
 			foreach( array_unique( $quotes ) as $quote ) {
-				$key = '§'.md5( $this->genPass() ).'§';
+				$key = '§'.md5( $tikilib->genPass() ).'§';
 				$aux["key"] = $key;
 				$aux["data"] = $quote;
 				$quote_keys[] = $aux;
@@ -1285,7 +1287,10 @@ if( \$('#$id') ) {
 				return;
 			}
 		}
-
+		
+		//Testing new parser ;)
+		//return $this->parse($data);
+		
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
@@ -1395,7 +1400,7 @@ if( \$('#$id') ) {
 			preg_match_all("/(?<!\[)(\[[^\[][^\]]+\])/", $data, $noparseurl);
 
 			foreach (array_unique($noparseurl[1])as $np) {
-				$key = '§'.md5($this->genPass()).'§';
+				$key = '§'.md5($tikilib->genPass()).'§';
 
 				$aux["key"] = $key;
 				$aux["data"] = $np;

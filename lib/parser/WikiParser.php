@@ -533,9 +533,10 @@ class WikiParserLexer {
 			case 1:
 					preg_match('/^\{([a-z]+)/', $yy_->yytext, $pluginName);
 					preg_match('/[ ].*?[}]|[/}]/', $yy_->yytext, $pluginParams);
-					$yy_->yytext = array(
+					print_r($pluginParams);
+					$yy_->yytext = (object)array(
 						"name"=> $pluginName[1],
-						"params"=> $pluginParams[0],
+						"params"=> (!empty($pluginParams[0]) ? $pluginParams[0] : ''),
 						"body"=> ''
 					);
 					return 8;
