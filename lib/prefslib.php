@@ -609,7 +609,7 @@ class PreferencesLib
 	{
 		global $user;
 		$tikilib = TikiLib::lib('tiki');
-		$filters = $tikilib->get_user_preference($user, 'pref_filters', 'basic,advanced,new');
+		$filters = $tikilib->get_user_preference($user, 'pref_filters', 'basic,new');
 		$filters = explode(',', $filters);
 		return $filters;
 	}
