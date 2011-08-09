@@ -78,6 +78,10 @@ class PaymentLib extends TikiDb_Bridge
 		return $this->get_payments( $conditions, $offset, $max );
 	}
 
+	function uncancel_payment( $id ) {
+		$this->query( 'UPDATE `tiki_payment_requests` SET `cancel_date` = NULL WHERE `paymentRequestId` = ?', array( $id ) );
+	}
+	
 	function cancel_payment( $id ) {
 		if( $info = $this->get_payment( $id ) ) {
 			if( $info['state'] != 'canceled' ) {
@@ -158,8 +162,12 @@ class PaymentLib extends TikiDb_Bridge
 	function enter_payment( $invoice, $amount, $type, array $data ) {
 		global $user, $userlib;
 		if( $info = $this->get_payment( $invoice ) ) {
-			if( $info['state'] != 'past' && $info['state'] != 'canceled' && $info['amount_remaining_raw'] - $amount <= 0 ) {
+			if( $info['state'] != 'past' && $info['amount_remaining_raw'] - $amount <= 0 ) {
 				$results = $this->run_behaviors( $info, 'complete' );
+				if ($info['state'] == 'canceled') {
+					// in the case of canceled payments being paid (e.g. user was delayed at Paypal when cancellation happened)
+					$this->uncancel_payment( $invoice );
+				}
 			}
 			if (!empty($results)) {
 				$data = array_merge($results, $data);

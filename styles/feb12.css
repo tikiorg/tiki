@@ -300,9 +300,13 @@ body.fixed_width .fixedwidth .fixedwidth {
 	bottom: 0;
 }
 
-/* give every sub-element of #siteloginbar some padding */
-#siteloginbar * {
-	padding: 2px;
+.siteloginbar_popup .tabmark {
+	padding: 0;
+	background-position: 0 -2px;
+}
+
+.siteloginbar_popup .login_link {
+    padding: 4px 8px;
 }
 
 .siteloginbar a:link,
@@ -315,8 +319,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-align: right;
 }
 
-.siteloginbar_popup ul li ul {
-	margin-top: -14px;
+.siteloginbar_poppedup {
+	margin-top: -18px;
 }
 
 /* Site title and subtitle */

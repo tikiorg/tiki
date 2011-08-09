@@ -159,6 +159,11 @@ img {
 	clear: none;
 }
 
+#sitetitle,
+#sitesubtitle { 
+	line-height: 1;
+}
+
 /* default minimum height in case only login, etc. (absolutely positioned) is assigned */
 #top_modules {
 	min-height: 20px;
@@ -168,34 +173,26 @@ img {
 #top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
-	bottom: 5px;
+	bottom: 1px;
+}
+
+#top_modules .box-login_box .siteloginbar {
+	margin-bottom: 5px;
 }
 
 .siteloginbar div {
 	display: inline-block;
 }
 
-/* Sitelogin Popup */
-#top_modules .tiki_register_login {
-	bottom: 1px;
-	position: absolute;
-	right: 10px;
-}
-
-.siteloginbar_poppedup {
+#top_modules .siteloginbar_poppedup {
 	margin-left: -20%;
+/*	margin-top: -2px;*/
 }
 
 .siteloginbar_popup .tabcontent fieldset {
 	margin: 0;
 	margin-left: -4px;
 	border: none;
-}
-
-.siteloginbar_popup h1 {
-	font-size: 1em;
-	font-weight: normal;
-	margin: auto;
 }
 
 .siteloginbar_poppedup div {
@@ -211,28 +208,10 @@ li#register_link {
 	padding-right: 26px !important;
 }
 
-.siteloginbar_popup .cssmenu_horiz #register_link ul {
-	margin-left: -5.5em;
-}
-
-.siteloginbar_popup .cssmenu_horiz #login_link ul {
-	margin-left: -9em;
-}
-
-.siteloginbar_popup .cssmenu_horiz #logout_link ul {
-	margin-left: -2.5em;
-}
-
-.siteloginbar_popup .siteloginbar {
-	bottom: auto;
-	font-size: inherit;
-	position: static;
-	right: auto;
-	text-align: left;
-}
-
-.siteloginbar_popup .siteloginbar * {
-	white-space: normal;
+.siteloginbar_popup .cssmenu_horiz {
+	width: inherit;
+	margin: inherit;
+	padding: inherit;
 }
 
 .siteloginbar_popup .cssmenu_horiz ul li {
@@ -246,23 +225,11 @@ li#register_link {
 	white-space: normal !important;
 }
 
-.siteloginbar_popup .sl-login,
-.siteloginbar_popup .pass {
-	display: block;
-	width: auto;
-	margin-bottom: 4px;
-}
-
-#sitetitle,
-#sitesubtitle { 
-	line-height: 1;
-}
-
 li#logout_link a {
 	padding-right: 40px;
 }
 
-.siteloginbar_popup #logout_link .cbox {
+.siteloginbar_popup #logout_link {
 	text-align: center;
 }
 
@@ -274,23 +241,19 @@ li#logout_link a {
 	display: inline;
 }
 
-.siteloginbar_popup .cbox {
+.siteloginbar_poppedup {
 	padding: 10px;
 	margin: 2px 2px 3px 1px;
 }
 
-.siteloginbar_popup .cbox * {
-	line-height: 14px;
+.siteloginbar_poppedup * {
+	line-height: 1.1;
 	margin: 2px;
 }
 
-.siteloginbar_popup .cbox label {
+.siteloginbar_popup label {
 	clear: both;
 	float: left;
-}
-
-.siteloginbar_popup .cbox div {
-	clear: both;
 }
 
 .siteloginbar_popup #sl-login-user,
@@ -306,30 +269,27 @@ li#logout_link a {
 }
 
 .siteloginbar_popup .pass {
-	display: inline;
-}
-
-.siteloginbar_popup .pass a {
 	float: left;
 	margin: 0;
 	padding: 0;
-	text-align: center;
-	width: 30%;
+	text-align: left;
+	width: 47%;
 }
 
-.siteloginbar_popup .register a {
+.siteloginbar_popup .pass a {
+	text-align: left;
+}
+
+.siteloginbar_popup .register {
 	float: right;
 	margin: 0;
 	padding: 0;
-	text-align: center;
-	width: 30%;
+	width: 47%;
 }
 .siteloginbar_popup .wikiaction {
 	clear: both;
 	float: right;
 }
-/* end from r27359 */
-
 /* end Sitelogin Popup */
 
 #sitesearchbar {
@@ -1033,15 +993,6 @@ tr.diffheader {
 
 .tabcontent table td {
 	padding: 5px;
-}
-
-/* avoid applying menu styles to popup links */
-.siteloginbar_popup .cssmenu_horiz ul.siteloginbar_poppedup li a,
-.siteloginbar_popup .cssmenu_horiz ul.siteloginbar_poppedup li a:hover,
-.siteloginbar_popup .cssmenu_horiz li:hover ul.siteloginbar_poppedup li a {
-	background: none;
-	border: none;
-	text-transform: none;
 }
 
 /***** Wiki *****/
