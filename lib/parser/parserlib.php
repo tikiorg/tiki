@@ -2063,7 +2063,7 @@ if( \$('#$id') ) {
 				if (($litype == '*' || $litype == '#') && !(strlen($line)-count($listbeg)>4 && preg_match('/^\*+$/', $line))) {
 					// Close open paragraph, but not lists or div's
 					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-					$listlevel = $this->how_many_at_start($line, $litype);
+					$listlevel = $tikilib->how_many_at_start($line, $litype);
 					$liclose = '</li>';
 					$addremove = 0;
 					if ($listlevel < count($listbeg)) {
