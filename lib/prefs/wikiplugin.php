@@ -7,7 +7,9 @@
 
 function prefs_wikiplugin_list($partial = false) {
 	global $tikilib;
-
+	
+	$parserlib = TikiLib::lib('parser');
+	
 	// Note that most of these will be disabled by an other feature check.
 	$defaultPlugins = array(
 		'article' => 'y',
@@ -120,8 +122,8 @@ function prefs_wikiplugin_list($partial = false) {
 
 	$prefs = array();
 
-	foreach( $tikilib->plugin_get_list() as $plugin ) {
-		$info = $tikilib->plugin_info( $plugin );
+	foreach( $parserlib->plugin_get_list() as $plugin ) {
+		$info = $parserlib->plugin_info( $plugin );
 		if (empty($info['prefs'])) $info['prefs'] = array();
 		$dependencies = array_diff( $info['prefs'], array( 'wikiplugin_' . $plugin ) );
 

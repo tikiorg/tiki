@@ -99,7 +99,7 @@ class XmlLib extends TikiLib
 	function export_page($page)
 	{
 		global $tikilib, $prefs, $smarty, $tikidomain;
-		
+		$parserlib = TikiLib::lib('parser');
 		$info = $tikilib->get_page_info($page);
 		if (empty($info)) {
 			$this->errors[] = 'Page does not exist';
@@ -126,7 +126,7 @@ class XmlLib extends TikiLib
 		if ($prefs['feature_wiki_pictures'] == 'y' && $this->config['images'] && preg_match_all('/\{img\s*\(?([^\}]+)\)?\s*\}/i', $info['data'], $matches)) {
 			global $tikiroot;
 			foreach ($matches[1] as $match) {
-				$args = $tikilib->plugin_split_args($match);
+				$args = $parserlib->plugin_split_args($match);
 				if (empty($args['src'])) {
 				} elseif (preg_match('|img/wiki_up/(.*)|', $args['src'], $m)) {
 					$file = empty($tikidomain)?$args['src']: str_replace('img/wiki_up/', "img/wiki_up/$tikidomain/", $args['src']);

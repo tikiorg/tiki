@@ -42,6 +42,8 @@ function wikiplugin_button_info() {
 
 function wikiplugin_button($data, $params) {
 	global $tikilib,$smarty;
+	$parserlib = TikiLib::lib('parser');
+	
 	if (empty($params['href'])) {
 		return tra('Incorrect param');
 	}
@@ -58,7 +60,7 @@ function wikiplugin_button($data, $params) {
 	}
 	
 	// Parse wiki argument variables in the url, if any (i.e.: {{itemId}} for it's numeric value).
-	$tikilib->parse_wiki_argvariable($params['href']);
+	$parserlib->parse_wiki_argvariable($params['href']);
 
 	include_once($path);
 	$func = 'smarty_function_button';

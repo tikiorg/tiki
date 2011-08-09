@@ -1665,8 +1665,9 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 
 		$name = $data['name'];
 		unset( $data['name'] );
-
-		$tikilib->plugin_alias_store( $name, $data );
+		
+		$parserlib = TikiLib::lib('parser');
+		$parserlib->plugin_alias_store( $name, $data );
 
 		return $name;
 	}

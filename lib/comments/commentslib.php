@@ -1558,7 +1558,8 @@ class Comments extends TikiLib
 
 	function parse_comment_data($data) {
 		global $prefs, $tikilib, $section;
-
+		$parserlib = TikiLib::lib('parser');
+		
 		if (($prefs['feature_forum_parse'] == 'y' && $section == 'forums') || $prefs['section_comments_parse'] == 'y') {
 			return $this->parse_data($data);
 		}
@@ -1580,7 +1581,8 @@ class Comments extends TikiLib
 		$data = preg_replace("/\[([^\]\|]+)\]/", '<a class="commentslink" href="$1">$1</a>', $data);
 
 		// smileys
-		$data = $tikilib->parse_smileys($data);
+		
+		$data = $parserlib->parse_smileys($data);
 
 		$data = preg_replace("/---/", "<hr/>", $data);
 		// replace --- with <hr/>

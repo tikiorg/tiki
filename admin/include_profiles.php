@@ -16,6 +16,8 @@ require_once 'lib/profilelib/listlib.php';
 $list = new Tiki_Profile_List;
 $sources = $list->getSources();
 
+$parserlib = TikiLib::lib('parser');
+
 if ($prefs['profile_unapproved'] == 'y') {
 	Tiki_Profile::enableDeveloperMode();
 }
@@ -119,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$dependencies[] = $d->pageUrl;
 			$userInput = array_merge($userInput, $d->getRequiredInput());
 		}
-		$parsed = $tikilib->parse_data($profile->pageContent);
+		$parsed = $parserlib->parse_data($profile->pageContent);
 		$installed = $installer->isInstalled($profile);
 		
 		echo json_encode(array(

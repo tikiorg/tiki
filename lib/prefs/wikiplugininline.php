@@ -7,7 +7,8 @@
 
 function prefs_wikiplugininline_list($partial = false) {
 	global $tikilib;
-
+	$parserlib = TikiLib::lib('parser');
+	
 	$defaultInline = array(
 		'file' => 'y',
 		'getaccesstoken' => 'y',
@@ -54,8 +55,8 @@ function prefs_wikiplugininline_list($partial = false) {
 
 	$prefs = array();
 
-	foreach( $tikilib->plugin_get_list() as $plugin ) {
-		$info = $tikilib->plugin_info( $plugin );
+	foreach( $parserlib->plugin_get_list() as $plugin ) {
+		$info = $parserlib->plugin_info( $plugin );
 
 		$prefs['wikiplugininline_' . $plugin] = array(
 			'name' => tr('Inline plugin %0', $info['name'] ),

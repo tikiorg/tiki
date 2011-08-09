@@ -814,12 +814,14 @@ class WikiLib extends TikiLib
 
 	function list_plugins($with_help = false, $area_id = 'editwiki') {
 		global $prefs;
+		$parserlib = TikiLib::lib('parser');
+		
 		if ($with_help) {
 			global $cachelib, $headerlib, $prefs;
 			if (empty($_REQUEST['xjxfun'])) { $headerlib->add_jsfile( 'tiki-jsplugin.php?language='.$prefs['language'], 'dynamic' ); }
 			$cachetag = 'plugindesc' . $this->get_language() . $area_id . '_js=' . $prefs['javascript_enabled'];
 			if (! $plugins = $cachelib->getSerialized( $cachetag ) ) {
-				$list = $this->plugin_get_list();
+				$list = $parserlib->plugin_get_list();
 
 				$plugins = array();
 				foreach ($list as $name) {
@@ -856,9 +858,10 @@ class WikiLib extends TikiLib
 	//
 	function get_plugin_description($name, &$enabled, $area_id = 'editwiki') {
 		global $tikilib;
+		$parserlib = TikiLib::lib('parser');
 		$data = '';
 
-		if( ( ! $info = $this->plugin_info( $name ) ) && $this->plugin_exists( $name, true ) )
+		if( ( ! $info = $parserlib->plugin_info( $name ) ) && $parserlib->plugin_exists( $name, true ) )
 		{
 			$enabled = true;
 

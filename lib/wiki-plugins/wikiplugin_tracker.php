@@ -326,6 +326,8 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 function wikiplugin_tracker($data, $params)
 {
 	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib, $tiki_p_view, $captchalib;
+	$parserlib = TikiLib::lib('parser');
+	
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	if (isset($params['itemId']) && empty($params['itemId']))
@@ -414,7 +416,7 @@ function wikiplugin_tracker($data, $params)
 
 	if (isset($values)) {
 		if (!is_array($values)) {
-			$values = $tikilib->quotesplit(':', $values);
+			$values = $parserlib->quotesplit(':', $values);
 			foreach ($values as $i=>$v) {
 				$values[$i] = preg_replace('/^"(.*)"$/', '$1', $v);
 			}

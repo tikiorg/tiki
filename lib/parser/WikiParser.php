@@ -534,8 +534,8 @@ class WikiParserLexer {
 					preg_match('/^\{([a-z]+)/', $yy_->yytext, $pluginName);
 					preg_match('/[ ].*?[}]|[/}]/', $yy_->yytext, $pluginParams);
 					$yy_->yytext = array(
-						"name"=> $pluginName[0],
-						"params"=> $pluginParams,
+						"name"=> $pluginName[1],
+						"params"=> $pluginParams[0],
 						"body"=> ''
 					);
 					return 8;
@@ -547,8 +547,8 @@ class WikiParserLexer {
 					
 					if (!isset($yy->pluginStack)) $yy->pluginStack = array();
 					array_push($yy->pluginStack, (object)array(
-						"name"=> $pluginName[0],
-						"params"=> $pluginParams
+						"name"=> $pluginName[1],
+						"params"=> $pluginParams[0]
 					));
 					
 					return 9;
@@ -556,6 +556,7 @@ class WikiParserLexer {
 			break;
 			case 3:
 					if ($yy->pluginStack) {
+						
 						preg_match('/'.$yy->pluginStack[count($yy->pluginStack) - 1]->name.'/', $yy_->yytext, $pluginExists);
 						
 						if (

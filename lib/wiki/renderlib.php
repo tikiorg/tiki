@@ -330,7 +330,8 @@ class WikiRenderer
 			);
 
 			if ($this->raw) {
-				$pdata = $tikilib->parse_data_raw($this->content_to_render);
+				$parserlib = TikiLib::lib('parser');
+				$pdata = $parserlib->parse_data_raw($this->content_to_render);
 			} else {
 				$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
 			}

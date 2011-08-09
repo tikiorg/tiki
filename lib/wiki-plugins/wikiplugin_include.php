@@ -132,7 +132,9 @@ function wikiplugin_include($data, $params, $offset) {
 			$text = implode("\n", $explText);
 		}
 	}
-	$tikilib->parse_wiki_argvariable($text);
+	
+	$parserlib = TikiLib::lib('parser');
+	$parserlib->parse_wiki_argvariable($text);
 	// append an edit button
 	global $smarty;
 	if (isset($perms) && $perms['tiki_p_edit'] === 'y') {

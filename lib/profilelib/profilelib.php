@@ -182,7 +182,8 @@ class Tiki_Profile
 	{
 		global $tikilib, $wikilib;
 		require_once 'lib/wiki/wikilib.php';
-
+		$parserlib = TikiLib::lib('parser');
+		
 		$profile = new self;
 		$profile->domain = 'tiki://local';
 		$profile->profile = $pageName;
@@ -191,7 +192,7 @@ class Tiki_Profile
 
 		$info = $tikilib->get_page_info( $pageName );
 		$content = html_entity_decode( $info['data'] );
-		$tikilib->parse_wiki_argvariable($content);
+		$parserlib->parse_wiki_argvariable($content);
 		$profile->loadYaml( $content );
 
 		return $profile;

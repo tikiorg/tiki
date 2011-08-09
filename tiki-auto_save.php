@@ -132,7 +132,8 @@ $(window).load(function(){
 				$smarty->assign('headtitle', tra('Preview'));
 				$data = '<div id="c1c2"><div id="wrapper"><div id="col1"><div id="tiki-center" class="wikitext">';
 				if (has_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])) {
-					$data .= $tikilib->parse_data_raw($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])));
+					$parserlib = TikiLib::lib('parser');
+					$data .= $parserlib->parse_data_raw($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])));
 				} else {
 					if ($autoSaveIdParts[1] == 'wiki_page') {
 						global $wikilib; include_once('lib/wiki/wikilib.php');

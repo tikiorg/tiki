@@ -789,8 +789,8 @@ $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
 if (isset($_REQUEST["preview"])) {
-
-	$parsed = $tikilib->apply_postedit_handlers($parsed);
+	$parserlib = TikiLib::lib('parser');
+	$parsed = $parserlib->apply_postedit_handlers($parsed);
 	
 	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki( $parsed );
@@ -911,7 +911,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	// Parse $edit and eliminate image references to external URIs (make them internal)
 	$edit = $imagegallib->capture_images($edit);
 	// apply the optional page edit filters before data storage
-	$edit = $tikilib->apply_postedit_handlers($edit);
+	$parserlib = TikiLib::lib('parser');
+	$edit = $parserlib->apply_postedit_handlers($edit);
 	$exist = $tikilib->page_exists($_REQUEST['page']);
 	// If page exists
 	if(!$exist) {

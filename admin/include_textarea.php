@@ -11,9 +11,11 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+$parserlib = TikiLib::lib('parser');
+
 $plugins = array();
-foreach($tikilib->plugin_get_list() as $name) {
-	$info = $tikilib->plugin_info($name);
+foreach($parserlib->plugin_get_list() as $name) {
+	$info = $parserlib->plugin_info($name);
 	if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) $plugins[$name] = $info;
 }
 $smarty->assign('plugins', $plugins);
@@ -24,8 +26,8 @@ if (isset($_REQUEST['textareasetup']) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 
 // from tiki-admin_include_textarea.php
 global $tikilib;
-$pluginsAlias = $tikilib->plugin_get_list(false, true);
-$pluginsReal = $tikilib->plugin_get_list(true, false);
+$pluginsAlias = $parserlib->plugin_get_list(false, true);
+$pluginsReal = $parserlib->plugin_get_list(true, false);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	global $cachelib;
 	require_once ('lib/cache/cachelib.php');
@@ -55,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['delete'])) {
 		if (!is_array($_POST['enabled'])) $_POST['enabled'] = array();
 		foreach($pluginsAlias as $name) {
-			$tikilib->plugin_alias_delete( $name );
+			$parserlib->plugin_alias_delete( $name );
 		}
-		$pluginsAlias = $tikilib->plugin_get_list(false, true);
+		$pluginsAlias = $parserlib->plugin_get_list(false, true);
 	}
 	if (isset($_POST['textareasetup']) && !in_array($_POST['plugin_alias'], $pluginsReal) && isset($_REQUEST["plugin_alias"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] == 3)) { // tab=3 is plugins alias tab (TODO improve)
 		$info = array(
@@ -139,13 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 		}
-		$tikilib->plugin_alias_store($_POST['plugin_alias'], $info);
+		$parserlib->plugin_alias_store($_POST['plugin_alias'], $info);
 		if (!in_array($_POST['plugin_alias'], $pluginsAlias)) $pluginAlias[] = $_POST['plugins'];
 		foreach(glob('temp/cache/wikiplugin_*') as $file) unlink($file);
-		$pluginsAlias = $tikilib->plugin_get_list(false, true);
+		$pluginsAlias = $parserlib->plugin_get_list(false, true);
 	}
 }
-if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $tikilib->plugin_alias_info($_REQUEST['plugin_alias'])) {
+if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $parserlib->plugin_alias_info($_REQUEST['plugin_alias'])) {
 	// Add an extra empty parameter to create new ones
 	$pluginInfo['description']['params']['__NEW__'] = array(
 		'name' => '',
@@ -178,7 +180,7 @@ $smarty->assign('plugins_real', $pluginsReal);
 if (isset($_REQUEST['disabled']) && $tiki_p_admin == 'y') {
 	$offset = 0;
 	$disabled = array();
-	foreach($tikilib->plugin_get_list() as $name) {
+	foreach($parserlib->plugin_get_list() as $name) {
 		if ($prefs["wikiplugin_$name"] == 'n') {
 			$allDisabled[] = $name;
 		}
@@ -190,7 +192,7 @@ if (isset($_REQUEST['disabled']) && $tiki_p_admin == 'y') {
 		}
 		$offset += $prefs['maxRecords'];
 		foreach ($pages['data'] as $page) {
-			$plugins = $tikilib->getPlugins($page['data'], $allDisabled);
+			$plugins = $parserlib->getPlugins($page['data'], $allDisabled);
 			if (!empty($plugins)) {
 				foreach ($plugins as $plugin) {
 					if (!in_array($plugin[1], $disabled)) {

@@ -84,8 +84,9 @@ if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 }
 
 // Get page data
+$parserlib = TikiLib::lib('parser');
 $info = $tikilib->get_page_info($page);
-$pdata = $tikilib->parse_data_raw($info["data"]);
+$pdata = $parserlib->parse_data_raw($info["data"]);
 
 if (!isset($_REQUEST['pagenum']))
 	$_REQUEST['pagenum'] = 1;
@@ -95,8 +96,8 @@ $pdata = $wikilib->get_page($pdata, $_REQUEST['pagenum']);
 $smarty->assign('pages', $pages);
 
 // Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->replace_preparse( $info["data"], $preparsed, $noparsed );
-$tikilib->replace_preparse( $pdata, $preparsed, $noparsed );
+$parserlib->replace_preparse( $info["data"], $preparsed, $noparsed );
+$parserlib->replace_preparse( $pdata, $preparsed, $noparsed );
 
 $smarty->assign_by_ref('parsed', $pdata);
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));

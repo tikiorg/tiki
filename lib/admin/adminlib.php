@@ -357,6 +357,8 @@ class AdminLib extends TikiLib
 	// changed for virtualhost support
 	function dump() {
 		global $tikidomain, $prefs;
+		$parserlib = TikiLib::lib('parser');
+		
 		$dump_path = "dump";
 		if ($tikidomain) {
 			$dump_path.= "/$tikidomain";
@@ -372,7 +374,7 @@ class AdminLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 			$pageName = $res["pageName"] . '.html';
 
-			$dat = $this->parse_data($res["data"]);
+			$dat = $parserlib->parse_data($res["data"]);
 			// Now change index.php?page=foo to foo.html
 			// and index.php to HomePage.html
 			$dat = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$1.html", $dat);

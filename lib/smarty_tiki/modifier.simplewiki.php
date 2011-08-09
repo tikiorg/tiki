@@ -24,7 +24,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_modifier_simplewiki($string) {
 	global $tikilib;
-
+	$parserlib = TikiLib::lib('parser');
+	
 	$string = htmlentities( $string, ENT_QUOTES, 'UTF-8' );
-	return $tikilib->parse_data_simple( $string );
+	return $parserlib->parse_data_simple( $string );
 }

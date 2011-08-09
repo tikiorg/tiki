@@ -484,6 +484,8 @@ class BlogLib extends TikiDb_Bridge
 		global $tikilib, $tiki_p_admin_comments, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
 		global $commentslib; require_once('lib/comments/commentslib.php');
 		
+		$parserlib = TikiLib::lib('parser');
+		
 		if (!is_object($commentslib)) {
 			$commentslib = new Comments();
 		}
@@ -551,7 +553,7 @@ class BlogLib extends TikiDb_Bridge
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
 			if (isset($res['excerpt'])) {
-				$res['excerpt'] = $tikilib->parse_data($res['excerpt'], array('is_html' => true));
+				$res['excerpt'] = $parserlib->parse_data($res['excerpt'], array('is_html' => true));
 			}
 
 			$ret[] = $res;

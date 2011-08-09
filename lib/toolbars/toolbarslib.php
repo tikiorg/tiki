@@ -62,7 +62,8 @@ abstract class Toolbar
 	public static function getList( $include_custom = true ) // {{{
 	{
 		global $tikilib;
-		$plugins = $tikilib->plugin_get_list();
+		$parserlib = TikiLib::lib('parser');
+		$plugins = $parserlib->plugin_get_list();
 		
 		foreach( $plugins as & $name ) {
 			$name = "wikiplugin_$name";
@@ -1374,9 +1375,11 @@ class ToolbarWikiplugin extends Toolbar
 	public static function fromName( $name ) // {{{
 	{
 		global $tikilib;
+		$parserlib = TikiLib::lib('parser');
+		
 		if( substr( $name, 0, 11 ) == 'wikiplugin_'  ) {
 			$name = substr( $name, 11 );
-			if( $info = $tikilib->plugin_info( $name ) ) {
+			if( $info = $parserlib->plugin_info( $name ) ) {
 				if (isset($info['icon']) and $info['icon'] != '') {
 					$icon = $info['icon'];
 				} else {
@@ -1410,8 +1413,9 @@ class ToolbarWikiplugin extends Toolbar
 	function isAccessible() // {{{
 	{
 		global $tikilib;
+		$parserlib = TikiLib::lib('parser');
 		$dummy_output = '';
-		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName, $dummy_output );
+		return parent::isAccessible() && $parserlib->plugin_enabled( $this->pluginName, $dummy_output );
 	} // }}}
 
 	private static function getToken( $name ) // {{{

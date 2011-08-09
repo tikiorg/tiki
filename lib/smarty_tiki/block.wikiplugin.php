@@ -16,8 +16,9 @@ function smarty_block_wikiplugin( $params, $content, &$smarty, $repeat = false )
 
 	$name = $params['_name'];
 	unset( $params['_name'] );
-
-	return $tikilib->plugin_execute( $name, $content, $params, 0, false, array(
+	
+	$parserlib = TikiLib::lib('parser');
+	return $parserlib->plugin_execute( $name, $content, $params, 0, false, array(
 		'context_format' => 'html',
 		'ck_editor' => false,
 	) );

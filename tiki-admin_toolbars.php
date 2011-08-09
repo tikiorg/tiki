@@ -214,8 +214,10 @@ if (count($_REQUEST) == 0) {
 }
 
 $plugins = array();
-foreach($tikilib->plugin_get_list() as $name) {
-	$info = $tikilib->plugin_info($name);
+
+$parserlib = TikiLib::lib('parser');
+foreach($parserlib->plugin_get_list() as $name) {
+	$info = $parserlib->plugin_info($name);
 	if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) $plugins[$name] = $info;
 }
 $smarty->assign('plugins', $plugins);

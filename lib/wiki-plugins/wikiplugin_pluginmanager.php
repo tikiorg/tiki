@@ -381,7 +381,9 @@ function get_plugin_info($sPluginFile) {
 	$sPlugin= $match[1];
 	include_once(PLUGINS_DIR.'/'.$sPluginFile);
 	global $tikilib;
-	$infoPlugin = $tikilib->plugin_info($sPlugin);
+	$parserlib = TikiLib::lib('parser');
+	
+	$infoPlugin = $parserlib->plugin_info($sPlugin);
 	$numparams = isset($infoPlugin['params']) ? count($infoPlugin['params']) : 0;
 	return $infoPlugin;
 }

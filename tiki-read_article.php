@@ -14,6 +14,9 @@ if (!isset($_REQUEST["articleId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$parserlib = TikiLib::lib('parser');
+
 $article_data = $artlib->get_article($_REQUEST["articleId"]);
 $tikilib->get_perm_object($_REQUEST['articleId'], 'article');
 if ($article_data === false) {
@@ -117,7 +120,8 @@ if( $prefs['article_paginate'] == 'y' ) {
 	// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 	$preparsed = array();
 	$noparsed = array();
-	$tikilib->parse_first($article_data["body"], $preparsed, $noparsed);
+	
+	$parserlib->parse_first($article_data["body"], $preparsed, $noparsed);
 	$pages = $artlib->get_number_of_pages($article_data["body"]);
 	$article_data["body"] = $artlib->get_page($article_data["body"], $_REQUEST['page']);
 	$smarty->assign('pages', $pages);
@@ -135,7 +139,8 @@ if( $prefs['article_paginate'] == 'y' ) {
 	$smarty->assign('last_page', $pages);
 	$smarty->assign('pagenum', $_REQUEST['page']);
 	// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-	$tikilib->replace_preparse($article_data["body"], $preparsed, $noparsed);
+	$parserlib = TikiLib::lib('parser');
+	$parserlib->replace_preparse($article_data["body"], $preparsed, $noparsed);
 }
 if ($prefs["article_custom_attributes"] == 'y') {
 	$t_article_attributes = $artlib->get_article_attributes($article_data["articleId"]);

@@ -1694,7 +1694,8 @@ class FileGalLib extends TikiLib
 	function syncFileBacklinks($data, $context) {
 		global $tikilib;
 		$fileIds = array();
-		$plugins = $tikilib->getPlugins($data, array('IMG', 'FILE'));
+		$parserlib = TikiLib::lib('parser');
+		$plugins = $parserlib->getPlugins($data, array('IMG', 'FILE'));
 		foreach ($plugins as $plugin) {
 			if (!empty($plugin['arguments']['fileId'])) {
 				$fileIds[] = $plugin['arguments']['fileId'];
