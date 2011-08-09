@@ -20,10 +20,12 @@
 						{foreach from=$groupData.members item=memberName}
 							<li>
 								{if $groupData.can_remove}
-									<input type="checkbox" name="remove[{$groupName|escape}][]" value="{$memberName|escape}" id="{$groupName|escape}-{$memberName|escape}"/>
-									<label for="{$groupName|escape}-{$memberName|escape}">{$memberName|userlink}</label>
+									<label>
+										<input type="checkbox" name="remove[{$groupName|escape}][]" value="{$memberName|escape}"/>
+										{$memberName|userlink}
+									</label>
 								{else}
-									{$memberName|escape}
+									{$memberName|userlink}
 								{/if}
 								{if $prefs.feature_group_transition eq 'y'}
 									{foreach from=$groupData.transitions key=cand item=trans}
