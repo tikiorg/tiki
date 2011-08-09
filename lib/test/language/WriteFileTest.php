@@ -7,7 +7,7 @@
 
 require_once('lib/language/Exception.php');
 require_once('lib/language/WriteFile.php');
-@include_once('vfsStream/vfsStream.php');
+require_once('vfsStream/vfsStream.php');
 
 class Language_WriteFileTest extends TikiTestCase
 {
@@ -15,10 +15,6 @@ class Language_WriteFileTest extends TikiTestCase
 	
 	protected function setUp()
 	{
-		if (!class_exists('vfsStream')) {
-			$this->markTestSkipped('vfsStream class not available');
-		}
-		
 		// setup a mock filesystem 
 		$lang = vfsStream::setup('lang');
 		$lang->addChild(new vfsStreamFile('language.php'));

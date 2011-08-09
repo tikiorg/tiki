@@ -12,16 +12,12 @@ require_once('lib/language/FileType.php');
 require_once('lib/language/FileType/Php.php');
 require_once('lib/language/FileType/Tpl.php');
 
-@include_once('vfsStream/vfsStream.php');
+require_once('vfsStream/vfsStream.php');
 
 class Language_GetStringsEndToEndTest extends TikiTestCase
 {
 	protected function setUp()
 	{
-		if (!class_exists('vfsStream')) {
-			$this->markTestSkipped('vfsStream class not available');
-		}
-		
 		// setup a mock filesystem with directories and files 
 		$root = vfsStream::setup('root');
 		$dir1 = new vfsStreamDirectory('dir1');

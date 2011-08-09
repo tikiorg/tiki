@@ -6,7 +6,7 @@
 // $Id$
 
 require_once('lib/language/CollectFiles.php');
-@include_once('vfsStream/vfsStream.php');
+require_once('vfsStream/vfsStream.php');
 
 /**
  * Class for tests methods that uses vfsStream, if available,
@@ -18,10 +18,6 @@ class Language_CollectFiles_VfsStream_Test extends TikiTestCase
 	
 	protected function setUp()
 	{
-		if (!class_exists('vfsStream')) {
-			$this->markTestSkipped('vfsStream class not available');
-		}
-
 		$this->obj = new Language_CollectFiles;
 		
 		// setup a mock filesystem with directories and files 

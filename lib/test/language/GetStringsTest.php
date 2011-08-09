@@ -104,11 +104,7 @@ class Language_GetStringsTest extends TikiTestCase
 	
 	public function testCollectString_shouldNotConsiderEmptyCallsToTra()
 	{
-		@include_once('vfsStream/vfsStream.php');
-		
-		if (!class_exists('vfsStream')) {
-			$this->markTestSkipped('vfsStream class not available');
-		}
+		require_once('vfsStream/vfsStream.php');
 		
 		$this->obj->addFileType(new Language_FileType_Php);
 		
