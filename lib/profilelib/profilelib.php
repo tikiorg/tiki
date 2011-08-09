@@ -261,25 +261,26 @@ class Tiki_Profile
 
 		$this->data = array();
 
-		while( false !== $base = $this->findNextPluginStart($content, $pos) )
+		$matches = WikiParser_PluginMatcher::match($content);
+		$parser = new WikiParser_PluginArgumentParser;
+
+		foreach ($matches as $match)
 		{
-			$begin = strpos( $content, ')}', $base ) + 2;
-			$end = strpos( $content, '{CODE}', $base );
-			$pos = $end + 6;
-
-			if( false === $base || false === $begin || false === $end )
-				return false;
-
-			$yaml = substr( $content, $begin, $end - $begin );
-
-			$data = Horde_Yaml::load( $yaml );
-
-			foreach( $data as $key => $value )
+			$arguments = $parser->parse($match->getArguments());
+			if ( ($match->getName() == 'code' && isset($arguments['caption']) && $arguments['caption'] == 'YAML')
+				|| $match->getName() == 'profile' )
 			{
-				if( array_key_exists( $key, $this->data ) )
-					$this->data[$key] = $this->mergeData( $this->data[$key], $value );
-				else
-					$this->data[$key] = $value;
+				$yaml = $match->getBody();
+
+				$data = Horde_Yaml::load( $yaml );
+
+				foreach( $data as $key => $value )
+				{
+					if( array_key_exists( $key, $this->data ) )
+						$this->data[$key] = $this->mergeData( $this->data[$key], $value );
+					else
+						$this->data[$key] = $value;
+				}
 			}
 		}
 
