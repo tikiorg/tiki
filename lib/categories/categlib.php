@@ -1100,13 +1100,21 @@ class CategLib extends ObjectLib
 		}
 		global $prefs, $tikilib;
 		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
-			if (!empty($ret)){
-				foreach ($ret as $res) {
-					$res['name'] = tra($res['name']);
-					$rett[strtolower($tikilib->take_away_accent($res['name']))] = $res;
+			if(!function_exists('cmpcatname')) {
+				function cmpcatname($a, $b) {
+					$a = strtolower(TikiLib::lib('tiki')->take_away_accent($a['name']));
+					$b = strtolower(TikiLib::lib('tiki')->take_away_accent($b['name']));
+					if ($a == $b) {
+						return 0;
+					}
+					return ($a < $b) ? -1 : 1;
 				}
-				ksort($rett);
-				$ret = array_values($rett);
+			}
+			if (!empty($ret)){
+				foreach ($ret as &$res) {
+					$res['name'] = tra($res['name']);
+				}
+				usort($ret, "cmpcatname");
 			}
 		}
 		return $ret;
