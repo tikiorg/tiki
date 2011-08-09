@@ -287,15 +287,16 @@
 				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_edit&amp;trackerId={$trackerId|escape:'url'}">
 					<div class="item-block">
-						<p>{tr}Items modified locally without conflicts{/tr}</p>
+						<p>{tr}Safe modifications (no remote conflict){/tr}</p>
 						<ul class="load-items automatic">
 						</ul>
 					</div>
 					<div class="item-block">
-						<p>{tr}Items modified locally with conflicts (selecting these will cause the remote changes to be lost, manual update recommended){/tr}</p>
+						<p>{tr}Dangerous modifications (remote conflict){/tr}</p>
 						<ul class="load-items manual">
 						</ul>
 					</div>
+					<p>{tr}On push, local items will be removed until data reload.{/tr}</p>
 					<p><input type="submit" value="{tr}Push local changes{/tr}"/></p>
 				</form>
 				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_refresh&amp;trackerId={$trackerId|escape:'url'}">
@@ -304,7 +305,13 @@
 							<p>{tr}When reloading the data from the source, all local changes will be lost.{/tr}</p>
 							<ul>
 								<li>{tr}New items that must be preserved should be pushed using the above controls.{/tr}</li>
-								<li>{tr}Modified items should be edited manually on the source tracker (until a better solution).{/tr}</li>
+								<li>
+									{tr}Modifications that must be preserved should be replicated.{/tr}
+									<ul>
+										<li>{tr}Without conflicts: Using the above controls{/tr}</li>
+										<li>{tr}With conflicts: Manually on the source.{/tr} <em>{tr}Using the above controls will cause information loss.{/tr}</em></li>
+									</ul>
+								</li>
 							</ul>
 						{/remarksbox}
 					{/if}

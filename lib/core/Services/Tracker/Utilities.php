@@ -184,14 +184,13 @@ class Services_Tracker_Utilities
 	function clearTracker($trackerId)
 	{
 		$table = TikiDb::get()->table('tiki_tracker_items');
-		$trklib = TikiLib::lib('trk');
 
 		$items = $table->fetchColumn('itemId', array(
 			'trackerId' => $trackerId,
 		));
 
 		foreach ($items as $itemId) {
-			$trklib->remove_tracker_item($itemId, true);
+			$this->removeItem($itemId);
 		}
 	}
 
@@ -345,6 +344,12 @@ EXPORT;
 		}
 
 		return $fields;
+	}
+
+	function removeItem($itemId)
+	{
+		$trklib = TikiLib::lib('trk');
+		$trklib->remove_tracker_item($itemId, true);
 	}
 }
 

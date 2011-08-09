@@ -434,6 +434,7 @@ class Services_Tracker_SyncController
 		));
 		foreach ($itemList as $item) {
 			$this->updateRemoteItem($remoteDefinition, $definition, $item);
+			$this->utilities->removeItem($item['itemId']);
 		}
 	}
 }
