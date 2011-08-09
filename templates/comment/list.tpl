@@ -9,7 +9,8 @@
 {if $cant gt 0}
 	<ol>
 		{foreach from=$comments item=comment}
-			<li class="comment {if $comment.archived eq 'y'}archived{/if}" data-comment-thread-id="{$comment.threadId|escape}">
+			<li class="comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
+	
 				<div style="float: right;">
 					{if $allow_remove}
 						{self_link action=remove threadId=$comment.threadId _icon=cross _class=confirm-prompt _confirm="{tr}Are you sure you want to remove this comment?{/tr}"}{tr}Remove{/tr}{/self_link}
@@ -30,11 +31,11 @@
 				<div class="body">
 					<span class="avatar">{comment.userName|avatarize}</span>
 					{$comment.parsed}
-
-					{if $allow_post && $comment.locked neq 'y'}
-						<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Post new comment{/tr}{/self_link}</div>
-					{/if}
 				</div>
+
+				{if $allow_post && $comment.locked neq 'y'}
+					<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Post new comment{/tr}{/self_link}</div>
+				{/if}
 
 				{if $comment.replies_info.numReplies gt 0}
 					{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
@@ -52,3 +53,6 @@
 	<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId}{tr}Post new comment{/tr}{/self_link}</div>
 {/if}
 
+{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}
+	<a id="note-editor-comment" href="" style="display:none;">{tr}Add Comment{/tr}</a>
+{/if}

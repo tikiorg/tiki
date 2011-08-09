@@ -122,13 +122,6 @@
 				{include file='comment.tpl' comment=$comments_coms[rep]}
 				{if $thread_style != 'commentStyle_plain'}<br />{/if}
 			{/section}
-			{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
-				{jq}
-					$('.postbody dt:contains("note")')
-						.closest('.postbody')
-						.addnotes( $('#top') );
-				{/jq}
-			{/if}
 		</form>
 
 		<div class="thread_pagination">
@@ -261,12 +254,6 @@
 							{textarea id="editpost2" name="comments_data" rows=$rows cols=$cols comments="y" codemirror=$codemirror syntax=$syntax}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
 							<input type="hidden" name="rows" value="{$rows}" />
 							<input type="hidden" name="cols" value="{$cols}" />
-							{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
-								<a id="note-editor-comment" href="" style="display:none;">{tr}Add Comment{/tr}</a>
-								{jq}
-									$('#top').noteeditor('#editpostform textarea', '#note-editor-comment');
-								{/jq}
-							{/if}
 
 							{if $user and $prefs.feature_user_watches eq 'y'}
 								<div id="watch_thread_on_reply">
