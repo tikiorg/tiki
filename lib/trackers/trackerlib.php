@@ -4475,8 +4475,8 @@ class TrackerLib extends TikiLib
 			if ($prefs['feature_categories'] == 'y') {
 				$categlib = TikiLib::lib('categ');
 				$item_categs = $categlib->get_object_categories('trackeritem', $item_info['itemId']);
-				}
 			}
+		}
 		$query = 'select ttifl.*, ttf.* from `tiki_tracker_item_fields` ttifl left join `tiki_tracker_fields` ttf on (ttf.`fieldId`=ttifl.`fieldId`) where '.implode(' and ', $mid);
 		$all = $this->fetchAll($query, $bindvars, -1, 0);
 		foreach ($all as $f) {
@@ -4495,8 +4495,6 @@ class TrackerLib extends TikiLib
 		}
 		
 		$last[-1] = $item_info['status']; 
-		$mid[] = 'ta.`objectType`=?';
-		$bindvars[] = 'trackeritem';
 		if (!empty($filter)) {
 			foreach ($filter as $key=>$f) {
 		 		switch($key) {
@@ -4506,7 +4504,14 @@ class TrackerLib extends TikiLib
 				}  		
 			}
 		}
-		$query = 'select * from `tiki_tracker_item_field_logs` ttifl left join `tiki_actionlog` ta on (ta.`comment`=ttifl.`version` and ta.`object`=ttifl.`itemId`) where '.implode(' and ', $mid).' order by ttifl.`itemId` asc, ttifl.`version` desc, ttifl.`fieldId` asc';
+		if (empty($item_info['itemId'])) {
+			$join = 'ttifl.`itemId`';
+			$bindvars = array_merge(array('trackeritem'), $bindvars);
+		} else {
+			$join = '?';
+			$bindvars = array_merge(array('trackeritem', $item_info['itemId']), $bindvars);
+		}
+		$query = 'select * from `tiki_tracker_item_field_logs` ttifl left join `tiki_actionlog` ta on (ta.`comment`=ttifl.`version` and ta.`objectType`=? and ta.`object`='.$join.') where '.implode(' and ', $mid).' order by ttifl.`itemId` asc, ttifl.`version` desc, ttifl.`fieldId` asc';
 		$all = $this->fetchAll($query, $bindvars, -1, 0);
 		$history['cant'] = count($all);
 		$history['data'] = array();
