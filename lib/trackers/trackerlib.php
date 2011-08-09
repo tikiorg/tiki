@@ -1233,7 +1233,10 @@ class TrackerLib extends TikiLib
 		$factory = new Tracker_Field_Factory($definition);
 
 		$userField = $definition->getUserField();
-		$itemUser = $info[$userField];
+		$itemUser = null;
+		if ($userField) {
+			$itemUser = $info[$userField];
+		}
 
 		$fields = array();
 		foreach ( $listfields as $fieldId =>$fopt ) {
@@ -3328,7 +3331,7 @@ class TrackerLib extends TikiLib
 				$field_categs = $aux;
 				$f['value'] = implode(',', array_intersect($field_categs, $item_categs)); 
 			}
-			$last[$f['fieldId'].$f['lang']] = $f['value'];	
+			$last[$f['fieldId']] = $f['value'];	
 		}
 		
 		$last[-1] = $item_info['status']; 
