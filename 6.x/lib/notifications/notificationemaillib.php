@@ -95,10 +95,14 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	if ($prefs['feature_user_watches'] == 'y' || $prefs['feature_group_watches'] == 'y') {
 		$nots_raw = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
 		$nots = array();
+		$users = array();
 		foreach( $nots_raw as $n ) {
-			if( $n['user'] != $author ) {
+			if ($n['user'] != $author
+				&& !in_array($n['user'], $users)) // make sure user receive only one notification even if he is monitoring both the topic and thread
+			{
 				$n['language'] = $tikilib->get_user_preference($n['user'], "language", $defaultLanguage);
 				$nots[] = $n;
+				$users[] = $n['user'];
 			}
 		}
 	}
