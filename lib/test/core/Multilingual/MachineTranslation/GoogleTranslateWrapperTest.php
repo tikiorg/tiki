@@ -123,7 +123,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
 		$text = 'profile (<a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">install profile now</a>)';
 		$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper('en','fr');
 	  	$translation = $translator->translateText($text);
-   	  	$this->assertEquals(strtolower('voir le profil (<a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">profil installer maintenant</a>)'), strtolower($translation), "The translation was not correct for text: $text.");
+   	  	$this->assertEquals(strtolower('profil (<a class="wiki"  href="tiki-admin.php?profile=&amp;category=Featured+profiles&amp;repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&amp;preloadlist=y&amp;page=profiles&amp;list=List#profile-results" rel="">profil de l\'installer maintenant</a>)'), strtolower($translation), "The translation was not correct for text: $text.");
 	}
 	
    /**
