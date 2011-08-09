@@ -2144,12 +2144,12 @@ img.pref_dependency {
 /* Kaltura browse entries */
 
 /* remove margins from the image */ 
-.items img { 
+.kaltura .items img { 
     margin: 0; 
 }
  
 /* make A tags our floating scrollable items */ 
-.items a { 
+.kaltura .items a { 
     display: block; 
     float: left; 
     margin: 20px 15px; 

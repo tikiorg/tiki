@@ -21,7 +21,7 @@
 			<param name="flashVars" value="entry_id={$klist[0]->id}" />
 			<param name="wmode" value="opaque" />
 		</object>
-		<div class="navi">
+		<div class="navi kaltura">
 			<a class="prev"></a> 
 			<div class="scrollable"> 
 				<div class="items"> 
