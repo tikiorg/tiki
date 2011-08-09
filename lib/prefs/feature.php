@@ -723,6 +723,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),
 		'feature_ticketlib' => array(
 			'name' => tra('Require confirmation if possible CSRF detected'),
@@ -1593,8 +1594,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'description' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
 			'help' => 'Redirect+to+similar+wiki+page',
-			'default' => 'y',
-			'tags' => array('basic'),
+			'default' => 'n',
 		),
 		'feature_wiki_templates' => array(
 			'name' => tra('Content templates'),
