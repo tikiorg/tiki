@@ -27,10 +27,6 @@ class TikiLib extends TikiDb_Bridge
 {
 	var $buffer;
 	var $flag;
-	var $parser;
-	var $pre_handlers = array();
-	var $pos_handlers = array();
-	var $postedit_handlers = array();
 	var $usergroups_cache = array();
 
 	var $num_queries = 0;
@@ -2342,23 +2338,6 @@ class TikiLib extends TikiDb_Bridge
 		));
 	}
 
-	// Hot words methods ////
-	/*shared*/
-	function get_hotwords() {
-		static $cache_hotwords;
-		if ( isset($cache_hotwords) ) {
-			return $cache_hotwords;
-		}
-		$query = "select * from `tiki_hotwords`";
-		$result = $this->fetchAll($query, array(),-1,-1, false);
-		$ret = array();
-		foreach ($result as $res ) {
-			$ret[$res["word"]] = $res["url"];
-		}
-		$cache_hotwords = $ret;
-		return $ret;
-	}
-
 	// FRIENDS METHODS //
 	function list_user_friends($user, $offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '')
 	{
@@ -4472,7 +4451,7 @@ class TikiLib extends TikiDb_Bridge
 					$this->plugin_pending_notification($plugin_name, $context);
 				}
 				
-				$this->plugin_find_implementation( $plugin_name, $body, $arguments );
+				$parserlib->plugin_find_implementation( $plugin_name, $body, $arguments );
 
 				$func_name = 'wikiplugin_' . $plugin_name . '_save';
 
@@ -4530,50 +4509,6 @@ class TikiLib extends TikiDb_Bridge
 		$mail->send(array($prefs['sender_email']));
 	}
 	
-	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
-		$parserlib = TikiLib::lib('parser');
-		if( $info = $parserlib->plugin_alias_info( $implementation ) ) {
-			$implementation = $info['implementation'];
-
-			// Do the body conversion
-			if( isset($info['body']) ) {
-				if( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
-					|| empty( $data ) )
-					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
-
-				if( isset($info['body']['params']) )
-					$data = $parserlib->plugin_replace_args( $data, $info['body']['params'], $args );
-			} else {
-				$data = '';
-			}
-
-			// Do parameter conversion
-			$params = array();
-			if( isset($info['params']) ) {
-				foreach( $info['params'] as $key => $value ) {
-					if( is_array( $value ) && isset($value['pattern']) && isset($value['params']) ) {
-						$params[$key] = $parserlib->plugin_replace_args( $value['pattern'], $value['params'], $args );
-					} else {
-						// Handle simple values
-						if( isset($args[$key]) )
-							$params[$key] = $args[$key];
-						else
-							$params[$key] = $value;
-					}
-				}
-			}
-
-			$args = $params;
-
-			// Attempt to find recursively
-			$this->plugin_find_implementation( $implementation, $data, $args );
-
-			return true;
-		}
-
-		return false;
-	}
-
 	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
 		$smarty = TikiLib::lib('smarty');
 
