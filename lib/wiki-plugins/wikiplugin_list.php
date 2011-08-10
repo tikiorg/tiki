@@ -27,13 +27,8 @@ function wikiplugin_list($data, $params)
 	$alternate = null;
 	$output = null;
 	$subPlugins = array();
-
-	$query = new Search_Query;
-	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
-
-	if (isset($_REQUEST['offset'])) {
-		$query->setRange($_REQUEST['offset']);
-	}
+	$filter = array();
+	$contentfilters = array();
 
 	$matches = WikiParser_PluginMatcher::match($data);
 	$argumentParser = new WikiParser_PluginArgumentParser;
@@ -43,32 +38,40 @@ function wikiplugin_list($data, $params)
 		$arguments = $argumentParser->parse($match->getArguments());
 
 		foreach ($arguments as $key => $value) {
-			$function = "wpquery_{$name}_{$key}";
-
-			if (function_exists($function)) {
-				$function($query, $value, $arguments);
-			}
-
-			$function = "wpformat_{$name}_{$key}";
-
-			if (function_exists($function)) {
-				$function($subPlugins, $value, $match->getBody());
+			if ($name == 'filter') {
+				if ($key == 'content') {
+					$contentfilters[] = array('value' => $value, 'arguments' => $arguments); 
+				} else {
+					$filter[$key] = $value;	
+				}	
+			} elseif ($name == 'format' && $key == 'name') {
+				wpformat_format_name($subPlugins, $value, $match->getBody());
+			} elseif ($name == 'sort' && $key == 'mode') {
+				$sort_mode = $value;	
 			}
 		}
-
 		if ($name == 'output') {
 			$output = $match;
-		}
-
-		if ($name == 'alternate') {
+		} elseif ($name == 'alternate') {
 			$alternate = $match->getBody();
 		}
+	}
+
+	$query = $unifiedsearchlib->buildQuery($filter);
+	foreach ($contentfilters as $cf) {
+		wpquery_filter_content($query, $cf['value'], $cf['arguments']);
+	} 
+	if (isset($_REQUEST['offset'])) {
+		$query->setRange($_REQUEST['offset']);
 	}
 
 	$query->filterPermissions(Perms::get()->getGroups());
 
 	if (isset($_REQUEST['sort_mode'])) {
-		$query->setOrder($_REQUEST['sort_mode']);
+		$sort_mode = $_REQUEST['sort_mode'];
+	}
+	if (isset($sort_mode)) {
+		$query->setOrder($sort_mode); 
 	}
 
 	$index = $unifiedsearchlib->getIndex();
@@ -115,21 +118,6 @@ function wikiplugin_list($data, $params)
 	return $out;
 }
 
-function wpquery_filter_type($query, $value)
-{
-	$query->filterType($value);
-}
-
-function wpquery_filter_categories($query, $value)
-{
-	$query->filterCategory($value);
-}
-
-function wpquery_filter_deepcategories($query, $value)
-{
-	$query->filterCategory($value, true);
-}
-
 function wpquery_filter_content($query, $value, array $arguments)
 {
 	if (isset($arguments['field'])) {
@@ -139,16 +127,6 @@ function wpquery_filter_content($query, $value, array $arguments)
 	}
 
 	$query->filterContent($value, $fields);
-}
-
-function wpquery_filter_language($query, $value)
-{
-	$query->filterLanguage($value);
-}
-
-function wpquery_sort_mode($query, $value)
-{
-	$query->setOrder($value);
 }
 
 function wpformat_format_name(&$subPlugins, $value, $body)

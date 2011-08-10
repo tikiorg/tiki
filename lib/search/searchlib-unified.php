@@ -279,12 +279,21 @@ class UnifiedSearchLib
 			$query->filterCategory($filter['categories'], isset($filter['deep']));
 		}
 
+		if (isset($filter['deepcategories']) && $filter['deepcategories']) {
+			$query->filterCategory($filter['deepcategories'], true);
+		} 
+
 		if (isset($filter['tags']) && $filter['tags']) {
 			$query->filterTags($filter['tags']);
 		}
 
 		if (isset($filter['content']) && $filter['content']) {
-			$query->filterContent($filter['content'], TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true));
+			if (isset($filter['field']) && $filter['field']) {
+				$field = $filter['field'];
+			} else {
+				$field = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+			}
+			$query->filterContent($filter['content'], $field);
 		}
 
 		if (isset($filter['autocomplete']) && $filter['autocomplete']) {
@@ -306,9 +315,11 @@ class UnifiedSearchLib
 
 		unset($filter['type']);
 		unset($filter['categories']);
+		unset($filter['deepcategories']);
 		unset($filter['deep']);
 		unset($filter['tags']);
 		unset($filter['content']);
+		unset($filter['field']);
 		unset($filter['language']);
 		unset($filter['autocomplete']);
 
