@@ -235,7 +235,7 @@ class TikiLib extends TikiDb_Bridge
 		$this->now = time();
 	}
 	
-	function parse_data($data, $options) {
+	function parse_data($data, $options = array()) {
 		//to make migration easier
 		$parserlib = TikiLib::lib('parser');
 		return $parserlib->parse_data($data, $options);
