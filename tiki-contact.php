@@ -15,6 +15,8 @@ $access->check_feature(array('feature_contact', 'feature_messages'));
 
 $auto_query_args = array();
 
+$smarty->assign('mid', 'tiki-contact.tpl');
+
 if ($user == '') {
 	$access->check_feature('contact_anon');
 	
@@ -93,5 +95,4 @@ $smarty->assign('email', $email);
 $smarty->assign('priority', 3);
 ask_ticket('contact');
 
-$smarty->assign('mid', 'tiki-contact.tpl');
 $smarty->display("tiki.tpl");
