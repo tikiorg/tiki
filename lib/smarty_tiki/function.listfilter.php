@@ -94,6 +94,9 @@ function smarty_function_listfilter($params, &$smarty) {
 		}
 		$content .= "
 } );	// end keyup
+setTimeout(function () {
+	$('#$id').keyup();
+}, 1000);
 		";
 	
 		$headerlib->add_jq_onready($content);
