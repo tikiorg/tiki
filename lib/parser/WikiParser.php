@@ -106,7 +106,7 @@ class WikiParser {
 					$href = $S[$O-1];
 					$text = $S[$O-1];
 					
-					if ($S[$O-1]->match('/\|/')) {
+					if (preg_match('/\|/', $S[$O-1])) {
 						$href = $link[0];
 						$text = $link[1];
 					}
@@ -139,7 +139,7 @@ class WikiParser {
 					$href = $S[$O-1];
 					$text = $S[$O-1];
 					
-					if ($S[$O-1]->match('/\|/')) {
+					if (preg_match('/\|/', $S[$O-1])) {
 						$href = $wikilink[0];
 						$text = $wikilink[1];
 					}
