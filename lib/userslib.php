@@ -3029,7 +3029,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_share',
-				'description' => tra('Can share a page (email, twitter, facebook, message, forums)'),
+				'description' => tra('Can share a page (email, Twitter, Facebook, message, forums)'),
 				'level' => 'basic',
 				'type' => 'tiki',
 				'admin' => false,

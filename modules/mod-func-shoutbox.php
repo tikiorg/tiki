@@ -54,12 +54,12 @@ function module_shoutbox_info() {
 			),
 			'tweet' => array(
 				'name'=> tra('Tweet'),
-				'description' => tra('If set to "1" and the user has authorized us to tweet messages with Twitter, the user can decide, if he wants to shout via twitter.'),
+				'description' => tra('If set to "1" and the user has authorized us to tweet messages with Twitter, the user can decide, if he wants to shout via Twitter.'),
 				'filter' => 'word'
 			),
 			'facebook' => array(
 				'name'=> tra('Facebook'),
-				'description' => tra('If set to "1" and the user has authorized us with Facebook, the user can decide, if he wants to add the shout to his facebook wall.'),
+				'description' => tra('If set to "1" and the user has authorized us with Facebook, the user can decide, if he wants to add the shout to his Facebook wall.'),
 				'filter' => 'word'
 			)
 			

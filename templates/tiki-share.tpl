@@ -162,7 +162,7 @@
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
-								<p><a href="tiki-socialnetworks.php">{tr}Authorize with twitter first{/tr}</a></p>
+								<p><a href="tiki-socialnetworks.php">{tr}Authorize with Twitter first{/tr}</a></p>
 							{/remarksbox}
 						{/if}
 					</td>
@@ -190,7 +190,7 @@
 					<td rowspan="2">
 						<img src="img/icons/facebook-logo_32.png" alt="Facebook" />
 						<br />
-							{tr}Put on my facebook wall{/tr}
+							{tr}Put on my Facebook wall{/tr}
 					</td>
 					<td>
 						{if $facebook}
@@ -200,7 +200,7 @@
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
-								<p><a href="tiki-socialnetworks.php">{tr}Authorize with facebook first{/tr}</a></p>
+								<p><a href="tiki-socialnetworks.php">{tr}Authorize with Facebook first{/tr}</a></p>
 							{/remarksbox}
 						{/if}
 					</td>

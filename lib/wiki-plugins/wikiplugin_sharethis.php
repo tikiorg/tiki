@@ -60,7 +60,7 @@ function wikiplugin_sharethis_info() {
 			'postfirst' => array(
 				'required' => false,
 				'name' => tra('First Services Shown'),
-				'description' => tra('Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
+				'description' => tra('Input a list of post services (like Facebook, Myspace, Digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
 				'filter' => 'alpha',
 				'advanced' => true,		
 				'default' => '',

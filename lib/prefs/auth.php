@@ -65,7 +65,7 @@ function prefs_auth_list() {
 		),
 		'auth_token_share' => array(
 			'name' => tra('Share access rights with friends when using Share'),
-			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email/twitter/facebook. Lifespan of the links is defined by the site.'),
+			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email/Twitter/Facebook. Lifespan of the links is defined by the site.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'dependencies' => array(
