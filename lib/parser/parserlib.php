@@ -40,7 +40,7 @@ class ParserLib extends TikiDb_Bridge
 	function plugin($pluginDetails) {
 		$name = $pluginDetails->name;
 		$body = $pluginDetails->body;
-		$args = $this->plugin_split_args($pluginDetails->params);
+		$args = $this->plugin_split_args($pluginDetails->args);
 		
 		$pluginBodyParser = new WikiParser;
 		
@@ -1355,8 +1355,8 @@ if( \$('#$id') ) {
 		$data = preg_replace('/(\{img [^\}]+li)<x>(nk[^\}]+\})/i', '\\1\\2', $data);
 
 		// Process pre_handlers here
-		if (is_array($tikilib->pre_handlers)) {
-			foreach ($tikilib->pre_handlers as $handler) {
+		if (is_array($this->pre_handlers)) {
+			foreach ($this->pre_handlers as $handler) {
 				$data = $handler($data);
 			}
 		}
@@ -1474,7 +1474,7 @@ if( \$('#$id') ) {
 		$this->replace_preparse($data, $preparsed, $noparsed);
 
 		// Process pos_handlers here
-		foreach ($tikilib->pos_handlers as $handler) {
+		foreach ($this->pos_handlers as $handler) {
 			$data = $handler($data);
 		}
 		if ($old_wysiwyg_parsing !== null) {
