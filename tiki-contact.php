@@ -28,12 +28,12 @@ if ($user == '') {
 		if (empty($_REQUEST['subject']) && empty($_REQUEST['body']) || empty($_REQUEST['from'])) {
 			$smarty->assign('message', tra('ERROR: you must include a subject or a message. You must also make sure to have a valid e-mail in the FROM field'));
 			$smarty->assign('priority', $_REQUEST['priority']);
-			
+
 			if (!empty($_REQUEST['from'])) $smarty->assign_by_ref('from', $_REQUEST['from']);
 			if (!empty($_REQUEST['subject'])) $smarty->assign_by_ref('subject', $_REQUEST['subject']);
 			if (!empty($_REQUEST['body'])) $smarty->assign_by_ref('body', $_REQUEST['body']);
 			if (!empty($_REQUEST['priority'])) $smarty->assign_by_ref('priority', $_REQUEST['priority']);
-			
+
 			$smarty->display("tiki.tpl");
 			die;
 		}
@@ -50,8 +50,9 @@ if ($user == '') {
 			}
 		}
 		$smarty->assign('sent', 1);
+		$body = tra("{$_REQUEST['from']} sent you a message:") . "\n" . $_REQUEST['body'];
 		$messulib->post_message($prefs['contact_user'], $_REQUEST['from'], $_REQUEST['to'],
-			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+			'', $_REQUEST['subject'], $body, $_REQUEST['priority']);
 		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
 		$smarty->assign('message', $message);
 	}
@@ -75,8 +76,9 @@ if ($user == '') {
 		}
 		$smarty->assign('sent', 1);
 		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
+		$body = tra("{$user} sent you a message:") . "\n" . $_REQUEST['body'];
 		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
-			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+			'', $_REQUEST['subject'], $body, $_REQUEST['priority']);
 
 		$smarty->assign('message', $message);
 	}
