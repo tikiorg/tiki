@@ -163,9 +163,9 @@ $smarty->assign('show_expdate', $article_data["show_expdate"]);
 $smarty->assign('edit_data', 'y');
 $body = $article_data["body"];
 $heading = $article_data["heading"];
-$smarty->assign('parsed_body', $tikilib->parse_data($body));
+$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y')));
 $smarty->assign('parsed_heading', $tikilib->parse_data($heading));
-//}
+
 $topics = $artlib->list_topics();
 foreach ($topics as $topic) {
 	if ($topic['topicId'] == $article_data['topicId']) {
