@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {assign var=escuser value=$assign_user|escape:url}
-{title}{tr}Assign User {$assign_user} to Groups{/tr}{/title}
+{title}{tr 0=$assign_user}Assign User %0 to Groups{/tr}{/title}
 
 <div class="navbar">
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
@@ -52,7 +52,7 @@
 	</form>
 </table>
 <br />
-<div align="left"><h2>{tr}Assign User {$assign_user|escape} to Groups{/tr}</h2></div>
+<div align="left"><h2>{tr 0=$assign_user|escape}Assign User %0 to Groups{/tr}</h2></div>
 
 {include file='find.tpl' find_show_num_rows='y'}
 
