@@ -58,7 +58,7 @@ function wikiplugin_datachannel_info()
 				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('Clear alle Tiki caches'), 'value' => 'all'), 
+					array('text' => tra('Clear all Tiki caches'), 'value' => 'all'), 
 					array('text' => './templates_c/', 'value' => 'templates_c'),
 					array('text' => './modules/cache/', 'value' => 'modules_cache'),
 					array('text' => './temp/cache/', 'value' => 'temp_cache'),

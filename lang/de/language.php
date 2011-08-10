@@ -8023,7 +8023,6 @@ $lang=Array(
 "CSS class for this form" => "CSS-Klasse für dieses Formular",
 "Empty Caches" => "Caches leeren",
 "Which caches to empty. Default \"Clear all Tiki caches\"" => "Welche Caches geleert werden sollen. Standard \"Alle Tiki Caches leeren\"",
-"Clear alle Tiki caches" => "Lösche alle Tiki Caches",
 "All user prefs sessions" => "Alle Benutzer-Prefs-Sitzungen",
 "Price to execute the datachannel (%0)" => "Preis für die Ausführung des Datenkanals (%0)",
 "Payment Label" => "Bezahlungsbezeichnung",

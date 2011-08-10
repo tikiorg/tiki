@@ -3512,7 +3512,6 @@ $lang=Array(
 // "Do not use returnURI but instead return true quietly" => "Do not use returnURI but instead return true quietly",
 // "If set to y, will return quietly after data channel has run which would be needed if plugin is used in non-wiki page context" => "If set to y, will return quietly after data channel has run which would be needed if plugin is used in non-wiki page context",
 // "Button Label" => "Button Label",
-"Clear alle Tiki caches" => "Vider tous les caches Tiki",
 // "Price to execute the datachannel (%0)" => "Price to execute the datachannel (%0)",
 // "Datachannel" => "Datachannel",
 // "DB Report" => "DB Report",
