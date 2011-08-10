@@ -38,11 +38,14 @@ class XmlLib extends TikiLib
 	/* Export a list of pages or a structure */
 	function export_pages($pages=null, $structure=null, $zipFile='dump/xml.zip', $config=null)
 	{
-		if (!($this->zip = new ZipArchive())) {
+		if (! class_exists('ZipArchive')) {
 			$this->errors[] = 'Problem zip initialisation';
 			$this->errorsArgs[] = '';
 			return false;
 		}
+
+		$this->zip = new ZipArchive;
+
 		if (!$this->zip->open($zipFile, ZIPARCHIVE::OVERWRITE)) {
 			$this->errors[] = 'Can not open the file';
 			$this->errorsArgs[] = $zipFile;
