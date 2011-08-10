@@ -415,19 +415,7 @@ if( \$('#$id') ) {
 
 		$data = $matches->getText();
 
-		$start = -1;
-		while (false !== $start = strpos($data, '~np~', $start + 1)) {
-			if (false !== $end = strpos($data, '~/np~', $start)) {
-				$content = substr($data, $start + 4, $end - $start - 4);
-
-				// ~pp~ type "plugins"
-				$key = "§".md5($tikilib->genPass())."§";
-				$noparsed["key"][] = preg_quote($key);
-				$noparsed["data"][] = $content;
-
-				$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
-			}
-		}
+		$this->strip_unparsed_block($data, $noparsed);
 
 		// ~pp~
 		$start = -1;
@@ -439,6 +427,25 @@ if( \$('#$id') ) {
 				$key = "§".md5($tikilib->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
 				$noparsed["data"][] = '<pre>'.$content.'</pre>';
+				$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
+			}
+		}
+	}
+
+	private function strip_unparsed_block(& $data, & $noparsed)
+	{
+		$tikilib = TikiLib::lib('tiki');
+
+		$start = -1;
+		while (false !== $start = strpos($data, '~np~', $start + 1)) {
+			if (false !== $end = strpos($data, '~/np~', $start)) {
+				$content = substr($data, $start + 4, $end - $start - 4);
+
+				// ~pp~ type "plugins"
+				$key = "§".md5($tikilib->genPass())."§";
+				$noparsed["key"][] = preg_quote($key);
+				$noparsed["data"][] = $content;
+
 				$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
 			}
 		}
@@ -1000,7 +1007,10 @@ if( \$('#$id') ) {
 		$data = $filter->filter($data);
 
 		if (isset($parseOptions) && !$parseOptions['is_html']) {
+			$noparsed = array('data' => array(), 'key' => array());
+			$this->strip_unparsed_block($data, $noparsed);
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+			$data = str_replace($noparsed['key'], $noparsed['data'], $data);
 		}
 
 		// Make sure all arguments are declared
