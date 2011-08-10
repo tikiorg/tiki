@@ -3,7 +3,7 @@
 		<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset class="admin">
-		<legend>{tr}Settings{/tr}</legend>
+		<legend>{tr}MapServer settings{/tr}</legend>
 		<div class="adminoptionbox">
 			{if $map_error neq ''}
 				{remarksbox type=warning title="{tr}Warning{/tr}"}{$map_error}{/remarksbox}
