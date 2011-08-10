@@ -55,7 +55,9 @@ if ($user == '') {
 		$body = tr("%0 sent you a message:", $_REQUEST['from']) . "\n" . $_REQUEST['body'];
 		$messulib->post_message($prefs['contact_user'], $_REQUEST['from'], $_REQUEST['to'],
 			'', $_REQUEST['subject'], $body, $_REQUEST['priority']);
-		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
+		$contact_name = $userlib->get_user_preference($prefs['contact_user'], 'realName');
+		if ($contact_name == '') $contact_name = $prefs['contact_user'];
+		$message = tr('Message sent to %0', $contact_name ) . '<br />';
 		$smarty->assign('message', $message);
 	}
 } else {
@@ -77,7 +79,9 @@ if ($user == '') {
 			die;
 		}
 		$smarty->assign('sent', 1);
-		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
+		$contact_name = $userlib->get_user_preference($prefs['contact_user'], 'realName');
+		if ($contact_name == '') $contact_name = $prefs['contact_user'];
+		$message = tr('Message sent to %0', $contact_name ) . '<br />';
 		$body = tra("{$user} sent you a message:") . "\n" . $_REQUEST['body'];
 		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $body, $_REQUEST['priority']);
