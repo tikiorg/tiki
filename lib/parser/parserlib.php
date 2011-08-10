@@ -24,7 +24,10 @@
 
 class ParserLib extends TikiDb_Bridge
 {
-	var $parser;
+	private $parser;
+	private $pre_handlers = array();
+	private $pos_handlers = array();
+	private $postedit_handlers = array();
 	
 	function __construct() {
 		include_once "WikiParser.php";
@@ -35,13 +38,15 @@ class ParserLib extends TikiDb_Bridge
 	}
 	
 	function plugin($pluginDetails) {
-		$args = $this->plugin_split_args($pluginDetails->args);
-
+		$name = $pluginDetails->name;
+		$body = $pluginDetails->body;
+		$args = $this->plugin_split_args($pluginDetails->params);
+		
 		$pluginBodyParser = new WikiParser;
 		
 		//nested parsing!
 		$pluginOutput = $pluginBodyParser->parse(
-			$this->plugin_execute($pluginDetails->name, $pluginDetails->body, $args)
+			$this->plugin_execute($name, $body, $args)
 		);
 		
 		return $pluginOutput;
@@ -275,7 +280,7 @@ class ParserLib extends TikiDb_Bridge
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 
-		$data = $tikilib->htmldecode($data);
+		$data = TikiLib::htmldecode($data);
 		if (! $options['is_html']) {
 			// Decode partially, leave the < and > as HTML entities
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
@@ -563,7 +568,7 @@ if( \$('#$id') ) {
 		$data['plugin_name'] = $name;
 
 		$prefName = "pluginalias_$name";
-		$this->set_preference( $prefName, serialize( $data ) );
+		$tikilib->set_preference( $prefName, serialize( $data ) );
 		
 		global $prefs;
 		$list = array();
@@ -572,7 +577,7 @@ if( \$('#$id') ) {
 		
 		if( ! in_array( $name, $list ) ) {
 			$list[] = $name;
-			$this->set_preference( 'pluginaliaslist', serialize($list) );
+			$tikilib->set_preference( 'pluginaliaslist', serialize($list) );
 		}
 
 		foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
@@ -584,16 +589,17 @@ if( \$('#$id') ) {
 
 	//*
 	function plugin_alias_delete( $name ) {
+		$tikilib = TikiLib::lib('tiki');
 		$name = strtolower( $name );
 		$prefName = "pluginalias_$name";
 
 		// Remove from list
-		$list = $this->get_preference( 'pluginaliaslist', array(), true );
+		$list = $tikilib->get_preference( 'pluginaliaslist', array(), true );
 		$list = array_diff( $list, array( $name ) );
 		$this->set_preference( 'pluginaliaslist', serialize($list) );
 
 		// Remove the definition
-		$this->delete_preference( $prefName );
+		$tikilib->delete_preference( $prefName );
 
 		// Clear cache
 		$cachelib = TikiLib::lib('cache');
@@ -681,13 +687,15 @@ if( \$('#$id') ) {
 				if( $tiki_p_plugin_approve == 'y' ) {
 					if( isset( $_POST['plugin_accept'] ) ) {
 						global $page;
+						$tikilib = TikiLib::lib('tiki');
 						$this->plugin_fingerprint_store( $fingerprint, 'accept' );
-						$this->invalidate_cache( $page );
+						$tikilib->invalidate_cache( $page );
 						return true;
 					} elseif( isset( $_POST['plugin_reject'] ) ) {
 						global $page;
+						$tikilib = TikiLib::lib('tiki');
 						$this->plugin_fingerprint_store( $fingerprint, 'reject' );
-						$this->invalidate_cache( $page );
+						$tikilib->invalidate_cache( $page );
 						return 'rejected';
 					}
 				} 
@@ -988,7 +996,7 @@ if( \$('#$id') ) {
 
 		// Apply filters on the body
 		$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
-		$data = $tikilib->htmldecode($data);
+		$data = TikiLib::htmldecode($data);
 		$data = $filter->filter($data);
 
 		if (isset($parseOptions) && !$parseOptions['is_html']) {
@@ -1010,13 +1018,13 @@ if( \$('#$id') ) {
 				}
 				$paramInfo = $params[$argKey];
 				$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
-				$argValue = $tikilib->htmldecode($argValue);
+				$argValue = TikiLib::htmldecode($argValue);
 
 				if( isset($paramInfo['separator']) ) {
 					$vals = array();
 					
-					$vals = $this->array_apply_filter(
-						$this->multi_explode( $paramInfo['separator'], $argValue),
+					$vals = $tikilib->array_apply_filter(
+						$tikilib->multi_explode( $paramInfo['separator'], $argValue),
 						$filter
 					);
 
@@ -1621,7 +1629,7 @@ if( \$('#$id') ) {
 			// enter square brackets in their output; things like [[foo]
 			// get rendered as [foo]. -rlpowell
 
-			if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
+			if ($prefs['cachepages'] == 'y' && $tikilib->is_cached($link)) {
 				//use of urlencode for using cached versions of dynamic sites
 				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
 
@@ -2113,12 +2121,12 @@ if( \$('#$id') ) {
 				} elseif ($litype == '+') {
 					// Close open paragraph, but not list or div's
 					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-					$listlevel = $this->how_many_at_start($line, $litype);
+					$listlevel = $tikilib->how_many_at_start($line, $litype);
 					// Close lists down to requested level
 					while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
 
 					// Must append paragraph for list item of given depth...
-					$listlevel = $this->how_many_at_start($line, $litype);
+					$listlevel = $tikilib->how_many_at_start($line, $litype);
 					if (count($listbeg)) {
 						if (substr(current($listbeg), 0, 5) != '</li>') {
 							array_unshift($listbeg, '</li>' . array_shift($listbeg));
@@ -2800,6 +2808,64 @@ if( \$('#$id') ) {
 		} else {
 			return array_unique( $pageList );
 		}
+	}
+
+	function plugin_find_implementation( & $implementation, & $data, & $args ) {
+		if( $info = $this->plugin_alias_info( $implementation ) ) {
+			$implementation = $info['implementation'];
+
+			// Do the body conversion
+			if( isset($info['body']) ) {
+				if( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
+					|| empty( $data ) )
+					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
+
+				if( isset($info['body']['params']) )
+					$data = $this->plugin_replace_args( $data, $info['body']['params'], $args );
+			} else {
+				$data = '';
+			}
+
+			// Do parameter conversion
+			$params = array();
+			if( isset($info['params']) ) {
+				foreach( $info['params'] as $key => $value ) {
+					if( is_array( $value ) && isset($value['pattern']) && isset($value['params']) ) {
+						$params[$key] = $this->plugin_replace_args( $value['pattern'], $value['params'], $args );
+					} else {
+						// Handle simple values
+						if( isset($args[$key]) )
+							$params[$key] = $args[$key];
+						else
+							$params[$key] = $value;
+					}
+				}
+			}
+
+			$args = $params;
+
+			// Attempt to find recursively
+			$this->plugin_find_implementation( $implementation, $data, $args );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private function get_hotwords() {
+		static $cache_hotwords;
+		if ( isset($cache_hotwords) ) {
+			return $cache_hotwords;
+		}
+		$query = "select * from `tiki_hotwords`";
+		$result = $this->fetchAll($query, array(),-1,-1, false);
+		$ret = array();
+		foreach ($result as $res ) {
+			$ret[$res["word"]] = $res["url"];
+		}
+		$cache_hotwords = $ret;
+		return $ret;
 	}
 }
 
