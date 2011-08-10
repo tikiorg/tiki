@@ -43,6 +43,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Wiki',
 			'default' => 'y',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=wiki') .' --- ' .tr('[%0|List]', 'tiki-listpages.php'),
 		),
 		'feature_blogs' => array(
 			'name' => tra('Blog'),
@@ -50,7 +51,8 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Blogs',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=blog') .' --- ' .tr('[%0|List]', 'tiki-list_blogs.php'),
 		),
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
@@ -59,6 +61,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Image+Gallery',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=gal') .' --- ' .tr('[%0|List]', 'tiki-galleries.php'),
 		),
 		'feature_machine_translation' => array(
 			'name' => tra('Machine Translation (by Google Translate)'),
@@ -72,11 +75,11 @@ function prefs_feature_list($partial = false) {
 		'feature_trackers' => array(
 			'name' => tra('Trackers'),
 			'description' => tra('Database & form generator'),
-			'hint' => tr('Trackers need to be [%0|configured].', 'tiki-admin_trackers.php'),
 			'help' => 'Trackers',
 			'type' => 'flag',
 			'keywords' => 'CRUD',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=trackers') .' --- ' .tr('[%0|List]', 'tiki-list_trackers.php'),
 		),
 		'feature_forums' => array(
 			'name' => tra('Forums'),
@@ -85,6 +88,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=forums') .' --- ' .tr('[%0|List]', 'tiki-forums.php'),
 		),
 		'feature_file_galleries' => array(
 			'name' => tra('File Gallery'),
@@ -93,6 +97,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=fgal') .' --- ' .tr('[%0|List]', 'tiki-list_file_gallery.php'),
 		),
 		'feature_file_galleries_save_draft' => array(
 			'name' => tra('Save files as drafts'),
@@ -105,6 +110,7 @@ function prefs_feature_list($partial = false) {
 		'feature_file_galleries_templates' => array(
 			'name' => tra('File Galleries configuration templates'),
 			'type' => 'flag',
+			'keywords' => tra('template'),
 			'dependencies' => array(
 				'feature_file_galleries',
                          ),
@@ -117,6 +123,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=cms') .' --- ' .tr('[%0|List]', 'tiki-list_articles.php'),
 		),
 		'feature_polls' => array(
 			'name' => tra('Polls'),
@@ -124,7 +131,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Poll',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=polls') .' --- ' .tr('[%0|List]', 'tiki-admin_polls.php'),
 		),
 		'feature_newsletters' => array(
 			'name' => tra('Newsletters'),
@@ -132,7 +140,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Newsletters',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'hint' => tr('[%0|List]', 'tiki-newsletters.php'),
 		),
 		'feature_calendar' => array(
 			'name' => tra('Calendar'),
@@ -140,14 +149,17 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Calendar',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=calendar') .' --- ' .tr('[%0|List]', 'tiki-calendar.php?viewlist=list'),
 		),
 		'feature_banners' => array(
 			'name' => tra('Banners'),
 			'description' => tra('Insert, track, and manage advertising banners.'),
 			'help' => 'Banners',
+			'keywords' => 'banner publicity',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=ads') .' --- ' .tr('[%0|List]', 'tiki-list_banners.php'),
 		),
 		'feature_categories' => array(
 			'name' => tra('Category'),
@@ -155,6 +167,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Category',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=category') .' --- ' .tr('[%0|List]', 'tiki-browse_categories.php'),
 		),
 		'feature_score' => array(
 			'name' => tra('Score'),
@@ -170,6 +183,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=search'),
 		),
 		'feature_freetags' => array(
 			'name' => tra('Freetags'),
@@ -177,6 +191,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Tags',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=freetags') .' --- ' .tr('[%0|List]', 'tiki-browse_freetags.php'),
 		),
 		'feature_actionlog' => array(
 			'name' => tra('Action Log'),
@@ -215,6 +230,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|List]', 'tiki-list_surveys.php'),
 		),
 		'feature_directory' => array(
 			'name' => tra('Directory'),
@@ -222,6 +238,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Directory',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|List]', 'tiki-directory_browse.php'),			
 		),
 		'feature_quizzes' => array(
 			'name' => tra('Quizzes'),
@@ -229,6 +246,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Quizzes',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|List]', 'tiki-list_quizzes.php'),
 		),
 		'feature_featuredLinks' => array(
 			'name' => tra('Featured Links'),
@@ -250,15 +268,17 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Shoutbox',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'hint' => tr('[%0|List]', 'tiki-shoutbox.php'),
 		),
 		'feature_maps' => array(
 			'name' => tra('Maps'),
 			'description' => tra('Navigable, interactive maps with user-selectable layers'),
 			'help' => 'Maps',
-			'warning' => tra('Requires mapserver'),
+			'warning' => tra('Requires MapServer'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),			
 		),
 		'feature_gmap' => array(
 			'name' => tra('Google Maps'),
@@ -266,6 +286,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'GMap',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=gmap'),
 		),
 		'feature_live_support' => array(
 			'name' => tra('Live support system'),
@@ -273,6 +294,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Live+Support',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-live_support_admin.php'),
 		),
 		'feature_tell_a_friend' => array(
 			'name' => tra('Tell a Friend'),
@@ -280,6 +302,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Tell+a+Friend',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
 		),
 		'feature_share' => array(
 			'name' => tra('Share'),
@@ -289,6 +312,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=share'),			
 		),
 		'feature_html_pages' => array(
 			'name' => tra('HTML pages'),
@@ -297,6 +321,8 @@ function prefs_feature_list($partial = false) {
 			'warning' => tra('HTML can be used in wiki pages. This is a separate feature.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
+			'hint' => tr('[%0|Admin]', 'tiki-admin_html_pages.php'),
 		),
 		'feature_contact' => array(
 			'name' => tra('Contact Us'),
@@ -304,7 +330,11 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Contact+us',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),				
+			'dependencies' => array(
+				'feature_messages',
+			),
+			'tags' => array('basic'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=general#Contact') .' --- ' .tr('[%0|Use]', 'tiki-contact.php'),
 		),
 		'feature_minichat' => array(
 			'name' => tra('Minichat'),
@@ -436,6 +466,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Webmail',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=webmail') .' --- ' .tr('[%0|Use]', 'tiki-webmail.php'),
 		),
 		'feature_intertiki' => array(
 			'name' => tra('Intertiki'),
@@ -444,13 +476,16 @@ function prefs_feature_list($partial = false) {
 			'perspective' => false,
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=intertiki'),
 		),
 		'feature_mailin' => array(
 			'name' => tra('Mail-in'),
 			'description' => tra('Populate wiki pages and articles by email'),
 			'help' => 'Mail-in',
+			'keywords' => 'inbound email',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-admin_mailin.php'),
 		),
 		'feature_wiki_mindmap' => array(
 			'name' => tra('Mindmap'),
@@ -473,7 +508,8 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'hint' => tr('[%0|List]', 'tiki-sheets.php'),
 		),
 		'feature_slideshow' => array(
 			'name' => tra('Slideshow (jQuery.s5)'),
@@ -490,7 +526,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'invoice contractor invoicing',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('new'),			
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
@@ -506,6 +542,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Kaltura',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=video') .' --- ' .tr('[%0|List]', 'tiki-list_kaltura_entries.php?list=media'),
 		),
 		'feature_friends' => array(
 			'name' => tra('Friendship Network'),
@@ -520,17 +557,21 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Banning system'),
 			'help' => 'Banning',
 			'type' => 'flag',
+			'keywords' => 'ban kick exclude deny',			
 			'description' => tra('Deny access to specific users based on username, IP, and date/time range.'),
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|Admin]', 'tiki-admin_banning.php'),
 		),
 		'feature_stats' => array(
 			'name' => tra('Stats'),
 			'description' => tra('Record basic statistics about major Tiki features (number of wiki pages, size of file galleries, etc.)'),
 			'help' => 'Stats',
+			'keywords' => 'stat analytics',
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|View]', 'tiki-stats.php'),			
 		),
 		'feature_action_calendar' => array(
 			'name' => tra('Action Calendar'),
@@ -543,8 +584,10 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Referer Stats'),
 			'description' => tra('Record domain name of sites that send visitors to this Tiki.'),
 			'help' => 'Stats',
+			'keywords' => 'stat analytics referrer refferer refferrer',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|List]', 'tiki-referer_stats.php'),			
 		),
 		'feature_redirect_on_error' => array(
 			'name' => tra('Redirect On Error'),
@@ -694,6 +737,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Integrator',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
+			'hint' => tr('[%0|List]', 'tiki-list_integrator_repositories.php'),
 		),
 		'feature_xmlrpc' => array(
 			'name' => tra('XMLRPC API'),
@@ -857,6 +902,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Dynamic+Content',
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|List]', 'tiki-list_contents.php'),
 		),
 		'feature_filegals_manager' => array(
 			'name' => tra('Use File Galleries to store pictures'),
@@ -968,6 +1014,7 @@ function prefs_feature_list($partial = false) {
 			),
 			'warning' => tra('Do not use if your server is IIS'),
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=sefurl'),
 		),
 		'feature_sefurl_filter' => array(
 			'name' => tra('Search engine friendly url Postfilter'),
@@ -1018,6 +1065,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n', // If enabling by default, lib/setup/prefs.php needs updating
+			'hint' => tr('[%0|List]', 'tiki-edit_perspective.php'),
 		),
 		'feature_wiki_replace' => array(
 			'name' => tra('Search and replace'),
@@ -1050,6 +1098,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Content Templates'),
 			'type' => 'flag',
 			'help' => 'Content+Template',
+			'keywords' => tra('template article news'),			
 			'description' => tra('Pre-defined content for a wiki page.'),
 			'default' => 'n',
 		),
@@ -1127,7 +1176,9 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Search+Stats',
 			'default' => 'n',
+			'keywords' => 'stat analytics',
 			'tags' => array('basic'),
+			'hint' => tr('[%0|View]', 'tiki-search_stats.php'),			
 		),
 		'feature_search_show_forbidden_obj' => array(
 			'name' => tra('Ignore individual object permissions'),
@@ -1326,17 +1377,21 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Edit+CSS',
 			'perspective' => false,
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-edit_css.php'),
 		),
 		'feature_theme_control' => array(
 			'name' => tra('Theme Control'),
 			'description' => tra('Assign different themes to different sections, categories, and objects'),
+			'keywords' => tra('design themes'),
 			'type' => 'flag',
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-theme_control.php'),	
 		),
 		'feature_view_tpl' => array(
 			'name' => tra('Tiki Template Viewing'),
 			'type' => 'flag',
 			'help' => 'View+Templates',
+			'keywords' => tra('template'),			
 			'perspective' => false,
 			'default' => 'n',
 		),
@@ -1344,11 +1399,13 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Edit Templates'),
 			'type' => 'flag',
 			'help' => 'Edit+Templates',
+			'keywords' => tra('template'),			
 			'perspective' => false,
 			'dependencies' => array(
 				'feature_view_tpl',
 			),
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-edit_templates.php'),
 		),
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
@@ -1599,6 +1656,7 @@ function prefs_feature_list($partial = false) {
 		'feature_wiki_templates' => array(
 			'name' => tra('Content templates'),
 			'type' => 'flag',
+			'keywords' => tra('template'),			
 			'help' => 'Content+Template',
 			'default' => 'n',
 		),
@@ -1716,6 +1774,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('View source'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),
 		'feature_wiki_ratings' => array(
 			'name' => tra('Rating'),
@@ -1870,6 +1929,8 @@ function prefs_feature_list($partial = false) {
 				'feature_jquery_ui',
 			),
 			'default' => 'n',
+			'tags' => array('experimental'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=metrics') .' --- ' .tr('[%0|Configure]', 'tiki-admin_metrics.php'),
 		),
 		'feature_wiki_argvariable' => array(
 			'name' => tra('Wiki argument variables'),
@@ -1931,6 +1992,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Hotwords',
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-admin_hotwords.php'),		
 		),
 		'feature_hotwords_nw' => array(
 			'name' => tra('Open Hotwords in new window'),
@@ -2061,6 +2123,7 @@ function prefs_feature_list($partial = false) {
 			'hint' => tra('use tiki-webdav.php as the URI of the WebDAV repository'),
 			'help' => 'WebDAV',
 			'type' => 'flag',
+			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_file_galleries',
 				'php_libxml',
@@ -2109,6 +2172,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Tiki+User+Credits',
 			'default' => 'n',
+			'hint' => tr('[%0|Admin]', 'tiki-admin_credits.php'),			
 		),
 		'feature_invite' => array(
 			'name' => tra('Invite users'),

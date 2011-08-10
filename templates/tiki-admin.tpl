@@ -2,6 +2,10 @@
 
 {title help="$helpUrl"}{$admintitle}{/title}
 
+{if $prefs.sender_email eq ''}
+{tr 0="tiki-admin.php?lm_criteria=sender_email&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0">here<a/>{/tr}
+{/if}
+
 <form method="post" action="">
 	<fieldset>
 		<legend>{tr}Preference Filters{/tr}</legend>
@@ -151,24 +155,8 @@ if $pagetop_msg}
 <br style="clear:both" />
 {remarksbox type="tip" title="{tr}Crosslinks to other features and settings{/tr}"}
 
-	{tr}Other sections:{/tr}<br />
-	{if $prefs.feature_sheet eq 'y'} <a href="tiki-sheets.php">{tr}Spreadsheet{/tr}</a> {/if}
-	{if $prefs.feature_newsletters eq 'y'} <a href="tiki-admin_newsletters.php">{tr}Newsletters{/tr}</a> {/if}
-	{if $prefs.feature_surveys eq 'y'} <a href="tiki-admin_surveys.php">{tr}Surveys{/tr}</a> {/if}
-	{if $prefs.feature_quizzes eq 'y'} <a href="tiki-edit_quiz.php">{tr}Quizzes{/tr}</a> {/if}
-	{if $prefs.feature_integrator eq 'y'} <a href="tiki-admin_integrator.php">{tr}Integrator{/tr}</a> {/if}
-	{if $prefs.feature_html_pages eq 'y'} <a href="tiki-admin_html_pages.php">{tr}HTML pages{/tr}</a> {/if}
-	{if $prefs.feature_shoutbox eq 'y'} 
-		<a href="tiki-shoutbox.php">{tr}Shoutbox{/tr}</a>
-		<a href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> 
-	{/if}
-	{if $prefs.feature_live_support eq 'y'} <a href="tiki-live_support_admin.php">{tr}Live Support{/tr}</a> {/if}
-	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
-	{/if} *}
-	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact Us{/tr}</a> {/if}
-	<hr />
-
 	{tr}Administration features:{/tr}<br />
+	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> {/if} *}
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
@@ -176,47 +164,26 @@ if $pagetop_msg}
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 	<a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
-	<a href="tiki-admin.php?page=metrics">{tr}Metrics Dashboard{/tr}</a>
-	{if $prefs.feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
-	{if $prefs.lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit Languages{/tr}</a> {/if}
-	<a href="tiki-admin.php?page=rating">{tr}Advanced Rating{/tr}</a>
-	<a href="tiki-admin_credits.php">{tr}Tiki User Credits{/tr}</a> 
 	<a href="tiki-admin_transitions.php">{tr}Transitions{/tr}</a>
 	<hr />
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />
 	<a href="tiki-admin_notifications.php">{tr}Mail Notifications{/tr}</a> 
-	{if $prefs.feature_perspective eq 'y'}<a href="tiki-edit_perspective.php">{tr}Perspectives{/tr}</a>{/if}
 	<hr />
 
 	{tr}Navigation features:{/tr}<br />
 	<a href="tiki-admin_menus.php">{tr}Menus{/tr}</a> 
 	<a href="tiki-admin_modules.php">{tr}Modules{/tr}</a>
-	{if $prefs.feature_categories eq 'y'} <a href="tiki-admin_categories.php">{tr}Categories{/tr}</a> {/if}
 	{if $prefs.feature_featuredLinks eq 'y'}<a href="tiki-admin_links.php">{tr}Links{/tr}</a>{/if}
-	<hr />
-
-	{tr}Look & feel{/tr} ({tr}themes{/tr}):<br />
-	{if $prefs.feature_theme_control eq 'y'} <a href="tiki-theme_control.php">{tr}Theme Control{/tr}</a> {/if}
-	{if $prefs.feature_edit_templates eq 'y'} <a href="tiki-edit_templates.php">{tr}Edit Templates{/tr}</a> {/if}
-	{if $prefs.feature_editcss eq 'y'} <a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a> {/if}
 	<hr />
 
 	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br />
 	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
-	{if $prefs.feature_hotwords eq 'y'} <a href="tiki-admin_hotwords.php">{tr}Hotwords{/tr}</a> {/if}
 	<a href="tiki-list_cache.php">{tr}External Pages Cache{/tr}</a> 
 	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 
 	<a href="tiki-admin_content_templates.php">{tr}Content Templates{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
-	{if $prefs.feature_dynamic_content eq 'y'}<a href="tiki-list_contents.php">{tr}Dynamic Content{/tr}</a> {/if}
 	<a href="tiki-admin_external_wikis.php">{tr}External Wikis{/tr}</a> 
-	{if $prefs.feature_mailin eq 'y'}<a href="tiki-admin_mailin.php">{tr}Mail-in{/tr}</a> {/if}
 	<hr />
 
-	{tr}Stats &amp; banners:{/tr}<br />
-	{if $prefs.feature_stats eq 'y'} <a href="tiki-stats.php">{tr}Stats{/tr}</a> {/if}
-	{if $prefs.feature_referer_stats eq 'y'} <a href="tiki-referer_stats.php">{tr}Referer Stats{/tr}</a> {/if}
-	{if $prefs.feature_search eq 'y' and $prefs.feature_search_stats eq 'y'} <a href="tiki-search_stats.php">{tr}Search Stats{/tr}</a>  {/if}
-	{if $prefs.feature_banners eq 'y'} <a href="tiki-list_banners.php">{tr}Banners{/tr}</a> {/if}
 {/remarksbox}

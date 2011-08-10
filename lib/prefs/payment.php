@@ -13,6 +13,7 @@ function prefs_payment_list() {
 			'type' => 'flag',
 			'help' => 'Payment',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=payment') .' --- ' .tr('[%0|List]', 'tiki-payment.php'),
 		),
 		'payment_system' => array(
 			'name' => tra('Payment System'),

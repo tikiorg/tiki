@@ -118,6 +118,7 @@ function prefs_fgal_list() {
 				'n' => tra('Store in directory'),
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'fgal_use_dir' => array(
 			'name' => tra('Path'),
@@ -125,6 +126,7 @@ function prefs_fgal_list() {
 			'size' => 50,
 			'perspective' => false,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'fgal_search_in_content' => array(
 			'name' => tra('Include the search box on the current gallery files just after the find div'),

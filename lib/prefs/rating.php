@@ -13,6 +13,7 @@ function prefs_rating_list() {
 			'type' => 'flag',
 			'help' => 'Advanced+Rating',
 			'default' => 'n',
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=rating'),
 		),
 		'rating_recalculation' => array(
 			'name' => tra('Rating recalculation mode'),

@@ -1,4 +1,4 @@
-{title}{tr}Edit or export languages{/tr}{/title}
+{title admpage="i18n"}{tr}Edit or export languages{/tr}{/title}
 
 <div class="navbar">
 	{if $smarty.session.interactive_translation_mode eq 'on'}

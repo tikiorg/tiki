@@ -56,7 +56,6 @@
 </div>
 
 {preference name=lang_use_db}
-<div class="adminoptionlabel"><a class="button" href="tiki-edit_languages.php">{tr}Edit or export/import Languages{/tr}</a></div>
 
 {preference name=record_untranslated}
 	
