@@ -977,6 +977,9 @@ class CategLib extends ObjectLib
 		} else {
 			$cachekey = "childcategs$categId";
 		}
+		if ($persp = TikiLib::lib('perspective')->get_current_perspective()) {
+			$cachekey .= "_$persp"; 
+		}
 		if( ! $ret = $cachelib->getSerialized("$cachekey") ) {
 			$ret = $this->list_categs($categId, false, $all_descends);
 			$cachelib->cacheItem($cachekey,serialize($ret));
