@@ -13,6 +13,7 @@ function wikiplugin_addtogooglecal_info() {
 		'prefs' => array('wikiplugin_addtogooglecal'),
 		'introduced' => 6,
 		'icon' => 'pics/icons/calendar_add.png',
+		'format' => 'html',
 		'params' => array(
 			'calitemid' => array(
 				'required' => true,
