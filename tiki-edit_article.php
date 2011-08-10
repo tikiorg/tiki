@@ -156,7 +156,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
-	$smarty->assign('parsed_body', $tikilib->parse_data($body));
+	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y')));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading));
 }
 
@@ -176,6 +176,8 @@ if (isset($_REQUEST["allowhtml"])) {
 	} else {
 		$smarty->assign('allowhtml', 'n');
 	}
+} else if ($prefs['article_body_is_html'] === 'y') {
+	$smarty->assign('allowhtml', 'y');
 }
 if (isset($_REQUEST["ispublished"])) {
 	if ($_REQUEST["ispublished"] == "on") {
@@ -320,7 +322,7 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body);
+	$parsed_body = $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y'));
 	$parsed_heading = $tikilib->parse_data($heading);
 
 	$smarty->assign('parsed_body', $parsed_body);
