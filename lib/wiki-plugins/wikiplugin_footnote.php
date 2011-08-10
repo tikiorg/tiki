@@ -14,12 +14,14 @@ function wikiplugin_footnote_info()
 		'prefs' => array('wikiplugin_footnote'),
 		'body' => tra('The footnote'),
 		'icon' => 'pics/icons/text_horizontalrule.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 			'sameas' => array(
 				'required' => false,
 				'name' => tra('Sameas'),
 				'description' => tra('Tag to existing footnote'),
-				'default' => ''
+				'default' => '',
+				'filter' => 'int',
 			),
 		)
 	);
