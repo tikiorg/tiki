@@ -64,6 +64,10 @@ function prefs_wikiplugininline_list($partial = false) {
 			'type' => 'flag',
 			'default' => isset($defaultInline[$plugin]) ? 'y' : 'n',
 		);
+
+		if (isset($info['tags'])) {
+			$prefs['wikiplugininline_' . $plugin]['tags'] = (array) $info['tags'];
+		}
 	}
 
 	return $prefs;

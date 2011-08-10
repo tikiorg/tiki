@@ -135,6 +135,10 @@ function prefs_wikiplugin_list($partial = false) {
 			'dependencies' => $dependencies,
 			'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n',
 		);
+
+		if (isset($info['tags'])) {
+			$prefs['wikiplugin_' . $plugin]['tags'] = (array) $info['tags'];
+		}
 	}
 	$prefs['wikiplugin_snarf_cache'] = array(
 		'name' => tra('Global cache time for the plugin snarf in seconds'),
@@ -147,3 +151,4 @@ function prefs_wikiplugin_list($partial = false) {
 
 	return $prefs;
 }
+
