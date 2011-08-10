@@ -22,6 +22,12 @@
 
 {jq}
 	var updateVisible = function() {
+		var show = function (selector) {
+			selector.show();
+			selector.parents('fieldset:not(.tabcontent)').show();
+			selector.closest('fieldset.tabcontent').addClass('filled');
+		};
+
 		var filters = [];
 		var prefs = $('.adminoptionbox.preference').hide();
 		prefs.parents('fieldset:not(.tabcontent)').hide();
@@ -30,14 +36,13 @@
 			var targets = $('.adminoptionbox.preference.' + $(this).val());
 			if ($(this).is(':checked')) {
 				filters.push($(this).val());
-				targets.show();
-				targets.parents('fieldset:not(.tabcontent)').show();
-				targets.closest('fieldset.tabcontent').addClass('filled');
+				show(targets);
 			} else if ($(this).is('.negative:not(:checked)')) {
 				targets.hide();
 			}
 		});
-		$('.adminoptionbox.preference.modified').show();
+
+		show($('.adminoptionbox.preference.modified'))
 
 		$('input[name="filters"]').val(filters.join(' '));
 		$('.tabset .tabmark a').each(function () {
