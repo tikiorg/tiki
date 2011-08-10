@@ -22,7 +22,7 @@
 	position: absolute;
 	top: -999em;
 	width: 10em; /* left offset of submenus need to match (see below) */
-	z-index: 751;
+	z-index: 1751;
 }
 
 .cssmenu_horiz ul li,
@@ -53,7 +53,7 @@
 .cssmenu_vert li.sfHover ul {
 	left: 0;
 	top: 2.5em; /* match top ul list item height */
-	z-index: 752;
+	z-index: 1752;
 }
 
 .cssmenu_horiz li:hover li ul,
