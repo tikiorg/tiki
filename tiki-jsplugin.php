@@ -31,8 +31,6 @@ $all = empty( $_REQUEST['plugin'] );
 
 $files = array();
 
-$parserlib = TikiLib::lib('parser');
-
 if( $all )
 {
 	$cache = "temp/cache/wikiplugin_ALL_".$_REQUEST['language'];
@@ -45,6 +43,7 @@ if( $all )
 
 	include 'tiki-setup.php';
 	
+	$parserlib = TikiLib::lib('parser');
 	$plugins = $parserlib->plugin_get_list();
 }
 else
@@ -66,6 +65,7 @@ else
 
 ob_start();
 
+$parserlib = TikiLib::lib('parser');
 ?>
 if( typeof tiki_plugins == 'undefined' ) { var tiki_plugins = {}; }
 <?php foreach( $plugins as $plugin ):
