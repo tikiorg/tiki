@@ -12,6 +12,7 @@ function wikiplugin_wysiwyg_info() {
 		'description' => tra('Experimental: Purify the HTML content.'),
 		'prefs' => array('wikiplugin_wysiwyg'),
 		'params' => array(),
+		'tags' => 'experimental'		
 		'filter' => 'purifier',
 		'body' => tra('Content'),
 	);
