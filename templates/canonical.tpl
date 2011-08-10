@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $prefs.feature_canonical_url eq 'y'}
-	{if $mid eq 'tiki-show_page.tpl'}
+	{if $mid eq 'tiki-show_page.tpl' or 'tiki-index_p.tpl'}
 		<link rel="canonical" href="{$base_url}{$page|sefurl}" />
 	{elseif $mid eq 'tiki-view_tracker_item.tpl'}
 		<link rel="canonical" href="{$base_url}{$itemId|sefurl:trackeritem}" />

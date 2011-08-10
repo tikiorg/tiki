@@ -81,16 +81,18 @@ class Messu extends TikiLib
 				}
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
 				$mail->setText($mail_data);
-				
-				$from_email = $userlib->get_user_email($from);
-				if ($bcc_sender === 'y' && !empty($from_email)) {
-					$mail->setHeader("Bcc", $from_email);
-				}
-				if ($replyto_email !== 'y' && $userlib->get_user_preference($from,'email is public','n') == 'n') {
-					$from_email = '';	// empty $from_email if not to be used - saves getting it twice
-				}
-				if (!empty($from_email)) {
-					$mail->setHeader("Reply-To", $from_email);
+
+				if ($userlib->user_exists($from)) {
+					$from_email = $userlib->get_user_email($from);
+					if ($bcc_sender === 'y' && !empty($from_email)) {
+						$mail->setHeader("Bcc", $from_email);
+					}
+					if ($replyto_email !== 'y' && $userlib->get_user_preference($from,'email is public','n') == 'n') {
+						$from_email = '';	// empty $from_email if not to be used - saves getting it twice
+					}
+					if (!empty($from_email)) {
+						$mail->setHeader("Reply-To", $from_email);
+					}
 				}
 				if (!empty($prefs['sender_email'])) {
 					$mail->setHeader("From", $prefs['sender_email']);
@@ -98,8 +100,9 @@ class Messu extends TikiLib
 					$mail->setHeader("From", $from_email);
 				}
 
-				if (!$mail->send(array($email), 'mail'))
+				if (!$mail->send(array($email), 'mail')) {
 					return false; //TODO echo $mail->errors;
+				}
 			}
 		}
 		return true;
