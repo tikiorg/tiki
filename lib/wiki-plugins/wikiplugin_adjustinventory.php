@@ -13,7 +13,7 @@ function wikiplugin_adjustinventory_info() {
 		'prefs' => array( 'wikiplugin_adjustinventory', 'payment_feature' ),
 		'filter' => 'wikicontent',
 		'format' => 'html',
-		'tags' => 'experimental'
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'code' => array(
 				'required' => true,

@@ -14,7 +14,7 @@ function wikiplugin_code_info() {
 		'body' => tra('Code'),
 		'icon' => 'pics/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
-		'tags' => 'basic'
+		'tags' => array( 'basic' ),	
 		'params' => array(
 			'caption' => array(
 				'required' => false,
