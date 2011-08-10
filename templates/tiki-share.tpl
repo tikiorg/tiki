@@ -20,7 +20,7 @@
 		{/if}
 		{if isset($facebookId) and $facebookId!=false}
 			<div>
-				<img src="img/icons/facebook-logo_32.png" /> </a>{tr}The link was posted on your facebook wall{/tr}
+				<img src="img/icons/facebook-logo_32.png" /> </a>{tr}The link was posted on your Facebook wall{/tr}
 			</div>
 		{/if}
 		{if isset($messageSent)}
