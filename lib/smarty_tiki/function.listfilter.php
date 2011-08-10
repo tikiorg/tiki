@@ -95,7 +95,9 @@ function smarty_function_listfilter($params, &$smarty) {
 		$content .= "
 } );	// end keyup
 setTimeout(function () {
-	$('#$id').keyup();
+	if ($('#$id').val() != '') {
+		$('#$id').keyup();
+	}
 }, 1000);
 		";
 	
