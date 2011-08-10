@@ -18,7 +18,7 @@ function module_poweredby_info() {
 		'params' => array(
 			'tiki' => array(
 				'name' => tra('Tiki'),
-				'description' => tra('Shows "Powered by The Tiki Community" message') . ' (y/n)',
+				'description' => tra('Shows "Powered by Tiki Wiki CMS Groupware" message') . ' (y/n)',
 				'filter' => 'alpha',
 			),
 			'version' => array(
