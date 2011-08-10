@@ -332,6 +332,7 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 			'dependencies' => array(
 				'feature_messages',
+				'sender_email',
 			),
 			'tags' => array('basic'),
 			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=general#Contact') .' --- ' .tr('[%0|Use]', 'tiki-contact.php'),
@@ -2207,7 +2208,7 @@ function prefs_feature_list($partial = false) {
 		'feature_jison_wiki_parser' => array(
 			'name' => tra('Jison Wiki Parser'),
 			'type' => 'flag',
-			'help' => 'JisonWikiParser',
+			'help' => 'Jison+Wiki+Parser',
 			'keywords' => 'parser',
 			'description' => tra('Is a new strategy for parsing wiki pages more like a programming language'),
 			'default' => 'n',
