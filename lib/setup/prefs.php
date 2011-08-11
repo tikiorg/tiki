@@ -224,9 +224,6 @@ function get_default_prefs() {
 		'feature_sitenav' => 'n',
 		'sitenav' => '{tr}Navigation : {/tr}<a href="tiki-contact.php" accesskey="10" title="">{tr}Contact Us{/tr}</a>',
 
-		// layout
-		'feature_theme_generator' => 'n',
-
 		// mods
 		'feature_mods_provider' => 'n',
 		'mods_dir' => 'mods',
