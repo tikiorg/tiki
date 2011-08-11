@@ -329,10 +329,6 @@ if (!isset($tikidomain)) { $tikidomain = ''; }
 $smarty = new Smarty_Tiki($tikidomain);
 $smarty->loadFilter('pre', 'tr');
 $smarty->loadFilter('pre', 'jq');
-//$smarty->auto_literal = false;
-//$smarty->debugging = true;
-//$smarty->registerFilter('pre', 'jq');
-//$smarty->registerFilter('pre', 'tr');
 
 include_once('lib/smarty_tiki/resource.tplwiki.php');
 $smarty->registerResource('tplwiki', array('smarty_resource_tplwiki_source', 'smarty_resource_tplwiki_timestamp', 'smarty_resource_tplwiki_secure', 'smarty_resource_tplwiki_trusted'));
