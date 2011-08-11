@@ -214,9 +214,8 @@ class TikiAccessLib extends TikiLib
 	}
 
 	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true, $message='') {
-		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;
+		global $smarty, $prefs, $tikiroot, $userlib, $user;
 		require_once ('tiki-setup.php');
-		include_once('lib/wiki/wikilib.php');
 
 		// Don't redirect when calls are made for web services
 		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request()
