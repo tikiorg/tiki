@@ -65,10 +65,10 @@
 							{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 								<a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
 							{/if}
-							{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+							{if !empty($user) and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 								<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
 							{/if}
-							{if $user and $prefs.feature_user_watches eq 'y'}
+							{if !empty($user) and $prefs.feature_user_watches eq 'y'}
 								{if $user_watching_page eq 'n'}
 									<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">{icon _id='eye' alt="{tr}Page is NOT being monitored. Click icon to START monitoring.{/tr}"}</a>
 								{else}

@@ -5,7 +5,7 @@
 	{assign var=thispage value=$page|escape:"url"}
 
 	{capture assign=page_bar}
-		{if $prefs.user_favorites eq 'y' and $user}
+		{if !empty($user) and !empty($prefs.user_favorites) and $prefs.user_favorites eq 'y' and $user}
 			{button _keepall='y' _class="favorite-toggle" href="tiki-ajax_services.php" controller="favorite" action="toggle" type="wiki+page" object=$thispage _text="{tr}Toggle Favorite{/tr}"}
 		{/if}
 

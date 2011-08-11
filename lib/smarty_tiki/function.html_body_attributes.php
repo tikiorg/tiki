@@ -40,7 +40,7 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 		$class .= 'fullscreen';
 	}
 
-	if ($prefs['layout_add_body_group_class'] === 'y') {
+	if (isset($prefs['layout_add_body_group_class']) && $prefs['layout_add_body_group_class'] === 'y') {
 		if (empty($user)) {
 			$class .= ' grp_Anonymous';
 		} else if (TikiLib::lib('user')->user_is_in_group($user, 'Registered')) {

@@ -328,7 +328,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 		}
 
 		// include and setup themegen editor if already open
-		if ($tiki_p_admin === 'y' && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
+		if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
 				(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
 			include_once 'lib/themegenlib.php';
 			$themegenlib->setupEditor();

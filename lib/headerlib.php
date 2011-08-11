@@ -302,6 +302,7 @@ class HeaderLib
 	}
 
 	function output_js_config($wrap = true) {
+		$back = null;
 		if (count($this->js_config)) {
 			ksort($this->js_config);
 			$back = "\n<!-- js_config before loading JSfile -->\n";
@@ -619,7 +620,7 @@ class HeaderLib
 	private function process_themegen_files($files) {
 		global $prefs, $tikidomainslash, $in_installer;
 		
-		if (empty($in_installer) && $prefs['themegenerator_feature'] === 'y' && !empty($prefs['themegenerator_theme'])) {
+		if (empty($in_installer) && isset($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($prefs['themegenerator_theme'])) {
 			global $themegenlib; include_once 'lib/themegenlib.php';
 			
 			$data = $themegenlib->getCurrentTheme()->getData();

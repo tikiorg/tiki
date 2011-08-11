@@ -177,7 +177,7 @@
 		</div> {* -- END of fixedwidth -- *}
 
 		{include file='footer.tpl'}
-		{if $prefs.socialnetworks_user_firstlogin == 'y'}
+		{if isset($prefs.socialnetworks_user_firstlogin) && $prefs.socialnetworks_user_firstlogin == 'y'}
 			{include file='tiki-socialnetworks_firstlogin_launcher.tpl'}
 		{/if}
 
