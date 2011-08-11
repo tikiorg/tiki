@@ -22,7 +22,7 @@ function wikiplugin_chart_info() {
 			'type' => array(
 				'required' => true,
 				'name' => tra('Chart Type'),
-				'description' => tra('BarStackGraphic | MultibarGraphic | MultilineGraphic | PieChartGraphic'),
+				'description' => 'BarStackGraphic | MultibarGraphic | MultilineGraphic | PieChartGraphic', // Removed translation call since these are all system names. TODO: Make an actual English sentence from this
 			),
 			'width' => array(
 				'required' => true,
