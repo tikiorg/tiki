@@ -40,7 +40,7 @@
 
 {if $locSection eq 'settings'}
 	{tabset  name='tabs_webmail_settings'}
-		{tab name="List"}
+		{tab name="{tr}List{/tr}"}
 			{if count($accounts) != 0}
 				<h2>{tr}Personal e-mail accounts{/tr}</h2>
 				<table class="normal">
@@ -276,7 +276,7 @@
 							<tr>
 								<td>{tr}Auto-refresh page time{/tr}</td>
 								<td colspan="3">
-									<input type="text" name="autoRefresh" size="4" value="{$info.autoRefresh|escape}" /> seconds (0 = no auto refresh)
+									<input type="text" name="autoRefresh" size="4" value="{$info.autoRefresh|escape}" /> {tr}seconds (0 = no auto refresh){/tr}
 								</td>
 							</tr>
 							<tr>

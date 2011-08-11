@@ -405,27 +405,27 @@ if ($isvalid) {
 				exit;
 
 			case ACCOUNT_DISABLED:
-				$error = 'Account disabled';
+				$error = tra('Account disabled');
 				break;
 
 			case ACCOUNT_WAITING_USER:
-				$error = 'You did not validate your account';
+				$error = tra('You did not validate your account');
 				$extraButton = array('href'=>'tiki-send_mail.php?user='.$_REQUEST['user'], 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email')); 
 				break;
 
 			case USER_AMBIGOUS:
-				$error = 'You must use the right case for your user name';
+				$error = tra('You must use the right case for your user name');
 				break;
 
 			case USER_NOT_VALIDATED:
-				$error = 'You are not yet validated';
+				$error = tra('You are not yet validated');
 				break;
 
 			default:
-				$error = 'Invalid username or password';
+				$error = tra('Invalid username or password');
 		}
 		if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
-		$smarty->assign('msg', tra($error));
+		$smarty->assign('msg', $error);
 		$smarty->display('error.tpl');
 		exit;
 		// on a login error wait this long in seconds. slows down automated login attacks.
