@@ -112,39 +112,39 @@ SMILE							[a-z]+
 	%}
 
 <bold>[_][_]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'BOLD_END'); %}
-[_][_]						%{ this.begin('bold');	alert(this.yy.npOn);		return (this.yy.npOn ? 'CONTENT' : 'BOLD_START'); %}
+[_][_]						%{ this.begin('bold');			return (this.yy.npOn ? 'CONTENT' : 'BOLD_START'); %}
 <box>[\^]					%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'BOX_END'); %}
-[\^]						%{ this.begin('box');				return (this.yy.npOn ? 'CONTENT' : 'BOX_START'); %}
+[\^]						%{ this.begin('box');			return (this.yy.npOn ? 'CONTENT' : 'BOX_START'); %}
 <center>[:][:]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'CENTER_END'); %}
-[:][:]						%{ this.begin('center');			return (this.yy.npOn ? 'CONTENT' : 'CENTER_START'); %}
+[:][:]						%{ this.begin('center');		return (this.yy.npOn ? 'CONTENT' : 'CENTER_START'); %}
 <colortext>[\~][\~]			%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'COLORTEXT_END'); %}
 [\~][\~][#]					%{ this.begin('colortext');		return (this.yy.npOn ? 'CONTENT' : 'COLORTEXT_START'); %}
 <header6>[\n]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'HEADER6_END'); %}
-[\n]("!!!!!!")				%{ this.begin('header6');			return (this.yy.npOn ? 'CONTENT' : 'HEADER6_START'); %}
+[\n]("!!!!!!")				%{ this.begin('header6');		return (this.yy.npOn ? 'CONTENT' : 'HEADER6_START'); %}
 <header5>[\n]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'HEADER5_END'); %}
-[\n]("!!!!!")				%{ this.begin('header5');			return (this.yy.npOn ? 'CONTENT' : 'HEADER5_START'); %}
+[\n]("!!!!!")				%{ this.begin('header5');		return (this.yy.npOn ? 'CONTENT' : 'HEADER5_START'); %}
 <header4>[\n]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'HEADER4_END'); %}
-[\n]("!!!!")				%{ this.begin('header4');			return (this.yy.npOn ? 'CONTENT' : 'HEADER4_START'); %}
+[\n]("!!!!")				%{ this.begin('header4');		return (this.yy.npOn ? 'CONTENT' : 'HEADER4_START'); %}
 <header3>[\n]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'HEADER3_END'); %}
-[\n]("!!!")					%{ this.begin('header3');			return (this.yy.npOn ? 'CONTENT' : 'HEADER3_START'); %}
+[\n]("!!!")					%{ this.begin('header3');		return (this.yy.npOn ? 'CONTENT' : 'HEADER3_START'); %}
 <header2>[\n]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'HEADER2_END'); %}
-[\n]("!!")					%{ this.begin('header2');			return (this.yy.npOn ? 'CONTENT' : 'HEADER2_START'); %}
+[\n]("!!")					%{ this.begin('header2');		return (this.yy.npOn ? 'CONTENT' : 'HEADER2_START'); %}
 <header1>[\n]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'HEADER1_END'); %}
-[\n]("!")					%{ this.begin('header1');			return (this.yy.npOn ? 'CONTENT' : 'HEADER1_START'); %}
+[\n]("!")					%{ this.begin('header1');		return (this.yy.npOn ? 'CONTENT' : 'HEADER1_START'); %}
 <italic>['][']				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'ITALIC_END'); %}
-['][']						%{ this.begin('italic');			return (this.yy.npOn ? 'CONTENT' : 'ITALIC_START'); %}
+['][']						%{ this.begin('italic');		return (this.yy.npOn ? 'CONTENT' : 'ITALIC_START'); %}
 <link>("]")					%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'LINK_END'); %}
-("[")						%{ this.begin('link');				return (this.yy.npOn ? 'CONTENT' : 'LINK_START'); %}
+("[")						%{ this.begin('link');			return (this.yy.npOn ? 'CONTENT' : 'LINK_START'); %}
 <strikethrough>[-][-]		%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'STRIKETHROUGH_END'); %}
 [-][-]						%{ this.begin('strikethrough');	return (this.yy.npOn ? 'CONTENT' : 'STRIKETHROUGH_START'); %}
 <table>[|][|]				%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'TABLE_END'); %}
 [|][|]						%{ this.begin('table');			return (this.yy.npOn ? 'CONTENT' : 'TABLE_START'); %}
 <titlebar>[=][-]			%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'TITLEBAR_END'); %}
-[-][=]						%{ this.begin('titlebar');			return (this.yy.npOn ? 'CONTENT' : 'TITLEBAR_START'); %}
+[-][=]						%{ this.begin('titlebar');		return (this.yy.npOn ? 'CONTENT' : 'TITLEBAR_START'); %}
 <underscore>[=][=][=]		%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'UNDERSCORE_END'); %}
-[=][=][=]					%{ this.begin('underscore');		return (this.yy.npOn ? 'CONTENT' : 'UNDERSCORE_START'); %}
+[=][=][=]					%{ this.begin('underscore');	return (this.yy.npOn ? 'CONTENT' : 'UNDERSCORE_START'); %}
 <wikilink>[)][)]			%{ this.popState();				return (this.yy.npOn ? 'CONTENT' : 'WIKILINK_END'); %}
-[(][(]						%{ this.begin('wikilink');			return (this.yy.npOn ? 'CONTENT' : 'WIKILINK_START'); %}
+[(][(]						%{ this.begin('wikilink');		return (this.yy.npOn ? 'CONTENT' : 'WIKILINK_START'); %}
 
 "<"(.|\n)*?">"								return 'HTML'
 (.)											return 'CONTENT'
