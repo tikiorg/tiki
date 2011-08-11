@@ -12704,7 +12704,7 @@ $lang=Array(
 "Assign new module" => "Attribuer un nouveau module",
 "Edit this assigned module" => "Editer ce module assigné",
 "Module Options" => "Options de modules",
-"Custom Modules" => "Personnaliser les modules",
+"Custom Modules" => "Modules personnalisés",
 "Create new custom module" => "Créer un nouveau module personnalisé",
 "Edit this custom module" => "Editer ce module personnalisé",
 "Create your new custom module below. Make sure to preview first and make sure all is OK before <a href=\"#assign\">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site." => "Créer votre module fait sur mesure. Assurez vous de faire un aperçu avant de <a href=\"#assign\">l'assigner</a>. L'utilisation d'une mauvaise syntaxe wiki ou de code smarty (pas de problème avec html) peut vous empêcher d'utiliser le site.",
