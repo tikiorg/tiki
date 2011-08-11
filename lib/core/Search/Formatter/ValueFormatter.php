@@ -24,7 +24,7 @@ class Search_Formatter_ValueFormatter
 		$name = array_shift($arguments);
 
 		if (empty($this->valueSet[$name])) {
-			return tr("No value for '%0'", $name);
+			return '';
 		}
 
 		$class = 'Search_Formatter_ValueFormatter_' . ucfirst($format);
