@@ -57,8 +57,7 @@ function wikiplugin_poll($data, $params) {
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($pollId)) {
-	    $smarty->assign('msg', tra("missing poll ID for plugin POLL"));
-	    return $smarty->fetch("error_simple.tpl");
+	    return WikiParser_PluginOutput::argumentError(array('pollId'));
 	}
 	global $polllib;include_once ('lib/polls/polllib.php');
 
