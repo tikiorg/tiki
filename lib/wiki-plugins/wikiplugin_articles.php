@@ -36,21 +36,21 @@ function wikiplugin_articles_info()
 			'topic' => array(
 				'required' => false,
 				'name' => tra('Topic Name Filter'),
-				'description' => tra('Filter the list of aricles by their topic. Example: ') . '[!]topic+topic+topic',
+				'description' => tra('Filter the list of articles by topic. Example: ') . '[!]topic+topic+topic',
 				'filter' => 'striptags',
 				'default' => ''
 			),
 			'topicId' => array(
 				'required' => false,
 				'name' => tra('Topic ID Filter'),
-				'description' => tra('Filter the list of aricles by their topic ID. Example: ') . '[!]topicId+topicId+topicId',
+				'description' => tra('Filter the list of articles by topic ID. Example: ') . '[!]topicId+topicId+topicId',
 				'filter' => 'striptags',
 				'default' => ''
 			),
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type Filter'),
-				'description' => tra('Filter the list of aricles by their types. Example: ') . '[!]type+type+type',
+				'description' => tra('Filter the list of articles by types. Example: ') . '[!]type+type+type',
 				'filter' => 'striptags',
 				'default' => ''
 			),
