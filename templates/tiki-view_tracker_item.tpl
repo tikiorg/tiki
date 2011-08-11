@@ -265,7 +265,7 @@
 					</td>
 				</tr>
 			</table>
-			{query _type='form_input' itemId=NULL trackerId=NULL}
+		
 			{* ------------------- *}
 		</form>
 
