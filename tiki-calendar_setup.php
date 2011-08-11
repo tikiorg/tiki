@@ -26,7 +26,7 @@ if ( ! ($prefs['feature_calendar'] == 'y' || $prefs['feature_action_calendar'] =
 
 global $calendarlib; include_once('lib/calendar/calendarlib.php');
 
-$trunc = "20"; // put in a pref, number of chars displayed in cal cells
+$trunc = "40"; // put in a pref, number of chars displayed in cal cells
 
 if (!empty($_REQUEST['focus'])) {
 	$_REQUEST['todate'] = $_SESSION['CalendarFocusDate'] = $_REQUEST['focus'];
