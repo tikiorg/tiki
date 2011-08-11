@@ -14,8 +14,8 @@
 		</label>
 	{/foreach}
 {else}
-	<select name="{$field.ins_id|escape}" {if $field.http_request}onchange="selectValues('trackerIdList={$field.http_request[0]}&amp;fieldlist={$field.http_request[3]}&amp;filterfield={$field.http_request[1]}&amp;status={$field.http_request[4]}&amp;mandatory={$field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field.http_request[5]}')"{/if}>
-{assign var=otherValue value=$field.value}
+	<select name="{$field.ins_id|escape}">
+		{assign var=otherValue value=$field.value}
 		{if $field.isMandatory ne 'y' || empty($field.value)}
 			<option value="">&nbsp;</option>
 		{/if}

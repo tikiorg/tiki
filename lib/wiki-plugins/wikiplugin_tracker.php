@@ -1132,18 +1132,6 @@ function wikiplugin_tracker($data, $params)
 					if ($f['type'] != 'S') {
 						$back .= '</div>';
 					}
-					if (!empty($f['http_request']) && !empty($itemId)) {
-						$js .= 'selectValues("trackerIdList=' . $f['http_request'][0] 
-									. '&fieldlist=' . $f['http_request'][3]
-									. '&filterfield=' . $f['http_request'][1]
-									. '&status=' . $f['http_request'][4]
-									. '&mandatory=' . $f['http_request'][6]
-									. '&filtervalue=' . $f['http_request'][7]
-									. '&selected=' . $f['http_request'][8]
-									. '","' . $f['http_request'][5]
-									.'");'
-									;
-					}
 				}
 			}
 			if (!empty($tpl)) {

@@ -1,4 +1,4 @@
-<select name="{$field.ins_id}" {if $field.http_request}onchange="selectValues('trackerIdList={$field.http_request[0]}&amp;fieldlist={$field.http_request[3]}&amp;filterfield={$field.http_request[1]}&amp;status={$field.http_request[4]}&amp;mandatory={$field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field.http_request[5]}')"{/if}>
+<select name="{$field.ins_id}">
 	{if $field.isMandatory ne 'y' || empty($field.value)}
 		<option value=""{if $field.value eq '' or $field.value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 	{/if}

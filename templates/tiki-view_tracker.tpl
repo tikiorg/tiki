@@ -377,13 +377,3 @@
 		{/tab}
 	{/if}
 {/tabset}
-
-
-{foreach from=$fields key=ix item=field_value}
-	{assign var=fid value=$field_value.fieldId}
-	{if isset($listfields.$fid.http_request) && $listfields.$fid.http_request}
-		{jq}
-			selectValues('trackerIdList={{$listfields.$fid.http_request[0]}}&fieldlist={{$listfields.$fid.http_request[3]}}&filterfield={{$listfields.$fid.http_request[1]}}&status={{$listfields.$fid.http_request[4]}}&mandatory={{$listfields.$fid.http_request[6]}}','{{$listfields.$fid.http_request[5]}}','{{$field_value.ins_id}}')
-		{/jq}
-	{/if}
-{/foreach}
