@@ -51,7 +51,7 @@
 			<input type="checkbox" id="feature_jscalendar" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked" {/if}onclick="flip('usejscalendar');" />
 		</div>
 		<div class="adminoptionlabel">
-			<label for="feature_jscalendar">{tr}JS calendar{/tr}</label>
+			<label for="feature_jscalendar">JS Calendar</label>
 			{help url="Js+Calendar"}
 		</div>
 		</div>

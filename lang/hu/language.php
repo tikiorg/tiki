@@ -13115,7 +13115,6 @@ $lang=Array(
 "General settings" => "Általános beállítások",
 "Default calendars to display" => "Alapértelmezésben megjelenített naptárak",
 "Create calendar" => "Naptár létrehozása",
-"JS calendar" => "JS naptár",
 "Browse categories" => "Kategóriák böngészése",
 "Administer categories" => "Kategóriák adminisztrálása",
 "Plugins" => "Plugin-ok",

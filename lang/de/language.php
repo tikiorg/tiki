@@ -10479,7 +10479,6 @@ $lang=Array(
 "All calendars" => "Alle Kalender",
 "A subset of available calendars" => "Ein Teil der verfügbaren Kalender",
 "Create calendar" => "Erstelle Kalender",
-"JS calendar" => "JS Kalender",
 "Year selection is valid when the JS Calendar <strong>is not</strong> enabled" => "Die Auswahl des Jahres ist gültig, wenn der JS Kalender <strong>nicht</strong> aktiviert ist",
 "Browse categories" => "Kategorien ansehen",
 "Administer categories" => "Kategorien verwalten",

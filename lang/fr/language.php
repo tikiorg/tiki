@@ -4432,7 +4432,6 @@ $lang=Array(
 // "No Playlist found" => "No Playlist found",
 // "No Playlist ID was provided" => "No Playlist ID was provided",
 // "Sef URL" => "Sef URL",
-"JS calendar" => "Calendrier JS",
 // "Year selection is valid when the JS Calendar <strong>is not</strong> enabled" => "Year selection is valid when the JS Calendar <strong>is not</strong> enabled",
 // "Article View" => "Article View",
 // "Please note: Work in progress, not functioning as yet (r33357)" => "Please note: Work in progress, not functioning as yet (r33357)",
