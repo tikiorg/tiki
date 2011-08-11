@@ -6,6 +6,7 @@
 // $Id$
 
 $section = 'cms';
+//get_strings tra('Articles Home');
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
 include_once ("lib/comments/commentslib.php");
