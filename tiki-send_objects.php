@@ -9,6 +9,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/pear/XML/Server.php');
 include_once ('lib/structures/structlib.php');
 
+// get_strings tra("Send Pages");
 $access->check_feature('feature_comm');
 $access->check_permission_either( array('tiki_p_send_pages', 'tiki_p_send_articles') );
 
@@ -132,8 +133,8 @@ if (isset($_REQUEST['send'])) {
 																		);
 			$result = $client->send($searchMsg);
 			if (!$result) {
-				$errorMsg = 'Cannot login to server maybe the server is down';
-				$msg.= tra($errorMsg);
+				$errorMsg = tra('Cannot login to server maybe the server is down');
+				$msg.= $errorMsg;
 			} else {
 				if (!$result->faultCode()) {
 					$msg.= tra('Page') . ': ' . $spage['pageName'] . ' ' . tra('successfully sent') . '<br />';
@@ -162,8 +163,8 @@ if (isset($_REQUEST['send'])) {
 																			);
 			$result = $client->send($searchMsg);
 			if (!$result) {
-				$errorMsg = 'Cannot login to server maybe the server is down';
-				$msg.= tra($errorMsg);
+				$errorMsg = tra('Cannot login to server maybe the server is down');
+				$msg.= $errorMsg;
 			} else {
 				if (!$result->faultCode()) {
 					$msg.= tra('Page') . ': ' . $page . ' ' . tra('successfully sent') . '<br />';
@@ -207,8 +208,8 @@ if (isset($_REQUEST['send'])) {
 																			);
 			$result = $client->send($searchMsg);
 			if (!$result) {
-				$errorMsg = 'Cannot login to server maybe the server is down';
-				$msg.= tra($errorMsg);
+				$errorMsg = tra('Cannot login to server maybe the server is down');
+				$msg.= $errorMsg;
 			} else {
 				if (!$result->faultCode()) {
 					$msg.= tra('Article:') . ' ' . $page_info['title'] . ' ' . tra('successfully sent') . '<br />';
