@@ -15,6 +15,10 @@ $page = $_POST['page'];
 $plugin = strtolower( basename( $_POST['type'] ) );
 $type = strtoupper( $plugin );
 
+if (empty($parserlib)) {
+	$parserlib = TikiLib::lib('parser');
+}
+
 if( ! $meta = $parserlib->plugin_info( $plugin ) )
 	exit;
 
