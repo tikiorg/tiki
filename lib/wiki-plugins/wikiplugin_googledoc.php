@@ -90,7 +90,7 @@ function wikiplugin_googledoc_info() {
 			'frameborder' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => 'Frame Border',
+				'name' => tra('Frame Border'),
 				'description' => tra('Choose whether to show a border around the iframe'),
 				'default' => 0,
 				'options' => array(

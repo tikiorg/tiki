@@ -134,14 +134,14 @@ function wikiplugin_articles_info()
 			),
 			'periodQuantity' => array(
 				'required' => false,
-				'name' => tr('Period quantity'),
+				'name' => tra('Period quantity'),
 				'description' => tr('Numeric value to display only last articles published within a user defined time-frame. Used in conjunction with the next parameter "Period unit", this parameter indicates how many of those units are to be considered to define the time frame. If this parameter is set, "Start Date" and "End date" are ignored.'),
 				'filter' => 'int',
 				'default' => '',
 			),
 			'periodUnit' => array(
 				'required' => false,
-				'name' => tr('Period unit'),
+				'name' => tra('Period unit'),
 				'description' => tr('Time unit used with "Period quantity"'),
 				'filter' => 'word',
 				'options' => array(

@@ -35,14 +35,14 @@ function wikiplugin_relations_info()
 			),
 			'singlelist' => array(
 				'required' => false,
-				'name' => tr('Single List'),
-				'description' => tr('Render all qualifiers into a single list without displaying the qualifier name.'),
+				'name' => tra('Single List'),
+				'description' => tra('Render all qualifiers into a single list without displaying the qualifier name.'),
 				'filter' => 'int',
 				'since' => '8.0',
 				'default' => 0,
 				'options' => array(
-					array('text' => tr('No'), 'value' => 0),
-					array('text' => tr('Yes'), 'value' => 1),
+					array('text' => tra('No'), 'value' => 0),
+					array('text' => tra('Yes'), 'value' => 1),
 				),
 			),
 		),

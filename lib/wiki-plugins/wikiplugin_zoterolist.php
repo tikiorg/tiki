@@ -8,8 +8,8 @@
 function wikiplugin_zoterolist_info()
 {
 	return array(
-		'name' => tr('Zotero Reference List'),
-		'description' => tr('Produces the complete reference list from the Zotero server.'),
+		'name' => tra('Zotero Reference List'),
+		'description' => tra('Produces the complete reference list from the Zotero server.'),
 		'prefs' => array('zotero_enabled', 'wikiplugin_zoterolist'),
 		'params' => array(
 			'tag' => array(
