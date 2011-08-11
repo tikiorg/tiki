@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/pear/XML/Server.php');
 include_once ('lib/structures/structlib.php');
 
-// get_strings tra("Send Pages");
+//get_strings tra("Send Pages");
 $access->check_feature('feature_comm');
 $access->check_permission_either( array('tiki_p_send_pages', 'tiki_p_send_articles') );
 
