@@ -1114,6 +1114,7 @@ class CategLib extends ObjectLib
 				foreach ($ret as &$res) {
 					$res['name'] = tra($res['name']);
 				}
+				unset($res);
 				usort($ret, "cmpcatname");
 			}
 		}
