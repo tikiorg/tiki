@@ -73,7 +73,9 @@ class Search_Formatter_Plugin_WikiTemplate implements Search_Formatter_Plugin_In
 			$format = 'plain';
 		}
 
-		return $valueFormatter->$format($name);
+		unset($arguments['format']);
+		unset($arguments['name']);
+		return $valueFormatter->$format($name, $arguments);
 	}
 }
 

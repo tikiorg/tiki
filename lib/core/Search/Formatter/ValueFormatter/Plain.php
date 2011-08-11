@@ -7,10 +7,19 @@
 
 class Search_Formatter_ValueFormatter_Plain implements Search_Formatter_ValueFormatter_Interface
 {
+	private $separator = ', ';
+
+	function __construct($arguments)
+	{
+		if (isset($arguments['separator'])) {
+			$this->separator = $arguments['separator'];
+		}
+	}
+
 	function render($name, $value, array $entry)
 	{
 		if (is_array($value)) {
-			return implode(', ', $value);
+			return implode($this->separator, $value);
 		} else {
 			return $value;
 		}

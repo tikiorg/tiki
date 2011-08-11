@@ -22,6 +22,9 @@ class Search_Formatter_ValueFormatter
 	function __call($format, $arguments)
 	{
 		$name = array_shift($arguments);
+		if (! $arguments = array_shift($arguments)) {
+			$arguments = array();
+		}
 
 		if (! isset($this->valueSet[$name]) || is_null($this->valueSet[$name])) {
 			return tr("No value for '%0'", $name);
@@ -29,7 +32,7 @@ class Search_Formatter_ValueFormatter
 
 		$class = 'Search_Formatter_ValueFormatter_' . ucfirst($format);
 		if (class_exists($class)) {
-			$formatter = new $class;
+			$formatter = new $class($arguments);
 			return $formatter->render($name, $this->valueSet[$name], $this->valueSet);
 		} else {
 			return tr("Unknown formatting rule '%0' for '%1'", $format, $name);
