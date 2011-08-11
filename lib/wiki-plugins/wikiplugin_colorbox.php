@@ -110,7 +110,7 @@ function wikiplugin_colorbox_info() {
 			'parsedescriptions' => array(
 				'required' => false,
 				'name' => tra('Parse Descriptions'),
-				'description' => tra('Wiki parse the file descriptions'),
+				'description' => tra('Parse the file descriptions as wiki syntax'),
 				'filter' => 'alpha',
 				'accepted' => 'y or n',
 				'default' => 'n',
