@@ -38,5 +38,5 @@ lang = {
 	"What address are you looking for?" : "Quelle adresse recherchez-vous ?",
 	"Filter:" : "Filtre&nbsp;:",
 	"Please enter a page name" : "Veuillez entrer un nom de page",
-	"Are you sure you want to unassign this module?" : "Êtes-vous sur de vouloir supprimer ce module ?",
+	"Are you sure you want to unassign this module?" : "Êtes-vous sur de vouloir désattribuer ce module ?",
 };
