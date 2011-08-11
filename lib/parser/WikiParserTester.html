@@ -11,6 +11,7 @@
 		<script src="../codemirror_tiki/codemirror_tiki.js"></script>
 		
 		<script src="WikiParser.js"></script>
+		<script src="parserlib.js"></script>
 		<script style="text/javascript">
 			function wikiplugin_nobody() {
 				return "__This plugin has no body__";
@@ -49,48 +50,10 @@
 			}
 			
 			function isHtmlPermissible(tag) {
-				if ($('#HtmlOn').is(':checked')) {
+				if ($('#htmlOn').is(':checked')) {
 					return tag;
 				}
 				return "";
-			}
-			
-			function plugin(plugin) {
-				if (!isPluginPermissible(plugin.name)) return "<div style='background-color: red; color: white;'>Plugin " + plugin.name + " Not Permissible</div>";
-			
-				var wikiPluginName = "wikiplugin_" + plugin.name.toLowerCase();
-				if (window[wikiPluginName]) {
-					var thisOutput = window[wikiPluginName](plugin.body);
-					if (thisOutput) {
-						var newOutput = tryParse(thisOutput);
-						
-						return (newOutput ? newOutput : thisOutput);
-					}
-				}
-				return plugin.body;
-			}
-			
-			function tryParse(val) {
-				try {
-					function Lexer () {}
-					Lexer.prototype = WikiParser.lexer;
-
-					function Parser () {
-						this.lexer = new Lexer();
-						this.yy = {};
-					}
-					Parser.prototype = WikiParser;
-					
-					var wikiParser = (new Parser);
-					
-					return wikiParser.parse(val);
-				} catch (e) {
-					if ($('#errorsOn').is(':checked')) {
-						$('<pre />')
-							.html(e + '')
-							.dialog();
-					}
-				}
 			}
 			
 			$(function(){
@@ -100,14 +63,14 @@
 				
 				$('#runParser')
 					.click(function() {
-						$('#output').html(tryParse(editor.getValue()));
+						$('#output').html(parserlib.parse(editor.getValue(), $('#errorsOn').is(':checked')));
 					});
 				$('#wiki')
 					.change(function() {
-						$('#output').html(tryParse(editor.getValue()));
+						$('#output').html(parserlib.parse(editor.getValue(), $('#errorsOn').is(':checked')));
 					})
 					.keyup(function() {
-						$('#output').html(tryParse(editor.getValue()));
+						$('#output').html(parserlib.parse(editor.getValue(), $('#errorsOn').is(':checked')));
 					})
 					.change();
 			});
@@ -216,7 +179,7 @@ And now, just www.tiki.org (which should become a link)
 	I'm in the yellow!
 {BGYELLOW}</textarea>
 					Show Errors? <input type="checkbox" value="true" id="errorsOn" /> <br />
-					Allow Html? <input type="checkbox" value="true" id="HtmlOn" /> <br />
+					Allow Html? <input type="checkbox" value="true" id="htmlOn" /> <br />
 					<input type="button" value="Submit" id="runParser"/>
 				</td>
 				<td style="width: 50%;">

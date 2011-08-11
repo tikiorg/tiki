@@ -34,7 +34,7 @@ class ParserLib extends TikiDb_Bridge
 		$this->parser = new WikiParser;
 		
 		//private methods
-		$this->parser->cmd = $this;
+		$this->parser->yy->cmd = $this;
 	}
 	
 	function plugin($pluginDetails) {
@@ -54,6 +54,113 @@ class ParserLib extends TikiDb_Bridge
 	
 	function parse($data) {
 		return $this->parser->parse($data);
+	}
+	
+	//Wiki Syntax Objects Parsing Start
+	function make_bold($html) {
+		return "<strong>" . $html . "</strong>";
+	}
+	
+	function make_box($html) {
+		return "<div style='border: solid 1px black;'>" . $html . "</div>";
+	}
+	
+	function make_center($html) {
+		return "<center>" . $html . "</center>";
+	}
+	
+	function make_colortext($color, $html) {
+		return "<span style='color: #" . $color . ";'>" . $html . "</span>";
+	}
+	
+	function make_italics($html) {
+		return "<i>" . $html . "</i>";
+	}
+	
+	function make_header1($html) {
+		return "<h1>" . $html . "</h1>";
+	}
+	
+	function make_header2($html) {
+		return "<h2>" . $html . "</h2>";
+	}
+	
+	function make_header3($html) {
+		return "<h3>" . $html . "</h3>";
+	}
+	
+	function make_header4($html) {
+		return "<h4>" . $html . "</h4>";
+	}
+	
+	function make_header5($html) {
+		return "<h5>" . $html . "</h5>";
+	}
+	
+	function make_header6($html) {
+		return "<h6>" . $html . "</h6>";
+	}
+	
+	function make_hr() {
+		return "<hr />";
+	}
+	
+	function make_link($href, $html) {
+		return "<a href='" . $href . "'>" . $html . "</a>";
+	}
+	
+	function make_smile($smile) { //this needs more tlc too
+		return "<img src='img/smiles/icon_" . $smile . ".gif' alt='" . $smile . "' />";
+	}
+	
+	function make_strikethrough($html) {
+		return "<span style='text-decoration: line-through;'>" . $html . "</span>";
+	}
+	
+	function make_table($html) {
+		return "<table style='width: 100%;'>" . $html . "</table>";
+	}
+	
+	function make_table_tr($html) {
+		return "<tr>" . $html . "</tr>";
+	}
+	
+	function make_table_td($html) {
+		return "<td>" . $html . "</td>";
+	}
+	
+	function make_titlebar($html) {
+		return "<div class='titlebar'>" . $html . "</div>";
+	}
+	
+	function make_underscore($html) {
+		return "<u>" . $html . "</u>";
+	}
+	
+	function make_wikilink($href, $html) {
+		return "<a href='" . $href . "'>" . $html . "</a>";
+	}
+	//Wiki Syntax Objects Parsing End
+	
+	function html($html) {
+		return $html;
+	}
+	
+	//unified functions used inside parser
+	function substring($val, $left, $right) {
+		 return substr($val, $left, $right);
+	}
+	
+	function match($pattern, $subject) {
+		return preg_match($pattern, $subject);
+	}
+	
+	function replace($search, $replace, $subject) {
+		return str_replace($search, $replace, $subject);
+	}
+	
+	function split($delimiter, $string) {
+		return explode($delimiter, $string);
 	}
 	
 	//NEED MIGRATION

@@ -26,8 +26,8 @@ SMILE							[a-z]+
 
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
-		var pluginName = yytext.match(/^\{([a-z]+)/)[1];
-		var pluginParams =  yytext.match(/[ ].*?[}]|[/}]/);
+		var pluginName = yy.cmd.match(/^\{([a-z]+)/, yytext)[1];
+		var pluginParams = yy.cmd.match(/[ ].*?[}]|[/}]/, yytext);
 		yytext = {
 			name: pluginName,
 			params: pluginParams,
@@ -38,13 +38,14 @@ SMILE							[a-z]+
 
 "{"{PLUGIN_ID}"(".*?")}"
 	%{
-		var pluginName = yytext.match(/^\{([A-Z]+)/)[1];
-		var pluginParams =  yytext.match(/[(].*?[)]/);
+		var pluginName = yy.cmd.match(/^\{([A-Z]+)/, yytext)[1];
+		var pluginParams =  yy.cmd.match(/[(].*?[)]/, yytext);
 		
 		if (!yy.pluginStack) yy.pluginStack = [];
 		yy.pluginStack.push({
 			name: pluginName,
-			params: pluginParams
+			params: pluginParams,
+			body: ''
 		});
 		
 		if (yy.pluginStack.length == 1) {
@@ -59,7 +60,7 @@ SMILE							[a-z]+
 		if (yy.pluginStack) {
 			if (
 				yy.pluginStack.length &&
-				yytext.match(yy.pluginStack[yy.pluginStack.length - 1].name)
+				yy.cmd.match(yy.pluginStack[yy.pluginStack.length - 1].name, yytext)
 			) {
 				var readyPlugin = yy.pluginStack.pop();
 				if (yy.pluginStack.length == 0) {
@@ -93,21 +94,20 @@ SMILE							[a-z]+
 
 "---" 
 	%{
-		yytext = "<hr />";
+		yytext = this.yy.cmd.make_hr();
 		return 'HORIZONTAL_BAR';
 	%}
 
 "(:"{SMILE}":)"
 	%{
-		var smile = yytext.substring(2, yytext.length - 2);
-		yytext = "<img src='img/smiles/icon_" + smile + ".gif' alt='" + smile + "' />";
+		var smile = this.yy.cmd.substring(yytext, 2, -2);
+		yytext = this.yy.cmd.make_smile(smile);
 		return 'SMILE';
 	%}
 
 "[[".*?
 	%{
-		var smile = yytext.substring(2, yytext.length - 2);
-		yytext = "<img src='img/smiles/icon_" + smile + ".gif' alt='" + smile + "' />";
+		yytext = this.yy.cmd.substring(yytext, 2, -1);
 		return 'CONTENT';
 	%}
 
@@ -150,7 +150,7 @@ SMILE							[a-z]+
 (.)											return 'CONTENT'
 (\n)
 	%{
-		yytext = yytext.replace(/\n/g, '<br />');
+		yytext = this.yy.cmd.replace(/\n/g, '<br />', yytext);
 		return 'CONTENT';
 	%}
 
@@ -177,11 +177,11 @@ wiki_contents
 
 plugin
  : INLINE_PLUGIN
-	{$$ = plugin($1);}
+	{$$ = yy.cmd.plugin($1);}
  | PLUGIN_START wiki_contents PLUGIN_END
 	{
 		$3.body = $2;
-		$$ = plugin($3);
+		$$ = yy.cmd.plugin($3);
 	}
  ;
 
@@ -196,84 +196,83 @@ content
  : CONTENT
 	{$$ = $1;}
  | HTML
-	{$$ = isHtmlPermissible($1);}
- | LINK
-	{$$ = $1;}
+	{$$ = yy.cmd.html($1);}
  | HORIZONTAL_BAR
 	{$$ = $1;}
  | SMILE
 	{$$ = $1;}
  | BOLD_START wiki_contents BOLD_END
-	{$$ = "<b>" + $2 + "</b>";}
+	{$$ = yy.cmd.make_bold($2);}
  | BOX_START wiki_contents BOX_END
-	{$$ = "<div style='border: solid 1px black;'>" + $2 + "</div>";}
+	{$$ = yy.cmd.make_box($2);}
  | CENTER_START wiki_contents CENTER_END
-	{$$ = "<center>" + $2 + "</center>";}
+	{$$ = yy.cmd.make_center($2);}
  | COLORTEXT_START wiki_contents COLORTEXT_END
 	{
 		var text = $2.split(':');
-		$$ = "<span style='color: #" + text[0] + ";'>" +text[1] + "</span>";
+		$$ = yy.cmd.make_colortext(text[0], text[1]);
 	}
  | ITALIC_START wiki_contents ITALIC_END
-	{$$ = "<i>" + $2 + "</i>";}
+	{$$ = yy.cmd.make_italics($2);}
  | HEADER6_START wiki_contents HEADER6_END
-	{$$ = "<h6>" + $2 + "</h6>";}
+	{$$ = yy.cmd.make_header6($2);}
  | HEADER5_START wiki_contents HEADER5_END
-	{$$ = "<h5>" + $2 + "</h5>";}
+	{$$ = yy.cmd.make_header5($2);}
  | HEADER4_START wiki_contents HEADER4_END
-	{$$ = "<h4>" + $2 + "</h4>";}
+	{$$ = yy.cmd.make_header4($2);}
  | HEADER3_START wiki_contents HEADER3_END
-	{$$ = "<h3>" + $2 + "</h3>";}
+	{$$ = yy.cmd.make_header3($2);}
  | HEADER2_START wiki_contents HEADER2_END
-	{$$ = "<h2>" + $2 + "</h2>";}
+	{$$ = yy.cmd.make_header2($2);}
  | HEADER1_START wiki_contents HEADER1_END
-	{$$ = "<h1>" + $2 + "</h1>";}
+	{$$ = yy.cmd.make_header1($2);}
  | LINK_START wiki_contents LINK_END
 	{
 		var link = $2.split('|');
 		var href = $2;
 		var text = $2;
 		
-		if ($2.match(/\|/)) {
+		if (yy.cmd.match(/\|/, $2)) {
 			href = link[0];
 			text = link[1];
 		}
 		
-		$$ = "<a href='" + href + "'>" + text  + "</a>";
+		$$ = yy.cmd.make_link(href, text);
 	}
  | NP_START wiki_contents NP_END
 	{$$ = $2;}
  | STRIKETHROUGH_START wiki_contents STRIKETHROUGH_END
-	{$$ = "<span style='text-decoration: line-through;'>" + $2 + "</span>";}
+	{$$ = yy.cmd.make_strikethrough($2);}
  | TABLE_START wiki_contents TABLE_END
 	{
 		var tableContents = '';
-		var rows = $2.split('<br />');
+		var rows = yy.cmd.split('<br />', $2);
 		for(var i = 0; i < rows.length; i++) {
-			var cells = rows[i].split('|');
-			tableContents += "<tr>";
+			var row = '';
+			
+			var cells = yy.cmd.split('|',  rows[i]);
 			for(var j = 0; j < cells.length; j++) {
-				tableContents += "<td>" + cells[j] + "</td>";
+				row += yy.cmd.make_table_td(cells[j]);
 			}
-			tableContents += "</tr>";
+			tableContents += yy.cmd.make_table_tr(row);
 		}
-		$$ = "<table style='width: 100%;'>" + tableContents + "</table>";
+		$$ = yy.cmd.make_table(tableContents);
 	}
  | TITLEBAR_START wiki_contents TITLEBAR_END
-	{$$ = "<div class='titlebar'>" + $2 + "</div>";}
+	{$$ = yy.cmd.make_titlebar($2);}
  | UNDERSCORE_START wiki_contents UNDERSCORE_END
-	{$$ = "<u>" + $2 + "</u>";}
+	{$$ = yy.cmd.make_underscore($2);}
  | WIKILINK_START wiki_contents WIKILINK_END
 	{
 		var wikilink = $2.split('|');
 		var href = $2;
 		var text = $2;
 		
-		if ($2.match(/\|/)) {
+		if (yy.cmd.match(/\|/, $2)) {
 			href = wikilink[0];
 			text = wikilink[1];
 		}
 		
-		$$ = "<a href='" + href + "'>" + text  + "</a>";
+		$$ = yy.cmd.make_wikilink(href, text);
 	}
  ;
