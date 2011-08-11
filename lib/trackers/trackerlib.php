@@ -742,6 +742,10 @@ class TrackerLib extends TikiLib
 		}
 		$definition = Tracker_Definition::get($trackerId);
 		$field = $definition->getField($fieldId);
+		
+		if (!$field) {		// could be a deleted field referred to by a list type field
+			return array(tr('*** ERROR: Field %0 not found ***', $fieldId));
+		}
 		$ret2 = array();
 		foreach ($ret as $res) {
 			$k = $res['itemId'];
