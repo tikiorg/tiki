@@ -190,8 +190,6 @@ if (!isset($_REQUEST['export_type'])) {
 $smarty->assign( 'export_type', $_REQUEST['export_type']);
 
 if (isset($_REQUEST['export']) && $_REQUEST['export_type'] === 'prefs') {
-	include_once 'lib/Horde/Yaml.php';
-	include_once 'lib/Horde/Yaml/Dumper.php';
 	$export_yaml = Horde_Yaml::dump( array( 'preferences' => $_REQUEST['prefs_to_export'] ),
 			array('indent' => 1, 'wordwrap' => 0));
 
