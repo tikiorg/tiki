@@ -40,7 +40,7 @@ class Smarty_Tiki extends Smarty
 		global $prefs;
 
 		if ($tikidomain) { $tikidomain.= '/'; }
-		$this->template_dir = realpath('templates/');
+		$this->template_dir = array(realpath('templates/'));
 		$this->compile_dir = realpath("templates_c/$tikidomain");
 		$this->config_dir = realpath('configs/');
 		$this->cache_dir = realpath("templates_c/$tikidomain");
@@ -58,7 +58,13 @@ class Smarty_Tiki extends Smarty
 		} else {
 			$this->disableSecurity();
 		}
+		$this->use_sub_dirs = false;
 		$this->url_overriding_prefix_stack = array();
+		if (!empty($prefs['smarty_notice_reporting']) and $prefs['smarty_notice_reporting'] === 'y' ) {
+			$this->error_reporting = E_NOTICE;
+		} else {
+			$this->error_reporting = 0;
+		}
 	}
 
 	function _smarty_include($params) {
