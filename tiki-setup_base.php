@@ -441,8 +441,8 @@ if (isset($_SESSION["$user_cookie_site"])) {
 } else {
 	$user = NULL;
 
-	if ($prefs['login_http_basic'] === 'always' ||
-		($prefs['login_http_basic'] === 'ssl' && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) {
+	if ( isset($prefs['login_http_basic']) && $prefs['login_http_basic'] === 'always' ||
+		(isset($prefs['login_http_basic']) && $prefs['login_http_basic'] === 'ssl' && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) {
 
 		// Authenticate if the credentials are present, do nothing otherwise
 		if (isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
@@ -571,7 +571,7 @@ unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
 // --------------------------------------------------------------
 if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y')) {
-	$smarty->registerFilter('output', 'highlight');
+	$smarty->loadFilter('output', 'highlight');
 }
 if (function_exists('mb_internal_encoding')) {
 	mb_internal_encoding("UTF-8");
