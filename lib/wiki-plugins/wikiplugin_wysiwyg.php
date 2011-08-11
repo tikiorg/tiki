@@ -8,8 +8,8 @@
 function wikiplugin_wysiwyg_info() {
 	return array(
 		'name' => 'WYSIWYG',
-		//'documentation' => 'PluginWYSIWYG',
-		'description' => tra('Experimental: Purify the HTML content.'),
+		'documentation' => 'PluginWYSIWYG',
+		'description' => tra('Permits to have a WYSIWYG section for part of a page.'),
 		'prefs' => array('wikiplugin_wysiwyg'),
 		'params' => array(),
 		'tags' => array( 'experimental' ),	
