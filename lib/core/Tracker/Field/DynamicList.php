@@ -88,15 +88,17 @@ $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 		function(data, status) {
 			$ddl = $("select[name=' . $this->getInsertId() . ']");
 			$ddl.empty();
-			$.each( data, function (i,v) {
-				$ddl.append(
-					$("<option/>")
-						.attr("value", v)
-						.text(v)
-				);
-			});
-			if (val) {
-				$ddl.val(val);
+			if (data) {
+				$.each( data, function (i,v) {
+					$ddl.append(
+						$("<option/>")
+							.attr("value", v)
+							.text(v)
+					);
+				});
+				if (val) {
+					$ddl.val(val);
+				}
 			}
 		}
 	);
