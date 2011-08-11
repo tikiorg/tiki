@@ -213,7 +213,6 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-	// you must call ask_ticket('error') before calling this
 	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true, $message='') {
 		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;
 		require_once ('tiki-setup.php');
