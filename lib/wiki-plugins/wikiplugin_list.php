@@ -90,6 +90,11 @@ function wikiplugin_list($data, $params)
 
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
 				$plugin->setData($builder->getData($output->getBody()));
+			} elseif (isset($arguments['wiki'])) {
+				$wikitpl = "wiki:" . $arguments['wiki'];
+				$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
+				$wikicontent = preg_replace("/\{\\$([^\}]+)\}/", "{display name=\\1}", $wikicontent); 
+				$plugin = new Search_Formatter_Plugin_WikiTemplate($wikicontent);
 			} else {
 				$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
 			}
