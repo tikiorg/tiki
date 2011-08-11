@@ -37,6 +37,7 @@ function prefs_themegenerator_list($partial = false) {
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'description' => tra('Permits to adjust colors and fonts via the browser.'),
 			'help' => 'Theme+Generator',
+			'tags' => array('experimental'),
 			'default' => 'n',
 		),
 		'themegenerator_theme' => array(
