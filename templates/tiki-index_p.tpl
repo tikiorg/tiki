@@ -15,7 +15,8 @@
       
       {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
-{icon _id='lock' alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} `$page_user`"}
+{capture assign=title}{tr _0=$page_user}Locked by %0{/tr}{/capture}{*FIXME*}
+{icon _id='lock' alt="{tr}Locked{/tr}" title=$title}
 {/if}
 </h1>{/if}
 <table >

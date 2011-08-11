@@ -13,9 +13,9 @@
 <table style='width: 100%;'>
 	<tr>
 		<td>
-			{tr 0=$invoice.$invoiceNumber}Invoice %0{/tr}
+			{tr _0=$invoice.$invoiceNumber}Invoice %0{/tr}
 			<br />
-			{tr 0=$invoice.$dateIssued}Date Issued %0{/tr} 
+			{tr _0=$invoice.$dateIssued}Date Issued %0{/tr} 
 			<br />
 			<br />
 			{tr}Status{/tr} 
@@ -49,9 +49,9 @@
 {/foreach}
 
 </table>
-{tr 0=$amount}Amount: %0{/tr}<br />
-{tr 0=$amount}Total: %0{/tr}<br />
-{tr 0=$invoice.$paymentTerm}Payment Terms: %0{/tr}
+{tr _0=$amount}Amount: %0{/tr}<br />
+{tr _0=$amount}Total: %0{/tr}<br />
+{tr _0=$invoice.$paymentTerm}Payment Terms: %0{/tr}
 <br />
 <br />
 <a href="tiki-edit_invoice.php?InvoiceId={$InvoiceId}">{tr}Edit Invoice{/tr}</a>

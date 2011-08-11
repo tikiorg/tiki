@@ -113,8 +113,8 @@ function doChallengeResponse() {
 		{/if}
 		{if !empty($error_login)}
 			{remarksbox type='errors' title="{tr}Error{/tr}"}
-				{if $error_login == -5 {*USER_NOT_FOUND (define does not work on old php)*}}{tr}Invalid username{/tr}
-				{elseif $error_login == -3 {*PASSWORD_INCORRECT*}}{tr}Invalid password{/tr}
+				{if $error_login == -5}{tr}Invalid username{/tr}
+				{elseif $error_login == -3}{tr}Invalid password{/tr}
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		{/if}

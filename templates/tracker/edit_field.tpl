@@ -15,7 +15,7 @@
 		{tr}Description contains wiki syntax{/tr}
 	</label>
 
-	<h4>{tr 0=$info.name}Options for %0{/tr}</h4>
+	<h4>{tr _0=$info.name}Options for %0{/tr}</h4>
 	
 	<p>{$info.description|escape}</p>
 

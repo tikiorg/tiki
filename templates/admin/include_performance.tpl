@@ -35,7 +35,7 @@
 		
 		{tab name="{tr}Bytecode Cache{/tr}"}
 			{if $opcode_cache}
-				<p>{tr 0=$opcode_cache}Using <strong>%0</strong>.These stats affect all PHP applications running on the server.{/tr}</p>
+				<p>{tr _0=$opcode_cache}Using <strong>%0</strong>.These stats affect all PHP applications running on the server.{/tr}</p>
 
 				{if $opcode_stats.warning_xcache_blocked}
 					<p>{tr}Configuration setting <em>xcache.admin.enable_auth</em> prevents from accessing statistics. This will also prevent the cache from being cleared when clearing template cache.{/tr}</p>
@@ -51,7 +51,7 @@
 				{/if}
 
 				{if $opcode_stats.warning_ratio}
-					<p>{tr 0=$opcode_cache}Low hit ratio. %0 may be misconfigured and not used.{/tr}</p>
+					<p>{tr _0=$opcode_cache}Low hit ratio. %0 may be misconfigured and not used.{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_starve}
@@ -59,14 +59,14 @@
 				{/if}
 
 				{if $opcode_stats.warning_low}
-					<p>{tr 0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr}</p>
+					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_check}
 					<p>
-						{tr 0=$stat_flag}Configuration <em>%0</em> is enabled. Disabling modification checks can improve performance, but will require manual clear on file updates.{/tr}
+						{tr _0=$stat_flag}Configuration <em>%0</em> is enabled. Disabling modification checks can improve performance, but will require manual clear on file updates.{/tr}
 						{if $opcode_stats.warning_xcache_blocked}
-							{tr 0=$stat_flag}<em>%0</em> should not be disabled due to authentication on XCache.{/tr}
+							{tr _0=$stat_flag}<em>%0</em> should not be disabled due to authentication on XCache.{/tr}
 						{/if}
 					</p>
 				{/if}

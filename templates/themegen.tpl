@@ -41,7 +41,7 @@
 										{tr}Found in:{/tr}
 										{$tg_item.contexts}
 										{if $tg_item.old neq $tg_item.new}
-											{tr 0=$tg_item.old 1=$tg_item.new}Changed from %0 to %1{/tr}
+											{tr _0=$tg_item.old _1=$tg_item.new}Changed from %0 to %1{/tr}
 										{else}
 											{tr}Unchanged{/tr}
 										{/if}">

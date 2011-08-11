@@ -31,7 +31,7 @@
 		<div id="fixedwidth" class="fixedwidth"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
 			<div id="main">
-				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
+				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
 							<div class="header_outer">

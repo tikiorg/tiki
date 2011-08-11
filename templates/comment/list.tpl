@@ -1,5 +1,5 @@
 {if ! $parentId && $allow_lock}
-	{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class=confirm-prompt _confirm="{tr}Do you really want to lock comments?{/tr}}{tr}Lock{/tr}{/self_link}
+	{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class=confirm-prompt _confirm="{tr}Do you really want to lock comments?{/tr}"}{tr}Lock{/tr}{/self_link}
 {/if}
 
 {if ! $parentId && $allow_unlock}
@@ -27,9 +27,9 @@
 						{self_link action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class=confirm-prompt _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
 					{/if}
 				</div>
-				<h6>{tr 0=$comment.userName|userlink 1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
+				<h6>{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
 				<div class="body">
-					<span class="avatar">{comment.userName|avatarize}</span>
+					<span class="avatar">{$comment.userName|avatarize}</span>
 					{$comment.parsed}
 				</div>
 

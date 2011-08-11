@@ -164,7 +164,7 @@
 						<td class="text">
 							{if $users[user].currentLogin eq ''}
 								{capture name=when}{$users[user].age|duration_short}{/capture}
-								{tr}Never{/tr} <em>({tr 0=$smarty.capture.when}Registered %0 ago{/tr})</em>
+								{tr}Never{/tr} <em>({tr _0=$smarty.capture.when}Registered %0 ago{/tr})</em>
 							{else}
 								{$users[user].currentLogin|tiki_long_datetime}
 							{/if}
@@ -176,7 +176,7 @@
 						</td>
 	
 						<td class="icon">
-							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$username` {tr}to groups{/tr} "}</a>
+							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign{/tr} %0 {tr}to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
 						</td>
 	
 						<td class="text">
@@ -185,7 +185,8 @@
 									{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
 										{if $what ne 'included' and $grs != "Registered"}
 											{capture assign=grse}{$grs|escape}{/capture}
-											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} `$username` {tr}from{/tr} $grse"}{/self_link}
+											{capture assign=title}{tr _0=$username _1=$grse}Remove %0 from %1{/tr}{/capture}{*FIXME*}
+											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
 										{else}
 											{icon _id='bullet_white'}
 										{/if}
@@ -206,21 +207,23 @@
 						</td>
 	
 						<td class="action">
-							{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings:{/tr} `$username`"}{/self_link}
+							{capture assign=title}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}
+							{self_link _class="link" user=$users[user].userId _icon="page_edit" _title=$title}{/self_link}
 							{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-								<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$username}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$username`"}</a>
+								<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a>
 							{/if}
 							{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
-								<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information:{/tr} {$username}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt="{tr}User Information:{/tr} `$username`"}</a>
+								{capture assign=title}{tr _0=$username}User Information: %0{/tr}{/capture}{*FIXME*}
+								<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{$title}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt=$title}</a>
 							{/if}
 		
 							{if $users[user].user ne 'admin'}
 								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 								{if $users[user].waiting eq 'a'}
-									<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$username`"}</a>
+									<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">{capture assign=alt}{tr _0=$users[user].user|username}Validate user: %0{/tr}{/capture}{*FIXME*}{icon _id='accept' alt=$alt}</a>
 								{/if}
 								{if $users[user].waiting eq 'u'}
-									<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr}Confirm user email:{/tr} {$users[user].user|username}">{icon _id='email_go' alt="{tr}Confirm user email:{/tr} `$username`"}</a>
+									<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">{capture assign=alt}{tr _0=$username}Confirm user email: %0{/tr}{/capture}{*FIXME*}{icon _id='email_go' alt=$alt}</a>
 								{/if}
 								{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
 									<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalid email{/tr}">{icon _id='email_cross' alt="{tr}Invalid email{/tr}"}</a>

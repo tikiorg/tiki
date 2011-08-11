@@ -1,6 +1,6 @@
 {title help="trackers"}{tr}Tracker Item History{/tr}{/title}
 <div class="navbar">
-	 {button href="tiki-view_tracker_item.php?itemId=`$item_info.itemId`" _text="{tr}View Tracker Item{/tr}"}
+	 {button _keepall='y' href="tiki-view_tracker_item.php" itemId=$item_info.itemId _text="{tr}View Tracker Item{/tr}"}
 </div>
 
 <div class="clearfix">

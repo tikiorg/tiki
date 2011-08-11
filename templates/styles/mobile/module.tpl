@@ -53,7 +53,7 @@
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span id="moduleflip-{$smarty.capture.name}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-					{assign var=name value=`icnmod-$smarty.capture.name`}
+					{assign var=name value="icnmod-"|cat:$smarty.capture.name}
 					{capture name=name}
 						icnmod-{$smarty.capture.name}
 					{/capture}

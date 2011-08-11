@@ -1,5 +1,5 @@
 {if !empty($field.options_array[2]) && ($field.options_array[2] eq '1' or $field.options_array[2] eq 'y')}
-	{select_all checkbox_names=`$field.ins_id`[] label="{tr}Select All{/tr}"}
+	{select_all checkbox_names=$field.ins_id|cat:"[]" label="{tr}Select All{/tr}"}
 {/if}
 {if $field.options_array[1] eq 'd' || $field.options_array[1] eq 'm'}
 	{if $field.options_array[1] eq 'm'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br />{/if}

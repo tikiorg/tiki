@@ -69,7 +69,9 @@
 {if $subtree[ix].pos eq ''}
 	<th><a class='link' href='{sefurl page=$subtree[ix].pageName structure=$structure_name page_ref_id=$subtree[ix].page_ref_id}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 		{if $editable == 'y'}
-		{if $subtree[ix].flag == 'L'}{icon _id='lock' alt="locked" title="locked by `$subtree[ix].user`"}
+		{if $subtree[ix].flag == 'L'}
+			{capture assign=title}{tr _0=$subtree[ix].user}locked by %0{/tr}{/capture}
+			{icon _id='lock' alt="{tr}Locked{/tr}" title=$title}
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'>{icon _id='page_edit'}</a>{/if}
 		{/if}
 		{if $tiki_p_watch_structure eq 'y'}
@@ -94,7 +96,9 @@
 		{if $editable == 'y'}<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=1'>{icon _id='resultset_previous' alt="{tr}Promote{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=4'>{icon _id='resultset_next' alt="{tr}Demote{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=2'>{icon _id='resultset_up' alt="{tr}Previous{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=3'>{icon _id='resultset_down' style="margin-right:10px;" alt="{tr}Next{/tr}"}{/if}</a>
 		{if $subtree[ix].viewable == 'y'}<a class='link' href='{sefurl page=$subtree[ix].pageName structure=$structure_name page_ref_id=$subtree[ix].page_ref_id}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>{else}&nbsp;{/if}
 		{if $subtree[ix].editable == 'y'}
-		{if $subtree[ix].flag == 'L'}{icon _id='lock' alt="locked" title="locked by `$subtree[ix].user`"}
+		{if $subtree[ix].flag == 'L'}
+			{capture assign=title}{tr _0=$subtree[ix].user}locked by %0{/tr}{/capture}
+			{icon _id='lock' alt="{tr}Locked{/tr}" title=$title}
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'>{icon _id='page_edit'}</a>{/if}
 		{/if}
 		{if $tiki_p_watch_structure eq 'y'}

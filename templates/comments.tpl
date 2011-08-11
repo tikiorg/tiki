@@ -4,9 +4,9 @@
 
 {if $tiki_p_forum_read eq 'y'}
 
-	{* This section (comment) is only displayed * }
-	{* if a reply to it is being composed * }
-	{* The $parent_com is only set in this case *}
+	{* This section (comment) is only displayed *}
+	{* if a reply to it is being composed *}
+	{* The $parent_com is only set in this case*}
 	{* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
 	{if $comments_cant gt 0}
@@ -61,7 +61,7 @@
 			{if $prefs.forum_thread_user_settings eq 'y'}
 				{if $comments_cant > 0 and $section eq 'blogs'}
 					{* displaying just for blogs only because I'm not sure if this is useful for other sections *}
-					{capture name=comments_cant_title}{if $comments_cant == 1}{tr 0=$comments_cant}%0 comment{/tr}{else}{tr 0=$comments_cant}%0 comments{/tr}{/if}{/capture}
+					{capture name=comments_cant_title}{if $comments_cant == 1}{tr _0=$comments_cant}%0 comment{/tr}{else}{tr _0=$comments_cant}%0 comments{/tr}{/if}{/capture}
 					<h3>{$smarty.capture.comments_cant_title}</h3>
 				{/if}
 				<div class="forum_actions">
@@ -70,13 +70,13 @@
 							<span class="action">
 								<label for="comments-maxcomm">{tr}Messages:{/tr}</label>
 								<select name="comments_per_page" id="comments-maxcomm">
-									<option value="10" {if $comments_per_page eq 10 }selected="selected"{/if}>10</option>
-									<option value="20" {if $comments_per_page eq 20 }selected="selected"{/if}>20</option>
-									<option value="30" {if $comments_per_page eq 30 }selected="selected"{/if}>30</option>
-									<option value="999999" {if $comments_per_page eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
+									<option value="10" {if $comments_per_page eq 10}selected="selected"{/if}>10</option>
+									<option value="20" {if $comments_per_page eq 20}selected="selected"{/if}>20</option>
+									<option value="30" {if $comments_per_page eq 30}selected="selected"{/if}>30</option>
+									<option value="999999" {if $comments_per_page eq 999999}selected="selected"{/if}>{tr}All{/tr}</option>
 								</select>
 								
-								{if $forum_info.is_flat neq 'y' }
+								{if $forum_info.is_flat neq 'y'}
 									<label for="comments-style">{tr}Style:{/tr}</label>
 									<select name="thread_style" id="comments-style">
 										<option value="commentStyle_plain" {if $thread_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>

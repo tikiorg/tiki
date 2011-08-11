@@ -12,7 +12,7 @@
 		<legend>{tr}Upload files{/tr}</legend>
 		{if $field.limit}
 			{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
-				{tr 0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. Additional files uploaded will still be uploaded to the server and searchable, but they will not be attached to this item. Make sure you remove the files no longer required before you save your changes.{/tr}
+				{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. Additional files uploaded will still be uploaded to the server and searchable, but they will not be attached to this item. Make sure you remove the files no longer required before you save your changes.{/tr}
 			{/remarksbox}
 		{/if}
 		<p>{tr}Drop files from your desktop here or browse for them{/tr}</p>

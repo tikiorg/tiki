@@ -103,7 +103,8 @@
 						<li>
 							{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}
 							{if count($diff_summaries) gt 1}
-								{icon _id="arrow_right"  onclick="\$('input[name=oldver]').val(`$diff.version`);\$('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
+								{assign var=diff_version value=$diff.version}
+								{icon _id="arrow_right"  onclick="\$('input[name=oldver]').val($diff_version);\$('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
 							{/if}
 						</li>
 					{/foreach}
@@ -150,11 +151,11 @@
 				{if isset($page_badchars_display)}
 					{if $prefs.wiki_badchar_prevent eq 'y'}
 						{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
-							{tr 0=$page_badchars_display|escape}The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: <strong>%0</strong>{/tr}
+							{tr _0=$page_badchars_display|escape}The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: <strong>%0</strong>{/tr}
 						{/remarksbox}
 					{else}
 						{remarksbox type=tip title="{tr}Tip{/tr}"}
-							{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
+							{tr _0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 						{/remarksbox}
 					{/if}
 					<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" /></p>

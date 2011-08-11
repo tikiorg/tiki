@@ -11,11 +11,11 @@
 	{if $evt.result.allday}
 		{tr}All day{/tr}
 	{else}
-	  {if ($evt.endTimeStamp - $evt.startTimeStamp < 86400)}
+	  {if $evt.endTimeStamp - $evt.startTimeStamp < 86400}
 		{$evt.startTimeStamp|tiki_short_time} &gt {$evt.endTimeStamp|tiki_short_time}
 	  {else}
-		{$evt.startTimeStamp|tiki_short_date}&nbsp;({{$evt.startTimeStamp|tiki_short_time}) &gt 
-		{$evt.endTimeStamp|tiki_short_date}&nbsp;({{$evt.endTimeStamp|tiki_short_time})
+		{$evt.startTimeStamp|tiki_short_date}&nbsp;({$evt.startTimeStamp|tiki_short_time}) &gt 
+		{$evt.endTimeStamp|tiki_short_date}&nbsp;({$evt.endTimeStamp|tiki_short_time})
 	  {/if}
 	{/if}
 	</strong>

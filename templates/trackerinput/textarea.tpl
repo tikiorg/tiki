@@ -41,7 +41,7 @@
 	{foreach name=lg from=$field.lingualvalue item=ling}
 		<label for="area_{$field.fieldId}_{$ling.lang}">{$ling.lang|langname}</label><br />
 			{if $field.options_array[0] eq 1}
-       			{toolbars qtnum=$field.id area_id=area_`$field.id`_`$ling.lang`}
+       			{toolbars qtnum=$field.id area_id="area_"|cat:$field.id|cat:'_'|cat:$ling.lang}
        		{/if}
 			<textarea id="area_{$field.fieldId}_{$ling.lang}" name="{$field.ins_id}[{$ling.lang}]" cols="{if $field.options_array[1] gt 1}{$field.options_array[1]}{else}50{/if}" rows="{if $field.options_array[2] gt 1}{$field.options_array[2]}{else}4{/if}"{if $field.options_array[5] > 0} onkeyup="wordCount({$field.options_array[5]}, this, 'cpt_{$field.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 				{$ling.value|escape}

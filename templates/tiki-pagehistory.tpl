@@ -164,8 +164,8 @@ $("#toggle_diffs a").click(function(){
 						{/if}
 						<td class="left">
 							{$info.lastModif|tiki_short_datetime}
-							{if $tiki_p_wiki_view_author ne 'n'}{tr 0=$info.user|userlink}by %0{/tr}{/if}
-							{if $prefs.feature_wiki_history_ip ne 'n'}{tr 0=$info.ip}from %0{/tr}{/if}
+							{if $tiki_p_wiki_view_author ne 'n'}{tr _0=$info.user|userlink}by %0{/tr}{/if}
+							{if $prefs.feature_wiki_history_ip ne 'n'}{tr _0=$info.ip}from %0{/tr}{/if}
 
 							{if $flaggedrev_approval and $tiki_p_wiki_view_latest eq 'y' and $info.approved}<strong>({tr}approved{/tr})</strong>{/if}
 
@@ -219,8 +219,8 @@ $("#toggle_diffs a").click(function(){
 						{/if}
 						<td class="left">
 							{$element.lastModif|tiki_short_datetime}
-							{if $tiki_p_wiki_view_author ne 'n'}{tr 0=$element.user|userlink}by %0{/tr}{/if}
-							{if $prefs.feature_wiki_history_ip ne 'n'}{tr 0=$element.ip}from %0{/tr}{/if}
+							{if $tiki_p_wiki_view_author ne 'n'}{tr _0=$element.user|userlink}by %0{/tr}{/if}
+							{if $prefs.feature_wiki_history_ip ne 'n'}{tr _0=$element.ip}from %0{/tr}{/if}
 
 							{if $element.comment}<div>{$element.comment|escape}</div>{/if}
 

@@ -80,7 +80,7 @@
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 				{/if}
-				{button href="#" _flip_id="uploadinfos`$uploads[ix].fileId`" _text="{tr}Additional Info{/tr}"}
+				{button href="#" _flip_id="uploadinfos"|cat:$uploads[ix].fileId _text="{tr}Additional Info{/tr}"}
 				<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
 					{tr}You can download this file using:{/tr} <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].fileId|sefurl:file}</a></div>
 					{tr}You can link to the file from a Wiki page using:{/tr} <div class="code">[{$uploads[ix].fileId|sefurl:file}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>

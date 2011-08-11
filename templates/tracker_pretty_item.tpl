@@ -17,9 +17,9 @@
 				{trackeroutput item=$item field=$field list_mode=$list_mode showlinks=n}
 			{/if}
 		{/capture}
-		{set var=f_`$field.fieldId` value=$smarty.capture.value}
+		{set var="f_"|cat:$field.fieldId value=$smarty.capture.value}
 	{else}
-		{set var=f_`$field.fieldId` value=''}
+		{set var="f_"|cat:$field.fieldId value=''}
 	{/if}
 {/foreach}
 {set var=f_created value=$item.created}

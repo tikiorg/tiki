@@ -270,9 +270,9 @@
 	{if $tracker_sync}
 		{tab name="{tr}Synchronization{/tr}"}
 			<p>
-				{tr 0="`$tracker_sync.provider`/tracker`$tracker_sync.source`"}This tracker is a remote copy of <a href="%0">%0</a>.{/tr}
+				{tr _0=$tracker_sync.provider|cat:'/tracker'|cat:$tracker_sync.source}This tracker is a remote copy of <a href="%0">%0</a>.{/tr}
 				{if $tracker_sync.last}
-					{tr 0=$tracker_sync.last|tiki_short_date}It was last updated on %0.{/tr}
+					{tr _0=$tracker_sync.last|tiki_short_date}It was last updated on %0.{/tr}
 				{/if}
 			</p>
 			{permission name=tiki_p_admin_trackers}

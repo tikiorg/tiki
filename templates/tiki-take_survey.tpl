@@ -79,7 +79,7 @@
           {/if}
         </div>
       {elseif $questions[ix].type eq 'g'}
-        {fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name="question_`$questions[ix].questionId`"}
+        {fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name="question_"|cat:$questions[ix].questionId}
       {/if}
     </div>
   {/section}

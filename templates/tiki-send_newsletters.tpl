@@ -311,7 +311,8 @@
 		</form>
 	{/tab}
 
-	{tab name="{tr}Drafts{/tr}&nbsp;(`$cant_drafts`)"}
+	{capture assign=$name}{tr _0=$cant_drafts}Drafts&nbsp;(%0){/tr}{/capture}{*FIXME*}
+	{tab name=$name}
 	{* --- tab with drafts --- *}
 		{assign var=channels value=$drafts}
 		{assign var=view_editions value='n'}
@@ -329,11 +330,12 @@
 		{assign var=find value=$dr_find}
 		{assign var=find_bak value=$ed_find}
 		{assign var=tab value=2}
-		<h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
+		<h2>{$name}</h2>
 		{include file='sent_newsletters.tpl'}
 	{/tab}
 
-	{tab name="{tr}Sent editions{/tr}&nbsp;($cant_editions)"}
+	{capture assign=$name}{tr _0=$cant_editions}Sent Editions&nbsp;(%0){/tr}{/capture}{*FIXME*}
+	{tab name=$name}
 	{* --- tab with editions --- *}
 		{assign var=channels value=$editions}
 		{assign var=view_editions value='y'}
@@ -351,7 +353,7 @@
 		{assign var=find value=$ed_find}
 		{assign var=find_bak value=$dr_find}
 		{assign var=tab value=3}
-		<h2>{tr}Sent editions{/tr}&nbsp;({$cant_editions})</h2>
+		<h2>{$name}</h2>
 		{include file='sent_newsletters.tpl'}
 		{/tab}
 	{/tabset}

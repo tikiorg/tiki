@@ -8,9 +8,9 @@
 					{tr}Leave a comment{/tr}
 				{else}
 					{if $post_info.comments == 1}
-						{tr 0=$post_info.comments}%0 comment{/tr}
+						{tr _0=$post_info.comments}%0 comment{/tr}
 					{else}
-						{tr 0=$post_info.comments}%0 comments{/tr}
+						{tr _0=$post_info.comments}%0 comments{/tr}
 					{/if}
 				{/if}
 			</a>

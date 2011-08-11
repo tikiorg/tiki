@@ -1,6 +1,6 @@
 <div {if isset($iPluginMemberpayment)}id="pluginMemberpayment{$iPluginMemberpayment}" {elseif isset($datachannel_execution)}id="{$datachannel_execution}" {/if}class="payment">
 	{if isset($wp_member_title)}
-		{wiki}{tr 0=$wp_member_group.groupName 4=$wp_member_group.expireAfter 5=$wp_member_group.expireAfterYear}{$wp_member_title}{/tr}{/wiki}
+		{wiki}{tr _0=$wp_member_group.groupName _4=$wp_member_group.expireAfter _5=$wp_member_group.expireAfterYear}{$wp_member_title}{/tr}{/wiki}
 	{else} 
 		<h2>{$payment_info.description|escape}</h2>
 	{/if}
@@ -16,7 +16,7 @@
 		{else}
 			{tr}Initial amount:{/tr} {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
 			{tr}Amount remaining:{/tr} <strong>{$payment_info.amount_remaining|escape} {$payment_info.currency|escape}</strong><br />
-			{tr 0=$payment_info.request_date|tiki_short_date 1=$payment_info.due_date|tiki_short_date}Payment request was sent on %0 and is due by %1.{/tr}<br />
+			{tr _0=$payment_info.request_date|tiki_short_date _1=$payment_info.due_date|tiki_short_date}Payment request was sent on %0 and is due by %1.{/tr}<br />
 		{/if}
 		{if ( $payment_info.state eq 'outstanding' || $payment_info.state eq 'overdue' )}
 			{if $prefs.payment_system eq 'paypal' && $prefs.payment_paypal_business neq ''}

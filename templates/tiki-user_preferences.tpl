@@ -557,7 +557,7 @@
 
 {if $tiki_p_delete_account eq 'y' and $userinfo.login neq 'admin'}
 {tab name="{tr}Account Deletion{/tr}"}
-<form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr 0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
+<form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr _0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
 {if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
  <table class="formcolor">
   <tr class="{cycle}">

@@ -43,7 +43,7 @@
 		{if isset($module_params.date_format)}
 			{assign var=date_format value=$module_params.date_format}
 		{else}
-			{assign var=date_format value="`$prefs.short_date_format` `$prefs.short_time_format`"}
+			{assign var=date_format value=$prefs.short_date_format|cat:' '|cat:$prefs.short_time_format}
 		{/if}
 		{section name=ix loop=$webmail_list}
 			{assign var='date_value' value=$webmail_list[ix].timestamp|tiki_date_format:$date_format}
@@ -88,7 +88,9 @@
 					{else}
 						<span class="mod_webmail_from">{$sender.email|truncate:20:"...":true}</span>
 					{/if}
-					{assign var=tit value="<span class='webmail_tip_title'><strong>$subject</strong><br /></span>|{tr}From:{/tr} <em>`$sender.name`</em> &nbsp; <tt>&amp;lt;`$sender.email`&amp;gt;</tt><br /><small>[$date_value]</small>"}
+					{capture assign=tit}{strip}
+					<span class='webmail_tip_title'><strong>{$subject}</strong><br /></span>|{tr}From:{/tr} <em>{$sender.name}</em> &nbsp; <tt>&amp;lt;{$sender.email}&amp;gt;</tt><br /><small>[{$date_value}]</small>
+					{/strip}{/capture}
 					{self_link _script='tiki-webmail.php' msgid=$webmail_list[ix].msgid locSection='read' _noauto='y' _class='clearfix linkmodule tips300 webmail_subject' _title=$tit}
 						{if $maxlen > 0}{* default value for maxlen param eq 26 *}
 							{$subject|truncate:$maxlen:"...":true}

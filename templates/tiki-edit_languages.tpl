@@ -118,7 +118,7 @@
 							<tr class="last">
 								<td colspan="2">
 									{if isset($item.user) && isset($item.lastModif)}
-										{tr 0=$item.user|userlink 1=$item.lastModif|tiki_short_date}Last changed by %0 on %1{/tr}
+										{tr _0=$item.user|userlink _1=$item.lastModif|tiki_short_date}Last changed by %0 on %1{/tr}
 									{/if}
 								</td>
 							</tr>

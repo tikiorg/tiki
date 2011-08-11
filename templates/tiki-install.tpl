@@ -188,7 +188,7 @@
 		<p>
 			<img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;" />
 			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br />
-			<em>{tr 0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
+			<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
 		</p>
 		<form action="tiki-install.php" method="post">
 			<input type="hidden" name="install_step" value="4" />
@@ -298,7 +298,7 @@
 	  		{if isset($legacy_collation)}
 				<strong style="color: red">Something is wrong with the database encoding.</strong> The schema has UTF-8 as default encoding but some tables in the schema have a different collation, {$legacy_collation}. Converting to UTF-8 may solve this but may also make matters worse. You should investigate what happened or only proceed with backups.
 			{else}
-				{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
+				{tr _0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 			{/if}
 			<p><a href="http://doc.tiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
 
@@ -326,7 +326,7 @@
 	<tr>
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
-				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr 0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}</p>{/if}
+				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr _0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}</p>{/if}
 				{if $tikidb_created}
 				<script type='text/javascript'><!--//--><![CDATA[//><!--
 				{literal}

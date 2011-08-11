@@ -45,7 +45,8 @@
                 </td>
                 <td class="action">
                   <a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">
-                    {icon _id='page_edit' title="{tr}Edit:{/tr} `$user_pages[ix].pageName`"}
+									{capture assign=title}{tr _0=$user_pages[ix].pageName}Edit: %0{/tr}{/capture}{*FIXME*}
+                    {icon _id='page_edit' title=$title}
                   </a>
                 </td>
               </tr>

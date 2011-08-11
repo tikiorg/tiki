@@ -65,7 +65,7 @@
 				{else}
 					<div class="separator"><a class="separator" href="javascript:flip('{$cname}');">{$slvn_item.count}&nbsp;{$slvn_item.label}</a></div>
 				{/if}
-				{assign var=showcname value=show_$cname}
+				{assign var=showcname value="show_"|cat:$cname}
 	
 	        	{if $pos eq 'trackers' or $pos eq 'utrackers'}
 					<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
@@ -74,7 +74,7 @@
 					 	{foreach key=tp item=tracker from=$slvn_item.tid}
 					 		{assign var=tcname value=$tracker.cname}
 					 		<div class="separator" style="margin-left: 10px; display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
-					 			{assign var=showtcname value=show_$tcname}
+					 			{assign var=showtcname value="show_"|cat:$tcname}
 					 			<a class="separator" href="javascript:flip('{$tcname}');">{$tracker.count}&nbsp;{$tracker.label|escape}</a>
 					 			<div id="{$tcname}" style="display:{if !isset($cookie.$showtcname) or $cookie.$showtcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
 					 				{if $nonums != 'y'}<ol>{else}<ul>{/if}

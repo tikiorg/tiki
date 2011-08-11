@@ -35,8 +35,8 @@ function smarty_block_tr($params, $content, &$smarty) {
 
 	$args = array();
 	foreach( $params as $key => $value ) {
-		if( is_int( $key ) )
-			$args[$key] = $value;
+		if( preg_match( '/_([[:digit:]])+/', $key, $matches ) )
+			$args[$matches[1]] = $value;
 	}
 
 	if (empty($params['interactive']) || $params['interactive'] == 'y')

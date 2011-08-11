@@ -128,7 +128,7 @@
 		<form method="post" action="tiki-admin_transitions.php?action={if $selected_transition}edit{else}new{/if}&amp;cookietab=2" style="text-align: left;">
 			{if $selected_transition}
 				<h2>
-					{tr 0=$selected_transition.name}Edit <em>%0</em>{/tr}
+					{tr _0=$selected_transition.name}Edit <em>%0</em>{/tr}
 					<input type="hidden" name="transitionId" value="{$selected_transition.transitionId|escape}"/>
 					(<a href="tiki-admin_transitions.php">{tr}Create new{/tr}</a>)
 				</h2>

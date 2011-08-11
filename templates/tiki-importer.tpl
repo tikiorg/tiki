@@ -54,24 +54,24 @@
     {if isset($importFeedback.importedPages)}
     	<p>
 	    	{if isset($importFeedback.totalPages)}
-		    	{tr 0=$importFeedback.importedPages 1=$importFeedback.totalPages}%0 pages imported from a total of %1{/tr}
+		    	{tr _0=$importFeedback.importedPages _1=$importFeedback.totalPages}%0 pages imported from a total of %1{/tr}
 		    {else}
-		    	{tr 0=$importFeedback.importedPages}%0 pages imported{/tr}
+		    	{tr _0=$importFeedback.importedPages}%0 pages imported{/tr}
 		    {/if}
 		    &nbsp;{tr}(you can see the list of wiki pages in your site <a href="tiki-listpages.php">here</a>).{/tr}
 		</p>
 	{/if}
 
 	{if isset($importFeedback.importedPosts)}
-       	<p>{tr 0=$importFeedback.importedPosts}%0 posts imported.{/tr}</p>
+       	<p>{tr _0=$importFeedback.importedPosts}%0 posts imported.{/tr}</p>
 	{/if}
 	
 	{if isset($importFeedback.importedTags)}
-       	<p>{tr 0=$importFeedback.importedTags}%0 tags imported.{/tr}</p>
+       	<p>{tr _0=$importFeedback.importedTags}%0 tags imported.{/tr}</p>
 	{/if}
 	
 	{if isset($importFeedback.importedCategories)}
-       	<p>{tr 0=$importFeedback.importedCategories}%0 categories imported.{/tr}</p>
+       	<p>{tr _0=$importFeedback.importedCategories}%0 categories imported.{/tr}</p>
 	{/if}
 
     {if !empty($importErrors)}

@@ -2,10 +2,10 @@
 
 {if $prefs.feature_file_galleries eq 'y'}
 	{if !isset($tpl_module_title)}
-		{if isset($module_rows) && $module_rows gt 0 }
-			{eval var="{tr}Last `$module_rows` Podcasts{/tr}" assign="tpl_module_title"}
+		{if isset($module_rows) && $module_rows gt 0}
+			{capture assign=tpl_module_title}{tr _0=$module_rows}Last %0 Podcasts{/tr}{/capture}
 		{else}
-			{eval var="{tr}Newest Podcasts{/tr}" assign="tpl_module_title"}
+			{assign value="{tr}Newest Podcasts{/tr}" var="tpl_module_title"}
 		{/if}
 	{/if}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="last_podcasts" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}

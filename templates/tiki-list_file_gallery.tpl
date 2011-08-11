@@ -65,7 +65,7 @@
 		{/if}
 
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-			{button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=$galleryId&amp;cookietab=1"}
+			{button _keepall='y' _text="{tr}Create a File Gallery{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
 		{/if}
 
 		{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
@@ -74,18 +74,18 @@
 
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
-				{button _text="{tr}Browse Gallery{/tr}" href="?galleryId=$galleryId"}
+				{button _keepall='y' _text="{tr}Browse Gallery{/tr}" galleryId=$galleryId}
 			{else}
-				{button _text="{tr}Edit Gallery{/tr}" href="?edit_mode=1&amp;galleryId=$galleryId"}
+				{button _keepall='y' _text="{tr}Edit Gallery{/tr}" edit_mode="1" galleryId=$galleryId}
 			{/if}
 		{/if}
 
 		{if $edit_mode neq 'y' and $dup_mode neq 'y'}
 			{if $view eq 'browse' or $view eq 'admin'}
-				{button _text="{tr}List Gallery{/tr}" href="?view=list&amp;galleryId=$galleryId"}
+				{button __keepall='y' text="{tr}List Gallery{/tr}" view="list" galleryId=$galleryId}
 			{else}
 				{if $tiki_p_admin_file_galleries eq 'y'}
-					{button _text="{tr}Admin View{/tr}" href="?view=admin&amp;galleryId=$galleryId"}
+					{button _keepall='y' _text="{tr}Admin View{/tr}" view="admin" galleryId=$galleryId}
 				{/if}
 				{button _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId} {* no AJAX to make shadowbox work in browse view *}
 			{/if}
@@ -93,20 +93,20 @@
 
 		{if $tiki_p_assign_perm_file_gallery eq 'y'}
 			{assign var=objectName value=$name|escape:"url"}
-			{button _text="{tr}Permissions{/tr}" href="tiki-objectpermissions.php?objectName=$objectName&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId=$galleryId"}
+			{button _keepall='y' _text="{tr}Permissions{/tr}" href="tiki-objectpermissions.php" objectName=$objectName objectType='file+gallery' permType='file+galleries' objectId=$galleryId}
 		{/if}
 
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
 			{if $tiki_p_upload_files eq 'y'}
-				{button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php?galleryId=$galleryId"}
+				{button _keepall='y' _text="{tr}Upload File{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
 			{/if}
 			
 			{if $prefs.feature_draw eq 'y'}
-				{button _text="{tr}Create a drawing{/tr}" href="tiki-edit_draw.php?galleryId=$galleryId"}
+				{button _keepall='y' _text="{tr}Create a drawing{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
 			{/if}
 			
 			{if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-				{button _text="{tr}Directory Batch{/tr}" href="tiki-batch_upload_files.php?galleryId=$galleryId"}
+				{button _keepall='y' _text="{tr}Directory Batch{/tr}" href="tiki-batch_upload_files.php" galleryId=$galleryId}
 			{/if}
 		{/if}
 
@@ -117,7 +117,7 @@
 		{/if}
 
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-			{button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=-1&amp;galleryId=0"}
+			{button _keepall='y' _text="{tr}Create a File Gallery{/tr}" edit_mode="1" parentId="-1" galleryId="0"}
 		{/if}
 
 		{if $tiki_p_upload_files eq 'y'}
@@ -154,7 +154,7 @@
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}
-				{button _text=$watching_categories[i].name|escape href="tiki-browse_categories.php?parentId=`$watching_categories[i].categId`"}
+				{button _keepall='y' _text=$watching_categories[i].name|escape href="tiki-browse_categories.php" parentId=$watching_categories[i].categId}
 			{/section}
 		{/if}			
 	</div>

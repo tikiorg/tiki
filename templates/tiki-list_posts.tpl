@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Blogs"}{if isset($blogTitle)}{tr 0=$blogTitle}Blog: %0{/tr}{else}{tr}Blog{/tr}{/if}{/title}
+{title help="Blogs"}{if isset($blogTitle)}{tr _0=$blogTitle}Blog: %0{/tr}{else}{tr}Blog{/tr}{/if}{/title}
 
 <div class="navbar">
 	{button href="tiki-edit_blog.php" _text="{tr}Create Blog{/tr}"}

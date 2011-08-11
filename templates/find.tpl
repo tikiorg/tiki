@@ -208,7 +208,7 @@
 	</label>
 {/if}
 
-{if !empty($find_other) }
+{if !empty($find_other)}
 	<label class="find_other" for="find_other">
 		   {tr}{$find_other}{/tr}
 		   <input type="text" name="find_other" id="find_other" value="{$find_other_val|escape}"/>
