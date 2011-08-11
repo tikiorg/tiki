@@ -9,7 +9,11 @@ class Search_Formatter_ValueFormatter_Plain implements Search_Formatter_ValueFor
 {
 	function render($name, $value, array $entry)
 	{
-		return $value;
+		if (is_array($value)) {
+			return implode(', ', $value);
+		} else {
+			return $value;
+		}
 	}
 }
 

@@ -17,8 +17,14 @@ class Search_Formatter_ValueFormatter_Trackerrender implements Search_Formatter_
 		$field = $tracker->getField(substr($name, 14));
 		$field['value'] = $value;
 
+		$item = array();
+		if ($entry['object_type'] == 'trackeritem') {
+			$item['itemId'] = $entry['object_id'];
+		}
+
 		$trklib = TikiLib::lib('trk');
 		return '~np~' . $trklib->field_render_value(array(
+			'item' => $item,
 			'field' => $field,
 			'process' => 'y',
 		)) . '~/np~';
