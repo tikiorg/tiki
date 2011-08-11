@@ -48,7 +48,7 @@ class Search_Formatter_Plugin_WikiTemplate implements Search_Formatter_Plugin_In
 			$name = $match->getName();
 
 			if ($name === 'display') {
-				$match->replaceWith($this->processDisplay($valueFormatter, $match->getBody(), $match->getArguments()));
+				$match->replaceWith((string) $this->processDisplay($valueFormatter, $match->getBody(), $match->getArguments()));
 			}
 		}
 
