@@ -432,9 +432,11 @@ foreach ($languages as $ksel => $sel) {
 		writeFile_and_User ($fw, "// ### If a string ending with colon needs translating (like \"{tr}Login:{/tr}\")\n");
 		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Login' and ':' separately.\n");
 		writeFile_and_User ($fw, "// ### This allows to have only one translation for \"{tr}Login{/tr}\" and \"{tr}Login:{/tr}\"\n");
-		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that\n");
+		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \" :\" for languages that\n");
 		writeFile_and_User ($fw, "// ### need it (like French)\n");
-
+		writeFile_and_User ($fw, '// ### Note: the difference is invisible but " :" has an UTF-8 non-breaking-space, not a regular space nor the HTML &nbsp;.\n');
+		writeFile_and_User ($fw, "// ### This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.\n");
+		
 		// Start generating the lang array
 		writeFile_and_User ($fw, "\n\$lang=Array(\n");  
 	}
@@ -607,8 +609,7 @@ foreach ($languages as $ksel => $sel) {
 		if ('en' != $sel && !$nosections) {
 			writeFile_and_User ($fw, "// ### Start of unused words\n");
 			writeFile_and_User ($fw, "// ### Please remove manually!\n");
-			writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
-			writeFile_and_User ($fw, "// ### as unused!\n");
+			writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked as unused!\n");
 			writeFile_and_User ($fw, "// ### Please see http://tiki.org/UnusedWords for further info\n");
 		}
 		foreach ($unused as $key => $val) {
