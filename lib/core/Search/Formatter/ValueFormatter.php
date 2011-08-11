@@ -23,7 +23,7 @@ class Search_Formatter_ValueFormatter
 	{
 		$name = array_shift($arguments);
 
-		if (empty($this->valueSet[$name])) {
+		if (! isset($this->valueSet[$name]) || is_null($this->valueSet[$name])) {
 			return tr("No value for '%0'", $name);
 		}
 
