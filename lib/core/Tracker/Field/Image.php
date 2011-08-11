@@ -156,7 +156,7 @@ class Tracker_field_Image extends Tracker_Field_File
 				return '';
 			}
 		}
-		require_once $smarty->_get_plugin_filepath('function', 'html_image');
+		$smarty->loadPlugin('smarty_function_html_image');
 		$ret = smarty_function_html_image($params, $smarty);
 		if (!empty($pre))
 			$ret = $pre.$ret.'</a>';

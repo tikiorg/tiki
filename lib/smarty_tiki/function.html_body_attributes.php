@@ -17,7 +17,7 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 	$onload = '';
 	$class = '';
 	
-	$dblclickedit = $smarty->get_template_vars('dblclickedit');
+	$dblclickedit = $smarty->getTemplateVars('dblclickedit');
 	
 	if (isset($section) && $section == 'wiki page' && $prefs['user_dbl'] == 'y' and $dblclickedit == 'y' and $tiki_p_edit == 'y') {
 		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page='.rawurlencode($page).'\';"';

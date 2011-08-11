@@ -40,7 +40,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 	$default_icon_type = 'relative';
 
 	if ( $repeat ) return;
-	require_once $smarty->_get_plugin_filepath('function', 'query');
+	$smarty->loadPlugin('smarty_function_query');
 
 	if ( is_array($params) ) {
 
@@ -93,7 +93,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
 			if ( empty($params['_disabled']) ) {
 				if ( $params['_ajax'] === 'y' && $params['_script'] === '' ) {
-					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
+					$smarty->loadPlugin('smarty_block_ajax_href');
 					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'role_main';
 					if ( ! isset($params['_onclick']) ) $params['_onclick'] = '';
 					if ( ! isset($params['_template']) ) {
@@ -117,7 +117,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
 			if ( isset($params['_icon']) ) {
 				if ( ! isset($params['_title']) && $content != '' ) $params['_title'] = $content;
-				require_once $smarty->_get_plugin_filepath('function', 'icon');
+				$smarty->loadPlugin('smarty_function_icon');
 
 				$icon_params = array('_id' => $params['_icon'], '_type' => $default_icon_type);
 				if ( isset($params['_alt']) ) {
@@ -160,7 +160,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			$ret = "<a $link>".$content.'</a>';
 
 			if ( !empty($params['_sort_field']) ) {
-				require_once $smarty->_get_plugin_filepath('function', 'show_sort');
+				$smarty->loadPlugin('smarty_function_show_sort');
 				$ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
 						array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
 						$smarty

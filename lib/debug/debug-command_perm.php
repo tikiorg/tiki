@@ -46,7 +46,7 @@ class DbgPermissions extends DebuggerCommand
 		$mask = count($p) > 0 ? str_replace('$', '', trim($p[0])) : '';
 		// Get list of all vars
 		global $smarty;
-		$tpl_vars = $smarty->get_template_vars();
+		$tpl_vars = $smarty->getTemplateVars();
 		// Get descriptions for all permissions
 		global $userlib;
 		$pd = $userlib->get_permissions();

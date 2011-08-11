@@ -78,8 +78,8 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 			$attachment = TikiLib::lib('trk')->get_item_attachment($att_id);
 
 			$smarty = TikiLib::lib('smarty');
-			require_once $smarty->_get_plugin_filepath('block', 'self_link');
-			require_once $smarty->_get_plugin_filepath('function', 'icon');
+			$smarty->loadPlugin('smarty_block_self_link');
+			$smarty->loadPlugin('smarty_function_icon');
 
 			$link = smarty_block_self_link(array(
 												'_script' => 'tiki-download_item_attachment.php',

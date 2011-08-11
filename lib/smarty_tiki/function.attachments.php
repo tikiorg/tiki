@@ -49,7 +49,7 @@ function s_f_attachments_actionshandler( $params ) {
 					/* check_ticket('index'); */
 
 					global $smarty;
-					require_once $smarty->_get_plugin_filepath('function', 'query');
+					$smarty->loadPlugin('smarty_function_query');
 
 					$galleryId = $filegallib->get_attachment_gallery( $params['page'], 'wiki page' );
 					$filegallib->actionHandler( 'uploadFile', array(

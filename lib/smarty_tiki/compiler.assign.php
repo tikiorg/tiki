@@ -51,6 +51,7 @@ function smarty_compiler_assign($tag_attrs, &$compiler) {
 	//     and will be simply available in smarty as $myarray.foo.bar
 	//
 	if ( strpos($_params['var'], '.') !== false ) {
+		//FIXME
 		return "\$this->_tpl_vars[".str_replace('.', "']['", $_params['var'])."] = {$_params['value']};";
 	}
 

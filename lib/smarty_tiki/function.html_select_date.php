@@ -50,9 +50,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_html_select_date($params, &$smarty)
 {
 	global $tikilib; // TIKI
-	require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
-    require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
-    require_once $smarty->_get_plugin_filepath('function','html_options');
+    $smarty->loadPlugin('smarty_shared_escape_special_chars');
+    $smarty->loadPlugin('smarty_shared_make_timestamp');
+    $smarty->loadPlugin('smarty_function_html_options');
     /* Default values. */
     $prefix          = "Date_";
     $start_year      = strftime("%Y");

@@ -48,7 +48,7 @@ class DbgSPrint extends DebuggerCommand
 			$v = trim(str_replace("$", "", $v));
 
 			if (strlen($v) != 0) {
-				$tmp = $smarty->get_template_vars();
+				$tmp = $smarty->getTemplateVars();
 
 				if (is_array($tmp) && isset($tmp[$v]))
 					$result .= $v . ' = ' . print_r($tmp[$v], true). "\n";

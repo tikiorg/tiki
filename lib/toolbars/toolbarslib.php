@@ -360,12 +360,12 @@ abstract class Toolbar
 		return $this->label;
 	} // }}}
 
-	function getWysiwygToken() // {{{
+	function getWysiwygToken( $areaId ) // {{{
 	{
 		return $this->wysiwyg;
 	} // }}}
 	
-	function getSyntax() // {{{
+	function getSyntax( $areaId ) // {{{
 	{
 		return '';
 	} // }}}
@@ -619,7 +619,7 @@ class ToolbarInline extends Toolbar
 		return $tag;
 	} // }}}
 
-	function getSyntax() // {{{
+	function getSyntax( $areaId ) // {{{
 	{
 		return $this->syntax;
 	} // }}}
@@ -1269,7 +1269,7 @@ class ToolbarFileGallery extends Toolbar
 	
 	function getSyntax( $areaId ) {
 		global $smarty;
-		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
+		$smarty->loadPlugin('smarty_function_filegal_manager_url');
 		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\');';
 	}
 
@@ -1436,7 +1436,7 @@ class ToolbarWikiplugin extends Toolbar
 			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
 				global $headerlib,  $smarty, $prefs;
 				// can't do upload the cke way yet
-				//require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
+				//$smarty->loadPlugin('smarty_function_filegal_manager_url');
 				//$url =  smarty_function_filegal_manager_url(array('area_id'=> 'fgal_picker'), $smarty);
 				//$headerlib->add_js('CKEDITOR.config.filebrowserUploadUrl = "'.$url.'"', 5);
 				$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
@@ -1570,7 +1570,7 @@ class ToolbarSheet extends Toolbar
 		return $tag;
 	} // }}}
 
-	function getSyntax() // {{{
+	function getSyntax( $areaId ) // {{{
 	{
 		return $this->syntax;
 	} // }}}

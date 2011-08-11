@@ -78,7 +78,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$as_id = $params['id'];
 	
 	include_once('lib/smarty_tiki/block.remarksbox.php');
-	$editWarning = $prefs['wiki_timeout_warning'] == 'y' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox';
+	$tmp_var = $smarty->getTemplateVars('page');
+	$editWarning = $prefs['wiki_timeout_warning'] === 'y' && isset($tmp_var) && $tmp_var !== 'sandbox';
 	if ($params['_simple'] === 'n' && $editWarning) {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
@@ -153,7 +154,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true);
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 	
-		include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
+		$smarty->loadPlugin('smarty_function_toolbars');
 		$cktools = smarty_function_toolbars($params, $smarty);
 		$cktools = json_encode($cktools);
 		$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
@@ -256,7 +257,7 @@ function CKeditor_OnComplete() {
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
+		$smarty->assignByRef('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', $params['comments']);	// jb removed fallback to using _simple here if comments not set 110720
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 		$smarty->assign('toolbar_section', $params['section']);

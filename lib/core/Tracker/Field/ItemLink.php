@@ -95,7 +95,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$label = isset($list[$item]) ? $list[$item] : '';
 		}
 		if ($item && $context['list_mode'] !== 'csv' && $this->getOption(2)) {
-			require_once $smarty->_get_plugin_filepath('function', 'object_link');
+			$smarty->loadPlugin('smarty_function_object_link');
 
 			return smarty_function_object_link(array(
 				'type' => 'trackeritem',

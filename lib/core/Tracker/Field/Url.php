@@ -44,7 +44,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 		if (empty($url) || $context['list_mode'] == 'csv') {
 			return $url;
 		} else {
-			require_once $smarty->_get_plugin_filepath('function', 'object_link');
+			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(array(
 				'type' => 'external',
 				'id' => $url,

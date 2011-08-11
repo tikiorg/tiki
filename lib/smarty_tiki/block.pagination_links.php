@@ -72,9 +72,9 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	) ) return '';
 	if ( ! isset($params['reloff']) && ( $params['offset'] >= $params['cant'] + $zero_based_min || $params['offset'] < $zero_based_min ) ) return '';
 	// Include smarty functions used below
-	require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
-	require_once $smarty->_get_plugin_filepath('function', 'query');
-	require_once $smarty->_get_plugin_filepath('function', 'icon');
+	$smarty->loadPlugin('smarty_block_ajax_href');
+	$smarty->loadPlugin('smarty_function_query');
+	$smarty->loadPlugin('smarty_function_icon');
 
 	// Make sure every params are initialized
 	if ( ! isset($params['itemname']) ) $params['itemname'] = 'Page';

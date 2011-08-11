@@ -38,7 +38,7 @@ function smarty_function_debugger($params, &$smarty) {
 			if ($debugger->result_type() == TPL_RESULT) {
 				$smarty->assign('result_tpl', $debugger->result_tpl());
 		
-				$smarty->assign_by_ref('command_result', $command_result);
+				$smarty->assignByRef('command_result', $command_result);
 			} else {
 				$smarty->assign('command_result', $command_result);
 			}
@@ -77,7 +77,7 @@ function smarty_function_debugger($params, &$smarty) {
 		$c = getCookie('debugconsole', 'menu');
 		$smarty->assign('debugconsole_style', $c == 'o' ? 'display:block;' : 'display:none;');
 		
-		$smarty->assign_by_ref('tabs', $tabs);
+		$smarty->assignByRef('tabs', $tabs);
 		
 		$js = '';
 		if ($prefs['feature_jquery_ui'] == 'y') {

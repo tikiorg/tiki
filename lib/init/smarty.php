@@ -14,13 +14,29 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 require_once 'lib/setup/third_party.php';
 require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
+class Tiki_Security_Policy extends Smarty_Security {
+		public $php_modifiers = array( 'nl2br','escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr' );
+		public $php_functions = array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'json_encode', 'stristr', 'is_numeric', 'array' );
+		public $secure_dir = array(
+			'img/icons',
+			'img/icons2',
+			'img/flags',
+			'img/trackers',
+			'images/',
+			'pics/',
+			'pics/icons',
+			'pics/icons/mime',
+			'pics/large',
+		);
+}
+
 class Smarty_Tiki extends Smarty
 {
 	var $url_overriding_prefix_stack = null;
 	var $url_overriding_prefix = null;
 
 	function Smarty_Tiki($tikidomain = '') {
-		parent::Smarty();
+		parent::__construct();
 		global $prefs;
 
 		if ($tikidomain) { $tikidomain.= '/'; }
@@ -36,37 +52,12 @@ class Smarty_Tiki extends Smarty
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
 		);
-		$this->security = ( $prefs['smarty_security'] == 'y' );
 
-		// In general, it's better that use_sub_dirs = false
-		// If ever you are on a very large/complex/multilingual site and your
-		// templates_c directory is > 10 000 files, (you can check at tiki-admin_system.php)
-		// you can change to true and maybe you will get better performance.
-		// http://smarty.php.net/manual/en/variable.use.sub.dirs.php
-		//
-		$this->use_sub_dirs = false;
-
-		$this->security_settings['MODIFIER_FUNCS'] = array_merge(
-			$this->security_settings['MODIFIER_FUNCS'],
-			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr' )
-		);
-		$this->security_settings['IF_FUNCS'] = array_merge(
-			$this->security_settings['IF_FUNCS'],
-			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'in_array', 'json_encode', 'stristr', 'is_numeric' )
-		);
-		$this->secure_dir = array(
-			'img/icons',
-			'img/icons2',
-			'img/flags',
-			'img/trackers',
-			'images/',
-			'pics/',
-			'pics/icons',
-			'pics/icons/mime',
-			'pics/large',
-		);
-		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
-
+		if ( $prefs['smarty_security'] == 'y' ) {
+			$this->enableSecurity('Tiki_Security_Policy');
+		} else {
+			$this->disableSecurity();
+		}
 		$this->url_overriding_prefix_stack = array();
 	}
 
@@ -93,8 +84,8 @@ class Smarty_Tiki extends Smarty
 		$smarty_orig_values = array();
 		if ( is_array( $override_vars ) ) {
 			foreach ( $override_vars as $k => $v ) {
-				$smarty_orig_values[ $k ] =& $this->get_template_vars( $k );
-				$this->assign_by_ref($k, $override_vars[ $k ]);
+				$smarty_orig_values[ $k ] =& $this->getTemplateVars( $k );
+				$this->assignByRef($k, $override_vars[ $k ]);
 			}
 		}
 
@@ -103,7 +94,7 @@ class Smarty_Tiki extends Smarty
 		// Restore original values of smarty variables
 		if ( count( $smarty_orig_values ) > 0 ) {
 			foreach ( $smarty_orig_values as $k => $v ) {
-				$this->assign_by_ref($k, $smarty_orig_values[ $k ]);
+				$this->assignByRef($k, $smarty_orig_values[ $k ]);
 			}
 		}
 
@@ -111,10 +102,10 @@ class Smarty_Tiki extends Smarty
 		return $return;
 	}
 
-	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
+	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false) {
 		global $prefs, $style_base, $tikidomain, $zoom_templates;
 
-		if ( ($tpl = $this->get_template_vars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
+		if ( ($tpl = $this->getTemplateVars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 
 			// Set the last mid template to be used by AJAX to simulate a 'BACK' action
 			if ( isset($_SESSION['last_mid_template']) ) {
@@ -125,7 +116,7 @@ class Smarty_Tiki extends Smarty
 			$_SESSION['last_mid_php'] = $_SERVER['REQUEST_URI'];
 
 			// set the first part of the browser title for admin pages
-			if (!isset($this->_tpl_vars['headtitle'])) {
+			if (!isset($this->getGlobal['headtitle'])) {
 				$script_name = basename($_SERVER['SCRIPT_NAME']);
 				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
 					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
@@ -160,7 +151,7 @@ class Smarty_Tiki extends Smarty
 			if ( $_smarty_tpl_file == 'tiki-print.tpl' ) {
 				$this->assign('print_page', 'y');
 			}
-			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
+			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id, $parent);//must get the mid because the modules can overwrite smarty variables
 
 			$this->assign('mid_data', $data);
 
@@ -202,7 +193,15 @@ class Smarty_Tiki extends Smarty
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
-		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
+		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $parent, $_smarty_display);
+	}
+
+	function clear_assign($var) {
+		return parent::clearAssign($var);
+	}
+
+	function assign_by_ref($var,&$value) {
+		return parent::assignByRef($var,$value);
 	}
 
 	/* fetch in a specific language  without theme consideration */
@@ -222,12 +221,12 @@ class Smarty_Tiki extends Smarty
 		$_smarty_cache_id = $lg . $_smarty_cache_id;
 		$_smarty_compile_id = $lg . $_smarty_compile_id;
 		$this->_compile_id = $lg . $_smarty_compile_id; // not pretty but I don't know how to change id for get_compile_path
-		$isCompiled = $this->_is_compiled($_smarty_tpl_file, $this->_get_compile_path($_smarty_tpl_file));
+		$isCompiled = $this->getCompiledFilepath($_smarty_tpl_file);
 		if (!$isCompiled) {
 			$lgSave = $prefs['language'];
 			$prefs['language'] = $lg;
 		}
-		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
+		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, null, $_smarty_display);
 		if (!$isCompiled) {
 			$prefs['language'] = $lgSave;
 		}
@@ -248,7 +247,7 @@ class Smarty_Tiki extends Smarty
 		}
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
-		return parent::is_cached($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id);
+		return parent::isCached($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id);
 	}
 	function clear_cache($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_exp_time=null) {
 		global $prefs, $style_base, $tikidomain;
@@ -264,11 +263,12 @@ class Smarty_Tiki extends Smarty
 		}
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
-		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
+		return parent::clearCache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
 	}
 	function display($resource_name, $cache_id=null, $compile_id = null, $content_type = 'text/html; charset=utf-8') {
 
 		global $prefs;
+
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			static $loaded = false;
 			static $purifier = null;
@@ -293,6 +293,7 @@ class Smarty_Tiki extends Smarty
 			return $purifier->purify(parent::display($resource_name, $cache_id, $compile_id));
 		} else {
 			return parent::display($resource_name, $cache_id, $compile_id);
+
 		}
 	}
 	// Returns the file name associated to the template name
@@ -326,29 +327,33 @@ class Smarty_Tiki extends Smarty
 
 if (!isset($tikidomain)) { $tikidomain = ''; }
 $smarty = new Smarty_Tiki($tikidomain);
-$smarty->load_filter('pre', 'tr');
-$smarty->load_filter('pre', 'jq');
+$smarty->loadFilter('pre', 'tr');
+$smarty->loadFilter('pre', 'jq');
+//$smarty->auto_literal = false;
+//$smarty->debugging = true;
+//$smarty->registerFilter('pre', 'jq');
+//$smarty->registerFilter('pre', 'tr');
 
 include_once('lib/smarty_tiki/resource.tplwiki.php');
-$smarty->register_resource('tplwiki', array('smarty_resource_tplwiki_source', 'smarty_resource_tplwiki_timestamp', 'smarty_resource_tplwiki_secure', 'smarty_resource_tplwiki_trusted'));
+$smarty->registerResource('tplwiki', array('smarty_resource_tplwiki_source', 'smarty_resource_tplwiki_timestamp', 'smarty_resource_tplwiki_secure', 'smarty_resource_tplwiki_trusted'));
 
 include_once('lib/smarty_tiki/resource.wiki.php');
-$smarty->register_resource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
+$smarty->registerResource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
 
 global $prefs;
 // Assign the prefs array in smarty, by reference
-$smarty->assign_by_ref('prefs', $prefs);
+$smarty->assignByRef('prefs', $prefs);
 
 // Define the special maxRecords global var
 $maxRecords = $prefs['maxRecords'];
-$smarty->assign_by_ref('maxRecords', $maxRecords);
+$smarty->assignByRef('maxRecords', $maxRecords);
 
 if ($prefs['log_tpl'] == 'y') {
-	$smarty->load_filter('pre', 'log_tpl');
+	$smarty->loadFilter('pre', 'log_tpl');
 }
 if ( $prefs['feature_sefurl_filter'] == 'y' ) {
   require_once ('tiki-sefurl.php');
-  $smarty->register_outputfilter('filter_out_sefurl');
+  $smarty->registerFilter('output','filter_out_sefurl');
 }
 
 // temp assigns for textarea row/cols that used to depend on

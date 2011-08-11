@@ -31,8 +31,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib, $tabset_index, $tikilib;
 
-
-	if ($smarty->get_template_vars('print_page') == 'y' || $prefs['layout_tabs_optional'] === 'n') {
+	if ($smarty->getTemplateVars('print_page') == 'y' || $prefs['layout_tabs_optional'] === 'n') {
 		$params['toggle'] = 'n';
 	}
 	if ( $repeat ) {
@@ -79,7 +78,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		//closing
 		if ( $prefs['feature_tabs'] == 'y') {
 			if (empty($params['toggle']) || $params['toggle'] != 'n') {
-				require_once $smarty->_get_plugin_filepath('function','button');
+				$smarty->loadPlugin('smarty_function_button');
 				if ($cookietab == 'n') {
 					$button_params['_text'] = tra('Tab View');
 				} else {

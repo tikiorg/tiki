@@ -25,7 +25,7 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 	$strings = json_encode( $strings );
 	
 	// add wrench icon link
-	require_once $smarty->_get_plugin_filepath('block', 'self_link');
+	$smarty->loadPlugin('smarty_block_self_link');
 	$help .= smarty_block_self_link(
 		array( '_icon'=>'wrench',
 			   '_script'=>'tiki-edit_languages.php',

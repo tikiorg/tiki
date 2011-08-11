@@ -529,7 +529,7 @@ class WikiRenderer
 	{
 		global $smarty;
 		if( ! array_key_exists( $name, $this->smartyRestore ) )
-			$this->smartyRestore[$name] = $smarty->get_template_vars($name);
+			$this->smartyRestore[$name] = $smarty->getTemplateVars($name);
 
 		$smarty->assign( $name, $value );
 	} // }}}

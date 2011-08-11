@@ -29,7 +29,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_html_select_duration($params, &$smarty)
 {
 	global $smarty;
-	require_once $smarty->_get_plugin_filepath('function','html_options');
+	$smarty->loadPlugin('smarty_function_html_options');
 	$html_result = '';
 	$default = array('prefix'=>'Duration_', 'default_unit'=>'week', 'default'=>'', 'default_value'=>'');
 	$params = array_merge($default, $params);

@@ -34,10 +34,10 @@ function smarty_function_toolbars($params, &$smarty)
 	}
 	
 	// some non-converted <textareas> expect $rows and $cols set in smarty (transitional for 6)
-	if (!isset($smarty->_tpl_vars['rows'])) {
+	if ( null === $smarty->getTemplateVars('rows') ) {
 		$smarty->assign('rows', 20);
 	}
-	if (!isset($smarty->_tpl_vars['cols'])) {
+	if ( null === $smarty->getTemplateVars('cols') ) {
 		$smarty->assign('cols', 80);
 	}
 	

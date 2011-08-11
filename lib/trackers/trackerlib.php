@@ -3183,7 +3183,7 @@ class TrackerLib extends TikiLib
 		$smarty = TikiLib::lib('smarty');
 		$s_var = null;
 		if (!empty($matches[1])) { 
-			$s_var = $smarty->get_template_vars($matches[1]);
+			$s_var = $smarty->getTemplateVars($matches[1]);
 		}
 		if (!is_null($s_var)) {
 			$r = $s_var;

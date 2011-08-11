@@ -31,7 +31,7 @@ function smarty_function_tree($params, &$smarty) {
 		$name = $params['data']['name'];
 		$link_id = 'id';
 		$link_var = 'galleryId';
-		require_once $smarty->_get_plugin_filepath('function', 'icon');
+		$smarty->loadPlugin('smarty_function_icon');
 		$icon = '&nbsp;' . smarty_function_icon(array('_id' => 'folder'), $smarty) . '&nbsp;';
 		
 		$tree_nodes = array(
@@ -42,7 +42,7 @@ function smarty_function_tree($params, &$smarty) {
 			)
 		);
 		$root_id = $params['data']['id'];
-		require_once $smarty->_get_plugin_filepath('block', 'self_link');
+		$smarty->loadPlugin('smarty_block_self_link');
 		foreach($params['data']['data'] as $d) {
 			$link_params = array('_script' => $link, $link_var => $d[$link_id], '_class' => 'fgalname');
 			if (!empty($_REQUEST['filegals_manager'])) {

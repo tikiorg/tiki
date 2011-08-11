@@ -72,6 +72,6 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 	$smarty->assign('remarksbox_icon', $icon);
 	$smarty->assign('remarksbox_close', $close);
 	$smarty->assign('remarksbox_width', $width);
-	$smarty->assign_by_ref('remarksbox_content', $content);
+	$smarty->assignByRef('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }

@@ -391,7 +391,7 @@ function wikiplugin_img_info() {
 														break;
 													case 'module_*':
 														if( !empty($smarty) ) {
-															$image_module_params = $smarty->get_template_vars('module_params');
+															$image_module_params = $smarty->getTemplateVars('module_params');
 															if( !empty($image_module_params) ) $img_condition_status = true;
 														}
 														break;
@@ -402,7 +402,7 @@ function wikiplugin_img_info() {
 														if( !empty($section) ) {
 															if( $section == 'cms' ) {
 																if( !empty($smarty) ) {
-																	$image_article_type = $smarty->get_template_vars('type');
+																	$image_article_type = $smarty->getTemplateVars('type');
 																	if( !empty($image_article_type) ) {
 																		if( strtolower(trim($image_article_type)) == 'article' ) $img_condition_status = true;
 																	} // if(!empty($image_article_type))
@@ -414,7 +414,7 @@ function wikiplugin_img_info() {
 														if( !empty($section) ) {
 															if( $section == 'cms' ) {
 																if( !empty($smarty) ) {
-																	$image_article_type = $smarty->get_template_vars('type');
+																	$image_article_type = $smarty->getTemplateVars('type');
 																	if( !empty($image_article_type) ) {
 																		if( strtolower(trim($image_article_type)) == 'review' ) $img_condition_status = true;
 																	} // if(!empty($image_article_type))
@@ -426,7 +426,7 @@ function wikiplugin_img_info() {
 														if( !empty($section) ) {
 															if( $section == 'cms' ) {
 																if( !empty($smarty) ) {
-																	$image_article_type = $smarty->get_template_vars('type');
+																	$image_article_type = $smarty->getTemplateVars('type');
 																	if( !empty($image_article_type) ) {
 																		if( strtolower(trim($image_article_type)) == 'event' ) $img_condition_status = true;
 																	} // if(!empty($image_article_type))
@@ -438,7 +438,7 @@ function wikiplugin_img_info() {
 														if( !empty($section) ) {
 															if( $section == 'cms' ) {
 																if( !empty($smarty) ) {
-																	$image_article_type = $smarty->get_template_vars('type');
+																	$image_article_type = $smarty->getTemplateVars('type');
 																	if( !empty($image_article_type) ) {
 																		if( strtolower(trim($image_article_type)) == 'classified' ) $img_condition_status = true;
 																	} // if(!empty($image_article_type))
@@ -1135,7 +1135,7 @@ function wikiplugin_img_info() {
 			if ($imgdata['thumb'] == 'mousesticky') {
 				$popup_params['sticky'] = true;
 			}
-			require_once $smarty->_get_plugin_filepath('function', 'popup');
+			$smarty->loadPlugin('smarty_function_popup');
 			$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
 		} else {
 			if (!empty($imgdata['fileId']) && $imgdata['thumb'] != 'download' && empty($urldisp)) {

@@ -89,7 +89,7 @@ function smarty_function_icon($params, &$smarty) {
 	global $url_path, $base_url, $tikipath, $tikilib;
 
 	// Include smarty functions used below
-	require_once $smarty->_get_plugin_filepath('function', 'html_image');
+	$smarty->loadPlugin('smarty_function_html_image');
 
 	// auto-detect 'alt' param if not set
 	if ( ! isset($params['alt']) ) {

@@ -238,7 +238,7 @@ EOF;
 	$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
 	
 	if( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
-		require_once $smarty->_get_plugin_filepath('function','button');
+		$smarty->loadPlugin('smarty_function_button');
 		
 		//If you've given the sheet a url, you can't edit it, disable if not possible
 		if (!isset($url)) {

@@ -205,7 +205,7 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 	function renderEntries($entries, $count, $offset, $maxRecords)
 	{
 		global $smarty;
-		require_once $smarty->_get_plugin_filepath('block', 'pagination_links');
+		$smarty->loadPlugin('smarty_block_pagination_links');
 		$pagination = smarty_block_pagination_links(array('cant' => $count, 'offset' => $offset, 'step' => $maxRecords), '', $smarty, false);
 
 		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {

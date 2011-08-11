@@ -31,7 +31,7 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 	if ( $repeat ) {
 		return;
 	} else {
-		$print_page = $smarty->get_template_vars('print_page');
+		$print_page = $smarty->getTemplateVars('print_page');
 
 		if ($print_page != 'y') {
 			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']) + 1;

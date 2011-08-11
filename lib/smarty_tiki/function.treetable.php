@@ -180,7 +180,7 @@ function smarty_function_treetable($params, &$smarty) {
 */
 
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
-		require_once($smarty->_get_plugin_filepath('function', 'listfilter'));
+		$smarty->loadPlugin('smarty_function_listfilter');
 		$html .= smarty_function_listfilter(
 			array('id' => $id.'_filter',
 				  'selectors' => "#$id tbody tr:not(.parent)",
@@ -189,7 +189,7 @@ function smarty_function_treetable($params, &$smarty) {
 	}
 
 	if ($_openall == 'y') {
-		require_once($smarty->_get_plugin_filepath('function', 'icon'));
+		$smarty->loadPlugin('smarty_function_icon');
 		$html .= '&nbsp;' . smarty_function_icon(
 			array('_id' => 'folder',
 				'id' => $id.'_openall',
@@ -223,7 +223,7 @@ $("#'.$id.'_openall").click( function () {
 	}
 	
 	if ($_showSelected == 'y') {
-		require_once($smarty->_get_plugin_filepath('function', 'icon'));
+		$smarty->loadPlugin('smarty_function_icon');
 		$html .= ' <input type="checkbox" id="'.$id.'_showSelected" title="'.tra('Show only selected').'" />';
 		$html .= ' ' . tra('Show only selected');
 				

@@ -99,7 +99,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
 			$groupIds = $this->getOption(2, '');
 
-			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
+			$smarty->loadPlugin('smarty_function_user_selector');
 			return smarty_function_user_selector(
 					array(	'user' => $value,
 							'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
@@ -110,7 +110,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 							'groupIds' => $groupIds,
 					), $smarty);
 		} else {
-			require_once $smarty->_get_plugin_filepath('modifier', 'username');
+			$smarty->loadPlugin('smarty_modifier_username');
 			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
 		}
 	}
@@ -121,7 +121,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		if (empty($value)) {
 			return '';
 		} else {
-			require_once TikiLib::lib('smarty')->_get_plugin_filepath('modifier', 'username');
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
 			return smarty_modifier_username( $value );
 		}
 	}

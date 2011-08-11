@@ -239,7 +239,7 @@ function wikiplugin_articles($data, $params)
 				$paramsnext[$arg] = $$arg;
 		}
 		$paramsnext['_type'] = 'absolute_path';
-		require_once $smarty->_get_plugin_filepath('function', 'query');
+		$smarty->loadPlugin('smarty_function_query');
 		$urlnext = smarty_function_query($paramsnext, $smarty);
 	}
 

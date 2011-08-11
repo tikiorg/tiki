@@ -32,7 +32,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	if ( ! isset($params['help']) ) $params['help'] = '';
 	if ( ! isset($params['admpage']) ) $params['admpage'] = '';
 	if ( ! isset($params['url']) ) {
-		require_once $smarty->_get_plugin_filepath('function', 'query');
+		$smarty->loadPlugin('smarty_function_query');
 		$params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
 	}
 
@@ -55,18 +55,18 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	$html = '<h1>';
 	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . htmlspecialchars($content) . "</a>\n";
 
-	if ($smarty->get_template_vars('print_page') != 'y') {
+	if ($smarty->getTemplateVars('print_page') != 'y') {
 		if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
 			$html .= '<a href="' . $prefs['helpurl'] . rawurlencode($params['help']) . '" class="titletips" title="' . tra('Help page:') . ' ' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('_id' => 'help') , $smarty)
 			. "</a>\n";
 		}
 
-		if ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates == 'y' && ($tpl = $smarty->get_template_vars('mid'))) {
+		if ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates == 'y' && ($tpl = $smarty->getTemplateVars('mid'))) {
 			$html .= '<a href="tiki-edit_templates.php?template=' . $tpl . '" class="titletips" title="' . tra('View or edit tpl:') . ' ' . htmlspecialchars($content) . '">' 
 			. smarty_function_icon(array('_id' => 'shape_square_edit', 'alt' => tra('Edit Template')), $smarty)
 			. "</a>\n";
-		} elseif ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y' && ($tpl = $smarty->get_template_vars('mid'))) {
+		} elseif ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y' && ($tpl = $smarty->getTemplateVars('mid'))) {
 			$html .= '<a href="tiki-edit_templates.php?template=' . $tpl . '" class="titletips" title="' . tra('View tpl:') . ' ' . htmlspecialchars($content) . '">' 
 			. smarty_function_icon(array('_id' => 'shape_square', 'alt' => tra('View Template')), $smarty)
 			. "</a>\n";

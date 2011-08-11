@@ -39,7 +39,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 
 	if (!isset($params['show']) or $params['show'] == 'y') {
 		global $headerlib;
-		require_once $smarty->_get_plugin_filepath('block', 'self_link');
+		$smarty->loadPlugin('smarty_block_self_link');
 		$self_link_params['_alt'] = tra('Click for Help');
 		$self_link_params['_icon'] = 'help';
 		$self_link_params['_ajax'] = 'n';

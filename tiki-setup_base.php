@@ -542,7 +542,7 @@ if ($tiki_p_trust_input != 'y') {
 	unset($tmp);
 }
 
-if ($prefs['tiki_check_file_content'] == 'y' && count($_FILES)) {
+if ( isset($prefs['tiki_check_file_content']) && $prefs['tiki_check_file_content'] == 'y' && count($_FILES)) {
 	if ($finfo = new finfo(FILEINFO_MIME)) {
 
 		foreach ($_FILES as $key => & $upload_file_info) {
@@ -571,7 +571,7 @@ unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
 // --------------------------------------------------------------
 if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y')) {
-	$smarty->load_filter('output', 'highlight');
+	$smarty->registerFilter('output', 'highlight');
 }
 if (function_exists('mb_internal_encoding')) {
 	mb_internal_encoding("UTF-8");

@@ -368,7 +368,7 @@ function initialize_prefs() {
 		// Unserialize serialized preferences
 		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
 			foreach ( $_SESSION['serialized_prefs'] as $p ) {
-				if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = unserialize($modified[$p]);
+				if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = @unserialize($modified[$p]);
 			}
 		}
 

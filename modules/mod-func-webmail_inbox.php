@@ -155,7 +155,7 @@ function webmail_refresh() {	// called in ajax mode
 	}
 	
 	if (!$webmail_account) {
-		require_once $smarty->_get_plugin_filepath('function', 'icon');
+		$smarty->loadPlugin('smarty_function_icon');
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
 		$smarty->assign('error', tra('No accounts set up (or no current account set)').'&nbsp;'.
 			'<a href="tiki-webmail.php?locSection=settings">'.smarty_function_icon(array('_id'=>'arrow_right'), $smarty)).'</a>';

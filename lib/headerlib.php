@@ -672,4 +672,4 @@ class HeaderLib
 }
 
 $headerlib = new HeaderLib;
-$smarty->assign_by_ref('headerlib', $headerlib);
+$smarty->assignByRef('headerlib', $headerlib);

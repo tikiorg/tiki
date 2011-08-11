@@ -159,7 +159,7 @@ class DbgCmd_Watch extends DebuggerCommand
 		$result = '';
 
 		if (strlen($v) != 0) {
-			$tmp = $smarty->get_template_vars();
+			$tmp = $smarty->getTemplateVars();
 
 			if (is_array($tmp) && isset($tmp[$v]))
 				$result .= print_r($tmp[$v], true). "\n";

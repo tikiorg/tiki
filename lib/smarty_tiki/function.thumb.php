@@ -26,7 +26,7 @@ function smarty_function_thumb($params, &$smarty) {
 	if ( ! isset($params['_max']) ) $params['_max'] = $prefs['fgal_thumb_max_size']; // default thumbnail size
 
 	// Include smarty functions used below
-	require_once $smarty->_get_plugin_filepath('function', 'html_image');
+	$smarty->loadPlugin('smarty_function_html_image');
 
 // Smarty html_image has some problems to detect height and width of such a file...
 //	$html = smarty_function_html_image(array(

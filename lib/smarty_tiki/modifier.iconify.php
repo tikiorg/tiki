@@ -19,11 +19,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Purpose:  Returns a filetype icon if the filetype is known and there's an icon in pics/icons/mime. Returns a default file type icon in any other case
  * -------------------------------------------------------------
  */
-require_once $smarty->_get_plugin_filepath('function', 'icon');
 
 function smarty_modifier_iconify($string, $filetype = null)
 {
   global $smarty;
+
+  $smarty->loadPlugin('smarty_function_icon');
   $ext = strtolower(substr($string, strrpos($string, '.') + 1));
   $icon = file_exists("pics/icons/mime/$ext.png") ? $ext : 'default';
 

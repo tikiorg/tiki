@@ -118,7 +118,7 @@ class AjaxLib
 		//$objResponse->setCharacterEncoding('UTF-8');
 
 		
-		$confirmation_text = $smarty->get_template_vars('confirmation_text');
+		$confirmation_text = $smarty->getTemplateVars('confirmation_text');
 
 		if ( $last_user != $user ) {
 
@@ -128,14 +128,14 @@ class AjaxLib
 		} elseif ( $this->templateIsRegistered($template) ) {
 
 			$content = '';
-			if ($smarty->get_template_vars('mid') == $template) {
-				$content = $smarty->get_template_vars('mid_data');
+			if ($smarty->getTemplateVars('mid') == $template) {
+				$content = $smarty->getTemplateVars('mid_data');
 			}
 			if (empty($content)) {
 				$content = $smarty->fetch($template);
 			}
 			// Help
-			require_once $smarty->_get_plugin_filepath('function', 'show_help');
+			$smarty->loadPlugin('smarty_function_show_help');
 			$content .= smarty_function_show_help(null,$smarty);
 			// Handle TikiTabs in order to display only the current tab in the XAJAX response
 			// This has to be done here, since it is tikitabs() is usually called when loading the <body> tag
@@ -170,7 +170,7 @@ class AjaxLib
 //			if ( $prefs['feature_ticketlib2'] == 'y' ) {
 //				$objResponse->confirmCommands(1, $confirmation_text);
 //				$params['daconfirm'] = 'y';
-//				$params['ticket'] = $smarty->get_template_vars('ticket');
+//				$params['ticket'] = $smarty->getTemplateVars('ticket');
 //			}
 //
 //			require_once('lib/smarty_tiki/block.self_link.php');

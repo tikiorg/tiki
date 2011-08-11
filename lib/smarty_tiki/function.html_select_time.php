@@ -34,8 +34,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_html_select_time($params, &$smarty)
 {
 	global $tikilib;
-	require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
-	require_once $smarty->_get_plugin_filepath('function','html_options');
+	$smarty->loadPlugin('smarty_shared_make_timestamp');
+	$smarty->loadPlugin('smarty_function_html_options');
 	/* Default values. */
 	$prefix             = "Time_";
 	$time               = time();

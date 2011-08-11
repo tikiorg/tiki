@@ -16,7 +16,7 @@ function smarty_function_show_sort($params, &$smarty) {
 
 	if ( isset($_REQUEST[$params['sort']]) ) {
 		$p =  $_REQUEST[$params['sort']];
-	} elseif ( $s = $smarty->get_template_vars($params['sort']) ) {
+	} elseif ( $s = $smarty->getTemplateVars($params['sort']) ) {
 		$p = $s;
 	}
 
@@ -25,7 +25,7 @@ function smarty_function_show_sort($params, &$smarty) {
 		$order = substr($p, strrpos($p, '_') + 1);
 
 		if ( strtolower($prop) == strtolower(trim($params['var'])) ) {
-			require_once $smarty->_get_plugin_filepath('function', 'icon');
+			$smarty->loadPlugin('smarty_function_icon');
 			$icon_params = array('alt' => tra('Invert Sort'), 'style' => 'vertical-align:middle');
 
 			switch( $order ) {

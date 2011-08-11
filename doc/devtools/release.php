@@ -326,6 +326,30 @@ function check_smarty_syntax(&$error_msg) {
 	if ( $templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/' )
 		$templates_dir = substr($templates_dir, 0, --$templates_dir_length);
 	$temp_compile_file = TEMP_DIR . 'smarty_compiled_content';
+	$smarty->compileAllTemplates('.tpl', true);
+}
+
+function check_smarty_syntax2(&$error_msg) {
+	global $tikidomain, $prefs, $smarty;
+	$tikidomain = '';
+
+	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
+	$prefs = array(
+		'lang_use_db' => 'n',
+		'language' => 'en',
+		'site_language' => 'en',
+		'feature_ajax' => 'n'
+	);
+
+	// Load Tiki Smarty
+	require_once 'lib/init/smarty.php';
+	set_error_handler('check_smarty_syntax_error_handler');
+
+	$templates_dir = $smarty->template_dir;
+	$templates_dir_length = strlen($templates_dir);
+	if ( $templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/' )
+		$templates_dir = substr($templates_dir, 0, --$templates_dir_length);
+	$temp_compile_file = TEMP_DIR . 'smarty_compiled_content';
 
 	$entries = array();
 	get_files_list($templates_dir, $entries, '/\.tpl$/');

@@ -28,7 +28,7 @@ function smarty_function_var_dump($params, &$smarty)
 	//
 	$v = $params['var'];
 	if (!empty($v)) {
-		$tmp = $smarty->get_template_vars();
+		$tmp = $smarty->getTemplateVars();
 		if (is_array($tmp) && isset($tmp["$v"])) {
 			if (is_string($tmp[$v])) {
 				$debugger->msg("Smarty var_dump(".$v.') = '.print_r($tmp[$v], true));

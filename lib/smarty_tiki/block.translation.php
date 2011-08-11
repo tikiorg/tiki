@@ -30,7 +30,7 @@ function smarty_block_translation($params, $content, &$smarty)
 {
     if (isset($content)) {
         $lang = $params['lang'];
-	if ($smarty->get_template_vars('language') == $lang) {
+	if ($smarty->getTemplateVars('language') == $lang) {
 	    return $content;
 	} else {
 	    return '';

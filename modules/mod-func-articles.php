@@ -97,7 +97,7 @@ function module_articles( $mod_reference, $module_params ) {
 		'sort' => null
 	);
 	if (isset($module_params['topicId']) && $module_params['topicId'] == 0 && ($object = current_object()) && $object['type'] == 'article') {
-		$topicId = $smarty->get_template_vars('topicId');
+		$topicId = $smarty->getTemplateVars('topicId');
 	}
 	
 	foreach ( $urlParams as $p => $v ) {

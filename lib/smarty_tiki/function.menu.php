@@ -41,11 +41,11 @@ function smarty_function_menu($params, &$smarty)
 	if (empty($translate)) {
 		$translate = 'y';
 	}
-	$smarty->assign_by_ref('translate', $translate);
+	$smarty->assignByRef('translate', $translate);
 	if (empty($menu_cookie)) {
 		$menu_cookie = 'y';
 	}
-	$smarty->assign_by_ref('menu_cookie', $menu_cookie);
+	$smarty->assignByRef('menu_cookie', $menu_cookie);
 	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
 		if (empty($type)) {

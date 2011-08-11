@@ -24,7 +24,7 @@ class Search_Formatter_ValueFormatter_Reference implements Search_Formatter_Valu
 	function render($name, $value, array $entry)
 	{
 		global $smarty;
-		require_once $smarty->_get_plugin_filepath('function', 'object_link');
+		$smarty->loadPlugin('smarty_function_object_link');
 
 		foreach ((array) $value as $id) {
 			$params = array(

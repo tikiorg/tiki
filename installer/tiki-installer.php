@@ -173,7 +173,7 @@ class Smarty_Tiki_Installer extends Smarty
 {
 
 	function Smarty_Tiki_Installer($tikidomain) {
-		parent::Smarty();
+		parent::__construct();
 		if ($tikidomain) {
 			$tikidomain .= '/'; 
 		}
@@ -204,11 +204,11 @@ class Smarty_Tiki_Installer extends Smarty
 		//$this->debug_tpl = 'debug.tpl';
 	}
 
-	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
+	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false) {
 		global $language;
 		$_smarty_cache_id = $language . $_smarty_cache_id;
 		$_smarty_compile_id = $language . $_smarty_compile_id;
-		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
+		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $parent, $_smarty_display);
 	}
 }
 
@@ -590,8 +590,9 @@ $_SESSION["install-logged-$multi"] = 'y';
 // Init smarty
 global $tikidomain;
 $smarty = new Smarty_Tiki_Installer($tikidomain);
-$smarty->load_filter('pre', 'tr');
-$smarty->load_filter('output', 'trimwhitespace');
+$smarty->loadFilter('pre', 'tr');
+$smarty->loadFilter('output', 'trimwhitespace');
+$smarty->auto_literal = false;
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('virt', isset($virt) ? $virt : null );
 $smarty->assign('multi', isset($multi) ? $multi : null );
@@ -613,7 +614,7 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 $dbservers = array();
 if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli)');
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
-$smarty->assign_by_ref('dbservers', $dbservers);
+$smarty->assignByRef('dbservers', $dbservers);
 
 $errors = '';
 
@@ -663,7 +664,7 @@ include('lib/tikilib.php');
 
 // Get list of available languages
 $languages = TikiLib::list_languages(false, null, true);
-$smarty->assign_by_ref("languages", $languages);
+$smarty->assignByRef("languages", $languages);
 
 $client_charset = '';
 
@@ -877,7 +878,7 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	exit;
 }
 
-$smarty->assign_by_ref('tikifeedback', $tikifeedback);
+$smarty->assignByRef('tikifeedback', $tikifeedback);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
@@ -1045,11 +1046,11 @@ jqueryTiki.effect_tabs_speed = 400;
 $headerlib->add_js($js, 100);
 
 
-$smarty->assign_by_ref('headerlib',$headerlib);
+$smarty->assignByRef('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);
 $smarty->assign('install_type', $install_type);
-$smarty->assign_by_ref('prefs', $prefs);
+$smarty->assignByRef('prefs', $prefs);
 $smarty->assign('detected_https',isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {

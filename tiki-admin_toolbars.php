@@ -78,20 +78,20 @@ if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 if( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
-	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	$smarty->loadPlugin('smarty_function_query');
 	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
 if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
-	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	$smarty->loadPlugin('smarty_function_query');
 	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax'], $_REQUEST['tool_type'], $_REQUEST['tool_plugin']);
-	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	$smarty->loadPlugin('smarty_function_query');
 	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
