@@ -172,11 +172,11 @@ class reportsLib extends TikiLib
 					} elseif ($change['event'] == 'wiki_file_attached') {
 						$body .= "<u>".$change['data']['user']."</u> ".tra('uploaded the file') . " <a href=\"$tikiUrl/tiki-download_wiki_attachment.php?attId=".$change['data']['attId']."\">".$change['data']['filename']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a>.";
 					} elseif ($change['event'] == 'calendar_changed') {
-						$calendarlib = TikiLib::lib('calendar');
+						global $calendarlib; require_once('lib/calendar/calendarlib.php');
 						$item = $calendarlib->get_item($change['data']['calitemId']);
 						$body .= tr('%0 added or updated event %1', "<u>{$change['data']['user']}</u>", "<a href='$tikiUrl/tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>");
 					} elseif ($change['event'] == 'tracker_item_modified') {
-						$trklib = TikiLib::lib('trk');
+						global $trklib; require_once('lib/trackers/trackerlib.php');
 						$tracker = $trklib->get_tracker($change['data']['trackerId']);
 						$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
 							"<u>{$change['data']['user']}</u>",
