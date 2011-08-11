@@ -703,6 +703,12 @@ class TrackerLib extends TikiLib
 		global $prefs;
 		$cachelib = TikiLib::lib('cache');
 
+		if (!$trackerId) {
+			return array(tr('*** ERROR: Tracker ID not set ***', $fieldId));
+		}
+		if (!$fieldId) {
+			return array(tr('*** ERROR: Field ID not set ***', $fieldId));
+		}
 		$jail = '';
 		$needToCheckCategPerms = $this->need_to_check_categ_perms($allfields);
 		if ($prefs['feature_categories'] == 'y' && $needToCheckCategPerms) {
