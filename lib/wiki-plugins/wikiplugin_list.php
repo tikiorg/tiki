@@ -150,6 +150,24 @@ function wpquery_filter_language($query, $value)
 	$query->filterLanguage($value);
 }
 
+function wpquery_filter_relation($query, $value, $arguments)
+{
+	if (! isset($arguments['qualifier'], $arguments['objecttype'])) {
+		TikiLib::lib('errorreport')->report(tr('Missing objectype or qualifier for relation filter.'));
+	}
+
+	$token = (string) new Search_Query_Relation($arguments['qualifier'], $arguments['objecttype'], $value);
+	$query->filterRelation($token);
+}
+
+function wpquery_filter_favorite($query, $value)
+{
+	wpquery_filter_relation($query, $value, array(
+		'qualifier' => 'tiki.user.favorite.invert',
+		'objecttype' => 'user',
+	));
+}
+
 function wpquery_sort_mode($query, $value)
 {
 	$query->setOrder($value);
