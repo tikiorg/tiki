@@ -49,6 +49,9 @@ function smarty_function_object_link( $params, $smarty ) {
 	case 'relation_target':
 		$function = 'smarty_function_object_link_relation_target';
 		break;
+	case 'freetag':
+		$function = 'smarty_function_object_link_freetag';
+		break;
 	default:
 		$function = 'smarty_function_object_link_default';
 		break;
@@ -191,5 +194,18 @@ function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $
 	}
 
 	return $out;
+}
+
+function smarty_function_object_link_freetag( $smarty, $tag, $title = null ) {
+	global $prefs;
+	if ($prefs['feature_freetags'] != 'y') {
+		return tr('freetags disabled');
+	}
+
+	if (is_numeric($tag)) {
+		$tag = TikiLib::lib('freetag')->get_tag_from_id($tag);
+	}
+
+	return smarty_function_object_link_default($smarty, $tag, $tag, 'freetag');
 }
 

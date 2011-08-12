@@ -800,6 +800,13 @@ class FreetagLib extends ObjectLib
 		return $this->getOne($query, array($tag));
 	}
 
+	function get_tag_from_id($tagId)
+	{
+		return $this->table('tiki_freetags')->fetchOne('tag', array(
+			'tagId' => $tagId,
+		));
+	}
+
 	/**
 	 * get_raw_tag_id
 	 *
