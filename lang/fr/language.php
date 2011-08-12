@@ -75,7 +75,6 @@ $lang=Array(
 // ### Please remove manually!
 // ### N.B. Legitimate strings may be marked// ### as unused!
 // ### Please see http://tiki.org/UnusedWords for further info
-// 1D
 " But the login failed, so check the Username and Password" => " Mais l'authentification a échoué, vérifier l'identifiant et le mot de passe",
 " mail account" => " compte de messagerie",
 " Syntax tips" => " astuces de syntaxe",
@@ -3518,12 +3517,10 @@ $lang=Array(
 "Downloaded" => "Téléchargé(e)",
 "Create/edit dsn" => "Ajouter/modifier un DSN (Data Source Name)",
 "Included group, group users and emails will be refreshed at each newsletter sending" => "Les groupes inclus, les utilisateurs des groupes et leurs adresses électroniques seront reconstruits à chaque envoi de lettre d'informations",
-// 1F
 // ### end of unused words
 
 // ### start of untranslated words
 // ### uncomment value pairs as you translate
-// 2D
 "Uploaded by" => "Téléchargé par",
 "Last Modified by" => "Modifié en dernier par",
 // "Sa" => "Sa",
@@ -8039,7 +8036,6 @@ $lang=Array(
 "The TikiTests Replay File has an error" => "Le fichier 'Rejouer les TikiTests' a une erreur",
 "You are about to delete a TikiTest file, do you want to continue " => "Vous êtes sur le point d'effacer un fichier TikiTest, voulez-vous poursuivre",
 "The TikiTest Replay File is Empty" => "Le fichier 'Rejouer le TikiTest' est vide",
-// 2F
 // ### end of untranslated words
 // ###
 
@@ -8047,7 +8043,6 @@ $lang=Array(
 // ### start of possibly untranslated words
 // ###
 
-// 3D
 "ID" => "ID",
 "Type" => "Type",
 "Description" => "Description",
@@ -15486,5 +15481,4 @@ $lang=Array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "You do not have permissions to view the maps" => "Vous n'avez pas les droits pour voir les cartes",
-// 3F
 "###end###"=>"###end###");
