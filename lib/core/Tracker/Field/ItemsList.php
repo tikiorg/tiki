@@ -92,7 +92,10 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		} else {
 			$localField = (int) $this->getOption(2);
 			$localValue = $this->getData($localField);
-
+			$localFieldDef = $this->getTrackerDefinition()->getField($localField);
+			if ($localFieldDef['type'] == 'r' && isset($localFieldDef['options_array'][0]) && isset($localFieldDef['options_array'][1])) {
+				$localValue = $trklib->get_item_value($localFieldDef['options_array'][0], $localValue, $localFieldDef['options_array'][1]);
+			}
 			// Skip nulls
 			if ($localValue) {
 				$items = $trklib->get_items_list($trackerId, $remoteField, $localValue, $status);
