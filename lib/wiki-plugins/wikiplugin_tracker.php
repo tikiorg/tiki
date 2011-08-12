@@ -750,6 +750,15 @@ function wikiplugin_tracker($data, $params)
 							$url .= "#wikiplugin_tracker$iTRACKER";
 							header("Location: $url");
 							exit;
+						} else if (!empty($_REQUEST['ajax_add'])) {	// called by tracker ItemLink fields when adding new list items
+							global $access;
+							if (!ob_end_clean()) {	// too late but try anyway
+								ob_clean();
+							}
+							ob_start();
+							$access->output_serialized(json_encode($ins_fields));
+							ob_end_flush();
+							die;
 						} else {
 							return '';
 						}
@@ -932,6 +941,12 @@ function wikiplugin_tracker($data, $params)
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 			$smarty->assign('trackerEditFormId', $iTRACKER);
+
+		if (!empty($params['_ajax_form_ins_id'])) {
+			global $headerlib;
+			$old_js = $headerlib->output_js(false);
+		}
+
 			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
 				global $validatorslib;
 				include_once('lib/validatorslib.php');
@@ -1176,9 +1191,18 @@ function wikiplugin_tracker($data, $params)
 			if ($params['formtag'] == 'y') {
 				$back.= '</form>';
 			}
-			if (!empty($js)) {
-				$back .= '<script type="text/javascript">'.$js.'</script>';
+
+			if (!empty($params['_ajax_form_ins_id'])) {
+				$new_js = $headerlib->output_js(false);
+				$new_js = substr($new_js, strlen($old_js) - 5, -5);	// offset for end of doc.ready statemenet TODO better
+				
+				$js .= ' var ajaxTrackerFormInit_' . $params['_ajax_form_ins_id'] . ' = function() {' . $new_js . '}';
 			}
+
+			if (!empty($js)) {
+				$headerlib->add_js( $js, 10 );
+			}
+
 			if (!empty($page))
 				$back .= '~/np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);

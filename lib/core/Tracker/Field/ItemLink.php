@@ -63,6 +63,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Link to a wiki page instead of directly to the item'),
 						'filter' => 'pagename',
 					),
+					'addItems' => array(
+						'name' => tr('Add Items'),
+						'description' => tr('Display text to allow new items to be added - e.g. "Add item..." (requires jQuery-UI)'),
+						'filter' => 'text',
+					),
+					'addItemsWikiTpl' => array(
+						'name' => tr('Add Item Template Page'),
+						'description' => tr('Wiki page to use as a Pretty Tracker template'),
+						'filter' => 'pagename',
+					),
 				),
 			),
 		);
@@ -72,13 +82,83 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$data = $this->getLinkData($requestData, $this->getInsertId());
 
-		$value = $data['value'];
-
 		return $data;
 	}
 
 	function renderInput($context = array())
 	{
+		if ($this->getOption(6) && $context['inTable'] !== 'y') {
+			require_once 'lib/wiki-plugins/wikiplugin_tracker.php';
+
+			$form = wikiplugin_tracker('', array(
+					'trackerId' => $this->getOption(0),
+					'ignoreRequestItemId' => 'y',
+					'_ajax_form_ins_id' => $this->getInsertId(),
+				));
+
+			$form = preg_replace(array('/<!--.*?-->/', '/\s+/'), array('', ' '), $form);	// remove comments etc
+
+			TikiLib::lib('header')->add_jq_onready('
+$("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
+	if ($(this).val() == -1) {
+		var $d = $("<div id=\'add_dialog_' . $this->getInsertId() . '\' style=\'display:none\'>' . addslashes($form) . '</div>")
+			.appendTo(document.body);
+		
+		var w = $d.width() * 1.4;
+		var h = $d.height() * 1.6;
+		if ($(document.body).width() < w) {
+			w = $(document.body).width() * 0.8;
+		}
+		if ($(document.body).height() < h) {
+			h = $(document.body).height() * 0.8;
+		}
+
+		$d.dialog({
+				width: w,
+				height: h,
+				title: "'.$this->getOption(6).'",
+				modal: true,
+				buttons: {
+					"Add": function() {
+						var $f = $("form", this).append($("<input type=\'hidden\' name=\'ajax_add\' value=\'1\' />"));
+						ajaxLoadingShow($f);
+						$.post( $f.attr("action"), $f.serialize(), function(data, status) {
+							var m = data.match(/.*(\{"data":.*)/);	// strip the beginning of the page as smarty sends stuff before this can be sent FIXME
+							if (m && m.length > 0) {
+								m = $.secureEvalJSON(m[1]);
+								for (var i = 0; i < m.data.length; i++) {
+									var a = m.data[i];
+									if ( a && a["fieldId"] == '.$this->getOption(1).' ) {
+										$o = $("<option value=\'" + a["fileId"] + "\'>" + a["value"] + "</option>");
+										$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
+										$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 1;
+									}
+								}
+							}
+							ajaxLoadingHide();
+							$d.dialog( "close" );
+
+							return;
+						});
+
+
+							//.append($("<input type=\'hidden\' name=\'save\' value=\'save\' />"))
+							//.submit();
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				},
+				create: function(event, ui) {
+					 ajaxTrackerFormInit_' . $this->getInsertId() . '();
+				}
+			}).find(".input_submit_container").remove();
+	}
+});
+');
+
+		}
+
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context);
 	}
 
@@ -138,6 +218,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			);
 		}
 
+		if ($this->getOption(6)) {	// addItems
+			$data['list']['-1'] = $this->getOption(6);
+			if (isset($data['listdisplay'])) {
+				$data['listdisplay']['-1'] = $this->getOption(6);
+			}
+		}
+		
 		return $data;
 	}
 
