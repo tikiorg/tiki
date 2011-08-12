@@ -4108,7 +4108,7 @@ class TrackerLib extends TikiLib
 
 		$handler = $this->get_field_handler($field, $item);
 
-		if (isset($params['process']) && $params['process'] == 'y') {
+		if ($handler && isset($params['process']) && $params['process'] == 'y') {
 			$field = array_merge($field, $handler->getFieldData($field));
 			$handler = $this->get_field_handler($field, $item);
 		}
