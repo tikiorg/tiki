@@ -61,7 +61,7 @@ function tf_export_submit(fm) {
 					{tr}After:{/tr}&nbsp;
 				{/if}
 			{/if}
-			{trackerinput field=$filter.field}
+			{trackerinput field=$filter.field inForm="y"}
 {*------text *} 
 		{elseif $filter.format eq 't' or $filter.format eq 'T' or $filter.format eq 'i'}
 			{if $filter.format eq 'i'}

@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>{tr}Filter{/tr}</td>
-	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y" inExportForm="y"}</td></tr>
+	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y"}</td></tr>
 {if $prefs.feature_ajax eq 'y'}
 	<tr>
 		<td><label for="recordsMax">{tr}Number of records{/tr}</label></td>
