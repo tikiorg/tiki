@@ -43,7 +43,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Wiki',
 			'default' => 'y',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=wiki') .' --- ' .tr('[%0|List]', 'tiki-listpages.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=wiki') .' --- ' .tr('[%0|List]', 'tiki-listpages.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=wiki&show_disabled_features=y'),
 		),
 		'feature_blogs' => array(
 			'name' => tra('Blog'),
@@ -52,7 +52,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Blogs',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=blog') .' --- ' .tr('[%0|List]', 'tiki-list_blogs.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=blog') .' --- ' .tr('[%0|List]', 'tiki-list_blogs.php').' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=blog&show_disabled_features=y'),
 		),
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
@@ -79,7 +79,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'CRUD',
 			'default' => 'n',
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=trackers') .' --- ' .tr('[%0|List]', 'tiki-list_trackers.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=trackers') .' --- ' .tr('[%0|List]', 'tiki-list_trackers.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=tracker&show_disabled_features=y'),
 		),
 		'feature_forums' => array(
 			'name' => tra('Forums'),
@@ -88,7 +88,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=forums') .' --- ' .tr('[%0|List]', 'tiki-forums.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=forums') .' --- ' .tr('[%0|List]', 'tiki-forums.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=forum&show_disabled_features=y'),
 		),
 		'feature_file_galleries' => array(
 			'name' => tra('File Gallery'),
@@ -97,7 +97,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=fgal') .' --- ' .tr('[%0|List]', 'tiki-list_file_gallery.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=fgal') .' --- ' .tr('[%0|List]', 'tiki-list_file_gallery.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=file&show_disabled_features=y'),
 		),
 		'feature_file_galleries_save_draft' => array(
 			'name' => tra('Save files as drafts'),
@@ -123,7 +123,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=cms') .' --- ' .tr('[%0|List]', 'tiki-list_articles.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=cms') .' --- ' .tr('[%0|List]', 'tiki-list_articles.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=article&show_disabled_features=y'),
 		),
 		'feature_polls' => array(
 			'name' => tra('Polls'),
@@ -132,7 +132,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=polls') .' --- ' .tr('[%0|List]', 'tiki-admin_polls.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=polls') .' --- ' .tr('[%0|List]', 'tiki-admin_polls.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=poll&show_disabled_features=y'),
 		),
 		'feature_newsletters' => array(
 			'name' => tra('Newsletters'),
@@ -141,7 +141,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|List]', 'tiki-newsletters.php'),
+			'hint' => tr('[%0|List]', 'tiki-newsletters.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=newsletter&show_disabled_features=y'),
 		),
 		'feature_calendar' => array(
 			'name' => tra('Calendar'),
@@ -150,7 +150,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=calendar') .' --- ' .tr('[%0|List]', 'tiki-calendar.php?viewlist=list'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=calendar') .' --- ' .tr('[%0|List]', 'tiki-calendar.php?viewlist=list') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=calendar&show_disabled_features=y'),
 		),
 		'feature_banners' => array(
 			'name' => tra('Banners'),
@@ -159,7 +159,7 @@ function prefs_feature_list($partial = false) {
 			'keywords' => 'banner publicity',
 			'type' => 'flag',
 			'default' => 'n',
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=ads') .' --- ' .tr('[%0|List]', 'tiki-list_banners.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=ads') .' --- ' .tr('[%0|List]', 'tiki-list_banners.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=banner&show_disabled_features=y'),
 		),
 		'feature_categories' => array(
 			'name' => tra('Category'),
@@ -167,7 +167,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Category',
 			'type' => 'flag',
 			'default' => 'n',
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=category') .' --- ' .tr('[%0|List]', 'tiki-browse_categories.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=category') .' --- ' .tr('[%0|List]', 'tiki-browse_categories.php').' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=categor&show_disabled_features=y'),
 		),
 		'feature_score' => array(
 			'name' => tra('Score'),
@@ -183,7 +183,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=search'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=search') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=search&show_disabled_features=y'),
 		),
 		'feature_freetags' => array(
 			'name' => tra('Freetags'),
@@ -191,7 +191,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Tags',
 			'type' => 'flag',
 			'default' => 'n',
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=freetags') .' --- ' .tr('[%0|List]', 'tiki-browse_freetags.php'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=freetags') .' --- ' .tr('[%0|List]', 'tiki-browse_freetags.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=tag&show_disabled_features=y'),
 		),
 		'feature_actionlog' => array(
 			'name' => tra('Action Log'),
@@ -510,7 +510,7 @@ function prefs_feature_list($partial = false) {
 			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|List]', 'tiki-sheets.php'),
+			'hint' => tr('[%0|List]', 'tiki-sheets.php') .' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=sheet&show_disabled_features=y'),
 		),
 		'feature_slideshow' => array(
 			'name' => tra('Slideshow (jQuery.s5)'),
