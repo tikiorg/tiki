@@ -35,6 +35,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 			$val = 'n';
 		} else {
 			$val = $this->getValue();
+			if (empty($val)) {
+				$val = 'n';
+			}
 		}
 		return array(
 			'value' => $val,
