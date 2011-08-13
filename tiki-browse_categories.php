@@ -78,10 +78,12 @@ if (is_array($_REQUEST['parentId'])) {
 
 		$path = $categlib->get_category_path($_REQUEST['parentId']);
 		$p_info = $categlib->get_category($_REQUEST['parentId']);
+		if ($prefs["feature_multilingual"] === "y")
+			$p_info["name"] = tra($p_info["name"]);
 		$father = $p_info['parentId'];
 		$smarty->assign_by_ref('p_info', $p_info);
 		$canView = $perms->view_category;
-		$smarty->assign('headtitle', tra($p_info['name'])); //TODO Why translate ?
+		$smarty->assign('headtitle', $p_info['name']);
 	} else {
 		$path = tra('TOP');
 		$father = 0;
