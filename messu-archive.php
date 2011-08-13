@@ -88,5 +88,6 @@ $smarty->assign('percentage', $percentage);
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('messu-archive');
+$smarty->assign('headtitle', tra('Archive'));
 $smarty->assign('mid', 'messu-archive.tpl');
 $smarty->display("tiki.tpl");

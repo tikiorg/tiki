@@ -98,5 +98,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('notepad-list');
+$smarty->assign('headtitle', tra('Notes'));
 $smarty->assign('mid', 'tiki-notepad_list.tpl');
 $smarty->display("tiki.tpl");

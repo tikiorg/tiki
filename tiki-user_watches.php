@@ -187,5 +187,6 @@ $eok = $userlib->get_user_email($user);
 $smarty->assign('email_ok', empty($eok) ? 'n' : 'y');
 ask_ticket('user-watches');
 $smarty->assign_by_ref('report_preferences', $reportslib->get_report_preferences_by_user($user));
+$smarty->assign('headtitle', tra('User Watches'));
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

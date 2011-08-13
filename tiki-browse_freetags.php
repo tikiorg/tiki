@@ -8,7 +8,6 @@
 $section = 'freetags';
 require_once ('tiki-setup.php');
 include_once ('lib/freetag/freetaglib.php');
-$smarty->assign('headtitle', tra('Tags'));
 $access->check_feature('feature_freetags');
 $access->check_permission('tiki_p_view_freetags');
 
@@ -146,5 +145,6 @@ $smarty->assign('objects_with_freetags',
 				'tracker %d'
 			)
 	);
+$smarty->assign('headtitle', tra('Tags'));
 $smarty->assign('mid', 'tiki-browse_freetags.tpl');
 $smarty->display("tiki.tpl");
