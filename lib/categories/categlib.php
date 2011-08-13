@@ -124,13 +124,16 @@ class CategLib extends ObjectLib
 				foreach ($catpath as $cat) {
 					$tepath[] = tra($cat['name']);
 				}
+				$res['name'] = tra($this->get_category_name($res['categId']));
+			} else {
+				$res['name'] = $this->get_category_name($res['categId']);
 			}
 			$categpath = implode("::",$tepath);
 			$categpathforsort = implode("!!",$tepath) . '!!'; // needed to prevent cat::subcat to be sorted after cat2::subcat 
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
 			$res["deep"] = count($tepath);
-			$res['name'] = $this->get_category_name($res['categId']);
+
 			global $userlib;
 			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
 				$res['has_perm'] = 'y';
