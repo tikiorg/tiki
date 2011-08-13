@@ -119,9 +119,11 @@ class CategLib extends ObjectLib
 			}
       
 			$catpath = $this->get_category_path($res["categId"]);
-			$tepath = array();	
-			foreach ($catpath as $cat) {
-				$tepath[] = tra($cat['name']);
+			$tepath = array();
+			if ($prefs['feature_multilingual'] === "y"){
+				foreach ($catpath as $cat) {
+					$tepath[] = tra($cat['name']);
+				}
 			}
 			$categpath = implode("::",$tepath);
 			$categpathforsort = implode("!!",$tepath) . '!!'; // needed to prevent cat::subcat to be sorted after cat2::subcat 
