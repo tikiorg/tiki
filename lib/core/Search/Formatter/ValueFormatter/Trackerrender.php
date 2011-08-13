@@ -14,6 +14,9 @@ class Search_Formatter_ValueFormatter_Trackerrender implements Search_Formatter_
 		}
 
 		$tracker = Tracker_Definition::get($entry['tracker_id']);
+		if (!is_object($tracker)) {
+			return $value;
+		}
 		$field = $tracker->getField(substr($name, 14));
 		$field['value'] = $value;
 
