@@ -41,7 +41,21 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate('trackerinput/jscalendar.tpl', $context);
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_jscalendar');
+
+		$params = array( 'fieldname' => $this->getInsertId());
+		$params['showtime'] = $this->getOption(0) === 'd' ? 'n' : 'y';
+		if ( empty($context['inForm'])) {
+			$params['date'] = $this->getValue();
+			if (empty($params['date'])) {
+				$params['date'] = $this->getConfiguration('value');
+			}
+		} else {
+			$params['date'] = '';
+		}
+
+		return smarty_function_jscalendar( $params, $smarty);
 	}
 }
 
