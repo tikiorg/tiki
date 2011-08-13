@@ -168,6 +168,22 @@ function wpquery_filter_favorite($query, $value)
 	));
 }
 
+function wpquery_filter_range($query, $value, array $arguments)
+{
+	if (! isset($arguments['from'], $arguments['to'])) {
+		TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
+	} 
+	$query->filterRange($arguments['from'], $arguments['to'], $value); 
+}
+
+function wpquery_filter_textrange($query, $value, array $arguments)
+{
+	if (! isset($arguments['from'], $arguments['to'])) {
+		TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
+	}
+	$query->filterTextRange($arguments['from'], $arguments['to'], $value);
+}
+
 function wpquery_sort_mode($query, $value)
 {
 	$query->setOrder($value);
