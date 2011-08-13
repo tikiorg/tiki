@@ -31,22 +31,21 @@ class ParserLib extends TikiDb_Bridge
 	
 	function __construct() {
 		include_once "WikiParser.php";
-		$this->parser = new WikiParser;
-		
-		//private methods
-		$this->parser->yy->cmd = $this;
+		$this->parser = new WikiParser();
 	}
 	
 	function plugin($pluginDetails) {
-		$name = $pluginDetails->name;
-		$body = $pluginDetails->body;
-		$args = $this->plugin_split_args($pluginDetails->args);
-		
 		$pluginBodyParser = new WikiParser;
-		
 		//nested parsing!
+		$parserlib = new ParserLib;
 		$pluginOutput = $pluginBodyParser->parse(
-			$this->plugin_execute($name, $body, $args)
+			$parserlib->plugin_execute(
+				$pluginDetails->name,
+				$pluginDetails->body,
+				$parserlib->plugin_split_args(
+					$pluginDetails->args
+				)
+			)
 		);
 		
 		return $pluginOutput;
@@ -57,93 +56,125 @@ class ParserLib extends TikiDb_Bridge
 	}
 	
 	//Wiki Syntax Objects Parsing Start
-	function make_bold($html) {
-		return "<strong>" . $html . "</strong>";
+	function bold($content) {
+		return "<strong>" . $content . "</strong>";
 	}
 	
-	function make_box($html) {
-		return "<div style='border: solid 1px black;'>" . $html . "</div>";
+	function box($content) {
+		return "<div style='border: solid 1px black;'>" . $content . "</div>";
 	}
 	
-	function make_center($html) {
-		return "<center>" . $html . "</center>";
+	function center($content) {
+		return "<center>" . $content . "</center>";
 	}
 	
-	function make_colortext($color, $html) {
-		return "<span style='color: #" . $color . ";'>" . $html . "</span>";
+	function colortext($content) {
+		$text = ParserLib::split(':', $content);
+		$color = $text[0];
+		$content = $text[1];
+		return "<span style='color: #" . $color . ";'>" . $content . "</span>";
 	}
 	
-	function make_italics($html) {
-		return "<i>" . $html . "</i>";
+	function italics($content) {
+		return "<i>" . $content . "</i>";
 	}
 	
-	function make_header1($html) {
-		return "<h1>" . $html . "</h1>";
+	function header1($content) {
+		return "<h1>" . $content . "</h1>";
 	}
 	
-	function make_header2($html) {
-		return "<h2>" . $html . "</h2>";
+	function header2($content) {
+		return "<h2>" . $content . "</h2>";
 	}
 	
-	function make_header3($html) {
-		return "<h3>" . $html . "</h3>";
+	function header3($content) {
+		return "<h3>" . $content . "</h3>";
 	}
 	
-	function make_header4($html) {
-		return "<h4>" . $html . "</h4>";
+	function header4($content) {
+		return "<h4>" . $content . "</h4>";
 	}
 	
-	function make_header5($html) {
-		return "<h5>" . $html . "</h5>";
+	function header5($content) {
+		return "<h5>" . $content . "</h5>";
 	}
 	
-	function make_header6($html) {
-		return "<h6>" . $html . "</h6>";
+	function header6($content) {
+		return "<h6>" . $content . "</h6>";
 	}
 	
-	function make_hr() {
+	function hr() {
 		return "<hr />";
 	}
 	
-	function make_link($href, $html) {
-		return "<a href='" . $href . "'>" . $html . "</a>";
+	function link($content) {
+		$link = ParserLib::split(':', $content);
+		$href = $content;
+		
+		if (ParserLib::match('/\|/', $content)) {
+			$href = $link[0];
+			$content = $link[1];
+		}
+		return "<a href='" . $href . "'>" . $content . "</a>";
 	}
 	
-	function make_smile($smile) { //this needs more tlc too
+	function smile($smile) { //this needs more tlc too
 		return "<img src='img/smiles/icon_" . $smile . ".gif' alt='" . $smile . "' />";
 	}
 	
-	function make_strikethrough($html) {
-		return "<span style='text-decoration: line-through;'>" . $html . "</span>";
+	function strikethrough($content) {
+		return "<span style='text-decoration: line-through;'>" . $content . "</span>";
 	}
 	
-	function make_table($html) {
-		return "<table style='width: 100%;'>" . $html . "</table>";
+	function table($content) {
+		$tableContents = '';
+		$rows = ParserLib::split('<br />', $content);
+		for($i = 0; $i < count($rows); $i++) {
+			$row = '';
+			
+			$cells = ParserLib::split('|',  $rows[$i]);
+			for($j = 0; $j < count($cells); $j++) {
+				$row .= ParserLib::table_td($cells[$j]);
+			}
+			$tableContents .= ParserLib::table_tr($row);
+		}
+		return "<table style='width: 100%;'>" . $tableContents . "</table>";
 	}
 	
-	function make_table_tr($html) {
-		return "<tr>" . $html . "</tr>";
+	function table_tr($content) {
+		return "<tr>" . $content . "</tr>";
 	}
 	
-	function make_table_td($html) {
-		return "<td>" . $html . "</td>";
+	function table_td($content) {
+		return "<td>" . $content . "</td>";
 	}
 	
-	function make_titlebar($html) {
-		return "<div class='titlebar'>" . $html . "</div>";
+	function titlebar($content) {
+		return "<div class='titlebar'>" . $content . "</div>";
 	}
 	
-	function make_underscore($html) {
-		return "<u>" . $html . "</u>";
+	function underscore($content) {
+		return "<u>" . $content . "</u>";
 	}
 	
-	function make_wikilink($href, $html) {
-		return "<a href='" . $href . "'>" . $html . "</a>";
+	function wikilink($content) {
+		$wikilink = ParserLib::split('|', $content);
+		$href = $content;
+		
+		if (ParserLib::match('/\|/', $content)) {
+			$href = $wikilink[0];
+			$content = $wikilink[1];
+		}
+		return "<a href='" . $href . "'>" . $content . "</a>";
 	}
 	//Wiki Syntax Objects Parsing End
 	
-	function html($html) {
-		return $html;
+	function html($content) {
+		return $content;
+	}
+	
+	function formatContent($content) {
+		return nl2br($content);
 	}
 	
 	//unified functions used inside parser
@@ -152,7 +183,8 @@ class ParserLib extends TikiDb_Bridge
 	}
 	
 	function match($pattern, $subject) {
-		return preg_match($pattern, $subject);
+		preg_match($pattern, $subject, $match);
+		return (!empty($match[1]) ? $match[1] : false);
 	}
 	
 	function replace($search, $replace, $subject) {
@@ -162,6 +194,62 @@ class ParserLib extends TikiDb_Bridge
 	function split($delimiter, $string) {
 		return explode($delimiter, $string);
 	}
+	
+	function join() {
+		$array = func_get_args();
+		return implode($array, '');
+	}
+	
+	function size($array) {
+		if (empty($array)) $array = array();
+		return count($array);
+	}
+	
+	function pop($array) {
+		if (empty($array)) $array = array();
+		array_pop($array);
+		return $array;
+	}
+	
+	function push($array, $val) {
+		if (empty($array)) $array = array();
+		array_push($array, $val);
+		return $array;
+	}
+	
+	function shift($array) {
+		if (empty($array)) $array = array();
+		array_shift($array);
+		return $array;
+	}
+	// start state handlers
+	function stackPlugin($yytext, $pluginStack) {
+		$pluginName = ParserLib::match('/^\{([A-Z]+)/', $yytext);
+		$pluginArgs =  ParserLib::match('/[(].*?[)]/', $yytext);
+		
+		return ParserLib::push($pluginStack, (object)array(
+			name=> $pluginName,
+			args=> $pluginArgs,
+			body=> ''
+		));
+	}
+
+	function inlinePlugin($yytext) {
+		$pluginName = ParserLib::match('/^\{([a-z]+)/', $yytext);
+		$pluginArgs = ParserLib::split(' ', $yytext);
+		$pluginArgs = ParserLib::shift($pluginArgs);
+		
+		return (object)array(
+			name=> $pluginName,
+			args=> implode(' ', $pluginArgs),
+			body=> ''
+		);
+	}
+	
+	function npState($npState, $ifTrue, $ifFalse) {
+		return ($npState == true ? $ifTrue : $ifFalse);
+	}
+	//end state handlers
 	
 	//NEED MIGRATION
 	//Below here methods that need updating to new WikiParser.php that were integrated from tikilib
