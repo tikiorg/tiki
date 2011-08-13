@@ -122,7 +122,7 @@ class Smarty_Tiki extends Smarty
 			$_SESSION['last_mid_php'] = $_SERVER['REQUEST_URI'];
 
 			// set the first part of the browser title for admin pages
-			if (!isset($this->getGlobal['headtitle'])) {
+			if (!isset($this->tpl_vars['headtitle'])) {
 				$script_name = basename($_SERVER['SCRIPT_NAME']);
 				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
 					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
