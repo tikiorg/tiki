@@ -25,7 +25,7 @@ $smarty->assign('headtitle', tra('Search'));
 
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
-
+//get_strings tra("Searchindex")
 //ini_set('display_errors', true);
 //error_reporting(E_ALL);
 

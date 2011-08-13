@@ -7,7 +7,7 @@
 
 $section = 'forums';
 require_once ('tiki-setup.php');
-
+//get_strings tra('List Forums')
 $auto_query_args = array('sort_mode', 'offset', 'find', 'mode');
 
 $smarty->assign('headtitle',tra('Forums'));

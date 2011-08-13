@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 $access->check_permission(array('tiki_p_clean_cache'));
-
+//get_strings tra('Tiki Cache/Sys Admin')
 $done = '';
 $output = '';
 $buf = '';

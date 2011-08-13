@@ -11,6 +11,7 @@ $auto_query_args = array('sort_mode', 'offset', 'find');
 if (!isset($dcslib)) {
 	$dcslib = new DCSLib;
 }
+//get_strings tra('Dynamic content')
 $access->check_feature('feature_dynamic_content');
 $access->check_permission('tiki_p_admin_dynamic');
 if (isset($_REQUEST["remove"])) {

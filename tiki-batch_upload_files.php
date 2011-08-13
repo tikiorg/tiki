@@ -9,7 +9,7 @@ $section = 'file_galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
 $access->check_feature(array('feature_file_galleries', 'feature_file_galleries_batch'));
-
+//get_strings tra('Directory batch')
 // Now check permissions to access this page
 $access->check_permission('tiki_p_batch_upload_file_dir');
 

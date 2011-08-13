@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
 $access->check_permission('tiki_p_view_directory');
+//get_strings tra('Browse Directory')
 // If no parent category then the parent category is 0
 if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
 $smarty->assign('parent', $_REQUEST["parent"]);

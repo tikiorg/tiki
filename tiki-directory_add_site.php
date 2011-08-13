@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
 $access->check_permission('tiki_p_submit_link');
-
+//get_strings tra('Submit a new link')
 // If no parent category then the parent category is 0
 if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
 // If no site category then the site category is -1

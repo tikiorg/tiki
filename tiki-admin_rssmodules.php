@@ -7,6 +7,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/rss/rsslib.php');
+//get_strings tra('External Feeds')
 $auto_query_args = array(
 	'rssId',
 	'offset',
