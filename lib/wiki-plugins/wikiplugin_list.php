@@ -32,7 +32,11 @@ function wikiplugin_list($data, $params)
 	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
 
 	if (isset($_REQUEST['offset'])) {
-		$query->setRange($_REQUEST['offset']);
+		if (isset($_REQUEST['maxRecords'])) {
+			$query->setRange($_REQUEST['offset'], $_REQUEST['maxRecords']);
+		} else {
+			$query->setRange($_REQUEST['offset']);
+		}
 	}
 
 	$matches = WikiParser_PluginMatcher::match($data);
