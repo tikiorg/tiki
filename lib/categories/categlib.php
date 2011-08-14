@@ -30,7 +30,7 @@ class CategLib extends ObjectLib
 	function list_categs($categId=0, $showWS=false, $all = true) {
 		$back = $this->get_all_categories_ext($showWS);
 
-		if ($categId > 0) {
+		if ($categId > 0 || !$all) {
 			$path = '';
 			$back2 = array();
 			foreach ($back as $cat) {
