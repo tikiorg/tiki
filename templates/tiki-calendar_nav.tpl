@@ -21,22 +21,22 @@
 				<br class="clearfix" />
 			{/if}
 	{/if}
-	
+
 		<span style="display: inline-block">{strip}
 {*previous*}
 		<div>
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon="resultset_previous"}{/self_link}
 		{/if}
 		</div>
 
@@ -89,17 +89,17 @@
 {*previous*}
 	 {if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon="resultset_previous"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon="resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon="resultset_previous"}{/self_link}
 		{/if}
 	{/if}
 

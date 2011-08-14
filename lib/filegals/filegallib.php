@@ -1163,7 +1163,7 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 		foreach ($fileIds as $fileId) {
-			$info = $tikilib->get_file($fileId);
+			$info = $this->get_file($fileId);
 			if ($tiki_p_admin_file_galleries == 'y' || $userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 				if (empty($zipName)) {
 					$zipName = $info['galleryId'];

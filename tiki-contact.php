@@ -62,7 +62,9 @@ if (isset($_REQUEST['send'])) {
 		$body = tr("%0 sent you a message:", $from) . "\n" . $_REQUEST['body'];
 		$messulib->post_message($prefs['contact_user'], $from, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $body, $_REQUEST['priority']);
-		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
+		$contact_name = $userlib->get_user_preference($prefs['contact_user'], 'realName');
+		if ($contact_name == '') $contact_name = $prefs['contact_user'];
+		$message = tra('Message sent to'). ': ' . $contact_name . '<br />';
 		$smarty->assign('sent', 1);
 		$smarty->assign('message', $message);
 	}
