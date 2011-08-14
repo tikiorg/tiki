@@ -7,11 +7,7 @@
 
 $section = 'cms';
 require_once ('tiki-setup.php');
-
 include_once ('lib/rankings/ranklib.php');
-
-$smarty->assign('headtitle',tra('Rankings'));
-
 $access->check_feature(array('feature_articles', 'feature_cms_rankings'));
 $access->check_permission('tiki_p_read_article');
 

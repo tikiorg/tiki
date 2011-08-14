@@ -20,7 +20,6 @@ require_once 'tiki-setup.php';
 require_once 'lib/categories/categlib.php';
 require_once 'lib/tree/categ_browse_tree.php';
 
-$smarty->assign('headtitle', tra('Categories'));
 $access->check_feature('feature_categories');
 
 if (isset($_POST['action'])) {

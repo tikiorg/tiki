@@ -10,7 +10,6 @@ $section_class = "tiki_wiki_page manage";	// This will be body class instead of 
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find', 'days');
-$smarty->assign('headtitle', tra('Last Changes'));
 $access->check_feature('feature_wiki');
 $access->check_feature('feature_lastChanges');
 $access->check_permission('tiki_p_view');

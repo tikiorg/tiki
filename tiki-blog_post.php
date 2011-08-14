@@ -59,7 +59,6 @@ if ($postId > 0) {
 	}
 }
 
-$smarty->assign('headtitle', tra('Edit Post'));
 $smarty->assign('blogId', $blogId);
 $smarty->assign('postId', $postId);
 

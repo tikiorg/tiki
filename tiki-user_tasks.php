@@ -631,6 +631,5 @@ include_once ('lib/userprefs/userprefslib.php');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 $smarty->assign_by_ref('percs', $percs);
-$smarty->assign('headtitle', tra('User Tasks'));
 $smarty->assign('mid', 'tiki-user_tasks.tpl');
 $smarty->display("tiki.tpl");

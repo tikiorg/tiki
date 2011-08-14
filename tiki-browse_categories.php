@@ -70,7 +70,6 @@ if (is_array($_REQUEST['parentId'])) {
 		}
 	}
 	$smarty->assign('paths', $paths);
-	$smarty->assign('headtitle', tra('Categories'));
 } else {
 	// If the parent category is not zero get the category path
 	if ($_REQUEST['parentId']) {
@@ -83,12 +82,10 @@ if (is_array($_REQUEST['parentId'])) {
 		$father = $p_info['parentId'];
 		$smarty->assign_by_ref('p_info', $p_info);
 		$canView = $perms->view_category;
-		$smarty->assign('headtitle', $p_info['name']);
 	} else {
 		$path = tra('TOP');
 		$father = 0;
 		$canView = true;
-		$smarty->assign('headtitle', tra('Categories'));
 	}
 	$smarty->assign('path', $path);
 	$smarty->assign('father', $father);

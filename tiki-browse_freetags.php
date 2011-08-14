@@ -145,6 +145,5 @@ $smarty->assign('objects_with_freetags',
 				'tracker %d'
 			)
 	);
-$smarty->assign('headtitle', tra('Tags'));
 $smarty->assign('mid', 'tiki-browse_freetags.tpl');
 $smarty->display("tiki.tpl");

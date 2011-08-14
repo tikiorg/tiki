@@ -73,7 +73,5 @@ $smarty->assign_by_ref('cookietab', $cookietab);
 include_once ('tiki-mytiki_shared.php');
 //ask_ticket('user-contacts_prefs');
 include_once ('tiki-section_options.php');
-// Display the template
-$smarty->assign('headtitle', tra('User Contacts Preferences'));
 $smarty->assign('mid', 'tiki-user_contacts_prefs.tpl');
 $smarty->display("tiki.tpl");

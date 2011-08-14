@@ -10,7 +10,6 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/articles/artlib.php');
 
-$smarty->assign('headtitle',tra('Edit article'));
 //get_strings tra('New Article')
 if ($prefs['feature_freetags'] == 'y') {
 	global $freetaglib;

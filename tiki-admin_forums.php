@@ -7,7 +7,6 @@
 
 $section = 'forums';
 require_once ('tiki-setup.php');
-$smarty->assign('headtitle', tra('Admin Forums'));
 if (!isset($_REQUEST['forumId'])) {
 	$_REQUEST['forumId'] = 0;
 }

@@ -21,8 +21,6 @@ $inputConfiguration = array(
 $section = 'search';
 require_once ('tiki-setup.php');
 require_once 'lib/search/searchlib-unified.php';
-$smarty->assign('headtitle', tra('Search'));
-
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
 //get_strings tra("Searchindex")

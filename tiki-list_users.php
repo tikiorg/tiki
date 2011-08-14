@@ -69,7 +69,5 @@ $smarty->assign_by_ref('listdistance', $listdistance);
 $smarty->assign_by_ref('listuserscountry', $listuserscountry);
 $section = 'users';
 include_once ('tiki-section_options.php');
-// Display the template
-$smarty->assign('headtitle', tra('User List'));
 $smarty->assign('mid', 'tiki-list_users.tpl');
 $smarty->display("tiki.tpl");

@@ -941,6 +941,5 @@ include_once ('tiki-mytiki_shared.php');
 include_once ('tiki-section_options.php');
 
 ask_ticket('webmail');
-$smarty->assign('headtitle', tra('Webmail'));
 $smarty->assign('mid', 'tiki-webmail.tpl');
 $smarty->display('tiki.tpl');

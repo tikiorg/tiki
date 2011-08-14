@@ -112,5 +112,4 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 ask_ticket('messu-broadcast');
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
-$smarty->assign('headtitle', tra('Broadcast'));
 $smarty->display("tiki.tpl");

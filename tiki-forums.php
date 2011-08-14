@@ -10,8 +10,6 @@ require_once ('tiki-setup.php');
 //get_strings tra('List Forums')
 $auto_query_args = array('sort_mode', 'offset', 'find', 'mode');
 
-$smarty->assign('headtitle',tra('Forums'));
-
 $access->check_feature('feature_forums');
 $access->check_permission('tiki_p_forum_read');
 

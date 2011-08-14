@@ -8,8 +8,6 @@
 require_once 'tiki-setup.php';
 $access->check_feature('wiki_validate_plugin');
 $access->check_permission('tiki_p_plugin_approve');
-$smarty->assign('headtitle', tra('Plugin Approval'));
-
 $parserlib = TikiLib::lib('parser');
 
 if (isset($_POST['submit_mult']) && ($_POST['submit_mult'] == 'clear') && is_array($_POST['clear'])) {
@@ -31,10 +29,6 @@ if (isset($_REQUEST['approveone'])) {
 if (isset($_REQUEST['clearone'])) {
 	$parserlib->plugin_clear_fingerprint($_REQUEST['clearone']);
 }
-
-
-
-
 
 if (isset($_POST['approveall'])) {
 	$parserlib->approve_all_pending_plugins();

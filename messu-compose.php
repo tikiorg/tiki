@@ -178,5 +178,4 @@ $smarty->assign('allowMsgs', $allowMsgs);
 include_once ('tiki-section_options.php');
 ask_ticket('messu-compose');
 include_once ('tiki-mytiki_shared.php');
-$smarty->assign('headtitle', tra('Compose'));
 $smarty->display("tiki.tpl");

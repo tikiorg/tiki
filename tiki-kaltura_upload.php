@@ -10,8 +10,6 @@ require_once 'lib/videogals/videogallib.php';
 
 $access->check_permission(array('tiki_p_upload_videos'));
 
-$smarty->assign('headtitle', tra('Kaltura Upload'));
-
 $cwflashVars = array();
 $cwflashVars["uid"]               = $kuser;
 $cwflashVars["partnerId"]         = $prefs['partnerId'];

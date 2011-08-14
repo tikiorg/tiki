@@ -9,8 +9,6 @@ require_once 'tiki-setup.php';
 require_once 'lib/videogals/videogallib.php';
 
 try {
-$smarty->assign('headtitle', tra('Kaltura Video'));
-
 $kentryType = "";
 $videoId = array();
 if(!empty($_REQUEST['mixId'])){	

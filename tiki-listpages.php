@@ -38,7 +38,6 @@ if (isset($_REQUEST['hits_link_to_all_languages']) && $_REQUEST['hits_link_to_al
 }
 $smarty->assign('all_langs', $all_langs);
 
-$smarty->assign('headtitle', tra('Pages'));
 $access->check_feature(array('feature_wiki', 'feature_listPages'));
 $access->check_permission('tiki_p_view');
 /* mass-remove:

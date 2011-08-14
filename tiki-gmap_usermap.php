@@ -7,6 +7,5 @@
 
 include "tiki-setup.php";
 $access->check_feature('feature_gmap');
-$smarty->assign('headtitle', tra('Users Map'));
 $smarty->assign('mid','tiki-gmap_usermap.tpl');
 $smarty->display('tiki.tpl');

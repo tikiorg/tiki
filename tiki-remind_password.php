@@ -9,7 +9,6 @@ require_once ('tiki-setup.php');
 $access->check_feature('forgotPass');
 $smarty->assign('showmsg', 'n');
 $smarty->assign('showfrm', 'y');
-$smarty->assign('headtitle', tra('I forgot my password'));
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	// this is a 'new password activation':

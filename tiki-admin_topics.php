@@ -8,7 +8,6 @@
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
-$smarty->assign('headtitle', tra('Admin topics'));
 $access->check_feature('feature_articles');
 // PERMISSIONS: NEEDS p_admin or tiki_p_articles_admin_topics
 $access->check_permission(array('tiki_p_articles_admin_topics'));

@@ -91,6 +91,5 @@ include_once ('tiki-mytiki_shared.php');
 ask_ticket('user-bookmarks');
 include_once ('tiki-section_options.php');
 // Display the template
-$smarty->assign('headtitle', tra('User Bookmarks'));
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');
 $smarty->display("tiki.tpl");

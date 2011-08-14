@@ -1,7 +1,5 @@
 {strip}
-	{title admpage="calendar"}
-		{tr}Calendar Item{/tr}
-	{/title}
+	{title admpage="calendar"}{tr}Calendar event : {/tr}{$calitem.name}{/title}
 	
 	<div class="navbar">
 		{if $tiki_p_view_calendar eq 'y'}

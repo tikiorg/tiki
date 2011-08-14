@@ -793,5 +793,4 @@ else {
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('headtitle',tra('Calendar'));
 $smarty->display("tiki.tpl");

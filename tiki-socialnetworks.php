@@ -80,6 +80,5 @@ $smarty->assign('twitterRegistered',$socialnetworkslib->twitterRegistered());
 $smarty->assign('facebookRegistered',$socialnetworkslib->facebookRegistered());
 
 ask_ticket('socialnetworks');
-$smarty->assign('headtitle', tra('Social Networks'));
 $smarty->assign('mid', 'tiki-socialnetworks.tpl');
 $smarty->display("tiki.tpl");

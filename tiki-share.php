@@ -82,11 +82,8 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	}
 	$smarty->assign('forums',$forums);
 	$report='n';
-	$smarty->assign('headtitle', tra('Share this page'));
 } else {
 	$report='y';
-	$smarty->assign('headtitle', tra('Report this page'));
-
 }
 $smarty->assign('report',$_REQUEST['report']);
 
