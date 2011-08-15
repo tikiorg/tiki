@@ -770,6 +770,7 @@ if( \$('#$id') ) {
 		$data['plugin_name'] = $name;
 
 		$prefName = "pluginalias_$name";
+		$tikilib = TikiLib::lib('tiki');
 		$tikilib->set_preference( $prefName, serialize( $data ) );
 		
 		global $prefs;

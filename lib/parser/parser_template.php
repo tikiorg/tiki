@@ -1,7 +1,7 @@
 <?php
 /* Jison generated parser */
 class WikiParser {
-	function __construct($lexer) {
+	function __construct($lexer = null) {
 		
 		$this->lexer = (!empty($lexer) ? $lexer : new WikiParserLexer);
 	}
