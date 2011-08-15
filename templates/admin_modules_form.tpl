@@ -106,7 +106,6 @@
 							<div class="admin2cols adminoptionbox clearfix">
 								<div class="q1">
 									<label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label>
-									<br />&nbsp;
 								</div>
 								<div class="description q234">
 									<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}" class="{$param.filter}" />
