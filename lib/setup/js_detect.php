@@ -91,6 +91,13 @@ if (m) {
 	var hours = - now.getTimezoneOffset() / 60;
 	m = "GMT" + (hours > 0 ? "+" : "") + hours;
 }
+// Etc/GMT+ is equivalent to GMT- 
+if (m.substring(0,4) == "GMT+") {
+	m = "Etc/GMT-" + m.substring(4);
+}
+if (m.substring(0,4) == "GMT-") {
+	m = "Etc/GMT+" + m.substring(4);
+} 
 if (inArray(m, allTimeZoneCodes)) {
 	local_tz = m;
 } else {
