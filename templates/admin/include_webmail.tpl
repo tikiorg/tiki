@@ -2,6 +2,13 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
 	</div>
+	
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_webmail}
+	</fieldset>		
+
+	
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=webmail_view_html}

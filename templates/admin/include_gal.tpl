@@ -7,6 +7,11 @@
 {/remarksbox}
 
 <fieldset class="admin">
+	<legend>{tr}Activate the feature{/tr}</legend>
+	{preference name=feature_galleries}
+</fieldset>
+
+<fieldset class="admin">
 	<legend>{tr}Home Gallery{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
 		{preference name=home_gallery}

@@ -8,6 +8,12 @@
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
 	<input type="hidden" name="adssetup" />
+	
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_banners}
+	</fieldset>		
+	
 	<fieldset>
 		<legend>{tr}Site Ads and Banners{/tr}{help url="Banners"}</legend>
 

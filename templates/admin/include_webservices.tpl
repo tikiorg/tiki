@@ -1,4 +1,10 @@
 <form method="post" action="tiki-admin.php?page=webservices">
+
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_webservices}
+	</fieldset>		
+
 	<div class="navbar">
 		{foreach from=$webservices item=name}
 			{button href="tiki-admin.php?page=webservices&amp;name=$name" _text=$name}

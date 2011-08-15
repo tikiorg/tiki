@@ -5,10 +5,12 @@
 		<input type="submit" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
-	{tabset name="admin_share"}
-		{tab name="{tr}General Preferences{/tr}"}
-
-			<fieldset>
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_share}
+	</fieldset>		
+	
+			<fieldset class="admin">
 				<legend>{tr}Site-wide features{/tr}</legend>
 
 				<div class="admin featurelist">
@@ -25,8 +27,7 @@
 					</div>
 				</div>
 			</fieldset>
-		{/tab}
-	{/tabset}
+
 
 <div class="heading input_submit_container" style="text-align: center">
 	<input type="submit" name="sharesetprefs" value="{tr}Change preferences{/tr}" />

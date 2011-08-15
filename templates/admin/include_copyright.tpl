@@ -7,6 +7,11 @@
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
 	<input type="hidden" name="setcopyright" />
+	
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_copyright}
+	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Copyright management{/tr}</legend>

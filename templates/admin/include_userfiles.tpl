@@ -2,9 +2,16 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
+
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_userfiles}
+	</fieldset>		
+
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
 		<table class="admin">
+		
 			<tr>
 				<td>{tr}Quota (Mb){/tr}</td>
 				<td>

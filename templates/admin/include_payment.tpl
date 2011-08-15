@@ -4,9 +4,12 @@
 </div>
 <form action="tiki-admin.php?page=payment" method="post">
 	<fieldset class="admin">
-		<legend>{tr}Payment{/tr}</legend>
+		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=payment_feature}
-		
+	</fieldset>		
+
+	<fieldset class="admin">
+		<legend>{tr}Payment{/tr}</legend>
 		{remarksbox title="{tr}Choose payment system{/tr}"}
 			{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br />
 			{tr}PayPal is working at the moment. See PayPal.com{/tr}<br />

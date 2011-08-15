@@ -60,6 +60,9 @@
 <fieldset class="admin">
 <legend>{tr}Activate the feature{/tr}</legend>
 	{preference name=feature_watershed}
+</fieldset>
+<fieldset class="admin">
+<legend>{tr}Settings{/tr}</legend>
 	{preference name=watershed_log_errors}
 </fieldset>
 {remarksbox type="info" title="{tr}Configuration within Watershed{/tr}"}{tr}Set the webservice to point to tiki-watershed_service.php on your site, and turn on Authentication Lock.{/tr}{/remarksbox}

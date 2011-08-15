@@ -8,7 +8,11 @@
 	<div class="heading input_submit_container" style="text-align: right;">
 		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />
 	</div>
+	
 	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_sefurl}
+
 		{if $htaccess eq 'missing'}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
 		{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file.{/tr}	
@@ -21,9 +25,13 @@
 		{tr}.htaccess file is out of date. SEFURL may not work completely or incorrectly if Tiki htaccess directives are not current.{/tr}	
 		{tr}To update this file, if it was not customized, overwrite the <strong>.htaccess</strong> file (located in the main directory of your Tiki installation) with <strong>_htaccess</strong>.{/tr}
 		{/remarksbox}
-		{/if}
+		{/if}		
+
+	</fieldset>		
+	
+	<fieldset class="admin">
+		
 		<legend>{tr}Settings{/tr}</legend>
-		{preference name=feature_sefurl}
 		{preference name=feature_sefurl_filter}
 
 		<div style="padding:0.5em;clear:both">
