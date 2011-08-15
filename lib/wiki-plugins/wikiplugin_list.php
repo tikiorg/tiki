@@ -81,7 +81,7 @@ function wikiplugin_list($data, $params)
 
 	$query->filterPermissions(Perms::get()->getGroups());
 
-	if (isset($_REQUEST['sort_mode'])) {
+	if (!empty($_REQUEST['sort_mode'])) {
 		$query->setOrder($_REQUEST['sort_mode']);
 	}
 
