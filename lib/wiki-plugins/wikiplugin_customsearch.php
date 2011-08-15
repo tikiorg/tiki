@@ -85,7 +85,7 @@ function wikiplugin_customsearch($data, $params)
 			customsearch_offset_$id = 0;
 		});
 		$('#customsearch_$id" . "').submit(function() {
-			load_customsearch_$id($.toJSON(customsearch_$id" . "_searchdata), customsearch_offset_$id, customsearch_maxRecords_$id);
+			load_customsearch_$id($.toJSON(customsearch_$id" . "_searchdata));
 			return false;
 		});";
 		
@@ -122,7 +122,7 @@ function wikiplugin_customsearch($data, $params)
 		} 
 	}
 
-	$script .= "function load_customsearch_$id" . "(searchdata, customsearch_offset, customsearch_maxRecords) { 
+	$script .= "function load_customsearch_$id" . "(searchdata) { 
 			$.ajax({
 				type: 'POST',
 				url: 'customsearch_ajax.php',
@@ -132,17 +132,19 @@ function wikiplugin_customsearch($data, $params)
 					groups: '" . json_encode($groups) . "',
 					textrangegroups: '" . json_encode($textrangegroups) . "',
 					daterangegroups: '" . json_encode($daterangegroups) . "',
-					offset: customsearch_offset,
-					maxRecords: customsearch_maxRecords},
+					offset: customsearch_offset_$id,
+					sort_mode: customsearch_sort_mode_$id,
+					maxRecords: customsearch_maxRecords_$id},
 				dataType: 'html',
 				success: function(data){
 					$('#customsearch_$id" . "_results').html(data);
 				}
 			});
 		};
+		customsearch_sort_mode_$id = '';
 		customsearch_offset_$id = $offset;
 		customsearch_maxRecords_$id = $maxRecords; 
-		load_customsearch_$id('', customsearch_offset_$id, customsearch_maxRecords_$id);";
+		load_customsearch_$id('');";
 
 	$form = '<div id="' . "customsearch_$id" . '_form' . '"><form id="' . "customsearch_$id" . '">' . $matches->getText() . '</form></div>'; 
 
