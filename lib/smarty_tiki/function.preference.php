@@ -52,8 +52,12 @@ function smarty_function_preference( $params, $smarty ) {
 		
 		return $smarty->fetch( 'prefs/' . $info['type'] . '.tpl' );
 	} else {
-		$info = array('value' => tra('Error'), 'default_val' => tra('Error'),
-			'name' => tr( 'Preference %0 is not defined', $params['name'] )
+		$info = array(
+			'value' => tra('Error'),
+			'default_val' => tra('Error'),
+			'name' => tr( 'Preference %0 is not defined', $params['name'] ),
+			'tags' => array('modified', 'basic', 'all'),
+			'tagstring' => 'modified basic all',
 		);
 		if (strpos($_SERVER["SCRIPT_NAME"], 'tiki-edit_perspective.php') !== false) {
 			$info['hint'] = tra('Drag this out of the perspective and resave it.');
