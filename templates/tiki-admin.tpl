@@ -169,7 +169,6 @@ if $pagetop_msg}
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 	<a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
-	<a href="tiki-admin_transitions.php">{tr}Transitions{/tr}</a>
 	<hr />
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />

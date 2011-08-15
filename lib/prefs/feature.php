@@ -210,7 +210,7 @@ function prefs_feature_list($partial = false) {
 			'admin' => 'category',
 			'view' => 'tiki-browse_categories.php',
 			'permission' => array(
-				'textFilter' => 'category',
+				'textFilter' => 'categ', // intentional use of categ so it catches category and categories
 			),
 		),
 		'feature_score' => array(
@@ -2210,6 +2210,10 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Group+Transitions',
 			'default' => 'n',
+			'view' => 'tiki-admin_transitions.php',
+			'permission' => array(
+				'permType' => 'transition',
+			),
 		),
 		'feature_category_transition' => array(
 			'name' => tra('Category Transition'),
@@ -2217,6 +2221,10 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Category+Transitions',
 			'default' => 'n',
+			'view' => 'tiki-admin_transitions.php',
+			'permission' => array(
+				'permType' => 'transition',
+			),			
 		),
 		'feature_watershed' => array(
 			'name' => tra('Ustream Watershed'),
