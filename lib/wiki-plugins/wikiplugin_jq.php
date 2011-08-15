@@ -37,7 +37,11 @@ function wikiplugin_jq($data, $params) {
 	$nojquery = isset($nojquery) ? $nojquery : tr('<!-- jq plugin inactive: JavaScript off -->');
 	if ($prefs['javascript_enabled'] != 'y') { return $nojquery; }
 	$notonready = isset($notonready) ? $notonready : false;
-	
+
+	// Need to manually decode greater than and less than (not sure if we want to decode all HTML entities
+	$data = str_replace('&lt;', '<', $data);
+	$data = str_replace('&gt;', '>', $data);
+
 	if (!$notonready) {		
 		$headerlib->add_jq_onready($data);
 	} else { 
