@@ -31,11 +31,11 @@
 {/if}
 
 {if $p.module}
-	<a href="{$p.view|escape}">{icon _id=module title="{tr}Module{/tr}"}</a>
+	<a href="{$p.module|escape}">{icon _id=module title="{tr}Module{/tr}"}</a>
 {/if}
 
 {if $p.plugin}
-	<a href="{$p.view|escape}">{icon _id=plugin title="{tr}Plugin{/tr}"}</a>
+	<a href="{$p.plugin|escape}">{icon _id=plugin title="{tr}Plugin{/tr}"}</a>
 {/if}
 
 {jq}
