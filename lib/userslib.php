@@ -4871,7 +4871,7 @@ class UsersLib extends TikiLib
 				'type' => 'dsn',
 				'admin' => false,
 				'prefs' => array(),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_payment_admin',
