@@ -144,6 +144,7 @@ if (ctab) {
 		$div_id = $smarty_tabset_name;
 		// work arounds for nested plugins
 		$tabset_index--;
+		array_pop($smarty_tabset);
 		if ($tabset_index > 0) {
 			$smarty_tabset_name = $smarty_tabset[$tabset_index]['name'];
 			$cookietab = getCookie($smarty_tabset_name, 'tabs', 1);
