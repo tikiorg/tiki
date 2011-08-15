@@ -101,7 +101,7 @@ function wikiplugin_list($data, $params)
 
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
 				$plugin->setData($builder->getData($output->getBody()));
-			} elseif (isset($arguments['wiki'])) {
+			} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {	
 				$wikitpl = "tplwiki:" . $arguments['wiki'];
 				$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
 				$plugin = new Search_Formatter_Plugin_WikiTemplate($wikicontent);

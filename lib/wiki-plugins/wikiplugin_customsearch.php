@@ -39,6 +39,8 @@ function wikiplugin_customsearch($data, $params)
 	global $prefs;
 	if (!isset($params['wiki'])) {
 		return tra('Template is not specified');
+	} elseif (!TikiLib::lib('tiki')->page_exists($params['wiki'])) {
+		return tra('Template page not found');
 	}
 	if (isset($params['id'])) {
 		$id = preg_replace('/[^a-zA-Z0-9]/', '', $params['id']);
