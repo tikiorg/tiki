@@ -281,6 +281,10 @@ EXPORT;
 				$values = explode(',', $input->$key->none());
 				$filter = TikiFilter::get($filter);
 				$values = array_map(array($filter, 'filter'), $values);
+			} elseif (isset($info['separator'])) {
+				$input->setFilter($key, $filter);
+				$values = $input->asArray($key, $info['separator']);
+				$values = array(implode($info['separator'], $values));
 			} else {
 				$values = array($input->$key->$filter());
 			}
