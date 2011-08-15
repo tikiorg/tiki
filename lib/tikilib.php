@@ -5574,6 +5574,12 @@ JS;
 			return trim($filter->filter($vals));
 		}
 	}
+
+	function refresh_index($type, $object, $process = true)
+	{
+		require_once 'lib/search/refresh-functions.php';
+		return refresh_index($type, $object, $process);
+	}
 }
 // end of class ------------------------------------------------------
 

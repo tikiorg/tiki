@@ -55,12 +55,14 @@ class Services_Favorite_Controller
 		if ($target) {
 			if (! in_array("$type:$object", $relations) && $relationId = $relationlib->add_relation('tiki.user.favorite', 'user', $user, $type, $object)) {
 				$relations[$relationId] = "$type:$object";
+				TikiLib::lib('tiki')->refresh_index($type, $object);
 			}
 		} else {
 			foreach ($relations as $id => $key) {
 				if ($key === "$type:$object") {
 					$relationlib->remove_relation($id);
 					unset($relations[$id]);
+					TikiLib::lib('tiki')->refresh_index($type, $object);
 				}
 			}
 		}
