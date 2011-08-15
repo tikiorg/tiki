@@ -10,6 +10,12 @@
 
 	{tabset name="admin_forums"}
 		{tab name="{tr}General Settings{/tr}"}
+		
+			<fieldset class="admin">
+				<legend>{tr}Activate the feature{/tr}</legend>
+				{preference name=feature_forums}
+			</fieldset>
+			
 			{preference name=home_forum}
 
 			<fieldset>

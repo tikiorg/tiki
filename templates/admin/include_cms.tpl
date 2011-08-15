@@ -21,6 +21,12 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<input type="hidden" name="cmsprefs" />
 
+			<fieldset class="admin">
+				<legend>{tr}Activate the feature{/tr}</legend>
+				{preference name=feature_articles}
+			</fieldset>
+			
+			
 			{preference name=art_home_title}
 			{preference name=maxArticles}
 

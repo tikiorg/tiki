@@ -4,8 +4,11 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="messagesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
-	
-	{preference name=feature_messages}
+
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_messages}
+	</fieldset>
 
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>

@@ -11,6 +11,12 @@
 	</div>
 	{if $prefs.feature_wysiwyg ne 'y'}{preference name=feature_wysiwyg}{/if}
 	{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is planned to be addressed through the future "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
+
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_wysiwyg}
+	</fieldset>
+
 	<fieldset class="admin">
 		<legend>{icon _id="text_dropcaps"} {tr}Wysiwyg Editor Features{/tr}</legend>
 		{preference name=wysiwyg_optional}

@@ -11,6 +11,12 @@
 
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
+		
+			<fieldset class="admin">
+				<legend>{tr}Activate the feature{/tr}</legend>
+				{preference name=feature_blogs}
+			</fieldset>
+		
 			{preference name=home_blog}
 			<fieldset>
 				<legend>

@@ -6,6 +6,12 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="faqcomprefs" value="{tr}Change settings{/tr}" />
 	</div>
+
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_faqs}
+	</fieldset>	
+
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=faq_prefix}

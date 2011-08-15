@@ -1,6 +1,11 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <fieldset class="admin">
+	<legend>{tr}Activate the feature{/tr}</legend>
+	{preference name=feature_trackers}
+</fieldset>
+
+<fieldset class="admin">
     <form action="tiki-admin.php?page=trackers" method="post">
 	{preference name=user_selector_threshold}
 	{preference name=tracker_field_computed}

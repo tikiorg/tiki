@@ -7,6 +7,11 @@
 		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_calendar}
+	</fieldset>
+	
 	<fieldset>
 		<legend>{tr}General settings{/tr}{help url="Calendar+Admin"}</legend>
 		<div class="adminoptionbox">

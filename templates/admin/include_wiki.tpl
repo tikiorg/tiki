@@ -11,6 +11,13 @@
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
+		
+			<fieldset class="admin">
+				<legend>{tr}Activate the feature{/tr}</legend>
+				{preference name=feature_wiki}
+			</fieldset>
+
+		
 			{preference name=wikiHomePage default=$prefs.site_wikiHomePage}
 
 			<fieldset>

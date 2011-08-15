@@ -4,6 +4,11 @@
 	<div class="input_submit_container clear" style="text-align: right;">
 		<input type="submit" name="directory" value="{tr}Change preferences{/tr}" />
 	</div>
+	
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_directory}
+	</fieldset>		
 
 	<fieldset class="admin">
 		<legend>{tr}Directory{/tr}</legend>

@@ -4,8 +4,14 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
+	
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_polls}
+	</fieldset>
+	
 	<fieldset>
-		<legend>{tr}Polls{/tr}{help url="Polls+Config"}</legend>
+		<legend>{tr}Settings{/tr}{help url="Polls"}</legend>
 		<input type="hidden" name="pollprefs" />
 		{preference name=feature_poll_anonymous}
 		{preference name=feature_poll_revote}

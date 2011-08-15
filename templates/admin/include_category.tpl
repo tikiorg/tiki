@@ -11,11 +11,17 @@
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
 
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_categories}
+	</fieldset>	
+	
 	<fieldset>
+	
 		<legend>
 			{tr}Features{/tr}{help url="Category"}
 		</legend>
-		{preference name=feature_categories}
+		
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}
