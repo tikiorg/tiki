@@ -40,7 +40,7 @@ class Services_Tracker_Controller
 		$wikiparse = $input->description_parse->int();
 		$fieldId = 0;
 
-		$types = $this->utilities->getFieldTypes($description);
+		$types = $this->utilities->getFieldTypes();
 
 		if (empty($type)) {
 			$type = 't';
@@ -158,7 +158,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker field not found in specified tracker'), 404);
 		}
 
-		$types = $this->utilities->getFieldTypes($description);
+		$types = $this->utilities->getFieldTypes();
 		$typeInfo = $types[$field['type']];
 
 		$permName = $input->permName->word();

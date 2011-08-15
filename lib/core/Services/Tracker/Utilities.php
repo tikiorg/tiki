@@ -264,7 +264,7 @@ EXPORT;
 	function buildOptions($input, $typeInfo)
 	{
 		if (is_string($typeInfo)) {
-			$types = $this->getFieldTypes($description);
+			$types = $this->getFieldTypes();
 			$typeInfo = $types[$typeInfo];
 		}
 
@@ -328,9 +328,9 @@ EXPORT;
 		return $out;
 	}
 
-	function getFieldTypes($description)
+	function getFieldTypes()
 	{
-		$factory = new Tracker_Field_Factory($description);
+		$factory = new Tracker_Field_Factory(null);
 		return $factory->getFieldTypes();
 	}
 
