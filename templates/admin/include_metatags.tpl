@@ -6,6 +6,8 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="metatags" value="{tr}Change preferences{/tr}" />
 	</div>
+{tabset name="admin_metatags"}
+	{tab name="{tr}Meta tags{/tr}"}
 	<fieldset>
 		<legend>
 			{tr}Meta tags{/tr}
@@ -21,7 +23,9 @@
 			{preference name=metatag_author}
 		</div>
 	</fieldset>
+	{/tab}
 
+	{tab name="{tr}Geo URL{/tr}"}
 	<fieldset>
 		<legend>
 			{tr}Geo URL{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://geourl.org/">{icon _id='help'}</a>{/if}
@@ -30,7 +34,8 @@
 		{preference name=metatag_georegion}
 		{preference name=metatag_geoplacename}
 	</fieldset>
-
+	{/tab}
+	{tab name="{tr}Robots{/tr}"}
 	<fieldset>
 		<legend>{tr}Robots{/tr}</legend>
 		{* Need to show site_metatag_robots as real metatags are overridden at runtime *}
@@ -38,6 +43,8 @@
 		{preference name=metatag_robots}
 		{preference name=metatag_revisitafter}
 	</fieldset>
+	{/tab}
+{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="metatags" value="{tr}Change preferences{/tr}" />
 	</div>
