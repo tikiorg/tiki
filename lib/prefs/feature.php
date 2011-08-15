@@ -303,6 +303,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Featured Links'),
 			'description' => tra('Simple menu system which can optionally add an external web page in an iframe'),
 			'help' => 'Featured+links',
+			'view' => 'tiki-admin_links.php',
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1153,11 +1154,12 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('basic'),
 		),
 		'feature_cms_templates' => array(
-			'name' => tra('Content Templates'),
+			'name' => tra('Article content templates'),
 			'type' => 'flag',
 			'help' => 'Content+Template',
 			'keywords' => tra('template article news'),			
-			'description' => tra('Pre-defined content for a wiki page.'),
+			'description' => tra('Predefined content for a news article'),
+			'view' => 'tiki-admin_content_templates.php',
 			'default' => 'n',
 		),
 		'feature_cms_print' => array(
@@ -1712,11 +1714,13 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 		),
 		'feature_wiki_templates' => array(
-			'name' => tra('Content templates'),
+			'name' => tra('Wiki content templates'),
 			'type' => 'flag',
 			'keywords' => tra('template'),			
 			'help' => 'Content+Template',
 			'default' => 'n',
+			'description' => tra('Predefined content for a wiki page'),
+			'view' => 'tiki-admin_content_templates.php',
 		),
 		'feature_warn_on_edit' => array(
 			'name' => tra('Warn on edit conflict'),
