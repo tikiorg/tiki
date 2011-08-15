@@ -289,11 +289,15 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 		$document->appendChild($element);
 
 		// leave a blank one in the front
-		if (!isset($arguments['multiple']) && !isset($arguments['size'])) {
-			$option = $document->createElement('option');
+		if (!isset($arguments['multiple']) && !isset($arguments['size']) || isset($arguments['_firstlabel'])) {
+			if (!empty($arguments['_firstlabel'])) {
+				$label = $arguments['_firstlabel'];
+			} else {
+				$label = '';
+			}
+			$option = $document->createElement('option', $label);
 			$element->appendChild($option);
 		} 
-		
 		$script .= "$('#$fieldid').change(function() { 
 			var filter = new Object();
 			filter.config = " . json_encode($arguments) . ";
