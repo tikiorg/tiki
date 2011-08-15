@@ -52,7 +52,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Blogs',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=blog') .' --- ' .tr('[%0|List]', 'tiki-list_blogs.php').' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=blog&show_disabled_features=y'),
+			'hint' => tr('[%0|Settings]', 'tiki-admin.php?page=blogs') .' --- ' .tr('[%0|List]', 'tiki-list_blogs.php').' --- ' .tr('[%0|Permissions]', 'tiki-objectpermissions.php?textFilter=blog&show_disabled_features=y'),
 		),
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
