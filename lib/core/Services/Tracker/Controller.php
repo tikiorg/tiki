@@ -71,6 +71,16 @@ class Services_Tracker_Controller
 				'description' => $description,
 				'descriptionIsParsed' => $wikiparse,
 			));
+
+			if ($input->submit_and_edit->none() || $input->next->word() === 'edit') {
+				return array(
+					'FORWARD' => array(
+						'action' => 'edit_field',
+						'fieldId' => $fieldId,
+						'trackerId' => $trackerId,
+					),
+				);
+			}
 		}
 
 		return array(
