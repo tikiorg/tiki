@@ -282,7 +282,7 @@ class XmlLib extends TikiLib
 			$tikilib->update_page($info['name'], $info['data'], 'Updated from import', !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], 0, isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL);
 		} else {
 			$old = false;
-			$tikilib->create_page($info['name'], 0, $info['data'], $info['lastModif'], $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL, '', 0, $info['created']);
+			$tikilib->create_page($info['name'], $info['hits'], $info['data'], $info['lastModif'], $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL, '', 0, $info['created']);
 		}
 
 		if ($prefs['feature_wiki_comments'] == 'y' && $tiki_p_edit_comments == 'y' && !empty($info['comments'])) {
