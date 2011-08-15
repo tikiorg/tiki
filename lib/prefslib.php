@@ -135,6 +135,15 @@ class PreferencesLib
 			
 			$info = array_merge($defaults, $info);
 
+			if (isset($info['permission'])) {
+				$info['permission']['show_disabled_features'] = 'y';
+				$info['permission'] = 'tiki-objectpermissions.php?' . http_build_query($info['permission'], '', '&');
+			}
+
+			if (isset($info['admin'])) {
+				$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
+			}
+
 			return $info;
 		}
 

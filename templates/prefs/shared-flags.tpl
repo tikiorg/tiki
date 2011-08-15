@@ -18,6 +18,18 @@
 	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default|escape}" />
 {/if}
 
+{if $p.admin}
+	<a href="{$p.admin|escape}">{icon _id=wrench title="{tr}Admin{/tr}"}</a>
+{/if}
+
+{if $p.permission}
+	<a href="{$p.permission|escape}">{icon _id=key title="{tr}Permissions{/tr}"}</a>
+{/if}
+
+{if $p.view}
+	<a href="{$p.view|escape}">{icon _id=magnifier title="{tr}View{/tr}"}</a>
+{/if}
+
 {jq}
 $('.pref-reset')
 	.change( function() {
