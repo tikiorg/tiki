@@ -16,6 +16,7 @@ function prefs_javascript_list() {
 				'google' => tra('Google'),
 			),
 			'default' => 'none',
+			'tags' => array('basic'),
 		),
 	);
 }
