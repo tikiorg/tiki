@@ -16,9 +16,17 @@ function module_search_wiki_page_info() {
 		'name' => tra('Search for Wiki Page'),
 		'description' => tra('Search for a wiki page by name.'),
 		'prefs' => array('feature_wiki'),
+		'params' => array(
+			'exact_match' => array(
+				'name' => tra('Exact Match'),
+				'description' => tra('Exact match checkbox unchecked by default if set to "n".') . " " . tr('Default: "y".'),
+				'filter' => 'alpha'
+			),
+		),
 	);
 }
 
 function module_search_wiki_page( $mod_reference, $module_params ) {
-	
+	global $smarty;
+	$smarty->assign('exact_match', isset($module_params['exact_match']) ? $module_params['exact_match'] : 'y');
 }
