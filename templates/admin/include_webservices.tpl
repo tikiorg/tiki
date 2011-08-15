@@ -2,7 +2,7 @@
 
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_webservices}
+		{preference name=feature_webservices visible="always"}
 	</fieldset>		
 
 	<div class="navbar">

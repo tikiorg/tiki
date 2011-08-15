@@ -7,7 +7,7 @@
 
 <fieldset class="admin">
 	<legend>{tr}Activate the feature{/tr}</legend>
-	{preference name=feature_score}
+	{preference name=feature_score visible="always"}
 </fieldset>		
 	
 <fieldset class="admin">

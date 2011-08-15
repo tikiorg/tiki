@@ -11,7 +11,7 @@
 	
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_banners}
+		{preference name=feature_banners visible="always"}
 	</fieldset>		
 	
 	<fieldset>

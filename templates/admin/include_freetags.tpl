@@ -7,7 +7,7 @@
 		
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_freetags}
+		{preference name=feature_freetags visible="always"}
 	</fieldset>			
 		
 			<fieldset>

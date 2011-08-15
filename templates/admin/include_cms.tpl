@@ -23,7 +23,7 @@
 
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
-				{preference name=feature_articles}
+				{preference name=feature_articles visible="always"}
 			</fieldset>
 			
 			

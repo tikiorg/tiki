@@ -14,7 +14,7 @@
 		
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
-				{preference name=feature_blogs}
+				{preference name=feature_blogs visible="always"}
 			</fieldset>
 		
 			{preference name=home_blog}

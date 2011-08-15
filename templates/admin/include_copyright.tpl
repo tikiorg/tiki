@@ -10,7 +10,7 @@
 	
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_copyright}
+		{preference name=feature_copyright visible="always"}
 	</fieldset>
 
 	<fieldset>

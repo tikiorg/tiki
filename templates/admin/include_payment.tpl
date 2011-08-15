@@ -5,7 +5,7 @@
 <form action="tiki-admin.php?page=payment" method="post">
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=payment_feature}
+		{preference name=payment_feature visible="always"}
 	</fieldset>		
 
 	<fieldset class="admin">

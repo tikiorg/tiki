@@ -7,7 +7,7 @@
 	
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_directory}
+		{preference name=feature_directory visible="always"}
 	</fieldset>		
 
 	<fieldset class="admin">

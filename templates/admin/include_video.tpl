@@ -10,7 +10,7 @@
 
 <fieldset class="admin">
 <legend>{tr}Activate the feature{/tr}</legend>
-	{preference name=feature_kaltura}
+	{preference name=feature_kaltura visible="always"}
 </fieldset>
 
 <fieldset class="admin">

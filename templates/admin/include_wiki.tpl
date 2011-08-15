@@ -14,7 +14,7 @@
 		
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
-				{preference name=feature_wiki}
+				{preference name=feature_wiki visible="always"}
 			</fieldset>
 
 		

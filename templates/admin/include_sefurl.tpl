@@ -11,7 +11,7 @@
 	
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_sefurl}
+		{preference name=feature_sefurl visible="always"}
 
 		{if $htaccess eq 'missing'}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}	

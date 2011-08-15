@@ -11,7 +11,7 @@
 	
 <fieldset class="admin">
 	<legend>{tr}Activate the feature{/tr}</legend>
-	{preference name=feature_gmap}
+	{preference name=feature_gmap visible="always"}
 </fieldset>	
 
 	<fieldset class="admin">

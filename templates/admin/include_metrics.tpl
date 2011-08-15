@@ -9,7 +9,7 @@
 		{button href="tiki-admin_metrics.php" _text="{tr}Configure metrics{/tr}"}
 	</div>
 
-  		{preference name=feature_metrics_dashboard}
+  		{preference name=feature_metrics_dashboard visible="always"}
 		<div class="adminoptionboxchild" id="feature_metrics_dashboard_childcontainer">
 			{preference name=metrics_pastresults label="{tr}Show past results{/tr}"}
 			{preference name=metrics_pastresults_count label="{tr}Past results count{/tr}"}

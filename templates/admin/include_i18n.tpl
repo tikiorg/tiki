@@ -25,7 +25,7 @@
 {preference name=default_mail_charset}
 
 <div class="adminoptionbox">
-	{preference name=feature_multilingual}
+	{preference name=feature_multilingual visible="always"}
 <div class="adminoptionboxchild" id="feature_multilingual_childcontainer">	
 
 	{preference name=feature_detect_language}

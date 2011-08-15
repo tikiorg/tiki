@@ -8,7 +8,7 @@
 
 	<fieldset>
 		<legend>{tr}Global configuration{/tr}</legend>
-		{preference name=rating_advanced}
+		{preference name=rating_advanced visible="always"}
 		{preference name=rating_recalculation}
 		<div class="rating_recalculation_childcontainer randomvote randomload">
 			{preference name=rating_recalculation_odd}

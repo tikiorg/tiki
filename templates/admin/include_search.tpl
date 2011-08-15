@@ -20,7 +20,7 @@
 					{tr}Unified Search{/tr}
 				</legend>
 
-				{preference name=feature_search}
+				{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">				
 					{preference name="unified_incremental_update"}
 					{preference name="unified_engine"}

@@ -7,7 +7,7 @@
 	
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_polls}
+		{preference name=feature_polls visible="always"}
 	</fieldset>
 	
 	<fieldset>

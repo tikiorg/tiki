@@ -35,7 +35,7 @@
 
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
-				{preference name=feature_file_galleries}
+				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
 		
 			{preference name=home_file_gallery}

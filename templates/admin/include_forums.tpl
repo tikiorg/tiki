@@ -13,7 +13,7 @@
 		
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
-				{preference name=feature_forums}
+				{preference name=feature_forums visible="always"}
 			</fieldset>
 			
 			{preference name=home_forum}

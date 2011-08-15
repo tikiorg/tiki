@@ -9,7 +9,7 @@
 
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_calendar}
+		{preference name=feature_calendar visible="always"}
 	</fieldset>
 	
 	<fieldset>

@@ -13,7 +13,7 @@
 
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_wysiwyg}
+		{preference name=feature_wysiwyg visible="always"}
 	</fieldset>
 
 	<fieldset class="admin">
