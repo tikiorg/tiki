@@ -30,7 +30,13 @@
 	</div>
 
 	{tabset name="fgal_admin"}
+	
 		{tab name="{tr}General Settings{/tr}"}
+
+			<fieldset class="admin">
+				<legend>{tr}Activate the feature{/tr}</legend>
+				{preference name=feature_file_galleries}
+			</fieldset>
 		
 			{preference name=home_file_gallery}
 			{preference name='fgal_use_db'}
@@ -53,6 +59,7 @@
 					<a class="link" href="tiki-admin.php?page=comments">{tr}Manage comment settings{/tr}</a>
 				</div>
 				{preference name='fgal_display_zip_option'}
+				{preference name=feature_webdav}
 
 				{preference name='fgal_limit_hits_per_file'}
 				{preference name='fgal_prevent_negative_score'}
