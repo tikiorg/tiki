@@ -101,11 +101,13 @@
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
-				<fieldset class="admin clearfix featurelist">
+				<div class="adminoptionboxchild">
+				<fieldset>
 					<legend> {tr}Experimental:{/tr} {icon _id=bug_error}</legend>
 					{preference name=feature_jquery_carousel}
 					{preference name=feature_jquery_tablesorter}
 				</fieldset>
+				</div>
 			</fieldset>
 {/tab}
 
@@ -120,7 +122,7 @@
 				{preference name=feature_webservices}
 			</div>
 
-			<div class="adminoptionbox">
+			<div class="admin clearfix featurelist">
 				<fieldset>
 					<legend>{tr}Logging and Reporting{/tr}</legend>
 					<div class="adminoptionbox">
