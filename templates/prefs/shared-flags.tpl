@@ -30,6 +30,14 @@
 	<a href="{$p.view|escape}">{icon _id=magnifier title="{tr}View{/tr}"}</a>
 {/if}
 
+{if $p.module}
+	<a href="{$p.view|escape}">{icon _id=module title="{tr}Module{/tr}"}</a>
+{/if}
+
+{if $p.plugin}
+	<a href="{$p.view|escape}">{icon _id=plugin title="{tr}Plugin{/tr}"}</a>
+{/if}
+
 {jq}
 $('.pref-reset')
 	.change( function() {

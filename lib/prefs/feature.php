@@ -58,6 +58,8 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('basic'),
 			'admin' => 'blogs',
 			'view' => 'tiki-list_blogs.php',
+			'plugin' => 'blog',
+			'module' => 'blog',			
 			'permission' => array(
 				'permType' => 'blog',
 			),
@@ -90,6 +92,8 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 			'admin' => 'trackers',
 			'view' => 'tiki-list_trackers.php',
+			'plugin' => 'tracker',
+			'module' => 'tracker',
 			'permission' => array(
 				'permType' => 'tracker',
 			),
@@ -103,6 +107,8 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('basic'),
 			'admin' => 'forums',
 			'view' => 'tiki-forums.php',
+			'plugin' => 'forum',
+			'module' => 'forum',
 			'permission' => array(
 				'textFilter' => 'forum',
 			),
