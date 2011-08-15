@@ -134,7 +134,10 @@ SMILE							[a-z]+
 (.)											return 'CONTENT'
 (\n)
 	%{
-		yytext = parserlib.formatContent(yytext);
+		if (parserlib.npState(this.yy.npOn, false, true) == true) {
+			yytext = parserlib.formatContent(yytext);
+		}
+		
 		return 'CONTENT';
 	%}
 

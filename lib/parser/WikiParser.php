@@ -601,7 +601,10 @@ break;
 case 43:return 12;
 break;
 case 44:
-		$yy_->yytext = ParserLib::formatContent($yy_->yytext);
+		if (ParserLib::npState($this->yy->npOn, false, true) == true) {
+			$yy_->yytext = ParserLib::formatContent($yy_->yytext);
+		}
+		
 		return 12;
 	
 break;
