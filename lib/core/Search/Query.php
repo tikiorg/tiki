@@ -88,9 +88,9 @@ class Search_Query
 	}
 
 	function filterTextRange($from, $to, $field = 'title')
-        {
-                $this->expr->addPart(new Search_Expr_Range($from, $to, 'plaintext', $field));
-        }
+	{
+		$this->expr->addPart(new Search_Expr_Range($from, $to, 'plaintext', $field));
+	}
 
 	function filterInitial($initial, $field = 'title')
 	{
