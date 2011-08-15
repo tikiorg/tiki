@@ -48,7 +48,8 @@
 		$('.tabset .tabmark a').each(function () {
 			var selector = 'fieldset.tabcontent.' + $(this).attr('href').substring(1);
 			var content = $(this).closest('.tabset').find(selector);
-			$(this).parent().toggle(content.is('.filled'));
+
+			$(this).parent().toggle(content.is('.filled') || content.find('.preference').length === 0);
 		});
 	};
 
