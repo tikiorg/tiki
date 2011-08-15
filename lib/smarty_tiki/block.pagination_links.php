@@ -191,7 +191,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 				$link = '<a class="'.$class.'" ';
 				if ($params['_ajax'] == 'y') {
 					// setting javascript offset variable if requested 
-					if (isset($params['offset_jsvar'])) {
+					if (!empty($params['offset_jsvar'])) {
 						$params['_onclick'] = $params['offset_jsvar'] . "=$linkoffset;" . $params['_onclick'];
 					}
 							
