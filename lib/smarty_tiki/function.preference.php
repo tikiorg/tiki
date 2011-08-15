@@ -25,6 +25,12 @@ function smarty_function_preference( $params, $smarty ) {
 			$info['value'] = $params['default'];
 		}
 
+		if (isset($params['visible']) && $params['visible'] == 'always') {
+			// Modified preferences are never hidden, so pretend it's modified when forcing display
+			$info['tags'][] = 'modified';
+			$info['tagstring'] .= ' modified';
+		}
+
 		if ($get_pages) {
 			if (count($info['pages']) > 0) {
 			$pages_string = tra(' (found in ');

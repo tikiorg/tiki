@@ -13,7 +13,7 @@
 
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_categories}
+		{preference name=feature_categories visible="always"}
 	</fieldset>	
 	
 	<fieldset>
