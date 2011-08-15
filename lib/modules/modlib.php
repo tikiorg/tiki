@@ -550,7 +550,7 @@ class ModLib extends TikiLib
 				'section' => 'appearance',
 			),
 			'nobox' => array(
-				'name' => tra('No box'),
+				'name' => tra('No Box'),
 				'description' => 'y|n '.tra('Show only the content'),
 				'section' => 'appearance',
 			),
@@ -560,7 +560,7 @@ class ModLib extends TikiLib
 				'section' => 'appearance',
 			),
 			'notitle' => array(
-				'name' => tra('No title'),
+				'name' => tra('No Title'),
 				'description' => 'y|n '.tra('Show module title'),
 				'filter' => 'alpha',
 				'section' => 'appearance',
@@ -587,7 +587,7 @@ class ModLib extends TikiLib
 				'section' => 'visibility',
 			),
 			'page' => array(
-				'name' => tra('Page filter'),
+				'name' => tra('Page Filter'),
 				'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'pagename',
@@ -640,7 +640,7 @@ class ModLib extends TikiLib
 		// Parameters common to several modules, but not all
 		$common_params = array(
 			'nonums' => array(
-				'name' => tra('No numbers'),
+				'name' => tra('No Numbers'),
 				'description' => tra('If set to "y", the module will not number list items.'),
 				'section' => 'appearance',
 			),
