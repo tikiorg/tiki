@@ -2,7 +2,7 @@
 {if !isset($versioned) or not $versioned}
 	{strip}
 
-	{assign var=thispage value=$page|escape:"url"}
+	{assign var=thispage value=$page|escape}
 
 	{capture assign=page_bar}
 		{if !empty($user) and !empty($prefs.user_favorites) and $prefs.user_favorites eq 'y' and $user}
