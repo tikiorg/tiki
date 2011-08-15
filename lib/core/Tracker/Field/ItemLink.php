@@ -90,11 +90,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		if ($this->getOption(6) && $context['inTable'] !== 'y') {
 			require_once 'lib/wiki-plugins/wikiplugin_tracker.php';
 
-			$form = wikiplugin_tracker('', array(
-					'trackerId' => $this->getOption(0),
-					'ignoreRequestItemId' => 'y',
-					'_ajax_form_ins_id' => $this->getInsertId(),
-				));
+			$params = array(
+				'trackerId' => $this->getOption(0),
+				'ignoreRequestItemId' => 'y',
+				'_ajax_form_ins_id' => $this->getInsertId(),
+			);
+
+			if ($this->getOption(7)) {
+				$params['wiki'] = $this->getOption(7);
+			}
+			$form = wikiplugin_tracker('', $params);
 
 			$form = preg_replace(array('/<!--.*?-->/', '/\s+/'), array('', ' '), $form);	// remove comments etc
 

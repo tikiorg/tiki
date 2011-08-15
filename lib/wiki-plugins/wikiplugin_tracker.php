@@ -943,8 +943,8 @@ function wikiplugin_tracker($data, $params)
 			$smarty->assign('trackerEditFormId', $iTRACKER);
 
 		if (!empty($params['_ajax_form_ins_id'])) {
-			global $headerlib;
-			$old_js = $headerlib->output_js(false);
+			global $headerlib;							// when called via AJAX take a copy of the JS so far to allow collection
+			$old_js = $headerlib->output_js(false);		// of tracker form JS into a function to initialise it when the dialog is created
 		}
 
 			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
