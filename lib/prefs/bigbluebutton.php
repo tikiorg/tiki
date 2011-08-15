@@ -14,6 +14,9 @@ function prefs_bigbluebutton_list()
 			'type' => 'flag',
 			'keywords' => 'big blue button web conferencing audio video chat screensharing whiteboard',
 			'help' => 'BigBlueButton',
+			'dependencies' => array(
+				'php_libxml',
+			),			
 		),
 		'bigbluebutton_server_location' => array(
 			'name' => tra('BigBlueButton server location'),
