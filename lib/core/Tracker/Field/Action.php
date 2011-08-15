@@ -12,7 +12,7 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 		return array(
 			'x' => array(
 				'name' => tr('Action'),
-				'description' => tr('?'),
+				'description' => tr('Create a form which will be posted somewhere, not necessarily trackers or even Tiki.'),
 				'params' => array(
 					'label' => array(
 						'name' => tr('Name'),
