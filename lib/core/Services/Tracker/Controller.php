@@ -38,6 +38,7 @@ class Services_Tracker_Controller
 		$type = $input->type->text();
 		$description = $input->description->text();
 		$wikiparse = $input->description_parse->int();
+		$adminOnly = $input->adminOnly->int();
 		$fieldId = 0;
 
 		$types = $this->utilities->getFieldTypes();
@@ -70,6 +71,7 @@ class Services_Tracker_Controller
 				'type' => $type,
 				'description' => $description,
 				'descriptionIsParsed' => $wikiparse,
+				'isHidden' => $adminOnly ? 'y' : 'n',
 			));
 
 			if ($input->submit_and_edit->none() || $input->next->word() === 'edit') {

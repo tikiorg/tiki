@@ -49,7 +49,7 @@ class Services_Tracker_Utilities
 			'n',
 			'n',
 			'y',
-			'n',
+			isset($data['isHidden']) ? $data['isHidden'] : 'n',
 			isset($data['isMandatory']) ? ($data['isMandatory'] ? 'y' : 'n') : 'y',
 			$trklib->get_last_position($data['trackerId']) + 10,
 			isset($data['options']) ? $data['options'] : '',

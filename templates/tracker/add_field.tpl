@@ -3,7 +3,7 @@
 		{tr}Name:{/tr}
 		<input type="text" name="name" value="{$name|escape}" required="required"/>
 	</label>
-	<label>
+	<label style="display:none;">
 		{tr}Permanent Name:{/tr}
 		<input type="text" name="permName" value="{$permName|escape}" pattern="[a-zA-Z0-9_]+"/>
 	</label>
@@ -33,6 +33,13 @@
 			{if $descriptionIsParsed}checked="checked"{/if}
 			/>
 		{tr}Description contains wiki syntax{/tr}
+	</label>
+	<label>
+		<input type="checkbox" name="adminOnly" value="1"/>
+		{tr}Restrict visibility to administrators{/tr}
+		<div class="description">
+			{tr}Useful if you are working on a live tracker.{/tr}
+		</div>
 	</label>
 	<div>
 		<input type="submit" name="submit" value="{tr}Add Field{/tr}"/>
