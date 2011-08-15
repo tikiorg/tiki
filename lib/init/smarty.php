@@ -42,7 +42,7 @@ class Smarty_Tiki extends Smarty
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = array(realpath('templates/'));
 		$this->compile_dir = realpath("templates_c/$tikidomain");
-		$this->config_dir = realpath('configs/');
+		$this->config_dir = null;
 		$this->cache_dir = realpath("templates_c/$tikidomain");
 		$this->caching = 0;
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
@@ -122,7 +122,7 @@ class Smarty_Tiki extends Smarty
 			$_SESSION['last_mid_php'] = $_SERVER['REQUEST_URI'];
 
 			// set the first part of the browser title for admin pages
-			if (!isset($this->getTemplateVars['headtitle'])) {
+			if ( null !== $this->getTemplateVars('headtitle') ) {
 				$script_name = basename($_SERVER['SCRIPT_NAME']);
 				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
 					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
@@ -228,7 +228,7 @@ class Smarty_Tiki extends Smarty
 
 		return preg_replace("/^[ \t]*/", '', $res);
 	}
-	function is_cached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
+	function isCached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
 		global $prefs, $style_base, $tikidomain;
 
 		if (isset($prefs['style']) && isset($style_base)) {
@@ -244,7 +244,7 @@ class Smarty_Tiki extends Smarty
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 		return parent::isCached($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id);
 	}
-	function clear_cache($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_exp_time=null) {
+	function clearCache($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_exp_time=null) {
 		global $prefs, $style_base, $tikidomain;
 
 		if (isset($prefs['style']) && isset($style_base) && isset($_smarty_tpl_file)) {
