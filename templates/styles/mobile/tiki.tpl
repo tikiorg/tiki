@@ -214,6 +214,12 @@
 		{/if}
 		{interactivetranslation}
 		<!-- Put JS at the end -->
+		{jq}
+if (typeof $.mobile === "undefined") {
+	$("#fixedwidth").show();
+	ajaxLoadingHide();
+}
+		{/jq}
 		{if $headerlib}
 			{$headerlib->output_js_config()}
 			{$headerlib->output_js_files()}
