@@ -1039,7 +1039,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 		}
 	}
 
-	if ($prefs['geo_locate_wiki'] == 'y' && ! empty($_REQUEST['geolocation'])) {
+	if (! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] == 'y' && ! empty($_REQUEST['geolocation'])) {
 		TikiLib::lib('geo')->set_coordinates('wiki page', $page, $_REQUEST['geolocation']);
 	}
 
@@ -1205,7 +1205,7 @@ if ($prefs['feature_contribution'] === 'y') {
 	include_once('contribution.php');
 }
 
-if( $prefs['geo_locate_wiki'] == 'y' ) {
+if( ! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] == 'y' ) {
 	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('wiki page', $page));
 }
 
@@ -1236,7 +1236,7 @@ if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates =
 		$prefs['feature_wiki_footnotes'] === 'y' ||
 		($prefs['feature_wiki_ratings'] === 'y' && $tiki_p_wiki_admin_ratings ==='y') ||
 		$prefs['feature_multilingual'] === 'y' ||
-		$prefs['geo_locate_wiki'] === 'y') {
+		! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] === 'y') {
 	
 	$smarty->assign('showPropertiesTab', 'y');
 }

@@ -949,12 +949,16 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 													, 'default_unit' => empty($_REQUEST['find_lastDownload_unit']) ? 'week' : $_REQUEST['find_lastDownload_unit']
 													);
 	foreach ($fgal_listing_conf as $k => $v) {
-		if ( $k == 'type' )
+		if ( $k == 'type' ) {
 			$show_k = 'icon';
-		elseif ( $k == 'lastModif' )
+		} elseif ( $k == 'lastModif' ) {
 			$show_k = 'modified';
-		else $show_k = $k;
+		} else {
+			$show_k = $k;
+		}
+		if (isset($prefs['fgal_list_'.$k.'_admin'])) {
 			$gal_info['show_'.$show_k] = $prefs['fgal_list_'.$k.'_admin'];
+		}
 	}
 	$smarty->assign('show_find_orphans', 'y');
 }

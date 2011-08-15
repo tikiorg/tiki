@@ -583,7 +583,7 @@ class FileGalLib extends TikiLib
 			'show_files' => $prefs['fgal_list_files'],
 			'show_hits' => $prefs['fgal_list_hits'],
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
-			'show_checked' => $prefs['fgal_show_checked'],
+			'show_checked' => !empty($prefs['fgal_show_checked']) ? $prefs['fgal_show_checked'] : 'y' ,
 			'show_share' => $prefs['fgal_list_share'],
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
@@ -2219,7 +2219,7 @@ class FileGalLib extends TikiLib
 						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
 						$wiki_syntax = '') {
 
-		global $user, $tiki_p_admin_file_galleries, $prefs;
+		global $user, $tiki_p_admin, $tiki_p_admin_file_galleries, $prefs;
 
 		$f_jail_bind = array();
 		$g_jail_bind = array();
@@ -2476,7 +2476,12 @@ class FileGalLib extends TikiLib
 				$fgal_perms = array();
 			}
 		} else {
+			$cacheType = 'fgals_perms_'.implode('_',$galleryId)."_";
+			if ($cachelib->isCached($cacheName, $cacheType)) {
+				$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+			} else {
 				$fgal_perms = array();
+			}
 		}
 		foreach( $result as $res ) {
 			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');

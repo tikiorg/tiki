@@ -40,7 +40,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 function smarty_block_tikimodule($params, $content, &$smarty) {
-	global $prefs;
+	global $prefs, $user;
 	extract($params);
 	if (!isset($content))   return "";
 	if (!isset($error))  $error = '';
