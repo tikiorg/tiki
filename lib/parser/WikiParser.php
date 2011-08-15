@@ -112,9 +112,7 @@ break;
 	}
 	
 	function parseError($str, $hash) {
-		//throw new Exception($str);
-		print_r($str);
-		die;
+		throw new Exception($str);
 	}
 	
 	function parse($input) {
@@ -320,9 +318,7 @@ class WikiParserLexer {
 	function WikiParserLexer() {}
 	
 	function parseError($str, $hash) {
-		//throw new Exception($str);
-		print_r($str);
-		die;
+		throw new Exception($str);
 	}
 	
 	function setInput($input) {
