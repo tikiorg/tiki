@@ -36,7 +36,7 @@ function wikiplugin_customsearch_info()
 
 function wikiplugin_customsearch($data, $params)
 {
-	global $prefs, $smarty;
+	global $prefs;
 	if (!isset($params['wiki'])) {
 		return tra('Template is not specified');
 	}
@@ -45,7 +45,6 @@ function wikiplugin_customsearch($data, $params)
 	} else {
 		$id = '0';
 	}
-	$smarty->assign('customsearch_id', $id);
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
 	} else {
@@ -81,6 +80,10 @@ function wikiplugin_customsearch($data, $params)
 		}
 		customsearch_$id" . "_searchdata = new Object();
 		customsearch_$id" . "_basedata = '" . json_encode((string) $data) . "';
+		$('#customsearch_$id" . "').click(function() {
+			// reset offset on reclick of submit button
+			customsearch_offset_$id = 0;
+		});
 		$('#customsearch_$id" . "').submit(function() {
 			load_customsearch_$id($.toJSON(customsearch_$id" . "_searchdata), customsearch_offset_$id, customsearch_maxRecords_$id);
 			return false;

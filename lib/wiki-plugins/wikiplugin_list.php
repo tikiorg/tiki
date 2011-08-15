@@ -42,6 +42,9 @@ function wikiplugin_list($data, $params)
 	$matches = WikiParser_PluginMatcher::match($data);
 	$argumentParser = new WikiParser_PluginArgumentParser;
 
+	$onclick = '';
+	$offset_jsvar = '';
+
 	foreach ($matches as $match) {
 		$name = $match->getName();
 		$arguments = $argumentParser->parse($match->getArguments());
@@ -67,6 +70,13 @@ function wikiplugin_list($data, $params)
 		if ($name == 'alternate') {
 			$alternate = $match->getBody();
 		}
+
+		if ($name == 'pagination' && isset($arguments['onclick'])) {
+			$onclick = $arguments['onclick'];
+		}
+		if ($name == 'pagination' && isset($arguments['offset_jsvar'])) {
+			$offset_jsvar = $arguments['offset_jsvar'];
+		}
 	}
 
 	$query->filterPermissions(Perms::get()->getGroups());
@@ -80,7 +90,7 @@ function wikiplugin_list($data, $params)
 	$result = $query->search($index);
 
 	if (count($result)) {
-		if ($output) {
+		if (!empty($output)) {
 			$arguments = $argumentParser->parse($output->getArguments());
 	
 			if (isset($arguments['template'])) {
@@ -100,7 +110,7 @@ function wikiplugin_list($data, $params)
 			}
 
 			if (isset($arguments['pagination'])) {
-				$plugin = new WikiPlugin_List_AppendPagination($plugin);
+				$plugin = new WikiPlugin_List_AppendPagination($plugin, $onclick, $offset_jsvar);
 			}
 		} else {
 			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title format=objectlink}\n");
@@ -114,7 +124,7 @@ function wikiplugin_list($data, $params)
 		}
 
 		$out = $formatter->format($result);
-	} elseif($alternate) {
+	} elseif(!empty($alternate)) {
 		$out = $alternate;
 	} else {
 		$out = '^' . tra('No results for query.') . '^';
@@ -202,9 +212,11 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 {
 	private $parent;
 
-	function __construct(Search_Formatter_Plugin_Interface $parent)
-	{
+	function __construct(Search_Formatter_Plugin_Interface $parent, $onclick, $offset_jsvar)
+	{ 
 		$this->parent = $parent;
+		$this->offset_jsvar = $offset_jsvar;
+		$this->onclick = $onclick;
 	}
 
 	function getFields()
@@ -226,7 +238,7 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 	{
 		global $smarty;
 		$smarty->loadPlugin('smarty_block_pagination_links');
-		$pagination = smarty_block_pagination_links(array('cant' => $count, 'offset' => $offset, 'step' => $maxRecords), '', $smarty, false);
+		$pagination = smarty_block_pagination_links(array('_onclick' => $this->onclick, 'offset_jsvar' => $this->offset_jsvar, 'cant' => $count, 'offset' => $offset, 'step' => $maxRecords), '', $smarty, false);
 
 		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$pagination = "~np~$pagination~/np~";
