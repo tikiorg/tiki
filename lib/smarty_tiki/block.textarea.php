@@ -35,7 +35,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 
-	if (!isset($params['_wysiwyg'])) {	// should not be set usually(?)
+	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
+
+	if (!isset($params['_wysiwyg']) && $params['_simple'] === 'n') {	// should not be set usually(?)
 		include_once 'lib/setup/editmode.php';
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
@@ -62,8 +64,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	
 	// mainly for modules admin - preview is for the module, not the custom module so don;t need to confirmExit
 	$params['_previewConfirmExit'] = isset($params['_previewConfirmExit']) ? $params['_previewConfirmExit'] : 'y';
-	
-	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
 	
 	if ( ! isset($params['section']) ) {
 		global $section;
