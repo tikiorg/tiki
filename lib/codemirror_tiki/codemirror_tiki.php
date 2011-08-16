@@ -27,23 +27,7 @@ function tiki_syntax_highlighter_flex() {
 						});
 					})
 					.hide();
-			} else {
-				$('.wikitext').bind('slideChange', function(obj) {
-					$('.CodeMirror-wrapping').remove();
-					$('.codelisting')
-						.show()
-						.each(function() {
-							$(this).flexibleCodeMirror({
-								readOnly: true,
-								parse: ['javascript'],
-								width: $(this).width() + 'px',
-								height: $(this).parent().height() + 'px'
-							});
-						})
-						.hide();
-				});
-			}
-			
+			}			
 		");
 	}
 }
