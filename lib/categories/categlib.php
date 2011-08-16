@@ -1007,11 +1007,18 @@ class CategLib extends ObjectLib
 		return $ret;
 	}
 	function get_viewable_child_categories($categId, $all_descends = false) {
+		static $localCache = array();
+		$key = implode('-', func_get_args());
+
+		if (isset($localCache[$key])) {
+			return $localCache[$key];
+		}
+
 		$alls = $this->get_child_categories($categId, $all_descends);
 		if (empty($alls)) {
-			return $alls;
+			return $localCache[$key] = $alls;
 		}
-		return Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
+		return $localCache[$key] = Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
 	}
 
 	function get_all_categories($showWS = false) {

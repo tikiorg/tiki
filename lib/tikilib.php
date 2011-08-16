@@ -4734,6 +4734,23 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	static function list_languages($path = false, $short=null, $all=false) {
+		global $prefs;
+
+		$key = 'disk_languages' . implode(',', func_get_args()) . $prefs['language'];
+		$cachelib = TikiLib::lib('cache');
+
+		if (! $languages = $cachelib->getSerialized($key)) {
+			$languages = self::list_disk_languages($path);
+			$languages = TikiLib::format_language_list($languages, $short, $all);
+
+			$cachelib->cacheItem($key, serialize($languages));
+		}
+
+		return $languages;
+	}
+
+	private static function list_disk_languages($path)
+	{
 		$languages = array();
 
 		if (!$path)
@@ -4752,8 +4769,7 @@ class TikiLib extends TikiDb_Bridge
 
 		closedir ($h);
 
-		// Format and return the list
-		return TikiLib::format_language_list($languages, $short, $all);
+		return $languages;
 	}
 
 	static function get_language_map()
