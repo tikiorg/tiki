@@ -915,7 +915,7 @@ if( \$('#$id') ) {
 
 	//*
 	function plugin_fingerprint_check( $fp, $dont_modify = false ) {
-		global $user;
+		global $tikilib, $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
 		$result = $this->query( "SELECT `status`, IF(`status`='pending' AND `last_update` < ?, 'old', '') flag FROM `tiki_plugin_security` WHERE `fingerprint` = ?",
 			array( $limit, $fp ) );
@@ -949,7 +949,7 @@ if( \$('#$id') ) {
 				$user = tra('Anonymous');
 			}
 
-			$pluginSecurity = $this->table('tiki_plugin_security');
+			$pluginSecurity = $tikilib->table('tiki_plugin_security');
 			$pluginSecurity->delete(array(
 				'fingerprint' => $fp,
 			));
@@ -967,7 +967,7 @@ if( \$('#$id') ) {
 
 	//*
 	function plugin_fingerprint_store( $fp, $type ) {
-		global $prefs, $user, $page;
+		global $tikilib, $prefs, $user, $page;
 		if( $page ) {
 			$objectType = 'wiki page';
 			$objectId = $page;
@@ -976,7 +976,7 @@ if( \$('#$id') ) {
 			$objectId = '';
 		}
 
-		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array(
 			'fingerprint' => $fp,
 		));
@@ -991,7 +991,8 @@ if( \$('#$id') ) {
 
 	//*
 	function plugin_clear_fingerprint( $fp ) {
-		$pluginSecurity = $this->table('tiki_plugin_security');
+		global $tikilib;
+		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array(
 			'fingerprint' => $fp,
 		));
@@ -999,14 +1000,15 @@ if( \$('#$id') ) {
 
 	//*
 	function list_plugins_pending_approval() {
-		return $this->fetchAll("SELECT `fingerprint`, `added_by`, `last_update`, `last_objectType`, `last_objectId` FROM `tiki_plugin_security` WHERE `status` = 'pending' ORDER BY `last_update` DESC");
+		global $tikilib;
+		return $tikilib->fetchAll("SELECT `fingerprint`, `added_by`, `last_update`, `last_objectType`, `last_objectId` FROM `tiki_plugin_security` WHERE `status` = 'pending' ORDER BY `last_update` DESC");
 	}
 
 	//*
 	function approve_all_pending_plugins() {
-		global $user;
+		global $tikilib, $user;
 
-		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->updateMultiple(array(
 			'status' => 'accept',
 			'approval_by' => $user,
@@ -1017,9 +1019,9 @@ if( \$('#$id') ) {
 
 	//*
 	function approve_selected_pending_plugings($fp) {
-		global $user;
+		global $tikilib, $user;
 
-		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->update(array(
 			'status' => 'accept',
 			'approval_by' => $user,
@@ -2089,7 +2091,8 @@ if( \$('#$id') ) {
 
 	//*
 	private function get_dynamic_variable( $name, $lang = null ) {
-		$result = $this->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
+		global $tikilib;
+		$result = $tikilib->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
 
 		$value = "NaV";
 
@@ -2785,13 +2788,13 @@ if( \$('#$id') ) {
 
 	//*
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
-		global $prefs;
+		global $tikilib, $prefs;
 		$wikilib = TikiLib::lib('wiki');
 
 		// Fetch all externals once
 		static $externals = false;
 		if( false === $externals ) {
-			$externals = $this->fetchMap( 'SELECT LOWER(`name`), `extwiki` FROM `tiki_extwiki`' );
+			$externals = $tikilib->fetchMap( 'SELECT LOWER(`name`), `extwiki` FROM `tiki_extwiki`' );
 		}
 		
 		$displayLink = $pageLink;
@@ -3060,12 +3063,13 @@ if( \$('#$id') ) {
 	}
 
 	private function get_hotwords() {
+		global $tikilib;
 		static $cache_hotwords;
 		if ( isset($cache_hotwords) ) {
 			return $cache_hotwords;
 		}
 		$query = "select * from `tiki_hotwords`";
-		$result = $this->fetchAll($query, array(),-1,-1, false);
+		$result = $tikilib->fetchAll($query, array(),-1,-1, false);
 		$ret = array();
 		foreach ($result as $res ) {
 			$ret[$res["word"]] = $res["url"];
