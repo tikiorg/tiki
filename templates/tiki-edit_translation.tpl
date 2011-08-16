@@ -1,4 +1,4 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
+{title help="i18n" admpage="i18n"}{tr}Translate:{/tr} {$name}{if isset($languageName)} ({$languageName}, {$langpage}){/if}{/title}
 
 <div class="navbar">
 	{if $type eq 'wiki page'}
