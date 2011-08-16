@@ -285,7 +285,7 @@ class XmlLib extends TikiLib
 			$tikilib->update_page($info['name'], $info['data'], 'Updated from import', !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], 0, isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL);
 		} else {
 			$old = false;
-			$tikilib->create_page($info['name'], 0, $info['data'], $info['lastModif'], $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL, '', 0, $info['created']);
+			$tikilib->create_page($info['name'], $info['hits'], $info['data'], $info['lastModif'], $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL, '', 0, $info['created']);
 		}
 
 		if ($prefs['feature_wiki_comments'] == 'y' && $tiki_p_edit_comments == 'y' && !empty($info['comments'])) {
@@ -356,6 +356,7 @@ class XmlLib extends TikiLib
 			if (!$maxVersion) {
 				$maxVersion = 0;
 			}
+			$newVersion = $maxVersion;
 			foreach ($info['history'] as $version) {
 				if (($version['data'] = $this->zip->getFromName($version['zip'])) === false) {
 					$this->errors[] = 'Can not unzip history';
@@ -364,7 +365,10 @@ class XmlLib extends TikiLib
 				}
 				$query = 'insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)';
 				$this->query($query, array($info['name'], $version['version']+$maxVersion, $old?$tikilib->now: $version['lastModif'], $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
+				$newVersion = max($version['version']+$maxVersion, $newVersion);
 			}
+			$query = 'update `tiki_pages` set `version`=? where `pageName`=?';
+			$this->query($query, array($newVersion, $info['name']));
 		}
 		if ($prefs['feature_wiki_structure'] == 'y' && !empty($info['structure'])) {
 			global $structlib; include_once('lib/structures/structlib.php');

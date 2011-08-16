@@ -9,6 +9,7 @@
 <wysiwyg>{$info.wysiwyg}</wysiwyg>
 <created>{$info.created}</created>
 <lastModif>{$info.lastModif}</lastModif>
+<hits>{$info.hits}</hits>
 {*<data><![CDATA[{$info.data|escape:'html'}]]></data>*}
 {if $config.comments and !empty($comments)}
 <comments>

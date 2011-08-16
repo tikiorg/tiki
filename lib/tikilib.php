@@ -3924,6 +3924,7 @@ class TikiLib extends TikiDb_Bridge
 			'created' => empty($created) ? $this->now : $created,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
+			'creator' => $user,
 		);
 		if ($lang) {
 			$insertData['lang'] = $lang;
