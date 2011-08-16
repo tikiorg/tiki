@@ -33,65 +33,55 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase {
 	function tearDown() {
 		chdir($this->dir);
 	}
-		
+	
 	
 	/**
-	 * Font family
+	 * Font Family and Font Size
 	 * 
-	 * => {FONT(type="span", font-family="tahoma")}text{FONT}
+	 * => {FONT(family="tahoma", size="12pt")}text{FONT}
 	 * - 'font-family'
+	 * - 'font-size'
 	 */
 	function testFontFamily() {
 		$this->markTestIncomplete('Work in progress.');
 		
-		$ex = '{FONT(type="span", font-family="tahoma")}text{FONT}';
-		
+		/*
+		 * family
+		 */
+		$ex = '{FONT(family="tahoma")}text{FONT}';
 		$inData = '<span style="font-family:tahoma;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-	}
-	
-	
-	/**
-	 * Size
-	 * 
-	 * => {FONT(type="span", font-size="tahoma")}text{FONT}
-	 * 'font-size'
-	 * 
-	 */
-	function testFontSize() {
-		$this->markTestIncomplete('Work in progress.');
+		
 		
 		/*
-		 * px
+		 * size
 		 */
-		$ex = '{FONT(type="span", font-size="12px")}text{FONT}';
-		
+		$ex = '{FONT(size="12px")}text{FONT}';
 		$inData = '<span style="font-size:12px;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 
-		
-		/*
-		 * pt
-		 */
-		$ex = '{FONT(type="span", font-size="12pt")}text{FONT}';
-		
+		$ex = '{FONT(size="12pt")}text{FONT}';
 		$inData = '<span style="font-size:12pt;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 		
-		
-		/*
-		 * em
-		 */
-		$ex = '{FONT(type="span", font-size="1.2em")}text{FONT}';
-		
+		$ex = '{FONT(size="1.2em")}text{FONT}';
 		$inData = '<span style="font-size:1.2em;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-	}
 		
+		
+		/*
+		 * family and size
+		 */
+		$ex = '{FONT(family="tahoma", size="12pt")}';
+		$inData = '<span style="font-family=tahoma";font-size:1.2pt;">text<span>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+	}
+	
 	
 	/**
 	 * Bold

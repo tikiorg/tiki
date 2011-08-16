@@ -136,8 +136,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$el = new EditLib();
 		
-		$inData = '<code>monospaced</code>';
-		$exp = '-+monospaced+-';
+		$inData = '-+monospaced+-';
+		$exp = '<code>monospaced</code>';
 		$out = $el->parseToWysiwyg($inData, false);
 		$this->assertEquals($exp, $out);
 	}
