@@ -243,10 +243,10 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 
 		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$pagination = "~np~$pagination~/np~";
+			return $this->parent->renderEntries($entries, $count, $offset, $maxRecords) . $pagination;
+		} else { 
+			return $this->parent->renderEntries($entries, $count, $offset, $maxRecords, $pagination); 
 		}
-
-		return $this->parent->renderEntries($entries, $count, $offset, $maxRecords)
-			. $pagination;
 	}
 }
 

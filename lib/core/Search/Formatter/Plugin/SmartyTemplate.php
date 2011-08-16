@@ -43,7 +43,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		return $entry->getPlainValues();
 	}
 
-	function renderEntries($entries, $count, $offset, $maxRecords)
+	function renderEntries($entries, $count, $offset, $maxRecords, $pagination = '')
 	{
 		$smarty = new Smarty;
 		$smarty->security = true;
@@ -70,7 +70,10 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		$smarty->assign('results', $entries);
 		$smarty->assign('count', $count);
 		$smarty->assign('offset', $offset);
+		$smarty->assign('offsetplusone', $offset + 1);
+		$smarty->assign('offsetplusmaxRecords', $offset + $maxRecords);
 		$smarty->assign('maxRecords', $maxRecords);
+		$smarty->assign('pagination', $pagination);
 
 		return $smarty->fetch($this->templateFile);
 	}
