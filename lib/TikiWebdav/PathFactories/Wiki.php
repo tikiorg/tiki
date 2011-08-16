@@ -11,20 +11,9 @@ class TikiWebdav_PathFactories_Wiki implements ezcWebdavPathFactory
 	protected $baseUriLength = 0;
 	protected $collectionPathes = array();
 
-	public function __construct()
-	{
-		global $base_url;
-		if ( ( $pos = strpos($base_url, 'tiki-webdav-wiki.php/') ) !== false ) {
-			$this->baseUri = substr($base_url, 0, strpos($base_url, 'tiki-webdav-wiki.php') + 20);
-		} else {
-			$this->baseUri = $base_url . 'tiki-webdav-wiki.php';
-		}
-		$this->baseUriLength = strlen($this->baseUri);
-	}
-
 	public function parseUriToPath( $uri )
 	{
-		$requestPath = rawurldecode(substr( trim( $uri ), $this->baseUriLength )) ;
+		$requestPath = rawurldecode( trim( $uri ) ) ;
 
 		if ( empty($requestPath) ) {
 			$requestPath = '/';
@@ -38,6 +27,12 @@ class TikiWebdav_PathFactories_Wiki implements ezcWebdavPathFactory
 
 	public function generateUriFromPath( $path )
 	{
-		return $this->baseUri . implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) );
+		global $base_url;
+
+		$result = $base_url . 'tiki-webdav.php/Wiki%20Pages' . implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) );
+
+		print_debug("generateUriFromPath($path): $result\n");
+		return $result;
+
 	}
 }

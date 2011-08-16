@@ -22,10 +22,10 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
 }
 
-$webdav_access = true;
+$webdav_access = false;
 require_once 'tiki-setup.php';
 
-$debug = false;
+$debug = true;
 $debug_file= '/tmp/tiki4log';
 
 function print_debug($string) {
@@ -59,28 +59,52 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 	$smarty->assign('mid','tiki-webdav.tpl');
 	$smarty->display("tiki.tpl");
 } else {
-	require_once 'lib/TikiWebdav/autoload.php';
-	require_once 'lib/TikiWebdav/Server.php';
-	require_once 'lib/TikiWebdav/Backend/File.php';
-	require_once 'lib/TikiWebdav/PathFactories/File.php';
-	require_once 'lib/TikiWebdav/Auth/Default.php';
 
 	if ( empty($_SERVER['PATH_INFO']) ) {
 		$_SERVER['PATH_INFO'] = '/';
 	}
 
-	print_debug("\n=== _SERVER() ===\n".print_r($_SERVER,true)."\n");
+	$path = preg_replace('#.*tiki-webdav\.php#','', rawurldecode( trim( $_SERVER['REQUEST_URI'] ) ) );
+	require_once 'lib/TikiWebdav/autoload.php';
+	require_once 'lib/TikiWebdav/Server.php';
 
+	print_debug("\n=== _SERVER() ===\n".print_r($_SERVER,true)."\n");
 	$server = TikiWebdav_Server::getInstance();
 	$server->options->realm = tra('Tiki WebDAV access');
-	$pathFactory = new TikiWebdav_PathFactories_File;
-	$backend = new TikiWebdav_Backends_File;
 
-	print_debug("\n TOKENFile=". $backend->getRoot().'/.webdav-token.php'."\n");
-	$server->auth = new TikiWebdav_Auth_Default ( $backend->getRoot().'/.webdav-token.php' );
-	$server->pluginRegistry->registerPlugin(
-			new ezcWebdavLockPluginConfiguration()
-			);
+	print_debug("\n====PATH : $path ====\n");
+	if (preg_match('/^\/Wiki Pages\//', $path)) {
+		print_debug("\n====Wiki====\n");
+		require_once 'lib/TikiWebdav/Backend/Wiki.php';
+		require_once 'lib/TikiWebdav/PathFactories/Wiki.php';
+		require_once 'lib/TikiWebdav/Auth/Default.php';
+		require_once 'lib/TikiWebdav/Auth/Wiki.php';
+
+		$pathFactory = new TikiWebdav_PathFactories_Wiki();
+		$backend = new TikiWebdav_Backends_Wiki();
+
+		$path = preg_replace('/^\/Wiki Pages\//','', $path);
+		if (empty($path)) {
+			$path = '/';
+		}
+		print_debug("\n====PATH : $path ====\n");
+		print_debug("\n TOKENFile=". $backend->getRoot().'/.webdav-token.php'."\n");
+		$server->auth = new TikiWebdav_Auth_Wiki( $backend->getRoot().'/.webdav-token.php' );
+
+	} else {
+		require_once 'lib/TikiWebdav/Backend/File.php';
+		require_once 'lib/TikiWebdav/PathFactories/File.php';
+		require_once 'lib/TikiWebdav/Auth/Default.php';
+
+		$pathFactory = new TikiWebdav_PathFactories_File;
+		$backend = new TikiWebdav_Backends_File;
+
+		print_debug("\n TOKENFile=". $backend->getRoot().'/.webdav-token.php'."\n");
+		$server->auth = new TikiWebdav_Auth_Default ( $backend->getRoot().'/.webdav-token.php' );
+		$server->pluginRegistry->registerPlugin(
+				new ezcWebdavLockPluginConfiguration()
+				);
+	}
 
 	foreach ( $server->configurations as $conf ) {
 		$conf->pathFactory = $pathFactory;
@@ -88,6 +112,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 
 	print_debug("\n=== handle() ===\n");
 	global $filegallib; require_once('lib/filegals/filegallib.php');
-	$server->handle( $backend, preg_replace('#.*tiki-webdav\.php#','',$_SERVER['REQUEST_URI'] ) ); 
+	$server->handle( $backend, $path ); 
 	print_debug("\n=== end handle() ===\n");
 }
