@@ -114,14 +114,17 @@ class Captcha
 	 * @return bool true or false 
 	 *
 	 */
-	function validate() {
+	function validate($input = null) {
+		if (is_null($input)) {
+			$input = $_REQUEST;
+		}
 		if ($this->type == 'recaptcha') {
 			return $this->captcha->isValid(array(
-				'recaptcha_challenge_field' => $_REQUEST['recaptcha_challenge_field'],
-				'recaptcha_response_field' => $_REQUEST['recaptcha_response_field']
+				'recaptcha_challenge_field' => $input['recaptcha_challenge_field'],
+				'recaptcha_response_field' => $input['recaptcha_response_field']
 			));
 		} else {
-			return $this->captcha->isValid($_REQUEST['captcha']);
+			return $this->captcha->isValid($input['captcha']);
 		}
 	}
 

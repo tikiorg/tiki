@@ -114,7 +114,11 @@ class Services_Comment_Controller
 			if (empty($user) && $prefs['feature_antibot'] == 'y') {
 				$captchalib = TikiLib::lib('captcha');
 
-				if (! $captchalib->validate()) {
+				if (! $captchalib->validate(array(
+					'recaptcha_challenge_field' => $input->recaptcha_challenge_field->none(),
+					'recaptcha_response_field' => $input->recaptcha_response_field->none(),
+					'captcha' => $input->captcha->none(),
+				))) {
 					$errors[] = $captchalib->getErrors();
 				}
 			}
@@ -127,23 +131,25 @@ class Services_Comment_Controller
 				$message_id = ''; // By ref
 				$threadId = $commentslib->post_new_comment("$type:$objectId", $parentId, $user, $title, $data, $message_id, $parent ? $parent['message_id'] : '', 'n', '', '', $contributions, $anonymous_name, '', $anonymous_email, $anonymous_website);
 
-				if ($prefs['wiki_watch_comments'] == 'y' && $type == 'wiki page') {
-					global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
-					sendCommentNotification('wiki', $objectId, $title, $data);
-				} else if ($type == 'article') {
-					global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
-					sendCommentNotification('article', $objectId, $title, $data);
-				} elseif ($type == 'trackeritem') {
-					global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
-					sendCommentNotification('trackeritem', $objectId, $title, $data);
-				}
+				if ($threadId) {
+					if ($prefs['wiki_watch_comments'] == 'y' && $type == 'wiki page') {
+						global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+						sendCommentNotification('wiki', $objectId, $title, $data);
+					} else if ($type == 'article') {
+						global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+						sendCommentNotification('article', $objectId, $title, $data);
+					} elseif ($type == 'trackeritem') {
+						global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+						sendCommentNotification('trackeritem', $objectId, $title, $data);
+					}
 
-				return array(
-					'threadId' => $threadId,
-					'parentId' => $parentId,
-					'type' => $type,
-					'objectId' => $objectId,
-				);
+					return array(
+						'threadId' => $threadId,
+						'parentId' => $parentId,
+						'type' => $type,
+						'objectId' => $objectId,
+					);
+				}
 			}
 		}
 
