@@ -48,10 +48,17 @@ class Tracker_Field_Factory
 			}
 		}
 
+		uasort($this->infoMap, array($this, 'compareName'));
+
 		$cachelib->cacheItem($cacheKey, serialize(array(
 			'typeMap' => $this->typeMap,
 			'infoMap' => $this->infoMap,
 		)));
+	}
+
+	function compareName($a, $b)
+	{
+		return strcasecmp($a['name'], $b['name']);
 	}
 
 	function getFieldTypes()
