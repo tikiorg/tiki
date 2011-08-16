@@ -5093,7 +5093,7 @@ class UsersLib extends TikiLib
 				continue;
 			}
 
-			if ($type === 'global') {
+			if ($type === 'global' || $type == 'all') {
 				$ret[] = $this->permission_compatibility($permission);
 			} elseif ($type == $permission['type'] && $permission['scope'] == 'object') {
 				$ret[] = $this->permission_compatibility($permission);
