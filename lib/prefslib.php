@@ -45,6 +45,10 @@ class PreferencesLib
 			);
 			$info = $data[$name];
 
+			if ($info['type'] === 'textarea') {
+				$defaults['size'] = 10;
+			}
+
 			if( $source == null ) {
 				$source = $prefs;
 			}
@@ -132,7 +136,7 @@ class PreferencesLib
 			}
 
 			$info['tagstring'] = implode(' ', $info['tags']);
-			
+
 			$info = array_merge($defaults, $info);
 
 			if (isset($info['permission'])) {
