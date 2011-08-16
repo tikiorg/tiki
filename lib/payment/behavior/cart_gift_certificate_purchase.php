@@ -3,6 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function payment_behavior_cart_gift_certificate_purchase( $productId = 0, $giftcertemail = '', $quantity = 1, $orderId = 0, $orderItemId = 0 ) {
 	global $trklib; require_once("lib/trackers/trackerlib.php");

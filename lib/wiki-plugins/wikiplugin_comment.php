@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_trackercomments.php 34503 2011-05-19 13:42:26Z sylvieg $
+// $Id$
 
 function wikiplugin_comment_info() {
 	return array(

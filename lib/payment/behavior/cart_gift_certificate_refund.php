@@ -3,6 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function payment_behavior_cart_gift_certificate_refund( $giftcertId = 0, $giftcertMode = '', $giftcertAmount = 0, $giftcertDiscount = 0 ) {
 	global $cartlib; require_once("lib/payment/cartlib.php");

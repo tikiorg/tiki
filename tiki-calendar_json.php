@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-calendar.php 36168 2011-08-15 13:20:33Z sept_7 $
+// $Id$
 
 $section = 'calendar';
 require_once ('tiki-setup.php');
