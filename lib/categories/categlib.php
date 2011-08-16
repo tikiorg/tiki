@@ -1008,7 +1008,8 @@ class CategLib extends ObjectLib
 	}
 	function get_viewable_child_categories($categId, $all_descends = false) {
 		static $localCache = array();
-		$key = implode('-', func_get_args());
+		$args = func_get_args();
+		$key = implode('-', $args);
 
 		if (isset($localCache[$key])) {
 			return $localCache[$key];

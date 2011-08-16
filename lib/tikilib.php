@@ -4736,7 +4736,8 @@ class TikiLib extends TikiDb_Bridge
 	static function list_languages($path = false, $short=null, $all=false) {
 		global $prefs;
 
-		$key = 'disk_languages' . implode(',', func_get_args()) . $prefs['language'];
+		$args = func_get_args();
+		$key = 'disk_languages' . implode(',', $args) . $prefs['language'];
 		$cachelib = TikiLib::lib('cache');
 
 		if (! $languages = $cachelib->getSerialized($key)) {
@@ -5220,7 +5221,8 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 
 		$cachelib = TikiLib::lib('cache');
-		$cacheKey = serialize(func_get_args()) . $prefs['language'];
+		$args = func_get_args();
+		$cacheKey = serialize($args) . $prefs['language'];
 
 		if ($data = $cachelib->getSerialized($cacheKey, 'flags')) {
 			return $data;
