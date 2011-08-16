@@ -23,10 +23,11 @@ $paths = array(
 
 ini_set( 'include_path', implode( PATH_SEPARATOR, $paths ) );
 
-function __autoload( $name ) {
+function __autoload_tikitest( $name ) {
 	$path = str_replace( '_', '/', $name ) . '.php';
 	@ include_once( $path );
 }
+spl_autoload_register('__autoload_tikitest');
 
 if (!is_file(dirname(__FILE__) . '/local.php')) {
 	die("\nYou need setup a new database, install Tiki on it and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
@@ -48,7 +49,6 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	die("\nUnable to connect to the database\n\n");
 }
 
-require_once('lib/core/TikiDb/Adodb.php');
 TikiDb::set(new TikiDb_Adodb($dbTiki));
 
 // update db if needed
