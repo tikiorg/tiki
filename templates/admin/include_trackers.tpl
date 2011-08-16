@@ -10,6 +10,26 @@
 	</fieldset>
 
 	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_tracker}
+		{preference name=wikiplugin_trackerlist}
+		{preference name=wikiplugin_trackerfilter}
+		{preference name=wikiplugin_trackerif}
+		{preference name=wikiplugin_trackerstat}
+		{preference name=wikiplugin_miniquiz}
+		{preference name=wikiplugin_vote}
+		{preference name=wikiplugin_trackercomments}
+		{preference name=wikiplugin_trackeritemfield}
+		{preference name=wikiplugin_trackerprefill}
+		{preference name=wikiplugin_trackertimeline}
+		{preference name=wikiplugin_trackertoggle}
+		{preference name=wikiplugin_prettytrackerviews}
+		{preference name=wikiplugin_trackerpasscode}
+		{preference name=wikiplugin_trackeritemcopy}
+	</fieldset>
+	
+	
+	<fieldset class="admin">
 		<legend>{tr}Tracker settings{/tr}</legend>
 		{preference name=user_selector_threshold}
 		{preference name=tracker_field_computed}
