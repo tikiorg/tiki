@@ -126,21 +126,27 @@ function wikiplugin_customsearch($data, $params)
 	}
 
 	$script .= "function load_customsearch_$id" . "(searchdata) { 
+			$('#customsearch_$id" . "_results').modal('Searching...');	
+			var datamap = {basedata: customsearch_$id" . "_basedata,
+				adddata: searchdata,
+				searchid: '$id',
+				groups: '" . json_encode($groups) . "',
+				textrangegroups: '" . json_encode($textrangegroups) . "',
+				daterangegroups: '" . json_encode($daterangegroups) . "',
+				offset: customsearch_offset_$id,
+				maxRecords: customsearch_maxRecords_$id };	
+			if (customsearch_sort_mode_$id) {
+				// blank sort_mode is not allowed by Tiki input filter
+				datamap[sort_mode] = customsearch_sort_mode_$id;
+			}
 			$.ajax({
 				type: 'POST',
 				url: 'customsearch_ajax.php',
-				data: {basedata: customsearch_$id" . "_basedata,
-					adddata: searchdata,
-					id: '$id',
-					groups: '" . json_encode($groups) . "',
-					textrangegroups: '" . json_encode($textrangegroups) . "',
-					daterangegroups: '" . json_encode($daterangegroups) . "',
-					offset: customsearch_offset_$id,
-					sort_mode: customsearch_sort_mode_$id,
-					maxRecords: customsearch_maxRecords_$id},
+				data: datamap, 
 				dataType: 'html',
 				success: function(data){
 					$('#customsearch_$id" . "_results').html(data);
+					$('#customsearch_$id" . "_results').modal();
 				}
 			});
 		};

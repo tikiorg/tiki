@@ -6,6 +6,10 @@
 // $Id$
 
 require_once('tiki-setup.php');
+$inputConfiguration = array(
+	'id' => '',
+	'sort_mode' => '',
+);
 
 $access->check_feature('wikiplugin_list', 'feature_ajax', 'wikiplugin_customsearch');
 if (empty($_POST['basedata'])) {
@@ -17,8 +21,8 @@ if (empty($_POST['basedata'])) {
 if (isset($_POST['adddata'])) {
 	$dataappend = array();	
 	$adddata = json_decode($_POST['adddata'], true);
-	if (!empty($_POST['id'])) {
-		$id = $_POST['id'];
+	if (!empty($_POST['searchid'])) {
+		$id = $_POST['searchid'];
 	} else {
 		$id = '0';
 	}
