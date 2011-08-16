@@ -337,7 +337,6 @@ function wikiplugin_tracker($data, $params)
 	$params = array_merge($default, $params);
 	$item = array();
 	
-	//var_dump($_REQUEST);
 	extract ($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y') {
@@ -516,7 +515,10 @@ function wikiplugin_tracker($data, $params)
 			$definition = Tracker_Definition::get($trackerId);
 			$item_info = isset($item_info) ? $item_info : array();
 			$factory = new Tracker_Field_Factory($definition);
-			$flds = array('data' => $definition->getFields($outf));
+			$flds = array('data' => array());
+			foreach ($outf as $fieldId) {
+				$flds['data'][] = $definition->getField($fieldId);
+			}
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
@@ -585,6 +587,13 @@ function wikiplugin_tracker($data, $params)
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
+
+				if ($registration == 'y' && isset($params['userField'])) {
+					$userField = $definition->getField($params['userField']);
+					$userField['value'] = $_REQUEST['name'];
+					$ins_fields['data'][] = $userField;
+				}
+
 				$ins_categs = 0; // important: non-array ins_categs means categories should remain unchanged
 				$parent_categs_only = array();
 				foreach ($ins_fields['data'] as $current_field) {
