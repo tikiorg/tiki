@@ -1587,4 +1587,20 @@ form.simple select
 	width: 100%;
 }
 
+/* $.fn.modal */
+.mask {
+	position:absolute; 
+	z-index:99999;
+	background-color:#FFFFFF;
+	display:none;
+}
+
+.boxes .dialog {
+	width:375px;
+	height:203px;
+	font-weight: bold:
+	z-index: 999999;
+	text-align: center;
+}
+
 /* End of file */
