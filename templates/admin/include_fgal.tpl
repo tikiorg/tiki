@@ -37,6 +37,20 @@
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
+			
+			<fieldset class="admin">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_files}
+				{preference name=wikiplugin_file}
+				{preference name=wikiplugin_img}
+				{preference name=wikiplugin_carousel}
+				{preference name=wikiplugin_galleriffic}
+				{preference name=wikiplugin_colorbox}
+				{preference name=wikiplugin_draw}
+				{preference name=wikiplugin_annotation}				
+				{preference name=wikiplugin_flash}				
+			</fieldset>
+			
 		
 			{preference name=home_file_gallery}
 			{preference name='fgal_use_db'}

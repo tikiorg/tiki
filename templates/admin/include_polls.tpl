@@ -10,6 +10,11 @@
 		{preference name=feature_polls visible="always"}
 	</fieldset>
 	
+	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_poll}
+	</fieldset>
+	
 	<fieldset>
 		<legend>{tr}Settings{/tr}{help url="Polls"}</legend>
 		<input type="hidden" name="pollprefs" />

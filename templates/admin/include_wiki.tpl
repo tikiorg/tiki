@@ -17,6 +17,20 @@
 				{preference name=feature_wiki visible="always"}
 			</fieldset>
 
+			<fieldset class="admin">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_author}
+				{preference name=wikiplugin_include}
+				{preference name=wikiplugin_transclude}
+				{preference name=wikiplugin_randominclude}
+				{preference name=wikiplugin_slideshow}
+				{preference name=wikiplugin_attach}
+				{preference name=wikiplugin_backlinks}
+				{preference name=wikiplugin_listpages}
+				{preference name=wikiplugin_showpages}				
+				{preference name=wikiplugin_titlesearch}
+				{preference name=wikiplugin_wantedpages}				
+			</fieldset>
 		
 			{preference name=wikiHomePage default=$prefs.site_wikiHomePage}
 

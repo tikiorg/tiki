@@ -16,6 +16,11 @@
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_blogs visible="always"}
 			</fieldset>
+			
+			<fieldset class="admin">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_bloglist}
+			</fieldset>
 		
 			{preference name=home_blog}
 			<fieldset>

@@ -12,6 +12,14 @@
 		{preference name=feature_calendar visible="always"}
 	</fieldset>
 	
+	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_calendar}
+		{preference name=wikiplugin_events}
+		{preference name=wikiplugin_mcalendar}
+		{preference name=wikiplugin_addtogooglecal}
+	</fieldset>
+	
 	<fieldset>
 		<legend>{tr}General settings{/tr}{help url="Calendar+Admin"}</legend>
 		<div class="adminoptionbox">

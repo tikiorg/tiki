@@ -13,6 +13,11 @@
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_banners visible="always"}
 	</fieldset>		
+
+	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_banner}
+	</fieldset>
 	
 	<fieldset>
 		<legend>{tr}Site Ads and Banners{/tr}{help url="Banners"}</legend>

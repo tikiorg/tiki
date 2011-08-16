@@ -25,7 +25,12 @@
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_articles visible="always"}
 			</fieldset>
-			
+
+			<fieldset class="admin">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_articles}
+				{preference name=wikiplugin_article}
+			</fieldset>
 			
 			{preference name=art_home_title}
 			{preference name=maxArticles}

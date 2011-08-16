@@ -15,6 +15,13 @@
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_categories visible="always"}
 	</fieldset>	
+
+	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_category}
+		{preference name=wikiplugin_catpath}
+		{preference name=wikiplugin_catorphans}
+	</fieldset>
 	
 	<fieldset>
 	

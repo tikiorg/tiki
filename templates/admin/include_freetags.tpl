@@ -9,6 +9,11 @@
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_freetags visible="always"}
 	</fieldset>			
+	
+	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_freetagged}
+	</fieldset>
 		
 			<fieldset>
 				<legend>{tr}Freetags{/tr}{help url="Tags"}</legend>
