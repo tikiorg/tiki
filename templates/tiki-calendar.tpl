@@ -137,15 +137,43 @@
 		</form>
 	{/if}
 
-	{include file='tiki-calendar_nav.tpl'}
-	{if $viewlist eq 'list'}
-		{include file='tiki-calendar_listmode.tpl'}
-	{elseif $viewmode eq 'day'}
-		{include file='tiki-calendar_daymode.tpl'}
-	{elseif $viewmode eq 'week'}
-		{include file='tiki-calendar_weekmode.tpl'}
-	{else}
-		{include file='tiki-calendar_calmode.tpl'}
-	{/if}
+{if $prefs.calendar_fullcalendar neq 'y'}
+  {include file='tiki-calendar_nav.tpl'}
+  {if $viewlist eq 'list'}
+    {include file='tiki-calendar_listmode.tpl'}
+  {elseif $viewmode eq 'day'}
+    {include file='tiki-calendar_daymode.tpl'}
+  {elseif $viewmode eq 'week'}
+    {include file='tiki-calendar_weekmode.tpl'}
+  {else}
+    {include file='tiki-calendar_calmode.tpl'}
+  {/if}
+{else}
+{jq}
+$('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+			editable: false,
+			events: 'tiki-calendar_json.php',
+			minTime: {{$minHourOfDay}},
+			maxTime: {{$maxHourOfDay}},
+			eventAfterRender : function( event, element, view ) {
+				element.attr('title',event.title +'|'+event.description);
+				element.cluetip({arrows: true, splitTitle: '|'});
+			}
+});
+{/jq}
+
+<style type='text/css'>
+  #calendar {
+    width: 90%;
+    margin: 0 auto;
+    }
+</style>
+<div id='calendar'></div>
+{/if}
 <p>&nbsp;</p>
 </div>

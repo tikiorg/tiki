@@ -98,5 +98,13 @@ function prefs_calendar_list() {
 			),
 			'default' => 'n',
 		),
+		'calendar_fullcalendar' => array(
+			'name' => tra('Use FullCalendar to display Calendars'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_jquery'
+			),
+			'default' => 'n',
+		),
 	);
 }
