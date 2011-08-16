@@ -145,11 +145,11 @@ class PreferencesLib
 			}
 
 			if (isset($info['module'])) {
-				$info['module'] = 'tiki-admin_modules.php?filter=' . urlencode($info['module']);
+				$info['module'] = 'tiki-admin_modules.php?cookietab=3&textFilter=' . urlencode($info['module']);
 			}			
 
 			if (isset($info['plugin'])) {
-				$info['plugin'] = 'tiki-admin.php?page=textarea&filter=' . urlencode($info['plugin']);
+				$info['plugin'] = 'tiki-admin.php?page=textarea&cookietab=2&textFilter=' . urlencode($info['plugin']);
 			}
 			
 			return $info;

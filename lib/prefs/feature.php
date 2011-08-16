@@ -95,7 +95,7 @@ function prefs_feature_list($partial = false) {
 			'plugin' => 'tracker',
 			'module' => 'tracker',
 			'permission' => array(
-				'permType' => 'tracker',
+				'permType' => 'trackers',
 			),
 		),
 		'feature_forums' => array(
@@ -107,10 +107,9 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('basic'),
 			'admin' => 'forums',
 			'view' => 'tiki-forums.php',
-			'plugin' => 'forum',
 			'module' => 'forum',
 			'permission' => array(
-				'textFilter' => 'forum',
+				'permType' => 'forums',
 			),
 		),
 		'feature_file_galleries' => array(
@@ -123,7 +122,7 @@ function prefs_feature_list($partial = false) {
 			'admin' => 'fgal',
 			'view' => 'tiki-list_file_gallery.php',
 			'permission' => array(
-				'textFilter' => 'tracker',
+				'permType' => 'file galleries',
 			),
 		),
 		'feature_file_galleries_save_draft' => array(
@@ -140,7 +139,7 @@ function prefs_feature_list($partial = false) {
 			'keywords' => tra('template'),
 			'dependencies' => array(
 				'feature_file_galleries',
-                         ),
+            ),
 			'default' => 'n',
 		),
 		'feature_articles' => array(
@@ -247,7 +246,7 @@ function prefs_feature_list($partial = false) {
 			'admin' => 'freetags',
 			'view' => 'tiki-browse_freetags.php',
 			'permission' => array(
-				'textFilter' => 'tag',
+				'permType' => 'freetags',
 			),
 		),
 		'feature_actionlog' => array(
@@ -328,6 +327,7 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 			'tags' => array('basic'),
 			'view' => 'tiki-shoutbox.php',
+			'module' => 'shoutbox',
 		),
 		'feature_maps' => array(
 			'name' => tra('Maps'),
