@@ -22,6 +22,13 @@
 					{preference name=feature_comments_post_as_anonymous}				
 					{preference name=comments_vote}				
 					{preference name=comments_archive}				
+
+					{preference name=comments_akismet_filter}
+
+					<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
+						{preference name=comments_akismet_apikey}
+						{preference name=comments_akismet_check_users}
+					</div>
 				</div>
 			</fieldset>
 

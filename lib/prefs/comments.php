@@ -37,5 +37,28 @@ function prefs_comments_list() {
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'comments_akismet_filter' => array(
+			'name' => tra('Use Akismet to filter comments'),
+			'description' => tra('Prevent comment spam by using the Akismet service to determine if the comment is spam. If comment moderation is enabled, the Akismet will indicate if the comment is to be moderated or not. If there is no comment moderation, the comment will be rejected if considered as spam.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('new', 'advanced'),
+		),
+		'comments_akismet_apikey' => array(
+			'name' => tra('Akismet API Key'),
+			'description' => tra('Key required for the Akismet comment spam prevention to work.'),
+			'hint' => tr('Obtain this key by registering your site on [%0]', 'http://akismet.com'),
+			'type' => 'text',
+			'filter' => 'word',
+			'tags' => array('new', 'advanced'),
+			'default' => '',
+		),
+		'comments_akismet_check_users' => array(
+			'name' => tr('Filter spam for registered users'),
+			'description' => tr('Enable spam filtering for registered users as well. Useful if your site allows for anyone to register without much validation.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('new', 'advanced'),
+		),
 	);
 }

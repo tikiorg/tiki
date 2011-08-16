@@ -2262,7 +2262,18 @@ class Comments extends TikiLib
 		// Break out the type and object parameters.
 		$object = explode( ":", $objectId, 2);
 		// Handle comments moderation (this should not affect forums and user with admin rights on comments)
-		$approved = ( $tiki_p_admin_comments == 'y' || $object[0] == 'forum' || $prefs['feature_comments_moderation'] != 'y' ) ? 'y' : 'n';
+		$approved = $this->determine_initial_approval(array(
+			'type' => $object[0],
+			'author' => $userName,
+			'email' => $user ? TikiLib::lib('tiki')->get_user_email($user) : $anonymous_email,
+			'website' => $anonymous_website,
+			'content' => $data,
+		));
+
+		if ($approved === false) {
+			TikiLib::lib('errorreport')->report(tr('Your comment was rejected.'));
+			return false;
+		}
 
 		$comments = $this->table('tiki_comments');
 		$threadId = $comments->fetchOne('threadId', array('hash' => $hash));
@@ -2321,6 +2332,61 @@ class Comments extends TikiLib
 
 		return $threadId;
 		//return $return_result;
+	}
+
+	private function determine_initial_approval(array $info)
+	{
+		global $user, $prefs;
+
+		if ($tiki_p_admin_comments == 'y' || $object[0] == 'forum') {
+			return 'y';
+		}
+
+		if ($prefs['comments_akismet_filter'] == 'y') {
+			$isSpam = $this->check_is_spam($info);
+
+			if ($prefs['feature_comments_moderation'] == 'y') {
+				return $isSpam ? 'n' : 'y';
+			} else {
+				return $isSpam ? false : 'y';
+			}
+		} else {
+			return ($prefs['feature_comments_moderation'] == 'y') ? 'n' : 'y';
+		}
+	}
+
+	private function check_is_spam(array $info)
+	{
+		global $prefs, $user;
+
+		if ($prefs['comments_akismet_filter'] != 'y') {
+			return false;
+		}
+
+		if ($user && $prefs['comments_akismet_check_users'] != 'y') {
+			return false;
+		}
+
+		try {
+			$tikilib = TikiLib::lib('tiki');
+
+			$url = $tikilib->tikiUrl();
+			$akismet = new Zend_Service_Akismet($prefs['comments_akismet_apikey'], $url);
+
+			return $akismet->isSpam(array(
+				'user_ip' => $tikilib->get_ip_address(),
+				'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+				'referrer' => $_SERVER['HTTP_REFERER'],
+				'comment_type' => 'comment',
+				'comment_author' => $info['author'],
+				'comment_author_email' => $info['email'],
+				'comment_author_url' => $info['website'],
+				'comment_content' => $info['content'],
+			));
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report(tr('Cannot perform spam check: %0', $e->getMessage()));
+			return false;
+		}
 	}
 
 	// Check if a particular topic exists.
