@@ -335,7 +335,6 @@ function wikiplugin_tracker($data, $params)
 	$params = array_merge($default, $params);
 	$item = array();
 	
-	//var_dump($_REQUEST);
 	extract ($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y') {
@@ -513,7 +512,10 @@ function wikiplugin_tracker($data, $params)
 
 			$definition = Tracker_Definition::get($trackerId);
 			$factory = new Tracker_Field_Factory($definition, isset($item_info) ? $item_info : array());
-			$flds = array('data' => $definition->getFields($outf));
+			$flds = array('data' => array());
+			foreach ($outf as $fieldId) {
+				$flds['data'][] = $definition->getField($fieldId);
+			}
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
@@ -569,98 +571,6 @@ function wikiplugin_tracker($data, $params)
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
 				}
 
-				foreach ($flds['data'] as $fl) {
-					if ($factory->getHandler($fl)) {
-						continue;
-					}
-					// Types that were initially supported by the plugin
-					if (! in_array($fl['type'], array('q', 'k', 'u', 'g', 'I', 'C', 'n', 'j', 'f'))) {
-						continue;
-					}
-					// store value to display it later if form
-					// isn't fully filled.
-					if ($flds['data'][$cpt]['type'] == 's' && $flds['data'][$cpt]['name'] == 'Rating') {
-						if (isset($_REQUEST['track'][$fl['fieldId']])) {
-							$newItemRate = $_REQUEST['track'][$fl['fieldId']];
-							$newItemRateField = $fl['fieldId'];
-						} else {
-							$newItemRate = NULL;
-						}
-					
-					} elseif ($flds["data"][$cpt]["type"] == 'c') {
-						if (!isset($_REQUEST['track'][$fl['fieldId']])) {
-							$_REQUEST['track'][$fl['fieldId']] = 'n';
-						}	
-					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') &&	// user/group/ip
-							  ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {	// create or modif
-						
-						if ($tiki_p_admin_trackers === 'y' && isset($_REQUEST['track'][$fl['fieldId']]) && in_array($fl['fieldId'], $fields_plugin)) {
-							// but admins can override if the field is in the form
-							// do nothing, act casual
-						} else if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
-							if ($flds['data'][$cpt]['type'] == 'u') {
-								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
-							} elseif ($flds['data'][$cpt]['type'] == 'g') {
-								$_REQUEST['track'][$fl['fieldId']] = $group;
-							} elseif ($flds['data'][$cpt]['type'] == 'I') {
-								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
-							} elseif ($flds['data'][$cpt]['type'] == 'k') {
-								$_REQUEST['track'][$fl['fieldId']] = isset($_REQUEST['page'])?$_REQUEST['page']: '';
-							}
-						} elseif (!empty($itemId) && $flds['data'][$cpt]['options_array'][0] == '2') {
-							if ($flds['data'][$cpt]['type'] == 'u')
-								$_REQUEST['track'][$fl['fieldId']] = $user;
-							elseif ($flds['data'][$cpt]['type'] == 'g')
-								$_REQUEST['track'][$fl['fieldId']] = $group;
-							elseif ($flds['data'][$cpt]['type'] == 'I')
-								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
-						}
-					} elseif (($flds['data'][$cpt]['type'] == 'C' || $flds['data'][$cpt]['type'] == 'e') && empty($_REQUEST['track'][$fl['fieldId']])) {
-						$_REQUEST['track'][$fl['fieldId']] = '';
-					} elseif ($flds['data'][$cpt]['type'] == 'f') {
-						$ins_id = $fields_prefix . $fl['fieldId'];
-						if (isset($_REQUEST[$ins_id.'Day']) || isset($_REQUEST[$ins_id.'Hour'])) {
-							$_REQUEST['track'][$fl['fieldId']] = $trklib->build_date($_REQUEST, $flds['data'][$cpt], $ins_id);
-						}
-					}
-					if (isset($_REQUEST['ins_'.$fl['fieldId']])) { // to remember if error
-						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_'.$fl['fieldId']];
-					}
-
-					if(isset($_REQUEST['track'][$fl['fieldId']])) {
-						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
-					} else {
-						$flds['data'][$cpt]['value'] = '';
-						if (empty($itemId)) {
-							if ($fl['type'] == 'c') {
-								$_REQUEST['track'][$fl['fieldId']] = 'n';
-							} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y') {
-								// if none radio is selected, there will be no value and no error if mandatory
-								$_REQUEST['track'][$fl['fieldId']] = '';
-							}
-						}
-					}
-					if (!empty($_REQUEST['other_track_'.$fl['fieldId']])) {
-						$flds['data'][$cpt]['value'] = $_REQUEST['other_track_'.$fl['fieldId']];
-					}
-					if ($flds['data'][$cpt]['isMultilingual'] == 'y') {
-						foreach ($prefs['available_languages'] as $num=>$tmplang) {
-							if (isset($_REQUEST['track'][$fl['fieldId']][$tmplang])) {
-								$fl['lingualvalue'][$num]['value'] = $_REQUEST['track'][$fl['fieldId']][$tmplang];
-								$fl['lingualvalue'][$num]['lang'] = $tmplang;
-							}
-						}
-					}
-					$full_fields[$fl['fieldId']] = $fl;
-					
-					if ($embedded == 'y' and $fl['name'] == 'page') {
-						$embeddedId = $fl['fieldId'];
-					}
-					if ($fl['isMain'] == 'y')
-						$mainfield = $flds['data'][$cpt]['value'];
-					$cpt++;
-				} /*foreach */
-
 				if (isset($_REQUEST['track'])) {
 					foreach ($_REQUEST['track'] as $fld=>$val) {
 						//$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
@@ -674,6 +584,13 @@ function wikiplugin_tracker($data, $params)
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
+
+				if ($registration == 'y' && isset($params['userField'])) {
+					$userField = $definition->getField($params['userField']);
+					$userField['value'] = $_REQUEST['name'];
+					$ins_fields['data'][] = $userField;
+				}
+
 				$ins_categs = 0; // important: non-array ins_categs means categories should remain unchanged
 				$parent_categs_only = array();
 				foreach ($ins_fields['data'] as $current_field) {
