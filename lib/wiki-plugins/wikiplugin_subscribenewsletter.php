@@ -13,6 +13,7 @@ function wikiplugin_subscribenewsletter_info() {
 		'prefs' => array('feature_newsletters', 'wikiplugin_subscribenewsletter'),
 		'body' => tra('Invitation message'),
 		'icon' => 'pics/icons/newspaper_add.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'nlId' => array(
 				'required' => true,

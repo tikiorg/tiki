@@ -13,6 +13,7 @@ function wikiplugin_scroll_info() {
 		'prefs' => array('wikiplugin_scroll'),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/script.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'width' => array(
 				'required' => true,

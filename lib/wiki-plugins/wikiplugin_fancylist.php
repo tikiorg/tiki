@@ -13,6 +13,7 @@ function wikiplugin_fancylist_info() {
 		'prefs' => array('wikiplugin_fancylist'),
 		'body' => tra('One item per line starting with anything followed by ")".'),
 		'icon' => 'pics/icons/text_list_bullets.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 		 	'div' => array(
 			 	'required' => false,

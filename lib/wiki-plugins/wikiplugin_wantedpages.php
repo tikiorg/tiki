@@ -15,6 +15,7 @@ function wikiplugin_wantedpages_info() {
 		'prefs' => array( 'wikiplugin_wantedpages' ),
 		'body' => tra('Custom level regex. A custom filter for wanted pages to be listed (only used when level=>custom). Possible values: a valid regex-expression (PCRE).'),
 		'icon' => 'pics/icons/page_white_find.png',
+		'tags' => array( 'basic' ),	
 		'params' => array(
 			'ignore' => array(
 				'required' => false,

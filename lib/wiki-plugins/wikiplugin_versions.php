@@ -14,6 +14,7 @@ function wikiplugin_versions_info()
 		'prefs' => array( 'wikiplugin_versions' ),
 		'body' => tra('Block of text separated by ---(version x)--- markers. Text before the first marker is used by default.'),
 		'icon' => 'pics/icons/tab_edit.png',
+		'tags' => array( 'basic' ),	
 		'params' => array(
 			'nav' => array(
 				'required' => false,

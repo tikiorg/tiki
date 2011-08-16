@@ -13,6 +13,7 @@ function wikiplugin_redirect_info() {
 		'prefs' => array( 'wikiplugin_redirect' ),
 		'validate' => 'arguments',
 		'icon' => 'pics/icons/arrow_right.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'page' => array(
 				'required' => false,

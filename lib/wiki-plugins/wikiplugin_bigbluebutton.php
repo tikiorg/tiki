@@ -13,6 +13,7 @@ function wikiplugin_bigbluebutton_info() {
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ),
 		'icon' => 'pics/icons/webcam.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'name' => array(
 				'required' => true,

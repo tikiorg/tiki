@@ -12,6 +12,7 @@ function wikiplugin_aname_info() {
 		'description' => tra('Create an anchor that can be linked to'),
 		'prefs' => array('wikiplugin_aname'),
 		'body' => tra('The name of the anchor.'),
+		'tags' => array( 'basic' ),		
 		'params' => array(),
 		'icon' => 'pics/icons/anchor.png',
 	);

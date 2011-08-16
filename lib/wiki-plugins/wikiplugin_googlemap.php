@@ -13,6 +13,7 @@ function wikiplugin_googlemap_info() {
 		'prefs' => array( 'wikiplugin_googlemap' ),
 		'format' => 'html',
 		'icon' => 'pics/icons/google.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'type' => array(
 				'safe' => true,

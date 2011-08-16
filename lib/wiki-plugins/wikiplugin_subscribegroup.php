@@ -13,6 +13,7 @@ function wikiplugin_subscribegroup_info() {
 		'prefs' => array( 'wikiplugin_subscribegroup' ),
 		'body' => tra('text displyed before the button'),
 		'icon' => 'pics/icons/group_add.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'group' => array(
 				'required' => true,

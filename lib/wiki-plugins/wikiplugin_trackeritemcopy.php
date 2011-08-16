@@ -8,6 +8,7 @@ function wikiplugin_trackeritemcopy_info() {
 		'prefs' => array('wikiplugin_trackeritemcopy', 'feature_trackers'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,

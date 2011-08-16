@@ -28,6 +28,7 @@ function wikiplugin_module_info() {
 		'validate' => 'all',
 		'icon' => 'pics/icons/module.png',
 		'extraparams' =>true,
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'module' => array(
 				'required' => true,

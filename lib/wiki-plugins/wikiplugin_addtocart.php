@@ -14,6 +14,7 @@ function wikiplugin_addtocart_info() {
 		'filter' => 'wikicontent',
 		'format' => 'html',
 		'icon' => 'pics/icons/cart_add.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'code' => array(
 				'required' => true,

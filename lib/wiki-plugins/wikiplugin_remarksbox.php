@@ -13,6 +13,7 @@ function wikiplugin_remarksbox_info() {
 		'prefs' => array( 'wikiplugin_remarksbox' ),
 		'body' => tra('remarks text'),
 		'icon' => 'pics/icons/comment_add.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'type' => array(
 				'required' => true,

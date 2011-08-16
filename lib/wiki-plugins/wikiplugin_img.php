@@ -12,6 +12,7 @@ function wikiplugin_img_info() {
 		'description' => tra('Display custom formatted images'),
 		'prefs' => array( 'wikiplugin_img'),
 		'icon' => 'pics/icons/picture.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'src' => array(
 				'required' => false,

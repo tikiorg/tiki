@@ -14,6 +14,7 @@ function wikiplugin_sort_info() {
 		'body' => tra('Data to sort, one entry per line.'),
 		'filter' => 'text',
 		'icon' => 'pics/icons/table_sort.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'sort' => array(
 				'required' => false,

@@ -13,6 +13,7 @@ function wikiplugin_fancytable_info() {
 		'prefs' => array('wikiplugin_fancytable'),
 		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
 		'icon' => 'pics/icons/table.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'head' => array(
 				'required' => false,

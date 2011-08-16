@@ -14,6 +14,7 @@ function wikiplugin_div_info() {
 		'body' => tra('text'),
 		'icon' => 'pics/icons/script_code_red.png',
 		'filter' => 'wikicontent',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'type' => array(
 				'required' => false,

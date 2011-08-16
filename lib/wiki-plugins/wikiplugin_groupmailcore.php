@@ -13,6 +13,7 @@ function wikiplugin_groupmailcore_info() {
 		'prefs' => array('wikiplugin_groupmailcore', 'feature_trackers'),
 		//'extraparams' => true,
 		'icon' => 'pics/icons/email.png',
+		'tags' => array( 'experimental' ),	
 		'params' => array(
 			'fromEmail' => array(
 				'required' => true,

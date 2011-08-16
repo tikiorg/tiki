@@ -13,6 +13,7 @@ function wikiplugin_slideshow_info() {
 		'prefs' => array( 'wikiplugin_slideshow', 'feature_slideshow', 'wiki_uses_slides' ),
 		'body' => tra('Slideshow notes - Separate with "/////"'),
 		'icon' => 'pics/icons/images.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'theme' => array(
 				'required' => false,

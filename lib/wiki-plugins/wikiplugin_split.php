@@ -14,6 +14,7 @@ function wikiplugin_split_info()
 		'prefs' => array( 'wikiplugin_split' ),
 		'filter' => 'wikicontent',
 		'icon' => 'pics/icons/table.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'joincols' => array(
 				'required' => false,

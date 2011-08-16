@@ -12,6 +12,7 @@ function wikiplugin_include_info() {
 		'description' => tra('Include content from a wiki page'),
 		'prefs' => array('wikiplugin_include'),
 		'icon' => 'pics/icons/page_copy.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'page' => array(
 				'required' => true,

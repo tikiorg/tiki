@@ -15,6 +15,7 @@ function wikiplugin_js_info() {
 			'validate' => 'all',
 			'filter' => 'rawhtml_unsafe',
 			'icon' => 'pics/icons/script_code_red.png',
+			'tags' => array( 'basic' ),
 			'params' => array(
 				'file' => array(
 					'required' => false,

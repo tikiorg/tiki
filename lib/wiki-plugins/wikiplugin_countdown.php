@@ -13,6 +13,7 @@ function wikiplugin_countdown_info() {
 		'prefs' => array('wikiplugin_countdown'),
 		'icon' => 'pics/icons/clock.png',
 		'body' => tra('Text to append to the countdown.'),
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'enddate' => array(
 				'required' => true,

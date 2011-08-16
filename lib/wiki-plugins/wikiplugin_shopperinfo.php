@@ -13,6 +13,7 @@ function wikiplugin_shopperinfo_info() {
 		'prefs' => array('wikiplugin_shopperinfo', 'payment_feature'),
 		'filter' => 'wikicontent',
 		'format' => 'html',
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'values' => array(
 				'required' => true,

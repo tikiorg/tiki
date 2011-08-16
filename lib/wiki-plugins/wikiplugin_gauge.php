@@ -13,6 +13,7 @@ function wikiplugin_gauge_info() {
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
 		'icon' => 'pics/icons/chart_bar.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'value' => array(
 				'required' => true,

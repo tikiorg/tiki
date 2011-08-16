@@ -13,6 +13,7 @@ function wikiplugin_alink_info() {
 		'prefs' => array('wikiplugin_alink'),
 		'body' => tra('Anchor link label.'),
 		'icon' => 'pics/icons/world_link.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'aname' => array(
 				'required' => true,

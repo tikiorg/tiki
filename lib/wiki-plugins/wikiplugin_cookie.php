@@ -13,6 +13,7 @@ function wikiplugin_cookie_info()
 		'description' => tra('Display a rotating set of taglines or quotes (also known as fortune cookies)'),
 		'prefs' => array( 'wikiplugin_cookie' ),
 		'icon' => 'pics/icons/quotes.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 		),
 	);

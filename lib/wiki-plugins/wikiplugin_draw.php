@@ -12,6 +12,7 @@ function wikiplugin_draw_info() {
 		'description' => tra('Display or create an image from TikiDraw that is stored into the File Gallery'),
 		'prefs' => array( 'feature_draw' , 'wikiplugin_draw'),
 		'icon' => 'pics/icons/shape_square_edit.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'id' => array(
 				'required' => false,

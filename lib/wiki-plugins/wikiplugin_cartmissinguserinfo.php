@@ -12,6 +12,7 @@ function wikiplugin_cartmissinguserinfo_info() {
 		'documentation' => tra('PluginCartMissingUserInfo'),		
 		'description' => tra('Check if user still has missing info to enter'),
 		'prefs' => array('wikiplugin_cartmissinguserinfo', 'payment_feature'),
+		'tags' => array( 'experimental' ),		
 		'params' => array(
 			'info_type' => array(
 				'required' => true,

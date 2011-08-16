@@ -7,6 +7,7 @@ function wikiplugin_hasticket_info() {
 		'description' => tra('Set'),
 		'prefs' => array('wikiplugin_hasticket', 'payment_feature'),
 		'filter' => 'wikicontent',
+		'tags' => array( 'experimental' ),		
 		'params' => array(
 			'key' => array(
 				'required' => true,

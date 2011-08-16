@@ -13,6 +13,7 @@ function wikiplugin_sub_info() {
 		'prefs' => array( 'wikiplugin_sub' ),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/text_subscript.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 		),
 	);

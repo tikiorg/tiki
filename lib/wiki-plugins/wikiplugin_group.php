@@ -14,6 +14,7 @@ function wikiplugin_group_info() {
 		'prefs' => array('wikiplugin_group'),
 		'icon' => 'pics/icons/group.png',
 		'filter' => 'wikicontent',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'friends' => array(
 				'required' => false,

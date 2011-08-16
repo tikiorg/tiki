@@ -13,6 +13,7 @@ function wikiplugin_carousel_info()
 		'description' => tra('Carousel on a file gallery'),
 		'prefs' => array('wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'),
 		'icon' => 'pics/icons/wand.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'fgalId' => array(
 				'required' => true,

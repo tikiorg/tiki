@@ -13,6 +13,7 @@ function wikiplugin_slider_info() {
 		'prefs' => array( 'wikiplugin_slider' ),
 		'body' => tra('Content separated by /////'),
 		'icon' => 'pics/icons/cool.gif',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'titles' => array(
 				'required' => false,

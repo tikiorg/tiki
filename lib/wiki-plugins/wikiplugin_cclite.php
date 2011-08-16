@@ -15,6 +15,7 @@ function wikiplugin_cclite_info() {
 //		'validate' => '',
 		'prefs' => array( 'wikiplugin_cclite', 'payment_feature' ),
 		'icon' => 'pics/icons/money.png',
+		'tags' => array( 'experimental' ),		
 		'params' => array(
 			'mode' => array(
 				'required' => false,

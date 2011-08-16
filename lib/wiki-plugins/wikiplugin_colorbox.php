@@ -13,6 +13,7 @@ function wikiplugin_colorbox_info() {
 		'prefs' => array( 'feature_file_galleries', 'feature_shadowbox', 'wikiplugin_colorbox' ),
 		'introduced' => 5,
 		'icon' => 'pics/icons/pictures.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'fgalId' => array(
 				'required' => false,

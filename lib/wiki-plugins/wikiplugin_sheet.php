@@ -13,6 +13,7 @@ function wikiplugin_sheet_info() {
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
 		'body' => tra('Sheet Heading'),
 		'icon' => 'pics/icons/sheet_get_range.png',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'id' => array(
 				'required' => false,

@@ -13,6 +13,7 @@ function wikiplugin_prettytrackerviews_info() {
 		'description' => tra('Stores tiki.tracker.pretty.views attribute for trackeritem'),
 		'prefs' => array('wikiplugin_prettytrackerviews', 'feature_trackers'),
 		'defaultfilter' => 'text',
+		'tags' => array( 'experimental' ),
 		'params' => array (
 			'record' => array (
 				'required' => false,

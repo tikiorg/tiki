@@ -13,6 +13,7 @@ function wikiplugin_box_info() {
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/layout_header.png',
+		'tags' => array( 'basic' ),		
 		'params' => array(
 			'title' => array(
 				'required' => false,
