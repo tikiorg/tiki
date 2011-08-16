@@ -8,25 +8,43 @@
 function tiki_syntax_highlighter_flex() {
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
-
+		
+		//the if statement here is not needed in codemirror2
 		$headerlib->add_jq_onready("
 			$('textarea')
 				.flexibleCodeMirror({
 					changeText: '".tra("Change Highlighter")."'
 				});
 			
-			$('.codelisting')
-				.each(function() {
-					$(this).flexibleCodeMirror({
-						readOnly: true,
-						parse: ['javascript'],
-						width: $(this).width() + 'px',
-						height: $(this).parent().height() + 'px'
-					});
-				})
-				.hide();
+			if (!$.s5) {
+				$('.codelisting')
+					.each(function() {
+						$(this).flexibleCodeMirror({
+							readOnly: true,
+							parse: ['javascript'],
+							width: $(this).width() + 'px',
+							height: $(this).parent().height() + 'px'
+						});
+					})
+					.hide();
+			} else {
+				$('.wikitext').bind('slideChange', function(obj) {
+					$('.CodeMirror-wrapping').remove();
+					$('.codelisting')
+						.show()
+						.each(function() {
+							$(this).flexibleCodeMirror({
+								readOnly: true,
+								parse: ['javascript'],
+								width: $(this).width() + 'px',
+								height: $(this).parent().height() + 'px'
+							});
+						})
+						.hide();
+				});
+			}
+			
 		");
-		
 	}
 }
 
