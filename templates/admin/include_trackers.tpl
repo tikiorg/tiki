@@ -1,51 +1,51 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
-<fieldset class="admin">
-	<legend>{tr}Activate the feature{/tr}</legend>
-	{preference name=feature_trackers visible="always"}
-</fieldset>
+<form action="tiki-admin.php?page=trackers" method="post">
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
+	</div>
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_trackers visible="always"}
+	</fieldset>
 
-<fieldset class="admin">
-    <form action="tiki-admin.php?page=trackers" method="post">
-	{preference name=user_selector_threshold}
-	{preference name=tracker_field_computed}
-	{preference name=user_selector_realnames_tracker}
-	{preference name="tracker_remote_sync"}
-   	<div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
-	</div> 
-    </form>
-</fieldset>
+	<fieldset class="admin">
+		<legend>{tr}Tracker settings{/tr}</legend>
+		{preference name=user_selector_threshold}
+		{preference name=tracker_field_computed}
+		{preference name=user_selector_realnames_tracker}
+		{preference name="tracker_remote_sync"}
+	</fieldset>
 
-<fieldset class="admin">
-  <legend>{tr}Tracker attachment preferences{/tr}</legend>
-    <form action="tiki-admin.php?page=trackers" method="post">
-      <table class="admin">
-        <tr>
-          <td>
-            {tr}Use database to store files:{/tr}
-          </td>
-          <td>
-            <input type="radio" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked"{/if}/>
-          </td>
-        </tr>
+	<fieldset class="admin">
+	  <legend>{tr}Tracker attachment preferences{/tr}</legend>
+		  <table class="admin">
+			<tr>
+			  <td>
+				{tr}Use database to store files:{/tr}
+			  </td>
+			  <td>
+				<input type="radio" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked"{/if}/>
+			  </td>
+			</tr>
 
-        <tr>
-          <td>
-            {tr}Use a directory to store files:{/tr}</td>
-          <td>
-            <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
-            <br />
-            <input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" /> 
-          </td>
-        </tr>
+			<tr>
+			  <td>
+				{tr}Use a directory to store files:{/tr}</td>
+			  <td>
+				<input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
+				<br />
+				<input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" />
+			  </td>
+			</tr>
 
-      </table>
-			<div class="heading input_submit_container" style="text-align: right">
-        <input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
-			</div>
-    </form>
-</fieldset>
+		  </table>
+	</fieldset>
+	
+	<div class="heading input_submit_container" style="text-align: center">
+		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
+	</div>
+</form>
 
 
 <fieldset class="admin">
@@ -105,12 +105,12 @@
             <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title="{tr}Switch storage{/tr}"}</a>
           </td>
         </tr>
-{sectionelse}
+		{sectionelse}
 			{norecords _colspan=10}
         {/section}
       </table>
       
-			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
     </div>
 {if $attachements}
     <table>
