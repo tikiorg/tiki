@@ -21,6 +21,11 @@
 		{foreach from=$types item=info key=k}
 			<div class="description {$k|escape}" style="display: none;">
 				{$info.description|escape}
+				{if $info.help}
+					<a href="{$prefs.helpurl|escape}{$info.help|escape:'url'}" target="tikihelp" class="tikihelp" title="{$info.name|escape}">
+						{icon _id=help alt=''}
+					</a>
+				{/if}
 			</div>
 		{/foreach}
 	</label>
