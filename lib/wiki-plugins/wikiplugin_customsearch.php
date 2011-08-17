@@ -93,7 +93,7 @@ function wikiplugin_customsearch($data, $params)
 
 	$parser = new WikiParser_PluginArgumentParser;
 	$fingerprint = md5(print_r($matches, true));
-	$sessionprint = "customsearch_$id" . "_$fingerprint";
+	$sessionprint = "customsearch_{$id}_$fingerprint";
 	if (isset($_SESSION[$sessionprint]) && $_SESSION[$sessionprint] != $fingerprint) {
 		unset($_SESSION["customsearch_$id"]);
 	} 
@@ -104,26 +104,26 @@ function wikiplugin_customsearch($data, $params)
 	$daterangegroups = array();
 
 	$script .= "function add_customsearch_$id(fieldid, filter) {
-			customsearch_$id" . "_searchdata[fieldid] = filter; 
+			customsearch_{$id}_searchdata[fieldid] = filter; 
 		}
 		function remove_customsearch_$id(fieldid) {
-			delete customsearch_$id" . "_searchdata[fieldid];
+			delete customsearch_{$id}_searchdata[fieldid];
 		}
-		customsearch_$id" . "_searchdata = new Object();
-		customsearch_$id" . "_basedata = '" . json_encode((string) $data) . "';
-		$('#customsearch_$id" . "').click(function() {
+		customsearch_{$id}_searchdata = new Object();
+		customsearch_{$id}_basedata = '" . json_encode((string) $data) . "';
+		$('#customsearch_$id').click(function() {
 			// reset offset on reclick of submit button
 			customsearch_offset_$id = 0;
 		});
-		$('#customsearch_$id" . "').submit(function() {
-			load_customsearch_$id($.toJSON(customsearch_$id" . "_searchdata));
+		$('#customsearch_$id').submit(function() {
+			load_customsearch_$id($.toJSON(customsearch_{$id}_searchdata));
 			return false;
 		});";
 		
 	foreach ($matches as $k => $match) {
 		$name = $match->getName(); 
 		$arguments = $parser->parse($match->getArguments());
-		$fieldid = "customsearch_$id" . "_$k";
+		$fieldid = "customsearch_{$id}_$k";
 		if ($arguments['_filter'] == 'content' && !empty($arguments['_field'])) {
 			$filter = $arguments['_field'];
 		} else {
@@ -146,13 +146,13 @@ function wikiplugin_customsearch($data, $params)
 		if (function_exists($function)) {
 			if (isset($arguments['_group'])) {
 				$groups[$fieldid] = $arguments['_group']; 
-				$fieldname = "customsearch_$id" . "_gr" . $arguments['_group'];
+				$fieldname = "customsearch_{$id}_gr" . $arguments['_group'];
 			} elseif (isset($arguments['_textrange'])) {
 				$textrangegroups[$fieldid] = $arguments['_textrange'];
-				$fieldname = "customsearch_$id" . "_textrange" . $arguments['_textrange'];
+				$fieldname = "customsearch_{$id}_textrange" . $arguments['_textrange'];
 			} elseif (isset($arguments['_daterange'])) {
 				$daterangegroups[$fieldid] = $arguments['_daterange'];
-				$fieldname = "customsearch_$id" . "_daterange" . $arguments['_daterange'];
+				$fieldname = "customsearch_{$id}_daterange" . $arguments['_daterange'];
 			} else {
 				$fieldname = $fieldid;
 			}
@@ -160,12 +160,12 @@ function wikiplugin_customsearch($data, $params)
 		} 
 	}
 
-	$script .= "function load_customsearch_$id" . "(searchdata) {";
+	$script .= "function load_customsearch_$id(searchdata) {";
 	if ($searchfadediv) { 
 		$searchfadetext = tr('Searching...');
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal('$searchfadetext');";
 	}	
-	$script .= "var datamap = {basedata: customsearch_$id" . "_basedata,
+	$script .= "var datamap = {basedata: customsearch_{$id}_basedata,
 				adddata: searchdata,
 				searchid: '$id',
 				groups: '" . json_encode($groups) . "',
@@ -186,7 +186,7 @@ function wikiplugin_customsearch($data, $params)
 	if ($searchfadediv) {
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal();";
 	}
-	$script .= "$('#customsearch_$id" . "_results').html(data); customsearch_quiet_$id = false; 
+	$script .= "$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false; 
 		
 				}
 			});
