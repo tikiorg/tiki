@@ -43,7 +43,7 @@ function prefs_comments_list() {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('new', 'advanced'),
-			'keywords' => 'akismet',
+			'keywords' => 'askimet', // Let an admin find the preference even if his query has this common typo
 		),
 		'comments_akismet_apikey' => array(
 			'name' => tra('Akismet API Key'),
@@ -53,7 +53,7 @@ function prefs_comments_list() {
 			'filter' => 'word',
 			'tags' => array('new', 'advanced'),
 			'default' => '',
-			'keywords' => 'akismet',	
+			'keywords' => 'askimet',	
 		),
 		'comments_akismet_check_users' => array(
 			'name' => tr('Filter spam for registered users'),
@@ -61,7 +61,7 @@ function prefs_comments_list() {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('new', 'advanced'),
-			'keywords' => array('akismet'),			
+			'keywords' => array('askimet'),			
 		),
 	);
 }
