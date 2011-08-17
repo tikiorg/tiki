@@ -577,7 +577,6 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 			'default' => 'n',
-			'module' => 'sheet',			
 			'tags' => array('basic'),
 			'view' => 'tiki-sheets.php',
 			'permission' => array(
