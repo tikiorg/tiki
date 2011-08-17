@@ -253,8 +253,8 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 		});";
 	} 
 
-	if ($default) {
-		if ($default != 'n' && ($type == 'checkbox' || $type == 'radio')) {
+	if ($default) { 
+		if ((string) $default != 'n' && ($type == 'checkbox' || $type == 'radio')) {
 			$element->setAttribute('checked', 'checked');
 		} else {
 			$element->setAttribute('value', $default);
