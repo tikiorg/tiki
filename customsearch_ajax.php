@@ -46,10 +46,18 @@ if (isset($_POST['adddata'])) {
 	} else {
 		$datarangegroups = array();
 	}
+	if (isset($_SESSION["customsearch_$id"])) {
+		unset($_SESSION["customsearch_$id"]);
+	}
 	foreach($adddata as $fieldid => $d) {
 		$config = $d['config'];
 		$name = $d['name'];
 		$value = $d['value'];
+
+		// save values entered as defaults while session lasts
+		if (!empty($value)) {
+			$_SESSION["customsearch_$id"][$fieldid] = $value;
+		}	
 
 		if (empty($config['type'])) {
 			$config['type'] = $name;
