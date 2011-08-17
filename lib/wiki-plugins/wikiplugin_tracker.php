@@ -515,9 +515,13 @@ function wikiplugin_tracker($data, $params)
 			$definition = Tracker_Definition::get($trackerId);
 			$item_info = isset($item_info) ? $item_info : array();
 			$factory = new Tracker_Field_Factory($definition);
-			$flds = array('data' => array());
-			foreach ($outf as $fieldId) {
-				$flds['data'][] = $definition->getField($fieldId);
+			if (empty($outf)) {
+				$flds = array('data' => $definition->getFields());
+			} else {
+				$flds = array('data' => array());
+				foreach ($outf as $fieldId) {
+					$flds['data'][] = $definition->getField($fieldId);
+				}
 			}
 			$bad = array();
 			$embeddedId = false;
