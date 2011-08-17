@@ -49,8 +49,8 @@
 	</label>
 
 {if isset($exact_match)}
-	<label class="findexactmatch" for="findexactmatch">
-			{tr}Exact&nbsp;match{/tr}
+	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
+			{tr}Exact match{/tr}
 		<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}/>
 	</label>
 {/if}
