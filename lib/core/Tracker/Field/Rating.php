@@ -14,6 +14,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'name' => tr('Rating'),
 				'description' => tr('A rating of the tracker item'),
 				'readonly' => true,
+				'help' => 'Rating Tracker Field',
 				'params' => array(
 					'option' => array(
 						'name' => tr('Option'),

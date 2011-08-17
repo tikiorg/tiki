@@ -19,7 +19,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			'd' => array(
 				'name' => tr('Drop Down'),
 				'description' => tr('Allows users to select only from a specified set of options'),
-				'help' => 'Drop Down - Radio Tracker Field',					
+				'help' => 'Drop Down - Radio Tracker Field',
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
@@ -32,6 +32,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			'D' => array(
 				'name' => tr('Drop Down with Other field'),
 				'description' => tr('Allows users to select from a specified set of options or to enter an alternate option'),
+				'help' => 'Drop Down - Radio Tracker Field',
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
@@ -44,6 +45,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			'R' => array(
 				'name' => tr('Radio Buttons'),
 				'description' => tr('Allows users to select only from a specified set of options'),
+				'help' => 'Drop Down - Radio Tracker Field',				
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
@@ -56,6 +58,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			'M' => array(
 				'name' => tr('Multiselect'),
 				'description' => tr('Allows a user to select multiple values from a specified set of options'),
+				'help' => 'Multiselect Tracker Field',				
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),

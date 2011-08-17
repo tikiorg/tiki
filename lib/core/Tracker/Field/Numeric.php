@@ -70,6 +70,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 			'b' => array(
 				'name' => tr('Currency Field'),
 				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
+				'help' => 'Currency Amount Tracker Field',				
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),

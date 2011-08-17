@@ -20,6 +20,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 				'name' => tr('Header'),
 				'description' => tr('Displays a header between fields to delimit a section and allow folding the fields.'),
 				'readonly' => true,
+				'help' => 'Header Tracker Field',
 				'params' => array(
 					'level' => array(
 						'name' => tr('Header Level'),

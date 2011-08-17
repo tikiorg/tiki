@@ -19,6 +19,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 			'A' => array(
 				'name' => tr('Attachment'),
 				'description' => tr('Allows a file to be attached to the tracker item.'),
+				'help' => 'Attachment Field',				
 				'params' => array(
 					'listview' => array(
 						'name' => tr('List View'),
