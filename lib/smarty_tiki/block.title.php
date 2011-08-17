@@ -23,8 +23,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  */
 
-function smarty_block_title($params, $content, &$smarty, $repeat) {
-	global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin, $smarty;
+function smarty_block_title($params, $content, $template, $repeat) {
+	global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin;
 
 	if ( $repeat || $content == '' ) return;
 	include_once('lib/smarty_tiki/function.icon.php');
@@ -32,12 +32,12 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	if ( ! isset($params['help']) ) $params['help'] = '';
 	if ( ! isset($params['admpage']) ) $params['admpage'] = '';
 	if ( ! isset($params['url']) ) {
-		$smarty->loadPlugin('smarty_function_query');
-		$params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
+		$template->loadPlugin('smarty_function_query');
+		$params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $template);
 	}
 
 	// Set the variable for the HTML title tag
-	$smarty->assign( 'headtitle', $content );
+	$template->smarty->assign( 'headtitle', $content );
 
 	$class = 'pagetitle';
 	$current = current_object();
@@ -55,27 +55,27 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	$html = '<h1>';
 	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . htmlspecialchars($content) . "</a>\n";
 
-	if ($smarty->getTemplateVars('print_page') != 'y') {
+	if ($template->getTemplateVars('print_page') != 'y') {
 		if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
 			$html .= '<a href="' . $prefs['helpurl'] . rawurlencode($params['help']) . '" class="titletips" title="' . tra('Help page:') . ' ' . htmlspecialchars($content) . '">'
-			. smarty_function_icon(array('_id' => 'help') , $smarty)
+			. smarty_function_icon(array('_id' => 'help') , $template)
 			. "</a>\n";
 		}
 
-		if ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates == 'y' && ($tpl = $smarty->getTemplateVars('mid'))) {
+		if ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates == 'y' && ($tpl = $template->getTemplateVars('mid'))) {
 			$html .= '<a href="tiki-edit_templates.php?template=' . $tpl . '" class="titletips" title="' . tra('View or edit tpl:') . ' ' . htmlspecialchars($content) . '">' 
-			. smarty_function_icon(array('_id' => 'shape_square_edit', 'alt' => tra('Edit Template')), $smarty)
+			. smarty_function_icon(array('_id' => 'shape_square_edit', 'alt' => tra('Edit Template')), $template)
 			. "</a>\n";
-		} elseif ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y' && ($tpl = $smarty->getTemplateVars('mid'))) {
+		} elseif ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y' && ($tpl = $template->getTemplateVars('mid'))) {
 			$html .= '<a href="tiki-edit_templates.php?template=' . $tpl . '" class="titletips" title="' . tra('View tpl:') . ' ' . htmlspecialchars($content) . '">' 
-			. smarty_function_icon(array('_id' => 'shape_square', 'alt' => tra('View Template')), $smarty)
+			. smarty_function_icon(array('_id' => 'shape_square', 'alt' => tra('View Template')), $template)
 			. "</a>\n";
 			
 		}
 
 		if ( $tiki_p_admin == 'y' && $params['admpage'] != '' ) {
 			$html .= '<a class="titletips" href="tiki-admin.php?page=' . $params['admpage'] . '" title="' . tra('Admin page:') . ' ' . htmlspecialchars($content) . '">'
-			. smarty_function_icon(array('_id' => 'wrench', 'alt' => tra('Admin Feature')), $smarty)
+			. smarty_function_icon(array('_id' => 'wrench', 'alt' => tra('Admin Feature')), $template)
 			. "</a>\n";
 		}
 	}
