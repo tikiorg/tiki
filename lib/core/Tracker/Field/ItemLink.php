@@ -129,11 +129,9 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 						var $f = $("form", this).append($("<input type=\'hidden\' name=\'ajax_add\' value=\'1\' />"));
 						ajaxLoadingShow($f);
 						$.post( $f.attr("action"), $f.serialize(), function(data, status) {
-							var m = data.match(/.*(\{"data":.*)/);	// strip the beginning of the page as smarty sends stuff before this can be sent FIXME
-							if (m && m.length > 0) {
-								m = $.secureEvalJSON(m[1]);
-								for (var i = 0; i < m.data.length; i++) {
-									var a = m.data[i];
+							if (data && data.data) {
+								for (var i = 0; i < data.data.length; i++) {
+									var a = data.data[i];
 									if ( a && a["fieldId"] == '.$this->getOption(1).' ) {
 										$o = $("<option value=\'" + a["fileId"] + "\'>" + a["value"] + "</option>");
 										$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
@@ -145,7 +143,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 							$d.dialog( "close" );
 
 							return;
-						});
+						}, "json");
 
 
 							//.append($("<input type=\'hidden\' name=\'save\' value=\'save\' />"))

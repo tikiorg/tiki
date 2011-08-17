@@ -765,11 +765,15 @@ function wikiplugin_tracker($data, $params)
 							exit;
 						} else if (!empty($_REQUEST['ajax_add'])) {	// called by tracker ItemLink fields when adding new list items
 							global $access;
-							if (!ob_end_clean()) {	// too late but try anyway
-								ob_clean();
+							while ( ob_get_level() ) {
+								ob_end_clean();
 							}
-							ob_start();
-							$access->output_serialized(json_encode($ins_fields));
+							if ( $prefs['feature_obzip'] == 'y' ) {
+								ob_start('ob_gzhandler');
+							} else {
+								ob_start();
+							}
+							$access->output_serialized($ins_fields);
 							ob_end_flush();
 							die;
 						} else {
