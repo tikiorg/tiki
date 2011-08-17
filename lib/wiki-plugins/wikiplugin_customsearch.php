@@ -247,6 +247,7 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 		$script .= "$('#$fieldid').keydown(function(event) {
 			if (event.keyCode == '13') {
 				event.preventDefault();
+				$('#$fieldid').trigger('change');
 				return false;
 			}
 		});";
