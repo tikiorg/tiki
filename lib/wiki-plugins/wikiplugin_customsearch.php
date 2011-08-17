@@ -406,8 +406,13 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 	} else {
 		$options = array();
 	}
+	if (isset($arguments['_mandatory']) && $arguments['_mandatory'] == 'y') {
+		$mandatory = true;
+	} else {
+		$mandatory = false;
+	}
 	// leave a blank one in the front
-	if (!isset($arguments['multiple']) && !isset($arguments['size'])) {
+	if (!$mandatory && !isset($arguments['multiple']) && !isset($arguments['size'])) {
 		$option = $document->createElement('option');
 		$element->appendChild($option);
 	}
