@@ -27,7 +27,7 @@
 			{if $prefs.comments_notitle neq 'y'}
 				<label>{tr}Title:{/tr} <input type="text" name="title" value="{$title|escape}"/></label>
 			{/if}
-			<label class="clearfix">{tr}Comment:{/tr} {textarea name=data comments="y"}{$data|escape}{/textarea}</label>
+			<label class="clearfix">{tr}Comment:{/tr} {textarea name=data comments="y" _wysiwyg="n"}{$data|escape}{/textarea}</label>
 
 			{if $prefs.feature_antibot eq 'y'}
 				{assign var='showmandatory' value='y'}
