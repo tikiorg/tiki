@@ -14,21 +14,50 @@ class Tracker_Field_Factory
 	function __construct($trackerDefinition)
 	{
 		$this->trackerDefinition = $trackerDefinition;
-
+		
 		$fieldMap = $this->buildTypeMap(array(
 			'lib/core/Tracker/Field' => 'Tracker_Field_',
 		));
 	}
-
+	
+	private function getPreCacheTypeMap($cacheKey)
+	{
+		global $tikilib;
+		
+		if (!empty($tikilib->trackerFieldFactoryMap[$cacheKey])) {
+			$this->typeMap = $tikilib->trackerFieldFactoryMap[$cacheKey]->type;
+			$this->infoMap = $tikilib->trackerFieldFactoryMap[$cacheKey]->info;
+			return true;
+		}
+		return false;
+	}
+	
+	private function setPreCacheTypeMap($cacheKey, $data)
+	{
+		global $tikilib;
+		if (empty($tikilib->trackerFieldFactoryMap)) $tikilib->trackerFieldFactoryMap = array();
+		
+		$tikilib->trackerFieldFactoryMap[$cacheKey] = (object)array(
+			"type"=> $data["typeMap"],
+			"info"=> $data["infoMap"]
+		);
+	}
+	
 	private function buildTypeMap($paths)
 	{
 		global $prefs;
 		$cachelib = TikiLib::lib('cache');
 		$cacheKey = 'fieldtypes.' . $prefs['language'];
-
+		
+		if ($this->getPreCacheTypeMap($cacheKey) == true) {
+			return;
+		}
+		
 		if ($data = $cachelib->getSerialized($cacheKey)) {
 			$this->typeMap = $data['typeMap'];
 			$this->infoMap = $data['infoMap'];
+			
+			$this->setPreCacheTypeMap($cacheKey, $data);
 			return;
 		}
 
