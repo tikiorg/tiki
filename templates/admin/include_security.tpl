@@ -58,6 +58,13 @@
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
 			{preference name=feature_banning}
+			
+			{preference name=comments_akismet_filter}
+				<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
+					{preference name=comments_akismet_apikey}
+					{preference name=comments_akismet_check_users}
+				</div>
+			
 		{/tab}
 	
 		{tab name="{tr}Search results{/tr}"}
