@@ -12,7 +12,7 @@
 
 require_once 'lib/wiki/editlib.php';
 
-class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
+class EditLib_ParseToWiki_TextTest extends TikiTestCase {
 
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
@@ -44,9 +44,9 @@ class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
 	 * - justify
 	 */
 	function testBlockAlignement() {
+		global $prefs;
 		
-		$this->markTestIncomplete('Work in progress.');
-		
+
 		/*
 		 * left
 		 */
@@ -55,9 +55,9 @@ class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
 		$inData = 'This text is aligned left';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
+				
+		$ex = '{DIV(align="left")}This text is aligned left{DIV}';
 		
-		
-		$ex = '{DIV(align="left)}This text is aligned left{DIV}';
 		$inData = '<div style="text-align: left;">This text is aligned left</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
@@ -69,7 +69,18 @@ class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
 		/*
 		 * center
 		 */
+		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$ex = '::This text is centered::';
+		
+		$inData = '<div style="text-align: center;">This text is centered</div>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		$inData = '<div align="center">This text is centered</div>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$ex = ':::This text is centered:::';
 		
 		$inData = '<div style="text-align: center;">This text is centered</div>';
 		$out = $this->el->parseToWiki($inData);
@@ -83,7 +94,7 @@ class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
 		 * right
 		 */
 		$ex = '{DIV(align="right")}This text is aligned right{DIV}';
-		
+
 		$inData = '<div style="text-align: right;">This text is aligned right</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
@@ -106,6 +117,14 @@ class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
 	}
 	
 	
+	/**
+	 * Align paragraphs
+	 * 
+	 * - left
+	 * - center
+	 * - right
+	 * - justify
+	 */	
 	function testParagraphAlignement() {
 		
 		$this->markTestIncomplete('Work in progress.');

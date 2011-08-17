@@ -42,7 +42,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '{FONT(type="span", font-family="tahoma")}text{FONT}';
 		$exp = '<span style="font-family:tahoma;">text<span>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 
@@ -54,7 +54,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '{FONT(type="span", font-size="12px")}text{FONT}';
 		$exp = '<span style="font-size:12px;">text<span>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -66,7 +66,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '__bold__';
 		$exp = '<strong>bold</strong>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -78,7 +78,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '\'\'italic\'\'';
 		$exp = '<em>italic</em>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -90,7 +90,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '===underlined===';
 		$exp = '<u>underlined</u>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -102,7 +102,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '--strike through--';
 		$exp = '<strike>strike through</strike>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -114,7 +114,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '{SUB()}subscript{SUB}';
 		$exp = '<sub>subscript</sub>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}	
 
@@ -126,7 +126,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '{SUP()}superscript{SUP}';
 		$exp = '<sup>superscript</sup>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}		
 	
@@ -138,7 +138,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '-+monospaced+-';
 		$exp = '<code>monospaced</code>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 
@@ -150,7 +150,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '{DIV(type="tt")}teletype{DIV}';
 		$exp = '<tt>teletype</tt>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -162,22 +162,22 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
 		
 		$inData = '~~#112233:text~~';
 		$exp = '<span style="color:#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~ ,#112233:text~~';
 		$exp = '<span style="background-color:#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~#AABBCC,#112233:text~~';
 		$exp = '<span style="color:#AABBCC; background-color=#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~ #AABBCC , #112233 :text~~';
 		$exp = '<span style="color:#AABBCC; background-color=#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, false);
+		$out = $el->parseToWysiwyg($inData, true);
 		$this->assertEquals($exp, $out);
 	}
 }
