@@ -342,7 +342,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 			}	
 			$script .= "});";
 
-			if ($default && in_array($c, (array) $default)) {
+			if ($default && in_array($c['categId'], (array) $default)) {
 				$element->setAttribute('checked', 'checked');
                 		$script .= "customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 			} 
@@ -380,8 +380,8 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 			$option = $document->createElement('option', $_categpath ? $c['categpath'] : $c['name']); 
 			$option->setAttribute('value', $c['categId']);
 			$element->appendChild($option);
-			if ($default && in_array($c, (array) $default)) {
-				$element->setAttribute('value', $default);
+			if ($default && in_array($c['categId'], (array) $default)) {
+				$option->setAttribute('selected', 'selected');
 				$script .= "customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 			}
 		}
