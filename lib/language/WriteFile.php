@@ -44,11 +44,12 @@ class Language_WriteFile
 		}
 		
 		$this->filePath = $filePath;
+		$tmpFilePath = $this->filePath . '.tmp';
 		
 		$this->translations = $this->getCurrentTranslations();
 		$entries = $this->mergeStringsWithTranslations($strings, $this->translations);
 
-		$handle = fopen($this->filePath, 'w');
+		$handle = fopen($tmpFilePath, 'w');
 		
 		if ($handle) {
 			fwrite($handle, "<?php\n");
@@ -59,9 +60,10 @@ class Language_WriteFile
 			}
 			
 			fwrite($handle, ");\n");
+			fclose($handle);
 		}
 		
-		fclose($handle);
+		rename($tmpFilePath, $this->filePath);	
 	}
 	
 	/**
