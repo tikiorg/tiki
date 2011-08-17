@@ -17,7 +17,8 @@ class Language_WriteFileTest extends TikiTestCase
 	{
 		// setup a mock filesystem 
 		$lang = vfsStream::setup('lang');
-		$lang->addChild(new vfsStreamFile('language.php'));
+		$this->langFile = new vfsStreamFile('language.php');
+		$lang->addChild($this->langFile);
 
 		$this->filePath = vfsStream::url('lang/language.php');
 		
@@ -26,7 +27,9 @@ class Language_WriteFileTest extends TikiTestCase
 
 	public function testWriteStringsToFile_shouldRaiseExceptionForInvalidFile()
 	{
-		$strings = array('string');
+		$string1 = new stdClass;
+		$string1->name = 'First string';
+		$strings = array($string1);
 		$this->setExpectedException('Language_Exception');
 		$this->obj->writeStringsToFile($strings, vfsStream::url('lang/invalidFile'));
 	}
@@ -34,6 +37,16 @@ class Language_WriteFileTest extends TikiTestCase
 	public function testWriteStringsToFile_shouldReturnFalseIfEmptyParam()
 	{
 		$this->assertFalse($this->obj->writeStringsToFile(array(), $this->filePath));
+	}
+	
+	public function testWriteStringsToFile_shouldRaiseExceptionIfFileIsNotWritable()
+	{
+		$string1 = new stdClass;
+		$string1->name = 'First string';
+		$strings = array($string1);
+		$this->langFile->chmod(0444);
+		$this->setExpectedException('Language_Exception');
+		$this->obj->writeStringsToFile($strings, vfsStream::url('lang/language.php'));
 	}
 	
 	public function testWriteStringsToFile_shouldWriteSimpleStrings()

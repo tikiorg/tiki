@@ -3,6 +3,10 @@
 require_once('lib/core/TikiDb.php');
 require_once('Language.php');
 
+/**
+ * Class to update language.php file with new
+ * collected strings.
+ */
 class Language_WriteFile
 {
 	/**
@@ -33,6 +37,10 @@ class Language_WriteFile
 		
 		if (!file_exists($filePath)) {
 			throw new Language_Exception("File $filePath does not exist.");
+		}
+		
+		if (!is_writable($filePath)) {
+			throw new Language_Exception("Can't write to file $filePath.");
 		}
 		
 		$this->filePath = $filePath;
