@@ -187,8 +187,8 @@ function wikiplugin_customsearch($data, $params)
 		customsearch_sort_mode_$id = '$sort_mode';
 		customsearch_offset_$id = $offset;
 		customsearch_maxRecords_$id = $maxRecords; 
-		load_customsearch_$id('');"; 
-
+		$('#customsearch_$id').submit();";
+		
 	$form = '<div id="' . "customsearch_$id" . '_form' . '"><form id="' . "customsearch_$id" . '">' . $matches->getText() . '</form></div>'; 
 
 	$results = '<div id="' . "customsearch_$id" . '_results"></div>';
