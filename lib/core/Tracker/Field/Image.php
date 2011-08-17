@@ -22,6 +22,7 @@ class Tracker_field_Image extends Tracker_Field_File
 			'i' => array(
 				'name' => tr('Image'),
 				'description' => tr('Allow users to upload images on the tracker item.'),
+				'help' => 'Image Tracker Field',
 				'params' => array(
 					'xListSize' => array(
 						'name' => tr('List image width'),

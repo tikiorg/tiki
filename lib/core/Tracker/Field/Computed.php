@@ -19,6 +19,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 			'C' => array(
 				'name' => tr('Computed Field'),
 				'description' => tr('Provides a computed value based on numeric field values.'),
+				'help' => 'Computed Tracker Field',				
 				'params' => array(
 					'formula' => array(
 						'name' => tr('Formula'),

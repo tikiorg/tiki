@@ -19,6 +19,7 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 			'c' => array(
 				'name' => tr('Checkbox'),
 				'description' => tr('Provides a checkbox field for yes/no, on/off input.'),
+				'help' => 'Checkbox Tracker Field',					
 				'params' => array(
 				),
 			),

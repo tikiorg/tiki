@@ -19,6 +19,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 			'w' => array(
 				'name' => tra('Dynamic Items List'),
 				'description' => tra('Dynamically updates a selection list based on linked data from another tracker.'),
+				'help' => 'Dynamic items list',				
 				'params' => array(
 					'trackerId' => array(
 						'name' => tr('Tracker ID'),

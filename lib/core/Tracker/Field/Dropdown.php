@@ -19,6 +19,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			'd' => array(
 				'name' => tr('Drop Down'),
 				'description' => tr('Allows users to select only from a specified set of options'),
+				'help' => 'Drop Down - Radio Tracker Field',					
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),

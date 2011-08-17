@@ -19,6 +19,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			'f' => array(
 				'name' => tr('Date and Time'),
 				'description' => tr('Provides drop-down options to accurately select a date and/or time.'),
+				'help' => 'Date Tracker Field',					
 				'params' => array(
 					'datetime' => array(
 						'name' => tr('Type'),

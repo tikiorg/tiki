@@ -19,6 +19,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			'e' => array(
 				'name' => tr('Category'),
 				'description' => tr('Allows for one or multiple categories under the specified main category to be affected to the tracker item.'),
+				'help' => 'Category Tracker Field',					
 				'params' => array(
 					'parentId' => array(
 						'name' => tr('Parent Category'),
