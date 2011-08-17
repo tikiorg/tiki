@@ -11,6 +11,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>{tr}Features{/tr}{help url="Text+Area"}</legend>
+				{preference name=feature_fullscreen}				
 				{preference name=feature_filegals_manager}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_wiki_replace}
