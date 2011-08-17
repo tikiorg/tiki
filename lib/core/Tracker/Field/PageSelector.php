@@ -20,6 +20,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 			'k' => array(
 				'name' => tr('Page Selector'),
 				'description' => tr('Allows a selection from the list of pages.'),
+				'help' => 'Page selector',
 				'params' => array(
 					'autoassign' => array(
 						'name' => tr('Auto-Assign'),

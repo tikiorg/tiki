@@ -19,6 +19,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			'a' => array(
 				'name' => tr('Text Area'),
 				'description' => tr('Multi-line text input.'),
+				'help' => 'Textarea Tracker Field',				
 				'params' => array(
 					'toolbars' => array(
 						'name' => tr('Toolbars'),

@@ -19,6 +19,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			'U' => array(
 				'name' => tr('User Subscription'),
 				'description' => tr('Allows registered users to subscribe themselves to a tracker item. Think evite.com. The item should ideally only be editable by the creator or administrators. Prepend the maximum amount of subscribers to the field value if such a limit is desired.'),
+				'help' => 'Subscription Tracker Field',
 				'params' => array(
 				),
 			),
