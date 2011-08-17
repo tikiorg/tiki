@@ -20,4 +20,5 @@ $lang = array(
 // "Help on \$admintitle Config" => "Help on \$admintitle Config",
 // "Unused and untranslated" => "Unused and untranslated",
 "Unused and translated" => "Unused and translated", 
+"Congratulations!\n\nYour server can send emails.\n\n" => "Gratulation!\n\nDein Server kann Emails senden.\n\n",
 );

@@ -86,12 +86,14 @@ class Language extends TikiDb_Bridge
 	 * should not apper in english strings.
 	 */
 	public static function removePhpSlashes ($string) {
-		$removePHPslashes = Array ('\n'   => "\n",
-				   '\r'   => "\r",
-				   '\t'   => "\t",
-				   '\\\\' => '\\',
-				   '\$'   => '$',
-				   '\"'   => '"');
+		$removePHPslashes = array(
+			'\n'   => "\n",
+			'\r'   => "\r",
+			'\t'   => "\t",
+			'\\\\' => '\\',
+			'\$'   => '$',
+			'\"'   => '"'
+		);
 	  
 		if (preg_match ('/\{0-7]{1,3}|\x[0-9A-Fa-f]{1,2}/', $string, $match)) {
 			trigger_error ("Octal or hexadecimal string '".$match[1]."' not supported", E_WARNING);

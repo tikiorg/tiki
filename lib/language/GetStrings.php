@@ -189,7 +189,7 @@ class Language_GetStrings
 		if (!$fileExtension || $fileExtension == '.') {
 			throw new Language_Exception('Could not determine file extension.');
 		}
-		
+
 		foreach ($this->fileTypes as $fileType) {
 			if (in_array($fileExtension, $fileType->getExtensions())) {
 				$file = file_get_contents($filePath);
@@ -198,10 +198,18 @@ class Language_GetStrings
 					$file = preg_replace($regex, $replacement, $file);
 				}
 				
-				foreach ($fileType->getRegexes() as $regex) {
+				foreach ($fileType->getRegexes() as $postProcess => $regex) {
 					$matches = array();
 					preg_match_all($regex, $file, $matches);
-					$strings = array_merge($strings, $matches[1]);
+					$newStrings = $matches[1];
+					
+					// $postProcess can be used to call a file type specific method for each regular expression
+					// used for PHP file type to perform different clean up for single quoted and double quoted strings
+					if (method_exists($fileType, $postProcess)) {
+						$newStrings = $fileType->$postProcess($newStrings);
+					}
+					
+					$strings = array_merge($strings, $newStrings);
 				}
 				
 				break;

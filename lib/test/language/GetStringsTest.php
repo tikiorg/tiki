@@ -81,10 +81,23 @@ class Language_GetStringsTest extends TikiTestCase
 		
 		$expectedResult = array('%0 enabled', '%0 disabled', 'Features', 'Enable/disable Tiki features here, but configure them elsewhere',
 			'General', 'General preferences and settings', 'Login', 'User registration, login and authentication', 'Wiki', 'Wiki settings',
-			'Help on $admintitle Config'
+			'Help on $admintitle Config', "Congratulations!\n\nYour server can send emails.\n\n",
 		);
 		
 		$this->assertEquals($expectedResult, $strings);
+	}
+	
+	public function testCollectStrings_shouldCallRegexPostProcessMethodIfOneExists()
+	{
+		$php = $this->getMock('Language_FileType_Php', array('getExtensions', 'getCleanupRegexes', 'singleQuoted', 'doubleQuoted'));
+		$php->expects($this->exactly(2))->method('getExtensions')->will($this->returnValue(array('.php')));
+		$php->expects($this->exactly(1))->method('getCleanupRegexes')->will($this->returnValue(array()));
+		$php->expects($this->exactly(1))->method('singleQuoted')->will($this->returnValue(array(0 => array(), 1 => array())));
+		$php->expects($this->exactly(1))->method('doubleQuoted')->will($this->returnValue(array(0 => array(), 1 => array())));
+		
+		$this->obj->addFileType($php);
+		$this->obj->addFileType(new Language_FileType_Tpl);
+		$this->obj->collectStrings(__DIR__ . '/fixtures/test_collecting_strings.php');
 	}
 	
 	public function testCollectStrings_withFileTypeTpl()

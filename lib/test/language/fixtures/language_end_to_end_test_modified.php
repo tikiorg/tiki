@@ -24,4 +24,5 @@ $lang = array(
 "Wiki" => "Wiki",
 // "Wiki settings" => "Wiki settings",
 // "Help on \$admintitle Config" => "Help on \$admintitle Config",
+"Congratulations!\n\nYour server can send emails.\n\n" => "Gratulation!\n\nDein Server kann Emails senden.\n\n",
 );

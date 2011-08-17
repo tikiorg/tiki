@@ -72,4 +72,5 @@ if (isset($_REQUEST['page'])) {
 	$smarty->assign('description', 'Home Page for Administrators');
 	$smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
 	$smarty->assign('description', $crumbs[0]->description);
+	$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
 }

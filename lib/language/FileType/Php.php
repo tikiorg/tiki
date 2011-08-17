@@ -12,8 +12,8 @@
 class Language_FileType_Php extends Language_FileType
 {
 	protected $regexes = array(
-		'|\Wtra?\s*\(\s*\'(.+?)\'\s*[\),]|s',
-		'|\Wtra?\s*\(\s*"(.+?)"\s*[\),]|s'
+		'singleQuoted' => '|\Wtra?\s*\(\s*\'(.+?)\'\s*[\),]|s', // strings encapsulated with single quotes
+		'doubleQuoted' => '|\Wtra?\s*\(\s*"(.+?)"\s*[\),]|s' // strings encapsulated with double quotes
 	);
 	
 	protected $extensions = array('.php');
@@ -25,4 +25,34 @@ class Language_FileType_Php extends Language_FileType
 		"!^\s*\#.*\$!m" => '', // shell comments
 		'/\Wtra?\s*\((["\'])\1\)/' => '', // remove empty calls to tra() (tra('') or tra(""))
 	);
+	
+	/**
+	 * Post process method for regex that collect single quoted
+	 * strings.
+	 * 
+	 * @param array $strings
+	 * @return array modified $strings array
+	 */
+	public function singleQuoted(array $strings)
+	{
+		return str_replace("\'", "'", $strings);
+	}
+	
+	/**
+	 * Post process method for regex that collect double quoted
+	 * strings.
+	 * 
+	 * @param array $strings
+	 * @return array modified $strings array
+	 */
+	public function doubleQuoted(array $strings)
+	{
+		// Strip the extracted strings from escapes
+		// (these will be reinserted during generation)
+		foreach ($strings as $key => $string) {
+			$strings[$key] = Language::removePhpSlashes($string);
+		}
+		
+		return $strings;
+	}
 }
