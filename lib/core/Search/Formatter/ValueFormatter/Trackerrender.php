@@ -30,6 +30,7 @@ class Search_Formatter_ValueFormatter_Trackerrender implements Search_Formatter_
 			'item' => $item,
 			'field' => $field,
 			'process' => 'y',
+			'search_render' => 'y',
 		)) . '~/np~';
 	}
 }
