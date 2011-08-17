@@ -1315,6 +1315,7 @@ function prefs_feature_list($partial = false) {
 				'feature_blogs',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
