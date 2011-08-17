@@ -203,7 +203,7 @@ class Smarty_Tiki extends Smarty
 	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)  {
 		global $prefs, $lang, $style_base, $tikidomain;
 
-                if (isset($prefs['style']) && isset($style_base)) {
+		if (isset($prefs['style']) && isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
 			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
@@ -215,16 +215,11 @@ class Smarty_Tiki extends Smarty
 
 		$_smarty_cache_id = $lg . $_smarty_cache_id;
 		$_smarty_compile_id = $lg . $_smarty_compile_id;
-		$this->_compile_id = $lg . $_smarty_compile_id; // not pretty but I don't know how to change id for get_compile_path
-		$isCompiled = $this->getCompiledFilepath($_smarty_tpl_file);
-		if (!$isCompiled) {
-			$lgSave = $prefs['language'];
-			$prefs['language'] = $lg;
-		}
+
+		$lgSave = $prefs['language'];
+		$prefs['language'] = $lg;
 		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, null, $_smarty_display);
-		if (!$isCompiled) {
-			$prefs['language'] = $lgSave;
-		}
+		$prefs['language'] = $lgSave; // Restore the language of the user triggering the notification
 
 		return preg_replace("/^[ \t]*/", '', $res);
 	}
