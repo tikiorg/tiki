@@ -227,7 +227,7 @@
 		</tr>
 		<tr id='heading_only2' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td colspan="2">
-				{textarea name="body" rows=$rows cols=$cols id="body"}{$body}{/textarea}
+				{textarea name="body" id="body"}{$body}{/textarea}
 			</td>
 		</tr>
 

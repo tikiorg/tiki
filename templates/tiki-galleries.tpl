@@ -30,7 +30,7 @@
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 				<table class="formcolor">
 					<tr><td>{tr}Name:{/tr}</td><td><input type="text" name="name" value="{$name|escape}"/></td></tr>
-					<tr><td>{tr}Description:{/tr}</td><td><textarea   rows="{$rows}" cols="{$cols}" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
+					<tr><td>{tr}Description:{/tr}</td><td><textarea   rows="20" cols="80" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
 					{if $tiki_p_admin_galleries eq 'y'}
 						<tr><td>{tr}Gallery is visible to non-admin users?{/tr}</td><td><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
 						{* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}

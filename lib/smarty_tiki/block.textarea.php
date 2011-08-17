@@ -226,10 +226,10 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 		if (empty($params['cols'])) {	
 			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
 		} else {
-			$html .= '" cols="'.$params['cols'].'"';
+			$html .= '" cols="'.$params['cols'].'em"';
 		}
 		if (!empty($params['rows'])) {	
-			$html .= ' rows="'.$params['rows'].'"';
+			$html .= ' rows="'.$params['rows'].'em"';
 		}
 		$html .= '>'.htmlspecialchars($content).'</textarea>';
 		
@@ -245,27 +245,24 @@ function CKeditor_OnComplete() {
 		
 		// setup for wiki editor
 		
+		$smarty->assign('comments', $params['comments']);	// jb removed fallback to using _simple here if comments not set 110720
+		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
+		$smarty->assign('toolbar_section', $params['section']);
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
-			if ( $k == 'id' || $k == 'name' || $k == 'class' || $k == '_toolbars' ) {
-				$smarty->assign('textarea_'.$k, $v);
-			} elseif ( $k[0] != '_' ) {
+			if ( $k[0] != '_' && ! in_array( $k, array('comments', 'switcheditor', 'section', 'area_id', 'autosave'))) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';
 			}
 		}
-		if (empty($textarea_id)) { $textarea_id = $params['id']; }
+		if (empty($textarea_id)) { $smarty->assign('textarea_id', $params['id']); }
+		$smarty->assign('textarea__toolbars', $params['_toolbars']);
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
 		$smarty->assignByRef('pagedata', htmlspecialchars($content));
-		$smarty->assign('comments', $params['comments']);	// jb removed fallback to using _simple here if comments not set 110720
-		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
-		$smarty->assign('toolbar_section', $params['section']);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
-		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
-			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
-			."\n".'<input type="hidden" name="wysiwyg" value="n" />';
+		$html .= "\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
 	}	// wiki or wysiwyg
 

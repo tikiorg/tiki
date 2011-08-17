@@ -90,9 +90,7 @@
 	<div id='textarea-toolbar' style='padding:3px; font-size:10px;'>
 		{toolbars area_id='mapdata'}
 	</div>
-	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='{$rows}' wrap='virtual' cols='{$cols}' style='width:99%'>{$pagedata|escape}</textarea>
-	<input type="hidden" name="rows" value="{$rows}"/>
-	<input type="hidden" name="cols" value="{$cols}"/>
+	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='20' wrap='virtual' style='width:99%'>{$pagedata|escape}</textarea>
 	<input type="hidden" name="mapfile" value="{$mapfile}" />
 	<input type="hidden" name="mode" value="{$mode}" />
 </div>

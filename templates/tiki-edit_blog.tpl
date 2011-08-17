@@ -37,7 +37,7 @@
             <label for="blog-desc">{tr}Description{/tr}</label>
           </td>
           <td>
-            <textarea class="wikiedit" name="description" id="blog-desc" rows="{$rows}" cols="{$cols}" wrap="virtual">{$description|escape}</textarea>
+            <textarea class="wikiedit" name="description" id="blog-desc" rows="20" cols="80" wrap="virtual">{$description|escape}</textarea>
           </td>
         </tr>
         <tr class="editblogform">
@@ -142,7 +142,7 @@
 					</tr>
           <tr class="editblogform">
             <td colspan="2">
-              <textarea name="heading" id="blogs-heading" rows='10' cols='{$cols}'>{$heading|escape}</textarea>
+              <textarea name="heading" id="blogs-heading" rows='10' cols='80'>{$heading|escape}</textarea>
             </td>
           </tr>
 
@@ -164,7 +164,7 @@
 					</tr>
           <tr class="editblogform">
             <td colspan="2">
-              <textarea name="post_heading" id="blogs-post_heading" rows='10' cols='{$cols}'>{$post_heading|escape}</textarea>
+              <textarea name="post_heading" id="blogs-post_heading" rows='10' cols='80'>{$post_heading|escape}</textarea>
             </td>
           </tr>
 

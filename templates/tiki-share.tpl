@@ -79,7 +79,7 @@
 				</td>
 	
 				<td>
-					<textarea name="comment" style="width:95%;" rows="10" cols='{$cols}' id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
+					<textarea name="comment" style="width:95%;" rows="10" id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
 				</td>
 			</tr>
 	

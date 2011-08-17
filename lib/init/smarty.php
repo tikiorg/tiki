@@ -346,9 +346,3 @@ if ( $prefs['feature_sefurl_filter'] == 'y' ) {
   require_once ('tiki-sefurl.php');
   $smarty->registerFilter('output','filter_out_sefurl');
 }
-
-// temp assigns for textarea row/cols that used to depend on
-// defunct textareasize thing. These textareas should eventually be
-// converted to use {textarea} object that have the correct defaults already
-$smarty->assign('rows', 20);
-$smarty->assign('cols', 80);

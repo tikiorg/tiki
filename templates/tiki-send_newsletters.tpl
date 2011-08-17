@@ -249,7 +249,7 @@
 						<label for="editwikitxt">{tr}Data Txt:{/tr}</label>
 					</td>
 					<td id="txtcol2" >
-						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+						<textarea id='editwikitxt' name="datatxt" rows="20" cols="80">{$info.datatxt|escape}</textarea>
 					</td>
 				</tr>
 
@@ -266,7 +266,7 @@
 							{tr}Be careful not to paste articles that must not be seen by the recipients{/tr} 
 						{/remarksbox}
 						{/if}
-						<textarea id='articlecliptxt' name="articleClip" rows="{$rows}" cols="{$cols}" readonly="readonly">{$articleClip}</textarea>		
+						<textarea id='articlecliptxt' name="articleClip" rows="20" cols="80" readonly="readonly">{$articleClip}</textarea>
 					</td>
 				</tr>				
 				

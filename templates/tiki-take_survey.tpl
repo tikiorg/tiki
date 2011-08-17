@@ -25,13 +25,13 @@
 				{if $questions[ix].explode.0 > 0}
 					{assign var='textrows' value=$questions[ix].explode.0}
 				{else}
-					{assign var='textrows' value=$rows}
+					{assign var='textrows' value=20}
 				{/if}
 
 				{if $questions[ix].explode.1 > 0}
 					{assign var='textcols' value=$questions[ix].explode.1}
 				{else}
-					{assign var='textcols' value=$cols}
+					{assign var='textcols' value=80}
 				{/if}
 
         <div class="quizoptions">
