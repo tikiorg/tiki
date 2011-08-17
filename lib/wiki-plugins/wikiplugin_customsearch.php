@@ -124,7 +124,14 @@ function wikiplugin_customsearch($data, $params)
 		$name = $match->getName(); 
 		$arguments = $parser->parse($match->getArguments());
 		$fieldid = "customsearch_$id" . "_$k";
-		if (isset($_SESSION["customsearch_$id"][$fieldid])) {
+		if ($arguments['_filter'] == 'content' && !empty($arguments['_field'])) {
+			$filter = $arguments['_field'];
+		} else {
+			$filter = '';
+		}
+		if ( $filter && !empty($_REQUEST['default'][$filter]) ) {
+                        $default = $_REQUEST['default'][$filter];
+                } elseif (isset($_SESSION["customsearch_$id"][$fieldid])) { 
 			$default = $_SESSION["customsearch_$id"][$fieldid]; 
 		} elseif (!empty($arguments['_default'])) {
 			if (strpos($arguments['_default'], ',') !== false) {
