@@ -61,6 +61,11 @@ class Image extends ImageAbstract
 	function _resize($x, $y) {
 		if ($this->data) {
 			$t = imagecreatetruecolor($x, $y);
+			// trick to have a transparent background for png instead of black
+			imagesavealpha($t, true);			
+			$trans_colour = imagecolorallocatealpha($t, 0, 0, 0, 127);
+			imagefill($t, 0, 0, $trans_colour);
+
 			imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
 			$this->data = $t;
 			unset($t);
