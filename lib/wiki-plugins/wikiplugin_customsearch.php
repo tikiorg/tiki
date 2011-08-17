@@ -31,6 +31,18 @@ function wikiplugin_customsearch_info()
 				'filter' => 'text',
 				'default' => '0',
 			),
+			'autosearchdelay' => array(
+				'required' => false,
+				'name' => tra('Delay in milliseconds before automatically triggering search after change (0 disables)'),
+				'filter' => 'digits',
+				'default' => '0',
+			),
+			'searchfadediv' => array(
+				'required' => false,
+				'name' => tra('The ID of the div to fade out when AJAX search is in progress, if required'),
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -48,6 +60,16 @@ function wikiplugin_customsearch($data, $params)
 	} else {
 		$id = '0';
 	}
+	if (isset($params['autosearchdelay'])) {
+		$autosearchdelay = $params['autosearchdelay'];
+	} else {
+		$autosearchdelay = 0;
+	}
+	if (isset($params['searchfadediv'])) {
+		$searchfadediv = $params['searchfadediv'];
+	} else {
+		$searchfadediv = '';
+	}
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
 	} else {
@@ -58,6 +80,12 @@ function wikiplugin_customsearch($data, $params)
         } else {
 		$maxRecords = $prefs['maxRecords']; 
 	}		
+	if (!empty($_REQUEST['sort_mode'])) {
+		$sort_mode = $_REQUEST['sort_mode'];
+	} else {
+		$sort_mode = '';
+	}
+
 	$wikitpl = "tplwiki:" . $params['wiki'];
 	$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
 
@@ -121,13 +149,16 @@ function wikiplugin_customsearch($data, $params)
 			} else {
 				$fieldname = $fieldid;
 			}
-			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script, $groups));
+			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script, $groups, $autosearchdelay));
 		} 
 	}
 
-	$script .= "function load_customsearch_$id" . "(searchdata) { 
-			$('#customsearch_$id" . "_results').modal('Searching...');	
-			var datamap = {basedata: customsearch_$id" . "_basedata,
+	$script .= "function load_customsearch_$id" . "(searchdata) {";
+	if ($autosearchdelay && $searchfadediv) { 
+		$searchfadetext = tr('Searching...');
+		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal('$searchfadetext');";
+	}	
+	$script .= "var datamap = {basedata: customsearch_$id" . "_basedata,
 				adddata: searchdata,
 				searchid: '$id',
 				groups: '" . json_encode($groups) . "',
@@ -137,23 +168,26 @@ function wikiplugin_customsearch($data, $params)
 				maxRecords: customsearch_maxRecords_$id };	
 			if (customsearch_sort_mode_$id) {
 				// blank sort_mode is not allowed by Tiki input filter
-				datamap[sort_mode] = customsearch_sort_mode_$id;
+				datamap['sort_mode'] = customsearch_sort_mode_$id;
 			}
 			$.ajax({
 				type: 'POST',
 				url: 'customsearch_ajax.php',
 				data: datamap, 
 				dataType: 'html',
-				success: function(data){
-					$('#customsearch_$id" . "_results').html(data);
-					$('#customsearch_$id" . "_results').modal();
+				success: function(data){";
+	if ($autosearchdelay && $searchfadediv) {
+		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal();";
+	}
+	$script .= "$('#customsearch_$id" . "_results').html(data); customsearch_quiet_$id = false; 
+		
 				}
 			});
 		};
-		customsearch_sort_mode_$id = '';
+		customsearch_sort_mode_$id = '$sort_mode';
 		customsearch_offset_$id = $offset;
 		customsearch_maxRecords_$id = $maxRecords; 
-		load_customsearch_$id('');";
+		load_customsearch_$id('');"; 
 
 	$form = '<div id="' . "customsearch_$id" . '_form' . '"><form id="' . "customsearch_$id" . '">' . $matches->getText() . '</form></div>'; 
 
@@ -174,7 +208,7 @@ function cs_design_setbasic(&$element, $fieldid, $fieldname, $arguments) {
 	}		
 }
 
-function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups) {
+function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
 	$document = new DOMDocument;
 	$element = $document->createElement('input');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments); 
@@ -193,14 +227,30 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 		$radioreset = '';	
 	}
 
-	$script .= "$('#$fieldid').change(function() {
-			var filter = new Object();
+	$script .= "$('#$fieldid').change(function() {";
+	if ($autosearchdelay) {
+		$script .= "if (typeof(customsearch_timeout_$id)!='undefined') clearTimeout(customsearch_timeout_$id);";
+	}
+	$script .= "var filter = new Object();
 			filter.config = " . json_encode($arguments) . ";
 			filter.name = 'input';
 			filter.value = $val_selector;
 			$radioreset
-			add_customsearch_$id('$fieldid', filter); 
+			add_customsearch_$id('$fieldid', filter);"; 
+	if ($autosearchdelay) {
+		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+	}		
+	$script .= "});";
+
+	if ($autosearchdelay) {
+		// prevent enter from submitting form since the change itself will do so
+		$script .= "$('#$fieldid').keydown(function(event) {
+			if (event.keyCode == '13') {
+				event.preventDefault();
+				return false;
+			}
 		});";
+	} 
 
 	if ($default) {
 		if ($default != 'n' && ($type == 'checkbox' || $type == 'radio')) {
@@ -208,16 +258,16 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 		} else {
 			$element->setAttribute('value', $default);
 		}
-		$script .= 	"$('#$fieldid').trigger('change');";
+		$script .= 	"customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 	} elseif ($type == "hidden") {
-		$script .= 	"$('#$fieldid').trigger('change');";
+		$script .= 	"customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 	}
 	
 	$document->appendChild($element);
 	return $document->saveHTML();
 }
 
-function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups) {
+function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
 	$document = new DOMDocument;
 	extract ($arguments, EXTR_SKIP);
 	if (empty($_group) && ($_style == 'checkbox' || $_style == 'radio')) {
@@ -272,8 +322,11 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 				$radioreset = '';	
 			}
 
-			$script .= "$('#$fieldid').change(function() {
-				if ($(this).is(':checked')) {
+			$script .= "$('#$fieldid').change(function() {";
+			if ($autosearchdelay) {
+				$script .= "if (typeof(customsearch_timeout_$id)!='undefined') clearTimeout(customsearch_timeout_$id);";
+			}
+			$script .= "if ($(this).is(':checked')) {
 					var filter = new Object();
 					filter.config = " . json_encode($arguments) . ";
 					filter.name = 'categories';
@@ -282,12 +335,15 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 					add_customsearch_$id('$fieldid', filter); 
 				} else {
 					remove_customsearch_$id('$fieldid', filter);
-				}
-			});";
+				}";
+			if ($autosearchdelay) {
+				$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+			}	
+			$script .= "});";
 
 			if ($default && in_array($c, (array) $default)) {
 				$element->setAttribute('checked', 'checked');
-                		$script .= "$('#$fieldid').trigger('change');";
+                		$script .= "customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 			} 
 		} 
 	} elseif ($_style == 'select') {
@@ -305,13 +361,19 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 			$option = $document->createElement('option', $label);
 			$element->appendChild($option);
 		} 
-		$script .= "$('#$fieldid').change(function() { 
-			var filter = new Object();
+		$script .= "$('#$fieldid').change(function() {"; 
+		if ($autosearchdelay) {
+			$script .= "if (typeof(customsearch_timeout_$id)!='undefined') clearTimeout(customsearch_timeout_$id);";
+		}
+		$script .= "var filter = new Object();
 			filter.config = " . json_encode($arguments) . ";
 			filter.name = 'categories';
 			filter.value = $(this).val();
-			add_customsearch_$id('$fieldid', filter); 
-		});";
+			add_customsearch_$id('$fieldid', filter);"; 
+		if ($autosearchdelay) {
+			$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+		} 
+		$script .= "});";
 		
 		foreach ($cats as $c) {
 			$option = $document->createElement('option', $_categpath ? $c['categpath'] : $c['name']); 
@@ -319,7 +381,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 			$element->appendChild($option);
 			if ($default && in_array($c, (array) $default)) {
 				$element->setAttribute('value', $default);
-				$script .= "$('#$fieldid').trigger('change');";
+				$script .= "customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 			}
 		}
 	
@@ -329,7 +391,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 	return $document->saveHTML();
 }
 
-function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups) {
+function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
 	$document = new DOMDocument;
 	$element = $document->createElement('select');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
@@ -349,13 +411,19 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 		$element->appendChild($option);
 	}
 
-	$script .= "$('#$fieldid').change(function() {
-			var filter = new Object();
+	$script .= "$('#$fieldid').change(function() {";
+	if ($autosearchdelay) {
+		$script .= "if (typeof(customsearch_timeout_$id)!='undefined') clearTimeout(customsearch_timeout_$id);";
+	}
+	$script .= "var filter = new Object();
 			filter.config = " . json_encode($arguments) . ";
 			filter.name = 'select';
 			filter.value = $(this).val();
-			add_customsearch_$id('$fieldid', filter);
-		});"; 
+			add_customsearch_$id('$fieldid', filter);";
+	if ($autosearchdelay) {
+		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+	} 
+	$script .= "});"; 
 
 	foreach ($options as $k => $opt) {
 		if (!empty($labels[$k])) {
@@ -367,7 +435,7 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 		$option->setAttribute('value', $opt);
 		if ($default && in_array($opt, (array) $default)) {
 			$option->setAttribute('selected', 'selected');
-			$script .= 	"$('#$fieldid').trigger('change');";
+			$script .= "customsearch_quiet_$id = true; $('#$fieldid').trigger('change'); customsearch_quiet_$id = false;";
 		}
 		$element->appendChild($option); 
 	}
