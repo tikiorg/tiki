@@ -46,13 +46,13 @@ class Tracker_Field_Factory
 	private function buildTypeMap($paths)
 	{
 		global $prefs;
-		$cachelib = TikiLib::lib('cache');
 		$cacheKey = 'fieldtypes.' . $prefs['language'];
 		
 		if ($this->getPreCacheTypeMap($cacheKey) == true) {
 			return;
 		}
-		
+
+		$cachelib = TikiLib::lib('cache');
 		if ($data = $cachelib->getSerialized($cacheKey)) {
 			$this->typeMap = $data['typeMap'];
 			$this->infoMap = $data['infoMap'];
