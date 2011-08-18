@@ -11,7 +11,8 @@
  */
 
 
-class EditLibTest extends TikiTestCase {
+class EditLibTest extends TikiTestCase
+{
 	
 	private $dir = '';  // the unmodifed directory
 

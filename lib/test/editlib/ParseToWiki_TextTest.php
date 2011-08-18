@@ -12,7 +12,8 @@
 
 require_once 'lib/wiki/editlib.php';
 
-class EditLib_ParseToWiki_TextTest extends TikiTestCase {
+class EditLib_ParseToWiki_TextTest extends TikiTestCase
+{
 
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib

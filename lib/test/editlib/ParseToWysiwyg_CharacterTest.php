@@ -12,7 +12,8 @@
 
 require_once 'lib/wiki/editlib.php';
 
-class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase {
+class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
+{
 	
 	private $dir = '';  // the unmodifed directory
 	
