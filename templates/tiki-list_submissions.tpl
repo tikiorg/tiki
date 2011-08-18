@@ -100,7 +100,7 @@
 			<td colspan="7">
 				{if $listpages}
 					<p align="left"> {*on the left to have it close to the checkboxes*}
-						{button _text="{tr}Select Duplicates{/tr}" _id="select_dupes_btn"}
+						{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this); return false;"}
 						<label>{tr}Perform action with checked:{/tr}
 							<select name="submit_mult">
 								<option value=""></option>
@@ -108,25 +108,6 @@
 							</select>
 						</label>
 						<input type="submit" value="{tr}OK{/tr}" />
-						{jq}
-$("#select_dupes_btn").click(function(){
-	var $rows = $(this).parents("table:first tr:not(:first)");
-	$rows.each(function( ix, el ){
-		if ($("input:checked", el).length === 0) {
-			var $el = $(el);
-			var line = $el.text();
-			$rows.each(function( ix, el ){
-				if ($el[0] !== el && $("input:checked", el).length === 0) {
-					if (line === $(el).text()) {
-						$(":checkbox:first", el).attr("checked", true);
-					}
-				}
-			});
-		}
-	});
-	return false;
-});
-{/jq}
 					</p>
 				{/if}
 			</td>
