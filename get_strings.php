@@ -89,7 +89,9 @@ function collect_files ($dir)
 				'pear' === $file || 'ckeditor' === $file ||
 				'lang' === $file || 'templates_c' === $file || 'dump'  === $file || 
 				'temp' === $file || 'img' === $file || 'cache' === $file ||
-				'test' === $file || 'codemirror' === $file) {
+				'test' === $file || 'codemirror' === $file || 'svg-edit' === $file ||
+				'mobileesp' === $file || 'html5shim' === $file || 'jquery.s5' === $file ||
+				'jquery.sheet' === $file) {
 			continue;
 		}
 

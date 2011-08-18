@@ -35,9 +35,9 @@ $getStrings->addFileType(new Language_FileType_Tpl);
 // skip the following directories 
 $getStrings->collectFiles->setExcludeDirs(array(
 	'dump' , 'img', 'lang', 'lib/adodb', 'lib/ckeditor',
-	'lib/codemirror', 'lib/core/Zend', 'lib/ezcomponents',
-	'lib/htmlpurifier', 'lib/jquery', 'lib/jscalendar', 'lib/pclzip',
-	'lib/pear', 'lib/phpcas', 'lib/smarty', 'lib/test',	'temp',
+	'lib/codemirror', 'lib/core/Zend', 'lib/ezcomponents', 'lib/html5shim', 
+	'lib/htmlpurifier', 'lib/jquery', 'lib/jquery.s5', 'lib/jquery.sheet', 'lib/jscalendar', 'lib/mobileesp', 'lib/pclzip',
+	'lib/pear', 'lib/phpcas', 'lib/smarty', 'lib/svg-edit', 'lib/test',	'temp',
 	'temp/cache',	'templates_c'
 ));
 
