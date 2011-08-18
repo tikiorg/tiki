@@ -37,7 +37,9 @@ class TrackerQueryLib extends TikiLib
 	 * table so that it is removed once the connection is closed or after the page loads.
 	 */
 	function __construct() {
-		global $tikilib, $tikilib;	
+		global $tikilib, $trklib;
+		$trklib = TikiLib::lib('trk');
+		
 		$tikilib->query("
 		 	DROP TABLE IF EXISTS temp_tracker_field_options;
 			CREATE TEMPORARY TABLE temp_tracker_field_options (
@@ -236,7 +238,7 @@ class TrackerQueryLib extends TikiLib
 		$fields_safe = "";
 		$status_safe = "";
 		$isSearch = false;
-		
+
 		$trackerId = ($byName == true ? $trklib->get_tracker_by_name($tracker) : $tracker);
 		
 		if (empty($trackerId)) return; //if we can't find a tracker, then return
@@ -417,7 +419,7 @@ class TrackerQueryLib extends TikiLib
 	
 	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
 	*/
-	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, $includeTrackerDetails, $desc, $render) {
+	function tracker_query_by_names($tracker, $start = null, $end = null, $itemId = null, $equals = null, $search = null, $fields = null, $status = null, $sort = null, $limit = null, $offset = null, $includeTrackerDetails = null, $desc = null, $render = null) {
 		return $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails, $desc, $render);
 	}
 	
