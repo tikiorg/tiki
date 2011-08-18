@@ -30,7 +30,7 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$access->check_authenticity(tr('Are you sure you want to permanently remove article id %0?', $_REQUEST["remove"]));
+	$access->check_authenticity(tr('Are you sure you want to permanently remove the article with identifier %0?', $_REQUEST["remove"]));
 	$artlib->remove_article($_REQUEST["remove"]);
 }
 if (isset($_REQUEST['submit_mult'])) {
@@ -45,7 +45,7 @@ if (isset($_REQUEST['submit_mult'])) {
 				die;
 			}
 		}
-		$access->check_authenticity(tr('Are you sure you want to permanently remove %0 articles?', count($_REQUEST["checked"])));
+		$access->check_authenticity(tr('Are you sure you want to permanently remove these %0 articles?', count($_REQUEST["checked"])));
 
 		foreach ($_REQUEST["checked"] as $aId) {
 			$artlib->remove_article($aId);

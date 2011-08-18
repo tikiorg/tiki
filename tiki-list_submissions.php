@@ -19,7 +19,7 @@ $auto_query_args = array(
 );
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_submission');
-	$access->check_authenticity(tr('Are you sure you want to permanently remove submited article id %0?', $_REQUEST["remove"]));
+	$access->check_authenticity(tr('Are you sure you want to permanently remove the submitted article with identifier %0?', $_REQUEST["remove"]));
 	$artlib->remove_submission($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["approve"])) {
@@ -30,14 +30,14 @@ if (isset($_REQUEST["approve"])) {
 if (isset($_REQUEST['submit_mult']) && count($_REQUEST["checked"]) > 0) {
 	if ($_REQUEST['submit_mult'] === 'remove_subs') {
 		$access->check_permission('tiki_p_remove_submission');
-		$access->check_authenticity(tr('Are you sure you want to permanently remove %0 submited articles?', count($_REQUEST["checked"])));
+		$access->check_authenticity(tr('Are you sure you want to permanently remove these %0 submitted articles?', count($_REQUEST["checked"])));
 
 		foreach ($_REQUEST["checked"] as $sId) {
 			$artlib->remove_submission($sId);
 		}
 	} else if ($_REQUEST['submit_mult'] === 'approve_subs') {
 		$access->check_permission('tiki_p_approve_submission');
-		$access->check_authenticity(tr('Are you sure you want to approve %0 submited articles?', count($_REQUEST["checked"])));
+		$access->check_authenticity(tr('Are you sure you want to approve these %0 submitted articles?', count($_REQUEST["checked"])));
 
 		foreach ($_REQUEST["checked"] as $sId) {
 			$artlib->approve_submission($sId);
