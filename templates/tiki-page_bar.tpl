@@ -80,8 +80,8 @@
 			{/if}
 
 			{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y'}
-				{capture assign=wiki_discussion_string}{include file='wiki-discussion.tpl'}+[tiki-index.php?page={$page}|{$page}]{/capture}
-				{button _keepall='y' href="tiki-view_forum.php" forumId=$prefs.wiki_forum_id comments_postComment="post" comments_title=$page comments_data=$wiki_discussion_string|escape:"url" comment_topictype="n" _text="{tr}Discuss{/tr}"}
+				{capture assign=wiki_discussion_string}{include file='wiki-discussion.tpl'} [tiki-index.php?page={$page|escape:url}|{$page}]{/capture}
+				{button _keepall='y' href="tiki-view_forum.php" forumId=$prefs.wiki_forum_id comments_postComment="post" comments_title=$page comments_data=$wiki_discussion_string comment_topictype="n" _text="{tr}Discuss{/tr}"}
 			{/if}
 
 			{if $show_page eq 'y'} 
