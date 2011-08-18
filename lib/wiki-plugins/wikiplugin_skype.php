@@ -8,7 +8,7 @@
 function wikiplugin_skype_info() {
 	return array(
 		'name' => tra('Skype'),
-		'documentation' => tra('PluginSkype'),
+		'documentation' => 'PluginSkype',
 		'description' => tra('Clickable Skype link'),
 		'prefs' => array( 'wikiplugin_skype' ),
 		'body' => tra('Name or number to call or chat with.')." ".tra("do not forget to check the tools / options/ privacy / allow my status to be show on the web"),
