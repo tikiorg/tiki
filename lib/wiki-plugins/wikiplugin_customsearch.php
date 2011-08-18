@@ -124,6 +124,11 @@ function wikiplugin_customsearch($data, $params)
 		$name = $match->getName(); 
 		$arguments = $parser->parse($match->getArguments());
 		$fieldid = "customsearch_{$id}_$k";
+		if ($name == 'sort' && !empty($arguments['mode']) && empty($sort_mode)) {
+			$sort_mode = $arguments['mode'];
+			$match->replaceWith('');
+			continue;
+		} 
 		if ($arguments['_filter'] == 'content' && !empty($arguments['_field'])) {
 			$filter = $arguments['_field'];
 		} else {
