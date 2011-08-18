@@ -190,9 +190,69 @@ class EditLib
 	
 	
 	/**
+	 * Utility for walk_and_parse to process p and div tags
+	 * 
+	 * @param bool $isPar True if we process a <p>, false if a <div> 
+	 * @param array $args the attributes of the tag
+	 * @param string $src output string
+	 * @param array $p ['stack'] = closing strings stack
+	 */
+	private function parseParDivTag($isPar, &$args, &$src, &$p) {
+		
+		global $prefs;
+		
+		if (isset($args['style']) || isset($args['align'])) {
+			$tag_name = $isPar ? 'p' : 'div'; // key for the $p[stack]
+			$type = $isPar ? 'type="p", ' : ''; // used for {DIV()}
+			
+			$style = array();
+			$this->parseStyleAttribute($args['style']['value'], $style);
+			
+
+			/*
+		 	* convert 'align' to 'style' definitions
+		    */
+			if (isset($args['align'])) {
+				$style['text-align'] = $args['align']['value']; 
+			} 
+			
+			
+			/*
+			 * process all the defined styles
+			 */
+			foreach (array_keys($style) as $format) {
+				switch ($format) {
+					case 'text-align':
+						if ($style[$format] == 'left') {
+							$src .= "{DIV(${type}align=\"left\")}";
+							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
+						} elseif ($style[$format] == 'center') {
+							if($isPar) {
+								$src .= "{DIV(${type}align=\"center\")}";
+								$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
+							} else {
+								$markup = ($prefs['feature_use_three_colon_centertag'] == 'y') ? ':::' : '::';
+								$src .= $markup;
+								$p['stack'][] = array('tag' => $tag_name, 'string' => $markup);
+							}
+						} elseif ($style[$format] == 'right') {
+							$src .= "{DIV(${type}align=\"right\")}";
+							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
+						} elseif ($style[$format] == 'justify') {
+							$src .= "{DIV(${type}align=\"justify\")}";
+							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
+						} 
+						break;
+				} // switch format
+			} // foreach style
+		}
+	}
+	
+	
+	/**
 	 * Utility for walk_and_parse to process span arguments
 	 * 
-	 * @param array $args the arguments of the span
+	 * @param array $args the attributes of the span
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
@@ -475,6 +535,8 @@ class EditLib
 						
 					}
 					
+					$isPar = false; // assuming "div" when calling parseParDivTag()
+					
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
 						case "meta": $c[$i]["content"] = ''; break;
@@ -483,9 +545,18 @@ class EditLib
 						case "br": $src .= "\n"; break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
-						case "p":
+						case "p": $isPar = true;
 						case "div": // Wiki parsing creates divs for center
-							if(isset($c[$i]['pars']['style']['value'])) {
+							
+							// if(isset($c[$i]['pars']['style']['value'])) {
+							if(isset($c[$i]['pars'])) {
+								
+								$this->parseParDivTag($isPar, $c[$i]['pars'], $src, $p);
+
+								
+								/*
+								 * deactivated by mauriz, will be replaced by the method call above
+								 * 
 								if ( strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
 									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 										$src .= $this->startNewLine($src) .":::";
@@ -498,6 +569,8 @@ class EditLib
 										$src .= $this->startNewLine($src) .'{DIV(type="p",align="right")}';
 										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "{DIV}\n\n");
 								}
+								*/
+								
 							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
