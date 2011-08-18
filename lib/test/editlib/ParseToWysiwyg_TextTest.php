@@ -10,7 +10,8 @@
  *
  */
 
-class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase {
+class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase 
+{
 	
 private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
@@ -34,35 +35,45 @@ private $dir = '';  // the unmodifed directory
 	
 	
 	/**
-	 * Align blocks
-	 * 
-	 * - left
-	 * - center
-	 * - right
-	 * - justify
+	 * Align divs 'left'
 	 */
-	function testBlockAlignement() {
+	function testBlockAlignLeft() {
 		global $prefs;
 		
 		$this->markTestIncomplete('Work in progress.');
 
-		/*
-		 * left
-		 */
 		$ex = 'This text is aligned left';
 		
+		
+		/*
+		 * default
+		 */
 		$inData = 'This text is aligned left';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
 		
+		
+		/*
+		 * explicit
+		 */
 		$ex = '<div style="text-align: left;">This text is aligned left</div>';
 		$inData = '{DIV(align="left")}This text is aligned left{DIV}';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
+	}
+	
+	
+	/**
+	 * Align divs 'center'
+	 */
+	function testBlockAlignCentered() {
+		global $prefs;
+		
+		$this->markTestIncomplete('Work in progress.');
 
-
+		
 		/*
-		 * center
+		 * two colon
 		 */
 		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$ex = '<div style="text-align: center;">This text is centered</div>';
@@ -70,78 +81,100 @@ private $dir = '';  // the unmodifed directory
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
 
+		
+		/*
+		 * three colon
+		 */
 		$prefs['feature_use_three_colon_centertag'] = 'y';
 		$ex = '<div style="text-align: center;">This text is centered</div>';
 		$inData = ':::This text is centered:::';
-		$out = $this->el->parseToWysiwyg($inData, true);
-		$this->assertEquals($ex, $out);
-		
-		
-		/*
-		 * right
-		 */
-		$ex = '<div style="text-align: right;">This text is aligned right</div>';
-		$inData = '{DIV(align="right")}This text is aligned right{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
-		$this->assertEquals($ex, $out);
-		
-		
-		/*
-		 * justify
-		 */
-		$ex = '<div style="text-align: justify;">This text is justified</div>';
-		$inData = '{DIV(align="justify")}This text is justified{DIV}';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
 	}
 	
 	
 	/**
-	 * Align paragraphs
-	 * 
-	 * - left
-	 * - center
-	 * - right
-	 * - justify
+	 * Align divs 'right'
+	 */
+	function testBlockAlignRight() {
+		global $prefs;
+		
+		$this->markTestIncomplete('Work in progress.');
+
+		$ex = '<div style="text-align: right;">This text is aligned right</div>';
+		$inData = '{DIV(align="right")}This text is aligned right{DIV}';
+		$out = $this->el->parseToWysiwyg($inData, true);
+		$this->assertEquals($ex, $out);
+	}
+	
+	
+	/**
+	 * Align divs 'justify'
+	 */
+	function testBlockAlignJustified() {
+		global $prefs;
+		
+		$this->markTestIncomplete('Work in progress.');
+
+		$ex = '<div style="text-align: justify;">This text is justified</div>';
+		$inData = '{DIV(align="justify")}This text is justified{DIV}';
+		$out = $this->el->parseToWysiwyg($inData, true);
+		$this->assertEquals($ex, $out);
+	}
+		
+	
+	/**
+	 * Align paragraphs 'left'
 	 */	
-	function testParagraphAlignement() {
+	function testParagraphAlignLeft() {
 		
 		$this->markTestIncomplete('Work in progress.');
 		
-		
-		/*
-		 * left
-		 */
 		$ex = '<p style="text-align: left;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="left")}This text is aligned{DIV}';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
-
+	}	
+	
+	
+	/**
+	 * Align paragraphs 'center'
+	 */	
+	function testParagraphAlignCentered() {
 		
-		/*
-		 * center
-		 */
+		$this->markTestIncomplete('Work in progress.');
+		
 		$ex = '<p style="text-align: center;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="center")}This text is aligned{DIV}';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
-
+	}		
+	
+	
+	/**
+	 * Align paragraphs 'right'
+	 */	
+	function testParagraphAlignRight() {
 		
-		/*
-		 * right
-		 */
+		$this->markTestIncomplete('Work in progress.');
+		
 		$ex = '<p style="text-align: right;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="right")}This text is aligned{DIV}';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
+	}	
+
+	
+	/**
+	 * Align paragraphs 'justify'
+	 */	
+	function testParagraphAlignJustified() {
 		
+		$this->markTestIncomplete('Work in progress.');
 		
-		/*
-		 * justify
-		 */
 		$ex = '<p style="text-align: justify;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="justify")}This text is aligned{DIV}';
 		$out = $this->el->parseToWysiwyg($inData, true);
 		$this->assertEquals($ex, $out);
-	}	
+	}		
 }

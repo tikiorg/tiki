@@ -37,19 +37,13 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	
 	
 	/**
-	 * Align blocks
-	 * 
-	 * - left
-	 * - center
-	 * - right
-	 * - justify
+	 * Align Divs 'left'
 	 */
-	function testBlockAlignement() {
+	function testBlockAlignLeft() {
 		global $prefs;
-		
 
 		/*
-		 * left
+		 * default
 		 */
 		$ex = 'This text is aligned left';
 		
@@ -57,18 +51,31 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 				
+
+		/*
+		 * explicit
+		 */
 		$ex = '{DIV(align="left")}This text is aligned left{DIV}';
 		
 		$inData = '<div style="text-align: left;">This text is aligned left</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
+
 		$inData = '<div align="left">This text is aligned left</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-
+	}
+	
+	
+	/**
+	 * Align Divs 'center'
+	 */
+	function testBlockAlignCentered() {
+		global $prefs;
+		
 
 		/*
-		 * center
+		 * two colon
 		 */
 		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$ex = '::This text is centered::';
@@ -80,6 +87,10 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 
+		
+		/*
+		 * three colon
+		 */
 		$prefs['feature_use_three_colon_centertag'] = 'y';
 		$ex = ':::This text is centered:::';
 		
@@ -89,97 +100,165 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<div align="center">This text is centered</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
+	}
+	
+	
+	/**
+	 * Align Divs 'right'
+	 */
+	function testBlockAlignRight() {
+		global $prefs;
 		
-		
-		/*
-		 * right
-		 */
 		$ex = '{DIV(align="right")}This text is aligned right{DIV}';
 
+		
+		/*
+		 * style
+		 */
 		$inData = '<div style="text-align: right;">This text is aligned right</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		$inData = '<div align="right">This text is aligned right</div>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
 		
 		
 		/*
-		 * justify
+		 * align
 		 */
-		$ex = '{DIV(align="justify")}This text is justified{DIV}';
-		
-		$inData = '<div style="text-align: justify;">This text is justified</div>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		$inData = '<div align="justify">This text is justified</div>';
+		$inData = '<div align="right">This text is aligned right</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 	}
 	
 	
 	/**
-	 * Align paragraphs
-	 * 
-	 * - left
-	 * - center
-	 * - right
-	 * - justify
-	 */	
-	function testParagraphAlignement() {
+	 * Align Divs 'justify'
+	 */
+	function testBlockAlignJustified() {
+		global $prefs;
 		
-		$this->markTestIncomplete('Work in progress.');
-		
+		$ex = '{DIV(align="justify")}This text is justified{DIV}';
+
 		
 		/*
-		 * left
+		 * style
 		 */
-		$ex = '{DIV(type="p", align="left")}This text is aligned{DIV}';
-		
-		$inData = '<p style="text-align: left;">This text is aligned</p>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		$inData = '<p align="left">This text is aligned</p>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		
-				
-		/*
-		 * center
-		 */
-		$ex = '{DIV(type="p", align="center")}This text is aligned{DIV}';
-		
-		$inData = '<p style="text-align: center;">This text is aligned</p>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		$inData = '<p align="center">This text is aligned</p>';
+		$inData = '<div style="text-align: justify;">This text is justified</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 		
 		
 		/*
-		 * right
+		 * align
 		 */
-		$ex = '{DIV(type="p", align="right")}This text is aligned{DIV}';
-		
-		$inData = '<p style="text-align: right;">This text is aligned</p>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		$inData = '<p align="right">This text is aligned</p>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		
-		
-		/*
-		 * justify
-		 */
-		$ex = '{DIV(type="p", align="justify")}This text is aligned{DIV}';
-		
-		$inData = '<p style="text-align: justify;">This text is aligned</p>';
-		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);
-		$inData = '<p align="justify">This text is aligned</p>';
+		$inData = '<div align="justify">This text is justified</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 	}
+	
+	
+	
+	/**
+	 * Align paragraphs 'left'
+	 */	
+	function testParagraphAlignLeft() {
+		
+//		$this->markTestIncomplete('Work in progress.');
+
+		$ex = '{DIV(type="p", align="left")}This text is aligned{DIV}';
+		
+		
+		/*
+		 * style
+		 */
+		$inData = '<p style="text-align: left;">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * align
+		 */
+		$inData = '<p align="left">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+	}
+	
+	
+	/**
+	 * Align paragraphs 'center'
+	 */	
+	function testParagraphAlignCentered() {
+		
+//		$this->markTestIncomplete('Work in progress.');
+		
+		$ex = '{DIV(type="p", align="center")}This text is aligned{DIV}';
+
+		/*
+		 * style
+		 */
+		$inData = '<p style="text-align: center;">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * align
+		 */
+		$inData = '<p align="center">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+	}	
+	
+
+	/**
+	 * Align paragraphs 'right'
+	 */	
+	function testParagraphAlignRight() {
+		
+//		$this->markTestIncomplete('Work in progress.');
+
+		$ex = '{DIV(type="p", align="right")}This text is aligned{DIV}';
+		
+		
+		/*
+		 * style
+		 */
+		$inData = '<p style="text-align: right;">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * align
+		 */
+		$inData = '<p align="right">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+	}	
+	
+	
+	/**
+	 * Align paragraphs 'justified'
+	 */	
+	function testParagraphAlignJustified() {
+		
+//		$this->markTestIncomplete('Work in progress.');
+		
+		$ex = '{DIV(type="p", align="justify")}This text is aligned{DIV}';
+
+		
+		/*
+		 * style
+		 */
+		$inData = '<p style="text-align: justify;">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * align
+		 */
+		$inData = '<p align="justify">This text is aligned</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+	}	
 }
