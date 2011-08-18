@@ -43,6 +43,17 @@ function wikiplugin_customsearch_info()
 				'filter' => 'text',
 				'default' => '',
 			),
+			'recalllastsearch' => array(
+				'required' => false,
+				'name' => tra('Return users to same search parameters on coming back to the search page after leaving'),
+				'description' => tra('In the same session, return users to same search parameters on coming back to the search page after leaving'),	
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
+				),
+				'filter' => 'digits',
+				'default' => '0',
+			),
 		),
 	);
 }
@@ -59,6 +70,11 @@ function wikiplugin_customsearch($data, $params)
 		$id = preg_replace('/[^a-zA-Z0-9]/', '', $params['id']);
 	} else {
 		$id = '0';
+	}
+	if (isset($params['recalllastsearch']) && $params['recalllastsearch'] == 1) {
+		$recalllastsearch = 1;
+	} else {
+		$recalllastsearch = 0;
 	}
 	if (isset($params['autosearchdelay'])) {
 		$autosearchdelay = $params['autosearchdelay'];
@@ -77,14 +93,14 @@ function wikiplugin_customsearch($data, $params)
 	} 
 	if (isset($_REQUEST['maxRecords'])) {
 		$maxRecords = $_REQUEST['maxRecords'];
-        } elseif (!empty($_SESSION["customsearch_$id"]['maxRecords'])) {
+        } elseif ($recalllastsearch && !empty($_SESSION["customsearch_$id"]['maxRecords'])) {
 		$maxRecords = $_SESSION["customsearch_$id"]['maxRecords'];
 	} else {
 		$maxRecords = $prefs['maxRecords']; 
 	}		
 	if (!empty($_REQUEST['sort_mode'])) {
 		$sort_mode = $_REQUEST['sort_mode'];
-	} elseif (!empty($_SESSION["customsearch_$id"]['sort_mode'])) {
+	} elseif ($recalllastsearch && !empty($_SESSION["customsearch_$id"]['sort_mode'])) {
 		$sort_mode = $_SESSION["customsearch_$id"]['sort_mode'];
 	} else {
 		$sort_mode = '';
@@ -104,7 +120,7 @@ function wikiplugin_customsearch($data, $params)
 	$_SESSION[$sessionprint] = $fingerprint;
 
 	// important that offset from session is set after fingerprint check otherwise blank page might show
-	if (!$offset && !empty($_SESSION["customsearch_$id"]["offset"])) {
+	if ($recalllastsearch && !$offset && !empty($_SESSION["customsearch_$id"]["offset"])) {
 		$offset = $_SESSION["customsearch_$id"]["offset"];
 	}
 	
@@ -145,7 +161,7 @@ function wikiplugin_customsearch($data, $params)
 		}
 		if ( $filter && !empty($_REQUEST['default'][$filter]) ) {
                         $default = $_REQUEST['default'][$filter];
-                } elseif (isset($_SESSION["customsearch_$id"][$fieldid])) { 
+                } elseif ($recalllastsearch && isset($_SESSION["customsearch_$id"][$fieldid])) { 
 			$default = $_SESSION["customsearch_$id"][$fieldid]; 
 		} elseif (!empty($arguments['_default'])) {
 			if (strpos($arguments['_default'], ',') !== false) {
