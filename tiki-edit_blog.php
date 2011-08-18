@@ -91,13 +91,10 @@ if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["heading"]);
 } elseif (!isset($data["heading"])) {
-	$n = $smarty->get_filename('blog_heading.tpl', 'r');
-	@$fp = fopen($n, 'r');
-	if ($fp) {
-		$heading = fread($fp, filesize($n));
-		@fclose($fp);
-	} else
+	$heading = file_get_contents($smarty->get_filename('blog_heading.tpl'));
+	if (!$heading) {
 		$heading = '';
+	} 
 } else {
 	$heading = $data["heading"];
 }
@@ -106,13 +103,10 @@ if (isset($_REQUEST["post_heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$post_heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["post_heading"]);
 } elseif (!isset($data["post_heading"])) {
-	$n = $smarty->get_filename('blog_post_heading.tpl', 'r');
-	@$fp = fopen($n, 'r');
-	if ($fp) {
-		$post_heading = fread($fp, filesize($n));
-		@fclose($fp);
-	} else
+	$post_heading = file_get_contents($smarty->get_filename('blog_post_heading.tpl'));
+	if (!$post_heading) {
 		$post_heading = '';
+	} 
 } else {
 	$post_heading = $data["post_heading"];
 }
