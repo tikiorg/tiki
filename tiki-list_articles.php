@@ -31,8 +31,27 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$access->check_authenticity();
+	$access->check_authenticity(tr('Are you sure you want to permanently remove article id %0?', $_REQUEST["remove"]));
 	$artlib->remove_article($_REQUEST["remove"]);
+}
+if (isset($_REQUEST['submit_mult'])) {
+	if ($_REQUEST['submit_mult'] === 'remove_articles' && count($_REQUEST["checked"]) > 0) {
+		foreach ($_REQUEST["checked"] as $aId) {
+			$artperms = Perms::get( array( 'type' => 'article', 'object' => $aId ) );
+
+			if ($artperms->remove_article != 'y') {
+				$smarty->assign('errortype', 401);
+				$smarty->assign('msg', tra("You do not have permission to remove articles"));
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
+		$access->check_authenticity(tr('Are you sure you want to permanently remove %0 articles?', count($_REQUEST["checked"])));
+
+		foreach ($_REQUEST["checked"] as $aId) {
+			$artlib->remove_article($aId);
+		}
+	}
 }
 // This script can receive the thresold
 // for the information as the number of
