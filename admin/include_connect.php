@@ -15,6 +15,17 @@ if (isset($_REQUEST["connectcomprefs"])) {
 }
 ask_ticket('admin-inc-connect');
 
-global $userlib;
-$smarty->assign('def_admin_email', $userlib->get_admin_email());
-$smarty->assign('def_loc', $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' .$prefs['gmap_defaultz']);
+global $userlib, $prefs, $base_url, $headerlib, $smarty;
+
+if (empty($prefs['connect_site_title'])) {
+	$defaults = array(
+		'connect_site_title' => $prefs['browsertitle'],
+		'connect_site_email' => $userlib->get_admin_email(),
+		'connect_site_url' => $base_url,
+		'connect_site_keywords' => $prefs['metatag_keywords'],
+		'connect_site_location' => $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' .$prefs['gmap_defaultz'],
+	);
+	$smarty->assign('connect_defaults_json', json_encode($defaults));
+} else {
+	$smarty->assign('connect_defaults_json', '');
+}
