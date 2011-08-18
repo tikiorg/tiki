@@ -261,7 +261,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		$smarty->assign('context', $context);
 		$smarty->assign('item', $this->getItemData());
 
-		return $smarty->fetch($file);
+		return $smarty->fetch($file, $file);
+		//return $smarty->fetch($file);
 	}
 }
 
