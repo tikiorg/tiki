@@ -21,9 +21,11 @@ class Language_CollectFilesTest extends TikiTestCase
 	}
 	
 	public function testSetExcludeDirsAndGetExcludeDir_shouldSetProperty() {
-		$dirs = array(__DIR__ . '/fixtures');
+		$dir = 'language/fixtures';
+		$dirs = array($dir);
+		$expectedResult = array(getcwd() . '/' . $dir);
 		$this->obj->setExcludeDirs($dirs);
-		$this->assertEquals($dirs, $this->obj->getExcludeDirs());
+		$this->assertEquals($expectedResult, $this->obj->getExcludeDirs());
 	}
 	
 	public function testIncludeFilesDirs_shouldRaiseExceptionForInvalidFile() {

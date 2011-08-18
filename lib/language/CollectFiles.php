@@ -40,10 +40,16 @@ class Language_CollectFiles
 	 */
 	public function setExcludeDirs(array $excludeDirs)
 	{
-		foreach ($excludeDirs as $dir) {
+		$cwd = getcwd() . '/';
+		
+		foreach ($excludeDirs as $key => $dir) {
+			$dir = $cwd . $dir;
+			
 			if (!is_dir($dir)) {
 				throw new Language_Exception("Dir $dir does not exist");
 			}
+			
+			$excludeDirs[$key] = $dir;
 		}
 		
 		$this->excludeDirs = $excludeDirs;
@@ -132,7 +138,7 @@ class Language_CollectFiles
 			}
 	
 			$path = $dir . '/' . $file;
-			
+
 			if (in_array($path, $this->getExcludeDirs())) {
 				continue;
 			}

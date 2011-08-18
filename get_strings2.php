@@ -34,11 +34,11 @@ $getStrings->addFileType(new Language_FileType_Tpl);
 
 // skip the following directories 
 $getStrings->collectFiles->setExcludeDirs(array(
-	'./dump' , './img', './lang', './lib/adodb', './lib/ckeditor',
-	'./lib/codemirror', './lib/core/Zend', './lib/ezcomponents',
-	'./lib/htmlpurifier', './lib/jquery', './lib/jscalendar', './lib/pclzip',
-	'./lib/pear', './lib/phpcas', './lib/smarty', './lib/test',	'./temp',
-	'./temp/cache',	'./templates_c'
+	'dump' , 'img', 'lang', 'lib/adodb', 'lib/ckeditor',
+	'lib/codemirror', 'lib/core/Zend', 'lib/ezcomponents',
+	'lib/htmlpurifier', 'lib/jquery', 'lib/jscalendar', 'lib/pclzip',
+	'lib/pear', 'lib/phpcas', 'lib/smarty', 'lib/test',	'temp',
+	'temp/cache',	'templates_c'
 ));
 
 // manually add the following files from skipped directories
