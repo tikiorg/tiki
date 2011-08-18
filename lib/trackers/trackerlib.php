@@ -3562,15 +3562,24 @@ class TrackerLib extends TikiLib
 		return $fields;
 	}
 	
-	function get_field_handler($field, $item = array())
+	function get_field_handler($field, $item = array(), $refresh = false)
 	{
 		$trackerId = (int) $field['trackerId'];
-
-		$definition = Tracker_Definition::get($trackerId);
-
-		$factory = new Tracker_Field_Factory($definition);
-
-		return $factory->getHandler($field, $item);
+		
+		//The bit below adds definition to self to cut down on creation of news on larger data sets
+		if (empty($this->trackerDefinition)) {
+			$this->trackerDefinition = array();
+		}
+		
+		if (empty($this->trackerDefinition[$trackerId]) || $refresh == true) {
+			$this->trackerDefinition[$trackerId] = Tracker_Definition::get($trackerId);
+		}
+		
+		if (empty($this->trackerDefinition[$trackerId]->trackerFieldFactory) || $refresh == true) {
+			$this->trackerDefinition[$trackerId]->trackerFieldFactory = new Tracker_Field_Factory($this->trackerDefinition[$trackerId]);
+		}
+		
+		return $this->trackerDefinition[$trackerId]->trackerFieldFactory->getHandler($field, $item);
 	}
 
 	function get_field_value($field, $item)
