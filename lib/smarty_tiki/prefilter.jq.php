@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * @param $source from smarty (raw)
  * @return unknown_type
  * 
- * Doesn't check $prefs['feature_jquery'] here as prefilter only loaded if enabled (in js_detect.php)
+ * Doesn't check $prefs['feature_jquery'] here as prefilter only loaded if enabled (in lib/setup/javascript.php)
  */
 
 function smarty_prefilter_jq($source) {
