@@ -17,7 +17,7 @@ function module_search_wiki_page_info() {
 		'description' => tra('Search for a wiki page by name.'),
 		'prefs' => array('feature_wiki'),
 		'params' => array(
-			'exact_match' => array(
+			'exact' => array(
 				'name' => tra('Exact Match'),
 				'description' => tra('Exact match checkbox checked by default if set to "y".') . " " . tr('Default: "n".'),
 				'filter' => 'alpha'
@@ -27,6 +27,5 @@ function module_search_wiki_page_info() {
 }
 
 function module_search_wiki_page( $mod_reference, $module_params ) {
-	global $smarty;
-	$smarty->assign('exact_match', isset($module_params['exact_match']) ? $module_params['exact_match'] : 'n');
+
 }
