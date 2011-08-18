@@ -1133,8 +1133,8 @@ class ArtLib extends TikiLib
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			if (empty($mid)) $mid = ' where ';
-			$mid .= ' (`title` like ? or `heading` like ? or `body` like ?) ';
-			$bindvars = array($findesc, $findesc, $findesc);
+			$mid .= " (`title` like ? or `heading` like ? or `body` like ? or `author` like ? or `authorName` like ?) ";
+			$bindvars = array($findesc, $findesc, $findesc, $findesc, $findesc);
 		}
 
 		// type=>[!]a+b+c+d+...
@@ -1355,8 +1355,8 @@ class ArtLib extends TikiLib
 	{
 		if ($find) {
 			$findPattern = '%' . $find . '%';
-			$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
-			$bindvars = array($findPattern, $findPattern, $findPattern);
+			$mid = " where (`title` like ? or `heading` like ? or `body` like ? or `author` like ? or `authorName` like ?) ";
+			$bindvars = array($findPattern, $findPattern, $findPattern, $findPattern, $findPattern);
 		} else {
 			$mid = '';
 			$bindvars = array();

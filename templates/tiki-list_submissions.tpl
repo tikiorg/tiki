@@ -13,11 +13,13 @@
 	<table class="normal">
 		{assign var=numbercol value=0}
 		<tr>
-			<th class="auto">
-				{if $listpages}
-				   {select_all checkbox_names='checked[]'}
-				{/if}
-			</th>
+			{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
+				<th class="auto">
+					{if $listpages}
+					   {select_all checkbox_names='checked[]'}
+					{/if}
+				</th>
+			{/if}
 			{if $prefs.art_list_title eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
 				<th>
@@ -52,15 +54,23 @@
 					<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a>
 				</th>
 			{/if}
+			{if $prefs.art_list_authorName eq 'y'}
+				{assign var=numbercol value=$numbercol+1}
+				<th>
+					<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}Author{/tr}</a>
+				</th>
+			{/if}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}Action{/tr}</th>
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=changes loop=$listpages}
 			<tr class="{cycle}">
-				<td class="checkbox">
-					<input type="checkbox" name="checked[]" value="{$listpages[changes].subId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/>
-				</td>
+				{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
+					<td class="checkbox">
+						<input type="checkbox" name="checked[]" value="{$listpages[changes].subId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/>
+					</td>
+				{/if}
 				{if $prefs.art_list_title eq 'y'}
 					<td class="text">
 						<a class="link" title="{$listpages[changes].title|escape}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}</a>
@@ -79,7 +89,10 @@
 					<td class="text">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 				{/if}
 				{if $prefs.art_list_author eq 'y'}
-					<td class="text">{$listpages[changes].author|escape}</td>
+						<td class="text">{$listpages[changes].author|escape}</td>
+					{/if}
+				{if $prefs.art_list_authorName eq 'y'}
+						<td class="text">{$listpages[changes].authorName|escape}</td>
 				{/if}
 				<td class="action">
 					{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
@@ -96,22 +109,27 @@
 		{sectionelse}
 			{norecords _colspan=$numbercol}
 		{/section}
-		<tr>
-			<td colspan="7">
-				{if $listpages}
-					<p align="left"> {*on the left to have it close to the checkboxes*}
-						{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this); return false;"}
-						<label>{tr}Perform action with checked:{/tr}
-							<select name="submit_mult">
-								<option value=""></option>
-								<option value="remove_subs" >{tr}Remove{/tr}</option>
-							</select>
-						</label>
-						<input type="submit" value="{tr}OK{/tr}" />
-					</p>
-				{/if}
-			</td>
-		</tr>
+		{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
+			<tr>
+				<td colspan="7">
+					{if $listpages}
+						<p align="left"> {*on the left to have it close to the checkboxes*}
+							{if $tiki_p_remove_submission eq 'y'}
+								{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this); return false;"}
+							{/if}
+							<label>{tr}Perform action with checked:{/tr}
+								<select name="submit_mult">
+									<option value=""></option>
+									{if $tiki_p_remove_submission eq 'y'}<option value="remove_subs" >{tr}Remove{/tr}</option>{/if}
+									{if $tiki_p_approve_submission eq 'y'}<option value="approve_subs" >{tr}Approve{/tr}</option>{/if}
+								</select>
+							</label>
+							<input type="submit" value="{tr}OK{/tr}" />
+						</p>
+					{/if}
+				</td>
+			</tr>
+		{/if}
 	</table>
 	{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
 <form>

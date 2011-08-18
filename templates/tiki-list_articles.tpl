@@ -65,7 +65,11 @@
 			{/if}
 			{if $prefs.art_list_author eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
-				<th>{self_link _sort_arg='sort_mode' _sort_field='authorName'}{tr}AuthorName{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg='sort_mode' _sort_field='author'}{tr}User{/tr}{/self_link}</th>
+			{/if}
+			{if $prefs.art_list_authorName eq 'y'}
+				{assign var=numbercol value=$numbercol+1}
+				<th>{self_link _sort_arg='sort_mode' _sort_field='authorName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
 			{if $prefs.art_list_rating eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
@@ -130,6 +134,9 @@
 					<td class="text">{tr}{$listpages[changes].lang}{/tr}</td>
 				{/if}
 				{if $prefs.art_list_author eq 'y'}
+					<td class="text">{$listpages[changes].author|escape}</td>
+				{/if}
+				{if $prefs.art_list_authorName eq 'y'}
 					<td class="text">{$listpages[changes].authorName|escape}</td>
 				{/if}
 				{if $prefs.art_list_rating eq 'y'}
