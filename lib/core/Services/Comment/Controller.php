@@ -367,7 +367,7 @@ class Services_Comment_Controller
 				return false;
 			}
 
-			if ($prefs['wiki_comments_allowed_per_page'] == 'y') {
+			if ($prefs['wiki_comments_allow_per_page'] == 'y') {
 				$info = TikiLib::lib('tiki')->get_page_info($objectId);
 				if (! empty($info['comments_enabled'])) {
 					return $info['comments_enabled'] == 'y';

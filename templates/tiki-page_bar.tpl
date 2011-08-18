@@ -89,7 +89,7 @@
 				{* don't show comments if feature disabled or not enough rights *}
 
 				{if $prefs.feature_wiki_comments == 'y'
-					&& ($prefs.wiki_comments_allowed_per_page neq 'y' or $info.comments_enabled eq 'y')
+					&& ($prefs.wiki_comments_allow_per_page neq 'y' or $info.comments_enabled eq 'y')
 					&& $tiki_p_wiki_view_comments == 'y'
 					&& (($tiki_p_read_comments == 'y'
 					&& $comments_cant != 0)
