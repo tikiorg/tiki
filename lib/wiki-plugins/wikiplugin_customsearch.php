@@ -102,6 +102,11 @@ function wikiplugin_customsearch($data, $params)
 		unset($_SESSION["customsearch_$id"]);
 	} 
 	$_SESSION[$sessionprint] = $fingerprint;
+
+	// important that offset from session is set after fingerprint check otherwise blank page might show
+	if (!$offset && !empty($_SESSION["customsearch_$id"]["offset"])) {
+		$offset = $_SESSION["customsearch_$id"]["offset"];
+	}
 	
 	$groups = array();
 	$textrangegroups = array();
@@ -116,7 +121,7 @@ function wikiplugin_customsearch($data, $params)
 		customsearch_{$id}_searchdata = new Object();
 		customsearch_{$id}_basedata = '" . json_encode((string) $data) . "';
 		$('#customsearch_$id').click(function() {
-			// reset offset on reclick of submit button
+			// reset offset on reclick of form since new search should always start from 0 offset 
 			customsearch_offset_$id = 0;
 		});
 		$('#customsearch_$id').submit(function() {

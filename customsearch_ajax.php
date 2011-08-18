@@ -55,6 +55,9 @@ if (isset($_POST['adddata'])) {
 	if (!empty($_REQUEST["sort_mode"])) {
 		$_SESSION["customsearch_$id"]["sort_mode"] = $_REQUEST["sort_mode"];
 	}
+	if (!empty($_REQUEST["offset"])) {
+		$_SESSION["customsearch_$id"]["offset"] = $_REQUEST["offset"];
+	}
 	foreach($adddata as $fieldid => $d) {
 		$config = $d['config'];
 		$name = $d['name'];
