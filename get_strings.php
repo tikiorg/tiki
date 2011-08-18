@@ -503,7 +503,7 @@ foreach ($languages as $ksel => $sel) {
 				// Strip the extracted strings from escapes
 				// (these will not be reinserted during generation, since ' need
 				// not be escaped when string delimeters are double quotes)
-				$word = preg_replace ("/\\'/", "'", $sqword);
+				$word = str_replace("\'", "'", $sqword);
 				$words[$word] = $word;                               
 			}
 		}
