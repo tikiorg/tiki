@@ -9,10 +9,28 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
 $access->check_feature('feature_submissions');
+
+$auto_query_args = array(
+	'subId',
+	'offset',
+	'maxRecords',
+	'sort_mode',
+	'find'
+);
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_submission');
-	$access->check_authenticity();
+	$access->check_authenticity(tr('Are you sure you want to permanently remove submited article id %0?', $_REQUEST["remove"]));
 	$artlib->remove_submission($_REQUEST["remove"]);
+}
+if (isset($_REQUEST['submit_mult'])) {
+	if ($_REQUEST['submit_mult'] === 'remove_subs' && count($_REQUEST["checked"]) > 0) {
+		$access->check_permission('tiki_p_remove_submission');
+		$access->check_authenticity(tr('Are you sure you want to permanently remove %0 submited articles?', count($_REQUEST["checked"])));
+
+		foreach ($_REQUEST["checked"] as $sId) {
+			$artlib->remove_submission($sId);
+		}
+	}
 }
 if (isset($_REQUEST["approve"])) {
 	check_ticket('list-submissions');
@@ -32,6 +50,11 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
+if (!empty($_REQUEST['maxRecords'])) {
+	$maxRecords = $_REQUEST['maxRecords'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
+}
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
