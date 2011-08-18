@@ -49,6 +49,12 @@ if (isset($_POST['adddata'])) {
 	if (isset($_SESSION["customsearch_$id"])) {
 		unset($_SESSION["customsearch_$id"]);
 	}
+	if (!empty($_REQUEST["maxRecords"])) {
+		$_SESSION["customsearch_$id"]["maxRecords"] = $_REQUEST["maxRecords"];
+	}
+	if (!empty($_REQUEST["sort_mode"])) {
+		$_SESSION["customsearch_$id"]["sort_mode"] = $_REQUEST["sort_mode"];
+	}
 	foreach($adddata as $fieldid => $d) {
 		$config = $d['config'];
 		$name = $d['name'];

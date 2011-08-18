@@ -77,11 +77,15 @@ function wikiplugin_customsearch($data, $params)
 	} 
 	if (isset($_REQUEST['maxRecords'])) {
 		$maxRecords = $_REQUEST['maxRecords'];
-        } else {
+        } elseif (!empty($_SESSION["customsearch_$id"]['maxRecords'])) {
+		$maxRecords = $_SESSION["customsearch_$id"]['maxRecords'];
+	} else {
 		$maxRecords = $prefs['maxRecords']; 
 	}		
 	if (!empty($_REQUEST['sort_mode'])) {
 		$sort_mode = $_REQUEST['sort_mode'];
+	} elseif (!empty($_SESSION["customsearch_$id"]['sort_mode'])) {
+		$sort_mode = $_SESSION["customsearch_$id"]['sort_mode'];
 	} else {
 		$sort_mode = '';
 	}
