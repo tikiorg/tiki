@@ -59,6 +59,16 @@ function prefs_unified_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'unified_user_cache' => array(
+			'name' => tra('Cache per user and query'),
+			'type' => 'text',
+			'size' => '4',
+			'filter' => 'digits',
+			'description' => tra('Time in minutes a user has a same query cached '),
+			'hint' => tra('In minutes'),
+			'default' => '0',
+			'tags' => array('advanced', 'new'),
+		),
 	);
 }
 

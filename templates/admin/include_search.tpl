@@ -33,6 +33,7 @@
 
 					{preference name=unified_field_weight}
 					{preference name=unified_default_content}
+					{preference name=unified_user_cache}
 
 					<h4>{tr}Index maintenance{/tr}</h4>
 					<ul>

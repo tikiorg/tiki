@@ -38,16 +38,12 @@ if (count($filter)) {
 	if (isset($_REQUEST['save_query'])) {
 		$_SESSION['quick_search'][(int) $_REQUEST['save_query']] = $_REQUEST;
 	}
-
-	$query = $unifiedsearchlib->buildQuery($filter);
-
-	$query->setRange(isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0, empty($_REQUEST['maxRecords'])?$prefs['maxRecords']: $_REQUEST['maxRecords']);
-
-	$results = $query->search($unifiedsearchlib->getIndex());
-
-	$dataSource = $unifiedsearchlib->getDataSource('formatting');
+	$offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
+	$maxRecords = empty($_REQUEST['maxRecords'])?$prefs['maxRecords']: $_REQUEST['maxRecords'];
 
 	if ($access->is_serializable_request(true)) {
+		$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
+		$dataSource = $unifiedsearchlib->getDataSource('formatting');
 		$results = $dataSource->getInformation($results, array('title', 'modification_date', 'url'));
 
 		require_once 'lib/smarty_tiki/function.object_link.php';
@@ -68,25 +64,43 @@ if (count($filter)) {
 		));
 		exit;
 	} else {
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
-		$plugin->setData(array(
-			'prefs' => $prefs,
-		));
-		$plugin->setFields(array(
-			'title' => null,
-			'url' => null,
-			'modification_date' => null,
-			'highlight' => null,
-		));
+		$cachelib = TikiLib::lib('cache');
+		$cacheType = 'search';
+		$cacheName = $user.'/'.$offset.'/'.$maxRecords.'/'.serialize($filter);
+		$isCached = false;
+		if (!empty($prefs['unified_user_cache']) && $cachelib->isCached($cacheName, $cacheType)) {
+			list($date, $html) = $cachelib->getSerialized($cacheName, $cacheType);
+			if ($date > $tikilib->now - $prefs['unified_user_cache'] * 60) {
+				$isCached = true;
+			}
+		}
+		if (!$isCached) {
+			$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
+			$dataSource = $unifiedsearchlib->getDataSource('formatting');
 
-		$formatter = new Search_Formatter($plugin);
-		$formatter->setDataSource($dataSource);
+			$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
+			$plugin->setData(array(
+				'prefs' => $prefs,
+			));
+			$plugin->setFields(array(
+				'title' => null,
+				'url' => null,
+				'modification_date' => null,
+				'highlight' => null,
+			));
 
-		$wiki = $formatter->format($results);
+			$formatter = new Search_Formatter($plugin);
+			$formatter->setDataSource($dataSource);
 
-		$smarty->assign('results', $tikilib->parse_data($wiki, array(
-			'is_html' => true,
-		)));
+			$wiki = $formatter->format($results);
+			$html = $tikilib->parse_data($wiki, array(
+				'is_html' => true,
+			));
+			if (!empty($prefs['unified_user_cache'])) {
+				$cachelib->cacheItem($cacheName, serialize(array($tikilib->now, $html)), $cacheType);
+			}
+		}
+		$smarty->assign('results', $html);
 	}
 }
 
@@ -96,3 +110,10 @@ $smarty->assign('filter', $filter);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-searchindex.tpl');
 $smarty->display("tiki.tpl");
+
+function tiki_searchindex_get_results($filter, $offset, $maxRecords) {
+	global $unifiedsearchlib;
+	$query = $unifiedsearchlib->buildQuery($filter);
+	$query->setRange($offset, $maxRecords);
+	return $query->search($unifiedsearchlib->getIndex());
+}
