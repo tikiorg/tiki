@@ -1815,7 +1815,6 @@ $lang=Array(
 "Can report msgs to moderator" => "Kann Nachrichten dem Moderator melden",
 "Can save a CSV backup of entire trackers" => "Kann ein CSV Backup von allen Trackern erstellen",
 "Can use the Tiki Importer" => "Kann den Tiki Importer benutzen",
-"Can validate submited links" => "Kann eingereichte Links bestätigen/zulassen",
 "Can view Tikiwiki tools calendar" => "Kann den Tikiwiki Werkzeuge Kalender einsehen",
 "Can view trackers closed items" => "Kann geschlossene Trackereinträge einsehen",
 "Can view trackers pending items" => "Kann noch anstehende Trackereinträge ansehen",

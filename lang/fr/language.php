@@ -2946,7 +2946,6 @@ $lang=Array(
 "Can report msgs to moderator" => "Droit de rapporter des messages vers le modérateur",
 "Can save a CSV backup of entire trackers" => "Droit de sauvegarder un fichier CSV de tous les trackers",
 "Can use the Tiki Importer" => "Pouvoir utiliser l'importateur Tiki",
-"Can validate submited links" => "Droit de valider des liens soumis",
 "Can view referer stats" => "Droit de voir les statistiques des origines",
 "Can view trackers closed items" => "Droit de voir les fiches de formulaires clôturées",
 "Can view trackers pending items" => "Droit de voir les fiches de formulaire en attente",
