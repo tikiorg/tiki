@@ -3150,7 +3150,7 @@ class TrackerLib extends TikiLib
 			}
 		} else {
 			$resource_name = $smarty->get_filename($resource);
-			$f = $smarty->_read_file($resource_name);
+			$f = file_get_contents($resource_name);
 		}
 		if (!empty($f)) {
 			preg_match_all('/\$f_([0-9]+)(\|output)?/', $f, $matches);
