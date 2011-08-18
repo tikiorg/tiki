@@ -2154,7 +2154,14 @@ class TrackerLib extends TikiLib
 
 		$result = $fieldsTable->fetchAll($fieldsTable->all(), $conditions, $maxRecords, $offset, $fieldsTable->sortMode($sort_mode));
 		$cant = $fieldsTable->fetchCount($conditions);
-
+		
+		$resultIdAsKey = array();
+		foreach( $result as $field ) {
+			$resultIdAsKey[$field['fieldId']] = $field;
+		}
+		$result = $resultIdAsKey;
+		unset($resultIdAsKey);
+		
 		foreach( $result as & $res ) {
 			$res['options_array'] = preg_split('/\s*,\s*/', trim($res['options']));
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
@@ -2168,7 +2175,7 @@ class TrackerLib extends TikiLib
 			}
 			$ret[] = $res;
 		}
-
+		
 		return array(
 			'data' => $result,
 			'cant' => $cant,

@@ -229,15 +229,23 @@ class TrackerQueryLib extends TikiLib
 	 * 		)
 	 * )
 	 */
-	function tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status = "opc", $sort, $limit, $offset, $byName, $includeTrackerDetails = true, $desc = true, $delimiter = "[{|!|}]") {
-		global $tikilib;
+	function tracker_query($tracker, $start = null, $end = null, $itemId = null, $equals = null, $search = null, $fields = null, $status = "opc", $sort = null, $limit = null, $offset = null, $byName = false, $includeTrackerDetails = true, $desc = true, $render = true, $delimiter = "[{|!|}]") {
+		global $tikilib, $trklib;
 		$debug = false;
 		$params = array();
 		$fields_safe = "";
 		$status_safe = "";
 		$isSearch = false;
 		
-		$params[] = $tracker;
+		$trackerId = ($byName == true ? $trklib->get_tracker_by_name($tracker) : $tracker);
+		
+		if (empty($trackerId)) return; //if we can't find a tracker, then return
+		
+		$trackerDefinition = Tracker_Definition::get($trackerId);
+		
+		$trackerFieldDefinition = $trackerDefinition->getFields();
+		
+		$params[] = $trackerId;
 		
 		if (isset($start) && !empty($start) && !$search) $params[] = $start;
 		if (isset($end) && !empty($end) && !$search) $params[] = $end;
@@ -352,7 +360,7 @@ class TrackerQueryLib extends TikiLib
 			 
 			
 			WHERE
-			".(isset($byName) && !empty($byName) ? "tiki_trackers.name" : "tiki_trackers.trackerId")." = ?
+			tiki_trackers.trackerId = ?
 			
 			".(isset($start) && !empty($start) && !$search ? 								" AND tiki_tracker_items.lastModif > ? " : "")."
 			".(isset($end) && !empty($end) && !$search ? 								" AND tiki_tracker_items.lastModif < ? " : "")."
@@ -391,9 +399,9 @@ class TrackerQueryLib extends TikiLib
 						$newRow[$field] = array($newRow[$field]);
 					}
 					
-					$newRow[$field][] = $itemValues[$key];
+					$newRow[$field][] = ($render == true ? $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]) : $itemValues[$key]);
 				} else {
-					$newRow[$field] = $itemValues[$key];
+					$newRow[$field] = ($render == true ? $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]) : $itemValues[$key]);
 				}
 			}
 			if (isset($includeTrackerDetails) && $includeTrackerDetails == true) {
@@ -409,8 +417,19 @@ class TrackerQueryLib extends TikiLib
 	
 	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
 	*/
-	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, $includeTrackerDetails) {
-		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails);
+	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, $includeTrackerDetails, $desc, $render) {
+		return $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails, $desc, $render);
+	}
+	
+	
+	private function render_field_value($fieldDefinition, $value) {
+		global $trklib;
+		
+		$fieldDefinition['value'] = $value;
+		return $trklib->field_render_value(array(
+			'field'=> $fieldDefinition,
+			'process'=> 'y'
+		));
 	}
 	
 	/*Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
