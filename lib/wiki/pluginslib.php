@@ -24,7 +24,7 @@
 *    $plugin = new BackLinks();
 *    return $plugin->getDescription();
 * }    * </code>
-* @package Tikiwiki
+* @package Tiki
 * @subpackage Plugins
 * @author Claudio Bustos
 * @version $Revision: 1.12 $
