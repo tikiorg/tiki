@@ -246,6 +246,13 @@ class TrackerQueryLib extends TikiLib
 		$trackerDefinition = Tracker_Definition::get($trackerId);
 		
 		$trackerFieldDefinition = $trackerDefinition->getFields();
+		$trackerFieldDefinitionIdAsKey = array();
+		foreach( $trackerFieldDefinition as $field ) {
+			$trackerFieldDefinitionIdAsKey[$field['fieldId']] = $field;
+		}
+		$trackerFieldDefinition = $trackerFieldDefinitionIdAsKey;
+		unset($trackerFieldDefinition);
+		
 		
 		$params[] = $trackerId;
 		
