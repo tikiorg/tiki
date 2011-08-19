@@ -1,4 +1,20 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+/**
+ * Update language.php files
+ * 
+ * Examples:
+ * 		- get_strings.php -> update all language.php files
+ * 		- get_strings.php?lang=fr -> update just lang/fr/language.php file
+ * 		- get_strings.php?lang[]=fr&lang[]=pt-br&outputFiles -> update both French
+ * 		  and Brazilian Portuguese language.php files and for each string add a line with
+ * 		  the file where it was found.
+ */
 
 if (php_sapi_name() != 'cli') {
 	require_once('tiki-setup.php');
