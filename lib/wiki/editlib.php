@@ -191,32 +191,32 @@ class EditLib
 	
 	/**
 	 * Utility for walk_and_parse to process p and div tags
-	 * 
-	 * @param bool $isPar True if we process a <p>, false if a <div> 
+	 *
+	 * @param bool $isPar True if we process a <p>, false if a <div>
 	 * @param array $args the attributes of the tag
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
 	private function parseParDivTag($isPar, &$args, &$src, &$p) {
-		
+
 		global $prefs;
-		
+
 		if (isset($args['style']) || isset($args['align'])) {
 			$tag_name = $isPar ? 'p' : 'div'; // key for the $p[stack]
 			$type = $isPar ? 'type="p", ' : ''; // used for {DIV()}
-			
+
 			$style = array();
 			$this->parseStyleAttribute($args['style']['value'], $style);
-			
+
 
 			/*
 		 	* convert 'align' to 'style' definitions
 		    */
 			if (isset($args['align'])) {
-				$style['text-align'] = $args['align']['value']; 
-			} 
-			
-			
+				$style['text-align'] = $args['align']['value'];
+			}
+
+
 			/*
 			 * process all the defined styles
 			 */
@@ -241,14 +241,14 @@ class EditLib
 						} elseif ($style[$format] == 'justify') {
 							$src .= "{DIV(${type}align=\"justify\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
-						} 
+						}
 						break;
 				} // switch format
 			} // foreach style
 		}
 	}
-	
-	
+
+
 	/**
 	 * Utility for walk_and_parse to process span arguments
 	 * 
@@ -409,6 +409,15 @@ class EditLib
 		
 	}
 
+	/**
+	 * Function to take html from ckeditor and parse back to wiki markup
+	 * Used by "switch editor" and when saving in wysiwyg_htmltowiki mode
+	 * When saving in mixed "html" mode the "unparsing" is done in JavaScript client-side
+	 *
+	 * @param $inData		editor content
+	 * @return string		wiki markup
+	 */
+
 	function parseToWiki( $inData ) {
 		
 		$parsed = $this->parse_html($inData);
@@ -419,7 +428,16 @@ class EditLib
 		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
 		return $parsed;
 	}
-	
+
+	/**
+	 * Render html to send to ckeditor, including parsing plugins for wysiwyg editing
+	 * From both wiki page source (for wysiwyg_htmltowiki) and "html" modes
+	 *
+	 * @param $inData			page data, can be wiki or mixed html/wiki
+	 * @param bool $fromWiki	set if converting from wiki page using "switch editor"
+	 * @return string			html to send to ckeditor
+	 */
+
 	function parseToWysiwyg( $inData, $fromWiki = false ) {
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
@@ -430,7 +448,7 @@ class EditLib
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
 														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki),
 														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki),
-														'process_double_brackets' => 'n'));
+															'process_double_brackets' => 'n'));
 		
 		if ($prefs['wysiwyg_htmltowiki'] === 'n' && $fromWiki) {
 			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
@@ -450,10 +468,13 @@ class EditLib
 	
 	/**
 	 * Converts wysiwyg plugins into wiki.
-	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)  
+	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)
+	 * Also used by ajax preview in tiki-auto_save.php
 	 * 
-	 * @param string $inData (page data - mostly html but can have a bit of wiki in it)
+	 * @param string $inData	page data - mostly html but can have a bit of wiki in it
+	 * @return string			html with wiki plugins
 	 */
+
 	function partialParseWysiwygToWiki( $inData ) {
 
 		// de-protect ck_protected comments
@@ -536,7 +557,7 @@ class EditLib
 					}
 					
 					$isPar = false; // assuming "div" when calling parseParDivTag()
-					
+
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
 						case "meta": $c[$i]["content"] = ''; break;
@@ -547,16 +568,16 @@ class EditLib
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
 						case "p": $isPar = true;
 						case "div": // Wiki parsing creates divs for center
-							
+
 							// if(isset($c[$i]['pars']['style']['value'])) {
 							if(isset($c[$i]['pars'])) {
-								
+
 								$this->parseParDivTag($isPar, $c[$i]['pars'], $src, $p);
 
-								
+
 								/*
 								 * deactivated by mauriz, will be replaced by the method call above
-								 * 
+								 *
 								if ( strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
 									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 										$src .= $this->startNewLine($src) .":::";
@@ -570,7 +591,7 @@ class EditLib
 										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "{DIV}\n\n");
 								}
 								*/
-								
+
 							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
