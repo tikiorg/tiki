@@ -57,12 +57,40 @@ $("#connect_list_btn a").click(function(){
 							controller: 'connect',
 							action: 'list'
 						}, function (data, status) {
+
 							$d.append($("<h3>{tr}Tiki Version{/tr}</h3>")).append($("<p>" + data.version + "</p>"));
-							var $dl = $("<dl />");
-							for (var pref in data.prefs) {
-								$dl.append($("<dt>" + pref + "</dt><dd>" + data.prefs[pref].cur + "</dd>"));
+
+							var formatList = function( inArray ) {
+								var $dl = $("<dl />");
+								for (var key in inArray) {
+									$dl.append($("<dt>" + key + "</dt><dd>" + inArray[key] + "</dd>"));
+								}
+								return $dl;
 							}
-							$d.append($("<h3>{tr}Modified Prefs{/tr}</h3>")).append($dl);
+
+							var $din = $("<div />");
+							var $tabs = $("<ul />").appendTo($din);		// list for tabs
+
+							if (data.prefs) {
+									$tabs.append("<li><a href='#ctab-m'>{tr}Prefs{/tr}</a></li>");
+									$("<div id='ctab-m' />").append(formatList(data.prefs)).appendTo($din);
+							}
+							if (data.site) {
+								$tabs.append("<li><a href='#ctab-p'>{tr}Site Info{/tr}</a></li>");
+								$("<div id='ctab-p' />").append(formatList(data.site)).appendTo($din);
+							}
+							if (data.server) {
+								$tabs.append("<li><a href='#ctab-s'>{tr}Server{/tr}</a></li>");
+								$("<div id='ctab-s' />").append(formatList(data.server)).appendTo($din);
+							}
+							if (data.tables) {
+								$tabs.append("<li><a href='#ctab-d'>{tr}Database{/tr}</a></li>");
+								$("<div id='ctab-d' />").append(formatList(data.tables)).appendTo($din);
+							}
+
+							$din.appendTo($d);
+							$din.tabs();
+
 							ajaxLoadingHide();
 					});
 				},

@@ -43,21 +43,37 @@ class Services_Connect_Controller
 
 		$info = array( 'version' => $prefs['tiki_release'] );
 
-		$prefslib = TikiLib::lib('prefs');
-		$modified_prefs = $prefslib->getModifiedPreferences();
+		if ($prefs['connect_send_anonymous_info'] === 'y') {
+			$prefslib = TikiLib::lib('prefs');
+			$modified_prefs = $prefslib->getModifiedPreferences();
 
-		// remove some non-anonymous values
-		if ($prefs['connect_send_info'] !== 'y') {
+			// remove the non-anonymous values
 			foreach ($this->private_prefs as $p) {
 				unset($modified_prefs[$p]);
 			}
+			foreach ($modified_prefs as &$p) {
+				$p = $p['cur'];	// remove the defaults
+			}
+			$info['prefs'] = $modified_prefs;
+			// get all table row counts
+			$res = TikiLib::lib('tiki')->fetchAll('SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE();');
+			if (!empty($res)) {
+				$info['tables'] = array();
+				foreach( $res as $r ) {
+					$info['tables'][$r['table_name']] = $r['table_rows'];
+				}
+			}
 		}
 
-		$info['prefs'] = $modified_prefs;
+		if ($prefs['connect_send_info'] === 'y') {
+			$site_prefs = array();
+			foreach( $this->private_prefs as $p) {
+				$site_prefs[$p] = $prefs[$p];
+			}
+			$info['site'] = $site_prefs;
+			$info['server'] = $_SERVER;
+		}
 
-		$pages = TikiDb::get()->table('tiki_pages');
-		$info['objects'] = array( 'wiki_pages' => $pages->fetchOne($pages->count()));
-		
 		return $info;
 	}
 
