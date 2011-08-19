@@ -44,8 +44,6 @@ class Smarty_Tiki extends Smarty
 		$this->template_dir = array(realpath('templates/'));
 		$this->compile_dir = realpath("templates_c/$tikidomain");
 		$this->config_dir = null;
-		$this->cache_dir = realpath("templates_c/$tikidomain");
-		$this->caching = 0;
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
 		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
 		$this->assign('app_name', 'Tiki');
@@ -224,38 +222,7 @@ class Smarty_Tiki extends Smarty
 
 		return preg_replace("/^[ \t]*/", '', $res);
 	}
-	function isCached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
-		global $prefs, $style_base, $tikidomain;
 
-		if (isset($prefs['style']) && isset($style_base)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
-			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
-			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
-			}
-		}
-		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
-		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
-		return parent::isCached($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id);
-	}
-	function clearCache($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_exp_time=null) {
-		global $prefs, $style_base, $tikidomain;
-
-		if (isset($prefs['style']) && isset($style_base) && isset($_smarty_tpl_file)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
-			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
-			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
-			}
-		}
-		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
-		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
-		return parent::clearCache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
-	}
 	function display($resource_name, $cache_id=null, $compile_id = null, $content_type = 'text/html; charset=utf-8') {
 
 		global $prefs;
