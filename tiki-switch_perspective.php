@@ -17,15 +17,16 @@ $_SESSION['need_reload_prefs'] = true;
 if( isset($_REQUEST['perspective']) ) {
 	$perspective = $_REQUEST['perspective'];
 	if( $perspectivelib->perspective_exists( $perspective ) ) {
-		foreach( $perspectivelib->get_domain_map() as $domain => $persp ) {
-			if( $persp == $perspective ) {
-				$targetUrl = 'http://' . $domain;
+		if ($prefs['multidomain_switchdomain'] == 'y') {
+			foreach( $perspectivelib->get_domain_map() as $domain => $persp ) {
+				if( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
+					$targetUrl = 'http://' . $domain;
 
-				header( 'Location: ' . $targetUrl );
-				exit;
+					header( 'Location: ' . $targetUrl );
+					exit;
+				}
 			}
 		}
-
 		$_SESSION['current_perspective'] = $perspective;
 	}
 }

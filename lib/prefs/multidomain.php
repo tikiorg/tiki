@@ -27,5 +27,15 @@ function prefs_multidomain_list() {
 			'hint' => tra('One domain per line. Comma separated with perspective ID. Ex.: tiki.org,1'),
 			'default' => '',
 		),
+		'multidomain_switchdomain' => array(
+			'name' => tra('Switch domain when switching perspective'),
+			'tags' => array('advanced'),	
+			'description' => tra('Remember that different domains have different login sessions and even in the case of subdomains you need to have an understanding of session cookies to make it work'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_perspective', 'multidomain_active'
+			),
+			'default' => 'n',
+		),
 	);
 }
