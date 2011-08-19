@@ -66,6 +66,7 @@ if (!$installer->tableExists('tiki_preferences')) {
 $pwd = getcwd();
 chdir( dirname(__FILE__) . '/../..' );
 require_once 'lib/init/smarty.php';
+$smarty->addPluginsDir('../smarty_tiki/');
 require_once 'lib/cache/cachelib.php';
 require_once 'lib/tikilib.php';
 require_once 'lib/wiki/wikilib.php';
