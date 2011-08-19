@@ -2136,7 +2136,7 @@ class FileGalLib extends TikiLib
 						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
 						$wiki_syntax = '') {
 
-		global $user, $tiki_p_admin_file_galleries, $prefs;
+		global $user, $tiki_p_admin_file_galleries, $prefs, $tiki_p_admin;
 
 		$f_jail_bind = array();
 		$g_jail_bind = array();
