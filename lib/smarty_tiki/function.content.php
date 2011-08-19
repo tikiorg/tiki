@@ -1,3 +1,4 @@
+
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 

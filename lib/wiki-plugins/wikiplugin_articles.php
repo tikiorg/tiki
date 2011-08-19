@@ -263,7 +263,7 @@ function wikiplugin_articles($data, $params)
 	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"], array('min_one_paragraph' => true));
 		if ($fullbody == 'y') {
-			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"], array('min_one_paragraph' => true));
+			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"], array('min_one_paragraph' => true, 'is_html' => $prefs['article_body_is_html'] === 'y'));
 		}
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];
