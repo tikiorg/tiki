@@ -1109,12 +1109,12 @@ function prefs_feature_list($partial = false) {
 			'default' =>'n',
 		),
 		'feature_sefurl_tracker_prefixalias' => array(
-			'name' => tra('Redirect tiki-view_tracker.php?itemId=yyy to Prefixyyy page'),
+			'name' => tra('Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page'),
 			'description' => tra('This redirection uses the wiki prefix alias feature'),
 			'help' => 'Page+Alias',
 			'perspective' => false,
 			'type' => 'flag',
-			'require' => array('feature_sefurl', 'wiki_prefixalias_tokens'),
+			'dependencies' => array('feature_sefurl', 'wiki_prefixalias_tokens'),
 			'default' =>'n',
 		),	
 		'feature_canonical_url' => array(
