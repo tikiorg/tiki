@@ -2668,7 +2668,7 @@ CREATE TABLE `users_usergroups` (
   `groupName` varchar(255) NOT NULL default '',
   `created` int(14) default NULL,
   `expire` int(14) default NULL,
-  PRIMARY KEY (`userId`,`groupName`(30))
+  PRIMARY KEY (`userId`,`groupName`(225))
 ) ENGINE=MyISAM;
 
 INSERT INTO users_groups (`groupName`,`groupDesc`) VALUES ('Anonymous','Public users not logged');
