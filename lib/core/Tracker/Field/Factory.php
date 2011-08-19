@@ -7,6 +7,8 @@
 
 class Tracker_Field_Factory
 {
+	private static $trackerFieldLocalCache;
+
 	private $trackerDefinition;
 	private $typeMap = array();
 	private $infoMap = array();
@@ -20,26 +22,22 @@ class Tracker_Field_Factory
 		));
 	}
 	
-	private function getPreCacheTypeMap($cacheKey)
+	private function getPreCacheTypeMap()
 	{
-		global $tikilib;
-		
-		if (!empty($tikilib->trackerFieldFactoryMap[$cacheKey])) {
-			$this->typeMap = $tikilib->trackerFieldFactoryMap[$cacheKey]->type;
-			$this->infoMap = $tikilib->trackerFieldFactoryMap[$cacheKey]->info;
+		if (!empty(self::$trackerFieldLocalCache)) {
+			$this->typeMap = self::$trackerFieldLocalCache['type'];
+			$this->infoMap = self::$trackerFieldLocalCache['info'];
 			return true;
 		}
+
 		return false;
 	}
 	
-	private function setPreCacheTypeMap($cacheKey, $data)
+	private function setPreCacheTypeMap($data)
 	{
-		global $tikilib;
-		if (empty($tikilib->trackerFieldFactoryMap)) $tikilib->trackerFieldFactoryMap = array();
-		
-		$tikilib->trackerFieldFactoryMap[$cacheKey] = (object)array(
-			"type"=> $data["typeMap"],
-			"info"=> $data["infoMap"]
+		self::$trackerFieldLocalCache = array(
+			'type' => $data['typeMap'],
+			'info' => $data['infoMap']
 		);
 	}
 	
@@ -48,7 +46,7 @@ class Tracker_Field_Factory
 		global $prefs;
 		$cacheKey = 'fieldtypes.' . $prefs['language'];
 		
-		if ($this->getPreCacheTypeMap($cacheKey) == true) {
+		if ($this->getPreCacheTypeMap()) {
 			return;
 		}
 
@@ -57,7 +55,7 @@ class Tracker_Field_Factory
 			$this->typeMap = $data['typeMap'];
 			$this->infoMap = $data['infoMap'];
 			
-			$this->setPreCacheTypeMap($cacheKey, $data);
+			$this->setPreCacheTypeMap($data);
 			return;
 		}
 
@@ -79,10 +77,13 @@ class Tracker_Field_Factory
 
 		uasort($this->infoMap, array($this, 'compareName'));
 
-		$cachelib->cacheItem($cacheKey, serialize(array(
+		$data = array(
 			'typeMap' => $this->typeMap,
 			'infoMap' => $this->infoMap,
-		)));
+		);
+
+		$cachelib->cacheItem($cacheKey, serialize($data));
+		$this->setPreCacheTypeMap($data);
 	}
 
 	function compareName($a, $b)
