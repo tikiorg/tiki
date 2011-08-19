@@ -32,14 +32,12 @@ $smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity( tra('Are you sure you want to delete menu id:') . ' ' . $_REQUEST['remove'] );
 	$menulib->remove_menu($_REQUEST["remove"]);
-	$smarty->clearCache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-menus');
 	if (!isset($_REQUEST['icon'])) $_REQUEST['icon'] = null;
 	$_REQUEST['use_items_icons'] = (isset($_REQUEST['use_items_icons']) && $_REQUEST['use_items_icons'] == 'on') ? 'y' : 'n';
 	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon'], $_REQUEST['use_items_icons']);
-	$smarty->clearCache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 	$_REQUEST["menuId"] = 0;
 	$smarty->assign('menuId', 0);
 	$smarty->assign('info', array(
