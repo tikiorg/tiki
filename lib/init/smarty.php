@@ -41,7 +41,7 @@ class Smarty_Tiki extends Smarty
 		global $prefs;
 
 		if ($tikidomain) { $tikidomain.= '/'; }
-		$this->template_dir = array(realpath('templates/'));
+		$this->template_dir = realpath('templates/'); // This needs to be changed to a setTemplateDir() call for Smarty 3.1, but Tiki reads template_dir in several places and expects it to be a string, not an array.
 		$this->compile_dir = realpath("templates_c/$tikidomain");
 		$this->config_dir = null;
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
