@@ -96,5 +96,10 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 	{
 		return TikiLib::lib('tiki')->parse_data(htmlspecialchars($text));
 	}
+
+	protected function getIndexableType()
+	{
+		return 'wikitext';
+	}
 }
 

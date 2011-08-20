@@ -203,5 +203,62 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 	{
 		return $info;
 	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$value = $this->getValue();
+		$fieldType = $this->getIndexableType();
+
+		if ($this->getConfiguration('isMultilingual') == 'y') {
+			$decoded = json_decode($value, true);
+			$value = implode("\n", $decoded);
+
+			$data = array($baseKey => $typeFactory->$fieldType($value));
+			foreach ($decoded as $lang => $content) {
+				$data[$baseKey . '_' . $lang] = $typeFactory->$fieldType($content);
+			}
+
+			return $data;
+		} else {
+			return array(
+				$baseKey => $typeFactory->$fieldType($value),
+			);
+		}
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		global $prefs;
+
+		$data = array($baseKey);
+
+		if ($this->getConfiguration('isMultilingual') == 'y') {
+			foreach ($prefs['available_languages'] as $lang) {
+				$data[] = $baseKey . '_' . $lang;
+			}
+		}
+
+		return $data;
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		global $prefs;
+
+		$data = array($baseKey => true);
+
+		if ($this->getConfiguration('isMultilingual') == 'y') {
+			foreach ($prefs['available_languages'] as $lang) {
+				$data[$baseKey . '_' . $lang] = true;
+			}
+		}
+
+		return $data;
+	}
+
+	protected function getIndexableType()
+	{
+		return 'sortable';
+	}
 }
 

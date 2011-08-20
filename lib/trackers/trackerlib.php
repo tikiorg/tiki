@@ -3565,8 +3565,13 @@ class TrackerLib extends TikiLib
 	function get_field_handler($field, $item = array())
 	{
 		$trackerId = (int) $field['trackerId'];
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			return false;
+		}
 		
-		return Tracker_Definition::get($trackerId)->getFieldFactory()->getHandler($field, $item);
+		return $definition->getFieldFactory()->getHandler($field, $item);
 	}
 
 	function get_field_value($field, $item)

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
+abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracker_Field_Indexable
 {
 	private $definition;
 	private $itemData;
@@ -262,6 +262,23 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		$smarty->assign('item', $this->getItemData());
 
 		return $smarty->fetch($file, $file);
+	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		return array(
+			$baseKey => $typeFactory->sortable($this->getValue()),
+		);
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		return array($baseKey);
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array($baseKey => true);
 	}
 }
 

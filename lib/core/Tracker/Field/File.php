@@ -129,5 +129,21 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 			'value' => '',
 		);
 	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		return array(
+		);
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		return array();
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array();
+	}
 }
 
