@@ -42,10 +42,6 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			return $data;
 		}
 
-		if ($languageField = $definition->getLanguageField()) {
-			$data['language'] = $typeFactory->identifier($itemData[$languageField]);
-		}
-
 		foreach ($this->getIndexableHandlers($definition, $item) as $baseKey => $handler) {
 			$data = array_merge($data, $handler->getDocumentPart($baseKey, $typeFactory));
 		}
@@ -86,7 +82,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			$data = array_merge($data, $handler->getProvidedFields($baseKey));
 		}
 
-		return $data;
+		return array_unique($data);
 	}
 
 	function getGlobalFields()
