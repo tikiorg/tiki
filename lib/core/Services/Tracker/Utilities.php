@@ -24,7 +24,7 @@ class Services_Tracker_Utilities
 		$trackerId = $definition->getConfiguration('trackerId');
 		$fields = array();
 
-		$factory = new Tracker_Field_Factory($definition);
+		$factory = $definition->getFieldFactory();
 		foreach ($fieldMap as $key => $value) {
 			if ($field = $definition->getFieldFromPermName($key)) {
 				$field['value'] = $value;
@@ -330,7 +330,7 @@ EXPORT;
 
 	function getFieldTypes()
 	{
-		$factory = new Tracker_Field_Factory(null);
+		$factory = new Tracker_Field_Factory(false);
 		return $factory->getFieldTypes();
 	}
 

@@ -81,7 +81,7 @@ class Services_Tracker_SyncController
 	function action_sync_meta($input)
 	{
 		list($trackerId, $definition, $syncInfo) = $this->readTracker($input);
-		$factory = new Tracker_Field_Factory($definition);
+		$factory = $definition->getFieldFactory();
 
 		$export = $this->getRemoteTrackerFieldExport($syncInfo['provider'], $syncInfo['source']);
 		foreach ($export as $info) {
@@ -113,7 +113,7 @@ class Services_Tracker_SyncController
 		$itemMap = array();
 
 		$remoteDefinition = $this->getRemoteDefinition($definition);
-		$factory = new Tracker_Field_Factory($remoteDefinition);
+		$factory = $remoteDefinition->getFieldFactory();
 		foreach ($this->getRemoteItems($syncInfo) as $item) {
 			foreach ($item['fields'] as $key => & $value) {
 				$field = $remoteDefinition->getFieldFromPermName($key);
@@ -242,7 +242,8 @@ class Services_Tracker_SyncController
 			throw new Services_Exception(tr('Invalid data provided'), 400);
 		}
 
-		$factory = new Tracker_Field_Factory($definition);
+		$definition = Tracker_Definition::get($trackerId);
+		$factory = $definition->getFieldFactory();
 		foreach ($data as $info) {
 			$handler = $factory->getHandler($info);
 			if ($handler instanceof Tracker_Field_Synchronizable) {
@@ -333,7 +334,7 @@ class Services_Tracker_SyncController
 	private function exportFields($fields, $remoteDefinition, $definition)
 	{
 		unset($fields['syncSource']);
-		$factory = new Tracker_Field_Factory($definition);
+		$factory = $definition->getFieldFactory();
 		foreach ($fields as $key => & $value) {
 			$field = $remoteDefinition->getFieldFromPermName($key);
 			if ($field && $definition->getFieldFromPermName($key)) {

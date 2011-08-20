@@ -144,7 +144,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 			return null;
 		}
 
-		$factory = new Tracker_Field_Factory($this->trackerDefinition);
+		$factory = $this->trackerDefinition->getFieldFactory();
 
 		$popupFields = array();
 		foreach ($fields as $id) {

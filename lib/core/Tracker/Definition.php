@@ -10,6 +10,7 @@ class Tracker_Definition
 	static $definitions = array();
 
 	private $trackerInfo;
+	private $factory;
 	private $fields;
 
 	public static function get($trackerId)
@@ -52,6 +53,15 @@ class Tracker_Definition
 	function getInformation()
 	{
 		return $this->trackerInfo;
+	}
+
+	function getFieldFactory()
+	{
+		if ($this->factory) {
+			return $this->factory;
+		}
+
+		return $this->factory = new Tracker_Field_Factory($this);
 	}
 
 	function getConfiguration($key, $default = false)

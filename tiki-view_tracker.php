@@ -189,7 +189,7 @@ $usecategs = false;
 $textarea_options = false;
 $all_descends = false;
 
-$fieldFactory = new Tracker_Field_Factory($trackerDefinition);
+$fieldFactory = $trackerDefinition->getFieldFactory();
 
 foreach ($xfields['data'] as $i => $current_field) {
 	$current_field_list = array();

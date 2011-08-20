@@ -319,7 +319,7 @@ $plugins_loaded = false;
 if (empty($tracker_info)) {
 	$item_info = array();
 }
-$fieldFactory = new Tracker_Field_Factory($definition);
+$fieldFactory = $definition->getFieldFactory();
 
 foreach($xfields["data"] as $i => $current_field) {
 	$fid = $current_field["fieldId"];
@@ -515,7 +515,7 @@ if ($_REQUEST["itemId"]) {
 	$lst = '';
 	$tracker_item_main_value = '';
 
-	$fieldFactory = new Tracker_Field_Factory($definition);
+	$fieldFactory = $definition->getFieldFactory();
 
 	foreach($xfields["data"] as $i => $current_field) {
 		$current_field_fields = null;

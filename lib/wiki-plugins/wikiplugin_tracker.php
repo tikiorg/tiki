@@ -514,7 +514,7 @@ function wikiplugin_tracker($data, $params)
 
 			$definition = Tracker_Definition::get($trackerId);
 			$item_info = isset($item_info) ? $item_info : array();
-			$factory = new Tracker_Field_Factory($definition);
+			$factory = $definition->getFieldFactory();
 			if (empty($outf)) {
 				$flds = array('data' => $definition->getFields());
 			} else {

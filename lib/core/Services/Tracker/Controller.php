@@ -315,7 +315,6 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Invalid data provided'), 400);
 		}
 
-		$factory = new Tracker_Field_Factory($definition);
 		foreach ($data as $info) {
 			$this->utilities->importField($trackerId, new JitFilter($info), $preserve);
 		}
