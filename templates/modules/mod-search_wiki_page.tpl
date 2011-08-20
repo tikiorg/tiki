@@ -5,7 +5,7 @@
   <form class="forms" method="post" action="tiki-listpages.php">
     <input type="hidden" name="lang" value=""/>
     <input name="find" size="14" type="text" accesskey="s" class="pagename"{if isset($find)} value="{$find|escape}"{/if} />
-    <label><span style="white-space: nowrap">{tr}Exact match{/tr}</span><input type="checkbox" name="exact_match" {if (isset($exact_match) and $exact_match eq 'y') or (!isset($exact_match) and $module_params.exact eq 'y')}checked="checked"{/if}/></label>
+    <label><span style="white-space: nowrap">{tr}Exact match{/tr}</span><input type="checkbox" name="exact_match"{if $exact eq 'y'} checked="checked"{/if}/></label>
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/> 
   </form>
 {/tikimodule}
