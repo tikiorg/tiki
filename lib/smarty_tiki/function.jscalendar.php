@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_jscalendar($params, &$smarty) {
+function smarty_function_jscalendar($params, $smarty) {
 	global $headerlib, $prefs, $tikilib;
 	
 	if ($prefs['feature_jquery_ui'] === 'y' && (!isset($params['showtime']) || $params['showtime'] === 'n')) {	// override jscalendar with jQuery UI datepicker
@@ -75,7 +75,7 @@ function smarty_function_jscalendar_tra($str) {
 	return str_replace("'", "\\'", tra($str));
 }
 
-function smarty_function_jscalendar_body($params, &$smarty) {
+function smarty_function_jscalendar_body($params, $smarty) {
 	global $headerlib, $tikilib, $prefs;
 
 	$headerlib->add_cssfile('lib/jscalendar/calendar-system.css');

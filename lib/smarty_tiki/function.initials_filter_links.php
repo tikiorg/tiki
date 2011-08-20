@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_initials_filter_links($params, &$smarty) {
+function smarty_function_initials_filter_links($params, $smarty) {
 	$html = '';
 	$sep = ' . ';
 	$default_type = 'absolute_path';

@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_rcontent($params, &$smarty) {
+function smarty_function_rcontent($params, $smarty) {
     global $dcslib; include_once('lib/dcs/dcslib.php');
     return $dcslib->get_random_content($params['id']);
 }

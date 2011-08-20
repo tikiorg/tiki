@@ -83,7 +83,7 @@ define('COLUMN_MAXLEN', 64);
  * 		or "toggle=true" to enable
  * @return HTML formatted for metric
  */
-function smarty_function_metric($params, &$smarty)
+function smarty_function_metric($params, $smarty)
 {
     global $m, $m_id, $prefs;
     extract($params);

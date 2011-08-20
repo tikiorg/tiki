@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_poll($params, &$smarty) {
+function smarty_function_poll($params, $smarty) {
 	global $polllib, $dbTiki, $commentslib, $prefs;
 	global $tiki_p_view_poll_results, $tiki_p_vote_poll;
     extract($params);

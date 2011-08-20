@@ -19,7 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_wikistructure($params, &$smarty) {
+function smarty_function_wikistructure($params, $smarty) {
 	include_once('lib/wiki-plugins/wikiplugin_toc.php');
 
 	if (!empty($params['id'])) {

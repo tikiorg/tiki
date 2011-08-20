@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  */
 
-function smarty_block_textarea($params, $content, &$smarty, $repeat) {
+function smarty_block_textarea($params, $content, $smarty, $repeat) {
 	global $prefs, $headerlib, $smarty;
 	
 	if ( $repeat ) return;

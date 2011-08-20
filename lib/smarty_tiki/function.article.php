@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /* inserts the content of an rss feed into a module */
-function smarty_function_article($params, &$smarty)
+function smarty_function_article($params, $smarty)
 {
 	global $tikilib;
 	global $artlib; require_once 'lib/articles/artlib.php';

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_block_wikiplugin( $params, $content, &$smarty, $repeat = false ) {
+function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false ) {
  	global $tikilib;
 
 	if ( $repeat ) return;

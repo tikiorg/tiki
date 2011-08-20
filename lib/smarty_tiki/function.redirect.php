@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_redirect($params, &$smarty) {
+function smarty_function_redirect($params, $smarty) {
 	extract($params, EXTR_SKIP);
 	// Param = url
 	if(empty($url)) {

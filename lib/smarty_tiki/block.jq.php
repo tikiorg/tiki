@@ -36,7 +36,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *    {jq}{literal}$(#exampleId").show({/literal}{if $animation_fast eq 'y'}"fast"{else}"slow"{/if}){/jq}
  */
 
-function smarty_block_jq($params, $content, &$smarty) {
+function smarty_block_jq($params, $content, $smarty) {
 	global $headerlib, $prefs;
 	
 	if (empty($content)) { return ''; }

@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Do NOT change this plugin under any circunstances!
 
-function smarty_function_sameurl($params, &$smarty)
+function smarty_function_sameurl($params, $smarty)
 {
     global $sameurl_elements;
     $data = $_SERVER['SCRIPT_NAME'];

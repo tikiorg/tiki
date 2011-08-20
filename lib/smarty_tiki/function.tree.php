@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * syntax: {tree}
  * 
  */
-function smarty_function_tree($params, &$smarty) {
+function smarty_function_tree($params, $smarty) {
 	global $prefs;
 
 	if ( $prefs['javascript_enabled'] == 'n' ) {

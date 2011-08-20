@@ -25,7 +25,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _defaultdir: directory to use when the _id param does not include the path
  *  - _extension: Filename extension - default 'png'
  */
-function smarty_function_icon($params, &$smarty) {
+function smarty_function_icon($params, $smarty) {
 	if ( ! is_array($params) ) $params = array();
 	global $prefs, $tc_theme, $tc_theme_option, $cachelib;
 	

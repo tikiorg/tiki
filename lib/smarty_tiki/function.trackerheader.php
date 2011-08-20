@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
    toggle: o for open, c for close
    inTable: table class in a table otherwise will insert div
 */
-function smarty_function_trackerheader($params, &$smarty)
+function smarty_function_trackerheader($params, $smarty)
 {
 	global $prefs;
 	global $headerlib; include_once('lib/headerlib.php');

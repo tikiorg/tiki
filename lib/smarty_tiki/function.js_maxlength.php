@@ -22,7 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  */
 
-function smarty_function_js_maxlength($params, &$smarty) {
+function smarty_function_js_maxlength($params, $smarty) {
 	extract($params); // textarea=string maxlength=num
 
     echo "\n<script type=\"text/javascript\">\n";

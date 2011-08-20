@@ -24,7 +24,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_obj_in_cat($params, &$smarty) 
+function smarty_function_obj_in_cat($params, $smarty) 
 {					
 	global $categlib;
 	include_once ('lib/categories/categlib.php');

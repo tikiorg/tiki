@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_memusage($params, &$smarty)
+function smarty_function_memusage($params, $smarty)
 {
     if (function_exists('memory_get_peak_usage')) {
 			// PHP 5.2+

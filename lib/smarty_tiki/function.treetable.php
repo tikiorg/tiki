@@ -66,7 +66,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_treetable($params, &$smarty) {
+function smarty_function_treetable($params, $smarty) {
 	global $headerlib, $tree_table_id, $prefs;
 	
 	extract($params);

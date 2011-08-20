@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * params:
  *	- name: Name of the cookie
  */
-function smarty_function_cookie_jar($params, &$smarty) {
+function smarty_function_cookie_jar($params, $smarty) {
 	if ( empty($params['name']) ) return;
 	return getCookie($params['name']);
 }

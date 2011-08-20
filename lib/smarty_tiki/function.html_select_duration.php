@@ -26,7 +26,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * params: prefix, default_unit(key word or value in secs), default (nb of units), default_value (duration in secs)
  * Purpose:  Prints the dropdowns for duration selection
  */
-function smarty_function_html_select_duration($params, &$smarty)
+function smarty_function_html_select_duration($params, $smarty)
 {
 	global $smarty;
 	$smarty->loadPlugin('smarty_function_html_options');

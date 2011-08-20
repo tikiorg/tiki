@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_debugger($params, &$smarty) {
+function smarty_function_debugger($params, $smarty) {
 	
 	global $prefs;
 	if ($prefs['feature_debug_console'] == 'y') {

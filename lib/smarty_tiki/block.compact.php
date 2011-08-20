@@ -11,7 +11,7 @@
  * join some words together...
  */
 
-function smarty_block_compact($params, $content, &$smarty)
+function smarty_block_compact($params, $content, $smarty)
 {
     // Tags with uncompactable content...
     $nct = array('textarea', 'pre');

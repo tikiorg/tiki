@@ -36,7 +36,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 
-function smarty_function_listfilter($params, &$smarty) {
+function smarty_function_listfilter($params, $smarty) {
 	global $headerlib, $prefs, $listfilter_id;
 	if ($prefs['feature_jquery'] != 'y' || $prefs['javascript_enabled'] != 'y') {
 		return '';

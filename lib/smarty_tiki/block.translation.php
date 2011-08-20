@@ -26,7 +26,7 @@
  * @param Smarty clever simulation of a method
  * @return string string $content re-formatted
  */
-function smarty_block_translation($params, $content, &$smarty)
+function smarty_block_translation($params, $content, $smarty)
 {
     if (isset($content)) {
         $lang = $params['lang'];

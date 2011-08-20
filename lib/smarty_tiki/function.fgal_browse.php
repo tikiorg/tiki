@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _maxRecords
  *  - _find
  */
-function smarty_function_fgal_browse($params, &$smarty) {
+function smarty_function_fgal_browse($params, $smarty) {
 	if ( ! is_array($params) || ! isset($params['_id']) ) return;
 	global $tikilib, $userlib, $tiki_p_view_file_gallery, $prefs;
 

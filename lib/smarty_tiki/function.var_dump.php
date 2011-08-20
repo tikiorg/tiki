@@ -21,7 +21,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 
  * Adapted to do more than string for tiki 5
  */
-function smarty_function_var_dump($params, &$smarty)
+function smarty_function_var_dump($params, $smarty)
 {
 	global $debugger, $smarty;
 	require_once('lib/debug/debugger.php');

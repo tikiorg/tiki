@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_prefilter_log_tpl($source, &$smarty) {
+function smarty_prefilter_log_tpl($source, $smarty) {
 	global $prefs;
 
 	if ($prefs['log_tpl'] != 'y' || $smarty->_current_file == 'evaluated template' ||

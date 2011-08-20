@@ -19,7 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 		_text : text to display, bu default => No records found.
 */
 
-function smarty_function_norecords($params, &$smarty)
+function smarty_function_norecords($params, $smarty)
 {
 	$html='<tr class="even">';
 	if (is_int($params["_colspan"])) {

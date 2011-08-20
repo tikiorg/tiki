@@ -47,7 +47,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * @param Smarty
  * @return string
  */
-function smarty_function_html_select_date($params, &$smarty)
+function smarty_function_html_select_date($params, $smarty)
 {
 	global $tikilib; // TIKI
     $smarty->loadPlugin('smarty_shared_escape_special_chars');

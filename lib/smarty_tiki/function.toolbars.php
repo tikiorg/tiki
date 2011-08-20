@@ -9,7 +9,7 @@
  * Smarty plugin to display content only to some groups
  */
 
-function smarty_function_toolbars($params, &$smarty)
+function smarty_function_toolbars($params, $smarty)
 {
 	global $prefs;
 	$default = array('comments' => '');

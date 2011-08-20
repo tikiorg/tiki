@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_elapsed($params, &$smarty)
+function smarty_function_elapsed($params, $smarty)
 {
     global $tiki_timer;
     

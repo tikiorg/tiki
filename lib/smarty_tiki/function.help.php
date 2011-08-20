@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_help($params, &$smarty)
+function smarty_function_help($params, $smarty)
 {
     extract($params);
     // Param = zone

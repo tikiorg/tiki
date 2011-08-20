@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 if (!function_exists('smarty_function_sefurl')) {
-	function smarty_function_sefurl($params, &$smarty) {
+	function smarty_function_sefurl($params, $smarty) {
 		global $prefs;
 		global $wikilib; include_once('lib/wiki/wikilib.php');
 	

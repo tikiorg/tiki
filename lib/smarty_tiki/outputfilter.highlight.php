@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           to provide highlighted search terms.
  * -------------------------------------------------------------
  */
-function smarty_outputfilter_highlight($source, &$smarty) {
+function smarty_outputfilter_highlight($source, $smarty) {
 	global $prefs;
 
 	if (empty($_REQUEST['highlight'])) {

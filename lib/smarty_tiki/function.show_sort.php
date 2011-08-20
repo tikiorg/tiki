@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_show_sort($params, &$smarty) {
+function smarty_function_show_sort($params, $smarty) {
 	global $url_path;
 
 	if ( isset($_REQUEST[$params['sort']]) ) {

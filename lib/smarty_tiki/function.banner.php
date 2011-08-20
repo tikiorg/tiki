@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_banner($params, &$smarty)
+function smarty_function_banner($params, $smarty)
 {
     global $bannerlib;include_once('lib/banners/bannerlib.php');
 	$default = array('zone'=>'', 'target'=>'', 'id'=>'');

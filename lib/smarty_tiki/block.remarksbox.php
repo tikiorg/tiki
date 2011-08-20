@@ -32,7 +32,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 }
 
 
-function smarty_block_remarksbox($params, $content, &$smarty) {
+function smarty_block_remarksbox($params, $content, $smarty) {
 	global $prefs;
 	
 	extract($params);

@@ -24,7 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_compiler_assign_content($tag_attrs, &$compiler) {
+function smarty_compiler_assign_content($tag_attrs, $compiler) {
 	$_params = $compiler->_parse_attrs($tag_attrs);
 
 	if ( ! isset($_params['var']) ) {

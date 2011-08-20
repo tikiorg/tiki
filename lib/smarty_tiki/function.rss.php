@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /* inserts the content of an rss feed into a module */
-function smarty_function_rss($params, &$smarty)
+function smarty_function_rss($params, $smarty)
 {
 	global $tikilib;
 	global $dbTiki;

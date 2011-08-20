@@ -31,7 +31,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * @return string
  * @uses smarty_make_timestamp()
  */
-function smarty_function_html_select_time($params, &$smarty)
+function smarty_function_html_select_time($params, $smarty)
 {
 	global $tikilib;
 	$smarty->loadPlugin('smarty_shared_make_timestamp');

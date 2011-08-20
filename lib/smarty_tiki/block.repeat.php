@@ -24,7 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
  
-function smarty_block_repeat($params, $content, &$smarty) 
+function smarty_block_repeat($params, $content, $smarty) 
 { 
 if (!empty($content)) { 
 $intCount = intval($params['count']); 

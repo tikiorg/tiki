@@ -21,7 +21,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * - sectionLevel: displays from this level only
  * - toLevel : displays to this level only
  */
-function smarty_function_menu($params, &$smarty)
+function smarty_function_menu($params, $smarty)
 {
 	global $tikilib, $user, $headerlib, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');

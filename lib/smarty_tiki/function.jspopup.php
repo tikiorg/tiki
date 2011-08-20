@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_jspopup($params, &$smarty)
+function smarty_function_jspopup($params, $smarty)
 {
     extract($params);
     // Param = zone

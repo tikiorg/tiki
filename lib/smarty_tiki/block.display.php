@@ -17,7 +17,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   die;
 }
 
-function smarty_block_display($params, $content, &$smarty)
+function smarty_block_display($params, $content, $smarty)
 {
 	global $prefs, $user, $userlib;
 	

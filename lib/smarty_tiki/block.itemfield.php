@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-function smarty_block_itemfield($params, $content, &$smarty, &$repeat) {
+function smarty_block_itemfield($params, $content, $smarty, &$repeat) {
 	include_once('lib/wiki-plugins/wikiplugin_trackeritemfield.php');
 	if (!$repeat) // only on closing tag
 		if (($res = wikiplugin_trackeritemfield($content, $params))!== false)

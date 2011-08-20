@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_show_help($params, &$smarty)
+function smarty_function_show_help($params, $smarty)
 {
 	global $help_sections;
 

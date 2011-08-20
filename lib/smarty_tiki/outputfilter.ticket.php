@@ -32,7 +32,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           mose@tikiwiki.org for coding
  * -------------------------------------------------------------
  */
- function smarty_outputfilter_ticket($source, &$smarty) {
+ function smarty_outputfilter_ticket($source, $smarty) {
 		global $ticket;
     $source = preg_replace("~((<form[^>]*action=(\"|')[^\"']*tiki-[^\"']*(\"|')[^>]*>(\s*))<)~si",
                             '$2<input type="hidden" name="ticket" value="'.$ticket.'" /><', $source);

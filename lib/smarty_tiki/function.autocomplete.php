@@ -18,7 +18,7 @@
  *				 N.B. Will be wrapped in {} chars here to avoid smarty delimiter difficulties
  * 
  */
-function smarty_function_autocomplete($params, &$smarty) {
+function smarty_function_autocomplete($params, $smarty) {
 	global $prefs, $headerlib;
 
 	if ($prefs['javascript_enabled'] !== 'y' or $prefs['feature_jquery_autocomplete'] !== 'y') return '';

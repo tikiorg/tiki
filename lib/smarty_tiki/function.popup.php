@@ -31,7 +31,7 @@
  *     width       in pixels?
  *     fullhtml    
  */
-function smarty_function_popup($params, &$smarty)
+function smarty_function_popup($params, $smarty)
 {
     $append = '';
     foreach ($params as $_key=>$_value) {
