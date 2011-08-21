@@ -1598,7 +1598,7 @@ form.simple select
 .boxes .dialog {
 	width:375px;
 	height:203px;
-	font-weight: bold:
+	font-weight: bold;
 	z-index: 999999;
 	text-align: center;
 }
