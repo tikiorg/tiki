@@ -859,7 +859,6 @@ class WikiLib extends TikiLib
 	function get_plugin_description($name, &$enabled, $area_id = 'editwiki') {
 		global $tikilib;
 		$parserlib = TikiLib::lib('parser');
-		$data = '';
 
 		if( ( ! $info = $parserlib->plugin_info( $name ) ) && $parserlib->plugin_exists( $name, true ) )
 		{
@@ -881,7 +880,7 @@ class WikiLib extends TikiLib
 
 			if( isset( $ret['prefs'] ) )
 			{
-				global $prefs, $headerlib;
+				global $prefs;
 
 				// If the plugin defines required preferences, they should all be to 'y'
 				foreach( $ret['prefs'] as $pref )
