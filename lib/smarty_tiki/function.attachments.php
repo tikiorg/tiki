@@ -110,7 +110,7 @@ function smarty_function_attachments($params, $smarty) {
 	// Get URL params specific to this smarty function that should be assigned in smarty
 	$url_override_prefix = 's_f_attachments';
 	$url_overrided_arguments = array( 'sort_mode', 'remove', 'galleryId', 'comment', 'upload', 'page' );
-//	$smarty->set_request_overriders($url_override_prefix, $url_overrided_arguments);
+	$smarty->set_request_overriders($url_override_prefix, $url_overrided_arguments);
 
 	$params['sort_mode'] = isset( $_REQUEST[ $url_override_prefix . '-sort_mode' ] ) ? $_REQUEST[ $url_override_prefix . '-sort_mode' ] : '';
 
@@ -146,8 +146,8 @@ function smarty_function_attachments($params, $smarty) {
 	$params['files'] = $files['data'];
 	$params['cant'] = $files['cant'];
 
-//	$return = "\n" . $smarty->plugin_fetch('fgal_attachments.tpl', $params) . "\n";
+	$return = "\n" . $smarty->plugin_fetch('fgal_attachments.tpl', $params) . "\n";
 
-//	$smarty->remove_request_overriders($url_override_prefix, $url_overrided_arguments);
+	$smarty->remove_request_overriders($url_override_prefix, $url_overrided_arguments);
 	return $return;
 }
