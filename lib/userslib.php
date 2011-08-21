@@ -1560,9 +1560,6 @@ class UsersLib extends TikiLib
 	}
 
 	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
-
-		global $tiki_p_list_users, $tiki_p_admin;
-
 		$perms = Perms::get( array(
 			'type' => 'group',
 			'object' => $group,
@@ -1617,8 +1614,6 @@ class UsersLib extends TikiLib
 		$cant = $this->getOne($query_cant, $mbindvars);
 
 		foreach ( $ret as &$res ) {
-			$aux = array();
-
 			if (! $perms->admin_users) {
 				// Filter out sensitive data
 				unset($res['email']);
@@ -1637,7 +1632,6 @@ class UsersLib extends TikiLib
 			$res["groups"] = $groups;
 			$res["age"] = $this->now - $res["registrationDate"];
 			$res['user_information'] = $this->get_user_preference($user, 'user_information', 'public');
-
 			$res['editable'] = $this->user_can_be_edited($user);
 		}
 
@@ -2195,7 +2189,6 @@ class UsersLib extends TikiLib
 	 * @return array list of users
 	 */
 	function get_group_users($group, $offset = 0, $max=-1, $what='login', $sort_mode='login_asc') {
-		global $prefs;
 		$w = $what=='*'? 'uu.*, ug.`created`, ug.`expire` ': "uu.`$what`"; 
 		$query = "select $w from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=? order by ".$this->convertSortMode($sort_mode);
 		$result = $this->fetchAll($query,$group, $max, $offset);
@@ -2332,7 +2325,6 @@ class UsersLib extends TikiLib
 	function assign_level_permissions($group, $level) {
 		$query = "select `permName` from `users_permissions` where `level` = ?";
 		$result = $this->query($query, array($level));
-		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$this->assign_permission_to_group($res['permName'], $group);
@@ -2349,7 +2341,6 @@ class UsersLib extends TikiLib
 	function remove_level_permissions($group, $level) {
 		$query = "select `permName` from `users_permissions` where `level` = ?";
 		$result = $this->query($query, array($level));
-		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$this->remove_permission_from_group($res['permName'], $group);
@@ -5077,7 +5068,6 @@ class UsersLib extends TikiLib
 	}
 
 	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
-		global $prefs;
 
 		if ($enabledOnly) {
 			$raw = $this->get_enabled_permissions();
@@ -5360,7 +5350,7 @@ class UsersLib extends TikiLib
 	}
 
 	function confirm_user($user) {
-		global $prefs,$cachelib;
+		global $cachelib;
 
 		$query = "update `users_users` set `provpass`=?, valid=?, `email_confirm`=?, `waiting`=? where `login`=?";
 		$result = $this->query($query, array('', NULL, $this->now, NULL, $user));
@@ -5368,7 +5358,7 @@ class UsersLib extends TikiLib
 	}
 
 	function invalidate_account($user) {
-		global $prefs,$cachelib, $tikilib;
+		global $cachelib, $tikilib;
 
 		$query = "update `users_users` set valid=?, `waiting`=? where `login`=?";
 		$result = $this->query($query, array(md5($tikilib->genPass()), 'u', $user));
@@ -5553,7 +5543,6 @@ class UsersLib extends TikiLib
 	}
 
 	function get_user_by_cookie($cookie) {
-		global $prefs;
 		list($secret, $userId) = explode('.', $cookie, 2);
 		$query = "select `userId` from `tiki_user_login_cookies` where `secret`=? and `userId`=? and `expiration` > NOW()";
 
@@ -6139,7 +6128,7 @@ class UsersLib extends TikiLib
 	}
 
 	function confirm_email($user, $pass) {
-		global $prefs, $tikilib;
+		global $tikilib;
 		$query = 'select `provpass`, `login`, `unsuccessful_logins` from `users_users` where `login`=?';
 		$result = $this->query($query, array($user));
 		if (!($res = $result->fetchRow())) {
