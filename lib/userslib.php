@@ -203,7 +203,7 @@ class UsersLib extends TikiLib
 	 * @return void : redirects to suitable homepage or redir param if not remote 
 	 */
 	function user_logout($user, $remote = false, $redir = '') {
-		global $prefs, $logslib, $lslib, $user_cookie_site, $phpcas_enabled;
+		global $prefs, $logslib, $lslib, $user_cookie_site;
 
 		$logslib->add_log('login', 'logged out');
 		
@@ -304,7 +304,7 @@ class UsersLib extends TikiLib
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
 	function validate_user($user, $pass, $challenge = '', $response = '', $validate_phase=false) {
-		global $tikilib, $prefs, $user_ldap_attributes;
+		global $tikilib, $prefs;
 
 		if ($user != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
 			// slave intertiki sites should never check passwords locally, just for admin
@@ -793,7 +793,7 @@ class UsersLib extends TikiLib
 	}
 
 	function check_cas_authentication($user_cookie_site) {
-		global $tikilib, $prefs, $base_url, $webdav_access;
+		global $tikilib, $prefs, $webdav_access;
 
 		// Avoid CAS authentication check if the client is not able to handle HTTP redirects to another domain. This includes:
 		//  - WebDAV requests
@@ -1096,7 +1096,6 @@ class UsersLib extends TikiLib
 	// synchronize all groups with ldap directory
 	function ldap_sync_all_groups() {
 		global $prefs;
-		global $logslib;
 
 		if ($prefs['syncGroupsWithDirectory'] != 'y') {
 			return false;
