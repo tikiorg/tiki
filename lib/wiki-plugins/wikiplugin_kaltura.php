@@ -27,12 +27,12 @@ function wikiplugin_kaltura($data, $params) {
 	global $prefs;
      extract ($params, EXTR_SKIP);
      
-     $code ='<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" allowScriptAccess="always" allowNetworking="all" allowFullScreen="true" height="365" width="400" data="'.$prefs['kServiceUrl'].'index.php/kwidget/wid/'.$prefs['kdpWidget'].'/uiconf_id/'.$prefs['kdpUIConf'].'/entry_id/'.$id.'">
+     $code ='<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" allowScriptAccess="always" allowNetworking="all" allowFullScreen="true" height="365" width="400" data="'.$prefs['kServiceUrl'].'index.php/kwidget/wid/'.$prefs['kdpWidget'].'/uiconf_id/'.$prefs['kdpUIConf'].'/entry_id/'.urlencode($id).'">
 			 <param name="allowScriptAccess" value="always" />
 			 <param name="allowNetworking" value="all" />
 			 <param name="allowFullScreen" value="true" />
-			 <param name="movie" value="'.$prefs['kServiceUrl'].'index.php/kwidget/wid/'.$prefs['kdpWidget'].'/uiconf_id/'.$prefs['kdpUIConf'].'/entry_id/'.$id.'"/>
-			 <param name="flashVars" value="entry_id='.$id.'"/>
+			 <param name="movie" value="'.$prefs['kServiceUrl'].'index.php/kwidget/wid/'.$prefs['kdpWidget'].'/uiconf_id/'.$prefs['kdpUIConf'].'/entry_id/'.urlencode($id).'"/>
+			 <param name="flashVars" value="entry_id='.htmlspecialchars($id).'"/>
 			 <param name="wmode" value="opaque"/>
 			 </object>';
      return '~np~'.$code.'~/np~';
