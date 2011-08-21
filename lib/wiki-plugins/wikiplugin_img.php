@@ -772,12 +772,10 @@ function wikiplugin_img_info() {
 		}
 		//if we need iptc data
 		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || !empty($imgdata['metadata'])) {
-			include_once('lib/metadata.php');
-			$imageObj->iptc = get_iptc($imageObj->otherinfo);
 			//description from image iptc
-			$idesc = isset($imageObj->iptc['2#120'][0]) ? $imageObj->iptc['2#120'][0] : '';	
+			$idesc = isset($imageObj->iptc_raw['2#120'][0]) ? $imageObj->iptc_raw['2#120'][0] : '';	
 			//title from image iptc	
-			$ititle = isset($imageObj->iptc['2#005'][0]) ? $imageObj->iptc['2#005'][0] : '';
+			$ititle = isset($imageObj->iptc_raw['2#005'][0]) ? $imageObj->iptc_raw['2#005'][0] : '';
 		}
 		$fwidth = '';
 		$fheight = '';
@@ -1182,9 +1180,10 @@ function wikiplugin_img_info() {
 		$dialog = metaview_dialog($imageObj, $id, $dbinfo['filename']);
 		$repl .= $dialog;
 		$jq = '$(document).ready(function() {
-					$("#' . $id . '").dialog({
+					$("#' . $id . '").css(\'z-index\', \'1005\').dialog({
 							autoOpen: false,
-							width: 700
+							width: 700,
+							zIndex: 1005
 					});				
 						
 					$("#' . $id_link . '").click(function() {
@@ -1341,4 +1340,5 @@ function wikiplugin_img_info() {
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 	return '~np~' . $repl. "\r" . '~/np~';
- }
+//	echo '<pre>' . $imageObj->xmp->saveXML() . '</pre>';
+}
