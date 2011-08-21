@@ -1317,7 +1317,7 @@ class UsersLib extends TikiLib
 		foreach ($result as $res) {
 			$ret[$res['login']] = $this->clean_user($res["login"]);
 		}
-		if (!empty($finddesc) && $prefs['user_show_realnames'] == 'y') {
+		if (!empty($findesc) && $prefs['user_show_realnames'] == 'y') {
 			$query = "select `user` from `tiki_user_preferences` where `prefName` = 'realName' and `value` like ?";
 			$result = $this->fetchAll($query,array($findesc),$maxRecords,$offset);
 			foreach ($result as $res) {
