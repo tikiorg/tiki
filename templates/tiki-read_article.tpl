@@ -164,13 +164,13 @@
 </div>
 
 {if $prefs.feature_article_comments == 'y' && 
-		(($tiki_p_read_comments == 'y' && $comments_cant != 0) || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
+		($tiki_p_read_comments == 'y' || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
 
-	<div id="page-bar" class="clearfix">
-		{include file='comments_button.tpl'}
-	</div>
-
-	{include file='comments.tpl'}
+	<div id="comment-container" data-target="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=article&amp;objectId={$articleId|escape:'url'}"></div>
+	{jq}
+		var id = '#comment-container';
+		$(id).comment_load($(id).data('target'));
+	{/jq}
 {/if}
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}

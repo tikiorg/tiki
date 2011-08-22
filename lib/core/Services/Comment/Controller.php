@@ -387,6 +387,8 @@ class Services_Comment_Controller
 			return $prefs['feature_blogposts_comments'] == 'y';
 		case 'trackeritem':
 			return true;
+		case 'article':
+			return $prefs['feature_article_comments'] == 'y';
 		default:
 			return false;
 		}

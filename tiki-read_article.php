@@ -174,16 +174,7 @@ foreach ($topics as $topic) {
 	}
 }
 $smarty->assign_by_ref('topics', $topics);
-if ($prefs['feature_article_comments'] == 'y') {
-	$smarty->assign('comment_can_rate_article', $article_data["comment_can_rate_article"]);
-	$comments_per_page = $prefs['article_comments_per_page'];
-	$thread_sort_mode = $prefs['article_comments_default_ordering'];
-	$comments_vars = array('articleId');
-	$comments_prefix_var = 'article:';
-	$comments_object_var = 'articleId';
-	include_once ("comments.php");
-	if (isset($_REQUEST['show_comzone']) && $_REQUEST['show_comzone'] == 'y') $smarty->assign('show_comzone', 'y');
-}
+
 $objId = $_REQUEST['articleId'];
 if ($prefs['feature_categories'] == 'y') {
 	$is_categorized = $categlib->is_categorized('article',$objId);
