@@ -200,6 +200,7 @@ class UnifiedSearchLib
 			}
 
 			$aggregator->addContentSource('comment', new Search_ContentSource_CommentSource($commentTypes));
+			$aggregator->addGlobalSource(new Search_GlobalSource_CommentSource);
 		}
 
 		// Global Sources
