@@ -63,8 +63,7 @@ class Language_WriteFile
 			fwrite($handle, "// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project\n");
 			fwrite($handle, "// \n");
 			fwrite($handle, "// All Rights Reserved. See copyright.txt for details and a complete list of authors.\n");
-			fwrite($handle, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n");
-			fwrite($handle, "// \$Id$\n\n");
+			fwrite($handle, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n\n");
 			fwrite($handle, "\$lang = array(\n");
 			
 			foreach ($entries as $entry) {
