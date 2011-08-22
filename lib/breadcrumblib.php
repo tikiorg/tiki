@@ -87,7 +87,7 @@ function breadcrumb_buildTrail($crumbs, $loc) {
  */
 /* private static */
 function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1) {
-    global $structure, $structure_path, $prefs, $print_page, $info;
+    global $structure, $structure_path, $prefs, $info;
 
     $seper = ' '.htmlentities($prefs['site_crumb_seper'],ENT_QUOTES,"UTF-8").' ';
     switch ($prefs['feature_sitetitle']) {
@@ -199,7 +199,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass) {
  */
 /* static */
 function breadcrumb_getTitle($crumbs, $loc) {
-    global $prefs, $print_page, $info;
+    global $prefs, $info;
 
     if ($prefs['feature_breadcrumbs'] == 'n' && ($prefs['feature_wiki_description'] == 'y' && $info)) {
         return _breadcrumb_getTitle($crumbs, $loc);

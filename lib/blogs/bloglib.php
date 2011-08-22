@@ -16,7 +16,8 @@ include_once('lib/reportslib.php');
  * Class that handles all blog operations
  *
  * @uses TikiDb_Bridge
- * @package
+ * @package Tiki
+ * @subpackage Blogs
  * @version
  * @license LGPL. See licence.txt for more details
  */
@@ -64,7 +65,6 @@ class BlogLib extends TikiDb_Bridge
 		$i = 0;
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-			global $user;
 			if ($objperm = $tikilib->get_perm_object($res['blogId'], 'blog', '', false)) {
 				if ( $objperm['tiki_p_read_blog'] == 'y' || ($ref == 'post' && $objperm['tiki_p_blog_post_view_ref'] == 'y') || ($ref == 'blog' && $objperm['tiki_p_blog_view_ref'] == 'y')) {
 					++$cant;
@@ -127,8 +127,6 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function get_blog_by_title($blogTitle)
 	{
-		global $prefs, $user;
-
 	 	// Avoiding select by name so as to avoid SQL injection problems.
 		$query = "select `title`, `blogId` from `tiki_blogs`";
 		$result = $this->fetchAll($query);
@@ -481,7 +479,7 @@ class BlogLib extends TikiDb_Bridge
 							$maxRecords = -1, $sort_mode = 'created_desc', $find = '', 
 							$date_min = '', $date_max = '', $approved = 'y'
 	)  {
-		global $tikilib, $tiki_p_admin_comments, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
+		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
 		global $commentslib; require_once('lib/comments/commentslib.php');
 		
 		$parserlib = TikiLib::lib('parser');
@@ -661,7 +659,6 @@ class BlogLib extends TikiDb_Bridge
 
 		$result = Perms::filter( array( 'type' => 'blog' ), 'object', $result, array( 'object' => 'blogId' ), array('read_blog', 'blog_view_ref') );
 
-		global $prefs;
 		foreach( $result as $res ) {
 			$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
 			$title = $this->getOne($query2, array($res["blogId"]));
@@ -886,7 +883,6 @@ class BlogLib extends TikiDb_Bridge
 	 * @return array
 	 */
 	function _get_adjacent_posts($blogId, $created, $publishDate = null, $user=null) {
-		global $tikilib;
 		$res = array();
 
 		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ';

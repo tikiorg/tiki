@@ -146,8 +146,6 @@ class Installer extends TikiDb_Bridge
 		// split the file into several queries?
 		$statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command);
 
-		$prestmt="";
-		$do_exec=true;
 		$status = true;
 		foreach ($statements as $statement) {
 			if (trim($statement)) {

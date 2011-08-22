@@ -147,7 +147,7 @@ class TikiCalendarLib extends CalendarLib
 
 	function getTikiItems($with_infos = true) {
 		global $prefs;
-		global $tiki_p_view, $tiki_p_view_image_gallery, $tiki_p_read_article, $tiki_p_read_blog, $tiki_p_forum_read, $tiki_p_view_directory, $tiki_p_view_file_gallery, $tiki_p_view_faqs, $tiki_p_take_quiz, $tiki_p_view_trackers, $tiki_p_take_survey, $tiki_p_subscribe_newsletters, $tiki_p_view_chart;
+		global $tiki_p_view, $tiki_p_view_image_gallery, $tiki_p_read_article, $tiki_p_read_blog, $tiki_p_forum_read, $tiki_p_view_directory, $tiki_p_view_file_gallery, $tiki_p_view_faqs, $tiki_p_take_quiz, $tiki_p_view_trackers, $tiki_p_take_survey, $tiki_p_subscribe_newsletters;
 
 		$return = array(
 			"wiki" => array( "label" => tra("Wiki"), "feature" => ''.$prefs['feature_wiki'], "right" => "$tiki_p_view"),

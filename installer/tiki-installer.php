@@ -269,7 +269,7 @@ function get_webserver_uid() {
 }
 
 function error_and_exit() {
-	global $errors, $docroot, $wwwgroup, $wwwuser;
+	global $errors, $docroot;
 
         $PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
 
@@ -408,7 +408,7 @@ function list_disable_accounts() {
 }
 
 function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_charset, &$dbTiki ) {
-	global $tikifeedback, $smarty;
+	global $tikifeedback;
 	$dbcon = false;
 
 	// This section handles the case of adodb (not the preferred case)
