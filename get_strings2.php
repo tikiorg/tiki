@@ -18,6 +18,10 @@
  * Command line examples:
  * 		- php get_strings.php
  * 		- php get_strings.php lang=pt-br outputFiles=true
+ *
+ *
+ * If you want to know the translation progression for your language, just visit : http://i18n.tiki.org/status
+ *
  */
 
 if (php_sapi_name() != 'cli') {
