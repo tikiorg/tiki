@@ -13,11 +13,15 @@ include_once('modules/mod-func-translation.php');
 execute_module_translation();
 
 $access->check_feature('feature_multilingual');
-	
+
 if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id']) && $_REQUEST['id'])) {
 	$smarty->assign('msg',tra("No object indicated"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+if (isset($_REQUEST['type'], $_REQUEST['id']) && $_REQUEST['type'] == 'wiki page') {
+	$_REQUEST['page'] = $tikilib->get_page_name_from_id($_REQUEST['id']);
 }
 
 include_once("lang/langmapping.php");
@@ -46,52 +50,9 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	}
 }
 else if ($_REQUEST['id']) {
-	if (!isset($_REQUEST['type'])) {
-		$smarty->assign('msg',tra("No type indicated"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	if ($_REQUEST['type'] == "wiki page") {
-		$info = $tikilib->get_page_info_from_id($_REQUEST['id']);
-		if (empty($info)) {
-			$smarty->assign('msg',tra("Page cannot be found"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$name = $info['pageName'];
-		$type = "wiki page";
-		$objId = $info['page_id'];
-		$langpage = $info['lang'];
-		$fullLangName = $langmapping[$langpage][0];
-		$smarty->assign( 'languageName', $fullLangName );
-		$cat_type = 'wiki page';
-		$cat_objid = $name;
-		
-		$edit_data = $info['data'];
-		$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
-		
-		if ($prefs['feature_translation_incomplete_notice'] == 'y') {
-			$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.")."^\n\n");
-		}
-		
-	}
-	else if ($_REQUEST['type'] == "article") {
-		global $artlib; require_once 'lib/articles/artlib.php';
-		$info = $artlib->get_article($_REQUEST["id"]);
-		if (empty($info)) {
-			$smarty->assign('msg', tra("Article not found"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$name = $info['title'];
-		$type = "article";
-		$objId = $_REQUEST['id'];
-		$langpage = $info['lang'];
-		$cat_type = 'article';
-		$cat_objid = $objId;
-		$fullLangName = $langmapping[$langpage][0];
-		$smarty->assign( 'languageName', $fullLangName );
-	}
+	$smarty->assign('msg',tra("Only wiki pages are supported."));
+	$smarty->display("error.tpl");
+	die;
 }
 
 $smarty->assign('name', $name);
@@ -126,116 +87,7 @@ if ($type == "wiki page") {
 	}
 }
 
-if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId']) && $tiki_p_detach_translation == 'y') { // detach from a translation set
-	check_ticket('edit-translation');
-	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
-}
- else if (isset($_REQUEST['set']) && !empty($_REQUEST['srcName'])) { // attach to a translation set
-	check_ticket('edit-translation');
-	if (empty($langpage) || $langpage == "NULL") {
-		$error = "traLang";
-		$smarty->assign('error', $error);
-	}
-	else {
-		$srcInfo = $tikilib->get_page_info($_REQUEST['srcName']);
-		if (empty($srcInfo)) {
-			$error = "srcExists";
-			$smarty->assign('error', $error);
-		}
-		else 
-			if (!(isset($srcInfo['lang']) && $srcInfo['lang'])) {
-				$error = "srcLang";
-				$smarty->assign('error', $error);
-			}
-			elseif ($srcInfo['page_id'] != $objId) {
-				$error = $multilinguallib->insertTranslation($type, $srcInfo['page_id'], $srcInfo['lang'], $objId, $langpage);
-				if ($error)
-					$smarty->assign('error', $error);
-				else
-					$_REQUEST['srcName'] = "";
-			}
-	}
-	$smarty->assign('srcName', $_REQUEST['srcName']);
-}
-else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
-	check_ticket('edit-translation');
-	if (empty($langpage) || $langpage == "NULL") {
-		$error = "traLang";
-		$smarty->assign('error', $error);
-	}
-	else {
-		global $artlib; require_once 'lib/articles/artlib.php';
-		$srcInfo = $artlib->get_article($_REQUEST["srcId"]);
-	if (empty($srcInfo)) {
-			$error = "srcExists";
-			$smarty->assign('error', $error);
-		}
-		else 
-			if (!(isset($srcInfo['lang']) && $srcInfo['lang'])) {
-				$error = "srcLang";
-				$smarty->assign('error', $error);
-			}
-			else {
-				$error = $multilinguallib->insertTranslation($type, $srcInfo['articleId'], $srcInfo['lang'], $objId, $langpage);
-				if ($error)
-					$smarty->assign('error', $error);
-				else
-					$_REQUEST['srcName'] = "";
-			}
-	}
-	$smarty->assign('srcId', $_REQUEST['srcId']);
-}
-
-if ($type == "wiki page") {
-	// Fetches the list of pages with a langage assigned
-	// that is different than those already included in the
-	// current set.
-	$result = $tikilib->query("
-		SELECT lang, pageName 
-		FROM tiki_pages 
-		WHERE
-			lang IS NOT NULL
-			AND lang <> ?
-			AND page_id NOT IN(
-				SELECT
-					a.page_id
-				FROM
-					tiki_pages a
-					INNER JOIN tiki_translated_objects b ON a.lang = b.lang
-					INNER JOIN tiki_translated_objects c ON b.traId = c.traId
-				WHERE
-					c.type = 'wiki page'
-					AND c.objId = ?
-			)
-			AND page_id NOT IN(
-				SELECT
-					a.objId
-				FROM
-					tiki_translated_objects a
-					INNER JOIN tiki_translated_objects b ON a.traId = b.traId
-				WHERE
-					b.lang = ?
-					AND a.type = 'wiki page'
-					AND b.type = 'wiki page'
-			)
-		ORDER BY pageName ASC", array($langpage, $info['page_id'], $langpage) );
-  $pages = array( 'data' => array() );
-  while( $row = $result->fetchRow() )
-    $pages['data'][] = $row;
-
-	$smarty->assign_by_ref('pages', $pages["data"]);
-}
-else if ($type == "article") {
-	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to edit this article"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-
 $trads = $multilinguallib->getTranslations($type, $objId, $name, $langpage, true);
-$smarty->assign('trads', $trads);
 
 $usedLang = array();
 foreach( $trads as $trad )
@@ -255,11 +107,6 @@ ask_ticket('edit-translation');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-
-if ($type == 'article') {
-	$articles = $artlib->list_articles(0, -1, 'title_asc', '', '', '', $user);
-	$smarty->assign('articles', $articles["data"]);
-}
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_translation.tpl');

@@ -2930,11 +2930,12 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_detach_translation',
 				'description' => tra('Can remove association between two pages in a translation set'),
-				'level' => 'registered',
+				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array('feature_multilingual'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'cms'),
 			),
 			array(
 				'name' => 'tiki_p_edit_cookies',
