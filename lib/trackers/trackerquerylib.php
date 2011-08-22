@@ -244,14 +244,14 @@ class TrackerQueryLib extends TikiLib
 		if (empty($trackerId)) return; //if we can't find a tracker, then return
 		
 		$trackerDefinition = Tracker_Definition::get($trackerId);
-		
+
 		$trackerFieldDefinition = $trackerDefinition->getFields();
 		$trackerFieldDefinitionIdAsKey = array();
 		foreach( $trackerFieldDefinition as $field ) {
 			$trackerFieldDefinitionIdAsKey[$field['fieldId']] = $field;
 		}
 		$trackerFieldDefinition = $trackerFieldDefinitionIdAsKey;
-		unset($trackerFieldDefinition);
+		unset($trackerFieldDefinitionIdAsKey);
 		
 		
 		$params[] = $trackerId;
@@ -426,14 +426,14 @@ class TrackerQueryLib extends TikiLib
 	
 	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
 	*/
-	function tracker_query_by_names($tracker, $start = null, $end = null, $itemId = null, $equals = null, $search = null, $fields = null, $status = null, $sort = null, $limit = null, $offset = null, $includeTrackerDetails = null, $desc = null, $render = null) {
+	function tracker_query_by_names($tracker, $start = null, $end = null, $itemId = null, $equals = null, $search = null, $fields = null, $status = null, $sort = null, $limit = null, $offset = null, $includeTrackerDetails = null, $desc = null, $render = true) {
 		return $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails, $desc, $render);
 	}
 	
 	
 	private function render_field_value($fieldDefinition, $value) {
 		global $trklib;
-		
+
 		$fieldDefinition['value'] = $value;
 		return $trklib->field_render_value(array(
 			'field'=> $fieldDefinition,
