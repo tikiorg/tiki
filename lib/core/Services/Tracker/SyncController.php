@@ -95,7 +95,7 @@ class Services_Tracker_SyncController
 				continue;
 			}
 
-			$importable = $handler->importField($info, $syncInfo);
+			$importable = $handler->importRemoteField($info, $syncInfo);
 			$this->utilities->updateField($trackerId, $localField['fieldId'], $importable);
 		}
 
@@ -119,7 +119,7 @@ class Services_Tracker_SyncController
 				$field = $remoteDefinition->getFieldFromPermName($key);
 				if ($field && $definition->getFieldFromPermName($key)) {
 					$handler = $factory->getHandler($field);
-					$value = $handler->import($value);
+					$value = $handler->importRemote($value);
 				}
 			}
 
@@ -247,8 +247,8 @@ class Services_Tracker_SyncController
 		foreach ($data as $info) {
 			$handler = $factory->getHandler($info);
 			if ($handler instanceof Tracker_Field_Synchronizable) {
-				$importable = $handler->importField($info, $syncInfo);
-				$this->utilities->importField($trackerId, new JitFilter($importable), false);
+				$importable = $handler->importRemoteField($info, $syncInfo);
+				$this->utilities->importRemoteField($trackerId, new JitFilter($importable), false);
 			}
 		}
 	}
@@ -339,7 +339,7 @@ class Services_Tracker_SyncController
 			$field = $remoteDefinition->getFieldFromPermName($key);
 			if ($field && $definition->getFieldFromPermName($key)) {
 				$handler = $factory->getHandler($field);
-				$value = $handler->export($value);
+				$value = $handler->exportRemote($value);
 			}
 		}
 		

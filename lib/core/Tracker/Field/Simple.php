@@ -115,17 +115,17 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 		return $this->renderTemplate("trackerinput/{$this->type}.tpl", $context);
 	}
 
-	function import($value)
+	function importRemote($value)
 	{
 		return $value;
 	}
 
-	function export($value)
+	function exportRemote($value)
 	{
 		return $value;
 	}
 
-	function importField(array $info, array $syncInfo)
+	function importRemoteField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

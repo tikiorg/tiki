@@ -7,10 +7,10 @@
 
 interface Tracker_Field_Synchronizable extends Tracker_Field_Interface
 {
-	function import($value);
+	function importRemote($value);
 
-	function export($value);
+	function exportRemote($value);
 
-	function importField(array $info, array $syncInfo);
+	function importRemoteField(array $info, array $syncInfo);
 }
 

@@ -61,17 +61,17 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 		);
 	}
 
-	function import($value)
+	function importRemote($value)
 	{
 		return $value;
 	}
 
-	function export($value)
+	function exportRemote($value)
 	{
 		return $value;
 	}
 
-	function importField(array $info, array $syncInfo)
+	function importRemoteField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

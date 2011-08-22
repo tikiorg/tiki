@@ -232,17 +232,17 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		return $data;
 	}
 
-	function import($value)
+	function importRemote($value)
 	{
 		return $value;
 	}
 
-	function export($value)
+	function exportRemote($value)
 	{
 		return $value;
 	}
 
-	function importField(array $info, array $syncInfo)
+	function importRemoteField(array $info, array $syncInfo)
 	{
 		$sourceOptions = explode(',', $info['options']);
 		$trackerId = isset($sourceOptions[0]) ? (int) $sourceOptions[0] : 0;

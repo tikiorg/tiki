@@ -66,17 +66,17 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 		);
 	}
 
-	function import($value)
+	function importRemote($value)
 	{
 		return '';
 	}
 
-	function export($value)
+	function exportRemote($value)
 	{
 		return '';
 	}
 
-	function importField(array $info, array $syncInfo)
+	function importRemoteField(array $info, array $syncInfo)
 	{
 		return $info;
 	}

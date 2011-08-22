@@ -196,17 +196,17 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
 	}
 
-	function import($value)
+	function importRemote($value)
 	{
 		return $value;
 	}
 
-	function export($value)
+	function exportRemote($value)
 	{
 		return $value;
 	}
 
-	function importField(array $info, array $syncInfo)
+	function importRemoteField(array $info, array $syncInfo)
 	{
 		$sourceOptions = explode(',', $info['options']);
 		$parentId = isset($sourceOptions[0]) ? (int) $sourceOptions[0] : 0;

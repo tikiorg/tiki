@@ -127,17 +127,17 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		}
 	}
 
-	function import($value)
+	function importRemote($value)
 	{
 		return $value;
 	}
 
-	function export($value)
+	function exportRemote($value)
 	{
 		return $value;
 	}
 
-	function importField(array $info, array $syncInfo)
+	function importRemoteField(array $info, array $syncInfo)
 	{
 		$groupIds = $this->getOption(2, '');
 		$groupIds = array_filter(explode('|', $groupIds));
