@@ -1048,8 +1048,9 @@ class ArtLib extends TikiLib
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = ' where (`title` like ? or `heading` like ? or `body` like ?) ';
-			$bindvars = array($findesc, $findesc, $findesc);
+			if (empty($mid)) $mid = ' where ';
+			$mid .= " (`title` like ? or `heading` like ? or `body` like ? or `author` like ? or `authorName` like ?) ";
+			$bindvars = array($findesc, $findesc, $findesc, $findesc, $findesc);
 		}
 
 		// type=>[!]a+b+c+d+...
@@ -1268,9 +1269,9 @@ class ArtLib extends TikiLib
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '')
 	{
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-			$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
-			$bindvars = array($findesc, $findesc, $findesc);
+			$findPattern = '%' . $find . '%';
+			$mid = " where (`title` like ? or `heading` like ? or `body` like ? or `author` like ? or `authorName` like ?) ";
+			$bindvars = array($findPattern, $findPattern, $findPattern, $findPattern, $findPattern);
 		} else {
 			$mid = '';
 			$bindvars = array();
