@@ -73,10 +73,73 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
+		$ins_id = $this->getInsertId();
+
+		if (isset($requestData['vote']) && isset($requestData['itemId'])) {
+			$trklib = TikiLib::lib('trk');
+			$data = $this->getBaseFieldData();
+			$trklib->replace_star($requestData[$ins_id], $this->getConfiguration('trackerId'), $requestData['itemId'], $data, $user, true);
+		} else {
+			$data = $this->gatherVoteData();
+		}
+
+		return array(
+			'my_rate' => $data['my_rate'],
+			'numvotes' => empty($data['numvotes']) ? 0 : $data['numvotes'],
+			'voteavg' => empty($data['voteavg']) ? 0 : $data['voteavg'],
+			'request_rate' => (isset($requestData[$ins_id]))
+				? $requestData[$ins_id]
+				: null,
+			'value' => $data['value'],
+			'mode' => $data['mode'],
+			'labels' => $data['labels_array'],      
+			'rating_options' => $data['rating_options'],
+		);
+	}
+
+	function renderOutput($context = array())
+	{
+		return $this->renderTemplate('trackeroutput/rating.tpl', $context);
+	}
+
+	function renderInput($context = array())
+	{
+		if ($this->getConfiguration('type') == 's') {
+			return $this->renderTemplate('trackerinput/rating.tpl', $context);
+		}
+
+		return null;
+	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$data = $this->gatherVoteData();
+
+		return array(
+			$baseKey => $typeFactory->sortable($data['voteavg']),
+			"{$baseKey}_count" => $typeFactory->sortable($data['numvotes']),
+			"{$baseKey}_sum" => $typeFactory->sortable($data['total']),
+		);
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		return array(
+			$baseKey,
+			"{$baseKey}_count",
+			"{$baseKey}_sum",
+		);
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array();
+	}
+
+	private function getBaseFieldData()
+	{
 		global $user;
 
-		$trklib = TikiLib::lib('trk');
-		$ins_id = $this->getInsertId();
 		$mode = 'stars'; // default is stars for legacy reasons
 
 		$options_array = $this->getConfiguration('options_array');
@@ -103,47 +166,44 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			$rating_options = $options_array;
 		}
 
-		$data = array(
+		return array(
 			'fieldId' => $this->getConfiguration('fieldId'),
 			'type' => $this->getConfiguration('type'),
 			'name' => $this->getConfiguration('name'),
 			'value' => $this->getValue(), 
 			'options_array' => $options_array,
 			'rating_options' => $rating_options,
-		);
-
-		if (isset($requestData['vote']) && isset($requestData['itemId'])) {
-			$trklib->replace_star($requestData[$ins_id], $this->getConfiguration('trackerId'), $requestData['itemId'], $data, $user, true);
-		} else {
-			$trklib->update_star_field($this->getConfiguration('trackerId'), $this->getItemId(), $data);
-		}
-
-		return array(
-			'my_rate' => $data['my_rate'],
-			'numvotes' => empty($data['numvotes']) ? 0 : $data['numvotes'],
-			'voteavg' => empty($data['voteavg']) ? 0 : $data['voteavg'],
-			'request_rate' => (isset($requestData[$ins_id]))
-				? $requestData[$ins_id]
-				: null,
-			'value' => $data['value'],
 			'mode' => $mode,
-			'labels' => $labels_array,      
-			'rating_options' => $rating_options,
 		);
 	}
 
-	function renderOutput($context = array())
+	private function gatherVoteData()
 	{
-		return $this->renderTemplate('trackeroutput/rating.tpl', $context);
-	}
+		global $user;
+		$field = $this->getBaseFieldData();
+		$trackerId = $this->getConfiguration('trackerId');
+		$itemId = $this->getItemId();
 
-	function renderInput($context = array())
-	{
-		if ($this->getConfiguration('type') == 's') {
-			return $this->renderTemplate('trackerinput/rating.tpl', $context);
+		$votings = TikiDb::get()->table('tiki_user_votings');
+
+		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
+			$key = 'tracker.'.$trackerId.'.'.$itemId; 
+		} elseif ($field['type'] == '*' || $field['type'] == 'STARS') { // field rating - value is the average of the votes
+			$key = "tracker.$trackerId.$itemId.".$field['fieldId']; 
 		}
 
-		return null;
+		$data = $votings->fetchRow(array(
+			'count' => $votings->count(),
+			'total' => $votings->sum('optionId'),
+		), array('id' => $key));
+
+		$field['numvotes'] = $data['count'];
+		$field['total'] = $data['total']; 
+		$field['voteavg'] = $field['total'] / $field['numvotes'];
+		// be careful optionId is the value - not the optionId
+		$field['my_rate'] = $votings->fetchOne('optionId', array('id' => $key, 'user' => $user));
+
+		return $field;
 	}
 }
 

@@ -2412,25 +2412,6 @@ class TrackerLib extends TikiLib
 		$field['my_rate'] = $userValue;
 		$field['voteavg'] = $field['value'] = $data['total'] / $field['numvotes'];
 	}
-	function update_star_field($trackerId, $itemId, &$field) {
-		global $user;
-		$votings = $this->table('tiki_user_votings');
-
-		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
-			$key = 'tracker.'.$trackerId.'.'.$itemId; 
-		} elseif ($field['type'] == '*' || $field['type'] == 'STARS') { // field rating - value is the average of the votes
-			$key = "tracker.$trackerId.$itemId.".$field['fieldId']; 
-		}
-		$data = $votings->fetchRow(array(
-                        'count' => $votings->count(),
-                        'total' => $votings->sum('optionId'),
-                ), array('id' => $key));
-		$field['numvotes'] = $data['count'];
-		$total = $data['total']; 
-		$field['voteavg'] = $total/$field['numvotes'];
-		// be careful optionId is the value - not the optionId
-		$field['my_rate'] = $votings->fetchOne('optionId', array('id' => $key, 'user' => $user));
-	}
 
 	function remove_tracker($trackerId) {
 
