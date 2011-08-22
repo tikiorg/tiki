@@ -10,23 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-// Process Features form(s)
-if (isset($_REQUEST["features"])) {
-	$features_toggles = array(
-		"feature_events", //2009-04-29 marclaporte: can we remove this?
-	);
-	$pref_byref_values = array(
-		"user_flip_modules"
-	);
-	check_ticket('admin-inc-features');
-	foreach($features_toggles as $toggle) {
-		simple_set_toggle($toggle);
-	}
-	foreach($pref_byref_values as $britem) {
-		byref_set_value($britem);
-	}
-	$cachelib->empty_cache();
-}
 
 $smarty->assign('event_graph', TikiLib::events()->getEventGraph());
 
