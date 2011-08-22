@@ -365,6 +365,19 @@ abstract class Toolbar
 		return $this->wysiwyg;
 	} // }}}
 	
+	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		// this code does not make any sense yet, it's just for testing
+		if ($this->wysiwyg != 'Font') {
+			return $this->wysiwyg;
+		}
+		else
+		{
+			return '';
+		} 
+	} // }}}
+	
 	function getSyntax( $areaId ) // {{{
 	{
 		return '';
@@ -1687,7 +1700,7 @@ class ToolbarsList
 			$this->lines[] = $elements;
 	} // }}}
 
-	function getWysiwygArray( $areaId ) // {{{
+	function getWysiwygArray( $areaId, $wysiwyg_wiki = false ) // {{{
 	{
 		$lines = array();
 		foreach( $this->lines as $line ) {
@@ -1696,9 +1709,14 @@ class ToolbarsList
 			foreach( $line as $bit ) {
 				foreach( $bit as $group) {
 					foreach( $group as $tag ) {
-	
-						if( $token = $tag->getWysiwygToken( $areaId ) )
-							$lineOut[] = $token;
+						
+						if ( $wysiwyg_wiki ) {
+							if( $token = $tag->getWysiwygWikiToken( $areaId ) )
+								$lineOut[] = $token;
+						} else {
+							if( $token = $tag->getWysiwygToken( $areaId ) )
+								$lineOut[] = $token;
+						}
 					}
 	
 					$lineOut[] = '-';
