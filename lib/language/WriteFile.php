@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 require_once('lib/core/TikiDb.php');
 require_once('Language.php');
@@ -53,6 +58,11 @@ class Language_WriteFile
 		
 		if ($handle) {
 			fwrite($handle, "<?php\n");
+			fwrite($handle, "// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project\n");
+			fwrite($handle, "// \n");
+			fwrite($handle, "// All Rights Reserved. See copyright.txt for details and a complete list of authors.\n");
+			fwrite($handle, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n");
+			fwrite($handle, "// \$Id$\n\n");
 			fwrite($handle, "\$lang = array(\n");
 			
 			foreach ($entries as $entry) {
