@@ -54,7 +54,7 @@
 				{jq}
 					$('.translations a').click(function () {
 						var link = this;
-						$(this).tracker_service_dialog({
+						$(this).serviceDialog({
 							title: $(link).text(),
 							data: {
 								controller: 'translation',

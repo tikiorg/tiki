@@ -60,7 +60,7 @@
 				}
 
 				if ($(form.action).val() === 'export_fields') {
-					$(form).tracker_service_dialog({
+					$(form).serviceDialog({
 						title: tr('Export'),
 						data: $(form).serialize(),
 						load: function () {
