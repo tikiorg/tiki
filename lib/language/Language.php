@@ -15,6 +15,9 @@ require_once('lib/core/TikiDb/Bridge.php');
 
 //TODO: move language functions (like $tikilib->list_languages()) from $tikilib to this class
 /**
+ * @package   Tiki
+ * @subpackage    Language
+ *
  * Generic methods for managing languages in Tiki
  */
 class Language extends TikiDb_Bridge

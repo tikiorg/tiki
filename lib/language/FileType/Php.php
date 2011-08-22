@@ -6,6 +6,8 @@
 // $Id$
 
 /**
+ * @package   Tiki
+ * @subpackage    Language
  * Define properties to collect translatable
  * strings from PHP files. 
  */

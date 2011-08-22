@@ -5,6 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * @package   Tiki
+ * @subpackage    Language
+ */
+
 abstract class Language_FileType
 {
 	/**

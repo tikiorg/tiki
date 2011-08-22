@@ -6,6 +6,8 @@
 // $Id$
 
 /**
+ * @package   Tiki
+ * @subpackage    Language
  * Exception class for language related classes 
  */
 class Language_Exception extends Exception

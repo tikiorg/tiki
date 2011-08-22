@@ -8,6 +8,8 @@
 require_once('Exception.php');
 
 /**
+ * @package   Tiki
+ * @subpackage    Language
  * Scan directories collecting files that should be parsed
  * when searching for translatable strings. Provide methods
  * to manually exclude directories from the search and

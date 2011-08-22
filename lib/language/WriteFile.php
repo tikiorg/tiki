@@ -9,6 +9,8 @@ require_once('lib/core/TikiDb.php');
 require_once('Language.php');
 
 /**
+ * @package   Tiki
+ * @subpackage    Language
  * Class to update language.php file with new
  * collected strings.
  */
