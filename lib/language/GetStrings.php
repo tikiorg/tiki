@@ -77,7 +77,7 @@ class Language_GetStrings
 		$this->collectFiles = $collectFiles;
 		$this->writeFile = $writeFile;
 		
-		if (isset($options['outputFiles']) && $options['outputFiles'] == true) {
+		if (isset($options['outputFiles'])) {
 			$this->outputFiles = true;
 		}
 		

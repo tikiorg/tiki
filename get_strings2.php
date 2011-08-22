@@ -9,11 +9,15 @@
  * Update language.php files
  * 
  * Examples:
- * 		- get_strings.php -> update all language.php files
- * 		- get_strings.php?lang=fr -> update just lang/fr/language.php file
- * 		- get_strings.php?lang[]=fr&lang[]=pt-br&outputFiles -> update both French
+ * 		- http://localhost/pathToTiki/get_strings.php -> update all language.php files
+ * 		- http://localhost/pathToTiki/get_strings.php?lang=fr -> update just lang/fr/language.php file
+ * 		- http://localhost/pathToTiki/get_strings.php?lang[]=fr&lang[]=pt-br&outputFiles -> update both French
  * 		  and Brazilian Portuguese language.php files and for each string add a line with
  * 		  the file where it was found.
+ * 
+ * Command line examples:
+ * 		- php get_strings.php
+ * 		- php get_strings.php lang=pt-br outputFiles=true
  */
 
 if (php_sapi_name() != 'cli') {
@@ -21,6 +25,7 @@ if (php_sapi_name() != 'cli') {
 	$access->check_permission('tiki_p_admin');
 }
 
+require_once('lib/core/Request.php');
 require_once('lib/language/CollectFiles.php');
 require_once('lib/language/FileType.php');
 require_once('lib/language/FileType/Php.php');
@@ -35,12 +40,14 @@ $timer->start();
 
 $options = array();
 
-if (isset($_GET['lang']) && !empty($_GET['lang'])) {
-	$options['lang'] = $_GET['lang'];
+$request = new Request();
+
+if ($request->hasProperty('lang')) {
+	$options['lang'] = $request->getProperty('lang');
 }
 
-if (isset($_GET['outputFiles'])) {
-	$options['outputFiles'] = true;
+if ($request->hasProperty('outputFiles')) {
+	$options['outputFiles'] = $request->getProperty('outputFiles');
 }
 
 $getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile, $options);
