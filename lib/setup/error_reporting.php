@@ -22,7 +22,15 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 } else {
 	$errorReportingLevel = $prefs['error_reporting_level'];
 }
-set_error_handler("tiki_error_handling", $errorReportingLevel);
+
+// Handle Smarty Notices
+if (!empty($prefs['smarty_notice_reporting']) and $prefs['smarty_notice_reporting'] === 'y' ) {
+		$errorHandlerReportingLevel = $errorReportingLevel | E_NOTICE;
+} else {
+		$errorHandlerReportingLevel = $errorReportingLevel;
+}
+
+set_error_handler("tiki_error_handling", $errorHandlerReportingLevel);
 error_reporting($errorReportingLevel);
 
 if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
