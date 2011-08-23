@@ -29,7 +29,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 {
-	global $prefs;
+	global $prefs, $user;
 
 	if ( $repeat ) return;
 
@@ -49,9 +49,9 @@ function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 		$htmlelement = 'role_main';
 	}
 	$def_func = (isset($params['scrollTo']) ? 'window.scrollTo('.$params['scrollTo'].');' : '') . 'loadComponent';
-  $func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
-  $last_user = htmlspecialchars($user);
-  if ($onclick) {
+	$func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
+	$last_user = htmlspecialchars($user);
+	if ($onclick) {
 		return " href=\"$url\" onclick=\"$onclick\" ";
 	} else {
 		return " href=\"$url\" ";
