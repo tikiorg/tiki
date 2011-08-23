@@ -5,6 +5,8 @@ $("#editItemForm{{$trackerEditFormId}}").validate({
 	ignore: '.ignore',
 	submitHandler: function(){process_submit(this.currentForm);}
 });
+{/jq}
+{jq}
 process_submit = function(me) {
 	if (!$(me).attr("is_validating")) {
 		$(me).attr("is_validating", true);
