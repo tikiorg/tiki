@@ -4,8 +4,11 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-/*
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * Smarty plugin to display wiki-parsed content
  *
  * Usage: {wiki}wiki text here{/wiki} 
@@ -20,15 +23,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_wiki($params, $content, $smarty)
 {
-		global $user,$userlib,$tikilib;
-		if ( (isset($params['isHtml'])) and ($params['isHtml'] ) ) {
-		  $isHtml = true;
-		} else {
-		  $isHtml = false;
-		}
-		$ret = $tikilib->parse_data($content, array('is_html' => $isHtml));
-		if (isset($params['line']) && $params['line'] == 1) {
-			$ret = preg_replace('/<br \/>$/', '', $ret);
-		}
-		return $ret;
+	global $user,$userlib,$tikilib;
+	if ( (isset($params['isHtml'])) and ($params['isHtml'] ) ) {
+	  $isHtml = true;
+	} else {
+	  $isHtml = false;
+	}
+	$ret = $tikilib->parse_data($content, array('is_html' => $isHtml));
+	if (isset($params['line']) && $params['line'] == 1) {
+		$ret = preg_replace('/<br \/>$/', '', $ret);
+	}
+	return $ret;
 }

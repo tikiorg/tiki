@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// this script may only be included - so it's better to die if called directly
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
 /**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * \brief smarty_block_tabs : add tabs to a template
  *
  * params: name (optional but unique per page if set)
@@ -25,10 +23,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 		{tab name='tab3'}tab content{/tab}
  *	{/tabset}
  * \endcode
- *
  */
 
-function smarty_block_tabset($params, $content, $smarty, &$repeat) {
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+function smarty_block_tabset($params, $content, $smarty, &$repeat)
+{
 	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib, $tabset_index, $tikilib;
 
 	if ($smarty->getTemplateVars('print_page') == 'y' || $prefs['layout_tabs_optional'] === 'n') {

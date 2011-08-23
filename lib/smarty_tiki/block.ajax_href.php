@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
-/*
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * smarty_block_ajax_href creates the href for a link in Smarty accoring to AJAX prefs
  * 
  * Params:
@@ -21,12 +19,19 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 	function	-	xajax registered function to call - default: loadComponent	// AJAX_TODO?
  * 	scrollTo	-	x,y coords to scroll to on click (e.g. "0,0")
  * 	_onclick	-	extra JS to run first onclick
+ *
  */
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
+function smarty_block_ajax_href($params, $content, $smarty, $repeat)
+{
+	global $prefs, $user, $info;
 
-function smarty_block_ajax_href($params, $content, $smarty, $repeat) {
-    global $prefs, $user, $info;
-    if ( $repeat ) return;
+	if ( $repeat ) return;
 
 	if ( !empty($params['_onclick']) ) {
 		$onclick = $params['_onclick'];
@@ -35,20 +40,20 @@ function smarty_block_ajax_href($params, $content, $smarty, $repeat) {
 		}
 	} else {
 		$onclick = '';
-    }
-    $url = $content;
-    $template = $params['template'];
+	}
+	$url = $content;
+	$template = $params['template'];
 	if ( !empty($params['htmlelement']) ) {
 		$htmlelement = $params['htmlelement'];
 	} else {
 		$htmlelement = 'role_main';
 	}
 	$def_func = (isset($params['scrollTo']) ? 'window.scrollTo('.$params['scrollTo'].');' : '') . 'loadComponent';
-    $func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
-    $last_user = htmlspecialchars($user);
-    if ($onclick) {
-	return " href=\"$url\" onclick=\"$onclick\" ";
-    } else {
-	return " href=\"$url\" ";
-    }
+  $func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
+  $last_user = htmlspecialchars($user);
+  if ($onclick) {
+		return " href=\"$url\" onclick=\"$onclick\" ";
+	} else {
+		return " href=\"$url\" ";
+	}
 }

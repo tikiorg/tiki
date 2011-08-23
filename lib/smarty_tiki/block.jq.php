@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
 /**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * \brief Smarty {jq} block handler
  *
  * Creates JQuery javascript if enabled
@@ -36,7 +34,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *    {jq}{literal}$(#exampleId").show({/literal}{if $animation_fast eq 'y'}"fast"{else}"slow"{/if}){/jq}
  */
 
-function smarty_block_jq($params, $content, $smarty) {
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+function smarty_block_jq($params, $content, $smarty)
+{
 	global $headerlib, $prefs;
 	
 	if (empty($content)) { return ''; }
@@ -49,7 +54,7 @@ function smarty_block_jq($params, $content, $smarty) {
 	
 	if (!$notonready) {		
 		$headerlib->add_jq_onready($content);
-	} else {	// 
+	} else {
 		$headerlib->add_js($content);
 	}
 	return '';

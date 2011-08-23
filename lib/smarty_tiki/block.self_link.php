@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-	header("location: index.php");
-	exit;
-}
-
-/*
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * smarty_block_self_link : add a link (with A tag) to the current page on a text (passed through $content argument).
  *
  *   The generated link uses other smarty functions like query and show_sort to handle AJAX, sorting fields, and sorting icons.
@@ -34,7 +32,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _script : specify another script than the current one (this disable AJAX for this link when the current script is different).
  *   _on* : specify values of on* (e.g. onclick) HTML attributes used for javascript events
  */
-function smarty_block_self_link($params, $content, $smarty, $repeat = false) {
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+function smarty_block_self_link($params, $content, $smarty, $repeat = false)
+{
 	global $prefs;
 	$default_type = 'absolute_path';
 	$default_icon_type = 'relative';

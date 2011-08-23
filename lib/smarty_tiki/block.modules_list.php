@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// this script may only be included - so it's better to die if called directly
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
 /**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * \brief smarty_block_modules_list : show unordered or ordered list or nothing if there is nothing to show
  *
  * params: list
@@ -30,7 +28,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  */
 
-function smarty_block_modules_list($params, $content, $smarty, &$repeat) {
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+function smarty_block_modules_list($params, $content, $smarty, &$repeat)
+{
 	global $prefs;
 	if( count($params["list"]) > 0 ){
 		if( $params["nonums"] == "y") {

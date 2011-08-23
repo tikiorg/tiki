@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
-/*
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * smarty_block_textarea : add a textarea to a template.
  *
  * special params:
@@ -20,10 +18,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *    _simple: if set to 'y' does no wysiwyg, auto_save, lost edit warning etc
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
- *
  */
 
-function smarty_block_textarea($params, $content, $smarty, $repeat) {
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+function smarty_block_textarea($params, $content, $smarty, $repeat)
+{
 	global $prefs, $headerlib, $smarty;
 	
 	if ( $repeat ) return;

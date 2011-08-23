@@ -5,7 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * \brief Add help via icon to a page
  * @author: Stéphane Casset
  * @date: 06/11/2008

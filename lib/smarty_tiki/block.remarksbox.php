@@ -6,6 +6,10 @@
 // $Id$
 
 /**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * \brief Smarty {remarksbox}{/remarksbox} block handler (tip (default), comment, note or warning)
  *
  * To make a module it is enough to place smth like following
@@ -26,13 +30,13 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
-  header('location: index.php');
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
   exit;
 }
 
-
-function smarty_block_remarksbox($params, $content, $smarty) {
+function smarty_block_remarksbox($params, $content, $smarty)
+{
 	global $prefs;
 	
 	extract($params);

@@ -5,13 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
 /**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ *
  * smarty_block_pagination_links: Generate pagination links
  *
  * url: base url to use for links (specified through the content between the pagination_links starting and ending tags).
@@ -44,7 +42,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _onclick : to allow for custom onclick for link
  *  - offset_jsvar : the variable name of the javascript variable to store the requested offset when pagination link is clicked (does not work with reloff).
  */
-function smarty_block_pagination_links($params, $url, $smarty, $repeat) {
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+function smarty_block_pagination_links($params, $url, $smarty, $repeat)
+{
 	global $prefs;
 
 	if ($repeat) return;
@@ -86,12 +92,12 @@ function smarty_block_pagination_links($params, $url, $smarty, $repeat) {
 	if ( ! isset($params['usedots']) ) $params['usedots'] = 'y';
 	if ( ! isset($params['class']) ) $params['class'] = 'mini';
 	if ( ! isset($params['htmlelement']) ) $params['htmlelement'] = 'tiki-center';
-   if ( ! isset($params['template']) ) {
-      $params['template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
-      if ( $params['template'] == 'tiki-index.tpl' ) {
-         $params['template'] = 'tiki-show_page.tpl';
-      }
-   }
+ 	if ( ! isset($params['template']) ) {
+  	$params['template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
+		if ( $params['template'] == 'tiki-index.tpl' ) {
+			$params['template'] = 'tiki-show_page.tpl';
+		}
+	}
 
 	if ( ! file_exists('templates/'.$params['template']) || $params['template'] == 'noauto' ) {
 		$params['htmlelement'] = '';
