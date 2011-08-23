@@ -29,3 +29,5 @@ if (empty($prefs['connect_site_title'])) {
 } else {
 	$smarty->assign('connect_defaults_json', '');
 }
+
+$headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');

@@ -21,7 +21,7 @@ function prefs_connect_list() {
 			'dependencies' => 'connect_feature',
 			'filter' => 'digits',
 			'default' => '168',
-			'tags' => array('experimental', 'advanced'),
+			'tags' => array('advanced'),
 		),
 		'connect_server' => array(
 			'name' => tra('Tiki Connect Server URL'),
@@ -30,7 +30,7 @@ function prefs_connect_list() {
 			'dependencies' => 'connect_feature',
 			'default' => 'https://mother.tiki.org/tiki-connect.php',
 			'filter' => 'url',
-			'tags' => array('experimental', 'advanced'),
+			'tags' => array('advanced'),
 		),
 		'connect_last_post' => array(
 			'name' => tra('Last connection'),
@@ -39,7 +39,7 @@ function prefs_connect_list() {
 			'dependencies' => 'connect_feature',
 			'filter' => 'digits',
 			'default' => '',
-			'tags' => array('experimental', 'advanced'),
+			'tags' => array('advanced'),
 		),
 		'connect_send_info' => array(
 			'name' => tra('Send Site Information'),

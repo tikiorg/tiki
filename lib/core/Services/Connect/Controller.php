@@ -23,9 +23,10 @@ class Services_Connect_Controller
 			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
 		}
 		include_once 'lib/core/TikiConnect.php';
-		$controller = new TikiConnect();
-		$info = $controller->buildArray();
+		$connectlib = new TikiConnect();
+		$info = $connectlib->buildConnectData();
 
+		//$info = $connectlib->diffDataWithLastSent($info);
 		return $info;
 	}
 
@@ -36,52 +37,127 @@ class Services_Connect_Controller
 			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
 		}
 
+		include_once 'lib/core/TikiConnect.php';
+		$connectlib = new TikiConnect();
+
 		$controller = new Services_RemoteController($prefs['connect_server'], 'connect');
 
 		$tikilib = TikiLib::lib('tiki');
-		if (empty($prefs['connect_guid'])) {
+		$confirmedGuid = $connectlib->getConfirmedGuid();
 
-			$data = $controller->receive( array( 'connect_data' => array( 'status' => 'new' ) ));
+		if ( empty($confirmedGuid) || empty($prefs['connect_guid'])) {	// not connected?
 
-			if ($data && !empty($data['guid'])) {
-				$tikilib->set_preference('connect_guid', $data['guid']);
+			$pending = $connectlib->getPendingGuid();
+
+			if (empty($pending)) {
+				$data = $controller->receive( array( 'connect_data' => array( 'cmd' => 'new' )));
+
+				if ($data['status'] === 'pending' && !empty($data['guid'])) {
+					$connectlib->recordConnection(null, $data['status'], $data['guid']);
+				}
+
+			} else {
+				$data = $controller->receive( array( 'connect_data' => array( 'cmd' => 'confirm', 'guid' => $pending )));
+
+				if ($data && !empty($data['guid']) && $data['status'] === 'confirmed') {
+					if ($data['guid'] === $pending) {
+						$tikilib->set_preference('connect_guid', $pending);
+						$connectlib->recordConnection(null, $data['status'], $pending);
+					}
+				} else {
+					$data = array(
+						'status' => 'error',
+						'message' => tra('Something went wrong. Tiki Connect is still experimental.'),
+					);
+				}
 			}
 
-		} else {
-			$odata = $this->action_list();
+		} else if ($prefs['connect_guid'] === $confirmedGuid) {
+			$odata = $connectlib->buildConnectData();	//$this->action_list();
+			//$diffdata = $connectlib->diffDataWithLastSent($odata);	// maybe later
+
+			$odata['cmd'] = 'send';
+			$odata['guid'] = $prefs['connect_guid'];
+
 
 			$data = $controller->receive( array( 'connect_data' => $odata ));
 
 			if ($data) {
-				$tikilib->set_preference('connect_last_post', $tikilib->now);
+				$status = 'sent';
+				$connectlib->recordConnection($odata, $status, $prefs['connect_guid']);
 			}
 		}
 		return $data;
 	}
 
 	function action_receive($input) {
+		include_once 'lib/core/TikiConnect.php';
+		$connectlib = new TikiConnect();
+		$rdata = array(
+//			'input' => $input,		// for testing only
+//			'server' => $_SERVER,
+//			'post' => $_POST,
+//			'get' => $_GET,
+		);
+
 		if (!empty($_POST['connect_data'])) {
-			if (empty($_POST['connect_data']['prefs']['connect_guid'])) {
-				// send back welcome message
-				return array(
-					'status' => 'pending',
-					'message' => tra('Welcome to Tiki Connect'),
-					'guid' => uniqid(rand(), true),
+			$connectData = $_POST['connect_data'];
+			$connectData['cmd'] = isset($connectData['cmd']) ? $connectData['cmd'] : '';
+			
+			if ($connectData['cmd'] === 'new') {
+
+				$status = 'pending';
+				$guid = uniqid(rand(), true);
+
+				$connectlib->recordConnection(null, $status, $guid, true);
+
+				// send back confirm message
+				$rdata = array(
+					'status' => $status,
+					'message' => tra('Please confirm you want to participate in Tiki Connect'),
+					'guid' => $guid,
 				);
-			} else {
-				// TODO check the guid is one of mine
-				return array(
-					'status' => 'received',
-					'message' => tra('Connect data received, thanks'),
-				);
+
+			} else if ($connectData['cmd'] === 'confirm' && !empty($connectData['guid'])) {
+
+				if ($connectlib->isPendingGuid($connectData['guid'])) {
+					
+					$status = 'confirmed';
+					$guid = $connectData['guid'];
+
+					$connectlib->recordConnection(null, $status, $guid, true);
+
+					// send back welcome message
+					$rdata = array(
+						'status' => $status,
+						'message' => tra('Welcome to Tiki Connect'),
+						'guid' => $guid,
+					);
+					
+				} else {
+					$rdata = array(
+						'status' => 'error',
+						'message' => tra('Something went wrong. Tiki Connect is still experimental.'),
+					);
+				}
+
+			} else if ($connectData['cmd'] === 'send' && !empty($connectData)) {
+
+				$guid = $connectData['guid'];
+
+				if ($connectlib->isConfirmedGuid($guid)) {
+					$status = 'received';
+
+					$connectlib->recordConnection($connectData, $status, $guid, true);
+
+					$rdata = array(
+						'status' => $status,
+						'message' => tra('Connect data received, thanks'),
+					);
+				}
 			}
 		}
-		return array(
-			'input' => $input,
-			'server' => $_SERVER,
-			'post' => $_POST,
-			'get' => $_GET,
-		);
+		return $rdata;
 	}
 }
 

@@ -8,12 +8,14 @@
 class TikiConnect {
 
 	// preferences that we should not collect
-	private $private_prefs = array(
+
+	private $privatePrefs = array(
 		'gmap_key',
 	);
 
 	// preferences that we should ask to collect
-	private $protected_prefs = array(
+	
+	private $protectedPrefs = array(
 		'browsertitle',
 		'connect_server',
 		'connect_site_email',
@@ -28,27 +30,39 @@ class TikiConnect {
 		'sitetitle',
 	);
 
-	function buildArray() {
+	private $connectTable = null;
+
+	public function __construct() {
+		$this->connectTable = TikiDb::get()->table('tiki_connect');
+	}
+
+	/**
+	 * Collects and returns Tiki Connect data
+	 * 
+	 * @return array
+	 */
+
+	function buildConnectData() {
 		global $prefs;
 		$info = array( 'version' => $prefs['tiki_release'] );
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
 			TikiLib::lib('tiki')->set_lastUpdatePrefs();
 			$prefslib = TikiLib::lib('prefs');
-			$modified_prefs = $prefslib->getModifiedPreferences();
+			$modifiedPrefs = $prefslib->getModifiedPreferences();
 
 			// remove the non-anonymous values
-			foreach ( $this->private_prefs as $p ) {
-				unset($modified_prefs[$p]);
+			foreach ( $this->privatePrefs as $p ) {
+				unset($modifiedPrefs[$p]);
 			}
 			// remove the protected values
-			foreach ( $this->protected_prefs as $p ) {
-				unset($modified_prefs[$p]);
+			foreach ( $this->protectedPrefs as $p ) {
+				unset($modifiedPrefs[$p]);
 			}
-			foreach ($modified_prefs as &$p) {
+			foreach ($modifiedPrefs as &$p) {
 				$p = $p['cur'];	// remove the defaults
 			}
-			$info['prefs'] = $modified_prefs;
+			$info['prefs'] = $modifiedPrefs;
 			// get all table row counts
 			$res = TikiLib::lib('tiki')->fetchAll('SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE();');
 			if (!empty($res)) {
@@ -62,12 +76,167 @@ class TikiConnect {
 		if ($prefs['connect_send_info'] === 'y') {
 			// restore the protected values
 			$site_prefs = array();
-			foreach( $this->protected_prefs as $p) {
+			foreach( $this->protectedPrefs as $p) {
 				$site_prefs[$p] = $prefs[$p];
 			}
 			$info['site'] = $site_prefs;
 			$info['server'] = $_SERVER;
 		}
 		return $info;
+	}
+
+	/**
+	 * Records a row in tiki_connect
+	 *
+	 * @param array $data		"connect" data to store
+	 * @param string $status	pending|confirmed|sent|received
+	 * @param null $guid		client guid
+	 * @param bool $server		server mode (default client)
+	 * @return void
+	 */
+
+	function recordConnection($data, $status, $guid = null, $server = false) {
+
+		$this->connectTable->insert(array(
+				'type' => $status,
+				'data' => $data ? serialize( $data ) : null,
+				'guid' => $guid,
+				'server' => $server ? 1 : 0,
+		));
+
+		if (!$server) {
+			$tikilib = TikiLib::lib('tiki');
+			$tikilib->set_preference('connect_last_post', $tikilib->now);
+		}
+	}
+
+	function getLastDataSent() {
+
+		$res = $this->connectTable->fetchAll(
+			array('created', 'data'),
+			array(
+				'type' => 'sent',
+				'server' => 0,
+			),
+			1,
+			-1,
+			array( 'created' => 'DESC')
+		);
+
+		if (!empty($res[0]) && !empty($res[0]['data'])) {
+			return unserialize( $res[0]['data'] );
+		} else {
+			return array();
+		}
+
+	}
+
+	function diffDataWithLastSent( $data ) {
+		$lastData = $this->getLastDataSent();
+
+		if (!empty($lastData)) {
+			foreach( $data as $key => $val) {
+				if (is_array($val)) {
+					foreach( $val as $ikey => $ival) {
+						if (isset( $lastData[$key][$ikey] ) && $lastData[$key][$ikey] === $ival) {
+							unset($data[$key][$ikey]);
+						}
+					}
+				} else if (!in_array( $key, array('version', 'guid'))) {
+					if (isset( $lastData[$key] ) && $lastData[$key] === $val) {
+						unset($data[$key]);
+					}
+				}
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * gets a guid created within last 10 minutes
+	 *
+	 * @return string guid
+	 */
+
+	function getPendingGuid() {
+
+		$res = $this->connectTable->fetchAll(
+			array('created', 'guid'),
+			array(
+				'type' => 'pending',
+				'server' => 0,
+			),
+			1,
+			-1,
+			array( 'created' => 'DESC')
+		);
+		
+		if (!empty($res[0])) {
+			$created = strtotime($res[0]['created']);
+			if ($created + 600 > time()) {	// 10 mins
+				return $res[0]['guid'];
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * gets a confirmed guid if there
+	 *
+	 * @return string guid
+	 */
+	
+	function getConfirmedGuid() {
+		$res = $this->connectTable->fetchAll(
+			array('created', 'guid'),
+			array('type' => 'confirmed', 'server' => 0),
+			1,
+			-1,
+			array( 'created' => 'DESC')
+
+		);
+
+		if (!empty($res[0])) {
+			return $res[0]['guid'];
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * test if a guid is pending
+	 *
+	 * @param string $guid
+	 * @return bool
+	 */
+
+	function isPendingGuid( $guid ) {
+		$res = $this->connectTable->fetchCount(
+			array(
+				'type' => 'pending',
+				'server' => 1,
+				'guid' => $guid,
+			)
+		);
+		return $res > 0;
+	}
+
+	/**
+	 * text if a guid is confirmed here
+	 *
+	 * @param string $guid
+	 * @return bool
+	 */
+
+	function isConfirmedGuid( $guid ) {
+		$res = $this->connectTable->fetchCount(
+			array(
+				'type' => 'confirmed',
+				'server' => 1,
+				'guid' => $guid,
+			)
+		);
+		return $res > 0;
 	}
 }
