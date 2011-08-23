@@ -58,39 +58,40 @@ $("#connect_list_btn a").click(function(){
 							action: 'list'
 						}, function (data, status) {
 
-							$d.append($("<h3>{tr}Tiki Version{/tr}</h3>")).append($("<p>" + data.version + "</p>"));
+							if (data) {
+								$d.append($("<h3>{tr}Tiki Version{/tr}</h3>")).append($("<p>" + data.version + "</p>"));
 
-							var formatList = function( inArray ) {
-								var $dl = $("<dl />");
-								for (var key in inArray) {
-									$dl.append($("<dt>" + key + "</dt><dd>" + inArray[key] + "</dd>"));
+								var formatList = function( inArray ) {
+									var $dl = $("<dl />");
+									for (var key in inArray) {
+										$dl.append($("<dt>" + key + "</dt><dd>" + inArray[key] + "</dd>"));
+									}
+									return $dl;
 								}
-								return $dl;
-							}
 
-							var $din = $("<div />");
-							var $tabs = $("<ul />").appendTo($din);		// list for tabs
+								var $din = $("<div />");
+								var $tabs = $("<ul />").appendTo($din);		// list for tabs
 
-							if (data.prefs) {
-									$tabs.append("<li><a href='#ctab-m'>{tr}Prefs{/tr}</a></li>");
-									$("<div id='ctab-m' />").append(formatList(data.prefs)).appendTo($din);
-							}
-							if (data.site) {
-								$tabs.append("<li><a href='#ctab-p'>{tr}Site Info{/tr}</a></li>");
-								$("<div id='ctab-p' />").append(formatList(data.site)).appendTo($din);
-							}
-							if (data.server) {
-								$tabs.append("<li><a href='#ctab-s'>{tr}Server{/tr}</a></li>");
-								$("<div id='ctab-s' />").append(formatList(data.server)).appendTo($din);
-							}
-							if (data.tables) {
-								$tabs.append("<li><a href='#ctab-d'>{tr}Database{/tr}</a></li>");
-								$("<div id='ctab-d' />").append(formatList(data.tables)).appendTo($din);
-							}
+								if (data.prefs) {
+										$tabs.append("<li><a href='#ctab-m'>{tr}Prefs{/tr}</a></li>");
+										$("<div id='ctab-m' />").append(formatList(data.prefs)).appendTo($din);
+								}
+								if (data.site) {
+									$tabs.append("<li><a href='#ctab-p'>{tr}Site Info{/tr}</a></li>");
+									$("<div id='ctab-p' />").append(formatList(data.site)).appendTo($din);
+								}
+								if (data.server) {
+									$tabs.append("<li><a href='#ctab-s'>{tr}Server{/tr}</a></li>");
+									$("<div id='ctab-s' />").append(formatList(data.server)).appendTo($din);
+								}
+								if (data.tables) {
+									$tabs.append("<li><a href='#ctab-d'>{tr}Database{/tr}</a></li>");
+									$("<div id='ctab-d' />").append(formatList(data.tables)).appendTo($din);
+								}
 
-							$din.appendTo($d);
-							$din.tabs();
-
+								$din.appendTo($d);
+								$din.tabs();
+							}	// error TODO
 							ajaxLoadingHide();
 					});
 				},
@@ -102,7 +103,18 @@ $("#connect_list_btn a").click(function(){
 	return false;
 });
 					{/jq}
-					{if !empty($connect_defaults_json)}
+					{button _script="#" _text="{tr}Send Info{/tr}" _title="{tr}Send the data{/tr}" _id="connect_send_btn"}
+					{jq}
+$("#connect_send_btn a").click(function(){
+	$.getJSON('tiki-ajax_services.php', {
+			controller: 'connect',
+			action: 'send'
+		}, function (data, status) {
+			alert(data.message);
+	});
+	return false;
+});
+					{/jq}					{if !empty($connect_defaults_json)}
 						{button _text="{tr}Fill form{/tr}" _title="{tr}Fill this form in based on other preferences{/tr}" _id="connect_defaults_btn" _script="#"}
 						{jq}
 $("#connect_defaults_btn a").click(function(){
@@ -128,6 +140,7 @@ $("#connect_defaults_btn a").click(function(){
 				{preference name="connect_server"}
 				{preference name="connect_last_post"}
 				{preference name="connect_server_mode"}
+				{preference name="connect_guid"}
 			</div>
 
 		</fieldset>

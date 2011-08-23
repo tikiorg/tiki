@@ -92,12 +92,21 @@ function prefs_connect_list() {
 			'default' => 'y',
 		),
 		'connect_server_mode' => array(
-			'name' => tra('Connect Server'),
+			'name' => tra('Connect Server Mode'),
             'description' => tra('For use by mother.tiki.org.'),
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'n',
 			'tags' => array('new', 'advanced'),
+		),
+		'connect_guid' => array(
+			'name' => tra('Connect GUID'),
+            'description' => tra('For use by mother.tiki.org. Do not modify'),
+			'type' => 'text',
+			'size' => 60,
+			'dependencies' => 'connect_feature',
+			'default' => '',
+			'tags' => array('new', 'advanced', 'readonly'),	// TODO readonly tag?
 		),
 	);
 }

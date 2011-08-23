@@ -32,6 +32,9 @@ $inputConfiguration = array(array(
 		'action' => 'word',
 		'controller' => 'word',
 	),
+	'staticKeyFiltersForArrays' => array(
+		'connect_data' => 'xss',
+	) ,
 ));
 
 if (isset($_REQUEST['controller'], $_REQUEST['action'])) {

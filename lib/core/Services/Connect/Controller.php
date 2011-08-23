@@ -8,22 +8,6 @@
 class Services_Connect_Controller
 {
 
-	private $private_prefs = array(
-		'browsertitle',
-		'connect_server',
-		'connect_site_email',
-		'connect_site_email',
-		'connect_site_location',
-		'connect_site_title',
-		'connect_site_url',
-		'gmap_defaultx',
-		'gmap_defaulty',
-		'gmap_key',
-		'header_custom_js',
-		'sitesubtitle',
-		'sitetitle',
-	);
-
 	function setUp()
 	{
 		global $prefs;
@@ -33,49 +17,71 @@ class Services_Connect_Controller
 		}
 	}
 
-	function action_list($input)
+	function action_list($input = null)
 	{
-		global $user, $prefs;
-		
-		if (! $user) {
-			return array();
+		if (! Perms::get()->admin) {
+			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
 		}
-
-		$info = array( 'version' => $prefs['tiki_release'] );
-
-		if ($prefs['connect_send_anonymous_info'] === 'y') {
-			$prefslib = TikiLib::lib('prefs');
-			$modified_prefs = $prefslib->getModifiedPreferences();
-
-			// remove the non-anonymous values
-			foreach ($this->private_prefs as $p) {
-				unset($modified_prefs[$p]);
-			}
-			foreach ($modified_prefs as &$p) {
-				$p = $p['cur'];	// remove the defaults
-			}
-			$info['prefs'] = $modified_prefs;
-			// get all table row counts
-			$res = TikiLib::lib('tiki')->fetchAll('SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE();');
-			if (!empty($res)) {
-				$info['tables'] = array();
-				foreach( $res as $r ) {
-					$info['tables'][$r['table_name']] = $r['table_rows'];
-				}
-			}
-		}
-
-		if ($prefs['connect_send_info'] === 'y') {
-			$site_prefs = array();
-			foreach( $this->private_prefs as $p) {
-				$site_prefs[$p] = $prefs[$p];
-			}
-			$info['site'] = $site_prefs;
-			$info['server'] = $_SERVER;
-		}
+		include_once 'lib/core/TikiConnect.php';
+		$controller = new TikiConnect();
+		$info = $controller->buildArray();
 
 		return $info;
 	}
 
+	function action_send($input) {
+		global $prefs;
+
+		if (! Perms::get()->admin) {
+			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
+		}
+
+		$controller = new Services_RemoteController($prefs['connect_server'], 'connect');
+
+		$tikilib = TikiLib::lib('tiki');
+		if (empty($prefs['connect_guid'])) {
+
+			$data = $controller->receive( array( 'connect_data' => array( 'status' => 'new' ) ));
+
+			if ($data && !empty($data['guid'])) {
+				$tikilib->set_preference('connect_guid', $data['guid']);
+			}
+
+		} else {
+			$odata = $this->action_list();
+
+			$data = $controller->receive( array( 'connect_data' => $odata ));
+
+			if ($data) {
+				$tikilib->set_preference('connect_last_post', $tikilib->now);
+			}
+		}
+		return $data;
+	}
+
+	function action_receive($input) {
+		if (!empty($_POST['connect_data'])) {
+			if (empty($_POST['connect_data']['prefs']['connect_guid'])) {
+				// send back welcome message
+				return array(
+					'status' => 'pending',
+					'message' => tra('Welcome to Tiki Connect'),
+					'guid' => uniqid(rand(), true),
+				);
+			} else {
+				// TODO check the guid is one of mine
+				return array(
+					'status' => 'received',
+					'message' => tra('Connect data received, thanks'),
+				);
+			}
+		}
+		return array(
+			'input' => $input,
+			'server' => $_SERVER,
+			'post' => $_POST,
+			'get' => $_GET,
+		);
+	}
 }
 
