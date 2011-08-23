@@ -27,6 +27,7 @@
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 						{preference name="unified_lucene_location"}
 						{preference name="unified_lucene_highlight"}
+						{preference name="unified_lucene_max_result"}
 					</div>
 					
 					{preference name=unified_tokenize_version_numbers}

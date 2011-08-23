@@ -12,6 +12,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private $cache;
 	private $lastModif;
 	private $directory;
+	private $maxResults = 0;
 
 	function __construct($directory, $lang = 'en', $highlight = true)
 	{
@@ -98,6 +99,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->cache = $cache;
 	}
 
+	function setMaxResults($max)
+	{
+		$this->maxResults = (int) $max;
+	}
+
 	private function internalFind(& $query, $sortOrder)
 	{
 		if ($this->cache) {
@@ -116,8 +122,12 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$hits = $this->getLucene()->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 
 		$result = array();
-		foreach ($hits as $hit) {
+		foreach ($hits as $key => $hit) {
 			$result[] = array_merge($this->extractValues($hit->getDocument()), array('relevance' => round($hit->score, 2)));
+
+			if ($this->maxResults && count($result) >= $this->maxResults) {
+				break;
+			}
 		}
 
 		if ($this->cache) {

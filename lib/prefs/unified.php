@@ -30,6 +30,14 @@ function prefs_unified_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'unified_lucene_max_result' => array(
+			'name' => tra('Lucene Maximum Results'),
+			'description' => tra('Maximum amount of results to expose. Results further than these will need a more refined query to be reached.'),
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 200,
+			'size' => 6,
+		),
 		'unified_incremental_update' => array(
 			'name' => tra('Incremental Index Update'),
 			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
