@@ -1,41 +1,41 @@
-{if isset($p.helpurl)}
+{if $p.helpurl}
 	<a href="{$p.helpurl|escape}" target="tikihelp" class="tikihelp" title="{$p.name|escape}: {$p.description|escape}">
 		{icon _id=help alt=''}
 	</a>
-{elseif isset($p.description)}
+{elseif $p.description}
 	<span class="tikihelp" title="{$p.name|escape}: {$p.description|escape}">
 		{icon _id=information alt=''}
 	</span>
 {/if}
-{if isset($p.warning)}
+{if $p.warning}
 	<a href="" target="tikihelp" class="tikihelp" title="{tr}Warning:{/tr} {$p.warning|escape}">
 		{icon _id=error alt=''}
 	</a>
 {/if}
 
-{if isset($p.modified) and isset($p.available)}
+{if $p.modified and $p.available}
 	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none" />
 	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default|escape}" />
 {/if}
 
-{if isset($p.admin) or isset($p.permission) or isset($p.view) or isset($p.module) or isset($p.plugin)}
+{if $p.admin or $p.permission or $p.view or $p.module or $p.plugin}
 	{capture name=over_actions}{strip}
 		<div class='opaque'>
 			<div class='box-title'>{tr}Actions{/tr}</div>
 			<div class='box-data'>
-				{if isset($p.admin)}
+				{if $p.admin}
 					<a class="iconmenu" href="{$p.admin|escape}">{icon _id=application_form title="{tr}Admin{/tr}"} {tr}Admin{/tr}</a>
 				{/if}
-				{if isset($p.permission)}
+				{if $p.permission}
 					<a class="iconmenu" href="{$p.permission|escape}">{icon _id=key title="{tr}Permissions{/tr}"} {tr}Permissions{/tr}</a>
 				{/if}
-				{if isset($p.view)}
+				{if $p.view}
 					<a class="iconmenu" href="{$p.view|escape}">{icon _id=magnifier title="{tr}View{/tr}"} {tr}View{/tr}</a>
 				{/if}
-				{if isset($p.module)}
+				{if $p.module}
 					<a class="iconmenu" href="{$p.module|escape}">{icon _id=module title="{tr}Module{/tr}"} {tr}Module{/tr}</a>
 				{/if}
-				{if isset($p.plugin)}
+				{if $p.plugin}
 					<a class="iconmenu" href="{$p.plugin|escape}">{icon _id=plugin title="{tr}Plugin{/tr}"} {tr}Plugin{/tr}</a>
 				{/if}
 			</div>

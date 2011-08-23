@@ -42,6 +42,11 @@ class PreferencesLib
 				'shorthint' => '',
 				'perspective' => true,
 				'parameters' => array(),
+				'admin' => '',
+				'module' => '',
+				'permission' => '',
+				'plugin' => '',
+				'view' => '',
 			);
 			$info = $data[$name];
 
