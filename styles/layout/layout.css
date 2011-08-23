@@ -1941,7 +1941,7 @@ ul.freetagged li {
 }
 
 @media print {
-	.tikihelp, .navbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+	.tikihelp, .navbar, .categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
 
