@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_wiki($params, $content, $smarty)
 {
-	global $user,$userlib,$tikilib;
+	global $tikilib;
 	if ( (isset($params['isHtml'])) and ($params['isHtml'] ) ) {
 	  $isHtml = true;
 	} else {

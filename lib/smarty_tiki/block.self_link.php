@@ -41,7 +41,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 {
-	global $prefs;
 	$default_type = 'absolute_path';
 	$default_icon_type = 'relative';
 

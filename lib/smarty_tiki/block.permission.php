@@ -20,8 +20,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_permission($params, $content, $smarty, $repeat)
 {
-	global $prefs;
-
 	$context = array();
 
 	if( isset( $params['type'], $params['object'] ) ) {

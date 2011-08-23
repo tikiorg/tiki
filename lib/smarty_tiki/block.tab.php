@@ -30,7 +30,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_tab($params, $content, $smarty, &$repeat)
 {
-	global $prefs, $smarty_tabset_name, $smarty_tabset, $cookietab, $smarty_tabset_i_tab, $tabset_index;
+	global $prefs, $smarty_tabset, $cookietab, $smarty_tabset_i_tab, $tabset_index;
 	
 	if ( $repeat ) {
 		return;
