@@ -19,7 +19,6 @@ class TikiConnect {
 		'browsertitle',
 		'connect_server',
 		'connect_site_email',
-		'connect_site_email',
 		'connect_site_location',
 		'connect_site_title',
 		'connect_site_url',
