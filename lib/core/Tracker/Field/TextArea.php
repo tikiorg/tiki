@@ -89,6 +89,19 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	function renderInput($context = array())
 	{
+		$cols = $this->getOption(1);
+		$rows = $this->getOption(2);
+
+		$context['toolbar'] = $this->getOption(0) ? 'y' : 'n';
+		$context['cols'] = ($cols >= 1) ? $cols : 50;
+		$context['rows'] = ($rows >= 1) ? $rows : 50;
+		$context['keyup'] = '';
+
+		if ($this->getOption(5)) {
+			$context['keyup'] = "wordCount({$this->getOption(5)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
+		} elseif ($this->getOption(3)) {
+			$context['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
+		}
 		return $this->renderTemplate('trackerinput/textarea.tpl', $context);
 	}
 

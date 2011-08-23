@@ -4,19 +4,14 @@
 		{if $field.options_array[0] eq 1}
    			{toolbars qtnum=$field.fieldId area_id="area_"|cat:$field.fieldId section="trackers"}
 		{/if}
-		<input type="text" id="area_{$field.fieldId}" name="{$field.ins_id}"{if $field.options_array[1] > 0} size="{$field.options_array[1]}"{/if}{if $field.options_array[3]>0} maxlength="{$field.options_array[3]}"{/if} value="{$field.value|escape}"{if $field.options_array[5]} onkeyup="wordCount({$field.options_array[5]}, this, 'cpt_{$field.fieldId}', "{tr}Word Limit Exceeded{/tr}")"{/if} {if $field.options_array[3]} onkeyup="charCount({$field.options_array[3]}, this, 'cpt_{$field.fieldId}', "{tr}Character Limit Exceeded{/tr}")"{/if} />
+		<input type="text" id="area_{$field.fieldId}" name="{$field.ins_id}"{if $field.options_array[1] > 0} size="{$field.options_array[1]}"{/if}{if $field.options_array[3]>0} maxlength="{$field.options_array[3]}"{/if} value="{$field.value|escape}" onkeyup=$keyup />
 	{else}
-		{capture name=textarea_id}area_{$field.fieldId}{/capture}
-		{capture name=textarea_toolbars}{if $field.options_array[0] eq 1}y{else}n{/if}{/capture}
-		{capture name=textarea_cols}{if $field.options_array[1] >= 1}{$field.options_array[1]}{else}50{/if}{/capture}
-		{capture name=textarea_rows}{if $field.options_array[2] >= 1}{$field.options_array[2]}{else}4{/if}{/capture}
-		{capture name=textarea_onkeyup}{if $field.options_array[5]}wordCount({$field.options_array[5]}, this, 'cpt_{$field.fieldId}', '{tr}Word Limit Exceeded{/tr}'){elseif $field.options_array[3]}charCount({$field.options_array[3]}, this, 'cpt_{$field.fieldId}', '{tr}Character Limit Exceeded{/tr}'){/if}{/capture}
 		{if $field.options_array[7] == 'y'}
-			{textarea id=$smarty.capture.textarea_id name=$field.ins_id cols=$smarty.capture.textarea_cols rows=$smarty.capture.textarea_rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='y' section="trackers"}
+			{textarea id="area_`$field.fieldId`" name=$field.ins_id cols=$context.cols rows=$context.rows onkeyup=$context.keyup _wysiwyg='y' section="trackers"}
 				{$field.value}
 			{/textarea}
 		{else}
-			{textarea id=$smarty.capture.textarea_id name=$field.ins_id _toolbars=$smarty.capture.textarea_toolbars _simple='y' cols=$smarty.capture.textarea_cols rows=$smarty.capture.textarea_rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='n' section="trackers"}
+			{textarea id="area_`$field.fieldId`" name=$field.ins_id _toolbars=$context.toolbar _simple='y' cols=$context.cols rows=$context.rows onkeyup=$context.keyup _wysiwyg='n' section="trackers"}
 				{$field.value}
 			{/textarea}
 		{/if}
