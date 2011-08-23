@@ -1300,7 +1300,8 @@ function prefs_feature_list($partial = false) {
 		'feature_blog_heading' => array(
 			'name' => tra('Custom blog headings'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
+			'warning' => tr('Using custom blog headings will use significantly more server resources. Unless you need per-blog templates, you should use a customize the template file.'),
 		),
 		'feature_blog_edit_publish_date' => array(
 			'name' => tra('Publish dates can be modified'),
