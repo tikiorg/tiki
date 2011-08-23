@@ -65,6 +65,7 @@
 		{preference name=feature_action_calendar}
 		{preference name=calendar_view_tab}
 		{preference type='multicheckbox' name='calendar_view_days'}
+		{preference name=calendar_description_is_html}
 	</fieldset>
 	<div class="input_submit_container clear" style="text-align: center;">
 		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />

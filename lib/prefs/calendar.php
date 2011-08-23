@@ -87,5 +87,11 @@ function prefs_calendar_list() {
 				'wikiplugin_addtogooglecal'
 			),
 		),
+		'calendar_description_is_html' => array(
+			'name' => tra('Treat calendar item descriptions as HTML'),
+			'description' => tra('Use this if you use the WYSIWYG editor for calendars. This is to handle legacy data from Tiki pre 7.0.'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 	);
 }

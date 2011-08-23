@@ -844,7 +844,7 @@
 							{$calitem.description}
 						{/textarea}
 					{else}
-						<span class="description">
+						<span{if $prefs.calendar_description_is_html neq "y"} class="description"{/if}>
 							{$calitem.parsed|default:"<i>{tr}No description{/tr}</i>"}
 						</span>
 					{/if}

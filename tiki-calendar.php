@@ -280,7 +280,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$smarty->assign('cellname', $le["name"]);
 				$smarty->assign('cellurl', $le["web"]);
 				$smarty->assign('cellid', $le["calitemId"]);
-				$smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
+				$smarty->assign('celldescription', $tikilib->parse_data($le["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y')));
 				$smarty->assign('cellmodif', $le['modifiable']);
 				$smarty->assign('cellvisible', $le['visible']);
 				$smarty->assign('cellstatus', $le['status']);
