@@ -9,6 +9,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 {
 	private $lucene;
 	private $highlight = true;
+	private $cache;
+	private $lastModif;
+	private $directory;
 
 	function __construct($directory, $lang = 'en', $highlight = true)
 	{
@@ -17,43 +20,57 @@ class Search_Index_Lucene implements Search_Index_Interface
 		default:
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 		}
+
+		$this->directory = $directory;
+		$this->lastModif = file_exists($directory) ? filemtime($directory) : 0;
+
+		$this->highlight = (bool) $highlight;
+	}
+
+	private function getLucene()
+	{
+		if ($this->lucene) {
+			return $this->lucene;
+		}
+
 		try {
-			$this->lucene = Zend_Search_Lucene::open($directory);
+			$this->lucene = Zend_Search_Lucene::open($this->directory);
 		} catch (Zend_Search_Lucene_Exception $e) {
-			$this->lucene = Zend_Search_Lucene::create($directory);
+			$this->lucene = Zend_Search_Lucene::create($this->directory);
 		}
 
 		$this->lucene->setMaxBufferedDocs(100);
 		$this->lucene->setMaxMergeDocs(200);
 		$this->lucene->setMergeFactor(50);
 
-		$this->highlight = (bool) $highlight;
+		return $this->lucene;
 	}
 
 	function addDocument(array $data)
 	{
 		$document = $this->generateDocument($data);
 
-		$this->lucene->addDocument($document);
+		$this->getLucene()->addDocument($document);
 	}
 
 	function optimize()
 	{
-		$this->lucene->optimize();
+		$this->getLucene()->optimize();
 	}
 
 	function invalidateMultiple(Search_Expr_Interface $expr)
 	{
 		$documents = array();
 
+		$lucene = $this->getLucene();
 		$query = $this->buildQuery($expr);
-		foreach ($this->lucene->find($query) as $hit) {
+		foreach ($lucene->find($query) as $hit) {
 			$document = $hit->getDocument();
 			$documents[] = array(
 				'object_type' => $document->object_type,
 				'object_id' => $document->object_id,
 			);
-			$this->lucene->delete($hit->id);
+			$lucene->delete($hit->id);
 		}
 
 		return $documents;
@@ -61,20 +78,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
-		$query = $this->buildQuery($query);
+		$hits = $this->internalFind($query, $sortOrder);
 
-		$hits = $this->lucene->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
-		$result = array();
-
-		foreach ($hits as $key => $hit) {
-			if ($key >= $resultStart) {
-				$result[] = array_merge($this->extractValues($hit->getDocument()), array('relevance' => round($hit->score, 2)));
-
-				if (count($result) == $resultCount) {
-					break;
-				}
-			}
-		}
+		$result = array_slice($hits, $resultStart, $resultCount);
 
 		$resultSet = new Search_ResultSet($result, count($hits), $resultStart, $resultCount);
 
@@ -85,6 +91,43 @@ class Search_Index_Lucene implements Search_Index_Interface
 		}
 
 		return $resultSet;
+	}
+
+	function setCache($cache)
+	{
+		$this->cache = $cache;
+	}
+
+	private function internalFind(& $query, $sortOrder)
+	{
+		if ($this->cache) {
+			$args = func_get_args();
+			$cacheKey = serialize($args);
+
+			$entry = $this->cache->getSerialized($cacheKey, 'searchresult', $this->lastModif);
+
+			if ($entry) {
+				$query = $entry['query'];
+				return $entry['hits'];
+			}
+		}
+
+		$query = $this->buildQuery($query);
+		$hits = $this->getLucene()->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
+
+		$result = array();
+		foreach ($hits as $hit) {
+			$result[] = array_merge($this->extractValues($hit->getDocument()), array('relevance' => round($hit->score, 2)));
+		}
+
+		if ($this->cache) {
+			$this->cache->cacheItem($cacheKey, serialize(array(
+				'query' => $query,
+				'hits' => $result,
+			)), 'searchresult');
+		}
+
+		return $result;
 	}
 
 	private function extractValues($document)

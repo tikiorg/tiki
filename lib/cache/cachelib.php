@@ -38,12 +38,12 @@ class Cachelib
 		return $this->implementation->isCached( $key, $type );
 	}
 
-	function getCached($key, $type='') {
-		return $this->implementation->getCached( $key, $type );
+	function getCached($key, $type='', $lastModif = false) {
+		return $this->implementation->getCached( $key, $type, $lastModif );
 	}
 
-	function getSerialized($key, $type = '') {
-		$data = $this->getCached( $key, $type );
+	function getSerialized($key, $type = '', $lastModif = false) {
+		$data = $this->getCached( $key, $type, $lastModif );
 		
 		if( $data ) {
 			return unserialize( $data );
@@ -265,10 +265,17 @@ class CacheLibFileSystem
 		return is_file($this->folder."/$key");
 	}
 
-	function getCached($key, $type='') {
+	function getCached($key, $type='', $lastModif = false) {
 		$key = $type.md5($key);
-		if (is_readable($this->folder."/$key")) {
-			return @file_get_contents($this->folder."/$key");
+		$file = $this->folder."/$key";
+		if (is_readable($file)) {
+			// If a last date is given for cache validity, make sure the file is younger
+			if ($lastModif !== false && filemtime($file) < $lastModif) {
+				unlink($file);
+				return false;
+			}
+
+			return @file_get_contents($file);
 		} else {
 			return false;
 		}
@@ -319,7 +326,7 @@ class CacheLibMemcache
 		return false;
 	}
 
-	function getCached($key, $type='') {
+	function getCached($key, $type='', $lastModif = false) {
 		global $memcachelib;
 		return $memcachelib->get( $this->getKey( $key, $type ) );
 	}
