@@ -357,7 +357,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$smarty->assign('edit',true);
 	$hour_minmax = abs(ceil(($calendar['startday']-1)/(60*60))) . '-' . ceil(($calendar['endday'])/(60*60));
 } elseif (isset($_REQUEST['preview']) || $impossibleDates) {
-	$save['parsed'] = $tikilib->parse_data($save['description']);
+	$save['parsed'] = $tikilib->parse_data($save['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
 	$id = $save['calitemId'];
 	$calitem = $save;

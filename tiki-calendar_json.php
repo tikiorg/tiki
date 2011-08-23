@@ -183,7 +183,7 @@ $events = array();
 foreach($listevents as $event) {
 	$events[] = array ( 'id' => $event['calitemId'],
 											'title' => $event['name'],
-											'description' => $tikilib->parse_data($event["description"]),
+											'description' => $tikilib->parse_data($event["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y')),
 											'url' => 'tiki-calendar_edit_item.php?viewcalitemId='.$event['calitemId'],
 											'allDay' => $event['allday'] != 0 ,
 											'start' => $event['date_start'],
