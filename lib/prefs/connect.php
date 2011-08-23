@@ -13,6 +13,7 @@ function prefs_connect_list() {
             'description' => tra('Connect your Tiki with the community by sending anonymised statistical data to tiki.org'),
 			'default' => 'n',	// to be enabled by default when working for Tiki 8
 			'tags' => array('experimental'),
+			'warning' => tra('Experimental. This feature is still under development.'),
 		),
 		'connect_frequency' => array(
 			'name' => tra('Connection frequency'),
