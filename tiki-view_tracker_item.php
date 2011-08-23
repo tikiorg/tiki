@@ -716,6 +716,12 @@ if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y
 	$smarty->assign('validationjs', $validationjs);
 }
 
+if (($tiki_p_remove_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_remove_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_remove_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+	$smarty->assign('editTitle', tr('Edit/Delete'));
+} else {
+	$smarty->assign('editTitle', tr('Edit'));
+}
+
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 

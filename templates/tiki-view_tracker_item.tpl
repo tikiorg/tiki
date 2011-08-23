@@ -132,8 +132,7 @@
 
 {* --------------------------------------------------------------- tab with edit --- *}
 {if (! isset($print_page) || $print_page ne 'y') && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
-	{capture name="editTitle"}{if ($tiki_p_remove_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $item_info.status eq 'c')}{tr}Edit/Delete{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
-	{tab name=$smarty.capture.editTitle}
+	{tab name=$editTitle}
 		<h2>{tr}Edit Item{/tr}</h2>
 
 		<div class="nohighlight">
@@ -309,6 +308,5 @@
 <br /><br />
 
 {if isset($print_page) && $print_page eq 'y'}
-	{capture name=url}{$base_url}{$itemId|sefurl:trackeritem}{/capture}
-	{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
+	{tr}The original document is available at{/tr} <a href="{$base_url|escape}{$itemId|sefurl:trackeritem}">{$base_url|escape}{$itemId|sefurl:trackeritem}</a>
 {/if}
