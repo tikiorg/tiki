@@ -29,6 +29,7 @@
 					{if $prefs.feature_wysiwyg eq 'y'}<option value="both"{if $view_mode eq "both"} selected{/if}>{tr}Wiki and WYSIWYG{/tr}</option>{/if}
 					<option value="wiki"{if $view_mode eq "wiki"} selected{/if}>{tr}Wiki only{/tr}</option>
 					{if $prefs.feature_wysiwyg eq 'y'}<option value="wysiwyg"{if $view_mode eq "wysiwyg"} selected{/if}>{tr}WYSIWYG only{/tr}</option>{/if}
+					{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_htmltowiki eq 'y'}<option value="wysiwyg_wiki"{if $view_mode eq "wysiwyg_wiki"} selected{/if}>{tr}Visual Wiki{/tr}</option>{/if}
 					{if $prefs.feature_sheet eq 'y'}<option value="sheet"{if $view_mode eq "sheet"} selected{/if}>{tr}Spreadsheet{/tr}</option>{/if}
 				</select>
 			</div>

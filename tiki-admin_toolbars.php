@@ -161,6 +161,7 @@ foreach( $qtlist as $name ) {
 		continue;
 	}
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
+	$wyswik = strlen($tag->getWysiwygWikiToken()) ? 'qt-wyswik' : '';
 	$test_html = $tag->getWikiHtml('');
 	$wiki = strlen($test_html) > 0 ? 'qt-wiki' : '';
 	$wiki = strpos($test_html, 'qt-sheet') !== false ? 'qt-sheet' : $wiki;
@@ -185,7 +186,7 @@ foreach( $qtlist as $name ) {
 	if ($tag->getType() == 'Wikiplugin') {
 		$label .= '<input type="hidden" name="plugin" value="'.$tag->getPluginName().'" />';
 	}
-	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $plug $cust $avail", 'html' => "$icon<span>$label</span>");
+	$qtelement[$name] = array( 'name' => $name, 'class' => "toolbar qt-$name $wys $wiki $wyswik $plug $cust $avail", 'html' => "$icon<span>$label</span>");
 }
 
 $headerlib->add_js( "var toolbarsadmin_rowStr = '" . substr(implode(",#row-",range(0,$rowCount)),2) . "'

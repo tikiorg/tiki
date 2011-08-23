@@ -42,7 +42,7 @@ $_SESSION['wysiwyg_wiki'] = 'n';
 
 
 if ($_SESSION['wysiwyg'] == 'y') {
-	if ($prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
+	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
 		$is_html = false;
 		$_SESSION['wysiwyg_wiki'] = 'y';
 	} else {
