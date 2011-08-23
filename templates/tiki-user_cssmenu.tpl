@@ -31,14 +31,13 @@
 				{elseif isset($icon) and $icon}
 					{icon _id='folder' align="left"}
 				{/if}
-				{capture name=chdataName}
+				<span class="menuText">
 					{if $translate eq 'n'}
 						{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}
 					{else}
 						{tr}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
 					{/if}
-				{/capture}
-				<span class="menuText">{$smarty.capture.chdataName}</span>
+				</span>
 			{if $link_on_section ne 'n'}</a>{/if}
 			{assign var=opensec value=$opensec+1}
 			<ul>
@@ -50,14 +49,13 @@
 					{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 						{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 					{/if}
-					{capture name=chdataName}
+					<span class="menuText">
 						{if $translate eq 'n'}
 							{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}
 						{else}
 							{tr}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
 						{/if}
-					{/capture}
-					<span class="menuText">{$smarty.capture.chdataName}</span>
+					</span>
 				</a>
 			</li>
 			{if $sep eq 'line'}{assign var=sep value=''}{/if}
