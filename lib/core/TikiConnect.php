@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
  
-class TikiConnect {
+class TikiConnect
+{
 
 	// preferences that we should not collect
 
