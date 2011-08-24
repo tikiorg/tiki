@@ -229,13 +229,13 @@
 				{foreach from=$actionlogs item=actionlog}
 					<tr class="{cycle}">
 						<td class="username">
-							{if $actionlog.user}{$actionlog.user}{else}{tr}Anonymous{/tr}{/if}
+							{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}
 						</td>
 						<td class="date">
 							{$actionlog.lastModif|tiki_short_datetime}
 						</td>
 						<td class="text">
-							{tr}{$actionlog.action}{/tr}
+							{tr}{$actionlog.action|escape}{/tr}
 							{if $actionlog.action eq 'Categorized' || $actionlog.action eq 'Uncategorized'}/{$actionlog.comment|replace:"categId=":""}{/if}
 						</td>
 						<td class="text">
@@ -425,13 +425,13 @@
 				<tr>
 					<th>{tr}User{/tr}</th>
 					{foreach key=title item=nb from=$userActions.0}
-						{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
+						{if $title ne 'user'}<th>{$title|replace:"/":" "|escape}</th>{/if}
 					{/foreach}
 				</tr>
 				{cycle values="even,odd" print=false}
 				{foreach item=stat from=$userActions name=userActions}
 					<tr class="{cycle}">
-						<td class="username">{$stat.user}</td>
+						<td class="username">{$stat.user|escape}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'user'}<td class="integer">{$nb}</td>{/if}
 						{/foreach}
@@ -447,7 +447,7 @@
 				<tr>
 					<th>{tr}Object{/tr}</th>
 					{foreach key=title item=nb from=$objectActions[0]}
-						{if $title ne 'object' and $title ne 'link'}<th>{$title|replace:"/":" "}</th>{/if}
+						{if $title ne 'object' and $title ne 'link'}<th>{$title|replace:"/":" "|escape}</th>{/if}
 					{/foreach}
 				</tr>
 				{cycle values="even,odd" print=false}
@@ -471,12 +471,12 @@
 				<tr>
 					<th>{tr}Category{/tr}</th>
 					{foreach key=title item=nb from=$statCateg[0]}
-						{if $title ne 'category'}<th>{$title|replace:"/":" "}</th>{/if}
+						{if $title ne 'category'}<th>{$title|replace:"/":" "|escape}</th>{/if}
 					{/foreach}
 				</tr>
 				{foreach key=categId item=stat from=$statCateg}
 					<tr class="{cycle}">
-						<td class="text">{$stat.category}</td>
+						<td class="text">{$stat.category|escape}</td>
 						{foreach key=a item=nb from=$statCateg[$categId]}
 							{if $a ne 'category'}<td class="integer">{$nb}</td>{/if}
 						{/foreach}
@@ -498,8 +498,8 @@
 				</tr>
 				{foreach key=categUser item=stat from=$statUserCateg}
 					<tr class="{cycle}">
-						<td class="text">{$stat.category}</td>
-						<td class="username">{$stat.user}</td>
+						<td class="text">{$stat.category|escape}</td>
+						<td class="username">{$stat.user|escape}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'category' and $a ne 'user'}
 								<td class="integer">{$nb}</td>
