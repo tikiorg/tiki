@@ -13,6 +13,7 @@
 	{tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
 			<div class="admin featurelist">
+				{preference name=feature_score}
 				{preference name=feature_mytiki}
 				{preference name=feature_minical}
 				{preference name=feature_userPreferences}
@@ -30,6 +31,7 @@
 				<div class="adminoptionboxchild" id="feature_userfiles_childcontainer">
 					{preference name=feature_use_fgal_for_user_files}
 				</div>
+				{preference name=feature_webmail}				
 				{preference name=feature_userlevels}
 				{preference name=feature_groupalert}
 				{preference name=change_theme}

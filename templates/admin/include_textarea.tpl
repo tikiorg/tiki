@@ -15,6 +15,7 @@
 				{preference name=feature_filegals_manager}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_wiki_replace}
+				{preference name=feature_syntax_highlighter}
 			</fieldset>
 
 			<fieldset>
@@ -30,7 +31,7 @@
 				{preference name=feature_wiki_argvariable}
 				{preference name=wiki_dynvar_style}
 				{preference name=wiki_dynvar_multilingual}
-
+				{preference name=feature_jison_wiki_parser}	
 			</fieldset>
 
 			<fieldset>

@@ -590,6 +590,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'slide slides presentation',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_invoice' => array(
 			'name' => tra('Invoice'),
@@ -598,7 +599,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'invoice contractor invoicing',
 			'default' => 'n',
-			'tags' => array('new'),			
+			'tags' => array('experimental'),			
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
@@ -2272,6 +2273,7 @@ function prefs_feature_list($partial = false) {
             'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
             'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),			
         ),
         'feature_accounting' => array(
 			'name' => tra('Accounting'),

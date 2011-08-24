@@ -109,6 +109,7 @@
 				</div>
 
 				{preference name=http_skip_frameset}
+				{preference name=feature_loadbalancer}
 			</fieldset>
 
 			<fieldset>

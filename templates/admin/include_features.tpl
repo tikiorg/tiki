@@ -48,22 +48,28 @@
 				{preference name=feature_shoutbox}
 				{preference name=feature_maps}
 				{preference name=feature_gmap}
+				{preference name=feature_minichat}				
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
 				{preference name=feature_share}
-				{preference name=feature_minichat}
-				{preference name=feature_score}
+				{preference name=feature_socialnetworks}
+				{preference name=feature_credits}
+				{preference name=feature_invoice}
+				{preference name=payment_feature}				
+				{preference name=feature_draw}
+				{preference name=feature_slideshow}
 				{preference name=feature_dynamic_content}
+				{preference name=feature_watershed}				
+				{preference name=feature_kaltura}				
 				{preference name=bigbluebutton_feature}
 					<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 						{preference name=bigbluebutton_server_location}
 						{preference name=bigbluebutton_server_salt}
 					</div>
 				{preference name=feature_perspective}
-				{preference name=payment_feature}
 				{preference name=feature_sefurl}
 				{preference name=feature_webmail}
-				{preference name=feature_kaltura}
+				{preference name=connect_feature}
 			</div>
 		</fieldset>
 
@@ -83,6 +89,24 @@
 {/tab}
 			
 {tab name="{tr}Interface{/tr}"}
+			<fieldset class="admin clearfix featurelist">
+				<legend> {tr}Mobile{/tr} </legend>	
+					{preference name=mobile_feature}
+
+					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
+						{preference name=mobile_perspectives}
+						<fieldset>
+							<legend>{tr}Mobile Themes{/tr}</legend>
+						{preference name=mobile_theme_header}
+						{preference name=mobile_theme_content}
+						{preference name=mobile_theme_footer}
+						{preference name=mobile_theme_modules}
+						{preference name=mobile_theme_menus}
+						{preference name=mobile_use_latest_lib}
+						</fieldset>
+					</div>
+			</fieldset>
+
 			<fieldset class="admin clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>	
 				{preference name=feature_ajax}
@@ -204,35 +228,6 @@
 					<legend class="heading">{icon _id="bricks"} <span>{tr}Getting there...{/tr}</span></legend>
 					<p class="description">{tr}Most of these features are hoped to make it into the "new" section for Tiki 6.{/tr}</p>
 				</fieldset>-->
-
-				<fieldset>
-					<legend class="heading">{icon _id="new"} <span>{tr}Fresh out of the oven{/tr}</span></legend>
-					{preference name=feature_syntax_highlighter}
-					{preference name=feature_credits}
-					{preference name=feature_loadbalancer}
-					{preference name=feature_socialnetworks}
-					{preference name=feature_watershed}
-					{preference name=feature_file_galleries_save_draft}
-					{preference name=feature_file_galleries_templates}
-					{preference name=feature_draw}
-					{preference name=feature_slideshow}
-					{preference name=mobile_feature}
-					{preference name=feature_invoice}
-					{preference name=feature_jison_wiki_parser}
-					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
-						{preference name=mobile_perspectives}
-						<fieldset>
-							<legend>{tr}Mobile Themes{/tr}</legend>
-						{preference name=mobile_theme_header}
-						{preference name=mobile_theme_content}
-						{preference name=mobile_theme_footer}
-						{preference name=mobile_theme_modules}
-						{preference name=mobile_theme_menus}
-						{preference name=mobile_use_latest_lib}
-						</fieldset>
-					</div>
-					{preference name=connect_feature}
-				</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="accept"} <span>{tr}Seem ok but...{/tr}</span></legend>

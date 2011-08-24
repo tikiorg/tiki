@@ -50,8 +50,7 @@
 				{preference name=wikiplugin_annotation}				
 				{preference name=wikiplugin_flash}				
 			</fieldset>
-			
-		
+
 			{preference name=home_file_gallery}
 			{preference name='fgal_use_db'}
 			<div class="adminoptionboxchild fgal_use_db_childcontainer n">
@@ -101,6 +100,8 @@
 				{preference name='fgal_keep_fileId'}
 				{preference name='feature_use_fgal_for_user_files'}
 				{preference name='feature_use_fgal_for_wiki_attachments'}
+				{preference name='feature_file_galleries_save_draft'}
+				{preference name='feature_file_galleries_templates'}				
 				{preference name='fgal_upload_progressbar'}
 				{preference name='fgal_upload_from_source'}
 				{preference name='fgal_tracker_existing_search'}
