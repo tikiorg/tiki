@@ -156,6 +156,8 @@ function wikiplugin_customsearch($data, $params)
 		} 
 		if ($arguments['_filter'] == 'content' && !empty($arguments['_field'])) {
 			$filter = $arguments['_field'];
+		} elseif ($arguments['_filter'] == 'content' && empty($arguments['_field'])) {
+			$filter = 'content';
 		} else {
 			$filter = '';
 		}
