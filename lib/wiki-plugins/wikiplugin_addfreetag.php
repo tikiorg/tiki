@@ -39,7 +39,7 @@ function wikiplugin_addfreetag($data, $params)
 	$identifier = 'wp_addfreetag_' . str_replace(array(':',' '), array('_',''), $params['object']);
 
 	if (!empty($_POST[$identifier])) {
-		$_POST[$identifier] = '"' . $_POST[$identifier] . '"';
+		$_POST[$identifier] = '"' . str_replace('"', '', $_POST[$identifier]) . '"';
 		if ($object['type'] == 'trackeritem') {
 			$permobject = TikiLib::lib('trk')->get_tracker_for_item($object['object']); 
 			$permobjecttype = 'tracker';
@@ -62,8 +62,9 @@ function wikiplugin_addfreetag($data, $params)
 					} else {
 						$taglist .= $tag['tag'] . ' ';
 					}
-      				} 
-				TikiLib::lib('trk')->modify_field($object['object'], $field, $taglist);
+      				}
+				// taglist will have slashes
+				TikiLib::lib('trk')->modify_field($object['object'], $field, stripslashes($taglist));
 			}
 		} 
 		$url = $_SERVER['REQUEST_URI'];
