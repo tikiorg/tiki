@@ -71,6 +71,11 @@
 				{preference name=feature_sefurl}
 				{preference name=feature_webmail}
 				{preference name=connect_feature}
+				{preference name=feature_actionlog}
+				{preference name=feature_comm}
+				{preference name=feature_contribution}
+				{preference name=feature_copyright}
+				{preference name=feature_mailin}				
 				{preference name=zotero_enabled}
 					<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
 						{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
@@ -81,7 +86,13 @@
 						{preference name=zotero_group_id}
 						{preference name=zotero_style}
 					</div>
+					
+				{preference name=feature_custom_home}
+				{preference name=feature_faqs}
+				{preference name=feature_galleries}
+				{preference name=feature_html_pages}	
 			</div>
+			
 		</fieldset>
 
 		<fieldset>
@@ -203,49 +214,6 @@
 			</fieldset>
 {/tab}
 
-{* ---------- Experimental features ------------ *}
-{tab name="{tr}Experimental{/tr}"}
-			<div class="admin clearfix featurelist">
-
-				<!--<fieldset>
-					<legend class="heading">{icon _id="bricks"} <span>{tr}Getting there...{/tr}</span></legend>
-					<p class="description">{tr}Most of these features are hoped to make it into the "new" section for Tiki 6.{/tr}</p>
-				</fieldset>-->
-
-				<fieldset>
-					<legend class="heading">{icon _id="accept"} <span>{tr}Seem ok but...{/tr}</span></legend>
-					<p class="description">{tr}These features are not reported to be broken, but they are not actively developed and/or widely used.{/tr}</p>
-					{preference name=feature_actionlog}
-					{preference name=feature_comm}
-					{preference name=feature_contribution}
-					{preference name=feature_copyright}
-					{preference name=feature_custom_home}
-					{preference name=feature_friends}
-					{preference name=feature_intertiki}
-					{preference name=feature_mailin}
-					{preference name=feature_morcego}
-					{preference name=feature_wiki_mindmap}
-					{preference name=feature_print_indexed}
-					{preference name=feature_breadcrumbs}
-					<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
-						{preference name=feature_siteloclabel}
-						{preference name=feature_siteloc}
-						{preference name=feature_sitetitle}
-						{preference name=feature_sitedesc}
-					</div>
-				</fieldset>
-
-				<fieldset>
-					<legend class="heading">{icon _id="information_gray"} <span>{tr}Will be phased out{/tr}</span></legend>
-					<p class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology.{/tr}</p>
-					{preference name=feature_faqs}
-					{preference name=feature_galleries}
-					{preference name=feature_html_pages}
-				</fieldset>
-
-			</div>
-
-{/tab}
 {/tabset}
 
 

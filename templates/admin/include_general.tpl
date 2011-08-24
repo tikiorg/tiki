@@ -249,6 +249,20 @@
 					{preference name=site_busy_msg}
 				</div>
 			</fieldset>
+
+			<fieldset>
+				<legend class="heading">{tr}Breadcrumbs{/tr}</legend>
+
+				{preference name=feature_breadcrumbs}
+				<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
+					{preference name=feature_siteloclabel}
+					{preference name=feature_siteloc}
+					{preference name=feature_sitetitle}
+					{preference name=feature_sitedesc}
+				</div>
+			</fieldset>
+
+
 		{/tab}
 
 		{tab name="{tr}Date and Time{/tr}"}

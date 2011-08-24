@@ -262,6 +262,10 @@
 		<div class="adminoptionboxchild" id="feature_wiki_print_childcontainer">
 			{preference name=feature_wiki_multiprint}
 		</div>
+		{preference name=feature_print_indexed}
+		
+		{preference name=feature_wiki_mindmap}
+		{preference name=feature_morcego}
 
 		<div class="adminoptionbox clearfix">
 			<fieldset>

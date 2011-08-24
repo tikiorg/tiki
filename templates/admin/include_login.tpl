@@ -31,6 +31,7 @@
 	{tabset name="admin_login"}
 		{tab name="{tr}General Preferences{/tr}"}
 			{preference name=auth_method}
+			{preference name=feature_intertiki}
 			
 			<fieldset>
 				<legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
