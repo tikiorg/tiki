@@ -313,9 +313,7 @@ foreach ($all_modules_info as &$mod) {
 }
 uasort($all_modules_info, 'compare_names');
 $smarty->assign_by_ref( 'all_modules_info', $all_modules_info);
-if (!empty($_REQUEST['module_list_show_all'])) {
-	$smarty->assign('module_list_show_all', true);
-}
+$smarty->assign('module_list_show_all', !empty($_REQUEST['module_list_show_all']));
 
 $orders = array();
 for ($i = 1;$i < 50;$i++) {
