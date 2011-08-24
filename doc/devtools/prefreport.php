@@ -6,7 +6,7 @@
 // $Id$
 
 // Usage: From the command line:
-// php doc/devtools/lessermagicreport.php > lessermagicreport.csv
+// php doc/devtools/prefreport.php > prefreport.csv
 
 require_once 'tiki-setup.php';
 require_once 'lib/prefslib.php';
