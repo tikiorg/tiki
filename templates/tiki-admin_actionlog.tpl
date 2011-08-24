@@ -371,7 +371,7 @@
 
 		{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
 			<table class="normal">
-				<caption>{tr}Volumn per category{/tr}</caption>
+				<caption>{tr}Volume per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
 					{foreach item=type from=$typeVol}
@@ -395,7 +395,7 @@
 
 		{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
 			<table class="normal">
-				<caption>{tr}Volumn per category and per user{/tr}</caption>
+				<caption>{tr}Volume per category and per user{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
 					<th>{tr}User{/tr}</th>
@@ -514,9 +514,9 @@
 			<table>
 				<caption>
 					{if $selectedUsers}
-						{tr}Volumn per the users'group and per contribution{/tr}
+						{tr}Volume per the users' group and per contribution{/tr}
 					{else}
-						{tr}Volumn per group and per contribution{/tr}
+						{tr}Volume per group and per contribution{/tr}
 					{/if}
 				</caption>
 				<tr>
@@ -540,7 +540,7 @@
 
 		{if $prefs.feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
 			<table>
-				<caption>{tr}Volumn per user and per contribution{/tr}</caption>
+				<caption>{tr}Volume per user and per contribution{/tr}</caption>
 				<tr>
 					<th>{tr}User{/tr}</th>
 					<th>{tr}Contribution{/tr}</th>
@@ -562,7 +562,7 @@
 
 		{if $prefs.feature_contribution eq 'y' && isset($contributionStat)}
 			<table>
-				<caption>{if $selectedUsers}{tr}Volumn per users'contribution and time{/tr}{else}{tr}Volumn per contribution and time{/tr}{/if}</caption>
+				<caption>{if $selectedUsers}{tr}Volume per users' contribution and time{/tr}{else}{tr}Volume per contribution and time{/tr}{/if}</caption>
 				<tr>
 					<th>{tr}Contribution{/tr}</th>
 					<th colspan="{$contributionNbCols}">{if $contribTime eq 'd'}{tr}Days{/tr}{else}{tr}Weeks{/tr}{/if}</th>
