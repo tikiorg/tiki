@@ -8,7 +8,7 @@
 function smarty_function_preference( $params, $smarty ) {
 	global $prefslib, $prefs; require_once 'lib/prefslib.php';
 	if( ! isset( $params['name'] ) ) {
-		return tra( 'Preference name not specified.' );
+		return 'Preference name not specified.';
 	}
 
 	$source = null;
