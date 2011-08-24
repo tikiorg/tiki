@@ -26,6 +26,21 @@ $fields = array(
 	'description' => '',
 	'locations' => '',
 	'dependencies' => '',
+	'type' => '',
+	'options' => '',
+	'admin' => '',
+	'module' => '',
+	'view' => '',
+	'permission' => '',
+	'plugin' => '',
+	'extensions' => '',
+	'tags' => '',
+	'parameters' => '',
+	'detail' => '',
+	'warning' => '',
+	'hint' => '',
+	'shorthint' => '',
+	'perspective' => '',	
 );
 
 $stopWords = array( '', 'in', 'and', 'a', 'to', 'be', 'of', 'on', 'the', 'for', 'as', 'it', 'or', 'with', 'by', 'is', 'an' );
@@ -68,7 +83,21 @@ function collect_raw_data( $fields ) {
 			$entry['filter'] = isset( $raw['filter'] ) ? $raw['filter'] : '';
 			$entry['help'] = isset( $raw['help'] ) ? $raw['help'] : '';
 			$entry['dependencies'] = isset( $raw['dependencies'] ) ? implode( ',', $raw['dependencies'] ) : '';
-
+			$entry['type'] = isset( $raw['type'] ) ? $raw['type'] : '';
+			$entry['options'] = isset( $raw['options'] ) ? implode( ',', $raw['options'] ) : '';
+			$entry['admin'] = isset( $raw['admin'] ) ? $raw['admin'] : '';
+			$entry['module'] = isset( $raw['module'] ) ? $raw['module'] : '';
+			$entry['view'] = isset( $raw['view'] ) ? $raw['view'] : '';
+			$entry['permission'] = isset( $raw['permission'] ) ? implode( ',', $raw['permission'] ) : '';
+			$entry['plugin'] = isset( $raw['plugin'] ) ? $raw['plugin'] : '';
+			$entry['extensions'] = isset( $raw['extensions'] ) ? implode( ',', $raw['extensions'] ) : '';
+			$entry['tags'] = isset( $raw['tags'] ) ? implode( ',', $raw['tags'] ) : '';
+			$entry['parameters'] = isset( $raw['parameters'] ) ? implode( ',', $raw['parameters'] ) : '';
+			$entry['detail'] = isset( $raw['detail'] ) ? $raw['detail'] : '';
+			$entry['warning'] = isset( $raw['warning'] ) ? $raw['warning'] : '';
+			$entry['hint'] = isset( $raw['hint'] ) ? $raw['hint'] : '';
+			$entry['shorthint'] = isset( $raw['shorthint'] ) ? $raw['shorthint'] : '';
+			$entry['perspective'] = isset( $raw['perspective'] ) ? $raw['perspective'] : '';
 			$data[] = $entry;
 		}
 	}
