@@ -16,11 +16,11 @@ class TikiConnectTest extends TikiTestCase
 	{
 	}
 	
-	public function testBuildArray()
+	public function testBuildConnectData()
 	{
 
 		$this->obj = new TikiConnect();		// for now just check it returns something
-		$data = $this->obj->buildArray();	// TODO check status etc
+		$data = $this->obj->buildConnectData();	// TODO check status etc
 		
 		$this->assertTrue(count($data) > 0);
 	}
