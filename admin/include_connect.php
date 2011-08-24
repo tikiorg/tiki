@@ -34,5 +34,5 @@ if (empty($prefs['connect_site_title'])) {
 include_once 'lib/core/TikiConnect.php';
 $connectlib = new TikiConnect();
 
-$smarty->assignByRef('connect_stats', $connectlib->getRecievedDataStats());
+$smarty->assignByRef('connect_stats', $connectlib->getReceivedDataStats());
 

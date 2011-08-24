@@ -154,7 +154,7 @@ class TikiConnect
 	}
 
 
-	function getRecievedDataStats() {
+	function getReceivedDataStats() {
 		global $prefs;
 
 		$ret = array();
