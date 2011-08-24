@@ -335,7 +335,7 @@ $("#editpageform").submit(function(evt) {
 		});
 		if (isHtml) {
 			this.saving = false;
-			return confirm(tr('You appear to be using HTML in your article but have not selected "Allow HTML".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?'));
+			return confirm(tr('You appear to be using HTML in your article but have not selected "Allow full HTML".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?'));
 		}
 	}
 	return true;
