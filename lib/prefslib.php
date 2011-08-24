@@ -10,6 +10,7 @@ class PreferencesLib
 	private $data = array();
 	private $usageArray;
 	private $file = '';
+	private $files = array();
 	// prefs modified by the system etc
 	private $system_modified = array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs', 'case_patched' );
 	// prefs with system info etc
