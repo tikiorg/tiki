@@ -5,15 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: wikiplugin_relations.php 36072 2011-08-11 15:31:53Z changi67 $
 
-function wikiplugin_addfreetags_info()
+function wikiplugin_addfreetag_info()
 {
 	return array(
-		'name' => tra('Add Freetags'),
-		'description' => tra('Add freetags to specified object'),
+		'name' => tra('Add Freetag'),
+		'description' => tra('Add a single freetag to specified object'),
 		'format' => 'html',
-		'prefs' => array('feature_freetags', 'wikiplugin_addfreetags'),
+		'prefs' => array('feature_freetags', 'wikiplugin_addfreetag'),
 		'introduced' => 8,
-		'documentation' => 'PluginAddFreetags',
+		'documentation' => 'PluginAddFreetag',
 		'params' => array(
 			'object' => array(
 				'required' => false,
@@ -27,7 +27,7 @@ function wikiplugin_addfreetags_info()
 	);
 }
 
-function wikiplugin_addfreetags($data, $params)
+function wikiplugin_addfreetag($data, $params)
 {
 	global $user;
 	$object = current_object();
@@ -39,6 +39,7 @@ function wikiplugin_addfreetags($data, $params)
 	$identifier = 'wp_addfreetag_' . str_replace(array(':',' '), array('_',''), $params['object']);
 
 	if (!empty($_POST[$identifier])) {
+		$_POST[$identifier] = '"' . $_POST[$identifier] . '"';
 		if ($object['type'] == 'trackeritem') {
 			$permobject = TikiLib::lib('trk')->get_tracker_for_item($object['object']); 
 			$permobjecttype = 'tracker';
@@ -72,6 +73,6 @@ function wikiplugin_addfreetags($data, $params)
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('wp_addfreetag', $identifier); 
-	return $smarty->fetch('wiki-plugins/wikiplugin_addfreetags.tpl');
+	return $smarty->fetch('wiki-plugins/wikiplugin_addfreetag.tpl');
 }
 
