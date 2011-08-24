@@ -216,9 +216,6 @@ function get_default_prefs() {
 		'expanded_category_jail_key' => '',
 		'ws_container' => 0,
 
-		// html header
-		'head_extra_js' => array(),
-
 		// look and feel
 
 		'feature_sitenav' => 'n',
