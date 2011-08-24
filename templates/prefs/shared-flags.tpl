@@ -71,7 +71,19 @@ $('.pref-reset')
 		var box = $(this).closest('span').find(':checkbox');
 		box.attr('checked', box.filter(':checked').length == 0).change();
 		var $i = $(this).find("img");
-		$i.attr("src", $i.attr("src").indexOf("undo") > -1 ? $i.attr("src").replace("undo", "redo") :  $i.attr("src").replace("redo", "undo"));
+		if ($i.attr("src").indexOf("undo") > -1) {
+			$i.attr({
+				"src": $i.attr("src").replace("undo", "redo"),
+				"title": "{tr}Restore current value{/tr}",
+				"alt": "{tr}Restore current value{/tr}"
+			});
+		} else {
+			$i.attr({
+				"src": $i.attr("src").replace("redo", "undo"),
+				"title": "{tr}Reset to default{/tr}",
+				"alt": "{tr}Reset to default{/tr}"
+			});
+		}
 		return false;
 	});
 {/jq}
