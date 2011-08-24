@@ -21,14 +21,16 @@
 		<fieldset>
 			<legend>{tr}Tiki Connect{/tr}</legend>
 			{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
-				{tr}Please note: Work in progress, coming soon... (r36230){/tr}
+				{tr}Please note: Work in progress, coming soon... (r36454){/tr}
 			{/remarksbox}
 			{preference name="connect_feature"}
 			<div class="adminoptionboxchild" id="connect_feature_childcontainer">
 				<div class="navbar">
 					{button _script="#" _text="{tr}Preview info{/tr}" _title="{tr}See what is going to be sent{/tr}" _id="connect_list_btn"}
 					{button _script="#" _text="{tr}Send Info{/tr}" _title="{tr}Send the data{/tr}" _id="connect_send_btn"}
-
+					{if !empty($connect_stats)}
+						<span>{tr _0=$connect_stats.received _1=$connect_stats.guids}<strong>Server stats:</strong> %0 reports received from %1 Tikis{/tr}</span>
+					{/if}
 					{if !empty($connect_defaults_json)}
 						{button _text="{tr}Fill form{/tr}" _title="{tr}Fill this form in based on other preferences{/tr}" _id="connect_defaults_btn" _script="#"}
 						{jq}

@@ -29,7 +29,7 @@ function prefs_connect_list() {
             'description' => tra('Where to send the information.').' '.tra('Default:'). 'http://mother.tiki.org',
 			'type' => 'text',
 			'dependencies' => 'connect_feature',
-			'default' => 'https://mother.tiki.org/tiki-connect.php',
+			'default' => 'https://mother.tiki.org',
 			'filter' => 'url',
 			'tags' => array('advanced'),
 		),

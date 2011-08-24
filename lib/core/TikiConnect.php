@@ -86,7 +86,7 @@ class TikiConnect
 	}
 
 	/**
-	 * Records a row in tiki_connect
+	 * Records a row in tiki_connect and updates pref connect_last_post if client
 	 *
 	 * @param array $data		"connect" data to store
 	 * @param string $status	pending|confirmed|sent|received
@@ -153,8 +153,31 @@ class TikiConnect
 		return $data;
 	}
 
+
+	function getRecievedDataStats() {
+		global $prefs;
+
+		$ret = array();
+
+		if ($prefs['connect_server_mode'] === 'y') {
+			$ret['received'] = $this->connectTable->fetchCount(
+				array(
+					'type' => 'received',
+					'server' => 1,
+				)
+			);
+		}
+
+		// select distinct guid from tiki_connect where server=1;
+		$res = TikiLib::lib('tiki')->getOne('SELECT COUNT(DISTINCT `guid`) FROM `tiki_connect` WHERE `server` = 1;');
+
+		$ret['guids'] = $res;
+		
+		return $ret;
+	}
+
 	/**
-	 * gets a guid created within last 10 minutes
+	 * gets a guid created within last 1 minute
 	 *
 	 * @return string guid
 	 */
@@ -174,7 +197,7 @@ class TikiConnect
 		
 		if (!empty($res[0])) {
 			$created = strtotime($res[0]['created']);
-			if ($created + 600 > time()) {	// 10 mins
+			if ($created + 60 > time()) {	// 1 min
 				return $res[0]['guid'];
 			}
 		}

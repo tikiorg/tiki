@@ -14,6 +14,7 @@ if (isset($_REQUEST["connectcomprefs"])) {
 	check_ticket('admin-inc-connect');
 }
 ask_ticket('admin-inc-connect');
+$headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');
 
 global $userlib, $prefs, $base_url, $headerlib, $smarty;
 
@@ -30,4 +31,8 @@ if (empty($prefs['connect_site_title'])) {
 	$smarty->assign('connect_defaults_json', '');
 }
 
-$headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');
+include_once 'lib/core/TikiConnect.php';
+$connectlib = new TikiConnect();
+
+$smarty->assignByRef('connect_stats', $connectlib->getRecievedDataStats());
+
