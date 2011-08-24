@@ -136,6 +136,7 @@ function wikiplugin_list($data, $params)
 
 function wpquery_filter_type($query, $value)
 {
+	$value = explode(',', $value);
 	$query->filterType($value);
 }
 
