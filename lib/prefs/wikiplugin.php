@@ -17,7 +17,7 @@ function prefs_wikiplugin_list() {
 
 		$prefs['wikiplugin_' . $plugin] = array(
 			'name' => tr( 'Plugin %0', $info['name'] ),
-			'description' => $info['description'],
+			'description' => isset($info['description']) ? $info['description'] : '',
 			'type' => 'flag',
 			'help' => 'Plugin' . $plugin,
 			'dependencies' => $dependencies,
