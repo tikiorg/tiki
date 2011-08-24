@@ -43,6 +43,7 @@
 				</div>
 				{preference name=feature_group_transition}
 				{preference name=user_favorites}
+				{preference name=feature_invite}
 			</div>
 		{/tab}
 

@@ -55,6 +55,7 @@
 				{preference name=feature_socialnetworks}
 				{preference name=feature_credits}
 				{preference name=feature_invoice}
+				{preference name=feature_accounting}
 				{preference name=payment_feature}				
 				{preference name=feature_draw}
 				{preference name=feature_slideshow}
@@ -70,6 +71,16 @@
 				{preference name=feature_sefurl}
 				{preference name=feature_webmail}
 				{preference name=connect_feature}
+				{preference name=zotero_enabled}
+					<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
+						{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
+							{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
+						{/if}
+						{preference name=zotero_client_key}
+						{preference name=zotero_client_secret}
+						{preference name=zotero_group_id}
+						{preference name=zotero_style}
+					</div>
 			</div>
 		</fieldset>
 
@@ -191,34 +202,6 @@
 				{/jq}
 			</fieldset>
 {/tab}
-
-{* ---------- New features ------------ *}
-{tab name="{tr}New{/tr}"}
-			<div class="admin clearfix featurelist">
-				<fieldset>
-					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
- 					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
-						{preference name=feature_invite}
-						{preference name=feature_quick_object_perms}
-						{preference name=feature_webdav}
-						{preference name=feature_wysiwyg}
-						{preference name=feature_accounting}
-						{preference name=zotero_enabled}
-						<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
-							{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
-								{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
-							{/if}
-
-							{preference name=zotero_client_key}
-							{preference name=zotero_client_secret}
-							{preference name=zotero_group_id}
-							{preference name=zotero_style}
-						</div>
-				</fieldset>
-			</div>
-
-{/tab}
-
 
 {* ---------- Experimental features ------------ *}
 {tab name="{tr}Experimental{/tr}"}
