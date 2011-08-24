@@ -53,10 +53,8 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
 		);
-		$smarty->security_settings['MODIFIER_FUNCS'] = array_merge(
-			$smarty->security_settings['MODIFIER_FUNCS'],
-			array('ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags')
-		);
+
+		$smarty->enableSecurity('Tiki_Security_Policy');
 
 		if( $this->changeDelimiters ) {
 			$smarty->left_delimiter = '{{';

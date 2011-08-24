@@ -104,7 +104,8 @@ OUT;
 	<tr><th>Object</th><th>Type</th></tr>
 	<tr><td>HomePage</td><td>wiki page</td></tr>
 	<tr><td>SomePage</td><td>wiki page</td></tr>
-</table>~/np~</div>
+</table>
+~/np~</div>
 OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
@@ -126,7 +127,8 @@ OUT;
 	<tr><th>Object</th><th>Type</th></tr>
 	<tr><td>HomePage</td><td>wiki page</td></tr>
 	<tr><td>SomePage</td><td>wiki page</td></tr>
-</table>~/np~</div>
+</table>
+~/np~</div>
 OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
@@ -151,7 +153,8 @@ OUT;
 None~np~</td><td>wiki page</td></tr>
 	<tr><td>~/np~SomePage
 About~np~</td><td>wiki page</td></tr>
-</table>~/np~</div>
+</table>
+~/np~</div>
 OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
@@ -245,7 +248,8 @@ OUT;
 	<caption>Count: 1</caption>
 	<tr><th>Object</th><th>Type</th></tr>
 	<tr><td><a href="HomePage">HomePage</a></td><td>wiki page</td></tr>
-</table>~/np~</div>
+</table>
+~/np~</div>
 OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
