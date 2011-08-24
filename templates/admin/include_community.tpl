@@ -12,6 +12,7 @@
 
 	{tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
+	
 			<div class="admin featurelist">
 				{preference name=feature_score}
 				{preference name=feature_mytiki}
@@ -46,6 +47,30 @@
 				{preference name=feature_invite}
 			</div>
 		{/tab}
+		
+		{tab name="{tr}Plugins{/tr}"}
+			{preference name=wikiplugin_author}
+			{preference name=wikiplugin_avatar}
+			{preference name=wikiplugin_favorite}
+			{preference name=wikiplugin_group}
+			{preference name=wikiplugin_groupexpiry}
+			{preference name=wikiplugin_invite}
+			{preference name=wikiplugin_mail}
+			{preference name=wikiplugin_map}
+			{preference name=wikiplugin_memberlist}				
+			{preference name=wikiplugin_memberpayment}
+			{preference name=wikiplugin_perm}
+			{preference name=wikiplugin_proposal}
+			{preference name=wikiplugin_realnamelist}
+			{preference name=wikiplugin_subscribegroup}
+			{preference name=wikiplugin_subscribegroups}			
+			{preference name=wikiplugin_topfriends}		
+			{preference name=wikiplugin_usercount}
+			{preference name=wikiplugin_userlink}
+			{preference name=wikiplugin_userlist}
+			{preference name=wikiplugin_userpref}
+		{/tab}
+		
 
 		{tab name="{tr}General Settings{/tr}"}
 			{preference name=user_show_realnames}
