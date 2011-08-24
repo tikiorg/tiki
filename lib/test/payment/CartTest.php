@@ -10,6 +10,8 @@ require_once 'lib/payment/cartlib.php';
 class Payment_CartTest extends TikiTestCase
 {
 	function setUp() {
+		global $prefs;
+		$prefs['feature_sefurl'] = 'n';
 		$this->obj = $this->getMock('CartLib', array('get_gift_certificate_code'));
 		$_SERVER['REQUEST_URI'] = '/tiki-index.php';
 	}
