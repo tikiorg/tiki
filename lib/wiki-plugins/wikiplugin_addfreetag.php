@@ -35,8 +35,11 @@ function wikiplugin_addfreetag($data, $params)
 	if (isset($params['object']) && false !== strpos($params['object'], ':')) {
 		list($object['type'], $object['object']) = explode(':', $params['object'], 2);
 	}
-
-	$identifier = 'wp_addfreetag_' . str_replace(array(':',' '), array('_',''), $params['object']);
+	if ($object['type'] == 'wiki page' && !ctype_digit($object['object'])) {
+		$identifier = 'wp_addfreetag_' . str_replace(array(':',' '), array('_',''), TikiLib::lib('tiki')->get_page_id_from_name($params['object']));
+	} else {
+		$identifier = 'wp_addfreetag_' . str_replace(array(':',' '), array('_',''), $params['object']);
+	}
 
 	if (!empty($_POST[$identifier])) {
 		$_POST[$identifier] = '"' . str_replace('"', '', $_POST[$identifier]) . '"';
