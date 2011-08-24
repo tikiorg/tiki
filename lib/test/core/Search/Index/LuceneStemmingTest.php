@@ -57,9 +57,16 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 		$this->assertGreaterThan(0, count($query->search($this->index)));
 	}
 
-	function testSearchExtraAccents()
+	function testSearchAccentExactMatch()
 	{
 		$query = new Search_Query('éducation');
+
+		$this->assertGreaterThan(0, count($query->search($this->index)));
+	}
+
+	function testSearchExtraAccents()
+	{
+		$query = new Search_Query('pagé');
 
 		$this->assertGreaterThan(0, count($query->search($this->index)));
 	}
