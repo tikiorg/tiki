@@ -262,9 +262,6 @@ class Language_GetStringsTest extends TikiTestCase
 		
 		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => $this->baseDir));
 		$obj->writeToFiles($strings);
-		
-		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => false, 'baseDir' => $this->baseDir));
-		$obj->writeToFiles($strings);
 	}
 	
 	public function testScanFiles_shouldReturnStringsFromFiles()
