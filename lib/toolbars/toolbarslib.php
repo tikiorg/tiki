@@ -265,7 +265,7 @@ abstract class Toolbar
 				$tag = new ToolbarSeparator();
 				break;
 			case 'CkOnly':
-				$tag = new ToolbarCkOnly();
+				$tag = new ToolbarCkOnly( $tagName );
 				break;
 			case 'Fullscreen':
 				$tag = new ToolbarFullscreen();
@@ -856,6 +856,7 @@ class ToolbarPicker extends Toolbar
 			$icon = tra('pics/icons/palette_bg.png');
 			$wysiwyg = 'BGColor';
 			$styleType = 'background-color';
+			$rawList = array();
 			
 			$hex = array('0', '3', '6', '8', '9', 'C', 'F');
 			$count_hex = count($hex);
@@ -985,9 +986,9 @@ class ToolbarDialog extends Toolbar
 			$list = array('Wiki Link',
 						'<label for="tbWLinkDesc">Show this text</label>',
 						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						'<label for="tbWLinkURL">Link to this page</label>',
+						'<label for="tbWLinkPage">Link to this page</label>',
 						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkRel">Anchor:</label>' : '',
+						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkAnchor">Anchor:</label>' : '',
 						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 98%" />' : '',
 						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 98%" />' : '',
@@ -1034,7 +1035,7 @@ class ToolbarDialog extends Toolbar
 			$list = array('Find Text',
 						'<label>Search:</label>',
 						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
-						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
+						'<label for="tbFindCase" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
 						'{"open": function() { dialogFindOpen(area_id); },'.
@@ -1051,13 +1052,13 @@ class ToolbarDialog extends Toolbar
 			$tool_prefs[] = 'feature_wiki_replace';
 			
 			$list = array('Text Replace',
-						'<label>Search:</label>',
+						'<label for="tbReplaceSearch">Search:</label>',
 						'<input type="text" id="tbReplaceSearch" class="ui-widget-content ui-corner-all" />',
-						'<label>Replace:</label>',
+						'<label for="tbReplaceReplace">Replace:</label>',
 						'<input type="text" id="tbReplaceReplace" class="ui-widget-content ui-corner-all clearfix" />',
-						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
+						'<label for="tbReplaceCase" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
+						'<br /><label for="tbReplaceAll" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
 						'{"open": function() { dialogReplaceOpen(area_id); },'.
