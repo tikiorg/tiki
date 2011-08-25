@@ -93,5 +93,11 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 
 		$this->assertGreaterThan(0, count($query->search($this->index)));
 	}
+
+	function testStopWords()
+	{
+		$query = new Search_Query('a for the');
+		$this->assertEquals(0, count($query->search($this->index)));
+	}
 }
 
