@@ -254,12 +254,13 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return $this->itemData;
 	}
 
-	protected function renderTemplate($file, $context = array())
+	protected function renderTemplate($file, $context = array(), $data = array())
 	{
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('field', $this->definition);
 		$smarty->assign('context', $context);
 		$smarty->assign('item', $this->getItemData());
+		$smarty->assign('data', $data);
 
 		return $smarty->fetch($file, $file);
 	}

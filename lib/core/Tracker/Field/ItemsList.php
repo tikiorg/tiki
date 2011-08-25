@@ -72,10 +72,66 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
+		return array(
+			'value' => '',
+		);
+	}
+	
+	function renderInput($context = array())
+	{
+		return tr('Read Only');
+	}
+
+	function renderOutput( $context = array() ) {
+		if ($context['list_mode'] === 'csv') {
+			return $this->getConfiguration('value');
+		} else {
+			$trklib = TikiLib::lib('trk');
+
+			$items = $this->getItemIds();
+
+			$list = array();
+			foreach ($items as $itemId) {
+				if ($displayFields) {
+					$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
+				} else {
+					$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
+				}
+			}
+			
+			return $this->renderTemplate('trackeroutput/itemslist.tpl', $context, array(
+				'links' => (bool) $this->getOption(4),
+				'itemIds' => implode(',', $items),
+				'items' => $list,
+				'num' => count($list),
+			));
+		}
+	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$items = $this->getItemIds();
+
+		return array(
+			$baseKey => $typeFactory->multivalue($items),
+		);
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		return array($baseKey);
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array();
+	}
+
+	private function getItemIds()
+	{
 		$trackerId = (int) $this->getOption(0);
 		$remoteField = (int) $this->getOption(1);
 		$displayFields = $this->getOption(3);
-		$generateLinks = (bool) $this->getOption(4);
 		$status = $this->getOption(5, 'opc');
 
 		$tracker = Tracker_Definition::get($trackerId);
@@ -105,35 +161,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			}
 		}
 
-		$list = array();
-		foreach ($items as $itemId) {
-			if ($displayFields) {
-				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
-			} else {
-				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
-			}
-		}
-		
-		return array(
-			'value' => '',
-			'itemIds' => implode(',', $items),
-			'items' => $list,
-			'num' => count($list),
-			'links' => $generateLinks,
-		);
-	}
-	
-	function renderInput($context = array())
-	{
-		return tr('Read Only');
-	}
-
-	function renderOutput( $context = array() ) {
-		if ($context['list_mode'] === 'csv') {
-			return $this->getConfiguration('value');
-		} else {
-			return $this->renderTemplate('trackeroutput/itemslist.tpl', $context);
-		}
+		return $items;
 	}
 }
 
