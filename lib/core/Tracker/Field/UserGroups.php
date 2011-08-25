@@ -28,23 +28,17 @@ class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
-		$ins_id = $this->getInsertId();
+		$itemId = $this->getItemId();
 		
-		if (isset($requestData[$ins_id])) {
-			$value = $requestData[$ins_id];
-		} else {
-			$itemId = $this->getItemId();
+		if ($itemId) {
+			$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
 			
-			if ($itemId) {
-				$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
-				
-				if (!empty($itemUser)) {
-					global $tikilib;
-					$value = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
-				}
+			if (!empty($itemUser)) {
+				$tikilib = TikiLib::lib('tiki');
+				$value = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 			}
 		}
-		
+	
 		return array('value' => $value);
 	}
 	
@@ -56,5 +50,24 @@ class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 	function renderOutput($context = array())
 	{
 		return $this->renderTemplate('trackeroutput/usergroups.tpl', $context);
+	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$data = $this->getFieldData();
+
+		return array(
+			$baseKey => $typeFactory->multivalue($data['value']),
+		);
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		return array($baseKey);
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array($baseKey => true);
 	}
 }
