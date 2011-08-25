@@ -1418,10 +1418,10 @@ class TikiLib extends TikiDb_Bridge
 				$ret = '';
 				break;
 			case 'l':
-				$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='$user' />";
+				$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
 				break;
 			case 'u':
-				$path = "tiki-show_user_avatar.php?user=$user";
+				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
 
 				if( $prefs['users_serve_avatar_static'] == 'y' ) {
 					global $tikidomain;
@@ -1432,7 +1432,7 @@ class TikiLib extends TikiDb_Bridge
 					}
 				}
 
-				$ret = "<img border='0' src='$path' " . $style . " alt='$user' />";
+				$ret = "<img border='0' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
 				break;
 		}
 		return $ret;
