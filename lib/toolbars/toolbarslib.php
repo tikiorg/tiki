@@ -234,11 +234,10 @@ abstract class Toolbar
 		global $tikilib;
 		
 		$tikilib->query('DELETE FROM `tiki_preferences` WHERE `name` LIKE \'toolbar_tool_%\'');
-		$tikilib->query('DELETE FROM `tiki_preferences` WHERE `name` = \'toolbar_custom_list\'');
+		$tikilib->delete_preference('toolbar_custom_list');
 		
 		//global $cachelib; require_once("lib/cache/cachelib.php");
 		//$cachelib->invalidate('tiki_preferences_cache');
-		$tikilib->set_lastUpdatePrefs();
 	}
 	
 
