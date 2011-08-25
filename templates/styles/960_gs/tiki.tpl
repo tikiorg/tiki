@@ -20,7 +20,7 @@
 		{/if}
 
 		{* TikiTest ToolBar *}
-		{if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
+		{if $prefs.feature_tikitests eq 'y' and !empty($tikitest_state) and $tikitest_state neq 0}
 			{include file='tiki-tests_topbar.tpl'}
 		{/if}
 

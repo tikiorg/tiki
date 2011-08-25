@@ -441,6 +441,9 @@ class MenuLib extends TikiLib
 					$option['open'] = true;
 				}
 			} elseif ($option['type'] == 's') {
+				if (empty($params['id']) && !empty($params['structureId'])) {
+					$params['id'] = $params['structureId'];
+				}
 				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
 				$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
 			}

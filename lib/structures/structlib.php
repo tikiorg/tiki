@@ -1064,6 +1064,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		  
 		  $option['url'] = str_replace('&amp;', '&', $option['url']);			// as of Tiki 7 menu items get encoded later
 		  $option['sefurl'] = str_replace('&amp;', '&', $option['sefurl']);
+		  $option['optionId'] = $channel['page_ref_id'];
 		  
 		  ++$cant;
 		  $options[] = $option;

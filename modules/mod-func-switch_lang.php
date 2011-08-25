@@ -45,6 +45,8 @@ function module_switch_lang( $mod_reference, $module_params )
 		for ($i = 0, $icount_languages = count($languages); $i < $icount_languages; $i++) {
 			if (isset($flagmapping[$languages[$i]['value']])) {
 				$languages[$i]['flag'] = $flagmapping[$languages[$i]['value']][0];
+			} else {
+				$languages[$i]['flag'] = '';
 			}
 			if (isset($pageRenderer) && count($pageRenderer->trads) > 0) {
 				$languages[$i]['class'] = ' unavailable';
