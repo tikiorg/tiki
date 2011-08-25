@@ -91,8 +91,11 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		}
 	}
 	
-	if ( $type == "blog post" )
+	if ( $type == "blog post" ) {
 		$class = ' class="link"';
+	} elseif ( $type == "freetag" ) {
+		$class = ' class="freetag"';
+	}
 
 	$html = '<a href="' . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
 
