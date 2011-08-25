@@ -6,12 +6,7 @@
 // $Id$
 
 $inputConfiguration = array(array(
-	'staticKeyFilters' => array(
-		'categId' => 'digits',
-		'action' => 'alpha',
-	),
 	'staticKeyFiltersForArrays' => array(
-		'objects' => 'text',
 		'filter' => 'text',
 	),
 	'catchAllUnset' => null,
@@ -22,46 +17,6 @@ require_once 'lib/categories/categlib.php';
 require_once 'lib/tree/categ_browse_tree.php';
 
 $access->check_feature('feature_categories');
-
-if (isset($_POST['action'])) {
-	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-	$perms = Perms::get('category', $_REQUEST['categId']);
-
-	if ($_POST['action'] == 'add' && $perms->add_objects) {
-		foreach ($_POST['objects'] as $identifier) {
-			list($type, $id) = explode(':', $identifier, 2);
-			$objectPerms = Perms::get($type, $id);
-
-			if ($objectPerms->modify_object_categories) {
-				$categlib->categorize_any($type, $id, $_REQUEST['categId']);
-				$unifiedsearchlib->invalidateObject($type, $id);
-			}
-		}
-	} elseif ($_POST['action'] == 'remove' && $perms->remove_objects) {
-		foreach ($_POST['objects'] as $identifier) {
-			list($type, $id) = explode(':', $identifier, 2);
-			$objectPerms = Perms::get($type, $id);
-
-			if ($objectPerms->modify_object_categories && $oId = $categlib->is_categorized($type, $id)) {
-				$categlib->uncategorize($oId, $_REQUEST['categId']);
-				$unifiedsearchlib->invalidateObject($type, $id);
-			}
-		}
-	}
-
-	$unifiedsearchlib->processUpdateQueue(count($_POST['objects'])*2);
-	$objects = $categlib->list_category_objects($_REQUEST['categId'], 0, 1, 'name_asc');
-
-	$query = new Search_Query;
-	$query->filterCategory($_REQUEST['categId']);
-	$query->filterPermissions($globalperms->getGroups());
-	$query->setRange(0, 1);
-	$result = $query->search($unifiedsearchlib->getIndex());
-	$access->output_serialized(array(
-		'count' => count($result),
-	));
-	exit;
-}
 
 // Generate the category tree {{{
 $ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');

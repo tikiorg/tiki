@@ -8,6 +8,14 @@
 	{/if}
 </div>
 
+{remarksbox title="{tr}Move objects between categories{/tr}"}
+	<ol>
+		<li>{tr}Click on the category name you want to list. The list of objects in that category will become visible.{/tr}</li>
+		<li>{tr}Select the objects you want to affect. Controls will appear in the category browser.{/tr}</li>
+		<li>{tr}Use the plus and minus signs to add or remove the categories on selected objects.{/tr}</li>
+	</ol>
+{/remarksbox}
+
 <div class="category-browser">
 	{$tree}
 </div>
@@ -32,13 +40,6 @@
 	{/if}
 </div>
 
-{remarksbox title="{tr}Move objects between categories{/tr}"}
-<ol>
-	<li>{tr}Click on the category name you want to list. The list of objects in that category will become visible.{/tr}</li>
-	<li>{tr}Select the objects you want to affect. Controls will appear in the category browser.{/tr}</li>
-	<li>{tr}Use the plus and minus signs to add or remove the categories on selected objects.{/tr}</li>
-</ol>
-{/remarksbox}
 {jq}
 function perform_selection_action(action, row) {
 	var objects = [], categId = $(row).find('a').data('categ');
@@ -51,12 +52,14 @@ function perform_selection_action(action, row) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'tiki-edit_categories.php',
+		url: 'tiki-ajax_services.php',
 		dataType: 'json',
 		data: {
+			controller: 'category',
 			action: action,
 			categId: categId,
-			objects: objects
+			objects: objects,
+			confirm: 1
 		},
 		success: function (data) {
 			$('.object-count', row).text(data.count);
@@ -69,14 +72,14 @@ function perform_selection_action(action, row) {
 
 $('.categ-add')
 	.click(function () {
-		perform_selection_action('add', $(this).closest('li')[0]);
+		perform_selection_action('categorize', $(this).closest('li')[0]);
 	})
 	.addClass('ui-icon')
 	.addClass('ui-icon-circle-plus');
 
 $('.categ-remove')
 	.click(function () {
-		perform_selection_action('remove', $(this).closest('li')[0]);
+		perform_selection_action('uncategorize', $(this).closest('li')[0]);
 	})
 	.addClass('ui-icon')
 	.addClass('ui-icon-circle-minus');
