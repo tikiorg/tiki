@@ -84,6 +84,7 @@
 			
 			{preference name=user_store_file_gallery_picture}
 			{preference name=user_picture_gallery_id}
+			{preference name=user_default_picture_id}
 			
 			<input type="hidden" name="userfeatures" />
 			<fieldset>

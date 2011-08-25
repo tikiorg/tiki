@@ -77,6 +77,16 @@ function prefs_user_list($partial = false) {
 			'size' => '3',
 			'default' => 0,
 		),
+		'user_default_picture_id' => array(
+			'name' => tra('File ID of default avatar image'),
+			'deacription' => tra('File ID of image to use in file gallery as the avatar if user has no avatar image in file galleries'), 
+			'help' => 'User+Preferences',
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => '5',
+			'default' => 0,
+			'dependencies' => array('user_store_file_gallery_picture'),
+		),
 		'user_who_viewed_my_stuff' => array(
 			'name' => tra('Display who viewed my stuff on the user information page'),
 			'description' => tra('You will need to activate tracking of views for various items in the action log for this to work'),

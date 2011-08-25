@@ -60,7 +60,9 @@ if ($prefs["user_store_file_gallery_picture"] == 'y' && isset($_REQUEST["avatar"
         require_once ('lib/userprefs/userprefslib.php');
         if ($user_picture_id = $userprefslib->get_user_picture_id($_REQUEST["avatar"])) {
                 $_REQUEST['fileId'] = $user_picture_id;
-        }
+        } elseif (!empty($prefs['user_default_picture_id'])) {
+		$_REQUEST['fileId'] = $prefs['user_default_picture_id'];
+	}
 }
 
 if ( ! ini_get('safe_mode') ) {
