@@ -169,7 +169,7 @@ class TikiConnect
 		}
 
 		// select distinct guid from tiki_connect where server=1;
-		$res = TikiLib::lib('tiki')->getOne('SELECT COUNT(DISTINCT `guid`) FROM `tiki_connect` WHERE `server` = 1;');
+		$res = TikiLib::lib('tiki')->getOne('SELECT COUNT(DISTINCT `guid`) FROM `tiki_connect` WHERE `server` = 1 AND `type` = \'received\';');
 
 		$ret['guids'] = $res;
 		
