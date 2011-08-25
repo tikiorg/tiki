@@ -11,16 +11,20 @@
 <div class="category-browser">
 	{$tree}
 </div>
+{filter action="tiki-edit_categories.php" filter=$filter}{/filter}
 <div class="object-list">
-	{if $objects and $objects.data}
+	{if $result && count($result)}
 		<ol>
-			{foreach from=$objects.data item=object}
-				<li{permission type=$object.type object=$object.itemId name="modify_object_categories"} class="available"{/permission}>
-					<input type="checkbox" name="object[]" value="{$object.type|escape}:{$object.itemId|escape}"/>
-					<a href="{$object.href|escape}">{$object.name|escape}</a>
+			{foreach from=$result item=object}
+				<li{permission type=$object.type object=$object.object_id name="modify_object_categories"} class="available"{/permission}>
+					<input type="checkbox" name="object[]" value="{$object.object_type|escape}:{$object.object_id|escape}"/>
+					{object_link type=$object.object_type id=$object.object_id}
 				</li>
 			{/foreach}
 		</ol>
+		{if $result->hasMore()}
+			<p>{tr}More results available. Please refine the search criterias.{/tr}</p>
+		{/if}
 		<p>
 			<a class="select-all" href="#selectall">{tr}Select all{/tr}</a>
 			<a class="unselect-all" href="#unselectall">{tr}Unselect all{/tr}</a>
@@ -37,22 +41,28 @@
 {/remarksbox}
 {jq}
 function perform_selection_action(action, row) {
-	var objects = [], url = $(row).find('a').attr('href');
+	var objects = [], categId = $(row).find('a').data('categ');
 
 	$('.object-list :checked').each(function () {
 		objects.push($(this).val());
 	});
 
+	$('.control', row).fadeTo(10, .20);
+
 	$.ajax({
 		type: 'POST',
-		url: url,
+		url: 'tiki-edit_categories.php',
 		dataType: 'json',
 		data: {
 			action: action,
+			categId: categId,
 			objects: objects
 		},
 		success: function (data) {
 			$('.object-count', row).text(data.count);
+		},
+		complete: function () {
+			$('.control', row).fadeTo(10, 1);
 		}
 	});
 }

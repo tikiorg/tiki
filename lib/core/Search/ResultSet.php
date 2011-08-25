@@ -66,5 +66,10 @@ class Search_ResultSet extends ArrayObject
 			}
 		}
 	}
+
+	function hasMore()
+	{
+		return $this->count > $this->offset + $this->maxRecords;
+	}
 }
 

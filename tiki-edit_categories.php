@@ -12,6 +12,7 @@ $inputConfiguration = array(array(
 	),
 	'staticKeyFiltersForArrays' => array(
 		'objects' => 'text',
+		'filter' => 'text',
 	),
 	'catchAllUnset' => null,
 ));
@@ -23,6 +24,7 @@ require_once 'lib/tree/categ_browse_tree.php';
 $access->check_feature('feature_categories');
 
 if (isset($_POST['action'])) {
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$perms = Perms::get('category', $_REQUEST['categId']);
 
 	if ($_POST['action'] == 'add' && $perms->add_objects) {
@@ -32,6 +34,7 @@ if (isset($_POST['action'])) {
 
 			if ($objectPerms->modify_object_categories) {
 				$categlib->categorize_any($type, $id, $_REQUEST['categId']);
+				$unifiedsearchlib->invalidateObject($type, $id);
 			}
 		}
 	} elseif ($_POST['action'] == 'remove' && $perms->remove_objects) {
@@ -41,13 +44,21 @@ if (isset($_POST['action'])) {
 
 			if ($objectPerms->modify_object_categories && $oId = $categlib->is_categorized($type, $id)) {
 				$categlib->uncategorize($oId, $_REQUEST['categId']);
+				$unifiedsearchlib->invalidateObject($type, $id);
 			}
 		}
 	}
 
+	$unifiedsearchlib->processUpdateQueue(count($_POST['objects'])*2);
 	$objects = $categlib->list_category_objects($_REQUEST['categId'], 0, 1, 'name_asc');
+
+	$query = new Search_Query;
+	$query->filterCategory($_REQUEST['categId']);
+	$query->filterPermissions($globalperms->getGroups());
+	$query->setRange(0, 1);
+	$result = $query->search($unifiedsearchlib->getIndex());
 	$access->output_serialized(array(
-		'count' => $objects['cant'],
+		'count' => count($result),
 	));
 	exit;
 }
@@ -58,7 +69,7 @@ $ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
 $tree_nodes = array();
 foreach($ctall as $c) {
 	$url = htmlentities('tiki-edit_categories.php?' . http_build_query(array(
-		'categId' => $c['categId'],
+		'filter~categories' => $c['categId'],
 	)), ENT_QUOTES, 'UTF-8');
 	$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
 	$perms = Perms::get('category', $c['categId']);
@@ -70,7 +81,7 @@ foreach($ctall as $c) {
 $add
 $remove
 <span class="object-count">{$c['objects']}</span>
-<a class="catname" href="{$url}">{$name}</a>
+<a class="catname" href="{$url}" data-categ="{$c['categId']}">{$name}</a>
 BODY;
 
 	$tree_nodes[] = array(
@@ -80,11 +91,10 @@ BODY;
 	);
 }
 
-$orphans = $categlib->list_orphan_objects(0, 0, 'name_asc');
 $tree_nodes[] = array(
 	'id' => 'orphan',
 	'parent' => '0',
-	'data' => '<span class="object-count">' . $orphans['cant'] . '</span><a class="catname" href="tiki-edit_categories.php?categId=0"><em>' . tr('Orphans') . '</em></a>',
+	'data' => '<span class="object-count">' . $orphans['cant'] . '</span><a class="catname" href="tiki-edit_categories.php?filter~categories=orphan"><em>' . tr('Orphans') . '</em></a>',
 );
 
 $tm = new CatBrowseTreeMaker('categ');
@@ -92,17 +102,14 @@ $res = $tm->make_tree(0, $tree_nodes);
 $smarty->assign('tree', $res);
 // }}}
 
-// Generate the object list {{{
-if (isset($_REQUEST['categId'])) {
-	$categId = $_REQUEST['categId'];
+$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
+$smarty->assign('filter', $filter);
 
-	if ($categId > 0) {
-		$objects = $categlib->list_category_objects($categId, 0, -1, 'name_asc');
-	} else {
-		$objects = $categlib->list_orphan_objects(0, -1, 'name_asc');
-	}
-
-	$smarty->assign('objects', $objects);
+if (count($filter)) {
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+	$query = $unifiedsearchlib->buildQuery($filter);
+	$result = $query->search($unifiedsearchlib->getIndex());
+	$smarty->assign('result', $result);
 }
 // }}}
 
