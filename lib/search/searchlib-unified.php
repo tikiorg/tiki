@@ -268,7 +268,10 @@ class UnifiedSearchLib
 
 		$query = new Search_Query;
 		$query->setWeightCalculator($this->getWeightCalculator());
-		$query->filterPermissions(Perms::get()->getGroups());
+
+		if (! Perms::get()->admin) {
+			$query->filterPermissions(Perms::get()->getGroups());
+		}
 
 		if ($jail = $categlib->get_jail()) {
 			$query->filterCategory($jail, true);

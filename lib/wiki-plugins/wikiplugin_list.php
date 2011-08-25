@@ -80,7 +80,9 @@ function wikiplugin_list($data, $params)
 		}
 	}
 
-	$query->filterPermissions(Perms::get()->getGroups());
+	if (! Perms::get()->admin) {
+		$query->filterPermissions(Perms::get()->getGroups());
+	}
 
 	if (!empty($_REQUEST['sort_mode'])) {
 		$query->setOrder($_REQUEST['sort_mode']);
