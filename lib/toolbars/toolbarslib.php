@@ -1362,6 +1362,13 @@ JS
 		return $this->wysiwyg;
 	} // }}}
 	
+	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		return $this->getWysiwygToken($areaId); 
+	} // }}}	
+	
+	
 	function isAccessible() // {{{
 	{
 		global $tiki_p_edit_switch_mode;
