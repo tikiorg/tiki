@@ -6,7 +6,6 @@
 // $Id$
 $section = "draw";
 require_once ('tiki-setup.php');
-require_once ('lib/svg-edit_tiki/draw.php');
 include_once ('lib/filegals/filegallib.php');
 
 $access->check_feature('feature_draw');
