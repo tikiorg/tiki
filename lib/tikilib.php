@@ -3518,42 +3518,36 @@ class TikiLib extends TikiDb_Bridge
 
 	// Returns an array of non-default preferences
 	function get_db_preferences() {
-		$needLoading = false;
 		$needCache = false;
 
 		// modified to cache for non-logged in users (case where logged out users have no session)
-		if (isset($_SESSION['s_prefs'])) {
-			$needLoading = true;
-		} else {
+		if (!isset($_SESSION['s_prefs'])) {
 			//logged out
 			$cachelib = TikiLib::lib('cache');
 			if ( $data = $cachelib->getSerialized("tiki_preferences_cache")) {
 				return $data;
 			}
-			$needLoading = true;
 			$needCache = true;
 		}	
 
-		if( $needLoading ) {
-			$defaults = get_default_prefs();
-			$modified = array();
+		$defaults = get_default_prefs();
+		$modified = array();
 
-			// logged in
-			$result = $this->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+		// logged in
+		$result = $this->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
 
-			foreach ( $result as $res ) {
-				$name = $res['name'];
-				$value = $res['value'];
+		foreach ( $result as $res ) {
+			$name = $res['name'];
+			$value = $res['value'];
 
-				if( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
-					$modified[$name] = $value;
-			}
-
-			$modified['lastReadingPrefs'] = isset($modified['lastUpdatePrefs']) ? $modified['lastUpdatePrefs'] : -1;		
+			if( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
+				$modified[$name] = $value;
 		}
 
+		$modified['lastReadingPrefs'] = isset($modified['lastUpdatePrefs']) ? $modified['lastUpdatePrefs'] : -1;		
+
 		if( $needCache ) {
-			$cachelib->cacheItem("tiki_preferences_cache",serialize($modified));
+			$cachelib->cacheItem("tiki_preferences_cache", serialize($modified));
 		}
 
 		return $modified;
