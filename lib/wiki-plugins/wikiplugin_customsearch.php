@@ -277,7 +277,7 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 			$radioreset
 			add_customsearch_$id('$fieldid', filter);"; 
 	if ($autosearchdelay) {
-		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_$id\').submit()', $autosearchdelay);";
 	}		
 	$script .= "});";
 
@@ -377,7 +377,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 					remove_customsearch_$id('$fieldid', filter);
 				}";
 			if ($autosearchdelay) {
-				$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+				$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_$id\').submit()', $autosearchdelay);";
 			}	
 			$script .= "});";
 
@@ -411,7 +411,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 			filter.value = $(this).val();
 			add_customsearch_$id('$fieldid', filter);"; 
 		if ($autosearchdelay) {
-			$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+			$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_$id\').submit()', $autosearchdelay);";
 		} 
 		$script .= "});";
 		
@@ -466,7 +466,7 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 			filter.value = $(this).val();
 			add_customsearch_$id('$fieldid', filter);";
 	if ($autosearchdelay) {
-		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_rep\').submit()', $autosearchdelay);";
+		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_$id\').submit()', $autosearchdelay);";
 	} 
 	$script .= "});"; 
 
