@@ -27,5 +27,11 @@ class ErrorReportLib
 
 		return $errors;
 	}
+
+	function send_headers()
+	{
+		require_once 'lib/smarty_tiki/function.error_report.php';
+		header('X-Tiki-Error: ' . smarty_function_error_report(array(), TikiLib::lib('smarty')));
+	}
 }
 

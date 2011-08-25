@@ -39,18 +39,22 @@ class Services_Tracker_Utilities
 
 	function createField(array $data)
 	{
+		$definition = Tracker_Definition::get($data['trackerId']);
+
+		$isFirst = 0 === count($definition->getFields());
+
 		$trklib = TikiLib::lib('trk');
 		return $trklib->replace_tracker_field(
 			$data['trackerId'],
 			0,
 			$data['name'],
 			$data['type'],
+			($isFirst ? 'y' : 'n'),
 			'n',
-			'n',
-			'n',
+			($isFirst ? 'y' : 'n'),
 			'y',
 			isset($data['isHidden']) ? $data['isHidden'] : 'n',
-			isset($data['isMandatory']) ? ($data['isMandatory'] ? 'y' : 'n') : 'y',
+			isset($data['isMandatory']) ? ($data['isMandatory'] ? 'y' : 'n') : ($isFirst ? 'y' : 'n'),
 			$trklib->get_last_position($data['trackerId']) + 10,
 			isset($data['options']) ? $data['options'] : '',
 			$data['description'],

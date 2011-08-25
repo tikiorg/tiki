@@ -131,20 +131,40 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker does not exist'), 404);
 		}
 
+		$hasList = false;
+		$hasLink = false;
+
 		$fields = array();
 		foreach ($input->field as $key => $value) {
 			$fieldId = (int) $key;
+			$isMain = $value->isMain->int();
+			$isTblVisible = $value->isTblVisible->int();
+
 			$fields[$fieldId] = array(
 				'position' => $value->position->int(),
-				'isTblVisible' => $value->isTblVisible->int() ? 'y' : 'n',
-				'isMain' => $value->isMain->int() ? 'y' : 'n',
+				'isTblVisible' => $isTblVisible ? 'y' : 'n',
+				'isMain' => $isMain ? 'y' : 'n',
 				'isSearchable' => $value->isSearchable->int() ? 'y' : 'n',
 				'isPublic' => $value->isPublic->int() ? 'y' : 'n',
 				'isMandatory' => $value->isMandatory->int() ? 'y' : 'n',
 			);
 
 			$this->utilities->updateField($trackerId, $fieldId, $fields[$fieldId]);
+
+			$hasList = $hasList || $isTblVisible;
+			$hasLink = $hasLink || $isMain;
 		}
+
+		$errorreport = TikiLib::lib('errorreport');
+		if (! $hasList) {
+			$errorreport->report(tr('Tracker contains no listed field, no meaningful information will be provided in the default list.'));
+		}
+
+		if (! $hasLink) {
+			$errorreport->report(tr('Tracker contains no field in the title, no link will be generated.'));
+		}
+
+		$errorreport->send_headers();
 
 		return array(
 			'fields' => $fields,

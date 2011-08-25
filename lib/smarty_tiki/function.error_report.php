@@ -14,15 +14,19 @@ function smarty_function_error_report($params, $smarty)
 	$post = '</div>';
 
 	TikiLib::lib('header')->add_js('
-	$("#error_report").ajaxError(function (e, jqxhr) {
+	$("#error_report").ajaxComplete(function (e, jqxhr) {
 		var error = jqxhr.getResponseHeader("X-Tiki-Error");
 		if (error) {
-			if ($(this).is(":empty")) {
+			if ($("ul", this).length === 0) {
 				$(this).append($(error)[0].childNodes);
 			} else {
 				$("ul", this).append($(error).find("li"));
 			}
 		}
+	});
+	$("#error_report .clear").live("click", function () {
+		$("#error_report").empty();
+		return false;
 	});
 	');
 	
@@ -32,7 +36,7 @@ function smarty_function_error_report($params, $smarty)
 		return $pre . smarty_block_remarksbox(array(
 			'type' => 'errors',
 			'title' => tra('Error(s)'),
-		), '<ul><li>' . implode('</li><li>', $errors) . '</li></ul>', $smarty) . $post;
+		), '<a class="clear" style="float: right;" href="#">' . tr('Clear errors') . '</a><ul><li>' . implode('</li><li>', $errors) . '</li></ul>', $smarty) . $post;
 	} else {
 		return $pre . $post;
 	}
