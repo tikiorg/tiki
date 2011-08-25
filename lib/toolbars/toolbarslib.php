@@ -206,7 +206,6 @@ abstract class Toolbar
 		if( !in_array( $name, $custom_list ) ) {
 			$custom_list[] = $name;
 			$tikilib->set_preference( 'toolbar_custom_list', serialize($custom_list) );
-			$tikilib->set_lastUpdatePrefs();
 		}
 	}
 
