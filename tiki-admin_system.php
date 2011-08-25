@@ -77,6 +77,7 @@ foreach($dirs as $i => $d) {
 }
 $smarty->assign_by_ref('dirs', $dirs);
 $smarty->assign_by_ref('dirsWritable', $dirsWritable);
+$smarty->assign('zipPath', '');
 if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath']) && $tiki_p_admin == 'y') {
 	include_once ('lib/pclzip/pclzip.lib.php');
 	if (!$archive = new PclZip($_REQUEST['zipPath'])) {
@@ -92,7 +93,7 @@ if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath']) && $tiki_p_admin == '
 		$smarty->display('error.tpl');
 		die;
 	}
-	$smarty->assign_by_ref('zipPath', $_REQUEST['zipPath']);
+	$smarty->assign('zipPath', $_REQUEST['zipPath']);
 }
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
