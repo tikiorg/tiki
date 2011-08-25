@@ -2031,10 +2031,9 @@ if( \$('#$id') ) {
 						break;
 					}
 
-					if( ! empty( $value ) || isset( $arg[4] ) ) {
-						$needles[] = $arg[0];
-						$replacements[] = $value;
-					}
+					$needles[] = $arg[0];
+					$replacements[] = $value;
+				
 				}
 				$data = str_replace( $needles, $replacements, $data );
 			}
