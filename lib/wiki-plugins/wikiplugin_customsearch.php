@@ -26,9 +26,9 @@ function wikiplugin_customsearch_info()
 			),
 			'id' => array(
 				'required' => false,
-				'name' => tra('Unique Alphanumeric ID for search'),
-				'description' => tra('A unique ID to distinguish custom searches for storing of previous search criteria entered by users'),
-				'filter' => 'text',
+				'name' => tra('Alphanumeric Unique Identifier for search'),
+				'description' => tra('A unique identifier to distinguish custom searches for storing of previous search criteria entered by users'),
+				'filter' => 'alnum',
 				'default' => '0',
 			),
 			'autosearchdelay' => array(
@@ -67,7 +67,7 @@ function wikiplugin_customsearch($data, $params)
 		return tra('Template page not found');
 	}
 	if (isset($params['id'])) {
-		$id = preg_replace('/[^a-zA-Z0-9]/', '', $params['id']);
+		$id = $params['id'];
 	} else {
 		$id = '0';
 	}
