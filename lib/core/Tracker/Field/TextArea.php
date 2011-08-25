@@ -92,17 +92,19 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		$cols = $this->getOption(1);
 		$rows = $this->getOption(2);
 
-		$context['toolbar'] = $this->getOption(0) ? 'y' : 'n';
-		$context['cols'] = ($cols >= 1) ? $cols : 50;
-		$context['rows'] = ($rows >= 1) ? $rows : 50;
-		$context['keyup'] = '';
+		$data = array(
+			'toolbar' => $this->getOption(0) ? 'y' : 'n',
+			'cols' => ($cols >= 1) ? $cols : 50,
+			'rows' => ($rows >= 1) ? $rows : 50,
+			'keyup' => '',
+		);
 
 		if ($this->getOption(5)) {
-			$context['keyup'] = "wordCount({$this->getOption(5)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
+			$data['keyup'] = "wordCount({$this->getOption(5)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
 		} elseif ($this->getOption(3)) {
-			$context['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
+			$data['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
 		}
-		return $this->renderTemplate('trackerinput/textarea.tpl', $context);
+		return $this->renderTemplate('trackerinput/textarea.tpl', $context, $data);
 	}
 
 	protected function attemptParse($text)

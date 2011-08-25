@@ -91,17 +91,19 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			return tra('Read-only');
 		}
 
-		$context['labels'] = array();
+		$labels = array();
 		foreach ($this->getConfiguration('relations') as $rel) {
 			list($type, $id) = explode(':', $rel, 2);
-			$context['labels'][$rel] = TikiLib::lib('object')->get_title($type, $id);
+			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id);
 		}
 		foreach ($this->getConfiguration('inverts') as $rel) {
 			list($type, $id) = explode(':', $rel, 2);
-			$context['labels'][$rel] = TikiLib::lib('object')->get_title($type, $id);
+			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id);
 		}
-		$context['filter'] = $this->buildFilter();
-		return $this->renderTemplate('trackerinput/relation.tpl', $context);
+		$labels = $this->buildFilter();
+		return $this->renderTemplate('trackerinput/relation.tpl', $context, array(
+			'labels' => $labels,
+		));
 	}
 
 	function renderOutput($context = array())

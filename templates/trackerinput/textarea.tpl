@@ -7,11 +7,11 @@
 		<input type="text" id="area_{$field.fieldId}" name="{$field.ins_id}"{if $field.options_array[1] > 0} size="{$field.options_array[1]}"{/if}{if $field.options_array[3]>0} maxlength="{$field.options_array[3]}"{/if} value="{$field.value|escape}" onkeyup=$keyup />
 	{else}
 		{if $field.options_array[7] == 'y'}
-			{textarea id="area_`$field.fieldId`" name=$field.ins_id cols=$context.cols rows=$context.rows onkeyup=$context.keyup _wysiwyg='y' section="trackers"}
+			{textarea id="area_`$field.fieldId`" name=$field.ins_id cols=$data.cols rows=$data.rows onkeyup=$data.keyup _wysiwyg='y' section="trackers"}
 				{$field.value}
 			{/textarea}
 		{else}
-			{textarea id="area_`$field.fieldId`" name=$field.ins_id _toolbars=$context.toolbar _simple='y' cols=$context.cols rows=$context.rows onkeyup=$context.keyup _wysiwyg='n' section="trackers"}
+			{textarea id="area_`$field.fieldId`" name=$field.ins_id _toolbars=$data.toolbar _simple='y' cols=$data.cols rows=$data.rows onkeyup=$data.keyup _wysiwyg='n' section="trackers"}
 				{$field.value}
 			{/textarea}
 		{/if}

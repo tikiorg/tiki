@@ -1,12 +1,12 @@
 <div id="{$field.ins_id|escape}_container">
 	<input type="hidden" name="{$field.ins_id|escape}[]" value="" />
 	<ul>
-		{foreach from=$context.labels item=label key=id}
+		{foreach from=$data.labels item=label key=id}
 			<li>{$label|escape}</li>
 		{/foreach}
 	</ul>
 	<textarea name="{$field.ins_id|escape}">{$field.value|escape}</textarea>
-	{object_selector _class=selector _filter=$context.filter}
+	{object_selector _class=selector _filter=$data.filter}
 </div>
 {jq}
 (function () {
@@ -38,7 +38,7 @@
 
 	$('ul', container).empty();
 	$('textarea', container).remove();
-	var labels = {{$context.labels|@json_encode}};
+	var labels = {{$data.labels|@json_encode}};
 	$.each(labels, createItem);
 
 	$('ul', container).sortList();

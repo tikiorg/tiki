@@ -69,27 +69,28 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 
 		if (empty($att_id)) {
 			return '';
-		} else {
-
-			if ($context['list_mode'] === 'csv') {
-				global $base_url;
-				return $base_url . 'tiki-download_item_attachment.php?attId=' . $att_id;	// should something to do with export_attachment() happen here?
-			}
-
-			$attachment = TikiLib::lib('trk')->get_item_attachment($att_id);
-
-			$smarty = TikiLib::lib('smarty');
-			$smarty->loadPlugin('smarty_block_self_link');
-			$smarty->loadPlugin('smarty_function_icon');
-
-			$link = smarty_block_self_link(array(
-												'_script' => 'tiki-download_item_attachment.php',
-												'attId' => $att_id,
-										   ),
-										   smarty_function_icon(array('_id' => 'disk', 'alt' => tra('Download')), $smarty) . ' ' .
-										   $attachment['filename'],
-										   $smarty);
 		}
+
+		if ($context['list_mode'] === 'csv') {
+			global $base_url;
+			return $base_url . 'tiki-download_item_attachment.php?attId=' . $att_id;	// should something to do with export_attachment() happen here?
+		}
+
+		$attachment = TikiLib::lib('trk')->get_item_attachment($att_id);
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_block_self_link');
+		$smarty->loadPlugin('smarty_function_icon');
+
+		$link = smarty_block_self_link(
+			array(
+				'_script' => 'tiki-download_item_attachment.php',
+				'attId' => $att_id,
+			),
+			smarty_function_icon(array('_id' => 'disk', 'alt' => tra('Download')), $smarty) . ' ' .
+			$attachment['filename'],
+			$smarty
+		);
 		return $link;
 	}
 

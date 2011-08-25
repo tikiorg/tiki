@@ -166,8 +166,9 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	function renderInput($context = array())
 	{
-		$context['image_tag'] = $this->renderInnerOutput($context);
-		return $this->renderTemplate('trackerinput/image.tpl', $context);
+		return $this->renderTemplate('trackerinput/image.tpl', $context, array(
+			'image_tag' => $this->renderInnerOutput($context),
+		));
 	}
 
 	function handleSave($value, $oldValue)

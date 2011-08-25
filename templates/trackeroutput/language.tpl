@@ -1,1 +1,1 @@
-{$context.label|escape}
+{$data.label|escape}

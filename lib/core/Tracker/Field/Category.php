@@ -115,18 +115,16 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$selected_categories = $this->getConfiguration('selected_categories');
 		$categories = $this->getConfiguration('list');
-		$ret = '';
+		$ret = array();
 		foreach ($selected_categories as $categId) {
-			if (!empty($ret))
-				$ret .= '<br />';
 			foreach ($categories as $category) {
 				if ($category['categId'] == $categId) {
-					$ret .= $category['name'];
+					$ret[] = $category['name'];
 					break;
 				}
 			}
 		}
-		return $ret;
+		return implode('<br/>', $ret);
 	}
 
 	function handleSave($value, $oldValue)
