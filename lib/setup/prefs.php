@@ -318,8 +318,8 @@ function get_default_prefs() {
 
 
 function initialize_prefs() {
-	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs;
-		
+	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs, $in_installer, $section;
+
 	// Check if prefs needs to be reloaded
 	if (isset($_SESSION['s_prefs'])) {
 
@@ -359,26 +359,23 @@ function initialize_prefs() {
 		}
 
 		// Override default prefs with values specified in database
-		$modified = isset($tikilib) ? $tikilib->getModifiedPreferences() : "";
+		$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
 
 		// Unserialize serialized preferences
-		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
-			foreach ( $_SESSION['serialized_prefs'] as $p ) {
-				if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = @unserialize($modified[$p]);
-			}
+		foreach ( $_SESSION['serialized_prefs'] as $p ) {
+			if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = @unserialize($modified[$p]);
 		}
 
 		// Keep some useful sites values available before overriding with user prefs
 		// (they could be used in templates, so we need to set them even for Anonymous)
 		foreach ( $user_overrider_prefs as $uop ) {
-			$modified['site_'.$uop] = isset($modified[$uop])?$modified[$uop]:$defaults[$uop];
+			$modified['site_'.$uop] = isset($modified[$uop]) ? $modified[$uop] : $defaults[$uop];
 		}
 
 		// Assign prefs to the session
 		$_SESSION['s_prefs'] = $modified;
 	}
 
-	global $in_installer, $section;
 	// Perspectives are disabled by default so the preference has to be modified
 	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' && empty($in_installer) ) {
 		if( ! isset( $section ) || $section != 'admin' ) {
