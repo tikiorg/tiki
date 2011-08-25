@@ -14,6 +14,8 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   exit;
 }
 
+// Prefs for which we want to use the site value (they will be prefixed with 'site_')
+// ( this is also used in tikilib, not only when reloading prefs )
 $user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage',
 								'default_calendars', 'metatag_robots', 'themegenerator_theme');
 initialize_prefs();
@@ -316,9 +318,6 @@ function get_default_prefs() {
 
 
 function initialize_prefs() {
-	// Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
-	// ( this is also used in tikilib, not only when reloading prefs )
-	
 	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs;
 		
 	// Check if prefs needs to be reloaded
@@ -379,8 +378,8 @@ function initialize_prefs() {
 		$_SESSION['s_prefs'] = $modified;
 	}
 
-	// Disabled by default so it has to be modified
-	global $in_installer, $section;	// but not if called during installer
+	global $in_installer, $section;
+	// Perspectives are disabled by default so the preference has to be modified
 	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' && empty($in_installer) ) {
 		if( ! isset( $section ) || $section != 'admin' ) {
 			require_once 'lib/perspectivelib.php';
