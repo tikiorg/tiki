@@ -82,7 +82,7 @@ class Cachelib
 			$this->erase_dir_content("modules/cache/$tikidomain");
 			$this->flush_opcode_cache();
 			if (is_object($tikilib)) { 
-				$tikilib->set_lastUpdatePrefs();
+				$tikilib->invalidateModifiedPreferencesCaches();
 			}
 			if (is_object($logslib)) {
 				$logslib->add_log( $log_section, 'erased all cache content');
@@ -115,7 +115,7 @@ class Cachelib
 		}
 		if (in_array( 'prefs', $dir_names)) {
 			if (is_object($tikilib)) {
-				$tikilib->set_lastUpdatePrefs();
+				$tikilib->invalidateModifiedPreferencesCaches();
 			}
 		}
 	}

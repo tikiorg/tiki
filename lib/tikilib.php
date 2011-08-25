@@ -3536,7 +3536,7 @@ class TikiLib extends TikiDb_Bridge
 				$modified[$name] = $value;
 		}
 
-		$modified['lastReadingPrefs'] = isset($modified['lastUpdatePrefs']) ? $modified['lastUpdatePrefs'] : -1;		
+		$modified['lastReadingPrefs'] = $modified['lastUpdatePrefs'];		
 
 		$cachelib->cacheItem('modified_preferences', serialize($modified));
 
@@ -3583,7 +3583,7 @@ class TikiLib extends TikiDb_Bridge
 		$this->table('tiki_preferences')->delete(array(
 			'name' => $name,
 		));
-		$this->set_lastUpdatePrefs();
+		$this->invalidateModifiedPreferencesCaches();
 	}
 
 	function set_preference($name, $value) {
@@ -3597,13 +3597,10 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		}
 
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('modified_preferences');
-
 		$menulib = TikiLib::lib('menu');
 		$menulib->empty_menu_cache();
 
-		$this->set_lastUpdatePrefs();
+		$this->invalidateModifiedPreferencesCaches();
 
 		$preferences = $this->table('tiki_preferences');
 		$preferences->insertOrUpdate(array(
@@ -3623,19 +3620,22 @@ class TikiLib extends TikiDb_Bridge
 				$prefs[$name] = $value;
 				$_SESSION['s_prefs'][$name] = $value;
 			}
-			++$prefs['lastUpdatePrefs'];
-			$_SESSION['s_prefs']['lastUpdatePrefs'] = $prefs['lastUpdatePrefs'];
 		}
 		return true;
 	}
 
-	function set_lastUpdatePrefs() {
+	// Invalidate the first-level "Cachelib" modified preferences cache as well as the session preferences caches 
+	function invalidateModifiedPreferencesCaches() {
 		$preferences = $this->table('tiki_preferences');
 		$preferences->update(array(
 			'value' => $preferences->increment(1),
 		), array(
 			'name' => 'lastUpdatePrefs',
 		));
+		++$prefs['lastUpdatePrefs'];
+		
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->invalidate('modified_preferences');
 	}
 
 	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null) {
