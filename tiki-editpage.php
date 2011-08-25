@@ -762,9 +762,9 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 		} else {
 			$is_html = true;
 			$info['is_html'] = true;
+			$smarty->assign('allowhtml','y');
 		}
 		$info['wysiwyg'] = true;
-		$smarty->assign('allowhtml','y');
 	} elseif ($_SESSION['wysiwyg'] === 'y') {
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 			if ($edit_data == 'ajax error') {
