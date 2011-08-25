@@ -53,7 +53,7 @@ class Services_Connect_Controller
 				$data = $controller->receive( array( 'connect_data' => array( 'cmd' => 'new' )));
 
 				if ($data['status'] === 'pending' && !empty($data['guid'])) {
-					$connectlib->recordConnection(null, $data['status'], $data['guid']);
+					$connectlib->recordConnection($data['status'], $data['guid']);
 				}
 
 			} else {
@@ -62,7 +62,7 @@ class Services_Connect_Controller
 				if ($data && !empty($data['guid']) && $data['status'] === 'confirmed') {
 					if ($data['guid'] === $pending) {
 						$tikilib->set_preference('connect_guid', $pending);
-						$connectlib->recordConnection(null, $data['status'], $pending);
+						$connectlib->recordConnection($data['status'], $pending);
 					}
 				} else {
 					$data = array(
@@ -82,9 +82,12 @@ class Services_Connect_Controller
 
 			$data = $controller->receive( array( 'connect_data' => $odata ));
 
-			if ($data) {
+			if ($data && $data['status'] === 'received') {
 				$status = 'sent';
-				$connectlib->recordConnection($odata, $status, $prefs['connect_guid']);
+				$connectlib->recordConnection($status, $prefs['connect_guid'], $odata);
+			} else {
+				$connectlib->removeGuid($confirmedGuid);
+				$tikilib->set_preference('connect_guid', '');
 			}
 		}
 		return $data;
@@ -93,12 +96,12 @@ class Services_Connect_Controller
 	function action_receive($input) {
 		include_once 'lib/core/TikiConnect.php';
 		$connectlib = new TikiConnect();
-		$rdata = array(
-//			'input' => $input,		// for testing only
-//			'server' => $_SERVER,
-//			'post' => $_POST,
-//			'get' => $_GET,
-		);
+		$rdata = array( 'debug' => array(
+			'input' => $input,		// for testing only
+			'server' => $_SERVER,
+			'post' => $_POST,
+			'get' => $_GET,
+		));
 
 		if (!empty($_POST['connect_data'])) {
 			$connectData = $_POST['connect_data'];
@@ -109,7 +112,7 @@ class Services_Connect_Controller
 				$status = 'pending';
 				$guid = uniqid(rand(), true);
 
-				$connectlib->recordConnection(null, $status, $guid, true);
+				$connectlib->recordConnection($status, $guid, null, true);
 
 				// send back confirm message
 				$rdata = array(
@@ -125,7 +128,7 @@ class Services_Connect_Controller
 					$status = 'confirmed';
 					$guid = $connectData['guid'];
 
-					$connectlib->recordConnection(null, $status, $guid, true);
+					$connectlib->recordConnection($status, $guid, null, true);
 
 					// send back welcome message
 					$rdata = array(
@@ -148,11 +151,19 @@ class Services_Connect_Controller
 				if ($connectlib->isConfirmedGuid($guid)) {
 					$status = 'received';
 
-					$connectlib->recordConnection($connectData, $status, $guid, true);
+					$connectlib->recordConnection($status, $guid, $connectData, true);
 
 					$rdata = array(
 						'status' => $status,
 						'message' => tra('Connect data received, thanks'),
+					);
+				} else {	// guid not recorded here
+					$status = 'error';
+					$connectlib->recordConnection($status, $guid, null, true);
+					$rdata = array(
+						'status' => $status,
+						'newguid' => uniqid(rand(), true),
+						'message' => tra('Your Tiki is not registered here yet, please try again?'),
 					);
 				}
 			}

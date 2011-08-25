@@ -88,18 +88,18 @@ class TikiConnect
 	/**
 	 * Records a row in tiki_connect and updates pref connect_last_post if client
 	 *
-	 * @param array $data		"connect" data to store
 	 * @param string $status	pending|confirmed|sent|received
 	 * @param null $guid		client guid
+	 * @param array $data		"connect" data to store
 	 * @param bool $server		server mode (default client)
 	 * @return void
 	 */
 
-	function recordConnection($data, $status, $guid = null, $server = false) {
+	function recordConnection($status, $guid, $data = null, $server = false) {
 
 		$this->connectTable->insert(array(
 				'type' => $status,
-				'data' => $data ? serialize( $data ) : null,
+				'data' => $data ? json_encode( $data ) : null,
 				'guid' => $guid,
 				'server' => $server ? 1 : 0,
 		));
@@ -225,6 +225,23 @@ class TikiConnect
 		} else {
 			return '';
 		}
+	}
+
+	/**
+	 * removes confirm/pending guid if there
+	 *
+	 * @param string $guid
+	 * @param bool $server
+	 * @return void
+	 */
+
+	function removeGuid( $guid, $server = false ) {
+		$this->connectTable->deleteMultiple(
+			array(
+				'server' => $server ? 1 : 0,
+				'guid' => $guid,
+			)
+		);
 	}
 
 	/**
