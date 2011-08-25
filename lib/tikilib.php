@@ -3516,10 +3516,8 @@ class TikiLib extends TikiDb_Bridge
 		return false;
 	}
 
-	// This method overrides the prefs with those specified in database
-	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
+	// Returns an array of non-default preferences
 	function get_db_preferences() {
-
 		$needLoading = false;
 		$needCache = false;
 
