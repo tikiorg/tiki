@@ -173,6 +173,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			'value' => $this->getValue(), 
 			'options_array' => $options_array,
 			'rating_options' => $rating_options,
+			'labels_array' => $labels_array,
 			'mode' => $mode,
 		);
 	}
