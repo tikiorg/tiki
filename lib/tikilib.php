@@ -3516,21 +3516,21 @@ class TikiLib extends TikiDb_Bridge
 		return false;
 	}
 
-	// Returns an array of non-default preferences
+	// Returns a string-indexed array of modified preferences (those with a value other than the default). Keys are preference names. Values are preference values.
 	function get_db_preferences() {
 		$cachelib = TikiLib::lib('cache');
-		if ( $data = $cachelib->getSerialized("tiki_preferences_cache")) {
+		if ( $data = $cachelib->getSerialized('modified_preferences')) {
 			return $data;
 		}
 
 		$defaults = get_default_prefs();
 		$modified = array();
 
-		$result = $this->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+		$results = $this->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
 
-		foreach ( $result as $res ) {
-			$name = $res['name'];
-			$value = $res['value'];
+		foreach ( $results as $result ) {
+			$name = $result['name'];
+			$value = $result['value'];
 
 			if( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
 				$modified[$name] = $value;
@@ -3538,7 +3538,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$modified['lastReadingPrefs'] = isset($modified['lastUpdatePrefs']) ? $modified['lastUpdatePrefs'] : -1;		
 
-		$cachelib->cacheItem("tiki_preferences_cache", serialize($modified));
+		$cachelib->cacheItem('modified_preferences', serialize($modified));
 
 		return $modified;
 	}
@@ -3598,7 +3598,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('tiki_preferences_cache');
+		$cachelib->invalidate('modified_preferences');
 
 		$menulib = TikiLib::lib('menu');
 		$menulib->empty_menu_cache();
