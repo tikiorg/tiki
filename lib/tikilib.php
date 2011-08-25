@@ -4243,7 +4243,7 @@ class TikiLib extends TikiDb_Bridge
 			$wysiwyg = $info['wysiwyg'];
 		}
 		
-		if( $wysiwyg == 'y' && $html != 1 ) {	// correct for html only wysiwyg
+		if( $wysiwyg == 'y' && $html != 1 && $prefs['wysiwyg_htmltowiki'] != 'y') {	// correct for html only wysiwyg
 			$html = 1;
 		}
 
