@@ -970,6 +970,17 @@ function prefs_feature_list($partial = false) {
 			),
 			'tags' => array('experimental'),			
 		),
+		'feature_docs' => array(
+			'name' => tra('Docs (WebODF)'),
+			'description' => tra('Docs gives you the ability to view/edit Open Document Format'),
+			'help' => 'Docs',
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_file_galleries',				
+			),
+			'tags' => array('experimental'),			
+		),
 		'feature_dynamic_content' => array(
 			'name' => tra('Dynamic Content System'),
 			'description' => tra('Bloc of content which can be reused and programmed (timed)'),

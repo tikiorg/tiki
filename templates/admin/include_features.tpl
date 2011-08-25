@@ -58,6 +58,7 @@
 				{preference name=feature_accounting}
 				{preference name=payment_feature}				
 				{preference name=feature_draw}
+				{preference name=feature_docs}
 				{preference name=feature_slideshow}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_watershed}				
