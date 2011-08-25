@@ -92,7 +92,6 @@ abstract class SerializedList
 		if( !in_array( $this->name, $list ) ) {
 			$list[] = $this->name;
 			$tikilib->set_preference( $this->getListName(), serialize($list) );
-			$tikilib->set_lastUpdatePrefs();
 		}
 	}
 
@@ -108,7 +107,6 @@ abstract class SerializedList
 		if( in_array( $this->name, $list ) ) {
 			$list = array_diff($list, array($this->name));
 			$tikilib->set_preference( $this->getListName(), serialize($list) );
-			$tikilib->set_lastUpdatePrefs();
 		}
 	}
 	
