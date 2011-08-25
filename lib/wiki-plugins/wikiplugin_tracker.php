@@ -754,16 +754,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					}
 					if (empty($url)) {
-						if (!empty($page)) {
-							$url = "tiki-index.php?page=".urlencode($page);
-							if (!empty($itemId)) {
-								$url .= "&itemId=".$itemId;
-							}
-							$url .= "&ok=y&iTRACKER=$iTRACKER";
-							$url .= "#wikiplugin_tracker$iTRACKER";
-							header("Location: $url");
-							exit;
-						} else if (!empty($_REQUEST['ajax_add'])) {	// called by tracker ItemLink fields when adding new list items
+						if (!empty($_REQUEST['ajax_add'])) {	// called by tracker ItemLink fields when adding new list items
 							global $access;
 							while ( ob_get_level() ) {
 								ob_end_clean();
@@ -776,6 +767,16 @@ function wikiplugin_tracker($data, $params)
 							$access->output_serialized($ins_fields);
 							ob_end_flush();
 							die;
+							
+						} else if (!empty($page)) {
+							$url = "tiki-index.php?page=".urlencode($page);
+							if (!empty($itemId)) {
+								$url .= "&itemId=".$itemId;
+							}
+							$url .= "&ok=y&iTRACKER=$iTRACKER";
+							$url .= "#wikiplugin_tracker$iTRACKER";
+							header("Location: $url");
+							exit;
 						} else {
 							return '';
 						}

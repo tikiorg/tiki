@@ -88,7 +88,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function renderInput($context = array())
 	{
-		if ($this->getOption(6) && $context['inTable'] !== 'y') {
+		if ($this->getOption(6) && !$context['in_ajax_form']) {
+
+			$context['in_ajax_form'] = true;
+			
 			require_once 'lib/wiki-plugins/wikiplugin_tracker.php';
 
 			$params = array(
@@ -102,7 +105,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			}
 			$form = wikiplugin_tracker('', $params);
 
-			$form = preg_replace(array('/<!--.*?-->/', '/\s+/'), array('', ' '), $form);	// remove comments etc
+			$form = preg_replace(array('/<!--.*?-->/', '/\s+/', '/^~np~/', '/~\/np~/'), array('', ' ', '', ''), $form);	// remove comments etc
 
 			TikiLib::lib('header')->add_jq_onready('
 $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
