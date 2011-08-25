@@ -359,7 +359,7 @@ function initialize_prefs() {
 		}
 
 		// Override default prefs with values specified in database
-		$modified = isset($tikilib) ? $tikilib->get_db_preferences() : "";
+		$modified = isset($tikilib) ? $tikilib->getModifiedPreferences() : "";
 
 		// Unserialize serialized preferences
 		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
