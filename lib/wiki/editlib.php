@@ -439,18 +439,18 @@ class EditLib
 	 */
 
 	function parseToWysiwyg( $inData, $fromWiki = false ) {
-		global $tikilib, $tikiroot, $prefs;
+		global $tikilib, $tikiroot, $prefs, $wysiwyg_wiki;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
 		
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki),
-														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki),
+														'ck_editor' => true, 'is_html' => (!$wysiwyg_wiki && !$fromWiki),
+														'process_wiki_paragraphs' => ($wysiwyg_wiki || $fromWiki),
 															'process_double_brackets' => 'n'));
 		
-		if ($prefs['wysiwyg_htmltowiki'] === 'n' && $fromWiki) {
+		if (!$wysiwyg_wiki && $fromWiki) {
 			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's

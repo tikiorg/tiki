@@ -39,14 +39,17 @@ if ($prefs['feature_wysiwyg'] == 'y' && $prefs['javascript_enabled'] == 'y') {
  * Note: We don't test here for the pref. This forces to override the value stored in the cookie when the feature is switched off. 
  */
 $_SESSION['wysiwyg_wiki'] = 'n';
+global $wysiwyg_wiki;
+$wysiwyg_wiki = false;
 
 
 if ($_SESSION['wysiwyg'] == 'y') {
 	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
 		$is_html = false;
 		$_SESSION['wysiwyg_wiki'] = 'y';
+		$wysiwyg_wiki = true;
 	} else {
-		$is_html = true;	
+		$is_html = true;
 	}
 } elseif ($prefs['feature_wiki_allowhtml'] == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
 	if (isset($_REQUEST['preview']) || isset($jitRequest['edit'])) {
