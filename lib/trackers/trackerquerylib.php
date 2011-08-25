@@ -437,7 +437,8 @@ class TrackerQueryLib extends TikiLib
 		$fieldDefinition['value'] = $value;
 		return $trklib->field_render_value(array(
 			'field'=> $fieldDefinition,
-			'process'=> 'y'
+			'process'=> 'y',
+			'list_mode'=> 'y'
 		));
 	}
 	
