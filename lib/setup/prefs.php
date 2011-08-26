@@ -338,7 +338,6 @@ function initialize_prefs() {
 	}
 
 	$defaults = get_default_prefs();
-	// Set default prefs only if needed
 	if ( ! $_SESSION['need_reload_prefs'] ) {
 		$modified = $_SESSION['s_prefs'];
 	} else { // Generate or re-generate a session cache of modified preferences.
@@ -349,7 +348,6 @@ function initialize_prefs() {
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 		}
 
-		// Override default prefs with values specified in database
 		$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
 
 		// Unserialize serialized preferences
@@ -378,7 +376,7 @@ function initialize_prefs() {
 		}
 	}
 
-	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
+	$prefs = array_merge( $defaults, $modified ); // Preferences are the sum of modified preferences and those with the default value.
 	global $systemConfiguration;
 	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
 }
