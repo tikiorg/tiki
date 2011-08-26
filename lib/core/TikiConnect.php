@@ -47,7 +47,7 @@ class TikiConnect
 		$info = array( 'version' => $prefs['tiki_release'] );
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
-			TikiLib::lib('tiki')->set_lastUpdatePrefs();
+			TikiLib::lib('tiki')->invalidateModifiedPreferencesCaches();
 			$prefslib = TikiLib::lib('prefs');
 			$modifiedPrefs = $prefslib->getModifiedPreferences();
 
