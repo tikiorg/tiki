@@ -63,7 +63,6 @@
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
 	{elseif $files[$changes].type eq 'application/vnd.oasis.opendocument.text'}
-		{$files|@debug_print_var}
 		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
