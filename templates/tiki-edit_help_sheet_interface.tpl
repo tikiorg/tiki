@@ -2,7 +2,7 @@
 {* \brief Show spreadsheet help (for jQuery.sheet) 
 {* included by toolbarslib *}
 
-{add_help show='n' id="sheet_help_interface" title="Spreadsheet Interface"}
+{add_help show='n' id="sheet_help_interface" title="{tr}Spreadsheet Interface{/tr}"}
 	<h3>{tr}Spreadsheet{/tr}</h3>
 	<div class="help_section">	
 		<p>
