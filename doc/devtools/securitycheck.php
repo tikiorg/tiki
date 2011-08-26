@@ -8,9 +8,9 @@
 // analyse_file_path groups files by type, e.g. library, etc.
 
 // Usage:
-// From TikiWiki root, run:
+// From Tiki root, run:
 // php doc/devtools/securitycheck.php > securityreport.html
-// visit securityreport.html (where your TikiWiki is)
+// visit securityreport.html (where your Tiki is)
 //
 
 if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
@@ -541,7 +541,7 @@ usort( $unsafe, 'sort_cb' );
 <html>
 <head><title>Security Static Checker Output</title></head>
 <body>
-<p>TikiWiki Version: <?php echo "$major.$minor.$revision" ?></p>
+<p>Tiki Version: <?php echo "$major.$minor.$revision" ?></p>
 <p>Audit Date: <?php echo date( 'Y-m-d H:i:s' ) ?></p>
 <h1>Potentially unsafe files</h1>
 <p>
