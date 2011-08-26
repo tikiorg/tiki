@@ -196,7 +196,10 @@ function wikiplugin_customsearch($data, $params)
 	if ($searchfadediv) { 
 		$searchfadetext = tr('Searching...');
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal('$searchfadetext');";
-	}	
+		$script .= "else var spinner = $('#customsearch_$id').showBusy();";
+	} else {
+		$script .= "var spinner = $('#customsearch_$id').showBusy();";
+	}
 	$script .= "var datamap = {basedata: customsearch_{$id}_basedata,
 				adddata: searchdata,
 				searchid: '$id',
@@ -218,6 +221,7 @@ function wikiplugin_customsearch($data, $params)
 	if ($searchfadediv) {
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal();";
 	}
+	$script .= "if (typeof spinner != 'undefined') $('#customsearch_$id').showBusy(spinner);";
 	$script .= "$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false; 
 		
 				}
