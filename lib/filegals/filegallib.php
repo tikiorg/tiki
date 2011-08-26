@@ -40,7 +40,6 @@ class FileGalLib extends TikiLib
 	}
 
 	private function get_file_checksum($galleryId, $path, $data) {
-		global $prefs;
 
 		$savedir = $this->get_gallery_save_dir($galleryId);
 
@@ -127,7 +126,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function remove_file($fileInfo, $galInfo='', $disable_notifications = false) {
-		global $prefs, $smarty, $user;
+		global $prefs, $user;
 
 		if ( empty( $fileInfo['fileId'] ) ) {
 			return false;
@@ -178,7 +177,6 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
-		$tikilib = TikiLib::lib('tiki');
 		$smarty = TikiLib::lib('smarty');
 		$filesTable = $this->table('tiki_files');
 		$galleriesTable = $this->table('tiki_file_galleries');
@@ -667,8 +665,6 @@ class FileGalLib extends TikiLib
 	}
 
 	function process_batch_file_upload($galleryId, $file, $user, $description, &$errors) {
-		global $prefs, $smarty;
-
 		include_once ('lib/pclzip/pclzip.lib.php');
 		include_once ('lib/mime/mimelib.php');
 		$extract_dir = 'temp/'.basename($file).'/';
@@ -676,7 +672,6 @@ class FileGalLib extends TikiLib
 		$archive = new PclZip($file);
 		$archive->extract(PCLZIP_OPT_PATH, $extract_dir, PCLZIP_OPT_REMOVE_ALL_PATH);
 		unlink($file);
-		$files = array();
 		$h = opendir($extract_dir);
 		$gal_info = $this->get_file_gallery_info($galleryId);
 		$savedir = $this->get_gallery_save_dir($galleryId, $gal_info);
@@ -805,7 +800,6 @@ class FileGalLib extends TikiLib
 		if ( ! is_null($comment) ) {
 			$updateData['comment'] = $comment;
 		}
-		$bindvars[] = $id;
 
 		$files = $this->table('tiki_files');
 
@@ -830,7 +824,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='', $lockedby=NULL, $deleteAfter=NULL) {
-		global $prefs, $tikilib, $user;
+		global $prefs, $user;
 
 		if (! $this->is_filename_valid($filename)) {
 			return false;
@@ -1066,7 +1060,6 @@ class FileGalLib extends TikiLib
 	}
 
 	function get_search_text_for_data($data,$path,$type, $galleryId) {
-		global $prefs;
 
 		if (!isset($data) && !isset($path)) {
 			return false;
@@ -1447,7 +1440,6 @@ class FileGalLib extends TikiLib
 		static $nb_galleries = 0;
 
 		$i = 0;
-		$current_path = array();
 		$path_found = false;
 		if ($nb_galleries == 0) $nb_galleries = count($galleries);
 		for ($gk = 0; $gk < $nb_galleries; $gk++) {
@@ -1692,7 +1684,6 @@ class FileGalLib extends TikiLib
 	}
 	// sync the backlinks used by a text of an object
 	function syncFileBacklinks($data, $context) {
-		global $tikilib;
 		$fileIds = array();
 		$parserlib = TikiLib::lib('parser');
 		$plugins = $parserlib->getPlugins($data, array('IMG', 'FILE'));
@@ -2015,7 +2006,7 @@ class FileGalLib extends TikiLib
 		));
 	}
 	function deleteOldFiles() {
-		global $prefs, $tikilib, $smarty;
+		global $prefs, $smarty;
 		include_once('lib/webmail/tikimaillib.php');
 		$query = 'select * from `tiki_files` where `deleteAfter` < '.$this->now.' - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
 		$files = $this->fetchAll($query, array());
@@ -2043,8 +2034,6 @@ class FileGalLib extends TikiLib
 	}
 	// get the wiki_syntax - use parent's if none
 	function getWikiSyntax($galleryId=0) {
-		global $prefs;
-		
 		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
 			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
 				return '%fileId%';		// for use in plugin edit popup
@@ -2632,7 +2621,6 @@ class FileGalLib extends TikiLib
 		static $defaultValues = null;
 
 		if ( $defaultValues === null && $defaultsFallback ) {
-			global $prefs;
 			$defaultValues = $this->default_file_gallery();
 		}
 
@@ -3255,7 +3243,7 @@ class FileGalLib extends TikiLib
 	}
 
 	private function convert_from_data($gal_info, & $fhash, $data) {
-		$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $galInfo);
+		$savedir = $this->get_gallery_save_dir($gal_info['galleryId']);
 		$fhash = '';
 
 		if ($savedir) {
