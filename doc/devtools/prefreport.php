@@ -7,6 +7,10 @@
 
 // Usage: From the command line:
 // php doc/devtools/prefreport.php > prefreport.csv
+//
+// also check out  doc/devtools/securitycheck.php to see in which files are 
+// used each pref (and permission name too)
+//
 
 require_once 'tiki-setup.php';
 require_once 'lib/prefslib.php';

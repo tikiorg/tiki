@@ -12,6 +12,9 @@
 // php doc/devtools/securitycheck.php > securityreport.html
 // visit securityreport.html (where your Tiki is)
 //
+//
+// Related script:  doc/devtools/prefreport.php
+//
 
 if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
