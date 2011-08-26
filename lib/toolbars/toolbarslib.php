@@ -1203,17 +1203,19 @@ class ToolbarHelptool extends Toolbar
 	
 	function getWikiHtml( $areaId ) // {{{
 	{
-
 		global $wikilib, $smarty, $plugins, $section;
 		if (!isset($plugins)) {
 			include_once ('lib/wiki/wikilib.php');
 			$plugins = $wikilib->list_plugins(true, $areaId);
 		}
+		
+		$sheethelp = '';
+		
 		if ($section == 'sheet') {
-			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl') . $smarty->fetch('tiki-edit_help_sheet_interface.tlp');
-		} else {
-			$sheethelp = '';
+			$sheethelp .= $smarty->fetch('tiki-edit_help_sheet.tpl');
+			$sheethelp .= $smarty->fetch('tiki-edit_help_sheet_interface.tpl');
 		}
+		
 		$smarty->assign_by_ref('plugins', $plugins);
 		return  $smarty->fetch('tiki-edit_help.tpl') .
 				$smarty->fetch('tiki-edit_help_plugins.tpl') .
@@ -1748,7 +1750,7 @@ class ToolbarsList
 		if ($prefs['feature_jquery_autocomplete'] != 'y') {
 			$headerlib->add_jsfile('lib/jquery/jquery-autocomplete/jquery.autocomplete.min.js');
 		}
-
+		
 		$c = 0;
 		foreach( $this->lines as $line ) {
 			$lineHtml = '';
@@ -1789,6 +1791,7 @@ class ToolbarsList
 						$lineHtml = $lineBit;
 					}
 				}
+				
 				// adding admin icon if no right part - messy - TODO better
 				if ($c == 0 && empty($lineBit) && !empty($right)) {
 					$lineHtml .= "<div class='helptool-admin'>$right</div>";
