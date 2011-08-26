@@ -32,7 +32,7 @@ function check_individual($user,$blogid,$permName) {
   if(!$userlib->object_has_one_permission($blogid,'blog')) return true;
   // If the object has individual permissions then check
   // Now get all the permissions that are set for this type of permissions 'image gallery'
-  if($userlib->object_has_permission($user,$blogId,'blog',$permName)) {
+  if($userlib->object_has_permission($user,$blogid,'blog',$permName)) {
     return true;
   } else {
     return false;
