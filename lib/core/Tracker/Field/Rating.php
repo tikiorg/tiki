@@ -154,7 +154,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		if ($mode == 'stars') {
 			$labels_array = array();
 		} else { 
-			for ($i = $labelstartkey; $i < count($options_array); $i++) {
+			for ($i = $labelstartkey, $count_options_array = count($options_array); $i < $count_options_array; $i++) {
 				$labels_array[] = $options_array[$i]; 
 			} 
 		}
