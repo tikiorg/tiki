@@ -6,7 +6,7 @@
 // $Id$
 
 function prefs_global_list($partial = false) {
-	global $tikilib, $prefs, $url_host;
+	global $tikilib, $url_host;
 
 	$all_styles = array();
 	$languages = array();

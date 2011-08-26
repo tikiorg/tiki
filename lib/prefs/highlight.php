@@ -26,7 +26,7 @@ function prefs_highlight_list($partial = false) {
  */
 function highlight_group_values($partial)
 {
-	global $prefs, $userlib;
+	global $userlib;
 
 	if ($partial) {
 		return false;

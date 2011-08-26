@@ -14,7 +14,7 @@
  */
 function simple_set_toggle($feature)
 {
-	global $_REQUEST, $tikilib, $smarty, $prefs, $logslib;
+	global $_REQUEST, $tikilib, $prefs, $logslib;
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == 'on') {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y

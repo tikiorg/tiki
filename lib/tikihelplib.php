@@ -26,7 +26,7 @@ class TikiHelpLib
  */
 /* static */
 function help_doclink($params) {
-    global $prefs, $helpurl;
+    global $prefs;
     
      extract($params);
     // Param = zone

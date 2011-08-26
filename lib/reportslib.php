@@ -79,7 +79,7 @@ class reportsLib extends TikiLib
 	}
 	
 	public function makeHtmlEmailBody($report_cache, $report_preferences) {
-		global $tikilib, $userlib, $base_url;
+		global $userlib, $base_url;
 		
 		$tikiUrl = rtrim($base_url, '/');
 		

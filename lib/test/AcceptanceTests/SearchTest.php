@@ -104,7 +104,6 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     private function _assertSearchResultsWere($listOfHits, $query, $message) {
         $this->assertElementPresent("xpath=//ul[@class='searchresults']",
                                     "List of search results was absent for query '$query'");
-        $numExpectedHits = count($listOfHits);
         foreach ($listOfHits as $expectedHit) {
            $this->assertElementPresent("link=$expectedHit", "$message\nLink to expected hit '$expectedHit' was missing for query '$query'");
         } 

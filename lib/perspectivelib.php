@@ -142,7 +142,6 @@ class PerspectiveLib
 
 	// Replaces all preferences from $perspectiveId with those in the provided string-indexed array (in format "pref_name" => "pref_value").
 	function replace_preferences( $perspectiveId, $preferences ) {
-		$db = TikiDb::get();
 		$this->perspectivePreferences->deleteMultiple(array('perspectiveId' => $perspectiveId));
 
 		global $prefslib; require_once 'lib/prefslib.php';

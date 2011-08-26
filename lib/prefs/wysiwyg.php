@@ -6,7 +6,6 @@
 // $Id$
 
 function prefs_wysiwyg_list() {
-	global $prefs;
 	
 	return array(
 		'wysiwyg_optional' => array(
