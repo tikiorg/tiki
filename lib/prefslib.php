@@ -145,20 +145,20 @@ class PreferencesLib
 
 			$info = array_merge($defaults, $info);
 
-			if (isset($info['permission'])) {
+			if (!empty($info['permission'])) {
 				$info['permission']['show_disabled_features'] = 'y';
 				$info['permission'] = 'tiki-objectpermissions.php?' . http_build_query($info['permission'], '', '&');
 			}
 
-			if (isset($info['admin'])) {
+			if (!empty($info['admin'])) {
 				$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
 			}
 
-			if (isset($info['module'])) {
+			if (!empty($info['module'])) {
 				$info['module'] = 'tiki-admin_modules.php?cookietab=3&textFilter=' . urlencode($info['module']);
 			}			
 
-			if (isset($info['plugin'])) {
+			if (!empty($info['plugin'])) {
 				$info['plugin'] = 'tiki-admin.php?page=textarea&cookietab=2&textFilter=' . urlencode($info['plugin']);
 			}
 			
