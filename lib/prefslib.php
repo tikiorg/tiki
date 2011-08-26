@@ -11,8 +11,8 @@ class PreferencesLib
 	private $usageArray;
 	private $file = '';
 	private $files = array();
-	// prefs modified by the system etc
-	private $system_modified = array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs', 'case_patched' );
+	// Fake preferences controlled by the system
+	private $system_modified = array( 'tiki_release', 'tiki_version_last_check', 'versionOfPreferencesCache', 'case_patched' );
 	// prefs with system info etc
 	private $system_info = array( 'fgal_use_dir', 'sender_email' );
 	
