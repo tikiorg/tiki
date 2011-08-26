@@ -98,7 +98,7 @@ function prefs_connect_list() {
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'n',
-			'tags' => array('new', 'advanced'),
+			'tags' => array('advanced'),
 		),
 		'connect_guid' => array(
 			'name' => tra('Connect GUID'),
@@ -107,7 +107,7 @@ function prefs_connect_list() {
 			'size' => 60,
 			'dependencies' => 'connect_feature',
 			'default' => '',
-			'tags' => array('new', 'advanced', 'readonly'),	// TODO readonly tag?
+			'tags' => array('advanced', 'readonly'),	// TODO readonly tag?
 		),
 	);
 }

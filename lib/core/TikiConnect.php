@@ -248,18 +248,19 @@ class TikiConnect
 	 * test if a guid is pending
 	 *
 	 * @param string $guid
-	 * @return bool
+	 * @return string
 	 */
 
 	function isPendingGuid( $guid ) {
-		$res = $this->connectTable->fetchCount(
+		$res = $this->connectTable->fetchOne(
+			'data',
 			array(
 				'type' => 'pending',
 				'server' => 1,
 				'guid' => $guid,
 			)
 		);
-		return $res > 0;
+		return trim($res, '"');
 	}
 
 	/**

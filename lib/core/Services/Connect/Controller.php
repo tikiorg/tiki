@@ -57,7 +57,12 @@ class Services_Connect_Controller
 				}
 
 			} else {
-				$data = $controller->receive( array( 'connect_data' => array( 'cmd' => 'confirm', 'guid' => $pending )));
+				$data = $controller->receive( array(
+					'connect_data' => array(
+					'cmd' => 'confirm',
+					'guid' => $pending,
+					'captcha' => $input->captcha->filter(),
+				)));
 
 				if ($data && !empty($data['guid']) && $data['status'] === 'confirmed') {
 					if ($data['guid'] === $pending) {
@@ -65,9 +70,10 @@ class Services_Connect_Controller
 						$connectlib->recordConnection($data['status'], $pending);
 					}
 				} else {
+					$connectlib->removeGuid($pending);
 					$data = array(
 						'status' => 'error',
-						'message' => tra('Something went wrong. Tiki Connect is still experimental.'),
+						'message' => empty($data['message']) ? tra('Something went wrong. Tiki Connect is still experimental. Please try again.') : $data['message'],
 					);
 				}
 			}
@@ -106,43 +112,63 @@ class Services_Connect_Controller
 		if (!empty($_POST['connect_data'])) {
 			$connectData = $_POST['connect_data'];
 			$connectData['cmd'] = isset($connectData['cmd']) ? $connectData['cmd'] : '';
-			
+
+			require_once('lib/captcha/captchalib.php');
+			$caplib = new Captcha('dumb');
+			$caplib->captcha->setKeepSession(true)->setUseNumbers(false)->setWordlen(4);
+			$capkey = $caplib->generate();
+
 			if ($connectData['cmd'] === 'new') {
 
 				$status = 'pending';
 				$guid = uniqid(rand(), true);
 
-				$connectlib->recordConnection($status, $guid, null, true);
+				$captcha = strip_tags($caplib->render());
+
+				$connectlib->recordConnection($status, $guid, $caplib->captcha->getWord(), true);	// save the catcha id as the data
+				// temporary fix for now, save the captcha word in there - validate doesn't seem to keep the session in this context
 
 				// send back confirm message
 				$rdata = array(
 					'status' => $status,
-					'message' => tra('Please confirm you want to participate in Tiki Connect'),
+					'message' => tr('Please confirm you want to participate in Tiki Connect' . "\n" . $captcha),
 					'guid' => $guid,
 				);
+				//$rdata['debug']['capkey'] = $capkey;
+				//$rdata['debug']['caplib'] = serialize($caplib);
 
-			} else if ($connectData['cmd'] === 'confirm' && !empty($connectData['guid'])) {
+			} else if ($connectData['cmd'] === 'confirm' && !empty($connectData['guid']) && !empty($connectData['captcha'])) {
 
-				if ($connectlib->isPendingGuid($connectData['guid'])) {
-					
-					$status = 'confirmed';
-					$guid = $connectData['guid'];
+				$capkey = $connectlib->isPendingGuid($connectData['guid']);
+				$valid = $caplib->validate(array('captcha' => array('input' => $connectData['captcha'], 'id' => $capkey)));
+				// $caplib->validate never seems to validate here
+				$valid = $connectData['captcha'] === $capkey;
+				if ($valid) {
+					if (!empty($capkey)) {
 
-					$connectlib->recordConnection($status, $guid, null, true);
+						$status = 'confirmed';
+						$guid = $connectData['guid'];
 
-					// send back welcome message
-					$rdata = array(
-						'status' => $status,
-						'message' => tra('Welcome to Tiki Connect'),
-						'guid' => $guid,
-					);
-					
+						$connectlib->recordConnection($status, $guid, null, true);
+
+						// send back welcome message
+						$rdata = array(
+							'status' => $status,
+							'message' => tra('Welcome to Tiki Connect'),
+							'guid' => $guid,
+						);
+					} else {
+						$rdata['status'] = 'error';
+						$rdata['message'] = tra('Something went wrong on the server. Tiki Connect is still experimental.');
+					}
 				} else {
-					$rdata = array(
-						'status' => 'error',
-						'message' => tra('Something went wrong. Tiki Connect is still experimental.'),
-					);
+					$connectlib->removeGuid($connectData['guid'], true);
+					$rdata['status'] = 'error';
+					$rdata['message'] = tra('Captcha code problem.') . "\n" . $caplib->getErrors();
+					//$rdata['debug']['capkey'] = $capkey;
+					//$rdata['debug']['caplib'] = serialize($caplib);
 				}
+
 
 			} else if ($connectData['cmd'] === 'send' && !empty($connectData)) {
 
@@ -163,7 +189,7 @@ class Services_Connect_Controller
 					$rdata = array(
 						'status' => $status,
 						'newguid' => uniqid(rand(), true),
-						'message' => tra('Your Tiki is not registered here yet, please try again?'),
+						'message' => tra('Your Tiki is not registered here yet, please try again.'),
 					);
 				}
 			}
