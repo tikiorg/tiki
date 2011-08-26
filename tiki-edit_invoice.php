@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	
 	$_TEMP['InvoiceId'] = array();
-	for($i = 0; $i < count($_REQUEST['InvoiceItemId']); $i++) {
+	for($i = 0, $count_InvoiceItemId = count($_REQUEST['InvoiceItemId']); $i < $count_InvoiceItemId; $i++) {
 		$_TEMP['InvoiceId'][$i] = $_REQUEST['InvoiceId'];
 		
 		$invoiceItem = processItem("Invoice Items", array(
