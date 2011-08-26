@@ -161,7 +161,7 @@ class Installer extends TikiDb_Bridge
 			}
 		}
 
-		$this->query("update `tiki_preferences` set `value`= `value`+1 where `name`='lastUpdatePrefs'");
+		$this->query("update `tiki_preferences` set `value`= `value`+1 where `name`='versionOfPreferencesCache'");
 		return $status;
 	} // }}}
 

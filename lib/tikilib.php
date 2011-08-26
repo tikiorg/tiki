@@ -3536,7 +3536,7 @@ class TikiLib extends TikiDb_Bridge
 				$modified[$name] = $value;
 		}
 
-		$modified['lastReadingPrefs'] = $modified['lastUpdatePrefs'];		
+		$modified['lastReadingPrefs'] = $modified['versionOfPreferencesCache'];		
 
 		$cachelib->cacheItem('modified_preferences', serialize($modified));
 
@@ -3630,9 +3630,9 @@ class TikiLib extends TikiDb_Bridge
 		$preferences->update(array(
 			'value' => $preferences->increment(1),
 		), array(
-			'name' => 'lastUpdatePrefs',
+			'name' => 'versionOfPreferencesCache',
 		));
-		++$prefs['lastUpdatePrefs'];
+		++$prefs['versionOfPreferencesCache'];
 		
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('modified_preferences');

@@ -937,7 +937,6 @@ $lang=Array(
 "https login" => "https login",
 "https port" => "https port",
 "language" => "language",
-"lastUpdatePrefs" => "lastUpdatePrefs",
 "sender email" => "sender email",
 "{\$comments_cant} comment" => "{\$comments_cant} comment",
 "{\$comments_cant} comments" => "{\$comments_cant} comments",

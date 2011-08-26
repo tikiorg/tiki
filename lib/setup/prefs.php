@@ -37,7 +37,7 @@ function get_default_prefs() {
 		'tiki_release' => '0',
 		'tiki_needs_upgrade' => 'n',
 		'tiki_version_last_check' => 0,
-		'lastUpdatePrefs' => 1,
+		'versionOfPreferencesCache' => 1, // Fake preference to manage caches of modified preferences
 
 
 		'groups_are_emulated' => 'n',
@@ -323,11 +323,9 @@ function initialize_prefs() {
 	// Check if prefs needs to be reloaded
 	if (isset($_SESSION['s_prefs'])) {
 
-		// lastUpdatePrefs pref is retrived in tiki-setup_base
-		$lastUpdatePrefs = isset($prefs['lastUpdatePrefs']) ? $prefs['lastUpdatePrefs'] : 1;
-
 		// Reload if there was an update of some prefs
-		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
+		// versionOfPreferencesCache is a basic preference retrieved in tiki-setup_base
+		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $prefs['versionOfPreferencesCache'] > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
 			$_SESSION['need_reload_prefs'] = true;
 		} else {
 			$_SESSION['need_reload_prefs'] = false;
