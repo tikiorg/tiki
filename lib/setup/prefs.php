@@ -320,16 +320,11 @@ function get_default_prefs() {
 function initialize_prefs() {
 	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs, $in_installer, $section;
 
-	// Check if prefs needs to be reloaded
+	// Determine whether we already have a valid session cache of modified preferences.
 	if (isset($_SESSION['s_prefs'])) {
-
-		// Reload if there was an update of some prefs
-		// versionOfPreferencesCache is a basic preference retrieved in tiki-setup_base
-		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $prefs['versionOfPreferencesCache'] > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
-			$_SESSION['need_reload_prefs'] = true;
-		} else {
-			$_SESSION['need_reload_prefs'] = false;
-		}
+		// Compare the session's version of the cache of preferences with the latest. The versionOfPreferencesCache pseudo-preference is basic and retrieved in tiki-setup_base.
+		// Reload if the session cache of modified preferences is older than the first-level cache of modified preferences.
+		$_SESSION['need_reload_prefs'] = empty($_SESSION['s_prefs']['versionOfPreferencesCache']) || $prefs['versionOfPreferencesCache'] > $_SESSION['s_prefs']['versionOfPreferencesCache'];
 
 		// Reload if the virtual host or tikiroot has changed
 		if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
@@ -338,7 +333,6 @@ function initialize_prefs() {
 			$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
 			$_SESSION['need_reload_prefs'] = true;
 		}
-
 	} else {
 		$_SESSION['need_reload_prefs'] = true;
 	}
@@ -347,8 +341,7 @@ function initialize_prefs() {
 	// Set default prefs only if needed
 	if ( ! $_SESSION['need_reload_prefs'] ) {
 		$modified = $_SESSION['s_prefs'];
-	} else {
-
+	} else { // Generate or re-generate a session cache of modified preferences.
 		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 		if ( ! isset($_SESSION['serialized_prefs']) ) {
 			$_SESSION['serialized_prefs'] = array();

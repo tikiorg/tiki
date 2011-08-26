@@ -3536,8 +3536,6 @@ class TikiLib extends TikiDb_Bridge
 				$modified[$name] = $value;
 		}
 
-		$modified['lastReadingPrefs'] = $modified['versionOfPreferencesCache'];		
-
 		$cachelib->cacheItem('modified_preferences', serialize($modified));
 
 		return $modified;
