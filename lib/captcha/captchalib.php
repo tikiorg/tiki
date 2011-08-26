@@ -38,10 +38,20 @@ class Captcha
 	 *
 	 * @return null
 	 */
-	function __construct() {
+	function __construct( $type = '' ) {
 		global $prefs;
-		
-		if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
+
+		if (empty($type)) {
+			if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
+				$type = 'recaptcha';
+			} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
+				$type = 'default';
+			} else {
+				$type = 'dumb';
+			}
+		}
+
+		if ($type === 'recaptcha') {
 			require_once('lib/core/Zend/Captcha/ReCaptcha.php');
 			$this->captcha = new Zend_Captcha_ReCaptcha(array(
 				'privkey' => $prefs['recaptcha_privkey'],
@@ -52,7 +62,7 @@ class Captcha
 			$this->type = 'recaptcha';
 
 			$this->recaptchaCustomTranslations();
-		} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
+		} else if ($type === 'default') {
 			$this->captcha = new Zend_Captcha_Image(array(
 				'wordLen' => $prefs['captcha_wordLen'],
 				'timeout' => 600,
@@ -63,7 +73,7 @@ class Captcha
 				'dotNoiseLevel' => $prefs['captcha_noise'],
 			));
 			$this->type = 'default';
-		} else {
+		} else {		// implied $type==='dumb'
 			require_once('lib/core/Zend/Captcha/Dumb.php');
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->type = 'dumb';
@@ -79,7 +89,7 @@ class Captcha
 	 */
 	function generate() {
 		try {
-			$this->captcha->generate();
+			$key = $this->captcha->generate();
 			if ($this->type == 'default') {
 				// the following needed to keep session active for ajax checking 
 				$session = $this->captcha->getSession();
@@ -87,6 +97,7 @@ class Captcha
 				$this->captcha->setSession($session);
 				$this->captcha->setKeepSession(false);
 			}
+			return $key;
 		} catch (Zend_Exception $e) {
 		}
 	}
