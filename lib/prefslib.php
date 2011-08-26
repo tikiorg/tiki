@@ -562,6 +562,7 @@ class PreferencesLib
 	 * @param bool $added shows current prefs not in defaults
 	 * @return array (prefname => array( 'cur' => current value, 'def' => default value ))
 	 */
+	// WARNING: tikilib contains a similar method with the same name
 	function getModifiedPreferences( $added = false ) {
 		global $tikilib;
 

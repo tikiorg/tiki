@@ -3517,6 +3517,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	// Returns a string-indexed array of modified preferences (those with a value other than the default). Keys are preference names. Values are preference values.
+	// WARNING: prefslib contains a similar method with the same name
 	function getModifiedPreferences() {
 		$cachelib = TikiLib::lib('cache');
 		if ( $data = $cachelib->getSerialized('modified_preferences')) {
