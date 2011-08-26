@@ -71,9 +71,9 @@ function wikiplugin_bigbluebutton_info() {
 function wikiplugin_bigbluebutton( $data, $params ) {
 	global $smarty, $prefs, $user, $u_info;
 	global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
-	$name = $params['name'];
+	$meeting = $params['name']; // Meeting is more descriptive than name, but parameter name was already decided.
 
-	$smarty->assign( 'bbb_name', $name );
+	$smarty->assign( 'bbb_meeting', $meeting );
 	$smarty->assign( 'bbb_image', rtrim( $prefs['bigbluebutton_server_location'], '/' ) . '/images/bbb_logo.png' );
 
 	$perms = Perms::get( 'bigbluebutton', $name );
