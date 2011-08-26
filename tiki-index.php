@@ -575,7 +575,7 @@ function translate_text($text, $sourceLang, $targetLang, $html) {
 }
 
 function make_sure_machine_translation_is_enabled() {
-	global $multilinguallib, $access, $_REQUEST, $prefs;
+	global $access, $_REQUEST, $prefs;
 	if ($prefs['feature_machine_translation'] != 'y') {
 		require_once('lib/tikiaccesslib.php');	
 		$error_msg = tra("You have requested that this page be machine translated:").

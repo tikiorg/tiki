@@ -20,7 +20,7 @@ function is_perm($permName, $objectType) {
 	return false;
 }
 function list_perms($objectId, $objectType, $objectName) {
-	global $userlib, $tikilib, $prefs;
+	global $userlib, $prefs;
 	$ret = array();
 	$cats = array();
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
