@@ -329,7 +329,7 @@ class EditLib
 		$matches = array();
 		preg_match_all('/ *([^ :]+) *: *([^;]+) *;?/', $style, $matches);
 		
-		for ($i=0; $i<count($matches[0]); $i++) {
+		for ($i=0, $count_matches = count($matches[0]); $i<$count_matches; $i++) {
 			$key = $matches[1][$i];
 			$value = trim($matches[2][$i]);
 			

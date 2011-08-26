@@ -190,9 +190,9 @@ class TrackerQueryLib extends TikiLib
 	    	$fieldList = explode('|', $fieldList);
 	        $fieldList = array(array($fieldList[0], $this->sort_direction($fieldList[1])));
 	    } else {
-	        for ($i = 0; $i < count($fieldList); ++$i) {
-	            $fieldList[$i] = explode('|', $fieldList[$i]);
-				$fieldList[$i] = array($fieldList[$i][0], $this->sort_direction($fieldList[$i][1]));
+	        for ($i = 0, $count_fieldList = count($fieldList); $i < $count_fieldList; ++$i) {
+	    			$fieldList[$i] = explode('|', $fieldList[$i]);
+						$fieldList[$i] = array($fieldList[$i][0], $this->sort_direction($fieldList[$i][1]));
 	        }
 	    }
 	    
@@ -278,7 +278,7 @@ class TrackerQueryLib extends TikiLib
 		}
 		
 		if (count($fields) > 0 && (count($equals) > 0 || count($search) > 0)) {
-			for($i = 0; $i < count($fields); $i++) {
+			for($i = 0, $count_fields = count($fields); $i < $count_fields; $i++) {
 				if (strlen($fields[$i]) > 0) {
 					$fields_safe .= " ( search_item_fields.fieldId = ? ";
 					$params[] = $fields[$i];
@@ -305,7 +305,7 @@ class TrackerQueryLib extends TikiLib
 		}
 		
 		if (strlen($status) > 0) {
-			for($i=0; $i < strlen($status); $i++) {
+			for($i=0, $strlen_status = strlen($status); $i < $strlen_status; $i++) {
 				if (strlen($status[$i]) > 0) {
 					$status_safe .= " tiki_tracker_items.status = ? ";
 					if ($i + 1 < strlen($status) && strlen($status) > 1) $status_safe .= " OR ";

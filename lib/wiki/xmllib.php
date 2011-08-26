@@ -227,7 +227,6 @@ class XmlLib extends TikiLib
 	/* import pages or structure */
 	function import_pages($zipFile='dump/xml.zip', $config=null)
 	{
-		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments, $dbTiki, $tikidomain;
 		if (!empty($config)) {
 			$this->config = array_merge($this->config, $config);
 		}
@@ -272,9 +271,8 @@ class XmlLib extends TikiLib
 	/* create a page from an xml parsing result */
 	function create_page($info)
 	{
-		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments, $dbTiki, $tikidomain;
+		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $tiki_p_edit_comments, $dbTiki, $tikidomain;
 
-		$dir = $info['name'];
 		if (($info['data'] = $this->zip->getFromName($info['zip'])) === false) {
 			$this->errors[] = 'Can not unzip';
 			$this->errorsArgs[] = $info['zip'];
