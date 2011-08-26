@@ -53,13 +53,18 @@
 		<a href="{$files[$changes].id|sefurl:display}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
-		{if $files[changes].type eq 'image/svg+xml'}
+		{if $files[$changes].type eq 'image/svg+xml'}
 			<a href="tiki-edit_draw.php?fileId={$files[changes].id}&galleryId={$files[changes].galleryId}">
 			{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 			</a>
 		{/if}
 	{elseif $files[$changes].type eq 'text/csv'}
 		<a href="tiki-view_sheets.php?fileId={$files[$changes].id}">
+		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+		</a>
+	{elseif $files[$changes].type eq 'application/vnd.oasis.opendocument.text'}
+		{$files|@debug_print_var}
+		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
 	{/if}
