@@ -10,9 +10,7 @@ require_once 'lib/perspectivelib.php';
 
 $access->check_feature( 'feature_perspective' );
 
-// Force preference reload, new perspective will be taken in account.
 $_SESSION['current_perspective'] = 0;
-$_SESSION['need_reload_prefs'] = true;
 
 if( isset($_REQUEST['perspective']) ) {
 	$perspective = $_REQUEST['perspective'];

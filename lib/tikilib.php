@@ -3769,8 +3769,6 @@ class TikiLib extends TikiDb_Bridge
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];
 					$_SESSION['s_prefs'][$name] = $prefs['site_'.$name];
-				} else {
-					$_SESSION['need_reload_prefs'] = true;
 				}
 			}
 		}
@@ -3815,7 +3813,6 @@ class TikiLib extends TikiDb_Bridge
 		if ( $my_user == $user ) {
 			$prefs =array_merge($prefs, $preferences);
 			$_SESSION['s_prefs']=array_merge($_SESSION['s_prefs'], $preferences);
-			$_SESSION['need_reload_prefs'] = true;
 		}
 		return true;
 	}
