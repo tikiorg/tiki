@@ -32,7 +32,7 @@ class Language_GetStringsTest extends TikiTestCase
 	public function testConstruct_shouldRaiseExceptionForInvalidBaseDir()
 	{
 		$this->setExpectedException('Language_Exception');
-		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => 'invalidDir'));
+		$this->obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => 'invalidDir'));
 	}
 	
 	public function testAddFileType() {
