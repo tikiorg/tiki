@@ -32,7 +32,7 @@
 
 <div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
-		{if !isset($filegals_manager) || $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
+		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 
@@ -58,7 +58,7 @@
 {if !empty($find_show_sub) and $find_show_sub eq 'y'}
 	<label class="findsub">
 		{tr}and all the sub-objects{/tr}
-		<input type="checkbox" name="find_sub" id="find_sub" {if $find_sub eq 'y'}checked="checked"{/if}/>
+		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}/>
 	</label>
 {/if}
 
@@ -211,7 +211,7 @@
 {if !empty($find_other)}
 	<label class="find_other" for="find_other">
 		   {tr}{$find_other}{/tr}
-		   <input type="text" name="find_other" id="find_other" value="{$find_other_val|escape}"/>
+		   <input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}"/>
 	</label>
 {/if}
 

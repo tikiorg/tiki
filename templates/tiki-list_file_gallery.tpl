@@ -130,7 +130,7 @@
 
 </div>
 
-{if $filegals_manager neq ''}
+{if !empty($filegals_manager)}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
 	<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
 	<input type="checkbox" id="keepOpenCbx" checked="checked">
@@ -159,7 +159,7 @@
 	</div>
 {/if}
 
-{if $fgal_diff|@count gt 0}
+{if !empty($fgal_diff)}
 	{remarksbox type="note" title="{tr}Modifications{/tr}"}
 		{foreach from=$fgal_diff item=fgp_prop key=fgp_name name=change}
 			{tr}Property <b>{$fgp_name}</b> Changed{/tr}

@@ -202,7 +202,7 @@
 					<h3>{tr}Objects that can be included{/tr}</h3>
 					{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 					<table>
-						{if $polls}
+						{if isset($polls)}
 							<tr>
 								<td>
 									<label for="list_polls">{tr}Available polls:{/tr}</label>
@@ -401,7 +401,7 @@
 		<div style="height:400px;overflow:auto;">
 			<div class="navbar">
 				{listfilter selectors='#module_list li'}
-				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if $module_list_show_all} checked="checked"{/if} />
+				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if isset($module_list_show_all)} checked="checked"{/if} />
 				<label for="module_list_show_all">{tr}Show all modules{/tr}</label>
 			</div>
 			<ul id="module_list">

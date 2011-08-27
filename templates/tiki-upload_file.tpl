@@ -8,24 +8,24 @@
 
 {title help="File+Galleries" admpage="fgal"}{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}{/title}
 
-{if !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or (isset($uploads) and count($uploads) > 0)}
+{if !empty($galleryId) or (isset($galleries) and count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or (isset($uploads) and count($uploads) > 0)}
 <div class="navbar">
 	{if !empty($galleryId)}
 		{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
 	{/if}
 
-	{if count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
-		{if $filegals_manager neq ''}
+	{if isset($galleries) and count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
+		{if !empty($filegals_manager)}
 			{assign var=fgmanager value=$filegals_manager|escape}
 			{button href="tiki-list_file_gallery.php?filegals_manager=$fgmanager" _text="{tr}List Galleries{/tr}"}
 		{else}
 			{button href="tiki-list_file_gallery.php" _text="{tr}List Galleries{/tr}"}
 		{/if}
 	{/if}
-	{if count($uploads) > 0}
+	{if isset($uploads) and count($uploads) > 0}
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
-	{if isset($filegals_manager)}
+	{if !empty($filegals_manager)}
 		{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
 		<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
 			<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
@@ -75,7 +75,7 @@
 				<img src="{$uploads[ix].fileId|sefurl:thumbnail}" />
 			</td>
 			<td>
-				{if $filegals_manager neq ''}
+				{if !empty($filegals_manager)}
 					<a href="#" onClick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
@@ -325,7 +325,7 @@
 
 	<input type="hidden" name="formId" value="0"/>
 	<input type="hidden" name="simpleMode" value="{$simpleMode}"/>
-	{if $filegals_manager neq ''}
+	{if !empty($filegals_manager)}
 		<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
 	{/if}
 	{if isset($token_id) and $token_id neq ''}
@@ -515,7 +515,7 @@
 	
 			function add_upload_file() {
 				tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
-				{{if $filegals_manager neq ''}}
+				{{if !empty($filegals_manager)}}
 				tmp += '<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>';
 				{{/if}}
 				tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';

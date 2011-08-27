@@ -53,7 +53,7 @@
 				</div>
 			{/if}
 
-			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" enctype="multipart/form-data">
+			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if !empty($filegals_manager)}?filegals_manager={$filegals_manager|escape}{/if}" enctype="multipart/form-data">
 				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 				<input type="hidden" name="find" value="{$find|escape}" />
 				{if !empty($smarty.request.show_details)}<input type="hidden" name="show_details" value="{$smarty.request.show_details}" />{/if}
@@ -109,7 +109,7 @@
 						
 						</div>
 						
-						{if $smarty.request.movesel_x and !isset($file_info)}
+						{if !empty($smarty.request.movesel_x) and !isset($file_info)}
 							<div>
 								{tr}Move to:{/tr}
 								<select name="moveto">
@@ -121,7 +121,7 @@
 							</div>
 						{/if}
 					</div>
-					{if $perms}
+					{if !empty($perms)}
 						<div>
 							{tr}Assign permissions to file galleries{/tr}
 							<select name="perms[]" multiple="multiple" size="5">

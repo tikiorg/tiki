@@ -48,7 +48,7 @@
 	<tbody>
 	{if !$tagList}
 		<tr>
-	<td colspan="{if in_array('',$languageList)}{$languageList|@count - 1}{else}{$languageList|@count}{/if}">
+	<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
 			{tr}There are no tags on this page in your preferred languages{/tr}
 			</td>
 		</tr>
@@ -72,7 +72,7 @@
 		{/foreach}
 		{else}
 			{assign var=btag value=$tag[$blank]}
-			<td colspan="{if in_array('',$languageList)}{$languageList|@count - 1}{else}{$languageList|@count}{/if}">
+			<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
 				{$btag.tag}
 				- {tr}Set language{/tr}
 				<select name="setlang[{$btag.tagId}]">
@@ -86,7 +86,7 @@
 		</tr>
 	{/foreach}
 		<tr>
-			<td colspan="{if in_array('',$languageList)}{$languageList|@count - 1}{else}{$languageList|@count}{/if}">
+			<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
 				<input type="submit" name="save" value="{tr}Save{/tr}"/>
 			</td>
 		</tr>

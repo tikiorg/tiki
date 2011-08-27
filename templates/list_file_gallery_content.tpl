@@ -17,7 +17,7 @@
 				{self_link _sort_arg=$sort_arg _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}
 			</th>
 		{/if}
-		{if $show_thumb eq 'y'}
+		{if !empty($show_thumb) and $show_thumb eq 'y'}
 			<th>
 			</th>
 		{/if}
@@ -67,7 +67,7 @@
 					{assign var=nbCols value=$nbCols+1}
 					<th{$td_args}>
 							{self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
-							{if $propicon}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
+							{if !empty($propicon)}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
 						{/self_link}
 					</th>
 				{/if}
@@ -262,10 +262,10 @@
 					{capture assign=link}
 						{strip}
 							{if $files[changes].isgal eq 1}
-								href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"
+								href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}"
 							{else}
 		
-								{if $filegals_manager neq ''}
+								{if !empty($filegals_manager)}
 									href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 		
 								{elseif (isset($files[changes].p_download_files) and $files[changes].p_download_files eq 'y')
