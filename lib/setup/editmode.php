@@ -35,10 +35,9 @@ if ($prefs['feature_wysiwyg'] == 'y' && $prefs['javascript_enabled'] == 'y') {
 }
 
 /*
- * Per default, don't do wysiwyg_htmltowiki.
- * Note: We don't test here for the pref. This forces to override the value stored in the cookie when the feature is switched off. 
+ * Per default, we don't run the CKE in Wiki mode.
+ * The edit mode depends on wysiwyg_htmltowiki and on the kind a data to be edited. 
  */
-$_SESSION['wysiwyg_wiki'] = 'n';
 global $wysiwyg_wiki;
 $wysiwyg_wiki = false;
 
@@ -46,7 +45,6 @@ $wysiwyg_wiki = false;
 if ($_SESSION['wysiwyg'] == 'y') {
 	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
 		$is_html = false;
-		$_SESSION['wysiwyg_wiki'] = 'y';
 		$wysiwyg_wiki = true;
 	} else {
 		$is_html = true;
