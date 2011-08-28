@@ -47,15 +47,14 @@ $safePaths = array(
 	'\./db/virtuals.inc',
 
 	/* The following are DELIBERATELY PUBLIC. */
-	'\./tiki-change_password.php;',
 	'\./tiki-cookie-jar.php',
 	'\./tiki-error_simple.php',
 	'\./tiki-information.php',
-	'\./tiki-install.php',
+	'\./tiki-install.php',  // does its own check
 	'\./tiki-jsplugin.php',
 	'\./tiki-live_support_chat_frame.php',
 	'\./tiki-login_scr.php',
-	'\./tiki-channel.php',			// does it's own checks
+	'\./tiki-channel.php',			// does its own checks
 
 	/* This file is just comments */
 	'./about.php',
