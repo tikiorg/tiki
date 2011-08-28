@@ -410,7 +410,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Minichat',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'module' => 'chat',
 		),
 		'feature_comments_moderation' => array(
 			'name' => tra('Comments Moderation'),
@@ -729,11 +730,12 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_user_watches' => array(
 			'name' => tra('User Watches'),
-			'description' => tra('User Watches'),
+			'description' => tra('Receive email notification of changes'),
 			'help' => 'User+Watches',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'view' => 'tiki-admin_notifications.php',			
 		),
 		'feature_group_watches' => array(
 			'name' => tra('Group Watches'),
@@ -1078,6 +1080,8 @@ function prefs_feature_list($partial = false) {
 				'feature_polls',
 			),
 			'default' => 'n',
+			'admin' => 'comments',
+			'view' => 'tiki-list_comments.php',
 		),	
 		'feature_faq_comments' => array(
 			'name' => tra('Comments for FAQs'),
@@ -1086,6 +1090,8 @@ function prefs_feature_list($partial = false) {
 				'feature_faqs',
 			),
 			'default' => 'y',
+			'admin' => 'comments',
+			'view' => 'tiki-list_comments.php',			
 		),	
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly URL'),
@@ -1178,6 +1184,8 @@ function prefs_feature_list($partial = false) {
 			),
 			'default' => 'n',
 			'tags' => array('basic'),
+			'admin' => 'comments',
+			'view' => 'tiki-list_comments.php',			
 		),
 		'feature_cms_templates' => array(
 			'name' => tra('Article content templates'),
@@ -1328,6 +1336,8 @@ function prefs_feature_list($partial = false) {
 			),
 			'default' => 'y',
 			'tags' => array('basic'),
+			'admin' => 'comments',
+			'view' => 'tiki-list_comments.php',			
 		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
@@ -1344,8 +1354,10 @@ function prefs_feature_list($partial = false) {
 		'feature_file_galleries_comments' =>array(
 			'name' => tra('File Gallery Comments'),
 			'type' => 'flag',
-			'help' => 'File+Gallery+Config',
+			'help' => 'Comments',
 			'default' => 'n',
+			'admin' => 'comments',
+			'view' => 'tiki-list_comments.php',			
 		),
 		'feature_use_fgal_for_user_files' =>array(
 			'name' => tra('Use file galleries for user files'),
@@ -1796,6 +1808,8 @@ function prefs_feature_list($partial = false) {
 			),
 			'default' => 'n',
 			'tags' => array('basic'),
+			'admin' => 'comments',
+			'view' => 'tiki-list_comments.php',			
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
