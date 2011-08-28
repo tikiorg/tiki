@@ -230,6 +230,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Score',
 			'type' => 'flag',
 			'default' => 'n',
+			'admin' => 'score',
+			'module' => 'score',				
 		),
 		'feature_search' => array(
 			'name' => tra('Search'),
