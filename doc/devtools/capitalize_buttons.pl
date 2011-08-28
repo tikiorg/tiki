@@ -32,6 +32,9 @@
 #
 #Usage     :  perl capitalize_buttons.pl word Word
 #
+#
+# Also see: doc/devtools/update_english_strings.php
+#
 #Revision history :
 #  Date       Author  Description
 #  2007-07-17  JML    1: First version

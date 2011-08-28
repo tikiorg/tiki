@@ -9,6 +9,10 @@
 // string is changed in Tiki source code
 // This script is experimental. Always review the changes to language.php file before
 // committing.
+// 
+// Also see: doc/devtools/capitalize_buttons.pl
+//
+
 
 if ($argc < 3) {
 	die("\nUsage: php doc/devtools/update_english_strings.php \"oldString\" \"newString\"\n\n");
