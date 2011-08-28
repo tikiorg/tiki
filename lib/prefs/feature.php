@@ -2333,12 +2333,12 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_dummy' => array(
 			'name' => tra('Dummy preference'),
-			'type' => 'flag',
+			'type' => 'text',
 			'help' => 'Preferences',
-			'helpurl' => 'PreferencesURLtest',			
+			'helpurl' => 'PreferencesURLtest', // 2011-08-28 ML: what does this do?
 			'keywords' => 'test bogus bogusorama',
 			'description' => tra('This is useful for developers to learn how to create a new preference.'),
-			'default' => 'n',
+			'default' => 'This is the default value of this preference.',
 			'detail' => tra('This is the detail.'),
 			'warning' => tra('This is the warning.'),
 			'hint' => tra('This is the hint.'),
