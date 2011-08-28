@@ -2331,5 +2331,34 @@ function prefs_feature_list($partial = false) {
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'tags' => array('experimental'),
 		),
+		'feature_dummy' => array(
+			'name' => tra('Dummy preference'),
+			'type' => 'flag',
+			'help' => 'Preferences',
+			'helpurl' => 'PreferencesURLtest',			
+			'keywords' => 'test bogus bogusorama',
+			'description' => tra('This is useful for developers to learn how to create a new preference.'),
+			'default' => 'n',
+			'detail' => tra('This is the detail.'),
+			'warning' => tra('This is the warning.'),
+			'hint' => tra('This is the hint.'),
+			'shorthint' => tra('This is the shorthint.'),
+			
+			'tags' => array('experimental','expert'),
+			'view' => 'tiki-listpages.php',
+			'plugin' => 'blog',
+			'dependencies' => array(
+				'feature_wiki',
+			),
+			'extensions' => array(
+				'zlib',
+			),
+			'module' => 'blog',
+			'permission' => array(
+				'permType' => 'blog',
+			),
+			'admin' => 'blogs',
+			'perspective' => false,			
+		),
 	);
 }

@@ -166,6 +166,7 @@
 				{preference name=disableJavascript}
 				{preference name=smarty_compilation}
 				{preference name=feature_webservices}
+				{preference name=feature_dummy}				
 			</div>
 
 			<div class="admin clearfix featurelist">
