@@ -424,7 +424,6 @@ class TikiLib extends TikiDb_Bridge
 
 	function httprequest($url, $reqmethod = "GET")
 	{
-		global $prefs;
 		// test url :
 		// rewrite url if sloppy # added a case for https urls
 		if ( (substr($url,0,7) <> "http://") and
@@ -607,7 +606,7 @@ class TikiLib extends TikiDb_Bridge
 	function list_watches($offset, $maxRecords, $sort_mode, $find) {
 		$mid = '';
 		$mid2 = '';
-		$bindvars = $bindvars1 = $bindvars2 = array();
+		$bindvars1 = $bindvars2 = array();
 		if ($find) {	
 			$mid = ' where `event` like ? or `email` like ? or `user` like ? or `object` like ? or `type` like ?';
 			$mid2 = ' where `event` like ? or `group` like ? or `object` like ? or `type` like ?';
@@ -822,7 +821,6 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		$ret = array();
 
-		$where = array();
 		$mid = '';
 		if( $prefs['feature_user_watches_translations'] == 'y'  && $event == 'wiki_page_changed') {
 			// If $prefs['feature_user_watches_translations'] is turned on, also look for
@@ -1088,7 +1086,6 @@ class TikiLib extends TikiDb_Bridge
 			$this->online_users_cache=array();
 			$query = "select s.`user`, p.`value` as `realName`, `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.`user` = p.`user` and p.`prefName` = 'realName' where s.`user` is not null;";
 			$result = $this->fetchAll($query,array(''));
-			$ret = array();
 			foreach ($result as $res ) {
 				$res['user_information'] = $this->get_user_preference($res['user'], 'user_information', 'public');
 				$res['allowMsgs'] = $this->get_user_preference($res['user'], 'allowMsgs', 'y');
@@ -1167,7 +1164,6 @@ class TikiLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-			global $user;
 			$objperm = $this->get_perm_object($res, 'quizzes', '', false);
 
 			if ( $objperm['tiki_p_take_quiz'] == 'y' ) {
@@ -1233,7 +1229,6 @@ class TikiLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-		  global $user;
 		  $objperm = $this->get_perm_object( $res['surveyId'], 'survey', '', false );
 		  if ( $objperm['tiki_p_take_survey'] ) {
 			if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
@@ -1387,7 +1382,6 @@ class TikiLib extends TikiDb_Bridge
 	// \todo remove all hardcoded html in get_user_avatar()
 	function get_user_avatar($user, $float = "") {
 		global $prefs;
-		$userlib = TikiLib::lib('user');
 
 		if (empty($user))
 			return '';
@@ -1686,7 +1680,6 @@ class TikiLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 	  foreach ( $result as $res ) {
-		global $user;
 		$objperm = $this->get_perm_object($res['faqId'], 'faq', '', false);
 		if ($objperm['tiki_p_view_faqs'] == 'y') {
 		  if (($maxRecords == -1) || (($n>=$offset) && ($n < ($offset + $maxRecords)))) {
@@ -1824,7 +1817,6 @@ class TikiLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-			global $user;
 			$objperm = $this->get_perm_object($res['forumId'], 'forums', '', false);
 			if ($objperm['tiki_p_forum_read'] == 'y') {
 				if (($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords)))) {
@@ -2008,7 +2000,6 @@ class TikiLib extends TikiDb_Bridge
 	/*shared*/
 	function list_menu_options($menuId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $full=false, $level=0) {
 		global $user, $tiki_p_admin, $prefs;
-		$smarty = TikiLib::lib('smarty');
 		$wikilib = TikiLib::lib('wiki');
 
 		$options = $this->table('tiki_menu_options');
@@ -2344,8 +2335,6 @@ class TikiLib extends TikiDb_Bridge
 	// FRIENDS METHODS //
 	function list_user_friends($user, $offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '')
 	{
-		$userlib = TikiLib::lib('user');
-
 		$sort_mode = $this->convertSortMode($sort_mode);
 
 		if($find) {
@@ -2376,7 +2365,6 @@ class TikiLib extends TikiDb_Bridge
 
 	function list_online_friends($user)
 	{
-		$userlib = TikiLib::lib('user');
 		$this->update_session();
 
 		$bindvars = array($user);
@@ -2453,7 +2441,6 @@ class TikiLib extends TikiDb_Bridge
 		if ( $ppos = strpos($sort_mode, ':') ) {
 
 			$sort_value = substr($sort_mode, $ppos + 1);
-			$sort_by_pref = true;
 			$sort_way = 'asc';
 
 			if ( preg_match('/^(.+)_(asc|desc)$/i', $sort_value, $regs) ) {
@@ -3079,7 +3066,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='', $onlyCant=false, $ref='') {
-		global $prefs, $user, $tiki_p_wiki_view_ratings;
+		global $prefs, $tiki_p_wiki_view_ratings;
 
 		$join_tables = '';
 		$join_bindvars = array();
@@ -3209,7 +3196,6 @@ class TikiLib extends TikiDb_Bridge
 				$bindvars[] = $initial.'%';
 			}
 			$mid .= $tmp_mid.')';
-			$mmid = $mid;
 		}
 
 		if ( $only_orphan_pages ) {
@@ -3578,7 +3564,6 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function delete_preference($name) {
-		global $prefs;
 		$this->table('tiki_preferences')->delete(array(
 			'name' => $name,
 		));
@@ -3625,6 +3610,7 @@ class TikiLib extends TikiDb_Bridge
 
 	// Invalidate the first-level "Cachelib" modified preferences cache as well as the session preferences caches 
 	function invalidateModifiedPreferencesCaches() {
+		global $prefs;
 		$preferences = $this->table('tiki_preferences');
 		$preferences->update(array(
 			'value' => $preferences->increment(1),
@@ -3854,8 +3840,6 @@ class TikiLib extends TikiDb_Bridge
 	 **/
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0, $created='') {
 		global $prefs;
-		$smarty = TikiLib::lib('smarty');
-		$commentslib = TikiLib::lib('comments');
 
 		if( ! $is_html ) {
 			$data = str_replace( '<x>', '', $data );
@@ -4176,9 +4160,7 @@ class TikiLib extends TikiDb_Bridge
 	 **/
 	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=null, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style='') {
 		global $prefs;
-		$smarty = TikiLib::lib('smarty');
 		$histlib = TikiLib::lib('hist');
-		$commentslib = TikiLib::lib('comments');
 
 		if (!$edit_user) $edit_user = 'anonymous';
 
@@ -4201,12 +4183,10 @@ class TikiLib extends TikiDb_Bridge
 				$histlib->get_page_latest_version($pageName)
 			);
 
-		$lastModif = $info["lastModif"];
 		$user = $info["user"];
 		if (!$user) $user = 'anonymous';
 		$ip = $info["ip"];
 		$comment = $info["comment"];
-		$minor=$info["version_minor"];
 		$description = $info['description'];
 		$data = $info["data"];
 		$willDoHistory = ($prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment );
@@ -4492,8 +4472,6 @@ class TikiLib extends TikiDb_Bridge
 	}
 	
 	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
-		$smarty = TikiLib::lib('smarty');
-
 		if (strtolower($pageName) == 'sandbox')
 			return;
 
@@ -4655,7 +4633,6 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function make_time($hour,$minute,$second,$month,$day,$year) {
-		global $prefs;
 		$tikilib = TikiLib::lib('tiki');
 		$tikidate = TikiLib::lib('tikidate');
 		$display_tz = $tikilib->get_display_timezone();
@@ -5702,9 +5679,7 @@ function detect_browser_language() {
 }
 
 function validate_email($email) {
-	global $prefs;
 	$validate = new Zend_Validate_EmailAddress( Zend_Validate_Hostname::ALLOW_ALL );
-	
 	return $validate->isValid( $email );
 }
 
