@@ -8135,6 +8135,7 @@ $lang=Array(
 "No changes" => "Aucune modifications",
 "Yesterday" => "Hier",
 "Today" => "Aujourd'hui",
+"today" => "aujourd'hui",
 "and" => "et",
 "more changes of the same type.." => "plus de changements du même type...",
 "changed the picture gallery" => "a changé la galerie d'images",
