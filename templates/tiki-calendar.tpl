@@ -158,21 +158,25 @@ $('#calendar').fullCalendar({
       },
 			editable: false,
 			events: 'tiki-calendar_json.php',
+			year: {{$viewyear}},
+			month: {{$viewmonth}}-1,
+			day: {{$viewday}},
 			minTime: {{$minHourOfDay}},
 			maxTime: {{$maxHourOfDay}},
-			monthNames: [ '{tr}January{/tr}', '{tr}February{/tr}', '{tr}March{/tr}', '{tr}April{/tr}', '{tr}May{/tr}', '{tr}June{/tr}', '{tr}July{/tr}', '{tr}August{/tr}', '{tr}September{/tr}', '{tr}October{/tr}', '{tr}November{/tr}', '{tr}December{/tr}'], 
-			monthNamesShort: [ '{tr}Jan{/tr}', '{tr}Feb{/tr}', '{tr}Mar{/tr}', '{tr}Apr{/tr}', '{tr}May{/tr}', '{tr}Jun{/tr}', '{tr}Jul{/tr}', '{tr}Aug{/tr}', '{tr}Sep{/tr}', '{tr}Oct{/tr}', '{tr}Nov{/tr}', '{tr}Dec'{/tr}], 
-			dayNames: ['{tr}Sunday{/tr}', '{tr}Monday{/tr}', '{tr}Tuesday{/tr}', '{tr}Wednesday{/tr}', '{tr}Thursday{/tr}', '{tr}Friday{/tr}', '{tr}Saturday{/tr}'],
-			dayNamesShort: ['{tr}Sun{/tr}', '{tr}Mon{/tr}', '{tr}Tue{/tr}', '{tr}Wed{/tr}', '{tr}Thu{/tr}', '{tr}Fri{/tr}', '{tr}Sat{/tr}'],
+			monthNames: [ "{tr}January{/tr}", "{tr}February{/tr}", "{tr}March{/tr}", "{tr}April{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}August{/tr}", "{tr}September{/tr}", "{tr}October{/tr}", "{tr}November{/tr}", "{tr}December{/tr}"], 
+			monthNamesShort: [ "{tr}Jan{/tr}", "{tr}Feb{/tr}", "{tr}Mar{/tr}", "{tr}Apr{/tr}", "{tr}May{/tr}", "{tr}Jun{/tr}", "{tr}Jul{/tr}", "{tr}Aug{/tr}", "{tr}Sep{/tr}", "{tr}Oct{/tr}", "{tr}Nov{/tr}", "{tr}Dec"{/tr}], 
+			dayNames: ["{tr}Sunday{/tr}", "{tr}Monday{/tr}", "{tr}Tuesday{/tr}", "{tr}Wednesday{/tr}", "{tr}Thursday{/tr}", "{tr}Friday{/tr}", "{tr}Saturday{/tr}"],
+			dayNamesShort: ["{tr}Sun{/tr}", "{tr}Mon{/tr}", "{tr}Tue{/tr}", "{tr}Wed{/tr}", "{tr}Thu{/tr}", "{tr}Fri{/tr}", "{tr}Sat{/tr}"],
 			buttonText: {
 										today:    "{tr}today{/tr}",
-										month:    '{tr}month{/tr}',
-										week:     '{tr}week{/tr}',
-										day:      '{tr}day{/tr}'
+										month:    "{tr}month{/tr}",
+										week:     "{tr}week{/tr}",
+										day:      "{tr}day{/tr}"
 			},
+			allDayText: "{tr}all-day{/tr}",
 			firstDay: {{$prefs.calendar_firstDayofWeek}},
 			slotMinutes: {{$prefs.calendar_timespan}},
-			defaultView: {{if $prefs.calendar_view_mode === 'month'}}'month'{{else if $prefs.calendar_view_mode === 'week'}}'agendaWeek'{{else if $prefs.calendar_view_mode === 'day'}}'agendaDay'{{else}}'month'{{/if}},
+			defaultView: {{if $prefs.calendar_view_mode === 'week'}}'agendaWeek'{{else if $prefs.calendar_view_mode === 'day'}}'agendaDay'{{else}}'month'{{/if}},
 			eventAfterRender : function( event, element, view ) {
 				element.attr('title',event.title +'|'+event.description);
 				element.cluetip({arrows: true, splitTitle: '|'});
