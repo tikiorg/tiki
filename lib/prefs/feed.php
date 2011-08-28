@@ -72,7 +72,7 @@ function prefs_feed_list() {
 			'description' => tra('Propose basic http authentication if the user has no permission to see the feed'),
 			'type' => 'flag',
 			'default' => 'n',
-			),
+		),
 		'feed_cache_time' => array(
 			'name' => tra('Caching time'),
 			'type' => 'text',
@@ -81,7 +81,8 @@ function prefs_feed_list() {
 			'shorthint' => tra('seconds'),
 			'hint' => tra('Use 0 for no caching'),
 			'default' => '0', // 0 = disabled (default)
-			),
+			'warning' => tra('Enabling caching will override existing permissions - all content will be public. Enable this option <strong>only</strong> if your syndicated content should be public.'),
+		),
 		'feed_articles' => array(
 			'name' => tra('Articles'),
 			'description' => tra('RSS feeds for articles'),

@@ -30,10 +30,6 @@
 			{preference name=feed_language}
 			{preference name=feed_cache_time}
 
-			{remarksbox type="Note" title="{tr}Note{/tr}"}
-				{tr}Enabling caching will override existing permissions - all content will be public. Enable this option <strong>only</strong> if your syndicated content should be public.{/tr}
-			{/remarksbox}	
-				
 			{preference name=feed_basic_auth}
 		{/tab}
 
