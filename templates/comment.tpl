@@ -18,13 +18,13 @@
 {/if}
 
 {if $first neq 'y' and $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != ''}
-	{foreach from=$comment.replies_info.replies item="comment"}
-		{if $comment.doNotShow != 1 && $thread_style != 'commentStyle_plain'}
+	{foreach from=$comment.replies_info.replies item="subcomment"}
+		{if $subcomment.doNotShow != 1 && $thread_style != 'commentStyle_plain'}
 		<div class="sub_comment_area">
 			<div class="sub_comment">
 		{/if}
-		{include file='comment.tpl' comment=$comment}
-		{if $comment.doNotShow != 1  && $thread_style != 'commentStyle_plain'}
+		{include file='comment.tpl' comment=$subcomment}
+		{if $subcomment.doNotShow != 1  && $thread_style != 'commentStyle_plain'}
 			</div>
 		</div>
 		{/if}
