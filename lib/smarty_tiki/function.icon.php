@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /*
- * smarty_function_icon: Display a Tikiwiki icon, using theme icons if they exists
+ * smarty_function_icon: Display a Tiki icon, using theme icons if they exists
  *
  * params will be used as params for the HTML tag (e.g. border, class, ...), except special params starting with '_' :
  *  - _id: short name (i.e. 'page_edit') or relative file path (i.e. 'pics/icons/page_edit.png'). [required]
@@ -21,7 +21,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
  *  - _menu_text: if set to 'y', will use the 'title' argument as text after the icon and place the whole content between div tags with a 'icon_menu' class (not compatible with '_notag' param set to 'y').
  *  - _menu_icon: if set to 'n', will not show icon image when _menu_text is 'y'.
- *  - _confirm: text to use in a popup requesting the user to confirm it's action (yet only available with javascript)
+ *  - _confirm: text to use in a popup requesting the user to confirm its action (yet only available with javascript)
  *  - _defaultdir: directory to use when the _id param does not include the path
  *  - _extension: Filename extension - default 'png'
  */
