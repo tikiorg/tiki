@@ -1708,7 +1708,7 @@ class ToolbarsList
 			$this->lines[] = $elements;
 	} // }}}
 
-	function getWysiwygArray( $areaId, $wysiwyg_wiki = false ) // {{{
+	function getWysiwygArray( $areaId, $tb_type = 'html') // {{{
 	{
 		$lines = array();
 		foreach( $this->lines as $line ) {
@@ -1717,13 +1717,13 @@ class ToolbarsList
 			foreach( $line as $bit ) {
 				foreach( $bit as $group) {
 					foreach( $group as $tag ) {
-						
-						if ( $wysiwyg_wiki ) {
-							if( $token = $tag->getWysiwygWikiToken( $areaId ) )
-								$lineOut[] = $token;
-						} else {
-							if( $token = $tag->getWysiwygToken( $areaId ) )
-								$lineOut[] = $token;
+						switch ($tb_type) {
+							case 'wiki': 
+								if( $token = $tag->getWysiwygWikiToken( $areaId ) ) {$lineOut[] = $token;};
+								break;
+							case 'html' : 
+							default:
+								if( $token = $tag->getWysiwygToken( $areaId ) ) {$lineOut[] = $token;};
 						}
 					}
 	

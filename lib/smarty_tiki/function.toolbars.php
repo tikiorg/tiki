@@ -52,7 +52,7 @@ function smarty_function_toolbars($params, $smarty)
 	if ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y') {
 		if ($wysiwyg_wiki) {
 			// load the Wiki toolbars into the CKE
-			return $list->getWysiwygArray( $params['area_id'], true );			
+			return $list->getWysiwygArray( $params['area_id'], 'wiki' );			
 		} else {
 			// load the html toolbars into the CKE
 			return $list->getWysiwygArray( $params['area_id'] );
