@@ -1738,6 +1738,7 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
+			'description' => tra('Makes pages shorter by splitting the content in different tabs'),			
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
