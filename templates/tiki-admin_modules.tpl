@@ -27,8 +27,7 @@
 	{/remarksbox}
 {/if}
 
-{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="star"}
-	<em>{tr}New. This feature is still under development{/tr}</em><br />
+{remarksbox type="note" title="{tr}Modules{/tr}" icon="star"}
 	<ul>
 		<li>{tr}Drag the modules around to re-order then click save when ready{/tr}</li>
 		<li>{tr}Double click them to edit{/tr}</li>
