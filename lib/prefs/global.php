@@ -200,9 +200,10 @@ function prefs_global_list($partial = false) {
 			'default' => '',
 		),
 		'forgotPass' => array(
-			'name' => tra('Remind/forgot password'),
+			'name' => tra('Forgot password'),
 			'type' => 'flag',
-			'description' => tra('If passwords <em>are not</em> plain text, reset instructions will be emailed to the user.').' '. tra('If passwords <em>are stored</em> as plain text, the password will be emailed to the user'),
+			'description' => tra('Users can request to reset password. They will receive a link by email.'),
+			'detail' => tra("Since passwords are encrypted, it's not possible to tell the user what the password is. It's only possible to change it."),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
