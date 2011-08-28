@@ -296,18 +296,18 @@ class EditLib
 				switch ($format) {
 					case 'font-weight':
 						if ($style[$format] == 'bold') {
-							$src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__');
+							$src .= '__'; $p['stack'][] = array('tag' => 'span', 'string' => '__');
 						}
 						break;
 					case 'font-style': 
 						if ($style[$format] == 'italic') {
-							$src .= '\'\''; $p['stack'][] = array('tag' => 'strong', 'string' => '\'\'');
+							$src .= '\'\''; $p['stack'][] = array('tag' => 'span', 'string' => '\'\'');
 						}
 					case 'text-decoration':
 						if ($style[$format] == 'line-through') {
-							$src .= '--'; $p['stack'][] = array('tag' => 'strong', 'string' => '--');
+							$src .= '--'; $p['stack'][] = array('tag' => 'span', 'string' => '--');
 						} else if ($style[$format] == 'underline') {
-							$src .= '==='; $p['stack'][] = array('tag' => 'strong', 'string' => '===');
+							$src .= '==='; $p['stack'][] = array('tag' => 'span', 'string' => '===');
 						}
 				} // switch format
 			} // foreach style
