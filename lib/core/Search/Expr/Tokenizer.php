@@ -49,7 +49,7 @@ class Search_Expr_Tokenizer
 
 	private function addToken(&$tokens, &$current)
 	{
-		if (! empty($current) ) {
+		if ( strlen($current) ) {
 			$tokens[] = $current;
 			$current = '';
 		}
