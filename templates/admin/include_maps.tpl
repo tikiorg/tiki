@@ -3,6 +3,14 @@
 		<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset class="admin">
+		<legend>{tr}Settings{/tr}</legend>
+			{preference name=geo_locate_blogpost}
+			{preference name=geo_locate_wiki}
+			{preference name=geo_locate_article}
+			{preference name=wikiplugin_map}
+	</fieldset>
+	
+	<fieldset class="admin">			
 		<legend>{tr}MapServer settings{/tr}</legend>
 		<div class="adminoptionbox">
 			{if $map_error neq ''}
