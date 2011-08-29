@@ -50,6 +50,8 @@ function prefs_session_list() {
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'warning' => tra('Only activate if you have already configured SSL, otherwise, your will lock yourself of Tiki'),
+			'tags' => array('expert'),
 		),
 	);
 }
