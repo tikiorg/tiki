@@ -176,7 +176,7 @@ function prefs_wiki_list($partial = false) {
 			'name' => tra('Prevent special characters in page names'),
 			'description' => tra('Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'tags' => array('basic'),
 		),
 		'wiki_ranking_reload_probability' => array(
