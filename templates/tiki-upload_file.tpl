@@ -555,11 +555,9 @@
 	{/if}
 
 	{if $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
-		<form class="remote-upload" method="post" action="tiki-ajax_services.php">
+		<form class="remote-upload" method="post" action="{service controller=file action=remote}">
 			<h3>{tr}Upload from URL{/tr}</h3>
 			<p>
-				<input type="hidden" name="controller" value="file"/>
-				<input type="hidden" name="action" value="remote"/>
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
 				<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://"/></label>
 				<input type="submit" value="{tr}Add{/tr}"/>

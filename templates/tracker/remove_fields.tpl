@@ -1,7 +1,5 @@
 {if $status neq 'DONE'}
-	<form method="post" action="tiki-ajax_services.php">
-		<input type="hidden" name="controller" value="tracker"/>
-		<input type="hidden" name="action" value="remove_fields"/>
+	<form method="post" action="{service controller=tracker action=remove_fields}">
 		<input type="hidden" name="confirm" value="1"/>
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
 		{foreach from=$fields item=fieldId}

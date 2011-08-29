@@ -9,7 +9,7 @@
 {tabset}
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
-		<form class="save-fields" method="post" action="tiki-ajax_services.php">
+		<form class="save-fields" method="post" action="{service controller=tracker}">
 			<table id="fields" class="normal">
 				<thead>
 					<tr>
@@ -35,13 +35,12 @@
 					<option value="export_fields">{tr}Export Selected{/tr}</option>
 				</select>
 				<input type="submit" name="submit" value="{tr}Go{/tr}"/>
-				<input type="hidden" name="controller" value="tracker"/>
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
 				<input type="hidden" name="confirm" value="0"/>
 			</div>
 		</form>
 
-		<form class="add-field" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=addfield">
+		<form class="add-field" method="post" action="{service controller=tracker action=add_field}">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
 			<input type="submit" value="{tr}Add Field{/tr}"/>
 		</form>
@@ -68,7 +67,7 @@
 						}
 					});
 				} else {
-					$.ajax('tiki-ajax_services.php', {
+					$.ajax($(form).attr('href'), {
 						type: 'POST',
 						data: $(form).serialize(),
 						dataType: 'json',
@@ -122,7 +121,7 @@
 	{/tab}
 	
 	{tab name="{tr}Import Tracker Fields{/tr}"}
-		<form class="simple import-fields" action="tiki-ajax_services.php" method="post">
+		<form class="simple import-fields" action="{service controller=tracker action=import_fields}" method="post">
 			<label>
 				{tr}Raw Fields{/tr}
 				<textarea name="raw"></textarea>
@@ -134,8 +133,6 @@
 			</label>
 
 			<div class="submit">
-				<input type="hidden" name="controller" value="tracker"/>
-				<input type="hidden" name="action" value="import_fields"/>
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
 				<input type="submit" value="{tr}Import{/tr}"/>
 			</div>

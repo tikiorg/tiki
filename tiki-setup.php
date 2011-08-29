@@ -351,6 +351,16 @@ if ($prefs['feature_trackers'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-trackers.js');
 }
 
+if ($prefs['feature_sefurl'] != 'y') {
+	$headerlib->add_js('$.service = function (controller, action) {
+		var url = "tiki-ajax_services.php?controller=" + controller;
+		if (action) {
+			url = url + "&action=" + action;
+		}
+		return url;
+	}');
+}
+
 if( session_id() ) {
 	if( $prefs['tiki_cachecontrol_session'] ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_session'] );

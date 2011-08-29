@@ -1,4 +1,4 @@
-<form method="post" action="tiki-ajax_services.php">
+<form method="post" action="{service controller=translation action=detach}">
 	<p>{tr}Are you sure you want to detach these translations?{/tr}</p>
 	<ul>
 		<li>{object_link type=$type id=$source}</li>
@@ -7,8 +7,6 @@
 		{/if}
 	</ul>
 	<p>
-		<input type="hidden" name="controller" value="translation"/>
-		<input type="hidden" name="action" value="detach"/>
 		<input type="hidden" name="type" value="{$type|escape}"/>
 		<input type="hidden" name="source" value="{$source|escape}"/>
 		<input type="hidden" name="target" value="{$target|escape}"/>

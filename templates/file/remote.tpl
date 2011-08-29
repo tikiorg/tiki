@@ -1,5 +1,5 @@
 {if ! $fileId}
-	<form method="post" action="tiki-ajax_services.php?controller=file&amp;action=remote">
+	<form method="post" action="{service controller=file action=remote}">
 		<h3>{tr}Upload from URL{/tr}</h3>
 		<p>
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}"/>

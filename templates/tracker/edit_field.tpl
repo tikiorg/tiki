@@ -1,4 +1,4 @@
-<form class="simple" method="post" action="tiki-ajax_services.php">
+<form class="simple" method="post" action="{service controller=tracker action=edit_field}">
 	<div class="accordion">
 		<h4>{tr}General{/tr}</h4>
 		<div>
@@ -131,8 +131,6 @@
 
 	<div>
 		<input type="submit" name="submit" value="{tr}Save{/tr}"/>
-		<input type="hidden" name="controller" value="tracker"/>
-		<input type="hidden" name="action" value="edit_field"/>
 		<input type="hidden" name="trackerId" value="{$field.trackerId|escape}"/>
 		<input type="hidden" name="fieldId" value="{$field.fieldId|escape}"/>
 	</div>

@@ -276,16 +276,16 @@
 				{/if}
 			</p>
 			{permission name=tiki_p_admin_trackers}
-				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_meta&amp;trackerId={$trackerId|escape:'url'}">
+				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_meta trackerId=$trackerId}">
 					<p><input type="submit" value="{tr}Reload field definitions{/tr}"/></p>
 				</form>
-				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_new&amp;trackerId={$trackerId|escape:'url'}">
+				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_new trackerId=$trackerId}">
 					<p>{tr}Items added locally{/tr}</p>
 					<ul class="load-items items">
 					</ul>
 					<p><input type="submit" value="{tr}Push new items{/tr}"/></p>
 				</form>
-				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_edit&amp;trackerId={$trackerId|escape:'url'}">
+				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_edit trackerId=$trackerId}">
 					<div class="item-block">
 						<p>{tr}Safe modifications (no remote conflict){/tr}</p>
 						<ul class="load-items automatic">
@@ -299,7 +299,7 @@
 					<p>{tr}On push, local items will be removed until data reload.{/tr}</p>
 					<p><input type="submit" value="{tr}Push local changes{/tr}"/></p>
 				</form>
-				<form class="sync-refresh" method="post" action="tiki-ajax_services.php?controller=tracker_sync&amp;action=sync_refresh&amp;trackerId={$trackerId|escape:'url'}">
+				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_refresh trackerId=$trackerId}">
 					{if $tracker_sync.modified}
 						{remarksbox type=warning title="{tr}Local changes will be lost{/tr}"}
 							<p>{tr}When reloading the data from the source, all local changes will be lost.{/tr}</p>

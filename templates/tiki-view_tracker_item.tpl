@@ -49,7 +49,7 @@
 			<h2>{tr}View Item{/tr}</h2>
 			{if $tracker_is_multilingual}
 				<div class="translations">
-					<a href="tiki-ajax_services.php?controller=translation&amp;action=manage&amp;type=trackeritem&amp;source={$itemId|escape:'url'}">{tr}Translations{/tr}</a>
+					<a href="{service controller=translation action=manage type=trackeritem source=$itemId}">{tr}Translations{/tr}</a>
 				</div>
 				{jq}
 					$('.translations a').click(function () {
@@ -114,7 +114,7 @@
 
 		{tab name="{tr}Comments{/tr}"}
 
-			<div id="comment-container" data-target="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=trackeritem&amp;objectId={$itemId|escape:'url'}"></div>
+			<div id="comment-container" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
 			{jq}
 				var id = '#comment-container';
 				$(id).comment_load($(id).data('target'));

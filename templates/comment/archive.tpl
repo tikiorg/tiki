@@ -1,13 +1,11 @@
 {if $status neq 'DONE'}
-	<form method="post" action="tiki-ajax_services.php">
+	<form method="post" action="{service controller="comment" action="archive"}">
 		{if $do eq 'archive'}
 			<p>{tr}Are you sure you want to archive this comment?{/tr}</p>
 		{else}
 			<p>{tr}Are you sure you want to unarchive this comment?{/tr}</p>
 		{/if}
 		<p>
-			<input type="hidden" name="controller" value="comment"/>
-			<input type="hidden" name="action" value="archive"/>
 			<input type="hidden" name="do" value="{$do|escape}"/>
 			<input type="hidden" name="threadId" value="{$threadId|escape}"/>
 			<input type="hidden" name="confirm" value="1"/>

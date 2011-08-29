@@ -184,7 +184,7 @@
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
   <div id="page-bar" class="clearfix">
-		<span class="button"><a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=image+gallery&amp;objectId={$galleryId|escape:'url'}#comment-container">{tr}Comments{/tr}</a></span>
+		<span class="button"><a id="comment-toggle" href="{service controller=comment action=list type="image gallery" objectId=$galleryId}#comment-container">{tr}Comments{/tr}</a></span>
 		{jq}
 			$('#comment-toggle').comment_toggle();
 		{/jq}

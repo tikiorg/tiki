@@ -2,7 +2,7 @@
 	<p>{tr}Your comment was posted.{/tr}</p>
 	<p>{object_link type=$type objectId=$objectId}</p>
 {else}
-	<form method="post" action="tiki-ajax_services.php">
+	<form method="post" action="{service controller=comment action=post}">
 		{if ! $user or $prefs.feature_comments_post_as_anonymous eq 'y'}
 			<fieldset>
 				<legend>{tr}Identity{/tr}</legend>
@@ -18,8 +18,6 @@
 		{/if}
 		<fieldset>
 			<legend class="clearfix">{tr}Content{/tr}</legend>
-			<input type="hidden" name="controller" value="comment"/>
-			<input type="hidden" name="action" value="post"/>
 			<input type="hidden" name="type" value="{$type|escape}"/>
 			<input type="hidden" name="objectId" value="{$objectId|escape}"/>
 			<input type="hidden" name="parentId" value="{$parentId|escape}"/>

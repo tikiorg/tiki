@@ -2,9 +2,7 @@
 {if !isset($versioned) or not $versioned}
 	{strip}
 	{capture assign=page_bar}
-		{if !empty($user) and !empty($prefs.user_favorites) and $prefs.user_favorites eq 'y' and $user}
-			{button _keepall='y' _class="favorite-toggle" href="tiki-ajax_services.php" controller="favorite" action="toggle" type="wiki page" object=$page _text="{tr}Toggle Favorite{/tr}"}
-		{/if}
+		{favorite type="wiki page" object=$page}
 
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
@@ -95,7 +93,7 @@
 					&& $comments_cant != 0)
 					|| $tiki_p_post_comments == 'y'
 					||$tiki_p_edit_comments == 'y')}
-					<span class="button"><a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=wiki+page&amp;objectId={$page|escape:'url'}#comment-container">{tr}Comments{/tr}</a></span>
+					<span class="button"><a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">{tr}Comments{/tr}</a></span>
 					{jq}
 						$('#comment-toggle').comment_toggle();
 					{/jq}

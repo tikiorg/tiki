@@ -1,9 +1,7 @@
 {if $status neq 'DONE'}
-	<form method="post" action="tiki-ajax_services.php">
+	<form method="post" action="{service controller=comment action=unlock}">
 		<p>{tr}Are you sure you want to unlock comments on this object?{/tr}</p>
 		<p>
-			<input type="hidden" name="controller" value="comment"/>
-			<input type="hidden" name="action" value="unlock"/>
 			<input type="hidden" name="type" value="{$type|escape}"/>
 			<input type="hidden" name="objectId" value="{$objectId|escape}"/>
 			<input type="hidden" name="confirm" value="1"/>

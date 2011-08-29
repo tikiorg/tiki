@@ -104,7 +104,12 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	global $prefs;
 	if (isset($attributes['tiki.content.source']) && $prefs['fgal_source_show_refresh'] == 'y') {
 		require_once 'lib/smarty_tiki/function.icon.php';
-		$html .= '<a class="file-refresh" href="tiki-ajax_services.php?controller=file&amp;action=refresh&amp;fileId=' . intval($object) . '">' . smarty_function_icon(array(
+		$smarty->loadPlugin('smarty_function_service');
+		$html .= '<a class="file-refresh" href="' . smarty_function_service(array(
+			'controller' => 'file',
+			'action' => 'refresh',
+			'fileId' => intval($object),
+		), $smarty) . '">' . smarty_function_icon(array(
 			'_id' => 'arrow_refresh',
 		), $smarty) . '</a>';
 

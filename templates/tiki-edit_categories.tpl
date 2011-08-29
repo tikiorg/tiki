@@ -52,11 +52,9 @@ function perform_selection_action(action, row) {
 
 	$.ajax({
 		type: 'POST',
-		url: 'tiki-ajax_services.php',
+		url: $.service('category', action),
 		dataType: 'json',
 		data: {
-			controller: 'category',
-			action: action,
 			categId: categId,
 			objects: objects,
 			confirm: 1

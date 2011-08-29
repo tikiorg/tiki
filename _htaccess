@@ -144,6 +144,9 @@ RewriteRule ^show:(~?)(.+)$        tiki-slideshow.php?page=$1$2             [QSA
 RewriteRule ^user([0-9]+)(.*)      tiki-user_information.php?userId=$1$2    [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 
+RewriteRule ^tiki-([a-z_]+)-([a-z_]+) tiki-ajax_services.php?controller=$1&action=$2		[QSA,L]
+RewriteRule ^tiki-([a-z_]+)         tiki-ajax_services.php?controller=$1		[QSA,L]
+
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 </IfModule>

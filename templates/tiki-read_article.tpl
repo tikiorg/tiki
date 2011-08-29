@@ -166,7 +166,7 @@
 {if $prefs.feature_article_comments == 'y' && 
 		($tiki_p_read_comments == 'y' || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
 
-	<div id="comment-container" data-target="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=article&amp;objectId={$articleId|escape:'url'}"></div>
+	<div id="comment-container" data-target="{service controller=comment action=list type=article objectId=$articleId}"></div>
 	{jq}
 		var id = '#comment-container';
 		$(id).comment_load($(id).data('target'));

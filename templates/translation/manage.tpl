@@ -5,7 +5,7 @@
 			<li>
 				{object_link type=$type id=$trans.objId}, {$trans.language|escape}
 				{permission type=$type object=$trans.objId name=detach_translation}
-					<a class="confirm-prompt" href="tiki-ajax_services.php?controller=translation&amp;action=detach&amp;type={$type|escape:'url'}&amp;source={$source|escape:'url'}&amp;target={$trans.objId|escape:'url'}" data-confirm="{tr}Are you sure you want to detach the translation?{/tr}">{icon _id=cross}</a>
+					<a class="confirm-prompt" href="{service controller=translation action=detach type=$type source=$source target=$trans.objId}" data-confirm="{tr}Are you sure you want to detach the translation?{/tr}">{icon _id=cross}</a>
 				{/permission}
 			</li>
 		{/foreach}
@@ -16,14 +16,12 @@
 
 {if $canAttach}
 	{if $filters.language}
-		<form class="simple" method="post" action="tiki-ajax_services.php">
+		<form class="simple" method="post" action="{service controller=translation action=attach}">
 			<label>
 				{tr}Add a new object to the set{/tr}
 				{object_selector _name=target _filter=$filters}
 			</label>
 			<div>
-				<input type="hidden" name="controller" value="translation"/>
-				<input type="hidden" name="action" value="attach"/>
 				<input type="hidden" name="type" value="{$type|escape}"/>
 				<input type="hidden" name="source" value="{$source|escape}"/>
 				<input type="submit" value="{tr}Add{/tr}"/>

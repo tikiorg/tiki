@@ -71,7 +71,7 @@ var handleFiles = function (files) {
 
 				$.ajax({
 					type: 'POST',
-					url: 'tiki-ajax_services.php?controller=file&action=upload',
+					url: $.service('file', 'upload'),
 					xhr: provider,
 					dataType: 'json',
 					success: function (data) {
@@ -162,11 +162,9 @@ $url.keypress(function (e) {
 
 		$.ajax({
 			type: 'POST',
-			url: 'tiki-ajax_services.php',
+			url: $.service('file', 'remote'),
 			dataType: 'json',
 			data: {
-				controller: 'file',
-				action: 'remote',
 				galleryId: "{{$field.galleryId|escape}}",
 				url: url
 			},

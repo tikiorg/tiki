@@ -1,7 +1,7 @@
 {if $trackerId}
 	<a href="tiki-admin_tracker_fields.php?trackerId={$trackerId|escape:'url'}">{tr}Admin Fields{/tr}</a>
 {else}
-	<form method="post" action="tiki-ajax_services.php" class="simple">
+	<form method="post" action="{service controller=tracker_sync action=clone_remote}" class="simple">
 		{if $list}
 			<label>
 				{tr}Tracker:{/tr}
@@ -22,8 +22,6 @@
 			</label>
 		{/if}
 		<div>
-			<input type="hidden" name="controller" value="tracker_sync"/>
-			<input type="hidden" name="action" value="clone_remote"/>
 			{if $list}
 				<input type="submit" value="{tr}Clone{/tr}"/>
 			{else}

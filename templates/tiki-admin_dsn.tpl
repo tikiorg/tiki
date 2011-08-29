@@ -66,7 +66,7 @@
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
 <h2>{tr}Content Authentication{/tr}</h2>
-<form id="source-form" method="post" action="">
+<form id="source-form" method="post" action="{service controller=""}">
 	<fieldset>
 		<legend>{tr}Identification{/tr}</legend>
 		<label>
@@ -123,10 +123,7 @@ $('#source-form').each(function () {
 	var form = this, 
 		reload = function () {
 			$('option.added', form).remove();
-			$.getJSON('tiki-ajax_services.php', {
-				controller: 'auth_source',
-				action: 'list',
-			}, function (entries) {
+			$.getJSON($.service('auth_source', 'list'), function (entries) {
 				$.each(entries, function (k, v) {
 					$(form.existing).append($('<option class="added"/>').text(v));
 				});
@@ -153,9 +150,7 @@ $('#source-form').each(function () {
 		if (val.length) {
 			$(form.identifier).hide().val(val);
 
-			$.getJSON('tiki-ajax_services.php', {
-				controller: 'auth_source',
-				action: 'fetch',
+			$.getJSON($.service('auth_source', 'fetch'), {
 				identifier: $(form.existing).val()
 			}, function (data) {
 				$(form.method).val(data.method).change();
@@ -195,7 +190,6 @@ $('#source-form').each(function () {
 
 	$(form.save).click(function () {
 		var data = {
-			controller: 'auth_source',
 			action: 'save',
 			identifier: $(form.identifier).val(),
 			url: $(form.url).val(),
@@ -221,7 +215,7 @@ $('#source-form').each(function () {
 
 		$(form.existing).val('').change();
 
-		$.post('tiki-ajax_services.php', data, function () {
+		$.post($(form).attr('action'), data, function () {
 			if (isNew) {
 				$(form.existing).append($('<option/>').text(data.identifier));
 			}
@@ -232,8 +226,7 @@ $('#source-form').each(function () {
 	});
 
 	$(form.delete).click(function () {
-		$.post('tiki-ajax_services.php', {
-			controller: 'auth_source',
+		$.post($(form).attr('action'), {
 			action: 'delete',
 			identifier: $(form.existing).val()
 		}, function () {
