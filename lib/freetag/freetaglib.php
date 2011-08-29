@@ -200,7 +200,7 @@ class FreetagLib extends ObjectLib
 																		, $broaden = 'n'
 																		) 
 	{
-		global $categlib;
+		global $categlib, $prefs;
 		include_once('lib/categories/categlib.php');
 
 		global $tiki_p_admin, $user, $smarty;
