@@ -2953,7 +2953,6 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'prefs' => array('feature_multilingual'),				
 				'admin' => false,
-				'prefs' => array(),
 				'scope' => 'global',
 			),
 			array(
