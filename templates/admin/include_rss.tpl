@@ -170,16 +170,6 @@
 				{preference name=feed_directories_homepage}
 			</div>
 
-			{preference name=feed_maps}
-			<div class="adminoptionboxchild" id="feed_maps_childcontainer">
-				<a href="tiki-maps_rss.php" title="{tr}Feed for maps{/tr}."> {icon _id=feed}</a>
-				{preference name=feed_maps_title}
-				{preference name=feed_maps_desc}
-				{preference name=feed_maps_max}
-				{preference name=feed_maps_showAuthor}
-				{preference name=feed_maps_homepage}
-			</div>
-
 			{preference name=feed_shoutbox}
 			<div class="adminoptionboxchild" id="feed_shoutbox_childcontainer">
 				<a href="tiki-maps_rss.php" title="{tr}Feed for shoutbox{/tr}."> {icon _id=feed}</a>

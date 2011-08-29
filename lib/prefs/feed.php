@@ -219,15 +219,6 @@ function prefs_feed_list() {
 			),
 			'default' => 'n',
 		),
-		'feed_maps' => array(
-			'name' => tra('RSS for maps'),
-			'description' => tra('RSS feed for maps'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_maps',
-			),
-			'default' => 'n',
-		),
 		'feed_shoutbox' => array(
 			'name' => tra('RSS for shoutbox'),
 			'description' => tra('RSS feed for shoutbox'),
@@ -335,13 +326,6 @@ function prefs_feed_list() {
 			'filter' => 'digits',
 			'default' => 10,
 		),
-		'feed_maps_max' => array(
-			'name' => tra('Maximum number of items to display'),
-			'type' => 'text',
-			'size' => 5,
-			'filter' => 'digits',
-			'default' => '',
-		),
 		'feed_shoutbox_max' => array(
 			'name' => tra('Maximum number of items to display'),
 			'type' => 'text',
@@ -415,11 +399,6 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_directories_showAuthor' => array(
-			'name' => tra('Show Author'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
-		'feed_maps_showAuthor' => array(
 			'name' => tra('Show Author'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -502,12 +481,6 @@ function prefs_feed_list() {
 			'default' => '',
 		),
 		'feed_directories_homepage' => array(
-			'name' => tra('Homepage URL'),
-			'type' => 'text',
-			'size' => '60',
-			'default' => '',
-		),
-		'feed_maps_homepage' => array(
 			'name' => tra('Homepage URL'),
 			'type' => 'text',
 			'size' => '60',
@@ -603,12 +576,6 @@ function prefs_feed_list() {
 			'type' => 'text',
 			'size' => '80',
 			'default' => tra('Tiki RSS feed for directory sites'),
-		),
-		'feed_maps_title' => array(
-			'name' => tra('Title'),
-			'type' => 'text',
-			'size' => '80',
-			'default' => '',
 		),
 		'feed_shoutbox_title' => array(
 			'name' => tra('Title'),
@@ -713,13 +680,6 @@ function prefs_feed_list() {
 			'type' => 'textarea',
 			'size' => 2,
 			'default' => tra('Last sites.'),
-		),
-		'feed_maps_desc' => array(
-			'name' => tra('Maps RSS Description'),
-			'description' => tra('Description to be published as part of the RSS feed for maps.'),
-			'type' => 'textarea',
-			'size' => 2,
-			'default' => '',
 		),
 		'feed_shoutbox_desc' => array(
 			'name' => tra('Shoutbox RSS Description'),
