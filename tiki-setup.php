@@ -142,6 +142,8 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
 }
 
+//	include_once ('tiki-perspective_binder.php');
+
 if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
 	require_once('lib/captcha/captchalib.php');
 	$smarty->assign_by_ref('captchalib', $captchalib);
