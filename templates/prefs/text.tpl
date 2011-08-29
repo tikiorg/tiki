@@ -14,7 +14,7 @@
 	{include file="prefs/shared-flags.tpl"}
 
 	{if $p.detail}
-		<br/>{$p.detail|escape}
+		<br/>{$p.detail|simplewiki}
 	{/if}	
 
 	{if $p.hint}
