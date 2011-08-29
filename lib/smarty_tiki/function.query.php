@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_query($params, $smarty) {
-	global $auto_query_args;
+	global $auto_query_args, $prefs;
 	static $request = NULL;
 
 	// Modify explicit params to be prefixed if they need to (used in a plugin, module, ...)
@@ -101,7 +101,7 @@ function smarty_function_query($params, $smarty) {
 				}
 			}
 		} else {
-			if (isset($params['controller'], $params['action'])) {
+			if (isset($params['controller'], $params['action']) && $prefs['feature_sefurl'] == 'y') {
 				unset($query['controller'], $query['action']);
 			}
 			if ( ! isset($params['_urlencode']) ) {
