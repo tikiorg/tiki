@@ -200,10 +200,9 @@ class FreetagLib extends ObjectLib
 																		, $broaden = 'n'
 																		) 
 	{
-		global $categlib, $prefs;
-		include_once('lib/categories/categlib.php');
 
-		global $tiki_p_admin, $user, $smarty;
+		global $tiki_p_admin, $user, $smarty, $prefs;
+		$categlib = TikiLib::lib('categ');
 		if (!isset($tagArray) || !is_array($tagArray)) {
 			return false;
 		}
