@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 // For documentation how to use this file please see the comment at the end of this file
 $sagsSideCatId = 1; // ID of the parent category that indicates the current page is assigned to an "Area"
 global $prefs;
