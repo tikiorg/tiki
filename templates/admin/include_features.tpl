@@ -46,13 +46,10 @@
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
 				{preference name=feature_shoutbox}
-				{preference name=feature_maps}
-				{preference name=feature_gmap}
 				{preference name=feature_minichat}				
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
 				{preference name=feature_share}
-				{preference name=feature_socialnetworks}
 				{preference name=feature_credits}
 				{preference name=feature_invoice}
 				{preference name=feature_accounting}
@@ -61,6 +58,30 @@
 				{preference name=feature_docs}
 				{preference name=feature_slideshow}
 				{preference name=feature_dynamic_content}
+				{preference name=feature_perspective}
+				{preference name=feature_sefurl}
+				{preference name=feature_webmail}
+				{preference name=feature_actionlog}
+				{preference name=feature_comm}
+				{preference name=feature_contribution}
+				{preference name=feature_copyright}
+				{preference name=feature_mailin}				
+					
+				{preference name=feature_custom_home}
+				{preference name=feature_faqs}
+				{preference name=feature_galleries}
+				{preference name=feature_html_pages}	
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Interaction with online services or other software{/tr}</legend>
+			<div class="admin clearfix featurelist">		
+				{preference name=connect_feature}
+				{preference name=feature_maps}
+				{preference name=feature_gmap}
+				{preference name=feature_socialnetworks}
+				
 				{preference name=feature_watershed}				
 				{preference name=feature_kaltura}				
 				{preference name=bigbluebutton_feature}
@@ -69,15 +90,7 @@
 						{preference name=bigbluebutton_server_salt}
 						{preference name=wikiplugin_bigbluebutton}
 					</div>
-				{preference name=feature_perspective}
-				{preference name=feature_sefurl}
-				{preference name=feature_webmail}
-				{preference name=connect_feature}
-				{preference name=feature_actionlog}
-				{preference name=feature_comm}
-				{preference name=feature_contribution}
-				{preference name=feature_copyright}
-				{preference name=feature_mailin}				
+			
 				{preference name=zotero_enabled}
 					<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
 						{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
@@ -88,15 +101,11 @@
 						{preference name=zotero_group_id}
 						{preference name=zotero_style}
 					</div>
-					
-				{preference name=feature_custom_home}
-				{preference name=feature_faqs}
-				{preference name=feature_galleries}
-				{preference name=feature_html_pages}	
-			</div>
 			
+			</div>
 		</fieldset>
-
+		
+		
 		<fieldset>
 			<legend>{tr}Watches{/tr}</legend>
 

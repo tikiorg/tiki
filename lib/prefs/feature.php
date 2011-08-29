@@ -609,6 +609,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'invoice contractor invoicing',
 			'default' => 'n',
+			'view' => 'tiki-list_invoices.php',
 			'tags' => array('experimental'),			
 		),
 		'feature_wysiwyg' => array(
@@ -620,8 +621,8 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('experimental'),
 		),
 		'feature_kaltura' => array(
-			'name' => tra('Kaltura'),
-			'description' => tra('Collaborative video editing'),
+			'name' => tra('Kaltura Video Management'),
+			'description' => tra('Integration to the Kaltura video management platform'),
 			'help' => 'Kaltura',
 			'type' => 'flag',
 			'default' => 'n',
@@ -694,6 +695,8 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Custom+Home',
 			'type' => 'flag',
 			'default' => 'n',
+			'view' => 'tiki-custom_home.php',
+			'tags' => array('expert'),			
 		),
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
@@ -2295,7 +2298,7 @@ function prefs_feature_list($partial = false) {
 			),			
 		),
 		'feature_watershed' => array(
-			'name' => tra('Ustream Watershed'),
+			'name' => tra('Ustream Watershed live video streaming'),
 			'description' => tra('Integration to Ustream Watershed live video streaming.'),
 			'type' => 'flag',
 			'help' => 'Ustream+Watershed',
