@@ -198,6 +198,9 @@ class UnifiedSearchLib
 			if ($prefs['feature_file_galleries_comments'] == 'y') {
 				$commentTypes[] = 'file gallery';
 			}
+			if ($prefs['feature_trackers'] == 'y') {
+				$commentTypes[] = 'trackeritem';
+			}
 
 			$aggregator->addContentSource('comment', new Search_ContentSource_CommentSource($commentTypes));
 			$aggregator->addGlobalSource(new Search_GlobalSource_CommentSource);
