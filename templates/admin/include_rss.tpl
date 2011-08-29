@@ -20,11 +20,6 @@
 				{preference name=feed_rss_editor_email}
 				{preference name=feed_rss_webmaster_email}
 			</div>
-			{remarksbox type="Note" title="{tr}Note{/tr}"}
-				{tr}Specification{/tr}
-				<a href="http://blogs.law.harvard.edu/tech/rss" title="{tr}Specification:{/tr} RSS 2.0">RSS 2.0</a>
-				<a href="http://www.atomenabled.org/developers/syndication/atom-format-spec.php" title="{tr}Specification:{/tr} Atom 1.0">Atom 1.0</a>.
-			{/remarksbox}
 
 			{preference name=feed_img}
 			{preference name=feed_language}

@@ -10,6 +10,9 @@
 			 <label for="{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}">{$label|escape}</label>
 		</div>
 	{/foreach}
+	{if $p.detail}
+		{$p.detail|simplewiki}
+	{/if}
 	{include file="prefs/shared-flags.tpl"}
 	{if $p.hint}
 		<br/><em>{$p.hint|simplewiki}</em>

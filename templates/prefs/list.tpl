@@ -10,6 +10,9 @@
 	{if $p.shorthint}
 		<em>{$p.shorthint|simplewiki}</em>
 	{/if}
+	{if $p.detail}
+		<br/>{$p.detail|simplewiki}
+	{/if}		
 	{if $p.hint}
 		<br/><em>{$p.hint|simplewiki}</em>
 	{/if}

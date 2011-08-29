@@ -15,6 +15,9 @@ function prefs_feed_list() {
 				'2' => tra('RSS 2.0'),
 			),
 			'default' => '5',
+			'shorthint' => '[http://atomenabled.org/developers/syndication/atom-format-spec.php|Atom 1.0]'
+						.' - '
+						.'[http://cyber.law.harvard.edu/rss/rss.html|RSS 2.0]',
 		),
 
 		// atom specific preferences
@@ -66,6 +69,7 @@ function prefs_feed_list() {
 			'type' => 'text',
 			'size' => '10',
 			'default' =>  'en-us',
+			'tags' => array('basic'),
 		),
 		'feed_basic_auth' => array(
 			'name' => tra('RSS basic Authentication'),
@@ -81,7 +85,7 @@ function prefs_feed_list() {
 			'shorthint' => tra('seconds'),
 			'hint' => tra('Use 0 for no caching'),
 			'default' => '0', // 0 = disabled (default)
-			'warning' => tra('Enabling caching will override existing permissions - all content will be public. Enable this option <strong>only</strong> if your syndicated content should be public.'),
+			'detail' => tra('Enabling caching will override existing permissions - all content will be public. Enable this option __only__ if your syndicated content should be public.'),
 		),
 		'feed_articles' => array(
 			'name' => tra('Articles'),
