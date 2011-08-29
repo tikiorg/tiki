@@ -230,6 +230,18 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'int',
 				'default' => 0,
 			),
+			'forceoffset' => array(
+				'required' => false,
+				'name' => tra('Fix offset always (no pagination)'),
+				'description' => tra('Fix offset to that specified, disallow pagination.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'showpagination' => array(
 				'required' => false,
 				'name' => tra('Show Pagination'),
@@ -1071,7 +1083,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$max = $prefs['maxRecords'];
 		}
 
-		if (isset($_REQUEST['tr_offset'])) {
+		if (isset($_REQUEST['tr_offset']) && (!isset($forceoffset) || $forceoffset == 'n')) {
 			$tr_offset = $_REQUEST['tr_offset'];
 		} else if (isset($offset) && $offset >= 0) {
 			$tr_offset = $offset;
