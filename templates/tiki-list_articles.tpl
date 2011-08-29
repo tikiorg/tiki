@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Articles" admpage="cms"}{tr}Articles{/tr}{/title}
+{title help="Articles" admpage="articles"}{tr}Articles{/tr}{/title}
 
 <div class="navbar">
 	{if $tiki_p_edit_article eq 'y'}

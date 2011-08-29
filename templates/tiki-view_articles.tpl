@@ -1,5 +1,5 @@
 {if $prefs.art_home_title ne ''}
-	{title help="Articles" admpage="cms"}
+	{title help="Articles" admpage="articles"}
 		{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic}{/tr}
 		{elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type}{/tr}
 		{else}{tr}Articles{/tr}{/if}
