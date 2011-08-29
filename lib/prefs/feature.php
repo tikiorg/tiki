@@ -139,7 +139,7 @@ function prefs_feature_list($partial = false) {
 			'keywords' => tra('template'),
 			'dependencies' => array(
 				'feature_file_galleries',
-            ),
+			),
 			'default' => 'n',
 		),
 		'feature_articles' => array(
@@ -288,6 +288,13 @@ function prefs_feature_list($partial = false) {
 			'help' => 'FAQ',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
+			'admin' => 'faqs',
+			'view' => 'tiki-list_faqs.php',
+			'module' => 'faq',
+			'permission' => array(
+				'textFilter' => 'faq',
+			),			
 		),
 		'feature_surveys' => array(
 			'name' => tra('Surveys'),
