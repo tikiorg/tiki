@@ -182,15 +182,6 @@ function prefs_feed_list() {
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
-		'feed_trackers' => array(
-			'name' => tra('RSS for trackers'),
-			'description' => tra('RSS feed for trackers'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_trackers',
-			),
-			'default' => 'n',
-		),
 		'feed_tracker' => array(
 			'name' => tra('RSS per tracker'),
 			'description' => tra('RSS feed per tracker'),
@@ -298,13 +289,6 @@ function prefs_feed_list() {
 			'filter' => 'digits',
 			'default' => 10,
 		),
-		'feed_trackers_max' => array(
-			'name' => tra('Maximum number of items to display'),
-			'type' => 'text',
-			'size' => 5,
-			'filter' => 'digits',
-			'default' => 10,
-		),
 		'feed_tracker_max' => array(
 			'name' => tra('Maximum number of items to display'),
 			'type' => 'text',
@@ -383,11 +367,6 @@ function prefs_feed_list() {
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'feed_trackers_showAuthor' => array(
-			'name' => tra('Show Author'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'feed_tracker_showAuthor' => array(
 			'name' => tra('Show Author'),
 			'type' => 'flag',
@@ -457,12 +436,6 @@ function prefs_feed_list() {
 			'default' => '',
 		),
 		'feed_forum_homepage' => array(
-			'name' => tra('Homepage URL'),
-			'type' => 'text',
-			'size' => '60',
-			'default' => '',
-		),
-		'feed_trackers_homepage' => array(
 			'name' => tra('Homepage URL'),
 			'type' => 'text',
 			'size' => '60',
@@ -552,12 +525,6 @@ function prefs_feed_list() {
 			'type' => 'text',
 			'size' => '80',
 			'default' => tra('Tiki RSS feed for forum: '),
-		),
-		'feed_trackers_title' => array(
-			'name' => tra('Title'),
-			'type' => 'text',
-			'size' => '80',
-			'default' => '',
 		),
 		'feed_tracker_title' => array(
 			'name' => tra('Title'),
@@ -652,13 +619,6 @@ function prefs_feed_list() {
 			'type' => 'textarea',
 			'size' => 2,
 			'default' => tra('Last posts to this forum. '),
-		),
-		'feed_trackers_desc' => array(
-			'name' => tra('Trackers RSS Description'),
-			'description' => tra('Description to be published as part of the RSS feed for trackers.'),
-			'type' => 'textarea',
-			'size' => 2,
-			'default' => '',
 		),
 		'feed_tracker_desc' => array(
 			'name' => tra('Individual trackers RSS Description'),

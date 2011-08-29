@@ -130,16 +130,6 @@
 				{preference name=feed_forum_homepage}
 			</div>
 
-			{preference name=feed_trackers}
-			<div class="adminoptionboxchild" id="feed_trackers_childcontainer">
-				<a href="tiki-trackers_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=feed_trackers_title}
-				{preference name=feed_trackers_desc}
-				{preference name=feed_trackers_max}
-				{preference name=feed_trackers_showAuthor}
-				{preference name=feed_trackers_homepage}
-			</div>
-
 			{preference name=feed_tracker}
 			<div class="adminoptionboxchild" id="feed_tracker_childcontainer">
 				<a href="tiki-tracker_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
