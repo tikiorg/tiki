@@ -1,4 +1,4 @@
-{title}{tr}Submissions{/tr}{/title}
+{title admpage="articles" help="Articles"}{tr}Submissions{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-edit_submission.php" _text="{tr}Edit New Submission{/tr}"}

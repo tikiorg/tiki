@@ -7,9 +7,9 @@
 {/if}
 
 {if $subId}
-	{title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title}{/title}
+	{title help="Articles" admpage="articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title}{/title}
 {else}
-	{title help="Articles"}{tr}Submit article{/tr}{/title}
+	{title help="Articles" admpage="articles"}{tr}Submit article{/tr}{/title}
 {/if}
 
 <div class="navbar">

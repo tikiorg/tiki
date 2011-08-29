@@ -3,7 +3,7 @@
 
 {include file='tiki-articles-js.tpl'}
 
-{title help="Articles"}
+{title help="Articles" admpage="articles"}
 	{if $articleId}
 		{tr}Edit:{/tr} {$title}
 	{else}

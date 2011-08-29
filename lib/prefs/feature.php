@@ -1176,9 +1176,15 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_submissions' => array(
 			'name' => tra('Submissions'),
+			'description' => tra('Submissions are sent in but need to be approved before they go live'),
 			'help' => 'Articles',
 			'type' => 'flag',
 			'default' => 'n',
+			'view' => 'tiki-list_submissions.php',
+			'module' => 'submission',
+			'permission' => array(
+				'textFilter' => 'submission',
+			),
 		),
 		'feature_cms_rankings' => array(
 			'name' => tra('Rankings'),
