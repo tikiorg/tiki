@@ -3177,7 +3177,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'file galleries',
 				'admin' => false,
-				'prefs' => array('feature_file_galleries'),
+				'prefs' => array('feature_file_galleries_batch'),
 				'scope' => 'object',
 			),
 			array(
