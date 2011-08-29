@@ -2305,10 +2305,11 @@ function prefs_feature_list($partial = false) {
         ),
         'feature_accounting' => array(
 			'name' => tra('Accounting'),
-			'description' => tra('Enable accounting system'),
+			'description' => tra('Double-entry accounting system'),
 			'help' => 'Accounting',
 			'type' => 'flag',
 			'default' => 'n',
+			'view' => 'tiki-accounting_books.php',
 			'tags' => array('experimental'),
 		),
 		'feature_syntax_highlighter' => array(
@@ -2334,7 +2335,7 @@ function prefs_feature_list($partial = false) {
 		'feature_dummy' => array(
 			'name' => tra('Dummy preference'),
 			'type' => 'text',
-			'size' => '15',
+			'size' => '15',			
 			'help' => 'Preferences',
 			'helpurl' => 'PreferencesURLtest', // 2011-08-28 ML: what does this do?
 			'keywords' => 'test bogus bogusorama',
@@ -2344,8 +2345,10 @@ function prefs_feature_list($partial = false) {
 			'warning' => tra('This is the warning.'),
 			'hint' => tra('This is the hint.'),
 			'shorthint' => tra('This is the shorthint.'),
-			
-			'tags' => array('experimental','expert'),
+			'tags' => array(
+				'experimental',
+				'expert',
+				),
 			'view' => 'tiki-listpages.php',
 			'plugin' => 'blog',
 			'dependencies' => array(
