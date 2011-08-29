@@ -30,6 +30,7 @@ function prefs_fgal_list() {
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
+			'dependencies' => array('feature_score'),			
 		),
 		'fgal_limit_hits_per_file' => array(
 			'name' => tra('Allow download limit per file'),

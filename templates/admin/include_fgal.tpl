@@ -76,12 +76,6 @@
 
 				{preference name='fgal_limit_hits_per_file'}
 				{preference name='fgal_prevent_negative_score'}
-				<div class="adminoptionboxchild" id="fgal_prevent_negative_score_childcontainer">
-					{if $prefs.feature_score ne 'y'}
-						<br />
-						{icon _id=information}{tr}Score is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-					{/if}
-				</div>
 
 				{preference name='fgal_allow_duplicates'}
 				{preference name='feature_file_galleries_batch'}
