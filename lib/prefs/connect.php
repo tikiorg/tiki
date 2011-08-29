@@ -14,6 +14,7 @@ function prefs_connect_list() {
 			'default' => 'n',	// to be enabled by default when working for Tiki 8
 			'tags' => array('experimental'),
 			'warning' => tra('Experimental. This feature is still under development.'),
+			'admin' => 'connect'
 		),
 		'connect_frequency' => array(
 			'name' => tra('Connection frequency'),
