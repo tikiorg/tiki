@@ -152,7 +152,7 @@
 
 			{preference name=feed_calendar}
 			<div class="adminoptionboxchild" id="feed_calendar_childcontainer">
-				<a href="tiki-calendar_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
+				<a href="tiki-calendars_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
 				{preference name=feed_calendar_title}
 				{preference name=feed_calendar_desc}
 				{preference name=feed_calendar_max}
