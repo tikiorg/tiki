@@ -73,6 +73,9 @@
 				</div>
 				{preference name='fgal_display_zip_option'}
 				{preference name='feature_webdav'}
+				
+				{preference name=feature_draw}
+				{preference name=feature_docs}				
 
 				{preference name='fgal_limit_hits_per_file'}
 				{preference name='fgal_prevent_negative_score'}
