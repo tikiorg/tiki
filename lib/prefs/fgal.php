@@ -27,9 +27,8 @@ function prefs_fgal_list() {
 		),
 		'fgal_prevent_negative_score' => array(
 			'name' => tra('Prevent download if score becomes negative'),
-			'type' => 'text',
+			'type' => 'flag',
 			'help' => 'File+Gallery+config',
-			'size' => 50,
 			'default' => 'n',
 		),
 		'fgal_limit_hits_per_file' => array(
