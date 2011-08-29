@@ -1,4 +1,4 @@
-{title help="Inter-User Messages"}{tr}Compose message{/tr}{/title}
+{title help="Inter-User Messages" admpage="messages"}{tr}Compose message{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}

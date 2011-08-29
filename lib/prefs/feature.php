@@ -207,7 +207,7 @@ function prefs_feature_list($partial = false) {
 			'view' => 'tiki-list_banners.php',
 			'admin' => 'ads',
 			'module' => 'banner',			
-			'permissions' => array(
+			'permission' => array(
 				'textFilter' => 'banner',
 			),
 		),
@@ -793,7 +793,13 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Inter-user+Messages',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
+			'admin' => 'messages',
+			'module' => 'message',
+			'view' => 'messu-mailbox.php',
+			'permission' => array(
+				'textFilter' => 'message',
+			),			
 		),
 		'feature_userfiles' => array(
 			'name' => tra('User Files'),

@@ -1,4 +1,4 @@
-{title help='Inter-User Messages' url='messu-broadcast.php'}{tr}Broadcast message{/tr}{/title}
+{title help='Inter-User Messages' url='messu-broadcast.php' admpage="messages"}{tr}Broadcast message{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}

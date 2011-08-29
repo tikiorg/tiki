@@ -1,4 +1,4 @@
-{title help="Inter-User Messages"}{tr}Message Archive{/tr}{/title}
+{title help="Inter-User Messages" admpage="messages"}{tr}Message Archive{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
