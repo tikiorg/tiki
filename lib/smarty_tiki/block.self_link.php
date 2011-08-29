@@ -48,25 +48,6 @@ function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 	$smarty->loadPlugin('smarty_function_query');
 
 	if ( is_array($params) ) {
-
-		if ( ! empty($params['_selected']) ) {
-			// Filter the condition
-			if (preg_match('/[a-zA-Z0-9 =<>!]+/',$params['_selected'])) {
-				$error_report = error_reporting(~E_ALL);
-				$return = eval ( '$selected =' . $params['_selected'].";" );
-				error_reporting($error_report);
-				if ($return !== FALSE) {
-					if ($selected) {
-						if (! empty($params['_selected_class']) ) {
-							$params['_class'] = $params['_selected_class'];
-						} else {
-							$params['_class'] = 'selected';
-						}
-					}
-				}
-			}
-		}
-
 		if ( ! isset($content) ) $content = '';
 		if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
 		if ( ! isset($params['_script']) ) $params['_script'] = '';
