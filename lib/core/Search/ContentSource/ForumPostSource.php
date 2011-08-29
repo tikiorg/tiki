@@ -18,7 +18,6 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 	{
 		return $this->db->table('tiki_comments')->fetchColumn('threadId', array(
 			'objectType' => 'forum',
-			'parentId' => 0,
 		));
 	}
 
@@ -45,6 +44,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'contributors' => $typeFactory->multivalue(array_unique($author)),
 
 			'post_content' => $typeFactory->wikitext($content),
+			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
 
 			'parent_object_type' => $typeFactory->identifier($comment['objectType']),
 			'parent_object_id' => $typeFactory->identifier($comment['object']),

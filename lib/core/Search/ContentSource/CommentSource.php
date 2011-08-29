@@ -45,6 +45,7 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 			'contributors' => $typeFactory->multivalue(array($comment['userName'])),
 
 			'comment_content' => $typeFactory->wikitext($comment['data']),
+			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
 
 			'parent_object_type' => $typeFactory->identifier($comment['objectType']),
 			'parent_object_id' => $typeFactory->identifier($comment['object']),
