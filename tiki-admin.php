@@ -530,6 +530,230 @@ if ($prefs['feature_version_checks'] == 'y') {
 	}
 }
 
+$icons = array(
+	"general" => array(
+		'position' => '0px 0px;',
+		'title' => tr('General'),
+	),
+	"features" => array(
+		'position' => '-100px 0px;',
+		'title' => tr('Features'),
+	),
+	"login" => array(
+		'position' => '-200px 0px;',
+		'title' => tr('Log in'),
+	),
+	"community" => array(
+		'position' => '-300px 0px;',
+		'title' => tr('Community'),
+	),
+	"profiles" => array(
+		'position' => '-400px 0px;',
+		'title' => tr('Profiles'),
+	),
+	"look" => array(
+		'position' => '-500px 0px;',
+		'title' => tr('Look & Feel'),
+	),
+	"i18n" => array(
+		'position' => '0px -100px;',
+		'title' => tr('i18n'),
+	),
+	"textarea" => array(
+		'position' => '-100px -100px;',
+		'title' => tr('Editing and Plugins'),
+	),
+	"module" => array(
+		'position' => '-200px -100px;',
+		'title' => tr('Module'),
+	),
+	"metatags" => array(
+		'position' => '-300px -100px;',
+		'title' => tr('Meta Tags'),
+	),
+	"performance" => array(
+		'position' => '-400px -100px;',
+		'title' => tr('Performance'),
+	),
+	"security" => array(
+		'position' => '-500px -100px;',
+		'title' => tr('Security'),
+	),
+	"comments" => array(
+		'position' => '0px -200px;',
+		'title' => tr('Comments'),
+	),
+	"rss" => array(
+		'position' => '-100px -200px;',
+		'title' => tr('Feeds'),
+	),
+	"connect" => array(
+		'position' => '-200px -200px;',
+		'title' => tr('Connect'),
+	),
+	"rating" => array(
+		'position' => '-300px -200px;',
+		'title' => tr('Rating'),
+	),
+	"wiki" => array(
+		'position' => '-400px -200px;',
+		'title' => tr('Wiki'),
+		'disabled' => $prefs['feature_wiki'] != 'y',
+	),
+	"fgal" => array(
+		'position' => '-500px -200px;',
+		'title' => tr('File Galleries'),
+		'disabled' => $prefs['feature_file_galleries'] != 'y',
+	),
+	"blogs" => array(
+		'position' => '0px -300px;',
+		'title' => tr('Blogs'),
+		'disabled' => $prefs['feature_blogs'] != 'y',
+	),
+	"gal" => array(
+		'position' => '-100px -300px;',
+		'title' => tr('Image Galleries'),
+		'disabled' => $prefs['feature_galleries'] != 'y',
+	),
+	"articles" => array(
+		'position' => '-200px -300px;',
+		'title' => tr('Articles'),
+		'disabled' => $prefs['feature_articles'] != 'y',
+	),
+	"forums" => array(
+		'position' => '-300px -300px;',
+		'title' => tr('Forums'),
+		'disabled' => $prefs['feature_forums'] != 'y',
+	),
+	"trackers" => array(
+		'position' => '-400px -300px;',
+		'title' => tr('Trackers'),
+		'disabled' => $prefs['feature_trackers'] != 'y',
+	),
+	"polls" => array(
+		'position' => '-500px -300px;',
+		'title' => tr('Polls'),
+		'disabled' => $prefs['feature_polls'] != 'y',
+	),
+	"calendar" => array(
+		'position' => '0px -400px;',
+		'title' => tr('Calendar'),
+		'disabled' => $prefs['feature_calendar'] != 'y',
+	),
+	"category" => array(
+		'position' => '-100px -400px;',
+		'title' => tr('Categories'),
+		'disabled' => $prefs['feature_categories'] != 'y',
+	),
+	"score" => array(
+		'position' => '-200px -400px;',
+		'title' => tr('Score'),
+		'disabled' => $prefs['feature_score'] != 'y',
+	),
+	"freetags" => array(
+		'position' => '-300px -400px;',
+		'title' => tr('Freetags'),
+		'disabled' => $prefs['feature_freetags'] != 'y',
+	),
+	"search" => array(
+		'position' => '-400px -400px;',
+		'title' => tr('Search'),
+		'disabled' => $prefs['feature_search'] != 'y',
+	),
+	"faqs" => array(
+		'position' => '-500px -400px;',
+		'title' => tr('FAQs'),
+		'disabled' => $prefs['feature_faqs'] != 'y',
+	),
+	"directory" => array(
+		'position' => '0px -500px;',
+		'title' => tr('Directory'),
+		'disabled' => $prefs['feature_directory'] != 'y',
+	),
+	"maps" => array(
+		'position' => '-100px -500px;',
+		'title' => tr('Maps'),
+		'disabled' => $prefs['feature_maps'] != 'y',
+	),
+	"gmap" => array(
+		'position' => '-200px -500px;',
+		'title' => tr('Google Maps'),
+		'disabled' => $prefs['feature_gmap'] != 'y',
+	),
+	"copyright" => array(
+		'position' => '-300px -500px;',
+		'title' => tr('Copyright'),
+		'disabled' => $prefs['feature_copyright'] != 'y',
+	),
+	"messages" => array(
+		'position' => '-400px -500px;',
+		'title' => tr('Messages'),
+		'disabled' => $prefs['feature_messages'] != 'y',
+	),
+	"userfiles" => array(
+		'position' => '-500px -500px;',
+		'title' => tr('User files'),
+		'disabled' => $prefs['feature_userfiles'] != 'y',
+	),
+	"webmail" => array(
+		'position' => '0px -600px;',
+		'title' => tr('Webmail'),
+		'disabled' => $prefs['feature_webmail'] != 'y',
+	),
+	"wysiwyg" => array(
+		'position' => '-100px -600px;',
+		'title' => tr('Wysiwyg'),
+		'disabled' => $prefs['feature_wysiwyg'] != 'y',
+	),
+	"ads" => array(
+		'position' => '-200px -600px;',
+		'title' => tr('Site Ads and Banners'),
+		'disabled' => $prefs['feature_banners'] != 'y',
+	),
+	"intertiki" => array(
+		'position' => '-300px -600px;',
+		'title' => tr('InterTiki'),
+		'disabled' => $prefs['feature_intertiki'] != 'y',
+	),
+	"semantic" => array(
+		'position' => '-400px -600px;',
+		'title' => tr('Semantic links'),
+		'disabled' => $prefs['feature_semantic'] != 'y',
+	),
+	"webservices" => array(
+		'position' => '-500px -600px;',
+		'title' => tr('Webservices'),
+		'disabled' => $prefs['feature_webservices'] != 'y',
+	),
+	"sefurl" => array(
+		'position' => '0px -700px;',
+		'title' => tr('Search engine friendly url'),
+		'disabled' => $prefs['feature_sefurl'] != 'y',
+	),
+	"video" => array(
+		'position' => '-100px -700px;',
+		'title' => tr('Video streaming integration'),
+		'disabled' => $prefs['feature_kaltura'] != 'y' && $prefs['feature_watershed'] != 'y',
+	),
+	"payment" => array(
+		'position' => '-200px -700px;',
+		'title' => tr('Payment'),
+		'disabled' => $prefs['payment_feature'] != 'y',
+	),
+	"socialnetworks" => array(
+		'position' => '-300px -700px;',
+		'title' => tr('Social networks'),
+		'disabled' => $prefs['feature_socialnetworks'] != 'y',
+	),
+	"share" => array(
+		'position' => '-400px -700px;',
+		'title' => tr('Share'),
+		'disabled' => $prefs['feature_share'] != 'y',
+	),
+);
+
+$smarty->assign('icons', $icons);
+
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
