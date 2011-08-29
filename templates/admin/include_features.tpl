@@ -67,6 +67,7 @@
 					<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 						{preference name=bigbluebutton_server_location}
 						{preference name=bigbluebutton_server_salt}
+						{preference name=wikiplugin_bigbluebutton}
 					</div>
 				{preference name=feature_perspective}
 				{preference name=feature_sefurl}
