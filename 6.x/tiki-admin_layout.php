@@ -43,13 +43,14 @@ $needed_elements = array(
 	'top_bar',
 	'bot_bar'
 );
-foreach($sections_enabled as $sec => $dat) foreach($needed_elements as $elmt) $needed_prefs[$sec . '_' . $elmt] = 'y';
+foreach($sections_enabled as $sec => $dat)
+	foreach($needed_elements as $elmt)
+		$needed_prefs[$sec . '_' . $elmt] = 'y';
 $tikilib->get_preferences($needed_elements, true, true);
 foreach($sections_enabled as $sec => $dat) {
 	$aux["name"] = $sec;
-	foreach($needed_elements as $elmt) $aux[$elmt] = $ {
-		$sec . '_' . $elmt
-	};
+	foreach($needed_elements as $elmt)
+		$aux[$elmt] = $prefs[$sec . '_' . $elmt];
 	$sections_smt[] = $aux;
 }
 $smarty->assign('sections', $sections_smt);
