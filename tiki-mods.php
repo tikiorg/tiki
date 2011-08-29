@@ -57,8 +57,8 @@ if (isset($_REQUEST['version']) and trim($_REQUEST['version'])) {
 	$versionarg = '&amp;version=' . urlencode($_REQUEST['version']);
 	$version = $_REQUEST['version'];
 } else {
-	$version = '3';
-	$versionarg = '&amp;version=3';
+	$version = '7';
+	$versionarg = '&amp;version=7';
 }
 $smarty->assign('versionarg', $versionarg);
 $smarty->assign('version', $version);
@@ -214,6 +214,16 @@ if (!empty($version)) { // filter out other versions
 					$mv = 6.0; // e.g. version= "Compatible with Tiki 6 releases." or "6+"
 					
 				}
+				
+				if (strpos($m->version[0], ' 7 ') !== false || strpos($m->version[0], ' 7+') !== false) {
+					$mv = 7.0; // e.g. version= "Compatible with Tiki 7 releases." or "7+"
+					
+				}
+
+				if (strpos($m->version[0], ' 8 ') !== false || strpos($m->version[0], ' 8+') !== false) {
+					$mv = 8.0; // e.g. version= "Compatible with Tiki 8 releases." or "8+"
+					
+				}				
 				if ($mv >= $v) {
 					$filtmod[$k] = $m;
 				}
