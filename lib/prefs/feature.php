@@ -347,9 +347,9 @@ function prefs_feature_list($partial = false) {
 			'module' => 'shoutbox',
 		),
 		'feature_maps' => array(
-			'name' => tra('Maps'),
+			'name' => tra('MapServer'),
 			'description' => tra('Navigable, interactive maps with user-selectable layers'),
-			'help' => 'Maps',
+			'help' => 'MapServer',
 			'warning' => tra('Requires MapServer'),
 			'type' => 'flag',
 			'default' => 'n',
