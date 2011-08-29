@@ -562,17 +562,12 @@ class PreferencesLib
 	 * @param bool $added shows current prefs not in defaults
 	 * @return array (prefname => array( 'cur' => current value, 'def' => default value ))
 	 */
-	// WARNING: tikilib contains a similar method with the same name
-	function getModifiedPreferences( $added = false ) {
+	// NOTE: tikilib contains a similar method called getModifiedPreferences
+	function getModifiedPrefsForExport( $added = false ) {
 		global $tikilib;
 
-		$prefsTable = $tikilib->table('tiki_preferences');	// get prefs direct from db
-		$res = $prefsTable->fetchAll( $prefsTable->all(), array() );
-		$prefs = array();
 
-		foreach ($res as $row) {
-			$prefs[$row['name']] = $row['value'];
-		}
+		$prefs = $tikilib->getModifiedPreferences();
 
 		$defaults = get_default_prefs();
 		$modified = array();

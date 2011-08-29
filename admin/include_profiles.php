@@ -181,7 +181,7 @@ else
 	
 $smarty->assign('tikiMajorVersion' ,substr($TWV->version,0,2));
 
-$modified = $prefslib->getModifiedPreferences( !empty($_REQUEST['export_show_added']) ? true : false );
+$modified = $prefslib->getModifiedPrefsForExport( !empty($_REQUEST['export_show_added']) ? true : false );
 $smarty->assign('modified_list', $modified);
 
 if (!isset($_REQUEST['export_type'])) {
