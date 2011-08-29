@@ -352,12 +352,19 @@ if ($prefs['feature_trackers'] == 'y') {
 }
 
 if ($prefs['feature_sefurl'] != 'y') {
-	$headerlib->add_js('$.service = function (controller, action) {
-		var url = "tiki-ajax_services.php?controller=" + controller;
-		if (action) {
-			url = url + "&action=" + action;
+	$headerlib->add_js('$.service = function (controller, action, query) {
+		if (! query) {
+			query = {};
 		}
-		return url;
+		query.controller = controller;
+
+		if (action) {
+			query.action = action;
+		}
+
+		return "tiki-ajax_services.php?" + $.map(query, function (v, k) {
+			return k + "=" + escape(v);
+		}).join("&");
 	}');
 }
 
