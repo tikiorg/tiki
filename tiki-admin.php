@@ -199,259 +199,384 @@ if( isset( $_REQUEST['lm_criteria'] ) ) {
 
 $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());
 
+$icons = array(
+	"general" => array(
+		'position' => '0px 0px;',
+		'icon' => 'pics/large/icon-configuration.png',
+		'title' => tr('General'),
+		'description' => tr('Global site configuration, date formats, admin password etc.'),
+		'help' => 'General+Admin',
+	),
+	"features" => array(
+		'position' => '-100px 0px;',
+		'icon' => 'pics/large/boot.png',
+		'title' => tr('Features'),
+		'description' => tr('Switches for major features'),
+		'help' => 'Features+Admin',
+	),
+	"login" => array(
+		'position' => '-200px 0px;',
+		'icon' => 'pics/large/stock_quit.png',
+		'title' => tr('Log in'),
+		'description' => tr('User registration, remember me cookie settings and authentication methods'),
+		'help' => 'Login+Config',
+	),
+	"community" => array(
+		'position' => '-300px 0px;',
+		'icon' => 'pics/large/users.png',
+		'title' => tr('Community'),
+		'description' => tr('User specific features and settings'),
+		'help' => 'Community',
+	),
+	"profiles" => array(
+		'position' => '-400px 0px;',
+		'icon' => 'pics/large/profiles.png',
+		'title' => tr('Profiles'),
+		'description' => tr('Repository configuration, browse and apply profiles'),
+		'help' => 'Profiles',
+	),
+	"look" => array(
+		'position' => '-500px 0px;',
+		'icon' => 'pics/large/gnome-settings-background.png',
+		'title' => tr('Look & Feel'),
+		'description' => tr('Theme selection, layout settings and UI effect controls'),
+		'help' => 'Look+and+Feel',
+	),
+	"i18n" => array(
+		'position' => '0px -100px;',
+		'icon' => 'pics/large/i18n.png',
+		'title' => tr('i18n'),
+		'description' => tr('Internationalization and localization - mulitlingual features'),
+		'help' => 'i18n',
+	),
+	"maps" => array(
+		'icon' => 'pics/large/maps.png',
+		'position' => '-100px -500px;',
+		'title' => tr('Maps'),
+		'disabled' => $prefs['feature_maps'] != 'y',
+		'description' => tr('Settings and features for maps'),
+		'help' => 'Maps',
+	),
+	"textarea" => array(
+		'position' => '-100px -100px;',
+		'icon' => 'pics/large/editing48x48.png',
+		'title' => tr('Editing and Plugins'),
+		'description' => tr('Text editing settings applicable to many areas. Plugin activation and plugin alias management'),
+		'help' => 'Text+area',
+	),
+	"module" => array(
+		'position' => '-200px -100px;',
+		'icon' => 'pics/large/display-capplet.png',
+		'title' => tr('Module'),
+		'description' => tr('Module appearance settings'),
+		'help' => 'Module',
+	),
+	"metatags" => array(
+		'position' => '-300px -100px;',
+		'icon' => 'pics/large/metatags.png',
+		'title' => tr('Meta Tags'),
+		'description' => tr('Information to include in the header of each page'),
+		'help' => 'Meta+Tags',
+	),
+	"performance" => array(
+		'position' => '-400px -100px;',
+		'icon' => 'pics/large/performance.png',
+		'title' => tr('Performance'),
+		'description' => tr('Server performance settings'),
+		'help' => 'Performance',
+	),
+	"security" => array(
+		'position' => '-500px -100px;',
+		'icon' => 'pics/large/gnome-lockscreen48x48.png',
+		'title' => tr('Security'),
+		'description' => tr('Site security settings'),
+		'help' => 'Security',
+	),
+	"comments" => array(
+		'position' => '0px -200px;',
+		'icon' => 'pics/large/comments.png',
+		'title' => tr('Comments'),
+		'description' => tr('Comments settings'),
+		'help' => 'Comments',
+	),
+	"rss" => array(
+		'position' => '-100px -200px;',
+		'icon' => 'pics/large/feed-icon.png',
+		'title' => tr('Feeds'),
+		'help' => 'Feeds User',
+	),
+	"connect" => array(
+		'position' => '-200px -200px;',
+		'icon' => 'pics/large/gnome-globe.png',
+		'title' => tr('Connect'),
+		'help' => 'Connect',
+	),
+	"rating" => array(
+		'position' => '-300px -200px;',
+		'icon' => 'pics/large/rating.png',
+		'title' => tr('Rating'),
+		'help' => 'Advanced+Rating',
+	),
+	"wiki" => array(
+		'position' => '-400px -200px;',
+		'icon' => 'pics/large/wikipages.png',
+		'title' => tr('Wiki'),
+		'disabled' => $prefs['feature_wiki'] != 'y',
+		'description' => tr('Wiki page settings and features'),
+		'help' => 'Wiki+Config',
+	),
+	"fgal" => array(
+		'position' => '-500px -200px;',
+		'icon' => 'pics/large/file-manager.png',
+		'title' => tr('File Galleries'),
+		'disabled' => $prefs['feature_file_galleries'] != 'y',
+		'description' => tr('Defaults and configuration for file galleries'),
+		'help' => 'File+Gallery',
+	),
+	"blogs" => array(
+		'position' => '0px -300px;',
+		'icon' => 'pics/large/blogs.png',
+		'title' => tr('Blogs'),
+		'disabled' => $prefs['feature_blogs'] != 'y',
+		'description' => tr('Settings for blogs'),
+		'help' => 'Blog',
+	),
+	"gal" => array(
+		'position' => '-100px -300px;',
+		'icon' => 'pics/large/stock_select-color.png',
+		'title' => tr('Image Galleries'),
+		'disabled' => $prefs['feature_galleries'] != 'y',
+		'description' => tr('Defaults and configuration for image galleries (will be phased out in favour of file galleries)'),
+		'help' => 'Image+Gallery',
+	),
+	"articles" => array(
+		'position' => '-200px -300px;',
+		'icon' => 'pics/large/stock_bold.png',
+		'title' => tr('Articles'),
+		'disabled' => $prefs['feature_articles'] != 'y',
+		'description' => tr('Settings and features for articles'),
+		'help' => 'Articles',
+	),
+	"forums" => array(
+		'icon' => 'pics/large/stock_index.png',
+		'position' => '-300px -300px;',
+		'title' => tr('Forums'),
+		'disabled' => $prefs['feature_forums'] != 'y',
+		'description' => tr('Settings and features for forums'),
+		'help' => 'Forum',
+	),
+	"trackers" => array(
+		'icon' => 'pics/large/gnome-settings-font.png',
+		'position' => '-400px -300px;',
+		'title' => tr('Trackers'),
+		'disabled' => $prefs['feature_trackers'] != 'y',
+		'description' => tr('Settings and features for trackers'),
+		'help' => 'Trackers',
+	),
+	"polls" => array(
+		'icon' => 'pics/large/stock_missing-image.png',
+		'position' => '-500px -300px;',
+		'title' => tr('Polls'),
+		'disabled' => $prefs['feature_polls'] != 'y',
+		'description' => tr('Settings and features for polls'),
+		'help' => 'Polls',
+	),
+	"calendar" => array(
+		'icon' => 'pics/large/date.png',
+		'position' => '0px -400px;',
+		'title' => tr('Calendar'),
+		'disabled' => $prefs['feature_calendar'] != 'y',
+		'description' => tr('Settings and features for calendars'),
+		'help' => 'Calendar',
+	),
+	"category" => array(
+		'icon' => 'pics/large/categories.png',
+		'position' => '-100px -400px;',
+		'title' => tr('Categories'),
+		'disabled' => $prefs['feature_categories'] != 'y',
+		'description' => tr('Settings and features for categories'),
+		'help' => 'Category',
+	),
+	"score" => array(
+		'icon' => 'pics/large/stock_about.png',
+		'position' => '-200px -400px;',
+		'title' => tr('Score'),
+		'disabled' => $prefs['feature_score'] != 'y',
+		'description' => tr('Values of actions for users rank score'),
+		'help' => 'Score',
+	),
+	"freetags" => array(
+		'icon' => 'pics/large/vcard.png',
+		'position' => '-300px -400px;',
+		'title' => tr('Freetags'),
+		'disabled' => $prefs['feature_freetags'] != 'y',
+		'description' => tr('Settings and features for freetags'),
+		'help' => 'Tags',
+	),
+	"search" => array(
+		'icon' => 'pics/large/xfce4-appfinder.png',
+		'position' => '-400px -400px;',
+		'title' => tr('Search'),
+		'disabled' => $prefs['feature_search'] != 'y',
+		'description' => tr('Search configuration'),
+		'help' => 'Search',
+	),
+	"faqs" => array(
+		'icon' => 'pics/large/stock_dialog_question.png',
+		'position' => '-500px -400px;',
+		'title' => tr('FAQs'),
+		'disabled' => $prefs['feature_faqs'] != 'y',
+		'description' => tr('Settings and features for FAQs'),
+		'help' => 'FAQ',
+	),
+	"directory" => array(
+		'icon' => 'pics/large/gnome-fs-server.png',
+		'position' => '0px -500px;',
+		'title' => tr('Directory'),
+		'disabled' => $prefs['feature_directory'] != 'y',
+		'description' => tr('Settings and features for directory of links'),
+		'help' => 'Directory',
+	),
+	"gmap" => array(
+		'icon' => 'pics/large/google_maps.png',
+		'position' => '-200px -500px;',
+		'title' => tr('Google Maps'),
+		'disabled' => $prefs['feature_gmap'] != 'y',
+		'description' => tr('Defaults and API key for Google Maps'),
+		'help' => 'gmap',
+	),
+	"copyright" => array(
+		'icon' => 'pics/large/copyright.png',
+		'position' => '-300px -500px;',
+		'title' => tr('Copyright'),
+		'disabled' => $prefs['feature_copyright'] != 'y',
+		'description' => tr('Site-wide copyright information'),
+		'help' => 'Copyright',
+	),
+	"messages" => array(
+		'icon' => 'pics/large/messages.png',
+		'position' => '-400px -500px;',
+		'title' => tr('Messages'),
+		'disabled' => $prefs['feature_messages'] != 'y',
+		'description' => tr('Message settings'),
+		'help' => 'Inter-User+Messages',
+	),
+	"userfiles" => array(
+		'icon' => 'pics/large/userfiles.png',
+		'position' => '-500px -500px;',
+		'title' => tr('User files'),
+		'disabled' => $prefs['feature_userfiles'] != 'y',
+		'description' => tr('User files settings'),
+		'help' => 'User+Files',
+	),
+	"webmail" => array(
+		'icon' => 'pics/large/evolution.png',
+		'position' => '0px -600px;',
+		'title' => tr('Webmail'),
+		'disabled' => $prefs['feature_webmail'] != 'y',
+		'description' => tr('Webmail settings'),
+		'help' => 'Webmail',
+	),
+	"wysiwyg" => array(
+		'icon' => 'pics/large/wysiwyg.png',
+		'position' => '-100px -600px;',
+		'title' => tr('Wysiwyg'),
+		'disabled' => $prefs['feature_wysiwyg'] != 'y',
+		'description' => tr('Options for WYSIWYG editor'),
+		'help' => 'Wysiwyg',
+	),
+	"ads" => array(
+		'icon' => 'pics/large/ads.png',
+		'position' => '-200px -600px;',
+		'title' => tr('Site Ads and Banners'),
+		'disabled' => $prefs['feature_banners'] != 'y',
+		'description' => tr('Banners are a common way to display advertisements and notices on a Web page.'),
+		'help' => 'Look+and+Feel',
+	),
+	"intertiki" => array(
+		'icon' => 'pics/large/intertiki.png',
+		'position' => '-300px -600px;',
+		'title' => tr('InterTiki'),
+		'disabled' => $prefs['feature_intertiki'] != 'y',
+		'description' => tr('Set up links between Tiki servers'),
+		'help' => 'InterTiki',
+	),
+	"semantic" => array(
+		'icon' => 'pics/large/semantic.png',
+		'position' => '-400px -600px;',
+		'title' => tr('Semantic links'),
+		'disabled' => $prefs['feature_semantic'] != 'y',
+		'description' => tr('Manage semantic wiki links'),
+		'help' => 'Semantic+Admin',
+	),
+	"webservices" => array(
+		'icon' => 'pics/large/webservices.png',
+		'position' => '-500px -600px;',
+		'title' => tr('Webservices'),
+		'disabled' => $prefs['feature_webservices'] != 'y',
+		'description' => tr('Register and manage web services'),
+		'help' => 'WebServices',
+	),
+	"sefurl" => array(
+		'icon' => 'pics/large/goto.png',
+		'position' => '0px -700px;',
+		'title' => tr('Search engine friendly url'),
+		'disabled' => $prefs['feature_sefurl'] != 'y',
+		'description' => tr('Search Engine Friendly URLs'),
+		'help' => 'Rewrite+Rules',
+	),
+	"video" => array(
+		'icon' => 'pics/large/gnome-camera-video-32.png',
+		'position' => '-100px -700px;',
+		'title' => tr('Video streaming integration'),
+		'disabled' => $prefs['feature_kaltura'] != 'y' && $prefs['feature_watershed'] != 'y',
+		'description' => tr('Video integration configuration'),
+		'help' => 'Kaltura+Config',
+	),
+	"payment" => array(
+		'icon' => 'pics/large/payment.png',
+		'position' => '-200px -700px;',
+		'title' => tr('Payment'),
+		'disabled' => $prefs['payment_feature'] != 'y',
+		'help' => 'Payment',
+	),
+	"socialnetworks" => array(
+		'icon' => 'pics/large/socialnetworks.png',
+		'position' => '-300px -700px;',
+		'title' => tr('Social networks'),
+		'disabled' => $prefs['feature_socialnetworks'] != 'y',
+		'description' => tr('Configure social networks integration'),
+		'help' => 'Social+Networks',
+	),
+	"share" => array(
+		'icon' => 'img/mytiki/stock_contact.png',
+		'position' => '-400px -700px;',
+		'title' => tr('Share'),
+		'disabled' => $prefs['feature_share'] != 'y',
+		'description' => tr('Configure share feature'),
+		'help' => 'share',
+	),
+	'wikiatt' => array(
+		'title' => tr('Wiki Attachments'),
+		'help' => 'Wiki+Config',
+	),
+	'plugins' => array(
+		'title' => tr('Plugin Alias'),
+		'description' => tr('Create shortcut syntaxes to plugins.'),
+		'help' => 'Plugin+Alias',
+	),
+);
+
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
-	if ($adminPage == 'features') {
-		$admintitle = tra('Features');
-		$description = tra('Enable/disable Tiki features here, but configure them elsewhere'); 
-		$helpUrl = 'Features+Admin';
-		include_once ('admin/include_features.php');
-	} else if ($adminPage == 'general') {
-		$admintitle = tra('General');
-		$description = tra('General preferences and settings');
-		$helpUrl = 'General+Admin';
-		include_once ('admin/include_general.php');
-	} else if ($adminPage == 'login') {
-		$admintitle = tra('Login');
-		$description = tra('User registration, login and authentication');
-		$helpUrl = 'Login+Config';
-		include_once ('admin/include_login.php');
-	} else if ($adminPage == 'wiki') {
-		$admintitle = tra('Wiki');
-		$description = tra('Wiki settings');
-		$helpUrl = 'Wiki+Config';
-		include_once ('admin/include_wiki.php');
-	} else if ($adminPage == 'wikiatt') {
-		$admintitle = tra('Wiki Attachments');
-		$description = tra('Wiki attachments');
-		$helpUrl = 'Wiki+Config';
-		include_once ('admin/include_wikiatt.php');
-	} else if ($adminPage == 'gal') {
-		$admintitle = tra('Image Galleries');
-		$description = tra('Image galleries');
-		$helpUrl = 'Image+Gallery';
-		include_once ('admin/include_gal.php');
-	} else if ($adminPage == 'fgal') {
-		$admintitle = tra('File Galleries');
-		$description = tra('File Galleries');
-		$helpUrl = 'File+Gallery';
-		include_once ('admin/include_fgal.php');
-	} else if ($adminPage == 'articles') {
-		$admintitle = tra('Articles');
-		$description = tra('Articles settings');
-		$helpUrl = 'Articles';
-		include_once ('admin/include_articles.php');
-	} else if ($adminPage == 'polls') {
-		$admintitle = tra('Polls');
-		$description = tra('Poll comments settings');
-		$helpUrl = 'Polls';
-		include_once ('admin/include_polls.php');
-	} else if ($adminPage == 'blogs') {
-		$admintitle = tra('Blogs');
-		$description = tra('Configuration options for all blogs on your site');
-		$helpUrl = 'Blog';
-		include_once ('admin/include_blogs.php');
-	} else if ($adminPage == 'forums') {
-		$admintitle = tra('Forums');
-		$description = tra('Forums settings');
-		$helpUrl = 'Forum';
-		include_once ('admin/include_forums.php');
-	} else if ($adminPage == 'faqs') {
-		$admintitle = tra('FAQs');
-		$description = tra('FAQ comments settings');
-		$helpUrl = 'FAQ';
-		include_once ('admin/include_faqs.php');
-	} else if ($adminPage == 'trackers') {
-		$admintitle = tra('Trackers');
-		$description = tra('Trackers settings');
-		$helpUrl = 'Trackers';
-		include_once ('admin/include_trackers.php');
-	} else if ($adminPage == 'webmail') {
-		$admintitle = tra('Webmail');
-		$description = tra('Webmail');
-		$helpUrl = 'Webmail';
-		include_once ('admin/include_webmail.php');
-	} else if ($adminPage == 'comments') {
-		$admintitle = tra('Comments');
-		$description = tra('Comments settings');
-		$helpUrl = 'Comments';
-		include_once ('admin/include_comments.php');
-	} else if ($adminPage == 'rss') {
-		$admintitle = tra('Feeds');
-		$description = tra('Feeds settings');
-		$helpUrl = 'Feeds User';
-		include_once ('admin/include_rss.php');
-	} else if ($adminPage == 'directory') {
-		$admintitle = tra('Directory');
-		$description = tra('Directory settings');
-		$helpUrl = 'Directory';
-		include_once ('admin/include_directory.php');
-	} else if ($adminPage == 'userfiles') {
-		$admintitle = tra('User Files');
-		$description = tra('User files');
-		$helpUrl = 'User+Files';
-		include_once ('admin/include_userfiles.php');
-	} else if ($adminPage == 'maps') {
-		$admintitle = tra('Maps');
-		$description = tra('Maps configuration');
-		$helpUrl = 'Maps';
-		include_once ('admin/include_maps.php');
-	} else if ($adminPage == 'metatags') {
-		$admintitle = tra('Meta Tags');
-		$description = tra('Meta Tags settings');
-		$helpUrl = 'Meta+Tags';
-		include_once ('admin/include_metatags.php');
-	} else if ($adminPage == 'performance') {
-		$admintitle = tra('Performance');
-		$description = tra('Speed & Performance');
-		$helpUrl = 'Performance';
-		include_once ('admin/include_performance.php');
-	} else if ($adminPage == 'security') {
-		$admintitle = tra('Security');
-		$description = tra('Security');
-		$helpUrl = 'Security';
-		include_once ('admin/include_security.php');
-	} else if ($adminPage == 'search') {
-		$admintitle = tra('Search');
-		$description = tra('Search settings');
-		$helpUrl = 'Search';
-		include_once ('admin/include_search.php');
-	} else if ($adminPage == 'score') {
-		$admintitle = tra('Score');
-		$description = tra('Score settings');
-		$helpUrl = 'Score';
-		include_once ('admin/include_score.php');
-	} else if ($adminPage == 'community') {
-		$admintitle = tra('Community');
-		$description = tra('Community settings');
-		$helpUrl = 'Community';
-		include_once ('admin/include_community.php');
-	} else if ($adminPage == 'messages') {
-		$admintitle = tra('Messages');
-		$description = tra('User Messages');
-		$helpUrl = 'Inter-User+Messages';
-		include_once ('admin/include_messages.php');
-	} else if ($adminPage == 'calendar') {
-		$admintitle = tra('Calendar');
-		$description = tra('Calendar settings');
-		$helpUrl = 'Calendar';
-		include_once ('admin/include_calendar.php');
-	} else if ($adminPage == 'intertiki') {
-		$admintitle = tra('Intertiki');
-		$description = tra('Intertiki settings');
-		$helpUrl = 'InterTiki';
-		include_once ('admin/include_intertiki.php');
-	} else if ($adminPage == 'freetags') {
-		$admintitle = tra('Freetags');
-		$description = tra('Freetags settings');
-		$helpUrl = 'Tags';
-		include_once ('admin/include_freetags.php');
-	} else if ($adminPage == 'gmap') {
-		$admintitle = tra('Google Maps');
-		$description = tra('Google Maps');
-		$helpUrl = 'gmap';
-		include_once ('admin/include_gmap.php');
-	} else if ($adminPage == 'i18n') {
-		$admintitle = tra('i18n');
-		$description = tra('Internationalization');
-		$helpUrl = 'i18n';
-		include_once ('admin/include_i18n.php');
-	} else if ($adminPage == 'wysiwyg') {
-		$admintitle = tra('wysiwyg');
-		$description = tra('Wysiwyg editor');
-		$helpUrl = 'Wysiwyg';
-		include_once ('admin/include_wysiwyg.php');
-	} else if ($adminPage == 'copyright') {
-		$admintitle = tra('Copyright');
-		$description = tra('Copyright management');
-		$helpUrl = 'Copyright';
-		include_once ('admin/include_copyright.php');
-	} else if ($adminPage == 'category') {
-		$admintitle = tra('Category');
-		$description = tra('Category');
-		$helpUrl = 'Category';
-		include_once ('admin/include_category.php');
-	} else if ($adminPage == 'module') {
-		$admintitle = tra('Module');
-		$description = tra('Module');
-		$helpUrl = 'Module';
-		include_once ('admin/include_module.php');
-	} else if ($adminPage == 'look') {
-		$admintitle = tra('Look & Feel');
-		$description = tra('Customize look and feel of your Tiki');
-		$helpUrl = 'Look+and+Feel';
-		include_once ('admin/include_look.php');
-	} else if ($adminPage == 'textarea') {
-		$admintitle = tra('Text area');
-		$description = tra('Text area');
-		$helpUrl = 'Text+area';
-		include_once ('admin/include_textarea.php');
-	} else if ($adminPage == 'ads') {
-		$admintitle = tra('Site Ads and Banners');
-		$description = tra('Configure Site Ads and Banners');
-		$helpUrl = 'Look+and+Feel';
-		include_once ('admin/include_ads.php');
-	} else if ($adminPage == 'profiles') {
-		$admintitle = tra('Profiles');
-		$description = tra('Install predefined configuration profiles and add-ons.');
-		$helpUrl = 'Profiles';
-		include_once ('admin/include_profiles.php');
-	} else if ($adminPage == 'plugins') {
-		$admintitle = tra('Plugin Alias');
-		$description = tra('Create shortcut syntaxes to plugins.');
-		$helpUrl = 'Plugin+Alias';
-		include_once ('admin/include_plugins.php');
-	} else if ($adminPage == 'semantic') {
-		$admintitle = tra('Semantic Wiki Links');
-		$description = tra('Manage semantic tokens used throughout the wiki.');
-		$helpUrl = 'Semantic+Admin';
-		include_once ('admin/include_semantic.php');
-	} else if ($adminPage == 'webservices') {
-		$admintitle = tra('Webservice Registration');
-		$description = tra('Discover and register web services to allow direct use in wiki pages.');
-		$helpUrl = 'WebServices';
-		include_once ('admin/include_webservices.php');
-	} else if ($adminPage == 'sefurl') {
-		$admintitle = tra('Search engine friendly url');
-		$description = tra('Search engine friendly url');
-		$helpUrl = 'Rewrite+Rules';
-		include_once ('admin/include_sefurl.php');
-	} else if ($adminPage == 'video') {
-		$admintitle = tra('Video');
-		$description = tra('Settings for video streaming integration');
-		$helpUrl = 'Kaltura+Config';
-		include_once ('admin/include_video.php');
-	} else if ($adminPage == 'connect') {
-		$admintitle = tra('Connect');
-		$description = tra('Connect');
-		$helpUrl = 'Connect';
-		include_once ('admin/include_connect.php');
-	} else if ($adminPage == 'rating') {
-		$admintitle = tra('Advanced Rating');
-		$description = tra('Advanced Rating');
-		$helpUrl = 'Advanced+Rating';
-		include_once ('admin/include_rating.php');
-	} else if ($adminPage == 'payment') {
-		$admintitle = tra('Payment');
-		$description = tra('Payment');
-		$helpUrl = 'Payment';
-		include_once ('admin/include_payment.php');
-	} else if ($adminPage == 'socialnetworks') {
-		$admintitle = tra('Social Networks');
-		$description = tra('Settings for social networks integration');
-		$helpUrl = 'Social+Networks';
-		include_once ('admin/include_socialnetworks.php');
-	} else if ($adminPage == 'share') {
-		$admintitle = tra('Share');
-		$description = tra('Settings for share preferences');
-		$helpUrl = 'share';
-		include_once ('admin/include_share.php');
-	} else {
-		$helpUrl = '';
-	}
-	$url = 'tiki-admin.php' . '?page=' . $adminPage;
-	if (!$helpUrl) {
-		$helpUrl = ucfirst($adminPage) . '+Config';
+	if (isset($icons[$adminPage])) {
+		$icon = $icons[$adminPage];
+
+		$admintitle = $icon['title'];
+		$description = isset($icon['description']) ? $icon['description'] : '';
+		$helpUrl = isset($icon['help']) ? $icon['help'] : '';
+		include_once ("admin/include_$adminPage.php");
+		$url = 'tiki-admin.php' . '?page=' . $adminPage;
 	}
 	$helpDescription = tr("Help on %0 Config", $admintitle);
 	
@@ -529,318 +654,6 @@ if ($prefs['feature_version_checks'] == 'y') {
 		}
 	}
 }
-
-$icons = array(
-	"general" => array(
-		'position' => '0px 0px;',
-		'icon' => 'pics/large/icon-configuration.png',
-		'title' => tr('General'),
-		'description' => tr('Global site configuration, date formats, admin password etc.'),
-	),
-	"features" => array(
-		'position' => '-100px 0px;',
-		'icon' => 'pics/large/boot.png',
-		'title' => tr('Features'),
-		'description' => tr('switches for major features'),
-	),
-	"login" => array(
-		'position' => '-200px 0px;',
-		'icon' => 'pics/large/stock_quit.png',
-		'title' => tr('Log in'),
-		'description' => tr('User registration, remember me cookie settings and authentication methods'),
-	),
-	"community" => array(
-		'position' => '-300px 0px;',
-		'icon' => 'pics/large/users.png',
-		'title' => tr('Community'),
-		'description' => tr('User specific features and settings'),
-	),
-	"profiles" => array(
-		'position' => '-400px 0px;',
-		'icon' => 'pics/large/profiles.png',
-		'title' => tr('Profiles'),
-		'description' => tr('Repository configuration, browse and apply profiles'),
-	),
-	"look" => array(
-		'position' => '-500px 0px;',
-		'icon' => 'pics/large/gnome-settings-background.png',
-		'title' => tr('Look & Feel'),
-		'description' => tr('Theme selection, layout settings and UI effect controls'),
-	),
-	"i18n" => array(
-		'position' => '0px -100px;',
-		'icon' => 'pics/large/i18n.png',
-		'title' => tr('i18n'),
-		'description' => tr('Internationalization and localization - mulitlingual features'),
-	),
-	"maps" => array(
-		'icon' => 'pics/large/maps.png',
-		'position' => '-100px -500px;',
-		'title' => tr('Maps'),
-		'disabled' => $prefs['feature_maps'] != 'y',
-		'description' => tr('Settings and features for maps'),
-	),
-	"textarea" => array(
-		'position' => '-100px -100px;',
-		'icon' => 'pics/large/editing48x48.png',
-		'title' => tr('Editing and Plugins'),
-		'description' => tr('Text editing settings applicable to many areas. Plugin activation and plugin alias management'),
-	),
-	"module" => array(
-		'position' => '-200px -100px;',
-		'icon' => 'pics/large/display-capplet.png',
-		'title' => tr('Module'),
-		'description' => tr('Module appearance settings'),
-	),
-	"metatags" => array(
-		'position' => '-300px -100px;',
-		'icon' => 'pics/large/metatags.png',
-		'title' => tr('Meta Tags'),
-		'description' => tr('Information to include in the header of each page'),
-	),
-	"performance" => array(
-		'position' => '-400px -100px;',
-		'icon' => 'pics/large/performance.png',
-		'title' => tr('Performance'),
-		'description' => tr('Server performance settings'),
-	),
-	"security" => array(
-		'position' => '-500px -100px;',
-		'icon' => 'pics/large/gnome-lockscreen48x48.png',
-		'title' => tr('Security'),
-		'description' => tr('Site security settings'),
-	),
-	"comments" => array(
-		'position' => '0px -200px;',
-		'icon' => 'pics/large/comments.png',
-		'title' => tr('Comments'),
-		'description' => tr('Comments settings'),
-	),
-	"rss" => array(
-		'position' => '-100px -200px;',
-		'icon' => 'pics/large/feed-icon.png',
-		'title' => tr('Feeds'),
-	),
-	"connect" => array(
-		'position' => '-200px -200px;',
-		'icon' => 'pics/large/gnome-globe.png',
-		'title' => tr('Connect'),
-	),
-	"rating" => array(
-		'position' => '-300px -200px;',
-		'icon' => 'pics/large/rating.png',
-		'title' => tr('Rating'),
-	),
-	"wiki" => array(
-		'position' => '-400px -200px;',
-		'icon' => 'pics/large/wikipages.png',
-		'title' => tr('Wiki'),
-		'disabled' => $prefs['feature_wiki'] != 'y',
-		'description' => tr('Wiki page settings and features'),
-	),
-	"fgal" => array(
-		'position' => '-500px -200px;',
-		'icon' => 'pics/large/file-manager.png',
-		'title' => tr('File Galleries'),
-		'disabled' => $prefs['feature_file_galleries'] != 'y',
-		'description' => tr('Defaults and configuration for file galleries'),
-	),
-	"blogs" => array(
-		'position' => '0px -300px;',
-		'icon' => 'pics/large/blogs.png',
-		'title' => tr('Blogs'),
-		'disabled' => $prefs['feature_blogs'] != 'y',
-		'description' => tr('Settings for blogs'),
-	),
-	"gal" => array(
-		'position' => '-100px -300px;',
-		'icon' => 'pics/large/stock_select-color.png',
-		'title' => tr('Image Galleries'),
-		'disabled' => $prefs['feature_galleries'] != 'y',
-		'description' => tr('Defaults and configuration for image galleries (will be phased out in favour of file galleries)'),
-	),
-	"articles" => array(
-		'position' => '-200px -300px;',
-		'icon' => 'pics/large/stock_bold.png',
-		'title' => tr('Articles'),
-		'disabled' => $prefs['feature_articles'] != 'y',
-		'description' => tr('Settings and features for articles'),
-	),
-	"forums" => array(
-		'icon' => 'pics/large/stock_index.png',
-		'position' => '-300px -300px;',
-		'title' => tr('Forums'),
-		'disabled' => $prefs['feature_forums'] != 'y',
-		'description' => tr('Settings and features for forums'),
-	),
-	"trackers" => array(
-		'icon' => 'pics/large/gnome-settings-font.png',
-		'position' => '-400px -300px;',
-		'title' => tr('Trackers'),
-		'disabled' => $prefs['feature_trackers'] != 'y',
-		'description' => tr('Settings and features for trackers'),
-	),
-	"polls" => array(
-		'icon' => 'pics/large/stock_missing-image.png',
-		'position' => '-500px -300px;',
-		'title' => tr('Polls'),
-		'disabled' => $prefs['feature_polls'] != 'y',
-		'description' => tr('Settings and features for polls'),
-	),
-	"calendar" => array(
-		'icon' => 'pics/large/date.png',
-		'position' => '0px -400px;',
-		'title' => tr('Calendar'),
-		'disabled' => $prefs['feature_calendar'] != 'y',
-		'description' => tr('Settings and features for calendars'),
-	),
-	"category" => array(
-		'icon' => 'pics/large/categories.png',
-		'position' => '-100px -400px;',
-		'title' => tr('Categories'),
-		'disabled' => $prefs['feature_categories'] != 'y',
-		'description' => tr('Settings and features for categories'),
-	),
-	"score" => array(
-		'icon' => 'pics/large/stock_about.png',
-		'position' => '-200px -400px;',
-		'title' => tr('Score'),
-		'disabled' => $prefs['feature_score'] != 'y',
-		'description' => tr('Values of actions for users rank score'),
-	),
-	"freetags" => array(
-		'icon' => 'pics/large/vcard.png',
-		'position' => '-300px -400px;',
-		'title' => tr('Freetags'),
-		'disabled' => $prefs['feature_freetags'] != 'y',
-		'description' => tr('Settings and features for freetags'),
-	),
-	"search" => array(
-		'icon' => 'pics/large/xfce4-appfinder.png',
-		'position' => '-400px -400px;',
-		'title' => tr('Search'),
-		'disabled' => $prefs['feature_search'] != 'y',
-		'description' => tr('Search configuration'),
-	),
-	"faqs" => array(
-		'icon' => 'pics/large/stock_dialog_question.png',
-		'position' => '-500px -400px;',
-		'title' => tr('FAQs'),
-		'disabled' => $prefs['feature_faqs'] != 'y',
-		'description' => tr('Settings and features for FAQs'),
-	),
-	"directory" => array(
-		'icon' => 'pics/large/gnome-fs-server.png',
-		'position' => '0px -500px;',
-		'title' => tr('Directory'),
-		'disabled' => $prefs['feature_directory'] != 'y',
-		'description' => tr('Settings and features for directory of links'),
-	),
-	"gmap" => array(
-		'icon' => 'pics/large/google_maps.png',
-		'position' => '-200px -500px;',
-		'title' => tr('Google Maps'),
-		'disabled' => $prefs['feature_gmap'] != 'y',
-		'description' => tr('Defaults and API key for Google Maps'),
-	),
-	"copyright" => array(
-		'icon' => 'pics/large/copyright.png',
-		'position' => '-300px -500px;',
-		'title' => tr('Copyright'),
-		'disabled' => $prefs['feature_copyright'] != 'y',
-		'description' => tr('Site-wide copyright information'),
-	),
-	"messages" => array(
-		'icon' => 'pics/large/messages.png',
-		'position' => '-400px -500px;',
-		'title' => tr('Messages'),
-		'disabled' => $prefs['feature_messages'] != 'y',
-		'description' => tr('Message settings'),
-	),
-	"userfiles" => array(
-		'icon' => 'pics/large/userfiles.png',
-		'position' => '-500px -500px;',
-		'title' => tr('User files'),
-		'disabled' => $prefs['feature_userfiles'] != 'y',
-		'description' => tr('User files settings'),
-	),
-	"webmail" => array(
-		'icon' => 'pics/large/evolution.png',
-		'position' => '0px -600px;',
-		'title' => tr('Webmail'),
-		'disabled' => $prefs['feature_webmail'] != 'y',
-		'description' => tr('Webmail settings'),
-	),
-	"wysiwyg" => array(
-		'icon' => 'pics/large/wysiwyg.png',
-		'position' => '-100px -600px;',
-		'title' => tr('Wysiwyg'),
-		'disabled' => $prefs['feature_wysiwyg'] != 'y',
-		'description' => tr('Options for WYSIWYG editor'),
-	),
-	"ads" => array(
-		'icon' => 'pics/large/ads.png',
-		'position' => '-200px -600px;',
-		'title' => tr('Site Ads and Banners'),
-		'disabled' => $prefs['feature_banners'] != 'y',
-		'description' => tr('Banners are a common way to display advertisements and notices on a Web page.'),
-	),
-	"intertiki" => array(
-		'icon' => 'pics/large/intertiki.png',
-		'position' => '-300px -600px;',
-		'title' => tr('InterTiki'),
-		'disabled' => $prefs['feature_intertiki'] != 'y',
-		'description' => tr('Set up links between Tiki servers'),
-	),
-	"semantic" => array(
-		'icon' => 'pics/large/semantic.png',
-		'position' => '-400px -600px;',
-		'title' => tr('Semantic links'),
-		'disabled' => $prefs['feature_semantic'] != 'y',
-		'description' => tr('Manage semantic wiki links'),
-	),
-	"webservices" => array(
-		'icon' => 'pics/large/webservices.png',
-		'position' => '-500px -600px;',
-		'title' => tr('Webservices'),
-		'disabled' => $prefs['feature_webservices'] != 'y',
-		'description' => tr('Register and manage web services'),
-	),
-	"sefurl" => array(
-		'icon' => 'pics/large/goto.png',
-		'position' => '0px -700px;',
-		'title' => tr('Search engine friendly url'),
-		'disabled' => $prefs['feature_sefurl'] != 'y',
-		'description' => tr('Search Engine Friendly URLs'),
-	),
-	"video" => array(
-		'icon' => 'pics/large/gnome-camera-video-32.png',
-		'position' => '-100px -700px;',
-		'title' => tr('Video streaming integration'),
-		'disabled' => $prefs['feature_kaltura'] != 'y' && $prefs['feature_watershed'] != 'y',
-		'description' => tr('Video integration configuration'),
-	),
-	"payment" => array(
-		'icon' => 'pics/large/payment.png',
-		'position' => '-200px -700px;',
-		'title' => tr('Payment'),
-		'disabled' => $prefs['payment_feature'] != 'y',
-	),
-	"socialnetworks" => array(
-		'icon' => 'pics/large/socialnetworks.png',
-		'position' => '-300px -700px;',
-		'title' => tr('Social networks'),
-		'disabled' => $prefs['feature_socialnetworks'] != 'y',
-		'description' => tr('Configure social networks integration'),
-	),
-	"share" => array(
-		'icon' => 'img/mytiki/stock_contact.png',
-		'position' => '-400px -700px;',
-		'title' => tr('Share'),
-		'disabled' => $prefs['feature_share'] != 'y',
-		'description' => tr('Configure share feature'),
-	),
-);
 
 $smarty->assign('icons', $icons);
 

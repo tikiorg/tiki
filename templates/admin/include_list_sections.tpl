@@ -11,14 +11,16 @@
 
 <div class="clearfix cbox-data">
 	{foreach from=$icons key=page item=info}
-		{if $info.disabled}
-			{assign var=class value="admbox off"}
-		{else}
-			{assign var=class value="admbox"}
+		{if $info.position}
+			{if $info.disabled}
+				{assign var=class value="admbox off"}
+			{else}
+				{assign var=class value="admbox"}
+			{/if}
+			{self_link page=$page _class=$class _style="background-image: url('pics/sprite/admin.fullpanel.png'); background-position: `$info.position`" _title=$info.title}
+				<img src="pics/trans.png" alt="{$info.title|escape}" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}" />
+				<span>{$info.title|escape}</span>
+			{/self_link}
 		{/if}
-		{self_link page=$page _class=$class _style="background-image: url('pics/sprite/admin.fullpanel.png'); background-position: `$info.position`" _title=$info.title}
-			<img src="pics/trans.png" alt="{$info.title|escape}" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}" />
-			<span>{$info.title|escape}</span>
-		{/self_link}
 	{/foreach}
 </div>
