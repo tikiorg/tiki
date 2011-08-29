@@ -7,7 +7,7 @@
 	{if $wiki_stats}{button _anchor="wiki_stats" _text="{tr}Wiki{/tr}"}{/if}
 	{if $igal_stats}{button _anchor="igal_stats" _text="{tr}Image galleries{/tr}"}{/if}
 	{if $fgal_stats}{button _anchor="fgal_stats" _text="{tr}File Galleries{/tr}"}{/if}
-	{if $cms_stats}{button _anchor="cms_stats" _text="{tr}CMS{/tr}"}{/if}
+	{if $cms_stats}{button _anchor="cms_stats" _text="{tr}Articles{/tr}"}{/if}
 	{if $forum_stats}{button _anchor="forum_stats" _text="{tr}Forums{/tr}"}{/if}
 	{if $blog_stats}{button _anchor="blog_stats" _text="{tr}Blogs{/tr}"}{/if}
 	{if $poll_stats}{button _anchor="poll_stats" _text="{tr}Polls{/tr}"}{/if}
@@ -155,7 +155,7 @@
 {/if}
 
 {if $cms_stats}
-	<h2 id="cms_stats">{tr}CMS Stats{/tr}</h2>
+	<h2 id="cms_stats">{tr}Articles Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
 	<table class="formcolor">
 		<tr class="{cycle}">

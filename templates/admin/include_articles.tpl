@@ -17,9 +17,9 @@
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
 
-	{tabset name="admin_cms"}
+	{tabset name="admin_articles"}
 		{tab name="{tr}General Settings{/tr}"}
-			<input type="hidden" name="cmsprefs" />
+			<input type="hidden" name="articlesprefs" />
 
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -63,7 +63,7 @@
 				{preference name=geo_locate_article}
 				{preference name=article_body_is_html}
 
-				<input type="hidden" name="cmsfeatures" />
+				<input type="hidden" name="articlesfeatures" />
 			</fieldset>
 			
 			<fieldset>

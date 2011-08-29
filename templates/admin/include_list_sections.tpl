@@ -1,3 +1,4 @@
+
 {* $Id$ *}
 {*
  * If you want to change this page, check http://tiki.org/AdministrationDev
@@ -47,7 +48,7 @@
 	
 	{self_link page="gal" _class="admbox" _style="background-image: url('pics/sprite/admin.fullpanel.png'); background-position: -100px -300px;" _selected="'`$prefs.feature_galleries`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Image Galleries{/tr}" title="{tr}Image Galleries{/tr}{if $prefs.feature_galleries ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Image Galleries{/tr}</span>{/self_link}
 
-	{self_link page="cms" _class="admbox" _style="background-image: url('pics/sprite/admin.fullpanel.png'); background-position: -200px -300px;" _selected="'`$prefs.feature_articles`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}{if $prefs.feature_articles ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Articles{/tr}</span>{/self_link}
+	{self_link page="articles" _class="admbox" _style="background-image: url('pics/sprite/admin.fullpanel.png'); background-position: -200px -300px;" _selected="'`$prefs.feature_articles`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}{if $prefs.feature_articles ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Articles{/tr}</span>{/self_link}
 
 	{self_link page="forums" _class="admbox" _style="background-image: url('pics/sprite/admin.fullpanel.png'); background-position: -300px -300px;" _selected="'`$prefs.feature_forums`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}{if $prefs.feature_forums ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Forums{/tr}</span>{/self_link}
 
