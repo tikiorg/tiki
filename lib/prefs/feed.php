@@ -58,14 +58,14 @@ function prefs_feed_list() {
 		),
 
 		'feed_img' => array(
-			'name' => tra('Image path'),
+			'name' => tra('Feed Image path'),
 			'description' => tra('Specifies a GIF, JPEG or PNG image that can be displayed with the feed.'),
 			'type' => 'text',
 			'size' => '40',
 			'default' => 'img/tiki/Tiki_WCG.png',
 		),
 		'feed_language' => array(
-			'name' => tra('Language'),
+			'name' => tra('Feed Language'),
 			'type' => 'text',
 			'size' => '10',
 			'default' =>  'en-us',
@@ -78,7 +78,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_cache_time' => array(
-			'name' => tra('Caching time'),
+			'name' => tra('Feed Caching time'),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
@@ -88,7 +88,7 @@ function prefs_feed_list() {
 			'detail' => tra('Enabling caching will override existing permissions - all content will be public. Enable this option __only__ if your syndicated content should be public.'),
 		),
 		'feed_articles' => array(
-			'name' => tra('Articles'),
+			'name' => tra('RSS for articles'),
 			'description' => tra('RSS feeds for articles'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -98,7 +98,7 @@ function prefs_feed_list() {
 			'tags' => array('basic'),
 		),
 		'feed_blogs' => array(
-			'name' => tra('Blogs'),
+			'name' => tra('RSS for blogs'),
 			'description' => tra('RSS feeds for blogs'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -108,7 +108,7 @@ function prefs_feed_list() {
 			'tags' => array('basic'),
 		),
 		'feed_blog' => array(
-			'name' => tra('Individual Blogs'),
+			'name' => tra('RSS for individual blogs'),
 			'description' => tra('RSS feed for individual blogs'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -118,7 +118,7 @@ function prefs_feed_list() {
 			'tags' => array('basic'),
 		),
 		'feed_image_galleries' => array(
-			'name' => tra('Image galleries'),
+			'name' => tra('RSS for image galleries'),
 			'description' => tra('RSS feed for image galleries'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -127,7 +127,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_image_gallery' => array(
-			'name' => tra('Individual Image galleries'),
+			'name' => tra('RSS for individual image galleries'),
 			'description' => tra('RSS feed for individual image galleries'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -136,7 +136,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_file_galleries' => array(
-			'name' => tra('File Galleries'),
+			'name' => tra('RSS for file galleries'),
 			'description' => tra('RSS feed for file galleries'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -145,7 +145,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_file_gallery' => array(
-			'name' => tra('Individual file galleries'),
+			'name' => tra('RSS for individual file galleries'),
 			'description' => tra('RSS feed for individual file galleries'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -154,7 +154,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_wiki' => array(
-			'name' => tra('Wiki'),
+			'name' => tra('RSS for wiki pages'),
 			'description' => tra('RSS feed for wiki'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -163,7 +163,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_forums' => array(
-			'name' => tra('Forums'),
+			'name' => tra('RSS for forums'),
 			'description' => tra('RSS feed for forums'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -173,7 +173,7 @@ function prefs_feed_list() {
 			'tags' => array('basic'),
 		),
 		'feed_forum' => array(
-			'name' => tra('Individual Forums'),
+			'name' => tra('RSS for individual forums'),
 			'description' => tra('RSS feed for individual forums'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -183,7 +183,7 @@ function prefs_feed_list() {
 			'tags' => array('basic'),
 		),
 		'feed_trackers' => array(
-			'name' => tra('Trackers'),
+			'name' => tra('RSS for trackers'),
 			'description' => tra('RSS feed for trackers'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -192,8 +192,8 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_tracker' => array(
-			'name' => tra('Individual trackers items'),
-			'description' => tra('RSS feed for individual trackers items'),
+			'name' => tra('RSS per tracker'),
+			'description' => tra('RSS feed per tracker'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_trackers',
@@ -201,7 +201,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_calendar' => array(
-			'name' => tra('Calendar events'),
+			'name' => tra('RSS for calendar events'),
 			'description' => tra('RSS feed for calendar events'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -211,7 +211,7 @@ function prefs_feed_list() {
 			'tags' => array('basic'),
 		),
 		'feed_directories' => array(
-			'name' => tra('Directories'),
+			'name' => tra('RSS for directories'),
 			'description' => tra('RSS feed for directories'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -220,7 +220,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_maps' => array(
-			'name' => tra('Maps'),
+			'name' => tra('RSS for maps'),
 			'description' => tra('RSS feed for maps'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -229,7 +229,7 @@ function prefs_feed_list() {
 			'default' => 'n',
 		),
 		'feed_shoutbox' => array(
-			'name' => tra('Shoutbox'),
+			'name' => tra('RSS for shoutbox'),
 			'description' => tra('RSS feed for shoutbox'),
 			'type' => 'flag',
 			'dependencies' => array(
