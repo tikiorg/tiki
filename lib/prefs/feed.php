@@ -385,7 +385,7 @@ function prefs_feed_list() {
 		'feed_shoutbox_showAuthor' => array(
 			'name' => tra('Show Author'),
 			'type' => 'flag',
-			'default' => '',
+			'default' => 'n',
 		),
 		'feed_articles_homepage' => array(
 			'name' => tra('Homepage URL'),
