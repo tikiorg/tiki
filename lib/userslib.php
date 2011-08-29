@@ -2951,8 +2951,8 @@ class UsersLib extends TikiLib
 				'description' => tra('Can edit translations and create new languages'),
 				'level' => 'editors',
 				'type' => 'tiki',
-				'prefs' => array('feature_multilingual'),				
 				'admin' => false,
+				'prefs' => array('feature_multilingual'),				
 				'scope' => 'global',
 			),
 			array(
@@ -2987,9 +2987,8 @@ class UsersLib extends TikiLib
 				'description' => tra('Can search'),
 				'level' => 'basic',
 				'type' => 'tiki',
-				'prefs' => array('feature_search'),				
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_search'),
 				'scope' => 'global',
 			),
 			array(
