@@ -2334,6 +2334,7 @@ function prefs_feature_list($partial = false) {
 		'feature_dummy' => array(
 			'name' => tra('Dummy preference'),
 			'type' => 'text',
+			'size' => '15',
 			'help' => 'Preferences',
 			'helpurl' => 'PreferencesURLtest', // 2011-08-28 ML: what does this do?
 			'keywords' => 'test bogus bogusorama',
