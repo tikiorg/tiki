@@ -14,6 +14,8 @@
 
 {self_link page="i18n" _class="icon tips" _title="{tr}i18n{/tr}|{tr}Internationalization and localization - mulitlingual features{/tr}"}{icon _id="pics/large/i18n.png" alt="{tr}i18n{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
+{self_link page="maps" _class="icon tips" _title="{tr}Maps{/tr}|{tr}Settings and features for maps{/tr}"}{icon _id="pics/large/maps.png" alt="{tr}Maps{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
 {self_link page="textarea" _class="icon tips" _title="{tr}Editing and Plugins{/tr}|{tr}Text editing settings applicable to many areas. Plugin activation and plugin alias management{/tr}"}{icon _id="pics/large/editing48x48.png" alt="{tr}Editing and Plugins{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}      
 
 {self_link page="module" _class="icon tips" _title="{tr}Module{/tr}|{tr}Module appearance settings{/tr}"}{icon _id="pics/large/display-capplet.png" alt="{tr}Module{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}   
@@ -90,10 +92,6 @@
 
 {if $prefs.feature_directory eq 'y'}
 {self_link page="directory" _class="icon tips" _title="{tr}Directory{/tr}|{tr}Settings and features for directory of links{/tr}"}{icon _id="pics/large/gnome-fs-server.png" alt="{tr}Directory{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
-{/if}
-
-{if $prefs.feature_maps eq 'y'}
-{self_link page="maps" _class="icon tips" _title="{tr}Maps{/tr}|{tr}Settings and features for maps{/tr}"}{icon _id="pics/large/maps.png" alt="{tr}Maps{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
 {if $prefs.feature_gmap eq 'y'}

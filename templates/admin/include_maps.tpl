@@ -12,7 +12,9 @@
 	
 	<fieldset class="admin">			
 		<legend>{tr}MapServer settings{/tr}</legend>
-		<div class="adminoptionbox">
+		
+	{preference name=feature_maps}
+		<div class="adminoptionboxchild" id="feature_maps_childcontainer">
 			{if $map_error neq ''}
 				{remarksbox type=warning title="{tr}Warning{/tr}"}{$map_error}{/remarksbox}
 			{/if}
@@ -23,8 +25,8 @@
 			{preference name=gdaltindex}
 			{preference name=ogr2ogr}
 			{preference name=mapzone}
-		</div>
-
+	</div>			
+		
 		<div class="heading input_submit_container" style="text-align: center">
 			<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
 			<input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" />

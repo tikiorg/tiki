@@ -559,6 +559,10 @@ $icons = array(
 		'position' => '0px -100px;',
 		'title' => tr('i18n'),
 	),
+	"maps" => array(
+		'position' => '-100px -500px;',
+		'title' => tr('Maps'),
+	),	
 	"textarea" => array(
 		'position' => '-100px -100px;',
 		'title' => tr('Editing and Plugins'),
@@ -669,11 +673,6 @@ $icons = array(
 		'position' => '0px -500px;',
 		'title' => tr('Directory'),
 		'disabled' => $prefs['feature_directory'] != 'y',
-	),
-	"maps" => array(
-		'position' => '-100px -500px;',
-		'title' => tr('Maps'),
-		'disabled' => $prefs['feature_maps'] != 'y',
 	),
 	"gmap" => array(
 		'position' => '-200px -500px;',

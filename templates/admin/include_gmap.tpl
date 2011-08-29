@@ -19,6 +19,7 @@
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
 				{preference name=gmap_key}
+				{preference name=wikiplugin_googlemap}
 			</div>
 		</div>
 		<fieldset>
