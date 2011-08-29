@@ -60,6 +60,8 @@
 
 				if ($(form.action).val() === 'export_fields') {
 					$(form).serviceDialog({
+						controller: 'tracker',
+						action: 'export_fields',
 						title: tr('Export'),
 						data: $(form).serialize(),
 						load: function () {
@@ -67,7 +69,7 @@
 						}
 					});
 				} else {
-					$.ajax($(form).attr('href'), {
+					$.ajax($(form).attr('action'), {
 						type: 'POST',
 						data: $(form).serialize(),
 						dataType: 'json',
