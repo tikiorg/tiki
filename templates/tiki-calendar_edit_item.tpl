@@ -1037,7 +1037,7 @@
 					{/if}
 				</td>
 			</tr>
-			{if $groupforalert ne ''}
+			{if !empty($groupforalert)}
 				{if $showeachuser eq 'y'}
 					<tr>
 						<td>
@@ -1124,6 +1124,7 @@
 							" style="width:90%;" />
 						{/if}
 					{else}
+						{assign var='in_particip' value='n'}
 						{foreach item=ppl from=$calitem.participants}
 							{$ppl.name|userlink} 
 							{if $listroles[$ppl.role]}

@@ -179,16 +179,20 @@ $('#calendar').fullCalendar({
 			defaultView: {{if $prefs.calendar_view_mode === 'week'}}'agendaWeek'{{else if $prefs.calendar_view_mode === 'day'}}'agendaDay'{{else}}'month'{{/if}},
 			eventAfterRender : function( event, element, view ) {
 				element.attr('title',event.title +'|'+event.description);
-				element.cluetip({arrows: true, splitTitle: '|'});
+				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
 			}
 });
 {/jq}
 
 <style type='text/css'>
   #calendar {
-    width: 90%;
-    margin: 0 auto;
-    }
+		width: 90%;
+		margin: 0 auto;
+	}
+	/* Fix pb with DatePicker */
+	.ui-datepicker {
+		z-index:9999 !important;
+	}
 </style>
 <div id='calendar'></div>
 {/if}

@@ -189,8 +189,8 @@ foreach($listevents as $event) {
 											'start' => $event['date_start'],
 											'end' => $event['date_end'],
 											'editable' => false,
-											'color' => $cals_info['data'][$event['calendarId']]['custombgcolor'],
-											'textColor' => $cals_info['data'][$event['calendarId']]['customfgcolor']);
+											'color' => '#'.$cals_info['data'][$event['calendarId']]['custombgcolor'],
+											'textColor' => '#'.$cals_info['data'][$event['calendarId']]['customfgcolor']);
 }
 
 echo json_encode($events);
