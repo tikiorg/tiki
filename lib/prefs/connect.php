@@ -12,7 +12,7 @@ function prefs_connect_list() {
 			'type' => 'flag',
             'description' => tra('Connect your Tiki with the community by sending anonymised statistical data to tiki.org'),
 			'default' => 'n',	// to be enabled by default when working for Tiki 8
-			'tags' => array('experimental'),
+			'tags' => array('experimental', 'basic'),
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'admin' => 'connect'
 		),
@@ -49,6 +49,7 @@ function prefs_connect_list() {
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'connect_site_title' => array(
 			'name' => tra('Site Title'),
@@ -56,6 +57,7 @@ function prefs_connect_list() {
 			'type' => 'text',
 			'dependencies' => 'connect_send_info',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'connect_site_email' => array(
 			'name' => tra('Email Contact'),
@@ -63,6 +65,7 @@ function prefs_connect_list() {
 			'type' => 'text',
 			'dependencies' => 'connect_send_info',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'connect_site_url' => array(
 			'name' => tra('URL'),
@@ -70,6 +73,7 @@ function prefs_connect_list() {
 			'type' => 'text',
 			'dependencies' => 'connect_send_info',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'connect_site_keywords' => array(
 			'name' => tra('Key Words'),
@@ -77,6 +81,7 @@ function prefs_connect_list() {
 			'type' => 'textarea',
 			'dependencies' => 'connect_send_info',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'connect_site_location' => array(
 			'name' => tra('Site Location'),
@@ -85,6 +90,7 @@ function prefs_connect_list() {
 			'size' => 60,
 			'dependencies' => 'connect_send_info',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'connect_send_anonymous_info' => array(
 			'name' => tra('Send Usage Information'),

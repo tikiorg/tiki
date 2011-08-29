@@ -12,6 +12,8 @@ class TikiConnect
 
 	private $privatePrefs = array(
 		'gmap_key',
+		'recaptcha_pubkey',
+		'recaptcha_privkey',
 	);
 
 	// preferences that we should ask to collect
@@ -23,11 +25,16 @@ class TikiConnect
 		'connect_site_location',
 		'connect_site_title',
 		'connect_site_url',
+		'feature_site_report_email',
+		'fgal_use_dir',
 		'gmap_defaultx',
 		'gmap_defaulty',
 		'header_custom_js',
+		'sender_email',
+		'sitemycode',
 		'sitesubtitle',
 		'sitetitle',
+		't_use_dir',
 	);
 
 	private $connectTable = null;
@@ -47,9 +54,9 @@ class TikiConnect
 		$info = array( 'version' => $prefs['tiki_release'] );
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
-			TikiLib::lib('tiki')->invalidateModifiedPreferencesCaches();
-			$prefslib = TikiLib::lib('prefs');
-			$modifiedPrefs = $prefslib->getModifiedPreferences();
+			$tikilib = TikiLib::lib('tiki');
+			$tikilib->invalidateModifiedPreferencesCaches();
+			$modifiedPrefs = $tikilib->getModifiedPreferences();
 
 			// remove the non-anonymous values
 			foreach ( $this->privatePrefs as $p ) {
@@ -58,9 +65,6 @@ class TikiConnect
 			// remove the protected values
 			foreach ( $this->protectedPrefs as $p ) {
 				unset($modifiedPrefs[$p]);
-			}
-			foreach ($modifiedPrefs as &$p) {
-				$p = $p['cur'];	// remove the defaults
 			}
 			$info['prefs'] = $modifiedPrefs;
 			// get all table row counts
