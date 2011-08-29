@@ -2421,7 +2421,7 @@ class Comments extends TikiLib
 		$result = $comments->fetchAll($comments->all(), array(
 			'threadId' => $threadOrParent,
 		));
-		foreach ($result as $row) {
+		foreach ($result as $res) {
 			if ($res['objectType'] == 'forum') {
 				$this->remove_object('forum post', $res['threadId']);
 				if ($prefs['feature_actionlog'] == 'y') {
