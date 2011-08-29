@@ -400,7 +400,7 @@
 		<div style="height:400px;overflow:auto;">
 			<div class="navbar">
 				{listfilter selectors='#module_list li'}
-				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if isset($module_list_show_all)} checked="checked"{/if} />
+				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if $module_list_show_all} checked="checked"{/if} />
 				<label for="module_list_show_all">{tr}Show all modules{/tr}</label>
 			</div>
 			<ul id="module_list">
