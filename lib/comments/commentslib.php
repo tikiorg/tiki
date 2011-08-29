@@ -2460,6 +2460,11 @@ class Comments extends TikiLib
 			'threadId' => (int) $threadId,
 		));
 
+		// Update search index after deletion is done
+		foreach ($result as $res) {
+			$this->update_index($res['objectType'], $res['threadId']);
+		}
+
 		return true;
 	}
 
@@ -2792,16 +2797,17 @@ class Comments extends TikiLib
 	private function update_index($type, $threadId, $parentId = null) {
 		require_once('lib/search/refresh-functions.php');
 
-		refresh_index('comments', $threadId);
-
 		if ($type == 'forum') {
 			$type = 'forum post';
+
+			refresh_index($type, $threadId);
 
 			$root = $this->find_root($parentId ? $parentId : $threadId);
 			refresh_index($type, $root);
 
 			return $type;
 		} else {
+			refresh_index('comments', $threadId);
 			return $type.' comment';
 		}
 	}
