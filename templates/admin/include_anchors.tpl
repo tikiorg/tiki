@@ -49,7 +49,7 @@
 {/if}
 
 {if $prefs.feature_articles eq 'y'}
-{self_link page="cms" _class="icon tips" _title="{tr}Articles{/tr}|{tr}Settings and features for articles{/tr}"}{icon _id="pics/large/stock_bold.png" alt="{tr}Articles{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="articles" _class="icon tips" _title="{tr}Articles{/tr}|{tr}Settings and features for articles{/tr}"}{icon _id="pics/large/stock_bold.png" alt="{tr}Articles{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
 {if $prefs.feature_forums eq 'y'}

@@ -105,7 +105,7 @@
 {* Determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
 {if in_array($adminpage, array("features", "general", "login", "wiki",
-"gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs",
+"gal", "fgal", "articles", "polls", "search", "blogs", "forums", "faqs",
 "trackers", "webmail", "comments", "rss", "directory", "userfiles", "maps",
 "metatags", "performance", "security", "wikiatt", "score", "community", "messages",
 "calendar", "intertiki", "video", "freetags", "gmap",

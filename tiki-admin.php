@@ -236,11 +236,11 @@ if (isset($_REQUEST['page'])) {
 		$description = tra('File Galleries');
 		$helpUrl = 'File+Gallery';
 		include_once ('admin/include_fgal.php');
-	} else if ($adminPage == 'cms') {
+	} else if ($adminPage == 'articles') {
 		$admintitle = tra('Articles');
-		$description = tra('Article/CMS settings');
+		$description = tra('Articles settings');
 		$helpUrl = 'Articles';
-		include_once ('admin/include_cms.php');
+		include_once ('admin/include_articles.php');
 	} else if ($adminPage == 'polls') {
 		$admintitle = tra('Polls');
 		$description = tra('Poll comments settings');
