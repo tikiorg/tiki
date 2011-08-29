@@ -12,7 +12,7 @@
 	</div>
 {/if}
 
-<form method="post" action="tiki-admin.php?page=cms">
+<form method="post" action="tiki-admin.php?page=articles">
 	<div class="input_submit_container clear" style="text-align: right;">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
