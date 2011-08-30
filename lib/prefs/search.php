@@ -101,8 +101,8 @@ function prefs_search_list() {
 			'default' => 'n',
 		),
 		'search_forum_deepindexing' => array(
-			'name' => tra('Index forum posts with reply content'),
-			'description' => tra('If enabled, forum posts will be indexed with the content of replies included'),
+			'name' => tra('Index forum replies together with root post'),
+			'description' => tra('If enabled, forum replies will be indexed together with the root post as a single document instead of being separately indexed'),
 			'type' => 'flag',
 			'default' => 'y',
 		), 

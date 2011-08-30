@@ -2788,11 +2788,14 @@ class Comments extends TikiLib
 
 	private function update_index($type, $threadId, $parentId = null) {
 		require_once('lib/search/refresh-functions.php');
+		global $prefs;
 
 		if ($type == 'forum') {
 			$type = 'forum post';
 
-			refresh_index($type, $threadId);
+			if ($prefs['search_forum_deepindexing'] != 'y') {
+				refresh_index($type, $threadId);
+			}
 
 			$root = $this->find_root($parentId ? $parentId : $threadId);
 			refresh_index($type, $root);

@@ -16,9 +16,13 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_comments')->fetchColumn('threadId', array(
-			'objectType' => 'forum',
-		));
+		global $prefs;
+		if ($prefs['search_forum_deepindexing'] == 'y') {
+			$filters = array('objectType' => 'forum', 'parentId' => 0);
+		} else {
+			$filters = array('objectType' => 'forum');
+		}
+		return $this->db->table('tiki_comments')->fetchColumn('threadId', $filters);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
