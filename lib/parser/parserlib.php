@@ -2023,8 +2023,10 @@ if( \$('#$id') ) {
 						$value = $user;
 						break;
 					case 'page':
-						$value = $options['page'];
-						break;
+						if (!empty($options['page'])) {
+							$value = $options['page'];
+							break;
+						}
 					default:
 						if( isset($_GET[$name]) )
 							$value = $_GET[$name];
