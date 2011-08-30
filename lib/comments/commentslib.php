@@ -725,7 +725,6 @@ class Comments extends TikiLib
 			$join .= 'left join `tiki_comments` tca on (tca.`parentId`=a.`threadId` or (tca.`parentId`=0 and tca.`threadId`=a.`threadId`))left join `tiki_forum_attachments` tfa on (tfa.`threadId`=tca.`threadId`)';
 		}
 
-		$ret = array();
 		$query = 
 			$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
@@ -863,7 +862,6 @@ class Comments extends TikiLib
 			$forumId = $forums->insert($data);
 		}
 
-		global $prefs;
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('forums', $forumId);
 
@@ -887,8 +885,6 @@ class Comments extends TikiLib
 	}
 
 	function list_forums($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find = '') {
-		global $user;
-
 		$bindvars=array();
 
 		$categlib = TikiLib::lib('categ');
@@ -1447,8 +1443,6 @@ class Comments extends TikiLib
 
 		$ret = array();
 
-		global $userlib;
-
 		while ($res = $result->fetchRow()) {
 			$res = $this->get_comment( $res['threadId'] );
 
@@ -1557,7 +1551,7 @@ class Comments extends TikiLib
 	}
 
 	function parse_comment_data($data) {
-		global $prefs, $tikilib, $section;
+		global $prefs, $section;
 		$parserlib = TikiLib::lib('parser');
 		
 		if (($prefs['feature_forum_parse'] == 'y' && $section == 'forums') || $prefs['section_comments_parse'] == 'y') {
@@ -1723,8 +1717,6 @@ class Comments extends TikiLib
 		}
 
 		$ret = array();
-		$logins = array();
-		$threadIds = array();
 
 		if ($reply_threadId > 0 && $style == 'commentStyle_threaded') {
 			$ret[] = $this->get_comments_fathers($reply_threadId, $ret);
@@ -2168,7 +2160,7 @@ class Comments extends TikiLib
 		$postDate = '', $anonymous_email = '', $anonymous_website = ''
 	)
 	{
-		global $prefs, $tiki_p_admin_comments;
+		global $prefs;
 
 		if ($postDate == '') $postDate = $this->now;
 
@@ -2336,7 +2328,7 @@ class Comments extends TikiLib
 
 	private function determine_initial_approval(array $info)
 	{
-		global $user, $prefs;
+		global $prefs, $tiki_p_admin_comments;
 
 		if ($tiki_p_admin_comments == 'y' || $object[0] == 'forum') {
 			return 'y';
