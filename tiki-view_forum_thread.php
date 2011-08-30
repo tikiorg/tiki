@@ -129,7 +129,7 @@ $access->check_permission( array('tiki_p_forum_read') );
 $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
 
-$threads = $commentslib->get_forum_topics($_REQUEST['forumId'], $_REQUEST['topics_offset'] - 1, 3, $_REQUEST["topics_sort_mode"]);
+$threads = $commentslib->get_forum_topics($_REQUEST['forumId'], max(0, $_REQUEST['topics_offset'] - 1), 3, $_REQUEST["topics_sort_mode"]);
 if ($threads[0]['threadId'] == $_REQUEST['comments_parentId'] && count($threads) >= 1) {
 	$next_thread = $threads[1];
 	$smarty->assign('next_topic', $next_thread['threadId']);
