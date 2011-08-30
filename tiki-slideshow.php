@@ -115,8 +115,8 @@ $smarty->assign_by_ref('lastUser', $info["user"]);
 
 include_once ('tiki-section_options.php');
 
-$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
-$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
+$headerlib->add_cssfile( 'lib/jquery.s5/jquery.s5.css' );
+$headerlib->add_jsfile( 'lib/jquery.s5/jquery.s5.js' );
 $headerlib->add_jq_onready( '
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
 	

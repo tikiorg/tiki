@@ -1880,7 +1880,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
-		$title = " title='{$sheet->getTitle()}'";
+		$title = " title='" . htmlspecialchars($sheet->getTitle(), ENT_QUOTES) . "'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		echo "<table{$class}{$id}{$sub}{$title}>\n";
 
@@ -2383,20 +2383,20 @@ class SheetLib extends TikiLib
 	{
 		global $headerlib;
 		if (!$this->setup_jQuery_sheet_files) {
-			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
+			$headerlib->add_cssfile( 'lib/jquery.sheet/jquery.sheet.css' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/jquery.sheet.js' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/jquery.sheet.advancedfn.js' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/jquery.sheet.financefn.js' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/parser.js' );
 			$headerlib->add_jsfile( 'lib/sheet/grid.js' );
 			
 			//json support
 			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
 			
 			// plugins
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/plugins/jquery.scrollTo-min.js' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/plugins/raphael-min.js', 'external' );
+			$headerlib->add_jsfile( 'lib/jquery.sheet/plugins/g.raphael-min.js', 'external' );
 			$this->setup_jQuery_sheet_files = true;
 		}
 	}
