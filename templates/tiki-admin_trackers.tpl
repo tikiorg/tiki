@@ -29,42 +29,42 @@
 			<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
-		{section name=user loop=$channels}
+		{foreach from=$channels item=tracker}
 			<tr class="{cycle}">
 				<td class="id">
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
+					{$tracker.trackerId|escape}
 				</td>
 				<td class="text">
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
+					{*<a class="tablename dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}" title="{tr}Edit{/tr}">{$tracker.name|escape}</a>*}
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$tracker.trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$tracker.name|escape}</a>
 				</td>
-				{if $channels[user].descriptionIsParsed eq 'y'}
-					<td class="text">{wiki}{$channels[user].description}{/wiki}</td>
+				{if $tracker.descriptionIsParsed eq 'y'}
+					<td class="text">{wiki}{$tracker.description}{/wiki}</td>
 				{else}
-					<td class="text">{$channels[user].description|escape|nl2br}</td>
+					<td class="text">{$tracker.description|escape|nl2br}</td>
 				{/if}
-				<td class="date">{$channels[user].created|tiki_short_date}</td>
-				<td class="date">{$channels[user].lastModif|tiki_short_date}</td>
-				<td class="integer">{$channels[user].items}</td>
+				<td class="date">{$tracker.created|tiki_short_date}</td>
+				<td class="date">{$tracker.lastModif|tiki_short_date}</td>
+				<td class="integer">{$tracker.items|escape}</td>
 				<td class="action">
-					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2">{icon _id='page_edit'}</a>
-					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
-					{if $channels[user].individual eq 'y'}
-						<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
+					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$tracker.trackerId}&amp;cookietab=2">{icon _id='page_edit'}</a>
+					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
+					{if $tracker.individual eq 'y'}
+						<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
 					{else}
-						<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
+						<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
 					{/if}
-					<a title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$channels[user].trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+					<a title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$tracker.trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>
-		{sectionelse}
+		{foreachelse}
 			{if $find}
 				{norecords _colspan=7 _text="No records found with: $find"}
 			{else}
 				{norecords _colspan=7}
 			{/if}
-		{/section}
+		{/foreach}
 	</table>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{jq}
@@ -73,6 +73,19 @@
 			success: function (data) {
 				$(this).closest('tr').remove();
 			}
+		});
+		$('.tablename.dialog').click(function () {
+			var link = this;
+			$(this).serviceDialog({
+				title: $(link).text(),
+				data: {
+					controller: 'tracker',
+					action: 'replace',
+					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
+				}
+			});
+
+			return false;
 		});
 	{/jq}
 {/tab}
