@@ -78,5 +78,11 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 	{
 		return $info;
 	}
+
+	function renderOutput($context = array())
+	{
+		$fieldData = $this->getFieldData();
+		return $fieldData['value']; 
+	}
 }
 
