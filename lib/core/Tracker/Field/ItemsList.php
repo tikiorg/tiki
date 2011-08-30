@@ -89,6 +89,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			$trklib = TikiLib::lib('trk');
 
 			$items = $this->getItemIds();
+			$displayFields = $this->getOption(3);
+			$status = $this->getOption(5, 'opc');
+			$trackerId = (int) $this->getOption(0);
 
 			$list = array();
 			foreach ($items as $itemId) {
@@ -101,6 +104,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			
 			return $this->renderTemplate('trackeroutput/itemslist.tpl', $context, array(
 				'links' => (bool) $this->getOption(4),
+				'raw' => (bool) $displayFields,
 				'itemIds' => implode(',', $items),
 				'items' => $list,
 				'num' => count($list),
