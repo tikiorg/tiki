@@ -227,10 +227,6 @@ tt {font-size: 1.2em}
 	background: url(eatlon/banner.gif) no-repeat 100% 100%;	
 }
 	
-#top_modules {
-/*	min-height: 126px;*/
-/*	background: url(eatlon/banner.gif) no-repeat 100% 0*/}
-
 #top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;

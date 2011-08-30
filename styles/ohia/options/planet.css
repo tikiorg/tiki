@@ -391,7 +391,10 @@ a.forumnameread {color: #666}
 	color: #fff;
 	background: #989898}
 
-.tabactive a {background: #888; color: #666}
+.tabactive a {
+	background: #888;
+	color: #666;
+}
 
 .tabcontent {
 	border-color: #777;
