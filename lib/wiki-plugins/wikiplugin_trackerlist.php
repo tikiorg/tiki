@@ -1675,9 +1675,9 @@ function wikiplugin_trackerlist($data, $params) {
 				
 				//this options preloads the javascript for displaying sheets
 				if (!empty($displaysheet) && $displaysheet == 'y') {
-					global $headerlib;
+					$headerlib = TikiLib::lib("header");
+					$sheetlib = TikiLib::lib("sheet");
 					
-					require_once ('lib/sheet/grid.php');
 					$sheetlib->setup_jquery_sheet();
 					$headerlib->add_jq_onready('
 						$("div.trackercontainer").sheet($.extend($.sheet.tikiOptions,{
