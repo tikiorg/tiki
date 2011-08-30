@@ -38,7 +38,6 @@
 	<fieldset class="admin">
 		<legend>{tr}Tracker settings{/tr}</legend>
 		{preference name=user_selector_threshold}
-		{preference name=tracker_field_computed}
 		{preference name=user_selector_realnames_tracker}
 		{preference name="tracker_remote_sync"}
 	</fieldset>
