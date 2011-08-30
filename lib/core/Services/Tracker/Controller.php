@@ -452,5 +452,34 @@ class Services_Tracker_Controller
 			'itemId' => $itemId,
 		);
 	}
+
+	function action_remove($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$confirm = $input->confirm->int();
+
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+		
+		if ($confirm) {
+			$this->utilities->removeTracker($trackerId);
+
+			return array(
+				'trackerId' => 0,
+			);
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'name' => $definition->getConfiguration('name'),
+		);
+	}
 }
 

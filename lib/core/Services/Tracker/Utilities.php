@@ -382,5 +382,14 @@ EXPORT;
 		$trklib = TikiLib::lib('trk');
 		$trklib->remove_tracker_item($itemId, true);
 	}
+
+	function removeTracker($trackerId)
+	{
+		$trklib = TikiLib::lib('trk');
+		$trklib->remove_tracker($trackerId);
+
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_log('admintrackers', 'removed tracker ' . $trackerId);
+	}
 }
 

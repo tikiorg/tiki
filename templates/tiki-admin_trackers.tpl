@@ -55,7 +55,7 @@
 					{else}
 						<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
 					{/if}
-					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+					<a title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$channels[user].trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>
 		{sectionelse}
@@ -67,6 +67,14 @@
 		{/section}
 	</table>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+	{jq}
+		$('.remove.confirm-prompt').requireConfirm({
+			message: "{tr}Do you really remove this tracker?{/tr}",
+			success: function (data) {
+				$(this).closest('tr').remove();
+			}
+		});
+	{/jq}
 {/tab}
 
 {if $trackerId}

@@ -51,11 +51,6 @@ if (!empty($_REQUEST['exportTrackerProfile']) && !empty($_REQUEST['trackerId']))
 	die;
 }
 
-if (isset($_REQUEST["remove"])) {
-	$access->check_authenticity();
-	$trklib->remove_tracker($_REQUEST["remove"]);
-	$logslib->add_log('admintrackers', 'removed tracker ' . $_REQUEST["remove"]);
-}
 if (isset($_REQUEST['deltodo'])) {
 	include_once('lib/todolib.php');
 	TodoLib::delTodo($_REQUEST['deltodo']);
