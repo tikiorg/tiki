@@ -226,12 +226,6 @@ if ($_REQUEST["comments_threadId"] > 0) {
 		die;
 	}
 
-	// Add the replied-to text, with >.
-	// Disabled by damian
-	//	$smarty->assign('comment_data', '');
-	// Re-enabled by rlpowell; my users rely on this.  If you want to disable it, put an option in the forums or something.
-	// However, I re-enabled it *working*, instead of broken.  -rlpowell
-	// check to see if QUOTE plugin or > should be used -Terence
 	global $prefs;
 	if ( $comment_info["data"] != ''  ) {
 		if ( ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') && $prefs['feature_use_quoteplugin'] == 'y' ) {
