@@ -162,6 +162,36 @@ class PreferencesLib
 				$info['plugin'] = 'tiki-admin.php?page=textarea&cookietab=2&textFilter=' . urlencode($info['plugin']);
 			}
 			
+			if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
+
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_icon');
+
+				$info['popup_html'] = '<div class="opaque"><div class="box-title">'.tra('Actions').'</div><div class="box-data">';
+
+				if (!empty($info['admin'])) {
+					$icon= smarty_function_icon(array( '_id' => 'application_form', 'title' => tra('Admin')), $smarty);
+					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a>';
+				}
+				if (!empty($info['permission'])) {
+					$icon= smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
+					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a>';
+				}
+				if (!empty($info['view'])) {
+					$icon= smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
+					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a>';
+				}
+				if (!empty($info['module'])) {
+					$icon= smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
+					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a>';
+				}
+				if (!empty($info['plugin'])) {
+					$icon= smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
+					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a>';
+				}
+				$info['popup_html'] .= '</div></div>';
+			}
+
 			return $info;
 		}
 
