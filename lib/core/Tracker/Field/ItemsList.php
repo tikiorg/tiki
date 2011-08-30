@@ -88,7 +88,11 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		} else {
 			$trklib = TikiLib::lib('trk');
 
-			$items = $this->getItemIds();
+			if (isset($context['search_render']) && $context['search_render'] == 'y') {
+				$items = $this->getData($this->getConfiguration('fieldId'));
+			} else {
+				$items = $this->getItemIds();
+			}
 			$displayFields = $this->getOption(3);
 			$status = $this->getOption(5, 'opc');
 			$trackerId = (int) $this->getOption(0);
