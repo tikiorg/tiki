@@ -1,9 +1,11 @@
-{if $prefs.art_home_title ne ''}
-	{title help="Articles" admpage="cms"}
-		{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic|escape}{/tr}
-		{elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type|escape}{/tr}
-		{else}{tr}Articles{/tr}{/if}
-	{/title}
+{if !isset($actions) or $actions eq "y"}
+	{if $prefs.art_home_title ne ''}
+		{title help="Articles" admpage="cms"}
+			{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic|escape}{/tr}
+			{elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type|escape}{/tr}
+			{else}{tr}Articles{/tr}{/if}
+		{/title}
+	{/if}
 {/if}
 	<div class="clearfix" style="clear: both;">
 		<div style="float: right; padding-left:10px; white-space: nowrap">
