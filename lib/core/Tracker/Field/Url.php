@@ -20,6 +20,15 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				'description' => tr('Creates a link to a specified URL.'),
 				'help' => 'URL Tracker Field',
 				'params' => array(
+					'linkToURL' => array(
+						'name' => tr('Display'),
+						'description' => tr('How the URL should be rendered'),
+                                                'filter' => 'int',	
+						'options' => array(
+							0 => tr('Link'),
+							1 => tr('Plain'),
+						),
+					),
 				),
 			),
 		);
@@ -42,7 +51,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 
 		$url = $this->getConfiguration('value');
 		
-		if (empty($url) || $context['list_mode'] == 'csv') {
+		if (empty($url) || $context['list_mode'] == 'csv' || $this->getOption(0)) {
 			return $url;
 		} else {
 			$smarty->loadPlugin('smarty_function_object_link');
