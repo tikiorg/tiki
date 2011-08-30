@@ -3686,7 +3686,7 @@ CREATE TABLE `tiki_connect` (
 	`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`type` VARCHAR(64) NOT NULL DEFAULT '',
 	`data` TEXT,
-	`guid` VARCHAR(32) DEFAULT NULL,
+	`guid` VARCHAR(64) DEFAULT NULL,
 	`server` TINYINT(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `server` (`server`)

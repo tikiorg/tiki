@@ -99,11 +99,14 @@ class TikiConnect
 	 * @return void
 	 */
 
-	function recordConnection($status, $guid, $data = null, $server = false) {
+	function recordConnection($status, $guid, $data = '', $server = false) {
 
+		if (is_array($data) || is_object($data)) {
+			$data = json_encode( $data );
+		}
 		$this->connectTable->insert(array(
 				'type' => $status,
-				'data' => $data ? json_encode( $data ) : null,
+				'data' => $data,
 				'guid' => $guid,
 				'server' => $server ? 1 : 0,
 		));
@@ -182,6 +185,7 @@ class TikiConnect
 
 	/**
 	 * gets a guid created within last 1 minute
+	 * Connect Client
 	 *
 	 * @return string guid
 	 */
@@ -210,6 +214,7 @@ class TikiConnect
 
 	/**
 	 * gets a confirmed guid if there
+	 * Connect Client
 	 *
 	 * @return string guid
 	 */
@@ -240,16 +245,31 @@ class TikiConnect
 	 */
 
 	function removeGuid( $guid, $server = false ) {
-		$this->connectTable->deleteMultiple(
+		$this->connectTable->update(
+			array(
+				'type' => 'deleted_pending'
+			),
 			array(
 				'server' => $server ? 1 : 0,
 				'guid' => $guid,
+				'type' => 'pending',
+			)
+		);
+		$this->connectTable->update(
+			array(
+				'type' => 'deleted_confirmed'
+			),
+			array(
+				'server' => $server ? 1 : 0,
+				'guid' => $guid,
+				'type' => 'confirmed',
 			)
 		);
 	}
 
 	/**
 	 * test if a guid is pending
+	 * Connect Server
 	 *
 	 * @param string $guid
 	 * @return string
@@ -264,11 +284,12 @@ class TikiConnect
 				'guid' => $guid,
 			)
 		);
-		return trim($res, '"');
+		return $res;
 	}
 
 	/**
 	 * text if a guid is confirmed here
+	 * Connect Server
 	 *
 	 * @param string $guid
 	 * @return bool
