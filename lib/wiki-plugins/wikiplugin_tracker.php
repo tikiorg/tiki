@@ -326,7 +326,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 
 function wikiplugin_tracker($data, $params)
 {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib, $tiki_p_view, $captchalib;
+	global $tikilib, $userlib, $user, $group, $page, $smarty, $prefs, $trklib, $captchalib;
 	$parserlib = TikiLib::lib('parser');
 	
 	static $iTRACKER = 0;
@@ -1248,7 +1248,6 @@ function wikiplugin_tracker($data, $params)
 
 function wikiplugin_tracker_render_input($f, $item) {
 	$trklib = TikiLib::lib('trk');
-	$smarty = TikiLib::lib('smarty');
 
 	$handler = $trklib->get_field_handler($f, $item);
 
@@ -1264,7 +1263,6 @@ function wikiplugin_tracker_render_input($f, $item) {
 }
 
 function wikiplugin_tracker_render_value($f, $item) {
-	$smarty = TikiLib::lib('smarty');
 	$trklib = TikiLib::lib('trk');
 
 	$handler = $trklib->get_field_handler($f, $item);
