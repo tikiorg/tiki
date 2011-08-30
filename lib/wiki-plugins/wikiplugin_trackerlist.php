@@ -11,6 +11,7 @@ function wikiplugin_trackerlist_info() {
 		'documentation' => 'PluginTrackerList',
 		'description' => tra('List, filter and sort the items in a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
+		'tags' => array( 'basic' ),		
 		'body' => tra('Notice'),
 		'format' => 'html',
 		'icon' => 'pics/icons/database_table.png',
