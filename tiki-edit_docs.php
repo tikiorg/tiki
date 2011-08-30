@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-edit_draw.php 35496 2011-07-19 16:17:25Z robertplummer $
+// $Id$
 $section = "docs";
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');

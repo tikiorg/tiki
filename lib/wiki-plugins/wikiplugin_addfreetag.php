@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_relations.php 36072 2011-08-11 15:31:53Z changi67 $
+// $Id$
 
 function wikiplugin_addfreetag_info()
 {
