@@ -655,12 +655,14 @@ class TrackerLib extends TikiLib
 		$res='';
 		$sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
 		$definition = Tracker_Definition::get($trackerId);
-		foreach ($sts as $field){
+		foreach ($sts as $k => $field){
 			$myfield = $definition->getField($field);
 
 			$myfield['value'] = $this->get_item_value($trackerId,$itemId,$field);
 
-			$res .= $separator;
+			if ($k > 0) {
+				$res .= $separator;
+			}
 			$res .= trim($this->field_render_value(array(
 				'field' => $myfield,
 				'process' => 'y',
