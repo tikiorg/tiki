@@ -667,10 +667,6 @@ class RSSLib extends TikiDb_Bridge
 				}
 			}
 
-			if (empty($url)) {
-				//continue;
-			}
-
 			$entry = $writer->createEntry();
 			$entry->setTitle($title ? $title : tra('Unspecified'));
 			$entry->setLink($tikilib->tikiUrl($url));

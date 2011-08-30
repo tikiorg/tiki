@@ -54,8 +54,8 @@ class QueueLib extends TikiDb_Bridge
 		$messages = array_unique($messages);
 		if (count($messages)) {
 			return array_map('json_decode', $messages, array_fill(0, count($messages), true));
-		} else {
-		}	return array();
+		
+		return array();
 	}
 }
 
