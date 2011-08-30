@@ -15,6 +15,9 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'description' => tr('A rating of the tracker item'),
 				'readonly' => true,
 				'help' => 'Rating Tracker Field',
+				'prefs' => array('trackerfield_rating'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'option' => array(
 						'name' => tr('Option'),
@@ -45,6 +48,9 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'description' => tr('Displays a star rating'),
 				'readonly' => true,
 				'deprecated' => true,
+				'prefs' => array('trackerfield_stars'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'option' => array(
 						'name' => tr('Option'),
@@ -59,6 +65,9 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'description' => tr('Displays a star rating'),
 				'readonly' => true,
 				'deprecated' => true,
+				'prefs' => array('trackerfield_starsystem'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'option' => array(
 						'name' => tr('Option'),

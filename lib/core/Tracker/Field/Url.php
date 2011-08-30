@@ -19,6 +19,9 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				'name' => tr('URL'),
 				'description' => tr('Creates a link to a specified URL.'),
 				'help' => 'URL Tracker Field',
+				'prefs' => array('trackerfield_url'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'linkToURL' => array(
 						'name' => tr('Display'),

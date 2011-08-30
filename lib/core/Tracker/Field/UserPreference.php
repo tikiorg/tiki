@@ -20,6 +20,9 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 				'name' => tr('User Preference'),
 				'description' => tr('Allows user preference changes from a tracker.'),
 				'help' => 'User Preference Field',
+				'prefs' => array('trackerfield_userpreference'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'type' => array(
 						'name' => tr('Preference Name'),

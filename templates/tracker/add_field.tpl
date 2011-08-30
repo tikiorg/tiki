@@ -52,4 +52,13 @@
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
 		<input type="hidden" name="next" value="close"/>
 	</div>
+	{if $tiki_p_admin eq 'y'}
+		{remarksbox type=info title="{tr}More types available{/tr}"}
+			<p>{tr _0="tiki-admin.php?page=trackers"}More field types may be enabled from the <a href="%0">administration panel</a>.{/tr}</p>
+		{/remarksbox}
+	{else}
+		{remarksbox type=info title="{tr}More types available{/tr}"}
+			<p>{tr _0="https://doc.tiki.org/Tracker+Field+Type"}Contact your administrator to see if they can be enabled. The complete field type list is available in the <a rel="external" class="external" href="%0">documentation</a>.{/tr}</p>
+		{/remarksbox}
+	{/if}
 </form>

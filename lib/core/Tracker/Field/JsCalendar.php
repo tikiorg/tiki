@@ -13,6 +13,9 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 			'j' => array(
 				'name' => tr('Date and Time (JSCalendar)'),
 				'description' => tr('Provides drop-down options to accurately select a date and/or time.'),
+				'prefs' => array('trackerfield_jscalendar'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'datetime' => array(
 						'name' => tr('Type'),

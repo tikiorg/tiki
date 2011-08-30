@@ -20,6 +20,9 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				'name' => tr('Text Field'),
 				'description' => tr('Single-line text input.'),
 				'help' => 'Text Tracker Field',
+				'prefs' => array('trackerfield_text'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),

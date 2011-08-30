@@ -18,6 +18,9 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			'REL' => array(
 				'name' => tr('Relations'),
 				'description' => tr('Allows to create arbitrary relations between the trackers and other objects in the system.'),
+				'prefs' => array('trackerfield_relation'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'relation' => array(
 						'name' => tr('Relation'),

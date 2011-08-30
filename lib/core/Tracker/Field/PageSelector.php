@@ -21,6 +21,9 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 				'name' => tr('Page Selector'),
 				'description' => tr('Allows a selection from the list of pages.'),
 				'help' => 'Page selector',
+				'prefs' => array('trackerfield_pageselector', 'feature_wiki'),
+				'tags' => array('advanced'),
+				'default' => 'y',
 				'params' => array(
 					'autoassign' => array(
 						'name' => tr('Auto-Assign'),

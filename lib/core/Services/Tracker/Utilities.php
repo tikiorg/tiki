@@ -335,7 +335,30 @@ EXPORT;
 	function getFieldTypes()
 	{
 		$factory = new Tracker_Field_Factory(false);
-		return $factory->getFieldTypes();
+		$completeList = $factory->getFieldTypes();
+
+		$list = array();
+
+		foreach ($completeList as $code => $info) {
+			if ($this->isEnabled($info)) {
+				$list[$code] = $info;
+			}
+		}
+
+		return $list;
+	}
+
+	private function isEnabled($info)
+	{
+		global $prefs;
+
+		foreach ($info['prefs'] as $p) {
+			if ($prefs[$p] != 'y') {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	function getFieldsFromIds($definition, $fieldIds)

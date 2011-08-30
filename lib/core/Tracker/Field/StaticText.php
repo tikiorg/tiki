@@ -21,6 +21,9 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 				'description' => tr('Displays the field description as static text that can be used to display notes or additional instructions.'),
 				'readonly' => true,
 				'help' => 'Static Text Tracker Field',				
+				'prefs' => array('trackerfield_statictext'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'wikiparse' => array(
 						'name' => tr('Wiki Parse'),

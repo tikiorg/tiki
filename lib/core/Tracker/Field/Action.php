@@ -14,6 +14,9 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 				'name' => tr('Action'),
 				'description' => tr('Create a form which will be posted somewhere, not necessarily trackers or even Tiki.'),
 				'help' => 'Action Tracker Field',
+				'prefs' => array('trackerfield_action'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'label' => array(
 						'name' => tr('Name'),

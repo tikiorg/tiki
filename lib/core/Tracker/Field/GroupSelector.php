@@ -20,6 +20,9 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 				'name' => tr('Group Selector'),
 				'description' => tr('Allows a selection from a specified list of user groups.'),
 				'help' => 'Group selector',				
+				'prefs' => array('trackerfield_groupselector'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'autoassign' => array(
 						'name' => tr('Auto-Assign'),

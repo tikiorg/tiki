@@ -20,6 +20,9 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 				'name' => tr('Location'),
 				'description' => tr('Allows to select a geolocation for the item and displays it on a map.'),
 				'help' => 'Location Tracker Field',				
+				'prefs' => array('trackerfield_location'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'use_as_item_location' => array(
 						'name' => tr('Use as item location'),

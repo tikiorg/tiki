@@ -28,6 +28,12 @@
 		{preference name=wikiplugin_trackeritemcopy}
 	</fieldset>
 	
+	<fieldset class="admin">
+		<legend>{tr}Field Types{/tr}</legend>
+		{foreach from=$fieldPreferences item=name}
+			{preference name=$name}
+		{/foreach}
+	</fieldset>
 	
 	<fieldset class="admin">
 		<legend>{tr}Tracker settings{/tr}</legend>

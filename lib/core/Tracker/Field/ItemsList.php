@@ -21,6 +21,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 				'description' => tr('Displays a list of field values from another tracker that has a relation with this tracker.'),
 				'readonly' => true,
 				'help' => 'Items List and Item Link Tracker Fields',
+				'prefs' => array('trackerfield_itemslist'),
+				'tags' => array('advanced'),
+				'default' => 'n',
 				'params' => array(
 					'trackerId' => array(
 						'name' => tr('Tracker ID'),

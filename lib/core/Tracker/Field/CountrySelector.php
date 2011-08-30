@@ -20,6 +20,9 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 				'name' => tr('Country Selector'),
 				'description' => tr('Allows a selection from a specified list of countries'),
 				'help' => 'Country Selector',
+				'prefs' => array('trackerfield_countryselector'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'name_flag' => array(
 						'name' => tr('Display'),

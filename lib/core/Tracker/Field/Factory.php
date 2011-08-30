@@ -101,7 +101,15 @@ class Tracker_Field_Factory
 		$type = $field_info['type'];
 
 		if (isset($this->typeMap[$type])) {
+			$info = $this->infoMap[$type];
 			$class = $this->typeMap[$type];
+
+			global $prefs;
+			foreach ($info['prefs'] as $pref) {
+				if ($prefs[$pref] != 'y') {
+					return null;
+				}
+			}
 
 			if (is_callable(array($class, 'build'))) {
 				return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData); 

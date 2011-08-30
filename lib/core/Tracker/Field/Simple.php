@@ -22,6 +22,9 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 				'name' => tr('Email'),
 				'description' => tr('Allows to input an email address with options of making it active.'),
 				'help' => 'Email Tracker Field',				
+				'prefs' => array('trackerfield_email'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'link' => array(
 						'name' => tr('Link Type'),
@@ -66,6 +69,9 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 				'name' => tr('IP Selector'),
 				'description' => tr('IP address input field.'),
 				'help' => 'IP selector',
+				'prefs' => array('trackerfield_ipaddress'),
+				'tags' => array('basic'),
+				'default' => 'n',
 				'params' => array(
 					'autoassign' => array(
 						'name' => tr('Auto-assign'),

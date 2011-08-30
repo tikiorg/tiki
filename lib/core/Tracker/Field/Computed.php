@@ -18,8 +18,12 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 		return array(
 			'C' => array(
 				'name' => tr('Computed Field'),
-				'description' => tr('Provides a computed value based on numeric field values.'),
+				'description' => tr('Provides a computed value based on numeric field values. Consider using webservices or javascript to perform the task instead of using this type.'),
 				'help' => 'Computed Tracker Field',				
+				'prefs' => array('trackerfield_computed'),
+				'tags' => array('advanced'),
+				'default' => 'n',
+				'warning' => tra('This feature is still in place for backwards compatibility. While there are no flaws associated to it, it could be used as a vector for attacks causing a lot of damage. Webservice field or custom javascript is recommended instead of this field.'),
 				'params' => array(
 					'formula' => array(
 						'name' => tr('Formula'),
@@ -34,11 +38,6 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
-		global $prefs;
-		if ($prefs['tracker_field_computed'] != 'y') {
-			return array();
-		}
-
 		$ins_id = $this->getInsertId();
 		$data = array();
 		

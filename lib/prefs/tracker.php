@@ -7,13 +7,6 @@
 
 function prefs_tracker_list() {
 	return array(
-		'tracker_field_computed' => array(
-			'name' => tra('Tracker computed field'),
-			'description' => tra('Allow execution of computed fields. Consider using webservices or javascript to perform the task instead of using this type.'),
-			'warning' => tra('This feature is still in place for backwards compatibility. While there are no flaws associated to it, it could be used as a vector for attacks causing a lot of damage. Webservice field or custom javascript is recommended instead of this field.'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'tracker_remote_sync' => array(
 			'name' => tr('Synchronize Remote Tracker'),
 			'description' => tr('Allows to clone a tracker on a remote host and synchronize the data locally on demand.'),

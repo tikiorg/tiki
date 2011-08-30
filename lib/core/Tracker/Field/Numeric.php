@@ -22,6 +22,9 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 				'name' => tr('Numeric Field'),
 				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
 				'help' => 'Numeric Tracker Field',
+				'prefs' => array('trackerfield_numeric'),
+				'tags' => array('basic'),
+				'default' => 'y',
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),
@@ -71,6 +74,9 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 				'name' => tr('Currency Field'),
 				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
 				'help' => 'Currency Amount Tracker Field',				
+				'prefs' => array('trackerfield_currency'),
+				'tags' => array('basic'),
+				'default' => 'n',
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),

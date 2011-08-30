@@ -15,6 +15,9 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 			'LANG' => array(
 				'name' => tr('Language'),
 				'description' => tr('Assign a language to the tracker item to enable multilingual trackers.'),
+				'prefs' => array('trackerfield_language', 'feature_multilingual'),
+				'tags' => array('advanced'),
+				'default' => 'y',
 				'params' => array(
 					'autoassign' => array(
 						'name' => tr('Auto-Assign'),
