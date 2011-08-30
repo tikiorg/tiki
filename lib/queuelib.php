@@ -52,7 +52,7 @@ class QueueLib extends TikiDb_Bridge
 
 		// Strip duplicate messages
 		$messages = array_unique($messages);
-		if (count($messages)) {
+		if (count($messages))
 			return array_map('json_decode', $messages, array_fill(0, count($messages), true));
 		
 		return array();
