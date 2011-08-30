@@ -68,6 +68,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'contributors',
 
 			'post_content',
+			'parent_thread_id',
 
 			'parent_view_permission',
 			'parent_object_id',

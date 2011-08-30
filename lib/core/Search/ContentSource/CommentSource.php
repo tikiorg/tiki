@@ -69,6 +69,7 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 			'url',
 
 			'comment_content',
+			'parent_thread_id',
 
 			'parent_view_permission',
 			'parent_object_id',
