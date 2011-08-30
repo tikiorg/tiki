@@ -174,7 +174,7 @@ window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php"
 ');	// before all
 		
 		global $wysiwyg_wiki;
-		if ($wysiwyg_wiki == true) {
+		if ($wysiwyg_wiki) {
 			$headerlib->add_jq_onready('
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
