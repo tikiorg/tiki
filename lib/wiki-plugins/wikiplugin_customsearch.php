@@ -56,8 +56,8 @@ function wikiplugin_customsearch_info()
 			),
 			'callbackscript' => array(
 				'required' => false,
-				'name' => tra('Custom javascript wiki page'),
-				'description' => tra('The wiki page on which custom javascript that is to be executed on return of AJAX results'), 
+				'name' => tra('Custom JavaScript wiki page'),
+				'description' => tra('The wiki page on which custom JavaScript that is to be executed on return of AJAX results'), 
 				'filter' => 'pagename',
 				'default' => '',
 			),
