@@ -673,21 +673,22 @@ class TrackerLib extends TikiLib
 		$sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
 		$res = array();
 		foreach ($sts as $field){
-			$myfield=$this->get_tracker_field($field);
-			$is_date=($myfield['type']=='f');
-			$is_trackerlink=($myfield['type']=='r');
-			$tmp="";
-			$tmp=$this->get_all_items($trackerId,$field,$status, false);//deliberatly do not check perm on categs on items
-			$options = preg_split('/,/', $myfield["options"]);
-			foreach ($tmp as $key=>$value){
-				if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
-				if ($is_trackerlink){
-					$value=$this->concat_item_from_fieldslist($options[0],$value,$options[3]);
-				}
-				if (!empty($res[$key])) {
-					$res[$key].=$separator.$value;
-				} else {
-					$res[$key] = $value;
+			if ($myfield=$this->get_tracker_field($field)) {
+				$is_date=($myfield['type']=='f');
+				$is_trackerlink=($myfield['type']=='r');
+				$tmp="";
+				$tmp=$this->get_all_items($trackerId,$field,$status, false);//deliberatly do not check perm on categs on items
+				$options = preg_split('/,/', $myfield["options"]);
+				foreach ($tmp as $key=>$value){
+					if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
+					if ($is_trackerlink){
+						$value=$this->concat_item_from_fieldslist($options[0],$value,$options[3]);
+					}
+					if (!empty($res[$key])) {
+						$res[$key].=$separator.$value;
+					} else {
+						$res[$key] = $value;
+					}
 				}
 			}
 		}
@@ -2517,12 +2518,13 @@ class TrackerLib extends TikiLib
 	}
 
 	function get_tracker_field($fieldId) {
-		$res = $this->fields()->fetchFullRow(array('fieldId' => (int) $fieldId));
-		$res['options_array'] = preg_split('/,/', $res['options']);
-		$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
-		$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
-		$res['editableBy'] = ($res['editableBy'] != '') ? unserialize($res['editableBy']) : array();
-		return $res;
+		if ($res = $this->fields()->fetchFullRow(array('fieldId' => (int) $fieldId))) {
+			$res['options_array'] = preg_split('/,/', $res['options']);
+			$res['itemChoices'] = ! empty($res['itemChoices']) ? unserialize($res['itemChoices']) : array();
+			$res['visibleBy'] = ! empty($res['visibleBy']) ? unserialize($res['visibleBy']) : array();
+			$res['editableBy'] = ! empty($res['editableBy']) ? unserialize($res['editableBy']) : array();
+			return $res;
+		}
 	}
 
 	function get_field_id($trackerId,$name) {

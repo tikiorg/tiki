@@ -992,7 +992,7 @@ class CategLib extends ObjectLib
 		} else {
 			$cachekey = "childcategs$categId";
 		}
-		if ($persp = TikiLib::lib('perspective')->get_current_perspective()) {
+		if ($persp = TikiLib::lib('perspective')->get_current_perspective($prefs)) {
 			$cachekey .= "_$persp"; 
 		}
 		if( ! $ret = $cachelib->getSerialized("$cachekey") ) {
