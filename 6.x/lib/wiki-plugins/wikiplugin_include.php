@@ -169,6 +169,10 @@ function wikiplugin_include($data, $params, $offset) {
 			$text = implode("\n", $explText);
 		}
 	}
-	$tikilib->parse_wiki_argvariable($text);
+	$options = null;
+	if (!empty($_REQUEST['page'])) {
+		$options['page'] = $_REQUEST['page'];
+	}
+	$tikilib->parse_wiki_argvariable($text, $options);
 	return $text;
 }
