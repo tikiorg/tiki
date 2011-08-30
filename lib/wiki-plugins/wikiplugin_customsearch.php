@@ -54,6 +54,13 @@ function wikiplugin_customsearch_info()
 				'filter' => 'digits',
 				'default' => '0',
 			),
+			'callbackscript' => array(
+				'required' => false,
+				'name' => tra('Custom javascript wiki page'),
+				'description' => tra('The wiki page on which custom javascript that is to be executed on return of AJAX results'), 
+				'filter' => 'pagename',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -192,6 +199,11 @@ function wikiplugin_customsearch($data, $params)
 		} 
 	}
 
+	if (!empty($params['callbackscript']) && TikiLib::lib('tiki')->page_exists($params['callbackscript'])) {
+		$callbackscript_tpl = "wiki:" . $params['callbackscript'];
+		$callbackScript = TikiLib::lib('smarty')->fetch($callbackscript_tpl); 
+	}
+
 	$script .= "function load_customsearch_$id(searchdata) {";
 	if ($searchfadediv) { 
 		$searchfadetext = tr('Searching...');
@@ -222,8 +234,9 @@ function wikiplugin_customsearch($data, $params)
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal();";
 	}
 	$script .= "if (typeof spinner != 'undefined') $('#customsearch_$id').showBusy(spinner);";
-	$script .= "$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false; 
-		
+	$script .= "$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false;"; 
+	if (!empty($callbackScript)) $script .= $callbackScript;		
+	$script .= "
 				}
 			});
 		};
