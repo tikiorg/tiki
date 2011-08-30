@@ -435,22 +435,23 @@ class EditLib
 	 *
 	 * @param $inData			page data, can be wiki or mixed html/wiki
 	 * @param bool $fromWiki	set if converting from wiki page using "switch editor"
+	 * @param bool $wysiwig_wiki set if are doing WYSIWYG Wiki
 	 * @return string			html to send to ckeditor
 	 */
 
-	function parseToWysiwyg( $inData, $fromWiki = false ) {
-		global $tikilib, $tikiroot, $prefs, $wysiwyg_wiki;
+	function parseToWysiwyg( $inData, $fromWiki = false, $wysiwig_wiki = false ) {
+		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
 		
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => (!$wysiwyg_wiki && !$fromWiki),
-														'process_wiki_paragraphs' => ($wysiwyg_wiki || $fromWiki),
+														'ck_editor' => true, 'is_html' => (!$wysiwig_wiki && !$fromWiki),
+														'process_wiki_paragraphs' => ($wysiwig_wiki || $fromWiki),
 															'process_double_brackets' => 'n'));
 		
-		if (!$wysiwyg_wiki && $fromWiki) {
+		if ($fromWiki) {
 			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
