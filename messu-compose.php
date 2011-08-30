@@ -39,7 +39,12 @@ foreach(array(
 	'to',
 	'cc',
 	'bcc'
-) as $dest) if (is_array($_REQUEST[$dest])) $_REQUEST[$dest] = implode(', ', array_filter($_REQUEST[$dest], 'ctype_alnum'));
+			  ) as $dest) {
+	if (is_array($_REQUEST[$dest])) {
+		$sep = strstr(implode('',$_REQUEST[$dest]), ',') === false?', ': '; ';
+		$_REQUEST[$dest] = implode($sep, $_REQUEST[$dest]);
+	}
+}
 $smarty->assign('to', $_REQUEST['to']);
 $smarty->assign('cc', $_REQUEST['cc']);
 $smarty->assign('bcc', $_REQUEST['bcc']);
