@@ -23,6 +23,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
+		global $prefs;
+
 		$commentslib = TikiLib::lib('comments');
 		$comment = $commentslib->get_comment($objectId);
 
@@ -31,10 +33,13 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$author = array($comment['userName']);
 
 		$thread = $commentslib->get_comments($comment['objectType'] . ':' . $comment['object'], $objectId, 0, 0);
-		foreach ($thread['data'] as $reply) {
-			$content .= "\n{$reply['data']}";
-			$lastModification = max($lastModification, $reply['commentDate']);
-			$author[] = $comment['userName'];
+
+		if ($prefs['search_forum_deepindexing'] == 'y') {
+			foreach ($thread['data'] as $reply) {
+				$content .= "\n{$reply['data']}";
+				$lastModification = max($lastModification, $reply['commentDate']);
+				$author[] = $comment['userName'];
+			}
 		}
 
 		$data = array(

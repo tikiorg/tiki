@@ -29,6 +29,8 @@
 						{preference name="unified_lucene_highlight"}
 						{preference name="unified_lucene_max_result"}
 					</div>
+
+					{preference name=search_forum_deepindexing}
 					
 					{preference name=unified_tokenize_version_numbers}
 

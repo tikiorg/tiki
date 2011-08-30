@@ -248,6 +248,9 @@ function get_default_prefs() {
 							sheetgetrange,sheetrefresh,-,sheetfind|sheetclose,sheetsave,help/
 							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed|fullscreen/',
 
+		// search
+		'search_forum_deepindexing' => 'y',
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'feature_contribution_display_in_comment' => 'y',
