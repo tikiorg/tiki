@@ -284,7 +284,7 @@ function smarty_function_html_select_date($params, $smarty)
             }
             $year_result .= ' />';
         } else {
-            $years = range((int)$start_year, (int)$end_year);
+            $years = range(max((int)$start_year, 1970), (int)$end_year);
             if ($reverse_years) {
                 rsort($years, SORT_NUMERIC);
             } else {
