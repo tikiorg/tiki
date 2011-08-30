@@ -8,7 +8,7 @@
 $section_class = 'tiki_login';	// This will be body class instead of $section
 include_once ("tiki-setup.php");
 if (isset($_REQUEST['user'])) {
-	if ($_REQUEST['user'] == 'admin' && $_SESSION["groups_are_emulated"] != "y") {
+	if ($_REQUEST['user'] == 'admin' && (!isset($_SESSION["groups_are_emulated"]) || $_SESSION["groups_are_emulated"] != "y")) {
 		$smarty->assign('showloginboxes', 'y');
 		$smarty->assign('adminuser', $_REQUEST['user']);
 	} else {
