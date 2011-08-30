@@ -185,7 +185,7 @@ abstract class Toolbar
 	}
 
 	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '') {
-		global $prefs, $tikilib;
+		global $tikilib;
 		
 		$name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $tikilib->take_away_accent( $name )) );
 		$standard_names = Toolbar::getList(false);
@@ -584,7 +584,6 @@ class ToolbarInline extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
-		global $prefs;
 		switch( $tagName ) {
 		case 'bold':
 			$label = tra('Bold');
@@ -750,7 +749,6 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 
 	public static function fromName( $tagName ) // {{{
 	{
-		global $prefs;
 		switch( $tagName ) {
 		case 'list':
 			$label = tra('Unordered List');
@@ -789,7 +787,6 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 class ToolbarPicker extends Toolbar
 {
 	private $list;
-	private $index;
 	private $name;
 	
 	public static function fromName( $tagName ) // {{{
@@ -939,7 +936,6 @@ class ToolbarPicker extends Toolbar
 	static private function setupJs() {
 		
 		static $pickerAdded = false;
-		global $headerlib;
 
 		if( ! $pickerAdded ) {
 			$pickerAdded = true;
@@ -1114,7 +1110,6 @@ class ToolbarDialog extends Toolbar
 	static private function setupJs() {
 		
 		static $dialogAdded = false;
-		global $headerlib;
 
 		if( ! $dialogAdded ) {
 			$dialogAdded = true;
@@ -1171,7 +1166,6 @@ class ToolbarFullscreen extends Toolbar
 {
 	function __construct() // {{{
 	{
-		global $prefs;
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
 			->setWysiwygToken( 'Maximize' )
@@ -1226,7 +1220,7 @@ class ToolbarHelptool extends Toolbar
 	function getWysiwygToken( $areaId ) // {{{
 	{
 
-		global $wikilib, $smarty, $plugins, $section, $prefs;
+		global $wikilib, $smarty, $plugins;
 		
 		include_once ('lib/wiki/wikilib.php');
 		$plugins = $wikilib->list_plugins(true, $areaId);
@@ -1323,8 +1317,6 @@ class ToolbarSwitchEditor extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $smarty;
-		
 		return $this->getSelfLink('switchEditor(\'wysiwyg\', $(this).parents(\'form\')[0]);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-switcheditor');
 	} // }}}
@@ -1478,7 +1470,6 @@ class ToolbarSheet extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
-		global $prefs;
 		switch( $tagName ) {
 			case 'sheetsave':
 				$label = tra('Save Sheet');
