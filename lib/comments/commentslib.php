@@ -2648,7 +2648,7 @@ class Comments extends TikiLib
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$errors[] = $captchalib->getErrors();
 		}
-		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
+		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forum_info['forumId']) ) {
 			$errors = sprintf(tra('Please wait %d seconds between posts'). $forum_info['floodInterval']);
 		}
 		if ($tiki_p_admin_forum != 'y' && $forum_info['forum_use_password'] != 'n' && $params['password'] != $forum_info['forum_password']) {
