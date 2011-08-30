@@ -53,7 +53,7 @@ if (isset($_REQUEST['editor_id'])) {
 			$wysiwyg_wiki = false;
 			if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 				$info = $tikilib->get_page_info($referer[2]);
-				$wysiwyg_wiki = $info['is_html'] == 1 ? false : true;	
+				$wysiwyg_wiki = ($info['is_html'] == 0 && $info['wysiwyg'] == 'y') ? true : false;	
 			}
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']), false, $wysiwyg_wiki);
 		} else if ($_REQUEST['command'] == 'auto_save') {
