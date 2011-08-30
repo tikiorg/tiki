@@ -20,6 +20,7 @@ function prefs_trackerfield_list($partial = false) {
 			'dependencies' => $type['prefs'],
 			'type' => 'flag',
 			'warning' => isset($type['warning']) ? $type['warning'] : false,
+			'help' => isset($type['help']) ? urlencode($type['help']) : false,
 		);
 	}
 
