@@ -135,7 +135,11 @@ function wikiplugin_include($data, $params, $offset) {
 	}
 	
 	$parserlib = TikiLib::lib('parser');
-	$parserlib->parse_wiki_argvariable($text);
+	$options = null;
+	if (!empty($_REQUEST['page'])) {
+		$options['page'] = $_REQUEST['page'];
+	}
+	$parserlib->parse_wiki_argvariable($text, $options);
 	// append an edit button
 	global $smarty;
 	if (isset($perms) && $perms['tiki_p_edit'] === 'y') {
