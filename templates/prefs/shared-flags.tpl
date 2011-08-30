@@ -21,7 +21,7 @@
 {if !empty($p.popup_html)}
 	<a class="icon" title="{tr}Actions{/tr}" href="#" style="padding:0; margin:0; border:0"
 			 {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml=1 center="true" text=$p.popup_html|escape:"javascript"|escape:"html"}>
-		{icon _id='wrench' alt="{tr}Actions{/tr}"}
+		{icon _id='application_form' alt="{tr}Actions{/tr}"}
 	</a>
 {/if}
 

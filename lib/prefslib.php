@@ -170,7 +170,7 @@ class PreferencesLib
 				$info['popup_html'] = '<div class="opaque"><div class="box-title">'.tra('Actions').'</div><div class="box-data">';
 
 				if (!empty($info['admin'])) {
-					$icon= smarty_function_icon(array( '_id' => 'application_form', 'title' => tra('Admin')), $smarty);
+					$icon= smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
 					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a>';
 				}
 				if (!empty($info['permission'])) {
