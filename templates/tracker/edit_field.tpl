@@ -129,7 +129,7 @@
 		</div>
 	</div>
 
-	<div>
+	<div class="submit">
 		<input type="submit" name="submit" value="{tr}Save{/tr}"/>
 		<input type="hidden" name="trackerId" value="{$field.trackerId|escape}"/>
 		<input type="hidden" name="fieldId" value="{$field.fieldId|escape}"/>
