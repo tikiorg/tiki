@@ -2330,7 +2330,7 @@ class Comments extends TikiLib
 	{
 		global $prefs, $tiki_p_admin_comments;
 
-		if ($tiki_p_admin_comments == 'y' || $object[0] == 'forum') {
+		if ($tiki_p_admin_comments == 'y' || $info['type'] == 'forum') {
 			return 'y';
 		}
 
