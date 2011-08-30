@@ -747,7 +747,9 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
-		$parsed = $editlib->parseToWiki($edit_data);
+		if ($prefs['wysiwyg_htmltowiki'] === 'n' || $info['is_html'] == 1) {
+			$parsed = $editlib->parseToWiki($edit_data); // when we come from WYSIWYG Wiki the data must not be touched
+		}
 		$is_html = false;
 		$info['is_html'] = false;
 		$info['wysiwyg'] = false;
