@@ -103,9 +103,12 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			list($type, $id) = explode(':', $rel, 2);
 			$labels[$rel] = TikiLib::lib('object')->get_title($type, $id);
 		}
-		$labels = $this->buildFilter();
+
+		$filter = $this->buildFilter();
+
 		return $this->renderTemplate('trackerinput/relation.tpl', $context, array(
 			'labels' => $labels,
+			'filter' => $filter,
 		));
 	}
 
