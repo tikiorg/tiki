@@ -501,8 +501,8 @@ function wikiplugin_googlemap($data, $params) {
 				}
 			}
 			$icon = '';
-			$iconx = '';
-			$icony = '';
+			$icon_x = '';
+			$icon_y = '';
 			if (!empty($options_array[2]) && $iconsize = getimagesize($options_array[2])) {
 				if (isset($iconsize[0]) && isset($iconsize[1]) && $iconsize[0] && $iconsize[1]) {
 					$icon = $options_array[2];
@@ -603,7 +603,7 @@ function wikiplugin_googlemap($data, $params) {
 }
 
 function saveGmapDefaultxyz($feedback, $pointx, $pointy, $pointz) {	// AJAX_TODO
-	global $tikilib, $user;
+//	global $tikilib, $user;
 //	$objResponse = new xajaxResponse();
 //	if (!$user) {
 //		$objResponse->assign($feedback, "innerHTML", tra("Not logged in"));
@@ -623,7 +623,7 @@ function saveGmapDefaultxyz($feedback, $pointx, $pointy, $pointz) {	// AJAX_TODO
 }
 
 function saveGmapUser($feedback, $pointx, $pointy, $pointz, $u) {	// AJAX_TODO
-	global $prefs, $tikilib, $ajaxlib, $user, $userlib, $tiki_p_admin_users;
+//	global $prefs, $tikilib, $ajaxlib, $user, $userlib, $tiki_p_admin_users;
 //	$objResponse = new xajaxResponse();
 //	if (!($u == $user || $tiki_p_admin_users == 'y' && $u != $user && $userlib->user_exists($u))) {		
 //		$objResponse->assign($feedback, "innerHTML", tra("You can only set your own location"));
@@ -666,7 +666,7 @@ function saveGmapUser($feedback, $pointx, $pointy, $pointz, $u) {	// AJAX_TODO
 }
 
 function saveGmapItem($feedback, $pointx, $pointy, $pointz, $type, $itemId, $fieldId) {	// AJAX_TODO
-	global $tikilib, $ajaxlib, $user, $objectlib, $attributelib;
+//	global $tikilib, $ajaxlib, $user, $objectlib, $attributelib;
 //	$objResponse = new xajaxResponse();
 //	$res = false;
 //	include_once('lib/objectlib.php');
