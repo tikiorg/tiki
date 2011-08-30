@@ -250,7 +250,7 @@ class Tracker_field_Image extends Tracker_Field_File
 			$ratio = $max_width / $image_width;
 		} else {
 			$ratio = $max_height / $image_height;
-			if (round($image_width * $ratio) > $max_width) {
+			if ($max_width && round($image_width * $ratio) > $max_width) {
 				$ratio = $max_width / $image_width;
 			}
 		}
