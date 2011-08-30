@@ -1379,7 +1379,7 @@ class AccountingLib extends LogsLib
 							$errors[] = "$idname " . tra('does not exist.');
 					} else {
 						if ($res->numRows()>0)
-							$errors[] = "$idname $accountId " . tra('already exists');
+							$errors[] = "$idname $id " . tra('already exists');
 					} //existence
 				} // query
 			} // 0
