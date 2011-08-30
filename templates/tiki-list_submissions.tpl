@@ -107,11 +107,12 @@
 				</td>
 			</tr>
 		{sectionelse}
+			{assign var=numbercol value=$numbercol+1}
 			{norecords _colspan=$numbercol}
 		{/section}
 		{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
 			<tr>
-				<td colspan="7">
+				<td colspan="{$numbercol}">
 					{if $listpages}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
 							{if $tiki_p_remove_submission eq 'y'}
