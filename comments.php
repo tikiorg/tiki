@@ -246,7 +246,14 @@ if ($_REQUEST["comments_threadId"] > 0) {
 		}
 	}
 
-	$smarty->assign('comment_title', ( $prefs['forum_comments_no_title_prefix'] != 'y' ? tra('Re:').' ' : '' ).$comment_info["title"]);
+	if ( $prefs['forum_reply_forcetitle'] == 'y' ) {
+		$comment_title = '';
+	} elseif ( $prefs['forum_comments_no_title_prefix'] != 'y' ) {
+		$comment_title = tra('Re:').' '.$comment_info["title"];
+	} else {
+		$comment_title = $comment_info["title"];
+	}
+	$smarty->assign('comment_title', $comment_title);
 	$smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
 } else {
 	$smarty->assign('comment_title', '');

@@ -30,6 +30,7 @@
 				{preference name=feature_forum_replyempty}
 				{preference name=forum_reply_notitle}
 				{preference name=forum_comments_no_title_prefix}
+				{preference name=forum_reply_forcetitle}
 				{preference name=feature_forums_allow_thread_titles}
 				{preference name=forum_match_regex}
 			</fieldset>

@@ -113,5 +113,11 @@ function prefs_forum_list() {
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'forum_reply_forcetitle' => array(
+			'name' => tra('Force title in reply'),
+			'description' => tra('Shows a blank title box and requires it to be filled before submission of forum post.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

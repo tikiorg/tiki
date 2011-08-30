@@ -317,5 +317,15 @@
 	{/if}
 {/if}
 </div>
+{if $prefs.forum_reply_forcetitle eq 'y'}
+{jq}
+$('#editpostform').submit( function() {
+	if (!$('#comments-title').val()) {
+		alert('{tr}Please enter a title{/tr}');
+		return false;
+	}
+});
+{/jq}
+{/if}
 {* End of Post dialog *}
 
