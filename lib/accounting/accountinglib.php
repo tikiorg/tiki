@@ -374,7 +374,7 @@ class AccountingLib extends LogsLib
 																		, $accountTax)
 												);
 		if ($res === false) {
-			$errors[] = tra('Error creating account') & " $accountId: " . $this->ErrorNo() . ": " . $tikilib->ErrorMsg() . "<br /><pre>$query</pre>";
+			$errors[] = tra('Error creating account') & " $accountId: " . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			return $errors;
 		}
 		return true;
@@ -605,7 +605,7 @@ class AccountingLib extends LogsLib
 				`itemAmount`, `itemText`, `itemTs`)
 				VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
-		$res = $tikilib->query($query, array($bookId, $journalId, $debitAccount, -1, $amount, $debitText));
+		$res = $this->query($query, array($bookId, $journalId, $debitAccount, -1, $amount, $debitText));
 
 		if ($res === false) {
 			$errors[] = tra('Booking error creating debit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
@@ -613,10 +613,10 @@ class AccountingLib extends LogsLib
 			return $errors;
 		}
 
-		$res = $tikilib->query($query, array($bookId, $journalId, $creditAccount, 1, $amount, $creditText));
+		$res = $this->query($query, array($bookId, $journalId, $creditAccount, 1, $amount, $creditText));
 
 		if ($res === false) {
-			$errors[] = tra('Booking error creating credit entry') . $tikilib->ErrorNo() . ": " . $tikilib->ErrorMsg() . "<br /><pre>$query</pre>";
+			$errors[] = tra('Booking error creating credit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			$errors[] = $this->manualRollback($journalId);
 			return $errors;
 		}
@@ -843,7 +843,7 @@ class AccountingLib extends LogsLib
 		$res = $this->query($query, array($bookId, $stackId));
 		$rollback = $rollback and ($res !== false);
 		if (!$rollback) {
-			return tra('Rollback failed, inconsistent database: Cleanup needed for stackId %0 in book %1', array($journalId, $bookId));
+			return tra('Rollback failed, inconsistent database: Cleanup needed for stackId %0 in book %1', array($stackId, $bookId));
 		} else {
 			return tra('successfully rolled back #') . " $stackId";
 		}
@@ -969,7 +969,7 @@ class AccountingLib extends LogsLib
 			$res = $this->query($query, array($bookId, $stackId, $creditAccount[$i], 1, $a, $creditText[$i]));
 			if ($res === false) {
 				$errors[] = tra('Booking error creating stack credit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
-				$errors[] = $this->manualRollback($bookId, $journalId);
+				$errors[] = $this->manualRollback($bookId, $stackId);
 				return $errors;
 			}
 		}
@@ -1088,7 +1088,7 @@ class AccountingLib extends LogsLib
 			$res = $this->query($query, array($bookId, $stackId, $creditAccount[$i], 1, $a, $creditText[$i]));
 			if ($res === false) {
 				$errors[] = tra('Booking error creating stack credit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
-				$errors[] = $this->manualRollback($bookId, $journalId);
+				$errors[] = $this->manualRollback($bookId, $stackId);
 				return $errors;
 			}
 		}
@@ -1230,7 +1230,7 @@ class AccountingLib extends LogsLib
 	function getBankAccount($bookId, $accountId)
 	{
 		$query = "SELECT * FROM `tiki_acct_bankaccount` WHERE bankBookId=? and bankAccountId=?";
-		$res = $tikilib->query($query, array($bookId, $accountId));
+		$res = $this->query($query, array($bookId, $accountId));
 		if ($res === false) return $res;
 		return $res->fetchRow();
 	}//getBankAccount
@@ -1353,7 +1353,6 @@ class AccountingLib extends LogsLib
 	 * @param	string	$table		the table to search
 	 * @param	boolean	$exists		true if a record must exist, false if it must not	
 	 *
-	 * @global	object	$tikilib	contains required database functions
 	 * @return	array	Returns aa array of errors (empty if none occurred)
 	 */
 	function validateId($idname, $id, $table, $exists = true, $bookIdName = '', $bookId = 0)
@@ -1372,7 +1371,7 @@ class AccountingLib extends LogsLib
 				
 				$res = $this->query($query);
 				if ($res === false) {
-					$errors[] = tra('Error checking') & " $idname: " . $tikilib->ErrorNo() . ": " . $tikilib->ErrorMsg() . "<br /><pre>$query</pre>";
+					$errors[] = tra('Error checking') & " $idname: " . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 				} else {
 					if ($exists) {
 						if ($res->numRows() == 0)
