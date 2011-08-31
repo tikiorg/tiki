@@ -4183,13 +4183,9 @@ class TikiLib extends TikiDb_Bridge
 				$histlib->get_page_latest_version($pageName)
 			);
 
-		$user = $info["user"];
-		if (!$user) $user = 'anonymous';
-		$ip = $info["ip"];
-		$comment = $info["comment"];
-		$description = $info['description'];
+		$user = $info["user"] ? $info["user"] : 'anonymous';
 		$data = $info["data"];
-		$willDoHistory = ($prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment );
+		$willDoHistory = ($prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $info['description'] != $edit_description || $info["comment"] != $edit_comment );
 		$version = $old_version + ($willDoHistory?1:0);
 
 		if ($is_html === null) {
