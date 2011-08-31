@@ -84,5 +84,14 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 		$fieldData = $this->getFieldData();
 		return $fieldData['value']; 
 	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$checked = $this->getValue() === 'y';
+
+		return array(
+			$baseKey => $typeFactory->identifier($checked ? 'y' : 'n'),
+		);
+	}
 }
 
