@@ -47,14 +47,22 @@ function tra($content, $lg='', $unused = false, $args = array()) {
 
 function init_language( $lg ) {
 	global $tikidomain, $prefs;
-	if( is_file("lang/$lg/language.php")) {
+	if (is_file("lang/$lg/language.php")) {
 		global ${"lang_$lg"};
 
 		$lang = array();
 		include("lang/$lg/language.php");
+		
+		// include mods language files if any
+		foreach (glob("lang/$lg/language_*.php") as $file) {
+			require($file);
+			$lang = array_merge($lang, $lang_mod);
+		}
+
 		if (is_file("lang/$lg/custom.php")) {
 			include_once("lang/$lg/custom.php");
 		}
+		
 		if (!empty($tikidomain) && is_file("lang/$lg/$tikidomain/custom.php")) {
 			include_once("lang/$lg/$tikidomain/custom.php");
 		}
