@@ -43,15 +43,9 @@ if ( $prefs['lang_use_db'] != 'y' ) {
     global $lang;
 }
 
-/*
- * Some languages needs BiDi support. Add their code names here ...
- */
-if ( $prefs['language'] == 'ar' || $prefs['language'] == 'he' || $prefs['language'] == 'fa' ) {
-	$prefs['feature_bidi'] = 'y';
-} else {
-	$prefs['feature_bidi'] = 'n';
+if (empty($prefs['language']) || $prefs['change_language'] == 'n') {
+	$prefs['language'] = $prefs['site_language']; // Override user-specific language
 }
 
-if (empty($prefs['language']) || $prefs['change_language'] == 'n') {
-	$prefs['language'] = $prefs['site_language'];
-}
+// Some languages need BiDi support. Add their code names here ...
+$prefs['feature_bidi'] = in_array($prefs['language'], array('ar', 'he', 'fa')) ? 'y' : 'n';
