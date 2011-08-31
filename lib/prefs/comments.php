@@ -42,7 +42,7 @@ function prefs_comments_list() {
 			'description' => tra('Prevent comment spam by using the Akismet service to determine if the comment is spam. If comment moderation is enabled, the Akismet will indicate if the comment is to be moderated or not. If there is no comment moderation, the comment will be rejected if considered as spam.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('new', 'advanced'),
+			'tags' => array('advanced'),
 			'keywords' => 'askimet', // Let an admin find the preference even if his query has this common typo
 		),
 		'comments_akismet_apikey' => array(
@@ -51,7 +51,7 @@ function prefs_comments_list() {
 			'hint' => tr('Obtain this key by registering your site on [%0]', 'http://akismet.com'),
 			'type' => 'text',
 			'filter' => 'word',
-			'tags' => array('new', 'advanced'),
+			'tags' => array('advanced'),
 			'default' => '',
 			'keywords' => 'askimet',	
 		),
@@ -60,7 +60,7 @@ function prefs_comments_list() {
 			'description' => tr('Enable spam filtering for registered users as well. Useful if your site allows for anyone to register without much validation.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('new', 'advanced'),
+			'tags' => array('advanced'),
 			'keywords' => array('askimet'),			
 		),
 	);

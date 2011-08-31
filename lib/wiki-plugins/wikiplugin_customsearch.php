@@ -15,7 +15,7 @@ function wikiplugin_customsearch_info()
 		'body' => tra('LIST plugin configuration information'),
 		'filter' => 'wikicontent',
 		'icon' => 'pics/icons/text_list_bullets.png',
-		'tags' => array( 'new' ),		
+		'tags' => array('expert'),		
 		'params' => array(
 			'wiki' => array(
 				'required' => true,

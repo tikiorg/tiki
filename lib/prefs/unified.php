@@ -75,7 +75,7 @@ function prefs_unified_list()
 			'description' => tra('Time in minutes a user has a same query cached '),
 			'hint' => tra('In minutes'),
 			'default' => '0',
-			'tags' => array('advanced', 'new'),
+			'tags' => array('advanced'),
 		),
 	);
 }

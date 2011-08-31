@@ -204,7 +204,7 @@ function prefs_fgal_list() {
 			'description' => tra('Allow to create files in file galleries using a URL that will be polled for new revisions.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('advanced', 'new'),
+			'tags' => array('advanced'),
 			'dependencies' => array('fgal_keep_fileId'),
 		),
 		'fgal_source_refresh_frequency' => array(

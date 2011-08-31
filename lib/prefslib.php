@@ -662,7 +662,7 @@ class PreferencesLib
 	{
 		global $user;
 		$tikilib = TikiLib::lib('tiki');
-		$filters = $tikilib->get_user_preference($user, 'pref_filters', 'basic,new');
+		$filters = $tikilib->get_user_preference($user, 'pref_filters', 'basic');
 		$filters = explode(',', $filters);
 		return $filters;
 	}
@@ -682,8 +682,8 @@ class PreferencesLib
 				'label' => tra('Advanced'),
 				'type' => 'positive',
 			),
-			'new' => array(
-				'label' => tra('New'),
+			'expert' => array(
+				'label' => tra('Expert'),
 				'type' => 'negative',
 			),
 			'experimental' => array(
