@@ -684,7 +684,7 @@ class PreferencesLib
 			),
 			'expert' => array(
 				'label' => tra('Expert'),
-				'type' => 'negative',
+				'type' => 'positive',
 			),
 			'experimental' => array(
 				'label' => tra('Experimental'),
