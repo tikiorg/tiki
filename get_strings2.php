@@ -18,6 +18,7 @@
  * Command line examples:
  * 		- php get_strings.php
  * 		- php get_strings.php lang=pt-br outputFiles=true
+ * 		- php get_strings.php baseDir=lib/ excludeDirs=lib/core/Zend,lib/captcha includeFiles=captchalib.php,index.php
  *
  *
  * If you want to know the translation progression for your language, just visit : http://i18n.tiki.org/status
@@ -54,24 +55,47 @@ if ($request->hasProperty('outputFiles')) {
 	$options['outputFiles'] = $request->getProperty('outputFiles');
 }
 
+$excludeDirs = array(
+	'dump' , 'img', 'lang', 'lib/adodb', 'lib/ckeditor',
+	'lib/codemirror', 'lib/core/Zend', 'lib/ezcomponents', 'lib/html5shim', 
+	'lib/htmlpurifier', 'lib/jquery', 'lib/jquery.s5', 'lib/jquery.sheet', 'lib/jscalendar', 'lib/mobileesp', 'lib/pclzip',
+	'lib/pear', 'lib/phpcas', 'lib/smarty', 'lib/svg-edit', 'lib/test',	'temp',
+	'temp/cache',	'templates_c'
+);
+
+$includeFiles = array(
+	'./lang/langmapping.php', './img/flags/flagnames.php'
+);
+
+// command-line only options
+if (php_sapi_name() == 'cli') {
+	if ($request->hasProperty('baseDir')) {
+		$options['baseDir'] = $request->getProperty('baseDir');
+		
+		// when a custom base dir is set, default $includeFiles and $excludeDirs are not used
+		$includeFiles = array();
+		$excludeDirs = array();
+	}
+	
+	if ($request->hasProperty('excludeDirs')) {
+		$excludeDirs = explode(',', $request->getProperty('excludeDirs'));
+	}
+	
+	if ($request->hasProperty('includeFiles')) {
+		$includeFiles = explode(',', $request->getProperty('includeFiles'));
+	}
+}
+
 $getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile, $options);
 
 $getStrings->addFileType(new Language_FileType_Php);
 $getStrings->addFileType(new Language_FileType_Tpl);
 
 // skip the following directories 
-$getStrings->collectFiles->setExcludeDirs(array(
-	'dump' , 'img', 'lang', 'lib/adodb', 'lib/ckeditor',
-	'lib/codemirror', 'lib/core/Zend', 'lib/ezcomponents', 'lib/html5shim', 
-	'lib/htmlpurifier', 'lib/jquery', 'lib/jquery.s5', 'lib/jquery.sheet', 'lib/jscalendar', 'lib/mobileesp', 'lib/pclzip',
-	'lib/pear', 'lib/phpcas', 'lib/smarty', 'lib/svg-edit', 'lib/test',	'temp',
-	'temp/cache',	'templates_c'
-));
+$getStrings->collectFiles->setExcludeDirs($excludeDirs);
 
 // manually add the following files from skipped directories
-$getStrings->collectFiles->setIncludeFiles(array(
-	'./lang/langmapping.php', './img/flags/flagnames.php'
-));
+$getStrings->collectFiles->setIncludeFiles($includeFiles);
 
 echo formatOutput("Languages: " . implode(' ', $getStrings->getLanguages()) . "\n");
 
