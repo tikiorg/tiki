@@ -8,8 +8,12 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
+if ($prefs['feature_multilingual'] != 'y') { // change_language is enabled by default, but depends on feature_multilingual. Hackish...
+	$prefs['change_language'] = 'n';
+}
+
 if (isset($_REQUEST['switchLang'])) { // check can change lang + valid lang
-	if ($prefs['change_language'] != 'y' || $prefs['feature_multilingual'] != 'y'
+	if ($prefs['change_language'] != 'y'
 		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
 		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php'))
 		unset($_REQUEST['switchLang']);
@@ -27,7 +31,7 @@ if (isset($_REQUEST['switchLang'])) {
 	} else {
 		$_SESSION['language'] = $prefs['language'];
 	}
-} elseif ( $prefs['feature_multilingual'] == 'y' && $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])and !isset($_SESSION['s_prefs']['language'])) {
+} elseif ( $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])and !isset($_SESSION['s_prefs']['language'])) {
 	$browser_language = detect_browser_language();
 	if ( ! empty($browser_language) ) {
 		$prefs['language'] = $browser_language;
@@ -48,6 +52,6 @@ if ( $prefs['language'] == 'ar' || $prefs['language'] == 'he' || $prefs['languag
 	$prefs['feature_bidi'] = 'n';
 }
 
-if (empty($prefs['language']) || ($prefs['feature_multilingual'] == 'y' && $prefs['change_language'] == 'n') ) {
+if (empty($prefs['language']) || $prefs['change_language'] == 'n') {
 	$prefs['language'] = $prefs['site_language'];
 }
