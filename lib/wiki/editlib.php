@@ -439,7 +439,7 @@ class EditLib
 	 * @return string			html to send to ckeditor
 	 */
 
-	function parseToWysiwyg( $inData, $fromWiki = false, $wysiwig_wiki = false ) {
+	function parseToWysiwyg( $inData, $fromWiki = false, $wysiwyg_wiki = false ) {
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
@@ -447,8 +447,8 @@ class EditLib
 		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
 		
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => (!$wysiwig_wiki && !$fromWiki),
-														'process_wiki_paragraphs' => ($wysiwig_wiki || $fromWiki),
+														'ck_editor' => true, 'is_html' => (!$wysiwyg_wiki && !$fromWiki),
+														'process_wiki_paragraphs' => ($wysiwyg_wiki || $fromWiki),
 															'process_double_brackets' => 'n'));
 		
 		if ($fromWiki) {
