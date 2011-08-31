@@ -435,7 +435,7 @@ class EditLib
 	 *
 	 * @param $inData			page data, can be wiki or mixed html/wiki
 	 * @param bool $fromWiki	set if converting from wiki page using "switch editor"
-	 * @param bool $wysiwig_wiki set if are doing WYSIWYG Wiki
+	 * @param bool $wysiwyg_wiki set if are doing WYSIWYG Wiki
 	 * @return string			html to send to ckeditor
 	 */
 
