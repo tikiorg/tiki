@@ -304,12 +304,14 @@ $icons = array(
 		'icon' => 'pics/large/feed-icon.png',
 		'title' => tr('Feeds'),
 		'help' => 'Feeds User',
+		'description' => tr('Outgoing RSS feed setup'),
 	),
 	"connect" => array(
 		'position' => '-200px -200px;',
 		'icon' => 'pics/large/gnome-globe.png',
 		'title' => tr('Connect'),
 		'help' => 'Connect',
+		'description' => tr('Tiki Connect - join in!'),
 	),
 	"rating" => array(
 		'position' => '-300px -200px;',
@@ -653,6 +655,10 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
 		}
 	}
+}
+
+foreach ($icons as &$icon) {
+	$icon = array_merge( array( 'disabled' => false, 'description' => '', 'icon' => 'pics/large/green_question48x48.png'), $icon);
 }
 
 $smarty->assign('icons', $icons);
