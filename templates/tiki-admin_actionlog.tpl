@@ -263,7 +263,7 @@
 							<td>
 								{foreach name=contribution from=$actionlog.contributions item=contribution}
 									{if !$smarty.foreach.contribution.first}, {/if}
-									{$contribution.name}
+									{$contribution.name|escape}
 								{/foreach}
 							</td>
 							{if $prefs.feature_contributor_wiki eq 'y'}
@@ -528,8 +528,8 @@
 				{foreach from=$groupContributions key=group item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
 						<tr class="{cycle}">
-							<td class="text">{$group}</td>
-							<td class="text">{$contribution}</td>
+							<td class="text">{$group|escape}</td>
+							<td class="text">{$contribution|escape}</td>
 							<td class="integer">{$stat.add}</td>
 							<td class="integer">{$stat.del}</td>
 						</tr>
@@ -550,8 +550,8 @@
 				{foreach from=$userContributions key=user item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
 						<tr class="{cycle}">
-							<td class="username">{$user}</td>
-							<td class="text">{$stat.name}</td>
+							<td class="username">{$user|escape}</td>
+							<td class="text">{$stat.name|escape}</td>
 							<td class="integer">{$stat.stat.add}</td>
 							<td class="integer">{$stat.stat.del}</td>
 						</tr>
@@ -575,7 +575,7 @@
 				</tr>
 				{foreach from=$contributionStat key=contributionId item=contribution}
 					<tr class="{cycle}">
-						<td>{$contribution.name}</td>
+						<td>{$contribution.name|escape}</td>
 						{foreach from=$contribution.stat item=stat}
 							<td>
 								{if !empty($stat.add)}<span class="diffadded">{$stat.add}</span>{/if}
