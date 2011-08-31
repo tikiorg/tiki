@@ -4471,62 +4471,6 @@ class TikiLib extends TikiDb_Bridge
 		$mail->send(array($prefs['sender_email']));
 	}
 	
-	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
-		if (strtolower($pageName) == 'sandbox')
-			return;
-
-		// Collect pages before modifying edit_data
-		$pages = $this->get_pages($edit_data, true);
-
-		if (!$this->page_exists($pageName))
-			return false;
-
-		$history = $this->table('tiki_history');
-		$history->delete(array(
-			'pageName' => $pageName,
-			'version' => (int) $version,
-		));
-		$history->insert(array(
-			'pageName' => $pageName,
-			'version' => (int) $version,
-			'lastModif' => (int) $lastModif,
-			'user' => $edit_user,
-			'ip' => $edit_ip,
-			'comment' => $edit_comment,
-			'data' => $edit_data,
-			'description' => $description,
-		));
-
-		//print("version: $version<br />");
-		// Get this page information
-		$info = $this->get_page_info($pageName);
-
-		if ($version >= $info["version"]) {
-			$modifications = array(
-				'data' => $edit_data,
-				'comment' => $edit_comment,
-				'lastModif' => $this->now,
-				'version' => (int) $version,
-				'user' => $edit_user,
-				'ip' => $edit_ip,
-				'description' => $description,
-				'page_size' => strlen($edit_data),
-				'lang' => $lang,
-			);
-			$this->table('tiki_pages')->update($modifications, array(
-				'pageName' => $pageName,
-			));
-
-			// Parse edit_data updating the list of links from this page
-			$this->clear_links($pageName);
-
-			// Pages are collected at the top of the function before adding slashes
-			foreach ($pages as $page => $types) {
-				$this->replace_link($pageName, $page, $types);
-			}
-		}
-	}
-
 	function get_display_timezone($_user = false) {
 		global $prefs, $user;
 
