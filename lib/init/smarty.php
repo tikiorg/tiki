@@ -60,9 +60,9 @@ class Smarty_Tiki extends Smarty
 		$this->use_sub_dirs = false;
 		$this->url_overriding_prefix_stack = array();
 		if (!empty($prefs['smarty_notice_reporting']) and $prefs['smarty_notice_reporting'] === 'y' ) {
-			$this->error_reporting = E_NOTICE;
+			$this->error_reporting = E_ALL;
 		} else {
-			$this->error_reporting = 0;
+			$this->error_reporting = E_ALL ^ E_NOTICE;
 		}
 	}
 
