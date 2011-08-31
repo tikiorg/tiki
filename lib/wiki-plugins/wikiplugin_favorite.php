@@ -24,7 +24,7 @@ function wikiplugin_favorite_info() {
 				'required' => true,
 				'name' => tra('Object ID'),
 				'description' => tra('Object ID'),
-				'filter' => 'int',
+				'filter' => 'text',
 				'default' => '',
 			),
 		)
@@ -32,8 +32,21 @@ function wikiplugin_favorite_info() {
 }
 function wikiplugin_favorite($data, $params) {
 	global $smarty;
-	$smarty->assign('wikiplugin_favorite_objectId', urlencode($params['objectId']));
-	$smarty->assign('wikiplugin_favorite_objectType', urlencode($params['objectType']));	
+	if ($params['objectType'] == 'usertracker') {
+		$objectType = 'trackeritem';
+		$objectId = 0;
+		if ($userid = Tikilib::lib('tiki')->get_user_id($params['objectId'])) {
+			$tracker = TikiLib::lib('user')->get_usertracker($userid);
+			if( $tracker && $tracker['usersTrackerId'] ) {
+				$objectId = TikiLib::lib('trk')->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $params['objectId'] );
+			}
+		}
+	} else {
+		$objectType = $params['objectType'];
+		$objectId = $params['objectId'];
+	}
+	$smarty->assign('wikiplugin_favorite_objectId', urlencode($objectId));
+	$smarty->assign('wikiplugin_favorite_objectType', urlencode($objectType));	
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_favorite.tpl');
 	return $ret;
 }						   
