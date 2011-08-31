@@ -32,7 +32,7 @@
 				{preference name=wikiplugin_wantedpages}				
 			</fieldset>
 		
-			{preference name=wikiHomePage default=$prefs.site_wikiHomePage}
+			{preference name=wikiHomePage}
 
 			<fieldset>
 				<legend>{tr}Page display{/tr}</legend>

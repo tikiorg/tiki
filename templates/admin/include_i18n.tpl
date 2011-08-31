@@ -20,7 +20,7 @@
 {tabset name="admin_i18n"}
 	{tab name="{tr}Internationalization{/tr}"}
 
-{preference name=language default=$prefs.site_language}
+{preference name=language}
 {preference name=wiki_page_regex}
 {preference name=default_mail_charset}
 

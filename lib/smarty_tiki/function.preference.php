@@ -6,7 +6,7 @@
 // $Id$
 
 function smarty_function_preference( $params, $smarty ) {
-	global $prefslib, $prefs; require_once 'lib/prefslib.php';
+	global $prefslib, $prefs, $user_overrider_prefs; require_once 'lib/prefslib.php';
 	if( ! isset( $params['name'] ) ) {
 		return 'Preference name not specified.';
 	}
@@ -21,8 +21,8 @@ function smarty_function_preference( $params, $smarty ) {
 		if( isset($params['label']) ) {
 			$info['name'] = $params['label'];
 		}
-		if (isset($params['default'])) {// use for site_language
-			$info['value'] = $params['default'];
+		if (in_array($params['name'], $user_overrider_prefs) && isset($prefs[$params['name']])) {
+			$info['value'] = $prefs['site_' . $params['name']];
 		}
 
 		if (isset($params['visible']) && $params['visible'] == 'always') {

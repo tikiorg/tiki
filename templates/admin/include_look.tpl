@@ -8,7 +8,7 @@
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
 
-			{preference name=style default=$prefs.site_style}
+			{preference name=style}
 			<div class="adminoptionbox">
 				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 					<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
@@ -16,7 +16,7 @@
 			</div>
 
 			<div class="adminoptionbox">
-				{preference name=style_option default=$prefs.site_style_option}
+				{preference name=style_option}
 				{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
 					{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
 				{/if}
@@ -171,7 +171,7 @@
 				{preference name="themegenerator_feature"}
 				<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 					<div class="adminoptionbox">			
-						{preference name="themegenerator_theme" default=$prefs.site_themegenerator_theme}
+						{preference name="themegenerator_theme"}
 						<div  class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 							
 							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
