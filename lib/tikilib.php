@@ -4227,7 +4227,7 @@ class TikiLib extends TikiDb_Bridge
 			'version_minor' => $edit_minor,
 			'user' => $edit_user,
 			'ip' => $edit_ip,
-			'page_size' => strlen($data),
+			'page_size' => strlen($edit_data),
 			'is_html' => $html,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
