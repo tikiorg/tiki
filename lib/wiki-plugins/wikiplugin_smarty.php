@@ -19,7 +19,7 @@ function wikiplugin_smarty_info() {
 			'name' => array(
 				'required' => false,
 				'name' => tra('Smarty Function'),
-				'description' => tra('The name of the smarty function that the button will activate. Available functions are: lib/smarty/libs/plugins/function.[name].php'),
+				'description' => tra('The name of the Smarty function that the button will activate. Available functions are: lib/smarty/libs/plugins/function.[name].php'),
 				'filter' => 'word',
 				'default' => '',
 			),

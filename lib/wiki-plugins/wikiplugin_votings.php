@@ -8,7 +8,7 @@ function wikiplugin_votings_info() {
 	return array(
 		'name' => tra('Votings'),
 		'documentation' => 'PluginVotings',
-		'description' => tra('Saves voting information in smarty variables for display'),
+		'description' => tra('Saves voting information in Smarty variables for display'),
 		'prefs' => array( 'wikiplugin_votings' ),	
 		'format' => 'html',
 		'params' => array(
