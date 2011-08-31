@@ -67,6 +67,7 @@ class TWVersion
 				16=>'Vulpeculae',	// 5.x
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
+				19=>'Star required',	// 8.x
 		);
 	}
 
