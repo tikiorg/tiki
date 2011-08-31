@@ -4313,7 +4313,7 @@ class TikiLib extends TikiDb_Bridge
 				$logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $hash['contributions'], $hash2);
 				if ($prefs['feature_contribution'] == 'y') {
 					$contributionlib = TikiLib::lib('contribution');
-					$contributionlib->assign_contributions($hash['contributions'], $pageName, 'wiki page', $description, $pageName, "tiki-index.php?page=".urlencode($pageName));
+					$contributionlib->assign_contributions($hash['contributions'], $pageName, 'wiki page', $edit_description, $pageName, "tiki-index.php?page=".urlencode($pageName));
 				}
 			}
 
