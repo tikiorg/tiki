@@ -585,6 +585,7 @@ class RSSLib extends TikiDb_Bridge
 	
 		$configuration['type'] = 'article';
 		
+		$module = $this->get_rss_module( $rssId );
 
 		if( $module['actions'] ) {
 			$actions = json_decode( $module['actions'], true );
