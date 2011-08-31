@@ -69,7 +69,7 @@ function wikiplugin_bigbluebutton_info() {
 }
 
 function wikiplugin_bigbluebutton( $data, $params ) {
-	global $smarty, $prefs, $user, $u_info;
+	global $smarty, $prefs, $user;
 	global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
 	$meeting = $params['name']; // Meeting is more descriptive than name, but parameter name was already decided.
 
@@ -91,7 +91,7 @@ function wikiplugin_bigbluebutton( $data, $params ) {
 	if( $perms->bigbluebutton_join ) {
 		if( isset($_POST['bbb']) && $_POST['bbb'] == $name ) {
 			if( ! $user && isset($_POST['bbb_name']) && ! empty($_POST['bbb_name']) ) {
-				$u_info['prefs']['realName'] = $params['prefix'] . $_POST['bbb_name'];
+				$_SESSION['bbb_name'] = $params['prefix'] . $_POST['bbb_name'];
 			}
 
 			// Attempt to create room made before joining as the BBB server has no persistency.

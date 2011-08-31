@@ -138,6 +138,8 @@ class BigBlueButtonLib
 			return $u_info['prefs']['realName'];
 		} elseif( $u_info['login'] ) {
 			return $u_info['login'];
+		} elseif(!empty($_SESSION['bbb_name'])) {
+				return $_SESSION['bbb_name'];
 		} else {
 			return tra('anonymous');
 		}
