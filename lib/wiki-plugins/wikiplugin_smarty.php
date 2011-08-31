@@ -18,7 +18,7 @@ function wikiplugin_smarty_info() {
 		'params' => array(
 			'name' => array(
 				'required' => false,
-				'name' => tra('Smarty Function'),
+				'name' => tra('Smarty function'),
 				'description' => tra('The name of the Smarty function that the button will activate. Available functions are: lib/smarty/libs/plugins/function.[name].php'),
 				'filter' => 'word',
 				'default' => '',
