@@ -14,8 +14,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				'name' => tr('Files'),
 				'description' => tr('Attached and upload files stored in the file galleries to the tracker item.'),
 				'prefs' => array('trackerfield_files', 'feature_file_galleries'),
-				'tags' => array('experimental'),
-				'help' => 'Files Tracker Field',				
+				'tags' => array('advanced'),
+				'help' => 'Files Tracker Field',
 				'default' => 'y',
 				'params' => array(
 					'galleryId' => array(
