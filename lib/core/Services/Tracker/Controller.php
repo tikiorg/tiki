@@ -481,5 +481,156 @@ class Services_Tracker_Controller
 			'name' => $definition->getConfiguration('name'),
 		);
 	}
+
+	function action_replace($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$confirm = $input->confirm->int();
+
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		if ($confirm) {
+			$name = $input->name->text();
+
+			if (! $name) {
+				throw new Services_Exception_MissingValue('name');
+			}
+
+			$data = array(
+				'name' => $name,
+				'description' => $input->description->text(),
+				'descriptionIsParsed' => $input->descriptionIsParsed->int() ? 'y' : 'n',
+				'showStatus' => $input->showStatus->int() ? 'y' : 'n',
+				'showStatusAdminOnly' => $input->showStatusAdminOnly->int() ? 'y' : 'n',
+				'showCreated' => $input->showCreated->int() ? 'y' : 'n',
+				'showCreatedView' => $input->showCreatedView->int() ? 'y' : 'n',
+				'showCreatedBy' => $input->showCreatedBy->int() ? 'y' : 'n',
+				'showCreatedFormat' => $input->showCreatedFormat->text(),
+				'showLastModif' => $input->showLastModif->int() ? 'y' : 'n',
+				'showLastModifView' => $input->showLastModifView->int() ? 'y' : 'n',
+				'showLastModifBy' => $input->showLastModifBy->int() ? 'y' : 'n',
+				'showLastModifFormat' => $input->showLastModifFormat->text(),
+				'defaultOrderKey' => $input->defaultOrderKey->int(),
+				'defaultOrderDir' => $input->defaultOrderKey->word(),
+				'doNotShowEmptyField' => $input->doNotShowEmptyField->int() ? 'y' : 'n',
+				'showPopup' => $input->showPopup->text(),
+				'defaultStatus' => (array) $input->defaultStatus->word(),
+				'newItemStatus' => $input->newItemStatus->word(),
+				'modItemStatus' => $input->modItemStatus->word(),
+				'outboundEmail' => $input->outboundEmail->email(),
+				'simpleEmail' => $input->simpleEmail->int() ? 'y' : 'n',
+				'groupforAlert' => $input->groupforAlert->groupname(),
+				'showeachuser' => $input->showeachuser->int() ? 'y' : 'n',
+				'writerCanModify' => $input->writerCanModify->int() ? 'y' : 'n',
+				'userCanTakeOwnership' => $input->userCanTakeOwnership->int() ? 'y' : 'n',
+				'oneUserItem' => $input->oneUserItem->int() ? 'y' : 'n',
+				'writerGroupCanModify' => $input->writerGroupCanModify->int() ? 'y' : 'n',
+				'useRatings' => $input->useRatings->int() ? 'y' : 'n',
+				'showRatings' => $input->showRatings->int() ? 'y' : 'n',
+				'ratingOptions' => $input->ratingOptions->text(),
+				'useComments' => $input->useComments->int() ? 'y' : 'n',
+				'showComments' => $input->showComments->int() ? 'y' : 'n',
+				'showLastComment' => $input->showLastComment->int() ? 'y' : 'n',
+				'useAttachments' => $input->useAttachments->int() ? 'y' : 'n',
+				'showAttachments' => $input->showAttachments->int() ? 'y' : 'n',
+				'orderAttachments' => implode(',', $input->orderAttachments->word()),
+				'start' => $input->start->int() ? $this->readDate($input, 'start') : 0,
+				'end' => $input->end->int() ? $this->readDate($input, 'end') : 0,
+			);
+
+			$this->utilities->updateTracker($trackerId, $data);
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'info' => $definition->getInformation(),
+			'statusTypes' => TikiLib::lib('trk')->status_types(),
+			'statusList' => preg_split('//', $definition->getConfiguration('defaultStatus', 'o'), -1, PREG_SPLIT_NO_EMPTY),
+			'sortFields' => $this->getSortFields($definition),
+			'attachmentAttributes' => $this->getAttachmentAttributes($definition->getConfiguration('orderAttachments', 'created,filesize,hits')),
+			'start_date' => $this->format($definition->getConfiguration('start'), '%Y-%m-%d'),
+			'start_time' => $this->format($definition->getConfiguration('start'), '%H:%M'),
+			'end_date' => $this->format($definition->getConfiguration('end'), '%Y-%m-%d'),
+			'end_time' => $this->format($definition->getConfiguration('end'), '%H:%M'),
+		);
+	}
+
+	private function getSortFields($definition)
+	{
+		$sorts = array();
+
+		foreach ($definition->getFields() as $field) {
+			$sorts[$field['fieldId']] = $field['name'];
+		}
+
+		$sorts[-1] = tr('Last Modification');
+		$sorts[-2] = tr('Creation Date');
+		$sorts[-3] = tr('Item ID');
+
+		return $sorts;
+	}
+
+	private function getAttachmentAttributes($active)
+	{
+		$active = explode(',', $active);
+
+		$available = array(
+			'filename' => tr('Filename'),
+			'created' => tr('Creation date'),
+			'hits' => tr('Views'),
+			'comment' => tr('Comment'),
+			'filesize' => tr('File size'),
+			'version' => tr('Version'),
+			'filetype' => tr('File type'),
+			'longdesc' => tr('Long description'),
+			'user' => tr('User'),
+		);
+
+		$active = array_intersect(array_keys($available), $active);
+
+		$attributes = array_fill_keys($active, null);
+		foreach ($available as $key => $label) {
+			$attributes[$key] = array('label' => $label, 'selected' => in_array($key, $active));
+		}
+
+		return $attributes;
+	}
+
+	private function readDate($input, $prefix)
+	{
+		$date = $input->{$prefix . '_date'}->text();
+		$time = $input->{$prefix . '_time'}->text();
+
+		if (! $time) {
+			$time = '00:00';
+		}
+
+		list($year, $month, $day) = explode('-', $date);
+		list($hour, $minute) = explode(':', $time);
+		$second = 0;
+
+		$tikilib = TikiLib::lib('tiki');
+		$tikidate = TikiLib::lib('tikidate');
+		$display_tz = $tikilib->get_display_timezone();
+		if ( $display_tz == '' ) $display_tz = 'UTC';
+		$tikidate->setTZbyID($display_tz);
+		$tikidate->setLocalTime($day,$month,$year,$hour,$minute,$second,0);
+		return $tikidate->getTime();
+	}
+
+	private function format($date, $format)
+	{
+		if ($date) {
+			return TikiLib::date_format($format, $date);
+		}
+	}
 }
 

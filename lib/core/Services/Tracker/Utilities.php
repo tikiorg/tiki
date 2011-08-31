@@ -185,6 +185,10 @@ class Services_Tracker_Utilities
 		);
 	}
 
+	function updateTracker($trackerId, $data)
+	{
+	}
+
 	function clearTracker($trackerId)
 	{
 		$table = TikiDb::get()->table('tiki_tracker_items');
