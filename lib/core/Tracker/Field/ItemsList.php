@@ -160,6 +160,10 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		} else {
 			$localField = (int) $this->getOption(2);
 			$localValue = $this->getData($localField);
+			if (!$localValue) {
+				// in some cases e.g. pretty tracker $this->getData($localField) is not reliable as the info is not there
+				$localValue = $trklib->get_item_value($tracker, $this->getItemId(), $localField);
+			}
 			$localFieldDef = $this->getTrackerDefinition()->getField($localField);
 			if ($localFieldDef['type'] == 'r' && isset($localFieldDef['options_array'][0]) && isset($localFieldDef['options_array'][1])) {
 				$localValue = $trklib->get_item_value($localFieldDef['options_array'][0], $localValue, $localFieldDef['options_array'][1]);
