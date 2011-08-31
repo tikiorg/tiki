@@ -183,7 +183,7 @@ if( isset( $_REQUEST['lm_criteria'] ) ) {
 	try {
 		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
 		$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'], $temp_filters );
-		$results = array_slice( $results, 0, 10 );
+		$results = array_slice( $results, 0, 50 );
 		$smarty->assign( 'lm_searchresults', $results );
 		$smarty->assign( 'lm_error', '' );
 	} catch(Zend_Search_Lucene_Exception $e) {
@@ -253,7 +253,6 @@ $icons = array(
 		'icon' => 'pics/large/maps.png',
 		'position' => '-100px -500px;',
 		'title' => tr('Maps'),
-		'disabled' => $prefs['feature_maps'] != 'y',
 		'description' => tr('Settings and features for maps'),
 		'help' => 'Maps',
 	),
