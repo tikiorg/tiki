@@ -522,7 +522,7 @@ if (array($types)) {
 $smarty->assign('type', $type);
 }
 if ($prefs["article_custom_attributes"] == 'y') {
-	$article_attributes = $artlib->get_article_attributes($_REQUEST["articleId"]);	
+	$article_attributes = $artlib->get_article_attributes($articleId);	
 	$smarty->assign('article_attributes', $article_attributes);
 	$all_attributes = array();
 	$js_string = '';

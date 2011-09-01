@@ -18,6 +18,7 @@ $all = 0;
 if ($_REQUEST["parent"] == 0) {
 	$parent_name = 'Top';
 	$all = 1;
+	$smarty->assign('parent_info', "");
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
 	$smarty->assign('parent_info', $parent_info);

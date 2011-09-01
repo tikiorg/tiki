@@ -46,7 +46,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	
-	if ($params['_wysiwyg'] !== 'y') {
+	if (!isset($params['_wysiwyg']) || $params['_wysiwyg'] !== 'y') {
 		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
 		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
 	}
@@ -123,7 +123,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$smarty->assign( 'autosave_js', '');
 	}
 
-	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
+	if ( ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y' ) && $params['_simple'] == 'n') {
 		
 		// new ckeditor implementation 2010
 		if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
