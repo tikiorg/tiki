@@ -132,12 +132,12 @@ class BigBlueButtonLib
 	}
 
 	private function getAttendeeName() {
-		global $u_info;
+		global $user, $tikilib;
 
-		if( isset( $u_info['prefs']['realName'] ) ) {
-			return $u_info['prefs']['realName'];
-		} elseif( $u_info['login'] ) {
-			return $u_info['login'];
+		if( $tikilib->userHasPreference('realName') ) {
+			return $tikilib->get_user_preference('realName');
+		} elseif( $user ) {
+			return $user;
 		} elseif(!empty($_SESSION['bbb_name'])) {
 				return $_SESSION['bbb_name'];
 		} else {

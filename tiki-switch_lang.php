@@ -76,13 +76,7 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 	}
 }
 if (isset($_GET['language'])) {
-	$language = $_GET['language'];
-	if ($user && $prefs['change_language'] == 'y') {
-		$tikilib->set_user_preference($user, 'language', $language);
-	} else {
-		$_SESSION['s_prefs']['language'] = $language;
-		$prefs['language'] = $language;
-	}
+	$tikilib->set_user_preference($user, 'language', $_GET['language']);
 }
 header("location: $orig_url");
 exit;

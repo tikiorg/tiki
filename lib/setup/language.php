@@ -30,7 +30,7 @@ if (isset($_REQUEST['switchLang'])) {
 	} else {
 		$_SESSION['language'] = $prefs['language'];
 	}
-} elseif ( $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])) {
+} elseif ( $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !$tikilib->userHasPreference('language')) {
 	$browser_language = detect_browser_language();
 	if ( ! empty($browser_language) ) {
 		$prefs['language'] = $browser_language;

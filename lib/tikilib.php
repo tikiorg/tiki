@@ -3714,13 +3714,35 @@ class TikiLib extends TikiDb_Bridge
 		return $return;
 	}
 
+	// Returns a boolean indicating whether the specified user (anonymous or not, the current user by default) has the specified preference set
+	function userHasPreference($preference, $username = FALSE) {
+		global $user, $user_preferences;
+		if ($user) {
+			if ($username === FALSE) {
+				$username = $user;
+			}
+			if (!isset($user_preferences[$username])) {
+				$this->get_user_preferences($username);
+			}
+			return isset($user_preferences[$username][$preference]);
+		} else {
+			return isset($_SESSION['preferences'][$preference]);
+		}
+	}
+	
 	function get_user_preference($my_user, $name, $default = null) {
 		global $user_preferences, $user;
-		if ($user != $my_user && !isset($user_preferences[$my_user])) {
-			$this->get_user_preferences($my_user);
-		}
-		if ( isset($user_preferences) && isset($user_preferences[$my_user]) && isset($user_preferences[$my_user][$name]) ) {
-			return $user_preferences[$my_user][$name];
+		if ($user) {
+			if ($user != $my_user && !isset($user_preferences[$my_user])) {
+				$this->get_user_preferences($my_user);
+			}
+			if ( isset($user_preferences) && isset($user_preferences[$my_user]) && isset($user_preferences[$my_user][$name]) ) {
+				return $user_preferences[$my_user][$name];
+			}
+		} else {
+			if (isset($_SESSION['preferences'][$name])) {
+				return $_SESSION['preferences'][$name];
+			}
 		}
 		return $default;
 	}
@@ -3728,29 +3750,32 @@ class TikiLib extends TikiDb_Bridge
 	function set_user_preference($my_user, $name, $value) {
 		global $user_preferences, $prefs, $user, $user_overrider_prefs;
 
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('user_details_'.$my_user);
-
-		if ($name == "realName") {
-			// attempt to invalidate userlink cache (does not cover all options - only the default)
-			$cachelib->invalidate('userlink.'.$user.'.'.$my_user.'0');
-			$cachelib->invalidate('userlink.'.$my_user.'0');
+		if ($user) {
+			$cachelib = TikiLib::lib('cache');
+			$cachelib->invalidate('user_details_'.$my_user);
+	
+			if ($name == "realName") {
+				// attempt to invalidate userlink cache (does not cover all options - only the default)
+				$cachelib->invalidate('userlink.'.$user.'.'.$my_user.'0');
+				$cachelib->invalidate('userlink.'.$my_user.'0');
+			}
+	
+			if (!empty($my_user)) {
+				$userPreferences = $this->table('tiki_user_preferences');
+				$userPreferences->delete(array(
+					'user' => $my_user,
+					'prefName' => $name,
+				));
+				$userPreferences->insert(array(
+					'user' => $my_user,
+					'prefName' => $name,
+					'value' => $value,
+				));
+			}
+			$user_preferences[$my_user][$name] = $value;
+		} else {
+			$_SESSION['preferences'][$name] = $value;
 		}
-
-		if (!empty($my_user)) {
-			$userPreferences = $this->table('tiki_user_preferences');
-			$userPreferences->delete(array(
-				'user' => $my_user,
-				'prefName' => $name,
-			));
-			$userPreferences->insert(array(
-				'user' => $my_user,
-				'prefName' => $name,
-				'value' => $value,
-			));
-		}
-		
-		$user_preferences[$my_user][$name] = $value;
 
 		if ( $my_user == $user ) {
 			$prefs[$name] = $value;
