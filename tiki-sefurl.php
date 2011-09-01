@@ -34,36 +34,48 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = '', $wi
 			$cachelib->cacheItem('sefurl_regex_out', serialize($sefurl_regex_out));
 		}
 	}
-	if ($type == 'article' && $prefs['feature_sefurl_title_article'] == 'y' && empty($with_next) && $with_title == 'y') {
-		global $artlib;
-		include_once ('lib/articles/artlib.php');
-		if (preg_match('/articleId=([0-9]+)/', $tpl_output, $matches) || preg_match('/article([0-9]+)/', $tpl_output, $matches)) {
-			if (empty($title)) $title = $artlib->get_title($matches[1]);
-			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
-			$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
-			$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
-		}
-	}
-	if ($type == 'blog' && $prefs['feature_sefurl_title_blog'] == 'y' && empty($with_next) && $with_title == 'y') {
-		global $bloglib;
-		include_once ('lib/blogs/bloglib.php');
-		if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches) || preg_match('/blog([0-9]+)/', $tpl_output, $matches)) {
-			if (empty($title)) $title = $bloglib->get_title($matches[1]);
-			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
-			$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
-			$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
-		}
-	}
-	if ($type == 'blogpost' && $prefs['feature_sefurl_title_blog'] == 'y' && empty($with_next) && $with_title == 'y') {
-		global $bloglib;
-		include_once ('lib/blogs/bloglib.php');
-		if (preg_match('/postId=([0-9]+)/', $tpl_output, $matches)) {
-			if (empty($title)) {
-				if ($post_info = $bloglib->get_post($matches[1])) $title = $post_info['title'];
+	if ($type == 'article' && empty($with_next) && $with_title == 'y') {
+		if ($prefs['feature_sefurl_title_article'] == 'y') {
+			global $artlib;
+			include_once ('lib/articles/artlib.php');
+			if (preg_match('/articleId=([0-9]+)/', $tpl_output, $matches) || preg_match('/article([0-9]+)/', $tpl_output, $matches)) {
+				if (empty($title)) $title = $artlib->get_title($matches[1]);
+				$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+				$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
+				$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
 			}
-			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
-			$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
-			$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
+		} else {
+			$title = '';
+		}
+	}
+	if ($type == 'blog' && empty($with_next) && $with_title == 'y') {
+		if ($prefs['feature_sefurl_title_blog'] == 'y') {
+			global $bloglib;
+			include_once ('lib/blogs/bloglib.php');
+			if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches) || preg_match('/blog([0-9]+)/', $tpl_output, $matches)) {
+				if (empty($title)) $title = $bloglib->get_title($matches[1]);
+				$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+				$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
+				$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
+			}
+		} else {
+			$title = '';
+		}
+	}
+	if ($type == 'blogpost' && empty($with_next) && $with_title == 'y') {
+		if ($prefs['feature_sefurl_title_blog'] == 'y') {
+			global $bloglib;
+			include_once ('lib/blogs/bloglib.php');
+			if (preg_match('/postId=([0-9]+)/', $tpl_output, $matches)) {
+				if (empty($title)) {
+					if ($post_info = $bloglib->get_post($matches[1])) $title = $post_info['title'];
+				}
+				$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+				$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
+				$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);
+			}
+		} else {
+			$title = '';
 		}
 	}
 	if ($type == 'tracker item' || $type == 'trackeritem') {
