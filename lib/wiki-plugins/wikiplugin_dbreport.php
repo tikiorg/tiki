@@ -1503,7 +1503,7 @@ function wikiplugin_dbreport($data, $params) {
 		return tra('Missing db or dsn parameter');
 	}
 	// parse the report definition
-	$parse_fix = ($_REQUEST['preview']) && ($_SESSION['s_prefs']['tiki_release']=='2.2');
+	$parse_fix = ($_REQUEST['preview']) && ($prefs['tiki_release']=='2.2');
 	if($parse_fix) {
 		$report =& wikiplugin_dbreport_parse($data);
 	} else {
