@@ -13,11 +13,25 @@ $access->check_feature('feature_file_galleries');
 
 include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
+include_once ('lib/mime/mimetypes.php');
 
 ask_ticket('draw');
 
-$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+$_REQUEST['fileId'] = (int)$_REQUEST['fileId'];
+$smarty->assign('fileId', $_REQUEST['fileId']);
+
+if ($_REQUEST['fileId'] > 0) {
+	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+} else {
+	$fileInfo = array();
+}
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
+
+if ( $fileInfo['filetype'] != $mimetypes["svg"] ) {
+	$smarty->assign('msg', tra("Wrong file type, expected ". $mimetypes["svg"]));
+	$smarty->display("error.tpl");
+	die;
+}
 
 $globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
 
@@ -43,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
 	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
 	
-	include_once ('lib/mime/mimetypes.php');
 	$type = $mimetypes["svg"];
 	$fileId = '';
 	if (empty($_REQUEST["fileId"]) == false) {

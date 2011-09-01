@@ -7,6 +7,8 @@
 $section = "docs";
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
+include_once ('lib/mime/mimetypes.php');
+
 $auto_query_args = array(
 	'fileId',
 	'edit'
@@ -23,8 +25,19 @@ ask_ticket('docs');
 $_REQUEST['fileId'] = (int)$_REQUEST['fileId'];
 $smarty->assign('fileId', $_REQUEST['fileId']);
 
-$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+if ($_REQUEST['fileId'] > 0) {
+	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+} else {
+	$fileInfo = array();
+}
+
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
+
+if ( $fileInfo['filetype'] != $mimetypes["odt"] ) {
+	$smarty->assign('msg', tra("Wrong file type, expected ". $mimetypes["odt"]));
+	$smarty->display("error.tpl");
+	die;
+}
 
 $globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
 
@@ -53,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	//webodf has to send an encoded string so that all browsers can handle the post-back
 	$_REQUEST['data'] = base64_decode($_REQUEST['data']);
 	
-	include_once ('lib/mime/mimetypes.php');
 	$type = $mimetypes["odt"];
 	$fileId = '';
 	if (empty($_REQUEST["fileId"]) == false) {
