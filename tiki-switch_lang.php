@@ -75,7 +75,6 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 		$orig_url = filter_out_sefurl($orig_url, $smarty);
 	}
 }
-$orig_url = preg_replace('/(.*\?.*)switchLang=[a-zA-Z-_]*&?(.*)/', '$1$2', $orig_url);
 $orig_url = preg_replace('/(.*[?&]lang=)[a-zA-Z-_]*(&?.*)/', '$1' . $_REQUEST['language'] . '$2', $orig_url); // for tiki-view_lang.php?lang=en
 if (isset($_GET['language'])) {
 	$language = $_GET['language'];
