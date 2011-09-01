@@ -417,9 +417,10 @@ $smarty->assign_by_ref('topics', $topics);
 // get list of valid types
 $types = $artlib->list_types_byname();
 if ($prefs["article_custom_attributes"] == 'y') {
-	$article_attributes = $artlib->get_article_attributes($_REQUEST["subId"], true);	
+	$article_attributes = $artlib->get_article_attributes($subId, true);	
 	$smarty->assign('article_attributes', $article_attributes);
 	$all_attributes = array();
+	$js_string= "";
 	foreach($types as &$t) {
 		// javascript needs htmlid to show/hide to be properties of basic array
 		$type_attributes = $artlib->get_article_type_attributes($t["type"]);
