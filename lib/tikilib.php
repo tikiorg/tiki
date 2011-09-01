@@ -3733,6 +3733,20 @@ class TikiLib extends TikiDb_Bridge
 			$cachelib->invalidate('userlink.'.$user.'.'.$my_user.'0');
 			$cachelib->invalidate('userlink.'.$my_user.'0');
 		}
+
+		if (!empty($my_user)) {
+			$userPreferences = $this->table('tiki_user_preferences');
+			$userPreferences->delete(array(
+				'user' => $my_user,
+				'prefName' => $name,
+			));
+			$userPreferences->insert(array(
+				'user' => $my_user,
+				'prefName' => $name,
+				'value' => $value,
+			));
+		}
+		
 		$user_preferences[$my_user][$name] = $value;
 
 		if ( $my_user == $user ) {
@@ -3761,19 +3775,6 @@ class TikiLib extends TikiDb_Bridge
 					$_SESSION['s_prefs'][$name] = $prefs['site_'.$name];
 				}
 			}
-		}
-
-		if (!empty($my_user)) {
-			$userPreferences = $this->table('tiki_user_preferences');
-			$userPreferences->delete(array(
-				'user' => $my_user,
-				'prefName' => $name,
-			));
-			$userPreferences->insert(array(
-				'user' => $my_user,
-				'prefName' => $name,
-				'value' => $value,
-			));
 		}
 
 		return true;
