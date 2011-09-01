@@ -954,7 +954,7 @@ class WikiLib extends TikiLib
 		}
 		if ($prefs['feature_sefurl'] == 'y') {
 			include_once('tiki-sefurl.php');
-			return  filter_out_sefurl($href, $smarty, 'wiki');
+			return  filter_out_sefurl($href, 'wiki');
 		} else {
 			return $href;
 		}
