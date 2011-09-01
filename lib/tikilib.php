@@ -220,8 +220,11 @@ class TikiLib extends TikiDb_Bridge
 			require_once('lib/parser/parserlib.php');
 			return $libraries[$name] = new ParserLib;
 		case 'connect':
-			require_once('lib/core/TikiConnect.php');
-			return $libraries[$name] = new TikiConnect();
+			require_once('lib/core/Connect/Client.php');
+			return $libraries[$name] = new Connect_Client();
+		case 'connect_server':
+			require_once('lib/core/Connect/Server.php');
+			return $libraries[$name] = new Connect_Server();
 		}
 	}
 

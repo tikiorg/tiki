@@ -3,51 +3,20 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: TikiConnect.php 36763 2011-09-01 15:29:33Z jonnybradley $
  
-class TikiConnect
+require_once('lib/core/Connect/Abstract.php');
+
+class Connect_Client extends Connect_Abstract
 {
 
-	// preferences that we should not collect
-
-	private $privatePrefs = array(
-		'gmap_key',
-		'recaptcha_pubkey',
-		'recaptcha_privkey',
-	);
-
-	// preferences that we should ask to collect
-	
-	private $protectedPrefs = array(
-		'browsertitle',
-		'connect_server',
-		'connect_site_email',
-		'connect_site_location',
-		'connect_site_title',
-		'connect_site_url',
-		'feature_site_report_email',
-		'fgal_use_dir',
-		'gmap_defaultx',
-		'gmap_defaulty',
-		'header_custom_js',
-		'sender_email',
-		'sitemycode',
-		'sitesubtitle',
-		'sitetitle',
-		't_use_dir',
-	);
-
-	private $connectTable = null;
 	private $votes = null;
-
-	public function __construct() {
-		$this->connectTable = TikiDb::get()->table('tiki_connect');
-	}
 
 	/**
 	 * Collects and returns Tiki Connect data
 	 * 
-	 * @return array
+	 * @return array		containing: 'prefs', 'tables', 'votes', 'site' and 'server' info arrays
+	 * 						depending on connect prefs
 	 */
 
 	function buildConnectData() {
@@ -95,34 +64,6 @@ class TikiConnect
 		return $info;
 	}
 
-	/**
-	 * Records a row in tiki_connect and updates pref connect_last_post if client
-	 *
-	 * @param string $status	pending|confirmed|sent|received
-	 * @param null $guid		client guid
-	 * @param array $data		"connect" data to store
-	 * @param bool $server		server mode (default client)
-	 * @return void
-	 */
-
-	function recordConnection($status, $guid, $data = '', $server = false) {
-
-		if (is_array($data) || is_object($data)) {
-			$data = serialize( $data );
-		}
-		$this->connectTable->insert(array(
-				'type' => $status,
-				'data' => $data,
-				'guid' => $guid,
-				'server' => $server ? 1 : 0,
-		));
-
-		if (!$server) {
-			$tikilib = TikiLib::lib('tiki');
-			$tikilib->set_preference('connect_last_post', $tikilib->now);
-		}
-	}
-
 	function getLastDataSent() {
 
 		$res = $this->connectTable->fetchAll(
@@ -166,28 +107,6 @@ class TikiConnect
 		return $data;
 	}
 
-
-	function getReceivedDataStats() {
-		global $prefs;
-
-		$ret = array();
-
-		if ($prefs['connect_server_mode'] === 'y') {
-			$ret['received'] = $this->connectTable->fetchCount(
-				array(
-					'type' => 'received',
-					'server' => 1,
-				)
-			);
-		}
-
-		// select distinct guid from tiki_connect where server=1;
-		$res = TikiLib::lib('tiki')->getOne('SELECT COUNT(DISTINCT `guid`) FROM `tiki_connect` WHERE `server` = 1 AND `type` = \'received\';');
-
-		$ret['guids'] = $res;
-		
-		return $ret;
-	}
 
 	/**
 	 * gets a guid created within last 1 minute
@@ -277,40 +196,6 @@ class TikiConnect
 	}
 
 	/**
-	 * Load vote info from database
-	 * Connect Client (default) or Server
-	 *
-	 * @param string $guid
-	 * @param bool $server
-	 * @return array
-	 */
-
-	function getVotesForGuid( $guid, $server = false ) {
-		if (!empty($guid)) {
-			$res = $this->connectTable->fetchAll(
-				array('data'),
-				array(
-					 'type' => 'votes',
-					 'guid' => $guid,
-					 'server' => $server ? 1 : 0
-				),
-				1,
-				-1,
-				array( 'created' => 'DESC')
-
-			);
-		} else {
-			$res = array();
-		}
-
-		if (!empty($res[0])) {
-			return unserialize($res[0]['data']);
-		} else {
-			return array();
-		}
-	}
-
-	/**
 	 * Save current votes to database
 	 * Connect Client
 	 *
@@ -354,73 +239,4 @@ class TikiConnect
 		}
 	}
 
-	/**
-	 * removes confirm/pending guid if there
-	 *
-	 * @param string $guid
-	 * @param bool $server
-	 * @return void
-	 */
-
-	function removeGuid( $guid, $server = false ) {
-		$this->connectTable->update(
-			array(
-				'type' => 'deleted_pending'
-			),
-			array(
-				'server' => $server ? 1 : 0,
-				'guid' => $guid,
-				'type' => 'pending',
-			)
-		);
-		$this->connectTable->update(
-			array(
-				'type' => 'deleted_confirmed'
-			),
-			array(
-				'server' => $server ? 1 : 0,
-				'guid' => $guid,
-				'type' => 'confirmed',
-			)
-		);
-	}
-
-	/**
-	 * test if a guid is pending
-	 * Connect Server
-	 *
-	 * @param string $guid
-	 * @return string
-	 */
-
-	function isPendingGuid( $guid ) {
-		$res = $this->connectTable->fetchOne(
-			'data',
-			array(
-				'type' => 'pending',
-				'server' => 1,
-				'guid' => $guid,
-			)
-		);
-		return $res;
-	}
-
-	/**
-	 * text if a guid is confirmed here
-	 * Connect Server
-	 *
-	 * @param string $guid
-	 * @return bool
-	 */
-
-	function isConfirmedGuid( $guid ) {
-		$res = $this->connectTable->fetchCount(
-			array(
-				'type' => 'confirmed',
-				'server' => 1,
-				'guid' => $guid,
-			)
-		);
-		return $res > 0;
-	}
 }

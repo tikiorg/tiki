@@ -19,8 +19,7 @@ class Services_Connect_Server
 		if ($prefs['connect_server_mode'] !== 'y') {
 			throw new Services_Exception(tr('Connect Server Mode disabled'), 403);
 		}
-		include_once 'lib/core/TikiConnect.php';
-		$this->connectlib = new TikiConnect();
+		$this->connectlib = TikiLib::lib('connect_server');
 	}
 
 	function action_new($input) {

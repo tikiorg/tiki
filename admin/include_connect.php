@@ -31,8 +31,7 @@ if (empty($prefs['connect_site_title'])) {
 	$smarty->assign('connect_defaults_json', '');
 }
 
-include_once 'lib/core/TikiConnect.php';
-$connectlib = new TikiConnect();
+$connectlib = TikiLib::lib('connect_server');
 
 $smarty->assignByRef('connect_stats', $connectlib->getReceivedDataStats());
 

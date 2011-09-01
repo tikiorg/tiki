@@ -19,8 +19,7 @@ class Services_Connect_Client
 			throw new Services_Exception(tr('Feature disabled'), 403);
 		}
 
-		include_once 'lib/core/TikiConnect.php';
-		$this->connectlib = new TikiConnect();
+		$this->connectlib = TikiLib::lib('connect');
 		$this->remote = new Services_RemoteController($prefs['connect_server'], 'connect_server');
 
 	}
