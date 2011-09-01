@@ -101,7 +101,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	}
 	if ($prefs['feature_sefurl'] == 'y' && $smarty) {
 		include_once('tiki-sefurl.php');
-		return filter_out_sefurl($href, $smarty, $type, $title, $with_next, $with_title);
+		return filter_out_sefurl($href, $type, $title, $with_next, $with_title);
 	} else {
 		return $href;
 	}

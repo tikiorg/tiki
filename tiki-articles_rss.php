@@ -85,7 +85,7 @@ if ($output["data"]=="EMPTY") {
 	foreach ($changes["data"] as $data)  {
 		$data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
 		$data["body"] = null;
-		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['articleId']), $smarty, 'article', $data['title']);
+		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['articleId']), 'article', $data['title']);
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;

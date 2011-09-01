@@ -108,9 +108,9 @@ function module_categories( $mod_reference, &$module_params ) {
 	include_once('tiki-sefurl.php');
 	foreach ($categories as $cat) {
 		if (isset($module_params['selflink']) && $module_params['selflink'] == 'y') {
-			$url = filter_out_sefurl('tiki-index.php?page=' . urlencode($cat['name']), $smarty);
+			$url = filter_out_sefurl('tiki-index.php?page=' . urlencode($cat['name']));
 		} else {
-			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], $smarty, 'category', $cat['name']) .$urlEnd;
+			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], 'category', $cat['name']) .$urlEnd;
 		}
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],

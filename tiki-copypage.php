@@ -66,7 +66,7 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 		if ($result) {
 			if ($prefs['feature_sefurl'] == 'y') {
 				include_once('tiki-sefurl.php');
-				header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", $smarty, 'wiki')));
+				header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", 'wiki')));
 			} else {
 				header('location: tiki-index.php?page=' . urlencode($newName));
 			}

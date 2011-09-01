@@ -2040,7 +2040,7 @@ class FileGalLib extends TikiLib
 			} else if ($_REQUEST['filegals_manager'] === 'fgal_picker') {
 				$href = 'tiki-download_file.php?fileId=123&amp;display';	// dummy id as sefurl expects a (/d+) pattern
 				global $smarty; include_once('tiki-sefurl.php');
-				$href = filter_out_sefurl($href, $smarty);
+				$href = filter_out_sefurl($href);
 				return str_replace('123', '%fileId%', $href);
 			}
 		}

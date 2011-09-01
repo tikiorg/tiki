@@ -164,7 +164,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 			$url = 'tiki-user_information.php?userId='.urlencode($info['userId']);
 			if ($prefs['feature_sefurl'] == 'y') {
 				include_once('tiki-sefurl.php');
-				$url = filter_out_sefurl($url, $smarty);
+				$url = filter_out_sefurl($url);
 			}
 		} else {
 			$url = preg_replace(array('/%userId%/', '/%user%/'), array($info['userId'], $info['login']),  $prefs['urlOnUsername']);

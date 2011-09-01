@@ -338,10 +338,10 @@ class FreetagLib extends ObjectLib
 				if ($prefs['feature_sefurl'] == 'y') {
 					include_once('tiki-sefurl.php');
 					if ($row['type'] == 'blog post' && !empty($post_info)) {
-						$row['href'] = filter_out_sefurl($row['href'], $smarty, 'blogpost', $post_info['title']);
+						$row['href'] = filter_out_sefurl($row['href'], 'blogpost', $post_info['title']);
 					} else {
 						$type = ($row['type'] == 'wiki page') ? 'wiki' : ($row['type'] == 'blog post'? 'blogpost': $row['type']);
-						$row['href'] = filter_out_sefurl($row['href'], $smarty, $type);
+						$row['href'] = filter_out_sefurl($row['href'], $type);
 					}
 				}
 				$ret[] = $row;

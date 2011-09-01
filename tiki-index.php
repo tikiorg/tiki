@@ -216,7 +216,7 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$url = 'tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user;
 		if ($prefs['feature_sefurl'] == 'y') {
 			include_once('tiki-sefurl.php');
-			header('location: '. urlencode(filter_out_sefurl($url, $smarty, 'wiki')));
+			header('location: '. urlencode(filter_out_sefurl($url, 'wiki')));
 		} else {
 			header("Location: $url");
 		}

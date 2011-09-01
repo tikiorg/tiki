@@ -15,7 +15,7 @@ else $orig_url = $prefs['tikiIndex'];
 if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) { 
 	if (preg_match('/cat[0-9]+-?/', $orig_url)) {
 		include_once('tiki-sefurl.php');
-		$orig_url = filter_out_sefurl(preg_replace('#(.*)\/cat([0-9]+)(.*)#', '/tiki-browse_categories.php?parentId=$2$3', $orig_url), $smarty, 'category');
+		$orig_url = filter_out_sefurl(preg_replace('#(.*)\/cat([0-9]+)(.*)#', '/tiki-browse_categories.php?parentId=$2$3', $orig_url), 'category');
 	} elseif (preg_match('/article[0-9]+-?/', $orig_url)) {
 		$orig_url = preg_replace('#\/article([0-9]+)(.*)#', '/tiki-read_article.php?articleId=$1', $orig_url);
 	} else {
@@ -72,7 +72,7 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 	$orig_url = preg_replace('/(.*)&no_bl=y(.*)/', '$1$2', $orig_url);
 	if ($prefs['feature_sefurl'] == 'y') {
 		include_once('tiki-sefurl.php');
-		$orig_url = filter_out_sefurl($orig_url, $smarty);
+		$orig_url = filter_out_sefurl($orig_url);
 	}
 }
 if (isset($_GET['language'])) {

@@ -96,7 +96,7 @@ if ($prefs['feature_sefurl'] == 'y') {
 		$prefs['tikiIndex'] = $wikilib->sefurl($userlib->best_multilingual_page($prefs['wikiHomePage']));
 	} else if (substr($prefs['tikiIndex'], 0, strlen('tiki-view_blog.php')) == 'tiki-view_blog.php') {
 		include_once('tiki-sefurl.php');
-		$prefs['tikiIndex'] = filter_out_sefurl($prefs['tikiIndex'], $smarty, 'blog');
+		$prefs['tikiIndex'] = filter_out_sefurl($prefs['tikiIndex'], 'blog');
 	}
 }
 

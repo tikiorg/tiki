@@ -28,7 +28,7 @@ function smarty_modifier_avatarize($user)
 	$id = $userlib->get_user_id($user);
 	include_once('tiki-sefurl.php');
 	$url = "tiki-user_information.php?userId=$id";
-	$url = filter_out_sefurl($url, $smarty);	
+	$url = filter_out_sefurl($url);	
   	$avatar = "<a title=\"" . htmlspecialchars($user, ENT_NOQUOTES) . "\" href=\"$url\">".$avatar.'</a>';
   } 
   return $avatar;	

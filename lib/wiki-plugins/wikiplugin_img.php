@@ -994,7 +994,7 @@ function wikiplugin_img_info() {
 		
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
-	$src = filter_out_sefurl(htmlentities($src), $smarty);
+	$src = filter_out_sefurl(htmlentities($src));
 	$replimg = '<img src="' . $src . '"';
 	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
 	
@@ -1161,7 +1161,7 @@ function wikiplugin_img_info() {
 		// title
 		!empty($imgtitle) ? $linktitle = $imgtitle : $linktitle = '';
 		
-		$link = filter_out_sefurl(htmlentities($link), $smarty);
+		$link = filter_out_sefurl(htmlentities($link));
 
 		//Final link string
 		$replimg = "\r\t" . '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle 

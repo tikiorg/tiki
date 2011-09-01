@@ -263,7 +263,7 @@ function _breadcrumb_getTitle($crumbs, $loc) {
 		$ret .= tra("go back to this crumb");
 		$ret .= '" accesskey="'.($cnt);
 		include_once('tiki-sefurl.php');
-		$ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url, $smarty).'">';
+		$ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url).'">';
     }
 	if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
 		$ret .= tra("Administration:")." ";

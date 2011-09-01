@@ -320,7 +320,7 @@ if ($isvalid) {
 						$groupHome = $userlib->get_user_default_homepage($user);
 						if ($groupHome != '') {
 							include_once('tiki-sefurl.php');
-							$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome), $smarty);
+							$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome));
 						}
 					}
 				}

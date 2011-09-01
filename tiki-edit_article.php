@@ -48,7 +48,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 		die;
 	}
 	include_once('tiki-sefurl.php');
-	header ('location: '.filter_out_sefurl("tiki-read_article.php?articleId=$articleId", $smarty, 'article', $artice_data['title']));
+	header ('location: '.filter_out_sefurl("tiki-read_article.php?articleId=$articleId", 'article', $artice_data['title']));
 	die;
 }
 
@@ -498,7 +498,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	@$artlib->delete_image_cache("preview",$previewId);
 
 	include_once('tiki-sefurl.php');
-	header ('location: '.	filter_out_sefurl("tiki-read_article.php?articleId=$artid", $smarty, 'article', $_REQUEST['title']));
+	header ('location: '.	filter_out_sefurl("tiki-read_article.php?articleId=$artid", 'article', $_REQUEST['title']));
 }
 $smarty->assign_by_ref('errors', $errors);
 

@@ -601,7 +601,7 @@ class CategLib extends ObjectLib
 				}
 				if ($prefs['feature_sefurl'] == 'y') {
 					$type = $res['type'] == 'wiki page'? 'wiki': $res['type'];
-					$res['sefurl'] = filter_out_sefurl($res['href'], $smarty, $type);
+					$res['sefurl'] = filter_out_sefurl($res['href'], $type);
 				}
 				if (empty($res['name'])) {
 					$res['name'] = '#' . $res['itemId'];

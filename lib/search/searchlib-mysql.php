@@ -547,7 +547,7 @@ class SearchLib extends TikiLib
 		global $user, $smarty;
 		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $i=>$r) {
-			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], $smarty, 'blog', $r['pageName']);
+			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], 'blog', $r['pageName']);
 		}
 
 		return $res;
@@ -581,7 +581,7 @@ class SearchLib extends TikiLib
 			$objperm = $this->get_perm_object($r['name'], 'article', '', false);
 			if (empty($r['name']) || $objperm['tiki_p_topic_read'] == 'y') {
 				$r['name'] = $r['pageName'];
-				$r['href'] = filter_out_sefurl($r['href'], $smarty, 'article', $r['pageName']);
+				$r['href'] = filter_out_sefurl($r['href'], 'article', $r['pageName']);
 				$ret['data'][] = $r;
 			} else {
 				--$ret['cant'];
@@ -653,7 +653,7 @@ class SearchLib extends TikiLib
 		foreach ($ret['data'] as $i=>$res) {
 			global $smarty;
 			include_once('tiki-sefurl.php');
-			$res['href'] = filter_out_sefurl($res['href'], $smarty, 'trackeritem', $res['name']);
+			$res['href'] = filter_out_sefurl($res['href'], 'trackeritem', $res['name']);
 			if (($j = array_search($res['name'], $itemFinal)) === false) {
 				$res['pageName'] = '(#'.$res['pageName'].') '.$trklib->get_isMain_value($res['hits'], $res['pageName']);
 				$res['hits'] = 'Unknown'; 
