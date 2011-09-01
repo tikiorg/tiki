@@ -2287,6 +2287,9 @@ class UsersLib extends TikiLib
 		$query = "update `users_users` set `default_group` = ?
 			where `login` = ?";
 		$this->query($query, array($group, $user));
+		if ($user == $_SESSION['u_info']['login']) {
+			$_SESSION['u_info']['group'] = $group;
+		}
 	}
 	function set_email_group($user, $email) {
 		$query = 'select `id`, `groupName`, `emailPattern` from `users_groups` where `emailPattern`!=?';
