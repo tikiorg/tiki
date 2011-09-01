@@ -24,7 +24,7 @@ $globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileI
 //check permissions
 if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to edit this file"));
+	$smarty->assign('msg', tra("You do not have permission to view/edit this file"));
 	$smarty->display("error.tpl");
 	die;
 }
