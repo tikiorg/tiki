@@ -1498,12 +1498,6 @@ function wikiplugin_dbreport($data, $params) {
 	$wikiplugin_dbreport_record = null;
 	// extract parameters
 	extract ($params,EXTR_SKIP);
-	// debug plugin input
-	if($debug_input) {
-		$msg = $_REQUEST['preview'] . ' ' . $_SESSION['s_prefs']['tiki_release'] . '<br/>';
-		$msg .= '~np~<pre>'.htmlspecialchars($data).'</pre>~/np~';
-		$ret .= wikiplugin_dbreport_message_box($msg);
-	}
 	// we need a dsn or db parameter
 	if (!isset($dsn) && !isset($db)) {
 		return tra('Missing db or dsn parameter');
