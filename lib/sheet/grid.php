@@ -2293,12 +2293,41 @@ class SheetLib extends TikiLib
 	}
 	
 	function get_related_trackers_as_html($sheetId) {
-		$trackerHtml = '';
-		require_once ('lib/wiki-plugins/wikiplugin_trackerlist.php');
+		$trklib = TikiLib::lib("trk");
+		$trkqrylib = TikiLib::lib("trkqry");
+		
+		$html = '';
+		
 		foreach($this->get_related_tracker_ids($sheetId) as $trackerId) {
-			$trackerHtml .= wikiplugin_trackerlist(null, array("trackerId" => $trackerId, "tableassheet" => "y"));
+			$itemI = 0;
+			$html .= '<table title="'.htmlspecialchars($trackerInfo['name']).'" readonly="true" class="readonly">';
+			$trackerDef = Tracker_Definition::get($trackerId);
+			$trackerInfo = $trackerDef->getInformation();
+
+			foreach($trkqrylib->tracker_query($trackerInfo['name'], $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, false) as $item) {
+				if ($itemI == 0) {
+					$html .= "<tr>";
+					foreach($item as $key => $field) {
+						$html .= "<th>";
+						$html .= $key;
+						$html .= "</th>";
+					}
+					$html .= "</tr>";
+				}
+				$itemI++;
+				
+				$html .= "<tr>";
+				foreach($item as $field) {
+					$html .= "<td>";
+					$html .= $field;
+					$html .= "</td>";
+				}
+				$html .= "</tr>";
+			}
+			$html .= "</table>";
 		}
-		return $trackerHtml;
+		
+		return $html;
 	}
 	
 	function get_sheet_subsheets( $sheetId ) // {{{2

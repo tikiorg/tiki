@@ -74,7 +74,7 @@ class Tracker_Definition
 		return $this->getConfiguration($key) === 'y';
 	}
 
-	function getFields()
+	function getFields($keyAsId = false)
 	{
 		if ($this->fields) {
 			return $this->fields;
@@ -84,6 +84,15 @@ class Tracker_Definition
 		$trackerId = $this->trackerInfo['trackerId'];
 		$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true);
 
+		//makes transversing easier
+		if ($keyAsId == true) {
+			$fieldsTemp = array();
+			foreach($fields['data'] as $field) {
+				$fieldsTemp[$field['fieldId']] = $field;
+			}
+			$fields['data'] = $fieldsTemp;
+		}
+		
 		return $this->fields = $fields['data'];
 	}
 

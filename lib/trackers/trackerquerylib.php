@@ -245,14 +245,7 @@ class TrackerQueryLib extends TikiLib
 		
 		$trackerDefinition = Tracker_Definition::get($trackerId);
 
-		$trackerFieldDefinition = $trackerDefinition->getFields();
-		$trackerFieldDefinitionIdAsKey = array();
-		foreach( $trackerFieldDefinition as $field ) {
-			$trackerFieldDefinitionIdAsKey[$field['fieldId']] = $field;
-		}
-		$trackerFieldDefinition = $trackerFieldDefinitionIdAsKey;
-		unset($trackerFieldDefinitionIdAsKey);
-		
+		$trackerFieldDefinition = $trackerDefinition->getFields(true);
 		
 		$params[] = $trackerId;
 		
@@ -260,7 +253,7 @@ class TrackerQueryLib extends TikiLib
 		if (isset($end) && !empty($end) && !$search) $params[] = $end;
 		if (isset($itemId) && !empty($itemId) && !$search) $params[] = $itemId;
 		
-		if(isset($byName) && !empty($byName)) {
+		if(isset($byName) && $byName == true) {
 			$fieldIds = array();
 			foreach($fields as $field) {
 				$fieldIds[] = $tikilib->getOne("
@@ -433,7 +426,6 @@ class TrackerQueryLib extends TikiLib
 	
 	private function render_field_value($fieldDefinition, $value) {
 		global $trklib;
-
 		$fieldDefinition['value'] = $value;
 		return $trklib->field_render_value(array(
 			'field'=> $fieldDefinition,
