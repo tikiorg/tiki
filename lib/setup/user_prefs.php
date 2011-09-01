@@ -9,13 +9,12 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Handle the current user prefs in session
-if ( ! isset($_SESSION['u_info']) || $_SESSION['u_info']['login'] != $user || $_SESSION['need_reload_prefs'] ) {
-	$_SESSION['need_reload_prefs'] = false;
+if ( ! isset($_SESSION['u_info']) || $_SESSION['u_info']['login'] != $user ) {
 	$_SESSION['u_info'] = array();
 	$_SESSION['u_info']['login'] = $user;
 	$_SESSION['u_info']['group'] = ( $user ) ? $userlib->get_user_default_group($user) : '';
 	if (empty($user)) {
-		$_SESSION['preferences'] = array();
+		$_SESSION['preferences'] = array(); // For anonymous, store some preferences like the theme in the session.
 	}
 }
 
