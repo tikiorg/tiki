@@ -12,6 +12,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 define('PATTERN_TO_CLEAN_TEXT', '/[^0-9a-zA-Z_]/');
 define('CLEAN_CHAR', '-');
 define('TITLE_SEPARATOR', '-');
+
+/**
+ * Turns a Tiki url into a Search Engine Friendly one
+ *
+ * @param string $tpl_output	original "unfriendly" url
+ * @param object $smarty		smarty
+ * @param string $type			type of object (article|blog|blogpost etc)
+ * @param string $title			title of object
+ * @param null $with_next		unknown
+ * @param string $with_title	unknown
+ * @return string			sefurl
+ */
+
+
 function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = '', $with_next = null, $with_title='y') {
 	global $sefurl_regex_out, $tikilib, $prefs, $base_url;
 	if ($prefs['feature_sefurl'] != 'y' or ( preg_match('#^http(|s)://#',$tpl_output) and strpos($tpl_output, $base_url) !== 0 ) ) {
