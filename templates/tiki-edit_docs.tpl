@@ -12,5 +12,5 @@
 
 <input id="fileId" type="hidden" value="{$fileId}" />
 
-<div id="tiki_doc" class="">
+<div id="tiki_doc" class="" style="border-style:outset;border-width:2px;">
 </div>
