@@ -25,8 +25,42 @@ class Services_Connect_Client
 
 	}
 
-	function action_list($input = null)
-	{
+	function action_vote($input) {
+		global $prefs;
+
+		if (! Perms::get()->admin) {
+			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
+		}
+
+		if (empty($prefs['connect_guid'])) {
+			throw new Services_Exception(tr('Tiki not connected. Please click "Send Info" to join in!'), 403);
+		}
+
+		$vote = $input->vote->text();
+		$pref = $input->pref->text();
+
+		$votes = $this->connectlib->getVotes( true );
+		if (!isset( $votes[$pref] )) {
+			$votes[$pref] = array();
+		}
+		$arr = $votes[$pref];
+
+		if (substr($vote, 0, 2) === 'un') {
+			$vote  = substr( $vote, 2 );
+			unset($arr[ array_search( $vote, $arr )]);
+		} else if (!in_array( $vote, $arr )){
+			$arr[] = $vote;
+			$vote = 'un' . $vote;	// send back the opposite vote to update the icon
+		}
+		if ($votes[$pref] != $arr) {
+			$votes[$pref] = $arr;
+			$this->connectlib->saveVotesForGuid($prefs['connect_guid'], $votes);
+		}
+
+		return array( 'newVote' => $vote );
+	}
+
+	function action_list($input = null) {
 		if (! Perms::get()->admin) {
 			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
 		}

@@ -17,6 +17,14 @@
 		{/foreach}
 
 		<input type="submit" value="{tr}Set as my default{/tr}"/>
+
+		{if $prefs.connect_feature eq "y"}
+			<label>
+				<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}/>
+				{tr}Feedback{/tr}
+			</label>
+			{$headerlib->add_jsfile("lib/jquery_tiki/tiki-connect.js")}
+		{/if}
 	</fieldset>
 </form>
 

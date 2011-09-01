@@ -38,6 +38,7 @@ class TikiConnect
 	);
 
 	private $connectTable = null;
+	private $votes = null;
 
 	public function __construct() {
 		$this->connectTable = TikiDb::get()->table('tiki_connect');
@@ -74,6 +75,11 @@ class TikiConnect
 				foreach( $res as $r ) {
 					$info['tables'][$r['table_name']] = $r['table_rows'];
 				}
+			}
+
+			$votes = $this->getVotes();
+			if (!empty($votes)) {
+				$info['votes'] = $votes;
 			}
 		}
 
@@ -233,6 +239,118 @@ class TikiConnect
 			return $res[0]['guid'];
 		} else {
 			return '';
+		}
+	}
+
+	/**
+	 * Gets voting for a single pref
+	 * Connect Client
+	 *
+	 * @param string $pref		preference name
+	 * @return array of votes
+	 */
+
+	function getVote($pref) {
+		$votes = $this->getVotes();
+		if (isset( $votes[$pref] )) {
+			return $votes[$pref];
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Gets current votes
+	 * Connect Client
+	 *
+	 * @param bool $reload
+	 * @return array
+	 */
+
+	function getVotes( $reload = false ) {
+		global $prefs;
+
+		if (empty($this->votes) || $reload ) {
+			$this->votes = $this->getVotesForGuid($prefs['connect_guid']);
+		}
+		return $this->votes;
+	}
+
+	/**
+	 * Load vote info from database
+	 * Connect Client (default) or Server
+	 *
+	 * @param string $guid
+	 * @param bool $server
+	 * @return array
+	 */
+
+	function getVotesForGuid( $guid, $server = false ) {
+		if (!empty($guid)) {
+			$res = $this->connectTable->fetchAll(
+				array('data'),
+				array(
+					 'type' => 'votes',
+					 'guid' => $guid,
+					 'server' => $server ? 1 : 0
+				),
+				1,
+				-1,
+				array( 'created' => 'DESC')
+
+			);
+		} else {
+			$res = array();
+		}
+
+		if (!empty($res[0])) {
+			return unserialize($res[0]['data']);
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Save current votes to database
+	 * Connect Client
+	 *
+	 * @param string $guid
+	 * @param $votes
+	 * @return void
+	 */
+
+	function saveVotesForGuid( $guid, $votes ) {
+
+		if (is_array($votes) || is_object($votes)) {
+			$votes = serialize( $votes );
+		}
+		$count = $this->connectTable->fetchCount(array(
+			'server' => 0,
+			'guid' => $guid,
+			'type' => 'votes',
+		));
+
+		if ($count) {
+			$this->connectTable->update(
+				array(
+					'type' => 'votes',
+					'data' => $votes,
+				),
+				array(
+					'server' => 0,
+					'guid' => $guid,
+					'type' => 'votes',
+				)
+			);
+		} else {
+			$this->connectTable->insert(
+				array(
+					'type' => 'votes',
+					'data' => $votes,
+					'server' => 0,
+					'guid' => $guid,
+				)
+			);
 		}
 	}
 

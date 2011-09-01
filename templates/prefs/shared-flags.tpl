@@ -24,7 +24,9 @@
 		{icon _id='application_form' alt="{tr}Actions{/tr}"}
 	</a>
 {/if}
-
+{if !empty($p.voting_html)}
+	{$p.voting_html}
+{/if}
 {jq}
 $('.pref-reset')
 	.change( function() {

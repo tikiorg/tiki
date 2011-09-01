@@ -161,41 +161,74 @@ class PreferencesLib
 			if (!empty($info['plugin'])) {
 				$info['plugin'] = 'tiki-admin.php?page=textarea&cookietab=2&textFilter=' . urlencode($info['plugin']);
 			}
-			
-			if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
 
-				$smarty = TikiLib::lib('smarty');
-				$smarty->loadPlugin('smarty_function_icon');
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_icon');
+
+			if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
 
 				$info['popup_html'] = '<div class="opaque"><div class="box-title">'.tra('Actions').'</div><div class="box-data">';
 
 				if (!empty($info['admin'])) {
-					$icon= smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
-					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a>';
+					$icon = smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
+					$info['popup_html'] .= '<a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a>';
 				}
 				if (!empty($info['permission'])) {
-					$icon= smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
-					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a>';
+					$icon = smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
+					$info['popup_html'] .= '<a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a>';
 				}
 				if (!empty($info['view'])) {
-					$icon= smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
-					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a>';
+					$icon = smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
+					$info['popup_html'] .= '<a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a>';
 				}
 				if (!empty($info['module'])) {
-					$icon= smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
-					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a>';
+					$icon = smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
+					$info['popup_html'] .= '<a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a>';
 				}
 				if (!empty($info['plugin'])) {
-					$icon= smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
-					$info['popup_html'] .= '<a class="iconmenu" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a>';
+					$icon = smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
+					$info['popup_html'] .= '<a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a>';
 				}
 				$info['popup_html'] .= '</div></div>';
+			}
+
+			if ($prefs['connect_feature'] === 'y') {
+				$connectlib = TikiLib::lib('connect');
+				$currentVote = $connectlib->getVote($info['preference']);
+				
+				$info['voting_html'] = '';
+
+				if (!in_array('like', $currentVote)) {
+					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'like', tra('Like')), $smarty);
+				} else {
+					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'unlike', tra("Don't like")), $smarty);
+				}
+				if (!in_array('fix', $currentVote)) {
+					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'fix', tra('Fix me')), $smarty);
+				} else {
+					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'unfix', tra("Don't fix me")), $smarty);
+				}
+				if (!in_array('wtf', $currentVote)) {
+					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'wtf', tra("What's this for?")), $smarty);
+				} else {
+					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'unwtf', tra("What's this for?")), $smarty);
+				}
 			}
 
 			return $info;
 		}
 
 		return false;
+	}
+
+	private function getVoteIconParams( $pref, $vote, $label ) {
+		return array(
+			'_id' => 'connect_' . $vote,
+			'title' => $label,
+			'href' => '#', 'onclick' => 'connectVote("' . $pref . '", "'. $vote .'", this);return false;',
+			'class' => 'icon connectVoter',
+			'style' => 'display:none',
+		);
 	}
 
 	private function preferenceDisabled($tags) {
