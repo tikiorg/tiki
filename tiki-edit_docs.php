@@ -7,6 +7,10 @@
 $section = "docs";
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
+$auto_query_args = array(
+	'fileId',
+	'edit'
+);
 
 $access->check_feature('feature_docs');
 $access->check_feature('feature_file_galleries');
@@ -17,6 +21,7 @@ include_once ('tiki-section_options.php');
 ask_ticket('docs');
 
 $_REQUEST['fileId'] = (int)$_REQUEST['fileId'];
+$smarty->assign('fileId', $_REQUEST['fileId']);
 
 $fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
@@ -31,6 +36,39 @@ if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_galle
 	die;
 }
 
+if (!empty($_REQUEST['name']) || !empty($fileInfo['name'])) {
+	$_REQUEST['name'] = (!empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
+} else {
+	$_REQUEST['name'] = "New Doc";
+}
+
+$_REQUEST['name'] = htmlspecialchars(str_replace(".odt", "", $_REQUEST['name']));
+
+//Upload to file gallery
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
+	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
+	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
+	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
+	
+	//webodf has to send an encoded string so that all browsers can handle the post-back
+	$_REQUEST['data'] = base64_decode($_REQUEST['data']);
+	
+	include_once ('lib/mime/mimetypes.php');
+	$type = $mimetypes["odt"];
+	$fileId = '';
+	if (empty($_REQUEST["fileId"]) == false) {
+		//existing file
+		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+	} else {
+		//new file
+		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+	}
+	
+	echo $fileId;
+	die;
+}
+
+
 $smarty->assign( "page", $page );
 $smarty->assign( "isFromPage", isset($page) );
 $smarty->assign( "fileId", $_REQUEST['fileId']);
@@ -38,11 +76,50 @@ $smarty->assign( "fileId", $_REQUEST['fileId']);
 $headerlib->add_jsfile("lib/webodf/webodf.js");
 $headerlib->add_cssfile("lib/webodf/webodf.css");
 
+$savingText = tr("Saving...");
+
 $headerlib->add_jq_onready("
-	var odfelement = document.getElementById('tiki_doc'),
-    odfcanvas = new odf.OdfCanvas(odfelement);
+	window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
 	odfcanvas.load('tiki-download_file.php?fileId=' + $('#fileId').val());
+	
+	//make editable
+	$('.editButton').click(function() {
+		odfcanvas.setEditable();
+		
+		$('.editState,.viewState').toggle();
+		
+		return false;
+	});
+	
+	runtime.writeFile = function(path, data) {
+		$.modal('$savingText');
+		var base64 = new core.Base64();
+		data = base64.convertUTF8ArrayToBase64(data);
+		$.post('tiki-edit_docs.php', {
+			fileId: $('#fileId').val(),
+			data: data
+		}, function(id) {
+				$.modal();
+				$('#fileId').val(id);
+		});
+	};
+	
+	$('.saveButton').click(function() {
+		odfcanvas.save();
+		return false;
+	});
 ");
+
+if (isset($_REQUEST['edit'])) {
+	$smarty->assign("edit", "true");
+	$headerlib->add_jq_onready("
+		odfcanvas.setEditable();
+	");
+} else {
+	$smarty->assign("edit", "false");
+}
+
+
 // Display the template
 $smarty->assign('mid', 'tiki-edit_docs.tpl');
 // use tiki_full to include include CSS and JavaScript

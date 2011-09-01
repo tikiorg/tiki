@@ -66,6 +66,9 @@
 		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
+		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}&edit">
+		{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
+		</a>
 	{/if}
 	
 	{if (isset($files[$changes].p_download_files) and  $files[$changes].p_download_files eq 'y')
