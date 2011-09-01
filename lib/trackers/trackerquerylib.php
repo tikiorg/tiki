@@ -427,6 +427,12 @@ class TrackerQueryLib extends TikiLib
 	private function render_field_value($fieldDefinition, $value) {
 		global $trklib;
 		$fieldDefinition['value'] = $value;
+		
+		//if type is text, no need to render value
+		switch($fieldDefinition['type']) {
+			case 't': return $value;
+		}
+		
 		return $trklib->field_render_value(array(
 			'field'=> $fieldDefinition,
 			'process'=> 'y',
