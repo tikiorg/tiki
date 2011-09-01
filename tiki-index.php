@@ -291,7 +291,6 @@ if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasec
     	die;
 }
 if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($info['lang'])) {
-	$_SESSION['s_prefs']['language'] = $info['lang'];
 	$prefs['language'] = $info['lang'];
 }
 

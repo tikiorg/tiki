@@ -44,7 +44,6 @@ if($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y'){
 }
 
 if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($article_data["lang"])) {
-	$_SESSION['s_prefs']['language'] = $article_data["lang"];
 	$prefs['language'] = $article_data["lang"];
 }
 
