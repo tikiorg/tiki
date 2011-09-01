@@ -108,7 +108,7 @@ class TikiConnect
 	function recordConnection($status, $guid, $data = '', $server = false) {
 
 		if (is_array($data) || is_object($data)) {
-			$data = json_encode( $data );
+			$data = serialize( $data );
 		}
 		$this->connectTable->insert(array(
 				'type' => $status,
