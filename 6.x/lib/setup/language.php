@@ -27,7 +27,7 @@ if (isset($_REQUEST['switchLang'])) {
 	} else {
 		$_SESSION['language'] = $prefs['language'];
 	}
-} elseif ( $prefs['feature_multilingual'] == 'y' && $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])) {
+} elseif ( $prefs['feature_multilingual'] == 'y' && $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])and !isset($_SESSION['s_prefs']['language'])) {
 	$browser_language = detect_browser_language();
 	if ( ! empty($browser_language) ) {
 		$prefs['language'] = $browser_language;
