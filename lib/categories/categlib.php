@@ -964,9 +964,6 @@ class CategLib extends ObjectLib
 		}
 
 		$alls = $this->get_child_categories($categId, $all_descends);
-		if (empty($alls)) {
-			return $localCache[$key] = $alls;
-		}
 		return $localCache[$key] = Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
 	}
 
