@@ -136,6 +136,11 @@ function wikiplugin_list($data, $params)
 	return $out;
 }
 
+function wpquery_list_max($query, $value)
+{
+	$query->setRange(0, $value);	
+}
+
 function wpquery_filter_type($query, $value)
 {
 	$value = explode(',', $value);
