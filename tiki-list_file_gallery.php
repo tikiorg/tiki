@@ -523,7 +523,6 @@ if (isset($_REQUEST['edit'])) {
 			$cat_name = $_REQUEST['name'];
 			$cat_href = 'tiki-list_file_gallery.php?galleryId=' . $cat_objid;
 			include_once ('categorize.php');
-			$categlib->build_cache();
 		}
 		
 		if (isset($_REQUEST['viewitem'])) {
