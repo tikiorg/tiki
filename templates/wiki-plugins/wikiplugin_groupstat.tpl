@@ -17,7 +17,7 @@
 					{quotabar length=$stat.percent}
 				{/if}
 			{else}
-				%{$stat.percent|string_format:"%.2f"}
+				{$stat.percent|string_format:"%.2f"}%
 			{/if}
 		</td>
 		</tr>
