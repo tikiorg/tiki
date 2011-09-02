@@ -365,7 +365,8 @@ class CategLib extends ObjectLib
 			global $objectlib; include_once('lib/objectlib/php');
 			$info = $objectlib->get_object_via_objectid($catObjectId);
 			$logslib->add_action('Uncategorized', $info['itemId'], $info['type'], "categId=$categId");
-		}	}
+		}
+	}
 
 	function get_category_descendants($categId) {
 		global $user,$userlib;
@@ -975,39 +976,32 @@ class CategLib extends ObjectLib
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. */
-	function build_cache() {
-		global $tikilib;
-		global $cachelib; include_once('lib/cache/cachelib.php');
-		$ret = array();
-		$query = "select * from `tiki_categories` order by `name` asc, `categId` desc";
-		$result = $this->query($query, array());
-		while ($res = $result->fetchRow()) {
-			$id = $res["categId"];
-			$catpath = $this->get_category_path($id);
-			$tepath = array();
-			foreach ($catpath as $cat) {
-				$tepath[] = $cat['name'];
-			}
-			$categpath = implode("::",$tepath);
-			$categpathforsort = $tikilib->take_away_accent(implode("!!",$tepath)); // needed to prevent cat::subcat to be sorted after cat2::subcat
-			$res["categpath"] = $categpath;
-			$res["tepath"] = $tepath;
-			$query = "select count(*) from `tiki_categories` where `parentId`=?";
-			$res["children"] = $this->getOne($query,array($id));
-			$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-			$res["objects"] = $this->getOne($query,array($id));
-			$ret[$categpathforsort] = $res;
-		}
-		ksort($ret);
-		$ret = array_values($ret);
-		$cachelib->cacheItem("allcategs",serialize($ret));
-		return $ret;
-	}
-
 	private function get_category_cache() {
 		global $cachelib;
 		if( ! $ret = $cachelib->getSerialized("allcategs") ) {
-			$ret = $this->build_cache(false);
+			$ret = array();
+			$query = "select * from `tiki_categories` order by `name` asc, `categId` desc";
+			$result = $this->query($query, array());
+			while ($res = $result->fetchRow()) {
+				$id = $res["categId"];
+				$catpath = $this->get_category_path($id);
+				$tepath = array();
+				foreach ($catpath as $cat) {
+					$tepath[] = $cat['name'];
+				}
+				$categpath = implode("::",$tepath);
+				$categpathforsort = TikiLib::take_away_accent(implode("!!",$tepath)); // needed to prevent cat::subcat to be sorted after cat2::subcat
+				$res["categpath"] = $categpath;
+				$res["tepath"] = $tepath;
+				$query = "select count(*) from `tiki_categories` where `parentId`=?";
+				$res["children"] = $this->getOne($query,array($id));
+				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
+				$res["objects"] = $this->getOne($query,array($id));
+				$ret[$categpathforsort] = $res;
+			}
+			ksort($ret);
+			$ret = array_values($ret);
+			$cachelib->cacheItem("allcategs",serialize($ret));
 		}
 
 		return $ret;
