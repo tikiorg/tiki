@@ -41,15 +41,15 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 
 	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
 
-	if (!isset($params['_wysiwyg']) && $params['_simple'] === 'n') {	// should not be set usually(?)
-		include_once 'lib/setup/editmode.php';
-		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
+	if (!isset($params['_wysiwyg'])) {
+		if ($params['_simple'] === 'n') {	// should not be set usually(?)
+			include_once 'lib/setup/editmode.php';
+			$params['_wysiwyg'] = $_SESSION['wysiwyg'];
+		} else {
+			$params['_wysiwyg'] = 'n';
+		}
 	}
 	
-	if (!isset($params['_wysiwyg']) || $params['_wysiwyg'] !== 'y') {
-		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
-		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
-	}
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
@@ -123,7 +123,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$smarty->assign( 'autosave_js', '');
 	}
 
-	if ( ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y' ) && $params['_simple'] == 'n') {
+	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {	// TODO cope with wysiwyg and simple
 		
 		// new ckeditor implementation 2010
 		if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
@@ -228,7 +228,8 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 ', 20);	// after dialog tools init (10)
 
 		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;';	// missing closing quotes, closed in condition
-		if (empty($params['cols'])) {	
+
+		if (empty($params['cols'])) {
 			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
 		} else {
 			$html .= '" cols="'.$params['cols'].'em"';
@@ -250,6 +251,9 @@ function CKeditor_OnComplete() {
 		
 		// setup for wiki editor
 		
+		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
+		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
+
 		$smarty->assign('comments', $params['comments']);	// jb removed fallback to using _simple here if comments not set 110720
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 		$smarty->assign('toolbar_section', $params['section']);
