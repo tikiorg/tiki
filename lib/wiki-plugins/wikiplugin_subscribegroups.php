@@ -22,13 +22,24 @@ function wikiplugin_subscribegroups_info() {
 			'showsubscribe' => array(
 				'required' => false, 
 				'name' => tra('Show Subscribe Box'),
-				'description' => tra('Show the subscribe drop down box (shown by default). Will not show if there are no other groups the user may register for.'),
+				'description' => tra('Show the subscribe box (shown by default). Will not show if there are no other groups the user may register for.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'subscribestyle' => array(
+				'required' => false,
+				'name' => tra('Subscribe Box Style'),
+				'description' => tra('Style to show the subscribe box, either dropdown or table.'),
+				'filter' => 'alpha',
+				'default' => 'dropdown',
+				'options' => array(
+					array('text' => tra('Drop Down'), 'value' => 'dropdown'),
+					array('text' => tra('Table'), 'value' => 'table'),
 				)
 			),
 			'showdefault' => array(
@@ -99,32 +110,38 @@ function wikiplugin_subscribegroups($data, $params) {
 		$groups = $userlib->get_including_groups($including);
 	}
 	if ($group) {
-		if ($group == 'Anonymous' || $group == 'Registered') {
-			return tra('Incorrect parameter');
+		$garray = (array) $group;
+		foreach($garray as &$g) {
+			if ($g == 'Anonymous' || $g == 'Registered') {
+				return tra('Incorrect parameter');
+			}
+			if (!($info = $userlib->get_group_info($g))) {
+				return tra('Incorrect parameter');
+			}
+			if ($info['userChoice'] != 'y') { // limit to userchoice
+				return tra('You do not have permission to subscribe to groups');
+			}
+			if (!empty($groups) && !in_array($g, $groups)) {// limit the group to the groups params
+				$g = '';
+			}
 		}
-		if (!($info = $userlib->get_group_info($group))) {
-			return tra('Incorrect parameter');
-		}
-		if ($info['userChoice'] != 'y') { // limit to userchoice
-			return tra('You do not have permission to subscribe to groups');
-		}
-		if (!empty($groups) && !in_array($group, $groups)) {// limit the group to the groups params
-			$group = '';
-		}
+		unset($g);
 	}
 
 	$userGroups = $userlib->get_user_groups_inclusion($user);
-	if (!empty($_REQUEST['assign']) && !isset($userGroups[$group])) {
-		$userlib->assign_user_to_group($user, $group);
-	}
-	if (!empty($_REQUEST['unassign']) && isset($userGroups[$group])) {
-		$userlib->remove_user_from_group($user, $group);
+	if (isset($garray)) {
+		foreach ($garray as $g) {
+			if (!empty($_REQUEST['assign']) && !isset($userGroups[$group])) {
+				$userlib->assign_user_to_group($user, $g);
+			}
+			if (!empty($_REQUEST['unassign']) && isset($userGroups[$group])) {
+				$userlib->remove_user_from_group($user, $group);
+			}
+		}
 	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (!empty($_REQUEST['default']) && isset($userGroups[$_REQUEST['default']])) {
 		$userlib->set_default_group($user, $_REQUEST['default']);
-		global $group;
-		$group = $_REQUEST['default'];
 		if (isset($defaulturl)) {
 			header("Location: $defaulturl");
 			die;
@@ -161,6 +178,11 @@ function wikiplugin_subscribegroups($data, $params) {
 		$smarty->assign('showsubscribe', 'n');
 	} else {
 		$smarty->assign('showsubscribe', 'y');
+	}
+	if (isset($subscribestyle)) {
+		$smarty->assign('subscribestyle', $subscribestyle);
+	} else {
+		$smarty->assign('subscribestyle', 'dropdown');
 	}
 	if (isset($showdefault) && $showdefault == 'y') {
 		$smarty->assign('showdefault', 'y');

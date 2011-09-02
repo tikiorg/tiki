@@ -24,7 +24,7 @@
 </table>
 {/if}
 
-{if $showsubscribe ne 'n' && !empty($possibleGroups)}
+{if $showsubscribe ne 'n' && !empty($possibleGroups) && $subscribestyle eq 'dropdown'}
 <form method="post">
 <select name="assign" onchange="this.form.submit();">
 <option value=""><i>{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to a group{/tr}{/if}</i></option>
@@ -35,5 +35,19 @@
 	</option>
 {/foreach}
 </select>
+</form>
+{elseif $showsubscribe ne 'n' && !empty($possibleGroups) && $subscribestyle eq 'table'}
+<form method="post">
+<table class="normal">
+{foreach from=$possibleGroups item=gr}
+	<tr>
+	<td class="{cycle advance=false}">
+	<input name="assign[]" type="checkbox" value="{$gr|escape}" /> {$gr|escape}
+	{if $showgroupdescription eq 'y'}<div style="margin-left:20px">{$allGroups.$gr.groupDesc|escape}</div>{/if}
+	</td>
+	</tr>
+{/foreach}
+</table>
+<input type="submit" value="{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to groups{/tr}{/if}" />
 </form>
 {/if}
