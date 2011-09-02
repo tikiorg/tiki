@@ -8,6 +8,7 @@
 function smarty_function_service($params, $smarty)
 {
 	global $prefs;
+	$smarty->loadPlugin('smarty_modifier_escape');
 
 	if (! isset($params['controller'])) {
 		return 'missing-controller';
@@ -30,7 +31,6 @@ function smarty_function_service($params, $smarty)
 		$url .= '?' . http_build_query($params, '', '&');
 	}
 
-	require_once 'lib/smarty_tiki/modifier.escape.php';	
 	return smarty_modifier_escape($url);
 }
 
