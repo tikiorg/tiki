@@ -26,7 +26,8 @@ class CategLib extends ObjectLib
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. 
-	If $all is set to false, only first level children obtained. */
+	If $all is set to false, only first level children obtained.
+	Related to list_all_categories, get_child_categories, get_visible_child_categories, get_all_categories */
 	function list_categs($categId=0, $all = true) {
 		$back = $this->get_all_categories();
 
@@ -38,7 +39,7 @@ class CategLib extends ObjectLib
 					$path = $cat['categpath'].'::';
 			}
 			foreach ($back as $cat) {
-				if (($all == true || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
+				if (($all || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
 					$cat['categpath'] = substr($cat['categpath'], strlen($path));
 					$back2[] = $cat;
 				}
@@ -82,6 +83,7 @@ class CategLib extends ObjectLib
 		return $catinfo;
 	}
 
+	// Related to list_categs()
 	function list_all_categories($offset, $maxRecords, $sort_mode, $find, $type, $objid) {
 		global $prefs;
 		$cats = $this->get_object_categories($type, $objid);
