@@ -49,7 +49,7 @@ function wikiplugin_groupstat($data, $params) {
 
 	if (isset($params['groups'])) {
 		$groups = explode(':', $params['groups']);
-		$query = 'SELECT COUNT(DISTINCT(*)) FROM `users_usergroups` WHERE `groupName` IN('.implode(',', array_fill(0,count($groups),'?')).')';
+		$query = 'SELECT COUNT(DISTINCT `userId`) FROM `users_usergroups` WHERE `groupName` IN('.implode(',', array_fill(0,count($groups),'?')).')';
 		$total = $tikilib->getOne($query, $groups);
 	} else {
 		$groups = $userlib->list_all_groups();
