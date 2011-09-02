@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * @param string The string from which an id should be built
  * @return string A string to use as an id
  */
-function smarty_modifier_escape($string)
+function smarty_modifier_to_id($string)
 {
-	return TikiLib::lib('tiki')->clean_id_string( $string );
+	return TikiLib::clean_id_string( $string );
 }
