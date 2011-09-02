@@ -9,7 +9,7 @@
 {foreach from=$stats item=stat}
 	{if $stat.group ne 'Anonymous' and $stat.group ne 'Registered'}
 		<tr class="{cycle}">
-		<td>{$stat.group}</td>
+		<td>{$stat.group|escape}</td>
 		<td>{$stat.nb}</td>
 		<td>
 			{if $params.show_bar eq 'y'}
