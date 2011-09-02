@@ -41,7 +41,7 @@
 <table class="normal">
 {foreach from=$possibleGroups item=gr}
 	<tr>
-	<td class="{cycle advance=false}">
+	<td class="{cycle}">
 	<input name="assign[]" type="checkbox" value="{$gr|escape}" /> {$gr|escape}
 	{if $showgroupdescription eq 'y'}<div style="margin-left:20px">{$allGroups.$gr.groupDesc|escape}</div>{/if}
 	</td>
