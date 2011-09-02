@@ -131,15 +131,14 @@ function wikiplugin_subscribegroups($data, $params) {
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (isset($garray)) {
 		foreach ($garray as $g) {
-			if (!empty($_REQUEST['assign']) && !isset($userGroups[$group])) {
+			if (!empty($_REQUEST['assign']) && !isset($userGroups[$g])) {
 				$userlib->assign_user_to_group($user, $g);
 			}
-			if (!empty($_REQUEST['unassign']) && isset($userGroups[$group])) {
+			if (!empty($_REQUEST['unassign']) && isset($userGroups[$g])) {
 				$userlib->remove_user_from_group($user, $group);
 			}
 		}
 	}
-	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (!empty($_REQUEST['default']) && isset($userGroups[$_REQUEST['default']])) {
 		$userlib->set_default_group($user, $_REQUEST['default']);
 		if (isset($defaulturl)) {
