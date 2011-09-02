@@ -445,7 +445,6 @@ CREATE TABLE `tiki_categories` (
   `description` varchar(250) default NULL,
   `parentId` int(12) default NULL,
   `hits` int(8) default NULL,
-  `rootCategId` int(12) default NULL,
   PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -3671,23 +3670,23 @@ CREATE TABLE `tiki_cart_inventory_hold` (
 
 DROP TABLE IF EXISTS `tiki_source_auth`;
 CREATE TABLE `tiki_source_auth` (
-	`identifier` VARCHAR(50) PRIMARY KEY,
-	`scheme` VARCHAR(20) NOT NULL,
-	`domain` VARCHAR(200) NOT NULL,
-	`path` VARCHAR(200) NOT NULL,
-	`method` VARCHAR(20) NOT NULL,
-	`arguments` TEXT NOT NULL,
-	KEY `tiki_source_auth_ix` (`scheme`, `domain`)
+    `identifier` VARCHAR(50) PRIMARY KEY,
+    `scheme` VARCHAR(20) NOT NULL,
+    `domain` VARCHAR(200) NOT NULL,
+    `path` VARCHAR(200) NOT NULL,
+    `method` VARCHAR(20) NOT NULL,
+    `arguments` TEXT NOT NULL,
+    KEY `tiki_source_auth_ix` (`scheme`, `domain`)
 );
 
 DROP TABLE IF EXISTS `tiki_connect`;
 CREATE TABLE `tiki_connect` (
-	`id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
-	`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`type` VARCHAR(64) NOT NULL DEFAULT '',
-	`data` TEXT,
-	`guid` VARCHAR(64) DEFAULT NULL,
-	`server` TINYINT(1) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`id`),
-	KEY `server` (`server`)
+    `id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+    `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `type` VARCHAR(64) NOT NULL DEFAULT '',
+    `data` TEXT,
+    `guid` VARCHAR(64) DEFAULT NULL,
+    `server` TINYINT(1) NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    KEY `server` (`server`)
 );
