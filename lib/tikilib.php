@@ -5248,8 +5248,17 @@ class TikiLib extends TikiDb_Bridge
 		return str_replace($accents, $convs, $str); 
 	}
 
+	/**
+	 * Remove all spaces, accents and non-word chars from a string
+	 * Can be used for DOM elements and preferences etc
+	 *
+	 * @static
+	 * @param string $str
+	 * @return string cleaned
+	 */
+
 	static function clean_id_string($str) {
-		return preg_replace('/[\s,\/\|]+/', '_', TikiLib::take_away_accent( $str ));
+		return preg_replace('/\W+/', '_', TikiLib::take_away_accent( $str ));
 	}
 
 	/* return the positions in data where the hdr-nth header is find
