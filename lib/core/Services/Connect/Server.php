@@ -70,7 +70,7 @@ class Services_Connect_Server
 
 					// send back welcome message
 					$rdata['status'] = $status;
-					$rdata['message'] = tra('Welcome to Tiki Connect');
+					$rdata['message'] = tra('Welcome to Tiki Connect, please click "Send Info" when you want to make a connection.');
 					$rdata['guid'] = $guid;
 
 				} else {

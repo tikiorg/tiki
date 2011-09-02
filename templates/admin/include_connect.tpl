@@ -53,13 +53,18 @@
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
-					{tr}Please note: Work in progress, coming soon... (r36454){/tr}
+					<p><em>{tr}Please note: Experimetnal - work in progress{/tr}</em></p>
+					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br />
+					{tr}When you click the "Send Info" below you will be connected with mother.tiki.org, which is where the data will be collected.{/tr}</p>
+					<p>{tr}You can also send feedback about Tiki by checking the "Feedback" checkbox above. Icons will appear next to all the preferences where you can "like", request a "fix" or ask "what's this for?"{/tr}<br />
+					{tr}Your votes are sent when you connect with mother.tiki.org (currently only be clicking the "Send Info" button){/tr}</p>
+					<p>{tr}For more info{/tr} <a href="http://doc.tiki.org/Connect">{tr}click here{/tr}</a></p>
 				{/remarksbox}
 				{preference name="connect_feature"}
 				<div class="adminoptionboxchild" id="connect_feature_childcontainer">
 					<div class="navbar">
-						{button _script="#" _text="{tr}Preview info{/tr}" _title="{tr}See what is going to be sent{/tr}" _id="connect_list_btn"}
 						{button _script="#" _text="{tr}Send Info{/tr}" _title="{tr}Send the data{/tr}" _id="connect_send_btn"}
+						{button _script="#" _text="{tr}Preview info{/tr}" _title="{tr}See what is going to be sent{/tr}" _id="connect_list_btn"}
 						{if empty($prefs.connect_site_title)}
 							{button _text="{tr}Fill form{/tr}" _title="{tr}Fill this form in based on other preferences{/tr}" _id="connect_defaults_btn" _script="#"}
 						{/if}
@@ -83,8 +88,8 @@
 					</div>
 					{preference name="connect_send_anonymous_info"}
 
-					<strong>{tr}Advanced settings{/tr}</strong>
-					<div class="adminoptionboxchild">
+					<div class="adminoptionboxchild" style="visibility:hidden;">
+						<strong>{tr}Advanced settings{/tr}</strong> {tr}Exposed to assist testing and development{/tr}
 						{preference name="connect_frequency"}
 						{preference name="connect_server"}
 						{preference name="connect_last_post"}
