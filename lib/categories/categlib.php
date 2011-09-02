@@ -82,7 +82,7 @@ class CategLib extends ObjectLib
 		return $catinfo;
 	}
 
-	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid) {
+	function list_all_categories($offset, $maxRecords, $sort_mode, $find, $type, $objid) {
 		global $prefs;
 		$cats = $this->get_object_categories($type, $objid);
 
