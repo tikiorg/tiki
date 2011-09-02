@@ -238,6 +238,7 @@ class CategLib extends ObjectLib
 		}
 		
 		$cachelib->invalidate('allcategs');
+		$cachelib->invalidate('childcategs'.$parentId);
 		
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate("allcategs$categId");
@@ -267,6 +268,7 @@ class CategLib extends ObjectLib
 		$cachelib->invalidate('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
+		$cachelib->invalidate('childcategs'.$oldParentId);
 
 		$this->update_category_cache($categId);
 		$values= array("categoryId"=>$categId, "categoryName"=>$name, "categoryPath"=>$this->get_category_path_string_with_root($categId),
