@@ -144,7 +144,8 @@ function wikiplugin_subscribegroups($data, $params) {
 		}
 	}
 
-	$allGroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n', '', 'y');
+	$allGroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+
 	$possibleGroups = array();
 	foreach ($allGroups['data'] as $gr) {
 		if ($gr['userChoice'] == 'y' && (empty($groups) || in_array($gr['groupName'], $groups)) && !isset($userGroups[$gr['groupName']]) && $gr['groupName'] != 'Registered' && $gr['groupName'] != 'Anonymous') {
