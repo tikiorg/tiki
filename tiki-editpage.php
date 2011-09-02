@@ -747,8 +747,15 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
-		if ($prefs['wysiwyg_htmltowiki'] === 'n' || $info['is_html'] == 1) {
-			$parsed = $editlib->parseToWiki($edit_data); // when we come from WYSIWYG Wiki the data must not be touched
+		
+		// $disable_wysiwyg_html is a helper var for wysiwyg_htmltowiki and is defined in editmode.php  
+		global $disable_wysiwyg_html; 
+		if ($disable_wysiwyg_html) {
+			// we come from WYSIWYG-Wiki
+			$parsed = $edit_data; 
+		} else {			
+			// we come from WYSIWYG-HTML
+			$parsed = $editlib->parseToWiki($edit_data); 
 		}
 		$is_html = false;
 		$info['is_html'] = false;
@@ -757,14 +764,20 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y') {
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$smarty->assign('msg', "Parsing wiki to html");
-		$parsed = $editlib->parseToWysiwyg($edit_data, true);
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+		
+		// $disable_wysiwyg_html is a helper var for wysiwyg_htmltowiki and is defined in editmode.php
+		global $disable_wysiwyg_html;
+		if ($disable_wysiwyg_html) {
+			// we switch to WYSIWYG-Wiki
+			$parsed = $edit_data; 
 			$is_html = false;
 			$info['is_html'] = false;
 		} else {
+			// we switch to WYSIWYG-HTML
+			$parsed = $editlib->parseToWysiwyg($edit_data, true); 
 			$is_html = true;
 			$info['is_html'] = true;
-			$smarty->assign('allowhtml','y');
+			$smarty->assign('allowhtml','y');	
 		}
 		$info['wysiwyg'] = true;
 	} elseif ($_SESSION['wysiwyg'] === 'y') {

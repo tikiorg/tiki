@@ -35,17 +35,18 @@ if ($prefs['feature_wysiwyg'] == 'y' && $prefs['javascript_enabled'] == 'y') {
 }
 
 /*
- * Per default, we don't run the CKE in Wiki mode.
- * The edit mode depends on wysiwyg_htmltowiki and on the kind a data to be edited. 
+ * The following two globals are helper vars for wysiwyg_htmltowiki:
+ * - $wysiwyg_wiki        : is needed to load the toolbars and the CKE plugins
+ * - $disable_wysiwyg_html: is needed to perform the appropriate syntax conversions during editor switch 
  */
-global $wysiwyg_wiki;
+global $wysiwyg_wiki, $disable_wysiwyg_html;
 $wysiwyg_wiki = false;
-
+$disable_wysiwyg_html = false;  
 
 if ($_SESSION['wysiwyg'] == 'y') {
 	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
 		$is_html = false;
-		$wysiwyg_wiki = true;
+		$wysiwyg_wiki = true; // do WYSIWYG-Wiki
 	} else {
 		$is_html = true;
 	}
@@ -59,6 +60,9 @@ if ($_SESSION['wysiwyg'] == 'y') {
 			$is_html = true;
 		}
 	}
+}
+if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) {
+	$disable_wysiwyg_html = true;
 }
 if (isset($jitRequest['edit'])) {
 	// Restore the property for the rest of the script
