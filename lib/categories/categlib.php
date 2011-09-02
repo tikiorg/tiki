@@ -1013,7 +1013,6 @@ class CategLib extends ObjectLib
 		return $ret;
 	}
 
-	// Same as get_all_categories + it also get info about count of objects
 	function get_all_categories() {
 		$ret = $this->get_category_cache();
 
