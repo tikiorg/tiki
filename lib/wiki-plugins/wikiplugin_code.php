@@ -9,8 +9,6 @@ global $headerlib, $prefs;
 require_once('lib/codemirror_tiki/codemirror_tiki.php');
 
 if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
-	tiki_syntax_highlighter_base();
-	
 	$headerlib->add_jq_onready("
 		if (!syntaxHighlighter) return;
 		if (!syntaxHighlighter.modes) return;
