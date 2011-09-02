@@ -187,7 +187,7 @@ abstract class Toolbar
 	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '') {
 		global $tikilib;
 		
-		$name = strtolower( TikiLib::lib('tiki')->clean_id_string( $name ));
+		$name = strtolower( TikiLib::clean_id_string( $name ));
 		$standard_names = Toolbar::getList(false);
 		$custom_list = Toolbar::getCustomList();
 		if (in_array($name, $standard_names)) {		// don't allow custom tools with the same name as standard ones

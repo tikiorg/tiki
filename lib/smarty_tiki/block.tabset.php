@@ -50,7 +50,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$short_name = str_replace(array('tiki-', '.php'), '', basename($_SERVER['SCRIPT_NAME']));
 			$smarty_tabset_name = 't_' . $short_name . $tabset_index;
 		}
-		$smarty_tabset_name = TikiLib::lib('tiki')->clean_id_string( $smarty_tabset_name );
+		$smarty_tabset_name = TikiLib::clean_id_string( $smarty_tabset_name );
 		$smarty_tabset[$tabset_index] = array( 'name' => $smarty_tabset_name, 'tabs' => array());
 		if (!isset($smarty_tabset_i_tab)) {
 			$smarty_tabset_i_tab = 1;
