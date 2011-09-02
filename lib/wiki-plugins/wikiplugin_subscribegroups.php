@@ -138,6 +138,7 @@ function wikiplugin_subscribegroups($data, $params) {
 				$userlib->remove_user_from_group($user, $group);
 			}
 		}
+		$userGroups = $userlib->get_user_groups_inclusion($user); // refresh after update
 	}
 	if (!empty($_REQUEST['default']) && isset($userGroups[$_REQUEST['default']])) {
 		$userlib->set_default_group($user, $_REQUEST['default']);
