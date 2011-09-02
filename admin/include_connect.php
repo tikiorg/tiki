@@ -10,28 +10,50 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-if (isset($_REQUEST["connectcomprefs"])) {
+if (isset($_REQUEST["connectprefs"])) {
 	check_ticket('admin-inc-connect');
 }
 ask_ticket('admin-inc-connect');
-$headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');
-
 global $userlib, $prefs, $base_url, $headerlib, $smarty;
 
+$headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');
+
 if (empty($prefs['connect_site_title'])) {
-	$defaults = array(
+	$defaults = json_encode(array(
 		'connect_site_title' => $prefs['browsertitle'],
 		'connect_site_email' => $userlib->get_admin_email(),
 		'connect_site_url' => $base_url,
 		'connect_site_keywords' => $prefs['metatag_keywords'],
 		'connect_site_location' => $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' .$prefs['gmap_defaultz'],
-	);
-	$smarty->assign('connect_defaults_json', json_encode($defaults));
-} else {
-	$smarty->assign('connect_defaults_json', '');
+	));
+
+	$headerlib->add_jq_onready('
+$("#connect_defaults_btn a").click(function(){
+	var connect_defaults = ' . $defaults . ';
+	for (el in connect_defaults) {
+		$("input[name=" + el + "]").val(connect_defaults[el]);
+	}
+	return false;
+});
+'	);
 }
 
-$connectlib = TikiLib::lib('connect_server');
+if ($prefs['connect_server_mode'] === 'y') {
+	$connectlib = TikiLib::lib('connect_server');
 
-$smarty->assignByRef('connect_stats', $connectlib->getReceivedDataStats());
-
+	$search_str = '';
+	
+	if (isset($_REQUEST['cserver'])) {
+		if ($_REQUEST['cserver'] === 'rebuild') {
+			$connectlib->rebuildIndex();
+		} else if (!empty($_REQUEST['cserver_search'])) {
+			$search_str = $_REQUEST['cserver_search'];
+		}
+	}
+	$smarty->assign('cserver_search_text', $search_str);
+	$smarty->assignByRef('connect_stats', $connectlib->getReceivedDataStats());
+	$smarty->assignByRef('connect_recent', $connectlib->getMatchingConnections( empty($search_str) ? '*' : $search_str));
+} else {
+	$smarty->assign('connect_stats', null);
+	$smarty->assign('connect_recent', null);
+}

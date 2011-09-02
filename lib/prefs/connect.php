@@ -16,33 +16,6 @@ function prefs_connect_list() {
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'admin' => 'connect'
 		),
-		'connect_frequency' => array(
-			'name' => tra('Connection frequency'),
-            'description' => tra('How often to send information (in hours)').' '.tra('Default:'). '168 ('.tra('weekly') . ')',
-			'type' => 'text',
-			'dependencies' => 'connect_feature',
-			'filter' => 'digits',
-			'default' => '168',
-			'tags' => array('advanced'),
-		),
-		'connect_server' => array(
-			'name' => tra('Tiki Connect Server URL'),
-            'description' => tra('Where to send the information.').' '.tra('Default:'). 'http://mother.tiki.org',
-			'type' => 'text',
-			'dependencies' => 'connect_feature',
-			'default' => 'https://mother.tiki.org',
-			'filter' => 'url',
-			'tags' => array('advanced'),
-		),
-		'connect_last_post' => array(
-			'name' => tra('Last connection'),
-            'description' => tra('Clear to initiate immediate send'),
-			'type' => 'text',
-			'dependencies' => 'connect_feature',
-			'filter' => 'digits',
-			'default' => '',
-			'tags' => array('advanced'),
-		),
 		'connect_send_info' => array(
 			'name' => tra('Send Site Information'),
             'description' => tra('Additionally send keywords, location etc to tiki.org so you can connect with Tikis near you.'),
@@ -93,11 +66,38 @@ function prefs_connect_list() {
 			'tags' => array('basic'),
 		),
 		'connect_send_anonymous_info' => array(
-			'name' => tra('Send Usage Information'),
+			'name' => tra('Send Anonymous Information'),
             'description' => tra('Send anonymous usage information.'),
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'y',
+		),
+		'connect_frequency' => array(
+			'name' => tra('Connection frequency'),
+            'description' => tra('How often to send information (in hours)').' '.tra('Default:'). '168 ('.tra('weekly') . ')',
+			'type' => 'text',
+			'dependencies' => 'connect_feature',
+			'filter' => 'digits',
+			'default' => '168',
+			'warning' => tra('Experimental. Currently unused, click "Send Info" to connect.'),
+		),
+		'connect_server' => array(
+			'name' => tra('Tiki Connect Server URL'),
+            'description' => tra('Where to send the information.').' '.tra('Default:'). 'http://mother.tiki.org',
+			'type' => 'text',
+			'dependencies' => 'connect_feature',
+			'default' => 'https://mother.tiki.org',
+			'filter' => 'url',
+			'tags' => array('expert'),
+		),
+		'connect_last_post' => array(
+			'name' => tra('Last connection'),
+            'description' => tra(''),
+			'type' => 'text',
+			'dependencies' => 'connect_feature',
+			'filter' => 'digits',
+			'default' => '',
+			'tags' => array('expert'),
 		),
 		'connect_server_mode' => array(
 			'name' => tra('Connect Server Mode'),
@@ -105,7 +105,7 @@ function prefs_connect_list() {
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'n',
-			'tags' => array('advanced'),
+			'tags' => array('expert'),
 		),
 		'connect_guid' => array(
 			'name' => tra('Connect GUID'),
@@ -114,7 +114,7 @@ function prefs_connect_list() {
 			'size' => 60,
 			'dependencies' => 'connect_feature',
 			'default' => '',
-			'tags' => array('advanced', 'readonly'),	// TODO readonly tag?
+			'tags' => array('expert', 'readonly'),	// TODO readonly tag?
 		),
 	);
 }

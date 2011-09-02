@@ -25,6 +25,7 @@ abstract class Connect_Abstract
 		'connect_site_location',
 		'connect_site_title',
 		'connect_site_url',
+		'connect_site_keywords',
 		'feature_site_report_email',
 		'fgal_use_dir',
 		'gmap_defaultx',
@@ -47,10 +48,10 @@ abstract class Connect_Abstract
 	 * Records a row in tiki_connect and updates pref connect_last_post if client
 	 *
 	 * @param string $status	pending|confirmed|sent|received
-	 * @param null $guid		client guid
-	 * @param array $data		"connect" data to store
+	 * @param string $guid		client guid
+	 * @param mixed $data		"connect" data to store (serialized)
 	 * @param bool $server		server mode (default client)
-	 * @return void
+	 * @return datetime $created
 	 */
 
 	function recordConnection($status, $guid, $data = '', $server = false) {
@@ -58,17 +59,19 @@ abstract class Connect_Abstract
 		if (is_array($data) || is_object($data)) {
 			$data = serialize( $data );
 		}
-		$this->connectTable->insert(array(
+		$insertId = $this->connectTable->insert(array(
 				'type' => $status,
 				'data' => $data,
 				'guid' => $guid,
 				'server' => $server ? 1 : 0,
 		));
 
+		$created = $this->connectTable->fetchOne('created', array( 'id' => $insertId ));
 		if (!$server) {
 			$tikilib = TikiLib::lib('tiki');
 			$tikilib->set_preference('connect_last_post', $tikilib->now);
 		}
+		return $created;
 	}
 
 	/**

@@ -86,8 +86,13 @@ class Services_Connect_Client
 			if (empty($pending)) {
 				$data = $this->remote->new();
 
-				if ($data['status'] === 'pending' && !empty($data['guid'])) {
+				if ($data && $data['status'] === 'pending' && !empty($data['guid'])) {
 					$this->connectlib->recordConnection($data['status'], $data['guid']);
+				} else {
+					$data = array(
+						'status' => 'error',
+						'message' => empty($data['message']) ? tra('Something went wrong. Tiki Connect is still experimental. Please try again.') . ' (' . tra('registration') . ')' : $data['message'],
+					);
 				}
 
 			} else {
@@ -105,7 +110,7 @@ class Services_Connect_Client
 				} else {
 					$data = array(
 						'status' => 'error',
-						'message' => empty($data['message']) ? tra('Something went wrong. Tiki Connect is still experimental. Please try again.') : $data['message'],
+						'message' => empty($data['message']) ? tra('Something went wrong. Tiki Connect is still experimental. Please try again.') . ' (' . tra('confirmation') . ')' : $data['message'],
 					);
 				}
 			}

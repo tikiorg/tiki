@@ -5,12 +5,12 @@
 			{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}
 		{/remarksbox}
 
-	<fieldset>
-		<legend><strong>{tr}Join the community!{/tr}</strong></legend>
-		<p>
-			<a href="http://info.tiki.org/Join+the+community">{tr}Click here to join in!{/tr}</a>
-		</p>
-	</fieldset>
+		<fieldset>
+			<legend><strong>{tr}Join the community!{/tr}</strong></legend>
+			<p>
+				<a href="http://info.tiki.org/Join+the+community">{tr}Click here to join in!{/tr}</a>
+			</p>
+		</fieldset>
 		<fieldset>
 			<legend><strong>{tr}Tiki News{/tr}</strong></legend>
 			<p>
@@ -60,43 +60,86 @@
 					<div class="navbar">
 						{button _script="#" _text="{tr}Preview info{/tr}" _title="{tr}See what is going to be sent{/tr}" _id="connect_list_btn"}
 						{button _script="#" _text="{tr}Send Info{/tr}" _title="{tr}Send the data{/tr}" _id="connect_send_btn"}
-						{if !empty($connect_stats)}
-							<span>{tr _0=$connect_stats.received _1=$connect_stats.guids}<strong>Server stats:</strong> %0 reports received from %1 Tikis{/tr}</span>
-						{/if}
-						{if !empty($connect_defaults_json)}
+						{if empty($prefs.connect_site_title)}
 							{button _text="{tr}Fill form{/tr}" _title="{tr}Fill this form in based on other preferences{/tr}" _id="connect_defaults_btn" _script="#"}
-							{jq}
-$("#connect_defaults_btn a").click(function(){
-	var connect_defaults = {{$connect_defaults_json}};
-	for (el in connect_defaults) {
-		$("input[name=" + el + "]").val(connect_defaults[el]);
-	}
-	return false;
-});
-							{/jq}
 						{/if}
 					</div>
 					{preference name="connect_send_info"}
 					<div class="adminoptionboxchild" id="connect_send_info_childcontainer">
 						{preference name="connect_site_title"}
+						{if $prefs.connect_send_info eq "y" and empty($prefs.connect_site_title)}
+							{remarksbox type="errors" title=""}
+								{tr}Site Title is required{/tr}
+							{/remarksbox}
+						{/if}
 						{preference name="connect_site_email"}
 						{preference name="connect_site_url"}
-						{preference name="connect_site_location"}
 						{preference name="connect_site_keywords"}
+						{preference name="connect_site_location"}
+						<div class="adminoptionboxchild" style="padding-left:5em;">
+							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-target-field="connect_site_location">
+							</div>
+						</div>
 					</div>
 					{preference name="connect_send_anonymous_info"}
-					{preference name="connect_frequency"}
-					{preference name="connect_server"}
-					{preference name="connect_last_post"}
-					{preference name="connect_server_mode"}
-					{preference name="connect_guid"}
+
+					<strong>{tr}Advanced settings{/tr}</strong>
+					<div class="adminoptionboxchild">
+						{preference name="connect_frequency"}
+						{preference name="connect_server"}
+						{preference name="connect_last_post"}
+						{preference name="connect_server_mode"}
+						{preference name="connect_guid"}
+					</div>
 				</div>
 
 			</fieldset>
 
 			<div class="heading input_submit_container" style="text-align: center;">
-				<input type="submit" value="{tr}Change preferences{/tr}" />
+				<input type="submit" name="connectprefs" value="{tr}Change preferences{/tr}" />
 			</div>
 		</form>
 	{/tab}
+	{if $prefs.connect_server_mode eq "y"}
+		{tab name="{tr}Connections received{/tr}"}
+			<h2>{tr}Recent connections{/tr}</h2>
+			<form class="admin" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
+				<input name="cserver_search" type="text" value="{$cserver_search_text}" />
+				<input name="cserver" type="submit" value="{tr}Search{/tr}" />
+				{button cserver="rebuild" _auto_args="cserver,page" _text="{tr}Rebuild Index{/tr}" _title="{tr}Rebuild received connections index{/tr}"}
+				{if !empty($connect_stats)}
+					<span>{tr _0=$connect_stats.received _1=$connect_stats.guids}<strong>Server stats:</strong> %0 reports received from %1 Tikis{/tr}</span>
+				{/if}
+			</form>
+
+			<table class="normal">
+				<tr>
+					<th>{tr}Created{/tr}</th>
+					<th>{tr}Title{/tr}</th>
+					<th>{tr}Language{/tr}</th>
+					<th>{tr}Keywords{/tr}</th>
+				</tr>
+				{cycle values="odd,even" print=false}
+				{section name=connection loop=$connect_recent}
+					<tr class="{cycle}">
+						<td>
+							{$connect_recent[connection].created}
+						</td>
+						<td class="text">
+							<a class="{$connect_recent[connection].class}" {$connect_recent[connection].metadata} href="{$connect_recent[connection].url}">{$connect_recent[connection].title|escape}</a>
+						</td>
+						<td>
+							{$connect_recent[connection].language}
+						</td>
+						<td>
+							{$connect_recent[connection].keywords}
+						</td>
+					</tr>
+				{sectionelse}
+					{norecords _colspan=4}
+				{/section}
+			</table>
+
+		{/tab}
+	{/if}
 {/tabset}
