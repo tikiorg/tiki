@@ -31,11 +31,11 @@ abstract class SerializedList
 	 * @param string $name
 	 */
 	public function __construct($name) {
-		global $tikilib, $prefs;
+		global $prefs;
 		
 		$this->initPrefPrefix();
 		
-		$this->name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $tikilib->take_away_accent( $name )) );
+		$this->name = strtolower( TikiLib::lib('tiki')->clean_id_string( $name ));
 		if (!empty($this->name) && !empty($prefs[$this->getPrefName()])) {
 			$this->loadPref();
 		} else {

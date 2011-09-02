@@ -5233,8 +5233,8 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function take_away_accent($str) {
-		$accents = explode(' ', 'À Á Â Ã Ä Å Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö Ù Ú Û Ü Ý ß à á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý Æ æ');
-		$convs =   explode(' ', 'A A A A A A C E E E E I I I I D N O O O O O U U U U Y s a a a a a a c e e e e i i i i n o o o o o u u u u y AE ae');
+		$accents = explode(' ', 'À Á Â Ã Ä Å Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö ø Ø Ù Ú Û Ü Ý ß à á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý Æ æ');
+		$convs =   explode(' ', 'A A A A A A C E E E E I I I I D N O O O O O o O U U U U Y s a a a a a a c e e e e i i i i n o o o o o u u u u y AE ae');
 		return str_replace($accents, $convs, $str);
 	}
 
@@ -5246,6 +5246,10 @@ class TikiLib extends TikiDb_Bridge
 			$convs[] = rawurlencode($a);
 		}
 		return str_replace($accents, $convs, $str); 
+	}
+
+	function clean_id_string($str) {
+		return preg_replace('/[\s,\/\|]+/', '_', $this->take_away_accent( $str ));
 	}
 
 	/* return the positions in data where the hdr-nth header is find

@@ -33,7 +33,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_tabset($params, $content, $smarty, &$repeat)
 {
-	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib, $tabset_index, $tikilib;
+	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib, $tabset_index;
 
 	if ($smarty->getTemplateVars('print_page') == 'y' || $prefs['layout_tabs_optional'] === 'n') {
 		$params['toggle'] = 'n';
@@ -50,7 +50,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$short_name = str_replace(array('tiki-', '.php'), '', basename($_SERVER['SCRIPT_NAME']));
 			$smarty_tabset_name = 't_' . $short_name . $tabset_index;
 		}
-		$smarty_tabset_name = preg_replace('/[\s,\/\|]+/', '_', $tikilib->take_away_accent( $smarty_tabset_name ));	// TODO refactor into clean_string - see e.g. toolbarslib?
+		$smarty_tabset_name = TikiLib::lib('tiki')->clean_id_string( $smarty_tabset_name );
 		$smarty_tabset[$tabset_index] = array( 'name' => $smarty_tabset_name, 'tabs' => array());
 		if (!isset($smarty_tabset_i_tab)) {
 			$smarty_tabset_i_tab = 1;

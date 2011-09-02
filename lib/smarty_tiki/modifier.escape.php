@@ -107,7 +107,10 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
         case 'unescape':
             return rawurldecode($string);
 
-        default:
+		case 'id':
+			return TikiLib::lib('tiki')->clean_id_string( $string );
+
+		default:
             return $string;
     }
 }
