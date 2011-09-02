@@ -28,7 +28,7 @@ class CategLib extends ObjectLib
 		"objects" is the number of objects directly in the category. 
 	If $all is set to false, only first level children obtained. */
 	function list_categs($categId=0, $all = true) {
-		$back = $this->get_all_categories_ext();
+		$back = $this->get_all_categories();
 
 		if ($categId > 0 || !$all) {
 			$path = '';
@@ -53,7 +53,7 @@ class CategLib extends ObjectLib
 	 * Specifiy a common ancestor category ID in $top to remove the top level from the category path
 	 */
 	function get_category_info($categIds, $top=null) {
-		$back = $this->get_all_categories_ext();
+		$back = $this->get_all_categories();
 		$i = 0;
 		$cut = '';
 		foreach ($back as $cat) {
@@ -970,21 +970,6 @@ class CategLib extends ObjectLib
 		return $localCache[$key] = Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
 	}
 
-	function get_all_categories($showWS = false) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
-	/*
-		// inhibited because allcateg_ext is cached now
-		$query = " select `name`,`categId`,`parentId` from `tiki_categories` order by `name`";
-		$result = $this->query($query,array());
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-	*/
-		return $this->get_all_categories_ext();
-	}
-
 	/* Returns an array of categories and caches it in cache item "allcategs".
 	Each category is similar to a tiki_categories record, but with the following additional fields:
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
@@ -1030,7 +1015,7 @@ class CategLib extends ObjectLib
 	}
 
 	// Same as get_all_categories + it also get info about count of objects
-	function get_all_categories_ext() {
+	function get_all_categories() {
 		$ret = $this->get_category_cache();
 
 		if( $jail = $this->get_jail() ) {
@@ -1067,7 +1052,7 @@ class CategLib extends ObjectLib
 	}
 
 	function get_all_categories_respect_perms($user, $perm) {
-		$result = $this->get_all_categories_ext();
+		$result = $this->get_all_categories();
 		return Perms::filter( array( 'type' => 'category' ), 'object', $result, array( 'object' => 'categId' ), $perm );
 	}
 
