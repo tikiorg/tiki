@@ -4,12 +4,12 @@
 		{if $displayMode eq 'tabs'}
 			<ul>
 				{foreach from=$memberlist_groups key=groupName item=groupData}
-						<li><a href="#{$execution_key|escape}_{$groupName|escape:id}">{$groupName|escape}</a></li>
+						<li><a href="#{$execution_key|escape}_{$groupName|to_id}">{$groupName|escape}</a></li>
 				{/foreach}
 			</ul>
 		{/if}
 		{foreach from=$memberlist_groups key=groupName item=groupData}
-			<div class="group" id="{$execution_key|escape}_{$groupName|escape:id}">
+			<div class="group" id="{$execution_key|escape}_{$groupName|to_id}">
 				<h2>{$groupName|escape}</h2>
 				{if isset($groupData.info) and !empty($groupData.info.groupDesc)}
 					<p class=="description">{$groupData.info.groupDesc}</p>
