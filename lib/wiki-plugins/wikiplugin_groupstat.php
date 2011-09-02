@@ -18,6 +18,16 @@ function wikiplugin_groupstat_info() {
 				'name' => tra('Groups'),
 				'description' => tra('Groups separated by :. If empty, all groups will be listed.'),
 			),
+			'percent_of' => array(
+				'required' => false,
+				'name' => tra('Percentage of'),
+				'description' => tra('Show percentage out of all users in site, or just specified groups if any.'),
+				'default' => 'groups',
+				'options' => array(
+					array('text' => tra('Users in specified groups, if any'), 'value' => 'groups'),
+					array('text' => tra('Site users'), 'value' => 'site')
+				)
+			),
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
@@ -49,8 +59,12 @@ function wikiplugin_groupstat($data, $params) {
 
 	if (isset($params['groups'])) {
 		$groups = explode(':', $params['groups']);
-		$query = 'SELECT COUNT(DISTINCT `userId`) FROM `users_usergroups` WHERE `groupName` IN('.implode(',', array_fill(0,count($groups),'?')).')';
-		$total = $tikilib->getOne($query, $groups);
+		if (isset($params['percent_of']) && $params['percent_of'] == 'site') {
+			$total = $userlib->nb_users_in_group();
+		} else {
+			$query = 'SELECT COUNT(DISTINCT `userId`) FROM `users_usergroups` WHERE `groupName` IN('.implode(',', array_fill(0,count($groups),'?')).')';
+			$total = $tikilib->getOne($query, $groups);
+		}
 	} else {
 		$groups = $userlib->list_all_groups();
 		$total = $userlib->nb_users_in_group();
