@@ -65,26 +65,6 @@ function tiki_syntax_highlighter_html() {
 	}
 }
 
-function tiki_syntax_highlighter_code() {
-	global $headerlib, $prefs;
-	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
-		tiki_syntax_highlighter_base();
-		$headerlib->add_jq_onready("
-			$(document)
-				.bind('plugin_code_ready', function(args) {
-					var code = args.container.find('textarea:first');
-					
-					code.flexibleSyntaxHighlighter({
-						mode: 'php',
-						lineNumbers: true,
-						changeText: '".tra("Change Highlighter")."',
-						force: true
-					});
-				});
-		");
-	}
-}
-
 function tiki_syntax_highlighter_r() {	
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
