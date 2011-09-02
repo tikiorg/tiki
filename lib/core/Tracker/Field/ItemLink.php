@@ -133,27 +133,28 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				buttons: {
 					"Add": function() {
 						var $f = $("form", this).append($("<input type=\'hidden\' name=\'ajax_add\' value=\'1\' />"));
-						ajaxLoadingShow($f);
-						$.post( $f.attr("action"), $f.serialize(), function(data, status) {
-							if (data && data.data) {
-								for (var i = 0; i < data.data.length; i++) {
-									var a = data.data[i];
-									if ( a && a["fieldId"] == '.$this->getOption(1).' ) {
-										$o = $("<option value=\'" + a["fileId"] + "\'>" + a["value"] + "</option>");
-										$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
-										$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 1;
+						if (typeof $f.valid === "function" && $f.valid()) {
+							ajaxLoadingShow($f);
+							$.post( $f.attr("action"), $f.serialize(), function(data, status) {
+								if (data && data.data) {
+									for (var i = 0; i < data.data.length; i++) {
+										var a = data.data[i];
+										if ( a && a["fieldId"] == '.$this->getOption(1).' ) {
+											$o = $("<option value=\'" + a["fileId"] + "\'>" + a["value"] + "</option>");
+											$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
+											$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 1;
+										}
 									}
 								}
-							}
-							ajaxLoadingHide();
-							$d.dialog( "close" );
+								ajaxLoadingHide();
+								$d.dialog( "close" );
 
-							return;
-						}, "json");
+								return;
+							}, "json");
+						}
 
-
-							//.append($("<input type=\'hidden\' name=\'save\' value=\'save\' />"))
-							//.submit();
+						//.append($("<input type=\'hidden\' name=\'save\' value=\'save\' />"))
+						//.submit();
 					},
 					Cancel: function() {
 						$( this ).dialog( "close" );
