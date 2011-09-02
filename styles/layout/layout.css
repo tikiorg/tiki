@@ -2145,8 +2145,17 @@ div.aclabel, span.aclabel, label.aclabel {
 	list-style: none;
 }
 
+/* Locator module */
+
 .minimap {
 	height: 180px;
+}
+
+.minimap .olControlAttribution,
+.map-container .olControlAttribution{
+    right: 3px;
+    bottom: 3px;
+	text-align: right;
 }
 
 /* FileGals Flash Upload */
