@@ -179,9 +179,6 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 	}
 	global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin, $categlib;
 	$section = 'categories';
-	require_once ('tiki-setup.php');
-	include_once ('lib/categories/categlib.php');
-	include_once ('lib/tree/categ_browse_tree.php');
 	$nodesc = count($descendants);
 	$watch_desc = 'n';
 	$watch_this = 'n';
