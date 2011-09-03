@@ -46,6 +46,22 @@ class Tiki_Profile_ChannelList
 			// At least one match is required
 			if( count( array_intersect( $groups, $this->channels[$channel]['groups'] ) ) == 0 )
 				return false;
+
+			// Checking against input if required (note that unlike normal groups, all must match)
+			foreach ($this->channels[$channel]['groups'] as $g) {
+				if (preg_match('/\$profilerequest\:(\w+)\$/', $g, $matches)) {
+					for ($i = 1; $i < strlen($matches); $i++) {
+						if (empty($_POST[$matches[$i]])) {
+							return false;
+						} else {
+							$tocheck = str_replace($matches[0], $_POST[$matches[$i]], $g);
+							if (!in_array($tocheck, $groups)) {
+								return false;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		return true;
