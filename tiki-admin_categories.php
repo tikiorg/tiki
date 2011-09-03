@@ -261,7 +261,7 @@ $smarty->assign('categ_name', $categ_name);
 // ---------------------------------------------------
 
 
-$categories = $categlib->getCategories();
+$categories = $categlib->getCategories(false);
 $smarty->assign('categories', $categories);
 
 $treeNodes = array();
