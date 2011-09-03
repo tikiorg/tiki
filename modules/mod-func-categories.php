@@ -70,7 +70,7 @@ function module_categories( $mod_reference, &$module_params ) {
 	$urlEnd .= "&amp;deep=$deep";
 	$name = "";
 
-	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
+	$categories = $categlib->getCategories(true, true, true);
 
 	if ( empty($categories) ) {
 		$module_params['error'] = tra("You do not have permission to use this feature");

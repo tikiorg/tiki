@@ -30,7 +30,7 @@ class CategLib extends ObjectLib
 	Related to list_all_categories, get_child_categories, get_visible_child_categories, getCategories
 	Respects the category filter */
 	function list_categs($categId=0, $all = true) {
-		$back = $this->getCategories(true, true);
+		$back = $this->getCategories(true, false, true);
 
 		if ($categId > 0 || !$all) {
 			$path = '';
@@ -55,7 +55,7 @@ class CategLib extends ObjectLib
 	 * Specifiy a common ancestor category ID in $top to remove the top level from the category path
 	 */
 	function get_category_info($categIds, $top=null) {
-		$back = $this->getCategories(true, true);
+		$back = $this->getCategories(true, false, true);
 		$i = 0;
 		$cut = '';
 		foreach ($back as $cat) {
@@ -148,7 +148,7 @@ class CategLib extends ObjectLib
 	}
 	
 	function get_category_path_string($categId) {
-		$categs = $this->getCategories(false);
+		$categs = $this->getCategories(false, false);
 		foreach ($categs as $cat) {
 			if ($cat['categId'] == $categId) {
 				return $cat['categpath'];
@@ -303,7 +303,7 @@ class CategLib extends ObjectLib
 	function is_categorized($type, $itemId) {
 		if ( empty($itemId) ) return 0;
 
-		if ( count( $this->getCategories(false) ) == 0 ) { // Optimization
+		if ( count( $this->getCategories(false, false) ) == 0 ) { // Optimization
 			return 0;
 		}
 
@@ -980,9 +980,9 @@ class CategLib extends ObjectLib
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. 
 	If considerCategoryFilter is true, only categories that match the category filter are returned.
+	If considerPermissions is true, only categories that the user has the permission to view are returned.
 	If sortByName is enabled, categories are sorted according to their translated name (rather than according to their path). */
-	
-	function getCategories($considerCategoryFilter = true, $sortByName = false) {
+	function getCategories($considerCategoryFilter = true, $considerPermissions = true, $sortByName = false) {
 		global $cachelib;
 		if( ! $ret = $cachelib->getSerialized("allcategs") ) {
 			$ret = array();
@@ -1022,6 +1022,9 @@ class CategLib extends ObjectLib
 				}
 			}
 		}
+		if ($considerPermissions) {
+			$ret = Perms::filter( array( 'type' => 'category' ), 'object', $ret, array( 'object' => 'categId' ), 'view_category' );
+		}
 		if ($sortByName) {		
 			global $prefs;
 			if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
@@ -1048,12 +1051,6 @@ class CategLib extends ObjectLib
 		return $ret;
 	}
 
-	function get_all_categories_respect_perms($user, $perm) {
-		$result = $this->getCategories(true, true);
-		return Perms::filter( array( 'type' => 'category' ), 'object', $result, array( 'object' => 'categId' ), $perm );
-	}
-
-	
 	// get categories related to a link. For Whats related module.
 	function get_link_categories($link) {
 		$ret=array();

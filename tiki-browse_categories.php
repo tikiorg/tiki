@@ -119,7 +119,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	}
 }
 
-$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
+$ctall = $categlib->getCategories(true, true, true);
 
 $descendants_curr = $categlib->get_category_descendants($_REQUEST['parentId']);
 //user watches on current level

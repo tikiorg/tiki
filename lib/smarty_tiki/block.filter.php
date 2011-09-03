@@ -51,7 +51,7 @@ function smarty_block_filter($params, $content, $smarty, $repeat)
 		// Generate the category tree {{{
 		global $categlib; require_once 'lib/categories/categlib.php';
 		require_once 'lib/tree/categ_browse_tree.php';
-		$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
+		$ctall = $categlib->getCategories(true, true, true);
 
 		$tree_nodes = array();
 		foreach($ctall as $c) {

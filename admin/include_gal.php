@@ -119,7 +119,7 @@ $smarty->assign('gdlib', $gdlib);
 $smarty->assign('imagicklib', $imagicklib);
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
-	$catree = $categlib->getCategories(true, true);
+	$catree = $categlib->getCategories(true, false, true);
 	$smarty->assign('catree', $catree);
 }
 $galleries = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');

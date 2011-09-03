@@ -327,7 +327,7 @@ if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') 
 	include_once("categorize_list.php");
 } elseif ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
-	$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
+	$categories = $categlib->getCategories(true, true, true);
 	$smarty->assign_by_ref('categories', $categories);
 }
 
