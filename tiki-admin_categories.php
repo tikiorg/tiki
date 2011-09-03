@@ -259,31 +259,38 @@ $smarty->assign('path', $path);
 $smarty->assign('father', $father);
 $smarty->assign('categ_name', $categ_name);
 // ---------------------------------------------------
-function array_csort($marray, $column) {
-	if (is_array($marray)) {
-		$sortarr = array();
-		foreach($marray as $key => $row) {
-			$sortarr[$key] = $row[$column];
-		}
-		array_multisort($sortarr, $marray);
-		return $marray;
+
+
+$categories = $categlib->getCategories();
+$smarty->assign('categories', $categories);
+
+$treeNodes = array();
+$smarty->loadPlugin('smarty_function_icon');
+foreach($categories as $category) {
+	$data = '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;categId=' . $category['categId'] . '" title="' . tra('Edit') . '">' . smarty_function_icon(array('_id'=>'page_edit'), $smarty) . '</a>';
+	$data .= '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;removeCat=' . $category['categId'] . '" title="' . tra('Delete') . '">' . smarty_function_icon(array('_id'=>'cross'), $smarty) . '</a>';
+
+	if ($userlib->object_has_one_permission($category['categId'], 'category')) {
+		$title = tra('Edit permissions for this category');
+		$icon = 'key_active';
 	} else {
-		return array();
+		$title = tra('Assign Permissions');
+		$icon = 'key';
 	}
+	$data .= '<a href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId'] . '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=all">' . smarty_function_icon(array('_id'=>$icon, 'alt'=>$title), $smarty) . '</a>';
+	
+	
+	$data .= '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] . '">' . htmlspecialchars($category['name']) .'</a> ';
+	$treeNodes[] = array(
+		'id' => $category['categId'],
+		'parent' => $category['parentId'],
+		'data' => $data 
+	);
 }
-$catree = $categlib->list_all_categories(0, -1, 'name_asc', '', '', 0);
-//$catree = array_csort($catree['data'],'categpath'); not needed as array is already sorted when returned from categlib
-if (is_array($path)) {
-	foreach($catree['data'] as $key => $c) {
-		foreach($path as $p) {
-			if ($p['categId'] == $c['categId']) {
-				$catree['data'][$key]['incat'] = 'y';
-				break;
-			}
-		}
-	}
-}
-$smarty->assign('catree', $catree['data']);
+include_once ('lib/tree/categ_browse_tree.php');
+$treeMaker = new CatBrowseTreeMaker('categ');
+$smarty->assign('tree', $treeMaker->make_tree(0, $treeNodes));
+
 // ---------------------------------------------------
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';

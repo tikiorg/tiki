@@ -22,39 +22,7 @@
 	</div>
 </div>
 
-{section name=dx loop=$catree}
-	{assign var=after value=$smarty.section.dx.index_next}
-	{assign var=before value=$smarty.section.dx.index_prev}
-	{if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
-		<div id="id{$catree[$before].categId}" style="display:{if $catree[$before].incat eq 'y'}inline{else}none{/if};">
-	{/if}
-	<div>
-		
-	<a href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">{icon _id='page_edit' hspace="5" vspace="1"}</a>
-	<a href="tiki-admin_categories.php?parentId={$catree[dx].categId}" title="{tr}View{/tr}">{icon _id='magnifier' hspace="5" vspace="1"}</a>
-	<a href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">{icon _id='cross' hspace="5" vspace="1"}</a>
-		
-	{if $catree[dx].has_perm eq 'y'}
-		<a title="{tr}Edit permissions for this category{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'url'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
-	{else}
-		<a title="{tr}Assign Permissions{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'url'}&amp;permType=category">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
-	{/if}
-		
-	<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
-		<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name|escape}</a>
-		{if $smarty.section.dx.last}
-			{repeat count=$catree[dx].deep}</div>{/repeat}
-		{elseif $catree[dx].deep < $catree[$after].deep}
-			<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a>
-			</div>
-		{elseif $catree[dx].deep eq $catree[$after].deep}
-			</div>
-		{else}
-			</div>
-			{repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
-		{/if}
-	</div>
-{/section}
+{$tree}
 
 {tabset}
 	{tab name="{tr}Create/Edit category{/tr}"}
@@ -72,9 +40,9 @@
 					<td>
 						<select name="parentId">
 							<option value="0">{tr}Top{/tr}</option>
-							{section name=ix loop=$catree}
-								<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath|escape}</option>
-							{/section}
+								{foreach $categories as $category}
+								<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
+								{/foreach}
 						</select>
 					</td>
 				</tr>
@@ -150,17 +118,16 @@
 				<input type="submit" name="unassign" value="{tr}Unassign all objects from this category{/tr}" />
 				<br />
 				<select name="toId">
-				{section name=ix loop=$catree}
-					<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath|escape}</option>
-				{/section}
+				{foreach $categories as $category}
+					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
+				{/foreach}
 				</select>
 				<input type="submit" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}" />
 				<br />
 				<select name="to">
-				{section name=ix loop=$catree}
-					<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath|escape}</option>
-				{/section}
-				</select>
+				{foreach $categories as $category}
+					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
+				{/foreach}				</select>
 				<input type="submit" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}" />
 			</form>
 		{/tab}
