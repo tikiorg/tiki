@@ -874,7 +874,7 @@ class FileGalLib extends TikiLib
 					'lastModifUser' => $user,
 					'lastModif' => $this->now,
 					'author' => $author,
-					'creator' => $creator,
+					'user' => $creator,
 				), array(
 					'fileId' => $id,
 				));
