@@ -82,8 +82,8 @@
 						{preference name="connect_site_keywords"}
 						{preference name="connect_site_location"}
 						<div class="adminoptionboxchild" style="padding-left:5em;">
-							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-target-field="connect_site_location">
-							</div>
+							{$headerlib->add_map()}
+							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-target-field="connect_site_location"></div>
 						</div>
 					</div>
 					{preference name="connect_send_anonymous_info"}
