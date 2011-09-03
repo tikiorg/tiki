@@ -157,8 +157,11 @@ if (isset($_REQUEST["looksetup"])) {
 
 if ($reload) {
 		$location = 'location: tiki-admin.php?page=look';
-		if ($prefs['feature_tabs'] === 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
-			$location.= "&cookietab=" . $_COOKIE['tab'];
+		if ($prefs['feature_tabs'] === 'y') {
+			$t = getCookie('admin_look', 'tabs');
+			if ($t > 1) {
+				$location.= "&cookietab=$t";
+			}
 		}
 		header($location);
 		exit;
