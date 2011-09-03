@@ -11,7 +11,7 @@
 				<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
 			{/foreach}
 		</select>
-		{if isset($assign_info)}<div class="description">{$assign_info.description} {help url=$assign_info.documentation}</div>{/if}
+		{if isset($assign_info)}<div class="description">{$assign_info.description}{if isset($assign_info.documentation)} {help url=$assign_info.documentation}{/if}</div>{/if}
 	</div>
 	{if !empty($assign_name)}
 		{if isset($assign_info.type) and $assign_info.type eq 'function'}
