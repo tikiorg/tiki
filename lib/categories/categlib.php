@@ -119,6 +119,9 @@ class CategLib extends ObjectLib
 				}
 				$res['name'] = tra($this->get_category_name($res['categId']));
 			} else {
+				foreach ($catpath as $cat) {
+					$tepath[] = $cat['name'];
+				}
 				$res['name'] = $this->get_category_name($res['categId']);
 			}
 			$categpath = implode("::",$tepath);
