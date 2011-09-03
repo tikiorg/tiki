@@ -53,7 +53,7 @@ class Tiki_Profile_ChannelList
 					break;
 				}
 				if (preg_match('/\$profilerequest\:(\w+)\$/', $g, $matches)) {
-					for ($i = 1; $i < strlen($matches); $i++) {
+					for ($i = 1; $i < count($matches); $i++) {
 						if (empty($_REQUEST[$matches[$i]])) {
 							return false;
 						} else {
