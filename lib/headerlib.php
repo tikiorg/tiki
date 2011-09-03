@@ -467,6 +467,11 @@ class HeaderLib
 		return $js_script;
 	}
 	
+	function removeJsFromHTML( $html ) {
+		$html = preg_replace('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', "", $html);
+		return $html;
+	}
+	
 	public function get_all_css_content() {
 		$files = $this->collect_css_files();
 		$minified = '';

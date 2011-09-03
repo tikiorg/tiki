@@ -386,7 +386,7 @@ class WikiLib extends TikiLib
 				// get any cached JS and add to headerlib JS
 				$headerlib->add_js( implode( "\n", $headerlib->getJsFromHTML( $content )));
 				// now remove all the js from the source
-				$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
+				$content = $headerlib->removeJsFromHtml($content);
 				$canBeRefreshed = true;
 			} else {
 				$js1 = $headerlib->getJs();
