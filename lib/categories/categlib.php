@@ -1533,7 +1533,7 @@ class CategLib extends ObjectLib
 		return $result;
 	}
 
-	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null) {
+	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null, $override_perms = false) {
 		global $prefs, $user, $userlib;
 		
 		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
@@ -1553,6 +1553,9 @@ class CategLib extends ObjectLib
 
 		require_once 'lib/core/Category/Manipulator.php';
 		$manip = new Category_Manipulator( $objType, $objId );
+		if ($override_perms) {
+			$manip->overrideChecks();
+		}
 		$manip->setNewCategories( $categories ? $categories : array() );
 
 		if( is_array( $managedCategories ) ) {

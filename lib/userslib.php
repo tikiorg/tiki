@@ -6394,7 +6394,7 @@ class UsersLib extends TikiLib
 		return $u;
 	}
 	
-	function categorize_user_tracker_item($user, $group) {
+	private function categorize_user_tracker_item($user, $group) {
 		global $tikilib;
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
@@ -6406,11 +6406,11 @@ class UsersLib extends TikiLib
 			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
 			$cat[] = $categId;
 			$cat = array_unique($cat);
-			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat);
+			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true); // using override_perms=true because if user adding himself to group may not have perms yet
 		}
 	}
 	
- 	function uncategorize_user_tracker_item($user, $group) {
+ 	private function uncategorize_user_tracker_item($user, $group) {
 		global $tikilib;
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
@@ -6421,7 +6421,7 @@ class UsersLib extends TikiLib
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
 			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
 			$cat = array_diff($cat, array($categId));
-			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat);
+			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true);
 		}
 	}
 

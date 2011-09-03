@@ -2677,7 +2677,7 @@ class TrackerLib extends TikiLib
 		return $this->fields()->fetchOne('fieldId', array('isMain' => 'y', 'trackerId' => $trackerId));
 	}
 
-	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array()) {
+	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array(), $override_perms = false) {
 		$categlib = TikiLib::lib('categ');
 		$cat_type = "trackeritem";
 		$cat_objid = $itemId;
@@ -2716,7 +2716,7 @@ class TrackerLib extends TikiLib
 			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
 			$ins_categs = array_merge($remain_categs, $new_categs);
 		}
-		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
+		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, null, $override_perms);
 	}
 	function move_up_last_fields($trackerId, $fieldId, $delta=1) {
 		$type = ($delta > 0) ? 'increment' : 'decrement';
