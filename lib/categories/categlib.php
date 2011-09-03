@@ -27,7 +27,7 @@ class CategLib extends ObjectLib
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. 
 	If $all is set to false, only first level children obtained.
-	Related to list_all_categories, get_child_categories, get_visible_child_categories, getCategories
+	Related to get_child_categories, get_visible_child_categories, getCategories
 	Respects the category filter */
 	function list_categs($categId=0, $all = true) {
 		$back = $this->getCategories(true, false, true);
@@ -84,69 +84,6 @@ class CategLib extends ObjectLib
 		return $catinfo;
 	}
 
-	// Related to list_categs()
-	function list_all_categories($offset, $maxRecords, $sort_mode, $find, $type, $objid) {
-		global $prefs;
-		$cats = $this->get_object_categories($type, $objid);
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$bindvals=array($findesc,$findesc);
-			$mid = " where (`name` like ? or `description` like ?)";
-		} else {
-		    $bindvals=array();
-		    $mid = "";
-		}
-		
-	    $query = "select * from `tiki_categories` $mid order by ".$this->convertSortMode($sort_mode);
-	    $query_cant = "select count(*) from `tiki_categories` $mid";
-		$result = $this->query($query,$bindvals,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvals);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-		  if (!empty($cats) && in_array($res["categId"], $cats)) {
-				$res["incat"] = 'y';
-			} else {
-				$res["incat"] = 'n';
-			}
-      
-			$catpath = $this->get_category_path($res["categId"]);
-			$tepath = array();
-			if ($prefs['feature_multilingual'] === "y"){
-				foreach ($catpath as $cat) {
-					$tepath[] = tra($cat['name']);
-				}
-				$res['name'] = tra($this->get_category_name($res['categId']));
-			} else {
-				foreach ($catpath as $cat) {
-					$tepath[] = $cat['name'];
-				}
-				$res['name'] = $this->get_category_name($res['categId']);
-			}
-			$categpath = implode("::",$tepath);
-			$categpathforsort = implode("!!",$tepath) . '!!'; // needed to prevent cat::subcat to be sorted after cat2::subcat 
-			$res["categpath"] = $categpath;
-			$res["tepath"] = $tepath;
-			$res["deep"] = count($tepath);
-
-			global $userlib;
-			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
-				$res['has_perm'] = 'y';
-			} else {
-				$res['has_perm'] = 'n';
-			}
-			$ret["$categpathforsort"] = $res;
-		}
-
-		ksort($ret);
-		
-		$retval = array();
-		$retval["data"] = array_values($ret);
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-	
 	function get_category_path_string($categId) {
 		$categs = $this->getCategories(false, false);
 		foreach ($categs as $cat) {
