@@ -1052,6 +1052,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 	private $name;
 	private $description = '';
 	private $parent = 0;
+	private $migrateparent = 0;
 	private $items = array();
 
 	function fetchData()
@@ -1067,6 +1068,8 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 			$this->description = $data['description'];
 		if( array_key_exists( 'parent', $data ) )
 			$this->parent = $data['parent'];
+		if( array_key_exists( 'migrateparent', $data ) )
+			$this->migrateparent = $data['migrateparent'];
 		if( array_key_exists( 'items', $data ) && is_array( $data['items'] ) )
 			foreach( $data['items'] as $pair )
 				if( is_array($pair) && count( $pair ) == 2 )
@@ -1090,6 +1093,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->name );
 		$this->replaceReferences( $this->description );
 		$this->replaceReferences( $this->parent );
+		$this->replaceReferences( $this->migrateparent );
 		$this->replaceReferences( $this->items );
 		
 		global $categlib;
@@ -1098,6 +1102,10 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 			$categlib->update_category( $id, $this->name, $this->description, $this->parent );
 		} else {
 			$id = $categlib->add_category( $this->parent, $this->name, $this->description );
+		}
+
+		if ($this->migrateparent && $from = $categlib->exist_child_category( $this->migrateparent, $this->name )) {
+			$categlib->move_all_objects($from, $id);
 		}
 
 		foreach( $this->items as $item )
