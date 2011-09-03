@@ -468,8 +468,13 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 		$mandatory = false;
 	}
 	// leave a blank one in the front
-	if (!$mandatory && !isset($arguments['multiple']) && !isset($arguments['size'])) {
-		$option = $document->createElement('option');
+	if (!$mandatory && !isset($arguments['multiple']) && !isset($arguments['size']) || isset($arguments['_firstlabel'])) {
+		if (!empty($arguments['_firstlabel'])) {
+			$label = $arguments['_firstlabel'];
+		} else {
+			$label = '';
+		}
+		$option = $document->createElement('option', $label);
 		$element->appendChild($option);
 	}
 
