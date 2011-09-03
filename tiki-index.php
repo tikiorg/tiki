@@ -512,7 +512,7 @@ if ( $prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_w
 if ($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
 		check_ticket('index');
-		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && $objectperms->watch_structure ) {
+		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && !$objectperms->watch_structure ) {
 			$access->display_error( $page, tra('Permission denied'), '403');
 		}
 		if($_REQUEST['watch_action']=='add') {
