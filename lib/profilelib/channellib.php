@@ -57,7 +57,7 @@ class Tiki_Profile_ChannelList
 						if (empty($_REQUEST[$matches[$i]])) {
 							return false;
 						} else {
-							$tocheck = str_replace($matches[0], $_POST[$matches[$i]], $g);
+							$tocheck = str_replace($matches[0], $_REQUEST[$matches[$i]], $g);
 							if (!in_array($tocheck, $groups)) {
 								return false;
 							}
