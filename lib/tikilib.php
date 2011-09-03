@@ -4545,7 +4545,7 @@ class TikiLib extends TikiDb_Bridge
 		if (!$long_datetime_format) {
 			$t = trim($this->get_long_time_format());
 			if (!empty($t)) {
-				$t = ' ['.$t.']';
+				$t = ' '.$t;
 			}
 			$long_datetime_format = $this->get_long_date_format().$t;
 		}
@@ -4559,7 +4559,7 @@ class TikiLib extends TikiDb_Bridge
 		if (!$short_datetime_format) {
 			$t = trim($this->get_short_time_format());
 			if (!empty($t)) {
-				$t = ' ['.$t.']';
+				$t = ' '.$t;
 			}
 			$short_datetime_format = $this->get_short_date_format().$t;
 		}
