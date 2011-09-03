@@ -69,12 +69,13 @@ class Connect_Server extends Connect_Abstract
 			$res['metadata'] = '';
 
 			if ($res['geo_lat'] && $res['geo_lon']) {
-				$res['class'] .= ' geolocated';
+				$res['class'] .= ' geolocated connection';
 				$res['metadata'] = " data-geo-lat=\"{$res['geo_lat']}\" data-geo-lon=\"{$res['geo_lon']}\"";
 
 				if (isset($res['geo_zoom'])) {
 					$res['metadata'] .= " data-geo-zoom=\"{$res['geo_zoom']}\"";
 				}
+				$res['metadata'] .= ' data-icon-name="tiki"';
 			}
 
 			$ret[] = $res;

@@ -53,7 +53,7 @@
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
-					<p><em>{tr}Please note: Experimetnal - work in progress{/tr}</em></p>
+					<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
 					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br />
 					{tr}When you click the "Send Info" below you will be connected with mother.tiki.org, which is where the data will be collected.{/tr}</p>
 					<p>{tr}You can also send feedback about Tiki by checking the "Feedback" checkbox above. Icons will appear next to all the preferences where you can "like", request a "fix" or ask "what's this for?"{/tr}<br />
@@ -83,12 +83,14 @@
 						{preference name="connect_site_location"}
 						<div class="adminoptionboxchild" style="padding-left:5em;">
 							{$headerlib->add_map()}
-							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-target-field="connect_site_location"></div>
+							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;"  data-target-field="connect_site_location"{if $prefs.connect_server_mode eq "y"}
+								data-icon-name="tiki" data-icon-src="img/tiki/tikiicon.png"
+								data-icon-size="[16,16]" data-icon-offset="[-8,-16]" data-marker-filter=".geolocated.connection"{/if}></div>
 						</div>
 					</div>
 					{preference name="connect_send_anonymous_info"}
 
-					<div class="adminoptionboxchild" style="visibility:hidden;">
+					<div class="adminoptionboxchild"{if $prefs.connect_server_mode neq "y"} style="display:none;"{/if}>
 						<strong>{tr}Advanced settings{/tr}</strong> {tr}Exposed to assist testing and development{/tr}
 						{preference name="connect_frequency"}
 						{preference name="connect_server"}
