@@ -161,11 +161,12 @@ function wikiplugin_datachannel( $data, $params )
 	$groups = Perms::get()->getGroups();
 
 	$config = Tiki_Profile_ChannelList::fromConfiguration( $prefs['profile_channels'] );
-	if( $config->canExecuteChannels( array( $params['channel'] ), $groups ) ) {
+	if( $config->canExecuteChannels( array( $params['channel'] ), $groups, true ) ) {
 		$smarty->assign( 'datachannel_execution', $executionId );
 		if( $_SERVER['REQUEST_METHOD'] == 'POST' 
 			&& isset( $_POST['datachannel_execution'] ) 
-			&& $_POST['datachannel_execution'] == $executionId ) {
+			&& $_POST['datachannel_execution'] == $executionId
+			&& $config->canExecuteChannels( array( $params['channel'] ), $groups ) ) {
 
 			$input = array_intersect_key( $_POST, $inputfields );
 			

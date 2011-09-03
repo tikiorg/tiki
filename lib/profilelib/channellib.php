@@ -37,7 +37,7 @@ class Tiki_Profile_ChannelList
 		return $list;
 	} // }}}
 
-	function canExecuteChannels( array $channelNames, array $groups ) // {{{
+	function canExecuteChannels( array $channelNames, array $groups, $skipInputCheck = false ) // {{{
 	{
 		foreach( $channelNames as $channel ) {
 			if( ! array_key_exists( $channel, $this->channels ) )
@@ -49,9 +49,12 @@ class Tiki_Profile_ChannelList
 
 			// Checking against input if required (note that unlike normal groups, all must match)
 			foreach ($this->channels[$channel]['groups'] as $g) {
+				if ($skipInputCheck) {
+					break;
+				}
 				if (preg_match('/\$profilerequest\:(\w+)\$/', $g, $matches)) {
 					for ($i = 1; $i < strlen($matches); $i++) {
-						if (empty($_POST[$matches[$i]])) {
+						if (empty($_REQUEST[$matches[$i]])) {
 							return false;
 						} else {
 							$tocheck = str_replace($matches[0], $_POST[$matches[$i]], $g);
