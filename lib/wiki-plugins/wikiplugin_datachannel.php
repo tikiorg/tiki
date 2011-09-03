@@ -15,7 +15,8 @@ function wikiplugin_datachannel_info()
 		'prefs' => array('wikiplugin_datachannel'),
 		'body' => tra('List of fields to display. One field per line. Comma delimited: fieldname,label') . '<br /><br />' .
 					tra('To use values from other forms on the same page as parameters for the data-channel use "fieldname, external=fieldid".') . ' ' .
-					tra('Where "fieldid" is the id (important) of the external input to use, and "fieldname" is the name of the parameter in the data-channel'),
+					tra('Where "fieldid" is the id (important) of the external input to use, and "fieldname" is the name of the parameter in the data-channel') . ' . ' .
+					tra('To use fixed hidden preset values use "fieldname, hidden=value."'),
 		'extraparams' => true,
 		'icon' => 'pics/icons/transmit_blue.png',
 		'params' => array(
@@ -147,6 +148,10 @@ function wikiplugin_datachannel( $data, $params )
 					$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("#' . $moreparts[1] . '").val()));';
 				}
 				$inputfields[ $parts[0] ] = 'external';
+			} elseif (strpos( $parts[1], 'hidden') === 0) {
+				$moreparts = explode('=', trim($parts[1]), 2);
+				$fields[ $parts[0] ] = $moreparts[1];
+				$inputfields[ $parts[0] ] = 'hidden';
 			} else {
 				$fields[ $parts[0] ] = $parts[1];
 				$inputfields[ $parts[0] ] = $parts[1];
@@ -275,6 +280,8 @@ function wikiplugin_datachannel( $data, $params )
 			}
 			$smarty->assign('datachannel_feedbacks', array_merge($installer->getFeedback(), $profile->getFeedback()) );
 		}
+
+		$smarty->assign( 'datachannel_inputfields', $inputfields );
 		$smarty->assign( 'datachannel_fields', $fields );
 		$smarty->assign( 'button_label', !empty($params['buttonLabel']) ? $params['buttonLabel'] : 'Go');
 		$smarty->assign( 'form_class_attr', !empty($params['class']) ? ' class="' . $params['class'] . '"' : '');
