@@ -10,6 +10,9 @@ function tiki_syntax_highlighter_flex() {
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
 		tiki_syntax_highlighter_base();
 		$headerlib->add_jq_onready("
+			if ($.flexibleSyntaxHighlighterLoaded) return;
+			$.flexibleSyntaxHighlighterLoaded = true;
+			
 			$('textarea')
 				.flexibleSyntaxHighlighter({
 					changeText: '".tra("Change Highlighter")."'
