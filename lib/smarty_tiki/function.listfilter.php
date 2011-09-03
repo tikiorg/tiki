@@ -75,14 +75,21 @@ function smarty_function_listfilter($params, $smarty) {
 			$input .= ' value="' . $_REQUEST[$query] . '"';
 		}
 
-		$input .= " /></label>";
-		
+		$input .= " class='listfilter' />";
+		$input .= "<img src='pics/icons/close.png' onclick=\"\$('#$id').val('').keyup();return false;\" class='closeicon' width='16' height='16' style='visibility:hidden;position:relative;right:20px;top:6px;'/>";
+		$input .= "</label>";
+
 		if (!isset($selectors)) $selectors = ".$id table tr";
 			
 		$content = "
 \$('#$id').keyup( function() {
 	var criterias = this.value.toLowerCase().split( /\s+/ );
-	
+
+	if (this.value.length) {
+		$(this).next('img.closeicon').css('visibility', '');
+	} else {
+		$(this).next('img.closeicon').css('visibility', 'hidden');
+	}
 	\$('$selectors').each( function() {
 		var text = \$(this).text().toLowerCase();
 		for( i = 0; criterias.length > i; ++i ) {
