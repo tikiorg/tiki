@@ -267,7 +267,7 @@ $("#newItemForm").validate({
 
 {if $field_value.type eq 'p' or $field_value.type eq 'A'}
 	{include file='tracker_item_field_input.tpl'}
-	{if $field_value.type eq 'p' and $field_value.options_array[0] == 'password'}<br /><i>Let empty to not change it</i>{/if}
+	{if $field_value.type eq 'p' and $field_value.options_array[0] == 'password'}<br /><i>Leave empty if password is to remain unchanged</i>{/if}
 {/if}
 
 {* -------------------- system -------------------- *}
