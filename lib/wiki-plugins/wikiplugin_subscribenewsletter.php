@@ -73,7 +73,7 @@ function wikiplugin_subscribenewsletter($data, $params) {
 	if ($user) {
 		$alls = $nllib->get_all_subscribers($nlId, false);
 		foreach ($alls as $all) {
-			if ($all['db_email'] == $user)
+			if (strtolower($all['db_email']) == strtolower($user))
 				return;
 		}
 	}
