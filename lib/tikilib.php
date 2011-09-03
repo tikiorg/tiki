@@ -5249,16 +5249,16 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * Convert all whitespace from a string, turning any non-empty string to a string that can be used as an HTML id attribute.
-	 * ids still need to be non-empty and unique. This function should be avoided, use OIDs instead.
+	 * Remove all spaces, accents and non-word chars from a string
+	 * Can be used for DOM elements and preferences etc
 	 *
 	 * @static
-	 * @param string $str The string from which an id should be built
-	 * @return string A string to use as an id, encoded for an HTML element attribute context
+	 * @param string $str
+	 * @return string cleaned
 	 */
 
 	static function clean_id_string($str) {
-		return htmlspecialchars(preg_replace('/\W+/', '_', $str), ENT_NOQUOTES);
+		return preg_replace('/\W+/', '_', TikiLib::take_away_accent( $str ));
 	}
 
 	/* return the positions in data where the hdr-nth header is find
