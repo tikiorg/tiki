@@ -28,7 +28,7 @@
 	{if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
 		<div id="id{$catree[$before].categId}" style="display:{if $catree[$before].incat eq 'y'}inline{else}none{/if};">
 	{/if}
-	<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}">
+	<div>
 		
 	<a href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">{icon _id='page_edit' hspace="5" vspace="1"}</a>
 	<a href="tiki-admin_categories.php?parentId={$catree[dx].categId}" title="{tr}View{/tr}">{icon _id='magnifier' hspace="5" vspace="1"}</a>
