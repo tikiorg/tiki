@@ -30,8 +30,8 @@
 								{if $prefs.feature_group_transition eq 'y'}
 									{foreach from=$groupData.transitions key=cand item=trans}
 										{if $cand eq $memberName}
-											{foreach from=$trans key=trans item=label}
-												{self_link transition=$trans member=$memberName}{$label|escape}{/self_link}
+											{foreach from=$trans key=tran item=label}
+												{self_link transition=$tran member=$memberName}{$label|escape}{/self_link}
 											{/foreach}
 										{/if}
 									{/foreach}
