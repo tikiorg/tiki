@@ -6,7 +6,6 @@
 // $Id$
 
 global $headerlib, $prefs;
-require_once('lib/codemirror_tiki/codemirror_tiki.php');
 
 function wikiplugin_code_info() {
 	return array(
