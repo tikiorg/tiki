@@ -63,6 +63,13 @@ function wikiplugin_memberlist_info() {
 				'default' => '',
 				'filter' => 'username',
 			),
+			'sort_mode' => array(
+				'required' => false,
+				'name' => tra('Sort mode'),
+				'description' => tra('Sort mode for member listing.'),
+				'default' => 'login_asc',
+				'filter' => 'text',
+			)
 		),
 	);
 }
@@ -106,7 +113,7 @@ function wikiplugin_memberlist( $data, $params ) {
 
 	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
 
-	$validGroups = wikiplugin_memberlist_get_group_details( $groups, $params['max'] );
+	$validGroups = wikiplugin_memberlist_get_group_details( $groups, $params['max'], $params['sort_mode'] );
 
 	if( isset($_POST[$exec_key]) ) {
 		if( isset( $_POST['join'] ) ) {
@@ -167,10 +174,10 @@ function wikiplugin_memberlist( $data, $params ) {
 	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberlist.tpl' ) . '~/np~';
 }
 
-function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1) {
+function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_mode = 'login_asc') {
 	global $userlib;
 
-	$raw = $userlib->get_users( 0, $maxRecords, 'login_asc', '', '', false, $groupName );
+	$raw = $userlib->get_users( 0, $maxRecords, $sort_mode, '', '', false, $groupName );
 	$users = array();
 
 	if (isset($raw['data'])) {
@@ -182,7 +189,7 @@ function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1) {
 	return $users;
 }
 
-function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1 ) {
+function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $sort_mode = 'login_asc' ) {
 	global $user, $prefs, $userlib;
 	$validGroups = array();
 	foreach( $groups as $groupName ) {
@@ -204,7 +211,7 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1 ) {
 			);
 
 			if( $perms->group_view_members ) {
-				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName, $maxRecords );
+				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName, $maxRecords, $sort_mode );
 
 				if( $prefs['feature_group_transition'] == 'y' ) {
 					require_once 'lib/transitionlib.php';
