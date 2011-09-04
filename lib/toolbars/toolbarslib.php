@@ -546,6 +546,16 @@ class ToolbarCkOnly extends Toolbar
 		return null;
 	} // }}}
 	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		switch ($this->wysiwyg) {
+			case 'autosave': return $this->wysiwyg; break;
+			case 'ShowBlocks': return $this->wysiwyg; break;
+			case 'Source': return $this->wysiwyg; break;
+			default: return null;
+		}
+	} // }}}	
+	
 	function getLabel() // {{{
 	{
 		return $this->wysiwyg;
