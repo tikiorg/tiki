@@ -59,6 +59,15 @@ if (isset($_REQUEST['save'])) {
 	$info['message'] = '';
 	$smarty->assign_by_ref('info', $info);
 }
+
+if ( !empty($_REQUEST['export']) ) {
+	$maxRecords = -1;
+} elseif (isset($_REQUEST['max'])) {
+	$maxRecords = $_REQUEST['max'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
+}
+
 $where = '';
 $wheres = array();
 if (isset($_REQUEST['where'])) {
@@ -84,6 +93,22 @@ $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find, $where);
+
+if ( isset($_REQUEST['export']) || isset($_REQUEST['csv']) ) { 
+// export banning rules //
+
+	$csv = $banlib->export_rules($items);
+
+	header('Content-type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="tiki-admin_banning.csv"');
+	if ( function_exists('mb_strlen') ) {
+  header('Content-Length: '.mb_strlen($csv, '8bit'));
+  } else {
+  header('Content-Length: '.strlen($csv));
+  }
+ echo $csv;
+ die();
+}
 $smarty->assign('cant', $items['cant']);
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);

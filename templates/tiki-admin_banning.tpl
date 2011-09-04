@@ -14,6 +14,17 @@
 
 {title help="Banning+System"}{tr}Banning system{/tr}{/title}
 
+<div class="navbar">
+	<form action="tiki-admin_banning.php" method="post">
+	<input type="hidden" name="export" value="y"/>
+	<table class="formcolor">
+		<tr>
+			<td><input type="submit" name="csv" value="{tr}Export as CSV{/tr}"/></td>
+		</tr>
+	</table>
+	</form>
+</div>
+
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
 	<input type="hidden" name="banId" value="{$banId|escape}" />

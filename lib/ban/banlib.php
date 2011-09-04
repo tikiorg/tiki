@@ -93,6 +93,50 @@ class BanLib extends TikiLib
 		return $retval;
 	}
 
+	function export_rules($rules)
+	{
+	$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,\r\n";
+	foreach ($rules as $rule) {
+		if (!isset($rule['title'])) {
+			$rule['title'] = '';
+		}
+		if (isset($rule['user'])) {
+			$rule['ip1'] = '';
+			$rule['ip2'] = '';
+			$rule['ip3'] = '';
+			$rule['ip4'] = '';
+		}
+		if ($rule['mode'] == 'ip') {
+			$rule['user'] = '';
+		}
+		if ($rule['use_dates'] != 'y') {
+			$rule['date_from'] = '';
+			$rule['date_to'] = '';
+		}
+		if (!isset($rule['message'])) {
+			$rule['message'] = '';
+		}
+		$csv.= '"' . $rule['banId']
+				 . '","' . $rule['mode']
+				 . '","' . $rule['title']
+				 . '","' . $rule['ip1']
+				 . '","' . $rule['ip2']
+				 . '","' . $rule['ip3']
+				 . '","' . $rule['ip4']
+				 . '","' . $rule['user']
+				 . '","' . $rule['date_from']
+				 . '","' . $rule['date_to']
+				 . '","' . $rule['use_dates']
+				 . '","' . $rule['created']
+				 . '","' . $this->date_format("%y%m%d %H:%M", $rule['created'])
+				 . '","' . $rule['message']
+				 .'","'
+				 ;
+		$csv .= "\"\n";
+	}
+	return $csv;
+	}
+
 	/*
 	banId integer(12) not null auto_increment,
 	  mode enum('user','ip'),
