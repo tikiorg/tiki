@@ -195,7 +195,7 @@ class BanLib extends TikiLib
 	function replace_rule($banId, $mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message,
 		$sections) {
 
-		if ($banId) {
+		if ($banId && TikiDb::get()->table('tiki_banning')->fetchCount( array( 'banId' => $banId )) > 0) {
 			$query = " update `tiki_banning` set
   			`title`=?,
   			`ip1`=?,
