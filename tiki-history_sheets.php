@@ -59,14 +59,13 @@ $cookietab = 1;
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready("
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
-		editable: false,
-		fnPaneScroll: $.sheet.paneScrollLocker,
-		fnSwitchSheet: $.sheet.switchSheetLocker
+		editable: false
 	});
 	
-	$('div.tiki_sheet').each(function() {
-		$(this).sheet($.sheet.tikiOptions);
-	});
+	$('div.tiki_sheet')
+		.sheet($.sheet.tikiOptions)
+		.bind('paneScroll', $.sheet.paneScrollLocker)
+		.bind('switchSheet', $.sheet.switchSheetLocker);
 	
 	$.sheet.setValuesForCompareSheet('$sheetIndexes[0]', $('input.compareSheet1'), '$sheetIndexes[1]', $('input.compareSheet2'));
 	
