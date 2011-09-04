@@ -93,6 +93,90 @@ class BanLib extends TikiLib
 		return $retval;
 	}
 
+	function export_rules($rules)
+	{
+	$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections\n";
+	foreach ($rules as $rule) {
+		if (!isset($rule['title'])) {
+			$rule['title'] = '';
+		}
+		if (isset($rule['user'])) {
+			$rule['ip1'] = '';
+			$rule['ip2'] = '';
+			$rule['ip3'] = '';
+			$rule['ip4'] = '';
+		}
+		if ($rule['mode'] == 'ip') {
+			$rule['user'] = '';
+		}
+		if ($rule['use_dates'] != 'y') {
+			$rule['date_from'] = '';
+			$rule['date_to'] = '';
+		}
+		if (!isset($rule['message'])) {
+			$rule['message'] = '';
+		}
+		$csv.= '"' . $rule['banId']
+				 . '","' . $rule['mode']
+				 . '","' . $rule['title']
+				 . '","' . $rule['ip1']
+				 . '","' . $rule['ip2']
+				 . '","' . $rule['ip3']
+				 . '","' . $rule['ip4']
+				 . '","' . $rule['user']
+				 . '","' . $rule['date_from']
+				 . '","' . $rule['date_to']
+				 . '","' . $rule['use_dates']
+				 . '","' . $rule['created']
+				 . '","' . $this->date_format("%y%m%d %H:%M", $rule['created'])
+				 . '","' . $rule['message'] . '","';
+
+		if (!empty($rule['sections'])) {
+			foreach ($rule['sections'] as $section) {
+				$csv .= $section['section'] . '|';
+			}
+			$csv = rtrim($csv, '|');
+		}
+		$csv .= "\"\n";
+	}
+	return $csv;
+	}
+
+	function importCSV( $fname, $import_as_new ) {
+		global $smarty;
+
+		$fields = false;
+		if ($fhandle = fopen($fname, 'r')) {
+			$fields = fgetcsv($fhandle, 1000);
+		}
+		if ($fields === false) {
+			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		$nb = 0;
+		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
+			$d = array("banId"=>"", "mode"=>"", "title"=>"", "ip1" =>"", "ip2"=>"", 
+					   "ip3"=>"", "ip4"=>"", "user"=>"", "date_from"=>"", "date_to"=>"", "use_dates"=>"", "created"=>"","created_readable"=>"","message"=>"");
+			foreach ($fields as $field) {
+				$d[$field] = $data[array_search($field, $fields)];
+			}
+			if (empty($d['message'])) {
+				$d['message'] = tra('Spam is not welcome here');
+			}
+			if ($import_as_new) {
+				$d['banId'] = 0;
+			}
+			$nb++;
+
+			$this->replace_rule($d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
+								$d['user'], $d['date_from'], $d['date_to'], $d['use_dates'], $d['message'],
+								explode( '|', $d['sections']));
+		}
+		fclose ($fhandle);
+		return $nb;
+	}
+
 	/*
 	banId integer(12) not null auto_increment,
 	  mode enum('user','ip'),
@@ -111,7 +195,7 @@ class BanLib extends TikiLib
 	function replace_rule($banId, $mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message,
 		$sections) {
 
-		if ($banId) {
+		if ($banId && TikiDb::get()->table('tiki_banning')->fetchCount( array( 'banId' => $banId )) > 0) {
 			$query = " update `tiki_banning` set
   			`title`=?,
   			`ip1`=?,
