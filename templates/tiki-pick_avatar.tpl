@@ -20,7 +20,7 @@
 <h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>
 {if $avatar}{$avatar}
 {if $user_picture_id}
-{wikiplugin _name="img" thumb="y" fileId="$user_picture_id"}{/wikiplugin}
+<img src="tiki-download_file.php?fileId={$user_picture_id|escape}&display=y"></img>
 {/if}
 {else}{tr}no avatar{/tr}{/if}
 {if sizeof($avatars) eq 0 and $avatar}
