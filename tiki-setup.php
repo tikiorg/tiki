@@ -221,8 +221,14 @@ if ($prefs['javascript_enabled'] != 'n') {
 	$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');	
 
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
-		require_once('lib/codemirror_tiki/codemirror_tiki.php');
-		tiki_syntax_highlighter_flex();
+		//add codemirror stuff
+		$headerlib->add_cssfile( 'lib/codemirror/lib/codemirror.css' );
+		$headerlib->add_cssfile( 'lib/codemirror/theme/default.css' );
+		$headerlib->add_jsfile( 'lib/codemirror/lib/codemirror.js' );
+		
+		//add tiki stuff
+		$headerlib->add_cssfile( 'lib/codemirror_tiki/codemirror_tiki.css' );
+		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
 	}
 	
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {

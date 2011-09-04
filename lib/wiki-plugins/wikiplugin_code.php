@@ -8,47 +8,6 @@
 global $headerlib, $prefs;
 require_once('lib/codemirror_tiki/codemirror_tiki.php');
 
-if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
-	$headerlib->add_jq_onready("
-		if (!syntaxHighlighter) return;
-		if (!syntaxHighlighter.modes) return;
-		
-		$(document)
-			.bind('plugin_code_ready', function(args) {
-				var colors = args.container.find('#param_colors input:first').hide();
-				var code = args.container.find('textarea[name=\"content\"]');
-				
-				code.flexibleSyntaxHighlighter({
-					mode: colors.val(),
-					lineNumbers: true,
-					changeText: '".tra("Change Highlighter")."',
-					force: true
-				});
-			
-				var colorsSelector = $('<select />')
-					.insertAfter(colors)
-					.change(function() {
-						colors.val(colorsSelector.val());
-					})
-					.mousedown(function() {
-						colorsSelector.change();
-					})
-					.mouseup(function() {
-						colorsSelector.change();
-					})
-					.click(function() {
-						colorsSelector.change();
-					});
-				
-				for(mode in syntaxHighlighter.modes) {
-					$('<option />').text(mode).attr('value', mode).appendTo(colorsSelector);
-				}
-				
-				colorsSelector.val(colors.val());
-		});
-	");
-}
-
 function wikiplugin_code_info() {
 	return array(
 		'name' => tra('Code'),
