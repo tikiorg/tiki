@@ -69,6 +69,18 @@ function wikiplugin_memberlist_info() {
 				'description' => tra('Sort mode for member listing.'),
 				'default' => 'login_asc',
 				'filter' => 'text',
+			),
+			'readOnly' => array(
+				'required' => false,
+				'name' => tra('Read only'),
+				'description' => tra('Read only mode. All ability to modify membership is hidden.'),
+				'default' => 'n',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			)
 		),
 	);
@@ -113,7 +125,12 @@ function wikiplugin_memberlist( $data, $params ) {
 
 	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
 
-	$validGroups = wikiplugin_memberlist_get_group_details( $groups, $params['max'], $params['sort_mode'] );
+	if ($params['readOnly'] == 'y') {
+		$readOnly = true;
+	} else {
+		$readOnly = false;
+	}
+	$validGroups = wikiplugin_memberlist_get_group_details( $groups, $params['max'], $params['sort_mode'], $readOnly );
 
 	if( isset($_POST[$exec_key]) ) {
 		if( isset( $_POST['join'] ) ) {
@@ -189,7 +206,7 @@ function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_
 	return $users;
 }
 
-function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $sort_mode = 'login_asc' ) {
+function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $sort_mode = 'login_asc', $readOnly = false ) {
 	global $user, $prefs, $userlib;
 	$validGroups = array();
 	foreach( $groups as $groupName ) {
@@ -203,10 +220,10 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $so
 			$isMember = in_array( $groupName, $perms->getGroups() );
 
 			$validGroups[$groupName] = array(
-				'can_join' => $perms->group_join && ! $isMember && $user,
-				'can_leave' => $perms->group_join && $isMember && $user,
-				'can_add' => $perms->group_add_member,
-				'can_remove' => $perms->group_remove_member,
+				'can_join' => $perms->group_join && ! $isMember && $user && ! $readOnly,
+				'can_leave' => $perms->group_join && $isMember && $user && ! $readOnly,
+				'can_add' => $perms->group_add_member && ! $readOnly,
+				'can_remove' => $perms->group_remove_member && ! $readOnly,
 				'is_member' => $isMember,
 			);
 
