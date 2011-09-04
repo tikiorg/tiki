@@ -812,7 +812,7 @@ class LogsLib extends TikiLib
 
 	function export($actionlogs, $unit = 'b')
 	{
-	$csv = "user,date,time,action,type,object,category,categId, unit,+,-,contribution\r\n";
+	$csv = "user,date,time,action,type,object,category,categId,ip, unit,+,-,contribution\r\n";
 	foreach ($actionlogs as $action) {
 		if (!isset($action['object'])) {
 			$action['object'] = '';
@@ -827,7 +827,9 @@ class LogsLib extends TikiLib
 		if (!isset($action['del'])) {
 			$action['del'] = '';
 		}
-
+		if (!isset($action['ip'])) {
+			$action['ip'] = '';
+		}
 		$csv.= '"' . $action['user']
 				 . '","' . $this->date_format("%y%m%d", $action['lastModif'])
 				 . '","' . $this->date_format("%H:%M", $action['lastModif'])
@@ -836,6 +838,7 @@ class LogsLib extends TikiLib
 				 . '","' . $action['object']
 				 . '","' . $action['categName']
 				 . '","' . $action['categId']
+				 . '","' . $action['ip']
 				 . '","' . $unit
 				 . '","' . $action['add']
 				 . '","' . $action['del']
