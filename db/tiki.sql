@@ -2006,7 +2006,7 @@ CREATE TABLE `tiki_shoutbox` (
   `timestamp` int(14) default NULL,
   `user` varchar(200) NULL default '',
   `hash` varchar(32) default NULL,
-  `tweetId` bigint(20) unsigned NOT NULL,
+  `tweetId` bigint(20) unsigned NOT NULL default 0,
   PRIMARY KEY (`msgId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
