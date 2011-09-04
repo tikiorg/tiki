@@ -109,6 +109,7 @@ class CategLib extends ObjectLib
 		return array_values($path);
 	}
 
+	// Returns false if the category is not found.
 	function get_category($categId) {
 		if(!isset($this->category_cache) || !isset($this->category_cache[$categId])) {
 			$this->update_category_cache($categId);
@@ -923,23 +924,22 @@ class CategLib extends ObjectLib
 		global $cachelib;
 		if( ! $ret = $cachelib->getSerialized("allcategs") ) {
 			$ret = array();
-			$query = "select * from `tiki_categories` order by `name` asc, `categId` desc";
+			$query = "select * from `tiki_categories`";
 			$result = $this->query($query, array());
 			while ($res = $result->fetchRow()) {
 				$id = $res["categId"];
+				$query = "select count(*) from `tiki_categories` where `parentId`=?";
+				$res["children"] = $this->getOne($query,array($id));
+				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
+				$res["objects"] = $this->getOne($query,array($id));
 				$catpath = $this->get_category_path($id);
 				$tepath = array();
 				foreach ($catpath as $cat) {
 					$tepath[] = $cat['name'];
 				}
-				$categpath = implode("::",$tepath);
-				$categpathforsort = TikiLib::take_away_accent(implode("!!",$tepath)); // needed to prevent cat::subcat to be sorted after cat2::subcat
-				$res["categpath"] = $categpath;
 				$res["tepath"] = $tepath;
-				$query = "select count(*) from `tiki_categories` where `parentId`=?";
-				$res["children"] = $this->getOne($query,array($id));
-				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-				$res["objects"] = $this->getOne($query,array($id));
+				$res["categpath"] = implode("::",$tepath);
+				$categpathforsort = TikiLib::take_away_accent(implode("!!",$tepath)); // needed to prevent cat::subcat to be sorted after cat2::subcat
 				$ret[$categpathforsort] = $res;
 			}
 			ksort($ret);
@@ -959,9 +959,11 @@ class CategLib extends ObjectLib
 				}
 			}
 		}
+		
 		if ($considerPermissions) {
 			$ret = Perms::filter( array( 'type' => 'category' ), 'object', $ret, array( 'object' => 'categId' ), 'view_category' );
 		}
+		
 		if ($sortByName) {		
 			global $prefs;
 			if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
