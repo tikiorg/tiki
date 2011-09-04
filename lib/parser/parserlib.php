@@ -1878,17 +1878,19 @@ if( \$('#$id') ) {
 	}
 
 	//*
-	private function parse_data_inline_syntax( $line, $words = array() ) {
+	private function parse_data_inline_syntax( $line, $words = array(), $ck_editor = false ) {
 		global $prefs;
 
-		if ($prefs['feature_hotwords'] == 'y') {
-			// Replace Hotwords before begin
-			$line = $this->replace_hotwords($line, $words);
-		}
+		if (!$ck_editor) {
+			if ($prefs['feature_hotwords'] == 'y') {
+				// Replace Hotwords before begin
+				$line = $this->replace_hotwords($line, $words);
+			}
 
-		// Make plain URLs clickable hyperlinks
-		if ($prefs['feature_autolinks'] == 'y') {
-			$line = $this->autolinks($line);
+			// Make plain URLs clickable hyperlinks
+			if ($prefs['feature_autolinks'] == 'y') {
+				$line = $this->autolinks($line);
+			}
 		}
 
 		// Replace monospaced text
@@ -1897,9 +1899,12 @@ if( \$('#$id') ) {
 		$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
 		// Replace italic text
 		$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
-		// Replace definition lists
-		$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
-		$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+		
+		if (!$ck_editor) {
+			// Replace definition lists
+			$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+			$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+		}
 
 		return $line;
 	}
@@ -2269,9 +2274,7 @@ if( \$('#$id') ) {
 				$line = '<tt>' . $line . '</tt>';
 			}
 
-			if (!$options['ck_editor']) {
-				$line = $this->parse_data_inline_syntax( $line, $words );
-			}
+			$line = $this->parse_data_inline_syntax( $line, $words, $options['ck_editor'] );
 
 			// This line is parseable then we have to see what we have
 			if (substr($line, 0, 3) == '---') {
