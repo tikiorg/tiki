@@ -97,7 +97,7 @@ $items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find, $where);
 if ( isset($_REQUEST['export']) || isset($_REQUEST['csv']) ) { 
 // export banning rules //
 
-	$csv = $banlib->export_rules($items);
+	$csv = $banlib->export_rules($items['data']);
 
 	header('Content-type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="tiki-admin_banning.csv"');
