@@ -56,6 +56,15 @@ function smarty_function_preference( $params, $smarty ) {
 			$smarty->assign( 'mode', 'normal' );
 		}
 		
+		//we reset the codemirror/syntax vars so that they are blank because they are reused for other params
+		$smarty->assign( 'codemirror' );
+		$smarty->assign( 'syntax' );
+		
+		if ( !empty( $params['syntax'] ) ) {
+			$smarty->assign( 'codemirror', 'true' );
+			$smarty->assign( 'syntax', $params['syntax'] );
+		}
+		
 		return $smarty->fetch( 'prefs/' . $info['type'] . '.tpl' );
 	} else {
 		$info = array(
