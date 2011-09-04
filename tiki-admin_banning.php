@@ -10,6 +10,8 @@ include_once ('lib/ban/banlib.php');
 $access->check_feature('feature_banning');
 $access->check_permission('tiki_p_admin_banning');
 
+$auto_query_args = array( 'banId' );
+
 if (!empty($_REQUEST['banId'])) {
 	$info = $banlib->get_rule($_REQUEST['banId']);
 } else {
@@ -39,6 +41,18 @@ if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {
 		$banlib->remove_rule($sec);
 	}
 }
+
+if (isset($_REQUEST["import"]) && isset($_FILES["fileCSV"])) {
+	check_ticket('admin-banning');
+
+	// import banning rules //
+	$number_imported = $banlib->importCSV($_FILES["fileCSV"]["tmp_name"], isset($_REQUEST['import_as_new']));
+	if ($number_imported > 0) {
+		$smarty->assign('updated', "y");
+		$smarty->assign('number_imported', $number_imported);
+	}
+}
+
 if (isset($_REQUEST['save'])) {
 	check_ticket('admin-banning');
 	$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
@@ -108,11 +122,6 @@ if ( isset($_REQUEST['export']) || isset($_REQUEST['csv']) ) {
   }
  echo $csv;
  die();
-}
-if (isset($_REQUEST["import"]) && isset($_FILES["fileCSV"])) {
-	// import banning rules //
-	if ($banlib->importCSV($_FILES["fileCSV"]["tmp_name"]))
-		$smarty->assign('updated', "y");
 }
 $smarty->assign('cant', $items['cant']);
 $smarty->assign_by_ref('cant_pages', $items["cant"]);

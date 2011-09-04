@@ -95,7 +95,7 @@ class BanLib extends TikiLib
 
 	function export_rules($rules)
 	{
-	$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,\r\n";
+	$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections\n";
 	foreach ($rules as $rule) {
 		if (!isset($rule['title'])) {
 			$rule['title'] = '';
@@ -129,16 +129,22 @@ class BanLib extends TikiLib
 				 . '","' . $rule['use_dates']
 				 . '","' . $rule['created']
 				 . '","' . $this->date_format("%y%m%d %H:%M", $rule['created'])
-				 . '","' . $rule['message']
-				 .'","'
-				 ;
+				 . '","' . $rule['message'] . '","';
+
+		if (!empty($rule['sections'])) {
+			foreach ($rule['sections'] as $section) {
+				$csv .= $section['section'] . '|';
+			}
+			$csv = rtrim($csv, '|');
+		}
 		$csv .= "\"\n";
 	}
 	return $csv;
 	}
 
-	function importCSV($fname) {
-		global $user, $smarty;
+	function importCSV( $fname, $import_as_new ) {
+		global $smarty;
+
 		$fields = false;
 		if ($fhandle = fopen($fname, 'r')) {
 			$fields = fgetcsv($fhandle, 1000);
@@ -155,8 +161,17 @@ class BanLib extends TikiLib
 			foreach ($fields as $field) {
 				$d[$field] = $data[array_search($field, $fields)];
 			}
-			if (empty($d["message"]))
-				$d["message"] = "Spam is not welcome here";
+			if (empty($d['message'])) {
+				$d['message'] = tra('Spam is not welcome here');
+			}
+			if ($import_as_new) {
+				$d['banId'] = 0;
+			}
+			$nb++;
+
+			$this->replace_rule($d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
+								$d['user'], $d['date_from'], $d['date_to'], $d['use_dates'], $d['message'],
+								explode( '|', $d['section']));
 		}
 		fclose ($fhandle);
 		return $nb;

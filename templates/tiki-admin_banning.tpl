@@ -118,6 +118,10 @@
       </td>
       <td>
         <input type="file" name="fileCSV" size="50" />
+        <label>
+        	<input type="checkbox" name="import_as_new" />
+        	{tr}Import as new rules{/tr}
+        </label>
         <input type="submit" name="import" value="{tr}import{/tr}" />
       </td>
     </tr>
