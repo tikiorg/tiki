@@ -6403,7 +6403,7 @@ class UsersLib extends TikiLib
 			$categlib = TikiLib::lib('categ');
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
-			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
+			$categId = $categlib->get_category_id($group);
 			$cat[] = $categId;
 			$cat = array_unique($cat);
 			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true); // using override_perms=true because if user adding himself to group may not have perms yet
@@ -6419,7 +6419,7 @@ class UsersLib extends TikiLib
 			$categlib = TikiLib::lib('categ');
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
-			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
+			$categId = $categlib->get_category_id($group);
 			$cat = array_diff($cat, array($categId));
 			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true);
 		}
