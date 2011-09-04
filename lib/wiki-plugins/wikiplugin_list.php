@@ -207,8 +207,16 @@ function wpquery_filter_textrange($query, $value, array $arguments)
 	$query->filterTextRange($arguments['from'], $arguments['to'], $value);
 }
 
-function wpquery_sort_mode($query, $value)
+function wpquery_sort_mode($query, $value, array $arguments)
 {
+	if ($value == 'randommode') {
+		if ( !empty($arguments['modes']) ) {
+			$modes = explode(',', $arguments['modes']);
+			$value = $modes[array_rand($modes)];
+		} else {
+			return;
+		}
+	}
 	$query->setOrder($value);
 }
 
