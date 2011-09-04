@@ -181,6 +181,12 @@ function wikiplugin_customsearch($data, $params)
 		} else {
 			$default = '';
 		}
+		if ( $name == 'categories' ) {
+			$parent = $arguments['_parent'];
+			if (!empty($_REQUEST['defaultcat'][$parent])) {
+				$default = $_REQUEST['defaultcat'][$parent];
+			}
+		}
 		$function = "cs_design_{$name}";
 		if (function_exists($function)) {
 			if (isset($arguments['_group'])) {
