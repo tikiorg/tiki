@@ -209,6 +209,9 @@
 						</th>
 					{/if}
 					<th>
+						{tr}IP{/tr}
+					</th>
+					<th>
 						<a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a>
 					</th>
 					<th>
@@ -253,6 +256,9 @@
 								{assign var=ic value=$actionlog.categId}{$categNames[$ic]|escape}
 							</td>
 						{/if}
+						<td class="text">
+							{tr}{$actionlog.ip}{/tr}
+						</td>
 						<td class="{if $actionlog.add} diffadded{/if}">
 							{if $actionlog.add or $actionlog.add eq '0'}{$actionlog.add}{else}&nbsp;{/if}
 						</td>

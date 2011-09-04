@@ -40,6 +40,12 @@ if (!empty($_REQUEST["action_log_type"])) {
   $action_log_type = '%';
 }
 
+if (!empty($_REQUEST["action_log_ip"])) {
+  $action_log_ip = $_REQUEST["action_log_ip"];
+} else {
+  $action_log_ip = '%';
+}
+
 if (!empty($_REQUEST["action_log_action"])) {
   $action_log_action = $_REQUEST["action_log_action"];
 } else {
@@ -710,6 +716,7 @@ $smarty->assign_by_ref('cant', $actions_cant);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $action_log_types = $logslib->get_actionlog_types();
 if (!empty($_REQUEST['action_log_type'])) $smarty->assign('action_log_type',$_REQUEST['action_log_type']);
+if (!empty($_REQUEST['action_log_ip'])) $smarty->assign('action_log_ip',$_REQUEST['action_log_ip']);
 if (!empty($_REQUEST['action_log_action'])) $smarty->assign('action_log_action',$_REQUEST['action_log_action']);
 $smarty->assign('action_log_conf_selected',$action_log_conf_selected);
 $smarty->assign('action_log_types',$action_log_types);
