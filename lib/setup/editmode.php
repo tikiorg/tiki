@@ -44,7 +44,7 @@ $wysiwyg_wiki = false;
 $disable_wysiwyg_html = false;  
 
 if ($_SESSION['wysiwyg'] == 'y') {
-	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
+	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_wiki_parsed'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only 
 		$is_html = false;
 		$wysiwyg_wiki = true; // do WYSIWYG-Wiki
 	} else {
@@ -61,7 +61,7 @@ if ($_SESSION['wysiwyg'] == 'y') {
 		}
 	}
 }
-if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) {
+if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_wiki_parsed'] == 'y' && $prefs['wysiwyg_htmltowiki'] == 'y' && !$info['is_html']) {
 	$disable_wysiwyg_html = true;
 }
 if (isset($jitRequest['edit'])) {
