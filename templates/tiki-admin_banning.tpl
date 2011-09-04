@@ -17,13 +17,14 @@
 <div class="navbar">
 	<form action="tiki-admin_banning.php" method="post">
 	<input type="hidden" name="export" value="y"/>
-	<table class="formcolor">
-		<tr>
-			<td><input type="submit" name="csv" value="{tr}Export as CSV{/tr}"/></td>
-		</tr>
-	</table>
+		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}"/>
 	</form>
+	{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV"}
 </div>
+
+{if $updated}
+  {tr}Banning rules have been updated{/tr}
+{/if}
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
@@ -105,6 +106,25 @@
 		</tr>
 	</table>
 </form>
+
+<h2 id="Import_rules_as_CSV">{tr}Import rules as CSV{/tr}</h2>
+<form method="post" action="tiki-admin_banning.php" enctype="multipart/form-data">
+  <table class="formcolor">
+    <tr>
+      <td>
+        {tr}CSV File{/tr}
+		{capture name=help}{tr}Column names on the first line:{/tr}<br />banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message<br />{tr}Date format:{/tr} {tr}See:{/tr} http://php.net/strtotime{/capture}
+        <a {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
+      </td>
+      <td>
+        <input type="file" name="fileCSV" size="50" />
+        <input type="submit" name="import" value="{tr}import{/tr}" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+<h2>{tr}Find{/tr}</h2>
 {if $items}
 	<form method="post" action="tiki-admin_banning.php">
 		<input type="hidden" name="offset" value="{$offset|escape}" />

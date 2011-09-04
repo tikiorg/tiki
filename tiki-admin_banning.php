@@ -109,6 +109,11 @@ if ( isset($_REQUEST['export']) || isset($_REQUEST['csv']) ) {
  echo $csv;
  die();
 }
+if (isset($_REQUEST["import"]) && isset($_FILES["fileCSV"])) {
+	// import banning rules //
+	if ($banlib->importCSV($_FILES["fileCSV"]["tmp_name"]))
+		$smarty->assign('updated', "y");
+}
 $smarty->assign('cant', $items['cant']);
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);

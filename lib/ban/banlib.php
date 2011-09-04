@@ -137,6 +137,31 @@ class BanLib extends TikiLib
 	return $csv;
 	}
 
+	function importCSV($fname) {
+		global $user, $smarty;
+		$fields = false;
+		if ($fhandle = fopen($fname, 'r')) {
+			$fields = fgetcsv($fhandle, 1000);
+		}
+		if ($fields === false) {
+			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		$nb = 0;
+		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
+			$d = array("banId"=>"", "mode"=>"", "title"=>"", "ip1" =>"", "ip2"=>"", 
+					   "ip3"=>"", "ip4"=>"", "user"=>"", "date_from"=>"", "date_to"=>"", "use_dates"=>"", "created"=>"","created_readable"=>"","message"=>"");
+			foreach ($fields as $field) {
+				$d[$field] = $data[array_search($field, $fields)];
+			}
+			if (empty($d["message"]))
+				$d["message"] = "Spam is not welcome here";
+		}
+		fclose ($fhandle);
+		return $nb;
+	}
+
 	/*
 	banId integer(12) not null auto_increment,
 	  mode enum('user','ip'),
