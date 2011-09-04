@@ -41,4 +41,13 @@ lang = {
 "Tip: Leave the first line as it is, starting with \";note:\". This is required" : "Tip: Lasse die erste Zeile, beginnend mit \";note:\" unverändert. Dies ist erforderlich",
 "Theme Generator:" : "Theme-Generator:",
 "Edit module:" : "Bearbeite Modul:",
+"Edit module" : "Bearbeite Modul",
+"Save" : "Speichern",
+"Cancel" : "Abbrechen",
+"Delete" : "Löschen",	
+"Unassign module" : "Modul entfernen",
+"Favorite" : "Favoriten",
+"Filter:" : "Filter:",
+"Please enter a page name" : "Bitte trage einen Seitennamen ein",
+"Are you sure you want to unassign this module?" : "Bist Du sicher, dass Du das Modul entfernen willst?", 
 };
