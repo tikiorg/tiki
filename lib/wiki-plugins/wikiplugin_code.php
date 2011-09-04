@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-global $headerlib, $prefs;
-
 function wikiplugin_code_info() {
 	return array(
 		'name' => tra('Code'),
