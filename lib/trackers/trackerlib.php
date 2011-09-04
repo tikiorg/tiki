@@ -3897,18 +3897,21 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	private function get_item_categories($trackerId, $values)
+	private function get_viewable_category_field_cats($trackerId)
 	{
 		$definition = Tracker_Definition::get($trackerId);
 		$categories = array();
 
 		foreach ($definition->getFields() as $field) {
 			if ($field['type'] == 'e') {
-				$fieldId = $field['fieldId'];
-				$value = isset($values[$fieldId]) ? $values[$fieldId] : null;
 
-				if ($value) {
-					$categories = array_merge($categories, explode(',', $value));
+				$parentId = $field['options_array'][0];
+				$descends = isset($field['options_array'][3]) && $field['options_array'][3] == 1;
+
+				$cats = TikiLib::lib('categ')->get_viewable_child_categories($parentId, $descends);
+
+				foreach ($cats as $c) {
+					$categories[] = $c['categId'];
 				}
 			}
 		}
@@ -3931,26 +3934,28 @@ class TrackerLib extends TikiLib
 		$userlib = TikiLib::lib('user');
 		$categlib = TikiLib::lib('categ');
 
-		$old_categories = $this->get_item_categories($trackerId, $args['old_values']);
-		$current_categories = $this->get_item_categories($trackerId, $args['values']);
-
-		$new_categs = array_diff($current_categories, $old_categories);
-		$del_categs = array_diff($old_categories, $current_categories);
+		$current_categories = $categlib->get_object_categories('trackeritem', $args['object'], -1, false);
 
 		global $prefs;
+
 		$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
-		$sig_add = array_intersect($sig_catids, $new_categs);
-		$sig_del = array_intersect($sig_catids, $del_categs);
+		$addable_catids = array_intersect($current_categories, $sig_catids); 
+
+		$categoryfield_catids = $this->get_viewable_category_field_cats($trackerId);
+		$removable_catids = array_diff( array_intersect($categoryfield_catids, $sig_catids), $current_categories);
+
 		$groupList = $userlib->list_all_groups();
-		foreach ($sig_add as $c) {
+		$currentGroups = $userlib->get_user_groups($trackersync_user);
+
+		foreach ($addable_catids as $c) {
 			$groupName = $categlib->get_category_name($c, true);
-			if (in_array($groupName, $groupList)) {
+			if (!in_array($groupName, $currentGroups) && in_array($groupName, $groupList)) {
 				$userlib->assign_user_to_group($trackersync_user, $groupName);
 			}
 		}
-		foreach ($sig_del as $c) {
-			$groupName = $categlib->get_category_name($c, true);
-			if (in_array($groupName, $groupList)) {
+		foreach ($currentGroups as $groupName) {
+			$catid = $categlib->get_category_id($groupName);
+			if (in_array($catid, $removable_catids) && !in_array($catid, $valid_catids)) {
 				$userlib->remove_user_from_group($trackersync_user, $groupName);
 			}
 		}
