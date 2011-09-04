@@ -366,14 +366,7 @@ abstract class Toolbar
 	
 	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
 	{
-		// this code does not make any sense yet, it's just for testing
-		if ($this->wysiwyg != 'Font') {
-			return $this->wysiwyg;
-		}
-		else
-		{
-			return '';
-		} 
+		return null;
 	} // }}}
 	
 	function getSyntax( $areaId ) // {{{
@@ -640,7 +633,12 @@ class ToolbarInline extends Toolbar
 
 		return $this;
 	} // }}}
-
+	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		return $this->getWysiwygToken($areaId);
+	} // }}}
+	
 	function getWikiHtml( $areaId ) // {{{
 	{
 		if ($this->syntax == '~np~text~/np~') {	// closing ~/np~ tag breaks toolbar when inside nested plugins
@@ -1707,18 +1705,20 @@ class ToolbarsList
 
 			foreach( $line as $bit ) {
 				foreach( $bit as $group) {
+					$group_count = 0;
 					foreach( $group as $tag ) {
 						switch ($tb_type) {
 							case 'wiki': 
-								if( $token = $tag->getWysiwygWikiToken( $areaId ) ) {$lineOut[] = $token;};
+								if( $token = $tag->getWysiwygWikiToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
 								break;
 							case 'html' : 
 							default:
-								if( $token = $tag->getWysiwygToken( $areaId ) ) {$lineOut[] = $token;};
+								if( $token = $tag->getWysiwygToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
 						}
 					}
-	
-					$lineOut[] = '-';
+					if ($group_count) { // don't add separators for empty groups
+						$lineOut[] = '-';	
+					}
 				}
 			}
 
