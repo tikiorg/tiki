@@ -81,7 +81,13 @@ function wikiplugin_memberlist_info() {
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
-			)
+			),
+			'including' => array(
+				'required' => false,
+				'name' => tra('Including Group'),
+				'description' => tra('Only groups including the group that you specify will be listed'),
+				'default' => '',
+                        )
 		),
 	);
 }
@@ -116,6 +122,18 @@ function wikiplugin_memberlist( $data, $params ) {
 		$in_group = array();
 		foreach ($groups as $group) {
 			if (in_array($group, $usergroups) && $group != 'Anonymous') {
+				$in_group[] = $group;
+			}
+		}
+		$groups = $in_group;
+		unset($in_group);
+	}
+
+	if (!empty($params['including'])) {
+		$includinggroups = $userlib->get_including_groups($params['including']);
+		$in_group = array();
+		foreach ($groups as $group) {
+			if (in_array($group, $includinggroups)) {
 				$in_group[] = $group;
 			}
 		}
