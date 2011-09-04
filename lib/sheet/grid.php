@@ -2283,6 +2283,14 @@ class SheetLib extends TikiLib
 		} 
 	}
 	
+	function remove_related_trackers($sheetId) {
+		global $relationlib; require_once('lib/attributes/relationlib.php');
+		
+		foreach($this->get_related_tracker_ids($sheetId) as $trackerId) {
+			$this->remove_related_tracker($sheetId, $trackerId);
+		}
+	}
+	
 	function get_related_tracker_ids($sheetdId) {
 		global $relationlib; require_once('lib/attributes/relationlib.php');
 		$trackerIds = array();
@@ -2290,6 +2298,14 @@ class SheetLib extends TikiLib
 			$trackerIds[] = $result['itemId'];
 		}
 		return $trackerIds;
+	}
+	
+	function update_related_trackers($sheetId, $trackerIds) {
+		$this->remove_related_trackers($sheetId);
+		
+		foreach($trackerIds as $trackerId) {
+			$this->add_related_tracker($sheetId, $trackerId);
+		}
 	}
 	
 	function get_related_trackers_as_html($sheetId) {
@@ -2300,10 +2316,11 @@ class SheetLib extends TikiLib
 		
 		foreach($this->get_related_tracker_ids($sheetId) as $trackerId) {
 			$itemI = 0;
-			$html .= '<table title="'.htmlspecialchars($trackerInfo['name']).'" readonly="true" class="readonly">';
+			
 			$trackerDef = Tracker_Definition::get($trackerId);
 			$trackerInfo = $trackerDef->getInformation();
-
+			$html .= '<table title="'.htmlspecialchars($trackerInfo['name']).'" trackerId="'.$trackerId.'" class="readonly">';
+			
 			foreach($trkqrylib->tracker_query($trackerInfo['name'], $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, false) as $item) {
 				if ($itemI == 0) {
 					$html .= "<tr>";
@@ -2600,13 +2617,15 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function save_sheet($data, $id, $file, $type = 'db')
+	function save_sheet($sheets, $trackers, $id, $file, $type = 'db')
 	{
 		global $user, $sheetlib;
 		
-		$sheets =  json_decode($data);
-		$rc =  '';
+		$sheets =  json_decode($sheets);
+		$trackers = json_decode($trackers);
 		
+		$rc =  '';
+
 		if ($id) {
 			$grid = new TikiSheet($id);
 			if (is_array($sheets)) {
@@ -2639,6 +2658,8 @@ class SheetLib extends TikiLib
 					}
 				}
 			}
+			
+			$this->update_related_trackers($id, $trackers);
 		} /*else {
 			
 			$grid = new TikiSheet();

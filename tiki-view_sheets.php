@@ -88,8 +88,8 @@ if ($prefs['feature_contribution'] == 'y') {
 //Save
 if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	if ( $_REQUEST['sheetId'] ) {
-		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
-		
+		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST['t'], $_REQUEST["sheetId"] );
+
 	}
 	die($result);
 //Clone
