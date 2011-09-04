@@ -28,8 +28,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_textarea($params, $content, $smarty, $repeat)
 {
-	global $prefs, $headerlib, $smarty;
-	
+	global $prefs, $headerlib, $smarty, $disable_wysiwyg_html;
+
 	if ( $repeat ) return;
 
 	// some defaults
@@ -76,6 +76,9 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';
 	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
+
+	// setup for wysiwyg editing (introduced for wysiwyg_htmltowiki)  
+	$html .= "<input type=\"hidden\" name=\"disable_wysiwyg_html\" value=\"$disable_wysiwyg_html\" />";
 	
 	$auto_save_referrer = '';
 	$auto_save_warning = '';

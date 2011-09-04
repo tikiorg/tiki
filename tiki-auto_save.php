@@ -48,14 +48,7 @@ if (isset($_REQUEST['editor_id'])) {
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
-			
-			// determine if the data is html or wiki
-			$wysiwyg_wiki = false;
-			if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-				$info = $tikilib->get_page_info($referer[2]);
-				$wysiwyg_wiki = $info['is_html'] == 0 && $info['wysiwyg'] == 'y';	
-			}
-			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']), false, $wysiwyg_wiki);
+			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']), false, $_REQUEST['disable_wysiwyg_html']);
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
 			$data = $_REQUEST['data'];
