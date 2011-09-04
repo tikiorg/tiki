@@ -216,9 +216,9 @@ if ($prefs['javascript_enabled'] != 'n') {
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
 	
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
-		require_once('lib/codemirror_tiki/codemirror_tiki.php');
-		tiki_syntax_highlighter_base();
-		tiki_syntax_highlighter_flex();
+		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
+		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );
+		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
 	}
 	
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
