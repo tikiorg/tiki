@@ -78,7 +78,7 @@ function wikiplugin_customsearch($data, $params)
 	} else {
 		$id = '0';
 	}
-	if (isset($params['recalllastsearch']) && $params['recalllastsearch'] == 1) {
+	if (isset($params['recalllastsearch']) && $params['recalllastsearch'] == 1 && (!isset($_REQUEST['forgetlastsearch']) || $_REQUEST['forgetlastsearch'] != 'y')) {
 		$recalllastsearch = 1;
 	} else {
 		$recalllastsearch = 0;
