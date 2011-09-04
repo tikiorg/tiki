@@ -86,10 +86,6 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	header('Location: tiki-pick_avatar.php');
 	exit;
 }
-// Get full user picture if it is set
-if ($prefs["user_store_file_gallery_picture"] == 'y' && $user_picture_id = $userprefslib->get_user_picture_id($userwatch) ) {
-	$smarty->assign('user_picture_id', $user_picture_id);	
-}
 
 if (isset($_REQUEST["uselib"])) {
 	check_ticket('pick-avatar');
@@ -111,9 +107,16 @@ closedir($h);
 $smarty->assign_by_ref('avatars', $avatars);
 $smarty->assign('numav', count($avatars));
 $smarty->assign('yours', rand(0, count($avatars)));
-include_once ('tiki-mytiki_shared.php');
+
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);
+
+// Get full user picture if it is set
+if ($prefs["user_store_file_gallery_picture"] == 'y' && $user_picture_id = $userprefslib->get_user_picture_id($userwatch) ) {
+	$smarty->assign('user_picture_id', $user_picture_id);	
+}
+
 ask_ticket('pick-avatar');
+include_once ('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'tiki-pick_avatar.tpl');
 $smarty->display("tiki.tpl");
