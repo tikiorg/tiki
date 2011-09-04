@@ -171,7 +171,7 @@ class BanLib extends TikiLib
 
 			$this->replace_rule($d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
 								$d['user'], $d['date_from'], $d['date_to'], $d['use_dates'], $d['message'],
-								explode( '|', $d['section']));
+								explode( '|', $d['sections']));
 		}
 		fclose ($fhandle);
 		return $nb;
