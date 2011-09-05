@@ -71,7 +71,8 @@ function wikiplugin_addfreetag($data, $params)
 				TikiLib::lib('trk')->modify_field($object['object'], $field, stripslashes($taglist));
 			}
 		} 
-		TikiLib::lib('tiki')->refresh_index($object['type'], $object['object']);
+		require_once 'lib/search/refresh-functions.php';
+		refresh_index($object['type'], $object['object']);
 		$url = $_SERVER['REQUEST_URI'];
 		header("Location: $url");
 		die;

@@ -36,5 +36,6 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_freetags_tag == 'y') {
 
     $freetaglib->add_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);	
     $freetaglib->update_tags($user, $cat_objid, $cat_type, $tag_string, false, $cat_lang);
-    TikiLib::lib('tiki')->refresh_index($cat_type, $cat_objid);
+    require_once 'lib/search/refresh-functions.php';
+    refresh_index($cat_type, $cat_objid);
 }
