@@ -212,7 +212,15 @@ $headerlib->add_jq_onready('
 	jST.file = "'.$_REQUEST['file'].'";
 	
 	$.sheet.link.setupUI();
-	$.sheet.manageState();
+	$.sheet.readyState();
+	
+	$(window).bind("beforeunload", function() {
+		$($.sheet.instance).each(function() {
+			if (this.isDirty) {
+				return true;
+			}
+		});
+	});
 	
 	$("#edit_button a")
 		.click(function() {
