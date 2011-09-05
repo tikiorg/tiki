@@ -16,7 +16,6 @@ function wikiplugin_googlemap_info() {
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'type' => array(
-				'safe' => true,
 				'required' => true,
 				'name' => tra('Type'),
 				'description' => tra('Type of items to show on google map'),
@@ -32,7 +31,6 @@ function wikiplugin_googlemap_info() {
 				)
 			),
 			'mode' => array(
-				'safe' => true,
 				'required' => true,
 				'name' => tra('Display Mode'),
 				'description' => tra('Map display mode'),
@@ -46,39 +44,43 @@ function wikiplugin_googlemap_info() {
 				)
 			),
 			'key' => array(
-					'safe' => true,
 					'required' => false,
 					'name' => tra('API Key'),
-					'description' => tra('Google maps key, if not set in user preferences'),
-					'default' => ''
+					'description' => tra('Google maps key. Not needed if set in user preferences'),
+					'default' => '',
+					'accepted' => tra('Valid key for the website, which can be obtained at http://code.google.com/apis/maps/signup.html.'),
+					'filter' => 'striptags'
 			),
 			'name' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Map ID'),
 				'description' => tra('Id suffix of Google map div to avoid conflicts with other maps on same page'),
-				'default' => 'default'
+				'default' => 'default',
+				'accepted' => tra('Single "word" which must begin with a letter and may be followed by any number of digits, hyphens, underscores, colons and periods.'),
+				'filter' => 'striptags',
 			),
 			'width' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width in pixels or %'),
-				'default' => 500
+				'default' => 500,
+				'accepted' => tra('A plain number will be interpreted as pixels. Add a % symbol after the number to indicate percentage.'),
+				'filter' => 'striptags',
 			),
 			'height' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels or %'),
-				'default' => 400
+				'accepted' => tra('A plain number will be interpreted as pixels. Add a % symbol after the number to indicate percentage.'),
+				'default' => 400,
+				'filter' => 'striptags',
 			),
 			'frameborder' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Show Border'),
 				'description' => tra('Choose whether to show a frame border around the map (no border shown by default).'),
 				'default' => 0,
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
@@ -86,56 +88,137 @@ function wikiplugin_googlemap_info() {
 				)
 			),
 			'defaultx' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Default Center Longitude'),
 				'description' => tra('Default longitude value used to center the map, e.g. -79.39. Default is the default set in the Gmap feature.'),
+				'accepted' => tra('An integer between -180 and 180.'),
+				'filter' => 'int',
 			),
 			'defaulty' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Default Center Latitude'),
 				'description' => tra('Default latitude value used to center the map, e.g. 43.7. Default is the default set in the Gmap feature.'),
+				'accepted' => tra('An integer between -180 and 180.'),
+				'filter' => 'int',
 			),
 			'defaultz' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Default Zoom'),
-				'description' => tra('Use an integer between 0 and 19 to set a default zoom level for the map. Default is the default set in the Gmap feature.'),
-				'filter' => 'int'
+				'description' => tra('Use an integer between 1 and 21 to set a default zoom level for the map. Default is the default set in the Gmap feature.'),
+				'filter' => 'digits',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => 'Whole Earth', 'value' => 1), 
+					array('text' => 2, 'value' => 2), 
+					array('text' => 3, 'value' => 3), 
+					array('text' => 4, 'value' => 4), 
+					array('text' => 'Country Size', 'value' => 5), 
+					array('text' => 6, 'value' => 6), 
+					array('text' => 7, 'value' => 7), 
+					array('text' => 8, 'value' => 8), 
+					array('text' => 9, 'value' => 9), 
+					array('text' => 10, 'value' => 10), 
+					array('text' => 'City Size', 'value' => 11), 
+					array('text' => 12, 'value' => 12), 
+					array('text' => 13, 'value' => 13), 
+					array('text' => 14, 'value' => 14), 
+					array('text' => 15, 'value' => 15), 
+					array('text' => 'Village Size', 'value' => 16), 
+					array('text' => 17, 'value' => 17), 
+					array('text' => 18, 'value' => 18), 
+					array('text' => 19, 'value' => 19), 
+					array('text' => 20, 'value' => 20), 
+					array('text' => 'Max Zoom', 'value' => 21), 
+				)
 			),
 			'setdefaultxyz' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Save View'),
 				'description' => tra('Allow user to set current map view as default view for himself only'),
 				'default' => false,
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => true), 
 					array('text' => tra('No'), 'value' => false)
 				)
 			),
+			'marker' => array(
+				'required' => false,
+				'name' => tra('Marker'),
+				'description' => tra('Add a marker when only the default or no coordinates are set. No marker by default.'),
+				'default' => 0,
+				'filter' => 'digits',
+				'since' => '8.0',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
+			),
+			'markertext' => array(
+				'required' => false,
+				'name' => tra('Text Bubble'),
+				'description' => tra('Text for bubble for marker. Tiki wiki-syntax can be used.'),
+				'default' => '',
+				'filter' => 'striptags',
+				'accepted' => tra('Plain text or Tiki wiki-syntax.'),
+				'since' => '8.0',
+				'advanced' => true,
+			),
+			'markerstart' => array(
+				'required' => false,
+				'name' => tra('Show/Hide Marker Text'),
+				'description' => tra('Set whether the marker text bubble is shown or hidden initially. Default is to hide.'),
+				'default' => 'hide',
+				'since' => '8.0',
+				'filter' => 'alpha',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Hide'), 'value' => 'hide'), 
+					array('text' => tra('Show'), 'value' => 'show')
+				)
+			),
 			'locateitemtype' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Item Type'),
-				'description' => tra('Type of item being geotagged (user, wiki page, blog, etc). Will attempt to use current object if not specified.'),
-				'default' => ''
+				'description' => tra('Type of item being geotagged (user, wiki page, blog, etc). Will attempt to use current object if not specified. Tracker items must be categorized.'),
+				'default' => '',
+				'filter' => 'striptags',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => 'Article', 'value' => 'article'), 
+					array('text' => 'Blog', 'value' => 'blog'),
+					array('text' => 'Comment', 'value' => 'comment'), 
+					array('text' => 'FAQ', 'value' => 'faq'), 
+					array('text' => 'File Gallery', 'value' => 'file gallery'), 
+					array('text' => 'Image Gallery', 'value' => 'image gallery'), 
+					array('text' => 'Poll', 'value' => 'poll'), 
+					array('text' => 'Post', 'value' => 'post'), 
+					array('text' => 'Tracker', 'value' => 'tracker'), 
+					array('text' => 'Tracker Item', 'value' => 'trackeritem'), 
+					array('text' => 'Tracker Item Pending', 'value' => 'trackeritem_pending'), 
+					array('text' => 'Tracker Item Closed', 'value' => 'trackeritem_closed'), 
+					array('text' => 'User', 'value' => 'user'), 
+					array('text' => 'Wiki Page', 'value' => 'wiki page'), 
+				)
 			),
 			'locateitemid' => array(
-				'safe' => true,
 				'required' => false,
-				'name' => tra('Item ID'),
+				'name' => tra('Item ID or Name'),
 				'description' => tra('ID of item being geotagged (name of page, blog ID, etc). Will attempt to use current object if not specified'),
-				'default' => ''
+				'default' => '',
+				'filter' => 'striptags',
+				'accepted' => tra('Any ID number or name for an existing object of the type specified in the Item Type field.')
 			),		
 			'hideifnone' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Hide If No Markers'),
 				'description' => tra('Hide map if there are no markers to be shown. Default is to show the map.'),
 				'default' => false,
+				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => true), 
@@ -143,23 +226,40 @@ function wikiplugin_googlemap_info() {
 				)
 			),
 			'togglehidden' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Visibility Toggle'),
 				'description' => tra('Add ability to toggle visibility. No toggle by default.'),
 				'default' => 0,
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
+			'togglealign' => array(
+				'required' => false,
+				'name' => tra('Toggle Link Align'),
+				'description' => tra('Alignment for the show/hide toggle link'),
+				'default' => '',
+				'since' => '8.0',
+				'parent' => array('name' => 'togglehidden', 'value' => 1),
+				'advanced' => true,
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Center'), 'value' => 'center'),
+					array('text' => tra('Right'), 'value' => 'right'),
+				)
+			),
 			'starthidden' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Start Hidden'),
 				'description' => tra('Choose whether to keep the map hidden initially. Default is to show the map initially.'),
 				'default' => '',
+				'filter' => 'digits',
+				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
@@ -167,70 +267,77 @@ function wikiplugin_googlemap_info() {
 				)
 			),		
 			'autozoom' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Auto Zoom'),
-				'description' => tra('Use an integer between 0 and 19 to auto zoom to this level on address find'),
+				'description' => tra('Use an integer between 1 and 21 to auto zoom to this level on address find'),
 				'default' => '',
-				'filter' => 'int',
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
-					array('text' => 0, 'value' => 0), 
-					array('text' => 1, 'value' => 1), 
+					array('text' => 'Whole Earth', 'value' => 1), 
 					array('text' => 2, 'value' => 2), 
 					array('text' => 3, 'value' => 3), 
 					array('text' => 4, 'value' => 4), 
-					array('text' => 5, 'value' => 5), 
+					array('text' => 'Country Size', 'value' => 5), 
 					array('text' => 6, 'value' => 6), 
 					array('text' => 7, 'value' => 7), 
 					array('text' => 8, 'value' => 8), 
 					array('text' => 9, 'value' => 9), 
 					array('text' => 10, 'value' => 10), 
-					array('text' => 11, 'value' => 11), 
+					array('text' => 'City Size', 'value' => 11), 
 					array('text' => 12, 'value' => 12), 
 					array('text' => 13, 'value' => 13), 
 					array('text' => 14, 'value' => 14), 
 					array('text' => 15, 'value' => 15), 
-					array('text' => 16, 'value' => 16), 
+					array('text' => 'Village Size', 'value' => 16), 
 					array('text' => 17, 'value' => 17), 
 					array('text' => 18, 'value' => 18), 
-					array('text' => 19, 'value' => 19), 
+					array('text' => 20, 'value' => 20), 
+					array('text' => 'Max Zoom', 'value' => 21), 
 				)
 			),
 			'controls' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Show Controls'),
 				'description' => tra('Show map controls (shown by default)'),
 				'filter' => 'alpha',
 				'default' => 'y',
+				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
+					array('text' => tra('All'), 'value' => 'a'), 
+					array('text' => tra('Zoom Only'), 'value' => 'z'),
+					array('text' => tra('Zoom and Type'), 'value' => 'zt'),
+					array('text' => tra('Zoom and Scale'), 'value' => 'zs'),
+					array('text' => tra('Type Only'), 'value' => 't'),
+					array('text' => tra('Type and Scale'), 'value' => 'ts'),
+					array('text' => tra('Scale Only'), 'value' => 's'),
+					array('text' => tra('None'), 'value' => 'n'),
 				)
 			),
 			'trackerfieldid' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('Tracker Field ID'),
-				'description' => tra('Field ID of tracker field if type is trackerfield or locator and locateitemtype is trackeritem'),
-				'filter' => 'int',
+				'description' => tra('Field ID of tracker field if type is Item, Tracker Field or Locator, Item Type is trackeritem and Item ID is the tracker item ID. Tracker item must be categorized.'),
+				'accepted' => tra('Numeric ID of a location type tracker field.'),
+				'filter' => 'digits',
 				'default' => 0
 			),
 			'trackerinputid' => array(
-				'safe' => true,
 				'required' => false,
-				'name' => tra('HTML ID'),
+				'name' => tra('Tracker HTML ID'),
 				'description' => tra('HTML ID of tracker field input box where value is copied to by Javascript. Auto set if used as part of entry forms'),
+				'accepted' => tra('Single "word" which must begin with a letter and may be followed by any number of digits, hyphens, underscores, colons and periods.'),
+				'advanced' => true,
 				'default' => ''
 			),
 			'in_form' => array(
-				'safe' => true,
 				'required' => false,
 				'name' => tra('In Form'),
 				'description' => tra('Set to 1 (Yes) if this is embedded inside a form. Needed to prevent nested forms which is not allowed in HTML.'),
 				'default' => 0,
+				'filter' => 'digits',
+				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
@@ -277,35 +384,53 @@ function wikiplugin_googlemap($data, $params) {
 	}
 	$smarty->assign( 'gmapname',  $gmapname);
 	
-	if (isset($params["defaultx"])) {
-		$defaultx = $params["defaultx"];
+	if (isset($params['defaultx'])) {
+		$defaultx = $params['defaultx'];
+	} elseif (isset($prefs['gmap_defaultx'])) {
+		$defaultx = $prefs['gmap_defaultx'];
 	} else {
-		$defaultx = $prefs["gmap_defaultx"];
+		$defaultx = 0;
 	}
-	if (isset($params["defaulty"])) {
-		$defaulty = $params["defaulty"];
+	
+	if (isset($params['defaulty'])) {
+		$defaulty = $params['defaulty'];
+	} elseif (isset($prefs['gmap_defaulty'])) {
+		$defaulty = $prefs['gmap_defaulty'];
 	} else {
-		$defaulty = $prefs["gmap_defaulty"];
+		$defaulty = 0;
 	}
-	if (isset($params["defaultz"])) {
-		$defaultz = $params["defaultz"];
+	
+	if (isset($params['defaultz'])) {
+		$defaultz = $params['defaultz'];
+	} elseif (isset($prefs['gmap_defaultz'])) {
+		$defaultz = $prefs['gmap_defaultz'];
 	} else {
-		$defaultz = $prefs["gmap_defaultz"];
+		$defaultz = 1;
 	}
+
 	$smarty->assign( 'gmap_defaultx', $defaultx );
 	$smarty->assign( 'gmap_defaulty', $defaulty );
 	$smarty->assign( 'gmap_defaultz', $defaultz );
 	
+	
+	$marker = isset($params['marker']) ? $params['marker'] : 0;
+	$smarty->assign('gmap_marker', $marker);
+	
+	$markertext = htmlspecialchars($params['markertext']);
+	$markertext = !empty($params['markertext']) && $marker == 1 ? trim($tikilib->parse_data(addslashes($params['markertext']))) : '';
+	$smarty->assign('gmap_markertext', $markertext);
+	$smarty->assign('gmap_markerstart', isset($params['markerstart']) && $params['markerstart'] == 'show' ? 'show' : 'hide');	
+	
 	if (isset($params["controls"])) {
 		$smarty->assign( 'gmap_controls', $params["controls"] );
 	} else {
-		$smarty->assign( 'gmap_controls', 'y' );
+		$smarty->assign( 'gmap_controls', 'a' );
 	}
 	
 	if (isset($params["in_form"])) {
 		$smarty->assign( 'gmap_in_form', $params["in_form"] );
 	} else {
-		$smarty->assign( 'gmap_in_form', 0 );
+		$smarty->assign('gmap_in_form', 0 );
 	}
 	
 	if (isset($params["setdefaultxyz"]) && $params["setdefaultxyz"]) {
@@ -349,15 +474,28 @@ function wikiplugin_googlemap($data, $params) {
 	if (isset($params["togglehidden"]) && $params["togglehidden"]) {
 		$smarty->assign( 'gmaptoggle', 1 );
 	} else {
-		$smarty->assign( 'gmaptoggle', 0 );
+		$smarty->assign('gmaptoggle', 0 );
+	}
+	
+	if ($params['togglehidden']) {
+		$smarty->assign('toggletexthid', tra('Show location map'));
+		$smarty->assign('toggletextshown', tra('Hide location map'));
+	} else {
+		$smarty->assign('toggletexthid', '');
+		$smarty->assign('toggletextshown', '');
 	}	
+	
+	$smarty->assign('togglealign', $params['togglehidden'] && !empty($params['togglealign']) ? 'text-align: ' . $params['togglealign'] . ';' : '');
+
 	if (isset($params["hideifnone"]) && $params["hideifnone"]) {
 		$hideifnone = true;
 	} else {
 		$hideifnone = false;
 	}
-	if (isset($params["starthidden"]) && $params["starthidden"]) {
-		$smarty->assign( 'gmaphidden', 1 );
+	if (isset($params['starthidden']) && $params['starthidden']) {
+		$smarty->assign('gmaphidden', 1);
+	} else {
+		$smarty->assign('gmaphidden', 0);
 	}
 	if (isset($params["autozoom"])) {
 		$smarty->assign( 'gmapautozoom', $params["autozoom"] );
@@ -403,7 +541,7 @@ function wikiplugin_googlemap($data, $params) {
 			}
 		}
 	}
-
+	$smarty->assign('gmapitem', '');
 	if ($type != 'objectlist' && $locateitemtype == 'user') {
 		$smarty->assign('gmapitemtype', 'user');
 		global $userlib, $user, $tiki_p_admin;
