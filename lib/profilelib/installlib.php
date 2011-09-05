@@ -879,7 +879,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $description;
 	private $name;
 	private $lang;
-	private $translations;
+	private $translations = array();
 	private $message;
 	private $structure;
 	private $wysiwyg;

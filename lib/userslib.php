@@ -5276,7 +5276,7 @@ class UsersLib extends TikiLib
 		$userid = $this->get_user_id($user);
 
 		if ( $userid > 0 ){
-			$query = "insert into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
+			$query = "insert ignore into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
 			$result = $this->query($query, array($userid, $group, $tikilib->now), -1, -1, false);
 			$group_ret = true;
 			if ($prefs['user_trackersync_groups'] == 'y') {
