@@ -126,6 +126,8 @@ function wikiplugin_addrelation($data, $params)
 			$relation_id = $relationlib->add_relation( $qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object'] );
 			$relationlib->remove_relation( $relation_id );
 		}
+		TikiLib::lib('tiki')->refresh_index($source_object['type'], $source_object['object']);
+		TikiLib::lib('tiki')->refresh_index($target_object['type'], $target_object['object']);
 	}
 	$relationsfromsource = $relationlib->get_relations_from( $source_object['type'], $source_object['object'], $qualifier );
 	$relationexists = false;
