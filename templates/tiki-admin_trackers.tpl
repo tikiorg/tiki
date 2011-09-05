@@ -67,6 +67,9 @@
 		{/foreach}
 	</table>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+	<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
+		<input type="submit" value="{tr}Create tracker{/tr}"/>
+	</form>
 	{jq}
 		$('.remove.confirm-prompt').requireConfirm({
 			message: "{tr}Do you really remove this tracker?{/tr}",
@@ -82,6 +85,22 @@
 					controller: 'tracker',
 					action: 'replace',
 					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
+				}
+			});
+
+			return false;
+		});
+
+		$('.create-tracker').submit(function () {
+			var form = this;
+			$(this).serviceDialog({
+				title: $(':submit', form).val(),
+				data: {
+					controller: 'tracker',
+					action: 'replace'
+				},
+				success: function () {
+					document.location.reload();
 				}
 			});
 

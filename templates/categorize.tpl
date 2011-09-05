@@ -4,7 +4,7 @@
  <td>{tr}Categorize{/tr}</td>
  <td{if $colsCategorize} colspan="{$colsCategorize}"{/if}>
 {/if}
-{if $mandatory_category >= 0 or $prefs.javascript_enabled neq 'y'}
+{if $mandatory_category >= 0 or $prefs.javascript_enabled neq 'y' or $auto eq 'y'}
   <div id="categorizator">
 {else}
 {if !isset($notable) || $notable neq 'y'}{button href="#" _flip_id='categorizator' _class='link' _text="{tr}Select Categories{/tr}" _flip_default_open='n'}{/if}

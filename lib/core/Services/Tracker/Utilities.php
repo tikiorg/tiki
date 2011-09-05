@@ -196,7 +196,7 @@ class Services_Tracker_Utilities
 		unset($data['description']);
 		unset($data['descriptionIsParsed']);
 
-		$trklib->replace_tracker($trackerId, $name, $description, $data, $descriptionIsParsed);
+		return $trklib->replace_tracker($trackerId, $name, $description, $data, $descriptionIsParsed);
 	}
 
 	function clearTracker($trackerId)

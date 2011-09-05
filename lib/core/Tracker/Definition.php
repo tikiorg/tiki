@@ -45,6 +45,14 @@ class Tracker_Definition
 		return $def;
 	}
 
+	public static function getDefault()
+	{
+		$def = new self(array());
+		$def->fields = array();
+
+		return $def;
+	}
+
 	private function __construct($trackerInfo)
 	{
 		$this->trackerInfo = $trackerInfo;

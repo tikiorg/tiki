@@ -491,10 +491,14 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
 		}
 
-		$definition = Tracker_Definition::get($trackerId);
+		if ($trackerId) {
+			$definition = Tracker_Definition::get($trackerId);
 
-		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			if (! $definition) {
+				throw new Services_Exception(tr('Tracker does not exist'), 404);
+			}
+		} else {
+			$definition = Tracker_Definition::getDefault();
 		}
 
 		$cat_type = 'tracker';
@@ -558,13 +562,15 @@ class Services_Tracker_Controller
 				'autoCreateCategories' => $input->autoCreateCategories->int() ? 'y' : 'n',
 			);
 
-			$this->utilities->updateTracker($trackerId, $data);
+			$trackerId = $this->utilities->updateTracker($trackerId, $data);
 
 			$cat_desc = $data['description'];
 			$cat_name = $data['name'];
 			$cat_href = "tiki-view_tracker.php?trackerId=" . $trackerId;
 			$cat_objid = $trackerId;
 			include "categorize.php";
+
+			$definition = Tracker_Definition::get($trackerId);
 		}
 
 		include_once ("categorize_list.php");
