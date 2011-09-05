@@ -68,12 +68,12 @@ fieldset {
 }
 
 /* margin and padding for span surrounding the "button" links, same definition for button form element */
-button,
+/*button,
 .button,
 .button.highlight {
 	margin: 1px 2px;
 	padding: 2px;
-}
+}*/
 
 .button a,
 .button a:visited,
@@ -81,6 +81,7 @@ button,
 .button input,
 .calbuttonBox a {
 	padding: 1px 4px;
+
 }
 
 #genPass .button a,
@@ -89,12 +90,20 @@ button,
 	padding: 1px 4px !important;
 }
 
+.button,
+button,
 input[type=reset],
 input[type=submit],
 input[type=reset]:hover,
 input[type=submit]:hover {
-	padding: 1px 4px;
-	margin-right: 1px;
+	margin: 0 2px 2px 0;
+	font-size: inherit;
+	font-family: inherit;
+	padding: 0;
+}
+
+input {
+	padding: 0;
 }
 
 /* highlight on interface text to draw attention; also
