@@ -3324,7 +3324,7 @@ $lang=Array(
 // ### start of untranslated words
 // ### uncomment value pairs as you translate
 "Error in search query" => "Fehler in der Suchabfrage",
-"Please see <a href=\"http://doc.tiki.org/\">the documentation</a> for more information" => ""Siehe bitte <a href=\"http://doc.tiki.org/\">in der Dokumentation</a> nach weiteren Informationen",
+"Please see <a href=\"http://doc.tiki.org/\">the documentation</a> for more information" => "Siehe bitte <a href=\"http://doc.tiki.org/\">in der Dokumentation</a> nach weiteren Informationen",
 "Your comment was rejected" => "Dein Kommentar wurde zurückgewiesen",
 "Cannot perform spam check: %0" => "Kann kein Spam-Prüfung vornehmen: %0",
 "Create a form which will be posted somewhere, not necessarily trackers or even Tiki" => "Erstelle eine Formular welches irgendwo eingesetzt wird - nicht zwingend bei Trackern oder überhaupt in der Tiki",
