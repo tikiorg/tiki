@@ -62,7 +62,7 @@ $headerlib->add_jq_onready("
 		editable: false
 	});
 	
-	$('div.tiki_sheet')
+	jST = $('div.tiki_sheet')
 		.sheet($.sheet.tikiOptions)
 		.bind('paneScroll', $.sheet.paneScrollLocker)
 		.bind('switchSheet', $.sheet.switchSheetLocker);

@@ -142,6 +142,7 @@ if ( isset($_REQUEST['file']) ) {
 	$smarty->assign('notEditable', 'true');
 	
 	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
+
 } elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 	if ( $_REQUEST['relate'] == 'add' ) {
 		$sheetlib->add_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
@@ -149,6 +150,14 @@ if ( isset($_REQUEST['file']) ) {
 	} elseif( $_REQUEST['relate'] == 'remove' ) {
 		$sheetlib->remove_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
 		$smarty->assign('msg', tra("Tracker Removed From Spreadsheet"));
+	}
+} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['childSheetId']) ) {
+	if ( $_REQUEST['relate'] == 'add' ) {
+		$sheetlib->add_related_sheet( $_REQUEST["sheetId"], $_REQUEST['childSheetId'] );
+		$smarty->assign('msg', tra("Spreadsheet added"));
+	} elseif( $_REQUEST['relate'] == 'remove' ) {
+		$sheetlib->remove_related_sheet( $_REQUEST['childSheetId'] );
+		$smarty->assign('msg', tra("Spreadsheet removed"));
 	}
 } else {
 	//Database sheet
@@ -187,46 +196,43 @@ if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 }
 
 $smarty->assign('grid_content', $tableHtml);
-
-if (empty($tableHtml) == false) {
-	$smarty->assign('menu', $smarty->fetch('tiki-view_sheets_menu.tpl'));
-}
+$smarty->assign('menu', $smarty->fetch('tiki-view_sheets_menu.tpl'));
 
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready('
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
 		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false),
-		menu: $("#sheetMenu").html()
+		menu: $("#sheetMenu").clone().html()
 	});
 	
-	$.sheet.tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
+	jST = $("div.tiki_sheet")
+		.sheet($.sheet.tikiOptions);
 	
-	$.sheet.tikiSheet.id = "'.$_REQUEST['sheetId'].'";
-	$.sheet.tikiSheet.file = "'.$_REQUEST['file'].'";
+	jST.id = "'.$_REQUEST['sheetId'].'";
+	jST.file = "'.$_REQUEST['file'].'";
 	
-	$.sheet.link.setupUI($.sheet.tikiSheet);
-	$.sheet.manageState($.sheet.tikiSheet);
+	$.sheet.link.setupUI();
+	$.sheet.manageState();
 	
 	$("#edit_button a")
 		.click(function() {
-			$.sheet.manageState($.sheet.tikiSheet, true, "edit");
+			$.sheet.manageState(true, "edit");
 			return false;
 		});
 						
 	$("#save_button a")
 		.click( function () {
-			$("#saveState").hide();
-			
-			$.sheet.saveSheet($.sheet.tikiSheet, function() {
-				$.sheet.manageState($.sheet.tikiSheet, true, "");
+			$.sheet.saveSheet(function() {
+				$.sheet.manageState(true);
 			});
 			
 			return false;
 		});
 	
 	$("#cancel_button")
-		.click(function() {
-			$("#saveState").hide();
+		.click(function() {			
+			$.sheet.manageState(true);
+			return false;
 		});
 ');
 

@@ -1879,7 +1879,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			}
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
-		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
+		$id = empty( $sheet->sheetId ) ? '' : " data-sheetId='{$sheet->sheetId}'";
 		$title = " title='" . htmlspecialchars($sheet->getTitle(), ENT_QUOTES) . "'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		echo "<table{$class}{$id}{$sub}{$title}>\n";
@@ -2268,15 +2268,15 @@ class SheetLib extends TikiLib
 		return $result->fetchRow();
 	}
 	
-	function add_related_tracker($sheetdId, $trackerId) {
+	function add_related_tracker($sheetId, $trackerId) {
 		global $relationlib; require_once('lib/attributes/relationlib.php');
-		$relationlib->add_relation("tiki.sheet.tracker", "sheetId", $sheetdId, "trackerId", $trackerId);
+		$relationlib->add_relation("tiki.sheet.tracker", "sheetId", $sheetId, "trackerId", $trackerId);
 	}
 	
-	function remove_related_tracker($sheetdId, $trackerId) {
+	function remove_related_tracker($sheetId, $trackerId) {
 		global $relationlib; require_once('lib/attributes/relationlib.php');
 		$trackerIds = array();
-		foreach($relationlib->get_relations_from("sheetId", $sheetdId, "tiki.sheet.tracker") as $result) {
+		foreach($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.tracker") as $result) {
 			if ($result['itemId'] == $trackerId) {
 				$relationlib->remove_relation($result['relationId']);
 			}
@@ -2291,10 +2291,10 @@ class SheetLib extends TikiLib
 		}
 	}
 	
-	function get_related_tracker_ids($sheetdId) {
+	function get_related_tracker_ids($sheetId) {
 		global $relationlib; require_once('lib/attributes/relationlib.php');
 		$trackerIds = array();
-		foreach($relationlib->get_relations_from("sheetId", $sheetdId, "tiki.sheet.tracker") as $result) {
+		foreach($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.tracker") as $result) {
 			$trackerIds[] = $result['itemId'];
 		}
 		return $trackerIds;
@@ -2319,7 +2319,7 @@ class SheetLib extends TikiLib
 			
 			$trackerDef = Tracker_Definition::get($trackerId);
 			$trackerInfo = $trackerDef->getInformation();
-			$html .= '<table title="'.htmlspecialchars($trackerInfo['name']).'" trackerId="'.$trackerId.'" class="readonly">';
+			$html .= '<table title="'.htmlspecialchars($trackerInfo['name']).'" data-trackerId="'.$trackerId.'" class="readonly">';
 			
 			foreach($trkqrylib->tracker_query($trackerInfo['name'], $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, false) as $item) {
 				if ($itemI == 0) {
@@ -2345,6 +2345,14 @@ class SheetLib extends TikiLib
 		}
 		
 		return $html;
+	}
+	
+	function add_related_sheet($parentSheetId, $sheetId) {
+		$this->query( " UPDATE `tiki_sheets` SET `parentSheetId` = ? WHERE `sheetId` = ? AND `parentSheetId` <> `sheetId`", array( $parentSheetId, $sheetId ) );
+	}
+
+	function remove_related_sheet($sheetId) {
+		$this->query( " UPDATE `tiki_sheets` SET `parentSheetId` = 0 WHERE `sheetId` = ? ", array( $sheetId ) );
 	}
 	
 	function get_sheet_subsheets( $sheetId ) // {{{2
