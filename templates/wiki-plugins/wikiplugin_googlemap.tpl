@@ -126,7 +126,7 @@
 				var point = new GMarker(new GLatLng({$pointy|escape},{$pointx|escape}));
 			{/if}
 			gmap{$gmapname|escape}map.addOverlay(point);
-			{if $gmapmarkerstart eq 'show'}
+			{if $gmap_markerstart eq 'show'}
 				{* $gmap_markertext content has already been escaped in the related php file *}
 				point.openInfoWindowHtml('{$gmap_markertext}');
 			{else}
@@ -140,7 +140,7 @@
 			{if $gmap_marker eq 1}
 				var marker = new GMarker(point);
 				gmap{$gmapname|escape}map.addOverlay(marker);
-				{if $gmapmarkerstart eq 'show'}
+				{if $gmap_markerstart eq 'show'}
 					marker.openInfoWindowHtml('{$gmap_markertext}');
 				{else}
 					GEvent.addListener(marker, "click", function() {literal}{{/literal}
