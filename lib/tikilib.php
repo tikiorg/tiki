@@ -5478,8 +5478,8 @@ JS;
 		}
 
 		// Move custom permissions
-		$oldId = md5($type . strtolower($old));
-		$newId = md5($type . strtolower($new));
+		$oldId = md5($type . TikiLib::strtolower($old));
+		$newId = md5($type . TikiLib::strtolower($new));
 		$this->table('users_objectpermissions')->updateMultiple(array('objectId' => $newId), array(
 			'objectId' => $oldId,
 			'objectType' => $type,
@@ -5539,6 +5539,15 @@ JS;
 	{
 		require_once 'lib/search/refresh-functions.php';
 		return refresh_index($type, $object, $process);
+	}
+
+	public static function strtolower($string)
+	{
+		if (function_exists('mb_strtolower')) {
+			return mb_strtolower($string, 'UTF-8');
+		} else {
+			return strtolower($string);
+		}
 	}
 }
 // end of class ------------------------------------------------------
