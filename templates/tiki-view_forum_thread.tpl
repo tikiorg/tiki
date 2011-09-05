@@ -29,14 +29,20 @@
 {$prefs.site_crumb_seper} 
 <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if} 
 {$prefs.site_crumb_seper} 
-<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$smarty.request.comments_parentId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.title|escape}</a>
+{$thread_info.title|escape}
 
 <div style="text-align: right; margin-bottom: 15px;">
+{if !$thread_info.topic.threadId}
 	<span>
-	{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
-	{if $next_topic}<a href="tiki-view_forum_thread.php?comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if}]{/if}
+	{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[ {if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
+	{if $next_topic}<a href="tiki-view_forum_thread.php?comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if} ]{/if}
 	</span>
-	<span style="margin-left:10px;">
+{else}
+	<span>
+		{tr}You are viewing a reply to{/tr} <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>
+	</span>
+{/if}
+	 <span style="margin-left:10px;">
 		{if $pdf_export eq 'y'}<a href="{$smarty.server.PHP_SELF}?{query display="pdf"}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>{/if}
 		<a href="{$smarty.server.PHP_SELF}?{query display="print"}" title="{tr}Print this page only{/tr}">{icon _id='printer' alt="{tr}Print this page only{/tr}"}</a>
 		<a href="{$smarty.server.PHP_SELF}?{query display="print_all"}" title="{tr}Print all pages{/tr}">{icon _id='printer_add' alt="{tr}Print all pages{/tr}"}</a>
@@ -67,8 +73,9 @@
 {/if}
 
 <div class="top_post">
-  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
-    {include file='freetag_list.tpl'}
+  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $prefs.freetags_show_middle eq 'y' and !$thread_info.topic.threadId}
+	{include file='freetag_list.tpl'}
+	<div style="text-align:right">{wikiplugin _name="addfreetag" object="forum post:$comments_parentId"}{/wikiplugin}</div>
   {/if}
 
   {include file='comment.tpl' first='y' comment=$thread_info thread_style='commentStyle_plain'}
