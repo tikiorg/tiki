@@ -14,7 +14,7 @@ require_once 'lib/wiki/editlib.php';
 
 class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 {
-	
+	private $el = null; // the EditLib
 	private $dir = '';  // the unmodifed directory
 	
 	function __construct() {
@@ -25,7 +25,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	function setUp() {
 		
 		$_SERVER['HTTP_HOST'] = ''; // editlib expects that HTTP_HOST is defined
-				
+
+		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
 	}
@@ -61,61 +62,42 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	
 	
 	function testBold() {
-		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new Editlib();
-		
 		$inData = '__bold__';
 		$exp = '<strong>bold</strong>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, true);
-		$this->assertEquals($exp, $out);
+		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$this->assertEquals($exp, $out);		
 	}
 	
 	
 	function testItalic() {
-		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new EditLib();
-		
 		$inData = '\'\'italic\'\'';
 		$exp = '<em>italic</em>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);
 	}
 	
 	
 	function testUnderlined() {
-		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new EditLib();
-		
 		$inData = '===underlined===';
 		$exp = '<u>underlined</u>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);
 	}
 	
 	
 	function testStrike() {
-		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new EditLib();
-		
 		$inData = '--strike through--';
 		$exp = '<strike>strike through</strike>'; // like CKE
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);
 	}
 	
 	
 	function testSubscript() {
 		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new EditLib();
-		
 		$inData = '{SUB()}subscript{SUB}';
 		$exp = '<sub>subscript</sub>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($exp, $out);
 	}	
 
