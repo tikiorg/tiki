@@ -6,9 +6,9 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
 }
 
 class BanLib extends TikiLib
@@ -16,11 +16,11 @@ class BanLib extends TikiLib
 	function get_rule($banId) {
 		$query = "select * from `tiki_banning` where `banId`=?";
 
-		$result = $this->query($query,array($banId));
+		$result = $this->query($query, array($banId));
 		$res = $result->fetchRow();
 		$aux = array();
 		$query2 = "select `section` from `tiki_banning_sections` where `banId`=?";
-		$result2 = $this->query($query2,array($banId));
+		$result2 = $this->query($query2, array($banId));
 		$aux = array();
 
 		while ($res2 = $result2->fetchRow()) {
@@ -34,9 +34,9 @@ class BanLib extends TikiLib
 	function remove_rule($banId) {
 		$query = "delete from `tiki_banning` where `banId`=?";
 
-		$this->query($query,array($banId));
+		$this->query($query, array($banId));
 		$query = "delete from `tiki_banning_sections` where `banId`=?";
-		$this->query($query,array($banId));
+		$this->query($query, array($banId));
 	}
 
 	function list_rules($offset, $maxRecords, $sort_mode, $find, $where = '') {
@@ -45,10 +45,10 @@ class BanLib extends TikiLib
 			$findesc = '%' . $find . '%';
 
 			$mid = " where ((`message` like ?) or (`title` like ?))";
-			$bindvars=array($findesc,$findesc);
+			$bindvars = array($findesc, $findesc);
 		} else {
 			$mid = "";
-			$bindvars=array();
+			$bindvars = array();
 		}
 
 		// DB abstraction: TODO
@@ -60,17 +60,17 @@ class BanLib extends TikiLib
 			}
 		}
 
-		$query = "select * from `tiki_banning` $mid order by ".$this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_banning` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_banning` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$aux = array();
 
 			$query2 = "select * from `tiki_banning_sections` where `banId`=?";
-			$result2 = $this->query($query2,array($res['banId']));
+			$result2 = $this->query($query2, array($res['banId']));
 
 			while ($res2 = $result2->fetchRow()) {
 				$aux[] = $res2;
@@ -84,7 +84,7 @@ class BanLib extends TikiLib
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		$query = "select `banId` from `tiki_banning` where `use_dates`=? and `date_to` < FROM_UNIXTIME(?)";
-		$result = $this->query($query,array('y',$this->now));
+		$result = $this->query($query, array('y', $this->now));
 
 		while ($res = $result->fetchRow()) {
 			$this->remove_rule($res['banId']);
@@ -93,56 +93,55 @@ class BanLib extends TikiLib
 		return $retval;
 	}
 
-	function export_rules($rules)
-	{
-	$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections\n";
-	foreach ($rules as $rule) {
-		if (!isset($rule['title'])) {
-			$rule['title'] = '';
-		}
-		if (isset($rule['user'])) {
-			$rule['ip1'] = '';
-			$rule['ip2'] = '';
-			$rule['ip3'] = '';
-			$rule['ip4'] = '';
-		}
-		if ($rule['mode'] == 'ip') {
-			$rule['user'] = '';
-		}
-		if ($rule['use_dates'] != 'y') {
-			$rule['date_from'] = '';
-			$rule['date_to'] = '';
-		}
-		if (!isset($rule['message'])) {
-			$rule['message'] = '';
-		}
-		$csv.= '"' . $rule['banId']
-				 . '","' . $rule['mode']
-				 . '","' . $rule['title']
-				 . '","' . $rule['ip1']
-				 . '","' . $rule['ip2']
-				 . '","' . $rule['ip3']
-				 . '","' . $rule['ip4']
-				 . '","' . $rule['user']
-				 . '","' . $rule['date_from']
-				 . '","' . $rule['date_to']
-				 . '","' . $rule['use_dates']
-				 . '","' . $rule['created']
-				 . '","' . $this->date_format("%y%m%d %H:%M", $rule['created'])
-				 . '","' . $rule['message'] . '","';
-
-		if (!empty($rule['sections'])) {
-			foreach ($rule['sections'] as $section) {
-				$csv .= $section['section'] . '|';
+	function export_rules($rules) {
+		$csv = "banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections\n";
+		foreach ($rules as $rule) {
+			if (!isset($rule['title'])) {
+				$rule['title'] = '';
 			}
-			$csv = rtrim($csv, '|');
+			if (isset($rule['user'])) {
+				$rule['ip1'] = '';
+				$rule['ip2'] = '';
+				$rule['ip3'] = '';
+				$rule['ip4'] = '';
+			}
+			if ($rule['mode'] == 'ip') {
+				$rule['user'] = '';
+			}
+			if ($rule['use_dates'] != 'y') {
+				$rule['date_from'] = '';
+				$rule['date_to'] = '';
+			}
+			if (!isset($rule['message'])) {
+				$rule['message'] = '';
+			}
+			$csv .= '"' . $rule['banId']
+					. '","' . $rule['mode']
+					. '","' . $rule['title']
+					. '","' . $rule['ip1']
+					. '","' . $rule['ip2']
+					. '","' . $rule['ip3']
+					. '","' . $rule['ip4']
+					. '","' . $rule['user']
+					. '","' . $rule['date_from']
+					. '","' . $rule['date_to']
+					. '","' . $rule['use_dates']
+					. '","' . $rule['created']
+					. '","' . $this->date_format("%y%m%d %H:%M", $rule['created'])
+					. '","' . $rule['message'] . '","';
+
+			if (!empty($rule['sections'])) {
+				foreach ($rule['sections'] as $section) {
+					$csv .= $section['section'] . '|';
+				}
+				$csv = rtrim($csv, '|');
+			}
+			$csv .= "\"\n";
 		}
-		$csv .= "\"\n";
-	}
-	return $csv;
+		return $csv;
 	}
 
-	function importCSV( $fname, $import_as_new ) {
+	function importCSV($fname, $import_as_new) {
 		global $smarty;
 
 		$fields = false;
@@ -156,8 +155,8 @@ class BanLib extends TikiLib
 		}
 		$nb = 0;
 		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
-			$d = array("banId"=>"", "mode"=>"", "title"=>"", "ip1" =>"", "ip2"=>"", 
-					   "ip3"=>"", "ip4"=>"", "user"=>"", "date_from"=>"", "date_to"=>"", "use_dates"=>"", "created"=>"","created_readable"=>"","message"=>"");
+			$d = array("banId" => "", "mode" => "", "title" => "", "ip1" => "", "ip2" => "",
+					   "ip3" => "", "ip4" => "", "user" => "", "date_from" => "", "date_to" => "", "use_dates" => "", "created" => "", "created_readable" => "", "message" => "");
 			foreach ($fields as $field) {
 				$d[$field] = $data[array_search($field, $fields)];
 			}
@@ -171,9 +170,9 @@ class BanLib extends TikiLib
 
 			$this->replace_rule($d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
 								$d['user'], $d['date_from'], $d['date_to'], $d['use_dates'], $d['message'],
-								explode( '|', $d['sections']));
+								explode('|', $d['sections']));
 		}
-		fclose ($fhandle);
+		fclose($fhandle);
 		return $nb;
 	}
 
@@ -192,40 +191,30 @@ class BanLib extends TikiLib
 	  message text,
 	  primary key(banId)
 	  */
-	function replace_rule($banId, $mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message,
-		$sections) {
+	function replace_rule($banId, $mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $sections) {
 
-		if ($banId && TikiDb::get()->table('tiki_banning')->fetchCount( array( 'banId' => $banId )) > 0) {
-			$query = " update `tiki_banning` set
-  			`title`=?,
-  			`ip1`=?,
-  			`ip2`=?,
-  			`ip3`=?,
-  			`ip4`=?,
-  			`user`=?,
-  			`date_from` = FROM_UNIXTIME(?),
-  			`date_to` = FROM_UNIXTIME(?),
-  			`use_dates` = ?,
-  			`message` = ?
-  			where `banId`=?
-  		";
+		$count = TikiDb::get()->table('tiki_banning')->fetchCount(array('banId' => $banId));
+		if ($banId && $count > 0) {
+			$query = "update `tiki_banning` set `title`=?, `ip1`=?, `ip2`=?, `ip3`=?, `ip4`=?, `user`=?, " .
+					 "`date_from` = FROM_UNIXTIME(?), `date_to` = FROM_UNIXTIME(?), `use_dates` = ?, `message` = ? where `banId`=?";
 
-			$this->query($query,array($title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$banId));
+			$this->query($query, array($title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $banId));
 		} else {
-			$query = "insert into `tiki_banning`(`mode`,`title`,`ip1`,`ip2`,`ip3`,`ip4`,`user`,`date_from`,`date_to`,`use_dates`,`message`,`created`)
-		values(?,?,?,?,?,?,?,FROM_UNIXTIME(?),FROM_UNIXTIME(?),?,?,?)";
-			$this->query($query,array($mode,$title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$this->now));
-			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?",array($this->now));
+			$query = "insert into `tiki_banning`(`mode`,`title`,`ip1`,`ip2`,`ip3`,`ip4`,`user`,`date_from`,`date_to`,`use_dates`,`message`,`created`) " .
+					 "values(?,?,?,?,?,?,?,FROM_UNIXTIME(?),FROM_UNIXTIME(?),?,?,?)";
+			$this->query($query, array($mode, $title, $ip1, $ip2, $ip3, $ip4, $user, $date_from, $date_to, $use_dates, $message, $this->now));
+			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?", array($this->now));
 		}
 
 		$query = "delete from `tiki_banning_sections` where `banId`=?";
-		$this->query($query,array($banId));
+		$this->query($query, array($banId));
 
 		foreach ($sections as $section) {
 			$query = "insert into `tiki_banning_sections`(`banId`,`section`) values(?,?)";
 
-			$this->query($query,array($banId,$section));
+			$this->query($query, array($banId, $section));
 		}
 	}
 }
+
 $banlib = new BanLib;
