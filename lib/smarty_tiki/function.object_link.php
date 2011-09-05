@@ -71,6 +71,11 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		$title = TikiLib::lib('object')->get_title($type, $object);
 	}
 
+	if (empty($title) && $type == 'freetag') {
+		// Blank freetag should not be returned with "No title specified"
+		return '';
+	}
+
 	$escapedPage = smarty_modifier_escape( $title ? $title : tra('No title specified') );
 
 	if ($url) {
