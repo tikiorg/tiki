@@ -41,18 +41,19 @@ function wikiplugin_addfreetag($data, $params)
 		$identifier = 'wp_addfreetag_' . str_replace(array(':',' '), array('_',''), $params['object']);
 	}
 
+	if ($object['type'] == 'trackeritem') {
+		$permobject = TikiLib::lib('trk')->get_tracker_for_item($object['object']);
+		$permobjecttype = 'tracker';
+	} else {
+		$permobject = $object['object'];
+		$permobjecttype = $object['type'];
+	}
+	if (! TikiLib::lib('tiki')->user_has_perm_on_object($user, $permobject, $permobjecttype, 'tiki_p_freetags_tag')) {
+		return '';
+	}
 	if (!empty($_POST[$identifier])) {
 		$_POST[$identifier] = '"' . str_replace('"', '', $_POST[$identifier]) . '"';
-		if ($object['type'] == 'trackeritem') {
-			$permobject = TikiLib::lib('trk')->get_tracker_for_item($object['object']); 
-			$permobjecttype = 'tracker';
-		} else {
-			$permobject = $object['object'];
-			$permobjecttype = $object['type']; 
-		}
-		if (TikiLib::lib('tiki')->user_has_perm_on_object($user, $permobject, $permobjecttype, 'tiki_p_view_freetags')) { 
-			TikiLib::lib('freetag')->tag_object( $user, $object['object'], $object['type'], $_POST[$identifier]);
-		} 
+		TikiLib::lib('freetag')->tag_object( $user, $object['object'], $object['type'], $_POST[$identifier]);
 		if ($object['type'] == 'trackeritem') {
 			// need to update tracker field as well
 			$definition = Tracker_Definition::get($permobject);
