@@ -16,6 +16,57 @@
 				{tr}Description is wiki-parsed{/tr}
 			</label>
 		</div>
+		<h4>{tr}Features{/tr}</h4>
+		<div>
+			<label>
+				<input type="checkbox" name="useRatings" value="1"
+					{if $info.useRatings eq 'y'} checked="checked"{/if}/>
+				{tr}Allow ratings (deprecated, use rating field){/tr}
+			</label>
+			<label class="depends" data-on="useRatings">
+				{tr}Rating options{/tr}
+				<input type="text" name="ratingOptions" value="{if $info.ratingOptions}{$info.ratingOptions|escape}{else}-2,-1,0,1,2{/if}" />
+			</label>
+			<label class="depends" data-on="useRatings">
+				<input type="checkbox" name="showRatings" value="1"
+					{if $info.showRatings eq 'y'} checked="checked"{/if}/>
+				{tr}Show ratings in listing{/tr}
+			</label>
+			<label>
+				<input type="checkbox" name="useComments" value="1"
+					{if $info.useComments eq 'y'} checked="checked"{/if}/>
+				{tr}Allow comments{/tr}
+			</label>
+			<label class="depends" data-on="useComments">
+				<input type="checkbox" name="showComments" value="1"
+					{if $info.showComments eq 'y'} checked="checked"{/if}/>
+				{tr}Show comments in listing{/tr}
+			</label>
+			<label class="depends" data-on="useComments">
+				<input type="checkbox" name="showLastComment" value="1"
+					{if $info.showLastComment eq 'y'} checked="checked"{/if}/>
+				{tr}Display last comment author and date{/tr}
+			</label>
+			<label>
+				<input type="checkbox" name="useAttachments" value="1"
+					{if $info.useAttachments eq 'y'} checked="checked"{/if}/>
+				{tr}Allow attachments{/tr}
+			</label>
+			<label class="depends" data-on="useAttachments">
+				<input type="checkbox" name="showAttachments" value="1"
+					{if $info.showAttachments eq 'y'} checked="checked"{/if}/>
+				{tr}Display attachments in listing{/tr}
+			</label>
+			<fieldset class="depends sortable" data-on="useAttachments" data-selector="label">
+				<legend>{tr}Attachment attributes (sortable){/tr}</legend>
+				{foreach from=$attachmentAttributes key=name item=info}
+					<label>
+						<input type="checkbox" name="orderAttachments[]" value="{$name|escape}" {if $info.selected} checked="checked"{/if}/>
+						{$info.label|escape}
+					</label>
+				{/foreach}
+			</fieldset>
+		</div>
 		<h4>{tr}Display{/tr}</h4>
 		<div>
 			<label>
@@ -99,6 +150,20 @@
 					{tr}Comma-separated list of field IDs{/tr}
 				</div>
 			</label>
+			<label>
+				{tr}Template to display an item{/tr}
+				<input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}"/>
+				<div class="description">
+					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
+				</div>
+			</label>
+			<label>
+				{tr}Template to edit an item{/tr}
+				<input type="text" name="editItemPretty" value="{$info.editItemPretty|escape}"/>
+				<div class="description">
+					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
+				</div>
+			</label>
 		</div>
 		<h4>{tr}Status{/tr}</h4>
 		<div>
@@ -135,12 +200,6 @@
 				{/foreach}
 			</fieldset>
 		</div>
-		{if $prefs.feature_categories eq 'y'}
-			<h4>{tr}Categories{/tr}</h4>
-			<div>
-				TODO : Categorize
-			</div>
-		{/if}
 		<h4>{tr}Notifications{/tr}</h4>
 		<div>
 			<label>
@@ -216,11 +275,11 @@
 				</label>
 				<label class="depends" data-on="start">
 					Date
-					<input type="date" name="start_date" value="{$start_date|escape}"/>
+					<input type="date" name="startDate" value="{$startDate|escape}"/>
 				</label>
 				<label class="depends" data-on="start">
 					Time
-					<input type="time" name="start_time" value="{$start_time|default:'00:00'|escape}"/>
+					<input type="time" name="startTime" value="{$startTime|default:'00:00'|escape}"/>
 				</label>
 				<label>
 					<input type="checkbox" name="end" value="1"
@@ -229,66 +288,64 @@
 				</label>
 				<label class="depends" data-on="end">
 					Date
-					<input type="date" name="end_date" value="{$end_date|escape}"/>
+					<input type="date" name="endDate" value="{$endDate|escape}"/>
 				</label>
 				<label class="depends" data-on="end">
 					Time
-					<input type="time" name="end_time" value="{$end_time|default:'00:00'|escape}"/>
+					<input type="time" name="endTime" value="{$endTime|default:'00:00'|escape}"/>
 				</label>
 			</fieldset>
 		</div>
-		<h4>{tr}Features{/tr}</h4>
-		<div>
-			<label>
-				<input type="checkbox" name="useRatings" value="1"
-					{if $info.useRatings eq 'y'} checked="checked"{/if}/>
-				{tr}Allow ratings (deprecated, use rating field){/tr}
-			</label>
-			<label class="depends" data-on="useRatings">
-				{tr}Rating options{/tr}
-				<input type="text" name="ratingOptions" value="{if $info.ratingOptions}{$info.ratingOptions|escape}{else}-2,-1,0,1,2{/if}" />
-			</label>
-			<label class="depends" data-on="useRatings">
-				<input type="checkbox" name="showRatings" value="1"
-					{if $info.showRatings eq 'y'} checked="checked"{/if}/>
-				{tr}Show ratings in listing{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="useComments" value="1"
-					{if $info.useComments eq 'y'} checked="checked"{/if}/>
-				{tr}Allow comments{/tr}
-			</label>
-			<label class="depends" data-on="useComments">
-				<input type="checkbox" name="showComments" value="1"
-					{if $info.showComments eq 'y'} checked="checked"{/if}/>
-				{tr}Show comments in listing{/tr}
-			</label>
-			<label class="depends" data-on="useComments">
-				<input type="checkbox" name="showLastComment" value="1"
-					{if $info.showLastComment eq 'y'} checked="checked"{/if}/>
-				{tr}Display last comment author and date{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="useAttachments" value="1"
-					{if $info.useAttachments eq 'y'} checked="checked"{/if}/>
-				{tr}Allow attachments{/tr}
-			</label>
-			<label class="depends" data-on="useAttachments">
-				<input type="checkbox" name="showAttachments" value="1"
-					{if $info.showAttachments eq 'y'} checked="checked"{/if}/>
-				{tr}Display attachments in listing{/tr}
-			</label>
-			<fieldset class="depends sortable" data-on="useAttachments" data-selector="label">
-				<legend>{tr}Attachment attributes (sortable){/tr}</legend>
-				{foreach from=$attachmentAttributes key=name item=info}
-					<label>
-						<input type="checkbox" name="orderAttachments[]" value="{$name|escape}" {if $info.selected} checked="checked"{/if}/>
-						{$info.label|escape}
-					</label>
-				{/foreach}
-			</fieldset>
-		</div>
-		TODO : Group trackers
+		{if $prefs.feature_categories eq 'y'}
+			<h4>{tr}Categories{/tr}</h4>
+			<div>
+				{include file='categorize.tpl' colsCategorize=2 auto=y}
+				<label>
+					<input type="checkbox" name="autoCreateCategories" value="1"
+						{if $info.autoCreateCategories eq 'y'}checked="checked"{/if}/>
+					{tr}Auto-create corresponding categories{/tr}
+				</label>
+			</div>
+		{/if}
+		{if $prefs.groupTracker eq 'y'}
+			<h4>{tr}Groups{/tr}</h4>
+			<div>
+				<label>
+					<input type="checkbox" name="autoCreateGroup" value="1"
+						{if $info.autoCreateGroup eq 'y'} checked="checked"{/if}/>
+					{tr}Create a group for each item{/tr}
+				</label>
+				<label class="depends" data-on="autoCreateGroup">
+					{tr}Groups will include{/tr}
+					<select name="autoCreateGroupInc">
+						<option value=""></option>
+						{foreach from=$groupList item=g}
+							<option value="{$g|escape}" {if $g eq $info.autoCreateGroupInc}selected="selected"{/if}>{$g|escape}</option>
+						{/foreach}
+					</select>
+				</label>
+				<label class="depends" data-on="autoCreateGroup">
+					<input type="checkbox" name="autoAssignCreatorGroup" value="1"
+						{if $info.autoAssignCreatorGroup eq 'y'} checked="checked"{/if}/>
+					{tr}Creator is assigned to the group{/tr}
+				</label>
+				<label class="depends" data-on="autoCreateGroup">
+					<input type="checkbox" name="autoAssignCreatorGroupDefault" value="1"
+						{if $info.autoAssignCreatorGroupDefault eq 'y'} checked="checked"{/if}/>
+					{tr}Will become the creator's default group{/tr}
+				</label>
+				<label class="depends" data-on="autoCreateGroup">
+					<input type="checkbox" name="autoAssignGroupItem" value="1"
+						{if $info.autoAssignGroupItem eq 'y'} checked="checked"{/if}/>
+					{tr}Will become the new item's group creator{/tr}
+				</label>
+				<label class="depends" data-on="autoCreateGroup">
+					<input type="checkbox" name="autoCopyGroup" value="1"
+						{if $info.autoCopyGroup eq 'y'} checked="checked"{/if}/>
+					{tr}Copy the default group in the field ID before updating the group{/tr}
+				</label>
+			</div>
+		{/if}
 	</div>
 	<div class="submit">
 		<input type="hidden" name="confirm" value="1"/>

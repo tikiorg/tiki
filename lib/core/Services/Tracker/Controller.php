@@ -497,6 +497,9 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Tracker does not exist'), 404);
 		}
 
+		$cat_type = 'tracker';
+		$cat_objid = $trackerId;
+
 		if ($confirm) {
 			$name = $input->name->text();
 
@@ -544,11 +547,27 @@ class Services_Tracker_Controller
 				'orderAttachments' => implode(',', $input->orderAttachments->word()),
 				'start' => $input->start->int() ? $this->readDate($input, 'start') : 0,
 				'end' => $input->end->int() ? $this->readDate($input, 'end') : 0,
+				'autoCreateGroup' => $input->autoCreateGroup->int() ? 'y' : 'n',
+				'autoCreateGroupInc' => $input->autoCreateGroupInc->groupname(),
+				'autoAssignCreatorGroup' => $input->autoAssignCreatorGroup->int() ? 'y' : 'n',
+				'autoAssignCreatorGroupDefault' => $input->autoAssignCreatorGroupDefault->int() ? 'y' : 'n',
+				'autoAssignGroupItem' => $input->autoAssignGroupItem->int() ? 'y' : 'n',
+				'autoCopyGroup' => $input->autoCopyGroup->int() ? 'y' : 'n',
+				'viewItemPretty' => $input->viewItemPretty->text(),
+				'editItemPretty' => $input->editItemPretty->text(),
+				'autoCreateCategories' => $input->autoCreateCategories->int() ? 'y' : 'n',
 			);
 
 			$this->utilities->updateTracker($trackerId, $data);
+
+			$cat_desc = $data['description'];
+			$cat_name = $data['name'];
+			$cat_href = "tiki-view_tracker.php?trackerId=" . $trackerId;
+			$cat_objid = $trackerId;
+			include "categorize.php";
 		}
 
+		include_once ("categorize_list.php");
 		return array(
 			'trackerId' => $trackerId,
 			'info' => $definition->getInformation(),
@@ -556,10 +575,11 @@ class Services_Tracker_Controller
 			'statusList' => preg_split('//', $definition->getConfiguration('defaultStatus', 'o'), -1, PREG_SPLIT_NO_EMPTY),
 			'sortFields' => $this->getSortFields($definition),
 			'attachmentAttributes' => $this->getAttachmentAttributes($definition->getConfiguration('orderAttachments', 'created,filesize,hits')),
-			'start_date' => $this->format($definition->getConfiguration('start'), '%Y-%m-%d'),
-			'start_time' => $this->format($definition->getConfiguration('start'), '%H:%M'),
-			'end_date' => $this->format($definition->getConfiguration('end'), '%Y-%m-%d'),
-			'end_time' => $this->format($definition->getConfiguration('end'), '%H:%M'),
+			'startDate' => $this->format($definition->getConfiguration('start'), '%Y-%m-%d'),
+			'startTime' => $this->format($definition->getConfiguration('start'), '%H:%M'),
+			'endDate' => $this->format($definition->getConfiguration('end'), '%Y-%m-%d'),
+			'endTime' => $this->format($definition->getConfiguration('end'), '%H:%M'),
+			'groupList' => $this->getGroupList(),
 		);
 	}
 
@@ -606,8 +626,8 @@ class Services_Tracker_Controller
 
 	private function readDate($input, $prefix)
 	{
-		$date = $input->{$prefix . '_date'}->text();
-		$time = $input->{$prefix . '_time'}->text();
+		$date = $input->{$prefix . 'Date'}->text();
+		$time = $input->{$prefix . 'Time'}->text();
 
 		if (! $time) {
 			$time = '00:00';
@@ -631,6 +651,19 @@ class Services_Tracker_Controller
 		if ($date) {
 			return TikiLib::date_format($format, $date);
 		}
+	}
+
+	private function getGroupList()
+	{
+		$userlib = TikiLib::lib('user');
+		$groups = $userlib->list_all_groupIds();
+		$out = array();
+
+		foreach ($groups as $g) {
+			$out[] = $g['groupName'];
+		}
+		
+		return $out;
 	}
 }
 

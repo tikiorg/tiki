@@ -1579,6 +1579,10 @@ form.simple label {
 	padding-bottom: 1em;
 }
 
+form.simple label.depends {
+	padding-left: 20px;
+}
+
 form.simple label .description {
 	padding-left: 20px;
 }

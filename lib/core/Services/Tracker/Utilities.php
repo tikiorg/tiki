@@ -187,6 +187,16 @@ class Services_Tracker_Utilities
 
 	function updateTracker($trackerId, $data)
 	{
+		$trklib = TikiLib::lib('trk');
+		$name = $data['name'];
+		$description = $data['description'];
+		$descriptionIsParsed = $data['descriptionIsParsed'];
+
+		unset($data['name']);
+		unset($data['description']);
+		unset($data['descriptionIsParsed']);
+
+		$trklib->replace_tracker($trackerId, $name, $description, $data, $descriptionIsParsed);
 	}
 
 	function clearTracker($trackerId)

@@ -6,13 +6,19 @@
 // $Id$
 
 require_once('tiki-setup.php');
+$access = TikiLib::lib('access');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
-global $prefs, $userlib;
+
+$userlib = TikiLib::lib('user');
+$smarty = TikiLib::lib('smarty');
+
+global $prefs;
+
 $catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
 
 $smarty->assign('mandatory_category', '-1');
 if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)) {
-	global $categlib, $user; include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 
 	if( ! isset( $cat_object_exists ) ) {
 		$cat_object_exists = (bool) $cat_objid;
@@ -73,3 +79,4 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		$smarty->assign('catsdump', implode(',',$cats));
 	$smarty->assign_by_ref('categories', $categories);
 }
+
