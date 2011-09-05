@@ -22,7 +22,7 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 	function getGlobalFields()
 	{
 		return array(
-			'freetags_text' => false,
+			'freetags_text' => true,
 		);
 	}
 
