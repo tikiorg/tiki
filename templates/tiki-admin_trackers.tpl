@@ -319,54 +319,32 @@ categories = {$catsdump}
 {* --- tab with raw form --- *}
 	<h2>{tr}Duplicate Tracker{/tr}</h2>
 
-	<form action="tiki-admin_trackers.php" method="post">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Name{/tr}</td>
-				<td><input type="text" name="name" /></td>
-			</tr>
-			<tr>
-				<td>{tr}Description{/tr}</td>
-				<td colspan="2">
-					{tr}Description text is wiki-parsed:{/tr} 
-					<input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('duplicateTrackerDesc');" />
-					<div id="duplicateTrackerDesc" style="display:none;" >
-						{toolbars qtnum="duplicateTrackerDesc" area_id="duplicateTrackerDescription"}
-						{if $descriptionIsParsed eq 'y'}
-							{jq}toggleBlock('duplicateTrackerDesc');{/jq}
-						{/if}
-					</div>
-					<br />
-					<textarea id="duplicateTrackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Tracker{/tr}</td>
-				<td>
-					{section name=ix loop=$trackers}
-						{if $smarty.section.ix.first}
-							<select name="trackerId">
-						{/if}
-						<option value="{$trackers[ix].trackerId}"{if $trackerId eq $trackers[ix].trackerId} selected="selected"{/if}>{$trackers[ix].name|escape}</option>
-						{if $smarty.section.ix.last}
-							</select>
-						{/if}
-					{/section}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Duplicate categories{/tr}</td>
-				<td><input type="checkbox" name="dupCateg" /></td>
-			</tr>
-			<tr>
-				<td>{tr}Duplicate perms{/tr}</td>
-				<td><input type="checkbox" name="dupPerms" /></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" name="duplicate" value="{tr}Duplicate Tracker{/tr}" /></td>
-			</tr>
-		</table>
+	<form class="simple" action="{service controller=tracker action=duplicate}" method="post">
+		<label>
+			{tr}Name{/tr}
+			<input type="text" name="name" />
+		</label>
+		<label>
+			{tr}Tracker{/tr}
+			<select name="trackerId">
+				{foreach from=$trackers item=tr}
+					<option value="{$tr.trackerId|escape}">{$tr.name|escape}</option>
+				{/foreach}
+			</select>
+		</label>
+		{if $prefs.feature_categories eq 'y'}
+			<label>
+				<input type="checkbox" name="dupCateg" value="1"/>
+				{tr}Duplicate categories{/tr}
+			</label>
+		{/if}
+		<label>
+			<input type="checkbox" name="dupPerms" value="1"/>
+			{tr}Duplicate permissions{/tr}
+		</label>
+		<div class="submit">
+			<input type="submit" value="{tr}Duplicate{/tr}"/>
+		</div>
 	</form>
 	
 	{if $prefs.tracker_remote_sync eq 'y'}

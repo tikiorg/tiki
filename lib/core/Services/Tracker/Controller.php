@@ -534,8 +534,6 @@ class Services_Tracker_Controller
 				'modItemStatus' => $input->modItemStatus->word(),
 				'outboundEmail' => $input->outboundEmail->email(),
 				'simpleEmail' => $input->simpleEmail->int() ? 'y' : 'n',
-				'groupforAlert' => $input->groupforAlert->groupname(),
-				'showeachuser' => $input->showeachuser->int() ? 'y' : 'n',
 				'writerCanModify' => $input->writerCanModify->int() ? 'y' : 'n',
 				'userCanTakeOwnership' => $input->userCanTakeOwnership->int() ? 'y' : 'n',
 				'oneUserItem' => $input->oneUserItem->int() ? 'y' : 'n',
@@ -570,10 +568,20 @@ class Services_Tracker_Controller
 			$cat_objid = $trackerId;
 			include "categorize.php";
 
+			$groupforAlert = $input->groupforAlert->groupname();
+
+			if ($groupforAlert) {
+				$groupalertlib = TikiLib::lib('groupalert');
+				$showeachuser = $input->showeachuser->int() ? 'y' : 'n';
+				$groupalertlib->AddGroup('tracker', $trackerId, $groupforAlert, $showeachuser);
+			}
+
 			$definition = Tracker_Definition::get($trackerId);
 		}
 
 		include_once ("categorize_list.php");
+		$groupalertlib = TikiLib::lib('groupalert');
+		$groupforAlert = $groupalertlib->GetGroup('tracker', 'trackerId');
 		return array(
 			'trackerId' => $trackerId,
 			'info' => $definition->getInformation(),
@@ -586,6 +594,35 @@ class Services_Tracker_Controller
 			'endDate' => $this->format($definition->getConfiguration('end'), '%Y-%m-%d'),
 			'endTime' => $this->format($definition->getConfiguration('end'), '%H:%M'),
 			'groupList' => $this->getGroupList(),
+			'groupforAlert' => $groupforAlert,
+			'showeachuser' => $groupalertlib->GetShowEachUser('tracker', 'trackerId', $groupforAlert),
+		);
+	}
+
+	function action_duplicate($input)
+	{
+		$trackerId = $input->trackerId->int();
+
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$definition = Tracker_Definition::get($trackerId);
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+		
+		$name = $input->name->text();
+
+		if (! $name) {
+			throw new Services_Exception_MissingValue('name');
+		}
+
+		$newId = $this->utilities->duplicateTracker($trackerId, $name, $input->dupCateg->int(), $input->dupPerms->int());
+
+		return array(
+			'trackerId' => $newId,
+			'name' => $name,
 		);
 	}
 

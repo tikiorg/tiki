@@ -196,6 +196,8 @@ class Services_Tracker_Utilities
 		unset($data['description']);
 		unset($data['descriptionIsParsed']);
 
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_log('admintrackers', 'changed or created tracker ' . $name);
 		return $trklib->replace_tracker($trackerId, $name, $description, $data, $descriptionIsParsed);
 	}
 
@@ -404,6 +406,28 @@ EXPORT;
 
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('admintrackers', 'removed tracker ' . $trackerId);
+	}
+
+	function duplicateTracker($trackerId, $name, $duplicateCategories, $duplicatePermissions)
+	{
+		$trklib = TikiLib::lib('trk');
+		$newTrackerId = $trklib->duplicate_tracker($trackerId, $name, '', 'n');
+
+		if ($duplicateCategories) {
+			$categlib = TikiLib::lib('categ');
+			$cats = $categlib->get_object_categories('tracker', $trackerId);
+			$catObjectId = $categlib->add_categorized_object('tracker', $newTrackerId, '', $name, "tiki-view_tracker.php?trackerId=$newTrackerId");
+			foreach($cats as $cat) {
+				$categlib->categorize($catObjectId, $cat);
+			}
+		}
+
+		if ($duplicatePermissions) {
+			$userlib = TikiLib::lib('user');
+			$userlib->copy_object_permissions($trackerId, $newTrackerId, 'tracker');
+		}
+
+		return $newTrackerId;
 	}
 }
 

@@ -224,13 +224,13 @@
 					<select name="groupforAlert">
 						<option value=""></option>
 						{foreach from=$groupList item=g}
-							<option value="{$g|escape}" {if $g eq $info.groupforAlert}selected="selected"{/if}>{$g|escape}</option>
+							<option value="{$g|escape}" {if $g eq $groupforAlert}selected="selected"{/if}>{$g|escape}</option>
 						{/foreach}
 					</select>
 				</label>
 				<label>
 					<input type="checkbox" name="showeachuser" value="1"
-						{if $info.showeachuser eq 'y'}checked="checked"{/if}/>
+						{if $showeachuser eq 'y'}checked="checked"{/if}/>
 					{tr}Allow user selection for small groups{/tr}
 				</label>
 			{/if}
