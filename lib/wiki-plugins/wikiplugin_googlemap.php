@@ -92,14 +92,14 @@ function wikiplugin_googlemap_info() {
 				'name' => tra('Default Center Longitude'),
 				'description' => tra('Default longitude value used to center the map, e.g. -79.39. Default is the default set in the Gmap feature.'),
 				'accepted' => tra('An integer between -180 and 180.'),
-				'filter' => 'int',
+				'filter' => 'striptags',
 			),
 			'defaulty' => array(
 				'required' => false,
 				'name' => tra('Default Center Latitude'),
 				'description' => tra('Default latitude value used to center the map, e.g. 43.7. Default is the default set in the Gmap feature.'),
 				'accepted' => tra('An integer between -180 and 180.'),
-				'filter' => 'int',
+				'filter' => 'striptags',
 			),
 			'defaultz' => array(
 				'required' => false,
