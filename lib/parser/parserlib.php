@@ -1583,7 +1583,7 @@ if( \$('#$id') ) {
 		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!> or <!--//--<!CDATA[//><!--
 		if (!$simple_wiki) {
 			// FIXME produces false positive for strings contining html comments. e.g: --some text<!-- comment -->
-			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<del>$1</del>", $data);
+			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<strike>$1</strike>", $data);
 		}
 
 		// Handle comment sections
@@ -1648,7 +1648,7 @@ if( \$('#$id') ) {
 			$data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
 
 			// Underlined text
-			$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
+			$data = preg_replace("/===(.+?)===/", "<u>$1</u>", $data);
 			// Center text
 			if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 				$data = preg_replace("/:::(.+?):::/", "<div style=\"text-align: center;\">$1</div>", $data);
