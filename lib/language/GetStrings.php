@@ -37,6 +37,13 @@ class Language_GetStrings
 	protected $languages = array();
 	
 	/**
+	 * Name of the file that contain the
+	 * translations.
+	 * @var string
+	 */
+	protected $fileName = 'language.php';
+	
+	/**
 	 * @var Language_CollectFiles
 	 */
 	public $collectFiles;
@@ -100,6 +107,10 @@ class Language_GetStrings
 			$this->setLanguages($options['lang']);
 		} else {
 			$this->setLanguages();
+		}
+		
+		if (isset($options['fileName'])) {
+			$this->fileName = $options['fileName']; 
 		}
 	}
 	
@@ -276,14 +287,14 @@ class Language_GetStrings
 		$languages = $this->languages;
 		
 		foreach ($languages as $lang) {
-			$langPath = $this->baseDir . '/lang/' . $lang . '/language.php';
+			$langPath = $this->baseDir . '/lang/' . $lang . '/' . $this->fileName;
 			$this->writeFile->writeStringsToFile($strings, $langPath, $this->outputFiles);
 		}
 	}
 	
 	/**
 	 * Return all available languages (check for the
-	 * existence of a language.php file).
+	 * existence of a language file).
 	 * @return array all language codes
 	 */
 	protected function getAllLanguages()
@@ -296,7 +307,7 @@ class Language_GetStrings
 			}
 			
 			$path = $dirs->path . '/' . $entry;
-			if (is_dir($path) && file_exists($path . '/language.php')) {
+			if (is_dir($path) && file_exists($path . '/' . $this->fileName)) {
 				$languages[] = $entry;
 			}
 		}

@@ -18,7 +18,9 @@
  * Command line examples:
  * 		- php get_strings.php
  * 		- php get_strings.php lang=pt-br outputFiles=true
- * 		- php get_strings.php baseDir=lib/ excludeDirs=lib/core/Zend,lib/captcha includeFiles=captchalib.php,index.php
+ * 		- php get_strings.php baseDir=lib/ excludeDirs=lib/core/Zend,lib/captcha includeFiles=captchalib.php,index.php fileName=language_r.php
+ * 
+ * Note: baseDir and fileName parameters are available in command line mode only 
  *
  *
  * If you want to know the translation progression for your language, just visit : http://i18n.tiki.org/status
@@ -83,6 +85,10 @@ if (php_sapi_name() == 'cli') {
 	
 	if ($request->hasProperty('includeFiles')) {
 		$includeFiles = explode(',', $request->getProperty('includeFiles'));
+	}
+	
+	if ($request->hasProperty('fileName')) {
+		$options['fileName'] = $request->getProperty('fileName');
 	}
 }
 

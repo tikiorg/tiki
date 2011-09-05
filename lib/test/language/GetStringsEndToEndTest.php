@@ -23,7 +23,7 @@ class Language_GetStringsEndToEndTest extends TikiTestCase
 		$dir1 = new vfsStreamDirectory('dir1');
 		$dir2 = new vfsStreamDirectory('dir2');
 		$dir3 = new vfsStreamDirectory('lang');
-		$langDir = new vfsStreamDirectory('es');
+		$this->langDir = new vfsStreamDirectory('es');
 		
 		$file1 = new vfsStreamFile('file1.tpl');
 		$file1->setContent(file_get_contents(__DIR__ . '/fixtures/test_collecting_strings.tpl'));
@@ -36,8 +36,8 @@ class Language_GetStringsEndToEndTest extends TikiTestCase
 		
 		$dir1->addChild($file1);
 		$dir2->addChild($file2);
-		$dir3->addChild($langDir);
-		$langDir->addChild($langFile);
+		$dir3->addChild($this->langDir);
+		$this->langDir->addChild($langFile);
 		
 		$root->addChild($dir1);
 		$root->addChild($dir2);
@@ -54,6 +54,25 @@ class Language_GetStringsEndToEndTest extends TikiTestCase
 		$this->assertEquals(
 			file_get_contents(__DIR__ . '/fixtures/language_end_to_end_test_modified.php'),
 			file_get_contents(vfsStream::url('root/lang/es/language.php'))
+		);
+	}
+	
+	public function testGetStrings_endToEnd_customLanguageFileName()
+	{
+		$fileName = 'language_r.php'; 
+		
+		$langFile = new vfsStreamFile($fileName);
+		$langFile->setContent(file_get_contents(__DIR__ . '/fixtures/language_end_to_end_test_original.php'));
+		$this->langDir->addChild($langFile);
+		
+		$obj = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile, array('baseDir' => vfsStream::url('root'), 'fileName' => 'language_r.php'));
+		$obj->addFileType(new Language_FileType_Php);
+		$obj->addFileType(new Language_FileType_Tpl);
+		$obj->run();
+		
+		$this->assertEquals(
+			file_get_contents(__DIR__ . '/fixtures/language_end_to_end_test_modified.php'),
+			file_get_contents(vfsStream::url("root/lang/es/$fileName"))
 		);
 	}
 }

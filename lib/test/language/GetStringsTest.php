@@ -264,6 +264,16 @@ class Language_GetStringsTest extends TikiTestCase
 		$obj->writeToFiles($strings);
 	}
 	
+	public function testWriteToFiles_shouldUseCustomFileName()
+	{
+		$strings = array('string1', 'string2', 'string3', 'string4');
+				
+		$this->writeFile->expects($this->once())->method('writeStringsToFile')->with($strings, $this->stringContains('language_r.php'), false);
+		
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => $this->baseDir, 'lang' => 'es', 'fileName' => 'language_r.php'));
+		$obj->writeToFiles($strings);
+	}
+	
 	public function testScanFiles_shouldReturnStringsFromFiles()
 	{
 		$files = array('file1', 'file2', 'file3');
