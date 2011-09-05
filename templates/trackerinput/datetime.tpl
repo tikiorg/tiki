@@ -27,7 +27,7 @@
 	{assign var=time value=$field.value}
 {/if}
 {if $field.options_array[0] ne 't'}
-	{if ($field.isMandatory ne 'y' and (isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))) or (isset($inExportForm) and $inExportForm eq 'y')}
+	{if ((isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))) or (isset($inExportForm) and $inExportForm eq 'y')}
 		{html_select_date prefix=$field.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
 	{else}
 		{html_select_date prefix=$field.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
