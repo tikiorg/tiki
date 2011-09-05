@@ -53,6 +53,9 @@ class Language_WriteFile
 		$this->filePath = $filePath;
 		$tmpFilePath = $this->filePath . '.tmp';
 		
+		// backup original language file
+		copy($filePath, $filePath . '.old');
+		
 		$this->translations = $this->getCurrentTranslations();
 		$entries = $this->mergeStringsWithTranslations($strings, $this->translations);
 

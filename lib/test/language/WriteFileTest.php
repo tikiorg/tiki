@@ -63,6 +63,10 @@ class Language_WriteFileTest extends TikiTestCase
 		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3);
 		
 		$this->obj->writeStringsToFile($strings, $this->filePath);
+		
+		// check if a backup of old language file (in this case an empty file) was created 
+		$this->assertTrue(file_exists($this->filePath . '.old'));
+		
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_simple.php'), file_get_contents($this->filePath));
 	}
 

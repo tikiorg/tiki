@@ -103,14 +103,14 @@ class Language_GetStrings
 			$this->baseDir = getcwd();
 		}
 		
+		if (isset($options['fileName'])) {
+			$this->fileName = $options['fileName']; 
+		}
+		
 		if (isset($options['lang'])) {
 			$this->setLanguages($options['lang']);
 		} else {
 			$this->setLanguages();
-		}
-		
-		if (isset($options['fileName'])) {
-			$this->fileName = $options['fileName']; 
 		}
 	}
 	
@@ -300,7 +300,7 @@ class Language_GetStrings
 	protected function getAllLanguages()
 	{
 		$dirs = dir($this->baseDir . '/lang');
-		
+
 		while (false !== ($entry = $dirs->read())) {
 			if ($entry == '.' || $entry == '..') {
 				continue;
