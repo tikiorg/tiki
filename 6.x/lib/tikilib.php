@@ -8615,8 +8615,8 @@ JS;
 		}
 
 		// Move custom permissions
-		$oldId = md5($type . strtolower($old));
-		$newId = md5($type . strtolower($new));
+		$oldId = md5($type . TikiLib::strtolower($old));
+		$newId = md5($type . TikiLib::strtolower($new));
 		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=? AND `objectType` = ?";
 		$this->query($query, array( $newId, $oldId, $type ) );
 
@@ -8661,6 +8661,15 @@ JS;
 			return false;
 		}
 	}
+	
+	public static function strtolower($string)
+	{
+		if (function_exists('mb_strtolower')) {
+			return mb_strtolower($string, 'UTF-8');
+		} else {
+			return strtolower($string);
+		}
+	}	
         
 }
 // end of class ------------------------------------------------------

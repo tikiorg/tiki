@@ -131,7 +131,7 @@ class BlogLib extends TikiDb_Bridge
 		$result = $this->fetchAll($query);
 		if ( !empty($result) ) {
 			foreach ( $result as $res ) {
-				if( strtolower($res['title']) == strtolower($blogTitle) ) {
+				if( TikiLib::strtolower($res['title']) == TikiLib::strtolower($blogTitle) ) {
 					return $this->get_blog($res['blogId']);
 				}
 			}

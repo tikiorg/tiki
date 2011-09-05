@@ -318,7 +318,7 @@ class SemanticLib
 		$haveprefixes = false;
 		foreach ($prefixes as $p) {
 			$p = trim($p);
-			if (strlen($p) > 0 && strtolower(substr($query, 0, strlen($p))) == strtolower($p)) {
+			if (strlen($p) > 0 && TikiLib::strtolower(substr($query, 0, strlen($p))) == TikiLib::strtolower($p)) {
 				$mid .= " OR ( `target_type` = 'wiki page' AND `target_itemId` LIKE ?)";
 				$bindvars[] = "$p%";
 				$haveprefixes = true;
