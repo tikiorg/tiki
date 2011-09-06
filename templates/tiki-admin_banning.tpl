@@ -115,7 +115,7 @@
     <tr>
       <td>
         {tr}CSV File{/tr}
-		{capture name=help}{tr}Column names on the first line:{/tr}<br />banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message<br />{tr}Date format:{/tr} {tr}See:{/tr} http://php.net/strtotime{/capture}
+		{capture name=help}{tr}Column names on the first line:{/tr}<br />banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections<br />{tr}Sections format:{/tr} {tr}section names are splited by a pipe (a vertical bar). To see an example and use it as template, add on rule by hand, and export it as csv{/tr}<br />{tr}Date format:{/tr} {tr}See:{/tr} http://php.net/strtotime{/capture}
         <a {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
       </td>
       <td>
