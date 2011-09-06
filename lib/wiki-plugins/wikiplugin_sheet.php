@@ -126,13 +126,12 @@ function wikiplugin_sheet($data, $params) {
 	$subsheets = isset($subsheets) && $subsheets == 'n' ? false : true;
 	$class = (isset($class)) ? " $class"  : '';
 	
-	if( !class_exists( 'TikiSheet' ) )
-		require "lib/sheet/grid.php";
+	$sheetlib = TikiLib::lib("sheet");
 
 	static $index = 0;
 	++$index;
 
-	if (!isset($id) && !isset($url)) {
+	if (empty($id) && empty($url)) {
 		if( $tiki_p_edit_sheet != 'y' || $tiki_p_edit != 'y' ) {
 			return ("<b>missing id parameter for plugin</b><br />");
 		} else {
@@ -157,14 +156,12 @@ function wikiplugin_sheet($data, $params) {
 				document.getElementById('$formId').submit();
 				</script>
 				~/np~
-				EOF;
+EOF;
 			} else {
-				$intro = tra('Incomplete call to plugin: No target sheet.');
 				$label = tra('Create New Sheet');
 				return <<<EOF
 ~np~
 <form method="post" action="">
-	<p>$intro</p>
 	<p>
 		<input type="submit" name="create_sheet" value="$label"/>
 		<input type="hidden" name="index" value="$index"/>
@@ -175,20 +172,23 @@ EOF;
 			}
 		}
 	}
-
+	
+	$info;
 	if (!empty($id)) {
 		$info = $sheetlib->get_sheet_info($id);
-		if (empty($info)) {
-			return ("<b>missing id parameter for plugin</b><br />");
-		}
-		$objectperms = Perms::get('sheet', $id);
-		if (!$objectperms->view_sheet  && !($user && $info['author'] == $user)) {
-			return (tra('Permission denied'));
-		}
+	}
+
+	if (empty($info)) {
+		return tra("Error loading spreadsheet");
+	}
+	
+	$objectperms = Perms::get('sheet', $id);
+	if (!$objectperms->view_sheet  && !($user && $info['author'] == $user)) {
+		return (tra('Permission denied'));
 	}
 
 	// Build required objects
-	$sheet = new TikiSheet($id);
+	$sheet = new TikiSheet();
 	$db = new TikiSheetDatabaseHandler( $id );
 	$out = new TikiSheetOutputHandler( $data );
 
@@ -243,7 +243,7 @@ EOF;
 		
 		//If you've given the sheet a url, you can't edit it, disable if not possible
 		if (!isset($url)) {
-			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
+			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight&page=$page");
 		}
 		
 		$ret .= smarty_function_button( $button_params, $smarty);
