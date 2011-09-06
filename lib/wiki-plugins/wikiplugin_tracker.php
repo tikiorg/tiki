@@ -492,6 +492,8 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('register_pass2', $smarty->fetch('register-pass2.tpl'));
 					$smarty->assign('register_passcode', $smarty->fetch('register-passcode.tpl'));
 					$smarty->assign('register_groupchoice', $smarty->fetch('register-groupchoice.tpl'));
+					$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
+					$wiki = $prefs["user_register_prettytracker_tpl"];
 				}
 				if (!empty($wiki)) {
 					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
@@ -1106,7 +1108,7 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($showstatus) && $showstatus == 'y') {
 					$back .= '<tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>';
 				}
-				if ($registration == 'y') {
+				if ($registration == 'y' && $prefs["user_register_prettytracker"] != 'y') {
 					$back .= $smarty->fetch('register-form.tpl');
 				}
 			} else {
@@ -1180,7 +1182,8 @@ function wikiplugin_tracker($data, $params)
 			include_once('lib/smarty_tiki/function.trackerheader.php');
 			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
 
-			if ($prefs['feature_antibot'] == 'y' && empty($user) && $formtag != 'n') {
+			if ($prefs['feature_antibot'] == 'y' && empty($user) && $formtag != 'n'
+				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y') ) {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
