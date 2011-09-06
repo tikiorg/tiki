@@ -8185,6 +8185,15 @@ JS;
 		$menulib = TikiLib::lib('menu');
 		$menulib->rename_wiki_page($old, $new);
 	}
+
+	public static function strtolower($string)
+	{
+		if (function_exists('mb_strtolower')) {
+			return mb_strtolower($string, 'UTF-8');
+		} else {
+			return strtolower($string);
+		}
+	}
 }
 // end of class ------------------------------------------------------
 

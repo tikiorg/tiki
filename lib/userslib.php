@@ -51,7 +51,7 @@ class UsersLib extends TikiLib
 	}
 
 	function assign_object_permission($groupName, $objectId, $objectType, $permName) {
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
 		$query = "delete from `users_objectpermissions`	where `objectId` = ? and `objectType`=?";
 		$bindvars = array($objectId, $objectType);
@@ -81,7 +81,7 @@ class UsersLib extends TikiLib
 
 	function object_has_permission($user, $objectId, $objectType, $permName) {
 		$groups = $this->get_user_groups($user);
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 		$mid = implode(',',array_fill(0,count($groups),'?'));
 		$query = "select count(*) from `users_objectpermissions` where `groupName` in ($mid) and `objectId` = ? and `objectType` = ? and `permName` = ?";
 		$bindvars = array_merge($groups, array($objectId, $objectType, $permName));
@@ -94,7 +94,7 @@ class UsersLib extends TikiLib
 	}
 
 	function remove_object_permission($groupName, $objectId, $objectType, $permName) {
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
 		$query = "delete from `users_objectpermissions`
 			where `groupName` = ? and `objectId` = ?
@@ -110,7 +110,7 @@ class UsersLib extends TikiLib
 	}
 
 	function copy_object_permissions($objectId,$destinationObjectId,$objectType) {
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
 		$query = "select `permName`, `groupName`
 			from `users_objectpermissions`
@@ -143,7 +143,7 @@ class UsersLib extends TikiLib
 	}
 
 	function get_object_permissions($objectId, $objectType, $group='', $perm='') {
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
 		$query = "select `groupName`, `permName`
 			from `users_objectpermissions`
@@ -167,7 +167,7 @@ class UsersLib extends TikiLib
 		if (array_key_exists($params, $this->get_object_permissions_for_user_cache)) {
 			return $this->get_object_permissions_for_user_cache[$params];
 		}
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 		$bindvars = array($objectId, $objectType);
 		$groups = $this->get_user_groups($user);
 		$bindvars = array_merge($bindvars, $groups);
@@ -183,7 +183,7 @@ class UsersLib extends TikiLib
 	}
 
 	function object_has_one_permission($objectId, $objectType) {
-		$objectId = md5($objectType . strtolower($objectId));
+		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
 		if(!isset($this->userobjectperm_cache) || !is_array($this->userobjectperm_cache)
 			|| !isset($this->userobjectperm_cache[$objectId])) {

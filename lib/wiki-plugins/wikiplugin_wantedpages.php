@@ -185,7 +185,7 @@ class WikiPluginWantedPages extends PluginsLib
 		while ($row = $result->fetchRow()) {
 			foreach($ignorepages as $ipage) {
 				// test whether a substring ignores this page, ignore case
-				if (fnmatch(strtolower($ipage), strtolower($row['fromPage'])) === true) {
+				if (fnmatch(TikiLib::strtolower($ipage), TikiLib::strtolower($row['fromPage'])) === true) {
 					if ($debug == 2) { // the "hardcore case"
 						echo $row['toPage'] . ' [from: ' . $row['fromPage'] . ']: ' . tra('ignored') . '<br />';
 					} elseif ($debug) { // add this page to the table

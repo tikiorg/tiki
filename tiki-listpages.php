@@ -326,7 +326,7 @@ if (!empty($multiprint_pages)) {
 	// Exact match and single result, go to page directly
 	if( count( $listpages['data'] ) == 1 ) {
 		$result = reset( $listpages['data'] );
-		if( strtolower( $find ) == strtolower( $result['pageName'] ) ) {
+		if( TikiLib::strtolower( $find ) == TikiLib::strtolower( $result['pageName'] ) ) {
 			require_once 'lib/wiki/wikilib.php';
 			header( 'Location: ' . $wikilib->sefurl( $result['pageName'], '', $all_langs ) );
 			exit;

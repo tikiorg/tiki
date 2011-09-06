@@ -211,6 +211,6 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	}
 
 	private function cleanObject($name) {
-		return strtolower(trim($name));
+		return TikiLib::strtolower(trim($name));
 	}
 }
