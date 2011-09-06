@@ -7,6 +7,6 @@
 	{/foreach}
 {else}
 ~np~{tabset name=$tabsetname|escape}
-	{section name=ix loop=$tabs}{tab name=$tabs[ix]|escape}~/np~{$tabcontent[ix]}~np~{/tab}{/section}
+	{section name=ix loop=$tabs}{tab name=$tabs[ix]|escape}{$tabcontent[ix]}{/tab}{/section}
 {/tabset}~/np~
 {/if}
