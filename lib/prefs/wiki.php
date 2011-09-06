@@ -630,6 +630,7 @@ function prefs_wiki_list($partial = false) {
 			'size' => '30',
 			'dependencies' => array(
 				'feature_wiki_1like_redirection',
+				'feature_semantic', // this is needed at point of creation of semantic link otherwise link will not register
 			),
 			'default' => '',
 		),		
