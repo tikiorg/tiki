@@ -15,8 +15,7 @@
 			{if $captchalib->type eq 'recaptcha'}
 				{$captchalib->render()}
 			{else}
-				{$captchalib->generate()}
-				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->getId()}" />
+				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}" />
 				{if $captchalib->type eq 'default'}
 					<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" height="50" />
 				{else}
