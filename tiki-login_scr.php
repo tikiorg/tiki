@@ -15,7 +15,7 @@ if (isset($_REQUEST['user'])) {
 		$smarty->assign('loginuser', $_REQUEST['user']);
 	}
 }
-if ($prefs['useGroupHome'] != 'y' && !isset($_SESSION['loginfrom'])) {
+if (($prefs['useGroupHome'] != 'y' || $prefs['limitedGoGroupHome'] == 'y') && !isset($_SESSION['loginfrom'])) {
 	$_SESSION['loginfrom'] = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
 }
 
