@@ -8154,8 +8154,8 @@ JS;
 		}
 
 		// Move custom permissions
-		$oldId = md5($type . strtolower($old));
-		$newId = md5($type . strtolower($new));
+		$oldId = md5($type . TikiLib::strtolower($old));
+		$newId = md5($type . TikiLib::strtolower($new));
 		$this->table('users_objectpermissions')->updateMultiple(array('objectId' => $newId), array(
 			'objectId' => $oldId,
 			'objectType' => $type,
