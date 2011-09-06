@@ -107,6 +107,13 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$inData = '<span style="font-weight:bold;">bold</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
+		
+		// line break
+		$this->markTestIncomplete('Work in progress.');
+		$ex = '__bold__\n__BOLD__';
+		$inData = '<strong>bold<br />BOLD</strong>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
 	}
 		
 	
@@ -133,6 +140,13 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$inData = '<span style="font-style:italic;">italic</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
+		
+		// line break
+		$this->markTestIncomplete('Work in progress.');
+		$ex = '\'\'italic\'\'\n\'\'ITALIC\'\'';
+		$inData = '<em>italic<br />ITALIC</em>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
 	}
 	
 	
@@ -153,7 +167,14 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<span style="text-decoration:underline;">underlined</span>';
 		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);			
+		$this->assertEquals($ex, $out);		
+
+		// line break
+		$this->markTestIncomplete('Work in progress.');
+		$ex = '===underlined===\n===UNDERLINED===';
+		$inData = '<u>underlined<br />UNDERLINED</u>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);		
 	}
 	
 	
@@ -184,7 +205,14 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<span style="text-decoration:line-through;">strikethrough</span>';
 		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);				
+		$this->assertEquals($ex, $out);		
+
+		// line break
+		$this->markTestIncomplete('Work in progress.');
+		$ex = '--strikethrough--\n--STRIKETHROUGH--';
+		$inData = '<strike>strikethrough<br />STRIKETHROUGH</strike>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);		
 	}
 	
 	
@@ -233,7 +261,14 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<code>monospaced</code>';
 		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);		
+		$this->assertEquals($ex, $out);	
+
+		// line break
+		$this->markTestIncomplete('Work in progress.');
+		$ex = '-+monospaced+-\n-+MONOSPACED+-';
+		$inData = '<code>monospaced<br />MONOSPACED</code>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);	
 	}
 
 		
@@ -249,7 +284,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<tt>typewriter</tt>';
 		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);			
+		$this->assertEquals($ex, $out);	
 	}
 	
 	
@@ -269,8 +304,8 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<span style="color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);			
-		
+		$this->assertEquals($ex, $out);		
+
 		
 		/*
 		 * background only
@@ -283,7 +318,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<span style="background-color:#FFFF00;">color</span>';
 		$out = $this->el->parseToWiki($inData);
-		$this->assertEquals($ex, $out);			
+		$this->assertEquals($ex, $out);		
 
 		
 		/*
