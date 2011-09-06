@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_search_wiki_page_info() {
 	return array(
 		'name' => tra('Search for Wiki Page'),
-		'description' => tra('Search for a wiki page by name.'),
+		'description' => tra('Depracated - use Search module instead') . ' ' . tra('(Search for a wiki page by name.)'),
 		'prefs' => array('feature_wiki'),
 		'params' => array(
 			'exact' => array(
