@@ -1694,7 +1694,7 @@ function wikiplugin_trackerlist($data, $params) {
 				if (!empty($tableassheet) && $tableassheet == 'y') {
 					$smarty->assign('tableassheet', 'true');
 				}
-				
+				$smarty->assign('context', $params);
 				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
 				if ($save_fc !== null) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
