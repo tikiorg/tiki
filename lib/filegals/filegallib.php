@@ -2351,6 +2351,10 @@ class FileGalLib extends TikiLib
 			$f_query .= ' AND (tf.`lastDownload` < ? or tf.`lastDownload` is NULL)';
 			$bindvars[] = $filter['lastDownload'];
 		}
+		if ( !empty($filter['fileType']) ) {
+			$f_query .= ' AND (tf.`filetype` = ?)';
+			$bindvars[] = $filter['fileType'];
+		}
 		if ( $with_files && $prefs['feature_file_galleries_save_draft'] == 'y' ) {
 			$bindvars[] = $user;
 		}

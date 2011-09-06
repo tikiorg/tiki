@@ -707,6 +707,10 @@ if (!empty($_REQUEST['find_lastModif']) && !empty($_REQUEST['find_lastModif_unit
 if (!empty($_REQUEST['find_lastDownload']) && !empty($_REQUEST['find_lastDownload_unit']) ) {
 	$find['lastDownload'] = $tikilib->now - ($_REQUEST['find_lastDownload'] * $_REQUEST['find_lastDownload_unit']);
 }
+if (!empty($_REQUEST['find_fileType']) && !empty($_REQUEST['find_fileType']) ) {
+	include_once ('lib/mime/mimetypes.php');
+	$find['fileType'] = $mimetypes[$_REQUEST['find_fileType']];
+}
 
 if (!isset($_REQUEST['find']))
 	$_REQUEST['find'] = '';
