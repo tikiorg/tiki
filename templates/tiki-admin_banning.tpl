@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 {jq notonready=true}
 	function CheckAll() {
@@ -11,6 +13,20 @@
 {/jq}
 
 {title help="Banning+System"}{tr}Banning system{/tr}{/title}
+
+<div class="navbar">
+	<form action="tiki-admin_banning.php" method="post">
+	<input type="hidden" name="export" value="y"/>
+		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}" class="button"/>
+		{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV" class="button"}
+	</form>
+</div>
+
+{if $updated}
+	{remarksbox type="note" title="{tr}Note:{/tr}"}
+		<strong>{tr}Banning rules have been updated{/tr}</strong>
+	{/remarksbox}
+{/if}
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
@@ -92,7 +108,30 @@
 		</tr>
 	</table>
 </form>
+
+<h2 id="Import_rules_as_CSV">{tr}Import rules as CSV{/tr}</h2>
+<form method="post" action="tiki-admin_banning.php" enctype="multipart/form-data">
+  <table class="formcolor">
+    <tr>
+      <td>
+        {tr}CSV File{/tr}
+		{capture name=help}{tr}Column names on the first line:{/tr}<br />banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections<br />{tr}Sections format:{/tr} {tr}section names are splitted by pipes (vertical bars). To see an example and use it as template, add one rule by hand, and export it as csv{/tr}<br />{tr}Date format:{/tr} {tr}See:{/tr} http://php.net/strtotime{/capture}
+        <a {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
+      </td>
+      <td>
+        <input type="file" name="fileCSV" size="50" />
+        <label>
+        	<input type="checkbox" name="import_as_new" />
+        	{tr}Import as new rules{/tr}
+        </label>
+        <input type="submit" name="import" value="{tr}import{/tr}" />
+      </td>
+    </tr>
+  </table>
+</form>
+
 {if $items}
+<h2>{tr}Find{/tr}</h2>
 	<form method="post" action="tiki-admin_banning.php">
 		<input type="hidden" name="offset" value="{$offset|escape}" />
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -134,7 +173,10 @@
 					{/section}
 				</td>
 				<td class="action">
-					&nbsp;&nbsp;<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link">
+					&nbsp;&nbsp;<a title="{tr}Edit{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;banId={$items[user].banId}" class="link">
+						{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+					</a>
+					<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link">
 						{icon _id='cross' alt="{tr}Delete{/tr}"}
 					</a>&nbsp;&nbsp;
 				</td>

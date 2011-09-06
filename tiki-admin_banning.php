@@ -10,35 +10,33 @@ include_once ('lib/ban/banlib.php');
 $access->check_feature('feature_banning');
 $access->check_permission('tiki_p_admin_banning');
 
-if (!empty($_REQUEST['banId'])) {
-	$info = $banlib->get_rule($_REQUEST['banId']);
-} else {
-	$_REQUEST['banId'] = 0;
-	$info['sections'] = array();
-	$info['title'] = '';
-	$info['mode'] = 'user';
-	$info['user'] = '';
-	$info['ip1'] = 255;
-	$info['ip2'] = 255;
-	$info['ip3'] = 255;
-	$info['ip4'] = 255;
-	$info['use_dates'] = 'n';
-	$info['date_from'] = $tikilib->now;
-	$info['date_to'] = $tikilib->now + 7 * 24 * 3600 * 100;
-	$info['message'] = '';
-}
-$smarty->assign('banId', $_REQUEST['banId']);
-$smarty->assign_by_ref('info', $info);
+$auto_query_args = array( 'banId' );
+
 if (isset($_REQUEST['remove'])) {
 	$access->check_authenticity();
 	$banlib->remove_rule($_REQUEST['remove']);
+	unset($_REQUEST['banId']);
 }
 if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {
 	check_ticket('admin-banning');
 	foreach(array_keys($_REQUEST['delsec']) as $sec) {
 		$banlib->remove_rule($sec);
 	}
+	unset($_REQUEST['banId']);
 }
+
+if (isset($_REQUEST["import"]) && isset($_FILES["fileCSV"])) {
+	check_ticket('admin-banning');
+
+	// import banning rules //
+	$number_imported = $banlib->importCSV($_FILES["fileCSV"]["tmp_name"], isset($_REQUEST['import_as_new']));
+	if ($number_imported > 0) {
+		$smarty->assign('updated', "y");
+		$smarty->assign('number_imported', $number_imported);
+	}
+	unset($_REQUEST['banId']);
+}
+
 if (isset($_REQUEST['save'])) {
 	check_ticket('admin-banning');
 	$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
@@ -58,7 +56,37 @@ if (isset($_REQUEST['save'])) {
 	$info['date_to'] = $tikilib->now + 7 * 24 * 3600;
 	$info['message'] = '';
 	$smarty->assign_by_ref('info', $info);
+	unset($_REQUEST['banId']);
 }
+
+if ( !empty($_REQUEST['export']) ) {
+	$maxRecords = -1;
+} elseif (isset($_REQUEST['max'])) {
+	$maxRecords = $_REQUEST['max'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
+}
+
+if (!empty($_REQUEST['banId'])) {
+	$info = $banlib->get_rule($_REQUEST['banId']);
+} else {
+	$_REQUEST['banId'] = 0;
+	$info['sections'] = array();
+	$info['title'] = '';
+	$info['mode'] = 'user';
+	$info['user'] = '';
+	$info['ip1'] = 255;
+	$info['ip2'] = 255;
+	$info['ip3'] = 255;
+	$info['ip4'] = 255;
+	$info['use_dates'] = 'n';
+	$info['date_from'] = $tikilib->now;
+	$info['date_to'] = $tikilib->now + 7 * 24 * 3600 * 100;
+	$info['message'] = '';
+}
+$smarty->assign('banId', $_REQUEST['banId']);
+$smarty->assign_by_ref('info', $info);
+
 $where = '';
 $wheres = array();
 if (isset($_REQUEST['where'])) {
@@ -84,6 +112,22 @@ $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find, $where);
+
+if (isset($_REQUEST['export']) || isset($_REQUEST['csv'])) {
+	// export banning rules //
+	$csv = $banlib->export_rules($items['data']);
+
+	header("Content-type: text/comma-separated-values; charset:UTF-8");
+	header('Content-Disposition: attachment; filename="tiki-admin_banning.csv"');
+	if (function_exists('mb_strlen')) {
+		header('Content-Length: ' . mb_strlen($csv, '8bit'));
+	} else {
+		header('Content-Length: ' . strlen($csv));
+	}
+	echo $csv;
+	die();
+}
+
 $smarty->assign('cant', $items['cant']);
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);
