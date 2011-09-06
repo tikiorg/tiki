@@ -47,7 +47,7 @@
 				<td class="date">{$tracker.lastModif|tiki_short_date}</td>
 				<td class="integer">{$tracker.items|escape}</td>
 				<td class="action">
-					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$tracker.trackerId}&amp;cookietab=2">{icon _id='page_edit'}</a>
+					<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 					{if $tracker.individual eq 'y'}
@@ -84,6 +84,20 @@
 				data: {
 					controller: 'tracker',
 					action: 'replace',
+					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
+				}
+			});
+
+			return false;
+		});
+
+		$('.export.dialog').click(function () {
+			var link = this;
+			$(this).serviceDialog({
+				title: $(link).attr('title'),
+				data: {
+					controller: 'tracker',
+					action: 'export',
 					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
 				}
 			});
@@ -202,53 +216,6 @@
 {tab name="{tr}Import/Export{/tr}"}
 <h2>{tr}Tracker Import/Export{/tr}</h2>
 {tabset}
-{* --- tab with raw form --- *}
-{tab name="{tr}Import/export trackers{/tr}"}
-	
-	<h3>{tr}Tracker Definition{/tr}</h3>
-	<form action="tiki-admin_trackers.php" method="post">
-		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-		<input type="hidden" name="import" value="1" />
-		<textarea name="rawmeat" cols="62" rows="32">
-{if $trackerId}
-[TRACKER]
-trackerId = {$trackerId}
-name = {$name|escape}
-description = {$description|escape}
-descriptionIsParsed = {$descriptionIsParsed}
-useExplicitNames = {$useExplicitNames}
-showStatus = {$showStatus}
-defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach}
-
-showStatusAdminOnly = {$showStatusAdminOnly}
-outboundEmail = {$outboundEmail|escape}
-simpleEmail = {$simpleEmail}
-newItemStatus = {$newItemStatus}
-modItemStatus = {$modItemStatus}
-writerCanModify = {$writerCanModify}
-writerGroupCanModify = {$writerGroupCanModify}
-showCreated = {$showCreated}
-showLastModif = {$showLastModif}
-defaultOrderKey = {$defaultOrderKey}
-defaultOrderDir = {$defaultOrderDir}
-useComments = {$useComments}
-showComments = {$showComments}
-useAttachments = {$useAttachments}
-showAttachments = {$showAttachments}
-attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.hits|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0}
-useRatings = {$useRatings}
-ratingOptions = {$ratingOptions}
-categories = {$catsdump}
-{/if}
-		</textarea>
-		<br />
-		<input type="submit" name="save" value="{tr}Import{/tr}" />
-	</form>
-	{if $trackerId}
-		<h3>{tr}Export for profile{/tr}</h3>
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
-	{/if}
-	{/tab}
 	
 	{if $trackerId}
 		{include file='tiki-export_tracker.tpl'}
@@ -359,6 +326,21 @@ categories = {$catsdump}
 			</div>
 		</form>
 	{/if}
+
+	<h2>{tr}Import From Export{/tr}</h2>
+	<form class="simple" method="post" action="{service controller=tracker action=import}">
+		<label>
+			{tr}Raw data{/tr}
+			<textarea name="raw"></textarea>
+		</label>
+		<label>
+			<input type="checkbox" name="preserve" value="1"/>
+			{tr}Preserve tracker ID{/tr}
+		</label>
+		<div class="submit">
+			<input type="submit" value="{tr}Import{/tr}"/>
+		</div>
+	</form>
 {/tab}
 
 {/tabset}

@@ -37,12 +37,6 @@ if (isset($_REQUEST['deltodo'])) {
 }
 
 if (isset($_REQUEST["save"])) {
-	if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
-		$raw = $tikilib->read_raw($_REQUEST['rawmeat']);
-		foreach($raw['tracker'] as $it => $da) {
-			$_REQUEST["$it"] = $da;
-		}
-	}
 	check_ticket('admin-trackers');
 	if (!empty($_REQUEST['todo_event']) && !empty($_REQUEST['todo_after']) ) {
 		include_once('lib/todolib.php');

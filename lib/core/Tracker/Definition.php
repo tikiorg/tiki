@@ -28,7 +28,7 @@ class Tracker_Definition
 
 		if ($tracker_info) {
 			if ($t = $trklib->get_tracker_options($trackerId)) {
-				$tracker_info = array_merge($tracker_info, $t);
+				$tracker_info = array_merge($t, $tracker_info);
 			}
 
 			$definition = new self($tracker_info);

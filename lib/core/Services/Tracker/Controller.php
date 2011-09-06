@@ -529,7 +529,7 @@ class Services_Tracker_Controller
 				'defaultOrderDir' => $input->defaultOrderKey->word(),
 				'doNotShowEmptyField' => $input->doNotShowEmptyField->int() ? 'y' : 'n',
 				'showPopup' => $input->showPopup->text(),
-				'defaultStatus' => (array) $input->defaultStatus->word(),
+				'defaultStatus' => implode('', (array) $input->defaultStatus->word()),
 				'newItemStatus' => $input->newItemStatus->word(),
 				'modItemStatus' => $input->modItemStatus->word(),
 				'outboundEmail' => $input->outboundEmail->email(),
@@ -623,6 +623,67 @@ class Services_Tracker_Controller
 		return array(
 			'trackerId' => $newId,
 			'name' => $name,
+		);
+	}
+
+	function action_export($input)
+	{
+		$trackerId = $input->trackerId->int();
+
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+		
+		$info = $definition->getInformation();
+
+		$out = "[TRACKER]\n";
+
+		foreach ($info as $key => $value) {
+			if ($key && $value) {
+				$out .= "$key = $value\n";
+			}
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'export' => $out,
+		);
+	}
+
+	function action_import($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$raw = $input->raw->none();
+		$preserve = $input->preserve->int();
+
+		$data = TikiLib::lib('tiki')->read_raw($raw);
+
+		if (! $data || ! isset($data['tracker'])) {
+			throw new Services_Exception(tr('Invalid data provided'), 400);
+		}
+
+		$data = $data['tracker'];
+
+		$trackerId = 0;
+		if ($preserve) {
+			$trackerId = (int) $data['trackerId'];
+		}
+
+		unset($data['trackerId']);
+		$trackerId = $this->utilities->updateTracker($trackerId, $data);
+
+		return array(
+			'trackerId' => $trackerId,
+			'name' => $data['name'],
 		);
 	}
 
