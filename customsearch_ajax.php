@@ -103,13 +103,13 @@ if (isset($_POST['adddata'])) {
 	// Reconstruct textrange from-to filters
 	$grouped = cs_get_grouped($dataappend, $textrangegroups);
 	$grouping_keys = array('content');
-	$to_reconstruct = cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false); 
+	$to_reconstruct = cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true); 
 	cs_reconstruct_rangegroup($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, 'text');
 
-	// Reconstruct textrange from-to filters
+	// Reconstruct daterange from-to filters
 	$grouped = cs_get_grouped($dataappend, $daterangegroups);
 	$grouping_keys = array('content');
-	$to_reconstruct = cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false);
+	$to_reconstruct = cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true);
 	cs_reconstruct_rangegroup($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, 'date');
 
 	// Finally combine base filters with appended filters
@@ -133,7 +133,7 @@ function cs_get_grouped($dataappend, $groups) {
 	return $grouped; 
 }
 
-function cs_process_group($dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true) {
+function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false) {
 	$parser = new WikiParser_PluginArgumentParser;
 	$to_reconstruct = array();
 	foreach ($grouped as $group_id => $grp) {
@@ -172,6 +172,10 @@ function cs_process_group($dataappend, $grouped, $id, $grouping_keys, $min_match
 			}
 			if (count($query_vals) >= $min_match && count($query_vals) <= $max_match) {
 				$to_reconstruct[$group_id] = array('args' => $args, 'query_vals' => $query_vals);
+			} elseif ($drop_if_no_match) {
+				foreach ($grouped[$group_id] as $to_drop) {
+					unset($dataappend[$to_drop]);
+				}
 			}
 		}
 	}
