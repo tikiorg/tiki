@@ -1,5 +1,6 @@
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl and $prefs.socialnetworks_user_firstlogin != 'y'}
-	<input type="text" name="name" id="name" /><strong class='mandatory_star'>*</strong>
+	<input type="text" name="name" id="name" />
+	&nbsp;<strong class='mandatory_star'>*</strong>
 {else}
 	<tr>
 		<td>
