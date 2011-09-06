@@ -38,11 +38,14 @@ class Connect_Client extends Connect_Abstract
 			}
 			$info['prefs'] = $modifiedPrefs;
 			// get all table row counts
-			$res = TikiLib::lib('tiki')->fetchAll('SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE();');
+			$tikilib = TikiLib::lib('tiki');
+			$res = $tikilib->fetchAll('SHOW TABLES;');
 			if (!empty($res)) {
 				$info['tables'] = array();
 				foreach( $res as $r ) {
-					$info['tables'][$r['table_name']] = $r['table_rows'];
+					foreach ($r as $table) {
+						$info['tables'][$table] = $tikilib->getOne('SELECT COUNT(*) FROM `' . $table . '`');
+					}
 				}
 			}
 
