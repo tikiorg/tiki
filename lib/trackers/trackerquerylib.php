@@ -253,7 +253,7 @@ class TrackerQueryLib extends TikiLib
 		if (isset($end) && !empty($end) && !$search) $params[] = $end;
 		if (isset($itemId) && !empty($itemId) && !$search) $params[] = $itemId;
 		
-		if(isset($byName) && $byName == true) {
+		if(isset($byName) && $byName == true && !empty($fields)) {
 			$fieldIds = array();
 			foreach($fields as $field) {
 				$fieldIds[] = $tikilib->getOne("
