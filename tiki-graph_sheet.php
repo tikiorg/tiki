@@ -6,7 +6,9 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-require_once ('lib/sheet/grid.php');
+
+$sheetlib = TikiLib::lib("sheet");
+
 require_once ('lib/graph-engine/gd.php');
 require_once ('lib/graph-engine/pdflib.php');
 require_once ('lib/graph-engine/ps.php');

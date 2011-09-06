@@ -8,7 +8,9 @@
 $section = 'sheet';
 $tiki_sheet_div_style = '';
 require_once ('tiki-setup.php');
-require_once ('lib/sheet/grid.php');
+
+$sheetlib = TikiLib::lib("sheet");
+
 $auto_query_args = array(
 	'sheetId',
 	'readdate',
@@ -16,7 +18,8 @@ $auto_query_args = array(
 	'simple',
 	'height',
 	'file',
-	'fileId'
+	'fileId',
+	'page',
 );
 $access->check_feature('feature_sheet');
 $access->check_feature('feature_jquery_ui');
@@ -43,6 +46,7 @@ if (!$sheetlib->user_can_view( $_REQUEST['sheetId'] )) {
 	die;
 }
 
+$smarty->assign('page', $_REQUEST['page']);
 $smarty->assign('objectperms', $objectperms);
 
 if (isset($_REQUEST['height'])) {
@@ -88,7 +92,7 @@ if ($prefs['feature_contribution'] == 'y') {
 //Save
 if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	if ( $_REQUEST['sheetId'] ) {
-		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST['t'], $_REQUEST["sheetId"] );
+		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 
 	}
 	die($result);
@@ -122,7 +126,31 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 }
 
 //Edit & View
-if ( isset($_REQUEST['file']) ) {
+if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
+	if ( $_REQUEST['relate'] == 'add' ) {
+		$sheetlib->add_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
+		$smarty->assign('msg', tra("Tracker Added To Spreadsheet"));
+	} elseif( $_REQUEST['relate'] == 'remove' ) {
+		$sheetlib->remove_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
+		$smarty->assign('msg', tra("Tracker Removed From Spreadsheet"));
+	}
+} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['childSheetId']) ) {
+	if ( $_REQUEST['relate'] == 'add' ) {
+		$sheetlib->add_related_sheet( $_REQUEST["sheetId"], $_REQUEST['childSheetId'] );
+		$smarty->assign('msg', tra("Spreadsheet added"));
+	} elseif( $_REQUEST['relate'] == 'remove' ) {
+		$sheetlib->remove_related_sheet($_REQUEST["sheetId"], $_REQUEST['childSheetId'] );
+		$smarty->assign('msg', tra("Spreadsheet removed"));
+	}
+} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['fileId']) ) {
+	if ( $_REQUEST['relate'] == 'add' ) {
+		$sheetlib->add_related_file( $_REQUEST["sheetId"], $_REQUEST['fileId'] );
+		$smarty->assign('msg', tra("File added"));
+	} elseif( $_REQUEST['relate'] == 'remove' ) {
+		$sheetlib->remove_related_file( $_REQUEST["sheetId"], $_REQUEST['fileId'] );
+		$smarty->assign('msg', tra("File removed"));
+	}
+} elseif ( isset($_REQUEST['file']) ) {
 	//File sheets
 	$handler = new TikiSheetCSVHandler( $_REQUEST['file'] );
 	$grid = new TikiSheet();
@@ -143,22 +171,6 @@ if ( isset($_REQUEST['file']) ) {
 	
 	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
 
-} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
-	if ( $_REQUEST['relate'] == 'add' ) {
-		$sheetlib->add_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
-		$smarty->assign('msg', tra("Tracker Added To Spreadsheet"));
-	} elseif( $_REQUEST['relate'] == 'remove' ) {
-		$sheetlib->remove_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
-		$smarty->assign('msg', tra("Tracker Removed From Spreadsheet"));
-	}
-} elseif ( isset($_REQUEST['relate']) && isset($_REQUEST['childSheetId']) ) {
-	if ( $_REQUEST['relate'] == 'add' ) {
-		$sheetlib->add_related_sheet( $_REQUEST["sheetId"], $_REQUEST['childSheetId'] );
-		$smarty->assign('msg', tra("Spreadsheet added"));
-	} elseif( $_REQUEST['relate'] == 'remove' ) {
-		$sheetlib->remove_related_sheet( $_REQUEST['childSheetId'] );
-		$smarty->assign('msg', tra("Spreadsheet removed"));
-	}
 } else {
 	//Database sheet
 	$handler = new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
@@ -168,7 +180,7 @@ if ( isset($_REQUEST['file']) ) {
 		$handler->setReadDate($_REQUEST['readdate']);
 	}
 	
-	$grid = new TikiSheet( $_REQUEST["sheetId"] );
+	$grid = new TikiSheet();
 	$grid->import( $handler );
 		
 	//ensure that sheet isn't being edited, then parse values if needed
@@ -182,7 +194,6 @@ if ( isset($_REQUEST['file']) ) {
 			
 	$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
 	
-	$relatedTrackersAsHtml = $sheetlib->get_related_trackers_as_html( $_REQUEST["sheetId"] );
 	if (strlen($relatedTrackersAsHtml) > 0) {
 		$tableHtml[0] = $tableHtml[0] . $relatedTrackersAsHtml;
 	}
@@ -199,9 +210,14 @@ $smarty->assign('grid_content', $tableHtml);
 $smarty->assign('menu', $smarty->fetch('tiki-view_sheets_menu.tpl'));
 
 $sheetlib->setup_jquery_sheet();
+if (!empty($_REQUEST['parse']) && $_REQUEST['parse'] == 'edit') {
+	$headerlib->add_jq_onready('
+		$.sheet.tikiOptions.editable = true;
+	');
+}
+
 $headerlib->add_jq_onready('
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
-		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false),
 		menu: $("#sheetMenu").clone().html()
 	});
 	

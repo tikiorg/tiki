@@ -8,7 +8,9 @@
 $section = 'sheet';
 $tiki_sheet_div_style = '';
 require_once ('tiki-setup.php');
-require_once ('lib/sheet/grid.php');
+
+$sheetlib = TikiLib::lib("sheet");
+
 $auto_query_args = array(
 	'sheetId',
 	'idx_0',

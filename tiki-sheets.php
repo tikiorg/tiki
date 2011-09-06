@@ -7,7 +7,8 @@
 
 $section = 'sheet';
 require_once ('tiki-setup.php');
-require_once ('lib/sheet/grid.php');
+
+$sheetlib = TikiLib::lib("sheet");
 
 $access->check_feature('feature_sheet');
 
