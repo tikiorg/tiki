@@ -163,7 +163,7 @@ class TikiLib extends TikiDb_Bridge
 			global $ratingconfiglib; require_once 'lib/rating/configlib.php';
 			return $libraries[$name] = $ratingconfiglib;
 		case 'sheet':
-			global $sheetlib; require_once ('lib/sheet/grid.php');
+			global $sheetlib; require_once ('lib/sheet/sheetlib.php');
 			return $libraries[$name] = $sheetlib;
 		case 'zotero':
 			require_once 'lib/zoterolib.php';
