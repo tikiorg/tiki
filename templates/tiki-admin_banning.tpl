@@ -17,13 +17,15 @@
 <div class="navbar">
 	<form action="tiki-admin_banning.php" method="post">
 	<input type="hidden" name="export" value="y"/>
-		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}"/>
+		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}" class="button"/>
+		{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV" class="button"}
 	</form>
-	{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV"}
 </div>
 
 {if $updated}
-  {tr}Banning rules have been updated{/tr}
+	{remarksbox type="note" title="{tr}Note:{/tr}"}
+		<strong>{tr}Banning rules have been updated{/tr}</strong>
+	{/remarksbox}
 {/if}
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
@@ -128,8 +130,8 @@
   </table>
 </form>
 
-<h2>{tr}Find{/tr}</h2>
 {if $items}
+<h2>{tr}Find{/tr}</h2>
 	<form method="post" action="tiki-admin_banning.php">
 		<input type="hidden" name="offset" value="{$offset|escape}" />
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -171,7 +173,10 @@
 					{/section}
 				</td>
 				<td class="action">
-					&nbsp;&nbsp;<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link">
+					&nbsp;&nbsp;<a title="{tr}Edit{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;banId={$items[user].banId}" class="link">
+						{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+					</a>
+					<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link">
 						{icon _id='cross' alt="{tr}Delete{/tr}"}
 					</a>&nbsp;&nbsp;
 				</td>
