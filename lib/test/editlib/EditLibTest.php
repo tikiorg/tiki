@@ -13,7 +13,7 @@
 
 class EditLibTest extends TikiTestCase
 {
-	
+	private $el = null; // the EditLib
 	private $dir = '';  // the unmodifed directory
 
 	function __construct() {
@@ -202,7 +202,7 @@ class EditLibTest extends TikiTestCase
 	}
 	
 	
-	function testParseToWiki() {
+	function testParseToWikiSpaces() {
 		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new EditLib();
@@ -213,6 +213,21 @@ class EditLibTest extends TikiTestCase
 		$inData = 'abc <b> bold </b> def';
 		$res = $el->parseToWiki($inData);
 		$this->assertEquals('abc __ bold __ def', $res);
+	}
+	
+	
+	/**
+	 * Nested wiki inline tags
+	 * 
+	 * This test verifies that the tags are written in the correct
+	 * order to the output stream.
+	 */
+	function testParseToWikiNestedInline() {
+		
+		$ex = '__bold\'\'bold italic\'\'__';
+		$inData = '<strong>bold<em>bold italic</em></strong>';
+		$res = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $res);
 	}
 	
 }
