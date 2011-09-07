@@ -30,7 +30,7 @@ class CategLib extends ObjectLib
 	Related to get_child_categories, get_visible_child_categories, getCategories
 	Respects the category filter */
 	function list_categs($categId=0, $all = true) {
-		$back = $this->getCategories(true, false, true);
+		$back = $this->getCategories(true, false);
 
 		if ($categId > 0 || !$all) {
 			$path = '';
@@ -55,7 +55,7 @@ class CategLib extends ObjectLib
 	 * Specifiy a common ancestor category ID in $top to remove the top level from the category path
 	 */
 	function get_category_info($categIds, $top=null) {
-		$back = $this->getCategories(true, false, true);
+		$back = $this->getCategories(true, false);
 		$i = 0;
 		$cut = '';
 		foreach ($back as $cat) {
@@ -181,11 +181,10 @@ class CategLib extends ObjectLib
 			$this->remove_category($res["categId"]);
 		}
 		
-		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('allcategs');
 		$cachelib->invalidate('childcategs'.$parentId);
 		
 		$cachelib->empty_type_cache('fgals_perms');
-		$cachelib->invalidate("allcategs$categId");
 	
 		$values= array("categoryId"=>$categId, "categoryName"=>$categoryName, "categoryPath"=>$categoryPath,
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
@@ -209,7 +208,7 @@ class CategLib extends ObjectLib
 
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
-		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 		$cachelib->invalidate('childcategs'.$oldParentId);
@@ -228,7 +227,7 @@ class CategLib extends ObjectLib
 		$result = $this->query($query,array($name,$description,(int) $parentId, 0));
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? order by `categId` desc";
 		$id = $this->getOne($query,array($name,(int) $parentId));
-		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
@@ -268,7 +267,7 @@ class CategLib extends ObjectLib
 			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
 			$this->query($query, array($id));
 		}
-		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		return $id;
 	}
@@ -285,7 +284,7 @@ class CategLib extends ObjectLib
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId));
 
 		global $cachelib;
-		$cachelib->invalidate("allcategs");
+		$cachelib->empty_type_cache("allcategs");
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			global $objectlib; include_once('lib/objectlib.php');
@@ -300,7 +299,7 @@ class CategLib extends ObjectLib
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId),-1,-1,false);
 
 		global $cachelib;
-		$cachelib->invalidate("allcategs");
+		$cachelib->empty_type_cache("allcategs");
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			global $objectlib; include_once('lib/objectlib/php');
@@ -595,7 +594,7 @@ class CategLib extends ObjectLib
 				$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 				$result = $this->query($query,array((int) $catObjectId));
 			}
-			$cachelib->invalidate('allcategs');
+			$cachelib->empty_type_cache('allcategs');
 			$cachelib->empty_type_cache('fgals_perms');
 		}
 	}
@@ -911,40 +910,83 @@ class CategLib extends ObjectLib
 		return $localCache[$key] = Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
 	}
 
+	// Return an array enumerating a subtree with the given root node in preorder
+	private function getSortedSubTreeNodes($root, $categories) {
+		$subTreeNodes = array($root);
+		$childrenSubTreeNodes = array();
+		foreach ($categories[$root]['children'] as $child) {
+			$childrenSubTreeNodes[$categories[$child]['name']] = $this->getSortedSubTreeNodes($child, $categories);
+		}
+		ksort($childrenSubTreeNodes, SORT_LOCALE_STRING);
+		foreach ($childrenSubTreeNodes as $childSubTreeNodes) {
+			$subTreeNodes = array_merge($subTreeNodes, $childSubTreeNodes);
+		}
+		return $subTreeNodes;
+	}
+	
 	/* Returns an array of categories.
 	Each category is similar to a tiki_categories record, but with the following additional fields:
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
-		"children" is the number of categories the category has as children.
+		"children" is an array of identifiers of the categories the category has as children.
 		"objects" is the number of objects directly in the category. 
 	If considerCategoryFilter is true, only categories that match the category filter are returned.
 	If considerPermissions is true, only categories that the user has the permission to view are returned.
-	If sortByName is enabled, categories are sorted according to their translated name (rather than according to their path). */
-	function getCategories($considerCategoryFilter = true, $considerPermissions = true, $sortByName = false) {
-		global $cachelib;
-		if( ! $ret = $cachelib->getSerialized("allcategs") ) {
-			$ret = array();
+	If localized is enabled, category names are translated to the user's language. */
+	function getCategories($considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
+		global $cachelib, $prefs;
+		if( ! $ret = $cachelib->getSerialized($localized ? $prefs['language'] : '', 'allcategs') ) {
+			// This generates different caches for each language. The empty key is used when no localization was requested.
+			// This could be optimized, but for now each cache is generated from scratch.
+
+			$categories = array();
+			$roots = array();
 			$query = "select * from `tiki_categories`";
 			$result = $this->query($query, array());
 			while ($res = $result->fetchRow()) {
 				$id = $res["categId"];
-				$query = "select count(*) from `tiki_categories` where `parentId`=?";
-				$res["children"] = $this->getOne($query,array($id));
 				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-				$res["objects"] = $this->getOne($query,array($id));
-				$catpath = $this->get_category_path($id);
-				$tepath = array();
-				foreach ($catpath as $cat) {
-					$tepath[] = $cat['name'];
+				$res["objects"] = $this->getOne($query, array($id));
+				$res['children'] = array();
+				if ($localized) {
+					$res['name'] = tr($res['name']);
 				}
-				$res["tepath"] = $tepath;
-				$res["categpath"] = implode("::",$tepath);
-				$categpathforsort = TikiLib::take_away_accent(implode("!!",$tepath)); // needed to prevent cat::subcat to be sorted after cat2::subcat
-				$ret[$categpathforsort] = $res;
+				
+				$categories[$id] = $res;
 			}
-			ksort($ret);
-			$ret = array_values($ret);
-			$cachelib->cacheItem("allcategs",serialize($ret));
+
+			foreach ($categories as &$category) {
+				if ($category['parentId']) {
+					// Link this category from its parent.
+					$categories[$category['parentId']]['children'][] = $category['categId'];
+				} else {
+					// Mark as a root category.
+					$roots[$category['name']] = $category['categId'];
+				}
+				
+				$path = array($category['name']);
+				for ($parent = $category['parentId']; $parent != 0; $parent = $categories[$parent]['parentId']) {
+					$path[] = $categories[$parent]['name'];
+				}
+				$path = array_reverse($path);
+
+				$category["tepath"] = $path;
+				$category["categpath"] = implode("::", $path);
+			}
+			
+			// Sort in preorder. Siblings are sorted by name.
+			ksort($roots, SORT_LOCALE_STRING);
+			$sortedCategoryIdentifiers = array();
+			foreach ($roots as $root) {
+				$sortedCategoryIdentifiers = array_merge($sortedCategoryIdentifiers, $this->getSortedSubTreeNodes($root, $categories));
+			}
+			$ret = array();
+			foreach ($sortedCategoryIdentifiers as $categoryIdentifier) {
+				$ret[] = $categories[$categoryIdentifier];
+			}
+			unset($categories);
+			
+			$cachelib->cacheItem($localized ? $prefs['language'] : '', 'allcategs');
 		}
 
 		if ($considerCategoryFilter) {
@@ -962,29 +1004,6 @@ class CategLib extends ObjectLib
 		
 		if ($considerPermissions) {
 			$ret = Perms::filter( array( 'type' => 'category' ), 'object', $ret, array( 'object' => 'categId' ), 'view_category' );
-		}
-		
-		if ($sortByName) {		
-			global $prefs;
-			if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
-				if(!function_exists('cmpcatname')) {
-					function cmpcatname($a, $b) {
-						$a = strtolower(TikiLib::take_away_accent($a['name']));
-						$b = strtolower(TikiLib::take_away_accent($b['name']));
-						if ($a == $b) {
-							return 0;
-						}
-						return ($a < $b) ? -1 : 1;
-					}
-				}
-				if (!empty($ret)){
-					foreach ($ret as &$res) {
-						$res['name'] = tra($res['name']);
-					}
-					unset($res);
-					usort($ret, "cmpcatname");
-				}
-			}
 		}
 		
 		return $ret;
@@ -1062,8 +1081,8 @@ class CategLib extends ObjectLib
 	    
 		    // Refresh categories
 		    global $cachelib; include_once('lib/cache/cachelib.php');
-		    $cachelib->invalidate('allcategs');
-        $cachelib->empty_type_cache('fgals_perms');
+		    $cachelib->empty_type_cache('allcategs');
+        	$cachelib->empty_type_cache('fgals_perms');
 		}
     }
 
