@@ -108,7 +108,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		} else if ($_REQUEST['watch_action'] == 'add') {
 			$name = tra('Top');
 			if ($_REQUEST['watch_object'] != 0) {
-				$name = $categlib->get_category_path_string_with_root($user, $_REQUEST['watch_object']);
+				$name = $categlib->get_category_path_string_with_root($_REQUEST['watch_object']);
 			}
 			$categlib->watch_category($user, $_REQUEST['watch_object'], $name);
 		} else if ($_REQUEST['watch_action'] == 'remove_desc') {
