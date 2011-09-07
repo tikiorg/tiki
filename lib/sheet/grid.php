@@ -340,7 +340,7 @@ class TikiSheet
 				$childSheet->import($handler);
 				$data .= $childSheet->getTableHtml( false );
 			}
-			
+		}
 			foreach ($sheetlib->get_related_file_ids($this->id) as $childFileId) {
 				$fileInfo = $filegallib->get_file_info( $childFileId );
 				
@@ -354,7 +354,7 @@ class TikiSheet
 				if (!empty($handler)) {
 					$childSheet = new TikiSheet();
 					$childSheet->import($handler);
-					$data .= $childSheet->getTableHtml( false );
+					$data .= $childSheet->getTableHtml();
 				}
 			}
 			
@@ -362,9 +362,9 @@ class TikiSheet
 				$handler = new TikiSheetTrackerHandler($childTrackerId);
 				$childSheet = new TikiSheet();
 				$childSheet->import($handler);
-				$data .= $childSheet->getTableHtml( false );
+				$data .= $childSheet->getTableHtml();
 			}
-		}
+		
 		
 		return $data;
 	}
