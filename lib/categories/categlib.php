@@ -931,7 +931,7 @@ class CategLib extends ObjectLib
 	/* Returns an array of categories.
 	Each category is similar to a tiki_categories record, but with the following additional fields:
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
-		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
+		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category. Indices are category OIDs.
 		"children" is an array of identifiers of the categories the category has as children.
 		"objects" is the number of objects directly in the category.
 		
@@ -976,9 +976,9 @@ class CategLib extends ObjectLib
 					$roots[$category['name']] = $category['categId'];
 				}
 				
-				$path = array($category['name']);
+				$path = array($category['categId'] => $category['name']);
 				for ($parent = $category['parentId']; $parent != 0; $parent = $categories[$parent]['parentId']) {
-					$path[] = $categories[$parent]['name'];
+					$path[$parent] = $categories[$parent]['name'];
 				}
 				$path = array_reverse($path);
 
@@ -1473,15 +1473,12 @@ class CategLib extends ObjectLib
 	 * "Root Category (TOP) > 1st Subcategory > 2nd Subcategory::..."	
 	 */	
 	function get_category_path_string_with_root($categId) {		
-		$path = $this->get_category_path($categId);
-		$name = '';
-		$tepath = array ();
-		$tepath[] = "Top";
-		foreach ($path as $pathelem) {
-			$tepath[] = $pathelem['name'];
+		$category = $this->get_category($categId);
+		$tepath = array ('Top');
+		foreach ($category['tepath'] as $pathelem) {
+			$tepath[] = $pathelem;
 		}
-		$name = implode(" > ", $tepath);
-		return $name;
+		return implode(" > ", $tepath);
 	}
 
 	/**
