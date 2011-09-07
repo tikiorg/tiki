@@ -217,7 +217,6 @@ class CategLib extends ObjectLib
 		$cachelib->invalidate('childcategs'.$parentId);
 		$cachelib->invalidate('childcategs'.$oldParentId);
 
-		$this->update_category_cache($categId);
 		$values= array("categoryId"=>$categId, "categoryName"=>$name, "categoryPath"=>$this->get_category_path_string_with_root($categId),
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
 			"action"=>"category updated","oldCategoryName"=>$oldCategoryName, "oldCategoryPath"=>$oldCategoryPath,
@@ -1509,18 +1508,6 @@ class CategLib extends ObjectLib
           	$values['event']="category_changed";          	
           	sendCategoryEmailNotification($values);          	
         }
-	}
-
-	/**
-	 * Updates the information of the category that is stored in the cache.
-	 */
-	function update_category_cache($categId) {	   
-		$query = "select * from `tiki_categories` where `categId`=?";
-		$result = $this->query($query,array((int) $categId));
-		if (!$result->numRows()) {
-		   $this->category_cache[$categId] = false;
-		}
-		$this->category_cache[$categId] = $result->fetchRow();
 	}
 
 	/**
