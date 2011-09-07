@@ -653,7 +653,122 @@ class Services_Tracker_Controller
 		return array(
 			'trackerId' => $trackerId,
 			'export' => $out,
+			'fields' => $definition->getFields(),
+			'recordsMax' => $definition->getConfiguration('items'),
 		);
+	}
+
+	function action_export_items($input)
+	{
+		$trackerId = $input->trackerId->int();
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+		
+		$perms = Perms::get('tracker', $trackerId);
+		if (! $perms->export_tracker) {
+			throw new Services_Exception(tr('Not allowed to export'), 403);
+		}
+
+		$fields = array();
+		foreach ((array) $input->listfields->int() as $fieldId) {
+			if ($f = $definition->getField($fieldId)) {
+				$fields[$fieldId] = $f;
+			}
+		}
+
+		if (0 === count($fields)) {
+			throw new Services_Exception(tr('No valid field selected for export'), 400);
+		}
+
+		$showItemId = $input->showItemId->int();
+		$showStatus = $input->showStatus->int();
+		$showCreated = $input->showCreated->int();
+		$showLastModif = $input->showLastModif->int();
+
+		$encoding = $input->encoding->text();
+		if (! in_array($encoding, array('UTF-8', 'ISO-8859-1'))) {
+			$encoding = 'UTF-8';
+		}
+		$separator = $input->separator->none();
+		$delimitorR = $input->delimitorR->none();
+		$delimitorL = $input->delimitorL->none();
+
+		$cr = $input->CR->none();
+
+		$recordsMax = $input->recordsMax->int();
+		$recordsOffset = $input->recordsOffset->int() - 1;
+
+		session_write_close();
+
+		$trklib = TikiLib::lib('trk');
+		$trklib->write_export_header();
+
+		$header = array();
+		if ($showItemId) {
+			$header[] = 'itemId';
+		}
+		if ($showStatus) {
+			$header[] = 'status';
+		}
+		if ($showCreated) {
+			$header[] = 'created';
+		}
+		if ($showLastModif) {
+			$header[] = 'lastModif';
+		}
+		foreach ($fields as $f) {
+			$header[] = $f['name'] . ' -- ' . $f['fieldId'];
+		}
+
+		$this->writeCsv($header, $separator, $delimitorL, $delimitorR, $encoding);
+
+		$items = $trklib->list_items($trackerId, $recordsOffset, $recordsMax, 'itemId_asc', $fields);
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_tiki_short_datetime');
+		foreach ($items['data'] as $row) {
+			$toDisplay = array();
+			if ($showItemId) {
+				$toDisplay[] = $row['itemId'];
+			}
+			if ($showStatus) {
+				$toDisplay[] = $row['status'];
+			}
+			if ($showCreated) {
+				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['created']);
+			}
+			if ($showLastModif) {
+				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['lastModif']);
+			}
+			foreach ($row['field_values'] as $val) {
+				$toDisplay[] = $trklib->get_field_handler($val)->renderOutput(array('list_mode' => 'csv'));
+			}
+
+			$this->writeCsv($toDisplay, $separator, $delimitorL, $delimitorR, $encoding, $cr);
+		}
+
+		exit;
+	}
+
+	private function writeCsv($fields, $separator, $delimitorL, $delimitorR, $encoding, $cr = '%%%')
+	{
+		$values = array();
+		foreach ($fields as $v) {
+			$values[] = "$delimitorL$v$delimitorR";
+		}
+
+		$line = implode($separator, $values);
+		$line = str_replace(array("\r\n", "\n", "<br/>", "<br />"), $cr, $line);
+
+		if ($encoding === 'ISO-8859-1') {
+			echo utf8_decode($line) . "\n";
+		} else {
+			echo $line . "\n";
+		}
 	}
 
 	function action_import($input)
