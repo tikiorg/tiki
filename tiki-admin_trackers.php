@@ -31,50 +31,9 @@ if (!empty($_REQUEST['exportTrackerProfile']) && !empty($_REQUEST['trackerId']))
 	die;
 }
 
-if (isset($_REQUEST['deltodo'])) {
-	include_once('lib/todolib.php');
-	TodoLib::delTodo($_REQUEST['deltodo']);
-}
-
-if (isset($_REQUEST["save"])) {
-	check_ticket('admin-trackers');
-	if (!empty($_REQUEST['todo_event']) && !empty($_REQUEST['todo_after']) ) {
-		include_once('lib/todolib.php');
-		if (!function_exists('compute_select_duration')) include('lib/smarty_tiki/function.html_select_duration.php');
-		$todoId = TodoLib::addTodo($todo_after = compute_select_duration($_REQUEST, 'todo_after'), $_REQUEST['todo_event'], 'tracker', $_REQUEST['trackerId'], array('status'=>$_REQUEST['todo_from']), array('status'=>$_REQUEST['todo_to']));
-		if (!empty($_REQUEST['todo_notif'])) {
-			$todo_notif = compute_select_duration($_REQUEST, 'todo_notif');
-			$todo_detail = array('mail'=>'creator', 'before'=>$todo_notif);
-			if (!empty($_REQUEST['todo_subject'])) $todo_detail['subject'] = $_REQUEST['todo_subject'];
-			if (!empty($_REQUEST['todo_body'])) $todo_detail['body'] = $_REQUEST['todo_body'];
-			TodoLib::addTodo($todo_after - $todo_notif, $_REQUEST['todo_event'], 'todo', $todoId, '', $todo_detail);
-		}
-	}
-
-	$cookietab = 1;
-}
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $info = array();
-$fields = array(
-	'data' => array()
-);
-if ($_REQUEST["trackerId"]) {
-	$info = array_merge($info, $trklib->get_tracker($_REQUEST["trackerId"]));
-	$info = array_merge($info, $trklib->get_tracker_options($_REQUEST["trackerId"]));
-	require_once 'lib/todolib.php';
-	$info['todos'] = $todolib->listTodoObject('tracker', $_REQUEST['trackerId']);
-	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
-	$smarty->assign('action', '');
-	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
-	$formats = '';
-	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId'], '', $formats);
-	$smarty->assign_by_ref('filters', $filters);
-	
-	$smarty->assign('recordsMax', $info['items']);
-	$smarty->assign('recordsOffset', 1);
-	
-}
-$smarty->assign('fields', $fields['data']);
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
@@ -94,13 +53,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
-if ($offset != 0 || $maxRecords < $channels['cant'] || $sort_mode != '' || $find != '') {
-	$trackers = $trklib->list_trackers();
-	$smarty->assign_by_ref('trackers', $trackers['data']); // for duplicate
-	
-} else {
-	$smarty->assign_by_ref('trackers', $channels['data']);
-}
+$smarty->assign_by_ref('trackers', $channels['data']);
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["trackerId"], 'tracker')) {

@@ -20,6 +20,7 @@ $controllerMap = array(
 	'auth_source' => 'Services_AuthSource_Controller',
 	'tracker' => 'Services_Tracker_Controller',
 	'tracker_sync' => 'Services_Tracker_SyncController',
+	'tracker_todo' => 'Services_Tracker_TodoController',
 	'favorite' => 'Services_Favorite_Controller',
 	'translation' => 'Services_Language_TranslationController',
 	'user' => 'Services_User_Controller',

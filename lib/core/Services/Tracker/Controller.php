@@ -30,7 +30,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		$name = $input->name->text();
@@ -109,7 +109,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		return array(
@@ -128,7 +128,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		$hasList = false;
@@ -182,12 +182,12 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		$field = $definition->getField($fieldId);
 		if (! $field) {
-			throw new Services_Exception(tr('Tracker field not found in specified tracker'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		$types = $this->utilities->getFieldTypes();
@@ -252,12 +252,12 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker not found'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		foreach ($fields as $fieldId) {
 			if (! $definition->getField($fieldId)) {
-				throw new Services_Exception(tr('Field does not exist in tracker'), 404);
+				throw new Services_Exception_NotFound;
 			}
 		}
 
@@ -292,7 +292,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker not found'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		if ($fields) {
@@ -323,7 +323,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker not found'), 404);
+			throw new Services_Exception_NotFound;
 		}
 		
 		$raw = $input->raw->none();
@@ -373,7 +373,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		$items = $this->utilities->getItems(array(
@@ -402,7 +402,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		// TODO : Eventually, this method should check the track permissions
@@ -428,7 +428,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 
 		// TODO : Eventually, this method should check the track permissions
@@ -465,7 +465,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 		
 		if ($confirm) {
@@ -495,7 +495,7 @@ class Services_Tracker_Controller
 			$definition = Tracker_Definition::get($trackerId);
 
 			if (! $definition) {
-				throw new Services_Exception(tr('Tracker does not exist'), 404);
+				throw new Services_Exception_NotFound;
 			}
 		} else {
 			$definition = Tracker_Definition::getDefault();
@@ -609,7 +609,7 @@ class Services_Tracker_Controller
 
 		$definition = Tracker_Definition::get($trackerId);
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 		
 		$name = $input->name->text();
@@ -637,7 +637,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 		
 		$info = $definition->getInformation();
@@ -665,7 +665,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 		
 		$perms = Perms::get('tracker', $trackerId);
@@ -761,7 +761,7 @@ class Services_Tracker_Controller
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
-			throw new Services_Exception(tr('Tracker does not exist'), 404);
+			throw new Services_Exception_NotFound;
 		}
 		
 		$perms = Perms::get('tracker', $trackerId);

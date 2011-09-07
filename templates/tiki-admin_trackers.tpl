@@ -48,6 +48,7 @@
 				<td class="integer">{$tracker.items|escape}</td>
 				<td class="action">
 					<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+					<a title="{tr _0=$tracker.name|escape}Events{/tr}" class="event dialog" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 					{if $tracker.individual eq 'y'}
@@ -105,6 +106,20 @@
 			return false;
 		});
 
+		$('.event.dialog').click(function () {
+			var link = this;
+			$(this).serviceDialog({
+				title: $(link).attr('title'),
+				data: {
+					controller: 'tracker_todo',
+					action: 'view',
+					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
+				}
+			});
+
+			return false;
+		});
+
 		$('.create-tracker').submit(function () {
 			var form = this;
 			$(this).serviceDialog({
@@ -121,96 +136,6 @@
 			return false;
 		});
 	{/jq}
-{/tab}
-
-{if $trackerId}
-	{capture assign='tabeditcreatetrk_admtrk'}{tr}Edit Tracker{/tr} <i>{$name|escape} (#{$trackerId})</i>{/capture}
-{else}
-	{assign var='tabeditcreatetrk_admtrk' value="{tr}Create Tracker{/tr}"}
-{/if}
-	
-{tab name=$tabeditcreatetrk_admtrk}
-{* --- tab with form --- *}
-<a name="mod"></a>
-	<h2>{tr}Create/Edit Tracker{/tr}</h2>
-	{if $trackerId}
-		{include file='object_perms_summary.tpl' objectName=$name objectType='tracker' objectId=$trackerId permType=$permsType}
-	{/if}
-	<form action="tiki-admin_trackers.php" method="post" name="editpageform" id="editpageform">
-		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-		<table class="formcolor">
-
-
-			{if !empty($info.todos)}
-				<tr>
-					<td>{tr}Status changes list{/tr}</td>
-					<td>
-						{cycle values="odd,even" print=false}
-						<table class="normal">
-						<tr><th>{tr}From{/tr}</th><th>{tr}To{/tr}</th><th>{tr}Delay{/tr}</th><th>{tr}After{/tr}</th><th>{tr}Notification{/tr}</th><th>{tr}Action{/tr}</th></tr>
-						{foreach from=$info.todos item=todo}
-							<tr class="{cycle}">
-								<td>{$todo.from.status|escape}</td>
-								<td>{$todo.to.status|escape}</td>
-								<td>{$todo.after|duration|escape}</td>
-								<td>{tr}{$todo.event}{/tr}</td>
-								<td>
-									{foreach from=$todo.notifs item=notif name=notif}
-										{if !$smarty.foreach.notif.first}<br />{/if}
-										{foreach from=$notif.to key=i item=j name=notif2}
-											{if !$smarty.foreach.notif2.first}<br />{/if}
-											{$i|escape}: {if $i eq 'before'}{$j|duration|escape}{else}{$j|escape}{/if}
-										{/foreach}
-									{/foreach}
-								</td>
-								<td><a title="{tr}Delete todo{/tr}" class="link" href="tiki-admin_trackers.php?trackerId={$trackerId}&amp;deltodo={$todo.todoId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
-							</tr>
-						{/foreach}
-						</table>
-					</td>
-				</tr>
-			{/if}
-			<tr>
-				<td>{tr}Status changes{/tr}</td>
-				<td>			
-					<label>
-						{tr}From{/tr}
-						<select name="todo_from">
-							<option value=""></option>
-							{foreach key=st item=stdata from=$status_types}
-								<option value="{$st|escape}">{$stdata.label|escape}</option>
-							{/foreach}
-						</select>
-					</label>
-					<label>
-						{tr}To{/tr}
-						<select name="todo_to">
-							<option value=""></option>
-							{foreach key=st item=stdata from=$status_types}
-								<option value="{$st|escape}">{$stdata.label|escape}</option>
-							{/foreach}
-						</select>
-					</label><br />
-					{html_select_duration prefix='todo_after'}
-					<select name="todo_event">
-						<option value="creation">{tr}After creation{/tr}</option>
-						<option value="modification">{tr}After last modification{/tr}</option>
-					</select>
-					<fieldset>
-						<legend>{tr}Notification{/tr}</legend>
-						{tr}Warn creator of an upcoming status change{/tr}{html_select_duration prefix='todo_notif'}{tr}before{/tr}<br />
-						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /></label><br />
-						<label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label><em><br />{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em>
-					</fieldset>
-				</td>
-			</tr>
-				
-			<tr>
-				<td></td>
-				<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
-			</tr>
-		</table>
-	</form>
 {/tab}
 
 {tab name="{tr}Import/Export{/tr}"}
