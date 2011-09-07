@@ -224,10 +224,17 @@ class EditLibTest extends TikiTestCase
 	 */
 	function testParseToWikiNestedInline() {
 		
-		$ex = '__bold\'\'bold italic\'\'__';
-		$inData = '<strong>bold<em>bold italic</em></strong>';
+		$ex = '__bold\'\'bold italic\'\'__\n__\'\'bold italic\'\'__';
+		$inData = '<strong>bold<em>bold italic<br />bold italic</em></strong>';
 		$res = $this->el->parseToWiki($inData);
+		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
 		$this->assertEquals($ex, $res);
+		
+		$ex = '__bold\'\'bold italic\'\'__\n__bold__';
+		$inData = '<strong>bold<em>bold italic</em><br />bold</strong>';
+		$res = $this->el->parseToWiki($inData);
+		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
+		$this->assertEquals($ex, $res);		
 	}
 	
 }

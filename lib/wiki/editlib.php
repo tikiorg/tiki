@@ -384,6 +384,25 @@ class EditLib
 	}
 	
 	
+	/**
+	 * Process an inline tag
+	 * 
+	 * Line breaks are not allowed within inline tags. Hence, a special processing is needed.
+	 *
+	 * @param $tag strint The name of the tag
+	 * @param $src string output string
+	 * @param $p array ['stack'] = closing strings stack,
+	 * @param $begin string The wiki markup that begins the inline tag
+	 * @param $end string The wiki markup that ends the inline tag
+	 */
+	function processInlineTag($tag, &$src, &$p, $begin, $end) {
+		$p['inlinestack']['begin'][] = $begin;
+		$p['inlinestack']['end'][] = $end;
+		$src .= $begin;
+		$p['stack'][] = array('tag' => $tag, 'string' => $end);
+	}
+	
+	
 	function saveCompleteTranslation() {
 		global $multilinguallib, $tikilib;
 		
@@ -564,7 +583,11 @@ class EditLib
 						case "meta": $c[$i]["content"] = ''; break;
 						
 						// others we do want
-						case "br": $src .= "\n"; break;
+						case "br": 
+							foreach (array_reverse($p['inlinestack']['end']) as $end) {$src .= $end;}
+							$src .= "\n";
+							foreach ($p['inlinestack']['begin'] as $begin) {$src .= $begin;}
+							break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
 						case "p": $isPar = true;
@@ -634,10 +657,10 @@ class EditLib
 								 */
 							}
 							break;
-						case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
-						case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
-						case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
-						case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
+						case "b": $this->processInlineTag('b', $src, $p, '__', '__'); break;
+						case "i": $this->processInlineTag('i', $src, $p, '\'\'', '\'\''); break;
+						case "em": $this->processInlineTag('em', $src, $p, '\'\'', '\'\''); break;
+						case "strong": $this->processInlineTag('strong', $src, $p, '__', '__'); break;
 						case "u": $src .= "==="; $p['stack'][] = array('tag' => 'u', 'string' => "==="); break;
 						case "strike": $src .= "--"; $p['stack'][] = array('tag' => 'strike', 'string' => "--"); break;
 						case "del": $src .= "--"; $p['stack'][] = array('tag' => 'del', 'string' => "--"); break;
@@ -723,6 +746,15 @@ class EditLib
 							break;
 					}	// end switch on tag name
 				} else {
+					// Close tag -> pop inline stack
+					switch ($c[$i]["data"]["name"]) {
+						case "b":
+						case "strong":
+						case "em":
+							array_pop( $p['inlinestack']['begin'] );
+							array_pop( $p['inlinestack']['end'] );
+					}							
+					
 					// This is close tag type. Is that smth we r waiting for?
 					switch ($c[$i]["data"]["name"]) {
 						case "ul":
@@ -794,7 +826,8 @@ class EditLib
 		$htmlparser->Parse();
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
-		$p = array('stack' => array(), 'listack' => array(), 'first_td' => false, 'first_tr' => false);
+		$p = array('stack' => array(), 'listack' => array(), 'inlinestack' => array(), 'first_td' => false, 'first_tr' => false);
+		$p['inlinestack'] = array('begin' => array(), 'end' => array() );
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 		// to produce invalid wiki :)

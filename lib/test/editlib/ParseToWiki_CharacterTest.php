@@ -94,8 +94,9 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 */
 	function testBold() {
 		
-		$this->markTestIncomplete('Work in progress.');
+		// simple
 		$ex = '__bold__';
+
 		$inData = '<b>bold</b>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
@@ -109,10 +110,23 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$this->assertEquals($ex, $out);
 		
 		// line break
-		$ex = '__bold__\n__BOLD__';
-		$inData = '<strong>bold<br />BOLD</strong>';
+		$ex = '__bold__\n__BOLD__regular';
+		
+		$inData = '<b>bold<br />BOLD</b>regular';
 		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
+		
+		$inData = '<strong>bold<br />BOLD</strong>regular';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);		
+		
+		$this->markTestIncomplete('Work in progress.');
+		$inData = '<span style="font-weight:bold;">bold<br />BOLD</span>regular';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);				
 	}
 		
 	
@@ -141,11 +155,23 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$this->assertEquals($ex, $out);		
 		
 		// line break
-		$this->markTestIncomplete('Work in progress.');
-		$ex = '\'\'italic\'\'\n\'\'ITALIC\'\'';
-		$inData = '<em>italic<br />ITALIC</em>';
+		$ex = '\'\'italic\'\'\n\'\'ITALIC\'\'regular';
+
+		$inData = '<em>italic<br />ITALIC</em>regular';
 		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
+		
+		$inData = '<i>italic<br />ITALIC</i>regular';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);
+
+		$this->markTestIncomplete('Work in progress.');		
+		$inData = '<span style="font-style:italic;">italic<br />ITALIC</span>regular';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);		
 	}
 	
 	
