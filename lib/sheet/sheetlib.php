@@ -22,6 +22,12 @@ class SheetLib extends TikiLib
 		$result = $result->fetchRow();
 		$result['tiki_p_edit_sheet'] = $this->user_can_edit( $sheetId );
 		$result['parentSheetId'] = end($this->get_related_sheet_ids( $sheetId, true ));
+		$result['childSheetIds'] = $this->get_related_sheet_ids( $sheetId );
+		$result['childTrackerIds'] = $this->get_related_tracker_ids( $sheetId );
+		$result['childFileIds'] = $this->get_related_file_ids( $sheetId );
+		$result['created'] = $this->get_created($sheet['sheetId']);
+		$result['lastModif'] = $this->get_lastModif($sheet['sheetId']);
+		
 		return $result;
 	}
 
@@ -150,16 +156,16 @@ class SheetLib extends TikiLib
 			$sheetIds[] = $result['sheetId'];
 		}
 		
-		$sheetIds = array_merge($this->get_relate_all("sheet", $sheetId), $sheetIds);
+		$sheetIds = array_merge($this->get_relate_all("sheet", $sheetId, $getParent), $sheetIds);
 		
 		foreach($sheetIds as $childSheetId) {
-			$sheetIds = array_merge($this->get_relate_all("sheet", $childSheetId), $sheetIds);
+			$sheetIds = array_merge($this->get_relate_all("sheet", $childSheetId, $getParent), $sheetIds);
 		}
 		
 		return $sheetIds;
 	}
 	
-	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' , $includeChildren = false) // {{{2
+	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '') // {{{2
 	{
 		global $user, $tikilib, $userlib;
 		switch( $sort_mode )
@@ -195,42 +201,37 @@ class SheetLib extends TikiLib
 			$mid .= ' `title` like ? ';
 		}
 		
-		$result = $this->fetchAll( "SELECT * FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
+		$result = $this->fetchAll( "SELECT sheetId FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
 		
 		$sheets = array();
 		foreach($result as $key => $sheet) {
 			$children = array();
 			
 			foreach($this->get_related_sheet_ids($sheet['sheetId']) as $childSheetId) {
-				$childSheet = $this->get_sheet_info($childSheetId);
-				$childSheet['isChild'] = 'true';
-				$childSheet['parentSheetId'] = $sheet['sheetId'];
-				$children[] = $childSheet;
+				$children[$childSheetId] = $this->get_sheet_info($childSheetId);
 			}
 			
-			$sheet['tiki_p_edit_sheet'] = $this->user_can_edit($sheet['sheetId']);
-			$sheet['created'] = $this->get_created($sheet['sheetId']);
-			$sheet['lastModif'] = $this->get_lastModif($sheet['sheetId']);
+			$sheet = $this->get_sheet_info( $sheet['sheetId'] );
+			
 			$sheet['children'] = $children;
 			
 			if ($this->user_can_view($sheet['sheetId'])) {
 				$sheets[$sheet['sheetId']] = $sheet;
 			}
 		}
-
+		//print_r($sheets);
 		$results = array();
 		
-		$results['data'] = $sheets;
+		$results['data'] = $sheets;		
 		
-		if ($includeChildren == false) {
-			foreach($results['data'] as $key => $sheet) {
-				foreach($sheet['children'] as $childSheetId) {
-					if (!empty($results['data'][$childSheetId['sheetId']]))
-						unset($results['data'][$childSheetId['sheetId']]);
-				}
+		foreach($results['data'] as $key => $sheet) {
+			foreach($sheet['children'] as $key => $childSheetId) {
+				if (!empty($results['data'][$key]))
+					unset($results['data'][$key]);
 			}
 		}
 		
+		//print_r($results);
 		$results['cant'] = $this->getOne( "SELECT COUNT(*) FROM `tiki_sheets` $mid", $bindvars );
 
 		return $results;

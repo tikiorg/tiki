@@ -4,7 +4,7 @@
 
 <tr class="{cycle}">
 	<td class="text">
-		{if $sheet.isChild}
+		{if $sheet.parentSheetId}
 			<span class="ui-icon ui-icon-grip-dotted-vertical" style="float: left;"></span>
 			<span class="ui-icon ui-icon-grip-dotted-horizontal" style="float: left; margin-left: -9px;"></span>
 		{/if}
