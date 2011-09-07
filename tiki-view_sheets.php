@@ -214,6 +214,10 @@ if (!empty($_REQUEST['parse']) && $_REQUEST['parse'] == 'edit') {
 	$headerlib->add_jq_onready('
 		$.sheet.tikiOptions.editable = true;
 	');
+} else {
+	$headerlib->add_jq_onready('
+		$.sheet.tikiOptions.editable = false;
+	');
 }
 
 $headerlib->add_jq_onready('
