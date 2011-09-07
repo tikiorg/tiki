@@ -297,8 +297,8 @@
 
 		{if $prefs.wiki_list_categories eq 'y'}
 			<td class="text">
-				{foreach item=categ from=$listpages[changes].categname name=categ}
-					{if !$smarty.foreach.categ.first}<br />{/if}
+				{foreach $listpages[changes].categname as $categ}
+					{if !$categ@first}<br />{/if}
 					{$categ|escape}
 				{/foreach}
 			</td>
@@ -306,8 +306,8 @@
 
 		{if $prefs.wiki_list_categories_path eq 'y'}
 			<td class="text">
-				{foreach item=categpath from=$listpages[changes].categpath}
-					{if !$smarty.foreach.categpath.first}<br />{/if}
+				{foreach $listpages[changes].categpath as $categpath}
+					{if !$categpath@first}<br />{/if}
 					{$categpath|escape}
 				{/foreach}
 			</td>
