@@ -84,14 +84,17 @@ class CategLib extends ObjectLib
 		return $catinfo;
 	}
 
+	// Returns a string representing the specified category's path.
+	// The path includes all parent categories ordered from the root to the category's parent, and the category itself.
+	// The string is a double colon (::) separated concatenation of category names.
+	// Returns the empty string if the specified category does not exist.
 	function get_category_path_string($categId) {
-		$categs = $this->getCategories(false, false);
-		foreach ($categs as $cat) {
-			if ($cat['categId'] == $categId) {
-				return $cat['categpath'];
-			}
+		$categories = $this->getCategories(false, false);
+		if (isset($categories[$categId])) {
+			return $categories[$categId]['categpath'];
+		} else {
+			return '';
 		}
-		return '';
 	}
 
 	// Returns an array of ancestors of the category with the given $categId and the given category itself.
@@ -111,10 +114,11 @@ class CategLib extends ObjectLib
 
 	// Returns false if the category is not found.
 	function get_category($categId) {
-		if(!isset($this->category_cache) || !isset($this->category_cache[$categId])) {
-			$this->update_category_cache($categId);
+		$categories = $this->getCategories(false, false);
+		if (!isset($categories[$categId])) {
+			return false;
 		}
-		return $this->category_cache[$categId];
+		return $categories[$categId];
 	}
 	
 	function get_category_id($name){
@@ -982,7 +986,7 @@ class CategLib extends ObjectLib
 			}
 			$ret = array();
 			foreach ($sortedCategoryIdentifiers as $categoryIdentifier) {
-				$ret[] = $categories[$categoryIdentifier];
+				$ret[$categories[$categoryIdentifier]['categId']] = $categories[$categoryIdentifier];
 			}
 			unset($categories);
 			
