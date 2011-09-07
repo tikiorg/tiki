@@ -193,7 +193,7 @@ function wikiplugin_code($data, $params) {
 		$pre_style = 'overflow:auto;';
 	}
 
-	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'"'.$boxid.'>'
+	$out = '<pre class="codelisting" data-syntax="'.$colors.'" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'"'.$boxid.'>'
 		.(( $parse_wiki ) ? '' : '~np~')
 		.$out
 		.(( $parse_wiki ) ? '' : '~/np~')
