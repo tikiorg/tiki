@@ -64,8 +64,8 @@ if (is_array($_REQUEST['parentId'])) {
 	foreach($_REQUEST['parentId'] as $p) {
 		$perms = Perms::get( array( 'type' => 'category', 'object' => $p ) );
 		if( $perms->view_category ) {
-			$paths[] = $categlib->get_category_path($p);
 			$p_info = $categlib->get_category($p);
+			$paths[] = $p_info['tepath'];
 			$canView = true;
 		}
 	}
@@ -75,7 +75,6 @@ if (is_array($_REQUEST['parentId'])) {
 	if ($_REQUEST['parentId']) {
 		$perms = Perms::get( array( 'type' => 'category', 'object' => $_REQUEST['parentId'] ) );
 
-		$path = $categlib->get_category_path($_REQUEST['parentId']);
 		$p_info = $categlib->get_category($_REQUEST['parentId']);
 		if ($prefs["feature_multilingual"] === "y")
 			$p_info["name"] = tra($p_info["name"]);
@@ -83,11 +82,9 @@ if (is_array($_REQUEST['parentId'])) {
 		$smarty->assign_by_ref('p_info', $p_info);
 		$canView = $perms->view_category;
 	} else {
-		$path = tra('TOP');
 		$father = 0;
 		$canView = true;
 	}
-	$smarty->assign('path', $path);
 	$smarty->assign('father', $father);
 }
 if (!$canView) {

@@ -109,7 +109,7 @@
 </div>
 
 <form method="post" action="tiki-browse_categories.php">
-	<label>{tr}Find:{/tr} {$p_info.name|escape} <input type="text" name="find" value="{$find|escape}" size="35" /></label><input type="submit" value="{tr}Find{/tr}" name="search" />
+	<label>{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}<input type="text" name="find" value="{$find|escape}" size="35" /></label><input type="submit" value="{tr}Find{/tr}" name="search" />
 	<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/></label>
 	<input type="hidden" name="parentId" value="{$parentId|escape}" />
 	<input type="hidden" name="type" value="{$type|escape}" />
@@ -125,13 +125,13 @@
 
 <br /><br />
 
-{if $path}
+{if isset($p_info)}
 	<div class="treetitle">{tr}Current category:{/tr}
 		<a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" class="categpath">{tr}Top{/tr}</a>
-		{section name=x loop=$path}
+		{foreach $p_info.tepath as $id=>$name}
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;
-			<a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$path[x].name|tr_if|escape}</a>
-		{/section}
+			<a class="categpath" href="tiki-browse_categories.php?parentId={$id}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$name|escape}</a>
+		{/foreach}
 			{$eyes_curr}
 	</div>
      
@@ -143,10 +143,10 @@
 	
 {elseif $paths}
 	{section name=x loop=$paths}
-		{section name=y loop=$paths[x]}
+		{foreach $paths[x] as $id=>$name}
 			&nbsp;{$prefs.site_crumb_seper|escape}&nbsp;
-			<a class="categpath" href="tiki-browse_categories.php?parentId={$paths[x][y].categId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$paths[x][y].name|tr_if}</a>
-		{/section}
+			<a class="categpath" href="tiki-browse_categories.php?parentId={$id}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$name|escape}</a>
+		{/foreach}
 		<br />
 	{/section}
 {/if}
