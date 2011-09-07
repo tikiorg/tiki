@@ -296,7 +296,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
-	$categories = $categlib->getCategories(true, true, true);
+	$categories = $categlib->getCategories();
 	$smarty->assign_by_ref('categories', $categories);
 }
 

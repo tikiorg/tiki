@@ -51,7 +51,7 @@ if (!empty($_REQUEST['categId'])) {
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
-	$categories = $categlib->getCategories(true, false, true);
+	$categories = $categlib->getCategories(true, false);
 	$smarty->assign('categories', $categories);
 }
 if (isset($_REQUEST["maxRecords"])) {

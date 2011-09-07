@@ -15,7 +15,7 @@ function prefs_user_list($partial = false) {
 		global $categlib;
 
 		include_once ('lib/categories/categlib.php');
-		$all_categs = $categlib->getCategories(true, false, true);
+		$all_categs = $categlib->getCategories(true, false);
 
 		$catree['0'] = tra('All');
 

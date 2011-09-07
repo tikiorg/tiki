@@ -170,7 +170,7 @@ $smarty->assign_by_ref('types', $types);
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
-	$categories = $categlib->getCategories(true, true, true);
+	$categories = $categlib->getCategories();
 	$smarty->assign_by_ref('categories', $categories);
 	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));	
 }

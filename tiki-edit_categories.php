@@ -19,7 +19,7 @@ require_once 'lib/tree/categ_browse_tree.php';
 $access->check_feature('feature_categories');
 
 // Generate the category tree {{{
-$ctall = $categlib->getCategories(true, true, true);
+$ctall = $categlib->getCategories();
 
 $tree_nodes = array();
 foreach($ctall as $c) {
