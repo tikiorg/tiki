@@ -19,8 +19,10 @@ class SheetLib extends TikiLib
 	function get_sheet_info( $sheetId ) // {{{2
 	{
 		$result = $this->query( "SELECT * FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
-
-		return $result->fetchRow();
+		$result = $result->fetchRow();
+		$result['tiki_p_edit_sheet'] = $this->user_can_edit( $sheetId );
+		$result['parentSheetId'] = end($this->get_related_sheet_ids( $sheetId, true ));
+		return $result;
 	}
 
 	function get_sheet_layout( $sheetId ) // {{{2
@@ -45,11 +47,17 @@ class SheetLib extends TikiLib
 		} 
 	}
 	
-	function get_relate_all($type, $sheetId) {
+	function get_relate_all($type, $sheetId, $inverted = false) {
 		global $relationlib; require_once('lib/attributes/relationlib.php');
 		$entityIds = array();
-		foreach($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
-			$entityIds[] = $result['itemId'];
+		if ($inverted == true) {
+			foreach($relationlib->get_relations_to("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
+				$entityIds[] = $result['itemId'];
+			}
+		} else {
+			foreach($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
+				$entityIds[] = $result['itemId'];
+			}
 		}
 		return $entityIds;
 	}
@@ -135,7 +143,7 @@ class SheetLib extends TikiLib
 		$this->update_relate("sheet", $sheetId, $childSheetIds);
 	}
 	
-	function get_related_sheet_ids( $sheetId ) // {{{2
+	function get_related_sheet_ids( $sheetId, $getParent = false ) // {{{2
 	{
 		$sheetIds = array();
 		foreach($this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array( $sheetId ) ) as $result) {
@@ -143,6 +151,10 @@ class SheetLib extends TikiLib
 		}
 		
 		$sheetIds = array_merge($this->get_relate_all("sheet", $sheetId), $sheetIds);
+		
+		foreach($sheetIds as $childSheetId) {
+			$sheetIds = array_merge($this->get_relate_all("sheet", $childSheetId), $sheetIds);
+		}
 		
 		return $sheetIds;
 	}
@@ -183,31 +195,66 @@ class SheetLib extends TikiLib
 			$mid .= ' `title` like ? ';
 		}
 		
-		if (!$includeChildren) {
-			if (!$mid) {
-				$mid .= ' WHERE ';
-			} else {
-				$mid .= ' AND ';
+		$result = $this->fetchAll( "SELECT * FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
+		
+		$sheets = array();
+		foreach($result as $key => $sheet) {
+			$children = array();
+			
+			foreach($this->get_related_sheet_ids($sheet['sheetId']) as $childSheetId) {
+				$childSheet = $this->get_sheet_info($childSheetId);
+				$childSheet['isChild'] = 'true';
+				$childSheet['parentSheetId'] = $sheet['sheetId'];
+				$children[] = $childSheet;
 			}
-			$mid .= ' (parentSheetId = 0 or parentSheetId = null) ';
+			
+			$sheet['tiki_p_edit_sheet'] = $this->user_can_edit($sheet['sheetId']);
+			$sheet['created'] = $this->get_created($sheet['sheetId']);
+			$sheet['lastModif'] = $this->get_lastModif($sheet['sheetId']);
+			$sheet['children'] = $children;
+			
+			if ($this->user_can_view($sheet['sheetId'])) {
+				$sheets[$sheet['sheetId']] = $sheet;
+			}
+		}
+
+		$results = array();
+		
+		$results['data'] = $sheets;
+		
+		if ($includeChildren == false) {
+			foreach($results['data'] as $key => $sheet) {
+				foreach($sheet['children'] as $childSheetId) {
+					if (!empty($results['data'][$childSheetId['sheetId']]))
+						unset($results['data'][$childSheetId['sheetId']]);
+				}
+			}
 		}
 		
-		$result = $this->query( "SELECT * FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
-
-		while( $row = $result->fetchRow() ) {
-			if ($tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-				if ($userlib->object_has_one_permission($row['sheetId'], 'sheet'))
-					$row['individual'] = 'y';
-				$row['tiki_p_edit_sheet'] = ($user && $user == $row['author']) || $tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_edit_sheet')?'y': 'n';
-				$results['data'][] = $row;
-			}
-		}
-
 		$results['cant'] = $this->getOne( "SELECT COUNT(*) FROM `tiki_sheets` $mid", $bindvars );
 
 		return $results;
 	}
-
+	
+	function get_created( $sheetId ) {
+		return $this->getOne( "
+				SELECT begin
+				FROM tiki_sheet_values
+				WHERE sheetId = ?
+				ORDER BY begin ASC
+			", array( $sheetId ));
+	}
+	
+	function get_lastModif( $sheetId ) {
+		return $this->getOne( "
+				SELECT begin
+				FROM tiki_sheet_values
+				WHERE 
+					sheetId = ?
+				ORDER BY end DESC
+			", array( $sheetId ));
+	}
+	
 	function remove_sheet( $sheetId ) // {{{2
 	{
 		global $prefs;

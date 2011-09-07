@@ -4,7 +4,12 @@
 
 {tabset}
 {tab name="{tr}List{/tr}"}
-<h2>{tr}Available Sheets{/tr}</h2>
+{if $tiki_p_edit_sheet eq 'y'}
+	<div class="navbar">
+		{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" _text="{tr}Create New Sheet{/tr}"}
+	</div>
+{/if}
+<h2>{tr}Spreadsheet{/tr}</h2>
 {if $sheets or $find ne ''}
   {include file='find.tpl'}
 {/if}
@@ -13,56 +18,19 @@
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
-{cycle values="odd,even" print=false}
-	{section name=changes loop=$sheets}
-		<tr class="{cycle}">
-			<td class="text"><a class="galname sheetLink" sheetId="{$sheets[changes].sheetId}" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title|escape}</a></td>
-			<td class="text">{$sheets[changes].description|escape}</td>
-			<td class="username">{$sheets[changes].author|escape}</td>
-			<td class="action">
-				{if $chart_enabled eq 'y'}
-					<a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}">
-						<img src='pics/icons/chart_curve.png' width='16' height='16' alt="{tr}Graph{/tr}" title="{tr}Graph{/tr}" />
-					</a>
-				{/if}
-				{if $tiki_p_view_sheet_history eq 'y'}
-					<a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">
-						{icon _id='application_form_magnify' alt="{tr}History{/tr}"}
-					</a>
-				{/if}
-				<a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">
-					{icon _id='disk' alt="{tr}Export{/tr}"}
-				</a>
-				{if $sheets[changes].tiki_p_edit_sheet eq 'y'}
-					<a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">
-						{icon _id='folder_add' alt="{tr}Import{/tr}"}
-					</a>
-				{/if}
-				{if $tiki_p_admin_sheet eq 'y'}
-					<a class="gallink" href="tiki-objectpermissions.php?objectName={$sheets[changes].title|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheets[changes].sheetId}">
-					{if $sheets[changes].individual eq 'y'}
-						{icon _id='key_active' alt="{tr}Active Perms{/tr}"}
-					{else}
-						{icon _id='key' alt="{tr}Perms{/tr}"}
-					{/if}
-					</a>
-				{/if}
-				{if $sheets[changes].tiki_p_edit_sheet eq 'y'}
-					<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">
-						{icon _id='page_edit' alt="{tr}Configure{/tr}"}
-					</a>
-					<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}">
-						{icon _id='cross' alt="{tr}Delete{/tr}"}
-					</a>
-				{/if}
-			</td>
-		</tr>
-	{sectionelse}
+	{foreach item=sheet from=$sheets}
+		{include name='base' file='tiki-sheets_listing.tpl' sheet=$sheet}
+		{foreach item=childSheet from=$sheet.children}
+			{include name='child' file='tiki-sheets_listing.tpl' sheet=$childSheet}
+		{/foreach}
+	{foreachelse}
 		{norecords _colspan=4}
-	{/section}
+	{/foreach}
 </table>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
@@ -75,11 +43,6 @@
 			<h2>{tr}Create a sheet{/tr}</h2>
 		{else}
 			<h2>{tr}Configure this sheet:{/tr} {$title|escape}</h2>
-			{if $tiki_p_edit_sheet eq 'y'}
-				<div class="navbar">
-					{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" _text="{tr}Create New Sheet{/tr}"}
-				</div>
-			{/if}
 		{/if}
 		
 		{if $individual eq 'y'}
@@ -107,17 +70,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Join with Spreadsheet:{/tr}</td>
+					<td>{tr}Parent Spreadsheet:{/tr}</td>
 					<td>
 						<select name="parentSheetId">
 							<option value="0">{tr}None{/tr}</option>
-							{section name=sheet loop=$sheets}
-								{if not $sheets[sheet].parentSheetId}
-								<option value="{$sheets[sheet].sheetId}"{if $parentSheetId eq $sheets[sheet].sheetId} selected="selected"{/if}>
-									{$sheets[sheet].title|escape} - ({$sheets[sheet].sheetId})
+							{foreach item=sheet from=$sheets}
+								<option value="{$sheet.sheetId}"{if $parentSheetId eq $sheet.sheetId} selected="selected"{/if}>
+									{$sheet.title|escape} - ({$sheet.sheetId})
 								</option>
-								{/if}
-							{/section}
+							{/foreach}
 						</select>
 						<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}</em>
 					</td>
