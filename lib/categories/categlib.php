@@ -989,7 +989,7 @@ class CategLib extends ObjectLib
 			}
 			unset($categories);
 			
-			$cachelib->cacheItem($localized ? $prefs['language'] : '', 'allcategs');
+			$cachelib->cacheItem($localized ? $prefs['language'] : '', serialize($ret), 'allcategs');
 		}
 
 		if ($considerCategoryFilter) {
