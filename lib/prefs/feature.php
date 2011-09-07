@@ -15,7 +15,7 @@ function prefs_feature_list($partial = false) {
 		global $categlib;
 
 		include_once ('lib/categories/categlib.php');
-		$all_categs = $categlib->getCategories(true, false);
+		$all_categs = $categlib->getCategories(NULL, true, false);
 
 		$catree['0'] = tra('All');
 

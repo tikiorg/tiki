@@ -30,7 +30,7 @@ class CategLib extends ObjectLib
 	Related to get_child_categories, get_visible_child_categories, getCategories
 	Respects the category filter */
 	function list_categs($categId=0, $all = true) {
-		$back = $this->getCategories(true, false);
+		$back = $this->getCategories(NULL, true, false);
 
 		if ($categId > 0 || !$all) {
 			$path = '';
@@ -55,7 +55,7 @@ class CategLib extends ObjectLib
 	 * Specifiy a common ancestor category ID in $top to remove the top level from the category path
 	 */
 	function get_category_info($categIds, $top=null) {
-		$back = $this->getCategories(true, false);
+		$back = $this->getCategories(NULL, true, false);
 		$i = 0;
 		$cut = '';
 		foreach ($back as $cat) {
@@ -89,9 +89,9 @@ class CategLib extends ObjectLib
 	// The string is a double colon (::) separated concatenation of category names.
 	// Returns the empty string if the specified category does not exist.
 	function get_category_path_string($categId) {
-		$categories = $this->getCategories(false, false);
-		if (isset($categories[$categId])) {
-			return $categories[$categId]['categpath'];
+		$category = $this->get_category($categId);
+		if ($category) {
+			return $category['categpath'];
 		} else {
 			return '';
 		}
@@ -113,12 +113,13 @@ class CategLib extends ObjectLib
 	}
 
 	// Returns false if the category is not found.
+	// WARNING: permissions and the category filter are not considered.
 	function get_category($categId) {
-		$categories = $this->getCategories(false, false);
-		if (!isset($categories[$categId])) {
-			return false;
+		if (!is_numeric($categId)) {
+			throw new Exception('Invalid category identier');
 		}
-		return $categories[$categId];
+		$categories = $this->getCategories(array('identifier' => (int) $categId), false, false);
+		return empty($categories) ? false : $categories[$categId];
 	}
 	
 	function get_category_id($name){
@@ -243,7 +244,7 @@ class CategLib extends ObjectLib
 	function is_categorized($type, $itemId) {
 		if ( empty($itemId) ) return 0;
 
-		if ( count( $this->getCategories(false, false) ) == 0 ) { // Optimization
+		if ( count( $this->getCategories(NULL, false, false) ) == 0 ) { // Optimization
 			return 0;
 		}
 
@@ -932,11 +933,19 @@ class CategLib extends ObjectLib
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
 		"children" is an array of identifiers of the categories the category has as children.
-		"objects" is the number of objects directly in the category. 
+		"objects" is the number of objects directly in the category.
+		
+	By default, we start from all categories.
+	If $filter is an array with an "identifier" element, starting categories are restrained.
+	If the "type" element is unset or set to "self", start from only the designated category.
+	If the "type" element is set to "children", start from the designated category's children.
+	TODO: If the "type" element is set to "descendants", start from the designated category's descendants.
+		
 	If considerCategoryFilter is true, only categories that match the category filter are returned.
 	If considerPermissions is true, only categories that the user has the permission to view are returned.
-	If localized is enabled, category names are translated to the user's language. */
-	function getCategories($considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
+	If localized is enabled, category names are translated to the user's language.
+	*/
+	function getCategories($filter = NULL, $considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
 		global $cachelib, $prefs;
 		if( ! $ret = $cachelib->getSerialized($localized ? $prefs['language'] : '', 'allcategs') ) {
 			// This generates different caches for each language. The empty key is used when no localization was requested.
@@ -992,6 +1001,24 @@ class CategLib extends ObjectLib
 			$cachelib->cacheItem($localized ? $prefs['language'] : '', serialize($ret), 'allcategs');
 		}
 
+		if (!is_null($filter)) {
+			$kept = array();
+			$type = isset($filter['type']) ? $filter['type'] : 'self';
+			switch ($type) {
+				case 'children':
+					$kept = $ret[$filter['identifier']]['children'];
+					break;
+				//case 'descendants':
+					// TODO
+					//break;
+				default:
+					$ret = array($filter['identifier'] => $ret[$filter['identifier']]); // Avoid array functions for optimization 
+			}
+			if ($type != 'self') {
+				$ret = array_intersect_key($ret, array_flip($kept));
+			}
+		}
+		
 		if ($considerCategoryFilter) {
 			if( $jail = $this->get_jail() ) {
 				$prefilter = $ret;
