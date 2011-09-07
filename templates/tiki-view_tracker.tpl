@@ -262,11 +262,6 @@
 		{/tab}
 	{/if}
 	
-	{if $tiki_p_export_tracker eq 'y'}
-		{* -------------------------------------------------- tab with export (and dump if perms) --- *}
-		{include file='tiki-export_tracker.tpl'}
-	{/if}
-
 	{if $tracker_sync}
 		{tab name="{tr}Synchronization{/tr}"}
 			<p>

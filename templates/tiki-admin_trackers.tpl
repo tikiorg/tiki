@@ -218,8 +218,6 @@
 {tabset}
 	
 	{if $trackerId}
-		{include file='tiki-export_tracker.tpl'}
-
 		{tab name="{tr}Import CSV data{/tr}"}
 		<h3>{tr}Tracker Items Import{/tr}</h3>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">

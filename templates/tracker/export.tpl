@@ -6,6 +6,13 @@
 			<textarea>{$export|escape}</textarea>
 		</label>
 	</form>
+	<h4>{tr}Quick Export{/tr}</h4>
+	<form method="post" class="simple no-ajax" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
+		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
+		<div class="submit">
+			<input type="submit" value="{tr}Export{/tr}"/>
+		</div>
+	</form>
 	<h4>{tr}Export Tracker Items{/tr}</h4>
 	<form class="simple no-ajax" action="{service controller=tracker action=export_items trackerId=$trackerId}" method="post">
 		<label>

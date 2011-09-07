@@ -705,7 +705,7 @@ class Services_Tracker_Controller
 		session_write_close();
 
 		$trklib = TikiLib::lib('trk');
-		$trklib->write_export_header();
+		$trklib->write_export_header($encoding, $trackerId);
 
 		$header = array();
 		if ($showItemId) {
@@ -751,6 +751,26 @@ class Services_Tracker_Controller
 			$this->writeCsv($toDisplay, $separator, $delimitorL, $delimitorR, $encoding, $cr);
 		}
 
+		exit;
+	}
+
+	function action_dump_items($input)
+	{
+		$trackerId = $input->trackerId->int();
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+		
+		$perms = Perms::get('tracker', $trackerId);
+		if (! $perms->export_tracker) {
+			throw new Services_Exception(tr('Not allowed to export'), 403);
+		}
+
+		$trklib = TikiLib::lib('trk');
+		$trklib->dump_tracker_csv($trackerId);
 		exit;
 	}
 

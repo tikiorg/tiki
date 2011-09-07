@@ -1762,7 +1762,7 @@ class TrackerLib extends TikiLib
 		
 		// write out file header
 		session_write_close();
-		$this->write_export_header();
+		$this->write_export_header('UTF-8', $trackerId);
 		
 		// then "field names -- index" as first line
 		$str = '';
@@ -1858,8 +1858,13 @@ class TrackerLib extends TikiLib
 		return $items;
 	}
 
-	function write_export_header() {
-		header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
+	function write_export_header($encoding = null, $trackerId = null) {
+		if (! $encoding) {
+			$encoding = $_REQUEST['encoding'];
+		}
+		if (! $trackerId) {
+			$trackerId = $_REQUEST['trackerId'];
+		}
 		if (!empty($_REQUEST['file'])) {
 			if (preg_match('/.csv$/', $_REQUEST['file'])) {
 				$file = $_REQUEST['file'];
@@ -1867,8 +1872,9 @@ class TrackerLib extends TikiLib
 				$file = $_REQUEST['file'].'.csv';
 			}
 		} else {
-			$file = tra('tracker').'_'.$_REQUEST['trackerId'].'.csv';
+			$file = tra('tracker').'_'.$trackerId.'.csv';
 		}
+		header("Content-type: text/comma-separated-values; charset:".$encoding);
 		header("Content-Disposition: attachment; filename=$file");
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");

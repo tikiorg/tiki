@@ -30,13 +30,6 @@ $access->check_permission('tiki_p_export_tracker');
 $smarty->assign_by_ref('trackerId', $_REQUEST['trackerId']);
 $smarty->assign_by_ref('tracker_info', $tracker_info);
 
-if (isset($_REQUEST['dump_tracker'])) {
-	$access->check_permission('tiki_p_tracker_dump');
-	
-	$trklib->dump_tracker_csv($_REQUEST['trackerId']);
-	return;
-}
-
 $filters = array();
 if (!empty($_REQUEST['listfields'])) {
 	if (is_string($_REQUEST['listfields'])) {
