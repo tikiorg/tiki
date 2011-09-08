@@ -200,6 +200,15 @@ function prefs_user_list($partial = false) {
 			),
 			'default' => -1,
 		),
+		'user_trackersync_lang' => array(
+			'name' => tra('Change user system language when changing user tracker item language'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+			),
+			'default' => 'n',
+		),
 		'user_selector_threshold' => array(
 			'name' => tra('Maximum number of users to show in drop down lists'),
 			'description' => tra('Prevents out of memory and performance issues when user list is very large by using a jQuery autocomplete text input box.'),

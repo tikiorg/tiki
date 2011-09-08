@@ -3793,6 +3793,29 @@ class TrackerLib extends TikiLib
 		}
 	}
 
+	function sync_user_lang($args)
+	{
+		global $prefs;
+
+		$trackerId = $args['trackerId'];
+
+		if ($prefs['user_trackersync_lang'] != 'y') {
+			return;
+		}
+
+		if (! $this->tracker_is_syncable($trackerId)) {
+			return;
+		}
+
+		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+			return;
+		}
+
+		$definition = Tracker_Definition::get($trackerId);
+		$fieldId = $definition->getLanguageField();
+		TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'language', $args['values'][$fieldId]);
+	}
+
 	function sync_user_realname($args)
 	{
 		global $prefs;

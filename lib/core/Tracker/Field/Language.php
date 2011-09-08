@@ -92,6 +92,7 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 			if ($old != $new) {
 				$multilinguallib = TikiLib::lib('multilingual');
 				$multilinguallib->updateObjectLang('trackeritem', $args['object'], $new);
+				TikiLib::lib('trk')->sync_user_lang($args);
 			}
 		}
 	}
