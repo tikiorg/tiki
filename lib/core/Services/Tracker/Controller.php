@@ -822,6 +822,53 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_import_items($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (isset($_FILES['importfile'])) {
+			if (! is_uploaded_file($_FILES['importfile']['tmp_name'])) {
+				throw new Services_Exception(tr('File upload failed.'), 400);
+			}
+
+			if (! $fp = @ fopen($_FILES['importfile']['tmp_name'], "rb")) {
+				throw new Services_Exception(tr('Uploaded file could not be read.'), 500);
+			}
+
+			$trklib = TikiLib::lib('trk');
+			$count = $trklib->import_csv(
+				$trackerId,
+				$fp,
+				$input->add_items->int(),
+				$input->dateFormat->text(),
+				$input->encoding->text(),
+				$input->separator->text(),
+				$input->updateLastModif->int()
+			);
+
+			fclose($fp);
+			
+			return array(
+				'trackerId' => $trackerId,
+				'return' => $count,
+			);
+		}
+		
+		return array(
+			'trackerId' => $trackerId,
+			'return' => '',
+		);
+	}
+
 	private function getSortFields($definition)
 	{
 		$sorts = array();

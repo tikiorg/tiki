@@ -48,6 +48,7 @@
 				<td class="integer">{$tracker.items|escape}</td>
 				<td class="action">
 					<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+					<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
 					<a title="{tr _0=$tracker.name|escape}Events{/tr}" class="event dialog" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
@@ -120,6 +121,20 @@
 			return false;
 		});
 
+		$('.import.dialog').click(function () {
+			var link = this;
+			$(this).serviceDialog({
+				title: $(link).attr('title'),
+				data: {
+					controller: 'tracker',
+					action: 'import_items',
+					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
+				}
+			});
+
+			return false;
+		});
+
 		$('.create-tracker').submit(function () {
 			var form = this;
 			$(this).serviceDialog({
@@ -136,73 +151,6 @@
 			return false;
 		});
 	{/jq}
-{/tab}
-
-{tab name="{tr}Import/Export{/tr}"}
-<h2>{tr}Tracker Import/Export{/tr}</h2>
-{tabset}
-	
-	{if $trackerId}
-		{tab name="{tr}Import CSV data{/tr}"}
-		<h3>{tr}Tracker Items Import{/tr}</h3>
-		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}File{/tr}</td>
-					<td><input name="importfile" type="file" /></td>
-				</tr>
-				<tr>
-					<td>{tr}Date Format{/tr}</td>
-					<td>
-						<input type="radio" name="dateFormat" value="mm/dd/yyyy" checked="checked"/>
-						{tr}month{/tr}/{tr}day{/tr}/{tr}year{/tr}(01/31/2008)
-						<br />
-						<input type="radio" name="dateFormat" value="dd/mm/yyyy" />
-						{tr}day{/tr}/{tr}month{/tr}/{tr}year{/tr}(31/01/2008)
-						<br />
-						<input type="radio" name="dateFormat" value="yyyy-mm-dd" />
-						{tr}year{/tr}-{tr}month{/tr}-{tr}day{/tr}(2008-01-31)
-						<br />
-						<input type="radio" name="dateFormat" value="" />{tr}timestamp{/tr}
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Charset encoding{/tr}</td>
-					<td>
-						<select name="encoding">
-							<option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
-							<option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Separator{/tr}</td>
-					<td><input type="text" name="separator" value="," size="2" /></td>
-				</tr>
-				<tr>
-					<td>{tr}Add as new items:{/tr}</td>
-					<td><input type="checkbox" name="add_items" /></td>
-				</tr>
-				<tr>
-					<td>{tr}Update lastModif date if updating items (status and created are updated only if the fields are specified in the csv):{/tr}</td>
-					<td><input type="checkbox" name="updateLastModif" checked="checked" /></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><input type="submit" name="save" value="{tr}Import{/tr}" /></td>
-				</tr>
-			</table>
-		</form>
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-			<ul>
-				<li>{tr}The order of the fields does not matter, but you need to add a header with the field names{/tr}</li>
-				<li>{tr}Add " -- " to the end of the fields in the header that you would like to import!{/tr}</li>
-				<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
-			</ul>
-		{/remarksbox}
-		{/tab}
-	{/if}
-{/tabset}
 {/tab}
 
 {tab name="{tr}Duplicate Tracker{/tr}"}
