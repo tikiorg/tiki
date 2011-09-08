@@ -2063,7 +2063,7 @@ CREATE TABLE `tiki_submissions` (
   `heading` text,
   `body` text,
   `hash` varchar(32) default NULL,
-  `author` varchar(200) NOT NULL default '',
+  `author` varchar(200) default NULL,
   `nbreads` int(14) default NULL,
   `votes` int(8) default NULL,
   `points` int(14) default NULL,
