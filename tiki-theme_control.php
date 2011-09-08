@@ -13,7 +13,7 @@ $access->check_permission('tiki_p_admin');
 
 $auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'categId');
 
-$categories = $categlib->getCategories(true, false);
+$categories = $categlib->getCategories(NULL, true, false);
 $smarty->assign('categories', $categories);
 $smarty->assign('categId', isset($_REQUEST['categId']) ? $_REQUEST['categId'] : 0);
 
