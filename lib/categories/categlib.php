@@ -1115,25 +1115,24 @@ class CategLib extends ObjectLib
 		}
     }
 
-    // Moved from tikilib.php
-    function get_categorypath($cats, $include_excluded=false) {
+    // Get a string of HTML code representing an object's category paths.
+    // $cats: The OIDs of the categories of the object.
+    function get_categorypath($cats) {
 			global $smarty, $prefs;
 
-			if ($include_excluded == false) {
-				$excluded = preg_split('/,/', $prefs['categorypath_excluded']);
-				$cats = array_diff($cats, $excluded);
-			}			
+			$excluded = preg_split('/,/', $prefs['categorypath_excluded']);
+			$cats = array_diff($cats, $excluded);
 			
 			$catpath = '';
 			foreach ($cats as $categId) {
 				$catp = array();
 				$info = $this->get_category($categId);
-				if ($include_excluded == false && !in_array($info['categId'], $excluded)) {
+				if (!in_array($info['categId'], $excluded)) {
 					$catp[$info['categId']] = $info['name'];
 				}
 				while ($info["parentId"] != 0) {
 					$info = $this->get_category($info["parentId"]);
-					if ($include_excluded == false && !in_array($info['categId'], $excluded)) {
+					if (!in_array($info['categId'], $excluded)) {
 						$catp[$info['categId']] = $info['name'];
 					}
 				}
@@ -1143,7 +1142,6 @@ class CategLib extends ObjectLib
 			return $catpath;
     }
     
-    //Moved from tikilib.php
     function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
 		global $smarty, $prefs;
 
