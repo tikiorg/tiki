@@ -62,14 +62,8 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 	private function getParents($categId)
 	{
 		if (! isset($this->parentCategories[$categId])) {
-			$path = $this->categlib->get_category_path($categId);
-
-			$categories = array();
-			foreach($path as $categ) {
-				$categories[] = $categ['categId'];
-			}
-
-			$this->parentCategories[$categId] = $categories;
+			$category = $this->categlib->get_category($categId);
+			$this->parentCategories[$categId] = array_keys($category['tepath']);
 		}
 
 		return $this->parentCategories[$categId];
