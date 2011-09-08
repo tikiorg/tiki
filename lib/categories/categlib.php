@@ -914,7 +914,7 @@ class CategLib extends ObjectLib
 	}
 
 	// Return an array enumerating a subtree with the given root node in preorder
-	private function getSortedSubTreeNodes($root, $categories) {
+	private function getSortedSubTreeNodes($root, &$categories) {
 		$subTreeNodes = array($root);
 		$childrenSubTreeNodes = array();
 		foreach ($categories[$root]['children'] as $child) {
