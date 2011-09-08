@@ -1273,10 +1273,7 @@ class CategLib extends ObjectLib
 	}
 	return $forbidden;
     }
-	function approve_submission($subId, $articleId) {
-		$query = "update `tiki_objects` set `type`= ?, `itemId`= ?, `href`=? where `itemId` = ? and `type`= ?";
-		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId, 'submission'));
-	}
+
 	/* build the portion of list join if filter by category
 	 * categId can be a simple value, a list of values=>or between categ, array('AND'=>list values) for an AND
 	 */

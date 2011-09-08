@@ -79,11 +79,9 @@ class ArtLib extends TikiLib
 																			, $data['isfloat']
 																			);
 		$this->transfer_attributes_from_submission($subId, $articleId);
-		global $prefs;
-		if ($prefs['feature_categories'] == 'y') {
-			global $categlib; include_once('lib/categories/categlib.php');
-			$categlib->approve_submission($subId, $articleId);
-		}
+
+		$query = "update `tiki_objects` set `type`= ?, `itemId`= ?, `href`=? where `itemId` = ? and `type`= ?";
+		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId, 'submission'));
 		$query = 'update `tiki_objects` set `href`=?, `type`=? where `href`=?';
 		$this->query($query, array("'tiki-read_article.php?articleId=$articleId", 'article', "tiki-edit_submission.php?subId=$subId"));
 		
