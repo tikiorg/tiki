@@ -128,6 +128,7 @@ jqueryTiki.effect_speed = '.($prefs['jquery_effect_speed'] == 'normal' ? '400' :
 jqueryTiki.effect_tabs = "'.$prefs['jquery_effect_tabs'].'";		// Different effect for tabs
 jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
 jqueryTiki.effect_tabs_speed = '.($prefs['jquery_effect_tabs_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_tabs_speed'].'"').';
+jqueryTiki.home_file_gallery = "'.$prefs['home_file_gallery'].'";
 
 jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
