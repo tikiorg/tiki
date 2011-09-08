@@ -7,7 +7,9 @@
 	});
 
 	$("input[name=useRegisterPasscode]").change(function () {
-		document.LogForm.registerPasscode.value='';
+		if (!$(this).is(':checked')){
+			document.LogForm.registerPasscode.value='';
+		}
 		return false
 	});
 {/jq}
