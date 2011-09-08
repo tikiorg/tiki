@@ -242,4 +242,13 @@ class EditLibTest extends TikiTestCase
 		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
 		$this->assertEquals($ex, $res);	
 	}
+	
+	
+	function testSpanNestedDecorations() {
+		$this->markTestIncomplete('Work in progress.');
+		$ex = '--===text===--';
+		$inData = '<span style="text-decoration:line-through underline;">text</span>';
+		$res = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $res);	
+	}
 }
