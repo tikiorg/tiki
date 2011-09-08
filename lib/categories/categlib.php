@@ -784,12 +784,7 @@ class CategLib extends ObjectLib
 		$catObjectId = $this->is_categorized('forum', $forumId);
 				
 		if (!$catObjectId) {
-
-			global $commentslib;
-			if (!is_object($commentslib)) {
-				require_once('lib/comments/commentslib.php');
-				$commentslib = new Comments;
-			}
+			$commentslib = TikiLib::lib('comments');
 			// The page is not cateorized
 			$info = $commentslib->get_forum($forumId);
 
@@ -973,15 +968,16 @@ class CategLib extends ObjectLib
 		if (!is_null($filter)) {
 			$kept = array();
 			$type = isset($filter['type']) ? $filter['type'] : 'self';
+			$filterBaseCategory = $ret[$filter['identifier']];
 			switch ($type) {
 				case 'children':
-					$kept = $ret[$filter['identifier']]['children'];
+					$kept = $filterBaseCategory['children'];
 					break;
 				//case 'descendants':
 					// TODO
 					//break;
 				default:
-					$ret = array($filter['identifier'] => $ret[$filter['identifier']]); // Avoid array functions for optimization 
+					$ret = array($filter['identifier'] => $filterBaseCategory); // Avoid array functions for optimization 
 			}
 			if ($type != 'self') {
 				$ret = array_intersect_key($ret, array_flip($kept));
