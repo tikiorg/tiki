@@ -374,7 +374,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 			cs_design_setbasic($input, $fieldid, $fieldname, $arguments);
 			$input->setAttribute('value', $categId);
 			$li->appendChild($input);
-			$label = $document->createTextNode($_categpath ? $c['categpath'] : $c['name']);
+			$label = $document->createTextNode($_categpath ? $c['relativePathString'] : $c['name']);
 			$li->appendChild($label); 
 			
 			if ($_style == 'radio') {
@@ -439,7 +439,7 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 		$script .= "});";
 		
 		foreach ($cats as $c) {
-			$option = $document->createElement('option', $_categpath ? $c['categpath'] : $c['name']); 
+			$option = $document->createElement('option', $_categpath ? $c['relativePathString'] : $c['name']); 
 			$option->setAttribute('value', $c['categId']);
 			$element->appendChild($option);
 			if ($default && in_array($c['categId'], (array) $default)) {

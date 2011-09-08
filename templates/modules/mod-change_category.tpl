@@ -21,7 +21,7 @@
 					{if $i.incat eq 'y'}
 						<tr>
 							<td class="{cycle advance=false}">
-								{if isset($module_params.path) and $module_params.path eq 'n'}{$i.name|escape}{else}{$i.categpath|escape}{/if}
+								{if isset($module_params.path) and $module_params.path eq 'n'}{$i.name|escape}{else}{$i.relativePathString|escape}{/if}
 							</td>
 							{if !isset($module_params.del) or $module_params.del eq 'y'}
 								<td class="{cycle}">
@@ -53,7 +53,7 @@
 						{if $detailed eq 'n' or $i.incat ne 'y'}
 							{if ($add eq 'y' or $i.incat eq 'y')}
 								<option value="{$k}"{if $multiple eq 'y' and $i.incat eq 'y'} selected="selected"{/if}>
-									{if isset($module_params.path) and $module_params.path eq 'n'}{$i.name|escape}{else}{$i.categpath|escape}{/if}
+									{if isset($module_params.path) and $module_params.path eq 'n'}{$i.name|escape}{else}{$i.relativePathString|escape}{/if}
 								</option>
 							{/if}
 						{/if}

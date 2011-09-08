@@ -41,7 +41,7 @@ class CategLib extends ObjectLib
 			}
 			foreach ($back as $cat) {
 				if (($all || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
-					$cat['categpath'] = substr($cat['categpath'], strlen($path));
+					$cat['relativePathString'] = substr($cat['categpath'], strlen($path));
 					$back2[] = $cat;
 				}
 			}
@@ -929,10 +929,13 @@ class CategLib extends ObjectLib
 	
 	/* Returns an array of categories.
 	Each category is similar to a tiki_categories record, but with the following additional fields:
-		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
-		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category. Indices are category OIDs.
 		"children" is an array of identifiers of the categories the category has as children.
 		"objects" is the number of objects directly in the category.
+		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category. Indices are category OIDs.
+		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
+		"relativePathString" exists when and only when filtering with a filter other than self.
+		It is a part of "categpath" which starts from after the filtered category rather than from a root category.
+		For example, if filtering descendants of category "Software", the "relativePathString" of a grandchild may be "Free Software::Tiki".
 		
 	By default, we start from all categories.
 	If $filter is an array with an "identifier" element, starting categories are restrained.
