@@ -30,25 +30,7 @@ class CategLib extends ObjectLib
 	Related to get_child_categories, get_visible_child_categories, getCategories
 	Respects the category filter */
 	function list_categs($categId=0, $all = true) {
-		$back = $this->getCategories(NULL, true, false);
-
-		if ($categId > 0 || !$all) {
-			$path = '';
-			$back2 = array();
-			foreach ($back as $cat) {
-				if ($cat['categId'] == $categId)
-					$path = $cat['categpath'].'::';
-			}
-			foreach ($back as $cat) {
-				if (($all || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
-					$cat['relativePathString'] = substr($cat['categpath'], strlen($path));
-					$back2[] = $cat;
-				}
-			}
-			return $back2;
-		} else {
-			return $back;
-		}
+		return $this->getCategories(array('identifier' => $categId, 'type' => $all ? 'descendants' : 'children'), true, false);
 	}
 
 	// Returns a string representing the specified category's path.
@@ -907,7 +889,7 @@ class CategLib extends ObjectLib
 				for ($parent = $category['parentId']; $parent != 0; $parent = $categories[$parent]['parentId']) {
 					$path[$parent] = $categories[$parent]['name'];
 					
-					$categories[$category['parentId']]['descendants'][] = $category['categId']; // Link this category from its ascendants for optimization.
+					$categories[$parent]['descendants'][] = $category['categId']; // Link this category from its ascendants for optimization.
 				}
 				$path = array_reverse($path);
 
@@ -947,6 +929,12 @@ class CategLib extends ObjectLib
 			}
 			if ($type != 'self') {
 				$ret = array_intersect_key($ret, array_flip($kept));
+
+				// Set relativePathString by stripping the length of the common ancestor plus 2 characters for the pathname separator ("::").
+				$strippedLength = strlen($filterBaseCategory['categpath']) + 2;
+				foreach ($ret as &$category) {
+					$category['relativePathString'] = substr($category['categpath'], $strippedLength);
+				}
 			}
 		}
 		
