@@ -49,7 +49,7 @@ if ($prefs['feature_trackers'] == 'y') {
 	}
 
 	if ($prefs['feature_multilingual'] == 'y') {
-		$events->bind('tiki.trackeritem.update', array('Tracker_Field_Language', 'update_language'));
+		$events->bind('tiki.trackeritem.save', array('Tracker_Field_Language', 'update_language'));
 	}
 
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'update_tracker_summary'));
