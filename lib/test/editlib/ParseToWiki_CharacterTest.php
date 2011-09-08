@@ -122,7 +122,6 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);		
 		
-		$this->markTestIncomplete('Work in progress.');
 		$inData = '<span style="font-weight:bold;">bold<br />BOLD</span>regular';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
@@ -167,7 +166,6 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
 
-		$this->markTestIncomplete('Work in progress.');		
 		$inData = '<span style="font-style:italic;">italic<br />ITALIC</span>regular';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		

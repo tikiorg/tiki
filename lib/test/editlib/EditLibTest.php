@@ -234,7 +234,12 @@ class EditLibTest extends TikiTestCase
 		$inData = '<strong>bold<em>bold italic</em><br />bold</strong>';
 		$res = $this->el->parseToWiki($inData);
 		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
-		$this->assertEquals($ex, $res);		
+		$this->assertEquals($ex, $res);	
+
+		$ex = '__\'\'bold italic\'\'__\n__\'\'BOLD ITALIC\'\'__';
+		$inData = '<span style="font-weight:bold;font-style:italic">bold italic<br />BOLD ITALIC</span>';
+		$res = $this->el->parseToWiki($inData);
+		$res = preg_replace('/\n/', '\n', $res); // fix LF encoding for comparison
+		$this->assertEquals($ex, $res);	
 	}
-	
 }

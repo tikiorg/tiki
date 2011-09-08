@@ -262,6 +262,8 @@ class EditLib
 			$style = array();
 			$this->parseStyleAttribute($args['style']['value'], $style);
 			
+			$this->processInlineTag('span', $src, $p, '', ''); // prepare the stacks, later we will append
+			
 			
 			/*
 			 * The colors need to be handeled separatly; two style definitions become
@@ -280,12 +282,12 @@ class EditLib
 			}
 			
 			if ($fcol || $bcol) {
-				$src .= "~~";
-				$src .= ($fcol ? $fcol : '');
-				$src .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
-				$src .= ($bcol ? ','.$bcol : '');
-				$src .= ':';
-				$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+				$col  = "~~";
+				$col .= ($fcol ? $fcol : '');
+				$col .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
+				$col .= ($bcol ? ','.$bcol : '');
+				$col .= ':';
+				$this->processInlineTag('span', $src, $p, $col, '~~', true); 
 			}
 			
 			
@@ -296,18 +298,18 @@ class EditLib
 				switch ($format) {
 					case 'font-weight':
 						if ($style[$format] == 'bold') {
-							$src .= '__'; $p['stack'][] = array('tag' => 'span', 'string' => '__');
+							$this->processInlineTag('span', $src, $p, '__', '__', true); 
 						}
 						break;
 					case 'font-style': 
 						if ($style[$format] == 'italic') {
-							$src .= '\'\''; $p['stack'][] = array('tag' => 'span', 'string' => '\'\'');
+							$this->processInlineTag('span', $src, $p, '\'\'', '\'\'', true);
 						}
 					case 'text-decoration':
 						if ($style[$format] == 'line-through') {
-							$src .= '--'; $p['stack'][] = array('tag' => 'span', 'string' => '--');
+							$this->processInlineTag('span', $src, $p, '--', '--', true);
 						} else if ($style[$format] == 'underline') {
-							$src .= '==='; $p['stack'][] = array('tag' => 'span', 'string' => '===');
+							$this->processInlineTag('span', $src, $p, '===', '===', true);
 						}
 				} // switch format
 			} // foreach style
@@ -422,7 +424,7 @@ class EditLib
 		// append
 		$top_begin[] = $begin;
 		$top_end[] = $end;
-		$top_string .= $end;
+		$top_string = $end . $top_string;
 		$src .= $begin;
 	}
 	
