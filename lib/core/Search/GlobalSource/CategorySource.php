@@ -40,11 +40,14 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 		if (empty($categories)) {
 			$categories[] = 'orphan';
+			$deepcategories = $categories;
+		} else {
+			$deepcategories = $this->getWithParent($categories);
 		}
 
 		return array(
 			'categories' => $typeFactory->multivalue($categories),
-			'deep_categories' => $typeFactory->multivalue($this->getWithParent($categories)),
+			'deep_categories' => $typeFactory->multivalue($deepcategories),
 		);
 	}
 
