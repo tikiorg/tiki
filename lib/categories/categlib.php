@@ -97,21 +97,19 @@ class CategLib extends ObjectLib
 		}
 	}
 
-	// Returns an array of ancestors of the category with the given $categId and the given category itself.
-	// The path is ordered starting from the category tree root and ending with the given category.
-	// Each category is represented by an array with the category ID at index "categId" and the name at index "name".
-	function get_category_path($categId) {
-		$info = $this->get_category($categId);
-		$i=999999;
-		$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
-		while ($info["parentId"] != 0) {
-			$info = $this->get_category($info["parentId"]);
-			$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
+	/**
+	 * Returns the path of the given category as a String in the format:
+	 * "Root Category (TOP) > 1st Subcategory > 2nd Subcategory::..."	
+	 */	
+	function get_category_path_string_with_root($categId) {		
+		$category = $this->get_category($categId);
+		$tepath = array ('Top');
+		foreach ($category['tepath'] as $pathelem) {
+			$tepath[] = $pathelem;
 		}
-		ksort($path);
-		return array_values($path);
+		return implode(" > ", $tepath);
 	}
-
+	
 	// Returns false if the category is not found.
 	// WARNING: permissions and the category filter are not considered.
 	function get_category($categId) {
@@ -1467,19 +1465,7 @@ class CategLib extends ObjectLib
 	 	$this->query($query, array((int) $categId, 'Category'));
 	 }
 	
-	
-	/**
-	 * Returns the path of the given category as a String in the format:
-	 * "Root Category (TOP) > 1st Subcategory > 2nd Subcategory::..."	
-	 */	
-	function get_category_path_string_with_root($categId) {		
-		$category = $this->get_category($categId);
-		$tepath = array ('Top');
-		foreach ($category['tepath'] as $pathelem) {
-			$tepath[] = $pathelem;
-		}
-		return implode(" > ", $tepath);
-	}
+
 
 	/**
 	 * Returns the description of the category.	
