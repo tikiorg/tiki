@@ -691,9 +691,9 @@ class EditLib
 						case "i": $this->processInlineTag('i', $src, $p, '\'\'', '\'\''); break;
 						case "em": $this->processInlineTag('em', $src, $p, '\'\'', '\'\''); break;
 						case "strong": $this->processInlineTag('strong', $src, $p, '__', '__'); break;
-						case "u": $src .= "==="; $p['stack'][] = array('tag' => 'u', 'string' => "==="); break;
-						case "strike": $src .= "--"; $p['stack'][] = array('tag' => 'strike', 'string' => "--"); break;
-						case "del": $src .= "--"; $p['stack'][] = array('tag' => 'del', 'string' => "--"); break;
+						case "u":  $this->processInlineTag('u', $src, $p, '===', '==='); break;
+						case "strike": $this->processInlineTag('strike', $src, $p, '--', '--'); break;
+						case "del": $this->processInlineTag('del', $src, $p, '--', '--'); break;
 						case "center":
 							if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 								$src .= ':::';
@@ -731,7 +731,7 @@ class EditLib
 						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
 						case "tt" : $src .= '{DIV(type="tt")}'; $p['stack'][] = array('tag' => 'tt', 'string' => "{DIV}"); break;
-						case "s"  : $src .= '--'; $p['stack'][] = array('tag' => 's', 'string' => "--"); break;
+						case "s"  : $src .= $this->processInlineTag('s', $src, $p, '--', '--'); break;
 						// Table parser
 						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
 						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true; break;

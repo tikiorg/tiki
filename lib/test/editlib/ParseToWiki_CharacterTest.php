@@ -193,10 +193,16 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$this->assertEquals($ex, $out);		
 
 		// line break
-		$this->markTestIncomplete('Work in progress.');
 		$ex = '===underlined===\n===UNDERLINED===';
+
 		$inData = '<u>underlined<br />UNDERLINED</u>';
 		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);
+
+		$inData = '<span style="text-decoration:underline;">underlined<br />UNDERLINED</span>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
 	
@@ -231,10 +237,26 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$this->assertEquals($ex, $out);		
 
 		// line break
-		$this->markTestIncomplete('Work in progress.');
 		$ex = '--strikethrough--\n--STRIKETHROUGH--';
+
 		$inData = '<strike>strikethrough<br />STRIKETHROUGH</strike>';
 		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);		
+		
+		$inData = '<del>strikethrough<br />STRIKETHROUGH</del>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);		
+		
+		$inData = '<s>strikethrough<br />STRIKETHROUGH</s>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);		
+		
+		$inData = '<strike>strikethrough<br />STRIKETHROUGH</strike>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
 	
