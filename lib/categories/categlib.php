@@ -864,7 +864,7 @@ class CategLib extends ObjectLib
 	If $filter is an array with an "identifier" element, starting categories are restrained.
 	If the "type" element is unset or set to "self", start from only the designated category.
 	If the "type" element is set to "children", start from the designated category's children.
-	TODO: If the "type" element is set to "descendants", start from the designated category's descendants.
+	If the "type" element is set to "descendants", start from the designated category's descendants.
 		
 	If considerCategoryFilter is true, only categories that match the category filter are returned.
 	If considerPermissions is true, only categories that the user has the permission to view are returned.
@@ -939,9 +939,9 @@ class CategLib extends ObjectLib
 				case 'children':
 					$kept = $filterBaseCategory['children'];
 					break;
-				//case 'descendants':
-					// TODO
-					//break;
+				case 'descendants':
+					$kept = $filterBaseCategory['descendants'];
+					break;
 				default:
 					$ret = array($filter['identifier'] => $filterBaseCategory); // Avoid array functions for optimization 
 			}
