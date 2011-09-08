@@ -202,7 +202,6 @@ class FreetagLib extends ObjectLib
 	{
 
 		global $tiki_p_admin, $user, $smarty, $prefs;
-		$categlib = TikiLib::lib('categ');
 		if (!isset($tagArray) || !is_array($tagArray)) {
 			return false;
 		}
@@ -316,7 +315,7 @@ class FreetagLib extends ObjectLib
 		$cant = $this->getOne($query_cant, $bindvals);
 
 		$ret = array();
-		$permMap = $categlib->map_object_type_to_permission();
+		$permMap = TikiLib::lib('object')->map_object_type_to_permission();
 		while ($row = $result->fetchRow()) {
 			$ok = false;
 			if ($tiki_p_admin == 'y') {

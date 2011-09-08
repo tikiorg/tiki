@@ -17,8 +17,7 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 
 		$this->db = TikiDb::get();
 
-		$categlib = TikiLib::lib('categ');
-		$this->permissionMap = $categlib->map_object_type_to_permission();
+		$this->permissionMap = TikiLib::lib('object')->map_object_type_to_permission();
 	}
 
 	function getDocuments()

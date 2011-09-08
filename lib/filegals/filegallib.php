@@ -1650,8 +1650,8 @@ class FileGalLib extends TikiLib
 		foreach ($objects as $object) {
 			$pobjects[$object['type']][] = $object;
 		}
-		global $categlib; include_once('lib/categories/categlib.php');
-		$map = CategLib::map_object_type_to_permission();
+		include_once('lib/categories/objectlib.php');
+		$map = ObjectLib::map_object_type_to_permission();
 		foreach ($pobjects as $type=>$list) {
 			if ($type == 'blog post') {
 				$this->parentObjects($list, 'tiki_blog_posts', 'postId', 'blogId');
