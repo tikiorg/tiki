@@ -385,21 +385,45 @@ class EditLib
 	
 	
 	/**
-	 * Process an inline tag
+	 * Utility of walk_and_parse to process an inline tag
 	 * 
-	 * Line breaks are not allowed within inline tags. Hence, a special processing is needed.
+	 * Inline tags need a special treatment: In html, a tag may contain
+	 * several line breaks. In Wiki however, line breaks are not allowed.
+	 * This method saves the inline tags in a separate stack. This stack
+	 * is used in walk_and_parse to output the required markup before and after
+	 * the linebreaks.
 	 *
 	 * @param $tag strint The name of the tag
 	 * @param $src string output string
 	 * @param $p array ['stack'] = closing strings stack,
 	 * @param $begin string The wiki markup that begins the inline tag
 	 * @param $end string The wiki markup that ends the inline tag
+	 * @param $append bool True = append to the topmost element on the stack, false = create a new element on the stack
 	 */
-	function processInlineTag($tag, &$src, &$p, $begin, $end) {
-		$p['inlinestack']['begin'][] = $begin;
-		$p['inlinestack']['end'][] = $end;
+	private function processInlineTag($tag, &$src, &$p, $begin, $end, $append = false) {
+		
+		// append=false, create new entries on the stack
+		if (!$append) {
+			$p['stack'][] = array('tag' => $tag, 'string' => '', 'inlinetag' => true);
+			$p['inlinestack']['begin'][] = array();
+			$p['inlinestack']['end'][] = array();
+		};
+
+		// get the entry points on the stacks
+		$key = end(array_keys( $p['inlinestack']['begin'] ) );
+		$top_begin = &$p['inlinestack']['begin'][$key]; 
+
+		$key = end(array_keys( $p['inlinestack']['end'] ) );
+		$top_end = &$p['inlinestack']['end'][$key];
+		
+		$key = end(array_keys( $p['stack'] ) );
+		$top_string = &$p['stack'][$key]['string'];
+
+		// append
+		$top_begin[] = $begin;
+		$top_end[] = $end;
+		$top_string .= $end;
 		$src .= $begin;
-		$p['stack'][] = array('tag' => $tag, 'string' => $end);
 	}
 	
 	
@@ -584,9 +608,13 @@ class EditLib
 						
 						// others we do want
 						case "br": 
-							foreach (array_reverse($p['inlinestack']['end']) as $end) {$src .= $end;}
+							foreach (array_reverse($p['inlinestack']['end']) as $end_arr) {
+								foreach (array_reverse($end_arr) as $end ) {
+									$src .= $end;}}
 							$src .= "\n";
-							foreach ($p['inlinestack']['begin'] as $begin) {$src .= $begin;}
+							foreach ($p['inlinestack']['begin'] as $begin_arr) {
+								foreach ($begin_arr as $begin) {
+									$src .= $begin;}}
 							break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
@@ -746,15 +774,6 @@ class EditLib
 							break;
 					}	// end switch on tag name
 				} else {
-					// Close tag -> pop inline stack
-					switch ($c[$i]["data"]["name"]) {
-						case "b":
-						case "strong":
-						case "em":
-							array_pop( $p['inlinestack']['begin'] );
-							array_pop( $p['inlinestack']['end'] );
-					}							
-					
 					// This is close tag type. Is that smth we r waiting for?
 					switch ($c[$i]["data"]["name"]) {
 						case "ul":
@@ -775,6 +794,12 @@ class EditLib
 								array_pop($p['stack']);
 							}
 							break;
+					}
+					
+					// update the inline stack
+					if (isset($e['inlinetag']) && $e['inlinetag'] == true) {
+						array_pop( $p['inlinestack']['begin'] );
+						array_pop( $p['inlinestack']['end'] );
 					}
 				}
 			}
