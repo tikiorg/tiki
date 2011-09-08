@@ -278,21 +278,23 @@ class CategLib extends ObjectLib
 		}
 	}
 
+	// Returns an array of the OIDs of a set of categories.
+	// $categId is an integer.
+	// If $categId is 0, that set is the set of all categories.
+	// If $categId is the OID of a category, that set is the set of that category and its descendants.
 	function get_category_descendants($categId) {
-		global $user,$userlib;
-		$query = "select `categId` from `tiki_categories` where `parentId`=?";
-
-		$result = $this->query($query,array((int) $categId));
-		$ret = array($categId);
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res["categId"];
-			$aux = $this->get_category_descendants($res["categId"]);
-			$ret = array_merge($ret, $aux);
+		if ($categId) {
+			$category = $this->get_category($categId);
+			return $category['descendants'];
+		} else {
+			$categories = $this->getCategories(NULL, false, false);
+			$roots = TikiLib::lib('cache')->getSerialized('roots', 'allcategs');
+			$allCategories = array($roots); 
+			foreach($roots as $root) {
+				$allCategories = array_merge($allCategories, $categories[$root]['descendants']);
+			}
+			return $allCategories;
 		}
-
-		$ret = array_unique($ret);
-		return array_values( $ret );
 	}
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false, $filter=null) {
@@ -850,6 +852,7 @@ class CategLib extends ObjectLib
 	/* Returns an array of categories.
 	Each category is similar to a tiki_categories record, but with the following additional fields:
 		"children" is an array of identifiers of the categories the category has as children.
+		"descendants" is an array of identifiers of the categories the category has as descendants.
 		"objects" is the number of objects directly in the category.
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category. Indices are category OIDs.
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
@@ -869,7 +872,8 @@ class CategLib extends ObjectLib
 	*/
 	function getCategories($filter = NULL, $considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
 		global $cachelib, $prefs;
-		if( ! $ret = $cachelib->getSerialized($localized ? $prefs['language'] : '', 'allcategs') ) {
+		$cacheKey = 'all' . ($localized ? '_' . $prefs['language'] : '');
+		if( ! $ret = $cachelib->getSerialized($cacheKey, 'allcategs') ) {
 			// This generates different caches for each language. The empty key is used when no localization was requested.
 			// This could be optimized, but for now each cache is generated from scratch.
 
@@ -882,6 +886,7 @@ class CategLib extends ObjectLib
 				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
 				$res["objects"] = $this->getOne($query, array($id));
 				$res['children'] = array();
+				$res['descendants'] = array();
 				if ($localized) {
 					$res['name'] = tr($res['name']);
 				}
@@ -901,6 +906,8 @@ class CategLib extends ObjectLib
 				$path = array($category['categId'] => $category['name']);
 				for ($parent = $category['parentId']; $parent != 0; $parent = $categories[$parent]['parentId']) {
 					$path[$parent] = $categories[$parent]['name'];
+					
+					$categories[$category['parentId']]['descendants'][] = $category['categId']; // Link this category from its ascendants for optimization.
 				}
 				$path = array_reverse($path);
 
@@ -920,7 +927,8 @@ class CategLib extends ObjectLib
 			}
 			unset($categories);
 			
-			$cachelib->cacheItem($localized ? $prefs['language'] : '', serialize($ret), 'allcategs');
+			$cachelib->cacheItem($cacheKey, serialize($ret), 'allcategs');
+			$cachelib->cacheItem('roots', serialize($roots), 'allcategs'); // Used in get_category_descendants()
 		}
 
 		if (!is_null($filter)) {
@@ -1023,7 +1031,6 @@ class CategLib extends ObjectLib
 	
 	// Moved from tikilib.php
 	function uncategorize_object($type, $id) {
-		// Fixed query. -rlpowell
 		$query = "select `catObjectId` from `tiki_categorized_objects` c, `tiki_objects` o where o.`objectId`=c.`catObjectId` and o.`type`=? and o.`itemId`=?";
 		$catObjectId = $this->getOne($query, array((string) $type,(string) $id));
 
