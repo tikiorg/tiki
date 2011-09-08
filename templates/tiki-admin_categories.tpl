@@ -13,12 +13,14 @@
 <div class="tree" id="top">
 	<div class="treetitle">{tr}Current category:{/tr} 
 		<a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
-		{section name=x loop=$path}
+		{if $parentId != 0}
+		{foreach $path as $id=>$name}
 			&nbsp;::&nbsp;
-			<a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name|escape}</a>
-		{/section}
+			<a class="categpath" href="tiki-admin_categories.php?parentId={$id}">{$name|escape}</a>
+		{/foreach}
 		<br />
 		{tr}Current Category ID:{/tr} {$parentId}
+		{/if}
 	</div>
 </div>
 
@@ -70,6 +72,7 @@
 			</form>
 		{/tab}
 	{/if}
+	{if $parentId != 0}
 	{tab name="{tr}Objects in category{/tr}"}
 		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</h2>
 		{if $objects}
@@ -110,7 +113,6 @@
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 	
-	{if $parentId !=0}
 		{tab name="{tr}Moving objects between categories{/tr}"}
 			<h2>{tr}Moving objects between categories{/tr}</h2>
 			<form method="get" action="tiki-admin_categories.php" name="move">

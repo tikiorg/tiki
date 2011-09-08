@@ -246,22 +246,19 @@ $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 // If the parent category is not zero get the category path
 if ($_REQUEST["parentId"]) {
-	$path = $categlib->get_category_path($_REQUEST["parentId"]);
 	$p_info = $categlib->get_category($_REQUEST["parentId"]);
 	$father = $p_info["parentId"];
-	$categ_name = $p_info['name'];
+	$smarty->assign('categ_name', $p_info['name']);
+	$smarty->assign('path', $p_info['tepath']);
 } else {
-	$path = "";
 	$father = 0;
-	$categ_name = tra('Top');
 }
-$smarty->assign('path', $path);
 $smarty->assign('father', $father);
-$smarty->assign('categ_name', $categ_name);
+
 // ---------------------------------------------------
 
 
-$categories = $categlib->getCategories(false);
+$categories = $categlib->getCategories(NULL, false);
 $smarty->assign('categories', $categories);
 
 $treeNodes = array();
