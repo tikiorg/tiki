@@ -144,6 +144,7 @@ class CategLib extends ObjectLib
 		return $res['name'];
 	}
 	
+	// WARNING: This removes not only the specified category, but also all its descendants.
 	function remove_category($categId) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 
