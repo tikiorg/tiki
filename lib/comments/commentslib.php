@@ -2045,8 +2045,7 @@ class Comments extends TikiLib
 		$object = explode( ":", $objectId, 2);
 		if ( count($object) < 2 ) return false;
 
-		// Add object if not already exists, because it's currently only done when using categories feature
-		// We suppose it's already done when unlocking the object, because it is needed to be locked
+		// Add object if it does not already exist. We assume it already exists when unlocking.
 		if ( $status == 'y' ) {
 			TikiLib::lib('object')->add_object($object[0], $object[1]);
 		}
