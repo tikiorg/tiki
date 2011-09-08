@@ -1655,6 +1655,9 @@ class CategLib extends ObjectLib
 		}
 	}
 
+	// Returns an array of OIDs of categories.
+	// These categories are those from the specified categories whose parents are not in the set of specified categories.
+	// $categories: An array of categories
 	function findRoots( $categories ) {
 		$candidates = array();
 
