@@ -50,39 +50,6 @@ class CategLib extends ObjectLib
 			return $back;
 		}
 	}
-	/* Similar to list_categs, but gets info for the category ids themselves, not descendants
-	 * $categIds can be an array.
-	 * Specifiy a common ancestor category ID in $top to remove the top level from the category path
-	 */
-	function get_category_info($categIds, $top=null) {
-		$back = $this->getCategories(NULL, true, false);
-		$i = 0;
-		$cut = '';
-		foreach ($back as $cat) {
-			$catkey = $cat['categId'];
-			if (isset($top)) {
-				if ($top == $cat['categId']) {
-					$cut = $cat['categpath'].'::';
-				} elseif ($cut != '' && strpos($cat['categpath'], $cut) === 0){
-					$cat['categpath'] = substr($cat['categpath'], strlen($cut));
-				}
-			}
-			$catlist["$catkey"] = $cat;
-			$catlist["$catkey"]['order'] = $i;
-			$i++;
-		}
-		if (is_array($categIds)) {
-			foreach ($categIds as $ids) {
-				$order = $catlist["$ids"]['order'];
-				$catinfo[$order] = $catlist["$ids"];
-			}
-			ksort($catinfo);
-			$catinfo = array_values($catinfo);
-		} else {
-			$catinfo[0] = $catlist["$categIds"];
-		}
-		return $catinfo;
-	}
 
 	// Returns a string representing the specified category's path.
 	// The path includes all parent categories ordered from the root to the category's parent, and the category itself.
