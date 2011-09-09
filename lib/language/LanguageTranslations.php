@@ -136,7 +136,7 @@ class LanguageTranslations extends TikiDb_Bridge
 			$stats = array('modif' => 0, 'new' => 0);
 
 			// add new strings to the language.php
-			$lastStr = array_search("\"###end###\"=>\"###end###\");\n", $langFile);
+			$lastStr = array_search(");\n", $langFile);
 
 			if ($lastStr === FALSE) {
 				// file has no line with "###end###\"=>\"###end###\") marking the end of the array

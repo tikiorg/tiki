@@ -121,5 +121,5 @@ $lang=Array(
 "Should escape \"double quotes\" in the source string" => "Deve escapar \"aspas duplas\" na string original",
 "Something" => "Algo",
 "Trying to insert malicious PHP code back to the language.php file" => "asff\"); echo 'teste'; \$dois = array('',\"",
-"###end###"=>"###end###");
+);
 

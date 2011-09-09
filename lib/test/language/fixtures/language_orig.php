@@ -118,5 +118,5 @@ $lang=Array(
 "The page is empty" => "A página está vazia",
 "You do not have permissions to view the maps" => "Você não possui permissões para ver os mapas",
 "Second test special \"characters\" escaping" => "Alguma tradução \"characters\"",
-"###end###"=>"###end###");
+);
 
