@@ -447,20 +447,32 @@ class HeaderLib
 	 * 
 	 * @return array of JavaScript strings
 	 */
-	function getJsFromHTML( $html, $switch_fn_definition = false ) {
+	function getJsFromHTML( $html, $switch_fn_definition = false, $isFiles = false ) {
 		$jsarr = array();
 		$js_script = array();
 		
 		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $html, $jsarr);
-		if (count($jsarr) > 1 && is_array($jsarr[1]) && count($jsarr[1]) > 0) {
-			$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
-			$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
+		if ($isFiles == false) {
+			if (count($jsarr) > 1 && is_array($jsarr[1]) && count($jsarr[1]) > 0) {
+				$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
+				$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
 
-			if ($switch_fn_definition) {
-				$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
+				if ($switch_fn_definition) {
+					$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
+				}
+
+				$js_script = array_merge($js_script, $js);
 			}
-
-			$js_script = array_merge($js_script, $js);
+		} else {
+			//if there was no content in the script, it is a src file
+			foreach($jsarr[0] as $key=>$tag) {
+				if (empty($jsarr[1][$key])) {
+					//we load the js as a xml element, then look to see if it has a "src" tag, if it does, we push it to array for end back
+					$js = simplexml_load_string($tag);
+					if (!empty($js['src']))
+						array_push($js_script, (string)$js['src']);
+				}
+			}
 		}
 		// this is very probably possible as a single regexp, maybe a preg_replace_callback
 		// but it was stopping the CDATA group being returned (and life's too short ;)

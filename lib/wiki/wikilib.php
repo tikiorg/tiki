@@ -384,9 +384,17 @@ class WikiLib extends TikiLib
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $wiki_cache >= $this->now) {
 				$content = $cache_info['cache'];
 				// get any cached JS and add to headerlib JS
+				$jsFiles = $headerlib->getJsFromHTML( $content, false, true );
+				
+				foreach($jsFiles as $jsFile) {
+					$headerlib->add_jsfile($jsFile);
+				}
+				
 				$headerlib->add_js( implode( "\n", $headerlib->getJsFromHTML( $content )));
+				
 				// now remove all the js from the source
 				$content = $headerlib->removeJsFromHtml($content);
+				
 				$canBeRefreshed = true;
 			} else {
 				$jsFile1 = $headerlib->getJsfiles();
@@ -396,15 +404,14 @@ class WikiLib extends TikiLib
 				
 				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
 				$jsFile2 = $headerlib->getJsfiles();
-				
 				$js2 = $headerlib->getJs();
-				
+
 				$jsFile = array_diff( $jsFile2, $jsFile1 );
 				$js = array_diff( $js2, $js1 );
 				
 				$jsFile = implode( "\n", $jsFile);
+				$js = $headerlib->wrap_js( implode( "\n", $js) );				
 				
-				$js = $headerlib->wrap_js( implode( "\n", $js) );
 				$this->update_cache($page, $content . $jsFile . $js);
 			}
 		} else {
@@ -414,7 +421,6 @@ class WikiLib extends TikiLib
 	}
 
 	function update_cache($page, $data) {
-
 		$query = "update `tiki_pages` set `cache`=?, `cache_timestamp`=? where `pageName`=?";
 		$result = $this->query($query, array( $data, $this->now, $page ) );
 		return true;
