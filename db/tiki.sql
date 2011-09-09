@@ -916,6 +916,7 @@ CREATE TABLE `tiki_forums` (
   `commentsPerPage` varchar(100) default NULL,
   `is_flat` char(1) default NULL,
   `mandatory_contribution` char(1) default NULL,
+  `forumLanguage` varchar(255) default NULL,
   PRIMARY KEY (`forumId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

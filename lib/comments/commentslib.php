@@ -793,7 +793,9 @@ class Comments extends TikiLib
 			$approval_type='all_posted', $moderator_group='', $forum_password='',
 			$forum_use_password='n', $att='att_no', $att_store='db', $att_store_dir='',
 			$att_max_size=1000000, $forum_last_n=0, $commentsPerPage='', $threadStyle='',
-			$is_flat='n', $att_list_nb='n', $topics_list_lastpost_title='y', $topics_list_lastpost_avatar='n', $topics_list_author_avatar='n') {
+			$is_flat='n', $att_list_nb='n', $topics_list_lastpost_title='y', $topics_list_lastpost_avatar='n', $topics_list_author_avatar='n',
+			$forumLanguage = ''
+		) {
 
 		$data = array(
 			'name' => $name,  	
@@ -850,9 +852,11 @@ class Comments extends TikiLib
 			'threadStyle' => $threadStyle,
 			'is_flat' => $is_flat,
 			'att_list_nb' => $att_list_nb,
+			'forumLanguage' => $forumLanguage,
 		);
-
+		
 		$forums = $this->table('tiki_forums');
+
 		if ($forumId) {
 			$forums->update($data, array(
 				'forumId' => (int) $forumId,

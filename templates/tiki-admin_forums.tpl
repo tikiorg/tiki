@@ -427,6 +427,21 @@
 					</a>
 				</td>
 			</tr>
+			
+			{if $prefs.feature_multilingual eq 'y'}
+				<tr>
+					<td>{tr}Language{/tr}</td>
+					<td>
+						<select name="forumLanguage" id="forumLanguage">
+							<option value="">{tr}Unknown{/tr}</option>
+							{section name=ix loop=$languages}
+								<option value="{$languages[ix].value|escape}"{if $forumLanguage eq $languages[ix].value or (!($data.page_id) and $forumLanguage eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
+							{/section}
+						</select>
+					</td>
+				</tr>
+			{/if}
+			
 			<tr>
 				<td colspan="2">
 
