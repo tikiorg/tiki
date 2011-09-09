@@ -52,11 +52,6 @@
 	<h1>{tr}Your OpenID identity is valid{/tr}</h1>
 	<p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
 	{if $allowRegister eq 'y'}
-	<table width="100%">
-		<col width="50%"/>
-		<col width="50%"/>
-		<tr>
-			<td>
 	{/if}
 {/if}	
 <div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
@@ -122,9 +117,6 @@
 				</p>
 				{include file="modules/mod-login_box.tpl"} 
 		{if $allowRegister eq 'y'}
-			</td>
-		</tr>
-		</table>
 		{/if}
 	{/if}
 		
