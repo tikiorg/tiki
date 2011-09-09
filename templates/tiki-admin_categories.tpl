@@ -29,7 +29,7 @@
 {tabset}
 	{tab name="{tr}Create/Edit category{/tr}"}
 		{if $categId > 0}
-			<h2>{tr}Edit this category:{/tr} <b>{$name|escape}</b> </h2>
+			<h2>{tr}Edit this category:{/tr} <b>{$categoryName|escape}</b> </h2>
 			{button href="tiki-admin_categories.php?parentId=$parentId#editcreate" _text="{tr}Create New{/tr}" _title="{tr}Create New{/tr}"}
 		{else}
 			<h2>{tr}Add new category{/tr}</h2>
@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<td>{tr}Name:{/tr}</td>
-					<td><input type="text" size="40" name="name" value="{$name|escape}" /></td>
+					<td><input type="text" size="40" name="name" value="{$categoryName|escape}" /></td>
 				</tr>
 				<tr>
 					<td>{tr}Description:{/tr}</td>

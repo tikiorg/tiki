@@ -242,7 +242,7 @@ if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
 	}
 }
 $smarty->assign('categId', $_REQUEST["categId"]);
-$smarty->assign('name', $info["name"]);
+$smarty->assign('categoryName', $info["name"]);
 $smarty->assign('description', $info["description"]);
 // If the parent category is not zero get the category path
 if ($_REQUEST["parentId"]) {
