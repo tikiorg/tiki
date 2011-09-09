@@ -101,8 +101,10 @@ class Language_WriteFile
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
 // This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
-// and it still allows to translate ":" as "&nbsp;:" for languages that
+// and it still allows to translate ":" as " :" for languages that
 // need it (like French)
+// Note: the difference is invisible but " :" has an UTF-8 non-breaking-space, not a regular space, but the UTF-8 equivalent of the HTML &nbsp;.
+// This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
 
 TXT;
