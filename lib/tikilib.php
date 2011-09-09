@@ -2022,7 +2022,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$sort = $options->expr($this->convertSortMode($sort_mode));
 		$result = $options->fetchAll($options->all(), $conditions, $maxRecords, $offset, $sort);
-		$cant = $options->fetchCOunt($conditions);
+		$cant = $options->fetchCount($conditions);
 
 		$ret = array();
 		foreach ( $result as $res ) {
