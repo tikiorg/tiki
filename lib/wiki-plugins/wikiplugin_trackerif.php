@@ -45,7 +45,7 @@ function wikiplugin_trackerif($data, $params)
 		$data = substr($data,0,strpos($data,'{ELSE}'));
 	}
 
-	if (!isset($_REQUEST['trackerId']) || !isset($_REQUEST['itemId'])) {
+	if (!isset($_REQUEST['itemId'])) {
 		// Edit mode
 		if (!isset($params['ignore']) || $params['ignore'] == 'y') {
 			return $data;
