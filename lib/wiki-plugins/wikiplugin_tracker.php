@@ -552,7 +552,7 @@ function wikiplugin_tracker($data, $params)
 							$categs = $categlib->getCategories($filter, true, false);
 							$_REQUEST["ins_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
-							$_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
+							$_REQUEST["ins_$f"] = $prefs[$matches[1]];
 						} elseif ($ff['type'] == 'e') {
 							$_REQUEST["ins_$f"][] = $autosavevalues[$i];
 						} else {
