@@ -2278,6 +2278,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 			'enable_ui_email' => 'n',
 			'enable_ui_online' => 'n',
 			'enable_password_protection' => 'n',
+			'forum_language' => '',
 		);
 
 		$data = Tiki_Profile::convertLists( $data, array(
@@ -2374,7 +2375,8 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 			$data['list_att_nb'],
 			$data['list_topic_last_post_title'],
 			$data['list_topic_last_post_avatar'],
-			$data['list_topic_author_avatar']
+			$data['list_topic_author_avatar'],
+			$data['forum_language'],
 		);
 
 		return $id;
