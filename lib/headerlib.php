@@ -413,7 +413,10 @@ class HeaderLib
 	 * @return array[strings]
 	 */
 	function getJsfiles() {
-
+		if (! function_exists('smarty_modifier_escape')) {
+			require_once 'lib/smarty_tiki/modifier.escape.php';
+		}
+		
 		ksort($this->jsfiles);
 		$out = array();
 

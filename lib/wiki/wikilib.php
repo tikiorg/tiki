@@ -389,13 +389,23 @@ class WikiLib extends TikiLib
 				$content = $headerlib->removeJsFromHtml($content);
 				$canBeRefreshed = true;
 			} else {
+				$jsFile1 = $headerlib->getJsfiles();
 				$js1 = $headerlib->getJs();
-				$content = $this->parse_data($info['data'], $parse_options );
+				
+				$content = $this->parse_data( $info['data'], $parse_options );
+				
 				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
+				$jsFile2 = $headerlib->getJsfiles();
+				
 				$js2 = $headerlib->getJs();
+				
+				$jsFile = array_diff( $jsFile2, $jsFile1 );
 				$js = array_diff( $js2, $js1 );
+				
+				$jsFile = implode( "\n", $jsFile);
+				
 				$js = $headerlib->wrap_js( implode( "\n", $js) );
-				$this->update_cache($page, $content . $js);
+				$this->update_cache($page, $content . $jsFile . $js);
 			}
 		} else {
 			$content = $this->parse_data($info['data'], $parse_options );
