@@ -309,6 +309,34 @@ class MenuLib extends TikiLib
 	// also sets setion open/close according to javascript and cookies
 	function setSelected($channels, $sectionLevel='', $toLevel='', $params='')
 	{
+		if (!empty($params['subMenu'])) {
+			$subMenu = array();
+			$cant = 0;
+			$in = false;
+			$optionLevel = $level = 0;
+			foreach ($channels['data'] as $position=>$option) {
+				if (is_numeric($option['type'])) {
+					$optionLevel = $option['type'];
+				} else if ($option['type'] == '-') {
+					$optionLevel = $optionLevel - 1;
+				} else if ($option['type'] == 'r' || $option['type'] == 's') {
+					$optionLevel = 0;
+				}
+				if ($in && $optionLevel <= $level) {
+					break;
+				} elseif ($in) {
+					$subMenu[] = $option;
+					$cant++;
+				} elseif (!$in && $option['optionId'] == $params['subMenu']) {
+					$level = $optionLevel;
+					$in = true;
+				} 
+				if ($option['type'] != '-' && $option['type'] != 'o') {
+					++$optionLevel;
+				}
+			}
+			$channels = array('data'=>$this->lower($subMenu), 'cant'=>$cant);
+		}
 		if (is_numeric($sectionLevel)) { // must extract only the submenu level sectionLevel where the current url is
 			$findUrl = false;
 			$optionLevel = 0;
@@ -403,34 +431,6 @@ class MenuLib extends TikiLib
 				}
 			}
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
-		}
-		if (!empty($params['subMenu'])) {
-			$subMenu = array();
-			$cant = 0;
-			$in = false;
-			$optionLevel = $level = 0;
-			foreach ($channels['data'] as $position=>$option) {
-				if (is_numeric($option['type'])) {
-					$optionLevel = $option['type'];
-				} else if ($option['type'] == '-') {
-					$optionLevel = $optionLevel - 1;
-				} else if ($option['type'] == 'r' || $option['type'] == 's') {
-					$optionLevel = 0;
-				}
-				if ($in && $optionLevel <= $level) {
-					break;
-				} elseif ($in) {
-					$subMenu[] = $option;
-					$cant++;
-				} elseif (!$in && $option['optionId'] == $params['subMenu']) {
-					$level = $optionLevel;
-					$in = true;
-				} 
-				if ($option['type'] != '-' && $option['type'] != 'o') {
-					++$optionLevel;
-				}
-			}
-			$channels = array('data'=>$this->lower($subMenu), 'cant'=>$cant);
 		}
 		// set sections open/close according to cookie
 			global $prefs;
