@@ -106,7 +106,7 @@ function module_change_category( $mod_reference, $module_params ) {
 		$cat_type = 'wiki page';
 		$cat_objid = $_REQUEST['page'];
 		
-		$categs = $categlib->list_categs($id);
+		$categs = $categlib->getCategories($id ? array('identifier'=>$id, 'type'=>'descendants') : NULL);
 	
 		if (!empty($module_params['group']) && $module_params['group'] == 'y') {
 			global $userlib, $user;

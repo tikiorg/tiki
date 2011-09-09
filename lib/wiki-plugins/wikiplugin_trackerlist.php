@@ -1180,7 +1180,12 @@ function wikiplugin_trackerlist($data, $params) {
 								$exactvalue[] = $evs[$i];
 							} elseif (preg_match('/(not)?categories\(([0-9]+)\)/', $evs[$i], $matches)) {
 								global $categlib; include_once('lib/categories/categlib.php');
-								$categs = $categlib->list_categs($matches[2]);
+								if (ctype_digit($matches[2]) && $matches[2] > 0) {
+									$filter = array('identifier'=>$matches[2], 'type'=>'descendants'); 
+								} else {
+									$filter = NULL;
+								}
+								$categs = $categlib->getCategories($filter, true, false);
 								$l = array($matches[2]);
 								foreach ($categs as $cat) {
 									$l[] = $cat['categId'];

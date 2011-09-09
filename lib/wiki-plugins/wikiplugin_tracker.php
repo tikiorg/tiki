@@ -554,8 +554,13 @@ function wikiplugin_tracker($data, $params)
 							continue;
 						}
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
+							if (ctype_digit($matches[1]) && $matches[1] > 0) {
+								$filter = array('identifier'=>$matches[1], 'type'=>'descendants'); 
+							} else {
+								$filter = NULL;
+							}
 							global $categlib; include_once('lib/categories/categlib.php');
-							$categs = $categlib->list_categs($matches[1]);
+							$categs = $categlib->getCategories($filter, true, false);
 							$_REQUEST["ins_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
 							$_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];

@@ -47,7 +47,7 @@ if (isset($_POST['langwatch'])) {
 
 if ($prefs['feature_categories']) {
 	include_once ('lib/categories/categlib.php');
-	$categories = $categlib->list_categs();
+	$categories = $categlib->getCategories(NULL, true, false);
 } else {
 	$categories = array();
 }

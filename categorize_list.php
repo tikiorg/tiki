@@ -34,19 +34,13 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		$ext = ($cat_type == 'wiki page')? 'wiki':str_replace(' ', '_', $cat_type);
 		$pref = 'feature_'.$ext.'_mandatory_category';
 		if ($prefs[$pref] > 0) {
-			$all_categories = $categlib->list_categs($prefs[$pref]);
+			$categories = $categlib->getCategories(array('identifier'=>$prefs[$pref], 'type'=>'descendants'));
 		} else {
-			$all_categories = $categlib->list_categs();
+			$categories = $categlib->getCategories();
 		}
 		$smarty->assign('mandatory_category', $prefs[$pref]);
 	} else {
-		$all_categories = $categlib->list_categs();
-	}
-
-	if( ! empty( $all_categories ) ) {
-		$categories = Perms::filter( array( 'type' => 'category' ), 'object', $all_categories, array( 'object' => 'categId' ), 'view_category' );
-	} else {
-		$categories = array();
+		$categories = $categlib->getCategories();
 	}
 
 	$num_categories = count($categories);

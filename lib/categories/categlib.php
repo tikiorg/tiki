@@ -794,7 +794,7 @@ class CategLib extends ObjectLib
 			$cachekey .= "_$persp"; 
 		}
 		if( ! $ret = $cachelib->getSerialized("$cachekey") ) {
-			$ret = $this->list_categs($categId, $all_descends);
+			$ret = $this->getCategories($categId ? array('identifier'=>$categId, 'type'=> $all_descends ? 'descendants' : 'children') : NULL, true, false);
 			$cachelib->cacheItem($cachekey,serialize($ret));
 		}
 		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {

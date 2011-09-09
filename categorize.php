@@ -29,11 +29,9 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	if (isset($section) && $section == 'wiki' && $prefs['feature_wiki_mandatory_category'] > 0)
-		$categories = $categlib->list_categs($prefs['feature_wiki_mandatory_category']);
+		$categories = $categlib->getCategories(array('identifier'=>$prefs['feature_wiki_mandatory_category'], 'type'=>'descendants'));
 	else
-		$categories = $categlib->list_categs();
-
-	$categories = Perms::filter( array( 'type' => 'category' ), 'object', $categories, array( 'object' => 'categId' ), 'view_category' );
+		$categories = $categlib->getCategories();
 
 	$num_categories = count($categories);
  	$can = $catobjperms->modify_object_categories;

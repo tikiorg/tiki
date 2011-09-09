@@ -93,8 +93,7 @@ case 'remove':
 }
 
 // Obtain data
-$all_categories = $categlib->list_categs();
-$categories = Perms::filter( array( 'type' => 'category' ), 'object', $all_categories, array( 'object' => 'categId' ), 'view_category' );
+$categories = $categlib->getCategories();
 $cat_tree = $categlib->generate_cat_tree( $categories, true, array_keys( $available_states ) );
 
 $transitionlib = new TransitionLib( $transition_mode );

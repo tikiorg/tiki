@@ -32,7 +32,7 @@ $auto_query_args = array(
 		'categId',
 		'find'
 		);
-$categories = $categlib->list_categs();
+$categories = $categlib->getCategories();
 
 if (!empty($_REQUEST["action_log_type"])) {
   $action_log_type = $_REQUEST["action_log_type"];
