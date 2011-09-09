@@ -14,6 +14,7 @@ if ($prefs['feature_freetags'] == 'y') {
 }
 $access->check_feature('feature_submissions');
 $access->check_permission('tiki_p_submit_article');
+$errors = array();
 
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {
@@ -147,10 +148,14 @@ if (isset($_REQUEST["allowhtml"])) {
 	}
 }
 
+if ((isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) && empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
+	$errors[] = $captchalib->getErrors();
+}
+
 $smarty->assign('preview', 0);
 
 // If we are in preview mode then preview it!
-if (isset($_REQUEST["preview"])) {
+if (isset($_REQUEST["preview"]) || !empty($errors)) {
 	check_ticket('edit-submission'); 
 	# convert from the displayed 'site' time to 'server' time
 
@@ -166,7 +171,7 @@ if (isset($_REQUEST["preview"])) {
 	$expireDate = TikiLib::make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 
 	$smarty->assign('reads', '0');
-	$smarty->assign('preview', 1);
+	if (isset($_REQUEST['preview'])) $smarty->assign('preview', 1);
 	$smarty->assign('edit_data', 'y');
 	$smarty->assign('title', strip_tags($_REQUEST["title"], '<a><pre><p><img><hr>'));
 	$smarty->assign('authorName', $_REQUEST["authorName"]);
@@ -272,8 +277,8 @@ if (isset($_REQUEST["preview"])) {
 }
 
 // Pro
-if (isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) {
-	check_ticket('edit-submission'); 
+if ((isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) && empty($errors)) {
+	check_ticket('edit-submission');
 	include_once ("lib/imagegals/imagegallib.php");
 
 	# convert from the displayed 'site' time to UTC time
@@ -467,6 +472,7 @@ $smarty->assign('siteTimeZone', $prefs['display_timezone']);
 global $wikilib; include_once('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins(true, 'body');
 $smarty->assign_by_ref('plugins', $plugins);
+$smarty->assign('errors', $errors);
 
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtcycle', '');

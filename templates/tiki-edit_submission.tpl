@@ -2,6 +2,14 @@
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
 {include file='tiki-articles-js.tpl'}
+{if !empty($errors)}
+	{remarksbox type='errors' title="{tr}Errors{/tr}"}
+		{foreach from=$errors item=m name=errors}
+			{$m}
+			{if !$smarty.foreach.errors.last}<br />{/if}
+		{/foreach}
+	{/remarksbox}
+{/if}
 {if $preview}
 	{include file='tiki-preview_article.tpl'}
 {/if}
@@ -275,6 +283,7 @@
 
 	<div align="center">
 		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
+		{if $prefs.feature_antibot eq 'y'}<div align="center">{include file='antibot.tpl' antibot_table='y'}</div>{/if}
 		<input type="submit" class="wikiaction" name="submit" value="{tr}Submit Article{/tr}" onclick="needToConfirm=false;" />
 		{if $tiki_p_autoapprove_submission eq 'y'}
 			<input type="submit" class="wikiaction" name="save" value="{tr}Auto-Approve Article{/tr}" onclick="needToConfirm=false;" />
