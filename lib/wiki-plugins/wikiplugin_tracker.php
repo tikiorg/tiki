@@ -567,7 +567,7 @@ function wikiplugin_tracker($data, $params)
 						} elseif ($ff['type'] == 'e') {
 							$_REQUEST["ins_$f"][] = $autosavevalues[$i];
 						} else {
-							$_REQUEST['track'][$f] = $autosavevalues[$i];
+							$_REQUEST["ins_$f"] = $autosavevalues[$i];
 						}
 					}
 				}
