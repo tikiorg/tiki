@@ -328,7 +328,7 @@ function wikiplugin_tracker($data, $params)
 {
 	global $tikilib, $userlib, $user, $group, $page, $smarty, $prefs, $trklib, $captchalib;
 	$parserlib = TikiLib::lib('parser');
-	
+
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	if (isset($params['itemId']) && empty($params['itemId']))
@@ -1023,6 +1023,21 @@ function wikiplugin_tracker($data, $params)
 						$customvalidation .= '} } } ';
 						$customvalidation .= '}, ';
 					}
+					if ($prefs['useRegisterPasscode'] == 'y') {
+						$customvalidation .= 'passcode: {
+									required: true,
+									remote: {
+										url: "validate-ajax.php", 
+										type: "post",
+										data: {
+											validator: "passcode", 
+											input: function() {
+												return $("#passcode").val();
+												}
+											}
+										}
+									}, ';
+					} 
 				}
 				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], $fields_prefix, $customvalidation, $customvalidation_m );
 
