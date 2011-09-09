@@ -913,7 +913,7 @@ class CategLib extends ObjectLib
 			$cachelib->cacheItem('roots', serialize($roots), 'allcategs'); // Used in get_category_descendants()
 		}
 
-		if (!is_null($filter)) {
+		if (!is_null($filter) && isset($ret[$filter['identifier']])) {
 			$kept = array();
 			$type = isset($filter['type']) ? $filter['type'] : 'self';
 			$filterBaseCategory = $ret[$filter['identifier']];
