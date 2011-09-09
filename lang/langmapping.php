@@ -45,6 +45,7 @@ $langmapping = array(
 	'ko' => array('한국어', tra("Korean")),
 	'hu' => array('Magyar', tra("Hungarian")),
 	'lt' => array('Lithuanian', tra("Lithuanian")),
+	'nds' => array('Plattdüütsch', tra("Lower German")),
 	'nl' => array('Nederlands', tra("Dutch")),
 	'no' => array('Norwegian', tra("Norwegian")),
 	'pl' => array('Polish', tra("Polish")),

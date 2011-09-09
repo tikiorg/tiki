@@ -35,6 +35,7 @@ $flagmapping = array(
 	'ja' 	=> array('Japan'),
 	'lt' 	=> array('Lithuania'),
 	'hu' 	=> array('Hungary'),
+	'nds'	=> array('Europe'),
 	'nl' 	=> array('Netherlands'),
 	'no' 	=> array('Norway'),
 	'pl' 	=> array('Poland'),
