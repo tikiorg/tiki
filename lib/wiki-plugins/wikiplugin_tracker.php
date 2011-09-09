@@ -534,17 +534,6 @@ function wikiplugin_tracker($data, $params)
 
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
-				foreach ($flds['data'] as $fl) {
-					// First convert track_xx to array (need to be up here before setting autosave fields)
-					$incomingTrackName = $fields_prefix . $fl["fieldId"];
-					if (isset($_REQUEST[$incomingTrackName])) {
-						$_REQUEST['track'][$fl["fieldId"]] = $_REQUEST[$incomingTrackName];
-					} else if (isset($_FILES[$incomingTrackName])) {	// also for uploaded files
-						foreach ($_FILES[$incomingTrackName] as $lbl => $val) {
-							$_FILES['track'][$lbl][$fl["fieldId"]] = $val;
-						}
-					}
-				}
 				if (!empty($autosavefields)) {
 					foreach ($autosavefields as $i=>$f) {
 						if (!$ff = $trklib->get_field($f, $flds['data'])) {
@@ -584,16 +573,6 @@ function wikiplugin_tracker($data, $params)
 				}
 				if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
-				}
-
-				if (isset($_REQUEST['track'])) {
-					foreach ($_REQUEST['track'] as $fld=>$val) {
-						//$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
-						if (!empty($_REQUEST['other_track_'.$fld])) {
-							$val = $_REQUEST['other_track_'.$fld];
-						}
-						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
-					}
 				}
 
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
