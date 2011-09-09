@@ -34,7 +34,7 @@ if ($_REQUEST['fileId'] > 0) {
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
 if ( $fileInfo['filetype'] != $mimetypes["odt"] ) {
-	$smarty->assign('msg', tra("Wrong file type, expected ". $mimetypes["odt"]));
+	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["odt"]));
 	$smarty->display("error.tpl");
 	die;
 }

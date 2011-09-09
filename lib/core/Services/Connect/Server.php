@@ -38,7 +38,7 @@ class Services_Connect_Server
 
 		// send back confirm message
 		$rdata['status'] = $status;
-		$rdata['message'] = tr('Please confirm you want to participate in Tiki Connect' . "\n" . $captcha);
+		$rdata['message'] = tr('Please confirm you want to participate in Tiki Connect') . "\n" . $captcha;
 		$rdata['guid'] = $guid;
 		
 		//$rdata['debug']['capkey'] = $capkey;
