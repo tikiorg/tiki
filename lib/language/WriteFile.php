@@ -63,10 +63,7 @@ class Language_WriteFile
 		
 		if ($handle) {
 			fwrite($handle, "<?php\n");
-			fwrite($handle, "// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project\n");
-			fwrite($handle, "// \n");
-			fwrite($handle, "// All Rights Reserved. See copyright.txt for details and a complete list of authors.\n");
-			fwrite($handle, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n\n");
+			fwrite($handle, $this->fileHeader());
 			fwrite($handle, "\$lang = array(\n");
 			
 			foreach ($entries as $entry) {
@@ -78,6 +75,39 @@ class Language_WriteFile
 		}
 		
 		rename($tmpFilePath, $this->filePath);	
+	}
+
+	/**
+	 * Return the text used for language.php header
+	 * @return string
+	 */
+	protected function fileHeader()
+	{
+		$header = <<<TXT
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+// Note for translators about translation of text ending with punctuation
+// 
+// The current list of concerned punctuation can be found in 'lib/init/tra.php'
+// On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
+// For clarity, we explain here only for colons: ':' but it is the same for the rest
+// 
+// Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
+// 
+// Technical justification:
+// If a string ending with colon needs translating (like "{tr}Login:{/tr}")
+// then Tiki tries to translate 'Login' and ':' separately.
+// This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
+// and it still allows to translate ":" as "&nbsp;:" for languages that
+// need it (like French)
+
+
+TXT;
+		
+		return $header;
 	}
 	
 	/**

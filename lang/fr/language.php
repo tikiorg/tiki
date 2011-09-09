@@ -4,6 +4,21 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+// Note for translators about translation of text ending with punctuation
+// 
+// The current list of concerned punctuation can be found in 'lib/init/tra.php'
+// On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
+// For clarity, we explain here only for colons: ':' but it is the same for the rest
+// 
+// Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
+// 
+// Technical justification:
+// If a string ending with colon needs translating (like "{tr}Login:{/tr}")
+// then Tiki tries to translate 'Login' and ':' separately.
+// This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
+// and it still allows to translate ":" as "&nbsp;:" for languages that
+// need it (like French)
+
 $lang = array(
 "No question indicated" => "Aucune question indiquée",
 "Welsh" => "Welsh",
@@ -35,6 +50,7 @@ $lang = array(
 "Korean" => "Coréen",
 "Hungarian" => "Hongrois",
 "Lithuanian" => "Lituanien",
+// "Lower German" => "Lower German",
 "Dutch" => "Hollandais",
 "Norwegian" => "Norvégien",
 "Polish" => "Polonais",
@@ -4221,7 +4237,7 @@ $lang = array(
 "URL the user is sent to after the form is submitted" => "Adresse (URL) vers laquelle l'utilisateur est dirigé après que le formulaire a été envoyé",
 // "URL Target" => "URL Target",
 // "Set the target parameter for the url (determines whether target will open in a new page, etc" => "Set the target parameter for the url (determines whether target will open in a new page, etc",
-// "Parent" => "Parent",
+"Parent" => "Батьківська",
 // "Self" => "Self",
 "Values" => "Valeurs",
 "Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc" => "Liste séparée par deux-points des valeurs par défaut. La première valeur correspond au permier champ, la seconde au second, etc.",

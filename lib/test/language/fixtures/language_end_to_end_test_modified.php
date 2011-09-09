@@ -4,6 +4,21 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+// Note for translators about translation of text ending with punctuation
+// 
+// The current list of concerned punctuation can be found in 'lib/init/tra.php'
+// On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
+// For clarity, we explain here only for colons: ':' but it is the same for the rest
+// 
+// Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
+// 
+// Technical justification:
+// If a string ending with colon needs translating (like "{tr}Login:{/tr}")
+// then Tiki tries to translate 'Login' and ':' separately.
+// This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
+// and it still allows to translate ":" as "&nbsp;:" for languages that
+// need it (like French)
+
 $lang = array(
 // "Bytecode Cache" => "Bytecode Cache",
 // "Using <strong>%0</strong>.These stats affect all PHP applications running on the server" => "Using <strong>%0</strong>.These stats affect all PHP applications running on the server",

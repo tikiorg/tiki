@@ -51,6 +51,9 @@ class Language_WriteFileTest extends TikiTestCase
 	
 	public function testWriteStringsToFile_shouldWriteSimpleStrings()
 	{
+		$obj = $this->getMock('Language_WriteFile', array('fileHeader'));
+		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
+		
 		$string1 = new stdClass;
 		$string1->name = 'First string';
 		
@@ -62,7 +65,7 @@ class Language_WriteFileTest extends TikiTestCase
 		
 		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3);
 		
-		$this->obj->writeStringsToFile($strings, $this->filePath);
+		$obj->writeStringsToFile($strings, $this->filePath);
 		
 		// check if a backup of old language file (in this case an empty file) was created 
 		$this->assertTrue(file_exists($this->filePath . '.old'));
@@ -102,7 +105,7 @@ class Language_WriteFileTest extends TikiTestCase
 	 */
 	public function testWriteStringsToFile_shouldKeepTranslationsEvenIfTheyAreEqualToEnglishString($strings)
 	{
-		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations', 'fileHeader'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
 			array(
 				'Unused string' => 'Some translation',
@@ -110,6 +113,7 @@ class Language_WriteFileTest extends TikiTestCase
 				'Translation is the same as English string' => 'Translation is the same as English string',
 			)
 		));
+		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 				
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
@@ -121,7 +125,7 @@ class Language_WriteFileTest extends TikiTestCase
 	 */
 	public function testWriteStringsToFile_shouldIgnoreUnusedStrings($strings)
 	{
-		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations', 'fileHeader'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
 			array(
 				'Unused string' => 'Some translation',
@@ -129,6 +133,7 @@ class Language_WriteFileTest extends TikiTestCase
 				'Translation is the same as English string' => 'Translation is the same as English string',
 			)
 		));
+		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 				
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
@@ -156,7 +161,7 @@ class Language_WriteFileTest extends TikiTestCase
 	 */
 	public function testWriteStringsToFile_shouldOutputFileWhereStringsWasFound($strings)
 	{
-		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations', 'fileHeader'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
 			array(
 				'Unused string' => 'Some translation',
@@ -164,6 +169,7 @@ class Language_WriteFileTest extends TikiTestCase
 				'Translation is the same as English string' => 'Translation is the same as English string',
 			)
 		));
+		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 				
 		$obj->writeStringsToFile($strings, $this->filePath, true);
 		
@@ -175,7 +181,7 @@ class Language_WriteFileTest extends TikiTestCase
 	 */
 	public function testWriteStringsToFile_shouldConsiderStringsWithPunctuationInEndASpecialCase($strings)
 	{
-		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations', 'fileHeader'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
 			array(
 				'Unused string' => 'Some translation',
@@ -185,6 +191,7 @@ class Language_WriteFileTest extends TikiTestCase
 				'Add user:' => 'Translation',
 			)
 		));
+		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 		
 		$string1 = new stdClass;
 		$string1->name = 'Login:';
@@ -209,7 +216,7 @@ class Language_WriteFileTest extends TikiTestCase
 	 */
 	public function testWriteStringsToFile_shouldProperlyHandleSpecialCharactersInsideStrings($strings)
 	{
-		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations', 'fileHeader'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
 			array(
 				'Unused string' => 'Some translation',
@@ -218,6 +225,7 @@ class Language_WriteFileTest extends TikiTestCase
 				"Congratulations!\n\nYour server can send emails.\n\n" => "Gratulation!\n\nDein Server kann Emails senden.\n\n",
 			)
 		));
+		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 		
 		$string1 = new stdClass;
 		$string1->name = "Congratulations!\n\nYour server can send emails.\n\n";
