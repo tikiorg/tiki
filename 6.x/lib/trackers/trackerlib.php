@@ -3821,10 +3821,10 @@ class TrackerLib extends TikiLib
 		if ($prefs['feature_daily_report_watches'] == 'y' && !empty($status)) {
 			global $reportslib; require_once('lib/reportslib.php');
 			$reportslib->makeReportCache($watchers_global,
-				array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+				array('event' => 'tracker_item_modified', 'itemId' => $itemId ? $itemId : $newItemId, 'trackerId' => $trackerId, 'user' => $user)
 			);
 			$reportslib->makeReportCache($watchers_item,
-				array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+				array('event' => 'tracker_item_modified', 'itemId' => $itemId ? $itemId : $newItemId, 'trackerId' => $trackerId, 'user' => $user)
 			);
 		}
 		
