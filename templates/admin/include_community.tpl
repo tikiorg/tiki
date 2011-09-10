@@ -3,6 +3,7 @@
 <div class="navbar">
 	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
 	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
+	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}	
 </div>
 
 <form action="tiki-admin.php?page=community" method="post">
