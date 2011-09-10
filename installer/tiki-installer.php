@@ -1075,7 +1075,7 @@ if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding'
 }
 
 if( $install_step == '0' ) {
-	$iis_warning = TikiInit::buildIISWarning();
+	$iis_warning = Installer::buildIISWarning();
 	$smarty->assign( 'iiswarning', $iis_warning );
 }
 
