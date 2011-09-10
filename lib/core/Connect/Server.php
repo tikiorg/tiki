@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: TikiConnect.php 36763 2011-09-01 15:29:33Z jonnybradley $
+// $Id$
 
 require_once('lib/core/Connect/Abstract.php');
 
