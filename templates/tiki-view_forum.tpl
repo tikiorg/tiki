@@ -380,7 +380,9 @@
 			{if $forum_info.att_list_nb eq 'y'}
 				<th>{tr}Atts{/tr}</th>
 			{/if}
-				
+			{if $prefs.feature_multilingual eq 'y'}
+				<th>{tr}Language{/tr}</th>
+			{/if}
 			<th>{tr}Actions{/tr}</th>
 		</tr>
 		
@@ -488,6 +490,13 @@
 						{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
 					</td>
 				{/if}
+				
+				{if $prefs.feature_multilingual eq 'y'}
+					<td>
+						{$forum_info.forumLanguage}
+					</td>
+				{/if}
+				
 				<td class="text" nowrap="nowrap">
 					{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
 						{if count($comments_coms[ix].attachments)}
