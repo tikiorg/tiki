@@ -1074,6 +1074,11 @@ if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding'
 	$smarty->assign('double_encode_fix_attempted', 'y');
 }
 
+if( $install_step == '0' ) {
+	$iis_warning = TikiInit::buildIISWarning();
+	$smarty->assign( 'iiswarning', $iis_warning );
+}
+
 if( $install_step == '4' ) {
 	$value = '';
 	if ( ($db = TikiDB::get()) && ($result = $db->fetchAll( 'show variables like "character_set_database"') )) {

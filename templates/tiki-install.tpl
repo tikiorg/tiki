@@ -58,6 +58,7 @@
 		<input type="hidden" name="install_step" value="1" />
 		<input type="submit" value=" {tr}Continue{/tr} " />
 	</form>
+{$iiswarning}
 </div>
 
 {elseif $install_step eq '1'}
