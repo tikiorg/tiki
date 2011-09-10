@@ -257,6 +257,14 @@ function wikiplugin_tracker_info()
 				'separator' => ':',
 				'default' => '',
 			),
+			'levelupfields' => array(
+				'required' => false,
+				'name' => tra('Increase-only autosave fields'),
+				'description' => tra('Colon-separated list of field IDs being autosaved whose value can only go up, not down'),
+				'filter' => 'digits',
+				'separator' => ':',
+				'default' => '',
+			),
 			'registration' => array(
 				'required' => false,
 				'name' => tra('Registration Fields'),
@@ -556,6 +564,12 @@ function wikiplugin_tracker($data, $params)
 						} elseif ($ff['type'] == 'e') {
 							$_REQUEST["ins_$f"][] = $autosavevalues[$i];
 						} else {
+							if (isset($params['levelupfields']) && in_array($f, $params['levelupfields'])) {
+								$current_levelup_val = $trklib->get_item_value($trackerId, $itemId, $f);
+								if ($autosavevalues[$i] <= $current_levelup_val) {
+									continue;
+								}
+							}					
 							$_REQUEST["ins_$f"] = $autosavevalues[$i];
 						}
 					}
