@@ -513,7 +513,8 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Quickperms allow to define classes of privileges and grant them to roles on objects.'),
 			'help' => 'Quickperms',
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
+			'tags' => array('experimental'),
 		),
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
