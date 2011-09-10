@@ -360,9 +360,15 @@ class TrackerLib extends TikiLib
 		return $res;
 	}
 
-	function get_item_id($trackerId,$fieldId,$value) {
+	function get_item_id($trackerId,$fieldId,$value,$partial = false) {
 		$query = "select ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
+		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? ";
+		if ($partial) {
+			$value = "%$value%";
+			$query .= " and ttif.`value` LIKE ?";
+		} else {
+			$query .= " and ttif.`value`=?";
+		}
 		return $this->getOne($query,array((int) $trackerId,(int)$fieldId,$value));
 	}
 

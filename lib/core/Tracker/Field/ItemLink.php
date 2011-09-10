@@ -77,6 +77,26 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Wiki page to use as a Pretty Tracker template'),
 						'filter' => 'pagename',
 					),
+					'preSelectFieldHere' => array(
+						'name' => tr('Preselect item based on value in this field'),
+						'description' => tr('Preselect item based on value in specified field ID of item being edited'),
+						'filter' => 'int',
+					),
+					'preSelectFieldThere' => array(
+						'name' => tr('Preselect based on value in this remote field'),
+						'description' => tr('Match preselect item with this field ID in tracker that is being linked to'),
+						'filter' => 'int',
+					),
+					'preSelectFieldMethod' => array(
+						'name' => tr('Preselection matching method'),
+						'description' => tr('Method to use to match fields for preselection purposes'),
+						'filter' => 'alpha',
+						'options' => array(
+							'exact' => tr('Exact Match'),
+							'partial' => tr('Field here is part of field there'),
+							'domain' => tr('Match domain, used for URL fields'),	
+						),
+					),
 				),
 			),
 		);
@@ -168,6 +188,12 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 });
 ');
 
+		}
+
+		if ($preselection = $this->getPreselection()) {
+			$context['preselection'] = $preselection;
+		} else {
+			$context['preselection'] = '';
 		}
 
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context);
@@ -285,6 +311,42 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		}
 
 		return implode(',', $parts);
+	}
+
+	private function getPreselection()
+	{
+		$trklib = TikiLib::lib('trk');
+
+		$localField = $this->getOption(8);
+		$remoteField = $this->getOption(9);
+		$method = $this->getOption(10);
+		$localTrackerId = $this->getConfiguration('trackerId');
+                $remoteTrackerId = $this->getOption(0);
+
+            	$localValue = $trklib->get_item_value($localTrackerId, $this->getItemId(), $localField);
+
+		if ($method == 'domain') {
+			if (! preg_match('@^(?:http://)?([^/]+)@i', $localValue, $matches)) {
+				return '';
+			}
+			$host = $matches[1];
+			preg_match('/[^.]+\.[^.]+$/', $host, $matches);
+			$domain = $matches[0];	
+			if (strlen($domain) > 6) {
+				// avoid com.sg or similar country subdomains
+				$localValue = $domain;
+			} else {
+				$localValue = $host;
+			}
+		} 
+
+		if ($method == 'domain' || $method == 'partial') {
+			$partial = true;
+		} else {
+			$partial = false;
+		}
+
+		return $trklib->get_item_id($remoteTrackerId, $remoteField, $localValue, $partial);
 	}
 }
 
