@@ -137,7 +137,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 			.appendTo(document.body);
 		
 		var w = $d.width() * 1.4;
-		var h = $d.height() * 1.6;
+		var h = $d.height() * 2.0;
 		if ($(document.body).width() < w) {
 			w = $(document.body).width() * 0.8;
 		}
