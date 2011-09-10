@@ -164,8 +164,9 @@ class TikiInit
 	*/
 	static function curPageURL() {
 		$pageURL = 'http';
-		if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) 
+		if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) {
 			$pageURL .= 's';
+		}
 		$pageURL .= '://';
 		if ($_SERVER['SERVER_PORT'] != '80') {
 			$pageURL .= $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$_SERVER['REQUEST_URI'];
@@ -186,8 +187,9 @@ class TikiInit
 		$baseURL = self::curPageURL();
 		$fileName = basename($_SERVER['SCRIPT_NAME']);
 		$pos = strpos($baseURL,$fileName)-1;
-		if($pos <0)
+		if($pos <0) {
 			return $baseURL;
+		}
 		return substr($baseURL,0,$pos);
 	}
 
@@ -229,8 +231,9 @@ class TikiInit
 			} catch(Zend_Http_Client_Exception $e) {
 				$err = $e->getMessage();
 			}
-			if(!isset($rcAccess)) 
+			if(!isset($rcAccess)) {
 				return true; // Something when wrong. Assume it's not caused by a missing URL Rewrite module
+			}
 
 		}
 		return $rcAccess;
@@ -245,40 +248,18 @@ class TikiInit
 	static function buildIISWarning() {
 		// Prepare IIS warning string
 		$iis_warning = '';
-		if(TikiInit::isIIS()) {
-			$iis_warning = '
+		if(TikiInit::isIIS() && !TikiInit::checkIISFileAccess()) {
+			$iis_warning = tra('
+				<div style="text-align:left">
 				<br/>
 				<h3>IIS Installation Note</h3>
-				You seem to be installing on an IIS server.<br>
+				<span style="color:red">Your system does <b>not</b> seem to have the <b>URL Rewrite</b> module installed.</span>
+				<p>
 				For proper operation on IIS the <b>URL Rewrite</b> module should be installed. 
-				Without it you will be able to operate Tiki, but you may encounter some problems with images and some features.</p>
-				<p>
-				<a href="http://go.microsoft.com/?linkid=9722533">Download the x86 version of the URL Rewrite module for IIS7.</a><br />
-				<a href="http://go.microsoft.com/?linkid=9722532">Download the x64 version of the URL Rewrite module for IIS7.</a>
+				Without it you will be able to operate Tiki, but you may encounter some problems with images and some features.<br/>
+				Please see <a href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.
 				</p>
-				<p>
-				If you do not install the <b>URL Rewrite</b> module, you may want to rename the web.config files in the various Tiki folders (e.g. to web_config).</p>';
-
-			if(!TikiInit::checkIISFileAccess()) {
-				$iis_warning .= '
-					<p>
-					Status: <span style="color:red">Your system does <b>not</b> seem to have the <b>URL Rewrite</b> module installed.</span><br/>
-					It is highly recommended that you
-					<ol>
-					<li>Quit this installer</li>
-					<li>Install the URL Rewrite module (recommended) / Rename the web.config file</li>
-					<li>Restart this installer</li>
-					</ol></span>
-					</p>';
-			} else {
-				$iis_warning .= '
-					<p>
-					Status: <span style="font-weight:bold"><u>Your system seems to have the <b>URL Rewrite</b> module installed</u>.
-					</p>';		
-			}
-			$iis_warning .= '<p>&nbsp;</p>';
-			
-			$iis_warning = "<div style='text-align:left'>".$iis_warning."</div>";
+				</div>');
 		}
 		return $iis_warning;
 	}	
