@@ -3,8 +3,14 @@
 {title help="Permission"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{$objectType}: {$objectName}{/if}{/title}
 
 <div class="navbar">
-{if !empty($referer)}{button href="$referer" _text="{tr}Back{/tr}"}{/if}
-{button href="tiki-list_object_permissions.php" _text="{tr}Object Permissions List{/tr}"}
+	{if !empty($referer)}{button href="$referer" _text="{tr}Back{/tr}"}{/if}
+	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+		{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
+	{/if}
+	{if $tiki_p_admin_users eq 'y'}
+	{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
+	{/if}
+	{button href="tiki-list_object_permissions.php" _text="{tr}Object Permissions List{/tr}"}
 </div>
 
 {tabset name='tabs_objectpermissions'}
