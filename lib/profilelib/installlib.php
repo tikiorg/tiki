@@ -2376,7 +2376,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 			$data['list_topic_last_post_title'],
 			$data['list_topic_last_post_avatar'],
 			$data['list_topic_author_avatar'],
-			$data['forum_language'],
+			$data['forum_language']
 		);
 
 		return $id;
