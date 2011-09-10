@@ -7,6 +7,9 @@
 		{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
 	{/if}
 	{button _text="{tr}Admin Users{/tr}"}
+	{if $tiki_p_admin eq 'y'}	
+	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}
+	{/if}
 	{if $userinfo.userId}
 		{button href="?add=1" _text="{tr}Add a New User{/tr}"}
 	{/if}
