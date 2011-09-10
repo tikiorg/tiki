@@ -557,15 +557,6 @@ $icons = array(
 		'description' => tr('Configure share feature'),
 		'help' => 'share',
 	),
-	'wikiatt' => array(
-		'title' => tr('Wiki Attachments'),
-		'help' => 'Wiki+Config',
-	),
-	'plugins' => array(
-		'title' => tr('Plugin Alias'),
-		'description' => tr('Create shortcut syntaxes to plugins.'),
-		'help' => 'Plugin+Alias',
-	),
 );
 
 if (isset($_REQUEST['page'])) {
