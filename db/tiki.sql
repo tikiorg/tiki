@@ -3667,7 +3667,7 @@ CREATE TABLE `tiki_cart_inventory_hold` (
     `quantity` INT( 14 ) NOT NULL,
     `timeHeld` INT( 14 ) NOT NULL,
     `hash` CHAR( 32 ) NOT NULL
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_source_auth`;
 CREATE TABLE `tiki_source_auth` (
@@ -3678,7 +3678,7 @@ CREATE TABLE `tiki_source_auth` (
     `method` VARCHAR(20) NOT NULL,
     `arguments` TEXT NOT NULL,
     KEY `tiki_source_auth_ix` (`scheme`, `domain`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_connect`;
 CREATE TABLE `tiki_connect` (
@@ -3690,4 +3690,4 @@ CREATE TABLE `tiki_connect` (
     `server` TINYINT(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `server` (`server`)
-);
+) ENGINE=MyISAM;
