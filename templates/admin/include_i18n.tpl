@@ -53,6 +53,9 @@
 		{preference name=category_i18n_synced}
 	</div>
 	{preference name=wiki_dynvar_multilingual}
+	{preference name=wikiplugin_tr}
+	{preference name=wikiplugin_lang}
+	{preference name=wikiplugin_translated}	
 </div>
 
 {preference name=lang_use_db}
