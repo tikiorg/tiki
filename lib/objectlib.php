@@ -256,4 +256,5 @@ class ObjectLib extends TikiLib
 		);
 	}
 }
+global $objectlib;
 $objectlib = new ObjectLib;
