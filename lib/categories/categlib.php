@@ -271,6 +271,7 @@ class CategLib extends ObjectLib
 		}
 	}
 
+	// WARNING: This may not do what you would think from the name.
 	// Returns an array of the OIDs of a set of categories.
 	// $categId is an integer.
 	// If $categId is 0, that set is the set of all categories.
@@ -278,7 +279,7 @@ class CategLib extends ObjectLib
 	function get_category_descendants($categId) {
 		if ($categId) {
 			$category = $this->get_category($categId);
-			return $category['descendants'];
+			return array_merge(array($categId), $category['descendants']);
 		} else {
 			$categories = $this->getCategories(NULL, false, false);
 			$roots = TikiLib::lib('cache')->getSerialized('roots', 'allcategs');
