@@ -8,7 +8,7 @@
 			{icon _id=user title="{tr}Users{/tr}" href="tiki-adminusers.php"}
 			{icon _id=group title="{tr}Groups{/tr}" href="tiki-admingroups.php"}			
 			{icon _id=key title="{tr}Permissions{/tr}" href="tiki-objectpermissions.php"}
-			{icon _id=chart_organisation title="{tr}Menus{/tr}" href="tiki-admin_menus.php"}
+			{icon _id=application_side_tree title="{tr}Menus{/tr}" href="tiki-admin_menus.php"}
 			{if $prefs.lang_use_db eq "y"}
 				{if isset($smarty.session.interactive_translation_mode) && $smarty.session.interactive_translation_mode eq "on"}
 					{icon _id=world_edit title="{tr}Toggle interactive translation off{/tr}" href="tiki-interactive_trans.php?interactive_translation_mode=off"}
