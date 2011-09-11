@@ -201,7 +201,7 @@
 					<h3>{tr}Objects that can be included{/tr}</h3>
 					{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 					<table>
-						{if isset($polls)}
+						{if $prefs.feature_polls eq "y"}
 							<tr>
 								<td>
 									<label for="list_polls">{tr}Available polls:{/tr}</label>
