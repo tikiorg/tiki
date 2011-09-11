@@ -13,6 +13,7 @@
 	<fieldset class="admin">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_freetagged}
+		{preference name=wikiplugin_addfreetag}		
 	</fieldset>
 		
 			<fieldset>
