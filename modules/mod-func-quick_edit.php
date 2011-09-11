@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_quick_edit_info() {
 	return array(
 		'name' => tra('Quick Edit'),
-		'description' => tra('Depracated - use Search module instead') . ' ' . tra('(Enables to quickly create or edit Wiki pages.)'),
+		'description' => tra('Deprecated - use Search module instead') . ' ' . tra('(Enables to quickly create or edit Wiki pages.)'),
 		'prefs' => array( 'feature_wiki' ),
 		'params' => array(
 			'templateId' => array(
