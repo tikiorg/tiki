@@ -13,7 +13,7 @@ function wikiplugin_addrelation_info()
 		'filter' => 'int',
 		'format' => 'html',
 		'validate' => 'all',
-		'prefs' => array('wikiplugin_relations'),
+		'prefs' => array('wikiplugin_addrelation'),
 		'introduced' => 8,
 		'documentation' => 'PluginAddRelation',
 		'params' => array(
