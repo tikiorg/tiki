@@ -214,7 +214,7 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 	}
 	//this category only
 	foreach ($usercatwatches as $usercatwatch) {
-		if ($usercatwatch['object'] == $descendants[0]) {
+		if ($usercatwatch['object'] == $categid) {
 			$watch_this = 'y';
 			break;
 		} else {
