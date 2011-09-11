@@ -13,6 +13,7 @@ function wikiplugin_tabs_info() {
 		'prefs' => array( 'wikiplugin_tabs' ),
 		'body' => tra('Tabs content separated by /////'),
 		'icon' => 'pics/icons/tab_edit.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 			'name' => array(
 				'required' => false,
