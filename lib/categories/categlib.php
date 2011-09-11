@@ -20,19 +20,6 @@ global $objectlib;require_once("lib/objectlib.php");
 class CategLib extends ObjectLib
 {
 
-	/* Returns an array of categories which are descendants of the category with the given $categId. If no category is given, all categories are returned.
-	Each category is similar to a tiki_categories record, but with the following additional fields:
-		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki". If a category is given, it is considered the root of the category tree for building categpath.
-		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
-		"children" is the number of categories the category has as children.
-		"objects" is the number of objects directly in the category. 
-	If $all is set to false, only first level children obtained.
-	Related to get_child_categories, get_visible_child_categories, getCategories
-	Respects the category filter */
-	function list_categs($categId=0, $all = true) {
-		return $this->getCategories(array('identifier' => $categId, 'type' => $all ? 'descendants' : 'children'), true, false);
-	}
-
 	// Returns a string representing the specified category's path.
 	// The path includes all parent categories ordered from the root to the category's parent, and the category itself.
 	// The string is a double colon (::) separated concatenation of category names.
@@ -135,8 +122,6 @@ class CategLib extends ObjectLib
 		}
 		
 		$cachelib->empty_type_cache('allcategs');
-		$cachelib->invalidate('childcategs'.$parentId);
-		
 		$cachelib->empty_type_cache('fgals_perms');
 	
 		$values= array("categoryId"=>$categId, "categoryName"=>$categoryName, "categoryPath"=>$categoryPath,
@@ -168,8 +153,6 @@ class CategLib extends ObjectLib
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
 		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
-		$cachelib->invalidate('childcategs'.$parentId);
-		$cachelib->invalidate('childcategs'.$oldParentId);
 
 		$values= array("categoryId"=>$categId, "categoryName"=>$name, "categoryPath"=>$this->get_category_path_string_with_root($categId),
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
@@ -192,7 +175,6 @@ class CategLib extends ObjectLib
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
-		$cachelib->invalidate('childcategs'.$parentId);
 		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
 			"action"=>"category created");		
@@ -790,45 +772,6 @@ class CategLib extends ObjectLib
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	
-	/*Set $all_descends to true to get all descendent categories, otherwise only first level children
-	 * Should consider combining with list_categs
-	 */
-	function get_child_categories($categId, $all_descends = false) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
-		global $prefs;
-		if (!$categId) $categId = "0"; // avoid wrong cache
-		if ($all_descends) {
-			$cachekey = "allchildcategs$categId";
-		} else {
-			$cachekey = "childcategs$categId";
-		}
-		if ($persp = TikiLib::lib('perspective')->get_current_perspective($prefs)) {
-			$cachekey .= "_$persp"; 
-		}
-		if( ! $ret = $cachelib->getSerialized("$cachekey") ) {
-			$ret = $this->getCategories($categId ? array('identifier'=>$categId, 'type'=> $all_descends ? 'descendants' : 'children') : NULL, true, false);
-			$cachelib->cacheItem($cachekey,serialize($ret));
-		}
-		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
-			foreach ($ret as $key=>$res) {
-				$ret[$key]['name'] = tra($res['name']);
-			}
-		}
-		return $ret;
-	}
-	function get_viewable_child_categories($categId, $all_descends = false) {
-		static $localCache = array();
-		$args = func_get_args();
-		$key = implode('-', $args);
-
-		if (isset($localCache[$key])) {
-			return $localCache[$key];
-		}
-
-		$alls = $this->get_child_categories($categId, $all_descends);
-		return $localCache[$key] = Perms::filter( array( 'type' => 'category' ), 'object', $alls, array( 'object' => 'categId' ), 'view_category' );
-	}
-
 	// Return an array enumerating a subtree with the given root node in preorder
 	private function getSortedSubTreeNodes($root, &$categories) {
 		$subTreeNodes = array($root);
