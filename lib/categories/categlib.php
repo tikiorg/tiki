@@ -1612,7 +1612,7 @@ class CategLib extends ObjectLib
 
 		global $prefs;
 		if ($prefs["category_autogeocode_within"]) {
-			$geocats = $this->get_child_categories($prefs["category_autogeocode_within"], true);
+			$geocats = $this->getCategories(array('identifier'=>$prefs["category_autogeocode_within"], 'type'=>'descendants'), true, false);
 		} else {
 			$geocats = false;
 		}

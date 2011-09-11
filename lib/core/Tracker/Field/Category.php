@@ -188,8 +188,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$parentId = $this->getOption(0);
 		$descends = $this->getOption(3) == 1;
-
-		return TikiLib::lib('categ')->get_viewable_child_categories($parentId, $descends);
+		if (ctype_digit($parentId) && $parentId > 0) {
+			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
+		} else {
+			return array();
+		}
 	}
 
 	private function getCategories()

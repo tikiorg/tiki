@@ -3329,8 +3329,13 @@ class TrackerLib extends TikiLib
 		foreach ($all as $f) {
 			if (!empty($item_categs) && $f['type'] == 'e') {//category
 				$f['options_array'] = explode(',',$f['options']);
-				$all_descends = (isset($f['options_array'][3]) && $f['options_array'][3] == 1);
-				$field_categs = $categlib->get_child_categories($f['options_array'][0], $all_descends);
+				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
+					$type = (isset($f['options_array'][3]) && $f['options_array'][3] == 1) ? 'descendants' : 'children';
+					$filter = array('identifier'=>$field['options_array'][0], 'type'=>$type);
+					$field_categs = $categlib->getCategories($filter, true, false); 
+				} else {
+					$field_categs = array();
+				}
 				$aux = array();
 				foreach ($field_categs as $cat) {
 					$aux[] = $cat['categId'];
@@ -3434,9 +3439,14 @@ class TrackerLib extends TikiLib
 			if ($prefs['feature_categories'] == 'y' && $res['type'] == 'e') {//category
 				if ((!empty($except) && in_array($res['fieldId'], $except))
 					|| (!empty($only) && !in_array($res['fieldId'], $only))) {// take away the categories from $cats
-					$childs = $categlib->get_child_categories($res['options_array'][0]);
+					if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
+						$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children'); 
+					} else {
+						$filter = NULL;
+					}
+					$chilren = $categlib->getCategories($filter, true, false);
 					$local = array();
-					foreach ($childs as $child) {
+					foreach ($children as $child) {
 						$local[] = $child['categId'];
 					}
 					$cats = array_diff($cats, $local);
@@ -3942,9 +3952,12 @@ class TrackerLib extends TikiLib
 
 				$parentId = $field['options_array'][0];
 				$descends = isset($field['options_array'][3]) && $field['options_array'][3] == 1;
-
-				$cats = TikiLib::lib('categ')->get_viewable_child_categories($parentId, $descends);
-
+				if (ctype_digit($parentId) && $parentId > 0) {
+					$cats = TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children')); 
+				} else {
+					$cats = array();
+				}
+				
 				foreach ($cats as $c) {
 					$categories[] = $c['categId'];
 				}

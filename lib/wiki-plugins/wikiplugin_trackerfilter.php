@@ -454,12 +454,17 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			switch ($field['type']){
 			case 'e':// category
 				global $categlib; include_once('lib/categories/categlib.php');
-				if (isset($fopt['options_array'][3]) && $fopt['options_array'][3] == 1) {
-					$all_descends = true;
+				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
+					if (isset($fopt['options_array'][3]) && $fopt['options_array'][3] == 1) {
+						$type = 'descendants';
+					} else {
+						$type = 'children';
+					}
+					$filter = array('identifier'=>$field['options_array'][0], 'type'=>$type);
+					$res = $categlib->getCategories($filter, true, false); 
 				} else {
-					$all_descends = false;
+					$res = array();
 				}
-				$res = $categlib->get_child_categories($field['options_array'][0], $all_descends);
 				$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 				break;
 			case 'd': // drop down list
@@ -485,7 +490,12 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i')) { // do not accept a format text for a categ for the moment
 			if (empty($res)) {
 				global $categlib; include_once('lib/categories/categlib.php');
-				$res = $categlib->get_child_categories($field['options_array'][0]);
+				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
+					$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
+					$res = $categlib->getCategories($filter, true, false); 
+				} else {
+					$res = array();
+				}
 			}
 			$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 		}
@@ -498,7 +508,12 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			case 'e': // category
 				if (empty($res)) {
 					global $categlib; include_once('lib/categories/categlib.php');
-					$res = $categlib->get_child_categories($field['options_array'][0]);
+					if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
+						$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
+						$res = $categlib->getCategories($filter, true, false); 
+					} else {
+						$res = array();
+					}
 				}
 				foreach ($res as $opt) {
 					$opt['id'] = $opt['categId'];

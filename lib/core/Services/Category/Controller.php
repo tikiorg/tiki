@@ -28,7 +28,7 @@ class Services_Category_Controller
 		}
 
 		$categlib = TikiLib::lib('categ');
-		return $categlib->get_viewable_child_categories($parentId, $descends);
+		return $categlib->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
 	}
 
 	function action_categorize($input)

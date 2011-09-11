@@ -185,7 +185,13 @@ function wikiplugin_trackerstat($data, $params)
 		}
 		if ($allFields['data'][$i]['type'] == 'e') {
 			global $categlib; include_once('lib/categories/categlib.php');
-			$listCategs = $categlib->get_child_categories($allFields['data'][$i]['options']);
+			$parent = (int) $allFields['data'][$i]['options'];
+			if ($parent > 0) {
+				$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
+				$listCategs = $categlib->getCategories($filter, true, false); 
+			} else {
+				$listCategs = array();
+			}
 			if ($tracker_info['oneUserItem'] == 'y') {
 				$itemId = $trklib->get_user_item($trackerId, $tracker_info);
 			}

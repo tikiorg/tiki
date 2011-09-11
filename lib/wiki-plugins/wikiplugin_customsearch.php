@@ -339,14 +339,17 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 	if (!isset($_style)) {
 		$_style = 'select';
 	}
-	if (!isset($_parent)) {
-		$_parent = 0;
-	}		
+	$showSubcategories = isset($_showdeep) && $_showdeep != 'n';
+	if (isset($_parent) && ctype_digit($_parent) && $_parent > 0) {
+		$filter = array('identifier'=>$_parent, 'type'=> $showSubcategories ? 'descendants' : 'children');
+	} else {
+		$filter = array('type'=>$showSubcategories ? 'all' : 'roots');
+	}
 	if (!isset($_categpath)) {
 		$_categpath = false;
 	}
 
-	$cats = TikiLib::lib('categ')->get_viewable_child_categories($_parent, isset($_showdeep) && $_showdeep != 'n');
+	$cats = TikiLib::lib('categ')->getCategories($filter);
 
 	if ($_style == 'checkbox' || $_style == 'radio') {
 		$currentlevel = 0;
