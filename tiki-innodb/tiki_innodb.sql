@@ -2,7 +2,7 @@
 -- Database : Tiki InnoDB (created from trunk 2011-09-11)
 --
 -- Conversion to InnoDB
--- 1. Replace ENGINE=InnoDB -> ENGINE=InnoDB
+-- 1. Replace ENGINE=MyISAM -> ENGINE=InnoDB
 --		Check for any MyISAM strings afterwards and change them
 -- 2. Extract all FULLTEXT indexes from the table definitions and make them a separate ALTER TABLE 
 --		Comment out these new statements
@@ -3912,7 +3912,7 @@ CREATE TABLE `tiki_cart_inventory_hold` (
     `quantity` INT( 14 ) NOT NULL,
     `timeHeld` INT( 14 ) NOT NULL,
     `hash` CHAR( 32 ) NOT NULL
-);
+) ENGINE=InnoDB;
 
 
 CREATE TABLE `tiki_source_auth` (
@@ -3923,7 +3923,7 @@ CREATE TABLE `tiki_source_auth` (
     `method` VARCHAR(20) NOT NULL,
     `arguments` TEXT NOT NULL,
     KEY `tiki_source_auth_ix` (`scheme`, `domain`)
-);
+) ENGINE=InnoDB;
 
 
 CREATE TABLE `tiki_connect` (
@@ -3935,4 +3935,4 @@ CREATE TABLE `tiki_connect` (
     `server` TINYINT(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `server` (`server`)
-);
+) ENGINE=InnoDB;
