@@ -159,6 +159,11 @@ class CategLib extends ObjectLib
 		$oldParentId=$oldCategory['parentId'];
 		$oldParentName=$this->get_category_name($oldParentId);
 
+		// Make sure the description fits the column width
+		if(strlen($description) > 250) {
+			$description = substr($description,0,250);
+		}
+
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
 		$cachelib->empty_type_cache('allcategs');
@@ -175,6 +180,12 @@ class CategLib extends ObjectLib
 
 	function add_category($parentId, $name, $description) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
+		
+		// Make sure the description fits the column width
+		if(strlen($description) > 250) {
+			$description = substr($description,0,250);
+		}
+
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId, 0));
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? order by `categId` desc";
