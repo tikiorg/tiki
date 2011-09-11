@@ -670,7 +670,8 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		} else {
 			$this->remove_group_watch( $group, $event, $object, $type );
-			$groupWatches = $this->table(array(
+			$groupWatches = $this->table('tiki_group_watches');
+			$groupWatches->insert(array(
 				'group' => $group,
 				'event' => $event,
 				'object' => $object,
