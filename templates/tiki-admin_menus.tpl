@@ -138,7 +138,8 @@
 		</table>
 
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
-			{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=look">Look and Feel</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+			
+			{tr}You can use menus by assigning the menu <a href="tiki-admin_modules.php">module</a> (to the top, left, right, etc.), or you can customize a template, using {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
 			<hr />
 			{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}
 			<br />
