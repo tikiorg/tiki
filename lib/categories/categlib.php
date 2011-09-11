@@ -853,17 +853,19 @@ class CategLib extends ObjectLib
 		It is a part of "categpath" which starts from after the filtered category rather than from a root category.
 		For example, if filtering descendants of category "Software", the "relativePathString" of a grandchild may be "Free Software::Tiki".
 		
-	By default, we start from all categories.
-	If $filter is an array with an "identifier" element, starting categories are restrained.
+	By default, we start from all categories. This happens if the filter is NULL or if its type is set to "all".
+	If $filter is an array with an "identifier" element or a "type" element set to "roots", starting categories are restrained.
+	If the "type" element is set to "roots", start from the root categories.
 	If the "type" element is unset or set to "self", start from only the designated category.
 	If the "type" element is set to "children", start from the designated category's children.
 	If the "type" element is set to "descendants", start from the designated category's descendants.
+	In the last 3 cases, an "identifier" element must be present.
 		
 	If considerCategoryFilter is true, only categories that match the category filter are returned.
 	If considerPermissions is true, only categories that the user has the permission to view are returned.
 	If localized is enabled, category names are translated to the user's language.
 	*/
-	function getCategories($filter = NULL, $considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
+	function getCategories($filter = array('type'=>'all'), $considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
 		global $cachelib, $prefs;
 		$cacheKey = 'all' . ($localized ? '_' . $prefs['language'] : '');
 		if( ! $ret = $cachelib->getSerialized($cacheKey, 'allcategs') ) {
@@ -924,16 +926,24 @@ class CategLib extends ObjectLib
 			$cachelib->cacheItem('roots', serialize($roots), 'allcategs'); // Used in get_category_descendants()
 		}
 
-		if (!is_null($filter) && isset($ret[$filter['identifier']])) {
+		$type = is_null($filter) ? 'all' : (isset($filter['type']) ? $filter['type'] : 'self');
+		if ($type != 'all') {
 			$kept = array();
-			$type = isset($filter['type']) ? $filter['type'] : 'self';
-			$filterBaseCategory = $ret[$filter['identifier']];
+			if ($type != 'roots') {
+				if (!isset($filter['identifier'])) {
+					throw new Exception("Missing base category");
+				}
+				$filterBaseCategory = $ret[$filter['identifier']];
+			}
 			switch ($type) {
 				case 'children':
 					$kept = $filterBaseCategory['children'];
 					break;
 				case 'descendants':
 					$kept = $filterBaseCategory['descendants'];
+					break;
+				case 'roots':
+					$kept = $cachelib->getSerialized('roots', 'allcategs');
 					break;
 				default:
 					$ret = array($filter['identifier'] => $filterBaseCategory); // Avoid array functions for optimization 
