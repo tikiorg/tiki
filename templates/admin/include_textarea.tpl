@@ -35,6 +35,43 @@
 				{preference name=feature_jison_wiki_parser}	
 			</fieldset>
 
+			<fieldset class="admin featurelist">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_alink}
+				{preference name=wikiplugin_aname}
+				{preference name=wikiplugin_box}
+				{preference name=wikiplugin_button}
+				{preference name=wikiplugin_center}
+				{preference name=wikiplugin_code}
+				{preference name=wikiplugin_div}
+				{preference name=wikiplugin_dl}
+				{preference name=wikiplugin_fade}
+				{preference name=wikiplugin_fancylist}
+				{preference name=wikiplugin_fancytable}
+				{preference name=wikiplugin_font}
+				{preference name=wikiplugin_footnote}
+				{preference name=wikiplugin_footnotearea}
+				{preference name=wikiplugin_gauge}
+				{preference name=wikiplugin_html}
+				{preference name=wikiplugin_iframe}
+				{preference name=wikiplugin_include}
+				{preference name=wikiplugin_mono}
+				{preference name=wikiplugin_mouseover}
+				{preference name=wikiplugin_mwtable}
+				{preference name=wikiplugin_quote}
+				{preference name=wikiplugin_remarksbox}
+				{preference name=wikiplugin_scroll}
+				{preference name=wikiplugin_slider}
+				{preference name=wikiplugin_sort}
+				{preference name=wikiplugin_split}
+				{preference name=wikiplugin_sup}
+				{preference name=wikiplugin_sub}
+				{preference name=wikiplugin_tabs}
+				{preference name=wikiplugin_tag}
+				{preference name=wikiplugin_toc}
+				{preference name=wikiplugin_versions}
+			</fieldset>			
+			
 			<fieldset>
 				<legend>{tr}Miscellaneous{/tr}</legend>
 				{preference name=feature_purifier}
