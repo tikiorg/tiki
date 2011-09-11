@@ -18,15 +18,18 @@
 		{preference name=modseparateanon}
 		{preference name=modhideanonadmin}
 
-		<fieldset class="labelColumns">
-			{preference name=module_zones_top}
-			{preference name=module_zones_topbar}
-			{preference name=module_zones_pagetop}
-			{preference name=feature_left_column}
-			{preference name=feature_right_column}
-			{preference name=module_zones_pagebottom}
-			{preference name=module_zones_bottom}
-		</fieldset>
+		<div class="adminoptionbox">
+			<fieldset>
+				<legend>{tr}Module zone visibility{/tr}</legend>			
+				{preference name=module_zones_top}
+				{preference name=module_zones_topbar}
+				{preference name=module_zones_pagetop}
+				{preference name=feature_left_column}
+				{preference name=feature_right_column}
+				{preference name=module_zones_pagebottom}
+				{preference name=module_zones_bottom}			
+			</fieldset>
+		</div>
 		{remarksbox type="tip" title="{tr}Hint{/tr}"}
 			{tr}If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
 		{/remarksbox}

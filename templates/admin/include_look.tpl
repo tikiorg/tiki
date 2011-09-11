@@ -80,13 +80,18 @@
 				</fieldset>
 			</div>
 
-			{preference name=module_zones_top}
-			{preference name=module_zones_topbar}
-			{preference name=module_zones_pagetop}
-			{preference name=feature_left_column}
-			{preference name=feature_right_column}
-			{preference name=module_zones_pagebottom}
-			{preference name=module_zones_bottom}			
+			<div class="adminoptionbox">
+				<fieldset>
+					<legend>{tr}Module zone visibility{/tr}</legend>			
+					{preference name=module_zones_top}
+					{preference name=module_zones_topbar}
+					{preference name=module_zones_pagetop}
+					{preference name=feature_left_column}
+					{preference name=feature_right_column}
+					{preference name=module_zones_pagebottom}
+					{preference name=module_zones_bottom}			
+				</fieldset>
+			</div>
 			
 			<div class="adminoptionbox">
 				<fieldset>
