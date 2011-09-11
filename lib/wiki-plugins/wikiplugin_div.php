@@ -13,6 +13,7 @@ function wikiplugin_div_info() {
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/script_code_red.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 			'type' => array(
 				'required' => false,

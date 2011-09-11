@@ -13,6 +13,7 @@ function wikiplugin_sup_info() {
 		'prefs' => array( 'wikiplugin_sup' ),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/text_superscript.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 		),
 	);
