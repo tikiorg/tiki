@@ -242,20 +242,6 @@ $icons = array(
 		'description' => tr('Theme selection, layout settings and UI effect controls'),
 		'help' => 'Look+and+Feel',
 	),
-	"i18n" => array(
-		'position' => '0px -100px;',
-		'icon' => 'pics/large/i18n.png',
-		'title' => tr('i18n'),
-		'description' => tr('Internationalization and localization - mulitlingual features'),
-		'help' => 'i18n',
-	),
-	"maps" => array(
-		'icon' => 'pics/large/maps.png',
-		'position' => '-100px -500px;',
-		'title' => tr('Maps'),
-		'description' => tr('Settings and features for maps'),
-		'help' => 'Maps',
-	),
 	"textarea" => array(
 		'position' => '-100px -100px;',
 		'icon' => 'pics/large/editing48x48.png',
@@ -276,6 +262,20 @@ $icons = array(
 		'title' => tr('Meta Tags'),
 		'description' => tr('Information to include in the header of each page'),
 		'help' => 'Meta+Tags',
+	),
+	"i18n" => array(
+		'position' => '0px -100px;',
+		'icon' => 'pics/large/i18n.png',
+		'title' => tr('i18n'),
+		'description' => tr('Internationalization and localization - mulitlingual features'),
+		'help' => 'i18n',
+	),
+	"maps" => array(
+		'icon' => 'pics/large/maps.png',
+		'position' => '-100px -500px;',
+		'title' => tr('Maps'),
+		'description' => tr('Settings and features for maps'),
+		'help' => 'Maps',
 	),
 	"performance" => array(
 		'position' => '-400px -100px;',
