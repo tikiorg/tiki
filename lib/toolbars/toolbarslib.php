@@ -550,6 +550,7 @@ class ToolbarCkOnly extends Toolbar
 	{
 		switch ($this->wysiwyg) {
 			case 'autosave': return $this->wysiwyg; break;
+			case 'Format': return $this->wysiwyg; break;
 			case 'ShowBlocks': return $this->wysiwyg; break;
 			case 'Source': return $this->wysiwyg; break;
 			default: return null;
@@ -1821,5 +1822,30 @@ class ToolbarsList
 		}
 		return false;
 	} // }}}
+}
+
+
+/**
+ * Definition of the CKE Toolbar Combos
+ */
+class ToolbarCombos {
+
+	
+	/**
+	 * Get the content of the format combo
+	 * 
+	 * Valid toolbar types are:
+	 * - 'html': WYSIWYG-HTML
+	 * - 'wiki': Visual Wiki 
+	 * 
+	 * @param string $tb_type The CKE toolbar type 
+	 */
+	static function getFormatTags($tb_type) {
+		switch ($tb_type) {
+			case 'wiki': return 'p;h1;h2;h3;h4;h5;h6'; break;
+			case 'html': 
+			default: return 'p;h1;h2;h3;h4;h5;h6;pre;address;div'; // CKE default
+		}
+	}
 }
 

@@ -167,6 +167,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
 		$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing f/ck
 		
+		$ckeformattags = $disable_wysiwyg_html ? ToolbarCombos::getFormatTags('wiki') : ToolbarCombos::getFormatTags('html');
+		
 		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 		$headerlib->add_jq_onready('
 window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
@@ -219,6 +221,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	customConfig: "",
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
 	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
+	format_tags: "' . $ckeformattags . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
 	contentsCss: ["' . $ckstyle . '"],
