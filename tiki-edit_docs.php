@@ -17,23 +17,26 @@ $auto_query_args = array(
 $access->check_feature('feature_docs');
 $access->check_feature('feature_file_galleries');
 
-include_once ("categorize_list.php");
-include_once ('tiki-section_options.php');
-
 ask_ticket('docs');
 
-$_REQUEST['fileId'] = (int)$_REQUEST['fileId'];
-$smarty->assign('fileId', $_REQUEST['fileId']);
+$fileId = (int)$_REQUEST['fileId'];
+$smarty->assign('fileId', $fileId);
 
-if ($_REQUEST['fileId'] > 0) {
-	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+if ($fileId > 0) {
+	$fileInfo = $filegallib->get_file_info( $fileId );
 } else {
 	$fileInfo = array();
 }
 
+$cat_type = 'file';
+$cat_objid = (int) $fileId;
+$cat_object_exists = ! empty($fileInfo);
+include_once ("categorize_list.php");
+include_once ('tiki-section_options.php');
+
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
-if ( $fileInfo['filetype'] != $mimetypes["odt"] ) {
+if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes["odt"] ) {
 	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["odt"]));
 	$smarty->display("error.tpl");
 	die;
@@ -60,17 +63,15 @@ $_REQUEST['name'] = htmlspecialchars(str_replace(".odt", "", $_REQUEST['name']))
 //Upload to file gallery
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
-	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
 	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
 	
 	//webodf has to send an encoded string so that all browsers can handle the post-back
 	$_REQUEST['data'] = base64_decode($_REQUEST['data']);
 	
 	$type = $mimetypes["odt"];
-	$fileId = '';
-	if (empty($_REQUEST["fileId"]) == false) {
+	if (! empty($fileId)) {
 		//existing file
-		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+		$fileId = $filegallib->save_archive($fileId, $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
 	} else {
 		//new file
 		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
@@ -83,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 
 $smarty->assign( "page", $page );
 $smarty->assign( "isFromPage", isset($page) );
-$smarty->assign( "fileId", $_REQUEST['fileId']);
+$smarty->assign( "fileId", $fileId);
 
 $headerlib->add_jsfile("lib/webodf/webodf.js");
 $headerlib->add_cssfile("lib/webodf/webodf.css");
