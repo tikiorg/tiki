@@ -51,7 +51,7 @@ function wikiplugin_trackerif($data, $params)
 			return $data;
 		}
 
-		return '';
+		return $dataelse;
 	}
 
 	try {
