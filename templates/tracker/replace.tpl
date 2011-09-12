@@ -59,10 +59,10 @@
 			</label>
 			<fieldset class="depends sortable" data-on="useAttachments" data-selector="label">
 				<legend>{tr}Attachment attributes (sortable){/tr}</legend>
-				{foreach from=$attachmentAttributes key=name item=info}
+				{foreach from=$attachmentAttributes key=name item=att}
 					<label>
-						<input type="checkbox" name="orderAttachments[]" value="{$name|escape}" {if $info.selected} checked="checked"{/if}/>
-						{$info.label|escape}
+						<input type="checkbox" name="orderAttachments[]" value="{$name|escape}" {if $att.selected} checked="checked"{/if}/>
+						{$att.label|escape}
 					</label>
 				{/foreach}
 			</fieldset>
