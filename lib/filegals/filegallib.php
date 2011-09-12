@@ -3329,12 +3329,13 @@ class FileGalLib extends TikiLib
 			}
 
 			if (class_exists('finfo')) {
-				$finfo = new finfo(FILEINFO_MIME);
+				$finfo = new finfo(FILEINFO_MIME_TYPE);
 				$type = $finfo->buffer($result);
-				$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
 			} else {
 				$type = $response->getHeader('Content-Type');
 			}
+
+			$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
 
 			if (empty ($name)) {
 				$name = tr('unknown');

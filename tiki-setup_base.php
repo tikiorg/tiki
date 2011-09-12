@@ -543,7 +543,7 @@ if ($tiki_p_trust_input != 'y') {
 }
 
 if ( isset($prefs['tiki_check_file_content']) && $prefs['tiki_check_file_content'] == 'y' && count($_FILES)) {
-	if ($finfo = new finfo(FILEINFO_MIME)) {
+	if ($finfo = new finfo(FILEINFO_MIME_TYPE)) {
 
 		foreach ($_FILES as $key => & $upload_file_info) {
 			if (is_array($upload_file_info['tmp_name'])) {
