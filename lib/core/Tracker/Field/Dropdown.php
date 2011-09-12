@@ -115,8 +115,12 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 	function renderInnerOutput($context)
 	{
-		$labels = array_map(array($this, 'getValueLabel'), $this->getConfiguration('selected'));
-		return implode(', ', $labels);
+		if ($context['list_mode'] === 'csv') {
+			return implode(', ', $this->getConfiguration('selected'));
+		} else {
+			$labels = array_map(array($this, 'getValueLabel'), $this->getConfiguration('selected'));
+			return implode(', ', $labels);
+		}
 	}
 
 	private function getValueLabel($value)
