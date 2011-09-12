@@ -1700,7 +1700,11 @@ function wikiplugin_trackerlist($data, $params) {
 					$smarty->assign('tableassheet', 'true');
 				}
 				$smarty->assign('context', $params);
-				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
+				try {
+					$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
+				} catch (SmartyException $e) {
+					$str = $e->getMessage();
+				}
 				if ($save_fc !== null) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
