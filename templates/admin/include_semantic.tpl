@@ -1,3 +1,12 @@
+<h2>{tr}Settings{/tr}</h2>
+<form action="tiki-admin.php?page=semantic" method="post">
+	<fieldset class="admin">
+		<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_semantic visible="always"}
+		{preference name=feature_backlinks}
+		<div class="input_submit_container center"><input type="submit" name="semantic" value="{tr}Change preferences{/tr}" /></div>
+	</fieldset>
+</form>
 <table width="100%">
 	<col width="50%"/>
 	<col width="50%"/>
@@ -5,6 +14,7 @@
 		<td>
 			<h2>{tr}Known Types{/tr}</h2>
 			<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
+
 			<table width="100%">
 				<tr>
 					<th></th>
