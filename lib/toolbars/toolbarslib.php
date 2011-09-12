@@ -549,10 +549,14 @@ class ToolbarCkOnly extends Toolbar
 	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
 	{
 		switch ($this->wysiwyg) {
-			case 'autosave': return $this->wysiwyg; break;
-			case 'Format': return $this->wysiwyg; break;
-			case 'ShowBlocks': return $this->wysiwyg; break;
-			case 'Source': return $this->wysiwyg; break;
+			case 'autosave':
+			case 'Format':
+			case 'Redo': 
+			case 'RemoveFormat':
+			case 'ShowBlocks': 
+			case 'Source':
+			case 'Undo':
+				 return $this->wysiwyg; break;
 			default: return null;
 		}
 	} // }}}	
