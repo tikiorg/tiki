@@ -492,6 +492,8 @@ function wikiplugin_tracker($data, $params)
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
 				return;
 			$outf = array();
+			$auto_fieldId = array();
+			$hidden_fieldId = array();
 			if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
 				if ($registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
 					$smarty->assign('register_login', $smarty->fetch('register-login.tpl'));
@@ -519,7 +521,28 @@ function wikiplugin_tracker($data, $params)
 					}
 				}
 				if (!empty($autosavefields)) {
-					$outf = array_merge($outf, $autosavefields);
+					$auto_fieldId = array_merge($auto_fieldId, $autosavefields);
+				}
+				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '1%');	// user owner
+				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '2%');	// user modifier
+				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '1%');	// owner group
+				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '2%');	// owner modifier
+				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'I', '1%');	// IP auto-assign
+				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'k', '1%');	// page creator
+				$auto_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'q');	// auto-increment	
+				foreach($auto_fieldId as $k => $v) {
+					if (empty($v) || in_array($v, $outf)) {
+						unset($auto_fieldId[$k]);
+					} else {
+						$outf[] = $v;
+					}
+				}
+				foreach($hidden_fieldId as $k => $v) {
+					if (empty($v) || in_array($v, $outf)) {
+						unset($hidden_fieldId[$k]);
+					} else {
+						$outf[] = $v;
+					}
 				}
 			}
 
@@ -660,6 +683,7 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$status = '';
 					}
+
 					$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 					if (is_array($ins_categs)) {
 						$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only);	
@@ -863,17 +887,12 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 
-			$optional = array();
-			$outf = array();
-			if (isset($fields) && !empty($fields)) {
+			if (!empty($fields)) {
 				$fl = preg_split('/:/', $fields);
-				if ($sort == 'y')
-					$flds = $trklib->sort_fields($flds, $fl);		
+				if ($sort == 'y') {
+					$flds = $trklib->sort_fields($flds, $fl);
+				}		
 				foreach ($fl as $l) {
-					if (substr($l, 0, 1) == '-') {
-						$l = substr($l, 1);
-						$optional[] = $l;
-					}
 					$ok = false;
 					foreach ($flds['data'] as $f) {
 						if ($f['fieldId'] == $l) {
@@ -884,50 +903,13 @@ function wikiplugin_tracker($data, $params)
 					if (!$ok) {
 						$back .= tra('Incorrect fieldId:').' '.$l;
 					}
-					$outf[] = $l;
 				}
-				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');	// user owner
-				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
-					$outf[] = $auto_fieldId;
-				}
-				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '2%');	// user modifier
-				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
-					$outf[] = $auto_fieldId;
-				}
-				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');	// owner group
-				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
-					$outf[] = $auto_fieldId;
-				}
-				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'g', '2%');	// owner modifier
-				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
-					$outf[] = $auto_fieldId;
-				}
-				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'I', '1%');	// IP auto-assign
-				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
-					$outf[] = $auto_fieldId;
-				}
-				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'k', '1%');	// page creator
-				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
-					$outf[] = $auto_fieldId;
-				}
-			} elseif (empty($fields) && !empty($wiki)) {
-				$wiki_info = $tikilib->get_page_info($wiki);
-				preg_match_all('/\$f_([0-9]+)/', $wiki_info['data'], $matches);
-				$outf = $matches[1];
-			} elseif (empty($fields) && !empty($tpl)) {
-				$f = $smarty->get_filename($tpl);
-				if (!empty($f)) {
-					$f = file_get_contents($f);
-					preg_match_all('/\$f_([0-9]+)/', $f, $matches);
-					$outf = $matches[1];
-				}
-			} elseif (empty($fields) && empty($wiki)) {
+			} elseif (empty($fields) && empty($wiki) && empty($tpl)) {
+				// in this case outf still be blank and needs to be filled
 				foreach ($flds['data'] as $f) {
-					if ($f['isMandatory'] == 'y')
-						$optional[] = $f['fieldId'];
 					$outf[] = $f['fieldId'];
 				}
-			}
+ 			}
 
 			// Display warnings when needed
 			
@@ -1131,13 +1113,14 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 			$backLength0 = strlen($back);
+
 			foreach ($flds['data'] as $f) {
-				if ($f['type'] == 'u' && $f['options_array'][0] == '1' && !in_array($f['fieldId'], $outf)) {
-					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
-				} elseif ($f['type'] == 'I' and $f['options_array'][0] == '1') {
-					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
-				} elseif ($f['type'] == 'q') {
-					$back .= '<input type="hidden" name="track['.$f['fieldId'].']" />';
+
+				if (in_array($f['fieldId'], $auto_fieldId)) {
+					// Do not show at all
+				} elseif (in_array($f['fieldId'], $hidden_fieldId)) {
+					// Show in hidden form
+					$back.= '<span style="display:none;">' . wikiplugin_tracker_render_input($f, $item)  . '</span>';
 				} elseif (in_array($f['fieldId'], $outf)) {
 					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 						$onemandatory = true;
@@ -1153,9 +1136,6 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item).$mand);
 						}
 					} else {
-						if (in_array($f['fieldId'], $optional)) {
-							$f['name'] = "<i>".$f['name']."</i>";
-						}
 						$back.= "<tr><td";
 						if (!empty($colwidth)){
 							$back .= " width='".$colwidth."'";
