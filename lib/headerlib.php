@@ -444,7 +444,7 @@ class HeaderLib
 	 * 
 	 * @param string $html - source to search for JavaScript
 	 * @param bool $switch_fn_definition - if set converts 'function fName ()' to 'fName = function()' for AJAX
-	 * @param bool $isFiles - if set true returns script tag's src attributes as array
+	 * @param bool $isFiles - if set true, get external scripts. If set to false, get inline scripts. If true, the external script tags's src attributes are returned as an array.
 	 *
 	 * @return array of JavaScript strings
 	 */
@@ -465,9 +465,8 @@ class HeaderLib
 				$js_script = array_merge($js_script, $js);
 			}
 		} else {
-			//if there was no content in the script, it is a src file
 			foreach($jsarr[0] as $key=>$tag) {
-				if (empty($jsarr[1][$key])) {
+				if (empty($jsarr[1][$key])) { //if there was no content in the script, it is a src file
 					//we load the js as a xml element, then look to see if it has a "src" tag, if it does, we push it to array for end back
 					$js = simplexml_load_string($tag);
 					if (!empty($js['src']))
