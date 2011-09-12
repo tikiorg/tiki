@@ -15,7 +15,7 @@ function module_whats_related_info() {
 	return array(
 		'name' => tra('Related Items'),
 		'description' => tra('Lists objects which share a category with the viewed object.'),
-		'prefs' => array(),
+		'prefs' => array('feature_categories'),
 		'params' => array()
 	);
 }
