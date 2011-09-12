@@ -1272,7 +1272,7 @@ class CategLib extends ObjectLib
 	}
 	
 	function group_watch_category_and_descendants($group, $categId, $categName = NULL, $top = true) {
-		global $tikilib, $descendants; 
+		global $tikilib; 
 		
 		if ($categId != 0 && $top == true) {
 	        $tikilib->add_group_watch($group, 'category_changed', $categId, 'Category', $categName, 
@@ -1318,7 +1318,7 @@ class CategLib extends ObjectLib
 	}
 	
 	function group_unwatch_category_and_descendants($group, $categId, $top = true) {
-		global $tikilib, $descendants;	
+		global $tikilib;	
 			
 		if ($categId != 0 && $top == true) {
 			$tikilib->remove_group_watch($group, 'category_changed', $categId, 'Category');

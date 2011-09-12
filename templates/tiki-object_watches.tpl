@@ -38,7 +38,7 @@
 				{foreach from=$deletedGroupsDesc item=g}<li>{$g|escape}&nbsp;&nbsp;<em>removed</em></li>{/foreach}
 			{/if}
 			</ul>
-			{if !empty($catTreeNodes)} 
+			{if isset($tree)} 
 				{tr}were made to these descendants:{/tr}
 				{$tree}
 			{/if}

@@ -23,12 +23,17 @@ $all_groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('all_groups', $all_groups);
 if ($objectType == 'Category') {
 	$smarty->assign('cat', 'y');
-	$desc_cnt = $categlib->get_category_descendants($_REQUEST['objectId']);
-	if (count($desc_cnt) > 1) {
-		$smarty->assign('desc', 'y');
-	}
-	if ($_REQUEST['objectId'] == 0) {
+	$categoryIdentifier = $_REQUEST['objectId'];
+	if ($categoryIdentifier) {
+		$category = $categlib->get_category($_REQUEST['objectId']);
+		$extendedTargets = $category['descendants'];
+		$smarty->assign('isTop', 'n');
+	} else {
+		$extendedTargets = $categlib->getCategories();
 		$smarty->assign('isTop', 'y');
+	}
+	if (count($extendedTargets) > 0) {
+		$smarty->assign('desc', 'y');
 	}
 }
 
@@ -61,7 +66,6 @@ if (isset($_REQUEST['assign'])) {
 		$group_watches = $_REQUEST['checked'];
 	}
 	if 	($objectType == 'Category') {
-		global $descendants;	
 		$addedGroupsDesc = array();
 		$deletedGroupsDesc = array();
 		$catTreeNodes = array();
@@ -82,22 +86,19 @@ if (isset($_REQUEST['assign'])) {
 		$smarty->assign_by_ref('addedGroupsDesc', $addedGroupsDesc);
 		$smarty->assign_by_ref('deletedGroupsDesc', $deletedGroupsDesc);
 		
-		if (count($descendants) > 0) {
-			foreach($descendants as $d) {
-				if ($d != 0) {
-					$catinfo = $categlib->get_category($d);
-					$catTreeNodes[] = array(
-						'id' => $catinfo['categId'],
-						'parent' => $catinfo['parentId'],
-						'data' => $catinfo['name'], 
-					);
-				}
-				include_once('lib/tree/categ_browse_tree.php');
-				$tm = new CatBrowseTreeMaker('categ');
-				$res = $tm->make_tree($catTreeNodes[0]['parent'], $catTreeNodes);
-				$smarty->assign('tree', $res);
-				$smarty->assign_by_ref('catTreeNodes', $catTreeNodes);
+		if (!empty($addedGroupsDesc) || !empty($deletedGroupsDesc)) {
+			foreach($extendedTargets as $d) {
+				$catinfo = $categlib->get_category($d);
+				$catTreeNodes[] = array(
+					'id' => $catinfo['categId'],
+					'parent' => $catinfo['parentId'],
+					'data' => $catinfo['name'], 
+				);
 			}
+			include_once('lib/tree/categ_browse_tree.php');
+			$tm = new CatBrowseTreeMaker('categ');
+			$res = $tm->make_tree($catTreeNodes[0]['parent'], $catTreeNodes);
+			$smarty->assign('tree', $res);
 		}
 	}
 } else {
