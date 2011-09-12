@@ -1,3 +1,4 @@
+{if $field.relations or $field.inverts}
 <ul id="display_f{$field.fieldId|escape}">
 	{foreach from=$field.relations item=identifier}
 		<li>{object_link identifier=$identifier}</li>
@@ -9,3 +10,4 @@
 {jq}
 	$('#display_f{{$field.fieldId|escape}}').sortList();
 {/jq}
+{/if}
