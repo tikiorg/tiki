@@ -161,7 +161,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 */	
 	function testParagraphAlignLeft() {
 		
-//		$this->markTestIncomplete('Work in progress.');
+		$this->markTestIncomplete('Work in progress.');
 
 		$ex = '{DIV(type="p", align="left")}This text is aligned{DIV}';
 		
@@ -184,11 +184,50 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	
 	
 	/**
+	 * Headings 1-6
+	 */
+	function testNumberedHeadings() {
+		
+		$this->markTestIncomplete('Work in progress.');
+		
+		$inData = '<h1>9. Heading Level 1</h1>';
+		$ex = '!#Heading Level 1';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+
+		$inData = '<h2>9.9. Heading Level 2</h2>';
+		$ex = '!!#Heading Level 2';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h3>9.9.9. Heading Level 3</h3>';
+		$ex = '!!!#Heading Level 3';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h4>9.9.9.9. Heading Level 4</h4>';
+		$ex = '!!!!#Heading Level 4';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h5>9.9.9.9.9. Heading Level 5</h5>';
+		$ex = '!!!!!#Heading Level 5';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h6>9.9.9.9.9.9. Heading Level 6</h6>';
+		$ex = '!!!!!!#Heading Level 6';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);		
+	}
+	
+	
+	/**
 	 * Align paragraphs 'center'
 	 */	
 	function testParagraphAlignCentered() {
 		
-//		$this->markTestIncomplete('Work in progress.');
+		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '{DIV(type="p", align="center")}This text is aligned{DIV}';
 
@@ -214,7 +253,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 */	
 	function testParagraphAlignRight() {
 		
-//		$this->markTestIncomplete('Work in progress.');
+		$this->markTestIncomplete('Work in progress.');
 
 		$ex = '{DIV(type="p", align="right")}This text is aligned{DIV}';
 		
@@ -241,7 +280,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 */	
 	function testParagraphAlignJustified() {
 		
-//		$this->markTestIncomplete('Work in progress.');
+		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '{DIV(type="p", align="justify")}This text is aligned{DIV}';
 
@@ -260,5 +299,42 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<p align="justify">This text is aligned</p>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-	}	
+	}
+
+	
+	/**
+	 * Headings 1-6
+	 */
+	function testUnnumberedHeadings() {
+		
+		$inData = '<h1>Heading Level 1</h1>';
+		$ex = '!Heading Level 1';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+
+		$inData = '<h2>Heading Level 2</h2>';
+		$ex = '!!Heading Level 2';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h3>Heading Level 3</h3>';
+		$ex = '!!!Heading Level 3';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h4>Heading Level 4</h4>';
+		$ex = '!!!!Heading Level 4';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h5>Heading Level 5</h5>';
+		$ex = '!!!!!Heading Level 5';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<h6>Heading Level 6</h6>';
+		$ex = '!!!!!!Heading Level 6';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+	}
 }
