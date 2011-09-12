@@ -444,7 +444,8 @@ class HeaderLib
 	 * 
 	 * @param string $html - source to search for JavaScript
 	 * @param bool $switch_fn_definition - if set converts 'function fName ()' to 'fName = function()' for AJAX
-	 * 
+	 * @param bool $isFiles - if set true returns script tag's src attributes as array
+	 *
 	 * @return array of JavaScript strings
 	 */
 	function getJsFromHTML( $html, $switch_fn_definition = false, $isFiles = false ) {
