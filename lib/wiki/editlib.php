@@ -200,7 +200,7 @@ class EditLib
 	private function parseParDivTag($isPar, &$args, &$src, &$p) {
 
 		global $prefs;
-
+		
 		if (isset($args['style']) || isset($args['align'])) {
 			$tag_name = $isPar ? 'p' : 'div'; // key for the $p[stack]
 			$type = $isPar ? 'type="p", ' : ''; // used for {DIV()}
@@ -227,14 +227,9 @@ class EditLib
 							$src .= "{DIV(${type}align=\"left\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
 						} elseif ($style[$format] == 'center') {
-							if($isPar) {
-								$src .= "{DIV(${type}align=\"center\")}";
-								$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
-							} else {
-								$markup = ($prefs['feature_use_three_colon_centertag'] == 'y') ? ':::' : '::';
-								$src .= $markup;
-								$p['stack'][] = array('tag' => $tag_name, 'string' => $markup);
-							}
+							$this->startNewLine($str);
+							$markup = ($prefs['feature_use_three_colon_centertag'] == 'y') ? ':::' : '::';
+							$this->processInlineTag($tag_name, $src, $p, $markup, $markup . "\n");
 						} elseif ($style[$format] == 'right') {
 							$src .= "{DIV(${type}align=\"right\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');

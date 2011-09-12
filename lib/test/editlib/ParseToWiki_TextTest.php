@@ -72,10 +72,10 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 */
 	function testBlockAlignCentered() {
 		global $prefs;
-		
+		$this->markTestIncomplete('Work in progress.');
 
 		/*
-		 * two colon
+		 * two colon, no line break
 		 */
 		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$ex = '::This text is centered::';
@@ -83,13 +83,14 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<div style="text-align: center;">This text is centered</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
+		
 		$inData = '<div align="center">This text is centered</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 
 		
 		/*
-		 * three colon
+		 * three colon, no line break
 		 */
 		$prefs['feature_use_three_colon_centertag'] = 'y';
 		$ex = ':::This text is centered:::';
@@ -97,8 +98,43 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$inData = '<div style="text-align: center;">This text is centered</div>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
+		
 		$inData = '<div align="center">This text is centered</div>';
 		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * two colon, line break
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$ex = '::This text is centered::\n::This text is centered::';
+		
+		$inData = '<div style="text-align: center;">This text is centered<br />This text is centered</div>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
+
+		$inData = '<div align="center">This text is centered<br />This text is centered</div>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * three colon, line break
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$ex = ':::This text is centered:::\n:::This text is centered:::';
+		
+		$inData = '<div style="text-align: center;">This text is centered<br />This text is centered</div>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<div align="center">This text is centered<br />This text is centered</div>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
 	}
 	
@@ -226,25 +262,71 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 * Align paragraphs 'center'
 	 */	
 	function testParagraphAlignCentered() {
-		
+		global $prefs;
+			
 		$this->markTestIncomplete('Work in progress.');
-		
-		$ex = '{DIV(type="p", align="center")}This text is aligned{DIV}';
+		/*
+		 * two colon, no line break
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$ex = '::This text is centered::';
 
+		$inData = '<p style="text-align: center;">This text is centered</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<p align="center">This text is centered</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+
+		
 		/*
-		 * style
+		 * three colon, no line break
 		 */
-		$inData = '<p style="text-align: center;">This text is aligned</p>';
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$ex = ':::This text is centered:::';
+		
+		$inData = '<p style="text-align: center;">This text is centered</p>';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<p align="center">This text is centered</p>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 		
 		
 		/*
-		 * align
+		 * two colon, line break
 		 */
-		$inData = '<p align="center">This text is aligned</p>';
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$ex = '::This text is centered::\n::This text is centered::';
+		
+		$inData = '<p style="text-align: center;">This text is centered<br />This text is centered</p>';
 		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
+
+		$inData = '<p align="center">This text is centered<br />This text is centered</p>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * three colon, line break
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$ex = ':::This text is centered:::\n:::This text is centered:::';
+		
+		$inData = '<p style="text-align: center;">This text is centered<br />This text is centered</p>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);
+		
+		$inData = '<p align="center">This text is centered<br />This text is centered</p>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);		
 	}	
 	
 
