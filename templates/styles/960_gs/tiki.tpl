@@ -167,18 +167,21 @@
 									<div class="grid_3" id="grid_16_right_modules">
 										
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
+								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n') or $module_pref_errors}
 									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										<div id="right_modules" class="content modules">
 											{if $module_pref_errors}
 												{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 													{tr}The following modules could not be loaded{/tr}
-													<p>
+													<form method="post" action="tiki-admin.php">
 														{foreach from=$module_pref_errors key=index item=pref_error}
-															<b>{$pref_error.mod_name}:</b><br />
-															{tr}Preference was not set:{/tr} '<a href="tiki-admin.php?lm_criteria={$pref_error.pref_name}&highlight={$pref_error.pref_name}">{$pref_error.pref_name}</a>'<br />
+															<p>{$pref_error.mod_name}:</p>
+															{preference name=$pref_error.pref_name}
 														{/foreach}
-													</p>
+														<div class="submit">
+															<input type="submit" value="{tr}Change{/tr}"/>
+														</div>
+													</form>
 												{/remarksbox}
 											{/if}
 											{section name=homeix loop=$right_modules}
