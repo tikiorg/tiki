@@ -2279,15 +2279,7 @@ CREATE TABLE `tiki_trackers` (
   `descriptionIsParsed` varchar(1) NULL default '0',
   `created` int(14) default NULL,
   `lastModif` int(14) default NULL,
-  `showCreated` char(1) default NULL,
-  `showStatus` char(1) default NULL,
-  `showLastModif` char(1) default NULL,
-  `useComments` char(1) default NULL,
-  `useAttachments` char(1) default NULL,
-  `showAttachments` char(1) default NULL,
   `items` int(10) default NULL,
-  `showComments` char(1) default NULL,
-  `orderAttachments` varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY (`trackerId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
