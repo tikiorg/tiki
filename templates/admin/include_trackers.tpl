@@ -4,37 +4,12 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div>
+{tabset}
+	{tab name="{tr}Settings{/tr}"}
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_trackers visible="always"}
 	</fieldset>
-
-	<fieldset class="admin">
-		<legend>{tr}Plugins{/tr}</legend>
-		{preference name=wikiplugin_tracker}
-		{preference name=wikiplugin_trackerlist}
-		{preference name=wikiplugin_trackerfilter}
-		{preference name=wikiplugin_trackerif}
-		{preference name=wikiplugin_trackerstat}
-		{preference name=wikiplugin_miniquiz}
-		{preference name=wikiplugin_vote}
-		{preference name=wikiplugin_trackercomments}
-		{preference name=wikiplugin_trackeritemfield}
-		{preference name=wikiplugin_trackerprefill}
-		{preference name=wikiplugin_trackertimeline}
-		{preference name=wikiplugin_trackertoggle}
-		{preference name=wikiplugin_prettytrackerviews}
-		{preference name=wikiplugin_trackerpasscode}
-		{preference name=wikiplugin_trackeritemcopy}
-	</fieldset>
-	
-	<fieldset class="admin">
-		<legend>{tr}Field Types{/tr}</legend>
-		{foreach from=$fieldPreferences item=name}
-			{preference name=$name}
-		{/foreach}
-	</fieldset>
-	
 	<fieldset class="admin">
 		<legend>{tr}Tracker settings{/tr}</legend>
 		{preference name=user_selector_threshold}
@@ -66,7 +41,38 @@
 
 		  </table>
 	</fieldset>
+
+	{/tab}
+	{tab name="{tr}Plugins{/tr}"}
+	<fieldset class="admin">
+		<legend>{tr}Plugins{/tr}</legend>
+		{preference name=wikiplugin_tracker}
+		{preference name=wikiplugin_trackerlist}
+		{preference name=wikiplugin_trackerfilter}
+		{preference name=wikiplugin_trackerif}
+		{preference name=wikiplugin_trackerstat}
+		{preference name=wikiplugin_miniquiz}
+		{preference name=wikiplugin_vote}
+		{preference name=wikiplugin_trackercomments}
+		{preference name=wikiplugin_trackeritemfield}
+		{preference name=wikiplugin_trackerprefill}
+		{preference name=wikiplugin_trackertimeline}
+		{preference name=wikiplugin_trackertoggle}
+		{preference name=wikiplugin_prettytrackerviews}
+		{preference name=wikiplugin_trackerpasscode}
+		{preference name=wikiplugin_trackeritemcopy}
+	</fieldset>
+	{/tab}
+	{tab name="{tr}Field Types{/tr}"}
+	<fieldset class="admin">
+		<legend>{tr}Field Types{/tr}</legend>
+		{foreach from=$fieldPreferences item=name}
+			{preference name=$name}
+		{/foreach}
+	</fieldset>
 	
+	{/tab}
+{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div>
