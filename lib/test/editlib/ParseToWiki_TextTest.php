@@ -80,11 +80,11 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = '::This text is centered::';
 		
 		$inData = '<div style="text-align: center;">This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 		
 		$inData = '<div align="center">This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 
 		
@@ -95,11 +95,11 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = ':::This text is centered:::';
 		
 		$inData = '<div style="text-align: center;">This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 		
 		$inData = '<div align="center">This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 		
 		
@@ -110,12 +110,12 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = '::This text is centered::\n::This text is centered::';
 		
 		$inData = '<div style="text-align: center;">This text is centered<br />This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<div align="center">This text is centered<br />This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 		
@@ -127,12 +127,12 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = ':::This text is centered:::\n:::This text is centered:::';
 		
 		$inData = '<div style="text-align: center;">This text is centered<br />This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
 		
 		$inData = '<div align="center">This text is centered<br />This text is centered</div>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
 	}
@@ -271,11 +271,11 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = '::This text is centered::';
 
 		$inData = '<p style="text-align: center;">This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 		
 		$inData = '<p align="center">This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 
 		
@@ -286,11 +286,11 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = ':::This text is centered:::';
 		
 		$inData = '<p style="text-align: center;">This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 		
 		$inData = '<p align="center">This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
 		
 		
@@ -301,12 +301,12 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = '::This text is centered::\n::This text is centered::';
 		
 		$inData = '<p style="text-align: center;">This text is centered<br />This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 
 		$inData = '<p align="center">This text is centered<br />This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
 		
@@ -318,12 +318,12 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = ':::This text is centered:::\n:::This text is centered:::';
 		
 		$inData = '<p style="text-align: center;">This text is centered<br />This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
 		
 		$inData = '<p align="center">This text is centered<br />This text is centered</p>';
-		$out = $this->el->parseToWiki($inData);
+		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}	
