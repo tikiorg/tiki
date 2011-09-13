@@ -106,7 +106,7 @@ function module_change_category( $mod_reference, $module_params ) {
 		$cat_type = 'wiki page';
 		$cat_objid = $_REQUEST['page'];
 		
-		$categs = $categlib->getCategories($id ? array('identifier'=>$id, 'type'=>'descendants') : NULL);
+		$categories = $categlib->getCategories($id ? array('identifier'=>$id, 'type'=>'descendants') : NULL);
 	
 		if (!empty($module_params['group']) && $module_params['group'] == 'y') {
 			global $userlib, $user;
@@ -114,7 +114,7 @@ function module_change_category( $mod_reference, $module_params ) {
 				return;
 			}
 			$userGroups = $userlib->get_user_groups_inclusion($user);
-			foreach ($categs as $i=>$cat) {
+			foreach ($categories as $i=>$cat) {
 				if (isset($userGroups[$cat['name']])) {
 					continue;
 				}
@@ -126,17 +126,13 @@ function module_change_category( $mod_reference, $module_params ) {
 					}
 				}
 				if (!$ok) {
-					unset($categs[$i]);
+					unset($categories[$i]);
 				}
 			}
 		}
 	
-		if (empty($categs)) {
-			return;
-		}
-	
 		$categsid = array();
-		foreach ($categs as $categ) {
+		foreach ($categories as $categ) {
 			$categsid[] = $categ['categId'];
 		}
 
@@ -180,12 +176,8 @@ function module_change_category( $mod_reference, $module_params ) {
 		$modcatlist = array();
 		$visibleCategs = Perms::filter( array( 'type' => 'category' ), 'object', $categsid, array( 'object' => 'category' ), 'view_category' );
 
-		$indexedCategs = array();
-		foreach ($categs as $categ) 
-			$indexedCategs[$categ['categId']] = $categ;
-
 		foreach ($visibleCategs as $categId) {
-			$modcatlist[$categId] = $indexedCategs[$categId];
+			$modcatlist[$categId] = $categories[$categId];
 			if (in_array($categId,$incategs)) {
 				$modcatlist[$categId]['incat'] = 'y';
 				$shy = false;
