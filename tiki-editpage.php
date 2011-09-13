@@ -890,7 +890,6 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	$cat_name = $_REQUEST["page"];
 	$cat_href="tiki-index.php?page=".urlencode($cat_objid);
 	$cat_lang = $_REQUEST['lang'];
-	$cat_object_exists = $tikilib->page_exists( $_REQUEST['page'] );
 	include_once("categorize.php");
 	include_once("poll_categorize.php");
 	include_once("freetag_apply.php");

@@ -105,7 +105,6 @@ if( isset( $_POST['request'] ) && $globalperms->request_payment ) {
 		if( $prefs['feature_categories'] == 'y' ) {
 			$cat_objid = $id;
 			$cat_type = 'payment';
-			$cat_object_exists = false;
 			$cat_desc = $_POST['description'];
 			$cat_name = $_POST['description'];
 			$cat_href = 'tiki-payment.php?invoice=' . $id;
