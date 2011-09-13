@@ -929,14 +929,21 @@ class CategLib extends ObjectLib
 	
 				foreach( $prefilter as $res ) {
 					if( in_array( $res['categId'], $jail ) ) {
-						$ret[] = $res;
+						$ret[$res['categId']] = $res;
 					}
 				}
 			}
 		}
 		
 		if ($considerPermissions) {
-			$ret = Perms::filter( array( 'type' => 'category' ), 'object', $ret, array( 'object' => 'categId' ), 'view_category' );
+			$categoryIdentifiers = array_keys($ret);
+			Perms::bulk( array( 'type' => 'category' ), 'object', $categoryIdentifiers );
+			foreach ($categoryIdentifiers as $categoryIdentifier) {
+				$permissions = Perms::get( array( 'type' => 'category', 'object' => $categoryIdentifier ) );
+				if (!$permissions->view_category) {
+					unset($ret[$categoryIdentifier]);
+				}
+			}
 		}
 		
 		return $ret;
