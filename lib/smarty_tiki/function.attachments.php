@@ -78,10 +78,10 @@ function s_f_attachments_actionshandler( $params ) {
  *   _id : id of the object (for a wiki page, use it's name)
  *   _type : type of the object ( e.g. "wiki page" - see objectTypes in lib/setup/sections.php )
  */
-function smarty_function_attachments($params, $smarty) {
+function smarty_function_attachments($params, $template) {
 	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_type']) ) return;
 
-	global $prefs, $tikilib, $userlib;
+	global $smarty, $prefs, $tikilib, $userlib;
 	global $filegallib; include_once('lib/filegals/filegallib.php');
 
 	/*** For the moment, only wiki attachments are handled through file galleries ***/
