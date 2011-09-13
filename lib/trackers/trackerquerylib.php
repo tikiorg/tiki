@@ -395,7 +395,7 @@ class TrackerQueryLib extends TikiLib
 			$itemValues = explode($delimiter, $row['item_values']);
 			
 			foreach($fieldIds as $key => $fieldId) {
-				$field = (isset($byName) ? $fieldNames[$key] : $fieldId);
+				$field = ($byName == true ? $fieldNames[$key] : $fieldId);
 				if (isset($newRow[$field])) {
 					if (is_array($newRow[$field]) == false) {
 						$newRow[$field] = array($newRow[$field]);
