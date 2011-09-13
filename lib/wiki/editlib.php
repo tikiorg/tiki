@@ -629,30 +629,8 @@ class EditLib
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
 						case "p": $isPar = true; if($src) {$src.="\n";}
 						case "div": // Wiki parsing creates divs for center
-
-							// if(isset($c[$i]['pars']['style']['value'])) {
 							if(isset($c[$i]['pars'])) {
-
 								$this->parseParDivTag($isPar, $c[$i]['pars'], $src, $p);
-
-
-								/*
-								 * deactivated by mauriz, will be replaced by the method call above
-								 *
-								if ( strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
-									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
-										$src .= $this->startNewLine($src) .":::";
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n\n");
-									} else {
-										$src .= $this->startNewLine($src) . "::";
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n\n");
-									}
-								} else if ( strpos($c[$i]['pars']['style']['value'],'text-align: right;') !== false ){
-										$src .= $this->startNewLine($src) .'{DIV(type="p",align="right")}';
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "{DIV}\n\n");
-								}
-								*/
-
 							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
@@ -660,38 +638,7 @@ class EditLib
 							break;
 						case "span":
 							if( isset($c[$i]['pars'])) {
-								
 								$this->parseSpanTag($c[$i]['pars'], $src, $p);
-
-								
-								/*
-								 * deactivated by mauriz, will be replaced by the method call above
-								 * 
-								if (isset($c[$i]['pars']['style'])) {	// colours
-									$contrast = '000000';
-									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$bgcol = str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT );
-										
-									} else if (preg_match( "/background(\-color)?:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$bgcol = $parts[2];
-									}
-									if (preg_match( "/\bcolor: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$fgcol = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
-									} else if (preg_match( "/^color:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
-										$fgcol = $parts[1];
-									}
-									if (!empty($bgcol) || !empty($fgcol)) {
-										$src .= "~~#" . (!empty($fgcol) ? $fgcol : $contrast);
-										$src .= (empty($bgcol) ? '' : ',#' . $bgcol);
-										$src .= ':';
-										$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
-									}
-								}
-								 */
 							}
 							break;
 						case "b": $this->processWikiTag('b', $src, $p, '__', '__', true); break;
