@@ -34,7 +34,7 @@
             {if $option.type eq 'checkbox'}
                 <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{$option.label}</label><br />
             {elseif $option.type eq 'text'}
-                <label>{$option.label}:<input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br />
+                <label>{$option.label}<input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br />
             {elseif $option.type eq 'select'}
 		        <label for="{$option.name}">{$option.label}</label><br />
 		        <select id="{$option.name}" name="{$option.name}">
