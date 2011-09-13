@@ -50,7 +50,7 @@ function wikiplugin_memberpayment_info() {
 			),
 			'howtitle' => array(
 				'required' => false,
-				'name' => tra('How Title'),
+				'name' => tra('Tiki Payments Invoice Title'),
 				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name, %4 for the number of days or %5 for the number of years').' '.tra('Supports wiki syntax'),
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
