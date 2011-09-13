@@ -627,7 +627,7 @@ class EditLib
 							break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
-						case "p": $isPar = true;
+						case "p": $isPar = true; if($src) {$src.="\n";}
 						case "div": // Wiki parsing creates divs for center
 
 							// if(isset($c[$i]['pars']['style']['value'])) {
