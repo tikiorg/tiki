@@ -22,7 +22,7 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 
-	if ( !isset($_REQUEST["cat_categorize"]) || $_REQUEST["cat_categorize"] != 'on' || (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
+	if ( !isset($_REQUEST["cat_categorize"]) || $_REQUEST["cat_categorize"] != 'on' ) {
 		$_REQUEST['cat_categories'] = NULL;
 	}
 	$categlib->update_object_categories(isset($_REQUEST['cat_categories'])?$_REQUEST['cat_categories']:'', $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, $_REQUEST['cat_managed']);

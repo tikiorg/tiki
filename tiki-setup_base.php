@@ -506,7 +506,6 @@ array_unshift( $inputConfiguration, array(
 	'staticKeyFilters' => array(
 		'menu' => 'striptags',
 		'cat_categorize' => 'alpha',
-		'cat_clearall' => 'alpha',
 		'tab' => 'digits',
 		'javascript_enabled' => 'alpha',
 		'XDEBUG_PROFILE' => 'int',
