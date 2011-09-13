@@ -533,6 +533,8 @@ class CategLib extends ObjectLib
 		case 'file gallery':
 		case 'fgal':
 			return $this->categorize_file_gallery( $identifier, $categId );
+		case 'file':
+			return $this->categorize_file($identifier, $categId);
 		case 'forum':
 			return $this->categorize_forum( $identifier, $categId );
 		case 'poll':
@@ -709,6 +711,23 @@ class CategLib extends ObjectLib
 
 			$href = 'tiki-list_file_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('file gallery', $galleryId, $info["description"], $info["name"], $href);
+		}
+
+		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
+	}
+
+	function categorize_file($fileId, $categId) {
+		$catObjectId = $this->is_categorized('file', $fileId);
+
+		if (!$catObjectId) {
+			$filegallib = TikiLib::lib('filegal');
+
+			// The page is not cateorized
+			$info = $filegallib->get_file_info($fileId, false, false, false);
+
+			$href = 'tiki-upload_file.php?fileId=' . $fileId;
+			$catObjectId = $this->add_categorized_object('file', $fileId, $info["description"], $info["name"], $href);
 		}
 
 		$this->categorize($catObjectId, $categId);
