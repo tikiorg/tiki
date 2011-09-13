@@ -229,7 +229,7 @@ class EditLib
 						} elseif ($style[$format] == 'center') {
 							$this->startNewLine($str);
 							$markup = ($prefs['feature_use_three_colon_centertag'] == 'y') ? ':::' : '::';
-							$this->processInlineTag($tag_name, $src, $p, $markup, $markup . "\n");
+							$this->processWikiTag($tag_name, $src, $p, $markup, $markup . "\n", false);
 						} elseif ($style[$format] == 'right') {
 							$src .= "{DIV(${type}align=\"right\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
@@ -257,7 +257,7 @@ class EditLib
 			$style = array();
 			$this->parseStyleAttribute($args['style']['value'], $style);
 			
-			$this->processInlineTag('span', $src, $p, '', ''); // prepare the stacks, later we will append
+			$this->processWikiTag('span', $src, $p, '', '', true); // prepare the stacks, later we will append
 			
 			
 			/*
@@ -282,7 +282,7 @@ class EditLib
 				$col .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
 				$col .= ($bcol ? ','.$bcol : '');
 				$col .= ':';
-				$this->processInlineTag('span', $src, $p, $col, '~~', true); 
+				$this->processWikiTag('span', $src, $p, $col, '~~', true, true); 
 			}
 			
 			
@@ -293,18 +293,18 @@ class EditLib
 				switch ($format) {
 					case 'font-weight':
 						if ($style[$format] == 'bold') {
-							$this->processInlineTag('span', $src, $p, '__', '__', true); 
+							$this->processWikiTag('span', $src, $p, '__', '__', true, true); 
 						}
 						break;
 					case 'font-style': 
 						if ($style[$format] == 'italic') {
-							$this->processInlineTag('span', $src, $p, '\'\'', '\'\'', true);
+							$this->processWikiTag('span', $src, $p, '\'\'', '\'\'', true, true);
 						}
 					case 'text-decoration':
 						if ($style[$format] == 'line-through') {
-							$this->processInlineTag('span', $src, $p, '--', '--', true);
+							$this->processWikiTag('span', $src, $p, '--', '--', true, true);
 						} else if ($style[$format] == 'underline') {
-							$this->processInlineTag('span', $src, $p, '===', '===', true);
+							$this->processWikiTag('span', $src, $p, '===', '===', true, true);
 						}
 				} // switch format
 			} // foreach style
@@ -382,44 +382,54 @@ class EditLib
 	
 	
 	/**
-	 * Utility of walk_and_parse to process an inline tag
+	 * Utility of walk_and_parse to process a wiki tag
 	 * 
-	 * Inline tags need a special treatment: In html, a tag may contain
-	 * several line breaks. In Wiki however, line breaks are not allowed.
-	 * This method saves the inline tags in a separate stack. This stack
-	 * is used in walk_and_parse to output the required markup before and after
-	 * the linebreaks.
+	 * Wiki tags need a special treatment: In html, a tag may contain
+	 * several line breaks. In Wiki however, line breaks are often not allowed
+	 * and sometimes additional line breaks are required.
+	 * 
+	 * This method saves Wiki tags an line break information in separate stacks. 
+	 * These stackes are used in walk_and_parse to:
+	 * - Output the required markup before and after the linebreaks (<br />).
+	 * - To ensure that linebreaks are, if required, inserted at the correct place (\n). 
 	 *
-	 * @param $tag strint The name of the tag
-	 * @param $src string output string
+	 * @param $tag string The name of the html tag
+	 * @param $src string Th Output string
 	 * @param $p array ['stack'] = closing strings stack,
-	 * @param $begin string The wiki markup that begins the inline tag
-	 * @param $end string The wiki markup that ends the inline tag
+	 * @param $begin string The wiki markup that begins the tag
+	 * @param $end string The wiki markup that ends the tag
+	 * @param $is_inline bool True if the tag is inline, false if the tag must span exacly one line.
 	 * @param $append bool True = append to the topmost element on the stack, false = create a new element on the stack
 	 */
-	private function processInlineTag($tag, &$src, &$p, $begin, $end, $append = false) {
+	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false) {
 		
 		// append=false, create new entries on the stack
 		if (!$append) {
-			$p['stack'][] = array('tag' => $tag, 'string' => '', 'inlinetag' => true);
-			$p['inlinestack']['begin'][] = array();
-			$p['inlinestack']['end'][] = array();
+			$p['stack'][] = array('tag' => $tag, 'string' => '', 'wikitag' => true);
+			$p['wikistack']['begin'][] = array();
+			$p['wikistack']['end'][] = array();
 		};
 
 		// get the entry points on the stacks
-		$key = end(array_keys( $p['inlinestack']['begin'] ) );
-		$top_begin = &$p['inlinestack']['begin'][$key]; 
+		$key = end(array_keys( $p['wikistack']['begin'] ) );
+		$top_begin = &$p['wikistack']['begin'][$key]; 
 
-		$key = end(array_keys( $p['inlinestack']['end'] ) );
-		$top_end = &$p['inlinestack']['end'][$key];
+		$key = end(array_keys( $p['wikistack']['end'] ) );
+		$top_end = &$p['wikistack']['end'][$key];
 		
 		$key = end(array_keys( $p['stack'] ) );
 		$top_string = &$p['stack'][$key]['string'];
 
-		// append
+		// append to the stacks
 		$top_begin[] = $begin;
 		$top_end[] = $end;
 		$top_string = $end . $top_string;
+		$p['wikistack']['isinline'][] = $is_inline;
+		
+		// update the output string
+		if (!$is_inline) {
+			$this->startNewLine($src);
+		}
 		$src .= $begin;
 	}
 	
@@ -605,11 +615,11 @@ class EditLib
 						
 						// others we do want
 						case "br": 
-							foreach (array_reverse($p['inlinestack']['end']) as $end_arr) {
+							foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
 								foreach (array_reverse($end_arr) as $end ) {
 									$src .= $end;}}
 							$src .= "\n";
-							foreach ($p['inlinestack']['begin'] as $begin_arr) {
+							foreach ($p['wikistack']['begin'] as $begin_arr) {
 								foreach ($begin_arr as $begin) {
 									$src .= $begin;}}
 							break;
@@ -682,13 +692,13 @@ class EditLib
 								 */
 							}
 							break;
-						case "b": $this->processInlineTag('b', $src, $p, '__', '__'); break;
-						case "i": $this->processInlineTag('i', $src, $p, '\'\'', '\'\''); break;
-						case "em": $this->processInlineTag('em', $src, $p, '\'\'', '\'\''); break;
-						case "strong": $this->processInlineTag('strong', $src, $p, '__', '__'); break;
-						case "u":  $this->processInlineTag('u', $src, $p, '===', '==='); break;
-						case "strike": $this->processInlineTag('strike', $src, $p, '--', '--'); break;
-						case "del": $this->processInlineTag('del', $src, $p, '--', '--'); break;
+						case "b": $this->processWikiTag('b', $src, $p, '__', '__', true); break;
+						case "i": $this->processWikiTag('i', $src, $p, '\'\'', '\'\'', true); break;
+						case "em": $this->processWikiTag('em', $src, $p, '\'\'', '\'\'', true); break;
+						case "strong": $this->processWikiTag('strong', $src, $p, '__', '__', true); break;
+						case "u":  $this->processWikiTag('u', $src, $p, '===', '===', true); break;
+						case "strike": $this->processWikiTag('strike', $src, $p, '--', '--', true); break;
+						case "del": $this->processWikiTag('del', $src, $p, '--', '--', true); break;
 						case "center":
 							if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 								$src .= ':::';
@@ -726,7 +736,7 @@ class EditLib
 						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
 						case "tt" : $src .= '{DIV(type="tt")}'; $p['stack'][] = array('tag' => 'tt', 'string' => "{DIV}"); break;
-						case "s"  : $src .= $this->processInlineTag('s', $src, $p, '--', '--'); break;
+						case "s"  : $src .= $this->processWikiTag('s', $src, $p, '--', '--', true); break;
 						// Table parser
 						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
 						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true; break;
@@ -793,10 +803,11 @@ class EditLib
 							break;
 					}
 					
-					// update the inline stack
-					if (isset($e['inlinetag']) && $e['inlinetag'] == true) {
-						array_pop( $p['inlinestack']['begin'] );
-						array_pop( $p['inlinestack']['end'] );
+					// update the wiki stack
+					if (isset($e['wikitag']) && $e['wikitag'] == true) {
+						array_pop( $p['wikistack']['begin'] );
+						array_pop( $p['wikistack']['end'] );
+						array_pop( $p['wikistack']['isinline'] );
 					}
 				}
 			}
@@ -848,8 +859,8 @@ class EditLib
 		$htmlparser->Parse();
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
-		$p = array('stack' => array(), 'listack' => array(), 'inlinestack' => array(), 'first_td' => false, 'first_tr' => false);
-		$p['inlinestack'] = array('begin' => array(), 'end' => array() );
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'first_td' => false, 'first_tr' => false);
+		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array() );
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 		// to produce invalid wiki :)
