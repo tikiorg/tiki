@@ -17,6 +17,11 @@
 
 			<div class="adminoptionbox">
 				{preference name=style_option}
+
+				{if $prefs.feature_jquery_ui eq 'y'}
+					{preference name=feature_jquery_ui_theme}
+				{/if}
+				
 				{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
 					{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
 				{/if}
