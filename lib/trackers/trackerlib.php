@@ -1253,7 +1253,7 @@ class TrackerLib extends TikiLib
 
 		$userField = $definition->getUserField();
 		$itemUser = null;
-		if ($userField) {
+		if ($userField && isset($info[$userField])) {
 			$itemUser = $info[$userField];
 		}
 
