@@ -55,6 +55,11 @@ class Search_Query
 		}
 	}
 
+	function filterContributors($query)
+	{
+		$this->addPart($query, 'multivalue', 'contributors');
+	}
+
 	function filterCategory($query, $deep = false)
 	{
 		$this->addPart($query, 'multivalue', $deep ? 'deep_categories' : 'categories');
