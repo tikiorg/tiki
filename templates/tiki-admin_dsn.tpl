@@ -66,7 +66,7 @@
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
 <h2>{tr}Content Authentication{/tr}</h2>
-<form id="source-form" method="post" action="{service controller=""}">
+<form id="source-form" method="post" action="{service controller=auth_source}">
 	<fieldset>
 		<legend>{tr}Identification{/tr}</legend>
 		<label>
