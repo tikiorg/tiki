@@ -1556,7 +1556,6 @@ class CategLib extends ObjectLib
 		$new_categories = $manip->getAddedCategories();
 		$removed_categories = $manip->getRemovedCategories();
 
-		$this->add_object($objType, $objId, $desc, $name, $href);
 		if (empty($new_categories) and empty($removed_categories)) { //nothing changed
 			return;
 		}
@@ -1614,9 +1613,7 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		foreach ($removed_categories as $category) {
-			$this->uncategorize($catObjectId, $category);
-		}
+		$this->remove_object_from_categories($catObjectId, $removed_categories);
 	}
 
 	// Returns an array of OIDs of categories.
