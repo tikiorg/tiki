@@ -7,7 +7,7 @@
 
 function upgrade_20110905_multibyte_lc_fix_tiki($installer)
 {
-	require('TikiDb/Table.php');
+	require('lib/core/TikiDb/Table.php');
 
 	if (function_exists('mb_strtolower')) {
 		$pages = $installer->table('tiki_pages')->fetchColumn('pageName', array());
