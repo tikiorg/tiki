@@ -6370,7 +6370,7 @@ class UsersLib extends TikiLib
 				$ann_day = substr($info['anniversary'],2,2);
 				// start off with this year's anniversary date
 				$extend_until = new DateTime("{$date_year}-{$ann_month}-{$ann_day} 01:00:00", $timezone);
-				while ($effective_date->getTimestamp() >= $extend_until->getTimestamp()) {
+				while ($effective_date->format('U') >= $extend_until->format('U')) {
 					// already passed the anniversary this month, extend to next year's anniversary
 					$extend_until->modify("+1 year");
 				}
@@ -6381,7 +6381,7 @@ class UsersLib extends TikiLib
 					$payable_from = clone $prev_ann;
 				} elseif ($prorateInterval == 'month') {
 					$payable_from = clone $extend_until;
-					while ($payable_from->getTimestamp() > $effective_date->getTimestamp()) {
+					while ($payable_from->format('U') > $effective_date->format('U')) {
 						$payable_from->modify("-1 month");
 					}
 				} elseif ($prorateInterval == 'day') {
@@ -6397,7 +6397,7 @@ class UsersLib extends TikiLib
 				$ann_day = $info['anniversary'];
 				// start off with this month's anniversary date
 				$extend_until = new DateTime("{$date_year}-{$date_month}-{$ann_day} 01:00:00", $timezone); 
-				while ($effective_date->getTimestamp() >= $extend_until->getTimestamp()) {
+				while ($effective_date->format('U') >= $extend_until->format('U')) {
 					// already passed the anniversary this month, extend to next month's anniversary
 					$extend_until->modify("+1 month");
 				}
@@ -6415,8 +6415,8 @@ class UsersLib extends TikiLib
 					$extend_until->modify("+$p month");
 				}
 			}
-			$ratio_prorated_first_period = ($extend_until->getTimestamp() - $payable_from->getTimestamp()) / ($extend_until->getTimestamp() - $prev_ann->getTimestamp());
-			$timestamp = $extend_until->getTimestamp();
+			$ratio_prorated_first_period = ($extend_until->format('U') - $payable_from->format('U')) / ($extend_until->format('U') - $prev_ann->format('U'));
+			$timestamp = $extend_until->format('U');
 		} else {
 			$timestamp = $date + $periods * $info['expireAfter'] * 24 * 3600;
 		}
