@@ -1457,14 +1457,6 @@ class CategLib extends ObjectLib
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null, $override_perms = false) {
 		global $prefs, $user, $userlib;
 		
-		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
-		if (!empty($categories)) {
-			foreach($categories as $key=>$category) {
-				if($category{strlen($category)-1}=="/")
-					$categories[$key]=substr($category, 0, -1);
-			}
-		}
-		
 		if (empty($categories)) {
 			$forcedcat = $userlib->get_user_group_default_category($user);
 			if ( !empty($forcedcat) ) {
