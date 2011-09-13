@@ -177,12 +177,26 @@ class reportsLib extends TikiLib
 						$body .= tr('%0 added or updated event %1', "<u>{$change['data']['user']}</u>", "<a href='$tikiUrl/tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>");
 					} elseif ($change['event'] == 'tracker_item_modified') {
 						global $trklib; require_once('lib/trackers/trackerlib.php');
-						$tracker = $trklib->get_tracker($change['data']['trackerId']);
-						$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
-							"<u>{$change['data']['user']}</u>",
-							"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId={$change['data']['itemId']}'>{$change['data']['itemId']}</a>",
-							"<a href='$tikiUrl/tiki-view_tracker.php?trackerId={$change['data']['trackerId']}'>{$tracker['name']}</a>"
-						);
+						
+						$trackerId = $change['data']['trackerId'];
+						$itemId = $change['data']['itemId'];
+						
+						$tracker = $trklib->get_tracker($trackerId);
+						$mainFieldValue = $trklib->get_isMain_value($trackerId, $itemId);
+						
+						if ($mainFieldValue) {
+							$body .= tr('%0 added or updated tracker item %1 on tracker %2',
+								"<u>{$change['data']['user']}</u>",
+								"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>",
+								"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+							);
+						} else {
+							$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
+								"<u>{$change['data']['user']}</u>",
+								"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>",
+								"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+							);
+						}
 					}
 					
 					if ($key==0)
