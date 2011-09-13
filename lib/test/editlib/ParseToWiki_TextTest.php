@@ -72,7 +72,6 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 */
 	function testBlockAlignCentered() {
 		global $prefs;
-		$this->markTestIncomplete('Work in progress.');
 
 		/*
 		 * two colon, no line break
@@ -264,7 +263,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	function testParagraphAlignCentered() {
 		global $prefs;
 			
-		$this->markTestIncomplete('Work in progress.');
+
 		/*
 		 * two colon, no line break
 		 */

@@ -227,9 +227,8 @@ class EditLib
 							$src .= "{DIV(${type}align=\"left\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
 						} elseif ($style[$format] == 'center') {
-							$this->startNewLine($str);
 							$markup = ($prefs['feature_use_three_colon_centertag'] == 'y') ? ':::' : '::';
-							$this->processWikiTag($tag_name, $src, $p, $markup, $markup . "\n", false);
+							$this->processWikiTag($tag_name, $src, $p, $markup, $markup, false);
 						} elseif ($style[$format] == 'right') {
 							$src .= "{DIV(${type}align=\"right\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
@@ -614,11 +613,14 @@ class EditLib
 						case "meta": $c[$i]["content"] = ''; break;
 						
 						// others we do want
-						case "br": 
+						case "br":
+							// close all open wiki markup
 							foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
 								foreach (array_reverse($end_arr) as $end ) {
 									$src .= $end;}}
+							// write newline
 							$src .= "\n";
+							// reopen all previously closed wiki markup
 							foreach ($p['wikistack']['begin'] as $begin_arr) {
 								foreach ($begin_arr as $begin) {
 									$src .= $begin;}}
@@ -805,6 +807,11 @@ class EditLib
 					
 					// update the wiki stack
 					if (isset($e['wikitag']) && $e['wikitag'] == true) {
+						
+						if ( !end($p['wikistack']['isinline']) ) { // markup spans a whole line
+							$this->startNewLine($src);
+						}
+						
 						array_pop( $p['wikistack']['begin'] );
 						array_pop( $p['wikistack']['end'] );
 						array_pop( $p['wikistack']['isinline'] );
