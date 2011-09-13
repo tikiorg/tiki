@@ -254,7 +254,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 				$handler = $trklib->get_field_handler($field, $info);
 				$field = array_merge($field, $handler->getFieldData($field));
 				$handler = $trklib->get_field_handler($field, $info);	// gets the handler to blend back the value into the definitions array
-				$out = $handler->renderInnerOutput();
+				$out = $handler->renderOutput();
 
 				return $out;
 			}
