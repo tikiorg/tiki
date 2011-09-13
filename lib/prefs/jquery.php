@@ -88,5 +88,24 @@ function prefs_jquery_list($partial = false) {
 			),
 			'default' => 'vertical',
 		),
-	);	
+		'jquery_ui_selectmenu' => array(
+			'name' => tra('jQuery-ui Select Menu'),
+			'description' => tra('Styled replacement for dropdown select menus.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_jquery_ui',
+			),
+		),
+		'jquery_ui_selectmenu_all' => array(
+			'name' => tra('Use Select Menu on all select elements'),
+			'description' => tra('Applies jQuery-ui Select Menu to every select menu.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+			'dependencies' => array(
+				'jquery_ui_selectmenu',
+			),
+		),
+	);
 }

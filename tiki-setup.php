@@ -282,6 +282,15 @@ if ($prefs['javascript_enabled'] != 'n') {
 				$headerlib->add_css('.ui-autocomplete-loading { background: white url("lib/jquery/jquery-ui/themes/' .
 						'/base/images/ui-anim_basic_16x16.gif") right center no-repeat; }');
 			}
+			if( $prefs['jquery_ui_selectmenu'] == 'y' ) {
+				$headerlib->add_jsfile( 'lib/jquery/jquery-ui-selectmenu/ui/jquery.ui.selectmenu.js' );
+				$headerlib->add_cssfile( 'lib/jquery/jquery-ui-selectmenu/themes/base/jquery.ui.selectmenu.css' );
+				// standard css for selectmenu seems way too big for tiki - to be added to layout.css when not so experimental
+				$headerlib->add_css('.ui-selectmenu-menu ul li a, .ui-selectmenu-status { white-space: nowrap; }
+.ui-selectmenu { height: 1.8em; }
+.ui-selectmenu-menu li a,.ui-selectmenu-status { line-height: 1.0em; padding: .4em 1em; }
+.ui-selectmenu-status { line-height: .8em; }');
+			}
 		}
 
 		if( $prefs['feature_jquery_tooltips'] == 'y' ) {

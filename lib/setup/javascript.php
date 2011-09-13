@@ -134,6 +134,8 @@ jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.ajax = '.($prefs['feature_ajax'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.syntaxHighlighter = '.($prefs['feature_syntax_highlighter'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.selectmenu = '.($prefs['jquery_ui_selectmenu'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.selectmenuAll = '.($prefs['jquery_ui_selectmenu_all'] == 'y' ? 'true' : 'false') . ';
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
