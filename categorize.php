@@ -26,27 +26,4 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 		$_REQUEST['cat_categories'] = NULL;
 	}
 	$categlib->update_object_categories(isset($_REQUEST['cat_categories'])?$_REQUEST['cat_categories']:'', $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, $_REQUEST['cat_managed']);
-
-	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
-	if (isset($section) && $section == 'wiki' && $prefs['feature_wiki_mandatory_category'] > 0)
-		$categories = $categlib->getCategories(array('identifier'=>$prefs['feature_wiki_mandatory_category'], 'type'=>'descendants'));
-	else
-		$categories = $categlib->getCategories();
-
-	$num_categories = count($categories);
- 	$can = $catobjperms->modify_object_categories;
-
-	for ($iCat = 0; $iCat < $num_categories; $iCat++) {
-		$catperms = Perms::get( array( 'type' => 'category', 'object' => $categories[$iCat]['categId'] ) );
-
-		if (in_array($categories[$iCat]["categId"], $cats)) {
-			$categories[$iCat]["incat"] = 'y';
-			$categories[$iCat]['canchange'] = ($can && $catperms->remove_object) || isset($cat_object_exists) && ! $cat_object_exists;
-		} else {
-			$categories[$iCat]["incat"] = 'n';
-			$categories[$iCat]['canchange'] = $can && $catperms->add_object;
-		}
-	}
-	$smarty->assign_by_ref('categories', $categories["data"]);
-
 }

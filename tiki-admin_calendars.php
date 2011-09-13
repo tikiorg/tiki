@@ -242,10 +242,6 @@ $days_names = array(
 	tra("Saturday")
 );
 $smarty->assign('days_names',$days_names);
-;
-// $cat_type = 'calendar';
-// $cat_objid = $_REQUEST["calendarId"];
-// include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
 ask_ticket('admin-calendars');
 // disallow robots to index page:
