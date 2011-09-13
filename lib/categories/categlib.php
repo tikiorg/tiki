@@ -203,17 +203,17 @@ class CategLib extends ObjectLib
 	}
 
 	function add_categorized_object($type, $itemId, $description, $name, $href) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
-
 		$id = $this->add_object($type, $itemId, $description, $name, $href);
 		
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `catObjectId`=?";
 		if (!$this->getOne($query, array($id))) {
 			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
 			$this->query($query, array($id));
+			
+			global $cachelib; include_once('lib/cache/cachelib.php');
+			$cachelib->empty_type_cache('allcategs');
+			$cachelib->empty_type_cache('fgals_perms');
 		}
-		$cachelib->empty_type_cache('allcategs');
-		$cachelib->empty_type_cache('fgals_perms');
 		return $id;
 	}
 
