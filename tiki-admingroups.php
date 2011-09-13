@@ -62,7 +62,7 @@ if (isset($_REQUEST["newgroup"])) {
 	} else {
 		$_REQUEST['userChoice'] = (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on') ? 'y' : '';
 		if (empty($_REQUEST['expireAfter'])) $_REQUEST['expireAfter'] = 0;
-		$userlib->add_group($_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, '', $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 0, 0, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern']);
+		$userlib->add_group($_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, '', $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 0, 0, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern'], $_REQUEST['anniversary'], $_REQUEST['prorateInterval']);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -98,7 +98,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 		$_REQUEST['userChoice'] = '';
 	}
 	if (empty($_REQUEST['expireAfter'])) $_REQUEST['expireAfter'] = 0;
-	$userlib->change_group($_REQUEST['olgroup'], $_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, $ag_ufield, $ag_gfield, $ag_rufields, $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern']);
+	$userlib->change_group($_REQUEST['olgroup'], $_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, $ag_ufield, $ag_gfield, $ag_rufields, $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern'], $_REQUEST['anniversary'], $_REQUEST['prorateInterval']);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach($_REQUEST["include_groups"] as $include) {
@@ -158,7 +158,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 $inc = array();
-list($groupname, $groupdesc, $grouphome, $userstrackerid, $usersfieldid, $grouptrackerid, $groupfieldid, $defcatfieldid, $themefieldid, $groupperms, $trackerinfo, $memberslist, $userChoice, $groupdefcat, $grouptheme, $expireAfter, $emailPattern) = array('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+list($groupname, $groupdesc, $grouphome, $userstrackerid, $usersfieldid, $grouptrackerid, $groupfieldid, $defcatfieldid, $themefieldid, $groupperms, $trackerinfo, $memberslist, $userChoice, $groupdefcat, $grouptheme, $expireAfter, $emailPattern, $anniversary, $prorateInterval) = array('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 if (!empty($_REQUEST["group"])) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
 	if (isset($re["groupName"])) $groupname = $re["groupName"];
@@ -168,6 +168,8 @@ if (!empty($_REQUEST["group"])) {
 	if (isset($re["groupTheme"])) $grouptheme = $re["groupTheme"];
 	if (isset($re['userChoice'])) $userChoice = $re['userChoice'];
 	if (isset($re['expireAfter'])) $expireAfter = $re['expireAfter'];
+	if (isset($re['anniversary'])) $anniversary = $re['anniversary'];
+	if (isset($re['prorateInterval'])) $prorateInterval = $re['prorateInterval'];
 	if ($prefs['userTracker'] == 'y') {
 		if (isset($re["usersTrackerId"]) and $re["usersTrackerId"]) {
 			include_once ('lib/trackers/trackerlib.php');

@@ -5709,13 +5709,13 @@ class UsersLib extends TikiLib
 		return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0,$isexternal='n', $expireAfter=0, $emailPattern='') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield=0, $gfield=0,$isexternal='n', $expireAfter=0, $emailPattern='', $anniversary='', $prorateInterval='') {
 		global $tikilib;
 		$group = trim($group);
 		if ( $this->group_exists($group) ) return false;
 
-		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`, `expireAfter`, `emailPattern`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal, $expireAfter, $emailPattern) );
+		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`, `expireAfter`, `emailPattern`, `anniversary`, `prorateInterval`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, (int)$ufield, (int)$gfield,$isexternal, $expireAfter, $emailPattern, $anniversary, $prorateInterval) );
 
 		global $cachelib; require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('grouplist');
@@ -5725,7 +5725,7 @@ class UsersLib extends TikiLib
 		return $this->getOne($query, array($group));
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='',$isexternal='n', $expireAfter=0, $emailPattern='') {
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='',$isexternal='n', $expireAfter=0, $emailPattern='', $anniversary='', $prorateInterval='') {
 
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
 			// Changing group name of 'Anonymous' and 'Registered' is not allowed.
@@ -5733,13 +5733,13 @@ class UsersLib extends TikiLib
 		}
 
 		if ( ! $this->group_exists($olgroup) ) {
-			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme, $isexternal, $expireAfter, $emailPattern);
+			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme, $isexternal, $expireAfter, $emailPattern, $anniversary, $prorateInterval);
 		}
 
 		global $cachelib;
 
-		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?, `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=?, `isExternal`=?, `expireAfter`=?, `emailPattern`=? where `groupName`=?";
-		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $isexternal, $expireAfter, $emailPattern, $olgroup));
+		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?, `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=?, `isExternal`=?, `expireAfter`=?, `emailPattern`=?, `anniversary`=?, `prorateInterval`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $isexternal, $expireAfter, $emailPattern,  $anniversary, $prorateInterval, $olgroup));
 
 		if ( $olgroup != $group ) {
 			$query = array();
@@ -6301,15 +6301,25 @@ class UsersLib extends TikiLib
 	}
 	function update_expired_groups() {
 		global $tikilib;
+		$this->update_anniversary_expiry();
 		$query = 'SELECT uu.* FROM `users_usergroups` uu LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`) WHERE ( ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
 		$result = $this->query($query, array(0, $tikilib->now, 0, $tikilib->now ));
 		$query = 'DELETE FROM `users_usergroups` WHERE `groupName`=? AND `userId`=?';
-		while ($res = $result->fetchrow()) {
+		while ($res = $result->fetchRow()) {
 			$this->query($query, array($res['groupName'], $res['userId']));
 		}
 	}
-
-	function extend_membership( $user, $group, $periods = 1 ) {
+	function update_anniversary_expiry() {
+		$query = 'SELECT uu.* FROM `users_usergroups` uu LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`) WHERE ( ug.`anniversary` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL )';
+		$result = $this->query($query, array(''));
+		$query = 'UPDATE `users_usergroups` SET `expire` = ? WHERE `groupName`=? AND `userId`=?';
+		while ($res = $result->fetchRow()) {
+			$extend_until_info = $this->get_extend_until_info($res['login'], $res['groupName']);
+			$this->query($query, array($extend_until_info['timestamp'], $res['groupName'], $res['userId']));
+		}
+	}
+	
+	function extend_membership($user, $group, $periods = 1 ) {
 		global $tikilib;
 		$this->update_expired_groups();
 
@@ -6319,18 +6329,100 @@ class UsersLib extends TikiLib
 
 		$info = $this->get_group_info( $group );
 		$userInfo = $this->get_user_info( $user );
-		$date = $this->getOne( 'SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?', array($userInfo['userId'], $group));
-		if ($date <= 0)
-			$date = $tikilib->now;
-		$date += $periods * $info['expireAfter'] * 24 * 3600;
-
+		$extend_until_info = $this->get_extend_until_info($user, $group, $periods);
+		
 		$this->query( 'UPDATE `users_usergroups` SET `expire` = ? WHERE `userId` = ? AND `groupName` = ?', array(
-																												 $date,
+			$extend_until_info['timestamp'],
 			$userInfo['userId'],
 			$group,
 		) );
 	}
 
+	function get_extend_until_info($user, $group, $periods = 1) {
+		// Calculations here should always be 1 am system time otherwise prone to user manipulation or daylight savings problems
+		global $prefs;
+		$tz = $prefs['server_timezone'];
+		if ( ! TikiDate::TimezoneIsValidId($tz) ) {
+			$tz = 'UTC';
+		}
+		$timezone = new DateTimeZone($tz);
+		$userInfo = $this->get_user_info( $user );
+		$info = $this->get_group_info( $group );
+ 		$ratio_prorated_first_period = 1;
+		if (empty($info['prorateInterval'])) {
+			$prorateInterval = 'day';
+		} else {
+			$prorateInterval = $info['prorateInterval'];
+		}
+		$date = $this->getOne( 'SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?', array($userInfo['userId'], $group));
+		if (!$date) {
+			$date = $this->now;
+		}
+		if (!empty($info['anniversary'])) {
+			$date_year = date('Y', $date);
+			$date_month = date('m', $date);
+			$date_day = date('d', $date);
+			$effective_date = new DateTime("{$date_year}-{$date_month}-{$date_day} 01:00:00", $timezone);
+			$ratio_prorated_first_period = 1;
+			if (strlen($info['anniversary']) == 4) {
+				// annual anniversaries
+				$ann_month = substr($info['anniversary'],0,2);
+				$ann_day = substr($info['anniversary'],2,2);
+				// start off with this year's anniversary date
+				$extend_until = new DateTime("{$date_year}-{$ann_month}-{$ann_day} 01:00:00", $timezone);
+				while ($effective_date->getTimestamp() >= $extend_until->getTimestamp()) {
+					// already passed the anniversary this month, extend to next year's anniversary
+					$extend_until->modify("+1 year");
+				}
+				// store last past anniversary for prorating
+				$prev_ann = clone $extend_until;
+				$prev_ann->modify("-1 year");
+				if ($prorateInterval == 'year') {
+					$payable_from = clone $prev_ann;
+				} elseif ($prorateInterval == 'month') {
+					$payable_from = clone $extend_until;
+					while ($payable_from->getTimestamp() > $effective_date->getTimestamp()) {
+						$payable_from->modify("-1 month");
+					}
+				} elseif ($prorateInterval == 'day') {
+					$payable_from = clone $effective_date;
+				}
+				// add extra full periods
+				if ($periods > 1) {
+					$p = $periods - 1;
+					$extend_until->modify("+$p year");
+				}
+			} elseif (strlen($info['anniversary']) == 2) {
+				// monthly anniversaries
+				$ann_day = $info['anniversary'];
+				// start off with this month's anniversary date
+				$extend_until = new DateTime("{$date_year}-{$date_month}-{$ann_day} 01:00:00", $timezone); 
+				while ($effective_date->getTimestamp() >= $extend_until->getTimestamp()) {
+					// already passed the anniversary this month, extend to next month's anniversary
+					$extend_until->modify("+1 month");
+				}
+				// store last past anniversary for prorating
+				$prev_ann = clone $extend_until;
+				$prev_ann->modify("-1 month");
+				if ($prorateInterval == 'month' || $prorateInterval == 'year') {
+					$payable_from = clone $prev_ann;
+				} elseif ($prorateInterval == 'day') {
+					$payable_from = clone $effective_date;
+				}
+				// add extra full periods				
+				if ($periods > 1) {
+					$p = $periods - 1;
+					$extend_until->modify("+$p month");
+				}
+			}
+			$ratio_prorated_first_period = ($extend_until->getTimestamp() - $payable_from->getTimestamp()) / ($extend_until->getTimestamp() - $prev_ann->getTimestamp());
+			$timestamp = $extend_until->getTimestamp();
+		} else {
+			$timestamp = $date + $periods * $info['expireAfter'] * 24 * 3600;
+		}
+		return array('timestamp' => $timestamp, 'ratio_prorated_first_period' => $ratio_prorated_first_period);
+	}
+	
 	function get_users_created_group($group, $user=null) {
 		if (!empty($user)) {
 			$query = 'SELECT `users_usergroups`.`created` FROM `users_usergroups` LEFT JOIN `users_users` on (`users_users`.`userId`=`users_usergroups`.`userId`) WHERE `groupName`=? AND `user`=?';

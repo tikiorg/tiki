@@ -2633,6 +2633,8 @@ CREATE TABLE `users_groups` (
   `isExternal` char(1) default 'n',
   `expireAfter` int(14) default 0,
   `emailPattern`  varchar(255) default '',
+  `anniversary` char(4) default '',
+  `prorateInterval` varchar(255) default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `groupName` (`groupName`),
   KEY `expireAfter` (`expireAfter`)
