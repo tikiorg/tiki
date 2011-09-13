@@ -102,7 +102,6 @@ if (isset($_REQUEST["save"])) {
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-view_forum.php?forumId=" . $cat_objid;
-	$cat_object_exists = (bool) $fid;
 	include_once ("categorize.php");
 	$_REQUEST["forumId"] = $fid;
 }
@@ -227,7 +226,6 @@ $smarty->assign_by_ref('cant', $channels["cant"]);
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 $categories = array();
-$cat_object_exists = (bool) $_REQUEST['forumId'];
 include_once ("categorize_list.php");
 if (!empty($_REQUEST['dup_mode'])) {
 	if ($offset == 0 && ($maxRecords == - 1 || $channels['cant'] <= $maxRecords)) {

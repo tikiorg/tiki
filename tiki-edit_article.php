@@ -468,7 +468,6 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	$cat_objid = $artid;
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
 	$cat_name = $_REQUEST["title"];
-	$cat_object_exists = (bool) $artid;
 	$cat_lang = $_REQUEST['lang'];
 	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
 	include_once("categorize.php");
@@ -560,7 +559,6 @@ if( $prefs['geo_locate_article'] == 'y' ) {
 
 $cat_type = 'article';
 $cat_objid = $articleId;
-$cat_object_exists = (bool) $articleId;
 include_once ("categorize_list.php");
 
 if ($prefs['feature_freetags'] == 'y') {

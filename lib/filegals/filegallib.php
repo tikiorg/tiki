@@ -3060,7 +3060,6 @@ class FileGalLib extends TikiLib
 							$cat_desc = substr($params["description"][$key], 0, 200);
 							$cat_name = empty($params['name'][$key]) ? $name : $params['name'][$key];
 							$cat_href = $aux['dllink'];
-							$cat_object_exists = (bool) $fileId;
 							if ($prefs['feature_groupalert'] == 'y' && isset($params['listtoalert'])) {
 								global $groupalertlib; include_once ('lib/groupalert/groupalertlib.php');
 								$groupalertlib->Notify($params['listtoalert'], "tiki-download_file.php?fileId=" . $fileId);
@@ -3104,7 +3103,6 @@ class FileGalLib extends TikiLib
 			$cat_desc = substr($params["description"][0], 0, 200);
 			$cat_name = empty($fileInfo['name']) ? $fileInfo['filename'] : $fileInfo['name'];
 			$cat_href = $podCastGallery ? $podcast_url . $fhash : "$url_browse?fileId=" . $editFileId;
-			$cat_object_exists = (bool) $cat_objid;
 			if ($prefs['fgal_limit_hits_per_file'] == 'y') {
 				$this->set_download_limit($editFileId, $params['hit_limit'][0]);
 			}

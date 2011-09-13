@@ -199,7 +199,6 @@ if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
-$cat_object_exists = (bool) $cat_objid;
 include_once ('categorize_list.php');
 
 include_once ('tiki-section_options.php');

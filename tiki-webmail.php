@@ -619,7 +619,6 @@ END;
 		$cat_objid = $_REQUEST['accountId'];
 		$cat_name = $_REQUEST['account'];
 		$cat_href = 'tiki-webmail.php?locSection=settings&accountId=' . $cat_objid;
-		$cat_object_exists = (bool) $_REQUEST['accountId'];
 		include_once ('categorize.php');
 
 		unset($_REQUEST['accountId']);
@@ -644,7 +643,6 @@ END;
 	$cat_type = 'webmail account';
 	$cat_objid = (int) $_REQUEST['accountId'];
 	$categories = array();
-	$cat_object_exists = (bool) $_REQUEST['accountId'];
 	include_once ('categorize_list.php');
 
 	if (!empty($_REQUEST['accountId'])) {
