@@ -37,6 +37,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$author = array($comment['userName']);
 
 		$thread = $commentslib->get_comments($comment['objectType'] . ':' . $comment['object'], $objectId, 0, 0);
+		$forum_info = $commentslib->get_forum($comment['object']);
+		$forum_language = $forum_info['forumLanguage'] ? $forum_info['forumLanguage'] : 'unknown';
 
 		if ($prefs['search_forum_deepindexing'] == 'y') {
 			foreach ($thread['data'] as $reply) {
@@ -48,7 +50,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 		$data = array(
 			'title' => $typeFactory->sortable($comment['title']),
-			'language' => $typeFactory->identifier('unknown'),
+			'language' => $typeFactory->identifier($forum_language),
 			'modification_date' => $typeFactory->timestamp($lastModification),
 			'contributors' => $typeFactory->multivalue(array_unique($author)),
 
