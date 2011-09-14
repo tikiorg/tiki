@@ -2240,10 +2240,22 @@ class TrackerLib extends TikiLib
 						$status = $data[$i];
 				} elseif ($header[$i] == 'itemId') {
 					$itemId = $data[$i];
-				} elseif ($header[$i] == 'created' && is_numeric($data[$i])) {
-					$created = $data[$i];
-				} elseif ($header[$i] == 'lastModif' && is_numeric($data[$i])) {
-					$lastModif = $data[$i];
+				} elseif ($header[$i] == 'created') {
+					if (is_numeric($data[$i])) {
+						$created = $data[$i];
+					} elseif ($str = strtotime($data[$i])) {
+						$created = $str;
+					} elseif (($str = strptime($data[$i], $prefs['short_date_format'].' '.$prefs['short_time_format'])) && empty($str['unparsed'])) {
+						$created = mktime($str['tm_hour'], $str['tm_min'], $str['tm_sec'], $str['tm_month']+1, $str['tm_day'], $str['tm_year']+1900);
+					}
+				} elseif ($header[$i] == 'lastModif') {
+					if( is_numeric($data[$i])) {
+						$lastModif = $data[$i];
+					} elseif ($str = strtotime($data[$i])) {
+						$lastModif = $str;
+					} elseif (($str = strptime($data[$i], $prefs['short_date_format'].' '.$prefs['short_time_format'])) && empty($str['unparsed'])) {
+						$lastModif = mktime($str['tm_hour'], $str['tm_min'], $str['tm_sec'], $str['tm_month']+1, $str['tm_day'], $str['tm_year']+1900);
+					}
 				} elseif ($header[$i] == 'categs') { // for old compatibility
 					$cats = preg_split('/,/',trim($data[$i]));
 				}
