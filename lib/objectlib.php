@@ -14,10 +14,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // this is an abstract class
 class ObjectLib extends TikiLib
 {
-	// Create an object record for the given Tiki object if one doesn't already exist.
-	// Returns the object record OID. If the designated object does not exist, may return NULL.
-	// When creating, if $description is given, use the description, name and URL given as information, otherwise retrieve it from the object. 
-    function add_object($type, $itemId, $description = NULL, $name = NULL, $href = NULL) {
+	/* Create an object record for the given Tiki object if one doesn't already exist.
+	Returns the object record OID. If the designated object does not exist, may return NULL. If the object type is not handled and $checkHandled is TRUE, fail and return FALSE.
+	$checkHandled A boolean indicating whether only handled object types should be accepted when the object has no object record (legacy).
+	When creating, if $description is given, use the description, name and URL given as information.
+	Otherwise retrieve it from the object (if $checkHandled is FALSE, fill with empty strings if the object type is not handled).
+	Handled object types: "article", "blog", "calendar", "directory", "faq", "file", "file gallery", "forum", "image gallery", "poll", "quiz", "tracker", "trackeritem" and "wiki page". */
+    function add_object($type, $itemId, $checkHandled = TRUE, $description = NULL, $name = NULL, $href = NULL) {
 
 	$objectId = $this->get_object_id($type, $itemId);
 
@@ -137,6 +140,14 @@ class ObjectLib extends TikiLib
 					$name = $itemId;
 					$href = 'tiki-index.php?page=' . urlencode($itemId);
 					break;
+				default:
+					if ($checkHandled) {
+						return FALSE;
+					} else {
+						$description = '';
+						$name = '';
+						$href = '';						
+					}
 			}
 		}
 	    $objectId = $this->insert_object($type, $itemId, $description, $name, $href);

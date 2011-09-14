@@ -202,9 +202,14 @@ class CategLib extends ObjectLib
 		}
 	}
 
-	function add_categorized_object($type, $itemId, $description = NULL, $name = NULL, $href = NULL) {
-		$id = $this->add_object($type, $itemId, $description, $name, $href);
-		
+	// $type The object's type, which has to be one of those handled by ObjectLib's add_object().
+	// $checkHandled A boolean indicating whether only handled object types should be accepted when the object has no object record and no object information is given (legacy).
+	// Returns the object's OID, or FALSE if the object type is not handled and $checkHandled is FALSE.
+	function add_categorized_object($type, $itemId, $description = NULL, $name = NULL, $href = NULL, $checkHandled = FALSE) {
+		$id = $this->add_object($type, $itemId, $checkHandled, $description, $name, $href);
+		if ($id === FALSE) {
+			return FALSE;
+		}
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `catObjectId`=?";
 		if (!$this->getOne($query, array($id))) {
 			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
@@ -507,22 +512,14 @@ class CategLib extends ObjectLib
 
 	// Categorize the object of the given type and with the given unique identifier in the categories specified in the second parameter.
 	// $categIds can be a category OID or an array of category OIDs.
+	// $type The object's type, which has to be one of those handled by ObjectLib's add_object().
+	// Returns the object OID, or FALSE if the given type is not handled.
 	function categorize_any( $type, $identifier, $categIds )
 	{
-		switch( $type ) {
-			case 'wikipage':
-			case 'wiki_page':
-				$type = 'wiki page';
-				break;
-			case 'gallery':
-			case 'gal':
-				$type = 'image gallery';
-				break;
-			case 'file_gallery':
-			case 'fgal':
-				$type = 'file gallery';
+		$catObjectId = $this->add_categorized_object($type, $identifier, NULL, NULL, NULL, TRUE);
+		if ($catObjectId === FALSE) {
+			return FALSE;
 		}
-		$catObjectId = $this->add_categorized_object($type, $identifier);
 		if (!is_array($categIds)) {
 			$categIds = array($categIds);
 		}
