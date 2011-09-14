@@ -1603,16 +1603,16 @@ form.simple select
 /* $.fn.modal */
 .mask {
 	position:absolute; 
-	z-index:99999;
+	z-index:999;
 	background-color:#FFFFFF;
 	display:none;
 }
 
 .boxes .dialog {
-	width:375px;
-	height:203px;
+	width: auto;
+	height: auto;
 	font-weight: bold;
-	z-index: 999999;
+	z-index: 9999;
 	text-align: center;
 }
 
