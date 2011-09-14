@@ -27,7 +27,7 @@ class ObjectLib extends TikiLib
 			$this->query($query,array($description,$name,$href,$objectId));
 	    }
 	} else {
-		if (!is_null($description)) {
+		if (is_null($description)) {
 			switch ($type) {
 				case 'article':
 					global $artlib; require_once 'lib/articles/artlib.php';
