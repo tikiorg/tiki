@@ -33,13 +33,15 @@ function wikiplugin_customsearch_info()
 			),
 			'autosearchdelay' => array(
 				'required' => false,
-				'name' => tra('Delay in milliseconds before automatically triggering search after change (0 disables)'),
+				'name' => tra('Autotrigger AJAX search on criteria change'),
+				'description' => tra('Delay in milliseconds before automatically triggering search after change (0 disables)'),
 				'filter' => 'digits',
 				'default' => '0',
 			),
 			'searchfadediv' => array(
 				'required' => false,
-				'name' => tra('The specific ID of the specific div to fade out when AJAX search is in progress, if not set will attempt to fade the whole area or if failing simply show the spinner'),
+				'name' => tra('Div to fade when AJAX search in progress'),
+				'description' => tra('The specific ID of the specific div to fade out when AJAX search is in progress, if not set will attempt to fade the whole area or if failing simply show the spinner'),	
 				'filter' => 'text',
 				'default' => '',
 			),
