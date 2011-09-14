@@ -25,6 +25,8 @@ class Installer extends TikiDb_Bridge
 
 	var $success = array();
 	var $failures = array();
+	
+	var $useInnoDB = false;
 
 	function Installer() // {{{
 	{
@@ -152,6 +154,11 @@ class Installer extends TikiDb_Bridge
 				if (preg_match('/^\s*(?!-- )/m', $statement)) {// If statement is not commented
 					$display_errors = ini_get('display_errors');
 					ini_set('display_errors', 'Off');
+
+					if($this->useInnoDB) {
+						// Convert all MyISAM statments to InnoDB
+						$statement = str_ireplace("MyISAM", "InnoDB", $statement);
+					}
 
 					if ($this->query($statement, array(), -1, -1, true, $file) === false) {
 						$status = false;
@@ -364,4 +371,49 @@ class Installer extends TikiDb_Bridge
 		return $iis_warning;
 	}	
 	
+	/**
+	 * Get a list of installed engines in the MySQL instance
+	 * $return array of engine names
+	*/
+	function getEngines() {
+		$engines = array();
+		$result = $this->query('show engines');
+		if ( $result ) {
+			while ( $res = $result->fetchRow() ) {
+				$engines[] = $res['Engine'];
+			}		
+		}		
+		return $engines;
+	}
+	
+	/**
+	 * Check if InnoDB is an avaible engine
+	 * @return true if the InnoDB engine is available
+	 */ 
+	function hasInnoDB() {
+		$engines = $this->getEngines();
+		foreach($engines as $engine) {
+			if(strcmp(strtoupper($engine), 'INNODB') == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Detect the engine used in the current schema.
+	 * Assumes that all tables use the same table engine
+	 * @return string identifying the current engine, or an empty string if not installed
+	 */ 
+	function getCurrentEngine() {
+		$engine = '';
+		if($this->tableExists('tiki_schema')) {
+			$result = $this->query('SHOW TABLE STATUS WHERE Name = "tiki_schema"');
+			if ( $result ) {
+				$res = $result->fetchRow();
+				$engine  = $res['Engine'];
+			}
+		}
+		return $engine;
+	}
 }

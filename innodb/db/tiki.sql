@@ -146,8 +146,7 @@ CREATE TABLE `tiki_articles` (
   KEY `topicId` (`topicId`),
   KEY `publishDate` (`publishDate`),
   KEY `expireDate` (`expireDate`),
-  KEY `type` (`type`),
-  FULLTEXT KEY `ft` (`title`, `heading`, `body`)
+  KEY `type` (`type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_article_types`;
@@ -272,8 +271,7 @@ CREATE TABLE `tiki_blog_posts` (
   PRIMARY KEY (`postId`),
   KEY `data` (`data`(255)),
   KEY `blogId` (`blogId`),
-  KEY `created` (`created`),
-  FULLTEXT KEY `ft` (`data`, `title`)
+  KEY `created` (`created`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_blog_posts_images`;
@@ -319,8 +317,7 @@ CREATE TABLE `tiki_blogs` (
   PRIMARY KEY (`blogId`),
   KEY `title` (`title`),
   KEY `description` (`description`(255)),
-  KEY `hits` (`hits`),
-  FULLTEXT KEY `ft` (`title`, `description`)
+  KEY `hits` (`hits`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_calendar_categories`;
@@ -386,11 +383,7 @@ CREATE TABLE `tiki_calendar_items` (
   `lastmodif` int(14) NOT NULL default '0',
   `allday` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`calitemId`),
-  KEY `calendarId` (`calendarId`),
-  FULLTEXT KEY `ft` (`name`,`description`),
-  CONSTRAINT `fk_calitems_recurrence`
-    FOREIGN KEY (`recurrenceId`) REFERENCES `tiki_calendar_recurrence`(`recurrenceId`)
-    ON UPDATE CASCADE ON DELETE SET NULL
+  KEY `calendarId` (`calendarId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_calendar_locations`;
@@ -557,8 +550,7 @@ CREATE TABLE `tiki_comments` (
   KEY `tc_pi` (`parentId`),
   KEY `objectType` (object, `objectType`),
   KEY `commentDate` (`commentDate`),
-  KEY `threaded` (message_id, in_reply_to, `parentId`),
-  FULLTEXT KEY `ft` (title,data)
+  KEY `threaded` (message_id, in_reply_to, `parentId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_content`;
@@ -643,8 +635,7 @@ CREATE TABLE `tiki_directory_sites` (
   `cache_timestamp` int(14) default NULL,
   PRIMARY KEY (`siteId`),
   KEY (`isValid`),
-  KEY (url),
-  FULLTEXT KEY `ft` (name,description)
+  KEY (url)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_dsn`;
@@ -682,8 +673,7 @@ CREATE TABLE `tiki_faq_questions` (
   KEY `faqId` (`faqId`),
   KEY `question` (question(255)),
   KEY `answer` (answer(255)),
-  KEY `created` (`created`),
-  FULLTEXT KEY `ft` (question,answer)
+  KEY `created` (`created`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_faqs`;
@@ -698,8 +688,7 @@ CREATE TABLE `tiki_faqs` (
   PRIMARY KEY (`faqId`),
   KEY `title` (title),
   KEY `description` (description(255)),
-  KEY `hits` (hits),
-  FULLTEXT KEY `ft` (title,description)
+  KEY `hits` (hits)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_featured_links`;
@@ -808,8 +797,7 @@ CREATE TABLE `tiki_files` (
   KEY `created` (created),
   KEY `archiveId` (`archiveId`),
   KEY `galleryId` (`galleryId`),
-  KEY `hits` (hits),
-  FULLTEXT KEY `ft` (name,description,search_data,filename)
+  KEY `hits` (hits)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_file_drafts`;
@@ -989,8 +977,7 @@ CREATE TABLE `tiki_galleries` (
   KEY `description` (description(255)),
   KEY `hits` (hits),
   KEY `parentgallery` (parentgallery),
-  KEY `visibleUser` (visible, user),
-  FULLTEXT KEY `ft` (name,description)
+  KEY `visibleUser` (visible, user)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_galleries_scales`;
@@ -1084,8 +1071,7 @@ CREATE TABLE `tiki_images` (
   KEY `hits` (hits),
   KEY `ti_gId` (`galleryId`),
   KEY `ti_cr` (created),
-  KEY `ti_us` (user),
-  FULLTEXT KEY `ft` (name,description)
+  KEY `ti_us` (user)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_images_data`;
@@ -1644,7 +1630,6 @@ CREATE TABLE `tiki_pages` (
   UNIQUE KEY `pageName` (`pageName`),
   KEY `data` (`data`(255)),
   KEY `pageRank` (`pageRank`),
-  FULLTEXT KEY `ft` (`pageName`,`description`,`data`),
   KEY `lastModif`(`lastModif`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
@@ -2234,8 +2219,7 @@ CREATE TABLE `tiki_tracker_item_fields` (
   `value` text,
   PRIMARY KEY (`itemId`,`fieldId`),
   INDEX `fieldId` (`fieldId`),
-  INDEX value (value(250)),
-  FULLTEXT KEY `ft` (value)
+  INDEX value (value(250))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_tracker_item_field_logs`;
@@ -2325,6 +2309,9 @@ CREATE TABLE `tiki_user_assigned_modules` (
   PRIMARY KEY (`name`(30),`user`,`position`, `ord`)
 ) ENGINE=MyISAM;
 
+/*
+Incorrect table definition; there can be only one auto column and it must be defined as a key
+
 DROP TABLE IF EXISTS `tiki_user_bookmarks_folders`;
 CREATE TABLE `tiki_user_bookmarks_folders` (
   `folderId` int(12) NOT NULL auto_increment,
@@ -2333,6 +2320,7 @@ CREATE TABLE `tiki_user_bookmarks_folders` (
   `name` varchar(30) default NULL,
   PRIMARY KEY (`user`,`folderId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+*/
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_urls`;
 CREATE TABLE `tiki_user_bookmarks_urls` (
@@ -3685,3 +3673,20 @@ CREATE TABLE `tiki_connect` (
     PRIMARY KEY (`id`),
     KEY `server` (`server`)
 ) ENGINE=MyISAM;
+
+/* 
+MyISAM FULLTEXT indexing 
+CREATE FULLTEXT INDEX ft_articles ON tiki_articles(`title`, `heading`, `body`);
+CREATE FULLTEXT INDEX ft_blog_posts ON tiki_blog_posts(`data`, `title`);
+CREATE FULLTEXT INDEX ft_blogs ON tiki_blogs(`title`, `description`);
+CREATE FULLTEXT INDEX ft_calendar_items ON tiki_calendar_items(`name`,`description`);
+CREATE FULLTEXT INDEX ft_comments ON tiki_comments(title,data);
+CREATE FULLTEXT INDEX ftidx_directory_sites ON tiki_directory_sites(name,description);
+CREATE FULLTEXT INDEX ftidx_faq_questions ON tiki_faq_questions(question,answer);
+CREATE FULLTEXT INDEX ftidx_faqs ON tiki_faqs(title,description);
+CREATE FULLTEXT INDEX ftidx_files ON tiki_files(name,description,search_data,filename);
+CREATE FULLTEXT INDEX ftidx_galleries ON tiki_galleries(name,description);
+CREATE FULLTEXT INDEX ftidx_images ON tiki_images(name,description);
+CREATE FULLTEXT INDEX ftidx_pages ON tiki_pages(`pageName`,`description`,`data`);
+CREATE FULLTEXT INDEX ftidx_tracker_item_fields ON tiki_tracker_item_fields(value);
+*/

@@ -349,6 +349,13 @@
 				</p>
 
 			</div>
+			{if $hasInnoDB}
+			<p>Installing InnoDB
+			<input type="hidden" name="useInnoDB" value="1" />
+			{else}
+			<input type="hidden" name="useInnoDB" value="0" />
+			</p>
+			{/if}
 			</fieldset>
 		</td>
 			{if $tikidb_created}
