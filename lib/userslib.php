@@ -6498,6 +6498,8 @@ class UsersLib extends TikiLib
 			$cat[] = $categId;
 			$cat = array_unique($cat);
 			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true); // using override_perms=true because if user adding himself to group may not have perms yet
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('trackeritem', $itemid);
 		}
 	}
 	
@@ -6513,6 +6515,8 @@ class UsersLib extends TikiLib
 			$categId = $categlib->get_category_id($group);
 			$cat = array_diff($cat, array($categId));
 			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true);
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('trackeritem', $itemid);
 		}
 	}
 
