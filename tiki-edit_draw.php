@@ -27,7 +27,7 @@ if ($_REQUEST['fileId'] > 0) {
 }
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
-if ( $fileInfo['filetype'] != $mimetypes["svg"] ) {
+if ( ($fileInfo['filetype'] != $mimetypes["svg"]) && $_REQUEST['fileId'] > 0 ) {
 	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["svg"]));
 	$smarty->display("error.tpl");
 	die;
