@@ -39,7 +39,7 @@ function wikiplugin_customsearch_info()
 			),
 			'searchfadediv' => array(
 				'required' => false,
-				'name' => tra('The ID of the div to fade out when AJAX search is in progress, if required'),
+				'name' => tra('The specific ID of the specific div to fade out when AJAX search is in progress, if not set will attempt to fade the whole area or if failing simply show the spinner'),
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -211,12 +211,12 @@ function wikiplugin_customsearch($data, $params)
 	}
 
 	$script .= "function load_customsearch_$id(searchdata) {";
+	$searchfadetext = tr('Searching...');
 	if ($searchfadediv) { 
-		$searchfadetext = tr('Searching...');
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal('$searchfadetext');";
-		$script .= "else var spinner = $('#customsearch_$id').showBusy();";
+		$script .= "else $('#customsearch_$id').modal('$searchfadetext');";
 	} else {
-		$script .= "var spinner = $('#customsearch_$id').showBusy();";
+		$script .= "$('#customsearch_$id').modal('$searchfadetext');";
 	}
 	$script .= "var datamap = {basedata: customsearch_{$id}_basedata,
 				adddata: searchdata,
@@ -238,8 +238,10 @@ function wikiplugin_customsearch($data, $params)
 				success: function(data){";
 	if ($searchfadediv) {
 		$script .= "if ($('#$searchfadediv').length) $('#$searchfadediv').modal();";
+		$script .= "else $('#customsearch_$id').modal();";
+	} else {
+		$script .= "$('#customsearch_$id').modal();";
 	}
-	$script .= "if (typeof spinner != 'undefined') $('#customsearch_$id').showBusy(spinner);";
 	$script .= "$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false;"; 
 	if (!empty($callbackScript)) $script .= $callbackScript;		
 	$script .= "
