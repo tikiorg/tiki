@@ -43,7 +43,7 @@ function smarty_resource_wiki_timestamp($page, &$tpl_timestamp, $smarty) {
 		return false;
 	}
 	if (preg_match('/\{([A-z-Z0-9_]+) */', $info['data']) || preg_match('/\{\{.+\}\}/', $info['data'])) { // there are some plugins - so it can be risky to cache the page
-		$tpl_timestamp = $tikilib->now;
+		$tpl_timestamp = $tikilib->now + 100; // future needed in case consecutive run of template;
 	} else {
 		$tpl_timestamp = $info['lastModif'];
 	}
