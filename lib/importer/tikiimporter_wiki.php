@@ -177,7 +177,7 @@ class TikiImporter_Wiki extends TikiImporter
                     if (empty($categId)) {
                        $categId = $categlib->add_category(0, $cat, '');
                     }
-                    $categlib->categorize_page( $page['name'], $categId);
+                    $categlib->categorize_any('wiki page', $page['name'], $categId);
                 }
             }
         }

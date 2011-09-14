@@ -202,7 +202,7 @@ class CategLib extends ObjectLib
 		}
 	}
 
-	function add_categorized_object($type, $itemId, $description, $name, $href) {
+	function add_categorized_object($type, $itemId, $description = NULL, $name = NULL, $href = NULL) {
 		$id = $this->add_object($type, $itemId, $description, $name, $href);
 		
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `catObjectId`=?";
@@ -505,291 +505,33 @@ class CategLib extends ObjectLib
 		}
 	}
 
-	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
-	function categorize_any( $type, $identifier, $categId )
+	// Categorize the object of the given type and with the given unique identifier in the categories specified in the second parameter.
+	// $categIds can be a category OID or an array of category OIDs.
+	function categorize_any( $type, $identifier, $categIds )
 	{
-		switch( $type )
-		{
-		case 'wiki page':
-		case 'wikipage':
-		case 'wiki_page':
-			return $this->categorize_page( $identifier, $categId );
-		case 'tracker':
-			return $this->categorize_tracker( $identifier, $categId );
-		case 'quiz':
-			return $this->categorize_quiz( $identifier, $categId );
-		case 'article':
-			return $this->categorize_article( $identifier, $categId );
-		case 'faq':
-			return $this->categorize_faq( $identifier, $categId );
-		case 'blog':
-			return $this->categorize_blog( $identifier, $categId );
-		case 'directory':
-			return $this->categorize_directory( $identifier, $categId );
-		case 'gallery':
-		case 'gal':
-			return $this->categorize_gallery( $identifier, $categId );
-		case 'file_gallery':
-		case 'file gallery':
-		case 'fgal':
-			return $this->categorize_file_gallery( $identifier, $categId );
-		case 'file':
-			return $this->categorize_file($identifier, $categId);
-		case 'forum':
-			return $this->categorize_forum( $identifier, $categId );
-		case 'poll':
-			return $this->categorize_poll( $identifier, $categId );
-		case 'calendar':
-			return $this->categorize_calendar( $identifier, $categId );
-		case 'trackeritem':
-			return $this->categorize_trackeritem($identifier, $categId);
+		switch( $type ) {
+			case 'wikipage':
+			case 'wiki_page':
+				$type = 'wiki page';
+				break;
+			case 'gallery':
+			case 'gal':
+				$type = 'image gallery';
+				break;
+			case 'file_gallery':
+			case 'fgal':
+				$type = 'file gallery';
 		}
-	}
-
-	// Categorize the Wiki page with the given name in the categories specified in the second parameter. $categIds can be a category ID or an array of category IDs.
-	function categorize_page($pageName, $categIds) {
-		// Check if we already have this object in the tiki_categorized_objects page
-
-		$catObjectId = $this->is_categorized('wiki page', $pageName);
-
-		if (!$catObjectId) {
-			// The page is not cateorized
-			if (!($info = $this->get_page_info($pageName)))
-				return;
-			$href = 'tiki-index.php?page=' . urlencode($pageName);
-			$catObjectId = $this->add_categorized_object('wiki page', $pageName, substr($info["description"], 0, 200), $pageName, $href);
+		$catObjectId = $this->add_categorized_object($type, $identifier);
+		if (!is_array($categIds)) {
+			$categIds = array($categIds);
 		}
-
-		if (!is_array($categIds)) $categIds=array($categIds);
 		foreach($categIds as $categId) {
 			$this->categorize($catObjectId, $categId);
 		}
 
 		return $catObjectId;
 	}
-	
-	function categorize_tracker($trackerId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-
-		$catObjectId = $this->is_categorized('tracker', $trackerId);
-
-		if (!$catObjectId) {
-			global $trklib; include_once('lib/trackers/trackerlib.php');
-			$info = $trklib->get_tracker($trackerId);
-
-			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
-			$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_trackeritem($itemId, $categId) {
-		$catObjectId = $this->is_categorized('trackeritem', $itemId);
-
-		if (!$catObjectId) {
-			global $trklib; include_once('lib/trackers/trackerlib.php');
-			$info = $trklib->get_tracker_item($itemId);
-			$href = "tiki-view_tracker_item.php?itemId=$itemId&trackerId=".$info['trackerId'];
-			$name = $trklib->get_isMain_value($info['trackerId'], $itemId);
-			$catObjectId = $this->add_categorized_object('trackeritem', $itemId, '',$name , $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_quiz($quizId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('quiz', $quizId);
-
-		if (!$catObjectId) {
-			// The page is not cateorized
-			$info = $this->get_quiz($quizId);
-
-			$href = 'tiki-take_quiz.php?quizId=' . $quizId;
-			$catObjectId
-				= $this->add_categorized_object('quiz', $quizId, substr($info["description"], 0, 200), $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_article($articleId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('article', $articleId);
-
-		if (!$catObjectId) {
-			global $artlib; require_once 'lib/articles/artlib.php';
-			// The page is not cateorized
-			$info = $artlib->get_article($articleId);
-
-			$href = 'tiki-read_article.php?articleId=' . $articleId;
-			$catObjectId = $this->add_categorized_object('article', $articleId, $info["heading"], $info["title"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_faq($faqId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('faq', $faqId);
-
-		if (!$catObjectId) {
-			// The page is not cateorized
-			$info = $this->get_faq($faqId);
-
-			$href = 'tiki-view_faq.php?faqId=' . $faqId;
-			$catObjectId = $this->add_categorized_object('faq', $faqId, $info["description"], $info["title"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_blog($blogId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('blog', $blogId);
-
-		if (!$catObjectId) {
-			global $bloglib; require_once('lib/blogs/bloglib.php');
-			// The page is not cateorized
-			$info = $bloglib->get_blog($blogId);
-
-			$href = 'tiki-view_blog.php?blogId=' . $blogId;
-			$catObjectId = $this->add_categorized_object('blog', $blogId, $info["description"], $info["title"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_directory($directoryId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('directory', $directoryId);
-
-		if (!$catObjectId) {
-			// The page is not cateorized
-			$info = $this->get_directory($directoryId);
-
-			$href = 'tiki-directory_browse.php?parent=' . $directoryId;
-			$catObjectId = $this->add_categorized_object('directory', $directoryId, $info["description"], $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_gallery($galleryId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('image gallery', $galleryId);
-
-		if (!$catObjectId) {
-			// The page is not cateorized
-			$info = $this->get_gallery($galleryId);
-
-			$href = 'tiki-browse_gallery.php?galleryId=' . $galleryId;
-			$catObjectId = $this->add_categorized_object('image gallery', $galleryId, $info["description"], $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_file_gallery($galleryId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('file gallery', $galleryId);
-
-		if (!$catObjectId) {
-			$filegallib = TikiLib::lib('filegal');
-
-			// The page is not cateorized
-			$info = $filegallib->get_file_gallery($galleryId);
-
-			$href = 'tiki-list_file_gallery.php?galleryId=' . $galleryId;
-			$catObjectId = $this->add_categorized_object('file gallery', $galleryId, $info["description"], $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_file($fileId, $categId) {
-		$catObjectId = $this->is_categorized('file', $fileId);
-
-		if (!$catObjectId) {
-			$filegallib = TikiLib::lib('filegal');
-
-			// The page is not cateorized
-			$info = $filegallib->get_file_info($fileId, false, false, false);
-
-			$href = 'tiki-upload_file.php?fileId=' . $fileId;
-			$catObjectId = $this->add_categorized_object('file', $fileId, $info["description"], $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_forum($forumId, $categId) {
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('forum', $forumId);
-				
-		if (!$catObjectId) {
-			$commentslib = TikiLib::lib('comments');
-			// The page is not cateorized
-			$info = $commentslib->get_forum($forumId);
-
-			$href = 'tiki-view_forum.php?forumId=' . $forumId;
-			$catObjectId = $this->add_categorized_object('forum', $forumId, $info["description"], $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	function categorize_poll($pollId, $categId) {
-		global $polllib;
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('poll', $pollId);
-		if (!$catObjectId) {
-			if (!is_object($polllib)) {
-				require_once('lib/polls/polllib_shared.php');
-			}
-			// The page is not cateorized
-			$info = $polllib->get_poll($pollId);
-
-			$href = 'tiki-poll_form.php?pollId=' . $pollId;
-			$catObjectId = $this->add_categorized_object('poll', $pollId, $info["title"], $info["title"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-	
-	function categorize_calendar($calendarId, $categId) {
-		global $calendarlib;
-		// Check if we already have this object in the tiki_categorized_objects page
-		$catObjectId = $this->is_categorized('calendar', $calendarId);
-		if (!$catObjectId) {
-			if (!is_object($calendarlib)) {
-				require_once('lib/calendar/calendarlib.php');
-			}
-			// The page is not cateorized
-			$info = $calendarlib->get_calendar($calendarId);
-
-			$href = 'tiki-calendar.php?calId=' . $calendarId;
-			$catObjectId = $this->add_categorized_object('calendar', $calendarId, $info["description"], $info["name"], $href);
-		}
-
-		$this->categorize($catObjectId, $categId);
-		return $catObjectId;
-	}
-
-	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	
 	// Return an array enumerating a subtree with the given root node in preorder
 	private function getSortedSubTreeNodes($root, &$categories) {
