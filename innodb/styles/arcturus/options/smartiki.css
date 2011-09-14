@@ -1,0 +1,373 @@
+/* $Id$
+	Smartiki theme option for Arcturus.css;
+	for TikiWiki CMS/Groupware.
+	Visit http://themes.tiki.org for more information.
+*/
+
+/* reset arcturus values */
+body,
+#middle,
+#c1c2 #col2,
+#c1c2 #wrapper #col1 #tiki-center,
+#col3,
+#tiki-top,
+.wikitext,
+.footerbgtrap,
+.box,
+h3.box-title,
+.option a:hover {
+	background: none;
+}
+
+.box {
+	border: none;
+	padding-top: 3px;
+	margin-top: 13px;
+}
+
+#secondary_site_menu li,
+#secondary_site_menu li a,
+#tiki-top .cssmenu_horiz li,
+#tiki-top .cssmenu_horiz li a {
+	background: none;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+/* end reset */
+
+body {
+	font: 13px Verdana, sans-serif;
+	color: #333;
+	background: #fff;
+}
+
+html>body {
+	font-size: 13px;
+}
+
+a,
+a:visited {
+	text-decoration: none;
+	color: #994242;
+}
+a:hover {
+	text-decoration: underline;
+	color: #000000;
+}
+
+em {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.code {
+	background: #f0f0f0;
+}
+
+fieldset {
+	border: 1px solid #d4d4d4;
+}
+
+legend {
+	color: #333;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+	background-color: #f0c040;
+	border: 1px solid #676767;
+	margin: 0;
+	padding: 0 6px;
+	font-size: 12px;
+}
+
+.button a:hover,
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+	background-color: #f0ead8;
+	margin: 0;
+	padding: 0 6px;
+	font-size: 12px;
+}
+
+h1, .pagetitle {
+	font-family: verdana,arial,helvetica,sans-serif;
+	font-size: 140%;
+	font-weight: bold;
+	color: #000000;
+}
+
+#tiki-top {
+	background: #f0c040;
+	padding: 2px 10px;
+	border-bottom: 1px solid #9b410e;
+	width: auto;
+}
+
+#c1c2 #col2 {
+	background: #f0ead8;
+	text-align: right;
+	border-right: 1px solid #ddccbb;
+}
+
+#c1c2 #col2 .content {
+	margin-right: 2px;
+	width: 168px;
+	text-align: left;
+}
+
+#col3 {
+	width: 170px;
+	margin-left: -170px;
+	background: #f0ead8;
+	border-left: 1px solid #ddccbb;
+}
+
+.footerbgtrap {
+	background: #f0c040;
+	padding: 2px 0px 2px 0px;
+	border-top: 1px solid #9b410e;
+	border-bottom: 1px solid #9b410e;
+}
+
+/** CSS (suckerfish) menus **/
+/* default and topbar dropdown typography (colors) and padding */
+.cssmenu_horiz li,
+.cssmenu_vert ul li,
+#tiki-top .cssmenu_horiz li:hover ul li,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	background: #f0ead8;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a,
+#tiki-top .cssmenu_horiz li a {
+	font-size: 14px;
+	color: #994242;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert li ul a,
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	background: #f0ead8;
+	font-size: 14px;
+	color: #994242;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background: #e2e2e2;
+	border: 1px solid #003388;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #003388;
+}
+
+#tiki-top .cssmenu_horiz li {
+	background: none;
+	border-right: 1px solid #994242;
+}
+
+.separator {
+	margin-top: 4px;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
+	background: none;
+	color: #b1b299;
+	text-decoration: none;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.separator:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.option a,
+.separator a {
+	color: #994242;
+	font-size: 14px;
+	background: none;
+}
+
+.option a:hover,
+.separator a:hover {
+	color: #000;
+}
+
+h3.box-title {
+	font-weight: bold;
+	color: #000;
+	margin-bottom: 7px;
+	padding: 0 3px 3px;
+	border-bottom: 1px solid #e0dac8;
+	text-align: left;
+	font-size: 15px;
+}
+
+.box-data {
+	color: #000;
+	margin: 0 6px;
+}
+
+
+.cbox-title {
+  color: #000;
+  border-bottom: 1px solid #676767;
+  overflow: hidden;
+}
+
+.simplebox {
+	margin: 5px 1px;
+	padding: 2px;
+	color: black;
+	border: 1px solid #676767;
+	background-color: #f0f0f0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+th,
+td.heading,
+tr.diffheader {
+  color: #000;
+  font-size: 12px;
+  background: #f0ead8;
+  border: 1px solid #676767;
+  padding-left: 2px;
+  padding-right: 5px;
+}
+
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+    color: #000;
+}
+
+tr.odd td,
+td.odd,
+li.odd {
+	font-size: 12px;
+	background-color:#f0f0f0;
+	border:1px solid #676767;}
+
+tr.odd td:hover,
+td.odd:hover,
+li.odd:hover {
+	background: #fff7e6;
+}
+
+tr.even td,
+td.even,
+li.even,
+.forum_actions {
+	border: 1px solid #676767;
+	font-size: 12px;
+	background-color: #e0e0e0;
+	color: #000;
+}
+
+tr.even td:hover,
+td.even:hover,
+li.even:hover {
+	background: #fff7e6;
+}
+
+.tabs {
+	background: #fff;
+	border: 1px solid #9b410e;
+}
+
+.tabmark {
+	background: #f0c040;
+	border: 1px solid #676767;
+}
+
+.tabmark a,
+.tabmark a:visited {
+	padding: 0.5em 1em;
+	color: #000;
+	font-weight: normal;
+}
+
+.tabinactive:hover,
+.tabactive {
+	border-bottom-width: 0;
+	padding-bottom: 1px;
+	color: #000;
+	background: #f0ead8;
+	border: 1px solid #676767;
+	font-weight: normal;
+}
+
+.tabactive a:hover,
+.tabinactive a:hover {
+	background: none;
+}
+
+.tabcontent {
+	background: #f0ead8;
+}
+
+.statuson {
+	background: #f0c040;
+}
+
+.titleb,
+.articletrailer {
+	color:#676767;
+	font-size: 90%;
+}
+
+.articleheading {
+	border-bottom: 1px solid #aeaeae;
+	padding-bottom: 0.5em;
+	padding-right: 0.8em;
+	padding-top: 0.5em;
+}
+
+.articleheadingtext {
+	padding: 1em 2em;
+	margin: 10px 0;
+}
+
+.articlebody {
+	border: 1px solid #aeaeae;
+	padding: 1em 2em;
+	margin: 10px 0;
+	clear: both;
+}
+
+.postbody-title {
+	background: #f0c040;
+}
+
+.oddthumb {
+	background: transparent;
+	border: 1px solid #8cacbb;
+	border-collapse: collapse;}
+
+.eventhumb,
+.thumbnailcontener {
+	background: #f7f9fa;
+	border: 1px solid #8cacbb;
+	border-collapse: collapse;
+}

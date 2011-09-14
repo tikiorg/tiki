@@ -1,0 +1,1 @@
+update `tiki_objects` set `type`='trackeritem' where `type` like 'tracker %';

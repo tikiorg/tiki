@@ -1,0 +1,6 @@
+
+||__Page__|__Version__|__Last Modification__
+{{foreach from=$response.list item=page}}
+[{{$page.url}}|{{$page.page_name}}]|{{$page.version}}|{{$page.last_modif}} ({{$page.last_author}})
+{{/foreach}}
+||

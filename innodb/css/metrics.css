@@ -1,0 +1,103 @@
+#admin_metrics_add,
+#admin_metrics_add_tab,
+#admin_metrics_add_template {
+	width: 100%;
+}
+
+textarea#metric_query, textarea#tab_content {
+	width: 450px;
+}
+
+.trend-green {
+	color: #26831D;
+}
+
+.trend-red {
+	color: #b71d2f;
+}
+
+.trend-gray {
+	color: #ccc;
+}
+
+.inlinesparkline {
+	float: right;
+}
+
+.jqtabs .title {
+	font-size: 25px;
+}
+
+.jqtabs {
+	margin: 5px 20px;
+}
+
+.trend-table th {
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+}
+
+.trend-table td, .trend-table th {
+	padding: 2px 5px;
+}
+
+.trend-table tr td:first-child {
+	border-right: 1px solid #ccc;
+}
+
+.trend-table tr th:first-child {
+	border-right: 1px solid #ccc;
+}
+
+.trend-table {
+	border: 1px solid #ccc;
+	margin: 15px 10px;
+}
+
+.metricbox {
+	padding: 10px 0;
+	border-top: 1px solid #ccc;
+}
+
+.metricbox:first-child {
+	border-top: none;
+}
+
+.toggle-button {
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	background: url('img/icons2/arrow-right.gif') no-repeat top left;
+}
+
+.toggle-button-off {
+	background: url('img/icons2/arrow-down.gif') no-repeat top left;
+}
+
+.jqtabs #tab-add {
+	color: #b71d2f;
+}
+
+.metrics-range {
+	font-size: 30px;
+}
+
+.metrics-range-update {
+	float: right;
+	margin-top: 10px;
+}
+
+.feature-contents {
+	display: none;
+}
+
+.page-header {
+	padding: 0 20px;
+	margin-top: -10px;
+}
+
+.range-date-from,
+.range-date-to {
+	width: 80px;
+}

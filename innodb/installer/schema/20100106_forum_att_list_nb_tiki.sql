@@ -1,0 +1,1 @@
+alter table `tiki_forums` add column `att_list_nb` char(1) default NULL after `att_max_size`;

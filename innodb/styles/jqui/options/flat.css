@@ -1,0 +1,73 @@
+/* $Id$
+	Jqui theme (jqui.css), Element theme option (element.css)
+	for Tiki Wiki CMS/Groupware.
+	Thanks to garkpit for the random name.
+	Visit http://themes.tiki.org for more information.
+*/
+
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+	background-image: none;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+	background-image: none;
+}
+	
+.highlight,
+.highlight a {
+	background-image: none;
+}
+
+#tiki-top {
+	background-image: none;
+}
+
+h3.box-title,
+.cbox-title {
+	background-image: none;
+}
+.rbox-title,
+.rbox-data {
+	background-image: none;
+}
+
+.errors .rbox-title,
+.errors .rbox-data {
+	background-image: none;
+}
+
+.warning .rbox-title,
+.warning .rbox-data {
+	background-image: none;
+}
+
+.tabs {
+	background-image: none;
+}
+
+.tabmark {
+	background-image: none;
+}
+
+.tabactive {
+	background-image: none;
+}
+
+.postbody-title {
+	background-image: none;
+}
+	
+
+/* End of File */

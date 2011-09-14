@@ -1,0 +1,29 @@
+/* $Id$ 
+	FiveAlive theme CSS rules for IE6.
+*/
+
+#header-top {
+	height: 170px;
+}
+
+#siteloginbar_popup {
+	top: 30px;
+	left: 500px;
+}
+
+#sitesubtitle {
+	height: 30px;
+	padding-top: 8px;
+	position: static;
+}
+
+#sitesearchbar form {
+	height: 45px;
+}
+
+#sitesearchbar form label.findtitle input {
+font-size:18px;
+height:22px;
+width:150px;
+margin-top: 13px;
+}

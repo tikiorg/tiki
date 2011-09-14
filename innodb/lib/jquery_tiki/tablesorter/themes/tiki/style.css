@@ -1,0 +1,19 @@
+/* tables */
+table.sortable thead tr .header {
+	background-image: url(bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+table.sortable tbody tr.odd td {
+	background-color:#F0F0F0;
+}
+
+table.sortable thead tr .headerSortUp {
+	background-image: url(asc.gif);
+}
+
+table.sortable thead tr .headerSortDown {
+	background-image: url(desc.gif);
+}

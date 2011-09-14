@@ -1,0 +1,1 @@
+{tr}Go to your friendship network to accept or refuse this request{/tr} : {$server_name}

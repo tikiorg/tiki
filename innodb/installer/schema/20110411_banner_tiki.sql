@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_banners` ADD `onlyInURIs` text;

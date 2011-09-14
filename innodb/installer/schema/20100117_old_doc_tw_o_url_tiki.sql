@@ -1,0 +1,1 @@
+update tiki_preferences set value='http://doc.tikiwiki.org/' WHERE name='helpurl' and value IN('http://doc.tikiwiki.org/tiki-index.php?best_lang&page=', 'http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=', 'http://doc.tikiwiki.org/tiki-index.php?page=');
