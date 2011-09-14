@@ -6,6 +6,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// See http://doc.tiki.org/Restore+Help+Pages
+
 include_once("lib/init/initlib.php");
 require_once("db/tiki-db.php");
 require_once("lib/tikilib.php");
@@ -19,7 +21,6 @@ function tra($s)
 
 $tikilib = new TikiLib;
 
-$categId = '113';
 $structId = '160';
 
 $pages = explode("\n",`grep -r '{\$helpurl}' templates | sed -e "s/^.*helpurl}\([^\"']*\)[\"'].*$/\\1/" | sort | uniq`);
@@ -31,8 +32,6 @@ foreach ($pages as $p) {
 			$tikilib->create_page($p, 0, 'to do', time(), 'automatic import from RestoreHelp script', 'RestoreHelp', 'RestoreHelp', 'to do');
 			echo ', not found, is created,';
 		}
-		//$categlib->categorize_page($p,$categId);
-		echo ' is re-categorized';
 		
 		if ($structlib->page_is_in_structure($p)) {
 			$alls = $structlib->get_page_structures($p,'Help');
