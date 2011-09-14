@@ -290,8 +290,10 @@ if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasec
 	header('Location: tiki-editpage.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
     	die;
 }
-if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($info['lang'])) {
-	$prefs['language'] = $info['lang'];
+
+if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($info['lang']) && $prefs['language'] != $info['lang']) {
+	header('Location: tiki-switch_lang.php?language=' . $info['lang']);
+	die;
 }
 
 $page = $info['pageName'];
