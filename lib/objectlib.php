@@ -21,8 +21,6 @@ class ObjectLib extends TikiLib
 
 	if ($objectId) {
 		if (!empty($description) || !empty($name) || !empty($href)) {
-			$description = strip_tags($description);
-			$name = strip_tags($name);
 			$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
 			$this->query($query,array($description,$name,$href,$objectId));
 	    }
@@ -39,9 +37,6 @@ class ObjectLib extends TikiLib
     }
 
     function insert_object($type, $itemId, $description = '', $name = '', $href = '') {
-		$description = strip_tags($description);
-		$name = strip_tags($name);
-	
 	    $query = "insert into `tiki_objects`(`type`,`itemId`,`description`,`name`,`href`,`created`,`hits`,`comments_locked`) values(?,?,?,?,?,?,?,?)";
 	    $result = $this->query($query,array($type,(string) $itemId,$description,$name,$href,(int) $this->now,0,'n'));
 	    $query = "select `objectId` from `tiki_objects` where `created`=? and `type`=? and `itemId`=?";
