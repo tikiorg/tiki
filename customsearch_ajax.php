@@ -231,6 +231,8 @@ function cs_dataappend_language($config, $value) {
 		if (!empty($config['_value'])) {
 			$value = $config['_value'];
 			return '{filter language="' . $value . '"}';	
+		} elseif ($value) {
+			return '{filter language="' . $value . '"}';
 		} else {
 			return false;
 		}
