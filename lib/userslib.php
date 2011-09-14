@@ -6302,8 +6302,8 @@ class UsersLib extends TikiLib
 	function update_expired_groups() {
 		global $tikilib;
 		$this->update_anniversary_expiry();
-		$query = 'SELECT uu.* FROM `users_usergroups` uu LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`) WHERE ( ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
-		$result = $this->query($query, array(0, $tikilib->now, 0, $tikilib->now ));
+		$query = 'SELECT uu.* FROM `users_usergroups` uu LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`) WHERE ( ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR ((ug.`expireAfter` > ? OR ug.`anniversary` > ?) AND uu.`expire` < ?)';
+		$result = $this->query($query, array(0, $tikilib->now, 0, 0, $tikilib->now ));
 		while ($res = $result->fetchRow()) {
 			$this->remove_user_from_group($this->get_user_login($res['userId']), $res['groupName']);
 		}
