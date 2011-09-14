@@ -550,8 +550,11 @@ class ToolbarCkOnly extends Toolbar
 	{
 		switch ($this->wysiwyg) {
 			case 'autosave':
+			case 'Copy':
+			case 'Cut':
 			case 'Format':
 			case 'JustifyLeft':
+			case 'Paste':
 			case 'Redo': 
 			case 'RemoveFormat':
 			case 'ShowBlocks': 
