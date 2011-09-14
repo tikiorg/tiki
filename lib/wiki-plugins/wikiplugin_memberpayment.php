@@ -108,6 +108,17 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			}
 		}
 
+		$smarty->assign('wp_member_requestpending', 'n');
+        $smarty->assign('wp_member_paymentid', 0);
+		if (isset($params['currentuser']) && $params['currentuser'] == 'y' && !empty($params['preventdoublerequest']) && $params['preventdoublerequest'] == 'y') {
+			$attname = 'tiki.memberextend.' . $info['id'];
+			$attributes = $attributelib->get_attributes('user', $user);
+			if (isset($attributes[$attname])) {
+				$smarty->assign('wp_member_requestpending', 'y');
+				$smarty->assign('wp_member_paymentid', $attributes[$attname]);
+			}
+		}
+		
 		if( isset($_POST['wp_member_offset']) && $_POST['wp_member_offset'] == $offset ) {
 			$users = $params['currentuser'] == 'y'? array($user): explode( '|', $_POST['wp_member_users'] );
 			$users = array_map( 'trim', $users );

@@ -1,3 +1,4 @@
+{if $wp_member_requestpending neq 'y' }
 <form method="post" action="#pluginMemberpayment{$iPluginMemberpayment}">
 	<p>
 	{if !empty($wp_member_title) or !empty($wp_member_anniversary_day) or !empty($wp_member_anniversary_day)}
@@ -32,3 +33,6 @@
 		$('#user{{$wp_member_offset|escape}}').tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});
 	{/jq}
 </form>
+{else}
+{payment id=$wp_member_paymentid} {* TODO: can set returnurl param as well *}
+{/if}
