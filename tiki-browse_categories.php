@@ -124,13 +124,11 @@ $usercatwatches_curr = $tikilib->get_user_watches($user, 'category_changed');
 $eyes_curr = add_watch_icons ($descendants_curr, $usercatwatches_curr, $_REQUEST['parentId'], $_REQUEST['parentId'], $deep, $user);
 $smarty->assign_by_ref('eyes_curr', $eyes_curr);
 
-$i = 0;
-foreach($ctall as $c) {
+foreach($ctall as &$c) {
 	$descendants = $categlib->get_category_descendants($c['categId']);
 	$usercatwatches = $tikilib->get_user_watches($user, 'category_changed');
 	$eyes = add_watch_icons ($descendants, $usercatwatches, $_REQUEST['parentId'], $c['categId'], $deep, $user);
-	$ctall[$i]['eyes'] = $eyes;
-	++$i;
+	$c['eyes'] = $eyes;
 }
 $tree_nodes = array();
 foreach($ctall as $c) {
@@ -147,7 +145,9 @@ $smarty->assign('tree', $res);
 
 $objects = $categlib->list_category_objects($_REQUEST['parentId'], $offset, $maxRecords, $sort_mode, $type, $find, $deep == 'on', (!empty($_REQUEST['and'])) ? true : false);
 if ($deep == 'on') {
-	for ($i = count($objects['data']) - 1; $i >= 0; --$i) $objects['data'][$i]['categName'] = $tikilib->other_value_in_tab_line($ctall, $objects['data'][$i]['categId'], 'categId', 'name');
+	foreach ($objects['data'] as &$object) {
+		$object['categName'] = $tikilib->other_value_in_tab_line($ctall, $object['categId'], 'categId', 'name');
+	}
 }
 
 
