@@ -37,6 +37,11 @@ class Installer extends TikiDb_Bridge
 	function cleanInstall() // {{{
 	{
 		$this->runFile( dirname(__FILE__) . '/../db/tiki.sql' );
+		if($this->useInnoDB) {
+			$this->runFile( dirname(__FILE__) . '/../db/tiki_innodb.sql' );
+		} else {
+			$this->runFile( dirname(__FILE__) . '/../db/tiki_myisam.sql' );
+		}
 		$this->buildPatchList();
 		$this->buildScriptList();
 
