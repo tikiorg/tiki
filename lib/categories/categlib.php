@@ -1200,7 +1200,9 @@ class CategLib extends ObjectLib
 		return $result;
 	}
 
-	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null, $override_perms = false) {
+	// Change an object's categories
+	// $objId: A unique identifier of an object of the given type, for example "Foo" for Wiki page Foo.
+	function update_object_categories($categories, $objId, $objType, $desc=NULL, $name=NULL, $href=NULL, $managedCategories = null, $override_perms = false) {
 		global $prefs, $user, $userlib;
 		
 		if (empty($categories)) {
@@ -1295,7 +1297,7 @@ class CategLib extends ObjectLib
 		}
 	}
 
-	private function applyManipulator( $manip, $objType, $objId, $desc='', $name='', $href='' ) {
+	private function applyManipulator( $manip, $objType, $objId, $desc=NULL, $name=NULL, $href=NULL ) {
 		$old_categories = $this->get_object_categories($objType, $objId, -1, false);
 		$manip->setCurrentCategories( $old_categories );
 
