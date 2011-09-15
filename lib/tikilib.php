@@ -3884,14 +3884,6 @@ class TikiLib extends TikiDb_Bridge
 		// Collect pages before modifying data
 		$pages = $this->get_pages($data, true);
 
-		// This *really* shouldn't be necessary now that the
-		// query itself has been fixed up, and it causes much
-		// badness to the phpwiki import.  -rlpowell
-		//  $name = addslashes($name);
-		//  $description = addslashes($description);
-		//  $data = addslashes($data);
-		//  $comment = addslashes($comment);
-
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
@@ -3909,17 +3901,19 @@ class TikiLib extends TikiDb_Bridge
 			'pageName' => $name,
 			'hits' => (int) $hits,
 			'data' => $data,
+			'description' => $description,
 			'lastModif' => (int) $lastModif,
 			'comment' => $comment,
 			'version' => 1,
 			'version_minor' => $minor,
 			'user' => $user,
+			'ip' => $ip,
+			'creator' => $user,
 			'page_size' => strlen($data),
 			'is_html' => $html,
 			'created' => empty($created) ? $this->now : $created,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
-			'creator' => $user,
 		);
 		if ($lang) {
 			$insertData['lang'] = $lang;
