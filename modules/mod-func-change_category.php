@@ -131,73 +131,63 @@ function module_change_category( $mod_reference, $module_params ) {
 			}
 		}
 	
-		$categsid = array();
-		foreach ($categories as $categ) {
-			$categsid[] = $categ['categId'];
-		}
-
-		$unassignedCategs = array();
-		$assignedCategs = array();
-		if (isset($_REQUEST['remove']) && in_array($_REQUEST['remove'], $categsid) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
-			$oldCategs = $categlib->get_object_categories($cat_type, $cat_objid);
-			if (in_array($_REQUEST['remove'], $oldCategs)) {
-				$unassignedCategs[] = (int)$_REQUEST['remove'];
+		$managedCategories = array_keys($categories);
+		if (isset($_REQUEST['remove']) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
+			$originalCategories = $categlib->get_object_categories($cat_type, $cat_objid);
+			if (in_array($_REQUEST['remove'], $originalCategories) && in_array($_REQUEST['remove'], $managedCategories)) { // Check if the object is in the category to prevent infinite redirection.
+				$selectedCategories = array();
+				$managedCategories = array_intersect(array((int)$_REQUEST['remove']), $managedCategories);
 			}
 		} elseif (isset($_REQUEST["modcatid"]) and $_REQUEST["modcatid"] == $id) {
-			$newCategs = is_array($_REQUEST['modcatchange']) ? $_REQUEST['modcatchange'] : array($_REQUEST['modcatchange']);
-			foreach($newCategs as &$newCateg)
-				$newCateg = (int) $newCateg;
-			$oldCategs = $categlib->get_object_categories($cat_type, $cat_objid);
-
-			if ($detailed == 'n') 
-				$unassignedCategs = array_diff(array_intersect($oldCategs, $categsid), $newCategs);
-			if (isset($_REQUEST['modcatchange'])) 
-				$assignedCategs = array_diff($newCategs, $oldCategs);
+			if (!isset($_REQUEST['modcatchange'])) {
+				$selectedCategories = array();
+			} elseif (is_array($_REQUEST['modcatchange'])) {
+				$selectedCategories =  $_REQUEST['modcatchange'];
+			} else {
+				$selectedCategories = array($_REQUEST['modcatchange']);
+			}
+			foreach ($selectedCategories as &$selectedCategory) {
+				$selectedCategory = (int) $selectedCategory;
+			}
+			if ($detailed != 'n') {
+				$managedCategories = array_intersect($selectedCategories, $managedCategories);
+			}
 		}
 
-		if (!empty($assignedCategs) || !empty($unassignedCategs)) {
+		if (isset($selectedCategories)) {
 			$objectperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
 			if ($objectperms->modify_object_categories) {
-				$assignedCategs = Perms::filter( array( 'type' => 'category' ), 'object', $assignedCategs, array( 'object' => 'category' ), 'add_object' );
-				global $wikilib;
-				$categlib->categorize_page($cat_objid, $assignedCategs);
-				$categlib->notify_add($assignedCategs, $cat_objid, 'wiki page', $wikilib->sefurl($cat_objid));
-				if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
-					$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
-					$categlib->notify_remove($unassignedCategs, $cat_objid, 'wiki page', $wikilib->sefurl($cat_objid));
-				}
+				$categlib->update_object_categories($selectedCategories, $cat_objid, $cat_type, NULL, NULL, NULL, $managedCategories);
 			}
 			header('Location: '.$_SERVER['REQUEST_URI']);
 			die;
 		}
 
-		$incategs = $categlib->get_object_categories($cat_type, $cat_objid);
-		$remainCateg = false;
-		$modcatlist = array();
-		$visibleCategs = Perms::filter( array( 'type' => 'category' ), 'object', $categsid, array( 'object' => 'category' ), 'view_category' );
+		$objectCategories = $categlib->get_object_categories($cat_type, $cat_objid);
+		$isInAllManagedCategories = true;
 
-		foreach ($visibleCategs as $categId) {
-			$modcatlist[$categId] = $categories[$categId];
-			if (in_array($categId,$incategs)) {
-				$modcatlist[$categId]['incat'] = 'y';
+		foreach ($categories as &$category) {
+			if (in_array($category['categId'], $objectCategories)) {
+				$category['incat'] = 'y';
 				$shy = false;
 			} else {
-				$modcatlist[$categId]['incat'] = 'n';
-				$remainCateg = true;
+				$category['incat'] = 'n';
+				$isInAllManagedCategories = false;
 			}
 		}
-		if (count($modcatlist) != 1) {
+		if (count($categories) != 1) {
 			unset($module_params['imgUrlNotIn']);
 			unset($module_params['imgUrlIn']);
 		}
 	
-		$smarty->assign_by_ref('remainCateg', $remainCateg);
-		$smarty->assign('showmodule',!$shy);
-		if (empty($cat_parent))
+		$smarty->assign('isInAllManagedCategories', $isInAllManagedCategories);
+		$smarty->assign('showmodule', !$shy);
+		if (empty($cat_parent)) {
 			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s'), htmlspecialchars($_REQUEST['page'])));
-		else
+		} else {
 			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s in %s'), htmlspecialchars($_REQUEST['page']), htmlspecialchars($cat_parent)));
-		$smarty->assign('modcatlist',$modcatlist);
-		$smarty->assign('modcatid',$id);
+		}
+		$smarty->assign('modcatlist', $categories);
+		$smarty->assign('modcatid', $id);
 	}
 }

@@ -34,7 +34,7 @@
 			</table>
 		{/if}
 
-		{if $detailed eq 'n' or ($add eq 'y' and $remainCateg)}
+		{if $detailed eq 'n' or ($add eq 'y' and not $isInAllManagedCategories)}
 			<div align="center">
 				<form method="post" target="_self">
 					<input type="hidden" name="page" value="{$page|escape}" />
