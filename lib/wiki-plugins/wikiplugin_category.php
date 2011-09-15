@@ -188,17 +188,15 @@ function wikiplugin_category_info() {
 }
 
 function wikiplugin_category($data, $params) {
-	global $smarty, $prefs, $categlib;
-
-	if (!is_object($categlib)) {
-		require_once ("lib/categories/categlib.php");
-	}
+	global $prefs, $categlib;
 
 	if ($prefs['feature_categories'] != 'y') {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
+	
+	require_once ("lib/categories/categlib.php");
 
-	$default = array('one' => 'n', 'showlinks' => 'y', 'categoryshowlink'=>'y', 'maxRecords' => 50, 'showTitle' => 'y');
+	$default = array('maxRecords' => 50);
 	$params = array_merge($default, $params);
 	extract ($params,EXTR_SKIP);
 
@@ -239,8 +237,6 @@ function wikiplugin_category($data, $params) {
 	$types = (isset($types)) ? strtolower($types) : "*";
 	
 	$id = (!empty($id)) ? $id : 'current'; // use current category if none is given
-	if (isset($one) && $one == 'y')
-		$smarty->assign('one', $one);
 
 	if ($id == 'current') {
 		if (isset($_REQUEST['page'])) {
@@ -250,7 +246,7 @@ function wikiplugin_category($data, $params) {
 			$id = array();
 		}
 	}
-	$smarty->assign('params', $params);
-
-	return "~np~". $categlib->get_categoryobjects($id,$types,$sort,$split,$sub,$and, $maxRecords, $filter)."~/np~";
+	
+	$displayParameters = array_intersect($params, array_flip(array('showTitle', 'categoryshowlink', 'showtype', 'one', 'showlinks', 'showname', 'showdescription')));
+	return "~np~". $categlib->get_categoryobjects($id,$types,$sort,$split,$sub,$and, $maxRecords, $filter, $displayParameters)."~/np~";
 }
