@@ -7,8 +7,6 @@
 
 define( 'CUSTOM_ERROR_LEVEL', defined( 'E_DEPRECATED' ) ? E_ALL ^ E_DEPRECATED : E_ALL );
 
-require_once(dirname(__FILE__) . '/TikiTestCase.php');
-
 ini_set( 'display_errors', 'on' );
 error_reporting( CUSTOM_ERROR_LEVEL );
 
@@ -83,6 +81,9 @@ $_SESSION = array(
 	)
 );
 chdir($pwd);
+
+require_once(dirname(__FILE__) . '/TikiTestCase.php');
+require_once(dirname(__FILE__) . '/TestableTikiLib.php');
 
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(

@@ -2051,7 +2051,7 @@ class Comments extends TikiLib
 
 		// Add object if it does not already exist. We assume it already exists when unlocking.
 		if ( $status == 'y' ) {
-			TikiLib::lib('object')->add_object($object[0], $object[1]);
+			TikiLib::lib('object')->add_object($object[0], $object[1], FALSE);
 		}
 
 		$this->table('tiki_objects')->update(array(

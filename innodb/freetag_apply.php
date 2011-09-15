@@ -34,7 +34,7 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_freetags_tag == 'y') {
     if (!isset($cat_href)) $cat_href = '';
     if (!isset($cat_lang)) $cat_lang = null;
 
-    $freetaglib->add_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);	
+    $freetaglib->add_object($cat_type, $cat_objid, FALSE, $cat_desc, $cat_name, $cat_href);	
     $freetaglib->update_tags($user, $cat_objid, $cat_type, $tag_string, false, $cat_lang);
     require_once 'lib/search/refresh-functions.php';
     refresh_index($cat_type, $cat_objid);

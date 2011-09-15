@@ -25,6 +25,9 @@ CKEDITOR.plugins.add('tikiwiki',{
 		oldToDataFormat = editor.dataProcessor.toDataFormat ;
 		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, oldToDataFormat( html, fixForBody ) ); };
 		editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return twplugin.toHtmlFormat( editor, data ); };
+
+		// data in the clipboard is html, the input format is expected to be wiki
+		editor.on('paste', function(evt) {evt.editor.insertHtml(twplugin.toWikiFormat( editor, evt.data.html )); evt.stop(); }, editor.element.$);
 		
 		// button stuff goes here?
 	},

@@ -48,10 +48,9 @@ if (!empty($_REQUEST['copy_from']) && !empty($_REQUEST['to'])) {
 if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a page
-	// $categlib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
 	// add multiple pages at once
 	foreach($_REQUEST['pageName'] as $value) {
-		$categlib->categorize_page($value, $_REQUEST["parentId"]);
+		$categlib->categorize_any('wiki page', $value, $_REQUEST["parentId"]);
 		$category = $categlib->get_category($_REQUEST["parentId"]);
 		$categorizedObject = $categlib->get_categorized_object('wiki page', $value);
 		// Notify the users watching this category.
@@ -73,61 +72,61 @@ if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
 if (isset($_REQUEST["addpoll"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a poll
-	$categlib->categorize_poll($_REQUEST["pollId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('poll', $_REQUEST["pollId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('poll', $_REQUEST["pollId"]);
 }
 if (isset($_REQUEST["addfaq"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a faq
-	$categlib->categorize_faq($_REQUEST["faqId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('faq', $_REQUEST["faqId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('faq', $_REQUEST["faqId"]);
 }
 if (isset($_REQUEST["addtracker"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a tracker
-	$categlib->categorize_tracker($_REQUEST["trackerId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('tracker', $_REQUEST["trackerId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('tracker', $_REQUEST["trackerId"]);
 }
 if (isset($_REQUEST["addquiz"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a quiz
-	$categlib->categorize_quiz($_REQUEST["quizId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('quiz', $_REQUEST["quizId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('quiz', $_REQUEST["quizId"]);
 }
 if (isset($_REQUEST["addforum"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a forum
-	$categlib->categorize_forum($_REQUEST["forumId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('forum', $_REQUEST["forumId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('forum', $_REQUEST["forumId"]);
 }
 if (isset($_REQUEST["addgallery"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize an image gallery
-	$categlib->categorize_gallery($_REQUEST["galleryId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('image gallery', $_REQUEST["galleryId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('image gallery', $_REQUEST["galleryId"]);
 }
 if (isset($_REQUEST["addfilegallery"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a file gallery
-	$categlib->categorize_file_gallery($_REQUEST["file_galleryId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('file gallery', $_REQUEST["file_galleryId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('file gallery', $_REQUEST["file_galleryId"]);
 }
 if (isset($_REQUEST["addarticle"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize an article
-	$categlib->categorize_article($_REQUEST["articleId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('article', $_REQUEST["articleId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('article', $_REQUEST["articleId"]);
 }
 if (isset($_REQUEST["addblog"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a blog
-	$categlib->categorize_blog($_REQUEST["blogId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('blog', $_REQUEST["blogId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('blog', $_REQUEST["blogId"]);
 }
 if (isset($_REQUEST["adddirectory"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a directory category
-	$categlib->categorize_directory($_REQUEST["directoryId"], $_REQUEST["parentId"]);
+	$categlib->categorize_any('directory', $_REQUEST["directoryId"], $_REQUEST["parentId"]);
 	$categorizedObject = $categlib->get_categorized_object('directory', $_REQUEST["directoryId"]);
 }
 if (isset($categorizedObject) && !isset($_REQUEST["addpage"])) {

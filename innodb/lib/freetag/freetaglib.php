@@ -642,7 +642,7 @@ class FreetagLib extends ObjectLib
 
 		$tagId = $this->find_or_create_tag( $tag, $lang, false );
 
-		$objectId = $this->add_object($type, $itemId);
+		$objectId = $this->add_object($type, $itemId, FALSE);
 
 		$query = 'INSERT INTO `tiki_freetagged_objects`'
 						. ' (`tagId`, `objectId`, `user`, `created`)'

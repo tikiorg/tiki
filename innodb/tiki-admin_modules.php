@@ -412,6 +412,8 @@ ask_ticket('admin-modules');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 if (!empty($_REQUEST['edit_module'])) {	// pick up ajax calls
+	// the strings below are used to display the tab titles in the edit module box 
+	//get_strings tr('Module') tr('Appearance') tr('Visibility')
 	$smarty->display("admin_modules_form.tpl");
 } else {
 	$smarty->assign('mid', 'tiki-admin_modules.tpl');

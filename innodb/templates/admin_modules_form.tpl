@@ -17,7 +17,6 @@
 		{if isset($assign_info.type) and $assign_info.type eq 'function'}
 			<ul>
 				<li><a href="#param_section_basic">{tr}Basic{/tr}</a></li>
-				{* get_strings {tr}Module{/tr}{tr}Appearance{/tr}{tr}Visibility{/tr} *}
 				{foreach from=$assign_info.params key=sect item=params}
 					<li><a href="#param_section_{$sect}">{tr}{$sect|capitalize}{/tr}</a></li>
 				{/foreach}

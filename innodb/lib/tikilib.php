@@ -35,196 +35,201 @@ class TikiLib extends TikiDb_Bridge
 	var $cache_page_info;
 	var $sessionId = null;
 
+	/**
+	 * Collection of Tiki libraries.
+	 * Populated by TikiLib::lib()
+	 * @var array
+	 */
+	protected static $libraries = array();
+	
 	public static function lib($name)
 	{
-		static $libraries = array();
-
-		if (isset($libraries[$name])) {
-			return $libraries[$name];
+		if (isset(self::$libraries[$name])) {
+			return self::$libraries[$name];
 		}
 
 		// One-time inits of the libraries provided
 		switch ($name) {
 		case 'tiki':
 			global $tikilib;
-			return $libraries[$name] = $tikilib;
+			return self::$libraries[$name] = $tikilib;
 		case 'user':
 			global $userlib;
-			return $libraries[$name] = $userlib;
+			return self::$libraries[$name] = $userlib;
 		case 'categ':
 			global $categlib; include_once ('lib/categories/categlib.php');
-			return $libraries[$name] = $categlib;
+			return self::$libraries[$name] = $categlib;
 		case 'multilingual':
 			global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
-			return $libraries[$name] = $multilinguallib;
+			return self::$libraries[$name] = $multilinguallib;
 		case 'score':
 			global $scorelib; include_once("lib/score/scorelib.php");
-			return $libraries[$name] = $scorelib;
+			return self::$libraries[$name] = $scorelib;
 		case 'object':
 			global $objectlib; require_once('lib/objectlib.php');
-			return $libraries[$name] = $objectlib;
+			return self::$libraries[$name] = $objectlib;
 		case 'comments':
 			require_once 'lib/comments/commentslib.php';
-			return $libraries[$name] = new Comments;
+			return self::$libraries[$name] = new Comments;
 		case 'filegal':
 			global $filegallib; require_once 'lib/filegals/filegallib.php';
-			return $libraries[$name] = $filegallib;
+			return self::$libraries[$name] = $filegallib;
 		case 'tikidate':
 			require_once('lib/tikidate.php');
-			return $libraries[$name] = new TikiDate;
+			return self::$libraries[$name] = new TikiDate;
 		case 'css':
 			global $csslib; include_once("lib/csslib.php");
-			return $libraries[$name] = $csslib;
+			return self::$libraries[$name] = $csslib;
 		case 'trk':
 			global $trklib; require_once('lib/trackers/trackerlib.php');
-			return $libraries[$name] = $trklib;
+			return self::$libraries[$name] = $trklib;
 		case 'trkqry':
 			global $trkqrylib; require_once('lib/trackers/trackerquerylib.php');
-			return $libraries[$name] = $trkqrylib;
+			return self::$libraries[$name] = $trkqrylib;
 		case 'wiki':
 			global $wikilib; include_once('lib/wiki/wikilib.php');
-			return $libraries[$name] = $wikilib;
+			return self::$libraries[$name] = $wikilib;
 		case 'smarty':
 			global $smarty;
-			return $libraries[$name] = $smarty;
+			return self::$libraries[$name] = $smarty;
 		case 'cache':
 			global $cachelib; include_once('lib/cache/cachelib.php');
-			return $libraries[$name] = $cachelib;
+			return self::$libraries[$name] = $cachelib;
 		case 'userprefs':
 			global $userprefslib; include_once('lib/userprefs/userprefslib.php');
-			return $libraries[$name] = $userprefslib;
+			return self::$libraries[$name] = $userprefslib;
 		case 'logs':
 			global $logslib; include_once('lib/logs/logslib.php');
-			return $libraries[$name] = $logslib;
+			return self::$libraries[$name] = $logslib;
 		case 'menu':
 			global $menulib; include_once('lib/menubuilder/menulib.php');
-			return $libraries[$name] = $menulib;
+			return self::$libraries[$name] = $menulib;
 		case 'semantic':
 			global $semanticlib; require_once('lib/wiki/semanticlib.php');
-			return $libraries[$name] = $semanticlib;
+			return self::$libraries[$name] = $semanticlib;
 		case 'relation':
 			global $relationlib; require_once 'lib/attributes/relationlib.php';
-			return $libraries[$name] = $relationlib;
+			return self::$libraries[$name] = $relationlib;
 		case 'attribute':
 			global $attributelib; include_once('lib/attributes/attributelib.php');
-			return $libraries[$name] = $attributelib;
+			return self::$libraries[$name] = $attributelib;
 		case 'hist':
 			global $histlib; include_once ("lib/wiki/histlib.php");
-			return $libraries[$name] = $histlib;
+			return self::$libraries[$name] = $histlib;
 		case 'quantify':
 			global $quantifylib; include_once 'lib/wiki/quantifylib.php';
-			return $libraries[$name] = $quantifylib;
+			return self::$libraries[$name] = $quantifylib;
 		case 'contribution':
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			return $libraries[$name] = $contributionlib;
+			return self::$libraries[$name] = $contributionlib;
 		case 'struct':
 			global $structlib; include_once('lib/structures/structlib.php');
-			return $libraries[$name] = $structlib;
+			return self::$libraries[$name] = $structlib;
 		case 'rating':
 			global $ratinglib; require_once 'lib/rating/ratinglib.php';
-			return $libraries[$name] = $ratinglib;
+			return self::$libraries[$name] = $ratinglib;
 		case 'header':
 			global $headerlib;
-			return $libraries[$name] = $headerlib;
+			return self::$libraries[$name] = $headerlib;
 		case 'flaggedrevision':
 			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
-			return $libraries[$name] = $flaggedrevisionlib;
+			return self::$libraries[$name] = $flaggedrevisionlib;
 		case 'contact':
 			global $contactlib; require_once 'lib/webmail/contactlib.php';
-			return $libraries[$name] = $contactlib;
+			return self::$libraries[$name] = $contactlib;
 		case 'filegal':
 			global $filegallib; include_once('lib/filegals/filegallib.php');
-			return $libraries[$name] = $filegallib;
+			return self::$libraries[$name] = $filegallib;
 		case 'freetag':
 			global $freetaglib; include_once('lib/freetag/freetaglib.php');
-			return $libraries[$name] = $freetaglib;
+			return self::$libraries[$name] = $freetaglib;
 		case 'notification':
 			global $notificationlib; include_once ('lib/notifications/notificationlib.php');
-			return $libraries[$name] = $notificationlib;
+			return self::$libraries[$name] = $notificationlib;
 		case 'imagegal':
 			global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-			return $libraries[$name] = $imagegallib;
+			return self::$libraries[$name] = $imagegallib;
 		case 'admin':
 			global $adminlib; include_once 'lib/admin/adminlib.php';
-			return $libraries[$name] = $adminlib;
+			return self::$libraries[$name] = $adminlib;
 		case 'ldap':
 			global $ldaplib; include_once 'lib/ldap/ldaplib.php';
-			return $libraries[$name] = $ldaplib;
+			return self::$libraries[$name] = $ldaplib;
 		case 'todo':
 			global $todolib; include_once('lib/todolib.php');
-			return $libraries[$name] = $todolib;
+			return self::$libraries[$name] = $todolib;
 		case 'art':
 			global $artlib; include_once('lib/articles/artlib.php');
-			return $libraries[$name] = $artlib;
+			return self::$libraries[$name] = $artlib;
 		case 'blog':
 			global $bloglib; include_once('lib/blogs/bloglib.php');
-			return $libraries[$name] = $bloglib;
+			return self::$libraries[$name] = $bloglib;
 		case 'ratingconfig':
 			global $ratingconfiglib; require_once 'lib/rating/configlib.php';
-			return $libraries[$name] = $ratingconfiglib;
+			return self::$libraries[$name] = $ratingconfiglib;
 		case 'sheet':
 			global $sheetlib; require_once ('lib/sheet/sheetlib.php');
-			return $libraries[$name] = $sheetlib;
+			return self::$libraries[$name] = $sheetlib;
 		case 'zotero':
 			require_once 'lib/zoterolib.php';
-			return $libraries[$name] = new ZoteroLib;
+			return self::$libraries[$name] = new ZoteroLib;
 		case 'oauth':
 			require_once 'lib/oauthlib.php';
-			return $libraries[$name] = new OAuthLib;
+			return self::$libraries[$name] = new OAuthLib;
 		case 'geo':
 			global $geolib; require_once 'lib/geo/geolib.php';
-			return $libraries[$name] = $geolib;
+			return self::$libraries[$name] = $geolib;
 		case 'poll':
 			global $polllib; require_once 'lib/polllib.php';
-			return $libraries[$name] = $polllib;
+			return self::$libraries[$name] = $polllib;
 		case 'queue':
 			require_once 'lib/queuelib.php';
-			return $libraries[$name] = new QueueLib;
+			return self::$libraries[$name] = new QueueLib;
 		case 'captcha':
 			global $captchalib; require_once 'lib/captcha/captchalib.php';
-			return $libraries[$name] = $captchalib;
+			return self::$libraries[$name] = $captchalib;
 		case 'groupalert':
 			global $groupalertlib; require_once ('lib/groupalert/groupalertlib.php');
-			return $libraries[$name] = $groupalertlib;
+			return self::$libraries[$name] = $groupalertlib;
 		case 'validators':
 			global $validatorslib; include_once('lib/validatorslib.php');
-			return $libraries[$name] = $validatorslib;
+			return self::$libraries[$name] = $validatorslib;
 		case 'rss':
 			global $rsslib; include_once('lib/rss/rsslib.php');
-			return $libraries[$name] = $rsslib;
+			return self::$libraries[$name] = $rsslib;
 		case 'unifiedsearch':
 			global $unifiedsearchlib; include_once('lib/search/searchlib-unified.php');
-			return $libraries[$name] = $unifiedsearchlib;
+			return self::$libraries[$name] = $unifiedsearchlib;
 		case 'errorreport':
 			require_once 'lib/errorreportlib.php';
-			return $libraries[$name] = new ErrorReportLib;
+			return self::$libraries[$name] = new ErrorReportLib;
 		case 'prefs':
 			global $prefslib; include_once('lib/prefslib.php');
-			return $libraries[$name] = $prefslib;
+			return self::$libraries[$name] = $prefslib;
 		case 'stats':
 			global $statslib; require_once('lib/stats/statslib.php');
-			return $libraries[$name] = $statslib;
+			return self::$libraries[$name] = $statslib;
 		case 'access':
 			global $access; require_once 'lib/tikiaccesslib.php';
-			return $libraries[$name] = $access;
+			return self::$libraries[$name] = $access;
 		case 'reports':
 			global $reportslib; require_once('lib/reportslib.php');
-			return $libraries[$name] = $reportslib;
+			return self::$libraries[$name] = $reportslib;
 		case 'perspective':
 			global $perspectivelib; require_once('lib/perspectivelib.php');
-			return $libraries[$name] = $perspectivelib;
+			return self::$libraries[$name] = $perspectivelib;
 		case 'calendar':
 			global $calendarlib; require_once('lib/calendar/calendarlib.php');
-			return $libraries[$name] = $calendarlib;
+			return self::$libraries[$name] = $calendarlib;
 		case 'parser':
 			require_once('lib/parser/parserlib.php');
-			return $libraries[$name] = new ParserLib;
+			return self::$libraries[$name] = new ParserLib;
 		case 'connect':
 			require_once('lib/core/Connect/Client.php');
-			return $libraries[$name] = new Connect_Client();
+			return self::$libraries[$name] = new Connect_Client();
 		case 'connect_server':
 			require_once('lib/core/Connect/Server.php');
-			return $libraries[$name] = new Connect_Server();
+			return self::$libraries[$name] = new Connect_Server();
 		}
 	}
 
@@ -3884,14 +3889,6 @@ class TikiLib extends TikiDb_Bridge
 		// Collect pages before modifying data
 		$pages = $this->get_pages($data, true);
 
-		// This *really* shouldn't be necessary now that the
-		// query itself has been fixed up, and it causes much
-		// badness to the phpwiki import.  -rlpowell
-		//  $name = addslashes($name);
-		//  $description = addslashes($description);
-		//  $data = addslashes($data);
-		//  $comment = addslashes($comment);
-
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
@@ -3909,17 +3906,19 @@ class TikiLib extends TikiDb_Bridge
 			'pageName' => $name,
 			'hits' => (int) $hits,
 			'data' => $data,
+			'description' => $description,
 			'lastModif' => (int) $lastModif,
 			'comment' => $comment,
 			'version' => 1,
 			'version_minor' => $minor,
 			'user' => $user,
+			'ip' => $ip,
+			'creator' => $user,
 			'page_size' => strlen($data),
 			'is_html' => $html,
 			'created' => empty($created) ? $this->now : $created,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
-			'creator' => $user,
 		);
 		if ($lang) {
 			$insertData['lang'] = $lang;

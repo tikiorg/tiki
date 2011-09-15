@@ -110,7 +110,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			return false;
 		}
 
-		if ($context['list_mode'] == 'csv') {
+		if (isset($context['list_mode']) && $context['list_mode'] == 'csv') {
 			return false;
 		}
 
@@ -171,7 +171,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	 */
 	protected function renderInnerOutput($context = array())
 	{
-		if ($context['list_mode'] === 'csv') {
+		if (isset($context['list_mode']) && $context['list_mode'] === 'csv') {
 			$val = $this->getConfiguration('value');
 			$default = array('CR'=>'%%%', 'delimitorL'=>'"', 'delimitorR'=>'"');
 			$context = array_merge($default, $context);

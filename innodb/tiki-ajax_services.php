@@ -36,6 +36,7 @@ $inputConfiguration = array(array(
 		// for tiki connect
 		'guid' => 'text',
 		'captcha' => 'alnum',
+		'status' => 'word',
 	),
 	'staticKeyFiltersForArrays' => array(
 		'connect_data' => 'xss',

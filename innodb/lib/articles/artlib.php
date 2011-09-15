@@ -152,6 +152,9 @@ class ArtLib extends TikiLib
 				$smarty->assign('mail_data', $article_data['heading'] . "\n----------------------\n");
 				$smarty->assign('mail_heading', $heading);
 				$smarty->assign('mail_body', $body);
+				
+				// the strings below are used to localize messages in the template file
+				//get_strings tr('New article post:') tr('Edited article post:') tr('Deleted article post:')
 				sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
 			}
 

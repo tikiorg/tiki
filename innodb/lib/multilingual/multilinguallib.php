@@ -13,8 +13,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class MultilingualLib extends TikiLib
 {
-	private $tracesOn = false;
-
 	public $mtEnabled = 'y';
 
 	/**

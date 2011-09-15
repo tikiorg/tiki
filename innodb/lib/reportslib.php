@@ -69,22 +69,44 @@ class reportsLib extends TikiLib
 		}
 	}
 	
-	private function makeChangeArray($report_cache) {
+	/**
+	 * Organize $report_cache array by event type
+	 * 
+	 * @param array $report_cache
+	 * @return array new array with events organized by type
+	 */
+	private function makeChangeArray(array $report_cache) {
+		$change_array = array();
+		
 		foreach ($report_cache as $change) {
-			$indexIdentifier = $change['event'].$change['data']['action'].$change['data']['galleryId'].$change['data']['pageName'].$change['data']['categoryId'];
+			$indexIdentifier = $change['event'];
+			
+			if (isset($change['data']['action'])) {
+				$indexIdentifier .= $change['data']['action'];
+			}
+			
+			if (isset($change['data']['galleryId'])) {
+				$indexIdentifier .= $change['data']['galleryId'];
+			} else if (isset($change['data']['pageName'])) {
+				$indexIdentifier .= $change['data']['pageName'];
+			} else if (isset($change['data']['categoryId'])) {
+				$indexIdentifier .= $change['data']['categoryId']; 
+			}
 
 			$change_array[$indexIdentifier][] = $change;
 		}
+		
 		return $change_array;
 	}
 	
-	public function makeHtmlEmailBody($report_cache, $report_preferences) {
+	public function makeHtmlEmailBody(array $report_cache, array $report_preferences) {
 		global $userlib, $base_url;
 		
 		$tikiUrl = rtrim($base_url, '/');
 		
 		$change_array = $this->makeChangeArray($report_cache);
 		$somethingHasHappened = false;
+		$body = '';
 
 		$morechanges = 0;
 		foreach ($change_array as $somethingHasHappened=>$array) {
@@ -201,20 +223,23 @@ class reportsLib extends TikiLib
 						}
 					}
 					
-					if ($key==0)
+					if ($key==0) {
 						$body .= "</b>";
+					}
 						
 					$body .= "<br>";
-					if($report_preferences['type']=='plain')
+					if ($report_preferences['type']=='plain') {
 						$body .= "\r\n";
+					}
 				}
 			}
 		}
 		
-		if($report_preferences['type']=='plain')
+		if ($report_preferences['type'] == 'plain') {
 			$body = strip_tags($body);
+		}
 		
-		if(!$somethingHasHappened) {
+		if (!$somethingHasHappened) {
 			return tra("Nothing has happened.");
 		} else {
 			return $body;

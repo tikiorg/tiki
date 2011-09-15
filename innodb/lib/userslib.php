@@ -5071,7 +5071,7 @@ class UsersLib extends TikiLib
 		return $permissions;
 	}
 
-	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
+	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = 'all', $group = '', $enabledOnly = false) {
 
 		if ($enabledOnly) {
 			$raw = $this->get_enabled_permissions();

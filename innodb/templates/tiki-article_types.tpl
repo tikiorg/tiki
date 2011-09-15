@@ -53,7 +53,6 @@
 				{cycle print=false values="even,odd"}
 				<input type="hidden" name="type_array[{$types[user].type|escape}]" />
 				<tr class="{cycle}">
-					{*get_strings {tr}Article{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
 					<td class="integer">{$types[user].article_cnt}</td>
 					<td class="checkbox">
 						<input type="checkbox" name="use_ratings[{$types[user].type|escape}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} />

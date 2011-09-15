@@ -1598,7 +1598,7 @@ class FileGalLib extends TikiLib
 		$objectlib = TikiLib::lib('object');
 		$objectId = $objectlib->get_object_id($context['type'], $context['object']);
 		if (empty($objectId) && !empty( $fileIds)) {
-			$objectId = $objectlib->add_object($context['type'], $context['object'], $context['description'], $context['name'], $context['href']);
+			$objectId = $objectlib->add_object($context['type'], $context['object'], FALSE, $context['description'], $context['name'], $context['href']);
 		}
 		if (!empty($objectId)) {
 			$this->_replaceBacklinks($objectId, $fileIds);
