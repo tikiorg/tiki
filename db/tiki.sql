@@ -2331,7 +2331,8 @@ CREATE TABLE `tiki_user_bookmarks_folders` (
   `parentId` int(12) default NULL,
   `user` varchar(200) NOT NULL default '',
   `name` varchar(30) default NULL,
-  PRIMARY KEY (`user`,`folderId`)
+  PRIMARY KEY (`folderId`),
+  KEY `user` (`user`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_urls`;
