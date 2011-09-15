@@ -53,6 +53,37 @@ function list_perms($objectId, $objectType, $objectName) {
 	}
 	return array('objectId' => $objectId, 'special' => $ret, 'category' => $cats);
 }
+
+$feedbacks = array();
+$del = !empty($_REQUEST['delsel_x']) || !empty($_REQUEST['delsel']);
+$dup = !empty($_REQUEST['dupsel']);
+if ($del || $dup) {
+	if (!empty($_REQUEST['groupPerm'])) {
+		foreach ($_REQUEST['groupPerm'] as $perm) {
+			$perm = json_decode($perm, true);
+			if ($del) {
+				$userlib->remove_permission_from_group($perm['perm'], $perm['group']);
+				$feedbacks[] = tra('Remove permission %0 from %1', '', false, array($perm['perm'], $perm['group']));
+			} elseif (!empty($_REQUEST['toGroup']) && $userlib->group_exists($_REQUEST['toGroup'])) {
+				$userlib->assign_permission_to_group($perm['perm'], $_REQUEST['toGroup']);
+				$feedbacks[] = tra('Assign permission %0 to %1', '', false, array($perm['perm'], $_REQUEST['toGroup']));
+			}
+		}
+	}
+	if (!empty($_REQUEST['objectPerm'])) {
+		foreach ($_REQUEST['objectPerm'] as $perm) {
+			$perm = json_decode($perm, true);
+			if ($del) {
+				$userlib->remove_object_permission($perm['group'], $perm['objectId'], $perm['objectType'], $perm['perm']);
+				$feedbacks[] = tra('Remove permission %0 from %1', '', false, array($perm['perm'], $perm['group']));
+			} elseif (!empty($_REQUEST['toGroup']) && $userlib->group_exists($_REQUEST['toGroup'])) {
+				$userlib->assign_object_permission($_REQUEST['toGroup'], $perm['objectId'], $perm['objectType'], $perm['perm']);
+				$feedbacks[] = tra('Assign permission %0 to %1', '', false, array($perm['perm'], $_REQUEST['toGroup']));
+			}
+		}
+	}
+}
+
 $types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
 include_once ("lib/comments/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
 $all_groups = $userlib->list_all_groups();
@@ -73,7 +104,7 @@ foreach($types as $type) {
 			$objects = $tikilib->list_pageNames();
 			foreach($objects['data'] as $object) {
 				$r = list_perms($object['pageName'], $type, $object['pageName']);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']); }
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectType' => $type); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }
 			}
 			break;
@@ -84,7 +115,7 @@ foreach($types as $type) {
 			$objects = $filegallib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
 			foreach($objects['data'] as $object) {
 				$r = list_perms($object['id'], $type, $object['name']);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
 			}
 			break;
@@ -94,7 +125,7 @@ foreach($types as $type) {
 			$objects = TikiLib::lib('trk')->list_trackers();
 			foreach($objects['data'] as $object) {
 				$r = list_perms($object['trackerId'], $type, $object['name']);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
 			}
 			break;
@@ -123,5 +154,6 @@ foreach($types as $type) {
 	}
 }
 $smarty->assign_by_ref('res', $res);
+$smarty->assign_by_ref('feedbacks', $feedbacks);
 $smarty->assign('mid', 'tiki-list_object_permissions.tpl');
 $smarty->display('tiki.tpl');
