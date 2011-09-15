@@ -1264,9 +1264,8 @@ class CategLib extends ObjectLib
 				}
 			}
 		}
-
-		$this->notify_add($new_categories, $name, $objType, $href);
-		$this->notify_remove($removed_categories, $name, $objType, $href);
+		$this->notify_add($manip->getAddedCategories(), $name, $objType, $href);
+		$this->notify_remove($manip->getRemovedCategories(), $name, $objType, $href);
 	}
 
 	function notify_add($new_categories, $name, $objType, $href)
