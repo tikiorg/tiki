@@ -11,7 +11,6 @@
 // If you want to see the traces, set value below to true.
 // WARNING: DO NOT COMMIT WITH TRUE!!!!
 $dieInsteadOfForwardingWithHeader = false;
-$tracesOn = false;
 
 
 $inputConfiguration = array(
