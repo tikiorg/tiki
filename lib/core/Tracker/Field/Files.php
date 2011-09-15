@@ -120,7 +120,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				continue;
 			}
 
-			if (in_array($existing['itemId'])) {
+			if (in_array($existing['itemId'], $remove)) {
 				$relationlib->remove_relation($existing['relationId']);
 			}
 		}
