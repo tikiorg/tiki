@@ -383,3 +383,19 @@ function initialize_prefs() {
 	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
 }
 
+/**
+ * Detect the engine used in the current schema.
+ * Assumes that all tables use the same table engine
+ * @return string identifying the current engine, or an empty string if not installed
+ */ 
+function getCurrentEngine() {
+	global $tikilib;
+	$engine = '';
+	$result = $tikilib->query('SHOW TABLE STATUS WHERE Name = "tiki_schema"');
+	if ( $result ) {
+		$res = $result->fetchRow();
+		$engine  = $res['Engine'];
+	}
+	return $engine;
+}
+	

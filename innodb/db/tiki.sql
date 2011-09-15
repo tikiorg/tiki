@@ -2309,6 +2309,16 @@ CREATE TABLE `tiki_user_assigned_modules` (
   PRIMARY KEY (`name`(30),`user`,`position`, `ord`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_user_bookmarks_folders`;
+CREATE TABLE `tiki_user_bookmarks_folders` (
+  `folderId` int(12) NOT NULL auto_increment,
+  `parentId` int(12) default NULL,
+  `user` varchar(200) NOT NULL default '',
+  `name` varchar(30) default NULL,
+  PRIMARY KEY (`folderId`),
+  KEY `user` (`user`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
 DROP TABLE IF EXISTS `tiki_user_bookmarks_urls`;
 CREATE TABLE `tiki_user_bookmarks_urls` (
   `urlId` int(12) NOT NULL auto_increment,

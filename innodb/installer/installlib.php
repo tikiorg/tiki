@@ -404,21 +404,4 @@ class Installer extends TikiDb_Bridge
 		}
 		return false;
 	}
-	
-	/**
-	 * Detect the engine used in the current schema.
-	 * Assumes that all tables use the same table engine
-	 * @return string identifying the current engine, or an empty string if not installed
-	 */ 
-	function getCurrentEngine() {
-		$engine = '';
-		if($this->tableExists('tiki_schema')) {
-			$result = $this->query('SHOW TABLE STATUS WHERE Name = "tiki_schema"');
-			if ( $result ) {
-				$res = $result->fetchRow();
-				$engine  = $res['Engine'];
-			}
-		}
-		return $engine;
-	}
 }
