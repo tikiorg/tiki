@@ -791,7 +791,7 @@ class CategLib extends ObjectLib
 			return $catpath;
     }
     
-    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
+    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500, $filter=null) {
 		global $smarty, $prefs;
 
 		$typetokens = array(
@@ -861,7 +861,7 @@ class CategLib extends ObjectLib
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub);
+			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub, false, $filter);
 
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
