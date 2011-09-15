@@ -951,10 +951,6 @@ p.norecords {
 	list-style: none
 }
 
-.catfeatures li {
-	text-transform: capitalize;
-}
-
 .catitems {
 	margin-left: 15px;
 	padding: 0;
