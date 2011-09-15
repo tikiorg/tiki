@@ -467,6 +467,7 @@ class CategLib extends ObjectLib
 		}
 	}
 
+	// WARNING: This method is very different from get_categoryobjects()
 	// Get all the objects in a category
 	// filter = array('table'=>, 'join'=>, 'filter'=>, 'bindvars'=>)
 	function get_category_objects($categId, $type=null, $filter = null) {
@@ -790,7 +791,9 @@ class CategLib extends ObjectLib
 			}
 			return $catpath;
     }
-    
+
+	// WARNING: This method is very different from get_category_objects()
+	// Format a list of objects in the given categories, returning HTML code.
     function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500, $filter=null) {
 		global $smarty, $prefs;
 
