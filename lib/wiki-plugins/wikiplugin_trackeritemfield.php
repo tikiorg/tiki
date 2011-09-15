@@ -250,11 +250,9 @@ function wikiplugin_trackeritemfield($data, $params) {
 			} elseif ($test) { 
 				return $data;
 			} else {
-				$info[$fieldId] = $val;
-				$handler = $trklib->get_field_handler($field, $info);
-				$field = array_merge($field, $handler->getFieldData($field));
+				$field['value'] = $val;
 				$handler = $trklib->get_field_handler($field, $info);	// gets the handler to blend back the value into the definitions array
-				$out = $handler->renderOutput();
+				$out = $handler->renderOutput(array('showlinks'=>'n'));
 
 				return $out;
 			}
