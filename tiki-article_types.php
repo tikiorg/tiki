@@ -89,5 +89,7 @@ $smarty->assign('types', $types);
 
 include_once ('tiki-section_options.php');
 
+// the strings below are used to localize the article types in the template file
+//get_strings tr('Article') tr('Review') tr('Event') tr('Classified')
 $smarty->assign('mid', 'tiki-article_types.tpl');
 $smarty->display("tiki.tpl");
