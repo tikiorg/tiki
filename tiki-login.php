@@ -409,7 +409,7 @@ if ($isvalid) {
 
 			case ACCOUNT_WAITING_USER:
 				$error = tra('You did not validate your account');
-				$extraButton = array('href'=>'tiki-send_mail.php?user='.$_REQUEST['user'], 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email')); 
+				$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email')); 
 				break;
 
 			case USER_AMBIGOUS:
