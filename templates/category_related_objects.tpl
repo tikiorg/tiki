@@ -4,7 +4,7 @@
 	<h4>{tr}Related content{/tr}</h4>
 	<ul>
 	{foreach from=$category_related_objects item=object}
-		<li><a href="{$object.name|sefurl}">{$object.name|escape}</a></li>
+		<li><a href="{$object.href|escape}">{$object.name|escape}</a></li>
 	{/foreach}
 	</ul>
 </div>
