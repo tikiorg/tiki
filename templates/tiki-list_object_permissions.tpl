@@ -73,7 +73,7 @@
 				{capture assign=tablabel}{tr}Object Permissions{/tr} ({$content.objects|@count}){/capture}
 				{tab name=$tablabel}
 					<div class="tabs-2">
-					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
+					{remarksbox}{tr}If an object is not listed in this section nor in the Category Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
 					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
 					<table class="normal">
@@ -119,7 +119,7 @@
 				{capture assign=tablabel}{tr}Category Permissions{/tr} ({$content.category|@count}){/capture}
 				{tab name=$tablabel}
 					<div class="tabs-3">
-					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
+					{remarksbox}{tr}If an object is not listed in this section nor in the Object Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
 					<table class="normal">
 					<tr>
