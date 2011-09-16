@@ -227,6 +227,7 @@
 		<div class="adminoptionboxchild" id="wiki_likepages_samelang_only">
 			{preference name=wiki_likepages_samelang_only}
 		</div>
+		{preference name=feature_wiki_1like_redirection}
 		{preference name=feature_wiki_rankings}
 
 		{preference name=feature_wiki_structure}
@@ -247,7 +248,6 @@
 			{preference name=feature_wiki_use_date_links}
 		</div>
 		{preference name=wiki_uses_slides}
-		{preference name=feature_wiki_1like_redirection}
 		{preference name=feature_wiki_userpage}
 		<div class="adminoptionboxchild" id="feature_wiki_userpage_childcontainer">
 			{preference name=feature_wiki_userpage_prefix}
