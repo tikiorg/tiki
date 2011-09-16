@@ -13,6 +13,21 @@
 	{/remarksbox}
 {/if}
 
+<form method="post">
+	<div class="clearfix">
+	<div style="float:left;"><label for="filterGroup">{tr}Group Filter{/tr}</label></div>
+	<div style="float:left;">
+		<select multiple="multiple" id="filterGroup" name="filterGroup[]">
+			<option value=""{if empty($filterGroup)}selected="selected"{/if}></option>
+			{foreach from=$all_groups item=gr}
+				<option value="{$gr|escape}" {if in_array($gr, $filterGroup)}selected="selected"{/if}>{$gr|escape}</option>
+				{/foreach}
+		</select>
+	  </div>
+	  <div style="float:left;"><input type="submit" name="filter" value="{tr}Filter{/tr}" /></div>
+	  </div>
+</form>
+
 {tabset name='tabs_list_object_permissions'}
 	{foreach from=$res key=type item=content}
 		{tab name="{tr}$type{/tr}"}
@@ -29,6 +44,7 @@
 					<div class="tabs-1">
 					{remarksbox}{tr}If an object is not listed in the section below, then only the global perms are on{/tr}{/remarksbox}
 					<form method="post">
+					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
 					<table class="normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='groupPerm[]'}</th>
@@ -60,6 +76,7 @@
 					<div class="tabs-2">
 					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
 					<form method="post">
+					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
 					<table class="normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='objectPerm[]'}</th>
