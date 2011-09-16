@@ -3847,7 +3847,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_trackers_closed',
