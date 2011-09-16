@@ -431,13 +431,18 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
-		// TODO : Eventually, this method should check the track permissions
-		if (! Perms::get()->admin_trackers) {
-			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
-		}
-
 		if (! $itemId = $input->itemId->int()) {
 			throw new Services_Exception_MissingValue('itemId');
+		}
+
+		$itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		if (! $itemInfo || $itemInfo['trackerId'] != $trackerId) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$item = Tracker_Item::fromInfo($itemInfo);
+		if (! $item->canModify()) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
 
 		$this->utilities->updateItem($definition, array(
