@@ -248,7 +248,7 @@ class Services_Tracker_SyncController
 			$handler = $factory->getHandler($info);
 			if ($handler instanceof Tracker_Field_Synchronizable) {
 				$importable = $handler->importRemoteField($info, $syncInfo);
-				$this->utilities->importRemoteField($trackerId, new JitFilter($importable), false);
+				$this->utilities->importField($trackerId, new JitFilter($importable), false);
 			}
 		}
 	}
