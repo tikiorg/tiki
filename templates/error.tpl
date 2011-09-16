@@ -44,7 +44,7 @@ close();
 						</ul>
 					{else}
 			 			{remarksbox}
-							{tr}There are no wiki pages similar to '{$page}'{/tr}
+							{tr}There are no wiki pages similar to '{$page|escape}'{/tr}
 						{/remarksbox}
 			 		{/if}
 				{/if}
