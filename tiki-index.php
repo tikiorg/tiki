@@ -545,6 +545,7 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$smarty->assign('parsed',$page_content);
 } 
 
+$smarty->assign('info', $info);
 $smarty->assign('mid','tiki-show_page.tpl');
 
 $smarty->display("tiki.tpl");
