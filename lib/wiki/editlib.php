@@ -736,8 +736,6 @@ class EditLib
 				} else {
 					// This is close tag type. Is that smth we r waiting for?
 					switch ($c[$i]["data"]["name"]) {
-						case "h1":
-						case "h2": $p['wikistack']['wiki_lbr']--; break; // if 0, leave wiki line break mode
 						case "ul":
 							if (end($p['listack']) == '*') array_pop($p['listack']);
 							if( empty($p['listack']) )
@@ -769,11 +767,21 @@ class EditLib
 						array_pop( $p['wikistack']['end'] );
 						array_pop( $p['wikistack']['isinline'] );
 					}
+					
+					// can we leave wiki line break mode ?
+					switch ($c[$i]["data"]["name"]) { 
+						case "h1":
+						case "h2": 
+						case "h3":
+						case "h4":
+						case "h5":
+						case "h6": $p['wikistack']['wiki_lbr']--; break; 
+					}
 				}
 			}
 			// Recursive call on tags with content...
 			if (isset($c[$i]["content"])) {
-	//			if (substr($src, -1) != " ") $src .= " ";
+				if (substr($src, -1) != " ") $src .= " ";
 				$this->walk_and_parse($c[$i]["content"], $src, $p, $head_url );
 			}
 		}
