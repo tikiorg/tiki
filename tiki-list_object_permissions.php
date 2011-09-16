@@ -39,12 +39,9 @@ function list_perms($objectId, $objectType, $objectName, $filterGroup='') {
 		if (!empty($categs)) {
 			foreach($categs as $categId) {
 				$category_perms = $userlib->get_object_permissions($categId, 'category');
-				// return array(array('groupName'=>g, 'permName'=>p), ...)
-				$config = array();
 				if (!empty($category_perms)) {
 					foreach($category_perms as $category_perm) {
 						if (is_perm($category_perm['permName'], $objectType) && (empty($filterGroup) || in_array($category_perm['groupName'], $filterGroup))) {
-							$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
 							$cats[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
 									'reason' => 'Category', 'objectId' => $categId, 'objectType' => 'category',
 									'objectName' => $categlib->get_category_name($categId));
