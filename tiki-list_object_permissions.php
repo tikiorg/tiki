@@ -57,7 +57,7 @@ function list_perms($objectId, $objectType, $objectName, $filterGroup='') {
 	return array('objectId' => $objectId, 'special' => $ret, 'category' => $cats);
 }
 
-$filterGroup = empty($_REQUEST['filterGroup'])?'': $_REQUEST['filterGroup'];
+$filterGroup = empty($_REQUEST['filterGroup']) ? array() : $_REQUEST['filterGroup'];
 $feedbacks = array();
 $del = !empty($_REQUEST['delsel_x']) || !empty($_REQUEST['delsel']);
 $dup = !empty($_REQUEST['dupsel']);
