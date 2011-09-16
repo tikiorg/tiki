@@ -28,7 +28,7 @@ class TestableTikiLib extends TikiLib
 	 * @param array $libs
 	 * @return 
 	 */
-	public function overrideLib(array $libs)
+	public function overrideLibs(array $libs)
 	{
 		foreach ($libs as $key => $obj) {
 			$this->originalObjects[$key] = TikiLib::lib($key);

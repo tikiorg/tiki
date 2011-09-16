@@ -16,7 +16,7 @@ class Rating_AggregationTest extends TikiTestCase
 		$tikilib->expects($this->any())->method('get_ip_address')->will($this->returnValue('127.0.0.1'));
 		
 		$testableTikiLib = new TestableTikiLib;
-		$testableTikiLib->overrideLib(array('tiki' => $tikilib));
+		$testableTikiLib->overrideLibs(array('tiki' => $tikilib));
 		
 		parent::setUp();
 		TikiDb::get()->query( 'DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array( 'test.%' ) );
