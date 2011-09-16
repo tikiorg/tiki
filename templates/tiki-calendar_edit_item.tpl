@@ -838,7 +838,7 @@
 				</td>
 				<td>
 					{if $edit}
-						{textarea name="save[description]" id="editwiki"}
+						{textarea name="save[description]" id="editwiki" cols=40 rows=10}
 							{$calitem.description}
 						{/textarea}
 					{else}
