@@ -222,9 +222,10 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 * Headings 1-6
 	 */
 	function testNumberedHeadings() {
-		
+
 		$this->markTestIncomplete('Work in progress.');
 		
+		// all levels, no line break
 		$inData = '<h1>9. Heading Level 1</h1>';
 		$ex = '!#Heading Level 1';
 		$out = trim( $this->el->parseToWiki($inData) );
@@ -254,6 +255,13 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = '!!!!!!#Heading Level 6';
 		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);		
+		
+		
+		// level one, line breaks
+		$inData = '<h1>1. Heading Level 1<br />and Level 1A<br />and Level 1B</h1>';
+		$ex = '!#Heading Level 1%%%and Level 1A%%%and Level 1B';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);	
 	}
 	
 	
@@ -388,6 +396,7 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	 */
 	function testUnnumberedHeadings() {
 		
+		// all levels, no line break
 		$inData = '<h1>Heading Level 1</h1>';
 		$ex = '!Heading Level 1';
 		$out = trim( $this->el->parseToWiki($inData) );
@@ -417,5 +426,13 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$ex = '!!!!!!Heading Level 6';
 		$out = trim( $this->el->parseToWiki($inData) );
 		$this->assertEquals($ex, $out);
+		
+		
+		// level one, line breaks
+		$this->markTestIncomplete('Work in progress.');		
+		$inData = '<h1>Heading Level 1<br />and Level 1A<br />and Level 1B</h1>';
+		$ex = '!Heading Level 1%%%and Level 1A%%%and Level 1B';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);		
 	}
 }
