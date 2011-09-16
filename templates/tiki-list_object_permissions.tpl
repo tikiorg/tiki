@@ -42,7 +42,6 @@
 				{capture assign=tablabel}{tr}Global Permissions{/tr} ({$content.default|@count}){/capture}
 				{tab name=$tablabel}
 					<div class="tabs-1">
-					{remarksbox}{tr}If an object is not listed in the section below, then only the global perms are on{/tr}{/remarksbox}
 					<form method="post">
 					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
 					<table class="normal">
