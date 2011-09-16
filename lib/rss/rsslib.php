@@ -485,10 +485,6 @@ class RSSLib extends TikiDb_Bridge
 		foreach( $feed as $entry ) { // TODO: optimize. Atom entries have an 'updated' element which can be used to only update updated entries
 			$guid = $guidFilter->filter( $entry->getId() );
 
-			$count = $this->items->fetchCount(array('rssId' => $rssId, 'guid' => $guid));
-			if( 1 == $count ) {
-				$this->query("delete from `tiki_rss_items` where `rssId`=? and `guid`=?", array($rssId, $guid));
-			}
 			$authors = $entry->getAuthors();
 
 			$data = $filter->filter( array(
@@ -507,7 +503,12 @@ class RSSLib extends TikiDb_Bridge
 				$data['publication_date'] = $tikilib->now;
 			}
 
-			$this->insert_item( $rssId, $data, $actions );
+			$count = $this->items->fetchCount(array('rssId' => $rssId, 'guid' => $guid));
+			if( 0 == $count ) {
+				$this->insert_item( $rssId, $data, $actions );
+			} else {
+				$this->update_item( $rssId, $data['guid'], $data );
+			}
 		}
 	}
 
@@ -533,6 +534,20 @@ class RSSLib extends TikiDb_Bridge
 				$this->$method( $action, $data );
 			}
 		}
+	}
+
+	private function update_item( $rssId, $guid, $data ) {
+		$this->items->updateMultiple(array(
+			'rssId' => $rssId,
+			'guid' => $guid,
+		), array(
+			'url' => $data['url'],
+			'publication_date' => $data['publication_date'],
+			'title' => $data['title'],
+			'author' => $data['author'],
+			'description' => $data['description'],
+			'content' => $data['content'],
+		));
 	}
 
 	private function process_action_article( $configuration, $data ) {
