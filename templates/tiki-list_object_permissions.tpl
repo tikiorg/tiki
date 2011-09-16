@@ -73,7 +73,7 @@
 							{foreach from=$object.special item=special}
 								<tr class="{cycle}">
 									<td class="checkbox"><input type="checkbox" name="objectPerm[]" value='{$special|json_encode|escape}' /></td>
-									<td class="text">{$special.objectName}</td>
+									<td class="text">{$special.objectName|escape}</td>
 									<td class="text">{$special.group|escape}</td>
 									<td class="text">{$special.perm|escape}</td>
 									<td class="text">
@@ -116,12 +116,12 @@
 						{if !empty($object.category)}
 							{foreach from=$object.category item=special}
 								<tr class="{cycle}">
-									<td class="text">{if isset($object.objectName)}{$object.objectName}{else}{$object.objectId}{/if}</td>
+									<td class="text">{if isset($object.objectName)}{$object.objectName|escape}{else}{$object.objectId|escape}{/if}</td>
 									<td class="text">{$special.group|escape}</td>
 									<td class="text">{$special.perm|escape}</td>
 									<td class="text">
 										{if !empty($special.objectId)}
-											<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}:{/tr} {$special.objectName}</a>
+											<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape:url}">{tr}{$special.reason|escape}:{/tr} {$special.objectName|escape}</a>
 										{else}
 											{$special.reason|escape}: {$special.objectName}
 										{/if}
