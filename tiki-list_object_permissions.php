@@ -89,6 +89,7 @@ include_once ("lib/comments/commentslib.php"); global $commentslib; $commentslib
 $all_groups = $userlib->list_all_groups();
 $res = array();
 foreach($types as $type) {
+	$res[$type]['default'] = array();
 	$type_perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $tikilib->get_permGroup_from_objectType($type));
 	foreach($all_groups as $gr) {
 		$perms = $userlib->get_group_permissions($gr);
@@ -98,6 +99,8 @@ foreach($types as $type) {
 			}
 		}
 	}
+	$res[$type]['objects'] = array();
+	$res[$type]['category'] = array();
 	switch ($type) {
 		case 'wiki page':
 		case 'wiki':
