@@ -31,7 +31,7 @@
 	</div>
 
 	{* ------- return/next/previous tab --- *}
-	{if $tiki_p_view_trackers eq 'y'}
+	{if $canView}
 		{pagination_links cant=$cant offset=$offset reloff=$smarty.request.reloff itemname="{tr}Item{/tr}"}
 			{* Do not specify an itemId in URL used for pagination, because it will use the specified itemId instead of moving to another item *}
 			{$smarty.server.php_self}?{query itemId=NULL trackerId=$trackerId}
@@ -131,7 +131,7 @@
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
-{if (! isset($print_page) || $print_page ne 'y') && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
+{if (! isset($print_page) || $print_page ne 'y') && $canModify}
 	{tab name=$editTitle}
 		<h2>{tr}Edit Item{/tr}</h2>
 
@@ -179,9 +179,9 @@
 							{if count($fields) >= 5}
 								<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 								{* --------------------------- to return to tracker list after saving --------- *}
-								{if $tiki_p_view_trackers eq 'y'}
+								{if $canView}
 									<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" onclick="needToConfirm=false" />
-									{if $tiki_p_admin_trackers eq 'y' or ($tiki_p_remove_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $item_info.status eq 'c')}
+									{if $canRemove}
 										<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 									{/if}
 								{/if}
@@ -249,10 +249,10 @@
 					<td colspan="2">
 						<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 						{* --------------------------- to return to tracker list after saving --------- *}
-						{if $tiki_p_view_trackers eq 'y'}
+						{if $canView}
 							<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items List{/tr}" onclick="needToConfirm=false" />
 						{/if}
-						{if $tiki_p_admin_trackers eq 'y' or ($tiki_p_remove_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $item_info.status eq 'c')}
+						{if $canRemove}
 							<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 						{/if}
 						{if $item_info.logs.cant}

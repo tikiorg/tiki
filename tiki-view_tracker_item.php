@@ -271,6 +271,7 @@ $cat_objid = $_REQUEST['itemId'];
 $cat_type = 'trackeritem';
 
 $tracker_info = $definition->getInformation();
+$itemObject = Tracker_Item::fromInfo($item_info);
 
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
@@ -279,13 +280,7 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
-if (!empty($_REQUEST['itemId']) && !$special && $tiki_p_view_trackers != 'y') {
-	$g = $trklib-> get_item_group_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
-	if (in_array($g, $tikilib->get_user_groups($user))) {
-		$trklib->get_special_group_tracker_perm($tracker_info, true);
-	}
-}
-if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y' && !$special) {
+if (! $itemObject->canView()) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
@@ -370,22 +365,8 @@ foreach($xfields["data"] as $i => $current_field) {
 $authorfield = $definition->getAuthorField();
 if ($authorfield) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $authorfield);
-	if (($user && $tracker_info['authorindiv'] == $user) or ($user && $tracker_info['userCanTakeOwnership'] == 'y' && empty($tracker_info['authorindiv']))) {
-		$tiki_p_modify_tracker_items = 'y';
-		$smarty->assign("tiki_p_modify_tracker_items", "y");
-		$tiki_p_modify_tracker_items_pending = 'y';
-		$smarty->assign('tiki_p_modify_tracker_items_pending', 'y');
-		$tiki_p_modify_tracker_items_closed = 'y';
-		$smarty->assign('tiki_p_modify_tracker_items_closed', 'y');
-		$tiki_p_attach_trackers = 'y';
-		$smarty->assign("tiki_p_attach_trackers", "y");
-		$tiki_p_comment_trackers = 'y';
-		$smarty->assign("tiki_p_comment_trackers", "y");
-		$tiki_p_view_trackers = 'y';
-		$smarty->assign("tiki_p_view_trackers", "y");
-	}
 }
-if ($tiki_p_view_trackers != 'y' && !$special) {
+if (! $itemObject->canView()) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
@@ -394,14 +375,14 @@ if ($tiki_p_view_trackers != 'y' && !$special) {
 if (!isset($mainfield)) {
 	$mainfield = 0;
 }
-if ($tiki_p_admin_trackers == 'y' || ($tiki_p_remove_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_remove_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_remove_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+if ($itemObject->canRemove()) {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers-items');
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
 $rateFieldId = $definition->getRateField();
-if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c') || $special) {
+if ($itemObject->canModify()) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
@@ -499,17 +480,15 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' an
 }
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+	$itemObject = Tracker_Item::fromInfo($info);
 	if (!isset($info['trackerId'])) {
 		$info['trackerId'] = $_REQUEST['trackerId'];
 	}
-	if ((isset($info['status']) and $info['status'] == 'p' && $tiki_p_view_trackers_pending != 'y') || (isset($info['status']) and $info['status'] == 'c' && $tiki_p_view_trackers_closed != 'y') || ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' && (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) && (!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) && ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser) && !$special)) {
-		$itemGroup = $trklib->get_item_group_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
-		if (empty($itemGroup) || !$userlib->user_is_in_group($user, $itemGroup)) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied'));
-			$smarty->display('error.tpl');
-			die;
-		}
+	if (! $itemObject->canView()) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
 	}
 	$last = array();
 	$lst = '';
@@ -716,11 +695,15 @@ if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y
 	$smarty->assign('validationjs', $validationjs);
 }
 
-if (($tiki_p_remove_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_remove_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_remove_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+if ($itemObject->canRemove()) {
 	$smarty->assign('editTitle', tr('Edit/Delete'));
 } else {
 	$smarty->assign('editTitle', tr('Edit'));
 }
+
+$smarty->assign('canView', $itemObject->canView());
+$smarty->assign('canModify', $itemObject->canModify());
+$smarty->assign('canRemove', $itemObject->canRemove());
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
