@@ -30,7 +30,7 @@ function prefs_zotero_list()
 			'default' => '',
 		),
 		'zotero_group_id' => array(
-			'name' => tra('Zotero Group'),
+			'name' => tra('Zotero Group ID'),
 			'description' => tra('Numeric ID of the group, can be found in the URL.'),
 			'type' => 'text',
 			'filter' => 'digits',
