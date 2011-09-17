@@ -6503,6 +6503,9 @@ class UsersLib extends TikiLib
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
 			$categId = $categlib->get_category_id($group);
+			if (!$categId) {
+				return false;
+			}
 			$cat[] = $categId;
 			$cat = array_unique($cat);
 			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true); // using override_perms=true because if user adding himself to group may not have perms yet
@@ -6521,6 +6524,9 @@ class UsersLib extends TikiLib
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
 			$categId = $categlib->get_category_id($group);
+			if (!$categId) {
+				return false;
+			}
 			$cat = array_diff($cat, array($categId));
 			$trklib->categorized_item($tracker["usersTrackerId"], $itemid, '', $cat, array(), true);
 			require_once('lib/search/refresh-functions.php');
