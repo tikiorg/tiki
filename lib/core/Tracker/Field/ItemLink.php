@@ -224,6 +224,37 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		}
 	}
 
+        function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$data = $this->getLinkData(array(), 0);
+		$item = $data['value']; 
+		$dlist = $data['listdisplay'];
+		$list = $data['list'];
+
+		if (!empty($dlist)) {
+			$label = isset($dlist[$item]) ? $dlist[$item] : '';
+		} else {
+			$label = isset($list[$item]) ? $list[$item] : '';
+		}
+		return array(
+			$baseKey => $typeFactory->sortable($item),
+			"{$baseKey}_text" => $typeFactory->plaintext($label),
+		);
+	}
+
+	function getProvidedFields($baseKey)
+        {
+		return array(
+			$baseKey,
+			"{$baseKey}_text",
+		);
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array();
+	}
+
 	private function getLinkData($requestData, $string_id)
 	{
 		$data = array(

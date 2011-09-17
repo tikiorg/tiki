@@ -121,16 +121,35 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
+		$trklib = TikiLib::lib('trk');
+		$displayFields = $this->getOption(3);
+		$trackerId = (int) $this->getOption(0);
+		$status = $this->getOption(5, 'opc');
+
 		$items = $this->getItemIds();
+
+		$list = array();
+		foreach ($items as $itemId) {
+			if ($displayFields) {
+				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
+			} else {
+				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
+			}
+		}
+		$listtext = implode(' ', $list); 			
 
 		return array(
 			$baseKey => $typeFactory->multivalue($items),
+			"{$baseKey}_text" => $typeFactory->plaintext($listtext),
 		);
 	}
 
 	function getProvidedFields($baseKey)
 	{
-		return array($baseKey);
+		return array(
+			$baseKey,
+			"{$baseKey}_text",
+		);
 	}
 
 	function getGlobalFields($baseKey)
