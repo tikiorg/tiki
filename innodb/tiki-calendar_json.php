@@ -168,6 +168,7 @@ if ($_SESSION['CalendarViewGroups']) {
 	$listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, -1);
 	for ($i = count($listevents) - 1; $i >= 0; --$i) {
 		$listevents[$i]['modifiable'] = in_array($listevents[$i]['calendarId'], $modifiable)? "y": "n";
+		$listevents[$i]['visible'] = in_array($listevents[$i]['calendarId'], $visible)? "y": "n";
 	}
 } else {
 	$listevents = array();
@@ -181,14 +182,19 @@ if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 
 $events = array();
 foreach($listevents as $event) {
+	if ($event['modifiable'] === 'y') {
+		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&calitemId='.$event['calitemId'];
+	} else {
+		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&viewcalitemId='.$event['calitemId'];
+	}
 	$events[] = array ( 'id' => $event['calitemId'],
 											'title' => $event['name'],
 											'description' => $tikilib->parse_data($event["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y')),
-											'url' => 'tiki-calendar_edit_item.php?viewcalitemId='.$event['calitemId'],
+											'url' => $url,
 											'allDay' => $event['allday'] != 0 ,
 											'start' => $event['date_start'],
 											'end' => $event['date_end'],
-											'editable' => false,
+											'modifiable' => $event['modifiable'] === 'y',
 											'color' => '#'.$cals_info['data'][$event['calendarId']]['custombgcolor'],
 											'textColor' => '#'.$cals_info['data'][$event['calendarId']]['customfgcolor']);
 }

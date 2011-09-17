@@ -210,7 +210,7 @@
 
 		{tab name="{tr}LDAP external groups{/tr}"}
 			<fieldset>
-				<legend>LDAP external groups</legend>
+				<legend>{tr}LDAP external groups{/tr}</legend>
 
 				{preference name=auth_ldap_group_external}
 			</fieldset>

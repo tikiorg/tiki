@@ -13,6 +13,21 @@
 	{/remarksbox}
 {/if}
 
+<form method="post">
+	<div class="clearfix">
+	<div style="float:left;"><label for="filterGroup">{tr}Group Filter{/tr}</label></div>
+	<div style="float:left;">
+		<select multiple="multiple" id="filterGroup" name="filterGroup[]">
+			<option value=""{if empty($filterGroup)}selected="selected"{/if}></option>
+			{foreach from=$all_groups item=gr}
+				<option value="{$gr|escape}" {if in_array($gr, $filterGroup)}selected="selected"{/if}>{$gr|escape}</option>
+				{/foreach}
+		</select>
+	  </div>
+	  <div style="float:left;"><input type="submit" name="filter" value="{tr}Filter{/tr}" /></div>
+	  </div>
+</form>
+
 {tabset name='tabs_list_object_permissions'}
 	{foreach from=$res key=type item=content}
 		{tab name="{tr}$type{/tr}"}
@@ -27,8 +42,8 @@
 				{capture assign=tablabel}{tr}Global Permissions{/tr} ({$content.default|@count}){/capture}
 				{tab name=$tablabel}
 					<div class="tabs-1">
-					{remarksbox}{tr}If an object is not listed in the section below, then only the global perms are on{/tr}{/remarksbox}
 					<form method="post">
+					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
 					<table class="normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='groupPerm[]'}</th>
@@ -58,8 +73,9 @@
 				{capture assign=tablabel}{tr}Object Permissions{/tr} ({$content.objects|@count}){/capture}
 				{tab name=$tablabel}
 					<div class="tabs-2">
-					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
+					{remarksbox}{tr}If an object is not listed in this section nor in the Category Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
+					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
 					<table class="normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='objectPerm[]'}</th>
@@ -73,7 +89,7 @@
 							{foreach from=$object.special item=special}
 								<tr class="{cycle}">
 									<td class="checkbox"><input type="checkbox" name="objectPerm[]" value='{$special|json_encode|escape}' /></td>
-									<td class="text">{$special.objectName}</td>
+									<td class="text">{$special.objectName|escape}</td>
 									<td class="text">{$special.group|escape}</td>
 									<td class="text">{$special.perm|escape}</td>
 									<td class="text">
@@ -103,7 +119,7 @@
 				{capture assign=tablabel}{tr}Category Permissions{/tr} ({$content.category|@count}){/capture}
 				{tab name=$tablabel}
 					<div class="tabs-3">
-					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
+					{remarksbox}{tr}If an object is not listed in this section nor in the Object Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
 					<table class="normal">
 					<tr>
@@ -116,12 +132,12 @@
 						{if !empty($object.category)}
 							{foreach from=$object.category item=special}
 								<tr class="{cycle}">
-									<td class="text">{if isset($object.objectName)}{$object.objectName}{else}{$object.objectId}{/if}</td>
+									<td class="text">{if isset($object.objectName)}{$object.objectName|escape}{else}{$object.objectId|escape}{/if}</td>
 									<td class="text">{$special.group|escape}</td>
 									<td class="text">{$special.perm|escape}</td>
 									<td class="text">
 										{if !empty($special.objectId)}
-											<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}:{/tr} {$special.objectName}</a>
+											<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape:url}">{tr}{$special.reason|escape}:{/tr} {$special.objectName|escape}</a>
 										{else}
 											{$special.reason|escape}: {$special.objectName}
 										{/if}

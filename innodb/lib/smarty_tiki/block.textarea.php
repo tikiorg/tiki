@@ -388,16 +388,19 @@ function switchEditor(mode, form) {
 			$js_editconfirm .= "
 	var hiddenParents = \$('#$as_id').parents('fieldset:hidden:last');
 	
-	if (hiddenParents.length) { hiddenParents.show(); }
-	
+	if (hiddenParents.length) { hiddenParents.show(); }";
+
+		  if (!isset($_REQUEST['fullcalendar'])) {
+				$js_editconfirm .= "
 	if (typeof CodeMirror === 'undefined') { //so as not to conflict with CodeMirror resize
 		\$('#$as_id')
 			.resizable( {
 				minWidth: \$('#$as_id').width(),
 				minHeight: 50
 		});
-	}
-	
+	}";
+			}
+		$js_editconfirm .= "
 	if (hiddenParents.length) { hiddenParents.hide(); }
 ";
 		}

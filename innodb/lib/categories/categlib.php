@@ -607,7 +607,7 @@ class CategLib extends ObjectLib
 					
 					$categories[$parent]['descendants'][] = $category['categId']; // Link this category from its ascendants for optimization.
 				}
-				$path = array_reverse($path);
+				$path = array_reverse($path, true);
 
 				$category["tepath"] = $path;
 				$category["categpath"] = implode("::", $path);
@@ -1256,7 +1256,7 @@ class CategLib extends ObjectLib
 
 		$this->applyManipulator( $manip, $objType, $objId, $desc, $name, $href );
 
-		if( $prefs['category_i18n_sync'] != '' && $prefs['feature_multilingual'] == 'y' ) {
+		if( $prefs['category_i18n_sync'] != 'n' && $prefs['feature_multilingual'] == 'y' ) {
 			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
 			$targetCategories = $this->get_object_categories( $objType, $objId, -1, false );
 

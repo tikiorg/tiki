@@ -443,21 +443,13 @@ function wikiplugin_tracker($data, $params)
 	$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
 	
 	if (empty($_SERVER['SCRIPT_NAME']) || strpos($_SERVER['SCRIPT_NAME'], 'tiki-register.php') === false) {
-		if (!empty($itemId) && $tracker['writerCanModify'] == 'y' && isset($usertracker) && $usertracker) { // user tracker he can modify
-		} elseif (!empty($itemId) && $tracker['writerCanModify'] == 'y' && $user && (($itemUser = $trklib->get_item_creator($trackerId, $itemId)) == $user || ($tracker['userCanTakeOwnership'] == 'y' && empty($itemUser)))) {
-		} elseif (!empty($itemId) && isset($grouptracker) && $grouptracker) {
-		} else {
-			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
-				return '<b>'.tra("You do not have permission to insert an item").'</b>';
-			} elseif (!empty($itemId)) {
-				$item_info = $trklib->get_tracker_item($itemId);
-				if (!(($perms['tiki_p_modify_tracker_items'] == 'y' and $item_info['status'] != 'p' and $item_info['status'] != 'c') || ($perms['tiki_p_modify_tracker_items_pending'] == 'y' and $item_info['status'] == 'p') ||  ($perms['tiki_p_modify_tracker_items_closed'] == 'y' and $item_info['status'] == 'c'))) { 
-					if ($tracker['writerGroupCanModify'] == 'y' && in_array($trklib->get_item_group_creator($trackerId, $itemId), $tikilib->get_user_groups($user))) {
-						global $group;
-						$smarty->assign_by_ref('ours', $group);
-					} else 
-						return '<b>'.tra("You do not have permission to modify an item").'</b>';
-				}
+		if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
+			return '<b>'.tra("You do not have permission to insert an item").'</b>';
+		} elseif (!empty($itemId)) {
+			$item_info = $trklib->get_tracker_item($itemId);
+			$itemObject = Tracker_Item::fromInfo($item_info);
+			if (! $itemObject->canModify()) {
+				return '<b>'.tra("You do not have permission to modify an item").'</b>';
 			}
 		}
 	}

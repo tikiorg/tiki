@@ -291,7 +291,7 @@ if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasec
     	die;
 }
 
-if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($info['lang']) && $prefs['language'] != $info['lang']) {
+if (isset($_REQUEST['switchlang']) && $_REQUEST['switchlang'] == 'y' && $prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($info['lang']) && $prefs['language'] != $info['lang']) {
 	header('Location: tiki-switch_lang.php?language=' . $info['lang']);
 	die;
 }
@@ -545,6 +545,7 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$smarty->assign('parsed',$page_content);
 } 
 
+$smarty->assign('info', $info);
 $smarty->assign('mid','tiki-show_page.tpl');
 
 $smarty->display("tiki.tpl");

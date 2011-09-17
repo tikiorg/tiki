@@ -28,4 +28,4 @@
 		<li>{tr}No pages matched the search criteria{/tr}</li>
 	{/foreach}
 </ul>
-{pagination_links cant=$count step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links resultset=$results}{/pagination_links}

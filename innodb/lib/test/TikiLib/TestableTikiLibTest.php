@@ -12,7 +12,7 @@ class TestableTikiLibTest extends TikiTestCase
 		$obj = new TestableTikiLib;
 		
 		$this->assertEquals('TikiLib', get_class(TikiLib::lib('tiki')));
-		$obj->overrideLib(array('tiki' => new stdClass));
+		$obj->overrideLibs(array('tiki' => new stdClass));
 		$this->assertEquals('stdClass', get_class(TikiLib::lib('tiki')));
 	}
 	
@@ -21,7 +21,7 @@ class TestableTikiLibTest extends TikiTestCase
 		$obj = new TestableTikiLib;
 		
 		$this->assertEquals('TikiLib', get_class(TikiLib::lib('tiki')));
-		$obj->overrideLib(array('tiki' => new stdClass));
+		$obj->overrideLibs(array('tiki' => new stdClass));
 		$this->assertEquals('stdClass', get_class(TikiLib::lib('tiki')));
 		
 		unset($obj);
@@ -36,7 +36,7 @@ class TestableTikiLibTest extends TikiTestCase
 		$calendarlib->expects($this->never())->method('get_item');
 		
 		$this->assertEquals('CalendarLib', get_class(TikiLib::lib('calendar')));
-		$obj->overrideLib(array('calendar' => $calendarlib));
+		$obj->overrideLibs(array('calendar' => $calendarlib));
 		$this->assertContains('Mock_MockCalendarLib_', get_class(TikiLib::lib('calendar')));
 	}
 	

@@ -425,12 +425,7 @@ if ($show_disabled_features != 'y') {
 	}
 	$features = $features_filtered;
 }
-function compare_perms($ar1, $ar2) {
-	return strcasecmp($ar1['type'], $ar2['type']) === 0 ?
-			strcasecmp($ar1['permName'], $ar2['permName']) :
-			strcasecmp($ar1['type'], $ar2['type']);
-}
-usort($masterPerms, 'compare_perms');;
+
 $smarty->assign_by_ref('perms', $masterPerms);
 $smarty->assign_by_ref('features', $features);
 

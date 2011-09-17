@@ -28,6 +28,7 @@ class Search_Formatter
 
 	function format($list)
 	{
+		$list = Search_ResultSet::create($list);
 		$defaultValues = $this->plugin->getFields();
 
 		$fields = array_keys($defaultValues);
@@ -41,7 +42,7 @@ class Search_Formatter
 			$list = $this->dataSource->getInformation($list, $fields);
 		}
 
-		if (in_array('highlight', $fields) && $list instanceof Search_ResultSet) {
+		if (in_array('highlight', $fields)) {
 			foreach ($list as & $entry) {
 				$entry['highlight'] = $list->highlight($entry);
 			}
@@ -57,7 +58,7 @@ class Search_Formatter
 			$subEntries = array();
 			foreach ($this->subFormatters as $key => $plugin) {
 				$subInput = new Search_Formatter_ValueFormatter(array_merge($subDefault[$key], $row));
-				$subEntries[$key] = $this->render($plugin, array($plugin->prepareEntry($subInput)), $this->plugin->getFormat(), $list);
+				$subEntries[$key] = $this->render($plugin, Search_ResultSet::create(array($plugin->prepareEntry($subInput))), $this->plugin->getFormat(), $list);
 			}
 
 			$row = array_merge($row, $subEntries);
@@ -65,22 +66,15 @@ class Search_Formatter
 			$data[] = $this->plugin->prepareEntry(new Search_Formatter_ValueFormatter($row));
 		}
 
-		return $this->render($this->plugin, $data, Search_Formatter_Plugin_Interface::FORMAT_WIKI, $list);
+		$list = $list->replaceEntries($data);
+
+		return $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
 	
-	private function render($plugin, $data, $target, $resultSet)
+	private function render($plugin, $resultSet, $target)
 	{
-		$count = count($resultSet);
-		$maxRecords = $count;
-		$offset = 0;
-
-		if ($resultSet instanceof Search_ResultSet) {
-			$offset = $resultSet->getOffset();
-			$maxRecords = $resultSet->getMaxRecords();
-		}
-
 		$pluginFormat = $plugin->getFormat();
-		$rawOutput = $plugin->renderEntries($data, $count, $offset, $maxRecords);
+		$rawOutput = $plugin->renderEntries($resultSet);
 
 		if ($target == $pluginFormat) {
 			$out = $rawOutput;

@@ -471,7 +471,6 @@ class EditLib
 		
 		$parsed = $this->parse_html($inData);
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
-		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
@@ -614,16 +613,20 @@ class EditLib
 						
 						// others we do want
 						case "br":
-							// close all open wiki markup
-							foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
-								foreach (array_reverse($end_arr) as $end ) {
-									$src .= $end;}}
-							// write newline
-							$src .= "\n";
-							// reopen all previously closed wiki markup
-							foreach ($p['wikistack']['begin'] as $begin_arr) {
-								foreach ($begin_arr as $begin) {
-									$src .= $begin;}}
+							if ($p['wikistack']['wiki_lbr']) { // "%%%" or "\n" ?
+								$src .= ' %%% ';
+							} else {
+								// close all open wiki markup
+								foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
+									foreach (array_reverse($end_arr) as $end ) {
+										$src .= $end;}}
+								// write newline
+								$src .= "\n";
+								// reopen all previously closed wiki markup
+								foreach ($p['wikistack']['begin'] as $begin_arr) {
+									foreach ($begin_arr as $begin) {
+										$src .= $begin;}}
+							}
 							break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
@@ -667,6 +670,7 @@ class EditLib
 						case "h4":
 						case "h5":
 						case "h6":
+							$p['wikistack']['wiki_lbr']++; // force wiki line break mode
 							$hlevel = (int) $c[$i]["data"]["name"]{1};
 							if (isset($c[$i]['pars']['style']['value']) && strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
 								if ($prefs['feature_use_three_colon_centertag'] == 'y') {
@@ -763,11 +767,21 @@ class EditLib
 						array_pop( $p['wikistack']['end'] );
 						array_pop( $p['wikistack']['isinline'] );
 					}
+					
+					// can we leave wiki line break mode ?
+					switch ($c[$i]["data"]["name"]) { 
+						case "h1":
+						case "h2": 
+						case "h3":
+						case "h4":
+						case "h5":
+						case "h6": $p['wikistack']['wiki_lbr']--; break; 
+					}
 				}
 			}
 			// Recursive call on tags with content...
 			if (isset($c[$i]["content"])) {
-	//			if (substr($src, -1) != " ") $src .= " ";
+				if (substr($src, -1) != " ") $src .= " ";
 				$this->walk_and_parse($c[$i]["content"], $src, $p, $head_url );
 			}
 		}
@@ -814,7 +828,7 @@ class EditLib
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
 		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'first_td' => false, 'first_tr' => false);
-		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array() );
+		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array(), 'wiki_lbr' => 0 );
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 		// to produce invalid wiki :)

@@ -53,7 +53,12 @@ function wikiplugin_votings($data, $params) {
 
 	$field['numvotes'] = $data['count'];
 	$field['total'] = $data['total'];
-	$field['voteavg'] = $field['total'] / $field['numvotes'];
+
+	if ($field['numvotes']) {
+		$field['voteavg'] = $field['total'] / $field['numvotes'];
+	} else {
+		$field['voteavg'] = 0;
+	}
 	// be careful optionId is the value - not the optionId
 	$field['my_rate'] = $votings->fetchOne('optionId', array('id' => $key, 'user' => $user));	
 

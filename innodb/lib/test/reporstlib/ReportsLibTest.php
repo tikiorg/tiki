@@ -8,7 +8,7 @@
 require_once 'lib/reportslib.php';
 
 class ReportsLibTest extends TikiTestCase
-{	
+{
 	protected function setUp()
 	{	
 		$this->defaultReportPreferences = array('type' => 'plain');
@@ -29,7 +29,7 @@ class ReportsLibTest extends TikiTestCase
 			->will($this->returnValue(array('name' => 'Calendar item name')));
 
 		$tikilib = new TestableTikiLib;
-		$tikilib->overrideLib(array('calendar' => $calendarlib));
+		$tikilib->overrideLibs(array('calendar' => $calendarlib));
 		
 		$this->defaultReportPreferences['view'] = 'detailed';
 		

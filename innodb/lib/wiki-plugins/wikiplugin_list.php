@@ -154,7 +154,7 @@ function wpquery_filter_categories($query, $value)
 
 function wpquery_fiter_contributors($query, $value)
 {
-	$query->filterContributors($values);
+	$query->filterContributors($value);
 }
 
 function wpquery_filter_deepcategories($query, $value)
@@ -256,18 +256,16 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 		return $this->parent->prepareEntry($entry);
 	}
 
-	function renderEntries($entries, $count, $offset, $maxRecords)
+	function renderEntries(Search_ResultSet $entries)
 	{
 		global $smarty;
 		$smarty->loadPlugin('smarty_block_pagination_links');
-		$pagination = smarty_block_pagination_links(array('_onclick' => $this->onclick, 'offset_jsvar' => $this->offset_jsvar, 'cant' => $count, 'offset' => $offset, 'step' => $maxRecords), '', $smarty, false);
+		$pagination = smarty_block_pagination_links(array('_onclick' => $this->onclick, 'offset_jsvar' => $this->offset_jsvar, 'resultset' => $entries), '', $smarty, false);
 
 		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$pagination = "~np~$pagination~/np~";
-			return $this->parent->renderEntries($entries, $count, $offset, $maxRecords) . $pagination;
-		} else { 
-			return $this->parent->renderEntries($entries, $count, $offset, $maxRecords, $pagination); 
 		}
+		return $this->parent->renderEntries($entries) . $pagination;
 	}
 }
 

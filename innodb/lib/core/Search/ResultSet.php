@@ -8,23 +8,53 @@
 class Search_ResultSet extends ArrayObject
 {
 	private $count;
+	private $estimate;
 	private $offset;
 	private $maxRecords;
 
 	private $highlightHelper;
+
+	public static function create($list)
+	{
+		if ($list instanceof self) {
+			return $list;
+		} else {
+			return new self($list, count($list), 0, count($list));
+		}
+	}
 
 	function __construct($result, $count, $offset, $maxRecords)
 	{
 		parent::__construct($result);
 
 		$this->count = $count;
+		$this->estimate = $count;
 		$this->offset = $offset;
 		$this->maxRecords = $maxRecords;
+	}
+
+	function replaceEntries($list)
+	{
+		$return = new self($list, $this->count, $this->offset, $this->maxRecords);
+		$return->estimate = $this->estimate;
+		$return->highlightHelper = $this->highlightHelper;
+
+		return $return;
 	}
 
 	function setHighlightHelper(Zend_Filter_Interface $helper)
 	{
 		$this->highlightHelper = $helper;
+	}
+
+	function setEstimate($estimate)
+	{
+		$this->estimate = (int) $estimate;
+	}
+
+	function getEstimate()
+	{
+		return $this->estimate;
 	}
 
 	function getMaxRecords()

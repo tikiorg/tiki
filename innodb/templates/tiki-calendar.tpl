@@ -174,13 +174,42 @@ $('#calendar').fullCalendar({
 										day:      "{tr}day{/tr}"
 			},
 			allDayText: "{tr}all-day{/tr}",
-			firstDay: {{$prefs.calendar_firstDayofWeek}},
+			firstDay: {{$firstDayofWeek}},
 			slotMinutes: {{$prefs.calendar_timespan}},
 			defaultView: {{if $prefs.calendar_view_mode === 'week'}}'agendaWeek'{{else if $prefs.calendar_view_mode === 'day'}}'agendaDay'{{else}}'month'{{/if}},
 			eventAfterRender : function( event, element, view ) {
 				element.attr('title',event.title +'|'+event.description);
 				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
-			}
+			},
+			eventClick: function(event) {
+        if (event.url && event.modifiable) {
+			$.ajax({
+					dataType: 'html',
+					url: event.url,
+					success: function(data){
+						$( "#calendar_dialog" ).html(data);
+						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
+						$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
+					}
+				});
+//						$('#calendar_dialog').load(event.url + ' .wikitext');
+//						$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
+            return false;
+        }
+    },
+			dayClick: function(date, allDay, jsEvent, view) {
+			$.ajax({
+					dataType: 'html',
+					url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000,
+					success: function(data){
+						$( "#calendar_dialog" ).html(data);
+						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
+						$( "#calendar_dialog" ).dialog({ modal: true, title: '{tr}Add Event{/tr}', width: 'auto', height: 'auto', position: 'center' });
+					}
+				});
+            return false;
+    }
+
 });
 {/jq}
 
@@ -195,6 +224,7 @@ $('#calendar').fullCalendar({
 	}
 </style>
 <div id='calendar'></div>
+<div id='calendar_dialog'></div>
 {/if}
 <p>&nbsp;</p>
 </div>

@@ -7,6 +7,7 @@
 					<form action="tiki-read_article.php" method="get">
 						<div>
 							<input type="hidden" name="type" value="article"/>
+							<input type="hidden" name="switchlang" value="y" />
 							<select name="articleId" onchange="quick_switch_language( this, 'article', '{{$articleId|escape:"quotes"}}' )"> 
 								{section name=i loop=$trads}
 								<option value="{$trads[i].objId|escape}">{$trads[i].langName|escape}</option>
@@ -52,6 +53,7 @@
 							<option value="_manage_">{tr}Manage translations{/tr}</option>
 							{/if}
 						</select>
+						<input type="hidden" name="switchlang" value="y" />
 						<input type="hidden" name="no_bl" value="y" /> 
 					</div>
 				</form>

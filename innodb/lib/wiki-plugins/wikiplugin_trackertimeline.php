@@ -250,12 +250,15 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		// the simile api has to be included in the head to work it seems (tiki js files live at end of body now)
 		$headerlib->add_js('
 (function() {
-var head = document.getElementsByTagName("head")[0];
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.language = "JavaScript";
-script.src = "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true";
-head.appendChild(script);
+	Timeline_ajax_url=\'lib/simile_timeline/timeline_ajax/simile-ajax-api.js\';
+	Timeline_urlPrefix=\'lib/simile_timeline/timeline_js/\';
+	Timeline_parameters=\'bundle=true\';
+	var head = document.getElementsByTagName("head")[0];
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.language = "JavaScript";
+	script.src = "lib/simile_timeline/timeline_js/timeline-api.js?bundle=true;";
+	head.appendChild(script);
 })();
 ');
 
@@ -292,28 +295,37 @@ head.appendChild(script);
 		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
-var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline, ttlInit = function() {
+var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline;
+
+ttlInit = function() {
 	// wait for Timeline to be loaded
-	if (ttlInitCount < 12 && (typeof window.Timeline === "undefined" ||
+	if (ttlInitCount < 14 && (
+			typeof window.SimileAjax === "undefined" ||
+			typeof window.SimileAjax.loaded === "undefined" ||
+			typeof window.Timeline === "undefined" ||
 			typeof window.Timeline.createBandInfo === "undefined" ||
 			typeof window.Timeline.DateTime === "undefined" ||
 			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
 			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" )) {
 
-		if (ttlInitCount > 10) {	// at least 5 secs - reload
-			location.replace(location.href);
+		if (typeof window.Timeline !== "undefined" && typeof window.Timeline.DateTime === "undefined" && typeof window.SimileAjax.DateTime !== "undefined") {
+			window.Timeline.DateTime = window.SimileAjax.DateTime;
 		}
-		window.setTimeout( function() { ttlInit(); }, 500);
+		window.setTimeout( function() { ttlInit(); }, 1000);
 		ttlInitCount++;
 		return;
+	} else {
+		ttlTimelineReady = true;
 	}
 
 	if (!ttlTimelineReady) {	// just seems to need a little bit longer...
-		ttlTimelineReady = true;
-		window.setTimeout( function() { ttlInit(); }, 500);
+		location.replace(location.href);	// at least 10 secs - reload
 		return;
 	}
-	
+
+	// timeline finally loaded(?)
+	window.SimileAjax.History.enabled = false;
+
 	var ttl_eventSource = new Timeline.DefaultEventSource();
 	ttl_eventSource.loadJSON(ttl_eventData, ".");	// The data
 	
@@ -348,7 +360,8 @@ var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline, ttlInit = function(
 	ttlTimeline.layout(); // display the Timeline
 
 }	// end ttlInit
-ttlInit();
+
+setTimeout( function(){ ttlInit(); }, 1000);
 
 var ttlResizeTimerID = null;
 $(window).resize( function () {
