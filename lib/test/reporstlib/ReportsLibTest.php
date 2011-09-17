@@ -8,7 +8,7 @@
 require_once 'lib/reportslib.php';
 
 class ReportsLibTest extends TikiTestCase
-{	
+{
 	protected function setUp()
 	{	
 		$this->defaultReportPreferences = array('type' => 'plain');

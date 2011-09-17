@@ -1836,8 +1836,8 @@ class ToolbarsList
 /**
  * Definition of the CKE Toolbar Combos
  */
-class ToolbarCombos {
-
+class ToolbarCombos
+{
 	
 	/**
 	 * Get the content of the format combo

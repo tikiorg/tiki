@@ -10,11 +10,11 @@
  *
  */
 
-class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase 
+class EditLib_ParseToWysiwyg_TextTest extends TikiTestCase
 {
 	
 private $dir = '';  // the unmodifed directory
-	private $el = null; // the EditLib
+private $el = null; // the EditLib
 	
 	
 	function __construct() {

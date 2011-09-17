@@ -1,6 +1,7 @@
 <?php
 /* Jison generated parser */
-class WikiParser {
+class WikiParser
+{
 	function __construct($lexer = null) {
 		
 		$this->lexer = (!empty($lexer) ? $lexer : new WikiParserLexer);
@@ -304,7 +305,8 @@ break;
 }
 
 /* Jison generated lexer */
-class WikiParserLexer {
+class WikiParserLexer
+{
 	var $EOF = 1;
 	var $S = "";
 	var $yy = "";
