@@ -154,7 +154,7 @@ function wpquery_filter_categories($query, $value)
 
 function wpquery_fiter_contributors($query, $value)
 {
-	$query->filterContributors($values);
+	$query->filterContributors($value);
 }
 
 function wpquery_filter_deepcategories($query, $value)
