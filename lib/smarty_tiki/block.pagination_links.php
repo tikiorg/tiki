@@ -310,7 +310,7 @@ function smarty_block_pagination_links($params, $url, $smarty, $repeat)
 		}
 
 		if (isset($params['estimate']) && $params['estimate'] > $params['cant']) {
-			$html .= '<div>' . tr('More results may be available. Refine criterias to access the estimated %0 results.', $params['estimate']) . '</div>';
+			$html .= '<div>' . tr('More results may be available. Refine criteria to access the estimated %0 results.', $params['estimate']) . '</div>';
 		}
 
 		$html .= "</div>";
