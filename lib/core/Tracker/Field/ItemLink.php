@@ -177,6 +177,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 						//.submit();
 					},
 					Cancel: function() {
+						$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 0;
 						$( this ).dialog( "close" );
 					}
 				},
