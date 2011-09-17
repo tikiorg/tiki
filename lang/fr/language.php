@@ -11278,7 +11278,7 @@ $lang=Array(
 "Repeat password" => "Encore",
 "Generate a password" => "Générer un mot de passe",
 "Not your password" => "Pas votre mot de passe",
-"To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "Pour demander un mot de passe, {if \$prefs.feature_contact eq \\'y\\'}<a href=\"tiki-contact.php\">{/if}\\t\\t\\t\\tcontacter l\\'administrateur du système{if \\Array.feature_contact eq \\'y\\'}</a>{/if}",
+"To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "Pour demander un mot de passe, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\tcontactez l'administrateur du système{if \$prefs.feature_contact eq 'y'}</a>{/if}",
 "Last modification" => "Dernière modification",
 "No pages matched the search criteria" => "Aucune page ne correspond au(x) critère(s) de recherche",
 "Download Log File" => "Télécharger le fichier de log",
