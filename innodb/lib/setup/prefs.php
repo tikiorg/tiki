@@ -399,3 +399,15 @@ function getCurrentEngine() {
 	return $engine;
 }
 	
+/**
+ * Determine if MySQL fulltext search is supported by the current DB engine
+ * Assumes that all tables use the same table engine
+ * @return true if it is supported, otherwise false
+ */ 
+function isMySQLFulltextSearchSupported() {
+	$currentEngine = getCurrentEngine();
+	if(strcasecmp($currentEngine,"MyISAM") == 0) {
+		return true;
+	}
+	return false;
+}
