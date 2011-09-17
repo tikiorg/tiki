@@ -79,11 +79,12 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
-		$hits = $this->internalFind($query, $sortOrder);
+		$data = $this->internalFind($query, $sortOrder);
 
-		$result = array_slice($hits, $resultStart, $resultCount);
+		$result = array_slice($data['result'], $resultStart, $resultCount);
 
-		$resultSet = new Search_ResultSet($result, count($hits), $resultStart, $resultCount);
+		$resultSet = new Search_ResultSet($result, count($data['result']), $resultStart, $resultCount);
+		$resultSet->setEstimate($data['count']);
 
 		if ($this->highlight) {
 			$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($query));
@@ -130,14 +131,19 @@ class Search_Index_Lucene implements Search_Index_Interface
 			}
 		}
 
+		$return = array(
+			'result' => $result,
+			'count' => count($hits),
+		);
+
 		if ($this->cache) {
 			$this->cache->cacheItem($cacheKey, serialize(array(
 				'query' => $query,
-				'hits' => $result,
+				'hits' => $return,
 			)), 'searchresult');
 		}
 
-		return $result;
+		return $return;
 	}
 
 	private function extractValues($document)

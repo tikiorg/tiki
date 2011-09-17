@@ -55,9 +55,13 @@ class Search_Formatter_Plugin_WikiTemplate implements Search_Formatter_Plugin_In
 		return $matches->getText();
 	}
 
-	function renderEntries($entries, $count, $offset, $maxRecords)
+	function renderEntries(Search_ResultSet $entries)
 	{
-		return implode('', $entries);
+		$out = '';
+		foreach ($entries as $entry) {
+			$out .= $entry;
+		}
+		return $out;
 	}
 
 	private function processDisplay($valueFormatter, $body, $arguments)

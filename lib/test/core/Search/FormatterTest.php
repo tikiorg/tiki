@@ -189,8 +189,8 @@ OUT;
 		$source = $this->getMock('Search_Formatter_DataSource_Interface');
 		$source->expects($this->once())
 			->method('getInformation')
-			->with($this->equalTo($searchResult), $this->equalTo(array('object_id', 'description')))
-			->will($this->returnValue($withData));
+			->with($this->equalTo(Search_ResultSet::create($searchResult)), $this->equalTo(array('object_id', 'description')))
+			->will($this->returnValue(Search_ResultSet::create($withData)));
 
 		$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=object_id} ({display name=description})\n");
 

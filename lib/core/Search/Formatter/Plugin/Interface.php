@@ -16,6 +16,6 @@ interface Search_Formatter_Plugin_Interface
 
 	function prepareEntry($entry);
 
-	function renderEntries($entries, $count, $offset, $maxRecords);
+	function renderEntries(Search_ResultSet $entries);
 }
 

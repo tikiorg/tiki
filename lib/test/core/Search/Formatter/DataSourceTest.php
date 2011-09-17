@@ -31,11 +31,11 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source = new Search_Formatter_DataSource_Declarative;
 		$source->addContentSource('wiki page', $this->wikiSource);
 
-		$this->assertEquals(array(
+		$this->assertSetsEquals($source, array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test', 'description' => 'ABC'),
-		), $source->getInformation(array(
+		), array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), array('object_id', 'description')));
+		), array('object_id', 'description'));
 	}
 
 	function testRequestedValueNotProvided()
@@ -43,11 +43,11 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source = new Search_Formatter_DataSource_Declarative;
 		$source->addContentSource('wiki page', $this->wikiSource);
 
-		$this->assertEquals(array(
+		$this->assertSetsEquals($source, array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), $source->getInformation(array(
+		), array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), array('object_id', 'title')));
+		), array('object_id', 'title'));
 	}
 
 	function testValueFromGlobal()
@@ -56,22 +56,22 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addGlobalSource($this->categorySource);
 		$source->addGlobalSource($this->permissionSource);
 
-		$this->assertEquals(array(
+		$this->assertSetsEquals($source, array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test', 'categories' => array(1, 2, 3), 'allowed_groups' => array('Editors', 'Admins')),
-		), $source->getInformation(array(
+		), array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), array('object_id', 'description', 'categories', 'allowed_groups')));
+		), array('object_id', 'description', 'categories', 'allowed_groups'));
 	}
 
 	function testContentSourceNotAvailable()
 	{
 		$source = new Search_Formatter_DataSource_Declarative;
 
-		$this->assertEquals(array(
+		$this->assertSetsEquals($source, array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), $source->getInformation(array(
+		), array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), array('object_id', 'description', 'categories', 'allowed_groups')));
+		), array('object_id', 'description', 'categories', 'allowed_groups'));
 	}
 
 	function testCompleteTest()
@@ -80,11 +80,11 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addContentSource('wiki page', $this->wikiSource);
 		$source->addGlobalSource($this->categorySource);
 
-		$this->assertEquals(array(
+		$this->assertSetsEquals($source, array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test', 'description' => 'ABC', 'categories' => array(1, 2, 3)),
-		), $source->getInformation(array(
+		), array(
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
-		), array('object_id', 'description', 'categories', 'allowed_groups')));
+		), array('object_id', 'description', 'categories', 'allowed_groups'));
 	}
 
 	function testProvideResultSet()
@@ -125,6 +125,12 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		), 11, 10, 10);
 
 		$this->assertEquals($out, $source->getInformation($in, array('object_id', 'hash', 'title')));
+	}
+
+	private function assertSetsEquals($source, $expect, $in, $arg)
+	{
+		$out = $source->getInformation(Search_ResultSet::create($in), $arg);
+		$this->assertEquals(Search_ResultSet::create($expect), $out);
 	}
 }
 
