@@ -607,7 +607,7 @@ class CategLib extends ObjectLib
 					
 					$categories[$parent]['descendants'][] = $category['categId']; // Link this category from its ascendants for optimization.
 				}
-				$path = array_reverse($path);
+				$path = array_reverse($path, true);
 
 				$category["tepath"] = $path;
 				$category["categpath"] = implode("::", $path);
