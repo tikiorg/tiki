@@ -391,7 +391,7 @@ function initialize_prefs() {
 function getCurrentEngine() {
 	global $tikilib;
 	$engine = '';
-	$result = $tikilib->query('SHOW TABLE STATUS WHERE Name = "tiki_schema"');
+	$result = $tikilib->query('SHOW TABLE STATUS WHERE Name = ?', 'tiki_schema');
 	if ( $result ) {
 		$res = $result->fetchRow();
 		$engine  = $res['Engine'];
