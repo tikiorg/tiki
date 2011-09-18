@@ -24,6 +24,21 @@
 	}
 {/jq}
 
+{* this script hides date fields when they are irrelevant *}
+{jq notonready=true}
+	function CheckUseDates() {
+		var e = document.getElementById('usedates_date');
+		var e_from = document.getElementById('usedates_date_from');
+		var e_to = document.getElementById('usedates_date_to');
+		var check = document.getElementById('banning-actdates');
+		if ( check.checked == true ) {
+			e.style.display = 'block' ;
+		}else{
+			e.style.display = 'none' ;
+		}
+	}
+{/jq}
+
 {title help="Banning+System"}{tr}Banning system{/tr}{/title}
 
 <div class="navbar">
@@ -118,19 +133,23 @@
 		<tr>
 			<td><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
 			<td>
-				<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Rule active from{/tr}</td>
-			<td>
-				{html_select_date prefix="date_from" time=$info.date_from field_order=$prefs.display_field_order}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Rule active until{/tr}</td>
-			<td>
-				{html_select_date prefix="date_to" time=$info.date_to field_order=$prefs.display_field_order}
+				<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} onclick="CheckUseDates();" />
+				<div id="usedates_date" style="display: {if $info.use_dates eq 'y'}block{else}none{/if};" >
+					<table class="formcolor">
+						<tr>
+							<td>{tr}Rule active from{/tr}</td>
+							<td>
+								{html_select_date prefix="date_from" time=$info.date_from field_order=$prefs.display_field_order}
+							</td>
+						</tr>
+						<tr >
+							<td>{tr}Rule active until{/tr}</td>
+							<td>
+								{html_select_date prefix="date_to" time=$info.date_to end_year="+10" field_order=$prefs.display_field_order}
+							</td>
+						</tr>
+					</table>
+				</div>
 			</td>
 		</tr>
 		<tr>
