@@ -26,6 +26,7 @@
 							{$tiki_version}
 						{/if}
 					</strong>
+					({$db_engine_type})
 					{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
 				</div>
 

@@ -55,4 +55,7 @@ if (!empty($_REQUEST['testMail'])) {
 		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 3 );
 	}
 }
+$engine_type = getCurrentEngine();
+$smarty->assign('db_engine_type', $engine_type);
+
 ask_ticket('admin-inc-general');
