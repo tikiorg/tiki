@@ -102,10 +102,16 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 	$info['message'] = tr('Access from your localization was forbidden due to excessive spamming.');
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
 	$banId_list = explode('|',$_REQUEST['mass_ban_ip']);
+	if ( !empty($_REQUEST['mass_remove']) ) {
+		$access->check_authenticity(tra('Delete comments then set banning rules'));
+	}
 	foreach($banId_list as $id) {
 		$ban_comment=$commentslib->get_comment($id);
 		$ban_comments_list[$ban_comment['user_ip']][$id]['userName'] = $ban_comment['userName'];
 		$ban_comments_list[$ban_comment['user_ip']][$id]['title'] = $ban_comment['title'];
+		if ( !empty($_REQUEST['mass_remove']) ) {
+			$commentslib->remove_comment($id);
+		}
 	}
 	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
 }
