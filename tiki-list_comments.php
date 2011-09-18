@@ -102,13 +102,22 @@ if (isset($_REQUEST['checked'])) {
 		exit;
 	}
 
-	// Approve/Reject comment(s)
-	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['approve']) && in_array($_REQUEST['approve'], array('y', 'n', 'r'))) {
+	// Approve comment(s)
+	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['approve_x']) ) {
 		foreach($checked as $id) {
-			$commentslib->approve_comment($id, $_REQUEST['approve']);
+			$commentslib->approve_comment($id, 'y');
 		}
 	}
-	
+
+	// Reject comment(s)
+	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['reject_x'])) {
+		foreach($checked as $id) {
+			$commentslib->approve_comment($id, 'r');
+			$rejected[$id] = true;
+		}
+		$smarty->assign_by_ref('rejected', $rejected);
+	}
+
 	// Archive/unarchive comment(s)
 	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['archive']) && in_array($_REQUEST['archive'], array('archive', 'unarchive'))) {
 		foreach($checked as $id) {
