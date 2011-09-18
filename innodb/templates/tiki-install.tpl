@@ -331,7 +331,7 @@
 				{if $hasInnoDB}
 					Select database type
 					<input type="radio" name="useInnoDB" value="0" checked /> MyISAM &nbsp;&nbsp;&nbsp;
-					<input type="radio" name="useInnoDB" value="1" /> InnoDB
+					<input type="radio" name="useInnoDB" value="1" /> InnoDB (experimental)
 				{else}
 				<input type="hidden" name="useInnoDB" value="0" />
 				<br/>
