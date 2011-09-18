@@ -6,23 +6,23 @@
 // $Id$
 
 /**
- * Handler class for numeric and currency field
+ * Handler class for currency field
  * 
- * Letter key: ~n~
+ * Letter key: ~b~
  *
  */
-class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Currency extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
 		return array(
-			'n' => array(
-				'name' => tr('Numeric Field'),
+			'b' => array(
+				'name' => tr('Currency Field'),
 				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
-				'help' => 'Numeric Tracker Field',
-				'prefs' => array('trackerfield_numeric'),
+				'help' => 'Currency Amount Tracker Field',
+				'prefs' => array('trackerfield_currency'),
 				'tags' => array('basic'),
-				'default' => 'y',
+				'default' => 'n',
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),
@@ -38,33 +38,51 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 						'name' => tr('Display Size'),
 						'description' => tr('Visible size of the field in characters. Does not affect the numeric length.'),
 						'filter' => 'int',
+						'default' => 7,
 					),
 					'prepend' => array(
 						'name' => tr('Prepend'),
-						'description' => tr('Text to be displayed prior to the numeric value.'),
+						'description' => tr('Text to be displayed prior to the currency amount.'),
 						'filter' => 'text',
+						'default' => '',
 					),
 					'append' => array(
 						'name' => tr('Append'),
 						'description' => tr('Text to be displayed after the numeric value.'),
 						'filter' => 'text',
+						'default' => '',
 					),
-					'decimals' => array(
-						'name' => tr('Decimal Places'),
-						'description' => tr('Amount of decimals to preserve before rounding.'),
+					'locale' => array(
+						'name' => tr('Locale'),
+						'description' => tr('Set locale for currency formatting, for example en_US or en_US.UTF-8 or en_US.ISO-8559-1. Default is en_US.'),
+						'filter' => 'text',
+						'default' => 'en_US',
+					),
+					'currency' => array(
+						'name' => tr('Currency'),
+						'description' => tr('A custom alphanumeric currency code. Not needed if locale is set and a standard code is desired. Default is USD.'),
+						'filter' => 'alpha',
+						'default' => 'USD',
+					),
+					'symbol' => array(
+						'name' => tr('Symbol'),
+						'description' => tr('Set whether the currency code (for example USD) or symbol (for example $) will display. Defaults to symbol.'),
+						'filter' => 'alpha',
+						'default' => 'n',
+						'options' => array(
+							'i' => tr('Currency code'),
+							'n' => tr('Currency symbol'),
+						),
+					),
+					'all_symbol' => array(
+						'name' => tr('First or all'),
+						'description' => tr('Set whether the currency code or symbol will be displayed against all amounts or only the first amount.'),
 						'filter' => 'int',
-					),
-					'dec_point' => array(
-						'name' => tr('Decimal separator'),
-						'description' => tr('Single character, conventions depend on the language of the site.'),
-						'filter' => 'text',
-						'default' => '.',
-					),
-					'thousands' => array(
-						'name' => tr('Thousand separator'),
-						'description' => tr('Single character, conventions depend on the language of the site.'),
-						'filter' => 'text',
-						'default' => ',',
+						'default' => 0,
+						'options' => array(
+							0 => tr('First item only'),
+							1 => tr('All'),
+						),
 					),
 				),
 			),
@@ -84,7 +102,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 
 	function renderInnerOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/numeric.tpl', $context);
+		return $this->renderTemplate('trackeroutput/currency.tpl', $context);
 	}
 
 	function renderInput($context = array())
