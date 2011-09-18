@@ -57,8 +57,8 @@ function module_change_category_info() {
 				'description' => tra('If set to "y", allow to assign new categories.') . " " . tra('Example values: y, n.') . " " . tra('Default value: y.'),
 			),
 			'group' => array(
-				'name' => 'Group filter',
-				'description' => 'Very particular filter option. If set to "y", only categories with a name matching one of the user\'s groups are shown, and descendants of these matching categories.' . " " . tra('Example values: y, n.') . " " . tra('Default value: n.'),
+				'name' => tra('Group filter'),
+				'description' => tra('Very particular filter option. If set to "y", only categories with a name matching one of the user\'s groups are shown, and descendants of these matching categories.') . " " . tra('Example values: y, n.') . " " . tra('Default value: n.'),
 			),
 			'imgUrlNotIn' => array(
 				'name' => tra('Image URL not in category'),
