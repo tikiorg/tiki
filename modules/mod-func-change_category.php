@@ -29,7 +29,7 @@ function module_change_category_info() {
 			),
 			'path' => array(
 				'name' => tra('Display path'),
-				'description' => tra('Unless set to "n", diplay relative category paths in the category tree rather than category names.') . " " . tra('Paths are relative to the root category, which is not displayed.') . " " . tra('Example value:') . ' "n". ' . tra('Not set by default.'),
+				'description' => tra('Unless set to "n", display relative category paths in the category tree rather than category names.') . " " . tra('Paths are relative to the root category, which is not displayed.') . " " . tra('Example value:') . ' "n". ' . tra('Not set by default.'),
 			),
 			'multiple' => array(
 				'name' => tra('Multiple categories'),
