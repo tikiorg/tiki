@@ -72,7 +72,7 @@
 		{/capture}
 
 		<tr class="{cycle}{if $prefs.feature_comments_moderation eq 'y'} post-approved-{$comments[ix].approved}{/if}">
-			<td><input type="checkbox" name="checked[]" value="{$id}"/></td>
+			<td><input type="checkbox" name="checked[]" value="{$id}" {if isset($rejected[$id]) }checked="checked"{/if}/></td>
 			<td>
 				<a title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
 			</td>
@@ -103,7 +103,7 @@
 				<td class="approval">
 					{if $comments[ix].approved eq 'n'}
 						{self_link approve='y' checked=$id _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
-						{self_link approve='r' checked=$id _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
+						{self_link reject='r' checked=$id _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
 					{elseif $comments[ix].approved eq 'y'}
 						&nbsp;{tr}Approved{/tr}&nbsp;
 					{elseif $comments[ix].approved eq 'r'}
@@ -131,7 +131,7 @@
 		{/if}
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 			{icon _id='comment_approve' _tag='input_image' name='approve' value='y' alt="{tr}Approve{/tr}"}
-			{icon _id='comment_reject' _tag='input_image' name='approve' value='r' alt="{tr}Reject{/tr}"}
+			{icon _id='comment_reject' _tag='input_image' name='reject' value='r' alt="{tr}Reject{/tr}"}
 		{/if}
 	</div>
 	</form>
