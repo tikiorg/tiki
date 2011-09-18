@@ -26,6 +26,25 @@ if (isset($_REQUEST['banId'])) {
 	$info['date_to'] = $tikilib->now + 7 * 24 * 3600 * 100;
 	$info['message'] = '';
 }
+
+if (!empty($_REQUEST['mass_ban_ip'])) {
+	check_ticket('admin-banning');
+	include_once ('lib/comments/commentslib.php');
+	$commentslib = new Comments;
+	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip']);
+	$info['mode'] = 'mass_ban_ip';
+	$info['title'] = tr('Multiple IP Banning');
+	$info['message'] = tr('Access from your localization was forbidden due to excessive spamming.');
+	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
+	$banId_list = explode('|',$_REQUEST['mass_ban_ip']);
+	foreach($banId_list as $id) {
+		$ban_comment=$commentslib->get_comment($id);
+		$ban_comments_list[$ban_comment['user_ip']][$id]['userName'] = $ban_comment['userName'];
+		$ban_comments_list[$ban_comment['user_ip']][$id]['title'] = $ban_comment['title'];
+	}
+	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
+}
+
 $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST['remove'])) {
@@ -44,7 +63,14 @@ if (isset($_REQUEST['save'])) {
 	$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
 	$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
 	$sections = array_keys($_REQUEST['section']);
-	$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
+	if ($_REQUEST['mode'] == 'mass_ban_ip') {
+		foreach ($_REQUEST['multi_banned_ip'] as $ip => $value) {
+			list($ip1,$ip2,$ip3,$ip4) = explode('.',$ip);
+			$banlib->replace_rule($_REQUEST['banId'], 'ip', $_REQUEST['title'], $ip1, $ip2, $ip3, $ip4, $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
+		}
+	}else{
+		$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
+	}
 	$info['sections'] = array();
 	$info['title'] = '';
 	$info['mode'] = 'user';
