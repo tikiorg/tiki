@@ -620,8 +620,15 @@ class EditLib
 								foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
 									foreach (array_reverse($end_arr) as $end ) {
 										$src .= $end;}}
+								
 								// write newline
 								$src .= "\n";
+								
+								// for lists, we must prepend '+' to keep the indentation
+								if ($p['listack']) {
+									$src .= str_repeat( '+', count($p['listack']));
+								}
+								
 								// reopen all previously closed wiki markup
 								foreach ($p['wikistack']['begin'] as $begin_arr) {
 									foreach ($begin_arr as $begin) {
@@ -758,11 +765,6 @@ class EditLib
 					
 					// update the wiki stack
 					if (isset($e['wikitag']) && $e['wikitag'] == true) {
-						
-						if ( !end($p['wikistack']['isinline']) ) { // markup spans a whole line
-							$this->startNewLine($src);
-						}
-						
 						array_pop( $p['wikistack']['begin'] );
 						array_pop( $p['wikistack']['end'] );
 						array_pop( $p['wikistack']['isinline'] );

@@ -39,15 +39,14 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase {
 	 */			
 	function testBulletList() {
 
-		$this->markTestIncomplete('Work in progress.');
 		/*
 		 * *Item 1
 		 * *Item 2 
 		 */
 		$ex = '*Item 1\n*Item 2\n';		
-		$inData = '<ul><li>Item 1\n';
-		$inData .= '</li><li>Item 2\n';
-		$inData .= '</li></ul>\n';
+		$inData = "<ul><li>Item 1\n";
+		$inData .= "</li><li>Item 2\n";
+		$inData .= "</li></ul>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
@@ -59,10 +58,10 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase {
 		 * *Item 2
 		 */
 		$ex = '*Item 1\n**Item 1a\n*Item 2\n';
-		$inData = '<ul><li>Item 1\n';
-		$inData .= '<ul><li>Item 1a\n';
-		$inData .= '</li></ul></li><li>Item 2\n';
-		$inData .= '</li></ul>\n';
+		$inData = "<ul><li>Item 1\n";
+		$inData .= "<ul><li>Item 1a\n";
+		$inData .= "</li></ul></li><li>Item 2\n";
+		$inData .= "</li></ul>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
@@ -76,32 +75,33 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase {
 	 */	
 	function testBulletListContinuation()  {
 
-		$this->markTestIncomplete('Work in progress.');		
 		/*
 		 * *Item 1
 		 * +Continuation
 		 * *Item 2
 		 */
 		$ex = '*Item 1\n+Continuation\n*Item 2\n';		
-		$inData = '<ul><li>Item 1\n';
-		$inData .= '<br />Continuation\n';
-		$inData .= '</li><li>Item 2\n';
-		$inData .= '</li></ul>\n';
+		$inData = "<ul><li>Item 1\n";
+		$inData .= "<br />Continuation\n";
+		$inData .= "</li><li>Item 2\n";
+		$inData .= "</li></ul>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
 		
 		
 		/*
+		 * *Item A
 		 * **Item 1
 		 * ++Continuation
 		 * **Item 2
 		 */		
-		$ex = '**Item 1\n++Continuation\n**Item 2\n';		
-		$inData = '<ul><ul><li>Item 1\n';
-		$inData .= '<br />Continuation\n';
-		$inData .= '</li><li>Item 2\n';
-		$inData .= '</li></ul></ul>\n';
+		$ex = '*Item A\n**Item 1\n++Continuation\n**Item 2\n';
+		$inData = "<ul><li>Item A\n";		
+		$inData .= "<ul><li>Item 1\n";
+		$inData .= "<br />Continuation\n";
+		$inData .= "</li><li>Item 2\n";
+		$inData .= "</li></ul></li></ul>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);				
@@ -115,15 +115,14 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase {
 	 */			
 	function testNumberedList() {
 		
-		$this->markTestIncomplete('Work in progress.');		
 		/*
 		 * #Item 1
 		 * #Item 2 
 		 */
 		$ex = '#Item 1\n#Item 2\n';		
-		$inData = '<ol><li>Item 1\n';
-		$inData .= '</li><li>Item 2\n';
-		$inData .= '</li></ol>\n';
+		$inData = "<ol><li>Item 1\n";
+		$inData .= "</li><li>Item 2\n";
+		$inData .= "</li></ol>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
@@ -135,10 +134,10 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase {
 		 * #Item 2
 		 */
 		$ex = '#Item 1\n##Item 1a\n#Item 2\n';
-		$inData = '<ol><li>Item 1\n';
-		$inData .= '<ol><li>Item 1a\n';
-		$inData .= '</li></ol></li><li>Item 2\n';
-		$inData .= '</li></ol>\n';
+		$inData = "<ol><li>Item 1\n";
+		$inData .= "<ol><li>Item 1a\n";
+		$inData .= "</li></ol></li><li>Item 2\n";
+		$inData .= "</li></ol>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);							
@@ -152,35 +151,36 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase {
 	 */
 	function testNumberedListContinuation() {
 		
-		$this->markTestIncomplete('Work in progress.');		
 		/*
 		 * #Item 1
 		 * +Continuation
 		 * #Item 2
 		 */
 		$ex = '#Item 1\n+Continuation\n#Item 2\n';		
-		$inData = '<ol><li>Item 1\n';
-		$inData .= '<br />Continuation\n';
-		$inData .= '</li><li>Item 2\n';
-		$inData .= '</li></ol>\n';
+		$inData = "<ol><li>Item 1\n";
+		$inData .= "<br />Continuation\n";
+		$inData .= "</li><li>Item 2\n";
+		$inData .= "</li></ol>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 
 		
 		/*
+		 * #Item A
 		 * ##Item 1
 		 * ++Continuation
 		 * ##Item 2
-		 */	
-		$ex = '##Item 1\n++Continuation\n##Item 2\n';		
-		$inData = '<ol><ol><li>Item 1\n';
-		$inData .= '<br />Continuation\n';
-		$inData .= '</li><li>Item 2\n';
-		$inData .= '</li></ol></ol>\n';
+		 */		
+		$ex = '#Item A\n##Item 1\n++Continuation\n##Item 2\n';
+		$inData = "<ol><li>Item A\n";		
+		$inData .= "<ol><li>Item 1\n";
+		$inData .= "<br />Continuation\n";
+		$inData .= "</li><li>Item 2\n";
+		$inData .= "</li></ol></li></ol>\n";
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
-		$this->assertEquals($ex, $out);			
+		$this->assertEquals($ex, $out);		
 	}
 		
 }
