@@ -58,6 +58,11 @@ class Installer extends TikiDb_Bridge
 
 	function update() // {{{
 	{
+		// Mark InnoDB usage for updates
+		if(strcasecmp($this->getCurrentEngine(),"InnoDB") == 0) {
+			$this->useInnoDB = true;
+		}
+
 		if( ! $this->tableExists( 'tiki_schema' ) ) {
 			// DB too old to handle auto update
 
@@ -401,6 +406,35 @@ class Installer extends TikiDb_Bridge
 			if(strcmp(strtoupper($engine), 'INNODB') == 0) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Detect the engine used in the current schema.
+	 * Assumes that all tables use the same table engine
+	 * @return string identifying the current engine, or an empty string if not installed
+	 */ 
+	function getCurrentEngine() {
+		global $tikilib;
+		$engine = '';
+		$result = $this->query('SHOW TABLE STATUS LIKE ?', 'tiki_schema');
+		if ( $result ) {
+			$res = $result->fetchRow();
+			$engine  = $res['Engine'];
+		}
+		return $engine;
+	}
+
+	/**
+	 * Determine if MySQL fulltext search is supported by the current DB engine
+	 * Assumes that all tables use the same table engine
+	 * @return true if it is supported, otherwise false
+	 */ 
+	function isMySQLFulltextSearchSupported() {
+		$currentEngine = $this->getCurrentEngine();
+		if(strcasecmp($currentEngine,"MyISAM") == 0) {
+			return true;
 		}
 		return false;
 	}
