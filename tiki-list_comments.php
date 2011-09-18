@@ -88,6 +88,14 @@ if (isset($_REQUEST['checked'])) {
 			$commentslib->remove_comment($id);
 		}
 	}
+
+	// Ban IP adresses of multiple spammers
+	if ( isset($_REQUEST['ban_x']) ) {
+		$mass_ban_ip = implode('|',$checked);
+		header('Location: tiki-admin_banning.php?mass_ban_ip=' . $mass_ban_ip);
+		exit;
+	}
+
 	// Approve/Reject comment(s)
 	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['approve']) && in_array($_REQUEST['approve'], array('y', 'n', 'r'))) {
 		foreach($checked as $id) {

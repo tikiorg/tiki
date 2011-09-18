@@ -147,6 +147,9 @@
 	<div class="formcolor">
 		{tr}Perform action with checked:{/tr}
 		{icon _id='cross' _tag='input_image' name='remove' value='y' alt="{tr}Delete{/tr}"}
+		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_banning eq 'y'}
+			{icon _id='lock_red' _tag='input_image' name='ban' value='y' alt="{tr}Ban{/tr}"}
+		{/if}
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 			{icon _id='comment_approve' _tag='input_image' name='approve' value='y' alt="{tr}Approve{/tr}"}
 			{icon _id='comment_reject' _tag='input_image' name='approve' value='r' alt="{tr}Reject{/tr}"}
