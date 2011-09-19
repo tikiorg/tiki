@@ -2990,7 +2990,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_read_comments',
@@ -2999,7 +3000,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_admin_comments',
@@ -3008,7 +3010,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => true,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_edit_comments',
@@ -3017,7 +3020,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_remove_comments',
@@ -3026,7 +3030,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_vote_comments',
@@ -3035,7 +3040,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('comments_vote'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_admin_content_templates',
