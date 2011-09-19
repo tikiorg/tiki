@@ -2500,10 +2500,15 @@ if( \$('#$id') ) {
 							$button = '';
 						}
 
+						// replace <div> with <h> style attribute
+						$do_center = 0;
+						$title_text = preg_replace('/<div style="text-align: center;">(.*)<\/div>/', '\1', $title_text, 1, $do_center);
+						$style = $do_center ? ' style="text-align: center;"' : '';
+
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel).'>'.$aclose2;
+							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel).'>'.$aclose2;
 						} else {
-							$line = $button.'<h'.($hdrlevel).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
+							$line = $button.'<h'.($hdrlevel).$style.' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
 						}
 					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 						// Close open paragraph, lists, and div's
