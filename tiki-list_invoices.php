@@ -58,7 +58,7 @@ foreach($Invoices as $I => $Invoice) {
 }
 
 $smarty->assign("Invoices", $Invoices);
-$smarty->assign("Settings", TrackerQueryLib::tracker("Invoice Settings")->byName(true)->getOne()->query());
+$smarty->assign("Settings", TrackerQueryLib::tracker("Invoice Settings")->byName()->query());
 $smarty->assign("Amount", $Amount);
 $smarty->assign("Paid", $Paid);
 $smarty->assign("Status", $Status);

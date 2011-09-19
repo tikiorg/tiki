@@ -7,7 +7,7 @@
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
-$trkqrylib = TikiLib::lib('trkqry');
+TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
@@ -93,23 +93,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $invoiceItems = array();
 if (!empty($_REQUEST['InvoiceId'])) {
-	$invoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['InvoiceId']));
+	$invoice = TrackerQueryLib::tracker("Invoices")
+		->byName()
+		->equals($_REQUEST['InvoiceId'])
+		->getOne();
+		
 	$invoice['Item Ids'] = implode(',', $invoice['Item Ids']);
 	$smarty->assign("invoice", $invoice);
 	
-	$invoiceItems = $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['InvoiceId']), null, array("Invoice Id"));
+	$invoiceItems = TrackerQueryLib::tracker("Invoice Items")
+		->byName()
+		->fields(array("Invoice Id"))
+		->search(array($_REQUEST['InvoiceId']))
+		->query();
 } else {
 	$_REQUEST['InvoiceId'] = 0;
 }
 
 //give the user the last invoice number 
-$LastInvoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, null, null, null, null, null, null, 0, 1, true, false));
+$LastInvoice = TrackerQueryLib::tracker("Invoices")
+	->byName()
+	->limit(0)
+	->offset(1)
+	->desc(true)
+	->excludeDetails()
+	->getOne();
+
 $NewInvoiceNumber = (isset($LastInvoice["Invoice Number"]) ? $LastInvoice["Invoice Number"] + 1 : 1);
 $smarty->assign("NewInvoiceNumber", $NewInvoiceNumber);
 
 $smarty->assign("InvoiceId", $_REQUEST['InvoiceId']);
-$smarty->assign("clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
-$smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
+$smarty->assign("clients", TrackerQueryLib::tracker("Invoice Clients")->byName()->query());
+$smarty->assign("setting", TrackerQueryLib::tracker("Invoice Settings")->byName()->getOne());
 
 //we add an extra item to the end of invoiceItems, so we can duplicate it on the page
 if (count($invoiceItems) < 1) {
