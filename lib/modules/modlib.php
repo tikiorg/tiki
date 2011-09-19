@@ -777,7 +777,7 @@ class ModLib extends TikiLib
 			}
 
 			return $data;
-		} catch (SmartyCompilerException $e) {
+		} catch (Exception $e) {
 			$smarty->loadPlugin('smarty_block_remarksbox');
 			if ($tiki_p_admin == 'y') {
 				$message = $e->getMessage();
