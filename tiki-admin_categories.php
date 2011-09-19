@@ -21,6 +21,7 @@ if (!isset($_REQUEST['parentId'])) {
 }
 $smarty->assign('parentId', $_REQUEST['parentId']);
 
+
 if (!empty($_REQUEST['parentId'])) {
 	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['parentId'] );
 }
@@ -150,7 +151,7 @@ if (isset($categorizedObject) && !isset($_REQUEST["addpage"])) {
 	);
 	$categlib->notify($values);
 }
-if (isset($_REQUEST["categId"])) {
+if (!empty($_REQUEST["categId"])) {
 	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['categId'] );
 	$info = $categlib->get_category($_REQUEST["categId"]);
 } else {
@@ -197,6 +198,9 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 		$errors[] = tra('You can not create a category with a name already existing at this level');
 	} else {
 		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
+		if ($tiki_p_admin_categories != 'y') {
+			$userlib->copy_object_permissions($_REQUEST['parentId'], $newcategId, 'category');
+		}
 	}
 	$info["name"] = '';
 	$info["description"] = '';
@@ -244,6 +248,9 @@ if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
 					$smarty->display('error.tpl');
 					die;
 				}
+				if ($tiki_p_admin_categories != 'y') {
+					$userlib->copy_object_permissions($parentId, $newcategId, 'category');
+				}
 			}
 		}
 	}
@@ -264,8 +271,10 @@ $smarty->assign('father', $father);
 
 // ---------------------------------------------------
 
-
 $categories = $categlib->getCategories(NULL, false);
+if (empty($categories)) {
+	$access->check_permission('tiki_p_admin_categories');
+}
 $smarty->assign('categories', $categories);
 
 $treeNodes = array();
@@ -274,15 +283,16 @@ foreach($categories as $category) {
 	$data = '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;categId=' . $category['categId'] . '" title="' . tra('Edit') . '">' . smarty_function_icon(array('_id'=>'page_edit'), $smarty) . '</a>';
 	$data .= '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;removeCat=' . $category['categId'] . '" title="' . tra('Delete') . '">' . smarty_function_icon(array('_id'=>'cross'), $smarty) . '</a>';
 
-	if ($userlib->object_has_one_permission($category['categId'], 'category')) {
-		$title = tra('Edit permissions for this category');
-		$icon = 'key_active';
-	} else {
-		$title = tra('Assign Permissions');
-		$icon = 'key';
+	if ($tiki_p_asdmin_categories == 'y') {
+		if ($userlib->object_has_one_permission($category['categId'], 'category')) {
+			$title = tra('Edit permissions for this category');
+			$icon = 'key_active';
+		} else {
+			$title = tra('Assign Permissions');
+			$icon = 'key';
+		}
+		$data .= '<a href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId'] . '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=all">' . smarty_function_icon(array('_id'=>$icon, 'alt'=>$title), $smarty) . '</a>';
 	}
-	$data .= '<a href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId'] . '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=all">' . smarty_function_icon(array('_id'=>$icon, 'alt'=>$title), $smarty) . '</a>';
-	
 	
 	$data .= '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] . '">' . htmlspecialchars($category['name']) .'</a> ';
 	$treeNodes[] = array(
