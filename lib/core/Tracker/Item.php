@@ -129,5 +129,82 @@ class Tracker_Item
 			return $this->info[$groupField];
 		}
 	}
+
+	function canViewField($fieldId)
+	{
+		// Nothing stops the tracker administrator from doing anything
+		if ($this->perms->admin_trackers) {
+			return true;
+		}
+
+		// Viewing the item is required to view the field (safety)
+		if (! $this->canView()) {
+			return false;
+		}
+
+		$field = $this->definition->getField($fieldId);
+		
+		if (! $field) {
+			return false;
+		}
+
+		$isHidden = $field['isHidden'];
+		$visibleBy = $field['visibleBy'];
+
+		if ($isHidden == 'c' && $this->canModifyFromSpecialPermissions()) {
+			// Creator or creator group check when field can be modified by creator only
+			return true;
+		} elseif ($isHidden == 'y') {
+			// Visible by administrator only
+			return false;
+		} else {
+			// Permission based on visibleBy apply
+			return $this->isMemberOfGroups($visibleBy);
+		}
+	}
+
+	function canModifyField($fieldId)
+	{
+		// Nothing stops the tracker administrator from doing anything
+		if ($this->perms->admin_trackers) {
+			//return true;
+		}
+
+		// Modify the item is required to modify the field (safety)
+		if (! $this->canModify()) {
+			return false;
+		}
+
+		$field = $this->definition->getField($fieldId);
+		
+		if (! $field) {
+			return false;
+		}
+
+		$isHidden = $field['isHidden'];
+		$editableBy = $field['editableBy'];
+
+		if ($isHidden == 'c') {
+			// Creator or creator group check when field can be modified by creator only
+			return $this->canModifyFromSpecialPermissions();
+		} elseif ($isHidden == 'p') {
+			// Editable by administrator only
+			return false;
+		} else {
+			// Permission based on editableBy apply
+			return $this->isMemberOfGroups($editableBy);
+		}
+	}
+
+	private function isMemberOfGroups($groups)
+	{
+		// Nothing specified means everyone
+		if (empty($groups)) {
+			return true;
+		}
+
+		$commonGroups = array_intersect($groups, $this->perms->getGroups());
+		return count($commonGroups) != 0;
+	}
 }
 

@@ -327,19 +327,12 @@ foreach($xfields["data"] as $i => $current_field) {
 	$xfields['data'][$i] = $current_field;
 
 	$current_field_ins = null;
-	$current_field_fields = null;
 
-	if (!isset($mainfield) and $current_field['isMain'] == 'y') {
-		$mainfield = $i;
-	}
-	if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
-		if ($tiki_p_tracker_view_ratings == 'y') {
-			$current_field_ins = $current_field;
+	$fieldIsVisible = $itemObject->canViewField($fid);
+	$fieldIsEditable = $itemObject->canModifyField($fid);
 
-		}
-	} elseif ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
+	if ($fieldIsVisible || $fieldIsEditable) {
 		$current_field_ins = $current_field;
-		$current_field_fields = $current_field;
 
 		$handler = $fieldFactory->getHandler($current_field, $item_info);
 
@@ -348,17 +341,17 @@ foreach($xfields["data"] as $i => $current_field) {
 
 			if ($insert_values) {
 				$current_field_ins = array_merge($current_field_ins, $insert_values);
-				$current_field_fields = array_merge($current_field_fields, $insert_values);
 			}
 		}
 	}
 
 	if (! empty($current_field_ins)) {
-		$ins_fields['data'][$i] = $current_field_ins;
-	}
-
-	if (! empty($current_field_fields)) {
-		$fields['data'][$i] = $current_field_fields;
+		if ($fieldIsEditable) {
+			$ins_fields['data'][$i] = $current_field_ins;
+		}
+		if ($fieldIsVisible) {
+			$fields['data'][$i] = $current_field_ins;
+		}
 	}
 }
 
@@ -371,9 +364,6 @@ if (! $itemObject->canView()) {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
-}
-if (!isset($mainfield)) {
-	$mainfield = 0;
 }
 if ($itemObject->canRemove()) {
 	if (isset($_REQUEST["remove"])) {
@@ -412,7 +402,6 @@ if ($itemObject->canModify()) {
 			if (isset($rateFieldId) && isset($_REQUEST["ins_$rateFieldId"])) {
 				$trklib->replace_rating($_REQUEST["trackerId"], $_REQUEST["itemId"], $rateFieldId, $user, $_REQUEST["ins_$rateFieldId"]);
 			}
-			$mainvalue = $ins_fields["data"][$mainfield]["value"];
 			$_REQUEST['show'] = 'view';
 			foreach($fields["data"] as $i => $array) {
 				if (isset($fields["data"][$i])) {
@@ -497,31 +486,33 @@ if ($_REQUEST["itemId"]) {
 	$fieldFactory = $definition->getFieldFactory();
 
 	foreach($xfields["data"] as $i => $current_field) {
-		$current_field_fields = null;
-		$current_field_ins = array();
+		$current_field_ins = null;
 
 		$handler = $fieldFactory->getHandler($current_field, $info);
 
-		if ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
-			$current_field_fields = $current_field;
+		$fieldIsVisible = $itemObject->canViewField($fid);
+		$fieldIsEditable = $itemObject->canModifyField($fid);
+
+		if ($fieldIsVisible || $fieldIsEditable) {
+			$current_field_ins = $current_field;
 
 			if ($handler) {
 				$insert_values = $handler->getFieldData();
 
 				if ($insert_values) {
 					$current_field_ins = array_merge($current_field_ins, $insert_values);
-					$current_field_fields = array_merge($current_field_fields, $insert_values);
 				}
 			}
 
 		}
 
-		if ($current_field_fields) {
-			$fields["data"][$i] = $current_field_fields;
-		}
-
 		if (! empty($current_field_ins)) {
-			$ins_fields['data'][$i] = array_merge($ins_fields['data'][$i], $current_field_ins);
+			if ($fieldIsVisible) {
+				$fields['data'][$i] = array_merge($fields['data'][$i], $current_field_ins);
+			}
+			if ($fieldIsEditable) {
+				$ins_fields['data'][$i] = array_merge($ins_fields['data'][$i], $current_field_ins);
+			}
 		}
 	}
 	$smarty->assign('tracker_item_main_value', $trklib->get_isMain_value($_REQUEST['trackerId'], $_REQUEST['itemId']));
