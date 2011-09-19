@@ -245,7 +245,6 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		/*
 		 * numbered
 		 */
-		$this->markTestIncomplete('Work in progress.');
 		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
 		$ex = '!#::Heading::';	
