@@ -30,7 +30,7 @@ function module_since_last_visit_new_info() {
 			),
 			'date_as_link' => array(
 				'name' => tra('Show date as a calendar link'),
-				'description' => tra('If set to "n", do not add a link to tiki calendar on the date in the header (even if feature calendar is set)') . ' ' . tra('Default:') . ' "y"'
+				'description' => tra('If set to "n", do not add a link to tiki calendar on the date in the header (even if feature calendar is set).') . ' ' . tra('Default:') . ' "y"'
 			),
 			'fold_sections' => array(
 				'name' => tra('Fold sections by default'),

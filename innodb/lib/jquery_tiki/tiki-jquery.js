@@ -292,7 +292,7 @@ function checkDuplicateRows( button, columnSelector, rowSelector ) {
 
 function setUpClueTips() {
 	var ctOptions = {splitTitle: '|', cluezIndex: 2000, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'},
-		clickThrough: true, hoverIntent: {sensitivity: 3, interval: 600, timeout: 0}};
+		clickThrough: true, hoverIntent: {sensitivity: 3, interval: 100, timeout: 0}};
 	$.cluetip.setup({insertionType: 'insertBefore', insertionElement: '#main'});
 	
 	$('.tips[title!=""]').cluetip($.extend(ctOptions, {}));

@@ -9,8 +9,6 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 
 $access->check_feature('feature_categories');
-$access->check_permission('tiki_p_admin_categories');
-
 // Check for parent category or set to 0 if not present
 if (!empty($_REQUEST['parentId']) && !($info = $categlib->get_category($_REQUEST['parentId']))) {
 	$smarty->assign('msg', 'Incorrect param'.' parentId');
@@ -18,10 +16,14 @@ if (!empty($_REQUEST['parentId']) && !($info = $categlib->get_category($_REQUEST
 	die;
 }	
 
-if (!isset($_REQUEST["parentId"])) {
-	$_REQUEST["parentId"] = 0;
+if (!isset($_REQUEST['parentId'])) {
+	$_REQUEST['parentId'] = 0;
 }
-$smarty->assign('parentId', $_REQUEST["parentId"]);
+$smarty->assign('parentId', $_REQUEST['parentId']);
+
+if (!empty($_REQUEST['parentId'])) {
+	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['parentId'] );
+}
 
 if (!empty($_REQUEST['unassign'])) {
 	$access->check_authenticity(tra('Are you sure you want to unassign the objects of this category: ') . $info['name']);
@@ -34,6 +36,7 @@ if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['toId'] );
 	$categlib->move_all_objects($_REQUEST['parentId'], $_REQUEST['toId']);
 }
 if (!empty($_REQUEST['copy_from']) && !empty($_REQUEST['to'])) {
@@ -43,6 +46,7 @@ if (!empty($_REQUEST['copy_from']) && !empty($_REQUEST['to'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['to'] );
 	$categlib->assign_all_objects($_REQUEST['parentId'], $_REQUEST['to']);
 }
 if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
@@ -147,6 +151,7 @@ if (isset($categorizedObject) && !isset($_REQUEST["addpage"])) {
 	$categlib->notify($values);
 }
 if (isset($_REQUEST["categId"])) {
+	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['categId'] );
 	$info = $categlib->get_category($_REQUEST["categId"]);
 } else {
 	$_REQUEST["categId"] = 0;
@@ -174,6 +179,7 @@ if (isset($_REQUEST["removeObject"])) {
 	$categlib->notify($values);
 }
 if (isset($_REQUEST["removeCat"]) && ($info = $categlib->get_category($_REQUEST['removeCat']))) {
+	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['removeCat'] );
 	$access->check_authenticity(tra('Click here to delete the category:') . ' ' . $info['name']);
 	$categlib->remove_category($_REQUEST["removeCat"]);
 }
@@ -226,7 +232,9 @@ if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
 					$smarty->display('error.tpl');
 					die;
 				}
+				$access->check_permission('tiki_p_admin_categories', '', 'category', $parentId );
 			} else {
+				$access->check_permission('tiki_p_admin_categories');
 				$parentId = 0;
 			}
 			if (!$categlib->exist_child_category($parentId, $data[0])) {

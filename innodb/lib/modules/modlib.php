@@ -680,104 +680,115 @@ class ModLib extends TikiLib
 	}
 
 	function execute_module( $mod_reference ) {
-		$defaults = array(
-			'style' => '',
-			'nonums' => 'n',
-		);
-		$module_params = isset($mod_reference['params']) ? (array) $mod_reference['params'] : array();
-		$module_params = array_merge( $defaults, $module_params ); // not sure why style doesn't get set sometime but is used in the tpl
-
-		if ( empty($mod_reference['rows']) ) {
-			$mod_reference['rows'] = 10;
-		}
-		$module_rows = $mod_reference["rows"];
-
-		$info = $this->get_module_info( $mod_reference );
-		$cachefile = $this->get_cache_file( $mod_reference, $info );
-
-		global $smarty, $tikilib, $user;
-		
-		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) || $this->is_admin_mode() ) {
+		global $smarty, $tikilib, $user, $prefs, $tiki_p_admin;
 			
-			if ($this->is_admin_mode()) {
-				require_once ('lib/setup/timer.class.php');
-				$timer = new timer('module');
-				$timer->start('module');
+		try {
+			$defaults = array(
+				'style' => '',
+				'nonums' => 'n',
+			);
+			$module_params = isset($mod_reference['params']) ? (array) $mod_reference['params'] : array();
+			$module_params = array_merge( $defaults, $module_params ); // not sure why style doesn't get set sometime but is used in the tpl
+
+			if ( empty($mod_reference['rows']) ) {
+				$mod_reference['rows'] = 10;
 			}
-			if ( $info['type'] == "function") // Use the module name as default module title. This can be overriden later. A module can opt-out of this in favor of a dynamic default title set in the TPL using clear_assign in the main module function. It can also be overwritten in the main module function.
-				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
+			$module_rows = $mod_reference["rows"];
 
-			$smarty->assign('nonums', $module_params['nonums']);
-			
-			if( $info['type'] == 'include' ) {
-				$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
+			$info = $this->get_module_info( $mod_reference );
+			$cachefile = $this->get_cache_file( $mod_reference, $info );
 
-				if( file_exists( $phpfile ) ) {
-					include $phpfile;
+			if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) || $this->is_admin_mode() ) {
+				
+				if ($this->is_admin_mode()) {
+					require_once ('lib/setup/timer.class.php');
+					$timer = new timer('module');
+					$timer->start('module');
 				}
-			} elseif( $info['type'] == 'function' ) {
-				$function = 'module_' . $mod_reference['name'];
-				$phpfuncfile = 'modules/mod-func-' . $mod_reference['name'] . '.php';
+				if ( $info['type'] == "function") // Use the module name as default module title. This can be overriden later. A module can opt-out of this in favor of a dynamic default title set in the TPL using clear_assign in the main module function. It can also be overwritten in the main module function.
+					$smarty->assign('tpl_module_title', tra( $info['name'] ) );
 
-				if (file_exists($phpfuncfile)) {
-					include_once $phpfuncfile;
+				$smarty->assign('nonums', $module_params['nonums']);
+				
+				if( $info['type'] == 'include' ) {
+					$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
+
+					if( file_exists( $phpfile ) ) {
+						include $phpfile;
+					}
+				} elseif( $info['type'] == 'function' ) {
+					$function = 'module_' . $mod_reference['name'];
+					$phpfuncfile = 'modules/mod-func-' . $mod_reference['name'] . '.php';
+
+					if (file_exists($phpfuncfile)) {
+						include_once $phpfuncfile;
+					}
+
+					if( function_exists( $function ) ) {
+						$function( $mod_reference, $module_params );
+					}
 				}
 
-				if( function_exists( $function ) ) {
-					$function( $mod_reference, $module_params );
+				$ck = getCookie('mod-'.$mod_reference['name'].$mod_reference['position'].$mod_reference['ord'], 'menu', 'o');
+				$smarty->assign('module_display', ($prefs['javascript_enabled'] == 'n' || $ck == 'o'));
+				
+				$smarty->assign_by_ref('module_rows',$mod_reference['rows']);
+				$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
+				$smarty->assign('module_ord', $mod_reference['ord']);
+				$smarty->assign('module_position', $mod_reference['position']);
+				$smarty->assign('moduleId', $mod_reference['moduleId']);
+				if( isset( $module_params['title'] ) ) {
+					$smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
 				}
-			}
+				$smarty->assign('tpl_module_name', $mod_reference['name'] );
+				
+				$tpl_module_style = '';
+				if ($tiki_p_admin == 'y' && $this->is_admin_mode() && (!$this->filter_active_module($mod_reference) ||
+							$prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))))) {
+					$tpl_module_style .= 'opacity: 0.5;';
+				}
+				if (isset($module_params['overflow']) && $module_params['overflow'] === 'y') {
+					$tpl_module_style .= 'overflow:visible !important;';
+				}
+				$smarty->assign('tpl_module_style', $tpl_module_style );
+				
+				$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
 
-			global $prefs;
-			$ck = getCookie('mod-'.$mod_reference['name'].$mod_reference['position'].$mod_reference['ord'], 'menu', 'o');
-			$smarty->assign('module_display', ($prefs['javascript_enabled'] == 'n' || $ck == 'o'));
-			
-			$smarty->assign_by_ref('module_rows',$mod_reference['rows']);
-			$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
-			$smarty->assign('module_ord', $mod_reference['ord']);
-			$smarty->assign('module_position', $mod_reference['position']);
-			$smarty->assign('moduleId', $mod_reference['moduleId']);
-			if( isset( $module_params['title'] ) ) {
-				$smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
-			}
-			$smarty->assign('tpl_module_name', $mod_reference['name'] );
-			
-			global $tiki_p_admin, $prefs;
-			$tpl_module_style = '';
-			if ($tiki_p_admin == 'y' && $this->is_admin_mode() && (!$this->filter_active_module($mod_reference) ||
-						$prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))))) {
-				$tpl_module_style .= 'opacity: 0.5;';
-			}
-			if (isset($module_params['overflow']) && $module_params['overflow'] === 'y') {
-				$tpl_module_style .= 'overflow:visible !important;';
-			}
-			$smarty->assign('tpl_module_style', $tpl_module_style );
-			
-			$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
-
-			if (file_exists('templates/'.$template)) {
-				$data = $smarty->fetch($template);
+				if (file_exists('templates/'.$template)) {
+					$data = $smarty->fetch($template);
+				} else {
+					$data = $this->get_user_module_content( $mod_reference['name'] );
+				}
+				$smarty->clear_assign('module_params'); // ensure params not available outside current module
+				$smarty->clear_assign('tpl_module_title');
+				$smarty->clear_assign('tpl_module_name');
+				$smarty->clear_assign('tpl_module_style');
+				
+				if ($this->is_admin_mode() && $timer) {
+					$elapsed = round( $timer->stop('module'), 3);
+					$data = preg_replace('/<div /', '<div title="Module Execution Time ' . $elapsed . 's" ' , $data, 1);
+				}
+							
+				if (!empty($cachefile) && !$this->is_admin_mode()) {
+					file_put_contents( $cachefile, $data );
+				}
 			} else {
-				$data = $this->get_user_module_content( $mod_reference['name'] );
+				$data = file_get_contents( $cachefile );
 			}
-			$smarty->clear_assign('module_params'); // ensure params not available outside current module
-			$smarty->clear_assign('tpl_module_title');
-			$smarty->clear_assign('tpl_module_name');
-			$smarty->clear_assign('tpl_module_style');
-			
-			if ($this->is_admin_mode() && $timer) {
-				$elapsed = round( $timer->stop('module'), 3);
-				$data = preg_replace('/<div /', '<div title="Module Execution Time ' . $elapsed . 's" ' , $data, 1);
-			}
-						
-			if (!empty($cachefile) && !$this->is_admin_mode()) {
-				file_put_contents( $cachefile, $data );
-			}
-		} else {
-			$data = file_get_contents( $cachefile );
-		}
 
-		return $data;
+			return $data;
+		} catch (Exception $e) {
+			$smarty->loadPlugin('smarty_block_remarksbox');
+			if ($tiki_p_admin == 'y') {
+				$message = $e->getMessage();
+			} else {
+				$message = tr('Contact the system administrator');
+			}
+			return smarty_block_remarksbox(array(
+				'type' => 'warning',
+				'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
+			), $message, $smarty);
+		}
 	}
 
 	/**

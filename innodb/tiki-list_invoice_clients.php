@@ -7,7 +7,7 @@
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
-$trkqrylib = TikiLib::lib('trkqry');
+TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
@@ -28,9 +28,9 @@ $headerlib->add_jq_onready("
 			.css('cursor', 'pointer');
 	});
 ");
-print_r($trkqrylib->tracker_query_by_names("Invoice Clients"));
-$smarty->assign("Clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
-$smarty->assign("Settings", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
+
+$smarty->assign("Clients", TrackerQueryLib::tracker("Invoice Clients")->byName()->query());
+$smarty->assign("Settings", TrackerQueryLib::tracker("Invoice Settings")->byName()->getOne());
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_invoice_clients.tpl');

@@ -28,10 +28,10 @@
 {section name=posts loop=$s.maxcount}{assign var='i' value=$smarty.section.posts.iteration-1}
  {if !$smarty.section.posts.first}<tr class="{$style}">{/if}
   <td class="journal" style="text-align:right">{if $i<$s.debitcount}{$j.debit[$i].stackItemAccountId}{/if}&nbsp;</td>
-  <td class="journal" style="text-align:right">{if $i<$s.debitcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$s.debit[$i].stackItemAmount|currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>
+  <td class="journal" style="text-align:right">{if $i<$s.debitcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$s.debit[$i].stackItemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>
   <td class="journal">{if $i<$j.debitcount}{$j.debit[$i].stackItemText|escape}{/if}&nbsp;</td>
   <td class="journal" style="text-align:right">{if $i<$s.creditcount}{$j.credit[$i].stackItemAccountId}{/if}&nbsp;</td>
-  <td class="journal" style="text-align:right">{if $i<$s.creditcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$s.credit[$i].stackItemAmount|currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>
+  <td class="journal" style="text-align:right">{if $i<$s.creditcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$s.credit[$i].stackItemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>
   <td class="journal">{if $i<$j.creditcount}{$j.credit[$i].stackItemText|escape}{/if}&nbsp;</td>
   {if $smarty.section.posts.first}<td rowspan="{$s.maxcount}">
    <a class="icon" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}">{icon _id="delete" alt="{tr}delete this transaction from the stack{/tr}" _confirm="{tr}Are you sure you want to delete this transaction from stack?{/tr}"}</a><br />

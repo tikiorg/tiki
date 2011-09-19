@@ -1729,7 +1729,7 @@ function prefs_feature_list($partial = false) {
 				'ui-lightness' => 'ui-lightness',
 				'vader' => 'vader',
 			), 
-			'default' => 'smoothness',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos - previously ui-darkness)
+			'default' => 'flick',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos - previously ui-darkness)
 		),
 		'feature_jquery_validation' => array(
 			'name' => tra('Validation'),

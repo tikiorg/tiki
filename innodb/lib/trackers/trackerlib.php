@@ -3207,25 +3207,6 @@ class TrackerLib extends TikiLib
 		}
 		return false;
 	}
-	function fieldId_is_editable($field, $item) {
-		global $tiki_p_admin_trackers, $user;
-		if ($tiki_p_admin_trackers == 'y') {
-			return true;
-		}
-		if (in_array($field['type'], array('u', 'g', 'I'))) {
-			return false;
-		}
-		if (empty($field['isHidden']) || $field['isHidden'] == 'n') {
-			return true;
-		}
-		if ($field['isHidden'] == 'p' || $field['isHidden'] == 'y') {
-			return false;
-		}
-		if (isset($item['createdBy']) && $user == $item['createdBy'] && $field['isHidden'] == 'ec') {
-			return true;
-		}
-		return false;
-	}
 
 	function flaten($fields) {
 		$new = array();

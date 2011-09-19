@@ -70,9 +70,19 @@
 		<div><label class="aclabel">{tr}Decimals{/tr}</label>
 		<input type="text" name="bookDecimals" id="bookDecimals" value="{$bookDecimals}" /></div>
 		<div><label class="aclabel">{tr}Decimal point{/tr}</label>
-		<input type="text" name="bookDecPoint" id="bookDecPoint" value="{$bookDecPoint}" /></div>
+		<select name="bookDecPoint" id="bookDecPoint">
+			<option value="," {if $bookDecPoint eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
+			<option value="." {if empty($bookDecPoint) or $bookDecPoint eq '.'}selected="selected"{/if}>{tr}Decimal{/tr}</option>
+			<option value=" " {if $bookDecPoint eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
+		</select></div>
+		{*<input type="text" name="bookDecPoint" id="bookDecPoint" value="{$bookDecPoint}" /></div>*}
 		<div><label class="aclabel">{tr}Thousands separator{/tr}</label>
-		<input type="text" name="bookThousand" id="bookThousand" value="{$bookThousand}" /></div>
+		<select name="bookThousand" id="bookThousand" >
+			<option value="," {if empty($bookThousand) or $bookThousand eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
+			<option value="." {if $bookThousand eq '.'}selected="selected"{/if}>{tr}Decimal point{/tr}</option>
+			<option value=" " {if $bookThousand eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
+		</select></div>
+		{*<input type="text" name="bookThousand" id="bookThousand" value="{$bookThousand}" /></div>*}
 	</fieldset>
 	<fieldset>
 		<legend>CSV export settings</legend>

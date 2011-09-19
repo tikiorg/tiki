@@ -35,7 +35,7 @@
 			<td>{$d.itemAccountId}</td>
 			<td>
 				{if $book.bookCurrencyPos==-1}{$book.bookCurrency}{/if}
-				{$d.itemAmount|currency:$book.bookDecPoint:$book.bookThousand}
+				{$d.itemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}
 				{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
 			</td>
 		</tr>
@@ -52,7 +52,7 @@
 	   		<td>{$c.itemAccountId}</td>
 			<td>
 				{if $book.bookCurrencyPos==-1}{$book.bookCurrency}{/if}
-				{$c.itemAmount|currency:$book.bookDecPoint:$book.bookThousand}
+				{$c.itemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}
 				{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
 			</td>
 	 	</tr>

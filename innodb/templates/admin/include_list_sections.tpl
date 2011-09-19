@@ -9,7 +9,7 @@
 	{tr}Enable/disable Tiki features in {/tr}<a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}</a>{tr}, but configure them elsewhere{/tr}
 {/remarksbox}
 
-<div class="clearfix cbox-data">
+<div class="clearfix cbox-data" style="padding-left: 10px;">
 	{foreach from=$icons key=page item=info}
 		{if $info.position}
 			{if $info.disabled}

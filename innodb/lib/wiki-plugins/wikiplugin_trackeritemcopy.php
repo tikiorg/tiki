@@ -78,8 +78,8 @@ function wikiplugin_trackeritemcopy_info() {
 
 function wikiplugin_trackeritemcopy( $data, $params ) {
 	global $smarty;
-	global $trklib; require_once("lib/trackers/trackerlib.php");
-	global $trkqrylib; require_once("lib/trackers/trackerquerylib.php");
+	$trklib = TikiLib::lib("trk");
+	TikiLib::lib("trkqry");
 	
 	if (!isset($params["trackerId"]) || !isset($params["copyFieldIds"])) {
 		return tra('Missing mandatory parameters');
@@ -102,7 +102,7 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		function items_copy($trackerId, $updateFieldIds, $updateFieldValues, $copyFieldIds, $itemIds, $linkFieldId, $itemLinkId, $copies) {
-			global $trklib, $trkqrylib, $_POST;
+			global $trklib, $_POST;
 			
 			if(is_array($itemIds) == false) $itemIds = array($itemIds);
 			
@@ -204,7 +204,10 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 			if ($copies > 0) {
 				
 				if ($key > 0) {
-					$qry = $trkqrylib->tracker_query($trackerIdLeft, $start, $end, null, array($itemId), $search, $params["linkFieldIds"][0]);
+					$qry = TrackerQueryLib::tracker($trackerIdLeft)
+						->fields($params["linkFieldIds"][0])
+						->equals(array($itemId));
+						
 					$itemIds = array();
 					foreach($qry as $linkedItemIds => $item) {
 						$itemIds[] = $linkedItemIds;

@@ -472,6 +472,9 @@ class EditLib
 		$parsed = $this->parse_html($inData);
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
+		$parsed = preg_replace('/!(?:\d\.)+/', '!#', $parsed); // numbered headings
+		
+		
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
 		return $parsed;
@@ -620,8 +623,15 @@ class EditLib
 								foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
 									foreach (array_reverse($end_arr) as $end ) {
 										$src .= $end;}}
+								
 								// write newline
 								$src .= "\n";
+								
+								// for lists, we must prepend '+' to keep the indentation
+								if ($p['listack']) {
+									$src .= str_repeat( '+', count($p['listack']));
+								}
+								
 								// reopen all previously closed wiki markup
 								foreach ($p['wikistack']['begin'] as $begin_arr) {
 									foreach ($begin_arr as $begin) {
@@ -758,11 +768,6 @@ class EditLib
 					
 					// update the wiki stack
 					if (isset($e['wikitag']) && $e['wikitag'] == true) {
-						
-						if ( !end($p['wikistack']['isinline']) ) { // markup spans a whole line
-							$this->startNewLine($src);
-						}
-						
 						array_pop( $p['wikistack']['begin'] );
 						array_pop( $p['wikistack']['end'] );
 						array_pop( $p['wikistack']['isinline'] );

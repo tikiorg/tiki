@@ -20,7 +20,7 @@ class WikiParser {
 	
 	function performAction(&$thisS, $yytext, $yyleng, $yylineno, $yy, $yystate, $S, $_S) {
 		$O = count($S) - 1;
-		"<@@PARSER_PERFORM_ACTION@@>"
+		"<@@PARSER_PERFORM_ACTION@@>";
 	}
 
 	var $table = "<@@TABLE@@>";

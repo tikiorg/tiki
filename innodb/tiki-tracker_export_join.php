@@ -7,8 +7,10 @@ if (isset($_REQUEST['time']) == true) {
 }
 
 require_once('tiki-setup.php');
-require_once('lib/trackers/trackerlib.php');
-require_once('lib/trackers/trackerquerylib.php');
+$trklib = TikiLib::lib("trk");
+TikiLib::lib("trkqry");
+$trkqrylib = new TrackerQueryLib();
+
 $access->check_permission('tiki_p_export_tracker');
 
 
@@ -87,15 +89,28 @@ if (isset($_REQUEST['trackerIds']) == true) {
 	$i = 0;
 	foreach($_REQUEST['trackerIds'] as $key => $trackerId) {
 		if ($key == 0) {
-
-			$trackerPrimary = $trkqrylib->tracker_query($trackerId, $_REQUEST['start'][$key], $_REQUEST['end'][$key], null, $_REQUEST['q'][$key], $_REQUEST['search'][$key], $_REQUEST['fields'][$key], $_REQUEST['status'][$key]);
+			$trackerPrimary = TrackerQueryLib::tracker($trackerId)
+				->start($_REQUEST['start'][$key])
+				->end($_REQUEST['end'][$key])
+				->equals($_REQUEST['q'][$key])
+				->search($_REQUEST['search'][$key])
+				->fields($_REQUEST['fields'][$key])
+				->status($_REQUEST['status'][$key])
+				->query();
 		} else {
 			$joinVars = $_REQUEST['itemIdFields'][$key - 1];
 			$joinVars = explode('|', $joinVars);
 			
 			$trackerPrimary = $trkqrylib->join_trackers(
 				$trackerPrimary, 
-				$trkqrylib->tracker_query($trackerId, $_REQUEST['start'][$key], $_REQUEST['end'][$key], null, $_REQUEST['q'][$key], $_REQUEST['search'][$key], $_REQUEST['fields'][$key], $_REQUEST['status'][$key]), 
+				TrackerQueryLib::tracker($trackerId)
+					->start($_REQUEST['start'][$key])
+					->end($_REQUEST['end'][$key])
+					 ->equals($_REQUEST['q'][$key])
+					->search($_REQUEST['search'][$key])
+					->fields($_REQUEST['fields'][$key])
+					->status($_REQUEST['status'][$key])
+					->query(),
 				$joinVars[0],
 				$joinVars[1]
 			);

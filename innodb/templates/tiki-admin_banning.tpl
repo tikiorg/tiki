@@ -12,6 +12,33 @@
 	}
 {/jq}
 
+{* this script (un/)checks all checkboxes with id 'multi-banning-section' *}
+{jq notonready=true}
+	function CheckMultiIP() {
+		for (var i = 0; i < document.banningform.elements.length; i++) {
+			var e = document.banningform.elements[i];
+			if (e.type == 'checkbox' && e.id == 'multi-banning-section' && e.name != 'checkall') {
+				e.checked = document.banningform.checkmultiip.checked;
+			}
+		}
+	}
+{/jq}
+
+{* this script hides date fields when they are irrelevant *}
+{jq notonready=true}
+	function CheckUseDates() {
+		var e = document.getElementById('usedates_date');
+		var e_from = document.getElementById('usedates_date_from');
+		var e_to = document.getElementById('usedates_date_to');
+		var check = document.getElementById('banning-actdates');
+		if ( check.checked == true ) {
+			e.style.display = 'block' ;
+		}else{
+			e.style.display = 'none' ;
+		}
+	}
+{/jq}
+
 {title help="Banning+System"}{tr}Banning system{/tr}{/title}
 
 <div class="navbar">
@@ -28,7 +55,7 @@
 	{/remarksbox}
 {/if}
 
-<h2>{tr}Add or edit a rule{/tr}</h2>
+<h2>{tr}Add or edit rules{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
 	<input type="hidden" name="banId" value="{$banId|escape}" />
 	<table class="formcolor">
@@ -45,6 +72,32 @@
 				<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}" />
 			</td>
 		</tr>
+		{if isset($mass_ban_ip)}
+		<tr>
+			<td><label for="banning-ipregex">{tr}Multiple IP regex matching:{/tr}</label></td>
+			<td>
+				<input type="radio" name="mode" value="mass_ban_ip" {if $info.mode eq 'mass_ban_ip'}checked="checked"{/if} />
+				<div class="toggle">
+					<input type="checkbox" name="checkmultiip" checked="checked" onclick="CheckMultiIP();" />
+					<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
+				</div>
+				<table>
+					{foreach key=ip item=comment from=$ban_comments_list}
+						<tr>
+							<td>
+								<input type="checkbox" name="multi_banned_ip[{$ip}]" id="multi-banning-section" checked="checked" /> <label for="multi-banning-section">{$ip}</label>
+							</td>
+							<td>
+								{foreach key=id item=user from=$comment}
+									<div>{$user.userName}</div>
+								{/foreach}
+							</td>
+						</tr>
+					{/foreach}
+				</table>
+			</td>
+		</tr>
+		{else}
 		<tr>
 			<td><label for="banning-ipregex">{tr}IP regex matching:{/tr}</label></td>
 			<td>
@@ -55,18 +108,19 @@
 				<input type="text" name="ip4" value="{$info.ip4|escape}" size="3" />
 			</td>
 		</tr>
+		{/if}
 		<tr>
 			<td>{tr}Banned from sections:{/tr}</td>
 			<td>
 				<div class="toggle">
-					<input type="checkbox" name="checkall" onclick="CheckAll();" />
+					<input type="checkbox" name="checkall" {if (!$banId)}checked="checked"{/if} onclick="CheckAll();" />
 					<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
 				</div>
 				<table>
 					<tr>
 						{foreach key=sec name=ix item=it from=$sections}
 							<td>
-								<input type="checkbox" name="section[{$sec}]" id="banning-section" {if in_array($sec,$info.sections)}checked="checked"{/if} /> <label for="banning-section">{tr}{$sec}{/tr}</label>
+								<input type="checkbox" name="section[{$sec}]" id="banning-section" {if ((!$banId) || in_array($sec,$info.sections))}checked="checked"{/if} /> <label for="banning-section">{tr}{$sec}{/tr}</label>
 							</td>
 							{if $smarty.foreach.ix.index mod 2}
 								</tr>
@@ -79,19 +133,23 @@
 		<tr>
 			<td><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
 			<td>
-				<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Rule active from{/tr}</td>
-			<td>
-				{html_select_date prefix="date_from" time=$info.date_from field_order=$prefs.display_field_order}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Rule active until{/tr}</td>
-			<td>
-				{html_select_date prefix="date_to" time=$info.date_to field_order=$prefs.display_field_order}
+				<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} onclick="CheckUseDates();" />
+				<div id="usedates_date" style="display: {if $info.use_dates eq 'y'}block{else}none{/if};" >
+					<table class="formcolor">
+						<tr>
+							<td>{tr}Rule active from{/tr}</td>
+							<td>
+								{html_select_date prefix="date_from" time=$info.date_from field_order=$prefs.display_field_order}
+							</td>
+						</tr>
+						<tr >
+							<td>{tr}Rule active until{/tr}</td>
+							<td>
+								{html_select_date prefix="date_to" time=$info.date_to end_year="+10" field_order=$prefs.display_field_order}
+							</td>
+						</tr>
+					</table>
+				</div>
 			</td>
 		</tr>
 		<tr>

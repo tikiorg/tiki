@@ -107,15 +107,23 @@ class TikiAccessLib extends TikiLib
 		}		
 	}
 
-	function check_permission($permissions, $permission_name='') {
+	function check_permission($permissions, $permission_name='', $objectType='', $objectId='') {
 		require_once ('tiki-setup.php');
-		if ( ! is_array($permissions) ) { $permissions = array($permissions); }
+		if ( ! is_array($permissions) ) {
+			$permissions = array($permissions);
+		}
 		foreach ($permissions as $permission) {
-			global $$permission;
-			if ($$permission != 'y') {
-				if ($permission_name) { $permission = $permission_name; }
-				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
-				if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
+			$objectPermissions = Perms::get( $objectType, $objectId );
+			$name = str_replace('tiki_p_', '', $permission);
+			if ($objectPermissions->$name) {
+				continue;
+			}
+			if ($permission_name) {
+				$permission = $permission_name;
+			}
+			$this->display_error('', tra("You do not have permission to use this feature:")." ". $permission, '403', false);
+			if (!$user) {
+				$_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
 			}
 		}
 	}

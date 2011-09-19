@@ -6,7 +6,7 @@
 		{$tabcontent[$i]}
 	{/foreach}
 {else}
-~np~{tabset name=$tabsetname|escape}
+~np~{tabset toggle=$toggle name=$tabsetname|escape}
 	{section name=ix loop=$tabs}{tab name=$tabs[ix]|escape}{$tabcontent[ix]}{/tab}{/section}
 {/tabset}~/np~
 {/if}

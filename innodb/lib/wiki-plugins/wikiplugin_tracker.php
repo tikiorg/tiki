@@ -453,6 +453,7 @@ function wikiplugin_tracker($data, $params)
 			}
 		}
 	}
+
 	if (!empty($itemId)) {
 		global $logslib; include_once('lib/logs/logslib.php');
 		$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI']);
@@ -541,12 +542,26 @@ function wikiplugin_tracker($data, $params)
 			$definition = Tracker_Definition::get($trackerId);
 			$item_info = isset($item_info) ? $item_info : array();
 			$factory = $definition->getFieldFactory();
+
+			if (empty($item_info)) {
+				$itemObject = Tracker_Item::newItem($trackerId);
+			} elseif (! isset($itemObject)) {
+				$itemObject = Tracker_Item::fromInfo($item_info);
+			}
+
 			if (empty($outf)) {
-				$flds = array('data' => $definition->getFields());
+				$unfiltered = array('data' => $definition->getFields());
 			} else {
-				$flds = array('data' => array());
+				$unfiltered = array('data' => array());
 				foreach ($outf as $fieldId) {
-					$flds['data'][] = $definition->getField($fieldId);
+					$unfiltered['data'][] = $definition->getField($fieldId);
+				}
+			}
+
+			$flds = array('data' => array());
+			foreach ($unfiltered['data'] as $f) {
+				if ($itemObject->canModifyField($f['fieldId'])) {
+					$flds['data'][] = $f;
 				}
 			}
 			$bad = array();
@@ -560,9 +575,6 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($autosavefields)) {
 					foreach ($autosavefields as $i=>$f) {
 						if (!$ff = $trklib->get_field($f, $flds['data'])) {
-							continue;
-						}
-						if (!$trklib->fieldId_is_editable($ff, $item_info)) {
 							continue;
 						}
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {

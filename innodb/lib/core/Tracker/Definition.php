@@ -81,8 +81,17 @@ class Tracker_Definition
 	{
 		return $this->getConfiguration($key) === 'y';
 	}
-
-	function getFields($keyAsId = false)
+	
+	function getFieldsIdKeys()
+	{
+		$fields = array();
+		foreach($this->getFields() as $key => $field) {
+			$fields[$field['fieldId']] = $field;
+		}
+		return $fields;
+	}
+	
+	function getFields()
 	{
 		if ($this->fields) {
 			return $this->fields;
@@ -91,15 +100,6 @@ class Tracker_Definition
 		$trklib = TikiLib::lib('trk');
 		$trackerId = $this->trackerInfo['trackerId'];
 		$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true);
-
-		//makes transversing easier
-		if ($keyAsId == true) {
-			$fieldsTemp = array();
-			foreach($fields['data'] as $field) {
-				$fieldsTemp[$field['fieldId']] = $field;
-			}
-			$fields['data'] = $fieldsTemp;
-		}
 		
 		return $this->fields = $fields['data'];
 	}

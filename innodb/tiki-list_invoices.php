@@ -7,7 +7,7 @@
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
-$trkqrylib = TikiLib::lib('trkqry');
+TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
@@ -19,7 +19,9 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 	die;
 }
 
-$Invoices = $trkqrylib->tracker_query_by_names("Invoices");
+$Invoices = TrackerQueryLib::tracker("Invoices")
+	->byName(true)
+	->query();
 
 foreach($Invoices as $I => $Invoice) {
 	$Amount = 0;
@@ -56,7 +58,7 @@ foreach($Invoices as $I => $Invoice) {
 }
 
 $smarty->assign("Invoices", $Invoices);
-$smarty->assign("Settings", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
+$smarty->assign("Settings", TrackerQueryLib::tracker("Invoice Settings")->byName()->query());
 $smarty->assign("Amount", $Amount);
 $smarty->assign("Paid", $Paid);
 $smarty->assign("Status", $Status);

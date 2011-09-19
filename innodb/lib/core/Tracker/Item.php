@@ -24,12 +24,26 @@ class Tracker_Item
 		return $obj;
 	}
 
+	public static function newItem($trackerId)
+	{
+		$obj = new self;
+		$obj->info = array();
+		$obj->definition = Tracker_Definition::get($trackerId);
+		$obj->initialize();
+
+		return $obj;
+	}
+
 	private function __construct()
 	{
 	}
 
 	function canView()
 	{
+		if (empty($this->info)) {
+			return true;
+		}
+
 		if ($this->canModifyFromSpecialPermissions()) {
 			return true;
 		}
@@ -47,6 +61,10 @@ class Tracker_Item
 
 	function canModify()
 	{
+		if (empty($this->info)) {
+			return $this->perms->create_tracker_items;
+		}
+
 		if ($this->canModifyFromSpecialPermissions()) {
 			return true;
 		}
@@ -91,7 +109,7 @@ class Tracker_Item
 	{
 		$this->owner = $this->getItemOwner();
 		$this->ownerGroup = $this->getItemGroupOwner();
-		$this->perms = Perms::get('tracker', $this->info['trackerId']);
+		$this->perms = Perms::get('tracker', $this->definition->getConfiguration('trackerId'));
 	}
 
 	private function getItemOwner()
@@ -108,7 +126,7 @@ class Tracker_Item
 
 		$userField = $this->definition->getUserField();
 		if ($userField) {
-			return $this->info[$userField];
+			return $this->getValue($userField);
 		}
 	}
 
@@ -126,7 +144,91 @@ class Tracker_Item
 
 		$groupField = $this->definition->getWriterGroupField();
 		if ($groupField) {
-			return $this->info[$groupField];
+			return $this->getValue($groupField);
+		}
+	}
+
+	function canViewField($fieldId)
+	{
+		// Nothing stops the tracker administrator from doing anything
+		if ($this->perms->admin_trackers) {
+			return true;
+		}
+
+		// Viewing the item is required to view the field (safety)
+		if (! $this->canView()) {
+			return false;
+		}
+
+		$field = $this->definition->getField($fieldId);
+		
+		if (! $field) {
+			return false;
+		}
+
+		$isHidden = $field['isHidden'];
+		$visibleBy = $field['visibleBy'];
+
+		if ($isHidden == 'c' && $this->canModifyFromSpecialPermissions()) {
+			// Creator or creator group check when field can be modified by creator only
+			return true;
+		} elseif ($isHidden == 'y') {
+			// Visible by administrator only
+			return false;
+		} else {
+			// Permission based on visibleBy apply
+			return $this->isMemberOfGroups($visibleBy);
+		}
+	}
+
+	function canModifyField($fieldId)
+	{
+		// Nothing stops the tracker administrator from doing anything
+		if ($this->perms->admin_trackers) {
+			return true;
+		}
+
+		// Modify the item is required to modify the field (safety)
+		if (! $this->canModify()) {
+			return false;
+		}
+
+		$field = $this->definition->getField($fieldId);
+		
+		if (! $field) {
+			return false;
+		}
+
+		$isHidden = $field['isHidden'];
+		$editableBy = $field['editableBy'];
+
+		if ($isHidden == 'c') {
+			// Creator or creator group check when field can be modified by creator only
+			return $this->canModifyFromSpecialPermissions();
+		} elseif ($isHidden == 'p') {
+			// Editable by administrator only
+			return false;
+		} else {
+			// Permission based on editableBy apply
+			return $this->isMemberOfGroups($editableBy);
+		}
+	}
+
+	private function isMemberOfGroups($groups)
+	{
+		// Nothing specified means everyone
+		if (empty($groups)) {
+			return true;
+		}
+
+		$commonGroups = array_intersect($groups, $this->perms->getGroups());
+		return count($commonGroups) != 0;
+	}
+
+	private function getValue($fieldId)
+	{
+		if (isset($this->info[$fieldId])) {
+			return $this->info[$fieldId];
 		}
 	}
 }
