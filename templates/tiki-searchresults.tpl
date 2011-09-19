@@ -188,7 +188,7 @@
 			{if !empty($results[search].parentName)}
 					<a href="{$results[search].parentHref}" class="parentname">{$results[search].parentName|escape}</a>
 				{/if}
-			<a href="{$results[search].href}&amp;highlight={$words}" class="objectname">{$results[search].pageName|escape}</a>
+			<a href="{$results[search].href}&amp;highlight={$words|escape:url}" class="objectname">{$results[search].pageName|escape}</a>
 			{if $prefs.feature_search_show_visit_count eq 'y'}
 				<span class="itemhits">({tr}Hits:{/tr} {$results[search].hits|escape})</span>
 			{/if}
