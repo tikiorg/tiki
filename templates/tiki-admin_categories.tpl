@@ -41,7 +41,7 @@
 					<td>{tr}Parent:{/tr}</td>
 					<td>
 						<select name="parentId">
-							<option value="0">{tr}Top{/tr}</option>
+							{if $tiki_p_admin_categories eq 'y'}<option value="0">{tr}Top{/tr}</option>{/if}
 								{foreach $categories as $category}
 								<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
 								{/foreach}
