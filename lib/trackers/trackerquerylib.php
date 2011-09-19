@@ -29,15 +29,117 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class TrackerQueryLib extends TikiLib
-{
+class TrackerQueryLib {
 	
-	/* In the construct we put the field options for "items list" (type 'l') into a table to be joined upon, 
+	private $tracker;
+	private $start = 0;
+	private $end = 0;
+	private $itemId = array();
+	private $equals = array();
+	private $search = array();
+	private $fields = array();
+	private $status = "opc";
+	private $sort = null;
+	private $limit = 0;
+	private $offset = 0;
+	private $byName = false;
+	private $includeTrackerDetails = true;
+	private $desc = false;
+	private $render = true;
+	private $delimiter = "[{|!|}]";
+	private $debug = false;
+	
+	public function tracker($tracker) {
+		return new self($tracker);
+	}
+	
+	public function start($start) {
+		$this->start = $start;
+		return $this;
+	}
+	
+	public function end($end) {
+		$this->end = $end;
+		return $this;
+	}
+	
+	public function itemId($itemId) {
+		$this->itemId = $itemId;
+		return $this;
+	}
+	
+	public function equals($equals = array()) {
+		$this->equals = $equals;
+		return $this;
+	}
+	
+	public function search($search) {
+		$this->search = $search;
+		return $this;
+	}
+	
+	public function fields($fields = array()) {
+		$this->fields = $fields;
+		return $this;
+	}
+	
+	public function status($status) {
+		$this->status = $status;
+		return $this;
+	}
+	
+	public function sort($sort) {
+		$this->sort = $sort;
+		return $this;
+	}
+	
+	public function limit($limit) {
+		$this->limit = $limit;
+		return $this;
+	}
+	
+	public function offset($offset) {
+		$this->offset = $offset;
+		return $this;
+	}
+	
+	public function byName($byName = true) {
+		$this->byName = $byName;
+		return $this;
+	}
+	
+	public function includeTrackerDetails($includeTrackerDetails) {
+		$this->includeTrackerDetails = $includeTrackerDetails;
+		return $this;
+	}
+	
+	public function desc($desc) {
+		$this->desc = $desc;
+		return $this;
+	}
+	
+	public function render($render) {
+		$this->render = $render;
+		return $this;
+	}
+	
+	public function getOne() {
+		return $this
+			->limit(1)
+			->query();
+	}
+	
+	public function debug($debug = true) {
+		$this->debug = $debug;
+		return $this;
+	}
+	/* In the construct we putself(); the field options for "items list" (type 'l') into a table to be joined upon, 
 	 * so instead of running a query for every row, we use simple joins to get the job done.  We use a temporary
 	 * table so that it is removed once the connection is closed or after the page loads.
 	 */
-	function __construct() {
+	function __construct($tracker) {
 		global $tikilib, $trklib;
+		$this->tracker = $tracker;
 		$trklib = TikiLib::lib('trk');
 		
 		$tikilib->query("
@@ -216,7 +318,7 @@ class TrackerQueryLib extends TikiLib
 	    }
 	    return 0;
 	}
-
+	
 	/*Queries & filters trackers from mysql, orders results in a way that is human understandable and can be manipulated easily
 	 * The end result is a very simple array setup as follows:
 	 * array( //tracker(s)
@@ -231,31 +333,32 @@ class TrackerQueryLib extends TikiLib
 	 * 		)
 	 * )
 	 */
-	function tracker_query($tracker, $start = null, $end = null, $itemId = null, $equals = null, $search = null, $fields = null, $status = "opc", $sort = null, $limit = null, $offset = null, $byName = false, $includeTrackerDetails = true, $desc = true, $render = true, $delimiter = "[{|!|}]") {
+	
+	function query() {
 		global $tikilib, $trklib;
-		$debug = false;
 		$params = array();
 		$fields_safe = "";
 		$status_safe = "";
 		$isSearch = false;
 
-		$trackerId = ($byName == true ? $trklib->get_tracker_by_name($tracker) : $tracker);
-		
+		$trackerId = ($this->byName == true ? $trklib->get_tracker_by_name($this->tracker) : $this->tracker);
+
 		if (empty($trackerId)) return; //if we can't find a tracker, then return
+		if (!(is_numeric($trackerId))) throw new Exception("Opps, looks like you need to call ->byName();");
 		
 		$trackerDefinition = Tracker_Definition::get($trackerId);
-
+		
 		$trackerFieldDefinition = $trackerDefinition->getFields(true);
 		
 		$params[] = $trackerId;
 		
-		if (isset($start) && !empty($start) && !$search) $params[] = $start;
-		if (isset($end) && !empty($end) && !$search) $params[] = $end;
-		if (isset($itemId) && !empty($itemId) && !$search) $params[] = $itemId;
+		if (!empty($this->start) && !$this->search) $this->params[] = $this->start;
+		if (!empty($this->end) && !$this->search) $params[] = $this->end;
+		if (!empty($this->itemId) && !$this->search) $params[] = $this->itemId;
 		
-		if(isset($byName) && $byName == true && !empty($fields)) {
+		if($this->byName == true && !empty($this->fields)) {
 			$fieldIds = array();
-			foreach($fields as $field) {
+			foreach($this->fields as $field) {
 				$fieldIds[] = $tikilib->getOne("
 					SELECT fieldId
 					FROM tiki_tracker_fields
@@ -265,29 +368,29 @@ class TrackerQueryLib extends TikiLib
 					WHERE
 						tiki_trackers.name = ? AND
 						tiki_tracker_fields.name = ?
-				", array($tracker, $field));
+				", array($this->tracker, $field));
 			}
-			$fields = $fieldIds;
+			$this->fields = $fieldIds;
 		}
 		
-		if (count($fields) > 0 && (count($equals) > 0 || count($search) > 0)) {
-			for($i = 0, $count_fields = count($fields); $i < $count_fields; $i++) {
-				if (strlen($fields[$i]) > 0) {
+		if (count($this->fields) > 0 && (count($this->equals) > 0 || count($this->search) > 0)) {
+			for($i = 0, $count_fields = count($this->fields); $i < $count_fields; $i++) {
+				if (strlen($this->fields[$i]) > 0) {
 					$fields_safe .= " ( search_item_fields.fieldId = ? ";
-					$params[] = $fields[$i];
+					$params[] = $this->fields[$i];
 					
-					if (strlen($equals[$i]) > 0) {
+					if (strlen($this->equals[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value = ? ";
-						$params[] = $equals[$i];
-					} elseif (strlen($search[$i]) > 0) {
+						$params[] = $this->equals[$i];
+					} elseif (strlen($this->search[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value LIKE ? ";
-						$params[] = '%' . $search[$i] . '%';
+						$params[] = '%' . $this->search[$i] . '%';
 					}
 					
 					$fields_safe .= " ) ";
 					
 					
-					if ($i + 1 < count($fields) && count($fields) > 1) $fields_safe .= " OR ";
+					if ($i + 1 < count($this->fields) && count($this->fields) > 1) $fields_safe .= " OR ";
 				}
 			}
 			
@@ -297,12 +400,12 @@ class TrackerQueryLib extends TikiLib
 			}
 		}
 		
-		if (strlen($status) > 0) {
-			for($i=0, $strlen_status = strlen($status); $i < $strlen_status; $i++) {
-				if (strlen($status[$i]) > 0) {
+		if (strlen($this->status) > 0) {
+			for($i=0, $strlen_status = strlen($this->status); $i < $strlen_status; $i++) {
+				if (strlen($this->status[$i]) > 0) {
 					$status_safe .= " tiki_tracker_items.status = ? ";
-					if ($i + 1 < strlen($status) && strlen($status) > 1) $status_safe .= " OR ";
-					$params[] = $status[$i];
+					if ($i + 1 < strlen($this->status) && strlen($this->status) > 1) $status_safe .= " OR ";
+					$params[] = $this->status[$i];
 				}
 			}
 			
@@ -311,12 +414,12 @@ class TrackerQueryLib extends TikiLib
 			}
 		}
 		
-		if ( isset($limit) && !empty($limit) && is_numeric($limit) == false) {
-			unset($limit);
+		if ( !empty($this->limit) && is_numeric($this->limit) == false) {
+			unset($this->limit);
 		}
 		
-		if ( isset($offset) && !empty($offset) && is_numeric($offset) == false) {
-			unset($offset);
+		if ( isset($this->offset) && !empty($this->offset) && is_numeric($this->offset) == false) {
+			unset($this->offset);
 		}
 		
 		$query = "
@@ -324,9 +427,9 @@ class TrackerQueryLib extends TikiLib
 				tiki_tracker_items.status,
 				tiki_tracker_item_fields.itemId,
 				tiki_tracker_fields.trackerId,
-				GROUP_CONCAT(tiki_tracker_fields.name 			SEPARATOR '$delimiter') AS fieldNames,
-				GROUP_CONCAT(tiki_tracker_item_fields.fieldId	SEPARATOR '$delimiter') AS fieldIds,
-				GROUP_CONCAT(IFNULL(items_right.value, tiki_tracker_item_fields.value) 										SEPARATOR '$delimiter') AS item_values
+				GROUP_CONCAT(tiki_tracker_fields.name 			SEPARATOR '".$this->delimiter."') AS fieldNames,
+				GROUP_CONCAT(tiki_tracker_item_fields.fieldId	SEPARATOR '".$this->delimiter."') AS fieldIds,
+				GROUP_CONCAT(IFNULL(items_right.value, tiki_tracker_item_fields.value) 										SEPARATOR '".$this->delimiter."') AS item_values
 						
 			FROM tiki_tracker_item_fields ".($isSearch == true ? " AS search_item_fields " : "")."
 			
@@ -364,22 +467,22 @@ class TrackerQueryLib extends TikiLib
 			WHERE
 			tiki_trackers.trackerId = ?
 			
-			".(isset($start) && !empty($start) && !$search ? 								" AND tiki_tracker_items.lastModif > ? " : "")."
-			".(isset($end) && !empty($end) && !$search ? 								" AND tiki_tracker_items.lastModif < ? " : "")."
-			".(isset($itemId) && !empty($itemId) && !$search ? 							" AND tiki_tracker_item_fields.itemId = ? " : "")."
-			".(isset($fields_safe) && !empty($fields_safe) ? $fields_safe : "")."
-			".(isset($status_safe) && !empty($status_safe) ? $status_safe : "")."
+			".(!empty($this->start) && !$this->search ? 								" AND tiki_tracker_items.lastModif > ? " : "")."
+			".(!empty($this->end) && !$this->search ? 								" AND tiki_tracker_items.lastModif < ? " : "")."
+			".(!empty($this->itemId) && !$this->search ? 							" AND tiki_tracker_item_fields.itemId = ? " : "")."
+			".(!empty($fields_safe) ? $fields_safe : "")."
+			".(!empty($status_safe) ? $status_safe : "")."
 			
 			GROUP BY
-				tiki_tracker_item_fields.itemId ".($desc == true ? 'DESC' : 'ASC')."
+				tiki_tracker_item_fields.itemId ".($this->desc == true ? 'DESC' : 'ASC')."
 			ORDER BY 
 				tiki_tracker_items.lastModif
-			".(isset($limit) && !empty($limit) ? 
-				" LIMIT ".(isset($offset) && !empty($offset) ? "$offset, " : "")." $limit"
+			".(!empty($this->limit) ? 
+				" LIMIT ".(!empty($this->offset) ? $this->offset.", " : "")." ".$this->limit
 				: ""
 			);
 		
-		if ($debug == true) {
+		if ($this->debug == true) {
 			$result = array($query, $params);
 			print_r( $result );
 			die;
@@ -390,23 +493,32 @@ class TrackerQueryLib extends TikiLib
 		$newResult = array();
 		foreach($result as $key => $row) {
 			$newRow = array();
-			$fieldNames = explode($delimiter, $row['fieldNames']);
-			$fieldIds = explode($delimiter, $row['fieldIds']); 
-			$itemValues = explode($delimiter, $row['item_values']);
-			
+			$fieldNames = explode($this->delimiter, $row['fieldNames']);
+			$fieldIds = explode($this->delimiter, $row['fieldIds']); 
+			$itemValues = explode($this->delimiter, $row['item_values']);
+
 			foreach($fieldIds as $key => $fieldId) {
-				$field = ($byName == true ? $fieldNames[$key] : $fieldId);
+				$field = ($this->byName == true ? $fieldNames[$key] : $fieldId);
+				$value = '';
+				
+				if ($this->render == true) {
+					$value = $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]);
+				} else {
+					 $value = $itemValues[$key];
+				}
+				
 				if (isset($newRow[$field])) {
 					if (is_array($newRow[$field]) == false) {
 						$newRow[$field] = array($newRow[$field]);
 					}
 					
-					$newRow[$field][] = ($render == true ? $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]) : $itemValues[$key]);
+					$newRow[$field][] = $value;
 				} else {
-					$newRow[$field] = ($render == true ? $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]) : $itemValues[$key]);
+					$newRow[$field] = $value;
 				}
+				
 			}
-			if (isset($includeTrackerDetails) && $includeTrackerDetails == true) {
+			if ($includeTrackerDetails == true) {
 				$newRow['status'.$trackerId] = $row['status']; 
 				$newRow['trackerId'] = $row['trackerId'];
 				$newRow['itemId'] = $row['itemId'];
@@ -414,15 +526,9 @@ class TrackerQueryLib extends TikiLib
 			$newResult[$row['itemId']] = $newRow;
 		}
 		unset($result);
+		
 		return $newResult;
 	}
-	
-	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
-	*/
-	function tracker_query_by_names($tracker, $start = null, $end = null, $itemId = null, $equals = null, $search = null, $fields = null, $status = null, $sort = null, $limit = null, $offset = null, $includeTrackerDetails = null, $desc = null, $render = true) {
-		return $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails, $desc, $render);
-	}
-	
 	
 	private function render_field_value($fieldDefinition, $value) {
 		global $trklib;
@@ -550,6 +656,3 @@ class TrackerQueryLib extends TikiLib
 		return $output;
 	}
 }
-
-global $trkqrylib;
-$trkqrylib = new TrackerQueryLib;

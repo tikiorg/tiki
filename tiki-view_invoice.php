@@ -21,7 +21,11 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 
 (int)$_REQUEST['InvoiceId'] = $_REQUEST['InvoiceId'];
 $smarty->assign('InvoiceId', $_REQUEST['InvoiceId']);
-$invoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['InvoiceId']));
+$invoice = TrackerQueryLib::tracker("Invoices")
+	->byName()
+	->equals($_REQUEST['InvoiceId'])
+	->getOne();
+
 $amount = 0;
 
 if (is_array($invoice["Item Amounts"])) {
@@ -34,9 +38,23 @@ if (is_array($invoice["Item Amounts"])) {
 
 $smarty->assign("invoice", $invoice);
 $smarty->assign("amount", $amount);
-$smarty->assign("client", end($trkqrylib->tracker_query_by_names("Invoice Clients", null, null, null, array($invoice['Client Id']), null, array("Client Id"))));
-$smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
-$smarty->assign("invoiceItems", $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['InvoiceId']), null, array("Invoice Id")));
+$smarty->assign("client",
+	TrackerQueryLib::tracker("Invoice Clients")
+		->fields(array("Client Id"))->equals(array($invoice['Client Id']))
+		->byName()
+		->getOne()
+);
+$smarty->assign("setting", 
+	TrackerQueryLib::tracker("Invoice Settings")
+		->byName()
+		->query()
+);
+$smarty->assign("invoiceItems", 
+	TrackerQueryLib::tracker("Invoice Items")
+		->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
+		->byName()
+		->query()
+);
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_invoice.tpl');
