@@ -46,10 +46,11 @@ class TrackerQueryLib {
 	private $includeTrackerDetails = true;
 	private $desc = false;
 	private $render = true;
+	private $excludeDetails = false;
 	private $delimiter = "[{|!|}]";
 	private $debug = false;
 	
-	public function tracker($tracker) {
+	public static function tracker($tracker) {
 		return new self($tracker);
 	}
 	
@@ -108,8 +109,8 @@ class TrackerQueryLib {
 		return $this;
 	}
 	
-	public function includeTrackerDetails($includeTrackerDetails) {
-		$this->includeTrackerDetails = $includeTrackerDetails;
+	public function excludeDetails($excludeDetails = true) {
+		$this->excludeDetails = $excludeDetails;
 		return $this;
 	}
 	
@@ -123,6 +124,9 @@ class TrackerQueryLib {
 		return $this;
 	}
 	
+	public function includeDetails($includeDetails = true) {
+		
+	}
 	public function getOne() {
 		return $this
 			->limit(1)
@@ -518,7 +522,7 @@ class TrackerQueryLib {
 				}
 				
 			}
-			if ($includeTrackerDetails == true) {
+			if ($this->excludeDetails == false) {
 				$newRow['status'.$trackerId] = $row['status']; 
 				$newRow['trackerId'] = $row['trackerId'];
 				$newRow['itemId'] = $row['itemId'];
