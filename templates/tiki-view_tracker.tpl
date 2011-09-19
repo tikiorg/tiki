@@ -74,14 +74,11 @@
 								</th>
 							{/if}
 							
-							{foreach from=$fields key=ix item=field_value}
-								{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+							{foreach from=$listfields key=ix item=field_value}
+								{if $field_value.isTblVisible eq 'y' and ( $field_value.type ne 'x' and $field_value.type ne 'h') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 									<th class="auto">
 										{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
 									</th>
-									{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
-										{assign var=rateFieldId value=$field_value.fieldId}
-									{/if}
 								{/if}
 							{/foreach}
 							
@@ -123,9 +120,7 @@
 								
 								{* ------- list values --- *}
 								{foreach from=$items[user].field_values key=ix item=field_value}
-									{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' 
-										or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') 
-										and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+									{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 										<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
 											{trackeroutput field=$field_value showlinks=y showpopup="y" item=$items[user] list_mode=y inTable=formcolor reloff=$itemoff}
 										</td>
@@ -204,25 +199,21 @@
 				</tr>
 			{/if}
 			{foreach from=$fields key=ix item=field_value}
-				{if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
-					{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and
-							(empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') and
-							(empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and
-							($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and
-							!($field_value.type eq 's' and $field_value.name eq 'Rating')}
-						<tr>
-							<td>
-								{if $field_value.isMandatory eq 'y'}
-									{$field_value.name}<em class='mandatory_star'>*</em>
-								{else}
-									{$field_value.name}
-								{/if}
-							</td>
-							<td>
-								{trackerinput field=$field_value inTable=formcolor}
-							</td>
-						</tr>
-					{/if}
+				{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and
+						($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and
+						!($field_value.type eq 's' and $field_value.name eq 'Rating')}
+					<tr>
+						<td>
+							{if $field_value.isMandatory eq 'y'}
+								{$field_value.name}<em class='mandatory_star'>*</em>
+							{else}
+								{$field_value.name}
+							{/if}
+						</td>
+						<td>
+							{trackerinput field=$field_value inTable=formcolor}
+						</td>
+					</tr>
 				{/if}
 			{/foreach}
 			

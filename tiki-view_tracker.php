@@ -191,10 +191,10 @@ $all_descends = false;
 
 $fieldFactory = $trackerDefinition->getFieldFactory();
 
+$itemObject = Tracker_Item::newItem($_REQUEST['trackerId']);
+
 foreach ($xfields['data'] as $i => $current_field) {
-	$current_field_list = array();
-	$current_field_ins = array();
-	$current_field_fields = array();
+	$current_field_ins = null;
 
 	$fid = $current_field["fieldId"];
 	$ins_id = 'ins_' . $fid;
@@ -205,49 +205,31 @@ foreach ($xfields['data'] as $i => $current_field) {
 	if (!empty($sort_field) and $sort_field == $fid) {
 		$orderkey = true;
 	}
-	if (in_array($current_field['type'], array('u', 'g', 'I')) && isset($current_field['options_array'][0]) && $current_field['options_array'][0] == 1) {
-		$creatorSelector = true;
-	} else {
-		$creatorSelector = false;
-	}
-	//exclude fields that should not be listed
-	if (($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields)) and ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
-		$current_field_list = $current_field;
-	}
-	if ($creatorSelector or $current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'c' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
-		$current_field_ins = $current_field;
-		$current_field_fields = $current_field;
 
+	$fieldIsVisible = $itemObject->canViewField($fid);
+	$fieldIsEditable = $itemObject->canModifyField($fid);
+
+	//exclude fields that should not be listed
+	if ($fieldIsVisible && ($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields))) {
+		$listfields[$fid] = $current_field;
+	}
+
+	if ($fieldIsVisible || $fieldIsEditable) {
 		$handler = $fieldFactory->getHandler($current_field);
 
 		if ($handler) {
 			$field_values = $insert_values = $handler->getFieldData($_REQUEST);
-
-			if ($insert_values) {
-				$current_field_ins = array_merge($current_field_ins, $insert_values);
-			}
-
-			if ($field_values) {
-				$current_field_fields = array_merge($current_field_fields, $field_values);
-			}
+			$current_field_ins = array_merge($current_field, $insert_values);
 		}
-	}
-	// store values to have them available when there is
-	// an error in the values typed by an user for a field type.
-	if (isset($current_field_fields['fieldId'])) {
-		$current_field_fields['value'] = isset($current_field_ins['value']) ? $current_field_ins['value'] : '';
-	}
-
-	if (! empty($current_field_list)) {
-		$listfields[$fid] = $current_field_list;
 	}
 
 	if (! empty($current_field_ins)) {
-		$ins_fields['data'][$i] = $current_field_ins;
-	}
-
-	if (! empty($current_field_fields)) {
-		$fields['data'][$i] = $current_field_fields;
+		if ($fieldIsEditable) {
+			$ins_fields['data'][$i] = $current_field_ins;
+		}
+		if ($fieldIsVisible) {
+			$fields['data'][$i] = $current_field_ins;
+		}
 	}
 }
 
@@ -265,7 +247,8 @@ if (!$orderkey && $sort_mode == '') {
 }
 if (!empty($_REQUEST['remove'])) {
 	$item_info = $trklib->get_item_info($_REQUEST['remove']);
-	if ($tiki_p_admin_trackers == 'y' || ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+	$actionObject = Tracker_Item::fromInfo($item_info);
+	if ($actionObject->canRemove()) {
 		$access->check_authenticity();
 		$trklib->remove_tracker_item($_REQUEST['remove']);
 	}
@@ -273,7 +256,8 @@ if (!empty($_REQUEST['remove'])) {
 	check_ticket('view-trackers');
 	foreach($_REQUEST['action'] as $batchid) {
 		$item_info = $trklib->get_item_info($batchid);
-		if ($tiki_p_admin_trackers == 'y' || ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+		$actionObject = Tracker_Item::fromInfo($item_info);
+		if ($actionObject->canRemove()) {
 			$trklib->remove_tracker_item($batchid);
 		}
 	}
@@ -281,7 +265,8 @@ if (!empty($_REQUEST['remove'])) {
 	check_ticket('view-trackers');
 	foreach($_REQUEST['action'] as $batchid) {
 		$item_info = $trklib->get_item_info($batchid);
-		if ($tiki_p_admin_trackers == 'y' || ($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c')) {
+		$actionObject = Tracker_Item::fromInfo($item_info);
+		if ($actionObject->canModify()) {
 			$trklib->replace_item($_REQUEST['trackerId'], $batchid, array(
 				'data' => ''
 			) , $_REQUEST['batchaction']);
@@ -329,7 +314,7 @@ if (isset($_REQUEST['import'])) {
 		fclose($fp);
 	}
 } elseif (isset($_REQUEST["save"])) {
-	if ($tiki_p_create_tracker_items == 'y') {
+	if ($itemObject->canModify()) {
 		global $captchalib; include_once 'lib/captcha/captchalib.php';
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
@@ -486,7 +471,7 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 }
 foreach($xfields['data'] as $xfd) {
 	$fid = $xfd["fieldId"];
-	if ($xfd['isSearchable'] == 'y' and !isset($listfields[$fid]) and ($xfd['isHidden'] == 'n' or $xfd['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfd['type'] == 's' and $xfd['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
+	if ($xfd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
 		$listfields[$fid]['type'] = $xfd["type"];
 		$listfields[$fid]['name'] = $xfd["name"];
 		$listfields[$fid]['options'] = $xfd["options"];

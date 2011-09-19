@@ -41,7 +41,7 @@ class Tracker_Item
 	function canView()
 	{
 		if (empty($this->info)) {
-			return $this->perms->create_tracker_items;
+			return true;
 		}
 
 		if ($this->canModifyFromSpecialPermissions()) {
