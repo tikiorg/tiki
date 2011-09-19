@@ -111,12 +111,12 @@ class TikiAccessLib extends TikiLib
 		require_once ('tiki-setup.php');
 		if ( ! is_array($permissions) ) { $permissions = array($permissions); }
 		foreach ($permissions as $permission) {
-			global $$permission;
 			$objectperms = Perms::get( $objectType, $objectId );
 			$name = str_replace('tiki_p_', '', $permission);
 			if ($objectperms->$name) {
-				continue;
+					continue;
 			}
+
 			if ($permission_name) { $permission = $permission_name; }
 			$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
 			if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
