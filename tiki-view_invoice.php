@@ -7,7 +7,7 @@
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
-$trkqrylib = TikiLib::lib('trkqry');
+TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
