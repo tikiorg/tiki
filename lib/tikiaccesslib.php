@@ -112,15 +112,10 @@ class TikiAccessLib extends TikiLib
 		if ( ! is_array($permissions) ) { $permissions = array($permissions); }
 		foreach ($permissions as $permission) {
 			global $$permission;
-			if ($$permission == 'y') {
+			$objectperms = Perms::get( $objectType, $objectId );
+			$name = str_replace('tiki_p_', '', $permission);
+			if ($objectperms->$name) {
 				continue;
-			}
-			if (!empty($objectId)) {
-				$objectperms = Perms::get( $objectType, $objectId);
-				$name = str_replace('tiki_p_', '', $permission);
-				if ($objectperms->$name) {
-					continue;
-				}
 			}
 			if ($permission_name) { $permission = $permission_name; }
 			$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
