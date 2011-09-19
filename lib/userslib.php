@@ -2485,13 +2485,11 @@ class UsersLib extends TikiLib
 
 	function get_permission_names_for($type)
 	{
-		$raw = $this->get_raw_permissions();
+		$raw = $this->get_permissions(0, -1, 'permName_asc', '', 'wiki');
 		$out = array();
 
-		foreach ($raw as $permission) {
-			if ($permission['type'] == $type) {
-				$out[] = $permission['name'];
-			}
+		foreach ($raw['data'] as $permission) {
+			$out[] = $permission['name'];
 		}
 
 		return $out;

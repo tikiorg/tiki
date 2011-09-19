@@ -86,13 +86,10 @@
 
 				{* don't show comments if feature disabled or not enough rights *}
 
-				{if $prefs.feature_wiki_comments == 'y'
+				{if $prefs.feature_wiki_comments eq 'y'
 					&& ($prefs.wiki_comments_allow_per_page neq 'y' or $info.comments_enabled eq 'y')
-					&& $tiki_p_wiki_view_comments == 'y'
-					&& (($tiki_p_read_comments == 'y'
-					&& $comments_cant != 0)
-					|| $tiki_p_post_comments == 'y'
-					||$tiki_p_edit_comments == 'y')}
+					&& $tiki_p_wiki_view_comments eq 'y'
+					&& $tiki_p_read_comments eq 'y'}
 					<span class="button"><a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">{tr}Comments{/tr}</a></span>
 					{jq}
 						$('#comment-toggle').comment_toggle();
