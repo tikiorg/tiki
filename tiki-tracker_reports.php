@@ -6,7 +6,7 @@
 // $Id$
 
 require_once('tiki-setup.php');
-require_once('lib/trackers/trackerlib.php');
+$trkqry = TikiLib::lib("trk");
 $access->check_permission('tiki_p_export_tracker');
 
 $headerlib->add_jq_onready('
