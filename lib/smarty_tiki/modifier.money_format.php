@@ -35,11 +35,7 @@
 function smarty_modifier_money_format($number, $local, $currency, $format = '%(#10n', $display = 0) 
 { 
 		
-	if (empty($local)) {
-		if (setlocale(LC_MONETARY, 0) == 'C') { 
-			setlocale(LC_MONETARY, '');
-		}
-	} else {
+	if (!empty($local)) {
 		$ret = setlocale(LC_MONETARY, $local);
 		if ($ret===FALSE) {
 			echo "'$local' is not supported by this system.\n";
