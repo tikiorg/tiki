@@ -291,7 +291,7 @@ foreach($categories as $category) {
 			$title = tra('Assign Permissions');
 			$icon = 'key';
 		}
-		$data .= '<a href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId'] . '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=all">' . smarty_function_icon(array('_id'=>$icon, 'alt'=>$title), $smarty) . '</a>';
+		$data .= '<a href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId'] . '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=category">' . smarty_function_icon(array('_id'=>$icon, 'alt'=>$title), $smarty) . '</a>';
 	}
 	
 	$data .= '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] . '">' . htmlspecialchars($category['name']) .'</a> ';
