@@ -34,7 +34,7 @@ class TrackerQueryLib {
 	private $tracker;
 	private $start = 0;
 	private $end = 0;
-	private $itemId = array();
+	private $itemId = 0;
 	private $equals = array();
 	private $search = array();
 	private $fields = array();
@@ -352,7 +352,7 @@ class TrackerQueryLib {
 		
 		$trackerDefinition = Tracker_Definition::get($trackerId);
 		
-		$trackerFieldDefinition = $trackerDefinition->getFields(true);
+		$trackerFieldDefinition = $trackerDefinition->getFieldsIdKeys();
 		
 		$params[] = $trackerId;
 		
