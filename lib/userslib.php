@@ -5291,6 +5291,7 @@ class UsersLib extends TikiLib
 				$this->categorize_user_tracker_item($user, $group);	
 			}
 		}
+		$this->update_anniversary_expiry();
 		return $group_ret;
 	}
 
