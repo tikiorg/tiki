@@ -2794,7 +2794,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_calendar', 
-				'description' => array('Can create/admin calendars'),
+				'description' => tr('Can create/admin calendars'),
 				'level' => 'admin',
 				'type' => 'calendar',
 				'admin' => true,
