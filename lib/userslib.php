@@ -5114,10 +5114,8 @@ class UsersLib extends TikiLib
 				foreach ( $ret as &$res ) {
 					if ($this->group_has_permission($group, $res['permName'])) {
 						$res['hasPerm'] = 'y';
-						$res[count($res)/2] = 'y';	// keep indexed key too
 					} else {
 						$res['hasPerm'] = 'n';
-						$res[count($res)/2] = 'n';
 					}
 				}
 			} else if (is_array($group)) {
@@ -5125,10 +5123,8 @@ class UsersLib extends TikiLib
 					foreach( $group as $groupName) {
 						if ($this->group_has_permission($groupName, $res['permName'])) {
 							$res[$groupName.'_hasPerm'] = 'y';
-							$res[count($res)/2] = 'y';
 						} else {
 							$res[$groupName.'_hasPerm'] = 'n';
-							$res[count($res)/2] = 'n';
 						}
 					}
 				}
