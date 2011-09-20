@@ -320,7 +320,7 @@ class TrackerLib extends TikiLib
 	}
 
 	function replace_item_comment($commentId, $itemId, $title, $data, $user, $options) {
-		global $prefs;
+		global $prefs, $user;
 		$smarty = TikiLib::lib('smarty');
 		$notificationlib = TikiLib::lib('notification');
 
@@ -348,6 +348,13 @@ class TrackerLib extends TikiLib
 
 		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
 
+		if ($prefs['feature_daily_report_watches'] == 'y') {
+			$reportslib = TikiLib::lib('reports');
+			$reportslib->makeReportCache($watchers,
+				array('event' => 'tracker_item_comment', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user, 'threadId' => $commentId)
+			);
+		}	
+		
 		if (count($watchers > 0)) {
 			$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
 			$smarty->assign('mail_date', $this->now);
