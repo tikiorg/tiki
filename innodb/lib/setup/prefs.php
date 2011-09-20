@@ -390,13 +390,7 @@ function initialize_prefs() {
  */ 
 function getCurrentEngine() {
 	global $tikilib;
-	$engine = '';
-	$result = $tikilib->query('SHOW TABLE STATUS LIKE ?', 'tiki_schema');
-	if ( $result ) {
-		$res = $result->fetchRow();
-		$engine  = $res['Engine'];
-	}
-	return $engine;
+	return $tikilib->getCurrentEngine();
 }
 	
 /**
@@ -405,9 +399,6 @@ function getCurrentEngine() {
  * @return true if it is supported, otherwise false
  */ 
 function isMySQLFulltextSearchSupported() {
-	$currentEngine = getCurrentEngine();
-	if(strcasecmp($currentEngine,"MyISAM") == 0) {
-		return true;
-	}
-	return false;
+	global $tikilib;
+	return $tikilib->isMySQLFulltextSearchSupported();
 }
