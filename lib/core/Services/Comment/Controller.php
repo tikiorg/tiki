@@ -58,7 +58,7 @@ class Services_Comment_Controller
 
 		// Check general permissions
 
-		if (! $this->isEnabled($type, $object)) {
+		if (! $this->isEnabled($type, $objectId)) {
 			throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
 		}
 
