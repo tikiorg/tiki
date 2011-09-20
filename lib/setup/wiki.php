@@ -38,24 +38,20 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 	if ( $prefs['feature_multilingual'] == 'y' && (isset($_REQUEST['page']) || isset($_REQUEST['page_ref_id']) || isset($_REQUEST['page_id']))) { // perhaps we have to go to an another page
 		
 		global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
-		if ( $multilinguallib->useBestLanguage() || isset($_REQUEST['switchLang'])) {
+		if ( $multilinguallib->useBestLanguage()) {
 			
-			if (!empty($_REQUEST['page_id'])) {
-				if (isset($_REQUEST['switchLang'])) {
-					$info = get_page_info_from_id($page_id);
+			if (empty($_REQUEST['page_id'])) {
+				if (!empty($_REQUEST['page'])) {
+					$info = $tikilib->get_page_info($_REQUEST['page']);
+					$_REQUEST['page_id'] = $info['page_id'];
+				} elseif (!empty($_REQUEST['page_ref_id'])) {
+					global $structlib; include_once('lib/structures/structlib.php');
+					$info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);
+					$_REQUEST['page_id'] = $info['page_id'];
 				}
-			} elseif (!empty($_REQUEST['page'])) {
-				$info = $tikilib->get_page_info($_REQUEST['page']);
-				$_REQUEST['page_id'] = $info['page_id'];
-			} elseif (!empty($_REQUEST['page_ref_id'])) {
-				global $structlib; include_once('lib/structures/structlib.php');
-				$info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);
-				$_REQUEST['page_id'] = $info['page_id'];
 			}
 			if (!empty($_REQUEST['page_id'])) {
-				if (isset($_REQUEST['switchLang']) && $info['lang'] != $_REQUEST['switchLang']) {
-					$_REQUEST['page_id'] = $multilinguallib->selectLangObj('wiki page', $_REQUEST['page_id'], $_REQUEST['switchLang']);
-				} elseif ( $multilinguallib->useBestLanguage() ) {
+				if ( $multilinguallib->useBestLanguage() ) {
 					$_REQUEST['page_id'] = $multilinguallib->selectLangObj('wiki page', $_REQUEST['page_id']);
 				} 
 				if (!empty($_REQUEST['page_id'])) {

@@ -12,14 +12,8 @@ if ($prefs['feature_multilingual'] != 'y') { // change_language depends on featu
 	$prefs['change_language'] = 'n';
 }
 
-if (isset($_REQUEST['switchLang'])) {
-	$prefs['language'] = $_REQUEST['switchLang'];
-	if ($user && $prefs['feature_userPreferences'] == 'y') {
-		$tikilib->set_user_preference($user, 'language', $prefs['language']);
-	} else {
-		$_SESSION['language'] = $prefs['language'];
-	}
-} elseif ( $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !$tikilib->userHasPreference('language')) {
+// Detect browser language
+if ( $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !$tikilib->userHasPreference('language')) {
 	$browser_language = detect_browser_language();
 	if ( ! empty($browser_language) ) {
 		$prefs['language'] = $browser_language;
