@@ -37,11 +37,6 @@ if (isset($_REQUEST['switchLang'])) {
 	}
 }
 
-if ( $prefs['lang_use_db'] != 'y' ) {
-    // check if needed!!!
-    global $lang;
-}
-
 if (empty($prefs['language']) || $prefs['change_language'] == 'n') {
 	$prefs['language'] = $prefs['site_language']; // Override user-specific language
 }
