@@ -229,11 +229,8 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 	$likepages = $wikilib->get_like_pages($page);
 	/* if we have exactly one match, redirect to it */
 	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
-		if ($prefs['feature_sefurl'] == 'y') {
-			$url = $wikilib->sefurl($likepages[0]);
-		} else {
-			$url = 'tiki-index.php?page='.urlencode($likepages[0]);
-		}
+		$url = $wikilib->sefurl($likepages[0]);
+
 		// Process prefix alias with itemId append for pretty tracker pages
 		$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 		foreach ($prefixes as $p) {
