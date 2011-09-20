@@ -198,7 +198,7 @@
 					<td>{include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}</td>
 				</tr>
 			{/if}
-			{foreach from=$fields key=ix item=field_value}
+			{foreach from=$ins_fields key=ix item=field_value}
 				{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and
 						($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and
 						!($field_value.type eq 's' and $field_value.name eq 'Rating')}

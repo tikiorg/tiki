@@ -490,6 +490,7 @@ foreach($xfields['data'] as $xfd) {
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
 $smarty->assign('fields', $fields['data']);
+$smarty->assign('ins_fields', $ins_fields['data']);
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);
