@@ -1779,6 +1779,17 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Redirect+to+similar+wiki+page',
 			'default' => 'n',
 		),
+		'feature_wiki_pagealias' => array(
+			'name' => tra("Redirect to page alias, if any"),
+			'type' => 'flag',
+			'description' => tra("If a requested page doesn't exist, redirect to an alias page, if specified using an alias semantic link"),
+			'help' => 'Page+Alias',
+			'dependencies' => array(
+				'feature_wiki_1like_redirection',
+				'feature_semantic', // this is needed at point of creation of semantic link otherwise link will not register
+			),
+			'default' => 'n',
+		),
 		'feature_wiki_templates' => array(
 			'name' => tra('Wiki content templates'),
 			'type' => 'flag',

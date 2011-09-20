@@ -622,6 +622,13 @@ function prefs_wiki_list($partial = false) {
 			'filter' => 'int',
 			'default' => range( 1, 5 ),
 		),
+		'wiki_pagealias_tokens' => array(
+			'name' => tra('Semantic link types to use as page alias markers'),
+			'description' => tra('Comma separated list of semantic links to use to identify a page as an alias to another'),
+			'type' => 'text',
+			'dependencies' => array('feature_wiki_pagealias'),
+			'default' => 'alias',
+		),
 		'wiki_prefixalias_tokens' => array(
 			'name' => tra('Redirect pages using these prefix alias semantic links'),
 			'description' => tra('Comma separated list of prefixes of which pages will be redirected to page with semantic link'),

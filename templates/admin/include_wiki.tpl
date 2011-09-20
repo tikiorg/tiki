@@ -228,6 +228,8 @@
 			{preference name=wiki_likepages_samelang_only}
 		</div>
 		{preference name=feature_wiki_1like_redirection}
+		{preference name=feature_wiki_pagealias}
+		{preference name=wiki_pagealias_tokens}
 		{preference name=feature_wiki_rankings}
 
 		{preference name=feature_wiki_structure}

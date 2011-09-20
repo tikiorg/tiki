@@ -47,7 +47,7 @@ function get_default_prefs() {
 		'backlinks_name_len' => '0',
 		'feature_wiki_notepad' => 'n',
 		'feature_wiki_feedback_polls' => array(),
-		'feature_wiki_pagealias' => 'y',
+		'feature_wiki_pagealias' => 'n',
 		'mailin_autocheck' => 'n',
 		'mailin_autocheckFreq' => '0',
 		'mailin_autocheckLast' => 0,
@@ -58,6 +58,7 @@ function get_default_prefs() {
 		'wiki_top_bar' => 'y',
 		'feature_wiki_watch_structure' => 'n',
 		'wiki_validate_plugin' => 'y',
+		'wiki_pagealias_tokens' => 'alias',
 
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
