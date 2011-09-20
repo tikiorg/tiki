@@ -6,16 +6,16 @@
 // $Id$
 
 include_once ('tiki-setup.php');
-if ( '127.0.0.1' != $tikilib->get_ip_address() ) {
-	die("This script can only be called by the server!");
-}
-if ($prefs['feature_daily_report_watches'] != 'y') {
-	die("This feature is disabled");
-}
-include_once ('lib/reportslib.php');
 
-//Complete URL to your Tikiwiki installation without ending slash!
-$tikiUrl = "http://localhost/trunktest";
+if ( '127.0.0.1' != $tikilib->get_ip_address() ) {
+	die(tr('This script can only be called by the server!'));
+}
+
+if ($prefs['feature_daily_report_watches'] != 'y') {
+	die(tr('This feature is disabled'));
+}
+
+include_once ('lib/reportslib.php');
 
 foreach($reportslib->getUsersForSendingReport() as $key => $user) {
 	$report_preferences = $reportslib->get_report_preferences_by_user($user);
@@ -27,7 +27,7 @@ foreach($reportslib->getUsersForSendingReport() as $key => $user) {
 		$report_cache = $reportslib->get_report_cache_entries_by_user($user, "time ASC");
 		//Send email if there is a cache or if always_email = true
 		if ($report_cache OR (!$report_cache && $report_preferences['always_email']))
-			$reportslib->sendEmail($user_data, $report_preferences, $report_cache, $tikiUrl);
+			$reportslib->sendEmail($user_data, $report_preferences, $report_cache);
 	}
 	//Update Database
 	$reportslib->updateLastSent($user_data['login']);
