@@ -595,7 +595,7 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null) 
 	}
 	if ($type == 'trackeritem') {
 		// Tracker watches are pretty complicated, to get from trklib
-		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$trackerId = $tikilib->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $id));
 		$trackerOptions = $trklib->get_tracker_options($trackerId);
 		$watches = $trklib->get_notification_emails($trackerId, $id, $trackerOptions);
