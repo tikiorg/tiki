@@ -12,17 +12,6 @@ if ($prefs['feature_multilingual'] != 'y') { // change_language depends on featu
 	$prefs['change_language'] = 'n';
 }
 
-if (isset($_REQUEST['switchLang'])) { // check can change lang + valid lang
-	if ($prefs['change_language'] != 'y'
-		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
-		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php'))
-		unset($_REQUEST['switchLang']);
-	elseif ($prefs['available_languages']) {
-		if (count($prefs['available_languages']) >= 1 && !in_array($_REQUEST['switchLang'], $prefs['available_languages']))
-			unset($_REQUEST['switchLang']);
-	}
-}
-
 if (isset($_REQUEST['switchLang'])) {
 	$prefs['language'] = $_REQUEST['switchLang'];
 	if ($user && $prefs['feature_userPreferences'] == 'y') {
