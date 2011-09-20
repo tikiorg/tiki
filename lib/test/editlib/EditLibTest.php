@@ -217,6 +217,45 @@ class EditLibTest extends TikiTestCase
 	
 	
 	/**
+	 * Nested color specifications
+	 * 
+	 * In HTML, color specifications can be nested.
+	 * In Wiki, the colors specifications cannot be nested.
+	 * Hence some reordering is required.
+	 */
+	function testParseToWikiNestedColors() {
+
+		$this->markTestIncomplete('Work in progress.');
+		/*
+		 * <span><span>text</span></span>
+		 */
+		$inData = '<span style="color: rgb(255, 0, 0);">';
+		$inData .= '<span style="background-color: rgb(255, 255, 0);">';
+		$inData .= 'fg and bg colored';
+		$inData .= '</span></span>';
+		$res = $this->el->parseToWiki($inData);
+		$ex = '~~#FF0000, #FFFF00:fg and bg colored~~';
+		$this->assertEquals($ex, $res);
+		
+		
+		/*
+		 * <span>text<span>text</span>text</span>text
+		 */
+		$inData = '<span style="color: rgb(255, 0, 0);">';
+		$inData .= 'fg colored ';
+		$inData .= '<span style="background-color: rgb(255, 255, 0);">';
+		$inData .= 'both colored ';
+		$inData .= '</span>';
+		$inData .= 'fg colored ';
+		$inData .= '</span>';
+		$inData .= 'regular';
+		$res = $this->el->parseToWiki($inData);
+		$ex = '~~#FF0000:fg colored ~~~~#FF0000, #FFFF00:both colored ~~~~#FF0000:fg colored ~~regular';
+		$this->assertEquals($ex, $res);
+	}
+	
+	
+	/**
 	 * Nested wiki inline tags
 	 * 
 	 * This test verifies that the tags are written in the correct
