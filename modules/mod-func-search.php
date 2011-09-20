@@ -88,11 +88,13 @@ function module_search_info() {
 			),
 			'input_size' => array(
 				'name' => 'Input size',
-				'description' => tra('Size attribute (horizontal, in characters) of the text input field.') . ' ' . tra('Default:') . ' 14'
+				'description' => tra('Size attribute (horizontal, in characters) of the text input field.') . ' ' . tra('Default:') . ' 14',
+				'filter' => 'int'
 			),
 			'select_size' => array(
 				'name' => 'Select size',
-				'description' => tra('Size of the Search Filter dropdown list.') . " " . tra('Default:') . " 10"
+				'description' => tra('Size of the Search Filter dropdown list.') . " " . tra('Default:') . " 10",
+				'filter' => 'int'
 			),
 			'search_heading' => array(
 				'name' => tra('Heading'),
