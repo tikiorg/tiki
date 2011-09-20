@@ -252,6 +252,18 @@ class EditLibTest extends TikiTestCase
 		$res = $this->el->parseToWiki($inData);
 		$ex = '~~#FF0000:fg colored ~~~~#FF0000, #FFFF00:both colored ~~~~#FF0000:fg colored ~~regular';
 		$this->assertEquals($ex, $res);
+		
+		$inData = '<span style="background-color: rgb(255, 0, 0);">';
+		$inData .= 'bg colored ';
+		$inData .= '<span style="color: rgb(255, 255, 0);">';
+		$inData .= 'both colored ';
+		$inData .= '</span>';
+		$inData .= 'bg colored ';
+		$inData .= '</span>';
+		$inData .= 'regular';
+		$res = $this->el->parseToWiki($inData);
+		$ex = '~~ ,#FF0000:bg colored ~~~~#FF0000, #FFFF00:both colored ~~~~ ,#FF0000:bg colored ~~regular';
+		$this->assertEquals($ex, $res);		
 	}
 	
 	

@@ -276,6 +276,17 @@ class EditLib
 			}
 			
 			if ($fcol || $bcol) {
+				$fg_ref = &$p['colors']['fg'];
+				$bg_ref = &$p['colors']['bg'];
+				
+				if ($fg_ref || $bg_ref ) { // close the existing color tag
+					// $p['colors']['pref']
+				}
+				if (!$fcol && $fg_ref) { // copy the old foreground color
+				}
+				if (!$bcol && $bg_ref) { // copy the old background color
+				}
+				
 				$col  = "~~";
 				$col .= ($fcol ? $fcol : '');
 				$col .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
@@ -838,8 +849,9 @@ class EditLib
 		$htmlparser->Parse();
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
-		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'first_td' => false, 'first_tr' => false);
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => null, 'colors' => null, 'first_td' => false, 'first_tr' => false);
 		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array(), 'wiki_lbr' => 0 );
+		$p['colors'] = array('fg' => null, 'bg' => null, 'pref' => 0);
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 		// to produce invalid wiki :)
