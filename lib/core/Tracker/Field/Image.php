@@ -110,7 +110,7 @@ class Tracker_field_Image extends Tracker_Field_File
 		}
 	}
 
-	function renderInnerOutput( $context )
+	function renderInnerOutput( $context = array() )
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
