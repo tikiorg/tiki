@@ -596,7 +596,7 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null) 
 	if ($type == 'trackeritem') {
 		// Tracker watches are pretty complicated, to get from trklib
 		$trklib = TikiLib::lib('trk');
-		$trackerId = $tikilib->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $id));
+		$trackerId = $trklib->get_tracker_for_item($id);
 		$trackerOptions = $trklib->get_tracker_options($trackerId);
 		$watches = $trklib->get_notification_emails($trackerId, $id, $trackerOptions);
 	} else {
@@ -614,9 +614,9 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null) 
 			$smarty->assign('mail_objectname', $artlib->get_title($id));
 			$smarty->assign('mail_objectid', $id);
 		} elseif ($type == 'trackeritem') {
-			$trackerName = $tikilib->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+			$tracker = $trklib->get_tracker($trackerId);
 			$smarty->assign('mail_objectid', $id);	
-			$smarty->assign('mail_objectname', $trackerName);
+			$smarty->assign('mail_objectname', $tracker['name']);
 		}
 		$smarty->assign('objecttype', $type);		
 		$smarty->assign('mail_user', $user);
