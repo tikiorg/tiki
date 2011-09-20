@@ -133,13 +133,13 @@ class Services_Comment_Controller
 
 				if ($threadId) {
 					if ($prefs['wiki_watch_comments'] == 'y' && $type == 'wiki page') {
-						global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+						require_once('lib/notifications/notificationemaillib.php');
 						sendCommentNotification('wiki', $objectId, $title, $data);
 					} else if ($type == 'article') {
-						global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+						require_once('lib/notifications/notificationemaillib.php');
 						sendCommentNotification('article', $objectId, $title, $data);
 					} elseif ($type == 'trackeritem') {
-						global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+						require_once('lib/notifications/notificationemaillib.php');
 						sendCommentNotification('trackeritem', $objectId, $title, $data);
 					}
 
