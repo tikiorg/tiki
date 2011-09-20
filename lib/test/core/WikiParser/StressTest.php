@@ -5,6 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * @group slow
+ */
+
 class WikiParser_StressTest extends PHPUnit_Framework_TestCase
 {
 	function testMessProvidedByJonny()

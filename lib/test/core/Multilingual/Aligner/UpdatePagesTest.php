@@ -8,12 +8,10 @@
 /**
  * @group unit
  * @group MultilingualAlignerUpdatePages
+ * @group slow
  * 
  */
 
-//include_once "lib/core/Multilingual/Aligner/SentenceAlignments.php";
-//include_once "lib/core/Multilingual/Aligner/UpdateSentences.php";
-//include_once "lib/test/TikiTestCase.php";
 class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 {
 	private $orig_source_sentences =
