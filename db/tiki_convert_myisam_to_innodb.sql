@@ -4,19 +4,19 @@
 --
 
 -- DROP all FULLTEXT indexes
-ALTER TABLE tiki_articles DROP INDEX ft_articles;
-ALTER TABLE tiki_blog_posts DROP INDEX ft_blog_posts;
-ALTER TABLE tiki_blogs DROP INDEX ft_blogs;
-ALTER TABLE tiki_calendar_items DROP INDEX ft_calendar_items;
-ALTER TABLE tiki_comments DROP INDEX ft_comments;
-ALTER TABLE tiki_directory_sites DROP INDEX ftidx_directory_sites;
-ALTER TABLE tiki_faq_questions DROP INDEX ftidx_faq_questions;
-ALTER TABLE tiki_faqs DROP INDEX ftidx_faqs;
-ALTER TABLE tiki_files DROP INDEX ftidx_files;
-ALTER TABLE tiki_galleries DROP INDEX ftidx_galleries;
-ALTER TABLE tiki_images DROP INDEX ftidx_images;
-ALTER TABLE tiki_pages DROP INDEX ftidx_pages;
-ALTER TABLE tiki_tracker_item_fields DROP INDEX ftidx_tracker_item_fields;
+ALTER TABLE tiki_articles DROP INDEX ft;
+ALTER TABLE tiki_blog_posts DROP INDEX ft;
+ALTER TABLE tiki_blogs DROP INDEX ft;
+ALTER TABLE tiki_calendar_items DROP INDEX ft;
+ALTER TABLE tiki_comments DROP INDEX ft;
+ALTER TABLE tiki_directory_sites DROP INDEX ft;
+ALTER TABLE tiki_faq_questions DROP INDEX ft;
+ALTER TABLE tiki_faqs DROP INDEX ft;
+ALTER TABLE tiki_files DROP INDEX ft;
+ALTER TABLE tiki_galleries DROP INDEX ft;
+ALTER TABLE tiki_images DROP INDEX ft;
+ALTER TABLE tiki_pages DROP INDEX ft;
+ALTER TABLE tiki_tracker_item_fields DROP INDEX ft;
 
 -- Convert engine type to InnoDB
 ALTER TABLE `messu_messages` ENGINE=InnoDB;
