@@ -61,9 +61,9 @@ class reportsLib extends TikiLib
 	//Makes time short
 	private function makeTime($time) {
 		if (date("d.m.Y", $time)==date("d.m.Y", time()-86400)) {
-			return tra("Yesterday")." ".date("H:i", $time);
+			return tr("Yesterday %0", date("H:i", $time));
 		} elseif(date("d.m.Y", $time)==date("d.m.Y", time())) {
-			return tra("Today")." ".date("H:i", $time);
+			return tr("Today %0", date("H:i", $time));
 		} else {
 			return date("d.m.", $time)." ".date("H:i", $time);
 		}
