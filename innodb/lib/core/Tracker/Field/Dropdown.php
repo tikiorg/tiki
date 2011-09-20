@@ -113,7 +113,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		return $this->renderTemplate('trackerinput/dropdown.tpl', $context);
 	}
 
-	function renderInnerOutput($context)
+	function renderInnerOutput($context = array())
 	{
 		if ($context['list_mode'] === 'csv') {
 			return implode(', ', $this->getConfiguration('selected'));

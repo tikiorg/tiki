@@ -40,7 +40,7 @@ class Tracker_Item
 
 	function canView()
 	{
-		if (empty($this->info)) {
+		if ($this->isNew()) {
 			return true;
 		}
 
@@ -61,7 +61,7 @@ class Tracker_Item
 
 	function canModify()
 	{
-		if (empty($this->info)) {
+		if ($this->isNew()) {
 			return $this->perms->create_tracker_items;
 		}
 
@@ -193,6 +193,12 @@ class Tracker_Item
 			return false;
 		}
 
+		// Cannot modify a field you are not supposed to see
+		// Modify without view means insert-only
+		if (! $this->isNew() && ! $this->canViewField($fieldId)) {
+			return false;
+		}
+
 		$field = $this->definition->getField($fieldId);
 		
 		if (! $field) {
@@ -230,6 +236,11 @@ class Tracker_Item
 		if (isset($this->info[$fieldId])) {
 			return $this->info[$fieldId];
 		}
+	}
+
+	private function isNew()
+	{
+		return empty($this->info);
 	}
 }
 

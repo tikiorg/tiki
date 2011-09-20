@@ -389,6 +389,17 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		
 		$inData = '<span style="background:#0000FF;color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);		
+
+		
+		/*
+		 * line break
+		 */
+		$ex = '~~#FF0000,#0000FF:color text 1~~\n~~#FF0000,#0000FF:color text 2~~';
+
+		$inData = '<span style="color:rgb(255, 0, 0);background-color:rgb(0, 0, 255);">color text 1<br />color text 2</span>';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);			
 	}
 	

@@ -540,6 +540,7 @@ class RSSLib extends TikiDb_Bridge
 	}
 
 	private function update_item( $rssId, $guid, $data ) {
+		// A feed may contain several entries with the same GUID... see http://framework.zend.com/issues/browse/ZF-10954. Assuming a single record would actually cause issues, see r37318.
 		$this->items->updateMultiple(array(
 			'rssId' => $rssId,
 			'guid' => $guid,

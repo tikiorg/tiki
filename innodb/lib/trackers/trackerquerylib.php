@@ -660,3 +660,5 @@ class TrackerQueryLib {
 		return $output;
 	}
 }
+
+$trkqrylib = new TrackerQueryLib();

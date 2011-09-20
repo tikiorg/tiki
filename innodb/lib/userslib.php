@@ -2485,13 +2485,11 @@ class UsersLib extends TikiLib
 
 	function get_permission_names_for($type)
 	{
-		$raw = $this->get_raw_permissions();
+		$raw = $this->get_permissions(0, -1, 'permName_asc', '', $type);
 		$out = array();
 
-		foreach ($raw as $permission) {
-			if ($permission['type'] == $type) {
-				$out[] = $permission['name'];
-			}
+		foreach ($raw['data'] as $permission) {
+			$out[] = $permission['name'];
 		}
 
 		return $out;
@@ -2990,7 +2988,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_read_comments',
@@ -2999,7 +2998,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_admin_comments',
@@ -3008,7 +3008,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => true,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_edit_comments',
@@ -3017,7 +3018,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_remove_comments',
@@ -3026,7 +3028,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_vote_comments',
@@ -3035,7 +3038,8 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('comments_vote'),
-				'scope' => 'global',
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'blogs'),
 			),
 			array(
 				'name' => 'tiki_p_admin_content_templates',
@@ -5110,10 +5114,8 @@ class UsersLib extends TikiLib
 				foreach ( $ret as &$res ) {
 					if ($this->group_has_permission($group, $res['permName'])) {
 						$res['hasPerm'] = 'y';
-						$res[count($res)/2] = 'y';	// keep indexed key too
 					} else {
 						$res['hasPerm'] = 'n';
-						$res[count($res)/2] = 'n';
 					}
 				}
 			} else if (is_array($group)) {
@@ -5121,10 +5123,8 @@ class UsersLib extends TikiLib
 					foreach( $group as $groupName) {
 						if ($this->group_has_permission($groupName, $res['permName'])) {
 							$res[$groupName.'_hasPerm'] = 'y';
-							$res[count($res)/2] = 'y';
 						} else {
 							$res[$groupName.'_hasPerm'] = 'n';
-							$res[count($res)/2] = 'n';
 						}
 					}
 				}

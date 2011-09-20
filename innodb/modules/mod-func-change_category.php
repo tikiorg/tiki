@@ -91,7 +91,11 @@ function module_change_category( $mod_reference, $module_params ) {
 			$cat_parent = '';
 		}
 	
-		$shy = isset($module_params['shy']);
+		if (!empty($module_params['shy'])) {
+			$shy = $module_params['shy'] === 'y';
+		} else {
+			$shy = false;
+		}
 	
 		$detailed = isset($module_params['detail']) ? $module_params['detail'] : "n";
 		$smarty->assign('detailed', $detailed);

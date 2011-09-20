@@ -62,7 +62,6 @@ class WikiRenderer
 		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $this->page ) );
 
 		foreach( $permNames as $name ) {
-			$name = $name['permName'];
 			$this->setGlobal( $name, $objectperms->$name ? 'y' : 'n' );
 		}
 

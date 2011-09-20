@@ -469,11 +469,17 @@ class EditLib
 
 	function parseToWiki( $inData ) {
 		
+		global $prefs;
+		
 		$parsed = $this->parse_html($inData);
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
 		$parsed = preg_replace('/!(?:\d\.)+/', '!#', $parsed); // numbered headings
-		
+		if ($prefs['feature_use_three_colon_centertag'] == 'y') { // numbered and centerd headings
+			$parsed = preg_replace('/!:::(?:\d\.)+ *(.*):::/', '!#:::\1:::', $parsed); 
+		} else {
+			$parsed = preg_replace('/!::(?:\d\.)+ *(.*)::/', '!#::\1::', $parsed); 
+		}
 		
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);

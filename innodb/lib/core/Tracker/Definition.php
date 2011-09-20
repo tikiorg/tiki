@@ -99,9 +99,14 @@ class Tracker_Definition
 
 		$trklib = TikiLib::lib('trk');
 		$trackerId = $this->trackerInfo['trackerId'];
-		$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true);
+
+		if ($trackerId) {
+			$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true);
 		
-		return $this->fields = $fields['data'];
+			return $this->fields = $fields['data'];
+		} else {
+			$this->fields = array();
+		}
 	}
 
 	function getField($id)

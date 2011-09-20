@@ -1611,5 +1611,12 @@ form.simple select
 	z-index: 9999;
 	text-align: center;
 }
+.structuremenu .menuSection {
+	margin-left: 6px;
+	border-left: 1px dotted gray;
+}
+.structuremenu .menuSection .option, .structuremenu .menuSection .optionline {
+	background: transparent url(../../img/icons2/h_trenner.gif) center left no-repeat; padding-left: 21px;
+}
 
 /* End of file */

@@ -449,6 +449,53 @@ class ModLib extends TikiLib
 			return false;
 		}
 
+		global $cat_type, $cat_objid;
+		if( $prefs['feature_categories'] == 'y' ) {
+			$allcats = TikiLib::lib('categ')->getCategories();	// gets all cached categories
+			
+			if ( !empty( $params['category'])) {				// looking for a category to enable
+				if ( empty($cat_type) || empty($cat_objid)) {
+					return false;								// not a categorised object
+				}
+				$catIds = TikiLib::lib('categ')->get_object_categories( $cat_type, $cat_objid);
+				if (empty($catIds)) {
+					return false;								// no categories on this object
+				}
+				$cats = array();
+				foreach ($catIds as $c) {
+					$cats[] = $allcats[$c]['name'];
+				}
+
+				$ok = false;
+				foreach ((array) $params['category'] as $c) {
+					if (in_array( $c, $cats )) {
+						$ok = true;
+						break;
+					}
+				}
+				if (!$ok) {
+					return false;
+				}
+			}
+
+			if ( !empty( $params['nocategory'])) {				// looking for a category to disable
+				if ( !empty($cat_type) && !empty($cat_objid)) {
+					$catIds = TikiLib::lib('categ')->get_object_categories( $cat_type, $cat_objid);
+					if (!empty($cats)) {						// object has categories
+						$cats = array();
+						foreach ($catIds as $c) {
+							$cats[] = $allcats[$c]['name'];
+						}
+						foreach ((array) $params['nocategory'] as $c) {
+							if (in_array( $c, $cats )) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		return true;
 	}
 
@@ -618,6 +665,18 @@ class ModLib extends TikiLib
 				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
 				'filter' => 'alpha',
 				'section' => 'visibility',
+			),
+			'category' => array(
+				'name' => tra('Category'),
+				'description' => tra('Module displayed depending on category. Multiple category names can be separated by semi-colons.'),
+				'section' => 'visibility',
+				'separator' => ';',
+			),
+			'nocategory' => array(
+				'name' => tra('No Category'),
+				'description' => tra('Module hidden depending on category. Multiple category names can be separated by semi-colons. This takes precedence over the category parameter above.'),
+				'section' => 'visibility',
+				'separator' => ';',
 			),
 			'flip' => array(
 				'name' => tra('Flip'),

@@ -66,7 +66,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		return $this->renderTemplate('trackerinput/file.tpl', $context);
 	}
 	
-	function renderInnerOutput( $context ) {
+	function renderInnerOutput( $context = array() ) {
 
 		$att_id = $this->getValue();
 

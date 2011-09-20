@@ -8,8 +8,7 @@ if (isset($_REQUEST['time']) == true) {
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib("trk");
-TikiLib::lib("trkqry");
-$trkqrylib = new TrackerQueryLib();
+$trkqrylib = TikiLib::lib("trkqry");
 
 $access->check_permission('tiki_p_export_tracker');
 

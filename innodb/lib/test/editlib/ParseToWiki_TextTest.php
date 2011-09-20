@@ -218,6 +218,47 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	}
 	
 	
+	/** 
+	 * Centered headings must use style attribute
+	 */
+	function testCenterdHeadings() {
+		
+		global $prefs;
+		
+		
+		#
+		# unnumbered
+		#
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
+		$ex = '!::Heading::';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
+		$ex = '!:::Heading:::';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * numbered
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
+		$ex = '!#::Heading::';	
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);		
+		
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$inData = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
+		$ex = '!#:::Heading:::';	
+		$out = trim( $this->el->parseToWiki($inData) );
+		$this->assertEquals($ex, $out);				
+	}	
+	
+	
 	/**
 	 * Headings 1-6
 	 */

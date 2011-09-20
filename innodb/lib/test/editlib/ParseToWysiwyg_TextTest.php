@@ -137,6 +137,45 @@ private $el = null; // the EditLib
 	}	
 	
 	
+	/** 
+	 * Centered headings must use style attribute
+	 */
+	function testCenterdHeadings() {
+		global $prefs;
+		
+		#
+		# unnumbered
+		#
+		$prefs['feature_use_three_colon_centertag'] = 'n';		
+		$inData = '!::Heading::';
+		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$prefs['feature_use_three_colon_centertag'] = 'y';		
+		$inData = '!:::Heading:::';
+		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * numbered
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'n';		
+		$inData = '!#::Heading::';
+		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$this->assertEquals($ex, $out);
+		
+		$prefs['feature_use_three_colon_centertag'] = 'y';		
+		$inData = '!#:::Heading:::';
+		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$this->assertEquals($ex, $out);
+	}
+	
+	
 	/**
 	 * Headings 1-6
 	 */
