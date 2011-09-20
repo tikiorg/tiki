@@ -9,7 +9,7 @@ class reportsLib extends TikiLib
 {
 
 	//Sends the Email
-	public function sendEmail($user_data, $report_preferences, $report_cache, $tikiUrl) {
+	public function sendEmail($user_data, $report_preferences, $report_cache) {
 		global $prefs, $smarty, $tikilib;
 
 		include_once('lib/webmail/tikimaillib.php');
@@ -27,7 +27,7 @@ class reportsLib extends TikiLib
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
 
-		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences, $tikiUrl));
+		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
 
 		$mail->setUser($user_data['login']);
 		if(is_array($report_cache)) {
@@ -78,8 +78,11 @@ class reportsLib extends TikiLib
 		return $change_array;
 	}
 	
-	public function makeHtmlEmailBody($report_cache, $report_preferences, $tikiUrl) {
-		global $tikilib, $userlib;		
+	public function makeHtmlEmailBody($report_cache, $report_preferences) {
+		global $tikilib, $userlib, $base_url;
+		
+		$tikiUrl = rtrim($base_url, '/');
+		
 		$change_array = $this->makeChangeArray($report_cache);
 		$somethingHasHappened = false;
 
