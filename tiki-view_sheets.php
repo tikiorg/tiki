@@ -150,23 +150,14 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 		$sheetlib->remove_related_file( $_REQUEST["sheetId"], $_REQUEST['fileId'] );
 		$smarty->assign('msg', tra("File removed"));
 	}
-} elseif ( isset($_REQUEST['file']) ) {
-	//File sheets
-	$handler = new TikiSheetCSVHandler( $_REQUEST['file'] );
-	$grid = new TikiSheet();
-	$grid->import( $handler );
-	$tableHtml[0] = $grid->getTableHtml( true , null, false );
-	$smarty->assign('notEditable', 'true');
-	
-	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
 } elseif ( isset($_REQUEST['fileId']) ) {
 	include_once('lib/filegals/filegallib.php');
 	$access->check_feature('feature_file_galleries');
-	$handler = new TikiSheetFileGalleryCSVHandler($_REQUEST['fileId']);
-	
+	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+	$handler = new TikiSheetCSVHandler($fileInfo);
 	$grid = new TikiSheet();
 	$grid->import( $handler );
-	$tableHtml[0] = $grid->getTableHtml( true , null, false );
+	$tableHtml[0] = $grid->getTableHtml();
 	$smarty->assign('notEditable', 'true');
 	
 	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));

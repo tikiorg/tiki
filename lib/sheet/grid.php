@@ -910,7 +910,6 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 		$this->name = $fileInfo['name'];
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 		$this->type = "file";
-		$this->cssName = 'readonly';
 		$this->id = $fileInfo['fileId'];
 	}
 
@@ -919,18 +918,19 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	{
 		$rows = explode("\n", $this->data);
 		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
-			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
+			$cols = str_getcsv($rows[$i]);
 			
 			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
 				$sheet->initCell( $i, $j );
-				$sheet->setValue( $cols[$j] );
 				
-				if ( isset($cols[$j]) ) {
-					if (strlen( $cols[$j] )) {
-						if ($cols[$j][0] == '=' ) {
-							$sheet->setCalculation( substr($cols[$j], 1) );
-						}
+				if ( !empty($cols[$j]) ) {
+					if ($cols[$j][0] == '=' ) {
+						$sheet->setCalculation( substr($cols[$j], 1) );
+					} else {
+						$sheet->setValue( $cols[$j] );
 					}
+				} else {
+					$sheet->setValue( "" );
 				}
 				
 				$sheet->setSize( 1, 1 );
