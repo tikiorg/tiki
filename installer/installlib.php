@@ -25,6 +25,8 @@ class Installer extends TikiDb_Bridge
 
 	var $success = array();
 	var $failures = array();
+	
+	var $useInnoDB = false;
 
 	function Installer() // {{{
 	{
@@ -35,6 +37,11 @@ class Installer extends TikiDb_Bridge
 	function cleanInstall() // {{{
 	{
 		$this->runFile( dirname(__FILE__) . '/../db/tiki.sql' );
+		if($this->useInnoDB) {
+			$this->runFile( dirname(__FILE__) . '/../db/tiki_innodb.sql' );
+		} else {
+			$this->runFile( dirname(__FILE__) . '/../db/tiki_myisam.sql' );
+		}
 		$this->buildPatchList();
 		$this->buildScriptList();
 
@@ -51,6 +58,11 @@ class Installer extends TikiDb_Bridge
 
 	function update() // {{{
 	{
+		// Mark InnoDB usage for updates
+		if(strcasecmp($this->getCurrentEngine(),"InnoDB") == 0) {
+			$this->useInnoDB = true;
+		}
+
 		if( ! $this->tableExists( 'tiki_schema' ) ) {
 			// DB too old to handle auto update
 
@@ -152,6 +164,11 @@ class Installer extends TikiDb_Bridge
 				if (preg_match('/^\s*(?!-- )/m', $statement)) {// If statement is not commented
 					$display_errors = ini_get('display_errors');
 					ini_set('display_errors', 'Off');
+
+					if($this->useInnoDB) {
+						// Convert all MyISAM statments to InnoDB
+						$statement = str_ireplace("MyISAM", "InnoDB", $statement);
+					}
 
 					if ($this->query($statement, array(), -1, -1, true, $file) === false) {
 						$status = false;
@@ -363,5 +380,4 @@ class Installer extends TikiDb_Bridge
 		}
 		return $iis_warning;
 	}	
-	
 }

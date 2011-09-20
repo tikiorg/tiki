@@ -383,3 +383,22 @@ function initialize_prefs() {
 	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
 }
 
+/**
+ * Detect the engine used in the current schema.
+ * Assumes that all tables use the same table engine
+ * @return string identifying the current engine, or an empty string if not installed
+ */ 
+function getCurrentEngine() {
+	global $tikilib;
+	return $tikilib->getCurrentEngine();
+}
+	
+/**
+ * Determine if MySQL fulltext search is supported by the current DB engine
+ * Assumes that all tables use the same table engine
+ * @return true if it is supported, otherwise false
+ */ 
+function isMySQLFulltextSearchSupported() {
+	global $tikilib;
+	return $tikilib->isMySQLFulltextSearchSupported();
+}

@@ -60,6 +60,9 @@
 				<legend>
 					{tr}MySQL Search (legacy){/tr}{help url="Search"}
 				</legend>
+				{if $no_fulltext_support}
+					{tr}Your MySQL engine does not support MySQL fulltext search{/tr}
+				{else}
 				{preference name=feature_search_fulltext}
 				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
 					{preference name=feature_referer_highlight}
@@ -74,6 +77,7 @@
 						{preference name=feature_search_show_forbidden_cat}
 					</fieldset>
 				</div>
+				{/if}
 			</fieldset>
 				
 			<fieldset>

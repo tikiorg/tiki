@@ -773,6 +773,14 @@ if (
 		$tikifeedback[] = array('num'=>1, 'mes'=>tra("No database name specified"));
 	}
 }
+// Mark that InnoDB is to be used, if selected
+if(isset($_REQUEST['useInnoDB'])) {
+	if(intval($_REQUEST['useInnoDB']) > 0) {
+		if($installer != null) {
+			$installer->useInnoDB = true;	
+		}
+	}
+}
 
 if ( $dbcon ) {
 	$smarty->assign('dbcon', 'y');
@@ -1080,6 +1088,13 @@ if( $install_step == '0' ) {
 }
 
 if( $install_step == '4' ) {
+	// Show the innodb option in the (re)install section if InnoDB is present
+	if($installer->hasInnoDB()) {
+		$smarty->assign( 'hasInnoDB', true );
+	} else {
+		$smarty->assign( 'hasInnoDB', false );
+	}
+	
 	$value = '';
 	if ( ($db = TikiDB::get()) && ($result = $db->fetchAll( 'show variables like "character_set_database"') )) {
 		$res = reset( $result );
