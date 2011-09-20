@@ -140,7 +140,7 @@ class Services_Comment_Controller
 						sendCommentNotification('article', $objectId, $title, $data);
 					} elseif ($type == 'trackeritem') {
 						require_once('lib/notifications/notificationemaillib.php');
-						sendCommentNotification('trackeritem', $objectId, $title, $data);
+						sendCommentNotification('trackeritem', $objectId, $title, $data, $threadId);
 					}
 
 					return array(

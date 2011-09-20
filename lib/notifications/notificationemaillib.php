@@ -614,6 +614,13 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null) 
 			$smarty->assign('mail_objectname', $artlib->get_title($id));
 			$smarty->assign('mail_objectid', $id);
 		} elseif ($type == 'trackeritem') {
+			if ($prefs['feature_daily_report_watches'] == 'y') {
+				$reportslib = TikiLib::lib('reports');
+				$reportslib->makeReportCache($watches,
+					array('event' => 'tracker_item_comment', 'itemId' => $id, 'trackerId' => $trackerId, 'user' => $user, 'threadId' => $commentId)
+				);
+			}
+			
 			$tracker = $trklib->get_tracker($trackerId);
 			$smarty->assign('mail_objectid', $id);	
 			$smarty->assign('mail_objectname', $tracker['name']);
