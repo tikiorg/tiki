@@ -137,7 +137,7 @@
 		</form>
 	{/if}
 
-{if $prefs.calendar_fullcalendar neq 'y'}
+{if $prefs.calendar_fullcalendar neq 'y' or $viewlist eq 'list'}
   {include file='tiki-calendar_nav.tpl'}
   {if $viewlist eq 'list'}
     {include file='tiki-calendar_listmode.tpl'}
