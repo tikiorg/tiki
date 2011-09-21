@@ -17,11 +17,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
-require_once ( 'lib/smarty/libs/Smarty.class.php');
+$prefs['smarty_notice_reporting'] = 'y';
+$prefs['smarty_compilation'] = 'always';
+$prefs['smarty_security'] = 'y';
 require_once 'lib/init/initlib.php';
+set_error_handler("tiki_error_handling", E_ALL);
+error_reporting(E_ALL);
+require_once ( 'lib/init/smarty.php');
 require_once ('installer/installlib.php');
-
-error_reporting(E_ALL ^ E_NOTICE);
 
 class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 {
@@ -1122,4 +1125,5 @@ $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
 $smarty->assign( 'title', $title );
+$smarty->assign( 'phpErrors', $phpErrors );
 $smarty->display("tiki-install_screens.tpl");

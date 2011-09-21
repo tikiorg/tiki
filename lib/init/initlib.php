@@ -193,7 +193,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	case E_DEPRECATED:
 	case E_USER_DEPRECATED:
 		if (!  defined('THIRD_PARTY_LIBS_PATTERN') ||  ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
-			if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
+			if ( ! empty($prefs['smarty_notice_reporting']) && $prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 				break;
 			$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
 			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($err[$errno]):</b><br />";
