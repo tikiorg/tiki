@@ -46,6 +46,7 @@ function wikiplugin_div_info() {
 				'name' => tra('Box width'),
 				'description' => tra('In pixels or percentage. Default is original size'),
 				'default' => '',
+				'filter' => 'text',
 			),
 			'align' => array(
 				'required' => false,
