@@ -12,7 +12,7 @@ lang = {
 	"Strong" : "Fort",
 	"Average" : "Moyenne",
 	"Weak" : "Faible",
-	"Very Weak" : "Très failbe",
+	"Very Weak" : "Très faible",
 	"Strength" : "Robustesse",
 	"Valid User Name" : "Nom utilisateur valide",
 	"Passwords match" : "Les mots de passe concordent",
