@@ -715,10 +715,6 @@ class PreferencesLib
 				'label' => tra('Advanced'),
 				'type' => 'positive',
 			),
-			'expert' => array(
-				'label' => tra('Expert'),
-				'type' => 'positive',
-			),
 			'experimental' => array(
 				'label' => tra('Experimental'),
 				'type' => 'negative',
