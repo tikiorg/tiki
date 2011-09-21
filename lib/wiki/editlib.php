@@ -276,17 +276,6 @@ class EditLib
 			}
 			
 			if ($fcol || $bcol) {
-				$fg_ref = &$p['colors']['fg'];
-				$bg_ref = &$p['colors']['bg'];
-				
-				if ($fg_ref || $bg_ref ) { // close the existing color tag
-					// $p['colors']['pref']
-				}
-				if (!$fcol && $fg_ref) { // copy the old foreground color
-				}
-				if (!$bcol && $bg_ref) { // copy the old background color
-				}
-				
 				$col  = "~~";
 				$col .= ($fcol ? $fcol : '');
 				$col .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
@@ -413,11 +402,31 @@ class EditLib
 	 */
 	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false) {
 
+		// colors need a special processing
+		$have_color =  $end == '~~';
+		$nested_colors = $have_color && $p['colorstack'];
+		
 		// append=false, create new entries on the stack
 		if (!$append) {
 			$p['stack'][] = array('tag' => $tag, 'string' => '', 'wikitag' => true);
-			$p['wikistack'][] = array( 'begin' => array(), 'end' => array(), 'isinline' => $is_inline );	
+			$p['wikistack'][] = array( 'begin' => array(), 'end' => array(), 'isinline' => $is_inline, 'have_color' => $have_color );	
 		};
+
+		// prevent that colors are nested
+		if ($nested_colors) {
+			$this->closeWikiTags($p, $src);
+		}
+		
+		// update the color stack
+		if ( $have_color ) {
+			$col = preg_replace('/~~(.*):/', '\1', $begin);
+			$col_arr = explode( ',', $col );	
+			$fc = count($col_arr)      ? trim($col_arr[0]) : '';
+			$bc = count($col_arr) == 2 ? trim($col_arr[1]) : '';
+			$p['colorstack'][] = array( 'fc' => $fc, 'bc' => $bc );
+
+			$begin = '~~'; // the colors may change due to overlapping spans			
+		}
 
 		// get the entry points on the stacks
 		$key = end(array_keys($p['wikistack']));
@@ -425,17 +434,24 @@ class EditLib
 		
 		$key = end(array_keys( $p['stack'] ) );
 		$string = &$p['stack'][$key]['string'];
-
+		
 		// append to the stacks
 		$wiki['begin'][] = $begin;
 		$wiki['end'][] = $end;
 		$string = $end . $string;
-		
+
 		// update the output string
-		if (!$is_inline) {
-			$this->startNewLine($src);
+		if ($nested_colors) {
+//			$this->reopenWikiTags($p, $src);						
+		} else {
+			if (!$is_inline) {
+				$this->startNewLine($src);
+			}
+			$src .= $begin;
+			if ($have_color) {
+				$src .= $this->composeWikiColor($p);
+			}
 		}
-		$src .= $begin;
 	}
 	
 	
@@ -470,8 +486,34 @@ class EditLib
 		foreach ( $p['wikistack'] as $wiki_arr ) {
 			foreach ( $wiki_arr['begin'] as $begin) {
 				$src .= $begin;
+				
+				if ($begin == '~~') { // have color
+					$src .= $this->composeWikiColor($p);
+				}
 			}
 		}		
+	}
+	
+	
+	/**
+	 * Compose the color using $p['colorstack']
+	 * 
+ 	 * @param array $p ['stack'] = closing strings stack 
+	 * @return: the wiki markup that defines the color
+	 */
+	private function composeWikiColor(&$p) {
+		
+		$fc = '';
+		$bc = '';
+		
+		foreach ($p['colorstack'] as $def) {
+			$fc = $def['fc'] ? $def['fc'] : '';
+			$bc = $def['bc'] ? $def['bc'] : '';
+		}
+		$col = $fc ? $fc : ' ';
+		$col .= $bc ? ',' . $bc : '';
+
+		return $col . ':';
 	}
 	
 	
@@ -807,8 +849,13 @@ class EditLib
 					}
 					
 					// update the wiki stack
-					if (isset($e['wikitag']) && $e['wikitag'] == true) {
+					if (isset($e['wikitag']) && $e['wikitag']) {
 						array_pop( $p['wikistack'] );
+					}
+					
+					// update the color stack
+					if (isset($e['have_color']) && $e['have_color']) {
+						array_pop( $e['have_color'] );
 					}
 					
 					// can we leave wiki line break mode ?
@@ -870,15 +917,22 @@ class EditLib
 		$htmlparser->Parse();
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
-		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'colors' => null, 
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'colorstack' => array(), 
 			'wiki_lbr' => 0, 'first_td' => false, 'first_tr' => false);
 		/*
 		 * ['wikistack'] = array(), is used to save the wiki markup for the linebreak handling (1 array = 1 html tag)
 		 * 
-		 * Each array entry contains the following keys. 
+		 * Each array entry contains the following keys: 
 		 * - ['begin']    = array() of begin markups (1 style definition = 1 array entry)
 		 * - ['end']      = array() of end markups
 		 * - ['isinline'] = bool (true if the markup is inline, false if the markup spans a whole line)
+		 * 
+		 * 
+		 * ['colorstack'] = array(), used to save color specifications
+		 * 
+		 * Each array entry contains the following keys:
+		 * - ['fc'] = string that defines the foreground color ('#FFFFFF')
+		 * - ['bc'] = string that defines the background color (' ,#FFFFFF')
 		 */
 		$p['colors'] = array('fg' => null, 'bg' => null, 'pref' => 0);
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
