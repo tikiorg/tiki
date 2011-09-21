@@ -403,44 +403,75 @@ class EditLib
 	 * - Output the required markup before and after the linebreaks (<br />).
 	 * - To ensure that linebreaks are, if required, inserted at the correct place (\n). 
 	 *
-	 * @param $tag string The name of the html tag
-	 * @param $src string Th Output string
-	 * @param $p array ['stack'] = closing strings stack,
-	 * @param $begin string The wiki markup that begins the tag
-	 * @param $end string The wiki markup that ends the tag
-	 * @param $is_inline bool True if the tag is inline, false if the tag must span exacly one line.
-	 * @param $append bool True = append to the topmost element on the stack, false = create a new element on the stack
+	 * @param string $tag The name of the html tag
+	 * @param string $src Th Output string
+	 * @param array  $p   ['stack'] = closing strings stack,
+	 * @param string $begin The wiki markup that begins the tag
+	 * @param string $end The wiki markup that ends the tag
+	 * @param bool $is_inline True if the tag is inline, false if the tag must span exacly one line.
+	 * @param bool $append True = append to the topmost element on the stack, false = create a new element on the stack
 	 */
 	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false) {
-		
+
 		// append=false, create new entries on the stack
 		if (!$append) {
 			$p['stack'][] = array('tag' => $tag, 'string' => '', 'wikitag' => true);
-			$p['wikistack']['begin'][] = array();
-			$p['wikistack']['end'][] = array();
+			$p['wikistack'][] = array( 'begin' => array(), 'end' => array(), 'isinline' => $is_inline );	
 		};
 
 		// get the entry points on the stacks
-		$key = end(array_keys( $p['wikistack']['begin'] ) );
-		$top_begin = &$p['wikistack']['begin'][$key]; 
-
-		$key = end(array_keys( $p['wikistack']['end'] ) );
-		$top_end = &$p['wikistack']['end'][$key];
+		$key = end(array_keys($p['wikistack']));
+		$wiki = &$p['wikistack'][$key]; 
 		
 		$key = end(array_keys( $p['stack'] ) );
-		$top_string = &$p['stack'][$key]['string'];
+		$string = &$p['stack'][$key]['string'];
 
 		// append to the stacks
-		$top_begin[] = $begin;
-		$top_end[] = $end;
-		$top_string = $end . $top_string;
-		$p['wikistack']['isinline'][] = $is_inline;
+		$wiki['begin'][] = $begin;
+		$wiki['end'][] = $end;
+		$string = $end . $string;
 		
 		// update the output string
 		if (!$is_inline) {
 			$this->startNewLine($src);
 		}
 		$src .= $begin;
+	}
+	
+	
+	/**
+	 * Close open Wiki tags 
+	 * 
+	 * In some situations, for example before a line break, all open tags must be closed.
+	 * 
+ 	 * @param array $p ['stack'] = closing strings stack
+	 * @param string $src The output string
+	 */
+	private function closeWikiTags( &$p, &$src ) {
+		
+		foreach ( array_reverse($p['wikistack']) as $wiki_arr ) {
+			foreach ( array_reverse($wiki_arr['end']) as $end ) {	
+				$src .= $end;
+			}
+		}
+	}
+	
+	
+	/**
+	 * Reopen Wiki tags
+	 * 
+	 * In some situations, for example after a line break, all unfinished tags must be opend again.
+	 * 
+ 	 * @param array $p ['stack'] = closing strings stack
+	 * @param string $src The output string 
+	 */
+	private function reopenWikiTags( &$p, &$src ) {
+		
+		foreach ( $p['wikistack'] as $wiki_arr ) {
+			foreach ( $wiki_arr['begin'] as $begin) {
+				$src .= $begin;
+			}
+		}		
 	}
 	
 	
@@ -636,12 +667,7 @@ class EditLib
 							if ($p['wiki_lbr']) { // "%%%" or "\n" ?
 								$src .= ' %%% ';
 							} else {
-								// close all open wiki markup
-								foreach (array_reverse($p['wikistack']['end']) as $end_arr) {
-									foreach (array_reverse($end_arr) as $end ) {
-										$src .= $end;}}
-								
-								// write newline
+								$this->closeWikiTags($p, $src);
 								$src .= "\n";
 								
 								// for lists, we must prepend '+' to keep the indentation
@@ -649,10 +675,7 @@ class EditLib
 									$src .= str_repeat( '+', count($p['listack']));
 								}
 								
-								// reopen all previously closed wiki markup
-								foreach ($p['wikistack']['begin'] as $begin_arr) {
-									foreach ($begin_arr as $begin) {
-										$src .= $begin;}}
+								$this->reopenWikiTags($p, $src);
 							}
 							break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
@@ -785,9 +808,7 @@ class EditLib
 					
 					// update the wiki stack
 					if (isset($e['wikitag']) && $e['wikitag'] == true) {
-						array_pop( $p['wikistack']['begin'] );
-						array_pop( $p['wikistack']['end'] );
-						array_pop( $p['wikistack']['isinline'] );
+						array_pop( $p['wikistack'] );
 					}
 					
 					// can we leave wiki line break mode ?
@@ -849,9 +870,16 @@ class EditLib
 		$htmlparser->Parse();
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
-		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => null, 'colors' => null, 
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'colors' => null, 
 			'wiki_lbr' => 0, 'first_td' => false, 'first_tr' => false);
-		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array() );
+		/*
+		 * ['wikistack'] = array(), is used to save the wiki markup for the linebreak handling (1 array = 1 html tag)
+		 * 
+		 * Each array entry contains the following keys. 
+		 * - ['begin']    = array() of begin markups (1 style definition = 1 array entry)
+		 * - ['end']      = array() of end markups
+		 * - ['isinline'] = bool (true if the markup is inline, false if the markup spans a whole line)
+		 */
 		$p['colors'] = array('fg' => null, 'bg' => null, 'pref' => 0);
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
