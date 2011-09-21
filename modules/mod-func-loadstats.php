@@ -19,5 +19,5 @@ function module_loadstats_info() {
 	);
 }
 
-function module__loadstats( $mod_reference, $module_params ) {
+function module_loadstats( $mod_reference, $module_params ) {
 }
