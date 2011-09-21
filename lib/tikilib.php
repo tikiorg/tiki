@@ -491,7 +491,10 @@ class TikiLib extends TikiDb_Bridge
 		include_once ('tiki-setup.php');
 		if( $name == 'local' || empty($name) ) {
 			return TikiDb::get();
-		} else {
+		}
+
+		try
+		{
 			static $connectionMap = array();
 
 			if( ! isset( $connectionMap[$name] ) ) {
@@ -518,6 +521,8 @@ class TikiLib extends TikiDb_Bridge
 				}
 			}
 			return $connectionMap[$name];
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report($e->getMessage());
 		}
 	}
 
