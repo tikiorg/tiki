@@ -328,14 +328,6 @@
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
 				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr _0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}</p>{/if}
-				{if $hasInnoDB}
-					Select database type
-					<input type="radio" name="useInnoDB" value="0" checked /> MyISAM &nbsp;&nbsp;&nbsp;
-					<input type="radio" name="useInnoDB" value="1" /> InnoDB (experimental)
-				{else}
-				<input type="hidden" name="useInnoDB" value="0" />
-				<br/>
-				{/if}
 				{if $tikidb_created}
 				<script type='text/javascript'><!--//--><![CDATA[//><!--
 				{literal}
@@ -352,6 +344,17 @@
 				{else}
 				<div id="install-table">
 				{/if}
+					{if $hasInnoDB}
+						<label>
+							{tr}Select database engine{/tr}
+							<select name="useInnoDB">
+								<option value="0">{tr}MyISAM{/tr}</option>
+								<option value="1">{tr}InnoDB (experimental){/tr}</option>
+							</select>
+						</label>
+					{else}
+						<input type="hidden" name="useInnoDB" value="0" />
+					{/if}
 				<p align="center">
 					<input type="submit" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;" />
 				</p>
