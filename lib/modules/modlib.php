@@ -298,7 +298,7 @@ class ModLib extends TikiLib
 
 		foreach( $list as & $partial ) {
 			$partial = array_map( array( $this, 'augment_module_parameters' ), $partial );
-				if (!$this->is_admin_mode() || empty($_REQUEST['show_hidden_modules'])) {
+			if (!$this->is_admin_mode(true)) {
 				$partial = array_values( array_filter( $partial, array( $this, 'filter_active_module' ) ) );
 			}
 		}
@@ -864,12 +864,19 @@ class ModLib extends TikiLib
 	/**
 	 * Returns true if on the admin modules page
 	 *
+	 * @param bool $ifShowingHiddenModules	 - check for $_REQUEST['show_hidden_modules'] as well
+	 *
 	 * @return bool
 	 */
-	function is_admin_mode() {
+	function is_admin_mode( $ifShowingHiddenModules = false) {
 		global $tiki_p_admin_modules;
-		
-		return $tiki_p_admin_modules === 'y' && strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
+
+		$ok = true;
+		if ($ifShowingHiddenModules && empty($_REQUEST['show_hidden_modules'])) {
+			$ok = false;
+		}
+		return $ok && $tiki_p_admin_modules === 'y' &&
+				strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
 	}
 
 	function get_user_module_content( $name ) {
