@@ -21,7 +21,7 @@ function module_freetag_info() {
 }
 
 function module_freetag( $mod_reference, $module_params ) {
-	global $sections, $section;
+	global $sections, $section, $modlib;
 	global $smarty;
 	
 	$globalperms = Perms::get();
@@ -33,7 +33,10 @@ function module_freetag( $mod_reference, $module_params ) {
 		} elseif (isset($par['key']) && !empty($_REQUEST["{$par['key']}"])) {
 			$tagid = $_REQUEST["{$par['key']}"];
 		}
-		if ($tagid)
+		if ($tagid) {
 			$smarty->assign('viewTags', 'y');
+		}
+	} else if ($modlib->is_admin_mode(true)) {
+		$smarty->assign('viewTags', 'y');
 	}
 }
