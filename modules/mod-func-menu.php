@@ -17,14 +17,13 @@ function module_menu_info() {
 		'description' => tra('Horizontal or vertical menu.'),
 		'params' => array(
 			'id' => array(
-				'name' => tra('Menu Id'),
-//				'required' => true,
-				'description' => tra('Id from tiki-admin_menus.php'),
+				'name' => tra('Menu'),
+				'description' => tra('Identifier of a menu (from tiki-admin_menus.php)'),
 				'filter' => 'int',
 			),
 			'structureId' => array(
-				'name' => tra('Structure Id'),
-				'description' => tra('Id of a structure of wiki pages from tiki-admin_structures.php'),
+				'name' => tra('Structure'),
+				'description' => tra('Identifier of a structure of wiki pages (from tiki-admin_structures.php)'),
 				'filter' => 'text',
 			),
 			'type' => array(
@@ -77,5 +76,9 @@ function module_menu_info() {
 
 function module_menu( $mod_reference, $module_params ) {
 	global $smarty;
+	$smarty->assign('module_error', '');
+	if (empty($module_params['id']) && empty($module_params['structureId'])) {
+		$smarty->assign('module_error', tr('One of these parameters has to be set:') . ' ' . tr('Menu') . ', ' . tr('Structure') . '.');
+	}
 	$smarty->assign('module_type', empty($module_params['css']) || $module_params['css'] === 'y' ? 'cssmenu' : 'menu');
 }
