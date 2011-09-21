@@ -10,7 +10,8 @@ $inputConfiguration = array(
     'date' => 'digits',
     'maxRecords' => 'digits',
     'highlight' => 'text',
-    'where' => 'word',
+    'where' => 'text',
+    'find' => 'text',
     'searchLang' => 'word',
     'words' =>'text',
     'boolean' =>'word',
@@ -27,10 +28,10 @@ $access->check_permission('tiki_p_search');
 //ini_set('display_errors', true);
 //error_reporting(E_ALL);
 
-if (empty($_REQUEST['filter']) && !empty($_REQUEST['find'])) {
-	$_REQUEST['filter']['content'] = $_REQUEST['find'];
-	if (!empty($_REQUEST['where']))
-		$_REQUEST['filter']['type'] = $_REQUEST['where'];
+foreach (array('find', 'highlight', 'where') as $possibleKey) {
+	if (empty($_REQUEST['filter']) && !empty($_REQUEST[$possibleKey])) {
+		$_REQUEST['filter']['content'] = $_REQUEST[$possibleKey];
+	}
 }
 $filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
