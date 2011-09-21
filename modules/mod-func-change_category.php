@@ -73,11 +73,13 @@ function module_change_category_info() {
 }
 
 function module_change_category( $mod_reference, $module_params ) {
-	global $prefs, $tikilib, $smarty;
+	global $prefs, $tikilib, $smarty, $modlib;
 	global $categlib; require_once('lib/categories/categlib.php');
 	
 	// temporary limitation to wiki pages
-	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if'])) {
+	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']) ||
+			($modlib->is_admin_mode() && !empty($_REQUEST['show_hidden_modules']))) {
+		
 		if (empty($_REQUEST['page'])) {
 			global $structlib; include_once('lib/structures/structlib.php');
 			$page_info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);

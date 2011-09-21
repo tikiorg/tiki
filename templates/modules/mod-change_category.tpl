@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{if isset($page) and $showmodule}
+{if !empty($smarty.request.show_hidden_modules) or isset($page) and $showmodule}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="change_category" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 		{if !empty($module_params.imgUrlNotIn) and !empty($module_params.imgUrlIn)}
 			{foreach key=k item=i from=$modcatlist}{* Smarty hack to access $modcatlist's first key. This should only access one element. *}
