@@ -21,6 +21,8 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once 'lib/init/initlib.php';
 require_once ('installer/installlib.php');
 
+error_reporting(E_ALL ^ E_NOTICE);
+
 class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 {
 	function handle(TikiDb $db, $query, $values, $result) {
