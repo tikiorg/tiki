@@ -78,7 +78,7 @@ function module_change_category( $mod_reference, $module_params ) {
 	
 	// temporary limitation to wiki pages
 	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']) ||
-			($modlib->is_admin_mode() && !empty($_REQUEST['show_hidden_modules']))) {
+			($modlib->is_admin_mode(true))) {
 		
 		if (empty($_REQUEST['page'])) {
 			global $structlib; include_once('lib/structures/structlib.php');

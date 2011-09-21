@@ -22,7 +22,7 @@ function module_category_transition_info() {
 }
 
 function module_category_transition( $mod_reference, $module_params ) {
-	global $smarty, $cat_type, $cat_objid;
+	global $smarty, $cat_type, $cat_objid, $modlib;
 
 	if( $cat_type && $cat_objid ) {
 		$smarty->assign( 'objType', $cat_type );
@@ -39,6 +39,16 @@ function module_category_transition( $mod_reference, $module_params ) {
 
 		$transitions = $transitionlib->getAvailableTransitions( $cat_objid, $cat_type );
 		$smarty->assign( 'mod_transitions', $transitions );
+
+	} else if ($modlib->is_admin_mode(true)) {	// add a dummy transition to display on the module admin page
+
+		$smarty->assign( 'mod_transitions', array(
+				array('enabled' => true,
+					  'transitionId' => 0,
+					  'name' => tra('Example Transition'),
+				)
+			)
+		);
 	}
 }
 
