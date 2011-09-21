@@ -139,28 +139,25 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	
 	
 	function testColor() {
-		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new EditLib();
-		
+
 		$inData = '~~#112233:text~~';
-		$exp = '<span style="color:#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$exp = '<span style="color:#112233; background-color:">text</span>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~ ,#112233:text~~';
-		$exp = '<span style="background-color:#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$exp = '<span style="color: ; background-color:#112233">text</span>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~#AABBCC,#112233:text~~';
-		$exp = '<span style="color:#AABBCC; background-color=#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$exp = '<span style="color:#AABBCC; background-color:#112233">text</span>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~ #AABBCC , #112233 :text~~';
-		$exp = '<span style="color:#AABBCC; background-color=#112233;">text</span>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$exp = '<span style="color: #AABBCC ; background-color: #112233 ">text</span>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);
 	}
 }
