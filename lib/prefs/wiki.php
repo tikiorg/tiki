@@ -269,7 +269,7 @@ function prefs_wiki_list($partial = false) {
 			'default' => 'points_desc',
 		),
 		'wiki_uses_slides' => array(
-			'name' => tra('Slideshows'),
+			'name' => tra('Add a slideshow button on wiki pages'),
 			'type' => 'flag',
 			'help' => 'Slideshow',
 			'default' => 'n',
