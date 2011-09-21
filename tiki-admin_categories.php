@@ -272,7 +272,7 @@ $smarty->assign('father', $father);
 // ---------------------------------------------------
 
 $categories = $categlib->getCategories(NULL, false);
-if (empty($categories)) {
+if (empty($categories) && $tiki_p_admin_categories != 'y') {
 	$access->check_permission('tiki_p_admin_categories');
 }
 $smarty->assign('categories', $categories);
