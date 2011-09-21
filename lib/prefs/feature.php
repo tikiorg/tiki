@@ -319,6 +319,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Quizzes',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
 			'view' => 'tiki-list_quizzes.php',
 		),
 		'feature_featuredLinks' => array(
