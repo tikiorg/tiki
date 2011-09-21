@@ -84,24 +84,18 @@
 				
 				{preference name=feature_watershed}				
 				{preference name=feature_kaltura}				
-				{preference name=bigbluebutton_feature}
-					<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
-						{preference name=bigbluebutton_server_location}
-						{preference name=bigbluebutton_server_salt}
-						{preference name=wikiplugin_bigbluebutton}
-					</div>
 			
 				{preference name=zotero_enabled}
-					<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
-						{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
-							{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
-						{/if}
-						{preference name=zotero_client_key}
-						{preference name=zotero_client_secret}
-						{preference name=zotero_group_id}
-						{preference name=zotero_style}
-					</div>
-			
+				<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
+					{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
+						{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
+					{/if}
+					{preference name=zotero_client_key}
+					{preference name=zotero_client_secret}
+					{preference name=zotero_group_id}
+					{preference name=zotero_style}
+				</div>
+		
 			</div>
 		</fieldset>
 		

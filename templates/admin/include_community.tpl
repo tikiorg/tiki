@@ -117,61 +117,70 @@
 					{preference name=users_prefs_language}
 				{/if}
 
-			{preference name=users_prefs_userbreadCrumb}
-			{preference name=users_prefs_display_timezone}
-			{preference name=users_prefs_user_information}
-			{preference name=users_prefs_user_dbl}
-			{preference name=users_prefs_display_12hr_clock}
+				{preference name=users_prefs_userbreadCrumb}
+				{preference name=users_prefs_display_timezone}
+				{preference name=users_prefs_user_information}
+				{preference name=users_prefs_user_dbl}
+				{preference name=users_prefs_display_12hr_clock}
 
-			{preference name=users_prefs_show_mouseover_user_info}
-			{preference name=users_prefs_tasks_maxRecords}
-			{preference name=users_prefs_diff_versions}
+				{preference name=users_prefs_show_mouseover_user_info}
+				{preference name=users_prefs_tasks_maxRecords}
+				{preference name=users_prefs_diff_versions}
 
 
-		</fieldset>
+			</fieldset>
 
-		{* *** User Messages *** *}
-		<fieldset>
-			<legend>
-				{tr}User messages{/tr}
-				{help url="Inter-User+Messages"}
-			</legend>
+			{* *** User Messages *** *}
+			<fieldset>
+				<legend>
+					{tr}User messages{/tr}
+					{help url="Inter-User+Messages"}
+				</legend>
 
-			{preference name=users_prefs_mess_maxRecords}
-			{preference name=users_prefs_allowMsgs}
-			{preference name=users_prefs_mess_sendReadStatus}
-			{preference name=users_prefs_minPrio}
-			{preference name=users_prefs_mess_archiveAfter}
-		</fieldset>
+				{preference name=users_prefs_mess_maxRecords}
+				{preference name=users_prefs_allowMsgs}
+				{preference name=users_prefs_mess_sendReadStatus}
+				{preference name=users_prefs_minPrio}
+				{preference name=users_prefs_mess_archiveAfter}
+			</fieldset>
 
-		<fieldset>
-			<legend>{tr}My Tiki{/tr}</legend>
-			{preference name=users_prefs_mytiki_pages}
-			{preference name=users_prefs_mytiki_blogs}
-			{preference name=users_prefs_mytiki_gals}
-			{preference name=users_prefs_mytiki_msgs}
-			{preference name=users_prefs_mytiki_tasks}
-			{preference name=users_prefs_mytiki_forum_topics}
-			{preference name=users_prefs_mytiki_forum_replies}
-			{preference name=users_prefs_mytiki_items}
-		</fieldset>
-	{/tab}
+			<fieldset>
+				<legend>{tr}My Tiki{/tr}</legend>
+				{preference name=users_prefs_mytiki_pages}
+				{preference name=users_prefs_mytiki_blogs}
+				{preference name=users_prefs_mytiki_gals}
+				{preference name=users_prefs_mytiki_msgs}
+				{preference name=users_prefs_mytiki_tasks}
+				{preference name=users_prefs_mytiki_forum_topics}
+				{preference name=users_prefs_mytiki_forum_replies}
+				{preference name=users_prefs_mytiki_items}
+			</fieldset>
+		{/tab}
 
-	{tab name="{tr}Friendship Network{/tr}"}
-		{preference name=feature_friends}
-		<div class="adminoptionboxchild" id="feature_friends_childcontainer">
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					{tr}Select which items to display when listing users{/tr}.
+		{tab name="{tr}Friendship Network{/tr}"}
+			{preference name=feature_friends}
+			<div class="adminoptionboxchild" id="feature_friends_childcontainer">
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						{tr}Select which items to display when listing users{/tr}.
+					</div>
 				</div>
+				{preference name=user_list_order}
+				{preference name=feature_community_list_name}
+				{preference name=feature_community_list_score}
+				{preference name=feature_community_list_country}
+				{preference name=feature_community_list_distance}
 			</div>
-			{preference name=user_list_order}
-			{preference name=feature_community_list_name}
-			{preference name=feature_community_list_score}
-			{preference name=feature_community_list_country}
-			{preference name=feature_community_list_distance}
-		</div>
 
+		{/tab}
+		{tab name="{tr}BugBlueButton{/tr}"}
+			{preference name=bigbluebutton_feature}
+			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
+				{preference name=bigbluebutton_server_location}
+				{preference name=bigbluebutton_server_salt}
+				{preference name=bigbluebutton_recording_max_duration}
+				{preference name=wikiplugin_bigbluebutton}
+			</div>
 		{/tab}
 	{/tabset}
 	<div class="input_submit_container clear" style="text-align: center;">

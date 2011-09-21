@@ -59,10 +59,14 @@ function wikiplugin_bigbluebutton_info() {
 			),
 			'recording' => array(
 				'required' => false,
-				'name' => tra('File gallery for recordings'),
-				'description' => tra('Record the meetings and archive them in a file gallery. Requires BBB >= 0.8.'),
+				'name' => tra('Record meetings'),
+				'description' => tra('Requires BBB >= 0.8.'),
 				'filter' => 'int',
 				'default' => 0,
+				'options' => array(
+					array('value' => 0, 'text' => tr('Off')),
+					array('value' => 1, 'text' => tr('On')),
+				),
 			),
 		),
 	);
@@ -108,6 +112,7 @@ function wikiplugin_bigbluebutton( $data, $params ) {
 		}
 
 		$smarty->assign( 'bbb_attendees', $bigbluebuttonlib->getAttendees( $meeting ) );
+		$smarty->assign( 'bbb_recordings', $bigbluebuttonlib->getRecordings( $meeting ) );
 
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_bigbluebutton.tpl' );
 	}

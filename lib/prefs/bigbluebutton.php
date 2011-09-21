@@ -38,6 +38,16 @@ function prefs_bigbluebutton_list()
 			'filter' => 'text',
 			'default' => '',
 		),
+		'bigbluebutton_recording_max_duration' => array(
+			'name' => tr('BigBlueButton recording maximum duration'),
+			'description' => tr('A maximum duration for the meetings must be provided to BigBlueButton to prevent the recordings to be excessively long if a user leaves the window open too long.'),
+			'shorthint' => 'minutes',
+			'keywords' => 'big blue button',
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 6,
+			'default' => 5*60,
+		),
 	);
 }
 

@@ -230,6 +230,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'connect_server':
 			require_once('lib/core/Connect/Server.php');
 			return self::$libraries[$name] = new Connect_Server();
+		case 'bigbluebutton':
+			global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
+			return self::$libraries[$name] = $bigbluebuttonlib;
 		}
 	}
 

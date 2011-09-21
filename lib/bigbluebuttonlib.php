@@ -86,7 +86,7 @@ class BigBlueButtonLib
 	}
 
 	public function createRoom( $room, array $params = array() ) {
-		global $tikilib, $cachelib;
+		global $tikilib, $cachelib, $prefs;
 
 		$params = array_merge( array(
 			'logout' => $tikilib->tikiUrl(''),
@@ -112,8 +112,9 @@ class BigBlueButtonLib
 		if( isset( $params['logout'] ) ) {
 			$request['logoutURL'] = $params['logout'];
 		}
-		if( isset( $params['max'] ) ) {
-			$request['maxParticipants'] = $params['max'];
+		if( isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported() ) {
+			$request['record'] = 'true';
+			$request['duration'] = $prefs['bigbluebutton_recording_max_duration'];
 		}
 
 		$this->performRequest( 'create', $request );
@@ -134,12 +135,12 @@ class BigBlueButtonLib
 	private function getAttendeeName() {
 		global $user, $tikilib;
 
-		if( $tikilib->userHasPreference('realName') ) {
-			return $tikilib->get_user_preference('realName');
+		if( $realName = $tikilib->get_user_preference($user, 'realName') ) {
+			return $realName;
 		} elseif( $user ) {
 			return $user;
 		} elseif(!empty($_SESSION['bbb_name'])) {
-				return $_SESSION['bbb_name'];
+			return $_SESSION['bbb_name'];
 		} else {
 			return tra('anonymous');
 		}
@@ -223,6 +224,41 @@ class BigBlueButtonLib
 				return sha1( $action . $query . $prefs['bigbluebutton_server_salt'] );
 			}
 		}
+	}
+
+	private function isRecordingSupported() {
+		$version = $this->getVersion();
+		return version_compare( $version, '0.8' ) >= 0;
+	}
+
+	public function getRecordings( $room ) {
+		if (! $this->isRecordingSupported()) {
+			return array();
+		}
+
+		$result = $this->performRequest('getRecordings', array(
+			'meetingID' => $room,
+		));
+		
+		$data = array();
+		$recordings = $result->getElementsByTagName('recording');
+		foreach ($recordings as $recording) {
+			$recording = simplexml_import_dom($recording);
+			$info = array(
+				'recordID' => (string) $recording->recordID,
+				'startTime' => strtotime((string) $recording->startTime),
+				'endTime' => strtotime((string) $recording->endTime),
+				'playback' => array(),
+			);
+
+			foreach ($recording->playback as $playback) {
+				$info['playback'][ (string) $playback->format->type ] = (string) $playback->format->url;
+			}
+
+			$data[] = $info;
+		}
+
+		return $data;
 	}
 }
 
