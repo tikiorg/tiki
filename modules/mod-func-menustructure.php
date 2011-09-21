@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_menustructure_info() {
 	return array(
 		'name' => tra('Wiki Structure Menu'),
-		'description' => tra('Displays a structure.'),
+		'description' => tra('Displays a structure.') . ' ' . tra('N.B. Deprecated in Tiki 8+, use Menu instead'),
 		'prefs' => array( 'feature_wiki_structure' ),
 		'params' => array(
 			'structure' => array(

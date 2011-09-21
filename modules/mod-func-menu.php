@@ -18,13 +18,19 @@ function module_menu_info() {
 		'params' => array(
 			'id' => array(
 				'name' => tra('Menu Id'),
-				'required' => true,
+//				'required' => true,
 				'description' => tra('Id from tiki-admin_menus.php'),
 				'filter' => 'int',
+			),
+			'structureId' => array(
+				'name' => tra('Structure Id'),
+				'description' => tra('Id of a structure of wiki pages from tiki-admin_structures.php'),
+				'filter' => 'text',
 			),
 			'type' => array(
 				'name' => tra('Type'),
 				'description' => tra('Direction for menu: horiz or vert (default vert)'),
+				'filter' => 'text',
 			),
 			'css' => array(
 				'name' => tra('CSS/Superfish'),
@@ -38,15 +44,34 @@ function module_menu_info() {
 			'menu_class' => array(
 				'name' => tra('CSS class'),
 				'description' => tra('Class of the menu container'),
+				'filter' => 'text',
 			),
 			'sectionLevel' => array(
 				'name' => tra('Limit low visibles levels'),
 				'description' => tra('All the submenus beginning at this level will be displayed if the url matches one of the option of this level or above or below.'),
+				'filter' => 'int',
 			),
 			'toLevel' => array(
 				'name' => tra('Limit top visible levels'),
 				'description' => tra('Do not display options higher than this level.'),
-			),		)
+				'filter' => 'int',
+			),
+			'link_on_section' => array(
+				'name' => tra('Link on Section'),
+				'description' => tra('Create links on menu sections') . ' ' . tra('(y/n default y)'),
+				'filter' => 'alpha',
+			),
+			'translate' => array(
+				'name' => tra('Translate'),
+				'description' => tra('Translate labels') . ' ' . tra('(y/n default y)'),
+				'filter' => 'alpha',
+			),
+			'menu_cookie' => array(
+				'name' => tra('Menu Cookie'),
+				'description' => tra('Open the menu to show current option if possible') . ' ' . tra('(y/n default y)'),
+				'filter' => 'alpha',
+			),
+		)
 	);
 }
 
