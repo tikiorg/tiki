@@ -88,7 +88,7 @@ function smarty_function_menu($params, $smarty)
 		$channels = $tikilib->sort_menu_options($channels);
 		$cachelib->cacheItem($cacheName, serialize(array($menu_info, $channels)), $cacheType);
 	} else {
-		return '<span class="error">' . tra('menu function: Menu or Structure ID not set') . '</span>';
+		return '<span class="error">menu function: Menu or Structure ID not set</span>';
 	}
 	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'', isset($toLevel)?$toLevel: '', $params);
 
