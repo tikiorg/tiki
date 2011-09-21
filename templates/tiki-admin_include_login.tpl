@@ -80,6 +80,11 @@
 					<div class="adminoptionboxchild" id="user_register_prettytracker_childcontainer">
 					{preference name=user_register_prettytracker_tpl}
 					</div>
+				{preference name=user_register_prettytracker_output}
+					<div class="adminoptionboxchild" id="user_register_prettytracker_output_childcontainer">
+					{preference name=user_register_prettytracker_outputwiki}
+					{preference name=user_register_prettytracker_outputtowiki}
+					</div>
 				{preference name=user_trackersync_trackers}
 				{preference name=user_trackersync_realname}
 				{preference name=user_trackersync_geo}
