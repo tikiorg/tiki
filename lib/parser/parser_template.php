@@ -389,7 +389,7 @@ class WikiParserLexer {
 	
 	function performAction(&$yy, $yy_, $avoiding_name_collisions, $YY_START = null) {
 		$YYSTATE = $YY_START;
-		"<@@LEXER_PERFORM_ACTION@@>"
+		"<@@LEXER_PERFORM_ACTION@@>";
 	}
 
 	var $rules = "<@@RULES@@>";
