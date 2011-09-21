@@ -248,7 +248,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 			$term = $this->buildTerm($node);
 		}
 
-		if ($term) {
+		if ($term && method_exists($term, 'getTerm') && (string) $term->getTerm()) {
 			$term->setBoost($node->getWeight());
 		}
 
