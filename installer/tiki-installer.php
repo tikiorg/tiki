@@ -17,6 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
+$prefs = array();
 $prefs['smarty_notice_reporting'] = 'y';
 $prefs['smarty_compilation'] = 'always';
 $prefs['smarty_security'] = 'y';
@@ -172,49 +173,6 @@ function isWindows() {
 	}
 
 	return $windows;
-}
-
-class Smarty_Tiki_Installer extends Smarty
-{
-
-	function Smarty_Tiki_Installer($tikidomain) {
-		parent::__construct();
-		if ($tikidomain) {
-			$tikidomain .= '/'; 
-		}
-		$this->template_dir = realpath('templates/');
-		$this->compile_dir = realpath("templates_c/$tikidomain");
-		$this->config_dir = realpath('configs/');
-		$this->cache_dir = realpath("templates_c/$tikidomain");
-		$this->caching = 0;
-		$this->assign('app_name', 'Tiki');
-		include_once('lib/setup/third_party.php');
-		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
-			TIKI_SMARTY_DIR,
-			SMARTY_DIR.'plugins'
-		);
-
-		// In general, it's better that use_sub_dirs = false
-		// If ever you are on a very large/complex/multilingual site and your
-		// templates_c directory is > 10 000 files, (you can check at tiki-admin_system.php)
-		// you can change to true and maybe you will get better performance.
-		// http://smarty.php.net/manual/en/variable.use.sub.dirs.php
-		//
-		$this->use_sub_dirs = false;
-
-		// security_settings['MODIFIER_FUNCS'], ['IF_FUNCS'] and secure_dir not needed in installer
-
-		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
-		//$this->debugging = true;
-		//$this->debug_tpl = 'debug.tpl';
-	}
-
-	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false) {
-		global $language;
-		$_smarty_cache_id = $language . $_smarty_cache_id;
-		$_smarty_compile_id = $language . $_smarty_compile_id;
-		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $parent, $_smarty_display);
-	}
 }
 
 function check_session_save_path() {
@@ -594,10 +552,6 @@ $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
 global $tikidomain;
-$smarty = new Smarty_Tiki_Installer($tikidomain);
-$smarty->loadFilter('pre', 'tr');
-$smarty->loadFilter('output', 'trimwhitespace');
-$smarty->auto_literal = false;
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('virt', isset($virt) ? $virt : null );
 $smarty->assign('multi', isset($multi) ? $multi : null );

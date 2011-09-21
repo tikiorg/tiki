@@ -288,10 +288,10 @@ $smarty->assignByRef('prefs', $prefs);
 $maxRecords = $prefs['maxRecords'];
 $smarty->assignByRef('maxRecords', $maxRecords);
 
-if ($prefs['log_tpl'] == 'y') {
+if ( !empty($prefs['log_tpl']) && $prefs['log_tpl'] === 'y' ) {
 	$smarty->loadFilter('pre', 'log_tpl');
 }
-if ( $prefs['feature_sefurl_filter'] == 'y' ) {
+if ( !empty($prefs['feature_sefurl_filter']) && $prefs['feature_sefurl_filter'] === 'y' ) {
   require_once ('tiki-sefurl.php');
   $smarty->registerFilter('output','filter_out_sefurl');
 }
