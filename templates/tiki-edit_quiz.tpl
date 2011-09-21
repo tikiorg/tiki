@@ -140,6 +140,7 @@
 				<input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
+		{* Not implemented
 		<tr>
 			<td>
 				<label for="immediate-feedback">{tr}Immediate feedback{/tr}</label>
@@ -171,7 +172,7 @@
 			<td>
 				<input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} />
 			</td>
-		</tr>
+		</tr>*}
 		<tr>
 			<td>
 				<label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label>
