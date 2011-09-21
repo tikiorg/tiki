@@ -34,6 +34,7 @@ class PreferencesLib
 				'help' => '',
 				'dependencies' => array(),
 				'extensions' => array(),
+				'dbfeatures' => array(),
 				'options' => array(),
 				'description' => '',
 				'size' => 40,
@@ -105,11 +106,14 @@ class PreferencesLib
 
 			$info['available'] = true;
 
-			if( isset( $info['extensions'] ) ) {
-				if  (! $this->checkExtensions( $info['extensions'] ) ) {
-					$info['available'] = false;
-					$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
-				}
+			if  (! $this->checkExtensions( $info['extensions'] ) ) {
+				$info['available'] = false;
+				$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
+			}
+
+			if (! $this->checkDatabaseFeatures( $info['dbfeatures'] ) ) {
+				$info['available'] = false;
+				$info['notes'][] = tr('Unmatched system requirement. The database you are using does not support this feature.');
 			}
 
 			if (!isset($info['default'])) {	// missing default in prefs definition file?
@@ -259,6 +263,10 @@ class PreferencesLib
 	}
 
 	private function checkExtensions( $extensions ) {
+		if (count($extensions) == 0) {
+			return true;
+		}
+
 		$installed = get_loaded_extensions();
 
 		foreach( $extensions as $ext ) {
@@ -267,6 +275,14 @@ class PreferencesLib
 			}
 		}
 
+		return true;
+	}
+
+	private function checkDatabaseFeatures($features) {
+		if (in_array('mysql_fulltext', $features)) {
+			return TikiDb::get()->isMySQLFulltextSearchSupported();
+		}
+		
 		return true;
 	}
 

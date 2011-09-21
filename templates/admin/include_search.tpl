@@ -60,24 +60,15 @@
 				<legend>
 					{tr}MySQL Search (legacy){/tr}{help url="Search"}
 				</legend>
-				{if $no_fulltext_support}
-					{tr}Your MySQL engine does not support MySQL fulltext search{/tr}
-				{else}
 				{preference name=feature_search_fulltext}
 				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
 					{preference name=feature_referer_highlight}
 					{preference name=search_parsed_snippet}
 					{preference name=feature_search_stats}
 
-					<fieldset>
-						<legend>{tr}Permissions{/tr}</legend>
-						{icon _id=information} {tr}Enabling these options will improve performance, but may show forbidden results{/tr}.
-
-						{preference name=feature_search_show_forbidden_obj}
-						{preference name=feature_search_show_forbidden_cat}
-					</fieldset>
+					{preference name=feature_search_show_forbidden_obj}
+					{preference name=feature_search_show_forbidden_cat}
 				</div>
-				{/if}
 			</fieldset>
 				
 			<fieldset>

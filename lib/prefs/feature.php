@@ -1257,6 +1257,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Search',
 			'default' => 'n',
+			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_listPages' => array(
 			'name' => tra('List pages'),
@@ -1284,12 +1285,14 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Search',
 			'default' => 'n',
+			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer Search Highlighting'),
 			'type' => 'flag',
 			'help' => 'Referer+Search+Highlighting',
 			'default' => 'y',
+			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_stats' => array(
 			'name' => tra('Search stats'),
@@ -1299,17 +1302,21 @@ function prefs_feature_list($partial = false) {
 			'keywords' => 'stat analytics',
 			'tags' => array('basic'),
 			'view' => 'tiki-search_stats.php',
+			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_show_forbidden_obj' => array(
 			'name' => tra('Ignore individual object permissions'),
+			'hint' => tra('Will improve performance, but may show forbidden results'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_show_object_filter' => array(
 			'name' => tra('Object filter'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_show_search_box' => array(
 			'name' => tra('Search box'),
