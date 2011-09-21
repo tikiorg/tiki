@@ -100,10 +100,6 @@
 			{preference name=feature_sandbox}
 
 			{preference name=feature_wiki_comments}
-			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
-				<a class="link" href="tiki-admin.php?page=comments">{tr}Manage comment settings{/tr}</a>
-			</div>
-
 			
 			{preference name=feature_wiki_attachments}
 			<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
