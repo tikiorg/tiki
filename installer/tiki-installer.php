@@ -1091,7 +1091,7 @@ if( $install_step == '0' ) {
 
 if( $install_step == '4' ) {
 	// Show the innodb option in the (re)install section if InnoDB is present
-	if($installer->hasInnoDB()) {
+	if(isset($installer) and $installer->hasInnoDB()) {
 		$smarty->assign( 'hasInnoDB', true );
 	} else {
 		$smarty->assign( 'hasInnoDB', false );
