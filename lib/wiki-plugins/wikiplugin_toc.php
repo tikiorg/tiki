@@ -30,7 +30,7 @@ function wikiplugin_toc_info()
 			),
 			'order' => array(
 				'name' => tra('Order'),
-				'description' => tra('Order items in ascending or descending order (deafult is ascending).'),
+				'description' => tra('Order items in ascending or descending order (default is ascending).'),
 				'required' => false,
 				'filter' => 'alpha',
 				'default' => 'asc',
