@@ -298,7 +298,7 @@ class ModLib extends TikiLib
 
 		foreach( $list as & $partial ) {
 			$partial = array_map( array( $this, 'augment_module_parameters' ), $partial );
-			if (!$this->is_admin_mode() || empty($_REQUEST['show_hidden_modules'])) {
+				if (!$this->is_admin_mode() || empty($_REQUEST['show_hidden_modules'])) {
 				$partial = array_values( array_filter( $partial, array( $this, 'filter_active_module' ) ) );
 			}
 		}
@@ -451,8 +451,7 @@ class ModLib extends TikiLib
 
 		global $cat_type, $cat_objid;
 		if( $prefs['feature_categories'] == 'y' ) {
-			$allcats = TikiLib::lib('categ')->getCategories();	// gets all cached categories
-			
+
 			if ( !empty( $params['category'])) {				// looking for a category to enable
 				if ( empty($cat_type) || empty($cat_objid)) {
 					return false;								// not a categorised object
@@ -462,8 +461,13 @@ class ModLib extends TikiLib
 					return false;								// no categories on this object
 				}
 				$cats = array();
-				foreach ($catIds as $c) {
-					$cats[] = $allcats[$c]['name'];
+				if (is_numeric($params['category'][0])) {
+					$cats = $catIds;
+				} else {
+					$allcats = TikiLib::lib('categ')->getCategories();	// gets all categories (cached)
+					foreach ($catIds as $c) {
+						$cats[] = $allcats[$c]['name'];
+					}
 				}
 
 				$ok = false;
@@ -483,8 +487,13 @@ class ModLib extends TikiLib
 					$catIds = TikiLib::lib('categ')->get_object_categories( $cat_type, $cat_objid);
 					if (!empty($cats)) {						// object has categories
 						$cats = array();
-						foreach ($catIds as $c) {
-							$cats[] = $allcats[$c]['name'];
+						if (is_numeric($params['nocategory'][0])) {
+							$cats = $catIds;
+						} else {
+							$allcats = TikiLib::lib('categ')->getCategories();	// gets all categories (cached)
+							foreach ($catIds as $c) {
+								$cats[] = $allcats[$c]['name'];
+							}
 						}
 						foreach ((array) $params['nocategory'] as $c) {
 							if (in_array( $c, $cats )) {
@@ -668,15 +677,17 @@ class ModLib extends TikiLib
 			),
 			'category' => array(
 				'name' => tra('Category'),
-				'description' => tra('Module displayed depending on category. Multiple category names can be separated by semi-colons.'),
+				'description' => tra('Module displayed depending on category. Multiple category ids or names can be separated by semi-colons.'),
 				'section' => 'visibility',
 				'separator' => ';',
+				'filter' => 'alnum',
 			),
 			'nocategory' => array(
 				'name' => tra('No Category'),
-				'description' => tra('Module hidden depending on category. Multiple category names can be separated by semi-colons. This takes precedence over the category parameter above.'),
+				'description' => tra('Module hidden depending on category. Multiple category ids or names can be separated by semi-colons. This takes precedence over the category parameter above.'),
 				'section' => 'visibility',
 				'separator' => ';',
+				'filter' => 'alnum',
 			),
 			'flip' => array(
 				'name' => tra('Flip'),
@@ -855,7 +866,7 @@ class ModLib extends TikiLib
 	 *
 	 * @return bool
 	 */
-	private function is_admin_mode() {
+	function is_admin_mode() {
 		global $tiki_p_admin_modules;
 		
 		return $tiki_p_admin_modules === 'y' && strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
