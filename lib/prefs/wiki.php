@@ -284,21 +284,33 @@ function prefs_wiki_list($partial = false) {
 			'name' => tra('Create watch for author on page creation'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_user_watches',
+			),
 		),
 		'wiki_watch_comments' => array(
 			'name' => tra('Enable watches on comments'),
 			'type' => 'flag',
 			'default' => 'y',
+			'dependencies' => array(
+				'feature_user_watches',
+			),
 		),
 		'wiki_watch_editor' => array(
 			'name' => tra('Enable watch events when I am the editor'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_user_watches',
+			),
 		),
 		'wiki_watch_minor' => array(
 			'name' => tra('Watch minor edits'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_user_watches',
+			),
 		),
 		'wiki_list_id' => array(
 			'name' => tra('Page ID'),

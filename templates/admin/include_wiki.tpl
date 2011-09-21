@@ -273,17 +273,10 @@
 		<div class="adminoptionbox clearfix">
 			<fieldset>
 				<legend>{tr}Wiki watch{/tr}{help url="Watch"}</legend>
-				{if $prefs.feature_user_watches ne 'y'}
-					<div class="adminoptionbox clearfix">
-						{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
-					</div>
-				{else}
-					<input type="hidden" name="wikisetwatch" />
 					{preference name=wiki_watch_author}
 					{preference name=wiki_watch_editor}
 					{preference name=wiki_watch_comments}
 					{preference name=wiki_watch_minor}
-				{/if}
 			</fieldset>
 		</div>
 		{preference name=wiki_keywords}
