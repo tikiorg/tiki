@@ -32,8 +32,17 @@ class Search_Formatter_ValueFormatter
 
 		$class = 'Search_Formatter_ValueFormatter_' . ucfirst($format);
 		if (class_exists($class)) {
-			$formatter = new $class($arguments);
-			return $formatter->render($name, $this->valueSet[$name], $this->valueSet);
+			$cachelib = TikiLib::lib('cache');
+			$cacheName = $format . ':' . $name . ':' . serialize($this->valueSet[$name]);
+			$cacheType = 'search_valueformatter';
+			if ($cachelib->isCached($cacheName, $cacheType)) {
+				return $cachelib->getCached($cacheName, $cacheType);
+			} else {
+				$formatter = new $class($arguments);
+				$ret = $formatter->render($name, $this->valueSet[$name], $this->valueSet);
+				$cachelib->cacheItem($cacheName, $ret, $cacheType);
+				return ($ret);
+			}
 		} else {
 			return tr("Unknown formatting rule '%0' for '%1'", $format, $name);
 		}

@@ -103,6 +103,8 @@ if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] 
 
 	$stat = $unifiedsearchlib->rebuild();
 	$smarty->assign_by_ref('stat', $stat);
+
+	TikiLib::lib('cache')->empty_type_cache("search_valueformatter");
 }
 
 if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
