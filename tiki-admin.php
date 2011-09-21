@@ -318,6 +318,13 @@ $icons = array(
 		'title' => tr('Rating'),
 		'help' => 'Advanced+Rating',
 	),
+	"search" => array(
+		'icon' => 'pics/large/xfce4-appfinder.png',
+		'position' => '-400px -415px;',
+		'title' => tr('Search'),
+		'description' => tr('Search configuration'),
+		'help' => 'Search',
+	),
 	"wiki" => array(
 		'position' => '-400px -215px;',
 		'icon' => 'pics/large/wikipages.png',
@@ -413,14 +420,6 @@ $icons = array(
 		'disabled' => $prefs['feature_freetags'] != 'y',
 		'description' => tr('Settings and features for freetags'),
 		'help' => 'Tags',
-	),
-	"search" => array(
-		'icon' => 'pics/large/xfce4-appfinder.png',
-		'position' => '-400px -415px;',
-		'title' => tr('Search'),
-		'disabled' => $prefs['feature_search'] != 'y',
-		'description' => tr('Search configuration'),
-		'help' => 'Search',
 	),
 	"faqs" => array(
 		'icon' => 'pics/large/stock_dialog_question.png',
