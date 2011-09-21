@@ -57,12 +57,12 @@ function wikiplugin_bigbluebutton_info() {
 				'filter' => 'url',
 				'default' => ''
 			),
-			'max' => array(
+			'recording' => array(
 				'required' => false,
-				'name' => tra('Maximum Participants'),
-				'description' => tra('Limit to the amount of simultaneous participants in the room. Support for this parameter depends on the BigBlueButton server.'),
+				'name' => tra('File gallery for recordings'),
+				'description' => tra('Record the meetings and archive them in a file gallery. Requires BBB >= 0.8.'),
 				'filter' => 'int',
-				'default' => ''
+				'default' => 0,
 			),
 		),
 	);
@@ -70,16 +70,16 @@ function wikiplugin_bigbluebutton_info() {
 
 function wikiplugin_bigbluebutton( $data, $params ) {
 	global $smarty, $prefs, $user;
-	global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
+	$bigbluebuttonlib = TikiLib::lib('bigbluebutton');
 	$meeting = $params['name']; // Meeting is more descriptive than name, but parameter name was already decided.
 
 	$smarty->assign( 'bbb_meeting', $meeting );
 	$smarty->assign( 'bbb_image', rtrim( $prefs['bigbluebutton_server_location'], '/' ) . '/images/bbb_logo.png' );
 
-	$perms = Perms::get( 'bigbluebutton', $name );
+	$perms = Perms::get( 'bigbluebutton', $meeting );
 
-	if( ! $bigbluebuttonlib->roomExists( $name ) ) {
-		if( ! isset($_POST['bbb']) || $_POST['bbb'] != $name || ! $perms->bigbluebutton_create ) {
+	if( ! $bigbluebuttonlib->roomExists( $meeting ) ) {
+		if( ! isset($_POST['bbb']) || $_POST['bbb'] != $meeting || ! $perms->bigbluebutton_create ) {
 			return $smarty->fetch( 'wiki-plugins/wikiplugin_bigbluebutton_create.tpl' );
 		}
 	}
@@ -89,7 +89,7 @@ function wikiplugin_bigbluebutton( $data, $params ) {
 	), $params );
 
 	if( $perms->bigbluebutton_join ) {
-		if( isset($_POST['bbb']) && $_POST['bbb'] == $name ) {
+		if( isset($_POST['bbb']) && $_POST['bbb'] == $meeting ) {
 			if( ! $user && isset($_POST['bbb_name']) && ! empty($_POST['bbb_name']) ) {
 				$_SESSION['bbb_name'] = $params['prefix'] . $_POST['bbb_name'];
 			}
@@ -103,11 +103,11 @@ function wikiplugin_bigbluebutton( $data, $params ) {
 			// on the other hand. It does not solve the issue if the room is lost on the BBB server
 			// and tiki cache gets flushed. To cover that one, create can be granted to everyone for
 			// the specific object.
-			$bigbluebuttonlib->createRoom( $name, $params );
-			$bigbluebuttonlib->joinMeeting( $name );
+			$bigbluebuttonlib->createRoom( $meeting, $params );
+			$bigbluebuttonlib->joinMeeting( $meeting );
 		}
 
-		$smarty->assign( 'bbb_attendees', $bigbluebuttonlib->getAttendees( $name ) );
+		$smarty->assign( 'bbb_attendees', $bigbluebuttonlib->getAttendees( $meeting ) );
 
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_bigbluebutton.tpl' );
 	}
