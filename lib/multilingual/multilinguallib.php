@@ -385,12 +385,7 @@ class MultilingualLib extends TikiLib
 		}
 
 		if (isset($_REQUEST['no_bl']) && $_REQUEST['no_bl'] == 'y') {
-			return false; // no_bl is the new flag which has to be specified as y to have any effect
-		}
-
-		// The following checks below maintained for backward compatibility
-		if (isset($_REQUEST['best_lang']) && $_REQUEST['best_lang'] != 'y') {
-			return false; // the old best_lang check was default no, if present without y specified
+			return false; // no_bl is the new flag. It has to be specified as y to have any effect
 		}
 
 		if (isset($_REQUEST['bl']) && $_REQUEST['bl'] == 'n') {
