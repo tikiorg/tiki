@@ -697,7 +697,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 			'view' => 'tiki-custom_home.php',
-			'tags' => array('expert'),			
+			'tags' => array('advanced'),			
 		),
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
@@ -2381,7 +2381,6 @@ function prefs_feature_list($partial = false) {
 			'shorthint' => tra('This is the shorthint.'),
 			'tags' => array(
 				'experimental',
-				'expert',
 				),
 			'view' => 'tiki-listpages.php',
 			'plugin' => 'blog',

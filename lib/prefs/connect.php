@@ -89,7 +89,7 @@ function prefs_connect_list() {
 			'dependencies' => 'connect_feature',
 			'default' => 'https://mother.tiki.org',
 			'filter' => 'url',
-			'tags' => array('expert'),
+			'tags' => array('experimental'),
 		),
 		'connect_last_post' => array(
 			'name' => tra('Last connection'),
@@ -98,7 +98,7 @@ function prefs_connect_list() {
 			'dependencies' => 'connect_feature',
 			'filter' => 'digits',
 			'default' => '',
-			'tags' => array('expert'),
+			'tags' => array('experimental'),
 		),
 		'connect_server_mode' => array(
 			'name' => tra('Connect Server Mode'),
@@ -106,7 +106,7 @@ function prefs_connect_list() {
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'n',
-			'tags' => array('expert'),
+			'tags' => array('experimental'),
 		),
 		'connect_guid' => array(
 			'name' => tra('Connect GUID'),
@@ -115,7 +115,7 @@ function prefs_connect_list() {
 			'size' => 60,
 			'dependencies' => 'connect_feature',
 			'default' => '',
-			'tags' => array('expert', 'readonly'),	// TODO readonly tag?
+			'tags' => array('experimental', 'readonly'),	// TODO readonly tag?
 		),
 	);
 }
