@@ -633,7 +633,7 @@ class EditLib
 						
 						// others we do want
 						case "br":
-							if ($p['wikistack']['wiki_lbr']) { // "%%%" or "\n" ?
+							if ($p['wiki_lbr']) { // "%%%" or "\n" ?
 								$src .= ' %%% ';
 							} else {
 								// close all open wiki markup
@@ -697,7 +697,7 @@ class EditLib
 						case "h4":
 						case "h5":
 						case "h6":
-							$p['wikistack']['wiki_lbr']++; // force wiki line break mode
+							$p['wiki_lbr']++; // force wiki line break mode
 							$hlevel = (int) $c[$i]["data"]["name"]{1};
 							if (isset($c[$i]['pars']['style']['value']) && strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
 								if ($prefs['feature_use_three_colon_centertag'] == 'y') {
@@ -797,7 +797,7 @@ class EditLib
 						case "h3":
 						case "h4":
 						case "h5":
-						case "h6": $p['wikistack']['wiki_lbr']--; break; 
+						case "h6": $p['wiki_lbr']--; break; 
 					}
 				}
 			}
@@ -849,8 +849,9 @@ class EditLib
 		$htmlparser->Parse();
 		// Should I try to convert HTML to wiki?
 		$out_data = '';
-		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => null, 'colors' => null, 'first_td' => false, 'first_tr' => false);
-		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array(), 'wiki_lbr' => 0 );
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => null, 'colors' => null, 
+			'wiki_lbr' => 0, 'first_td' => false, 'first_tr' => false);
+		$p['wikistack'] = array('begin' => array(), 'end' => array(), 'isinline' => array() );
 		$p['colors'] = array('fg' => null, 'bg' => null, 'pref' => 0);
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
