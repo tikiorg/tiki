@@ -30,7 +30,7 @@
 			</label>
 		</fieldset>
 
-		<div class="category-picker" title="{tr}Select Categories{/tr}">
+		<div class="category-picker" title="{tr}Select Categories{/tr}" style="display:none;">
 			{$filter_category_picker}
 		</div>
 	{/if}
@@ -43,7 +43,7 @@
 			<a class="tag-lookup" href="#">{tr}Lookup{/tr}</a>
 		</fieldset>
 
-		<div class="tag-picker" title="{tr}Select Tags{/tr}">
+		<div class="tag-picker" title="{tr}Select Tags{/tr}" style="display:none;">
 			{$filter_tags_picker}
 		</div>
 	{/if}
