@@ -32,8 +32,9 @@ class Search_Formatter_ValueFormatter
 
 		$class = 'Search_Formatter_ValueFormatter_' . ucfirst($format);
 		if (class_exists($class)) {
+			global $prefs;
 			$cachelib = TikiLib::lib('cache');
-			$cacheName = $format . ':' . $name . ':' . serialize($this->valueSet[$name]);
+			$cacheName = $format . ':' . $name . ':' . $prefs['language'] . ':' . serialize($this->valueSet[$name]);
 			$cacheType = 'search_valueformatter';
 			if ($cachelib->isCached($cacheName, $cacheType)) {
 				return $cachelib->getCached($cacheName, $cacheType);
