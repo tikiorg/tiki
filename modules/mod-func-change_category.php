@@ -77,8 +77,7 @@ function module_change_category( $mod_reference, $module_params ) {
 	
 	$smarty->assign('showmodule', false);
 	// temporary limitation to wiki pages
-	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']) ||
-			($modlib->is_admin_mode(true))) {
+	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']) || $modlib->is_admin_mode(true)) {
 		global $categlib; require_once('lib/categories/categlib.php');
 		
 		if (empty($_REQUEST['page'])) {
@@ -94,7 +93,7 @@ function module_change_category( $mod_reference, $module_params ) {
 			$cat_parent = '';
 		}
 	
-		if (!empty($module_params['shy'])) {
+		if (!empty($module_params['shy']) && !$modlib->is_admin_mode(true)) {
 			$shy = $module_params['shy'] === 'y';
 		} else {
 			$shy = false;
