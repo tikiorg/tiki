@@ -201,5 +201,5 @@ function wikiplugin_file( $data, $params )
 		$forward['image'] = 1;
 	$middle = $filedata["desc"];
 
-	return $tikilib->plugin_execute( 'attach', $middle, $forward );
+	return TikiLib::lib('parser')->plugin_execute( 'attach', $middle, $forward );
 }
