@@ -1862,6 +1862,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Wiki-Syntax+Images',
 			'description' => tra('Allow users to upload images (pictures) to a page.'),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_wiki_export' => array(
 			'name' => tra('Export'),
