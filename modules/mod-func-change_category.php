@@ -74,11 +74,12 @@ function module_change_category_info() {
 
 function module_change_category( $mod_reference, $module_params ) {
 	global $prefs, $tikilib, $smarty, $modlib;
-	global $categlib; require_once('lib/categories/categlib.php');
 	
+	$smarty->assign('showmodule', false);
 	// temporary limitation to wiki pages
 	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']) ||
 			($modlib->is_admin_mode(true))) {
+		global $categlib; require_once('lib/categories/categlib.php');
 		
 		if (empty($_REQUEST['page'])) {
 			global $structlib; include_once('lib/structures/structlib.php');
