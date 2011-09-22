@@ -638,8 +638,6 @@ class MenuLib extends TikiLib
 							}
 						}
 					}
-				}
-				if ($display && $tiki_p_admin != 'y') {
 					$usergroups = $this->get_user_groups($user);
 					if (isset($res['groupname']) and $res['groupname']) {
 						foreach ($sections as $sec) {
