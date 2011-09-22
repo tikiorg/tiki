@@ -667,7 +667,6 @@ class EditLib
 					$add = $c[$i]["data"];
 					$add = str_replace( array("\r","\n"), '', $add );
 					$add = str_replace( '&nbsp;', ' ', $add );
-					$add = ltrim( $add );
 					$src .= $add;
 				}
 			} elseif ($c[$i]["type"] == "comment") {

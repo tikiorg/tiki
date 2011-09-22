@@ -203,15 +203,12 @@ class EditLibTest extends TikiTestCase
 	
 	
 	function testParseToWikiSpaces() {
-		$this->markTestIncomplete('Work in progress.');
-		
-		$el = new EditLib();
 		
 		/*
-		 * The EditLib r35862 eats spaces before the tags
+		 * The EditLib eats spaces after the tags
 		 */
 		$inData = 'abc <b> bold </b> def';
-		$res = $el->parseToWiki($inData);
+		$res = $this->el->parseToWiki($inData);
 		$this->assertEquals('abc __ bold __ def', $res);
 	}
 	
