@@ -114,7 +114,6 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 						$this->appendSubMatcher( $sub );
 						$pos = $match->getEnd();
 						--$this->leftOpen;
-						$passes = 0;
 						break;
 					}
 
