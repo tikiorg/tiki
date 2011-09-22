@@ -60,7 +60,8 @@ $needed_prefs = array(
 	'memcache_compress' => 'y',
 	'memcache_servers' => false,
 	'min_pass_length' => 5,
-	'pass_chr_special' => 'n'
+	'pass_chr_special' => 'n',
+	'smarty_compilation' => 'modified',
 );
 // check that tiki_preferences is there
 if (empty($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numrows)) {

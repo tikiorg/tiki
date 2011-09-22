@@ -362,7 +362,11 @@ function initialize_prefs() {
 		// Keep some useful sites values available before overriding with user prefs
 		// (they could be used in templates, so we need to set them even for Anonymous)
 		foreach ( $user_overrider_prefs as $uop ) {
-			$modified['site_'.$uop] = isset($modified[$uop]) ? $modified[$uop] : $defaults[$uop];
+			if (isset($modified[$uop])) {
+				$modified['site_'.$uop] = $modified[$uop];
+			} elseif (isset($defaults[$uop])) {
+				$modified['site_'.$uop] = $defaults[$uop];
+			}
 		}
 
 		// Assign prefs to the session
