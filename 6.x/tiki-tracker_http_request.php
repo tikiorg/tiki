@@ -24,7 +24,7 @@ $arrayFilterfield = explode(',', $_GET["filterfield"]);
 $arrayStatus = explode(',', $_GET["status"]);
 $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
-header('content-type: application/x-javascript');
+header('content-type: application/x-javascript; charset=utf-8');
 Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
 
 
@@ -37,7 +37,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 	// behaviour differ between smarty encoding and javascript encoding
 	if (!isset($_GET['selected'])) {
 		$selected = '';
-		$filtervalue = utf8_encode(rawurldecode($_GET["filtervalue"]));
+		$filtervalue = rawurldecode($_GET["filtervalue"]);
 	} else {
 		$selected = $arraySelected[$index];
 		$filtervalue = $_GET["filtervalue"];
