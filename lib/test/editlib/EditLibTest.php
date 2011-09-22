@@ -265,6 +265,26 @@ class EditLibTest extends TikiTestCase
 		$this->assertEquals($ex, $res);
 	}
 	
+	/**
+	 * Nested colors with wiki inline
+	 */
+	function testParseToWikiNestedColorsWithWikiInline() {
+		$this->markTestIncomplete('Work in progress.');
+		$inData =  '<span style="color: rgb(255, 0, 0);">';
+		$inData .= 'red ';
+		$inData .= '<strong>';
+		$inData .= 'bold ';
+		$inData .= '<span style="background-color: rgb(255, 255, 0);">';
+		$inData .= 'yellow ';
+		$inData .= '</span>';
+		$inData .= 'bold ';
+		$inData .= '</strong>';
+		$inData .= 'red';
+		$inData .= '</span>';
+		$ex = '~~#FF0000:red __bold __~~~~#FF0000, #FFFF00:yellow ~~~~#FF0000:__bold __red~~';
+		$res = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $res);
+	}
 	
 	/**
 	 * Nested wiki inline tags
