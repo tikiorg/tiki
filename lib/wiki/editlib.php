@@ -286,7 +286,7 @@ class EditLib
 				if ($p['colorstack']) { // don't nest color markup
 					$this->closeWikiTags($p, $src);
 					$this->processWikiTag('span', $src, $p, $col, '~~', true, true);
-					//$this->reopenWikiTags($p, $src);
+					$this->reopenWikiTags($p, $src, false);
 				} else {
 					$this->processWikiTag('span', $src, $p, $col, '~~', true, true);
 				} 
@@ -464,12 +464,19 @@ class EditLib
 	 * 
  	 * @param array $p ['stack'] = closing strings stack
 	 * @param string $src The output string
+	 * @param bool $write_color If true, colors are written to the outputstring
 	 */
-	private function closeWikiTags( &$p, &$src ) {
+	private function closeWikiTags( &$p, &$src, $write_color = true ) {
 		
 		foreach ( array_reverse($p['wikistack']) as $wiki_arr ) {
-			foreach ( array_reverse($wiki_arr['end']) as $end ) {	
-				$src .= $end;
+			foreach ( array_reverse($wiki_arr['end']) as $end ) {
+				if ($end == '~~') { // have color
+					if ($write_color) {
+						$src .= $end;
+					}
+				} else {
+					$src .= $end;					
+				}	
 			}
 		}
 	}
@@ -482,15 +489,19 @@ class EditLib
 	 * 
  	 * @param array $p ['stack'] = closing strings stack
 	 * @param string $src The output string 
+	 * @param bool $write_color If true, colors are written to the outputstring
 	 */
-	private function reopenWikiTags( &$p, &$src ) {
+	private function reopenWikiTags( &$p, &$src, $write_color = true ) {
 		
 		foreach ( $p['wikistack'] as $wiki_arr ) {
 			foreach ( $wiki_arr['begin'] as $begin) {
-				$src .= $begin;
-				
 				if ($begin == '~~') { // have color
-					$src .= $this->composeWikiColor($p);
+					if ($write_color) {
+						$src .= $begin;
+						$src .= $this->composeWikiColor($p);
+					}
+				} else {
+					$src .= $begin;
 				}
 			}
 		}		
@@ -846,17 +857,13 @@ class EditLib
 							$e = end($p['stack']);
 							if ($c[$i]["data"]["name"] == $e['tag'])
 							{
+								if (isset($e['colors']) && $e['colors']) {
+									$this->closeWikiTags($p, $src, false);
+								}
 								$src .= $e['string'];
 								array_pop($p['stack']);
 							}
 							break;
-					}
-					
-					// update the wiki stack
-					if (isset($e['wikitags']) && $e['wikitags']) {
-						for ( $i_wiki = 0; $i_wiki < $e['wikitags']; $i_wiki++ ) {
-							array_pop( $p['wikistack'] );
-						}
 					}
 					
 					// update the color stack
@@ -867,6 +874,14 @@ class EditLib
 						if ($p['colorstack']) { // unhide the color
 							$color = $this->composeWikiColor($p);
 							$src .= '~~' . $color;
+							$this->reopenWikiTags($p, $src, false);							
+						}
+					}
+
+					// update the wiki stack
+					if (isset($e['wikitags']) && $e['wikitags']) {
+						for ( $i_wiki = 0; $i_wiki < $e['wikitags']; $i_wiki++ ) {
+							array_pop( $p['wikistack'] );
 						}
 					}
 					
