@@ -640,6 +640,11 @@ class MenuLib extends TikiLib
 					}
 					$usergroups = $this->get_user_groups($user);
 					if (isset($res['groupname']) and $res['groupname']) {
+						if ( is_array($res['groupname']) ){
+							$sections = $res['groupname'];
+						} else {
+							$sections = array($res['groupname']);
+						}
 						foreach ($sections as $sec) {
 							if ($sec and !in_array($sec,$usergroups)) {
 								$display = false;
