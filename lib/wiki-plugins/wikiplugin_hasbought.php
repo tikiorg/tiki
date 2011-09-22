@@ -1,6 +1,6 @@
 <?php
 
-function wikiplugin_hasticket_info() {
+function wikiplugin_hasbought_info() {
 	return array(
 		'name' => tra('Check if user has bought certain item or if it is in cart'),
 		'documentation' => tra('PluginTrackerpasscode'),

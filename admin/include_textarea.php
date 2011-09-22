@@ -24,6 +24,8 @@ if (isset($_REQUEST['textareasetup']) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 	foreach(glob('temp/cache/wikiplugin_*') as $file) unlink($file);
 }
 
+$cookietab = 1;
+
 // from tiki-admin_include_textarea.php
 global $tikilib;
 $pluginsAlias = $parserlib->plugin_get_list(false, true);
