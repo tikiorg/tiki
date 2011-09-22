@@ -225,7 +225,6 @@ class EditLibTest extends TikiTestCase
 	 */
 	function testParseToWikiNestedColors() {
 
-		$this->markTestIncomplete('Work in progress.');
 		/*
 		 * <span><span>text</span></span>
 		 */
@@ -262,8 +261,8 @@ class EditLibTest extends TikiTestCase
 		$inData .= '</span>';
 		$inData .= 'regular';
 		$res = $this->el->parseToWiki($inData);
-		$ex = '~~ ,#FF0000:bg colored ~~~~#FF0000, #FFFF00:both colored ~~~~ ,#FF0000:bg colored ~~regular';
-		$this->assertEquals($ex, $res);		
+		$ex = '~~ , #FF0000:bg colored ~~~~#FFFF00, #FF0000:both colored ~~~~ , #FF0000:bg colored ~~regular';
+		$this->assertEquals($ex, $res);
 	}
 	
 	

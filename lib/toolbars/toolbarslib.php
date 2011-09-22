@@ -928,6 +928,18 @@ class ToolbarPicker extends Toolbar
 		return $this;
 	} // }}}
 
+	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		switch ($this->wysiwyg) {
+			case 'BGColor':
+			case 'TextColor':
+				 return $this->wysiwyg; break;
+			default: return null;
+		}
+	} // }}}
+	
+	
 	function setList( $list ) // {{{
 	{
 		$this->list = $list;
