@@ -548,5 +548,159 @@ class MenuLib extends TikiLib
 		$query = 'select `optionId` from `tiki_menu_options` where `menuId`=? and `url`=?';
 		return $this->getOne($query, array($menuId, $url));
 	}
+
+	function get_menu($menuId) {
+		$res = $this->table('tiki_menus')->fetchFullRow(array('menuId' => (int) $menuId));
+
+		if ( empty($res['icon']) ) {
+			$res['oicon'] = null;
+		} else {
+			$res['oicon'] = dirname($res['icon']).'/o'.basename($res['icon']);
+		}
+		return $res;
+	}
+
+	function list_menu_options($menuId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $full=false, $level=0) {
+		global $user, $tiki_p_admin, $prefs;
+		$wikilib = TikiLib::lib('wiki');
+
+		$options = $this->table('tiki_menu_options');
+		$conditions = array(
+				'menuId' => $menuId,
+				);
+		if ($find) {
+			$conditions['search'] = $options->expr('(`name` like ? or `url` like ?)', array("%$find%", "%$find%"));
+		}
+
+		if ($level && $prefs['feature_userlevels'] == 'y') {
+			$conditions['userlevel'] = $options->lesserThan($level + 1);
+		}
+
+		$sort = $options->expr($this->convertSortMode($sort_mode));
+		$result = $options->fetchAll($options->all(), $conditions, $maxRecords, $offset, $sort);
+		$cant = $options->fetchCount($conditions);
+
+		$ret = array();
+		foreach ( $result as $res ) {
+			$res['canonic'] = $res['url'];
+			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
+				$res['url'] = 'tiki-index.php?page=' . rawurlencode($matches[1]);
+				$res['sefurl'] = $wikilib->sefurl($matches[1]);
+				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));
+				if (!$perms->view && !$perms->wiki_view_ref) {
+					continue;
+				}
+			} else {
+				$res['sefurl'] = '';
+			}
+			if (!$full) {
+				$display = true;
+				if (isset($res['section']) and $res['section']) {
+					if (strstr($res['section'], '|')) {
+						$display = false;
+						$sections = preg_split('/\s*\|\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = true;
+								break;
+							}
+						}
+					} else {
+						$display = true;
+						$sections = preg_split('/\s*,\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = false;
+								break;
+							}
+						}
+					}
+				}
+				if ($display && $tiki_p_admin != 'y') {
+					if (isset($res['perm']) and $res['perm']) {
+						if (strstr($res['perm'], '|')) {
+							$display = false;
+							$sections = preg_split('/\s*\|\s*/',$res['perm']);
+							foreach ($sections as $sec) {
+								if (isset($GLOBALS[$sec]) && $GLOBALS[$sec] == 'y') {
+									$display = true;
+									break;
+								}
+							}
+						} else {
+							$sections = preg_split('/\s*,\s*/',$res['perm']);
+							$display = true;
+							foreach ($sections as $sec) {
+								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+									$display = false;
+									break;
+								}
+							}
+						}
+					}
+				}
+				if ($display && $tiki_p_admin != 'y') {
+					$usergroups = $this->get_user_groups($user);
+					if (isset($res['groupname']) and $res['groupname']) {
+						foreach ($sections as $sec) {
+							if ($sec and !in_array($sec,$usergroups)) {
+								$display = false;
+							}
+						}
+					}
+				}
+				if ($display) {
+					$pos = $res['position'];
+					if (empty($ret[$pos]) || empty($ret[$pos]['url']))
+						$ret[$pos] = $res;
+				}
+			} else {
+				$ret[] = $res;
+			}
+		}
+
+		return array(
+				'data' => array_values($ret),
+				'cant' => $cant,
+				);
+	}
+	/* 
+	 *gets result from list_menu_options and sorts "sorted section" sections.
+	 */
+	function sort_menu_options($channels) {
+
+		$sorted_channels = array();
+
+		if (!isset($channels['data']) || $channels['cant'] == 0) {
+			return $channels;
+		}
+		$cant = $channels['cant'];
+		$channels = $channels['data'];
+
+		$temp_max = count($channels);
+		for ($i=0; $i < $temp_max; $i++) {
+			$sorted_channels[$i] = $channels[$i];
+			if ($sorted_channels[$i]['type'] == 'r') { // sorted section
+				$sorted_channels[$i]['type'] = 's'; // common section, let's make it transparent
+				$i++;
+				$section = array();
+				while ($i < count($channels) && $channels[$i]['type'] == 'o') {
+					$section[] = $channels[$i];
+					$i++;
+				}
+				$i--;
+				//include_once('lib/smarty_tiki/function.menu.php');
+				usort($section, "compare_menu_options");
+				$sorted_channels = array_merge($sorted_channels, $section);
+			}
+		}
+
+		if (isset($cant)) {
+			$sorted_channels = array ('data' => $sorted_channels,
+					'cant' => $cant);
+		}
+
+		return $sorted_channels;
+	}
 }
 $menulib = new MenuLib;

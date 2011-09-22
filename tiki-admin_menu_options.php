@@ -28,7 +28,7 @@ if (!empty($_REQUEST['export'])) {
 }
 $maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 $smarty->assign('menuId', $_REQUEST["menuId"]);
-$editable_menu_info = $tikilib->get_menu($_REQUEST["menuId"]);
+$editable_menu_info = $menulib->get_menu($_REQUEST["menuId"]);
 $smarty->assign('editable_menu_info', $editable_menu_info);
 if (!isset($_REQUEST["optionId"])) {
 	$_REQUEST["optionId"] = 0;

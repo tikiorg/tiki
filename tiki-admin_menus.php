@@ -19,7 +19,7 @@ if (!isset($_REQUEST["menuId"])) {
 }
 $smarty->assign('menuId', $_REQUEST["menuId"]);
 if ($_REQUEST["menuId"]) {
-	$info = $tikilib->get_menu($_REQUEST["menuId"]);
+	$info = $menulib->get_menu($_REQUEST["menuId"]);
 } else {
 	$info = array();
 	$info["name"] = '';
