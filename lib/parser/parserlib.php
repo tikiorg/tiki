@@ -2964,7 +2964,7 @@ if( \$('#$id') ) {
 
 	//*
 	function get_pages($data,$withReltype = false) {
-		global $page_regex, $prefs;
+		global $page_regex, $prefs, $tikilib;
 
 		$matches = WikiParser_PluginMatcher::match( $data );
 		foreach( $matches as $match ) {
@@ -2980,10 +2980,10 @@ if( \$('#$id') ) {
 		preg_match_all('/<a class="wiki" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks);
 		preg_match_all('/<a class="wiki wikinew" href="tiki-editpage\.php\?page=([^\?&"]+)"/', $data, $htmlWantedLinks);
 		foreach($htmlLinks[1] as &$h) {
-			$h = urldecode($h);
+			$h = $tikilib->urldecode($h);
 		}
 		foreach($htmlWantedLinks[1] as &$h) {
-			$h = urldecode($h);
+			$h = $tikilib->urldecode($h);
 		}
 
 		if ($prefs['feature_wikiwords'] == 'y') {

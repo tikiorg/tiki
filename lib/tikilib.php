@@ -5397,6 +5397,16 @@ JS;
 			return strtolower($string);
 		}
 	}
+
+	public static function urldecode($string)
+	{
+	   return TikiInit::to_utf8(urldecode($string));
+	}
+
+	public static function rawurldecode($string)
+	{
+	   return TikiInit::to_utf8(rawurldecode($string));
+	}	
 }
 // end of class ------------------------------------------------------
 
