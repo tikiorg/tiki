@@ -30,13 +30,15 @@
 						{preference name="unified_lucene_max_result"}
 					</div>
 
-					{preference name=search_forum_deepindexing}
+					{preference name=unified_forum_deepindexing}
 					
 					{preference name=unified_tokenize_version_numbers}
 
 					{preference name=unified_field_weight}
 					{preference name=unified_default_content}
 					{preference name=unified_user_cache}
+
+					{preference name=unified_cached_formatters}
 
 					<h4>{tr}Index maintenance{/tr}</h4>
 					<ul>

@@ -101,11 +101,5 @@ function prefs_search_list() {
 			'dependencies' => array('feature_jquery_autocomplete', 'javascript_enabled'),
 			'default' => 'n',
 		),
-		'search_forum_deepindexing' => array(
-			'name' => tra('Index forum replies together with root post'),
-			'description' => tra('If enabled, forum replies will be indexed together with the root post as a single document instead of being separately indexed'),
-			'type' => 'flag',
-			'default' => 'y',
-		), 
 	);
 }

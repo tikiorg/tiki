@@ -36,12 +36,15 @@ class Search_Formatter_ValueFormatter
 			$cachelib = TikiLib::lib('cache');
 			$cacheName = $format . ':' . $name . ':' . $prefs['language'] . ':' . serialize($this->valueSet[$name]);
 			$cacheType = 'search_valueformatter';
-			if ($cachelib->isCached($cacheName, $cacheType)) {
+
+			if (in_array($format, $prefs['unified_cached_formatters']) && $cachelib->isCached($cacheName, $cacheType)) {
 				return $cachelib->getCached($cacheName, $cacheType);
 			} else {
 				$formatter = new $class($arguments);
 				$ret = $formatter->render($name, $this->valueSet[$name], $this->valueSet);
-				$cachelib->cacheItem($cacheName, $ret, $cacheType);
+				if (in_array($format, $prefs['unified_cached_formatters'])) {
+					$cachelib->cacheItem($cacheName, $ret, $cacheType);
+				}
 				return ($ret);
 			}
 		} else {

@@ -77,6 +77,19 @@ function prefs_unified_list()
 			'default' => '0',
 			'tags' => array('advanced'),
 		),
+		'unified_forum_deepindexing' => array(
+                        'name' => tra('Index forum replies together with root post'),
+                        'description' => tra('If enabled, forum replies will be indexed together with the root post as a single document instead of being separately indexed'),
+                        'type' => 'flag',
+                        'default' => 'y',
+                ),
+                'unified_cached_formatters' => array(
+                        'name' => tra('Search formatters to cache'),
+                        'description' => tra('Comma separated list of search formatters to cache the output of'),
+                        'type' => 'text',
+                        'separator' => ',',
+                        'default' => array('trackerrender','categorylist'),
+                ),
 	);
 }
 

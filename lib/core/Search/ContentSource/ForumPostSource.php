@@ -17,7 +17,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 	function getDocuments()
 	{
 		global $prefs;
-		if ($prefs['search_forum_deepindexing'] == 'y') {
+		if ($prefs['unified_forum_deepindexing'] == 'y') {
 			$filters = array('objectType' => 'forum', 'parentId' => 0);
 		} else {
 			$filters = array('objectType' => 'forum');
@@ -40,7 +40,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$forum_info = $commentslib->get_forum($comment['object']);
 		$forum_language = $forum_info['forumLanguage'] ? $forum_info['forumLanguage'] : 'unknown';
 
-		if ($prefs['search_forum_deepindexing'] == 'y') {
+		if ($prefs['unified_forum_deepindexing'] == 'y') {
 			foreach ($thread['data'] as $reply) {
 				$content .= "\n{$reply['data']}";
 				$lastModification = max($lastModification, $reply['commentDate']);

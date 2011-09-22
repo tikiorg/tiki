@@ -2796,7 +2796,7 @@ class Comments extends TikiLib
 		if ($type == 'forum') {
 			$type = 'forum post';
 
-			if ($prefs['search_forum_deepindexing'] != 'y') {
+			if ($prefs['unified_forum_deepindexing'] != 'y') {
 				refresh_index($type, $threadId);
 			}
 
