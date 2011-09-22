@@ -141,7 +141,7 @@ class TrackerQueryLib {
 	 * so instead of running a query for every row, we use simple joins to get the job done.  We use a temporary
 	 * table so that it is removed once the connection is closed or after the page loads.
 	 */
-	function __construct($tracker) {
+	function __construct($tracker = '') {
 		global $tikilib, $trklib;
 		$this->tracker = $tracker;
 		$trklib = TikiLib::lib('trk');
