@@ -8,20 +8,44 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
+// Indicates whether a locale identifier is valid
+// $localeIdentifier: A locale identifier, such as "en"
+// Returns a boolean, true if and only if the given locale identifier is valid. 
+function isValidLocale($localeIdentifier = '') {
+	global $prefs;
+	return preg_match("/[a-zA-Z-_]+$/", $localeIdentifier) && file_exists('lang/'. $localeIdentifier .'/language.php')
+		&& (empty($prefs['available_languages']) || in_array($localeIdentifier, $prefs['available_languages']));
+}
+
+// Sets the language
+// $localeIdentifier: the identifier of the locale to set
+// Returns true on success, false on failure (if $localeIdentifier is not a valid locale identifier) 
+function setLanguage($localeIdentifier = '') {
+	global $prefs, $tikilib, $user;
+	if (isValidLocale($localeIdentifier)) {
+		return $tikilib->set_user_preference($user, 'language', $localeIdentifier);
+	} else {
+		return false;
+	}	
+}
+
 if ($prefs['feature_multilingual'] != 'y') { // change_language depends on feature_multilingual.
 	$prefs['change_language'] = 'n';
 }
 
-// Detect browser language
-if ( $prefs['change_language'] == 'y' && $prefs['feature_detect_language'] == 'y' and !$tikilib->userHasPreference('language')) {
-	$browser_language = detect_browser_language();
-	if ( ! empty($browser_language) ) {
-		$prefs['language'] = $browser_language;
+if ( $prefs['change_language'] == 'y') {
+	// Detect browser language
+	if ($prefs['feature_detect_language'] == 'y' and !$tikilib->userHasPreference('language')) {
+		$browser_language = detect_browser_language();
+		if ( isValidLocale($browser_language) ) {
+			$prefs['language'] = $browser_language;
+		}
 	}
-}
-
-if (empty($prefs['language']) || $prefs['change_language'] == 'n') {
-	$prefs['language'] = $prefs['site_language']; // Override user-specific language
+} else {
+	if (!isValidLocale($prefs['language'])) {
+		// Override broken user locales
+		setLanguage($prefs['site_language']);
+	}
 }
 
 // Some languages need BiDi support. Add their code names here ...

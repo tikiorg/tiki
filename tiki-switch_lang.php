@@ -76,11 +76,7 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 	}
 }
 if (isset($_GET['language'])) {
-	if (preg_match("/[a-zA-Z-_]*$/", $_REQUEST['language']) && file_exists('lang/'.$_REQUEST['language'].'/language.php')
-		&& (empty($prefs['available_languages']) || in_array($_REQUEST['language'], $prefs['available_languages']))
-	) { // Check language validity
-		$tikilib->set_user_preference($user, 'language', $_GET['language']);
-	}
+	setLanguage($_GET['language']);
 }
 header("location: $orig_url");
 exit;
