@@ -390,7 +390,7 @@ class TikiLib extends TikiDb_Bridge
 		// Only attempt if document is declared as HTML
 		if (0 === strpos($response->getHeader('Content-Type'), 'text/html')) {
 			$dom = new DOMDocument;
-			if ($dom->loadHTML($response->getBody())) {
+			if ($response->getBody() && $dom->loadHTML($response->getBody())) {
 				$frames = $dom->getElementsByTagName('frame');
 				
 				if (count($frames)) {
