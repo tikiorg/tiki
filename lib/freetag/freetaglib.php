@@ -1042,6 +1042,11 @@ class FreetagLib extends ObjectLib
 
 	function get_tag_suggestion($exclude = '', $max = 10, $lang = null)
 	{
+		global $prefs;
+		if (!$lang && !empty($prefs['language'])) {
+			$lang = $prefs['language'];
+		}
+
 		$query = 'SELECT t.* FROM `tiki_freetags` t, `tiki_freetagged_objects` o'
 						. ' WHERE t.`tagId` = o.`tagId`'
 						. ' AND (`lang` = ? or `lang` IS null)'
