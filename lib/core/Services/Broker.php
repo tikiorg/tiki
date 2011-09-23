@@ -52,10 +52,10 @@ class Services_Broker
 
 				return $handler->$method($request);
 			} else {
-				throw new Services_Exception(tr('Controller not found (%0)', $controller), 404);
+				throw new Services_Exception(tr('Action not found (%0 in %1)', $action, $controller), 404);
 			}
 		} else {
-			throw new Services_Exception(tr('Action not found (%0 in %1)', $action, $controller), 404);
+			throw new Services_Exception(tr('Controller not found (%0)', $controller), 404);
 		}
 	}
 
