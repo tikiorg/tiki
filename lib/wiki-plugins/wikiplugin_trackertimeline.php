@@ -455,6 +455,7 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 
 		break;
 	case 'year':
+	default:
 		if( date( 'm-d H:i:s', $start ) == '01-01 00:00:00' ) {
 			$pos = $start;
 		} else {
