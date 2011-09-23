@@ -1465,7 +1465,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/* Referer stats */
 	/*shared*/
-	function register_referer($referer) {
+	function register_referer($referer,$fullurl) {
 		$refererStats = $this->table('tiki_referer_stats');
 
 		$cant = $refererStats->fetchCount(array('referer' => $referer));
@@ -1474,6 +1474,7 @@ class TikiLib extends TikiDb_Bridge
 			$refererStats->update(array(
 				'hits' => $refererStats->increment(1),
 				'last' => $this->now,
+				'lasturl' => $fullurl,
 			), array(
 				'referer' => $referer,
 			));
@@ -1482,6 +1483,7 @@ class TikiLib extends TikiDb_Bridge
 				'last' => $this->now,
 				'referer' => $referer,
 				'hits' => 1,
+				'lasturl' => $fullurl,
 			));
 		}
 	}

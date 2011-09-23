@@ -12,7 +12,7 @@ if ( $prefs['feature_referer_stats'] == 'y' ) {
     if ( isset($_SERVER['HTTP_REFERER']) ) {
         $pref = parse_url($_SERVER['HTTP_REFERER']);
         if ( isset($pref['host']) && !strstr($_SERVER['SERVER_NAME'], $pref['host']) ) {
-            $tikilib->register_referer($pref['host']);
+            $tikilib->register_referer($pref['host'],$_SERVER['HTTP_REFERER']);
         }
     }
 }

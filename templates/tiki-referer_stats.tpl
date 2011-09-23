@@ -21,7 +21,7 @@
   {cycle values="odd,even" print=false}
   {section name=user loop=$channels}
     <tr class="{cycle}">
-      <td class="text">{$channels[user].referer}</td>
+      <td class="text"><a href="{$channels[user].lasturl}" target="_blank">{$channels[user].referer}</a></td>
       <td class="integer">{$channels[user].hits}</td>
       <td class="date">{$channels[user].last|tiki_short_datetime}</td>
     </tr>
