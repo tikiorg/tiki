@@ -27,7 +27,7 @@ if ( $user ) {
 	// Initialize user prefs
 	$user_preferences = array(); // Used for cache
 
-	$group = $_SESSION['u_info']['group'];
+	$default_group = $group = $_SESSION['u_info']['group'];
 	$smarty->assign('group', $group); // do not use by_ref as $group can be changed in the .php
 	$smarty->assign_by_ref('user', $user);
 	$smarty->assign('default_group', $group);
