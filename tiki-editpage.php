@@ -389,7 +389,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 					// This path is never used by minor updates
 					if ($prefs['feature_multilingual'] === 'y') {
 						include_once("lib/multilingual/multilinguallib.php");
-						unset( $tikilib->cache_page_info );
+						$tikilib->cache_page_info = array();
 
 						if( $editlib->isNewTranslationMode() ) {
 							if ($editlib->aTranslationWasSavedAs('complete')) {
@@ -952,7 +952,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 		if ($prefs['feature_multilingual'] === 'y') {
 			include_once("lib/multilingual/multilinguallib.php");
 
-			unset( $tikilib->cache_page_info );
+			$tikilib->cache_page_info = array();
 			if( $editlib->isNewTranslationMode() ) {
 				if ($editlib->aTranslationWasSavedAs('complete')) {
 					$editlib->saveCompleteTranslation();
@@ -997,7 +997,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 		// Handle translation bits
 		if ($prefs['feature_multilingual'] === 'y' && !$minor) {
 			global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
-			unset( $tikilib->cache_page_info );
+			$tikilib->cache_page_info = array();
 
 			if( $editlib->isUpdateTranslationMode() ) {
 				if ($editlib->aTranslationWasSavedAs('complete')) {

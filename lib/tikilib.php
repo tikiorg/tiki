@@ -32,7 +32,7 @@ class TikiLib extends TikiDb_Bridge
 	var $num_queries = 0;
 	var $now;
 
-	var $cache_page_info;
+	var $cache_page_info = array();
 	var $sessionId = null;
 
 	/**
