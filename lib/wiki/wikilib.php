@@ -491,6 +491,18 @@ class WikiLib extends TikiLib
 			$bindvars=array($page);
 		}
 
+		if ($sort_mode !== 'created_desc') {
+			$pos = strrpos($sort_mode, '_');
+			if ($pos !== false && $pos > 0) {	// check the sort order is valid for attachments
+				$shortsort = substr($sort_mode, 0, $pos);
+			} else {
+				$shortsort = $sort_mode;
+			}
+			if (!in_array(array('user','attId','page','filename','filesize','filetype','hits','created','comment'), $shortsort)) {
+				$sort_mode = 'created_desc';
+			}
+		}
+
 		$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment` from `tiki_wiki_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
