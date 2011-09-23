@@ -1605,7 +1605,10 @@ if( \$('#$id') ) {
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
-			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:(.*)\~\~/Ums", "<span style=\"color:$1; background-color:$3\">$4</span>", $data);
+			$parse_color = 1;
+			while ($parse_color) { // handle nested colors, parse innermost first
+				$data = preg_replace("/~~([^~:,]+)(,([^~:]+))?:([^~]*)(?!~~[^~:,]+(?:,[^~:]+)?:[^~]*~~)~~/Ums", "<span style=\"color:$1; background-color:$3\">$4</span>", $data, -1, $parse_color);
+			}
 		}
 
 		// Extract [link] sections (to be re-inserted later)
