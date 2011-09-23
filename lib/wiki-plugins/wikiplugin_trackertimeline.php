@@ -247,20 +247,8 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 		global $headerlib;
 
-		// the simile api has to be included in the head to work it seems (tiki js files live at end of body now)
-		$headerlib->add_js('
-(function() {
-	Timeline_ajax_url=\'lib/simile_timeline/timeline_ajax/simile-ajax-api.js\';
-	Timeline_urlPrefix=\'lib/simile_timeline/timeline_js/\';
-	Timeline_parameters=\'bundle=true\';
-	var head = document.getElementsByTagName("head")[0];
-	var script = document.createElement("script");
-	script.type = "text/javascript";
-	script.language = "JavaScript";
-	script.src = "lib/simile_timeline/timeline_js/timeline-api.js?bundle=true;";
-	head.appendChild(script);
-})();
-');
+		// static js moved to lib
+		$headerlib->add_jsfile('lib/simile_tiki/tiki-timeline.js');
 
 		// prepare the data for SIMILE widget - to be included in the page for now (ajax feed to come)
 		$ttl_data = array();
@@ -291,87 +279,11 @@ function wikiplugin_trackertimeline( $data, $params ) {
 				'events' => $events,
 			);
 		}
-		$js = 'ajaxLoadingShow("ttl_timeline");';
 		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
-var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline;
-
-ttlInit = function() {
-	// wait for Timeline to be loaded
-	if (ttlInitCount < 14 && (
-			typeof window.SimileAjax === "undefined" ||
-			typeof window.SimileAjax.loaded === "undefined" ||
-			typeof window.Timeline === "undefined" ||
-			typeof window.Timeline.createBandInfo === "undefined" ||
-			typeof window.Timeline.DateTime === "undefined" ||
-			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
-			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" )) {
-
-		if (typeof window.Timeline !== "undefined" && typeof window.Timeline.DateTime === "undefined" && typeof window.SimileAjax.DateTime !== "undefined") {
-			window.Timeline.DateTime = window.SimileAjax.DateTime;
-		}
-		window.setTimeout( function() { ttlInit(); }, 1000);
-		ttlInitCount++;
-		return;
-	} else {
-		ttlTimelineReady = true;
-	}
-
-	if (!ttlTimelineReady) {	// just seems to need a little bit longer...
-		location.replace(location.href);	// at least 10 secs - reload
-		return;
-	}
-
-	// timeline finally loaded(?)
-	window.SimileAjax.History.enabled = false;
-
-	var ttl_eventSource = new Timeline.DefaultEventSource();
-	ttl_eventSource.loadJSON(ttl_eventData, ".");	// The data
-	
-	var bandInfos = [
-		window.Timeline.createBandInfo({
-			width:          "' . (empty($params['scale2']) ? '100%' : '70%' ) . '",
-			intervalUnit:   window.Timeline.DateTime.' . (strtoupper($params['scale1'])) . ',
-			eventSource:	ttl_eventSource,
-			intervalPixels: 100
-		})';
-		if (!empty($params['scale2'])) {
-			$js .= ',
-		window.Timeline.createBandInfo({
-			width:          "30%",
-			intervalUnit:   window.Timeline.DateTime.' . (strtoupper($params['scale2'])) . ',
-			eventSource:	ttl_eventSource,
-			intervalPixels: 200,
-			layout:			"overview"
-		})';
-		}
-		$js .= '];';
-		if (!empty($params['scale2'])) {
-			$js .= '
-	bandInfos[1].syncWith = 0;
-	bandInfos[1].highlight = true;
-	//bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());
+setTimeout( function(){ ttlInit("ttl_timeline",ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '"); }, 1000);
 ';
-		}
-		$js .= '
-	ttlTimeline = window.Timeline.create(document.getElementById("ttl_timeline"), bandInfos);
-	ajaxLoadingHide();
-	ttlTimeline.layout(); // display the Timeline
-
-}	// end ttlInit
-
-setTimeout( function(){ ttlInit(); }, 1000);
-
-var ttlResizeTimerID = null;
-$(window).resize( function () {
-	if (ttlTimeline && ttlResizeTimerID == null) {
-		ttlResizeTimerID = window.setTimeout(function() {
-			resizeTimerID = null;
-			ttlTimeline.layout();
-		}, 500);
-	}
-});';
 
 		$headerlib->add_jq_onready( $js, 10);
 		$out = '<div id="ttl_timeline" style="height: 250px; border: 1px solid #aaa"></div>';
