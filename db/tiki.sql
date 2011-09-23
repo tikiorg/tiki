@@ -1845,6 +1845,7 @@ CREATE TABLE `tiki_referer_stats` (
   `referer` varchar(255) NOT NULL default '',
   `hits` int(10) default NULL,
   `last` int(14) default NULL,
+  `lasturl` varchar(255) default NULL,
   PRIMARY KEY (`referer`)
 ) ENGINE=MyISAM;
 
