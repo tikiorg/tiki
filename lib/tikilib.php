@@ -3735,7 +3735,7 @@ class TikiLib extends TikiDb_Bridge
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
 		// Collect pages before modifying data
-		$pages = $this->get_pages($data, true);
+		$pointedPages = $this->get_pages($data, true);
 
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -3804,8 +3804,8 @@ class TikiLib extends TikiDb_Bridge
 		$this->clear_links($name);
 
 		// Pages are collected before adding slashes
-		foreach ($pages as $a_page => $types) {
-			$this->replace_link($name, $a_page, $types);
+		foreach ($pointedPages as $pointedPage => $types) {
+			$this->replace_link($name, $pointedPage, $types);
 		}
 		
 		// Update the log
