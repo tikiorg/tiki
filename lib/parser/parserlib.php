@@ -2979,6 +2979,7 @@ if( \$('#$id') ) {
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
 		preg_match_all('/<a class="wiki" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks);
 		preg_match_all('/<a class="wiki wikinew" href="tiki-editpage\.php\?page=([^\?&"]+)"/', $data, $htmlWantedLinks);
+		// TODO: revise the need to call modified urldecode() (shouldn't be needed after r37568). 20110922
 		foreach($htmlLinks[1] as &$h) {
 			$h = $tikilib->urldecode($h);
 		}
