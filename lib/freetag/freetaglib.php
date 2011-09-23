@@ -932,7 +932,16 @@ class FreetagLib extends ObjectLib
 	 */
 	function _tag_object_array($user, $itemId, $type, $tagArray, $lang = null)
 	{
-
+		// first check for lang of object
+		if (!$lang) {
+			$langutil = new Services_Language_Utilities;
+			try {
+				$lang = $langutil->getLanguage($type, $itemId);
+			} catch (Services_Exception $e) {
+				$lang = null;
+			}
+		}
+		
 		foreach($tagArray as $tag) {
 			$tag = trim($tag);
 			if ($tag != '') {
