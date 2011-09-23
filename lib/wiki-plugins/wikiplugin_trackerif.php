@@ -45,7 +45,13 @@ function wikiplugin_trackerif($data, $params)
 		$data = substr($data,0,strpos($data,'{ELSE}'));
 	}
 
-	if (!isset($_REQUEST['itemId'])) {
+	if (empty($_REQUEST["trackerId"])) {
+                $trackerId = $trklib->get_tracker_for_item($_REQUEST['itemId']);
+        } else {
+		$trackerId = $_REQUEST["trackerId"];
+	}
+
+	if (!$trackerId || !isset($_REQUEST['itemId'])) {
 		// Edit mode
 		if (!isset($params['ignore']) || $params['ignore'] == 'y') {
 			return $data;
@@ -61,11 +67,11 @@ function wikiplugin_trackerif($data, $params)
 		return $e->getMessage();
 	}
 
-	$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"]);
+	$xfields = $trklib->list_tracker_fields($trackerId);
 
 	foreach ($xfields['data'] as $field) {
 		// Retrieve values from the current item
-		$values[$field['fieldId']] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $field['fieldId']);
+		$values[$field['fieldId']] = $trklib->get_item_value($trackerId, $_REQUEST['itemId'], $field['fieldId']);
 	}
 
 	if (!wikiplugin_trackerif_test($test, $values)) {
