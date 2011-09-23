@@ -678,12 +678,12 @@ class WikiLib extends TikiLib
 		global $user, $tikilib, $prefs, $semanticlib;
 
 		// If pagealias are defined, they should be used instead of generic search
-		if( $prefs['feature_wiki_pagealias'] == 'y' ) {
+		if( $prefs['feature_wiki_pagealias'] == 'y' || !empty($prefs["wiki_prefixalias_tokens"])) {
 			require_once 'lib/wiki/semanticlib.php';
 
 			$toPage = $page;
 			$tokens = explode( ',', $prefs['wiki_pagealias_tokens'] ); 
-					
+
 			$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 			foreach ($prefixes as $p) {
 				$p = trim($p);
@@ -692,7 +692,7 @@ class WikiLib extends TikiLib
 					$tokens = 'prefixalias';
 				}
 			}
-					
+
 			$links = $semanticlib->getLinksUsing(
 				$tokens,
 				array( 'toPage' => $toPage ) );
