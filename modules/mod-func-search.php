@@ -64,11 +64,11 @@ function module_search_info() {
 			// initially from quick-edit
 			'search_action' => array(
 				'name' => tra('Search Form Action'),
-				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . tra(' tiki-searchresults.php or tiki-searchindex.php (for Tiki search))'
+				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . tra(' tiki-searchresults.php or tiki-searchindex.php (for Tiki search)'),
 			),
 			'search_submit' => array(
 				'name' => tra('Edit Submit Label'),
-				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Search')
+				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Search'),
 			),
 			'go_action' => array(
 				'name' => tra('Go Form Action'),
