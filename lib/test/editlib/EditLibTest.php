@@ -230,7 +230,7 @@ class EditLibTest extends TikiTestCase
 		$inData .= 'fg and bg colored';
 		$inData .= '</span></span>';
 		$res = $this->el->parseToWiki($inData);
-		$ex = '~~#FF0000, #FFFF00:fg and bg colored~~';
+		$ex = '~~#FF0000:~~ ,#FFFF00:fg and bg colored~~~~';
 		$this->assertEquals($ex, $res);
 		
 		
@@ -246,7 +246,7 @@ class EditLibTest extends TikiTestCase
 		$inData .= '</span>';
 		$inData .= 'regular';
 		$res = $this->el->parseToWiki($inData);
-		$ex = '~~#FF0000:fg colored ~~~~#FF0000, #FFFF00:both colored ~~~~#FF0000:fg colored ~~regular';
+		$ex = '~~#FF0000:fg colored ~~ ,#FFFF00:both colored ~~fg colored ~~regular';
 		$this->assertEquals($ex, $res);
 		
 		$inData = '<span style="background-color: rgb(255, 0, 0);">';
@@ -258,7 +258,7 @@ class EditLibTest extends TikiTestCase
 		$inData .= '</span>';
 		$inData .= 'regular';
 		$res = $this->el->parseToWiki($inData);
-		$ex = '~~ , #FF0000:bg colored ~~~~#FFFF00, #FF0000:both colored ~~~~ , #FF0000:bg colored ~~regular';
+		$ex = '~~ ,#FF0000:bg colored ~~#FFFF00:both colored ~~bg colored ~~regular';
 		$this->assertEquals($ex, $res);
 	}
 	
@@ -278,7 +278,7 @@ class EditLibTest extends TikiTestCase
 		$inData .= '</strong>';
 		$inData .= 'red';
 		$inData .= '</span>';
-		$ex = '~~#FF0000:red __bold __~~~~#FF0000, #FFFF00:__yellow __~~~~#FF0000:__bold __red~~';
+		$ex = '~~#FF0000:red __bold ~~ ,#FFFF00:yellow ~~bold __red~~';
 		$res = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $res);
 	}

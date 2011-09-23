@@ -154,10 +154,5 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		$exp = '<span style="color:#AABBCC; background-color:#112233">text</span>';
 		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($exp, $out);			
-				
-		$inData = '~~ #AABBCC , #112233 :text~~';
-		$exp = '<span style="color: #AABBCC ; background-color: #112233 ">text</span>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
-		$this->assertEquals($exp, $out);
 	}
 }

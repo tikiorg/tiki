@@ -355,7 +355,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		/*
 		 * background only
 		 */
-		$ex = '~~ , #FFFF00:color~~';
+		$ex = '~~ ,#FFFF00:color~~';
 		
 		$inData = '<span style="background:#FFFF00;">color</span>';
 		$out = $this->el->parseToWiki($inData);
@@ -369,7 +369,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		/*
 		 * text and background
 		 */
-		$ex = '~~#FF0000, #0000FF:color~~';
+		$ex = '~~#FF0000,#0000FF:color~~';
 
 		$inData = '<span style="color:rgb(255, 0, 0);background-color:rgb(0, 0, 255);">color</span>';
 		$out = $this->el->parseToWiki($inData);
@@ -395,7 +395,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		/*
 		 * line break
 		 */
-		$ex = '~~#FF0000, #0000FF:color text 1~~\n~~#FF0000, #0000FF:color text 2~~';
+		$ex = '~~#FF0000,#0000FF:color text 1~~\n~~#FF0000,#0000FF:color text 2~~';
 
 		$inData = '<span style="color:rgb(255, 0, 0);background-color:rgb(0, 0, 255);">color text 1<br />color text 2</span>';
 		$out = $this->el->parseToWiki($inData);

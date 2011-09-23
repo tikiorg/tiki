@@ -277,19 +277,11 @@ class EditLib
 			
 			if ($fcol || $bcol) {
 				$col  = "~~";
-				$col .= ($fcol ? $fcol : '');
-				$col .= ($bcol && !$fcol ? ' ' : ''); // need space before ',' if there is no fcolor
+				$col .= ($fcol ? $fcol : ' ');
 				$col .= ($bcol ? ','.$bcol : '');
 				$col .= ':';
 				
-				// nested color definition ?
-				if ($p['colorstack']) { // don't nest color markup
-					$this->closeWikiTags($p, $src);
-					$this->processWikiTag('span', $src, $p, $col, '~~', true, true);
-					$this->reopenWikiTags($p, $src, false);
-				} else {
-					$this->processWikiTag('span', $src, $p, $col, '~~', true, true);
-				} 
+				$this->processWikiTag('span', $src, $p, $col, '~~', true, true);
 			}
 			
 			
@@ -410,13 +402,9 @@ class EditLib
 	 */
 	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false) {
 
-		// colors need a special processing
-		$have_color =  $end == '~~';
-		$nested_colors = $have_color && $p['colorstack'];
-
 		// append=false, create new entries on the stack		
 		if (!$append) {
-			$p['stack'][] = array('tag' => $tag, 'string' => '', 'wikitags' => 0, 'colors' => 0 );
+			$p['stack'][] = array('tag' => $tag, 'string' => '', 'wikitags' => 0 );
 			$p['wikistack'][] = array( 'begin' => array(), 'end' => array() );
 		};
 		
@@ -427,18 +415,6 @@ class EditLib
 		$key = end(array_keys( $p['stack'] ) );
 		$stack = &$p['stack'][$key];
 		$string = &$stack['string'];
-
-		// update the color stack
-		if ( $have_color ) {
-			$col = preg_replace('/~~(.*):/', '\1', $begin);
-			$col_arr = explode( ',', $col );	
-			$fc = count($col_arr)      ? trim($col_arr[0]) : '';
-			$bc = count($col_arr) == 2 ? trim($col_arr[1]) : '';
-			$p['colorstack'][] = array( 'fc' => $fc, 'bc' => $bc );
-
-			$begin = '~~'; // the colors may change due to overlapping spans		
-			$stack['colors']++;	
-		}
 		
 		// append to the stacks
 		$wiki['begin'][] = $begin;
@@ -451,82 +427,6 @@ class EditLib
 			$this->startNewLine($src);
 		}
 		$src .= $begin;
-		if ($have_color) {
-			$src .= $this->composeWikiColor($p);
-		}
-	}
-	
-	
-	/**
-	 * Close open Wiki tags 
-	 * 
-	 * In some situations, for example before a line break, all open tags must be closed.
-	 * 
- 	 * @param array $p ['stack'] = closing strings stack
-	 * @param string $src The output string
-	 * @param bool $write_color If true, colors are written to the outputstring
-	 */
-	private function closeWikiTags( &$p, &$src, $write_color = true ) {
-		
-		foreach ( array_reverse($p['wikistack']) as $wiki_arr ) {
-			foreach ( array_reverse($wiki_arr['end']) as $end ) {
-				if ($end == '~~') { // have color
-					if ($write_color) {
-						$src .= $end;
-					}
-				} else {
-					$src .= $end;					
-				}	
-			}
-		}
-	}
-	
-	
-	/**
-	 * Reopen Wiki tags
-	 * 
-	 * In some situations, for example after a line break, all unfinished tags must be opend again.
-	 * 
- 	 * @param array $p ['stack'] = closing strings stack
-	 * @param string $src The output string 
-	 * @param bool $write_color If true, colors are written to the outputstring
-	 */
-	private function reopenWikiTags( &$p, &$src, $write_color = true ) {
-		
-		foreach ( $p['wikistack'] as $wiki_arr ) {
-			foreach ( $wiki_arr['begin'] as $begin) {
-				if ($begin == '~~') { // have color
-					if ($write_color) {
-						$src .= $begin;
-						$src .= $this->composeWikiColor($p);
-					}
-				} else {
-					$src .= $begin;
-				}
-			}
-		}		
-	}
-	
-	
-	/**
-	 * Compose the color using $p['colorstack']
-	 * 
- 	 * @param array $p ['stack'] = closing strings stack 
-	 * @return: the wiki markup that defines the color
-	 */
-	private function composeWikiColor(&$p) {
-		
-		$fc = '';
-		$bc = '';
-		
-		foreach ($p['colorstack'] as $def) {
-			if ($def['fc']) { $fc = $def['fc'];}
-			if ($def['bc']) { $bc = $def['bc'];}
-		}
-		$col = $fc ? $fc : ' ';
-		$col .= $bc ? ', ' . $bc : '';
-
-		return $col . ':';
 	}
 	
 	
@@ -577,10 +477,7 @@ class EditLib
 		} else {
 			$parsed = preg_replace('/!::(?:\d\.)+ *(.*)::/', '!#::\1::', $parsed); 
 		}
-		
-		// remove empty makrup
-		$parsed = preg_replace('/~~[^~:]*:~~/', '', $parsed);
-		
+
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
 		return $parsed;
@@ -724,7 +621,12 @@ class EditLib
 							if ($p['wiki_lbr']) { // "%%%" or "\n" ?
 								$src .= ' %%% ';
 							} else {
-								$this->closeWikiTags($p, $src);
+								// close all wiki tags
+								foreach ( array_reverse($p['wikistack']) as $wiki_arr ) {
+									foreach ( array_reverse($wiki_arr['end']) as $end ) {
+										$src .= $end;
+									}
+								}
 								$src .= "\n";
 								
 								// for lists, we must prepend '+' to keep the indentation
@@ -732,7 +634,12 @@ class EditLib
 									$src .= str_repeat( '+', count($p['listack']));
 								}
 								
-								$this->reopenWikiTags($p, $src);
+								// reopen all wikitags
+								foreach ( $p['wikistack'] as $wiki_arr ) {
+									foreach ( $wiki_arr['begin'] as $begin) {
+										$src .= $begin;
+									}
+								}
 							}
 							break;
 						case "hr": $src .= $this->startNewLine($src) . '---'; break;
@@ -857,27 +764,12 @@ class EditLib
 							$e = end($p['stack']);
 							if ($c[$i]["data"]["name"] == $e['tag'])
 							{
-								if (isset($e['colors']) && $e['colors']) {
-									$this->closeWikiTags($p, $src, false);
-								}
 								$src .= $e['string'];
 								array_pop($p['stack']);
 							}
 							break;
 					}
 					
-					// update the color stack
-					if (isset($e['colors']) && $e['colors']) {
-						for ( $i_col = 0; $i_col < $e['colors']; $i_col++ ) {
-							array_pop( $p['colorstack'] );
-						}
-						if ($p['colorstack']) { // unhide the color
-							$color = $this->composeWikiColor($p);
-							$src .= '~~' . $color;
-							$this->reopenWikiTags($p, $src, false);							
-						}
-					}
-
 					// update the wiki stack
 					if (isset($e['wikitags']) && $e['wikitags']) {
 						for ( $i_wiki = 0; $i_wiki < $e['wikitags']; $i_wiki++ ) {
@@ -948,24 +840,16 @@ class EditLib
 		 * ['stack'] = array
 		 * Speacial keys introduced to convert to Wiki
 		 * - ['wikitags']     = the number of 'wikistack' entries produced by the html tag
-		 * - ['colors']       = the number of 'colorstack' entries produced by the html tag 
 		 * 
 		 * ['wikistack'] = array(), is used to save the wiki markup for the linebreak handling (1 array = 1 html tag)
 		 * Each array entry contains the following keys: 
 		 * - ['begin']        = array() of begin markups (1 style definition = 1 array entry)
 		 * - ['end']          = array() of end markups
 		 * 
-		 * ['colorstack'] = array(), used to save color specifications
-		 * Each array entry contains the following keys:
-		 * - ['fc'] = string that defines the foreground color ('#FFFFFF')
-		 * - ['bc'] = string that defines the background color (' ,#FFFFFF')
-		 * 
 		 * wiki_lbr  = true if we must use '%%%' for linebreaks instead of '\n'
-		 * color_tag = ref to the active color tag on the 'stack'
 		 */
-		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(), 'colorstack' => array(), 
-			'wiki_lbr' => 0, 'color_tag' => null, 'first_td' => false, 'first_tr' => false);
-		$p['colors'] = array('fg' => null, 'bg' => null, 'pref' => 0);
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(),  
+			'wiki_lbr' => 0, 'first_td' => false, 'first_tr' => false);
 		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 		// to produce invalid wiki :)
