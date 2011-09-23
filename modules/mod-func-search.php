@@ -63,7 +63,7 @@ function module_search_info() {
 			),
 			// initially from quick-edit
 			'search_action' => array(
-				'name' => 'Search Form Action',
+				'name' => tra('Search Form Action'),
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-searchresults.php or tiki-searchindex.php (for Tiki search)'
 			),
 			'search_submit' => array(
@@ -71,7 +71,7 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Search')
 			),
 			'go_action' => array(
-				'name' => 'Go Form Action',
+				'name' => tra('Go Form Action'),
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-editpage.php'
 			),
 			'go_submit' => array(
@@ -79,7 +79,7 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Go')
 			),
 			'edit_action' => array(
-				'name' => 'Edit Form Action',
+				'name' => tra('Edit Form Action'),
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-editpage.php'
 			),
 			'edit_submit' => array(
@@ -87,12 +87,12 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Edit')
 			),
 			'input_size' => array(
-				'name' => 'Input size',
+				'name' => tra('Input size'),
 				'description' => tra('Size attribute (horizontal, in characters) of the text input field.') . ' ' . tra('Default:') . ' 14',
 				'filter' => 'int'
 			),
 			'select_size' => array(
-				'name' => 'Select size',
+				'name' => tra('Select size'),
 				'description' => tra('Size of the Search Filter dropdown list.') . " " . tra('Default:') . " 10",
 				'filter' => 'int'
 			),
