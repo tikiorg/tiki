@@ -2152,6 +2152,8 @@ class TrackerLib extends TikiLib
 
 		if (!empty($trackerId)) {
 			$conditions = array('trackerId' => (int) $trackerId);
+		} else {
+			return array();
 		}
 		if ($find) {
 			$conditions['name'] = $fieldsTable->like("%$find%");
