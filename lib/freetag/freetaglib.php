@@ -535,6 +535,11 @@ class FreetagLib extends ObjectLib
 		$bindvars[] = $tag;
 		$bindvars[] = $normalized_tag;
 
+		// force tag to be universal if no lang set
+		if (!$lang) {
+			$lang = null;
+		}
+
 		if ($this->multilingual && $lang && ! $anyLanguage) {
 			$mid .= ' AND `lang` = ?'; // null lang means universal
 			$bindvars[] = $lang;
