@@ -90,6 +90,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 	static $memoTrackerId = 0;
 	static $memoStatus = 0;
 	static $memoUserTracker = false;
+	static $memoItemObject = null;
 
 	extract ($params, EXTR_SKIP);
 
@@ -109,7 +110,6 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$tracker_info = array_merge($tracker_info, $t);
 		}
 		$itemId = $trklib->get_user_item($trackerId, $tracker_info);
-		$memoUserTracker = true;
 	}
 
 	if ((!empty($itemId) && $memoItemId == $itemId) || (empty($itemId) && !empty($memoItemId))) {
@@ -118,6 +118,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 			return tra('Incorrect param');
 		}
 		$trackerId = $memoTrackerId;
+		$itemObject = $memoItemObject;
 	} else {
 		if (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info, $_REQUEST['view_user']);
@@ -125,7 +126,6 @@ function wikiplugin_trackeritemfield($data, $params) {
 		if (empty($trackerId) && empty($itemId) && ((isset($userTracker) && $userTracker == 'y') || (isset($prefs) && $prefs['userTracker'] == 'y')) && !empty($group) && ($utid = $userlib->get_tracker_usergroup($user)) && $utid['usersTrackerId']) {
 			$trackerId = $utid['usersTrackerId'];
 			$itemId = $trklib->get_item_id($trackerId, $utid['usersFieldId'], $user);
-			$memoUserTracker = true;
 		} else if (empty($trackerId) && !empty($itemId)) {
 			$item = $trklib->get_tracker_item($itemId);
 			$trackerId = $item['trackerId'];
@@ -143,31 +143,16 @@ function wikiplugin_trackeritemfield($data, $params) {
 		if (!empty($info) && empty($trackerId)) {
 			$trackerId = $info['trackerId'];
 		}
-		if (!empty($info) && !$memoUserTracker) {
-			$perm = ($info['status'] == 'c')? 'view_trackers_closed':(($info['status'] == 'p')?'view_trackers_pending':'view_trackers');
-			$perms = Perms::get(array('type'=>'tracker', 'object'=>$trackerId));
-			if (!$perms->$perm) {
-				$g = $trklib-> get_item_group_creator($trackerId, $itemId);
-				if (in_array($g, $tikilib->get_user_groups($user))) {
-					if (empty($tracker_info)) {
-						$tracker_info = $trklib->get_tracker($info['trackerId']);
-					}
-					$perms = $trklib->get_special_group_tracker_perm($tracker_info, false);
-					if ($perms["tiki_p_$perm"] != 'y') {
-						return false;
-					}
-				} else {
-					return false;
-				}
-			}
-			$perms = Perms::get(array('type'=>'trackeritem', 'object'=>$itemId));
-			if (!$perms->$perm) {
-				return false;
-			}
+
+		$itemObject = Tracker_Item::fromInfo($info);
+		if (! $itemObject->canView()) {
+			return WikiParser_PluginOutput::error(tr('Permission denied'), tr('You are not allowed to view this item.'));
 		}
+
 		$memoStatus = $info['status'];
 		$memoItemId = $itemId;
 		$memoTrackerId = $info['trackerId'];
+		$memoItemObject = $itemObject;
 		if (isset($_REQUEST['itemId']) && $_REQUEST['itemId'] != $itemId) {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI'].'&trackeritemfield');
@@ -208,11 +193,12 @@ function wikiplugin_trackeritemfield($data, $params) {
 		foreach ($field_values as $field_value) {
 			if (($field_value['type'] == 'p' && $field_value['options_array'][0] == 'password') || ($field_value['isHidden'] != 'n' && $field_value['isHidden'] != 'c'))
 				continue;
-			if (!empty($field_value['visibleBy']) && !in_array($default_group, $field_value['visibleBy']))
+
+			if (! $itemObject->getViewField($field_value['fieldId'])) {
 				continue;
+			}
 
 			if (empty($field_value['value'])) {
-//echo "MISSING:".$field_value['fieldId'];
 				return $dataelse;
 			}
 		}
@@ -221,33 +207,16 @@ function wikiplugin_trackeritemfield($data, $params) {
 		if (!($field = $trklib->get_tracker_field($fieldId))) {
 			return tra('Incorrect param').': fieldId';
 		}
-		if ($tiki_p_admin_trackers != 'y' && $field['isHidden'] != 'n') {
-			return tra('Incorrect param').': fieldId';
+
+		if (! $itemObject->canViewField($fieldId)) {
+			return WikiParser_PluginOutput::error(tr('Permission denied'), tr('You are not allowed to view this field.'));
 		}
+
 		if (empty($test))
 			$test = false;
 
 		if (($val = $trklib->get_item_value($trackerId, $itemId, $fieldId)) !== false) {
-			if ($field['type'] == 'F') {
-				global $freetaglib;
-				if (!is_object($freetaglib)) {
-					include_once('lib/freetag/freetaglib.php');
-				}
-				$field['freetags'] = $freetaglib->_parse_tag($val);
-			}
-			if ($field['type'] == 'c' && !empty($value)) {
-				if (strtolower($value) == 'on')
-					$value = 'y';
-				if (strtolower($val) == 'on')
-					$val = 'y';
-			}
-			if ($test && empty($val)) {
-				return $dataelse;
-			} elseif ($test && !empty($value) && $value == $val) {
-				return $data;
-			} elseif ($test && !empty($value) && $value != $val) {
-				return $dataelse;
-			} elseif ($test) { 
+			if ($test) { 
 				return $data;
 			} else {
 				$field['value'] = $val;
