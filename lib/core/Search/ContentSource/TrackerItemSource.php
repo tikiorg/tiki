@@ -36,6 +36,14 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 		$item = $this->trklib->get_tracker_item($objectId);
 
+		if ($item['status'] == 'c') {
+			$permNeeded = 'tiki_p_view_trackers_closed';
+		} elseif ($item['status'] == 'p') {
+			$permNeeded = 'tiki_p_view_trackers_pending';
+		} else {
+			$permNeeded = 'tiki_p_view_trackers';
+		}
+
 		$definition = Tracker_Definition::get($item['trackerId']);
 
 		if (! $definition) {
@@ -56,7 +64,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 			'parent_object_type' => $typeFactory->identifier('tracker'),
 			'parent_object_id' => $typeFactory->identifier($item['trackerId']),
-			'parent_view_permission' => $typeFactory->identifier('tiki_p_view_trackers'),
+			'parent_view_permission' => $typeFactory->identifier($permNeeded),
 		));
 
 		return $data;
