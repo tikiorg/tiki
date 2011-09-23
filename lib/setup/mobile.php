@@ -25,7 +25,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 		$prefs['mobile_mode'] = 'y';
 
-		// hard-wire a few prefs shut to speed development
+		// hard-wire a few incompatible prefs shut to speed development
 		$prefs['feature_jquery_ui'] = 'n';
 		$prefs['feature_fullscreen'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
@@ -35,6 +35,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['themegenerator_feature'] = 'n';
 		$prefs['ajax_autosave'] = 'n';
 		$prefs['change_theme'] = 'n';
+		$prefs['feature_syntax_highlighter'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
