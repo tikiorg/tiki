@@ -440,7 +440,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		}
 
 
-		if ($tiki_p_wiki_approve == 'y' && $prefs['flaggedrev_approval'] == 'y') {
+		if ($prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
 			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 
 			if ($flaggedrevisionlib->page_requires_approval($page)) {
@@ -1063,7 +1063,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 		$url .= '&no_bl=y';
 	}
 
-	if ($tiki_p_wiki_approve == 'y' && $prefs['flaggedrev_approval'] == 'y') {
+	if ($prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
 		global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 
 		if ($flaggedrevisionlib->page_requires_approval($page)) {
