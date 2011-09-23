@@ -32,43 +32,43 @@ function module_adsense_info() {
 		'prefs' => array( ),
 		'params' => array(
 			'ad_channel' => array(
-				'name' => 'ad_channel',
+				'name' => tra('ad_channel'),
 				'description' => tra('Advertisement channel, as optionally provided by Google.'),
 				'filter' => 'striptags',
 			),
 			'client' => array(
-				'name' => 'client',
+				'name' => tra('client'),
 				'description' => tra('As provided by Google. Format: "pub-xxxxxxxxxxxxxxxx"'),
 				'required' => true,
 			),
 			'display' => array(
-				'name' => 'display',
+				'name' => tra('display'),
 				'description' => tra('Global banner format as provided by Google. For example: "display=468*60_as"'),
 				'filter' => 'striptags',
 				'required' => true,
 			),
 			'color_bg' => array(
-				'name' => 'color_bg',
+				'name' => tra('color_bg'),
 				'description' => tra('Background color, as optionally provided by Google.'),
 				'filter' => 'striptags',
 			),
 			'color_border' => array(
-				'name' => 'color_border',
+				'name' => tra('color_border'),
 				'description' => tra('Border color, as optionally provided by Google.'),
 				'filter' => 'striptags',
 			),
 			'color_link' => array(
-				'name' => 'color_link',
+				'name' => tra('color_link'),
 				'description' => tra('Link color, as optionally provided by Google.'),
 				'filter' => 'striptags',
 			),
 			'color_text' => array(
-				'name' => 'color_text',
+				'name' => tra('color_text'),
 				'description' => tra('Text color, as optionally provided by Google.'),
 				'filter' => 'striptags',
 			),
 			'color_url' => array(
-				'name' => 'color_url',
+				'name' => tra('color_url'),
 				'description' => tra('URL color, as optionally provided by Google.'),
 				'filter' => 'striptags',
 			)
