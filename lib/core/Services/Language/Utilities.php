@@ -67,6 +67,13 @@ class Services_Language_Utilities
 					$lang = $info[$field];
 				}
 				break;
+			case 'forum post':
+				$object = TikiLib::lib('comments')->get_comment_forum_id($object);
+				// no break: drop through to forum
+			case 'forum':
+				$info = TikiLib::lib('comments')->get_forum($object);
+				$lang = $info['forumLanguage'];	
+				break;
 		}
 
 		if (! $lang) {
