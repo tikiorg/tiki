@@ -129,7 +129,7 @@ function wikiplugin_customsearch($data, $params)
 	$_SESSION[$sessionprint] = $fingerprint;
 
 	// important that offset from session is set after fingerprint check otherwise blank page might show
-	if ($recalllastsearch && !$offset && !empty($_SESSION["customsearch_$id"]["offset"])) {
+	if ($recalllastsearch && !isset($_REQUEST['offset']) && !empty($_SESSION["customsearch_$id"]["offset"])) {
 		$offset = $_SESSION["customsearch_$id"]["offset"];
 	}
 	
