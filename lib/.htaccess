@@ -1,4 +1,4 @@
-<FilesMatch "\.ph(p(3|4)?|tml)$">
+<FilesMatch "\.php$">
 	order deny,allow
 	deny from all
 </FilesMatch>
