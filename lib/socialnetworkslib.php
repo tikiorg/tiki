@@ -350,14 +350,13 @@ class SocialNetworksLib extends LogsLib
 		}
 		
 		$data=http_build_query($params,'','&');
-		$request="POST $action HTTP/1.1\r\n".
+		$action .= "?$data";
+
+		$request="GET $action HTTP/1.1\r\n".
 				 "Host: graph.facebook.com\r\n".
 				 "Accept: */*\r\n".
-				 "Content-type: application/x-www-form-urlencoded\r\n".
-				 "Content-length: ". strlen($data) ."\r\n".
 				 "Expect: 100-continue\r\n".
-				 "Connection: close\r\n\r\n".
-				 $data;
+				 "Connection: close\r\n\r\n";
 
   		$fp = fsockopen("ssl://graph.facebook.com", 443);
   		if ($fp===false) {
