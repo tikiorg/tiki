@@ -386,7 +386,7 @@ if ($prefs['feature_sefurl'] != 'y') {
 		}
 
 		return "tiki-ajax_services.php?" + $.map(query, function (v, k) {
-			return k + "=" + encodeURIComponent(v);
+			return k + "=" + encodeURI(v);
 		}).join("&");
 	}');
 }
