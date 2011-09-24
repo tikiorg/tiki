@@ -31,7 +31,6 @@
 		{tr}Enter &lt;your site URL&gt;tiki-socialnetworks.php?request_facebook as Site URL and &lt;your site&gt; as Site Domain{/tr}.</p>
 		{/remarksbox}
 		<div class="adminoptionbox">
-			{preference name=socialnetworks_facebook_api_key}
 			{preference name=socialnetworks_facebook_application_secr}
 			{preference name=socialnetworks_facebook_application_id}
 			{preference name=socialnetworks_facebook_login}

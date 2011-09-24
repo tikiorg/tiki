@@ -118,7 +118,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function facebookRegistered() {
 		global $prefs;
-		return ($prefs['socialnetworks_facebook_application_id']!='' and $prefs['socialnetworks_facebook_api_key']!='' and $prefs['socialnetworks_facebook_application_secr']!='');
+		return ($prefs['socialnetworks_facebook_application_id']!='' and $prefs['socialnetworks_facebook_application_secr']!='');
 	}
 	
 	/**
@@ -166,7 +166,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function getFacebookAccessToken() {
 		global $prefs, $user, $userlib;
-		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_api_key']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
+		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
 			return false;
 		}
 
