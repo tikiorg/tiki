@@ -1036,6 +1036,7 @@ if( isset( $_POST['convert_to_utf8'] ) ) {
 	convert_database_to_utf8( $dbs_tiki );
 }
 
+$smarty->assign('double_encode_fix_attempted', 'n');
 if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding']) ) {
 	fix_double_encoding( $dbs_tiki, $_POST['previous_encoding'] );
 	$smarty->assign('double_encode_fix_attempted', 'y');
