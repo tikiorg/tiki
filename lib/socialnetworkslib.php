@@ -331,7 +331,7 @@ class SocialNetworksLib extends LogsLib
 	 * @param	bool	$addtoken	should the access token be added to the parameters if the calling function did not pass this parameter
 	 * @return	string				body of the response page (json encoded object)
 	 */
-	function facebookGraph($user, $action, $params, $addtoken=true) {
+	function facebookGraph($user, $action, $params, $addtoken=true, $method = 'POST') {
 		global $prefs;
 		if(!$this->facebookRegistered()) {
 			$this->add_log('facebookGraph','application not set up');
@@ -350,13 +350,20 @@ class SocialNetworksLib extends LogsLib
 		}
 		
 		$data=http_build_query($params,'','&');
-		$action .= "?$data";
+		if ($method == 'GET') {
+			$action .= "?$data";
+		}
 
-		$request="GET $action HTTP/1.1\r\n".
+		$request="$method $action HTTP/1.1\r\n".
 				 "Host: graph.facebook.com\r\n".
 				 "Accept: */*\r\n".
 				 "Expect: 100-continue\r\n".
-				 "Connection: close\r\n\r\n";
+				 "Connection: close\r\n";
+		if ($method == 'POST') {
+                        $request .= "Content-type: application/x-www-form-urlencoded\r\n".
+                                "Content-length: ". strlen($data) ."\r\n";
+                }
+                $request .= "\r\n";
 
   		$fp = fsockopen("ssl://graph.facebook.com", 443);
   		if ($fp===false) {
