@@ -67,12 +67,13 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 			$data['value'] = $this->getValue();
 
 			$langutil = new Services_Language_Utilities;
-			try {
-				$itemLang = $langutil->getLanguage('trackeritem', $this->getItemId());
-			} catch (Services_Exception $e) {
-				$itemLang = null;
+			if ($this->getItemId()) {
+				try {
+					$itemLang = $langutil->getLanguage('trackeritem', $this->getItemId());
+				} catch (Services_Exception $e) {
+					$itemLang = null;
+				}
 			}
-
 			$freetaglib = TikiLib::lib('freetag');
 			$data['freetags'] = $freetaglib->_parse_tag($data['value']);
 			$data['tag_suggestion'] = $freetaglib->get_tag_suggestion(
