@@ -481,9 +481,9 @@ class EditLib
 
 		// remove empty center tags
 		if ($prefs['feature_use_three_colon_centertag'] == 'y') { // numbered and centerd headings
-			$parsed = preg_replace('/::::::\n/', '', $parsed);
+			$parsed = preg_replace('/::: *:::\n/', '', $parsed);
 		} else {
-			$parsed = preg_replace('/::::\n/', '', $parsed); 
+			$parsed = preg_replace('/:: *::\n/', '', $parsed); 
 		}
 				
 		// Put back htmlentities as normal char
