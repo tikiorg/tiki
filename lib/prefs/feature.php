@@ -1115,7 +1115,7 @@ function prefs_feature_list($partial = false) {
 		),	
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly URL'),
-			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs'),
+			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs. On IIS, rename web_config to web.config'),
 			'help' => 'Clean+URLs',
 			'perspective' => false,
 			'type' => 'flag',
@@ -1123,7 +1123,6 @@ function prefs_feature_list($partial = false) {
 			'dependencies' => array(
 				'wiki_badchar_prevent',
 			),
-			'warning' => tra('Do not use if your server is IIS'),
 			'default' => 'n',
 			'admin' => 'sefurl',
 		),

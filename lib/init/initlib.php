@@ -162,6 +162,31 @@ class TikiInit
 			return iconv( 'CP1252', 'UTF-8', $string);
 		}
 	} 
+	
+	/**
+	*	Determine if the web server is an IIS server
+	*	@return true if IIS server, else false
+  	* \static
+	*/
+	static function isIIS() {
+		static $IIS;
+
+		// Sample value Microsoft-IIS/7.5
+		if (!isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
+			$IIS = substr($_SERVER['SERVER_SOFTWARE'], 0, 13) == 'Microsoft-IIS';
+		}
+
+		return $IIS;
+	}	
+
+	/**
+	*	Determine if the web server is an IIS server
+	*	@return true if IIS server, else false
+  	* \static
+	*/
+	static function hasIIS_UrlRewriteModule() {
+			return isset($_SERVER['IIS_UrlRewriteModule']) == true;
+	}	
 }
 
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {

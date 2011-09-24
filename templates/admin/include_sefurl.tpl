@@ -13,20 +13,41 @@
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_sefurl visible="always"}
 
-		{if $htaccess eq 'missing'}
-		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-		{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file.{/tr}	
-		{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}
-		{tr}If you need to keep an existing (non Tiki) .htaccess file, just add Tiki directives to it.{/tr}
-		{tr}When you upgrade (ex.: from Tiki4 to Tiki5), make sure to use the new _htaccess file.{/tr}
-		{/remarksbox}
-		{elseif $htaccess eq 'outdated'}
-		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-		{tr}.htaccess file is out of date. SEFURL may not work completely or incorrectly if Tiki htaccess directives are not current.{/tr}	
-		{tr}To update this file, if it was not customized, overwrite the <strong>.htaccess</strong> file (located in the main directory of your Tiki installation) with <strong>_htaccess</strong>.{/tr}
-		{/remarksbox}
-		{/if}		
-
+		{if $IIS}
+			{if $webconfig eq 'missing'}
+			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+			{tr}SEFURL will not work unless Tiki specific directives are deployed to the web.config file.{/tr}	
+			{tr}To enable this file, simply rename the <strong>web_config</strong> file (located in the main directory of your Tiki installation) to <strong>web.config</strong>.{/tr}
+			{tr}If you need to keep an existing (non Tiki) web.config file, just add Tiki directives to it.{/tr}
+			{tr}When you upgrade (ex.: from Tiki7 to Tiki8), make sure to use the new web_config file.{/tr}
+			{/remarksbox}
+			{elseif $webconfig eq 'outdated'}
+			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+			{tr}web.config file is out of date. SEFURL may not work completely or incorrectly if Tiki web.config directives are not current.{/tr}	
+			{tr}To update this file, if it was not customized, overwrite the <strong>web.config</strong> file (located in the main directory of your Tiki installation) with <strong>web_config</strong>.{/tr}
+			{/remarksbox}
+			{/if}		
+			{if $IIS_UrlRewriteModule == false}
+			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+			{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed. {/tr}	
+			{tr}Please see <a href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information{/tr}
+			{/remarksbox}
+			{/if}		
+		{else}
+			{if $htaccess eq 'missing'}
+			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+			{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file.{/tr}	
+			{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}
+			{tr}If you need to keep an existing (non Tiki) .htaccess file, just add Tiki directives to it.{/tr}
+			{tr}When you upgrade (ex.: from Tiki4 to Tiki5), make sure to use the new _htaccess file.{/tr}
+			{/remarksbox}
+			{elseif $htaccess eq 'outdated'}
+			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+			{tr}.htaccess file is out of date. SEFURL may not work completely or incorrectly if Tiki htaccess directives are not current.{/tr}	
+			{tr}To update this file, if it was not customized, overwrite the <strong>.htaccess</strong> file (located in the main directory of your Tiki installation) with <strong>_htaccess</strong>.{/tr}
+			{/remarksbox}
+			{/if}		
+		{/if}
 	</fieldset>		
 	
 	<fieldset class="admin">

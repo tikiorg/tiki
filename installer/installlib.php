@@ -256,22 +256,6 @@ class Installer extends TikiDb_Bridge
 		return count( $this->patches ) > 0 ;
 	} // }}}
 	
-	/**
-	*	Determine if the web server is an IIS server
-	*	@return true if IIS server, else false
-  	* \static
-	*/
-	static function isIIS() {
-		static $IIS;
-
-		// Sample value Microsoft-IIS/7.5
-		if (!isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
-			$IIS = substr($_SERVER['SERVER_SOFTWARE'], 0, 13) == 'Microsoft-IIS';
-		}
-
-		return $IIS;
-	}
-
 
 	/**
 	*	Build the full URL for the current page
@@ -365,7 +349,7 @@ class Installer extends TikiDb_Bridge
 	static function buildIISWarning() {
 		// Prepare IIS warning string
 		$iis_warning = '';
-		if(Installer::isIIS() && !Installer::checkIISFileAccess()) {
+		if(TikiInit::isIIS() && !TikiInit::checkIISFileAccess()) {
 			$iis_warning = tra('
 				<div style="text-align:left">
 				<br/>

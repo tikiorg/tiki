@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+  <appSettings>
+    <!-- Tiki configuration version. Incremented when the file is updated -->
+    <add key="TikiConfVersion" value="1" />
+  </appSettings>
   <system.webServer>
     <defaultDocument>
       <!-- Set the default document -->
