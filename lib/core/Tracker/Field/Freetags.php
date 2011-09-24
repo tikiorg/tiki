@@ -67,6 +67,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 			$data['value'] = $this->getValue();
 
 			$langutil = new Services_Language_Utilities;
+			$itemLang = null;
 			if ($this->getItemId()) {
 				try {
 					$itemLang = $langutil->getLanguage('trackeritem', $this->getItemId());
