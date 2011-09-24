@@ -8,7 +8,10 @@
         <add value="index.php" />
       </files>
     </defaultDocument>
-        <rewrite>
+		<security>
+			<requestFiltering allowDoubleEscaping="True"/>
+		</security>
+		<rewrite>
             <rules>
                 <clear />
                 <rule name="RequestBlockingRule1">
