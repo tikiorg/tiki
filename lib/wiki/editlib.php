@@ -479,6 +479,13 @@ class EditLib
 			$parsed = preg_replace('/!::(?:\d\.)+ *(.*)::/', '!#::\1::', $parsed); 
 		}
 
+		// remove empty center tags
+		if ($prefs['feature_use_three_colon_centertag'] == 'y') { // numbered and centerd headings
+			$parsed = preg_replace('/::::::\n/', '', $parsed);
+		} else {
+			$parsed = preg_replace('/::::\n/', '', $parsed); 
+		}
+				
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
 		return $parsed;

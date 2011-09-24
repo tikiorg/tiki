@@ -135,6 +135,30 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		$out = trim( $this->el->parseToWiki($inData) );
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * two colon, remove empty lines
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'n';
+		$ex = '::Center 1::\n::Center 2::';
+		
+		$inData = '<div align="center">Center 1<br /><br />Center 2</div>';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);
+		
+		
+		/*
+		 * three colon, remove empty lines
+		 */
+		$prefs['feature_use_three_colon_centertag'] = 'y';
+		$ex = ':::Center 1:::\n:::Center 2:::';
+		
+		$inData = '<div align="center">Center 1<br /><br />Center 2</div>';
+		$out = trim( $this->el->parseToWiki($inData) );
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);
 	}
 	
 	
