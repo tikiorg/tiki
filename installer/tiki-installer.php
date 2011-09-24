@@ -560,8 +560,9 @@ $smarty->assign('lang', $language);
 // Try to set a longer execution time for the installer
 @ini_set('max_execution_time', '0');
 $max_execution_time = ini_get('max_execution_time');
+$smarty->assign('max_exec_set_failed', 'n');
 if ($max_execution_time != 0) {
-	$smarty->assign('max_exec_set_failed', 'y');	
+	$smarty->assign('max_exec_set_failed', 'y');
 }
 
 // Tiki Database schema version
