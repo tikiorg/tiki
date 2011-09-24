@@ -48,7 +48,7 @@
 {if $show_removal}<a href="http://facebook.com/editapps.php" target="_blank">{tr}Click here{/tr}</a>{tr}to manage your authorisations at facebook{/tr}<br />{else}
 {* Can't use button here, we need the reload/redirect to work *}
 <span class="button"><a onclick=""  href="tiki-socialnetworks.php?request_facebook=true">Authorize</a></span>
-{tr}this site with facebook.com to use twitter integration of this site.{/tr}
+{tr}this site with facebook.com to use Facebook integration of this site.{/tr}
 {/if}
 {/if}
 {/if}
