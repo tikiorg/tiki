@@ -364,6 +364,9 @@ class SocialNetworksLib extends LogsLib
                                 "Content-length: ". strlen($data) ."\r\n";
                 }
                 $request .= "\r\n";
+		if ($method == 'POST') {
+			$request .= $data;
+		}
 
   		$fp = fsockopen("ssl://graph.facebook.com", 443);
   		if ($fp===false) {
