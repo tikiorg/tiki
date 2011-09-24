@@ -465,6 +465,7 @@ if ($tiki_p_admin_forum == 'y') {
 if ($prefs['feature_freetags'] == 'y') {
 	$cat_type = 'forum post';
 	$cat_objid = $_REQUEST["comments_threadId"];
+	$cat_lang = $forum_info['forumLanguage'];
 	include_once ("freetag_list.php");
 	//If in preview mode get the tags from the form and not from database
 	if (isset($_REQUEST["comments_previewComment"])) {
