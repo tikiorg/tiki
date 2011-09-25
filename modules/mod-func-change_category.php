@@ -77,7 +77,7 @@ function module_change_category( $mod_reference, $module_params ) {
 	
 	$smarty->assign('showmodule', false);
 	// temporary limitation to wiki pages
-	if (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']) || $modlib->is_admin_mode(true)) {
+	if (($GLOBALS['section'] == 'wiki page' && (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']))) || $modlib->is_admin_mode(true)) {
 		global $categlib; require_once('lib/categories/categlib.php');
 		
 		if (empty($_REQUEST['page'])) {
