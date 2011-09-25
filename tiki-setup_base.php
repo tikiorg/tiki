@@ -33,7 +33,6 @@ ini_set('magic_quotes_runtime', 0);
 ini_set('allow_call_time_pass_reference', 'On');
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
-require_once ('lib/setup/compat.php');
 require_once ('lib/tikiticketlib.php');
 require_once ('db/tiki-db.php');
 require_once ('lib/tikilib.php');

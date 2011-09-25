@@ -792,7 +792,6 @@ if (
 		$tikilib = new TikiLib;
 		require_once 'lib/userslib.php';
 		$userlib = new UsersLib;
-		require_once 'lib/setup/compat.php';
 		require_once 'lib/tikidate.php';
 		$tikidate = new TikiDate();
 	}
