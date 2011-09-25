@@ -1038,11 +1038,6 @@ if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding'
 	$smarty->assign('double_encode_fix_attempted', 'y');
 }
 
-if( $install_step == '0' ) {
-	$iis_warning = Installer::buildIISWarning();
-	$smarty->assign( 'iiswarning', $iis_warning );
-}
-
 if( $install_step == '4' ) {
 	// Show the innodb option in the (re)install section if InnoDB is present
 	if(isset($installer) and $installer->hasInnoDB()) {

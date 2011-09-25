@@ -339,29 +339,4 @@ class Installer extends TikiDb_Bridge
 		}
 		return $rcAccess;
 	}
-
-
-	/**
-	*	Build a warning string if IIS is used. It requires the URL Rewrite module for proper operation.
-	*	@return IIS warning string. An empty string is returned for other servers.
-  	* \static
-	*/
-	static function buildIISWarning() {
-		// Prepare IIS warning string
-		$iis_warning = '';
-		if(TikiInit::isIIS() && !TikiInit::checkIISFileAccess()) {
-			$iis_warning = tra('
-				<div style="text-align:left">
-				<br/>
-				<h3>IIS Installation Note</h3>
-				<span style="color:red">Your system does <b>not</b> seem to have the <b>URL Rewrite</b> module installed.</span>
-				<p>
-				For proper operation on IIS the <b>URL Rewrite</b> module should be installed. 
-				Without it you will be able to operate Tiki, but you may encounter some problems with images and some features.<br/>
-				Please see <a href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.
-				</p>
-				</div>');
-		}
-		return $iis_warning;
-	}	
 }
