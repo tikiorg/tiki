@@ -13,40 +13,35 @@
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_sefurl visible="always"}
 
-		{if $IIS}
-			{if $webconfig eq 'missing'}
-			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-			{tr}SEFURL will not work unless Tiki specific directives are deployed to the web.config file.{/tr}	
-			{tr}To enable this file, simply rename the <strong>web_config</strong> file (located in the main directory of your Tiki installation) to <strong>web.config</strong>.{/tr}
-			{tr}If you need to keep an existing (non Tiki) web.config file, just add Tiki directives to it.{/tr}
-			{tr}When you upgrade (ex.: from Tiki7 to Tiki8), make sure to use the new web_config file.{/tr}
+		{if $httpd eq 'IIS' and !$IIS_UrlRewriteModule}
+			{remarksbox type="warning" title="{tr}Warning{/tr}"}
+			{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed.{/tr}
+			{tr}Please see <a href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.{/tr}
 			{/remarksbox}
-			{elseif $webconfig eq 'outdated'}
-			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-			{tr}web.config file is out of date. SEFURL may not work completely or incorrectly if Tiki web.config directives are not current.{/tr}	
-			{tr}To update this file, if it was not customized, overwrite the <strong>web.config</strong> file (located in the main directory of your Tiki installation) with <strong>web_config</strong>.{/tr}
-			{/remarksbox}
-			{/if}		
-			{if $IIS_UrlRewriteModule == false}
-			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-			{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed. {/tr}	
-			{tr}Please see <a href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information{/tr}
-			{/remarksbox}
-			{/if}		
 		{else}
-			{if $htaccess eq 'missing'}
-			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-			{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file.{/tr}	
-			{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}
-			{tr}If you need to keep an existing (non Tiki) .htaccess file, just add Tiki directives to it.{/tr}
-			{tr}When you upgrade (ex.: from Tiki4 to Tiki5), make sure to use the new _htaccess file.{/tr}
-			{/remarksbox}
-			{elseif $htaccess eq 'outdated'}
-			{remarksbox type="warning" title="{tr}Warning{/tr}"}	
-			{tr}.htaccess file is out of date. SEFURL may not work completely or incorrectly if Tiki htaccess directives are not current.{/tr}	
-			{tr}To update this file, if it was not customized, overwrite the <strong>.htaccess</strong> file (located in the main directory of your Tiki installation) with <strong>_htaccess</strong>.{/tr}
-			{/remarksbox}
-			{/if}		
+			{if $configurationFile eq 'missing'}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+				{tr _0=$enabledFileName}SEFURL will not work unless Tiki specific directives are deployed to the %0 file.{/tr}
+				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}
+				{tr _0=$enabledFileName}If you need to keep an existing (non Tiki) %0 file, just add Tiki directives to it.{/tr}
+				{tr}When you upgrade Tiki (e.g. from version 7 to version 8), make sure to make use of the new URL rewriting configuration file.{/tr}
+				{/remarksbox}
+			{elseif $configurationFile eq 'no reference'}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+				{tr _0=$referenceFileName}%0 file is missing.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}
+				{/remarksbox}
+			{elseif $configurationFile eq 'unexpected reference' or $configurationFile eq 'unexpected enabled'}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+				{tr _0=$enabledFileName}%0 is not in the expected format.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}<br />
+				{tr _0=$enabledFileName}%0 may simply be outdated.{/tr}
+				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
+				{/remarksbox}
+			{elseif $configurationFile eq 'outdated'}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+				{tr _0=$enabledFileName}%0 file is out of date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}
+				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
+				{/remarksbox}
+			{/if}
 		{/if}
 	</fieldset>		
 	

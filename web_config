@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ [This line is used to check that this configuration file is up to date. Do not edit this line and leave it as the second line.] -->
 <configuration>
-  <appSettings>
-    <!-- Tiki configuration version. Incremented when the file is updated -->
-    <add key="TikiConfVersion" value="1" />
-  </appSettings>
   <system.webServer>
     <defaultDocument>
       <!-- Set the default document -->

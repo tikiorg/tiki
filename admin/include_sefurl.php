@@ -13,81 +13,51 @@ if (isset($_REQUEST['save'])) {
 	simple_set_value('feature_sefurl_paths');
 }
 
-if(TikiInit::isIIS()) {
-	// Check if web.config is present and current
-	$webconfig = 'missing';
-	$filenameUsed = 'web.config';
-	$fp = fopen($filenameUsed, "r");
-	if ($fp) {
-		$confverUsed = -1;
-		$confverNew = -1;
-
-		// Interpret web.config in use
-		$contentUsed = fread($fp, filesize($filenameUsed));
-		$xmlUsed = new SimpleXMLElement($contentUsed);
-		if(isset($xmlUsed->appSettings)) {
-			foreach($xmlUsed->appSettings->add as $node) {
-				$attr = $node->attributes();
-				if(isset($attr['key'])) {
-					if(!strcmp((string)$attr['key'],'TikiConfVersion') && isset($attr['value'])) {
-						$confverUsed = (int)$attr['value'];
-						break;
-					}
-				}
-			}
-		}
-	
-		// Interpret new web_config
-		$filenameNew = 'web_config';
-		$fpNew = fopen($filenameNew, "r");
-		if ($fpNew) {
-			$contentNew = fread($fpNew, filesize($filenameNew));
-			$xmlNew = new SimpleXMLElement($contentNew);
-			if(isset($xmlNew->appSettings)) {
-				foreach($xmlNew->appSettings->add as $node) {
-					$attr = $node->attributes();
-					if(isset($attr['key'])) {
-						if(!strcmp((string)$attr['key'],'TikiConfVersion') && isset($attr['value'])) {
-							$confverNew = (int)$attr['value'];
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		if($confverUsed >= $confverNew) {
-			$webconfig = 'current';
-		} else {
-			$webconfig = 'outdated';
-		}
-		fclose($fp);
-	}
-	
-	$smarty->assign('webconfig', $webconfig);
-	$smarty->assign('IIS', true);
-	if(TikiInit::hasIIS_UrlRewriteModule() == false) {
-		$smarty->assign('IIS_UrlRewriteModule', false);
-	}else {
+if (TikiInit::isIIS()) {
+	$httpd = 'IIS';
+	if (TikiInit::hasIIS_UrlRewriteModule()) {
 		$smarty->assign('IIS_UrlRewriteModule', true);
+		$enabledFileName = 'web.config';
+		$referenceFileName = 'web_config';
+	} else {
+		$smarty->assign('IIS_UrlRewriteModule', false);
 	}
 } else {
-	// Check if .htaccess is present and current
-	$htaccess = "missing";
-	$fp = fopen('.htaccess', "r");
-	if ($fp) {
-		$htCurrent = fopen('_htaccess', "r");
-		$installedFirstLine = fgets($fp); 
-		if ($installedFirstLine == fgets($htCurrent)) { // Do not warn if the first line of each file is identical. First lines contain _htaccess revision
-			$htaccess = 'current';
-		} elseif(strstr($installedFirstLine, 'This line is used to check that this htaccess file is up to date.')) {
-			$htaccess = 'outdated';
+	$enabledFileName = '.htaccess';
+	$referenceFileName = '_htaccess';
+	$httpd = 'Apache';
+}
+$smarty->assign('httpd', $httpd);
+
+// Check if the URL rewriting configuration file is present and current
+$configurationFile = "missing";
+if (isset($enabledFileName)) {
+	$enabledFile = fopen($enabledFileName, "r");
+	if ($enabledFile) {
+		$referenceFile = fopen($referenceFileName, "r");
+		if ($referenceFile) {
+			if ($httpd == 'IIS') { // On IIS, the Id line is the second line, rather than the first as in Apache. 
+				fgets($referenceFile);
+				fgets($enabledFile);
+			}
+			$referenceIdLine = fgets($referenceFile);
+			$enabledIdLine = fgets($enabledFile); 
+			if (!strstr($enabledIdLine, 'This line is used to check that this configuration file is up to date.')) {
+				$configurationFile = 'unexpected';
+			} elseif ($referenceIdLine == $enabledIdLine) { // Do not warn if the Id line of each file is identical. Id lines contain configuration file revision.
+				$configurationFile = 'current';
+			} else {
+				$configurationFile = 'outdated';
+			}
+			fclose($referenceFile);
+		} else {
+			$configurationFile = 'no reference';
 		}
-		fclose($htCurrent);
-		fclose($fp);
+		fclose($enabledFile);
 	}
-	$smarty->assign('htaccess', $htaccess);
-	$smarty->assign('IIS', false);
+	$smarty->assign('referenceFileName', $referenceFileName);
+	$smarty->assign('enabledFileName', $enabledFileName);
+	$smarty->assign('configurationFile', $configurationFile);
 }
 
 ask_ticket('admin-inc-sefurl');
