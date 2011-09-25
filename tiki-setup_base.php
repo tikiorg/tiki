@@ -178,6 +178,11 @@ if ($prefs['feature_fullscreen'] == 'y') {
 require_once ('lib/setup/prefs.php');
 // Smarty needs session since 2.6.25
 require_once ('lib/init/smarty.php');
+
+// Define the special maxRecords global variable
+$maxRecords = $prefs['maxRecords'];
+$smarty->assignByRef('maxRecords', $maxRecords);
+
 require_once ('lib/userslib.php'); global $userlib;
 $userlib = new UsersLib;
 require_once ('lib/tikiaccesslib.php');

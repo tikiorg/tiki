@@ -284,10 +284,6 @@ global $prefs;
 // Assign the prefs array in smarty, by reference
 $smarty->assignByRef('prefs', $prefs);
 
-// Define the special maxRecords global var
-$maxRecords = $prefs['maxRecords'];
-$smarty->assignByRef('maxRecords', $maxRecords);
-
 if ( !empty($prefs['log_tpl']) && $prefs['log_tpl'] === 'y' ) {
 	$smarty->loadFilter('pre', 'log_tpl');
 }
