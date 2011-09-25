@@ -171,9 +171,6 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		$installer = new Installer;
 
 		require_once('tiki-setup.php');
-		if ( ! $smarty ) {
-			require_once 'lib/init/smarty.php';
-		}
 
 		$smarty->assign( 'msg', $msg );
 		$smarty->assign( 'base_query', $query );
