@@ -37,6 +37,7 @@ function prefs_payment_list() {
 			'filter' => 'email',
 			'dependencies' => array( 'payment_feature' ),
 			'size' => 50,
+			'default' => '',
 		),
 		'payment_paypal_environment' => array(
 			'name' => tra('Paypal Environment'),
