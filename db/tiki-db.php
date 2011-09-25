@@ -167,33 +167,26 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 			$stacktrace = false;
 		}
 
+		require_once 'installer/installlib.php';
+		$installer = new Installer;
 
-		if ( ! isset($_SESSION['fatal_error']) ) {
-			// Do not show the error if an error has already occured during the same script execution (error.tpl already called), because tiki should have died before another error.
-			// This happens when error.tpl is called by tiki.sql... and tiki.sql is also called again in error.tpl, entering in an infinite loop.
-
-			require_once 'installer/installlib.php';
-			$installer = new Installer;
-
-			require_once('tiki-setup.php');
-			if ( ! $smarty ) {
-				require_once 'lib/init/smarty.php';
-			}
-
-			$smarty->assign( 'msg', $msg );
-			$smarty->assign( 'base_query', $query );
-			$smarty->assign( 'values', $values );
-			$smarty->assign( 'built_query', $q );
-			$smarty->assign( 'stacktrace', $stacktrace );
-			$smarty->assign( 'requires_update', $installer->requiresUpdate() );
-
-			header("Cache-Control: no-cache, pre-check=0, post-check=0");
-
-			$smarty->display('database-connection-error.tpl');
-			unset($_SESSION['fatal_error']);
-			$this->log($msg.' - '.$q);
-			die;
+		require_once('tiki-setup.php');
+		if ( ! $smarty ) {
+			require_once 'lib/init/smarty.php';
 		}
+
+		$smarty->assign( 'msg', $msg );
+		$smarty->assign( 'base_query', $query );
+		$smarty->assign( 'values', $values );
+		$smarty->assign( 'built_query', $q );
+		$smarty->assign( 'stacktrace', $stacktrace );
+		$smarty->assign( 'requires_update', $installer->requiresUpdate() );
+
+		header("Cache-Control: no-cache, pre-check=0, post-check=0");
+
+		$smarty->display('database-connection-error.tpl');
+		$this->log($msg.' - '.$q);
+		die;
 	} // }}}
 	function log($msg) {
 		global $user, $tikilib;
