@@ -147,16 +147,14 @@ function create_dirs($domain=''){
 	$ret = "";
 	foreach ($dirs as $dir) {
 		$dir = $dir.'/'.$domain;
-		// Create directories as needed
+
 		if (!is_dir($dir)) {
-			@mkdir($dir,02775);
-		}
-		@chmod($dir,02775);
-		// Check again and report problems
-		if (!is_dir($dir)) {
-			$ret .= "The directory '$docroot/$dir' does not exist.\n";
+			$created = @mkdir($dir, 02775); // Try creating the directory			
+			if (!$created) {
+				$ret .= "The directory '$docroot/$dir' could not be created.\n";
+			}
 		} else if (!TikiInit::is_writeable($dir)) {
-			@chmod($dir,02777);
+			@chmod($dir, 02775);
 			if (!TikiInit::is_writeable($dir)) {
 				$ret .= "The directory '$docroot/$dir' is not writeable.\n";
 			}
