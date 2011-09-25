@@ -852,7 +852,7 @@ $smarty->assign('email_test_tw', $email_test_tw);
 
 //  Sytem requirements test.
 if ($install_step == '2') {
-
+	$smarty->assign('mail_test_performed', 'n');
 	if (isset($_REQUEST['perform_mail_test']) && $_REQUEST['perform_mail_test'] == 'y') {
 
 		$email_test_to = $email_test_tw;
@@ -871,13 +871,11 @@ if ($install_step == '2') {
 			$validator = new Zend_Validate_EmailAddress();
 			if (!$validator->isValid($email_test_to)) {
 				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));
-				$smarty->assign('perform_mail_test', 'n');
 				$email_test_ready = false;
 			}
 		} else {	// no email supplied, check copy checkbox
 			if ($_REQUEST['email_test_cc'] != '1') {
 				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
-				$smarty->assign('perform_mail_test', 'n');
 				$email_test_ready = false;
 			}
 		}
@@ -902,7 +900,7 @@ if ($install_step == '2') {
 				$mail_test = 'n';
 			}
 			$smarty->assign('mail_test', $mail_test);
-			$smarty->assign('perform_mail_test', 'y');
+			$smarty->assign('mail_test_performed', 'y');
 			
 		}
 	}

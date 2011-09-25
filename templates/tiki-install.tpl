@@ -106,7 +106,7 @@
 	<br />
 	<h2>{tr}Mail{/tr}</h2><a name="mail"> </a>
 	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
-{if $perform_mail_test ne 'y'}
+{if $mail_test_performed ne 'y'}
 	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to you.{/tr}</p>
 	<div>
 	<form action="tiki-install.php#mail" method="post">
