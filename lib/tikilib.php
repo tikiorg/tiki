@@ -5411,11 +5411,12 @@ JS;
 	}	
 	
 	/**
-	*	Build the full URL for the current page. 
+	*	Return the request URI. 
 	*	Assumes http or https is used. Non-standard ports are taken into account
 	*	@return Full URL to the current page
   	* \static
 	*/
+	// Note: this is unused as of r37658, but quite generic.
 	static function curPageURL() {
 		$pageURL = 'http';
 		if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) {
