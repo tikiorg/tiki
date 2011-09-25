@@ -22,8 +22,7 @@ $prefs['smarty_notice_reporting'] = 'y';
 $prefs['smarty_compilation'] = 'always';
 $prefs['smarty_security'] = 'y';
 require_once 'lib/init/initlib.php';
-set_error_handler("tiki_error_handling", E_ALL);
-error_reporting(E_ALL);
+set_error_handler("tiki_error_handling", error_reporting());
 require_once ( 'lib/init/smarty.php');
 require_once ('installer/installlib.php');
 
