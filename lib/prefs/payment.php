@@ -167,6 +167,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
+			'default' => '',
 		),
 		'payment_tikicredits_xcrates' => array(
 			'name' => tra('Exchange rate for types of credit to use'),
@@ -174,6 +175,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
+			'default' => '',
 		),
 		'payment_user_only_his_own' => array(
 			'name' => tra('User can only see his own outstanding payments'),
