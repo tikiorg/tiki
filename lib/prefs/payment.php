@@ -379,6 +379,7 @@ function prefs_payment_list() {
 			'name' => tra('Event End Field Name'),
 			'description' => tra('Field Name in Events tracker of end date/time'),
 			'type' => 'text',
+			'default' => '',
 		),
 		'payment_cart_exchange' => array(
 			'name' => tra('Allow exchange of products'),
