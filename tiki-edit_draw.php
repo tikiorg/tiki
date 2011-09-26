@@ -143,6 +143,19 @@ $headerlib->add_jq_onready("
 		document.location = '$backLocation';
 	});
 ");
+
+if (isset($_REQUEST['map'])) {
+	require_once("lib/wiki-plugins/wikiplugin_map.php");
+	
+	echo wikiplugin_map();
+	
+	$headerlib->add_jq_onready("
+		$('#openlayers1').drawOver({
+			draw: $('#svgedit'),
+			type: 'map'
+		});
+	");
+}
 // Display the template
 $smarty->assign('mid', 'tiki-edit_draw.tpl');
 // use tiki_full to include include CSS and JavaScript
