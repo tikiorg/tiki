@@ -82,6 +82,12 @@ class Tracker_Item
 
 	function canRemove()
 	{
+		if ($this->isNew()) {
+			return false;
+		}
+
+		$status = $this->info['status'];
+
 		if ($status == 'c') {
 			return $this->perms->remove_tracker_items_closed;
 		} elseif ($status == 'p') {
