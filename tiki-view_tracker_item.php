@@ -487,6 +487,7 @@ if ($_REQUEST["itemId"]) {
 
 	foreach($xfields["data"] as $i => $current_field) {
 		$current_field_ins = null;
+		$fid = $current_field['fieldId'];
 
 		$handler = $fieldFactory->getHandler($current_field, $info);
 
@@ -508,10 +509,10 @@ if ($_REQUEST["itemId"]) {
 
 		if (! empty($current_field_ins)) {
 			if ($fieldIsVisible) {
-				$fields['data'][$i] = array_merge($fields['data'][$i], $current_field_ins);
+				$fields['data'][$i] = $current_field_ins;
 			}
 			if ($fieldIsEditable) {
-				$ins_fields['data'][$i] = array_merge($ins_fields['data'][$i], $current_field_ins);
+				$ins_fields['data'][$i] = $current_field_ins;
 			}
 		}
 	}
