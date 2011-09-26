@@ -49,7 +49,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'readonly' => true,
 				'deprecated' => true,
 				'prefs' => array('trackerfield_stars'),
-				'tags' => array('advanced'),
+				'tags' => array('experimental'),
 				'default' => 'n',
 				'params' => array(
 					'option' => array(
@@ -66,7 +66,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'readonly' => true,
 				'deprecated' => true,
 				'prefs' => array('trackerfield_starsystem'),
-				'tags' => array('advanced'),
+				'tags' => array('experimental'),
 				'default' => 'n',
 				'params' => array(
 					'option' => array(
