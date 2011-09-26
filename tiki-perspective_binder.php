@@ -6,8 +6,8 @@
 // $Id$
 
 // For documentation how to use this file please see the comment at the end of this file
-$sagsSideCatId = 1; // ID of the parent category that indicates the current page is assigned to an "Area"
-global $prefs;
+global $prefs;  
+$sagsSideCatId = $prefs['areas_root']; // ID of the parent category that indicates the current page is assigned to an "Area"
 
 HandleObjectCategories($objectCategoryIds);
 
@@ -19,12 +19,11 @@ function HandleObjectCategories($objectCategoryIds)
     
     if (!empty($objectCategoryIds))
     {
-    
         foreach($objectCategoryIds as $categId)
         {
+             $foundPerspective = GetPerspectiveId($categId);   // place this line here so the var is defined in the else case
             if ($categlib->get_category_parent($categId) == $sagsSideCatId) // If parent category has ID equal to value of $sagsSideCatId
             {
-             $foundPerspective = GetPerspectiveId($categId);
             
                 if ($foundPerspective != $_SESSION['current_perspective']) // If the found perspective is different than the current perspective, update it.
                 {
@@ -50,21 +49,21 @@ function HandleObjectCategories($objectCategoryIds)
 
 function GetPerspectiveId($categoryId)
 {
-
+global $tikilib;
 	try {
-	$DAL = new PDO('mysql:host=XXXXXX;dbname=XXXXXX', 'XXXXXX', 'XXXXXX'); //TODO Fix centralized place to store db credentials
-	$DAL->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//	$DAL = new PDO('mysql:host=localhost;dbname=tiki7', 'tiki7', 'QLfQBJpWHWj6Rqvt'); //TODO Fix centralized place to store db credentials
+//	$DAL->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$selectSql = "SELECT 
 				`perspectiveId`,
        				`pref`,
        				`value`
-				FROM `XXXXXX`.`tiki_perspective_preferences`
-				WHERE pref = 'category_jail' ";
-
-	$statement = $DAL->prepare($selectSql);
-	$statement->execute();
+				FROM `tiki_perspective_preferences`
+				WHERE pref = 'category_jail'";
+		$result = $tikilib->query($selectSql, array(), -1, 0);
+//	$statement = $DAL->prepare($selectSql);
+//	$statement->execute();
 	
-            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) 
+            while ($row = $result->fetchRow()) 
                {
             		$categories = unserialize($row["value"]); // categories are stored as serialized PHP in the database.
                         

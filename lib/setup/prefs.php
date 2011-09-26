@@ -14,6 +14,7 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   exit;
 }
 
+
 // Prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
 $user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage',
@@ -217,6 +218,10 @@ function get_default_prefs() {
 		'category_i18n_unsynced' => array(),
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
+
+		// areas perspective binder
+		'feature_areas' => 'n',
+		'areas_root' => 1,
 
 		// look and feel
 

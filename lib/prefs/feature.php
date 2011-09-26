@@ -36,6 +36,15 @@ function prefs_feature_list($partial = false) {
 			),
 			'default' => '-1',
 		),
+		'feature_areas' => array(
+			'name' => tra('Areas'),
+			'description' => tra('Also known as perspective binder'),
+			'type' => 'flag',
+			'help' => 'Areas',
+			'dependencies' => array(
+				'categories_used_in_tpl',
+			),
+		),
 		'feature_wiki' => array(
 			'name' => tra('Wiki'),
 			'description' => tra('Collaboratively authored documents with history of changes.'),

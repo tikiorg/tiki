@@ -46,6 +46,10 @@
 
 		{preference name=feature_category_transition}
 		{preference name=categories_used_in_tpl}
+		<div class="adminoptionboxchild" id="categories_used_in_tpl_childcontainer">
+				{preference name=feature_areas}
+				{preference name=areas_root}
+		</div>
 		{preference name=category_jail}
 		{preference name=category_defaults}
 		{preference name=category_autogeocode_within}
