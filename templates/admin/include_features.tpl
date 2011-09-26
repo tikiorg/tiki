@@ -26,6 +26,7 @@
 				{preference name=feature_articles}
 				{preference name=feature_forums}
 				{preference name=feature_trackers}
+				{preference name=feature_tracker_reports}
 				{preference name=feature_polls}
 				{preference name=feature_sheet}
 				{preference name=feature_calendar}

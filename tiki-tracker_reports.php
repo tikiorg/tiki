@@ -9,6 +9,8 @@ require_once('tiki-setup.php');
 $trkqry = TikiLib::lib("trk");
 $access->check_permission('tiki_p_export_tracker');
 
+$access->check_feature('feature_tracker_reports');
+
 $headerlib->add_jq_onready('
 	//manipulation objects
 	var elements = $("#trackerElements").hide();

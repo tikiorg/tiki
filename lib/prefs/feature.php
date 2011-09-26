@@ -97,6 +97,18 @@ function prefs_feature_list($partial = false) {
 				'permType' => 'trackers',
 			),
 		),
+		'feature_tracker_reports' => array(
+			'name' => tra('Tracker Reports'),
+			'description' => tra('Tracker Reports Generator'),
+			'help' => 'Trackers',
+			'type' => 'flag',
+			'keywords' => 'CRUD',
+			'default' => 'n',
+			'dependencies' => array('feature_trackers'),
+			'permission' => array(
+				'permType' => 'trackers',
+			),
+		),
 		'feature_forums' => array(
 			'name' => tra('Forums'),
 			'description' => tra('Online discussions on a variety of topics. Threaded or flat.'),
