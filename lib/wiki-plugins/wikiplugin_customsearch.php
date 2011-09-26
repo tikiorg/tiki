@@ -245,6 +245,7 @@ function wikiplugin_customsearch($data, $params)
 		$script .= "$('#customsearch_$id').modal();";
 	}
 	$script .= "$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false;"; 
+	$script .= "$(document).trigger('pageSearchReady');";
 	if (!empty($callbackScript)) $script .= $callbackScript;		
 	$script .= "
 				}
