@@ -95,7 +95,9 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 						$newtable.toggle();
 						$(this).toggleClass("trackerHeaderClose")
 								.toggleClass("trackerHeaderOpen");
-					}).addClass(toggle === "c" ? "trackerHeaderClose" : "trackerHeaderOpen")
+					}).addClass(toggle === "c" ? "trackerHeaderClose" : "trackerHeaderOpen");
+					if (toggle === "c") $newtable.hide();
+
 				}
 				$sibs.each(function(){
 					$newtable.append(this);
