@@ -455,7 +455,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			case 'e':// category
 				global $categlib; include_once('lib/categories/categlib.php');
 				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
-					if (isset($fopt['options_array'][3]) && $fopt['options_array'][3] == 1) {
+					if (isset($field['options_array'][3]) && $field['options_array'][3] == 1) {
 						$type = 'descendants';
 					} else {
 						$type = 'children';
