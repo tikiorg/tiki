@@ -507,15 +507,18 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && !$objectperms->watch_structure ) {
 			$access->display_error( $page, tra('Permission denied'), '403');
 		}
+		$ret = true;
 		if($_REQUEST['watch_action']=='add') {
-			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
+			$ret = $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
 		} elseif($_REQUEST['watch_action'] == 'add_desc') {
-			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=".$_REQUEST['structure']);
+			$ret = $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=".$_REQUEST['structure']);
 		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure');
 		} else {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 		}
+		if (!$ret) 
+			$access->display_error($page, "Invalid Email");
 	}
 }
 
