@@ -127,9 +127,9 @@
 			{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
 				<td class="archive">
 					{if $comments[ix].archived eq 'y'}
-						{self_link archive='unarchive' checked=$id _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
+						{self_link unarchive_x='unarchive' checked=$id _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
 					{else}
-						{self_link archive='archive' checked=$id _icon='folder'}{tr}Archive{/tr}{/self_link}
+						{self_link archive_x='archive' checked=$id _icon='folder'}{tr}Archive{/tr}{/self_link}
 					{/if}
 				</td>
 			{/if}
@@ -156,8 +156,8 @@
 			{icon _id='comment_reject' _tag='input_image' name='reject' value='r' alt="{tr}Reject{/tr}"}
 		{/if}
 		{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
-			{icon _id='folder' _tag='input_image' name='archive' value='archive' alt="{tr}Archive{/tr}"}
-			{icon _id='ofolder' _tag='input_image' name='archive' value='unarchive' alt="{tr}Unarchive{/tr}"}
+			{icon _id='folder' _tag='input_image' name='archive_x' value='archive' alt="{tr}Archive{/tr}"}
+			{icon _id='ofolder' _tag='input_image' name='unarchive_x' value='unarchive' alt="{tr}Unarchive{/tr}"}
 		{/if}
 	</div>
 	</form>

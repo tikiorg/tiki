@@ -118,16 +118,20 @@ if (isset($_REQUEST['checked'])) {
 		$smarty->assign_by_ref('rejected', $rejected);
 	}
 
-	// Archive/unarchive comment(s)
-	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['archive']) && in_array($_REQUEST['archive'], array('archive', 'unarchive'))) {
+	// Archive comment(s)
+	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['archive_x']) ) {
 		foreach($checked as $id) {
-			if ($_REQUEST['archive'] == 'archive') {
-				$commentslib->archive_thread($id);
-			} else if ($_REQUEST['archive'] == 'unarchive') {
-				$commentslib->unarchive_thread($id);
-			}
+			$commentslib->archive_thread($id);
 		}
 	}
+
+	// Unarchive comment(s)
+	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['unarchive_x']) ) {
+		foreach($checked as $id) {
+			$commentslib->unarchive_thread($id);
+		}
+	}
+
 }
 if (isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
