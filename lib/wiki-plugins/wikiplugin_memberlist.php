@@ -41,13 +41,10 @@ function wikiplugin_memberlist_info() {
 				'filter' => 'text',
 				'options' => array(
 					array('text' => 'Default (plain)', 'value' => ''),
-					array('text' => tra('Tabs (requires feature_jquery_ui)'), 'value' => 'tabs'),
+					array('text' => tra('Tabs'), 'value' => 'tabs'),
 					// more soon...
 				),
 				'default' => '',
-				'dependencies' => array(	// unused as yet i think - jb: tiki 8 trunk july 2011
-					'feature_jquery_ui',
-				),
 			),
 			'max' => array(
 				'required' => false,
@@ -212,12 +209,20 @@ function wikiplugin_memberlist( $data, $params ) {
 	$smarty->assign( 'memberlist_groups', $validGroups );
 	$smarty->assign('displayMode', $params['displayMode']);
 
-	if (!empty($params['displayMode']) && $params['displayMode'] === 'tabs') {
-		global $access, $headerlib;
-		$access->check_feature('feature_jquery_ui');
-		$headerlib->add_js('$("#' . $exec_key . '_form > div:first").tabs();', 50);
+	// seems conditonally adding tabs in the tpl doesn't work (unclosed {tabset} errors etc) - a Smarty 3 change?
+	if (empty($params['displayMode']) && $prefs['feature_tabs'] === 'y') {
+		$oldTabs = $prefs['feature_tabs'];
+		$prefs['feature_tabs'] = 'n';
+		// css workarounds for when in non tabs mode
+		TikiLib::lib('header')->add_css('.memberlist > fieldset { border: none; margin:  0; padding:  0; }
+.memberlist > fieldset > legend { display: none; }');
 	}
-	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberlist.tpl' ) . '~/np~';
+	$out = '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberlist.tpl' ) . '~/np~';
+
+	if (empty($params['displayMode']) && !empty($oldTabs)) {
+		$prefs['feature_tabs'] = $oldTabs;
+	}
+	return $out;
 }
 
 function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_mode = 'login_asc') {
