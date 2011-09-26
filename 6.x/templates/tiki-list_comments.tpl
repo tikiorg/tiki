@@ -102,8 +102,8 @@
 			{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 				<td class="approval">
 					{if $comments[ix].approved eq 'n'}
-						{self_link approve='y' checked=$id _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
-						{self_link reject='r' checked=$id _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
+						{self_link approve_x='y' checked=$id _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
+						{self_link reject_x='r' checked=$id _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
 					{elseif $comments[ix].approved eq 'y'}
 						&nbsp;{tr}Approved{/tr}&nbsp;
 					{elseif $comments[ix].approved eq 'r'}
