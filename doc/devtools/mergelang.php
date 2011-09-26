@@ -20,6 +20,8 @@ if ($argc < 3) {
 }
 
 require_once('lib/language/Language.php');
+require_once('lib/language/ParseFile.php');
+require_once('lib/language/MergeFiles.php');
 
 $sourcePath = $argv[1];
 $targetPath = $argv[2];
@@ -42,42 +44,15 @@ if (!file_exists($targetPath)) {
 foreach ($languages as $language) {
 	$sourceLangFile = "$sourcePath/lang/$language/language.php";
 	$targetLangFile = "$targetPath/lang/$language/language.php";
-	$tmpTargetLangFile = "$targetPath/lang/$language/language.php.tmp"; 
-	
-	if (file_exists($sourceLangFile)) {
-		$lines = file($sourceLangFile);
-		$sourceTranslations = array(); 
+	$tmpTargetLangFile = "$targetPath/lang/$language/language.php.tmp";
+
+	try {
+		$sourceObj = new Language_ParseFile($sourceLangFile);	
+		$targetObj = new Language_ParseFile($targetLangFile);
 		
-		foreach ($lines as $line) {
-			$matches = array();
-			
-			// build an array with all the translations from the source file
-			if (preg_match('/^\s*\"(.*)\"\s*\=\>\s*\"(.*)\"\s*\,\s*$/', $line, $matches)) {
-				$sourceTranslations[$matches[1]] = $matches[2];
-			}
-		}
-	}
-	
-	if (file_exists($targetLangFile)) {
-		$lines = file($targetLangFile);
-		$handle = fopen("$targetLangFile.tmp", 'w');
-		
-		if ($handle) {
-			// foreach each line in the target file check decide whether to keep the
-			// current translation or use the translation from the source file if one exists 
-			foreach ($lines as $line) {
-				$matches = array();
-				
-				if (preg_match('|^/?/?\s*\"(.*)\"\s*\=\>\s*\"(.*)\"\s*\,\s*$|', $line, $matches)
-					&& isset($sourceTranslations[$matches[1]]))
-				{
-					fwrite($handle, "\"{$matches[1]}\" => \"{$sourceTranslations[$matches[1]]}\",\n");
-				} else {
-					fwrite($handle, $line);
-				}
-			}
-			
-			rename($tmpTargetLangFile, $targetLangFile);
-		}
+		$mergeFiles = new Language_MergeFiles($sourceObj, $targetObj);
+		$mergeFiles->merge();
+	} catch (Language_Exception $e) {
+		echo "Warning: " . $e->getMessage() . "\n";
 	}
 }
