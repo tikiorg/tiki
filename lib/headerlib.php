@@ -677,9 +677,29 @@ class HeaderLib
 	}
 
 	function add_map() {
-		// Annoying notice with copyrights still remain in google
-		//$this->add_jsfile('http://maps.google.com/maps/api/js?v=3.3&sensor=false', 'external');
-		$this->add_jsfile('http://openlayers.org/api/2.10/OpenLayers.js', 'external');
+		$tikilib = TikiLib::lib('tiki');
+		$enabled = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
+
+		$enalbed = $tikilib->get_preference('geo_tilesets', array('openstreetmap'));
+
+		$google = array_intersect(array('google_street', 'google_physical', 'google_satellite', 'google_hybrid'), $enabled);
+		if (count($google) > 0) {
+			$this->add_jsfile('http://maps.google.com/maps/api/js?v=3.3&sensor=false', 'external');
+		}
+
+		/* Needs additional testing
+		$visual = array_intersect(array('visualearth_road', 'visualearth_aerial', 'visualearth_hybrid'), $enabled);
+		if (count($visual) > 0) {
+			$this->add_jsfile('http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1', 'external');
+		}
+
+		$yahoo = array_intersect(array('yahoo_street', 'yahoo_hybrid', 'yahoo_satellite'), $enabled);
+		if (count($yahoo) > 0) {
+			$this->add_jsfile('http://api.maps.yahoo.com/ajaxymap?v=3.0', 'external');
+		}
+		*/
+
+		$this->add_jsfile('http://openlayers.org/api/2.11/OpenLayers.js', 'external');
 		$this->add_js('$(".map-container:not(.done)").addClass("done").createMap();');
 	}
 	

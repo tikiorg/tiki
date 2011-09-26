@@ -26,6 +26,30 @@ function prefs_geo_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'geo_tilesets' => array(
+			'name' => tra('Available tile layers on maps'),
+			'description' => tra('Allows to replace the default OpenStreetMap tiles for tiles from other mapping services, such as Google, Yahoo or Bing.'),
+			'hint' => tr('Valid options are: %0', implode(', ', array(
+				'openstreetmap',
+				'openaerialmap',
+				'google_street',
+				'google_satellite',
+				'google_physical',
+				'google_hybrid',
+				/* Needs additional testing
+				'visualearth_road',
+				'visualearth_aerial',
+				'visualearth_hybrid',
+				'yahoo_street',
+				'yahoo_satellite',
+				'yahoo_hybrid',
+				*/
+			))),
+			'type' => 'text',
+			'filter' => 'word',
+			'separator' => ',',
+			'default' => array('openstreetmap'),
+		),
 	);
 }
 

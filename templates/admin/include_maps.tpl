@@ -4,16 +4,20 @@
 	</div>
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
-			{preference name=geo_locate_blogpost}
-			{preference name=geo_locate_wiki}
-			{preference name=geo_locate_article}
-			{preference name=wikiplugin_map}
+
+		{preference name=geo_tilesets}
+
+		{preference name=geo_locate_blogpost}
+		{preference name=geo_locate_wiki}
+		{preference name=geo_locate_article}
+		{preference name=wikiplugin_map}
+		{preference name=trackerfield_location}
 	</fieldset>
 	
 	<fieldset class="admin">			
 		<legend>{tr}MapServer settings{/tr}</legend>
 		
-	{preference name=feature_maps}
+		{preference name=feature_maps}
 		<div class="adminoptionboxchild" id="feature_maps_childcontainer">
 			{if $map_error neq ''}
 				{remarksbox type=warning title="{tr}Warning{/tr}"}{$map_error}{/remarksbox}
@@ -25,7 +29,7 @@
 			{preference name=gdaltindex}
 			{preference name=ogr2ogr}
 			{preference name=mapzone}
-	</div>			
+		</div>			
 		
 		<div class="heading input_submit_container" style="text-align: center">
 			<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
