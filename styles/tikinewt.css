@@ -195,21 +195,6 @@ input[type=radio] {
 	border: 0;
 }
 
-button,
-input[type=submit],
-.button input {
-	border: 1px solid #46596f;
-	background: #c7d0d9;
-	font-weight: bold;
-}
-
-button:hover,
-input[type=submit]:hover,
-.button input:hover {
-	background: #ffffff;
-	cursor: pointer;
-}
-
 #page-bar table, #page-bar td, #page-bar tr {
 	margin: 0;
 	padding: 0;
@@ -236,13 +221,15 @@ input[type=submit],
 	background: #c7d0d9;
 	border: 1px solid #999;
 	padding: 0 4px;
-	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
 	display: inline;
 	outline: none;
 	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
+	border: 1px solid #46596f;
+	background: #c7d0d9;
+	font-weight: bold;
 }
 
 .button a,
@@ -258,6 +245,10 @@ input[type=submit]:hover,
 .calbuttonbox a:hover {
 	background: #dca;
 	padding: 0 4px;
+	border: 1px solid #46596f;
+	background: #ffffff;
+	cursor: pointer;
+	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
 fieldset {
