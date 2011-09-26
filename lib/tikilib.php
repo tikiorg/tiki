@@ -101,6 +101,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'logs':
 			global $logslib; include_once('lib/logs/logslib.php');
 			return self::$libraries[$name] = $logslib;
+		case 'logsqry':
+			global $logsqrylib; include_once('lib/logs/logsquerylib.php');
+			return self::$libraries[$name] = $logsqrylib;
 		case 'menu':
 			global $menulib; include_once('lib/menubuilder/menulib.php');
 			return self::$libraries[$name] = $menulib;
