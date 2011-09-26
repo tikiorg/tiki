@@ -187,7 +187,7 @@ function wikiplugin_trackerstat($data, $params)
 			global $categlib; include_once('lib/categories/categlib.php');
 			$parent = (int) $allFields['data'][$i]['options'];
 			if ($parent > 0) {
-				$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
+				$filter = array('identifier'=>$parent, 'type'=>'children');
 				$listCategs = $categlib->getCategories($filter, true, false); 
 			} else {
 				$listCategs = array();

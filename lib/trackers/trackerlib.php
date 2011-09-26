@@ -3422,12 +3422,12 @@ class TrackerLib extends TikiLib
 			if ($prefs['feature_categories'] == 'y' && $res['type'] == 'e') {//category
 				if ((!empty($except) && in_array($res['fieldId'], $except))
 					|| (!empty($only) && !in_array($res['fieldId'], $only))) {// take away the categories from $cats
-					if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
-						$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children'); 
+					if (ctype_digit($res['options_array'][0]) && $res['options_array'][0] > 0) {
+						$filter = array('identifier'=>$res['options_array'][0], 'type'=>'children'); 
 					} else {
 						$filter = NULL;
 					}
-					$chilren = $categlib->getCategories($filter, true, false);
+					$children = $categlib->getCategories($filter, true, false);
 					$local = array();
 					foreach ($children as $child) {
 						$local[] = $child['categId'];
