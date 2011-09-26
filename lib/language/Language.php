@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+require_once('lib/core/TikiDb.php');
 require_once('lib/core/TikiDb/Bridge.php');
 
 //TODO: move language functions (like $tikilib->list_languages()) from $tikilib to this class
@@ -28,6 +29,7 @@ class Language extends TikiDb_Bridge
 	 * @return array list of languages
 	 */
 	public static function getLanguages() {
+		require_once('lib/init/tra.php');
 		global $langmapping; require_once('lang/langmapping.php');
 		return array_keys($langmapping);
 	}
