@@ -7,7 +7,10 @@
 
 require_once('tiki-setup.php');
 $trkqry = TikiLib::lib("trk");
-$access->check_permission('tiki_p_export_tracker');
+
+if (!$objectperms->admin_trackers) {
+	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
+}
 
 $access->check_feature('feature_tracker_reports');
 
