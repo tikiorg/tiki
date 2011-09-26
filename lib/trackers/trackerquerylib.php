@@ -124,9 +124,6 @@ class TrackerQueryLib {
 		return $this;
 	}
 	
-	public function includeDetails($includeDetails = true) {
-		
-	}
 	public function getOne() {
 		return $this
 			->limit(1)
