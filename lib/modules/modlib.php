@@ -485,7 +485,7 @@ class ModLib extends TikiLib
 			if ( !empty( $params['nocategory'])) {				// looking for a category to disable
 				if ( !empty($cat_type) && !empty($cat_objid)) {
 					$catIds = TikiLib::lib('categ')->get_object_categories( $cat_type, $cat_objid);
-					if (!empty($cats)) {						// object has categories
+					if (!empty($catIds)) {						// object has categories
 						$cats = array();
 						if (is_numeric($params['nocategory'][0])) {
 							$cats = $catIds;
