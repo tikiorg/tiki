@@ -17,7 +17,7 @@ function wikiplugin_smarty_info() {
 		'icon' => 'pics/icons/task_submitted.png',
 		'params' => array(
 			'name' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('Smarty function'),
 				'description' => tra('The name of the Smarty function that the button will activate. Available functions are: lib/smarty/libs/plugins/function.[name].php'),
 				'filter' => 'word',
