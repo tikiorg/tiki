@@ -98,6 +98,8 @@ $smarty->assign( "height", $width );
 $smarty->assign( "name", $name);
 
 $headerlib->add_jsfile("lib/svg-edit/embedapi.js");
+$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
+$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
 
 if (
 	isset($_REQUEST['index']) &&
@@ -105,187 +107,40 @@ if (
 	isset($_REQUEST['label'])
 ) {
 	$headerlib->add_jq_onready("	
-		window.wikiTracking = {
+		$.wikiTrackingDraw = {
 			index: '$index',
 			page: '$page',
 			label: '$label',
 			type: 'draw',
-			content: ''
+			content: '',
+			'params[width]': $height,
+			'params[height]': $width
 		};
 	");
 }
 
 $headerlib->add_jq_onready("
-	var win = $(window);
-	
-	$('body').append('<style>' +
-		'#fullscreen {' +
-			'left: 0px;' +
-			'top: 0px;' +
-			'position: absolute;' +
-			'z-index: 9999;' +
-			'background-color: white;' +
-			'text-align: center;' +
-		'}' +
-		'#fullscreen #tiki_draw_editor{' +
-			'width: inherit ! important;' +
-			'height: inherit ! important;' +
-		'}' +
-		'#fullscreen #svg-menu{' +
-			'position: absolute;' +
-			'z-index: 99991;' +
-		'}' +
-		'#fullscreen iframe {' +
-			'width: 100%;' +
-			'border: none ! important;' +
-		'}' +
-		'#tiki_draw iframe {' +
-			'width: 100%;' +
-			'height: ' + (win.height() * 0.8) + 'px;' +
-			'border: none ! important;' +
-		'#tiki_draw_editor iframe {' +
-			'border: none ! important;' +
-		'}' +
-		'.full_screen_body {' +
-			'overflow: hidden;' +
-		'}' +
-	'</style>');
-	
 	$('#tiki-draw_fullscreen').click(function() {
-		window.saveSvg();
-		var tiki_draw = $('#tiki_draw');
-		var fullscreen = $('#fullscreen');
-		var menuHeight = $('#svg-menu').height();
-		
-		if (fullscreen.length == 0) {
-			$('body').addClass('full_screen_body');
-			fullscreen = $('<div />').attr('id', 'fullscreen')
-				.html(tiki_draw.find('#tiki_draw_editor'))
-				.prependTo('body');
-			
-			var fullscreenIframe = fullscreen.find('iframe');
-			
-			win
-				.resize(function() {
-					fullscreen
-						.height(win.height())
-						.width(win.width());
-						
-					fullscreenIframe.height((fullscreen.height() - menuHeight));
-				})
-				.resize() //we do it double here to make sure it is all resized right
-				.resize();
-				
-		} else {
-			tiki_draw.append(fullscreen.find('#tiki_draw_editor'));
-			win.unbind('resize');
-			fullscreen.remove();
-			$('body').removeClass('full_screen_body');
-		}
-		
-		return false;
+		$('#tiki_draw').drawFullscreen();
 	});
 	
-	window.svgCanvas = null;
-	
-	window.handleSvgDataUpdate = function(data, error) {
-		if (error) {
-			alert('error ' + error);
-		} else {
-			window.handleSvgDataNew(data, error);
-		}			
-	}
-
-	window.handleSvgDataNew = function(data, error) {
-		if (error) {
-			alert('error ' + error);
-		} else {
-			$.modal('".tra("Saving...")."');
-			$.post('tiki-edit_draw.php', {
-				galleryId: $('#svg_gallery_id').val(),
-				fileId: $('#svg_file_id').val(),
-				name: $('#svg_file_name').val(),
-				data: data
-			}, function(id) {
-				//update title
-				$('.pagetitle,title').text($('#svg_file_name').val());
-				
-				if (id) {
-					$.modal('".tr("Saved file id:")." ' + id + '!');
-					$('#svg_file_id').val(id);
-				} else {
-					$.modal('".tr("Saved file id")." ' + $('#svg_file_id').val() + '!');
-				}
-				
-				if (window.wikiTracking) {
-					window.wikiTracking['params[id]'] = $('#svg_file_id').val();
-					window.wikiTracking['params[width]'] =  $('#svg_file_width').val();
-					window.wikiTracking['params[height]'] =  $('#svg_file_height').val();
-					
-					$.modal('".tr("Updating Wiki Page")."');
-					$.post('tiki-wikiplugin_edit.php', window.wikiTracking, function() {
-						$.modal();
-					});
-				} else {
-					$.modal();
-				}
-			});
-		}			
-	}
-	
-	window.saveSvg = function() {
-		window.svgCanvas.getSvgString()(window.handleSvgDataNew);
-		window.svgWindow.svgCanvas.undoMgr.resetUndoStack();
-	};
-	
-	$('#svgedit').load(function() {
-		var frame = window.svgFrame = document.getElementById('svgedit');
-		window.svgCanvas = new embedded_svg_edit(frame);
-		window.svgWindow = frame.contentWindow;
-		
-		// Hide main button, as we will be controlling new/load/save etc from the host document
-		var doc;
-		doc = frame.contentDocument;
-		if (!doc) {
-			doc = frame.contentWindow.document;
-		}
-		
-		var mainButton = $(doc).find('#main_button').hide();
-		
-		$('#tiki-draw_save')
-			.click(function() {
-				window.saveSvg();
-			});
-		
-		var thisDoc = document;
-		
-		$('#tiki-draw_back')
-			.click(function() {
-				thisDoc.location = '$backLocation';
-			});
-		
-		if ($('#svg_file_id').val()) {
-			window.svgCanvas.setSvgString($('#svg-data').html());
-		}
-		
-		window.svgWindow.onbeforeunload = function() {};
-		window.onbeforeunload = function() {
-			if ( window.svgWindow.svgCanvas.undoMgr.getUndoStackSize() > 1 ) {
-				return '".tra("There are unsaved changes, leave page?")."';
-			}
-		};
+	$('#svgedit').loadDraw({
+		fileId: $('#svg_file_id').val(),
+		galleryId: $('#svg_gallery_id').val(),
+		name: $('#svg_file_name').val(),
+		data: $('#svg-data').html()
 	});
 	
 	$('#tiki-draw_rename').click(function() {
-		var name = $('#svg_file_name').val();
-		var newName = prompt('".tra("Enter new name")."', name);
-		if (newName) {
-			if (newName != name) {
-				$('#svg_file_name').val(newName);
-				window.saveSvg();
-			}
-		}
-		return false;
+		$('#svg_file_name').val($('#svgedit').renameDraw());
+	});
+	
+	$('#tiki-draw_save').click(function() {
+		$('#svgedit').saveDraw();
+	});
+	
+	$('#tiki-draw_back').click(function() {
+		document.location = '$backLocation';
 	});
 ");
 // Display the template
