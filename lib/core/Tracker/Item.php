@@ -109,7 +109,33 @@ class Tracker_Item
 	{
 		$this->owner = $this->getItemOwner();
 		$this->ownerGroup = $this->getItemGroupOwner();
-		$this->perms = Perms::get('tracker', $this->definition->getConfiguration('trackerId'));
+
+		$this->perms = $this->getItemPermissions();
+
+		if (! $this->perms) {
+			$this->perms = $this->getTrackerPermissions();
+		}
+	}
+
+	private function getTrackerPermissions()
+	{
+		$trackerId = $this->definition->getConfiguration('trackerId');
+		return Perms::get('tracker', $trackerId);
+	}
+
+	private function getItemPermissions()
+	{
+		if (! $this->isNew()) {
+			$itemId = $this->info['itemId'];
+
+			$perms = Perms::get('trackeritem', $itemId);
+			$resolver = $perms->getResolver();
+			if (method_exists($resolver, 'from') && $resolver->from() != '') {
+				// Item permissions are valid if they are assigned directly to the object or category, otherwise
+				// tracker permissions are better than global ones.
+				return $perms;
+			}
+		}
 	}
 
 	private function getItemOwner()
