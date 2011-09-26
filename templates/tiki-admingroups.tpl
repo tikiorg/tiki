@@ -151,7 +151,7 @@
 
 			<tr>
 				<td>
-					<label for="indirectly_inherited_groups">{tr}Also inheriting permissions from the following groups (indirect inheritance through the groups selected above).{/tr}</label>
+					{tr}Also inheriting permissions from the following groups (indirect inheritance through the groups selected above).{/tr}
 				</td>
 				<td>
 					{if $indirectly_inherited_groups|@count > 0}
@@ -210,9 +210,9 @@
 			
 			{if $prefs.groupTracker eq 'y'}
 				<tr>
-					<td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td>
+					<td><label for="groupstracker">{tr}Group Information Tracker{/tr}</label></td>
 					<td>
-						<select name="groupstracker">
+						<select name="groupstracker" id="groupstracker">
 							<option value="0">{tr}choose a group tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
 								<option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
@@ -241,7 +241,7 @@
 				<tr>
 					<td><label for="userstracker">{tr}Users Information Tracker{/tr}</label></td>
 					<td>
-						<select name="userstracker">
+						<select name="userstracker" id="userstracker">
 							<option value="0">{tr}choose a users tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
 								<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
