@@ -25,7 +25,8 @@
 				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.{/tr}
 			{/if}
 		{/tab}
-
+		{tr}Errors{/tr}
+		{tr}Errors:{/tr}
 		{foreach from=$ins_fields key=ix item=cur_field}
 			{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 				<tr class="field{$cur_field.fieldId}">

@@ -58,7 +58,7 @@ class Language_WriteFile
 		
 		$this->translations = $this->getCurrentTranslations();
 		$entries = $this->mergeStringsWithTranslations($strings, $this->translations);
-
+		
 		$handle = fopen($tmpFilePath, 'w');
 		
 		if ($handle) {
@@ -128,27 +128,25 @@ TXT;
 		$entries = array();
 		
 		foreach ($strings as $string) {
-			if (isset($translations[$string->name])) {
-				$string->translation = $translations[$string->name];
+			if (isset($translations[$string['name']])) {
+				$string['translation'] = $translations[$string['name']];
 			} else {
 				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
 				// For example, if $string->name == 'Login:', we don't keep it if we also have a string 'Log In'
 				// (except if we already have an explicit translation for 'Log In:')
-				$stringLength = strlen($string->name);
-				$stringLastChar = $string->name[$stringLength - 1];
+				$stringLength = strlen($string['name']);
+				$stringLastChar = $string['name'][$stringLength - 1];
 				
 				if (in_array($stringLastChar, $punctuations) ) {
-					$trimmedString = substr($string->name, 0, $stringLength - 1);
-					// clone the object here to avoid changing $string->name for other languages 
-					$string = clone $string;
-					$string->name = $trimmedString;
+					$trimmedString = substr($string['name'], 0, $stringLength - 1);
+					$string['name'] = $trimmedString;
 					if (isset($translations[$trimmedString])) {
-						$string->translation = $translations[$trimmedString]; 
+						$string['translation'] = $translations[$trimmedString]; 
 					}
 				}
 			}
 			
-			$entries[$string->name] = $string;	
+			$entries[$string['name']] = $string;
 		}
 		
 		return $entries;
@@ -158,26 +156,23 @@ TXT;
 	 * Format a pair source and translation as
 	 * a string to be written to a language.php file
 	 * 
-	 * @param stdClass $entry an object with the English source string and the translation if any 
+	 * @param array $entry an array with the English source string and the translation if any 
 	 * @param bool $outputFiles whether file paths were string was found should be included or not in the output
 	 * @return string
 	 */
-	protected function formatString(stdClass $entry, $outputFiles = false)
+	protected function formatString(array $entry, $outputFiles = false)
 	{
 		// final formated string
 		$string = '';
 		
-		if ($outputFiles && (isset($entry->files) && !empty($entry->files))) {
-			$string .= '/* ' . join(', ', $entry->files) . " */\n";
+		if ($outputFiles && (isset($entry['files']) && !empty($entry['files']))) {
+			$string .= '/* ' . join(', ', $entry['files']) . " */\n";
 		}
 		
-		$source = Language::addPhpSlashes($entry->name);
+		$source = Language::addPhpSlashes($entry['name']);
 		
-		if (isset($entry->translation)) {
-			$trans = Language::addPhpSlashes($entry->translation);
-			// make sure translation is unset since each $entry is a object
-			// passed by reference for every call of $this->writeStringsToFile()
-			unset($entry->translation);
+		if (isset($entry['translation'])) {
+			$trans = Language::addPhpSlashes($entry['translation']);			
 			$string .= "\"$source\" => \"$trans\",\n";
 		} else {
 			$string .= "// \"$source\" => \"$source\",\n";

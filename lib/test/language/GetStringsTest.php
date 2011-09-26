@@ -109,7 +109,7 @@ class Language_GetStringsTest extends TikiTestCase
 			'Configuration setting <em>xcache.admin.enable_auth</em> prevents from accessing statistics. This will also prevent the cache from being cleared when clearing template cache.',
 			'Used', 'Available', 'Memory', 'Hit', 'Miss', 'Cache Hits', 'Few hits recorded. Statistics may not be representative.',
 			'Low hit ratio. %0 may be misconfigured and not used.',
-			'Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.', 'Created',
+			'Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.', 'Errors', 'Errors:', 'Created',
 		);
 		
 		$this->assertEquals($expectedResult, $strings);
@@ -155,19 +155,12 @@ class Language_GetStringsTest extends TikiTestCase
 	{
 		$files = array('file1', 'file2', 'file3');
 		
-		$string1 = new stdClass;
-		$string1->name = 'string1';
-		
-		$string2 = new stdClass;
-		$string2->name = 'string2';
-		
-		$string3 = new stdClass;
-		$string3->name = 'string3';
-		
-		$string4 = new stdClass;
-		$string4->name = 'string4';
-		
-		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
+		$strings = array(
+			'string1' => array('name' => 'string1'),
+			'string2' => array('name' => 'string2'),
+			'string3' => array('name' => 'string3'),
+			'string4' => array('name' => 'string4'),
+		);
 		
 		$this->collectFiles->expects($this->exactly(1))->method('setExtensions');
 		$this->collectFiles->expects($this->exactly(1))->method('run')->with($this->baseDir)->will($this->returnValue($files));
@@ -278,19 +271,12 @@ class Language_GetStringsTest extends TikiTestCase
 	{
 		$files = array('file1', 'file2', 'file3');
 		
-		$string1 = new stdClass;
-		$string1->name = 'string1';
-		
-		$string2 = new stdClass;
-		$string2->name = 'string2';
-		
-		$string3 = new stdClass;
-		$string3->name = 'string3';
-		
-		$string4 = new stdClass;
-		$string4->name = 'string4';
-		
-		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
+		$strings = array(
+			'string1' => array('name' => 'string1'),
+			'string2' => array('name' => 'string2'),
+			'string3' => array('name' => 'string3'),
+			'string4' => array('name' => 'string4'),
+		);
 		
 		$obj = $this->getMock('Language_GetStrings', array('collectStrings', 'setLanguages'), array($this->collectFiles, $this->writeFile));
 		
@@ -305,23 +291,12 @@ class Language_GetStringsTest extends TikiTestCase
 	{
 		$files = array('file1', 'file2', 'file3');
 		
-		$string1 = new stdClass;
-		$string1->name = 'string1';
-		$string1->files = array('file1');
-		
-		$string2 = new stdClass;
-		$string2->name = 'string2';
-		$string2->files = array('file1', 'file2');
-		
-		$string3 = new stdClass;
-		$string3->name = 'string3';
-		$string3->files = array('file2', 'file3');
-		
-		$string4 = new stdClass;
-		$string4->name = 'string4';
-		$string4->files = array('file3');
-		
-		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
+		$strings = array(
+			'string1' => array('name' => 'string1', 'files' => array('file1')),
+			'string2' => array('name' => 'string2', 'files' => array('file1', 'file2')),
+			'string3' => array('name' => 'string3', 'files' => array('file2', 'file3')),
+			'string4' => array('name' => 'string4', 'files' => array('file3')),
+		);
 		
 		$obj = $this->getMock('Language_GetStrings', array('collectStrings', 'setLanguages'), array($this->collectFiles, $this->writeFile, array('outputFiles' => true)));
 		

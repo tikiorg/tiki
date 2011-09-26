@@ -27,9 +27,9 @@ class Language_WriteFileTest extends TikiTestCase
 
 	public function testWriteStringsToFile_shouldRaiseExceptionForInvalidFile()
 	{
-		$string1 = new stdClass;
-		$string1->name = 'First string';
-		$strings = array($string1);
+		$strings = array(
+			'First string' => array('name' => 'First string'),
+		);
 		$this->setExpectedException('Language_Exception');
 		$this->obj->writeStringsToFile($strings, vfsStream::url('lang/invalidFile'));
 	}
@@ -41,9 +41,9 @@ class Language_WriteFileTest extends TikiTestCase
 	
 	public function testWriteStringsToFile_shouldRaiseExceptionIfFileIsNotWritable()
 	{
-		$string1 = new stdClass;
-		$string1->name = 'First string';
-		$strings = array($string1);
+		$strings = array(
+			'First string' => array('name' => 'First string'),
+		);
 		$this->langFile->chmod(0444);
 		$this->setExpectedException('Language_Exception');
 		$this->obj->writeStringsToFile($strings, vfsStream::url('lang/language.php'));
@@ -53,17 +53,12 @@ class Language_WriteFileTest extends TikiTestCase
 	{
 		$obj = $this->getMock('Language_WriteFile', array('fileHeader'));
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
-		
-		$string1 = new stdClass;
-		$string1->name = 'First string';
-		
-		$string2 = new stdClass;
-		$string2->name = 'Second string';
-		
-		$string3 = new stdClass;
-		$string3->name = 'etc';
-		
-		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3);
+
+		$strings = array(
+			'First string' => array('name' => 'First string'),
+			'Second string' => array('name' => 'Second string'),
+			'etc' => array('name' => 'etc'),
+		);
 		
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
@@ -75,27 +70,13 @@ class Language_WriteFileTest extends TikiTestCase
 
 	public function writeStringsToFile_provider()
 	{
-		$string1 = new stdClass;
-		$string1->name = 'First string';
-		$string1->files = array('file1', 'file3');
-		
-		$string2 = new stdClass;
-		$string2->name = 'Second string';
-		$string2->files = array('file2');
-		
-		$string3 = new stdClass;
-		$string3->name = 'Used string';
-		$string3->files = array('file3');
-		
-		$string4 = new stdClass;
-		$string4->name = 'Translation is the same as English string';
-		$string4->files = array('file5', 'file1');
-		
-		$string5 = new stdClass;
-		$string5->name = 'etc';
-		$string5->files = array('file4');
-		
-		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4, $string5->name => $string5);
+		$strings = array(
+			'First string' => array('name' => 'First string', 'files' => array('file1', 'file3')),
+			'Second string' => array('name' => 'Second string', 'files' => array('file2')),
+			'Used string' => array('name' => 'Used string', 'files' => array('file3')),
+			'Translation is the same as English string' => array('name' => 'Translation is the same as English string', 'files' => array('file5', 'file1')),
+			'etc' => array('name' => 'etc', 'files' => array('file4')),
+		);
 		
 		return array(array($strings));
 	}
@@ -153,7 +134,7 @@ class Language_WriteFileTest extends TikiTestCase
 		));
 		
 		$obj->writeStringsToFile($strings, $this->filePath);
-		$this->assertFalse(isset($strings['First string']->translation));
+		$this->assertFalse(isset($strings['First string']['translation']));
 	}
 	
 	/**
@@ -193,18 +174,9 @@ class Language_WriteFileTest extends TikiTestCase
 		));
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 		
-		$string1 = new stdClass;
-		$string1->name = 'Login:';
-		
-		$string2 = new stdClass;
-		$string2->name = 'Add user:';
-		
-		$string3 = new stdClass;
-		$string3->name = 'All users:';
-		
-		$strings[$string1->name] = $string1;
-		$strings[$string2->name] = $string2;
-		$strings[$string3->name] = $string3;
+		$strings['Login:'] = array('name' => 'Login:');
+		$strings['Add user:'] = array('name' => 'Add user:');
+		$strings['All users:'] = array('name' => 'All users:');
 		
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
@@ -227,17 +199,41 @@ class Language_WriteFileTest extends TikiTestCase
 		));
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 		
-		$string1 = new stdClass;
-		$string1->name = "Congratulations!\n\nYour server can send emails.\n\n";
-		
-		$string2 = new stdClass;
-		$string2->name = 'Handling actions of plugin "%s" failed';
-		
-		$strings[$string1->name] = $string1;
-		$strings[$string2->name] = $string2;
+		$strings["Congratulations!\n\nYour server can send emails.\n\n"] = array('name' => "Congratulations!\n\nYour server can send emails.\n\n");
+		$strings['Handling actions of plugin "%s" failed'] = array('name' => 'Handling actions of plugin "%s" failed');
 		
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_escape_special_characters.php'), file_get_contents($this->filePath));
+	}
+	
+	public function testWriteStringsToFile_shouldNotKeepTranslationsWithPunctuationOnSuccessiveCalls()
+	{
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations', 'fileHeader'));
+		$obj->expects($this->at(0))->method('getCurrentTranslations')->will($this->returnValue(
+			array(
+				'Errors' => 'Ошибки',
+			)
+		));
+		$obj->expects($this->any())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
+		
+		$strings = array(
+			'Errors' => array('name' => 'Errors'),
+			'Errors:' => array('name' => 'Errors:'),
+		);
+				
+		$obj->writeStringsToFile($strings, $this->filePath);
+		
+		$obj->expects($this->at(0))->method('getCurrentTranslations')->will($this->returnValue(
+			array(
+				'Errors:' => 'خطاها:',
+			)
+		));
+		
+		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_writestringstofile_first_call.php'), file_get_contents($this->filePath));
+		
+		$obj->writeStringsToFile($strings, $this->filePath);
+		
+		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_writestringstofile_second_call.php'), file_get_contents($this->filePath));
 	}
 }

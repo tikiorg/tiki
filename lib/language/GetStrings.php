@@ -262,18 +262,17 @@ class Language_GetStrings
 		foreach ($filesStrings as $file => $fileStrings) {
 			foreach ($fileStrings as $str) {
 				if (!isset($strings[$str])) {
-					$string = new stdClass;
-					$string->name = $str;
+					$string = array('name' => $str);
 					
 					if ($this->outputFiles) {
-						// $string->files is an array with all the files where the string was found
-						$string->files = array($file);
+						// $string['files'] is an array with all the files where the string was found
+						$string['files'] = array($file);
 					}
 					
 					$strings[$str] = $string;
 				} else {
 					if ($this->outputFiles) {
-						$strings[$str]->files[] = $file;
+						$strings[$str]['files'][] = $file;
 					}
 				}
 			}
@@ -284,9 +283,7 @@ class Language_GetStrings
 	
 	public function writeToFiles($strings)
 	{
-		$languages = $this->languages;
-		
-		foreach ($languages as $lang) {
+		foreach ($this->languages as $lang) {
 			$langPath = $this->baseDir . '/lang/' . $lang . '/' . $this->fileName;
 			$this->writeFile->writeStringsToFile($strings, $langPath, $this->outputFiles);
 		}
