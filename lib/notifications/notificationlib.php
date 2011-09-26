@@ -138,6 +138,12 @@ class NotificationLib extends TikiLib
 			'url' => '',
 			'object' => '*'
 		);
+		$watches['user_joins_group'] = array(
+			'label' => tra('User joins a group') ,
+			'type' => 'users',
+			'url' => '',
+			'object' => '*'
+		);
 
 		foreach($watches as $key => $watch) {
 			if (array_key_exists('available', $watch) && !$watch['available']) {

@@ -39,6 +39,18 @@ if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
 	}
 }
 $smarty->assign('trackers', $trackers);
+
+if ($prefs['feature_user_watches'] == 'y') {
+	if(!empty($user)) {
+		$tikilib = TikiLib::lib('tiki');
+		if( isset($_REQUEST['watch'] ) ) {
+			$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'],'group');
+		} else if( isset($_REQUEST['unwatch'] ) ) {
+			$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'],'group');
+		}
+	}
+}
+
 $ag_home = '';
 $ag_defcat = 0;
 $ag_theme = '';
@@ -223,6 +235,11 @@ if (!empty($_REQUEST["group"])) {
 	}
 	$smarty->assign('membersCount', $userlib->count_users($_REQUEST['group']));
 	$smarty->assign('membersOffset', $_REQUEST['membersOffset']);
+	if (!empty($user)) {
+		 $re['isWatching'] = TikiLib::lib('tiki')->user_watches($user, 'user_joins_group', $groupname, 'group') > 0;
+	} else {
+		 $re['isWatching'] = false;
+	}
 	if ($cookietab == '1') $cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();

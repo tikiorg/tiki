@@ -10,6 +10,19 @@
 		{/if}
 		{foreach from=$memberlist_groups key=groupName item=groupData}
 			<div class="group" id="{$execution_key|escape}_{$groupData.info.id}">
+				{if !empty($user) and $prefs.feature_user_watches eq 'y'}
+					<div class="floatright">
+						{if not $groupData.isWatching}
+							{self_link watch=$groupName}
+								{icon _id='eye' alt="{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}
+							{/self_link}
+						{else}
+							{self_link unwatch=$groupName}
+								{icon _id='no_eye' alt="{tr}Group IS being monitored. Click icon to STOP monitoring.{/tr}"}
+							{/self_link}
+						{/if}
+					</div>
+				{/if}
 				<h2>{$groupName|escape}</h2>
 				{if isset($groupData.info) and !empty($groupData.info.groupDesc)}
 					<p class=="description">{$groupData.info.groupDesc}</p>

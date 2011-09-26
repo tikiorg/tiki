@@ -983,6 +983,9 @@ class TikiLib extends TikiDb_Bridge
 				case 'auth_token_called':
 					$res['perm'] = true;
 					break;
+				case 'user_joins_group':
+					$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'group','tiki_p_group_view_members');
+					break;
 				default:
 					// for security we deny all others.
 					$res['perm']=FALSE;

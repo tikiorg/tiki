@@ -93,7 +93,7 @@ function wikiplugin_memberlist_info() {
 }
 
 function wikiplugin_memberlist( $data, $params ) {
-	global $prefs, $userlib;
+	global $prefs, $userlib, $user;
 	static $execution = 0;
 	$exec_key = 'memberlist-execution-' . ++ $execution;
 
@@ -109,6 +109,17 @@ function wikiplugin_memberlist( $data, $params ) {
 		$defaults["$key"] = $param['default'];
 	}
 	$params = array_merge($defaults, $params);
+
+	if ($prefs['feature_user_watches'] == 'y') {
+		if(!empty($user)) {
+			$tikilib = TikiLib::lib('tiki');
+			if( isset($_REQUEST['watch'] ) ) {
+				$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'],'group');
+			} else if( isset($_REQUEST['unwatch'] ) ) {
+				$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'],'group');
+			}
+		}
+	}
 
 	if (count($groups) === 1 && $groups[0] === '*') {	// all available
 		$groups = $userlib->list_all_groups();
@@ -255,6 +266,12 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $so
 					foreach( $validGroups[$groupName]['members'] as $username ) {
 						$validGroups[$groupName]['transitions'][$username] = $transitionlib->getAvailableTransitionsFromState( $groupName, $username );
 					}
+				}
+
+				if (!empty($user)) {
+					 $validGroups[$groupName]['isWatching'] = TikiLib::lib('tiki')->user_watches($user, 'user_joins_group', $groupName, 'group') > 0;
+				} else {
+					 $validGroups[$groupName]['isWatching'] = false;
 				}
 			}
 		}

@@ -5292,6 +5292,18 @@ class UsersLib extends TikiLib
 			}
 		}
 		$this->update_anniversary_expiry();
+
+		if ($group_ret) {
+			$watches = $tikilib->get_event_watches('user_joins_group', $group);
+			if (count($watches)) {
+				require_once ("lib/notifications/notificationemaillib.php");
+				$smarty = TikiLib::lib('smarty');
+				$smarty->assign('mail_user', $user);
+				$smarty->assign('mail_group', $group);
+				sendEmailNotification($watches, null, "user_joins_group_notification_subject.tpl", null, "user_joins_group_notification.tpl");
+			}
+		}
+		
 		return $group_ret;
 	}
 
