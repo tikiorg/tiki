@@ -552,8 +552,8 @@ class CategLib extends ObjectLib
 		"objects" is the number of objects directly in the category.
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category. Indices are category OIDs.
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki".
-		"relativePathString" exists when and only when filtering with a filter other than self.
-		It is a part of "categpath" which starts from after the filtered category rather than from a root category.
+		"relativePathString" defaults to categpath.
+		When and only when filtering with a filter of type "children" or "descendants", it becomes the part of "categpath" which starts from after the filtered category rather than from a root category.
 		For example, if filtering descendants of category "Software", the "relativePathString" of a grandchild may be "Free Software::Tiki".
 		
 	By default, we start from all categories. This happens if the filter is NULL or if its type is set to "all".
@@ -611,6 +611,7 @@ class CategLib extends ObjectLib
 
 				$category["tepath"] = $path;
 				$category["categpath"] = implode("::", $path);
+				$category["relativePathString"] = $category["categpath"];
 			}
 			
 			// Sort in preorder. Siblings are sorted by name.
@@ -654,10 +655,12 @@ class CategLib extends ObjectLib
 			if ($type != 'self') {
 				$ret = array_intersect_key($ret, array_flip($kept));
 
-				// Set relativePathString by stripping the length of the common ancestor plus 2 characters for the pathname separator ("::").
-				$strippedLength = strlen($filterBaseCategory['categpath']) + 2;
-				foreach ($ret as &$category) {
-					$category['relativePathString'] = substr($category['categpath'], $strippedLength);
+				if ($type != 'roots') {
+					// Set relativePathString by stripping the length of the common ancestor plus 2 characters for the pathname separator ("::").
+					$strippedLength = strlen($filterBaseCategory['categpath']) + 2;
+					foreach ($ret as &$category) {
+						$category['relativePathString'] = substr($category['categpath'], $strippedLength);
+					}
 				}
 			}
 		}
