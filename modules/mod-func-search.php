@@ -165,6 +165,7 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 		'templateId' => '',
 		'categId' => '',
 		'compact' => 'n',
+		'title' => tra('Search'),
 	);
 	
 	$smod_params = array_merge($defaults, $smod_params);
