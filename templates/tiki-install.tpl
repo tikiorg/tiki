@@ -62,7 +62,7 @@
 
 {elseif $install_step eq '1'}
 <h1>{tr}Read the License{/tr}</h1>
-<p>{tr}Tiki is software distributed under the LGPL license.{/tr} {tr} <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank">Here is a human-readable summary of the license below, including many translations.</a>{/tr}</p>
+<p>{tr}Tiki is software distributed under the LGPL license.{/tr} </p>
 <div align="center" style="margin-top:1em;">
 <iframe src="license.txt" width="700" height="300" style="width:700px;height:300px"> </iframe>
 	<form action="tiki-install.php" method="post">
