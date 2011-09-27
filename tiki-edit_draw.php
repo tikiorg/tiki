@@ -115,43 +115,65 @@ if (
 	");
 }
 
+if (!isset($_REQUEST['map'])) {
+	$headerlib->add_jq_onready("
+		$('#drawFullscreen').click(function() {
+			$('#tiki_draw').drawFullscreen();
+		});
+		
+		$('#tiki_draw')
+			.loadDraw({
+				fileId: $('#fileId').val(),
+				galleryId: $('#galleryId').val(),
+				name: $('#fileName').val(),
+				data: $('#fileData').html()
+			})
+			.bind('savedDraw', function(e, o) {
+				//this accounts for if the user sets the feature if the file id doesn't update after saving, by default it does, we need a reload for things to be safe.
+				if ($('#fileId').val() != o.fileId) {
+					var newLocation = 'tiki-edit_draw.php?fileId=' + o.fileId + '&galleryId=' + o.galleryId;
+					if ($.wikiTrackingDraw) {
+						newLocation += '&page=' + $.wikiTrackingDraw.page + 
+							'&index=' + $.wikiTrackingDraw.index +
+							'&label=' + $.wikiTrackingDraw.label +
+							'&width=' + $.wikiTrackingDraw.width +
+							'&height=' + $.wikiTrackingDraw.height;
+					}
+					
+					document.location = newLocation;
+				}
+			});
+	");
+} else {
+	require_once("lib/wiki-plugins/wikiplugin_map.php");
+	
+	$smarty->assign("map", wikiplugin_map());
+	
+	$headerlib->add_jq_onready("
+		$('#map').drawOver({
+			fileId: $('#fileId').val(),
+			galleryId: $('#galleryId').val(),
+			name: $('#fileName').val(),
+			data: $('#fileData').html()
+		});
+	");
+}
+
 $headerlib->add_jq_onready("
-	$('#tiki-draw_fullscreen').click(function() {
-		$('#tiki_draw').drawFullscreen();
+	$('#drawRename').click(function() {
+		$('#fileName').val($('#tiki_draw').renameDraw());
 	});
 	
-	$('#svgedit').loadDraw({
-		fileId: $('#svg_file_id').val(),
-		galleryId: $('#svg_gallery_id').val(),
-		name: $('#svg_file_name').val(),
-		data: $('#svg-data').html()
+	$('#drawSave').click(function() {
+		$('#tiki_draw').saveDraw();
 	});
 	
-	$('#tiki-draw_rename').click(function() {
-		$('#svg_file_name').val($('#svgedit').renameDraw());
-	});
-	
-	$('#tiki-draw_save').click(function() {
-		$('#svgedit').saveDraw();
-	});
-	
-	$('#tiki-draw_back').click(function() {
+	$('#drawBack').click(function() {
 		document.location = '$backLocation';
 	});
 ");
 
-if (isset($_REQUEST['map'])) {
-	require_once("lib/wiki-plugins/wikiplugin_map.php");
-	
-	echo wikiplugin_map();
-	
-	$headerlib->add_jq_onready("
-		$('#openlayers1').drawOver({
-			draw: $('#svgedit'),
-			type: 'map'
-		});
-	");
-}
+
 // Display the template
 $smarty->assign('mid', 'tiki-edit_draw.tpl');
 // use tiki_full to include include CSS and JavaScript
