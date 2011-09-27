@@ -41,6 +41,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Also known as perspective binder'),
 			'type' => 'flag',
 			'help' => 'Areas',
+			'default' => 'n',
 			'dependencies' => array(
 				'categories_used_in_tpl',
 			),
