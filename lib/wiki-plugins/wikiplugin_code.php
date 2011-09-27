@@ -24,7 +24,7 @@ function wikiplugin_code_info() {
 			'wrap' => array(
 				'required' => false,
 				'name' => tra('Word Wrap'),
-				'description' => tra('Enable word wrapping on the code to avoid breaking the layout. May not be used with line numbers if Geshi version 1.0.8.9+'),
+				'description' => tra('Enable word wrapping on the code to avoid breaking the layout.'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -35,7 +35,7 @@ function wikiplugin_code_info() {
 				'required' => false,
 				'name' => tra('Colors'),
 				'description' => tra('Syntax highlighting to use. GeSHi - Generic Syntax Highlighter must be installed for languages other than php. Without GeSHi, the php tag must be included at the 
-									beginning of the displayed code for the highlighting to work. May not be used with line numbers if Geshi version < 1.0.8.9. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, rsplus...'),
+									beginning of the displayed code for the highlighting to work. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, rsplus...'),
 				'advanced' => true,
 			),
 			'ln' => array(
@@ -112,44 +112,7 @@ function wikiplugin_code($data, $params) {
 	$id = 'codebox'.$code_count;
 	$boxid = " id=\"$id\" ";
 
-	// Detect if GeSHI (Generic Syntax Highlighter) is available
-	$geshi_paths = array(
-		'lib/geshi/class.geshi.php', // Tiki manual (or mod) install of GeSHI v1.2 in lib/geshi/
-		'lib/geshi/geshi.php', // Tiki manual (or mod) install of GeSHI v1.0 in lib/geshi/
-		'/usr/share/php-geshi/geshi.php' // php-geshi package v1.0
-	);
-	foreach ( $geshi_paths as $gp ) {
-		if ( file_exists($gp) ) {
-			require_once($gp);
-			break;
-		}
-	}
-
-	// If 'color' is specified and GeSHI installed, use syntax highlighting with GeSHi
-	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') && $prefs['feature_syntax_highlighter'] != 'y') {
-
-		$geshi = new GeSHi($code, $colors);
-
-		if ( version_compare(GESHI_VERSION, 1.1) == -1) { // Old API
-			if ( isset($ln) && $ln > 0 ) {
-				$geshi->set_code_style('background: #f5f5f5;'); //improves line spacing and fancy numbers
-				$geshi->set_header_type(GESHI_HEADER_PRE_TABLE); //allows user to select code from screen without line numbers for copying and pasting
-				$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS); //highlights every 5th line number
-				$geshi->start_line_numbers_at($ln);
-			}
-			$geshi->set_link_target('_blank');
-			$out = $geshi->parse_code();
-		} else { // New API
-			$out = $geshi->parseCode();
-		}
-
-		// Remove first <pre> tag
-		if ( $out != '' ) {
-			$out = preg_replace('/^<pre[^>]*>(.*)<\/pre>$/mis', '\\1', $out);
-			$out = trim($out);
-		}
-
-	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
+	if ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
 		$out = highlight_string($code, true);
 
@@ -165,7 +128,6 @@ function wikiplugin_code($data, $params) {
 		$out = trim($out);
 
 	} else {
-
 		$out = trim($code);
 		if ( isset($ln) && $ln == 1) {
 			$out = '';
@@ -208,3 +170,4 @@ function wikiplugin_code($data, $params) {
 	$code_count++;
 	return $out;
 }
+
