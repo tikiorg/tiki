@@ -51,8 +51,6 @@ function GetPerspectiveId($categoryId)
 {
 global $tikilib;
 	try {
-//	$DAL = new PDO('mysql:host=localhost;dbname=tiki7', 'tiki7', 'QLfQBJpWHWj6Rqvt'); //TODO Fix centralized place to store db credentials
-//	$DAL->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$selectSql = "SELECT 
 				`perspectiveId`,
        				`pref`,
