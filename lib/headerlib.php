@@ -683,7 +683,7 @@ class HeaderLib
 		$enalbed = $tikilib->get_preference('geo_tilesets', array('openstreetmap'));
 
 		$google = array_intersect(array('google_street', 'google_physical', 'google_satellite', 'google_hybrid'), $enabled);
-		if (count($google) > 0) {
+		if (count($google) > 0 || $prefs['geo_google_streetview'] == 'y') {
 			$this->add_jsfile('http://maps.google.com/maps/api/js?v=3.3&sensor=false', 'external');
 		}
 

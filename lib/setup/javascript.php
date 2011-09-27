@@ -137,6 +137,7 @@ jqueryTiki.syntaxHighlighter = '.($prefs['feature_syntax_highlighter'] == 'y' ? 
 jqueryTiki.selectmenu = '.($prefs['jquery_ui_selectmenu'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.selectmenuAll = '.($prefs['jquery_ui_selectmenu_all'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mapTileSets = ' . json_encode($tikilib->get_preference('geo_tilesets', array('openstreetmap'), true)) . ';
+jqueryTiki.googleStreetView = '.($prefs['geo_google_streetview'] == 'y' ? 'true' : 'false') . ';
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {

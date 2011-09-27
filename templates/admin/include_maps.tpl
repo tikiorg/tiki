@@ -6,6 +6,7 @@
 		<legend>{tr}Settings{/tr}</legend>
 
 		{preference name=geo_tilesets}
+		{preference name=geo_google_streetview}
 
 		{preference name=geo_locate_blogpost}
 		{preference name=geo_locate_wiki}

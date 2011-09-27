@@ -49,6 +49,14 @@ function prefs_geo_list()
 			'filter' => 'word',
 			'separator' => ',',
 			'default' => array('openstreetmap'),
+			'tags' => array('advanced', 'experimental'),
+		),
+		'geo_google_streetview' => array(
+			'name' => tr('Google Street View'),
+			'description' => array('Open up Google Street View in a window to see the visible coordinates.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('basic', 'experimental'),
 		),
 	);
 }
