@@ -395,6 +395,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		// Only attempt if document is declared as HTML
 		if (0 === strpos($response->getHeader('Content-Type'), 'text/html')) {
+			$use_int_errors = libxml_use_internal_errors(true); // suppress errors and warnings due to bad HTML
 			$dom = new DOMDocument;
 			if ($response->getBody() && $dom->loadHTML($response->getBody())) {
 				$frames = $dom->getElementsByTagName('frame');
@@ -405,11 +406,15 @@ class TikiLib extends TikiDb_Bridge
 						// Request with the first frame where scrolling is not disabled (likely to be a menu or some other web 2.0 helper)
 						if ($f->getAttribute('scrolling') != 'no') {
 							$client->setUri($this->http_get_uri($client->getUri(), $this->urlencode_accent($f->getAttribute('src'))));
+							libxml_clear_errors();
+							libxml_use_internal_errors($use_int_errors);
 							return $client->request();
 						}
 					}
 				}
 			}
+			libxml_clear_errors();
+			libxml_use_internal_errors($use_int_errors);
 		}
 	}
 
