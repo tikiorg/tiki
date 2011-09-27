@@ -18,7 +18,7 @@ class LogsQueryLib {
 	var $start = "";
 	var $end = "";
 	var $client = "";
-	var $count = false;
+	var $groupType = null;
 	var $limit = null;
 	var $desc = true;
 	
@@ -54,12 +54,13 @@ class LogsQueryLib {
 	}
 	
 	function count() {
-		$this->count = true;
+		$this->groupType = "count";
 		return $this->fetchAll();
 	}
 	
-	function countByDay() {
-	
+	function countByDate() {
+		$this->groupType = "countByDate";
+		return $this->fetchAll();
 	}
 	
 	function limit($limit) {
@@ -82,13 +83,12 @@ class LogsQueryLib {
 		
 		if (empty($this->type)) return array();
 		
+		
 		$query = "
 			SELECT
-				".(
-					$this->count == true ? 
-						"COUNT(actionId) as count" :
-						"*"
-				)."
+				".($this->groupType == "count" ? " COUNT(actionId) as count " : "")."
+				".($this->groupType == "countByDate" ? " COUNT(actionId) AS count, DATE_FORMAT(FROM_UNIXTIME(lastModif), '%m/%d/%Y') as date " : "")."
+				".(empty($this->groupType) ? " * " : "")."
 			FROM
 				tiki_actionlog
 			WHERE
@@ -109,6 +109,8 @@ class LogsQueryLib {
 					!empty($this->client) ? " AND client = ? " : ""
 				)."
 			
+			".($this->groupType == "countByDate" ? " GROUP BY DATE_FORMAT(FROM_UNIXTIME(lastModif), '%Y%m%d') " : "")."
+			
 			ORDER BY lastModif ". ($this->desc == true ? "DESC" : "ASC") ."
 			
 			".(!empty($this->limit) ? 
@@ -125,7 +127,7 @@ class LogsQueryLib {
 		if (!empty($this->end)) $params[] = $this->end;
 		if (!empty($this->client)) $params[] = $this->client;
 		
-		if ($this->count == true) {
+		if ($this->groupType == "count") {
 			return $tikilib->getOne($query, $params);
 		} else {
 			return $tikilib->fetchAll($query, $params);
