@@ -9,7 +9,7 @@
 	{/if}
 	{foreach key=ku item=cat from=$field.list}
 		{assign var=fcat value=$cat.categId}
-		<option value="{$cat.categId}"{if $field.cat.$fcat eq 'y'} selected="selected"{/if}>{$cat.relativePathString|escape}</option>
+		<option value="{$cat.categId|escape}" {if in_array($cat.categId, $field.selected_categories)}selected="selected"{/if}>{$cat.relativePathString|escape}</option>
 	{/foreach}
 	</select>
 {else}

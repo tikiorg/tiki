@@ -80,10 +80,10 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 		if (isset($requestData[$key]) && is_array($requestData[$key])) {
 			$selected = $requestData[$key];
-		} elseif (!empty($requestData)) {
-			$selected = array();		
-		} else {
+		} elseif ($this->getItemId()) {
 			$selected = $this->getCategories();
+		} else {
+			$selected = TikiLib::lib('categ')->get_default_categories();
 		}
 
 		$categories = $this->getApplicableCategories();
@@ -92,19 +92,8 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$data = array(
 			'value' => implode(',', $selected),
 			'selected_categories' => $selected,
-			$parentId => $categories,	// TODO kil?
 			'list' => $categories,
-			'cat' => array(),
-			'categs' => array(),
 		);
-
-		foreach($data[$parentId] as $category) {
-			$id = $category['categId'];
-			if (in_array($id, $selected)) {
-				$data['cat'][$id] = 'y';
-				$data['categs'][] = $category;
-			}
-		}
 
 		return $data;
 	}
@@ -186,9 +175,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getApplicableCategories()
 	{
-		$parentId = $this->getOption(0);
+		$parentId = (int) $this->getOption(0);
 		$descends = $this->getOption(3) == 1;
-		if (ctype_digit($parentId) && $parentId > 0) {
+		if ($parentId > 0) {
 			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
 		} else {
 			return array();
