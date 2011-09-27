@@ -8,11 +8,9 @@
 require_once('tiki-setup.php');
 $trkqry = TikiLib::lib("trk");
 
-if (!$objectperms->admin_trackers) {
+if ($tiki_p_admin_trackers != 'y') {
 	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
 }
-
-$access->check_feature('feature_tracker_reports');
 
 $headerlib->add_jq_onready('
 	//manipulation objects

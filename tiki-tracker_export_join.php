@@ -7,11 +7,13 @@ if (isset($_REQUEST['time']) == true) {
 }
 
 require_once('tiki-setup.php');
+
+if ($tiki_p_admin_trackers != 'y') {
+	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
+}
+
 $trklib = TikiLib::lib("trk");
 $trkqrylib = TikiLib::lib("trkqry");
-
-$access->check_permission('tiki_p_export_tracker');
-
 
 //TODO: This needs rewritten to match tiki
 function dateFormat($fieldIds, $tracker) {
