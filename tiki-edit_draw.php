@@ -97,10 +97,6 @@ $smarty->assign( "width", $width );
 $smarty->assign( "height", $width );
 $smarty->assign( "name", $name);
 
-$headerlib->add_jsfile("lib/svg-edit/embedapi.js");
-$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
-$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
-
 if (
 	isset($_REQUEST['index']) &&
 	isset($_REQUEST['page']) && 

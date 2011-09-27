@@ -375,6 +375,12 @@ if ($prefs['feature_trackers'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-trackers.js');
 }
 
+if ($prefs['feature_draw'] == 'y') {
+	$headerlib->add_jsfile("lib/svg-edit/embedapi.js");
+	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
+	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
+}
+
 if ($prefs['feature_sefurl'] != 'y') {
 	$headerlib->add_js('$.service = function (controller, action, query) {
 		if (! query) {
