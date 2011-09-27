@@ -19,7 +19,7 @@ function module_search_info() {
 		'params' => array(
 			'legacy_mode' => array(
 				'name' => tra('Legacy Mode'),
-				'description' => tra('Setting to emulate previous behaviour.') . ' ' . tra('Default:') . ' ""' . tra(' ("search"=search_box, "page"=search_wiki_page, "quick"=quick_edit)')
+				'description' => tra('Setting to emulate previous behaviour.') . ' ' . tra('Default:') . ' ""' . ' ("search"=search_box, "page"=search_wiki_page, "quick"=quick_edit)'
 			),
 			'tiki_search' => array(
 				'name' => tra('Tiki'),
