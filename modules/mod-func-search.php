@@ -87,8 +87,8 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Edit')
 			),
 			'input_size' => array(
-				'name' => tra('Input size'),
-				'description' => tra('Size attribute (horizontal, in characters) of the text input field.') . ' ' . tra('Default:') . ' 14',
+				'name' => tra('Input field width'),
+				'description' => tra('Width of the text input field (in characters).') . ' ' . tra('Example value:') . ' 15.' .' ' . tra('Default:') . tra(' 0 (leave automatic width)'),
 				'filter' => 'int'
 			),
 			'select_size' => array(
