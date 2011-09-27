@@ -26,7 +26,7 @@ function module_search_info() {
 				'description' => tra('If set to "y" the search performed is a "Tiki search".') . ' ' . tra('Default:') . ' "n"' . tra(' (full text search)')
 			),
 			'show_object_filter' => array(
-				'name' => tra('Show Search Filter'),
+				'name' => tra('Show Object Type Filter'),
 				'description' => tra('If set to "y" shows a dropdown of sections to search.') . ' ' . tra('Default:') . ' "n"' . tra(' (no object filter)')
 			),
 			'use_autocomplete' => array(
