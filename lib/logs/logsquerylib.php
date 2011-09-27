@@ -28,9 +28,89 @@ class LogsQueryLib {
 		return $me;
 	}
 	
-	function id($id) {
-		$this->id =$id;
+	static function wikiPage($id = "") {
+		return LogsQueryLib::type("wiki page")
+			->id($id);
+	}
+	
+	static function forum($id = "") {
+		return LogsQueryLib::type("forum")
+			->id($id);
+	}
+	
+	static function fileGallery($id = "") {
+		return LogsQueryLib::type("file gallery")
+			->id($id);
+	}
+	
+	static function imageGallery($id = "") {
+		return LogsQueryLib::type("image gallery")
+			->id($id);
+	}
+	
+	static function category($id = "") {
+		return LogsQueryLib::type("category")
+			->id($id);
+	}
+	
+	static function system($id = "") {
+		return LogsQueryLib::type("system")
+			->id($id);
+	}
+	
+	static function message($id = "") {
+		return LogsQueryLib::type("message")
+			->id($id);
+	}
+	
+	static function comment($id = "") {
+		return LogsQueryLib::type("comment")
+			->id($id);
+	}
+	
+	static function sheet($id = "") {
+		return LogsQueryLib::type("sheet")
+			->id($id);
+	}
+	
+	static function blog($id = "") {
+		return LogsQueryLib::type("blog")
+			->id($id);
+	}
+	
+	static function file($id = "") {
+		return LogsQueryLib::type("file")
+			->id($id);
+	}
+	
+	static function article($id = "") {
+		return LogsQueryLib::type("article")
+			->id($id);
+	}
+	
+	static function trackeritem($id = "") {
+		return LogsQueryLib::type("trackeritem")
+			->id($id);
+	}
+	
+	static function wikiPageAttachment($id = "") {
+		return LogsQueryLib::type("wiki page attachment")
+			->id($id);
+	}
+	
+	static function url($id = "") {
+		return LogsQueryLib::type("url")
+			->id($id);
+	}
+	
+	
+	function id($id = "") {
+		$this->id = $id;
 		return $this;
+	}
+	
+	function viewed() {
+		return $this->action("viewed");
 	}
 	
 	function action($action) {
