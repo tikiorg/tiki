@@ -236,6 +236,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'bigbluebutton':
 			global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
 			return self::$libraries[$name] = $bigbluebuttonlib;
+		case 'edit':
+			global $editlib; require_once 'lib/wiki/editlib.php';
+			return self::$libraries[$name] = $editlib;
 		}
 	}
 
