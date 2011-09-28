@@ -1,5 +1,30 @@
 {* $Id$ *}
 
+{if !empty($feedbacksWikiUp) || !empty($moveWikiUp)}
+	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
+	{if !empty($feedbacksWikiUp)}
+		{tr}Operations executed successfully{/tr}
+		<ul>
+		{foreach from=$feedbacksWikiUp item=f}
+			<li>{$f|escape}</li>
+		{/foreach}
+		</ul>
+	{else}
+		{tr}No pages found{/tr}
+	{/if}
+	{/remarksbox}
+{elseif !empty($moveWikiUp)}
+{/if}
+{if !empty($errorsWikiUp)}
+	{remarksbox type="errors" title="{tr}Errors{/tr}"}
+		<ul>
+		{foreach from=$errorsWikiUp item=f}
+			<li>{$f|escape}</li>
+		{/foreach}
+		</ul>
+	{/remarksbox}
+{/if}
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="rbox-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}
 {/remarksbox}
@@ -166,6 +191,8 @@
 			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=picture&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 			{preference name=feature_filegals_manager}
 			{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
+			{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
+			<br /><em>{tr}If you use these buttons please make sure to have a backup of the base and the directory wiki_up{/tr}</em>
 		</div>
 
 		{preference name=feature_wiki_export}

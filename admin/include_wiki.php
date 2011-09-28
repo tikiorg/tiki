@@ -19,6 +19,20 @@ if (isset($_REQUEST["dump"])) {
 	error_reporting(E_ERROR | E_WARNING);
 	$adminlib->dump();
 }
+if (!empty($_REQUEST['moveWikiUp'])) {
+	check_ticket('admin-inc-wiki');
+	$filegallib = TikiLib::lib('filegal');
+	$errorsWikiUp = $feedbacksWikiUp = array();
+	$info = $filegallib->get_file_gallery_info($prefs['home_file_gallery']);
+	if (empty($info)) {
+		$errorsWikiUp[] = tra('You must set a home file gallery');
+	} else {
+		$filegallib->moveAllWikiUpToFgal($prefs['home_file_gallery'], $errorsWikiUp, $feedbacksWikiUp);
+		$smarty->assign_by_ref('feedbacksWikiUp', $feedbacksWikiUp);
+		$smarty->assign_by_ref('moveWikiUp', $_REQUEST['moveWikiUp']);
+	}
+	$smarty->assign_by_ref('errorsWikiUp', $errorsWikiUp);
+}
 // Included for the forum dropdown
 include_once ("lib/comments/commentslib.php");
 if (isset($_REQUEST["createtag"])) {

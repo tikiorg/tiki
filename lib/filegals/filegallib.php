@@ -3477,5 +3477,68 @@ class FileGalLib extends TikiLib
 
 		return true;
 	}
+	function moveAllWikiUpToFgal($fgalId, &$errors, &$feedbacks) {
+		$tikilib = TikiLib::lib('tiki');
+		$offset = 0;
+		$maxRecords = 100;
+		while(true) {
+			$pages = $tikilib->list_pages($offset, $maxRecords);
+			if (empty($pages['data']))
+				break;
+			$offset += $maxRecords;
+			foreach ($pages['data'] as $page) {
+				$this->moveWikiUpToFgal($page, $fgalId, $errors, $feedbacks);
+			}
+		}
+	}
+	function moveWikiUpToFgal($page_info, $fgalId, &$errors, &$feedbacks) {
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
+		include_once('lib/mime/mimelib.php');
+		$argumentParser = new WikiParser_PluginArgumentParser;
+		$files = array();
+		if (strpos($page_info['data'], 'img/wiki_up') === false) {
+			return;
+		}
+		$matches = WikiParser_PluginMatcher::match( $page_info['data'] );
+		foreach ($matches as $match) {
+			$modif = false;
+			$plugin_name = $match->getName();
+			if ($plugin_name == 'img') {
+				$arguments = $argumentParser->parse($match->getArguments());
+				$newArgs = array();
+				foreach ($arguments as $key=>$val) {
+					if ($key == 'src') {
+						if (false === $data = @file_get_contents($val)) {
+							$errors[] = tra('Cannot open this file:').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
+							continue;
+						}
+						$name = preg_replace('|.*/([^/]*)|', '$1', $val);
+						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), tiki_get_mime($$name, 'application/octet-stream', $val), $user, '', 'wiki_up conversion');
+						if (empty($fileId)) {
+							$errors[] = tra('Cannot upload this file').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
+							continue;
+						} else {
+							$files[] = $val;
+							$modif = true;
+							$newArgs[] = 'fileId="'.$fileId.'"';
+						}
+					} else
+						$newArgs[] = "$key=\"$val\"";
+				}
+				if ($modif) {
+					$match->replaceWith('{img '.implode(' ', $newArgs).'}');
+				}
+			}
+		}
+		if (!empty($files)) {
+			$tikilib->update_page($page_info['pageName'], $matches->getText(), 'wiki_up conversion', $user, $tikilib->get_ip_address());
+			foreach ($files as $file) {
+				unlink($file);
+			}
+			$feedbacks[] = $page_info['pageName'];
+		}
+	}
+	
 }
 $filegallib = new FileGalLib;
