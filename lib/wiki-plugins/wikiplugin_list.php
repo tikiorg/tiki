@@ -101,9 +101,11 @@ function wikiplugin_list($data, $params)
 					$arguments['template'] = dirname(__FILE__) . '/../../templates/table.tpl';
 				}
 				$builder = new Search_Formatter_ArrayBuilder;
+				$templateData = $builder->getData($output->getBody());
 
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
-				$plugin->setData($builder->getData($output->getBody()));
+				$plugin->setData($templateData);
+				$plugin->setFields(wp_list_findfields($templateData));
 			} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {	
 				$wikitpl = "tplwiki:" . $arguments['wiki'];
 				$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
@@ -267,5 +269,20 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 		}
 		return $this->parent->renderEntries($entries) . $pagination;
 	}
+}
+
+function wp_list_findfields($data)
+{
+	$data = TikiLib::array_flat($data);
+
+	// Heuristic based: only lowecase letters, digits and underscore
+	$fields = array();
+	foreach ($data as $candidate) {
+		if (preg_match("/^[a-z0-9_]+$/", $candidate)) {
+			$fields[] = $candidate;
+		}
+	}
+
+	return $fields;
 }
 

@@ -5444,6 +5444,19 @@ JS;
 		}
 		return $pageURL;
 	}	
+
+	public static function array_flat(array $data)
+	{
+		$out = array();
+		foreach ($data as $entry) {
+			if (is_array($entry)) {
+				$out = array_merge($out, self::array_flat($entry));
+			} else {
+				$out[] = $entry;
+			}
+		}
+		return $out;
+	}
 }
 // end of class ------------------------------------------------------
 
