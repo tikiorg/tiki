@@ -3167,7 +3167,7 @@ $lang=Array(
 "Copy Calculation" => "Copier la formule",
 "Format Cell" => "Formater une cellule",
 "Items list" => "Liste de fiches",
-"Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19. You can use <a href=\"tiki-gmap_locator.php?for=item&amp;itemId={\$item.itemId}&amp;trackerId={\$item.trackerId}&amp;fieldId={\$field_value.fieldId}\">{tr}Google Map Locator" => "Format: x,y,zoom où x est la longitude, et y la latitude. Zoom est compris entre 0(vue de la terre) à 19. Vous pouvez utiliser <a href=\"tiki-gmap_locator.php?for=item&amp;itemId={\$item.itemId}&amp;trackerId={\$item.trackerId}&amp;fieldId={\$field_value.fieldId}\">{tr}Google Map Locator",
+"Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19." => "Format: x,y,zoom où x est la longitude, et y la latitude. Zoom est compris entre 0(vue de la terre) à 19.",
 "Periods" => "Périodes",
 "You cannot mix old and new trackers" => "Vous ne pouvez pas mélanger les anciens et les nouveaux formulaires",
 "Permission denied you cannot post" => "Droit d'accès refusé&nbsp;: vous ne pouvez pas publier d'articles",
