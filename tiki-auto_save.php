@@ -30,17 +30,18 @@ function send_ajax_response($command, $data ) {
 	header( 'Content-Type:text/xml; charset=UTF-8' );
 	echo '<?xml version="1.0" encoding="UTF-8"?>';
 	echo '<adapter command="' . $command . '">';
-	echo '<data><![CDATA[' .  $data . ']]></data>';
+	echo '<data><![CDATA[' .  rawurlencode($data) . ']]></data>';
 	echo '</adapter>';
 	exit;
 }
 
 if (isset($_REQUEST['editor_id'])) {
 	if (isset($_REQUEST['command']) && isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {
-		$_REQUEST['referer'] = isset($_REQUEST['referer']) ? urldecode($_REQUEST['referer']) : '';
+		if(!isset($_REQUEST['referer']))
+			$_REQUEST['referer'] =  '';
 		$referer = explode(':', $_REQUEST['referer']);	// user, section, object id
 		if ($referer && count($referer) === 3 && $referer[1] === 'wiki_page') {
-			$page = $referer[2];	// plugins use global $page for approval
+			$page = rawurldecode($referer[2]);	// plugins use global $page for approval
 		}
 		
 		if ($_REQUEST['command'] == 'toWikiFormat') {
