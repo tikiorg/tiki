@@ -173,7 +173,7 @@ ul.jumplinks a:active {
 	background: url('mono/login.jpg') 0 0 no-repeat;
 }
 
-.siteloginbar .register {
+#topbar_modules .siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;
 }
 

@@ -169,7 +169,7 @@ ul.jumplinks a:active {
 	width: 100%;
 	background: #fff url(cool/loginlong.jpg) 0 0 no-repeat}
 
-.siteloginbar .register {
+#topbar_modules .siteloginbar .register {
 	background: url(cool/register.jpg) no-repeat;
 }
 

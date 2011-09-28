@@ -478,7 +478,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-right: 10px;
 }
 
-.box-login_box .register {
+#topbar_modules .box-login_box .register {
 	float: right;
 	height: 24px !important;
 	line-height: 22px;
