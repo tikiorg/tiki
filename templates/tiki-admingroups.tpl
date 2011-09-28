@@ -302,7 +302,9 @@
 						{tr}Assign group <em>management</em> permissions:{/tr}
 					</td>
 					<td>
-						{icon href="tiki-objectpermissions.php?objectType=group&objectId=$groupname&objectName=$groupname&permType=group" _text="{tr}Assign Permissions{/tr}" _id="key"}
+						{self_link _script="tiki-objectpermissions.php" objectType="group" objectId=$groupname objectName=$groupname permType="group"}
+							{icon _text="{tr}Assign Permissions{/tr}" _id="key"}
+						{/self_link}
 					</td>
 				</tr>
 				<tr>
@@ -365,7 +367,28 @@
 				{/foreach}
 		</table>
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
+
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
+
+		<h2>{tr}Banned members List:{/tr} {$groupname|escape}</h2>
+		<table class="normal">
+			<tr>
+				<th>{tr}User{/tr}</th>
+				<th>{tr}Action{/tr}</th>
+			</tr>
+			{cycle values="even,odd" print=false}
+			<tr>
+				{foreach from=$bannedlist item=member}
+					<tr class="{cycle}">
+					<td class="username">{$member|userlink}</td>
+					<td class="action">
+						{self_link user=$member|escape:"url" action=unbanuser group=$groupname|escape:url _title="{tr}Unban user{/tr}"}
+							{icon _id='cross_admin' alt="{tr}Unban user{/tr}"}
+						{/self_link}
+					</td>
+					</tr>
+				{/foreach}
+		</table>
 		{if ! empty($userslist)}
 			<form method="post" action="tiki-admingroups.php">
 				<p>
@@ -376,6 +399,7 @@
 						{/foreach}
 					</select>
 					<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
+					<input type="submit" name="banuser" value="{tr}Ban user from group{/tr}"/>
 				</p>
 			</form>
 		{/if}
