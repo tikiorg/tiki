@@ -286,7 +286,7 @@ class TikiAccessLib extends TikiLib
 	}
 
 	function get_home_page($page='') {
-		global $prefs, $tikilib, $use_best_language;
+		global $prefs, $tikilib, $use_best_language, $userlib, $user;
 
 		if (!isset($page) || $page == '') {
 			if ($prefs['useGroupHome'] == 'y') {
