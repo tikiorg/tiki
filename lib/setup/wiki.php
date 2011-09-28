@@ -73,7 +73,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 		$homePageContent .= '!' . tr('Thank you for installing Tiki.') . "\n\n";
 		$homePageContent .= tr('The entire Tiki Community would like to thank you and help you get introduced to Tiki.') . "\n\n";
 		$homePageContent .= '!' . tr('How To Get Started') . "\n";
-		$homePageContent .= tr('Tiki has more than 1000 features and settings.');
+		$homePageContent .= tr('Tiki has more than 1000 features and settings.') . "\n\n";
 		$homePageContent .= tr('This allows you to create both very simple and complex websites.') . "\n\n";
 		$homePageContent .= tr('We understand that so many features might seem overwhelming at first. This is why we offer you two different ways to __Get Started__ with Tiki.') . "\n\n";
 		$homePageContent .= "{DIV(width=\"48%\",float=\"right\")}\n";
