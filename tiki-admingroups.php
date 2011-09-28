@@ -96,6 +96,27 @@ if (isset($_REQUEST['adduser'])) {
 	}
 	$cookietab = "3";
 }
+
+// banning
+
+if (isset($_REQUEST['banuser'])) {
+	$auser = $_REQUEST['user'];
+	$agroup = $_REQUEST['group'];
+	$access->check_authenticity(tr('Are you sure you want to ban the user "%0" from the group "%1"?' , $auser, $agroup));
+	$userlib->ban_user_from_group( $auser, $agroup);
+	$logslib->add_log('admingroups', "banned $auser from $agroup");
+	$cookietab = "3";
+}
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'unbanuser') {
+	$auser = $_REQUEST['user'];
+	$agroup = $_REQUEST['group'];
+	$access->check_authenticity(tr('Are you sure you want to unban the user "%0" from the group "%1"?' , $auser, $agroup));
+	$userlib->unban_user_from_group( $auser, $agroup);
+	$logslib->add_log('admingroups', "unbanned $auser from $agroup");
+	$cookietab = "3";
+}
+
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
@@ -329,11 +350,20 @@ if (isset($_REQUEST['group'])) {
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
 $smarty->assign('memberslist', $memberslist);
+
+$bannedlist = $userlib->get_group_banned_users($_REQUEST['group']);
+$smarty->assign('bannedlist', $bannedlist);
+
 $userslist=$userlib->list_all_users();
 if (!empty($memberslist)) {
 	foreach($memberslist as $key => $values){
 		if ( in_array($values["login"],$userslist ) ) {
 			unset($userslist[array_search($values["login"],$userslist,true)]);
+		}
+	}
+	foreach($bannedlist as $key => $value){
+		if ( in_array($value, $userslist ) ) {
+			unset($userslist[array_search($value, $userslist, true)]);
 		}
 	}
 }

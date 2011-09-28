@@ -5276,7 +5276,18 @@ class UsersLib extends TikiLib
 
 	function assign_user_to_group($user, $group) {
 		global $cachelib; require_once("lib/cache/cachelib.php");
-		global $tikilib, $prefs;
+		global $tikilib, $prefs, $access, $tiki_p_admin, $page;
+
+		if ($this->is_user_banned_from_group($user, $group)) {
+			$msg = tr('User "%0" is banned from the group "%1".' , $user, $group);
+			if ($tiki_p_admin === 'y') {
+				$access->check_authenticity($msg . ' ' . tra('Do you want to unban them and continue?'));
+				$this->unban_user_from_group($user, $group);
+			} else {
+				$access->display_error($page, $msg);
+			}
+		}
+
 		$cachelib->invalidate('user_details_'.$user);
 		$tikilib->invalidate_usergroups_cache($user);
 
@@ -5321,6 +5332,31 @@ class UsersLib extends TikiLib
 			$this->assign_user_to_group($user, $grp);
 		}
 
+	}
+
+	function ban_user_from_group( $user, $group ) {
+		TikiLib::lib('relation')->add_relation( 'tiki.user.banned', 'user', $user, 'group', $group);
+	}
+
+	function unban_user_from_group( $user, $group ) {
+		$relationlib = TikiLib::lib('relation');
+		$id = $relationlib->get_relation_id( 'tiki.user.banned', 'user', $user, 'group', $group);
+		if ($id) {
+			$relationlib->remove_relation($id);
+		}
+	}
+
+	function get_group_banned_users($group, $offset = 0, $max = -1, $what = 'login', $sort_mode = 'login_asc') {
+		$res = TikiLib::lib('relation')->get_relations_to( 'group', $group, 'tiki.user.banned' );
+		$ret = array();
+		foreach ($res as $r) {
+			$ret[] = $r['itemId'];
+		}
+		return $ret;
+	}
+
+	function is_user_banned_from_group( $user, $group ) {
+		return TikiLib::lib('relation')->get_relation_id( 'tiki.user.banned', 'user', $user, 'group', $group) > 0;
 	}
 
 	function hash_pass($pass, $salt = NULL) {
