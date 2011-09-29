@@ -44,7 +44,6 @@
 			{/if}
 		{/if}
 	</div>
-	<br />
 	
 	{if $use_find eq 'y'}
 		<div class="blogtools">
