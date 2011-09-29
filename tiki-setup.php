@@ -142,8 +142,10 @@ if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive
 	$cachelib->empty_cache('templates_c');
 }
 if ($prefs['feature_freetags'] == 'y') require_once ('lib/setup/freetags.php');
-if ($prefs['feature_categories'] == 'y') require_once ('lib/setup/categories.php');
-if ($prefs['feature_areas'] == 'y') include_once('tiki-perspective_binder.php');
+if ($prefs['feature_categories'] == 'y'){ 
+		require_once ('lib/setup/categories.php');
+		if ($prefs['feature_areas'] == 'y' && $prefs['feature_perspective'] == 'y') include_once('lib/perspective_binder.php');
+}
 if ($prefs['feature_userlevels'] == 'y') require_once ('lib/setup/userlevels.php');
 if ($prefs['auth_method'] == 'openid') require_once ('lib/setup/openid.php');
 if ($prefs['feature_wysiwyg'] == 'y') {
@@ -151,7 +153,6 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
 }
 
-//	include_once ('tiki-perspective_binder.php');
 
 if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
 	require_once('lib/captcha/captchalib.php');

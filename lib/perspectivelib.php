@@ -106,6 +106,39 @@ class PerspectiveLib
 		}
 	}
 
+
+	function get_perspective_by_categid( $categId ) {
+		$result = TikiDb::get()->query( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array( ) );
+
+		$out = array();
+                if($result !== false){
+			while( $row = $result->fetchRow() ) {
+				if(in_array($categId, unserialize( $row['value'] ) ) )
+					 return $row['perspectiveId']; 
+			}
+		}
+		return 0;
+	}
+
+	function set_perspective($perspective){
+	global $prefs;
+	if( $this->perspective_exists( $perspective ) ) {
+		if ($prefs['multidomain_switchdomain'] == 'y') {
+			foreach( $this->get_domain_map() as $domain => $persp ) {
+				if( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
+					$targetUrl = 'http://' . $domain;
+
+					header( 'Location: ' . $targetUrl );
+					exit;
+				}
+			}
+		}
+		$_SESSION['current_perspective'] = $perspective;
+	}
+
+}
+
+
 	private function write_permissions( & $info, $perms ) {
 		$info['can_edit'] = $perms->perspective_edit;
 		$info['can_remove'] = $perms->perspective_admin;

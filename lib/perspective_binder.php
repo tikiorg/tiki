@@ -19,75 +19,44 @@ HandleObjectCategories($objectCategoryIds);
 function HandleObjectCategories($objectCategoryIds)
 {
     
-	global $categlib, $prefs;  
-	$sagsSideCatId = $prefs['areas_root']; // ID of the parent category that indicates the current page is assigned to an "Area"
+	global $categlib, $prefs, $perspectivelib;  
+//	$sagsSideCatId = $prefs['areas_root']; // ID of the parent category that indicates the current page is assigned to an "Area"
     
     if (!empty($objectCategoryIds))
     {
         foreach($objectCategoryIds as $categId)
         {
-             $foundPerspective = GetPerspectiveId($categId);   // place this line here so the var is defined in the else case
-            if ($categlib->get_category_parent($categId) == $sagsSideCatId) // If parent category has ID equal to value of $sagsSideCatId
+
+            if ($categlib->get_category_parent($categId) == $prefs['areas_root']) // If parent category has ID equal to value of $prefs['areas_root']
             {
-            
+
+             $foundPerspective = $perspectivelib->get_perspective_by_categid($categId);   
                 if ($foundPerspective != $_SESSION['current_perspective']) // If the found perspective is different than the current perspective, update it.
                 {
-                    SetPerspectiveId($foundPerspective);
+                     $perspectivelib->set_perspective($foundPerspective);
+    //Reroute browser back to calling script after we have applied our hack.
+    header("Location: ". $_SERVER['REQUEST_URI']);	
                 }
             }
-            else // If parent category id does not equal $sagsSideCatId set the default perspective (0)
+            else // If parent category id does not equal $prefs['areas_root'] set the default perspective (0)
             {
-                if ($foundPerspective != $_SESSION['current_perspective'])
-                {
-                    SetPerspectiveId(0);
-                }
+//                if ($foundPerspective != $_SESSION['current_perspective'])
+  //              {
+                    $perspectivelib->set_perspective(0);
+    //Reroute browser back to calling script after we have applied our hack.
+    header("Location: ". $_SERVER['REQUEST_URI']);	
+    //            }
             }
         
         }
     }
-    else if ($_SESSION['current_perspective'] !== 0)
+/*    else if ($_SESSION['current_perspective'] !== 0)     // decomment this violates the category jail 
     {
         SetPerspectiveId(0);
         
-    }
+    }*/
 }
 
-function GetPerspectiveId($categoryId)
-{
-global $tikilib;
-	try {
-	$selectSql = "SELECT 
-				`perspectiveId`,
-       				`pref`,
-       				`value`
-				FROM `tiki_perspective_preferences`
-				WHERE pref = 'category_jail'";
-		$result = $tikilib->query($selectSql, array(), -1, 0);
-	
-            while ($row = $result->fetchRow()) 
-               {
-            		$categories = unserialize($row["value"]); // categories are stored as serialized PHP in the database.
-                        
-                            if (in_array($categoryId, $categories))
-                            {
-				 return $row["perspectiveId"];
-                    	}
-                }
-       	return 0;
-	}
-        catch (Exception $ex)
-	{
-		print_r($ex);
-	}
-}
-function SetPerspectiveId($perspectiveId)
-{	
-    // Set the perspective in session var so it will last across several pages. (URL Parameter "perspectiveId" is only temporary across diff. pages.)
-    $_SESSION['current_perspective'] = $perspectiveId;
-
-    //Reroute browser back to calling script after we have applied our hack.
-    header("Location: ". $_SERVER['REQUEST_URI']);	
-}
 
 /*-----------------------------------------------
 +++ Description of Perspective Binder / Areas +++ 
