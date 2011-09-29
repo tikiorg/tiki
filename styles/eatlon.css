@@ -183,30 +183,46 @@ button,
 input[type="reset"],
 input[type="submit"],
 .button input,
-.submitbutton,
 .calbuttonBox a {
 	border-top: 1px solid #f3f3f4;
 	border-left: 1px solid #f3f3f4;
 	border-right: 1px solid #878689;
 	border-bottom: 1px solid #878689;
-	background: #afafaf;
-	background: url(eatlon/menu_bg.png) 1000px -15px;
+	background: #afafaf url(eatlon/menu_bg.png) 1000px -15px;
 	color: #fff;
 	font-size: 11px;
 	font-weight: normal;
-	padding: 2px 4px}
+	padding: 2px 4px;
+}
 
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
-.submitbutton:hover,
-.calbuttonBox a:hover {
+.calbuttonBox:hover {
 	border-top: 1px solid #868f93;
 	border-left: 1px solid #868f93;
+	border-right: 1px solid #f3f3f4;
+	border-bottom: 1px solid #f3f3f4;
+	font-size: 11px;
+	font-weight: normal;
 	color: #ececec;
 	padding: 2px 4px;
+}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+span.button {
+	margin: 2px;
 }
 
 select[name="theme"] {width: 135px}

@@ -81,7 +81,7 @@ fieldset {
 #col2 fieldset {
 	width: 100px;
 }
-
+/*
 button,
 input,
 label,
@@ -95,14 +95,15 @@ select {
 input[type=checkbox],
 input[type=radio] {
 	vertical-align: middle !important;
-}
+}*/
 
-input.button,
+.button a,
+.button a:visited,
 button,
+input[type="reset"],
+input[type="submit"],
 .button input,
-.button,
-input.wikiaction,
-.calbuttonbox {
+.calbuttonBox a {
 	border: solid 1px #aaa;
 	background: #fbfbfb;
 	color: #000;
@@ -110,27 +111,34 @@ input.wikiaction,
 	font: .8em Arial, Helvetica, sans-serif;
 }
 
-/* styles by type separated from the above because IE6 doesn't like multiple class specifications with bracket selectors together */
-input[type=submit],
-input[type=reset] {
-	border: solid 1px #aaa;
-	background: #fbfbfb;
-	color: #000;
-	text-transform: uppercase;
-	font: .8em Arial, Helvetica, sans-serif;
-}
 
 /* hovered buttons */
-input.button:hover,
+.button a:hover,
 button:hover,
-input[type=submit]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
 .button input:hover,
-.button:hover,
-.calbuttonbox a:hover {
+.calbuttonBox:hover {
 	cursor: pointer;
 	background: #e6e6f8;
+	font: .8em Arial, Helvetica, sans-serif;
+	text-decoration: none;
 }
 
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+span.button {
+	margin: 2px;
+}
+/*
 .button,
 .calbuttonbox {
 	display: inline-block;
@@ -148,7 +156,7 @@ input[type=submit]:hover,
 .button a:hover,
 .calbuttonbox a:hover {
 	text-decoration: none;
-}
+}*/
 
 #col2 input[type=text] {
 	width: 95%;
