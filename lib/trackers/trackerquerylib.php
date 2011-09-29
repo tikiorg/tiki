@@ -29,7 +29,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class TrackerQueryLib {
+class TrackerQueryLib
+{
 	
 	private $tracker;
 	private $start = 0;
