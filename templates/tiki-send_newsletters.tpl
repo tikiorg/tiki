@@ -310,8 +310,8 @@
 			</table>
 		</form>
 	{/tab}
-
-	{capture assign=$name}{tr _0=$cant_drafts}Drafts&nbsp;(%0){/tr}{/capture}{*FIXME*}
+	
+	{assign var=name value="{tr _0=$cant_drafts}Drafts&nbsp;(%0){/tr}"}
 	{tab name=$name}
 	{* --- tab with drafts --- *}
 		{assign var=channels value=$drafts}
@@ -334,7 +334,7 @@
 		{include file='sent_newsletters.tpl'}
 	{/tab}
 
-	{capture assign=$name}{tr _0=$cant_editions}Sent Editions&nbsp;(%0){/tr}{/capture}{*FIXME*}
+	{assign var=name value="{tr _0=$cant_editions}Sent Editions&nbsp;(%0){/tr}"}
 	{tab name=$name}
 	{* --- tab with editions --- *}
 		{assign var=channels value=$editions}
