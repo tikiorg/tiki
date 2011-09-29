@@ -1378,12 +1378,12 @@ if (typeof window.CKEDITOR !== "undefined") {
 				command : '{$this->name}',
 				icon: editor.config._TikiRoot + '{$this->icon}'
 			});
-	
 		}
 	});
 }
 JS
 , 10);			
+			}
 			
 		}
 		return $this->wysiwyg;
