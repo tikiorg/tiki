@@ -6,16 +6,21 @@
 // $Id$
 
 // For documentation how to use this file please see the comment at the end of this file
-global $prefs;  
-$sagsSideCatId = $prefs['areas_root']; // ID of the parent category that indicates the current page is assigned to an "Area"
+
+//this script may only be included - so its better to die if called  directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 
 HandleObjectCategories($objectCategoryIds);
 
 function HandleObjectCategories($objectCategoryIds)
 {
     
-    global $categlib;
-    global $sagsSideCatId;
+	global $categlib, $prefs;  
+	$sagsSideCatId = $prefs['areas_root']; // ID of the parent category that indicates the current page is assigned to an "Area"
     
     if (!empty($objectCategoryIds))
     {
@@ -58,8 +63,6 @@ global $tikilib;
 				FROM `tiki_perspective_preferences`
 				WHERE pref = 'category_jail'";
 		$result = $tikilib->query($selectSql, array(), -1, 0);
-//	$statement = $DAL->prepare($selectSql);
-//	$statement->execute();
 	
             while ($row = $result->fetchRow()) 
                {
