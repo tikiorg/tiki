@@ -110,7 +110,8 @@ if (
 			type: 'draw',
 			content: '',
 			'params[width]': '$height',
-			'params[height]': '$width'
+			'params[height]': '$width',
+			'params[id]': '$fileId'
 		};
 	");
 }
@@ -136,8 +137,8 @@ if (!isset($_REQUEST['map'])) {
 						newLocation += '&page=' + $.wikiTrackingDraw.page + 
 							'&index=' + $.wikiTrackingDraw.index +
 							'&label=' + $.wikiTrackingDraw.label +
-							'&width=' + $.wikiTrackingDraw.width +
-							'&height=' + $.wikiTrackingDraw.height;
+							'&width=' + $.wikiTrackingDraw['params[width]'] +
+							'&height=' + $.wikiTrackingDraw['params[height]'];
 					}
 					
 					document.location = newLocation;
@@ -160,6 +161,9 @@ if (!isset($_REQUEST['map'])) {
 }
 
 $headerlib->add_jq_onready("
+	//prevent user back from messing things up
+	window.history.forward();
+	
 	$('#drawRename').click(function() {
 		$('#fileName').val($('#tiki_draw').renameDraw());
 	});
