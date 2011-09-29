@@ -9,7 +9,8 @@
  * @group unit
  *
  */
-class EditLib_ParseToWiki_ListTest extends TikiTestCase {
+class EditLib_ParseToWiki_ListTest extends TikiTestCase
+{
 	
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib

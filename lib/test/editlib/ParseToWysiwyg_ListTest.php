@@ -9,7 +9,8 @@
  * @group unit
  *
  */
-class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase {
+class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
+{
 	
 	private $el = null; // the EditLib
 	private $dir = '';  // the unmodifed directory
