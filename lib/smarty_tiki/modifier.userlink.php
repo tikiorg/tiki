@@ -76,6 +76,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 		$ou = $other_user;
 	}
 	if ( $max_length > 0 ) {
+		$smarty->loadPlugin('smarty_modifier_truncate');
 		$ou = smarty_modifier_truncate($ou, $max_length, '...', true);
 	}
 	$ou = htmlspecialchars($ou);
