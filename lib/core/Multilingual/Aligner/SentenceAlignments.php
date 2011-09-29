@@ -42,7 +42,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$sentences = $segmentor->segment(trim($key));
 				if (strcmp(trim($sentences[0]), trim($source_lng_sentence)) == 0) { //if one of those is matched
 					$found = 1;
-					for ($j=1, $l=1; $j<count($sentences); $l++) {
+					for ($j=1, $l=1, $count_sentences = count($sentences); $j<$count_sentences; $l++) {
 						$flag=0;
 						if (($l + $index) >= count($sentence_array)) {
 							$found = 0;
@@ -72,7 +72,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$sentences = $segmentor->segment(trim($val));
 				if (strcmp(trim($sentences[0]), trim($source_lng_sentence)) == 0) { //if one of those is matched
 					$found = 1;
-					for ($j=$i+1, $l=1; $j<count($sentences); $l++) {
+					for ($j=$i+1, $l=1, $count_sentences = count($sentences) ; $j<$count_sentences; $l++) {
 						$flag=0;
 						if (($l +$index)>=count($sentence_array)) {
 							$found = 0;
@@ -115,7 +115,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$start++;
 				$sent_ind = 0;
 				$sentences = $segmentor->segment(trim($key));
-				for($j=0; $j<count($sentences); $j++) {
+				for($j=0, $count_sentences = count($sentences); $j<$count_sentences; $j++) {
 					$sentences[$j] = trim($sentences[$j]);
 				}
 
@@ -229,7 +229,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$start++;
 				$sent_ind = 0;
 				$sentences = $segmentor->segment(trim($val));
-				for ($j=0; $j<count($sentences); $j++) {
+				for ($j=0, $count_sentences = count($sentences); $j<$count_sentences; $j++) {
 					$sentences[$j] = trim($sentences[$j]);
 				}
 
