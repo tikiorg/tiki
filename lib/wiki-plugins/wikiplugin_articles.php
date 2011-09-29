@@ -30,7 +30,7 @@ function wikiplugin_articles_info()
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Displayed'),
-				'description' => tra('The number of articles to display in the list (no max set by default)') . tra('If Pagination is set to y (Yes), this will determine the amount of articles per page'),
+				'description' => tra('The number of articles to display in the list (no max set by default)') . '. ' . tra('If Pagination is set to y (Yes), this will determine the amount of articles per page'),
 				'filter' => 'int',
 				'default' => -1
 			),
@@ -72,7 +72,7 @@ function wikiplugin_articles_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
-				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")').' '.tra('Use random to have random items.'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")').'. '.tra('Use random to have random items.'),
 				'filter' => 'word',
 				'default' => 'publishDate_desc'
 			),
@@ -115,21 +115,21 @@ function wikiplugin_articles_info()
 			'start' => array(
 				'required' => false,
 				'name' => tra('Starting Article'),
-				'description' => tra('The article number that the list should start with (starts with first article by default)') . tra('This will not work if Pagination is used.'),
+				'description' => tra('The article number that the list should start with (starts with first article by default)') . '. ' . tra('This will not work if Pagination is used.'),
 				'filter' => 'int',
 				'default' => 0
 			),
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start Date'),
-				'description' => tra('Earliest date to select articles from.') . ' (YYYY-MM-DD)',
+				'description' => tra('Earliest date to select articles from.') . tra(' (YYYY-MM-DD)'),
 				'filter' => 'date',
 				'default' => ''
 			),
 			'dateEnd' => array(
 				'required' => false,
 				'name' => tra('End date'),
-				'description' => tra('Latest date to select articles from.') . ' (YYYY-MM-DD)',
+				'description' => tra('Latest date to select articles from.') . tra(' (YYYY-MM-DD)'),
 				'filter' => 'date',
 				'default' => ''
 			),
