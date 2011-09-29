@@ -25,6 +25,538 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 7.2
+<http://tiki.org/ReleaseNotes72>
+------------------
+
+----------------------------------------------
+r37788 | changi67 | 2011-09-29 20:41:40 +0200 (Thu, 29 Sep 2011) | 1 line
+
+[KIL] Useless now
+----------------------------------------------
+r37779 | chibaguy | 2011-09-29 16:11:23 +0200 (Thu, 29 Sep 2011) | 1 line
+
+[FIX] Various problems with button styles (inconsistent normal|hover margins and padding, etc.)
+----------------------------------------------
+r37761 | nkoth | 2011-09-28 23:56:55 +0200 (Wed, 28 Sep 2011) | 1 line
+
+[bp/r37760][FIX] Language switching not working when pagename contains characters that need escaping in regex
+----------------------------------------------
+r37757 | nkoth | 2011-09-28 23:29:20 +0200 (Wed, 28 Sep 2011) | 1 line
+
+[FIX] bad translation with tr causing smarty parse error (not in trunk)
+----------------------------------------------
+r37735 | sampaioprimo | 2011-09-27 21:23:53 +0200 (Tue, 27 Sep 2011) | 2 lines
+
+rollback 37708 (will do it again after 7.2 release)
+
+----------------------------------------------
+r37708 | sampaioprimo | 2011-09-26 22:50:45 +0200 (Mon, 26 Sep 2011) | 2 lines
+
+update language files with translations from trunk using mergelang.php
+
+----------------------------------------------
+r37694 | sylvieg | 2011-09-26 18:17:17 +0200 (Mon, 26 Sep 2011) | 1 line
+
+[bp/r37693][FIX]header field: do not display the section below if header is closed
+----------------------------------------------
+r37690 | nkoth | 2011-09-26 17:41:20 +0200 (Mon, 26 Sep 2011) | 1 line
+
+[bp/r37688][FIX] Prevent broken links when wysiwyg is used and sefurl is on
+----------------------------------------------
+r37669 | sylvieg | 2011-09-26 14:30:14 +0200 (Mon, 26 Sep 2011) | 1 line
+
+[bp/r 37668][FIX]tracker: fix multivalued drop down filter for text
+----------------------------------------------
+r37657 | chealer | 2011-09-26 00:07:58 +0200 (Mon, 26 Sep 2011) | 1 line
+
+Registration: Temporarily revert r37066 (pending answer to http://article.gmane.org/gmane.comp.cms.tiki.cvs/68416 )
+----------------------------------------------
+r37651 | oeversetten | 2011-09-25 13:24:04 +0200 (Sun, 25 Sep 2011) | 6 lines
+
+
+[ENH] Does not hurt to let the selflink be translated, too, 
+since there seems no lookup to be if the linked page has a translation
+in the language currently set.
+
+
+----------------------------------------------
+r37650 | oeversetten | 2011-09-25 13:11:53 +0200 (Sun, 25 Sep 2011) | 5 lines
+
+
+[ENH] Category names will be translated as it is on the tiki-browse-categories page.
+
+
+
+----------------------------------------------
+r37640 | nkoth | 2011-09-24 21:12:02 +0200 (Sat, 24 Sep 2011) | 1 line
+
+[bp/37639][FIX] Mistake from previous commit, Facebook should be ok now.
+----------------------------------------------
+r37635 | nkoth | 2011-09-24 19:19:16 +0200 (Sat, 24 Sep 2011) | 1 line
+
+[bp/r37634][FIX] More facebook fixes - sorry about the bad fix the last commit
+----------------------------------------------
+r37632 | nkoth | 2011-09-24 18:46:31 +0200 (Sat, 24 Sep 2011) | 1 line
+
+[bp/r36021][FIX] obvious typo, fixed in trunk as part of larger fix only this part is backported
+----------------------------------------------
+r37630 | nkoth | 2011-09-24 18:16:54 +0200 (Sat, 24 Sep 2011) | 1 line
+
+[bp/r37629][FIX] Facebook no longer supports POST for oauth handshake, so using GET solving so-called test users only error
+----------------------------------------------
+r37604 | sylvieg | 2011-09-23 22:38:46 +0200 (Fri, 23 Sep 2011) | 1 line
+
+[bp/r37601][FIX]default_group: default_group is used in php code too
+----------------------------------------------
+r37598 | luciash | 2011-09-23 21:31:21 +0200 (Fri, 23 Sep 2011) | 1 line
+
+[bp/r37597][FIX] Major speed up: do not load tiki-jsplugin.php (edit plugin helper) when there is no editable plugin on the page (e.g. for Anonymous with no edit perms) -- please note it is different file as in trunk but same code
+----------------------------------------------
+r37586 | luciash | 2011-09-23 16:04:40 +0200 (Fri, 23 Sep 2011) | 1 line
+
+[bp/r37584][FIX] tracker regex validator: fix for the ... code which (no wonder) never worked
+----------------------------------------------
+r37544 | sampaioprimo | 2011-09-22 16:46:16 +0200 (Thu, 22 Sep 2011) | 2 lines
+
+updating language files
+
+----------------------------------------------
+r37542 | chibaguy | 2011-09-22 10:34:14 +0200 (Thu, 22 Sep 2011) | 1 line
+
+[FIX] Register link background in Strasa theme should only show when login is in topbar modules (as other login link backgrounds are specified). Thanks to Xavi. 
+----------------------------------------------
+r37532 | oeversetten | 2011-09-21 22:19:51 +0200 (Wed, 21 Sep 2011) | 5 lines
+
+
+Necessary lines to output the registration results with tracker plugin
+and to administrate it in the login panel
+
+
+----------------------------------------------
+r37528 | oeversetten | 2011-09-21 21:36:05 +0200 (Wed, 21 Sep 2011) | 7 lines
+
+
+[FIX] Obviously $re and $registrationlib->merged_prefs are not the same arrays (ll 85,87)
+The indices usersFieldId and user_register_prettytracker_tpl are not defined in both
+
+In the previous state the feature use pretty tracker template does not work!
+
+
+----------------------------------------------
+r37474 | sampaioprimo | 2011-09-20 23:27:46 +0200 (Tue, 20 Sep 2011) | 2 lines
+
+[bp/37470][ENH] add tracker item comments to daily reports (at Xavi's request)
+
+----------------------------------------------
+r37445 | sampaioprimo | 2011-09-20 15:22:42 +0200 (Tue, 20 Sep 2011) | 2 lines
+
+[bp/36110]tiki-user_reports_send.php works without previous configuration
+
+----------------------------------------------
+r37443 | chibaguy | 2011-09-20 11:45:42 +0200 (Tue, 20 Sep 2011) | 1 line
+
+[bp/r35632][MOD] Class clearfix needed (to contain child elements) to style module div id="mod-module_name" (div nested within div class="module_name") when nobox=y is set. Useful for added styling of box-logo, for example.
+----------------------------------------------
+r37439 | chealer | 2011-09-20 03:39:53 +0200 (Tue, 20 Sep 2011) | 1 line
+
+[bp/r37187][FIX] HTML special characters encoding
+----------------------------------------------
+r37359 | chealer | 2011-09-17 05:52:11 +0200 (Sat, 17 Sep 2011) | 2 lines
+
+[FIX] French: tiki-register.php "Parse error: syntax error, unexpected '.', expecting '(' in [...]register-passcode.tpl.php on line 11"
+r35254 regression. Thanks to Christian Perreault and Marc Laporte
+----------------------------------------------
+r37319 | lphuberdeau | 2011-09-16 16:13:18 +0200 (Fri, 16 Sep 2011) | 2 lines
+
+[FIX] bp/r37318. RSS item caching corruption and breakage of article generator
+
+----------------------------------------------
+r37280 | sylvieg | 2011-09-15 14:47:55 +0200 (Thu, 15 Sep 2011) | 1 line
+
+[FIX]trackeritemfield: field value must be set in field info not item info
+----------------------------------------------
+r37257 | sylvieg | 2011-09-14 17:47:06 +0200 (Wed, 14 Sep 2011) | 1 line
+
+[FIX]tracker: regression from tiki6: was accepting different format for created and lastModif when importing items
+----------------------------------------------
+r37249 | sylvieg | 2011-09-14 15:00:11 +0200 (Wed, 14 Sep 2011) | 1 line
+
+[bp/r 37248][FIX]most read topics: fix title and filter forumId
+----------------------------------------------
+r37222 | sampaioprimo | 2011-09-13 20:53:00 +0200 (Tue, 13 Sep 2011) | 2 lines
+
+[bp/37219][ENH] display tracker item isMain field value in daily reports (at Xavi's request)
+
+----------------------------------------------
+r37208 | sylvieg | 2011-09-13 17:18:09 +0200 (Tue, 13 Sep 2011) | 1 line
+
+[FIX]TRACKERITEMFIELD: use the renderOUtput absctraction instead of renderInputOutput that does not exist for email field
+----------------------------------------------
+r37175 | sylvieg | 2011-09-12 15:18:28 +0200 (Mon, 12 Sep 2011) | 1 line
+
+[FIX]parser: reset the loop control each time something has matched
+----------------------------------------------
+r37162 | nkoth | 2011-09-12 01:04:59 +0200 (Mon, 12 Sep 2011) | 1 line
+
+[bp/r37161][FIX]missing filters: otherwise {DIV()}{tracker trackerId=1 url=x){DIV} has the url changed to u<x>rl
+----------------------------------------------
+r37157 | sylvieg | 2011-09-11 23:06:00 +0200 (Sun, 11 Sep 2011) | 1 line
+
+[bp/r 36027] missing filters: otherwise {DIV()}{tracker trackerId=1 url=x){DIV} has the url changed to u<x>rl
+----------------------------------------------
+r37105 | chibaguy | 2011-09-10 08:50:21 +0200 (Sat, 10 Sep 2011) | 1 line
+
+[TRA] A few "happy path" strings, thanks to Lauren Mariko Cunningham-Lee.
+----------------------------------------------
+r37091 | sampaioprimo | 2011-09-09 21:55:12 +0200 (Fri, 09 Sep 2011) | 2 lines
+
+[FIX] right tracker item id value for daily reports (fixing directly here and on branches/i6.x since this fix is not applicable to trunk due to tracker revamp changes)
+
+----------------------------------------------
+r37066 | yonixxx | 2011-09-09 12:01:46 +0200 (Fri, 09 Sep 2011) | 1 line
+
+[FIX]module register: table tags removed to keep layout intact
+----------------------------------------------
+r37040 | sylvieg | 2011-09-08 15:13:18 +0200 (Thu, 08 Sep 2011) | 1 line
+
+[bp/r 3709][FIX]article: author can be null if anonymous submission
+----------------------------------------------
+r37027 | robertplummer | 2011-09-07 23:09:41 +0200 (Wed, 07 Sep 2011) | 1 line
+
+[FIX] Brought colors from wiki plugin to pre tag to codemirror
+----------------------------------------------
+r37005 | arildb | 2011-09-07 01:53:34 +0200 (Wed, 07 Sep 2011) | 1 line
+
+[FIX] Failures to create accounting tables when upgrading from 6 on a MySQL server in strict mode. Completes r34899. 
+----------------------------------------------
+r36995 | arildb | 2011-09-06 21:44:19 +0200 (Tue, 06 Sep 2011) | 1 line
+
+[bp/r36945][FIX][Completes r36991] Forgot to update a section.
+----------------------------------------------
+r36991 | arildb | 2011-09-06 20:45:52 +0200 (Tue, 06 Sep 2011) | 2 lines
+
+[bp/r36945][FIX] Multibyte characters not fully handled causes trouble under certain configurations, detected under windows, causing permissions not to be checked correctly when uppercase multibyte character were used in the page name, the patch updates past installs and uses mb_strtolower when available, also fixing similar issues that might arise in the code. 
+
+----------------------------------------------
+r36982 | xavidp | 2011-09-06 14:29:46 +0200 (Tue, 06 Sep 2011) | 12 lines
+
+[ENH] Several commits backported to provide fully working CSV export and CSV import. Thanks jonnyb.
+[bp/r36908][ENH] Work in progress to add CSV export of banning rules. In a later stage, CSV import will be added.
+[bp/r36912][FIX] banning: Pass the data only to the export function
+[bp/r36914][ENH] Work in progress to add Import banning rules by means of a CSV file.
+[bp/r36916][ENH] banning: Export section data and create or update rules on import. More tidying to do...
+[bp/r36922][FIX] banning: Don't try and update rules that don't exist here (thanks Xavi)
+[bp/r36923][FIX] banning: typo (testing is good, sorry ;-)
+[br/r36938]banlib: indentation
+[bp/r36939][FIX] banning: Parse dates to unix timestamps on import, set content-type to csv for csv files and reorganise request processing a bit
+[bp/r36977][ENH] Minor cosmetic and usability fixes. Thanks chibaguy for the change in different buttons so that they look more similar, and jonnyb for tips (and for fixing csv import in your previous commit, of course).
+[bp/r36978][FIX] Update help with info for sections
+[bp/r36981][FIX] typo and wording
+----------------------------------------------
+r36980 | xavidp | 2011-09-06 13:55:59 +0200 (Tue, 06 Sep 2011) | 1 line
+
+[bp/36936][FIX] Consistency in appearance of input, button and span class="button" a. Thanks to xavi for pointing out the problem. (thks chibaguy for fixing it!)
+----------------------------------------------
+r36963 | xavidp | 2011-09-05 23:46:12 +0200 (Mon, 05 Sep 2011) | 1 line
+
+Rollback of whole r36926, since csv import was not fully working yet by the time of the backport.
+----------------------------------------------
+r36935 | arildb | 2011-09-05 11:56:12 +0200 (Mon, 05 Sep 2011) | 2 lines
+
+[bp/r36934][FIX] Report the underlying error message to the user to help identify the real cause of the error. 
+Specifically Zotero authentication, when SSL in not activated in PHP.
+----------------------------------------------
+r36926 | xavidp | 2011-09-05 00:36:57 +0200 (Mon, 05 Sep 2011) | 7 lines
+
+[FIX] Several commits backported to provide CSV export and CSV import. Thanks jonnyb for feedback and partial fixes. However, Import CSV is not saved to mysql tables yet, not even after all this set of enhancements and fixes.
+[bp/r36908][ENH] Work in progress to add CSV export of banning rules. In a later stage, CSV import will be added.
+[bp/r36912][FIX] banning: Pass the data only to the export function
+[bp/r36914][ENH] Work in progress to add Import banning rules by means of a CSV file.
+[bp/r36916][ENH] banning: Export section data and create or update rules on import. More tidying to do...
+[bp/r36922][FIX] banning: Don't try and update rules that don't exist here (thanks Xavi)
+[bp/r36923][FIX] banning: typo (testing is good, sorry ;-)
+----------------------------------------------
+r36907 | robertplummer | 2011-09-04 16:47:06 +0200 (Sun, 04 Sep 2011) | 1 line
+
+[FIX] applied same update to 7 from trunk.  Fixed duplicate loading of syntax highlighter
+----------------------------------------------
+r36905 | xavidp | 2011-09-04 16:15:47 +0200 (Sun, 04 Sep 2011) | 1 line
+
+[br/r36904][FIX]Increase maximum time frame for banning from 1 to 100 weeks
+----------------------------------------------
+r36902 | xavidp | 2011-09-04 15:49:54 +0200 (Sun, 04 Sep 2011) | 1 line
+
+[bp/r36901][ENH]First step to enhance spam fight a little easier. Added IP info to data exported with csv file. Sencond step (still to come) would be to allow some csv import for admin banning...
+----------------------------------------------
+r36884 | arildb | 2011-09-04 00:57:13 +0200 (Sun, 04 Sep 2011) | 1 line
+
+[bp/r36882][FIX] Fix "Permission denied" error when trying to monitor sub structure. Bug# 2985
+----------------------------------------------
+r36793 | nkoth | 2011-09-02 01:40:40 +0200 (Fri, 02 Sep 2011) | 1 line
+
+[FIX] Changing oneself default group not effecting due to cache
+----------------------------------------------
+r36775 | nkoth | 2011-09-01 20:29:13 +0200 (Thu, 01 Sep 2011) | 1 line
+
+[FIX] Prevent db error when feature_file_galleries_save_draft is on and file properties are updated
+----------------------------------------------
+r36769 | chealer | 2011-09-01 19:09:11 +0200 (Thu, 01 Sep 2011) | 1 line
+
+Revert r36753 "[FIX] Detect browser language not working when global language is not English". Exposed breakage too complicated to fix
+----------------------------------------------
+r36753 | chealer | 2011-09-01 02:06:52 +0200 (Thu, 01 Sep 2011) | 1 line
+
+[bp/r36752][FIX] Detect browser language not working when global language is not English
+----------------------------------------------
+r36684 | sylvieg | 2011-08-30 21:05:42 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[bp/r36682][FIX]article: switch off need to confirm
+----------------------------------------------
+r36675 | robertplummer | 2011-08-30 20:18:59 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[FIX] Locations for images in slideshow
+----------------------------------------------
+r36669 | robertplummer | 2011-08-30 19:11:34 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[FIX] Brought the external jquery.sheet_tiki for mods from trunk model 
+----------------------------------------------
+r36667 | robertplummer | 2011-08-30 19:10:20 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[FIX] updated dependencies for s5 and sheet
+----------------------------------------------
+r36664 | robertplummer | 2011-08-30 18:52:06 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[ENH] Moved jQuery.sheet and jQuery.s5 to their own directories to prep for deletion and migration of old locations to better help with version management.
+----------------------------------------------
+r36661 | xavidp | 2011-08-30 18:47:17 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[bp/r36655][FIX]messu-compose: a user name is not only limitted to alnum. Thanks sylvieg
+----------------------------------------------
+r36652 | sylvieg | 2011-08-30 17:31:26 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[bp/r 36649][FIX]{{page}}: a page with {include page=included} and the page 'included' is a (trackerlist filtervalue={{page}}), the {{Page}} must be parsed and not keep to {{page}}
+----------------------------------------------
+r36640 | xavidp | 2011-08-30 12:40:11 +0200 (Tue, 30 Aug 2011) | 1 line
+
+[bp/r36639][FIX]Hide 'articles' hardcoded title + 2 action buttons next to it when articles are shown through PluginArticles and actions are requested to be hidden, for better customization of articles display within a custom wiki page
+----------------------------------------------
+r36605 | sylvieg | 2011-08-29 20:15:15 +0200 (Mon, 29 Aug 2011) | 1 line
+
+[bp/r36603][FIX]section layout: display the prefs
+----------------------------------------------
+r36454 | lphuberdeau | 2011-08-24 18:31:47 +0200 (Wed, 24 Aug 2011) | 1 line
+
+[FIX] Occasional duplicate entry is not really an error
+----------------------------------------------
+r36453 | lphuberdeau | 2011-08-24 18:29:35 +0200 (Wed, 24 Aug 2011) | 1 line
+
+[FIX] Notices and duplicate function depending on code path
+----------------------------------------------
+r36445 | jonnybradley | 2011-08-24 16:07:30 +0200 (Wed, 24 Aug 2011) | 3 lines
+
+[bp/r36444][FIX] textarea: Reconnect setting editorDirty flag by using prop() instead of attr() (behaviour change in jQuery 1.6)
+Thanks Gustav Graf (and mlaporte) for reporting
+Fixes first item of http://dev.tiki.org/wish3980
+----------------------------------------------
+r36402 | jonnybradley | 2011-08-23 13:34:50 +0200 (Tue, 23 Aug 2011) | 1 line
+
+[bp/r36401][FIX] calendars: Add temporary pref to cope with calendar items from before Tiki 7 containing HTML (as in Tiki < 7 articles were parsed as is_html=true).
+----------------------------------------------
+r36370 | changi67 | 2011-08-21 21:44:54 +0200 (Sun, 21 Aug 2011) | 1 line
+
+[BP/36368][FIX] Wrong variable name
+----------------------------------------------
+r36342 | jonnybradley | 2011-08-19 16:21:42 +0200 (Fri, 19 Aug 2011) | 1 line
+
+[bp/r36341][FIX] login: Missing forgot and register links on login_scr. Use the correct parameters and then don't clear them before they're needed. (thanks marclaporte)
+----------------------------------------------
+r36338 | jonnybradley | 2011-08-19 14:27:30 +0200 (Fri, 19 Aug 2011) | 3 lines
+
+[bp/r36012,36015]
+[FIX] articles: Add temporary pref to cope with articles from before Tiki 7 containing HTML (as in Tiki < 7 articles were parsed as is_html=true).
+[FIX] articles: Part 2 - implementation of pref to cope with articles containing HTML (article_body_is_html)
+----------------------------------------------
+r36336 | changi67 | 2011-08-19 11:54:21 +0200 (Fri, 19 Aug 2011) | 1 line
+
+[FIX] Undefined variable - cannot be commit in trunk because it's already fixed and got too much diff
+----------------------------------------------
+r36329 | jonnybradley | 2011-08-18 22:06:08 +0200 (Thu, 18 Aug 2011) | 4 lines
+
+[bp/ -r 36317:36318 -r 36319:36321] Collected article and submission admin improvements
+[ENH] submitted articles: Add multi-select checkbox to (so far) remove more than one article at a time, and a handy button to select duplicates
+[ENH] articles: Add multi-select checkbox to remove more than one article at a time, and refactor select duplicates code to tiki-jquery.js
+[ENH] articles: Add authorName field to article lists and search (the one called "author" is the creator tiki user, authorName is the author if generated from external feed or real name of user). Also add multi-approve to submissions admin and perm checks
+----------------------------------------------
+r36275 | sylvieg | 2011-08-17 13:10:39 +0200 (Wed, 17 Aug 2011) | 1 line
+
+[FIX]SUBSCRIBENEWSLETTER: since 34625: user and email are in lower case since around 34625
+----------------------------------------------
+r36257 | lphuberdeau | 2011-08-17 02:52:31 +0200 (Wed, 17 Aug 2011) | 1 line
+
+[FIX] Behavior change when removing  as a parameter to getFields() - which broke integrity
+----------------------------------------------
+r36248 | jean-lucnavarro | 2011-08-16 21:13:54 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[bp/r36121[TRA] more French translations
+----------------------------------------------
+r36244 | jonnybradley | 2011-08-16 19:26:27 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[bp/r36236][FIX] textareas: Fix lack of rows and cols fields when "mode" is wysiwyg but this textarea should not be (thanks again horky)
+----------------------------------------------
+r36242 | robertplummer | 2011-08-16 19:11:48 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[FIX] Just removed codemirror alltogether when using an s5 slideshow
+----------------------------------------------
+r36238 | lphuberdeau | 2011-08-16 19:03:59 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[FIX] User tracker not preserving the user in the tracker
+----------------------------------------------
+r36222 | changi67 | 2011-08-16 14:55:06 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[bp/36220][ENH] Remove unnecessary &nbsp;
+----------------------------------------------
+r36219 | changi67 | 2011-08-16 14:23:38 +0200 (Tue, 16 Aug 2011) | 1 line
+
+bp/36218 Missing tra for root gallery
+----------------------------------------------
+r36216 | sylvieg | 2011-08-16 13:56:03 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[FIX]wiki: xml import was not updating the version info
+----------------------------------------------
+r36211 | robertplummer | 2011-08-16 02:04:39 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[FIX] for when slides load, they have codemirror on, and they contain a code plugin.  This fix is only needed for codemirror 1 integration (iframe)
+----------------------------------------------
+r36207 | sylvieg | 2011-08-16 00:40:36 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[FIX]wiki: xml export/import hits (only for new pages)
+----------------------------------------------
+r36206 | sylvieg | 2011-08-16 00:31:08 +0200 (Tue, 16 Aug 2011) | 1 line
+
+[FIX]wiki page: regression since tiki6: creator in tiki_pages was no more set in page creation: patch the database with the first history user... can be wrong as history can be deleted but better than nothing???
+----------------------------------------------
+r36203 | sylvieg | 2011-08-15 23:28:41 +0200 (Mon, 15 Aug 2011) | 1 line
+
+[FIX]tabset: fix tabset recursivity when 2 tabset first level has a tabset
+----------------------------------------------
+r36187 | jonnybradley | 2011-08-15 18:50:16 +0200 (Mon, 15 Aug 2011) | 1 line
+
+[bp/r36186][FIX] mobile: Fix viewport scale to correct text size on devices
+----------------------------------------------
+r36185 | jonnybradley | 2011-08-15 18:34:21 +0200 (Mon, 15 Aug 2011) | 1 line
+
+[bp/r36184][FIX] mobile: Clear loading message and show page properly if not in mobile perspective (thanks horky on irc)
+----------------------------------------------
+r36157 | marclaporte | 2011-08-15 05:27:12 +0200 (Mon, 15 Aug 2011) | 1 line
+
+BigBlueButton integration requires php_libxml
+----------------------------------------------
+r36144 | nkoth | 2011-08-15 00:47:50 +0200 (Mon, 15 Aug 2011) | 1 line
+
+[FIX] Timezone detection from browser not working for GMT+ and GMT- timezones because these are not supported by TikiDate as valid. However, Etc/GMT- and Etc/GMT+ are. Note that Etc/GMT+ is equivalent to GMT- (that's the way *nix has always been with those timezones)
+----------------------------------------------
+r36138 | sylvieg | 2011-08-14 16:52:16 +0200 (Sun, 14 Aug 2011) | 1 line
+
+[FIX]TRACKER: do not show description for a static field as it is the content
+----------------------------------------------
+r36136 | sylvieg | 2011-08-14 16:02:16 +0200 (Sun, 14 Aug 2011) | 1 line
+
+[FIX]tracker : better fix to 3615: show always the parsing and do not truncate the html: Do we have a function that truncate html?
+----------------------------------------------
+r36135 | sylvieg | 2011-08-14 13:50:39 +0200 (Sun, 14 Aug 2011) | 1 line
+
+[FIX]tracker: do not escape static text when parsed
+----------------------------------------------
+r36116 | chibaguy | 2011-08-13 10:19:48 +0200 (Sat, 13 Aug 2011) | 1 line
+
+[NEW] Plum theme option by Simon Lussier implemented for FiveAlive theme.
+----------------------------------------------
+r36107 | jyhem | 2011-08-12 19:28:11 +0200 (Fri, 12 Aug 2011) | 1 line
+
+[FIX] Avoid line breaks in calendar module nav bar when 'View navigation bar' is set to 'partial'
+----------------------------------------------
+r36106 | sylvieg | 2011-08-12 17:52:21 +0200 (Fri, 12 Aug 2011) | 1 line
+
+[FIX]fgal: fix zip download
+----------------------------------------------
+r36102 | jean-lucnavarro | 2011-08-12 13:41:00 +0200 (Fri, 12 Aug 2011) | 2 lines
+
+[TRA] more French translations
+
+----------------------------------------------
+r36091 | sampaioprimo | 2011-08-11 23:26:00 +0200 (Thu, 11 Aug 2011) | 4 lines
+
+[bp/r35869] indentation
+[ENH][bp/r35870] add calendar events to daily reports
+[ENH][bp/r35872] add tracker items to daily reports
+
+----------------------------------------------
+r36032 | nkoth | 2011-08-11 01:05:09 +0200 (Thu, 11 Aug 2011) | 1 line
+
+[FIX] sub-category viewing was not showing categories after perspective change when cache was stored in a perspective where some cats are not visible
+----------------------------------------------
+r36016 | jyhem | 2011-08-10 18:38:34 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[ENH] Display real name of contact if available
+----------------------------------------------
+r36010 | lphuberdeau | 2011-08-10 17:39:56 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[FIX] bp/r36009 Be a bit more tolerant about escaping for plugins that ouput both plugins and html
+----------------------------------------------
+r36007 | jonnybradley | 2011-08-10 16:41:12 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[bp/r36005][FIX] addtogooglecal plugin: declare format as html
+----------------------------------------------
+r35996 | marclaporte | 2011-08-10 08:05:30 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[FIX] Missing canonical link on borderless pages
+----------------------------------------------
+r35994 | jyhem | 2011-08-10 06:24:01 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[FIX] No wiki syntax in plain emails
+----------------------------------------------
+r35993 | jyhem | 2011-08-10 06:12:46 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[ENH] Check that assumed user exists
+----------------------------------------------
+r35992 | jyhem | 2011-08-10 06:10:59 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[FIX] Use correct translation function
+----------------------------------------------
+r35990 | jyhem | 2011-08-10 04:34:16 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[FIX] Avoid blank screens when any error condition is met
+----------------------------------------------
+r35985 | jyhem | 2011-08-10 03:03:26 +0200 (Wed, 10 Aug 2011) | 1 line
+
+[FIX] Keep track of what people put in 'from' field
+----------------------------------------------
+r35963 | sampaioprimo | 2011-08-09 21:02:27 +0200 (Tue, 09 Aug 2011) | 2 lines
+
+[bp/35960][FIX] user receive only one notification when monitoring both topic and thread
+
+----------------------------------------------
+r35940 | sylvieg | 2011-08-09 16:00:55 +0200 (Tue, 09 Aug 2011) | 1 line
+
+[FIX]tracker: incorrect index
+----------------------------------------------
+r35939 | sylvieg | 2011-08-09 15:56:43 +0200 (Tue, 09 Aug 2011) | 1 line
+
+[FIX]tracker: incoprrect index
+----------------------------------------------
+r35938 | sylvieg | 2011-08-09 15:52:03 +0200 (Tue, 09 Aug 2011) | 1 line
+
+[FIX]tracker: speed up 15 times item history function
+----------------------------------------------
+r35917 | jyhem | 2011-08-08 19:19:01 +0200 (Mon, 08 Aug 2011) | 1 line
+
+[FIX]i18n: use utf8 non-breaking space instead of html &nbsp;
+----------------------------------------------
+r35882 | jean-lucnavarro | 2011-08-07 04:43:02 +0200 (Sun, 07 Aug 2011) | 1 line
+
+[FIX] typo line 3376
+----------------------------------------------
 Version 7.1
 <http://tiki.org/ReleaseNotes71>
 ------------------
