@@ -50,16 +50,17 @@ function wikiplugin_draw($data, $params) {
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	extract ($params,EXTR_SKIP);
 	
-	$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
-	//check permissions
-	if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
-		return;
-	}
-	
 	static $index = 0;
 	++$index;
 	
 	if (!isset($id)) {
+		//check permissions
+		if ($tiki_p_admin_file_galleries  != 'y') {
+			if ($tiki_p_upload_files != 'y') {
+				return;
+			}
+		}
+		
 		$label = tra('Draw New SVG Image');
 		$page = htmlentities($page);
 		$content = htmlentities($data);
