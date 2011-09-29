@@ -361,6 +361,11 @@ input[type="submit"]:hover,
 	background: #1173a5;
 	border: 1px solid #11597e;
 	text-decoration: none;
+	font-weight: bold;
+	line-height: 150%;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 
 #genPass .button:hover {
@@ -389,6 +394,21 @@ textarea,
 	color: #000;
 	border: 1px solid;
 	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
+}
+
+/* Needed for Opera (11) */
+.button a,
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+span.button {
+	margin: 2px;
 }
 
 select[multiple="multiple"] {

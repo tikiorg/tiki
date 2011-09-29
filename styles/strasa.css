@@ -255,6 +255,20 @@ select[name="theme-option"] {
 	width: 140px;
 }
 
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+.button {
+    margin: 2px;
+}
+
 small {
 	font-size: .9em;
 }

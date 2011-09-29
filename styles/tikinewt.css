@@ -174,26 +174,41 @@ input,
 textarea,
 select {
 	color: #112233;
-	margin: 1px;
-	font: 100% Verdana, Helvetica, Geneva, Arial, sans-serif;
+/*	margin: 1px; */
+	font:/* 100%*/ Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
-
+/*
 button,
 input,
 select {
 	vertical-align: middle;
-}
-
+}*/
+/*
 button,
 input {
 	margin-right: 1px;
 	padding: 1px;
-}
+}*/
 
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
 }
+/*
+button,
+input[type=submit],
+.button input {
+	border: 1px solid #46596f;
+	background: #c7d0d9;
+	font-weight: bold;
+}
+
+button:hover,
+input[type=submit]:hover,
+.button input:hover {
+	background: #ffffff;
+	cursor: pointer;
+}*/
 
 #page-bar table, #page-bar td, #page-bar tr {
 	margin: 0;
@@ -221,21 +236,17 @@ input[type=submit],
 	background: #c7d0d9;
 	border: 1px solid #999;
 	padding: 0 4px;
+	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	display: inline;
-	outline: none;
-	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
-	border: 1px solid #46596f;
-	background: #c7d0d9;
-	font-weight: bold;
+	font: bold Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
-
+/*
 .button a,
 .button a:visited {
 	padding: 1px 4px;
-}
+}*/
 	
 .button a:hover,
 button:hover,
@@ -245,10 +256,23 @@ input[type=submit]:hover,
 .calbuttonbox a:hover {
 	background: #dca;
 	padding: 0 4px;
-	border: 1px solid #46596f;
-	background: #ffffff;
-	cursor: pointer;
-	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
+	margin-right: 1px;
+	text-decoration: none;
+	font: bold Verdana, Helvetica, Geneva, Arial, sans-serif;
+}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+span.button {
+	margin: 2px;
 }
 
 fieldset {

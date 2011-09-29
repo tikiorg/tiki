@@ -169,7 +169,9 @@ input[type="submit"],
 	font-size: 10px;
 	font-weight: normal;
 	color: #fff;
-	background: #1b5880 url(twist/header.jpg) -30px -40px no-repeat}
+	background: #1b5880 url(twist/header.jpg) -30px -40px no-repeat;
+	padding: 2px 4px;
+}
 
 .button a:hover,
 button:hover,
@@ -179,7 +181,9 @@ input[type="submit"]:hover,
 .submitbutton:hover {
 	background: #619cc4 url(twist/header.jpg) -400px -40px no-repeat;
 	color: #fff;
-	text-decoration: none}
+	text-decoration: none;
+	padding: 2px 4px;
+}
 
 .button a:active,
 button:active,
@@ -189,6 +193,20 @@ input[type="submit"]:active,
 .submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845}
 
 input[type=checkbox] {border: 0}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+.button {
+    margin: 2px;
+}
 
 /***** Site Header & Identity *****/
 .fixed_width .header_fixedwidth {

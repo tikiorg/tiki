@@ -79,8 +79,8 @@ select,
 body.cke_show_borders {
 	background: #ecf5ff;
 	color: #4a6a90;
-	margin: 1px;
-	font: 100% Verdana, Helvetica, Geneva, Arial, sans-serif;
+/*	margin: 1px;*/
+	font: /*100%*/ Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
 textarea {
@@ -108,56 +108,56 @@ pre {
 }
 
 /* "button" links wrappers */
-.button {
+/*.button {
 	padding-left: 0;
 	padding-right: 0;
-}
+}*/
 
 /* Links in buttons */
 .button a,
 .button a:visited,
 button,
+input[type="reset"],
+input[type="submit"],
 .button input,
-.calbuttonbox a {
+.calbuttonBox a {
 	color: #449cd0;
 	background: #ededed;
 	border: 1px solid #c5c5c5;
 	font: bold .95em Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-input[type=reset],
-input[type=submit] {
-	color: #449cd0;
-	background: #ededed;
-	border: 1px solid #c5c5c5;
-	font: bold .95em Verdana, Helvetica, Geneva, Arial, sans-serif;
-}
-
-.button a,
+/*.button a,
 .button a:visited {
 	padding: 1px 4px;
-}
+}*/
 
 .button a:hover,
 button:hover,
 .button input:hover,
 .calbuttonbox a:hover {
 	background: white;
+	font: bold .95em Verdana, Helvetica, Geneva, Arial, sans-serif;
+
 }
 
 input[type=reset]:hover,
 input[type=submit]:hover {
 	background: white;
+	font: bold .95em Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-.button a:active,
-button:active,
-.button input:active,
-.highlight a:link,
-.highlight a:visited {
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
 	color: #449cd0;
 	background: #dbdbdb;
 	border: 1px solid #527ca6;
+	text-decoration: none;
+	font: bold .95em Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
 input[type=reset]:active,
@@ -165,6 +165,20 @@ input[type=submit]:active {
 	color: #449cd0;
 	background: #dbdbdb;
 	border: 1px solid #527ca6;
+}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+span.button {
+	margin: 2px;
 }
 
 form.admin input[name="features"] {
@@ -346,7 +360,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 
-.box-search form .ac_input {
+.box-search form .ac_input,
+.box-search form input[type=text] {
 	border: none;
 	background: none;
 }

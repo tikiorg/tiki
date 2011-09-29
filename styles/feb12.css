@@ -89,7 +89,7 @@ body.cke_show_borders {
 	background: #fff;
 	font-size: 1em;
 }
-
+/*
 input[type=text],
 input[type=password] {
 	font-size: 0.9em;
@@ -102,34 +102,39 @@ select {
 	font-size: 1.0em;
 	vertical-align: middle;
 }
-
+*/
 .button a,
 .button a:visited,
 button,
-input[type=reset],
-input[type=submit],
+input[type="reset"],
+input[type="submit"],
 .button input,
-.calbuttonbox {
-	vertical-align: middle;
+.calbuttonBox a {
 	font: bold 1em Arial, sans-serif;
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
 	font-size: 80%;
 	line-height: 200%;
+	padding: 2px 4px;
 }
 
 .button a:hover,
 button:hover,
-input[type=reset]:hover,
-input[type=submit]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
 .button input:hover,
-.calbuttonbox:hover,
+.calbuttonBox:hover
 #highlight,
 .highlight {
+	font: bold 1em Arial, sans-serif;
 	background: url(feb12/header.jpg) repeat-x 0 100%;
+	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
+	font-size: 80%;
 	text-decoration: none;
+	line-height: 200%;
+	padding: 2px 4px;		
 }
 
 .button a:active,
@@ -141,6 +146,20 @@ input[type=submit]:active,
 .highlight a:visited {
 	background: url(feb12/columnbg.jpg) 0 100%;
 	color: #000;
+}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+button[type="submit"],
+button[type="submit"]:hover {
+	padding: 0 3px;
+}
+
+.button {
+    margin: 2px;
 }
 
 form.admin input[name="features"] {

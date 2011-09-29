@@ -105,14 +105,7 @@ legend {color: #000}
 button,
 .button input,
 .submitbutton,
-.calbuttonBox a {
-	background: url(snow/pagetitle-bg.jpg) repeat-x;
-	font-weight: normal;
-	border: 1px solid #3f3f3f;
-	border-top: 1px solid #818181;
-	margin: 2px;
-	padding: 2px 4px}
-
+.calbuttonBox a,
 input[type="file"],
 input[type="reset"],
 input[type="submit"] {
@@ -126,21 +119,15 @@ input[type="submit"] {
 
 .button a:hover,
 button a:hover,
+button:hover,
 .button input:hover,
 .submitbutton:hover,
-.calbuttonBox a:hover
-.button input:hover,
-.submitbutton:hover {
-	border-top: 1px solid #a9a9a9;
-	border-left: 1px solid #a9a9a9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-	background: url(snow/pagetitle-bg.jpg) repeat-x bottom;
-}
-
+.calbuttonBox a:hover,
 input[type="file"]:hover,
 input[type="reset"]:hover,
-input[type="submit"]:hover  {
+input[type="submit"]:hover,
+.button input:hover,
+.submitbutton:hover {
 	border-top: 1px solid #a9a9a9;
 	border-left: 1px solid #a9a9a9;
 	border-right: 1px solid #696969;
@@ -158,6 +145,10 @@ input[type="password"] {
 	color: #000;
 	width: 120px;
 	cursor: text}
+	
+.button {
+    margin: 3px 2px;
+}
 
 input[type=wikiaction] {margin-bottom: 2px}
 

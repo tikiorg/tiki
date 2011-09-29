@@ -73,7 +73,7 @@ fieldset {
 .button.highlight {
 	margin: 1px 2px;
 	padding: 2px;
-}*/
+}
 
 .button a,
 .button a:visited,
@@ -81,8 +81,7 @@ fieldset {
 .button input,
 .calbuttonBox a {
 	padding: 1px 4px;
-
-}
+}*/
 
 #genPass .button a,
 #genPass .button a:visited,
@@ -91,7 +90,9 @@ fieldset {
 }
 
 .button,
+.button: hover,
 button,
+button:hover,
 input[type=reset],
 input[type=submit],
 input[type=reset]:hover,
