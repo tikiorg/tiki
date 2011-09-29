@@ -3479,13 +3479,10 @@ class FileGalLib extends TikiLib
 	}
 	function moveAllWikiUpToFgal($fgalId, &$errors, &$feedbacks) {
 		$tikilib = TikiLib::lib('tiki');
-		$offset = 0;
+		
 		$maxRecords = 100;
-		while(true) {
-			$pages = $tikilib->list_pages($offset, $maxRecords);
-			if (empty($pages['data']))
-				break;
-			$offset += $maxRecords;
+		// The outer loop attemps to limit memory usage by fetching pages gradually
+		for ($offset = 0; $pages = $tikilib->list_pages($offset, $maxRecords), !empty($pages['data']); $offset += $maxRecords) {
 			foreach ($pages['data'] as $page) {
 				$this->moveWikiUpToFgal($page, $fgalId, $errors, $feedbacks);
 			}
