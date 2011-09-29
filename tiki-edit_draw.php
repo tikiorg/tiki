@@ -46,7 +46,7 @@ if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_galle
 if (!empty($_REQUEST['name']) || !empty($fileInfo['name'])) {
 	$_REQUEST['name'] = (!empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
 } else {
-	$_REQUEST['name'] = "New Svg Image";
+	$_REQUEST['name'] = (isset($_REQUEST['page']) ? $_REQUEST['page'] : tr("New Svg Image"));
 }
 
 $_REQUEST['name'] = htmlspecialchars(str_replace(".svg", "", $_REQUEST['name']));
@@ -109,8 +109,8 @@ if (
 			label: '$label',
 			type: 'draw',
 			content: '',
-			'params[width]': $height,
-			'params[height]': $width
+			'params[width]': '$height',
+			'params[height]': '$width'
 		};
 	");
 }
