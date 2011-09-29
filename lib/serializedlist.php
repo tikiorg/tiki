@@ -35,7 +35,7 @@ abstract class SerializedList
 		
 		$this->initPrefPrefix();
 		
-		$this->name = strtolower( TikiLib::clean_id_string( $name ));
+		$this->name = strtolower( TikiLib::remove_non_word_characters_and_accents( $name ));
 		if (!empty($this->name) && !empty($prefs[$this->getPrefName()])) {
 			$this->loadPref();
 		} else {

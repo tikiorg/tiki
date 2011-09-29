@@ -5113,7 +5113,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * Remove all spaces, accents and non-word chars from a string
+	 * Remove all "non-word" characters and accents from a string
 	 * Can be used for DOM elements and preferences etc
 	 *
 	 * @static
@@ -5121,7 +5121,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @return string cleaned
 	 */
 
-	static function clean_id_string($str) {
+	static function remove_non_word_characters_and_accents($str) {
 		return preg_replace('/\W+/', '_', TikiLib::take_away_accent( $str ));
 	}
 
