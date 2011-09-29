@@ -39,8 +39,8 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array('__foo__', "<strong>foo</strong><br />" . "\n"),	 // bold
 			array('__ foo __', "<strong> foo </strong><br />" . "\n"),	 // bold
 
-			array('===foo===', '<span style="text-decoration:underline;">foo</span>' . "<br />" . "\n"), // underline
-			array('=== foo ===', '<span style="text-decoration:underline;"> foo </span>' . "<br />" . "\n"), // underline
+			array('===foo===', '<u>foo</u>' . "<br />" . "\n"), // underline
+			array('=== foo ===', '<u> foo </u>' . "<br />" . "\n"), // underline
 
 			array('-=foo=-', '<div class="titlebar">foo</div>' . "\n"),	// title bar
 			array('-= foo =-', '<div class="titlebar"> foo </div>' . "\n"),	// title bar
@@ -69,7 +69,7 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 				array('page' => 'HomePage'),
 			),			
 			
-			array('--foo--', "<del>foo</del><br />\n"),	// strike out
+			array('--foo--', "<strike>foo</strike><br />\n"),	// strike out
 			array('-- foo --', "-- foo --<br />\n"),	// not parsed
 
 			array('[foo]', '<a class="wiki"  href="foo" rel="">foo</a><br />' . "\n"), // link
