@@ -53,7 +53,7 @@
 		<a href="{$files[$changes].id|sefurl:display}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
-		{if $files[$changes].type eq 'image/svg+xml'}
+		{if $files[$changes].type eq 'image/svg+xml' and $files[$changes].perms.tiki_p_upload_files eq 'y'}
 			<a href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}">
 			{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 			</a>
@@ -66,9 +66,11 @@
 		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
-		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}&edit">
-		{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
-		</a>
+		{if $files[$changes].perms.tiki_p_upload_files eq 'y'}
+			<a href="tiki-edit_docs.php?fileId={$files[$changes].id}&edit">
+			{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
+			</a>
+		{/if}
 	{/if}
 	
 	{if (isset($files[$changes].p_download_files) and  $files[$changes].p_download_files eq 'y')

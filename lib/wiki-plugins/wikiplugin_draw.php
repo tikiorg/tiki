@@ -46,7 +46,7 @@ function wikiplugin_draw_info() {
 }
 
 function wikiplugin_draw($data, $params) {
-	global $dbTiki, $tiki_p_edit, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty, $headerlib, $globalperms;
+	global $dbTiki, $tiki_p_edit, $tiki_p_admin,$tiki_p_upload_files, $prefs, $user, $page, $tikilib, $smarty, $headerlib, $globalperms;
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	extract ($params,EXTR_SKIP);
 	
@@ -55,10 +55,8 @@ function wikiplugin_draw($data, $params) {
 	
 	if (!isset($id)) {
 		//check permissions
-		if ($tiki_p_admin_file_galleries  != 'y') {
-			if ($tiki_p_upload_files != 'y') {
-				return;
-			}
+		if ($tiki_p_upload_files != 'y') {
+			return;
 		}
 		
 		$label = tra('Draw New SVG Image');
