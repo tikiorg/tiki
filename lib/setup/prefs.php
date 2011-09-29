@@ -219,10 +219,6 @@ function get_default_prefs() {
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
 
-		// areas perspective binder
-		'feature_areas' => 'n',
-		'areas_root' => 1,
-
 		// look and feel
 
 		'feature_sitenav' => 'n',
