@@ -50,6 +50,12 @@ function wikiplugin_draw($data, $params) {
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	extract ($params,EXTR_SKIP);
 	
+	$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
+	//check permissions
+	if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
+		return;
+	}
+	
 	static $index = 0;
 	++$index;
 	
