@@ -696,6 +696,8 @@ function wikiplugin_trackerlist($data, $params) {
 	
 	extract ($params,EXTR_SKIP);
 
+	$skip_status_perm_check = false;
+
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
@@ -1114,6 +1116,9 @@ function wikiplugin_trackerlist($data, $params) {
 					$exactvalue[] = $_REQUEST['tr_user'];
 					$smarty->assign_by_ref('tr_user', $exactvalue);
 				}
+				if ($tracker_info['writerCanModify'] == 'y') {
+					$skip_status_perm_check = true;
+				}
 			}
 		}
 		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
@@ -1465,7 +1470,7 @@ function wikiplugin_trackerlist($data, $params) {
 				}
 			}
 			// End Optimization
-			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter, $allfields);
+			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter, $allfields, $skip_status_perm_check);
 			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
 				return;
 			}

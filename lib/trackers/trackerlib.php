@@ -878,7 +878,7 @@ class TrackerLib extends TikiLib
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 * allfields is only for performance issue - check if one field is a category
 	 */
-	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null) {
+	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null, $skip_status_perm_check = false) {
 		//echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '<br />FILTER:'; print_r($filter); /*echo '<br />LISTFIELDS'; print_r($listfields);*/ echo '</pre>';
 		global $prefs;
 
@@ -902,7 +902,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
+		if ( ! $skip_status_perm_check && $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
 			return array('cant' => 0, 'data' => '');
 		}
 		if ( substr($sort_mode, 0, 2) == 'f_' ) {
