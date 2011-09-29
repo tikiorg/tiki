@@ -192,7 +192,7 @@
 			{preference name=feature_filegals_manager}
 			{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
 			{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
-			<br /><em>{tr}If you use these buttons please make sure to have a backup of the base and the directory wiki_up{/tr}</em>
+			<br /><em>{tr}If you use these buttons please make sure to have a backup of the database and the directory wiki_up{/tr}</em>
 		</div>
 
 		{preference name=feature_wiki_export}
