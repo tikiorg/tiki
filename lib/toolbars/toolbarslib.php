@@ -1354,12 +1354,14 @@ class ToolbarSwitchEditor extends Toolbar
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
+		global $prefs;
 		if (!empty($this->wysiwyg)) {
 			$this->name = $this->wysiwyg;	// temp
 			
-			global $headerlib;
-			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(<<< JS
+		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
+				global $headerlib;
+				$label = addcslashes($this->label, "'");
+				$headerlib->add_jq_onready(<<< JS
 if (typeof window.CKEDITOR !== "undefined") {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
 	window.CKEDITOR.plugins.add( '{$this->name}', {
@@ -1381,7 +1383,7 @@ if (typeof window.CKEDITOR !== "undefined") {
 	});
 }
 JS
-, 10);		
+, 10);			
 			
 		}
 		return $this->wysiwyg;
