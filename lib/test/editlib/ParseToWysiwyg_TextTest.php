@@ -30,6 +30,9 @@ private $el = null; // the EditLib
 	
 		
 	function tearDown() {
+		global $prefs;
+		// restore preference default state
+		$prefs['feature_use_three_colon_centertag'] = 'n';
 		chdir($this->dir);
 	}	
 	

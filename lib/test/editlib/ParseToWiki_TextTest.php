@@ -32,6 +32,9 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 	
 		
 	function tearDown() {
+		global $prefs;
+		// restore preference default state
+		$prefs['feature_use_three_colon_centertag'] = 'n';
 		chdir($this->dir);
 	}
 	
