@@ -3,14 +3,14 @@
 {if !empty($feedbacksWikiUp) || !empty($moveWikiUp)}
 	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
 	{if !empty($feedbacksWikiUp)}
-		{tr}Operations executed successfully{/tr}
+		{tr}The following pages were modified:{/tr}
 		<ul>
 		{foreach from=$feedbacksWikiUp item=f}
 			<li>{$f|escape}</li>
 		{/foreach}
 		</ul>
 	{else}
-		{tr}No pages found{/tr}
+		{tr}Nothing was changed (no images in wiki_up were found in Wiki pages).{/tr}
 	{/if}
 	{/remarksbox}
 {elseif !empty($moveWikiUp)}
