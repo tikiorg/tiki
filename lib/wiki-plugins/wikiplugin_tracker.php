@@ -560,7 +560,7 @@ function wikiplugin_tracker($data, $params)
 
 			$flds = array('data' => array());
 			foreach ($unfiltered['data'] as $f) {
-				if ($itemObject->canModifyField($f['fieldId'])) {
+				if ($itemObject->canModifyField($f['fieldId']) || $registration == 'y' && empty($item_info)) {
 					$flds['data'][] = $f;
 				}
 			}
