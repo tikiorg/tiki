@@ -119,24 +119,6 @@
 			
 {tab name="{tr}Interface{/tr}"}
 			<fieldset class="admin clearfix featurelist">
-				<legend> {tr}Mobile{/tr} </legend>	
-					{preference name=mobile_feature}
-
-					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
-						{preference name=mobile_perspectives}
-						<fieldset>
-							<legend>{tr}Mobile Themes{/tr}</legend>
-						{preference name=mobile_theme_header}
-						{preference name=mobile_theme_content}
-						{preference name=mobile_theme_footer}
-						{preference name=mobile_theme_modules}
-						{preference name=mobile_theme_menus}
-						{preference name=mobile_use_latest_lib}
-						</fieldset>
-					</div>
-			</fieldset>
-
-			<fieldset class="admin clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
@@ -165,6 +147,25 @@
 				</fieldset>
 				</div>
 			</fieldset>
+
+			<fieldset class="admin clearfix featurelist">
+				<legend> {tr}Mobile{/tr} </legend>
+					{preference name=mobile_feature}
+
+					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
+						{preference name=mobile_perspectives}
+						<fieldset>
+							<legend>{tr}Mobile Themes{/tr}</legend>
+						{preference name=mobile_theme_header}
+						{preference name=mobile_theme_content}
+						{preference name=mobile_theme_footer}
+						{preference name=mobile_theme_modules}
+						{preference name=mobile_theme_menus}
+						{preference name=mobile_use_latest_lib}
+						</fieldset>
+					</div>
+			</fieldset>
+
 {/tab}
 
 {tab name="{tr}Programmer{/tr}"}
