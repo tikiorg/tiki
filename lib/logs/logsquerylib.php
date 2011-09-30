@@ -34,6 +34,11 @@ class LogsQueryLib
 			->id($id);
 	}
 	
+	static function wikiPagesFrom($user= "") {
+		return LogsQueryLib::type("wiki page")
+			->id($id);
+	}
+	
 	static function forum($id = "") {
 		return LogsQueryLib::type("forum")
 			->id($id);
@@ -89,7 +94,7 @@ class LogsQueryLib
 			->id($id);
 	}
 	
-	static function trackeritem($id = "") {
+	static function trackerItem($id = "") {
 		return LogsQueryLib::type("trackeritem")
 			->id($id);
 	}
@@ -103,7 +108,6 @@ class LogsQueryLib
 		return LogsQueryLib::type("url")
 			->id($id);
 	}
-	
 	
 	function id($id = "") {
 		$this->id = $id;
