@@ -12,6 +12,7 @@ function wikiplugin_iframe_info() {
 		'description' => tra('Include another web page within a frame'),
 		'prefs' => array( 'wikiplugin_iframe' ),
 		'body' => tra('URL'),
+		'format' => 'html',
 		'validate' => 'all',
 		'tags' => array( 'basic' ),
 		'icon' => 'pics/icons/page_copy.png',
