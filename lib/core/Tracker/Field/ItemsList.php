@@ -89,29 +89,16 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		if ($context['list_mode'] === 'csv') {
 			return $this->getConfiguration('value');
 		} else {
-			$trklib = TikiLib::lib('trk');
-
 			if (isset($context['search_render']) && $context['search_render'] == 'y') {
 				$items = $this->getData($this->getConfiguration('fieldId'));
 			} else {
 				$items = $this->getItemIds();
 			}
-			$displayFields = $this->getOption(3);
-			$status = $this->getOption(5, 'opc');
-			$trackerId = (int) $this->getOption(0);
 
-			$list = array();
-			foreach ($items as $itemId) {
-				if ($displayFields) {
-					$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
-				} else {
-					$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
-				}
-			}
-			
+			$list = $this->getItemLabels($items);
 			return $this->renderTemplate('trackeroutput/itemslist.tpl', $context, array(
 				'links' => (bool) $this->getOption(4),
-				'raw' => (bool) $displayFields,
+				'raw' => (bool) $this->getOption(3),
 				'itemIds' => implode(',', $items),
 				'items' => $list,
 				'num' => count($list),
@@ -121,26 +108,14 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
-		$trklib = TikiLib::lib('trk');
-		$displayFields = $this->getOption(3);
-		$trackerId = (int) $this->getOption(0);
-		$status = $this->getOption(5, 'opc');
-
 		$items = $this->getItemIds();
 
-		$list = array();
-		foreach ($items as $itemId) {
-			if ($displayFields) {
-				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
-			} else {
-				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
-			}
-		}
-		$listtext = implode(' ', $list); 			
+		$list = $this->getItemLabels($items);
+		$listtext = implode(' ', $list);
 
 		return array(
 			$baseKey => $typeFactory->multivalue($items),
-			"{$baseKey}_text" => $typeFactory->sortable($listtext),
+			"{$baseKey}_text" => $typeFactory->plaintext($listtext),
 		);
 	}
 
@@ -196,6 +171,30 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		}
 
 		return $items;
+	}
+
+	private function getItemLabels($items)
+	{
+		$displayFields = $this->getOption(3);
+		$trackerId = (int) $this->getOption(0);
+		$status = $this->getOption(5, 'opc');
+
+		$definition = Tracker_Definition::get($trackerId);
+		if (! $definition) {
+			return array();
+		}
+
+		$list = array();
+		$trklib = TikiLib::lib('trk');
+		foreach ($items as $itemId) {
+			if ($displayFields) {
+				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
+			} else {
+				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
+			}
+		}
+
+		return $list;
 	}
 }
 
