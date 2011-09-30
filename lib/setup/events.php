@@ -64,6 +64,10 @@ if ($prefs['feature_file_galleries'] == 'y') {
 	$events->bind('tiki.save', Event_Lib::defer('filegal', 'save_sync_file_backlinks'));
 }
 
+if ($prefs['dailyreports_enabled_for_new_users'] == 'y') {
+	$events->bind('tiki.user.create', Event_Lib::defer('reports', 'add_user_to_daily_reports'));
+}
+
 $events->bind('tiki.save', Event_Lib::defer('tiki', 'plugin_post_save_actions'));
 
 // Chain events
