@@ -2855,6 +2855,12 @@ class UsersLib extends TikiLib
 		$this->set_user_default_preferences($user, false); // do not force
 
 		$cachelib->invalidate('userslist');
+		
+		if ($prefs['dailyreports_enabled_for_new_users'] == 'y') {
+			$reportslib = TikiLib::lib('reports');
+			$reportslib->add_user_to_daily_reports($user);
+		}
+		
 		return true;
 	}
 

@@ -20,6 +20,9 @@
 				{preference name=feature_user_watches}
 				{preference name=feature_group_watches}
 				{preference name=feature_daily_report_watches}
+				<div class="adminoptionboxchild" id="feature_daily_report_watches_childcontainer">
+					{preference name=dailyreports_enabled_for_new_users}
+				</div>
 				{preference name=feature_user_watches_translations}
 				{preference name=feature_usermenu}
 				{preference name=feature_tasks}
