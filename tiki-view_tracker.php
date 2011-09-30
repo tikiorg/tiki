@@ -254,6 +254,8 @@ if (!empty($_REQUEST['remove'])) {
 	}
 } elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
 	check_ticket('view-trackers');
+	$transaction = $tikilib->begin();
+
 	foreach($_REQUEST['action'] as $batchid) {
 		$item_info = $trklib->get_item_info($batchid);
 		$actionObject = Tracker_Item::fromInfo($item_info);
@@ -261,8 +263,13 @@ if (!empty($_REQUEST['remove'])) {
 			$trklib->remove_tracker_item($batchid);
 		}
 	}
+
+	$transaction->commit();
+	
 } elseif (isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
 	check_ticket('view-trackers');
+	$transaction = $tikilib->begin();
+
 	foreach($_REQUEST['action'] as $batchid) {
 		$item_info = $trklib->get_item_info($batchid);
 		$actionObject = Tracker_Item::fromInfo($item_info);
@@ -272,6 +279,8 @@ if (!empty($_REQUEST['remove'])) {
 			) , $_REQUEST['batchaction']);
 		}
 	}
+
+	$transaction->commit();
 }
 $smarty->assign('mail_msg', '');
 $smarty->assign('email_mon', '');

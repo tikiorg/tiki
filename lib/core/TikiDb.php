@@ -268,6 +268,11 @@ abstract class TikiDb
 		return new TikiDb_Table($this, $tableName);
 	} // }}}
 
+	function begin() // {{{
+	{
+		return new TikiDb_Transaction;
+	} // }}}
+
 	/**
 	* Get a list of installed engines in the MySQL instance
 	* $return array of engine names

@@ -2431,6 +2431,7 @@ class TrackerLib extends TikiLib
 	}
 
 	function remove_tracker($trackerId) {
+		$transaction = $this->begin();
 
 		// ---- delete image from disk -------------------------------------
 		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
@@ -2462,6 +2463,7 @@ class TrackerLib extends TikiLib
 		$this->remove_object('tracker', $trackerId);
 
 		$this->clear_tracker_cache($trackerId);
+		$transaction->commit();
 
 		return true;
 	}

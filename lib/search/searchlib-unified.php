@@ -8,9 +8,30 @@
 class UnifiedSearchLib
 {
 	const INCREMENT_QUEUE = 'search-increment';
+	private $batchToken;
+
+	function startBatch()
+	{
+		if (! $this->batchToken) {
+			$this->batchToken = uniqid();
+			return $this->batchToken;
+		}
+	}
+
+	function endBatch($token, $count = 100)
+	{
+		if ($token && $this->batchToken === $token) {
+			$this->batchToken = null;
+			$this->processUpdateQueue($count);
+		}
+	}
 
 	function processUpdateQueue($count = 10)
 	{
+		if ($this->batchToken) {
+			return;
+		}
+
 		if ($this->rebuildInProgress()) {
 			return;
 		}
