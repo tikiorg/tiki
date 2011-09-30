@@ -29,8 +29,8 @@ function HandleObjectCategories($objectCategoryIds)
 
             if ($categlib->get_category_parent($categId) == $prefs['areas_root']) // If parent category has ID equal to value of $prefs['areas_root']
             {
-
-             $foundPerspective = $perspectivelib->get_perspective_by_categid($categId);   
+  
+             $foundPerspective = $perspectivelib->get_perspective_by_categid($categId); 
                 if ($foundPerspective != $_SESSION['current_perspective']) // If the found perspective is different than the current perspective, update it.
                 {
                      $perspectivelib->set_perspective($foundPerspective);
@@ -40,12 +40,12 @@ function HandleObjectCategories($objectCategoryIds)
             }
             else // If parent category id does not equal $prefs['areas_root'] set the default perspective (0)
             {
-//                if ($foundPerspective != $_SESSION['current_perspective'])
-  //              {
+                if ($foundPerspective != $_SESSION['current_perspective'])
+                {
                     $perspectivelib->set_perspective(0);
     //Reroute browser back to calling script after we have applied our hack.
     header("Location: ". $_SERVER['REQUEST_URI']);	
-    //            }
+                }
             }
         
         }
