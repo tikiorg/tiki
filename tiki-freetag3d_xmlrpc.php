@@ -13,7 +13,7 @@ $access->check_feature('feature_freetags', 'freetags_feature_3d');
 
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 
-$server = new XML_RPC_Server( $map );
+$server = new XML_RPC_Server($map);
 
 function getSubGraph($params) {
     global $freetaglib, $dbTiki, $base_url, $prefs;

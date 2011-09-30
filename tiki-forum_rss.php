@@ -14,12 +14,12 @@ if ($prefs['feed_forum'] != 'y') {
         require_once ('tiki-rss_error.php');
 }
 
-if(!isset($_REQUEST["forumId"])) {
+if (!isset($_REQUEST["forumId"])) {
         $errmsg=tra("No forumId specified");
         require_once ('tiki-rss_error.php');
 }
 
-$tikilib->get_perm_object( $_REQUEST['forumId'], 'forum' );
+$tikilib->get_perm_object($_REQUEST['forumId'], 'forum');
 
 if ($tiki_p_forum_read != 'y') {
 	$smarty->assign('errortype', 401);
