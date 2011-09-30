@@ -94,7 +94,7 @@ function wikiplugin_code($data, $params) {
 		. '~np~'
 		. $out
 		. '~/np~'
-		. '</pre>'
+		. '</pre>';
 	return $out;
 }
 
