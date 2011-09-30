@@ -146,7 +146,7 @@ class HeaderLib
 
 	function set_metatags($tag,$value,$rank=0) {
 		$tag = addslashes($tag);
-		$this->metatags[$tag] = $href;
+		$this->metatags[$tag] = $value;
 	}
 
 	function output_headers() {
@@ -677,6 +677,8 @@ class HeaderLib
 	}
 
 	function add_map() {
+		global $prefs;
+		
 		$tikilib = TikiLib::lib('tiki');
 		$enabled = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
 
