@@ -62,7 +62,7 @@ if (!isset($_SESSION["breadCrumb"])) {
 
 if (!in_array($page, $_SESSION["breadCrumb"])) {
 	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
-		array_shift ($_SESSION["breadCrumb"]);
+		array_shift($_SESSION["breadCrumb"]);
 	}
 
 	array_push($_SESSION["breadCrumb"], $page);
@@ -97,8 +97,8 @@ if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
 
-if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
-	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
+if ( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+	$pageRenderer->setPageNumber((int) $_REQUEST['pagenum']);
 }
 
 $pageRenderer->useRaw();
@@ -124,7 +124,7 @@ if ( isset($_REQUEST['download']) && $_REQUEST['download'] !== 'n' ) {
 
 // add &full to URL to output the whole html head and body
 if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
-	$smarty->assign('mid','tiki-show_page_raw.tpl');
+	$smarty->assign('mid', 'tiki-show_page_raw.tpl');
 	// use tiki_full to include include CSS and JavaScript
 	$smarty->display("tiki_full.tpl");
 } else if (isset($_REQUEST['textonly']) && $_REQUEST['textonly'] != 'n') {

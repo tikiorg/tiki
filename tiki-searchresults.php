@@ -127,7 +127,7 @@ if (!isset($_REQUEST["offset"])) {
 }
 if (isset($_REQUEST['searchLang'])) {
 	$searchLang = $_REQUEST['searchLang'];
-} elseif($prefs['search_default_interface_language'] == 'y' && $prefs['feature_multilingual'] == 'y') {
+} elseif ($prefs['search_default_interface_language'] == 'y' && $prefs['feature_multilingual'] == 'y') {
 	$searchLang = $prefs['language'];
 } else {
 	$searchLang = '';

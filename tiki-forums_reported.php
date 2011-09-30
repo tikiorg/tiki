@@ -67,11 +67,11 @@ if (isset($_REQUEST['del']) && isset($_REQUEST['msg'])) {
 // Quickjumpt to other forums
 if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
-	Perms::bulk( array( 'type' => 'forum' ), 'object', $all_forums['data'], 'forumId' );
+	Perms::bulk(array( 'type' => 'forum' ), 'object', $all_forums['data'], 'forumId');
 
 	$temp_max = count($all_forums["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
-		$forumperms = Perms::get( array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ) );
+		$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
 		$all_forums["data"][$i]["can_read"] = $forumperms->forum_read ? 'y' : 'n';
 	}
 

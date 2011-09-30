@@ -22,7 +22,7 @@ if (isset($_REQUEST['remove2'])) {
 }
 if (isset($_REQUEST['delete'])) {
 	$access->check_authenticity();
-	foreach(array_keys($_REQUEST["event"]) as $ev) {
+	foreach (array_keys($_REQUEST["event"]) as $ev) {
 		$minicallib->minical_remove_event($user, $ev);
 	}
 }

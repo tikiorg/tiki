@@ -17,7 +17,7 @@ if ($prefs['feature_banning'] == 'y') {
 }
 if ($prefs['layout_section'] == 'y') {
 	$section_elements = array('top_bar', 'bot_bar', 'left_column', 'right_column');
-	foreach($section_elements as $element) {
+	foreach ($section_elements as $element) {
 		if (isset($prefs[$section . '_' . $element])) {
 			$prefs['feature_' . $element] = $prefs[$section . '_' . $element];
 		}

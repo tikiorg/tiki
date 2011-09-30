@@ -76,7 +76,7 @@ if ($ed_offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign('url', "tiki-newsletter_archives.php");
 if (isset($_REQUEST['editionId'])) {
-	foreach($channels['data'] as $edition) {
+	foreach ($channels['data'] as $edition) {
 		if ($edition['editionId'] == $_REQUEST['editionId']) {
 			$edition["dataparsed"] = $tikilib->parse_data($edition["data"]);
 			$smarty->assign_by_ref('edition', $edition);

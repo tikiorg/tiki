@@ -15,7 +15,7 @@ $maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 	check_ticket('messu-sent');
-	foreach(array_keys($_REQUEST["msg"]) as $msg) {
+	foreach (array_keys($_REQUEST["msg"]) as $msg) {
 		$messulib->delete_message($user, $msg, 'sent');
 	}
 }
@@ -23,7 +23,7 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 if (isset($_REQUEST["archive"]) && isset($_REQUEST["msg"])) {
 	check_ticket('messu-sent');
 	$tmp = $messulib->count_messages($user, 'archive');
-	foreach(array_keys($_REQUEST["msg"]) as $msg) {
+	foreach (array_keys($_REQUEST["msg"]) as $msg) {
 		if (($prefs['messu_archive_size'] > 0) && ($tmp >= $prefs['messu_archive_size'])) {
 			$smarty->assign('msg', tra("Archive is full. Delete some messages from archive first."));
 			$smarty->display("error.tpl");
@@ -38,7 +38,7 @@ if (isset($_REQUEST["download"])) {
 	check_ticket('messu-sent');
 	// if message ids are handed over, use them:
 	if (isset($_REQUEST["msg"])) {
-		foreach(array_keys($_REQUEST["msg"]) as $msg) {
+		foreach (array_keys($_REQUEST["msg"]) as $msg) {
 			$tmp = $messulib->get_message($user, $msg, 'sent');
 			$items[] = $tmp;
 		}

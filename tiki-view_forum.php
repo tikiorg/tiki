@@ -78,7 +78,7 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 	}
 }
 
-$access->check_permission( array('tiki_p_forum_read') );
+$access->check_permission(array('tiki_p_forum_read'));
 
 $commentslib->forum_add_hit($_REQUEST["forumId"]);
 
@@ -107,7 +107,7 @@ if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['locksel_x'])) {
 		if (isset($_REQUEST['forumtopic'])) {
 			check_ticket('view-forum');
-			foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
 				$commentslib->lock_comment($topic);
 			}
 		}
@@ -116,7 +116,7 @@ if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['unlocksel_x'])) {
 		if (isset($_REQUEST['forumtopic'])) {
 			check_ticket('view-forum');
-			foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
 				$commentslib->unlock_comment($topic);
 			}
 		}
@@ -124,7 +124,7 @@ if ($tiki_p_admin_forum == 'y') {
 
 	if (isset($_REQUEST['movesel'])) {
 		if (isset($_REQUEST['forumtopic'])) {
-			foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
 				check_ticket('view-forum');
 				// To move a topic you just have to change the object
 				$obj = 'forum:' . $_REQUEST['moveto'];
@@ -138,7 +138,7 @@ if ($tiki_p_admin_forum == 'y') {
 
 	if (isset($_REQUEST['mergesel'])) {
 		if (isset($_REQUEST['forumtopic'])) {
-			foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
 				check_ticket('view-forum');
 				// To move a topic you just have to change the object
 				if ($topic != $_REQUEST['mergetopic']) {
@@ -237,7 +237,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_vote == 'y') {
 	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
 		check_ticket('view-forum');
 		$comments_show = 'y';
-		if ( $tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"], $_REQUEST['comments_vote'], range( 1, 5 ) ) ) {
+		if ($tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"], $_REQUEST['comments_vote'], range( 1, 5 ))) {
 			$commentslib->vote_comment($_REQUEST["comments_threadId"], $user, $_REQUEST["comments_vote"]);
 		}
 		$_REQUEST["comments_threadId"] = 0;
@@ -421,7 +421,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
 			$watching_categories = array();
-			foreach($watching_categories_temp as $wct) {
+			foreach ($watching_categories_temp as $wct) {
 				$watching_categories[] = array(
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)

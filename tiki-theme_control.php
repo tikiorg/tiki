@@ -32,7 +32,7 @@ if (isset($_REQUEST['assigcat'])) {
 if (isset($_REQUEST["delete"])) {
 	if (isset($_REQUEST["categ"])) {
 		check_ticket('theme-control');
-		foreach(array_keys($_REQUEST["categ"]) as $cat) {
+		foreach (array_keys($_REQUEST["categ"]) as $cat) {
 			$tcontrollib->tc_remove_cat($cat);
 		}
 	}

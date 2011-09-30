@@ -63,5 +63,5 @@ $smarty->assign('metrics_range_prefix', $converted_range['metrics_range_prefix']
 $smarty->assign('range', $range);
 $smarty->assign('tabs', $tabs);
 $smarty->assign('metrics_range', $metrics_range);
-$smarty->assign('mid','tiki-metrics.tpl');
+$smarty->assign('mid', 'tiki-metrics.tpl');
 $smarty->display("tiki.tpl");

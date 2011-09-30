@@ -8,7 +8,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/wiki/histlib.php');
-require_once('lib/wiki/wikilib.php');
+require_once ('lib/wiki/wikilib.php');
 require_once ('lib/rss/rsslib.php'); 
 
 $access->check_feature('feature_wiki');
@@ -19,8 +19,8 @@ if ($prefs['feed_wiki'] != 'y') {
 }
 
 $res=$access->authorize_rss(array('tiki_p_view', 'tiki_p_wiki_view_ref'));
-if($res) {
-   if($res['header'] == 'y') {
+if ($res) {
+   if ($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
       header('HTTP/1.0 401 Unauthorized');
    }
@@ -74,7 +74,7 @@ if ($output["data"]=="EMPTY") {
 	
 		// do a diff between both pages
 		require_once('lib/diff/difflib.php');
-		$diff = diff2($prev_page_p , $curr_page_p, "unidiff");
+		$diff = diff2($prev_page_p, $curr_page_p, "unidiff");
 	
 		
 		foreach ($diff as $part) {

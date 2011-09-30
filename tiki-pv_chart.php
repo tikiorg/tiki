@@ -21,7 +21,7 @@ if (!isset($_REQUEST["days"])) $_REQUEST["days"] = 7;
 $statslib = TikiLib::lib('stats');
 $data = $statslib->get_pv_chart_data($_REQUEST["days"]);
 
-foreach($data['xdata'] as $key => $date) {
+foreach ($data['xdata'] as $key => $date) {
 	 $data['xdata'][$key] = strtotime($date) / 24 / 3600;
 }
 $graph->setData(array('x' => $data['xdata'], 'y0' => $data['ydata']));

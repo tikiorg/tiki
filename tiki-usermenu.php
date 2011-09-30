@@ -16,7 +16,7 @@ $access->check_permission('tiki_p_usermenu');
 if (!isset($_REQUEST["menuId"])) $_REQUEST["menuId"] = 0;
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["menu"])) {
 	check_ticket('user-menu');
-	foreach(array_keys($_REQUEST["menu"]) as $men) {
+	foreach (array_keys($_REQUEST["menu"]) as $men) {
 		$usermenulib->remove_usermenu($user, $men);
 	}
 	if (isset($_SESSION['usermenu'])) unset($_SESSION['usermenu']);

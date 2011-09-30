@@ -41,14 +41,16 @@ require_once 'lib/cache/pagecache.php';
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()
 	->onlyForGet()
-	->requiresPreference( 'memcache_forum_output' )
-	->addArray( $_GET )
-	->addValue( 'role', 'forum-page-output' )
-	->addKeys( $_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ) )
-	->checkMeta( 'forum-page-output-meta-time', array(
-		'forumId'           => @$_REQUEST['forumId'],
-		'comments_parentId' => @$_REQUEST['comments_parentId']
-	) )
+	->requiresPreference('memcache_forum_output')
+	->addArray($_GET)
+	->addValue('role', 'forum-page-output')
+	->addKeys($_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ))
+	->checkMeta(
+		'forum-page-output-meta-time', array(
+			'forumId'           => @$_REQUEST['forumId'],
+			'comments_parentId' => @$_REQUEST['comments_parentId']
+			)
+		)
 	->applyCache();
 
 if ($prefs['feature_categories'] == 'y') {
@@ -102,7 +104,7 @@ if (isset($_REQUEST['lock'])) {
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
 $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_parentId"]);
 
-$tikilib->get_perm_object( $_REQUEST["forumId"], 'forum' );
+$tikilib->get_perm_object($_REQUEST["forumId"], 'forum');
 
 if ($user) {
 	if ($forum_info["moderator"] == $user) {
@@ -124,7 +126,7 @@ if ($tiki_p_admin_forum == 'y') {
 	$smarty->assign('tiki_p_forum_post_topic', 'y');
 }
 
-$access->check_permission( array('tiki_p_forum_read') );
+$access->check_permission(array('tiki_p_forum_read'));
 
 $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
@@ -150,7 +152,7 @@ if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['delsel'])) {
 		if (isset($_REQUEST['forumthread'])) {
 			check_ticket('view-forum');
-			foreach(array_values($_REQUEST['forumthread']) as $thread) {
+			foreach (array_values($_REQUEST['forumthread']) as $thread) {
 				$commentslib->remove_comment($thread);
 				$commentslib->register_remove_post($_REQUEST['forumId'], $_REQUEST['comments_parentId']);
 			}
@@ -163,7 +165,7 @@ if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['movesel'])) {
 		if (isset($_REQUEST['forumthread'])) {
 			check_ticket('view-forum');
-			foreach(array_values($_REQUEST['forumthread']) as $thread) {
+			foreach (array_values($_REQUEST['forumthread']) as $thread) {
 				$commentslib->set_parent($thread, $_REQUEST['moveto']);
 			}
 		}
@@ -253,7 +255,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
 			$watching_categories = array();
-			foreach($watching_categories_temp as $wct) {
+			foreach ($watching_categories_temp as $wct) {
 				$watching_categories[] = array(
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
@@ -343,7 +345,7 @@ if (isset($_REQUEST['display'])) {
 	if ($_REQUEST['display'] == 'pdf') {
 		require_once 'lib/pdflib.php';
 		$generator = new PdfGenerator();
-		$pdf = $generator->getPdf( 'tiki-view_forum_thread.php', array('display' => 'print', 'comments_parentId' => $_REQUEST['comments_parentId'], 'forumId' => $_REQUEST['forumId']) );
+		$pdf = $generator->getPdf('tiki-view_forum_thread.php', array('display' => 'print', 'comments_parentId' => $_REQUEST['comments_parentId'], 'forumId' => $_REQUEST['forumId']));
 
 		header('Cache-Control: private, must-revalidate');
 		header('Pragma: private');

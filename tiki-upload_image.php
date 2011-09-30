@@ -123,7 +123,7 @@ if (isset($_REQUEST["upload"])) {
 				if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 					if ($tiki_p_admin == 'y') {
 						$smarty->assign('msg', tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest);
-					}	else	{
+					} else {
 						$smarty->assign('msg', tra('Errors detected'));
 					}
 					$smarty->assign('errortype', 'no_redirect_login');

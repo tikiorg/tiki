@@ -62,7 +62,7 @@ if (isset($_REQUEST["save"])) {
 }
 if (!empty($_REQUEST['checked']) && (!empty($_REQUEST['prefix']) || !empty($_REQUEST['postfix']))) {
 	check_ticket('received-pages');
-	foreach($_REQUEST['checked'] as $page) {
+	foreach ($_REQUEST['checked'] as $page) {
 		$newpage = empty($_REQUEST['postfix']) ? $_REQUEST['prefix'] . $page : $page . $_REQUEST['postfix'];
 		if ($tikilib->page_exists($newpage)) {
 			$errors[] = array('error' => 'Page already exists', 'param' => $page);

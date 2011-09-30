@@ -51,7 +51,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 
 require_once 'lib/wiki/renderlib.php';
-$pageRenderer = new WikiRenderer( $info, $user );
+$pageRenderer = new WikiRenderer($info, $user);
 $objectperms = $pageRenderer->applyPermissions();
 
 if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objectperms->wiki_view_latest) {
@@ -142,7 +142,7 @@ $smarty->assign('cached_page', 'n');
 // Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 $preparsed = array();
 $noparsed = array();
-$parserlib->parse_first( $info["data"], $preparsed, $noparsed );
+$parserlib->parse_first($info["data"], $preparsed, $noparsed);
 
 $pdata = $wikilib->get_parse($page, $canBeRefreshed);
 
@@ -151,8 +151,8 @@ $pdata = str_replace('tiki-index.php', 'tiki-index_p.php', $pdata);
 if (!isset($_REQUEST['pagenum']))
 	$_REQUEST['pagenum'] = 1;
 
-if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
-	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
+if ( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+	$pageRenderer->setPageNumber((int) $_REQUEST['pagenum']);
 }
 
 

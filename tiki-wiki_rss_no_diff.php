@@ -19,8 +19,8 @@ if ($prefs['feed_wiki'] != 'y') {
 }
 
 $res=$access->authorize_rss(array('tiki_p_view', 'tiki_p_wiki_view_ref'));
-if($res) {
-   if($res['header'] == 'y') {
+if ($res) {
+   if ($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
       header('HTTP/1.0 401 Unauthorized');
    }

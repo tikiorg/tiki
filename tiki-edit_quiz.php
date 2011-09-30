@@ -127,10 +127,10 @@ if (isset($_REQUEST["save"])) {
 } elseif ($_REQUEST["quizId"]) {
 	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
 
-	if (!isset($info["publishDate"])){
+	if (!isset($info["publishDate"])) {
 		$info["publishDate"] = $tikilib->now;
 	}
-	if (!isset($info["expireDate"])){
+	if (!isset($info["expireDate"])) {
 		$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $tikilib->now));
 		$info["expireDate"] = $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1);
 	}
@@ -140,10 +140,10 @@ $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('canRepeat', $info["canRepeat"]);
 $smarty->assign('storeResults', $info["storeResults"]);
-$smarty->assign('immediateFeedback',$info["immediateFeedback"]);
-$smarty->assign('showAnswers',$info["showAnswers"]);
-$smarty->assign('shuffleQuestions',$info["shuffleQuestions"]);
-$smarty->assign('shuffleAnswers',$info["shuffleAnswers"]);
+$smarty->assign('immediateFeedback', $info["immediateFeedback"]);
+$smarty->assign('showAnswers', $info["showAnswers"]);
+$smarty->assign('shuffleQuestions', $info["shuffleQuestions"]);
+$smarty->assign('shuffleAnswers', $info["shuffleAnswers"]);
 $smarty->assign('questionsPerPage', $info["questionsPerPage"]);
 $smarty->assign('timeLimited', $info["timeLimited"]);
 $smarty->assign('timeLimit', $info["timeLimit"]);

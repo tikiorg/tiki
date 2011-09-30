@@ -17,7 +17,7 @@ if ($prefs['feature_daily_report_watches'] != 'y') {
 
 include_once ('lib/reportslib.php');
 
-foreach($reportslib->getUsersForSendingReport() as $key => $user) {
+foreach ($reportslib->getUsersForSendingReport() as $key => $user) {
 	$report_preferences = $reportslib->get_report_preferences_by_user($user);
 	$user_data = $userlib->get_user_info($user);
 
