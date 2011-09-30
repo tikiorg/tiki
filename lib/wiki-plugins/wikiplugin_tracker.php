@@ -690,7 +690,12 @@ function wikiplugin_tracker($data, $params)
 
 					$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 					if (is_array($ins_categs)) {
-						$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only);	
+						if ($registration == 'y' && empty($item_info)) {
+							$override_perms = true;
+						} else {
+							$override_perms = false;
+						}
+						$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only, $override_perms);	
 					}
 					if (isset($newItemRate)) {
 						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
