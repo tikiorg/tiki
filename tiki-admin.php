@@ -153,22 +153,22 @@ $adminPage = '';
 
 global $prefslib; require_once 'lib/prefslib.php';
 
-if( isset ($_REQUEST['pref_filters']) ) {
+if ( isset ($_REQUEST['pref_filters']) ) {
 	$prefslib->setFilters( $_REQUEST['pref_filters'] );
 }
 
 $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters']) : null;
 $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
-if( isset( $_REQUEST['lm_preference'] ) ) {
+if ( isset( $_REQUEST['lm_preference'] ) ) {
 	
 	$changes = $prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
-	foreach( $changes as $pref => $val ) {
+	foreach ( $changes as $pref => $val ) {
 		$value = $val['new'];
-		if( $value == 'y' ) {
+		if ( $value == 'y' ) {
 			add_feedback( $pref, tr('%0 enabled', $pref), 1, 1 );
 			$logslib->add_action('feature', $pref, 'system', 'enabled');
-		} elseif( $value == 'n' ) {
+		} elseif ( $value == 'n' ) {
 			add_feedback( $pref, tr('%0 disabled', $pref), 0, 1 );
 			$logslib->add_action('feature', $pref, 'system', 'disabled');
 		} else {
@@ -178,23 +178,23 @@ if( isset( $_REQUEST['lm_preference'] ) ) {
 	}
 }
 
-if( isset( $_REQUEST['lm_criteria'] ) ) {
+if ( isset( $_REQUEST['lm_criteria'] ) ) {
 	set_time_limit(0);
 	try {
-		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
-		$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'], $temp_filters );
-		$results = array_slice( $results, 0, 50 );
-		$smarty->assign( 'lm_searchresults', $results );
-		$smarty->assign( 'lm_error', '' );
+		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
+		$results = $prefslib->getMatchingPreferences($_REQUEST['lm_criteria'], $temp_filters);
+		$results = array_slice($results, 0, 50);
+		$smarty->assign('lm_searchresults', $results);
+		$smarty->assign('lm_error', '');
 	} catch(Zend_Search_Lucene_Exception $e) {
-		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
-		$smarty->assign( 'lm_error', $e->getMessage() );
-		$smarty->assign( 'lm_searchresults', '' );
+		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
+		$smarty->assign('lm_error', $e->getMessage());
+		$smarty->assign('lm_searchresults', '');
 	}
 } else {
-	$smarty->assign( 'lm_criteria', '' );
-	$smarty->assign( 'lm_searchresults', '' );
-	$smarty->assign( 'lm_error', '' );
+	$smarty->assign('lm_criteria', '');
+	$smarty->assign('lm_searchresults', '');
+	$smarty->assign('lm_error', '');
 }
 
 $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());

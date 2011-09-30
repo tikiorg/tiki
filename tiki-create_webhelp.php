@@ -76,7 +76,7 @@ if (isset($_REQUEST['create'])) {
 		die;
 	}
 
-	if(!is_dir("whelp/$dir")) {
+	if (!is_dir("whelp/$dir")) {
 		$output .= '<p>' . tr("Creating directory structure in <strong>%0</strong>.", $base) . '</p>';
 		mkdir("whelp/$dir");
 		mkdir("$base/js");

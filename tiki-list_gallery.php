@@ -24,7 +24,7 @@ if ($_REQUEST["galleryId"] != '0' && $imagegallib->get_gallery($_REQUEST["galler
 $tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
 $access->check_permission('tiki_p_view_image_gallery');
 /*
-if($tiki_p_upload_images != 'y') {
+if ($tiki_p_upload_images != 'y') {
 $smarty->assign('errortype', 401);
 $smarty->assign('msg',tra("You do not have permission to upload images"));
 $smarty->display("error.tpl");
@@ -37,7 +37,7 @@ if ($_REQUEST["galleryId"] != 0) {
 	//$smarty->assign_by_ref('theme',$gal_info["theme"]);
 	//$smarty->assign('use_theme','y');
 	/*
-	if( $tiki_p_admin != 'y' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
+	if ( $tiki_p_admin != 'y' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra("You do not have permission to browse this gallery"));
 	$smarty->display("error.tpl");

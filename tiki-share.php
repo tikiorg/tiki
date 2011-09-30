@@ -148,11 +148,11 @@ if (isset($_REQUEST['send'])) {
 		$smarty->assign('comment', $_REQUEST['comment']);	
 	}
 	
-	if(!empty($_REQUEST['share_token_notification'])){
+	if (!empty($_REQUEST['share_token_notification'])){
 		$smarty->assign('share_token_notification', $_REQUEST['share_token_notification']);
 	}
 	
-	if(!empty($_REQUEST['how_much_time_access'])){
+	if (!empty($_REQUEST['how_much_time_access'])){
 		$smarty->assign('how_much_time_access', $_REQUEST['how_much_time_access']);
 	}
 	
@@ -172,35 +172,35 @@ if (isset($_REQUEST['send'])) {
 		// send
 		
 		// Fix for multi adresses with autocomplete funtionnality
-		if(substr($_REQUEST['addresses'],-2) == ', '){
+		if (substr($_REQUEST['addresses'],-2) == ', '){
 			$_REQUEST['addresses'] = substr($_REQUEST['addresses'], 0, -2);
 		} 
 		$adresses = checkAddresses($_REQUEST['addresses']);
 		
 		require_once 'lib/auth/tokens.php';
-		if($prefs['share_can_choose_how_much_time_access'] && isset($_REQUEST['how_much_time_access']) && is_numeric($_REQUEST['how_much_time_access']) && $_REQUEST['how_much_time_access']>=1){
+		if ($prefs['share_can_choose_how_much_time_access'] && isset($_REQUEST['how_much_time_access']) && is_numeric($_REQUEST['how_much_time_access']) && $_REQUEST['how_much_time_access']>=1){
 			$prefs['auth_token_access_maxhits'] = $_REQUEST['how_much_time_access'];
 			
 			/* To upload, you need 2 token: one to see the page and another */
-			if(strpos($_REQUEST['url'], "tiki-upload_file")){
+			if (strpos($_REQUEST['url'], "tiki-upload_file")){
 				$prefs['auth_token_access_maxhits'] = $prefs['auth_token_access_maxhits']*2+1;
 			}
 			
 		}
 		
 		
-		if($_REQUEST['share_token_notification'] == 'y'){
+		if ($_REQUEST['share_token_notification'] == 'y'){
 			// list all users to give an unique token for notification
 			$tokenlib = AuthTokens::build( $prefs );
 						
-			if(is_array($adresses)){
+			if (is_array($adresses)){
 				$contactlib = TikiLib::lib('contact');
 				foreach ($adresses as $adresse) {
 					$tokenlist[] = $tokenlib->includeTokenReturn( $url_for_friend, $globalperms->getGroups(), $adresse );	
 					// if preference share_contact_add_non_existant_contact the add auomaticly to contact
-					if($prefs['share_contact_add_non_existant_contact'] == 'y' && $prefs['feature_contacts'] == 'y'){
+					if ($prefs['share_contact_add_non_existant_contact'] == 'y' && $prefs['feature_contacts'] == 'y'){
 						// check if email exist for at least one contact in 
-						if(!$contactlib->exist_contact($adresse, $user)){
+						if (!$contactlib->exist_contact($adresse, $user)){
 							$contacts = array(array('email'=>$adresse));
 							$contactlib->add_contacts($contacts, $user);
 						}
@@ -210,7 +210,7 @@ if (isset($_REQUEST['send'])) {
 
 			$smarty->assign('share_access',true);
 			
-			if(is_array($tokenlist)){
+			if (is_array($tokenlist)){
 				foreach ($tokenlist as $i=>$data) {
 					// Delete old user watch if it's necessary => avoid bad mails
 					$tikilib->remove_user_watch_object('auth_token_called', $data['tokenId'], 'security');
@@ -220,7 +220,7 @@ if (isset($_REQUEST['send'])) {
 			
 			
 		} else {
-			if( $prefs['auth_token_share'] == 'y' && ($prefs['auth_token_access'] == 'y' || isset($_POST['share_access']))) {
+			if ( $prefs['auth_token_share'] == 'y' && ($prefs['auth_token_access'] == 'y' || isset($_POST['share_access']))) {
 				$tokenlib = AuthTokens::build( $prefs );
 				$url_for_friend = $tokenlib->includeTokenReturn( $url_for_friend, $globalperms->getGroups(), $_REQUEST['addresses']);
 				$smarty->assign('share_access',true);
@@ -318,7 +318,7 @@ function checkAddresses($recipients) {
 		$recipients=preg_split('/(,|;)/',$recipients);
 	}
 	$ok=true;
-	foreach($recipients as &$recipient) {
+	foreach ($recipients as &$recipient) {
 		$recipient=trim($recipient);
 		if (function_exists('validate_email')) {
 			$ok = validate_email($recipient, $prefs['validateEmail']);
@@ -330,7 +330,7 @@ function checkAddresses($recipients) {
 			$e[] = tra('One of the email addresses you typed is invalid:') . '&nbsp;' . $recipient;
 		}
 	}
-	if(count($e) != 0) {
+	if (count($e) != 0) {
 		$errors=array_merge($errors, $e);
 		return false;
 	} else {
@@ -383,7 +383,7 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array()) {
 	$mail->setSubject($subject);
 	
 	$ok = true;
-	foreach($recipients as $i=>$recipient) {
+	foreach ($recipients as $i=>$recipient) {
 		$url_for_friend = $tokenlist[$i]['url'];
 		$smarty->assign('url_for_friend', $url_for_friend);
 		$txt = $smarty->fetch('mail/share.tpl');
@@ -418,7 +418,7 @@ function sendMessage($recipients, $subject) {
 		$arr_to=$recipients;
 	}
 	$users = array();
-	foreach($arr_to as $a_user) {
+	foreach ($arr_to as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
@@ -443,7 +443,7 @@ function sendMessage($recipients, $subject) {
 	}			
 	$users = array_unique($users);
 	$txt = $smarty->fetch('mail/share.tpl');
-	foreach($users as $a_user) {
+	foreach ($users as $a_user) {
 		$messulib->post_message($a_user, $user, $a_user, '', $subject, $txt, $_REQUEST['priority'], isset($_REQUEST['replyto_hash']) ? $_REQUEST['replyto_hash'] : '');
 		if ($prefs['feature_score'] == 'y') {
 			$tikilib->score_event($user, 'message_send');

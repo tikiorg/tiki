@@ -179,7 +179,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 // ************* previous/next **************
-foreach(array(
+foreach (array(
 	'status',
 	'filterfield',
 	'filtervalue',
@@ -224,7 +224,7 @@ if (isset($_REQUEST['reloff'])) {
 	$listfields = array();
 	if (substr($sort_mode, 0, 2) == 'f_') { //look at the field in case the field needs some processing to find the sort
 		list($a, $i, $o) = explode('_', $sort_mode);
-		foreach($xfields['data'] as $f) {
+		foreach ($xfields['data'] as $f) {
 			if ($f['fieldId'] == $i) {
 				$listfields = array(
 					$i => $f
@@ -316,7 +316,7 @@ if (empty($tracker_info)) {
 }
 $fieldFactory = $definition->getFieldFactory();
 
-foreach($xfields["data"] as $i => $current_field) {
+foreach ($xfields["data"] as $i => $current_field) {
 	$fid = $current_field["fieldId"];
 
 	$ins_id = 'ins_' . $fid;
@@ -403,7 +403,7 @@ if ($itemObject->canModify()) {
 				$trklib->replace_rating($_REQUEST["trackerId"], $_REQUEST["itemId"], $rateFieldId, $user, $_REQUEST["ins_$rateFieldId"]);
 			}
 			$_REQUEST['show'] = 'view';
-			foreach($fields["data"] as $i => $array) {
+			foreach ($fields["data"] as $i => $array) {
 				if (isset($fields["data"][$i])) {
 					$fid = $fields["data"][$i]["fieldId"];
 					$ins_id = 'ins_' . $fid;
@@ -485,7 +485,7 @@ if ($_REQUEST["itemId"]) {
 
 	$fieldFactory = $definition->getFieldFactory();
 
-	foreach($xfields["data"] as $i => $current_field) {
+	foreach ($xfields["data"] as $i => $current_field) {
 		$current_field_ins = null;
 		$fid = $current_field['fieldId'];
 
@@ -520,7 +520,7 @@ if ($_REQUEST["itemId"]) {
 }
 //restore types values if there is an error
 if (isset($error)) {
-	foreach($ins_fields["data"] as $i => $current_field) {
+	foreach ($ins_fields["data"] as $i => $current_field) {
 		if (isset($error["data"][$i]["value"])) {
 			$ins_fields["data"][$i]["value"] = $error["data"][$i]["value"];
 		}
@@ -528,7 +528,7 @@ if (isset($error)) {
 }
 // dynamic list process
 $id_fields = array();
-foreach($xfields['data'] as $sid => $onefield) {
+foreach ($xfields['data'] as $sid => $onefield) {
 	$id_fields[$xfields['data'][$sid]['fieldId']] = $sid;
 }
 // Pull realname for user.
@@ -563,7 +563,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
 			$watching_categories = array();
-			foreach($watching_categories_temp as $wct) {
+			foreach ($watching_categories_temp as $wct) {
 				$watching_categories[] = array(
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)

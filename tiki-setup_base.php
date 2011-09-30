@@ -85,9 +85,9 @@ global $logslib;
 require_once ('lib/logs/logslib.php');
 include_once ('lib/init/tra.php');
 
-if( $prefs['memcache_enabled'] == 'y' ) {
+if ( $prefs['memcache_enabled'] == 'y' ) {
 	require_once('lib/cache/memcachelib.php');
-	if( is_array( $prefs['memcache_servers'] ) ) {
+	if ( is_array( $prefs['memcache_servers'] ) ) {
 		$servers = $prefs['memcache_servers'];
 	} else {
 		$servers = unserialize( $prefs['memcache_servers'] );
@@ -115,11 +115,11 @@ if ($prefs['session_storage'] == 'db') {
 	} elseif ($api_tiki == 'pdo') {
 		require_once ('lib/tikisession-pdo.php');
 	}
-} elseif( $prefs['session_storage'] == 'memcache' && isset( $memcachelib ) && $memcachelib->isEnabled() ) {
+} elseif ( $prefs['session_storage'] == 'memcache' && isset( $memcachelib ) && $memcachelib->isEnabled() ) {
 	require_once ('lib/tikisession-memcache.php');
 }
 
-if( ! isset( $prefs['session_cookie_name'] ) || empty( $prefs['session_cookie_name'] ) ) {
+if ( ! isset( $prefs['session_cookie_name'] ) || empty( $prefs['session_cookie_name'] ) ) {
 	$prefs['session_cookie_name'] = session_name();
 }
 
@@ -139,9 +139,9 @@ if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
 
 // If called from the CDN, refuse to execute anything
 $cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
-if( $cdn_pref ) {
+if ( $cdn_pref ) {
 	$host = parse_url( $cdn_pref, PHP_URL_HOST );
-	if( $host == $_SERVER['HTTP_HOST'] ) {
+	if ( $host == $_SERVER['HTTP_HOST'] ) {
 		header("HTTP/1.0 404 Not Found");
 		echo "File not found.";
 		exit;
@@ -191,7 +191,7 @@ require_once ('lib/breadcrumblib.php');
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 function remove_gpc(&$var) {
 	if (is_array($var)) {
-		foreach($var as $key => $val) {
+		foreach ($var as $key => $val) {
 			remove_gpc($var[$key]);
 		}
 	} else {
@@ -298,7 +298,7 @@ function varcheck(&$array, $category) {
 	global $patterns, $vartype, $prefs;
 	$return = array();
 	if (is_array($array)) {
-		foreach($array as $rq => $rv) {
+		foreach ($array as $rq => $rv) {
 			// check if the variable name is allowed
 			if (!preg_match($patterns['vars'], $rq)) {
 				//die(tra("Invalid variable name : "). htmlspecialchars($rq));
@@ -466,14 +466,14 @@ if (isset($_SESSION["$user_cookie_site"])) {
 }
 
 if (is_object($smarty)) {
-	$smarty->assign( 'CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
+	$smarty->assign('CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
 }
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 // deal with register_globals
 if (ini_get('register_globals')) {
-	foreach(array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob) {
-		foreach($superglob as $key => $val) {
+	foreach (array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob) {
+		foreach ($superglob as $key => $val) {
 			if (isset($GLOBALS[$key]) && $GLOBALS[$key] == $val) { // if global has been set some other way
 				// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
 				unset($GLOBALS[$key]);
@@ -536,7 +536,7 @@ $_REQUEST = array_merge($_GET, $_POST);
 if ($tiki_p_trust_input != 'y') {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
 	$varcheck_errors = '';
-	foreach($varcheck_vars as $var) {
+	foreach ($varcheck_vars as $var) {
 		if (!isset($$var)) continue;
 		if (($tmp = varcheck($$var, $var)) != '') {
 			if ($varcheck_errors != '') $varcheck_errors.= '<br />';

@@ -43,7 +43,7 @@ $smarty->assign('actual', '');
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-programmed-content');
 
-	if( $_REQUEST['content_type'] == 'page' ) {
+	if ( $_REQUEST['content_type'] == 'page' ) {
 		$content = 'page:' . $_REQUEST['page_name'];
 	} else {
 		$content = $_REQUEST['data'];

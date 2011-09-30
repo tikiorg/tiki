@@ -58,7 +58,7 @@ function getDirContent($sub) {
 		}
 	}
 	sort($allimg);
-	foreach($allimg as $imgfile) {
+	foreach ($allimg as $imgfile) {
 		if (is_dir($tmp . "/" . $imgfile)) {
 			if ((substr($sub, -1) <> "/") && (substr($sub, -1) <> "\\")) {
 				$sub.= '/';

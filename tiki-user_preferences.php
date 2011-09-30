@@ -57,7 +57,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 // Custom fields
 include_once ('lib/registration/registrationlib.php');
 $customfields = $registrationlib->get_customfields();
-foreach($customfields as $i => $c) {
+foreach ($customfields as $i => $c) {
 	$customfields[$i]['value'] = $tikilib->get_user_preference($userwatch, $c['prefName']);
 }
 $smarty->assign_by_ref('customfields', $customfields);
@@ -151,7 +151,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
 	$tikilib->set_user_preference($userwatch, 'mailCharset', $_REQUEST['mailCharset']);
 	// Custom fields
-	foreach($customfields as $custpref => $prefvalue) {
+	foreach ($customfields as $custpref => $prefvalue) {
 		if (isset($_REQUEST[$customfields[$custpref]['prefName']])) $tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
 	}
 	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'ldap')) {
@@ -177,7 +177,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	}
 
 	// Custom fields
-	foreach($customfields as $custpref => $prefvalue) {
+	foreach ($customfields as $custpref => $prefvalue) {
 		// print $customfields[$custpref]['prefName'];
 		// print $_REQUEST[$customfields[$custpref]['prefName']];
 		$tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
@@ -397,7 +397,7 @@ if ($prefs['userTracker'] == 'y') {
 $smarty->assign('usertrackerId', $usertrackerId);
 $smarty->assign('useritemId', $useritemId);
 // Custom fields
-foreach($customfields as $custpref => $prefvalue) {
+foreach ($customfields as $custpref => $prefvalue) {
 	$customfields[$custpref]['value'] = $tikilib->get_user_preference($userwatch, $customfields[$custpref]['prefName'], $customfields[$custpref]['value']);
 	$smarty->assign($customfields[$custpref]['prefName'], $customfields[$custpref]['value']);
 }

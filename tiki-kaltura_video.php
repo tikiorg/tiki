@@ -11,25 +11,25 @@ require_once 'lib/videogals/videogallib.php';
 try {
 $kentryType = "";
 $videoId = array();
-if(!empty($_REQUEST['mixId'])){	
-	if(is_array($_REQUEST['mixId'])){
+if (!empty($_REQUEST['mixId'])){	
+	if (is_array($_REQUEST['mixId'])){
 		$videoId = $_REQUEST['mixId'];
-	}else{
+	} else {
 		$videoId[0] = $_REQUEST['mixId'];
 	}
 	$kentryType = "mix";
 }
 
-if(!empty($_REQUEST['mediaId'])){	
-	if(is_array($_REQUEST['mediaId'])){
+if (!empty($_REQUEST['mediaId'])){	
+	if (is_array($_REQUEST['mediaId'])){
 		$videoId = $_REQUEST['mediaId'];
-	}else{
+	} else {
 		$videoId[0] = $_REQUEST['mediaId'];
 	}
 	$kentryType = "media";
 }
 
-if(!empty($videoId) && isset($_REQUEST['action'])){
+if (!empty($videoId) && isset($_REQUEST['action'])){
 
 	$mode = $_REQUEST['action'];
 	$smarty->assign('kmode',$mode);
@@ -52,12 +52,12 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 			$editor = $prefs['default_kaltura_editor'];
 		}
 		
-		if($kentryType == "mix"){
+		if ($kentryType == "mix"){
 			$seflashVars = $seflashVars.
 				'&kshow_id=entry-' . $videoId[0].
 				'&entry_id='. $videoId[0];	
 		}
-		if($kentryType == "media"){
+		if ($kentryType == "media"){
 			$kentry = $kclient->media->get($videoId[0]);
 			$knewmixEntry = new KalturaMixEntry();
 			$knewmixEntry->name = "Remix of ".$kentry->name;
@@ -77,7 +77,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		break;
 	case 'dupl':
 		$access->check_permission(array('tiki_p_upload_videos'));
-		if($kentryType == "mix"){
+		if ($kentryType == "mix"){
 			$knewmixEntry = $kclient->mixing->cloneAction($videoId[0]);
 		}
 		header ('Location: tiki-list_kaltura_entries.php');
@@ -106,13 +106,13 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 	case 'delete':
 		$access->check_permission(array('tiki_p_delete_videos'));
 		$access->check_authenticity();
-		if($kentryType == "media"){
-			foreach( $videoId as $vi ) {
+		if ($kentryType == "media"){
+			foreach ( $videoId as $vi ) {
 				$kclient->media->delete($vi);
 			}
 		}
-		if($kentryType == "mix"){
-			foreach( $videoId as $vi ) {
+		if ($kentryType == "mix"){
+			foreach ( $videoId as $vi ) {
 				$kclient->mixing->delete($vi);
 			}					
 		}	
@@ -132,10 +132,10 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 			$ksession = $kclient->session->start( $prefs['adminSecret'], $kuser, $SESSION_ADMIN, $prefs['partnerId'], 86400, 'edit:*' );
 			$kclient->setKs($ksession);
 		}
-		if($kentryType == "mix"){
+		if ($kentryType == "mix"){
 			$kentry = $kclient->mixing->get($videoId[0]);
 			
-			if($_REQUEST['update']){
+			if ($_REQUEST['update']){
 				$kentry = new KalturaPlayableEntry();
 				$kentry->name = $_REQUEST['name'];
 				$kentry->description = $_REQUEST['description'];
@@ -145,10 +145,10 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 				$knewentry = $kclient->mixing->update($videoId[0],$kentry);
 			}
 		}
-		if($kentryType == "media"){
+		if ($kentryType == "media"){
 			$kentry = $kclient->media->get($videoId[0]);
 			
-			if($_REQUEST['update']){
+			if ($_REQUEST['update']){
 				$kentry = new KalturaPlayableEntry();
 				$kentry->name = $_REQUEST['name'];
 				$kentry->description = $_REQUEST['description'];
@@ -158,7 +158,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 				$knewentry = $kclient->media->update($videoId[0],$kentry);
 			}
 		}
-		if($_REQUEST['update']){
+		if ($_REQUEST['update']){
 			header ('Location: tiki-kaltura_video.php?'.$kentryType.'Id='.$videoId[0]);
 			die;
 		}
@@ -172,15 +172,15 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		
 	}
 		
-}else{
-	if(isset($videoId[0])){
+} else {
+	if (isset($videoId[0])){
 		$access->check_permission(array('tiki_p_view_videos'));
 		$smarty->assign('kmode', 'view');
-		if($kentryType == "mix"){
+		if ($kentryType == "mix"){
 			$kentry = $kclient->mixing->get($videoId[0]);
 		}
 	
-		if($kentryType == "media"){
+		if ($kentryType == "media"){
 			$kentry = $kclient->media->get($videoId[0]);	
 		}
 		$smarty->assign_by_ref('videoId',$videoId[0]);

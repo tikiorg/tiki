@@ -62,7 +62,7 @@ if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
 }
 
-$smarty->assign( 'parse', $_REQUEST['parse'] );
+$smarty->assign('parse', $_REQUEST['parse']);
 
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
@@ -130,7 +130,7 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 	if ( $_REQUEST['relate'] == 'add' ) {
 		$sheetlib->add_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
 		$smarty->assign('msg', tra("Tracker Added To Spreadsheet"));
-	} elseif( $_REQUEST['relate'] == 'remove' ) {
+	} elseif ( $_REQUEST['relate'] == 'remove' ) {
 		$sheetlib->remove_related_tracker( $_REQUEST["sheetId"], $_REQUEST['trackerId'] );
 		$smarty->assign('msg', tra("Tracker Removed From Spreadsheet"));
 	}
@@ -138,7 +138,7 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 	if ( $_REQUEST['relate'] == 'add' ) {
 		$sheetlib->add_related_sheet( $_REQUEST["sheetId"], $_REQUEST['childSheetId'] );
 		$smarty->assign('msg', tra("Spreadsheet added"));
-	} elseif( $_REQUEST['relate'] == 'remove' ) {
+	} elseif ( $_REQUEST['relate'] == 'remove' ) {
 		$sheetlib->remove_related_sheet($_REQUEST["sheetId"], $_REQUEST['childSheetId'] );
 		$smarty->assign('msg', tra("Spreadsheet removed"));
 	}
@@ -146,7 +146,7 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 	if ( $_REQUEST['relate'] == 'add' ) {
 		$sheetlib->add_related_file( $_REQUEST["sheetId"], $_REQUEST['fileId'] );
 		$smarty->assign('msg', tra("File added"));
-	} elseif( $_REQUEST['relate'] == 'remove' ) {
+	} elseif ( $_REQUEST['relate'] == 'remove' ) {
 		$sheetlib->remove_related_file( $_REQUEST["sheetId"], $_REQUEST['fileId'] );
 		$smarty->assign('msg', tra("File removed"));
 	}
@@ -191,7 +191,7 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 }
 	
 if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
-	foreach( $tableHtml as $table ) {
+	foreach ( $tableHtml as $table ) {
 		echo $table;
 	}
 	die;

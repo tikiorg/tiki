@@ -68,7 +68,7 @@ if (isset($_REQUEST['action'])) {
 					$_REQUEST['debitAmount'], $_REQUEST['creditAmount'],
 					$_REQUEST['debitText'],$_REQUEST['creditText']);
 		}
-		if(is_numeric($result)) {
+		if (is_numeric($result)) {
 			if (isset($_REQUEST['statementId'])) {
 				$accountinglib->updateStatementStack($bookId, $_REQUEST['statementId'],$result);		
 			}

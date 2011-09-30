@@ -27,7 +27,7 @@ $smarty->assign('contactId', $_REQUEST["contactId"]);
 
 $exts=$contactlib->get_ext_list($user);
 $traducted_exts=array();
-foreach($exts as $ext) {
+foreach ($exts as $ext) {
 	$traducted_exts[$ext['fieldId']] = array(
     	'tra' => tra($ext['fieldname']),
 		'art' => $ext['fieldname'],
@@ -39,7 +39,7 @@ foreach($exts as $ext) {
 
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
-	foreach($info['ext'] as $k => $v) {
+	foreach ($info['ext'] as $k => $v) {
 	    if (!in_array($k, array_keys($exts))) {
 			// okay, we need to grab the name from exts[], where fieldId = $k
  			$ext = $contactlib->get_ext($k);
@@ -70,7 +70,7 @@ if (isset($_REQUEST["save"])) {
 	$access->check_user($user);
 	check_ticket('webmail-contact');
 	$ext_result=array();
-	foreach($exts as $ext)
+	foreach ($exts as $ext)
 		$ext_result[$ext['fieldId']] = isset($_REQUEST['ext_'.$ext['fieldId']]) ? $_REQUEST['ext_'.$ext['fieldId']] : '';
 	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user, $_REQUEST['groups'], $ext_result);
 	$info["firstName"] = '';

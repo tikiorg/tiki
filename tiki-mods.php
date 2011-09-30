@@ -161,7 +161,7 @@ if ($type) {
 	if (!isset($remote[$type])) $remote[$type] = array();
 	$display[$type] = array_merge($local[$type], $remote[$type]);
 } else {
-	foreach($types as $t => $tt) {
+	foreach ($types as $t => $tt) {
 		if (isset($local[$t])) {
 			if (isset($remote[$t])) {
 				$display[$t] = array_merge($local[$t], $remote[$t]);
@@ -176,9 +176,9 @@ if ($type) {
 if (!empty($version)) { // filter out other versions
 	$filtered = array();
 	if ($version == - 1) {
-		foreach($display as $t => $ms) {
+		foreach ($display as $t => $ms) {
 			$filtmod = array();
-			foreach($ms as $k => $m) {
+			foreach ($ms as $k => $m) {
 				if (empty($m->version[0])) {
 					$filtmod[$k] = $m;
 				}
@@ -189,9 +189,9 @@ if (!empty($version)) { // filter out other versions
 		}
 	} else {
 		$v = floatval($version);
-		foreach($display as $t => $ms) {
+		foreach ($display as $t => $ms) {
 			$filtmod = array();
-			foreach($ms as $k => $m) {
+			foreach ($ms as $k => $m) {
 				$mv = floatval($m->version[0]);
 				// TODO - fix the data, but for the mean time...
 				if (strpos($m->version[0], '1.10') !== false || strpos($m->version[0], ' 2 ') !== false) {

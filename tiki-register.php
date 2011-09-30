@@ -54,7 +54,7 @@ if (isset($_REQUEST['register'])) {
 	check_ticket('register');
 	$cookie_name = $prefs['session_cookie_name'];
 
-	if( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) )
+	if ( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) )
 	    register_error(tra("You have to enable cookies to be able to login to this site"));
 
 	$smarty->assign('errortype', 'no_redirect_login');

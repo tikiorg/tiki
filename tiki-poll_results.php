@@ -52,13 +52,13 @@ if (!empty($_REQUEST['pollId'])) {
 	$smarty->assign_by_ref('pollId', $_REQUEST['pollId']);
 } else {
 	$polls = $polllib->list_active_polls(0, $_REQUEST['maxRecords'], 'votes_desc', $_REQUEST['find']);
-	foreach($polls['data'] as $pId) {
+	foreach ($polls['data'] as $pId) {
 		$pollIds[] = $pId['pollId'];
 	}
 }
 $poll_info_arr = array();
 $start_year = date('Y', $now);
-foreach($pollIds as $pK => $pId) { // iterate each poll
+foreach ($pollIds as $pK => $pId) { // iterate each poll
 	$poll_info = $polllib->get_poll($pId);
 	$start_year = min($start_year, date('Y', $poll_info['publishDate']));
 	if ($which_date == 'all') {

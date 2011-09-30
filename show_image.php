@@ -69,7 +69,7 @@ if (isset($_REQUEST["thumb"])) {
     }
 }
 
-if($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
+if ($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
 
 # Client-Side image cache (based on Etag Headers)
 # Etag value is based on the md5 hash of the image. It should change everytime the image changes. See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
@@ -111,7 +111,7 @@ header ("Etag: ".$imagegallib->etag);
 // header ("Content-length: ".$imagegallib->filesize);
 
 header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
-//if($data["path"]) {
+//if ($data["path"]) {
 //  readfile($prefs['gal_use_dir'].$data["path"].$ter);
 //} else {
 echo $imagegallib->image;

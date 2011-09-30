@@ -121,7 +121,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		if ($info = $imagegallib->get_gallery_info($_REQUEST["galleryId"])) {
 		$scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
 		$gallery_images = $imagegallib->get_images(0,-1,'name_asc',false,$_REQUEST['galleryId']);
-		foreach($gallery_images['data'] as $key => $item) {
+		foreach ($gallery_images['data'] as $key => $item) {
 			$options_galleryimage[tra('Image').' '.$item['name']]=$item['imageId'];
 		}
 		//$smarty->assign_by_ref('theme',$info["theme"]);
@@ -203,8 +203,8 @@ if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
 	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename','showcategories');
-	foreach($auxarray as $key => $item) {
-		if(!isset($_REQUEST[$item])) {
+	foreach ($auxarray as $key => $item) {
+		if (!isset($_REQUEST[$item])) {
 			$_REQUEST[$item]='n';
 		}
         	$smarty->assign($item,$_REQUEST[$item]);
@@ -286,8 +286,8 @@ if ($category_needed == 'y') {
 	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
 	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename','showcategories');
-	foreach($auxarray as $key => $item) {
-		if(!isset($_REQUEST[$item])) {
+	foreach ($auxarray as $key => $item) {
+		if (!isset($_REQUEST[$item])) {
 			$_REQUEST[$item]='n';
 		}
         	$smarty->assign($item,$_REQUEST[$item]);

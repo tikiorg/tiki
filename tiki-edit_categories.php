@@ -22,7 +22,7 @@ $access->check_feature('feature_categories');
 $ctall = $categlib->getCategories();
 
 $tree_nodes = array();
-foreach($ctall as $c) {
+foreach ($ctall as $c) {
 	$url = htmlentities('tiki-edit_categories.php?' . http_build_query(array(
 		'filter~categories' => $c['categId'],
 	)), ENT_QUOTES, 'UTF-8');

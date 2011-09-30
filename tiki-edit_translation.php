@@ -38,7 +38,7 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	$objId = $info['page_id'];
 	$langpage = $info['lang'];
 	$fullLangName = $langmapping[$langpage][0];
-	$smarty->assign( 'languageName', $fullLangName );
+	$smarty->assign('languageName', $fullLangName);
 	$cat_type = 'wiki page';
 	$cat_objid = $name;
 
@@ -73,7 +73,7 @@ if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['
 	}
 
 	$fullLangName = $langmapping[$langpage][0];
-	$smarty->assign( 'languageName', $fullLangName );
+	$smarty->assign('languageName', $fullLangName);
 }
 $smarty->assign('langpage', $langpage);
 
@@ -90,13 +90,13 @@ if ($type == "wiki page") {
 $trads = $multilinguallib->getTranslations($type, $objId, $name, $langpage, true);
 
 $usedLang = array();
-foreach( $trads as $trad )
+foreach ( $trads as $trad )
 	$usedLang[] = $trad['lang'];
 
 $rawLangs = $tikilib->list_languages();
 $languages = array();
-foreach( $rawLangs as $langInfo )
-	if( ! in_array( $langInfo['value'], $usedLang ) )
+foreach ( $rawLangs as $langInfo )
+	if ( ! in_array( $langInfo['value'], $usedLang ) )
 		$languages[] = $langInfo;
 $smarty->assign_by_ref('languages', $languages);
 if (count($languages) == 1) {

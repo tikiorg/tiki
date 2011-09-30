@@ -42,7 +42,7 @@ $access->check_permission('tiki_p_admin_newsletters');
 
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	$access->check_authenticity();
-	foreach($_REQUEST['checked'] as $check) {
+	foreach ($_REQUEST['checked'] as $check) {
 		$nllib->remove_newsletter_subscription_code($check);
 	}
 }
@@ -73,7 +73,7 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST["email"]) && $_REQUEST["email"] !
 	check_ticket('admin-nl-subsriptions');
 	if (strpos($_REQUEST["email"], ',')) {
 		$emails = explode(',', $_REQUEST["email"]);
-		foreach($emails as $e) {
+		foreach ($emails as $e) {
 			if ($userlib->user_exists(trim($e))) {
 				$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($e) , "y", $confirmEmail, $addEmail);
 			} else {
@@ -122,7 +122,7 @@ if (((isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription'])) || (
 		}
 	}
 	
-	foreach($emails as $email) {
+	foreach ($emails as $email) {
 		$email = trim($email);
 		if (empty($email)) continue;
 		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', $confirmEmail, 'y')) {
@@ -152,7 +152,7 @@ if (isset($_REQUEST['export'])) {
 	check_ticket('admin-nl-subsriptions');
 	$users = $nllib->get_all_subscribers($_REQUEST['nlId'], 'y');
 	$data = "email\n";
-	foreach($users as $u) {
+	foreach ($users as $u) {
 		if (!empty($u['email'])) $data.= $u['email'] . "\n";
 	}
 	header('Content-type: text/plain');

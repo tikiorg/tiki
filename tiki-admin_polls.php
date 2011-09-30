@@ -52,7 +52,7 @@ if (isset($_REQUEST["save"])) {
 	if (isset($_REQUEST['options']) && is_array($_REQUEST['options'])) {
 		//TODO insert options into poll
 		check_ticket('admin-poll-options');
-		foreach($_REQUEST['options'] as $i => $option) {
+		foreach ($_REQUEST['options'] as $i => $option) {
 			//continue;
 			if ($option == "") {
 				if (isset($_REQUEST['optionsId']) && isset($_REQUEST['optionsId'][$i])) $polllib->remove_poll_option($_REQUEST['optionsId'][$i]);
@@ -75,7 +75,7 @@ if (isset($_REQUEST['addPoll']) && !empty($_REQUEST['poll_template']) && !empty(
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
 	$cat_type = 'wiki page';
-	foreach($_REQUEST['pages'] as $cat_objid) {
+	foreach ($_REQUEST['pages'] as $cat_objid) {
 		if (!$catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
 			$info = $tikilib->get_page_info($cat_objid);
 			$cat_desc = $info['description'];
@@ -121,12 +121,12 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $polllib->list_polls($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 if ($prefs['poll_list_categories'] == 'y') {
-	foreach($channels['data'] as $key => $channel) {
+	foreach ($channels['data'] as $key => $channel) {
 		$channels['data'][$key]['categories'] = $polllib->get_poll_categories($channel['pollId']);
 	}
 }
 if ($prefs['poll_list_objects'] == 'y') {
-	foreach($channels['data'] as $key => $channel) {
+	foreach ($channels['data'] as $key => $channel) {
 		$channels['data'][$key]['objects'] = $polllib->get_poll_objects($channel['pollId']);
 	}
 }

@@ -37,7 +37,7 @@ $fcts = array(
 	'parse_ini_file',
 	'show_source'
 );
-foreach($fcts as $fct) {
+foreach ($fcts as $fct) {
 	if (function_exists($fct)) {
 		$phpfunctions[$fct] = array(
 			'setting' => tr('Enabled') ,
@@ -393,7 +393,7 @@ if (isset($_REQUEST['check_file_permissions'])) {
 	$executable = array();
 	$strangeinode = array();
 	$apachewritable = array();
-	foreach($fileperms as $fname => $fperms) {
+	foreach ($fileperms as $fname => $fperms) {
 		if ($fperms['suid']) {
 			$suid[$fname] = & $fileperms[$fname];
 		}

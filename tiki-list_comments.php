@@ -48,9 +48,9 @@ $smarty->assign_by_ref('title', $title);
 
 $show_types = array();
 $selected_types = array();
-foreach($sections_enabled as $k => $info) {
+foreach ($sections_enabled as $k => $info) {
 	if (isset($_REQUEST['types_section']) && $k != $_REQUEST['types_section']) continue;
-	foreach($sections_keys as $stype => $sfeature) {
+	foreach ($sections_keys as $stype => $sfeature) {
 		if (isset($info[$sfeature]) && $prefs[$info[$sfeature]] == 'y' && isset($info[$stype])) {
 			$comment_type = $info[$stype];
 			$show_types[$comment_type] = ucwords($comment_type);
@@ -84,7 +84,7 @@ if (isset($_REQUEST['checked'])) {
 	// Delete comment(s)
 	if (isset($_REQUEST['remove']) || isset($_REQUEST['remove_x'])) {
 		$access->check_authenticity(tra('Delete comments'));
-		foreach($checked as $id) {
+		foreach ($checked as $id) {
 			$commentslib->remove_comment($id);
 		}
 	}
@@ -104,14 +104,14 @@ if (isset($_REQUEST['checked'])) {
 
 	// Approve comment(s)
 	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['approve_x']) ) {
-		foreach($checked as $id) {
+		foreach ($checked as $id) {
 			$commentslib->approve_comment($id, 'y');
 		}
 	}
 
 	// Reject comment(s)
 	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['reject_x'])) {
-		foreach($checked as $id) {
+		foreach ($checked as $id) {
 			$commentslib->approve_comment($id, 'r');
 			$rejected[$id] = true;
 		}
@@ -120,14 +120,14 @@ if (isset($_REQUEST['checked'])) {
 
 	// Archive comment(s)
 	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['archive_x']) ) {
-		foreach($checked as $id) {
+		foreach ($checked as $id) {
 			$commentslib->archive_thread($id);
 		}
 	}
 
 	// Unarchive comment(s)
 	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['unarchive_x']) ) {
-		foreach($checked as $id) {
+		foreach ($checked as $id) {
 			$commentslib->unarchive_thread($id);
 		}
 	}

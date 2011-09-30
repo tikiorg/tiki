@@ -79,7 +79,7 @@ if ( empty( $fileId ) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galle
 	die;
 }
 if (isset($_REQUEST['galleryId'][1])) {
-	foreach($_REQUEST['galleryId'] as $i => $gal) {
+	foreach ($_REQUEST['galleryId'] as $i => $gal) {
 		if (!$i) continue;
 		// TODO get the good gal_info
 		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$i], 'file gallery', $gal_info, false);
@@ -176,12 +176,12 @@ $smarty->assign_by_ref('fileInfo', $fileInfo);
 $smarty->assign('editFileId', (int) $fileId);
 
 // Get the list of galleries to display the select box in the template
-$smarty->assign( 'galleryId', empty( $_REQUEST['galleryId'][0] ) ? '' : $_REQUEST['galleryId'][0] );
+$smarty->assign('galleryId', empty( $_REQUEST['galleryId'][0] ) ? '' : $_REQUEST['galleryId'][0]);
 
 if ( empty( $fileId ) ) {
 	$galleries = $filegallib->getSubGalleries( $requestGalleryId, true, 'upload_files' );
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
-	$smarty->assign( 'treeRootId', $galleries['parentId'] );
+	$smarty->assign('treeRootId', $galleries['parentId']);
 
 	if ( $prefs['fgal_upload_progressbar'] == 'ajax_flash' ) {
 		$headerlib->add_jsfile('lib/swfupload/src/swfupload.js');
@@ -194,7 +194,7 @@ if ( empty( $fileId ) ) {
 }
 
 if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
-	$smarty->assign( 'hit_limit', $filegallib->get_download_limit( $fileId ) );
+	$smarty->assign('hit_limit', $filegallib->get_download_limit( $fileId ));
 }
 
 $cat_type = 'file';

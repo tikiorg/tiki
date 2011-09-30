@@ -89,7 +89,7 @@ if (isset($_REQUEST["save"])) {
 	if ($msg == "") { // no error
 		$siteId = $dirlib->dir_replace_site($_REQUEST["siteId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"], $_REQUEST["country"], $_REQUEST["isValid"]);
 		$dirlib->remove_site_from_categories($siteId);
-		foreach($_REQUEST["siteCats"] as $acat) {
+		foreach ($_REQUEST["siteCats"] as $acat) {
 			$dirlib->dir_add_site_to_category($siteId, $acat);
 		}
 		$info["isValid"] = 'y';
@@ -148,7 +148,7 @@ $smarty->assign_by_ref('items', $items["data"]);
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
 if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { // an error occured, the chosen categs have to be set again
 	$temp_max = count($categs);
-	foreach($_REQUEST["siteCats"] as $acat) {
+	foreach ($_REQUEST["siteCats"] as $acat) {
 		for ($ix = 0; $ix < $temp_max; ++$ix) {
 			if ($categs[$ix]["categId"] == $acat) $categs[$ix]["belongs"] = 'y';
 		}

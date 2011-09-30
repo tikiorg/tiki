@@ -683,7 +683,7 @@ END;
 	$smarty->assign('pubAccounts', $accounts);
 
 	if (isset($_GET['msg'])) {
-		$smarty->assign( 'display_msg', $_GET['msg'] );
+		$smarty->assign('display_msg', $_GET['msg']);
 	}
 }
 

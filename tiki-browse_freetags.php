@@ -76,7 +76,7 @@ if (isset($_REQUEST['broaden']) && $_REQUEST['broaden'] == 'last') {
 $smarty->assign('broaden', $broaden);
 $tagArray = $freetaglib->_parse_tag((isset($_REQUEST['tag'])) ? $_REQUEST['tag'] : '');
 $tagString = '';
-foreach($tagArray as $t_ar) {
+foreach ($tagArray as $t_ar) {
 	if (strstr($t_ar, ' ')) {
 		$tagString.= '"' . $t_ar . '" ';
 	} else {
@@ -101,7 +101,7 @@ $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tso
 if (!empty($prefs['freetags_cloud_colors'])) {
 	$colors = explode(',', $prefs['freetags_cloud_colors']);
 	$prev = '';
-	foreach($most_popular_tags as $id => $tag) {
+	foreach ($most_popular_tags as $id => $tag) {
 		if (count($colors) == 1) {
 			$i = 0;
 		} elseif (count($colors) == 2) {

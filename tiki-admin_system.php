@@ -36,8 +36,8 @@ $smarty->assign('temppublic', $temppublic);
 $modules = $cachelib->count_cache_files("modules/cache/$tikidomain");
 $smarty->assign('modules', $modules);
 $templates = array();
-foreach($languages as $clang) {
-	if ($smarty->use_sub_dirs) { // was if(is_dir("templates_c/$tikidomain/")) ppl with tikidomains should test. redflo
+foreach ($languages as $clang) {
+	if ($smarty->use_sub_dirs) { // was if (is_dir("templates_c/$tikidomain/")) ppl with tikidomains should test. redflo
 		$templates[$clang["value"]] = $cachelib->count_cache_files("templates_c/$tikidomain/" . $clang["value"] . "/");
 	} else {
 		$templates[$clang["value"]] = $cachelib->count_cache_files("templates_c/", $tikidomain . $clang["value"]);
@@ -72,7 +72,7 @@ if ($prefs['feature_maps'] && !empty($prefs['map_path'])) {
 }
 $dirs = array_unique($dirs);
 $dirsExist = array();
-foreach($dirs as $i => $d) {
+foreach ($dirs as $i => $d) {
 	$dirsWritable[$i] = is_writable($d);
 }
 $smarty->assign_by_ref('dirs', $dirs);
@@ -85,7 +85,7 @@ if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath']) && $tiki_p_admin == '
 		$smarty->display('error.tpl');
 		die;
 	}
-	foreach($dirs as $d) {
+	foreach ($dirs as $d) {
 		if (file_exists($d)) $dirs2[] = $d;
 	}
 	if (!$archive->add($dirs2)) {

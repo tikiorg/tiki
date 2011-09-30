@@ -45,9 +45,9 @@ if (isset($_REQUEST['ext_private'])) {
 $exts = & $contactlib->get_ext_list($user);
 $nb_exts = count($exts);
 // consistancy check
-foreach($exts as $k => $ext) if ($ext['order'] != $k) $contactlib->modify_ext($user, $ext['fieldId'], array('order' => $k));
+foreach ($exts as $k => $ext) if ($ext['order'] != $k) $contactlib->modify_ext($user, $ext['fieldId'], array('order' => $k));
 if (isset($_REQUEST['ext_up'])) {
-	if (is_array($exts)) foreach($exts as $k => $ext) {
+	if (is_array($exts)) foreach ($exts as $k => $ext) {
 		if ($k > 0 && $ext['fieldId'] == $_REQUEST['ext_up']) {
 			$contactlib->modify_ext($user, $_REQUEST['ext_up'], array('order' => $k - 1));
 			$contactlib->modify_ext($user, $exts[$k - 1]['fieldId'], array('order' => $k));
@@ -57,7 +57,7 @@ if (isset($_REQUEST['ext_up'])) {
 	$cookietab = 2;
 }
 if (isset($_REQUEST['ext_down'])) {
-	if (is_array($exts)) foreach($exts as $k => $ext) {
+	if (is_array($exts)) foreach ($exts as $k => $ext) {
 		if ($k < $nb_exts && $ext['fieldId'] == $_REQUEST['ext_down']) {
 			$contactlib->modify_ext($user, $_REQUEST['ext_down'], array('order' => $k + 1));
 			$contactlib->modify_ext($user, $exts[$k + 1]['fieldId'], array('order' => $k));

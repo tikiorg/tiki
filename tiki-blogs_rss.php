@@ -48,7 +48,7 @@ if ($output["data"] == "EMPTY") {
 	$changes = $bloglib->list_all_blog_posts(0, $prefs['feed_blogs_max'], $dateId . '_desc', '', $now);
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
-	foreach($changes["data"] as $data) {
+	foreach ($changes["data"] as $data) {
 		global $bloglib;
 		$data["$descId"] = $tikilib->parse_data($data[$descId], array(
 			'print' => true

@@ -19,7 +19,7 @@ if (isset($_REQUEST['remove'])) {
 }
 if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {
 	check_ticket('admin-banning');
-	foreach(array_keys($_REQUEST['delsec']) as $sec) {
+	foreach (array_keys($_REQUEST['delsec']) as $sec) {
 		$banlib->remove_rule($sec);
 	}
 	unset($_REQUEST['banId']);
@@ -48,7 +48,7 @@ if (isset($_REQUEST['save'])) {
 			list($ip1,$ip2,$ip3,$ip4) = explode('.',$ip);
 			$banlib->replace_rule($_REQUEST['banId'], 'ip', $_REQUEST['title'], $ip1, $ip2, $ip3, $ip4, $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
 		}
-	}else{
+	} else {
 		$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
 	}
 	$info['sections'] = array();
@@ -105,7 +105,7 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 	if ( !empty($_REQUEST['mass_remove']) ) {
 		$access->check_authenticity(tra('Delete comments then set banning rules'));
 	}
-	foreach($banId_list as $id) {
+	foreach ($banId_list as $id) {
 		$ban_comment=$commentslib->get_comment($id);
 		$ban_comments_list[$ban_comment['user_ip']][$id]['userName'] = $ban_comment['userName'];
 		$ban_comments_list[$ban_comment['user_ip']][$id]['title'] = $ban_comment['title'];

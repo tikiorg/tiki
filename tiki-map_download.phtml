@@ -6,7 +6,7 @@
 // $Id$
 require_once ('tiki-setup.php');
 
-if(@$feature_maps != 'y') {
+if (@$feature_maps != 'y') {
 	$smarty->assign('msg',tra("Feature disabled"));
 	$smarty->display("error.tpl");
 	die;
@@ -60,7 +60,7 @@ for ($j=0;$j<$map->numlayers;$j++){
 	//Metadata handling
 	$download=FALSE;
 	if ($my_layers->name==$_GET['layer']){
-		if($my_layers->getMetadata("DOWNLOAD")=='T'){
+		if ($my_layers->getMetadata("DOWNLOAD")=='T'){
 			$download=TRUE;
 			if ($my_layers->connection!=""){
 				$download_path=$map_path.$my_layers->connection;

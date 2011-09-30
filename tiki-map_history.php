@@ -46,7 +46,7 @@ $smarty->assign('mapfile', $mapfile);
 $files = $maplib->listMapsWithRev($prefs['map_path']);
 $history = array();
 $j = 0;
-foreach($files as $file) {
+foreach ($files as $file) {
 	if (substr($file, 0, strlen($mapfile)) == $mapfile) {
 		$suffix = substr($file, strlen($mapfile));
 		$revision = intval(substr($suffix, 1));
@@ -59,7 +59,7 @@ foreach($files as $file) {
 }
 $history[$j]["version"] = $j + 1;
 $history[$j]["data"] = nl2br(file_get_contents($prefs['map_path'] . $mapfile));
-foreach($history as $index =>$h ) {
+foreach ($history as $index =>$h ) {
 	if (strpos($h["data"], "##TIKIMAPS HEADER: END##") != FALSE) {
 		$searchdata = substr($h["data"], 0, strpos($h["data"], "##TIKIMAPS HEADER: END##"));
 		if (strpos($searchdata, "#IP: ") != FALSE) {
@@ -92,11 +92,11 @@ if (!isset($_REQUEST["newver"])) {
 	$_REQUEST["newver"] = count($history);
 }
 if (isset($_REQUEST["compare"])) {
-	foreach($history as $old) {
+	foreach ($history as $old) {
 		if ($old["version"] == $_REQUEST["oldver"]) break;
 	}
 	$smarty->assign_by_ref('old', $old);
-	foreach($history as $new) {
+	foreach ($history as $new) {
 		if ($new["version"] == $_REQUEST["newver"]) break;
 	}
 	$smarty->assign_by_ref('new', $new);

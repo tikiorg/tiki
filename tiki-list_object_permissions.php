@@ -12,7 +12,7 @@ $all_perms = $userlib->get_permissions();
 function is_perm($permName, $objectType) {
 	global $all_perms, $tikilib;
 	$permGroup = $tikilib->get_permGroup_from_objectType($objectType);
-	foreach($all_perms['data'] as $perm) {
+	foreach ($all_perms['data'] as $perm) {
 		if ($perm['permName'] == $permName) {
 			return $permGroup == $perm['type'];
 		}
@@ -25,7 +25,7 @@ function list_perms($objectId, $objectType, $objectName, $filterGroup='') {
 	$cats = array();
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
 	if (!empty($perms)) {
-		foreach($perms as $perm) {
+		foreach ($perms as $perm) {
 			if (empty($filterGroup) || in_array($perm['groupName'], $filterGroup)) {
 				$json = json_encode(array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'objectId' => $objectId, 'objectType' => $objectType));
 				$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Object',
@@ -37,10 +37,10 @@ function list_perms($objectId, $objectType, $objectName, $filterGroup='') {
 		include_once ('lib/categories/categlib.php');
 		$categs = $categlib->get_object_categories($objectType, $objectId);
 		if (!empty($categs)) {
-			foreach($categs as $categId) {
+			foreach ($categs as $categId) {
 				$category_perms = $userlib->get_object_permissions($categId, 'category');
 				if (!empty($category_perms)) {
-					foreach($category_perms as $category_perm) {
+					foreach ($category_perms as $category_perm) {
 						if (is_perm($category_perm['permName'], $objectType) && (empty($filterGroup) || in_array($category_perm['groupName'], $filterGroup))) {
 							$cats[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
 									'reason' => 'Category', 'objectId' => $categId, 'objectType' => 'category',
@@ -93,12 +93,12 @@ $types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
 include_once ("lib/comments/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
 $all_groups = $userlib->list_all_groups();
 $res = array();
-foreach($types as $type) {
+foreach ($types as $type) {
 	$res[$type]['default'] = array();
 	$type_perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $tikilib->get_permGroup_from_objectType($type));
-	foreach($all_groups as $gr) {
+	foreach ($all_groups as $gr) {
 		$perms = $userlib->get_group_permissions($gr);
-		foreach($type_perms['data'] as $type_perm) {
+		foreach ($type_perms['data'] as $type_perm) {
 			if (in_array($type_perm['permName'], $perms) && (empty($filterGroup) || in_array($gr, $filterGroup))) {
 				$res[$type]['default'][] = array('group' => $gr, 'perm' => $type_perm['permName']);
 			}
@@ -110,7 +110,7 @@ foreach($types as $type) {
 		case 'wiki page':
 		case 'wiki':
 			$objects = $tikilib->list_pageNames();
-			foreach($objects['data'] as $object) {
+			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['pageName'], $type, $object['pageName'], $filterGroup);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectType' => $type); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }
@@ -121,7 +121,7 @@ foreach($types as $type) {
 		case 'file gallery':
 			$filegallib = TikiLib::lib('filegal');
 			$objects = $filegallib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
-			foreach($objects['data'] as $object) {
+			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['id'], $type, $object['name'], $filterGroup);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
@@ -131,7 +131,7 @@ foreach($types as $type) {
 		case 'tracker':
 		case 'trackers':
 			$objects = TikiLib::lib('trk')->list_trackers();
-			foreach($objects['data'] as $object) {
+			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['trackerId'], $type, $object['name'], $filterGroup);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
@@ -141,7 +141,7 @@ foreach($types as $type) {
 		case 'forum':
 		case 'forums':
 			$objects = $commentslib->list_forums();
-			foreach($objects['data'] as $object) {
+			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['forumId'], $type, $object['name'], $filterGroup);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
@@ -150,7 +150,7 @@ foreach($types as $type) {
 
 		case 'group':
 		case 'groups':
-			foreach($all_groups as $object) {
+			foreach ($all_groups as $object) {
 				$r = list_perms($object, $type, '', $filterGroup);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']); }
 				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }

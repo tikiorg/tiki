@@ -34,7 +34,7 @@ if ( empty($_REQUEST["sendingUniqId"]) ) {
 	$smarty->assign('sendingUniqId', $sendingUniqId);
 }
 
-if(!isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
+if (!isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
 	$_REQUEST['cookietab'] = 1;
 }
 $cookietab = $_REQUEST['cookietab'];
@@ -158,7 +158,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 $newsletterfiles = array();
 if (isset($_REQUEST['newsletterfile'])) {
 	$newsletterfiles_post = isset($_REQUEST['newsletterfile']) && is_array($_REQUEST['newsletterfile']) ? $_REQUEST['newsletterfile'] : array();
-	foreach($newsletterfiles_post as $k => $id) {
+	foreach ($newsletterfiles_post as $k => $id) {
 		$f = array();
 		if ((strlen($id) == 32) && preg_match('/^[0-9a-f]{32}$/', $id)) { // this is a valid md5 hash, so the file was just saved at preview time
 			$fpath = $prefs['tmpDir'] . '/newsletterfile-' . $id;
@@ -166,7 +166,7 @@ if (isset($_REQUEST['newsletterfile'])) {
 			$f['path'] = $fpath;
 			$newsletterfiles[] = $f;
 		} else if ((int)$_REQUEST['nlId'] > 0) {
-			foreach($info['files'] as $f) {
+			foreach ($info['files'] as $f) {
 				if ($f['id'] == (int)$id) {
 					$newsletterfiles[] = $f;
 					break;
@@ -178,7 +178,7 @@ if (isset($_REQUEST['newsletterfile'])) {
 	$newsletterfiles = $info['files'];
 }
 if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
-	foreach($_FILES['newsletterfile']['name'] as $i => $v) {
+	foreach ($_FILES['newsletterfile']['name'] as $i => $v) {
 		if ($_FILES['newsletterfile']['error'][$i] == UPLOAD_ERR_OK) {
 			$newsletterfiles[] = array(
 				'name' => $_FILES['newsletterfile']['name'][$i],
@@ -194,7 +194,7 @@ if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 	}
 }
 $_REQUEST['files'] = $info['files'] = $newsletterfiles;
-foreach($info['files'] as $k => $newsletterfile) {
+foreach ($info['files'] as $k => $newsletterfile) {
 	if ($newsletterfile['savestate'] == 'phptmp') {
 		// move it to temp
 		$tmpfnamekey = md5(rand() . time() . $newsletterfile['path'] . $newsletterfile['name'] . $newsletterfile['type']);
@@ -412,7 +412,7 @@ if (isset($_REQUEST["save_only"])) {
 	if (!isset($txt) || empty($_REQUEST['datatxt'])) $txt = "";
 	$smarty->assign('nlId', $_REQUEST['nlId']);
 	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true, $txt, $info['files'], $_REQUEST['wysiwyg']);
-	foreach($info['files'] as $k => $f) {
+	foreach ($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
 			unlink($f['path'] . '.infos');
 			$info['files'][$k]['savestate'] = 'tiki';

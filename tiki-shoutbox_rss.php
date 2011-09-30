@@ -17,8 +17,8 @@ if ($prefs['feed_shoutbox'] != 'y') {
 }
 
 $res=$access->authorize_rss(array('tiki_p_view_shoutbox','tiki_p_admin_cms'));
-if($res) {
-   if($res['header'] == 'y') {
+if ($res) {
+   if ($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
       header('HTTP/1.0 401 Unauthorized');
    }

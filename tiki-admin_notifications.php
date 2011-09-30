@@ -92,7 +92,7 @@ if (isset($_REQUEST["removeevent"]) && isset($_REQUEST['removetype'])) {
 }
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	check_ticket('admin-notif');
-	foreach($_REQUEST['checked'] as $id) {
+	foreach ($_REQUEST['checked'] as $id) {
 		if (strpos($id, 'user') === 0) $tikilib->remove_user_watch_by_id(substr($id, 4));
 		else $tikilib->remove_group_watch_by_id(substr($id, 5));
 	}

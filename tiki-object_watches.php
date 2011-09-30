@@ -52,7 +52,7 @@ if (isset($_REQUEST['assign'])) {
 	if (!isset($_REQUEST['checked'])) $_REQUEST['checked'] = array();
 	$old_watches = $tikilib->get_groups_watching($_REQUEST['objectId'], $_REQUEST['watch_event'], $objectType);
 	check_ticket('object_watches');
-	foreach($all_groups as $g) {
+	foreach ($all_groups as $g) {
 		if (in_array($g, $_REQUEST['checked']) && !in_array($g, $old_watches)) {
 			$tikilib->add_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $objectType,
 				$objectName, $objectHref);
@@ -69,7 +69,7 @@ if (isset($_REQUEST['assign'])) {
 		$addedGroupsDesc = array();
 		$deletedGroupsDesc = array();
 		$catTreeNodes = array();
-		foreach($all_groups as $g) {
+		foreach ($all_groups as $g) {
 			if (isset($_REQUEST[$g]) && $_REQUEST[$g] == 'cat_add_desc') {
 				$categlib->group_watch_category_and_descendants($g, $_REQUEST['objectId'], $objectName, false);
 				if ($g != 'Anonymous') {
@@ -87,7 +87,7 @@ if (isset($_REQUEST['assign'])) {
 		$smarty->assign_by_ref('deletedGroupsDesc', $deletedGroupsDesc);
 		
 		if (!empty($addedGroupsDesc) || !empty($deletedGroupsDesc)) {
-			foreach($extendedTargets as $d) {
+			foreach ($extendedTargets as $d) {
 				$catinfo = $categlib->get_category($d);
 				$catTreeNodes[] = array(
 					'id' => $catinfo['categId'],

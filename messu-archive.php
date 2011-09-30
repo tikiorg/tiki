@@ -15,7 +15,7 @@ $maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 	check_ticket('messu-archive');
-	foreach(array_keys($_REQUEST["msg"]) as $msg) {
+	foreach (array_keys($_REQUEST["msg"]) as $msg) {
 		$messulib->delete_message($user, $msg, 'archive');
 	}
 }
@@ -24,7 +24,7 @@ if (isset($_REQUEST["download"])) {
 	check_ticket('messu-archive');
 	// if message ids are handed over, use them:
 	if (isset($_REQUEST["msg"])) {
-		foreach(array_keys($_REQUEST["msg"]) as $msg) {
+		foreach (array_keys($_REQUEST["msg"]) as $msg) {
 			$tmp = $messulib->get_message($user, $msg, 'archive');
 			$items[] = $tmp;
 		}

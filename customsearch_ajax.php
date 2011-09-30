@@ -58,7 +58,7 @@ if (isset($_POST['adddata'])) {
 	if (!empty($_REQUEST["offset"])) {
 		$_SESSION["customsearch_$id"]["offset"] = $_REQUEST["offset"];
 	}
-	foreach($adddata as $fieldid => $d) {
+	foreach ($adddata as $fieldid => $d) {
 		$config = $d['config'];
 		$name = $d['name'];
 		$value = $d['value'];
@@ -125,7 +125,7 @@ echo $results;
 
 function cs_get_grouped($dataappend, $groups) {
 	$grouped = array();
-	foreach($dataappend as $fieldid => $data) {
+	foreach ($dataappend as $fieldid => $data) {
 		if (isset($groups[$fieldid]) && !isset($groupedids[$groups[$fieldid]])) {
 			$grouped[$groups[$fieldid]] = array_keys($groups, $groups[$fieldid]);
 		}

@@ -111,7 +111,7 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
 	$result = $tikilib->fetchAll($query, array($edit_language));
 
-	foreach( $result as $row ) {
+	foreach ( $result as $row ) {
 		${"lang_$edit_language"}[ $row['source'] ] = $row['tran'];
 	}
 

@@ -131,7 +131,7 @@ if (isset($_REQUEST['status'])) {
 	);
 	$_REQUEST['status'] = 'o';
 }
-foreach($status_raw as $let => $sta) {
+foreach ($status_raw as $let => $sta) {
 	if ((isset($$sta['perm']) and $$sta['perm'] == 'y') or ($my or $ours)) {
 		if (in_array($let, $sts)) {
 			$sta['class'] = 'statuson';
@@ -256,7 +256,7 @@ if (!empty($_REQUEST['remove'])) {
 	check_ticket('view-trackers');
 	$transaction = $tikilib->begin();
 
-	foreach($_REQUEST['action'] as $batchid) {
+	foreach ($_REQUEST['action'] as $batchid) {
 		$item_info = $trklib->get_item_info($batchid);
 		$actionObject = Tracker_Item::fromInfo($item_info);
 		if ($actionObject->canRemove()) {
@@ -270,7 +270,7 @@ if (!empty($_REQUEST['remove'])) {
 	check_ticket('view-trackers');
 	$transaction = $tikilib->begin();
 
-	foreach($_REQUEST['action'] as $batchid) {
+	foreach ($_REQUEST['action'] as $batchid) {
 		$item_info = $trklib->get_item_info($batchid);
 		$actionObject = Tracker_Item::fromInfo($item_info);
 		if ($actionObject->canModify()) {
@@ -305,7 +305,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
 			$watching_categories = array();
-			foreach($watching_categories_temp as $wct) {
+			foreach ($watching_categories_temp as $wct) {
 				$watching_categories[] = array(
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)
@@ -453,7 +453,7 @@ $urlquery['sort_mode'] = $sort_mode;
 $urlquery['exactvalue'] = $exactvalue;
 $urlquery['filterfield'] = $filterfield;
 if (is_array($filtervalue)) {
-	foreach($filtervalue as $fil) {
+	foreach ($filtervalue as $fil) {
 		$urlquery["filtervalue[" . $filterfield . "][]"] = $fil;
 	}
 } else {
@@ -461,7 +461,7 @@ if (is_array($filtervalue)) {
 }
 $smarty->assign_by_ref('urlquery', $urlquery);
 if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y' || isset($tracker_info['showLastComment']) && $tracker_info['showLastComment'] == 'y')) {
-	foreach($items['data'] as $itkey => $oneitem) {
+	foreach ($items['data'] as $itkey => $oneitem) {
 		if ($tracker_info['showComments'] == 'y') {
 			$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
 		}
@@ -472,13 +472,13 @@ if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y'
 	}
 }
 if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {
-	foreach($items["data"] as $itkey => $oneitem) {
+	foreach ($items["data"] as $itkey => $oneitem) {
 		$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 		$items["data"][$itkey]['attachments'] = $res['attachments'];
 		$items["data"][$itkey]['hits'] = $res['hits'];
 	}
 }
-foreach($xfields['data'] as $xfd) {
+foreach ($xfields['data'] as $xfd) {
 	$fid = $xfd["fieldId"];
 	if ($xfd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
 		$listfields[$fid]['type'] = $xfd["type"];
@@ -526,7 +526,7 @@ include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');
 $smarty->assign('show_filters', 'n');
 if (count($fields['data']) > 0) {
-	foreach($fields['data'] as $it) {
+	foreach ($fields['data'] as $it) {
 		if ($it['isSearchable'] == 'y') {
 			$smarty->assign('show_filters', 'y');
 			break;
@@ -534,7 +534,7 @@ if (count($fields['data']) > 0) {
 	}
 }
 if (isset($tracker_info['useRatings']) && $tracker_info['useRatings'] == 'y' && $items['data']) {
-	foreach($items['data'] as $f => $v) {
+	foreach ($items['data'] as $f => $v) {
 		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker." . $_REQUEST["trackerId"] . '.' . $items['data'][$f]['itemId'], $user);
 	}
 }

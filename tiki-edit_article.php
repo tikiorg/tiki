@@ -399,7 +399,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
     $fp = fopen($tmp_dest, "rb");
 		$imgdata = fread($fp, filesize($tmp_dest));
 		fclose ($fp);
-		if(is_file($tmp_dest)) {
+		if (is_file($tmp_dest)) {
 			@unlink($tmp_dest);
 		}
 		$imgtype = $_FILES['userfile1']['type'];
@@ -430,7 +430,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 			die;
 		}
 	}
-	if($_REQUEST['ispublished'] == "on")
+	if ($_REQUEST['ispublished'] == "on")
 		$ispublished = 'y';
 	else
 		$ispublished = 'n';
@@ -525,7 +525,7 @@ if ($prefs["article_custom_attributes"] == 'y') {
 	$smarty->assign('article_attributes', $article_attributes);
 	$all_attributes = array();
 	$js_string = '';
-	foreach($types as &$t) {
+	foreach ($types as &$t) {
 		// javascript needs htmlid to show/hide to be properties of basic array
 		$type_attributes = $artlib->get_article_type_attributes($t["type"]);
 		$all_attributes = array_merge($all_attributes, $type_attributes);
@@ -553,7 +553,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 }
 
-if( $prefs['geo_locate_article'] == 'y' ) {
+if ( $prefs['geo_locate_article'] == 'y' ) {
 	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('article', $articleId));
 }
 

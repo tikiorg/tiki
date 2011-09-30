@@ -46,7 +46,7 @@ if (isset($_REQUEST['book'])) {
 			$_REQUEST['debitAccount'], $_REQUEST['creditAccount'],
 			$_REQUEST['debitAmount'], $_REQUEST['creditAmount'],
 			$_REQUEST['debitText'],$_REQUEST['creditText']);
-	if(is_numeric($result)) {
+	if (is_numeric($result)) {
 		if (isset($_REQUEST['statementId'])) {
 			$accountinglib->updateStatement($bookId, $_REQUEST['statementId'],$result);		
 		}

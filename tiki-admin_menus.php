@@ -78,7 +78,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $channels = $menulib->list_menus($offset, $maxRecords, $sort_mode, $find);
-foreach($channels['data'] as $i => $channel) {
+foreach ($channels['data'] as $i => $channel) {
 	if ($userlib->object_has_one_permission($channel['menuId'], 'menus')) {
 		$channels['data'][$i]['individual'] = 'y';
 	}

@@ -69,7 +69,7 @@ if ($ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info['created'] > $ti
 }	
 $post_info['adjacent'] = $bloglib->_get_adjacent_posts($blogId, $post_info['created'], $tiki_p_blog_admin == 'y'? null: $tikilib->now, $user);
 
-if(isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
+if (isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 	$post_info['title'] .= ' (' . tra("private") . ')';
 }
 

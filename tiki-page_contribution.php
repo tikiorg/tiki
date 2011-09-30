@@ -44,18 +44,18 @@ if (!isset($_REQUEST['show'])) { //defaults
 	$showpopups=0;
 	$escape=0;
 } else {
-	if(isset($_REQUEST['showstatistics'])) {
+	if (isset($_REQUEST['showstatistics'])) {
 		$showstatistics=$_REQUEST['showstatistics'];
 	} else {
 		$showstatistics=0;
 	}	
-	if(isset($_REQUEST['showpage'])) {
+	if (isset($_REQUEST['showpage'])) {
 		$showpage=$_REQUEST['showpage'];
 	} else {
 		$showpage=0;
 	}	
 	
-	if(isset($_REQUEST['showpopups'])) {
+	if (isset($_REQUEST['showpopups'])) {
 		$showpopups=$_REQUEST['showpopups'];
 	} else {
 		$showpopups=0;
@@ -63,7 +63,7 @@ if (!isset($_REQUEST['show'])) { //defaults
 	$escape=0;
 	if (isset($prefs['feature_source']) and $prefs['feature_source']=='y' and 
 		isset($tiki_p_wiki_view_source) and $tiki_p_wiki_view_source=='y') {
-			if(isset($_REQUEST['escape'])) {
+			if (isset($_REQUEST['escape'])) {
 				$escape=$_REQUEST['escape'];
 			}
 	}

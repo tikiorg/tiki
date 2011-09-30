@@ -74,7 +74,7 @@ if (isset($_REQUEST["down"])) {
 }
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	check_ticket('admin-menu-options');
-	foreach($_REQUEST['checked'] as $id) {
+	foreach ($_REQUEST['checked'] as $id) {
 		$menulib->remove_menu_option($id);
 	}
 	$maxPos = $menulib->get_max_option($_REQUEST['menuId']);
@@ -132,7 +132,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('allchannels', $allchannels["data"]);
 if (isset($info['groupname']) && !is_array($info['groupname'])) $info['groupname'] = explode(',', $info['groupname']);
 $all_groups = $userlib->list_all_groups();
-if (is_array($all_groups)) foreach($all_groups as $g) $option_groups[$g] = (is_array($info['groupname']) && in_array($g, $info['groupname'])) ? 'selected="selected"' : '';
+if (is_array($all_groups)) foreach ($all_groups as $g) $option_groups[$g] = (is_array($info['groupname']) && in_array($g, $info['groupname'])) ? 'selected="selected"' : '';
 $smarty->assign_by_ref('option_groups', $option_groups);
 ask_ticket('admin-menu-options');
 // disallow robots to index page:

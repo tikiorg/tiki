@@ -29,7 +29,7 @@ $invoice = TrackerQueryLib::tracker("Invoices")
 $amount = 0;
 
 if (is_array($invoice["Item Amounts"])) {
-	foreach($invoice["Item Amounts"] as $key => $sum) {
+	foreach ($invoice["Item Amounts"] as $key => $sum) {
 		$amount += $invoice["Item Amounts"][$key] * $invoice["Item Quantities"][$key];
 	}
 } else {

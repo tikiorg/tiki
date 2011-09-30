@@ -37,7 +37,7 @@ if ( $prefs['feature_user_watches_languages'] == 'y') {
 
 $smarty->assign('add_options', $notification_types);
 if (isset($_POST['langwatch'])) {
-	foreach($languages as $lang) if ($_POST['langwatch'] == $lang['value']) {
+	foreach ($languages as $lang) if ($_POST['langwatch'] == $lang['value']) {
 		$langwatch = $lang;
 		break;
 	}
@@ -54,7 +54,7 @@ if ($prefs['feature_categories']) {
 
 if ( isset($_REQUEST['categwatch']) ) {
 	$selected_categ = null;
-	foreach( $categories as $categ ) {
+	foreach ( $categories as $categ ) {
 		if ( $_REQUEST['categwatch'] == $categ['categId'] ) {
 			$selected_categ = $categ;
 			break;
@@ -85,7 +85,7 @@ if (isset($_REQUEST["add"])) {
 				break;
 
 			case 'category_changed_in_lang':
-				if( $selected_categ && $langwatch ) {
+				if ( $selected_categ && $langwatch ) {
 					$watch_object = $selected_categ['categId'];
 					$watch_type = $langwatch['value'];
 					$watch_label = tr('Category watch: %0, Language: %1', $selected_categ['name'], $langwatch['name'] );
@@ -109,7 +109,7 @@ if (isset($_REQUEST["add"])) {
 			$_REQUEST['event'] = '';
 		}
 	} else {
-		foreach($_REQUEST['cat_categories'] as $cat) {
+		foreach ($_REQUEST['cat_categories'] as $cat) {
 			if ($cat > 0) $tikilib->add_user_watch($user, 'new_in_category', $cat, 'category', "tiki-browse_category.php?parentId=$cat");
 			else {
 				$tikilib->remove_user_watch($user, 'new_in_category', '*');
@@ -121,7 +121,7 @@ if (isset($_REQUEST["add"])) {
 if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
 	check_ticket('user-watches');
 	/* CSRL doesn't work if param as passed not in the uri */
-	foreach(array_keys($_REQUEST["watch"]) as $item) {
+	foreach (array_keys($_REQUEST["watch"]) as $item) {
 		$tikilib->remove_user_watch_by_id($item);
 	}
 }
@@ -142,7 +142,7 @@ if ( $prefs['feature_user_watches_languages'] == 'y') {
 }
 $rawEvents = $tikilib->get_watches_events();
 $events = array();
-foreach($rawEvents as $event) {
+foreach ($rawEvents as $event) {
 	if (array_key_exists($event, $notification_types)) {
 		$events[$event] = $notification_types[$event]['label'];
 	} else {
@@ -154,7 +154,7 @@ $smarty->assign('events', $events);
 if (!isset($_REQUEST['event'])) $_REQUEST['event'] = '';
 // get all the information for the event
 $watches = $tikilib->get_user_watches($user, $_REQUEST['event']);
-foreach($watches as $key => $watch) {
+foreach ($watches as $key => $watch) {
 	if (array_key_exists($watch['event'], $notification_types)) {
 		$watches[$key]['label'] = $notification_types[$watch['event']]['label'];
 	}
@@ -165,7 +165,7 @@ $smarty->assign('watches', $watches);
 if ($prefs['feature_categories']) {
 	$watches = $tikilib->get_user_watches($user, 'new_in_category');
 	$nb = count($categories);
-	foreach($watches as $watch) {
+	foreach ($watches as $watch) {
 		if ($watch['object'] == '*') {
 			$smarty->assign('all', 'y');
 			break;

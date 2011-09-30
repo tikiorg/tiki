@@ -22,7 +22,7 @@ $cwflashVars["Permissions"]       = 1;		// 1=public, 2=private, 3=group, 4=frien
 $smarty->assign_by_ref('cwflashVars',json_encode($cwflashVars));
 
 $count = 0;
-if($_REQUEST['kcw']){
+if ($_REQUEST['kcw']){
 	$count = count($_REQUEST['entryId']);
 	$smarty->assign_by_ref('count',$count);
 }

@@ -147,7 +147,7 @@ if (!isset($comments_prefix_var)) {
 	$comments_prefix_var = '';
 }
 
-if( ! isset( $comments_objectId ) ) {
+if ( ! isset( $comments_objectId ) ) {
 	if (!isset($_REQUEST[$comments_object_var])) {
 		die ("The comments_object_var variable cannot be found as a REQUEST variable");
 	}
@@ -192,7 +192,7 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign_by_ref('feedbacks', $feedbacks);
 
-	if( isset( $pageCache ) ) {
+	if ( isset( $pageCache ) ) {
 		$pageCache->invalidate();
 	}
 }
@@ -235,10 +235,10 @@ if ($_REQUEST["comments_threadId"] > 0) {
 			$comment_info["data"] = "\n> " . $comment_info["data"];
 		}
 	}
-	$smarty->assign( 'comment_data', $comment_info["data"] );
+	$smarty->assign('comment_data', $comment_info["data"]);
 
-	if( ! array_key_exists( "title", $comment_info ) )	{
-		if( array_key_exists( "comments_title", $_REQUEST ) ) {
+	if ( ! array_key_exists( "title", $comment_info ) )	{
+		if ( array_key_exists( "comments_title", $_REQUEST ) ) {
 			$comment_info["title"] = $_REQUEST["comments_title"];
 		} else {
 			$comment_info["title"] = "";
@@ -320,7 +320,7 @@ if ($forum_check[0] == 'forum' ) {
 	$smarty->assign('forumId', $forum_check[1]);
 }
 
-if( isset( $_REQUEST["comments_grandParentId"] ) ) {
+if ( isset( $_REQUEST["comments_grandParentId"] ) ) {
 	$smarty->assign('comments_grandParentId', $_REQUEST["comments_grandParentId"]);
 }
 
@@ -330,7 +330,7 @@ else
 	$threadId_if_reply = 0;
 
 if (empty($thread_sort_mode)) {
-	if( !empty($_REQUEST['thread_sort_mode'])) {
+	if ( !empty($_REQUEST['thread_sort_mode'])) {
 		$thread_sort_mode = $_REQUEST['thread_sort_mode'];
 	} else {
 		$thread_sort_mode = 'commentDate_asc';
@@ -355,7 +355,7 @@ $smarty->assign('comments_cant', $comments_cant);
 // Offset management
 $comments_maxRecords = $comments_per_page;
 
-if( $comments_maxRecords != 0 ) {
+if ( $comments_maxRecords != 0 ) {
 	$comments_cant_pages = ceil($comments_cant_page / $comments_maxRecords);
 	$smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 } else {

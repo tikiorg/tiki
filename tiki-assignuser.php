@@ -40,7 +40,7 @@ if (isset($_REQUEST["action"])) {
 	if ($userChoice == 'y') {
 		$gps = $userlib->get_groups(0, -1, 'groupName_asc', '', '', '', '', $userChoice);
 		$groups = array();
-		foreach($gps['data'] as $g) {
+		foreach ($gps['data'] as $g) {
 			$groups[$g['groupName']] = $g;
 		}
 	} elseif ($tiki_p_admin != 'y') {
@@ -63,7 +63,7 @@ if (isset($_REQUEST["action"])) {
 	}
 }
 
-if(isset($_REQUEST['set_default'])) {
+if (isset($_REQUEST['set_default'])) {
 	$userlib->set_default_group($_REQUEST['login'],$_REQUEST['defaultgroup']);
 }
 

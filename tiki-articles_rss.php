@@ -18,8 +18,8 @@ if ($prefs['feed_articles'] != 'y') {
 }
 
 $res=$access->authorize_rss(array('tiki_p_read_article','tiki_p_admin_cms', 'tiki_p_articles_read_heading'));
-if($res) {
-   if($res['header'] == 'y') {
+if ($res) {
+   if ($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
       header('HTTP/1.0 401 Unauthorized');
    }

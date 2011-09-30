@@ -141,7 +141,7 @@ $wd = TikiLib::date_format('%w', $focusdate);
 //prepare for select first day of week (Hausi)
 if ($firstDayofWeek == 1) {
 	$wd--;
-	if($wd == -1) {
+	if ($wd == -1) {
 		$wd = 6;
 	}
 }

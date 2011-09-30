@@ -17,8 +17,8 @@ $trkqrylib = TikiLib::lib("trkqry");
 
 //TODO: This needs rewritten to match tiki
 function dateFormat($fieldIds, $tracker) {
-	foreach($tracker as $key => $item) {
-		foreach($fieldIds as $fieldId) {
+	foreach ($tracker as $key => $item) {
+		foreach ($fieldIds as $fieldId) {
 			if (isset($item[$fieldId]) == true && is_numeric($item[$fieldId])) {
 				$tracker[$key][$fieldId] = $item[$fieldId] = date("F j, Y, g:i a", $item[$fieldId]);
 			}
@@ -63,7 +63,7 @@ defVal('end');
 function splitToTracker($param) {
 	if (isset($_REQUEST[$param])) {
 		$_REQUEST[$param] = explode("|", $_REQUEST[$param]);
-		foreach($_REQUEST[$param] as $key => $field) {
+		foreach ($_REQUEST[$param] as $key => $field) {
 			$_REQUEST[$param][$key] = explode(',', $_REQUEST[$param][$key]); 
 		}
 	}
@@ -88,7 +88,7 @@ $_REQUEST['itemIdFields'] = explode(",", $_REQUEST['itemIdFields']);
 $trackerPrimary = array();
 if (isset($_REQUEST['trackerIds']) == true) {
 	$i = 0;
-	foreach($_REQUEST['trackerIds'] as $key => $trackerId) {
+	foreach ($_REQUEST['trackerIds'] as $key => $trackerId) {
 		if ($key == 0) {
 			$trackerPrimary = TrackerQueryLib::tracker($trackerId)
 				->start($_REQUEST['start'][$key])
@@ -131,7 +131,7 @@ if (
 	$trackerPrimary = $trkqrylib->filter_fields_from_tracker_query($trackerPrimary, $_REQUEST['removeFieldIds'], $_REQUEST['showFieldIds']);
 }
 
-if(isset($_REQUEST['dateFieldIds'])) {
+if (isset($_REQUEST['dateFieldIds'])) {
 	$trackerPrimary = dateFormat($_REQUEST['dateFieldIds'], $trackerPrimary);
 }
 

@@ -11,13 +11,13 @@ $access->check_permission('tiki_p_plugin_approve');
 $parserlib = TikiLib::lib('parser');
 
 if (isset($_POST['submit_mult']) && ($_POST['submit_mult'] == 'clear') && is_array($_POST['clear'])) {
-	foreach($_POST['clear'] as $fp) {
+	foreach ($_POST['clear'] as $fp) {
 		$parserlib->plugin_clear_fingerprint($fp);
 	}
 }
 
 if (isset($_POST['submit_mult']) && ($_POST['submit_mult'] == 'approve') && is_array($_POST['clear'])) {
-	foreach($_POST['clear'] as $fp) {
+	foreach ($_POST['clear'] as $fp) {
 		$parserlib->approve_selected_pending_plugings($fp);
 	}
 }

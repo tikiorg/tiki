@@ -7,7 +7,7 @@
 
 require 'tiki-setup.php';
 
-if( ! isset( $_POST['page'], $_POST['content'], $_POST['index'], $_POST['type'], $_SERVER['HTTP_REFERER'] ) )
+if ( ! isset( $_POST['page'], $_POST['content'], $_POST['index'], $_POST['type'], $_SERVER['HTTP_REFERER'] ) )
 	die( 'Missing parameters' );
 
 $page = $_POST['page'];
@@ -19,10 +19,10 @@ if (empty($parserlib)) {
 	$parserlib = TikiLib::lib('parser');
 }
 
-if( ! $meta = $parserlib->plugin_info( $plugin ) )
+if ( ! $meta = $parserlib->plugin_info( $plugin ) )
 	exit;
 
-if( ! isset( $_POST['message'] ) )
+if ( ! isset( $_POST['message'] ) )
 	$_POST['message'] = (isset($meta['name']) ? tra($meta['name']) : $plugin) . ' ' . tra('Plugin modified by editor.');
 
 $info = $tikilib->get_page_info($page);
@@ -36,28 +36,28 @@ $current = $info['data'];
 
 $matches = WikiParser_PluginMatcher::match($current);
 $count = 0;
-foreach( $matches as $match )
+foreach ( $matches as $match )
 {
-	if( $match->getName() !== $plugin ) {
+	if ( $match->getName() !== $plugin ) {
 		continue;
 	}
 
 	++$count;
 
-	if( $_POST['index'] == $count ) {
+	if ( $_POST['index'] == $count ) {
 		$hasBody = !empty($content) && !ctype_space( $content );
 		$params = $match->getArguments();
 
 		// If parameters are provided, rebuild the parameter line
-		if( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
+		if ( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
 		{
 			// $values was relaxed to accept any argument rather than those defined up front 
 			// in the plugin's parameter list. This facilitates the use of modules as plugins.
 			$values = $_POST['params'];
 
 			$parts = array();
-			foreach( $values as $key => $value ) {
-				if( ! empty( $value ) )
+			foreach ( $values as $key => $value ) {
+				if ( ! empty( $value ) )
 					$parts[] = "$key=\"" . str_replace( '"', "\\\"", $value ) . '"';
 			}
 
@@ -65,7 +65,7 @@ foreach( $matches as $match )
 		}
 
 		// Replace the content
-		if( $hasBody ) {
+		if ( $hasBody ) {
 			$content = "{{$type}($params)}$content{{$type}}";
 		} else {
 			$content = "{{$plugin} $params}";

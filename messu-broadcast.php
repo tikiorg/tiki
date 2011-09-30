@@ -32,7 +32,7 @@ if (isset($_REQUEST['groupbr'])) {
 	if ($_REQUEST['groupbr'] == 'all' && $tiki_p_broadcast_all == 'y') {
 		$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
 		$all_users = array();
-		foreach($a_all_users['data'] as $a_user) {
+		foreach ($a_all_users['data'] as $a_user) {
 			$all_users[] = $a_user['user'];
 		}
 	} else {
@@ -55,7 +55,7 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 	}
 	// Remove invalid users from the to, cc and bcc fields
 	$users = array();
-	foreach($all_users as $a_user) {
+	foreach ($all_users as $a_user) {
 		if (!empty($a_user)) {
 			if ($userlib->user_exists($a_user)) {
 				if (!$userlib->user_has_permission($a_user, 'tiki_p_messages')) {
@@ -91,7 +91,7 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 	if (isset($_REQUEST['send'])) {
 		$smarty->assign('sent', 1);
 		// Insert the message in the inboxes of each user
-		foreach($users as $a_user) {
+		foreach ($users as $a_user) {
 			$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 			// if this is a reply flag the original messages replied to
 			if ($_REQUEST['replyto_hash'] <> '') {

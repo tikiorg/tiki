@@ -8,7 +8,7 @@
 include_once('tiki-setup.php');
 require_once("XML/Server.php");
 include_once('lib/blogs/bloglib.php');
-if($prefs['feature_xmlrpc'] != 'y') {
+if ($prefs['feature_xmlrpc'] != 'y') {
   die;  
 }
 $map = array (
@@ -27,12 +27,12 @@ $s=new XML_RPC_Server( $map );
 function check_individual($user,$blogid,$permName) {
   global $userlib;
   // If the user is admin he can do everything
-  if($userlib->user_has_permission($user,'tiki_p_blog_admin')) return true;
+  if ($userlib->user_has_permission($user,'tiki_p_blog_admin')) return true;
   // If no individual permissions for the object then ok
-  if(!$userlib->object_has_one_permission($blogid,'blog')) return true;
+  if (!$userlib->object_has_one_permission($blogid,'blog')) return true;
   // If the object has individual permissions then check
   // Now get all the permissions that are set for this type of permissions 'image gallery'
-  if($userlib->object_has_permission($user,$blogid,'blog',$permName)) {
+  if ($userlib->object_has_permission($user,$blogid,'blog',$permName)) {
     return true;
   } else {
     return false;
@@ -45,7 +45,7 @@ function getUserInfo($params) {
  $usernamep=$params->getParam(1); $username=$usernamep->scalarval();
  $passwordp=$params->getParam(2); $password=$passwordp->scalarval();
  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
- if($ok) {
+ if ($ok) {
    $myStruct=new XML_RPC_Value(array("nickname" => new XML_RPC_Value($username),
                                  "firstname" => new XML_RPC_Value("none"),
                                  "lastname" => new XML_RPC_Value("none"),
@@ -75,24 +75,24 @@ function newPost($params) {
   $content = preg_replace('#<title>(.*)</title>#','',$content);
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
-  if(!$ok) {
+  if (!$ok) {
     return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
  
   // Get individual permissions for this weblog if they exist
-  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+  if (!check_individual($username,$blogid,'tiki_p_blog_post') ) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
   }
   
   // If the blog is not public then check if the user is the owner
-  if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
-    if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
+  if (!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
+    if (!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
       return new XML_RPC_Response(0, 101, "User is not allowed to post");
     }
     global $bloglib; require_once('lib/blogs/bloglib.php');
     $blog_info = $bloglib->get_blog($blogid);
-    if($blog_info["public"]!='y') {
-      if($username != $blog_info["user"]) {
+    if ($blog_info["public"]!='y') {
+      if ($username != $blog_info["user"]) {
         return new XML_RPC_Response(0, 101, "User is not allowed to post");
       }
     }
@@ -119,26 +119,26 @@ function editPost($params) {
   $content = preg_replace('#<title>(.*)</title>#','',$content);
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
-  if(!$ok) {
+  if (!$ok) {
     return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
  
-  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+  if (!check_individual($username,$blogid,'tiki_p_blog_post') ) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefor the user cannot edit a post");
   }
  
-  if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
+  if (!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post");
   }
   
   // Now get the post information
   $post_data = $bloglib->get_post($postid);
-  if(!$post_data) {
+  if (!$post_data) {
     return new XML_RPC_Response(0, 101, "Post not found");
   }
   
-  if($post_data["user"]!=$username) {
-    if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
+  if ($post_data["user"]!=$username) {
+    if (!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
       return new XML_RPC_Response(0, 101, "Permission denied to edit that post since the post does not belong to the user");
     }
   }
@@ -156,19 +156,19 @@ function deletePost($params) {
   $passp=$params->getParam(4); $publish=$passp->scalarval();
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
-  if(!$ok) {
+  if (!$ok) {
     return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
  
   
   // Now get the post information
   $post_data = $bloglib->get_post($postid);
-  if(!$post_data) {
+  if (!$post_data) {
     return new XML_RPC_Response(0, 101, "Post not found");
   }
       
-  if($post_data["user"]!=$username) {
-    if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
+  if ($post_data["user"]!=$username) {
+    if (!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
       return new XML_RPC_Response(0, 101, "Permission denied to edit that post");
     }
   }
@@ -187,23 +187,23 @@ function getPost($params) {
   $passwordp=$params->getParam(3); $password=$passwordp->scalarval();
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
-  if(!$ok) {
+  if (!$ok) {
     return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
-  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+  if (!check_individual($username,$blogid,'tiki_p_blog_post') ) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
   }
  
-  if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
+  if (!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post");
   }
-  if(!$userlib->user_has_permission($username,'tiki_p_read_blog')) {
+  if (!$userlib->user_has_permission($username,'tiki_p_read_blog')) {
       return new XML_RPC_Response(0, 101, "Permission denied to read this blog");
   }
   
   // Now get the post information
   $post_data = $bloglib->get_post($postid);
-  if(!$post_data) {
+  if (!$post_data) {
     return new XML_RPC_Response(0, 101, "Post not found");
   }
   $dateCreated=$tikilib->get_iso8601_datetime($post_data["created"]);    
@@ -230,25 +230,25 @@ function getRecentPosts($params) {
   $passp=$params->getParam(4); $number=$passp->scalarval();
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
-  if(!$ok) {
+  if (!$ok) {
     return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
   
-  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+  if (!check_individual($username,$blogid,'tiki_p_blog_post') ) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefore the user cannot edit a post");
   }
   
-  if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
+  if (!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
     return new XML_RPC_Response(0, 101, "User is not allowed to post");
   }
   
   // Now get the post information
   $posts = $bloglib->list_blog_posts($blogid, false, 0, $number,'created_desc', '', '');
-  if(count($posts)==0) {
+  if (count($posts)==0) {
     return new XML_RPC_Response(0, 101, "No posts");
   }
   $arrayval = Array();
-  foreach($posts["data"] as $post) {
+  foreach ($posts["data"] as $post) {
     
     $dateCreated=$tikilib->get_iso8601_datetime($post["created"]);    
     $myStruct=new XML_RPC_Value(array("userid" => new XML_RPC_Value($username),
@@ -279,7 +279,7 @@ function getUserBlogs($params) {
  $blogs = $bloglib->list_user_blogs($username,true);
  $foo = parse_url($_SERVER["REQUEST_URI"]);
  $foo1=$tikilib->httpPrefix().str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
- foreach($blogs as $blog) {
+ foreach ($blogs as $blog) {
    $myStruct=new XML_RPC_Value(array("blogName" => new XML_RPC_Value($blog["title"]),
                                "url" => new XML_RPC_Value($foo1."?blogId=".$blog["blogId"]),
                                "blogid" => new XML_RPC_Value($blog["blogId"])),"struct");

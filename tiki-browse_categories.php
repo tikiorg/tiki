@@ -61,9 +61,9 @@ if (isset($_REQUEST['deep']) && $_REQUEST['deep'] == 'on') {
 $canView = false;
 if (is_array($_REQUEST['parentId'])) {
 	Perms::bulk( array( 'type' => 'category' ), 'object', $_REQUEST['parentId'] );
-	foreach($_REQUEST['parentId'] as $p) {
+	foreach ($_REQUEST['parentId'] as $p) {
 		$perms = Perms::get( array( 'type' => 'category', 'object' => $p ) );
-		if( $perms->view_category ) {
+		if ( $perms->view_category ) {
 			$p_info = $categlib->get_category($p);
 			$paths[] = $p_info['tepath'];
 			$canView = true;
@@ -124,14 +124,14 @@ $usercatwatches_curr = $tikilib->get_user_watches($user, 'category_changed');
 $eyes_curr = add_watch_icons ($descendants_curr, $usercatwatches_curr, $_REQUEST['parentId'], $_REQUEST['parentId'], $deep, $user);
 $smarty->assign_by_ref('eyes_curr', $eyes_curr);
 
-foreach($ctall as &$c) {
+foreach ($ctall as &$c) {
 	$descendants = $categlib->get_category_descendants($c['categId']);
 	$usercatwatches = $tikilib->get_user_watches($user, 'category_changed');
 	$eyes = add_watch_icons ($descendants, $usercatwatches, $_REQUEST['parentId'], $c['categId'], $deep, $user);
 	$c['eyes'] = $eyes;
 }
 $tree_nodes = array();
-foreach($ctall as $c) {
+foreach ($ctall as $c) {
 	$tree_nodes[] = array(
 		'id' => $c['categId'],
 		'parent' => $c['parentId'],
@@ -161,7 +161,7 @@ ask_ticket('browse-categories');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 if (isset($_GET['plain'])) {
 	header('Content-Type: text/plain');
-	foreach($objects['data'] as $object) echo "{$object['categName']}\t{$object['type']}\t{$object['itemId']}\n";
+	foreach ($objects['data'] as $object) echo "{$object['categName']}\t{$object['type']}\t{$object['itemId']}\n";
 	exit;
 } else {
 	// Display the template

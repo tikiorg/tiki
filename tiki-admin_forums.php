@@ -41,7 +41,7 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 }
 if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] = 'delsel_x' && isset($_REQUEST['checked'])) {
 	check_ticket('admin-forums');
-	foreach($_REQUEST['checked'] as $id) {
+	foreach ($_REQUEST['checked'] as $id) {
 		$commentslib->remove_forum($id);
 	}
 }
@@ -112,7 +112,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 		include_once ('lib/categories/categlib.php');
 		$cats = $categlib->get_object_categories('forum', $_REQUEST['forumId']);
 		$catObjectId = $categlib->add_categorized_object('forum', $newForumId, isset($_REQUEST['description']) ? $_REQUEST['description'] : '', $_REQUEST['name'], "tiki-view_forum.php?forumId=$newForumId");
-		foreach($cats as $cat) {
+		foreach ($cats as $cat) {
 			$categlib->categorize($catObjectId, $cat);
 		}
 	}
@@ -184,7 +184,7 @@ if ($_REQUEST["forumId"]) {
 	$info["forumLanguage"] = '';
 }
 $smarty->assign('forumId', $_REQUEST["forumId"]);
-foreach($info as $key => $value) {
+foreach ($info as $key => $value) {
 	if ($key == "section") // conflict with section management
 	$smarty->assign("forumSection", $value);
 	else $smarty->assign($key, $value);

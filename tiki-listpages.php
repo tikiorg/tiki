@@ -58,12 +58,12 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 			// Now check permissions to remove the selected pages
 			$access->check_permission('tiki_p_remove');
 			$access->check_authenticity(tr('Are you sure you want to remove the %0 selected pages?', count($_REQUEST['checked'])));
-			foreach($_REQUEST["checked"] as $check) $tikilib->remove_all_versions($check);
+			foreach ($_REQUEST["checked"] as $check) $tikilib->remove_all_versions($check);
 			break;
 
 		case 'print_pages':
 			$access->check_feature('feature_wiki_multiprint');
-			foreach($_REQUEST["checked"] as $check) {
+			foreach ($_REQUEST["checked"] as $check) {
 				$access->check_page_exists($check);
 				// Now check permissions to access this page
 				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
@@ -80,7 +80,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 
 		case 'export_pdf':
 			$access->check_feature('feature_wiki_multiprint');
-			foreach($_REQUEST["checked"] as $check) {
+			foreach ($_REQUEST["checked"] as $check) {
 				$access->check_page_exists($check);
 				// Now check permissions to access this page
 				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
@@ -99,7 +99,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 			$access->check_authenticity(tr('Are you sure you want to unlock the %0 selected pages?', count($_REQUEST['checked'])));
 			global $wikilib;
 			include_once ('lib/wiki/wikilib.php');
-			foreach($_REQUEST["checked"] as $check) {
+			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
 				if ($info['flag'] == 'L' && ($globalperms->admin_wiki == 'y' || ($user && ($user == $info['lockedby']) || (!$info['lockedby'] && $user == $info['user'])))) {
 					$wikilib->unlock_page($check);
@@ -112,7 +112,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 			$access->check_authenticity(tr('Are you sure you want to lock the %0 selected pages?', count($_REQUEST['checked'])));
 			global $wikilib;
 			include_once ('lib/wiki/wikilib.php');
-			foreach($_REQUEST["checked"] as $check) {
+			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
 				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
 				if ( $info['flag'] != 'L' && ( $globalperms->admin_wiki == 'y' || $perms->lock ) ) {
@@ -261,8 +261,8 @@ if (!empty($multiprint_pages)) {
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
 	$show_actions = 'n';
 	$actions_perms = array('tiki_p_edit', 'tiki_p_wiki_view_history', 'tiki_p_assign_perm_wiki_page', 'tiki_p_remove');
-	foreach($actions_perms as $p) {
-		foreach($listpages['data'] as $i) {
+	foreach ($actions_perms as $p) {
+		foreach ($listpages['data'] as $i) {
 			if ($i['perms'][$p] == 'y') {
 				$show_actions = 'y';
 				break 2;
@@ -287,11 +287,11 @@ if (!empty($multiprint_pages)) {
 		$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
-			foreach($listpages['data'] as $i => $check) {
+			foreach ($listpages['data'] as $i => $check) {
 				$cats = $categlib->get_object_categories('wiki page', $check['pageName']);
 				$listpages['data'][$i]['categpath'] = array();
 				$listpages['data'][$i]['categname'] = array();
-				foreach($cats as $cat) {
+				foreach ($cats as $cat) {
 					$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
 					if ($s = strrchr($cp, ':')) $listpages['data'][$i]['categname'][] = substr($s, 1);
 					else $listpages['data'][$i]['categname'][] = $cp;
@@ -325,9 +325,9 @@ if (!empty($multiprint_pages)) {
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 	// Exact match and single result, go to page directly
-	if( count( $listpages['data'] ) == 1 ) {
+	if ( count( $listpages['data'] ) == 1 ) {
 		$result = reset( $listpages['data'] );
-		if( TikiLib::strtolower( $find ) == TikiLib::strtolower( $result['pageName'] ) ) {
+		if ( TikiLib::strtolower( $find ) == TikiLib::strtolower( $result['pageName'] ) ) {
 			require_once 'lib/wiki/wikilib.php';
 			header( 'Location: ' . $wikilib->sefurl( $result['pageName'], '', $all_langs ) );
 			exit;
@@ -337,12 +337,12 @@ if (!empty($multiprint_pages)) {
 	if ($access->is_serializable_request()) {
 		if (isset($_REQUEST['listonly']) && ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) {
 			$pages = array();
-			foreach($listpages['data'] as $page) $pages[] = $page['pageName'];
+			foreach ($listpages['data'] as $page) $pages[] = $page['pageName'];
 			$access->output_serialized($pages);
 		} else {
 			$pages = array();
 			require_once 'lib/wiki/wikilib.php';
-			foreach($listpages['data'] as $page) {
+			foreach ($listpages['data'] as $page) {
 				$pages[] = array('page_id' => $page['page_id'], 'page_name' => $page['pageName'], 'url' => $wikilib->sefurl($page['pageName']), 'version' => $page['version'], 'description' => $page['description'], 'last_modif' => date('Y-m-d H:i:s', $page['lastModif']), 'last_author' => $page['user'], 'creator' => $page['creator'], 'creation_date' => date('Y-m-d H:i:s', $page['created']), 'lang' => $page['lang'],);
 			}
 			require_once 'lib/ointegratelib.php';
@@ -393,7 +393,7 @@ function possibly_look_for_page_aliases($query) {
 	}
 	$alias_found = 'n';
 	if (!empty($aliases)) {
-		foreach($aliases as $an_alias_info) {
+		foreach ($aliases as $an_alias_info) {
 			if ($an_alias_info['toPage'] == $query) {
 				$alias_found = 'y';
 			}

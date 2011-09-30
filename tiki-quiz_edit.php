@@ -64,7 +64,7 @@ function quiz_data_load()
 {
 	global $_REQUEST;
 	$quiz_data = array();
-	foreach($_REQUEST as $key => $val) {
+	foreach ($_REQUEST as $key => $val) {
 		if (preg_match("/^quiz_/", $key)) {
 			$k = preg_replace("/^quiz_([.]*)/", "\$1", $key);
 			$quiz_data[$k] = $val;
@@ -108,7 +108,7 @@ function quiz_data_load()
 								, 'additionalQuestions'
 								, 'forum'
 								);
-	foreach($fields as $field) {
+	foreach ($fields as $field) {
 		fetchYNOption($quiz_data, $quiz_data, $field);
 		
 	}

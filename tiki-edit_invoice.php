@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		global $trklib;
 		
 		$fields = $trklib->list_tracker_fields($trklib->get_tracker_by_name($trackerName));
-		foreach($fields['data'] as $key => $field) {
+		foreach ($fields['data'] as $key => $field) {
 			$fieldName = $field['name'];	
 			$fieldValue = (isset($i) ? $fieldValues[str_replace(" ", "", $fieldName)][$i] : $fieldValues[str_replace(" ", "", $fieldName)]);
 			$fields['data'][$key]['value'] = (empty($fieldValue) ? '' : $fieldValue);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	$_TEMP = $_REQUEST;
 	$itemsToDelete = array();
-	foreach(explode(',', $_REQUEST['InvoiceItemIds']) as $itemId) {
+	foreach (explode(',', $_REQUEST['InvoiceItemIds']) as $itemId) {
 		$itemsToDelete[$itemId] = $itemId;
 	}
 	
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	//end invoice items
 
 	//here I need to delete items that were deleted on the page
-	foreach($itemsToDelete as $itemId) {
+	foreach ($itemsToDelete as $itemId) {
 		$trklib->remove_tracker_item($itemId);
 	}
 	//end delete

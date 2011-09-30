@@ -18,8 +18,8 @@ if ($prefs['feed_image_galleries'] != 'y') {
 }
 
 $res=$access->authorize_rss(array('tiki_p_view_image_gallery','tiki_p_admin_galleries'));
-if($res) {
-   if($res['header'] == 'y') {
+if ($res) {
+   if ($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
       header('HTTP/1.0 401 Unauthorized');
    }

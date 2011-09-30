@@ -35,7 +35,7 @@ $smarty->assign('page_mode', 'form' );
 
 $grid = new TikiSheet;
 
-if( $_SERVER['REQUEST_METHOD'] == 'POST' )
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
 	$smarty->assign('page_mode', 'submit' );
 
@@ -50,7 +50,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 		$handler = new $handler( $_POST['page'] );
 		break;
 	default: // All file based handlers registered
-		if( !in_array( $handler, TikiSheet::getHandlerList() ) )
+		if ( !in_array( $handler, TikiSheet::getHandlerList() ) )
 		{
 			$smarty->assign('msg', "Handler is not allowed.");
 			$smarty->display("error.tpl");
@@ -60,7 +60,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
        	$handler = new $handler( $_FILES['file']['tmp_name'] , $encoding, 'UTF-8');
 	}
 
-	if( !$grid->import( $handler ) )
+	if ( !$grid->import( $handler ) )
 	{
 		$smarty->assign('msg', "Impossible to import the file.");
 
@@ -85,10 +85,10 @@ else
 
 	$handlers = TikiSheet::getHandlerList();
 	
-	foreach( $handlers as $key=>$handler )
+	foreach ( $handlers as $key=>$handler )
 	{
 		$temp = new $handler;
-		if( !$temp->supports( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC ) )
+		if ( !$temp->supports( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC ) )
 			continue;
 
 		$list[$key] = array(

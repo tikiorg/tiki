@@ -186,7 +186,7 @@ if ($prefs['user_tracker_infos']) {
 	$userTrackerId = $trackerinfo[0];
 	array_shift($trackerinfo);
 	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, array('fieldId' => $trackerinfo));
-	foreach($fields['data'] as $field) {
+	foreach ($fields['data'] as $field) {
 		$lll[$field['fieldId']] = $field;
 	}
 	$items = $trklib->list_items($userTrackerId, 0, 1, '', $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1%'), '', '', '', $userwatch);

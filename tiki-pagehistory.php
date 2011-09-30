@@ -71,7 +71,7 @@ $smarty->assign_by_ref('info', $info);
 //check_page_exits($page);
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"]) && $info["flag"] != 'L') {
 	check_ticket('page-history');
-	foreach(array_keys($_REQUEST["hist"]) as $version) {
+	foreach (array_keys($_REQUEST["hist"]) as $version) {
 		$histlib->remove_version($_REQUEST["page"], $version);
 	}
 }
@@ -150,9 +150,9 @@ if (count($history) > 0) {
 		$lasttime = $history[$i]['lastModif'];
 	}
 	$csesh = count($sessions) + 1;
-	foreach($history as &$h) {	// move ending 'version' into starting 'session'
+	foreach ($history as &$h) {	// move ending 'version' into starting 'session'
 		if (!empty($h['session'])) {
-			foreach($history as &$h2) {
+			foreach ($history as &$h2) {
 				if ($h2['version'] == $h['session']) {
 					$h2['session'] = $h['version'];
 				}
@@ -181,7 +181,7 @@ $smarty->assign('show_all_versions', $_REQUEST['show_all_versions']);
 $history_versions = array();
 $history_sessions = array();
 reset($history);
-foreach($history as &$h) {	// as $h has been used by reference before it needs to be so again (it seems)
+foreach ($history as &$h) {	// as $h has been used by reference before it needs to be so again (it seems)
 	$history_versions[] = (int)$h['version'];
 	$history_sessions[] = isset($h['session']) ? (int)$h['session'] : 0;
 }
@@ -366,7 +366,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 		// Find appropriate translation page
 		$langs = $multilinguallib->getTranslations('wiki page', $info['page_id'], $info['pageName'], true);
 		$pageName = '';
-		foreach($langs as $pageInfo) if ($target == (string)$pageInfo['lang']) {
+		foreach ($langs as $pageInfo) if ($target == (string)$pageInfo['lang']) {
 			$pageName = $pageInfo['objName'];
 		}
 		// Build URI / Redirect

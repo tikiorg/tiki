@@ -95,7 +95,7 @@ function displayRegisatrationForms($data, $messages) // {{{
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$nbChoiceGroups = 0;
 	$mandatoryChoiceGroups = true;
-	foreach($listgroups['data'] as $gr) {
+	foreach ($listgroups['data'] as $gr) {
 		if ($gr['registrationChoice'] == 'y') {
 			++$nbChoiceGroups;
 			$theChoiceGroup = $gr['groupName'];

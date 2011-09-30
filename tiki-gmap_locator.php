@@ -61,7 +61,7 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 	$smarty->assign('backurl','tiki-user_preferences.php?view_user=' . $userwatch);
 	$smarty->assign('backlink',tra('Back to preferences'));
 } elseif (isset($_REQUEST['for']) && $_REQUEST['for'] == 'item' && !empty($_REQUEST['itemId'])) {
-	if(!empty($_REQUEST['fieldId']) && !empty($_REQUEST['trackerId'])){
+	if (!empty($_REQUEST['fieldId']) && !empty($_REQUEST['trackerId'])){
 		if (isset($_REQUEST['point']) and is_array($_REQUEST['point'])) {
 			$tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker');
 			if ($tiki_p_modify_tracker_items == 'y') {

@@ -20,7 +20,7 @@ $smarty->assign('metric_datatype_all', $metric_datatype_all);
 $headerlib->add_cssfile("css/metrics.css");
 
 $dsn_list = $adminlib->list_dsn( 0, -1, 'name_asc', '' );
-$smarty->assign( 'dsn_list', $dsn_list['data'] );
+$smarty->assign('dsn_list', $dsn_list['data']);
 
 /* Edit or delete a metric */
 if (isset($_REQUEST["metric_submit"])) {

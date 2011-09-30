@@ -80,7 +80,7 @@ if (isset($_REQUEST['stop_date_Month'])) {
 $calendarIds = array();
 if (isset($_REQUEST['calendarIds'])) {
 	$calendarIds = $_REQUEST['calendarIds'];
-	foreach($calendarIds as $anId)
+	foreach ($calendarIds as $anId)
 		$smarty->assign('individual_'.$anId, $userlib->object_has_one_permission($anId, 'calendar'));
 } else {
 	if (!isset($_REQUEST["calendarId"])) {
@@ -113,9 +113,9 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 		header("Content-Disposition: inline; filename=tiki-calendar.csv");
 		$first = true;
 		$description = '';
-		foreach($events as $event) {
+		foreach ($events as $event) {
 			$line = '';
-			foreach($event as $name => $field) {
+			foreach ($event as $name => $field) {
 				if ( $first === true ) {
 					$description .= '"'.$name.'";';
 				}

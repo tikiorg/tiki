@@ -37,7 +37,7 @@ if (($article_data['publishDate'] > $tikilib->now) && ($article_data['author'] !
 	die;
 }
 
-if($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y'){
+if ($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y'){
 	$smarty->assign('msg', tra("Article is not published yet"));
 	$smarty->display("error.tpl");
 	die;
@@ -115,7 +115,7 @@ if ($article_data['image_x'] > 0) {
 	$smarty->assign('width', $img->get_width()+2);
 }
 $smarty->assign('heading', $article_data["heading"]);
-if( $prefs['article_paginate'] == 'y' ) {
+if ( $prefs['article_paginate'] == 'y' ) {
 	if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
 	// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 	$preparsed = array();

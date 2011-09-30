@@ -40,18 +40,18 @@ asort($sections2);
 $sections = array_merge($sections, $sections2);
 
 
-if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], array_keys($sections)) ) {
+if ( isset($_REQUEST['section']) && in_array($_REQUEST['section'], array_keys($sections)) ) {
 	$section = $_REQUEST['section'];
 } else {
 	$section = reset(array_keys($sections));
 }
-if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
+if ( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 	$comments = true;
 } else {
 	$comments = false;
 }
 
-foreach($sections as $skey => $sval) {
+foreach ($sections as $skey => $sval) {
 	if (!empty($prefs['toolbar_' . $skey . ($comments ? '_comments' : '')])) {
 		$sections[$skey] = $sval . ' *';
 	}
@@ -70,19 +70,19 @@ if (!empty($_REQUEST['reset_all_custom_tools'])) {
 	$access->redirect('tiki-admin_toolbars.php');
 }
 
-if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
+if ( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
 }
 
-if( isset($_REQUEST['reset']) && $section != 'global' ) {
+if ( isset($_REQUEST['reset']) && $section != 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
 	$smarty->loadPlugin('smarty_function_query');
 	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
-if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
+if ( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->delete_preference( $prefName);
 	$smarty->loadPlugin('smarty_function_query');
@@ -105,7 +105,7 @@ if (empty($current)) {
 $smarty->assign('not_default', false);
 if ($section == 'global') {
 	global $cachelib;
-	if( $defprefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
+	if ( $defprefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
 		if ($defprefs['toolbar_global' . ($comments ? '_comments' : '')] != $current) {
 			$smarty->assign('not_default', true);
 		}
@@ -127,10 +127,10 @@ if (!empty($current)) {
 	$current = trim( $current, '/' );
 	$current = explode( '/', $current );
 	$loadedRows = count($current);
-	foreach( $current as &$line ) {
+	foreach ( $current as &$line ) {
 		$bits = explode( '|', $line );
 		$line = array();
-		foreach($bits as $bit) {
+		foreach ($bits as $bit) {
 			$line[] = explode( ',', $bit );
 		}
 	}
@@ -146,18 +146,18 @@ $qtlist = Toolbar::getList();
 $usedqt = array();
 $qt_p_list = array();
 $qt_w_list = array();
-foreach( $current as &$line ) {
-	foreach($line as $bit) {
+foreach ( $current as &$line ) {
+	foreach ($line as $bit) {
 		$usedqt = array_merge($usedqt,$bit);
 	}
 }
 
 $customqt = Toolbar::getCustomList();
 
-foreach( $qtlist as $name ) {
+foreach ( $qtlist as $name ) {
 
 	$tag = Toolbar::getTag($name);
-	if( ! $tag ) {
+	if ( ! $tag ) {
 		continue;
 	}
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
@@ -217,22 +217,22 @@ if (count($_REQUEST) == 0) {
 $plugins = array();
 
 $parserlib = TikiLib::lib('parser');
-foreach($parserlib->plugin_get_list() as $name) {
+foreach ($parserlib->plugin_get_list() as $name) {
 	$info = $parserlib->plugin_info($name);
 	if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) $plugins[$name] = $info;
 }
 $smarty->assign('plugins', $plugins);
 
 $smarty->assign('comments', $comments);
-$smarty->assign( 'loaded', $section );
-$smarty->assign( 'rows', range( 0, $rowCount - 1 ) );
-$smarty->assign( 'rowCount', $rowCount );
-$smarty->assign( 'sections', $sections );
+$smarty->assign('loaded', $section);
+$smarty->assign('rows', range( 0, $rowCount - 1 ));
+$smarty->assign('rowCount', $rowCount);
+$smarty->assign('sections', $sections);
 $smarty->assign_by_ref('qtelement',$qtelement);
 $smarty->assign_by_ref('display_w',$display_w);
 $smarty->assign_by_ref('display_p',$display_p);
 $smarty->assign_by_ref('display_c',$display_c);
 //$smarty->assign_by_ref('qtlists',$qtlists);
 $smarty->assign_by_ref('current',$current);
-$smarty->assign( 'mid', 'tiki-admin_toolbars.tpl' );
+$smarty->assign('mid', 'tiki-admin_toolbars.tpl');
 $smarty->display( 'tiki.tpl' );

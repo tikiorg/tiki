@@ -6,7 +6,7 @@
 // $Id$
 
 // Data sent by the IPN must be left unharmed
-if( isset( $_GET['ipn'] ) ) {
+if ( isset( $_GET['ipn'] ) ) {
 	$ipn_data = $_POST;
 }
 
@@ -58,7 +58,7 @@ if ( isset($_POST['tiki_credit_pay']) && isset($_POST['tiki_credit_amount']) && 
 	
 }
 			
-if( isset( $ipn_data ) ) {
+if ( isset( $ipn_data ) ) {
 	$access->check_feature( 'payment_paypal_ipn' );
 	require_once 'lib/payment/paypallib.php';
 
@@ -70,7 +70,7 @@ if( isset( $ipn_data ) ) {
 	$info = $paymentlib->get_payment( $invoice );
 
 	// Important to check with paypal first
-	if( $paypallib->is_valid( $ipn_data, $info ) && $info ) {
+	if ( $paypallib->is_valid( $ipn_data, $info ) && $info ) {
 		$amount = $paypallib->get_amount( $ipn_data );
 		$paymentlib->enter_payment( $invoice, $amount, 'paypal', $ipn_data );
 	} else {
@@ -81,10 +81,10 @@ if( isset( $ipn_data ) ) {
 	exit;
 }
 
-if( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match( '/^\d+(\.\d{2})?$/', $_POST['manual_amount'] ) ) {
+if ( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match( '/^\d+(\.\d{2})?$/', $_POST['manual_amount'] ) ) {
 	$objectperms = Perms::get( 'payment', $_REQUEST['invoice'] );
 
-	if( $objectperms->payment_manual ) {
+	if ( $objectperms->payment_manual ) {
 		$paymentlib->enter_payment( $_POST['invoice'], $_POST['manual_amount'], 'user', array(
 			'user' => $user,
 			'note' => $_POST['note'],
@@ -96,13 +96,13 @@ if( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match( '/^\d+(\.
 	}
 }
 
-if( isset( $_POST['request'] ) && $globalperms->request_payment ) {
+if ( isset( $_POST['request'] ) && $globalperms->request_payment ) {
 	// Create new payment request
 
-	if( ! empty( $_POST['description'] ) && preg_match( '/^\d+(\.\d{2})?$/', $_POST['amount'] ) && $_POST['payable'] > 0 ) {
+	if ( ! empty( $_POST['description'] ) && preg_match( '/^\d+(\.\d{2})?$/', $_POST['amount'] ) && $_POST['payable'] > 0 ) {
 		$id = $paymentlib->request_payment( $_POST['description'], $_POST['amount'], (int) $_POST['payable'], $_POST['detail'] );
 
-		if( $prefs['feature_categories'] == 'y' ) {
+		if ( $prefs['feature_categories'] == 'y' ) {
 			$cat_objid = $id;
 			$cat_type = 'payment';
 			$cat_desc = $_POST['description'];
@@ -115,11 +115,11 @@ if( isset( $_POST['request'] ) && $globalperms->request_payment ) {
 	}
 }
 
-if( isset( $_REQUEST['cancel'] ) ) {
+if ( isset( $_REQUEST['cancel'] ) ) {
 	$objectperms = Perms::get( 'payment', $_REQUEST['cancel'] );
 	$info = $paymentlib->get_payment( $_REQUEST['cancel'] );
 
-	if( $objectperms->payment_admin || $info['user'] == $user ) {
+	if ( $objectperms->payment_admin || $info['user'] == $user ) {
 		$access->check_authenticity( tr('Cancel payment %0?', $_REQUEST['cancel'] ));
 		$paymentlib->cancel_payment( $_REQUEST['cancel'] );
 		$access->redirect( 'tiki-payment.php?invoice=' . $_REQUEST['cancel'], tra('Payment canceled.') );
@@ -147,7 +147,7 @@ function fetch_payment_list( $type ) {
 	$smarty->assign( $type, $data );
 }
 
-if( $prefs['feature_categories'] == 'y' && $globalperms->payment_request ) {
+if ( $prefs['feature_categories'] == 'y' && $globalperms->payment_request ) {
 	$cat_type = 'payment';
 	$cat_objid = '';
 	$cat_object_exists = false;
@@ -155,8 +155,8 @@ if( $prefs['feature_categories'] == 'y' && $globalperms->payment_request ) {
 	require 'categorize_list.php';
 }
 
-if( isset( $_REQUEST['invoice'] ) ) {
-	$smarty->assign( 'invoice', $_REQUEST['invoice'] );
+if ( isset( $_REQUEST['invoice'] ) ) {
+	$smarty->assign('invoice', $_REQUEST['invoice']);
 }
 
 fetch_payment_list( 'outstanding' );
@@ -164,6 +164,6 @@ fetch_payment_list( 'overdue' );
 fetch_payment_list( 'past' );
 fetch_payment_list( 'canceled' );
 
-$smarty->assign( 'mid', 'tiki-payment.tpl' );
-$smarty->display( 'tiki.tpl' );
+$smarty->assign('mid', 'tiki-payment.tpl');
+$smarty->display('tiki.tpl');
 

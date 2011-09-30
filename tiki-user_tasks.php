@@ -52,7 +52,7 @@ if (isset($_REQUEST['remove_task_from_trash'])) {
 }
 if (isset($_REQUEST['update_percentage']) && isset($_REQUEST['task_perc'])) {
 	check_ticket('user-tasks');
-	foreach($_REQUEST['task_perc'] as $task => $perc) {
+	foreach ($_REQUEST['task_perc'] as $task => $perc) {
 		if ($perc == 'w') $perc = NULL;
 		$tasklib->update_task_percentage($task, $user, $perc);
 	}
@@ -60,7 +60,7 @@ if (isset($_REQUEST['update_percentage']) && isset($_REQUEST['task_perc'])) {
 if (isset($_REQUEST['update_tasks'])) {
 	if (($_REQUEST['action'] == 'move_marked_to_trash') && isset($_REQUEST['task'])) {
 		check_ticket('user-tasks');
-		foreach(array_keys($_REQUEST['task']) as $task) {
+		foreach (array_keys($_REQUEST['task']) as $task) {
 			$tasklib->mark_task_as_trash($task, $user);
 			$trashed_task = $tasklib->get_task($user, $task);
 			if ($trashed_task['user'] == $user) {
@@ -81,7 +81,7 @@ if (isset($_REQUEST['update_tasks'])) {
 	}
 	if (($_REQUEST['action'] == 'open_marked') && isset($_REQUEST['task'])) {
 		check_ticket('user-tasks');
-		foreach(array_keys($_REQUEST['task']) as $task) {
+		foreach (array_keys($_REQUEST['task']) as $task) {
 			$tasklib->open_task($task, $user);
 			$trashed_task = $tasklib->get_task($user, $task);
 			if ($trashed_task['user'] == $user) {
@@ -102,7 +102,7 @@ if (isset($_REQUEST['update_tasks'])) {
 	}
 	if (($_REQUEST['action'] == 'complete_marked') && isset($_REQUEST['task'])) {
 		check_ticket('user-tasks');
-		foreach(array_keys($_REQUEST['task']) as $task) {
+		foreach (array_keys($_REQUEST['task']) as $task) {
 			$tasklib->mark_complete_task($task, $user);
 			$trashed_task = $tasklib->get_task($user, $task);
 			if ($trashed_task['user'] == $user) {
@@ -123,13 +123,13 @@ if (isset($_REQUEST['update_tasks'])) {
 	}
 	if (($_REQUEST['action'] == 'remove_marked_from_trash') && isset($_REQUEST['task'])) {
 		check_ticket('user-tasks');
-		foreach(array_keys($_REQUEST['task']) as $task) {
+		foreach (array_keys($_REQUEST['task']) as $task) {
 			$tasklib->unmark_task_as_trash($task, $user);
 		}
 	}
 	if (($_REQUEST['action'] == 'waiting_marked') && isset($_REQUEST['task'])) {
 		check_ticket('user-tasks');
-		foreach(array_keys($_REQUEST['task']) as $task) {
+		foreach (array_keys($_REQUEST['task']) as $task) {
 			$tasklib->waiting_task($task, $user);
 		}
 	}

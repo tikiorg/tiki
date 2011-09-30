@@ -11,7 +11,7 @@ $access->check_feature('feature_directory');
 $access->check_permission('tiki_p_validate_links');
 if (isset($_REQUEST["validate"]) && isset($_REQUEST['sites'])) {
 	check_ticket('dir-validate');
-	foreach(array_keys($_REQUEST["sites"]) as $siteId) {
+	foreach (array_keys($_REQUEST["sites"]) as $siteId) {
 		$dirlib->dir_validate_site($siteId);
 	}
 }
@@ -21,7 +21,7 @@ if (isset($_REQUEST["remove"])) {
 }
 if (isset($_REQUEST["del"]) && isset($_REQUEST['sites'])) {
 	check_ticket('dir-validate');
-	foreach(array_keys($_REQUEST["sites"]) as $siteId) {
+	foreach (array_keys($_REQUEST["sites"]) as $siteId) {
 		$dirlib->dir_remove_site($siteId);
 	}
 }

@@ -62,7 +62,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$access->check_feature( array( 'feature_ajax', 'feature_jquery_autocomplete' ) );
 
 	$sep = '|';
-	if( isset( $_REQUEST['separator'] ) ) {
+	if ( isset( $_REQUEST['separator'] ) ) {
 		$sep = $_REQUEST['separator'];
 	}
 	$p = strrpos($_REQUEST['q'], $sep);
@@ -77,7 +77,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		// $listgroups['data'] = Perms::filter( array( 'type' => 'group' ), 'object', $listgroups['data'], array( 'object' => 'groupName' ), 'view_group' );
 		
 		$grs = array();
-		foreach($listgroups['data'] as $gr) {
+		foreach ($listgroups['data'] as $gr) {
 			if (isset($_REQUEST['q']) && stripos($gr['groupName'], $_REQUEST['q']) !== false) {
 				$grs[] = $gr['groupName'];
 			}
@@ -90,7 +90,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		// tricker for users? Check the group they're in, then tiki_p_group_view_members
 		
 		$usrs = array();
-		foreach($listusers as $usr) {
+		foreach ($listusers as $usr) {
 			if (isset($_REQUEST['q']) && stripos($usr, $_REQUEST['q']) !== false) {
 				$usrs[] = $usr;
 			}
@@ -104,14 +104,14 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$contacts = array();		
 		$query = $_REQUEST['q'];
 				
-		foreach($listcontact as $key=>$contact) {
+		foreach ($listcontact as $key=>$contact) {
 			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
-				if($contact['email']<>''){ $contacts[] = $contact['email']; }
+				if ($contact['email']<>''){ $contacts[] = $contact['email']; }
 			}
 		}
-		foreach($listusers['data'] as $key=>$contact) {
+		foreach ($listusers['data'] as $key=>$contact) {
 			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['login'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
-				if($prefs['login_is_email'] == 'y'){
+				if ($prefs['login_is_email'] == 'y'){
 					$contacts[] = $contact['login'];
 				} else {
 					$contacts[] = $contact['email'];
@@ -127,7 +127,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$listusers = $userlib->get_users_light(0, -1, 'login_asc', '', $groups);
 		$done = array();
 		$finalusers = array();
-		foreach($listusers as $usrId => $usr) {
+		foreach ($listusers as $usrId => $usr) {
 			if (isset($_REQUEST['q'])) {
 				$longusr = $usr . ' (' . $usrId . ')';
 				if (array_key_exists($usr, $done)) {
@@ -154,12 +154,12 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		// tricker for users? Check the group they're in, then tiki_p_group_view_members
 				
 		$access->output_serialized($finalusers);
-	} elseif( $_REQUEST['listonly'] == 'tags' ) {
+	} elseif ( $_REQUEST['listonly'] == 'tags' ) {
 		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
 
 		$tags = $freetaglib->get_tags_containing( $_REQUEST['q'] );
 		$access->output_serialized( $tags );
-	} elseif( $_REQUEST['listonly'] == 'icons' ) {
+	} elseif ( $_REQUEST['listonly'] == 'icons' ) {
 
 		$dir = 'pics/icons';
 		$max = isset($_REQUEST['max']) ? $_REQUEST['max'] : 10;
@@ -170,11 +170,11 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		}
 		read_icon_dir($dir, $icons, $max);
 		$access->output_serialized($icons);
-	} elseif( $_REQUEST['listonly'] == 'shipping' && $prefs['shipping_service'] == 'y' ) {
+	} elseif ( $_REQUEST['listonly'] == 'shipping' && $prefs['shipping_service'] == 'y' ) {
 		global $shippinglib; require_once 'lib/shipping/shippinglib.php';
 
 		$access->output_serialized( $shippinglib->getRates( $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages'] ) );
-	} elseif(  $_REQUEST['listonly'] == 'trackername' ) {
+	} elseif (  $_REQUEST['listonly'] == 'trackername' ) {
 		$trackers = TikiLib::lib('trk')->list_trackers();
 		$ret = array();
 		foreach ($trackers['data'] as $tracker) {

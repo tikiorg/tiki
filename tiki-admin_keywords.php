@@ -63,8 +63,8 @@ if ( ( isset( $_REQUEST['save_keywords'] ) && isset( $_REQUEST['new_keywords'] )
 		
 	$update = set_keywords($page, $new_keywords);
 	
-	( $update ) ? $smarty->assign( 'keywords_updated', 'y' ) : $smarty->assign( 'keywords_updated', 'n' ); 
-	$smarty->assign( 'keywords_updated_on', $_REQUEST['page'] );
+	( $update ) ? $smarty->assign('keywords_updated', 'y') : $smarty->assign('keywords_updated', 'n'); 
+	$smarty->assign('keywords_updated_on', $_REQUEST['page']);
 }
 
 if ( isset( $_REQUEST['page'] ) && !$_REQUEST['remove_keywords']  ) {
@@ -77,8 +77,8 @@ if ( isset( $_REQUEST['page'] ) && !$_REQUEST['remove_keywords']  ) {
 
 if ( isset( $_REQUEST['q'] ) && !$_REQUEST['remove_keywords'] && !$_REQUEST['save_keywords'] ) {
 	$existing_keywords = get_all_keywords($limit, $offset, $_REQUEST['q']);
-	$smarty->assign( 'search_on', 'y' );
-	$smarty->assign( 'search_cant', $existing_keywords['cant'] );
+	$smarty->assign('search_on', 'y');
+	$smarty->assign('search_cant', $existing_keywords['cant']);
 }
 
 if ( !isset( $existing_keywords['cant'] ) ) {
@@ -87,12 +87,12 @@ if ( !isset( $existing_keywords['cant'] ) ) {
 
 if ( $existing_keywords['cant'] > 0 ) {
 
-	$smarty->assign( 'existing_keywords', $existing_keywords['pages'] );
+	$smarty->assign('existing_keywords', $existing_keywords['pages']);
 	
 	$pages_cant = ceil( $existing_keywords['cant'] / $limit );
-	$smarty->assign( 'pages_cant', $pages_cant );
-	$smarty->assign( 'offset', $offset );
+	$smarty->assign('pages_cant', $pages_cant);
+	$smarty->assign('offset', $offset);
 }	
 
-$smarty->assign( 'mid', 'tiki-admin_keywords.tpl' );
+$smarty->assign('mid', 'tiki-admin_keywords.tpl');
 $smarty->display( 'tiki.tpl' );

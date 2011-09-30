@@ -113,7 +113,7 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	if (isset($_REQUEST['delsel_x'])) {
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
-			foreach(array_values($_REQUEST['file']) as $file) {
+			foreach (array_values($_REQUEST['file']) as $file) {
 				if ($info = $filegallib->get_file_info($file)) {
 					$filegallib->remove_file($info, $gal_info);
 				}
@@ -121,7 +121,7 @@ if ($tiki_p_admin_file_galleries == 'y') {
 		}
 
 		if (isset($_REQUEST['subgal'])) {
-			foreach(array_values($_REQUEST['subgal']) as $subgal) {
+			foreach (array_values($_REQUEST['subgal']) as $subgal) {
 				$filegallib->remove_file_gallery($subgal, $galleryId);
 			}
 		}
@@ -130,12 +130,12 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	if (isset($_REQUEST['movesel'])) {
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
-			foreach(array_values($_REQUEST['file']) as $file) {
+			foreach (array_values($_REQUEST['file']) as $file) {
 				$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
 			}
 		}
 		if (isset($_REQUEST['subgal'])) {
-			foreach(array_values($_REQUEST['subgal']) as $subgal) {
+			foreach (array_values($_REQUEST['subgal']) as $subgal) {
 				$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
 			}
 		}
@@ -156,12 +156,12 @@ if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {
 	check_ticket('fgal');
 	$href = array();
 	if (isset($_REQUEST['file'])) {
-		foreach(array_values($_REQUEST['file']) as $file) {
+		foreach (array_values($_REQUEST['file']) as $file) {
 			$href[] = "fileId[]=$file";
 		}
 	}
 	if (isset($_REQUEST['subgal'])) {
-		foreach(array_values($_REQUEST['subgal']) as $subgal) {
+		foreach (array_values($_REQUEST['subgal']) as $subgal) {
 			$href[] = "galId[]=$subgal";
 		}
 	}
@@ -178,13 +178,13 @@ if (isset($_REQUEST['permsel_x']) && $tiki_p_assign_perm_file_gallery == 'y') {
 
 if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && isset($_REQUEST['subgal'])) {
 	check_ticket('fgal');
-	foreach($_REQUEST['subgal'] as $id) {
-		foreach($_REQUEST['perms'] as $perm) {
+	foreach ($_REQUEST['subgal'] as $id) {
+		foreach ($_REQUEST['perms'] as $perm) {
 			if (empty($_REQUEST['groups']) && empty($perm)) {
 				$userlib->assign_object_permission('', $id, 'file gallery', '');
 				continue;
 			}
-			foreach($_REQUEST['groups'] as $group) {
+			foreach ($_REQUEST['groups'] as $group) {
 				$userlib->assign_object_permission($group, $id, 'file gallery', $perm);
 			}
 		}
@@ -276,7 +276,7 @@ if (isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode']) {
 		$all_groups = $userlib->list_all_groups();
 		$groupselected = $groupalertlib->GetGroup('file gallery', $_REQUEST['galleryId']);
 		if (is_array($all_groups)) {
-			foreach($all_groups as $g) {
+			foreach ($all_groups as $g) {
 				$groupforAlertList[$g] = ($g == $groupselected) ? 'selected' : '';
 			}
 		}
@@ -388,13 +388,13 @@ if (isset($_REQUEST['edit'])) {
 											, 'image_max_size_y'
 											, 'wiki_syntax'
 											);
-	foreach($request_vars as $v) {
+	foreach ($request_vars as $v) {
 		if (isset($_REQUEST[$v])) {
 			$smarty->assign_by_ref($v, $_REQUEST[$v]);
 		}
 	}
 	$request_toggles = array('visible', 'public', 'lockable');
-	foreach($request_toggles as $t) {
+	foreach ($request_toggles as $t) {
 		$$t = (isset($_REQUEST[$t]) && $_REQUEST[$t] == 'on') ? 'y' : 'n';
 		$smarty->assign($t, $$t);
 	}
@@ -554,7 +554,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 																										, $_REQUEST['name']
 																										, 'tiki-list_file_gallery.php?galleryId=' . $newGalleryId
 																									);
-		foreach($cats as $cat) {
+		foreach ($cats as $cat) {
 			$categlib->categorize($catObjectId, $cat);
 		}
 	}
@@ -594,7 +594,7 @@ if (!empty($_FILES)) {
 		die;
 	}
 
-	foreach($_FILES as $k => $v) {
+	foreach ($_FILES as $k => $v) {
 		$result = $filegallib->handle_file_upload($k, $v);
 
 		if (isset($result['error'])) {
@@ -867,7 +867,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 			if (count($watching_categories_temp) > 0) {
 				$smarty->assign('category_watched', 'y');
 				$watching_categories = array();
-				foreach($watching_categories_temp as $wct) {
+				foreach ($watching_categories_temp as $wct) {
 					$watching_categories[] = array('categId' => $wct, 'name' => $categlib->get_category_name($wct));
 				}
 				$smarty->assign('watching_categories', $watching_categories);
@@ -920,7 +920,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 
 ask_ticket('fgal');
 if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
-	foreach($files['data'] as $file) {
+	foreach ($files['data'] as $file) {
 		$_SESSION['allowed'][$file['fileId']] = true;
 	}
 }

@@ -58,7 +58,7 @@ if ($output["data"] == "EMPTY") {
 	$readrepl = "tiki-view_tracker_item.php?$id=%s&$urlparam=%s";
 	$listfields = $trklib->list_tracker_fields($_REQUEST[$id]);
 	$fields = array();
-	foreach($listfields['data'] as $f) {
+	foreach ($listfields['data'] as $f) {
 		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c') continue;
 		$fields[$f['fieldId']] = $f;
 	}
@@ -99,12 +99,12 @@ if ($output["data"] == "EMPTY") {
 		require_once ('tiki-rss_error.php');
 	}
 	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['feed_tracker_max'], $sort_mode, $fields, $filterfield, $filtervalue, $status, null, $exactvalue);
-	foreach($tmp["data"] as $data) {
+	foreach ($tmp["data"] as $data) {
 		$data[$titleId] = (isset($_REQUEST['showitemId']) && $_REQUEST['showitemId'] == 'n')? '': tra('Tracker item:') . ' #' . $data[$urlparam];
 		$data[$descId] = '';
 		$first_text_field = null;
 		$aux_subject = null;
-		foreach($data["field_values"] as $data2) {
+		foreach ($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
 				$data2['value'] = $trklib->field_render_value(array(
 					'field' => $field,

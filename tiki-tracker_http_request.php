@@ -42,7 +42,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 	}
 	if ($filtervalue) {
 		$xfields = $trklib->list_tracker_fields($arrayTrackerId[$index], 0, -1, 'name_asc', '');
-		foreach($xfields["data"] as $idfi => $val) {
+		foreach ($xfields["data"] as $idfi => $val) {
 			if ($xfields["data"][$idfi]["fieldId"] == $arrayFieldlist[$index]) {
 				$fid = $xfields["data"][$idfi]["fieldId"];
 				$dfid = $idfi;

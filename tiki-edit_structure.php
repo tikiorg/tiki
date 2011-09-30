@@ -117,7 +117,7 @@ if (isset($_REQUEST["create"])) {
 		$structlib->s_create_page($_REQUEST['page_ref_id'], $after, $_REQUEST['name'], '', $structure_info['page_ref_id']);
 		$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["name"],'wiki page');
 	} 
-	elseif(!empty($_REQUEST['name2'])) {
+	elseif (!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
 			$new_page_ref_id = $structlib->s_create_page($_REQUEST['page_ref_id'], $after, $name, '', $structure_info['page_ref_id']);
       $after = $new_page_ref_id;      
@@ -129,7 +129,7 @@ if (isset($_REQUEST["create"])) {
 		$pages_added = array();
 		if (!(empty($_REQUEST['name']))) { 
 			$pages_added[] = $_REQUEST['name'];
-		} elseif(!empty($_REQUEST['name2'])) {
+		} elseif (!empty($_REQUEST['name2'])) {
   			foreach ($_REQUEST['name2'] as $name) {
 				$pages_added[] = $name;
   			}

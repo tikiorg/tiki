@@ -159,7 +159,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if (count($watching_categories_temp) > 0) {
 			$smarty->assign('category_watched', 'y');
 			$watching_categories = array();
-			foreach($watching_categories_temp as $wct) {
+			foreach ($watching_categories_temp as $wct) {
 				$watching_categories[] = array(
 					"categId" => $wct,
 					"name" => $categlib->get_category_name($wct)

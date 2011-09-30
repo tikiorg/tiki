@@ -53,8 +53,8 @@ if ( isset($_REQUEST['idx_1']) ) {
 }
 
 $smarty->assign_by_ref( 'sheetIndexes', $sheetIndexes );
-$smarty->assign( 'ver_cant' , count($history) );
-$smarty->assign( 'grid_content', $sheetlib->diff_sheets_as_html($_REQUEST["sheetId"], array($history[$sheetIndexes[0]]['stamp'], $history[$sheetIndexes[1]]['stamp'])) );
+$smarty->assign('ver_cant' , count($history));
+$smarty->assign('grid_content', $sheetlib->diff_sheets_as_html($_REQUEST["sheetId"], array($history[$sheetIndexes[0]]['stamp'], $history[$sheetIndexes[1]]['stamp'])));
 
 $cookietab = 1;
 

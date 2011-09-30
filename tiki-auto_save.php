@@ -37,7 +37,7 @@ function send_ajax_response($command, $data ) {
 
 if (isset($_REQUEST['editor_id'])) {
 	if (isset($_REQUEST['command']) && isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {
-		if(!isset($_REQUEST['referer']))
+		if (!isset($_REQUEST['referer']))
 			$_REQUEST['referer'] =  '';
 		$referer = explode(':', $_REQUEST['referer']);	// user, section, object id
 		if ($referer && count($referer) === 3 && $referer[1] === 'wiki_page') {
@@ -75,7 +75,7 @@ if (isset($_REQUEST['editor_id'])) {
 					$_REQUEST['diff_style'] = isset($_COOKIE['preview_diff_style']) ? $_COOKIE['preview_diff_style'] : '';
 				}
 				$data = $editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId']));
-				$smarty->assign( 'diff_style', $_REQUEST['diff_style'] );
+				$smarty->assign('diff_style', $_REQUEST['diff_style']);
 				global $tikilib;
 				if (!empty($_REQUEST['diff_style'])) {
 					$info = $tikilib->get_page_info($autoSaveIdParts[2]);
@@ -105,7 +105,7 @@ if (isset($_REQUEST['editor_id'])) {
 						$data = diff2( $diffold, $diffnew, $_REQUEST["diff_style"]);
 						$smarty->assign_by_ref('diffdata', $data);
 						
-						$smarty->assign( 'translation_mode', 'y' );
+						$smarty->assign('translation_mode', 'y');
 						$data = $smarty->fetch('pagehistory.tpl');
 					}
 				} else {
@@ -144,7 +144,7 @@ $(window).load(function(){
 				}
 				$data .= '</div></div></div></div>';
 				$smarty->assign_by_ref( 'mid_data', $data);
-				$smarty->assign( 'mid', '');
+				$smarty->assign('mid', '');
 				$smarty->display("tiki_full.tpl");
 			}
 		}	// end wiki preview

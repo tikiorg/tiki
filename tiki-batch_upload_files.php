@@ -65,7 +65,7 @@ function getDirContent($sub) {
 		die;
 	}
 
-	foreach($allfile as $filefile) {
+	foreach ($allfile as $filefile) {
 		if ('.' === $filefile{0}) {
 			continue;
 		}

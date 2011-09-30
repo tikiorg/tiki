@@ -54,7 +54,7 @@ if (empty($accs['data'])) {
 }
 $content = '<br /><br />';
 // foreach account
-foreach($accs['data'] as $acc) {
+foreach ($accs['data'] as $acc) {
 	$content.= "<b>Processing account</b><br />";
 	$content.= "Account :" . $acc['account'] . "<br />";
 	$content.= "Type    :" . $acc['type'] . "<br />";

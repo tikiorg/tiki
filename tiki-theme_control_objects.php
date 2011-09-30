@@ -111,7 +111,7 @@ if (isset($_REQUEST['assign'])) {
 }
 if (isset($_REQUEST["delete"])) {
 	check_ticket('tc-objects');
-	foreach(array_keys($_REQUEST["obj"]) as $obj) {
+	foreach (array_keys($_REQUEST["obj"]) as $obj) {
 		$tcontrollib->tc_remove_object($obj);
 	}
 }

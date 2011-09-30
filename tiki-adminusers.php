@@ -64,7 +64,7 @@ function batchImportUsers() {
 	$added = 0;
 	$errors = array();
 	$discarded = array();
-	foreach($userrecs as $u) {
+	foreach ($userrecs as $u) {
 		$local = array();
 		$exist = false;
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
@@ -125,7 +125,7 @@ function batchImportUsers() {
 		}
 		if (!empty($u['groups'])) {
 			$grps = preg_split("/(?<!,),(?!,)/", $u['groups']);
-			foreach($grps as $grp) {
+			foreach ($grps as $grp) {
 				$grp = preg_replace('/,,/', ',', preg_replace("/^ *(.*) *$/u", "$1", $grp));
 				$existg = false;
 				if ($userlib->group_exists($grp)) {
@@ -306,7 +306,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
 		$access->check_authenticity(tra('Are you sure you want to delete these users?'));
-		foreach($_REQUEST["checked"] as $deleteuser) if ($deleteuser != 'admin') {
+		foreach ($_REQUEST["checked"] as $deleteuser) if ($deleteuser != 'admin') {
 			$userlib->remove_user($deleteuser);
 			$logslib->add_log('users', sprintf(tra("Deleted account %s") , $deleteuser));
 			if ($_REQUEST['submit_mult'] == 'remove_users_with_page') $tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'] . $deleteuser);
@@ -337,8 +337,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
 	$access->check_authenticity(tra('Are you sure you want to add this user to these groups?'));
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
-		foreach($_REQUEST['checked'] as $assign_user) {
-			foreach($_REQUEST["checked_groups"] as $group) {
+		foreach ($_REQUEST['checked'] as $assign_user) {
+			foreach ($_REQUEST["checked_groups"] as $group) {
 				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
 					$userlib->assign_user_to_group($assign_user, $group);
 					$tikifeedback[] = array(
@@ -355,8 +355,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
 	$access->check_authenticity(tra('Are you sure you want to remove this user from these groups?'));
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
-		foreach($_REQUEST['checked'] as $assign_user) {
-			foreach($_REQUEST["checked_groups"] as $group) {
+		foreach ($_REQUEST['checked'] as $assign_user) {
+			foreach ($_REQUEST["checked_groups"] as $group) {
 				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
 					$userlib->remove_user_from_group($assign_user, $group);
 					$tikifeedback[] = array(
@@ -373,7 +373,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 } elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
 	$access->check_authenticity(tra('Are you sure you want to set the default groups for these users?'));
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
-		foreach($_REQUEST['checked'] as $assign_user) {
+		foreach ($_REQUEST['checked'] as $assign_user) {
 			$group = $_REQUEST["checked_group"];
 			if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
 				$userlib->set_default_group($assign_user, $group);
@@ -413,7 +413,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	$machine = $tikilib->httpPrefix( true ) . dirname($foo["path"]);
 	$machine = preg_replace("!/$!", "", $machine); // just incase
 	$smarty->assign_by_ref('mail_machine', $machine);
-	foreach($_REQUEST['checked'] as $mail_user) {
+	foreach ($_REQUEST['checked'] as $mail_user) {
 		$smarty->assign_by_ref('user', $mail_user);
 		$mail->setUser($mail_user);
 		$mail->setSubject($info['description']);
@@ -607,11 +607,11 @@ if (isset($_REQUEST['add'])) {
 }
 if ($tiki_p_admin == 'y') {
 	$alls = $userlib->get_groups();
-	foreach($alls['data'] as $g) {
+	foreach ($alls['data'] as $g) {
 		$all_groups[] = $g['groupName'];
 	}
 } else {
-	foreach($userGroups as $g => $t) {
+	foreach ($userGroups as $g => $t) {
 		$all_groups[] = $g;
 	}
 }

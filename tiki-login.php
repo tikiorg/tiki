@@ -47,7 +47,7 @@ if ($https_mode && $prefs['https_login'] == 'disabled') {
 	exit;
 }
 
-if( $prefs['session_silent'] == 'y' ) {
+if ( $prefs['session_silent'] == 'y' ) {
 	session_start();
 }
 
@@ -64,7 +64,7 @@ if (!isset($_SESSION['loginfrom'])) {
 }
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['su'])) {
-		if( empty( $_REQUEST['username'] ) ) {
+		if ( empty( $_REQUEST['username'] ) ) {
 			$smarty->assign('msg', tra('Username field cannot be empty. Please go back and try again.'));
 			$smarty->display('error.tpl');
 			exit;
@@ -162,7 +162,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 				if ($prefs['feature_intertiki_import_groups'] == 'y') {
 					if ($prefs['feature_intertiki_imported_groups']) {
 						$groups = preg_split('/\s*,\s*/', $prefs['feature_intertiki_imported_groups']);
-						foreach($groups as $group) {
+						foreach ($groups as $group) {
 							if (in_array(trim($group), $user_details['groups'])) {
 								$userlib->assign_user_to_group($user, trim($group));
 							}
@@ -172,7 +172,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 					}
 				} else {
 					$groups = preg_split('/\s*,\s*/', $prefs['interlist'][$prefs['feature_intertiki_mymaster']]['groups']);
-					foreach($groups as $group) {
+					foreach ($groups as $group) {
 						$userlib->assign_user_to_group($user, trim($group));
 					}
 				}

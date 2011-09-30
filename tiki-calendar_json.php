@@ -146,7 +146,7 @@ foreach ($listcals as $thatid) {
 // Calculate all the displayed days for the selected calendars
 /*
 $viewdays = array();
-foreach($_SESSION['CalendarViewGroups'] as $calendar) {
+foreach ($_SESSION['CalendarViewGroups'] as $calendar) {
 	$info = $calendarlib->get_calendar($calendar);
 	if (is_array($info['viewdays']))
 		$viewdays = array_merge($info['viewdays'],$viewdays);
@@ -181,7 +181,7 @@ if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 }
 
 $events = array();
-foreach($listevents as $event) {
+foreach ($listevents as $event) {
 	if ($event['modifiable'] === 'y') {
 		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&calitemId='.$event['calitemId'];
 	} else {

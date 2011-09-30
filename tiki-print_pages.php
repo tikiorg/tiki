@@ -37,14 +37,14 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 if (isset($_REQUEST["addpage"])) {
 	if (!in_array($_REQUEST["pageName"], $printpages)) {
-		foreach($_REQUEST['pageName'] as $value) {
+		foreach ($_REQUEST['pageName'] as $value) {
 			$printpages[] = $value;
 		}
 	}
 	$cookietab = 2;
 }
 if (isset($_REQUEST["removepage"])) {
-		foreach($_REQUEST['selectedpages'] as $value) {
+		foreach ($_REQUEST['selectedpages'] as $value) {
 			unset($printpages[$value]);
 		}
 		$printpages = array_merge($printpages);
@@ -59,7 +59,7 @@ if (isset($_REQUEST["clearstructures"])) {
 }
 if (isset($_REQUEST['addstructurepages'])) {
 	$struct = $structlib->get_subtree($_REQUEST["structureId"]);
-	foreach($struct as $struct_page) {
+	foreach ($struct as $struct_page) {
 		// Handle dummy last entry
 		if ($struct_page["pos"] != '' && $struct_page["last"] == 1) continue;
 		$printpages[] = $struct_page["pageName"];
@@ -82,8 +82,8 @@ $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('pages', $pages["data"]);
 $structures = $structlib->list_structures(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('structures', $structures["data"]);
-foreach($printstructures as $page_ref_id) {
-	foreach($structures['data'] as $struct) {
+foreach ($printstructures as $page_ref_id) {
+	foreach ($structures['data'] as $struct) {
 		if ($struct['page_ref_id'] == $page_ref_id) {
 			$printnamestructures[] = $struct['pageName'];
 			break;

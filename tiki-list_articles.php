@@ -180,7 +180,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 }
 if ($tiki_p_edit_article != 'y' && $tiki_p_remove_article != 'y') { //check one editable
-	foreach($listpages['data'] as $page) {
+	foreach ($listpages['data'] as $page) {
 		if ($page['author'] == $user && $page['creator_edit'] == 'y') {
 			$smarty->assign('oneEditPage', 'y');
 			break;

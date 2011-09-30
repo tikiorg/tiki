@@ -78,7 +78,7 @@ if ($tiki_p_edit_structures == 'y') {
 	}
 	if (isset($_REQUEST['batchaction'])) {
 		check_ticket('admin-structures');
-		foreach($_REQUEST['action'] as $batchid) {
+		foreach ($_REQUEST['action'] as $batchid) {
 			$structure_info = $structlib->s_get_structure_info($batchid);
 			if (!$tikilib->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit')) {
 				continue;
@@ -139,7 +139,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$parents[0] = $structure_id;
 		$last_pages[0] = null;
 		$tree_lines = explode("\n", $_REQUEST["tree"]);
-		foreach($tree_lines as $full_line) {
+		foreach ($tree_lines as $full_line) {
 			$names = explode("->", $full_line);
 			$line = $names[0];
 			$line = rtrim($line);
@@ -176,7 +176,7 @@ if ($tiki_p_edit_structures == 'y') {
 						if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && isset($_REQUEST["cat_categories"])) {
 							$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 							$alert_categorized[] = $cat_name;
-							foreach($_REQUEST["cat_categories"] as $cat_acat) {
+							foreach ($_REQUEST["cat_categories"] as $cat_acat) {
 								$categlib->categorize($catObjectId, $cat_acat);
 							}
 						}
@@ -190,7 +190,7 @@ if ($tiki_p_edit_structures == 'y') {
 							$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 							$numberofcats = count($cats);
 							$alert_categorized[] = $cat_name;
-							foreach($_REQUEST["cat_categories"] as $cat_acat) {
+							foreach ($_REQUEST["cat_categories"] as $cat_acat) {
 								if (!in_array($cat_acat, $cats, true)) {
 									$categlib->categorize($catObjectId, $cat_acat);
 									$numberofcats+= 1;

@@ -35,7 +35,7 @@ $section = 'wiki page';
 $isHomePage = (!isset($_REQUEST['page']));
 require_once('tiki-setup.php');
 require_once('lib/multilingual/multilinguallib.php');
-if( $prefs['feature_wiki_structure'] == 'y' ) {
+if ( $prefs['feature_wiki_structure'] == 'y' ) {
 	include_once('lib/structures/structlib.php');
 }
 include_once('lib/wiki/wikilib.php');
@@ -59,7 +59,7 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 }
 $access->check_feature( 'feature_wiki' );
 
-if(!isset($_SESSION['thedate'])) {
+if (!isset($_SESSION['thedate'])) {
     $thedate = $tikilib->now;
 } else {
     $thedate = $_SESSION['thedate'];
@@ -97,7 +97,7 @@ $info = null;
 $structs_with_perm = array(); 
 $structure = 'n';
 $smarty->assign('structure',$structure);
-if( $prefs['feature_wiki_structure'] == 'y' ) {
+if ( $prefs['feature_wiki_structure'] == 'y' ) {
 	// Feature checks made in the function for structure language
 	if (!$use_best_language) {
 		$info = $tikilib->get_page_info($_REQUEST["page"]);
@@ -208,7 +208,7 @@ if (!$info  || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 }
 	
 // If the page doesn't exist then display an error
-if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
+if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
 	if (!empty($prefs['url_anonymous_page_not_found']) && empty($user)) {
 		$access->redirect($prefs['url_anonymous_page_not_found']);
 	}
@@ -228,7 +228,7 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$isUserPage = false;
 	$likepages = $wikilib->get_like_pages($page);
 	/* if we have exactly one match, redirect to it */
-	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
+	if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
 		$url = $wikilib->sefurl($likepages[0]);
 
 		// Process prefix alias with itemId append for pretty tracker pages
@@ -339,11 +339,11 @@ $pageCache = Tiki_PageCache::create()
 	) )
 	->applyCache();
 
-if( $page_ref_id )
+if ( $page_ref_id )
 	$pageRenderer->setStructureInfo( $page_info );
 
 // Now check permissions to access this page
-if( ! $pageRenderer->canView ) {
+if ( ! $pageRenderer->canView ) {
 	$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 }
 
@@ -354,18 +354,18 @@ if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) =
 	exit;
 }
 
-if(isset($_REQUEST['copyrightpage'])) {
+if (isset($_REQUEST['copyrightpage'])) {
   $smarty->assign_by_ref('copyrightpage',$_REQUEST['copyrightpage']); 
 }
 
 // BreadCrumbNavigation here
 // Remember to reverse the array when posting the array
 
-if(!isset($_SESSION['breadCrumb'])) {
+if (!isset($_SESSION['breadCrumb'])) {
     $_SESSION['breadCrumb']=Array();
 }
-if(!in_array($page,$_SESSION['breadCrumb'])) {
-    if(count($_SESSION['breadCrumb'])>$prefs['userbreadCrumb']) {
+if (!in_array($page,$_SESSION['breadCrumb'])) {
+    if (count($_SESSION['breadCrumb'])>$prefs['userbreadCrumb']) {
 	array_shift($_SESSION['breadCrumb']);
     } 
     array_push($_SESSION['breadCrumb'],$page);
@@ -378,7 +378,7 @@ if(!in_array($page,$_SESSION['breadCrumb'])) {
 
 
 // Now increment page hits since we are visiting this page
-if($prefs['count_admin_pvs'] == 'y' || $user!='admin') {
+if ($prefs['count_admin_pvs'] == 'y' || $user!='admin') {
     $tikilib->add_hit($page);
 }
 
@@ -416,7 +416,7 @@ if (
 
 
 // Save to notepad if user wants to
-if($user 
+if ($user 
 	&& $objectperms->notepad
 	&& $prefs['feature_notepad'] == 'y' 
 	&& isset($_REQUEST['savenotepad'])) {
@@ -443,7 +443,7 @@ if ( isset($_REQUEST['undo']) ) {
 	}	
 }
 
-if(isset($_REQUEST['refresh'])) {
+if (isset($_REQUEST['refresh'])) {
     check_ticket('index');
     $tikilib->invalidate_cache($page);	
 }
@@ -452,7 +452,7 @@ $cat_type = 'wiki page';
 $cat_objid = $page;
 include_once('tiki-section_options.php');
 
-if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+if ( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
 }
 
@@ -466,23 +466,23 @@ if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName']
 }
 
 if ( $prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_wiki_attachments'] != 'y' ) {
-    if(isset($_REQUEST['removeattach'])) {
+    if (isset($_REQUEST['removeattach'])) {
 	check_ticket('index');
 	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
-	if( ($user && ($owner == $user) ) || $objectperms->wiki_admin_attachments ) {
+	if ( ($user && ($owner == $user) ) || $objectperms->wiki_admin_attachments ) {
 		$access->check_authenticity();
 		$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
 	}
 	$pageRenderer->setShowAttachments( 'y' );
     }
-    if(isset($_REQUEST['attach']) && ( $objectperms->wiki_admin_attachments || $objectperms->wiki_attach_files )) {
+    if (isset($_REQUEST['attach']) && ( $objectperms->wiki_admin_attachments || $objectperms->wiki_attach_files )) {
 	check_ticket('index');
 	// Process an attachment here
-	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	if (isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 	    $ret = $tikilib->attach_file($_FILES['userfile1']['name'], $_FILES['userfile1']['tmp_name'], $prefs['w_use_db']== 'y'? 'db': 'dir');	
 	    if ($ret['ok']) {
 	    	// Set "data" field only if we're using db
-	    	if( $prefs['w_use_db'] == 'y' )
+	    	if ( $prefs['w_use_db'] == 'y' )
 		{
 		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], $ret['data'], $_REQUEST['attach_comment'], $user, $ret['fhash']);
 		} else {
@@ -494,25 +494,25 @@ if ( $prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_w
 	}
     }
 
-	if( isset( $_REQUEST['sort_mode'] ) )
+	if ( isset( $_REQUEST['sort_mode'] ) )
 		$pageRenderer->setSortMode( $_REQUEST['sort_mode'] );
-	if( isset( $_REQUEST['atts_show'] ) )
+	if ( isset( $_REQUEST['atts_show'] ) )
 		$pageRenderer->setShowAttachments( $_REQUEST['atts_show'] );
 }
 
 // Watches
 if ($prefs['feature_user_watches'] == 'y') {
-	if($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
+	if ($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
 		check_ticket('index');
 		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && !$objectperms->watch_structure ) {
 			$access->display_error( $page, tra('Permission denied'), '403');
 		}
 		$ret = true;
-		if($_REQUEST['watch_action']=='add') {
+		if ($_REQUEST['watch_action']=='add') {
 			$ret = $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
-		} elseif($_REQUEST['watch_action'] == 'add_desc') {
+		} elseif ($_REQUEST['watch_action'] == 'add_desc') {
 			$ret = $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=".$_REQUEST['structure']);
-		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
+		} elseif ($_REQUEST['watch_action'] == 'remove_desc') {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure');
 		} else {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);

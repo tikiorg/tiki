@@ -54,7 +54,7 @@ if ($postId > 0) {
 			die;
 		}
 	}
-	if(isset($data['wysiwyg']) && !isset($_REQUEST['wysiwyg'])) {
+	if (isset($data['wysiwyg']) && !isset($_REQUEST['wysiwyg'])) {
 		$_REQUEST['wysiwyg'] = $data['wysiwyg'];
 	}
 }
@@ -255,7 +255,7 @@ $cat_type = 'blog post';
 $cat_objid = $postId;
 include_once ("categorize_list.php");
 
-if( $prefs['geo_locate_blogpost'] == 'y' ) {
+if ( $prefs['geo_locate_blogpost'] == 'y' ) {
 	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('blog post', $postId));
 }
 

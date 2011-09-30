@@ -122,12 +122,12 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-content-templates');
 	$type = $_REQUEST['template_type'];
 
-	if( $type == 'page' ) {
+	if ( $type == 'page' ) {
 		$content = 'page:' . $_REQUEST['page_name'];
 	} else {
 		$content = $_REQUEST["content"];
 	}
-	if(isset($_REQUEST["name"]) && $_REQUEST["name"] != ""){
+	if (isset($_REQUEST["name"]) && $_REQUEST["name"] != ""){
 		$tid = $templateslib->replace_template($_REQUEST["templateId"], $_REQUEST["name"], $content, $type);
 		$smarty->assign("templateId", '0');
 		$info["name"] = '';

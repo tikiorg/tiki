@@ -77,7 +77,7 @@ if ( !empty($_REQUEST['export']) ) {
 
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['save'])) {
-		foreach($action_log_conf_selected as $index => $conf) {
+		foreach ($action_log_conf_selected as $index => $conf) {
 			if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed and reported
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'v');
 			} elseif (isset($_REQUEST[$conf['code']]) && $_REQUEST[$conf['code']] == 'on') {
@@ -94,7 +94,7 @@ if ($tiki_p_admin == 'y') {
 } else {
 	if (isset($_REQUEST['save'])) {
 		$_prefs = 'v';
-		foreach($action_log_conf_selected as $index => $conf) {
+		foreach ($action_log_conf_selected as $index => $conf) {
 			if ($conf['status'] == 'v' || $conf['status'] == 'y') { // can only change what is recorded
 				if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed
 					$_prefs.= $conf['id'] . 'v';
@@ -111,7 +111,7 @@ if ($tiki_p_admin == 'y') {
 	} else {
 		$_prefs = $tikilib->get_user_preference($user, 'actionlog_conf', '');
 		if (!empty($_prefs)) {
-			foreach($confs as $i => $conf) {
+			foreach ($confs as $i => $conf) {
 				if ($confs[$i]['status'] == 'v' || $confs[$i]['status'] == 'y') {
 					if (preg_match('/[vy]' . $confs[$i]['id'] . '([vy])/', $_prefs, $matches)) $confs[$i]['status'] = $matches[1];
 				}
@@ -121,7 +121,7 @@ if ($tiki_p_admin == 'y') {
 	global $actionlogConf;
 	$actionlogConf = $confs;
 }
-foreach($confs as $conf) {
+foreach ($confs as $conf) {
 	if ($conf['status'] == 'v') {
 		++$nbViewedConfs;
 	}
@@ -167,7 +167,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 			if (count($_REQUEST['cat_categories']) > 1) {
 				$action['params'] = $logslib->get_action_params($_REQUEST['actionId']);
 				$action['contributions'] = $logslib->get_action_contributions($_REQUEST['actionId']);
-				foreach($_REQUEST['cat_categories'] as $cat) {
+				foreach ($_REQUEST['cat_categories'] as $cat) {
 					if ($cat != $old_categ) {
 						$logslib->add_action($action['action'], $action['object'], $action['objectType'], $action['comment'], $action['user'], $action['ip'], '', $action['lastModif'], '', '');
 					}
@@ -184,7 +184,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 			$info = $tikilib->get_page_info($action['object']);
 			$contributors = $logslib->get_wiki_contributors($info);
 			$tcontributors = array();
-			foreach($contributors as $c) {
+			foreach ($contributors as $c) {
 				$tcontributors[] = $c['userId'];
 			}
 			$smarty->assign_by_ref('contributors', $tcontributors);
@@ -195,7 +195,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 
 		}
 		$cont = array();
-		foreach($contributions as $contribution) {
+		foreach ($contributions as $contribution) {
 			$cont[] = $contribution['contributionId'];
 		}
 		$_REQUEST['contributions'] = $cont;
@@ -207,7 +207,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 		if (!empty($_REQUEST['startDate'])) $smarty->assign('startDate', $_REQUEST['startDate']);
 		if (!empty($_REQUEST['endDate'])) $smarty->assign('endDate', $_REQUEST['endDate']);
 		if (!empty($action['categId'])) {
-			foreach($categories as $i => $cat) {
+			foreach ($categories as $i => $cat) {
 				if ($action['categId'] == $cat['categId']) {
 					$categories[$i]['incat'] = 'y';
 				}
@@ -231,13 +231,13 @@ if ($tiki_p_admin == 'y') {
 			);
 }
 $selectedGroups = array();
-foreach($groups as $g) {
+foreach ($groups as $g) {
 	$selectedGroups[$g] = 'y';
 }
 $smarty->assign_by_ref('users', $users);
 $smarty->assign_by_ref('groups', $groups);
 $smarty->assign_by_ref('categories', $categories);
-foreach($categories as $categ) {
+foreach ($categories as $categ) {
 	$categNames[$categ['categId']] = $categ['name'];
 }
 $smarty->assign_by_ref('categNames', $categNames);
@@ -246,7 +246,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$url = '';
 	$selectedUsers = array();
 	if (isset($_REQUEST['selectedUsers'])) {
-		foreach($users as $key => $u) {
+		foreach ($users as $key => $u) {
 			if (in_array($u, $_REQUEST['selectedUsers'])) {
 				$url.= "&amp;selectedUsers[]=$u";
 				$selectedUsers[$key] = 'y';
@@ -256,13 +256,13 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('selectedUsers', $selectedUsers);
 	if (isset($_REQUEST['selectedGroups']) && !(count($_REQUEST['selectedGroups']) == 1 && $_REQUEST['selectedGroups'][0] == '')) {
 		$selectedGroups = array();
-		foreach($groups as $key => $g) {
+		foreach ($groups as $key => $g) {
 			if (in_array($g, $_REQUEST['selectedGroups'])) {
 				$url.= "&amp;selectedGroups[]=$g";
 				$selectedGroups[$g] = 'y';
 				if ($tiki_p_admin == 'y' || $tiki_p_view_actionlog_owngroups == 'y') {
 					$members = $userlib->get_group_users($g);
-					foreach($members as $m) {
+					foreach ($members as $m) {
 						$_REQUEST['selectedUsers'][] = $m;
 						$selectedUsers[$m] = 'y';
 					}
@@ -348,7 +348,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	if (isset($_REQUEST['sort_mode'])) {
 		list($col, $order) = explode('_', $_REQUEST['sort_mode']);
 		$sort = array();
-		foreach($actions as $a) {
+		foreach ($actions as $a) {
 			$sort[] = isset($a[$col]) ? $a[$col] : '';
 		}
 		array_multisort($sort, ($order == 'desc') ? SORT_DESC : SORT_ASC, $actions);
@@ -380,22 +380,22 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 if (isset($_REQUEST['graph'])) {
 	$contributions = $contributionlib->list_contributions(0, -1);
 	$legendWidth = 0;
-	foreach($contributions['data'] as $contribution) {
+	foreach ($contributions['data'] as $contribution) {
 		$legendWidth = max($legendWidth, strlen($contribution['name']));
 	}
 	$legendWidth = $legendWidth * 7 + 20;
 	$xUserTickWidth = 0;
-	foreach($userContributions['data'] as $u => $val) {
+	foreach ($userContributions['data'] as $u => $val) {
 		$xUserTickWidth = max($xUserTickWidth, strlen($u));
 	}
 	$xUserTickWidth = $xUserTickWidth * 7;
 	$xGroupTickWidth = 0;
-	foreach($groupContributions as $g => $val) {
+	foreach ($groupContributions as $g => $val) {
 		$xGroupTickWidth = max($xGroupTickWidth, strlen($g));
 	}
 	$xGroupTickWidth = $xGroupTickWidth * 7;
 	$yTickWidth = 0;
-	foreach($contributionStat['data'] as $contribution) {
+	foreach ($contributionStat['data'] as $contribution) {
 		$yTickWidth = max($yTickWidth, $contribution['add'], $contribution['del']);
 	}
 	$yTickWidth = "($yTickWidth).0";

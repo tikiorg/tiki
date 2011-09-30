@@ -16,8 +16,8 @@ if (!isset($prefs['feed_calendar']) || $prefs['feed_calendar'] != 'y') {
 }
 
 $res=$access->authorize_rss(array('tiki_p_view_calendar','tiki_p_admin_calendar'));
-if($res) {
-   if($res['header'] == 'y') {
+if ($res) {
+   if ($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
       header('HTTP/1.0 401 Unauthorized');
    }
@@ -84,7 +84,7 @@ if ($output["data"]=="EMPTY") {
 	require_once("lib/smarty_tiki/modifier.tiki_long_datetime.php");
 	require_once("lib/smarty_tiki/modifier.compactisodate.php");
 
-	foreach($items as &$item) {
+	foreach ($items as &$item) {
 		$start_d = smarty_modifier_compactisodate($item["start"]);
 		$end_d = smarty_modifier_compactisodate($item["end"]);
 	

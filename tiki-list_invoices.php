@@ -23,13 +23,13 @@ $Invoices = TrackerQueryLib::tracker("Invoices")
 	->byName(true)
 	->query();
 
-foreach($Invoices as $I => $Invoice) {
+foreach ($Invoices as $I => $Invoice) {
 	$Amount = 0;
 	$Paid = 0;
 	$Status = "";
 	
 	if (is_array($Invoice["Item Amounts"])) {
-		foreach($Invoice["Item Amounts"] as $Key => $sum) {
+		foreach ($Invoice["Item Amounts"] as $Key => $sum) {
 			$Amount += $Invoice["Item Amounts"][$Key] * $Invoice["Item Quantities"][$Key];
 		}
 	} else {
@@ -39,7 +39,7 @@ foreach($Invoices as $I => $Invoice) {
 	$Invoices[$I]["Amount"] = $Amount;
 	
 	if (is_array($Invoice["Amounts Paid"])) {
-		foreach($Invoice["Amounts Paid"] as $Sum) {
+		foreach ($Invoice["Amounts Paid"] as $Sum) {
 			$Paid += $Sum;
 		}
 	} else {

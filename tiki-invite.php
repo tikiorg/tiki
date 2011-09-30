@@ -17,7 +17,7 @@ $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 function parsemails_csv($bloc) {
 	$results=array();
 	$lines = preg_split('/[\n\r]+/', $bloc);
-	foreach($lines as $line) {
+	foreach ($lines as $line) {
 		$l=explode(',', $line);
 		$r=array();
 		$r['lastname']=trim($l[0]);
@@ -37,7 +37,7 @@ function parsemails_all($bloc) {
 	$mails = preg_split('/[^a-zA-Z0-9@._-]/', $bloc);
 
 	$results=array();
-	foreach($mails as $m) {
+	foreach ($mails as $m) {
 		$m=trim($m);
 		if (strpos($m, '@') === FALSE) continue;
 		if (strpos($m, '.') === FALSE) continue;
@@ -76,7 +76,7 @@ if (isset($_REQUEST['loadprevious']) && !empty($_REQUEST['loadprevious']) && iss
 $user_details = $userlib->get_user_details($user);
 $allgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $invitegroups=array();
-foreach($allgroups['data'] as $agroup)
+foreach ($allgroups['data'] as $agroup)
     $invitegroups[$agroup['groupName']] = $agroup['groupDesc'];
 $smarty->assign("invitegroups", $invitegroups);
 $smarty->assign("usergroups", $user_details['groups']);
@@ -106,12 +106,12 @@ if (isset($_REQUEST['send'])) {
         $res=$tikilib->query("SELECT MAX(id) as `id` FROM `tiki_invite` WHERE `inviter`=? AND `ts`=?", array($user, $tikilib->now));
         $row=$res->fetchRow(); $id=$row['id'];
         
-        foreach($emails as $m)
+        foreach ($emails as $m)
             $tikilib->query("INSERT INTO `tiki_invited` (id_invite, email, firstname, lastname, used) VALUES (?,?,?,?,?)",
                             array($id, $m['email'], $m['firstname'], $m['lastname'], "no"));
 
 		  $_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];			        
-        foreach($emails as $m) {
+        foreach ($emails as $m) {
             $mail = new TikiMail();
             $mail->setFrom($prefs['sender_email']);
             $mail->setSubject($_REQUEST["emailsubject"]);

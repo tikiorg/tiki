@@ -26,7 +26,7 @@ if (empty($content) && isset($_REQUEST['always'])) {
 header("Content-type: $type");
 echo $content;
 
-if( $prefs['users_serve_avatar_static'] == 'y' ) {
+if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 	require 'lib/mime/mimeextensions.php';
 	$ext = $mimeextensions[$type];
 	$image = "temp/public/$tikidomain/avatar_{$_REQUEST['user']}.$ext";

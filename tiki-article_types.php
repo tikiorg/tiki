@@ -13,15 +13,15 @@ $access->check_feature('feature_articles');
 // PERMISSIONS: NEEDS p_admin or tiki_p_articles_admin_types
 $access->check_permission(array('tiki_p_articles_admin_types'));
 
-if(isset($_REQUEST["add_type"])) {
+if (isset($_REQUEST["add_type"])) {
 	$artlib->add_type($_REQUEST["new_type"]);
 }
-elseif(isset($_REQUEST["remove_type"])) {
+elseif (isset($_REQUEST["remove_type"])) {
 	$access->check_authenticity();
 	$artlib->remove_type($_REQUEST["remove_type"]);
 }
-elseif(isset($_REQUEST["update_type"])) {
-	foreach(array_keys($_REQUEST["type_array"]) as $this_type) {
+elseif (isset($_REQUEST["update_type"])) {
+	foreach (array_keys($_REQUEST["type_array"]) as $this_type) {
 		if (!isset($_REQUEST["use_ratings"][$this_type])) {$_REQUEST["use_ratings"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_pre_publ"][$this_type])) {$_REQUEST["show_pre_publ"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_post_expire"][$this_type])) {$_REQUEST["show_post_expire"][$this_type] = 'n';}
@@ -80,7 +80,7 @@ if ($prefs["article_custom_attributes"] == 'y') {
 	if (isset($_REQUEST["att_type"]) && isset($_REQUEST["att_remove"])) {
 		$artlib->delete_article_type_attribute($_REQUEST["att_type"], $_REQUEST["att_remove"]);
 	}
-	foreach($types as &$t) {
+	foreach ($types as &$t) {
 		$t["attributes"] = $artlib->get_article_type_attributes($t["type"]);
 	}	
 }

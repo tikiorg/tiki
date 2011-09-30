@@ -45,7 +45,7 @@ $grid = new TikiSheet;
 $history = $sheetlib->sheet_history( $_REQUEST['sheetId'] );
 $smarty->assign_by_ref( 'history', $history );
 
-if( isset($_REQUEST['encoding']) )
+if ( isset($_REQUEST['encoding']) )
 {
 	$smarty->assign('page_mode', 'submit' );
 
@@ -54,7 +54,7 @@ if( isset($_REQUEST['encoding']) )
 
 	$handler = $_REQUEST['handler'];
 	
-	if( !in_array( $handler, TikiSheet::getHandlerList() ) )
+	if ( !in_array( $handler, TikiSheet::getHandlerList() ) )
 	{
 		$smarty->assign('msg', "Handler is not allowed.");
 
@@ -73,10 +73,10 @@ else
 
 	$handlers = TikiSheet::getHandlerList();
 	
-	foreach( $handlers as $key=>$handler )
+	foreach ( $handlers as $key=>$handler )
 	{
 		$temp = new $handler;
-		if( !$temp->supports( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC ) )
+		if ( !$temp->supports( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC ) )
 			continue;
 
 		$list[$key] = array(

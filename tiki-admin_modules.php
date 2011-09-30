@@ -64,7 +64,7 @@ if (!empty($_REQUEST['edit_assign'])) {
     $grps = '';
     if (!empty($info['groups'])) {
         $module_groups = unserialize($info["groups"]);
-        foreach($module_groups as $amodule) {
+        foreach ($module_groups as $amodule) {
             $grps = $grps . ' $amodule ';
         }
     }
@@ -157,7 +157,7 @@ if (isset($_REQUEST["assign"]) || isset($_REQUEST["preview"])) { // Verify that 
 	$missing_params = array();
 	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
 	if ($_REQUEST['moduleId'] > 0) {
-		foreach($modinfo["params"] as $pname => $param) {
+		foreach ($modinfo["params"] as $pname => $param) {
 			if ($param["required"] && empty($_REQUEST["assign_params"][$pname]))
 				$missing_params[] = $param["name"];
 		}
@@ -210,7 +210,7 @@ if (isset($_REQUEST["preview"])) {
 				$module_rows = 10;
             include_once ($phpfuncfile);
             $function = 'module_' . $_REQUEST["assign_name"];
-            if( function_exists( $function ) ) {
+            if ( function_exists( $function ) ) {
                 $function( array("name" => $_REQUEST["assign_name"], "position" => $_REQUEST["assign_position"], "ord" => $_REQUEST["assign_order"], "cache_time" => $_REQUEST["assign_cache"], "rows" => $module_rows), $_REQUEST["assign_params"] ); // Warning: First argument should have all tiki_modules table fields. This is just a best effort.
             }
         }
@@ -233,14 +233,14 @@ if (isset($_REQUEST["preview"])) {
     $smarty->assign_by_ref('assign_cache', $_REQUEST["assign_cache"]);
     $module_groups = $_REQUEST["groups"];
     $grps = '';
-    foreach($module_groups as $amodule) {
+    foreach ($module_groups as $amodule) {
         $grps = $grps . " $amodule ";
     }
     $smarty->assign('module_groups', $grps);
     $smarty->assign_by_ref('preview_data', $data);
 
 	$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
-	$smarty->assign( 'assign_info', $modinfo );
+	$smarty->assign('assign_info', $modinfo);
 }
 if (isset($_REQUEST["assign"])) {
     check_ticket('admin-modules');
@@ -262,7 +262,7 @@ if (isset($_REQUEST["assign"])) {
     $smarty->assign_by_ref('assign_type', $_REQUEST["assign_type"]);
     $module_groups = $_REQUEST["groups"];
     $grps = '';
-    foreach($module_groups as $amodule) {
+    foreach ($module_groups as $amodule) {
         $grps = $grps . " $amodule ";
     }
     $smarty->assign('module_groups', $grps);
@@ -273,7 +273,7 @@ if (isset($_REQUEST["assign"])) {
 		header("location: tiki-admin_modules.php");
 	} else {
 		$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
-		$smarty->assign( 'assign_info', $modinfo );
+		$smarty->assign('assign_info', $modinfo);
 	}
 }
 
@@ -371,20 +371,20 @@ $wikistructures = $structlib->list_structures('0', '100', 'pageName_asc', '');
 $smarty->assign('wikistructures', $wikistructures["data"]);
 $maximum = max( $maximum, $wikistructures['cant'] );
 
-$smarty->assign( 'maxRecords', $maxRecords );
-$smarty->assign( 'offset', $offset );
-$smarty->assign( 'maximum', $maximum );
+$smarty->assign('maxRecords', $maxRecords);
+$smarty->assign('offset', $offset);
+$smarty->assign('maximum', $maximum);
 
 $assigned_modules = $modlib->get_assigned_modules();
 $module_zones = array();
-foreach( $modlib->module_zones as $initial => $zone) {
+foreach ( $modlib->module_zones as $initial => $zone) {
 	$module_zones[$initial] = array(
 		'id' => $zone,
 		'name' => tra(substr($zone, 0, strpos($zone, '_')))
 	);
 }
-$smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
-$smarty->assign_by_ref( 'module_zones', $module_zones );
+$smarty->assign_by_ref('assigned_modules', $assigned_modules);
+$smarty->assign_by_ref('module_zones', $module_zones);
 
 $prefs['module_zones_top'] = 'fixed';
 $prefs['module_zones_topbar'] = 'fixed';

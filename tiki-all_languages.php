@@ -14,7 +14,7 @@ include_once('lib/wiki/renderlib.php');
 
 $access->check_feature(array('feature_multilingual', 'feature_multilingual_one_page'));
 
-if( !isset($_REQUEST['page']) ) {
+if ( !isset($_REQUEST['page']) ) {
 	header('Location: tiki-index.php');
 	die;
 }
@@ -31,10 +31,10 @@ $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page', $page);
 
 // If the page doesn't exist then display an error
-if(empty($requested)) {
+if (empty($requested)) {
 	$likepages = $wikilib->get_like_pages($page);
 	// if we have exactly one match, redirect to it 
-	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
+	if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
 		$access->redirect( 'tiki-all_languages.php?page='.urlencode($likepages[0]) );
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
@@ -57,14 +57,14 @@ if (count($preferred_langs) == 1) {
 }
 
 // Sort languages according to user's prefences
-foreach( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
-	if( $row['objId'] != $page_id && in_array($row['lang'], $preferred_langs) )
+foreach ( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
+	if ( $row['objId'] != $page_id && in_array($row['lang'], $preferred_langs) )
 		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
-	elseif( $row['lang'] != $requested['lang'] )
+	elseif ( $row['lang'] != $requested['lang'] )
 		$excluded[] = $row['lang'];
 
-foreach( $preferred_langs as $lang )
-	if( array_key_exists( $lang, $unordered ) )
+foreach ( $preferred_langs as $lang )
+	if ( array_key_exists( $lang, $unordered ) )
 		$pages[] = $unordered[$lang];
 
 $contents = array();
@@ -80,7 +80,7 @@ if (count($pages) >= 2) {
 }
 
 
-foreach( array_reverse( $pages ) as $id => $info )
+foreach ( array_reverse( $pages ) as $id => $info )
 {
 	$page = $info['pageName'];
 	$section = 'wiki page';
@@ -88,12 +88,12 @@ foreach( array_reverse( $pages ) as $id => $info )
 	$renderer = new WikiRenderer( $info, $user );
 	$renderer->applyPermissions();
 
-	if( $tiki_p_view == 'y' ) {
+	if ( $tiki_p_view == 'y' ) {
 		$renderer->runSetups();
 
 		$contents[] = $smarty->fetch('tiki-show_page.tpl');
 
-		if( $id === count($pages) - 1 )
+		if ( $id === count($pages) - 1 )
 			$renderer->restoreAll();
 	}
 }
@@ -101,8 +101,8 @@ foreach( array_reverse( $pages ) as $id => $info )
 $contents = array_reverse( $contents );
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign( 'side_by_side', $show_langs_side_by_side );
-$smarty->assign( 'excluded', $excluded );
-$smarty->assign( 'content', $contents);
-$smarty->assign( 'mid', 'tiki-all_languages.tpl' );
-$smarty->display( 'tiki.tpl' );
+$smarty->assign('side_by_side', $show_langs_side_by_side);
+$smarty->assign('excluded', $excluded);
+$smarty->assign('content', $contents);
+$smarty->assign('mid', 'tiki-all_languages.tpl');
+$smarty->display('tiki.tpl');

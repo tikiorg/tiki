@@ -35,7 +35,7 @@ if (!empty($_REQUEST['reply']) || !empty($_REQUEST['replyall'])) {
 	$_REQUEST['subject'] = tra("Re:") . preg_replace('/^(' . tra('Re:') . ')+/', '', $_REQUEST['subject']);
 	$smarty->assign('reply', 'y');
 }
-foreach(array(
+foreach (array(
 	'to',
 	'cc',
 	'bcc'
@@ -77,7 +77,7 @@ if (isset($_REQUEST['send'])) {
 	}
 	// Remove invalid users from the to, cc and bcc fields
 	$users = array();
-	foreach($arr_to as $a_user) {
+	foreach ($arr_to as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
@@ -97,7 +97,7 @@ if (isset($_REQUEST['send'])) {
 			}
 		}
 	}
-	foreach($arr_cc as $a_user) {
+	foreach ($arr_cc as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
@@ -117,7 +117,7 @@ if (isset($_REQUEST['send'])) {
 			}
 		}
 	}
-	foreach($arr_bcc as $a_user) {
+	foreach ($arr_bcc as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
@@ -151,7 +151,7 @@ if (isset($_REQUEST['send'])) {
 		die;
 	}
 	// Insert the message in the inboxes of each user
-	foreach($users as $a_user) {
+	foreach ($users as $a_user) {
 		$result = $messulib->post_message($a_user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash'],
 								isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
 		if ($result) {

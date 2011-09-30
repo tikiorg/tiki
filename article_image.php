@@ -30,7 +30,7 @@ if (!isset($_REQUEST["id"])) {
 $useCache = isset($_REQUEST['cache']) && $_REQUEST['cache'] == 'y'; // cache only the image in list mode
 
 // If image_type has no value, we default to "article" to preserve previous behaviour
-if(!isset($_REQUEST["image_type"])) {
+if (!isset($_REQUEST["image_type"])) {
 	$_REQUEST["image_type"]="article";
 }
 

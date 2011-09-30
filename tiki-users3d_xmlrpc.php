@@ -26,14 +26,14 @@ function getSubGraph($params) {
 	$neighbours = array();
 	while ($i <= $depth && count($queue) > 0) {
 		$nextQueue = array();
-		foreach($queue as $nodeName) {
+		foreach ($queue as $nodeName) {
 			$similar = $userlib->related_users($nodeName, 5);
 			if (isset($neighbours[$nodeName])) {
 				$myNeighbours = $neighbours[$nodeName];
 			} else {
 				$myNeighbours = array();
 			}
-			foreach($similar as $user) {
+			foreach ($similar as $user) {
 				$myNeighbours[] = $user['login'];
 				$neighbours[$user['login']][] = $nodeName;
 			}

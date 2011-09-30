@@ -26,8 +26,8 @@ if ($topic_info == DB_ERROR) {
 }
 $smarty->assign_by_ref('topic_info', $topic_info);
 
-if(isset($_REQUEST["edittopic"])) {
-  if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+if (isset($_REQUEST["edittopic"])) {
+  if (isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
     $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
     $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
     fclose($fp);
@@ -38,7 +38,7 @@ if(isset($_REQUEST["edittopic"])) {
     $artlib->replace_topic_image($_REQUEST["topicid"], $imgname, $imgtype, $imgsize, $data);
   }
 
-  if(isset($_REQUEST["name"])) {
+  if (isset($_REQUEST["name"])) {
     $artlib->replace_topic_name($_REQUEST["topicid"], $_REQUEST["name"]);
 	$topic_info['name'] = $_REQUEST['name'];
   }

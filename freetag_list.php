@@ -37,7 +37,7 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 	$taglist = '';
     }
 
-	if( !isset($cat_lang))
+	if ( !isset($cat_lang))
 		$cat_lang = null;
 
     $suggestion = $freetaglib->get_tag_suggestion($taglist,$prefs['freetags_browse_amount_tags_suggestion'],$cat_lang);

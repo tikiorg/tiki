@@ -8,7 +8,7 @@
 
 if (!defined('STDOUT') || !defined('STDIN') || !defined('STDERR'))
      die("<p>shell only</p>");
-if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
+if ( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
 // Initialization
 require_once ('tiki-setup.php');
@@ -162,12 +162,12 @@ function command_list($goption, $coption, $cparams) {
 		$regex=$cparams[0];
 	} else $regex='';
 
-	foreach($repos as $reponame => $repo) {
+	foreach ($repos as $reponame => $repo) {
 		if ($reponame == 'remote' && in_array('-l', $coption)) continue;
 		if ($reponame != 'installed' && in_array('-i', $coption)) continue;
 		$content=$modslib->read_list($repo['url'], $reponame);
-		foreach($content as $meat) {
-			foreach($meat as $mod) {
+		foreach ($content as $meat) {
+			foreach ($meat as $mod) {
 				if (($regex !== '') && !preg_match('/'.$regex.'/', $mod->modname))
 					continue;
 				$merged[$mod->type][$mod->name][$reponame]=$mod;
@@ -176,13 +176,13 @@ function command_list($goption, $coption, $cparams) {
 	}
 
 
-	foreach($merged as $k => $meat) {
+	foreach ($merged as $k => $meat) {
 		ksort($merged[$k]);
 	}
 	ksort($merged);
-	foreach($merged as $type => $meat) {
+	foreach ($merged as $type => $meat) {
 		echo $type.":\n";
-		foreach($meat as $name => $submeat) {
+		foreach ($meat as $name => $submeat) {
 			$rev_installed = isset($submeat['installed']) ? $submeat['installed']->revision : '';
 			$rev_remote    = isset($submeat['remote']) ? $submeat['remote']->revision : '';
 			printf("  %-24.24s | %7.7s | %7.7s\n", $name, $rev_installed, $rev_remote);
@@ -194,10 +194,10 @@ function command_show($goption, $coption, $cparams) {
 	global $repos;
 	global $modslib;
 
-	foreach($cparams as $cparam) {
+	foreach ($cparams as $cparam) {
 		$found=NULL;
 		$mod=new TikiMod($cparam);
-		foreach($repos as $reponame => $repo) {
+		foreach ($repos as $reponame => $repo) {
 			$content=$modslib->read_list($repo['url'], $reponame);
 			if (isset($content[$mod->type][$mod->name])) {
 				$found=$content[$mod->type][$mod->name];
@@ -218,7 +218,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->author) && count($mod->author)) {
 			echo "Author:\n";
-			foreach($mod->author as $author) {
+			foreach ($mod->author as $author) {
 				echo $author."\n";
 			}
 			echo "\n";
@@ -226,7 +226,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->description) && count($mod->description)) {
 			echo "Description:\n";
-			foreach($mod->description as $description) {
+			foreach ($mod->description as $description) {
 				echo $description."\n";
 			}
 			echo "\n";
@@ -237,7 +237,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->version) && count($mod->version)) {
 			echo "Version:\n";
-			foreach($mod->version as $version) {
+			foreach ($mod->version as $version) {
 				echo $version."\n";
 			}
 			echo "\n";
@@ -251,7 +251,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->configuration) && count($mod->configuration)) {
 			echo "Configuration:\n";
-			foreach($mod->configuration as $configuration) {
+			foreach ($mod->configuration as $configuration) {
 				echo $configuration."\n";
 			}
 			echo "\n";
@@ -259,7 +259,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->configuration_help) && count($mod->configuration_help)) {
 			echo "Configuration Help:\n";
-			foreach($mod->configuration_help as $configuration_help) {
+			foreach ($mod->configuration_help as $configuration_help) {
 				echo $configuration_help."\n";
 			}
 			echo "\n";
@@ -267,7 +267,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->files) && count($mod->files)) {
 			echo "Files:\n";
-			foreach($mod->files as $files) {
+			foreach ($mod->files as $files) {
 				echo $files."\n";
 			}
 			echo "\n";
@@ -275,7 +275,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->contributor) && count($mod->contributor)) {
 			echo "Contributor:\n";
-			foreach($mod->contributor as $contributor) {
+			foreach ($mod->contributor as $contributor) {
 				echo $contributor."\n";
 			}
 			echo "\n";
@@ -283,7 +283,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->devurl) && count($mod->devurl)) {
 			echo "devurl:\n";
-			foreach($mod->devurl as $devurl) {
+			foreach ($mod->devurl as $devurl) {
 				echo $devurl."\n";
 			}
 			echo "\n";
@@ -291,7 +291,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->docurl) && count($mod->docurl)) {
 			echo "docurl:\n";
-			foreach($mod->docurl as $docurl) {
+			foreach ($mod->docurl as $docurl) {
 				echo $docurl."\n";
 			}
 			echo "\n";
@@ -299,7 +299,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->help) && count($mod->help)) {
 			echo "Help:\n";
-			foreach($mod->help as $help) {
+			foreach ($mod->help as $help) {
 				echo $help."\n";
 			}
 			echo "\n";
@@ -307,7 +307,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->url) && count($mod->url)) {
 			echo "url:\n";
-			foreach($mod->url as $url) {
+			foreach ($mod->url as $url) {
 				echo $url."\n";
 			}
 			echo "\n";
@@ -315,7 +315,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->sql_upgrade) && count($mod->sql_upgrade)) {
 			echo "sql_Upgrade:\n";
-			foreach($mod->sql_upgrade as $sql_upgrade) {
+			foreach ($mod->sql_upgrade as $sql_upgrade) {
 				echo $sql_upgrade."\n";
 			}
 			echo "\n";
@@ -323,7 +323,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->sql_install) && count($mod->sql_install)) {
 			echo "sql_Install:\n";
-			foreach($mod->sql_install as $sql_install) {
+			foreach ($mod->sql_install as $sql_install) {
 				echo $sql_install."\n";
 			}
 			echo "\n";
@@ -331,7 +331,7 @@ function command_show($goption, $coption, $cparams) {
 		
 		if (is_array($mod->sql_remove) && count($mod->sql_remove)) {
 			echo "sql_Remove:\n";
-			foreach($mod->sql_remove as $sql_remove) {
+			foreach ($mod->sql_remove as $sql_remove) {
 				echo $sql_remove."\n";
 			}
 			echo "\n";
@@ -352,14 +352,14 @@ function usage($err) {
 	echo "usage:\n";
 	echo "php modsadm.php [options] commande\n\n";
 	echo "commands:\n";
-	foreach($commands as $command => $sglonk) {
+	foreach ($commands as $command => $sglonk) {
 		echo "  ".$command.(isset($sglonk['usage']) ? ' '.$sglonk['usage'] : '')."\n";
 	}
 	echo "\ncommands options:\n";
-	foreach($commands as $command => $sglonk) {
+	foreach ($commands as $command => $sglonk) {
 		if (isset($sglonk['options'])) {
 			echo "  ".$command.":\n";
-			foreach($sglonk['options'] as $k => $option) {
+			foreach ($sglonk['options'] as $k => $option) {
 				echo "    $k: ".$option['help']."\n";
 			}
 		}
@@ -376,7 +376,7 @@ function readargs($argv) {
 	$goption=array();
 	$coption=array();
 	$cparams=array();
-	foreach($argv as $argc => $arg) {
+	foreach ($argv as $argc => $arg) {
 		if ($argc == 0) continue;
 
 		if (substr($arg, 0, 1) == '-') {

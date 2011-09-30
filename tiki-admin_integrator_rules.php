@@ -87,7 +87,7 @@ if (isset($_REQUEST["preview"])) {
 			// Should we apply all configured rules or only current one?
 			if ($all == 'y') {
 				$rules = $integrator->list_rules($repID);
-				if (is_array($rules)) foreach($rules as $r) if (($r["ruleID"] !== $ruleID) && $r["enabled"]) $data = $integrator->apply_rule($rep, $r, $data);
+				if (is_array($rules)) foreach ($rules as $r) if (($r["ruleID"] !== $ruleID) && $r["enabled"]) $data = $integrator->apply_rule($rep, $r, $data);
 			}
 			// Apply rule (make this rule 'enabled' :)
 			$se = $rule["enabled"];
@@ -145,7 +145,7 @@ $smarty->assign('repID', $repID);
 // Fill list of possible source repositories
 $allreps = $integrator->list_repositories(false);
 $reps = array();
-foreach($allreps as $rep) $reps[$rep["repID"]] = $rep["name"];
+foreach ($allreps as $rep) $reps[$rep["repID"]] = $rep["name"];
 $smarty->assign_by_ref('reps', $reps);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

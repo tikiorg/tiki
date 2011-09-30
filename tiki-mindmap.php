@@ -34,7 +34,7 @@ if (isset($_REQUEST['export'])) { // {{{
 		global $wikilib, $tikilib, $user;
 		$child = $wikilib->wiki_get_neighbours($pageName);
 		$child = array_diff($child, $pages);
-		foreach($child as $page) {
+		foreach ($child as $page) {
 			if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view')) continue;
 			$node->appendChild($new = create_node($node->ownerDocument, $page));
 			if ($remainingLevels != 0) populate_node($new, $page, $remainingLevels - 1, array_merge($pages, array($page, $pageName)));

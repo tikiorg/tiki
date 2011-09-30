@@ -17,7 +17,7 @@ if (isset($_REQUEST['request_friendship'])) {
     
 	if ($userlib->user_exists($friend)) {
 		if (!$tikilib->verify_friendship($friend, $user)) {
-		    $userlib->request_friendship($user, $f	riend);
+		    $userlib->request_friendship($user, $friend);
 		    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
 		    $smarty->assign('msg', sprintf(tra("Friendship request sent to %s"), $friend));
 		    $foo = parse_url($_SERVER["REQUEST_URI"]);

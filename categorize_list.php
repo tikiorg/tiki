@@ -20,11 +20,11 @@ $smarty->assign('mandatory_category', '-1');
 if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)) {
 	$categlib = TikiLib::lib('categ');
 
-	if( ! isset( $cat_object_exists ) ) {
+	if ( ! isset( $cat_object_exists ) ) {
 		$cat_object_exists = (bool) $cat_objid;
 	}
 
-	if( $cat_object_exists ) {
+	if ( $cat_object_exists ) {
 		$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	} else {
 		$cats = $categlib->get_default_categories();

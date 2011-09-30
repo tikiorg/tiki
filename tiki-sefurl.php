@@ -104,11 +104,11 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 		$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
 		$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);	
 	}
-	foreach($sefurl_regex_out as $regex) {
+	foreach ($sefurl_regex_out as $regex) {
 		if (empty($type) || $type == $regex['type']) {
 			// if a question mark in pattern, deal with possible additional terms
 			// The '?&' isn't pretty but seems to work.
-			//if( strpos($regex['left'],'?') !== FALSE ) {
+			//if ( strpos($regex['left'],'?') !== FALSE ) {
 			//	$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
 			//}
 			$tpl_output = preg_replace('/' . $regex['left'] . '/', $regex['right'], $tpl_output);
@@ -118,7 +118,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 		$tpl_output.= TITLE_SEPARATOR . $title;
 	}
 	if (is_array($prefs['feature_sefurl_paths'])) {
-		foreach($prefs['feature_sefurl_paths'] as $path) {
+		foreach ($prefs['feature_sefurl_paths'] as $path) {
 			if (isset($_REQUEST[$path])) {
 				$tpl_output = urlencode($_REQUEST[$path]) . "/$tpl_output";
 			}

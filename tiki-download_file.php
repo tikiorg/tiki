@@ -140,7 +140,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	require_once('lib/stats/statslib.php');
 	$filegallib = TikiLib::lib('filegal');
-	if( ! $filegallib->add_file_hit($info['fileId']) )	{
+	if ( ! $filegallib->add_file_hit($info['fileId']) )	{
 		$access->display_error('', tra('You cannot download this file right now. Your score is low or file limit was reached.'), 401);
 	}
 	$statslib->stats_hit($info['filename'], 'file', $info['fileId']);

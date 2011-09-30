@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 $access->check_feature('layout_section');
 $access->check_permission('tiki_p_admin');
 
-foreach($sections_enabled as $section => $data) {
+foreach ($sections_enabled as $section => $data) {
 	if (isset($_REQUEST["${section}_layout"])) {
 		check_ticket('admin-layout');
 		if (isset($_REQUEST["${section}_left_column"]) && $_REQUEST["${section}_left_column"] == "on") {
@@ -43,13 +43,13 @@ $needed_elements = array(
 	'top_bar',
 	'bot_bar'
 );
-foreach($sections_enabled as $sec => $dat)
-	foreach($needed_elements as $elmt)
+foreach ($sections_enabled as $sec => $dat)
+	foreach ($needed_elements as $elmt)
 		$needed_prefs[$sec . '_' . $elmt] = 'y';
 $tikilib->get_preferences($needed_elements, true, true);
-foreach($sections_enabled as $sec => $dat) {
+foreach ($sections_enabled as $sec => $dat) {
 	$aux["name"] = $sec;
-	foreach($needed_elements as $elmt)
+	foreach ($needed_elements as $elmt)
 		$aux[$elmt] = $prefs[$sec . '_' . $elmt];
 	$sections_smt[] = $aux;
 }
