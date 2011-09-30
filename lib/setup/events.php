@@ -75,6 +75,9 @@ $events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
 $events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 $events->bind('tiki.trackeritem.save', 'tiki.save');
 
+$events->bind('tiki.user.update', 'tiki.user.save');
+$events->bind('tiki.user.create', 'tiki.user.save');
+
 function tiki_save_refresh_index($args) {
 	require_once('lib/search/refresh-functions.php');
 	$isBulk = isset($args['bulk_import']) && $args['bulk_import'];
