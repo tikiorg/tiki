@@ -42,7 +42,13 @@ require_once ('tiki-setup_base.php');
 setlocale(LC_ALL, ''); // Attempt changing the locale to the system default. 
 // Since the system default may not be UTF-8 but we may be dealing with multilingual content, attempt ensuring the collations are intelligent by forcing a general UTF-8 collation.
 // This will have no effect if the locale string is not valid or if the designated locale is not generated. 
-setlocale(LC_COLLATE, 'C.UTF-8');
+
+// en_US.utf8 was seen on a CentOS 5 system with over 500 locales but no C.UTF-8
+foreach (array('C.UTF-8', 'en_US.utf8') as $UnicodeLocale) {
+	if (setlocale(LC_COLLATE, $UnicodeLocale)) {
+		break;
+	}
+}
 
 if ($prefs['feature_tikitests'] == 'y') require_once ('tiki_tests/tikitestslib.php');
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
