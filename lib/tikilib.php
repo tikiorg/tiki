@@ -5080,18 +5080,10 @@ class TikiLib extends TikiDb_Bridge
 
 	static function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
 		if ( $translation_table == HTML_ENTITIES ) {
-			// Use html_entity_decode with UTF-8 only with PHP 5.0 or later, since
-			//   this function was available in PHP4 but _without_ multi-byte charater sets support
 			$string = html_entity_decode($string, $quote_style, 'utf-8');
-
 		} elseif ( $translation_table === HTML_SPECIALCHARS ) {
-			// Only available in PHP 5.1.0 or later
 			$string = htmlspecialchars_decode($string, $quote_style);
-
 		}
-
-		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
-		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
 
 		return $string;
 	}
