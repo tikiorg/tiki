@@ -42,6 +42,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Areas',
 			'default' => 'n',
+			'admin' => 'areas',
 			'dependencies' => array(
 				'categories_used_in_tpl',
 			),

@@ -405,6 +405,14 @@ $icons = array(
 		'description' => tr('Settings and features for categories'),
 		'help' => 'Category',
 	),
+	"areas" => array(
+		'icon' => 'img/clip.gif',
+		'position' => '0px 0px;',
+		'title' => tr('Areas'),
+		'disabled' => $prefs['feature_areas'] != 'y',
+		'description' => tr('Configure areas feature'),
+		'help' => 'areas',
+	),
 	"score" => array(
 		'icon' => 'pics/large/stock_about.png',
 		'position' => '-200px -415px;',

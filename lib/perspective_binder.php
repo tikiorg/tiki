@@ -13,14 +13,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-
-HandleObjectCategories($objectCategoryIds);
-
 function HandleObjectCategories($objectCategoryIds)
 {
     
 	global $categlib, $prefs, $perspectivelib;  
-//	$sagsSideCatId = $prefs['areas_root']; // ID of the parent category that indicates the current page is assigned to an "Area"
     
     if (!empty($objectCategoryIds))
     {
@@ -30,7 +26,7 @@ function HandleObjectCategories($objectCategoryIds)
             if ($categlib->get_category_parent($categId) == $prefs['areas_root']) // If parent category has ID equal to value of $prefs['areas_root']
             {
   
-             $foundPerspective = $perspectivelib->get_perspective_by_categid($categId); 
+             $foundPerspective = get_perspective_by_categid($categId); 
                 if ($foundPerspective != $_SESSION['current_perspective']) // If the found perspective is different than the current perspective, update it.
                 {
                      $perspectivelib->set_perspective($foundPerspective);
@@ -57,6 +53,50 @@ function HandleObjectCategories($objectCategoryIds)
     }*/
 }
 
+/*
+ for the difference between should and is, first retrieve all perspectives given for any reason
+ and then choose one in the function below, namely the first.
+*/
+function get_perspectives_by_categid($categId){
+	$result = TikiDb::get()->query( "SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ?", array($categId));
+	while($row = $result->fetchRow()) return unserialize($row['perspectives']);
+	return false;
+}
+/*
+ pick up the first or only perspective assigned to category with id categId
+ returns false if there is no entry for this category and returns 0 if it has no perspective
+*/
+function get_perspective_by_categid($categId){
+	$persp = get_perspectives_by_categid($categId);
+	if($persp===false) return false;
+	if(count($persp)==0) return 0;
+	return $persp[0];
+}
+
+function update_areas(){
+	global $prefs, $categlib;
+	$areas = array();
+	foreach($categlib->get_category_descendants($prefs['areas_root']) as $item)
+		$areas[$item] = array();	// it only should be just one perspective assigned
+	$result = TikiDb::get()->query( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
+
+        if($result !== false){
+		while( $row = $result->fetchRow() ) {
+			$categs = unserialize( $row['value'] );			
+			foreach($categs as $item) if(array_key_exists($item, $areas)) $areas[$item][] = $row['perspectiveId'];
+ 		}
+
+	foreach($areas as $key=>$item){
+		$result = TikiDb::get()->query("SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ".$key );
+		if(count($result->fetchRow())){
+			$result = TikiDb::get()->query("UPDATE tiki_areas SET perspectives = ? WHERE categId = ?",array(serialize($item), $key));
+	}else{ 
+			$result = TikiDb::get()->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(".$key.",'".serialize($item)."')", array());}
+		}
+	}
+	return true;
+}
+
 
 /*-----------------------------------------------
 +++ Description of Perspective Binder / Areas +++ 
@@ -75,28 +115,22 @@ Whilst the "Workspaces" function makes complete sets of content-objects only vis
 +++ Configurations +++
 ----------------------
 
-Please make sure, that on your webserver PDO is active - In this early stage this feature will only work with PDO and not with different database drivers.
+This feature is integrated in the tiki structure. The following steps, in order of the old configuration steps, describe what was done on the way and where to set the necessary parameters. The end user might look on steps 3 and 5. There is an admin panel for this feature.
 
-Step 1 of 6‪still
+Step 1 of 5still
 -----------
 
-This file tiki-perspective_binder.php must be saved in the tiki root folder.
-Include this file in the file tiki-setup. php * after the categories lib has been loaded * with the following line:
-
-//	include_once ('tiki-perspective_binder.php');
--> deleting the " // " AFTER all other necessary configurations will activate the tiki-perspective_binder.php
+This file lib/perspective_binder.php is included in the file tiki-setup. php after categories were setup, if feature_areas and feature_perspectives are set to 'y', since this depends on both features.
 
 In a Tiki 6.3 this line could be included for ex. under line 131 of tiki-setup.php
 In a Tiki 7.1 this line could be included for ex. under line 137 of tiki-setup.php .
 
-Step 2 of 6
+Step 2 of 5
 -----------
 
-Then you have to get the database connection datas from db/local.php and fill them in above in THIS file in line 49 and line 55 this way:
-line 49: 	$DAL = new PDO('mysql:host=LOCALHOSTADRESS;dbname=DATABASENAME', 'DATABASEUSERNAME', 'DATABASEPASSWORD');
-line 55:	FROM `DATABASENAME`.`tiki_perspective_preferences`
+The database query was tikified via the TikiDb class. The query takes place in get_perspectives_by_categid and was put into lib/perspectivelib.php along to the function set_perspective. set_perspective is used by tiki-switch_perspective.php, too.
 
-Step 3 of 6
+Step 3 of 5
 -----------
 
 In Tiki you need to setup a structure of categories:
@@ -104,22 +138,22 @@ A basic category must be a "top category" with no parent.
 You can name it for example "Areas"
 Then you create one or several child categories of this category, wich you can name "Area1", "Area2", "Area3", etc.
 
-Step 4 of 6
+The id of the parent category you can type in the text field areas root id in the category admin panel.
+
+Step 4 of 5
 -----------
 
 Please activate "categories used in templates" in your Tiki installation: 
-Admin->Categories check tick box "categories used in templates
+Admin->Categories check tick box "categories used in templates.
 
-Step 5 of 6
+To satisfy this step feature_areas is set to depend on categories_used_in_tpl.
+
+Step 5 of 5
 -----------
 
 Setup one perspective for each of the categories in the areas-structure.
 Assign one category Id of this structure to the category jail of the related perspective, in the way that each perspective Id=X has one category Id=Y in its jail to bind exact one category and one perspective together.
 
-Step 6 of 6
------------
-
-Go back to tiki-setup.php and uncomment line 138 by deleting the two slashes " // ".
 
 --------------------------
 +++ using the feature: +++
