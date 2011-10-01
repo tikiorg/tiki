@@ -377,7 +377,7 @@ function prefs_feature_list($partial = false) {
 			'warning' => tra('Requires MapServer'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
 		),
 		'feature_gmap' => array(
 			'name' => tra('Google Maps'),
@@ -393,6 +393,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Live+Support',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
 			'view' => 'tiki-live_support_admin.php',
 		),
 		'feature_tell_a_friend' => array(
