@@ -3672,3 +3672,10 @@ CREATE TABLE `tiki_connect` (
     PRIMARY KEY (`id`),
     KEY `server` (`server`)
 ) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_areas`;
+CREATE TABLE `tiki_areas` (
+	`categId` int(11) NOT NULL,
+	`perspectives` text,
+	KEY `categId` (`categId`)
+) ENGINE=MyISAM;
