@@ -174,6 +174,7 @@ class CategLib extends ObjectLib
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		
 		// Make sure the description fits the column width
+		// TODO: remove length constraint then remove this. See "Quiet truncation of data in database" thread on the development list
 		if (strlen($description) > 250) {
 			$description = substr($description,0,250);
 		}
