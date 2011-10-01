@@ -59,7 +59,9 @@ class Connect_Client extends Connect_Abstract
 			// restore the protected values
 			$site_prefs = array();
 			foreach( $this->protectedPrefs as $p) {
-				$site_prefs[$p] = $prefs[$p];
+				if (isset($prefs[$p])) {			// some protected prefs are legacy ones from previous versions
+					$site_prefs[$p] = $prefs[$p];
+				}
 			}
 			$info['site'] = $site_prefs;
 			$info['server'] = $_SERVER;
