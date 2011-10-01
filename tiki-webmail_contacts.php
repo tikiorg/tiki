@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/webmail/webmaillib.php');
 include_once ('lib/webmail/contactlib.php');
 
-$access->check_feature( 'feature_webmail' );
+$access->check_feature('feature_webmail');
 
 $smarty->assign('element', $_REQUEST["element"]);
 

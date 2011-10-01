@@ -56,9 +56,9 @@ class TikiDb_Pdo extends TikiDb
 
 		$this->convertQueryTablePrefixes( $query );
 
-		if( $offset != -1 && $numrows != -1 )
+		if ( $offset != -1 && $numrows != -1 )
 			$query .= " LIMIT $numrows OFFSET $offset";
-		elseif( $numrows != -1 )
+		elseif ( $numrows != -1 )
 			$query .= " LIMIT $numrows";
 
 		$starttime=$this->startTimer();
@@ -88,9 +88,9 @@ class TikiDb_Pdo extends TikiDb
 			return false;
 		} else {
 			$this->setErrorMessage( "" );
-			if(($values && !$pq->columnCount()) || (!$values && !$result->columnCount())) {
+			if (($values && !$pq->columnCount()) || (!$values && !$result->columnCount())) {
 				return array(); // Return empty result set for statements of manipulation
-			} elseif( !$values) {
+			} elseif ( !$values) {
 				return $result->fetchAll(PDO::FETCH_ASSOC);
 			} else {
 				return $pq->fetchAll(PDO::FETCH_ASSOC);

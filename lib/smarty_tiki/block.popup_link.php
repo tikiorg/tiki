@@ -35,7 +35,7 @@ function smarty_block_popup_link($params, $content, $smarty, $repeat)
 
 	\$('#$linkId').click( function() {
 		var block = \$('#$block');
-		if( block.css('display') == 'none' ) {
+		if ( block.css('display') == 'none' ) {
 			//var coord = \$(this).offset();
 			block.css( 'position', 'absolute' );
 			//block.css( 'left', coord.left);

@@ -44,7 +44,7 @@ class CopyrightsLib extends TikiLib
 
 		//$unique = $this->unique_copyright($page,$title);
 
-		//if($unique != 0) {
+		//if ($unique != 0) {
 		// security here?
 		//$this->edit_copyright($unique,$title,$year,$authors,$user);
 		//return;

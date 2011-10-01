@@ -47,7 +47,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 			$min = min( array_keys( $this->columns ) );
 		}
 
-		if( $min > 0 )
+		if ( $min > 0 )
 			$min = 0;
 
 		return $min;
@@ -86,18 +86,18 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 			$columns[] = $data['y' . $i];
 
 		$count = count( $columns );
-		if( !isset( $data['color'] ) )
+		if ( !isset( $data['color'] ) )
 		{
 			$data['color'] = array();
 			for( $i = 0; $count > $i; ++$i )
 				$data['color'][] = $this->_getColor();
 		}
 
-		if( !isset( $data['style'] ) )
+		if ( !isset( $data['style'] ) )
 			for( $i = 0; $count > $i; ++$i )
 				$data['style'][] = 'FillStroke-' . $data['color'][$i];
 
-		if( isset( $data['label'] ) )
+		if ( isset( $data['label'] ) )
 			foreach( $data['label'] as $key => $label )
 				$this->addLegend( $data['color'][$key], $label, 
 					(isset($data['link']) && isset($data['link'][$key])) ? $data['link'][$key] : 0 );
@@ -112,10 +112,10 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 				$x = $data['x'][$key];
 				$this->columnMap[$x] = $key;
 
-				if( !isset( $this->columns[$x] ) )
+				if ( !isset( $this->columns[$x] ) )
 					$this->columns[$x] = array();
 
-				if( !empty( $value ) )
+				if ( !empty( $value ) )
 					$this->columns[$x][$style] = $value;
 				else
 					$this->columns[$x][$style] = 0;
@@ -144,7 +144,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 			}
 			$positions = $this->_drawColumn( $ren, $values, $zero );
 
-			if( is_array( $positions ) )
+			if ( is_array( $positions ) )
 			{
 				$index = $this->columnMap[$label];
 				foreach( $positions as $style => $positionData )
@@ -210,7 +210,7 @@ class BarStackGraphic extends BarBasedGraphic // {{{1
 			$min = min( array_keys( $this->columns ) );
 		}
 
-		if( $min > 0 )
+		if ( $min > 0 )
 			$min = 0;
 
 		return $min;
@@ -241,9 +241,9 @@ class BarStackGraphic extends BarBasedGraphic // {{{1
 		$negative = 0;
 		foreach( $values as $style=>$value )
 		{
-			if( $value == 0 ) continue;
+			if ( $value == 0 ) continue;
 
-			if( $value > 0 )
+			if ( $value > 0 )
 			{
 				$bottom = $positive;
 				$positive += $value;
@@ -288,7 +288,7 @@ class MultibarGraphic extends BarBasedGraphic // {{{1
 		{
 			$base = $pad + $width * $i++;
 			
-			if( $value == 0 ) continue;
+			if ( $value == 0 ) continue;
 
 			$bottom = $this->dependant->getLocation( $value );
 			$this->_drawBox( $renderer, $base, $zero, $base + $width, $bottom, $style );

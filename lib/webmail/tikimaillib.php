@@ -193,7 +193,7 @@ function closetags ( $html ) {
     $closedtags = $result[1];
     $len_opened = count ( $openedtags );
     # all tags are closed
-    if( count ( $closedtags ) == $len_opened ) {
+    if ( count ( $closedtags ) == $len_opened ) {
         return $html;
     }
     $openedtags = array_reverse ( $openedtags );

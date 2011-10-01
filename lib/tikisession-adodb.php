@@ -16,5 +16,5 @@ unset($host_tiki);
 unset($user_tiki);
 unset($pass_tiki);
 unset($dbs_tiki);
-ini_set('session.save_handler','user');
+ini_set('session.save_handler', 'user');
 include_once('lib/adodb/session/adodb-session.php');

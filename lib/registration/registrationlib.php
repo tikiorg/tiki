@@ -67,7 +67,7 @@ class RegistrationLib extends TikiLib
 		// split function reference : http://www.php.net/manual/en/function.split.php
 		list ($Username, $Domain) = explode ("@", $Email);
         
-		if($prefs['validateEmail'] == 'n') {
+		if ($prefs['validateEmail'] == 'n') {
 			$Return[0]=true;
 			$Return[1]="The email appears to be correct."; 
 			Return $Return;
@@ -76,11 +76,11 @@ class RegistrationLib extends TikiLib
 		// That MX(mail exchanger) record exists in domain check .
 		// checkdnsrr function reference : http://www.php.net/manual/en/function.checkdnsrr.php
 		if ( checkdnsrr ( $Domain, "MX" ) )  {
-			if($Debug) echo "Confirmation : MX record about {$Domain} exists.<br>";
+			if ($Debug) echo "Confirmation : MX record about {$Domain} exists.<br>";
 			// If MX record exists, save MX record address.
 			// getmxrr function reference : http://www.php.net/manual/en/function.getmxrr.php
 			if ( getmxrr ($Domain, $MXHost))  {
-				if($Debug) {
+				if ($Debug) {
 					echo "Confirmation : Is confirming address by MX LOOKUP.<br>";
 					$j=0;
 					foreach($MXHost as $mxh) {

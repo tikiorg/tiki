@@ -17,7 +17,7 @@ class DCSLib extends TikiLib
 		foreach( $result as &$row ) {
 			$row['page_name'] = '';
 
-			if( $row['content_type'] == 'page' && substr( $row['data'], 0, 5 ) == 'page:' ) {
+			if ( $row['content_type'] == 'page' && substr( $row['data'], 0, 5 ) == 'page:' ) {
 				$row['page_name'] = substr( $row['data'], 5 );
 
 				$row['data'] = $this->get_content_from_page( $row['page_name'], $lang );
@@ -30,10 +30,10 @@ class DCSLib extends TikiLib
 		global $prefs;
 		$info = $this->get_page_info( $page );
 
-		if( $prefs['feature_multilingual'] == 'y' ) {
+		if ( $prefs['feature_multilingual'] == 'y' ) {
 			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
 
-			if( $lang && $info['lang'] && $lang != $info['lang'] ) {
+			if ( $lang && $info['lang'] && $lang != $info['lang'] ) {
 				$bestLangPageId = $multilinguallib->selectLangObj( 'wiki page', $info['page_id'], $lang );
 
 				if ($info['page_id'] != $bestLangPageId) {
@@ -42,14 +42,14 @@ class DCSLib extends TikiLib
 			}
 		}
 
-		if( $info ) {
+		if ( $info ) {
 			return TikiLib::htmldecode( $info['data'] );
 		}
 	}
 
 	private function first_data( $result, $lang = null ) {
 		$result = $this->convert_results( $result, $lang );
-		if( $first = reset( $result ) ) {
+		if ( $first = reset( $result ) ) {
 			return $first['data'];
 		}
 	}

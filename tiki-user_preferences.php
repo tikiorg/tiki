@@ -160,7 +160,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
        global $cachelib;
        $cachelib->invalidate('userlink.'.$user.'0');
      }
-   }
+	}
 	if ($prefs['feature_community_gender'] == 'y') {
 		if (isset($_REQUEST["gender"])) $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
 	}

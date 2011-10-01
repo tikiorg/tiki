@@ -56,8 +56,8 @@ class TemplatesLib extends TikiLib
 		$res = $result->fetchRow();
 
 
-		if( $res['template_type'] == 'page' ) {
-			if( substr( $res['content'], 0, 5 ) == 'page:' ) {
+		if ( $res['template_type'] == 'page' ) {
+			if ( substr( $res['content'], 0, 5 ) == 'page:' ) {
 				$res['page_name'] = substr( $res['content'], 5 );
 				$res['content'] = $this->get_template_from_page( $res['page_name'], $lang );
 			}
@@ -111,10 +111,10 @@ class TemplatesLib extends TikiLib
 		global $prefs;
 		$info = $this->get_page_info( $page );
 
-		if( $prefs['feature_multilingual'] == 'y' ) {
+		if ( $prefs['feature_multilingual'] == 'y' ) {
 			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
 
-			if( $lang && $info['lang'] && $lang != $info['lang'] ) {
+			if ( $lang && $info['lang'] && $lang != $info['lang'] ) {
 				$bestLangPageId = $multilinguallib->selectLangObj( 'wiki page', $info['page_id'], $lang );
 
 				if ($info['page_id'] != $bestLangPageId) {
@@ -123,7 +123,7 @@ class TemplatesLib extends TikiLib
 			}
 		}
 
-		if( $info ) {
+		if ( $info ) {
 			return TikiLib::htmldecode( $info['data'] );
 		}
 	}

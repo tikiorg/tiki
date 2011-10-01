@@ -89,7 +89,7 @@ class SearchLib extends TikiLib
 		} else {
 			$jail = $categlib->get_jail();
 		}
-		if( $jail ) {
+		if ( $jail ) {
 			$categlib->getSqlJoin( $jail, $h['objectType'], $h['objectKey'], $sqlCategJoin, $sqlCategWhere, $bindCateg );
 		}
 

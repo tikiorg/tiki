@@ -23,7 +23,7 @@ function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false ) 
 
 	if ( $repeat ) return;
 
-	if( ! isset( $params['_name'] ) ) {
+	if ( ! isset( $params['_name'] ) ) {
 		return '<div class="error">' . tra('Plugin name not specified.') . '</div>';
 	}
 

@@ -9,7 +9,7 @@ function prefs_server_list($partial = false) {
 
 	// Skipping the getTimeZoneList() from tikidate which just emulates the pear date format
 	// Generating it is extremely costly in terms of memory.
-	if( class_exists( 'DateTimeZone' ) ) {
+	if ( class_exists( 'DateTimeZone' ) ) {
 		$timezones = DateTimeZone::listIdentifiers();
 	} elseif ( class_exists('DateTime')) {
 		$timezones = array_keys( DateTime::getTimeZoneList() );

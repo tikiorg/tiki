@@ -34,12 +34,12 @@ function md5_check_dir($dir,&$result) { // save all files in $result
   $d=dir($dir);
   while (false !== ($e = $d->read())) {
     $entry=$dir.'/'.$e;
-    if(is_dir($entry)) {
-      if($e != '..' && $e != '.' && $e != 'CVS' && $entry!='./templates_c') { // do not descend and no CVS files
+    if (is_dir($entry)) {
+      if ($e != '..' && $e != '.' && $e != 'CVS' && $entry!='./templates_c') { // do not descend and no CVS files
         md5_check_dir($entry,$result);
       }
     } else {
-       if(substr($e,-4,4)==".php" && $entry != './tiki-create_md5.php' && $entry!='./db/local.php') {
+       if (substr($e,-4,4)==".php" && $entry != './tiki-create_md5.php' && $entry!='./db/local.php') {
          // echo "creating sum of $entry <br />\n";
          $result[$entry]=md5_file($entry);
        }
@@ -55,7 +55,7 @@ echo "creating md5 sums for dir $chkdir <br>";
 flush();
 md5_check_dir($chkdir,$tikimd5);
 
-if(isset($_REQUEST['secdb']) && $_REQUEST['secdb']='fs') {
+if (isset($_REQUEST['secdb']) && $_REQUEST['secdb']='fs') {
 $s=serialize($tikimd5);
 
 $fp=fopen('lib/admin/secdb.php.inc','wb');
@@ -68,7 +68,7 @@ fclose($fp);
    global $tikilib;
    echo "inserting into db table tiki_secdb.<br>";
    flush();
-   if(!isset($_REQUEST['tikiver'])) {
+   if (!isset($_REQUEST['tikiver'])) {
       echo "you have to set the tiki version. Example: tiki-create_md5.php?tikiver=1.9";
       die;
    }
@@ -78,7 +78,7 @@ fclose($fp);
    $tikilib->query($query,array($_REQUEST['tikiver']));
    $query='insert into `tiki_secdb`(`md5_value`,`filename`,`tiki_version`,`severity`) values (?,?,?,?)';
    foreach ($tikimd5 as $filename=>$filemd5) {
-      if($chkdir != '.') {
+      if ($chkdir != '.') {
         $filename=preg_replace("#^".preg_quote($chkdir)."#",".",$filename);
       }
       $tikilib->query($query,array($filemd5,$filename,$_REQUEST['tikiver'],0));

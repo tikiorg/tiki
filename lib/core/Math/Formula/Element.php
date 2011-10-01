@@ -24,7 +24,7 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 	}
 
 	function offsetGet( $offset ) {
-		if( isset( $this->children[$offset] ) ) {
+		if ( isset( $this->children[$offset] ) ) {
 			return $this->children[$offset];
 		}
 	}
@@ -37,7 +37,7 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 
 	function __get( $name ) {
 		foreach( $this->children as $child ) {
-			if( $child instanceof Math_Formula_Element && $child->type == $name ) {
+			if ( $child instanceof Math_Formula_Element && $child->type == $name ) {
 				return $child;
 			}
 		}
@@ -76,8 +76,8 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 		$extra = array();
 
 		foreach( $this->children as $child ) {
-			if( $child instanceof self ) {
-				if( ! in_array( $child->type, $allowedKeys ) ) {
+			if ( $child instanceof self ) {
+				if ( ! in_array( $child->type, $allowedKeys ) ) {
 					$extra[] = "({$child->type} ...)";
 				}
 			} else {
@@ -85,7 +85,7 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 			}
 		}
 
-		if( count( $extra ) ) {
+		if ( count( $extra ) ) {
 			return $extra;
 		}
 	}

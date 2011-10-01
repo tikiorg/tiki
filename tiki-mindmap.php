@@ -19,7 +19,8 @@ if (isset($_REQUEST['export'])) { // {{{
 	$dom = new DOMDocument;
 	$dom->appendChild($root = $dom->createElement('map'));
 	$root->setAttribute('version', '0.8.0');
-	function create_node($dom, $text, $link = true) {
+	function create_node($dom, $text, $link = true)
+	{
 		global $wikilib;
 		$node = $dom->createElement('node');
 		$node->setAttribute('TEXT', $text);
@@ -30,7 +31,8 @@ if (isset($_REQUEST['export'])) { // {{{
 		}
 		return $node;
 	}
-	function populate_node($node, $pageName, $remainingLevels = 3, $pages = array()) {
+	function populate_node($node, $pageName, $remainingLevels = 3, $pages = array())
+	{
 		global $wikilib, $tikilib, $user;
 		$child = $wikilib->wiki_get_neighbours($pageName);
 		$child = array_diff($child, $pages);

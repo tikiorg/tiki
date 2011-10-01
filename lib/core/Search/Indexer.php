@@ -152,7 +152,8 @@ class Search_Indexer
 		return $content;
 	}
 
-	private function getGlobalFields($objectType) {
+	private function getGlobalFields($objectType)
+	{
 		if (is_null($this->cacheGlobals)) {
 			$this->cacheGlobals = array();
 			foreach ($this->globalSources as $source) {

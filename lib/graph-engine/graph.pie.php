@@ -31,24 +31,24 @@ class PieChartGraphic extends Graphic // {{{1
 	{
 		$elements = count( $data['value'] );
 		
-		if( !isset( $data['color'] ) )
+		if ( !isset( $data['color'] ) )
 		{
 			$data['color'] = array();
 			for( $i = 0; $elements > $i; ++$i )
 				$data['color'][] = $this->_getColor();
 		}
 
-		if( !isset( $data['style'] ) )
+		if ( !isset( $data['style'] ) )
 			for( $i = 0; $elements > $i; ++$i )
 				$data['style'][] = 'FillStroke-' . $data['color'][$i];
 
-		if( isset( $data['label'] ) )
+		if ( isset( $data['label'] ) )
 			foreach( $data['label'] as $key => $label )
 				$this->addLegend( $data['color'][$key], $label );
 
 		$total = array_sum( $data['value'] );
 		foreach( $data['value'] as $key => $value )
-			if( is_numeric( $value ) )
+			if ( is_numeric( $value ) )
 				$this->pie_data[] = array( $data['style'][$key], $value / $total * 360 );
 
 		return true;

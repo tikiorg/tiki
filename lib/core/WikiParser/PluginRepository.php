@@ -17,7 +17,7 @@ class WikiParser_PluginRepository
 
 	function getInfo( $pluginName )
 	{
-		if( ! $this->pluginExists( $pluginName ) ) {
+		if ( ! $this->pluginExists( $pluginName ) ) {
 			return null;
 		}
 
@@ -29,12 +29,12 @@ class WikiParser_PluginRepository
 
 		include_once "{$location}/$functionName.php";
 
-		if( ! function_exists( $functionName ) ) {
+		if ( ! function_exists( $functionName ) ) {
 			$this->pluginsFound[ $pluginName ] = false;
 			return null;
 		}
 
-		if( ! function_exists( $infoName ) ) {
+		if ( ! function_exists( $infoName ) ) {
 			return null;
 		}
 
@@ -45,12 +45,12 @@ class WikiParser_PluginRepository
 	{
 		$pluginName = strtolower( $pluginName );
 
-		if( isset( $this->pluginsFound[ $pluginName ] ) ) {
+		if ( isset( $this->pluginsFound[ $pluginName ] ) ) {
 			return false !== $this->pluginsFound[ $pluginName ];
 		}
 
 		foreach( $this->folders as $folder ) {
-			if( $this->pluginExistsIn( $pluginName, $folder ) ) {
+			if ( $this->pluginExistsIn( $pluginName, $folder ) ) {
 				$this->pluginsFound[ $pluginName ] = $folder;
 				return true;
 			}

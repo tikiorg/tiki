@@ -58,7 +58,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 			$params['date'] = '';
 		}
 
-		return smarty_function_jscalendar( $params, $smarty);
+		return smarty_function_jscalendar($params, $smarty);
 	}
 }
 

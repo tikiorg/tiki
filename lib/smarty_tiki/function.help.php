@@ -15,7 +15,7 @@ function smarty_function_help($params, $smarty)
 {
     extract($params);
     // Param = zone
-    if(empty($url) && empty($desc) && empty($crumb)) {
+    if (empty($url) && empty($desc) && empty($crumb)) {
         $smarty->trigger_error("assign: missing parameter: help (url desc)|crumb");
         return;
     }

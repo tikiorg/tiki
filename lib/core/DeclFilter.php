@@ -31,7 +31,7 @@ class DeclFilter implements Zend_Filter_Interface
 					$real = 'add' . ucfirst( $method );
 
 					// Accept all methods begining with 'add' except those that are disallowed
-					if( method_exists( $filter, $real ) 
+					if ( method_exists( $filter, $real ) 
 						&& ! in_array( $method, $reject )
 						) {
 						$filter->$real( $argument );
@@ -57,7 +57,7 @@ class DeclFilter implements Zend_Filter_Interface
 		foreach( $keys as $key ) {
 			// Loop until a matching filter is found
 			foreach( $this->rules as $rule ) {
-				if( $rule->match( $key ) ) {
+				if ( $rule->match( $key ) ) {
 					$rule->apply( $data, $key );
 					break;
 				}

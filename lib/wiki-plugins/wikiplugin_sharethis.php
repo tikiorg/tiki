@@ -150,17 +150,17 @@ function wikiplugin_sharethis($data, $params) {
 	// load setting options from $params
 
 	// set post services that appear upon widget opening
-	if(!empty($postfirst))
+	if (!empty($postfirst))
 	{
 		$sharethis_options['postfirst'] = str_replace('|',$comma,$postfirst);
 	}
 	// limit send services that will appear
-	if(!empty($sendsvcs))
+	if (!empty($sendsvcs))
 	{
 		$sharethis_options['sendsvcs'] = str_replace('|',$comma,$sendsvcs);
 	}
 	// set icon style
-	if(!empty($rotateimage) || !empty($style)) {
+	if (!empty($rotateimage) || !empty($style)) {
 		if ($rotateimage == 'y' || $style == 'rotate') {
 			$sharethis_options['style'] = 'rotate';
 		} elseif ($style == 'horizontal') {
@@ -195,18 +195,18 @@ function wikiplugin_sharethis($data, $params) {
 	}
 	
 	// set button text
-	if(!empty($buttontext))
+	if (!empty($buttontext))
 	{
 		$sharethis_options['buttontext'] = $buttontext;
 	}
 	// set header title text. If header title is set by user, then set background color and text color
-	if(!empty($headertitle))
+	if (!empty($headertitle))
 	{
 		$sharethis_options['headertitle'] = str_replace(' ',$sp,$headertitle);
-			if(!empty($headerbg)) {
+			if (!empty($headerbg)) {
 			$sharethis_options['headerbg'] = $headerbg;
 			}
-			if(!empty($headertxtcolor)) {
+			if (!empty($headertxtcolor)) {
 			$sharethis_options['headertxtcolor'] = $headertxtcolor;
 			}
 		} else {
@@ -214,17 +214,17 @@ function wikiplugin_sharethis($data, $params) {
 			$sharethis_options['headertxtcolor'] = '';
 		}
 	// set link text color for services shown in popup
-	if(!empty($linkfg))
+	if (!empty($linkfg))
 	{
 		$sharethis_options['linkfg'] = $linkfg;
 	}
 	// set popup
-	if(!empty($popup))
+	if (!empty($popup))
 	{
 		$sharethis_options['popup'] = $popup;
 	}
 	// set embed
-	if(!empty($embed))
+	if (!empty($embed))
 	{
 		$sharethis_options['embed'] = $embed;
 	}
@@ -235,19 +235,19 @@ function wikiplugin_sharethis($data, $params) {
 	$sharethiscode .= '<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#';
 	$sharethiscode .= "type=".$sharethis_options['type'];
 	
-	if(!empty($sharethis_options['buttontext'])) $sharethiscode .= $sep."buttonText=".$sharethis_options['buttontext'];
-	if(!empty($sharethis_options['popup'])) $sharethiscode .= $sep."popup=".$sharethis_options['popup'];
-	if(!empty($sharethis_options['embed'])) $sharethiscode .= $sep."embeds=".$sharethis_options['embed'];
-	if(!empty($sharethis_options['style'])) $sharethiscode .= $sep."style=".$sharethis_options['style'];
-	if(!empty($sharethis_options['sendsvcs'])) $sharethiscode .= $sep."send_services=".$sharethis_options['sendsvcs'];
-	if(!empty($sharethis_options['postfirst'])) $sharethiscode .= $sep."post_services=".$sharethis_options['postfirst'];
-	if(!empty($sharethis_options['headertxtcolor'])) $sharethiscode .= $sep."headerfg=".$lb.$sharethis_options['headertxtcolor'];	
-	if(!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];	
-	if(!empty($sharethis_options['linkfg'])) $sharethiscode .= $sep."linkfg=".$lb.$sharethis_options['linkfg'];
-	if(!empty($sharethis_options['headertitle'])) $sharethiscode .= $sep."headerTitle=".$sharethis_options['headertitle'];
-	if(!empty($iconcode)) $sharethiscode .= ';button=false';
+	if (!empty($sharethis_options['buttontext'])) $sharethiscode .= $sep."buttonText=".$sharethis_options['buttontext'];
+	if (!empty($sharethis_options['popup'])) $sharethiscode .= $sep."popup=".$sharethis_options['popup'];
+	if (!empty($sharethis_options['embed'])) $sharethiscode .= $sep."embeds=".$sharethis_options['embed'];
+	if (!empty($sharethis_options['style'])) $sharethiscode .= $sep."style=".$sharethis_options['style'];
+	if (!empty($sharethis_options['sendsvcs'])) $sharethiscode .= $sep."send_services=".$sharethis_options['sendsvcs'];
+	if (!empty($sharethis_options['postfirst'])) $sharethiscode .= $sep."post_services=".$sharethis_options['postfirst'];
+	if (!empty($sharethis_options['headertxtcolor'])) $sharethiscode .= $sep."headerfg=".$lb.$sharethis_options['headertxtcolor'];	
+	if (!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];	
+	if (!empty($sharethis_options['linkfg'])) $sharethiscode .= $sep."linkfg=".$lb.$sharethis_options['linkfg'];
+	if (!empty($sharethis_options['headertitle'])) $sharethiscode .= $sep."headerTitle=".$sharethis_options['headertitle'];
+	if (!empty($iconcode)) $sharethiscode .= ';button=false';
 	$sharethiscode .= "\"></script>\n";
-	if(!empty($iconcode)) $sharethiscode .= $iconcode;	
+	if (!empty($iconcode)) $sharethiscode .= $iconcode;	
 	$sharethiscode .= "~hc~ ))ShareThis(( Bookmark Button END ~/hc~";
 
 $result = $sharethiscode;

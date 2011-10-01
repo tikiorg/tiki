@@ -1354,7 +1354,7 @@ function wikiplugin_trackerlist($data, $params) {
 						$exportUrl .= $filtervalue[$i];
 					}
 				}
-			} elseif(!empty($filterfield)) {
+			} elseif (!empty($filterfield)) {
 				$exportUrl .= "&amp;f_$filterfield=";
 				if (empty($filtervalue))
 					$exportUrl .= $exactvalue;

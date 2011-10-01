@@ -7,7 +7,8 @@
 
 class Search_ContentFilter_VersionNumber implements Zend_Filter_Interface
 {
-	public function filter($value) {
+	public function filter($value)
+	{
 		return preg_replace_callback('/[0-9]+(\.[0-9]+)+/', array($this, 'augmentVersionTokens'), $value);
 	}
 

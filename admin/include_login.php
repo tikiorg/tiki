@@ -17,7 +17,7 @@ if (isset($_REQUEST['loginprefs'])) {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 		$in = array();
 		$out = array();
-		foreach($listgroups['data'] as $gr) {
+		foreach ($listgroups['data'] as $gr) {
 			if ($gr['groupName'] == 'Anonymous') continue;
 			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
 				$out[] = $gr['groupName'];

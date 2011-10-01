@@ -341,7 +341,7 @@ class RSSLib extends TikiDb_Bridge
 	/* replace rss feed in db */
 	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate, $noUpdate = false)
 	{
-		//if($this->rss_module_name_exists($name)) return false; // TODO: Check the name
+		//if ($this->rss_module_name_exists($name)) return false; // TODO: Check the name
 		$refresh = 60 * $refresh;
 
 		$data = array(
@@ -434,7 +434,7 @@ class RSSLib extends TikiDb_Bridge
 			'rssId' => $this->modules->in($feeds),
 		);
 
-		if( ! $force ) {
+		if ( ! $force ) {
 			$conditions['date'] = $this->modules->expr('`lastUpdated` < ? - `refresh`', array($tikilib->now));
 		}
 
@@ -497,7 +497,7 @@ class RSSLib extends TikiDb_Bridge
 			) );
 
 			$data['guid'] = $guid;
-			if( method_exists( $entry, 'getDateCreated' ) && $createdDate = $entry->getDateCreated() ) {
+			if ( method_exists( $entry, 'getDateCreated' ) && $createdDate = $entry->getDateCreated() ) {
 				$data['publication_date'] = $createdDate->get( Zend_Date::TIMESTAMP );
 			} else {
 				global $tikilib;
@@ -505,7 +505,7 @@ class RSSLib extends TikiDb_Bridge
 			}
 
 			$count = $this->items->fetchCount(array('rssId' => $rssId, 'guid' => $guid));
-			if( 0 == $count ) {
+			if ( 0 == $count ) {
 				$this->insert_item( $rssId, $data, $actions );
 			} else {
 				$this->update_item( $rssId, $data['guid'], $data );
@@ -532,7 +532,7 @@ class RSSLib extends TikiDb_Bridge
 				$method = 'process_action_' . $action['type'];
 				unset( $action['type'] );
 
-				if( $action['active'] ) {
+				if ( $action['active'] ) {
 					$this->$method( $action, $data );
 				}
 			}
@@ -559,7 +559,7 @@ class RSSLib extends TikiDb_Bridge
 		$artlib = TikiLib::lib('art');
 		$publication = $data['publication_date'];
 
-		if( $configuration['future_publish'] > 0 ) {
+		if ( $configuration['future_publish'] > 0 ) {
 			$publication = $tikilib->now + $configuration['future_publish']*60;
 		}
 
@@ -570,10 +570,10 @@ class RSSLib extends TikiDb_Bridge
 		}
 		$data['content'] = trim($data['content']) == '' ? $data['content'] : '~np~' . $data['content'] . '~/np~';
 		
-		if($configuration['submission'] == true) {
+		if ($configuration['submission'] == true) {
 			$subid = $artlib->replace_submission( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], $data['content'], $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
-			if( count( $configuration['categories'] ) ) {
+			if ( count( $configuration['categories'] ) ) {
 				$categlib = TikiLib::lib('categ');
 				$objectId = $categlib->add_categorized_object( 'submission', $subid, $data['title'], $data['title'], 'tiki-edit_submission.php?subId=' . $subid );
 
@@ -586,7 +586,7 @@ class RSSLib extends TikiDb_Bridge
 
 		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], $data['content'], $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
-			if( count( $configuration['categories'] ) ) {
+			if ( count( $configuration['categories'] ) ) {
 				$categlib = TikiLib::lib('categ');
 				$objectId = $categlib->add_categorized_object( 'article', $id, $data['title'], $data['title'], 'tiki-read_article.php?articleId=' . $id );
 
@@ -603,7 +603,7 @@ class RSSLib extends TikiDb_Bridge
 		
 		$module = $this->get_rss_module( $rssId );
 
-		if( $module['actions'] ) {
+		if ( $module['actions'] ) {
 			$actions = json_decode( $module['actions'], true );
 		} else {
 			$actions = array();
@@ -611,7 +611,7 @@ class RSSLib extends TikiDb_Bridge
 
 		$out = array();
 		foreach( $actions as $action ) {
-			if( $action['type'] != 'article' ) {
+			if ( $action['type'] != 'article' ) {
 				$out[] = $action;
 			}
 		}
@@ -628,7 +628,7 @@ class RSSLib extends TikiDb_Bridge
 	function get_article_generator( $rssId ) {
 		$module = $this->get_rss_module( $rssId );
 
-		if( $module['actions'] ) {
+		if ( $module['actions'] ) {
 			$actions = json_decode( $module['actions'], true );
 		} else {
 			$actions = array();
@@ -645,7 +645,7 @@ class RSSLib extends TikiDb_Bridge
 		);
 
 		foreach( $actions as $action ) {
-			if( $action['type'] == 'article' ) {
+			if ( $action['type'] == 'article' ) {
 				unset( $action['type'] );
 				return array_merge( $default, $action );
 			}

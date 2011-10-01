@@ -25,7 +25,7 @@ class Transition
 	}
 
 	function addGuard( $type, $boundary, $set ) {
-		if( method_exists( $this, '_' . $type ) ) {
+		if ( method_exists( $this, '_' . $type ) ) {
 			$this->guards[] = array( $type, $boundary, $set );
 		} else {
 			$this->guards[] = array( 'unknown', 1, array( $type ) );
@@ -59,7 +59,7 @@ class Transition
 	}
 
 	private function _exactly( $amount, $list ) {
-		if( count($list) < $amount ) {
+		if ( count($list) < $amount ) {
 			$this->addBlocker( 'invalid', $amount, $list );
 			return;
 		}
@@ -67,9 +67,9 @@ class Transition
 		$intersect = array_intersect( $this->states, $list );
 		$count = count( $intersect );
 
-		if( $count > $amount ) {
+		if ( $count > $amount ) {
 			$this->addBlocker( 'extra', $count - $amount, $intersect );
-		} elseif( $count < $amount ) {
+		} elseif ( $count < $amount ) {
 			$set = array_diff( $list, $intersect );
 			$this->addBlocker( 'missing', $amount - $count, $set );
 		}
@@ -79,13 +79,13 @@ class Transition
 		$intersect = array_intersect( $this->states, $list );
 		$count = count( $intersect );
 
-		if( $count > $amount ) {
+		if ( $count > $amount ) {
 			$this->addBlocker( 'extra', $count - $amount, $intersect );
 		}
 	}
 
 	private function _atLeast( $amount, $list ) {
-		if( count($list) < $amount ) {
+		if ( count($list) < $amount ) {
 			$this->addBlocker( 'invalid', $amount, $list );
 			return;
 		}
@@ -93,7 +93,7 @@ class Transition
 		$intersect = array_intersect( $this->states, $list );
 		$count = count( $intersect );
 
-		if( $count < $amount ) {
+		if ( $count < $amount ) {
 			$set = array_diff( $list, $intersect );
 			$this->addBlocker( 'missing', $amount - $count, $set );
 		}

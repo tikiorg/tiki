@@ -52,7 +52,7 @@ class TikiMail
 		$this->connection = 0;
 		$this->state = 'new';
 		
-		if($this->debug) {
+		if ($this->debug) {
 			echo "Created new TikiMail object in which:<br>";
 			echo " Type = $type<br> User = $user<br> Mailbox = $mailbox<br> Options are: $options<br>";
 		}
@@ -64,7 +64,7 @@ class TikiMail
 	function connect() {
 		$this->connection = imap_open("\{$this->server:$this->port/$this->type/$this->options}$this->mailbox", "$this->user", "$this->pass");
                 if (!($this->connection)) {
-			if($this->debug) {
+			if ($this->debug) {
 				echo "Something bad happened while connecting!<br>";
 				echo implode("<br />\n", imap_errors());
 			}
@@ -79,8 +79,8 @@ class TikiMail
 	* We took coofe with the neighboor and talked about things, now it's time to leave
 	*/
 	function disconnect() {
-		if(($this->connection == 0) || $this->state = 'new') {
-			if($this->debug) {
+		if (($this->connection == 0) || $this->state = 'new') {
+			if ($this->debug) {
 				echo "We should first connect to server before disconnecting I think...<br>";
 			}
 			return false;
@@ -97,11 +97,11 @@ class TikiMail
 	*  IMAP is an example of that.
 	*/
 	function mailbox_create($mailbox) {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
-		if(!imap_createmailbox($this->connection, "\{$this->server:$this->port}$mailbox")) {
-			if($this->debug) {
+		if (!imap_createmailbox($this->connection, "\{$this->server:$this->port}$mailbox")) {
+			if ($this->debug) {
 				echo "We had problems creating the mailbox: $ourbox$mailbox<br>";
 				echo implode("<br />\n", imap_errors());
 			}
@@ -115,14 +115,14 @@ class TikiMail
 	*  Check a mailbox for new messages
 	*/
 	function mailbox_check($mailbox = '') {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
-		if($mailbox == '')
+		if ($mailbox == '')
 			$mailbox = $this->mailbox;
 			
 		$status = imap_status($this->connection, "\{$this->server:$this->port}$mailbox", SA_UNSEEN);
-		if(!$status) {
+		if (!$status) {
 			echo "I smell problems when looking for unseen messages<br>";
 			echo implode("<br />\n", imap_errors());
 			return -1;
@@ -135,11 +135,11 @@ class TikiMail
 	*  Delete a mailbox from the server.
 	*/
 	function mailbox_delete($mailbox) {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
-		if(!imap_deletemailbox($this->connection, "\{$this->server:$this->port}$mailbox")) {
-			if($this->debug) {
+		if (!imap_deletemailbox($this->connection, "\{$this->server:$this->port}$mailbox")) {
+			if ($this->debug) {
 				echo "We had problems deleting the mailbox: $mailbox<br>";
 				echo implode("<br />\n", imap_errors());
 			}
@@ -153,7 +153,7 @@ class TikiMail
 	*   expunge deleted messages from mailbox.
 	*/
 	function mailbox_expunge() {
-		if($this->state == 'new' || $this->connection == 0) {
+		if ($this->state == 'new' || $this->connection == 0) {
 			return false;
 		}
 		imap_expunge($this->connection);
@@ -167,7 +167,7 @@ class TikiMail
 	*  seen at: http://es2.php.net/manual/en/function.imap-headerinfo.php
 	*/
 	function mailbox_get_info() {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
 		$total = $this->mailbox_get_total();
@@ -189,7 +189,7 @@ class TikiMail
 	*/
 	
 	function mailbox_get_total() {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
 		$count = imap_num_msg($this->connection);
@@ -203,11 +203,11 @@ class TikiMail
 	*  Renames a mailbox
 	*/
 	function mailbox_rename($oldname, $newname) {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
-		if(!imap_renamemailbox($this->connection, "\{$this->server:$this->port}$oldname", "\{$this->server:$this->port}$newname")) {
-			if($this->debug) {
+		if (!imap_renamemailbox($this->connection, "\{$this->server:$this->port}$oldname", "\{$this->server:$this->port}$newname")) {
+			if ($this->debug) {
 				echo "We had problems renaming the mailbox: $oldname to $newname<br>";
 				echo implode("<br />\n", imap_errors());
 			}
@@ -221,7 +221,7 @@ class TikiMail
 	*  Check mailboxes for new messages
 	*/
 	function mailboxes_check() {
-		if(!$this->mailboxes_list()) {
+		if (!$this->mailboxes_list()) {
 			return false;
 		}
 		$boxes = $this->mailboxes_list();
@@ -243,7 +243,7 @@ class TikiMail
 	*   get a list of the mailboxes avaible on the server
 	*/
 	function mailboxes_list() {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
 		$boxes = array();
@@ -254,7 +254,7 @@ class TikiMail
 				$boxes[] = substr(strstr(imap_utf7_decode($val), '}'), 1);
 			}
 		} else {
-			if($this->debug) {
+			if ($this->debug) {
 				echo "Had problems collecting mailboxes list..";
 				echo implode("<br />\n", imap_errors());
 			}
@@ -269,7 +269,7 @@ class TikiMail
 	*  Look at mailbox_get_info() about data returned.
 	*/
 	function message_get_headers($msgno) {
-		if($this->connection) {
+		if ($this->connection) {
 			return false;
 		}
 		$headers = imap_headerinfo($this->connection, $msgno);
@@ -291,7 +291,7 @@ class TikiMail
 	*  Delete a message
 	*/
 	function message_delete() {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
 		imap_delete($this->connection, $msgno);
@@ -304,7 +304,7 @@ class TikiMail
 	*  UnDelete a message
 	*/
 	function message_undelete($msgno) {
-		if($this->connection == 0) {
+		if ($this->connection == 0) {
 			return false;
 		}
 		imap_undelete($this->connection, $msgno);

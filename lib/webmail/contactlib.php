@@ -75,11 +75,11 @@ class ContactLib extends TikiLib
 		$contact = trim($contact);
 		$query = "select count(*) from `tiki_webmail_contacts` where `email`=? ".(($user!='')?(' and `user` =? '):(''));
 		$params[] = $contact;
-		if($user!=''){
+		if ($user!=''){
 			$params[] = $user; 	
 		}
 		
-		if($this->getOne($query, $params) == 0){
+		if ($this->getOne($query, $params) == 0){
 			return false;
 		}
 		return true;
@@ -105,7 +105,7 @@ class ContactLib extends TikiLib
 	
 	function add_contacts($contacts, $user){
 		
-		if(is_array($contacts)){
+		if (is_array($contacts)){
 			foreach ($contacts as $contact) {
 				$query = 'insert into `tiki_webmail_contacts` set `firstName`=?, `lastName`=?, `email`=?, `nickname`=?, `user`=?';
 				$res = $this->query($query, array($contact['firstName'], $contact['lastName'], $contact['email'], $contact['nickname'], $user));

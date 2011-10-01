@@ -377,7 +377,7 @@ function wikiplugin_tracker($data, $params)
 		$trackerId = $item['trackerId'];
 	} elseif (!empty($view) && $view == 'group') {
 		$gtid = $userlib->get_grouptrackerid($group);
-		if(isset($gtid['groupTrackerId'])) {
+		if (isset($gtid['groupTrackerId'])) {
 			$trackerId = $gtid['groupTrackerId'];
 			$itemId = $trklib->get_item_id($trackerId, $gtid['groupFieldId'], $group);
 			$grouptracker = true;
@@ -676,7 +676,7 @@ function wikiplugin_tracker($data, $params)
 						unset($outputtowiki);
 					}
 				}
-				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki']) && !isset($_REQUEST['tr_preview'])) {
+				if ( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
 					if (isset($_REQUEST['status'])) {
 						$status = $_REQUEST['status'];
@@ -922,13 +922,13 @@ function wikiplugin_tracker($data, $params)
 
 			// Display warnings when needed
 			
-			if(count($field_errors['err_mandatory']) > 0) {
+			if (count($field_errors['err_mandatory']) > 0) {
 				$smarty->assign_by_ref('err_mandatory', $field_errors['err_mandatory']);
 			}
-			if(count($field_errors['err_value']) > 0) {
+			if (count($field_errors['err_value']) > 0) {
 				$smarty->assign_by_ref('err_value', $field_errors['err_value']);
 			}
-			if(count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0) {
+			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0) {
 				$back .= $smarty->fetch('tracker_error.tpl');
 				$_REQUEST['error'] = 'y';
 			}

@@ -15,11 +15,11 @@ die( 'REMOVE THIS LINE TO USE THE SCRIPT.' );
 require_once 'tiki-setup.php';
 require 'db/local.php';
 
-if( $client_charset !== 'utf8' ) {
+if ( $client_charset !== 'utf8' ) {
 	die('Please. Client charset to utf8.');
 }
 
-if( '' === trim( `which enca` ) ) {
+if ( '' === trim( `which enca` ) ) {
 	die('enca must be installed.');
 }
 
@@ -36,7 +36,7 @@ foreach( $text_fields as $field ) {
 	$values = $db->fetchAll( "select `$column_name` value from `$table_name`" );
 
 	foreach( $values as $value ) {
-		if( ctype_alpha( $value['value'] ) || empty($value['value']) ) {
+		if ( ctype_alpha( $value['value'] ) || empty($value['value']) ) {
 			continue;
 		}
 
@@ -44,7 +44,7 @@ foreach( $text_fields as $field ) {
 
 		$output = trim( `enca -L none /tmp/data` );
 
-		if( 0 === strpos( $output, 'Universal transformation format 8 bits; UTF-8' ) ) {
+		if ( 0 === strpos( $output, 'Universal transformation format 8 bits; UTF-8' ) ) {
 			$db->query( "UPDATE `$table_name` SET `$column_name`=CONVERT(CONVERT(CONVERT(CONVERT(`$column_name` USING binary) USING utf8) USING latin1) USING binary) WHERE `$column_name` = ?", array( $value['value'] ) );
 		}
 	}

@@ -160,7 +160,7 @@ if ($cant > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', -1);
 }
 
-$smarty->assign('initial', range('a','z'));
+$smarty->assign('initial', range('a', 'z'));
 if ($offset > 0) {
 	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
@@ -171,6 +171,5 @@ include_once ('tiki-section_options.php');
 
 ask_ticket('contacts');
 $smarty->assign('myurl', 'tiki-contacts.php');
-
-$smarty->assign('mid','tiki-contacts.tpl');
+$smarty->assign('mid', 'tiki-contacts.tpl');
 $smarty->display('tiki.tpl');

@@ -6,7 +6,7 @@
 // $Id$
 include_once('tiki-setup.php');
 global $discountlib; include_once('lib/payment/discountlib.php');
-$access->check_permission( array('tiki_p_admin') );
+$access->check_permission(array('tiki_p_admin'));
 
 $auto_query_args = array();
 $errors = array();

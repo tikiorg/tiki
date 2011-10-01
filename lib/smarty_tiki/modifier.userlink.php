@@ -36,13 +36,13 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 	$show_mouseover = $popup != 'n' && $prefs['feature_community_mouseover'] == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
 	$show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
 
-	if( $show_mouseover || $show_friends ) {
+	if ( $show_mouseover || $show_friends ) {
 		$cacheItem = 'userlink.'.$user.'.'.$other_user.$fullname.$max_length;
 	} else {
 		$cacheItem = 'userlink.'.$other_user.$fullname.$max_length;
 	}
 
-	if( $cached = $cachelib->getCached( $cacheItem ) ) {
+	if ( $cached = $cachelib->getCached( $cacheItem ) ) {
 		return $cached;
 	}
 
@@ -126,7 +126,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 					$content .= $distance.' '.tra('km') . '<br />';
 				}
 			}
-			if($prefs['feature_community_mouseover_email'] == 'y') {
+			if ($prefs['feature_community_mouseover_email'] == 'y') {
 				$email_isPublic = $tikilib->get_user_preference($other_user, 'email is public');
 				if ($email_isPublic != 'n') {
 					include_once ('lib/userprefs/scrambleEmail.php');
@@ -161,7 +161,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 		}
 
 
-		if(empty($prefs['urlOnUsername'])) {
+		if (empty($prefs['urlOnUsername'])) {
 			$url = 'tiki-user_information.php?userId='.urlencode($info['userId']);
 			if ($prefs['feature_sefurl'] == 'y') {
 				include_once('tiki-sefurl.php');

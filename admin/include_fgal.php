@@ -109,7 +109,7 @@ if (isset($_REQUEST["filegalhandlers"])) {
 	check_ticket('admin-inc-fgal');
 	if (!empty($_REQUEST['mimes'])) {
 		$mimes = $_REQUEST['mimes'];
-		foreach($mimes as $mime => $cmd) {
+		foreach ($mimes as $mime => $cmd) {
 			$mime = trim($mime);
 			if (empty($cmd))
 				$filegallib->delete_file_handler($mime);

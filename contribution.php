@@ -12,7 +12,7 @@
 // param: $contributionItemId: id of the comment if in coment/forum
 
 require_once('tiki-setup.php');
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 global $prefs;
 
 if ($prefs['feature_contribution'] == 'y') {

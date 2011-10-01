@@ -504,7 +504,7 @@ class CartLib
 	function get_quantity( $code ) {
 		$this->init_cart();
 
-		if( isset( $_SESSION['cart'][ $code ] ) ) {
+		if ( isset( $_SESSION['cart'][ $code ] ) ) {
 			return $_SESSION['cart'][ $code ]['quantity'];
 		} else {
 			return 0;
@@ -514,7 +514,7 @@ class CartLib
 	function get_hash( $code ) {
 		$this->init_cart();
 
-		if( isset( $_SESSION['cart'][ $code ] ) ) {
+		if ( isset( $_SESSION['cart'][ $code ] ) ) {
 			return $_SESSION['cart'][ $code ]['hash'];
 		} else {
 			return '';
@@ -524,7 +524,7 @@ class CartLib
 	function generate_item_description( $item, $parentCode = 0 ) {
 		$wiki = '';
 		
-		if( $item['href'] ) {
+		if ( $item['href'] ) {
 			$label = "[{$item['href']}|{$item['description']}]";
 		} else {
 			$label = $item['description'];
@@ -627,7 +627,7 @@ class CartLib
 		}
 		$this->init_cart();
 
-		if( isset( $_SESSION['cart'][ $code ] ) && $quantity != 0  ) {
+		if ( isset( $_SESSION['cart'][ $code ] ) && $quantity != 0  ) {
 			$_SESSION['cart'][ $code ]['quantity'] = abs($quantity);
 		} else {
 			unset( $_SESSION['cart'][ $code ] );
@@ -645,7 +645,7 @@ class CartLib
 				
 		$total = $this->get_total();
 
-		if( $total > 0 || $this->total_no_discount ) {
+		if ( $total > 0 || $this->total_no_discount ) {
 			// if anonymous shopping to set pref as to which shopperinfo to show in description
 			if (empty($user)) {
 				$shopperinfo_descvar = 'email'; // TODO: make this a pref
@@ -877,7 +877,7 @@ class CartLib
 		$behaviors = array();
 
 		foreach( $this->get_content() as $item ) {
-			if( isset( $item['behaviors'] ) ) {
+			if ( isset( $item['behaviors'] ) ) {
 				foreach( $item['behaviors'] as $behavior ) {
 					for( $i = 0; $item['quantity'] > $i; ++$i ) {
 						$behaviors[] = $behavior;
@@ -890,25 +890,25 @@ class CartLib
 	}
 
 	private function init_cart() {
-		if( ! isset( $_SESSION['cart'] ) ) {
+		if ( ! isset( $_SESSION['cart'] ) ) {
 			$_SESSION['cart'] = array(); 
 		}
 	}
 
 	private function init_product( $code, $info, $parentCode = 0, $quantity = 0, $childInputedPrice = 0 ) {
 	
-		if( ! isset( $_SESSION['cart'][ $code ] ) ||  ! isset( $_SESSION['cart'][ $parentCode ][ 'bundledproducts' ][ $code ] ) ) {
+		if ( ! isset( $_SESSION['cart'][ $code ] ) ||  ! isset( $_SESSION['cart'][ $parentCode ][ 'bundledproducts' ][ $code ] ) ) {
 			$info['hash'] = md5($code.time());
 			$info['code'] = $code;
 			$info['quantity'] = $quantity;
 			$info['price'] = number_format( abs($info['price']), 2, '.', '' );
 			$info['inputedprice'] = number_format( abs($childInputedPrice), 2, '.', '' );
 			
-			if( ! isset( $info['href'] ) ) {
+			if ( ! isset( $info['href'] ) ) {
 				$info['href'] = null;
 			}
 
-			if( !$parentCode ) {
+			if ( !$parentCode ) {
 				$_SESSION['cart'][ $code ] = $info;
 			} else {
 				 $_SESSION['cart'][ $parentCode ][ 'bundledproducts' ][ $code ] = $info;

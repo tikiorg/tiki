@@ -41,7 +41,7 @@ class WebMailLib extends TikiLib
 		// flag can be: isRead,isFlagged,isReplied, value: y/n
 
 		if ($flag == 'isFlagged') {
-			if($value == 'y'){
+			if ($value == 'y'){
 				$fMsg = "$user,". mktime().", ";
 			} else {
 				$fMsg = '';

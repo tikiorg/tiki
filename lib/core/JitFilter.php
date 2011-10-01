@@ -32,23 +32,23 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	function offsetGet( $key )
 	{
 		// Composed objects go through
-		if( $this->stored[$key] instanceof self )
+		if ( $this->stored[$key] instanceof self )
 			return $this->stored[$key];
 
 		$filter = $this->getFilter( $key );
 
-		if( is_array( $this->stored[$key] ) ) {
+		if ( is_array( $this->stored[$key] ) ) {
 			$this->stored[$key] = new self( $this->stored[$key] );
 
-			if( $filter ) {
+			if ( $filter ) {
 				$this->stored[$key]->setDefaultFilter( $filter );
 			}
 
 			return $this->stored[$key];
 		}
 
-		if( $filter ) {
-			if( isset( $this->lastUsed[$key] ) && $this->lastUsed[$key][0] == $filter )
+		if ( $filter ) {
+			if ( isset( $this->lastUsed[$key] ) && $this->lastUsed[$key][0] == $filter )
 				return $this->lastUsed[$key][1];
 
 
@@ -64,7 +64,7 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	{
 		unset($this->lastUsed[$key]);
 
-		if( $value instanceof self )
+		if ( $value instanceof self )
 			return $this->stored[$key] = $value->stored;
 		else
 			return $this->stored[$key] = $value;
@@ -72,22 +72,22 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function asArray( $key = false, $separator = false )
 	{
-		if( $key === false ) {
+		if ( $key === false ) {
 			$ret = array();
 			foreach( array_keys( $this->stored ) as $k ) {
 				$ret[$k] = $this->offsetGet($k);
-				if( $ret[$k] instanceof self )
+				if ( $ret[$k] instanceof self )
 					$ret[$k] = $ret[$k]->asArray();
 			}
 
 			return $ret;
 
-		} elseif( isset( $this->stored[$key] ) ) {
+		} elseif ( isset( $this->stored[$key] ) ) {
 			$value = $this->stored[$key];
 
-			if( $value instanceof self || is_array( $value ) )
+			if ( $value instanceof self || is_array( $value ) )
 				return $this->offsetGet( $key )->asArray();
-			elseif( $separator === false )
+			elseif ( $separator === false )
 				return array( $this->offsetGet( $key ) );
 			else {
 				$jit = new self( explode( $separator, $value ) );
@@ -107,9 +107,9 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		$jit->filters = $this->filters;
 		
 		foreach( $keys as $key ) {
-			if( isset($this->stored[$key]) )
+			if ( isset($this->stored[$key]) )
 				$jit->stored[$key] = $this->stored[$key];
-			if( isset($this->lastUsed[$key]) )
+			if ( isset($this->lastUsed[$key]) )
 				$jit->lastUsed[$key] = $this->lastUsed[$key];
 		}
 
@@ -128,9 +128,9 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	private function getFilter( $key )
 	{
-		if( array_key_exists( $key, $this->filters ) )
+		if ( array_key_exists( $key, $this->filters ) )
 			return $this->filters[$key];
-		elseif( $this->defaultFilter )
+		elseif ( $this->defaultFilter )
 			return $this->defaultFilter;
 
 		return null;
@@ -147,7 +147,7 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 		$this->filters[$key] = $filter;
 
-		if( isset($this->stored[$key]) && $this->stored[$key] instanceof self ) {
+		if ( isset($this->stored[$key]) && $this->stored[$key] instanceof self ) {
 			$this->stored[$key]->setDefaultFilter( $filter );
 		}
 	}
@@ -155,7 +155,7 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	function replaceFilters( $filters )
 	{
 		foreach( $filters as $key => $values ) {
-			if( is_array( $values ) 
+			if ( is_array( $values ) 
 				&& $this->offsetExists( $key ) 
 				&& $this->offsetGet( $key ) instanceof self ) {
 
@@ -199,10 +199,10 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function __get( $key )
 	{
-		if( ! isset( $this->stored[$key] ) )
+		if ( ! isset( $this->stored[$key] ) )
 			return new JitFilter_Element( null );
 
-		if( $this->stored[$key] instanceof self || is_array( $this->stored[$key] ) )
+		if ( $this->stored[$key] instanceof self || is_array( $this->stored[$key] ) )
 			return $this->offsetGet( $key );
 
 		return new JitFilter_Element( $this->stored[$key] );

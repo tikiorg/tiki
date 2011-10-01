@@ -83,8 +83,8 @@ class PaymentLib extends TikiDb_Bridge
 	}
 	
 	function cancel_payment( $id ) {
-		if( $info = $this->get_payment( $id ) ) {
-			if( $info['state'] != 'canceled' ) {
+		if ( $info = $this->get_payment( $id ) ) {
+			if ( $info['state'] != 'canceled' ) {
 				$this->run_behaviors( $info, 'cancel' );
 			}
 		}
@@ -96,7 +96,7 @@ class PaymentLib extends TikiDb_Bridge
 		global $tikilib, $prefs;
 		$info = reset( $this->fetchAll( 'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE `paymentRequestId` = ?', array( $id ) ) );	
 
-		if( $info ) {
+		if ( $info ) {
 			$info['state'] = $this->find_state( $info );
 			$info['amount_original'] = number_format( $info['amount'], 2, '.', ',' );
 			$info['amount_remaining_raw'] = $info['amount'] - $info['amount_paid'];
@@ -133,15 +133,15 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	private function find_state( $info ) {
-		if( ! empty( $info['cancel_date'] ) ) {
+		if ( ! empty( $info['cancel_date'] ) ) {
 			return 'canceled';
 		}
 
-		if( $info['amount_paid'] >= $info['amount'] ) {
+		if ( $info['amount_paid'] >= $info['amount'] ) {
 			return 'past';
 		}
 
-		if( $info['due_date'] < date('Y-m-d H:i:s') ) {
+		if ( $info['due_date'] < date('Y-m-d H:i:s') ) {
 			return 'overdue';
 		}
 
@@ -149,7 +149,7 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	private function extract_actions( $actions ) {
-		if( empty( $actions ) ) {
+		if ( empty( $actions ) ) {
 			return array(
 				'complete' => array(),
 				'cancel' => array(),
@@ -161,8 +161,8 @@ class PaymentLib extends TikiDb_Bridge
 
 	function enter_payment( $invoice, $amount, $type, array $data ) {
 		global $user, $userlib;
-		if( $info = $this->get_payment( $invoice ) ) {
-			if( $info['state'] != 'past' && $info['amount_remaining_raw'] - $amount <= 0 ) {
+		if ( $info = $this->get_payment( $invoice ) ) {
+			if ( $info['state'] != 'past' && $info['amount_remaining_raw'] - $amount <= 0 ) {
 				$results = $this->run_behaviors( $info, 'complete' );
 				if ($info['state'] == 'canceled') {
 					// in the case of canceled payments being paid (e.g. user was delayed at Paypal when cancellation happened)
@@ -180,15 +180,15 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function register_behavior( $invoice, $event, $behavior, array $arguments ) {
-		if( ! in_array( $event, array( 'complete', 'cancel' ) ) ) {
+		if ( ! in_array( $event, array( 'complete', 'cancel' ) ) ) {
 			return false;
 		}
 
-		if( ! $callback = $this->get_behavior( $behavior ) ) {
+		if ( ! $callback = $this->get_behavior( $behavior ) ) {
 			return false;
 		}
 
-		if( $info = $this->get_payment( $invoice ) ) {
+		if ( $info = $this->get_payment( $invoice ) ) {
 			$actions = $info['actions'];
 
 			$actions[$event][] = array( 'behavior' => $behavior, 'arguments' => $arguments );
@@ -203,7 +203,7 @@ class PaymentLib extends TikiDb_Bridge
 		$results = array();
 
 		foreach( $behaviors as $b ) {
-			if( $callback = $this->get_behavior( $b['behavior'] ) ) {
+			if ( $callback = $this->get_behavior( $b['behavior'] ) ) {
 				$results[str_replace('payment_behavior_', '', $callback)] = call_user_func_array( $callback, $b['arguments'] );
 			}
 		}
@@ -213,9 +213,9 @@ class PaymentLib extends TikiDb_Bridge
 	private function get_behavior( $name ) {
 		$file = dirname(__FILE__) . "/behavior/$name.php";
 		$function = 'payment_behavior_' . $name;
-		if( is_readable( $file ) ) {
+		if ( is_readable( $file ) ) {
 			require_once $file;
-			if( is_callable( $function ) ) {
+			if ( is_callable( $function ) ) {
 				return $function;
 			}
 		}

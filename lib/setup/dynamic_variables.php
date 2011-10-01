@@ -13,7 +13,7 @@ if ( isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y' ) {
     if ( isset($_REQUEST['_dyn_update']) ) {
 		global $prefs;
 
-		if( $prefs['feature_multilingual'] == 'y' && $prefs['wiki_dynvar_multilingual'] == 'y' && isset( $_REQUEST['page'] ) ) {
+		if ( $prefs['feature_multilingual'] == 'y' && $prefs['wiki_dynvar_multilingual'] == 'y' && isset( $_REQUEST['page'] ) ) {
 			$lang = $tikilib->getOne( 'SELECT `lang` FROM `tiki_pages` WHERE `pageName` = ?', array( $_REQUEST['page'] ) );
 		} else {
 			$lang = null;

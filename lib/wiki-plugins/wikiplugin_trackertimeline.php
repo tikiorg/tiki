@@ -150,7 +150,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	global $trklib, $smarty, $tikilib;
 	require_once 'lib/trackers/trackerlib.php';
 
-	if( ! isset( $params['tracker'] ) )
+	if ( ! isset( $params['tracker'] ) )
 		return "^" . tr("Missing parameter: %0", 'tracker') . "^";
 
 	$default = array('scale1' => 'hour', 'simile_timeline' => 'n');
@@ -161,7 +161,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	$end = strtotime( $params['upper'] );
 	$size = $end - $start;
 
-	if( $size <= 0 )
+	if ( $size <= 0 )
 		return "^" . tr("Start date after end date.") . "^";
 
 	$fieldIds = array(
@@ -172,11 +172,11 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$params['group'] => 'group',
 	);
 
-	if( isset($params['link_page']) ) {
+	if ( isset($params['link_page']) ) {
 		$fieldIds[ $params['link_page'] ] = 'link';
 	}
 
-	if( !empty($params['image_field']) ) {
+	if ( !empty($params['image_field']) ) {
 		$fieldIds[ $params['image_field'] ] = 'image';
 	}
 
@@ -196,15 +196,15 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 		// Filter elements
 		if ($params['simile_timeline'] !== 'y') {
-			if( $detail['start'] >= $detail['end'] )
+			if ( $detail['start'] >= $detail['end'] )
 				continue;
-			if( $detail['end'] <= $start || $detail['start'] > $end )
+			if ( $detail['end'] <= $start || $detail['start'] > $end )
 				continue;
 		} else {
-			if( !empty($detail['end']) && $detail['start'] > $detail['end'] ) {
+			if ( !empty($detail['end']) && $detail['start'] > $detail['end'] ) {
 				continue;
 			}
-			if( (!empty($detail['end']) && $detail['end'] < $start) || $detail['start'] > $end ) {
+			if ( (!empty($detail['end']) && $detail['end'] < $start) || $detail['start'] > $end ) {
 				continue;
 			}
 		}
@@ -220,7 +220,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$detail['encoded'] = json_encode( $detail );
 
 		// Add to data list
-		if( ! array_key_exists( $detail['group'], $data ) )
+		if ( ! array_key_exists( $detail['group'], $data ) )
 			$data[$detail['group']] = array();
 		$data[ $detail['group'] ][] = $detail;
 	}
@@ -235,7 +235,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 		$smarty->assign( 'wp_ttl_data', $data );
 		$layouts = array();
-		if( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) ) {
+		if ( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) ) {
 			$layouts[] = $layout;
 		}
 		$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
@@ -300,7 +300,7 @@ function wp_ttl_organize( $name, $base, $size, &$list, &$new ) {
 
 	$pos = $base;
 	foreach( $first as $item ) {
-		if( $item['lstart'] < $pos ) {
+		if ( $item['lstart'] < $pos ) {
 			$remaining[] = $item;
 			continue;
 		}
@@ -311,18 +311,18 @@ function wp_ttl_organize( $name, $base, $size, &$list, &$new ) {
 		$list[] = $item;
 	}
 
-	if( count( $remaining ) ) {
+	if ( count( $remaining ) ) {
 		wp_ttl_organize( "$name ", $base, $size, $remaining, $new );
 		$new["$name "] = $remaining;
 	}
 }
 
 function wp_ttl_sort_cb( $a, $b ) {
-	if( $a['start'] == $b['start'] )
+	if ( $a['start'] == $b['start'] )
 		return 0;
-	if( $a['start'] < $b['start'] )
+	if ( $a['start'] < $b['start'] )
 		return -1;
-	if( $a['start'] > $b['start'] )
+	if ( $a['start'] > $b['start'] )
 		return 1;
 }
 
@@ -338,7 +338,7 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 	case 'day': 
 		$size = 86400;
 
-		if( date( 'H:i:s', $start ) == '00:00:00' ) {
+		if ( date( 'H:i:s', $start ) == '00:00:00' ) {
 			$pos = $start;
 		} else {
 			$pos = strtotime( date( 'Y-m-d 00:00:00', $start + $size ) );
@@ -347,7 +347,7 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 	case 'week':
 		$size = 604800;
 
-		if( date( 'H:i:sw', $start ) == '00:00:000' ) {
+		if ( date( 'H:i:sw', $start ) == '00:00:000' ) {
 			$pos = $start;
 		} else {
 			$pos = strtotime( date( 'Y-m-d 00:00:00', $start + $size ) );
@@ -357,7 +357,7 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 
 		break;
 	case 'month':
-		if( date( 'd H:i:s', $start ) == '01 00:00:00' ) {
+		if ( date( 'd H:i:s', $start ) == '01 00:00:00' ) {
 			$pos = $start;
 		} else {
 			$pos = strtotime( date( 'Y-m-01 00:00:00', strtotime( 'next month', $start ) ) );
@@ -368,7 +368,7 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 		break;
 	case 'year':
 	default:
-		if( date( 'm-d H:i:s', $start ) == '01-01 00:00:00' ) {
+		if ( date( 'm-d H:i:s', $start ) == '01-01 00:00:00' ) {
 			$pos = $start;
 		} else {
 			$pos = strtotime( date( 'Y-01-01 00:00:00', strtotime( 'next year', $start ) ) );

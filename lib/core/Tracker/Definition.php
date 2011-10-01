@@ -85,7 +85,7 @@ class Tracker_Definition
 	function getFieldsIdKeys()
 	{
 		$fields = array();
-		foreach($this->getFields() as $key => $field) {
+		foreach ($this->getFields() as $key => $field) {
 			$fields[$field['fieldId']] = $field;
 		}
 		return $fields;

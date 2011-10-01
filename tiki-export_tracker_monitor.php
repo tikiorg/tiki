@@ -21,7 +21,8 @@ if (!isset($_REQUEST['trackerId'])) {
 	die();
 }
 
-function saveStatus($in_vals = array()) {
+function saveStatus($in_vals = array())
+{
 	global $stat_array, $monitor_filename;
 	$stat_array = array_merge($stat_array, $in_vals);
 	$fp_mon = fopen($monitor_filename, 'w');

@@ -23,11 +23,11 @@ initialize_prefs();
 
 function get_default_prefs() {
 	static $prefs;
-	if( is_array($prefs) )
+	if ( is_array($prefs) )
 		return $prefs;
 
 	global $cachelib; require_once 'lib/cache/cachelib.php';
-	if( $prefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
+	if ( $prefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
 		return $prefs;
 	}
 
@@ -375,10 +375,10 @@ function initialize_prefs() {
 	}
 
 	// Perspectives are disabled by default so the preference has to be modified
-	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' && empty($in_installer) ) {
-		if( ! isset( $section ) || $section != 'admin' ) {
+	if ( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' && empty($in_installer) ) {
+		if ( ! isset( $section ) || $section != 'admin' ) {
 			require_once 'lib/perspectivelib.php';
-			if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
+			if ( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
 				$changes = $perspectivelib->get_preferences( $persp );
 				$modified = array_merge( $modified, $changes );
 			}

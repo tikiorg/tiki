@@ -40,7 +40,7 @@ if (!$histlib->version_exists($page, $version)) {
 }
 
 $tikilib->get_perm_object($page, 'wiki page', $info);
-$access->check_permission( array('tiki_p_rollback', 'tiki_p_edit') );
+$access->check_permission(array('tiki_p_rollback', 'tiki_p_edit'));
 
 if (isset($_REQUEST["rollback"])) {
 	require_once('lib/diff/difflib.php');

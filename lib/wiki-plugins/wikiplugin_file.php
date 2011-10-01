@@ -187,7 +187,7 @@ function wikiplugin_file( $data, $params )
 
 	$filedata = array_merge( $filedata, $params );
 
-	if( ! $filedata["name"] ) {
+	if ( ! $filedata["name"] ) {
 		return;
 	}
 
@@ -195,9 +195,9 @@ function wikiplugin_file( $data, $params )
 	$forward['file'] = $filedata['name'];
 	$forward['inline'] = 1;
 	$forward['page'] = $filedata['page'];
-	if($filedata['showdesc'])
+	if ($filedata['showdesc'])
 		$forward['showdesc'] = 1;
-	if($filedata['image'])
+	if ($filedata['image'])
 		$forward['image'] = 1;
 	$middle = $filedata["desc"];
 

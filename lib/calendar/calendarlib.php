@@ -37,7 +37,7 @@ class CalendarLib extends TikiLib
 		global $categlib; require_once( 'lib/categories/categlib.php' );
 		
 		$join = '';
-		if( $jail = $categlib->get_jail() ) {
+		if ( $jail = $categlib->get_jail() ) {
 			$categlib->getSqlJoin($jail, 'calendar', 'tcal.`calendarId`', $join, $mid, $bindvars);
 		}	
 
@@ -635,7 +635,7 @@ class CalendarLib extends TikiLib
 		$cond = '';
 		$bindvars = array();
 		if (isset($calendarId)) {
-			if(is_array($calendarId)) {
+			if (is_array($calendarId)) {
 				$cond = $cond."and (0=1";
 				foreach($calendarId as $id) {
 					$cond = $cond." or i.`calendarId` = ? ";
@@ -650,7 +650,7 @@ class CalendarLib extends TikiLib
 		$cond .= " and `end` >= (unix_timestamp(now()) - ?*3600*34)";
 		$bindvars[] = $priorDays;
 
-		if($maxDaysEnd > 0)
+		if ($maxDaysEnd > 0)
 		{
 			$maxSeconds = ($maxDaysEnd * 24 * 60 * 60);
 			$cond .= " and `end` <= (unix_timestamp(now())) +".$maxSeconds;

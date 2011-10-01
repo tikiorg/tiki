@@ -365,20 +365,20 @@ function wikiplugin_img_info() {
 			global $section, $smarty;
 			$imgdata[$default] = trim($imgdata[$default]) . ';'; // trim whitespace and ensure at least one semicolon
 			$img_conditions_array = explode( ';', $imgdata[$default] ); // conditions separated by semicolons
-			if( !empty($img_conditions_array) ) {
+			if ( !empty($img_conditions_array) ) {
 				foreach($img_conditions_array as $key => $var) { // for each condition
-					if( !empty($var) ) {
+					if ( !empty($var) ) {
 						$img_condition = explode( '?', $var ); // condition separated from parameters by question mark
-						if( !empty($img_condition) ) {
+						if ( !empty($img_condition) ) {
 							$img_condition_name = trim($img_condition[0]);
-							if( !empty($img_condition[1]) ) { // if there is at least one parameter
+							if ( !empty($img_condition[1]) ) { // if there is at least one parameter
 								$img_condition[1] = trim($img_condition[1]) . ',';	// at least one comma
 								$img_parameters_array = explode( ',', $img_condition[1] ); // separate multiple parameters
-								if( !empty($img_parameters_array) ) {  // if a parameter has been extracted
+								if ( !empty($img_parameters_array) ) {  // if a parameter has been extracted
 									foreach($img_parameters_array as $param_key => $param_var) {	// for each parameter
-										if( !empty($param_var) ) {	// if a parameter exists
+										if ( !empty($param_var) ) {	// if a parameter exists
 											$img_parameter_array = explode( '=', trim($param_var) ); // separate parameters and values
-											if( !empty($img_parameter_array[0]) ) {  // if a parameter with a value has been extracted
+											if ( !empty($img_parameter_array[0]) ) {  // if a parameter with a value has been extracted
 	
 												$img_condition_status = false;	// initialise condition as not being true
 	
@@ -388,82 +388,82 @@ function wikiplugin_img_info() {
 														$img_condition_status = true; // default is always true
 														break;
 													case 'mode_mobile':
-														if( isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile' ) $img_condition_status = true;
+														if ( isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile' ) $img_condition_status = true;
 														break;
 													case 'module_*':
-														if( !empty($smarty) ) {
+														if ( !empty($smarty) ) {
 															$image_module_params = $smarty->getTemplateVars('module_params');
-															if( !empty($image_module_params) ) $img_condition_status = true;
+															if ( !empty($image_module_params) ) $img_condition_status = true;
 														}
 														break;
 													case 'section_*':
-														if( !empty($section) ) $img_condition_status = true;
+														if ( !empty($section) ) $img_condition_status = true;
 														break;
 													case 'section_cms_article':
-														if( !empty($section) ) {
-															if( $section == 'cms' ) {
-																if( !empty($smarty) ) {
+														if ( !empty($section) ) {
+															if ( $section == 'cms' ) {
+																if ( !empty($smarty) ) {
 																	$image_article_type = $smarty->getTemplateVars('type');
-																	if( !empty($image_article_type) ) {
-																		if( strtolower(trim($image_article_type)) == 'article' ) $img_condition_status = true;
-																	} // if(!empty($image_article_type))
-																} // if(!empty($smarty))
+																	if ( !empty($image_article_type) ) {
+																		if ( strtolower(trim($image_article_type)) == 'article' ) $img_condition_status = true;
+																	} // if (!empty($image_article_type))
+																} // if (!empty($smarty))
 															}
 														}
 														break;
 													case 'section_cms_review':
-														if( !empty($section) ) {
-															if( $section == 'cms' ) {
-																if( !empty($smarty) ) {
+														if ( !empty($section) ) {
+															if ( $section == 'cms' ) {
+																if ( !empty($smarty) ) {
 																	$image_article_type = $smarty->getTemplateVars('type');
-																	if( !empty($image_article_type) ) {
-																		if( strtolower(trim($image_article_type)) == 'review' ) $img_condition_status = true;
-																	} // if(!empty($image_article_type))
-																} // if(!empty($smarty))
+																	if ( !empty($image_article_type) ) {
+																		if ( strtolower(trim($image_article_type)) == 'review' ) $img_condition_status = true;
+																	} // if (!empty($image_article_type))
+																} // if (!empty($smarty))
 															}
 														}
 														break;
 													case 'section_cms_event':
-														if( !empty($section) ) {
-															if( $section == 'cms' ) {
-																if( !empty($smarty) ) {
+														if ( !empty($section) ) {
+															if ( $section == 'cms' ) {
+																if ( !empty($smarty) ) {
 																	$image_article_type = $smarty->getTemplateVars('type');
-																	if( !empty($image_article_type) ) {
-																		if( strtolower(trim($image_article_type)) == 'event' ) $img_condition_status = true;
-																	} // if(!empty($image_article_type))
-																} // if(!empty($smarty))
+																	if ( !empty($image_article_type) ) {
+																		if ( strtolower(trim($image_article_type)) == 'event' ) $img_condition_status = true;
+																	} // if (!empty($image_article_type))
+																} // if (!empty($smarty))
 															}
 														}
 														break;
 													case 'section_cms_classified':
-														if( !empty($section) ) {
-															if( $section == 'cms' ) {
-																if( !empty($smarty) ) {
+														if ( !empty($section) ) {
+															if ( $section == 'cms' ) {
+																if ( !empty($smarty) ) {
 																	$image_article_type = $smarty->getTemplateVars('type');
-																	if( !empty($image_article_type) ) {
-																		if( strtolower(trim($image_article_type)) == 'classified' ) $img_condition_status = true;
-																	} // if(!empty($image_article_type))
-																} // if(!empty($smarty))
+																	if ( !empty($image_article_type) ) {
+																		if ( strtolower(trim($image_article_type)) == 'classified' ) $img_condition_status = true;
+																	} // if (!empty($image_article_type))
+																} // if (!empty($smarty))
 															}
 														}
 														break;
 												} // switch ($img_condition_name)
 	
-												if( $img_condition_status != true ) {
+												if ( $img_condition_status != true ) {
 													// if match not found yet, examine more specific conditions
-													if( !empty($section) ) {	// if we have a section name
-														if( substr($img_condition_name,0,8) == 'section_' ) {
-															if( strlen($img_condition_name) > 8 ) {
+													if ( !empty($section) ) {	// if we have a section name
+														if ( substr($img_condition_name,0,8) == 'section_' ) {
+															if ( strlen($img_condition_name) > 8 ) {
 																$img_condition_part = substr($img_condition,8); // get part after "section_"
 																$img_condition_part = strtolower($img_condition_part);
 																$img_condition_part = trim(strtr($img_condition_part, '_', ' ')); // replace underscore with spaces
-																if( $section == $img_condition_part ) $img_condition_status = true;
-															} // if( length($img_condition_name) > 8 )
-														} // if( substr($img_condition_name,0,8) == "section_" )
-													} // if( !empty($section) )
+																if ( $section == $img_condition_part ) $img_condition_status = true;
+															} // if ( length($img_condition_name) > 8 )
+														} // if ( substr($img_condition_name,0,8) == "section_" )
+													} // if ( !empty($section) )
 												}
 	
-												if( $img_condition_status == true ) {
+												if ( $img_condition_status == true ) {
 													// set the parameters to their values
 													switch (strtolower(trim($img_parameter_array[0]))) {
 														case 'src':
@@ -545,29 +545,29 @@ function wikiplugin_img_info() {
 															$imgdata['alt'] = trim($img_parameter_array[1]);
 														break;
 													} // switch ($img_parameter_array[0])
-												} // if( $img_condition_status == true )
+												} // if ( $img_condition_status == true )
 	
-											} // if( !empty($img_parameter_array[0] )
+											} // if ( !empty($img_parameter_array[0] )
 										} // if a parameter exists
 									} // for each parameter
-								} // if( !empty($img_parameters_array) )
-							} // if( !empty($img_condition[1]) )
-						}  // if( !empty($img_condition) )
-					} // if( !empty($var) )
+								} // if ( !empty($img_parameters_array) )
+							} // if ( !empty($img_condition[1]) )
+						}  // if ( !empty($img_condition) )
+					} // if ( !empty($var) )
 				} // for each condition
-			} // if( !empty($img_conditions_array) )
+			} // if ( !empty($img_conditions_array) )
 	return $imgdata;
 	}
 }
 ////////////////////////////////////End of function for processing default and mandatory parameters////////////////////
 	//function calls
-	if( !empty($imgdata['default']) || !empty($imgdata['mandatory'])) {
-		if(!empty($imgdata['default'])) { 
+	if ( !empty($imgdata['default']) || !empty($imgdata['mandatory'])) {
+		if (!empty($imgdata['default'])) { 
 			$imgdata = apply_default_and_mandatory($imgdata, 'default');	//first process defaults
 			$imgdata = array_merge( $imgdata, $params );					//then apply user settings, overriding defaults
 		}
 		//apply mandatory settings, overriding user settings
-		if(!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');
+		if (!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');
 	}
 
 //////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
@@ -726,9 +726,9 @@ function wikiplugin_img_info() {
 			}		
 			//Give error messages if file doesn't exist, isn't an image. Display nothing if user lacks permission
 			if (!empty($imgdata['fileId']) || !empty($imgdata['id']) || !empty($imgdata['attId'])) {
-				if( ! $dbinfo ) {
+				if ( ! $dbinfo ) {
 					return '^' . tra('File not found.') . '^';
-				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' AND !preg_match('/thumbnail/i', $imgdata['fileId'])) {
+				} elseif ( substr($dbinfo['filetype'], 0, 5) != 'image' AND !preg_match('/thumbnail/i', $imgdata['fileId'])) {
 					return '^' . tra('File is not an image.') . '^';
 				} elseif (!class_exists('Image')) {
 					return '^' . tra('Server does not support image manipulation.') . '^';
@@ -1012,7 +1012,7 @@ function wikiplugin_img_info() {
 		$imalign = $center;
 	}
 	//set entire style string
-	if( !empty($imgdata['styleimage']) || !empty($imalign) ) {
+	if ( !empty($imgdata['styleimage']) || !empty($imalign) ) {
 		$border = '';
 		$style = '';
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
@@ -1035,7 +1035,7 @@ function wikiplugin_img_info() {
 		$replimg .= ' style="' . $imalign . $border . $style . '"';
 	}
 	//alt
-	if( !empty($imgdata['alt']) ) {
+	if ( !empty($imgdata['alt']) ) {
 		$replimg .= ' alt="' . $imgdata['alt'] . '"';
 	} else {
 		$replimg .= ' alt="Image"';
@@ -1203,7 +1203,7 @@ function wikiplugin_img_info() {
 		//To set room for enlarge button under image if there is no description
 		$descheightdef = 'height:17px;clear:left;';						
 		$repl .= "\r\t" . '<div class="mini" style="width:' . $width . 'px;';
-		if( !empty($imgdata['styledesc']) ) {
+		if ( !empty($imgdata['styledesc']) ) {
 			if (($imgdata['styledesc'] == 'left') || ($imgdata['styledesc'] == 'right')) {
 				$repl .= 'text-align:' . $imgdata['styledesc'] . '">';
 			} else {
@@ -1320,7 +1320,7 @@ function wikiplugin_img_info() {
 		$repl = "\r" . '<div ' . $class . 'style="' . $styleboxplus . '">' . $repl . "\r" . '</div>';
 	}
 //////////////////////////////////////Place 'clear' block///////////////////////////////////////////////////////////
-	if( !empty($imgdata['block']) ) {
+	if ( !empty($imgdata['block']) ) {
 		switch ($imgdata['block']) {
 		case 'top': 
 			$repl = "\n\r<br style=\"clear:both\" />\r" . $repl;
@@ -1336,7 +1336,7 @@ function wikiplugin_img_info() {
 		} 
 	} 
 	// Mobile
-	if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 	return '~np~' . $repl. "\r" . '~/np~';

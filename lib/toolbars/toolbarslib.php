@@ -30,31 +30,31 @@ abstract class Toolbar
 		//we detect sheet first because it has unique buttons
 		if ( $section == 'sheet' && $tag = ToolbarSheet::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = Toolbar::getCustomTool( $tagName ) )
+		elseif ( $tag = Toolbar::getCustomTool( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarInline::fromName( $tagName ) )
+		elseif ( $tag = ToolbarInline::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarBlock::fromName( $tagName ) )
+		elseif ( $tag = ToolbarBlock::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarLineBased::fromName( $tagName ) )
+		elseif ( $tag = ToolbarLineBased::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarCkOnly::fromName( $tagName ) )
+		elseif ( $tag = ToolbarCkOnly::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarWikiplugin::fromName( $tagName ) )
+		elseif ( $tag = ToolbarWikiplugin::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarPicker::fromName( $tagName ) )
+		elseif ( $tag = ToolbarPicker::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarDialog::fromName( $tagName ) )
+		elseif ( $tag = ToolbarDialog::fromName( $tagName ) )
 			return $tag;
-		elseif( $tagName == 'fullscreen' )
+		elseif ( $tagName == 'fullscreen' )
 			return new ToolbarFullscreen;
-		elseif( $tagName == 'tikiimage' )
+		elseif ( $tagName == 'tikiimage' )
 			return new ToolbarFileGallery;
-		elseif( $tagName == 'help' )
+		elseif ( $tagName == 'help' )
 			return new ToolbarHelptool;
-		elseif( $tagName == 'switcheditor' )
+		elseif ( $tagName == 'switcheditor' )
 			return new ToolbarSwitchEditor;
-		elseif( $tagName == '-' )
+		elseif ( $tagName == '-' )
 			return new ToolbarSeparator;
 		
 	} // }}}
@@ -157,7 +157,7 @@ abstract class Toolbar
 	{
 
 		global $prefs;
-		if( isset($prefs['toolbar_custom_list']) ) {
+		if ( isset($prefs['toolbar_custom_list']) ) {
 			$custom = @unserialize($prefs['toolbar_custom_list']);
 			sort($custom);
 		} else {
@@ -169,7 +169,7 @@ abstract class Toolbar
 	
 	public static function getCustomTool($name) {
 		global $prefs;
-		if( isset($prefs["toolbar_tool_$name"]) ) {
+		if ( isset($prefs["toolbar_tool_$name"]) ) {
 			$data = unserialize($prefs["toolbar_tool_$name"]);
 			$tag = Toolbar::fromData( $name, $data );
 			return $tag;
@@ -203,7 +203,7 @@ abstract class Toolbar
 		
 		$tikilib->set_preference( $prefName, serialize( $data ) );
 		
-		if( !in_array( $name, $custom_list ) ) {
+		if ( !in_array( $name, $custom_list ) ) {
 			$custom_list[] = $name;
 			$tikilib->set_preference( 'toolbar_custom_list', serialize($custom_list) );
 		}
@@ -215,14 +215,14 @@ abstract class Toolbar
 		$name = strtolower( $name );
 
 		$prefName = "toolbar_tool_$name";
-		if( isset($prefs[$prefName]) ) {
+		if ( isset($prefs[$prefName]) ) {
 			$tikilib->delete_preference( $prefName );
 			
 			$list = array();
-			if( isset($prefs['toolbar_custom_list']) ) {
+			if ( isset($prefs['toolbar_custom_list']) ) {
 				$list = unserialize($prefs['toolbar_custom_list']);
 			}
-			if( in_array( $name, $list ) ) {
+			if ( in_array( $name, $list ) ) {
 				$list = array_diff($list, array($name));
 				$tikilib->set_preference( 'toolbar_custom_list', serialize($list) );
 			}
@@ -304,7 +304,7 @@ abstract class Toolbar
 		global $prefs;
 
 		foreach( $this->requiredPrefs as $prefName )
-			if( ! isset($prefs[$prefName]) || $prefs[$prefName] != 'y' )
+			if ( ! isset($prefs[$prefName]) || $prefs[$prefName] != 'y' )
 				return false;
 
 		return true;
@@ -968,7 +968,7 @@ class ToolbarPicker extends Toolbar
 		
 		static $pickerAdded = false;
 
-		if( ! $pickerAdded ) {
+		if ( ! $pickerAdded ) {
 			$pickerAdded = true;
 		}
 	}
@@ -1142,7 +1142,7 @@ class ToolbarDialog extends Toolbar
 		
 		static $dialogAdded = false;
 
-		if( ! $dialogAdded ) {
+		if ( ! $dialogAdded ) {
 			$dialogAdded = true;
 		}
 	}
@@ -1210,7 +1210,7 @@ class ToolbarFullscreen extends Toolbar
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-fullscreen');
 		
 		
-//		if( isset($_REQUEST['zoom']) )
+//		if ( isset($_REQUEST['zoom']) )
 //			$name = 'preview';
 //		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
 //				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
@@ -1423,9 +1423,9 @@ class ToolbarWikiplugin extends Toolbar
 		global $tikilib;
 		$parserlib = TikiLib::lib('parser');
 		
-		if( substr( $name, 0, 11 ) == 'wikiplugin_'  ) {
+		if ( substr( $name, 0, 11 ) == 'wikiplugin_'  ) {
 			$name = substr( $name, 11 );
-			if( $info = $parserlib->plugin_info( $name ) ) {
+			if ( $info = $parserlib->plugin_info( $name ) ) {
 				if (isset($info['icon']) and $info['icon'] != '') {
 					$icon = $info['icon'];
 				} else {
@@ -1710,13 +1710,13 @@ class ToolbarsList
 				$thetags = $rtags;
 			}
 			foreach( $thetags as $tagName ) {
-				if( $tagName == '-' ) {
-					if( count($group) ) {
+				if ( $tagName == '-' ) {
+					if ( count($group) ) {
 						$elements[$i][] = $group;
 						$group = array();
 					}
 				} else {
-					if( ( $tag = Toolbar::getTag( $tagName ) ) 
+					if ( ( $tag = Toolbar::getTag( $tagName ) ) 
 						&& $tag->isAccessible() ) {
 	
 						$group[] = $tag;
@@ -1724,11 +1724,11 @@ class ToolbarsList
 				}
 			}
 	
-			if( count($group) ) {
+			if ( count($group) ) {
 				$elements[$i][] = $group;
 			}
 		}
-		if( count( $elements ) )
+		if ( count( $elements ) )
 			$this->lines[] = $elements;
 	} // }}}
 
@@ -1744,11 +1744,11 @@ class ToolbarsList
 					foreach( $group as $tag ) {
 						switch ($tb_type) {
 							case 'wiki': 
-								if( $token = $tag->getWysiwygWikiToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
+								if ( $token = $tag->getWysiwygWikiToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
 								break;
 							case 'html' : 
 							default:
-								if( $token = $tag->getWysiwygToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
+								if ( $token = $tag->getWysiwygToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
 						}
 					}
 					if ($group_count) { // don't add separators for empty groups
@@ -1759,7 +1759,7 @@ class ToolbarsList
 
 			$lineOut = array_slice( $lineOut, 0, -1 );
 
-			if( count($lineOut) )
+			if ( count($lineOut) )
 				$lines[] = array($lineOut);
 		}
 
@@ -1804,7 +1804,7 @@ class ToolbarsList
 						$groupHtml .= $tag->getWikiHtml( $areaId );
 					}
 					
-					if( !empty($groupHtml) ) {
+					if ( !empty($groupHtml) ) {
 						$param = empty($lineBit) ? '' : ' class="toolbar-list"';
 						$lineBit .= "<span$param>$groupHtml</span>";
 					}
@@ -1823,7 +1823,7 @@ class ToolbarsList
 					$lineHtml .= "<div class='helptool-admin'>$right</div>";
 				} 
 			}
-			if( !empty($lineHtml) ) {
+			if ( !empty($lineHtml) ) {
 				$html .= "<div>$lineHtml</div>";
 			}
 			$c++;

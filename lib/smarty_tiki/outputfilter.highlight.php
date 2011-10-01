@@ -38,10 +38,10 @@ function smarty_outputfilter_highlight($source, $smarty) {
 		$highlight = str_replace(array('(', ')', '*', '-', '"', '~','<', '>'), ' ', $highlight);
 	}
 
-	if(isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') {
+	if (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') {
 		$refererhi = _refererhi();
-		if(isset($refererhi) && !empty($refererhi)) {
-			if(isset($highlight) && !empty($highlight)) {
+		if (isset($refererhi) && !empty($refererhi)) {
+			if (isset($highlight) && !empty($highlight)) {
 				$highlight = $highlight." ".$refererhi;
 			} else {
 				$highlight = $refererhi;

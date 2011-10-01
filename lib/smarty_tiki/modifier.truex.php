@@ -22,6 +22,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_modifier_truex($string)
 {
-  if((int)$string == 1) return('x');
+  if ((int)$string == 1) return('x');
   return('-');
 }

@@ -23,7 +23,7 @@ if (!isset($_REQUEST["faqId"])) {
 	die;
 }
 
-$tikilib->get_perm_object( $_REQUEST['faqId'], 'faq' );
+$tikilib->get_perm_object($_REQUEST['faqId'], 'faq');
 
 $access->check_permission('tiki_p_view_faqs');
 

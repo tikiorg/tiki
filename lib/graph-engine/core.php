@@ -259,7 +259,7 @@ class Graphic // {{{1
 
 	function addDataHandler( $handler ) // {{{2
 	{
-		if( is_a($handler, 'DataHandler') )
+		if ( is_a($handler, 'DataHandler') )
 			$this->dataHandlers[] = $handler;
 	}
 
@@ -279,13 +279,13 @@ class Graphic // {{{1
 
 		$layout = $this->_layout();
 
-		if( $layout['title-active'] || empty( $this->title ) )
+		if ( $layout['title-active'] || empty( $this->title ) )
 		{
 			$top += 0.1;
 			$renderer->drawText( $this->title, 0, 1, 0.04, $renderer->getStyle( $layout['title-font'] ) );
 		}
 
-		if( $layout['legend-active'] && count( $this->legend ) > 0 && $layout['legend-location'] != 'static' )
+		if ( $layout['legend-active'] && count( $this->legend ) > 0 && $layout['legend-location'] != 'static' )
 			$this->_drawLegend( $renderer, $left, $top, $right, $bottom, $layout );
 
 		$left += $layout['content-margin'];
@@ -294,22 +294,22 @@ class Graphic // {{{1
 		$bottom -= $layout['content-margin'];
 		$this->_drawContent( new Fake_GRenderer( $renderer, $left, $top, $right, $bottom ) );
 
-		if( $layout['legend-active'] && count( $this->legend ) > 0 && $layout['legend-location'] == 'static' )
+		if ( $layout['legend-active'] && count( $this->legend ) > 0 && $layout['legend-location'] == 'static' )
 			$this->_drawLegend( $renderer, $left, $top, $right, $bottom, $layout );
 	}
 
 	function setData( $data ) // {{{2
 	{
-		if( !is_array( $data ) )
+		if ( !is_array( $data ) )
 			return false;
 
 		foreach( $this->getRequiredSeries() as $key => $value )
-			if( $value && ( !array_key_exists( $key, $data ) || !is_array( $data[$key] ) ) )
+			if ( $value && ( !array_key_exists( $key, $data ) || !is_array( $data[$key] ) ) )
 				return false;
 
 		foreach( $data as $key => $values )
 		{
-			if( !is_array( $values ) )
+			if ( !is_array( $values ) )
 				return false;
 
 			$data[$key] = array_values( $values );
@@ -427,7 +427,7 @@ class Graphic // {{{1
 		$renderer->drawRectangle( $x, $y, $x + $width, $y + $height, $renderer->getStyle( $layout['legend-style'] ) );
 		$box_offset = 0;
 		$text_offset = 0;
-		if( $box_size > $font_height )
+		if ( $box_size > $font_height )
 			$text_offset = ( $box_size - $font_height ) / 2;
 		else
 			$box_offset = ( $font_height - $box_size ) / 2;
@@ -457,7 +457,7 @@ class Graphic // {{{1
 					$y + $text_offset, 
 					$legend_font );
 				
-				if( ! empty( $url ) )
+				if ( ! empty( $url ) )
 					$renderer->addLink(
 						$url,
 						$x + $padding,
@@ -477,7 +477,7 @@ class Graphic // {{{1
 					$y + $text_offset, 
 					$legend_font );
 				
-				if( ! empty( $url ) )
+				if ( ! empty( $url ) )
 					$renderer->addLink(
 						$url,
 						$x,

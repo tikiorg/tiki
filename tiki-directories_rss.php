@@ -16,10 +16,12 @@ if ($prefs['feature_directory'] != 'y') {
 	$errmsg = tra("This feature is disabled") . ": feature_directory";
 	require_once ('tiki-rss_error.php');
 }
-$res = $access->authorize_rss(array(
-	'tiki_p_view_directory',
-	'tiki_p_admin_directory'
-));
+$res = $access->authorize_rss(
+	array(
+		'tiki_p_view_directory',
+		'tiki_p_admin_directory'
+	)
+);
 if ($res) {
 	if ($res['header'] == 'y') {
 		header('WWW-Authenticate: Basic realm="' . $tikidomain . '"');

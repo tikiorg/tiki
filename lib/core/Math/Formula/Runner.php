@@ -27,7 +27,7 @@ class Math_Formula_Runner
 	}
 
 	function inspect() {
-		if( $this->element ) {
+		if ( $this->element ) {
 			$this->inspectElement( $this->element );		
 			return $this->collected;
 		} else {
@@ -40,12 +40,12 @@ class Math_Formula_Runner
 	}
 
 	function evaluateData( $data ) {
-		if( $data instanceof Math_Formula_Element ) {
+		if ( $data instanceof Math_Formula_Element ) {
 			$op = $this->getOperation( $data );
 			return $op->evaluateTemplate( $data, array( $this, 'evaluateData' ) );
-		} elseif( is_numeric( $data ) ) {
+		} elseif ( is_numeric( $data ) ) {
 			return (double) $data;
-		} elseif( isset( $this->variables[$data] ) ) {
+		} elseif ( isset( $this->variables[$data] ) ) {
 			return $this->variables[$data];
 		} else {
 			throw new Math_Formula_Exception( tr('Variable not found "%0".', $data) );
@@ -59,9 +59,9 @@ class Math_Formula_Runner
 	}
 
 	function inspectData( $data ) {
-		if( $data instanceof Math_Formula_Element ) {
+		if ( $data instanceof Math_Formula_Element ) {
 			$this->inspectElement( $data );
-		} elseif( ! is_numeric( $data ) ) {
+		} elseif ( ! is_numeric( $data ) ) {
 			$this->collected[] = $data;
 		}
 
@@ -69,7 +69,7 @@ class Math_Formula_Runner
 	}
 
 	private function getElement( $element ) {
-		if( is_string( $element ) ) {
+		if ( is_string( $element ) ) {
 			$parser = new Math_Formula_Parser;
 			$element = $parser->parse( $element );
 		}
@@ -80,7 +80,7 @@ class Math_Formula_Runner
 	private function getOperation( $element ) {
 		$name = $element->getType();
 
-		if( isset( $this->known[$name] ) ) {
+		if ( isset( $this->known[$name] ) ) {
 			return $this->known[$name];
 		}
 
@@ -91,9 +91,9 @@ class Math_Formula_Runner
 			$class = $prefix . $ucname;
 			$file = "$path/$ucname.php";
 
-			if( file_exists( $file ) ) {
+			if ( file_exists( $file ) ) {
 				require_once $file;
-				if( class_exists( $class ) ) {
+				if ( class_exists( $class ) ) {
 					return $this->known[$name] = new $class;
 				}
 			}

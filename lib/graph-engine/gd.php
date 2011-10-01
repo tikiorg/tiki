@@ -34,7 +34,7 @@ class GD_GRenderer extends GRenderer // {{{1
 		$this->colors = array();
 		$this->fonts = array();
 
-		if( $width !== 0 && $height !== 0 )
+		if ( $width !== 0 && $height !== 0 )
 		{
 			$this->gd = imagecreate( $width, $height );
 			$this->_getColor( 'white' );
@@ -65,14 +65,14 @@ class GD_GRenderer extends GRenderer // {{{1
 
 	function drawRectangle( $left, $top, $right, $bottom, $style ) // {{{2
 	{
-		if( $top > $bottom )
+		if ( $top > $bottom )
 		{
 			// Filled rect has a problem when coordinates are inverted.
 			$a = $top;
 			$top = $bottom;
 			$bottom = $a;
 		}
-		if( $left > $right )
+		if ( $left > $right )
 		{
 			// Filled rect has a problem when coordinates are inverted.
 			$a = $left;
@@ -83,7 +83,7 @@ class GD_GRenderer extends GRenderer // {{{1
 		$this->_convertPosition( $left, $top );
 		$this->_convertPosition( $right, $bottom );
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			imagefilledrectangle( $this->gd, $left, $top, $right, $bottom, $style['fill'] );
 
 		imagesetthickness( $this->gd, $style['line-width'] );
@@ -93,7 +93,7 @@ class GD_GRenderer extends GRenderer // {{{1
 	function drawPie( $centerX, $centerY, $radius, $begin, $end, $style ) // {{{2
 	{
 		$radius = $radius * 2;
-		if( $begin != 0 || $end != 360 )
+		if ( $begin != 0 || $end != 360 )
 		{
 			$tmp = -$begin;
 			$begin = -$end;
@@ -141,7 +141,7 @@ class GD_GRenderer extends GRenderer // {{{1
 
 	function getStyle( $name ) // {{{2
 	{
-		if( isset( $this->styles[$name] ) )
+		if ( isset( $this->styles[$name] ) )
 			return $this->styles[$name];
 
 		return $this->styles[$name] = $this->_findStyle( $name );
@@ -234,7 +234,7 @@ class GD_GRenderer extends GRenderer // {{{1
 		case 'Normal':
 			array_shift( $parts );
 		default:
-			if( $parts[0] == 'Text' )
+			if ( $parts[0] == 'Text' )
 				$style['font'] = 4;
 			else
 				$style['line-width'] = 1;
@@ -251,7 +251,7 @@ class GD_GRenderer extends GRenderer // {{{1
 			$style['line'] = $this->_getColor( 'Black' );
 			break;
 		case 'Text':
-			if( !isset( $parts[1] ) )
+			if ( !isset( $parts[1] ) )
 				$parts[1] = null;
 			switch( $parts[1] )
 			{
@@ -278,7 +278,7 @@ class GD_GRenderer extends GRenderer // {{{1
 	{
 		$name = strtolower( $name );
 
-		if( isset( $this->colors[$name] ) )
+		if ( isset( $this->colors[$name] ) )
 			return $this->colors[$name];
 
 		return $this->colors[$name] = $this->_findColor( $name );

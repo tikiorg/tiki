@@ -20,9 +20,9 @@ class Multilingual_Aligner_SentenceAlignments
 
 	public function addSentencePair($lng1_sentence, $lng1, $lng2_sentence, $lng2)
 	{
-		if( $lng1 == $this->l1 ) {
+		if ( $lng1 == $this->l1 ) {
 			$this->alignment_table[$lng1_sentence] = $lng2_sentence;
-		} else if($lng2==$this->l1) {
+		} else if ($lng2==$this->l1) {
 			$this->alignment_table[$lng2_sentence] = $lng1_sentence;
 		}	
 	}
@@ -285,7 +285,7 @@ class Multilingual_Aligner_SentenceAlignments
 						}//while
 						continue;
 
-					} else if(($c=$this->strpos_function($temp2,$temp1))!=-1 && $c ==0) {		
+					} else if (($c=$this->strpos_function($temp2,$temp1))!=-1 && $c ==0) {		
 						$found = 1;
 						if (strlen($temp1) == strlen($temp2) && $sent_ind == count($sentences)) {
 							for($u=0; $u<$start; $u++) { //return key and val
@@ -348,7 +348,7 @@ class Multilingual_Aligner_SentenceAlignments
 	{
 		if (strlen($string) == 0 && strlen($pat) == 0) {
 		 return 0;
-		} else if(strlen($string) == 0 || strlen($pat) == 0) {
+		} else if (strlen($string) == 0 || strlen($pat) == 0) {
 			return -1;
 		}
 		$start = 0;

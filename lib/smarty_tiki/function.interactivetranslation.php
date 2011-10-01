@@ -16,7 +16,7 @@ function smarty_function_interactivetranslation($params, $smarty) {
 	global $headerlib, $smarty;
 
 	$strings = get_collected_strings();
-	if( count( $strings ) == 0 ) {
+	if ( count( $strings ) == 0 ) {
 		return;
 	}
 
@@ -46,9 +46,9 @@ function sort_strings_by_length( $a, $b ) {
 	$a = strlen( $a[1] );
 	$b = strlen( $b[1] );
 
-	if( $a == $b ) {
+	if ( $a == $b ) {
 		return 0;
-	} elseif( $a > $b ) {
+	} elseif ( $a > $b ) {
 		return -1;
 	} else {
 		return 1;

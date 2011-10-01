@@ -9,7 +9,7 @@
 
 $groupList = $tikilib->get_user_groups( $user );
 $is_token_access = false;
-if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
+if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	require_once 'lib/auth/tokens.php';
 	$token = $_REQUEST['TOKEN'];
 		
@@ -36,7 +36,7 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	}
 
 	$tokenlib = AuthTokens::build( $prefs );
-	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $tokenParams ) ) {
+	if ( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $tokenParams ) ) {
 	 	$groupList = $groups;
 	 	$detailtoken = $tokenlib->getToken($token);
 	 	$is_token_access = true;	
@@ -44,7 +44,7 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	 	/**
 	 	 * Shared 'File download' case
 	 	 */
-	 	if(isset($_GET['fileId']) && $detailtoken['parameters'] == '{"fileId":"'.$_GET['fileId'].'"}'){
+	 	if (isset($_GET['fileId']) && $detailtoken['parameters'] == '{"fileId":"'.$_GET['fileId'].'"}'){
 	 		$_SESSION['allowed'][$_GET['fileId']] = true;
 	 	}
 	 		 	
@@ -57,7 +57,7 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 			$notificationPage = '';
 			$smarty->assign_by_ref('page_token', $notificationPage);			
 			
-			if(is_array($nots)){
+			if (is_array($nots)){
 				include_once ('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 				
@@ -74,7 +74,7 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 					
 					// If file Gallery
 					$smarty->assign('filegallery', 'n');
-					if(preg_match("/\btiki-download_file.php\b/i",$notificationPage)){
+					if (preg_match("/\btiki-download_file.php\b/i",$notificationPage)){
 						include_once 'lib/filegals/filegallib.php';
 						$smarty->assign('filegallery', 'y');
 						$aParams = (array) json_decode($detailtoken['parameters']);

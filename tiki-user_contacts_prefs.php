@@ -12,7 +12,9 @@ require_once ('lib/webmail/contactlib.php');
 $access->check_feature('feature_contacts', '', 'community');
 $access->check_user($user);
 
-if (!isset($cookietab)) { $cookietab = '1'; }
+if (!isset($cookietab)) {
+	$cookietab = '1';
+}
 if (isset($_REQUEST['prefs'])) {
 	$tikilib->set_user_preference($user, 'user_contacts_default_view', $_REQUEST['user_contacts_default_view']);
 	$cookietab = '1';

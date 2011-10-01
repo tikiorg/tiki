@@ -144,7 +144,7 @@ abstract class TikiDb
 
 	protected function handleQueryError( $query, $values, $result ) // {{{
 	{
-		if( $this->errorHandler )
+		if ( $this->errorHandler )
 			$this->errorHandler->handle( $this, $query, $values, $result );
 		else {
 			throw new TikiDb_Exception( $this->getErrorMessage() );
@@ -158,7 +158,7 @@ abstract class TikiDb
 
 		if ( !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
 
-			if( !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
+			if ( !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
 				$query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
 			} else {
 				$query = str_replace("`users_", "`".$db_table_prefix."users_", $query);
@@ -230,7 +230,7 @@ abstract class TikiDb
 		$field = implode('.', $parts);
 		$bindvars = array_merge( $bindvars, $values );
 
-		if( count( $values ) > 0 ) {
+		if ( count( $values ) > 0 ) {
 			$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
 			return " $field IN( $values ) ";
 		} else {
@@ -295,7 +295,7 @@ abstract class TikiDb
 	function hasInnoDB() {
 		$engines = $this->getEngines();
 		foreach($engines as $engine) {
-			if(strcmp(strtoupper($engine), 'INNODB') == 0) {
+			if (strcmp(strtoupper($engine), 'INNODB') == 0) {
 				return true;
 			}
 		}
@@ -324,7 +324,7 @@ abstract class TikiDb
 	 */ 
 	function isMySQLFulltextSearchSupported() {
 		$currentEngine = $this->getCurrentEngine();
-		if(strcasecmp($currentEngine,"MyISAM") == 0) {
+		if (strcasecmp($currentEngine,"MyISAM") == 0) {
 			return true;
 		}
 		return false;

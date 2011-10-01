@@ -107,7 +107,7 @@ function wikiplugin_trackerstat($data, $params)
 		return tra('Permission denied');
 	}
 	if (!empty($show_lastmodif)) {
-		$date = $trklib->lastModif($trackerId);
+		$date = $trklib->lastModif ($trackerId);
 		if (!function_exists('smarty_modifier_tiki_date_format')) {
 			include('lib/smarty_tiki/modifier.tiki_date_format.php');
 		}

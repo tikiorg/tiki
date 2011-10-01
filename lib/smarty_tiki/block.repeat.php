@@ -30,7 +30,7 @@ function smarty_block_repeat($params, $content, $smarty)
 { 
 	if (!empty($content)) { 
 		$intCount = intval($params['count']); 
-		if($intCount < 0) { 
+		if ($intCount < 0) { 
 			$smarty->trigger_error("block: negative 'count' parameter"); 
 			return; 
 		} 

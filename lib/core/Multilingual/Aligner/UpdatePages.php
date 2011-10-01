@@ -131,7 +131,7 @@ class Multilingual_Aligner_UpdatePages
 				 echo "sentence-> ".$item."<br/>";
 				 $content = implode(' ', $final_updated);
 				 echo "$content<br/>";
-				 if(strcmp("Firefox supporte les caract�res internationaux pour des langues tel que lindien. Added_Source This is a test statement. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.", $content)==0)
+				 if (strcmp("Firefox supporte les caract�res internationaux pour des langues tel que lindien. Added_Source This is a test statement. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.", $content)==0)
 				 echo "match<br/>";
 				 else
 				 echo "fail";

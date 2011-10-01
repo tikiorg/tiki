@@ -7,7 +7,7 @@
 
 //this script may only be included - so its better to die if called directly.
 global $access, $prefs, $smarty;
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 	$errorReportingLevel = 0;

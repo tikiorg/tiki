@@ -131,9 +131,9 @@ class mime
 				}
 				$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
 				$back['body'] = mime::decodeBody($body, $encoding);
-				if( array_key_exists('ctype_parameters', $back) and isset($back['ctype_parameters']) and $back['ctype_parameters'] and (!isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == "iso-8858-1") and function_exists('utf8_encode')) { 
+				if ( array_key_exists('ctype_parameters', $back) and isset($back['ctype_parameters']) and $back['ctype_parameters'] and (!isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == "iso-8858-1") and function_exists('utf8_encode')) { 
 					$back[$type][] = utf8_encode($back['body']);
-				} elseif( array_key_exists('ctype_parameters', $back) and isset($back['ctype_parameters']) and $back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) != "utf-8" and function_exists('mb_convert_encoding')) {
+				} elseif ( array_key_exists('ctype_parameters', $back) and isset($back['ctype_parameters']) and $back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) != "utf-8" and function_exists('mb_convert_encoding')) {
 					$back[$type][] = mb_convert_encoding($back['body'],"utf-8", $back['ctype_parameters']['charset']);
 				} else {
 					$back[$type][] = $back['body'];

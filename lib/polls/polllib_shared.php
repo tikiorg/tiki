@@ -120,14 +120,14 @@ class PollLibShared extends TikiLib
 			$poll = array();
 			$poll['info'] = $this->get_poll($row['pollId']);
 
-			if( $cat_type == 'wiki page' ) {
+			if ( $cat_type == 'wiki page' ) {
 				$poll['info'] = $this->pollnameclean( $poll['info'], $cat_objid );
 			}
 
 			$poll['options'] = $this->list_poll_options($row['pollId']);
 			$poll['title'] = $poll['info']['title'];
 
-			if( $user ) {
+			if ( $user ) {
 				$poll['vote'] = $tikilib->get_user_vote( 'poll' . $row['pollId'], $user );
 			} else {
 				$poll['vote'] = false;
@@ -136,7 +136,7 @@ class PollLibShared extends TikiLib
 			$out[] = $poll;
 
 			// Unless multiple polls per object is enabled, end after the first
-			if( $prefs['poll_multiple_per_object'] != 'y' ) {
+			if ( $prefs['poll_multiple_per_object'] != 'y' ) {
 				break;
 			}
 		}
@@ -179,7 +179,7 @@ class PollLibShared extends TikiLib
 		$query = "delete from `tiki_poll_objects` where `catObjectId`=?";
 		$bindvars = array((int)$catObjectId);
 
-		if( $pollId ) {
+		if ( $pollId ) {
 			$query .= ' AND `pollId` = ?';
 			$bindvars[] = $pollId;
 		}

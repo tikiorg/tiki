@@ -16,7 +16,7 @@ class TikiFilter
 	 */
 	public static function get( $filter )
 	{
-		if( $filter instanceof Zend_Filter_Interface ) {
+		if ( $filter instanceof Zend_Filter_Interface ) {
 			return $filter;
 		}
 

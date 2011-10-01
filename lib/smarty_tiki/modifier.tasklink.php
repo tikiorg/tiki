@@ -32,7 +32,7 @@ include_once('lib/tasks/tasklib.php');
 		   }while(($my_count <= 15) && ($my_pos!=''));
 		}
 		if (($my_length >= 1300) || ($my_count >= 16)){
-			if($my_count < 15) {
+			if ($my_count < 15) {
 				$my_pos = 1300;
 			}
 			$description .= substr($info['description'],0,min(1300,$my_pos+1));

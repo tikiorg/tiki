@@ -37,7 +37,7 @@ if (($article_data['publishDate'] > $tikilib->now) && ($article_data['author'] !
 	die;
 }
 
-if ($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y'){
+if ($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y') {
 	$smarty->assign('msg', tra("Article is not published yet"));
 	$smarty->display("error.tpl");
 	die;
@@ -177,7 +177,7 @@ $smarty->assign_by_ref('topics', $topics);
 
 $objId = $_REQUEST['articleId'];
 if ($prefs['feature_categories'] == 'y') {
-	$is_categorized = $categlib->is_categorized('article',$objId);
+	$is_categorized = $categlib->is_categorized('article', $objId);
 }
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {

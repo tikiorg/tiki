@@ -125,7 +125,7 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 	} // }}}
 
 	private function getApplicable( $query = '' ) {
-		if( empty( $query ) ) {
+		if ( empty( $query ) ) {
 			return $this->lastUsed = $this->slave;
 		}
 

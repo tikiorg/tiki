@@ -106,11 +106,13 @@ if ($output["data"] == "EMPTY") {
 		$aux_subject = null;
 		foreach ($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
-				$data2['value'] = $trklib->field_render_value(array(
-					'field' => $field,
-					'item' => $item,
-					'process' => 'y',
-				));
+				$data2['value'] = $trklib->field_render_value(
+					array(
+						'field' => $field,
+						'item' => $item,
+						'process' => 'y',
+					)
+				);
 				if ($data2['value'] == '') {
 					$data2['value'] = '(' . tra('empty') . ')';
 				} else {

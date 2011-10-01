@@ -3062,7 +3062,7 @@ class TikiLib extends TikiDb_Bridge
 			$mid .= empty($mid) ? ' where (' : ' and (';
 			$tmp_mid = '';
 			if (is_array($initial)) {
-				foreach($initial as $i) {
+				foreach ($initial as $i) {
 					if ( ! empty($tmp_mid) ) $tmp_mid .= ' or ';
 					$tmp_mid .= ' `pageName` like ? ';
 					$bindvars[] = $i.'%';

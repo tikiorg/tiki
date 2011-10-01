@@ -44,10 +44,12 @@ if ($output["data"] == "EMPTY") {
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
 	foreach ($changes["data"] as $data) {
-		$data["$descId"] = $tikilib->parse_data($data[$descId], array(
-			'print' => true,
-			'is_html' => true,
-		));
+		$data["$descId"] = $tikilib->parse_data($data[$descId],
+			array(
+				'print' => true,
+				'is_html' => true,
+			)
+		);
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']), 'blogpost', urlencode($data['title']));
 		$tmp[] = $data;
 	}

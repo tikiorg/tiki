@@ -405,7 +405,7 @@ function switchEditor(mode, form) {
 ";
 		}
 			
-		if( $editWarning ) {
+		if ( $editWarning ) {
 			$headerlib->add_js($js_editlock);
 		}
 		$headerlib->add_js($js_editconfirm);

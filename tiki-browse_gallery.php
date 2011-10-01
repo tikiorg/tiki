@@ -32,7 +32,7 @@ if (!isset($_REQUEST["galleryId"])) {
 }
 $smarty->assign('individual', 'n');
 
-$tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
+$tikilib->get_perm_object($_REQUEST['galleryId'], 'image gallery');
 
 $access->check_permission('tiki_p_view_image_gallery');
 

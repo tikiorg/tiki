@@ -17,7 +17,7 @@
  *       'object' => 'HomePage',
  *   ) );
  *
- *   if( $perms->view_calendar ) {
+ *   if ( $perms->view_calendar ) {
  *      // ...
  *   }
  *
@@ -107,7 +107,7 @@ class Perms
 	 * a resolver appropriate to the context requested.
 	 */
 	public static function get( $context = array() ) {
-		if( ! is_array( $context ) ) {
+		if ( ! is_array( $context ) ) {
 			$args = func_get_args();
 			$context = array(
 				'type' => $args[0],
@@ -115,7 +115,7 @@ class Perms
 			);
 		}
 
-		if( self::$instance ) {
+		if ( self::$instance ) {
 			return self::$instance->getAccessor( $context );
 		} else {
 			$accessor = new Perms_Accessor;
@@ -132,11 +132,11 @@ class Perms
 		$accessor->setPrefix( $this->prefix );
 		$accessor->setGroups( $this->groups );
 
-		if( $this->checkSequence ) {
+		if ( $this->checkSequence ) {
 			$accessor->setCheckSequence( $this->checkSequence );
 		}
 
-		if( $resolver = $this->getResolver( $context ) ) {
+		if ( $resolver = $this->getResolver( $context ) ) {
 			$accessor->setResolver( $resolver );
 		}
 
@@ -178,7 +178,7 @@ class Perms
 		$remaining = array();
 
 		foreach( $data as $entry ) {
-			if( $dataKey ) {
+			if ( $dataKey ) {
 				$value = $entry[$dataKey];
 			} else {
 				$value = $entry;
@@ -187,7 +187,7 @@ class Perms
 			$remaining[] = $value;
 		}
 
-		if( count( $remaining ) ) {
+		if ( count( $remaining ) ) {
 			self::$instance->loadBulk( $baseContext, $bulkKey, $remaining );
 		}
 	}
@@ -212,7 +212,7 @@ class Perms
 		$valid = array();
 
 		foreach( $data as $entry ) {
-			if( self::hasPerm( $baseContext, $contextMap, $entry, $permission ) ) {
+			if ( self::hasPerm( $baseContext, $contextMap, $entry, $permission ) ) {
 				$valid[] = $entry;
 			}
 		}
@@ -245,7 +245,7 @@ class Perms
 
 		foreach( $data as $row ) {
 			$type = $row[$discriminator];
-			if( ! isset( $perType[$type] ) ) {
+			if ( ! isset( $perType[$type] ) ) {
 				$perType[$type] = array();
 			}
 
@@ -265,7 +265,7 @@ class Perms
 		foreach( $data as $entry ) {
 			$type = $entry[$discriminator];
 
-			if( self::hasPerm( $baseContext, $contextMapMap[$type], $entry, $permissionMap[$type] ) ) {
+			if ( self::hasPerm( $baseContext, $contextMapMap[$type], $entry, $permissionMap[$type] ) ) {
 				$valid[] = $entry;
 			}
 		}
@@ -296,19 +296,19 @@ class Perms
 		foreach( $this->factories as $factory ) {
 			$hash = $factory->getHash( $context );
 
-			if( isset( $this->hashes[$hash] ) ) {
+			if ( isset( $this->hashes[$hash] ) ) {
 				$resolver = $this->hashes[$hash];
 				break;
 			} else {
 				$toSet[] = $hash;
 			}
 
-			if( $resolver = $factory->getResolver( $context ) ) {
+			if ( $resolver = $factory->getResolver( $context ) ) {
 				break;
 			}
 		}
 
-		if( ! $resolver ) {
+		if ( ! $resolver ) {
 			$resolver = false;
 		}
 

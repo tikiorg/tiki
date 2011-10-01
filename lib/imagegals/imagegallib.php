@@ -86,7 +86,7 @@ class ImageGalsLib extends TikiLib
 		$this->file_uploads=ini_get('file_uploads');
 		$this->upload_max_filesize=ini_get('upload_max_filesize');
 		$this->post_max_size=ini_get('post_max_size');
-		if($this->file_uploads==0) {
+		if ($this->file_uploads==0) {
 		   $this->max_img_upload_size=0;
 		}
 	}
@@ -96,7 +96,7 @@ class ImageGalsLib extends TikiLib
 		global $tikilib;
 	   $this->upload_max_filesize=$tikilib->return_bytes($this->upload_max_filesize);
 	   $this->post_max_size=$tikilib->return_bytes($this->post_max_size);
-	   if($this->file_uploads==0) {
+	   if ($this->file_uploads==0) {
 		  return(0);
 	   } else {
 		  return(($this->post_max_size > $this->upload_max_filesize) ? $this->post_max_size : $this->upload_max_filesize);
@@ -194,7 +194,7 @@ class ImageGalsLib extends TikiLib
 		fclose ($fp);
 		$this->readimagefromstring();
 
-		if($this->validhandle()) echo $data;
+		if ($this->validhandle()) echo $data;
 	}
 
 	//Get sizes. Image must be loaded before
@@ -633,7 +633,7 @@ class ImageGalsLib extends TikiLib
 		global $prefs;
 	        
 		$galid = $this->get_gallery_from_image($imageid);
-		if($ysize==0) {
+		if ($ysize==0) {
 			$ysize=$xsize;
 		}
 
@@ -670,7 +670,7 @@ class ImageGalsLib extends TikiLib
 		}
 
 		// now we can start rebuilding the image
-		//if(!function_exists("ImageCreateFromString")) return false;
+		//if (!function_exists("ImageCreateFromString")) return false;
 		#get image and other infos
 		$this->get_image($imageid);
 		$galinfo = $this->get_gallery_info($galid);
@@ -746,7 +746,7 @@ class ImageGalsLib extends TikiLib
 			//mysql does'nt have subqueries. Bad.
 			$bindvars=array();
 			$query1 = "select `imageId`,`path` from `tiki_images`";
-			if($galleryId>-1) { // if galleryid == -1 then all galleries
+			if ($galleryId>-1) { // if galleryid == -1 then all galleries
 				$query1 .= ' where `galleryId`=?';
 				$bindvars=array((int)$galleryId);
 			}
@@ -760,10 +760,10 @@ class ImageGalsLib extends TikiLib
 
 				$result2 = $this->query($query2,$bindvars2);
 				while($res2=$result2->fetchRow()) {
-					if(!empty($res['path'])) {
-						if($res2['type']=='s') { $ext = ".scaled_" . $res2['xsize'] . "x" . $res2['ysize'];}
-						if($res2['type']=='t') { $ext = ".thumb";}
-						if($res2['type']=='s' || $res2['type']=='t') { // in case we add other types later
+					if (!empty($res['path'])) {
+						if ($res2['type']=='s') { $ext = ".scaled_" . $res2['xsize'] . "x" . $res2['ysize'];}
+						if ($res2['type']=='t') { $ext = ".thumb";}
+						if ($res2['type']=='s' || $res2['type']=='t') { // in case we add other types later
 							@unlink($prefs['gal_use_dir'].$res['path'].$ext );
 						}
 					}
@@ -1109,7 +1109,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 					$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
 					$result=$this->query($query2,$bindvars);
 					$res = $result->fetchRow();
-					if($res['sortdirection'] == 'asc') {
+					if ($res['sortdirection'] == 'asc') {
 						$res['sortdirection']='desc';
 					} else {
 						$res['sortdirection']='asc';
@@ -1520,7 +1520,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 
 		if ($xsize != 0 && $ysize != 0) {
 			$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
-			if($xsize == $ysize) {
+			if ($xsize == $ysize) {
 				// we don't know yet.
 				$mid = "and (d.`xsize` = ? or d.`ysize` = ?) order by `xysize` desc";
 			} else {
@@ -1528,7 +1528,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 			}
 		}
 		
-		if(!isset($bindvars) || !is_array($bindvars)) {
+		if (!isset($bindvars) || !is_array($bindvars)) {
 			$bindvars=array((int)$id,$itype);
 		}
 
@@ -1581,7 +1581,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 
 		
 		
-		if(!isset($bindvars) || !is_array($bindvars)) {
+		if (!isset($bindvars) || !is_array($bindvars)) {
 			$bindvars=array((int)$id,$itype);
 		}
 
@@ -1659,7 +1659,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 
 			// If the image was a .gif then the thumbnail has 0 bytes if the thumbnail
 			// is empty then use the full image as thumbnail
-			//  if($ext==".thumb" && filesize($prefs['gal_use_dir'].$res["path"].$ext)==0 ) {
+			//  if ($ext==".thumb" && filesize($prefs['gal_use_dir'].$res["path"].$ext)==0 ) {
 			//   $ext='';
 			//}
 			$this->readimagefromfile($prefs['gal_use_dir'] . $res["path"] . $ext);
@@ -1671,7 +1671,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 			$this->readimagefromstring();
 
 		// etag checks
-		if($this->etag=='') {
+		if ($this->etag=='') {
 		   $this->add_etag();
 		}
 
@@ -1683,7 +1683,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
       // stores md5 based etag in the tables
       // this function assumes that the $this->imageId and other
       // are loaded before (through $this->get_image() or similar)
-      if(isset($this->image)) {//avoid broken images through warning
+      if (isset($this->image)) {//avoid broken images through warning
         $etag=md5($this->image);
         $query='update `tiki_images_data` set `etag`=? where `imageId`=? and `xsize`=? and `ysize`=? and `type`=?';
         $bindvars=array($etag,(int) $this->imageId,(int) $this->xsize,(int) $this->ysize,$this->type);
@@ -1725,7 +1725,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 	       }
        }
 
-       if(!@is_array($bindvars)) {
+       if (!@is_array($bindvars)) {
 	       $bindvars=array((int)$id,$itype);
        }
 
@@ -1812,7 +1812,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 
 		if ($galleryId > 0) {
 			//$res = $result->fetchRow();
-			//if( ($user == 'admin') || ($res["user"]==$user) ) {
+			//if ( ($user == 'admin') || ($res["user"]==$user) ) {
 			$query = "update `tiki_galleries` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?, 
                 `thumbSizeX`=?, `thumbSizeY`=?, `description`=?, `theme`=?,
                 `lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
@@ -2023,12 +2023,12 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$ret['nextscale']=$this->getOne($query2,$bindvars);
 		$query2 =$query.'and `scale`<? order by `scale` desc';
 		$ret['prevscale']=$this->getOne($query2,$bindvars);
-		if($ret['nextscale']) {
+		if ($ret['nextscale']) {
 			$ret['nexttype']='s';
 		} else {
 			$ret['nexttype']='o';
 		}
-		if($ret['prevscale']) {
+		if ($ret['prevscale']) {
 			$ret['prevtype']='s';
 		} else {
 			$ret['prevtype']='o';
@@ -2205,7 +2205,7 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		global $errstr;
     $this->clear_class_vars(); //cleanup
     
-    if($direction!='to_fs' && $direction!='to_db') {
+    if ($direction!='to_fs' && $direction!='to_db') {
       return(false);
     }
     
@@ -2216,25 +2216,25 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     // get the storage location
     $query='select `path` from `tiki_images` where `imageId`=?';
     $path=$this->getOne($query,array($imageId),false);
-    if($path===false) { // imageId not found
+    if ($path===false) { // imageId not found
       return(false);
     }
     
-    if((empty($path) && $direction=='to_fs') || (!empty($path) && $direction=='to_db')) {
+    if ((empty($path) && $direction=='to_fs') || (!empty($path) && $direction=='to_db')) {
       // move image
       // load image
       $this->get_image($imageId);
       $query='update `tiki_images` set `path`=? where `imageId`=?';
-      if($direction=='to_fs') {
+      if ($direction=='to_fs') {
    $this->path=md5(uniqid($this->filename));
         // store_image data did already overwrite the "data" field in tiki_images_data
         $this->query($query,array($this->path,$imageId));
       }
       // write image
       $this->store_image_data(true);
-      if($direction=='to_db') {
+      if ($direction=='to_db') {
         // remove image in fs 
-        if(!@unlink($prefs['gal_use_dir'].$this->path)) {
+        if (!@unlink($prefs['gal_use_dir'].$this->path)) {
           $errstr = tra("unlink failed");
         }
         $this->query($query,array('',$imageId));
@@ -2252,7 +2252,7 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $n=0;
     $errors=0;
     $timeout=false;
-    if($direction!='to_fs' && $direction!='to_db') {
+    if ($direction!='to_fs' && $direction!='to_db') {
       return(false);
     }
     
@@ -2260,7 +2260,7 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $this->rebuild_scales($galId);
     
     // move images store
-    if($galId==-1) {
+    if ($galId==-1) {
       $query='select `imageId` from `tiki_images`';
       $result=$this->query($query,array());
     } else {
@@ -2269,12 +2269,12 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     }
     while ($res = $result->fetchRow()) {
       $r=$this->move_image_store($res['imageId'],$direction);
-      if($r!==false) {
+      if ($r!==false) {
         $n+=$r;
       } else {
   $errors++; 
       }
-      if($met-time()+$st < 3) { // avoid timeouts so that we dont end with broken images
+      if ($met-time()+$st < 3) { // avoid timeouts so that we dont end with broken images
    $timeout=true;
    break;
       }

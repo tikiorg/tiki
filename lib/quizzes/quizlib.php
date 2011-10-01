@@ -197,7 +197,7 @@ class QuizLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 			$res["avgavg"] = ($res["maxPoints"] != 0) ? $res["points"] / $res["maxPoints"] * 100 : 0.0;
 
-			if(isset($passingperct) && $passingperct > 0) {
+			if (isset($passingperct) && $passingperct > 0) {
 				$res['ispassing'] = ($res["avgavg"] >= $passingperct)?true:false;
 			}
 

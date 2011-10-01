@@ -20,11 +20,11 @@ function smarty_function_rss($params, $smarty)
 	include_once('lib/rss/rsslib.php');
 	extract($params, EXTR_SKIP);
 	// Param = zone
-	if(empty($id)) {
+	if (empty($id)) {
 		$smarty->trigger_error("assign: missing id parameter");
 		return;
 	}
-	if(empty($max)) {
+	if (empty($max)) {
 		$max = 99;
 	}
 

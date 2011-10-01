@@ -13,7 +13,8 @@ if ($prefs['feature_minical'] != 'y') {
 if (!$user) {
 	die;
 }
-function _csv($item) {
+function _csv($item)
+{
 	$item = str_replace('"', '""', $item);
 	//  if (strpos($item, ",") !== FALSE) {
 	$item = '"' . $item . '"';

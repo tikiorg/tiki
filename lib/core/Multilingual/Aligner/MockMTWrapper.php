@@ -12,20 +12,20 @@ class Multilingual_Aligner_MockMTWrapper extends Multilingual_Aligner_SentenceAl
 
 	public function getTranslationInOtherLanguage($source_lng_sentence, $source_lng) {
 	
-		if($source_lng=="en")
+		if ($source_lng=="en")
 			$k=1;
-		else if($source_lng=="fr")
+		else if ($source_lng=="fr")
 			$k=0;
 		foreach($this->alignment_table as $key=>$val)
 		{
-			if($k==1)
+			if ($k==1)
 			{
-				if($key==$source_lng_sentence)
+				if ($key==$source_lng_sentence)
 				return $val;
 			}
 			else
 			{
-				if($val==$source_lng_sentence)
+				if ($val==$source_lng_sentence)
 				return $key;
 			}	
 				 

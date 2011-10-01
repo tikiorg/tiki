@@ -9,7 +9,8 @@ require_once('tiki-setup.php');
 $access->check_feature('feature_invite');
 $access->check_permission('tiki_p_invite');
 
-function list_inviteds($offset=0, $max=-1, $inviter=null, $status=null, $nostatus=null, $sort_mode='ts_desc') {
+function list_inviteds($offset=0, $max=-1, $inviter=null, $status=null, $nostatus=null, $sort_mode='ts_desc')
+{
 	global $tikilib;
 	$bindvars = array();
 	if (!empty($inviter)) {

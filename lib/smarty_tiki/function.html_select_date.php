@@ -137,7 +137,7 @@ function smarty_function_html_select_date($params, $smarty)
                 break;
 
             default:
-                if(!is_array($_value)) {
+                if (!is_array($_value)) {
                     $extra_attrs .= ' '.$_key.'="'.smarty_function_escape_special_chars($_value).'"';
                 } else {
                     $smarty->trigger_error("html_select_date: extra attribute '$_key' cannot be an array", E_USER_NOTICE);
@@ -180,7 +180,7 @@ function smarty_function_html_select_date($params, $smarty)
             // force start year to include given date if not explicitly set
             $start_year = $time[0];
         }
-        if($end_year < $time[0] && !isset($params['end_year'])) {
+        if ($end_year < $time[0] && !isset($params['end_year'])) {
             // force end year to include given date if not explicitly set
             $end_year = $time[0];
         }
@@ -195,7 +195,7 @@ function smarty_function_html_select_date($params, $smarty)
     	$field_separator_count++;
         $month_names = array();
         $month_values = array();
-        if(isset($month_empty)) {
+        if (isset($month_empty)) {
             $month_names[''] = $month_empty;
             $month_values[''] = '';
         }
@@ -291,7 +291,7 @@ function smarty_function_html_select_date($params, $smarty)
                 sort($years, SORT_NUMERIC);
             }
             $yearvals = $years;
-            if(isset($year_empty)) {
+            if (isset($year_empty)) {
                 array_unshift($years, $year_empty);
                 array_unshift($yearvals, '');
             }
@@ -332,7 +332,7 @@ function smarty_function_html_select_date($params, $smarty)
                 break;
         }
         // Add the field seperator
-        if($i < $field_separator_count) {
+        if ($i < $field_separator_count) {
             $html_result .= $field_separator;
         }
     }

@@ -44,7 +44,8 @@ class Services_ResultLoaderTest extends PHPUnit_Framework_TestCase
 		$this->assertLoaderData(array(2, 4, 6, 8), new Services_ResultLoader(array($this, 'read'), 3));
 	}
 
-	function assertLoaderData($expect, $loader) {
+	function assertLoaderData($expect, $loader)
+	{
 		$accumulate = array();
 		foreach ($loader as $value) {
 			$accumulate[] = $value;

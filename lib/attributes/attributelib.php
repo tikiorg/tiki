@@ -31,11 +31,11 @@ class AttributeLib extends TikiDb_Bridge
 	 * (also grep "set_attribute" just in case there are undocumented names already used)
 	 */
 	function set_attribute( $type, $objectId, $attribute, $value ) {
-		if( false === $name = $this->get_valid( $attribute ) ) {
+		if ( false === $name = $this->get_valid( $attribute ) ) {
 			return false;
 		}
 
-		if( $value == '' ) {
+		if ( $value == '' ) {
 			$this->attributes->delete(array(
 				'type' => $type,
 				'itemId' => $objectId,

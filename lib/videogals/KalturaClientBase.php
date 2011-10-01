@@ -304,7 +304,7 @@ class KalturaClientBase
 		if ($paramValue === null)
 			return;
 			
-		if(is_object($paramValue) && $paramValue instanceof KalturaObjectBase)
+		if (is_object($paramValue) && $paramValue instanceof KalturaObjectBase)
 		{
 			$this->addParam($params, "$paramName:objectType", get_class($paramValue));
 		    foreach($paramValue as $prop => $val)
@@ -313,7 +313,7 @@ class KalturaClientBase
 			return;
 		}	
 		
-		if(!is_array($paramValue))
+		if (!is_array($paramValue))
 		{
 			$params[$paramName] = $paramValue;
 			return;
@@ -501,7 +501,7 @@ abstract class KalturaObjectBase
 	{
 		if ($paramValue !== null)
 		{
-			if($paramValue instanceof KalturaObjectBase)
+			if ($paramValue instanceof KalturaObjectBase)
 			{
 				$params[$paramName] = $paramValue->toParams();
 			}

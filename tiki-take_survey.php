@@ -22,7 +22,7 @@ if (!isset($_REQUEST["surveyId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$tikilib->get_perm_object( $_REQUEST["surveyId"], 'survey' );
+$tikilib->get_perm_object($_REQUEST["surveyId"], 'survey');
 
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);

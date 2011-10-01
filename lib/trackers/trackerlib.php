@@ -605,7 +605,7 @@ class TrackerLib extends TikiLib
 		$join = '';
 		$where = '';
 		$bindvars = array();
-		if( $jail = $categlib->get_jail() ) {
+		if ( $jail = $categlib->get_jail() ) {
 			$categlib->getSqlJoin($jail, 'tracker', '`tiki_trackers`.`trackerId`', $join, $where, $bindvars);
 		}	
 		if ($find) {
@@ -1147,7 +1147,7 @@ class TrackerLib extends TikiLib
 		}
 
 		$needToCheckCategPerms = $this->need_to_check_categ_perms($allfields);
-		if( $needToCheckCategPerms) {
+		if ( $needToCheckCategPerms) {
 			$categlib = TikiLib::lib('categ');
 			if ( $jail = $categlib->get_jail() ) {
 				$categlib->getSqlJoin($jail, 'trackeritem', 'tti.`itemId`', $join, $mid, $bindvars);
@@ -1508,12 +1508,12 @@ class TrackerLib extends TikiLib
 
 	function _format_data($field, $data) {
 		$data = trim($data);
-		if($field['type'] == 'a') {
-			if(isset($field["options_array"][3]) and $field["options_array"][3] > 0 and strlen($data) > $field["options_array"][3]) {
+		if ($field['type'] == 'a') {
+			if (isset($field["options_array"][3]) and $field["options_array"][3] > 0 and strlen($data) > $field["options_array"][3]) {
 				$data = substr($data,0,$field["options_array"][3])." (...)";
 			}
 		} elseif ($field['type'] == 'c') {
-			if($data != 'y') $data = 'n';
+			if ($data != 'y') $data = 'n';
 		}
 		return $data;
 	}
@@ -1536,17 +1536,17 @@ class TrackerLib extends TikiLib
 		for ($i = 0; $i < $temp_max; $i++) {
 			$column[$i] = -1;
 			for ($j = 0; $j < $nColumns; $j++) {
-				if($fields["data"][$i]['name'] == $data[$j]) {
+				if ($fields["data"][$i]['name'] == $data[$j]) {
 					$column[$i] = $j;
 				}
-				if($indexField == $data[$j]) {
+				if ($indexField == $data[$j]) {
 					$indexId = $j;
 				}
 			}
 		}
 
 		// If a primary key was specified, check that it was found among the columns of the file
-		if($indexField && $indexId == -1) return -1;
+		if ($indexField && $indexId == -1) return -1;
 
 		$total = 0;
 		while (($data = fgetcsv($csvHandle, 4096, $csvDelimiter)) !== FALSE) {
@@ -1942,7 +1942,7 @@ class TrackerLib extends TikiLib
 					break;
 				// numeric
 				case 'n':
-					if(!is_numeric($f['value'])) {
+					if (!is_numeric($f['value'])) {
 						$f['error'] = tra('Field is not numeric');
 						$erroneous_values[] = $f;
 					}
@@ -1950,7 +1950,7 @@ class TrackerLib extends TikiLib
 
 				// email
 				case 'm':
-					if(!validate_email($f['value'],$prefs['validateEmail'])) {
+					if (!validate_email($f['value'],$prefs['validateEmail'])) {
 						$erroneous_values[] = $f;
 					}
 					break;
@@ -2000,7 +2000,7 @@ class TrackerLib extends TikiLib
 		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
 		$imgList = array();
 		foreach($fieldList['data'] as $f) {
-			if( $f['type'] == 'i' ) {
+			if ( $f['type'] == 'i' ) {
 				$imgList[] = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
 			}
 		}
@@ -2054,7 +2054,7 @@ class TrackerLib extends TikiLib
 
 		// ---- delete image from disk -------------------------------------
 		foreach($imgList as $img) {
-			if( file_exists($img) ) {
+			if ( file_exists($img) ) {
 				unlink( $img );
 			}
 		}
@@ -2314,7 +2314,7 @@ class TrackerLib extends TikiLib
 			// remove images when needed
 			$old_field = $this->get_tracker_field($fieldId);
 			if (!empty($old_field['fieldId'])) {
-				if( $old_field['type'] == 'i' && $type != 'i' ) {
+				if ( $old_field['type'] == 'i' && $type != 'i' ) {
 					$this->remove_field_images( $fieldId );
 				}
 
@@ -2436,7 +2436,7 @@ class TrackerLib extends TikiLib
 		// ---- delete image from disk -------------------------------------
 		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
 		foreach($fieldList['data'] as $f) {
-			if( $f['type'] == 'i' ) {
+			if ( $f['type'] == 'i' ) {
 				$this->remove_field_images($f['fieldId']);
 			}
 		}
@@ -2475,7 +2475,7 @@ class TrackerLib extends TikiLib
 		// -------------------------------------
 		// remove images when needed
 		$field = $this->get_tracker_field($fieldId);
-		if( $field['type'] == 'i' ) {
+		if ( $field['type'] == 'i' ) {
 			$this->remove_field_images($fieldId);
 		}
 
@@ -2926,7 +2926,7 @@ class TrackerLib extends TikiLib
 		}
 		
 		$watchers_outbound = array();
-		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
+		if ( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
 			$emails3 = preg_split('/,/', $options['outboundEmail']);
 			foreach ($emails3 as $w) {
 				global $user_preferences;
@@ -3170,7 +3170,7 @@ class TrackerLib extends TikiLib
 	function replace_pretty_tracker_refs( &$value ) {
 		$smarty = TikiLib::lib('smarty');
 		
-		if( is_array( $value ) ) {
+		if ( is_array( $value ) ) {
 			foreach( $value as &$v ) {
 				$this->replace_pretty_tracker_refs( $v );
 			}
@@ -3200,7 +3200,7 @@ class TrackerLib extends TikiLib
 			'objectType' => 'trackeritem',
 		));
 	}
-	function lastModif($trackerId) {
+	function lastModif ($trackerId) {
 		return $this->items()->fetchOne($this->items()->max('lastModif'), array('trackerId' => (int) $trackerId));
 	}
 	function get_field($fieldId, $fields) {
@@ -3583,7 +3583,7 @@ class TrackerLib extends TikiLib
 		global $prefs;
 
 		// Don't send a notification if this operation is part of a bulk import
-		if($args['bulk_import']) {
+		if ($args['bulk_import']) {
 			return;
 		}
 
@@ -3608,7 +3608,7 @@ class TrackerLib extends TikiLib
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
 			include_once('lib/webmail/tikimaillib.php');
-			if( $simpleEmail == "n" ) {
+			if ( $simpleEmail == "n" ) {
 				$desc = $this->get_isMain_value($trackerId, $itemId);
 				if ($tracker_info['doNotShowEmptyField'] === 'y') {	// remove empty fields if tracker says so
 					$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
@@ -3677,10 +3677,10 @@ class TrackerLib extends TikiLib
 				$subject_test_changed = preg_match( $the_string, $the_data, $matches );
 				$subject = '';
 
-				if( $subject_test_unchanged == 1 ) {
+				if ( $subject_test_unchanged == 1 ) {
 					$subject = $unchanged_matches[1];
 				}
-				if( $subject_test_changed == 1 ) {
+				if ( $subject_test_changed == 1 ) {
 					$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
 				}
 
@@ -3703,7 +3703,7 @@ class TrackerLib extends TikiLib
 
 					$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
 					$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
-					if( ! empty( $my_sender ) ) {
+					if ( ! empty( $my_sender ) ) {
 						$mail->setHeader("Reply-To", $my_sender);
 					}
 					$mail->send(array($watcher['email']));

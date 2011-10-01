@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 // Check to see if admin has closed the site
 if ( $tiki_p_access_closed_site != 'y' and ! isset($bypass_siteclose_check) ) {

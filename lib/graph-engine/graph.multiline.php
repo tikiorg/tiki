@@ -47,7 +47,7 @@ class MultilineGraphic extends GridBasedGraphic // {{{1
 			$min =  min( $extremes );
 		}
 
-		if( $min > 0 )
+		if ( $min > 0 )
 			$min = 0;
 
 		return $min;
@@ -84,18 +84,18 @@ class MultilineGraphic extends GridBasedGraphic // {{{1
 			$lines[] = $data['y' . $i];
 
 		$count = count( $lines );
-		if( !isset( $data['color'] ) )
+		if ( !isset( $data['color'] ) )
 		{
 			$data['color'] = array();
 			for( $i = 0; $count > $i; ++$i )
 				$data['color'][] = $this->_getColor();
 		}
 
-		if( !isset( $data['style'] ) )
+		if ( !isset( $data['style'] ) )
 			for( $i = 0; $count > $i; ++$i )
 				$data['style'][] = 'Bold-LineStroke-' . $data['color'][$i];
 
-		if( isset( $data['label'] ) )
+		if ( isset( $data['label'] ) )
 			foreach( $data['label'] as $key => $label )
 				$this->addLegend( $data['color'][$key], $label );
 
@@ -107,7 +107,7 @@ class MultilineGraphic extends GridBasedGraphic // {{{1
 			foreach( $line as $key => $value )
 			{
 				$x = $data['x'][$key];
-				if( !empty( $value ) || $value === 0 )
+				if ( !empty( $value ) || $value === 0 )
 					$this->lines[$style][$x] = $value;
 			}
 
@@ -127,12 +127,12 @@ class MultilineGraphic extends GridBasedGraphic // {{{1
 			$style = $renderer->getStyle( $style );
 			
 			foreach( $line as $x => $y )
-				if( $layout['grid-independant-location'] == 'horizontal' )
+				if ( $layout['grid-independant-location'] == 'horizontal' )
 				{
 					$xPos = $this->independant->getLocation( $x );
 					$yPos = $this->dependant->getLocation( $y );
 
-					if( !is_null( $previous ) )
+					if ( !is_null( $previous ) )
 						$renderer->drawLine( $previous['x'], $previous['y'], $xPos, $yPos, $style );
 
 					$previous = array( 'x' => $xPos, 'y' => $yPos );
@@ -142,7 +142,7 @@ class MultilineGraphic extends GridBasedGraphic // {{{1
 					$xPos = $this->dependant->getLocation( $y );
 					$yPos = $this->independant->getLocation( $x );
 
-					if( !is_null( $previous ) )
+					if ( !is_null( $previous ) )
 						$renderer->drawLine( $previous['x'], $previous['y'], $xPos, $yPos, $style );
 
 					$previous = array( 'x' => $xPos, 'y' => $yPos );

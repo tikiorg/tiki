@@ -31,7 +31,7 @@ if ( isset( $_REQUEST['source'], $_REQUEST['trans'] ) && count($_REQUEST['source
 	foreach ( $_REQUEST['trans'] as $k => $translation ) {
 		$source = $_REQUEST['source'][$k];
 
-		$translations->updateTrans( $source, $translation );
+		$translations->updateTrans($source, $translation);
 	}
 
 	exit;

@@ -22,7 +22,7 @@ function refresh_search_index() {
   global $prefs;
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
-  if($prefs['search_refresh_rate'] > 0 && rand(1,$prefs['search_refresh_rate'])==1) {
+  if ($prefs['search_refresh_rate'] > 0 && rand(1,$prefs['search_refresh_rate'])==1) {
  //    print "<pre>refreshing</pre>\n";
 
 

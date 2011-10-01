@@ -94,7 +94,7 @@ function smarty_function_listfilter($params, $smarty) {
 		var text = \$(this).text().toLowerCase();
 		for( i = 0; criterias.length > i; ++i ) {
 			word = criterias[i];
-			if( word.length > 0 && text.indexOf( word ) == -1 ) {
+			if ( word.length > 0 && text.indexOf( word ) == -1 ) {
 				\$(this).not('$exclude').hide();	// don't search within excluded elements
 				return;
 			}

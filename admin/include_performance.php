@@ -27,7 +27,7 @@ $opcode_stats = array(
 	'warning_xcache_blocked' => false,
 );
 
-if( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
+if ( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
 	$opcode_cache = 'APC';
 	
 	$sma = apc_sma_info();
@@ -45,10 +45,10 @@ if( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
 		'hit_miss' => $cache['num_misses'] / $hit_total,
 		'hit_total' => $hit_total,
 	);
-} elseif( function_exists( 'xcache_info' ) ) {
+} elseif ( function_exists( 'xcache_info' ) ) {
 	$opcode_cache = 'XCache';
 
-	if( ini_get( 'xcache.admin.enable_auth' ) ) {
+	if ( ini_get( 'xcache.admin.enable_auth' ) ) {
 		$opcode_stats['warning_xcache_blocked'] = true;
 	} else {
 		$stat_flag = 'xcache.stat';
@@ -80,19 +80,19 @@ if( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
 	}
 }
 
-if( $stat_flag ) {
+if ( $stat_flag ) {
 	$opcode_stats['warning_check'] = (bool) ini_get( $stat_flag );
 	$smarty->assign( 'stat_flag', $stat_flag );
 }
 
-if( isset( $opcode_stats['hit_total'] ) ) {
+if ( isset( $opcode_stats['hit_total'] ) ) {
 	$opcode_stats = array_merge( $opcode_stats, array(
 		'warning_fresh' => $opcode_stats['hit_total'] < 10000,
 		'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
 	) );
 }
 
-if( isset( $opcode_stats['memory_total'] ) ) {
+if ( isset( $opcode_stats['memory_total'] ) ) {
 	$opcode_stats = array_merge( $opcode_stats, array(
 		'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
 		'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,

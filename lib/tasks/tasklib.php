@@ -53,7 +53,7 @@ class TaskLib extends TikiLib
 		
 		$result = $this->query($query,$value); 
 		if ($res = $result->fetchRow()) {
-			if( ($res['user'] == $user and  $res['rights_by_creator'] == NULL) or ($res['creator'] == $user)) {
+			if ( ($res['user'] == $user and  $res['rights_by_creator'] == NULL) or ($res['creator'] == $user)) {
 				$res['disabled'] = false;
 			} else {
 				$res['disabled'] = true;

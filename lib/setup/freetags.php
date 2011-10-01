@@ -39,26 +39,26 @@ if ( isset($section) and isset($sections[$section])) {
 	$smarty->assign('freetags',$tags);
 	$headerlib->add_cssfile('css/freetags.css');
 
-	if( $tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y' ) {
+	if ( $tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y' ) {
 		$ft_lang = null;
 		$ft_multi = false;
 		if (!empty($tags['data'])) {
 			foreach( $tags['data'] as $row ) {
 				$l = $row['lang'];
 	
-				if( ! $l )
+				if ( ! $l )
 					continue;
 	
-				if( ! $ft_lang )
+				if ( ! $ft_lang )
 					$ft_lang = $l;
-				elseif( $ft_lang != $l ) {
+				elseif ( $ft_lang != $l ) {
 					$ft_multi = true;
 					break;
 				}
 			}
 		}
 
-		if( $ft_multi && $object = current_object() ) {
+		if ( $ft_multi && $object = current_object() ) {
 			$smarty->assign( 'freetags_mixed_lang', "tiki-freetag_translate.php?objType=" . urlencode($object['type']) . '&objId=' . urlencode($object['object']) );
 		}
 	}

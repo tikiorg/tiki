@@ -56,7 +56,7 @@ if (isset($_POST['list'])) {
 	$lists = array();
 	$list = array();
 	if (isset($_POST['select'])) $list = (array)$_POST['select'];
-	foreach($list as $token) {
+	foreach ($list as $token) {
 		$lists[$token] = $semanticlib->getLinksUsing($token);
 	}
 	$smarty->assign('link_lists', $lists);

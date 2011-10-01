@@ -53,7 +53,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	), $prefs);
 
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
-	if( $prefs['feature_sitemycode'] === 'y' ) {
+	if ( $prefs['feature_sitemycode'] === 'y' ) {
 		$custom_code = $prefs['sitemycode'];
 		
 		if (preg_replace('/\s/', '', $custom_code) != preg_replace('/\s/', '', $defaultsitemycode)) {	// line ends seem to differ
@@ -68,7 +68,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 		}
 	}
 	
-	if( !empty($prefs['feature_secondary_sitemenu_custom_code']) ) {
+	if ( !empty($prefs['feature_secondary_sitemenu_custom_code']) ) {
 		$custom_code = $prefs['feature_secondary_sitemenu_custom_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
@@ -78,7 +78,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 									"('secondary_sitemenu_custom_code','t',1,7200,'nobox=y','a:0:{}');");
 	}
 	
-	if( !empty($prefs['feature_sitemenu_custom_code']) ) {
+	if ( !empty($prefs['feature_sitemenu_custom_code']) ) {
 		$custom_code = $prefs['feature_sitemenu_custom_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
@@ -88,7 +88,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 									"('sitemenu_custom_code','o',1,7200,'nobox=y','a:0:{}');");
 	}
 	
-	if( !empty($prefs['feature_topbar_custom_code']) ) {
+	if ( !empty($prefs['feature_topbar_custom_code']) ) {
 		$custom_code = $prefs['feature_topbar_custom_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
@@ -98,7 +98,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 									"('topbar_custom_code','o',1,7200,'nobox=y','a:0:{}');");
 	}
 	
-	if( !empty($prefs['feature_custom_center_column_header']) ) {
+	if ( !empty($prefs['feature_custom_center_column_header']) ) {
 		$custom_code = $prefs['feature_custom_center_column_header'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
@@ -108,7 +108,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 									"('custom_center_column_header','p',1,7200,'nobox=y','a:0:{}');");
 	}
 	
-	if( !empty($prefs['bot_logo_code']) ) {
+	if ( !empty($prefs['bot_logo_code']) ) {
 		$custom_code = $prefs['bot_logo_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",

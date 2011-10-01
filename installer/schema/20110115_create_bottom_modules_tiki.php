@@ -48,7 +48,7 @@ function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	), $prefs);
 	
 	// add site report
-	if( $prefs['feature_site_report'] === 'y' || ($prefs['feature_site_send_link'] === 'y' && $prefs['feature_tell_a_friend'] === 'y') ) {
+	if ( $prefs['feature_site_report'] === 'y' || ($prefs['feature_site_send_link'] === 'y' && $prefs['feature_tell_a_friend'] === 'y') ) {
 		$params = '';
 		$params .= $prefs['feature_site_report'] !== 'y'	? '&report=n' : '';
 		$params .= $prefs['feature_share'] !== 'y'		 	? '&share=n' : '';
@@ -59,7 +59,7 @@ function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	}
 
 	// add poweredby
-	if( $prefs['feature_bot_bar_power_by_tw'] !== 'n' || $prefs['feature_bot_bar_icons'] === 'y' ) {
+	if ( $prefs['feature_bot_bar_power_by_tw'] !== 'n' || $prefs['feature_bot_bar_icons'] === 'y' ) {
 		$params = '';
 		$params .= $prefs['feature_bot_bar_power_by_tw'] !== 'y'	? '&tiki=n' : '';
 		$params .= $prefs['feature_bot_bar_icons'] !== 'y'		 	? '&icons=n' : '';
@@ -70,31 +70,31 @@ function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	}
 
 	// add rsslist
-	if( $prefs['feature_bot_bar_rss'] !== 'n' ) {
+	if ( $prefs['feature_bot_bar_rss'] !== 'n' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('rsslist','b',3,7200,'nobox=y','a:0:{}');");
 	}
 
 	// add babelfish list
-	if( $prefs['feature_babelfish'] === 'y' ) {
+	if ( $prefs['feature_babelfish'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('babelfish_links','b',5,7200,'nobox=y&style=text-align%3Aleft%3B','a:0:{}');");
 	}
 	
 	// add babelfish logo
-	if( $prefs['feature_babelfish_logo'] === 'y' ) {
+	if ( $prefs['feature_babelfish_logo'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('babelfish_logo','b',4,7200,'nobox=y&style=float%3Aright%3B','a:0:{}');");
 	}
 	
 	// add loadstats
-	if( $prefs['feature_bot_bar_debug'] === 'y' ) {
+	if ( $prefs['feature_bot_bar_debug'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('loadstats','b',6,0,'nobox=y','a:1:{i:0;s:6:\"Admins\";}');");
 	}
 	
 	// add svnup
-	if( is_dir('.svn') ) {
+	if ( is_dir('.svn') ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('svnup','b',7,0,'nobox=y','a:1:{i:0;s:6:\"Admins\";}');");
 	}

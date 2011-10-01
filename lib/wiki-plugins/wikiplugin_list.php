@@ -129,7 +129,7 @@ function wikiplugin_list($data, $params)
 		}
 
 		$out = $formatter->format($result);
-	} elseif(!empty($alternate)) {
+	} elseif (!empty($alternate)) {
 		$out = $alternate;
 	} else {
 		$out = '^' . tra('No results for query.') . '^';

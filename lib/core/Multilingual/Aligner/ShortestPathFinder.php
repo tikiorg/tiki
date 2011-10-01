@@ -85,7 +85,7 @@ class  Multilingual_Aligner_ShortestPathFinder
 		while (in_array(false, $this -> visited, true) && $tries <= $maxTries) {
 //		    echo "-- computeShortestPathes: \$tries=$tries\n\$this->distance=\n";var_dump($this->distance);echo "\n\$this->previousNode=\n";var_dump($this->previousNode);print "\n";			
 			$this -> bestPath = $this->findBestPath($this->distance, array_keys($this -> visited, false, true));
-			if($to !== null && $this -> bestPath === $to) {
+			if ($to !== null && $this -> bestPath === $to) {
 				break;
 			}
 			$this -> updateDistanceAndPrevious($this -> bestPath);			
@@ -103,7 +103,7 @@ class  Multilingual_Aligner_ShortestPathFinder
 		$bestNode = NULL;
 		foreach ($ourNodesLeft as $currNode) {
 //		    echo "-- findBestPath: processing node: $currNode, \$ourDistance[\$currNode]=$ourDistance[$currNode], \$bestPath=$bestPath\n";
-			if($ourDistance[$currNode] < $bestPath) {
+			if ($ourDistance[$currNode] < $bestPath) {
 				$bestPath = $ourDistance[$currNode];
 				$bestNode = $currNode;
 			}
@@ -116,7 +116,7 @@ class  Multilingual_Aligner_ShortestPathFinder
 //	    echo "-- updateDistanceAndPrevious: \$obp=$obp\n";
 	    foreach ($this->nodes as $currNode) {
 //	        echo "-- updateDistanceAndPrevious: processing \$currNode=$currNode\n"; 	
-			if( 	(isset($this->map[$obp][$currNode])) 
+			if ( 	(isset($this->map[$obp][$currNode])) 
 			    &&	(!($this->map[$obp][$currNode] == $this->infiniteDistance) || ($this->map[$obp][$currNode] == 0 ))	
 				&&	(($this->distance[$obp] + $this->map[$obp][$currNode]) < $this -> distance[$currNode])
 			) 	
@@ -154,7 +154,7 @@ class  Multilingual_Aligner_ShortestPathFinder
 	function getShortestPathesInfo($to = null) {
 		$ourShortestPath = array();
 		foreach ($this->nodes as $aNode) {
-			if($to !== null && $to !== $aNode) {
+			if ($to !== null && $to !== $aNode) {
 				continue;
 			}
 			$ourShortestPath[$aNode] = array();
@@ -180,7 +180,7 @@ class  Multilingual_Aligner_ShortestPathFinder
 		$ourShortestPath = array();
 		$foo = '';
 		foreach ($this->nodes as $aNode) {
-			if($to !== null && $to !== $aNode) {
+			if ($to !== null && $to !== $aNode) {
 				continue;
 			}
 			$ourShortestPath[$aNode] = array();
@@ -194,7 +194,7 @@ class  Multilingual_Aligner_ShortestPathFinder
 			}
 			$ourShortestPath[$aNode] = array_reverse($ourShortestPath[$aNode]);
 			if ($to === null || $to === $aNode) {
-			if($this -> distance[$aNode] >= $this -> infiniteDistance) {
+			if ($this -> distance[$aNode] >= $this -> infiniteDistance) {
 				$foo .= sprintf("no route from %d to %d. \n",$this -> startnode,$aNode);
 			} else {
 				$foo .= sprintf('%d => %d = %d [%d]: (%s).'."\n" ,

@@ -35,7 +35,7 @@ function s_f_attachments_actionshandler( $params ) {
 				/* FIXME
 					check_ticket('index');
 					$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
-					if( ($user && ($owner == $user) ) || $objectperms->wiki_admin_attachments ) {
+					if ( ($user && ($owner == $user) ) || $objectperms->wiki_admin_attachments ) {
 						$access->check_authenticity();
 						$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
 					}
@@ -98,7 +98,7 @@ function smarty_function_attachments($params, $template) {
 		$smarty)."\n";
 	}
 
-////	if( $this->showAttachments !== false )
+////	if ( $this->showAttachments !== false )
 ////		$this->smartyassign('atts_show', $this->showAttachments);
 
 	foreach ( $params as $k => $v ) {

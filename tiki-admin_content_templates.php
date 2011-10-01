@@ -127,7 +127,7 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$content = $_REQUEST["content"];
 	}
-	if (isset($_REQUEST["name"]) && $_REQUEST["name"] != ""){
+	if (isset($_REQUEST["name"]) && $_REQUEST["name"] != "") {
 		$tid = $templateslib->replace_template($_REQUEST["templateId"], $_REQUEST["name"], $content, $type);
 		$smarty->assign("templateId", '0');
 		$info["name"] = '';
@@ -180,7 +180,7 @@ if (isset($_REQUEST["save"])) {
 		$info["section_events"] = (isset($_REQUEST["section_events"]) && $_REQUEST["section_events"] == 'on') ? 'y' : 'n';
 		$info["section_html"] = (isset($_REQUEST["section_html"]) && $_REQUEST["section_html"] == 'on') ? 'y' : 'n';
 		$smarty->assign('info', $info);
-		$smarty->assign('emptyname',"true");
+		$smarty->assign('emptyname', "true");
 	}
 }
 if (!isset($_REQUEST["sort_mode"])) {

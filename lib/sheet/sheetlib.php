@@ -26,7 +26,7 @@ class SheetLib extends TikiLib
 		$result['childTrackerIds'] = $this->get_related_tracker_ids( $sheetId );
 		$result['childFileIds'] = $this->get_related_file_ids( $sheetId );
 		$result['created'] = $this->get_created($sheet['sheetId']);
-		$result['lastModif'] = $this->get_lastModif($sheet['sheetId']);
+		$result['lastModif'] = $this->get_lastModif ($sheet['sheetId']);
 		
 		return $result;
 	}
@@ -246,7 +246,7 @@ class SheetLib extends TikiLib
 			", array( $sheetId ));
 	}
 	
-	function get_lastModif( $sheetId ) {
+	function get_lastModif ( $sheetId ) {
 		return $this->getOne( "
 				SELECT begin
 				FROM tiki_sheet_values
@@ -273,7 +273,7 @@ class SheetLib extends TikiLib
 	{
 		global $prefs;
 
-		if( $sheetId == 0 )
+		if ( $sheetId == 0 )
 		{
 			$this->query( "INSERT INTO `tiki_sheets` ( `title`, `description`, `author` ) VALUES( ?, ?, ? )", array( $title, $description, $author ) );
 
@@ -439,9 +439,9 @@ class SheetLib extends TikiLib
 	
 	function clone_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
 	{
-		if( $row = $this->get_sheet_layout( $sheetId ) )
+		if ( $row = $this->get_sheet_layout( $sheetId ) )
 		{
-			if( $row[ 'className' ] == $className
+			if ( $row[ 'className' ] == $className
 			 && $row[ 'headerRow' ] == $headerRow
 			 && $row[ 'footerRow' ] == $footerRow
 			 && $row[ 'parseValues' ] == $parseValues )
@@ -543,12 +543,12 @@ class SheetLib extends TikiLib
 	{
 		global $sheetlib;
 		
-	    if( !is_array($haystack) ) {
+	    if ( !is_array($haystack) ) {
 	        return false;
 	    }
 	 
 	    foreach( $haystack as $key => $val ) {
-	        if( is_array($val) && $subPath = $sheetlib->array_searchRecursive($needle, $val, $strict, $path) ) {
+	        if ( is_array($val) && $subPath = $sheetlib->array_searchRecursive($needle, $val, $strict, $path) ) {
 	            $path = array_merge($path, array($key), $subPath);
 	            return $path;
 	        } elseif ( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {

@@ -74,7 +74,7 @@ function prefs_memcache_list() {
 }
 
 function prefs_memcache_serialize_servers( $data ) {
-	if( ! is_array( $data ) ) {
+	if ( ! is_array( $data ) ) {
 		$data = unserialize( $data );
 	}
 	$out = '';
@@ -91,7 +91,7 @@ function prefs_memcache_unserialize_servers( $string ) {
 	$data = array();
 
 	foreach( explode( "\n", $string ) as $row ) {
-		if( preg_match( "/^\s*([^:]+):(\d+)\s*(\((\d+)\))?\s*$/", $row, $parts ) ) {
+		if ( preg_match( "/^\s*([^:]+):(\d+)\s*(\((\d+)\))?\s*$/", $row, $parts ) ) {
 			$data[] = array(
 				'host' => $parts[1],
 				'port' => $parts[2],
@@ -100,7 +100,7 @@ function prefs_memcache_unserialize_servers( $string ) {
 		}
 	}
 
-	if( count( $data ) ) {
+	if ( count( $data ) ) {
 		return $data;
 	} else {
 		return false;

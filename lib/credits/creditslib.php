@@ -90,7 +90,7 @@ class CreditsLib extends TikiLib
 		$creditTypes = $this->getCreditTypes();
 		
 		foreach( $credits as $type => $crVal) {
-			if( $creditTypes[$type]['is_static_level'] == 'y' )
+			if ( $creditTypes[$type]['is_static_level'] == 'y' )
 			{
 				$prefName = "credits_level_" . $type;
 				$credits[$type]['used'] = (float) $tikilib->get_user_preference( $info['login'], $prefName );
@@ -117,15 +117,15 @@ class CreditsLib extends TikiLib
 		foreach( $credits as $type => &$data )
 		{
 			$factor = 1;
-			if( isset($creditTypes[$type]) && $creditTypes[$type]['scaling_divisor'] ) {
+			if ( isset($creditTypes[$type]) && $creditTypes[$type]['scaling_divisor'] ) {
 				$factor = $creditTypes[$type]['scaling_divisor'];
 			}
-			if( isset($creditTypes[$type]) && $display_text = $creditTypes[$type]['display_text'] ) {
+			if ( isset($creditTypes[$type]) && $display_text = $creditTypes[$type]['display_text'] ) {
 				$data['display_text'] = $display_text;
 			} else {
 				$data['display_text'] = $type;
 			}
-			if( isset($creditTypes[$type]) && $unit_text = $creditTypes[$type]['unit_text'] ) {
+			if ( isset($creditTypes[$type]) && $unit_text = $creditTypes[$type]['unit_text'] ) {
 				$data['unit_text'] = $unit_text;
 			} else {
 				$data['unit_text'] = '';
@@ -154,20 +154,20 @@ class CreditsLib extends TikiLib
 
 	function replaceCredit( $creditId, $type, $used, $total, $validFrom, $expirationDate ) // {{{
 	{
-		if( !empty( $expirationDate ) )
+		if ( !empty( $expirationDate ) )
 			$expirationDate = date( 'Y-m-d H:i:s', $time = strtotime( $expirationDate ) );
 
-		if( $time === false )
+		if ( $time === false )
 			return false;
 
 		$validFrom = date( 'Y-m-d H:i:s', $time = strtotime( $validFrom ) );
 
-		if( $time === false )
+		if ( $time === false )
 			return false;
 
 		$this->query( "
 			UPDATE `tiki_credits` 
-			SET `credit_type` = ?, `used_amount` = ?, `total_amount` = ?, `expiration_date` = IF(?='',NULL,?), `creation_date` = ?
+			SET `credit_type` = ?, `used_amount` = ?, `total_amount` = ?, `expiration_date` = if (?='',NULL,?), `creation_date` = ?
 			WHERE `creditId` = ?",
 			array( $type, $used, $total, $expirationDate, $expirationDate, $validFrom, $creditId ) );
 	} // }}}
@@ -177,25 +177,25 @@ class CreditsLib extends TikiLib
 	 */
 	function addCredits( $userId, $creditType, $amount, $expirationDate = null, $validFrom = null ) // {{{
 	{
-		if( !$amount )
+		if ( !$amount )
 			return false;
 		
-		if( !empty( $expirationDate ) )
+		if ( !empty( $expirationDate ) )
 			$expirationDate = date( 'Y-m-d H:i:s', $time = strtotime( $expirationDate ) );
 
-		if( $time === false )
+		if ( $time === false )
 			return false;
 
-		if( !empty( $validFrom ) )
+		if ( !empty( $validFrom ) )
 			$validFrom = date( 'Y-m-d H:i:s', $time = strtotime( $validFrom ) );
 
-		if( $time === false )
+		if ( $time === false )
 			return false;
 
 		$this->query( "
 			INSERT INTO `tiki_credits` 
 				(`userId`, `credit_type`, `total_amount`, `expiration_date`, `creation_date`) 
-				VALUES(?,?,?,IF(? = '', NULL, ?),IF(?='', NULL, ?))",
+				VALUES(?,?,?,if (? = '', NULL, ?),if (?='', NULL, ?))",
 			array( $userId, $creditType, $amount, $expirationDate, $expirationDate, $validFrom, $validFrom) );
 
 		return true;
@@ -208,20 +208,20 @@ class CreditsLib extends TikiLib
 	 */
 	function useCredits( $userId, $creditType, $amount, $product_id = null ) // {{{
 	{
-		if( $amount == 0 ) {
+		if ( $amount == 0 ) {
 			return true;
 		}
 
 		// Level-type credits
 		$creditTypes = $this->getCreditTypes();
-		if( $creditTypes[$creditType]['is_static_level'] == 'y' )
+		if ( $creditTypes[$creditType]['is_static_level'] == 'y' )
 		{
 			$credits = $this->getCredits( $userId );
-			if( ! array_key_exists( $creditType, $credits ) ) {
+			if ( ! array_key_exists( $creditType, $credits ) ) {
 				return false;
 			}
 
-			if( $credits[$creditType]['remain'] > 0 )
+			if ( $credits[$creditType]['remain'] > 0 )
 			{
 				global $tikilib, $userlib;
 				$info = $userlib->get_userid_info( $userId );
@@ -254,7 +254,7 @@ class CreditsLib extends TikiLib
 				AND `creation_date` <= NOW()
 				AND `userId` = ?
 				AND `credit_type` = ?
-			ORDER BY IF(`expiration_date` IS NULL, 1000000, DATEDIFF(`expiration_date`, NOW())) ASC",
+			ORDER BY if (`expiration_date` IS NULL, 1000000, DATEDIFF(`expiration_date`, NOW())) ASC",
 			array( $userId, $creditType ) );
 
 		$total = 0;
@@ -264,11 +264,11 @@ class CreditsLib extends TikiLib
 			$list[] = $row;
 		}
 
-		if( $total == 0 ) {
+		if ( $total == 0 ) {
 			return false;
 		}
 		
-		if( $amount > $total ) {
+		if ( $amount > $total ) {
 			$amount = $total;
 		}
 		
@@ -278,7 +278,7 @@ class CreditsLib extends TikiLib
 		
 		foreach( $list as $row ) {
 			$amount = $this->_useCredits( $row['creditId'], $row['available'], $amount );
-			if( $amount <= 0 ) {
+			if ( $amount <= 0 ) {
 				return true;
 			}
 		}
@@ -289,7 +289,7 @@ class CreditsLib extends TikiLib
 	function restoreCredits( $userId, $creditType, $amount, $product_id = null ) // {{{
 	{
 		// Only valid for level-type credits
-		if( ! array_key_exists( $creditType, $this->getCreditTypes(true) ) ) {
+		if ( ! array_key_exists( $creditType, $this->getCreditTypes(true) ) ) {
 			return false;
 		}
 		
@@ -299,12 +299,12 @@ class CreditsLib extends TikiLib
 		$prefName = "credits_level_" . $creditType;
 
 		$used = (float) $tikilib->get_user_preference( $info['login'], $prefName );
-		if( $used === 0 ) {
+		if ( $used === 0 ) {
 			return false;
 		}
 
 		$used -= $amount;
-		if( $used < 0 ) {
+		if ( $used < 0 ) {
 			$used = 0;
 		}
 
@@ -322,7 +322,7 @@ class CreditsLib extends TikiLib
 	 */
 	function _useCredits( $creditId, $available, $amount ) // {{{
 	{
-		if( $available >= $amount ) {
+		if ( $available >= $amount ) {
 			$this->query( "UPDATE `tiki_credits` SET `used_amount` = `used_amount` + ? WHERE `creditId`= ?", 
 				array( $amount, $creditId ) );
 

@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function post_20090416_plugin_security_tiki( $installer )
 {
 	$result = $installer->query( "SELECT value FROM tiki_preferences WHERE name = 'plugin_fingerprints'" );
-	if( $row = $result->fetchRow() ) {
+	if ( $row = $result->fetchRow() ) {
 		$data = unserialize( $row['value'] );
 
 		foreach( $data as $fingerprint => $string ) {

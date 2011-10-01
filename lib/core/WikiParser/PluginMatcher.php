@@ -74,11 +74,11 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 				continue;
 			}
 
-			if( $pos >= $end ) {
+			if ( $pos >= $end ) {
 				return;
 			}
 
-			if( ! $this->isParsedLocation( $pos ) ) {
+			if ( ! $this->isParsedLocation( $pos ) ) {
 				++$pos;
 				continue;
 			}
@@ -86,15 +86,15 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			$match = new WikiParser_PluginMatcher_Match( $this, $pos );
 			++$pos;
 
-			if( ! $match->findName( $end ) ) {
+			if ( ! $match->findName( $end ) ) {
 				continue;
 			}
 
-			if( ! $match->findArguments( $end ) ) {
+			if ( ! $match->findArguments( $end ) ) {
 				continue;
 			}
 
-			if( $match->getEnd() !== false ) {
+			if ( $match->getEnd() !== false ) {
 				// End already reached
 				$this->recordMatch( $match );
 				$pos = $match->getEnd();
@@ -109,7 +109,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 					$candidate = $match->getEnd();
 					$sub = $this->getSubMatcher( $bodyStart, $candidate - 1 );
 
-					if( $sub->isComplete() ) {
+					if ( $sub->isComplete() ) {
 						$this->recordMatch( $match );
 						$this->appendSubMatcher( $sub );
 						$pos = $match->getEnd();
@@ -139,7 +139,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 	private function findNoParseRanges( $from, $to )
 	{
 		while( false !== $open = $this->findText( '~np~', $from, $to ) ) {
-			if( false !== $close = $this->findText( '~/np~', $open, $to ) ) {
+			if ( false !== $close = $this->findText( '~/np~', $open, $to ) ) {
 				$from = $close;
 				$this->ranges[] = array( $open, $close );
 			} else {
@@ -153,7 +153,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		foreach( $this->ranges as $range ) {
 			list( $open, $close ) = $range;
 
-			if( $pos > $open && $pos < $close )
+			if ( $pos > $open && $pos < $close )
 				return false;
 		}
 
@@ -173,7 +173,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 	function next()
 	{
 		foreach( $this->starts as $key => $m ) {
-			if( $key > $this->scanPosition ) {
+			if ( $key > $this->scanPosition ) {
 				$this->scanPosition = $key;
 				return $m;
 			}
@@ -206,7 +206,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 	private function getFirstStart( $lower )
 	{
 		foreach( $this->starts as $key => $match )
-			if( $key >= $lower )
+			if ( $key >= $lower )
 				return $key;
 
 		return false;
@@ -219,12 +219,12 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	function findText( $string, $from, $to )
 	{
-		if( $from >= strlen($this->text) )
+		if ( $from >= strlen($this->text) )
 			return false;
 
 		$pos = strpos( $this->text, $string, $from );
 
-		if( $pos === false || $pos + strlen($string) > $to )
+		if ( $pos === false || $pos + strlen($string) > $to )
 			return false;
 
 		return $pos;
@@ -246,9 +246,9 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		$toAdd = array();
 
 		foreach( $matches as $key => $m ) {
-			if( $m->inside( $match ) ) {
+			if ( $m->inside( $match ) ) {
 				$toRemove[] = $m;
-			} elseif( $key > $end ) {
+			} elseif ( $key > $end ) {
 				unset( $this->ends[$m->getEnd()] );
 				unset( $this->starts[$m->getStart()] );
 				$m->applyOffset( $sizeDiff );
@@ -275,7 +275,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		ksort( $this->ends );
 		ksort( $this->starts );
 
-		if( $this->scanPosition == $start ) {
+		if ( $this->scanPosition == $start ) {
 			$this->scanPosition = $start - 1;
 		}
 	}
@@ -309,17 +309,17 @@ class WikiParser_PluginMatcher_Match
 		$candidate = $this->matcher->getChunkFrom( $this->start + 1, self::NAME_MAX_LENGTH );
 		$name = strtok( $candidate, " (}\n\r," );
 
-		if( empty( $name ) || !ctype_alpha( $name ) ) {
+		if ( empty( $name ) || !ctype_alpha( $name ) ) {
 			$this->invalidate();
 			return false;
 		}
 
 		// Upper case uses long syntax
-		if( strtoupper( $name ) == $name ) {
+		if ( strtoupper( $name ) == $name ) {
 			$this->matchType = self::LONG;
 
 			// Parenthesis required when using long syntax
-			if( $candidate{ strlen($name) } != '(' ) {
+			if ( $candidate{ strlen($name) } != '(' ) {
 				$this->invalidate();
 				return false;
 			}
@@ -329,7 +329,7 @@ class WikiParser_PluginMatcher_Match
 
 		$nameEnd = $this->start + 1 + strlen( $name );
 
-		if( $nameEnd > $limit ) {
+		if ( $nameEnd > $limit ) {
 			$this->invalidate();
 			return false;
 		}
@@ -342,12 +342,12 @@ class WikiParser_PluginMatcher_Match
 
 	function findArguments( $limit )
 	{
-		if( $this->nameEnd === false )
+		if ( $this->nameEnd === false )
 			return false;
 
 		$pos = $this->matcher->findText( '}', $this->nameEnd, $limit );
 
-		if( false === $pos ) {
+		if ( false === $pos ) {
 			$this->invalidate();
 			return false;
 		}
@@ -357,7 +357,7 @@ class WikiParser_PluginMatcher_Match
 		while( 1 == ( $unescapedFound % 2 ) ) {
 			$old = $pos;
 			$pos = $this->matcher->findText( '}', $pos + 1, $limit );
-			if( false === $pos ) {
+			if ( false === $pos ) {
 				$this->invalidate();
 				return false;
 			}
@@ -375,7 +375,7 @@ class WikiParser_PluginMatcher_Match
 			$seek--;
 		}
 
-		if( in_array($this->matchType, array(self::LONG, self::LEGACY)) && $this->matcher->findText( ')', $seek - 1, $limit ) !== $seek - 1 ) {
+		if ( in_array($this->matchType, array(self::LONG, self::LEGACY)) && $this->matcher->findText( ')', $seek - 1, $limit ) !== $seek - 1 ) {
 			$this->invalidate();
 			return false;
 		}
@@ -389,7 +389,7 @@ class WikiParser_PluginMatcher_Match
 
 		$this->bodyStart = $pos + 1;
 
-		if( $this->matchType == self::SHORT || $this->matchType == self::LEGACY ) {
+		if ( $this->matchType == self::SHORT || $this->matchType == self::LEGACY ) {
 			$this->end = $this->bodyStart;
 			$this->bodyStart = false;
 		}
@@ -399,16 +399,16 @@ class WikiParser_PluginMatcher_Match
 
 	function findEnd( $after, $limit )
 	{
-		if( $this->bodyStart === false )
+		if ( $this->bodyStart === false )
 			return false;
 
 		$endToken = '{' . strtoupper( $this->name ) . '}';
 
 		do {
-			if( isset( $bodyEnd ) )
+			if ( isset( $bodyEnd ) )
 				$after = $bodyEnd + 1;
 
-			if( false === $bodyEnd = $this->matcher->findText( $endToken, $after, $limit ) ) {
+			if ( false === $bodyEnd = $this->matcher->findText( $endToken, $after, $limit ) ) {
 				$this->invalidate();
 				return false;
 			}
@@ -494,7 +494,7 @@ class WikiParser_PluginMatcher_Match
 		$pos = -1;
 		while( false !== $pos = strpos( $string, '"', $pos + 1 ) ) {
 			++$count;
-			if( $pos > 0 && $string{ $pos - 1} == "\\" )
+			if ( $pos > 0 && $string{ $pos - 1} == "\\" )
 				--$count;
 		}
 

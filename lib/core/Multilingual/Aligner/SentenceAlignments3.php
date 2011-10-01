@@ -22,12 +22,12 @@ class Multilingual_Aligner_SentenceAlignments
 	public function addSentencePair($lng1_sentence, $lng1, $lng2_sentence, $lng2)
 	{
 		//echo "in addsentencepair<br/>";
-		if($lng1==$this->l1)
+		if ($lng1==$this->l1)
 		{
 		//echo "in addpair eng<br/>";
 		$this->alignment_table[$lng1_sentence]=$lng2_sentence;
 		}
-		else if($lng2==$this->l1)
+		else if ($lng2==$this->l1)
 		{//echo "in addpair fr<br/>";
 		$this->alignment_table[$lng2_sentence]=$lng1_sentence;
         }	
@@ -38,16 +38,16 @@ class Multilingual_Aligner_SentenceAlignments
 		echo "in getSentenceInOtherLanguage<br/>";
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 					
-		if($source_lng==$this->l1)
+		if ($source_lng==$this->l1)
 			$k=1;
-		else if($source_lng==$this->l2)
+		else if ($source_lng==$this->l2)
 			$k=0;
 		foreach($this->alignment_table as $key=>$val)
 			{
-				if($k==1)
-				{//if(strcmp(trim($key),trim($source_lng_sentence))==0)
+				if ($k==1)
+				{//if (strcmp(trim($key),trim($source_lng_sentence))==0)
 					echo "key##$key<br/>";
-					//if($key!="\n\n")
+					//if ($key!="\n\n")
 					$sentences = $segmentor->segment(trim($key));
 					//else
 					//$sentences[]=$key;
@@ -55,33 +55,33 @@ class Multilingual_Aligner_SentenceAlignments
 					echo "count ".count($sentences)."<br/>";
 					foreach($sentences as $t)
 					echo "line after segmenting ##$t<br/>";
-					//if(count($sentences)!=1)
+					//if (count($sentences)!=1)
 					//##unset($sentences[count($sentences)-1]);//remove last blank line
 	 				//echo "count ".count($sentences)."<br/>";
 					//foreach($i=0;$i<count($sentences);$i++) //for each sentence of $key
 					{
-					if(strcmp(trim($sentences[0]),trim($source_lng_sentence))==0)//if one of those is matched
+					if (strcmp(trim($sentences[0]),trim($source_lng_sentence))==0)//if one of those is matched
 					{
 					$found=1;
 					for($j=1,$l=1;$j<count($sentences) ;$l++)
 					{$flag=0;
-					if(($l +$index)>=count($sentence_array))
+					if (($l +$index)>=count($sentence_array))
 					{$found=0;
 					break;
 					}
-					if(strcmp(trim($sentence_array[$index+$l]),trim($sentences[$j]))!=0)
+					if (strcmp(trim($sentence_array[$index+$l]),trim($sentences[$j]))!=0)
 					{
-					if($sentence_array[$index+$l]=="" || $sentence_array[$index+$l][0]!="+") //if it is an added sentence
+					if ($sentence_array[$index+$l]=="" || $sentence_array[$index+$l][0]!="+") //if it is an added sentence
 					{$found=0;
 					break;
 					}//if
 					else
 					$flag=1;
 					}//if
-					if($flag==0)
+					if ($flag==0)
 					$j++;
 					}//for
-					if($found==1)
+					if ($found==1)
 					{
 					$key_value=$key;
 					$array=array($key,$val);
@@ -93,7 +93,7 @@ class Multilingual_Aligner_SentenceAlignments
 					
 				}//if $k
 				else
-				{ //if(trim($val)==trim($source_lng_sentence))
+				{ //if (trim($val)==trim($source_lng_sentence))
 					///return $key;
 					
 					$sentences = $segmentor->segment(trim($val));
@@ -101,29 +101,29 @@ class Multilingual_Aligner_SentenceAlignments
 	 
 					//foreach($i=0;$i<count($sentences);$i++) //for each sentence of $key
 					{
-					if(strcmp(trim($sentences[0]),trim($source_lng_sentence))==0)//if one of those is matched
+					if (strcmp(trim($sentences[0]),trim($source_lng_sentence))==0)//if one of those is matched
 					{
 					$found=1;
 					for($j=$i+1,$l=1;$j<count($sentences);$l++)
 					{$flag=0;
-					if(($l +$index)>=count($sentence_array))
+					if (($l +$index)>=count($sentence_array))
 					{$found=0;
 					break;
 					}
 					
-					if(strcmp(trim($sentence_array[$index+$l]),trim($sentences[$j]))!=0)
+					if (strcmp(trim($sentence_array[$index+$l]),trim($sentences[$j]))!=0)
 					{
-					if($sentence_array[$index+$l]=="" || $sentence_array[$index+$l][0]!="+") //if it is an added sentence
+					if ($sentence_array[$index+$l]=="" || $sentence_array[$index+$l][0]!="+") //if it is an added sentence
 					{$found=0;
 					break;
 					}//if
 					else
 					$flag=1;
 					}//if
-					if($flag==0)
+					if ($flag==0)
 					$j++;
 					}//for
-					if($found==1)
+					if ($found==1)
 					{
 					$key_value=$val;
 					$array=array($val,$key);
@@ -139,7 +139,7 @@ class Multilingual_Aligner_SentenceAlignments
 				 
 			}//foreach
 		
-		if($k==1)
+		if ($k==1)
 		{	//####for many lines->many translatn		
 			$times=0;
 			$i=-1;
@@ -162,7 +162,7 @@ class Multilingual_Aligner_SentenceAlignments
 					//echo "sentence[0]##$sentences[0]<br/>";
 					//echo "count ".count($sentences)."<br/>";
 					//echo "line ##".$sentences[count($sentences)-1]."<br/>";
-					//if(count($sentences)!=1 && $sentences[count($sentences)-1] =="")
+					//if (count($sentences)!=1 && $sentences[count($sentences)-1] =="")
 					//##unset($sentences[count($sentences)-1]);//remove last blank line
 	 				//echo "count ".count($sentences)."<br/>";
 					
@@ -171,22 +171,22 @@ class Multilingual_Aligner_SentenceAlignments
 					
 					//foreach($i=0;$i<count($sentences);$i++) //for each sentence of $key
 					//if source line is a part of translation
-					if($temp1=="NULL" && $sent_ind<count($sentences))
+					if ($temp1=="NULL" && $sent_ind<count($sentences))
 					{$temp1=$sentences[$sent_ind];
 					//echo "temp1=NULL  $temp1<br/>";
 					$sent_ind++;
 					}
-					if($temp2=="NULL")
+					if ($temp2=="NULL")
 					{$temp2=$source_lng_sentence;
 					$index1;
 					}
 					$temp1=trim($temp1);
 					$temp2=trim($temp2);
 					
-					if(($c=$this->strpos_function($temp1,$temp2))!=-1 && $c ==0)
+					if (($c=$this->strpos_function($temp1,$temp2))!=-1 && $c ==0)
 					{		$found=1;
 					echo "inside strpos_function($temp1,$temp2)<br/>";
-							if(strlen($temp1)==strlen($temp2) && $sent_ind==count($sentences))
+							if (strlen($temp1)==strlen($temp2) && $sent_ind==count($sentences))
 							{echo "inside strlen($temp1)==strlen($temp2)  and ####start= $start<br/>";
 							for($u=0;$u<$start;$u++)//return key and val ###########
 							{//echo "inside<br/>";
@@ -211,10 +211,10 @@ class Multilingual_Aligner_SentenceAlignments
 							return $array;
 							}
 							$temp1 = substr($temp1,strlen($temp2));
-							if($temp1=="")
+							if ($temp1=="")
 							$temp1="NULL";
 							while(($index1+1)<count($sentence_array))
-							{if($sentence_array[$index1+1]=="" || $sentence_array[$index1+1][0]!="+")
+							{if ($sentence_array[$index1+1]=="" || $sentence_array[$index1+1][0]!="+")
 							{
 							$temp2=$sentence_array[$index1+1];
 							//echo "temp2  $temp2<br/>";
@@ -226,12 +226,12 @@ class Multilingual_Aligner_SentenceAlignments
 						continue;
 						
 					}//if strpos_function($sentence[0],$source_lng_sentence)
-					else if(($c=$this->strpos_function($temp2,$temp1))!=-1 && $c ==0)
+					else if (($c=$this->strpos_function($temp2,$temp1))!=-1 && $c ==0)
 					{		
 							echo "inside strpos_function($temp2,$temp1)<br/>";
 					
 							$found=1;
-							if(strlen($temp1) == strlen($temp2) && $sent_ind==count($sentences))
+							if (strlen($temp1) == strlen($temp2) && $sent_ind==count($sentences))
 							{
 							echo "inside strlen($temp1)==strlen($temp2)  and ####start= $start<br/>";
 							
@@ -257,7 +257,7 @@ class Multilingual_Aligner_SentenceAlignments
 							
 							$temp2=substr($temp2,strlen($temp1));
 							//echo "inside else if temp2 $temp2<br/>";
-							if($sent_ind>=count($sentences))
+							if ($sent_ind>=count($sentences))
 							{
 							$temp1="NULL";
 							break;
@@ -268,14 +268,14 @@ class Multilingual_Aligner_SentenceAlignments
 							$sent_ind++;
 							}
 					}//if strpos_function($sentence[0],$source_lng_sentence)
-			if($found==0)
+			if ($found==0)
 			{echo "break<br/>";
 			$start=0;
 			$value="";
 			break;
 			}//if
 			}//while
-			if($found==0)
+			if ($found==0)
 			{
 			$temp1="NULL";
 			$temp2="NULL";
@@ -308,7 +308,7 @@ class Multilingual_Aligner_SentenceAlignments
 					//echo "sentence[0]##$sentences[0]<br/>";
 					//echo "count ".count($sentences)."<br/>";
 					//echo "line ##".$sentences[count($sentences)-1]."<br/>";
-			//		if(count($sentences)!=1 && $sentences[count($sentences)-1] =="")
+			//		if (count($sentences)!=1 && $sentences[count($sentences)-1] =="")
 				//##	unset($sentences[count($sentences)-1]);//remove last blank line
 	 				//echo "count ".count($sentences)."<br/>";
 					
@@ -317,22 +317,22 @@ class Multilingual_Aligner_SentenceAlignments
 					
 					//foreach($i=0;$i<count($sentences);$i++) //for each sentence of $key
 					//if source line is a part of translation
-					if($temp1=="NULL" && $sent_ind<count($sentences))
+					if ($temp1=="NULL" && $sent_ind<count($sentences))
 					{$temp1=$sentences[$sent_ind];
 					//echo "temp1=NULL  $temp1<br/>";
 					$sent_ind++;
 					}
-					if($temp2=="NULL")
+					if ($temp2=="NULL")
 					{$temp2=$source_lng_sentence;
 					$index1;
 					}
 					$temp1=trim($temp1);
 					$temp2=trim($temp2);
 					
-					if(($c=$this->strpos_function($temp1,$temp2))!=-1 && $c ==0)
+					if (($c=$this->strpos_function($temp1,$temp2))!=-1 && $c ==0)
 					{		$found=1;
 					//echo "inside strpos_function($temp1,$temp2)<br/>";
-							if(strlen($temp1)==strlen($temp2) && $sent_ind==count($sentences))
+							if (strlen($temp1)==strlen($temp2) && $sent_ind==count($sentences))
 							{//echo "inside strlen($temp1)==strlen($temp2)  and ####start= $start<br/>";
 							for($u=0;$u<$start;$u++)//return key and val
 							{//echo "inside<br/>";
@@ -357,10 +357,10 @@ class Multilingual_Aligner_SentenceAlignments
 							return $array;
 							}
 							$temp1 = substr($temp1,strlen($temp2));
-							if($temp1=="")
+							if ($temp1=="")
 							$temp1="NULL";
 							while(($index1+1)<count($sentence_array))
-							{if($sentence_array[$index1+1]=="" || $sentence_array[$index1+1][0]!="+")
+							{if ($sentence_array[$index1+1]=="" || $sentence_array[$index1+1][0]!="+")
 							{
 							$temp2=$sentence_array[$index1+1];
 							//echo "temp2  $temp2<br/>";
@@ -372,12 +372,12 @@ class Multilingual_Aligner_SentenceAlignments
 						continue;
 						
 					}//if strpos_function($sentence[0],$source_lng_sentence)
-					else if(($c=$this->strpos_function($temp2,$temp1))!=-1 && $c ==0)
+					else if (($c=$this->strpos_function($temp2,$temp1))!=-1 && $c ==0)
 					{		
 							//echo "inside strpos_function($temp2,$temp1)<br/>";
 					
 							$found=1;
-							if(strlen($temp1) == strlen($temp2) && $sent_ind==count($sentences))
+							if (strlen($temp1) == strlen($temp2) && $sent_ind==count($sentences))
 							{
 							for($u=0;$u<$start;$u++)//return key and val
 							{
@@ -401,7 +401,7 @@ class Multilingual_Aligner_SentenceAlignments
 							
 							$temp2=substr($temp2,strlen($temp1));
 							//echo "inside else if temp2 $temp2<br/>";
-							if($sent_ind>=count($sentences))
+							if ($sent_ind>=count($sentences))
 							{
 							$temp1="NULL";
 							break;
@@ -412,14 +412,14 @@ class Multilingual_Aligner_SentenceAlignments
 							$sent_ind++;
 							}
 					}//if strpos_function($sentence[0],$source_lng_sentence)
-			if($found==0)
+			if ($found==0)
 			{echo "break<br/>";
 			$start=0;
 			$value="";
 			break;
 			}//if
 			}//while
-			if($found==0)
+			if ($found==0)
 			{
 			$temp1="NULL";
 			$temp2="NULL";
@@ -445,9 +445,9 @@ class Multilingual_Aligner_SentenceAlignments
 
 	public function strpos_function($string,$pat)
 	{ 
-		if(strlen($string)==0 && strlen($pat)==0)
+		if (strlen($string)==0 && strlen($pat)==0)
 		return 0;
-		else if(strlen($string)==0 ||strlen($pat)==0)
+		else if (strlen($string)==0 ||strlen($pat)==0)
 		return -1;
 	//	echo "in strpos  $string----$pat<br/>";
 		$start=0;
@@ -457,10 +457,10 @@ class Multilingual_Aligner_SentenceAlignments
 		$j=0;
 		for($i=0;$endmatch<=$lasts;$endmatch++,$start++)
 		{
-		if($string[$endmatch]==$pat[$lastp])
+		if ($string[$endmatch]==$pat[$lastp])
 			{for($j=0,$i=$start;$j<$lastp && $string[$i]==$pat[$j];$i++,$j++);
 			}//for $j		
-			if($j==$lastp)
+			if ($j==$lastp)
 			return $start;
 		}//for $i
 		return -1;

@@ -10,7 +10,7 @@ require dirname(__FILE__) . '/svntools.php';
 // Perform basic checks
 info( "Verifying..." );
 
-if( ! isset( $_SERVER['argc'] ) || $_SERVER['argc'] != 3 )
+if ( ! isset( $_SERVER['argc'] ) || $_SERVER['argc'] != 3 )
 	error( "Missing argument. Expecting tagged version to build increment from and to.\n\nExamples:\n\t2.0 2.2\n\t2.1 2.2" );
 
 $fromVersion = $_SERVER['argv'][1];
@@ -23,13 +23,13 @@ $fromRep = get_info( $source );
 $toRep = get_info( $branch );
 $local = get_info( '.' );
 
-if( ! isset( $fromRep->entry ) )
+if ( ! isset( $fromRep->entry ) )
 	error( "The origin tag does not exist." );
-if( ! isset( $toRep->entry ) )
+if ( ! isset( $toRep->entry ) )
 	error( "The destination tag does not exist." );
-if( ! isset( $local->entry ) )
+if ( ! isset( $local->entry ) )
 	error( "The current folder is not a local copy." );
-if( has_uncommited_changes( '.' ) )
+if ( has_uncommited_changes( '.' ) )
 	error( "Local copy contains uncommited changes." );
 
 info("Converting local copy to origin.");

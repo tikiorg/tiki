@@ -68,7 +68,7 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 
 			if ($_SESSION['current_perspective'] !== $perspective) {
 		
-				if( $perspectivelib->perspective_exists( $perspective ) ) {
+				if ( $perspectivelib->perspective_exists( $perspective ) ) {
 					$_SESSION['current_perspective'] = $perspective;
 				}
 				if (empty($page) && empty($url)) {

@@ -42,7 +42,7 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-browse_image.php?imageId=%s";
 	
-	$changes = $imagegallib->list_images(0,$prefs['feed_image_galleries_max'],$dateId.'_desc', '');
+	$changes = $imagegallib->list_images(0, $prefs['feed_image_galleries_max'], $dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);

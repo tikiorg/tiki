@@ -14,7 +14,7 @@ class Tiki_Profile_List
 		$raw = array_map( 'trim', $raw );
 		$sources = array();
 		foreach( $raw as $source )
-			if( !empty( $source ) )
+			if ( !empty( $source ) )
 			{
 				$file = $this->getCacheLocation( $source );
 				$last = $this->getCacheLastUpdate( $source );
@@ -37,7 +37,7 @@ class Tiki_Profile_List
 		$file = $this->getCacheLocation( $path );
 
 		// Replace existing with blank file
-		if( file_exists( $file ) )
+		if ( file_exists( $file ) )
 			unlink($file);
 		touch($file);
 
@@ -50,16 +50,16 @@ class Tiki_Profile_List
 		foreach( $parts as $line )
 		{
 			// All lines contain 3 entries
-			if( empty( $line ) )
+			if ( empty( $line ) )
 				continue;
-			if( substr_count( $line, "\t" ) != 2 )
+			if ( substr_count( $line, "\t" ) != 2 )
 				return false;
 
 			$good = true;
 		}
 
 		// A valid file has at least one profile
-		if( !$good )
+		if ( !$good )
 			return false;
 
 		file_put_contents( $file, $content . "\n" );
@@ -75,10 +75,10 @@ class Tiki_Profile_List
 
 		foreach( $sources as $s )
 		{
-			if( $source && $s['url'] != $source )
+			if ( $source && $s['url'] != $source )
 				continue;
 				
-			if( !$s['lastupdate'] )
+			if ( !$s['lastupdate'] )
 				continue;
 
 			$fp = fopen( $this->getCacheLocation( $s['url'] ), 'r' );
@@ -103,27 +103,27 @@ class Tiki_Profile_List
 
 		foreach( $sources as $s )
 		{
-			if( $source && $s['url'] != $source )
+			if ( $source && $s['url'] != $source )
 				continue;
 
-			if( !$s['lastupdate'] )
+			if ( !$s['lastupdate'] )
 				continue;
 
 			$fp = fopen( $this->getCacheLocation( $s['url'] ), 'r' );
 
 			while( false !== $row = fgetcsv( $fp, 200, "\t" ) )
 			{
-				if( count($row) != 3 )
+				if ( count($row) != 3 )
 					continue;
 
 				list( $c, $t, $i ) = $row;
 
 				$key = "{$s['url']}#{$i}";
 
-				if( $profilename && stripos( $i, $profilename ) === false )
+				if ( $profilename && stripos( $i, $profilename ) === false )
 					continue;
 
-				if( array_key_exists( $key, $list ) )
+				if ( array_key_exists( $key, $list ) )
 				{
 					$list[$key]['categories'][] = $c;
 				}
@@ -147,7 +147,7 @@ class Tiki_Profile_List
 				foreach ($categories as $category) {
 					$in = false; // Start assuming this required category isn't in this profile's categories
 					foreach ($profile['categories'] as $pcategory) {
-						if( $category == $pcategory ) {
+						if ( $category == $pcategory ) {
 							$in = true;
 							break;
 						}
@@ -175,7 +175,7 @@ class Tiki_Profile_List
 	private function getCacheLastUpdate( $path ) // {{{
 	{
 		$file = $this->getCacheLocation( $path );
-		if( ! file_exists( $file ) )
+		if ( ! file_exists( $file ) )
 			return 0;
 		
 		return filemtime( $file );

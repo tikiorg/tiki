@@ -24,23 +24,23 @@ class WikiParser_PluginArgumentParser
 			}
 
 			// Consider =>
-			if( $data{$pos + 1} == '>' )
+			if ( $data{$pos + 1} == '>' )
 				$pos++;
 
 			// Cut off the name part
 			$data = substr( $data, $pos + 1 );
 			$data = ltrim( $data );
 
-			if( !empty($data) && $data{0} == '"' ) {
+			if ( !empty($data) && $data{0} == '"' ) {
 				$quote = 0;
 				// Parameter between quotes, find closing quote not escaped by a \
 				while( false !== $quote = strpos( $data, '"', $quote + 1 ) ) {
-					if( $data{$quote - 1} != "\\" )
+					if ( $data{$quote - 1} != "\\" )
 						break;
 				}
 
 				// Closing quote found
-				if( $quote !== false ) {
+				if ( $quote !== false ) {
 					$value = substr( $data, 1, $quote - 1 );
 					$arguments[$name] = str_replace( '\"', '"', $value );
 
@@ -52,7 +52,7 @@ class WikiParser_PluginArgumentParser
 			}
 
 			// If last parameter, consider next as end of string
-			if( preg_match( "/[\s,]\w+=/", $data, $parts ) ) {
+			if ( preg_match( "/[\s,]\w+=/", $data, $parts ) ) {
 				$end = strpos( $data, $parts[0] );
 				$value = substr( $data, 0, $end );
 				$data = substr( $data, $end );

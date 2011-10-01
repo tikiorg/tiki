@@ -33,7 +33,7 @@ $path = $dirlib->dir_get_category_path_browse($_REQUEST["parent"]);
 $smarty->assign_by_ref('path', $path);
 $crumbs[] = new Breadcrumb(tra('Directory'), '', 'tiki-directory_browse.php?parent=0', 'Directory', tra('How to use Directory'));
 // Now append the path to the parent category
-array_splice($crumbs, count($crumbs) , 0, $dirlib->dir_build_breadcrumb_trail($_REQUEST["parent"]));
+array_splice($crumbs, count($crumbs), 0, $dirlib->dir_build_breadcrumb_trail($_REQUEST["parent"]));
 $smarty->assign('trail', $crumbs);
 $headtitle = breadcrumb_buildHeadTitle($crumbs);
 $smarty->assign_by_ref('headtitle', $headtitle);

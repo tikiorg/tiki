@@ -187,7 +187,7 @@ function wikiplugin_mouseover( $data, $params ) {
 
 	$default = array('parse'=>'y', 'parselabel'=>'y');
 	$params = array_merge($default, $params);
-	if( ! isset($params['url']) ) {
+	if ( ! isset($params['url']) ) {
 		$url = 'javascript:void(0)';
 	} else {
 		$url = $params['url'];
@@ -221,10 +221,10 @@ function wikiplugin_mouseover( $data, $params ) {
 		}
 	}
 
-	if( $parse ) {
+	if ( $parse ) {
 		$text = $tikilib->parse_data($text);
 	}
-	if( $params['parselabel'] == 'y' ) {
+	if ( $params['parselabel'] == 'y' ) {
 		$label = "~/np~$label~np~";
 	}
 

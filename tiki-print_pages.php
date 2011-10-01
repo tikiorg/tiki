@@ -13,7 +13,9 @@ $auto_query_args = array('page_ref_id', 'page', 'find', 'pageName', 'structureId
 $access->check_feature('feature_wiki_multiprint');
 $access->check_permission('tiki_p_view');
 //get_strings tra('Multiple Print');
-if (!isset($cookietab)) { $cookietab = '1'; }
+if (!isset($cookietab)) {
+	$cookietab = '1';
+}
 if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 	$printpages = array();
 	$printstructures = array();

@@ -200,7 +200,7 @@ if ($api_tiki == 'pdo' && extension_loaded("pdo") && in_array('mysql', PDO::getA
 require $dbInitializer;
 init_connection( TikiDb::get() );
 
-if( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
+if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
 	global $dbMaster, $dbSlave;
 	// Set-up the replication
 	$dbMaster = TikiDb::get();
@@ -226,10 +226,10 @@ function init_connection( $db ) {
 	$db->setServerType( $db_tiki );
 	$db->setErrorHandler( new TikiDb_LegacyErrorHandler );
 
-	if( isset( $db_table_prefix ) )
+	if ( isset( $db_table_prefix ) )
 		$db->setTablePrefix( $db_table_prefix );
 
-	if( isset( $common_users_table_prefix ) )
+	if ( isset( $common_users_table_prefix ) )
 		$db->setUsersTablePrefix( $common_users_table_prefix );
 }
 

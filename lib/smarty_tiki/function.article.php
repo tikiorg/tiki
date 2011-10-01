@@ -19,7 +19,7 @@ function smarty_function_article($params, $smarty)
 	global $dbTiki;
 	extract($params);
 
-	if(empty($max)) {
+	if (empty($max)) {
 		$max = 99;
 	}
 

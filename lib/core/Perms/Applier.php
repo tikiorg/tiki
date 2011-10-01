@@ -28,10 +28,10 @@ class Perms_Applier
 		$current = $object->getDirectPermissions();
 		$parent = $object->getParentPermissions();
 
-		if( $parent ) {
+		if ( $parent ) {
 			$comparator = new Perms_Reflection_PermissionComparator( $set, $parent );
 
-			if( $comparator->equal() && $this->isPossible( $current, $set ) ) {
+			if ( $comparator->equal() && $this->isPossible( $current, $set ) ) {
 				$null = new Perms_Reflection_PermissionSet;
 
 				$this->realApply( $object, $current, $null );
@@ -43,7 +43,7 @@ class Perms_Applier
 	}
 
 	private function isPossible( $current, $target ) {
-		if( $this->restriction === false ) {
+		if ( $this->restriction === false ) {
 			return true;
 		}
 
@@ -52,7 +52,7 @@ class Perms_Applier
 		
 		foreach( $changes as $addition ) {
 			list( $group, $permission ) = $addition;
-			if( ! isset( $this->restriction[$permission] ) ) {
+			if ( ! isset( $this->restriction[$permission] ) ) {
 				return false;
 			}
 		}
@@ -75,7 +75,7 @@ class Perms_Applier
 	}
 
 	private function attempt( $object, $method, $group, $permission ) {
-		if( $this->restriction === false || isset( $this->restriction[$permission] ) ) {
+		if ( $this->restriction === false || isset( $this->restriction[$permission] ) ) {
 			call_user_func( array( $object, $method ), $group, $permission );
 		}
 	}

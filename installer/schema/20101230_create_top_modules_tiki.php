@@ -40,12 +40,12 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	), $prefs);
 	
 	// add site logo
-	if( $prefs['feature_sitelogo'] === 'y' ) {
+	if ( $prefs['feature_sitelogo'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('logo','t',1,7200,'nobox=y','a:0:{}');");
 	}
 	// add site login
-	if( $prefs['feature_site_login'] === 'y' ) {
+	if ( $prefs['feature_site_login'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('login_box','t',2,0,'mode=popup&nobox=y','a:0:{}');");
 	}
@@ -58,13 +58,13 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 									"('menu','o',2,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y','a:0:{}');");
 		}
 		// add site search
-		if($prefs['feature_sitesearch'] === 'y' ) {
+		if ($prefs['feature_sitesearch'] === 'y' ) {
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 									"('search','o',1,7200,'nobox=y','a:0:{}');");
 		}
 	}
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
-	if( $prefs['feature_sitemycode'] === 'y' ) {
+	if ( $prefs['feature_sitemycode'] === 'y' ) {
 		$sitemycode = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'sitemycode'");
 		if (strpos($sitemycode, 'quickadmin') !== false) {
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
@@ -72,7 +72,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 		}
 	}
 	// add breadcrumb module - feature_breadcrumbs stays for now
-	if( $prefs['feature_breadcrumbs'] === 'y' ) {
+	if ( $prefs['feature_breadcrumbs'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 								"('breadcrumbs','t',6,0,'nobox=y','a:0:{}');");
 	}

@@ -9,7 +9,7 @@ $section = 'mytiki';
 
 require_once ('tiki-setup.php');
 
-if ( $user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' ){
+if ( $user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
 	$filegallib = TikiLib::lib('filegal');
 	$idGallery = $filegallib->get_user_file_gallery();
 

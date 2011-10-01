@@ -46,11 +46,11 @@ $pageCache = Tiki_PageCache::create()
 	->addValue('role', 'forum-page-output')
 	->addKeys($_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ))
 	->checkMeta(
-		'forum-page-output-meta-time', array(
-			'forumId'           => @$_REQUEST['forumId'],
-			'comments_parentId' => @$_REQUEST['comments_parentId']
-			)
-		)
+					'forum-page-output-meta-time', array(
+						'forumId'           => @$_REQUEST['forumId'],
+						'comments_parentId' => @$_REQUEST['comments_parentId']
+					)
+	)
 	->applyCache();
 
 if ($prefs['feature_categories'] == 'y') {

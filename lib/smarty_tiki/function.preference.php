@@ -7,18 +7,18 @@
 
 function smarty_function_preference( $params, $smarty ) {
 	global $prefslib, $prefs, $user_overrider_prefs; require_once 'lib/prefslib.php';
-	if( ! isset( $params['name'] ) ) {
+	if ( ! isset( $params['name'] ) ) {
 		return 'Preference name not specified.';
 	}
 
 	$source = null;
-	if( isset( $params['source'] ) ) {
+	if ( isset( $params['source'] ) ) {
 		$source = $params['source'];
 	}
 	$get_pages = isset( $params['get_pages']) && $params['get_pages'] != 'n' ? true : false;
 
-	if( $info = $prefslib->getPreference( $params['name'], true, $source, $get_pages ) ) {
-		if( isset($params['label']) ) {
+	if ( $info = $prefslib->getPreference( $params['name'], true, $source, $get_pages ) ) {
+		if ( isset($params['label']) ) {
 			$info['name'] = $params['label'];
 		}
 		if (in_array($params['name'], $user_overrider_prefs) && isset($prefs[$params['name']])) {
@@ -50,7 +50,7 @@ function smarty_function_preference( $params, $smarty ) {
 
 		$smarty->assign( 'p', $info );
 
-		if( isset( $params['mode'] ) && $params['mode'] == 'invert' ) {
+		if ( isset( $params['mode'] ) && $params['mode'] == 'invert' ) {
 			$smarty->assign( 'mode', 'invert' );
 		} else {
 			$smarty->assign( 'mode', 'normal' );

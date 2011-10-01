@@ -287,7 +287,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		foreach( $matches as $match ) {
 			$this->assertEquals( $expected[$iteration], $match->getName() );
 
-			if( $iteration == 1 ) {
+			if ( $iteration == 1 ) {
 				$match->replaceWith( 'Hello' );
 			}
 
@@ -308,7 +308,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		foreach( $matches as $match ) {
 			$this->assertEquals( $expected[$iteration], $match->getName() );
 
-			if( $iteration == 2 ) {
+			if ( $iteration == 2 ) {
 				$match->replaceWith( '{f}' );
 			}
 

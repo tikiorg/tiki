@@ -110,7 +110,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		if ( ! empty( $api_tiki ) ) {
 			$filetowrite .= "\$api_tiki='" . $api_tiki . "';\n";
 		}
-		if( ! empty( $client_charset ) ) {
+		if ( ! empty( $client_charset ) ) {
 			$filetowrite .= "\$client_charset='$client_charset';\n";
 		}
 		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
@@ -339,14 +339,14 @@ function fix_admin_account( $account ) {
 	global $installer;
 
 	$result = $installer->query( 'SELECT `id` FROM `users_groups` WHERE `groupName` = "Admins"' );
-	if( ! $row = $result->fetchRow() ) {
+	if ( ! $row = $result->fetchRow() ) {
 		$installer->query( 'INSERT INTO `users_groups` (`groupName`) VALUES("Admins")' );
 	}
 	
 	$installer->query( 'INSERT IGNORE INTO `users_grouppermissions` (`groupName`, `permName`) VALUES("Admins", "tiki_p_admin")' );
 
 	$result = $installer->query( 'SELECT `userId` FROM `users_users` WHERE `login` = ?', array( $account ) );
-	if( $row = $result->fetchRow() ) {
+	if ( $row = $result->fetchRow() ) {
 		$id = $row['userId'];
 		$installer->query( 'INSERT IGNORE INTO `users_usergroups` (`userId`, `groupName`) VALUES(?, "Admins")', array( $id ) );
 	}
@@ -458,7 +458,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	if ( $dbcon ) {
 		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 
-		if( ! empty( $client_charset ) ) {
+		if ( ! empty( $client_charset ) ) {
 			$db->query("SET CHARACTER SET $client_charset");
 		}
 
@@ -471,7 +471,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 function convert_database_to_utf8( $dbname ) {
 	$db = TikiDb::get();
 
-	if( $result = $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) ) {
+	if ( $result = $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) ) {
 		$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci" );
 
 		foreach( $result as $row ) {
@@ -487,7 +487,7 @@ function fix_double_encoding( $dbname, $previous ) {
 
 	$text_fields = $db->fetchAll( "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND CHARACTER_SET_NAME IS NOT NULL", array($dbname) );
 
-	if( $text_fields ) {
+	if ( $text_fields ) {
 		foreach( $text_fields as $field ) {
 			$db->query( "UPDATE `{$field['TABLE_NAME']}` SET `{$field['COLUMN_NAME']}` = CONVERT(CONVERT(CONVERT(CONVERT(`{$field['COLUMN_NAME']}` USING binary) USING utf8) USING $previous) USING binary)" );
 		}
@@ -709,7 +709,7 @@ if (
 	) && isset($_REQUEST['dbinfo'])
 ) {
 	if ( ! empty($_REQUEST['name']) ) {
-		if( isset( $_REQUEST['force_utf8'] ) ) {
+		if ( isset( $_REQUEST['force_utf8'] ) ) {
 			$client_charset = 'utf8';
 		} else {
 			$client_charset = '';
@@ -731,9 +731,9 @@ if (
 	}
 }
 // Mark that InnoDB is to be used, if selected
-if(isset($_REQUEST['useInnoDB'])) {
-	if(intval($_REQUEST['useInnoDB']) > 0) {
-		if($installer != null) {
+if (isset($_REQUEST['useInnoDB'])) {
+	if (intval($_REQUEST['useInnoDB']) > 0) {
+		if ($installer != null) {
 			$installer->useInnoDB = true;	
 		}
 	}
@@ -893,7 +893,7 @@ if ($install_step == '2') {
 			$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
 			
 			$sentmail = mail($email_test_to, $email_test_subject, $email_test_body, $email_test_headers);
-			if($sentmail){
+			if ($sentmail){
 				$mail_test = 'y';
 			} else {
 				$mail_test = 'n';
@@ -968,7 +968,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 	$installer->query($query);
 	$installer->query("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
 
-	if( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
+	if ( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
 		fix_admin_account( $_REQUEST['admin_account'] );
 	}
 	if (isset($_REQUEST['fix_disable_accounts']) && $_REQUEST['fix_disable_accounts'] == 'on') {
@@ -1021,25 +1021,25 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 
 $client_charset = '';
 
-if( file_exists( $local ) ) {
+if ( file_exists( $local ) ) {
 	include $local;
 }
 
 $smarty->assign( 'client_charset_in_file', $client_charset );
 
-if( isset( $_POST['convert_to_utf8'] ) ) {
+if ( isset( $_POST['convert_to_utf8'] ) ) {
 	convert_database_to_utf8( $dbs_tiki );
 }
 
 $smarty->assign('double_encode_fix_attempted', 'n');
-if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding']) ) {
+if ( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding']) ) {
 	fix_double_encoding( $dbs_tiki, $_POST['previous_encoding'] );
 	$smarty->assign('double_encode_fix_attempted', 'y');
 }
 
-if( $install_step == '4' ) {
+if ( $install_step == '4' ) {
 	// Show the innodb option in the (re)install section if InnoDB is present
-	if(isset($installer) and $installer->hasInnoDB()) {
+	if (isset($installer) and $installer->hasInnoDB()) {
 		$smarty->assign( 'hasInnoDB', true );
 	} else {
 		$smarty->assign( 'hasInnoDB', false );
@@ -1057,7 +1057,7 @@ if( $install_step == '4' ) {
 
 if (((isset($value) && $value == 'utf8') || $install_step == '7') && $db = TikiDB::get()) {
 	$result = $db->fetchAll( 'SELECT TABLE_COLLATION FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_COLLATION NOT LIKE "utf8%"', $dbs_tiki );
-	if(!empty ($result) ) {
+	if (!empty ($result) ) {
 		$smarty->assign('legacy_collation', $result[0]['TABLE_COLLATION']);
 	}
 }

@@ -11,7 +11,7 @@ $tokens = token_get_all( file_get_contents( $file ) );
 $out = array();
 
 foreach( $tokens as $token ) {
-	if( ! is_array( $token ) || $token[0] !== T_COMMENT ) {
+	if ( ! is_array( $token ) || $token[0] !== T_COMMENT ) {
 		$out[] = $token;
 	}
 }
@@ -19,7 +19,7 @@ foreach( $tokens as $token ) {
 ob_start();
 
 foreach( $out as $o ) {
-	if( is_array( $o ) ) {
+	if ( is_array( $o ) ) {
 		echo $o[1];
 	} else {
 		echo $o;

@@ -32,7 +32,8 @@ class TikiLib_UriMergeTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('http://example.com/foo/baz?y=x&a=b', $this->merge('http://example.com/foo/bar?x=y', 'baz?y=x&a=b'));
 	}
 
-	private function merge($first, $last) {
+	private function merge($first, $last)
+	{
 		return TikiLib::lib('tiki')->http_get_uri(Zend_Uri_Http::fromString($first), $last)->getUri();
 	}
 }

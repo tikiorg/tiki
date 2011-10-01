@@ -22,7 +22,7 @@ if (!isset($_REQUEST["quizId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$tikilib->get_perm_object( $_REQUEST['quizId'], 'quiz' );
+$tikilib->get_perm_object($_REQUEST['quizId'], 'quiz');
 
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);

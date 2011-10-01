@@ -53,19 +53,19 @@ class Tiki_Profile
 	{
 		foreach( $conversion as $key => $endValue )
 		{
-			if( ! isset( $data[$key] ) )
+			if ( ! isset( $data[$key] ) )
 				continue;
 
 			$data[$key] = (array) $data[$key];
 
 			foreach( $data[$key] as $item )
 			{
-				if( $prependKey === true )
+				if ( $prependKey === true )
 					$item = "{$key}_{$item}";
-				elseif( ! empty( $prependKey ) )
+				elseif ( ! empty( $prependKey ) )
 					$item = $prependKey . $item;
 
-				if( !isset( $data[$item] ) )
+				if ( !isset( $data[$item] ) )
 					$data[$item] = $endValue;
 			}
 
@@ -79,7 +79,7 @@ class Tiki_Profile
 	{
 		$copy = $data;
 		foreach( $copy as &$value )
-			if( is_bool( $value ) )
+			if ( is_bool( $value ) )
 				$value = $value ? 'y' : 'n';
 
 		return $copy;
@@ -97,7 +97,7 @@ class Tiki_Profile
 
 	public static function withPrefix( $profile ) // {{{
 	{
-		if( self::$resolvePrefix )
+		if ( self::$resolvePrefix )
 			return self::$resolvePrefix . ':' . $profile;
 		else
 			return $profile;
@@ -106,17 +106,17 @@ class Tiki_Profile
 	private static function getObjectReference( $object, $full = true ) // {{{
 	{
 		// If a prefix was set, attempt to isolate the lookup to the prefix first
-		if( $full ) {
+		if ( $full ) {
 			$withPrefix = $object;
 			$withPrefix['profile'] = self::withPrefix( $withPrefix['profile'] );
 
-			if( ! is_null( $ref = self::getObjectReference( $withPrefix, false ) ) )
+			if ( ! is_null( $ref = self::getObjectReference( $withPrefix, false ) ) )
 				return $ref;
 		}
 
 		$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
 
-		if( ! isset( self::$known[$serialized] ) )
+		if ( ! isset( self::$known[$serialized] ) )
 			self::$known[$serialized] = self::findObjectReference( $object );
 
 		return self::$known[$serialized];
@@ -129,7 +129,7 @@ class Tiki_Profile
 		$result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
 			array( $object['domain'], $object['profile'], $object['object'] ) );
 
-		if( $row = $result->fetchRow() )
+		if ( $row = $result->fetchRow() )
 			return $row['value'];
 
 		return null;
@@ -140,7 +140,7 @@ class Tiki_Profile
 		$profile = new self;
 		$profile->url = $url;
 
-		if( $profile->analyseMeta( $url ) ) {
+		if ( $profile->analyseMeta( $url ) ) {
 
 			// Obtain the page export
 			$content = TikiLib::lib('tiki')->httprequest( $url );
@@ -149,7 +149,7 @@ class Tiki_Profile
 
 			// Find content start (strip headers)
 			$begin = strpos( $content, "\n\n" );
-			if( ! $begin )
+			if ( ! $begin )
 				return false;
 
 			$content = substr( $content, $begin + 2 );
@@ -162,10 +162,10 @@ class Tiki_Profile
 
 	public static function fromNames( $domain, $profile ) // {{{
 	{
-		if( strpos( $domain, '://' ) === false )
+		if ( strpos( $domain, '://' ) === false )
 			$domain = "http://$domain";
 
-		if( $domain == 'tiki://local' ) {
+		if ( $domain == 'tiki://local' ) {
 			return self::fromDb( $profile );
 		} else {
 			if (self::$developerMode) {
@@ -232,12 +232,12 @@ class Tiki_Profile
 	{
 		$parts = parse_url( $url );
 
-		if( ! isset( $parts['query'], $parts['host'], $parts['path'] ) )
+		if ( ! isset( $parts['query'], $parts['host'], $parts['path'] ) )
 			return false;
 
 		parse_str( $parts['query'], $args );
 
-		if( ! isset( $args['page'] ) )
+		if ( ! isset( $args['page'] ) )
 			return false;
 
 		$dir = dirname( $parts['path'] );
@@ -277,7 +277,7 @@ class Tiki_Profile
 
 				foreach( $data as $key => $value )
 				{
-					if( array_key_exists( $key, $this->data ) )
+					if ( array_key_exists( $key, $this->data ) )
 						$this->data[$key] = $this->mergeData( $this->data[$key], $value );
 					else
 						$this->data[$key] = $value;
@@ -306,7 +306,7 @@ class Tiki_Profile
 	
 	private function traverseForExternals( &$data ) // {{{
 	{
-		if( is_array( $data ) ) {
+		if ( is_array( $data ) ) {
 			foreach( $data as &$value ) {
 				$this->traverseForExternals( $value );
 			}
@@ -337,7 +337,7 @@ class Tiki_Profile
 		$content = str_replace( "\r", '', $content );
 		$begin = strpos( $content, "\n\n" );
 
-		if( $begin !== false )
+		if ( $begin !== false )
 			return substr( $content, $begin + 2 );
 		else
 			return null;
@@ -366,11 +366,11 @@ class Tiki_Profile
 
 	function mergeData( $old, $new ) // {{{
 	{
-		if( is_array( $old ) && is_array( $new ) )
+		if ( is_array( $old ) && is_array( $new ) )
 		{
 			foreach( $new as $key => $value )
 			{
-				if( is_numeric( $key ) )
+				if ( is_numeric( $key ) )
 					$old[] = $value;
 				else
 					$old[$key] = $this->mergeData( $old[$key], $value );
@@ -384,13 +384,13 @@ class Tiki_Profile
 
 	function getNamedObjects() // {{{
 	{
-		if( ! isset( $this->data['objects'] ) )
+		if ( ! isset( $this->data['objects'] ) )
 			return array();
 
 		$named = array();
 
 		foreach( $this->data['objects'] as $object )
-			if( isset( $object['ref'] ) )
+			if ( isset( $object['ref'] ) )
 				$named[] = array( 'domain' => $this->domain, 'profile' => $this->profile, 'object' => $object['ref'] );
 
 		return $named;
@@ -406,7 +406,7 @@ class Tiki_Profile
 		$out = array();
 
 		foreach( $this->getReferences() as $ref )
-			if( $this->domain != $ref['domain'] || $this->profile != $ref['profile'] )
+			if ( $this->domain != $ref['domain'] || $this->profile != $ref['profile'] )
 				$out[] = $ref;
 
 		return $out;
@@ -415,12 +415,12 @@ class Tiki_Profile
 	private function traverseForReferences( $value ) // {{{
 	{
 		$array = array();
-		if( is_array( $value ) )
+		if ( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( self::SHORT_PATTERN, $value, $parts ) )
+		elseif ( preg_match( self::SHORT_PATTERN, $value, $parts ) )
 			$array[] = $this->convertReference( $parts );
-		elseif( preg_match_all( self::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) ) {
+		elseif ( preg_match_all( self::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) ) {
 			foreach( $parts as $row )
 				$array[] = $this->convertReference( $row );
 		}
@@ -432,9 +432,9 @@ class Tiki_Profile
 	{
 		list( $full, $null0, $null1, $domain, $null2, $profile, $object ) = $parts;
 
-		if( empty( $domain ) )
+		if ( empty( $domain ) )
 			$domain = $this->domain;
-		if( empty( $profile ) )
+		if ( empty( $profile ) )
 			$profile = $this->profile;
 
 		return array( 'domain' => $domain, 'profile' => $profile, 'object' => $object );
@@ -448,10 +448,10 @@ class Tiki_Profile
 	function traverseForRequiredInput( $value ) // {{{
 	{
 		$array = array();
-		if( is_array( $value ) )
+		if ( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForRequiredInput( $v ) );
-		elseif( preg_match( self::INFO_REQUEST, $value, $parts ) )
+		elseif ( preg_match( self::INFO_REQUEST, $value, $parts ) )
 			$array[$parts[1]] = $parts[4];
 
 		return $array;
@@ -464,13 +464,13 @@ class Tiki_Profile
 		foreach( $this->getExternalReferences() as $ext )
 		{
 			$key = Tiki_Profile::getProfileKeyFor( $ext['domain'], $ext['profile'] );
-			if( array_key_exists( $key, $known ) || array_key_exists( $key, $profiles ) )
+			if ( array_key_exists( $key, $known ) || array_key_exists( $key, $profiles ) )
 				continue;
 
 			$profiles[$key] = self::fromNames( $ext['domain'], $ext['profile'] );
 		}
 
-		if( $recursive )
+		if ( $recursive )
 			foreach( $profiles as $profile )
 				$profiles = array_merge( $profiles, $profile->getRequiredProfiles( true, $profiles ) );
 
@@ -479,10 +479,10 @@ class Tiki_Profile
 
 	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
 	{
-		if( $suppliedUserData === false )
+		if ( $suppliedUserData === false )
 			$suppliedUserData = $this->getRequiredInput();
 
-		if( is_array( $data ) ) {
+		if ( is_array( $data ) ) {
 			foreach( $data as &$sub )
 				$this->replaceReferences( $sub, $suppliedUserData );
 
@@ -490,7 +490,7 @@ class Tiki_Profile
 			foreach( array_keys( $data ) as $key ) {
 				$newKey = $key;
 				$this->replaceReferences( $newKey, $suppliedUserData );
-				if( $newKey != $key )
+				if ( $newKey != $key )
 					$toReplace[$key] = $newKey;
 			}
 
@@ -501,7 +501,7 @@ class Tiki_Profile
 		}
 		else
 		{
-			if( preg_match( self::SHORT_PATTERN, $data, $parts ) )
+			if ( preg_match( self::SHORT_PATTERN, $data, $parts ) )
 			{
 				$object = $this->convertReference( $parts );
 				$data = self::getObjectReference( $object );
@@ -511,7 +511,7 @@ class Tiki_Profile
 			$needles = array();
 			$replacements = array();
 
-			if( preg_match_all( self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER ) )
+			if ( preg_match_all( self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER ) )
 				foreach( $parts as $row )
 				{
 					$object = $this->convertReference( $row );
@@ -520,55 +520,55 @@ class Tiki_Profile
 					$replacements[] = self::getObjectReference( $object );
 				}
 
-			if( preg_match_all( self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER ) )
+			if ( preg_match_all( self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER ) )
 				foreach( $parts as $row )
 				{
 					list( $full, $label, $junk, $filter, $default ) = $row;
 
-					if( ! array_key_exists( $label, $suppliedUserData ) )
+					if ( ! array_key_exists( $label, $suppliedUserData ) )
 						$value = $default;
 					else
 						$value = $suppliedUserData[$label];
 
-					if( $filter )
+					if ( $filter )
 						$value = TikiFilter::get($filter)->filter($value);
 					else
 						$value = TikiFilter::get('xss')->filter($value);
 
-					if( empty($value) )
+					if ( empty($value) )
 						$value = $default;
 
 					$needles[] = $full;
 					$replacements[] = $value;
 				}
 			
-			if( count( $needles ) )
+			if ( count( $needles ) )
 				$data = str_replace( $needles, $replacements, $data );
 
 			$needles = array();
 			$replacements = array();
 
 			// Replace date formats D(...) to unix timestamps
-			if( preg_match_all( "/D\\(([^\\)]+)\\)/", $data, $parts, PREG_SET_ORDER ) )
+			if ( preg_match_all( "/D\\(([^\\)]+)\\)/", $data, $parts, PREG_SET_ORDER ) )
 				foreach( $parts as $row )
 				{
 					list( $full, $date ) = $row;
 
-					if( false !== $conv = strtotime( $date ) )
+					if ( false !== $conv = strtotime( $date ) )
 					{
 						$needles[] = $full;
 						$replacements = $conv;
 					}
 				}
 
-			if( count( $needles ) )
+			if ( count( $needles ) )
 				$data = str_replace( $needles, $replacements, $data );
 		}
 	} // }}}
 
 	function getInstructionPage() // {{{
 	{
-		if( isset( $this->data['instructions'] ) ) {
+		if ( isset( $this->data['instructions'] ) ) {
 			return $this->data['instructions'];
 		}
 	} // }}}
@@ -577,7 +577,7 @@ class Tiki_Profile
 	{
 		$prefs = array();
 
-		if( array_key_exists( 'preferences', $this->data ) )
+		if ( array_key_exists( 'preferences', $this->data ) )
 		{
 			$prefs = Tiki_Profile::convertLists( $this->data['preferences'], array(
 				'enable' => 'y', 
@@ -592,7 +592,7 @@ class Tiki_Profile
 
 	function getGroupMap() // {{{
 	{
-		if( ! isset( $this->data['mappings'] ) ) {
+		if ( ! isset( $this->data['mappings'] ) ) {
 			return array();
 		}
 
@@ -601,20 +601,20 @@ class Tiki_Profile
 
 	function getPermissions( $groupMap = array() ) // {{{
 	{
-		if( ! array_key_exists( 'permissions', $this->data ) )
+		if ( ! array_key_exists( 'permissions', $this->data ) )
 			return array();
 
 		$groups = array();
 		foreach( $this->data['permissions'] as $groupName => $data )
 		{
-			if( isset( $groupMap[ $groupName ] ) ) {
+			if ( isset( $groupMap[ $groupName ] ) ) {
 				$groupName = $groupMap[$groupName];
 			}
 
 			$permissions = Tiki_Profile::convertLists( $data, array( 'allow' => 'y', 'deny' => 'n' ), 'tiki_p_' );
 			$permissions = Tiki_Profile::convertYesNo( $permissions );
 			foreach( array_keys( $permissions ) as $key )
-				if( strpos( $key, 'tiki_p_' ) !== 0 )
+				if ( strpos( $key, 'tiki_p_' ) !== 0 )
 					unset( $permissions[$key] );
 
 			$defaultInfo = array(
@@ -632,19 +632,19 @@ class Tiki_Profile
 				'autojoin' => 'n',
 			);
 			foreach( $defaultInfo as $key => $value )
-				if( array_key_exists( $key, $data ) )
+				if ( array_key_exists( $key, $data ) )
 				{
-					if( is_array( $value ) )
+					if ( is_array( $value ) )
 						$defaultInfo[$key] = (array) $data[$key];
 					else
 						$defaultInfo[$key] = $data[$key];
 				}
 
 			$objects = array();
-			if( isset( $data['objects'] ) )
+			if ( isset( $data['objects'] ) )
 				foreach( $data['objects'] as $o )
 				{
-					if( !isset($o['type'], $o['id']) ) {
+					if ( !isset($o['type'], $o['id']) ) {
 						$this->setFeedback(tra('Syntax error: ').tra("Permissions' object must have a field 'type' and 'id'"));
 						continue;
 					}
@@ -653,7 +653,7 @@ class Tiki_Profile
 					$perms = Tiki_Profile::convertYesNo( $perms );
 
 					foreach( array_keys( $perms ) as $key )
-						if( strpos( $key, 'tiki_p_' ) !== 0 )
+						if ( strpos( $key, 'tiki_p_' ) !== 0 )
 							unset( $perms[$key] );
 
 					$o['permissions'] = $perms;
@@ -672,16 +672,16 @@ class Tiki_Profile
 
 	function getObjects() // {{{
 	{
-		if( !is_null( $this->objects ) )
+		if ( !is_null( $this->objects ) )
 			return $this->objects;
 
 		$objects = array();
 
-		if( array_key_exists( 'objects', $this->data ) )
+		if ( array_key_exists( 'objects', $this->data ) )
 			foreach( $this->data['objects'] as &$entry )
 			{
 				$o = new Tiki_Profile_Object( $entry, $this );
-				if( $o->isWellStructured() ) {
+				if ( $o->isWellStructured() ) {
 					$objects[] = $o;
 				} else {
 					$str = '';
@@ -702,7 +702,7 @@ class Tiki_Profile
 		while( ! empty( $objects ) )
 		{
 			// Circular dependency found... give what we have
-			if( $counter++ > count($objects) * 2 ) {
+			if ( $counter++ > count($objects) * 2 ) {
 				$this->setFeedback( tra('Circular reference') . ': ' . implode( ', ', array_unique( $refs ) ) );
 				break;
 			}
@@ -710,11 +710,11 @@ class Tiki_Profile
 			$object = array_shift( $objects );
 			$refs = $object->getInternalReferences();
 			$refs = array_diff( $refs, $names );
-			if( empty( $refs ) )
+			if ( empty( $refs ) )
 			{
 				$counter = 0;
 				$classified[] = $object;
-				if( $object->getRef() )
+				if ( $object->getRef() )
 					$names[] = $object->getRef();
 			}
 			else
@@ -733,7 +733,7 @@ class Tiki_Profile
 
 		$key = self::getProfileKeyFor( $this->domain, self::withPrefix($this->profile) );
 		foreach( array_keys(self::$known) as $obj )
-			if( strpos( $obj, $key ) === 0 )
+			if ( strpos( $obj, $key ) === 0 )
 				unset(self::$known[$obj]);
 	} // }}}
 
@@ -799,7 +799,7 @@ class Tiki_Profile_Object
 
 	function getRef() // {{{
 	{
-		if( array_key_exists( 'ref', $this->data ) )
+		if ( array_key_exists( 'ref', $this->data ) )
 			return $this->data['ref'];
 	} // }}}
 
@@ -814,7 +814,7 @@ class Tiki_Profile_Object
 		$this->id = $value;
 
 		$named = 'y';
-		if( ! $name = $this->getRef() )
+		if ( ! $name = $this->getRef() )
 		{
 			$name = uniqid();
 			$named = 'n';
@@ -826,7 +826,7 @@ class Tiki_Profile_Object
 
 	function getInternalReferences() // {{{
 	{
-		if( !is_null( $this->references ) )
+		if ( !is_null( $this->references ) )
 			return $this->references;
 
 		$this->references = $this->traverseForReferences( $this->data );
@@ -835,7 +835,7 @@ class Tiki_Profile_Object
 
 	function getData() // {{{
 	{
-		if( array_key_exists( 'data', $this->data ) )
+		if ( array_key_exists( 'data', $this->data ) )
 			return $this->data['data'];
 
 		return array();
@@ -854,22 +854,22 @@ class Tiki_Profile_Object
 	private function traverseForReferences( $value ) // {{{
 	{
 		$array = array();
-		if( is_array( $value ) )
+		if ( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( Tiki_Profile::SHORT_PATTERN, $value, $parts ) )
+		elseif ( preg_match( Tiki_Profile::SHORT_PATTERN, $value, $parts ) )
 		{
 			$ref = $this->profile->convertReference( $parts );
-			if( $this->profile->domain == $ref['domain']
+			if ( $this->profile->domain == $ref['domain']
 				&& $this->profile->profile == $ref['profile'] )
 				$array[] = $ref['object'];
 		}
-		elseif( preg_match_all( Tiki_Profile::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) )
+		elseif ( preg_match_all( Tiki_Profile::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) )
 		{
 			foreach( $parts as $row )
 			{
 				$ref = $this->profile->convertReference( $row );
-				if( $this->profile->domain == $ref['domain']
+				if ( $this->profile->domain == $ref['domain']
 					&& $this->profile->profile == $ref['profile'] )
 					$array[] = $ref['object'];
 			}
@@ -885,7 +885,7 @@ class Tiki_Profile_Object
 
 	function __get( $name ) // {{{
 	{
-		if( array_key_exists( $name, $this->data['data'] ) )
+		if ( array_key_exists( $name, $this->data['data'] ) )
 			return $this->data['data'][$name];
 	} // }}}
 }

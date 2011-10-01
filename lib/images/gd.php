@@ -94,7 +94,7 @@ class Image extends ImageAbstract
 					imagejpeg($this->data);
 					break;
 				case 'gif':
-					imagegif($this->data);
+					imagegif ($this->data);
 					break;
 				case 'png':
 					imagepng($this->data);

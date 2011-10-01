@@ -19,17 +19,17 @@ class Perms_Reflection_Factory
 	}
 
 	function get( $type, $object ) {
-		if( ! $class = $this->getRegistered( $type ) ) {
+		if ( ! $class = $this->getRegistered( $type ) ) {
 			$class = $this->fallback;
 		}
 
-		if( $class ) {
+		if ( $class ) {
 			return new $class( $this, $type, $object );
 		}
 	}
 
 	private function getRegistered( $type ) {
-		if( isset( $this->registry[ $type ] ) ) {
+		if ( isset( $this->registry[ $type ] ) ) {
 			return $this->registry[ $type ];
 		}
 	}

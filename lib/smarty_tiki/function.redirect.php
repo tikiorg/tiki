@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_redirect($params, $smarty) {
 	extract($params, EXTR_SKIP);
 	// Param = url
-	if(empty($url)) {
+	if (empty($url)) {
 		$smarty->trigger_error("assign: missing parameter: url");
 	return;
 	}

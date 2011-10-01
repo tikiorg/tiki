@@ -19,7 +19,7 @@ if (isset($_REQUEST['userfeatures'])) {
 if (isset($_REQUEST['users_defaults'])) {
 	check_ticket('admin-inc-login');
 
-	foreach($_prefs as $pref) {
+	foreach ($_prefs as $pref) {
 		simple_set_value($pref);
 	}
 }

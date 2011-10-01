@@ -305,7 +305,7 @@ class StructLib extends TikiLib
       $ret[] = $aux;
       //Recursively add any child nodes
 			$subs = $this->get_subtree($res['page_ref_id'], ($level + 1), $aux['pos']);
-      if(isset($subs)) {
+      if (isset($subs)) {
         $ret = array_merge($ret, $subs);
       }
       // Insert a dummy entry to close table/list
@@ -397,12 +397,12 @@ class StructLib extends TikiLib
 	function use_user_language_preferences( $langContext = null )
 	{
 		global $prefs, $multilinguallib;
-		if( $prefs['feature_multilingual'] != 'y' )
+		if ( $prefs['feature_multilingual'] != 'y' )
 			return;
-		if( $prefs['feature_multilingual_structures'] != 'y' )
+		if ( $prefs['feature_multilingual_structures'] != 'y' )
 			return;
 
-		if( !$multilinguallib )
+		if ( !$multilinguallib )
 			include_once('lib/multilingual/multilinguallib.php');
 
 		$this->displayLanguageOrder = $multilinguallib->preferredLangs( $langContext );
@@ -434,7 +434,7 @@ class StructLib extends TikiLib
 	/** Return an array of page info
   */
 	function s_get_page_info($page_ref_id) {
-		if( empty( $this->displayLanguageOrder ) )
+		if ( empty( $this->displayLanguageOrder ) )
 		{
 			$query =  'select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias`, `structure_id` ';
 			$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
@@ -467,7 +467,7 @@ class StructLib extends TikiLib
 			$result = $this->query( $query, $args );
 		}
 
-		if($res = $result->fetchRow()) {
+		if ($res = $result->fetchRow()) {
 			return $res;
 		} else {
 			return null;
@@ -483,7 +483,7 @@ class StructLib extends TikiLib
 		if ($cant) {
 			// TODO : FIX
 			$args = array();
-			if( ! $this->displayLanguageOrder ) {
+			if ( ! $this->displayLanguageOrder ) {
 				$query = 'select `page_ref_id`, `pageName`, `page_alias`, tp.`description` from `tiki_structures` ts, `tiki_pages` tp ';
 				$query.= 'where ts.`page_id`=tp.`page_id` and `parent_id`=? order by '.$this->convertSortMode('pos_'.$order);
 				$args[] = (int) $id;
@@ -566,7 +566,7 @@ class StructLib extends TikiLib
 					$smarty->assign('toc_type',$type);
 					$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
-					if(isset($leaf['sub']) && is_array($leaf['sub'])) {
+					if (isset($leaf['sub']) && is_array($leaf['sub'])) {
 						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page,$maxdepth,$cur_depth+1, $structurePageName).str_repeat("\t",($cur_depth*2)+1)."</li>\n";
 					} else {
 						$ret.=str_repeat("\t",($cur_depth*2)+1)."</li>\n";
@@ -592,10 +592,10 @@ class StructLib extends TikiLib
 		$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
 		$query .= 'where ts.`page_id`=tp.`page_id` and (`parent_id` is null or `parent_id`=0) and `pageName`=?';
 		$page_ref_id = $this->getOne($query,array($pageName));
-		if( $page_ref_id )
+		if ( $page_ref_id )
 			return $page_ref_id;
 
-		if( !$this->displayLanguageOrder )
+		if ( !$this->displayLanguageOrder )
 			return null;
 
 		$query = "
@@ -729,7 +729,7 @@ function get_struct_ref_id($pageName) {
 	function get_page_structures($pageName,$structure='') {
 		$ret = array();
 		$structures_added = array();
-		if( empty( $this->displayLanguageOrder ) ) {
+		if ( empty( $this->displayLanguageOrder ) ) {
 			$query = 'select `page_ref_id` ';
 			$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
 			$query .= 'where ts.`page_id`=tp.`page_id` and `pageName`=?';
@@ -751,7 +751,7 @@ function get_struct_ref_id($pageName) {
 			$next_page = $this->s_get_structure_info($res['page_ref_id']);
 			//Add each structure head only once
 			if (!in_array($next_page['page_ref_id'], $structures_added)) {
-				if(empty($structure) || $structure == $next_page['pageName']) {
+				if (empty($structure) || $structure == $next_page['pageName']) {
 				$structures_added[] = $next_page['page_ref_id'];
 				$next_page['req_page_ref_id'] = $res['page_ref_id'];
 				$ret[] = $next_page;
@@ -844,7 +844,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 			global $user;
 	        if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_view') ) {
 	        
-			if(file_exists('whelp/'.$res['pageName'].'/index.html')) {
+			if (file_exists('whelp/'.$res['pageName'].'/index.html')) {
 			  $res['webhelp']='y';
 			} else {
 			  $res['webhelp']='n';
@@ -907,7 +907,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		$result = $this->query($query,array($page));
 		$res = $result->fetchRow();
   		$docs[] = $res['pageName'];
-  		if(empty($res['description'])) $res['description']=$res['pageName'];
+  		if (empty($res['description'])) $res['description']=$res['pageName'];
   		$pageName=$res['pageName'].'|'.$res['description'];
   		$dat = $this->parse_data($res['data']);
   		//Now dump the page
@@ -922,12 +922,12 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		$page_words = preg_split("/[^A-Za-z0-9\-_]/",$res['data']);
   		foreach($page_words as $word) {
     		$word=strtolower($word);
-    		if(strlen($word)>3 && preg_match("/^[A-Za-z][A-Za-z0-9\_\-]*[A-Za-z0-9]$/",$word)) {
-      		if(!in_array($word,$words)) {
+    		if (strlen($word)>3 && preg_match("/^[A-Za-z][A-Za-z0-9\_\-]*[A-Za-z0-9]$/",$word)) {
+      		if (!in_array($word,$words)) {
         		$words[] = $word;
         		$index[$word]=Array();
       		}
-      		if(!in_array($res['pageName'].'|'.$res['description'],$index[$word])) {
+      		if (!in_array($res['pageName'].'|'.$res['description'],$index[$word])) {
         		$index[$word][] = $res['pageName'].'|'.$res['description'];
       		}
     		}
@@ -941,7 +941,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		fwrite($fw,"keywords[$i] = Array(\"$word\",Array(");
   		$first=true;
   		foreach($index[$word] as $doc) {
-    		if(!$first) {fwrite($fw,',');} else {$first=false;}
+    		if (!$first) {fwrite($fw,',');} else {$first=false;}
     		fwrite($fw,'"'.$doc.'"');
   		}
   		fwrite($fw,"));\n");
@@ -961,17 +961,17 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	$query = 'select * from `tiki_structures` ts,`tiki_pages` tp where tp.`page_id`=ts.`page_id` and `page_ref_id`=?';
 	$result = $this->query($query,array((int)$page_ref_id));
 	$res = $result->fetchRow();
-	if(empty($res['description'])) $res['description']=$res['pageName'];
+	if (empty($res['description'])) $res['description']=$res['pageName'];
 	$name = str_replace("'","\'",$res['description'].'|'.$res['pageName']);
 	$code = '';
 	$code.= "'$name'=>";
 	$query = 'select * from `tiki_structures` ts, `tiki_pages` tp  where tp.`page_id`=ts.`page_id` and `parent_id`=?';
 	$result = $this->query($query,array((int)$page_ref_id));
-	if($result->numRows()) {
+	if ($result->numRows()) {
 		$code.='Array(';
 		$first = true;
 		while($res=$result->fetchRow()) {
-			if(!$first) {
+			if (!$first) {
 			  $code.=',';
 			} else {
 			  $first = false;
@@ -988,7 +988,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   $code='';
   foreach($tree as $name => $node) {
    list($name,$link) = explode('|',$name);
-   if(is_array($node)) {
+   if (is_array($node)) {
      //New folder node is parent++ folder parent is paren
      $new = $parent . 'A';
      $code.='foldersTree'.$new."=insFld(foldersTree$parent,gFld(\"$name\",\"pages/$link.html\"));\n";
@@ -1003,8 +1003,8 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   $pages = Array();
   foreach($tree as $name => $node) {
    list($name,$link) = explode('|',$name);
-   if(is_array($node)) {
-     if(isset($name) && isset($link)) {
+   if (is_array($node)) {
+     if (isset($name) && isset($link)) {
         $pageName = $link;
         $pages[] = $pageName;
      }

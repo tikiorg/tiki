@@ -358,7 +358,7 @@ class TrackerQueryLib
 		if (!empty($this->end) && !$this->search) $params[] = $this->end;
 		if (!empty($this->itemId) && !$this->search) $params[] = $this->itemId;
 		
-		if($this->byName == true && !empty($this->fields)) {
+		if ($this->byName == true && !empty($this->fields)) {
 			$fieldIds = array();
 			foreach($this->fields as $field) {
 				$fieldIds[] = $tikilib->getOne("

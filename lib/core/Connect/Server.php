@@ -90,7 +90,7 @@ class Connect_Server extends Connect_Abstract
 
 	private function getIndex( $rebuld = false ) {
 
-		if( $rebuld || $this->indexNeedsRebuilding() ) {
+		if ( $rebuld || $this->indexNeedsRebuilding() ) {
 			$index = Zend_Search_Lucene::create( $this->indexFile );
 
 			foreach ($this->getReceivedDataLatest() as $connection) {

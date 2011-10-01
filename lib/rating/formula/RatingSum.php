@@ -9,7 +9,8 @@ require_once 'lib/rating/formula/RatingAverage.php';
 
 class Tiki_Formula_Function_RatingSum extends Tiki_Formula_Function_RatingAverage
 {
-	function __construct() {
+	function __construct()
+	{
 		$this->mode = 'sum';
 	}
 }

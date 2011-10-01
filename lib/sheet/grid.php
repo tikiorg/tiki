@@ -247,10 +247,10 @@ class TikiSheet
 	 */
 	function getColumnIndex( $id )
 	{
-		if( !preg_match( "/^([A-Z]+)([0-9]+)$/", $id, $parts ) )
+		if ( !preg_match( "/^([A-Z]+)([0-9]+)$/", $id, $parts ) )
 			return false;
 
-		if( !isset( $this->indexes[ $parts[1] ] ) )
+		if ( !isset( $this->indexes[ $parts[1] ] ) )
 		{
 			while( $this->lastID != $parts[1] )
 			{
@@ -273,7 +273,7 @@ class TikiSheet
 	 */
 	function getRowIndex( $id )
 	{
-		if( !preg_match( "/^([A-Z]+)([0-9]+)$/", $id, $parts ) )
+		if ( !preg_match( "/^([A-Z]+)([0-9]+)$/", $id, $parts ) )
 			return false;
 
 		return $parts[2] - 1;
@@ -289,10 +289,10 @@ class TikiSheet
 	 */
 	function equals( &$sheet, $rowIndex, $columnIndex )
 	{
-		if( isset( $this->dataGrid[$rowIndex][$columnIndex] ) && !isset( $sheet->dataGrid[$rowIndex][$columnIndex] ) )
+		if ( isset( $this->dataGrid[$rowIndex][$columnIndex] ) && !isset( $sheet->dataGrid[$rowIndex][$columnIndex] ) )
 			return false;
 
-		if( isset( $this->calcGrid[$rowIndex][$columnIndex] ) && !isset( $sheet->calcGrid[$rowIndex][$columnIndex] ) )
+		if ( isset( $this->calcGrid[$rowIndex][$columnIndex] ) && !isset( $sheet->calcGrid[$rowIndex][$columnIndex] ) )
 			return false;
 
 		return $this->dataGrid[$rowIndex][$columnIndex] == $sheet->dataGrid[$rowIndex][$columnIndex]
@@ -389,18 +389,18 @@ class TikiSheet
 		for( $y = 0; $this->rowCount > $y; $y++ ) {
 			for( $x = 0; $this->columnCount > $x; $x++ )
 			{
-				if( !isset( $this->dataGrid[$y] ) )
+				if ( !isset( $this->dataGrid[$y] ) )
 					$this->dataGrid[$y] = array();
-				if( !isset( $this->calcGrid[$y] ) )
+				if ( !isset( $this->calcGrid[$y] ) )
 					$this->calcGrid[$y] = array();
-				if( !isset( $this->cellInfo[$y] ) )
+				if ( !isset( $this->cellInfo[$y] ) )
 					$this->cellInfo[$y] = array();
 
-				if( !isset( $this->dataGrid[$y][$x] ) )
+				if ( !isset( $this->dataGrid[$y][$x] ) )
 					$this->dataGrid[$y][$x] = '';
-				if( !isset( $this->calcGrid[$y][$x] ) )
+				if ( !isset( $this->calcGrid[$y][$x] ) )
 					$this->calcGrid[$y][$x] = '';
-				if( !isset( $this->cellInfo[$y][$x] ) )
+				if ( !isset( $this->cellInfo[$y][$x] ) )
 					$this->cellInfo[$y][$x] = $base;
 
 				
@@ -443,25 +443,25 @@ class TikiSheet
 		$localMax = max( array_keys( $row ) );
 
 		$total = $localMax;
-		if( $addIndex )
+		if ( $addIndex )
 			$total += $row[$localMax]['width'];
 
-		if( $total > $maxCol )
+		if ( $total > $maxCol )
 			$maxCol = $total;
 
-		if( $addIndex )
+		if ( $addIndex )
 		{
 			foreach( $row as $info )
 			{
 				$total = $rowIndex + $info['height'];
 
-				if( $total > $maxRow )
+				if ( $total > $maxRow )
 					$maxRow = $total;
 			}
 		}
 		else
 		{
-			if( $rowIndex > $maxRow )
+			if ( $rowIndex > $maxRow )
 				$maxRow = $rowIndex;
 		}
 	}
@@ -480,20 +480,20 @@ class TikiSheet
 	 */
 	function getRange( $range )
 	{
-		if( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) )
+		if ( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) )
 		{
 			$beginRow = $parts[2] - 1;
 			$endRow = $parts[4] - 1;
 			$beginCol = $this->getColumnNumber( $parts[1] );
 			$endCol = $this->getColumnNumber( $parts[3] );
 
-			if( $beginRow > $endRow )
+			if ( $beginRow > $endRow )
 			{
 				$a = $endRow;
 				$endRow = $beginRow;
 				$beginRow = $a;
 			}
-			if( $beginCol > $endCol )
+			if ( $beginCol > $endCol )
 			{
 				$a = $endCol;
 				$endCol = $beginCol;
@@ -503,7 +503,7 @@ class TikiSheet
 			$data = array();
 			for( $row = $beginRow; $endRow + 1 > $row; $row++ )
 				for( $col = $beginCol; $endCol + 1 > $col; $col++ )
-					if( isset( $this->dataGrid[$row] ) && isset( $this->dataGrid[$row][$col] ) )
+					if ( isset( $this->dataGrid[$row] ) && isset( $this->dataGrid[$row][$col] ) )
 						$data[] = $this->dataGrid[$row][$col];
 
 			return $data;
@@ -518,7 +518,7 @@ class TikiSheet
 	 */
 	function setRange( $range )
 	{
-		if( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) ) {
+		if ( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) ) {
 			$this->rangeBeginRow = $parts[2] - 1;
 			$this->rangeEndRow = $parts[4] - 1;
 			$this->rangeBeginCol = $this->getColumnNumber( $parts[1] );
@@ -558,7 +558,7 @@ class TikiSheet
 		$this->errorFlag = false;
 		
 		set_error_handler( array( &$this, "error_handler" ) );
-		if( !$handler->_load( $this ) || $this->errorFlag )
+		if ( !$handler->_load( $this ) || $this->errorFlag )
 		{
 			restore_error_handler();
 			return false;
@@ -576,12 +576,12 @@ class TikiSheet
 	 */
 	function increment( $val )
 	{
-		if( empty( $val ) )
+		if ( empty( $val ) )
 			return substr( $this->COLCHAR, 0, 1 );
 
 		$n = strpos( $this->COLCHAR, substr( $val, -1 ) ) + 1;
 
-		if( $n < strlen( $this->COLCHAR ) )
+		if ( $n < strlen( $this->COLCHAR ) )
 			return substr( $val, 0, -1 ) . substr( $this->COLCHAR, $n, 1 );
 		else
 			return $this->increment( substr( $val, 0, -1 ) ) . substr( $this->COLCHAR, 0, 1 );
@@ -596,7 +596,7 @@ class TikiSheet
 	 */
 	function initCell( $cellID, $col = null )
 	{
-		if( $col === null )
+		if ( $col === null )
 		{
 			$this->usedRow = $this->getRowIndex( $cellID );
 			$this->usedCol = $this->getColumnIndex( $cellID );
@@ -644,7 +644,7 @@ class TikiSheet
 	 */
 	function setFormat( $format )
 	{
-		if( empty( $format ) || !method_exists( new TikiSheetDataFormat, $format ) ) $format = null;
+		if ( empty( $format ) || !method_exists( new TikiSheetDataFormat, $format ) ) $format = null;
 		$this->cellInfo[$this->usedRow][$this->usedCol]['format'] = $format;
 	}
 	
@@ -659,7 +659,7 @@ class TikiSheet
 
 		for( $y = $this->usedRow; $this->usedRow + $height > $y; $y++ )
 			for( $x = $this->usedCol; $this->usedCol + $width > $x; $x++ )
-				if( !($y == $this->usedRow && $x == $this->usedCol) )
+				if ( !($y == $this->usedRow && $x == $this->usedCol) )
 					$this->createDeadCell( $x, $y );
 	}
 	
@@ -821,7 +821,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 	// _load {{{2
 	function _load( &$sheet )
 	{
-		if( $file = @fopen( $this->file, "r" ) )
+		if ( $file = @fopen( $this->file, "r" ) )
 		{
 			$data = @fread( $file, filesize( $this->file ) );
 
@@ -829,7 +829,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 
 			$data = unserialize( $data );
 
-			if( $data === false )
+			if ( $data === false )
 				return false;
 
 			$sheet->dataGrid = $data->dataGrid;
@@ -847,7 +847,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 	{
 		$data = serialize( $sheet );
 
-		if( $this->file == "php://stdout" )
+		if ( $this->file == "php://stdout" )
 		{
 			header("Content-type: application/octet-stream");
 			header("Content-Disposition: attachment; filename=export.tws");
@@ -859,7 +859,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 		}
 		else
 		{
-			if( $file = @fopen( $this->file, "w" ) )
+			if ( $file = @fopen( $this->file, "w" ) )
 			{
 				$return =  @fwrite( $file, $data );
 
@@ -949,18 +949,18 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
         
         ksort ($sheet->dataGrid);
 		foreach( $sheet->dataGrid as $row )
-			if( is_array( $row ) )
+			if ( is_array( $row ) )
             {
                 ksort ($row);
 				$total[] = implode( ",", $row );
             }
 
-		if( is_array( $total ) )
+		if ( is_array( $total ) )
 			$total = implode( "\n", $total );
             
         $total = $this->encoding->convert_encoding ($total);
 
-		if( $this->file == "php://stdout" )
+		if ( $this->file == "php://stdout" )
 		{
 			header("Content-type: text/comma-separated-values");
 			header("Content-Disposition: attachment; filename=export.csv");
@@ -974,9 +974,9 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 		}
 		else
 		{
-			if( $file = @fopen( $this->file, "w" ) )
+			if ( $file = @fopen( $this->file, "w" ) )
 			{
-				if( !@fwrite( $file, $total ) )
+				if ( !@fwrite( $file, $total ) )
 					return false;
 
 				@fclose( $file );
@@ -1149,12 +1149,12 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
             $total[] = $this->fputcsvexcel( $row ,';','"', $sheet->metadata->columns);
         }
         
-        if( is_array( $total ) )
+        if ( is_array( $total ) )
             $total = implode( "\n", $total );
             
         $total = $this->encoding->convert_encoding ($total);
 
-        if( $this->file == "php://stdout" )
+        if ( $this->file == "php://stdout" )
         {
             header("Content-type: text/comma-separated-values");
             header("Content-Disposition: attachment; filename=export.csv");
@@ -1168,9 +1168,9 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
         }
         else
         {
-            if( $file = @fopen( $this->file, "w" ) )
+            if ( $file = @fopen( $this->file, "w" ) )
             {
-                if( !@fwrite( $file, $total ) )
+                if ( !@fwrite( $file, $total ) )
                     return false;
 
                 @fclose( $file );
@@ -1301,7 +1301,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				( `end` IS NULL OR `end` > ? )
 		", array( $this->id, (int)$this->readDate, (int)$this->readDate ) );
 
-		if( $row = $result2->fetchRow() )
+		if ( $row = $result2->fetchRow() )
 		{
 			extract( $row );
 			$sheet->configureLayout( $className, $headerRow, $footerRow, $parseValues );
@@ -1329,7 +1329,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		{
 			for( $col = 0; $sheet->getColumnCount() > $col; $col++ )
 			{
-				if( !$sheet->equals( $current, $row, $col ) )
+				if ( !$sheet->equals( $current, $row, $col ) )
 					$mods[] = array( "row" => $row, "col" => $col );
 			}
 		}
@@ -1342,7 +1342,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$updates[] = $this->id;
 
 		// Update the database {{{3
-		if( is_array( $mods ) )
+		if ( is_array( $mods ) )
 		{
 			foreach( $mods as $coord )
 			{
@@ -1360,7 +1360,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$updates[] = $col;
 
 				//Now that sheets have styles, many things can change and the cell not have a value.
-				//if( !$sheet->isEmpty( $row, $col ) )
+				//if ( !$sheet->isEmpty( $row, $col ) )
 				$inserts[] = array( (int)$this->id, $stamp, $row, $col, $value, $calc, $width, $height, $format, $style, $class, $user );
 
 			}
@@ -1383,7 +1383,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			
 		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ?  WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
-		if( count( $inserts ) > 0 )
+		if ( count( $inserts ) > 0 )
 			foreach( $inserts as $values )
 			{
 				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
@@ -1459,27 +1459,27 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	{
 		$document = new Spreadsheet_Excel_Reader();
 
-		if( !$document->read( $this->file ) )
+		if ( !$document->read( $this->file ) )
 			return false;
 
 		$data = $document->sheets[0];
 
-		if( is_array( $data['cells'] ) )
+		if ( is_array( $data['cells'] ) )
 			foreach( $data['cells'] as $row=>$cols )
 			{
-				if( is_array( $cols ) )
+				if ( is_array( $cols ) )
 					foreach( $cols as $col=>$value )
 					{
 						$sheet->initCell( $row, $col );
 						
 						$info = $data['cellsInfo'][$row][$col];
 
-						if( !isset( $info['rowspan'] ) )
+						if ( !isset( $info['rowspan'] ) )
 							$height = 1;
 						else
 							$height = $info['rowspan'];
 						
-						if( !isset( $info['colspan'] ) )
+						if ( !isset( $info['colspan'] ) )
 							$width = 1;
 						else
 							$width = $info['colspan'];
@@ -1516,10 +1516,10 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 
 		foreach( $sheet->dataGrid as $row=>$cols )
 		{
-			if( is_array( $cols ) )
+			if ( is_array( $cols ) )
 				foreach( $cols as $col=>$value )
 				{
-					if( isset( $sheet->calcGrid[$row][$col] ) )
+					if ( isset( $sheet->calcGrid[$row][$col] ) )
 					{
 						$formula = "=" . $sheet->calcGrid[$row][$col];
 						$out->writeFormula( $row, $col, utf8_decode( $formula ) );
@@ -1528,10 +1528,10 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						$out->write( $row, $col, $this->encoding->convert_encoding ( $value ) );
 
 					$width = $height = 1;
-					if( is_array( $sheet->cellInfo[$row][$col] ) )
+					if ( is_array( $sheet->cellInfo[$row][$col] ) )
 						extract( $sheet->cellInfo[$row][$col] );
 
-					if( $width != 1 || $height != 1 )
+					if ( $width != 1 || $height != 1 )
 					{
 						$out->mergeCells( $row, $col, $row + $height - 1, $col + $width - 1 );
 					}
@@ -1644,7 +1644,7 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 		global $tikilib;
 		
 		$result = $tikilib->query( "SELECT `data` FROM `tiki_pages` WHERE `pageName` = ?", array( $this->pageName ) );
-		if( $row = $result->fetchRow() )
+		if ( $row = $result->fetchRow() )
 		{
 			$tables = $this->getRawTables( $row['data'] );
 			
@@ -1690,14 +1690,14 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 		$tables = array();
 		while( true ) // Keep looping
 		{
-			if( ( $begin = strpos( $data, '||', $pos ) ) === false ) break;;
-			if( ( $end = strpos( $data, '||', $begin + 2 ) ) === false ) break;
+			if ( ( $begin = strpos( $data, '||', $pos ) ) === false ) break;;
+			if ( ( $end = strpos( $data, '||', $begin + 2 ) ) === false ) break;
 
 			$pos = $end + 2;
 
 			$content = substr( $data, $begin + 2, $end - $begin - 2 );
 			
-			if( strpos( $content, '|' ) !== false )
+			if ( strpos( $content, '|' ) !== false )
 				$tables[] = $content;
 		}
 
@@ -1747,13 +1747,13 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-//		if( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
+//		if ( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 //			return false;
 
 		if ($sheet->getRangeBeginRow() > -1 &&
 			$sheet->getRangeBeginRow() == $sheet->getRangeEndRow() &&
 			$sheet->getRangeBeginCol() == $sheet->getRangeEndCol()) {
-				if( isset( $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()] ) ) {
+				if ( isset( $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()] ) ) {
 					$data =  $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()];
 					if ($sheet->parseValues == 'y' && mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
 						global $tikilib;
@@ -1772,10 +1772,10 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		
 		echo "<table{$class}{$id}{$sub}{$title}{$type}>\n";
 
-		if( !is_null( $this->heading ) )
+		if ( !is_null( $this->heading ) )
 			echo "	<caption>{$this->heading}</caption>\n";
 		
-		if( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
+		if ( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			echo "	<thead>\n";
 			$this->drawRows( $sheet, 0, $sheet->headerRow );
@@ -1792,7 +1792,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() );
 		echo "	</tbody>\n";
 		
-		if( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
+		if ( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			echo "	<tfoot>\n";
 			$this->drawRows( $sheet, $sheet->getRowCount() - $sheet->footerRow, $sheet->getRowCount() );
@@ -1830,32 +1830,32 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				}
 				$append = '';
 
-				if( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
+				if ( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
 					continue;
 
 				$append = ' id="cell_c'.($j+1).'_r'.($i+1).'"';
 					
-				if( $width > 1 )
+				if ( $width > 1 )
 					$append .= " colspan='{$width}'";
 
-				if( $height > 1 )
+				if ( $height > 1 )
 					$append .= " rowspan='{$height}'";
 				
 				if (!empty($sheet->calcGrid[$i][$j])) {
 					$append .= ' formula="='.str_replace('"', "'", $sheet->calcGrid[$i][$j]).'"';
 				}
 
-				if( isset( $sheet->dataGrid[$i][$j] ) )
+				if ( isset( $sheet->dataGrid[$i][$j] ) )
 					$data = $sheet->dataGrid[$i][$j];
 				else
 					$data = '';
 
 				$format = $sheet->cellInfo[$i][$j]['format'];
-				if( !empty( $format ) )
+				if ( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
 				
 				$style = $sheet->cellInfo[$i][$j]['style'];
-				if( !empty( $style ) ) {
+				if ( !empty( $style ) ) {
 					//we have to sanitize the css style here
 					$tdStyle = "";
 					$color = $sheetlib->get_attr_from_css_string($style, "color", "");
@@ -1884,7 +1884,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				}
 				
 				$class = $sheet->cellInfo[$i][$j]['class'];
-				if( !empty( $class ) )
+				if ( !empty( $class ) )
 					$append .= ' class="'.$class.'"';
 				
 				if ($this->parseOutput && $sheet->parseValues == 'y') {
@@ -2000,33 +2000,33 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				extract( $sheet->cellInfo[$i][$j] );
 				$append = "";
 
-				if( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
+				if ( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
 					continue;
 
-				if( $width > 1 )
+				if ( $width > 1 )
 					$append .= " colspan='{$width}'";
 
-				if( $height > 1 )
+				if ( $height > 1 )
 					$append .= " rowspan='{$height}'";
 
-				if( isset( $sheet->dataGrid[$i][$j] ) )
+				if ( isset( $sheet->dataGrid[$i][$j] ) )
 					$data = $sheet->dataGrid[$i][$j];
 				else
 					$data = '';
 
 				$format = $sheet->cellInfo[$i][$j]['format'];
-				if( !empty( $format ) )
+				if ( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
 					
 				$style = $sheet->cellInfo[$i][$j]['style'];
-				if( !empty( $style ) ) {
+				if ( !empty( $style ) ) {
 					$append .= " style='{$style}'";
 					
 					$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 				}
 					
 				$class = $sheet->cellInfo[$i][$j]['class'];
-				if( !empty( $class ) )
+				if ( !empty( $class ) )
 					$append .= " class='{$class}'";
 					
 				$td .= "			<td$append>$data</td>\n";

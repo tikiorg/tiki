@@ -13,7 +13,7 @@ $auto_query_args = array('trackerId');
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
-$objectperms = Perms::get( 'tracker', $_REQUEST['trackerId']);
+$objectperms = Perms::get('tracker', $_REQUEST['trackerId']);
 if (!$objectperms->admin_trackers) {
 	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
 }

@@ -203,23 +203,23 @@ function current_object() {
 		);
 	}
 		
-	if( $cat_type && $cat_objid ) {
+	if ( $cat_type && $cat_objid ) {
 		return array(
 			'type' => $cat_type,
 			'object' => $cat_objid,
 		);
 	}
 	
-	if( isset( $sections[$section] ) ) {
+	if ( isset( $sections[$section] ) ) {
 		$info = $sections[$section];
 
-		if( isset( $info['itemkey'], $info['itemObjectType'], $_REQUEST[ $info['itemkey'] ] ) ) {
+		if ( isset( $info['itemkey'], $info['itemObjectType'], $_REQUEST[ $info['itemkey'] ] ) ) {
 			$type = isset( $_REQUEST[ $info['key'] ] ) ? $info['key'] : '';
 			return array(
 				'type' => sprintf( $info['itemObjectType'], $type ),
 				'object' => $_REQUEST[ $info['itemkey'] ],
 			);
-		} elseif( isset( $info['key'], $info['objectType'], $_REQUEST[ $info['key'] ] ) ) {
+		} elseif ( isset( $info['key'], $info['objectType'], $_REQUEST[ $info['key'] ] ) ) {
 			if (is_array($_REQUEST[ $info['key'] ])) {	// galleryId is an array here when in tiki-upload_file.php
 				$k = $_REQUEST[ $info['key'] ][0];
 			} else {

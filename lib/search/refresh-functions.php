@@ -16,7 +16,7 @@ function refresh_index($object_type, $object_id = null, $process = true) {
 
 	// First process unified search, then process the legacy indexing if required.
 
-	if( $prefs['unified_incremental_update'] == 'y' && $object_id ) {
+	if ( $prefs['unified_incremental_update'] == 'y' && $object_id ) {
 		$unified_type = refresh_index_convert_type($object_type);
 
 		try {

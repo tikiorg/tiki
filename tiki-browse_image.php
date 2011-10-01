@@ -34,7 +34,7 @@ if (!$galleryId) {
 	die;
 }
 
-$tikilib->get_perm_object( $galleryId, 'image gallery' );
+$tikilib->get_perm_object($galleryId, 'image gallery');
 $access->check_permission('tiki_p_view_image_gallery');
 
 $gal_info = $imagegallib->get_gallery($galleryId);

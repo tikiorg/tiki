@@ -19,7 +19,7 @@ $_SESSION['tiki_cookie_jar'][ $parameter_name ]
 */
 $tikiroot = dirname($_SERVER['PHP_SELF']);
 $session_params = session_get_cookie_params();
-session_set_cookie_params($session_params['lifetime'],$tikiroot);
+session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
 
 session_start();

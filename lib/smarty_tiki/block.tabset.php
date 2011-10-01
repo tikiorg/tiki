@@ -60,7 +60,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$cookietab = getCookie($smarty_tabset_name, 'tabs', 1);
 		}
 		// work out cookie value if there
-		if( isset($_REQUEST['cookietab']) && $tabset_index === 1) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
+		if ( isset($_REQUEST['cookietab']) && $tabset_index === 1) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
 			$cookietab = empty($_REQUEST['cookietab']) ? 1 : $_REQUEST['cookietab'];
 			setCookieSection( $smarty_tabset_name, $cookietab, 'tabs' );	// too late to set it here as output has started
 		}

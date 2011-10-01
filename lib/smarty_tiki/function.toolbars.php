@@ -18,16 +18,16 @@ function smarty_function_toolbars($params, $smarty)
 	if ($prefs['javascript_enabled'] != 'y') {
 		return '';
 	}
-	if( ! isset( $params['section'] ) ) {
+	if ( ! isset( $params['section'] ) ) {
 		global $section;
-		if( ! empty($section) ) {
+		if ( ! empty($section) ) {
 			$params['section'] = $section;
 		} else {
 			return '';	// proper features set $section, contact us (possibly others) don't
 		}
 	}
 
-	if( isset( $params['comments'] ) && $params['comments'] == 'y' ) {
+	if ( isset( $params['comments'] ) && $params['comments'] == 'y' ) {
 		$comments = true;
 	} else {
 		$comments = false;
@@ -43,7 +43,7 @@ function smarty_function_toolbars($params, $smarty)
 		$hidden[] = 'switcheditor';
 	}
 	
-	if( ! isset( $params['area_id'] ) ) {
+	if ( ! isset( $params['area_id'] ) ) {
 		$params['area_id'] = 'editwiki';
 	}
 

@@ -18,26 +18,26 @@ class Math_Formula_Tokenizer
 			$end = false;
 			$extra = null;
 
-			if( ctype_space( $chr ) ) {
+			if ( ctype_space( $chr ) ) {
 				$end = true;
-			} elseif( $chr == '(' || $chr == ')' ) {
+			} elseif ( $chr == '(' || $chr == ')' ) {
 				$extra = $chr;
 				$end = true;
 			} else {
 				$current .= $chr;
 			}
 
-			if( $end && 0 != strlen( $current ) ) {
+			if ( $end && 0 != strlen( $current ) ) {
 				$tokens[] = $current;
 				$current = '';
 			}
 
-			if( $extra ) {
+			if ( $extra ) {
 				$tokens[] = $extra;
 			}
 		}
 
-		if( strlen( $current ) != 0 ) {
+		if ( strlen( $current ) != 0 ) {
 			$tokens[] = $current;
 		}
 

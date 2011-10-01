@@ -150,7 +150,7 @@ class CategLib extends ObjectLib
 		}
 		
 		// Make sure the description fits the column width
-		if(strlen($description) > 250) {
+		if (strlen($description) > 250) {
 			$description = substr($description,0,250);
 		}
 
@@ -174,7 +174,7 @@ class CategLib extends ObjectLib
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		
 		// Make sure the description fits the column width
-		if(strlen($description) > 250) {
+		if (strlen($description) > 250) {
 			$description = substr($description,0,250);
 		}
 
@@ -388,7 +388,7 @@ class CategLib extends ObjectLib
 		$contextMapMap = array_fill_keys( array_keys( $permMap ), $contextMap );
 		$result = Perms::mixedFilter( array(), 'type', 'object', $result, $contextMapMap, $permMap );
 		
-		if( $maxRecords == -1 ) {
+		if ( $maxRecords == -1 ) {
 			$maxRecords = $cant;
 		}
 
@@ -469,7 +469,7 @@ class CategLib extends ObjectLib
 			$ret[] = $res["categId"];
 		}
 
-		if( $jailed ) {
+		if ( $jailed ) {
 			return $this->get_jailed( $ret );
 		} else {
 			return $ret;
@@ -580,7 +580,7 @@ class CategLib extends ObjectLib
 	function getCategories($filter = array('type'=>'all'), $considerCategoryFilter = true, $considerPermissions = true, $localized = true) {
 		global $cachelib, $prefs;
 		$cacheKey = 'all' . ($localized ? '_' . $prefs['language'] : '');
-		if( ! $ret = $cachelib->getSerialized($cacheKey, 'allcategs') ) {
+		if ( ! $ret = $cachelib->getSerialized($cacheKey, 'allcategs') ) {
 			// This generates different caches for each language. The empty key is used when no localization was requested.
 			// This could be optimized, but for now each cache is generated from scratch.
 
@@ -675,12 +675,12 @@ class CategLib extends ObjectLib
 		}
 		
 		if ($considerCategoryFilter) {
-			if( $jail = $this->get_jail() ) {
+			if ( $jail = $this->get_jail() ) {
 				$prefilter = $ret;
 				$ret = array();
 	
 				foreach( $prefilter as $res ) {
-					if( in_array( $res['categId'], $jail ) ) {
+					if ( in_array( $res['categId'], $jail ) ) {
 						$ret[$res['categId']] = $res;
 					}
 				}
@@ -707,7 +707,7 @@ class CategLib extends ObjectLib
 		$parsed=parse_url($link);
 		$urlPath = preg_split("#\/#",$parsed["path"]);
 		$parsed["path"]=end($urlPath);
-		if(!isset($parsed["query"])) return($ret);
+		if (!isset($parsed["query"])) return($ret);
 		/* not yet used. will be used to get the "base href" of a page
 		$params=array();
 		$a = explode('&', $parsed["query"]);
@@ -728,7 +728,7 @@ class CategLib extends ObjectLib
 	// maxRows related links with description
 	function get_related($categories,$maxRows=10) {
 		global $tiki_p_admin;
-		if(count($categories)==0) return (array());
+		if (count($categories)==0) return (array());
 		$quarr=implode(",",array_fill(0,count($categories),'?'));
 		$query="select distinct o.`type`, o.`description`, o.`itemId`,o.`href` from `tiki_objects` o, `tiki_categorized_objects` cdo, `tiki_category_objects` co  where co.`categId` in (".$quarr.") and co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId`";
 		$result=$this->query($query,$categories);
@@ -1002,7 +1002,7 @@ class CategLib extends ObjectLib
 		$callno++;
 		$fromSql .= " inner join `tiki_objects` co$callno";
 		$whereSql .= " AND co$callno.`type`=$type AND co$callno.`itemId`= $sqlObj ";
-		if( $type == '?' ) {
+		if ( $type == '?' ) {
 			$bind = array($objType);
 		} else {
 			$bind = array();
@@ -1256,11 +1256,11 @@ class CategLib extends ObjectLib
 		}
 		$manip->setNewCategories( $categories ? $categories : array() );
 
-		if( is_array( $managedCategories ) ) {
+		if ( is_array( $managedCategories ) ) {
 			$manip->setManagedCategories( $managedCategories );
 		}
 
-		if( $default = unserialize( $prefs['category_defaults'] ) ) {
+		if ( $default = unserialize( $prefs['category_defaults'] ) ) {
 			foreach( $default as $constraint ) {
 				$manip->addRequiredSet( $constraint['categories'], $constraint['default'] );
 			}
@@ -1268,11 +1268,11 @@ class CategLib extends ObjectLib
 
 		$this->applyManipulator( $manip, $objType, $objId, $desc, $name, $href );
 
-		if( $prefs['category_i18n_sync'] != 'n' && $prefs['feature_multilingual'] == 'y' ) {
+		if ( $prefs['category_i18n_sync'] != 'n' && $prefs['feature_multilingual'] == 'y' ) {
 			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
 			$targetCategories = $this->get_object_categories( $objType, $objId, -1, false );
 
-			if( $objType == 'wiki page' ) {
+			if ( $objType == 'wiki page' ) {
 				$translations = $multilinguallib->getTranslations( $objType, $this->get_page_id_from_name( $objId ), $objId );
 				$objectIdKey = 'objName';
 			} else {
@@ -1281,7 +1281,7 @@ class CategLib extends ObjectLib
 			}
 			
 			$subset = $prefs['category_i18n_synced'];
-			if( is_string( $subset ) ) {
+			if ( is_string( $subset ) ) {
 				$subset = unserialize( $subset );
 			}
 
@@ -1291,9 +1291,9 @@ class CategLib extends ObjectLib
 					$manip->setNewCategories( $targetCategories );
 					$manip->overrideChecks();
 	
-					if( $prefs['category_i18n_sync'] == 'whitelist' ) {
+					if ( $prefs['category_i18n_sync'] == 'whitelist' ) {
 						$manip->setManagedCategories( $subset );
-					} elseif( $prefs['category_i18n_sync'] == 'blacklist' ) {
+					} elseif ( $prefs['category_i18n_sync'] == 'blacklist' ) {
 						$manip->setUnmanagedCategories( $subset );
 					}
 	
@@ -1419,7 +1419,7 @@ class CategLib extends ObjectLib
 	}
 
 	function get_jailed( $categories ) {
-		if( $jail = $this->get_jail() ) {
+		if ( $jail = $this->get_jail() ) {
 			return array_values( array_intersect( $categories, $jail ) );
 		} else {
 			return $categories;
@@ -1429,7 +1429,7 @@ class CategLib extends ObjectLib
 	// Returns the categories a new object should be in by default, that is none in general, or the perspective categories if the user is in a perspective.
 	function get_default_categories() {
 		global $prefs;
-		if( $this->get_jail() ) {
+		if ( $this->get_jail() ) {
 			// Default categories are not the entire jail including the sub-categories but only the "root" categories
 			return is_array($prefs['category_jail'])? $prefs['category_jail']: array($prefs['category_jail']);
 		} else {

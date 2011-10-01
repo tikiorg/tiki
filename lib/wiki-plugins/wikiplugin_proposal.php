@@ -31,7 +31,7 @@ function wikiplugin_proposal_save( $context, $data, $params ) {
 	static $objects = array();
 	$key = $context['type'] . ':' . $context['object'];
 
-	if( ! isset( $objects[$key] ) ) {
+	if ( ! isset( $objects[$key] ) ) {
 		$objects[$key] = array( '+1' => 0, '0' => 0, '-1' => 0 );
 	}
 
@@ -52,7 +52,7 @@ function wikiplugin_proposal($data, $params) {
 	global $smarty, $user, $tiki_p_edit;
 	$smarty->assign( 'counts', $counts );
 
-	if( $user && $tiki_p_edit == 'y' )
+	if ( $user && $tiki_p_edit == 'y' )
 	{
 		$availableVotes = array(
 			tra('Accept proposal') => "$data\n+1 $user",
@@ -78,7 +78,7 @@ function wikiplugin_proposal_get_counts( $data ) {
 	foreach( $voteData as $entry )
 	{
 		$entry = trim( $entry );
-		if( preg_match( "/^(([\+\-]1)|0)\s+(\w+)/", $entry, $parts ) )
+		if ( preg_match( "/^(([\+\-]1)|0)\s+(\w+)/", $entry, $parts ) )
 		{
 			list( $full, $vote, $null, $voter ) = $parts;
 

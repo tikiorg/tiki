@@ -40,7 +40,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: Public");
 
 if ($info["dir"]) {
-	readfile ($info["dir"] . $info["path"]);
+	readfile($info["dir"] . $info["path"]);
 } else {
 	echo "$content";
 }

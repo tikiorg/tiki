@@ -42,7 +42,7 @@ if (isset($_REQUEST["change"])) {
 
 	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
 	if ( strlen($polerr)>0 ) {
-		$smarty->assign('msg',$polerr);
+		$smarty->assign('msg', $polerr);
 		$smarty->assign('errortype', 'no_redirect_login');
 	    $smarty->display("error.tpl");
 	    die;

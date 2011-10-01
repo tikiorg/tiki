@@ -38,7 +38,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	 * applicable to the context.
 	 */
 	function getHash( array $context ) {
-		if( ! isset( $context['type'], $context['object'] ) ) {
+		if ( ! isset( $context['type'], $context['object'] ) ) {
 			return '';
 		}
 
@@ -46,18 +46,18 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$key = $this->objectKey( $context );
 
-		if( count( $this->knownObjects[$key] ) > 0 ) {
+		if ( count( $this->knownObjects[$key] ) > 0 ) {
 			return 'category:' . implode( ':', $this->knownObjects[$key] );
 		}
 	}
 
 	function bulk( array $baseContext, $bulkKey, array $values ) {
-		if( ! isset($baseContext['type']) || $bulkKey != 'object' ) {
+		if ( ! isset($baseContext['type']) || $bulkKey != 'object' ) {
 			return $values;
 		}
 
 		$newCategories = $this->bulkLoadCategories( $baseContext, $bulkKey, $values );
-		if( count( $newCategories ) != 0 ) {
+		if ( count( $newCategories ) != 0 ) {
 			$this->bulkLoadPermissions( $newCategories );
 		}
 
@@ -65,18 +65,18 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		foreach( $values as $v ) {
 			$key = $this->objectKey( array_merge( $baseContext, array( 'object' => $v ) ) );
-			if( count( $this->knownObjects[$key] ) == 0 ) {
+			if ( count( $this->knownObjects[$key] ) == 0 ) {
 				$remaining[] = $v;
 			} else {
 				$add = true;
 				foreach( $this->knownObjects[$key] as $categ ) {
-					if( count( $this->knownCategories[$categ] ) > 0 ) {
+					if ( count( $this->knownCategories[$categ] ) > 0 ) {
 						$add = false;
 						break;
 					}
 				}
 
-				if( $add ) {
+				if ( $add ) {
 					$remaining[] = $v;
 				}
 			}
@@ -98,13 +98,13 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		foreach( $values as $v ) {
 			$key = $this->objectKey( array_merge( $baseContext, array( 'object' => $v ) ) );
 
-			if( ! isset( $this->knownObjects[$key] ) ) {
+			if ( ! isset( $this->knownObjects[$key] ) ) {
 				$objects[$this->cleanObject($v)] = $key;
 				$this->knownObjects[$key] = array();
 			}
 		}
 
-		if( count( $objects ) == 0 ) {
+		if ( count( $objects ) == 0 ) {
 			return array();
 		}
 
@@ -121,7 +121,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			
 			$this->knownObjects[$key][] = $category;
 
-			if( ! isset( $this->knownCategories[$category] ) ) {
+			if ( ! isset( $this->knownCategories[$category] ) ) {
 				$categories[$category] = true;
 			}
 		}
@@ -149,7 +149,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 			$perm = $this->sanitize( $row['permName'] );
 
-			if( ! isset( $this->knownCategories[$categ][$group] ) ) {
+			if ( ! isset( $this->knownCategories[$categ][$group] ) ) {
 				$this->knownCategories[$categ][$group] = array();
 			}
 
@@ -163,7 +163,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	 * categories will be added to the pool.
 	 */
 	function getResolver( array $context ) {
-		if( ! isset( $context['type'], $context['object'] ) ) {
+		if ( ! isset( $context['type'], $context['object'] ) ) {
 			return null;
 		}
 
@@ -177,7 +177,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		foreach( $categories as $categ ) {
 			foreach( $this->knownCategories[$categ] as $group => $partialPerms ) {
-				if( ! isset( $perms[$group] ) ) {
+				if ( ! isset( $perms[$group] ) ) {
 					$perms[$group] = array();
 				}
 
@@ -189,7 +189,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			$p = array_values( $p );
 		}
 
-		if( count( $perms ) === 0 ) {
+		if ( count( $perms ) === 0 ) {
 			return null;
 		} else {
 			return new Perms_Resolver_Static( $perms, 'category' );
@@ -197,7 +197,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	}
 
 	private function sanitize( $name ) {
-		if( strpos( $name, 'tiki_p_' ) === 0 ) {
+		if ( strpos( $name, 'tiki_p_' ) === 0 ) {
 			return substr( $name, strlen( 'tiki_p_' ) );
 		} else {
 			return $name;

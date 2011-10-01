@@ -14,7 +14,7 @@ class Perms_Check_Indirect implements Perms_Check
 	}
 
 	function check( Perms_Resolver $resolver, array $context, $name, array $groups ) {
-		if( isset( $this->map[$name] ) ) {
+		if ( isset( $this->map[$name] ) ) {
 			return $resolver->check( $this->map[$name], $groups );
 		} else {
 			return false;

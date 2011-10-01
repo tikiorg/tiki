@@ -11,7 +11,7 @@ class Math_Formula_DummyFunction_Testop extends Math_Formula_Function
 		$object = $element->object;
 		$concat = $element->concat;
 
-		if( $object && $concat && count($object) == 2 && count($concat) == 1 ) {
+		if ( $object && $concat && count($object) == 2 && count($concat) == 1 ) {
 			$type = $this->evaluateChild( $object[0] );
 			$id = $this->evaluateChild( $object[1] );
 			$other = $this->evaluateChild( $concat[0] );

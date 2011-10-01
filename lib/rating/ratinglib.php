@@ -24,7 +24,7 @@ class RatingLib extends TikiDb_Bridge
 	}
 
 	function convert_rating_sort( & $sort_mode, $type, $objectKey ) {
-		if( preg_match( '/^adv_rating_(\d+)_(asc|desc)$/', $sort_mode, $parts ) ) {
+		if ( preg_match( '/^adv_rating_(\d+)_(asc|desc)$/', $sort_mode, $parts ) ) {
 			$sort_mode = 'adv_rating_' . $parts[2];
 			return ' LEFT JOIN (SELECT `object` as `adv_rating_obj`, `value` as `adv_rating` FROM `tiki_rating_obtained` WHERE `type` = ' . $this->qstr( $type ) . ' AND `ratingConfigId` = ' . intval( $parts[1] ) . ') `adv_rating` ON `adv_rating`.`adv_rating_obj` = ' . $objectKey . ' ';
 		}
@@ -58,7 +58,7 @@ class RatingLib extends TikiDb_Bridge
 	 *                                 amount of seconds between votes. Requires keep parameter.
 	 */
 	function collect( $type, $objectId, $aggregate, array $params = array() ) {
-		if( $aggregate != 'avg' && $aggregate != 'sum' ) {
+		if ( $aggregate != 'avg' && $aggregate != 'sum' ) {
 			return false;
 		}
 
@@ -67,26 +67,26 @@ class RatingLib extends TikiDb_Bridge
 		$where = array( '( `id` = ? )' );
 		$bindvars = array( $token );
 
-		if( isset( $params['range'] ) ) {
+		if ( isset( $params['range'] ) ) {
 			$where[] = '( `time` > ? )';
 			$bindvars[] = time() - abs( $params['range'] );
 		}
 
-		if( isset( $params['ignore'] ) && $params['ignore'] == 'anonymous' ) {
+		if ( isset( $params['ignore'] ) && $params['ignore'] == 'anonymous' ) {
 			$where[] = '( `user` NOT LIKE ? )';
 			$bindvars[] = "anonymous\0%";
 		}
 
-		if( isset( $params['keep'] ) ) {
-			if( $params['keep'] == 'latest' ) {
+		if ( isset( $params['keep'] ) ) {
+			if ( $params['keep'] == 'latest' ) {
 				$connect = 'MAX';
-			} elseif( $params['keep'] == 'oldest' ) {
+			} elseif ( $params['keep'] == 'oldest' ) {
 				$connect = 'MIN';
 			}
 
-			if( $connect ) {
+			if ( $connect ) {
 				$extra = '';
-				if( isset( $params['revote'] ) ) {
+				if ( isset( $params['revote'] ) ) {
 					$revote = max( 1, abs( $params['revote'] ) );
 					$extra = " , FLOOR( ( UNIX_TIMESTAMP() - `time` ) / $revote )";
 				}
@@ -110,7 +110,7 @@ class RatingLib extends TikiDb_Bridge
 		case 'comment':
 			return "comment$objectId";
 		case 'wiki page':
-			if( is_numeric( $objectId ) ) {
+			if ( is_numeric( $objectId ) ) {
 				return "wiki$objectId";
 			}
 
@@ -125,28 +125,28 @@ class RatingLib extends TikiDb_Bridge
 	function record_user_vote( $user, $type, $objectId, $score, $time = null ) {
 		global $tikilib, $prefs;
 
-		if( ! $this->is_valid( $type, $score ) ) {
+		if ( ! $this->is_valid( $type, $score ) ) {
 			return false;
 		}
 
-		if( is_null( $time ) ) {
+		if ( is_null( $time ) ) {
 			$time = time();
 		}
 
 		$ip = $tikilib->get_ip_address();
 		$token = $this->get_token( $type, $objectId );
 
-		if( is_null( $token ) ) {
+		if ( is_null( $token ) ) {
 			return false;
 		}
 
 		$this->query( 'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
 			array( $user, $ip, $token, $score, $time ) );
 
-		if( $prefs['rating_advanced'] == 'y' ) {
-			if( $prefs['rating_recalculation'] == 'vote' ) {
+		if ( $prefs['rating_advanced'] == 'y' ) {
+			if ( $prefs['rating_recalculation'] == 'vote' ) {
 				$this->refresh_rating( $type, $objectId );
-			} elseif( $prefs['rating_recalculation'] == 'randomvote' ) {
+			} elseif ( $prefs['rating_recalculation'] == 'randomvote' ) {
 				$this->attempt_refresh();
 			}
 		}
@@ -184,7 +184,7 @@ class RatingLib extends TikiDb_Bridge
 		$result = $this->fetchAll( 'SELECT `optionId` FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ? ORDER BY `time` DESC',
 			array( $user, $this->get_token( $type, $objectId ) ), 1 );
 
-		if( count( $result ) == 1 ) {
+		if ( count( $result ) == 1 ) {
 			return (float) $result[0]['optionId'];
 		}
 	}
@@ -200,7 +200,7 @@ class RatingLib extends TikiDb_Bridge
 	private function get_current_user() {
 		global $user;
 
-		if( $user ) {
+		if ( $user ) {
 			return $user;
 		} else {
 			return $this->session_to_user( session_id() );
@@ -213,9 +213,9 @@ class RatingLib extends TikiDb_Bridge
 			$runner->setFormula( $formula );
 			$variables = $runner->inspect();
 
-			if( $available ) {
+			if ( $available ) {
 				$extra = array_diff( $variables, $available );
-				if( count($extra) > 0 ) {
+				if ( count($extra) > 0 ) {
 					return tr( 'Unknown variables referenced: %0', implode( ', ', $extra ) );
 				}
 			}
@@ -235,7 +235,7 @@ class RatingLib extends TikiDb_Bridge
 
 	function attempt_refresh( $all = false ) {
 		global $prefs;
-		if( 1 == rand( 1, $prefs['rating_recalculation_odd'] ) ) {
+		if ( 1 == rand( 1, $prefs['rating_recalculation_odd'] ) ) {
 			$this->internal_refresh_list( $prefs['rating_recalculation_count'] );
 		}
 	}

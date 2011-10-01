@@ -2069,11 +2069,11 @@ class FileGalLib extends TikiLib
 
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			// Enforce max download per file
-			if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
+			if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 				$limit = $this->get_download_limit( $id );
-				if( $limit > 0 ) {
+				if ( $limit > 0 ) {
 					$count = $files->fetchCount(array('fileId' => $id, 'hits' => $files->lesserThan($limit)));
-					if( ! $count ) {
+					if ( ! $count ) {
 						return false;
 					}
 				}
@@ -2094,11 +2094,11 @@ class FileGalLib extends TikiLib
 		}			
 
 		if ($prefs['feature_score'] == 'y') {
-			if( ! $this->score_event($user, 'fgallery_download', $id) )
+			if ( ! $this->score_event($user, 'fgallery_download', $id) )
 				return false;
 
 			$owner = $files->fetchOne('user', array('fileId' => (int) $id));
-			if( ! $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id") )
+			if ( ! $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id") )
 				return false;
 		}
 
@@ -2310,13 +2310,13 @@ class FileGalLib extends TikiLib
 			}
 		}
 
-		if( !empty($filter['categId']) ) {
+		if ( !empty($filter['categId']) ) {
 			$jail = $filter['categId'];
 		} else {
 			$jail = $categlib->get_jail();
 		}
 			
-		if( $jail ) {
+		if ( $jail ) {
 			$categlib->getSqlJoin( $jail, 'file', 'tf.`fileId`', $f_jail_join, $f_jail_where, $f_jail_bind );
 		} else {
 			$f_jail_join = '';
@@ -2388,7 +2388,7 @@ class FileGalLib extends TikiLib
 				$g_group_by = ' GROUP BY tfg.`galleryId`'; 
 			}
 
-			if( $jail ) {
+			if ( $jail ) {
 				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
 			} else {
 				$g_jail_join = '';
@@ -2520,19 +2520,19 @@ class FileGalLib extends TikiLib
 			if ($object_type === 'file') {
 				$res['wiki_syntax'] = $this->process_fgal_syntax($wiki_syntax, $res);
 				
-				if($prefs['auth_token_access'] == 'y'){
+				if ($prefs['auth_token_access'] == 'y'){
 					$query = 'select email, sum((maxhits - hits)) as visit, sum(maxhits) as maxhits  from tiki_auth_tokens where `parameters`=? group by email';
 					$share_result = $this->fetchAll($query, array('{"fileId":"'.$res['id'].'"}'));
 					$res['share']['data'] = $share_result;
 					$tmp = array();
-					if(is_array($res['share']['data'])){
+					if (is_array($res['share']['data'])){
 						foreach ($res['share']['data'] as $data) {
 							$tmp[] = $data['email'];
 						}
 					}
 					$string_share = implode(', ',$tmp);
 					$res['share']['string'] = substr($string_share, 0, 40);
-					if(strlen($string_share) >40){
+					if (strlen($string_share) >40){
 						$res['share']['string'] .= '...';
 					}
 					$res['share']['nb'] = count($share_result);
@@ -2881,25 +2881,25 @@ class FileGalLib extends TikiLib
 						$image_size_info = getimagesize($file_tmp_name);
 						$image_x = $image_size_info[0];
 						$image_y = $image_size_info[1];
-						if($gal_info["image_max_size_x"]) {
+						if ($gal_info["image_max_size_x"]) {
 							$rx=$image_x/$gal_info["image_max_size_x"];
 						}else{
 							$rx=0;
 						}
-						if($gal_info["image_max_size_y"]) {
+						if ($gal_info["image_max_size_y"]) {
 							$ry=$image_y/$gal_info["image_max_size_y"];
 						}else{
 							$ry=0;
 						}
 						$ratio=max($rx,$ry);
-						if($ratio>1) {	// Resizing will occur
+						if ($ratio>1) {	// Resizing will occur
 							$image_new_x=$image_x/$ratio;
 							$image_new_y=$image_y/$ratio;
 							$resized_file = $tmp_dest;
 							$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
 							switch($subtype) {
 								case "gif":
-									$image_p = imagecreatefromgif($file_tmp_name);
+									$image_p = imagecreatefromgif ($file_tmp_name);
 									break;
 								case "png":
 									$image_p = imagecreatefrompng($file_tmp_name);
@@ -2913,12 +2913,12 @@ class FileGalLib extends TikiLib
 									$image_p = imagecreatefromjpeg($file_tmp_name);
 									break;
 							}
-							if(!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
+							if (!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
 								$errors[] = tra('Cannot resize the file:') . ' ' . $resized_file;
 							}
 							switch($subtype) {
 								case "gif":
-									if (!imagegif($image_resized_p, $resized_file)){
+									if (!imagegif ($image_resized_p, $resized_file)){
 										$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
 									}
 									break;

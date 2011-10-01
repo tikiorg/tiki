@@ -24,8 +24,8 @@ class Perms_Resolver_Static implements Perms_Resolver
 
 	function check( $name, array $groups ) {
 		foreach( $groups as $groupName ) {
-			if( isset( $this->known[$groupName] ) ) {
-				if( isset( $this->known[$groupName][$name] ) ) {
+			if ( isset( $this->known[$groupName] ) ) {
+				if ( isset( $this->known[$groupName][$name] ) ) {
 					return true;
 				}
 			}

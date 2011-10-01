@@ -24,7 +24,7 @@ function tra($content, $lg='', $unused = false, $args = array()) {
 	static $languages = array();
 
 	if ($lg == '') {
-		if( $prefs['language'] ) {
+		if ( $prefs['language'] ) {
 			$lang = $prefs['language'];
 		} else {
 			$lang = $prefs['site_language'];
@@ -33,7 +33,7 @@ function tra($content, $lg='', $unused = false, $args = array()) {
 		$lang = $lg;
 	}
 
-	if( ! isset( $languages[$lang] ) ) {
+	if ( ! isset( $languages[$lang] ) ) {
 		$languages[ $lang ] = true;
 		init_language( $lang );
 	}
@@ -67,7 +67,7 @@ function init_language( $lg ) {
 			include_once("lang/$lg/$tikidomain/custom.php");
 		}
 
-		if( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
+		if ( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
 			global $tikilib;
 
 			$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
@@ -120,7 +120,7 @@ function tra_impl($content, $lg='', $args = array()) {
 }
 
 function tr_replace( $content, $args ) {
-	if( ! count( $args ) ) {
+	if ( ! count( $args ) ) {
 		$out = $content;
 	} else {
 		$needles = array();
@@ -137,7 +137,7 @@ function tr_replace( $content, $args ) {
 
 function record_string( $original, $printed ) {
 	global $interactive_collected_strings;
-	if( interactive_enabled() ) {
+	if ( interactive_enabled() ) {
 		$interactive_collected_strings[ md5( $original . '___' . $printed ) ] = array( $original, html_entity_decode( $printed ) );
 	}
 }

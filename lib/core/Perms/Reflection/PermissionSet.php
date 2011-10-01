@@ -10,7 +10,7 @@ class Perms_Reflection_PermissionSet
 	private $set = array();
 
 	function add( $group, $permission ) {
-		if( is_array( $permission ) ) {
+		if ( is_array( $permission ) ) {
 			foreach( $permission as $p ) {
 				$this->addOne( $group, $p );
 			}
@@ -20,8 +20,8 @@ class Perms_Reflection_PermissionSet
 	}
 
 	private function addOne( $group, $permission ) {
-		if( ! $this->has( $group, $permission ) ) {
-			if( ! isset( $this->set[ $group ] ) ) {
+		if ( ! $this->has( $group, $permission ) ) {
+			if ( ! isset( $this->set[ $group ] ) ) {
 				$this->set[ $group ] = array();
 			}
 
@@ -35,7 +35,7 @@ class Perms_Reflection_PermissionSet
 	}
 	
 	function remove( $group, $permission) {
-		if( is_array( $permission ) ) {
+		if ( is_array( $permission ) ) {
 			foreach( $permission as $p ) {
 				$this->removeOne( $group, $p );
 			}
@@ -45,7 +45,7 @@ class Perms_Reflection_PermissionSet
 	}
 
 	private function removeOne( $group, $permission ) {
-		if( $this->has( $group, $permission ) ) {
+		if ( $this->has( $group, $permission ) ) {
 			$k = array_search($permission, $this->set[$group]);
 			unset($this->set[$group][$k]);
 		}

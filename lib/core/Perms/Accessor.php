@@ -63,7 +63,7 @@ class Perms_Accessor implements ArrayAccess
 
 	function __get( $name ) {
 
-		if( $this->resolver ) {
+		if ( $this->resolver ) {
 			$name = $this->sanitize( $name );
 			
 			return $this->checkPermission( $name );
@@ -73,9 +73,9 @@ class Perms_Accessor implements ArrayAccess
 	}
 
 	private function checkPermission( $name ) {
-		if( $this->checkSequence ) {
+		if ( $this->checkSequence ) {
 			foreach( $this->checkSequence as $check ) {
-				if( $check->check( $this->resolver, $this->context, $name, $this->groups ) ) {
+				if ( $check->check( $this->resolver, $this->context, $name, $this->groups ) ) {
 					return true;
 				}
 			}
@@ -88,20 +88,20 @@ class Perms_Accessor implements ArrayAccess
 
 	function globalize( $permissions, $smarty = null, $sanitize = true ) {
 		foreach( $permissions as $perm ) {
-			if( $sanitize ) {
+			if ( $sanitize ) {
 				$perm = $this->sanitize( $perm );
 			}
 			$val = $this->checkPermission( $perm ) ? 'y' : 'n';
 			$GLOBALS[ $this->prefix . $perm ] = $val;
 
-			if( $smarty ) {
+			if ( $smarty ) {
 				$smarty->assign( 'tiki_p_' . $perm, $val );
 			}
 		}
 	}
 
 	private function sanitize( $name ) {
-		if( $this->prefix && $name{0} == $this->prefix{0} && strpos( $name, $this->prefix ) === 0 ) {
+		if ( $this->prefix && $name{0} == $this->prefix{0} && strpos( $name, $this->prefix ) === 0 ) {
 			return substr( $name, strlen( $this->prefix ) );
 		} else {
 			return $name;
@@ -123,7 +123,7 @@ class Perms_Accessor implements ArrayAccess
 	}
 
 	public function applicableGroups() {
-		if( $this->checkSequence ) {
+		if ( $this->checkSequence ) {
 			$groups = array();
 			foreach( $this->checkSequence as $check ) {
 				$groups = array_merge( $groups, $check->applicableGroups( $this->resolver ) );

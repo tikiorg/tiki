@@ -37,7 +37,7 @@ function wikiplugin_favorite($data, $params) {
 		$objectId = 0;
 		if ($userid = Tikilib::lib('tiki')->get_user_id($params['objectId'])) {
 			$tracker = TikiLib::lib('user')->get_usertracker($userid);
-			if( $tracker && $tracker['usersTrackerId'] ) {
+			if ( $tracker && $tracker['usersTrackerId'] ) {
 				$objectId = TikiLib::lib('trk')->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $params['objectId'] );
 			}
 		}

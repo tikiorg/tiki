@@ -109,7 +109,7 @@ function prefs_category_list() {
 }
 
 function prefs_category_serialize_defaults( $data ) {
-	if( ! is_array( $data ) ) {
+	if ( ! is_array( $data ) ) {
 		$data = unserialize( $data );
 	}
 
@@ -127,7 +127,7 @@ function prefs_category_unserialize_defaults( $string ) {
 	$data = array();
 	
 	foreach( explode( "\n", $string ) as $row ) {
-		if( preg_match('/^\s*(\d+\s*(,\s*\d+\s*)*)\/\s*(\d+)\s*$/', $row, $parts ) ) {
+		if ( preg_match('/^\s*(\d+\s*(,\s*\d+\s*)*)\/\s*(\d+)\s*$/', $row, $parts ) ) {
 			$categories = explode( ',', $parts[1] );
 			$categories = array_map( 'trim', $categories );
 			$categories = array_filter( $categories );
@@ -140,7 +140,7 @@ function prefs_category_unserialize_defaults( $string ) {
 		}
 	}
 
-	if( count( $data ) ) {
+	if ( count( $data ) ) {
 		return $data;
 	} else {
 		return false;

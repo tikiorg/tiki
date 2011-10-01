@@ -26,7 +26,7 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 		$parts = array();
 		
 		foreach( $this->known as $key ) {
-			if( isset( $context[$key] ) ) {
+			if ( isset( $context[$key] ) ) {
 				$parts[] = $context[$key];
 			}
 		}
@@ -37,7 +37,7 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 	function getResolver( array $context ) {
 		$hash = $this->getHash( $context );
 
-		if( isset( $this->resolvers[$hash] ) ) {
+		if ( isset( $this->resolvers[$hash] ) ) {
 			return $this->resolvers[$hash];
 		}
 	}

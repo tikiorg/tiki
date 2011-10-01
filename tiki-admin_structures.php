@@ -163,7 +163,7 @@ if ($tiki_p_edit_structures == 'y') {
 						$alert_in_st[] = trim($line);
 					}
 				}
-				$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line) , trim($alias), $structure_id);
+				$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line), trim($alias), $structure_id);
 				if (isset($new_page_ref_id)) {
 					$parents[$tabs + 1] = $new_page_ref_id;
 					$last_pages[$tabs] = $new_page_ref_id;

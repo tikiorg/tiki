@@ -58,7 +58,7 @@ class WikiParser_PluginOutput
 	public static function disabled( $name, $preferences ) {
 		$content = tr('Plugin <strong>%0</strong> cannot be executed.', $name );
 
-		if( Perms::get()->admin ) {
+		if ( Perms::get()->admin ) {
 			global $smarty;
 			require_once 'lib/smarty_tiki/function.preference.php';
 			require_once 'lib/smarty_tiki/modifier.escape.php';

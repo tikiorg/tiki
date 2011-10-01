@@ -29,7 +29,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		$this->styles = array();
 		$this->font = null;
 
-		if( !is_null( $format ) )
+		if ( !is_null( $format ) )
 		{
 			$size = $this->_getFormat( $format, $orientation );
 			$this->width = $size[0];
@@ -82,7 +82,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 			$style['line'][4]
 		);
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			pdf_setcolor( $this->pdf,
 				'fill',
 				$style['fill'][0],
@@ -96,7 +96,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 
 		pdf_rect( $this->pdf, $left, $top, $right - $left, $bottom - $top );
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			pdf_fill_stroke( $this->pdf );
 		else
 			pdf_stroke( $this->pdf );
@@ -116,7 +116,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 			$style['line'][4]
 		);
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			pdf_setcolor( $this->pdf,
 				'fill',
 				$style['fill'][0],
@@ -132,7 +132,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		pdf_arc( $this->pdf, $centerX, $centerY, $radius, $begin, $end );
 		pdf_lineto( $this->pdf, $centerX, $centerY );
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			pdf_closepath_fill_stroke( $this->pdf );
 		else
 			pdf_closepath_stroke( $this->pdf );
@@ -169,7 +169,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 	
 	function getStyle( $name ) // {{{2
 	{
-		if( isset( $this->styles[$name] ) )
+		if ( isset( $this->styles[$name] ) )
 			return $this->styles[$name];
 
 		return $this->styles[$name] = $this->_findStyle( $name );
@@ -246,7 +246,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		case 'Normal':
 			array_shift( $parts );
 		default:
-			if( $parts[0] == 'Text' )
+			if ( $parts[0] == 'Text' )
 				$style['font'] = 12;
 			else
 				$style['line-width'] = 1;
@@ -264,7 +264,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 			break;
 		case 'Text':
 			$style['fill'] = $this->_getColor( 'Black' );
-			if( !isset( $parts[1] ) )
+			if ( !isset( $parts[1] ) )
 				$parts[1] = null;
 			switch( $parts[1] )
 			{
@@ -358,7 +358,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		case 'FOLIO': $size = array(612.00,936.00); break;
 		}
 
-		if( strtolower($orientation) == 'landscape' )
+		if ( strtolower($orientation) == 'landscape' )
 		{
 			$a=$size[1];
 			$size[1]=$size[0];

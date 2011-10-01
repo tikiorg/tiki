@@ -46,16 +46,16 @@ function wikiplugin_jabber($data,$params) {
   global $user;
   extract($params,EXTR_SKIP);
 
-  if(!isset($height)) {
+  if (!isset($height)) {
     $height = 200;
   }
-  if(!isset($width)) {
+  if (!isset($width)) {
     $width = 200;
   }
-  if(!isset($xmlhostname)) {
+  if (!isset($xmlhostname)) {
     $xmlhostname = 'jabber.org';
   }
-  if(!isset($defaultColor)) {
+  if (!isset($defaultColor)) {
     $defaultColor = '255,255,255';
   }
   $userpwd = $userlib->get_user_password($user);
@@ -63,10 +63,10 @@ function wikiplugin_jabber($data,$params) {
   $result='<APPLET ARCHIVE="lib/jabber/JabberApplet.jar" CODE="org/jabber/applet/JabberApplet.class" HEIGHT='.$height.' WIDTH='.$width.' VIEWASTEXT>';
   $result.='<param name="xmlhostname" value="'.$xmlhostname.'">';
   $result.='<param name="defaultColor" value="'.$defaultColor.'">';
-  if(isset($user)) {
+  if (isset($user)) {
     $result.='<param name="user" value="'.$user.'">';
   }
-  if($userpwd != '') {
+  if ($userpwd != '') {
     $result.='<param name="pwd" value="'.$userpwd.'">';
   }
   $result.='</APPLET>';

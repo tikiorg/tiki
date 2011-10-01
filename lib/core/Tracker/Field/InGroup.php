@@ -54,7 +54,8 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 		$this->renderOutput($context);	// read only
 	}
 	
-	function renderOutput($context = array()) {
+	function renderOutput($context = array())
+	{
 		$trklib = TikiLib::lib('trk');
 		$itemUser = $trklib->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
 		

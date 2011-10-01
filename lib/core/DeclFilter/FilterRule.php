@@ -15,7 +15,7 @@ abstract class DeclFilter_FilterRule implements DeclFilter_Rule
 	{
 		$filter = $this->getFilter( $key );
 		
-		if( $this->composite ) {
+		if ( $this->composite ) {
 			$this->applyRecursive( $data[$key], $filter );
 		} else {
 			$data[$key] = $filter->filter( $data[$key] );
@@ -29,7 +29,7 @@ abstract class DeclFilter_FilterRule implements DeclFilter_Rule
 
 	private function applyRecursive( &$data, $filter )
 	{
-		if( is_array( $data ) ) {
+		if ( is_array( $data ) ) {
 			foreach( $data as &$value ) {
 				$this->applyRecursive( $value, $filter );
 			}

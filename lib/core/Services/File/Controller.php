@@ -16,7 +16,8 @@ class Services_File_Controller
 		}
 	}
 
-	function action_upload($input) {
+	function action_upload($input)
+	{
 		$gal_info = $this->checkTargetGallery($input);
 
 		$size = $input->size->int();

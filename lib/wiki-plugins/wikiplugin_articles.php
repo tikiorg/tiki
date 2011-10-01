@@ -222,7 +222,7 @@ function wikiplugin_articles($data, $params)
 	}
 
 	$urlnext = '';
-	if($usePagination == 'y')
+	if ($usePagination == 'y')
 	{
 		//Set offset when pagniation is used
 		if (!isset($_REQUEST["offset"])) {
@@ -232,7 +232,7 @@ function wikiplugin_articles($data, $params)
 		}
 		
 		//Default to 10 when pagination is used
-		if(($max == -1)){
+		if (($max == -1)){
 			$countPagination = 10;
 		}
 		foreach ($auto_args as $arg) {
@@ -248,7 +248,7 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign_by_ref('urlparam', $urlparam);
 	$smarty->assign_by_ref('urlnext', $urlnext);
 	
-	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
+	if (!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
 
 	$dateStartTS = 0;
@@ -338,7 +338,7 @@ function wikiplugin_articles($data, $params)
 		$smarty->assign_by_ref('type', $type);
 	}
 	
-	if($usePagination == 'y'){
+	if ($usePagination == 'y'){
 		$smarty->assign('maxArticles', $max);
 		$smarty->assign_by_ref('offset', $start);
 		$smarty->assign_by_ref('cant', $listpages['cant']);

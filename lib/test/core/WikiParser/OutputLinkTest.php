@@ -166,7 +166,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 	}
 
 	function getPageInfo( $page ) {
-		if( isset( $this->info[$page] ) ) {
+		if ( isset( $this->info[$page] ) ) {
 			return $this->info[$page];
 		}
 	}

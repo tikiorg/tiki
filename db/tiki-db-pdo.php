@@ -40,7 +40,7 @@ try {
 	$pdo_options = array();
 	$pdo_post_queries = array();
 
-	if( isset( $client_charset ) ) {
+	if ( isset( $client_charset ) ) {
 		$charset_query = "SET NAMES $client_charset";
 
 		if ( defined('PDO::MYSQL_ATTR_INIT_COMMAND' ) ) {
@@ -80,7 +80,7 @@ try {
 	exit;
 }
 
-if( ! function_exists( 'close_connection' ) ) {
+if ( ! function_exists( 'close_connection' ) ) {
 	function close_connection() {
 		global $dbTiki;
 		$dbTiki= NULL;

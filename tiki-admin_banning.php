@@ -45,7 +45,7 @@ if (isset($_REQUEST['save'])) {
 	$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : array();
 	if ($_REQUEST['mode'] == 'mass_ban_ip') {
 		foreach ($_REQUEST['multi_banned_ip'] as $ip => $value) {
-			list($ip1,$ip2,$ip3,$ip4) = explode('.',$ip);
+			list($ip1,$ip2,$ip3,$ip4) = explode('.', $ip);
 			$banlib->replace_rule($_REQUEST['banId'], 'ip', $_REQUEST['title'], $ip1, $ip2, $ip3, $ip4, $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
 		}
 	} else {
@@ -101,7 +101,7 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 	$info['title'] = tr('Multiple IP Banning');
 	$info['message'] = tr('Access from your localization was forbidden due to excessive spamming.');
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
-	$banId_list = explode('|',$_REQUEST['mass_ban_ip']);
+	$banId_list = explode('|', $_REQUEST['mass_ban_ip']);
 	if ( !empty($_REQUEST['mass_remove']) ) {
 		$access->check_authenticity(tra('Delete comments then set banning rules'));
 	}

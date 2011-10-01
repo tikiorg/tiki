@@ -15,7 +15,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 	function __construct($arguments)
 	{
 		if (isset($arguments['requiredParents'])) {
-			if(!empty($arguments['requiredParents'])) {
+			if (!empty($arguments['requiredParents'])) {
 			$this->requiredParents = explode(',',$arguments['requiredParents']);
 			} else {
 			$this->requiredParents = 'all';
@@ -46,23 +46,23 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 			$myArr[$arx['categId']] = Array('parentId' => $arx['parentId'],'name' => $arx['name']);
 		}
 
-		if($this->singleList == 'y') {
+		if ($this->singleList == 'y') {
 
 			foreach ($value as $ar)
 			{
-				if($ar == 'orphan') {
+				if ($ar == 'orphan') {
 					break;
 				}
 
 				$p_info = $myArr[$ar];
-				if( ($this->requiredParents=='all' || in_array( $p_info['parentId'], $this->requiredParents)) && !in_array( $p_info['parentId'], $this->excludeParents)) {
+				if ( ($this->requiredParents=='all' || in_array( $p_info['parentId'], $this->requiredParents)) && !in_array( $p_info['parentId'], $this->excludeParents)) {
 					$params = array('type' => 'category', 'id' => $ar);
 					$link = smarty_function_object_link($params, $smarty);
 
-					if(!empty($this->separator)) {
+					if (!empty($this->separator)) {
 						$list .= $link . $this->separator;
 					} else {
-						if(empty($list)) {
+						if (empty($list)) {
 							$list = "<ul class=\"categoryLinks\">";
 						}
 						$list .= ' <li>' . $link . "</li>";
@@ -70,7 +70,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 					
 				}
 			}
-			if(!empty($this->separator)) {
+			if (!empty($this->separator)) {
 				$g = 0-strlen($this->separator);
 				$list = substr($list,0,$g);
 			} else if (!empty($list)) {
@@ -81,19 +81,19 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 
 			foreach ($value as $ar)
 			{
-				if($ar == 'orphan') {
+				if ($ar == 'orphan') {
 					break;
 				}
 
 				$p_info = $myArr[$ar];
 
-				if( ($this->requiredParents=='all' || in_array( $p_info['parentId'], $this->requiredParents)) && !in_array( $p_info['parentId'], $this->excludeParents)) {
+				if ( ($this->requiredParents=='all' || in_array( $p_info['parentId'], $this->requiredParents)) && !in_array( $p_info['parentId'], $this->excludeParents)) {
 					$parent[$p_info['parentId']][] = $ar; 	
 				}
 			}			
 				
 			foreach ($parent as $k=>$v) {
-				if(empty($this->separator)) {
+				if (empty($this->separator)) {
 					$list .= "<h5>{$myArr[$k]['name']}</h5><ul class=\"categoryLinks\">";
 					foreach($v as $t) {
 						$params = array('type' => 'category', 'id' => $t);
@@ -109,7 +109,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 						$list .= $link.$this->separator;
 					}					
 				}
-				if(!empty($this->separator)) {
+				if (!empty($this->separator)) {
 					$g = 0-strlen($this->separator);
 					$list = substr($list,0,$g);
 					$list .= "<br />";

@@ -83,7 +83,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 	$default = array( 'currentuser'=>'n', 'inputtitle'=>'', 'howtitle' => '');
 	$params = array_merge( $default, $params );
 
-	if( ( $info = $userlib->get_group_info( $params['group'] ) ) && ( $info['expireAfter'] > 0 || $info['anniversary'] > '') ) {
+	if ( ( $info = $userlib->get_group_info( $params['group'] ) ) && ( $info['expireAfter'] > 0 || $info['anniversary'] > '') ) {
 		$smarty->assign( 'wp_member_offset', $offset );
 		$smarty->assign( 'wp_member_price', $params['price'] );
 		if (($info['expireAfter']/365)*365 == $info['expireAfter'] && $info['expireAfter'] >= 365) {
@@ -119,7 +119,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			}
 		}
 		
-		if( isset($_POST['wp_member_offset']) && $_POST['wp_member_offset'] == $offset ) {
+		if ( isset($_POST['wp_member_offset']) && $_POST['wp_member_offset'] == $offset ) {
 			$users = $params['currentuser'] == 'y'? array($user): explode( '|', $_POST['wp_member_users'] );
 			$users = array_map( 'trim', $users );
 			$users = array_filter( $users, array( $userlib, 'user_exists' ) );
@@ -137,7 +137,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			}
 			$periods = max( 1, (int) $_POST['wp_member_periods'] );
 
-			if( count($users) == 1 ) {
+			if ( count($users) == 1 ) {
 				$desc = tr('Membership to %0 for %1 (x%2)', $params['group'], reset( $users ), $periods );
 			} else {
 				$desc = tr('Membership to %0 for %1 users (x%2)', $params['group'], count( $users ), $periods );

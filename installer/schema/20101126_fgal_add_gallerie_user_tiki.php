@@ -19,7 +19,7 @@ function upgrade_20101126_fgal_add_gallerie_user_tiki( $installer )
 	// Search last insert id
 	$result = $installer->getOne("SELECT `galleryId` FROM `tiki_file_galleries` WHERE `name` = 'Users File Galleries' and `type`='system'");
 	
-	if($result != 0){
+	if ($result != 0){
 		$galleryId = $result['galleryId'];
 		$installer->query("INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('fgal_root_user_id', '".$galleryId."' );");	
 	}

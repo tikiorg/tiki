@@ -111,7 +111,7 @@ function collect_raw_data( $fields ) {
 
 function remove_fake_descriptions( & $data ) {
 	foreach( $data as & $row ) {
-		if( $row['name'] == $row['description'] ) {
+		if ( $row['name'] == $row['description'] ) {
 			$row['description'] = '';
 		}
 	}
@@ -129,7 +129,7 @@ function index_data( $data, $field ) {
 	foreach( $data as $row ) {
 		$value = strtolower( $row[$field] );
 
-		if( ! isset( $index[$value] ) ) {
+		if ( ! isset( $index[$value] ) ) {
 			$index[$value] = 0;
 		}
 
@@ -155,16 +155,16 @@ function update_search_flag( & $data, $index, $stopWords ) {
 		$words = array_diff( explode( ' ', $name . ' ' . $description ), $stopWords );
 
 		$row['duplicate_name'] = $index['name'][$name];
-		if( ! empty( $description ) ) {
+		if ( ! empty( $description ) ) {
 			$row['duplicate_description'] = $index['description'][$description];
 		}
 		$row['word_count'] = count( $words );
 
-		if( count( $words ) < 5 ) {
+		if ( count( $words ) < 5 ) {
 			$row['hard_to_search'] = 'X';
-		} elseif( $index['name'][$name] > 2 ) {
+		} elseif ( $index['name'][$name] > 2 ) {
 			$row['hard_to_search'] = 'X';
-		} elseif( $index['description'][$description] > 2 ) {
+		} elseif ( $index['description'][$description] > 2 ) {
 			$row['hard_to_search'] = 'X';
 		}
 	}

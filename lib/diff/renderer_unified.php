@@ -28,7 +28,8 @@ class Text_Diff_Renderer_unified extends Tiki_Text_Diff_Renderer
         $this->_trailing_context_lines = $context_lines;
         $this->_table = Array();
     }
-    function _endDiff() {
+    function _endDiff()
+    {		
         return $this->_table;
     }
 

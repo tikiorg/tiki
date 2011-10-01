@@ -43,7 +43,7 @@ class BlogLib extends TikiDb_Bridge
 		$join = '';
 		$where = '';
 
-		if( $jail = $categlib->get_jail() ) {
+		if ( $jail = $categlib->get_jail() ) {
 			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
 		}	
 
@@ -95,7 +95,7 @@ class BlogLib extends TikiDb_Bridge
 
 		$bindvars = array();
 
-		if( $jail = $categlib->get_jail() ) {
+		if ( $jail = $categlib->get_jail() ) {
 			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
 		} else {
 			$join = '';
@@ -132,7 +132,7 @@ class BlogLib extends TikiDb_Bridge
 		$result = $this->fetchAll($query);
 		if ( !empty($result) ) {
 			foreach ( $result as $res ) {
-				if( TikiLib::strtolower($res['title']) == TikiLib::strtolower($blogTitle) ) {
+				if ( TikiLib::strtolower($res['title']) == TikiLib::strtolower($blogTitle) ) {
 					return $this->get_blog($res['blogId']);
 				}
 			}
@@ -187,7 +187,7 @@ class BlogLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-			if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_admin') || ($res['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))) 
+			if ( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_admin') || ($res['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))) 
 				$ret[] = $res;
 		}
 		return $ret;
@@ -692,7 +692,7 @@ class BlogLib extends TikiDb_Bridge
 		global $smarty, $tikilib, $prefs, $reportslib;
 
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
-		if(!$created) {
+		if (!$created) {
 			$created = $tikilib->now;	
 		}
 		
@@ -935,7 +935,7 @@ class BlogLib extends TikiDb_Bridge
 		
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
 		if ($prefs['feature_blog_edit_publish_date'] == 'y') {
-			if(!$created) {
+			if (!$created) {
 				$created = $tikilib->now;	
 			}
 			$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`excerpt`=?,`created`=?,`user`=?,`title`=?, `priv`=?, `wysiwyg`=? where `postId`=?";

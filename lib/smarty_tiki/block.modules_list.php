@@ -36,8 +36,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_modules_list($params, $content, $smarty, &$repeat)
 {
-	if( count($params["list"]) > 0 ){
-		if( $params["nonums"] == "y") {
+	if ( count($params["list"]) > 0 ){
+		if ( $params["nonums"] == "y") {
 			$ret = '<ul>' . $content . '</ul>';
 		} else {
 			$ret = '<ol>' . $content . '</ol>';

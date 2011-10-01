@@ -12,7 +12,7 @@ class WikiParser_PluginParser
 
 	function parse( $text )
 	{
-		if( ! $this->argumentParser || ! $this->pluginRunner )
+		if ( ! $this->argumentParser || ! $this->pluginRunner )
 			return $text;
 
 

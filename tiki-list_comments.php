@@ -91,13 +91,13 @@ if (isset($_REQUEST['checked'])) {
 
 	// Ban IP adresses of multiple spammers
 	if ( isset($_REQUEST['ban_x']) ) {
-		$mass_ban_ip = implode('|',$checked);
+		$mass_ban_ip = implode('|', $checked);
 		header('Location: tiki-admin_banning.php?mass_ban_ip=' . $mass_ban_ip);
 		exit;
 	}
 	// Ban IP adresses of multiple spammers and remove comments
 	if ( isset($_REQUEST['ban_remove_x'])) {
-		$mass_ban_ip = implode('|',$checked);
+		$mass_ban_ip = implode('|', $checked);
 		header('Location: tiki-admin_banning.php?mass_remove=y&mass_ban_ip=' . $mass_ban_ip);
 		exit;
 	}

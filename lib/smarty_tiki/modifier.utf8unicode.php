@@ -40,7 +40,7 @@ function smarty_modifier_utf8unicode($utf8_text) {
 
                     $outputval = $outputval*0x40 + ( (ord($utf8_text{$pos})) & 0x3F );
                 }
-                if( $outputval != 0 ) { $output[] = $outputval; }
+                if ( $outputval != 0 ) { $output[] = $outputval; }
             }
         }
     }

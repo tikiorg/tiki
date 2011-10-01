@@ -7,7 +7,7 @@
 
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }

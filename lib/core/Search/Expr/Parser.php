@@ -58,7 +58,7 @@ class Search_Expr_Parser
 			} elseif ($token === ')') {
 				--$openCount;
 
-				if($openCount === 0) {
+				if ($openCount === 0) {
 					$inner = array_slice($tokens, $firstOpen + 1, $key - $firstOpen - 1);
 					$out[] = $this->reduce($inner);
 					$firstOpen = null;
@@ -66,7 +66,7 @@ class Search_Expr_Parser
 
 				// Skip extra closing parenthesis and restore state
 				$openCount = max(0, $openCount);
-			} elseif($openCount === 0) {
+			} elseif ($openCount === 0) {
 				$out[] = $token;
 			}
 		}

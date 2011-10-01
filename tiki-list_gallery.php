@@ -21,7 +21,7 @@ if ($_REQUEST["galleryId"] != '0' && $imagegallib->get_gallery($_REQUEST["galler
 	die;
 }
 
-$tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
+$tikilib->get_perm_object($_REQUEST['galleryId'], 'image gallery');
 $access->check_permission('tiki_p_view_image_gallery');
 /*
 if ($tiki_p_upload_images != 'y') {

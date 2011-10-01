@@ -16,7 +16,7 @@
 // Related script:  doc/devtools/prefreport.php
 //
 
-if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
+if ( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
@@ -65,7 +65,7 @@ $safePaths = array(
 
 );
 
-if( !file_exists( 'tiki-setup.php' ) )
+if ( !file_exists( 'tiki-setup.php' ) )
 	die( "Please run this script from tiki root.\n" );
 
 include_once ('lib/setup/twversion.class.php');
@@ -83,7 +83,7 @@ function get_content( $filename )
 {
 	static $last, $content;
 
-	if( $filename == $last )
+	if ( $filename == $last )
 		return $content;
 	
 	$content = file_get_contents( $last = $filename );
@@ -96,13 +96,13 @@ function feature_pattern( &$featureNameIndex ) // {{{
 	global $major, $minor, $revision;
 	$featureName = "((feature_\w+)|wiki_feature_3d|lang_use_db|allowRegister|validateUsers|cachepages)";
 	$q = "[\"']";
-	if( $major == 1 && $minor == 9 )
+	if ( $major == 1 && $minor == 9 )
 	{
 		$featureNameIndex = array( 2, 7 );
 		$tl = '\\$tikilib->get_preference';
 		return "/(\\\${$featureName}\s*(!=|==)=?\s*$q(y|n)[\"'])|($tl\s*\(\s*$q{$featureName}$q\s*(,\s*{$q}n?$q)?\s*\)\s*(==|!=)=?\s*$q(y|n)$q)/";
 	}
-	elseif( ($major == 1 && $minor == 10) || $major >= 2 )
+	elseif ( ($major == 1 && $minor == 10) || $major >= 2 )
 	{
 		$featureNameIndex = 1;
 		return "/\\\$prefs\s*\[$q(\w+)$q\]\s*(!=|==)=?\s*$q(y|n)$q/";
@@ -147,7 +147,7 @@ function scanfiles( $folder, &$files ) // {{{
 {
   global $filesHash;
 	$handle = opendir( $folder );
-	if( !$handle )
+	if ( !$handle )
 	{
 		printf( "Could not open folder: %s\n", $folder );
 		return;
@@ -156,12 +156,12 @@ function scanfiles( $folder, &$files ) // {{{
 	while( false !== $file = readdir( $handle ) )
 	{
 		// Skip self and parent
-		if( $file{0} == '.' || $file{0} == '..' )
+		if ( $file{0} == '.' || $file{0} == '..' )
 			continue;
 
 		$path = "$folder/$file";
 
-		if( is_dir( $path ) )
+		if ( is_dir( $path ) )
 			scanfiles( $path, $files );
 		else {
 		  $analysis = analyse_file_path( $path );
@@ -191,52 +191,52 @@ function analyse_file_path( $path ) // {{{
 	
 	$type = 'unknown';
 	$name = basename( $path );
-	if( strpos( $name, '.' ) !== false )
+	if ( strpos( $name, '.' ) !== false )
 		$extension = substr( $name, strrpos( $name, '.' ) + 1 );
 	else
 		$extension = false;
 
-	if( strpos( $path, '/CVS/' ) !== false )
+	if ( strpos( $path, '/CVS/' ) !== false )
 		$type = 'cvs';
-	elseif( strpos( $path, './templates_c/' ) === 0 )
+	elseif ( strpos( $path, './templates_c/' ) === 0 )
 		$type = 'cache';
-	elseif( regex_match( $path, $safePaths ) )
+	elseif ( regex_match( $path, $safePaths ) )
 		$type = 'safe';
-	elseif( $extension == 'php' || $extension == 'inc' )
+	elseif ( $extension == 'php' || $extension == 'inc' )
 	{
-		if( $name == 'index.php' )
+		if ( $name == 'index.php' )
 		$type = 'blocker';
-		elseif( $name == 'language.php' )
+		elseif ( $name == 'language.php' )
 		$type = 'lang';
-		elseif( strpos( $path, './lib/wiki-plugins' ) === 0 )
+		elseif ( strpos( $path, './lib/wiki-plugins' ) === 0 )
 		$type = 'wikiplugin';
-		elseif( strpos( $path, './lib/' ) === 0 )
+		elseif ( strpos( $path, './lib/' ) === 0 )
 		{
-			if( regex_match( $path, $thirdpartyLibs ) )
+			if ( regex_match( $path, $thirdpartyLibs ) )
 			$type = '3dparty';
 			else
 				$type = 'lib';
 		}
-		elseif( strpos( $path, './tiki-' ) === 0 )
+		elseif ( strpos( $path, './tiki-' ) === 0 )
 			$type = 'public';
-		elseif( strpos( $path, './modules/' ) === 0 )
+		elseif ( strpos( $path, './modules/' ) === 0 )
 			$type = 'module';
 		else
 			$type = "include";
 	}
-	elseif( in_array( $extension, array( 'txt', 'png', 'jpg', 'html', 'css', 'sql', 'gif', 'afm', 'js' ) ) )
+	elseif ( in_array( $extension, array( 'txt', 'png', 'jpg', 'html', 'css', 'sql', 'gif', 'afm', 'js' ) ) )
 		$type = 'static';
-	elseif( strpos( $path, './doc/devtools/' ) === 0 )
+	elseif ( strpos( $path, './doc/devtools/' ) === 0 )
 		$type = 'script';
-	elseif( strpos( $path, './files/' ) === 0 )
+	elseif ( strpos( $path, './files/' ) === 0 )
 		$type = 'user';
-	elseif( $extension == 'sh' )
+	elseif ( $extension == 'sh' )
 		$type = 'system';
-	elseif( strpos( $path, '_htaccess' ) !== false )
+	elseif ( strpos( $path, '_htaccess' ) !== false )
 		$type = 'system';
-	elseif( in_array( basename( $path ), array( 'INSTALL', 'README' ) ) )
+	elseif ( in_array( basename( $path ), array( 'INSTALL', 'README' ) ) )
 		$type = 'doc';
-	elseif( $extension == 'tpl' )
+	elseif ( $extension == 'tpl' )
 		$type = 'template';
 
 	return array(
@@ -370,7 +370,7 @@ function perform_extract_skip_check( &$file ) // {{{
 	preg_match_all( $pattern, get_content($file['path']), $parts );
 
 	foreach( $parts[0] as $extract )
-		if( strpos( $extract, 'EXTR_SKIP' ) === false )
+		if ( strpos( $extract, 'EXTR_SKIP' ) === false )
 			$file['unsafeextract'] = true;
 
 } // }}}
@@ -383,9 +383,9 @@ function access_check_call( $file, $type ) // {{{
 	$checks = array();
 
 	foreach( $tokens as $key => $token ) {
-		if( is_array( $token ) ) {
-			if( $token[0] == T_VARIABLE && $token[1] == '$access' ) {
-				if( $tokens[$key+1][0] == T_OBJECT_OPERATOR
+		if ( is_array( $token ) ) {
+			if ( $token[0] == T_VARIABLE && $token[1] == '$access' ) {
+				if ( $tokens[$key+1][0] == T_OBJECT_OPERATOR
 					&& $tokens[$key+2][0] == T_STRING && $tokens[$key+2][1] == $type ) {
 					$checks = array_merge( $checks, access_checks( $tokens, $key + 2 ) );
 				}
@@ -405,11 +405,11 @@ function access_checks( $tokens, $from ) // {{{
 	for( $i = $from; $end > $i; ++$i ) {
 		$token = $tokens[$i];
 
-		if( is_string( $token ) && $token == ';' ) {
+		if ( is_string( $token ) && $token == ';' ) {
 			break;
 		}
 
-		if( is_array( $token ) && $token[0] == T_CONSTANT_ENCAPSED_STRING ) {
+		if ( is_array( $token ) && $token[0] == T_CONSTANT_ENCAPSED_STRING ) {
 			$features[] = trim( $token[1], "\"'" );
 		}
 	}
@@ -424,7 +424,7 @@ function permission_check_accessors( $file ) // {{{
 	$perms = array();
 
 	foreach( $tokens as $key => $token ) {
-		if( is_array( $token ) && ( $token[0] == T_IF || $token[0] == T_ELSEIF ) ) {
+		if ( is_array( $token ) && ( $token[0] == T_IF || $token[0] == T_ELSEIF ) ) {
 			$subset = tokenizer_get_subset( $tokens, $key );
 			$perms = array_merge( $perms, permission_check_condition( $subset ) );
 		}
@@ -444,11 +444,11 @@ function tokenizer_get_subset( $tokens, $from ) // {{{
 	for( $i = $from; $end > $i && ( ! $started || $count > 0 ); ++$i ) {
 		$t = $tokens[$i];
 
-		if( is_string( $t ) ) {
-			if( $t == '(' ) {
+		if ( is_string( $t ) ) {
+			if ( $t == '(' ) {
 				$started = true;
 				$count++;
-			} elseif( $t == ')' ) {
+			} elseif ( $t == ')' ) {
 				$count--;
 			}
 		}
@@ -464,12 +464,12 @@ function permission_check_condition( $tokens ) // {{{
 	$permissions = array();
 
 	foreach( $tokens as $i => $t ) {
-		if( $t[0] == T_VARIABLE ) {
-			if( 'perms' == substr( $t[1], -5 ) ) {
-				if( $tokens[$i+1][0] == T_OBJECT_OPERATOR && $tokens[$i+2][0] == T_STRING ) {
+		if ( $t[0] == T_VARIABLE ) {
+			if ( 'perms' == substr( $t[1], -5 ) ) {
+				if ( $tokens[$i+1][0] == T_OBJECT_OPERATOR && $tokens[$i+2][0] == T_STRING ) {
 					$perm = $tokens[$i+2][1];
 
-					if( 'tiki_p_' != substr( $perm, 0, 7 ) ) {
+					if ( 'tiki_p_' != substr( $perm, 0, 7 ) ) {
 						$perm = 'tiki_p_' . $perm;
 					}
 
@@ -507,7 +507,7 @@ foreach( $files as $key=>$dummy )
 	case 'wikiplugin':
 		perform_extract_skip_check( $file );
 
-		if( $file['unsafeextract'] ) 
+		if ( $file['unsafeextract'] ) 
 			$unsafe[] = $file;
 
 					break;
@@ -523,7 +523,7 @@ foreach( $files as $key=>$dummy )
 		perform_noweb_check( $file );
 		perform_tikisetup_check( $file );
 
-		if( ! $file['noweb'] && ! $file['includeonly'] && ! count( $file['features'] ) && ! count( $file['permissions'] ) ) 
+		if ( ! $file['noweb'] && ! $file['includeonly'] && ! count( $file['features'] ) && ! count( $file['permissions'] ) ) 
 			$unsafe[] = $file;
 
 					break;
@@ -573,15 +573,15 @@ $fileType = $fileRecord['type'];
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach( $files as $file ) if( in_array( $file['type'], array(
+		<?php foreach( $files as $file ) if ( in_array( $file['type'], array(
 			'script', 'module', 'include', 'public', 'lib', '3rdparty', 'wikiplugin'
 		) ) ): ?>
 		<tr>
 			<td><a href="<?php echo htmlentities( substr( $file['path'], 2 ) ) ?>"><?php echo htmlentities( $file['path'] ) ?></a></td>
-			<td><?php if( isset($file['includeonly']) && $file['includeonly'] ) echo 'X' ?></td>
-			<td><?php if( $file['noweb'] ) echo 'X' ?></td>
-			<td><?php if( $file['tikisetup'] ) echo 'X' ?></td>
-			<td><?php if( $file['unsafeextract'] ) echo 'X' ?></td>
+			<td><?php if ( isset($file['includeonly']) && $file['includeonly'] ) echo 'X' ?></td>
+			<td><?php if ( $file['noweb'] ) echo 'X' ?></td>
+			<td><?php if ( $file['tikisetup'] ) echo 'X' ?></td>
+			<td><?php if ( $file['unsafeextract'] ) echo 'X' ?></td>
 			<td>
 				<?php foreach( $file['permissions'] as $perm ): ?>
 				<div><?php echo $perm ?></div>

@@ -103,10 +103,10 @@ class MapsLib extends TikiLib
 				}
 				if ($lon>=0) {
 					$lon=(($lon*$pres) % (360*$pres))/$pres;
-					if($lon>180) {$lon=$lon-360;}
+					if ($lon>180) {$lon=$lon-360;}
 				} else {
 					$lon=-((-$lon*$pres) % (360*$pres))/$pres;
-					if($lon<-180) {$lon=$lon+360;}
+					if ($lon<-180) {$lon=$lon+360;}
 				}
 				if ($prefs['mapzone']==360 && $lon<0) {
 					$lon=360+$lon;
@@ -196,10 +196,10 @@ class MapsLib extends TikiLib
 				}
 				if ($lon>=0) {
 					$lon=(($lon*$pres) % (360*$pres))/$pres;
-					if($lon>180) {$lon=$lon-360;}
+					if ($lon>180) {$lon=$lon-360;}
 				} else {
 					$lon=-((-$lon*$pres) % (360*$pres))/$pres;
-					if($lon<-180) {$lon=$lon+360;}
+					if ($lon<-180) {$lon=$lon+360;}
 				}
 				if ($prefs['mapzone']==360 && $lon<0) {
 					$lon=360+$lon;

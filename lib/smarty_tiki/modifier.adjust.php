@@ -38,7 +38,7 @@ function smarty_modifier_adjust($string, $length = 80,
         else
             $fragment = preg_replace('/\s+(\S+)?$/', '', $fragment);
         return $fragment.$etc;
-    } elseif(strlen($string)<$length) {
+    } elseif (strlen($string)<$length) {
         return $string.str_repeat($pad,$length-strlen($string));
     } else {
     	return $string;

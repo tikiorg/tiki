@@ -27,14 +27,14 @@ class Multilingual_Aligner_UpdateSentences1
 	$changed_diff_unchanged=array();
 	$changedSource_translated=array();
 	$changed_diff_unchanged=$this->text_diff($unchangedSource_array,$changedSource_array);
-	if(count($changed_diff_unchanged)==0)	//both files are same
+	if (count($changed_diff_unchanged)==0)	//both files are same
 	{
 		$changed_diff_unchanged=$changedSource_array;
 	}
 	$changed_diff_unchanged=$this->remove_wikisyntax($changed_diff_unchanged);
 	$changed_diff_unchanged=$this->identify_shuffled_and_negative_sentences($changed_diff_unchanged);
 	//Converting sentences in Source Language to Target language
-	if($translation==1)//files are in source language
+	if ($translation==1)//files are in source language
 	{
 		$changedSource_translated=$this->changedSourceFileTranslatedIntoTargetLanguage($changed_diff_unchanged,$alignments,$translator,$source_lng,$target_lng);
 		$final_diff= $changedSource_translated;
@@ -45,7 +45,7 @@ class Multilingual_Aligner_UpdateSentences1
 		$ii=0;
 		foreach($changed_diff_unchanged as $val)
 		{
-			if(strcmp($changed_diff_unchanged[$ii],"*deleted*")!=0)
+			if (strcmp($changed_diff_unchanged[$ii],"*deleted*")!=0)
 			$changed_final[]=trim($changed_diff_unchanged[$ii]);
 			$ii=$ii+1;
 		}//foreach
@@ -60,11 +60,11 @@ class Multilingual_Aligner_UpdateSentences1
 	$ii=0;
 	foreach($changed_diff_unchanged as $value)
 	{
-		if(strcmp(substr($value,0,1),"-")==0)	//sentence is preceded by '-'
+		if (strcmp(substr($value,0,1),"-")==0)	//sentence is preceded by '-'
 		{
 			$temp="+".substr($value,1);
 			$match=$this->array_search_function($temp,$changed_diff_unchanged);
-			if($match!=-1) //sentence is shuffled
+			if ($match!=-1) //sentence is shuffled
 			{
 				$changed_diff_unchanged[$ii]="";//eliminating the -ve sentence
 				$changed_diff_unchanged[$match]=substr($value,1);
@@ -75,11 +75,11 @@ class Multilingual_Aligner_UpdateSentences1
 			}
 		}//outer if
 	
-		if(strcmp(substr($value,0,1),"+")==0)	//sentence is preceded by '+'
+		if (strcmp(substr($value,0,1),"+")==0)	//sentence is preceded by '+'
 		{
 			$temp="-".substr($value,1);
 			$match=$this->array_search_function($temp,$changed_diff_unchanged);
-			if($match!=-1) //sentence is shuffled
+			if ($match!=-1) //sentence is shuffled
 			{
 				$changed_diff_unchanged[$match]="*deleted*";//eliminating the -ve sentence
 				$changed_diff_unchanged[$ii]=substr($value,1);
@@ -102,16 +102,16 @@ class Multilingual_Aligner_UpdateSentences1
 		$new_val=explode('<br />',$val);
 		foreach($new_val as $nn)
 		{
-			if($val!=""&&$val[0]=="-")
+			if ($val!=""&&$val[0]=="-")
 			{
-				if($num==0)
+				if ($num==0)
 					$sentences_new[]=trim($nn);
 				else
 					$sentences_new[]="-".trim($nn);
 			}
-			else if($val!=""&&$val[0]=="+")
+			else if ($val!=""&&$val[0]=="+")
 			{
-				if($num==0)
+				if ($num==0)
 					$sentences_new[]=trim($nn);
 				else
 					$sentences_new[]="+".trim($nn);
@@ -138,25 +138,25 @@ class Multilingual_Aligner_UpdateSentences1
 	$add=0;
 	foreach($arr as $ee)
 	{
-		if($kk!=0)
+		if ($kk!=0)
 		{
 			foreach($ee as $key=>$val)
 			{
-				if($val=="diffbody")
+				if ($val=="diffbody")
 				$body=1;
-				if($val=="diffdeleted")
+				if ($val=="diffdeleted")
 				$del=1;
-				if($val=="diffadded")
+				if ($val=="diffadded")
 				$add=1;
-				if($key=="data")
+				if ($key=="data")
 				{
 					foreach($val as $item)
 					{
-						if($body==1)
+						if ($body==1)
 						$changed_diff_unchanged[]=$item;
-						if($del==1)
+						if ($del==1)
 						$changed_diff_unchanged[]="-".$item;
-						if($add==1)
+						if ($add==1)
 						$changed_diff_unchanged[]="+".$item;
 					}//foreach
 					$body=0;
@@ -178,7 +178,7 @@ class Multilingual_Aligner_UpdateSentences1
 	$num=0;
 	foreach($changed_diff_unchanged as $value)
 	{
-		if($value=="*deleted*")
+		if ($value=="*deleted*")
 		unset($changed_diff_unchanged[$num]);
 		$num++;
 	}
@@ -192,14 +192,14 @@ class Multilingual_Aligner_UpdateSentences1
 		$target_lng_array=$alignments->getSentenceInOtherLanguage($value, $source_lng,$key_value,$changed_diff_unchanged,$this->array_search_function($value,$changed_diff_unchanged));  //as two or more target sentences are being considered as one string, here instead of string arrays should be returned
 		$key_value=$target_lng_array[0];
 		$target_lng_sentence=$target_lng_array[1];
-		if(strcmp($target_lng_sentence,"NULL")!=0)
+		if (strcmp($target_lng_sentence,"NULL")!=0)
 		{
 			$source_sent=$segmentor->segment(trim($key_value));
 			$index=$this->array_search_function($value,$changed_diff_unchanged);
 			$jj=0;
 			for ($ii=$index; $ii<count($source_sent)+$index+$jj; $ii++)
 			{
-				if($changed_diff_unchanged[$ii]=="" || $changed_diff_unchanged[$ii][0]!="+")
+				if ($changed_diff_unchanged[$ii]=="" || $changed_diff_unchanged[$ii][0]!="+")
 				{		
 					unset($changed_diff_unchanged[$ii]);
 				}
@@ -214,13 +214,13 @@ class Multilingual_Aligner_UpdateSentences1
 		}//if
 		else  //Machine Translation is required
 		{
-			if($value!="" && $value!="+")
+			if ($value!="" && $value!="+")
 			{
-				if($value[0]=="+")
+				if ($value[0]=="+")
 				{
 					$temp=substr($value,1);
 					$translation = $translator->getTranslationInOtherLanguage($temp,$source_lng);
-					if($translation!="NULL")
+					if ($translation!="NULL")
 					{
 						$changedSource_translated[]="+".trim($translation);
 					}//if !NULL
@@ -233,7 +233,7 @@ class Multilingual_Aligner_UpdateSentences1
    	  			else
    	  			{
    	  				$translation = $translator->getTranslationInOtherLanguage($value,$source_lng);
-					if($translation!="NULL")
+					if ($translation!="NULL")
 					{
 						$changedSource_translated[]="+".trim($translation);
 					}//if !NULL
@@ -265,19 +265,19 @@ class Multilingual_Aligner_UpdateSentences1
 	foreach($newarray_diff_oldarray as $value)
 	{
 		$ii++;
-		if(strcmp(substr($value,0,1),"-")==0)//sentence starts with '-'
+		if (strcmp(substr($value,0,1),"-")==0)//sentence starts with '-'
 		{
 			$temp="+".substr($value,1);
 			$match=$this->array_search_function($temp,$newarray_diff_oldarray);
-			if($match!=-1)
+			if ($match!=-1)
 			{
-				if($temp[1]=='+')//if same sentence is being added in to both source and target files
+				if ($temp[1]=='+')//if same sentence is being added in to both source and target files
 				{
 					$newarray_diff_oldarray[$ii]="";
 				}
 				else
 				{
-					if(($this->array_search_function(substr($value,1),$normal_array))==-1)
+					if (($this->array_search_function(substr($value,1),$normal_array))==-1)
 					{
 						$normal_array[]=substr($value,1);
 					}//if not present in normal_array
@@ -288,19 +288,19 @@ class Multilingual_Aligner_UpdateSentences1
 				$negative_array[]=$value;	
 			}//match not found
 		}//if '-'
-		else if(strcmp(substr($value,0,1),"+")==0)//sentence starts with '+'
+		else if (strcmp(substr($value,0,1),"+")==0)//sentence starts with '+'
 		{
 			$temp="-".substr($value,1);
 			$match=$this->array_search_function($temp,$newarray_diff_oldarray);
-			if($match!=-1)
+			if ($match!=-1)
 			{
-				if($temp[1]=="+")//if same sentence is being added in to both source and target files
+				if ($temp[1]=="+")//if same sentence is being added in to both source and target files
 				{
 					$positive_array[]=$value;
 				}
 				else
 				{
-					if($this->array_search_function(substr($value,1),$normal_array)==-1)
+					if ($this->array_search_function(substr($value,1),$normal_array)==-1)
 					{
 						$normal_array[]=substr($value,1);
 					}//if not present in normal_array
@@ -330,27 +330,27 @@ class Multilingual_Aligner_UpdateSentences1
 		$get=0; // to check if there is any normal sentence before this negative sentence
 		for($jj=$index-1;$jj>=0;$jj--)
 		{
-			if($get==1)
+			if ($get==1)
 				break;
-			if($target_diff_source[$jj][0]=="+" || $target_diff_source[$jj][0]=="-")
+			if ($target_diff_source[$jj][0]=="+" || $target_diff_source[$jj][0]=="-")
 				$temp=substr($target_diff_source[$jj],1);
 			else
 				$temp=$target_diff_source[$jj];
 			$search_result=$this->array_search_function($temp,$normal_array);
-			if($search_result!=-1)//found in normal array
+			if ($search_result!=-1)//found in normal array
 			{
 				$found=0; //to chack if already present in hash table
 				$get=1; ///found a normal sentence before
 				foreach($sentence_location as $key=>$val)
 				{
-					if(strcmp($key,$temp)==0)
+					if (strcmp($key,$temp)==0)
 					{
 						$found=1;
 						$sentence_location[$key][count($sentence_location[$key])]=$item;
 					}
 						
 				}//foreach
-				if($found==0)
+				if ($found==0)
 				{
 					$sentence_location[$temp]=array($item);
 				}
@@ -358,7 +358,7 @@ class Multilingual_Aligner_UpdateSentences1
 			//search in positive_array is doubtful
 		}//for $jj
 	
-		if($get==0)
+		if ($get==0)
 		{
 			$add_beginning[]=$item;
 		}
@@ -387,7 +387,7 @@ class Multilingual_Aligner_UpdateSentences1
 	//generation of final updated target file
 	foreach($add_beginning as $item)
 	{
-		if($item[1]=="+")
+		if ($item[1]=="+")
 		{
 			$finalUpdatedTarget[]="Added_Source ".substr($item,2);
 		}
@@ -404,11 +404,11 @@ class Multilingual_Aligner_UpdateSentences1
 			
 	foreach($Target_Updated as $item)
 	{
-		if(($index=$this->array_search_function("+".$item,$positive_array))!=-1)   //if present in positive_array
+		if (($index=$this->array_search_function("+".$item,$positive_array))!=-1)   //if present in positive_array
 		{
-			if($positive_array[$index]!="+" && $positive_array[$index][1]=='+')//'++' case
+			if ($positive_array[$index]!="+" && $positive_array[$index][1]=='+')//'++' case
 				$temp=substr($item,1);
-			else if($positive_array[$index]=="+" || $positive_array[$index][1]!='+')  //"+" case
+			else if ($positive_array[$index]=="+" || $positive_array[$index][1]!='+')  //"+" case
 			{
 				$bb=2;
 				while(is_numeric($item[$bb]))
@@ -423,9 +423,9 @@ class Multilingual_Aligner_UpdateSentences1
 		else  //present in normal arrray	
 		{
 			$item1=$item;
-			if($item!="")
+			if ($item!="")
 			{
-				if($item[0]=="+")//if same sentence is added at same positions in both source and target
+				if ($item[0]=="+")//if same sentence is added at same positions in both source and target
 				$item1=substr($item,1);
 				else
 				{
@@ -440,17 +440,17 @@ class Multilingual_Aligner_UpdateSentences1
 			$finalUpdatedTarget[]=$item1;
 			foreach($sentence_location as $key=>$val)
 			{
-				if(strcmp($key,$item)==0)
+				if (strcmp($key,$item)==0)
 				{
 					foreach($val as $add)
 					{
-						if($add!="-" && $add[1]=="+")
+						if ($add!="-" && $add[1]=="+")
 						{
 							$finalUpdatedTarget[]="Added_Source ".substr($add,2);
 						}
-						else if($add=="-" || $add[1]!="+" )
+						else if ($add=="-" || $add[1]!="+" )
 						{
-							if($add!="-")
+							if ($add!="-")
 							{
 								$bb=2;
 								while(is_numeric($add[$bb]))
@@ -474,7 +474,7 @@ class Multilingual_Aligner_UpdateSentences1
 	{$ii=0;
 	foreach($array as $val)
 	{
-	if(strcmp($temp,$val)==0)
+	if (strcmp($temp,$val)==0)
 	{
 	return $ii;
 	}
@@ -485,9 +485,9 @@ class Multilingual_Aligner_UpdateSentences1
 	
 	public function strpos_function($string,$pat)
 	{ 
-		if(strlen($string)==0 && strlen($pat)==0)
+		if (strlen($string)==0 && strlen($pat)==0)
 		return 0;
-		else if(strlen($string)==0 ||strlen($pat)==0)
+		else if (strlen($string)==0 ||strlen($pat)==0)
 		return -1;
 		$start=0;
 		$lasts=strlen($string)-1;
@@ -496,10 +496,10 @@ class Multilingual_Aligner_UpdateSentences1
 		$jj=0;
 		for($ii=0;$endmatch<=$lasts;$endmatch++,$start++)
 		{
-		if($string[$endmatch]==$pat[$lastp])
+		if ($string[$endmatch]==$pat[$lastp])
 			{for($jj=0,$ii=$start;$jj<$lastp && $string[$ii]==$pat[$jj];$ii++,$jj++);
 			}//for $jj		
-			if($jj==$lastp)
+			if ($jj==$lastp)
 			return $start;
 		}//for $ii
 		return -1;

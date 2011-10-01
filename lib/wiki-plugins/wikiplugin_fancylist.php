@@ -44,7 +44,7 @@ function wikiplugin_fancylist($data, $params) {
 
 		extract ($params,EXTR_SKIP);
 		}
-		if(isset($div)){
+		if (isset($div)){
 			$result = '<div class="fancylist'.($class ? " $class" : "").'">';
 			$count=1;
 		}else{
@@ -55,14 +55,14 @@ function wikiplugin_fancylist($data, $params) {
 	foreach ($lines as $line) {
 		// replace all before and including the ")"
 		$part = preg_replace("/[\w]+\)(.*)/", "$1", $line);
-      	if(isset($div)){
+      	if (isset($div)){
 		$result .= '<div><span class='.count.'>'.$count.'</span><p>' . $part . '</p></div>';
 		$count++;
 	}else{
                 $result .= '<li><p>' . $part . '</p></li>';				
 		}
 	}
-	if(isset($div)){
+	if (isset($div)){
 		$result .= '</div>';
 	}else{
 	 	$result .= '</ol>';

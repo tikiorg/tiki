@@ -40,7 +40,7 @@ class Perms_Reflection_Object implements Perms_Reflection_Container
 	}
 
 	function getParentPermissions() {
-		if( $permissions = $this->getCategoryPermissions() ) {
+		if ( $permissions = $this->getCategoryPermissions() ) {
 			return $permissions;
 		} else {
 			return $this->factory->get( 'global', null )->getDirectPermissions();
@@ -62,7 +62,7 @@ class Perms_Reflection_Object implements Perms_Reflection_Container
 			}
 		}
 
-		if( $count != 0 ) {
+		if ( $count != 0 ) {
 			return $set;
 		}
 	}

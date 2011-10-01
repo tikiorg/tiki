@@ -22,7 +22,7 @@ function smarty_block_permission($params, $content, $smarty, $repeat)
 {
 	$context = array();
 
-	if( isset( $params['type'], $params['object'] ) ) {
+	if ( isset( $params['type'], $params['object'] ) ) {
 		$context['type'] = $params['type'];
 		$context['object'] = $params['object'];
 	}
@@ -30,7 +30,7 @@ function smarty_block_permission($params, $content, $smarty, $repeat)
 	$perms = Perms::get( $context );
 	$name = $params['name'];
 
-	if( $perms->$name ) {
+	if ( $perms->$name ) {
 		return $content;
 	} else {
 		return '';

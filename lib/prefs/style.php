@@ -24,7 +24,7 @@ function prefs_style_list($partial = false) {
 	foreach( $all as $location ) {
 		$option = basename( $location );
 
-		if( ! isset( $style_options[$option] ) ) {
+		if ( ! isset( $style_options[$option] ) ) {
 			$style_options[$option] = "X - $option";
 		}
 	}

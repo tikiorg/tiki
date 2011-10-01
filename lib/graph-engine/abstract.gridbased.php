@@ -184,7 +184,7 @@ class GridScale // {{{1
 		$this->type = $type;
 		$this->layout = $layout;
 		
-		if( $type == 'independant' )
+		if ( $type == 'independant' )
 			$this->orientation = $layout['grid-independant-location'];
 		else
 			$this->orientation = ( $layout['grid-independant-location'] == 'vertical' ) ? 'horizontal' : 'vertical';
@@ -273,7 +273,7 @@ class LinearGridScale extends GridScale // {{{1
 
 		$this->minorScaleCount = 5;
 		while( $this->minorScaleCount > 1 )
-			if( round($maj / $this->minorScaleCount) == $maj / $this->minorScaleCount )
+			if ( round($maj / $this->minorScaleCount) == $maj / $this->minorScaleCount )
 				break;
 			else
 				--$this->minorScaleCount;
@@ -290,33 +290,33 @@ class LinearGridScale extends GridScale // {{{1
 		
 		$major = null;
 		$minor = null;
-		if( $this->layout["$base-major-guide"] !== false )
+		if ( $this->layout["$base-major-guide"] !== false )
 			$major = $renderer->getStyle( $this->layout["$base-major-guide"] );
-		if( $this->layout["$base-minor-guide"] !== false )
+		if ( $this->layout["$base-minor-guide"] !== false )
 			$minor = $renderer->getStyle( $this->layout["$base-minor-guide"] );
 
 		$start = $this->zero;
-		if( $start != 0 && $start != 1 && $this->layout["$base-zero-style"] !== false )
+		if ( $start != 0 && $start != 1 && $this->layout["$base-zero-style"] !== false )
 			$this->_drawGridLine( $renderer, $start, $renderer->getStyle( $this->layout["$base-zero-style"] ) );
 
 		$major_int = $this->_getMajorInterval();
 		$minor_int = $this->_getMinorInterval();
 		for( $i = $start; $i > 0; $i -= $major_int )
 		{
-			if( !is_null( $major ) )
+			if ( !is_null( $major ) )
 				$this->_drawGridLine( $renderer, $i, $major );
 
-			if( !is_null( $minor ) )
+			if ( !is_null( $minor ) )
 				for( $j = $i - $minor_int; $i - $major_int < $j && 0 < $j; $j -= $minor_int )
 					$this->_drawGridLine( $renderer, $j, $minor );
 		}
 
 		for( $i = $start; $i < 1; $i += $major_int )
 		{
-			if( !is_null( $major ) )
+			if ( !is_null( $major ) )
 				$this->_drawGridLine( $renderer, $i, $major );
 
-			if( !is_null( $minor ) )
+			if ( !is_null( $minor ) )
 				for( $j = $i + $minor_int; $i + $major_int > $j && 1 > $j; $j += $minor_int )
 					$this->_drawGridLine( $renderer, $j, $minor );
 		}
@@ -330,21 +330,21 @@ class LinearGridScale extends GridScale // {{{1
 		$minor_font = null;
 		$major_style = null;
 		$minor_style = null;
-		if( $this->layout["$base-major-font"] !== false )
+		if ( $this->layout["$base-major-font"] !== false )
 			$major_font = $renderer->getStyle( $this->layout["$base-major-font"] );
-		if( $this->layout["$base-minor-font"] !== false )
+		if ( $this->layout["$base-minor-font"] !== false )
 			$minor_font = $renderer->getStyle( $this->layout["$base-minor-font"] );
 
-		if( $this->layout["$base-major-style"] !== false )
+		if ( $this->layout["$base-major-style"] !== false )
 			$major_style = $renderer->getStyle( $this->layout["$base-major-style"] );
-		if( $this->layout["$base-minor-style"] !== false )
+		if ( $this->layout["$base-minor-style"] !== false )
 			$minor_style = $renderer->getStyle( $this->layout["$base-minor-style"] );
 
 		$minor_size = $this->layout["$base-minor-size"];
 		$major_size = $this->layout["$base-major-size"];
 
 		$start = $this->zero;
-		if( $start != 0 && $start != 1 )
+		if ( $start != 0 && $start != 1 )
 			$this->_drawGridTick( $renderer, $start, $major_style, $major_font, $major_size );
 
 		$major_int = $this->_getMajorInterval();
@@ -352,20 +352,20 @@ class LinearGridScale extends GridScale // {{{1
 
 		for( $i = $start; $i > 0; $i -= $major_int )
 		{
-			if( !is_null( $major_style ) || !is_null( $major_font ) )
+			if ( !is_null( $major_style ) || !is_null( $major_font ) )
 				$this->_drawGridTick( $renderer, $i, $major_style, $major_font, $major_size, $this->majorScaleRound );
 
-			if( !is_null( $minor_style ) || !is_null( $minor_font ) )
+			if ( !is_null( $minor_style ) || !is_null( $minor_font ) )
 				for( $j = $i - $minor_int; $i - $major_int < $j && 0 < $j; $j -= $minor_int )
 					$this->_drawGridTick( $renderer, $j, $minor_style, $minor_font, $minor_size, $this->minorScaleRound );
 		}
 
 		for( $i = $start; $i < 1; $i += $major_int )
 		{
-			if( !is_null( $major_style ) || !is_null( $major_font ) )
+			if ( !is_null( $major_style ) || !is_null( $major_font ) )
 				$this->_drawGridTick( $renderer, $i, $major_style, $major_font, $major_size, $this->majorScaleRound );
 
-			if( !is_null( $minor_style ) || !is_null( $minor_font ) )
+			if ( !is_null( $minor_style ) || !is_null( $minor_font ) )
 				for( $j = $i + $minor_int; $i + $major_int > $j && 1 > $j; $j += $minor_int )
 					$this->_drawGridTick( $renderer, $j, $minor_style, $minor_font, $minor_size, $this->minorScaleRound );
 		}
@@ -373,7 +373,7 @@ class LinearGridScale extends GridScale // {{{1
 
 	function _drawGridLine( &$renderer, $pos, $style ) // {{{2
 	{
-		if( $this->orientation == 'vertical' )
+		if ( $this->orientation == 'vertical' )
 			$renderer->drawLine( 0, $pos, 1, $pos, $style );
 		else
 			$renderer->drawLine( $pos, 0, $pos, 1, $style );
@@ -381,13 +381,13 @@ class LinearGridScale extends GridScale // {{{1
 
 	function _drawGridTick( &$renderer, $pos, $style, $font, $size, $round = false ) // {{{2
 	{
-		if( $this->orientation == 'vertical' )
+		if ( $this->orientation == 'vertical' )
 		{
 			$size = $size / $renderer->width;
-			if( $this->layout['grid-vertical-position'] == 'left' )
+			if ( $this->layout['grid-vertical-position'] == 'left' )
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( 1 - $size, $pos, 1, $pos, $style );
-				if( !is_null( $font ) && $this->count++ % $this->skip == 0 ) 
+				if ( !is_null( $style ) ) $renderer->drawLine( 1 - $size, $pos, 1, $pos, $style );
+				if ( !is_null( $font ) && $this->count++ % $this->skip == 0 ) 
 				{
 					$height = $renderer->getTextHeight( $font );
 					$value = $this->_getValue( $pos, $round );
@@ -396,8 +396,8 @@ class LinearGridScale extends GridScale // {{{1
 			}
 			else
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( 0, $pos, $size, $pos, $style );
-				if( !is_null( $font ) && $this->count++ % $this->skip == 0 )
+				if ( !is_null( $style ) ) $renderer->drawLine( 0, $pos, $size, $pos, $style );
+				if ( !is_null( $font ) && $this->count++ % $this->skip == 0 )
 				{
 					$height = $renderer->getTextHeight( $font );
 					$value = $this->_getValue( $pos, $round );
@@ -408,10 +408,10 @@ class LinearGridScale extends GridScale // {{{1
 		else
 		{
 			$size = $size / $renderer->height;
-			if( $this->layout['grid-horizontal-position'] == 'bottom' )
+			if ( $this->layout['grid-horizontal-position'] == 'bottom' )
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( $pos, 0, $pos, $size, $style );
-				if( !is_null( $font ) && $this->count++ % $this->skip == 0 )
+				if ( !is_null( $style ) ) $renderer->drawLine( $pos, 0, $pos, $size, $style );
+				if ( !is_null( $font ) && $this->count++ % $this->skip == 0 )
 				{
 					$value = $this->_getValue( $pos, $round );
 					$width = $renderer->getTextWidth( $value, $font ) * 0.55;
@@ -420,8 +420,8 @@ class LinearGridScale extends GridScale // {{{1
 			}
 			else
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( $pos, 1 - $size, $pos, 1, $style );
-				if( !is_null( $font ) )
+				if ( !is_null( $style ) ) $renderer->drawLine( $pos, 1 - $size, $pos, 1, $style );
+				if ( !is_null( $font ) )
 				{
 					$value = $this->_getValue( $pos, $round );
 					$width = $renderer->getTextWidth( $value, $font ) * 0.55;
@@ -434,7 +434,7 @@ class LinearGridScale extends GridScale // {{{1
 	function getSize( &$renderer, $available ) // {{{2
 	{
 		$param = $this->layout["grid-{$this->type}-major-font"];
-		if( $param !== false )
+		if ( $param !== false )
 			$font = $renderer->getStyle( $param );
 		$size = $this->layout["grid-{$this->type}-major-size"];
 		switch( $this->orientation )
@@ -480,7 +480,7 @@ class LinearGridScale extends GridScale // {{{1
 	{
 		$loc = $this->max / ($this->max - $this->min);
 
-		if( $this->orientation != 'vertical' )
+		if ( $this->orientation != 'vertical' )
 			$loc = 1 - $loc;
 
 		return $loc;
@@ -490,14 +490,14 @@ class LinearGridScale extends GridScale // {{{1
 	{
 		$zpos = $this->zero;
 
-		if( $this->orientation == 'vertical' )
+		if ( $this->orientation == 'vertical' )
 		{
 			$pos = 1 - $pos;
 			$zpos = 1 - $zpos;
 		}
 		$v = $this->value * ($pos-$zpos);
 
-		if( $round === false )
+		if ( $round === false )
 			return $v;
 		else
 			return round($v, $round);
@@ -507,7 +507,7 @@ class LinearGridScale extends GridScale // {{{1
 	{
 		$pos = $value / $this->value;
 
-		if( $this->orientation == 'vertical' )
+		if ( $this->orientation == 'vertical' )
 		{
 			$pos += 1 - $this->zero;
 			$pos = 1 - $pos;
@@ -547,11 +547,11 @@ class StaticGridScale extends GridScale // {{{1
 		$base = "grid-{$this->type}";
 		
 		$major = null;
-		if( $this->layout["$base-major-guide"] !== false )
+		if ( $this->layout["$base-major-guide"] !== false )
 			$major = $renderer->getStyle( $this->layout["$base-major-guide"] );
 
 		for( $i = 0; $i < 1; $i += $this->width )
-			if( !is_null( $major ) )
+			if ( !is_null( $major ) )
 				$this->_drawGridLine( $renderer, $i, $major );
 	}
 
@@ -561,16 +561,16 @@ class StaticGridScale extends GridScale // {{{1
 		
 		$major_font = null;
 		$major_style = null;
-		if( $this->layout["$base-major-font"] !== false )
+		if ( $this->layout["$base-major-font"] !== false )
 			$major_font = $renderer->getStyle( $this->layout["$base-major-font"] );
 
-		if( $this->layout["$base-major-style"] !== false )
+		if ( $this->layout["$base-major-style"] !== false )
 			$major_style = $renderer->getStyle( $this->layout["$base-major-style"] );
 
 		$major_size = $this->layout["$base-major-size"];
 
 		for( $i = 0; $i < 1; $i += $this->width )
-			if( !is_null( $major_style ) || !is_null( $major_font ) )
+			if ( !is_null( $major_style ) || !is_null( $major_font ) )
 				$this->_drawGridTick( $renderer, $i, $major_style, $major_font, $major_size );
 	}
 
@@ -587,7 +587,7 @@ class StaticGridScale extends GridScale // {{{1
 
 	function _drawGridLine( &$renderer, $pos, $style ) // {{{2
 	{
-		if( $this->orientation == 'vertical' )
+		if ( $this->orientation == 'vertical' )
 			$renderer->drawLine( 0, $pos, 1, $pos, $style );
 		else
 			$renderer->drawLine( $pos, 0, $pos, 1, $style );
@@ -595,15 +595,15 @@ class StaticGridScale extends GridScale // {{{1
 
 	function _drawGridTick( &$renderer, $pos, $style, $font, $size ) // {{{2
 	{
-		if( $this->orientation == 'vertical' )
+		if ( $this->orientation == 'vertical' )
 		{
 			$size = $size / $renderer->width;
 			$width = (1 - $size) / $this->layers;
 
-			if( $this->layout['grid-vertical-position'] == 'left' )
+			if ( $this->layout['grid-vertical-position'] == 'left' )
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( 1 - $size, $pos, 1, $pos, $style );
-				if( !is_null( $font ) ) 
+				if ( !is_null( $style ) ) $renderer->drawLine( 1 - $size, $pos, 1, $pos, $style );
+				if ( !is_null( $font ) ) 
 				{
 					$height = $renderer->getTextHeight( $font );
 					$offset = ++$this->count % $this->layers * $width;
@@ -613,8 +613,8 @@ class StaticGridScale extends GridScale // {{{1
 			}
 			else
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( 0, $pos, $size, $pos, $style );
-				if( !is_null( $font ) )
+				if ( !is_null( $style ) ) $renderer->drawLine( 0, $pos, $size, $pos, $style );
+				if ( !is_null( $font ) )
 				{
 					$offset = ++$this->count % $this->layers * $width + $size;
 					$height = $renderer->getTextHeight( $font );
@@ -626,10 +626,10 @@ class StaticGridScale extends GridScale // {{{1
 		else
 		{
 			$size = $size / $renderer->height;
-			if( $this->layout['grid-horizontal-position'] == 'bottom' )
+			if ( $this->layout['grid-horizontal-position'] == 'bottom' )
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( $pos, 0, $pos, $size, $style );
-				if( !is_null( $font ) )
+				if ( !is_null( $style ) ) $renderer->drawLine( $pos, 0, $pos, $size, $style );
+				if ( !is_null( $font ) )
 				{
 					$y = $size + $renderer->getTextHeight( $font ) * ($this->count++ % $this->layers);
 					$value = $this->_getValue( $pos );
@@ -640,8 +640,8 @@ class StaticGridScale extends GridScale // {{{1
 			}
 			else
 			{
-				if( !is_null( $style ) ) $renderer->drawLine( 1 - $pos, 1 - $size, 1 - $pos, 1, $style );
-				if( !is_null( $font ) )
+				if ( !is_null( $style ) ) $renderer->drawLine( 1 - $pos, 1 - $size, 1 - $pos, 1, $style );
+				if ( !is_null( $font ) )
 				{
 					$y = $renderer->getTextHeight( $font ) * (++$this->count % $this->layers);
 					$value = $this->_getValue( $pos );
@@ -656,12 +656,12 @@ class StaticGridScale extends GridScale // {{{1
 	function getSize( &$renderer, $available ) // {{{2
 	{
 		$param = $this->layout["grid-{$this->type}-major-font"];
-		if( $param !== false )
+		if ( $param !== false )
 			$font = $renderer->getStyle( $param );
 		$size = $this->layout["grid-{$this->type}-major-size"];
 
 		$max = 0;
-		if( $param !== false )
+		if ( $param !== false )
 			foreach( $this->labels as $label )
 				$max = max( $max, $renderer->getTextWidth( $label, $font ) );
 
@@ -681,7 +681,7 @@ class StaticGridScale extends GridScale // {{{1
 	function _getValue( $pos ) // {{{2
 	{
 		$index = intval( $pos / $this->width );
-		if( isset( $this->labels[ $index ] ) )
+		if ( isset( $this->labels[ $index ] ) )
 			return $this->labels[ $index ];
 		else
 			return null;

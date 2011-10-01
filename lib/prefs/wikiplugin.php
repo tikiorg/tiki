@@ -103,7 +103,7 @@ function prefs_wikiplugin_list($partial = false) {
 		}
 
 		global $prefs;
-		if( isset($prefs['pluginaliaslist']) ) {
+		if ( isset($prefs['pluginaliaslist']) ) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
 			$alias = array_filter($alias);
 		}

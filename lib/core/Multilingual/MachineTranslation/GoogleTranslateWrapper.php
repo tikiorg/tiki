@@ -92,7 +92,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
    	function __construct ($sourceLang, $targetLang, $html=true) {
    		$this->sourceLang = $sourceLang;
    		$this->targetLang = $targetLang;
-   		if($html) {
+   		if ($html) {
    			$this->markup = $this->htmlMarkup;
    		} else {
    			$this->translatingHTML = false;

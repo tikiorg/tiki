@@ -29,7 +29,7 @@ class PS_GRenderer extends GRenderer // {{{1
 		$this->styles = array();
 		$this->font = null;
 
-		if( !is_null( $format ) )
+		if ( !is_null( $format ) )
 		{
 			$size = $this->_getFormat( $format, $orientation );
 			$this->width = $size[0];
@@ -82,7 +82,7 @@ class PS_GRenderer extends GRenderer // {{{1
 			$style['line'][4]
 		);
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			ps_setcolor( $this->ps,
 				'fill',
 				$style['fill'][0],
@@ -96,7 +96,7 @@ class PS_GRenderer extends GRenderer // {{{1
 
 		ps_rect( $this->ps, $left, $top, $right - $left, $bottom - $top );
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			ps_fill_stroke( $this->ps );
 		else
 			ps_stroke( $this->ps );
@@ -116,7 +116,7 @@ class PS_GRenderer extends GRenderer // {{{1
 			$style['line'][4]
 		);
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			ps_setcolor( $this->ps,
 				'fill',
 				$style['fill'][0],
@@ -133,7 +133,7 @@ class PS_GRenderer extends GRenderer // {{{1
 		ps_lineto( $this->ps, $centerX, $centerY );
 		ps_closepath( $this->ps );
 
-		if( isset( $style['fill'] ) )
+		if ( isset( $style['fill'] ) )
 			ps_fill_stroke( $this->ps );
 		else
 			ps_stroke( $this->ps );
@@ -170,7 +170,7 @@ class PS_GRenderer extends GRenderer // {{{1
 	
 	function getStyle( $name ) // {{{2
 	{
-		if( isset( $this->styles[$name] ) )
+		if ( isset( $this->styles[$name] ) )
 			return $this->styles[$name];
 
 		return $this->styles[$name] = $this->_findStyle( $name );
@@ -247,7 +247,7 @@ class PS_GRenderer extends GRenderer // {{{1
 		case 'Normal':
 			array_shift( $parts );
 		default:
-			if( $parts[0] == 'Text' )
+			if ( $parts[0] == 'Text' )
 				$style['font'] = 12;
 			else
 				$style['line-width'] = 1;
@@ -357,7 +357,7 @@ class PS_GRenderer extends GRenderer // {{{1
 		case 'FOLIO': $size = array(612.00,936.00); break;
 		}
 
-		if( strtolower($orientation) == 'landscape' )
+		if ( strtolower($orientation) == 'landscape' )
 		{
 			$a=$size[1];
 			$size[1]=$size[0];

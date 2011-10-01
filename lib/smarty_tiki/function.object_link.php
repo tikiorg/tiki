@@ -13,11 +13,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_object_link( $params, $smarty ) {
 
-	if( ! isset( $params['type'], $params['id'] ) && ! isset( $params['identifier'] ) ) {
+	if ( ! isset( $params['type'], $params['id'] ) && ! isset( $params['identifier'] ) ) {
 		return tra('No object information provided.');
 	}
 
-	if( isset( $params['type'], $params['id'] ) ) {
+	if ( isset( $params['type'], $params['id'] ) ) {
 		$type = $params['type'];
 		$object = $params['id'];
 	} else {
@@ -142,10 +142,10 @@ function smarty_function_object_link_external( $smarty, $link, $title = null ) {
 		$link = 'http://' . $link;
 	}
 
-	if( ! $title ) {
-		if( ! $title = $cachelib->getCached( $link, 'object_link_ext_title' ) ) {
+	if ( ! $title ) {
+		if ( ! $title = $cachelib->getCached( $link, 'object_link_ext_title' ) ) {
 			$body = $tikilib->httprequest( $link );
-			if( preg_match( '|<title>(.+)</title>|', $body, $parts ) ) {
+			if ( preg_match( '|<title>(.+)</title>|', $body, $parts ) ) {
 				$title = TikiFilter::get('text')->filter($parts[1]);
 			} else {
 				$title = $link;
@@ -178,15 +178,15 @@ function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $
 
 	$cacheKey = "$relationId:$end:$title";
 
-	if( ! $out = $cachelib->getCached( $cacheKey, 'relation_link' ) ) {
+	if ( ! $out = $cachelib->getCached( $cacheKey, 'relation_link' ) ) {
 		$relation = $relationlib->get_relation( $relationId );
 
-		if( $relation ) {
-			if( ! $title ) {
+		if ( $relation ) {
+			if ( ! $title ) {
 				$attributes = $attributelib->get_attributes( 'relation', $relationId );
 				$key = 'tiki.relation.' . $end;
 
-				if( isset( $attributes[$key] ) && ! empty( $attributes[$key] ) ) {
+				if ( isset( $attributes[$key] ) && ! empty( $attributes[$key] ) ) {
 					$title = $attributes[$key];
 				}
 			}

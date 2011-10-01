@@ -138,7 +138,7 @@ function wp_map_mapserver($params)
 	if (isset($height)) {
 		$heightdata='height="'.intval($height).'"';
 	}	
-	if(@$prefs['feature_maps'] != 'y') {
+	if (@$prefs['feature_maps'] != 'y') {
 		$map=tra("Feature disabled");
 	} else {
 		$map='<object border="0" hspace="0" vspace="0" type="text/html" data="tiki-map.php?'.$mapdata.$extdata.$sizedata.'maponly=frame" '.$widthdata.' '.$heightdata.'><a href="tiki-map.php?'.$mapdata.$extdata.$sizedata.'"><img src="tiki-map.php?'.$mapdata.$extdata.$sizedata.'maponly=yes"/></a></object>';
