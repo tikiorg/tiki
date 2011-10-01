@@ -148,10 +148,10 @@ if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive
 	$cachelib->empty_cache('templates_c');
 }
 if ($prefs['feature_freetags'] == 'y') require_once ('lib/setup/freetags.php');
+require_once('lib/perspective_binder.php');
 if ($prefs['feature_categories'] == 'y'){ 
 		require_once ('lib/setup/categories.php');
-		if ($prefs['feature_areas'] == 'y' && $prefs['feature_perspective'] == 'y'){
-			include_once('lib/perspective_binder.php');
+		if ($prefs['feature_areas'] == 'y' && $prefs['categories_used_in_tpl'] == 'y'){
 			HandleObjectCategories($objectCategoryIds);
 		}
 }

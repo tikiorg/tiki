@@ -46,6 +46,7 @@ function prefs_feature_list($partial = false) {
 			'dependencies' => array(
 				'feature_categories',
 				'feature_perspective',
+				'categories_used_in_tpl',
 			),
 		),
 		'feature_wiki' => array(

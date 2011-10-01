@@ -52,7 +52,7 @@ function HandleObjectCategories($objectCategoryIds)
     }
 /*    else if ($_SESSION['current_perspective'] !== 0)     // decomment this violates the category jail 
     {
-        SetPerspectiveId(0);
+        $perspectivelib->set_perspective(0);
         
     }*/
 }
@@ -80,7 +80,9 @@ function get_perspective_by_categid($categId){
 function update_areas(){
 	global $prefs, $categlib;
 	$areas = array();
-	foreach($categlib->get_category_descendants($prefs['areas_root']) as $item)
+	$descendants = $categlib->get_category_descendants($prefs['areas_root']);
+	if( is_array($descendants) ){
+	foreach($descendants as $item)
 		$areas[$item] = array();	// it only should be just one perspective assigned
 	$result = TikiDb::get()->query( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
 
@@ -99,6 +101,7 @@ function update_areas(){
 		}
 	}
 	return true;
+	}else return false;
 }
 
 
