@@ -913,7 +913,6 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 				'id' => $phplayersTreeData['tree']['id']
 			);
 			$smarty->assign_by_ref('tree', $tree_array);
-			$smarty->assign('expanded', '');
 		}
 	}
 }

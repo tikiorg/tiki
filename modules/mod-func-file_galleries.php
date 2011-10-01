@@ -29,6 +29,5 @@ function module_file_galleries( $mod_reference, $module_params ) {
 	if ( isset($all_galleries) && is_array($all_galleries) && count($all_galleries) > 0 ) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers();
 		$smarty->assign_by_ref('tree', $phplayersTreeData['tree']);
-		$smarty->assign_by_ref('expanded', $phplayersTreeData['expanded']);
 	}
 }

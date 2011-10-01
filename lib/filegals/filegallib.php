@@ -1416,9 +1416,8 @@ class FileGalLib extends TikiLib
 		}
 
 		$galleryPath = array();
-		$expanded = array('1');
 		$fgal_mgr_param = !empty($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '';
-		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $expanded, $script, $rootGalleryId, $fgal_mgr_param);
+		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $script, $rootGalleryId, $fgal_mgr_param);
 		array_unshift($galleryPath, array($rootGalleryId, $tree['name']));
 
 		$galleryPathHtml = '';
@@ -1429,14 +1428,12 @@ class FileGalLib extends TikiLib
 
 		return array(
 			'tree' => $tree,
-			'expanded' => $expanded,
 			'path' => $galleryPathHtml,
 			'pathArray' => $galleryPath
 		);
 	}
 
-	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = -1, $queryString = '' ) {
-		static $total = 1;
+	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, $link = "", $cur_id = -1, $endQueryString = '' ) {
 		static $nb_galleries = 0;
 
 		$i = 0;
@@ -1446,15 +1443,11 @@ class FileGalLib extends TikiLib
 			$gv = & $galleries[$gk];
 			if ($gv['parentId'] == $cur_id && $gv['id'] != $cur_id) {
 				$tree[$i] = & $galleries[$gk];
-				$tree[$i]['link_var'] = 'galleryId';
-				$tree[$i]['link_id'] = $gv['id'];
-				$tree[$i]['link'] = $link."?".$tree[$i]['link_var']."=".$tree[$i]['link_id'] . $queryString;
-				$tree[$i]['pos'] = $total++;
-				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id'], $queryString);
+				$tree[$i]['link'] = $link."?galleryId=" . $gv['id'] . $endQueryString;
+				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $link, $gv['id'], $endQueryString);
 				if (!$path_found && $gv['id'] == $gallery_id) {
 					if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
 					array_unshift($gallery_path, array($gallery_id, $gv['name']));
-					$expanded[] = $tree[$i]['pos'] + 1;
 					$gallery_id = $cur_id;
 					$path_found = true;
 				}

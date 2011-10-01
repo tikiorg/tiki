@@ -1,2 +1,2 @@
 {* $Id$ *}
-{tree data=$tree expanded=$expanded}
+{tree data=$tree}
