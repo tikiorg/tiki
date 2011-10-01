@@ -13,6 +13,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+
+require_once('lib/perspectivelib.php');
+require_once('lib/categories/categlib.php');
+
 function HandleObjectCategories($objectCategoryIds)
 {
     
@@ -91,7 +95,7 @@ function update_areas(){
 		if(count($result->fetchRow())){
 			$result = TikiDb::get()->query("UPDATE tiki_areas SET perspectives = ? WHERE categId = ?",array(serialize($item), $key));
 	}else{ 
-			$result = TikiDb::get()->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(".$key.",'".serialize($item)."')", array());}
+			$result = TikiDb::get()->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,'?')", array($key, serialize($item)));}
 		}
 	}
 	return true;

@@ -38,13 +38,14 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_areas' => array(
 			'name' => tra('Areas'),
-			'description' => tra('Also known as perspective binder'),
+			'description' => tra('Binding categories and perspectives to each other'),
 			'type' => 'flag',
 			'help' => 'Areas',
 			'default' => 'n',
 			'admin' => 'areas',
 			'dependencies' => array(
-				'categories_used_in_tpl',
+				'feature_categories',
+				'feature_perspective',
 			),
 		),
 		'feature_wiki' => array(

@@ -12,8 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 
-require_once('lib/perspectivelib.php');
-require_once('lib/setup/categories.php');
 require_once('lib/perspective_binder.php');
 
 	// updating table tiki_areas	
