@@ -39,10 +39,10 @@ class Breadcrumb
 function breadcrumb_buildHeadTitle($crumbs) {
 	global $prefs;
 	if ($prefs['feature_breadcrumbs'] === 'y') {
-	    if( _is_assoc($crumbs) ) {
+	    if ( _is_assoc($crumbs) ) {
 	        return false;
 	    }
-	    if( is_array($crumbs) ) {
+	    if ( is_array($crumbs) ) {
 	        $ret = array();
 	        foreach($crumbs as $crumb) {
 	            $ret[] = breadcrumb_buildHeadTitle($crumb);
@@ -54,7 +54,7 @@ function breadcrumb_buildHeadTitle($crumbs) {
 	        return htmlspecialchars($crumbs->title);
 	    }
 	} else {
-	    if( is_array($crumbs) ) {
+	    if ( is_array($crumbs) ) {
 			return $crumbs[count($crumbs) - 1]->title;
 	    } else {
 	    	return $crumbs->title;
@@ -69,7 +69,7 @@ function breadcrumb_buildHeadTitle($crumbs) {
 /* static */
 function breadcrumb_buildTrail($crumbs, $loc) {
     global $prefs, $info;
-    if($prefs['feature_breadcrumbs'] == 'y') {
+    if ($prefs['feature_breadcrumbs'] == 'y') {
         if ($loc == 'page' && ($prefs['feature_siteloc'] == 'page' || ($prefs['feature_page_title'] == 'y' && $info) ) ) {
             return _breadcrumb_buildTrail($crumbs);
         } else if (($loc == 'site' || $loc == 'location') && $prefs['feature_siteloc'] == 'y') {
@@ -112,10 +112,10 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1) {
     if ($len == -1) {
         $len = count($crumbs);
     }
-    if( _is_assoc($crumbs) ) {
+    if ( _is_assoc($crumbs) ) {
         return false;
     }
-    if( is_array($crumbs) ) {                             
+    if ( is_array($crumbs) ) {                             
         $ret = array();
         if ( ($structure == 'y') && $info ) {
             $cnt +=1;
@@ -125,7 +125,7 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1) {
         } else {
             foreach($crumbs as $crumb) {
     	    $cnt+=1;
-    	    if( $len!=$cnt+1 ) {
+    	    if ( $len!=$cnt+1 ) {
                     $ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass);
                 } else {
                     $ret[] = '';
@@ -169,7 +169,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass) {
     $res = array();
     foreach ($structure_path as $crumb) {
         $cnt+=1;
-        if( $len!=$cnt ) {
+        if ( $len!=$cnt ) {
 
         $ret = '';
         if ($crumb['pageName'] != $page || $crumb['page_alias'] != $page) {
@@ -274,10 +274,10 @@ function _breadcrumb_getTitle($crumbs, $loc) {
 			$ret .= htmlentities(tra($crumbs[$len-1]->title), ENT_QUOTES, 'UTF-8').'</a>';
 		}
 	$ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
-	if( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {
+	if ( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {
 		$ret .= ' <img src="pics/icons/lock.png" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
 	}
-	if( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
+	if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
 		$ret .= '</strong>';          
 	}
 	return $ret;

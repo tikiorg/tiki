@@ -16,9 +16,9 @@ class PerspectiveLib
 	}
 
 	function get_current_perspective( $prefs ) {
-		if( isset( $_REQUEST['perspectiveId'] ) ) {
+		if ( isset( $_REQUEST['perspectiveId'] ) ) {
 			return (int) $_REQUEST['perspectiveId'];
-		} elseif( isset( $_SESSION['current_perspective'] ) ) {
+		} elseif ( isset( $_SESSION['current_perspective'] ) ) {
 			return (int) $_SESSION['current_perspective'];
 		}
 
@@ -33,7 +33,7 @@ class PerspectiveLib
 
 		$currentDomain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 		foreach( $this->get_domain_map( $prefs ) as $domain => $perspective ) {
-			if( $domain == $currentDomain ) {
+			if ( $domain == $currentDomain ) {
 				$_SESSION['current_perspective'] = trim($perspective);
 				return $perspective;
 			}
@@ -41,7 +41,7 @@ class PerspectiveLib
 	}
 
 	private function get_map( $prefs, $active_pref, $config_pref ) {
-		if( ! $prefs ) {
+		if ( ! $prefs ) {
 			global $prefs;
 		}
 
@@ -95,9 +95,9 @@ class PerspectiveLib
 	function get_perspective( $perspectiveId ) {
 		$result = TikiDb::get()->query( "SELECT perspectiveId, name FROM tiki_perspectives WHERE perspectiveId = ?", array( $perspectiveId ) );
 
-		if( $info = $result->fetchRow() ) {
+		if ( $info = $result->fetchRow() ) {
 			$perms = Perms::get( array( 'type' => 'perspective', 'object' => $perspectiveId ) );
-			if( $perms->view_perspective ) {
+			if ( $perms->view_perspective ) {
 				$info['preferences'] = $this->get_preferences( $perspectiveId );
 				$this->write_permissions( $info, $perms );
 
@@ -111,9 +111,9 @@ class PerspectiveLib
 		$result = TikiDb::get()->query( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array( ) );
 
 		$out = array();
-                if($result !== false){
+                if ($result !== false){
 			while( $row = $result->fetchRow() ) {
-				if(in_array($categId, unserialize( $row['value'] ) ) )
+				if (in_array($categId, unserialize( $row['value'] ) ) )
 					 return $row['perspectiveId']; 
 			}
 		}
@@ -122,10 +122,10 @@ class PerspectiveLib
 
 	function set_perspective($perspective){
 	global $prefs;
-	if( $this->perspective_exists( $perspective ) ) {
+	if ( $this->perspective_exists( $perspective ) ) {
 		if ($prefs['multidomain_switchdomain'] == 'y') {
 			foreach( $this->get_domain_map() as $domain => $persp ) {
-				if( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
+				if ( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
 					$targetUrl = 'http://' . $domain;
 
 					header( 'Location: ' . $targetUrl );
@@ -148,7 +148,7 @@ class PerspectiveLib
 	// Adds or renames a perspective. If $perspectiveId exists, rename it to $name. Otherwise, create a new perspective with id $perspectiveId named $name.
 	// Returns true if and only if the operation succeeds.
 	function replace_perspective( $perspectiveId, $name ) {
-		if( $perspectiveId ) {
+		if ( $perspectiveId ) {
 			$this->perspectives->update(array(
 				'name' => $name,
 			), array(

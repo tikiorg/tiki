@@ -10,15 +10,15 @@ class BigBlueButtonLib
 	private $version = false;
 
 	private function getVersion() {
-		if( $this->version !== false ) {
+		if ( $this->version !== false ) {
 			return $this->version;
 		}
 
-		if( $version = $this->performRequest( '', array() ) ) {
+		if ( $version = $this->performRequest( '', array() ) ) {
 			$values = $this->grabValues( $version->documentElement );
 			$version = $values['version'];
 
-			if( false !== $pos = strpos( $version, '-' ) ) {
+			if ( false !== $pos = strpos( $version, '-' ) ) {
 				$version = substr( $version, 0, $pos );
 			}
 			
@@ -33,10 +33,10 @@ class BigBlueButtonLib
 	public function getMeetings() {
 		global $cachelib;
 
-		if( ! $meetings = $cachelib->getSerialized( 'bbb_meetinglist' ) ) {
+		if ( ! $meetings = $cachelib->getSerialized( 'bbb_meetinglist' ) ) {
 			$meetings = array();
 
-			if( $dom = $this->performRequest( 'getMeetings', array( 'random' => 1 ) ) ) {
+			if ( $dom = $this->performRequest( 'getMeetings', array( 'random' => 1 ) ) ) {
 				foreach( $dom->getElementsByTagName( 'meeting' ) as $node ) {
 					$meetings[] = $this->grabValues( $node );
 				}
@@ -49,8 +49,8 @@ class BigBlueButtonLib
 	}
 
 	public function getAttendees( $room ) {
-		if( $meeting = $this->getMeeting( $room ) ) {
-			if( $dom = $this->performRequest( 'getMeetingInfo', array( 'meetingID' => $room, 'password' => $meeting['moderatorPW'] ) ) ) {
+		if ( $meeting = $this->getMeeting( $room ) ) {
+			if ( $dom = $this->performRequest( 'getMeetingInfo', array( 'meetingID' => $room, 'password' => $meeting['moderatorPW'] ) ) ) {
 
 				$attendees = array();
 
@@ -67,7 +67,7 @@ class BigBlueButtonLib
 		$values = array();
 
 		foreach( $node->childNodes as $n ) {
-			if( $n instanceof DOMElement ) {
+			if ( $n instanceof DOMElement ) {
 				$values[$n->tagName] = $n->textContent;
 			}
 		}
@@ -77,7 +77,7 @@ class BigBlueButtonLib
 
 	public function roomExists( $room ) {
 		foreach( $this->getMeetings() as $meeting ) {
-			if( $meeting['meetingID'] == $room ) {
+			if ( $meeting['meetingID'] == $room ) {
 				return true;
 			}
 		}
@@ -98,21 +98,21 @@ class BigBlueButtonLib
 			'logoutURL' => $params['logout'],
 		);
 
-		if( isset( $params['welcome'] ) ) {
+		if ( isset( $params['welcome'] ) ) {
 			$request['welcome'] = $params['welcome'];
 		}
-		if( isset( $params['number'] ) ) {
+		if ( isset( $params['number'] ) ) {
 			$request['dialNumber'] = $params['number'];
 		}
-		if( isset( $params['voicebridge'] ) ) {
+		if ( isset( $params['voicebridge'] ) ) {
 			$request['voiceBridge'] = $params['voicebridge'];
 		} else {
 			$request['voiceBridge'] = '7' . rand(0,9999);
 		}
-		if( isset( $params['logout'] ) ) {
+		if ( isset( $params['logout'] ) ) {
 			$request['logoutURL'] = $params['logout'];
 		}
-		if( isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported() ) {
+		if ( isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported() ) {
 			$request['record'] = 'true';
 			$request['duration'] = $prefs['bigbluebutton_recording_max_duration'];
 		}
@@ -127,7 +127,7 @@ class BigBlueButtonLib
 		$name = $this->getAttendeeName();
 		$password = $this->getAttendeePassword( $room );
 
-		if( $name && $password ) {
+		if ( $name && $password ) {
 			$this->joinRawMeeting( $room, $name, $password );
 		}
 	}
@@ -135,11 +135,11 @@ class BigBlueButtonLib
 	private function getAttendeeName() {
 		global $user, $tikilib;
 
-		if( $realName = $tikilib->get_user_preference($user, 'realName') ) {
+		if ( $realName = $tikilib->get_user_preference($user, 'realName') ) {
 			return $realName;
-		} elseif( $user ) {
+		} elseif ( $user ) {
 			return $user;
-		} elseif(!empty($_SESSION['bbb_name'])) {
+		} elseif (!empty($_SESSION['bbb_name'])) {
 			return $_SESSION['bbb_name'];
 		} else {
 			return tra('anonymous');
@@ -147,10 +147,10 @@ class BigBlueButtonLib
 	}
 
 	private function getAttendeePassword( $room ) {
-		if( $meeting = $this->getMeeting( $room ) ) {
+		if ( $meeting = $this->getMeeting( $room ) ) {
 			$perms = Perms::get( 'bigbluebutton', $room );
 
-			if( $perms->bigbluebutton_moderate ) {
+			if ( $perms->bigbluebutton_moderate ) {
 				return $meeting['moderatorPW'];
 			} else {
 				return $meeting['attendeePW'];
@@ -162,7 +162,7 @@ class BigBlueButtonLib
 		$meetings = $this->getMeetings();
 
 		foreach( $meetings as $meeting ) {
-			if( $meeting['meetingID'] == $room ) {
+			if ( $meeting['meetingID'] == $room ) {
 				return $meeting;
 			}
 		}
@@ -184,12 +184,12 @@ class BigBlueButtonLib
 
 		$url = $this->buildUrl( $action, $parameters );
 
-		if( $result = $tikilib->httprequest( $url ) ) {
+		if ( $result = $tikilib->httprequest( $url ) ) {
 			$dom = new DOMDocument;
-			if( $dom->loadXML( $result ) ) {
+			if ( $dom->loadXML( $result ) ) {
 				$nodes = $dom->getElementsByTagName( 'returncode' );
 
-				if( $nodes->length > 0 && ($returnCode = $nodes->item(0)) && $returnCode->textContent == 'SUCCESS' ) {
+				if ( $nodes->length > 0 && ($returnCode = $nodes->item(0)) && $returnCode->textContent == 'SUCCESS' ) {
 					return $dom;
 				}
 			}
@@ -199,8 +199,8 @@ class BigBlueButtonLib
 	private function buildUrl( $action, array $parameters ) {
 		global $prefs;
 
-		if( $action ) {
-			if( $checksum = $this->generateChecksum( $action, $parameters ) ) {
+		if ( $action ) {
+			if ( $checksum = $this->generateChecksum( $action, $parameters ) ) {
 				$parameters['checksum'] = $checksum;
 			}
 		}
@@ -213,12 +213,12 @@ class BigBlueButtonLib
 	private function generateChecksum( $action, array $parameters ) {
 		global $prefs;
 
-		if( $prefs['bigbluebutton_server_salt'] ) {
+		if ( $prefs['bigbluebutton_server_salt'] ) {
 			$query = http_build_query( $parameters, '', '&' );
 
 			$version = $this->getVersion();
 
-			if( -1 === version_compare( $version, '0.7' ) ) {
+			if ( -1 === version_compare( $version, '0.7' ) ) {
 				return sha1( $query . $prefs['bigbluebutton_server_salt'] );
 			} else {
 				return sha1( $action . $query . $prefs['bigbluebutton_server_salt'] );

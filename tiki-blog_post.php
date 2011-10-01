@@ -238,7 +238,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 
 	require_once('tiki-sefurl.php');	
 	$url = filter_out_sefurl("tiki-view_blog_post.php?postId=$postId", 'blogpost');
-	header ("location: $url");
+	header("location: $url");
 	die;
 }
 

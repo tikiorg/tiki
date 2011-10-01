@@ -24,7 +24,7 @@ class Tiki_Webservice
 
 	public static function create( $name ) // {{{
 	{
-		if( ! ctype_alpha( $name ) ) {
+		if ( ! ctype_alpha( $name ) ) {
 			return;
 		}
 
@@ -109,7 +109,7 @@ class Tiki_Webservice
 
 			case 'REST':
 			default:
-				if( preg_match_all( "/%(\w+)%/", $this->url . ' ' . $this->body, $matches, PREG_PATTERN_ORDER ) ) {
+				if ( preg_match_all( "/%(\w+)%/", $this->url . ' ' . $this->body, $matches, PREG_PATTERN_ORDER ) ) {
 					return array_diff( $matches[1], array( 'service', 'template' ) );
 				} else {
 					return array();
@@ -122,7 +122,7 @@ class Tiki_Webservice
 		$parameters = array();
 
 		foreach( $this->getParameters() as $key => $name ) {
-			if( isset( $params[$name] ) ) {
+			if ( isset( $params[$name] ) ) {
 				$parameters[$name] = $params[$name];
 			} else {
 				$parameters[$name] = '';
@@ -141,7 +141,7 @@ class Tiki_Webservice
 
 		$map = $this->getParameterMap( $params );
 			
-		if( $built ) {
+		if ( $built ) {
 			switch( $this->wstype ) {
 				case 'SOAP':
 					if ( !empty($this->operation) ) {
@@ -172,7 +172,7 @@ class Tiki_Webservice
 					$ointegrate->addAcceptTemplate( 'smarty', 'html' );
 					$ointegrate->addAcceptTemplate( 'javascript', 'html' );
 
-					if( $this->schemaVersion ) {
+					if ( $this->schemaVersion ) {
 						$ointegrate->addSchemaVersion( $this->schemaVersion );
 					}
 
@@ -185,7 +185,7 @@ class Tiki_Webservice
 
 	function addTemplate( $name ) // {{{
 	{
-		if( ! ctype_alpha( $name ) || empty( $name ) ) {
+		if ( ! ctype_alpha( $name ) || empty( $name ) ) {
 			return;
 		}
 
@@ -207,7 +207,7 @@ class Tiki_Webservice
 
 	function getTemplates() // {{{
 	{
-		if( $this->all )
+		if ( $this->all )
 			return $this->templates;
 
 		global $tikilib;
@@ -231,7 +231,7 @@ class Tiki_Webservice
 
 	function getTemplate( $name ) // {{{
 	{
-		if( isset( $this->templates[$name] ) )
+		if ( isset( $this->templates[$name] ) )
 			return $this->templates[$name];
 
 		global $tikilib;
@@ -287,7 +287,7 @@ class Tiki_Webservice_Template
 		$token = sprintf( "%s_%s", $this->webservice->getName(), $this->name );
 		$file = "temp/cache/" . md5( $token ) . '.tpl';
 
-		if( ! file_exists($file) || $this->lastModif > filemtime($file) ) {
+		if ( ! file_exists($file) || $this->lastModif > filemtime($file) ) {
 			file_put_contents( $file, $this->content );
 		}
 

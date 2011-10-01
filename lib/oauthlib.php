@@ -65,7 +65,7 @@ class OAuthLib extends TikiDb_Bridge
 		} catch (Zend_Oauth_Exception $e) {
 			$oauth_ex = $e->getPrevious();
 			$prevErr = "";
-			if($oauth_ex != null)
+			if ($oauth_ex != null)
 				$prevErr = $oauth_ex->getMessage();
 			die($e->getMessage().". Origin: ".$prevErr);
 		}
@@ -86,7 +86,7 @@ class OAuthLib extends TikiDb_Bridge
 			} catch (Zend_Oauth_Exception $e) {
 				$oauth_ex = $e->getPrevious();
 				$prevErr = "";
-				if($oauth_ex != null)
+				if ($oauth_ex != null)
 					$prevErr = $oauth_ex->getMessage();
 				die($e->getMessage().". Origin: ".$prevErr);
 			}

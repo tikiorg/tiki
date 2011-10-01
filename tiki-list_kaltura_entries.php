@@ -64,7 +64,7 @@ if (isset($_REQUEST['action'])) {
 					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id, $videoId[$i]);
 				}
 			}
-			header ('Location: tiki-kaltura_video.php?action=remix&mixId=' . $kmixEntry->id);
+			header('Location: tiki-kaltura_video.php?action=remix&mixId=' . $kmixEntry->id);
 			die;
 			break;
 
@@ -75,7 +75,7 @@ if (isset($_REQUEST['action'])) {
 				foreach ( $videoId as $vi ) {
 					$kclient->media->delete($vi);
 				}
-				header ('Location: tiki-list_kaltura_entries.php?list=media');
+				header('Location: tiki-list_kaltura_entries.php?list=media');
 				die;
 			}
 				
@@ -83,7 +83,7 @@ if (isset($_REQUEST['action'])) {
 				foreach ( $videoId as $vi ) {
 					$kclient->mixing->delete($vi);
 				}					
-				header ('Location: tiki-list_kaltura_entries.php?list=mix');
+				header('Location: tiki-list_kaltura_entries.php?list=mix');
 				die;
 			}
 			break;

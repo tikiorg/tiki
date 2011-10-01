@@ -404,11 +404,11 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) && empty($errors)) 
 	@$artlib->delete_image_cache("preview",$previewId);
 	if ( isset($_REQUEST["save"]) && $tiki_p_autoapprove_submission == 'y' ) {
 		$artlib->approve_submission($subid);
-		header ("location: tiki-view_articles.php");
+		header("location: tiki-view_articles.php");
 		die;
 	}
 
-	header ("location: tiki-list_submissions.php");
+	header("location: tiki-list_submissions.php");
 	die;
 }
 

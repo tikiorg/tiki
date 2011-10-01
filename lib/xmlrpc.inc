@@ -40,7 +40,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 	if (!function_exists('xml_parser_create'))
 	{
 		// Win 32 fix. From: 'Leo West' <lwest@imaginet.fr>
-		if($WINDIR)
+		if ($WINDIR)
 		{
 			dl('php3_xml.dll');
 		}
@@ -691,9 +691,9 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				{
 					$_xh[$parser]['st'].='"'. $_xh[$parser]['ac'] . '"';
 				}
-				// This if() detects if no scalar was inside <VALUE></VALUE>
+				// This if () detects if no scalar was inside <VALUE></VALUE>
 				// and pads an empty ''.
-				if($_xh[$parser]['st'][strlen($_xh[$parser]['st'])-1] == '(')
+				if ($_xh[$parser]['st'][strlen($_xh[$parser]['st'])-1] == '(')
 				{
 					$_xh[$parser]['st'].= '""';
 				}
@@ -764,7 +764,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				// and say we've found a value
 				$_xh[$parser]['lv']=2;
 			}
-			if(!@isset($_xh[$parser]['ac']))
+			if (!@isset($_xh[$parser]['ac']))
 			{
 				$_xh[$parser]['ac'] = '';
 			}
@@ -876,7 +876,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			{
 				$port=80;
 			}
-			if($timeout>0)
+			if ($timeout>0)
 			{
 				$fp=@fsockopen($server, $port,$this->errno, $this->errstr, $timeout);
 			}
@@ -896,7 +896,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				return $r;
 			}
 			// Only create the payload if it was not created previously
-			if(empty($msg->payload))
+			if (empty($msg->payload))
 			{
 				$msg->createPayload();
 			}
@@ -940,7 +940,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			}
 
 			// Only create the payload if it was not created previously
-			if(empty($msg->payload))
+			if (empty($msg->payload))
 			{
 				$msg->createPayload();
 			}
@@ -1019,8 +1019,8 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			{
 				$results = $this->_try_multicall($msgs, $timeout, $method);
 				/* TODO - this is not php3-friendly */
-				// if($results !== false)
-				if(is_array($results))
+				// if ($results !== false)
+				if (is_array($results))
 				{
 					// Either the system.multicall succeeded, or the send
 					// failed (e.g. due to HTTP timeout). In either case,
@@ -1071,24 +1071,24 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 			// Attempt RPC call
 			$result = $this->send($multicall, $timeout, $method);
-			if(!is_object($result))
+			if (!is_object($result))
 			{
 				return ($result || 0); // transport failed
 			}
 
-			if($result->faultCode() != 0)
+			if ($result->faultCode() != 0)
 			{
 				return false;		// system.multicall failed
 			}
 
 			// Unpack responses.
 			$rets = $result->value();
-			if($rets->kindOf() != 'array')
+			if ($rets->kindOf() != 'array')
 			{
 				return false;		// bad return type from system.multicall
 			}
 			$numRets = $rets->arraysize();
-			if($numRets != count($msgs))
+			if ($numRets != count($msgs))
 			{
 				return false;		// wrong number of return values.
 			}
@@ -1100,7 +1100,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				switch ($val->kindOf())
 				{
 				case 'array':
-					if($val->arraysize() != 1)
+					if ($val->arraysize() != 1)
 					{
 						return false;		// Bad value
 					}
@@ -1109,12 +1109,12 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 					break;
 				case 'struct':
 					$code = $val->structmem('faultCode');
-					if($code->kindOf() != 'scalar' || $code->scalartyp() != 'int')
+					if ($code->kindOf() != 'scalar' || $code->scalartyp() != 'int')
 					{
 						return false;
 					}
 					$str = $val->structmem('faultString');
-					if($str->kindOf() != 'scalar' || $str->scalartyp() != 'string')
+					if ($str->kindOf() != 'scalar' || $str->scalartyp() != 'string')
 					{
 						return false;
 					}
@@ -1286,13 +1286,13 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			global $xmlrpc_defencoding, $xmlrpc_internalencoding;
 
 			$hdrfnd = 0;
-			if($this->debug)
+			if ($this->debug)
 			{
 				//by maHo, replaced htmlspecialchars with htmlentities
 				print "<PRE>---GOT---\n" . htmlentities($data) . "\n---END---\n</PRE>";
 			}
 
-			if($data == '')
+			if ($data == '')
 			{
 				error_log('No response received from server.');
 				$r = new xmlrpcresp(0, $xmlrpcerr['no_data'], $xmlrpcstr['no_data']);
@@ -1300,7 +1300,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			}
 			// see if we got an HTTP 200 OK, else bomb
 			// but only do this if we're using the HTTP protocol.
-			if(ereg("^HTTP",$data))
+			if (ereg("^HTTP",$data))
 			{
 				// Strip HTTP 1.1 100 Continue header if present
 				while (ereg('^HTTP/1.1 1[0-9]{2}', $data))
@@ -1335,12 +1335,12 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				// be tolerant to usage of \n instead of \r\n to separate headers and data
 				// (even though it is not valid http)
 				$pos = strpos($data,"\r\n\r\n");
-				if($pos || is_int($pos))
+				if ($pos || is_int($pos))
 					$bd = $pos+4;
 				else
 				{
 					$pos = strpos($data,"\n\n");
-					if($pos || is_int($pos))
+					if ($pos || is_int($pos))
 						$bd = $pos+2;
 					else
 					{
@@ -1354,7 +1354,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				{
 					// take care of multi-line headers
 					$arr = explode(':',$line);
-					if(count($arr) > 1)
+					if (count($arr) > 1)
 					{
 						$header_name = trim($arr[0]);
 						// TO DO: some headers (the ones that allow a CSV list of values)
@@ -1421,7 +1421,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			if (!xml_parse($parser, $data, sizeof($data)))
 			{
 				// thanks to Peter Kocks <peter.kocks@baygate.com>
-				if((xml_get_current_line_number($parser)) == 1)
+				if ((xml_get_current_line_number($parser)) == 1)
 				{
 					$errstr = 'XML error at line 1, check URL';
 				}
@@ -1845,11 +1845,11 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 	{
 		$kind = $xmlrpc_val->kindOf();
 
-		if($kind == 'scalar')
+		if ($kind == 'scalar')
 		{
 			return $xmlrpc_val->scalarval();
 		}
-		elseif($kind == 'array')
+		elseif ($kind == 'array')
 		{
 			$size = $xmlrpc_val->arraysize();
 			$arr = array();
@@ -1860,7 +1860,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			}
 			return $arr;
 		}
-		elseif($kind == 'struct')
+		elseif ($kind == 'struct')
 		{
 			$xmlrpc_val->structreset();
 			$arr = array();
@@ -1873,7 +1873,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 		}
 	}
 
-	if(function_exists('xmlrpc_decode'))
+	if (function_exists('xmlrpc_decode'))
 	{
 		define('XMLRPC_EPI_ENABLED','1');
 	}
@@ -1884,11 +1884,11 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 		{
 			$kind = $xmlrpc_val->kindOf();
 
-			if($kind == 'scalar')
+			if ($kind == 'scalar')
 			{
 				return $xmlrpc_val->scalarval();
 			}
-			elseif($kind == 'array')
+			elseif ($kind == 'array')
 			{
 				$size = $xmlrpc_val->arraysize();
 				$arr = array();
@@ -1899,7 +1899,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 				}
 				return $arr;
 			}
-			elseif($kind == 'struct')
+			elseif ($kind == 'struct')
 			{
 				$xmlrpc_val->structreset();
 				$arr = array();
@@ -1975,7 +1975,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 			return $xmlrpc_val;
 	}
 
-	if(XMLRPC_EPI_ENABLED == '0')
+	if (XMLRPC_EPI_ENABLED == '0')
 	{
 		function xmlrpc_encode($php_val)
 		{

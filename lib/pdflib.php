@@ -14,14 +14,14 @@ class PdfGenerator
 		global $prefs;
 		$this->mode = 'none';
 
-		if( $prefs['print_pdf_from_url'] == 'webkit' ) {
+		if ( $prefs['print_pdf_from_url'] == 'webkit' ) {
 			$path = $prefs['print_pdf_webkit_path'];
-			if( ! empty( $path ) && is_executable( $path ) ) {
+			if ( ! empty( $path ) && is_executable( $path ) ) {
 				$this->mode = 'webkit';
 				$this->location = $path;
 			}
-		} elseif( $prefs['print_pdf_from_url'] == 'webservice' ) {
-			if( ! empty( $prefs['print_pdf_webservice_url'] ) ) {
+		} elseif ( $prefs['print_pdf_from_url'] == 'webservice' ) {
+			if ( ! empty( $prefs['print_pdf_webservice_url'] ) ) {
 				$this->mode = 'webservice';
 				$this->location = $prefs['print_pdf_webservice_url'];
 			}
@@ -31,7 +31,7 @@ class PdfGenerator
 	function getPdf( $file, array $params ) {
 		global $prefs, $base_url, $tikiroot;
 
-		if( $prefs['auth_token_access'] == 'y' ) {
+		if ( $prefs['auth_token_access'] == 'y' ) {
 			$perms = Perms::get();
 
 			require_once 'lib/auth/tokens.php';

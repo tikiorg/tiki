@@ -66,7 +66,7 @@ abstract class SerializedList
 	public function getPrefList() {
 		global $prefs;
 		
-		if( isset($prefs[$this->getListName()]) ) {
+		if ( isset($prefs[$this->getListName()]) ) {
 			$custom = @unserialize($prefs[$this->getListName()]);
 			sort($custom);
 		} else {
@@ -89,7 +89,7 @@ abstract class SerializedList
 		
 		$tikilib->set_preference( $this->getPrefName(), serialize( $this->data ) );
 		
-		if( !in_array( $this->name, $list ) ) {
+		if ( !in_array( $this->name, $list ) ) {
 			$list[] = $this->name;
 			$tikilib->set_preference( $this->getListName(), serialize($list) );
 		}
@@ -100,11 +100,11 @@ abstract class SerializedList
 		
 
 		$prefName = $this->getPrefName();
-		if( isset($prefs[$prefName]) ) {
+		if ( isset($prefs[$prefName]) ) {
 			$tikilib->delete_preference( $prefName );
 		}
 		$list = $this->getPrefList();
-		if( in_array( $this->name, $list ) ) {
+		if ( in_array( $this->name, $list ) ) {
 			$list = array_diff($list, array($this->name));
 			$tikilib->set_preference( $this->getListName(), serialize($list) );
 		}

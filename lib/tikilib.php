@@ -500,7 +500,7 @@ class TikiLib extends TikiDb_Bridge
 
 	function get_db_by_name( $name ) {
 		include_once ('tiki-setup.php');
-		if( $name == 'local' || empty($name) ) {
+		if ( $name == 'local' || empty($name) ) {
 			return TikiDb::get();
 		}
 
@@ -508,7 +508,7 @@ class TikiLib extends TikiDb_Bridge
 		{
 			static $connectionMap = array();
 
-			if( ! isset( $connectionMap[$name] ) ) {
+			if ( ! isset( $connectionMap[$name] ) ) {
 				$connectionMap[$name] = false;
 
 				$info = $this->get_dsn_info( $name );
@@ -523,7 +523,7 @@ class TikiLib extends TikiDb_Bridge
 				if (isset($api_tiki) &&  $api_tiki == 'adodb') {
 					require_once ('lib/adodb/adodb.inc.php');
 					$dbsqlplugin = ADONewConnection($dbdriver);
-					if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
+					if ( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
 						$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
 					}
 				} else {
@@ -671,7 +671,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		
-		if($event != 'auth_token_called'){
+		if ($event != 'auth_token_called'){
 			$this->remove_user_watch( $user, $event, $object, $type );
 		}
 
@@ -853,7 +853,7 @@ class TikiLib extends TikiDb_Bridge
 		$ret = array();
 
 		$mid = '';
-		if( $prefs['feature_user_watches_translations'] == 'y'  && $event == 'wiki_page_changed') {
+		if ( $prefs['feature_user_watches_translations'] == 'y'  && $event == 'wiki_page_changed') {
 			// If $prefs['feature_user_watches_translations'] is turned on, also look for
 			// pages in a translation group.
 			$mid = "`event`=?";
@@ -1003,7 +1003,7 @@ class TikiLib extends TikiDb_Bridge
 					break;
 				}
 
-				if($res['perm']) {
+				if ($res['perm']) {
 					$ret[] = $res;
 				}
 			}			
@@ -1131,7 +1131,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function is_user_online($whichuser) {
-		if(!isset($this->online_users_cache)) {
+		if (!isset($this->online_users_cache)) {
 			$this->get_online_users();
 		}
 
@@ -1348,10 +1348,10 @@ class TikiLib extends TikiDb_Bridge
 			));
 		}
 		// Perform check to make sure score does not go below 0 with negative scores
-		if( $prefs['fgal_prevent_negative_score'] == 'y' && strpos( $event_type, 'fgallery' ) === 0 ) {
+		if ( $prefs['fgal_prevent_negative_score'] == 'y' && strpos( $event_type, 'fgallery' ) === 0 ) {
 			$result = $this->query( "select `userId` from `users_users` where `score` + ? >= 0 and `login` = ?",
 					array( $score, $user ) );
-			if( ! $row = $result->fetchRow( $result ) )
+			if ( ! $row = $result->fetchRow( $result ) )
 				return false;
 		}
 
@@ -1420,7 +1420,7 @@ class TikiLib extends TikiDb_Bridge
 		if (empty($user))
 			return '';
 
-		if( is_array( $user ) ) {
+		if ( is_array( $user ) ) {
 			$res = $user;
 			$user = $user['login'];
 		} else {
@@ -1451,11 +1451,11 @@ class TikiLib extends TikiDb_Bridge
 			case 'u':
 				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
 
-				if( $prefs['users_serve_avatar_static'] == 'y' ) {
+				if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 					global $tikidomain;
 					$files = glob( "temp/public/$tikidomain/avatar_$user.*" );
 
-					if( !empty( $files[0] ) ) {
+					if ( !empty( $files[0] ) ) {
 						$path = $files[0];
 					}
 				}
@@ -2063,11 +2063,11 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 
 		// If an option is specified and the valid options are specified, skip the vote entirely if not valid
-		if( false !== $optionId && count( $valid_options ) > 0 && ! in_array( $optionId, $valid_options ) ) {
+		if ( false !== $optionId && count( $valid_options ) > 0 && ! in_array( $optionId, $valid_options ) ) {
 			return false;
 		}
 
-		if( $user && ! $allow_revote && $this->user_has_voted( $user, $id ) ) {
+		if ( $user && ! $allow_revote && $this->user_has_voted( $user, $id ) ) {
 			return false;
 		}
 
@@ -2213,7 +2213,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		$sort_mode = $this->convertSortMode($sort_mode);
 
-		if($find) {
+		if ($find) {
 			$findesc = '%'.$find.'%';
 			$mid=" and (u.`login` like ? or p.`value` like ?) ";
 			$bindvars=array($user,$findesc,$findesc);
@@ -2991,7 +2991,7 @@ class TikiLib extends TikiDb_Bridge
 		$categlib = TikiLib::lib('categ');
 		$category_jails = $categlib->get_jail();
 
-		if( ! isset( $filter['andCategId'] ) && ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
+		if ( ! isset( $filter['andCategId'] ) && ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
 			$filter['categId'] = $category_jails;
 		}
 		
@@ -3019,7 +3019,7 @@ class TikiLib extends TikiDb_Bridge
 					$cat_count = count( $categories );
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
 
-					if( $cat_count > 1 ) {
+					if ( $cat_count > 1 ) {
 						$distinct = ' DISTINCT ';
 					}
 
@@ -3120,7 +3120,7 @@ class TikiLib extends TikiDb_Bridge
 			$rawTemp = Perms::filter( array( 'type' => 'wiki page' ), 'object', $rawTemp, array( 'object' => 'pageName', 'creator' => 'creator' ), $filterPerms );
 
 			$raw = array_merge($raw, $rawTemp);
-			if( (count($raw) >= $offset + $maxRecords) || $maxRecords == -1 ) $haveEnough = TRUE; // now we have enough records
+			if ( (count($raw) >= $offset + $maxRecords) || $maxRecords == -1 ) $haveEnough = TRUE; // now we have enough records
 		} // prbably this brace has to include the next foreach??? I am unsure.
 		// but if yes, the next lines have to be reviewed.
 
@@ -3129,16 +3129,16 @@ class TikiLib extends TikiDb_Bridge
 		$links = $this->table('tiki_links');
 
 		foreach( $raw as $res ) {
-			if( $initial ) {
+			if ( $initial ) {
 				$valid = false;
 				foreach( (array) $initial as $candidate ) {
-					if( stripos( $res['pageName'], $candidate ) === 0 ) {
+					if ( stripos( $res['pageName'], $candidate ) === 0 ) {
 						$valid = true;
 						break;
 					}
 				}
 
-				if( ! $valid )
+				if ( ! $valid )
 					continue;
 			}
 			//WYSIWYCA
@@ -3225,7 +3225,7 @@ class TikiLib extends TikiDb_Bridge
 		foreach( $permNames as $perm ) {
 			$ret[$perm] = $perms->$perm ? 'y' : 'n';
 
-			if( $global ) {
+			if ( $global ) {
 				$smarty->assign( $perm, $ret[$perm] );
 				$GLOBALS[ $perm ] = $ret[$perm];
 			}
@@ -3395,7 +3395,7 @@ class TikiLib extends TikiDb_Bridge
 			$name = $result['name'];
 			$value = $result['value'];
 
-			if( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
+			if ( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
 				$modified[$name] = $value;
 		}
 
@@ -3432,7 +3432,7 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		$value = isset($prefs[$name]) ? $prefs[$name] : $default;
 
-		if( $expectArray && is_string( $value ) ) {
+		if ( $expectArray && is_string( $value ) ) {
 			return unserialize( $value );
 		} else {
 			return $value;
@@ -3743,7 +3743,7 @@ class TikiLib extends TikiDb_Bridge
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0, $created='') {
 		global $prefs;
 
-		if( ! $is_html ) {
+		if ( ! $is_html ) {
 			$data = str_replace( '<x>', '', $data );
 		}
 		$name = trim($name); // to avoid pb with trailing space http://dev.mysql.com/doc/refman/5.1/en/char.html
@@ -4094,11 +4094,11 @@ class TikiLib extends TikiDb_Bridge
 			$wysiwyg = $info['wysiwyg'];
 		}
 		
-		if( $wysiwyg == 'y' && $html != 1 && $prefs['wysiwyg_htmltowiki'] != 'y') {	// correct for html only wysiwyg
+		if ( $wysiwyg == 'y' && $html != 1 && $prefs['wysiwyg_htmltowiki'] != 'y') {	// correct for html only wysiwyg
 			$html = 1;
 		}
 
-		if( $html == 0 ) {
+		if ( $html == 0 ) {
 			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
 		}
 
@@ -4107,7 +4107,7 @@ class TikiLib extends TikiDb_Bridge
 			$edit_data = HTMLPurifier($edit_data);
 		}
 
-		if( is_null( $saveLastModif ) ) {
+		if ( is_null( $saveLastModif ) ) {
 			$saveLastModif = $this->now;
 		}
 
@@ -4189,7 +4189,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
-		if( $willDoHistory ) {
+		if ( $willDoHistory ) {
 			$this->replicate_page_to_history($pageName);
 			if (strtolower($pageName) != 'sandbox') {
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
@@ -4255,7 +4255,7 @@ class TikiLib extends TikiDb_Bridge
 			$filegallib->syncFileBacklinks( $data['content'], $context );
 		}
 
-		if( isset( $data['content'] ) ) {
+		if ( isset( $data['content'] ) ) {
 			$this->plugin_post_save_actions( $context, $data );
 		}
 	}
@@ -4297,7 +4297,7 @@ class TikiLib extends TikiDb_Bridge
 			$arguments = $argumentParser->parse( $match->getArguments() );
 
 			$dummy_output = '';
-			if( $parserlib->plugin_enabled( $plugin_name, $dummy_output ) ) {
+			if ( $parserlib->plugin_enabled( $plugin_name, $dummy_output ) ) {
 				$status = $parserlib->plugin_can_execute($plugin_name, $body, $arguments, true);
 
 				// when plugin status is pending, $status equals plugin fingerprint
@@ -4310,7 +4310,7 @@ class TikiLib extends TikiDb_Bridge
 
 				$func_name = 'wikiplugin_' . $plugin_name . '_save';
 
-				if( function_exists( $func_name ) ) {
+				if ( function_exists( $func_name ) ) {
 					$func_name( $context, $body, $arguments );
 				}
 			}
@@ -4802,7 +4802,7 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($file as $line) {
 			$r = $s = '';
 			if (substr($line,0,1) != "#") {
-				if( preg_match("/^\[([A-Z0-9]+)\]/",$line,$r) ) {
+				if ( preg_match("/^\[([A-Z0-9]+)\]/",$line,$r) ) {
 					$var = strtolower($r[1]);
 				}
 				if (isset($var) and (preg_match("/^([-_\/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)/",$line,$s))) {
@@ -4822,7 +4822,7 @@ class TikiLib extends TikiDb_Bridge
 	function httpPrefix( $isUserSpecific = false ) {
 		global $url_scheme, $url_host, $url_port, $prefs;
 
-		if( $isUserSpecific && $prefs['https_external_links_for_users'] == 'y' ) {
+		if ( $isUserSpecific && $prefs['https_external_links_for_users'] == 'y' ) {
 			$scheme = 'https';
 		} else {
 			$scheme = $url_scheme;
@@ -4836,7 +4836,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$base = $this->httpPrefix() . $tikiroot . $relative;
 
-		if( count( $args ) ) {
+		if ( count( $args ) ) {
 			$base .= '?';
 			$base .= http_build_query( $args, '', '&' );
 		}
@@ -5261,12 +5261,12 @@ JS;
 
 	function get_jail() {
 		global $prefs;
-		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
+		if ( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
 			// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 			$categlib = TikiLib::lib('categ');
 			$key = $prefs['category_jail'];
 			$categories = $prefs['category_jail'];
-			if( $prefs['expanded_category_jail_key'] != $key ) {
+			if ( $prefs['expanded_category_jail_key'] != $key ) {
 				$additional = array();
 
 				if (!empty($categories)) {
@@ -5379,7 +5379,7 @@ JS;
 		
 	    $array = explode($delimiters[0], $string);
 	    array_shift($delimiters);
-	    if($delimiters != NULL) {
+	    if ($delimiters != NULL) {
 	        foreach($array as $key => $val) {
 	             $array[$key] = $this->multi_explode($delimiters, $val);
 	        }

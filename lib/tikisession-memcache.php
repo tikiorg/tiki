@@ -64,7 +64,7 @@ class MemcacheSession
 	function read( $key ) {
 		$cache_key = $this->_buildCacheKey( $key );
 
-		if( $this->enabled ) {
+		if ( $this->enabled ) {
 			return $this->lib->get( $cache_key );
 		}
 	}
@@ -72,7 +72,7 @@ class MemcacheSession
 	function write( $key, $val ){
 		global $prefs; 
 
-		if( $this->enabled ) {
+		if ( $this->enabled ) {
 			$this->lib->set( $this->_buildCacheKey($key), $val, 60 * $prefs['session_lifetime'] );
 		}
 
@@ -80,7 +80,7 @@ class MemcacheSession
 	}
 
 	function destroy( $key ) {
-		if( $this->enabled ) {
+		if ( $this->enabled ) {
 			$this->lib->delete( $this->_buildCacheKey($key) );
 		}
 

@@ -5,5 +5,5 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-header ("location: ../../../index.php");
+header("location: ../../../index.php");
 die;

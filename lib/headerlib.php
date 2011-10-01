@@ -47,7 +47,7 @@ class HeaderLib
 
 		$cdn_pref = $https_mode ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
 	
-		if( !empty($cdn_pref) && 'http' != substr( $file, 0, 4 ) && $type !== 'dynamic' ) {
+		if ( !empty($cdn_pref) && 'http' != substr( $file, 0, 4 ) && $type !== 'dynamic' ) {
 			$file = $cdn_pref . $tikiroot . $file;
 		}
 
@@ -224,7 +224,7 @@ class HeaderLib
 
 		if (count($this->jsfiles)) {
 
-			if( $prefs['tiki_minify_javascript'] == 'y' ) {
+			if ( $prefs['tiki_minify_javascript'] == 'y' ) {
 
 				$jsfiles = $this->getMinifiedJs();
 
@@ -248,13 +248,13 @@ class HeaderLib
 		global $tikidomainslash;
 		
 		$dynamic = array();
-		if( isset( $this->jsfiles['dynamic'] ) ) {
+		if ( isset( $this->jsfiles['dynamic'] ) ) {
 			$dynamic = $this->jsfiles['dynamic'];
 			unset( $this->jsfiles['dynamic'] );
 		}
 
 		$external = array();
-		if( isset( $this->jsfiles['external'] ) ) {
+		if ( isset( $this->jsfiles['external'] ) ) {
 			$external = $this->jsfiles['external'];
 			unset( $this->jsfiles['external'] );
 		}
@@ -263,7 +263,7 @@ class HeaderLib
 		$file = 'temp/public/'.$tikidomainslash."minified_$hash.js";
 		$minified_files = array();
 
-		if( ! file_exists( $file ) ) {
+		if ( ! file_exists( $file ) ) {
 			require_once 'lib/minify/JSMin.php';
 			$minified = '/* ' . print_r( $this->jsfiles, true ) . ' */';
 			foreach( $this->jsfiles as $x => $files ) {
@@ -511,8 +511,8 @@ class HeaderLib
 
 		$back = '';
 
-		if( $prefs['tiki_minify_css'] == 'y' ) {
-			if( $prefs['tiki_minify_css_single_file'] == 'y' ) {
+		if ( $prefs['tiki_minify_css'] == 'y' ) {
+			if ( $prefs['tiki_minify_css_single_file'] == 'y' ) {
 				$files = $this->get_minified_css_single( $files );
 			} else {
 				$files = $this->get_minified_css( $files );
@@ -536,7 +536,7 @@ class HeaderLib
 			$hash = md5( $file );
 			$min = $target . "minified_$hash.css";
 
-			if( ! file_exists( $min ) ) {
+			if ( ! file_exists( $min ) ) {
 				file_put_contents( $min, $this->minify_css( $file ) );
 				chmod($min, 0644);
 			}
@@ -553,7 +553,7 @@ class HeaderLib
 		$target = 'temp/public/'.$tikidomainslash;
 		$file = $target . "minified_$hash.css";
 
-		if( ! file_exists( $file ) ) {
+		if ( ! file_exists( $file ) ) {
 			$minified = '';
 
 			foreach( $files as $f ) {

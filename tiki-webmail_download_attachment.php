@@ -40,7 +40,7 @@ $names = explode(';', $part->headers["content-disposition"]);
 $names = explode('=', $names[1]);
 $file = $names[1];
 
-header ("Content-type: $type");
+header("Content-type: $type");
 //header( "Content-Disposition: attachment; filename=$file" );
-header ("Content-Disposition: inline; filename=$file");
+header("Content-Disposition: inline; filename=$file");
 echo "$content";

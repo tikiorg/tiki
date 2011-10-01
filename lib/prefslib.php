@@ -27,7 +27,7 @@ class PreferencesLib
 		static $id = 0;
 		$data = $this->loadData( $name );
 
-		if( isset( $data[$name] ) ) {
+		if ( isset( $data[$name] ) ) {
 			$defaults = array(
 				'type' => '',
 				'helpurl' => '',
@@ -56,17 +56,17 @@ class PreferencesLib
 				$defaults['size'] = 10;
 			}
 
-			if( $source == null ) {
+			if ( $source == null ) {
 				$source = $prefs;
 			}
 		
 			$value = $source[$name];
-			if( !empty($value) && is_string( $value ) && ($value{0} == ':' || (strlen($value) > 1 && $value{1} == ':')) && false !== $unserialized = unserialize( $value ) ) {
+			if ( !empty($value) && is_string( $value ) && ($value{0} == ':' || (strlen($value) > 1 && $value{1} == ':')) && false !== $unserialized = unserialize( $value ) ) {
 				$value = $unserialized;
 			}
 
 			$info['preference'] = $name;
-			if( isset( $info['serialize'] ) ) {
+			if ( isset( $info['serialize'] ) ) {
 				$fnc = $info['serialize'];
 				$info['value'] = $fnc( $value );
 			} else {
@@ -85,15 +85,15 @@ class PreferencesLib
 			$info['raw'] = $source[$name];
 			$info['id'] = 'pref-' . ++$id;
 
-			if( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
-				if( preg_match('/^https?:/i', $info['help']) ) {
+			if ( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
+				if ( preg_match('/^https?:/i', $info['help']) ) {
 					$info['helpurl'] = $info['help'];
 				} else {
 					$info['helpurl'] = $prefs['helpurl'] . $info['help'];
 				}
 			}
 
-			if( $deps && isset( $info['dependencies'] ) ) {
+			if ( $deps && isset( $info['dependencies'] ) ) {
 				$info['dependencies'] = $this->getDependencies( $info['dependencies'] );
 			}
 
@@ -127,17 +127,17 @@ class PreferencesLib
 				$info['pages'] = $this->getPreferenceLocations( $name );
 			}
 
-			if( isset( $systemConfiguration->preference->$name ) ) {
+			if ( isset( $systemConfiguration->preference->$name ) ) {
 				$info['available'] = false;
 				$info['notes'][] = tr('Configuration forced by host.');
 			}
 
-			if( $this->preferenceDisabled( $info['tags'] ) ) {
+			if ( $this->preferenceDisabled( $info['tags'] ) ) {
 				$info['available'] = false;
 				$info['notes'][] = tr('Disabled by host.');
 			}
 
-			if( ! $info['available'] ) {
+			if ( ! $info['available'] ) {
 				$info['tags'][] = 'unavailable';
 			}
 
@@ -270,7 +270,7 @@ class PreferencesLib
 		$installed = get_loaded_extensions();
 
 		foreach( $extensions as $ext ) {
-			if( ! in_array( $ext, $installed ) ) {
+			if ( ! in_array( $ext, $installed ) ) {
 				return false;
 			}
 		}
@@ -306,7 +306,7 @@ class PreferencesLib
 	function applyChanges( $handled, $data, $limitation = null ) {
 		global $tikilib, $user_overrider_prefs;
 
-		if( is_array( $limitation ) ) {
+		if ( is_array( $limitation ) ) {
 			$handled = array_intersect( $handled, $limitation );
 		}
 
@@ -314,7 +314,7 @@ class PreferencesLib
 
 		$changes = array();
 		foreach( $handled as $pref ) {
-			if( in_array( $pref, $resets ) ) {
+			if ( in_array( $pref, $resets ) ) {
 				$defaults = get_default_prefs();
 				$value = $defaults[$pref];
 			} else {
@@ -322,7 +322,7 @@ class PreferencesLib
 			}
 			$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
 
-			if( ($old = $tikilib->get_preference( $realPref ) ) != $value ) {
+			if ( ($old = $tikilib->get_preference( $realPref ) ) != $value ) {
 				if ($tikilib->set_preference( $pref, $value )) {
 					$changes[$pref] = array('new'=> $value, 'old' => $old);
 				}
@@ -333,7 +333,7 @@ class PreferencesLib
 	}
 
 	function formatPreference( $pref, $data ) {
-		if( false !== $info = $this->getPreference( $pref ) ) {
+		if ( false !== $info = $this->getPreference( $pref ) ) {
 			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
 			$value = $this->$function( $info, $data );
 			return $value;
@@ -348,15 +348,15 @@ class PreferencesLib
 		foreach( $preferences as $name ) {
 			$info = $this->getPreference( $name );
 
-			if( $environment == 'perspective' && isset( $info['perspective'] ) && $info['perspective'] === false ) {
+			if ( $environment == 'perspective' && isset( $info['perspective'] ) && $info['perspective'] === false ) {
 				continue;
 			}
 			
-			if( isset( $info['filter'] ) ) {
+			if ( isset( $info['filter'] ) ) {
 				$filter->replaceFilter( $name, $info['filter'] );
 			}
 
-			if( isset( $info['separator'] ) ) {
+			if ( isset( $info['separator'] ) ) {
 				$out[ $name ] = $filter->asArray( $name, $info['separator'] );
 			} else {
 				$out[ $name ] = $filter[$name];
@@ -368,7 +368,7 @@ class PreferencesLib
 
 	function getExtraSortColumns() {
 		global $prefs;
-		if( isset($prefs['rating_advanced']) && $prefs['rating_advanced'] == 'y' ) {
+		if ( isset($prefs['rating_advanced']) && $prefs['rating_advanced'] == 'y' ) {
 			return TikiDb::get()->fetchMap( "SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs" );
 		} else {
 			return array();
@@ -377,7 +377,7 @@ class PreferencesLib
 
 	private function loadData( $name ) {
 		if (in_array( $name , $this->system_modified)) return null;
-		if( false !== $pos = strpos( $name, '_' ) ) {
+		if ( false !== $pos = strpos( $name, '_' ) ) {
 			$file = substr( $name, 0, $pos );
 		} else {
 			$file = 'global';
@@ -387,12 +387,12 @@ class PreferencesLib
 	}
 
 	private function getFileData( $file, $partial = false ) {
-		if( ! isset( $this->files[$file] ) ) {
+		if ( ! isset( $this->files[$file] ) ) {
             $inc_file = "lib/prefs/{$file}.php";
             if (file_exists( $inc_file )) {
                 require_once $inc_file;
 				$function = "prefs_{$file}_list";
-				if( function_exists( $function ) ) {
+				if ( function_exists( $function ) ) {
 					$this->files[$file] = $function($partial);
 				} else {
 					$this->files[$file] = array();
@@ -414,7 +414,7 @@ class PreferencesLib
 
 		foreach( (array) $dependencies as $dep ) {
 			$info = $this->getPreference( $dep, false );
-			if( $info ) {
+			if ( $info ) {
 				$out[] = array(
 					'name' => $dep,
 					'label' => $info['name'],
@@ -432,12 +432,12 @@ class PreferencesLib
 
 	private function getIndex() {
 		global $prefs;
-		if( $prefs['language'] == 'en' ) {
+		if ( $prefs['language'] == 'en' ) {
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 				new StandardAnalyzer_Analyzer_Standard_English() );
 		}
 
-		if( $this->indexNeedsRebuilding() ) {
+		if ( $this->indexNeedsRebuilding() ) {
 			$index = Zend_Search_Lucene::create( $this->file );
 
 			foreach ($this->getAvailableFiles() as $file) {
@@ -462,7 +462,7 @@ class PreferencesLib
 	}
 
 	public function getPreferenceLocations( $name ) {
-		if( ! $this->usageArray ) {
+		if ( ! $this->usageArray ) {
 			$this->loadPreferenceLocations();
 		}
 
@@ -530,7 +530,7 @@ class PreferencesLib
 			$doc->addField( Zend_Search_Lucene_Field::Text('keywords', $info['keywords']) );
 		}
 
-		if( isset( $info['options'] ) ) {
+		if ( isset( $info['options'] ) ) {
 			$doc->addField( Zend_Search_Lucene_Field::Text('options', implode( ' ', $info['options'] ) ) );
 		}
 
@@ -548,14 +548,14 @@ class PreferencesLib
 	private function _getTextValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( isset($info['separator']) && is_string( $data[$name] )) {
+		if ( isset($info['separator']) && is_string( $data[$name] )) {
 			$value = explode( $info['separator'], $data[$name] );
 		} else {
 			$value = $data[$name];
 		}
 
-		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
-			if( is_array( $value ) ) {
+		if ( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+			if ( is_array( $value ) ) {
 				return array_map( array( $filter, 'filter' ), $value );
 			} else {
 				return $filter->filter( $value );
@@ -568,7 +568,7 @@ class PreferencesLib
 	private function _getPasswordValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+		if ( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
 			return $filter->filter( $data[$name] );
 		} else {
 			return $data[$name];
@@ -578,13 +578,13 @@ class PreferencesLib
 	private function _getTextareaValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+		if ( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
 			$value = $filter->filter( $data[$name] );
 		} else {
 			$value = $data[$name];
 		}
 
-		if( isset( $info['unserialize'] ) ) {
+		if ( isset( $info['unserialize'] ) ) {
 			$fnc = $info['unserialize'];
 
 			return $fnc( $value );
@@ -599,7 +599,7 @@ class PreferencesLib
 
 		$options = $info['options'];
 
-		if( isset( $options[$value] ) ) {
+		if ( isset( $options[$value] ) ) {
 			return $value;
 		} else {
 			return reset( array_keys( $options ) );

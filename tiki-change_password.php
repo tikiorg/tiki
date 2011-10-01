@@ -79,7 +79,7 @@ if (isset($_REQUEST["change"])) {
 	// Login the user and display Home page
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	$logslib->add_log('login', 'logged from change_password', $_REQUEST['user'], '', '', $tikilib->now);
-	header ('Location: '.$prefs['tikiIndex']);
+	header('Location: '.$prefs['tikiIndex']);
 }
 ask_ticket('change-password');
 

@@ -67,7 +67,7 @@ function wikiplugin_ftp($data, $params) {
 		$content = file_get_contents($local);
 		$type = filetype($local);
 		unlink($local);
-		header ("Content-type: $type");
+		header("Content-type: $type");
 		header("Content-Disposition: attachment; filename=\"$data\"");
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

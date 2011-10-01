@@ -62,7 +62,7 @@ class reportsLib extends TikiLib
 	private function makeTime($time) {
 		if (date("d.m.Y", $time)==date("d.m.Y", time()-86400)) {
 			return tr("Yesterday %0", date("H:i", $time));
-		} elseif(date("d.m.Y", $time)==date("d.m.Y", time())) {
+		} elseif (date("d.m.Y", $time)==date("d.m.Y", time())) {
 			return tr("Today %0", date("H:i", $time));
 		} else {
 			return date("d.m.", $time)." ".date("H:i", $time);
@@ -122,7 +122,7 @@ class reportsLib extends TikiLib
 					if ($morechanges > 0) {
 						$body .= "   ".tra("and")." ".$morechanges." ".tra("more changes of the same type...")."<br>";
 						$morechanges = 0;
-						if($report_preferences['type']=='plain')
+						if ($report_preferences['type']=='plain')
 							$body .= "\r\n";
 					}
 	

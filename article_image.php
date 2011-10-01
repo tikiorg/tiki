@@ -84,7 +84,7 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 	}
 	$type = $storedData["image_type"];
 	$data =& $storedData["image_data"];
-	header ("Content-type: ".$type);
+	header("Content-type: ".$type);
 	if (!empty($_REQUEST['width'])) {
 		require_once('lib/images/images.php');
 		$image = new Image($data);
@@ -102,6 +102,6 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 }
 
 $size = getimagesize($cachefile);
-header ("Content-type: ".$size['mime']);
+header("Content-type: ".$size['mime']);
 readfile($cachefile);
 

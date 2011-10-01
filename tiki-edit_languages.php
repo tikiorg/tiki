@@ -162,9 +162,9 @@ if (isset($_REQUEST["exp_language"])) {
 if (isset($_REQUEST['downloadFile'])) {
 	check_ticket('edit-languages');
 	$data = $export_language->createCustomFile();
-	header ("Content-type: application/unknown");
-	header ("Content-Disposition: inline; filename=language.php");
-	header ("Content-encoding: UTF-8");
+	header("Content-type: application/unknown");
+	header("Content-Disposition: inline; filename=language.php");
+	header("Content-encoding: UTF-8");
 	echo $data;
 	exit (0);
 }

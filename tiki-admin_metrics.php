@@ -272,7 +272,7 @@ if (isset($_REQUEST["assign"])) {
 	$smarty->assign('assign_metric', $_REQUEST["assign_metric"]);
 	$smarty->assign('assign_tab', $_REQUEST["assign_tab"]);
 	$metricslib->createUpdateMetricAssigned($assigned_id, $_REQUEST["assign_metric"], $_REQUEST["assign_tab"]);
-	header ("location: tiki-admin_metrics.php");
+	header("location: tiki-admin_metrics.php");
 }
 
 $metrics_list = $metricslib->getAllMetrics();

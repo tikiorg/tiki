@@ -486,8 +486,8 @@ class ZipWriter
 		$this->offset = 0; // Current file position.
 
 		$zipname = addslashes($zipname);
-		header ("Content-Type: application/zip; name=\"$zipname\"");
-		header ("Content-Disposition: attachment; filename=\"$zipname\"");
+		header("Content-Type: application/zip; name=\"$zipname\"");
+		header("Content-Disposition: attachment; filename=\"$zipname\"");
 	//header( "Content-Disposition: inline; filename=$zipname" );
 	}
 

@@ -31,13 +31,13 @@ $file = &$info["filename"];
 $content = &$info["data"];
 
 session_write_close();
-header ("Content-type: $type");
-header ("Content-Disposition: inline; filename=\"$file\"");
+header("Content-type: $type");
+header("Content-Disposition: inline; filename=\"$file\"");
 
 // Added Damian March04 request of Akira123
-header ("Expires: 0");
-header ("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header ("Pragma: Public");
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Pragma: Public");
 
 if ($info["dir"]) {
 	readfile ($info["dir"] . $info["path"]);

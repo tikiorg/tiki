@@ -18,5 +18,5 @@ include_once ('lib/commcenter/commlib.php');
 $data = $commlib->get_received_article($_REQUEST["id"]);
 $type = $data["image_type"];
 $data = $data["image_data"];
-header ("Content-type: $type");
+header("Content-type: $type");
 echo $data;

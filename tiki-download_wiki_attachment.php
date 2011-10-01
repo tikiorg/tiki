@@ -38,24 +38,24 @@ $content = &$info["data"];
 session_write_close();
 //print("File:$file<br />");
 //die;
-header ("Content-type: $type");
+header("Content-type: $type");
 
-// This used to say "header ("Content-Disposition: attachment; filename=\"$file\"");"
+// This used to say "header("Content-Disposition: attachment; filename=\"$file\"");"
 // which made everything try to download instead of the browser picking what to do.
 // If people want the old behaviour, the right thing is probably to add an argument to 
 // tiki-download_wiki_attachment.php, such as "&download", and then code in the attachment
 // plugin, but the old behaviour really seems like The Wrong Thing to me.  -rlpowell
 // --> added a choice for compatibility issue
 if (isset($_REQUEST['download']))
-	header ("Content-Disposition: attachment; filename=\"$file\"");
+	header("Content-Disposition: attachment; filename=\"$file\"");
 else
-	header ("Content-Disposition: filename=\"$file\"");
+	header("Content-Disposition: filename=\"$file\"");
 
 // No reason to make everything uncacheable
-header ("Expires: ".date("D, d M Y H:i:s T", time()+86400));
+header("Expires: ".date("D, d M Y H:i:s T", time()+86400));
 // Added March04 Damian, Akira123 reported test
-header ("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header ("Pragma: public");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Pragma: public");
 
 if ($info["path"]) {
 	header("Content-Length: ". filesize( $prefs['w_use_dir'].$info["path"] ) );

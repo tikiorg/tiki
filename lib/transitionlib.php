@@ -40,7 +40,7 @@ class TransitionLib
 
 		$out = array();
 		foreach( $transitions as $tr ) {
-			if( $tr['from'] == $state ) {
+			if ( $tr['from'] == $state ) {
 				$out[ $tr['transitionId'] ] = $tr['name'];
 			}
 		}
@@ -50,13 +50,13 @@ class TransitionLib
 
 	function triggerTransition( $transitionId, $object, $type = null ) {
 		// Make sure the transition exists
-		if( ! $transition = $this->getTransition( $transitionId ) ) {
+		if ( ! $transition = $this->getTransition( $transitionId ) ) {
 			return false;
 		}
 
 		// Make sure the user can use it
 		$perms = Perms::get( array( 'type' => 'transition', 'object' => $transitionId ) );
-		if( ! $perms->trigger_transition ) {
+		if ( ! $perms->trigger_transition ) {
 			return false;
 		}
 
@@ -70,12 +70,12 @@ class TransitionLib
 			call_user_func_array( array( $tr, 'addGuard' ), $guard );
 		}
 
-		if( ! $tr->isReady() ) {
+		if ( ! $tr->isReady() ) {
 			return false;
 		}
 
 		$this->addState( $transition['to'], $object, $type );
-		if( ! $transition['preserve'] ) {
+		if ( ! $transition['preserve'] ) {
 			$this->removeState( $transition['from'], $object, $type );
 		}
 
@@ -85,7 +85,7 @@ class TransitionLib
 	function listTransitions( $states ) {
 		$db = TikiDb::get();
 
-		if( empty( $states ) ) {
+		if ( empty( $states ) ) {
 			return array();
 		}
 
@@ -128,7 +128,7 @@ class TransitionLib
 	private function getTransitionsFromStates( $states ) {
 		$db = TikiDb::get();
 
-		if( empty( $states ) ) {
+		if ( empty( $states ) ) {
 			return array();
 		}
 
@@ -152,7 +152,7 @@ class TransitionLib
 
 	private function expandGuards( $transition ) {
 		$transition['guards'] = json_decode( $transition['guards'], true );
-		if( ! $transition['guards'] ) {
+		if ( ! $transition['guards'] ) {
 			$transition['guards'] = array();
 		}
 
@@ -193,7 +193,7 @@ class TransitionLib
 			return;
 		case 'category':
 			global $categlib; require_once 'lib/categories/categlib.php';
-			if( $catobj = $categlib->is_categorized( $type, $object ) ) {
+			if ( $catobj = $categlib->is_categorized( $type, $object ) ) {
 				$categlib->uncategorize( $catobj, $state );
 			}
 			return;

@@ -17,7 +17,7 @@ if (!isset($_REQUEST["page"])) {
 	$exportlib->MakeWikiZip();
 	$dump = 'dump';
 	if (!empty($tikidomain)) $dump .= "/$tikidomain";
-	header ("location: $dump/export.tar");
+	header("location: $dump/export.tar");
 } else {
 	if (isset($_REQUEST["all"]))
 		$all = 0;
@@ -34,7 +34,7 @@ if (!isset($_REQUEST["page"])) {
 	$data = $exportlib->export_wiki_page($_REQUEST["page"], $all, $latest);
 
 	$page = $_REQUEST["page"];
-	header ("Content-type: application/unknown");
-	header ("Content-Disposition: inline; filename=$page");
+	header("Content-type: application/unknown");
+	header("Content-Disposition: inline; filename=$page");
 	echo $data;
 }

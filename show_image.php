@@ -74,7 +74,7 @@ if ($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
 # Client-Side image cache (based on Etag Headers)
 # Etag value is based on the md5 hash of the image. It should change everytime the image changes. See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
 
-#if the client sends the HTTP_IF_NONE_MATCH header (because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header (304)
+#if the client sends the HTTP_IF_NONE_MATCH header(because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header(304)
   if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $imagegallib->etag){
            header("HTTP/1.0 304 Not Modified");
 	   exit();
@@ -99,8 +99,8 @@ $type = $imagegallib->filetype;
 // close the session for speedup
 session_write_close();
 
-header ("Content-type: $type");
-header ("Etag: ".$imagegallib->etag);
+header("Content-type: $type");
+header("Etag: ".$imagegallib->etag);
 
 //line commented out by teedog
 //I noticed that the browser sometimes sends erroneous "Range:" headers when calling show_image.php
@@ -108,9 +108,9 @@ header ("Etag: ".$imagegallib->etag);
 //makes this problem go away.  From what I found through Google, "Content-length:" is mostly optional
 //so commenting it out should not cause problems.
 // note that the problem was not so mysterious : 912614
-// header ("Content-length: ".$imagegallib->filesize);
+// header("Content-length: ".$imagegallib->filesize);
 
-header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
+header("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
 //if ($data["path"]) {
 //  readfile($prefs['gal_use_dir'].$data["path"].$ter);
 //} else {

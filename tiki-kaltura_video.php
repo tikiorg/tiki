@@ -80,7 +80,7 @@ if (!empty($videoId) && isset($_REQUEST['action'])){
 		if ($kentryType == "mix"){
 			$knewmixEntry = $kclient->mixing->cloneAction($videoId[0]);
 		}
-		header ('Location: tiki-list_kaltura_entries.php');
+		header('Location: tiki-list_kaltura_entries.php');
 		die;
 		
 		break;	
@@ -116,14 +116,14 @@ if (!empty($videoId) && isset($_REQUEST['action'])){
 				$kclient->mixing->delete($vi);
 			}					
 		}	
-		header ('Location: tiki-list_kaltura_entries.php');
+		header('Location: tiki-list_kaltura_entries.php');
 		die;
 		break;
 	case 'download':
 		$access->check_permission(array('tiki_p_download_videos'));
 		$kres = $kclient->mixing->requestFlattening($videoId[0],'flv');
 
-		header ('Location: tiki-kaltura_video.php?videoId='.$videoId[0]);
+		header('Location: tiki-kaltura_video.php?videoId='.$videoId[0]);
 		die;
 		break;
 	case 'edit':
@@ -159,7 +159,7 @@ if (!empty($videoId) && isset($_REQUEST['action'])){
 			}
 		}
 		if ($_REQUEST['update']){
-			header ('Location: tiki-kaltura_video.php?'.$kentryType.'Id='.$videoId[0]);
+			header('Location: tiki-kaltura_video.php?'.$kentryType.'Id='.$videoId[0]);
 			die;
 		}
 		$smarty->assign_by_ref('videoId',$videoId[0]);

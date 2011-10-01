@@ -5,4 +5,4 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-header ('location: ../../tiki-index.php');
+header('location: ../../tiki-index.php');

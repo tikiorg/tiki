@@ -69,7 +69,7 @@ class SocialNetworksLib extends LogsLib
 	function getTwitterRequestToken() {
 		global $prefs;
 
-		if(!$this->twitterRegistered()) {
+		if (!$this->twitterRegistered()) {
 			return false;
 		}
 
@@ -97,7 +97,7 @@ class SocialNetworksLib extends LogsLib
 	function getTwitterAccessToken($user) {
 		global $prefs;
 
-		if($prefs['socialnetworks_twitter_consumer_key']=='' or $prefs['socialnetworks_twitter_consumer_secret']=='' or !isset($_SESSION['TWITTER_REQUEST_TOKEN'])) {
+		if ($prefs['socialnetworks_twitter_consumer_key']=='' or $prefs['socialnetworks_twitter_consumer_secret']=='' or !isset($_SESSION['TWITTER_REQUEST_TOKEN'])) {
 			return false;
 		}
 
@@ -126,7 +126,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function getFacebookRequestToken() {
 		global $prefs;
-		if(!$this->facebookRegistered()) {
+		if (!$this->facebookRegistered()) {
 			return false;
 		}
 		$scopes = array();
@@ -166,7 +166,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function getFacebookAccessToken() {
 		global $prefs, $user, $userlib;
-		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
+		if ($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
 			return false;
 		}
 
@@ -195,7 +195,7 @@ class SocialNetworksLib extends LogsLib
         $ret=preg_split('/(\r\n\r\n|\r\r|\n\n)/',$ret,2);
 		$ret=$ret[1];
 
-		if(substr($ret,0,13)=='access_token=') {
+		if (substr($ret,0,13)=='access_token=') {
 			$access_token = substr($ret,13);
 			if ($endoftoken = strpos($access_token,'&')) {
 				// Returned string may have other var like expiry
@@ -259,7 +259,7 @@ class SocialNetworksLib extends LogsLib
 			$this->add_log('tweet','user not registered with twitter');
 			return -1; 
 		}
-		if($cutMessage) {
+		if ($cutMessage) {
 			$message=substr($message,0,140);
 		} else {
 			if (strlen($message)>140) {
@@ -333,7 +333,7 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function facebookGraph($user, $action, $params, $addtoken=true, $method = 'POST') {
 		global $prefs;
-		if(!$this->facebookRegistered()) {
+		if (!$this->facebookRegistered()) {
 			$this->add_log('facebookGraph','application not set up');
 			return false;
 		}
@@ -411,7 +411,7 @@ class SocialNetworksLib extends LogsLib
 		}
 		$ret=$this->facebookGraph($user, 'me/feed/', $params);
 		$result=json_decode($ret);
-		if(isset($result->id)) {
+		if (isset($result->id)) {
 			return $result->id;
 		} else {
 			return false;

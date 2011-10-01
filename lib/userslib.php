@@ -165,7 +165,7 @@ class UsersLib extends TikiLib
 	function object_has_one_permission($objectId, $objectType) {
 		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
-		if(!isset($this->userobjectperm_cache) || !is_array($this->userobjectperm_cache)
+		if (!isset($this->userobjectperm_cache) || !is_array($this->userobjectperm_cache)
 			|| !isset($this->userobjectperm_cache[$objectId])) {
 			// i think, we really dont need the "and `objectType`=?" because the objectId should be unique due to the md5()
 			$query = "select count(*) from `users_objectpermissions` where `objectId`=? and `objectType`=?";
@@ -523,7 +523,7 @@ class UsersLib extends TikiLib
 			$validaffiliarray = preg_split('/,/',strtoupper($prefs['shib_affiliation']));
 			$validafil=false;
 			foreach($shibaffiliarray as $affil){
-				if(in_array($affil, $validaffiliarray)){
+				if (in_array($affil, $validaffiliarray)){
 					$validafil=true;
 				}
 			}
@@ -538,7 +538,7 @@ class UsersLib extends TikiLib
 				// see if we can create a new account
 				if ($shib_create_tiki) {
 
-					if(!(strlen($user) > 0 AND strlen($shibmail) > 0 AND strlen($shibaffiliation) > 0))
+					if (!(strlen($user) > 0 AND strlen($shibmail) > 0 AND strlen($shibaffiliation) > 0))
 					{
 						$errmsg = "User registration error: You do not have the required shibboleth attributes (";
 
@@ -563,7 +563,7 @@ class UsersLib extends TikiLib
 					else
 					{
 
-						if($validafil)
+						if ($validafil)
 						{
 
 							// Create the user
@@ -619,7 +619,7 @@ class UsersLib extends TikiLib
 		}
 
 		// next see if we need to check LDAP
-		else if($auth_ldap){
+		else if ($auth_ldap){
 			// check the user account
 			$result = $this->validate_user_ldap($user, $pass);
 
@@ -753,7 +753,7 @@ class UsersLib extends TikiLib
 			}
 			// if the user was found in Tiki, but not found in phpBB, we should probably disable the user
 			elseif ($userTikiPresent && !$userPhpbb) {
-				if($phpbb_disable_tikionly) {
+				if ($phpbb_disable_tikionly) {
 					// would probably be better do flag the user as not active? How do you do that?
 					// and it also would be better to check if the user is active first.. :)
 					$this->invalidate_account($user);
@@ -976,13 +976,13 @@ class UsersLib extends TikiLib
 		case 'LDAP_INVALID_SYNTAX':
 		case 'LDAP_NO_SUCH_OBJECT':
 		case 'LDAP_INVALID_DN_SYNTAX':
-			if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
+			if ($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
 			return USER_NOT_FOUND;
 		case 'LDAP_SUCCESS':
-			if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Bind successful.');
+			if ($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Bind successful.');
 			return USER_VALID;
 		default:
-			if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
+			if ($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
 			return SERVER_ERROR;
 		}
 
@@ -1031,7 +1031,7 @@ class UsersLib extends TikiLib
 		}
 
 		require_once('auth/ldap.php');
-		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing all users with ldap');
+		if ($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing all users with ldap');
 		$bind_type = 'default';
 
 		switch ($prefs['auth_ldap_type']) {
@@ -1117,7 +1117,7 @@ class UsersLib extends TikiLib
 		$ret=true;
 		$this->init_ldap($user, $pass);
 
-		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user with ldap');
+		if ($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user with ldap');
 
 		// sync user information
 		if ($prefs['auth_method'] == 'ldap') {
@@ -1168,7 +1168,7 @@ class UsersLib extends TikiLib
 		$this->ldap->setOption('username', $user);
 		$this->ldap->setOption('password', $pass);
 
-		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing group with ldap');
+		if ($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing group with ldap');
 		$userattributes=$this->ldap->get_user_attributes(true);
 
 		if ($prefs['syncGroupsWithDirectory'] == 'y' && $userattributes[$prefs['auth_ldap_group_corr_userattr']] != null) {
@@ -1253,17 +1253,17 @@ class UsersLib extends TikiLib
 		foreach($ldapgroups as $group) {
 			$gname=$group[$prefs['auth_ldap_groupattr']];
 			$ldapgroups_simple[]=$gname; // needed later
-			if($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
+			if ($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
 				//check if we need to sync group information
-				if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+				if (isset($group[$prefs['auth_ldap_groupdescattr']])) {
 					$ginfo=$this->get_group_info($gname);
-					if($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
+					if ($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
 						$this->set_group_description($gname,$group[$prefs['auth_ldap_groupdescattr']]);
 					}
 				}
 
-			} else if(!$this->group_exists($gname)){ // create group
-				if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+			} else if (!$this->group_exists($gname)){ // create group
+				if (isset($group[$prefs['auth_ldap_groupdescattr']])) {
 					$gdesc=$group[$prefs['auth_ldap_groupdescattr']];
 				} else {
 					$gdesc='';
@@ -1273,7 +1273,7 @@ class UsersLib extends TikiLib
 			}
 
 			// add user
-			if(!in_array($gname,$tikigroups)) {
+			if (!in_array($gname,$tikigroups)) {
 				$logslib->add_log('ldap','Adding user '.$user.' to external group '.$gname);
 				$this->assign_user_to_group($user,$gname);
 			}
@@ -1282,7 +1282,7 @@ class UsersLib extends TikiLib
 		// now clean up group membership if user has been unassigned from a group in ldap
 		$extgroups=$this->get_user_external_groups($user);
 		foreach($extgroups as $eg) {
-			if(!in_array($eg,$ldapgroups_simple)) {
+			if (!in_array($eg,$ldapgroups_simple)) {
 				$logslib->add_log('ldap','Removing user '.$user.' from external group '.$eg);
 				$this->remove_user_from_group($user, $eg);
 			}
@@ -1311,7 +1311,7 @@ class UsersLib extends TikiLib
 
 	function group_is_external($group) {
 		$gi=$this->get_group_info($group);
-		if($gi['isExternal']=='y') {
+		if ($gi['isExternal']=='y') {
 			return true;
 		}
 		return false;
@@ -1493,7 +1493,7 @@ class UsersLib extends TikiLib
 
 		$mid = '';
 		$bindvars = array();
-		if(!empty($group)) {
+		if (!empty($group)) {
 			if (!is_array($group)) {
 				$group = array($group);
 			}
@@ -1576,7 +1576,7 @@ class UsersLib extends TikiLib
 		// Return an array of users indicating name, email, last changed pages, versions, lastLogin
 
 		//TODO : recurse included groups
-		if(!empty($group)) {
+		if (!empty($group)) {
 			if (!is_array($group)) {
 				$group = array($group);
 			}
@@ -1585,7 +1585,7 @@ class UsersLib extends TikiLib
 			$bindvars = $group;
 			$mbindvars = $bindvars;
 		}
-		if( !empty($email) ) {
+		if ( !empty($email) ) {
 			$mid.= $mid == '' ? ' where' : ' and';
 			$mid.= ' uu.`email` like ?';
 			$mmid = $mid;
@@ -1850,9 +1850,9 @@ class UsersLib extends TikiLib
 		$query = "select `groupName` from `users_groups`";
 		$result = $this->query($query);
 		while($res = $result->fetchRow()) {
-			if($res['groupName'] != $group) {
+			if ($res['groupName'] != $group) {
 				$includedGroups = $this->get_included_groups($res['groupName']);
-				if(!in_array($group, $includedGroups)) {
+				if (!in_array($group, $includedGroups)) {
 					$list[] = $res['groupName'];
 				}
 			}
@@ -1868,21 +1868,21 @@ class UsersLib extends TikiLib
 		$userId = $this->getOne("select `userId` from `users_users` where `login` = ?", array($user));
 
 		$groupTracker = $this->get_tracker_usergroup( $user );
-		if( $groupTracker && $groupTracker['usersTrackerId'] ) {
+		if ( $groupTracker && $groupTracker['usersTrackerId'] ) {
 			$trklib = TikiLib::lib('trk');
 
 			$itemId = $trklib->get_item_id( $groupTracker['usersTrackerId'], $groupTracker['usersFieldId'], $user );
-			if( $itemId ) {
+			if ( $itemId ) {
 				$trklib->remove_tracker_item( $itemId );
 			}
 		}
 
 		$tracker = $this->get_usertracker( $userId );
-		if( $tracker && $tracker['usersTrackerId'] ) {
+		if ( $tracker && $tracker['usersTrackerId'] ) {
 			$trklib = TikiLib::lib('trk');
 
 			$itemId = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
-			if( $itemId ) {
+			if ( $itemId ) {
 				$trklib->remove_tracker_item( $itemId );
 			}
 		}
@@ -2002,7 +2002,7 @@ class UsersLib extends TikiLib
 
 				$u = ($res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 
-				if($value=array_search($from, $u))
+				if ($value=array_search($from, $u))
 				{
 					$u[$value] = $to ;
 					$u = serialize($u);
@@ -2215,7 +2215,7 @@ class UsersLib extends TikiLib
 		elseif ( $field != 'login' ) return false;
 
 		$result = $this->query("select * from `users_users` where `$field`=?", array($user));
-		if( $res = $result->fetchRow() ) {
+		if ( $res = $result->fetchRow() ) {
 			$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($res['login']) : $this->get_user_groups($res['login']);
 			$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
 			if ( $prefs['login_is_email'] == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
@@ -2441,7 +2441,7 @@ class UsersLib extends TikiLib
 
 
 	function get_usertracker($uid) {
-		if( $utr = $this->get_userid_info($uid) ) {
+		if ( $utr = $this->get_userid_info($uid) ) {
 			$utr["usersTrackerId"] = '';
 			foreach ($utr['groups'] as $gr) {
 				$utrid = $this->get_usertrackerid($gr);
@@ -5484,7 +5484,7 @@ class UsersLib extends TikiLib
 
 		$this->assign_user_to_group($user, 'Registered');
 
-		if( $prefs['eponymousGroups'] == 'y' )
+		if ( $prefs['eponymousGroups'] == 'y' )
 		{
 			// Create a group just for this user, for permissions
 			// assignment.
@@ -5944,7 +5944,7 @@ class UsersLib extends TikiLib
 	}
 
 	function related_users($user, $max=10, $type='wiki') {
-		if(!isset($user) || empty($user)) {
+		if (!isset($user) || empty($user)) {
 			return array();
 		}
 
@@ -6394,7 +6394,7 @@ class UsersLib extends TikiLib
 		global $tikilib;
 		$this->update_expired_groups();
 
-		if( ! $this->user_is_in_group( $user, $group ) ) {
+		if ( ! $this->user_is_in_group( $user, $group ) ) {
 			$this->assign_user_to_group( $user, $group );
 		}
 
@@ -6561,7 +6561,7 @@ class UsersLib extends TikiLib
 		global $tikilib;
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
-		if( $tracker && $tracker['usersTrackerId'] ) {
+		if ( $tracker && $tracker['usersTrackerId'] ) {
 			$trklib = TikiLib::lib('trk');
 			$categlib = TikiLib::lib('categ');
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
@@ -6582,7 +6582,7 @@ class UsersLib extends TikiLib
 		global $tikilib;
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
-		if( $tracker && $tracker['usersTrackerId'] ) {
+		if ( $tracker && $tracker['usersTrackerId'] ) {
 			$trklib = TikiLib::lib('trk');
 			$categlib = TikiLib::lib('categ');
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );

@@ -17,4 +17,4 @@ $access->check_feature('feature_banners');
 
 $bannerlib->add_click($_REQUEST["id"]);
 $url = urldecode($_REQUEST["url"]);
-header ("location: $url");
+header("location: $url");

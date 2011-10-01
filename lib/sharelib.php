@@ -31,7 +31,7 @@ class Tiki_ShareGroup
 
 	function addCategoryPermission( $source, $permission ) // {{{
 	{
-		if( ! array_key_exists( $permission, $this->categPerm ) )
+		if ( ! array_key_exists( $permission, $this->categPerm ) )
 			$this->categPerm[$permission] = array();
 
 		$this->categPerm[$permission][] = $source;
@@ -45,7 +45,7 @@ class Tiki_ShareGroup
 
 	function getSourceCategory( $permission ) // {{{
 	{
-		if( array_key_exists( $permission, $this->categPerm ) )
+		if ( array_key_exists( $permission, $this->categPerm ) )
 			return implode( ', ', $this->categPerm[$permission] );
 
 		return '';
@@ -55,9 +55,9 @@ class Tiki_ShareGroup
 	{
 		$ret = 'object';
 
-		if( array_key_exists( $permission, $this->categPerm ) )
+		if ( array_key_exists( $permission, $this->categPerm ) )
 			$ret = 'category';
-		if( array_key_exists( $permission, $this->groupPerm ) )
+		if ( array_key_exists( $permission, $this->groupPerm ) )
 			$ret = 'group';
 
 		return $ret;
@@ -76,7 +76,7 @@ class Tiki_ShareGroup
 	function setObjectPermissions( $permissions ) // {{{
 	{
 		// Make sure view is present
-		if( in_array( 'tiki_p_edit', $permissions ) && ! in_array( 'tiki_p_view', $permissions ) )
+		if ( in_array( 'tiki_p_edit', $permissions ) && ! in_array( 'tiki_p_view', $permissions ) )
 			$permissions[] = 'tiki_p_view';
 
 		// Remove redundant permissions
@@ -116,7 +116,7 @@ class Tiki_ShareObject
 		$this->loadedPermission = array();
 		$this->validGroups = array();
 		
-		if( $Tiki_ShareObject__groups == null )
+		if ( $Tiki_ShareObject__groups == null )
 			$this->loadGroups();
 	} // }}}
 
@@ -178,9 +178,9 @@ class Tiki_ShareObject
 	{
 		global $Tiki_ShareObject__groups;
 
-		if( ! array_key_exists( $name, $this->validGroups ) )
+		if ( ! array_key_exists( $name, $this->validGroups ) )
 		{
-			if( in_array( $name, $Tiki_ShareObject__groups ) )
+			if ( in_array( $name, $Tiki_ShareObject__groups ) )
 				$this->validGroups[$name] = new Tiki_ShareGroup( $name );
 			else
 				return;
@@ -215,7 +215,7 @@ class Tiki_ShareObject
 
 		foreach( $this->validGroups as $group )
 			foreach( $validPermission as $permission )
-				if( $group->hasObjectPermission( $permission ) )
+				if ( $group->hasObjectPermission( $permission ) )
 					$tikilib->query( "INSERT INTO users_objectpermissions ( groupName, permName, objectType, objectId ) VALUES( ?, ?, ?, ? )",
 						array( $group->name, $permission, $this->objectType, $this->objectHash ) );
 	} // }}}

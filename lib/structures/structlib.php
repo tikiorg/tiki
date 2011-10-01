@@ -37,7 +37,7 @@ class StructLib extends TikiLib
 		$dump = 'dump';
 		if ($tikidomain) { $dump.= "/$tikidomain"; }
 		$tar->toTar("$dump/$page_name.tar", FALSE);
-		header ("location: $dump/$page_name.tar");
+		header("location: $dump/$page_name.tar");
 		return '';
 	}
 	function s_export_structure_tree($structure_id, $level = 0) {

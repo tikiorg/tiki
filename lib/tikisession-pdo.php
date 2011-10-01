@@ -30,7 +30,7 @@ class Session
 
 		$bindvars = array( $sesskey );
 
-		if( $prefs['session_lifetime'] > 0 ) {
+		if ( $prefs['session_lifetime'] > 0 ) {
 			$qry = "select data from sessions where sesskey = ? and expiry > ?";
 			$bindvars[] = $prefs['session_lifetime'];
 		} else {
@@ -58,7 +58,7 @@ class Session
 	public function gc($maxlifetime){
 		global $prefs;
 
-		if( $prefs['session_lifetime'] > 0 ) {
+		if ( $prefs['session_lifetime'] > 0 ) {
 			$qry = "delete from sessions where expiry < ?";
 			TikiDb::get()->query($qry, array( time() ) );
 		}

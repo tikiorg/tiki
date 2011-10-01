@@ -19,7 +19,7 @@ if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
 	$size = getimagesize($bannercachefile);
 	$type = $size['mime'];
 
-	header ("Content-type: $type");
+	header("Content-type: $type");
 	readfile($bannercachefile);
 	exit;
 }
@@ -57,7 +57,7 @@ if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
 	}
 }
 
-header ("Content-type: $type");
+header("Content-type: $type");
 if (is_file($bannercachefile)) {
 	readfile($bannercachefile);
 } else {

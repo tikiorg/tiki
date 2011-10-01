@@ -61,6 +61,6 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
 */
 
 // I call index.php because tiki may not be setup when people attempt to call this.
-header ("location: index.php");
+header("location: index.php");
 die;
 
