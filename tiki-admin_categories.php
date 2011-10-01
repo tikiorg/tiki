@@ -193,13 +193,20 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 			$smarty->display("error.tpl");
 			die;
 		}
-		$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
-	} else if ($categlib->exist_child_category($_REQUEST['parentId'], $_REQUEST['name'])) {
-		$errors[] = tra('You can not create a category with a name already existing at this level');
+
+		try {
+			$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
+		} catch(Exception $e) {
+			$errors[] = $e->getMessage();
+		}
 	} else {
-		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
-		if ($tiki_p_admin_categories != 'y') {
-			$userlib->copy_object_permissions($_REQUEST['parentId'], $newcategId, 'category');
+		try {
+			$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
+			if ($tiki_p_admin_categories != 'y') {
+				$userlib->copy_object_permissions($_REQUEST['parentId'], $newcategId, 'category');
+			}
+		} catch(Exception $e) {
+			$errors[] = $e->getMessage();
 		}
 	}
 	$info["name"] = '';

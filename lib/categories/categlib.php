@@ -134,6 +134,7 @@ class CategLib extends ObjectLib
 		return true;
 	}
 
+	// Throws an Exception if the category name conflicts
 	function update_category($categId, $name, $description, $parentId) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 
@@ -144,6 +145,10 @@ class CategLib extends ObjectLib
 		$oldParentId=$oldCategory['parentId'];
 		$oldParentName=$this->get_category_name($oldParentId);
 
+		if (($oldCategoryName != $name || $oldParentId != $parentId) && $this->exist_child_category($parentId, $name)) {
+			throw new Exception(tr('A category named %0 already exists in %1.', $name, $this->get_category_name($parentId)));
+		}
+		
 		// Make sure the description fits the column width
 		if(strlen($description) > 250) {
 			$description = substr($description,0,250);
@@ -161,7 +166,11 @@ class CategLib extends ObjectLib
 		$this->notify($values);		
 	}
 
+	// Throws an Exception if the category name conflicts
 	function add_category($parentId, $name, $description) {
+		if ($this->exist_child_category($parentId, $name)) {
+			throw new Exception(tr('A category named %0 already exists in %1.', $name, $this->get_category_name($parentId)));
+		}
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		
 		// Make sure the description fits the column width
