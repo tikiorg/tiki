@@ -38,13 +38,12 @@ $tiki_timer->start();
 require_once ('tiki-setup_base.php');
 
 // Attempt setting locales. This code is just a start, locales should be set per-user.
-// Also, different operating systems use different locale strings. C.UTF-8 is valid on POSIX systems, maybe not on Windows, feel free to add alternative locale strings.
+// Also, different operating systems use different locale strings. en_US.utf8 is valid on POSIX systems, maybe not on Windows, feel free to add alternative locale strings.
 setlocale(LC_ALL, ''); // Attempt changing the locale to the system default. 
 // Since the system default may not be UTF-8 but we may be dealing with multilingual content, attempt ensuring the collations are intelligent by forcing a general UTF-8 collation.
 // This will have no effect if the locale string is not valid or if the designated locale is not generated. 
 
-// en_US.utf8 was seen on a CentOS 5 system with over 500 locales but no C.UTF-8
-foreach (array('C.UTF-8', 'en_US.utf8') as $UnicodeLocale) {
+foreach (array('en_US.utf8') as $UnicodeLocale) {
 	if (setlocale(LC_COLLATE, $UnicodeLocale)) {
 		break;
 	}
