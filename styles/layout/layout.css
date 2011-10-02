@@ -899,6 +899,12 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	width: 100%;
 }
 
+.ui-accordion .normal,
+.ui-accordion .normalnoborder,
+.ui-accordion .admin {
+	width: auto;
+}
+
 td {
 	vertical-align: top;
 }
