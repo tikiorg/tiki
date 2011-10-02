@@ -183,14 +183,17 @@ if (!empty($multiprint_pages)) {
 	}
 	$smarty->assign('find', $find);
 	$filter = '';
-	
-	if ($prefs['feature_multilingual'] == 'y' && ((!isset($_REQUEST['lang']) ) || (isset($_REQUEST['lang']) && $_REQUEST['lang'] != ''))) {
-		$filter = setLangFilter($filter);
-	}
-	$smarty->assign('find_langOrphan', '');
-	if (!empty($_REQUEST['langOrphan'])) {
-		$filter['langOrphan'] = $_REQUEST['langOrphan'];
-		$smarty->assign('find_langOrphan', $_REQUEST['langOrphan']);
+
+	if ($prefs['feature_multilingual'] == 'y') {
+		$smarty->assign('find_lang', '');
+		if (((!isset($_REQUEST['lang']) ) || (isset($_REQUEST['lang']) && $_REQUEST['lang'] != ''))) {
+			$filter = setLangFilter($filter);
+		}
+		$smarty->assign('find_langOrphan', '');
+		if (!empty($_REQUEST['langOrphan'])) {
+			$filter['langOrphan'] = $_REQUEST['langOrphan'];
+			$smarty->assign('find_langOrphan', $_REQUEST['langOrphan']);
+		}
 	}
 	
 	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
@@ -372,7 +375,7 @@ function setLangFilter($filter) {
 		$lang = 'en';
 	}
 	$filter['lang'] = $lang;
-	$smarty->assign_by_ref('find_lang', $lang);
+	$smarty->assign('find_lang', $lang);
 	return $filter;
 }
 function possibly_look_for_page_aliases($query) {
