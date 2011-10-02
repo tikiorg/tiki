@@ -1334,7 +1334,7 @@ class Comments extends TikiLib
 		}
 
 		if ($prefs['comments_archive'] == 'y' && $tiki_p_admin_comments != 'y') {
-			$conditions['archived'] = 'n';
+			$conditions['archived'] = $comments->expr('`archived` = ? OR `archived` IS NULL', array('n'));
 		}
 
 		return $comments->fetchCount($conditions);
@@ -1655,7 +1655,7 @@ class Comments extends TikiLib
 		}
 
 		if ($prefs['comments_archive'] == 'y' && $tiki_p_admin_comments != 'y') {
-			$queue_cond .= ' AND tc1.`archived`=?';
+			$queue_cond .= ' AND (tc1.`archived`=? OR tc1.`archived` IS NULL)';
 			$bindvars[] = 'n';
 		}
 
