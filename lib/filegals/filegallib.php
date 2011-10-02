@@ -1279,9 +1279,9 @@ class FileGalLib extends TikiLib
 		return $this->getGalleryChildrenIds( $childSubtree, $parentId, $format );
 	}
 
-	/* Get subgalleries for parent $parentId
+	/* Get the subgalleries of a gallery, the one identified by $parentId if $wholeSpecialGallery is false, or the special gallery containing the gallery identified by $parentId if $wholeSpecialGallery is true. 
 	 *
-	 * @param int $parentId Parent ID of subgalleries to get
+	 * @param int $parentId Identifier of a gallery
 	 * @param bool $wholeSpecialGallery If true, will return the subgalleries of the special gallery (User File Galleries, Wiki Attachment Galleries, File Galleries, ...) that contains the $parentId gallery
 	 * @param string $permission If set, will limit the list of subgalleries to those having this permission for the current user
 	 */
@@ -1404,16 +1404,7 @@ class FileGalLib extends TikiLib
 		if ( $currentGalleryId === null ) $currentGalleryId = $rootGalleryId;
 
 		$script = 'tiki-list_file_gallery.php';
-		$tree = array('name' => tra('File Galleries'), 'link' => $script, 'id' => $rootGalleryId );
-
-		if ( $rootGalleryId != $prefs['fgal_root_id'] ) {
-			foreach ( $allGalleries['data'] as $k => $v ) {
-				if ( $v['id'] == $rootGalleryId ) {
-					$tree['name'] = $v['name'];
-					break;
-				}
-			}
-		}
+		$tree = array('link' => $script, 'id' => $rootGalleryId );
 
 		$path = array();
 		for ($node = $this->get_file_gallery_info($currentGalleryId); $node && $node['galleryId'] != $rootGalleryId; $node = $this->get_file_gallery_info($node['parentId'])) {

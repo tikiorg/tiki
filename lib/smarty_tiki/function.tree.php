@@ -21,21 +21,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_tree($params, $smarty) {
 	require_once ('lib/tree/BrowseTreeMaker.php');
 	$link = $params['data']['link'];
-	$name = $params['data']['name'];
 	$root_id = $params['data']['id'];
 	$nodes = $params['data']['data'];
 
 	$smarty->loadPlugin('smarty_function_icon');
 	$icon = '&nbsp;' . smarty_function_icon(array('_id' => 'folder'), $smarty) . '&nbsp;';
 	
-	$tree_nodes = array(
-		array(
-			'id' => $root_id,
-			'parent' => 0,
-			'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
-		)
-	);
-	
+	$tree_nodes = array();
 	$smarty->loadPlugin('smarty_block_self_link');
 	foreach ($nodes as $node) {
 		$link_params = array('_script' => $link, 'galleryId' => $node['id'], '_class' => 'fgalname');
