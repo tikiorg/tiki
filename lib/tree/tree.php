@@ -32,7 +32,7 @@ require_once ('lib/debug/debugger.php');
  *  data   => user provided data to be placed as node text
  *
  */
-class TreeMaker
+abstract class TreeMaker
 {
 	/// Unique prefix for cookies generated for this tree
 	var $prefix;
@@ -111,8 +111,7 @@ class TreeMaker
 	}
 	/**
 	 * To change behavior (xhtml layout :) of generated tree
-	 * it is enough to redefine following methods..
-	 * (thanx that PHP have implicit virtual functions :)
+	 * it is enough to redefine following methods.
 	 *
 	 * General layout of generated tree code looks like this:
 	 *
