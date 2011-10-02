@@ -37,7 +37,7 @@ class CatBrowseTreeMaker extends TreeMaker
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 
 		// java script block that opens the nodes as remembered in cookies
-		$headerlib->add_jq_onready('$(".tree.root:not(.init)").categ_browse_tree().addClass("init")');
+		$headerlib->add_jq_onready('$(".tree.root:not(.init)").browse_tree().addClass("init")');
 		
 		// return tree
 		return $r;
@@ -90,7 +90,7 @@ class CatBrowseTreeMaker extends TreeMaker
 	//
 	function node_child_start_code($nodeinfo) {
 		$style = getCookie($nodeinfo['id'], $this->prefix) !== 'o' ? ' style="display:none"' : '';
-		return '<ul class="tree" data-catid="' . $nodeinfo['id'] .
+		return '<ul class="tree" data-id="' . $nodeinfo['id'] .
 			   		'" data-prefix="' . $this->prefix . '"' . $style .'>';
 	}
 
