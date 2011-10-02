@@ -1497,9 +1497,6 @@ class CategLib extends ObjectLib
 					'parent' => $c['parentId'],
 					'data' => $smarty->fetch( 'category_tree_entry.tpl' ),
 				);
-				if (in_array( $c['parentId'], $roots )) {
-					$tree_nodes[count($tree_nodes) - 1]['data'] = $tree_nodes[count($tree_nodes) - 1]['data'];
-				}
 			}
 		}
 		$tm = new BrowseTreeMaker("categorize");
