@@ -48,7 +48,7 @@ function prefs_category_list() {
 		),
 		'category_sort_ascii' => array(
 			'name' => tra('Sort categories by legacy ASCII sequence'),
-			'description' => tra('If turned on, will sort categories taking into account all characters as upper case, in ASCII sequence, will only consider limited set of accented characters. Might be needed to be able to override the normal sort by prepending punctuation characters to category names, such as "-" to sort at the beginning and "[" to start at the end.'), 
+			'description' => tra('If turned on, will sort categories taking into account all characters as upper case, in ASCII sequence, will only consider limited set of accented characters. Might be needed to be able to override the normal sort by prepending punctuation characters to category names, such as "-" to sort at the beginning and "[" to sort at the end.'), 
 			'type' => 'flag',
 			'tags' => array('advanced'),
 			'default' => 'n',
