@@ -709,6 +709,10 @@ function wikiplugin_tracker($data, $params)
 						foreach($newpagefields as $lf) {
 							$wikioutput = str_replace('{$f_' . $lf . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
 						}
+                                                 if(isset($registration)) {
+	 	                                                         $wikioutput = str_replace('{$register_login}', $user, $wikioutput);
+	 	                                                         $wikioutput = str_replace('{$register_email}', $_REQUEST['email'], $wikioutput);
+	 	                                                 }
 						$tikilib->create_page($newpagename, 0, $wikioutput, $tikilib->now, '', $user, $tikilib->get_ip_address());
 						$cat_desc = '';
 						$cat_type = 'wiki page';

@@ -146,6 +146,36 @@ function prefs_user_list($partial = false) {
 			),
 			'default' => '',
 		),
+		'user_register_prettytracker_output' => array(
+			'name' => tra('Output the registration results'),
+			'help' => 'User+Tracker',
+			'description' => tra('Use a wiki page as template to output the registration results to'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'userTracker',
+			),
+		),
+		'user_register_prettytracker_outputwiki' => array(
+			'name' => tra('Output registration pretty tracker template'),
+			'description' => tra('Wiki page only'),
+			'type' => 'text',
+			'size' => '20',
+			'default' => '',
+			'dependencies' => array(
+				'user_register_prettytracker_output',
+			),
+		),
+		'user_register_prettytracker_outputtowiki' => array(
+			'name' => tra('Page name fieldId'),
+			'description' => tra('User trackers field id whose value is used as output page name'),
+			'type' => 'text',
+			'size' => '20',
+			'default' => '',
+			'dependencies' => array(
+				'user_register_prettytracker_output',
+			),
+		),
 		'user_trackersync_trackers' => array(
 			'name' => tra('User tracker IDs to sync prefs from'),
 			'description' => tra('Enter the IDs separated by commas of trackers to sync user prefs from'),
