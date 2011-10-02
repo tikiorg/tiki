@@ -720,24 +720,23 @@ if (isset($_REQUEST['fileId'])) {
 	$smarty->assign('fileId', $_REQUEST['fileId']);
 }
 if ($prefs['feature_categories'] == 'y') {
-	$smarty->assign('findSelectedCategoriesNumber', 0);
 	if (!empty($_REQUEST['cat_categories'])) {
 		$find['categId'] = $_REQUEST['cat_categories'];
-		$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
 		if (count($_REQUEST['cat_categories']) > 1) {
 			unset($_REQUEST['categId']);
 		} else {
 			$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
-			unset($_REQUEST['cat_categories']);
 		}
 	} else {
 		$_REQUEST['cat_categories'] = array();
 	}
+	$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
+	if (!empty($_REQUEST['categId'])) {
+		$find['categId'] = $_REQUEST['categId'];
+		$smarty->assign('find_categId', $_REQUEST['categId']);
+	}
 }
-if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
-	$find['categId'] = $_REQUEST['categId'];
-	$smarty->assign('find_categId', $_REQUEST['categId']);
-}
+
 if (!empty($_REQUEST['find_orphans']) && ($_REQUEST['find_orphans'] == 'on' || $_REQUEST['find_orphans'] == 'y')) {
 	$find['orphan'] = 'y';
 	$smarty->assign('find_orphans', 'y');

@@ -104,23 +104,21 @@ if (($where == 'trackers')) {
 
 $categId = 0;
 if ($prefs['feature_categories'] == 'y') {
-	$smarty->assign('findSelectedCategoriesNumber', 0);
 	if (!empty($_REQUEST['cat_categories'])) {
 		$categId = $_REQUEST['cat_categories'];
-		$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
 		if (count($_REQUEST['cat_categories']) > 1) {
 			unset($_REQUEST['categId']);
 		} else {
 			$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
-			unset($_REQUEST['cat_categories']);
 		}
 	} else {
 		$_REQUEST['cat_categories'] = array();
 	}
-}
-if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
-	$categId = $_REQUEST['categId'];
-	$smarty->assign('find_categId', $_REQUEST['categId']);
+	$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
+	if (!empty($_REQUEST['categId'])) {
+		$categId = $_REQUEST['categId'];
+		$smarty->assign('find_categId', $_REQUEST['categId']);
+	}
 }
 
 if (!isset($_REQUEST["offset"])) {
