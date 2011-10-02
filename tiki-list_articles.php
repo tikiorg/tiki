@@ -133,9 +133,9 @@ if ($prefs['feature_categories'] == 'y') {
 			$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
 			unset($_REQUEST['cat_categories']);
 		}
-	}
-} else {
+	} else {
 		$_REQUEST['cat_categories'] = array();
+	}
 }
 if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 	$filter['categId'] = $_REQUEST['categId'];
