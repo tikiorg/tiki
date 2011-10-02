@@ -19,9 +19,6 @@ require_once ('lib/tree/tree.php');
  */
 class CatBrowseTreeMaker extends TreeMaker
 {
-	/// Generated ID (private usage only)
-	var $itemID;
-
 	/// Constructor
 	function CatBrowseTreeMaker($prefix) {
 		$this->TreeMaker($prefix);
