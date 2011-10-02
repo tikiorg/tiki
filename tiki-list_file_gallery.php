@@ -719,14 +719,17 @@ $smarty->assign_by_ref('find', $_REQUEST['find']);
 if (isset($_REQUEST['fileId'])) {
 	$smarty->assign('fileId', $_REQUEST['fileId']);
 }
-if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
-	$find['categId'] = $_REQUEST['cat_categories'];
-	if (count($_REQUEST['cat_categories']) > 1) {
-		$smarty->assign('find_cat_categories', $_REQUEST['cat_categories']);
-		unset($_REQUEST['categId']);
-	} else {
-		$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
-		unset($_REQUEST['cat_categories']);
+if ($prefs['feature_categories'] == 'y') {
+	$smarty->assign('findSelectedCategoriesNumber', 0);
+	if (!empty($_REQUEST['cat_categories'])) {
+		$find['categId'] = $_REQUEST['cat_categories'];
+		$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
+		if (count($_REQUEST['cat_categories']) > 1) {
+			unset($_REQUEST['categId']);
+		} else {
+			$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
+			unset($_REQUEST['cat_categories']);
+		}
 	}
 } else {
 	$_REQUEST['cat_categories'] = array();
@@ -906,11 +909,9 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 			$smarty->assign('gallery_path', $treeData['path']);
 		}
 	
-		if ($prefs['javascript_enabled'] != 'n') {
-			$tree_array = $treeData['tree'];
-			$tree_array['data'] = $subGalleries['data'];
-			$smarty->assign_by_ref('tree', $tree_array);
-		}
+		$tree_array = $treeData['tree'];
+		$tree_array['data'] = $subGalleries['data'];
+		$smarty->assign_by_ref('tree', $tree_array);
 	}
 }
 

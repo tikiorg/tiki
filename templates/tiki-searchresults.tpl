@@ -63,7 +63,7 @@
 				{/if}
 				
 				{if $prefs.feature_categories eq 'y' and !empty($categories)}
-					<div id="category_singleselect_find" style="display: {if $find_cat_categories|@count > 1}none{else}block{/if};">
+					<div id="category_singleselect_find" style="display: {if $findSelectedCategoriesNumber > 1}none{else}block{/if};">
 						<label class="findcateg"> 
 							<select name="categId">
 								<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
@@ -76,7 +76,7 @@
 						</label>
 						{if $prefs.javascript_enabled eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
 					</div>
-					<div id="category_multiselect_find" style="display: {if $find_cat_categories|@count > 1}block{else}none{/if};">
+					<div id="category_multiselect_find" style="display: {if $findSelectedCategoriesNumber > 1}block{else}none{/if};">
 				  		<div class="multiselect"> 
 				  			{if count($categories) gt 0}
 								{$cat_tree}
