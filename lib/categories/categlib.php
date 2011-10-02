@@ -1487,10 +1487,10 @@ class CategLib extends ObjectLib
 				if ($canchangeall) {
 					$c['canchange'] = true;
 				}
+				
 				// if used in find, should force incat to check those that have been selected
-				if (in_array($c['categId'], $forceincat)) {
-					$c['incat'] = 'y';
-				}
+				$c['incat'] = in_array($c['categId'], $forceincat) ? 'y' : 'n';
+				
 				$smarty->assign( 'category_data', $c );
 				$tree_nodes[] = array(
 					'id' => $c['categId'],
