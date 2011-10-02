@@ -47,8 +47,8 @@ class TreeMaker
 		return $this->make_tree_r($rootid, $ar);
 	}
 
-	/// Recursive make (do not call directly)
-	function make_tree_r($rootid, &$ar) {
+	/// Recursively make a tree
+	protected function make_tree_r($rootid, &$ar) {
 		global $debugger;
 
 		$debugger->msg("TreeMaker::make_tree_r: Root ID=" . $rootid);
