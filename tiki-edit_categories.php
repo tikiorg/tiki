@@ -14,7 +14,7 @@ $inputConfiguration = array(array(
 
 require_once 'tiki-setup.php';
 require_once 'lib/categories/categlib.php';
-require_once 'lib/tree/categ_browse_tree.php';
+require_once 'lib/tree/BrowseTreeMaker.php';
 
 $access->check_feature('feature_categories');
 
@@ -52,7 +52,7 @@ $tree_nodes[] = array(
 	'data' => '<span class="object-count">' . $orphans['cant'] . '</span><a class="catname" href="tiki-edit_categories.php?filter~categories=orphan"><em>' . tr('Orphans') . '</em></a>',
 );
 
-$tm = new CatBrowseTreeMaker('categ');
+$tm = new BrowseTreeMaker('categ');
 $res = $tm->make_tree(0, $tree_nodes);
 $smarty->assign('tree', $res);
 // }}}

@@ -6,7 +6,7 @@
 // $Id$
 
 /** \file
- * \brief Categories browse tree
+ * \brief Browse a tree, for example a categories tree
  *
  * \author zaufi@sendmail.ru
  * \enhanced by luci@sh.ground.cz
@@ -17,10 +17,10 @@ require_once ('lib/tree/tree.php');
 /**
  * \brief Class to render categories browse tree
  */
-class CatBrowseTreeMaker extends TreeMaker
+class BrowseTreeMaker extends TreeMaker
 {
 	/// Constructor
-	function CatBrowseTreeMaker($prefix) {
+	function BrowseTreeMaker($prefix) {
 		$this->TreeMaker($prefix);
 	}
 

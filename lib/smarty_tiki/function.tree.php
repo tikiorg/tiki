@@ -14,49 +14,41 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /*
  * JavaScript Tree
  * 
- * That smarty function is mostly intended to be used in .tpl files
+ * This Smarty function is mostly intended to be used in .tpl files
  * syntax: {tree}
  * 
  */
 function smarty_function_tree($params, $smarty) {
-	global $prefs;
+	require_once ('lib/tree/BrowseTreeMaker.php');
+	$link = $params['data']['link'];
+	$name = $params['data']['name'];
+	$root_id = $params['data']['id'];
+	$nodes = $params['data']['data'];
 
-	if ( $prefs['javascript_enabled'] == 'n' ) {
-		// If JavaScript is disabled, force the php version of the tree
-		$params['type'] = 'phptree';
-	} else {
-		// no phplayers - use category-style ones (for now)
-		require_once ('lib/tree/categ_browse_tree.php');
-		$link = $params['data']['link'];
-		$name = $params['data']['name'];
-		$link_id = 'id';
-		$link_var = 'galleryId';
-		$smarty->loadPlugin('smarty_function_icon');
-		$icon = '&nbsp;' . smarty_function_icon(array('_id' => 'folder'), $smarty) . '&nbsp;';
-		
-		$tree_nodes = array(
-			array(
-				'id' => $params['data']['id'],
-				'parent' => 0,
-				'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
-			)
-		);
-		$root_id = $params['data']['id'];
-		$smarty->loadPlugin('smarty_block_self_link');
-		foreach($params['data']['data'] as $d) {
-			$link_params = array('_script' => $link, $link_var => $d[$link_id], '_class' => 'fgalname');
-			if (!empty($_REQUEST['filegals_manager'])) {
-				$link_params['filegals_manager'] = $_REQUEST['filegals_manager'];
-			}
-			$tree_nodes[] = array(
-				'id' => $d['id'],
-				'parent' => $d['parentId'],
-				'data' => smarty_block_self_link($link_params, $icon . htmlspecialchars($d['name']), $smarty), 
-			);
+	$smarty->loadPlugin('smarty_function_icon');
+	$icon = '&nbsp;' . smarty_function_icon(array('_id' => 'folder'), $smarty) . '&nbsp;';
+	
+	$tree_nodes = array(
+		array(
+			'id' => $root_id,
+			'parent' => 0,
+			'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
+		)
+	);
+	
+	$smarty->loadPlugin('smarty_block_self_link');
+	foreach ($nodes as $node) {
+		$link_params = array('_script' => $link, 'galleryId' => $node['id'], '_class' => 'fgalname');
+		if (!empty($_REQUEST['filegals_manager'])) {
+			$link_params['filegals_manager'] = $_REQUEST['filegals_manager'];
 		}
-		$tm = new CatBrowseTreeMaker('categ');
-		$res = $tm->make_tree( $root_id, $tree_nodes);
-		return $res;
+		$tree_nodes[] = array(
+			'id' => $node['id'],
+			'parent' => $node['parentId'],
+			'data' => smarty_block_self_link($link_params, $icon . htmlspecialchars($node['name']), $smarty), 
+		);
 	}
-
+	$tm = new BrowseTreeMaker('Galleries');
+	$res = $tm->make_tree( $root_id, $tree_nodes);
+	return $res;
 }

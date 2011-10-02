@@ -103,7 +103,7 @@ function module_categories( $mod_reference, &$module_params ) {
 	else
 		$style = 'tree';
 		
-	include_once ('lib/tree/categ_browse_tree.php');
+	include_once ('lib/tree/BrowseTreeMaker.php');
 	$tree_nodes = array();
 	include_once('tiki-sefurl.php');
 	foreach ($categories as $cat) {
@@ -118,7 +118,7 @@ function module_categories( $mod_reference, &$module_params ) {
 			"data" => '<a class="catname" href="'.$url.'">' . htmlspecialchars($cat['name']) . '</a><br />'
 		);
 	}
-	$tm = new CatBrowseTreeMaker('mod_categ' . $module_params['module_position'] . $module_params['module_ord']);
+	$tm = new BrowseTreeMaker('mod_categ' . $module_params['module_position'] . $module_params['module_ord']);
 	$res = $tm->make_tree($categId, $tree_nodes);
 	$smarty->assign('tree', $res);
 

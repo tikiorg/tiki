@@ -308,8 +308,8 @@ foreach ($categories as $category) {
 		'data' => $data 
 	);
 }
-include_once ('lib/tree/categ_browse_tree.php');
-$treeMaker = new CatBrowseTreeMaker('categ');
+include_once ('lib/tree/BrowseTreeMaker.php');
+$treeMaker = new BrowseTreeMaker('categ');
 $smarty->assign('tree', $treeMaker->make_tree(0, $treeNodes));
 
 // ---------------------------------------------------

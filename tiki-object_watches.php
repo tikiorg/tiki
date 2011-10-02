@@ -95,8 +95,8 @@ if (isset($_REQUEST['assign'])) {
 					'data' => $catinfo['name'], 
 				);
 			}
-			include_once('lib/tree/categ_browse_tree.php');
-			$tm = new CatBrowseTreeMaker('categ');
+			include_once('lib/tree/BrowseTreeMaker.php');
+			$tm = new BrowseTreeMaker('categ');
 			$res = $tm->make_tree($catTreeNodes[0]['parent'], $catTreeNodes);
 			$smarty->assign('tree', $res);
 		}

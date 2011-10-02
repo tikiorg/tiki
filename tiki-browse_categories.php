@@ -8,7 +8,7 @@
 $section = 'categories';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
-include_once ('lib/tree/categ_browse_tree.php');
+include_once ('lib/tree/BrowseTreeMaker.php');
 $access->check_feature('feature_categories');
 $access->check_permission('tiki_p_view_category');
 
@@ -139,7 +139,7 @@ foreach ($ctall as $c) {
 					. urlencode($type) . '">' . htmlspecialchars($c['name']) .'</a> ', 
 	);
 }
-$tm = new CatBrowseTreeMaker('categ');
+$tm = new BrowseTreeMaker('categ');
 $res = $tm->make_tree($_REQUEST['parentId'], $tree_nodes);
 $smarty->assign('tree', $res);
 

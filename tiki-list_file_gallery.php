@@ -900,18 +900,15 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 	$smarty->assign_by_ref('all_galleries', $gals);
 
 	if ( ! empty($subGalleries) && is_array($subGalleries) && $subGalleries['cant'] > 0) {
-		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );
+		$treeData = $filegallib->getFilegalsTree( $galleryId );
 
 		if ( $prefs['fgal_show_path'] == 'y' ) {
-			$smarty->assign('gallery_path', $phplayersTreeData['path']);
+			$smarty->assign('gallery_path', $treeData['path']);
 		}
 	
 		if ($prefs['javascript_enabled'] != 'n') {
-			$tree_array = array('data' => $subGalleries['data'],
-				'name' => $phplayersTreeData['tree']['name'],
-				'link' => $phplayersTreeData['tree']['link'],
-				'id' => $phplayersTreeData['tree']['id']
-			);
+			$tree_array = $treeData['tree'];
+			$tree_array['data'] = $subGalleries['data'];
 			$smarty->assign_by_ref('tree', $tree_array);
 		}
 	}

@@ -50,7 +50,7 @@ function smarty_block_filter($params, $content, $smarty, $repeat)
 
 		// Generate the category tree {{{
 		global $categlib; require_once 'lib/categories/categlib.php';
-		require_once 'lib/tree/categ_browse_tree.php';
+		require_once 'lib/tree/BrowseTreeMaker.php';
 		$ctall = $categlib->getCategories();
 
 		$tree_nodes = array();
@@ -71,7 +71,7 @@ BODY;
 			);
 		}
 
-		$tm = new CatBrowseTreeMaker('categ');
+		$tm = new BrowseTreeMaker('categ');
 		$res = $tm->make_tree(0, $tree_nodes);
 		$smarty->assign('filter_category_picker', $res);
 		// }}}

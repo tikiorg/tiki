@@ -1388,13 +1388,13 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
-	// Get default phplayers tree for filegals - not actually using phplayers for tiki7+
-	function getFilegalsTreePhplayers( $currentGalleryId = null ) {
-		return $this->getTreePhplayers( $this->getFilegalsIdsTree(), $currentGalleryId );
+	// Get default tree for filegals
+	function getFilegalsTree( $currentGalleryId = null ) {
+		return $this->getTree( $this->getFilegalsIdsTree(), $currentGalleryId );
 	}
 
 	// Build galleries browsing tree and current gallery path array
-	function getTreePhplayers( $idTree, $currentGalleryId = null ) {
+	function getTree( $idTree, $currentGalleryId = null ) {
 		global $prefs;
 
 		$allGalleries = $this->getSubGalleries();
@@ -1404,7 +1404,7 @@ class FileGalLib extends TikiLib
 		if ( $currentGalleryId === null ) $currentGalleryId = $rootGalleryId;
 
 		$script = 'tiki-list_file_gallery.php';
-		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link' => $script, 'id' => $rootGalleryId );
+		$tree = array('name' => tra('File Galleries'), 'link' => $script, 'id' => $rootGalleryId );
 
 		if ( $rootGalleryId != $prefs['fgal_root_id'] ) {
 			foreach ( $allGalleries['data'] as $k => $v ) {
@@ -1415,46 +1415,26 @@ class FileGalLib extends TikiLib
 			}
 		}
 
-		$galleryPath = array();
-		$fgal_mgr_param = !empty($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '';
-		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $script, $rootGalleryId, $fgal_mgr_param);
-		array_unshift($galleryPath, array($rootGalleryId, $tree['name']));
-
-		$galleryPathHtml = '';
-		foreach ( $galleryPath as $dir_id ) {
-			if ( $galleryPathHtml != '' ) $galleryPathHtml .= ' &nbsp;&gt;&nbsp;';
-			$galleryPathHtml .= '<a href="' . $script . '?galleryId=' . $dir_id[0] . $fgal_mgr_param . '">' . htmlspecialchars($dir_id[1]) . '</a>';
+		$path = array();
+		for ($node = $this->get_file_gallery_info($currentGalleryId); $node && $node['galleryId'] != $rootGalleryId; $node = $this->get_file_gallery_info($node['parentId'])) {
+			$path[$node['galleryId']] = $node['name'];
+		}
+		$path[$rootGalleryId] = $tree['name'];
+		$path = array_reverse($path, true);
+		
+		$pathHtml = '';
+		foreach ( $path as $identifier => $name ) {
+			if ( $pathHtml != '' ) $pathHtml .= ' &nbsp;&gt;&nbsp;';
+			$pathHtml .= '<a href="' . $script . '?galleryId=' . $identifier . (!empty($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '') . '">' . htmlspecialchars($name) . '</a>';
 		}
 
 		return array(
 			'tree' => $tree,
-			'path' => $galleryPathHtml,
-			'pathArray' => $galleryPath
+			'path' => $pathHtml,
+			'pathArray' => $path
 		);
 	}
 
-	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, $link = "", $cur_id = -1, $endQueryString = '' ) {
-		static $nb_galleries = 0;
-
-		$i = 0;
-		$path_found = false;
-		if ($nb_galleries == 0) $nb_galleries = count($galleries);
-		for ($gk = 0; $gk < $nb_galleries; $gk++) {
-			$gv = & $galleries[$gk];
-			if ($gv['parentId'] == $cur_id && $gv['id'] != $cur_id) {
-				$tree[$i] = & $galleries[$gk];
-				$tree[$i]['link'] = $link."?galleryId=" . $gv['id'] . $endQueryString;
-				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $link, $gv['id'], $endQueryString);
-				if (!$path_found && $gv['id'] == $gallery_id) {
-					if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
-					array_unshift($gallery_path, array($gallery_id, $gv['name']));
-					$gallery_id = $cur_id;
-					$path_found = true;
-				}
-				$i++;
-			}
-		}
-	}
 	// get the size in k used in a fgal and its children
 	function getUsedSize($galleryId=0) {
 		$files = $this->table('tiki_files');
