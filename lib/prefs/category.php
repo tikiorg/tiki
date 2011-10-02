@@ -46,6 +46,13 @@ function prefs_category_list() {
 			'separator' => ',',
 			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
+		'category_sort_ascii' => array(
+			'name' => tra('Sort categories by legacy ascii sequence'),
+			'description' => tra('If turned on, will sort categories taking into account all characters as upper case, in ascii sequence, will only consider limited set of accented characters, might be needed on certain systems to take into account punctuation when sorting'), 
+			'type' => 'flag',
+			'tags' => array('advanced'),
+			'default' => 'n',
+		),
 		'category_autogeocode_within' => array(
 			'name' => tra('Automatically geocode items when categorized in'),
 			'description' => tra('Automatically geocode items based on category name when categorized in the sub-categories of this category ID'),

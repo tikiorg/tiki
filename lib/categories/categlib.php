@@ -543,12 +543,17 @@ class CategLib extends ObjectLib
 	
 	// Return an array enumerating a subtree with the given root node in preorder
 	private function getSortedSubTreeNodes($root, &$categories) {
+		global $prefs;
 		$subTreeNodes = array($root);
 		$childrenSubTreeNodes = array();
 		foreach ($categories[$root]['children'] as $child) {
 			$childrenSubTreeNodes[$categories[$child]['name']] = $this->getSortedSubTreeNodes($child, $categories);
 		}
-		ksort($childrenSubTreeNodes, SORT_LOCALE_STRING);
+		if ($prefs['category_sort_ascii'] == 'y') {
+			uksort($childrenSubTreeNodes, array("CategLib", "cmpcatname"));
+		} else {
+			ksort($childrenSubTreeNodes, SORT_LOCALE_STRING);
+		}
 		foreach ($childrenSubTreeNodes as $childSubTreeNodes) {
 			$subTreeNodes = array_merge($subTreeNodes, $childSubTreeNodes);
 		}
@@ -625,7 +630,11 @@ class CategLib extends ObjectLib
 			}
 			
 			// Sort in preorder. Siblings are sorted by name.
-			ksort($roots, SORT_LOCALE_STRING);
+			if ($prefs['category_sort_ascii'] == 'y') {
+				uksort($roots, array("CategLib", "cmpcatname"));
+			} else {
+				ksort($roots, SORT_LOCALE_STRING);
+			}	
 			$sortedCategoryIdentifiers = array();
 			foreach ($roots as $root) {
 				$sortedCategoryIdentifiers = array_merge($sortedCategoryIdentifiers, $this->getSortedSubTreeNodes($root, $categories));
@@ -1499,6 +1508,12 @@ class CategLib extends ObjectLib
 			$res .= $tm->make_tree($root, $tree_nodes);
 		}
 		return $res;
+	}
+
+	static function cmpcatname($a, $b) {
+		$a = strtoupper(TikiLib::take_away_accent($a));
+		$b = strtoupper(TikiLib::take_away_accent($b));
+		return strcmp($a, $b);
 	}
 }
 $categlib = new CategLib;

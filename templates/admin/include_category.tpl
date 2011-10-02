@@ -33,6 +33,7 @@
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}
 		</div>
+		{preference name=category_sort_ascii}
 		<fieldset>
 			<legend>
 				{tr}Category objects{/tr}
