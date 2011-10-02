@@ -1410,7 +1410,7 @@ class FileGalLib extends TikiLib
 		for ($node = $this->get_file_gallery_info($currentGalleryId); $node && $node['galleryId'] != $rootGalleryId; $node = $this->get_file_gallery_info($node['parentId'])) {
 			$path[$node['galleryId']] = $node['name'];
 		}
-		$path[$rootGalleryId] = $tree['name'];
+		$path[$rootGalleryId] = tra('File Galleries');
 		$path = array_reverse($path, true);
 		
 		$pathHtml = '';
