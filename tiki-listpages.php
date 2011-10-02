@@ -183,13 +183,16 @@ if (!empty($multiprint_pages)) {
 	}
 	$smarty->assign('find', $find);
 	$filter = '';
+	
 	if ($prefs['feature_multilingual'] == 'y' && ((!isset($_REQUEST['lang']) ) || (isset($_REQUEST['lang']) && $_REQUEST['lang'] != ''))) {
 		$filter = setLangFilter($filter);
 	}
+	$smarty->assign('find_langOrphan', '');
 	if (!empty($_REQUEST['langOrphan'])) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
-		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
+		$smarty->assign('find_langOrphan', $_REQUEST['langOrphan']);
 	}
+	
 	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
 		$filter['categId'] = $_REQUEST['cat_categories'];
 		if (count($_REQUEST['cat_categories']) > 1) {
