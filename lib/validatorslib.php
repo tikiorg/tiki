@@ -71,7 +71,7 @@ class Validators
 					} else {
 						$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
 					}
-					$validationjs .= 'message: "' .$field_value['validationMessage'].'", ';
+					$validationjs .= 'message: "' .tra($field_value['validationMessage']).'", ';
 					$validationjs .= 'input: function() { ';
 					if ( $prefix == 'ins_' && $field_value['type'] == 'a') {
 						$validationjs .= 'return $("#area_'.$field_value['fieldId'].'").val(); ';
@@ -94,8 +94,12 @@ class Validators
 		foreach ($fields_data as $field_value) {
 			if ($field_value['validationMessage'] && $field_value['isMandatory'] == 'y') {
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
-				$validationjs .= 'required: "' .$field_value['validationMessage'].'" ';
+				$validationjs .= 'required: "' .tra($field_value['validationMessage']).'" ';
 				$validationjs .= '}, ';	
+			} elseif ($field_value['isMandatory'] == 'y') {
+				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
+				$validationjs .= 'required: "' .tra('This field is required').'" ';
+				$validationjs .= '}, ';
 			}
 		}
 		$validationjs .= $custom_messages;

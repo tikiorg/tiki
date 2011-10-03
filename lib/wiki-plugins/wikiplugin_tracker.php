@@ -971,7 +971,9 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'email: { ';
 					$customvalidation .= 'required: true, ';
 					$customvalidation .= 'email: true }, ';
-					$customvalidation_m .= 'email: { email: "'. tra("Invalid email") .  '"}, ';
+					$customvalidation_m .= 'email: { email: "'. tra("Invalid email") 
+								. '", required: "' . tra("This field is required")
+								. '"}, ';
 					// password validation
 					$customvalidation .= 'pass: { ';
 					$customvalidation .= 'required: true, ';
@@ -984,6 +986,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'return $("#pass1").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
+					$customvalidation_m .= 'pass: { required: "' . tra("This field is required") . '"}, ';
 					// password repeat validation
 					$customvalidation .= 'passAgain: { equalTo: "#pass1" }, ';
 					$customvalidation_m .= 'passAgain: { equalTo: "'. tra("Passwords do not match") .  '"}, ';
@@ -999,6 +1002,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'return $("#name").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
+					$customvalidation_m .= 'name: { required: "' . tra("This field is required") . '"}, ';
 					if ($prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
 						// antibot validation   
 						$customvalidation .= '"captcha[input]": { ';
@@ -1015,6 +1019,7 @@ function wikiplugin_tracker($data, $params)
 						$customvalidation .= 'return $jq("#antibotcode").val(); ';
 						$customvalidation .= '} } } ';
 						$customvalidation .= '}, ';
+						$customvalidation_m .= '"captcha[input]": { required: "' . tra("This field is required") . '"}, ';
 					}
 					if ($prefs['useRegisterPasscode'] == 'y') {
 						$customvalidation .= 'passcode: {
@@ -1030,6 +1035,7 @@ function wikiplugin_tracker($data, $params)
 											}
 										}
 									}, ';
+						$customvalidation_m .= 'passcode: { required: "' . tra("This field is required") . '"}, ';
 					} 
 				}
 				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], $fields_prefix, $customvalidation, $customvalidation_m );
