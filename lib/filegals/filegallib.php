@@ -230,11 +230,13 @@ class FileGalLib extends TikiLib
 
 		if (empty($id)) {
 			$fileId = $filesTable->insert($fileData);
+			$final_event = 'tiki.file.create';
 		} else {
 			$filesTable->update($fileData, array(
 				'fileId' => $id,
 			));
 			$fileId = $id;
+			$final_event = 'tiki.file.update';
 		}
 
 		$galleriesTable->update(array(
@@ -252,8 +254,11 @@ class FileGalLib extends TikiLib
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('files', $fileId);
+		TikiLib::events()->trigger($final_event, array(
+			'type' => 'file',
+			'object' => $fileId,
+			'galleryId' => $galleryId,
+		));
 
 		//Watches
 		$smarty->assign('galleryId', $galleryId);
@@ -921,8 +926,11 @@ class FileGalLib extends TikiLib
 				unlink($savedir . $oldPath);
 			}
 
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('files', $id);
+			TikiLib::events()->trigger('tiki.file.update', array(
+				'type' => 'file',
+				'object' => $id,
+				'galleryId' => $gal_info['galleryId'],
+			));
 
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
 			if ($prefs['feature_file_galleries_save_draft'] == 'y') {

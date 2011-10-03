@@ -66,7 +66,7 @@ function refresh_index_convert_type($object_type) {
 	case 'file_galleries';
 		return 'file gallery';
 
-	case 'files': //case 'fgal': case 'file': 
+	case 'files': case 'file'; //case 'fgal':
 		return 'file';
 
 	case 'forums': //case 'forum':

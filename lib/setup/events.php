@@ -79,6 +79,10 @@ $events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
 $events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 $events->bind('tiki.trackeritem.save', 'tiki.save');
 
+$events->bind('tiki.file.update', 'tiki.file.save');
+$events->bind('tiki.file.create', 'tiki.file.save');
+$events->bind('tiki.file.save', 'tiki.save');
+
 $events->bind('tiki.user.update', 'tiki.user.save');
 $events->bind('tiki.user.create', 'tiki.user.save');
 
