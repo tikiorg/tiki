@@ -906,15 +906,13 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 	$smarty->assign_by_ref('all_galleries', $gals);
 
 	if ( ! empty($subGalleries) && is_array($subGalleries) && $subGalleries['cant'] > 0) {
-		$treeData = $filegallib->getFilegalsTree( $galleryId );
-
 		if ( $prefs['fgal_show_path'] == 'y' ) {
-			$smarty->assign('gallery_path', $treeData['path']);
+			$path = $filegallib->getPath( $galleryId );
+			$smarty->assign('gallery_path', $path['HTML']);
 		}
-	
-		$tree_array = $treeData['tree'];
-		$tree_array['data'] = $subGalleries['data'];
-		$smarty->assign_by_ref('tree', $tree_array);
+		$tree = $filegallib->getFilegalsTree( $galleryId );	
+		$tree['data'] = $subGalleries['data'];
+		$smarty->assign_by_ref('tree', $tree);
 	}
 }
 

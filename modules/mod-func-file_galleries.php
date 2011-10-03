@@ -27,9 +27,9 @@ function module_file_galleries( $mod_reference, $module_params ) {
 	$all_galleries = $filegallib->getSubGalleries();
 	
 	if ( isset($all_galleries) && is_array($all_galleries) && count($all_galleries) > 0 ) {
-		$treeData = $filegallib->getFilegalsTree();
+		$tree = $filegallib->getFilegalsTree();
 		$subGalleries = $filegallib->getSubGalleries( 0 );
-		$treeData['tree']['data'] = $subGalleries['data'];
-		$smarty->assign_by_ref('tree', $treeData['tree']);
+		$tree['data'] = $subGalleries['data'];
+		$smarty->assign_by_ref('tree', $tree);
 	}
 }

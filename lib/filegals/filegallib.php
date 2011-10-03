@@ -1393,36 +1393,36 @@ class FileGalLib extends TikiLib
 		return $this->getTree( $this->getFilegalsIdsTree(), $currentGalleryId );
 	}
 
-	// Build galleries browsing tree and current gallery path array
+	// Return galleries browsing tree
 	function getTree( $idTree, $currentGalleryId = null ) {
+		$idTreeKeys = array_keys( $idTree );
+
+		return array('link' => 'tiki-list_file_gallery.php', 'id' => $idTreeKeys[0] );
+	}
+	
+	// Return the given gallery's path. The path starts with a constant component, File Galleries. It would be File Galleries > Foo for a root file gallery named "Foo".
+	// Returns an array with 2 elements, "Array" and "HTML".
+	// Array is a numerically-indexed array with one element per path component. Each value is the name of the component (usually a file gallery name). Keys are file gallery OIDs.
+	// HTML is a string of HTML code to display the path.
+	function getPath( $currentGalleryId) {
 		global $prefs;
 
-		$allGalleries = $this->getSubGalleries();
-
-		$idTreeKeys = array_keys( $idTree );
-		$rootGalleryId = $idTreeKeys[0];
-		if ( $currentGalleryId === null ) $currentGalleryId = $rootGalleryId;
-
-		$script = 'tiki-list_file_gallery.php';
-		$tree = array('link' => $script, 'id' => $rootGalleryId );
-
 		$path = array();
-		for ($node = $this->get_file_gallery_info($currentGalleryId); $node && $node['galleryId'] != $rootGalleryId; $node = $this->get_file_gallery_info($node['parentId'])) {
+		for ($node = $this->get_file_gallery_info($currentGalleryId); $node && $node['galleryId'] != $prefs['fgal_root_id']; $node = $this->get_file_gallery_info($node['parentId'])) {
 			$path[$node['galleryId']] = $node['name'];
 		}
-		$path[$rootGalleryId] = tra('File Galleries');
+		$path[$prefs['fgal_root_id']] = tra('File Galleries');
 		$path = array_reverse($path, true);
 		
 		$pathHtml = '';
 		foreach ( $path as $identifier => $name ) {
 			if ( $pathHtml != '' ) $pathHtml .= ' &nbsp;&gt;&nbsp;';
-			$pathHtml .= '<a href="' . $script . '?galleryId=' . $identifier . (!empty($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '') . '">' . htmlspecialchars($name) . '</a>';
+			$pathHtml .= '<a href="tiki-list_file_gallery.php?galleryId=' . $identifier . (!empty($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=' . urlencode($_REQUEST['filegals_manager']) : '') . '">' . htmlspecialchars($name) . '</a>';
 		}
 
 		return array(
-			'tree' => $tree,
-			'path' => $pathHtml,
-			'pathArray' => $path
+			'HTML' => $pathHtml,
+			'Array' => $path
 		);
 	}
 
