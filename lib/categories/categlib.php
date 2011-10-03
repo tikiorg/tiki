@@ -1476,7 +1476,7 @@ class CategLib extends ObjectLib
 		$this->query($query, array((int)$to, (int)$from));
 	}
 	// generate category tree for use in various places (like categorize_list.php)
-	function generate_cat_tree($categories, $canchangeall = false, $forceincat = array()) {
+	function generate_cat_tree($categories, $canchangeall = false, $forceincat = null) {
 		global $smarty;
 		include_once ('lib/tree/BrowseTreeMaker.php');
 		$tree_nodes = array();
@@ -1489,7 +1489,9 @@ class CategLib extends ObjectLib
 				}
 				
 				// if used in find, should force incat to check those that have been selected
-				$c['incat'] = in_array($c['categId'], $forceincat) ? 'y' : 'n';
+				if (is_array($forceincat)) {
+					$c['incat'] = in_array($c['categId'], $forceincat) ? 'y' : 'n';
+				}
 				
 				$smarty->assign( 'category_data', $c );
 				$tree_nodes[] = array(
