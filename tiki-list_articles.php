@@ -135,9 +135,10 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 	$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
 	if (!empty($_REQUEST['categId'])) {
-		$filter['categId'] = $_REQUEST['categId'];
+		$filter['categId'] = array((int) $_REQUEST['categId']);
 		$smarty->assign('find_categId', $_REQUEST['categId']);
 	}
+	$selectedCategories = $filter['categId'];
 }
 
 if (!isset($_REQUEST['lang'])) {
@@ -174,7 +175,7 @@ if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 	$categories = $categlib->getCategories();
 	$smarty->assign_by_ref('categories', $categories);
-	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));	
+	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $selectedCategories));	
 }
 if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();

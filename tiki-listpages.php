@@ -207,15 +207,18 @@ if (!empty($multiprint_pages)) {
 		} else {
 			$_REQUEST['cat_categories'] = array();
 		}
+		$selectedCategories = $_REQUEST['cat_categories']; 
 		$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
 		if (!empty($_REQUEST['category'])) {
 			global $categlib;
 			include_once ('lib/categories/categlib.php');
 			$filter['categId'] = $categlib->get_category_id($_REQUEST['category']);
 			$smarty->assign('find_categId', $filter['categId']);
+			$selectedCategories = array((int) $filter['categId']);
 		} elseif (!empty($_REQUEST['categId'])) {
 			$filter['categId'] = $_REQUEST['categId'];
 			$smarty->assign('find_categId', $_REQUEST['categId']);
+			$selectedCategories = array((int) $filter['categId']);
 		} else {
 			$smarty->assign('find_categId', '');
 		}
@@ -294,7 +297,7 @@ if (!empty($multiprint_pages)) {
 		include_once ('lib/categories/categlib.php');
 		$categories = $categlib->getCategories();
 		$smarty->assign('notable', 'y');
-		$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));
+		$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $selectedCategories));
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
 			foreach ($listpages['data'] as $i => $check) {
