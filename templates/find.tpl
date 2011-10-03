@@ -128,7 +128,8 @@
 
 {if ((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)}
 	<div class="category_find">
-	<div id="category_singleselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}none{else}block{/if};">
+	{if $find_show_categories_multi eq 'n' || $findSelectedCategoriesNumber <= 1}
+	<div id="category_singleselect_find">
 		<select name="categId" class="findcateg">
 			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 			{section name=ix loop=$categories}
@@ -139,6 +140,7 @@
 		</select>
 		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
 	</div>
+	{/if}
 	<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
   		<div class="multiselect"> 
   			{if count($categories) gt 0}
