@@ -163,6 +163,26 @@ class LogsQueryLib
 		return $this;
 	}
 	
+	function countTrackerItemsByDate($user, $isGroup = false) {
+		global $tikilib;
+		
+		$this->groupType = "countByDate";
+		$this->type = "trackeritem";
+		
+		$items = $tikilib->fetchAll("
+			SELECT * FROM tiki_tracker_items WHERE createdBy = ?
+		", array($user));
+
+		$result = array();
+		
+		foreach($items as $item) {
+			$count = $this->id($item['itemId'])->fetchAll();
+			if (!empty($count)) $result[] = $count;
+		}
+		
+		return $result;
+	}
+	
 	function fetchAll() {
 		global $tikilib;
 		
@@ -203,7 +223,7 @@ class LogsQueryLib
 				: ""
 			)."
 		";
-		
+
 		$params = array($this->type);
 		
 		if (!empty($this->id)) $params[] = $this->id;

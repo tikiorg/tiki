@@ -36,7 +36,7 @@ function wikiplugin_contributionsdashboard_info() {
 }
 
 function wikiplugin_contributionsdashboard($data, $params) {
-	global $tikilib, $headerlib;
+	global $tikilib, $headerlib, $user;
 	$trklib = TikiLib::lib("trk");
 	$trkqrylib = TikiLib::lib("trkqry");
 	$logsqrylib = TikiLib::lib("logsqry");
@@ -62,18 +62,24 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	$raphaelData = array();
 	$raphaelDates = array();
-	
-	foreach(LogsQueryLib::wikiPage($_REQUEST['page'])
-			->viewed()
-			->desc()
-			->start($start)
-			->end($end)
-			->countByDate() as $log) {
-		
-		$raphaelData[] = $log['count'] * 1;
-		$raphaelDates[] = $log['date'];
+
+	foreach(LogsQueryLib::trackerItem()->countTrackerItemsByDate("simon") as $log) {
+		foreach($log as $count) {
+			$raphaelData[$count['date']] += $count['count'] * 1;
+			$raphaelDates[$count['date']] = $count['date'];
+		}
 	}
 	
+	$j = 0;
+	foreach($raphaelData as $date => $count) {
+		$raphaelDates[$j] = $date;
+		$raphaelData[$j] = $count;
+		
+		unset($raphaelDates[$date]);
+		unset($raphaelData[$date]);
+		$j++;
+	}
+
 	$headerlib->add_jq_onready("
 		var raphael$i = Raphael($('#raphael$i')[0]);
 		
