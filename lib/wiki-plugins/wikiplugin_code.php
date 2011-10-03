@@ -91,6 +91,7 @@ function wikiplugin_code($data, $params) {
 	}
 
 	$out = '<pre class="codelisting" ' . (isset($colors) ? ' data-syntax="' . $colors . '" ' : '')
+		. (isset($ln) ? ' data-line-numbers="' . $ln . '" ' : '')
 		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'"'.$boxid.'>'
 		. '~np~'
 		. $out
