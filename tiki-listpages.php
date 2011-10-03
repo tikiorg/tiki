@@ -208,16 +208,18 @@ if (!empty($multiprint_pages)) {
 			$_REQUEST['cat_categories'] = array();
 		}
 		$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
-		if (!empty($_REQUEST['categId'])) {
-			$filter['categId'] = $_REQUEST['categId'];
-			$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
-		}
 		if (!empty($_REQUEST['category'])) {
 			global $categlib;
 			include_once ('lib/categories/categlib.php');
 			$filter['categId'] = $categlib->get_category_id($_REQUEST['category']);
-			$smarty->assign_by_ref('find_categId', $filter['categId']);
+			$smarty->assign('find_categId', $filter['categId']);
+		} elseif (!empty($_REQUEST['categId'])) {
+			$filter['categId'] = $_REQUEST['categId'];
+			$smarty->assign('find_categId', $_REQUEST['categId']);
+		} else {
+			$smarty->assign('find_categId', '');
 		}
+
 	}
 
 	if ((!empty($_REQUEST['page_orphans']) && $_REQUEST['page_orphans'] == 'y') || (isset($_REQUEST['findfilter_orphan']) && $_REQUEST['findfilter_orphan'] == 'page_orphans')) {
