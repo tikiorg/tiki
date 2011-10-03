@@ -19,11 +19,6 @@ require_once ('lib/tree/tree.php');
  */
 class BrowseTreeMaker extends TreeMaker
 {
-	/// Constructor
-	function BrowseTreeMaker($prefix) {
-		$this->TreeMaker($prefix);
-	}
-
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar) {
 		global $headerlib, $prefs;

@@ -33,7 +33,7 @@ abstract class TreeMaker
 	var $prefix;
 
 	/// Constructor
-	function TreeMaker($prefix) {
+	function __construct($prefix) {
 		$this->prefix = $prefix;
 	}
 
