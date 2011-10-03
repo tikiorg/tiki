@@ -385,7 +385,7 @@ if ($prefs['feature_trackers'] == 'y') {
 }
 
 if ($prefs['feature_draw'] == 'y') {
-	$headerlib->add_jsfile("lib/svg-edit/embedapi.js");
+	$headerlib->add_jsfile("lib/svg-edit/embedapi.js", "external");
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
 }
