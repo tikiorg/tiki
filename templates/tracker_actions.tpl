@@ -4,10 +4,7 @@
 {if $tiki_p_admin_trackers eq 'y'}
 	{button href="tiki-admin_trackers.php?cookietab=1" _text="{tr}Admin Trackers{/tr}"}
 	{if !empty($trackerId)}
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&cookietab=2" _text="{tr}Edit Tracker{/tr}"}
 		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}
-	{else}
-		{button href="tiki-admin_trackers.php?cookietab=1" _text="{tr}Create Tracker{/tr}"}
 	{/if}
 {/if}
 
