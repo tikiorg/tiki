@@ -31,6 +31,13 @@ function wikiplugin_contributionsdashboard_info() {
 				'filter' => 'striptags',
 				'default' => 'Today',
 			),
+			'types' => array(
+				'required' => true,
+				'name' => tra('Dashboard Types'),
+				'description' => tra('The type of charts that will be rendered seperated by comma'),
+				'filter' => 'striptags',
+				'default' => 'trackeritems',
+			),
 		),
 	);
 }
@@ -50,61 +57,68 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	$default = array(
 		"start"=> time() - (7 * 24 * 60 * 60),
-		"end"=> time()
+		"end"=> time(),
+		"types"=> "trackeritems"
 	);
 	
 	$params = array_merge($default, $params);
 	
 	extract($params,EXTR_SKIP);
 	
+	$types = explode(',', $types);
+	
 	$headerlib->add_jsfile("lib/jquery.sheet/plugins/raphael-min.js", "external");
 	$headerlib->add_jsfile("lib/jquery.sheet/plugins/g.raphael-min.js", "external");
 	
-	$raphaelData = array();
-	$raphaelDates = array();
+	foreach($types as $type) {
+		if ($type == "trackeritems") {
+			$raphaelData = array();
+			$raphaelDates = array();
+			
+			//simon should be replaced with global $user when done
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countTrackerItemsByDate("simon") as $log) {
+				$raphaelData[] = $log['count'] * 1;
+				$raphaelDates[] = $log['date'];
+			}
 
-	foreach(LogsQueryLib::trackerItem()->countTrackerItemsByDate("simon") as $log) {
-		foreach($log as $count) {
-			$raphaelData[$count['date']] += $count['count'] * 1;
-			$raphaelDates[$count['date']] = $count['date'];
+			$headerlib->add_jq_onready("
+				var r = Raphael($('#raphaelTrackeritems$i')[0]);
+				
+				var data = ".json_encode($raphaelData).";
+				var dates = ".json_encode($raphaelDates).";
+				
+				r.g.barchart(10,10, $('#raphaelTrackeritems$i').width(),$('#raphaelTrackeritems$i').height(), [data])
+					.hover(function () {
+						this.flag = r.g.popup(
+							this.bar.x,
+							this.bar.y,
+							dates[this.bar.id] + '- ' + this.bar.value || '0'
+						).insertBefore(this);
+					},function () {
+						this.flag.animate({
+							opacity: 0
+						},
+						300,
+						function () {
+							this.remove();
+						});
+					});
+			");
+			
+			$result .= "<div id='raphaelTrackeritems$i' style='width: 100%; height: 400px; display: block;'></div>";
 		}
 	}
 	
-	$j = 0;
-	foreach($raphaelData as $date => $count) {
-		$raphaelDates[$j] = $date;
-		$raphaelData[$j] = $count;
-		
-		unset($raphaelDates[$date]);
-		unset($raphaelData[$date]);
-		$j++;
-	}
-
-	$headerlib->add_jq_onready("
-		var raphael$i = Raphael($('#raphael$i')[0]);
-		
-		raphael$i.data = ".json_encode($raphaelData).";
-		raphael$i.dates = ".json_encode($raphaelDates).";
-		
-		raphael$i.g.barchart(10,10, $('#raphael$i').width(),$('#raphael$i').height(), [raphael$i.data])
-			.hover(function () {
-				this.flag = raphael$i.g.popup(
-					this.bar.x,
-					this.bar.y,
-					raphael1.dates[this.bar.id] + '- ' + this.bar.value || '0'
-				).insertBefore(this);
-			},function () {
-				this.flag.animate({
-					opacity: 0
-				},
-				300,
-				function () {
-					this.remove();
-				});
-			});
-	");
-	
-	$result = "<div id='raphael$i'></div>";
-	
-	return $result;
+	return "<div class='ui-widget ui-widget-content ui-corner-all'>
+				<h3 class='ui-state-default ui-corner-tl ui-corner-tr' style='margin: 0; padding: 5px;'>
+					".tr("Contributions Dashboard")."
+					<span style='font-size: 12px; padding-left: 10px;'>
+						".tr("Date Range")."
+						<input type='text' id='raphaelStart$i' value='".strftime("%m/%d/%Y", $start)."' />
+						<input type='text' id='raphaelEnd$i' value='".strftime("%m/%d/%Y", $end)."' />
+						<input type='button' id='raphaelUpdate$i' value='".tr("Update")."' />
+					</span>
+				</h3>
+				$result
+			</div>";
 }

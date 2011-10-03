@@ -176,10 +176,19 @@ class LogsQueryLib
 		$result = array();
 		
 		foreach($items as $item) {
-			$count = $this->id($item['itemId'])->fetchAll();
-			if (!empty($count)) $result[] = $count;
+			foreach($this->id($item['itemId'])->fetchAll() as $log) {
+				if (empty($result[$log['date']])) $result[$log['date']] = array();
+				$result[$log['date']]['count'] += $log['count'];
+				$result[$log['date']]['date'] = $log['date'];
+			}
 		}
 		
+		$i = 0;
+		foreach($result as $key=>$log) {
+			$result[$i] = $result[$key];
+			unset($result[$key]);
+			$i++;
+		}
 		return $result;
 	}
 	
