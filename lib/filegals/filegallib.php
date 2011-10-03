@@ -258,6 +258,7 @@ class FileGalLib extends TikiLib
 			'type' => 'file',
 			'object' => $fileId,
 			'galleryId' => $galleryId,
+			'filetype' => $type,
 		));
 
 		//Watches
@@ -930,6 +931,7 @@ class FileGalLib extends TikiLib
 				'type' => 'file',
 				'object' => $id,
 				'galleryId' => $gal_info['galleryId'],
+				'filetype' => $type,
 			));
 
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
