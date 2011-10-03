@@ -124,7 +124,6 @@ if (!isset($_REQUEST["topic"])) {
 $filter['categId'] = 0;
 if ($prefs['feature_categories'] == 'y') {
 	if (!empty($_REQUEST['cat_categories'])) {
-		$filter['categId'] = $_REQUEST['cat_categories'];
 		if (count($_REQUEST['cat_categories']) > 1) {
 			unset($_REQUEST['categId']);
 		} else {
@@ -133,10 +132,13 @@ if ($prefs['feature_categories'] == 'y') {
 	} else {
 		$_REQUEST['cat_categories'] = array();
 	}
+	$filter['categId'] = $_REQUEST['cat_categories'];
 	$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
 	if (!empty($_REQUEST['categId'])) {
 		$filter['categId'] = array((int) $_REQUEST['categId']);
 		$smarty->assign('find_categId', $_REQUEST['categId']);
+	} else {
+		$smarty->assign('find_categId', '');
 	}
 	$selectedCategories = $filter['categId'];
 }
