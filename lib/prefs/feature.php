@@ -1141,7 +1141,7 @@ function prefs_feature_list($partial = false) {
 		),	
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly URL'),
-			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs. On IIS, rename web_config to web.config'),
+			'description' => tra('If you are using Apache, you can copy _htaccess to .htaccess to get Short URLs. On IIS, copy web_config to web.config'),
 			'help' => 'Clean+URLs',
 			'perspective' => false,
 			'type' => 'flag',
