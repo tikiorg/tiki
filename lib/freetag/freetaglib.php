@@ -653,7 +653,7 @@ class FreetagLib extends ObjectLib
 						. ' (`tagId`, `objectId`, `user`, `created`)'
 						. ' VALUES (?, ?, ?, ?)'
 						;
-		$bindvals = array($tagId, $objectId, $user, time());
+		$bindvals = array($tagId, $objectId, $user ? $user : '', time());
 
 		$this->query($query, $bindvals);
 
