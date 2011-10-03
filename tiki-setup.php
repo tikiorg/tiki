@@ -385,6 +385,7 @@ if ($prefs['feature_trackers'] == 'y') {
 }
 
 if ($prefs['feature_draw'] == 'y') {
+	//svg-edit/empbedapi.js neededs to be external because it is not minifyable, dirty code
 	$headerlib->add_jsfile("lib/svg-edit/embedapi.js", "external");
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
