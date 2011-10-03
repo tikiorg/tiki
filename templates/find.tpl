@@ -132,11 +132,11 @@
 	<div id="category_singleselect_find">
 		<select name="categId" class="findcateg">
 			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
-			{section name=ix loop=$categories}
-				<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
-					{$categories[ix].categpath|tr_if|escape}
+			{foreach $categories as $identifier => $category}
+				<option value="{$identifier}" {if $find_categId eq $identifier}selected="selected"{/if}>
+					{$category.categpath|tr_if|escape}
 				</option>
-			{/section}
+			{/foreach}
 		</select>
 		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
 	</div>
