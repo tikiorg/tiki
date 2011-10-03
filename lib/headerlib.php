@@ -270,6 +270,7 @@ class HeaderLib
 				foreach( $files as $f ) {
 					$content = file_get_contents( $f );
 					if ( ! preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
+						set_time_limit(600);
 						$minified .= JSMin::minify( $content );
 					} else {
 						$minified .= "\n// skipping minification for $f \n" . $content;
