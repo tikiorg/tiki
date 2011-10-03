@@ -406,8 +406,8 @@ $icons = array(
 		'help' => 'Category',
 	),
 	"areas" => array(
-		'icon' => 'img/clip.gif',
-		'position' => '0px 0px;',
+		'icon' => 'pics/large/areas.png',
+		'position' => '-500px -715px;',
 		'title' => tr('Areas'),
 		'disabled' => $prefs['feature_areas'] != 'y',
 		'description' => tr('Configure areas feature'),
