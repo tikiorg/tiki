@@ -12,13 +12,13 @@ class Calendar_DateTest extends TikiTestCase
 		$this->assertEquals( '2010-08-01 00:00', TikiLib::date_format('%Y-%m-%d %H:%m', $date) );
 	}
 	function testInfoDate() {
-		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		$calendarlib = TikiLib::lib('calendar');
 		$date = TikiLib::make_time(0, 0, 0, 8, 1, 2010);
 		$focus = $calendarlib->infoDate($date);
 		$this->assertEquals( '2010-08-01', TikiLib::date_format('%Y-%m-%d', $focus['date']) );
 	}
 	function testFocusToStartEnd() {
-		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		$calendarlib = TikiLib::lib('calendar');
 		$date = TikiLib::make_time(0, 0, 0, 8, 1, 2010);
 		$start = $startNext = array();
 		$calendarlib->focusStartEnd($calendarlib->infoDate($date), 'month', 'y', $start, $startNext);
@@ -34,7 +34,7 @@ class Calendar_DateTest extends TikiTestCase
 		$this->assertEquals( '2010-05-01', TikiLib::date_format('%Y-%m-%d', $startNext['date']) );
 	}
 	function testFocusToCell() {
-		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		$calendarlib = TikiLib::lib('calendar');
 		$start = $startNext = array();
 		$date = TikiLib::make_time(0, 0, 0, 8, 1, 2010);
 		$calendarlib->focusStartEnd($calendarlib->infoDate($date), 'month', 'y', $start, $startNext);
@@ -50,7 +50,7 @@ class Calendar_DateTest extends TikiTestCase
 		$this->assertEquals( '2010-09-05', TikiLib::date_format('%Y-%m-%d', $cell[5][6]['date']) );
 	}
 	function testPrevious() {
-		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		$calendarlib = TikiLib::lib('calendar');
 		$date = TikiLib::make_time(0, 0, 0, 7, 20, 2010);
 		$previous = $calendarlib->focusPrevious($calendarlib->infoDate($date), 'month');
 		$this->assertEquals( '2010-06-20', TikiLib::date_format('%Y-%m-%d', $previous['date']) );
@@ -62,7 +62,7 @@ class Calendar_DateTest extends TikiTestCase
 		$this->assertEquals( '2009-11-30', TikiLib::date_format('%Y-%m-%d', $previous['date']) );
 	}
 	function testNext() {
-		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		$calendarlib = TikiLib::lib('calendar');
 		$date = TikiLib::make_time(0, 0, 0, 8, 31, 2010);
 		$previous = $calendarlib->focusNext($calendarlib->infoDate($date), 'month');
 		$this->assertEquals( '2010-09-30', TikiLib::date_format('%Y-%m-%d', $previous['date']) );
