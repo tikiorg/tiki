@@ -36,7 +36,7 @@ function wikiplugin_contributionsdashboard_info() {
 }
 
 function wikiplugin_contributionsdashboard($data, $params) {
-	global $tikilib;
+	global $tikilib, $headerlib;
 	$trklib = TikiLib::lib("trk");
 	$trkqrylib = TikiLib::lib("trkqry");
 	$logsqrylib = TikiLib::lib("logsqry");
@@ -44,6 +44,8 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	static $iContributionsDashboard = 0;
 	++$iContributionsDashboard;
+	$i = $iContributionsDashboard;
+	
 	$smarty->assign('iContributionsDashboard', $iContributionsDashboard);
 	
 	$default = array(
@@ -55,26 +57,48 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	extract($params,EXTR_SKIP);
 	
-	$result = "";
-	$result .= "Top Users for this page<br />";
+	$headerlib->add_jsfile("lib/jquery.sheet/plugins/raphael-min.js", "external");
+	$headerlib->add_jsfile("lib/jquery.sheet/plugins/g.raphael-min.js", "external");
+	
+	$raphaelData = array();
+	$raphaelDates = array();
+	
 	foreach(LogsQueryLib::wikiPage($_REQUEST['page'])
 			->viewed()
 			->desc()
 			->start($start)
 			->end($end)
 			->countByDate() as $log) {
-		$result .= $log['date'].' - '.$log['count'].'<br />';
+		
+		$raphaelData[] = $log['count'] * 1;
+		$raphaelDates[] = $log['date'];
 	}
 	
-	$result .= "Hits: " .
-		LogsQueryLib::type($_REQUEST['page'])
-			->id("HomePage")
-			->viewed()
-			->start($start)
-			->end($end)
-			->count();
+	$headerlib->add_jq_onready("
+		var raphael$i = Raphael($('#raphael$i')[0]);
+		
+		raphael$i.data = ".json_encode($raphaelData).";
+		raphael$i.dates = ".json_encode($raphaelDates).";
+		
+		raphael$i.g.barchart(10,10, $('#raphael$i').width(),$('#raphael$i').height(), [raphael$i.data])
+			.hover(function () {
+				this.flag = raphael$i.g.popup(
+					this.bar.x,
+					this.bar.y,
+					raphael1.dates[this.bar.id] + '- ' + this.bar.value || '0'
+				).insertBefore(this);
+			},function () {
+				this.flag.animate({
+					opacity: 0
+				},
+				300,
+				function () {
+					this.remove();
+				});
+			});
+	");
 	
-	$result .= "<br />";
+	$result = "<div id='raphael$i'></div>";
 	
 	return $result;
 }
