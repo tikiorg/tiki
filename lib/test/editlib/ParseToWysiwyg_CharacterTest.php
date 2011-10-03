@@ -44,7 +44,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		
 		$inData = '{FONT(type="span", font-family="tahoma")}text{FONT}';
 		$exp = '<span style="font-family:tahoma;">text<span>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = $el->parseToWysiwyg($inData);
 		$this->assertEquals($exp, $out);
 	}
 
@@ -56,7 +56,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		
 		$inData = '{FONT(type="span", font-size="12px")}text{FONT}';
 		$exp = '<span style="font-size:12px;">text<span>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = $el->parseToWysiwyg($inData);
 		$this->assertEquals($exp, $out);
 	}
 	
@@ -109,7 +109,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		
 		$inData = '{SUP()}superscript{SUP}';
 		$exp = '<sup>superscript</sup>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = $el->parseToWysiwyg($inData);
 		$this->assertEquals($exp, $out);
 	}		
 	
@@ -121,7 +121,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		
 		$inData = '-+monospaced+-';
 		$exp = '<code>monospaced</code>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = $el->parseToWysiwyg($inData);
 		$this->assertEquals($exp, $out);
 	}
 
@@ -133,7 +133,7 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		
 		$inData = '{DIV(type="tt")}teletype{DIV}';
 		$exp = '<tt>teletype</tt>';
-		$out = $el->parseToWysiwyg($inData, true);
+		$out = $el->parseToWysiwyg($inData);
 		$this->assertEquals($exp, $out);
 	}
 	

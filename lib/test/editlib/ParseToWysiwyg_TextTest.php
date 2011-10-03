@@ -52,7 +52,7 @@ private $el = null; // the EditLib
 		 * default
 		 */
 		$inData = 'This text is aligned left';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 		
 		
@@ -61,7 +61,7 @@ private $el = null; // the EditLib
 		 */
 		$ex = '<div style="text-align: left;">This text is aligned left</div>';
 		$inData = '{DIV(align="left")}This text is aligned left{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}
 	
@@ -81,7 +81,7 @@ private $el = null; // the EditLib
 		$prefs['feature_use_three_colon_centertag'] = 'n';
 		$ex = '<div style="text-align: center;">This text is centered</div>';
 		$inData = '::This text is centered::';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 
 		
@@ -91,7 +91,7 @@ private $el = null; // the EditLib
 		$prefs['feature_use_three_colon_centertag'] = 'y';
 		$ex = '<div style="text-align: center;">This text is centered</div>';
 		$inData = ':::This text is centered:::';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}
 	
@@ -106,7 +106,7 @@ private $el = null; // the EditLib
 
 		$ex = '<div style="text-align: right;">This text is aligned right</div>';
 		$inData = '{DIV(align="right")}This text is aligned right{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}
 	
@@ -121,7 +121,7 @@ private $el = null; // the EditLib
 
 		$ex = '<div style="text-align: justify;">This text is justified</div>';
 		$inData = '{DIV(align="justify")}This text is justified{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}
 		
@@ -135,7 +135,7 @@ private $el = null; // the EditLib
 		
 		$ex = '<p style="text-align: left;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="left")}This text is aligned{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}	
 	
@@ -235,7 +235,7 @@ private $el = null; // the EditLib
 		
 		$ex = '<p style="text-align: center;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="center")}This text is aligned{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}		
 	
@@ -249,7 +249,7 @@ private $el = null; // the EditLib
 		
 		$ex = '<p style="text-align: right;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="right")}This text is aligned{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}	
 
@@ -263,7 +263,7 @@ private $el = null; // the EditLib
 		
 		$ex = '<p style="text-align: justify;">This text is aligned</p>';
 		$inData = '{DIV(type="p", align="justify")}This text is aligned{DIV}';
-		$out = $this->el->parseToWysiwyg($inData, true);
+		$out = $this->el->parseToWysiwyg($inData);
 		$this->assertEquals($ex, $out);
 	}	
 
