@@ -18,7 +18,7 @@ require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
 $prefs = array();
-$prefs['smarty_notice_reporting'] = 'y';
+$prefs['smarty_notice_reporting'] = 'n';
 $prefs['smarty_compilation'] = 'always';
 $prefs['smarty_security'] = 'y';
 require_once 'lib/init/initlib.php';
