@@ -58,7 +58,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	$default = array(
 		"start"=> 	time() - (365 * 24 * 60 * 60),
 		"end"=> 	time(),
-		"types"=> 	"trackeritems,toptrackeritemsusers"
+		"types"=> 	"trackeritems,toptrackeritemsusers,toptrackeritemsusersip"
 	);
 	
 	$params = array_merge($default, $params);
@@ -148,6 +148,28 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			");
 			
 			$result .= "<div id='raphaelTrackeritemsUsers$i' style='width: 100%; height: 400px; display: block;'></div>";
+		}
+		
+		if ($type == "toptrackeritemsusersip") {
+			$hits = array();
+			$users = array();
+			
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersIPFilterId($usersTrackerItems) as $data => $count) {
+				$data = json_decode($data);
+				
+				$hits[] = $count;
+				$users[] = $data->user . ' ' . $data->ip;
+			}
+
+			$headerlib->add_jq_onready("				
+				$('#raphaelTrackeritemsUsersIP$i').chart({
+					labels: 	".json_encode($users).",
+					data:		".json_encode($hits).",
+					label:		'Tracker Item Activity Grouped By Users & IP Address'
+				});
+			");
+			
+			$result .= "<div id='raphaelTrackeritemsUsersIP$i' style='width: 100%; height: 400px; display: block;'></div>";
 		}
 	}
 	
