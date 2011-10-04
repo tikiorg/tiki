@@ -50,11 +50,11 @@ class PreferencesLib
 				'plugin' => '',
 				'view' => '',
 			);
-			$info = array_merge($defaults, $data[$name]);
-
-			if ($info['type'] === 'textarea') {
+			if ($data[$name]['type'] === 'textarea') {
 				$defaults['size'] = 10;
 			}
+
+			$info = array_merge($defaults, $data[$name]);
 
 			if ( $source == null ) {
 				$source = $prefs;
