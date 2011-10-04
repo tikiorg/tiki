@@ -1328,7 +1328,8 @@ class FileGalLib extends TikiLib
 	 * @param int $galleryId The id of the gallery 
 	 * @return The special root gallery Id
 	 */
-	function getGallerySpecialRoot( $galleryId, $treeParentId = null, &$tree = null ) {
+	// WARNING: Semi-private function. "Public callers" should only pass the galleryId parameter.
+	function getGallerySpecialRoot( $galleryId, $treeParentId = null, &$tree = null /* Pass by reference for performance */) {
 		global $prefs;
 
 		if ( ( $treeParentId === null xor $tree === null ) || $galleryId <= 0 ) {
