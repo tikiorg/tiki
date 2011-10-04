@@ -56,19 +56,25 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	$smarty->assign('iContributionsDashboard', $iContributionsDashboard);
 	
 	$default = array(
-		"start"=> time() - (7 * 24 * 60 * 60),
-		"end"=> time(),
-		"types"=> "trackeritems"
+		"start"=> 	time() - (7 * 24 * 60 * 60),
+		"end"=> 	time(),
+		"types"=> 	"trackeritems"
 	);
 	
 	$params = array_merge($default, $params);
 	
-	extract($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
+	
+	$start = (!empty($_REQUEST["raphaelStart$i"]) ? strtotime($_REQUEST["raphaelStart$i"]) : $start);
+	$end = (!empty($_REQUEST["raphaelEnd$i"]) ? strtotime($_REQUEST["raphaelEnd$i"]) : $start);
 	
 	$types = explode(',', $types);
 	
 	$headerlib->add_jsfile("lib/jquery.sheet/plugins/raphael-min.js", "external");
 	$headerlib->add_jsfile("lib/jquery.sheet/plugins/g.raphael-min.js", "external");
+	$headerlib->add_jq_onready("
+		$('.cDashDate').datepicker();
+	");
 	
 	foreach($types as $type) {
 		if ($type == "trackeritems") {
@@ -81,7 +87,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 				$raphaelDates[] = $log['date'];
 			}
 
-			$headerlib->add_jq_onready("
+			$headerlib->add_jq_onready("				
 				var r = Raphael($('#raphaelTrackeritems$i')[0]);
 				
 				var data = ".json_encode($raphaelData).";
@@ -109,14 +115,24 @@ function wikiplugin_contributionsdashboard($data, $params) {
 		}
 	}
 	
-	return "<div class='ui-widget ui-widget-content ui-corner-all'>
+	return "
+			<style>
+				.headerHelper {
+					font-size: 14px;
+					padding-left: 20px;
+				}
+			</style>
+			<div class='ui-widget ui-widget-content ui-corner-all'>
 				<h3 class='ui-state-default ui-corner-tl ui-corner-tr' style='margin: 0; padding: 5px;'>
 					".tr("Contributions Dashboard")."
-					<span style='font-size: 12px; padding-left: 10px;'>
+					<span class='headerHelper'>
 						".tr("Date Range")."
-						<input type='text' id='raphaelStart$i' value='".strftime("%m/%d/%Y", $start)."' />
-						<input type='text' id='raphaelEnd$i' value='".strftime("%m/%d/%Y", $end)."' />
-						<input type='button' id='raphaelUpdate$i' value='".tr("Update")."' />
+						<form>
+							<input type='text' name='raphaelStart$i' id='raphaelStart$i' class='cDashDate' value='".strftime("%m/%d/%Y", $start)."' />
+							<input type='text' name='raphaelEnd$i' id='raphaelEnd$i' class='cDashDate' value='".strftime("%m/%d/%Y", $end)."' />
+							<input type='hidden' name='refresh' value='1' />
+							<input type='submit' id='raphaelUpdate$i' value='".tr("Update")."' />
+						</form>
 					</span>
 				</h3>
 				$result
