@@ -11,6 +11,9 @@
 </form>
 	{/tab}
 	{tab name="{tr}Areas Overview{/tr}"}	
+	{if isset($error)}
+	{remarksbox type="warning" title="{tr}Error{/tr}"}{$error} {tr}Nothing was updated.{/tr}{/remarksbox}
+	{/if}
 <form action="tiki-admin.php?page=areas" method="post">
 		<table class="normal">
 		<tr>

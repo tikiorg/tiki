@@ -77,24 +77,22 @@ class AreasLib extends CategLib
 		if( is_array($descendants) ){
 		foreach($descendants as $item)
 			$areas[$item] = array();	// it only should be just one perspective assigned
-		$result = $this->query( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
-
-	        if($result !== false){
-			while( $row = $result->fetchRow() ) {
+		$result = $this->fetchAll( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
+	        if(count($result)!=0){
+			foreach( $result as $row ) {
 				$categs = unserialize( $row['value'] );			
 				foreach($categs as $item) if(array_key_exists($item, $areas)) $areas[$item][] = $row['perspectiveId'];
 	 		}
 
+		// to get rid off probably old data
+		$this->query("DELETE FROM tiki_areas");
+
 		foreach($areas as $key=>$item){
-			$result = $this->query("SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ".$key );
-			if(count($result->fetchRow())){
-				$result = $this->query("UPDATE tiki_areas SET perspectives = ? WHERE categId = ?",array(serialize($item), $key));
-			}else{ 
-				$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));}
+			$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));
 			}
-		}
+		}else return tra("No category jail set in any perspective.");
 		return true;
-		}else return false;
+		}else return tra("Areas root category id")." ".tra("is invalid.");
 	}
 } // class end
 $areaslib = new AreasLib();

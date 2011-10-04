@@ -18,7 +18,8 @@ global $areaslib;
 	// updating table tiki_areas	
 	if(isset($_REQUEST['update_areas'])){
 		check_ticket('admin-inc-areas');
-		$areaslib->update_areas();
+		$pass = $areaslib->update_areas();
+		if($pass!==true) $smarty->assign_by_ref('error', $pass);
 	}
 
 // building overview
