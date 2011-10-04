@@ -64,10 +64,13 @@ function get_default_prefs() {
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
 
-		// filegals
-		'fgal_root_id' => 1,
-		'fgal_root_user_id' => 2,
-		'fgal_root_wiki_attachments_id' => 3,
+		// File galleries
+		
+		// Root galleries fake preferences. These are automatically overridden by schema upgrade scripts for installations that pre-date the existence of these root galleries.
+		'fgal_root_id' => 1, // Ancestor of "default" type galleries. For old installs, overriden by 20090811_filegals_container_tiki.sql
+		'fgal_root_user_id' => 2, // Ancestor of "user" type galleries (feature_use_fgal_for_user_files). For old installs, overriden by 20101126_fgal_add_gallerie_user_tiki.php
+		'fgal_root_wiki_attachments_id' => 3, // Ancestor of wiki "attachments" type galleries (feature_use_fgal_for_wiki_attachments). For old installs, overriden by 20101210_fgal_add_wiki_attachments_tiki.php
+
 		'fgal_enable_auto_indexing' => 'y',
 		'fgal_asynchronous_indexing' => 'y',
 		'fgal_sort_mode' => '',
