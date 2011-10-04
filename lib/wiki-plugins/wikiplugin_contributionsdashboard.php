@@ -58,7 +58,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	$default = array(
 		"start"=> 	time() - (7 * 24 * 60 * 60),
 		"end"=> 	time(),
-		"types"=> 	"trackeritems"
+		"types"=> 	"trackeritems,toptrackeritemsusers"
 	);
 	
 	$params = array_merge($default, $params);
@@ -78,20 +78,20 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	foreach($types as $type) {
 		if ($type == "trackeritems") {
-			$raphaelData = array();
-			$raphaelDates = array();
+			$data = array();
+			$dates = array();
 			
 			//simon should be replaced with global $user when done
 			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countTrackerItemsByDate("simon") as $log) {
-				$raphaelData[] = $log['count'] * 1;
-				$raphaelDates[] = $log['date'];
+				$data[] = $log['count'] * 1;
+				$dates[] = $log['date'];
 			}
 
 			$headerlib->add_jq_onready("				
 				var r = Raphael($('#raphaelTrackeritems$i')[0]);
 				
-				var data = ".json_encode($raphaelData).";
-				var dates = ".json_encode($raphaelDates).";
+				var data = ".json_encode($data).";
+				var dates = ".json_encode($dates).";
 				
 				r.g.barchart(10,10, $('#raphaelTrackeritems$i').width(),$('#raphaelTrackeritems$i').height(), [data])
 					.hover(function () {
@@ -113,27 +113,69 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			
 			$result .= "<div id='raphaelTrackeritems$i' style='width: 100%; height: 400px; display: block;'></div>";
 		}
+		
+		if ($type == "toptrackeritemsusers") {
+			$hits = array();
+			$users = array();
+			
+			//simon should be replaced with global $user when done
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->trackerItemsTopUsersByDate("simon") as $key=>$count) {
+				$hits[] = $count;
+				$users[] = $key;
+			}
+
+			$headerlib->add_jq_onready("				
+				var r = Raphael($('#raphaelTrackeritemsUsers$i')[0]);
+				
+				var hits = ".json_encode($hits).";
+				var users = ".json_encode($users).";
+				
+				r.g.barchart(10,10, $('#raphaelTrackeritemsUsers$i').width(),$('#raphaelTrackeritemsUsers$i').height(), [hits])
+					.hover(function () {
+						var o = '';
+						
+						this.flag = r.g.popup(
+							this.bar.x,
+							this.bar.y,
+							users[$(this.bar.node).index() - 2] + ' - ' + this.bar.value || '0'
+						).insertBefore(this);
+					},function () {
+						this.flag.animate({
+							opacity: 0
+						},
+						300,
+						function () {
+							this.remove();
+						});
+					});
+			");
+			
+			$result .= "<div id='raphaelTrackeritemsUsers$i' style='width: 100%; height: 400px; display: block;'></div>";
+		}
 	}
 	
 	return "
 			<style>
+				.header {
+					font-size: 16px;
+				}
 				.headerHelper {
-					font-size: 14px;
-					padding-left: 20px;
+					font-size: 12px;
+					float: right;
+					padding: 0px;
+					margin-top: -7px;
 				}
 			</style>
 			<div class='ui-widget ui-widget-content ui-corner-all'>
-				<h3 class='ui-state-default ui-corner-tl ui-corner-tr' style='margin: 0; padding: 5px;'>
+				<h3 class='header ui-state-default ui-corner-tl ui-corner-tr' style='margin: 0; padding: 5px;'>
 					".tr("Contributions Dashboard")."
-					<span class='headerHelper'>
+					<form class='headerHelper'>
 						".tr("Date Range")."
-						<form>
-							<input type='text' name='raphaelStart$i' id='raphaelStart$i' class='cDashDate' value='".strftime("%m/%d/%Y", $start)."' />
-							<input type='text' name='raphaelEnd$i' id='raphaelEnd$i' class='cDashDate' value='".strftime("%m/%d/%Y", $end)."' />
-							<input type='hidden' name='refresh' value='1' />
-							<input type='submit' id='raphaelUpdate$i' value='".tr("Update")."' />
-						</form>
-					</span>
+						<input type='text' name='raphaelStart$i' id='raphaelStart$i' class='cDashDate' value='".strftime("%m/%d/%Y", $start)."' />
+						<input type='text' name='raphaelEnd$i' id='raphaelEnd$i' class='cDashDate' value='".strftime("%m/%d/%Y", $end)."' />
+						<input type='hidden' name='refresh' value='1' />
+						<input type='submit' id='raphaelUpdate$i' value='".tr("Update")."' />
+					</form>
 				</h3>
 				$result
 			</div>";

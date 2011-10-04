@@ -192,6 +192,29 @@ class LogsQueryLib
 		return $result;
 	}
 	
+	function trackerItemsTopUsersByDate($user, $isGroup = false) {
+		global $tikilib;
+		
+		$this->groupType = "";
+		$this->type = "trackeritem";
+		
+		$items = $tikilib->fetchAll("
+			SELECT * FROM tiki_tracker_items WHERE createdBy = ?
+		", array($user));
+
+		$result = array();
+		
+		foreach($items as $item) {
+			foreach($this->id($item['itemId'])->fetchAll() as $log) {
+				if (empty($result[$log['user']])) $result[$log['user']] = 0;
+				
+				$result[$log['user']]++;
+			}
+		}
+		
+		return $result;
+	}
+	
 	function fetchAll() {
 		global $tikilib;
 		
