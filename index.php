@@ -6,8 +6,9 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-if ( ! headers_sent() ) {
-	header('location: '.$prefs['tikiIndex']);
+if ( ! headers_sent($header_file, $header_line) ) {
+	header ('Location: '.$prefs['tikiIndex']);
 } else {
-	die("header already sent");
+	echo "Header already sent in ".$header_file." at line ".$header_line;
+	exit();
 }
