@@ -28,11 +28,6 @@ function module_categories_info() {
 				'description' => tra('Show subcategories objects when accessing a linked category. Possible values: on (default), off.'),
 				'filter' => 'word'
 			),
-			'style' => array(
-				'name' => tra('PHP Layers menu style'),
-				'description' => tra('Sets the menu style if PHP Layers is enabled. Possible values: tree (default), vert, horiz, plain, phptree.'),
-				'filter' => 'word'
-			),
 			'categId' => array(
 				'name' => tra('Category ID'),
 				'description' => tra('Limits displayed categories to a subtree of categories starting with the category with the given ID. Example value: 11. Default: 0 (don\'t limit display).'),
@@ -97,11 +92,6 @@ function module_categories( $mod_reference, &$module_params ) {
 		$categories = $filtered_categories;
 		unset($filtered_categories);
 	}
-
-	if (isset($module_params['style']))
-		$style = $module_params['style'];
-	else
-		$style = 'tree';
 		
 	include_once ('lib/tree/BrowseTreeMaker.php');
 	$tree_nodes = array();
