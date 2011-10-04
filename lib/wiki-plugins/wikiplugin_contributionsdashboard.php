@@ -56,7 +56,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	$smarty->assign('iContributionsDashboard', $iContributionsDashboard);
 	
 	$default = array(
-		"start"=> 	time() - (7 * 24 * 60 * 60),
+		"start"=> 	time() - (365 * 24 * 60 * 60),
 		"end"=> 	time(),
 		"types"=> 	"trackeritems,toptrackeritemsusers"
 	);
@@ -66,7 +66,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	extract($params, EXTR_SKIP);
 	
 	$start = (!empty($_REQUEST["raphaelStart$i"]) ? strtotime($_REQUEST["raphaelStart$i"]) : $start);
-	$end = (!empty($_REQUEST["raphaelEnd$i"]) ? strtotime($_REQUEST["raphaelEnd$i"]) : $start);
+	$end = (!empty($_REQUEST["raphaelEnd$i"]) ? strtotime($_REQUEST["raphaelEnd$i"]) : $end);
 	
 	$types = explode(',', $types);
 	
@@ -132,8 +132,6 @@ function wikiplugin_contributionsdashboard($data, $params) {
 				
 				r.g.barchart(10,10, $('#raphaelTrackeritemsUsers$i').width(),$('#raphaelTrackeritemsUsers$i').height(), [hits])
 					.hover(function () {
-						var o = '';
-						
 						this.flag = r.g.popup(
 							this.bar.x,
 							this.bar.y,
