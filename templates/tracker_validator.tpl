@@ -19,7 +19,7 @@ process_submit = function(me) {
 	$(me).attr("is_validating", false);
 
 	// disable submit button(s)
-	$(me).find("input[type=submit]").attr("disable", true).css("opacity",0.5)
+	$(me).find("input[type=submit]").attr("disabled", true);
 	me.submit();
 };
 {/jq}
