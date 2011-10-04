@@ -274,19 +274,19 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$this->markTestIncomplete('Work in progress.');		
 				
 		/*
-		 * - page
+		 * - page name = description
 		 */
-		$inData = '???';			
+		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">HomePage</a>';			
 		$ex = '((HomePage))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
-		
+
 		/*
 		 * - page
 		 * - description
 		 */
-		$inData = '???';		
+		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">The Home Page</a>';		
 		$ex = '((HomePage|The Home Page))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
@@ -297,7 +297,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		 * - link to an anchor
 		 * - description
  		 */
-		$inData = '???';		
+		$inData = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki page">Home Page, Heading &quot;Admin Panel&quot;</a>';		
 		$ex = '((HomePage|#Get_Started_using_Admin_Panel|Home Page, Heading \"Admin Panel\"))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);	
@@ -306,7 +306,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		/*
 		 * Internation characters
 		 */	
-		$inData = '???';	
+		$inData = '<a href="tiki-index.php?page=%C3%A4%C3%B6%C3%BC%E2%82%AC+Page" title="äöü€ Page" class="wiki">äöü€ Page</a>';	
 		$ex = '((äöü€ Page))';
 		$out = $this->el->parseToWiki($inData);		
 		$this->assertEquals($ex, $out);		

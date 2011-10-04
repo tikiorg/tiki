@@ -1650,7 +1650,7 @@ if ( \$('#$id') ) {
 			$this->parse_htmlchar($data);
 		}
 		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
-		$data = $this->parse_data_wikilinks($data, $simple_wiki);
+		$data = $this->parse_data_wikilinks($data, $simple_wiki, $options['ck_editor']);
 		
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
@@ -1763,7 +1763,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function parse_data_wikilinks( $data, $simple_wiki )
+	private function parse_data_wikilinks( $data, $simple_wiki, $ck_editor = false )
 	{
 		global $page_regex, $prefs;
 
@@ -1797,7 +1797,7 @@ if ( \$('#$id') ) {
 				$description = strtok('|');
 			}
 
-			$replacement = $this->get_wiki_link_replacement($pages[2][$i], array('description' => $description,'reltype' => $pages[1][$i],'anchor' => $anchor));
+			$replacement = $this->get_wiki_link_replacement($pages[2][$i], array('description' => $description,'reltype' => $pages[1][$i],'anchor' => $anchor), $ck_editor);
 
 			$data = str_replace($exactMatch, $replacement, $data);
 		}
@@ -1807,7 +1807,7 @@ if ( \$('#$id') ) {
 
 		foreach ($pages[2] as $idx => $page_parse) {
 			$exactMatch = $pages[0][$idx];
-			$replacement = $this->get_wiki_link_replacement($page_parse, array( 'reltype' => $pages[1][$idx] ));
+			$replacement = $this->get_wiki_link_replacement($page_parse, array( 'reltype' => $pages[1][$idx] ), $ck_editor);
 
 			$data = str_replace($exactMatch, $replacement, $data);
 		}
@@ -1827,7 +1827,7 @@ if ( \$('#$id') ) {
 			$words = ( $prefs['feature_hotwords'] == 'y' ) ? $this->get_hotwords() : array();
 			foreach ( array_unique($pages[1]) as $page_parse ) {
 				if ( ! array_key_exists($page_parse, $words) ) {
-					$repl = $this->get_wiki_link_replacement($page_parse, array('plural' => $prefs['feature_wiki_plurals'] == 'y' ));
+					$repl = $this->get_wiki_link_replacement($page_parse, array('plural' => $prefs['feature_wiki_plurals'] == 'y' ), $ck_editor);
 
 					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . $repl . "$2", $data);
 				}
@@ -2851,7 +2851,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function get_wiki_link_replacement( $pageLink, $extra = array() )
+	function get_wiki_link_replacement( $pageLink, $extra = array(), $ck_editor = false )
 	{
 		global $tikilib, $prefs;
 		$wikilib = TikiLib::lib('wiki');
@@ -2895,7 +2895,7 @@ if ( \$('#$id') ) {
 			$link->setLanguage($GLOBALS['pageLang']);
 		}
 
-		return $link->getHtml();
+		return $link->getHtml($ck_editor);
 	}
 
 	//*

@@ -55,7 +55,7 @@ class WikiParser_OutputLink
 		$this->anchor = $anchor;
 	}
 
-	function getHtml() {
+	function getHtml($ck_editor = false) {
 		$page = $this->identifier;
 		$description = $this->identifier;
 		if ( $this->description ) {
@@ -67,7 +67,7 @@ class WikiParser_OutputLink
 				'href' => $link . $this->anchor,
 				'class' => $class,
 			) );
-		} elseif ( $info = $this->findWikiPage( $page ) ) {
+		} elseif ( ($info = $this->findWikiPage( $page )) || $ck_editor ) {
 			if (!empty($info['pageName'])) {
 				$page = $info['pageName'];
 			}
