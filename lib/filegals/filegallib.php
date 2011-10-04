@@ -84,7 +84,7 @@ class FileGalLib extends TikiLib
 				$return = $this->replace_file_gallery( array(
 					'name' => $pageName,
 					'user' => 'admin',
-					'type' => 'default',
+					'type' => 'attachments',
 					'public' => 'y',
 					'visible' => 'y',
 					'parentId' => $prefs['fgal_root_wiki_attachments_id']
