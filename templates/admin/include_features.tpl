@@ -8,6 +8,7 @@
 			<input type="reset" name="featuresreset" value="{tr}Reset{/tr}" />
 		</div>
 
+
 {tabset name="admin_features"}
 {*
  * The following section is typically for features that act like Tiki
@@ -33,7 +34,6 @@
 				{preference name=feature_newsletters}
 				{preference name=feature_banners}
 				{preference name=feature_categories}
-				{preference name=feature_areas}
 				{preference name=feature_freetags}
 				{preference name=feature_search}
 			</div>
@@ -62,6 +62,7 @@
 				{preference name=feature_dynamic_content}
 				{preference name=feature_perspective}
 				{preference name=feature_sefurl}
+				{preference name=feature_areas}
 				{preference name=feature_webmail}
 				{preference name=feature_actionlog}
 				{preference name=feature_comm}
