@@ -198,6 +198,22 @@ class LogsQueryLib
 		return $result;
 	}
 	
+	function countUsersIPFilterId($ids = array()) {
+		global $tikilib;
+		
+		$this->groupType = "";
+
+		$result = array();
+		
+		foreach($ids as $id) {
+			foreach($this->id($id)->fetchAll() as $log) {
+				$result[json_encode(array("ip"=>$log['ip'],"user"=>$log['user']))]++;
+			}
+		}
+		
+		return $result;
+	}
+	
 	function fetchAll() {
 		global $tikilib;
 		
