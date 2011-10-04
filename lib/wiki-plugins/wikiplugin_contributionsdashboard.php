@@ -83,6 +83,32 @@ function wikiplugin_contributionsdashboard($data, $params) {
 		$usersTrackerItems[] = $item['itemId'];
 	}
 	
+	$headerlib->add_jq_onready("
+		$.fn.chart = function(s) {
+			var me = $(this);
+			var r = Raphael(me[0]);
+			
+			r.g.barchart(10,10, me.width(), me.height(), [s.data])
+				.hover(function () {
+					this.flag = r.g.popup(
+						this.bar.x,
+						this.bar.y,
+						s.labels[$(this.bar.node).index() - 2] + ' - ' + this.bar.value || '0'
+					).insertBefore(this);
+				},function () {
+					this.flag.animate({
+						opacity: 0
+					},
+					300,
+					function () {
+						this.remove();
+					});
+				});
+		
+			if (s.label) r.g.label($(this).width() / 2,30, s.label);
+		};
+	");
+			
 	foreach($types as $type) {
 		if ($type == "trackeritems") {
 			$data = array();
@@ -95,29 +121,11 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			}
 
 			$headerlib->add_jq_onready("				
-				var r = Raphael($('#raphaelTrackeritems$i')[0]);
-				
-				var data = ".json_encode($data).";
-				var dates = ".json_encode($dates).";
-				
-				r.g.barchart(10,10, $('#raphaelTrackeritems$i').width(),$('#raphaelTrackeritems$i').height(), [data])
-					.hover(function () {
-						this.flag = r.g.popup(
-							this.bar.x,
-							this.bar.y,
-							dates[this.bar.id] + ' - ' + this.bar.value || '0'
-						).insertBefore(this);
-					},function () {
-						this.flag.animate({
-							opacity: 0
-						},
-						300,
-						function () {
-							this.remove();
-						});
-					});
-				
-				r.g.label($('#raphaelTrackeritems$i').width() / 2,30, 'Tracker Item Activity Grouped By Date');
+				$('#raphaelTrackeritems$i').chart({
+					labels: 	".json_encode($dates).",
+					data:		".json_encode($data).",
+					label:		'Tracker Item Activity Grouped By Date'
+				});
 			");
 			
 			$result .= "<div id='raphaelTrackeritems$i' style='width: 100%; height: 400px; display: block;'></div>";
@@ -134,29 +142,11 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			}
 
 			$headerlib->add_jq_onready("				
-				var r = Raphael($('#raphaelTrackeritemsUsers$i')[0]);
-				
-				var hits = ".json_encode($hits).";
-				var users = ".json_encode($users).";
-				
-				r.g.barchart(10,10, $('#raphaelTrackeritemsUsers$i').width(),$('#raphaelTrackeritemsUsers$i').height(), [hits])
-					.hover(function () {
-						this.flag = r.g.popup(
-							this.bar.x,
-							this.bar.y,
-							users[$(this.bar.node).index() - 2] + ' - ' + this.bar.value || '0'
-						).insertBefore(this);
-					},function () {
-						this.flag.animate({
-							opacity: 0
-						},
-						300,
-						function () {
-							this.remove();
-						});
-					});
-				
-				r.g.label($('#raphaelTrackeritemsUsers$i').width() / 2,30, 'Tracker Item Activity Grouped By Users');
+				$('#raphaelTrackeritemsUsers$i').chart({
+					labels: 	".json_encode($users).",
+					data:		".json_encode($hits).",
+					label:		'Tracker Item Activity Grouped By Users'
+				});
 			");
 			
 			$result .= "<div id='raphaelTrackeritemsUsers$i' style='width: 100%; height: 400px; display: block;'></div>";
