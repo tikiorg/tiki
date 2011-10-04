@@ -38,6 +38,7 @@ class Search_Indexer
 
 	/**
 	 * Rebuild the entire index.
+	 * @return array
 	 */
 	function rebuild()
 	{
@@ -58,7 +59,8 @@ class Search_Indexer
 		if (is_array($searchArgument)) {
 			$query = new Search_Query;
 			foreach ($searchArgument as $object) {
-				$query->addObject($object['object_type'], $object['object_id']);
+				$obj2array=(array)$object;
+				$query->addObject($obj2array['object_type'], $obj2array['object_id']);
 			}
 
 			$result = $query->invalidate($this->searchIndex);
@@ -68,7 +70,8 @@ class Search_Indexer
 		}
 
 		foreach ($objectList as $object) {
-			$this->addDocument($object['object_type'], $object['object_id']);
+			$obj2array=(array)$object;
+			$this->addDocument($obj2array['object_type'], $obj2array['object_id']);
 		}
 	}
 
