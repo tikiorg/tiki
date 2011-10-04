@@ -24,11 +24,5 @@ function module_file_galleries( $mod_reference, $module_params ) {
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	global $smarty;
 	
-	$allGalleries = $filegallib->getSubGalleries();
-	
-	if ( count($allGalleries) > 0 ) {
-		$tree = $filegallib->getTree();
-		$tree['data'] = $allGalleries['data'];
-		$smarty->assign_by_ref('tree', $tree);
-	}
+	$smarty->assign('tree', $filegallib->getTreeHTML());
 }
