@@ -163,20 +163,15 @@ class LogsQueryLib
 		return $this;
 	}
 	
-	function countTrackerItemsByDate($user, $isGroup = false) {
+	function countByDateFilterId($ids = array()) {
 		global $tikilib;
 		
-		$this->groupType = "countByDate";
-		$this->type = "trackeritem";
-		
-		$items = $tikilib->fetchAll("
-			SELECT * FROM tiki_tracker_items WHERE createdBy = ?
-		", array($user));
+		$this->countByDate();
 
 		$result = array();
 		
-		foreach($items as $item) {
-			foreach($this->id($item['itemId'])->fetchAll() as $log) {
+		foreach($ids as $id) {
+			foreach($this->id($id)->fetchAll() as $log) {
 				if (empty($result[$log['date']])) $result[$log['date']] = array();
 				$result[$log['date']]['count'] += $log['count'];
 				$result[$log['date']]['date'] = $log['date'];
@@ -192,20 +187,15 @@ class LogsQueryLib
 		return $result;
 	}
 	
-	function trackerItemsTopUsersByDate($user, $isGroup = false) {
+	function countUsersFilterId($ids = array()) {
 		global $tikilib;
 		
 		$this->groupType = "";
-		$this->type = "trackeritem";
-		
-		$items = $tikilib->fetchAll("
-			SELECT * FROM tiki_tracker_items WHERE createdBy = ?
-		", array($user));
 
 		$result = array();
 		
-		foreach($items as $item) {
-			foreach($this->id($item['itemId'])->fetchAll() as $log) {
+		foreach($ids as $id) {
+			foreach($this->id($id)->fetchAll() as $log) {
 				if (empty($result[$log['user']])) $result[$log['user']] = 0;
 				
 				$result[$log['user']]++;

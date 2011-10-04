@@ -76,13 +76,20 @@ function wikiplugin_contributionsdashboard($data, $params) {
 		$('.cDashDate').datepicker();
 	");
 	
+	$usersTrackerItems = array();
+	foreach($tikilib->fetchAll("
+		SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?
+	", array("simon")) as $item) {
+		$usersTrackerItems[] = $item['itemId'];
+	}
+	
 	foreach($types as $type) {
 		if ($type == "trackeritems") {
 			$data = array();
 			$dates = array();
 			
 			//simon should be replaced with global $user when done
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countTrackerItemsByDate("simon") as $log) {
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countByDateFilterId($usersTrackerItems) as $log) {
 				$data[] = $log['count'] * 1;
 				$dates[] = $log['date'];
 			}
@@ -121,7 +128,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			$users = array();
 			
 			//simon should be replaced with global $user when done
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->trackerItemsTopUsersByDate("simon") as $key=>$count) {
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersFilterId($usersTrackerItems) as $key=>$count) {
 				$hits[] = $count;
 				$users[] = $key;
 			}
