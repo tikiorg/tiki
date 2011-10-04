@@ -97,7 +97,7 @@ function update_areas(){
 		if(count($result->fetchRow())){
 			$result = TikiDb::get()->query("UPDATE tiki_areas SET perspectives = ? WHERE categId = ?",array(serialize($item), $key));
 	}else{ 
-			$result = TikiDb::get()->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,'?')", array($key, serialize($item)));}
+			$result = TikiDb::get()->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?, ?)", array($key, serialize($item)));}
 		}
 	}
 	return true;

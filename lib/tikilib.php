@@ -239,6 +239,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'edit':
 			global $editlib; require_once 'lib/wiki/editlib.php';
 			return self::$libraries[$name] = $editlib;
+		case 'scorm':
+			require_once 'lib/filegals/scormlib.php';
+			return self::$libraries[$name] = new ScormLib;
 		}
 	}
 

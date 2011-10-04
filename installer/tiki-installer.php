@@ -18,7 +18,7 @@ require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
 $prefs = array();
-$prefs['smarty_notice_reporting'] = 'y';
+$prefs['smarty_notice_reporting'] = 'n';
 $prefs['smarty_compilation'] = 'always';
 $prefs['smarty_security'] = 'y';
 require_once 'lib/init/initlib.php';
@@ -665,6 +665,7 @@ if ( file_exists($local) ) {
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 	$dbcon = false;
+	$smarty->assign( 'resetdb', 'n' );
 	if ( isset( $dbservers[$db_tiki] ) ) { // avoid errors in ADONewConnection() (wrong darabase driver etc...)
 		if ( $dbcon = initTikiDB( $api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki ) ) {
 			$smarty->assign( 'resetdb', isset($_REQUEST['reset']) ? 'y' : 'n' );
@@ -745,6 +746,10 @@ if ( $dbcon ) {
 } else {
 	$smarty->assign('dbcon', 'n');
 }
+
+// Some initializations to avoid PHP error messages
+$smarty->assign('tikidb_created', FALSE );
+$smarty->assign('tikidb_is20', FALSE );
 
 if ($dbcon) {
 	$has_tiki_db = has_tiki_db();

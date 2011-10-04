@@ -639,13 +639,23 @@ class TrackerLib extends TikiLib
 	// wiki page corresponding to a tracker item (230 in the example) using prefix aliases
 	// Returns false if no such page is found.
 	function get_trackeritem_pagealias($itemId) {
+		global $prefs;
 		$trackerId = $this->table('tiki_tracker_items')->fetchOne('trackerId', array('itemId' => $itemId));
 
 		$semanticlib = TikiLib::lib('semantic');
 		$t_links = $semanticlib->getLinksUsing('trackerid', array( 'toPage' => $trackerId ) );
+		$target = $t_links[0]['fromPage'];
+		if ($prefs['feature_multilingual'] == 'y' && count($t_links) > 1) {
+			foreach ($t_links as $t) {
+				if ($prefs['language'] == TikiLib::lib('multilingual')->getLangOfPage($t['fromPage'])) {
+					$target = $t['fromPage'];
+					break;
+				}
+			}
+		}
 
 		if (count($t_links)) {
-			$p_links = $semanticlib->getLinksUsing('prefixalias', array( 'fromPage' => $t_links[0]['fromPage'] ) );
+			$p_links = $semanticlib->getLinksUsing('prefixalias', array( 'fromPage' => $target ) );
 			if (count($p_links)) {
 				$ret = $p_links[0]['toPage'] . $itemId;
 				return $ret;

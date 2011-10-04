@@ -68,6 +68,10 @@ if ($prefs['dailyreports_enabled_for_new_users'] == 'y') {
 	$events->bind('tiki.user.create', Event_Lib::defer('reports', 'add_user_to_daily_reports'));
 }
 
+if ($prefs['scorm_enabled'] == 'y') {
+	$events->bind('tiki.file.save', Event_Lib::defer('scorm', 'handle_file'));
+}
+
 $events->bind('tiki.save', Event_Lib::defer('tiki', 'plugin_post_save_actions'));
 
 // Chain events
@@ -78,6 +82,10 @@ $events->bind('tiki.wiki.save', 'tiki.save');
 $events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
 $events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 $events->bind('tiki.trackeritem.save', 'tiki.save');
+
+$events->bind('tiki.file.update', 'tiki.file.save');
+$events->bind('tiki.file.create', 'tiki.file.save');
+$events->bind('tiki.file.save', 'tiki.save');
 
 $events->bind('tiki.user.update', 'tiki.user.save');
 $events->bind('tiki.user.create', 'tiki.user.save');

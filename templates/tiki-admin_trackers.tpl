@@ -23,7 +23,6 @@
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</th>
 			<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
@@ -37,12 +36,14 @@
 				</td>
 				<td class="text">
 					<a class="tablename dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}" title="{tr}Edit{/tr}">{$tracker.name|escape}</a>
+					<div class="description">
+						{if $tracker.descriptionIsParsed eq 'y'}
+							{wiki}{$tracker.description}{/wiki}
+						{else}
+							{$tracker.description|escape|nl2br}
+						{/if}
+					</div>
 				</td>
-				{if $tracker.descriptionIsParsed eq 'y'}
-					<td class="text">{wiki}{$tracker.description}{/wiki}</td>
-				{else}
-					<td class="text">{$tracker.description|escape|nl2br}</td>
-				{/if}
 				<td class="date">{$tracker.created|tiki_short_date}</td>
 				<td class="date">{$tracker.lastModif|tiki_short_date}</td>
 				<td class="integer">{$tracker.items|escape}</td>

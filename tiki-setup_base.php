@@ -177,6 +177,7 @@ if ($prefs['feature_fullscreen'] == 'y') {
 require_once ('lib/setup/prefs.php');
 // Smarty needs session since 2.6.25
 require_once ('lib/init/smarty.php');
+global $smarty;
 
 // Define the special maxRecords global variable
 $maxRecords = $prefs['maxRecords'];
@@ -588,4 +589,6 @@ if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
 }
 if (is_object($smarty)) {
 	$smarty->assign("tikidomain", $tikidomain);
+} else {
+	$smarty->assign("tikidomain", "");
 }

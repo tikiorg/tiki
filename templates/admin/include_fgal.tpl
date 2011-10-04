@@ -255,6 +255,10 @@
 				</div>
 			</div>
 		{/tab}
+		{tab name="{tr}SCORM{/tr}"}
+			{preference name=scorm_enabled}
+			{preference name=scorm_tracker}
+		{/tab}
 	{/tabset}
 
 	<div class="input_submit_container clear" style="text-align: center">
