@@ -90,7 +90,7 @@ class AreasLib extends CategLib
 			if(count($result->fetchRow())){
 				$result = $this->query("UPDATE tiki_areas SET perspectives = ? WHERE categId = ?",array(serialize($item), $key));
 			}else{ 
-				$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,'?')", array($key, serialize($item)));}
+				$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));}
 			}
 		}
 		return true;
