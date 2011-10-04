@@ -29,11 +29,12 @@ function smarty_function_tree($params, $smarty) {
 	
 	$tree_nodes = array();
 	$smarty->loadPlugin('smarty_block_self_link');
+	$link_params = array('_script' => $link, '_class' => 'fgalname');
+	if (!empty($_REQUEST['filegals_manager'])) {
+		$link_params['filegals_manager'] = $_REQUEST['filegals_manager'];
+	}
 	foreach ($nodes as $node) {
-		$link_params = array('_script' => $link, 'galleryId' => $node['id'], '_class' => 'fgalname');
-		if (!empty($_REQUEST['filegals_manager'])) {
-			$link_params['filegals_manager'] = $_REQUEST['filegals_manager'];
-		}
+		$link_params['galleryId'] = $node['id'];
 		$tree_nodes[] = array(
 			'id' => $node['id'],
 			'parent' => $node['parentId'],
