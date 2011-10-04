@@ -79,7 +79,7 @@ class WikiParser_OutputLink
 			return $this->outputLink( $description, array(
 				'href' => call_user_func( $this->wikiBuilder, $page ) . $this->anchor,
 				'title' => $title,
-				'class' => 'wiki page',
+				'class' => 'wiki_page',
 			) );
 		} else {
 			return $description . $this->outputLink( '?', array(
