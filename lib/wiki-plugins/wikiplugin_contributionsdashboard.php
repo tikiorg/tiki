@@ -114,10 +114,9 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			$data = array();
 			$dates = array();
 			
-			//simon should be replaced with global $user when done
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countByDateFilterId($usersTrackerItems) as $log) {
-				$data[] = $log['count'] * 1;
-				$dates[] = $log['date'];
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countByDateFilterId($usersTrackerItems) as $date => $count) {
+				$data[] = $count * 1;
+				$dates[] = $date;
 			}
 
 			$headerlib->add_jq_onready("				
@@ -135,10 +134,9 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			$hits = array();
 			$users = array();
 			
-			//simon should be replaced with global $user when done
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersFilterId($usersTrackerItems) as $key=>$count) {
+			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersFilterId($usersTrackerItems) as $user => $count) {
 				$hits[] = $count;
-				$users[] = $key;
+				$users[] = $user;
 			}
 
 			$headerlib->add_jq_onready("				
