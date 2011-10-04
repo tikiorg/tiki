@@ -342,7 +342,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - existing page
 		 */
 		$inData = "(($homePage))";		
-		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki_page">HomePage</a>';
+		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">HomePage</a>';
 		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($ex, $out);			
 		
@@ -352,7 +352,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
 		 */
 		$inData = "(($homePage|The Home Page))";		
-		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki_page">The Home Page</a>';
+		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">The Home Page</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
 		
@@ -363,7 +363,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
  		 */
 		$inData = "(($homePage|#Get_Started_using_Admin_Panel|Home Page, Heading \"Admin Panel\"))";		
-		$ex = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki_page">Home Page, Heading &quot;Admin Panel&quot;</a>';
+		$ex = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki page">Home Page, Heading &quot;Admin Panel&quot;</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);	
 		

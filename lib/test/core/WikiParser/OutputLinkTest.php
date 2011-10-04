@@ -69,7 +69,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLinkBuilder( array( $this, 'getWikiLink' ) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="Test" title="Testing" class="wiki_page">Test</a>',
+			'<a href="Test" title="Testing" class="wiki page">Test</a>',
 			$link->getHtml() );
 	}
 
@@ -86,7 +86,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLinkBuilder( array( $this, 'getWikiLink' ) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="Test1.2" title="Testing" class="wiki_page">Test</a>',
+			'<a href="Test1.2" title="Testing" class="wiki page">Test</a>',
 			$link->getHtml() );
 	}
 
@@ -104,7 +104,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLinkBuilder( array( $this, 'getWikiLink' ) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="Test" title="Testing" class="wiki_page abc">Test</a>',
+			'<a href="Test" title="Testing" class="wiki page abc">Test</a>',
 			$link->getHtml() );
 	}
 
@@ -161,7 +161,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setHandlePlurals( true );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="Policy" title="Some Page" class="wiki_page">Policies</a>',
+			'<a href="Policy" title="Some Page" class="wiki page">Policies</a>',
 			$link->getHtml() );
 	}
 
