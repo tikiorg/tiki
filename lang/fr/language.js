@@ -38,5 +38,6 @@ lang = {
 	"What address are you looking for?" : "Quelle adresse recherchez-vous ?",
 	"Filter:" : "Filtre :",
 	"Please enter a page name" : "Veuillez entrer un nom de page",
-	"Are you sure you want to unassign this module?" : "Êtes-vous sûr(e) de vouloir désattribuer ce module ?",
+	"Are you sure you want to unassign this module?" : "Êtes-vous sûr(e) de vouloir désattribuer ce module ?"
+	// remember the IE does not support ending comma on last item
 };
