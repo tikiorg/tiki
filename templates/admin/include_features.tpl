@@ -61,8 +61,8 @@
 				{preference name=feature_slideshow}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_perspective}
-				{preference name=feature_sefurl}
 				{preference name=feature_areas}
+				{preference name=feature_sefurl}
 				{preference name=feature_webmail}
 				{preference name=feature_actionlog}
 				{preference name=feature_comm}
