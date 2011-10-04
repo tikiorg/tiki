@@ -910,7 +910,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 			$path = $filegallib->getPath( $galleryId );
 			$smarty->assign('gallery_path', $path['HTML']);
 		}
-		$tree = $filegallib->getFilegalsTree( $galleryId );	
+		$tree = $filegallib->getTree( $galleryId );	
 		$tree['data'] = $subGalleries['data'];
 		$smarty->assign_by_ref('tree', $tree);
 	}

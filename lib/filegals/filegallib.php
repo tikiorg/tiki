@@ -1389,16 +1389,11 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
-	// Get default tree for filegals
-	function getFilegalsTree( $currentGalleryId = null ) {
-		return $this->getTree( $this->getFilegalsIdsTree(), $currentGalleryId );
-	}
-
-	// Return galleries browsing tree
-	function getTree( $idTree, $currentGalleryId = null ) {
-		$idTreeKeys = array_keys( $idTree );
-
-		return array('link' => 'tiki-list_file_gallery.php', 'id' => $idTreeKeys[0] );
+	// Return the complete file galleries tree for the special root containing the given gallery.
+	function getTree($currentGalleryId = NULL)
+	{
+		global $prefs;
+		return array('link' => 'tiki-list_file_gallery.php', 'id' => $this->getGallerySpecialRoot(is_null($currentGalleryId) ? $prefs['fgal_root_id'] : $currentGalleryId) );
 	}
 	
 	// Return the given gallery's path. The path starts with a constant component, File Galleries. It would be File Galleries > Foo for a root file gallery named "Foo".
