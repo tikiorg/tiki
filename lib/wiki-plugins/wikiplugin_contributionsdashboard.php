@@ -98,7 +98,7 @@ function wikiplugin_contributionsdashboard($data, $params) {
 						this.flag = r.g.popup(
 							this.bar.x,
 							this.bar.y,
-							dates[this.bar.id] + '- ' + this.bar.value || '0'
+							dates[this.bar.id] + ' - ' + this.bar.value || '0'
 						).insertBefore(this);
 					},function () {
 						this.flag.animate({
@@ -109,6 +109,8 @@ function wikiplugin_contributionsdashboard($data, $params) {
 							this.remove();
 						});
 					});
+				
+				r.g.label($('#raphaelTrackeritems$i').width() / 2,30, 'Tracker Item Activity Grouped By Date');
 			");
 			
 			$result .= "<div id='raphaelTrackeritems$i' style='width: 100%; height: 400px; display: block;'></div>";
@@ -146,6 +148,8 @@ function wikiplugin_contributionsdashboard($data, $params) {
 							this.remove();
 						});
 					});
+				
+				r.g.label($('#raphaelTrackeritemsUsers$i').width() / 2,30, 'Tracker Item Activity Grouped By Users');
 			");
 			
 			$result .= "<div id='raphaelTrackeritemsUsers$i' style='width: 100%; height: 400px; display: block;'></div>";
