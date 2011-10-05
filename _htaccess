@@ -19,16 +19,16 @@
 	deny from all
 </FilesMatch>
 
+<IfModule mod_dir.c>
+	DirectoryIndex index.php
+</IfModule>
+
 <IfModule deflate_module>
 	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript
 </IfModule>
 
 # Using ETags will improve the YSlow scores
 FileETag none
-
-<IfModule mod_dir.c>
-	DirectoryIndex index.php
-</IfModule>
 
 # If the site is stable, might be worth setting the expires header on all files for optimization.
 #<IfModule mod_expires.c>
@@ -37,6 +37,12 @@ FileETag none
 #		ExpiresDefault "access plus 10 years"
 #	</FilesMatch>
 #</IfModule>
+
+# if you want to use the Web Server Auth
+#AuthType Basic
+#AuthName "Restricted Access"
+#AuthUserFile /etc/httpd/passwords
+#Require valid-user 
 
 # Handling errors catched by Apache with Tiki
 # Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only catched by Apache (ex.: filenameThatDoesntExist.php). 
@@ -49,6 +55,23 @@ FileETag none
 # Tiki requires PHP 5. If your host doesn't offer PHP 5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
 # AddType application/x-httpd-php5 .php
 # AddHandler application/x-httpd-php5 .php
+
+# to activate the error display, uncomment the following line
+#php_flag display_errors on
+
+# increase memory
+#php_value memory_limit 128M
+
+# increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
+#php_value max_execution_time 90
+
+# increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)
+#php_value upload_max_filesize 10M
+#php_value post_max_size 11M
+
+# In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
+# The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
+#php_value include_path "." 
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -167,28 +190,3 @@ RewriteRule ^tiki-([a-z_]+)         tiki-ajax_services.php?controller=$1		[QSA,L
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
 </IfModule>
-# End of rewrite rules
-
-# to activate the error display, uncomment the following line
-#php_flag display_errors on
-
-# increase memory
-#php_value memory_limit 128M
-
-# increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
-#php_value max_execution_time 90
-
-# increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)
-#php_value upload_max_filesize 10M
-#php_value post_max_size 11M
-
-# In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
-# The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
-#php_value include_path "." 
-
-# if you want to use the Web Server Auth
-#AuthType Basic
-#AuthName "Restricted Access"
-#AuthUserFile /etc/httpd/passwords
-#Require valid-user 
-
