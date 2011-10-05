@@ -19,6 +19,10 @@
 	deny from all
 </FilesMatch>
 
+<IfModule deflate_module>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript
+</IfModule>
+
 # If the site is stable, might be worth setting the expires header on all files
 #<IfModule mod_expires.c>
 #	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
@@ -30,9 +34,10 @@
 # Using ETags will improve the YSlow scores
 FileETag none
 
-<IfModule deflate_module>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript
-</IfModule>
+# Tiki requires PHP 5. If your host doesn't offer PHP 5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
+# AddType application/x-httpd-php5 .php
+# AddHandler application/x-httpd-php5 .php
+
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -43,8 +48,7 @@ RewriteCond %{HTTP:Authorization} ^(.*)
 RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
 
 
-# If your Tiki is not at the root of the server (e.g. at http://example.com/tiki) 
-# You will need to uncomment and fix the RewriteBase value below to suit your installation.
+# You may need to uncomment and fix the RewriteBase value below to suit your installation.
 # RewriteBase   "/tiki"
 # And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",
 # You may need to uncomment the following line.
@@ -67,10 +71,6 @@ RewriteRule (.*) - [L]
 #       and enable feature_wiki_export (as well as feature_wiki and feature_categories)
 #RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]
 
-# Tiki 3.0 requires PHP5. If your host doesn't offer PHP5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
-# AddType application/x-httpd-php5 .php
-# AddHandler application/x-httpd-php5 .php
- 
 # Permanent redirect: Add instructions as below. This is useful if you were using another Web application or static HTML and you want to avoid broken links
 # Redirect 301 /oldpage.html /tiki-index.php?page=newpage
  
