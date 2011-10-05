@@ -154,16 +154,16 @@ RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [last]
  
 RewriteRule ^tiki-([a-z_]+)-([a-z_]+) tiki-ajax_services.php?controller=$1&action=$2		[QSA,L]
-RewriteRule ^tiki-([a-z_]+)         tiki-ajax_services.php?controller=$1		[QSA,L]
+RewriteRule ^tiki-([a-z_]+)         tiki-ajax_services.php?controller=$1		[QSA,L] # action may be specified in request body (POST)
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
 </IfModule>
 # End of rewrite rules
 
-# Error pages, handled by Apache (not by Tiki)
-# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass Tiki and must be handled by Apache (ex.: impossiblepagename.php) 
-# To use Apache error handling, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
-# ErrorDocument 404 /tiki-index.php?page=Page+not+found
+# Handling errors catched by Apache with Tiki
+# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only catched by Apache (ex.: filenameThatDoesntExist.php). 
+# To make Tiki handle errors catched by Apache, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
+# ErrorDocument 404 /tiki-index.php?page=File+not+found
 
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
