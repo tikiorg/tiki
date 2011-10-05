@@ -190,6 +190,64 @@ class EditLib
 	
 	
 	/**
+	 * Utility for walk_and_parse to process links
+	 * 
+	 * @param array $args the attributes of the link
+	 * @param string $src output string
+	 * @param array $p ['stack'] = closing strings stack
+	 */
+	private function parseLinkTag(&$args, &$src, &$p) {
+		
+		/*
+		 * parse the link classes
+		 */
+		$cl_wiki = false;
+		$cl_wiki_page = false;
+		
+		if ( isset($args['class']) && isset($args['href']) ) {
+			$matches = array();
+			preg_match_all('/([^ ]+)/', $args['class']['value'], $matches);
+			$classes = $matches[0];
+			
+			foreach ($classes as $cl) {
+				switch ($cl) {
+					case 'wiki': $cl_wiki = true; break;
+					case 'wiki_page': $cl_wiki_page = true; break;
+				}				
+			} 
+		}
+		
+
+		/*
+		 * convert the links
+		 */
+		if ( $cl_wiki && $cl_wiki_page ) {
+
+			// link to wiki page -> (( ))
+			$src .= '(('.$args["href"]["value"].'|';
+			$p['stack'][] = array('tag' => 'a', 'string' => '))');
+
+		} else {
+
+			// default, to be reviewed
+			if (isset($args["href"]["value"])) {
+				if( strstr( $args["href"]["value"], "http:" )) {
+					$src .= '['.$args["href"]["value"].'|';
+				} else {
+					//$src .= '['.$head_url.$args["href"]["value"].'|';
+					$src .= '['.$args["href"]["value"].'|';
+				}
+				$p['stack'][] = array('tag' => 'a', 'string' => ']');
+			}
+			if( isset($args["name"]["value"])) {
+				$src .= '{ANAME()}'.$args["name"]["value"].'{ANAME}';
+			}
+			
+		} // convert links
+	}
+	
+	
+	/**
 	 * Utility for walk_and_parse to process p and div tags
 	 *
 	 * @param bool $isPar True if we process a <p>, false if a <div>
@@ -742,7 +800,13 @@ class EditLib
 								}
 							break;
 						case "a":
+							if (isset($c[$i]['pars'])) {
+								$this->parseLinkTag($c[$i]['pars'], $src, $p);
+							}
+							
+							// deactivated by mauriz, will be replaced by the routine above
 							// If href attribute present in <a> tag
+							/* 
 							if (isset($c[$i]["pars"]["href"]["value"])) {
 								if( strstr( $c[$i]["pars"]["href"]["value"], "http:" )) {
 									$src .= '['.$c[$i]["pars"]["href"]["value"].'|';
@@ -754,6 +818,9 @@ class EditLib
 							if( isset($c[$i]["pars"]["name"]["value"])) {
 								$src .= '{ANAME()}'.$c[$i]["pars"]["name"]["value"].'{ANAME}';
 							}
+							*/
+							
+							
 							break;
 					}	// end switch on tag name
 				} else {
