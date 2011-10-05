@@ -182,10 +182,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		}
 		$access->output_serialized($ret);
 	}
-}
-
-// Handle Zotero Requests
-if ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) {
+} elseif ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) { // Handle Zotero Requests
 	$access->check_feature( array( 'zotero_enabled' ) );
 	$zoterolib = TikiLib::lib('zotero');
 
@@ -202,24 +199,20 @@ if ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) {
 			'results' => $references,
 		));
 	}
-}
-
-if (isset($_REQUEST['oauth_request'])) {
+} elseif (isset($_REQUEST['oauth_request'])) {
 	$oauthlib = TikiLib::lib('oauth');
 
 	$oauthlib->request_token($_REQUEST['oauth_request']);
 	die('Provider not supported.');
-}
-
-if (isset($_REQUEST['oauth_callback'])) {
+} elseif (isset($_REQUEST['oauth_callback'])) {
 	$oauthlib = TikiLib::lib('oauth');
 
 	$oauthlib->request_access($_REQUEST['oauth_callback']);
 	$access->redirect('');
-}
-
-if (isset($_REQUEST['geocode']) && $access->is_serializable_request()) {
+} elseif (isset($_REQUEST['geocode']) && $access->is_serializable_request()) {
 	$access->output_serialized(TikiLib::lib('geo')->geocode($_REQUEST['geocode']));
+} else {
+	$access->display_error(NULL, 'No AJAX service matches request parameters', 404);
 }
 
 function read_icon_dir($dir, &$icons, $max) {
