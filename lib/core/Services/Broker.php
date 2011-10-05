@@ -34,7 +34,7 @@ class Services_Broker
 				echo $this->render($controller, $action, $output);
 			}
 		} catch (Services_Exception $e) {
-			$access->display_error('', $e->getMessage(), $e->getCode());
+			$access->display_error(NULL, $e->getMessage(), $e->getCode());
 		}
 	}
 
