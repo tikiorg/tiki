@@ -14,95 +14,90 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
+
 require_once('lib/perspectivelib.php');
 require_once('lib/categories/categlib.php');
 
-function HandleObjectCategories($objectCategoryIds)
+class AreasLib extends CategLib
 {
-    
-	global $categlib, $prefs, $perspectivelib;  
-    
-    if (!empty($objectCategoryIds))
-    {
-        foreach($objectCategoryIds as $categId)
-        {
 
-            if ($categlib->get_category_parent($categId) == $prefs['areas_root']) // If parent category has ID equal to value of $prefs['areas_root']
-            {
-  
-             $foundPerspective = get_perspective_by_categid($categId); 
-                if ($foundPerspective != $_SESSION['current_perspective']) // If the found perspective is different than the current perspective, update it.
-                {
-                     $perspectivelib->set_perspective($foundPerspective);
-    //Reroute browser back to calling script after we have applied our hack.
-    header("Location: ". $_SERVER['REQUEST_URI']);	
-                }
-            }
-            else // If parent category id does not equal $prefs['areas_root'] set the default perspective (0)
-            {
-                if ($foundPerspective != $_SESSION['current_perspective'])
-                {
-                    $perspectivelib->set_perspective(0);
-    //Reroute browser back to calling script after we have applied our hack.
-    header("Location: ". $_SERVER['REQUEST_URI']);	
-                }
-            }
-        
-        }
-    }
+	function HandleObjectCategories($objectCategoryIds){
+    	global $prefs, $perspectivelib;  
+    
+   	if (!empty($objectCategoryIds)){
+	        foreach($objectCategoryIds as $categId){
+			// If parent category has ID equal to value of $prefs['areas_root']
+			if ($this->get_category_parent($categId) == $prefs['areas_root']){
+				$foundPerspective = $this->get_perspective_by_categid($categId); 
+				// If the found perspective is different than the current perspective, update it.
+		                if ($foundPerspective != $_SESSION['current_perspective']) {
+					$perspectivelib->set_perspective($foundPerspective);
+					//Reroute browser back to calling script after we have applied our hack.
+					header("Location: ". $_SERVER['REQUEST_URI']);	
+				}
+			}else{ // If parent category id does not equal $prefs['areas_root'] set the default perspective (0)
+				if ($foundPerspective != $_SESSION['current_perspective']) {
+				$perspectivelib->set_perspective(0);
+				//Reroute browser back to calling script after we have applied our hack.
+				header("Location: ". $_SERVER['REQUEST_URI']);	
+				}
+			}
+       		}
+	}
 /*    else if ($_SESSION['current_perspective'] !== 0)     // decomment this violates the category jail 
     {
         $perspectivelib->set_perspective(0);
         
     }*/
-}
+	}
 
 /*
  for the difference between should and is, first retrieve all perspectives given for any reason
  and then choose one in the function below, namely the first.
 */
-function get_perspectives_by_categid($categId){
-	$result = TikiDb::get()->query( "SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ?", array($categId));
-	while($row = $result->fetchRow()) return unserialize($row['perspectives']);
-	return false;
-}
+	function get_perspectives_by_categid($categId){
+		$result = $this->query( "SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ?", array($categId));
+		while($row = $result->fetchRow()) return unserialize($row['perspectives']);
+		return false;
+	}
 /*
  pick up the first or only perspective assigned to category with id categId
  returns false if there is no entry for this category and returns 0 if it has no perspective
 */
-function get_perspective_by_categid($categId){
-	$persp = get_perspectives_by_categid($categId);
-	if($persp===false) return false;
-	if(count($persp)==0) return 0;
-	return $persp[0];
-}
-
-function update_areas(){
-	global $prefs, $categlib;
-	$areas = array();
-	$descendants = $categlib->get_category_descendants($prefs['areas_root']);
-	if( is_array($descendants) ){
-	foreach($descendants as $item)
-		$areas[$item] = array();	// it only should be just one perspective assigned
-	$result = TikiDb::get()->query( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
-
-        if($result !== false){
-		while( $row = $result->fetchRow() ) {
-			$categs = unserialize( $row['value'] );			
-			foreach($categs as $item) if(array_key_exists($item, $areas)) $areas[$item][] = $row['perspectiveId'];
- 		}
-
-	foreach($areas as $key=>$item){
-		$result = TikiDb::get()->query("SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ".$key );
-		if(count($result->fetchRow())){
-			$result = TikiDb::get()->query("UPDATE tiki_areas SET perspectives = ? WHERE categId = ?",array(serialize($item), $key));
-	}else{ 
-			$result = TikiDb::get()->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?, ?)", array($key, serialize($item)));}
-		}
+	function get_perspective_by_categid($categId){
+		$persp = $this->get_perspectives_by_categid($categId);
+		if($persp===false) return false;
+		if(count($persp)==0) return 0;
+		return $persp[0];
 	}
-	return true;
-	}else return false;
-}
+
+	function update_areas(){
+		global $prefs;
+		$areas = array();
+		$descendants = $this->get_category_descendants($prefs['areas_root']);
+		if( is_array($descendants) ){
+		foreach($descendants as $item)
+			$areas[$item] = array();	// it only should be just one perspective assigned
+		$result = $this->fetchAll( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
+	        if(count($result)!=0){
+			foreach( $result as $row ) {
+				$categs = unserialize( $row['value'] );			
+				foreach($categs as $item) if(array_key_exists($item, $areas)) $areas[$item][] = $row['perspectiveId'];
+	 		}
+
+		// to get rid off probably old data
+		$this->query("DELETE FROM tiki_areas");
+
+		foreach($areas as $key=>$item){
+			$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));
+			}
+		}else return tra("No category jail set in any perspective.");
+		return true;
+		}else return tra("Areas root category id")." ".tra("is invalid.");
+	}
+} // class end
+$areaslib = new AreasLib();
+global $areaslib;
 
 
 /*-----------------------------------------------
