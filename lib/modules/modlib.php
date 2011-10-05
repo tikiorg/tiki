@@ -827,7 +827,7 @@ class ModLib extends TikiLib
 				if (file_exists('templates/'.$template)) {
 					$data = $smarty->fetch($template);
 				} else {
-					$data = $this->get_user_module_content( $mod_reference['name'] );
+					$data = $this->get_user_module_content( $mod_reference['name'], $module_params );
 				}
 				$smarty->clear_assign('module_params'); // ensure params not available outside current module
 				$smarty->clear_assign('tpl_module_title');
@@ -879,7 +879,7 @@ class ModLib extends TikiLib
 				strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
 	}
 
-	function get_user_module_content( $name ) {
+	function get_user_module_content( $name, $module_params ) {
 		global $tikilib, $smarty;
 
 		$smarty->assign('module_type','module');
@@ -894,7 +894,8 @@ class ModLib extends TikiLib
 				$info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true));
 				$info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
 			}
-
+			// re-assign module_params for the custom module in case a module plugin is used inside it
+			$smarty->assign_by_ref('module_params', $module_params);
 			$smarty->assign('user_title', tra($info['title']));
 			$smarty->assign_by_ref('user_data', $info['data']);
 			$smarty->assign_by_ref('user_module_name', $info['name']);
