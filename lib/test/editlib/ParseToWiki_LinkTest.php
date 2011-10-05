@@ -271,12 +271,11 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */	
 	function testWikiPage() {
 		
-		$this->markTestIncomplete('Work in progress.');		
-				
+
 		/*
 		 * - page name = description
 		 */
-		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">HomePage</a>';			
+		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">HomePage</a>';			
 		$ex = '((HomePage))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
@@ -286,19 +285,20 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		 * - page
 		 * - description
 		 */
-		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">The Home Page</a>';		
+		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">The Home Page</a>';		
 		$ex = '((HomePage|The Home Page))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
 		
+		$this->markTestIncomplete('Work in progress.');
 		/*
 		 * - page
 		 * - link to an anchor
 		 * - description
  		 */
-		$inData = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki page">Home Page, Heading &quot;Admin Panel&quot;</a>';		
-		$ex = '((HomePage|#Get_Started_using_Admin_Panel|Home Page, Heading \"Admin Panel\"))';
+		$inData = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki wiki_page">Home Page, Heading &quot;Admin Panel&quot;</a>';		
+		$ex = '((HomePage|#Get_Started_using_Admin_Panel|Home Page, Heading "Admin Panel"))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);	
 

@@ -193,10 +193,11 @@ class EditLib
 	 * Utility for walk_and_parse to process links
 	 * 
 	 * @param array $args the attributes of the link
+	 * @param array $text the link text
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
-	private function parseLinkTag(&$args, &$src, &$p) {
+	private function parseLinkTag(&$args, $text, &$src, &$p) {
 		
 		/*
 		 * parse the link classes
@@ -221,10 +222,18 @@ class EditLib
 		/*
 		 * convert the links
 		 */
+		//$p['wiki_lbr']++; // force wiki line break mode
+		
 		if ( $cl_wiki && $cl_wiki_page ) {
 
 			// link to wiki page -> (( ))
-			$src .= '(('.$args["href"]["value"].'|';
+			$target = urldecode($args['href']['value']);
+			$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
+			
+			$src .= '((';
+			if ($target != $text) {
+				$src .= $target.'|';
+			};
 			$p['stack'][] = array('tag' => 'a', 'string' => '))');
 
 		} else {
@@ -801,7 +810,17 @@ class EditLib
 							break;
 						case "a":
 							if (isset($c[$i]['pars'])) {
-								$this->parseLinkTag($c[$i]['pars'], $src, $p);
+								// get the link text
+								$text = '';
+								if ( $i < count($c) ) {
+									$next_token = &$c[$i+1];
+									if (isset($next_token['type']) && $next_token['type'] == 'text' && isset($next_token['data']) )
+									{
+										$text = trim($next_token['data']);
+									}
+								}
+								// parse the link
+								$this->parseLinkTag($c[$i]['pars'], $text, $src, $p);
 							}
 							
 							// deactivated by mauriz, will be replaced by the routine above
