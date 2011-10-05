@@ -95,7 +95,7 @@ $lang=Array(
 "admin hotwords tpl" => "admin aktivne reči tpl",
 "admin HtmlPages tpl" => "admin HtmlPages tpl",
 "Is this regular expression or simpel search/replacer" => "Da li je ovo regularan izraz (regex) ili jednostavna pretraga/zamena",
-"<span title=\"{tr}subset of chars: imsxeADSXUu, which is regex modifiers" => "<span title=\"{tr}podskup karaktera: imsxeADSXUu, koji su regex modifikatori",
+//"<span title=\"{tr}subset of chars: imsxeADSXUu, which is regex modifiers" => "<span title=\"{tr}podskup karaktera: imsxeADSXUu, koji su regex modifikatori",
 "admin featured links tpl" => "admin prikazujemo vam sajtove tpl",
 "admin mailin tpl" => "admin mailin tpl",
 "Edit tpl" => "Izmeni tpl",

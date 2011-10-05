@@ -787,7 +787,7 @@ $lang=Array(
 "edit account settings" => "muokkaa tili asetuksia",
 "edit included group" => "muokkaa sisällytettyä ryhmää",
 "assign to groups" => "liitä ryhmiä",
-"Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Ryhmä lähetys (CSV tiedosto<a {popup text='kirjaus,salasana,sähköposti,ryhmät<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help",
+//"Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Ryhmä lähetys (CSV tiedosto<a {popup text='kirjaus,salasana,sähköposti,ryhmät<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help",
 "edit article tpl" => "muokkaa artikkeli tpl",
 "advanced feature" => "kehittyneempi ominaisuus",
 "Assign user" => "Liitä käyttäjä",

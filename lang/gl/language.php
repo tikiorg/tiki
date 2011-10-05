@@ -95,7 +95,7 @@ $lang=Array(
 "The tracker needs a text field named Subject" => "O tracker precisa un campo de texto chamado \"Subject\"",
 "assign permissions" => "asignar permisos",
 "assign to groups" => "asignar a grupos",
-"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Carga en lote (ficheiro CSV <a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help",
+//"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Carga en lote (ficheiro CSV <a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help",
 "remove file extension from image name" => "borre a extensión do ficheiro do nome da imaxe",
 "convert sub directories to sub galleries" => "converter subdirectorios en subgalerías",
 "eg. from \"misc/screenshots/digicam0001.jpg\" a gallery named screenshots will be created" => "exemplo de \"misc/screenshots/digicam0001.jpg\" crearase unha galería chamada screenshots",

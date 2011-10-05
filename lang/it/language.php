@@ -244,7 +244,7 @@ $lang=Array(
 "by %s" => "di %s",
 "Archived page:" => "Pagina archiviata:",
 "Diff of %s." => "differenti versioni di %s.",
-" tags. Example: {tr}The newsletter was sent to {\$sent} email addresses" => " tags. Esempio: {tr}La newsletter e' stata inviata a questi indirizzi email: {\$sent}",
+//" tags. Example: {tr}The newsletter was sent to {\$sent} email addresses" => " tags. Esempio: {tr}La newsletter e' stata inviata a questi indirizzi email: {\$sent}",
 "Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature." => "Mostra un frammento di codice.\r\nImposta il parametro opzionale (da -+ln+- a 1) se desideri che il codice sia visualizzato per linee numerate.",
 "Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release." => "La tua modifica delle impostazioni � stata registrata. <a href='tiki-admin.php?page=general'>Clicca qui</a> o torna indietro pi� tardi per vedere i cambiamenti. (Questo � un bug conosciuto che sar� eliminato nella prossima release.)",
 "All Fields must be non empty" => "Devi riempire tutti i campi",

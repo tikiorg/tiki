@@ -91,7 +91,7 @@ $lang=Array(
 "Project Admins group template" => "Project Beheerders groep sjabloon",
 "Create New Group" => "Maak Nieuwe Groep aan",
 "Project Members group template" => "Project Leden groep sjabloon",
-"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Bulk aanlevering (CSV bestand<a {popup text='login,password,email'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}hulp",
+//"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Bulk aanlevering (CSV bestand<a {popup text='login,password,email'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}hulp",
 "slideshow_p" => "slideshow_p",
 "slideshow backward" => "slideshow achterwaarts",
 "slideshow_n" => "slideshow_n",
