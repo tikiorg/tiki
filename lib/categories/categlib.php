@@ -276,6 +276,7 @@ class CategLib extends ObjectLib
 	function get_category_descendants($categId) {
 		if ($categId) {
 			$category = $this->get_category($categId);
+			if($category == false) return false;
 			return array_merge(array($categId), $category['descendants']);
 		} else {
 			$categories = $this->getCategories(NULL, false, false);
