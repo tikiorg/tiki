@@ -21,7 +21,7 @@ function smarty_function_preference( $params, $smarty ) {
 		if ( isset($params['label']) ) {
 			$info['name'] = $params['label'];
 		}
-		if (in_array($params['name'], $user_overrider_prefs) && isset($prefs[$params['name']])) {
+		if ($source === null && in_array($params['name'], $user_overrider_prefs) && isset($prefs[$params['name']])) {
 			$info['value'] = $prefs['site_' . $params['name']];
 		}
 
