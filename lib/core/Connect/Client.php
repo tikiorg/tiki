@@ -115,31 +115,15 @@ class Connect_Client extends Connect_Abstract
 
 	/**
 	 * gets a guid created within last 1 minute
-	 * Connect Client
+	 * N.B. time caluculation done within database to avoid timezone issues etc
 	 *
 	 * @return string guid
 	 */
 
 	function getPendingGuid() {
-
-		$res = $this->connectTable->fetchAll(
-			array('created', 'guid'),
-			array(
-				'type' => 'pending',
-				'server' => 0,
-			),
-			1,
-			-1,
-			array( 'created' => 'DESC')
-		);
-		
-		if (!empty($res[0])) {
-			$created = strtotime($res[0]['created']);
-			if ($created + 60 > time()) {	// 1 min
-				return $res[0]['guid'];
-			}
-		}
-		return '';
+		$res = TikiDb::get()->getOne("SELECT `guid` FROM `tiki_connect` WHERE `type` = 'pending' AND " .
+									"`created` > NOW() - INTERVAL 1 MINUTE ORDER BY `created` DESC LIMIT 1;");
+		return empty($res) ? '' : $res;
 	}
 
 	/**
