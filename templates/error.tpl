@@ -25,42 +25,38 @@ close();
 			{assign var='errortitle' value="{tr}Error{/tr}"}
 		{/if}
 
-		{if ($errortype eq "404")}
-			{if isset($file_error)}
-				{remarksbox type='errors' title="{tr}File error{/tr}"}
-					{$file_error}
-				{/remarksbox}
-			{else}
-				{remarksbox type='errors' title=$errortitle}
-					{tr}Page not found{/tr}<br />{$page|escape}
-				{/remarksbox}
-				{if $prefs.feature_likePages eq 'y'}
-					{if $likepages}
-						<p>{tr}Perhaps you are looking for:{/tr}</p>
-						<ul>
-							{section name=back loop=$likepages}
-							<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]|escape}</a></li>
-							{/section}
-						</ul>
-					{else}
-			 			{remarksbox}
-							{tr}There are no wiki pages similar to '{$page|escape}'{/tr}
-						{/remarksbox}
-			 		{/if}
-				{/if}
-
-				{if $prefs.feature_search eq 'y' && $tiki_p_search eq 'y'}
-					{if $prefs.feature_likePages ne 'y'}
-					{/if}
-					{if $prefs.feature_search_fulltext eq 'y'}
-						{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
-					{else}
-						{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page" filter=$filter}
-					{/if}
-				{/if}
-
+		{if $errortype eq "404" and isset($file_error)}
+			{remarksbox type='errors' title="{tr}File error{/tr}"}
+				{$file_error}
+			{/remarksbox}
+		{elseif $errortype eq "404" and isset($page)}
+			{remarksbox type='errors' title=$errortitle}
+				{tr}Page not found{/tr}<br />{$page|escape}
+			{/remarksbox}
+			{if $prefs.feature_likePages eq 'y'}
+				{if $likepages}
+					<p>{tr}Perhaps you are looking for:{/tr}</p>
+					<ul>
+						{section name=back loop=$likepages}
+						<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]|escape}</a></li>
+						{/section}
+					</ul>
+				{else}
+		 			{remarksbox}
+						{tr}There are no wiki pages similar to '{$page|escape}'{/tr}
+					{/remarksbox}
+		 		{/if}
 			{/if}
 
+			{if $prefs.feature_search eq 'y' && $tiki_p_search eq 'y'}
+				{if $prefs.feature_likePages ne 'y'}
+				{/if}
+				{if $prefs.feature_search_fulltext eq 'y'}
+					{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
+				{else}
+					{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page" filter=$filter}
+				{/if}
+			{/if}
 		{else}
 			{if isset($token_error)}
 				{remarksbox type='errors' title="{tr}Token Error{/tr}"}
