@@ -23,7 +23,14 @@
 	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript
 </IfModule>
 
-# If the site is stable, might be worth setting the expires header on all files
+# Using ETags will improve the YSlow scores
+FileETag none
+
+<IfModule mod_dir.c>
+	DirectoryIndex index.php
+</IfModule>
+
+# If the site is stable, might be worth setting the expires header on all files for optimization.
 #<IfModule mod_expires.c>
 #	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
 #		ExpiresActive on
@@ -31,13 +38,17 @@
 #	</FilesMatch>
 #</IfModule>
 
-# Using ETags will improve the YSlow scores
-FileETag none
+# Handling errors catched by Apache with Tiki
+# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only catched by Apache (ex.: filenameThatDoesntExist.php). 
+# To make Tiki handle errors catched by Apache, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
+# ErrorDocument 404 /tiki-index.php?page=File+not+found
+
+# Permanent redirect: Add directive as the example below. This is useful if you were using another Web application or static HTML and you want to avoid broken links.
+# Redirect 301 /oldpage.html /tiki-index.php?page=newpage
 
 # Tiki requires PHP 5. If your host doesn't offer PHP 5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
 # AddType application/x-httpd-php5 .php
 # AddHandler application/x-httpd-php5 .php
-
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -71,9 +82,7 @@ RewriteRule (.*) - [L]
 #       and enable feature_wiki_export (as well as feature_wiki and feature_categories)
 #RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]
 
-# Permanent redirect: Add instructions as below. This is useful if you were using another Web application or static HTML and you want to avoid broken links
-# Redirect 301 /oldpage.html /tiki-index.php?page=newpage
- 
+
 # direct one-word access
 RewriteRule ^(img\/trackers\/.*)   $1                                       [L]
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
@@ -160,11 +169,6 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 </IfModule>
 # End of rewrite rules
 
-# Handling errors catched by Apache with Tiki
-# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only catched by Apache (ex.: filenameThatDoesntExist.php). 
-# To make Tiki handle errors catched by Apache, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
-# ErrorDocument 404 /tiki-index.php?page=File+not+found
-
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
 
@@ -187,8 +191,4 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 #AuthName "Restricted Access"
 #AuthUserFile /etc/httpd/passwords
 #Require valid-user 
-
-<IfModule mod_dir.c>
-	DirectoryIndex index.php
-</IfModule>
 
