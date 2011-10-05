@@ -342,7 +342,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - existing page
 		 */
 		$inData = "(($homePage))";		
-		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">HomePage</a>';
+		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">HomePage</a>';
 		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$this->assertEquals($ex, $out);			
 		
@@ -352,7 +352,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
 		 */
 		$inData = "(($homePage|The Home Page))";		
-		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki page">The Home Page</a>';
+		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">The Home Page</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
 		
@@ -363,7 +363,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
  		 */
 		$inData = "(($homePage|#Get_Started_using_Admin_Panel|Home Page, Heading \"Admin Panel\"))";		
-		$ex = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki page">Home Page, Heading &quot;Admin Panel&quot;</a>';
+		$ex = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki wiki_page">Home Page, Heading &quot;Admin Panel&quot;</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);	
 		
@@ -409,7 +409,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
  		 */
 		$cke_opts = array( 'absolute_links'=>true, 'suppress_icons' => true, 'ck_editor' => true);
 		$inData = "(($noPage))";
-		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist" title="Page does not exist not exist" class="wiki page">Page does not exist not exist</a>';
+		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist" title="Page does not exist not exist" class="wiki wiki_page">Page does not exist not exist</a>';
 		$out = trim($tikilib->lib('parser')->parse_Data($inData, $cke_opts));
 		$this->assertEquals($ex, $out);			
 		
@@ -421,7 +421,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
  		 */
 		$inData = "(($noPage|Page does not exist))";
-		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist" title="Page does not exist not exist" class="wiki page">Page does not exist</a>';
+		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist" title="Page does not exist not exist" class="wiki wiki_page">Page does not exist</a>';
 		$out = trim($tikilib->lib('parser')->parse_Data($inData, $cke_opts));
 		$this->assertEquals($ex, $out);		
 		
@@ -434,7 +434,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
  		 */
 		$inData = "(($noPage|#anchor|Page does not exist))";
-		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist#anchor" title="Page does not exist not exist" class="wiki page">Page does not exist</a>';
+		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist#anchor" title="Page does not exist not exist" class="wiki wiki_page">Page does not exist</a>';
 		$out = trim($this->el->parseToWysiwyg($inData, $cke_opts));
 		$this->assertEquals($ex, $out);		
 
@@ -443,7 +443,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * Internation characters
 		 */	
 		$inData = "((äöü€ Page))";
-		$ex = '<a href="tiki-index.php?page=%C3%A4%C3%B6%C3%BC%E2%82%AC+Page" title="&auml;&ouml;&uuml;&euro; Page" class="wiki page">&auml;&ouml;&uuml;&euro; Page</a>';
+		$ex = '<a href="tiki-index.php?page=%C3%A4%C3%B6%C3%BC%E2%82%AC+Page" title="&auml;&ouml;&uuml;&euro; Page" class="wiki wiki_page">&auml;&ouml;&uuml;&euro; Page</a>';
 		$out = trim($this->el->parseToWysiwyg($inData, $cke_opts));		
 		$this->assertEquals($ex, $out);		
 	}
