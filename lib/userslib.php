@@ -3714,7 +3714,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => true,
 				'prefs' => array('feature_newsletters'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_batch_subscribe_email',
@@ -3732,7 +3732,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_subscribe_email',
@@ -3750,7 +3750,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_newsletter',
