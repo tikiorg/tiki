@@ -310,6 +310,15 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);		
 		$this->assertEquals($ex, $out);		
 		
+		
+		/*
+		 * Line breaks
+		 */
+		$inData = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">Home<br />Page</a><br />Another Line';			
+		$ex = '((HomePage|Home %%% Page))\nAnother Line';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);			
 	}			
 	
 }

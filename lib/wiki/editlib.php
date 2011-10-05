@@ -222,7 +222,7 @@ class EditLib
 		/*
 		 * convert the links
 		 */
-		//$p['wiki_lbr']++; // force wiki line break mode
+		$p['wiki_lbr']++; // force wiki line break mode
 		
 		if ( $cl_wiki && $cl_wiki_page ) {
 
@@ -246,7 +246,6 @@ class EditLib
 
 			// open the link
 			if ($target) {
-				$src .= '((';
 
 				// the link is defined by the next token if
 				// -> we don't have an anchor
@@ -260,9 +259,8 @@ class EditLib
 						$link . '|';
 					}
 				};
-			
+				$this->processWikiTag('a', &$src, &$p, '((', '))', true); 				
 				$src .= $link;
-				$p['stack'][] = array('tag' => 'a', 'string' => '))');
 				
 			} // target defined
 		} else {
@@ -903,6 +901,7 @@ class EditLib
 					
 					// can we leave wiki line break mode ?
 					switch ($c[$i]["data"]["name"]) { 
+						case "a":
 						case "h1":
 						case "h2": 
 						case "h3":
