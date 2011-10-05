@@ -291,7 +291,6 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$this->assertEquals($ex, $out);			
 		
 		
-		$this->markTestIncomplete('Work in progress.');
 		/*
 		 * - page
 		 * - link to an anchor
@@ -306,10 +305,11 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		/*
 		 * Internation characters
 		 */	
-		$inData = '<a href="tiki-index.php?page=%C3%A4%C3%B6%C3%BC%E2%82%AC+Page" title="äöü€ Page" class="wiki">äöü€ Page</a>';	
+		$inData = '<a href="tiki-index.php?page=%C3%A4%C3%B6%C3%BC%E2%82%AC+Page" title="äöü€ Page" class="wiki wiki_page">äöü€ Page</a>';	
 		$ex = '((äöü€ Page))';
 		$out = $this->el->parseToWiki($inData);		
 		$this->assertEquals($ex, $out);		
+		
 	}			
 	
 }

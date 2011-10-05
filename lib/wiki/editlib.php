@@ -226,16 +226,45 @@ class EditLib
 		
 		if ( $cl_wiki && $cl_wiki_page ) {
 
-			// link to wiki page -> (( ))
-			$target = urldecode($args['href']['value']);
-			$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
-			
-			$src .= '((';
-			if ($target != $text) {
-				$src .= $target.'|';
-			};
-			$p['stack'][] = array('tag' => 'a', 'string' => '))');
+			/*
+			 * link to wiki page -> (( ))
+			 */
 
+			// extract the human readable page name
+			$href = urldecode($args['href']['value']);
+			$href = preg_replace('/tiki\-index\.php\?page\=/', '', $href);
+
+			// split the page name into target and anchor
+			$matches = preg_split('/#/', $href);
+			if ( count($matches) == 2) {
+				$target = $matches[0];
+				$anchor = '|#' . $matches[1];
+			} else {
+				$target = $href;
+				$anchor = '';
+			}
+
+			// open the link
+			if ($target) {
+				$src .= '((';
+
+				// the link is defined by the next token if
+				// -> we don't have an anchor
+				// -> AND the target matches the text of the next token
+				$link = '';
+				if ( $anchor || $target != $text ) {
+					$link = $target . $anchor . '|';
+					
+					// do we need a separator?
+					if ($text) {
+						$link . '|';
+					}
+				};
+			
+				$src .= $link;
+				$p['stack'][] = array('tag' => 'a', 'string' => '))');
+				
+			} // target defined
 		} else {
 
 			// default, to be reviewed
