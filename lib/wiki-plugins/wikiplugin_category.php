@@ -247,6 +247,6 @@ function wikiplugin_category($data, $params) {
 		}
 	}
 	
-	$displayParameters = array_intersect($params, array_flip(array('showTitle', 'categoryshowlink', 'showtype', 'one', 'showlinks', 'showname', 'showdescription')));
+	$displayParameters = array_intersect_key($params, array_flip(array('showTitle', 'categoryshowlink', 'showtype', 'one', 'showlinks', 'showname', 'showdescription')));
 	return "~np~". $categlib->get_categoryobjects($id,$types,$sort,$split,$sub,$and, $maxRecords, $filter, $displayParameters)."~/np~";
 }
