@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '8.0 SVN';	// needs to have no spaces for releases
+		$this->version 	= '8.0 Beta';	// needs to have no spaces for releases
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -67,7 +67,7 @@ class TWVersion
 				16=>'Vulpeculae',	// 5.x
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
-				19=>'Star required',	// 8.x
+				19=>'Acubens',	// 8.x
 		);
 	}
 
@@ -149,6 +149,7 @@ class TWVersion
 				'7.1RC2',
 				'7.1',
 				'7.2',
+				'8.0beta',
 			);
 	}
 
