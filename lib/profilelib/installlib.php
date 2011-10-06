@@ -469,7 +469,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			'restrict_start' => new Tiki_Profile_DateConverter,
 			'restrict_end' => new Tiki_Profile_DateConverter,
 			'sort_default_field' => new Tiki_Profile_ValueMapConverter(array( 'modification' => -1, 'creation' => -2, 'item' => -3 )),
-			'list_default_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' ), $implodeArray),
+			'list_default_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' )),
 			'default_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' )),
 			'modification_status' => new Tiki_Profile_ValueMapConverter(array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' )),
 		);
@@ -2756,6 +2756,7 @@ class Tiki_Profile_ValueMapConverter // {{{
 	function __construct( $map, $implodeArray = false )
 	{
 		$this->map = $map;
+		$this->implode = $implodeArray;
 	}
 
 	function convert( $value )

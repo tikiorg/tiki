@@ -699,6 +699,7 @@ class Tiki_Profile
 		// Order object creations to make sure all objects are created when needed
 		// Circular dependencies get dicarded
 		$counter = 0;
+		$refs = array();
 		while( ! empty( $objects ) )
 		{
 			// Circular dependency found... give what we have
