@@ -808,13 +808,15 @@ if (
 		$install_type = 'update';
 	}
 	
-	// Try to activate Apache htaccess file by renaming _htaccess into .htaccess
+	// Try to activate Apache htaccess file by copying _htaccess into .htaccess
 	// Do nothing (but warn the user to do it manually) if:
 	//   - there is no  _htaccess file,
-	//   - there is already an existing .htaccess (that is not necessarily the one that comes from TikiWiki),
-	//   - the rename does not work (e.g. due to filesystem permissions)
+	//   - there is already an existing .htaccess (that is not necessarily the one that comes from Tiki),
+	//   - the copy does not work (e.g. due to filesystem permissions)
 	//
-	if ( strpos($_SERVER['SERVER_SOFTWARE'],'Apache') !== false && !file_exists('.htaccess') && ! @rename('_htaccess', '.htaccess') ) {
+	// TODO: Perform up-to-date check as in the SEFURL admin panel
+	// TODO: Equivalent for IIS
+	if ( strpos($_SERVER['SERVER_SOFTWARE'],'Apache') !== false && !file_exists('.htaccess') && !@symlink('_htaccess', '.htaccess') && ! @copy('_htaccess', '.htaccess')) {
 		$smarty->assign('htaccess_error', 'y');
 	}
 }
