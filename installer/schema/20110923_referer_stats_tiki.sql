@@ -1,5 +1,2 @@
 #GillesM
-
-ALTER TABLE `tiki_referer_stats` ADD `lasturl` TEXT NULL AFTER `last` ;
-
- 
+ALTER TABLE `tiki_referer_stats` ADD `lasturl` TEXT DEFAULT NULL AFTER `last` ;
