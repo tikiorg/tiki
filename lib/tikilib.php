@@ -1245,9 +1245,9 @@ class TikiLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-			$objperm = $this->get_perm_object($res, 'quizzes', '', false);
+			$objperm = Perms::get('quizzes', $res);
 
-			if ( $objperm['tiki_p_take_quiz'] == 'y' ) {
+			if ( $objperm->take_quiz ) {
 				if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
 					$retids[] = $res;
 				}

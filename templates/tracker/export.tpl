@@ -69,13 +69,13 @@
 			<legend>{tr}Fields{/tr}</legend>
 			{foreach from=$fields item=field}
 				<label>
-					<input type="checkbox" name="listfields[]" value="{$field.fieldId|escape}" />
+					<input type="checkbox" name="listfields[]" value="{$field.fieldId|escape}" checked="checked" />
 					{$field.name|escape}
 				</label>
 			{/foreach}
 		</fieldset>
 		<label>
-			{tr}Amount of records{/tr}
+			{tr}Number of records{/tr}
 			<input type="number" name="recordsMax" value="{$recordsMax|escape}" />
 		</label>
 		<label>
