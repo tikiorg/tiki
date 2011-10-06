@@ -129,7 +129,7 @@ class WikiParser_OutputLink
 
 				$page = $remotePage;
 				$pattern = $this->externals[$token];
-				$class = 'wiki external ' . $token;
+				$class = 'wiki ext_page ' . $token;
 				return str_replace( '$page', urlencode( $page ), $pattern );
 			}
 		}

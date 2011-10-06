@@ -85,7 +85,6 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 	 */
 	function testExternalWiki() {
 
-		$this->markTestIncomplete('Work in progress.');
 		/*
 		 * setup the external wikis and the parser
 		 */
@@ -99,7 +98,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - page name
 		 */
 		$inData = "(($this->ext1:Download))" ;		
-		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki external test_ext1">Download</a>';
+		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki ext_page test_ext1">Download</a>';
 		$out = trim($p->parse_data($inData));
 		$this->assertEquals($ex, $out);			
 		
@@ -110,7 +109,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - anchor
 		 */
 		$inData = "(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release))" ;
-		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki external test_ext1">Download</a>';
+		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki ext_page test_ext1">Download</a>';
 		$out = trim($p->parse_data($inData));
 		$this->assertEquals($ex, $out);			
 		
@@ -122,7 +121,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - description
 		 */
 		$inData = "(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release|Download LTS))" ;	
-		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki external test_ext1">Download LTS</a>';
+		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki ext_page test_ext1">Download LTS</a>';
 		$out = trim($p->parse_data($inData));
 		$this->assertEquals($ex, $out);			
 	}
