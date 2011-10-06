@@ -1846,7 +1846,7 @@ CREATE TABLE `tiki_referer_stats` (
   `referer` varchar(255) NOT NULL default '',
   `hits` int(10) default NULL,
   `last` int(14) default NULL,
-  `lasturl` varchar(255) default NULL,
+  `lasturl` text default NULL,
   PRIMARY KEY (`referer`)
 ) ENGINE=MyISAM;
 
@@ -2230,7 +2230,6 @@ CREATE TABLE `tiki_tracker_item_field_logs` (
   `itemId` int(12) NOT NULL default '0',
   `fieldId` int(12) NOT NULL default '0',
   `value` text,
-  `lang` char(16) default NULL,
   INDEX `version` (`version`),
   INDEX `itemId` (`itemId`),
   INDEX `fieldId` (`fieldId`)

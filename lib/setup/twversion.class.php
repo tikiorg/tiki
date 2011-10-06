@@ -67,7 +67,7 @@ class TWVersion
 				16=>'Vulpeculae',	// 5.x
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
-				19=>'Star required',	// 8.x
+				19=>'Acubens',	// 8.x
 		);
 	}
 
@@ -149,6 +149,7 @@ class TWVersion
 				'7.1RC2',
 				'7.1',
 				'7.2',
+				'8.0beta',
 			);
 	}
 
