@@ -744,10 +744,10 @@ class Services_Tracker_Controller
 				$toDisplay[] = $row['status'];
 			}
 			if ($showCreated) {
-				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['created']);
+				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['created'], '', 'n');
 			}
 			if ($showLastModif) {
-				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['lastModif']);
+				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['lastModif'], '', 'n');
 			}
 			foreach ($row['field_values'] as $val) {
 				$toDisplay[] = $trklib->get_field_handler($val)->renderOutput(array('list_mode' => 'csv'));
