@@ -11,12 +11,12 @@
 	<div class="viewmode">
 	{if $calendar_type neq "tiki_actions"}
 			{if $module neq 'y'}
-				{button _auto_args="viewmode,focus" _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" viewmode='day' focus=$now}
+				{button _auto_args="viewmode,focus" _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" viewmode='day' focus=$now todate=$now}
 			{else}
 				{if empty($module_params.viewmode)}
-					{button _auto_args="viewmode,focus" _keepall=y _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" viewmode='day' focus=$now}
+					{button _auto_args="viewmode,focus" _keepall=y _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" viewmode='day' focus=$now todate=$now}
 				{else}
-					{button _auto_args="focus" _keepall=y _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" focus=$now}
+					{button _auto_args="focus" _keepall=y _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" focus=$now todate=$now}
 				{/if}
 				<br class="clearfix" />
 			{/if}
