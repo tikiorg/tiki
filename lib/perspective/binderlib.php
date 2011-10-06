@@ -21,11 +21,13 @@ class AreasLib extends CategLib
 {
 
 	function HandleObjectCategories($objectCategoryIds){
-    	global $prefs, $perspectivelib;  
+    	global $prefs, $perspectivelib, $_SESSION;  
     
    	if (!empty($objectCategoryIds)){
+		if(!isset($_SESSION['current_perspective'])) $_SESSION['current_perspective'] = 0; 
 	        foreach($objectCategoryIds as $categId){
 			// If parent category has ID equal to value of $prefs['areas_root']
+			$foundPerspective = NULL;
 			if ($this->get_category_parent($categId) == $prefs['areas_root']){
 				$foundPerspective = $this->get_perspective_by_categid($categId); 
 				// If the found perspective is different than the current perspective, update it.

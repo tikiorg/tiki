@@ -15,7 +15,7 @@
 				{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. Additional files uploaded will still be uploaded to the server and searchable, but they will not be attached to this item. Make sure you remove the files no longer required before you save your changes.{/tr}
 			{/remarksbox}
 		{/if}
-		<p>{tr}Drop files from your desktop here or browse for them{/tr}</p>
+		<p style="display:none;">{tr}Drop files from your desktop here or browse for them{/tr}</p>
 		<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
 	</fieldset>
 {/if}
@@ -115,45 +115,47 @@ $files.find('img').click(function () {
 	$(this).closest('li').remove();
 });
 
-$drop.bind('dragenter', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$drop.addClass('highlight');
-	return false;
-});
-$drop.bind('dragexit', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$drop.removeClass('highlight');
-	return false;
-});
-$drop.bind('dragover', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	return false;
-});
-$drop.bind('drop', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$drop.removeClass('highlight');
+if (typeof FileReader !== 'undefined') {
+	$drop.find('> p').show();
+	$drop.bind('dragenter', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$drop.addClass('highlight');
+		return false;
+	});
+	$drop.bind('dragexit', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$drop.removeClass('highlight');
+		return false;
+	});
+	$drop.bind('dragover', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	});
+	$drop.bind('drop', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$drop.removeClass('highlight');
 
-	var dataTransfer = e.dataTransfer;
-	if (! dataTransfer) {
-		dataTransfer = e.originalEvent.dataTransfer;
-	}
+		var dataTransfer = e.dataTransfer;
+		if (! dataTransfer) {
+			dataTransfer = e.originalEvent.dataTransfer;
+		}
 
-	if (dataTransfer && dataTransfer.files) {
-		handleFiles(dataTransfer.files);
-	}
-	return false;
-});
-
-$fileinput.change(function () {
-	if (this.files) {
-		handleFiles(this.files);
-		$(this).val('');
-	}
-});
+		if (dataTransfer && dataTransfer.files) {
+			handleFiles(dataTransfer.files);
+		}
+		return false;
+	});
+	$fileinput.change(function () {
+		if (this.files) {
+			handleFiles(this.files);
+			$(this).val('');
+		}
+	});
+}
 
 $url.keypress(function (e) {
 	if (e.which === 13) {
