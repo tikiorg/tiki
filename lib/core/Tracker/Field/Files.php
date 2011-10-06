@@ -33,6 +33,25 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'description' => tr('Maximum number of files to be attached on the field.'),
 						'filter' => 'int',
 					),
+					'displayImages' => array(
+						'name' => tr('Display Images'),
+						'description' => tr('Show files as images or object links'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('Links'),
+							1 => tr('Images'),
+						),
+					),
+					'imageParams' => array(
+						'name' => tr('Image parameters'),
+						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' max=400&desc=namedesc&stylebox=block"',
+						'filter' => 'text',
+					),
+					'imageParamsForLists' => array(
+						'name' => tr('Image parameters for lists'),
+						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
+						'filter' => 'text',
+					),
 				),
 			),
 		);
@@ -103,7 +122,49 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/files.tpl', $context);
+		if (!isset($context['list_mode'])) {
+			$context['list_mode'] = 'n';
+		}
+		$value = $this->getValue();
+
+		if ($context['list_mode'] === 'csv') {
+			return $value;
+		}
+		
+		$ret = '';
+		if (!empty($value)) {
+			if ($this->getOption(3)) { // images
+				$params = array(
+					'fileId' => $value,
+				);
+				if ($context['list_mode'] === 'y') {
+					$params['thumb'] = $context['list_mode'];
+					$params['rel'] = 'box[' . $this->getInsertId() . ']';
+					$otherParams = $this->getOption(5);
+				} else {
+					$otherParams = $this->getOption(4);
+				}
+				if ($otherParams) {
+					parse_str($otherParams, $otherParams);
+					$params = array_merge($params, $otherParams);
+				}
+
+				include_once('lib/wiki-plugins/wikiplugin_img.php');
+				$ret = wikiplugin_img('', $params, 0);
+				$ret = preg_replace('/~\/?np~/', '', $ret);
+			} else {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_object_link');
+				$ret = '<ol>';
+				foreach ($this->getConfiguration('files') as $fileId => $file) {
+					$ret .= '<li>';
+					$ret .= smarty_function_object_link(array('type' => 'file', 'id' => $fileId, 'title' => $file['name']), $smarty);
+					$ret .= '</li>';
+				}
+				$ret .= '</ol>';
+			}
+		}
+		return $ret;
 	}
 
 	function handleSave($value, $oldValue)
