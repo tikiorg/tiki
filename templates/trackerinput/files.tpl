@@ -149,14 +149,13 @@ if (typeof FileReader !== 'undefined') {
 		}
 		return false;
 	});
+	$fileinput.change(function () {
+		if (this.files) {
+			handleFiles(this.files);
+			$(this).val('');
+		}
+	});
 }
-
-$fileinput.change(function () {
-	if (this.files) {
-		handleFiles(this.files);
-		$(this).val('');
-	}
-});
 
 $url.keypress(function (e) {
 	if (e.which === 13) {
