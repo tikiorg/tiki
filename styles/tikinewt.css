@@ -979,49 +979,46 @@ td.third {
 	float: left;
 }
 
+.tabmark {
+	list-style-image: none;
+	float: left;
+	border: solid 1px #aaa;
+	border-bottom: none !important;
+	margin: 0 .2em 0 0;
+}
+
 .tabmark a,
 .tabmark a:visited {
 	padding: 0.5em 1em;
-	border-bottom: 0;
 	color: #666;
 	font-weight: bold;
 }
 
 .tabmark a:active {
-	background: #fff;
-	color: #ff0000;
+	color: #f00;
 }
 
 .tabmark a:hover {
 	color: #000;
-	background: #ccc;
 }
 
 .tabactive {
-	border: solid 1px #225566 !important;
-	border-bottom: none !important;
-	border-top-width: 2px !important;
-	position: relative;
-	top: -1px;
-}
-
-[class].tabactive {
-	top: 2px;
-}
-
-.tabactive a {
+	border: solid 1px #225566;
+	border-bottom-width: 0;
 	background: #eee;
 }
 
-.tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
-	position: relative !important;
-	top: -2px !important;
+.tabmark:hover {
+	background: #ccc;
 }
 
-[class].tabinactive {
-	top: 1px !important;
+.tabactive:hover {
+	background: #eee;
+}
+
+.tabactive a:hover {
+	color: #666;
+	text-decoration: none;
 }
 
 .tabcontent {
