@@ -19,7 +19,9 @@ process_submit = function(me) {
 	$(me).attr("is_validating", false);
 
 	// disable submit button(s)
-	$(me).find("input[type=submit]").attr("disabled", true);
+	// FIXME after 8.0b1 - this seems to prevent the "save" field being sent in the request on webkit
+	//$(me).find("input[type=submit]").attr("disabled", true);
+
 	me.submit();
 };
 {/jq}
