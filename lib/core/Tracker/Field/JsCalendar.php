@@ -30,11 +30,11 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 					),
 					'useNow' => array(
 						'name' => tr('Default value'),
-						'description' => tr('Use an empty value or now for new items'),
+						'description' => tr('Default date and time for new items'),
 						'filter' => 'int',
 						'options' => array(
-							0 => tr('Empty'),
-							1 => tr('Now'),
+							0 => tr('None (undefined)'),
+							1 => tr('Item creation date and time'),
 						),
 					),
 				),
