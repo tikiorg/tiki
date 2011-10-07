@@ -90,7 +90,12 @@ class Search_Indexer
 				}
 
 				foreach ($data as $entry) {
-					$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
+					try {
+						$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
+					} catch(Exception $e) {
+						// TODO something useful with this error message
+						$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
+					}
 				}
 
 				return count($data);
