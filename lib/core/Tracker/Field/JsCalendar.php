@@ -9,13 +9,15 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 {
 	public static function getTypes()
 	{
+		global $prefs;
+
 		return array(
 			'j' => array(
-				'name' => tr('Date and Time (JSCalendar)'),
-				'description' => tr('Provides drop-down options to accurately select a date and/or time.'),
+				'name' => tr('Date and Time (Date Picker)'),
+				'description' => tr('Provides jQuery-UI date picker select a date and optionally time.'),
 				'prefs' => array('trackerfield_jscalendar'),
 				'tags' => array('advanced'),
-				'default' => 'n',
+				'default' => $prefs['feature_jquery_ui'],
 				'params' => array(
 					'datetime' => array(
 						'name' => tr('Type'),
@@ -24,6 +26,15 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 						'options' => array(
 							'dt' => tr('Date and Time'),
 							'd' => tr('Date only'),
+						),
+					),
+					'useNow' => array(
+						'name' => tr('Default value'),
+						'description' => tr('Use an empty value or now for new items'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('Empty'),
+							1 => tr('Now'),
 						),
 					),
 				),
@@ -38,7 +49,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		return array(
 			'value' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
-				: $this->getValue(TikiLib::lib('tiki')->now),
+				: $this->getValue(),
 		);
 	}
 
@@ -53,6 +64,9 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 			$params['date'] = $this->getValue();
 			if (empty($params['date'])) {
 				$params['date'] = $this->getConfiguration('value');
+			}
+			if (empty($params['date']) && $this->getOption(1)) {
+				$params['date'] = TikiLib::lib('tiki')->now;
 			}
 		} else {
 			$params['date'] = '';
