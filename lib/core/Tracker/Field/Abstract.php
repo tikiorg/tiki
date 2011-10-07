@@ -203,8 +203,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		
 		if (isset($this->itemData[$key])) {
 			$value =$this->itemData[$key];
+		} else if (isset($this->definition['value'])) {
+			$value = $this->definition['value'];
 		} else {
-			$value = isset($this->itemData[$key]) ? $this->itemData[$key] : null;
+			$value = null;
 		}
 
 		return $value === null ? $default : $value;
