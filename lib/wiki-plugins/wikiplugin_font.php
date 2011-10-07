@@ -28,7 +28,7 @@ function wikiplugin_font_getfontoptions() {
   */
 function wikiplugin_font_info() {
 	return array(
-		'name' => 'FONT',
+		'name' => tra('FONT'),
 		'format' => 'wiki',
 		'documentation' => 'PluginFont',
 		'description' => tra('Experimental: Font family and font size.'),
