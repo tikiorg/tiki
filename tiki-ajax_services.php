@@ -59,7 +59,7 @@ if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
 }
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
-	$access->check_feature( array( 'feature_ajax', 'feature_jquery_autocomplete' ) );
+	$access->check_feature( 'feature_jquery_autocomplete' );
 
 	$sep = '|';
 	if ( isset( $_REQUEST['separator'] ) ) {
