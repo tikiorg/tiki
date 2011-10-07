@@ -103,7 +103,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/files.tpl', $context);
+		if ($context['list_mode'] === 'csv') {
+			return $this->getConfiguration('value');
+		} else {
+			return $this->renderTemplate('trackeroutput/files.tpl', $context);
+		}
 	}
 
 	function handleSave($value, $oldValue)
