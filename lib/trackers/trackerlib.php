@@ -4007,7 +4007,7 @@ class TrackerLib extends TikiLib
 		}
 		foreach ($currentGroups as $groupName) {
 			$catid = $categlib->get_category_id($groupName);
-			if (in_array($catid, $removable_catids) && !in_array($catid, $valid_catids)) {
+			if (in_array($catid, $removable_catids) && !in_array($catid, $addable_catids)) {
 				$userlib->remove_user_from_group($trackersync_user, $groupName);
 			}
 		}
