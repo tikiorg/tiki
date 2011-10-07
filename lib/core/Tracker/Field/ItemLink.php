@@ -205,13 +205,9 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		$smarty = TikiLib::lib('smarty');
 
 		$item = $this->getConfiguration('value');
-		$dlist = $this->getConfiguration('listdisplay');
 		$list = $this->getConfiguration('list');
-		if (!empty($dlist)) {
-			$label = isset($dlist[$item]) ? $dlist[$item] : '';
-		} else {
-			$label = isset($list[$item]) ? $list[$item] : '';
-		}
+		$label = isset($list[$item]) ? $list[$item] : '';
+
 		if ($item && $context['list_mode'] !== 'csv' && $this->getOption(2)) {
 			$smarty->loadPlugin('smarty_function_object_link');
 
@@ -225,18 +221,13 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		}
 	}
 
-        function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
 		$data = $this->getLinkData(array(), 0);
 		$item = $data['value']; 
-		$dlist = $data['listdisplay'];
 		$list = $data['list'];
-
-		if (!empty($dlist)) {
-			$label = isset($dlist[$item]) ? $dlist[$item] : '';
-		} else {
-			$label = isset($list[$item]) ? $list[$item] : '';
-		}
+		$label = isset($list[$item]) ? $list[$item] : '';
+		
 		return array(
 			$baseKey => $typeFactory->sortable($item),
 			"{$baseKey}_text" => $typeFactory->plaintext($label),
@@ -272,13 +263,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				)
 			);
 		} else {
-			$data['list'] = TikiLib::lib('trk')->get_all_items(
-				$this->getOption(0),
-				$this->getOption(1),
-				$this->getOption(4, 'opc'),
-				false
-			);
-			$data['listdisplay'] = array_unique(
+			$data['list'] = array_unique(
 				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
 					$this->getOption(0),
 					$this->getOption(3),
@@ -289,9 +274,6 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 
 		if ($this->getOption(6)) {	// addItems
 			$data['list']['-1'] = $this->getOption(6);
-			if (isset($data['listdisplay'])) {
-				$data['listdisplay']['-1'] = $this->getOption(6);
-			}
 		}
 		
 		return $data;
