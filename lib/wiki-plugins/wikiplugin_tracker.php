@@ -1189,7 +1189,11 @@ function wikiplugin_tracker($data, $params)
 				$back .= $smarty->fetch($tpl);
 			} elseif (!empty($wiki)) {
 				$smarty->security = true;
-				$back .= $smarty->fetch('wiki:'.$wiki);
+				if ($tikilib->page_exists($wiki)) {
+					$back .= $smarty->fetch('wiki:'.$wiki);
+				} else {
+					$back .= '<span class="error">' . tr('Missing wiki template page "%0"', $wiki) . '</span>';
+				}
 			}
 			include_once('lib/smarty_tiki/function.trackerheader.php');
 			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
