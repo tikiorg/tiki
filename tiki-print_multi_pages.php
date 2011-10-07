@@ -51,8 +51,16 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 		foreach ($struct as $struct_page) {
 			global $page_ref_id;
 			$page_ref_id = $struct_page['page_ref_id']; //to interpret {toc}
-			if ($struct_page['pos'] != '' && $struct_page['last'] == 1) continue;
+			if ($struct_page['pos'] != '' && $struct_page['last'] == 1) {
+				continue;
+			}
 			$page_info = $tikilib->get_page_print_info($struct_page['pageName']);
+			
+			// Use the alias as the display name, if an alias is defined
+			if( isset($struct_page['page_alias']) ) {
+				$page_info['pageName'] = $struct_page['page_alias'];
+			}
+			
 			$page_info['pos'] = $struct_page['pos'];
 			$page_info['h'] = empty($struct_page['pos']) ? 0 : count(explode('.', $struct_page['pos']));
 			$h = $page_info['h'] + 5;
