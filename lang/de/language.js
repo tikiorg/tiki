@@ -49,5 +49,6 @@ lang = {
 "Favorite" : "Favoriten",
 "Filter:" : "Filter:",
 "Please enter a page name" : "Bitte trage einen Seitennamen ein",
-"Are you sure you want to unassign this module?" : "Bist Du sicher, dass Du das Modul entfernen willst?", 
+"Are you sure you want to unassign this module?" : "Bist Du sicher, dass Du das Modul entfernen willst?"
+// Achtung: der IE unterstützt kein Komma nach dem letzten Eintrag
 };
