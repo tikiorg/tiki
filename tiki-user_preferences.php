@@ -272,7 +272,7 @@ if (isset($_REQUEST['chgadmin'])) {
 			die;
 		}
 	}
-	if (!empty($_REQUEST['email']) && $prefs['login_is_email'] != 'y' && $_REQUEST['email'] != $userlib->get_user_email($userwatch)) {
+	if (!empty($_REQUEST['email']) && ($prefs['login_is_email'] != 'y' || $user == 'admin') && $_REQUEST['email'] != $userlib->get_user_email($userwatch)) {
 		$userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
 		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra("Email is set to %s"), $_REQUEST['email']));
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master

@@ -17,6 +17,7 @@
 				{preference name=feature_wiki_replace}
 				{preference name=feature_syntax_highlighter}
 				{preference name=feature_wysiwyg}				
+				{preference name=ajax_autosave}
 			</fieldset>
 
 			<fieldset>
