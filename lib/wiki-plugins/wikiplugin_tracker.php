@@ -1192,7 +1192,7 @@ function wikiplugin_tracker($data, $params)
 				if ($tikilib->page_exists($wiki)) {
 					$back .= $smarty->fetch('wiki:'.$wiki);
 				} else {
-					$back .= '<span class="error">' . tr('Missing wiki template page "%0"', $wiki) . '</span>';
+					$back .= '<span class="error">' . tr('Missing wiki template page "%0"', htmlspecialchars($wiki)) . '</span>';
 				}
 			}
 			include_once('lib/smarty_tiki/function.trackerheader.php');
