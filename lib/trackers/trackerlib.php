@@ -1688,6 +1688,13 @@ class TrackerLib extends TikiLib
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
 						}
+						
+						if ($data[$i] === 'NULL') {
+							$data[$i] = '';
+						}
+						// remove escaped quotes \" etc
+						$data[$i] = stripslashes($data[$i]);
+
 						switch ($field['type']) {
 						case 'e':
 							$cats = preg_split('/%%%/', trim($data[$i]));
@@ -1711,9 +1718,9 @@ class TrackerLib extends TikiLib
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
 							break;
 						case 'c':
-							if (strtolower($data[$i]) == 'yes' || strtolower($data[$i]) == 'on')
+							if (strtolower($data[$i]) == 'yes' || strtolower($data[$i]) == 'on' || $data[$i] == 1)
 								$data[$i] = 'y';
-							elseif (strtolower($data[$i]) == 'no')
+							else
 								$data[$i] = 'n';
 							break;
 						case 'f':
@@ -1727,6 +1734,8 @@ class TrackerLib extends TikiLib
 							} elseif ($dateFormat == 'yyyy-mm-dd') {
 								list($y, $m, $d) = preg_split('#-#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+							} else if (!is_numeric($data[$i])) {	// timestamp but not numeric
+								$data[$i] = '';
 							}
 							break;
 						case 'q':
