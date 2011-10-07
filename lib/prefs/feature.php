@@ -2310,6 +2310,7 @@ function prefs_feature_list($partial = false) {
 		'feature_fixed_width' => array(
 			'name' => tra('Fixed width'),
 			'type' => 'flag',
+			'tags' => array('basic'),
 			'description' => tra('Constrains the width of the site.'),
 			'default' => 'y',
 		),
