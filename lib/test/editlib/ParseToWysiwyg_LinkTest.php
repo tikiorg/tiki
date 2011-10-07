@@ -50,31 +50,19 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 
 		/*
 		 * remove the external Wikis defined in the tests 
-		 */		
-		$al = new AdminLib();
-		$more = true;
-		$o = 0;
-		$n = 10;
-		while ($more) {
-			$ret = $al->list_extwiki($o, $n, 'extwikiId_desc', '');
-			if (count($ret['data'])){
-				foreach($ret['data'] as $ext) {
-					switch ( $ext['name']) {
-						case $this->ext1 : $id = $ext['extwikiId']; break;
-						default: $id = -1;
-					}
-					if ($id >= 0) {
-						$al->remove_extwiki($id);
-						$o += $n - 1;
-					} else {
-						$o += $n;						
-					}
-				}
-			} else {
-				$more = false;
+		 */
+		global $tikilib;
+		
+		$query = 'SELECT `name`, `extwikiId` FROM `tiki_extwiki`';
+		$wikis = $tikilib->fetchMap($query);
+		$tmp_wikis = array($this->ext1);
+		
+		foreach ($tmp_wikis as $w) {
+			if (isset($wikis[$w])) {
+				$id = $wikis[$w];
+				$tikilib->lib('admin')->remove_extwiki($id);
 			}
 		}
-		
 	}	
 		
 
@@ -82,19 +70,21 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 	 * Test links to pages of an external Wiki
 	 * 
 	 * This test is used to detect changes in the parser. Here, the EditLib is not used.
+	 * 
+	 * Note: Links with an invalid wiki identifier are parsed as regular Wiki page links.
 	 */
 	function testExternalWiki() {
 
 		/*
 		 * setup the external wikis and the parser
 		 */
-		$al = new AdminLib();
-		$al->replace_extwiki(0, 'http://tikiwiki.org/tiki-index.php?page=$page', $this->ext1);
-		$p = $al->lib('parser');
+		global $tikilib;
+		$tikilib->lib('admin')->replace_extwiki(0, 'http://tikiwiki.org/tiki-index.php?page=$page', $this->ext1);
+		$p = $tikilib->lib('parser');
 
 
 		/*
-		 * External Wiki ($page defined)
+		 * External Wiki 
 		 * - page name
 		 */
 		$inData = "(($this->ext1:Download))" ;		
@@ -104,7 +94,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		
 		
 		/*
-		 * External Wiki ($page defined)
+		 * External Wiki
 		 * - page name
 		 * - anchor
 		 */
@@ -115,7 +105,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		
 		
 		/*
-		 * External Wiki ($page defined)
+		 * External Wiki
 		 * - page name
 		 * - anchor
 		 * - description
@@ -123,7 +113,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$inData = "(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release|Download LTS))" ;	
 		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki ext_page test_ext1">Download LTS</a>';
 		$out = trim($p->parse_data($inData));
-		$this->assertEquals($ex, $out);			
+		$this->assertEquals($ex, $out);	
 	}
 	
 	

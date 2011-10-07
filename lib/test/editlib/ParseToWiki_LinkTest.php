@@ -16,6 +16,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 {
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
+	private $ext1 = 'test_ext1'; // name of the external Wiki 1
 	
 	
 	function __construct() {
@@ -32,47 +33,103 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		
 	function tearDown() {
 		chdir($this->dir);
+		
+		/*
+		 * remove the external Wikis defined in the tests 
+		 */
+		global $tikilib;
+		
+		$query = 'SELECT `name`, `extwikiId` FROM `tiki_extwiki`';
+		$wikis = $tikilib->fetchMap($query);
+		$tmp_wikis = array($this->ext1);
+		
+		foreach ($tmp_wikis as $w) {
+			if (isset($wikis[$w])) {
+				$id = $wikis[$w];
+				$tikilib->lib('admin')->remove_extwiki($id);
+			}
+		}		
 	}
 		
 
 	/**
 	 * Test links to pages of an external Wiki
+	 * 
+	 * Note: Links with an invalid wiki identifier are parsed as regular Wiki page links.
 	 */
 	function testExternalWiki() {
 		
-		$this->markTestIncomplete('Work in progress.');
-				
 		/*
-		 * External Wiki ($page defined)
+		 * setup the external wikis and the parser
+		 */
+		global $tikilib;
+		$tikilib->lib('admin')->replace_extwiki(0, 'http://tikiwiki.org/tiki-index.php?page=$page', $this->ext1);
+
+		
+		/*
+		 * External Wiki
 		 * - page name
 		 */
-		$inData = '???';		
-		$ex = '(($this->ext1:Download))';
+		$inData = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki ext_page test_ext1">Download</a>';		
+		$ex = "(($this->ext1:Download))";
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
 		
 		/*
-		 * External Wiki ($page defined)
+		 * External Wiki
 		 * - page name
 		 * - anchor
 		 */
-		$inData = '???';
-		$ex = '(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release))';
+		$inData = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki ext_page test_ext1">Download</a>';
+		$ex = "(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release))";
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
 		
 		/*
-		 * External Wiki ($page defined)
+		 * External Wiki
 		 * - page name
 		 * - anchor
 		 * - description
 		 */
-		$inData = '???';	
-		$ex = '(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release|Download LTS))';
+		$inData = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki ext_page test_ext1">Download LTS</a>';	
+		$ex = "(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release|Download LTS))";
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
+
+		
+		/*
+		 * External Wiki
+		 * - page name
+		 * - additional class name
+		 */
+		$inData = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki ext_page test_ext1 otherclass">Download</a>';		
+		$ex = "(($this->ext1:Download))";
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);			
+		
+		
+		/*
+		 * External Wiki
+		 * - page name
+		 * - invalid class name
+		 */
+		$inData = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki ext_page invalid">Download</a>';		
+		$ex = '[http://tikiwiki.org/tiki-index.php?page=Download|Download]';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);			
+		
+		
+		/*
+		 * External Wiki
+		 * - line breaks
+		 */
+		$inData = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki ext_page test_ext1">Download<br />Download</a><br />Text';		
+		$ex = '((' . $this->ext1 . ':Download %%% Download))\nText';
+		$out = $this->el->parseToWiki($inData);
+		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
+		$this->assertEquals($ex, $out);				
 	}
 		
 	
@@ -290,6 +347,16 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
+		
+		/*
+		 * - page
+		 * - link to an anchor
+		 */
+		$inData = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki wiki_page">HomePage</a>';		
+		$ex = '((HomePage|#Get_Started_using_Admin_Panel))';
+		$out = $this->el->parseToWiki($inData);
+		$this->assertEquals($ex, $out);			
+				
 		
 		/*
 		 * - page

@@ -21,6 +21,10 @@ class EditLib
 	public $oldSourceVersion = null;
 	public $newSourceVersion = null;
 	
+	// Fields for handling links to external wiki pages
+	private $external_wikis = null;
+	
+	
 	// general
 		
 	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info) {
@@ -197,72 +201,130 @@ class EditLib
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
-	private function parseLinkTag(&$args, $text, &$src, &$p) {
+	private function parseLinkTag(&$args, &$text, &$src, &$p) {
 		
 		/*
 		 * parse the link classes
 		 */
-		$cl_wiki = false;
 		$cl_wiki_page = false;
+		$cl_ext_page = false;
+		$ext_wiki_name = '';
 		
 		if ( isset($args['class']) && isset($args['href']) ) {
 			$matches = array();
 			preg_match_all('/([^ ]+)/', $args['class']['value'], $matches);
 			$classes = $matches[0];
 			
-			foreach ($classes as $cl) {
+			for ($i=0; $i< count($classes); $i++) {				
+				$cl = $classes[$i];
+							
 				switch ($cl) {
-					case 'wiki': $cl_wiki = true; break;
 					case 'wiki_page': $cl_wiki_page = true; break;
+					case 'ext_page': $cl_ext_page = true; break;
+					default:
+						// if the preceding class was 'ext_page', then we have the name of the external Wiki 
+						if ($i > 0 && $classes[$i-1] == 'ext_page') {
+							$ext_wiki_name = $cl;
+						}
 				}				
 			} 
 		}
 		
+		
+		/*
+		 * extract the target and the anchor from the href
+		 */
+		$href = urldecode($args['href']['value']);
+		$matches = explode( '#', $href);
+		if ( count($matches) == 2) {
+			$target = $matches[0];
+			$anchor = '#' . $matches[1];
+		} else {
+			$target = $href;
+			$anchor = '';
+		}		
+		
+		
+		/*
+		 * treat invalid external Wikis as web links
+		 */
+		if ( $cl_ext_page ) {
+			
+			// retrieve the definitions from the database
+			if ($this->external_wikis == null) {
+				global $tikilib;
+				$query = 'SELECT `name`, `extwiki` FROM `tiki_extwiki`';
+				$this->external_wikis = $tikilib->fetchMap($query);
+			}
 
+			// name must be set and defined
+			if ( !$ext_wiki_name || !isset($this->external_wikis[$ext_wiki_name]) ) {
+				$cl_ext_page = false;
+				$cl_wiki_page = false;
+			}
+		};
+		
+		
 		/*
 		 * convert the links
 		 */
 		$p['wiki_lbr']++; // force wiki line break mode
 		
-		if ( $cl_wiki && $cl_wiki_page ) {
+		if ( $cl_wiki_page ) {
 
 			/*
 			 * link to wiki page -> (( ))
 			 */
 
-			// extract the human readable page name
-			$href = urldecode($args['href']['value']);
-			$href = preg_replace('/tiki\-index\.php\?page\=/', '', $href);
-
-			// split the page name into target and anchor
-			$matches = preg_split('/#/', $href);
-			if ( count($matches) == 2) {
-				$target = $matches[0];
-				$anchor = '|#' . $matches[1];
-			} else {
-				$target = $href;
-				$anchor = '';
-			}
-
-			// open the link
 			if ($target) {
+				// construct the link
+				$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
+				$link = $target;
+				if ($anchor) {
+					$link .= '|' . $anchor;
+				}
 
-				// the link is defined by the next token if
-				// -> we don't have an anchor
-				// -> AND the target matches the text of the next token
-				$link = '';
-				if ( $anchor || $target != $text ) {
-					$link = $target . $anchor . '|';
-					
-					// do we need a separator?
-					if ($text) {
-						$link . '|';
-					}
-				};
+				// does the link text match the target?
+				if ($target == trim($text)) {
+					$text = '';	 // make sure walk_and_parse() does not append any text.
+				} else {
+					$link .= '|'; // the text will be appended by walk_and_parse()
+				}
+				
+				// flush
 				$this->processWikiTag('a', &$src, &$p, '((', '))', true); 				
 				$src .= $link;
 				
 			} // target defined
+			
+		} else if ( $cl_ext_page ) {
+			
+			/*
+			 * link to external Wiki page ((:))
+			 */
+			
+			// remove the extwiki definition from the target
+			$def = preg_replace('/\$page/', '', $this->external_wikis[$ext_wiki_name]);
+			$def = preg_quote($def, '/');
+			$target = preg_replace('/^' . $def.'/', '', $target);
+			
+			// construct the link
+			$link = $ext_wiki_name . ':' . $target;
+			if ($anchor) {
+				$link .= '|' . $anchor;
+			}
+				
+			// does the link text match the target?
+			if ($target == trim($text)) {
+				$text = '';	 // make sure walk_and_parse() does not append any text.
+			} else {
+				$link .= '|'; // the text will be appended by walk_and_parse()
+			}
+			
+			// flush			
+			$this->processWikiTag('a', $src, $p, '((', '))', true);
+			$src .= $link;
+			
 		} else {
 
 			// default, to be reviewed
@@ -843,7 +905,7 @@ class EditLib
 									$next_token = &$c[$i+1];
 									if (isset($next_token['type']) && $next_token['type'] == 'text' && isset($next_token['data']) )
 									{
-										$text = trim($next_token['data']);
+										$text = &$next_token['data'];
 									}
 								}
 								// parse the link
