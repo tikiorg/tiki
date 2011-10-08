@@ -12,6 +12,7 @@ $access->check_feature(array('feature_wiki_templates','feature_cms_templates'), 
 include_once ('lib/templates/templateslib.php');
 
 $access->check_permission('tiki_p_edit_content_templates');
+//get_strings tra('Content Templates')
 
 if (!isset($_REQUEST["templateId"])) {
 	$_REQUEST["templateId"] = 0;

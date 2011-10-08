@@ -9,6 +9,7 @@ include 'tiki-setup.php';
 include 'lib/calendar/tikicalendarlib.php';
 $access->check_feature('feature_action_calendar');
 $access->check_permission('tiki_p_view_tiki_calendar');
+//get_strings tra('Tiki Calendar')
 
 $headerlib->add_cssfile('css/calendar.css',20);
 
