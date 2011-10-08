@@ -40,7 +40,7 @@ function prefs_auth_list() {
 			'size' => 5,
 			'perspective' => false,
 			'filter' => 'digits',
-			'shorthint' => '(seconds)',
+			'shorthint' => tra('(seconds)'),
 			'default' => 3600*24*7,
 		),
 		'auth_token_access_maxhits' => array(
