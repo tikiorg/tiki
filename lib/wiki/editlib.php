@@ -203,6 +203,10 @@ class EditLib
 	 */
 	private function parseLinkTag(&$args, &$text, &$src, &$p) {
 		
+		$link = '';
+		$link_open = '';
+		$link_close = '';
+		
 		/*
 		 * parse the link classes
 		 */
@@ -266,35 +270,26 @@ class EditLib
 		
 		
 		/*
-		 * convert the links
+		 * construct the links according to the defined classes
 		 */
-		$p['wiki_lbr']++; // force wiki line break mode
-		
 		if ( $cl_wiki_page ) {
 
 			/*
 			 * link to wiki page -> (( ))
 			 */
-
+			
 			if ($target) {
-				// construct the link
+				// remove the html part of the target 
 				$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
+
+				// construct the link				
+				$link_open = '((';
+				$link_close = '))';			
 				$link = $target;
 				if ($anchor) {
 					$link .= '|' . $anchor;
 				}
 
-				// does the link text match the target?
-				if ($target == trim($text)) {
-					$text = '';	 // make sure walk_and_parse() does not append any text.
-				} else {
-					$link .= '|'; // the text will be appended by walk_and_parse()
-				}
-				
-				// flush
-				$this->processWikiTag('a', &$src, &$p, '((', '))', true); 				
-				$src .= $link;
-				
 			} // target defined
 			
 		} else if ( $cl_ext_page ) {
@@ -309,39 +304,63 @@ class EditLib
 			$target = preg_replace('/^' . $def.'/', '', $target);
 			
 			// construct the link
+			$link_open = '((';
+			$link_close = '))';			
 			$link = $ext_wiki_name . ':' . $target;
 			if ($anchor) {
 				$link .= '|' . $anchor;
 			}
-				
+			
+		} else {
+
+			// target
+			// rel
+			
+			$link_open = '[';
+			$link_close = ']';			
+			$link = $target;			
+			
+			/*
+			// default, to be reviewed
+			if (isset($args["href"]["value"])) {
+				if( strstr( $args["href"]["value"], "http:" )) {
+					$this->processWikiTag('a', $src, $p, '[', ']', true);
+					//$src .= '['.$args["href"]["value"].'|';
+					$src .= $args["href"]["value"].'|';
+				} else {
+					//$src .= '['.$head_url.$args["href"]["value"].'|';
+					$this->processWikiTag('a', $src, $p, '[', ']', true);
+					//$src .= '['.$args["href"]["value"].'|';
+					$src .= $args["href"]["value"].'|';
+				}
+			}
+			if( isset($args["name"]["value"])) {
+				$src .= '{ANAME()}'.$args["name"]["value"].'{ANAME}';
+			}
+			*/
+			
+		} // convert links
+		
+		
+	
+		/*
+		 * flush the constructed link
+		 */
+		if ($link && $link_open && $link_close) {
+
+			$p['wiki_lbr']++; // force wiki line break mode
+			
 			// does the link text match the target?
 			if ($target == trim($text)) {
 				$text = '';	 // make sure walk_and_parse() does not append any text.
 			} else {
 				$link .= '|'; // the text will be appended by walk_and_parse()
 			}
-			
-			// flush			
-			$this->processWikiTag('a', $src, $p, '((', '))', true);
+				
+			// process the tag and update the output
+			$this->processWikiTag('a', &$src, &$p, $link_open, $link_close, true); 				
 			$src .= $link;
-			
-		} else {
-
-			// default, to be reviewed
-			if (isset($args["href"]["value"])) {
-				if( strstr( $args["href"]["value"], "http:" )) {
-					$src .= '['.$args["href"]["value"].'|';
-				} else {
-					//$src .= '['.$head_url.$args["href"]["value"].'|';
-					$src .= '['.$args["href"]["value"].'|';
-				}
-				$p['stack'][] = array('tag' => 'a', 'string' => ']');
-			}
-			if( isset($args["name"]["value"])) {
-				$src .= '{ANAME()}'.$args["name"]["value"].'{ANAME}';
-			}
-			
-		} // convert links
+		}
 	}
 	
 	
