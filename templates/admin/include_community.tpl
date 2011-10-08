@@ -176,7 +176,7 @@
 			</div>
 
 		{/tab}
-		{tab name="{tr}BugBlueButton{/tr}"}
+		{tab name="{tr}BigBlueButton{/tr}"}
 			{preference name=bigbluebutton_feature}
 			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 				{preference name=bigbluebutton_server_location}
