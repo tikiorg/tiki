@@ -122,8 +122,21 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 	 */
 	function testInPage() {
 		
+		/*
+		 * with description
+		 */
 		$inData = '[#A_Heading|Link to heading]';		
 		$ex = '<a class="wiki" href="#A_Heading" rel="">Link to heading</a>';
+		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = preg_replace('/  /', ' ', $out); // the parser writes to many spaces
+		$this->assertEquals($ex, $out);
+
+		
+		/*
+		 * no description
+		 */
+		$inData = '[#A_Heading]';		
+		$ex = '<a class="wiki" href="#A_Heading" rel="">#A_Heading</a>';
 		$out = trim( $this->el->parseToWysiwyg($inData) );
 		$out = preg_replace('/  /', ' ', $out); // the parser writes to many spaces
 		$this->assertEquals($ex, $out);				
