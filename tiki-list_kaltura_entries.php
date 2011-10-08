@@ -8,6 +8,7 @@
 require_once 'tiki-setup.php';
 require_once 'lib/videogals/videogallib.php';
 $access->check_permission( array('tiki_p_list_videos') );
+//get_strings tra('List Entries')
 
 $mediaTypeAsString['2'] = 'Image';
 $mediaTypeAsString['1'] = 'Video';
