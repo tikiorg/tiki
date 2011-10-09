@@ -2289,13 +2289,12 @@ class FileGalLib extends TikiLib
 		} else {
 			$jail = $categlib->get_jail();
 		}
-			
+
+		$f_jail_join = '';
+		$f_jail_where = '';
+		$f_jail_bind = array();
 		if ( $jail ) {
 			$categlib->getSqlJoin( $jail, 'file', 'tf.`fileId`', $f_jail_join, $f_jail_where, $f_jail_bind );
-		} else {
-			$f_jail_join = '';
-			$f_jail_where = '';
-			$f_jail_bind = array();
 		}
 		if ($with_parent_name && !$with_subgals) {
 			$f2g_corresp['tfgp.`name` as `parentName`'] = '';
@@ -2362,12 +2361,11 @@ class FileGalLib extends TikiLib
 				$g_group_by = ' GROUP BY tfg.`galleryId`'; 
 			}
 
+			$g_jail_join = '';
+			$g_jail_where = '';
+			$g_jail_bind = array();
 			if ( $jail ) {
 				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
-			} else {
-				$g_jail_join = '';
-				$g_jail_where = '';
-				$g_jail_bind = array();
 			}
 			
 			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_jail_join;
@@ -3223,7 +3221,7 @@ class FileGalLib extends TikiLib
 		$fhash = '';
 
 		if ($savedir) {
-			$fhash = $this->find_unique_name($savedir, $name);
+			$fhash = $this->find_unique_name($savedir, $gal_info['name']);
 			file_put_contents($savedir . $fhash, $data);
 
 			return true;
