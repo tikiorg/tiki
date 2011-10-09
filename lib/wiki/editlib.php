@@ -286,13 +286,13 @@ class EditLib
 			/*
 			 * link to wiki page -> (( ))
 			 */
+			$link_open = '((';
+			$link_close = '))';				
 			
 			// remove the html part of the target 
 			$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
 
 			// construct the link				
-			$link_open = '((';
-			$link_close = '))';			
 			$link = $target;
 			if ($anchor) {
 				$link .= '|' . $anchor;
@@ -303,6 +303,8 @@ class EditLib
 			/*
 			 * link to external Wiki page ((:))
 			 */
+			$link_open = '((';
+			$link_close = '))';				
 			
 			// remove the extwiki definition from the target
 			$def = preg_replace('/\$page/', '', $this->external_wikis[$ext_wiki_name]);
@@ -310,8 +312,6 @@ class EditLib
 			$target = preg_replace('/^' . $def.'/', '', $target);
 			
 			// construct the link
-			$link_open = '((';
-			$link_close = '))';			
 			$link = $ext_wiki_name . ':' . $target;
 			if ($anchor) {
 				$link .= '|' . $anchor;
@@ -325,6 +325,7 @@ class EditLib
 			$link_open = '[';
 			$link_close = ']';
 			
+			// construct the link
 			$link = $target = $anchor;
 			$anchor = '';
 
@@ -335,7 +336,9 @@ class EditLib
 			 * -> articles, ...
 			 */
 			$link_open = '[';
-			$link_close = ']';						
+			$link_close = ']';		
+
+			// construct the link			
 			$link = $target;
 			
 		} else {
@@ -350,14 +353,31 @@ class EditLib
 			/*
 			 * parse the rel attribute
 			 */
-
+			$box = '';
 			
+			if ( isset($args['class']) && isset($args['rel']) ) {
+				$matches = array();
+				preg_match_all('/([^ ]+)/', $args['rel']['value'], $matches);
+				$rels = $matches[0];
+				
+				for ($i=0; $i< count($rels); $i++) {				
+					$r = $rels[$i];
+					
+					if (preg_match('/^box/', $r) ) {
+						$box = $r;
+					}
+				}
+			}
 			
+			// construct the link
 			$link = $target;	
 			if ($anchor) {
 				$link .= $anchor;
-			}						
-
+			}		
+			// the box must be appended to the text
+			if ($box) {
+				$text .= '|' . $box;
+			}				
 			
 		} // convert links
 		

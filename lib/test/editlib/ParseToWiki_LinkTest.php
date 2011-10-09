@@ -274,8 +274,6 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */	
 	function testWebResource() {
 		
-		$this->markTestIncomplete('Work in progress.');		
-		
 		/*
 		 * Web Page:
 		 * - link
@@ -340,7 +338,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		 * 
 		 */
 		$inData = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="external nofollow">http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1</a>';
-		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|nocache]';
+		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
@@ -351,7 +349,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		 * - description
 		 */
 		$inData = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="external nofollow">You Tube video in their flash player</a>';
-		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player|nocache]';
+		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 		
