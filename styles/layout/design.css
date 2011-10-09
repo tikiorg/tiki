@@ -748,7 +748,7 @@ p.editdate {
 	background: #ccffcc;
 	color: #000;
 	/*word-wrap:break-word;*/
-	max-width: 400px;
+	max-width: 553px;
 }
 
 .diffdeleted {
@@ -756,7 +756,7 @@ p.editdate {
 	color: #000;
 	text-decoration: line-through;
 	/*word-wrap:break-word;*/
-	max-width: 400px;
+	max-width: 553px;
 }
 
 .diffinldel {
