@@ -450,8 +450,6 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */
 	function testPluginAname() {
 		
-		$this->markTestIncomplete('Work in progress.');		
-
 		$ex = "{ANAME()}anchor{ANAME}";
 		$inData = '<a id="anchor"></a>';
 		$out = $this->el->parseToWiki($inData);		

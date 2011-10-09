@@ -341,6 +341,15 @@ class EditLib
 			// construct the link			
 			$link = $target;
 			
+		} else if (!$cl_wiki && !$cl_external && !$text && isset($args['id']) && isset($args['id']['value']) ) {
+			
+			/*
+			 * anchor
+			 */
+			 $link_open = '{ANAME()}';
+			 $link_close = '{ANAME}';
+			 $link = $args['id']['value'];
+			
 		} else {
 			
 			/*
