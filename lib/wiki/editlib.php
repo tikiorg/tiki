@@ -210,8 +210,10 @@ class EditLib
 		/*
 		 * parse the link classes
 		 */
-		$cl_wiki_page = false;
-		$cl_ext_page = false;
+		$cl_wiki = false;
+		$cl_wiki_page = false; // Wiki page
+		$cl_ext_page = false; // external Wiki page
+		$cl_external = false; // external web page
 		$ext_wiki_name = '';
 		
 		if ( isset($args['class']) && isset($args['href']) ) {
@@ -223,8 +225,10 @@ class EditLib
 				$cl = $classes[$i];
 							
 				switch ($cl) {
+					case 'wiki': $cl_wiki = true; break;
 					case 'wiki_page': $cl_wiki_page = true; break;
 					case 'ext_page': $cl_ext_page = true; break;
+					case 'external': $cl_external = true; break;
 					default:
 						// if the preceding class was 'ext_page', then we have the name of the external Wiki 
 						if ($i > 0 && $classes[$i-1] == 'ext_page') {
@@ -238,15 +242,20 @@ class EditLib
 		/*
 		 * extract the target and the anchor from the href
 		 */
-		$href = urldecode($args['href']['value']);
-		$matches = explode( '#', $href);
-		if ( count($matches) == 2) {
-			$target = $matches[0];
-			$anchor = '#' . $matches[1];
+		if ( isset($args['href']) ) {
+			$href = urldecode($args['href']['value']);
+			$matches = explode( '#', $href);
+			if ( count($matches) == 2) {
+				$target = $matches[0];
+				$anchor = '#' . $matches[1];
+			} else {
+				$target = $href;
+				$anchor = '';
+			}
 		} else {
-			$target = $href;
+			$target = '';
 			$anchor = '';
-		}		
+		}	
 		
 		
 		/*
@@ -278,19 +287,16 @@ class EditLib
 			 * link to wiki page -> (( ))
 			 */
 			
-			if ($target) {
-				// remove the html part of the target 
-				$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
+			// remove the html part of the target 
+			$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
 
-				// construct the link				
-				$link_open = '((';
-				$link_close = '))';			
-				$link = $target;
-				if ($anchor) {
-					$link .= '|' . $anchor;
-				}
-
-			} // target defined
+			// construct the link				
+			$link_open = '((';
+			$link_close = '))';			
+			$link = $target;
+			if ($anchor) {
+				$link .= '|' . $anchor;
+			}
 			
 		} else if ( $cl_ext_page ) {
 			
@@ -311,33 +317,37 @@ class EditLib
 				$link .= '|' . $anchor;
 			}
 			
-		} else {
+		} else if ($cl_wiki && !$cl_external && !$target && strlen($anchor) > 0  && substr($anchor, 0, 1) == '#' ) {
 
-			// target
-			// rel
-			
+			/*
+			 * inpage links [#]
+			 */
 			$link_open = '[';
-			$link_close = ']';			
-			$link = $target;			
+			$link_close = ']';
+			
+			$link = $target = $anchor;
+			$anchor = '';
+			
+		} else {
 			
 			/*
-			// default, to be reviewed
-			if (isset($args["href"]["value"])) {
-				if( strstr( $args["href"]["value"], "http:" )) {
-					$this->processWikiTag('a', $src, $p, '[', ']', true);
-					//$src .= '['.$args["href"]["value"].'|';
-					$src .= $args["href"]["value"].'|';
-				} else {
-					//$src .= '['.$head_url.$args["href"]["value"].'|';
-					$this->processWikiTag('a', $src, $p, '[', ']', true);
-					//$src .= '['.$args["href"]["value"].'|';
-					$src .= $args["href"]["value"].'|';
-				}
-			}
-			if( isset($args["name"]["value"])) {
-				$src .= '{ANAME()}'.$args["name"]["value"].'{ANAME}';
-			}
-			*/
+			 * other links []
+			 */
+			$link_open = '[';
+			$link_close = ']';
+			
+			
+			/*
+			 * parse the rel attribute
+			 */
+
+			
+			
+			$link = $target;	
+			if ($anchor) {
+				$link .= $anchor;
+			}						
+
 			
 		} // convert links
 		
@@ -346,7 +356,7 @@ class EditLib
 		/*
 		 * flush the constructed link
 		 */
-		if ($link && $link_open && $link_close) {
+		if ($link_open && $link_close) {
 
 			$p['wiki_lbr']++; // force wiki line break mode
 			

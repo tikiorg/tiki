@@ -137,9 +137,6 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 * Test link to anchor within a page
 	 */	
 	function testInPage() {
-
-		$this->markTestIncomplete('Work in progress.');		
-		
 		
 		/*
 		 * no description
@@ -175,7 +172,6 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */	
 	function testMailTo() {
 		
-		$this->markTestIncomplete('Work in progress.');		
 		
 		/*
 		 * e-mail
@@ -211,7 +207,6 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */	
 	function testOtherTikiPages() {
 		
-		$this->markTestIncomplete('Work in progress.');		
 		
 		/*
 		 * article
@@ -279,7 +274,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */	
 	function testWebResource() {
 		
-		$this->markTestIncomplete('Work in progress.');		
+		$this->markTestIncomplete('Work in progress.');
 		
 		/*
 		 * Web Page:
