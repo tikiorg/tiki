@@ -327,6 +327,16 @@ class EditLib
 			
 			$link = $target = $anchor;
 			$anchor = '';
+
+		} else if ($cl_wiki && !$cl_external) {
+			
+			/*
+			 * other tiki resources []
+			 * -> articles, ...
+			 */
+			$link_open = '[';
+			$link_close = ']';						
+			$link = $target;
 			
 		} else {
 			

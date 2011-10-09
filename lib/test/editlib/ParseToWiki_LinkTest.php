@@ -274,7 +274,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	 */	
 	function testWebResource() {
 		
-		$this->markTestIncomplete('Work in progress.');
+		$this->markTestIncomplete('Work in progress.');		
 		
 		/*
 		 * Web Page:
