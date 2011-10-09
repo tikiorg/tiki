@@ -108,8 +108,8 @@ if ($output["data"] == "EMPTY") {
 			if (isset($data2["name"])) {
 				$data2['value'] = $trklib->field_render_value(
 					array(
-						'field' => $field,
-						'item' => $item,
+						'field' => $data2,
+						'item' => $data,
 						'process' => 'y',
 					)
 				);
