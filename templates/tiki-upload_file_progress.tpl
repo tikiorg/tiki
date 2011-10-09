@@ -7,12 +7,12 @@
 	{assign var=seturl value=$fileId|sefurl:display}
 	{capture name=alink assign=alink}href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}" class="tips"{/capture}
 {else}
-{assign var=alink value=''}
+	{assign var=alink value=''}
 {/if}
 <table border="0" cellspacing="4" cellpadding="4">
 	<tr>
 		<td style="text-align: center">
-			<a {$alink}><img src="{$fileId|sefurl:thumbnail}" /></a>
+			<a {$alink}><img src="{$fileId|sefurl:thumbnail}" /><br /><span class="thumbcaption">{tr}Click Here to Insert in Wiki Syntax{/tr}</span></a>
 		</td>
 		<td>
 			{if !empty($filegals_manager)}
@@ -25,58 +25,56 @@
 					{$feedback_message}
 				</div>
 			{/if}
-			{if empty($filegals_manager)}
-				<div>
-					{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="{tr}Additional Info{/tr}"}
-					<span id="close_uploadinfos{$fileId}" style="display:none">
-				  		{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="({tr}Hide{/tr})"}
-					</span>
+			<div>
+				{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="{tr}Additional Info{/tr}"}
+				<span id="close_uploadinfos{$fileId}" style="display:none">
+					{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="({tr}Hide{/tr})"}
+				</span>
+			</div>
+			<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$fileId}">
+				<div style="font-weight:bold; font-style: italic; ">
+					{tr} Syntax tips:{/tr}
 				</div>
-				<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$fileId}">
-					<div style="font-weight:bold; font-style: italic; ">
-						{tr} Syntax tips:{/tr}
-					</div>
-					<span style="line-height: 150%">
-					{tr}Link to file from a Wiki page:{/tr}
+				<span style="line-height: 150%">
+				{tr}Link to file from a Wiki page:{/tr}
+				</span><br/>
+				<table>
+					<tr>
+						<td width="6px">
+						</td>
+						<td class="inline_syntax">
+							[{$fileId|sefurl:file}|{$name|escape}]
+						</td>
+					</tr>
+				</table>
+				<div style="font-weight:bold; font-style: italic; margin-top: 10px">
+					{tr}In addition, for image files:{/tr}
+				</div>
+				<span style="line-height: 150%">
+					{tr}To display in a Wiki page:{/tr}</span><br/>
+				<table>
+					<tr>
+						<td width="6px">
+						</td>
+						<td class="inline_syntax">
+							&#x7b;img fileId={$fileId}}
+						</td>
+					</tr>
+				</table>
+				{if $prefs.feature_shadowbox eq 'y'}
+					<span style="line-height: 200%">{tr}Display thumbnail that enlarges:{/tr}
 					</span><br/>
 					<table>
 						<tr>
 							<td width="6px">
 							</td>
 							<td class="inline_syntax">
-								[{$fileId|sefurl:file}|{$name|escape}]
+								&#x7b;img fileId={$fileId} thumb=y rel=box[g]}
 							</td>
 						</tr>
 					</table>
-					<div style="font-weight:bold; font-style: italic; margin-top: 10px">
-						{tr}In addition, for image files:{/tr}
-					</div>
-					<span style="line-height: 150%">
-						{tr}To display in a Wiki page:{/tr}</span><br/>
-					<table>
-						<tr>
-							<td width="6px">
-							</td>
-							<td class="inline_syntax">
-								&#x7b;img fileId={$fileId}}
-							</td>
-						</tr>
-					</table>
-					{if $prefs.feature_shadowbox eq 'y'}
-						<span style="line-height: 200%">{tr}Display thumbnail that enlarges:{/tr} 
-						</span><br/>
-						<table>
-							<tr>
-								<td width="6px">
-								</td>
-								<td class="inline_syntax">
-									&#x7b;img fileId={$fileId} thumb=y rel=box[g]}
-								</td>
-							</tr>
-						</table>
-					{/if}
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</td>
 	</tr>
 </table>
