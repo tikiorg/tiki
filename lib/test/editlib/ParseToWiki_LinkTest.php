@@ -451,4 +451,18 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$this->assertEquals($ex, $out);			
 	}
 	
+	
+	/*
+	 * Test anchors conversion to {ANAME}
+	 */
+	function testPluginAname() {
+		
+		$this->markTestIncomplete('Work in progress.');		
+
+		$ex = "{ANAME()}anchor{ANAME}";
+		$inData = '<a id="anchor"></a>';
+		$out = $this->el->parseToWiki($inData);		
+		$this->assertEquals($ex, $out);				
+	}	
+	
 }
