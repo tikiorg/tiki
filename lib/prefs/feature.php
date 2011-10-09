@@ -43,6 +43,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Areas',
 			'default' => 'n',
 			'admin' => 'areas',
+			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_categories',
 				'feature_perspective',

@@ -11,6 +11,7 @@
  * Letter key: ~w~
  *
  */
+// TODO: validate parameters (several required)
 class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 {
 	public static function getTypes()

@@ -8,7 +8,7 @@ function prefs_areas_list() {
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',
-			'default' => 0,	
+			'default' => 0,
 			'help' => 'Areas',
 			'dependencies' => array(
 				'feature_areas',

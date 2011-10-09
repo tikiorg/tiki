@@ -101,7 +101,7 @@ function collect_raw_data( $fields ) {
 			$entry['warning'] = isset( $raw['warning'] ) ? $raw['warning'] : '';
 			$entry['hint'] = isset( $raw['hint'] ) ? $raw['hint'] : '';
 			$entry['shorthint'] = isset( $raw['shorthint'] ) ? $raw['shorthint'] : '';
-			$entry['perspective'] = isset( $raw['perspective'] ) ? $raw['perspective'] : '';
+			$entry['perspective'] = isset( $raw['perspective'] ) ? $raw['perspective'] ? 'true' : 'false' : '';
 			$data[] = $entry;
 		}
 	}
@@ -143,7 +143,11 @@ function collect_locations( & $data ) {
 	global $prefslib; require_once 'lib/prefslib.php';
 
 	foreach( $data as & $row ) {
-		$row['locations'] = implode( ', ', $prefslib->getPreferenceLocations( $row['preference'] ) );
+		$pages = $prefslib->getPreferenceLocations($row['preference']);
+		foreach ($pages as & $page) {
+			$page = $page[0] . '/' . $page[1];
+		}
+		$row['locations'] = implode( ', ', $pages);
 	}
 }
 

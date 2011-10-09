@@ -1,9 +1,9 @@
 {tabset}
 	{tab name="{tr}Settings{/tr}"}
 <form action="tiki-admin.php?page=areas" method="post">
-				{preference name=feature_areas}
+				{preference name=feature_areas visible="always"}
 		<div class="adminoptionboxchild" id="feature_areas_childcontainer">
-				{preference name=areas_root}
+				{preference name=areas_root visible="always"}
 		</div>
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="areas" value="{tr}Change preferences{/tr}" />
