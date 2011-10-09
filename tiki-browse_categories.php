@@ -59,34 +59,23 @@ if (isset($_REQUEST['deep']) && $_REQUEST['deep'] == 'on') {
 	$smarty->assign('deep', 'off');
 }
 $canView = false;
-if (is_array($_REQUEST['parentId'])) {
-	Perms::bulk( array( 'type' => 'category' ), 'object', $_REQUEST['parentId'] );
-	foreach ($_REQUEST['parentId'] as $p) {
-		$perms = Perms::get( array( 'type' => 'category', 'object' => $p ) );
-		if ( $perms->view_category ) {
-			$p_info = $categlib->get_category($p);
-			$paths[] = $p_info['tepath'];
-			$canView = true;
-		}
-	}
-	$smarty->assign('paths', $paths);
-} else {
-	// If the parent category is not zero get the category path
-	if ($_REQUEST['parentId']) {
-		$perms = Perms::get( array( 'type' => 'category', 'object' => $_REQUEST['parentId'] ) );
 
-		$p_info = $categlib->get_category($_REQUEST['parentId']);
-		if ($prefs["feature_multilingual"] === "y")
-			$p_info["name"] = tra($p_info["name"]);
-		$father = $p_info['parentId'];
-		$smarty->assign_by_ref('p_info', $p_info);
-		$canView = $perms->view_category;
-	} else {
-		$father = 0;
-		$canView = true;
-	}
-	$smarty->assign('father', $father);
+// If the parent category is not zero get the category path
+if ($_REQUEST['parentId']) {
+	$perms = Perms::get( array( 'type' => 'category', 'object' => $_REQUEST['parentId'] ) );
+
+	$p_info = $categlib->get_category($_REQUEST['parentId']);
+	if ($prefs["feature_multilingual"] === "y")
+		$p_info["name"] = tra($p_info["name"]);
+	$father = $p_info['parentId'];
+	$smarty->assign_by_ref('p_info', $p_info);
+	$canView = $perms->view_category;
+} else {
+	$father = 0;
+	$canView = true;
 }
+$smarty->assign('father', $father);
+
 if (!$canView) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to view this page.'));

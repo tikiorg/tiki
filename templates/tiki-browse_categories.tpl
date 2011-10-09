@@ -140,15 +140,6 @@
 			<a class="catname" href="tiki-browse_categories.php?parentId={$father|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" title="{tr}Upper level{/tr}">..</a>
 		</div>
 	{/if}
-	
-{elseif $paths}
-	{section name=x loop=$paths}
-		{foreach $paths[x] as $id=>$name}
-			&nbsp;{$prefs.site_crumb_seper|escape}&nbsp;
-			<a class="categpath" href="tiki-browse_categories.php?parentId={$id}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$name|escape}</a>
-		{/foreach}
-		<br />
-	{/section}
 {/if}
 <table class="formcolor">
 	<tr>
