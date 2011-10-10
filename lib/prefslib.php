@@ -85,7 +85,7 @@ class PreferencesLib
 			$info['raw'] = $source[$name];
 			$info['id'] = 'pref-' . ++$id;
 
-			if ( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
+			if ( !empty( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
 				if ( preg_match('/^https?:/i', $info['help']) ) {
 					$info['helpurl'] = $info['help'];
 				} else {
