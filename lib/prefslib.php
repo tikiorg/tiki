@@ -475,8 +475,11 @@ class PreferencesLib
 			}
 		}
 
-		if (count($pages) == 0 && strpos($name, 'plugin') !== false) {
-			$pages[] = array('textarea', 0);	// plugins are included in textarea admin dynamically
+		if (strpos($name, 'wikiplugin_') === 0 || strpos($name, 'wikiplugininline_') === 0) {
+			$pages[] = array('textarea', 2);	// plugins are included in textarea admin dynamically
+		}
+		if (strpos($name, 'trackerfield_') === 0) {
+			$pages[] = array('trackers', 3);	// trackerfields are also included in tracker admin dynamically
 		}
 
 		return $pages;
