@@ -17,7 +17,7 @@
 }
 
 .CodeMirror-scroll{
-	overflow: hidden ! important;
+	overflow: scroll ! important;
 }
 
 .CodeMirror-fullscreen {
