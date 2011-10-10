@@ -50,8 +50,8 @@ function wikiplugin_draw($data, $params) {
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	extract ($params,EXTR_SKIP);
 	
-	static $index = 0;
-	++$index;
+	static $drawIndex = 0;
+	++$drawIndex;
 	
 	if (!isset($id)) {
 		//check permissions
@@ -62,7 +62,7 @@ function wikiplugin_draw($data, $params) {
 		$label = tra('Draw New SVG Image');
 		$page = htmlentities($page);
 		$content = htmlentities($data);
-		$formId = "form$index";
+		$formId = "form$drawIndex";
 		$gals=$filegallib->list_file_galleries(0,-1,'name_desc',$user);
 		
 		$galHtml = "";
@@ -70,17 +70,18 @@ function wikiplugin_draw($data, $params) {
 			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries")
 				$galHtml .= "<option value='".$gal['id']."'>".$gal['name']."</option>";
 		}
-				
+		
+		$in = tr(" in ");
+		
 		return <<<EOF
 		~np~
-		<form method="post" action="tiki-edit_draw.php">
+		<form method="get" action="tiki-edit_draw.php">
 			<p>
-				<input type="submit" name="label" value="$label" class="newSvgButton" />
+				<input type="submit" name="label" value="$label" class="newSvgButton" />$in
 				<select name="galleryId">
-					<option>Select Gallery For Image To Be In</option>
 					$galHtml
 				</select>
-				<input type="hidden" name="index" value="$index"/>
+				<input type="hidden" name="index" value="$drawIndex"/>
 				<input type="hidden" name="page" value="$page"/>
 			</p>
 		</form>
@@ -107,7 +108,7 @@ EOF;
 		"' />";
 	
 		if ($globalperms->admin_file_galleries == 'y') {
-			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$index&label=$label&width=$width&height=$height'>
+			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height'>
 					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 				</a>";
 		}

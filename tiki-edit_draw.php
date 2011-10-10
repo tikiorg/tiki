@@ -109,9 +109,11 @@ if (
 			label: '$label',
 			type: 'draw',
 			content: '',
-			'params[width]': '$height',
-			'params[height]': '$width',
-			'params[id]': '$fileId'
+			params: {
+				width: '$width',
+				height: '$height',
+				id: '$fileId'
+			}
 		};
 	");
 }
@@ -131,14 +133,14 @@ if (!isset($_REQUEST['map'])) {
 			})
 			.bind('savedDraw', function(e, o) {
 				//this accounts for if the user sets the feature if the file id doesn't update after saving, by default it does, we need a reload for things to be safe.
-				if ($('#fileId').val() != o.fileId) {
+				if ($('#fileId').val() != o.fileId || !$('#fileId').val()) {
 					var newLocation = 'tiki-edit_draw.php?fileId=' + o.fileId + '&galleryId=' + o.galleryId;
 					if ($.wikiTrackingDraw) {
 						newLocation += '&page=' + $.wikiTrackingDraw.page + 
 							'&index=' + $.wikiTrackingDraw.index +
 							'&label=' + $.wikiTrackingDraw.label +
-							'&width=' + $.wikiTrackingDraw['params[width]'] +
-							'&height=' + $.wikiTrackingDraw['params[height]'];
+							'&width=' + $.wikiTrackingDraw.params.width +
+							'&height=' + $.wikiTrackingDraw.params.height;
 					}
 					
 					document.location = newLocation;
