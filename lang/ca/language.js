@@ -25,4 +25,12 @@ lang = {
 	"Do not match" : "Diferent",
 	"Advanced options" : "Opcions avançades",
 	"Pick a file." : "Escull un arxiu",
+	"Save" : "Desa-ho",
+	"Cancel" : "Cancel·la-ho",
+	"Delete" : "Suprimeix-ho",	
+	"Unassign module" : "Deassigna el mòdul",
+	"Edit module" : "Modifica el mòdul",
+	"Edit module:" : "Modifica el mòdul:",
+	"Are you sure you want to unassign this module?" : "N'estàs segur que vols desassignar aquest mòdul?"
+	// remember the IE does not support ending comma on last item
 };
