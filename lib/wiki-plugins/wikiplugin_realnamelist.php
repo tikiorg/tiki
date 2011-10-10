@@ -7,7 +7,7 @@
 
 function wikiplugin_realnamelist_info() {
 	return array(
-		'name' => tra('User List with Real Names)'),
+		'name' => tra('User List with Real Names'),
 		'documentation' => 'PluginRealNameList',
 		'description' => tra('Show user real names for members of a group').tra(' (experimental, should be merged with UserList)'),
 		'prefs' => array( 'wikiplugin_realnamelist' ),
