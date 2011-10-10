@@ -121,6 +121,7 @@ body.fixed_width .fixedwidth {
 #c1c2 #wrapper #col1 #tiki-center {
 	padding: 10px;
 	padding-right: 20px;
+	max-width: 1500px; /* limit width to prevent bg image breakup */
 }
 
 #c1c2 #col2 {
