@@ -119,6 +119,7 @@ foreach ($ctall as &$c) {
 	$eyes = add_watch_icons ($descendants, $usercatwatches, $_REQUEST['parentId'], $c['categId'], $deep, $user);
 	$c['eyes'] = $eyes;
 }
+unset($c);
 $tree_nodes = array();
 foreach ($ctall as $c) {
 	$tree_nodes[] = array(

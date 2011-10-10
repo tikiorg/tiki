@@ -12,7 +12,11 @@
 <table border="0" cellspacing="4" cellpadding="4">
 	<tr>
 		<td style="text-align: center">
-			<a {$alink}><img src="{$fileId|sefurl:thumbnail}" /><br /><span class="thumbcaption">{tr}Click Here to Insert in Wiki Syntax{/tr}</span></a>
+			{if !empty($filegals_manager)}
+				<a {$alink}><img src="{$fileId|sefurl:thumbnail}" /><br /><span class="thumbcaption">{tr}Click Here to Insert in Wiki Syntax{/tr}</span></a>
+			{else}
+				<img src="{$fileId|sefurl:thumbnail}" />
+			{/if}
 		</td>
 		<td>
 			{if !empty($filegals_manager)}
@@ -51,7 +55,7 @@
 					{tr}In addition, for image files:{/tr}
 				</div>
 				<span style="line-height: 150%">
-					{tr}To display in a Wiki page:{/tr}</span><br/>
+					{tr}To display full size in a Wiki page:{/tr}</span><br/>
 				<table>
 					<tr>
 						<td width="6px">
