@@ -327,7 +327,7 @@ function wikiplugin_files_info() {
 			'max' => array(
 				'required' => false,
 				'name' => tra('Max'),
-				'description' => 'Number of rows (default: -1 = all)',
+				'description' => tra('Number of rows (default: -1 = all)'),
 				'default' => -1,
 				'advanced' => true,
 			),

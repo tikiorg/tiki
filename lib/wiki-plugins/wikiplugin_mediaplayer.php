@@ -18,7 +18,7 @@ function wikiplugin_mediaplayer_info() {
 			'fullscreen' => array(
 				'required' => false,
 				'name' => tra('Allow Fullscreen'),
-				'description' => tra('Allow fullscreen mode.').' true|false',
+				'description' => tra('Allow fullscreen mode.').tra(' true|false'),
 				'filter' => 'alpha',
 				'options' => array(
 					array(
