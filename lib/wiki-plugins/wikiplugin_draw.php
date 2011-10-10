@@ -92,14 +92,9 @@ EOF;
 	if (!isset($fileInfo['created'])) {
 		return tra("File not found.");
 	} else {
-		$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
+		$globalperms = Perms::get( array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ) );
 		
-		if (!$globalperms->view_file_gallery == 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("You do not have permission to view this file"));
-			$smarty->display("error.tpl");
-			die;
-		}
+		if ($globalperms->view_file_gallery != 'y') return "";
 		
 		$label = tra('Edit SVG Image');
 		$ret = "<img src='tiki-download_file.php?fileId=$id' style='".
@@ -107,7 +102,7 @@ EOF;
 			(isset($width) ? "width: $width;" : "" ).
 		"' />";
 	
-		if ($globalperms->admin_file_galleries == 'y') {
+		if ($globalperms->admin_file_gallery == 'y') {
 			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height'>
 					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 				</a>";
