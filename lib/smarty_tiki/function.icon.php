@@ -36,10 +36,13 @@ function smarty_function_icon($params, $smarty) {
 		$current_style = $tc_theme;
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
-	if ($params['_type'] === 'absolute_uri') {
-		$params['path_prefix'] = $base_url;
-	} else if ($params['_type'] === 'absolute_path') {
-		$params['path_prefix'] = $url_path;
+	
+	if (isset($params['_type'])) {
+		if ($params['_type'] === 'absolute_uri') {
+			$params['path_prefix'] = $base_url;
+		} else if ($params['_type'] === 'absolute_path') {
+			$params['path_prefix'] = $url_path;
+		}
 	}
 
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
