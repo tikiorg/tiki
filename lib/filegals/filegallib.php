@@ -3048,7 +3048,9 @@ class FileGalLib extends TikiLib
 								$syntax = $this->getWikiSyntax($params["galleryId"][$key]);
 								$syntax = $this->process_fgal_syntax($syntax, $aux);
 								$smarty->assign('syntax', $syntax);
-								$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+								if (!empty($_REQUEST['filegals_manager'])) {
+									$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+								}
 								$this->print_msg($smarty->fetch("tiki-upload_file_progress.tpl"), $formId);
 							}
 						}
