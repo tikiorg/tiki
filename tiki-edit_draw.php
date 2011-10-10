@@ -33,10 +33,10 @@ if ( ($fileInfo['filetype'] != $mimetypes["svg"]) && $_REQUEST['fileId'] > 0 ) {
 	die;
 }
 
-$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
+$globalperms = Perms::get( array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ) );
 
 //check permissions
-if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
+if (!($globalperms->admin_file_gallery == 'y' || $globalperms->view_file_gallery == 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to view/edit this file"));
 	$smarty->display("error.tpl");
