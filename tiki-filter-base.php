@@ -106,5 +106,5 @@ Zend_Loader_Autoloader::getInstance()
 	->registerNamespace('Tracker')
 	->registerNamespace('Event_')
 	->registerNamespace('Services_')
-	->registerNamespace('TikiDb');
-
+	->registerNamespace('TikiDb')
+	->registerNamespace('UniversalReports');
