@@ -113,10 +113,8 @@ if ( ! $options['no-readme-update'] && important_step("Update '" . README_FILENA
 }
 
 if ( ! $options['no-lang-update'] && important_step("Update language files") ) {
-	passthru("$phpCommand get_strings.php quiet");
-	$removeFiles = glob('lang/*/old.php');
-	$removeFiles[] = TEMP_DIR . '/permstrings.tpl';
-	$removeFiles[] = TEMP_DIR . '/prefnames.tpl';
+	passthru("$phpCommand get_strings.php");
+	$removeFiles = glob('lang/*/language.php.old');
 	foreach ( $removeFiles as $rf ) unlink($rf);
 	unset($removeFiles);
 	info('>> Language files updated and temporary files removed.');

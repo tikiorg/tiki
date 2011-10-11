@@ -41,6 +41,20 @@ function wikiplugin_draw_info() {
 				'default' => 'Image height',
 				'since' => '7.1'
 			),
+			'archive' => array(
+				'required' => false,
+				'name' => tra('Force Display Archive'),
+				'description' => tra('The latest revision of file is automatically shown, by setting archive to y, it bypasses this check and shows the archive rather than the latest revision'),
+				'filter' => 'striptags',
+				'accepted' => 'y or n',
+				'default' => 'n',
+				'since' => '8',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		),
 	);
 }
@@ -83,12 +97,22 @@ function wikiplugin_draw($data, $params) {
 				</select>
 				<input type="hidden" name="index" value="$drawIndex"/>
 				<input type="hidden" name="page" value="$page"/>
+				<input type="hidden" name="archive" value="$archive"/>
 			</p>
 		</form>
 		~/np~
 EOF;
 	}
+	
 	$fileInfo = $filegallib->get_file_info( $id );
+
+	if ($archive != 'y') {
+		if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
+			$id = $fileInfo['archiveId'];
+			$fileInfo = $filegallib->get_file_info( $id );
+		}
+	}
+	
 	if (!isset($fileInfo['created'])) {
 		return tra("File not found.");
 	} else {
