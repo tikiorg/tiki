@@ -9,15 +9,13 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 {
 	public static function getTypes()
 	{
-		global $prefs;
-
 		return array(
 			'j' => array(
 				'name' => tr('Date and Time (Date Picker)'),
 				'description' => tr('Provides jQuery-UI date picker select a date and optionally time.'),
-				'prefs' => array('trackerfield_jscalendar'),
+				'prefs' => array('trackerfield_jscalendar', 'feature_jquery_ui'),
 				'tags' => array('advanced'),
-				'default' => $prefs['feature_jquery_ui'],
+				'default' => 'y',
 				'params' => array(
 					'datetime' => array(
 						'name' => tr('Type'),
