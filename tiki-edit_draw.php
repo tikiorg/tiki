@@ -132,12 +132,17 @@ if (!isset($_REQUEST['map'])) {
 			$('#tiki_draw').drawFullscreen();
 		});
 		
-		$('#tiki_draw').loadDraw({
-			fileId: $('#fileId').val(),
-			galleryId: $('#galleryId').val(),
-			name: $('#fileName').val(),
-			data: $('#fileData').html()
-		});
+		$('#tiki_draw')
+			.loadDraw({
+				fileId: $('#fileId').val(),
+				galleryId: $('#galleryId').val(),
+				name: $('#fileName').val(),
+				data: $('#fileData').html()
+			})
+			.bind('renamedDraw', function(e, name) {
+				$('#fileName').val(name);
+				$('.pagetitle').text(name);
+			});
 	");
 } else {
 	require_once("lib/wiki-plugins/wikiplugin_map.php");
