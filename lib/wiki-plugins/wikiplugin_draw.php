@@ -126,7 +126,7 @@ EOF;
 			(isset($width) ? "width: $width;" : "" ).
 		"' />";
 	
-		if ($globalperms->admin_file_gallery == 'y') {
+		if ($globalperms->upload_files == 'y') {
 			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height'>
 					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 				</a>";
