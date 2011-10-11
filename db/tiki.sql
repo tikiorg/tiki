@@ -2312,12 +2312,11 @@ CREATE TABLE `tiki_user_assigned_modules` (
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_folders`;
 CREATE TABLE `tiki_user_bookmarks_folders` (
-  `folderId` int(12) NOT NULL auto_increment,
+  `folderId` int(12) NOT NULL,
   `parentId` int(12) default NULL,
   `user` varchar(200) NOT NULL default '',
   `name` varchar(30) default NULL,
-  PRIMARY KEY (`folderId`),
-  KEY `user` (`user`)
+  PRIMARY KEY (`user`,`folderId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_urls`;
@@ -3674,7 +3673,7 @@ CREATE TABLE `tiki_connect` (
 
 DROP TABLE IF EXISTS `tiki_areas`;
 CREATE TABLE `tiki_areas` (
-	`categId` int(11) NOT NULL,
-	`perspectives` text,
-	KEY `categId` (`categId`)
+    `categId` int(11) NOT NULL,
+    `perspectives` text,
+    KEY `categId` (`categId`)
 ) ENGINE=MyISAM;

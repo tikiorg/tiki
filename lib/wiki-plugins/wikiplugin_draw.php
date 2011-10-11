@@ -11,7 +11,7 @@ function wikiplugin_draw_info() {
 		'documentation' => 'PluginDraw',
 		'description' => tra('Display or create an image from TikiDraw that is stored into the File Gallery'),
 		'prefs' => array( 'feature_draw' , 'wikiplugin_draw'),
-		'icon' => 'pics/icons/shape_square_edit.png',
+		'icon' => 'lib\images\icons\svg.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'id' => array(
@@ -50,8 +50,8 @@ function wikiplugin_draw($data, $params) {
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	extract ($params,EXTR_SKIP);
 	
-	static $index = 0;
-	++$index;
+	static $drawIndex = 0;
+	++$drawIndex;
 	
 	if (!isset($id)) {
 		//check permissions
@@ -62,7 +62,7 @@ function wikiplugin_draw($data, $params) {
 		$label = tra('Draw New SVG Image');
 		$page = htmlentities($page);
 		$content = htmlentities($data);
-		$formId = "form$index";
+		$formId = "form$drawIndex";
 		$gals=$filegallib->list_file_galleries(0,-1,'name_desc',$user);
 		
 		$galHtml = "";
@@ -70,17 +70,18 @@ function wikiplugin_draw($data, $params) {
 			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries")
 				$galHtml .= "<option value='".$gal['id']."'>".$gal['name']."</option>";
 		}
-				
+		
+		$in = tr(" in ");
+		
 		return <<<EOF
 		~np~
-		<form method="post" action="tiki-edit_draw.php">
+		<form method="get" action="tiki-edit_draw.php">
 			<p>
-				<input type="submit" name="label" value="$label" class="newSvgButton" />
+				<input type="submit" name="label" value="$label" class="newSvgButton" />$in
 				<select name="galleryId">
-					<option>Select Gallery For Image To Be In</option>
 					$galHtml
 				</select>
-				<input type="hidden" name="index" value="$index"/>
+				<input type="hidden" name="index" value="$drawIndex"/>
 				<input type="hidden" name="page" value="$page"/>
 			</p>
 		</form>
@@ -91,14 +92,9 @@ EOF;
 	if (!isset($fileInfo['created'])) {
 		return tra("File not found.");
 	} else {
-		$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
+		$globalperms = Perms::get( array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ) );
 		
-		if (!$globalperms->view_file_gallery == 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("You do not have permission to view this file"));
-			$smarty->display("error.tpl");
-			die;
-		}
+		if ($globalperms->view_file_gallery != 'y') return "";
 		
 		$label = tra('Edit SVG Image');
 		$ret = "<img src='tiki-download_file.php?fileId=$id' style='".
@@ -106,8 +102,8 @@ EOF;
 			(isset($width) ? "width: $width;" : "" ).
 		"' />";
 	
-		if ($globalperms->admin_file_galleries == 'y') {
-			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$index&label=$label&width=$width&height=$height'>
+		if ($globalperms->admin_file_gallery == 'y') {
+			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height'>
 					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 				</a>";
 		}

@@ -78,6 +78,10 @@ function wikiplugin_code($data, $params) {
 
 	$out = $code;
 
+	if (isset($colors) && $colors == '1') {	// remove old geshi setting as it upsets codemirror
+		unset( $colors );
+	}
+
 	if ( isset($wrap) && $wrap == 1 ) {
 		// Force wrapping in <pre> tag through a CSS hack
 		$pre_style = 'white-space:pre-wrap;'

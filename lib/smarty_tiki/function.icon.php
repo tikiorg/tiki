@@ -27,8 +27,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_icon($params, $smarty) {
 	if ( ! is_array($params) ) $params = array();
-	global $prefs, $tc_theme, $tc_theme_option, $cachelib;
-	
+	global $prefs, $tc_theme, $tc_theme_option, $cachelib, $url_path, $base_url, $tikipath, $tikilib;
+
 	if (empty($tc_theme)) {
 		$current_style = $prefs['style'];
 		$current_style_option = $prefs['style_option'];
@@ -36,6 +36,15 @@ function smarty_function_icon($params, $smarty) {
 		$current_style = $tc_theme;
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
+	
+	if (isset($params['_type'])) {
+		if ($params['_type'] === 'absolute_uri') {
+			$params['path_prefix'] = $base_url;
+		} else if ($params['_type'] === 'absolute_path') {
+			$params['path_prefix'] = $url_path;
+		}
+	}
+
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
 	$cache_key = 'icons_' . $prefs['language'] . '_' . md5( $serialized_params );
 	if ( $cached = $cachelib->getCached( $cache_key ) ) {
@@ -86,7 +95,6 @@ function smarty_function_icon($params, $smarty) {
 	if ( ! preg_match('/^[a-z0-9_-]+$/i', $params['_id']) )
 		return;
 
-	global $url_path, $base_url, $tikipath, $tikilib;
 
 	// Include smarty functions used below
 	$smarty->loadPlugin('smarty_function_html_image');
@@ -109,16 +117,6 @@ function smarty_function_icon($params, $smarty) {
 					$params['file'] = $v2;
 				} else {
 					$params['file'] = $v;
-				}
-				break;
-			case '_type':
-				switch ( $v ) {
-				case 'absolute_uri':
-					$params['path_prefix'] = $base_url;
-					break;
-				case 'absolute_path':
-					$params['path_prefix'] = $url_path;
-					break;
 				}
 				break;
 			case '_notag':
