@@ -25,6 +25,12 @@ if ($_REQUEST['fileId'] > 0) {
 } else {
 	$fileInfo = array();
 }
+
+if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
+	$_REQUEST['fileId'] = $fileInfo['archiveId'];
+	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+}
+
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
 if ( ($fileInfo['filetype'] != $mimetypes["svg"]) && $_REQUEST['fileId'] > 0 ) {
@@ -79,6 +85,7 @@ if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
 $fileId = htmlspecialchars($_REQUEST['fileId']);
 $galleryId = htmlspecialchars($_REQUEST['galleryId']);
 $name = htmlspecialchars($_REQUEST['name']);
+$archive = htmlspecialchars($_REQUEST['archive']);
 
 $index = htmlspecialchars($_REQUEST['index']);
 $page = htmlspecialchars($_REQUEST['page']);
@@ -96,6 +103,7 @@ $smarty->assign( "galleryId", $galleryId );
 $smarty->assign( "width", $width );
 $smarty->assign( "height", $width );
 $smarty->assign( "name", $name);
+$smarty->assign( "archive", $archive);
 
 if (
 	isset($_REQUEST['index']) &&
@@ -124,28 +132,12 @@ if (!isset($_REQUEST['map'])) {
 			$('#tiki_draw').drawFullscreen();
 		});
 		
-		$('#tiki_draw')
-			.loadDraw({
-				fileId: $('#fileId').val(),
-				galleryId: $('#galleryId').val(),
-				name: $('#fileName').val(),
-				data: $('#fileData').html()
-			})
-			.bind('savedDraw', function(e, o) {
-				//this accounts for if the user sets the feature if the file id doesn't update after saving, by default it does, we need a reload for things to be safe.
-				if ($('#fileId').val() != o.fileId || !$('#fileId').val()) {
-					var newLocation = 'tiki-edit_draw.php?fileId=' + o.fileId + '&galleryId=' + o.galleryId;
-					if ($.wikiTrackingDraw) {
-						newLocation += '&page=' + $.wikiTrackingDraw.page + 
-							'&index=' + $.wikiTrackingDraw.index +
-							'&label=' + $.wikiTrackingDraw.label +
-							'&width=' + $.wikiTrackingDraw.params.width +
-							'&height=' + $.wikiTrackingDraw.params.height;
-					}
-					
-					document.location = newLocation;
-				}
-			});
+		$('#tiki_draw').loadDraw({
+			fileId: $('#fileId').val(),
+			galleryId: $('#galleryId').val(),
+			name: $('#fileName').val(),
+			data: $('#fileData').html()
+		});
 	");
 } else {
 	require_once("lib/wiki-plugins/wikiplugin_map.php");
@@ -164,8 +156,6 @@ if (!isset($_REQUEST['map'])) {
 
 $headerlib->add_jq_onready("
 	//prevent user back from messing things up
-	window.history.forward();
-	
 	$('#drawRename').click(function() {
 		$('#fileName').val($('#tiki_draw').renameDraw());
 	});
@@ -175,7 +165,7 @@ $headerlib->add_jq_onready("
 	});
 	
 	$('#drawBack').click(function() {
-		document.location = '$backLocation';
+		window.history.back();
 	});
 ");
 

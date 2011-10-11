@@ -9,6 +9,7 @@
 	<input type="hidden" id="fileName" value="{$name}" />
 	<input type="hidden" id="fileWidth" value="{$width}" />
 	<input type="hidden" id="fileHeight" value="{$hight}" />
+	<input type="hidden" id="archive" value="{$archive}" />
 	
 	<div id="drawEditor">
 		<div id="drawMenu">
