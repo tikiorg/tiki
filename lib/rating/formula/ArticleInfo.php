@@ -18,7 +18,7 @@ class Tiki_Formula_Function_ArticleInfo extends Math_Formula_Function
 
 		$supported = array( 'rating', 'age-second', 'age-hour', 'age-day', 'age-week', 'age-month', 'view-count' );
 		if ( ! in_array( $element[2], $supported ) ) {
-			$this->error( tra('Unsupported property. Supported properties are: ' . implode( ', ', $supported ) ) );
+			$this->error( tra('Unsupported property. Supported properties are: ') . implode( ', ', $supported ) ) ;
 		}
 
 		if ( $prefs['feature_articles'] != 'y' ) {
