@@ -379,6 +379,11 @@ a.flip:hover,
 	border: solid 2px black;
 }
 
+.wikitext .plugin_gauge,
+.wikitext .plugin_gauge-bar {
+	border: none;
+}
+
 /***** Boxes *****/
 /** Modules **/
 
