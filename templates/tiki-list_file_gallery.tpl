@@ -100,7 +100,7 @@
 				{button _keepall='y' _text="{tr}Upload File{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
 			{/if}
 			
-			{if $prefs.feature_draw eq 'y'}
+			{if $tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
 				{button _keepall='y' _text="{tr}Create a drawing{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
 			{/if}
 			
