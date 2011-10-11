@@ -447,6 +447,9 @@ function wikiplugin_tracker($data, $params)
 			return '<b>'.tra("You do not have permission to insert an item").'</b>';
 		} elseif (!empty($itemId)) {
 			$item_info = $trklib->get_tracker_item($itemId);
+			if (empty($item_info)) {
+				return '<b>'.tra("Incorrect item").'</b>';
+			}
 			$itemObject = Tracker_Item::fromInfo($item_info);
 			if (! $itemObject->canModify()) {
 				return '<b>'.tra("You do not have permission to modify an item").'</b>';
