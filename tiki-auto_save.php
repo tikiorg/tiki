@@ -49,7 +49,7 @@ if (isset($_REQUEST['editor_id'])) {
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
-			if (isset($_REQUEST['disable_wysiwyg_html']) && $_REQUEST['disable_wysiwyg_html'] !== 'false') {
+			if (!empty($_REQUEST['disable_wysiwyg_html']) && $_REQUEST['disable_wysiwyg_html'] !== 'false') {
 				$wysiwyg_wiki = true;
 			} else {
 				$wysiwyg_wiki = false;
