@@ -63,6 +63,10 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$selected = $this->getConfiguration('value');
 
+		if ($context['list_mode'] == 'csv') {
+			return $selected;
+		}
+
 		$languages = $this->getLanguages();
 		return $this->renderTemplate('trackeroutput/language.tpl', $context, array(
 			'label' => isset($languages[$selected]) ? $languages[$selected] : tr('None'),
