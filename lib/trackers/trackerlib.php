@@ -4149,12 +4149,14 @@ class TrackerLib extends TikiLib
 
 		if ($handler) {
 			$context = $params;
+			$fieldId = $field['fieldId'];
 			unset($context['item']);
 			unset($context['field']);
 			if (!isset($context['list_mode'])) {
 				$context['list_mode'] = 'n';
 			} 
 			$r = $handler->renderOutput($context);
+			TikiLib::lib('smarty')->assign("f_$fieldId", $r);
 			return $r;
 		}
 	}
