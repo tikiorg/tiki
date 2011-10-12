@@ -1195,7 +1195,7 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged'))) {
+		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged', 'draw'))) {
 			$plugin_result = str_replace(array('{', '}'), array('%7B' , '%7D'), $ck_editor_plugin);
 		} else {
 			// Tiki 7+ adds ~np~ to plugin output so remove them

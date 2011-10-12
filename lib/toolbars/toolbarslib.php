@@ -1732,7 +1732,7 @@ class ToolbarsList
 			$this->lines[] = $elements;
 	} // }}}
 
-	function getWysiwygArray( $areaId, $tb_type = 'html') // {{{
+	function getWysiwygArray( $areaId, $isHtml = true) // {{{
 	{
 		$lines = array();
 		foreach( $this->lines as $line ) {
@@ -1742,13 +1742,14 @@ class ToolbarsList
 				foreach( $bit as $group) {
 					$group_count = 0;
 					foreach( $group as $tag ) {
-						switch ($tb_type) {
-							case 'wiki': 
-								if ( $token = $tag->getWysiwygWikiToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
-								break;
-							case 'html' : 
-							default:
-								if ( $token = $tag->getWysiwygToken( $areaId ) ) {$lineOut[] = $token; $group_count++;};
+						if ($isHtml) {
+							if ( $token = $tag->getWysiwygToken( $areaId ) ) {
+								$lineOut[] = $token; $group_count++;
+							}
+						} else {
+							if ( $token = $tag->getWysiwygWikiToken( $areaId ) ) {
+								$lineOut[] = $token; $group_count++;
+							}
 						}
 					}
 					if ($group_count) { // don't add separators for empty groups
