@@ -1504,7 +1504,7 @@ class TikiLib extends TikiDb_Bridge
 
 				if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 					global $tikidomain;
-					$files = glob("temp/public/$tikidomain/avatar_$user.*");
+					$files = glob("temp/public/$tikidomain/avatar_$user.{jpg,gif,png}", GLOB_BRACE);
 
 					if ( !empty($files[0]) ) {
 						$path = $files[0];
