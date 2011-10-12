@@ -38,6 +38,16 @@ function wikiplugin_tabs_info() {
 					array('value' => 'n', 'text' => tra('No')),
 				),
 			),
+			'inside_pretty' => array(
+				'required' => false,
+				'name' => tra('Inside Pretty Tracker'),
+				'description' => tra('Parse pretty tracker variables within tabs'),
+				'default' => 'n',
+				'options' => array (
+					array('value' => 'n', 'text' => tra('No')),
+					array('value' => 'y' , 'text' => tra('Yes')),
+				),
+			),		
 		),
 	);
 }
@@ -55,6 +65,12 @@ function wikiplugin_tabs($data, $params) {
 	} else {
 		$toggle = 'y';
 	}
+
+	if (!empty($params['inside_pretty']) && $params['inside_pretty'] == 'y') {
+		$inside_pretty = true;
+	} else {
+		$inside_pretty = false;
+	}
 	
 	$tabs = array();
 	if (!empty($params['tabs'])) {
@@ -63,7 +79,7 @@ function wikiplugin_tabs($data, $params) {
 		return "''".tra("No tab title specified. At least one has to be set to make the tabs appear.")."''";
 	}
 	if (!empty($data)) {
-		$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+		$data = $tikilib->parse_data($data, array('suppress_icons' => true, 'inside_pretty' => $inside_pretty));
 		$tabData = explode('/////', $data);
 	}
 	
