@@ -143,7 +143,7 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Sort'),
 				'description' => tra('Sort ascending or descending on any field in the tiki_pages table. Syntax is field name followed by _asc or _desc. Example: ')
-									. 'lastModif_desc' . tra('or') . 'pageName_asc',
+									. 'lastModif_desc ' . tra('or') . ' pageName_asc',
 				'default' => 'pageName_asc',
 			),
 			'start' => array(
