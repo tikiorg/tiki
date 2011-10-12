@@ -19,8 +19,6 @@
 
 .CodeMirror-scroll{
 	overflow: auto ! important;
-	height: inherit;
-	width: inherit;
 }
 
 .CodeMirror-fullscreen {
@@ -43,4 +41,10 @@
 .noScroll
 {
 	overflow: hidden ! important;
+}
+
+.preCodeMirror {
+	width: 100%;
+	height: 100%;
+	display: block;
 }
