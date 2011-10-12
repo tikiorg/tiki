@@ -59,7 +59,7 @@ $feedbacks = array();
 $del = !empty($_REQUEST['delsel_x']) || !empty($_REQUEST['delsel']);
 $dup = !empty($_REQUEST['dupsel']);
 if ($del || $dup) {
-	check_ticket('list-object-permissions');
+	$access->check_authenticity();
 	if (!empty($_REQUEST['groupPerm'])) {
 		foreach ($_REQUEST['groupPerm'] as $perm) {
 			$perm = json_decode($perm, true);
@@ -165,6 +165,6 @@ $smarty->assign_by_ref('res', $res);
 $smarty->assign_by_ref('feedbacks', $feedbacks);
 $smarty->assign_by_ref('filterGroup', $filterGroup);
 $smarty->assign_by_ref('all_groups', $all_groups);
-ask_ticket('list-object-permissions');
+
 $smarty->assign('mid', 'tiki-list_object_permissions.tpl');
 $smarty->display('tiki.tpl');
