@@ -47,7 +47,7 @@ function wikiplugin_galleriffic_info() {
 			'imgHeight' => array(
 				'required' => false,
 				'name' => tra('Image slideshow height'),
-				'description' => tra('Width in pixels or percentage of the largest images.'),
+				'description' => tra('Height in pixels or percentage of the largest images.'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => '502px',
