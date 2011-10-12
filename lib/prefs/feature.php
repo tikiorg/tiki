@@ -87,6 +87,7 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 			'admin' => 'gal',
 			'view' => 'tiki-galleries.php',
+			'tags' => array('experimental'),
 		),
 		'feature_machine_translation' => array(
 			'name' => tra('Machine Translation (by Google Translate)'),
@@ -1426,6 +1427,7 @@ function prefs_feature_list($partial = false) {
 				'feature_file_galleries','feature_userfiles'
 			),
 			'default' => 'n',
+			'tags' => array('experimental'),
 		),
 		'feature_use_fgal_for_wiki_attachments' =>array(
 			'name' => tra('Use file galleries for wiki attachments'),
@@ -1435,6 +1437,7 @@ function prefs_feature_list($partial = false) {
 				'feature_file_galleries','feature_wiki_attachments'
 			),
 			'default' => 'n',
+			'tags' => array('experimental'),
 		),
 		'feature_file_galleries_author' => array(
 			'name' => tra("Require file author's name for anonymous uploads"),

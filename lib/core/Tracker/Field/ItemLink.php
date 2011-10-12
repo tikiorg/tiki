@@ -254,14 +254,22 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		);
 
 		if (!$this->getOption(3)) {	//no displayedFieldsList
-			$data['list'] = array_unique(
-				TikiLib::lib('trk')->get_all_items(
-					$this->getOption(0),
-					$this->getOption(1),
-					$this->getOption(4, 'opc'),
-					false
-				)
+			$data['list'] = TikiLib::lib('trk')->get_all_items(
+				$this->getOption(0),
+				$this->getOption(1),
+				$this->getOption(4, 'opc'),
+				false
 			);
+			if (array_unique($data['list']) != $data['list']) {
+				$newlist = array();
+				foreach($data['list'] as $k => $dl) {
+					if (in_array($dl, $newlist)) {
+						$dl = $dl . " ($k)";
+					}
+					$newlist[$k] = $dl;
+				}
+				$data['list'] = $newlist;
+			}
 		} else {
 			$data['list'] = array_unique(
 				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
@@ -270,6 +278,16 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 					$this->getOption(4, 'opc')
 				)
 			);
+			if (array_unique($data['listdisplay']) != $data['listdisplay']) {
+				$newlist = array();
+				foreach($data['listdisplay'] as $k => $dl) {
+					if (in_array($dl, $newlist)) {
+						$dl = $dl . " ($k)";
+					}
+					$newlist[$k] = $dl;
+				}
+				$data['listdisplay'] = $newlist;
+			}
 		}
 
 		if ($this->getOption(6)) {	// addItems

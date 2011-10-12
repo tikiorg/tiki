@@ -142,7 +142,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		$tracker = Tracker_Definition::get($trackerId);
 		$technique = 'value';
 
-		if ($tracker && $field = $tracker->getField($remoteField) && !$this->getOption(2)) {
+		if ($tracker && ($field = $tracker->getField($remoteField)) && !$this->getOption(2)) {
 			if ($field['type'] == 'r' || $field['type'] == 'q' && $field['options_array'][3] == 'itemId') {
 				$technique = 'id';
 			}

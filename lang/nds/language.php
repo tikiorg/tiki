@@ -21,6 +21,7 @@
 // Note: the difference is invisible but " :" has an UTF-8 non-breaking-space, not a regular space, but the UTF-8 equivalent of the HTML &nbsp;.
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
+
 $lang = array(
 /* /var/www/tiki-8.x/templates/prefs/text.tpl, /var/www/tiki-8.x/templates/find.tpl */
 "" => "",
@@ -29,7 +30,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-adminusers.tpl */
 "N" => "N",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-// "v" => "v",
+"v" => "v",
 /* /var/www/tiki-8.x/templates/tiki-calendar_nav.tpl */
 "W" => "W",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php, /var/www/tiki-8.x/lib/prefs/directory.php, /var/www/tiki-8.x/lib/prefs/category.php, /var/www/tiki-8.x/lib/prefs/warn.php, /var/www/tiki-8.x/lib/prefs/users.php, /var/www/tiki-8.x/lib/prefs/morelikethis.php, /var/www/tiki-8.x/templates/messu-sent.tpl, /var/www/tiki-8.x/templates/messu-mailbox.tpl */
@@ -91,7 +92,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/moderate_activation_mail.tpl, /var/www/tiki-8.x/templates/mail/user_creation_validation_mail.tpl, /var/www/tiki-8.x/templates/mail/password_reminder.tpl, /var/www/tiki-8.x/templates/mail/user_validation_mail.tpl, /var/www/tiki-8.x/templates/mail/moderate_validation_mail.tpl */
 "Hi" => "Moin",
 /* /var/www/tiki-8.x/templates/messu-compose.tpl, /var/www/tiki-8.x/templates/messu-read_archive.tpl, /var/www/tiki-8.x/templates/tiki-metrics.tpl, /var/www/tiki-8.x/templates/messu-read.tpl, /var/www/tiki-8.x/templates/messu-read_sent.tpl */
-"To" => "Na",
+"To" => "Nå",
 /* /var/www/tiki-8.x/templates/tiki-admin_mailin.tpl */
 // "mn" => "mn",
 /* /var/www/tiki-8.x/lib/newsletters/nllib.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_subscribegroup.php, /var/www/tiki-8.x/templates/tiki-admin_structures.tpl, /var/www/tiki-8.x/templates/tiki-view_tracker.tpl, /var/www/tiki-8.x/templates/tiki-remind_password.tpl, /var/www/tiki-8.x/templates/tiki-plugins.tpl, /var/www/tiki-8.x/templates/admin/include_gal.tpl, /var/www/tiki-8.x/templates/tiki-admin_forums.tpl, /var/www/tiki-8.x/templates/tiki-received_pages.tpl, /var/www/tiki-8.x/templates/tiki-importer.tpl, /var/www/tiki-8.x/templates/modules/mod-minichat.tpl, /var/www/tiki-8.x/templates/tiki-tell_a_friend.tpl, /var/www/tiki-8.x/templates/tiki-list_articles.tpl, /var/www/tiki-8.x/templates/tiki-share.tpl, /var/www/tiki-8.x/templates/tiki-listpages_content.tpl, /var/www/tiki-8.x/templates/tiki-adminusers.tpl, /var/www/tiki-8.x/templates/tiki-directory_add_site.tpl, /var/www/tiki-8.x/templates/messu-broadcast.tpl, /var/www/tiki-8.x/templates/tiki-list_submissions.tpl */
@@ -291,7 +292,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_help.tpl */
 // "col" => "col",
 /* /var/www/tiki-8.x/templates/tiki-theme_control_objects.tpl, /var/www/tiki-8.x/templates/tiki-theme_control.tpl, /var/www/tiki-8.x/templates/modules/mod-user_tasks.tpl, /var/www/tiki-8.x/templates/tiki-theme_control_sections.tpl, /var/www/tiki-8.x/templates/tiki-live_support_admin.tpl, /var/www/tiki-8.x/templates/tiki-pagehistory.tpl */
-// "Del" => "Del",
+"Del" => "Weg",
 /* /var/www/tiki-8.x/tiki-map_edit.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_map.php */
 "Map" => "Landkårt",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_ftp.php */
@@ -307,15 +308,15 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-calendar_import.tpl, /var/www/tiki-8.x/templates/tiki-admin_banning.tpl */
 "See" => "Kiek",
 /* /var/www/tiki-8.x/lib/parser/parserlib.php, /var/www/tiki-8.x/templates/tiki-forum_queue.tpl, /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
-// "sad" => "sad",
+ "sad" => "lurig",
 /* /var/www/tiki-8.x/modules/mod-func-change_category.php */
-// "Shy" => "Shy",
+"Shy" => "Schoo",
 /* /var/www/tiki-8.x/templates/tiki-admin_credits.tpl, /var/www/tiki-8.x/templates/edit_file_gallery.tpl, /var/www/tiki-8.x/templates/tiki-admin_modules.tpl, /var/www/tiki-8.x/templates/tiki-faq_questions.tpl, /var/www/tiki-8.x/templates/tiki-view_forum.tpl, /var/www/tiki-8.x/templates/tiki-edit_help.tpl, /var/www/tiki-8.x/templates/tiki-upload_file.tpl, /var/www/tiki-8.x/templates/tiki-pick_avatar.tpl */
 "Use" => "Bruken",
 /* /var/www/tiki-8.x/tiki-admin_forums.php, /var/www/tiki-8.x/templates/tiki-minical_prefs.tpl */
 "min" => "min",
 /* /var/www/tiki-8.x/templates/tiki-calendar.tpl */
-"Sat" => "Sav",
+"Sat" => "Svd",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_category.php */
 "And" => "Un",
 /* /var/www/tiki-8.x/templates/tiki-calendar.tpl */
@@ -591,9 +592,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_actionlog.tpl */
 // "Misc" => "Misc",
 /* /var/www/tiki-8.x/lib/filegals/filegallib.php, /var/www/tiki-8.x/templates/tiki-admin_categories.tpl, /var/www/tiki-8.x/templates/sent_newsletters.tpl, /var/www/tiki-8.x/templates/comments.tpl, /var/www/tiki-8.x/templates/tiki-contacts.tpl, /var/www/tiki-8.x/templates/tiki-webmail_contacts.tpl, /var/www/tiki-8.x/templates/tiki-admin_html_page_content.tpl */
-"Page" => "Siet",
+"Page" => "Sied",
 /* /var/www/tiki-8.x/lib/themegenlib.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_mono.php */
-// "Font" => "Font",
+ "Font" => "Schrivtbild",
 /* /var/www/tiki-8.x/lib/shoutbox/shoutboxlib.php, /var/www/tiki-8.x/lib/core/Tracker/Field/ItemLink.php, /var/www/tiki-8.x/lib/core/Tracker/Field/Url.php, /var/www/tiki-8.x/lib/core/Tracker/Field/ItemsList.php, /var/www/tiki-8.x/lib/core/Tracker/Field/PageSelector.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_img.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_realnamelist.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_userlist.php, /var/www/tiki-8.x/templates/tiki-tell_a_friend.tpl, /var/www/tiki-8.x/templates/tiki-share.tpl */
 "Link" => "Verknüppen",
 /* /var/www/tiki-8.x/templates/tiki-edit_help.tpl */
@@ -1377,7 +1378,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-admin_forums.php, /var/www/tiki-8.x/lib/core/Tracker/Field/Url.php, /var/www/tiki-8.x/lib/prefs/forum.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_toc.php, /var/www/tiki-8.x/templates/comments.tpl */
 // "Plain" => "Plain",
 /* /var/www/tiki-8.x/templates/tiki-user_information.tpl */
-// "Score" => "Score",
+"Score" => "Plåts",
 /* /var/www/tiki-8.x/templates/tiki-admin_transitions.tpl */
 "Count" => "Tall",
 /* /var/www/tiki-8.x/lib/prefs/default.php */
@@ -2127,11 +2128,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_cookies.tpl, /var/www/tiki-8.x/templates/tiki-admin.tpl */
 "Cookies" => "Kookjes",
 /* /var/www/tiki-8.x/templates/map/tiki-map_history.tpl, /var/www/tiki-8.x/templates/pagehistory.tpl, /var/www/tiki-8.x/templates/tiki-pagehistory.tpl */
-// "Current" => "Current",
+"Current" => "Opstunns",
 /* /var/www/tiki-8.x/templates/tiki-edit_article.tpl, /var/www/tiki-8.x/templates/tiki-received_articles.tpl, /var/www/tiki-8.x/templates/tiki-edit_submission.tpl, /var/www/tiki-8.x/templates/mail/submission_notification.tpl */
 // "Heading" => "Heading",
 /* /var/www/tiki-8.x/templates/admin/include_forums.tpl */
-// "Threads" => "Threads",
+"Threads" => "klöönsnacks",
 /* /var/www/tiki-8.x/templates/tiki-user_tasks_view.tpl, /var/www/tiki-8.x/templates/admin/include_profiles.tpl, /var/www/tiki-8.x/templates/tiki-user_tasks_edit.tpl, /var/www/tiki-8.x/templates/tiki-user_tasks_list.tpl */
 "Waiting" => "Töven",
 /* /var/www/tiki-8.x/templates/tiki-discount.tpl, /var/www/tiki-8.x/templates/tiki-received_pages.tpl, /var/www/tiki-8.x/templates/attachments.tpl, /var/www/tiki-8.x/templates/tiki-editpage.tpl, /var/www/tiki-8.x/templates/comment/post.tpl, /var/www/tiki-8.x/templates/fgal_attachments.tpl, /var/www/tiki-8.x/templates/tiki-upload_file.tpl, /var/www/tiki-8.x/templates/mail/user_watch_wiki_new_attach.tpl, /var/www/tiki-8.x/templates/mail/user_watch_comment.tpl, /var/www/tiki-8.x/templates/mail/user_watch_wiki_page_changed.tpl */
@@ -2141,9 +2142,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_articles.tpl, /var/www/tiki-8.x/templates/tiki-read_article.tpl */
 // "expires" => "expires",
 /* /var/www/tiki-8.x/templates/tiki-admin_security.tpl */
-// "special" => "special",
+ "special" => "besünners",
 /* /var/www/tiki-8.x/templates/tiki-page_contribution.tpl */
-// "version" => "version",
+ "version" => "Verschoon",
 /* /var/www/tiki-8.x/templates/tiki-preview_article.tpl */
 "Preview" => "Vöransicht",
 /* /var/www/tiki-8.x/tiki-send_objects.php */
@@ -2163,15 +2164,15 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_features.tpl, /var/www/tiki-8.x/templates/tiki-user_watches.tpl */
 "Watches" => "Monitors",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl, /var/www/tiki-8.x/templates/map/tiki-map_history.tpl, /var/www/tiki-8.x/templates/tiki-pagehistory.tpl */
-// "Compare" => "Compare",
+"Compare" => "Verglieken",
 /* /var/www/tiki-8.x/templates/messu-compose.tpl */
-// "Invalid" => "Invalid",
+"Invalid" => "Verkehrt",
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
 // "Move Up" => "Move Up",
 /* /var/www/tiki-8.x/tiki-map_edit.php, /var/www/tiki-8.x/templates/mail/user_watch_category_changed_subject.tpl */
 "changed" => "ännert",
 /* /var/www/tiki-8.x/templates/tiki-view_tracker.tpl, /var/www/tiki-8.x/templates/tiki-view_tracker_item.tpl, /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_trackerlist.tpl */
-// "Monitor" => "Monitor",
+"Monitor" => "Beluurn",
 /* /var/www/tiki-8.x/templates/admin/include_profiles.tpl */
 // "applied" => "applied",
 /* /var/www/tiki-8.x/templates/admin/include_general.tpl, /var/www/tiki-8.x/templates/admin/include_intertiki.tpl */
@@ -2179,7 +2180,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_invoice.tpl, /var/www/tiki-8.x/templates/tiki-list_invoice_clients.tpl */
 // "Taxable" => "Taxable",
 /* /var/www/tiki-8.x/templates/admin/include_metatags.tpl */
-// "Geo URL" => "Geo URL",
+"Geo URL" => "Geo URL",
 /* /var/www/tiki-8.x/templates/tiki-browse_image.tpl */
 "Smaller" => "Lütter",
 /* /var/www/tiki-8.x/templates/tiki-admin_metrics.tpl */
@@ -2399,7 +2400,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_faq.tpl */
 // "Answers" => "Answers",
 /* /var/www/tiki-8.x/lib/smarty_tiki/block.pagination_links.php */
-"Last %0" => "Låtst/e %0",
+"Last %0" => "Lest/e %0",
 /* /var/www/tiki-8.x/lib/smarty_tiki/block.pagination_links.php */
 "Next %0" => "Tokamen %0",
 /* /var/www/tiki-8.x/tiki-calendar_edit_item.php, /var/www/tiki-8.x/templates/tiki-calendar.tpl, /var/www/tiki-8.x/templates/tiki-calendar_edit_item.tpl */
@@ -2543,9 +2544,9 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "Mayotte" => "Mayotte",
 /* /var/www/tiki-8.x/lib/prefs/site.php */
-"Choices" => "Wahlmöögligkaiden",
+"Choices" => "Wåhlmöögligkaiden",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php, /var/www/tiki-8.x/templates/admin/include_wiki.tpl */
-"Page ID" => "Siets ID",
+"Page ID" => "Sied-ID",
 /* /var/www/tiki-8.x/lib/prefs/shipping.php */
 "UPS API" => "UPS API",
 /* /var/www/tiki-8.x/templates/mail/newsletter_byebye.tpl */
@@ -2569,7 +2570,7 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "Burundi" => "Burundi",
 /* /var/www/tiki-8.x/templates/tiki-pagehistory.tpl */
-"History" => "Schiednis",
+"History" => "Verloop",
 /* ./img/flags/flagnames.php */
 "Denmark" => "Däänmark",
 /* /var/www/tiki-8.x/lib/prefs/sitead.php, /var/www/tiki-8.x/templates/tiki-admin_polls.tpl, /var/www/tiki-8.x/templates/tiki-mods.tpl */
@@ -2777,7 +2778,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-webmail.tpl */
 // "Maildir" => "Maildir",
 /* /var/www/tiki-8.x/lib/modules/modlib.php */
-"No Page" => "Keen Siet",
+"No Page" => "Keen Sied",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_flash.php */
 "Youtube" => "Youtube",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_votings.php */
@@ -2895,7 +2896,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_poll_options.tpl, /var/www/tiki-8.x/templates/tiki-usermenu.tpl, /var/www/tiki-8.x/templates/tiki-admin_links.tpl, /var/www/tiki-8.x/templates/tiki-admin_survey_questions.tpl, /var/www/tiki-8.x/templates/tiki-edit_quiz_questions.tpl, /var/www/tiki-8.x/templates/admin_modules_form.tpl, /var/www/tiki-8.x/templates/tiki-admin_menu_options.tpl */
 "Position" => "Positschoon",
 /* /var/www/tiki-8.x/templates/tiki-wiki_structure_bar.tpl, /var/www/tiki-8.x/templates/tiki-send_objects.tpl, /var/www/tiki-8.x/templates/tiki-print_pages.tpl */
-"Add Page" => "Fög Siet to",
+"Add Page" => "Fög Sied to",
 /* /var/www/tiki-8.x/templates/tiki-admin_tracker_fields.tpl */
 "Save All" => "Allen Spiekern",
 /* /var/www/tiki-8.x/templates/tiki-file_info_box.tpl */
@@ -3161,7 +3162,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/header.tpl */
 "RSS Wiki" => "RSS Wiki",
 /* /var/www/tiki-8.x/templates/tiki-create_webhelp.tpl */
-"Top page" => "Baven Siet",
+"Top page" => "Baven Sied",
 /* /var/www/tiki-8.x/modules/mod-func-user_blogs.php, /var/www/tiki-8.x/lib/prefs/users.php, /var/www/tiki-8.x/templates/tiki-user_preferences.tpl, /var/www/tiki-8.x/templates/tiki-my_tiki.tpl */
 "My blogs" => "Miene Dågböker",
 /* ./img/flags/flagnames.php */
@@ -3203,7 +3204,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-admin.php, /var/www/tiki-8.x/tiki-admin_toolbars.php, /var/www/tiki-8.x/tiki-searchresults.php, /var/www/tiki-8.x/lib/prefs/feature.php, /var/www/tiki-8.x/lib/prefs/search.php, /var/www/tiki-8.x/lib/calendar/tikicalendarlib.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_freetagged.php, /var/www/tiki-8.x/templates/modules/mod-since_last_visit_new.tpl, /var/www/tiki-8.x/templates/modules/mod-search_box.tpl, /var/www/tiki-8.x/templates/modules/mod-search.tpl, /var/www/tiki-8.x/templates/tiki-browse_categories.tpl, /var/www/tiki-8.x/templates/tiki-admin_trackers.tpl, /var/www/tiki-8.x/templates/tiki-list_trackers.tpl, /var/www/tiki-8.x/templates/tiki-searchresults.tpl */
 "Trackers" => "Mittreckers",
 /* /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_stat.tpl */
-"Last Day" => "Låtste Dag",
+"Last Day" => "Leste Dag",
 /* /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_adjustinventory.tpl */
 "Subtract" => "Aftrecken",
 /* ./img/flags/flagnames.php */
@@ -3329,7 +3330,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-blog_post.tpl */
 "New Post" => "Nee Bidragg",
 /* /var/www/tiki-8.x/templates/tiki-print_pages.tpl */
-"No pages" => "Keen Siet",
+"No pages" => "Keen Sied",
 /* /var/www/tiki-8.x/templates/find.tpl, /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_trackerfilter.tpl */
 "Map View" => "Kårtenansicht",
 /* /var/www/tiki-8.x/tiki-webmail_ajax.php */
@@ -3733,7 +3734,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_trackers.tpl */
 // "Export %0" => "Export %0",
 /* /var/www/tiki-8.x/templates/tiki-edit_translation.tpl */
-"View Page" => "Siet bekieken",
+"View Page" => "Sied bekieken",
 /* /var/www/tiki-8.x/templates/tiki-calendar_edit_item.tpl */
 // "ending by" => "ending by",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/File.php, /var/www/tiki-8.x/templates/tiki-action_calendar.tpl, /var/www/tiki-8.x/templates/tiki-user_contacts_prefs.tpl, /var/www/tiki-8.x/templates/tiki-calendar.tpl, /var/www/tiki-8.x/templates/find.tpl, /var/www/tiki-8.x/templates/tiki-contacts.tpl, /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_trackerfilter.tpl */
@@ -3797,7 +3798,7 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "Nicaragua" => "Nicaragua",
 /* /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_stat.tpl */
-"Last Week" => "Låtste Week",
+"Last Week" => "Leste Week",
 /* /var/www/tiki-8.x/lib/prefs/calendar.php, /var/www/tiki-8.x/lib/calendar/calendarlib.php, /var/www/tiki-8.x/tiki-admin_calendars.php, /var/www/tiki-8.x/templates/tiki-calendar.tpl, /var/www/tiki-8.x/templates/tiki-calendar_edit_item.tpl */
 "Wednesday" => "Middeweek",
 /* ./img/flags/flagnames.php */
@@ -3961,7 +3962,7 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "Hong Kong" => "Hong Kong",
 /* /var/www/tiki-8.x/lib/prefs/forum.php, /var/www/tiki-8.x/templates/tiki-admin_forums.tpl, /var/www/tiki-8.x/templates/tiki-list_blogs.tpl */
-"Last post" => "Låtste Bidragg",
+"Last post" => "Leste Bidragg",
 /* /var/www/tiki-8.x/lib/prefs/http.php */
 "HTTP port" => "HTTP Poort",
 /* ./img/flags/flagnames.php */
@@ -4243,7 +4244,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_perspective.tpl */
 "Switch to" => "Wesseln to",
 /* /var/www/tiki-8.x/templates/tiki-forums.tpl, /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
-"Last Post" => "Låtste Bidrag",
+"Last Post" => "Leste Bidrag",
 /* /var/www/tiki-8.x/templates/tiki-edit_blog.tpl */
 "Edit Blog" => "Dågbook bewarken",
 /* /var/www/tiki-8.x/templates/tiki-user_tasks.tpl */
@@ -4297,7 +4298,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-install.tpl */
 // "Tiki Icon" => "Tiki Icon",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last week" => "Låtste Week",
+"Last week" => "Leste Week",
 /* /var/www/tiki-8.x/templates/tiki-edit_article.tpl, /var/www/tiki-8.x/templates/tiki-admin_toolbars.tpl */
 // "View mode" => "View mode",
 /* /var/www/tiki-8.x/templates/tiki-edit_article.tpl */
@@ -4417,11 +4418,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/map/tiki-map_history.tpl, /var/www/tiki-8.x/templates/tiki-pagehistory.tpl */
 // "c=compare" => "c=compare",
 /* /var/www/tiki-8.x/templates/tiki-show_page.tpl, /var/www/tiki-8.x/templates/blog_post_postbody_content.tpl, /var/www/tiki-8.x/templates/tiki-read_article.tpl, /var/www/tiki-8.x/templates/tiki-index_p.tpl */
-"Last page" => "Låtste Sied",
+"Last page" => "Leste Sied",
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
 "for links" => "för Verknüppens",
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl, /var/www/tiki-8.x/templates/tiki-view_forum_thread.tpl */
-"Last hour" => "Låtste Stünn",
+"Last hour" => "Leste Stünn",
 /* /var/www/tiki-8.x/templates/tiki-list_file_gallery.tpl */
 "SlideShow" => "Sleedschau",
 /* /var/www/tiki-8.x/templates/map/tiki-map.tpl */
@@ -4445,7 +4446,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-searchresults.php, /var/www/tiki-8.x/lib/prefs/search.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_freetagged.php, /var/www/tiki-8.x/templates/modules/mod-search_box.tpl, /var/www/tiki-8.x/templates/modules/mod-search.tpl, /var/www/tiki-8.x/templates/tiki-searchresults.tpl */
 "Blog Posts" => "Indrääg vun Dågbökern",
 /* /var/www/tiki-8.x/templates/tiki-browse_image.tpl */
-"Last Image" => "Låtst Bild",
+"Last Image" => "Lest Bild",
 /* /var/www/tiki-8.x/templates/tiki-likepages.tpl */
 "Pages like" => "Sieden as",
 /* /var/www/tiki-8.x/lib/prefs/auth.php, /var/www/tiki-8.x/templates/admin/include_login.tpl */
@@ -4483,7 +4484,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_articles.php */
 "Title Only" => "Bloot Titel",
 /* /var/www/tiki-8.x/templates/tiki-adminusers.tpl */
-"Last Login" => "Låtst Anmellen",
+"Last Login" => "Lest Anmellen",
 /* /var/www/tiki-8.x/templates/tiki-tell_a_friend.tpl, /var/www/tiki-8.x/templates/tiki-share.tpl */
 "Your email" => "Diene Nettpostadress",
 /* /var/www/tiki-8.x/templates/tracker/import_items.tpl, /var/www/tiki-8.x/templates/tiki-admingroups.tpl */
@@ -4723,9 +4724,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_credits.tpl */
 // "Usage Date" => "Usage Date",
 /* /var/www/tiki-8.x/templates/tiki-user_preferences.tpl, /var/www/tiki-8.x/templates/tiki-user_information.tpl */
-"Last login" => "Tolåtst anmellt",
+"Last login" => "Tolest anmellt",
 /* /var/www/tiki-8.x/templates/tiki-admin_polls.tpl */
-// "Add Option" => "Add Option",
+"Add Option" => "Opschoon tofögen",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_fancylist.php */
 // "Fancy List" => "Fancy List",
 /* /var/www/tiki-8.x/tiki-list_kaltura_entries.php */
@@ -4735,7 +4736,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-directory_browse.tpl */
 // "No records" => "No records",
 /* /var/www/tiki-8.x/templates/tiki-browse_gallery.tpl */
-// "All Images" => "All Images",
+"All Images" => "Alle Billers",
 /* ./img/flags/flagnames.php */
 "Costa_Rica" => "Costa_Rica",
 /* /var/www/tiki-8.x/templates/tiki-pagehistory.tpl */
@@ -4759,7 +4760,7 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "Costa Rica" => "Costa Rica",
 /* /var/www/tiki-8.x/templates/tiki-view_sheets_menu.tpl */
-// "Delete Row" => "Delete Row",
+"Delete Row" => "Reeg wegsmieten",
 /* /var/www/tiki-8.x/lib/modules/modlib.php */
 "No Numbers" => "Keene Tallen",
 /* /var/www/tiki-8.x/templates/tiki-galleries.tpl */
@@ -4767,11 +4768,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_performance.tpl */
 "Cache Hits" => "Ketsch Dreppers",
 /* /var/www/tiki-8.x/tiki-user_tasks.php */
-// "Percentage" => "Percentage",
+"Percentage" => "Perzentweert",
 /* /var/www/tiki-8.x/admin/include_gal.php */
 "Test Image" => "Testbild",
 /* /var/www/tiki-8.x/templates/tiki-poll_results.tpl */
-// "List Votes" => "List Votes",
+"List Votes" => "Stimmen oplisten",
 /* /var/www/tiki-8.x/templates/tiki-admin_polls.tpl, /var/www/tiki-8.x/templates/tiki-browse_categories.tpl */
 "Wiki pages" => "Wikisieden",
 /* /var/www/tiki-8.x/templates/file/remote.tpl */
@@ -4789,7 +4790,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-user_information.tpl */
 // "Basic Data" => "Basic Data",
 /* /var/www/tiki-8.x/templates/tiki-edit_structure.tpl */
-// "After page" => "After page",
+"After page" => "Achtersied",
 /* /var/www/tiki-8.x/modules/mod-func-login_box.php */
 "Input size" => "Grött vun Ingåv",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_mouseover.php */
@@ -4909,7 +4910,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-list_comments.tpl */
 "(no title)" => "(keen Titel)",
 /* /var/www/tiki-8.x/templates/tiki-show_page_raw.tpl */
-"Last Slide" => "Låtste Sleden",
+"Last Slide" => "Leste Sleden",
 /* /var/www/tiki-8.x/templates/tiki-view_forum_thread.tpl */
 "Show posts" => "Wies Bidrääg",
 /* /var/www/tiki-8.x/templates/tiki-admin_html_pages.tpl, /var/www/tiki-8.x/templates/tiki-sheets.tpl, /var/www/tiki-8.x/templates/tiki-admin_trackers.tpl, /var/www/tiki-8.x/templates/tiki-list_trackers.tpl */
@@ -4947,7 +4948,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-tikitests.php */
 "Tiki Tests" => "Tiki Versöken",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_stat.php, /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_stat.tpl */
-"Last Month" => "Låtste Månd",
+"Last Month" => "Leste Månd",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/DateTime.php */
 "Start Year" => "Bigånjohr",
 /* ./img/flags/flagnames.php */
@@ -5039,7 +5040,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_trackerlist.tpl */
 "Close item" => "Indragg sluten",
 /* /var/www/tiki-8.x/tiki-wiki_rankings.php */
-"Last pages" => "Låtste Sieden",
+"Last pages" => "Leste Sieden",
 /* /var/www/tiki-8.x/templates/tiki-install.tpl */
 "Test email" => "Testnettbreev",
 /* ./lang/langmapping.php */
@@ -5079,11 +5080,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-wiki_topline.tpl */
 "3d browser" => "3d Kieker",
 /* /var/www/tiki-8.x/tiki-galleries.php */
-"last image" => "låtst Bild",
+"last image" => "lest Bild",
 /* /var/www/tiki-8.x/templates/tiki-admin_newsletter_subscriptions.tpl */
 // "Subscribed" => "Subscribed",
 /* /var/www/tiki-8.x/tiki-blog_rankings.php */
-"Last posts" => "Låtste Bidrääg",
+"Last posts" => "Leste Bidrääg",
 /* ./lang/langmapping.php */
 "Indonesian" => "Indoneesch",
 /* /var/www/tiki-8.x/lib/prefs/connect.php */
@@ -5129,7 +5130,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/cas.php, /var/www/tiki-8.x/lib/prefs/calendar.php */
 "10 minutes" => "10 Minuten",
 /* /var/www/tiki-8.x/tiki-file_galleries_rankings.php */
-"Last files" => "Låtste Datein",
+"Last files" => "Leste Datein",
 /* ./lang/langmapping.php */
 "Portuguese" => "Portugeesch",
 /* /var/www/tiki-8.x/lib/prefs/cas.php, /var/www/tiki-8.x/lib/prefs/calendar.php */
@@ -5321,7 +5322,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/feature.php, /var/www/tiki-8.x/templates/tiki-admin_actionlog.tpl, /var/www/tiki-8.x/templates/tiki-mytiki_bar.tpl */
 // "Action Log" => "Action Log",
 /* /var/www/tiki-8.x/modules/mod-func-last_tracker_items.php */
-"Last Items" => "Låtste Indrääg",
+"Last Items" => "Leste Indrääg",
 /* /var/www/tiki-8.x/templates/copyrights.tpl */
 "Copyrights" => "Ooverhevers",
 /* /var/www/tiki-8.x/templates/tiki-admin_rssmodules.tpl, /var/www/tiki-8.x/templates/admin/include_directory.tpl, /var/www/tiki-8.x/templates/admin/include_rss.tpl, /var/www/tiki-8.x/templates/admin/include_trackers.tpl, /var/www/tiki-8.x/templates/admin/include_polls.tpl, /var/www/tiki-8.x/templates/admin/include_calendar.tpl, /var/www/tiki-8.x/templates/admin/include_faqs.tpl, /var/www/tiki-8.x/templates/admin/include_gal.tpl, /var/www/tiki-8.x/templates/admin/include_forums.tpl, /var/www/tiki-8.x/templates/admin/include_blogs.tpl, /var/www/tiki-8.x/templates/show_copyright.tpl */
@@ -5335,7 +5336,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Simple.php, /var/www/tiki-8.x/lib/prefs/blog.php, /var/www/tiki-8.x/templates/tiki-user_watches.tpl */
 "Plain text" => "Platte Text",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last month" => "Låtste Maand",
+"Last month" => "Leste Maand",
 /* /var/www/tiki-8.x/lib/prefs/socialnetworks.php, /var/www/tiki-8.x/templates/tiki-socialnetworks.tpl */
 // "bit.ly Key" => "bit.ly Key",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_img.php */
@@ -5397,7 +5398,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/forums.php, /var/www/tiki-8.x/templates/tiki-directory_browse.tpl, /var/www/tiki-8.x/templates/tiki-directory_search.tpl */
 "Name (desc)" => "Nåm (afst)",
 /* /var/www/tiki-8.x/tiki-galleries_rankings.php */
-"Last images" => "Låtste Biller",
+"Last images" => "Leste Biller",
 /* /var/www/tiki-8.x/modules/mod-func-articles.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_img.php, /var/www/tiki-8.x/templates/tiki-edit_article.tpl */
 // "Image width" => "Image width",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_webservice.php */
@@ -5439,7 +5440,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/permission.php */
 "Send to URL" => "Senn to URL",
 /* /var/www/tiki-8.x/templates/tiki-admin_rssmodules.tpl, /var/www/tiki-8.x/templates/admin/include_profiles.tpl */
-// "Last update" => "Last update",
+ "Last update" => "Lest Opfrischen",
 /* /var/www/tiki-8.x/lib/wiki/wikilib.php */
 // "Page locked" => "Page locked",
 /* /var/www/tiki-8.x/templates/tiki-payment-single.tpl */
@@ -5447,15 +5448,15 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "Philippines" => "Philippinen",
 /* /var/www/tiki-8.x/tiki-admin_forums.php, /var/www/tiki-8.x/modules/mod-func-forums_last_posts.php */
-// "Topics only" => "Topics only",
+"Topics only" => "Bloot Themen",
 /* /var/www/tiki-8.x/tiki-admin_forums.php */
 // "Date (desc)" => "Date (desc)",
 /* /var/www/tiki-8.x/lib/prefs/freetags.php */
 // "3D autoload" => "3D autoload",
 /* /var/www/tiki-8.x/templates/tiki-removepage.tpl */
-"Remove page" => "Siet wegsmieten",
+"Remove page" => "Sied wegsmieten",
 /* /var/www/tiki-8.x/lib/reportslib.php */
-// "all history" => "all history",
+"all history" => "heel Verloop",
 /* ./img/flags/flagnames.php */
 "North_Korea" => "Noordkorea",
 /* /var/www/tiki-8.x/templates/admin/include_intertiki.tpl */
@@ -5485,7 +5486,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/search.php */
 "Entire site" => "Heele Steed",
 /* /var/www/tiki-8.x/templates/mail/fgal_old_file_deleted.tpl */
-"Last editor" => "Låtst Bewarker",
+"Last editor" => "Lest Bewarker",
 /* /var/www/tiki-8.x/templates/tiki-admin_newsletter_subscriptions.tpl */
 // "Add To List" => "Add To List",
 /* /var/www/tiki-8.x/lib/prefs/cookie.php */
@@ -5903,7 +5904,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-edit_article.php */
 "New Article" => "Nee Artikel opstellen",
 /* /var/www/tiki-8.x/templates/tiki-rename_page.tpl */
-"Rename page" => "Siet nie benömen",
+"Rename page" => "Sied neebenömen",
 /* /var/www/tiki-8.x/templates/tiki-preview_article.tpl, /var/www/tiki-8.x/templates/tiki-received_articles.tpl, /var/www/tiki-8.x/templates/tiki-print_article.tpl */
 // "Topic image" => "Topic image",
 /* /var/www/tiki-8.x/tiki-notepad_list.php */
@@ -5911,17 +5912,17 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-list_contents.tpl */
 "Current ver" => "Opstunns Ver",
 /* /var/www/tiki-8.x/templates/tiki-list_contents.tpl */
-// "Future vers" => "Future vers",
+"Future vers" => "Tokümst Ver",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_poll.php */
-// "Show result" => "Show result",
+"Show result" => "Wies Rutkåmen",
 /* /var/www/tiki-8.x/templates/tiki-page_contribution_form.tpl */
-// "Show popups" => "Show popups",
+"Show popups" => "Wies Opduckers",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_sharethis.php */
 "Email \$ Sms" => "Nettpost \$ SMS",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last 3 days" => "Låtste 3 Dåg",
+"Last 3 days" => "Leste 3 Dåg",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last 5 days" => "Låtste 5 Dåg",
+"Last 5 days" => "Leste 5 Dåg",
 /* /var/www/tiki-8.x/lib/prefs/tiki.php */
 // "Leave as-is" => "Leave as-is",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit_new.php */
@@ -5929,7 +5930,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_sup.php */
 // "Superscript" => "Superscript",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last 2 days" => "Låtste 2 Dåg",
+"Last 2 days" => "Leste 2 Dåg",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_sharethis.php */
 // "Button Text" => "Button Text",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_sharethis.php */
@@ -6005,7 +6006,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_polls.tpl */
 // "Create poll" => "Create poll",
 /* /var/www/tiki-8.x/templates/tiki-show_page.tpl */
-"page: %0/%1" => "Siet: %0/%1",
+"page: %0/%1" => "Sied: %0/%1",
 /* /var/www/tiki-8.x/templates/tiki-list_posts.tpl, /var/www/tiki-8.x/templates/tiki-admin_menu_options.tpl, /var/www/tiki-8.x/templates/tiki-edit_blog.tpl */
 "Create Blog" => "Opstell Nettdågbook",
 /* /var/www/tiki-8.x/templates/modules/mod-login_box.tpl */
@@ -6125,7 +6126,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_credits.tpl */
 // "Amount Used" => "Amount Used",
 /* /var/www/tiki-8.x/lib/core/WikiParser/OutputLink.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_alink.php */
-"Create page" => "Opstell Siet",
+"Create page" => "Opstell Sied",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_mouseover.php */
 // "Parse Label" => "Parse Label",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_remarksbox.php */
@@ -6175,7 +6176,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_datachannel.php */
 // "Datachannel" => "Datachannel",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_lsdir.php */
-"Last Access" => "Låtste Togreep",
+"Last Access" => "Leste Togreep",
 /* /var/www/tiki-8.x/modules/mod-func-forums_last_posts.php, /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Show author" => "Show author",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -6373,7 +6374,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_article.tpl */
 // "Edit article" => "Edit article",
 /* /var/www/tiki-8.x/templates/mail/unsuccessful_logins.tpl */
-"Last attempt" => "Låtste Versök",
+"Last attempt" => "Leste Versök",
 /* /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
 "POP3 server:" => "POP3 Deenstrekner:",
 /* /var/www/tiki-8.x/lib/prefs/print.php */
@@ -6559,7 +6560,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_realnamelist.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_userlist.php */
 // "Result limit" => "Result limit",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_myspace.php */
-"MySpace Page" => "MySpace Siet",
+"MySpace Page" => "MySpace Sied",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_datachannel.php */
 // "Channel Name" => "Channel Name",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_datachannel.php */
@@ -6667,7 +6668,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_topic.tpl */
 // "Edit a topic" => "Edit a topic",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last 2 weeks" => "Låtste 2 Weken",
+"Last 2 weeks" => "Leste 2 Weken",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_author.php */
 "Make Visible" => "Måk sichtbor",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_sharethis.php */
@@ -6679,7 +6680,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_redirect.php */
 // "perspective " => "perspective ",
 /* /var/www/tiki-8.x/templates/tiki-lastchanges.tpl */
-"Last Changes" => "Låtst Opfrischens",
+"Last Changes" => "Lest Opfrischens",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_snarf.php */
 "HTML Content" => "HTML-Inholt",
 /* /var/www/tiki-8.x/templates/messu-read_archive.tpl, /var/www/tiki-8.x/templates/messu-read.tpl, /var/www/tiki-8.x/templates/messu-read_sent.tpl */
@@ -6707,7 +6708,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-shoutbox.tpl */
 // "Banned Words" => "Banned Words",
 /* /var/www/tiki-8.x/tiki-copypage.php, /var/www/tiki-8.x/tiki-removepage.php */
-"last version" => "låtste verschoon",
+"last version" => "leste verschoon",
 /* /var/www/tiki-8.x/tiki-galleries.php */
 "random image" => "tofallig utsökt Bild",
 /* /var/www/tiki-8.x/templates/map/tiki-map_upload.tpl */
@@ -6761,7 +6762,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-user_watches.tpl */
 // "Short report" => "Short report",
 /* /var/www/tiki-8.x/lib/smarty_tiki/modifier.userlink.php */
-"Last seen on" => "Låtst sehen an",
+"Last seen on" => "Lest sehen an",
 /* /var/www/tiki-8.x/lib/metadata/metadata.php */
 // "Time Created" => "Time Created",
 /* /var/www/tiki-8.x/lib/metadata/metadata.php */
@@ -6871,7 +6872,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-webmail_contacts.tpl */
 // "Address book" => "Address book",
 /* /var/www/tiki-8.x/templates/tiki-removepage.tpl */
-"Back to page" => "Torüg to de Siet",
+"Back to page" => "Torüg to de Sied",
 /* /var/www/tiki-8.x/templates/tiki-read_article.tpl */
 // "{\$topicName}" => "{\$topicName}",
 /* /var/www/tiki-8.x/templates/duplicate_file_gallery.tpl, /var/www/tiki-8.x/templates/tiki-upload_file.tpl, /var/www/tiki-8.x/templates/mail/fgal_quota_exceeded.tpl */
@@ -6893,7 +6894,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/webmail/contactlib.php */
 // "Personal Fax" => "Personal Fax",
 /* /var/www/tiki-8.x/templates/tiki-removepage.tpl */
-"Last Version" => "Låtste Verschoon",
+"Last Version" => "Leste Verschoon",
 /* /var/www/tiki-8.x/lib/webmail/contactlib.php */
 "Organization" => "Organisatschoon",
 /* /var/www/tiki-8.x/templates/tiki-payment-single.tpl */
@@ -7245,7 +7246,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-last_visitors.php */
 // "Show avatars" => "Show avatars",
 /* /var/www/tiki-8.x/tiki-admin_forums.php */
-"Score (desc)" => "Beweerten (afst)",
+"Score (desc)" => "Plåts (afst)",
 /* /var/www/tiki-8.x/modules/mod-func-switch_theme.php */
 "Switch Theme" => "Munster wesseln",
 /* /var/www/tiki-8.x/modules/mod-func-who_is_there.php */
@@ -7551,7 +7552,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-admin_security.php */
 // "SQL injection" => "SQL injection",
 /* /var/www/tiki-8.x/fgal_listing_conf.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_lsdir.php, /var/www/tiki-8.x/templates/tiki-admin_content_templates.tpl, /var/www/tiki-8.x/templates/tiki-notepad_list.tpl */
-"Last Modified" => "Tolåtst ännert",
+"Last Modified" => "Tolest ännert",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_slider.php */
 // "Toggle Arrows" => "Toggle Arrows",
 /* /var/www/tiki-8.x/templates/admin/include_textarea.tpl */
@@ -7649,7 +7650,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_connect.tpl, /var/www/tiki-8.x/templates/admin/include_search.tpl */
 // "Rebuild Index" => "Rebuild Index",
 /* /var/www/tiki-8.x/templates/tiki-admin_mailin.tpl */
-// "Article Topic" => "Article Topic",
+"Article Topic" => "Artikelthema",
 /* /var/www/tiki-8.x/templates/admin/include_connect.tpl */
 // "Send the data" => "Send the data",
 /* /var/www/tiki-8.x/templates/admin/include_connect.tpl */
@@ -7663,13 +7664,13 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-messages_unread_messages.php */
 "Show If Empty" => "Wies wenn leddig",
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
-// "Show Language" => "Show Language",
+"Show Language" => "Wies Språk",
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
-// "Show subtitle" => "Show subtitle",
+"Show subtitle" => "Wies Ünnertitel",
 /* /var/www/tiki-8.x/lib/prefs/connect.php */
 "Site Location" => "Låg vun Steed",
 /* /var/www/tiki-8.x/templates/admin/include_calendar.tpl */
-// "All calendars" => "All calendars",
+"All calendars" => "Alle Klenners",
 /* /var/www/tiki-8.x/templates/tiki-accounting_journal_csv.tpl */
 // "Credit Amount" => "Credit Amount",
 /* /var/www/tiki-8.x/templates/tiki-accounting_journal_csv.tpl */
@@ -7691,13 +7692,13 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_layout.tpl */
 // "Theme control" => "Theme control",
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl, /var/www/tiki-8.x/templates/tiki-view_forum_thread.tpl */
-// "Jump to forum" => "Jump to forum",
+"Jump to forum" => "Jump to Klöönhook",
 /* /var/www/tiki-8.x/tiki-admin_integrator_rules.php */
-// "No repository" => "No repository",
+"No repository" => "Keen Lågersteed",
 /* /var/www/tiki-8.x/modules/mod-func-webmail_inbox.php */
 "Webmail error" => "Nettpostfehler",
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl, /var/www/tiki-8.x/templates/tiki-view_forum_thread.tpl */
-// "Last 24 hours" => "Last 24 hours",
+"Last 24 hours" => "Verleden 24 Stünnen",
 /* /var/www/tiki-8.x/lib/prefs/connect.php */
 "Email Contact" => "Nettpostkontakt",
 /* /var/www/tiki-8.x/tiki-galleries_rankings.php, /var/www/tiki-8.x/templates/modules/mod-top_image_galleries.tpl */
@@ -7709,9 +7710,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/find.tpl */
 // "{\$find_other}" => "{\$find_other}",
 /* /var/www/tiki-8.x/templates/tiki-admin_security.tpl */
-// "PHP functions" => "PHP functions",
+"PHP functions" => "PHP-Funkschonen",
 /* /var/www/tiki-8.x/templates/tiki-admin_security.tpl */
-// "Tiki settings" => "Tiki settings",
+"Tiki settings" => "Tiki Instellens",
 /* /var/www/tiki-8.x/templates/tiki-admin_security.tpl */
 // "Tiki variable" => "Tiki variable",
 /* ./img/flags/flagnames.php */
@@ -7719,9 +7720,9 @@ $lang = array(
 /* ./img/flags/flagnames.php */
 "New Caledonia" => "Neekaledonien",
 /* /var/www/tiki-8.x/templates/blog_post_navigation.tpl */
-// "Previous post" => "Previous post",
+"Previous post" => "Vörige Bidragg",
 /* /var/www/tiki-8.x/templates/database-connection-error.tpl */
-// "The query was" => "The query was",
+"The query was" => "De Anfråg weer",
 /* /var/www/tiki-8.x/lib/metadata/metadata.php */
 // "Local Caption" => "Local Caption",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_category.php */
@@ -7737,7 +7738,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Rating.php, /var/www/tiki-8.x/lib/core/Tracker/Field/Dropdown.php */
 // "Radio Buttons" => "Radio Buttons",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_kaltura.php, /var/www/tiki-8.x/templates/tiki-kaltura_video.tpl */
-// "Kaltura Video" => "Kaltura Video",
+"Kaltura Video" => "Kaltura Video",
 /* ./img/flags/flagnames.php */
 "Liechtenstein" => "Liechtensteen",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/ItemsList.php */
@@ -7753,9 +7754,9 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-shoutbox.php */
 "Please wait.." => "Bidde tööv..",
 /* /var/www/tiki-8.x/lib/tikilib.php */
-// "Unknown error" => "Unknown error",
+"Unknown error" => "Unkennt Fehler",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_versions.php */
-// "Default Label" => "Default Label",
+"Default Label" => "Standårdbeteker",
 /* ./img/flags/flagnames.php */
 "French Guiana" => "Franzöösch Guyana",
 /* ./img/flags/flagnames.php */
@@ -7793,19 +7794,19 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Currency.php */
 // "Currency code" => "Currency code",
 /* /var/www/tiki-8.x/modules/mod-func-login_box.php */
-// "Show I Forgot" => "Show I Forgot",
+"Show I Forgot" => "Wies Ik vergeet",
 /* /var/www/tiki-8.x/lib/smarty_tiki/block.title.php, /var/www/tiki-8.x/templates/tiki-file_galleries.tpl */
 "Admin Feature" => "Stüürfunkschoon",
 /* /var/www/tiki-8.x/templates/tiki-admin_newsletters.tpl, /var/www/tiki-8.x/templates/tiki-admin_newsletter_subscriptions.tpl, /var/www/tiki-8.x/templates/trackeroutput/usersubscription.tpl */
 // "Subscriptions" => "Subscriptions",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_files.php */
-// "Show Filename" => "Show Filename",
+"Show Filename" => "Wies Dateinåm",
 /* /var/www/tiki-8.x/templates/tiki-newsletter_archives.tpl */
-// "Delete errors" => "Delete errors",
+"Delete errors" => "Fehlers wegsmieten",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Feed Language" => "Feed Language",
+"Feed Language" => "Fleetspråk",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_groupstat.php */
-// "Percentage of" => "Percentage of",
+"Percentage of" => "Perzentweert vun",
 /* ./img/flags/flagnames.php */
 "United States" => "Vereenigte Staten vun Amerika",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_group.php */
@@ -7817,9 +7818,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/header.tpl */
 "RSS Calendars" => "RSS Klenners",
 /* /var/www/tiki-8.x/modules/mod-func-last_visitors.php */
-// "Last Visitors" => "Last Visitors",
+"Last Visitors" => "Leste Besökers",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_tracker.php */
-// "Template Page" => "Template Page",
+"Template Page" => "Vörlågensied",
 /* /var/www/tiki-8.x/templates/tiki-admin_html_page_content.tpl */
 "Dynamic zones" => "Dünamsche Rebeden",
 /* /var/www/tiki-8.x/lib/metadata/metadata.php */
@@ -7829,7 +7830,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Tables syntax" => "Tables syntax",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_stat.php */
-// "Last 24 Hours" => "Last 24 Hours",
+"Last 24 Hours" => "Verleden 24 Stünnen",
 /* /var/www/tiki-8.x/templates/tiki-upload_file.tpl */
 "Cancel Upload" => "Hooglåden afbreken",
 /* /var/www/tiki-8.x/lib/newsletters/nllib.php */
@@ -8435,9 +8436,9 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_galleriffic.php */
 "Previous Photo" => "Vöriget Foto",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_galleriffic.php */
-// "Play Slideshow" => "Play Slideshow",
+"Play Slideshow" => "Speel Sleedschau",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_lsdir.php */
-// "List Directory" => "List Directory",
+"List Directory" => "List Verteknis",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_toc.php */
 // "Show Numbering" => "Show Numbering",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/ItemsList.php */
@@ -8457,7 +8458,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_colorbox.php */
 // "Show file name" => "Show file name",
 /* /var/www/tiki-8.x/tiki-search_replace.php */
-"Page updated: " => "Siet opfrischt: ",
+"Page updated: " => "Sied opfrischt: ",
 /* /var/www/tiki-8.x/templates/admin/include_rss.tpl */
 "Feed for blogs" => "Fleet för Nettdågböker",
 /* /var/www/tiki-8.x/templates/admin/include_trackers.tpl */
@@ -8479,7 +8480,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-mods_config.tpl */
 // "Package Config" => "Package Config",
 /* /var/www/tiki-8.x/templates/tiki-page_bar.tpl, /var/www/tiki-8.x/templates/styles/mobile/tiki-page_bar.tpl */
-// "Make Structure" => "Make Structure",
+"Make Structure" => "Måk Struktuur",
 /* /var/www/tiki-8.x/templates/tiki-usermenu.tpl */
 // "replace window" => "replace window",
 /* /var/www/tiki-8.x/templates/tiki-admin_polls.tpl */
@@ -8491,19 +8492,19 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_polls.tpl */
 // "Lock the pages" => "Lock the pages",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_colorbox.php */
-// "File ID Filter" => "File ID Filter",
+ "File ID Filter" => "Datei ID Filter",
 /* /var/www/tiki-8.x/templates/admin/include_rating.tpl */
 "Cache duration" => "Ketscherduur",
 /* /var/www/tiki-8.x/templates/admin/include_gal.tpl */
-// "Directory path" => "Directory path",
+ "Directory path" => "Verteknispadd",
 /* /var/www/tiki-8.x/templates/admin/include_gal.tpl */
-// "Uses Slideshow" => "Uses Slideshow",
+"Uses Slideshow" => "Brukt Sleedschau",
 /* /var/www/tiki-8.x/templates/admin/include_fgal.tpl */
 "System Command" => "Systeembefehl",
 /* /var/www/tiki-8.x/templates/admin/include_search.tpl */
 "Unified Search" => "Liekmåkt Söök",
 /* /var/www/tiki-8.x/templates/admin/include_gal.tpl, /var/www/tiki-8.x/templates/tiki-galleries.tpl */
-// "Images per row" => "Images per row",
+"Images per row" => "Billers per Reeg",
 /* /var/www/tiki-8.x/templates/admin/include_gal.tpl */
 // "Pixels Default" => "Pixels Default",
 /* /var/www/tiki-8.x/templates/admin/include_blogs.tpl */
@@ -8535,7 +8536,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_areas.tpl */
 "Areas Overview" => "Rebedens Översicht",
 /* /var/www/tiki-8.x/templates/header.tpl */
-"Edit this page" => "Bewark disse Siet",
+"Edit this page" => "Bewark disse Sied",
 /* /var/www/tiki-8.x/installer/tiki-installer.php */
 // "Tiki Installer" => "Tiki Installer",
 /* /var/www/tiki-8.x/templates/tiki-install.tpl */
@@ -8719,7 +8720,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-upload_image.tpl */
 // "Image ID thumb" => "Image ID thumb",
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
-// "Last post date" => "Last post date",
+"Last post date" => "Leste Bidraggsdåg",
 /* /var/www/tiki-8.x/templates/tiki-upload_file.tpl */
 "Upload File(s)" => "Datei(en) hooglåden",
 /* /var/www/tiki-8.x/lib/prefs/feature.php, /var/www/tiki-8.x/templates/admin/include_look.tpl */
@@ -8757,7 +8758,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_wantedpages.php */
 // "Skip Extension" => "Skip Extension",
 /* /var/www/tiki-8.x/modules/mod-func-last_modif_pages.php, /var/www/tiki-8.x/lib/prefs/feature.php, /var/www/tiki-8.x/templates/tiki-admin_menu_options.tpl */
-"Latest Changes" => "Låtste Ännern",
+"Latest Changes" => "Leste Ännern",
 /* /var/www/tiki-8.x/tiki-admin_forums.php */
 "Replies (desc)" => "Antwoorden (afst)",
 /* /var/www/tiki-8.x/modules/mod-func-last_validated_faq_questions.php */
@@ -8767,7 +8768,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_layout.tpl */
 // "layout options" => "layout options",
 /* /var/www/tiki-8.x/templates/wiki_authors.tpl, /var/www/tiki-8.x/templates/tiki-show_page_raw.tpl */
-"Last edited by" => "Tolåtst bewarkt vun",
+"Last edited by" => "Tolest bewarkt vun",
 /* /var/www/tiki-8.x/templates/tiki-list_gallery.tpl */
 // "Gallery Images" => "Gallery Images",
 /* /var/www/tiki-8.x/templates/tiki-kaltura_upload.tpl */
@@ -8989,7 +8990,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_articles.tpl */
 // "{\$type|escape}" => "{\$type|escape}",
 /* /var/www/tiki-8.x/modules/mod-func-top_visited_blogs.php */
-// "Show Last Post" => "Show Last Post",
+"Show Last Post" => "Wies leste Bidragg",
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
 "Use RSS Module" => "Bruk RSS-Moduul",
 /* /var/www/tiki-8.x/lib/toolbars/toolbarslib.php, /var/www/tiki-8.x/templates/tiki-view_sheets_menu.tpl */
@@ -9017,7 +9018,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/directory.php */
 // "Links per page" => "Links per page",
 /* /var/www/tiki-8.x/modules/mod-func-blog_last_comments.php */
-// "Options: \"y,n\"" => "Options: \"y,n\"",
+"Options: \"y,n\"" => "Opschonen: \"y,n\"",
 /* /var/www/tiki-8.x/lib/webmail/contactlib.php */
 "Street Address" => "Straat",
 /* /var/www/tiki-8.x/templates/modules/mod-semantic_links.tpl */
@@ -9277,7 +9278,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/tracker_changed_notification_subject.tpl */
 // "was modified at" => "was modified at",
 /* /var/www/tiki-8.x/lib/prefs/user.php */
-// "Score ascending" => "Score ascending",
+"Score ascending" => "Plåts opstiegen",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerlist.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_articles.php */
 // "Period quantity" => "Period quantity",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Category.php */
@@ -9485,7 +9486,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-calendar_import.tpl, /var/www/tiki-8.x/templates/tiki-calendar.tpl, /var/www/tiki-8.x/templates/tiki-calendar_edit_item.tpl, /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl */
 "Admin Calendars" => "Klenners verwålten",
 /* /var/www/tiki-8.x/modules/mod-func-action_similarcontent.php */
-// "Similar Content" => "Similar Content",
+"Similar Content" => "Analoge Inhold",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 "Entire location" => "Heel Låg",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_mwtable.php */
@@ -9503,7 +9504,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_cclite.php */
 // "Account summary" => "Account summary",
 /* /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
-"Last post title" => "Låtste Bidrag sien Titel",
+"Last post title" => "Leste Bidragg sien Titel",
 /* /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
 // "Duplicate Forum" => "Duplicate Forum",
 /* /var/www/tiki-8.x/lib/userslib.php */
@@ -9525,7 +9526,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-admin_security.php */
 // "Path disclosure" => "Path disclosure",
 /* /var/www/tiki-8.x/lib/prefs/connect.php */
-// "Last connection" => "Last connection",
+"Last connection" => "Verleden Verbinnen",
 /* /var/www/tiki-8.x/modules/mod-func-last_tracker_comments.php */
 // "Item identifier" => "Item identifier",
 /* /var/www/tiki-8.x/templates/admin/include_textarea.tpl */
@@ -9633,7 +9634,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/modules/mod-translation.tpl */
 "None match your" => "Keeneen passt to Dien",
 /* /var/www/tiki-8.x/modules/mod-func-articles.php, /var/www/tiki-8.x/modules/mod-func-article_archives.php */
-// "Language filter" => "Language filter",
+"Language filter" => "Språkfilter",
 /* /var/www/tiki-8.x/modules/mod-func-last_blog_posts.php */
 // "Blog identifier" => "Blog identifier",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_content.php */
@@ -9789,7 +9790,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_dl.php */
 // "Definition List" => "Definition List",
 /* /var/www/tiki-8.x/tiki-directory_admin.php */
-// "Admin Directory" => "Admin Directory",
+"Admin Directory" => "Stüür Verteknis",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_archivebuilder.php */
 // "Archive Builder" => "Archive Builder",
 /* /var/www/tiki-8.x/templates/tiki-quiz_edit.tpl */
@@ -10097,7 +10098,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Show author name" => "Show author name",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit_new.php */
-"Since Last Visit" => "Siet låtst Besök",
+"Since Last Visit" => "Siet lest Besök",
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Creator can edit" => "Creator can edit",
 /* /var/www/tiki-8.x/modules/mod-func-last_tracker_items.php */
@@ -10109,9 +10110,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Custom attribute" => "Custom attribute",
 /* /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl */
-// "Custom Locations" => "Custom Locations",
+"Custom Locations" => "Egen Lågen",
 /* /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl */
-// "Custom Languages" => "Custom Languages",
+"Custom Languages" => "Egen Språken",
 /* /var/www/tiki-8.x/modules/mod-func-freetags_most_popular.php */
 // "Maximum elements" => "Maximum elements",
 /* /var/www/tiki-8.x/templates/tiki-editpage.tpl */
@@ -10167,7 +10168,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-search.php */
 // "Show Edit Button" => "Show Edit Button",
 /* /var/www/tiki-8.x/templates/map/tiki-map_upload.tpl */
-// "Create Directory" => "Create Directory",
+ "Create Directory" => "Verteknis opstellen",
 /* /var/www/tiki-8.x/templates/map/tiki-map_edit.tpl, /var/www/tiki-8.x/templates/contribution.tpl, /var/www/tiki-8.x/templates/browse_file_gallery.tpl, /var/www/tiki-8.x/templates/plugins/plugin-topfriends.tpl, /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_trackerlist.tpl */
 // "No records found" => "No records found",
 /* /var/www/tiki-8.x/templates/attachments_tracker.tpl */
@@ -10183,7 +10184,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/map/tiki-map_edit.tpl */
 // "monitor this map" => "monitor this map",
 /* /var/www/tiki-8.x/templates/map/tiki-map_edit.tpl */
-// "hits last 7 days" => "hits last 7 days",
+"hits last 7 days" => "Oprööp in de verleden söven Dåg",
 /* /var/www/tiki-8.x/templates/tiki-faq_questions.tpl */
 "Add FAQ question" => "FAF-Fråg hentofögen",
 /* /var/www/tiki-8.x/modules/mod-func-search.php */
@@ -10357,7 +10358,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_transitions.tpl */
 "Edit <em>%0</em>" => "Bewark <em>%0</em>",
 /* /var/www/tiki-8.x/tiki-admin_forums.php, /var/www/tiki-8.x/lib/prefs/forums.php */
-"Last post (desc)" => "Låtste Bidragg (afst)",
+"Last post (desc)" => "Leste Bidragg (afst)",
 /* /var/www/tiki-8.x/templates/tiki-admin_transitions.tpl */
 // "Subset Selection" => "Subset Selection",
 /* /var/www/tiki-8.x/messu-read_archive.php, /var/www/tiki-8.x/messu-read.php, /var/www/tiki-8.x/messu-read_sent.php */
@@ -10521,7 +10522,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_actionlog.tpl */
 "Background color" => "Achtergrundklöör",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_kaltura.php */
-// "Kaltura Entry ID" => "Kaltura Entry ID",
+"Kaltura Entry ID" => "Kaltura Indragg ID",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_category.php */
 // "Show Child Links" => "Show Child Links",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/CountrySelector.php */
@@ -10529,7 +10530,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Category.php */
 // "First level only" => "First level only",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_files.php */
-// "Show Last Editor" => "Show Last Editor",
+"Show Last Editor" => "Wies lesten Bewarker",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Category.php */
 // "Include controls" => "Include controls",
 /* /var/www/tiki-8.x/templates/tiki-admin_poll_options.tpl */
@@ -10567,13 +10568,13 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-login_validate.php, /var/www/tiki-8.x/tiki-login.php */
 "Account disabled" => "Konto utkregen",
 /* /var/www/tiki-8.x/tiki-directory_browse.php */
-// "Browse Directory" => "Browse Directory",
+"Browse Directory" => "In Verteknis kieken",
 /* /var/www/tiki-8.x/tiki-login_validate.php, /var/www/tiki-8.x/templates/modules/mod-login_box.tpl */
 "Invalid password" => "Verkehrte Kennwoord",
 /* /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
-"Last post avatar" => "Låtste Bidrag sien Avatar",
+"Last post avatar" => "Leste Bidragg sien Avatar",
 /* /var/www/tiki-8.x/templates/tiki-admin_survey_questions.tpl */
-// "Multiple choices" => "Multiple choices",
+"Multiple choices" => "Mehr Utwål",
 /* /var/www/tiki-8.x/templates/tiki-importer.tpl */
 // "%0 tags imported" => "%0 tags imported",
 /* /var/www/tiki-8.x/modules/mod-func-babelfish_links.php */
@@ -10607,7 +10608,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/modules/mod-cart.tpl, /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_addtocart.tpl */
 // "Gift Certificate" => "Gift Certificate",
 /* /var/www/tiki-8.x/templates/modules/mod-last_podcasts.tpl */
-// "Last %0 Podcasts" => "Last %0 Podcasts",
+"Last %0 Podcasts" => "Lesten %0 Podcasts",
 /* /var/www/tiki-8.x/templates/modules/mod-groups_emulation.tpl */
 // "Switch to Groups" => "Switch to Groups",
 /* /var/www/tiki-8.x/templates/tiki-discount.tpl */
@@ -10657,7 +10658,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_fgal.tpl */
 "Gallery Listings" => "Oplistens",
 /* /var/www/tiki-8.x/fgal_listing_conf.php */
-"Last Modified by" => "Tolåtst bewarkt vun",
+"Last Modified by" => "Tolest bewarkt vun",
 /* /var/www/tiki-8.x/templates/admin/include_security.tpl */
 "General Security" => "Allgemeene Sekerhaid",
 /* /var/www/tiki-8.x/templates/admin/include_video.tpl */
@@ -10751,9 +10752,9 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/memcache.php */
 // "Memcache servers" => "Memcache servers",
 /* /var/www/tiki-8.x/lib/prefs/user.php */
-// "Score descending" => "Score descending",
+"Score descending" => "Plåts afstiegen",
 /* /var/www/tiki-8.x/templates/tiki-user_tasks_view.tpl */
-"Last modified by" => "Tolåtst bewarkt vun",
+"Last modified by" => "Tolest bewarkt vun",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 "Group Transition" => "Gruppenwessel",
 /* /var/www/tiki-8.x/lib/prefs/wikiplugininline.php */
@@ -10791,7 +10792,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-graph-sheets.tpl */
 // "Independant Scale" => "Independant Scale",
 /* /var/www/tiki-8.x/tiki-take_quiz.php, /var/www/tiki-8.x/tiki-quiz_stats_quiz.php, /var/www/tiki-8.x/tiki-edit_quiz_results.php, /var/www/tiki-8.x/tiki-quiz_result_stats.php, /var/www/tiki-8.x/tiki-edit_quiz_questions.php */
-"No quiz indicated" => "Keen Fragespeel geven",
+"No quiz indicated" => "Keen Frågespeel geven",
 /* /var/www/tiki-8.x/templates/tiki-galleries.tpl */
 // "Edit this gallery" => "Edit this gallery",
 /* /var/www/tiki-8.x/templates/filter.tpl, /var/www/tiki-8.x/templates/categorize.tpl */
@@ -10861,13 +10862,13 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-stats.tpl */
 // "Visits to weblogs" => "Visits to weblogs",
 /* /var/www/tiki-8.x/templates/tiki-editpage.tpl */
-// "Monitor this page" => "Monitor this page",
+"Monitor this page" => "Beluur disse Sied",
 /* /var/www/tiki-8.x/templates/tiki-editpage.tpl */
-// "Add another image" => "Add another image",
+"Add another image" => "Wieder Bild tofögen",
 /* /var/www/tiki-8.x/templates/tiki-admin_newsletters.tpl */
 // "Admin newsletters" => "Admin newsletters",
 /* /var/www/tiki-8.x/modules/mod-last_youtube_playlist_videos.php */
-// "No Playlist found" => "No Playlist found",
+"No Playlist found" => "Keen Afspeellist funnen",
 /* /var/www/tiki-8.x/lib/setup/wiki.php, /var/www/tiki-8.x/templates/admin/include_profiles.tpl */
 // "Featured Profiles" => "Featured Profiles",
 /* /var/www/tiki-8.x/templates/tiki-view_sheets_menu.tpl */
@@ -10881,7 +10882,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-payment-list-past.tpl */
 // "View payment info" => "View payment info",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "RSS feed for wiki" => "RSS feed for wiki",
+"RSS feed for wiki" => "RSS-Flett för Wiki",
 /* /var/www/tiki-8.x/templates/tiki-view_sheets_menu.tpl */
 // "Wrap with CEILING" => "Wrap with CEILING",
 /* /var/www/tiki-8.x/templates/comments.tpl */
@@ -10897,7 +10898,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_sheets_menu.tpl */
 // "Insert Row Before" => "Insert Row Before",
 /* /var/www/tiki-8.x/tiki-view_blog_post.php, /var/www/tiki-8.x/tiki-print_blog_post.php */
-// "No post indicated" => "No post indicated",
+ "No post indicated" => "Keen Bidragg angeven",
 /* /var/www/tiki-8.x/admin/include_general.php */
 "Test mail sent to" => "Test-Nettbreev sennen to",
 /* /var/www/tiki-8.x/tiki-payment.php */
@@ -11217,11 +11218,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-user_tasks_edit.tpl */
 // "Remove from Trash" => "Remove from Trash",
 /* /var/www/tiki-8.x/modules/mod-func-last_podcasts.php */
-// "Displays Podcasts" => "Displays Podcasts",
+"Displays Podcasts" => "Wiest Podcasts op",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
-// "Jison Wiki Parser" => "Jison Wiki Parser",
+"Jison Wiki Parser" => "Jison Wiki-Inleser",
 /* /var/www/tiki-8.x/modules/mod-func-last_blog_posts.php */
-// "Newest Blog Posts" => "Newest Blog Posts",
+"Newest Blog Posts" => "Neegeste Dågbookindrääg",
 /* /var/www/tiki-8.x/modules/mod-func-top_active_blogs.php */
 // "Most Active blogs" => "Most Active blogs",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -11231,7 +11232,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can admin quizzes" => "Can admin quizzes",
 /* /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl */
-// "List of Calendars" => "List of Calendars",
+"List of Calendars" => "List vun Klenners",
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
 // "Random image from" => "Random image from",
 /* /var/www/tiki-8.x/modules/mod-func-months_links.php */
@@ -11239,11 +11240,11 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_subscribegroups.php */
 // "Leader Group Name" => "Leader Group Name",
 /* /var/www/tiki-8.x/templates/tiki-admin_trackers.tpl */
-// "Duplicate Tracker" => "Duplicate Tracker",
+"Duplicate Tracker" => "Mittrecker verdubbeln",
 /* /var/www/tiki-8.x/templates/tiki-view_sheets.tpl, /var/www/tiki-8.x/templates/tiki-graph-sheets.tpl */
 // "List Spreadsheets" => "List Spreadsheets",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_subscribegroups.php */
-// "Group Description" => "Group Description",
+"Group Description" => "Gruppenbeschrieven",
 /* /var/www/tiki-8.x/modules/mod-func-trackerhelp.php */
 // "Text field height" => "Text field height",
 /* /var/www/tiki-8.x/lib/prefs/directory.php */
@@ -11255,15 +11256,15 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl, /var/www/tiki-8.x/templates/fgal_listing_conf.tpl */
 // "Show in popup box" => "Show in popup box",
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
-// "Assign new module" => "Assign new module",
+"Assign new module" => "Nee Moduul towiesen",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 "Number of friends" => "Frünnentall",
 /* /var/www/tiki-8.x/modules/mod-func-freetags_prefered.php */
-// "My Preferred Tags" => "My Preferred Tags",
+"My Preferred Tags" => "Mien Vörtrocken Betekers",
 /* /var/www/tiki-8.x/templates/tiki-listpages_content.tpl, /var/www/tiki-8.x/templates/tiki-my_tiki.tpl */
-"Last modification" => "Tolåtst Bewarken",
+"Last modification" => "Tolest Bewarken",
 /* /var/www/tiki-8.x/modules/mod-func-freetags_prefered.php */
-// "My preferred tags" => "My preferred tags",
+"My preferred tags" => "Mien vörtrocken Betekers",
 /* /var/www/tiki-8.x/templates/tiki-admin.tpl */
 "Set as my default" => "As Standård setten",
 /* /var/www/tiki-8.x/modules/mod-func-translation.php */
@@ -11291,7 +11292,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_slider.php */
 // "Enable Start Stop" => "Enable Start Stop",
 /* /var/www/tiki-8.x/lib/core/Services/AuthSource/Controller.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_transclude.php */
-"Permission Denied" => "Togreep aflehnt",
+"Permission Denied" => "Togripp aflehnt",
 /* /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_subscribegroups.tpl */
 // "Groups you are in" => "Groups you are in",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_tracker.php */
@@ -11327,7 +11328,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_alink.php */
 // "Anchor link label" => "Anchor link label",
 /* /var/www/tiki-8.x/templates/tiki-mods.tpl, /var/www/tiki-8.x/templates/tiki-show_page_raw.tpl */
-// "Last Modification" => "Last Modification",
+"Last Modification" => "Leste Ännern",
 /* /var/www/tiki-8.x/lib/prefs/middle.php */
 // "Middle shadow end" => "Middle shadow end",
 /* /var/www/tiki-8.x/lib/themegenlib.php */
@@ -11411,7 +11412,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-userversions.php */
 "No user indicated" => "Keen Bruker geven",
 /* /var/www/tiki-8.x/tiki-view_blog.php */
-// "No blog indicated" => "No blog indicated",
+"No blog indicated" => "Keen Dågbook angeven",
 /* /var/www/tiki-8.x/tiki-userversions.php */
 // "Non-existent user" => "Non-existent user",
 /* ./img/flags/flagnames.php */
@@ -11439,9 +11440,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-quiz_stats.tpl */
 // "Stats for quizzes" => "Stats for quizzes",
 /* /var/www/tiki-8.x/lib/rankings/ranklib.php */
-// "Forums last posts" => "Forums last posts",
+"Forums last posts" => "Hooks leste Bidrääg",
 /* /var/www/tiki-8.x/templates/tiki-admin_menu_options.tpl */
-// "Edit menu options" => "Edit menu options",
+"Edit menu options" => "Menüopschonen bewarken",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php, /var/www/tiki-8.x/templates/tiki-edit_help.tpl */
 // "Dynamic variables" => "Dynamic variables",
 /* /var/www/tiki-8.x/templates/mail/forum_post_notification.tpl */
@@ -11493,7 +11494,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/user_watch_calendar_subject.tpl */
 // "New calendar item" => "New calendar item",
 /* /var/www/tiki-8.x/tiki-admin_poll_options.php, /var/www/tiki-8.x/tiki-poll_form.php */
-// "No poll indicated" => "No poll indicated",
+ "No poll indicated" => "Keen Affråg angeven",
 /* /var/www/tiki-8.x/templates/mail/confirm_newsletter_subscription.tpl */
 // "To the newsletter" => "To the newsletter",
 /* /var/www/tiki-8.x/templates/tiki-admin_banning.tpl */
@@ -11567,7 +11568,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Services/Tracker/Controller.php, /var/www/tiki-8.x/lib/core/Services/Comment/Controller.php, /var/www/tiki-8.x/lib/core/Services/File/Controller.php */
 "Permission denied" => "Togang aflehnt",
 /* /var/www/tiki-8.x/tiki-forum_rankings.php */
-"Last forum topics" => "Låtste Klöönthemen",
+"Last forum topics" => "Leste Klöönthemen",
 /* /var/www/tiki-8.x/templates/tiki-adminusers.tpl */
 "Registered %0 ago" => "Vör %0 inmellt",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_articles.php */
@@ -11575,7 +11576,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-adminusers.tpl */
 // "Remove %0 from %1" => "Remove %0 from %1",
 /* /var/www/tiki-8.x/tiki_tests/tiki-tests_show_xpath.php */
-"The page is empty" => "De Siet is leddig",
+"The page is empty" => "De Sied is leddig",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerprefill.php */
 // "Tracker Page Name" => "Tracker Page Name",
 /* /var/www/tiki-8.x/lib/mods/modslib.php */
@@ -11597,7 +11598,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Search/Formatter/ValueFormatter.php */
 "No value for '%0'" => "Keen Wert för '%0'",
 /* /var/www/tiki-8.x/tiki-directory_redirect.php */
-"No site indicated" => "Keen Siet geven",
+"No site indicated" => "Keen Sied geven",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_fancytable.php */
 "Heading CSS Class" => "CSS-Koppklass",
 /* /var/www/tiki-8.x/templates/tiki-user_tasks_view.tpl, /var/www/tiki-8.x/templates/tiki-user_tasks_edit.tpl */
@@ -11631,7 +11632,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/wiki.php, /var/www/tiki-8.x/lib/prefs/freetags.php */
 "Friction constant" => "Rievenkonstant",
 /* /var/www/tiki-8.x/tiki-view_cache.php, /var/www/tiki-8.x/tiki-featured_link.php, /var/www/tiki-8.x/tiki-likepages.php, /var/www/tiki-8.x/tiki-rollback.php, /var/www/tiki-8.x/tiki-page_contribution.php, /var/www/tiki-8.x/tiki-pagehistory.php, /var/www/tiki-8.x/tiki-copypage.php, /var/www/tiki-8.x/tiki-admin_html_page_content.php, /var/www/tiki-8.x/tiki-removepage.php, /var/www/tiki-8.x/copyrights.php, /var/www/tiki-8.x/tiki-backlinks.php, /var/www/tiki-8.x/tiki-rename_page.php, /var/www/tiki-8.x/tiki-page.php */
-"No page indicated" => "Keen Siet geven",
+"No page indicated" => "Keen Sied geven",
 /* /var/www/tiki-8.x/templates/messu-read.tpl */
 // "Return to mailbox" => "Return to mailbox",
 /* /var/www/tiki-8.x/templates/tiki-live_support_admin.tpl */
@@ -11641,11 +11642,11 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-forums_rss.php, /var/www/tiki-8.x/tiki-image_gallery_rss.php, /var/www/tiki-8.x/tiki-tracker_rss.php, /var/www/tiki-8.x/tiki-map_rss.php, /var/www/tiki-8.x/tiki-file_galleries_rss.php, /var/www/tiki-8.x/tiki-blogs_rss.php, /var/www/tiki-8.x/tiki-forum_rss.php, /var/www/tiki-8.x/tiki-file_gallery_rss.php, /var/www/tiki-8.x/tiki-image_galleries_rss.php, /var/www/tiki-8.x/tiki-calendars_rss.php, /var/www/tiki-8.x/tiki-directories_rss.php, /var/www/tiki-8.x/tiki-wiki_rss.php, /var/www/tiki-8.x/tiki-shoutbox_rss.php, /var/www/tiki-8.x/tiki-directory_rss.php, /var/www/tiki-8.x/tiki-wiki_rss_no_diff.php, /var/www/tiki-8.x/tiki-articles_rss.php, /var/www/tiki-8.x/tiki-blog_rss.php */
 "rss feed disabled" => "RSS-Fleet utkregen",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_memberlist.php */
-// "Show Descriptions" => "Show Descriptions",
+"Show Descriptions" => "Wies Beschrieven",
 /* /var/www/tiki-8.x/lib/prefs/main.php */
 // "Main shadow start" => "Main shadow start",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_listpages.php */
-// "Only Orphan Pages" => "Only Orphan Pages",
+"Only Orphan Pages" => "Bloot west Sieden",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_subscribegroup.php */
 // "Postsubscribe URL" => "Postsubscribe URL",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_listpages.php */
@@ -11739,7 +11740,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_mail.php */
 // "Show User Dropdown" => "Show User Dropdown",
 /* /var/www/tiki-8.x/templates/map/tiki-map_edit.tpl */
-// "Available mapfiles" => "Available mapfiles",
+"Available mapfiles" => "Verfögbore Kårtendatein",
 /* /var/www/tiki-8.x/lib/prefs/metrics.php */
 // "Past metrics count" => "Past metrics count",
 /* /var/www/tiki-8.x/lib/prefs/map.php */
@@ -11747,7 +11748,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_file.php */
 "Custom Description" => "Topasst Beschrieven",
 /* /var/www/tiki-8.x/templates/tiki-directory_browse.tpl, /var/www/tiki-8.x/templates/tiki-directory_search.tpl */
-// "Last updated (asc)" => "Last updated (asc)",
+"Last updated (asc)" => "Tolest opfrischt (opst)",
 /* /var/www/tiki-8.x/lib/prefs/fgal.php */
 // "Max thumbnail size" => "Max thumbnail size",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Simple.php */
@@ -11797,7 +11798,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 "Display IP address" => "IP-Adress opwiesen",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
-"Last modified date" => "Dag vun låtste Ännern",
+"Last modified date" => "Dag vun leste Ännern",
 /* /var/www/tiki-8.x/templates/tiki-page_contribution_form.tpl */
 // "Parsed Text (HTML)" => "Parsed Text (HTML)",
 /* /var/www/tiki-8.x/modules/mod-func-search.php */
@@ -11839,7 +11840,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_tracker.tpl */
 // "View inserted item" => "View inserted item",
 /* /var/www/tiki-8.x/lib/prefs/mobile.php */
-"Use Latest Library" => "Bruk låtste Bökeree",
+"Use Latest Library" => "Bruk leste Bökeree",
 /* /var/www/tiki-8.x/templates/tiki-user_tasks.tpl, /var/www/tiki-8.x/templates/tiki-user_tasks_list.tpl */
 // "Rejected by a user" => "Rejected by a user",
 /* /var/www/tiki-8.x/templates/admin/include_login.tpl */
@@ -12219,7 +12220,7 @@ $lang = array(
 /* ./lang/langmapping.php */
 "Simplified Chinese" => "Vereenfacht Chineesch",
 /* /var/www/tiki-8.x/modules/mod-func-wiki_last_comments.php */
-"Last wiki comments" => "Låtste Wikianmarken",
+"Last wiki comments" => "Leste Wikianmarken",
 /* /var/www/tiki-8.x/templates/tiki-accounting_books.tpl */
 // "Quote strings with" => "Quote strings with",
 /* /var/www/tiki-8.x/tiki-user_preferences.php */
@@ -12315,7 +12316,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/auth.php */
 // "phpBB Table Prefix" => "phpBB Table Prefix",
 /* /var/www/tiki-8.x/templates/tiki-directory_admin_related.tpl */
-// "Directory Category" => "Directory Category",
+"Directory Category" => "Vertekniskategorie",
 /* /var/www/tiki-8.x/lib/prefs/feature.php, /var/www/tiki-8.x/templates/admin/include_community.tpl, /var/www/tiki-8.x/templates/tiki-friends.tpl */
 "Friendship Network" => "Früündschopsnettwark",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit_new.php */
@@ -12355,7 +12356,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/user_welcome_msg.tpl */
 // "You may log in now" => "You may log in now",
 /* /var/www/tiki-8.x/modules/mod-func-breadcrumb.php */
-"Last-Visited Pages" => "Låtst besökte Sieden",
+"Last-Visited Pages" => "Tolest besökte Sieden",
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Show Image Caption" => "Show Image Caption",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -12531,7 +12532,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/mail_invite.tpl */
 // "You join this group" => "You join this group",
 /* /var/www/tiki-8.x/tiki-galleries.php */
-"last uploaded image" => "låtst hooglåden Bild",
+"last uploaded image" => "tolest hooglåden Bild",
 /* /var/www/tiki-8.x/templates/tiki-admingroups.tpl */
 // "Ban user from group" => "Ban user from group",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_slideshow.php */
@@ -12685,7 +12686,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-admin_survey_questions.php, /var/www/tiki-8.x/tiki-take_survey.php, /var/www/tiki-8.x/tiki-survey_stats_survey.php */
 "No survey indicated" => "Keen Ünnersöken angeven",
 /* /var/www/tiki-8.x/lib/filegals/filegallib.php */
-// "Remove file draft: " => "Remove file draft: ",
+"Remove file draft: " => "Utwarken vun Datei wegsmieten: ",
 /* /var/www/tiki-8.x/tiki-quiz_result_stats.php */
 "No result indicated" => "Keen Rutkåmen angeven",
 /* /var/www/tiki-8.x/templates/tiki-stats.tpl */
@@ -12693,11 +12694,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-upload_file.tpl */
 "No File to Upload.." => "Keen Datei hoogtolåden..",
 /* /var/www/tiki-8.x/templates/admin/include_semantic.tpl */
-// "No occurences found" => "No occurences found",
+ "No occurences found" => "Keen Optreden funnen",
 /* /var/www/tiki-8.x/templates/tiki-listpages_content.tpl */
 "No pages found with" => "Keen Sied funnen mit",
 /* /var/www/tiki-8.x/tiki-view_forum_thread.php */
-// "No thread indicated" => "No thread indicated",
+"No thread indicated" => "Keen Klöönsnack geven",
 /* /var/www/tiki-8.x/tiki-view_banner.php */
 "No banner indicated" => "Keen Warvbild angeven",
 /* /var/www/tiki-8.x/lib/imagegals/imagegallib.php */
@@ -12827,7 +12828,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
 // "Use Dynamic Content" => "Use Dynamic Content",
 /* /var/www/tiki-8.x/modules/mod-func-last_modified_blogs.php */
-// "Last-Modified Blogs" => "Last-Modified Blogs",
+"Last-Modified Blogs" => "Tolest ännert Dågbökers",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_img.php */
 // "File Name Ascending" => "File Name Ascending",
 /* /var/www/tiki-8.x/templates/tiki-admin_surveys.tpl */
@@ -12921,7 +12922,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Admin Article Types" => "Admin Article Types",
 /* /var/www/tiki-8.x/modules/mod-func-last_tracker_items.php */
-"Last Modified Items" => "Tolåtst bewarkte Indrääg",
+"Last Modified Items" => "Tolest bewarkte Indrääg",
 /* /var/www/tiki-8.x/templates/tiki-calendar.tpl */
 "advanced parameters" => "verwiederte Parameters",
 /* /var/www/tiki-8.x/modules/mod-func-last_modif_events.php */
@@ -13019,11 +13020,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
 // "Containing posts by" => "Containing posts by",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
-// "Site Logo and Title" => "Site Logo and Title",
+"Site Logo and Title" => "Steed ehr Logo un Titel",
 /* /var/www/tiki-8.x/templates/tiki-directory_browse.tpl */
-// "in entire directory" => "in entire directory",
+"in entire directory" => "in heel Verteknis",
 /* /var/www/tiki-8.x/templates/tiki-directory_browse.tpl, /var/www/tiki-8.x/templates/tiki-directory_search.tpl */
-// "Last updated (desc)" => "Last updated (desc)",
+"Last updated (desc)" => "Tolest opfrischt (afst)",
 /* /var/www/tiki-8.x/templates/error_ticket.tpl, /var/www/tiki-8.x/templates/tiki-information.tpl, /var/www/tiki-8.x/templates/confirm.tpl, /var/www/tiki-8.x/templates/error.tpl */
 "Return to home page" => "Torüg to de Tohuussied",
 /* /var/www/tiki-8.x/templates/tiki-admin_trackers.tpl */
@@ -13227,7 +13228,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
 // "Lock Selected Topics" => "Lock Selected Topics",
 /* /var/www/tiki-8.x/templates/tiki-list_kaltura_playlists.tpl */
-// "No playlists found. " => "No playlists found. ",
+"No playlists found. " => "Keen Afspeellist funnen. ",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Top of center column" => "Top of center column",
 /* /var/www/tiki-8.x/tiki-admin.php, /var/www/tiki-8.x/templates/admin/include_ads.tpl */
@@ -13237,15 +13238,15 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-notepad_read.php */
 // "created from notepad" => "created from notepad",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_googlemap.php */
-// "Display a Google map" => "Display a Google map",
+"Display a Google map" => "Een Google-Kårt opwiesen",
 /* /var/www/tiki-8.x/templates/tiki-admin_dsn.tpl */
-// "HTTP Session / Login" => "HTTP Session / Login",
+"HTTP Session / Login" => "HTTP Törn / Anmellen",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_perspective.php */
-// "Allowed Perspectives" => "Allowed Perspectives",
+"Allowed Perspectives" => "Tolåten Kiekwinkels",
 /* /var/www/tiki-8.x/modules/mod-func-last_modif_events.php */
-// "Last-modified Events" => "Last-modified Events",
+"Last-modified Events" => "Tolest bewarkte Spitåkels",
 /* /var/www/tiki-8.x/lib/trackers/trackerlib.php */
-// "Field is not numeric" => "Field is not numeric",
+"Field is not numeric" => "Feld is nich numersch",
 /* ./img/flags/flagnames.php */
 "Netherlands_Antilles" => "Nederlannsche_Antillen",
 /* /var/www/tiki-8.x/templates/tiki-edit_help.tpl */
@@ -13315,7 +13316,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-menupage.php */
 "Displays a Wiki page" => "Opwiest een Wikisied",
 /* /var/www/tiki-8.x/tiki-edit_translation.php, /var/www/tiki-8.x/tiki-index_raw.php, /var/www/tiki-8.x/tiki-print_multi_pages.php, /var/www/tiki-8.x/tiki-likepages.php, /var/www/tiki-8.x/tiki-print.php, /var/www/tiki-8.x/tiki-slideshow2.php, /var/www/tiki-8.x/tiki-all_languages.php, /var/www/tiki-8.x/tiki-index_p.php, /var/www/tiki-8.x/tiki-rollback.php, /var/www/tiki-8.x/tiki-adminusers.php, /var/www/tiki-8.x/lib/profilelib/profilelib.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_backlinks.php, /var/www/tiki-8.x/lib/tikiaccesslib.php, /var/www/tiki-8.x/tiki-copypage.php, /var/www/tiki-8.x/tiki-removepage.php, /var/www/tiki-8.x/tiki-backlinks.php, /var/www/tiki-8.x/tiki-index.php, /var/www/tiki-8.x/tiki-rename_page.php */
-"Page cannot be found" => "Siet warrt nich funnen",
+"Page cannot be found" => "Sied warrt nich funnen",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_perm.php */
 // "Possible Permissions" => "Possible Permissions",
 /* /var/www/tiki-8.x/lib/prefs/quantify.php */
@@ -13437,7 +13438,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/connect.php */
 // "Connection frequency" => "Connection frequency",
 /* /var/www/tiki-8.x/templates/admin/include_general.tpl, /var/www/tiki-8.x/templates/modules/mod-svnup.tpl */
-"Last update from SVN" => "Låtste Opfrischen vun SVN",
+"Last update from SVN" => "Leste Opfrischen vun SVN",
 /* /var/www/tiki-8.x/tiki-user_tasks.php */
 "was moved into trash" => "weer in de Tünn treden",
 /* /var/www/tiki-8.x/templates/admin/include_webservices.tpl */
@@ -13479,15 +13480,15 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 "Shadowbox / ColorBox" => "Schemenkasten / Klöörkasten",
 /* /var/www/tiki-8.x/lib/wiki/wikilib.php */
-// "Removed last version" => "Removed last version",
+"Removed last version" => "Wegsmieten leste Verschoon",
 /* /var/www/tiki-8.x/templates/admin/include_connect.tpl */
 // "Connections received" => "Connections received",
 /* /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl */
 // "Default event status" => "Default event status",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_pluginmanager.php */
-// "Preferences required" => "Preferences required",
+"Preferences required" => "Instellens nödig",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_skype.php */
-// "Clickable Skype link" => "Clickable Skype link",
+"Clickable Skype link" => "Klickbore Skype-Verknüppen",
 /* /var/www/tiki-8.x/templates/admin/include_rating.tpl */
 "Global configuration" => "Globåle Inrichen",
 /* /var/www/tiki-8.x/templates/tiki-calendar_params_ical.tpl */
@@ -13499,7 +13500,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/modules/mod-change_category.tpl */
 // "Assign into category" => "Assign into category",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_flash.php */
-// "File Gallery Podcast" => "File Gallery Podcast",
+"File Gallery Podcast" => "Dateibunker Podcast",
 /* /var/www/tiki-8.x/modules/mod-func-last_podcasts.php */
 // "Bottom Link URL Text" => "Bottom Link URL Text",
 /* /var/www/tiki-8.x/tiki-view_tracker_item.php, /var/www/tiki-8.x/tiki-view_tracker.php, /var/www/tiki-8.x/tiki-admin_tracker_fields.php, /var/www/tiki-8.x/tiki-export_tracker_monitor.php, /var/www/tiki-8.x/tiki-export_tracker.php */
@@ -13647,7 +13648,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-rollback.php, /var/www/tiki-8.x/lib/wiki/pluginslib.php */
 "No version indicated" => "Keen Verschoon geven",
 /* /var/www/tiki-8.x/templates/tiki-directory_admin.tpl, /var/www/tiki-8.x/templates/tiki-directory_admin_bar.tpl */
-// "Directory Categories" => "Directory Categories",
+"Directory Categories" => "Vertekniskategorien",
 /* /var/www/tiki-8.x/tiki-rollback.php */
 // "Non-existent version" => "Non-existent version",
 /* /var/www/tiki-8.x/modules/mod-func-directory_stats.php */
@@ -13705,7 +13706,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_help_sheet.tpl */
 // "Spreadsheet Creation" => "Spreadsheet Creation",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
-"Similar (like pages)" => "Liek (as Sieden)",
+"Similar (like pages)" => "Analoog (as Sieden)",
 /* /var/www/tiki-8.x/templates/tiki-edit_quiz.tpl */
 // "Quiz can be repeated" => "Quiz can be repeated",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trade.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_memberpayment.php */
@@ -13717,25 +13718,25 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-babelfish_logo.php */
 // "Babel Fish icon link" => "Babel Fish icon link",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php, /var/www/tiki-8.x/templates/wiki_authors_style.tpl, /var/www/tiki-8.x/templates/wiki_authors.tpl, /var/www/tiki-8.x/templates/tiki-show_page_raw.tpl */
-"Page last modified on" => "Siet tolåtst ännert an",
+"Page last modified on" => "Sied tolest ännert an",
 /* /var/www/tiki-8.x/templates/tiki-admin_contribution.tpl */
-// "Edit the contribution" => "Edit the contribution",
+"Edit the contribution" => "Tostüürn bewarken",
 /* /var/www/tiki-8.x/lib/prefs/log.php */
 // "Log mail in Tiki logs" => "Log mail in Tiki logs",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/TextArea.php */
 // "Multi-line text input" => "Multi-line text input",
 /* /var/www/tiki-8.x/templates/tiki-admin_contribution.tpl */
-// "List of contributions" => "List of contributions",
+"List of contributions" => "List vun Tostüürn",
 /* /var/www/tiki-8.x/lib/prefs/fgal.php */
-// "Yes, display only bar" => "Yes, display only bar",
+"Yes, display only bar" => "Jo, bloot Liest opwiesen",
 /* /var/www/tiki-8.x/tiki-file_galleries_rankings.php */
-// "Most downloaded files" => "Most downloaded files",
+"Most downloaded files" => "Maist dållåden Datein",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackertimeline.php */
 // "Missing parameter: %0" => "Missing parameter: %0",
 /* /var/www/tiki-8.x/lib/prefs/jquery.php */
-// "jQuery-ui Select Menu" => "jQuery-ui Select Menu",
+"jQuery-ui Select Menu" => "jQuery-Böversied Utwåhlmenü",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_galleriffic.php */
-// "Image slideshow width" => "Image slideshow width",
+"Image slideshow width" => "Breed vun Bildsleedschau",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_addtocart.php */
 // "Associated event code" => "Associated event code",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_file.php */
@@ -13797,7 +13798,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-received_articles.tpl */
 // "Edit received article" => "Edit received article",
 /* /var/www/tiki-8.x/modules/mod-func-wiki_last_comments.php */
-"Last article comments" => "Låtste Artikelanmarken",
+"Last article comments" => "Leste Artikelanmarken",
 /* /var/www/tiki-8.x/templates/tiki-edit_article.tpl */
 // "for this edit session" => "for this edit session",
 /* /var/www/tiki-8.x/templates/tiki-newsletters.tpl */
@@ -13833,7 +13834,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-user_assigned_modules.tpl */
 // "User assigned modules" => "User assigned modules",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Last posts to weblogs" => "Last posts to weblogs",
+"Last posts to weblogs" => "Leste Bidrääg to Nettdågböker",
 /* /var/www/tiki-8.x/lib/prefs/login.php */
 "Use email as username" => "Nettpostadress as Brukernåm bruken",
 /* /var/www/tiki-8.x/templates/find.tpl, /var/www/tiki-8.x/templates/tiki-searchresults.tpl, /var/www/tiki-8.x/templates/categorize.tpl */
@@ -13849,29 +13850,29 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_freetags.tpl */
 // "Accept all characters" => "Accept all characters",
 /* /var/www/tiki-8.x/lib/prefs/error.php, /var/www/tiki-8.x/templates/tiki-install.tpl */
-// "Report all PHP errors" => "Report all PHP errors",
+"Report all PHP errors" => "Bericht alle PHP-Fehlers",
 /* /var/www/tiki-8.x/templates/tiki-calendar_params_ical.tpl */
 // "Export calendars iCal" => "Export calendars iCal",
 /* /var/www/tiki-8.x/templates/tiki-history_sheets.tpl */
 // "Roll Back Spreadsheet" => "Roll Back Spreadsheet",
 /* /var/www/tiki-8.x/templates/tiki-file_info_box.tpl */
-// "Size (width x height)" => "Size (width x height)",
+"Size (width x height)" => "Utmåten (Breed x Höögd)",
 /* /var/www/tiki-8.x/templates/tiki-webmail.tpl */
 // "Group e-mail accounts" => "Group e-mail accounts",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Last topics in forums" => "Last topics in forums",
+"Last topics in forums" => "Leste Themen in Klöönhoken",
 /* /var/www/tiki-8.x/templates/tiki-admin_integrator.tpl */
-// "Create New Repository" => "Create New Repository",
+"Create New Repository" => "Nee Lågersteed opstellen",
 /* /var/www/tiki-8.x/templates/tiki-admin_integrator_rules.tpl */
-// "Generate HTML preview" => "Generate HTML preview",
+"Generate HTML preview" => "HTML-Vöransicht tügen",
 /* /var/www/tiki-8.x/templates/tiki-admingroups.tpl */
 // "Group Homepage or Url" => "Group Homepage or Url",
 /* /var/www/tiki-8.x/templates/tiki-admin_metrics.tpl, /var/www/tiki-8.x/templates/tiki-admin_dsn.tpl */
 // "Local (Tiki database)" => "Local (Tiki database)",
 /* /var/www/tiki-8.x/templates/tiki-admin_credits.tpl */
-// "(YYYY-MM-DD HH:MM:SS)" => "(YYYY-MM-DD HH:MM:SS)",
+"(YYYY-MM-DD HH:MM:SS)" => "(YYYY-MM-DD HH:MM:SS)",
 /* /var/www/tiki-8.x/templates/tiki-admingroups.tpl */
-// "Assign users to group" => "Assign users to group",
+"Assign users to group" => "Brukers to Grupp towiesen",
 /* /var/www/tiki-8.x/templates/tiki-admin_metrics.tpl */
 // "Name (must be unique)" => "Name (must be unique)",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -13887,15 +13888,15 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/unified.php */
 // "Lucene Index Location" => "Lucene Index Location",
 /* /var/www/tiki-8.x/templates/tiki-page.tpl */
-// "Browser not supported" => "Browser not supported",
+"Browser not supported" => "Nettkieker nich ünnerstütt",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Translation assistant" => "Translation assistant",
 /* /var/www/tiki-8.x/lib/prefs/unified.php */
 "Unified Search Engine" => "Liekmåkt Söökmaschien",
 /* /var/www/tiki-8.x/templates/tiki-view_forum.tpl */
-// "Posts with no replies" => "Posts with no replies",
+"Posts with no replies" => "Bidrääg åhn Antwoorden",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit.php */
-"Since your last visit" => "Siet Dien låtsten Besök",
+"Since your last visit" => "Siet Dien lesten Besök",
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "List of article types" => "List of article types",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -13915,7 +13916,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_help.tpl */
 // "Autonumbered Headings" => "Autonumbered Headings",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit_new.php */
-"In the last %0 days.." => "In de låtsten %0 Dåg..",
+"In the last %0 days.." => "In de lesten %0 Dåg..",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Show category objects" => "Show category objects",
 /* /var/www/tiki-8.x/templates/tiki-edit_languages.tpl */
@@ -14301,7 +14302,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerlist.php, /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerstat.php */
 // "Last Modification Date" => "Last Modification Date",
 /* /var/www/tiki-8.x/templates/map/tiki-map.tpl, /var/www/tiki-8.x/templates/tiki-index_p.tpl */
-"Last modification date" => "Dag vun låtste Ännern",
+"Last modification date" => "Dag vun leste Ännern",
 /* /var/www/tiki-8.x/templates/register-groupchoice.tpl */
 // "{\$gr.groupDesc|escape}" => "{\$gr.groupDesc|escape}",
 /* /var/www/tiki-8.x/templates/tiki-importer.tpl */
@@ -14351,7 +14352,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-user_information.tpl */
 // "Additional Information" => "Additional Information",
 /* /var/www/tiki-8.x/tiki-search_replace.php */
-"Page cannot be found: " => "Siet nich funnen: ",
+"Page cannot be found: " => "Sied leet sik nich finnen: ",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_aname.php */
 // "The name of the anchor" => "The name of the anchor",
 /* /var/www/tiki-8.x/templates/tiki-admin_newsletter_subscriptions.tpl */
@@ -14381,7 +14382,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_wantedpages.php */
 // "non-valid custom regex" => "non-valid custom regex",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
-// "Open page as structure" => "Open page as structure",
+"Open page as structure" => "Sied opmaken as Struktuur",
 /* /var/www/tiki-8.x/lib/filegals/filegallib.php */
 // "Cannot resize the file" => "Cannot resize the file",
 /* /var/www/tiki-8.x/lib/prefs/payment.php */
@@ -14395,15 +14396,15 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-tests_menubar.tpl */
 // "cURL extension present" => "cURL extension present",
 /* /var/www/tiki-8.x/modules/mod-func-action_similarcontent.php */
-// "Similar Content Filter" => "Similar Content Filter",
+"Similar Content Filter" => "Analooginhold Filter",
 /* /var/www/tiki-8.x/templates/tiki-edit_templates.tpl */
 // "Save Only in the Theme" => "Save Only in the Theme",
 /* /var/www/tiki-8.x/lib/prefs/session.php */
-// "Default (from php.ini)" => "Default (from php.ini)",
+"Default (from php.ini)" => "Standård (vun php.ini)",
 /* /var/www/tiki-8.x/tiki-adminusers.php */
 "User login is required" => "Brukernåm is nödig",
 /* /var/www/tiki-8.x/lib/prefs/feature.php, /var/www/tiki-8.x/tiki-listpages.php */
-// "Pages not in structure" => "Pages not in structure",
+"Pages not in structure" => "Sieden nich in Struktuur",
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
 // "Dynamic content blocks" => "Dynamic content blocks",
 /* /var/www/tiki-8.x/tiki-adminusers.php */
@@ -14907,7 +14908,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-live_support_client.tpl */
 // "cancel request and exit" => "cancel request and exit",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit_new.php */
-"Since your last visit.." => "Siet Dien låtsten Besök..",
+"Since your last visit.." => "Siet Dien lesten Besök..",
 /* /var/www/tiki-8.x/templates/comment/post.tpl */
 // "Your comment was posted" => "Your comment was posted",
 /* /var/www/tiki-8.x/templates/tiki-edit_banner.tpl */
@@ -15153,13 +15154,13 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_groupmailcore.php */
 // "Email address to report" => "Email address to report",
 /* /var/www/tiki-8.x/tiki-edit_programmed_content.php */
-"No content id indicated" => "Keen Inholt-id geven",
+"No content id indicated" => "Keen Inhold-id geven",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "RSS for image galleries" => "RSS for image galleries",
+"RSS for image galleries" => "RSS för Billergalerien",
 /* /var/www/tiki-8.x/templates/mail/user_watch_file_gallery_changed_subject.tpl */
-// "File Gallery %s changed" => "File Gallery %s changed",
+"File Gallery %s changed" => "Dateibunker %s weer bewarkt",
 /* /var/www/tiki-8.x/lib/userslib.php */
-// "Can browse the calendar" => "Can browse the calendar",
+"Can browse the calendar" => "Kann de Klenner dörkieken",
 /* /var/www/tiki-8.x/templates/tiki-edit_article.tpl, /var/www/tiki-8.x/templates/tiki-edit_submission.tpl */
 // "Float text around image" => "Float text around image",
 /* /var/www/tiki-8.x/lib/mods/modslib.php */
@@ -15295,7 +15296,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/art.php */
 "Between heading and body" => "Twüschen Kopp un Lief",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for forums" => "Tiki RSS feed for forums",
+"Tiki RSS feed for forums" => "Tiki RSS-Fleet för Klöönhoken",
 /* /var/www/tiki-8.x/templates/tiki-admin_calendars.tpl */
 // "Delete events older than" => "Delete events older than",
 /* /var/www/tiki-8.x/templates/admin/include_look.tpl */
@@ -15781,7 +15782,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit.php */
 // "Since Last Visit (Simple)" => "Since Last Visit (Simple)",
 /* /var/www/tiki-8.x/templates/wiki_authors.tpl, /var/www/tiki-8.x/templates/tiki-show_page_raw.tpl */
-"Contributors to this page" => "Hölpers för disse Siet",
+"Contributors to this page" => "Hölpers för disse Sied",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Database & form generator" => "Database & form generator",
 /* /var/www/tiki-8.x/templates/tiki-edit_structure.tpl */
@@ -15881,7 +15882,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/score/events.php */
 // "Have your file downloaded" => "Have your file downloaded",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for forum: " => "Tiki RSS feed for forum: ",
+"Tiki RSS feed for forum: " => "Tiki RSS-Fleet för Klöönhook: ",
 /* /var/www/tiki-8.x/templates/tiki-admin_integrator_rules.tpl */
 // "Configure this Repository" => "Configure this Repository",
 /* /var/www/tiki-8.x/lib/prefs/smarty.php */
@@ -15973,7 +15974,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_modules.tpl */
 // "Double click them to edit" => "Double click them to edit",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for weblogs" => "Tiki RSS feed for weblogs",
+ "Tiki RSS feed for weblogs" => "Tiki RSS-Fleet för Nettdågböker",
 /* /var/www/tiki-8.x/templates/tiki-gmap_locator.tpl */
 // "Center map to saved point" => "Center map to saved point",
 /* /var/www/tiki-8.x/lib/prefs/shib.php */
@@ -16103,7 +16104,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/moderate_validation_mail_subject.tpl */
 // "User Registration Request" => "User Registration Request",
 /* /var/www/tiki-8.x/tiki-forum_rankings.php */
-"Last replied forum topics" => "Tolåtst antert Klöönthemen",
+"Last replied forum topics" => "Tolest antert Klöönthemen",
 /* /var/www/tiki-8.x/templates/tiki-upload_file.tpl */
 // "File can be deleted after" => "File can be deleted after",
 /* /var/www/tiki-8.x/templates/tiki-objectpermissions.tpl */
@@ -16367,7 +16368,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/metadata/metadata.php */
 // "Object Attribute Reference" => "Object Attribute Reference",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for articles" => "Tiki RSS feed for articles",
+"Tiki RSS feed for articles" => "Tiki RSS-Fleet för Artikeln",
 /* /var/www/tiki-8.x/lib/prefs/socialnetworks.php */
 // "Tiki may manage user pages" => "Tiki may manage user pages",
 /* /var/www/tiki-8.x/lib/userslib.php */
@@ -16489,11 +16490,11 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-view_sheets.tpl */
 // "What would you like to add" => "What would you like to add",
 /* /var/www/tiki-8.x/tiki-map_upload.php */
-// "The Directory is not empty" => "The Directory is not empty",
+"The Directory is not empty" => "Dat Verteknis is nich leddig",
 /* /var/www/tiki-8.x/tiki-admin.php */
 "Options for WYSIWYG editor" => "Opschonen för den WDSIWDK-Bewarker",
 /* /var/www/tiki-8.x/tiki-directory_rss.php */
-"Last sites of directory %0" => "De låtsten Steden vun't Verteknis %0",
+"Last sites of directory %0" => "De lesten Steden vun't Verteknis %0",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php */
 // "Page name display stripper" => "Page name display stripper",
 /* /var/www/tiki-8.x/templates/tiki-view_articles.tpl */
@@ -16523,7 +16524,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_slider.php */
 // "The theme to use in slider" => "The theme to use in slider",
 /* /var/www/tiki-8.x/templates/tiki-admin_system.tpl */
-// "Directory is not writeable" => "Directory is not writeable",
+"Directory is not writeable" => "Verteknis is nich schrievbor",
 /* /var/www/tiki-8.x/templates/admin/include_textarea.tpl */
 // "Inline (No Plugin Edit UI)" => "Inline (No Plugin Edit UI)",
 /* /var/www/tiki-8.x/installer/tiki-installer.php */
@@ -16721,7 +16722,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Freetags.php */
 // "Hide or show the input help" => "Hide or show the input help",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for calendars" => "Tiki RSS feed for calendars",
+"Tiki RSS feed for calendars" => "Tiki RSS-Fleet för Klenners",
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can send a link to a friend" => "Can send a link to a friend",
 /* /var/www/tiki-8.x/templates/tiki-quiz_edit.tpl */
@@ -16821,13 +16822,13 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-user_preferences.php */
 "The passwords did not match" => "De Kennwöör passt nich",
 /* /var/www/tiki-8.x/lib/userslib.php */
-// "Can view similar wiki pages" => "Can view similar wiki pages",
+"Can view similar wiki pages" => "Kann analoge Wikisieden bekieken",
 /* /var/www/tiki-8.x/lib/wiki/semanticlib.php */
 // "Invalid semantic token name" => "Invalid semantic token name",
 /* /var/www/tiki-8.x/templates/tiki-payment-list-past.tpl, /var/www/tiki-8.x/templates/tiki-payment-list.tpl */
 // "Cancel this payment request" => "Cancel this payment request",
 /* /var/www/tiki-8.x/tiki-map_edit.php */
-// "This mapfile already exists" => "This mapfile already exists",
+"This mapfile already exists" => "Disse Kårtendatei givt dat al",
 /* /var/www/tiki-8.x/tiki-list_gallery.php */
 "This gallery does not exist" => "Disse Galerie givt dat nich",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_box.php */
@@ -17119,7 +17120,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerlist.php */
 // "Template file in a Wiki page" => "Template file in a Wiki page",
 /* /var/www/tiki-8.x/tiki-faq_questions.php */
-// "No questions group indicated" => "No questions group indicated",
+"No questions group indicated" => "Keen Frågengrupp angeven",
 /* /var/www/tiki-8.x/templates/tiki-admin_actionlog.tpl */
 // "Number of actions per object" => "Number of actions per object",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
@@ -17273,11 +17274,11 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/search.php */
 // "Minimum length of search word" => "Minimum length of search word",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_freetagged.php */
-// "List similarly tagged objects" => "List similarly tagged objects",
+"List similarly tagged objects" => "List analoog betekent Objekten",
 /* /var/www/tiki-8.x/lib/prefs/mobile.php */
 // "New mobile feature for Tiki 7" => "New mobile feature for Tiki 7",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerprefill.php */
-// "Field ID for the second field" => "Field ID for the second field",
+ "Field ID for the second field" => "Feld-ID för de tweede Feld",
 /* /var/www/tiki-8.x/templates/tiki-search_replace.tpl */
 // "Max number of pages at a time" => "Max number of pages at a time",
 /* /var/www/tiki-8.x/modules/mod-func-menu.php */
@@ -17307,7 +17308,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can report posts to moderator" => "Can report posts to moderator",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
-// "Redirect to similar wiki page" => "Redirect to similar wiki page",
+"Redirect to similar wiki page" => "To analoge Wikisied ümledden",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 "Add BASE tag in the page HEAD" => "BASE-Element in de Sied ehr HEAD tofögen",
 /* /var/www/tiki-8.x/tiki-editpage.php */
@@ -17445,7 +17446,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
 // "RSS feed for individual blogs" => "RSS feed for individual blogs",
 /* /var/www/tiki-8.x/tiki-user_tasks.php */
-// "You've to finish your work on" => "You've to finish your work on",
+"You've to finish your work on" => "Dien Wark mutt dån sien bet",
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 "No article body, heading only" => "Keen Artikelrump, bloot Hööfding",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php */
@@ -17943,7 +17944,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Freetags.php */
 // "Visible size of the input field" => "Visible size of the input field",
 /* /var/www/tiki-8.x/templates/admin/include_copyright.tpl */
-// "Enable copyright management for" => "Enable copyright management for",
+"Enable copyright management for" => "Oorheverrechtspleeg ankriegen för",
 /* /var/www/tiki-8.x/lib/prefs/pass.php */
 // "Require characters and numerals" => "Require characters and numerals",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_articles.php */
@@ -18143,7 +18144,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-notepad_read.php, /var/www/tiki-8.x/tiki-index.php */
 "No name indicated for wiki page" => "Keen Nåm för Wikisied geven",
 /* /var/www/tiki-8.x/doc/devtools/tiki-show_raw_links.php */
-// "This feature is for admins only" => "This feature is for admins only",
+"This feature is for admins only" => "Disse Funkschoon is bloot för Verwålters",
 /* /var/www/tiki-8.x/lib/smarty_tiki/block.textarea.php */
 // "This edit session will expire in" => "This edit session will expire in",
 /* /var/www/tiki-8.x/tiki-import_xml_zip.php */
@@ -18159,11 +18160,11 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/importer/tikiimporter_blog_wordpress.php */
 // "Post \"%0\" successfully extracted" => "Post \"%0\" successfully extracted",
 /* /var/www/tiki-8.x/tiki-search_replace.php */
-// "Page has changed since preview: " => "Page has changed since preview: ",
+"Page has changed since preview: " => "Sied weer ännert siet Vöransicht: ",
 /* /var/www/tiki-8.x/lib/prefs/captcha.php */
 // "Word length of the captcha image" => "Word length of the captcha image",
 /* /var/www/tiki-8.x/lib/prefs/global.php */
-// "Create a new group for each user" => "Create a new group for each user",
+"Create a new group for each user" => "Een nee Grupp för elke Bruker opstellen",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Constrains the width of the site" => "Constrains the width of the site",
 /* /var/www/tiki-8.x/templates/admin/include_freetags.tpl */
@@ -18193,7 +18194,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/modules/mod-contributors.tpl */
 // "{\$contributor.country|stringfix}" => "{\$contributor.country|stringfix}",
 /* /var/www/tiki-8.x/tiki-file_gallery_rss.php, /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for file galleries" => "Tiki RSS feed for file galleries",
+"Tiki RSS feed for file galleries" => "Tiki RSS-Fleet för Dateibunkers",
 /* /var/www/tiki-8.x/templates/tiki-edit_help.tpl, /var/www/tiki-8.x/templates/tiki-edit_help_wysiwyg.tpl */
 // "For more information, please see" => "For more information, please see",
 /* /var/www/tiki-8.x/templates/admin/include_freetags.tpl */
@@ -18239,7 +18240,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-share.php */
 // "Links for sharing, reporting etc" => "Links for sharing, reporting etc",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for the wiki pages" => "Tiki RSS feed for the wiki pages",
+ "Tiki RSS feed for the wiki pages" => "Tiki RSS-Fleet för de Wikisieden",
 /* /var/www/tiki-8.x/templates/tiki-edit_question_options.tpl */
 // "Create/edit options for question" => "Create/edit options for question",
 /* /var/www/tiki-8.x/templates/tiki-shoutbox.tpl */
@@ -18323,9 +18324,9 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/forum.php */
 // "Display thread configuration bar" => "Display thread configuration bar",
 /* /var/www/tiki-8.x/templates/tiki-removepage.tpl */
-"Remove all versions of this page" => "Smiet all Verschonen vun disse Siet weg",
+"Remove all versions of this page" => "Smiet all Verschonen vun disse Sied weg",
 /* /var/www/tiki-8.x/templates/tiki-removepage.tpl */
-"You are about to remove the page" => "Du büst nipp un nau dorbi de Siet",
+"You are about to remove the page" => "Du büst nipp un nau dorbi de Sied",
 /* /var/www/tiki-8.x/templates/tiki-user_information.tpl */
 // "Refuse friendship from this user" => "Refuse friendship from this user",
 /* /var/www/tiki-8.x/lib/prefs/cas.php */
@@ -18513,7 +18514,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/article.php */
 // "Allows users to rate the articles" => "Allows users to rate the articles",
 /* /var/www/tiki-8.x/lib/prefs/feed.php, /var/www/tiki-8.x/tiki-directory_rss.php */
-// "Tiki RSS feed for directory sites" => "Tiki RSS feed for directory sites",
+"Tiki RSS feed for directory sites" => "Tiki RSS-Fleet för Verteknissteden",
 /* /var/www/tiki-8.x/templates/admin/include_wiki.tpl */
 // "The following pages were modified" => "The following pages were modified",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/Category.php */
@@ -18527,9 +18528,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-user_preferences.tpl */
 // "Your personal tracker information" => "Your personal tracker information",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for image galleries" => "Tiki RSS feed for image galleries",
+ "Tiki RSS feed for image galleries" => "Tiki RSS-Fleet för Billergalerien",
 /* /var/www/tiki-8.x/tiki-download_item_attachment.php */
-// "Error : The file %s doesn't exist" => "Error : The file %s doesn't exist",
+"Error : The file %s doesn't exist" => "Fehler : De Datei %s givt dat nich",
 /* /var/www/tiki-8.x/tiki-directory_add_site.php */
 // "Must enter a name to add a site. " => "Must enter a name to add a site. ",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_author.php */
@@ -18921,7 +18922,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-editpage.tpl */
 // "There is no available poll template" => "There is no available poll template",
 /* /var/www/tiki-8.x/templates/admin/include_gal.tpl, /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
-"Default number of comments per page" => "Standardtall vun Anmarkens jümmers Siet",
+"Default number of comments per page" => "Standårdtall vun Anmarkens per Sied",
 /* /var/www/tiki-8.x/templates/tiki-edit_structure.tpl */
 // "and its subpages from the structure" => "and its subpages from the structure",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_memberpayment.php */
@@ -18971,7 +18972,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_list.php */
 // "Missing from or to for range filter" => "Missing from or to for range filter",
 /* /var/www/tiki-8.x/templates/admin/include_security.tpl */
-// "Clipperz online password management" => "Clipperz online password management",
+"Clipperz online password management" => "Clipperz ankoppelt Kennwoordpleeg",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_img.php */
 // "Aligns the box containing the image" => "Aligns the box containing the image",
 /* /var/www/tiki-8.x/templates/tiki-user_information.tpl */
@@ -19059,7 +19060,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/mailin_help.tpl */
 // "You sent a request with the subject" => "You sent a request with the subject",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for shoutbox messages" => "Tiki RSS feed for shoutbox messages",
+"Tiki RSS feed for shoutbox messages" => "Tiki RSS-Fleet för Nårichten vun'n Bölkkasten",
 /* /var/www/tiki-8.x/templates/mail/user_creation_validation_mail.tpl */
 // "Your authentication credentials are" => "Your authentication credentials are",
 /* /var/www/tiki-8.x/lib/prefs/article.php */
@@ -19161,7 +19162,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can add own user to the participants" => "Can add own user to the participants",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for the file gallery: " => "Tiki RSS feed for the file gallery: ",
+"Tiki RSS feed for the file gallery: " => "Tiki RSS-Fleet för de Dateibunker: ",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_googlemap.php */
 // "Show map controls (shown by default)" => "Show map controls (shown by default)",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -19175,7 +19176,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/edit_file_gallery.tpl */
 // "Maximum height for images in gallery" => "Maximum height for images in gallery",
 /* /var/www/tiki-8.x/templates/tiki-edit_translation.tpl */
-"No language is assigned to this page" => "Keen Språk för disse Siet fastliggt",
+"No language is assigned to this page" => "Keen Språk för disse Sied fastliggt",
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can admin the dynamic content system" => "Can admin the dynamic content system",
 /* /var/www/tiki-8.x/lib/prefs/payment.php */
@@ -19445,7 +19446,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/wiki-plugins/wikiplugin_googlemap.tpl */
 // "Save current map view as user default" => "Save current map view as user default",
 /* /var/www/tiki-8.x/tiki-user_tasks.php */
-// "You've to start your work at least on" => "You've to start your work at least on",
+"You've to start your work at least on" => "Dien Wark mutt begån hebben tominnst af",
 /* /var/www/tiki-8.x/templates/tiki-batch_upload.tpl */
 // "Remove File Extension from Image Name" => "Remove File Extension from Image Name",
 /* /var/www/tiki-8.x/templates/tracker/add_field.tpl */
@@ -19565,7 +19566,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_newsletter_subscriptions.tpl */
 // "Use subscribers of another newsletter" => "Use subscribers of another newsletter",
 /* /var/www/tiki-8.x/lib/prefs/feed.php */
-// "Tiki RSS feed for the image gallery: " => "Tiki RSS feed for the image gallery: ",
+"Tiki RSS feed for the image gallery: " => "Tiki RSS-Fleet för de Billergalerie: ",
 /* /var/www/tiki-8.x/tiki-admin_security.php */
 // "File is not readable. Unable to check" => "File is not readable. Unable to check",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_cclite.php */
@@ -19663,7 +19664,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/categorypath.php */
 // "Separate category IDs with a comma (,)" => "Separate category IDs with a comma (,)",
 /* /var/www/tiki-8.x/modules/mod-func-action_similarcontent.php */
-// "Find similar content based on FreeTags" => "Find similar content based on FreeTags",
+"Find similar content based on FreeTags" => "Finn analoge Inhold baseeren op Freebetekers",
 /* /var/www/tiki-8.x/templates/tiki-tests_topbar.tpl */
 // "Paused to resume press the play button" => "Paused to resume press the play button",
 /* /var/www/tiki-8.x/modules/mod-func-search.php */
@@ -19725,7 +19726,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can view unapproved revisions of pages" => "Can view unapproved revisions of pages",
 /* /var/www/tiki-8.x/lib/prefs/freetags.php */
-// "Permits translation management of tags" => "Permits translation management of tags",
+"Permits translation management of tags" => "Verlövt Översettenpleeg vun Betekers",
 /* /var/www/tiki-8.x/lib/prefs/jquery.php */
 // "Use Select Menu on all select elements" => "Use Select Menu on all select elements",
 /* /var/www/tiki-8.x/lib/prefs/unified.php */
@@ -20111,7 +20112,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Allow comments to include a rating value" => "Allow comments to include a rating value",
 /* /var/www/tiki-8.x/modules/mod-func-action_similarcontent.php */
-// "Options: \"article, wiki page, blog post\"" => "Options: \"article, wiki page, blog post\"",
+"Options: \"article, wiki page, blog post\"" => "Opschonen: \"article, wiki page, blog post\"",
 /* /var/www/tiki-8.x/lib/prefs/global.php */
 "Validate new user registrations by email" => "Bekrachtige niege Bruker döör Nettpost",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_box.php */
@@ -20651,7 +20652,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-edit_image.tpl */
 // "The following image was successfully edited" => "The following image was successfully edited",
 /* /var/www/tiki-8.x/tiki-upload_image.php */
-"You do not have permission to upload images" => "Du draffs keen Bild hoogladen",
+"You do not have permission to upload images" => "Du draffs keen Bild hooglåden",
 /* /var/www/tiki-8.x/tiki-object_watches.php, /var/www/tiki-8.x/tiki-objectpermissions.php */
 // "Not enough information to display this page" => "Not enough information to display this page",
 /* /var/www/tiki-8.x/modules/mod-func-adsense.php */
@@ -20741,7 +20742,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-last_category_objects.php */
 // "Type of the objects to list. Example values" => "Type of the objects to list. Example values",
 /* /var/www/tiki-8.x/tiki-print_multi_pages.php, /var/www/tiki-8.x/tiki-browse_categories.php, /var/www/tiki-8.x/tiki-admin_structures.php, /var/www/tiki-8.x/tiki-tracker_view_history.php, /var/www/tiki-8.x/tiki-listpages.php, /var/www/tiki-8.x/tiki-create_webhelp.php, /var/www/tiki-8.x/tiki-index.php, /var/www/tiki-8.x/tiki-edit_structure.php */
-"You do not have permission to view this page" => "Du draffs disse Siet nich bekieken",
+"You do not have permission to view this page" => "Du draffs disse Sied nich bekieken",
 /* /var/www/tiki-8.x/templates/advanced_search_help.tpl */
 // "For example, <strong>run*</strong> will find" => "For example, <strong>run*</strong> will find",
 /* /var/www/tiki-8.x/templates/mail/new_friend_invitation_subject.tpl */
@@ -20755,7 +20756,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_googledoc.php */
 // "Name of iframe. Default is \"Frame\" + the key" => "Name of iframe. Default is \"Frame\" + the key",
 /* /var/www/tiki-8.x/tiki-edit_blog.php */
-// "You do not have permission to edit this blog" => "You do not have permission to edit this blog",
+"You do not have permission to edit this blog" => "Du draffs disse Dågbook nich bewarken",
 /* /var/www/tiki-8.x/templates/admin/include_connect.tpl */
 // "Please note: Experimental - work in progress" => "Please note: Experimental - work in progress",
 /* /var/www/tiki-8.x/templates/tiki-view_sheets_menu.tpl */
@@ -20779,7 +20780,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/jquery.php */
 // "Styled replacement for dropdown select menus" => "Styled replacement for dropdown select menus",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_tracker.php */
-// "You do not have permission to modify an item" => "You do not have permission to modify an item",
+"You do not have permission to modify an item" => "Du draffs keen Indragg ännern",
 /* /var/www/tiki-8.x/templates/tiki-admin_structures.tpl */
 // "Use single spaces to indent structure levels" => "Use single spaces to indent structure levels",
 /* /var/www/tiki-8.x/lib/prefs/user.php */
@@ -20813,7 +20814,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-adsense.php */
 // "Link color, as optionally provided by Google" => "Link color, as optionally provided by Google",
 /* /var/www/tiki-8.x/tiki-blog_post.php */
-// "You do not have permission to edit this post" => "You do not have permission to edit this post",
+ "You do not have permission to edit this post" => "Du draffs dissen Bidragg nich bewarken",
 /* /var/www/tiki-8.x/modules/mod-func-since_last_visit_new.php */
 // "If set to \"y\", use jQuery to show the result" => "If set to \"y\", use jQuery to show the result",
 /* /var/www/tiki-8.x/lib/userslib.php */
@@ -20851,7 +20852,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/map/tiki-map_frame.tpl, /var/www/tiki-8.x/templates/map/tiki-map.tpl */
 // "click on the map to zoom or pan, do not drag" => "click on the map to zoom or pan, do not drag",
 /* /var/www/tiki-8.x/templates/tiki-adminusers.tpl */
-// "You do not have permission to edit this user" => "You do not have permission to edit this user",
+"You do not have permission to edit this user" => "Du draffs dissen Bruker nich bewarken",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_remarksbox.php */
 // "Displays a comment, tip, note or warning box" => "Displays a comment, tip, note or warning box",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_payment.php */
@@ -20863,7 +20864,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-quick_edit.php */
 // "Enables to quickly create or edit Wiki pages" => "Enables to quickly create or edit Wiki pages",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_tracker.php */
-// "You do not have permission to insert an item" => "You do not have permission to insert an item",
+ "You do not have permission to insert an item" => "Du draffs keen Indragg infögen",
 /* /var/www/tiki-8.x/templates/tiki-upload_file.tpl */
 // "The following file was successfully uploaded" => "The following file was successfully uploaded",
 /* /var/www/tiki-8.x/lib/prefs/profile.php */
@@ -20881,7 +20882,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/filter.tpl */
 // "Include objects without a specified language" => "Include objects without a specified language",
 /* /var/www/tiki-8.x/x_maps.php */
-// "You do not have permissions to view the maps" => "You do not have permissions to view the maps",
+"You do not have permissions to view the maps" => "Du draffs de Kårten nich bekieken",
 /* /var/www/tiki-8.x/lib/prefs/direct.php */
 // "Max. number of links around the current item" => "Max. number of links around the current item",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_split.php */
@@ -20911,7 +20912,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/global.php */
 // "Use tracker to collect more user information" => "Use tracker to collect more user information",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_draw.php */
-// "You do not have permission to view this file" => "You do not have permission to view this file",
+"You do not have permission to view this file" => "Du draffs disse Datei nich bekieken",
 /* /var/www/tiki-8.x/lib/core/Tracker/Field/DynamicList.php */
 // "Field ID to link with in the current tracker" => "Field ID to link with in the current tracker",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_carousel.php */
@@ -20927,7 +20928,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tracker/replace.tpl */
 // "Allow ratings (deprecated, use rating field)" => "Allow ratings (deprecated, use rating field)",
 /* /var/www/tiki-8.x/tiki-list_banners.php */
-// "You do not have permission to remove banners" => "You do not have permission to remove banners",
+"You do not have permission to remove banners" => "Du draffs keen Warvbild wegsmieten",
 /* /var/www/tiki-8.x/modules/mod-func-change_category.php */
 // "Note that the root category is not displayed" => "Note that the root category is not displayed",
 /* /var/www/tiki-8.x/tiki-search_replace.php */
@@ -21143,9 +21144,9 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/language/LanguageTranslations.php */
 // "ERROR: unable to write to lang/%s/language.php" => "ERROR: unable to write to lang/%s/language.php",
 /* /var/www/tiki-8.x/tiki-edit_submission.php */
-// "You do not have permission to edit submissions" => "You do not have permission to edit submissions",
+"You do not have permission to edit submissions" => "Du draffs keen Överdregen bewarken",
 /* /var/www/tiki-8.x/tiki-shoutbox.php */
-// "You do not have permission to edit messages %0" => "You do not have permission to edit messages %0",
+ "You do not have permission to edit messages %0" => "Du draffs Nårichten %0 nich bewarken",
 /* /var/www/tiki-8.x/modules/mod-func-action_similarcontent.php */
 // "Display only similar content of type specified" => "Display only similar content of type specified",
 /* /var/www/tiki-8.x/lib/prefs/fgal.php */
@@ -21175,7 +21176,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-adsense.php */
 // "Border color, as optionally provided by Google" => "Border color, as optionally provided by Google",
 /* /var/www/tiki-8.x/tiki-map_edit.php */
-// "You do not have permission to read the mapfile" => "You do not have permission to read the mapfile",
+"You do not have permission to read the mapfile" => "Du draffs de Kårtendatei nich lesen",
 /* /var/www/tiki-8.x/templates/tiki-tell_a_friend.tpl, /var/www/tiki-8.x/templates/tiki-share.tpl */
 // "Separate multiple email addresses with a comma" => "Separate multiple email addresses with a comma",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerlist.php */
@@ -21183,7 +21184,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/tikiticketlib.php, /var/www/tiki-8.x/lib/tikiaccesslib.php */
 // "Sea Surfing (CSRF) detected. Operation blocked" => "Sea Surfing (CSRF) detected. Operation blocked",
 /* /var/www/tiki-8.x/lib/tikiaccesslib.php */
-"You do not have permission to use this feature" => "Du draffs dat Funkschoon nich bruken",
+"You do not have permission to use this feature" => "Du draffs disse Funkschoon nich bruken",
 /* /var/www/tiki-8.x/templates/modules/mod-quickadmin.tpl */
 "Modify the look &amp; feel (logo, theme, etc.)" => "Utsehn bewarken (Billers, Munster usw.)",
 /* /var/www/tiki-8.x/modules/mod-func-last_tracker_items.php */
@@ -21263,7 +21264,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_subscribegroup.php */
 // "Group name to subscribe to or unsubscribe from" => "Group name to subscribe to or unsubscribe from",
 /* /var/www/tiki-8.x/tiki-list_blogs.php */
-// "You do not have permission to remove this blog" => "You do not have permission to remove this blog",
+ "You do not have permission to remove this blog" => "Du draffs dat Dågbook nich wegsmieten",
 /* /var/www/tiki-8.x/templates/admin/include_profiles.tpl, /var/www/tiki-8.x/templates/tiki-admin.tpl */
 // "The following list of changes has been applied" => "The following list of changes has been applied",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackertoggle.php */
@@ -21343,7 +21344,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/payment/cclitelib.php */
 // "No registries specified in admin/payment/cclite" => "No registries specified in admin/payment/cclite",
 /* /var/www/tiki-8.x/tiki-edit_article.php */
-// "You do not have permission to edit this article" => "You do not have permission to edit this article",
+ "You do not have permission to edit this article" => "Du draffs dissen Artikel nich bewarken",
 /* /var/www/tiki-8.x/lib/core/Services/Language/TranslationController.php */
 // "Not allowed to attach the selected translations" => "Not allowed to attach the selected translations",
 /* /var/www/tiki-8.x/tiki-view_tracker_item.php */
@@ -21387,7 +21388,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/userslib.php */
 // "Can view action log for users of his own groups" => "Can view action log for users of his own groups",
 /* /var/www/tiki-8.x/tiki-image_gallery_rss.php, /var/www/tiki-8.x/tiki-tracker_rss.php, /var/www/tiki-8.x/tiki-forum_rss.php, /var/www/tiki-8.x/tiki-file_gallery_rss.php, /var/www/tiki-8.x/lib/tikiaccesslib.php, /var/www/tiki-8.x/tiki-list_file_gallery.php, /var/www/tiki-8.x/tiki-file_galleries_rankings.php, /var/www/tiki-8.x/tiki-articles_rss.php, /var/www/tiki-8.x/tiki-blog_rss.php */
-"You do not have permission to view this section" => "Du draffs disse Afsnidd nich bekieken",
+"You do not have permission to view this section" => "Du draffs dissen Afsnidd nich bekieken",
 /* /var/www/tiki-8.x/templates/tiki-admin_categories.tpl */
 // "Assign all objects of this category to this one" => "Assign all objects of this category to this one",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trade.php */
@@ -21423,7 +21424,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-article_types.tpl */
 // "Shows up in the drop down list of article types" => "Shows up in the drop down list of article types",
 /* /var/www/tiki-8.x/modules/mod-func-last_tracker_items.php */
-"You do not have permission to view this tracker" => "du draffs disse Mittrecker nich bekieken",
+"You do not have permission to view this tracker" => "Du draffs dissen Mittrecker nich bekieken",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_regex.php */
 // "Perform a regular expression search and replace" => "Perform a regular expression search and replace",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_zoterolist.php */
@@ -21435,7 +21436,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-upcoming_events.php */
 // "If set to \"y\", event descriptions are displayed" => "If set to \"y\", event descriptions are displayed",
 /* /var/www/tiki-8.x/tiki-list_file_gallery.php, /var/www/tiki-8.x/tiki-galleries.php */
-"You do not have permission to edit this gallery" => "Du draffs disse Galerie nich bewarken",
+"You do not have permission to edit this gallery" => "Du draffs dissen Bunker nich bewarken",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_articles.php */
 // "Filter the list of articles by topic. Example: " => "Filter the list of articles by topic. Example: ",
 /* /var/www/tiki-8.x/templates/modules/mod-assistant.tpl */
@@ -21481,7 +21482,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_listpages.php */
 // "Result number at which the listing should start" => "Result number at which the listing should start",
 /* /var/www/tiki-8.x/tiki-edit_templates.php */
-// "You do not have permission to read the template" => "You do not have permission to read the template",
+"You do not have permission to read the template" => "Du draffs de Vörlåg nich lesen",
 /* /var/www/tiki-8.x/templates/tiki-admin_actionlog.tpl */
 // "Volume per the users' group and per contribution" => "Volume per the users' group and per contribution",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_shopperinfo.php */
@@ -21519,7 +21520,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-admin_rssmodules.tpl */
 // "-1 to use original publishing date from the feed" => "-1 to use original publishing date from the feed",
 /* /var/www/tiki-8.x/modules/mod-func-breadcrumb.php */
-"Displays the last Wiki pages visited by the user" => "Opwiest de låtsten Wikisieden besökt vun de Bruker",
+"Displays the last Wiki pages visited by the user" => "Opwiest de lesten Wikisieden besökt vun de Bruker",
 /* /var/www/tiki-8.x/templates/tiki-sheets.tpl */
 // "You can access the sheet using the following URL" => "You can access the sheet using the following URL",
 /* /var/www/tiki-8.x/templates/admin/include_blogs.tpl */
@@ -21551,7 +21552,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_colorbox.php */
 // "Display a gallery of images in a popup slideshow" => "Display a gallery of images in a popup slideshow",
 /* /var/www/tiki-8.x/tiki-map_edit.php */
-// "You do not have permission to delete the mapfile" => "You do not have permission to delete the mapfile",
+ "You do not have permission to delete the mapfile" => "Du draffs de Kårtendatei nich wegsmieten",
 /* /var/www/tiki-8.x/templates/admin/include_login.tpl */
 // "Users can select a group to join at registration" => "Users can select a group to join at registration",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_carousel.php */
@@ -21565,7 +21566,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/article.php */
 // "Allow additional custom fields for article types" => "Allow additional custom fields for article types",
 /* /var/www/tiki-8.x/tiki-edit_templates.php */
-// "You do not have permission to write the template" => "You do not have permission to write the template",
+"You do not have permission to write the template" => "Du draffs nich in de Vörlåg schrieven",
 /* /var/www/tiki-8.x/tiki-adminusers.php */
 // "Are you sure you want to modify this user's data" => "Are you sure you want to modify this user's data",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -21737,7 +21738,7 @@ $lang = array(
 /* /var/www/tiki-8.x/modules/mod-func-freetags_most_popular.php */
 // "If set to \"cloud\", links are displayed as a cloud" => "If set to \"cloud\", links are displayed as a cloud",
 /* /var/www/tiki-8.x/tiki-list_file_gallery.php, /var/www/tiki-8.x/tiki-galleries.php */
-"You do not have permission to remove this gallery" => "Du draffs disse Galerie nich wegsmieten",
+"You do not have permission to remove this gallery" => "Du draffs dissen Bunker nich wegsmieten",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_scroll.php */
 // "Number of pixels followed by \"px\". Example: 600px" => "Number of pixels followed by \"px\". Example: 600px",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
@@ -21769,9 +21770,9 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/user_watch_structure.tpl */
 // "A page has been demoted to your watched structure" => "A page has been demoted to your watched structure",
 /* /var/www/tiki-8.x/tiki-browse_gallery.php */
-// "You do not have permission to access this gallery" => "You do not have permission to access this gallery",
+"You do not have permission to access this gallery" => "Du draffs nich op dissen Bunker togrepen",
 /* /var/www/tiki-8.x/tiki-edit_docs.php, /var/www/tiki-8.x/tiki-edit_draw.php */
-// "You do not have permission to view/edit this file" => "You do not have permission to view/edit this file",
+"You do not have permission to view/edit this file" => "Du draffs disse Datei nich bekieken/bewarken",
 /* /var/www/tiki-8.x/lib/prefs/user.php */
 // "File gallery to store full-size copy of avatar in" => "File gallery to store full-size copy of avatar in",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php, /var/www/tiki-8.x/lib/prefs/freetags.php */
@@ -21805,7 +21806,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/admin/include_intertiki.tpl */
 // "Warning: overrides manually registered local users" => "Warning: overrides manually registered local users",
 /* /var/www/tiki-8.x/tiki-map_edit.php */
-// "You do not have permission to write to the mapfile" => "You do not have permission to write to the mapfile",
+"You do not have permission to write to the mapfile" => "Du draffs nich in de Kårtendatei schrieven",
 /* /var/www/tiki-8.x/templates/unified_search_help.tpl, /var/www/tiki-8.x/templates/advanced_search_help.tpl */
 // "By default, all search terms are <em>optional</em>" => "By default, all search terms are <em>optional</em>",
 /* /var/www/tiki-8.x/templates/unified_search_help.tpl, /var/www/tiki-8.x/templates/advanced_search_help.tpl */
@@ -21985,7 +21986,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Permits find and replace of content in the edit box" => "Permits find and replace of content in the edit box",
 /* /var/www/tiki-8.x/tiki-pick_avatar.php, /var/www/tiki-8.x/tiki-my_tiki.php */
-// "You do not have permission to view other users data" => "You do not have permission to view other users data",
+"You do not have permission to view other users data" => "Du draffs nich annern Brukers ehre Daten bekieken",
 /* /var/www/tiki-8.x/tiki-admin_mailin.php */
 // "Mail-in accounts set to be checked every %s minutes" => "Mail-in accounts set to be checked every %s minutes",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_freetagged.php */
@@ -22137,7 +22138,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/tiki-install.tpl */
 // "Grant <em>tiki_p_admin</em> to the group, if missing" => "Grant <em>tiki_p_admin</em> to the group, if missing",
 /* /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
-"Only allow replies to the first message (flat forum)" => "Bloot Antwoorden för de först Nåricht tolaten (platt Hook)",
+"Only allow replies to the first message (flat forum)" => "Bloot Antwoorden för de först Nåricht tolåten (platt Hook)",
 /* /var/www/tiki-8.x/lib/prefs/feature.php */
 // "Integration to the Kaltura video management platform" => "Integration to the Kaltura video management platform",
 /* /var/www/tiki-8.x/lib/setup/wiki.php */
@@ -22201,7 +22202,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_events.php */
 // "Show the description of the event (shown by default)" => "Show the description of the event (shown by default)",
 /* /var/www/tiki-8.x/templates/tiki-print_article.tpl, /var/www/tiki-8.x/templates/tiki-read_article.tpl */
-// "You do not have permission to read complete articles" => "You do not have permission to read complete articles",
+"You do not have permission to read complete articles" => "Du draffs keen kumpletten Artikel lesen",
 /* /var/www/tiki-8.x/templates/object_perms_summary.tpl */
 // "No individual permissions, category permissions apply" => "No individual permissions, category permissions apply",
 /* /var/www/tiki-8.x/lib/prefs/server.php */
@@ -22731,7 +22732,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-adminusers.php */
 // "Are you sure you want to remove this user from this group" => "Are you sure you want to remove this user from this group",
 /* /var/www/tiki-8.x/templates/admin/include_security.tpl */
-// "Tiki doesn't offer a built-in password management feature" => "Tiki doesn't offer a built-in password management feature",
+"Tiki doesn't offer a built-in password management feature" => "Tiki levert keen inboot Funkschoon för de Kennwoordpleeg",
 /* /var/www/tiki-8.x/lib/prefs/header.php */
 // "Includes a custom block of inline JavaScript in all pages" => "Includes a custom block of inline JavaScript in all pages",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_titlesearch.php */
@@ -22823,13 +22824,13 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_code.php */
 // "Display code syntax with line numbers and color highlights" => "Display code syntax with line numbers and color highlights",
 /* /var/www/tiki-8.x/lib/prefs/article.php */
-"Divide articles into multiple pages with pagebreak markers" => "Artikeln op mehr Sieden mit Sietümbröök opdeelen",
+"Divide articles into multiple pages with pagebreak markers" => "Artikeln op mehr Sieden mit Siedümbröök opdeelen",
 /* /var/www/tiki-8.x/templates/tiki-freetag-translate.tpl */
-// "There are no tags on this page in your preferred languages" => "There are no tags on this page in your preferred languages",
+"There are no tags on this page in your preferred languages" => "Dor is keen Beteker op disse Sied in dien vörtrocken Språken",
 /* /var/www/tiki-8.x/lib/prefs/metrics.php */
 // "Value to display when no trend is available for the metric" => "Value to display when no trend is available for the metric",
 /* /var/www/tiki-8.x/tiki-galleries.php */
-"You do not have permission to make the map of this gallery" => "Togrip aflehnt, Du draffs keen Kårt vun disse Galerie måken",
+"You do not have permission to make the map of this gallery" => "Togrip aflehnt, Du draffs keen Kårt vun dissen Bunker måken",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_banner.php */
 // "Determines the browser behavior once the banner is clicked" => "Determines the browser behavior once the banner is clicked",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackertimeline.php */
@@ -22987,7 +22988,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_fancylist.php */
 // "Use the HTML tag div instead of the HTML tag for lists (ol)" => "Use the HTML tag div instead of the HTML tag for lists (ol)",
 /* /var/www/tiki-8.x/tiki-browse_image.php */
-// "You do not have permission to move images from this gallery" => "You do not have permission to move images from this gallery",
+"You do not have permission to move images from this gallery" => "Du draffs keen Bild vun disse Galerie verschuven",
 /* /var/www/tiki-8.x/modules/mod-func-login_box.php */
 // "Number of characters for username and password input fields" => "Number of characters for username and password input fields",
 /* /var/www/tiki-8.x/modules/mod-func-last_actions.php */
@@ -23039,9 +23040,9 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/importer/tikiimporter_wiki_mediawiki.php */
 // "XML file does not validate against the Mediawiki XML schema" => "XML file does not validate against the Mediawiki XML schema",
 /* /var/www/tiki-8.x/tiki-browse_gallery.php */
-// "You do not have permission to rotate images in this gallery" => "You do not have permission to rotate images in this gallery",
+ "You do not have permission to rotate images in this gallery" => "Du draffs keen Bild vun disse Galerie dreihn",
 /* /var/www/tiki-8.x/templates/tiki-wiki_topline.tpl */
-// "Page is NOT being monitored. Click icon to START monitoring" => "Page is NOT being monitored. Click icon to START monitoring",
+ "Page is NOT being monitored. Click icon to START monitoring" => "Sied is NICH luustert. Klick op Sümbol üm Luustern to begån",
 /* /var/www/tiki-8.x/templates/tiki-admin_forums.tpl */
 // "Shows number of attachments of the all thread in forum list" => "Shows number of attachments of the all thread in forum list",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_snarf.php */
@@ -23123,7 +23124,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_remarksbox.php */
 // "Use the highlight class for formatting (not used by default)" => "Use the highlight class for formatting (not used by default)",
 /* /var/www/tiki-8.x/tiki-file_archives.php, /var/www/tiki-8.x/lib/filegals/filegallib.php */
-// "You do not have permission to remove files from this gallery" => "You do not have permission to remove files from this gallery",
+"You do not have permission to remove files from this gallery" => "Du draffs keen Datei vun dissen Bunker wegsmieten",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_sheet.php */
 // "Internal ID of the TikiSheet.  Either id or url MUST be used" => "Internal ID of the TikiSheet.  Either id or url MUST be used",
 /* /var/www/tiki-8.x/lib/prefs/connect.php */
@@ -23203,7 +23204,7 @@ $lang = array(
 /* /var/www/tiki-8.x/tiki-list_kaltura_entries.php, /var/www/tiki-8.x/tiki-kaltura_video.php */
 "Invalid response provided by the Kaltura server. Please retry" => "Verkehrte Antwoord vun de Kaltura-Rekner. Bidd wedder versöken",
 /* /var/www/tiki-8.x/tiki-list_comments.php */
-// "You do not have permission to view the comments for this blog" => "You do not have permission to view the comments for this blog",
+ "You do not have permission to view the comments for this blog" => "Du draffs keen Anmarken vun't Dågbook bekieken",
 /* /var/www/tiki-8.x/templates/tiki-register_site.tpl */
 // "Registering is just for us to get an overview of Tiki's usage" => "Registering is just for us to get an overview of Tiki's usage",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_ftp.php */
@@ -24877,7 +24878,7 @@ $lang = array(
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_tabs.php */
 // "Unique tabset name (if you want it to remember its last state). Ex: user_profile_tabs" => "Unique tabset name (if you want it to remember its last state). Ex: user_profile_tabs",
 /* /var/www/tiki-8.x/templates/tiki-user_preferences.tpl */
-// "Leave \"New password\" and \"Confirm new password\" fields blank to keep current password" => "Leave \"New password\" and \"Confirm new password\" fields blank to keep current password",
+ "Leave \"New password\" and \"Confirm new password\" fields blank to keep current password" => "Låt de Feller \"Nee Kennwoord\" un \"Bekrachtig nee Kennwoord\" leddig üm opstunns Kennwoord to hoolden",
 /* /var/www/tiki-8.x/tiki-admin_security.php */
 // "The Path to store files in the imagegallery should be outside the tiki root directory" => "The Path to store files in the imagegallery should be outside the tiki root directory",
 /* /var/www/tiki-8.x/templates/tiki-tests_menubar.tpl */
@@ -25965,7 +25966,7 @@ $lang = array(
 /* /var/www/tiki-8.x/templates/mail/moderate_activation_mail.tpl */
 // "Your account registration request for {\$mail_site} was validated by the site admin and your account is active now" => "Your account registration request for {\$mail_site} was validated by the site admin and your account is active now",
 /* /var/www/tiki-8.x/lib/prefs/wiki.php */
-"What level of special characters are accepted as wiki links for page names. Ex.: ((Page &eacute;&agrave;&icirc;))" => "Welk Sünnertekens sünn in Siedennamen verlövt. Bsp.: ((Siet &eacute;&agrave;&icirc;))",
+"What level of special characters are accepted as wiki links for page names. Ex.: ((Page &eacute;&agrave;&icirc;))" => "Welk Sünnertekens sünn in Siedennamen verlövt. Bsp.: ((Sied &eacute;&agrave;&icirc;))",
 /* /var/www/tiki-8.x/templates/admin/include_fgal.tpl */
 // "If you decide to store files in a directory you must ensure that the user cannot access directly to the directory" => "If you decide to store files in a directory you must ensure that the user cannot access directly to the directory",
 /* /var/www/tiki-8.x/lib/wiki-plugins/wikiplugin_trackerstat.php */
