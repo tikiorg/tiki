@@ -1,7 +1,7 @@
-{tr}Report for{/tr} {$report_user}.{if $report_preferences.type eq 'plain'}
+{tr _0=$report_user}Report for %0{/tr}.{if $report_preferences.type eq 'plain'}
 
 {else}<br />{/if}
-{tr}Last Report sent on{/tr} {$report_last_report_date}.{if $report_preferences.type eq 'plain'}
+{tr _0=$report_last_report_date}Last Report sent on %0.{/tr}{if $report_preferences.type eq 'plain'}
 
 
 {else}<br /><br />{/if}

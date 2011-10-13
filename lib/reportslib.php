@@ -19,7 +19,7 @@ class reportsLib extends TikiLib
 		$smarty->assign('report_user', ucfirst($user_data['login']));
 		$smarty->assign('report_interval', ucfirst($report_preferences['interval']));
 		$smarty->assign('report_date', date("l d.m.Y"));
-		$smarty->assign('report_last_report_date', date("l d.m.Y", strtotime($report_preferences['last_report'])));
+		$smarty->assign('report_last_report_date', TikiLib::date_format($prefs['long_date_format'], strtotime($report_preferences['last_report'])));
 		$smarty->assign('report_total_changes', count($report_cache));
 		if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
@@ -29,17 +29,17 @@ class reportsLib extends TikiLib
 		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
 
 		$mail->setUser($user_data['login']);
+		
 		if (is_array($report_cache)) {
-			if (count($report_cache)==1) {
-				$changes = "1 ".tra("change");
+			if (count($report_cache) == 1) {
+				$subject = tr('Report from %0 (1 change)', TikiLib::date_format($prefs['short_date_format'], time()));
 			} else {
-				$changes = count($report_cache)." ".tra("changes");
+				$subject = tr('Report from %0 (%1 changes)', TikiLib::date_format($prefs['short_date_format'], time()), count($report_cache));
 			}
 		} else {
-			$changes = tra("No changes");
+			$subject = tr('Report from %0 (no changes)', TikiLib::date_format($prefs['short_date_format'], time()));
 		}
 
-		$subject = tra(ucfirst($report_preferences['interval'])." report from")." ".date("d.m.Y", time())." (".$changes.")";
 		$mail->setSubject($subject);
 
 		$userlang = $tikilib->get_user_preference($user_data['login'], "language", $prefs['site_language']);
