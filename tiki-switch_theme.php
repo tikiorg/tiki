@@ -50,7 +50,7 @@ if (isset($themeGenerator_theme) && $prefs['themegenerator_feature'] === 'y') {
 	$prefs['themegenerator_theme'] = $themeGenerator_theme;
 	$_SESSION['s_prefs']['themegenerator_theme'] = $themeGenerator_theme;
 	if ($user) {
-		$tikilib->set_user_preference($user, 'theme-themegen', $themeGenerator_theme);
+		$tikilib->set_user_preference($user, 'themegenerator_theme', $themeGenerator_theme);
 	}
 }
 
