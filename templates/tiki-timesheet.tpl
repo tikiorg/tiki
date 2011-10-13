@@ -1,6 +1,6 @@
-<table style="width: inherit;">
+<table id="timeSheetUnsaved" style="width: inherit; width: 100%;">
 	<tr>
-		<td style="width: 220px;">
+		<td>
 			<div id="jtrack-holder" style="margin: 0px;">
 				<div id="jtrack-bar">
 					<a href="#" class="jtrack-create">New task</a> |
@@ -65,8 +65,43 @@
 				</div>
 			</div>
 		</td>
-		<td style="width: 500px;">
+		<td>
 			<div id="timesheetSpreadsheet"></div>
 		</td>
 	</tr>
 </table>
+<input type="button" id="timeSheetCommit" value="{tr}Commit Time Sheet Items{/tr}" />
+
+{if $timeSheetProfileLoaded eq true}
+	{assign var=timeSheetI value=1}
+	{assign var=amountOfTimeSpent value="Amount of time spent"}
+	
+	<div id="timeSheetSaved">
+		<table title="{tr}Saved (Committed){/tr}">
+			<tr>
+				<td>{tr}Summary{/tr}</td>
+				<td>{tr}Time Spent{/tr}</td>
+				<td>{tr}Description{/tr}</td>
+				<td></td>
+				<td></td>
+			</tr>
+			{foreach from=$timeSheet item=item}
+				{$timeSheetI++}
+				<tr>
+					<td>{$item.Summary}</td>
+					<td>{$item.$amountOfTimeSpent}</td>
+					<td>{$item.Description}</td>
+					<td></td>
+					<td></td>
+				</tr>
+			{/foreach}
+			<tr>
+				<td></td>
+				<td formula="=SUM(B2:B{$timeSheetI})"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+{/if}
