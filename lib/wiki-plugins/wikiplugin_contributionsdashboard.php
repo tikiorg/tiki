@@ -85,6 +85,11 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	$headerlib->add_jq_onready("
 		$.fn.chart = function(s) {
+			s = $.extend({
+				labels: [],
+				data: []
+			}, s);
+			
 			var me = $(this);
 			var r = Raphael(me[0]);
 			
