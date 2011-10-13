@@ -1,11 +1,5 @@
 <?php
-// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
-
-class KalturaClientBase
+class KalturaClientBase 
 {
 	const KALTURA_API_VERSION = "3.0";
 	const KALTURA_SERVICE_FORMAT_JSON = 1;
@@ -45,7 +39,7 @@ class KalturaClientBase
 	public function __construct(KalturaConfiguration $config)
 	{
 	    $this->config = $config;
-
+	    
 	    $logger = $this->config->getLogger();
 		if ($logger)
 		{
@@ -74,10 +68,10 @@ class KalturaClientBase
 	{
 		if (count($this->callsQueue) == 0)
 		{
-			$this->isMultiRequest = false;
+			$this->isMultiRequest = false; 
 			return null;
 		}
-
+			 
 		$startTime = microtime(true);
 				
 		$params = array();
@@ -111,7 +105,7 @@ class KalturaClientBase
 		
 		// reset
 		$this->callsQueue = array();
-		$this->isMultiRequest = false;
+		$this->isMultiRequest = false; 
 		
 		$signature = $this->signature($params);
 		$this->addParam($params, "kalsig", $signature);
@@ -122,7 +116,7 @@ class KalturaClientBase
 		{
 			throw new KalturaClientException($error, KalturaClientException::ERROR_GENERIC);
 		}
-		else
+		else 
 		{
 			$this->log("result (serialized): " . $postResult);
 			
@@ -130,7 +124,7 @@ class KalturaClientBase
 			{
 				$result = @unserialize($postResult);
 
-				if ($result === false && serialize(false) !== $postResult)
+				if ($result === false && serialize(false) !== $postResult) 
 				{
 					throw new KalturaClientException("failed to unserialize server result\n$postResult", KalturaClientException::ERROR_UNSERIALIZE_FAILED);
 				}
@@ -222,7 +216,7 @@ class KalturaClientBase
 	}
 
 	/**
-	 * HTTP stream context request
+	 * HTTP stream context request 
 	 *
 	 * @param string $url
 	 * @param array $params
@@ -304,7 +298,7 @@ class KalturaClientBase
 		if ($paramValue === null)
 			return;
 			
-		if (is_object($paramValue) && $paramValue instanceof KalturaObjectBase)
+		if(is_object($paramValue) && $paramValue instanceof KalturaObjectBase)
 		{
 			$this->addParam($params, "$paramName:objectType", get_class($paramValue));
 		    foreach($paramValue as $prop => $val)
@@ -313,7 +307,7 @@ class KalturaClientBase
 			return;
 		}	
 		
-		if (!is_array($paramValue))
+		if(!is_array($paramValue))
 		{
 			$params[$paramName] = $paramValue;
 			return;
@@ -437,7 +431,7 @@ class KalturaServiceActionCall
 	public function parseParams(array $params)
 	{
 		$newParams = array();
-		foreach($params as $key => $val)
+		foreach($params as $key => $val) 
 		{
 			if (is_array($val))
 			{
@@ -470,7 +464,7 @@ class KalturaServiceActionCall
 }
 
 /**
- * Abstract base class for all client services
+ * Abstract base class for all client services 
  *
  */
 abstract class KalturaServiceBase
@@ -492,7 +486,7 @@ abstract class KalturaServiceBase
 }
 
 /**
- * Abstract base class for all client objects
+ * Abstract base class for all client objects 
  *
  */
 abstract class KalturaObjectBase
@@ -501,7 +495,7 @@ abstract class KalturaObjectBase
 	{
 		if ($paramValue !== null)
 		{
-			if ($paramValue instanceof KalturaObjectBase)
+			if($paramValue instanceof KalturaObjectBase)
 			{
 				$params[$paramName] = $paramValue->toParams();
 			}
@@ -524,16 +518,16 @@ abstract class KalturaObjectBase
 	}
 }
 
-class KalturaException extends Exception
+class KalturaException extends Exception 
 {
-    public function __construct($message, $code)
+    public function __construct($message, $code) 
     {
     	$this->code = $code;
 		parent::__construct($message);
     }
 }
 
-class KalturaClientException extends Exception
+class KalturaClientException extends Exception 
 {
 	const ERROR_GENERIC = -1;
 	const ERROR_UNSERIALIZE_FAILED = -2;
@@ -563,7 +557,7 @@ class KalturaConfiguration
 	{
 	    if (!is_numeric($partnerId))
 	        throw new KalturaClientException("Invalid partner id", KalturaClientException::ERROR_INVALID_PARTNER_ID);
-	
+	        
 	    $this->partnerId = $partnerId;
 	}
 	
@@ -592,7 +586,7 @@ class KalturaConfiguration
  * Implement to get Kaltura Client logs
  *
  */
-interface IKalturaLogger
+interface IKalturaLogger 
 {
-	function log($msg);
+	function log($msg); 
 }
