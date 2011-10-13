@@ -31,27 +31,14 @@ if (isset($_REQUEST['theme'])) {
 		$themeOption = '';
 	}
 	
-	$prefs['style'] = $theme;
-	if ($user) {
-		$tikilib->set_user_preference($user, 'theme', $theme);
-	}
-	$_SESSION['s_prefs']['style'] = $prefs['style'];
+	$tikilib->set_user_preference($user, 'theme', $theme);
 }
 if (isset($themeOption)) {
-	if ($user) {
-		  $tikilib->set_user_preference($user, 'theme-option', empty($themeOption) ? 'None' : $themeOption);
-	} else {
-		  $_SESSION['s_prefs']['style_option'] = $themeOption;
-	}
-	$prefs['style_option'] = $themeOption;
+	  $tikilib->set_user_preference($user, 'theme-option', empty($themeOption) ? 'None' : $themeOption);
 }
 
 if (isset($themeGenerator_theme) && $prefs['themegenerator_feature'] === 'y') {
-	$prefs['themegenerator_theme'] = $themeGenerator_theme;
-	$_SESSION['s_prefs']['themegenerator_theme'] = $themeGenerator_theme;
-	if ($user) {
-		$tikilib->set_user_preference($user, 'themegenerator_theme', $themeGenerator_theme);
-	}
+	$tikilib->set_user_preference($user, 'themegenerator_theme', $themeGenerator_theme);
 }
 
 if (isset($_SERVER['HTTP_REFERER'])) {
