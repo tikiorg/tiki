@@ -49,7 +49,7 @@ class reportsLib extends TikiLib
 		if ($report_preferences['type']=='plain') {
 			$mail->setText($mail_data);
 		} else {
-			$mail->setHtml($mail_data);
+			$mail->setHtml(nl2br($mail_data));
 		}
 		
 		$mail->buildMessage();
