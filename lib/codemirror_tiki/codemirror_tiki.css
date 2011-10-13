@@ -4,8 +4,8 @@
 	cursor: text;
 	font: 1em Arial,Helvetica,sans-serif ! important;
 	font-size: 1em ! important;
-	height: inherit;
-	width: inherit;
+	clear: both;
+	width: 100% ! important;
 }
 
 /*from the codemirror website*/
@@ -19,7 +19,6 @@
 
 .CodeMirror-scroll{
 	overflow: auto ! important;
-	width: inherit ! important;
 }
 
 .CodeMirror-fullscreen {
