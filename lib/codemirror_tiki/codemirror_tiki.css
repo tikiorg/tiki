@@ -19,6 +19,7 @@
 
 .CodeMirror-scroll{
 	overflow: auto ! important;
+	height: inherit ! important;
 }
 
 .CodeMirror-fullscreen {
