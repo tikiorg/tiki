@@ -3587,6 +3587,9 @@ class TikiLib extends TikiDb_Bridge
 		if ( ! is_string($my_user) || $my_user == '' ) return false;
 
 		global $user_preferences;
+		if (!array_key_exists($my_user, $user_preferences)) {
+			$user_preferences[$my_user] = array();
+		}
 		$global_ref =& $user_preferences[$my_user];
 		$return = $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($my_user));
 
@@ -3638,7 +3641,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $user_preferences, $prefs, $user, $user_overrider_prefs;
 
-		if ($user) {
+		if ($my_user) {
 			$cachelib = TikiLib::lib('cache');
 			$cachelib->invalidate('user_details_'.$my_user);
 	
@@ -3648,13 +3651,12 @@ class TikiLib extends TikiDb_Bridge
 				$cachelib->invalidate('userlink.'.$my_user.'0');
 			}
 	
-			if (!empty($my_user)) {
-				$userPreferences = $this->table('tiki_user_preferences');
-				$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
-				$userPreferences->insert(array('user' => $my_user,	'prefName' => $name,	'value' => $value));
-			}
+			$userPreferences = $this->table('tiki_user_preferences');
+			$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+			$userPreferences->insert(array('user' => $my_user,	'prefName' => $name,	'value' => $value));
+
 			$user_preferences[$my_user][$name] = $value;
-		} else {
+		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
 			$_SESSION['preferences'][$name] = $value;
 		}
 
