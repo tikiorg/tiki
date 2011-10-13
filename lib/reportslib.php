@@ -10,7 +10,7 @@ class reportsLib extends TikiLib
 
 	//Sends the Email
 	public function sendEmail($user_data, $report_preferences, $report_cache) {
-		global $prefs, $smarty, $tikilib;
+		global $prefs, $smarty, $tikilib, $base_url;
 
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
@@ -28,6 +28,14 @@ class reportsLib extends TikiLib
 
 		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
 
+		$userWatchesUrl = $base_url . 'tiki-user_watches.php';
+		
+		if ($report_preferences['type'] == 'html') {
+			$userWatchesUrl = "<a href=$userWatchesUrl>$userWatchesUrl</a>"; 
+		}
+		
+		$smarty->assign('userWatchesUrl', $userWatchesUrl);
+		
 		$mail->setUser($user_data['login']);
 		
 		if (is_array($report_cache)) {
