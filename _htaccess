@@ -12,7 +12,9 @@
 #
 # Please find more info here
 # http://doc.tiki.org/Rewrite+Rules
-#
+
+# DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers. See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized
+
 # This prevents reading of files with certain extensions.
 <FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
 	order deny,allow

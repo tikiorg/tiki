@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ [This line is used to check that this configuration file is up to date. Do not edit this line and leave it as the second line.] -->
+<!-- DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers. See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized -->
+
 <configuration>
   <system.webServer>
     <defaultDocument>
