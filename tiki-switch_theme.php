@@ -22,7 +22,7 @@ if (isset($_REQUEST['theme'])) {
 	if (empty($new_theme) || $new_theme != $prefs['style']) { // use default theme option when setting 'site default' or changing main theme
 		$_REQUEST['theme-option'] = '';
 	}
-	if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme') )) {
+	if ($user) {
 		$tikilib->set_user_preference($user, 'theme', $new_theme);
 	}
 	if (empty($new_theme)) {
@@ -30,13 +30,13 @@ if (isset($_REQUEST['theme'])) {
 		$prefs['style_option'] = $prefs['site_style_option'];
 		$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
 		unset($_REQUEST['theme-option']);
-		if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') )) {
+		if ($user) {
 			$tikilib->set_user_preference($user, 'theme-option', $prefs['site_style_option']);
 		}
 		if ($prefs['themegenerator_feature'] === 'y') {
 			$prefs['themegenerator_theme'] = $prefs['site_themegenerator_theme'];
 			$_SESSION['s_prefs']['themegenerator_theme'] = $prefs['site_themegenerator_theme'];
-			if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-themegen') )) {
+			if ($user) {
 				$tikilib->set_user_preference($user, 'theme-themegen', $prefs['site_themegenerator_theme']);
 			}
 			unset($_REQUEST['theme-themegen']);
@@ -48,7 +48,7 @@ if (isset($_REQUEST['theme'])) {
 }
 if (isset($_REQUEST['theme-option'])) {
 	$new_theme_option = $_REQUEST['theme-option'];
-	if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') )) {
+	if ($user) {
 		  $tikilib->set_user_preference($user, 'theme-option', empty($new_theme_option) ? 'None' : $new_theme_option);
 		  $prefs['style_option'] = $new_theme_option;
 	} else {
