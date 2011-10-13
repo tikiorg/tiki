@@ -25,13 +25,6 @@ function module_switch_theme( $mod_reference, $module_params ) {
 	
 	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
 	$current_style_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['style_option'] : '' : $tc_theme_option;
-
-	if ( isset($_COOKIE['tiki-theme']) && !($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') ){
-		$current_style = $_COOKIE['tiki-theme'];
-	}
-	if ( isset($_COOKIE['tiki-theme-option']) && !($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') ){
-		$current_style_option = $_COOKIE['tiki-theme-option'];
-	}
 	
 	$smarty->assign('tc_theme',$tc_theme);
 	$smarty->assign('style',$current_style);
