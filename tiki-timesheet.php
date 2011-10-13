@@ -35,7 +35,8 @@ $headerlib->add_jq_onready("
 		.html(table)
 		.sheet({
 			buildSheet: true,
-			editable: false
+			editable: false,
+			height: $('#jtrack-holder').height()
 		});
 ");
 $smarty->assign('mid', 'tiki-timesheet.tpl');
