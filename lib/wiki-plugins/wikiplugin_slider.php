@@ -335,15 +335,6 @@ function wikiplugin_slider($data, $params) {
 		$theme = 'default';
 	}
 	
-	function makeBool($val, $default) {
-		if (isset($val) && !empty($val)) {
-			$val = ($val == 'y' ? 'true' : 'false');
-		} else {
-			$val = $default;
-		}
-		return ($val ? 'true' : 'false');
-	}
-	
 	$headerlib->add_jq_onready("
 		function formatText(i, p) {
 			var possibleText = $('.tiki-slider-title').eq(i - 1).text();

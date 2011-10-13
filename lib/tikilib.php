@@ -5640,6 +5640,14 @@ function validate_email($email)
 	return $validate->isValid($email);
 }
 
+function makeBool($val, $default) {
+	if (isset($val) && !empty($val)) {
+		$val = ($val == 'y' ? 'true' : 'false');
+	} else {
+		$val = $default;
+	}
+	return ($val ? 'true' : 'false');
+}
 /* Editor configuration
 	 Local Variables:
 	 tab-width: 4
