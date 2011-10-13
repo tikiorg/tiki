@@ -17,7 +17,7 @@
 			{else}
 				{if $prefs.min_username_length > 1}
 					<div class="highlight">
-						<em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em>
+						<em>{tr _0=$prefs.min_username_length}Minimum %0 characters long{/tr}</em>
 					</div>
 				{/if}
 				{if $prefs.lowercase_username eq 'y'}

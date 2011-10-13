@@ -5702,7 +5702,7 @@ class UsersLib extends TikiLib
 
 		// Validate password here
 		if ( ( $prefs['auth_method'] != 'cas' || $user == 'admin' ) && strlen($pass) < $prefs['min_pass_length'] ) {
-			$errors[] = tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long");
+			$errors[] = tr("Password should be at least %0 characters long", $prefs['min_pass_length']);
 		}
 
 		// Check this code

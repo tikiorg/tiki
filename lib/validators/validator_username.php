@@ -18,11 +18,11 @@ function validator_username($input, $parameter = '', $message = '')
 		return tra("Invalid username");
 	}
 	if (strlen($input) > $prefs['max_username_length']) {
-		$error = tra("Username cannot contain more than") . ' ' . $prefs['max_username_length'] . ' ' . tra("characters");
+		$error = tr("Username cannot contain more than %0 characters", $prefs['max_username_length']);
 		return $error;
 	}
 	if (strlen($input) < $prefs['min_username_length']) {
-		$error = tra("Username must be at least") . ' ' . $prefs['min_username_length'] . ' ' . tra("characters long");
+		$error = tr("Username must be at least %0 characters long", $prefs['min_username_length']);
 		return $error;
 	}
 	return true;

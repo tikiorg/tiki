@@ -246,11 +246,15 @@ class RegistrationLib extends TikiLib
 			return new RegistrationError('name', tra("Username cannot contain uppercase letters"));
 		}
 
-		if (strlen($registration['name']) < $this->merged_prefs['min_username_length'])
-			return new RegistrationError('name', tra("Username must be at least") . ' ' . $this->merged_prefs['min_username_length'] . ' ' . tra("characters long"));
+		if (strlen($registration['name']) < $this->merged_prefs['min_username_length']) {
+			return new RegistrationError('name',
+				tr("Username must be at least %0 characters long", $this->merged_prefs['min_username_length']));
+		}
 			
-		if (strlen($registration['name']) > $this->merged_prefs['max_username_length'])
-			return new RegistrationError('name', tra("Username cannot contain more than") . ' ' . $this->merged_prefs['max_username_length'] . ' ' . tra("characters"));
+		if (strlen($registration['name']) > $this->merged_prefs['max_username_length']) {
+			return new RegistrationError('name', 
+				tr("Username cannot contain more than %0 characters", $this->merged_prefs['max_username_length']));
+		}
 		
 		$newPass = $registration['pass'] ? $registration['pass'] : $registration["genepass"];
 		$polerr = $userlib->check_password_policy($newPass);
