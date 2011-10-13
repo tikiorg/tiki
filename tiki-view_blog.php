@@ -9,6 +9,10 @@ $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
 
+$auto_query_args = array(
+	'blogId'
+);
+
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
 }
