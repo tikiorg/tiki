@@ -33,7 +33,7 @@ if (isset($_REQUEST['theme'])) {
 				$prefs['themegenerator_theme'] = $prefs['site_themegenerator_theme'];
 				$_SESSION['s_prefs']['themegenerator_theme'] = $prefs['site_themegenerator_theme'];
 				if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-themegen') ) && empty($group_style)) {
-					$tikilib->set_user_preference($user, 'theme-themegen', $prefs['site_themegenerator_theme']);
+					$tikilib->set_user_preference($user, 'themegenerator_theme', $prefs['site_themegenerator_theme']);
 				}
 				unset($_REQUEST['theme-themegen']);
 			}
@@ -61,6 +61,9 @@ if ($prefs['themegenerator_feature'] === 'y' && isset($_REQUEST['theme-themegen'
 		$themegen_theme = $_REQUEST['theme-themegen'];
 		$prefs['themegenerator_theme'] = $themegen_theme;
 		$_SESSION['s_prefs']['themegenerator_theme'] = $themegen_theme;
+		if ($user) {
+			$tikilib->set_user_preference($user, 'themegenerator_theme', $themegen_theme);
+		}
 	}
 }
 header("location: $orig_url");
