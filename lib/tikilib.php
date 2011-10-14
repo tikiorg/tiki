@@ -3606,15 +3606,15 @@ class TikiLib extends TikiDb_Bridge
 	function userHasPreference($preference, $username = FALSE)
 	{
 		global $user, $user_preferences;
-		if ($user) {
-			if ($username === FALSE) {
-				$username = $user;
-			}
+		if ($username === FALSE) {
+			$username = $user;
+		}
+		if ($username) {
 			if (!isset($user_preferences[$username])) {
 				$this->get_user_preferences($username);
 			}
 			return isset($user_preferences[$username][$preference]);
-		} else {
+		} else { // If $username is empty, we must be Anonymous looking up one of our own preferences
 			return isset($_SESSION['preferences'][$preference]);
 		}
 	}
@@ -3622,14 +3622,14 @@ class TikiLib extends TikiDb_Bridge
 	function get_user_preference($my_user, $name, $default = null)
 	{
 		global $user_preferences, $user;
-		if ($user) {
+		if ($my_user) {
 			if ($user != $my_user && !isset($user_preferences[$my_user])) {
 				$this->get_user_preferences($my_user);
 			}
 			if ( isset($user_preferences) && isset($user_preferences[$my_user]) && isset($user_preferences[$my_user][$name]) ) {
 				return $user_preferences[$my_user][$name];
 			}
-		} else {
+		} else { // If $my_user is empty, we must be Anonymous getting one of our own preferences
 			if (isset($_SESSION['preferences'][$name])) {
 				return $_SESSION['preferences'][$name];
 			}
