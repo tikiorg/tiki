@@ -54,9 +54,10 @@ function wikiplugin_sort($data, $params) {
 	srand ((float)microtime() * 1000000); // needed for shuffle;
 
 	if ($sort == "asc") {
-		sort ($lines);
+		natcasesort($lines);
 	} else if ($sort == "desc") {
-		rsort ($lines);
+		natcasesort($lines);
+		$lines = array_reverse($lines);
 	} else if ($sort == "reverse") {
 		$lines = array_reverse($lines);
 	} else if ($sort == "shuffle") {
