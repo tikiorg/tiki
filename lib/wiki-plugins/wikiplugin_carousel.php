@@ -146,10 +146,9 @@ function wikiplugin_carousel( $body, $params )
 		if ($param == 'sort_mode' || $param == 'fgalId') continue;
 		$jqparams[] = "$param : $value";
 	}
-	$jq = '
-				$(document).ready(function(){
-					$(\'#' . $unique . '\').infiniteCarousel({'. implode(', ', $jqparams).'});
-				});';
+	$jq = '$(document).ready(function(){
+	$("#' . $unique . '").tiki("carousel", {'. implode(', ', $jqparams).'});
+});';
 	global $headerlib;
 	$headerlib->add_jq_onready($jq);
 	$html = '<div id="'.$unique.'" class="clearfix"><ul>';
