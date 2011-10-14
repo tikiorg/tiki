@@ -61,7 +61,7 @@ if (isset($_POST['adddata'])) {
 	foreach ($adddata as $fieldid => $d) {
 		$config = $d['config'];
 		$name = $d['name'];
-		$value = addslashes($d['value']);
+		$value = $d['value'];
 
 		// save values entered as defaults while session lasts
 		if (!empty($value)) {
@@ -89,7 +89,7 @@ if (isset($_POST['adddata'])) {
 		}
 
 		$function = "cs_dataappend_{$filter}";
-		if (function_exists($function) && $line = $function($config, $value)) {
+		if (function_exists($function) && $line = $function($config, addslashes($value))) {
 			$dataappend[$fieldid] .= $line;
 		}
 	}
