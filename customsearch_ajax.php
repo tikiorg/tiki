@@ -89,7 +89,7 @@ if (isset($_POST['adddata'])) {
 		}
 
 		$function = "cs_dataappend_{$filter}";
-		if (function_exists($function) && $line = $function($config, $value)) {
+		if (function_exists($function) && $line = $function($config, addslashes($value))) {
 			$dataappend[$fieldid] .= $line;
 		}
 	}

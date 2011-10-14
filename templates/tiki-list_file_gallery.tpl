@@ -82,7 +82,7 @@
 
 		{if $edit_mode neq 'y' and $dup_mode neq 'y'}
 			{if $view eq 'browse' or $view eq 'admin'}
-				{button __keepall='y' text="{tr}List Gallery{/tr}" view="list" galleryId=$galleryId}
+				{button _keepall='y' _text="{tr}List Gallery{/tr}" view="list" galleryId=$galleryId}
 			{else}
 				{if $tiki_p_admin_file_galleries eq 'y'}
 					{button _keepall='y' _text="{tr}Admin View{/tr}" view="admin" galleryId=$galleryId}

@@ -108,33 +108,32 @@ function wikiplugin_split($data, $params, $pos)
 		$data = str_replace($match, $hash, $data);
 	}
 
-    // Remove first <ENTER> if exists...
-    // it may be here if present after {SPLIT()} in original text
+	// Remove first <ENTER> if exists...
+	// it may be here if present after {SPLIT()} in original text
 	if (substr($data, 0, 2) == "\r\n")
 		$data2 = substr($data, 2);
 	else
 		$data2 = $data;
 	
 	extract ($params, EXTR_SKIP);
-   $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
-   $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
-   // Split data by rows and cells
+	$fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
+	$joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
+	// Split data by rows and cells
 
-   $sections = preg_split("/@@@+/", $data2);
-   $rows = array();
-   $maxcols = 0;
-   foreach ($sections as $i)
-   {
-   	// split by --- but not by ----
-	//	$rows[] = preg_split("/([^\-]---[^\-]|^---[^\-]|[^\-]---$|^---$)+/", $i);
-	//	not to eat the character close to - and to split on --- and not ----
-		$rows[] = preg_split("/(?<!-)---(?!-)/", $i);
-      $maxcols = max($maxcols, count(end($rows)));
-   }
+	$sections = preg_split("/@@@+/", $data2);
+	$rows = array();
+	$maxcols = 0;
+	foreach ($sections as $i) {
+		// split by --- but not by ----
+		//	$rows[] = preg_split("/([^\-]---[^\-]|^---[^\-]|[^\-]---$|^---$)+/", $i);
+		//	not to eat the character close to - and to split on --- and not ----
+		$rows[] = '~/np~' . preg_split("/(?<!-)---(?!-)/", $i) . '~np~';
+		$maxcols = max($maxcols, count(end($rows)));
+	}
 
-   // Is there split sections present?
-   // Do not touch anything if no... even don't generate <table>
-   if (count($rows) <= 1 && count($rows[0]) <= 1)
+	// Is there split sections present?
+	// Do not touch anything if no... even don't generate <table>
+	if (count($rows) <= 1 && count($rows[0]) <= 1)
 	   return wikiplugin_split_rollback($data, $hashes);
 
 	$percent = false;
@@ -142,15 +141,15 @@ function wikiplugin_split($data, $params, $pos)
 		$tdsize= explode("|", $colsize);
 		$tdtotal=0;
 		for ($i=0;$i<$maxcols;$i++) {
-		  if (!isset($tdsize[$i])) {
-		    $tdsize[$i]=0;
-		  } else {
+			if (!isset($tdsize[$i])) {
+				$tdsize[$i]=0;
+			} else {
 				$tdsize[$i] = trim($tdsize[$i]);
 				if (strstr($tdsize[$i], '%')) {
 					$percent = true;
 				}
-		  }
-		  $tdtotal+=$tdsize[$i];
+			}
+			$tdtotal+=$tdsize[$i];
 		}
 		$tdtotaltd=floor($tdtotal/100*100);
 		if ($tdtotaltd == 100) // avoir IE to do to far
@@ -165,85 +164,85 @@ function wikiplugin_split($data, $params, $pos)
 	if (!isset($edit)) $edit = 'n';
 	$result = "<table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normalnoborder" : "").( !empty($customclass) ? " $customclass" : "")."'>";
 
-    // Attention: Dont forget to remove leading empty line in section ...
-    //            it should remain from previous '---' line...
-    // Attention: original text must be placed between \n's!!!
-    if (!isset($first) || $first != 'col') {
-       foreach ($rows as $r) {
-          $result .= "<tr>";
-          $idx = 1;
-          foreach ($r as $i) {
+	// Attention: Dont forget to remove leading empty line in section ...
+	//            it should remain from previous '---' line...
+	// Attention: original text must be placed between \n's!!!
+	if (!isset($first) || $first != 'col') {
+		foreach ($rows as $r) {
+			$result .= "<tr>";
+			$idx = 1;
+			foreach ($r as $i) {
 				// Remove first <ENTER> if exists
-             if (substr($i, 0, 2) == "\r\n") $i = substr($i, 2);
-            // Generate colspan for last element if needed
-            $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
-            $idx++;
-            // Add cell to table
-			if (isset($colsize)) {
-				$width = ' width="'.$tdsize[$idx-2].'"';
-			} elseif ($fixedsize) {
-				$width = ' width="'.$columnSize.'%" ';
-			} else {
-				$width = '';
+				if (substr($i, 0, 2) == "\r\n") $i = substr($i, 2);
+				// Generate colspan for last element if needed
+				$colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
+				$idx++;
+				// Add cell to table
+				if (isset($colsize)) {
+					$width = ' width="'.$tdsize[$idx-2].'"';
+				} elseif ($fixedsize) {
+					$width = ' width="'.$columnSize.'%" ';
+				} else {
+					$width = '';
+				}
+				$result .= '<td valign="top"'.$width.$colspan.'>'
+					// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
+					."\n"
+					// now prepend any carriage return and newline char with br
+					.preg_replace("/\r?\n/", "<br />\r\n", $i)
+					. '</td>';
 			}
-    		   $result .= '<td valign="top"'.$width.$colspan.'>'
-				// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
-				."\n"
-				// now prepend any carriage return and newline char with br
-				.preg_replace("/\r?\n/", "<br />\r\n", $i)
-                     . '</td>';
-         }
-        
-         $result .= "</tr>";
-       }
-   } else { // column first
-	if ($edit == 'y') {
-		global $user;
-		if (isset($_REQUEST['page'])) {
-			$type = 'wiki page';
-			$object = $_REQUEST['page'];
-			if ($tiki_p_admin_wiki == 'y' || $tiki_p_admin == 'y')
-				$perm = true;
-			else
-				$perm = $tikilib->user_has_perm_on_object($user, $object, $type, 'tiki_p_edit');
-		} else { // TODO: other object type
-			$perm = false;
+
+			$result .= "</tr>";
 		}
-       }
-	$ind = 0;
-	$icell = 0;
-	$result .= '<tr>';
-	$idx = 0;
-	foreach ($rows as $r) {
-		$result .= '<td valign="top" '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].(strstr($tdsize[$idx], '%')?'':'%').'"' : '').'>';
-		foreach ($r as $i) {
-			if (substr($i, 0, 2) == "\r\n") {
-				$i = substr($i, 2);
-				$ind += 2;
+	} else { // column first
+		if ($edit == 'y') {
+			global $user;
+			if (isset($_REQUEST['page'])) {
+				$type = 'wiki page';
+				$object = $_REQUEST['page'];
+				if ($tiki_p_admin_wiki == 'y' || $tiki_p_admin == 'y')
+					$perm = true;
+				else
+					$perm = $tikilib->user_has_perm_on_object($user, $object, $type, 'tiki_p_edit');
+			} else { // TODO: other object type
+				$perm = false;
 			}
-			if ($edit == 'y' && $perm && $section == 'wiki page') {
-				$result .= '<div class="split"><div style="float:right">';
-$result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
- 				$result .= '<a href="tiki-editpage.php?page='.$object.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
-  	                    .'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" width="16" height="16" /></a></div><br />';
- 				$ind += strlen($i);
-				while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
-					++$ind;
-			}
-			else
-				$result .= '<div>';
-			$result .= "\n".preg_replace("/\r?\n/", "<br />\r\n", $i). '</div>';
-			++$icell;
 		}
-		++$idx;
-		$result .= '</td>';
+		$ind = 0;
+		$icell = 0;
+		$result .= '<tr>';
+		$idx = 0;
+		foreach ($rows as $r) {
+			$result .= '<td valign="top" '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].(strstr($tdsize[$idx], '%')?'':'%').'"' : '').'>';
+			foreach ($r as $i) {
+				if (substr($i, 0, 2) == "\r\n") {
+					$i = substr($i, 2);
+					$ind += 2;
+				}
+				if ($edit == 'y' && $perm && $section == 'wiki page') {
+					$result .= '<div class="split"><div style="float:right">';
+					$result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
+					$result .= '<a href="tiki-editpage.php?page='.$object.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
+						.'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" width="16" height="16" /></a></div><br />';
+					$ind += strlen($i);
+					while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
+						++$ind;
+				}
+				else
+					$result .= '<div>';
+				$result .= "\n".preg_replace("/\r?\n/", "<br />\r\n", $i). '</div>';
+				++$icell;
+			}
+			++$idx;
+			$result .= '</td>';
+		}
+		$result .= '</tr>';
 	}
-	$result .= '</tr>';
-   }
-    // Close HTML table (no \n at end!)
+	// Close HTML table (no \n at end!)
 	$result .= "</table>";
 
-	return wikiplugin_split_rollback($result, $hashes);
+	return '~np~' . wikiplugin_split_rollback($result, $hashes) . '~/np~';
 }
 
 // find the real start and the real end of a cell
