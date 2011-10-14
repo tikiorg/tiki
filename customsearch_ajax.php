@@ -61,7 +61,7 @@ if (isset($_POST['adddata'])) {
 	foreach ($adddata as $fieldid => $d) {
 		$config = $d['config'];
 		$name = $d['name'];
-		$value = $d['value'];
+		$value = addslashes($d['value']);
 
 		// save values entered as defaults while session lasts
 		if (!empty($value)) {
