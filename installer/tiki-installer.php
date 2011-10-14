@@ -472,10 +472,10 @@ function convert_database_to_utf8( $dbname ) {
 	$db = TikiDb::get();
 
 	if ( $result = $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) ) {
-		$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci" );
+		$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_unicode_ci" );
 
 		foreach( $result as $row ) {
-			$db->query( "ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci" );
+			$db->query( "ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci" );
 		}
 	} else {
 		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation.');
