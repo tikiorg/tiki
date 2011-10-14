@@ -52,6 +52,7 @@
 				{preference name=feature_tell_a_friend}
 				{preference name=feature_share}
 				{preference name=feature_credits}
+				{preference name=feature_time_sheet}
 				{preference name=feature_invoice}
 				{preference name=feature_accounting}
 				{preference name=payment_feature}				

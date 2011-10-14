@@ -2436,5 +2436,15 @@ function prefs_feature_list($partial = false) {
 			'admin' => 'blogs',
 			'perspective' => false,			
 		),
+		'feature_time_sheet' => array(
+			'name' => tra('Time Sheet'),
+			'type' => 'flag',
+			'help' => 'TimeSheet',
+			'keywords' => 'timesheet time sheet project',
+			'description' => tra('A project time manager'),
+			'default' => 'n',
+			'warning' => tra('Experimental'),
+			'tags' => array('experimental'),
+		),
 	);
 }
