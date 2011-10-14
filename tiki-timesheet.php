@@ -1,6 +1,6 @@
 <?php
 require_once('tiki-setup.php');
-$access->check_feature('feature_time_sheet');
+$access->check_feature(array('feature_time_sheet','feature_trackers'));
 global $user;
 $auto_query_args = array(
 	'all',

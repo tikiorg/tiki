@@ -1461,7 +1461,7 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Social networks','tiki-socialnetworks.php',115,'feature_mytiki,feature_socialnetworks','tiki_p_socialnetworks|tiki_p_admin_socialnetworks','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42, 'r', 'Invoice', 'tiki-list_invoices.php', 790, 'feature_invoice', 'tiki_p_admin', '', 0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42, 'o', 'New Invoice', 'tiki-edit_invoice.php', 791, 'feature_invoice', 'tiki_p_admin', '', 0);
-
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42, 'r', 'TimeSheet', 'tiki-timesheet.php', 1270, 'feature_time_sheet', '', '', 0);
 DROP TABLE IF EXISTS `tiki_menus`;
 CREATE TABLE `tiki_menus` (
   `menuId` int(8) NOT NULL auto_increment,
