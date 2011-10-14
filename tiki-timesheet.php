@@ -1,12 +1,19 @@
 <?php
 require_once('tiki-setup.php');
+global $user;
 TikiLib::lib("trkqry");
 
 $projectList = TrackerQueryLib::tracker("Project list")->byName()->query();
-$timeSheet = TrackerQueryLib::tracker("Time sheet")->byName()->query();
+
+if (isset($_REQUEST['all'])) { //all views all sheet items
+	$timeSheet = TrackerQueryLib::tracker("Time sheet")->byName()->query();
+} else {//views only your items
+	$timeSheet = TrackerQueryLib::tracker("Time sheet")->byName()->search(array($user))->fields(array("Done by"))->query();
+}
 
 if(isset($projectList)) {
 	if (isset($_REQUEST['save'])) {	
+		$_REQUEST['Done_by'] = $user;
 		TikiLib::lib("trk")->replaceItemFromRequestValuesByName("Time sheet", array(
 			"Summary",
             "Associated project",
@@ -26,12 +33,9 @@ if(isset($projectList)) {
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
 $headerlib = TikiLib::lib("header");
-
 $headerlib->add_cssfile("lib/jquery/jtrack/css/jtrack.css");
 $headerlib->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js");
 $headerlib->add_jsfile("lib/jquery/jtrack/js/jtrack.js");
-
-
 $headerlib->add_jq_onready("
 	jTask.init();
 	var remainingWidth = $('#timeSheetUnsaved').width() - $('#jtrack-holder').width();
