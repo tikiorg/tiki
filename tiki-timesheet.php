@@ -1,14 +1,27 @@
 <?php
 require_once('tiki-setup.php');
 global $user;
+$auto_query_args = array(
+	'all',
+);
+
 TikiLib::lib("trkqry");
 
 $projectList = TrackerQueryLib::tracker("Project list")->byName()->query();
 
 if (isset($_REQUEST['all'])) { //all views all sheet items
-	$timeSheet = TrackerQueryLib::tracker("Time sheet")->byName()->query();
+	$smarty->assign("all", true);
+	
+	$timeSheet = TrackerQueryLib::tracker("Time sheet")
+		->byName()
+		->query();
 } else {//views only your items
-	$timeSheet = TrackerQueryLib::tracker("Time sheet")->byName()->search(array($user))->fields(array("Done by"))->query();
+	$smarty->assign("all", false);
+	
+	$timeSheet = TrackerQueryLib::tracker("Time sheet")
+		->byName()
+		->search(array($user))->fields(array("Done by"))
+		->query();
 }
 
 if(isset($projectList)) {

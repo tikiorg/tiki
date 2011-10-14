@@ -72,7 +72,13 @@
 </table>
 
 {if $timeSheetProfileLoaded eq true}
-	<input type="button" id="timeSheetCommit" value="{tr}Commit Time Sheet Items{/tr}" />
+	{if $all eq false}
+		{button _text="{tr}View All{/tr}" href="tiki-timesheet.php" all="true"}
+	{else}
+		{button _text="{tr}View My Items{/tr}" href="tiki-timesheet.php"}
+	{/if}
+	
+	{button _text="{tr}Commit Time Sheet Items{/tr}" _id="timeSheetCommit"}
 	
 	{assign var=timeSheetI value=1}
 	{assign var=amountOfTimeSpent value="Amount of time spent"}
