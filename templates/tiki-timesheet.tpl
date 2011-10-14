@@ -82,6 +82,7 @@
 	
 	{assign var=timeSheetI value=1}
 	{assign var=amountOfTimeSpent value="Amount of time spent"}
+	{assign var=doneBy value="Done by"}
 	
 	<div id="timeSheetSaved">
 		<table title="{tr}Saved (Committed){/tr}">
@@ -89,7 +90,7 @@
 				<td>{tr}Summary{/tr}</td>
 				<td>{tr}Time Spent{/tr}</td>
 				<td>{tr}Description{/tr}</td>
-				<td></td>
+				<td>{tr}Done By{/tr}</td>
 				<td></td>
 			</tr>
 			{foreach from=$timeSheet item=item}
@@ -98,7 +99,7 @@
 					<td>{$item.Summary}</td>
 					<td>{$item.$amountOfTimeSpent}</td>
 					<td>{$item.Description}</td>
-					<td></td>
+					<td>{$item.$doneBy}</td>
 					<td></td>
 				</tr>
 			{/foreach}
