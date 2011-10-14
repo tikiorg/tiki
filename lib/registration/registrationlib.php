@@ -313,34 +313,11 @@ class RegistrationLib extends TikiLib
 		$userlib->set_email_group($registration['name'], $registration['email']);
 		// save default user preferences
 		$tikilib->set_user_preference($registration['name'], 'theme', $prefs['style']);
-		$tikilib->set_user_preference($registration['name'], 'userbreadCrumb', $prefs['users_prefs_userbreadCrumb']);
-		$tikilib->set_user_preference($registration['name'], 'language', $prefs['users_prefs_language']);
-		$tikilib->set_user_preference($registration['name'], 'display_timezone', $prefs['users_prefs_display_timezone']);
-		$tikilib->set_user_preference($registration['name'], 'user_information', $prefs['users_prefs_user_information']);
-		$tikilib->set_user_preference($registration['name'], 'user_dbl', $prefs['users_prefs_user_dbl']);
-		$tikilib->set_user_preference($registration['name'], 'display_12hr_clock', $prefs['users_prefs_display_12hr_clock']);
-		$tikilib->set_user_preference($registration['name'], 'diff_versions', $prefs['users_prefs_diff_versions']);
-		$tikilib->set_user_preference($registration['name'], 'show_mouseover_user_info', $prefs['users_prefs_show_mouseover_user_info']);
-		$tikilib->set_user_preference($registration['name'], 'email is public', $prefs['users_prefs_email_is_public']);
-		$tikilib->set_user_preference($registration['name'], 'mailCharset', $prefs['users_prefs_mailCharset']);
 		$tikilib->set_user_preference($registration['name'], 'realName', '');
 		$tikilib->set_user_preference($registration['name'], 'homePage', '');
 		$tikilib->set_user_preference($registration['name'], 'lat', floatval(0));
 		$tikilib->set_user_preference($registration['name'], 'lon', floatval(0));
 		$tikilib->set_user_preference($registration['name'], 'country', '');
-		$tikilib->set_user_preference($registration['name'], 'mess_maxRecords', $prefs['users_prefs_mess_maxRecords']);
-		$tikilib->set_user_preference($registration['name'], 'mess_archiveAfter', $prefs['users_prefs_mess_archiveAfter']);
-		$tikilib->set_user_preference($registration['name'], 'mess_sendReadStatus', $prefs['users_prefs_mess_sendReadStatus']);
-		$tikilib->set_user_preference($registration['name'], 'minPrio', $prefs['users_prefs_minPrio']);
-		$tikilib->set_user_preference($registration['name'], 'allowMsgs', $prefs['users_prefs_allowMsgs']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_pages', $prefs['users_prefs_mytiki_pages']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_blogs', $prefs['users_prefs_mytiki_blogs']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_articles', $prefs['users_prefs_mytiki_articles']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_gals', $prefs['users_prefs_mytiki_gals']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);
-		$tikilib->set_user_preference($registration['name'], 'mytiki_items', $prefs['users_prefs_mytiki_items']);
-		$tikilib->set_user_preference($registration['name'], 'tasks_maxRecords', $prefs['users_prefs_tasks_maxRecords']);
 
 		// Custom fields
 		$customfields = $this->get_customfields();
