@@ -127,7 +127,7 @@ function wikiplugin_split($data, $params, $pos)
 		// split by --- but not by ----
 		//	$rows[] = preg_split("/([^\-]---[^\-]|^---[^\-]|[^\-]---$|^---$)+/", $i);
 		//	not to eat the character close to - and to split on --- and not ----
-		$rows[] = preg_split("/(?<!-)---(?!-)/", $i);
+		$rows[] = '~/np~' . preg_split("/(?<!-)---(?!-)/", $i) . '~np~';
 		$maxcols = max($maxcols, count(end($rows)));
 	}
 
@@ -242,7 +242,7 @@ function wikiplugin_split($data, $params, $pos)
 	// Close HTML table (no \n at end!)
 	$result .= "</table>";
 
-	return wikiplugin_split_rollback($result, $hashes);
+	return '~np~' . wikiplugin_split_rollback($result, $hashes) . '~/np~';
 }
 
 // find the real start and the real end of a cell
