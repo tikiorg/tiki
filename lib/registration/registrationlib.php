@@ -312,12 +312,6 @@ class RegistrationLib extends TikiLib
 		}
 		$userlib->set_email_group($registration['name'], $registration['email']);
 		// save default user preferences
-		$tikilib->set_user_preference($registration['name'], 'theme', $prefs['style']);
-		$tikilib->set_user_preference($registration['name'], 'realName', '');
-		$tikilib->set_user_preference($registration['name'], 'homePage', '');
-		$tikilib->set_user_preference($registration['name'], 'lat', floatval(0));
-		$tikilib->set_user_preference($registration['name'], 'lon', floatval(0));
-		$tikilib->set_user_preference($registration['name'], 'country', '');
 
 		// Custom fields
 		$customfields = $this->get_customfields();
