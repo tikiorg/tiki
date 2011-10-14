@@ -161,7 +161,7 @@ function prefs_freetags_list() {
 			'default' => '0.5f',
 		),
 		'freetags_3d_eletrostatic_constant' => array(
-			'name' => tra('Eletrostatic constant'),
+			'name' => tra('Electrostatic constant'),
 			'type' => 'text',
 			'size' => '5',
 			'default' => '1000f',

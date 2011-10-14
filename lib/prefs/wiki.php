@@ -553,7 +553,7 @@ function prefs_wiki_list($partial = false) {
 			'default' => '0.3f',
 		),
 		'wiki_3d_eletrostatic_constant' => array(
-			'name' => tra('Eletrostatic constant'),
+			'name' => tra('Electrostatic constant'),
 			'type' => 'text',
 			'type' => 'text',
 			'size' => '5',
