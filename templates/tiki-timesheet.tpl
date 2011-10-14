@@ -70,9 +70,10 @@
 		</td>
 	</tr>
 </table>
-<input type="button" id="timeSheetCommit" value="{tr}Commit Time Sheet Items{/tr}" />
 
 {if $timeSheetProfileLoaded eq true}
+	<input type="button" id="timeSheetCommit" value="{tr}Commit Time Sheet Items{/tr}" />
+	
 	{assign var=timeSheetI value=1}
 	{assign var=amountOfTimeSpent value="Amount of time spent"}
 	

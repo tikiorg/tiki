@@ -5,23 +5,9 @@ TikiLib::lib("trkqry");
 $projectList = TrackerQueryLib::tracker("Project list")->byName()->query();
 $timeSheet = TrackerQueryLib::tracker("Time sheet")->byName()->query();
 
-function processItem($trackerName, $fieldNames, $fieldValues, $itemId = 0, $i = 0) {
-	$trklib = TikiLib::lib("trk");
-	$trackerId = $trklib->get_tracker_by_name($trackerName);
-	$trackerDefinition = Tracker_Definition::get($trackerId);
-	$fields = $trackerDefinition->getFieldsIdKeys();
-
-	foreach ($fields as $key => $field) {
-		$fieldName = $field['name'];
-		$fieldValue = ($i > 0 ? $fieldValues[str_replace(" ", "_", $fieldName)][$i] : $fieldValues[str_replace(" ", "_", $fieldName)]);
-		$fields[$key]['value'] = (empty($fieldValue) ? '' : $fieldValue);
-	}
-
-	return $trklib->replace_item($trackerId, $itemId, array("data"=>$fields), 'o');
-}
 if(isset($projectList)) {
 	if (isset($_REQUEST['save'])) {	
-		processItem("Time sheet", array(
+		TikiLib::lib("trk")->replaceItemFromRequestValuesByName("Time sheet", array(
 			"Summary",
             "Associated project",
             "Description",
@@ -55,18 +41,18 @@ $headerlib->add_jq_onready("
 		table.append('<tr><td>Summary</td><td>Estimate</td><td>Time Spent</td></tr>');
 		
 		var rowI = 1;
-		for (var item in $.DOMCached.storage) {
+		for (var namespace in $.DOMCached.getStorage()) {
 			var row = $('<tr />').appendTo(table);
 			
-			row.append('<td>' + item + '</td>');
-			row.append('<td>' + $.DOMCached.storage[item].estimate.value + '</td>');
-			row.append('<td formula=\'ROUND(' + ($.DOMCached.storage[item].timer.value ? $.DOMCached.storage[item].timer.value / 60 : 0) + ')\' />');
+			row.append('<td>' + namespace + '</td>');
+			row.append('<td>' + $.DOMCached.get('estimate', namespace) + '</td>');
+			row.append('<td formula=\'ROUND(' + ($.DOMCached.get('timer', namespace) / 60) + ', 2)\' />');
 			rowI++;
 		}
 		var row = $('<tr />').appendTo(table);
 		row.append('<td>Totals</td>');
-		row.append('<td formula=\'ROUND(SUM(B2:B' + rowI + '))\'/>');
-		row.append('<td formula=\'=ROUND(SUM(C2:C' + rowI + '))\' />');
+		row.append('<td formula=\'ROUND(SUM(B2:B' + rowI + '), 2)\'/>');
+		row.append('<td formula=\'=ROUND(SUM(C2:C' + rowI + '), 2)\' />');
 		
 		$('#timesheetSpreadsheet').siblings().remove();
 		$('#timesheetSpreadsheet').parent().width(remainingWidth);
@@ -92,13 +78,22 @@ $headerlib->add_jq_onready("
 	});
 	
 	$('#timeSheetCommit').click(function() {
-		for (var item in $.DOMCached.storage) {
+		$('#timeSheetUnsaved').modal(tr('Committing...'));
+		var stack = [];
+		for (var namespace in $.DOMCached.getStorage()) {
+			stack.push(namespace);
 			$.post('tiki-timesheet.php?save', {
-				'Summary': item,
+				'Summary': namespace,
 				'Description': '',
-				'Amount of time spent': $.DOMCached.storage[item].timer.value / 60
+				'Amount of time spent': $.DOMCached.get('timer', namespace) / 60
 			}, function(o) {
-				//delete $.DOMCached.storage[item];
+				$.DOMCached.deleteNamespace(namespace);
+				stack.pop();
+				
+				if (stack.length == 0) {
+					$('#timeSheetUnsaved').modal();
+					document.location = document.location + '';
+				}
 			});
 		}
 	});
