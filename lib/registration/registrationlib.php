@@ -180,8 +180,7 @@ class RegistrationLib extends TikiLib
         
 		if ($email_valid != 'no') {
 			if ($prefs['validateUsers'] == 'y') {
-				//$apass = addslashes(substr(md5($tikilib->genPass()), 0, 25));
-				$apass = addslashes(md5($tikilib->genPass()));
+				$apass = md5($tikilib->genPass());
 				$registrationlib_apass = $apass;
 				$userlib->add_user($_REQUEST['name'], $apass, $_REQUEST["email"], $_REQUEST["pass"]);
 			} else {
@@ -296,7 +295,7 @@ class RegistrationLib extends TikiLib
 
 		$newPass = $registration['pass'] ? $registration['pass'] : $registration["genepass"];
 		if ($this->merged_prefs['validateUsers'] == 'y' || (isset($this->merged_prefs['validateRegistration']) && $this->merged_prefs['validateRegistration'] == 'y')) {
-			$apass = addslashes(md5($tikilib->genPass()));
+			$apass = md5($tikilib->genPass());
 			$userlib->send_validation_email($registration['name'], $apass, $registration['email'], '', '', isset($registration['chosenGroup']) ? $registration['chosenGroup'] : '');
 			$userlib->add_user($registration['name'], $newPass, $registration["email"], '', false, $apass, $openid_url , $this->merged_prefs['validateRegistration'] == 'y'?'a':'u');
 			$logslib->add_log('register', 'created account ' . $registration['name']);

@@ -107,7 +107,7 @@ function batchImportUsers() {
 		}
 		if (!$exist) {
 			if (!empty($_REQUEST['notification'])) {
-				$apass = addslashes(md5($tikilib->genPass()));
+				$apass = md5($tikilib->genPass());
 			} else {
 				$apass = '';
 			}
@@ -240,7 +240,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$send_validation_email = false;
 			if (isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on') {
 				$send_validation_email = true;
-				$apass = addslashes(md5($tikilib->genPass()));
+				$apass = md5($tikilib->genPass());
 			} else {
 				$apass = '';
 			}
