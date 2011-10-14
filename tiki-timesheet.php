@@ -12,7 +12,7 @@ if (isset($_REQUEST['all'])) { //all views all sheet items
 }
 
 if(isset($projectList)) {
-	if (isset($_REQUEST['save'])) {	
+	if (isset($_REQUEST['save'])) {
 		$_REQUEST['Done_by'] = $user;
 		TikiLib::lib("trk")->replaceItemFromRequestValuesByName("Time sheet", array(
 			"Summary",
@@ -61,13 +61,18 @@ $headerlib->add_jq_onready("
 		$('#timesheetSpreadsheet').siblings().remove();
 		$('#timesheetSpreadsheet').parent().width(remainingWidth);
 		
-		$('#timesheetSpreadsheet')
-			.html(table)
-			.sheet({
-				buildSheet: true,
-				editable: false,
-				height: $('#jtrack-holder').height()
-			});
+		var jS = $('#timesheetSpreadsheet').getSheet();
+		if (jS) {
+			jS.openSheet(table);
+		} else {		
+			$('#timesheetSpreadsheet')
+				.html(table)
+				.sheet({
+					buildSheet: true,
+					editable: false,
+					height: $('#jtrack-holder').height()
+				});
+		}
 	};
 	
 	$('.jtrack-create,.jtrack-update,.jtrack-remove,.jtrack-remove-all,.jtrack-cancel,.jtrack-power,#jtrack-button-remove,#jtrack-button-remove-all,#jtrack-button-create,#jtrack-button-update').live('click', function() {
