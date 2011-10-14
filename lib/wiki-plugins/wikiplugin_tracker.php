@@ -1273,6 +1273,10 @@ function wikiplugin_tracker_render_input($f, $item) {
 
 	$handler = $trklib->get_field_handler($f, $item);
 
+	if (!$handler) {
+		return '';
+	}
+
 	if (! $item['itemId']) {
 		// Non-selected items have not been processed
 		$f = array_merge($f, $handler->getFieldData());

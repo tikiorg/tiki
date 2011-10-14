@@ -107,6 +107,7 @@ class Tracker_Field_Factory
 			global $prefs;
 			foreach ($info['prefs'] as $pref) {
 				if ($prefs[$pref] != 'y') {
+					TikiLib::lib('errorreport')->report(tr('Tracker Field Factory Error: Pref "%0" required for field type "%1"', $pref, $class));
 					return null;
 				}
 			}
