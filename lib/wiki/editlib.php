@@ -467,9 +467,12 @@ class EditLib
 	function parseToWiki( $inData ) {
 		
 		global $prefs;
+
+		$parsed = $this->partialParseWysiwygToWiki($inData);	// remove cke type plugin wrappers
 		
-		$parsed = html_entity_decode($inData, ENT_QUOTES, 'UTF-8');
+		$parsed = html_entity_decode($parsed, ENT_QUOTES, 'UTF-8');
 		$parsed = preg_replace('/\t/', '', $parsed); // remove all tabs inserted by the CKE
+		
 		$parsed = $this->parse_html($parsed);
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
