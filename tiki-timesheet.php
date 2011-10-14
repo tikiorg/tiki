@@ -51,7 +51,6 @@ $headerlib->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js");
 $headerlib->add_jsfile("lib/jquery/jtrack/js/jtrack.js");
 $headerlib->add_jq_onready("
 	jTask.init();
-	var remainingWidth = $('#timeSheetUnsaved').width() - $('#jtrack-holder').width();
 	
 	$.timesheetSpreadsheet = function() {
 		var table = $('<table title=/>').attr('title', tr('Local Cache (Not Committed)'));
@@ -72,16 +71,14 @@ $headerlib->add_jq_onready("
 		row.append('<td formula=\'=ROUND(SUM(C2:C' + rowI + '), 2)\' />');
 		
 		$('#timesheetSpreadsheet').siblings().remove();
-		$('#timesheetSpreadsheet').parent().width(remainingWidth);
 		
 		var jS = $('#timesheetSpreadsheet').getSheet();
 		if (jS) {
 			jS.openSheet(table);
 		} else {		
 			$('#timesheetSpreadsheet')
-				.html(table)
 				.sheet({
-					buildSheet: true,
+					buildSheet: table,
 					editable: false,
 					height: $('#jtrack-holder').height()
 				});
@@ -96,7 +93,8 @@ $headerlib->add_jq_onready("
 	
 	$('#timeSheetSaved').sheet({
 		buildSheet: true,
-		editable: false
+		editable: false,
+		height: $('#jtrack-holder').height()
 	});
 	
 	$('#timeSheetCommit').click(function() {
@@ -119,6 +117,8 @@ $headerlib->add_jq_onready("
 			});
 		}
 	});
+	
+	$('#timeSheetTabs').tabs();
 ");
 $smarty->assign('mid', 'tiki-timesheet.tpl');
 // use tiki_full to include include CSS and JavaScript
