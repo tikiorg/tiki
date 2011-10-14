@@ -107,17 +107,21 @@ class TikiAccessLib extends TikiLib
 		}		
 	}
 
-	function check_permission($permissions, $permission_name='', $objectType='', $objectId='') {
+	function check_permission($permissions, $permission_name='', $objectType=false, $objectId=false) {
 		require_once ('tiki-setup.php');
 		if ( ! is_array($permissions) ) {
 			$permissions = array($permissions);
 		}
 		foreach ($permissions as $permission) {
-			$objectPermissions = Perms::get( $objectType, $objectId );
-			$name = str_replace('tiki_p_', '', $permission);
-			if ($objectPermissions->$name) {
+			if (false !== $objectType) {
+				$objectPermissions = Perms::get( $objectType, $objectId );
+				if ($objectPermissions->$permission) {
+					continue;
+				}
+			} elseif ($GLOBALS[$permission] == 'y') {
 				continue;
 			}
+
 			if ($permission_name) {
 				$permission = $permission_name;
 			}
