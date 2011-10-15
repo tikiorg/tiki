@@ -4698,6 +4698,15 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
+				'name' => 'tiki_p_plugin_preview',
+				'description' => tra('Can execute unapproved plugin registered'),
+				'level' => 'admin',
+				'type' => 'wiki',
+				'admin' => false,
+				'prefs' => array(),
+				'scope' => 'global',
+			),
+			array(
 				'name' => 'tiki_p_plugin_approve',
 				'description' => tra('Can approve plugin execution'),
 				'level' => 'editors',
@@ -4740,15 +4749,6 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_page_contribution'),
-				'scope' => 'global',
-			),
-			array(
-				'name' => 'tiki_p_plugin_preview',
-				'description' => tra('Can execute unapproved plugin registered'),
-				'level' => 'admin',
-				'type' => 'wiki',
-				'admin' => false,
-				'prefs' => array(),
 				'scope' => 'global',
 			),
 			array(
