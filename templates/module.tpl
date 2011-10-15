@@ -11,7 +11,7 @@
 	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
-		{if isset($user) and $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
+		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<span class="modcontrols">
 			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
 				{icon _id="resultset_up" alt="[{tr}Up{/tr}]"}

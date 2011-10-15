@@ -22,12 +22,12 @@ if ( ! isset($_SESSION['u_info']) || $_SESSION['u_info']['login'] != $user ) {
 $u_info =& $_SESSION['u_info'];
 $smarty->assign_by_ref('u_info', $u_info);
 
+$smarty->assign_by_ref('user', $user);
 $user_preferences = array(); // Used for cache
 
 if ( $user ) {
 	$default_group = $group = $_SESSION['u_info']['group'];
 	$smarty->assign('group', $group); // do not use by_ref as $group can be changed in the .php
-	$smarty->assign_by_ref('user', $user);
 	$smarty->assign('default_group', $group);
 
 	// Initialize user preferences

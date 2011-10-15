@@ -6,7 +6,7 @@
 
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
-			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y'}
+			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or (!$user and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y'}
 				{if $beingEdited eq 'y'}
 					{assign var=thisPageClass value='+highlight'}
 				{else}
@@ -32,7 +32,7 @@
 					{button _keepall='y' href="tiki-rename_page.php" page=$page _text="{tr}Rename{/tr}"}
 				{/if}
 
-				{if $prefs.feature_wiki_usrlock eq 'y' and isset($user) and $user and $tiki_p_lock eq 'y'}
+				{if $prefs.feature_wiki_usrlock eq 'y' and $user and $tiki_p_lock eq 'y'}
 					{if !$lock}
 						{button _keepall='y' href="tiki-index.php" page=$page action="lock" _text="{tr}Lock{/tr}"}
 					{elseif $tiki_p_admin_wiki eq 'y' or $user eq $page_user}
@@ -123,14 +123,14 @@
 					{/if}
 				{/if}{* attachments *}
 
-				{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y' or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
+				{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
 					{button _keepall='y' href="tiki-edit_translation.php" page=$page _text="{tr}Translate{/tr}"}
 				{/if}
 
 				{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
 					{button _keepall='y' href="tiki-admin_keywords.php" page=$page _text="{tr}Keywords{/tr}"}
 				{/if}
-				{if (isset($user) and $user) and (isset($tiki_p_create_bookmarks) and $tiki_p_create_bookmarks eq 'y') and $prefs.feature_user_bookmarks eq 'y'}
+				{if $user and (isset($tiki_p_create_bookmarks) and $tiki_p_create_bookmarks eq 'y') and $prefs.feature_user_bookmarks eq 'y'}
 					{button _script="tiki-user_bookmarks.php" urlname=$page urlurl=$page|sefurl addurl="Add" _text="{tr}Bookmark{/tr}" _auto_args="urlname,urlurl,addurl"}
 				{/if}
 			{/if}
