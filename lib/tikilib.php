@@ -1671,7 +1671,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// In other cases, we look in db
 		$id = $this->table('users_users')->fetchOne('userId', array('login' => $u));
-		$id = ($id === NULL) ? -1 : $id;
+		$id = ($id === false) ? -1 : $id;
 		if ( $current ) $_SESSION['u_info']['id'] = $id;
 		return $id;
 	}
