@@ -12,7 +12,7 @@ include_once ('lib/registration/registrationlib.php');
 include_once ('lib/trackers/trackerlib.php');
 if (isset($_REQUEST['userId'])) {
 	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
-	if ($userwatch === NULL) {
+	if ($userwatch === false) {
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("Unknown user"));
 		$smarty->display("error.tpl");
