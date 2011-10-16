@@ -185,7 +185,7 @@ function wikiplugin_trackerstat($data, $params)
 		}
 		if ($allFields['data'][$i]['type'] == 'e') {
 			global $categlib; include_once('lib/categories/categlib.php');
-			$parent = (int) $allFields['data'][$i]['options'];
+			$parent = (int) $allFields['data'][$i]['options']; // FIXME: Lazy access to the first option. Only works when a field only has its first option set.
 			if ($parent > 0) {
 				$filter = array('identifier'=>$parent, 'type'=>'children');
 				$listCategs = $categlib->getCategories($filter, true, false); 
