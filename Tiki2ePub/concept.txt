@@ -1,0 +1,57 @@
+The concept here is to create a script that will allow <TikiAdmin> to publish 
+	a nominated Tiki Structure ready for compilation as an ePub.
+	
+I'm using Rick Sapir's "Tiki for Smarties" (http://twbasics.keycontent.org) as 
+	my base Tiki, in order to have a fully structured Tiki for testing.
+	Rick uses Categories which differentiate between Tiki versions on some pages
+	... this parser should also be able to read Categories.
+	
+Upon creation of the static documents, an Archive should be created ready for 
+	downloading and importing into Sigil.   http://code.google.com/p/sigil/
+	
+Why Sigil specifically?
+	Because it's free :) ... and super easy to use.
+
+Possible complications:	
+	Sigil (0.4.2) uses XHTML 1.1 pages, not HTML5
+		We will need to replicate some of the HTML5 tags as CSS <span> classes 
+			to counteract those invalid tags in XHTML 1.1
+	At this time, ePubs don't support media content, rumour has it the next 
+		version of the specs will support it, we need to allow for support 
+		later.
+		
+		Write the script to wrap any media elements in comments, making them 
+			invisible to Sigil .... the comments can be easily removed once the
+			ePub specs allow for interactive content.
+	
+	Javascript elements don't seem to work properly in ePubs
+		For the time being, either recreate them as static objects or omit them 
+			from the document flow
+	
+	We only need the page content, not the layout
+		When pulling content, we could use javascript to extract the inner-html.
+		This could be overcome be simply bypassing the usual templates used and
+		droping the Wiki directly into our ePub template ... not sure, need to 
+		test.
+
+The Archive Structure:
+	<ePubNm>/structure.txt	--	copy of the document structure so we can add 
+								our pages to Sigil in correct order.
+								This is already accomplished in Tiki via
+								tiki-admin_structures.php?export_tree=1,
+								although if we want to get fancy and hyperlink 
+								the pages, we could write a script to return 
+								linkage.
+
+	<ePubNm>/images.txt		--	a (reference) list of images used 
+								
+	<ePubNm>/Text			--	our cached XHTML pages.
+
+	<ePubNm>/Images			--	all images used need to be copied accross to 
+								here so they are visible to Sigil.
+
+	<ePubNm>/Styles 	    --	any CSS used, strongly recommended that a 
+								specific CSS page be created for the book.
+
+	<ePubNm>/Misc			--	suggested location for our Smarty Template, 
+								"ePubPage.tpl"
