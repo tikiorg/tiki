@@ -356,7 +356,7 @@ function wikiplugin_articles($data, $params)
 			$memo[$article['articleId']] = $i;
 		}
 		foreach ($order as $articleId) {
-			if (!empty($memo[$articleId])) {
+			if (isset($memo[$articleId])) {
 				$list[] = $listpages['data'][$memo[$articleId]];
 			}
 		}
