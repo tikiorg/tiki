@@ -153,9 +153,9 @@ function wikiplugin_carousel( $body, $params )
 		}
 	}
 	
-	TikiLib::lib('header')->add_jq_onready('$("#' . $unique . '").tiki("carousel", "", '. json_encode($params).');');
+	TikiLib::lib('header')->add_jq_onready('setTimeout( function() { $("#' . $unique . '").tiki("carousel", "", '. json_encode($params).'); }, 1000);');
 	
-	$html = '<div id="'.$unique.'" class="clearfix"><ul>';
+	$html = '<div id="'.$unique.'" class="clearfix carousel"><ul>';
 	foreach ($files['data'] as $file) {
 		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display" alt="'.htmlentities($file['description']).'" />';
 		$caption = '';
