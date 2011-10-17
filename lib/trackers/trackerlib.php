@@ -1640,7 +1640,8 @@ class TrackerLib extends TikiLib
 					$cats = preg_split('/,/',trim($data[$i]));
 				}
 			}
-			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId && $replace_rows) {
+			$t = $this->get_tracker_for_item($itemId);
+			if ($itemId && $t && $t == $trackerId && $replace_rows) {
 				if (in_array('status', $header))
 					$update['status'] = $status;
 				if (in_array('created', $header))
@@ -1651,16 +1652,6 @@ class TrackerLib extends TikiLib
 				if (!empty($update)) {
 					$items->update($update, array('itemId' => (int) $itemId));
 				}
-				$replace = true;
-			} elseif ($itemId && !$t & $t === $trackerId) {
-				$items->insert(array(
-					'trackerId' => (int) $trackerId,
-					'created' => (int) $created,
-					'lastModif' => (int) $lastModif,
-					'status' => $status,
-					'itemId' => (int) $itemId,
-				));
-				$replace = false;
 			} else {
 				$itemId = $items->insert(array(
 					'trackerId' => (int) $trackerId,
@@ -1669,9 +1660,24 @@ class TrackerLib extends TikiLib
 					'status' => $status,
 				));
 				if (empty($itemId) || $itemId < 1) {
-					return "Problem inserting tracker item: trackerId=$trackerId, created=$created, lastModif=$lastModif, status=$status";
+					TikiLib::lib('errorreport')->report(tr('Problem inserting tracker item: trackerId=%0, created=%1, lastModif=%2, status=%3', $trackerId, $created, $lastModif, $status));
+				} else {
+					// deal with autoincrement fields
+					$auto_fid = $this->get_field_id_from_type($trackerId, 'q');
+					if (!is_array($auto_fid)) {
+						$auto_fid = array($auto_fid);
+					}
+					foreach($auto_fid as $fid) {
+						$auto_finfo = $this->get_tracker_field($fid);
+						$auto_handler = $this->get_field_handler($auto_finfo, $this->get_item_info($itemId));
+						$auto_val = $auto_handler->handleSave(null, null);
+						$itemFields->insert(array(
+							'itemId' => (int) $itemId,
+							'fieldId' => (int) $fid,
+							'value' => $auto_val['value'],
+						));
+					}
 				}
-				$replace = false;
 			}
 			$need_reindex[] = $itemId;
 			if (!empty($cats)) {
@@ -1728,9 +1734,6 @@ class TrackerLib extends TikiLib
 								list($y, $m, $d) = preg_split('#-#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							}
-							break;
-						case 'q':
-							$data[$i] = $itemId;
 							break;
 						}
 
