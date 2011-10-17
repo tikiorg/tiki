@@ -35,13 +35,21 @@ class Smarty_Tiki extends Smarty
 {
 	var $url_overriding_prefix_stack = null;
 	var $url_overriding_prefix = null;
+	var $main_template_dir = null;
 
 	function Smarty_Tiki($tikidomain = '') {
 		parent::__construct();
-		global $prefs;
+		global $prefs, $style_base;
 
 		if ($tikidomain) { $tikidomain.= '/'; }
-		$this->template_dir = realpath('templates/'); // This needs to be changed to a setTemplateDir() call for Smarty 3.1, but Tiki reads template_dir in several places and expects it to be a string, not an array.
+		$this->main_template_dir = realpath('templates/');
+		$this->template_dir = array();
+		if ( $tikidomain !== '/' ) {
+			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'; 
+		}
+		$this->template_dir[] = $this->main_template_dir.'/styles/'.$style_base.'/'; 
+		$this->template_dir[] = $this->main_template_dir; 
+		
 		$this->compile_dir = realpath("templates_c/$tikidomain");
 		$this->config_dir = null;
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
@@ -243,16 +251,16 @@ class Smarty_Tiki extends Smarty
 	// Returns the file name associated to the template name
 	function get_filename($template) {
 		global $tikidomain, $style_base;
-		if (!empty($tikidomain) && is_file($this->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$template)) {
+		if (!empty($tikidomain) && is_file($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$template)) {
     			$file = "/$tikidomain/styles/$style_base/";
-  		} elseif (!empty($tikidomain) && is_file($this->template_dir.'/'.$tikidomain.'/'.$template)) {
+  		} elseif (!empty($tikidomain) && is_file($this->main_template_dir.'/'.$tikidomain.'/'.$template)) {
     			$file = "/$tikidomain/";
-  		} elseif (is_file($this->template_dir.'/styles/'.$style_base.'/'.$template)) {
+  		} elseif (is_file($this->main_template_dir.'/styles/'.$style_base.'/'.$template)) {
 			$file = "/styles/$style_base/";
   		} else {
     			$file = '/';
   		}
-		return $this->template_dir.$file.$template;
+		return $this->main_template_dir.$file.$template;
 	}
 
 	function set_request_overriders( $url_arguments_prefix, $arguments_list ) {
