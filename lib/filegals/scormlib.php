@@ -28,7 +28,9 @@ class ScormLib
 
 			if ($manifest = $this->getScormManifest($zip)) {
 				$metadata = $this->getMetadata($manifest);
-				$this->createItem($metadata);
+				$this->createItem($metadata, array(
+					'scormPackage' => $args['object'],
+				));
 			}
 
 			$zip->close();
@@ -107,7 +109,7 @@ class ScormLib
 		return $data;
 	}
 
-	private function createItem($metadata)
+	private function createItem($metadata, $additional)
 	{
 		global $prefs;
 
@@ -125,6 +127,8 @@ class ScormLib
 				}
 			}
 		}
+
+		$fields = array_merge($fields, $additional);
 
 		$utilities = new Services_Tracker_Utilities;
 		$utilities->insertItem($definition, array(
