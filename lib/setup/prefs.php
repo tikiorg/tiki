@@ -324,6 +324,20 @@ function get_default_prefs() {
 	return $prefs;
 }
 
+function isInternetExploder()
+{
+    if (isset($_SERVER['HTTP_USER_AGENT']) && 
+    (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+        return true;
+    else
+        return false;
+}
+
+function boolean_to_string($value)
+{
+    return $value ? 'True' : 'False';
+}
+
 
 function initialize_prefs() {
 	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs, $in_installer, $section;
@@ -391,6 +405,31 @@ function initialize_prefs() {
 	$prefs = array_merge( $defaults, $modified ); // Preferences are the sum of modified preferences and those with the default value.
 	global $systemConfiguration;
 	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
+    $prefs['favicon_debug'] = array();
+    $prefs['favicon_debug'][] = 'This is my temporary debug log/scratchpad';
+    $prefs['favicon_debug'][] = 'There is prolly a smarter way to do this.';
+	$prefs['favicon_debug'][] = 'HTTP_USER_AGENT == ' . $_SERVER['HTTP_USER_AGENT'];
+	$prefs['favicon_debug'][] = 'Using Internet Exploder == ' . boolean_to_string( isInternetExploder());
+	
+	// For standards compliant browsers, we want a favicon link like...
+	//   <link rel="icon" type="image/jpeg" href="http://www.example.com/image.jpg">
+	
+	// For Internet Exploder, we want a favicon link like...
+	//   <link rel="SHORTCUT ICON" href="http://www.example.com/alternateimage.ico"/>
+	
+    $prefs['actual_site_favicon_rel' ] = 'icon';
+	$prefs['actual_site_favicon_type'] = $prefs['site_favicon_type'];
+	$prefs['actual_site_favicon'     ] = $prefs['site_favicon'];	
+	if (isInternetExploder() && ((!empty($prefs['site_favicon_msie']))  || ($prefs['site_favicon_type']=='image/vnd.microsoft.icon'))) {
+	  // If the $prefs['site_favicon_msie'] preference is empty, we can re-use the regular $prefs['site_favicon'],
+	  //  but only if it of a type that Exploder understands (.ico image/vnd.microsoft.icon) .
+      $prefs['actual_site_favicon_rel' ] = 'SHORTCUT ICON';
+	  $prefs['actual_site_favicon_type'] = '';
+	  if ((!empty($prefs['site_favicon_msie'])) && ($prefs['actual_site_favicon'] != $prefs['site_favicon_msie'])) {
+	    $prefs['actual_site_favicon'] = $prefs['site_favicon_msie'];		
+        $prefs['favicon_debug'][] = 'Overriding the favicon to suite IE.';
+		}
+	  }
 }
 
 /**

@@ -17,7 +17,7 @@ class Services_Comment_Controller
 		$type = $input->type->text();
 		$objectId = $input->objectId->pagename();
 
-		if (! $this->isEnabled($type, $object)) {
+		if (! $this->isEnabled($type, $objectId)) {
 			throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
 		}
 

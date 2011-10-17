@@ -31,7 +31,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 	if (empty($_REQUEST['view_user'])) $userwatch = $tikilib->get_user_login($_REQUEST['userId']);
 	else $userwatch = $_REQUEST['view_user'];
 	if ($userwatch != $user) {
-		if ($userwatch === NULL) {
+		if ($userwatch === false) {
 			$smarty->assign('msg', tra("Unknown user"));
 			$smarty->display("error.tpl");
 			die;

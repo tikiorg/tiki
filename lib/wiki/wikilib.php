@@ -381,7 +381,7 @@ class WikiLib extends TikiLib
 			$parse_options['suppress_icons'] = true;
 		}
 
-		$wiki_cache = !is_null($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
+		$wiki_cache = ($prefs['feature_wiki_icache'] == 'y' && !is_null($info['wiki_cache'])) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
 		if ($wiki_cache > 0 && (empty($user) || $prefs['wiki_cache'] == 0) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $wiki_cache >= $this->now) {
