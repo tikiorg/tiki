@@ -151,6 +151,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	    	switch ($xmlVersion) {
 	    		case '0.3':
 	    		case '0.4':
+	    		case '0.5':
 	    			$xmlDtdFile = dirname(__FILE__) . "/mediawiki_dump_v$xmlVersion.xsd";
 	    			break;
 	    		default:

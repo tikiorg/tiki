@@ -21,9 +21,10 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
     public function testImportShouldCallMethodsToStartImportProcess()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData'));
+        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'setupTiki'));
         $obj->expects($this->once())->method('parseData');
         $obj->expects($this->once())->method('insertData');
+        $obj->expects($this->once())->method('setupTiki');
 
         $this->expectOutputString("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $obj->import();
@@ -32,10 +33,11 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
     public function testImportShouldSetSessionVariables()
     {
         $expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
-        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'saveAndDisplayLog')); 
+        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'saveAndDisplayLog', 'setupTiki')); 
         $obj->expects($this->once())->method('parseData');
         $obj->expects($this->once())->method('insertData')->will($this->returnValue($expectedImportFeedback));
         $obj->expects($this->once())->method('saveAndDisplayLog');
+        $obj->expects($this->once())->method('setupTiki');
         
         $obj->log = 'some log string';
         $obj->import();
