@@ -1568,6 +1568,7 @@ function prefs_feature_list($partial = false) {
 			),
 			'default' => 'n',
 			'view' => 'tiki-edit_templates.php',
+			'tags' => array('experimental'),
 		),
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),

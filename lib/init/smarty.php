@@ -48,7 +48,8 @@ class Smarty_Tiki extends Smarty
 		$this->main_template_dir = realpath('templates/');
 		$this->template_dir = array();
 		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
-			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'; 
+			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/';
+			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/'; 
 		}
 		$this->template_dir[] = $this->main_template_dir.'/styles/'.$style_base.'/'; 
 		$this->template_dir[] = $this->main_template_dir; 
