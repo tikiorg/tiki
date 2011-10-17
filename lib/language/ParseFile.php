@@ -13,8 +13,22 @@ require_once('Exception.php');
  */
 class Language_ParseFile
 {
-	
 	public $filePath;
+	
+	/**
+	 * Language file parsed content.
+	 * 
+	 * @var array
+	 */
+	protected $content = array();
+	
+	/**
+	 * Wheter $this->paser() has been called and
+	 * the content for the file is already loaded.
+	 * 
+	 * @var bool
+	 */
+	protected $contentLoaded = false;
 	
 	public function __construct($filePath)
 	{
@@ -58,6 +72,47 @@ class Language_ParseFile
 			}
 		}
 		
+		$this->content = $content;
+		$this->contentLoaded = true;
+		
 		return $content;
+	}
+
+	/**
+	 * Return statistics about the language file.
+	 * Information available is total number of strings,
+	 * number of untranslated strings, number of translated strings
+	 * and translation percentage.
+	 * 
+	 * @return array
+	 */
+	public function getStats()
+	{
+		if (!$this->contentLoaded) {
+			$this->parse();
+		}
+		
+		$stats = array(
+			'total' => 0,
+			'translated' => 0,
+			'untranslated' => 0,
+			'percentage' =>  0,
+		);
+		
+		foreach ($this->content as $entry) {
+			if ($entry['translated']) {
+				$stats['translated']++;
+			} else {
+				$stats['untranslated']++;
+			}
+			
+			$stats['total']++;
+		}
+		
+		if (!empty($stats['total'])) {
+			$stats['percentage'] = round($stats['translated'] / $stats['total'], 4) * 100;
+		}
+		
+		return $stats;
 	}
 }

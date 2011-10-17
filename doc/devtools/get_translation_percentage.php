@@ -43,6 +43,7 @@ if (!file_exists($tikiPath)) {
 chdir($tikiPath);
 require_once('tiki-setup.php');
 require_once('lang/langmapping.php');
+require_once('lib/language/ParseFile.php');
 
 if (isset($wikiPage) && !$tikilib->page_exists($wikiPage)) {
 	die("\nERROR: $wikiPage doesn't exist\n\n");
@@ -58,47 +59,29 @@ if ($return_var == 1) {
 	die("\nCouln't execute get_strings.php\n\n");
 }
 
-
 // calculate the percentage for each language.php
 $outputData = array();
 $globalStats = array();
 
 // $langmapping is set on lang/langmapping.php
 foreach ($langmapping as $lang => $null) {
-	if (file_exists("lang/$lang/language.php") && $lang != 'en') {
-		$lines = file("lang/$lang/language.php");
-		$total = 0;
-		$translated = 0;
-		$untranslated = 0;
-		
-		foreach ($lines as $line) {
-			$matches = array();
-			
-			if (preg_match('|^(/?/?)\s*?".+"\s*=>\s*".+".*|', $line, $matches)) {
-				$total++;
-				
-				if (!empty($matches[1])) {
-					$untranslated++;
-				} else {
-					$translated++;
-				}
-			}
-		}
-		
-		$percentage = round($translated / $total, 4) * 100;
+	$filePath = "lang/$lang/language.php";
+	if (file_exists($filePath) && $lang != 'en') {
+		$parseFile = new Language_ParseFile($filePath);
+		$stats = $parseFile->getStats();
 		
 		$outputData[$lang] = array(
-			'total' => $total,
-			'untranslated' => $untranslated,
-			'translated' => $translated,
-			'percentage' => $percentage,
+			'total' => $stats['total'],
+			'untranslated' => $stats['untranslated'],
+			'translated' => $stats['translated'],
+			'percentage' => $stats['percentage'],
 		);
 		
-		if ($percentage >= 70) {
+		if ($stats['percentage'] >= 70) {
 			$globalStats['70+']++; 
-		} else if ($percentage >= 30) {
+		} else if ($stats['percentage'] >= 30) {
 			$globalStats['30+']++;
-		} else if ($percentage < 30) {
+		} else if ($stats['percentage'] < 30) {
 			$globalStats['0+']++;
 		}
 	}

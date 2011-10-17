@@ -19,6 +19,19 @@ class Language_ParseFileTest extends TikiTestCase
 		$this->obj = new Language_ParseFile($this->filePath);
 	}
 
+	public function provider()
+	{
+		return array(array(array(
+			'Bytecode Cache' => array('key' => 'Bytecode Cache', 'translated' => false),
+			'Used' => array('key' => 'Used', 'translation' => "Usado", 'translated' => true),
+		 	'Available' => array('key' => 'Available', 'translated' => false),
+			'Memory' => array('key' => 'Memory', 'translated' => false),
+			'%0 enabled' => array('key' => '%0 enabled', 'translation' => '%0 habilitado', 'translated' => true),
+			'Features' => array('key' => 'Features', 'translation' => 'Recursos', 'translated' => true),
+			'Enable/disable Tiki features here, but configure them elsewhere' => array('key' => 'Enable/disable Tiki features here, but configure them elsewhere', 'translated' => false),
+		)));
+	}
+	
 	public function testConstruct_shouldThrowExceptionForInvalidFile()
 	{
 		$this->setExpectedException('Language_Exception', 'Path invalidFile does not exist.');
@@ -31,19 +44,77 @@ class Language_ParseFileTest extends TikiTestCase
 		$this->assertEquals($this->filePath, $obj->filePath);
 	}
 	
-	public function testParse_shouldReturnDataStructureRepresentingLanguageFile()
+    /**
+     * @dataProvider provider
+     */
+	public function testParse_shouldReturnDataStructureRepresentingLanguageFile($expectedResult)
 	{
-		$expectedResult = array(
-			'Bytecode Cache' => array('key' => 'Bytecode Cache', 'translated' => false),
-			'Used' => array('key' => 'Used', 'translation' => "Usado", 'translated' => true),
-		 	'Available' => array('key' => 'Available', 'translated' => false),
-			'Memory' => array('key' => 'Memory', 'translated' => false),
-			'%0 enabled' => array('key' => '%0 enabled', 'translation' => '%0 habilitado', 'translated' => true),
-			'Features' => array('key' => 'Features', 'translation' => 'Recursos', 'translated' => true),
-			'Enable/disable Tiki features here, but configure them elsewhere' => array('key' => 'Enable/disable Tiki features here, but configure them elsewhere', 'translated' => false),
-		);
-		
 		$this->assertEquals($expectedResult, $this->obj->parse());
 	}
 	
+	public function testParse_shouldSetContentLoadedProperty()
+	{
+		$reflectionClass = new ReflectionClass($this->obj);
+		$property = $reflectionClass->getProperty('contentLoaded');
+		$property->setAccessible(true);
+		
+		$this->obj->parse();
+		$this->assertTrue($property->getValue($this->obj));
+	}
+	
+	public function testGetStats_shouldReturnEmptyStats()
+	{
+		$expectedResult = array(
+			'total' => 0,
+			'translated' => 0,
+			'untranslated' => 0,
+			'percentage' =>  0,
+		);
+
+		$root = vfsStream::setup('root');
+		$file = new vfsStreamFile('language.php');
+		$root->addChild($file);
+		
+		$obj = new Language_ParseFile(vfsStream::url('root/language.php'));
+		
+		$this->assertEquals($expectedResult, $obj->getStats());
+	}
+	
+	public function testGetStats_shouldReturnLangFileStats()
+	{
+		$expectedResult = array(
+			'total' => 7,
+			'translated' => 3,
+			'untranslated' => 4,
+			'percentage' =>  42.86,
+		);
+		
+		$this->assertEquals($expectedResult, $this->obj->getStats());
+	}
+	
+	/**
+     * @dataProvider provider
+     */
+	public function testGetStats_shouldNotCallParseIfContentIsAlreadyLoaded($content)
+	{
+		$expectedResult = array(
+			'total' => 7,
+			'translated' => 3,
+			'untranslated' => 4,
+			'percentage' =>  42.86,
+		);
+		
+		$obj = $this->getMock('Language_ParseFile', array('parse'), array($this->filePath));
+		$obj->expects($this->never())->method('parse');
+		
+		$reflectionClass = new ReflectionClass($obj);
+		$contentProperty = $reflectionClass->getProperty('content');
+		$contentProperty->setAccessible(true);
+		$contentProperty->setValue($obj, $content);
+		$contentLoadedProperty = $reflectionClass->getProperty('contentLoaded');
+		$contentLoadedProperty->setAccessible(true);
+		$contentLoadedProperty->setValue($obj, true);
+		
+		$this->assertEquals($expectedResult, $obj->getStats());
+	}
 }
