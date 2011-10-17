@@ -77,21 +77,6 @@ class Smarty_Tiki extends Smarty
 		}
 	}
 
-	function _smarty_include($params) {
-		global $style_base, $tikidomain;
-
-		if (isset($style_base)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "$tikidomain/styles/$style_base/".$params['smarty_include_tpl_file'];
-			} elseif ($tikidomain and file_exists("templates/$tikidomain/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "$tikidomain/".$params['smarty_include_tpl_file'];
-			} elseif (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
-			}
-		}
-		return parent::_smarty_include($params);
-	}
-
 	// Fetch templates from plugins (smarty plugins, wiki plugins, modules, ...) that may need to :
 	//   - temporarily override some smarty vars,
 	//   - prefix their self_link / button / query URL arguments
