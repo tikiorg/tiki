@@ -6,12 +6,25 @@
 // $Id$
 
 require_once 'lib/language/CollectFiles.php';
+require_once('vfsStream/vfsStream.php');
 
 class Language_CollectFilesTest extends TikiTestCase
 {
 	protected function setUp()
 	{
 		$this->obj = new Language_CollectFiles;
+		
+		// setup a mock filesystem with directories and files 
+		$root = vfsStream::setup('root');
+		$dir1 = new vfsStreamDirectory('dir1');
+		$dir2 = new vfsStreamDirectory('dir2');
+		$root->addChild($dir1);
+		$root->addChild($dir2);
+		
+		$dir1->addChild(new vfsStreamFile('file1.tpl'));
+		$dir2->addChild(new vfsStreamFile('file2.php'));
+		$dir2->addChild(new vfsStreamFile('file3.php'));
+		$dir2->addChild(new vfsStreamFile('file4.txt'));
 	}
 	
 	public function testSetExcludeDirs_shouldRaiseExceptionForInvalidDir() {
@@ -53,5 +66,29 @@ class Language_CollectFilesTest extends TikiTestCase
 	{
 		$this->setExpectedException('Language_Exception');
 		$this->obj->scanDir('invalidDir');
+	}
+	
+	public function testScanDir_shouldReturnFiles()
+	{
+		$expectedResult = array('vfs://root/dir1/file1.tpl', 'vfs://root/dir2/file2.php', 'vfs://root/dir2/file3.php');
+		$this->assertEquals($expectedResult, $this->obj->scanDir(vfsStream::url('root')));
+	}
+	
+	public function testScanDir_shouldIgnoreExcludedDirs()
+	{
+		$obj = $this->getMock('Language_CollectFiles', array('getExcludeDirs'));
+		$obj->expects($this->exactly(5))->method('getExcludeDirs')->will($this->returnValue(array('vfs://root/dir1')));
+		$expectedResult = array('vfs://root/dir2/file2.php', 'vfs://root/dir2/file3.php');
+		$this->assertEquals($expectedResult, $obj->scanDir(vfsStream::url('root')));
+	}
+	
+	public function testScanDir_shouldAcceptIncludedFiles()
+	{
+		$obj = $this->getMock('Language_CollectFiles', array('getExcludeDirs', 'getIncludeFiles'));
+		$obj->expects($this->exactly(3))->method('getExcludeDirs')->will($this->returnValue(array('vfs://root/dir2')));
+		$obj->expects($this->exactly(2))->method('getIncludeFiles')->will($this->returnValue(array('vfs://root/dir2/file3.php')));
+		
+		$expectedResult = array('vfs://root/dir1/file1.tpl', 'vfs://root/dir2/file3.php');
+		$this->assertEquals($expectedResult, $obj->scanDir(vfsStream::url('root')));
 	}
 }
