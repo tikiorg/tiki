@@ -1128,12 +1128,17 @@ class ArtLib extends TikiLib
 					$multilinguallib->sqlTranslationOrphan('article', '`tiki_articles`', 'articleId', $val, $join, $mid, $bindvars);
 					$mid = ' where '.$mid;
 				}
+				if ($typeF == 'articleId' || $typeF == 'notArticleId') {
+					$mid .= empty($mid)? ' where ': ' and ';
+					$mid .= '`articleId` '.($typeF =='notArticleId'?'not in ':'in').' ('.implode(',', array_fill(0, count($val), '?')).')';
+					$bindvars = array_merge($bindvars, $val);
+				}
 			}
 		}
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			if (empty($mid)) $mid = ' where ';
+			$mid .= empty($mid)? ' where ': ' and ';
 			$mid .= " (`title` like ? or `heading` like ? or `body` like ? or `author` like ? or `authorName` like ?) ";
 			$bindvars = array($findesc, $findesc, $findesc, $findesc, $findesc);
 		}

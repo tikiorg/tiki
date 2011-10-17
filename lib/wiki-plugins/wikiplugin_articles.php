@@ -79,7 +79,23 @@ function wikiplugin_articles_info()
 			'order' => array(
 				'required' => false,
 				'name' => tra('Specific order'),
-				'description' => tra('List of ArticleId that mus appears in this order if present'),
+				'description' => tra('List of ArticleId that must appear in this order if present'),
+				'filter' => 'digits',
+				'separator' => '|',
+				'default' => ''
+			),
+			'articleId' => array(
+				'required' => false,
+				'name' => tra('Only these articles'),
+				'description' => tra('List of ArticleId to display separated by |'),
+				'filter' => 'digits',
+				'separator' => '|',
+				'default' => ''
+			),
+			'notArticleId' => array(
+				'required' => false,
+				'name' => tra('Not these articles'),
+				'description' => tra('List of ArticleId that can not be displayed separated by |'),
 				'filter' => 'digits',
 				'separator' => '|',
 				'default' => ''
@@ -303,6 +319,12 @@ function wikiplugin_articles($data, $params)
 
 	if (!empty($translationOrphan)) {
 		$filter['translationOrphan'] = $translationOrphan;
+	}
+	if (!empty($articleId)) {
+		$filter['articleId'] = $articleId;
+	}
+	if (!empty($notArticleId)) {
+		$filter['notArticleId'] = $notArticleId;
 	}
 	
 	include_once("lib/comments/commentslib.php");
