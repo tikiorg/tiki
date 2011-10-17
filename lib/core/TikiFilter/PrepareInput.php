@@ -13,7 +13,13 @@ class TikiFilter_PrepareInput
 	{
 		$this->delimiter = $delimiter;
 	}
-
+	
+	static function delimiter($delimiter)
+	{
+		$me = new self($delimiter);
+		return $me;
+	}
+	
 	function prepare(array $input)
 	{
 		$output = array();
