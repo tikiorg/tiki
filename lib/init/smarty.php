@@ -41,7 +41,7 @@ class Smarty_Tiki extends Smarty
 		parent::__construct();
 		global $prefs, $style_base;
 
-		if (empty($style_base)) {
+		if (empty($style_base) && class_exists('TikiLib')) {	// TikiLib doesn't exist in the installer
 			$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
 		}
 		if ($tikidomain) { $tikidomain.= '/'; }
