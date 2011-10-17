@@ -52,13 +52,13 @@ if ($tiki_p_edit_templates == 'y') {
 		check_ticket('edit-templates');
 		if (isset($_REQUEST['saveTheme'])) {
 			if (!empty($tikidomain)) {
-				if (!is_dir($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base))
-					mkdir($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base);
-				$file = $smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST['template'];
+				if (!is_dir($smarty->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base))
+					mkdir($smarty->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base);
+				$file = $smarty->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST['template'];
 			} else {
-				if (!is_dir($smarty->template_dir.'/styles/'.$style_base))
-					mkdir($smarty->template_dir.'/styles/'.$style_base);
-				$file = $smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST['template'];
+				if (!is_dir($smarty->main_template_dir.'/styles/'.$style_base))
+					mkdir($smarty->main_template_dir.'/styles/'.$style_base);
+				$file = $smarty->main_template_dir.'/styles/'.$style_base.'/'.$_REQUEST['template'];
 			}
 		} else {
 			$file = $smarty->get_filename($_REQUEST['template']);
@@ -109,7 +109,7 @@ if ($mode == 'listing') {
 	$local = 'styles/'.str_replace('.css', '', $prefs['style']).'/';
 	$where = array('', 'mail/', 'map/', 'modules/', $local);
 	$files = array();
-	chdir($smarty->template_dir);
+	chdir($smarty->main_template_dir);
 	foreach ($where as $w) {
 		$files = array_merge($files, glob($w . '*.tpl'));
 	}
