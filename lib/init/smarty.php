@@ -41,10 +41,13 @@ class Smarty_Tiki extends Smarty
 		parent::__construct();
 		global $prefs, $style_base;
 
+		if (empty($style_base)) {
+			$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
+		}
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->main_template_dir = realpath('templates/');
 		$this->template_dir = array();
-		if ( $tikidomain !== '/' ) {
+		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
 			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'; 
 		}
 		$this->template_dir[] = $this->main_template_dir.'/styles/'.$style_base.'/'; 
