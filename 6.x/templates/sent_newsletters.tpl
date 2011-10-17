@@ -24,24 +24,24 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>{$channels[user].name|escape}</td>
-				<td>{$channels[user].subject|escape}</td>
+				<td class="text">{$channels[user].name|escape}</td>
+				<td class="text"><a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{$channels[user].subject|escape}</a></td>
 				{if $view_editions eq 'y'}
 					<td>{$channels[user].users}</td>
 					<td>{$channels[user].sent|tiki_short_datetime}</td>
 				{/if}
-				<td>
+				<td class="integer">
 					{if $channels[user].nbErrors > 0}
 						<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}&amp;error={$channels[user].editionId}">{$channels[user].nbErrors}</a>
 					{else}
 						0
 					{/if}
 				</td>
-				<td>
+				<td class="action">
 					{if $url == "tiki-newsletter_archives.php"}
 						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					{/if}
-					{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y') }
+					{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y')}
 						<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
 					{else}
 						&nbsp;
