@@ -130,9 +130,9 @@ class Language_CollectFiles
 		
 		$files = array();
 		$pattern = $this->buildExtensionsPattern();
-		$handle = opendir($dir);
+		$contents = scandir($dir);
 
-		while (false !== ($file = readdir($handle))) {
+		foreach ($contents as $file) {
 			// Skip current, parent and hidden directories
 			if ('.'  === $file || '..' === $file
 				|| ((is_dir($file)) && strpos($file, '.') === 0)) {
@@ -151,9 +151,7 @@ class Language_CollectFiles
 				$files = array_merge($files, $this->scanDir($path));
 			}
 		}
-		
-		closedir($handle);
-		
+				
 		foreach ($this->getIncludeFiles() as $file) {
 			if (preg_match($pattern, $file) && !in_array($file, $files)) {
 				$files[] = $file;
