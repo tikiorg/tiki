@@ -21,20 +21,50 @@ class ScormLib
 		}
 	}
 
-	function handle_file($args)
+	function handle_file_creation($args)
 	{
+		if ($metadata = $this->getRequestMetadata($args)) {
+			$this->createItem($metadata, array(
+				'scormPackage' => $args['object'],
+			));
+		}
+	}
+
+	function handle_file_update($args)
+	{
+		if (isset($args['initialFileId']) && $metadata = $this->getRequestMetadata($args)) {
+			$relationlib = TikiLib::lib('relation');
+			$items = $relationlib->get_relations_to('file', $args['initialFileId'], 'tiki.file.attach');
+
+			$transaction = TikiDb::get()->begin();
+
+			foreach ($items as $item ) {
+				if ($item['type'] == 'trackeritem') {
+					$this->updateItem($item['itemId'], $metadata, array(
+						'scormPackage' => $args['object'],
+					));
+				}
+			}
+
+			$transaction->commit();
+		}
+	}
+
+	private function getRequestMetadata($args)
+	{
+		$metadata = null;
+
 		if ($this->isZipFile($args)
 			&& $zip = $this->getZipFile($args['object'])) {
 
 			if ($manifest = $this->getScormManifest($zip)) {
 				$metadata = $this->getMetadata($manifest);
-				$this->createItem($metadata, array(
-					'scormPackage' => $args['object'],
-				));
 			}
 
 			$zip->close();
 		}
+
+		return $metadata;
 	}
 
 	private function isZipFile($args)
@@ -111,9 +141,38 @@ class ScormLib
 
 	private function createItem($metadata, $additional)
 	{
+		$definition = $this->getScormTracker();
+		$fields = $this->buildFields($definition, $metadata, $additional);
+
+		$utilities = new Services_Tracker_Utilities;
+		$utilities->insertItem($definition, array(
+			'status' => 'o',
+			'fields' => $fields,
+		));
+	}
+
+	private function updateItem($itemId, $metadata, $additional)
+	{
+		$definition = $this->getScormTracker();
+		$fields = $this->buildFields($definition, $metadata, $additional);
+
+		$utilities = new Services_Tracker_Utilities;
+		$utilities->updateItem($definition, array(
+			'itemId' => (int) $itemId,
+			'status' => 'o',
+			'fields' => $fields,
+		));
+	}
+
+	private function getScormTracker()
+	{
 		global $prefs;
 
-		$definition = Tracker_Definition::get($prefs['scorm_tracker']);
+		return Tracker_Definition::get($prefs['scorm_tracker']);
+	}
+
+	private function buildFields($definition, $metadata, $additional)
+	{
 		$fields = array();
 
 		foreach ($metadata as $key => $values) {
@@ -128,13 +187,7 @@ class ScormLib
 			}
 		}
 
-		$fields = array_merge($fields, $additional);
-
-		$utilities = new Services_Tracker_Utilities;
-		$utilities->insertItem($definition, array(
-			'status' => 'o',
-			'fields' => $fields,
-		));
+		return array_merge($fields, $additional);
 	}
 
 	private function getTagString($values)

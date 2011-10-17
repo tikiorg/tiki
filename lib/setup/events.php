@@ -69,7 +69,8 @@ if ($prefs['dailyreports_enabled_for_new_users'] == 'y') {
 }
 
 if ($prefs['scorm_enabled'] == 'y') {
-	$events->bind('tiki.file.save', Event_Lib::defer('scorm', 'handle_file'));
+	$events->bind('tiki.file.create', Event_Lib::defer('scorm', 'handle_file_creation'));
+	$events->bind('tiki.file.update', Event_Lib::defer('scorm', 'handle_file_update'));
 }
 
 $events->bind('tiki.save', Event_Lib::defer('tiki', 'plugin_post_save_actions'));

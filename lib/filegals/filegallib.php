@@ -230,13 +230,16 @@ class FileGalLib extends TikiLib
 
 		if (empty($id)) {
 			$fileId = $filesTable->insert($fileData);
-			$final_event = 'tiki.file.create';
+			
+			if ($id === 0) {
+				$final_event = 'tiki.file.create';
+			}
 		} else {
 			$filesTable->update($fileData, array(
 				'fileId' => $id,
 			));
 			$fileId = $id;
-			$final_event = 'tiki.file.update';
+			$final_event = null;
 		}
 
 		$galleriesTable->update(array(
@@ -254,12 +257,14 @@ class FileGalLib extends TikiLib
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
 		}
 
-		TikiLib::events()->trigger($final_event, array(
-			'type' => 'file',
-			'object' => $fileId,
-			'galleryId' => $galleryId,
-			'filetype' => $type,
-		));
+		if ($final_event) {
+			TikiLib::events()->trigger($final_event, array(
+				'type' => 'file',
+				'object' => $fileId,
+				'galleryId' => $galleryId,
+				'filetype' => $type,
+			));
+		}
 
 		//Watches
 		$smarty->assign('galleryId', $galleryId);
@@ -408,10 +413,13 @@ class FileGalLib extends TikiLib
 					'fileId' => (int) $fileId,
 				));
 
-				if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && ( $prefs['fgal_asynchronous_indexing'] != 'y' || ! isset($_REQUEST['fast']) ) ) {
-					require_once('lib/search/refresh-functions.php');
-					refresh_index('files', $fileId);
-				}
+				TikiLib::events()->trigger('tiki.file.update', array(
+					'type' => 'file',
+					'object' => $fileId,
+					'galleryId' => $gal_info['galleryId'],
+					'initialFileId' => $fileId,
+					'filetype' => $type,
+				));
 			} else {
 				$this->save_archive($fileId, $old_file['galleryId'], $archives, $old_file['name'], $old_file['description'], $draft['filename'], $draft['data'], $draft['filesize'], $draft['filetype'], $old_file['creator'], $draft['path'], $old_file['comment'], $old_file['created'], $draft['lockedby']);
 			}
@@ -424,6 +432,7 @@ class FileGalLib extends TikiLib
 		global $prefs;
 
 		$filesTable = $this->table('tiki_files');
+		$initialFileId = $id;
 
 		// fgal_keep_fileId == n means that the archive will keep the same fileId and the latest version will have a new fileId
 		// fgal_keep_fileId = y the new version will keep the current fileId, the archive will have a new fileId
@@ -438,7 +447,7 @@ class FileGalLib extends TikiLib
 		}
 
 		// Insert or update and index (for search) the new file 
-		$idNew = $this->insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby, NULL, $prefs['fgal_keep_fileId']=='y'?$id:0);
+		$idNew = $this->insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby, NULL, $prefs['fgal_keep_fileId']=='y'?$id:false);
 
 		if ($count_archives > 0) {
 			$archives = $this->get_archives($id, 0, -1, 'created_asc');
@@ -475,6 +484,14 @@ class FileGalLib extends TikiLib
 			global $categlib; require_once('lib/categories/categlib.php');
 			$categlib->uncategorize_object('file', $id);
 		}
+
+		TikiLib::events()->trigger('tiki.file.update', array(
+			'type' => 'file',
+			'object' => $idNew,
+			'galleryId' => $gal_info['galleryId'],
+			'initialFileId' => $initialFileId,
+			'filetype' => $type,
+		));
 
 		return $idNew;
 	}
@@ -840,6 +857,8 @@ class FileGalLib extends TikiLib
 		$fileDraftsTable = $this->table('tiki_file_drafts');
 		$galleriesTable = $this->table('tiki_file_galleries');
 
+		$initialFileId = $id;
+
 		// Update the fields in the database
 		$name = trim(strip_tags($name));
 		$description = strip_tags($description);
@@ -931,6 +950,7 @@ class FileGalLib extends TikiLib
 				'type' => 'file',
 				'object' => $id,
 				'galleryId' => $gal_info['galleryId'],
+				'initialFileId' => $initialFileId,
 				'filetype' => $type,
 			));
 
