@@ -10291,6 +10291,7 @@ $lang = array(
 // "of every month" => "of every month",
 // "on each" => "on each",
 // "{\$monthnames[\$recurrence.dateOfYear_month]}" => "{\$monthnames[\$recurrence.dateOfYear_month]}",
+"End" => "Konec",
 // "Show duration" => "Show duration",
 // "Events cannot end before they start" => "Events cannot end before they start",
 // "No description" => "No description",
