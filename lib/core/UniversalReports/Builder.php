@@ -119,7 +119,13 @@ class UniversalReports_Builder
 	
 	function outputCSV()
 	{
-		$output = $this->outputArray();
+		$output = '';
+		
+		foreach($this->outputArray() as $row) {
+			$output .= '"' . implode('","', $row) . '"'. "\n";
+		}
+
+		return $output;
 	}
 	
 	function outputChart()
