@@ -6,13 +6,20 @@ TikiLib::lib("sheet")->setup_jquery_sheet();
 
 if (!empty($_REQUEST['preview'])) {
 	echo UniversalReports_Builder::load($_REQUEST['preview'])
-			->setValuesFromRequest($_REQUEST['values'])
-			->outputSheet();
+		->setValuesFromRequest($_REQUEST['values'])
+		->outputSheet();
 	die;
 }
 
 if (!empty($_REQUEST['load'])) {
 	echo json_encode(UniversalReports_Builder::load($_REQUEST['load'])->input);
+	die;
+}
+
+if (!empty($_REQUEST['exportcsv'])) {
+	echo UniversalReports_Builder::load($_REQUEST['exportcsv'])
+		->setValuesFromRequest(json_decode(urldecode($_REQUEST['values'])))
+		->outputCSV(true);
 	die;
 }
 
@@ -50,6 +57,15 @@ $headerlib->add_jq_onready("
 					});
 			}
 		});
+		
+		return false;
+	});
+	
+	$('#universalReportsExportCSV').click(function() {
+		$.download('tiki-edit_universal_reports.php', { 
+			values: JSON.stringify($('#universalReportsEditor').serializeArray()),
+			exportcsv: $('#universalReportsType').val()
+		}, 'post');
 		
 		return false;
 	});

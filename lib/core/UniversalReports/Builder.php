@@ -8,6 +8,11 @@ class UniversalReports_Builder
 	var $name = '';
 	var $description = '';
 	
+	function __construct() {
+		$this->name = 'report';
+		$this->description = '';
+	}
+	
 	static function load($type)
 	{
 		$me = new self();
@@ -80,6 +85,8 @@ class UniversalReports_Builder
 	{
 		$parsedValues = array();
 		foreach($values as $value) {
+			$value = (array)$value; //was having trouble with downloading csv
+			
 			if (preg_match('/\[\]/', $value['name'])) {
 				$value['name'] = str_replace('[]', '', $value['name']);
 				$parsedValues[$value['name']][] = array(
@@ -117,14 +124,23 @@ class UniversalReports_Builder
 		return $grid->getTableHtml();
 	}
 	
-	function outputCSV()
+	function outputCSV($auto = false)
 	{
 		$output = '';
 		
 		foreach($this->outputArray() as $row) {
 			$output .= '"' . implode('","', $row) . '"'. "\n";
 		}
-
+		
+		if ($auto == true) {
+			header("Content-type: application/csv");
+			header("Content-Disposition: attachment; filename=" . $this->name . ".csv");
+			header("Pragma: no-cache");
+			header("Expires: 0");
+			echo $output;
+			return '';
+		}
+		
 		return $output;
 	}
 	
