@@ -78,7 +78,10 @@
 				{assign var=stick value="n"}
 
 				{foreach from=$fields key=ix item=cur_field}
-					{if !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.options_array[0] ne 'password')}
+					{if !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and
+							empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h' and $cur_field.type ne 'l') and
+							($cur_field.options_array[0] ne 'password')}
+					
 						<tr class="field{$cur_field.fieldId}">
 							<td class="formlabel" >
 								{$cur_field.name|escape}
