@@ -47,5 +47,42 @@ class TikiFilter_PrepareInputTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expect, $prepareInput->prepare($input));
 	}
+	
+	function testNormalFlatten()
+	{
+		$input = array(
+			'foo' => 'bar',
+			'hello' => 'world',
+		);
+		
+		$this->assertEquals($input, TikiFilter_PrepareInput::delimiter('.')->flatten($input));
+	}
+	
+	function testConvertArrayFlatten()
+	{
+		$input = array(
+			'foo' => array(
+				'baz' => 'bar',
+				'bar' => 'baz',
+			),
+			'hello' => 'world',
+			'a' => array(
+				'b' => array(
+					'c' => '1',
+					'd' => '2',
+				),
+			),
+		);
+		
+		$expect = array(
+			'foo.baz' => 'bar',
+			'foo.bar' => 'baz',
+			'hello' => 'world',
+			'a.b.c' => '1',
+			'a.b.d' => '2',
+		);
+		
+		$this->assertEquals($expect, TikiFilter_PrepareInput::delimiter('.')->flatten($input));
+	}
 }
 
