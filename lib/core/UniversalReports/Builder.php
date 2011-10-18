@@ -36,6 +36,19 @@ class UniversalReports_Builder
 		return $me;
 	}
 	
+	static function listDefinitions()
+	{
+		$files = array();
+		
+		foreach(scandir('lib/core/UniversalReports/Definition') as $fileName) {
+			if (preg_match('/[.]php/', $fileName)) {
+				$files[] = str_replace('.php', '', $fileName);
+			}
+		}
+		
+		return $files;
+	}
+	
 	static function listType($type)
 	{
 		
