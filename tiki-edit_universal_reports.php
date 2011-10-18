@@ -50,7 +50,7 @@ $headerlib->add_jq_onready("
 				jS.openSheet(o);
 			} else {
 				$('#universalReportsDebug')
-					.html(o)
+					.html($(o).attr('title', tr('Preview')))
 					.sheet({
 						buildSheet: true,
 						editable: false
