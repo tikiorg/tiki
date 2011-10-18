@@ -104,7 +104,17 @@ class UniversalReports_Builder
 	
 	function outputSheet()
 	{
-		$output = $this->outputArray();
+		$sheetlib = TikiLib::lib("sheet");
+		
+		$handler = new TikiSheetSimpleArrayHandler(array(
+			"values"=>$this->outputArray(),
+			"name"=>$this->name
+		));
+		
+		$grid = new TikiSheet();
+		$grid->import( $handler );
+		
+		return $grid->getTableHtml();
 	}
 	
 	function outputCSV()

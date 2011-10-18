@@ -1007,7 +1007,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
  } // }}}1
  
 
-/** TikiSheetCSVHandler {{{1
+/** TikiSheetTrackerHandler {{{1
  * Class that stores the sheet representation in a
  * standard text file as a serialized PHP object.
  */
@@ -1089,6 +1089,74 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 	}
  } // }}}1
 
+
+/** TikiSheetTrackerHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object.
+ */
+class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
+{
+	var $values = array();
+	
+	function TikiSheetSimpleArrayHandler( $simpleArray = array() )
+	{		
+		$this->values = $simpleArray['values'];
+		$this->name = $simpleArray['name'];
+		$this->type = "simpleArray";
+		$this->cssName = 'readonly';
+	}
+
+	// _load {{{2
+	function _load( &$sheet ) {
+		global $tikilib;
+		TikiLib::lib("trkqry");
+		$i = 0;
+		$trackerName = $this->name;
+
+		foreach($this->values as $row) {
+			$j = 0;	
+			foreach($row as $key => $col) {
+				$sheet->initCell( $i, $j );
+				
+				if (!empty($col[0]) && $col[0] == '=' ) {
+					$sheet->setCalculation( substr($col, 1) );
+				}
+				
+				$sheet->setValue( $i == 0 ? $key : $col );
+				
+				$sheet->setSize( 1, 1 );
+				$j++;
+			}
+			$i++;
+		}
+		
+		return true;
+	}
+
+	// _save {{{2
+	function _save( &$sheet )
+	{
+		return false;
+	}
+	
+	// name {{{2
+	function name()
+	{
+		return $this->info['name'];
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_LOAD_DATA ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "1.0";
+	}
+ } // }}}1
 
  /** TikiSheetCSVExcelHandler {{{1
  * Class that stores the sheet representation in a
