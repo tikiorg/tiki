@@ -2,8 +2,17 @@
 require_once('tiki-setup.php');
 
 if (isset($_REQUEST['parse'])) {
-	unset($_REQUEST['parse']);
-	print_r( UniversalReports_Parser::load('Tracker')->apply($_REQUEST) );
+	print_r(
+		UniversalReports_Builder::load('Tracker')->setValues(
+			TikiFilter_PrepareInput::delimiter('_')->prepare(
+				TikiFilter_PrepareInput::delimiter('_')->flatten(
+					UniversalReports_Builder::load('Tracker')
+						->setValuesFromRequest($_REQUEST['values'])
+						->values
+				)
+			)
+		)->outputArray()
+	);
 	die;
 }
 
@@ -15,11 +24,14 @@ $headerlib->add_jsfile( 'lib/core/UniversalReports/Parser.js' );
 $headerlib->add_jq_onready("
 	$('#universalReportsEditor')
 		.universalReportsBuilder({
-			definition: ".json_encode(UniversalReports_Builder::load('Tracker')->definition)."
+			definition: ".json_encode(UniversalReports_Builder::load('Tracker')->input)."
 		});
 	
 	$('#universalReportsUpdate').click(function() {
-		$.post('tiki-edit_universal_reports.php?parse',$('#universalReportsEditor').universalReportsParser(), function(o) {
+		$.post('tiki-edit_universal_reports.php', {
+			values: $('#universalReportsEditor').serializeArray(),
+			parse: true
+		}, function(o) {
 			$('#universalReportsDebug').text(o);
 		});
 		
