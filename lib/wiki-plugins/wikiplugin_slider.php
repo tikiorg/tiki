@@ -394,6 +394,7 @@ function wikiplugin_slider($data, $params) {
 	
 	$titles = array();
 	if (!empty($titles)) {
+		$titles = $tikilib->parse_data($titles, array('suppress_icons' => true));
 		$titles = explode('|', $titles);
 	}
 	
