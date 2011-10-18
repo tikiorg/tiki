@@ -1,16 +1,7 @@
 <?php
 class UniversalReports_Definition_Tracker
-{
-	var $trkqrylib;
-	var $report = array();
-	
-	function __construct()
-	{
-		//we maintain this object so we can add options to it later
-		$this->trkqrylib = TikiLib::lib("trkqry");
-	}
-	
-	static function definition() {
+{	
+	function input() {
 		global $tikilib;
 		$trackers = array();
 		foreach($tikilib->table('tiki_trackers')->fetchAll(array('trackerId','name')) as $column) {
@@ -68,7 +59,7 @@ class UniversalReports_Definition_Tracker
 						),
 						array(
 							"label"=> 		tr("Item Id"),
-							"name"=> 		"trackerItemId",
+							"name"=> 		"itemId",
 							"type"=> 		"single",
 							"repeats"=>		false,
 							"required"=>	false,
@@ -93,7 +84,7 @@ class UniversalReports_Definition_Tracker
 						),
 						array(
 							"label"=> 		tr("Fields"),
-							"name"=> 		"trackerFields",
+							"name"=> 		"fields",
 							"type"=> 		"multi",
 							"dependancy"=>	"tracker",
 							"values"=> 		"trackerFields",
@@ -106,17 +97,60 @@ class UniversalReports_Definition_Tracker
 		);
 	}
 	
-	static function assemble($report)
+	function output($values = array())
 	{
-		$me = new self();
-		$me->report = $report;
+		global $tikilib;
+		$tracker = $values['tracker'];
 		
+		$qry = TikiLib::lib('trkqry')->tracker($tracker['value'])
+			->start($tracker['start']['value'])
+			->end($tracker['end']['value'])
+			->itemId($tracker['itemId']['value'])
+			->excludeDetails();
 		
-		return $me;
-	}
-	
-	function output()
-	{
-		return $this->report;
+		if (!empty($tracker['status'])) {
+			$allStatus = '';
+			foreach($tracker['status'] as $status) {
+				if (!empty($status['value'])) $allStatus .= $status['value'];
+			}
+			
+			$qry->status($allStatus);
+		}
+		
+		if (!empty($tracker['search'])) {
+			$fieldIds = array();
+			$search = array();
+			
+			for($i = 0; $i < count($tracker['search']); $i++) {
+				if (!empty($tracker['search'][$i]) && $tracker['search'][$i + 1]) {
+					$fieldIds[] = $tracker['search']['value'][$i];
+					$search[] = $tracker['search']['value'][$i + 1];
+				}
+				$i++			; //searches are in groups of 2
+			}
+			
+			if (!empty($fieldIds) && !empty($search)) {
+				$qry
+					->fields($fieldIds)
+					->equals($search);
+			}
+		}
+		
+		$result = $qry->query(); 
+		
+		if (!empty($tracker['fields'])) {
+			$newResult = array();
+			foreach($result as $itemKey => $item) {
+				$newResult[$itemKey] = array();
+				foreach($tracker['fields'] as $field) {
+					$newResult[$itemKey][$field['value']] = $result[$itemKey][$field['value']]; 
+				}
+			}
+			
+			$result = $newResult;
+			unset($newResult);
+		}
+		
+		return $result;
 	}
 }
