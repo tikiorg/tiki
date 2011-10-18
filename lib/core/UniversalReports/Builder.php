@@ -128,7 +128,18 @@ class UniversalReports_Builder
 	{
 		$output = '';
 		
+		$header = false;
+		
 		foreach($this->outputArray() as $row) {
+			if ($header == false) {
+				$header = true;
+				$headerNames = array();
+				foreach($row as $headerName=>$col) {
+					$headerNames[] = tr(ucwords($headerName));
+				}
+				
+				$output .= '"' . implode('","', $headerNames) . '"'. "\n";
+			}
 			$output .= '"' . implode('","', $row) . '"'. "\n";
 		}
 		
