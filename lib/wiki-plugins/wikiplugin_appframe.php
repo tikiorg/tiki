@@ -49,7 +49,10 @@ $(window).resize(function () {
 	}
 
 	appframe.height(target);
-}).resize();
+	$('#appframe .tab').each(function () {
+		$(this).data('available-height', $('#appframe').height() - $(this).position().top).addClass('height-size');
+	});
+});
 $('#appframe .tab').parent().each(function () {
 	var tabs = $(this).children('.tab').wrapAll('<div class="tabs" style="height: 100%;"/>');
 	var list = $('<ul/>');
@@ -59,9 +62,10 @@ $('#appframe .tab').parent().each(function () {
 		list.append($('<li/>').append(link));
 	});
 	tabs.parent().tabs();
-	tabs.data('available-height', $('#appframe').height() - tabs.position().top).addClass('height-size');
 });
 $('#appframe .accordion').parent().accordion();
+
+$(window).resize();
 JS
 );
 
