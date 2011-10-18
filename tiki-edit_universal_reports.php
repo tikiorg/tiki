@@ -1,14 +1,16 @@
 <?php
 require_once('tiki-setup.php');
 
-if (isset($_REQUEST['parse'])) {
+if (!empty($_REQUEST['preview'])) {
 	print_r(
-		UniversalReports_Builder::load('Logs')->setValuesFromRequest($_REQUEST['values'])->outputArray()
+		UniversalReports_Builder::load($_REQUEST['preview'])
+			->setValuesFromRequest($_REQUEST['values'])
+			->outputArray()
 	);
 	die;
 }
 
-if (isset($_REQUEST['load'])) {
+if (!empty($_REQUEST['load'])) {
 	echo json_encode(UniversalReports_Builder::load($_REQUEST['load'])->input);
 	die;
 }
@@ -32,10 +34,10 @@ $headerlib->add_jq_onready("
 		})
 		.change();
 	
-	$('#universalReportsUpdate').click(function() {
+	$('#universalReportsPreview').click(function() {
 		$.post('tiki-edit_universal_reports.php', {
 			values: $('#universalReportsEditor').serializeArray(),
-			parse: true
+			preview: $('#universalReportsType').val()
 		}, function(o) {
 			$('#universalReportsDebug').text(o);
 		});

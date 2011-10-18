@@ -10,7 +10,8 @@
 
 </form>
 
-{button _text="Update" _id="universalReportsUpdate"}
+{button _text="Preview" _id="universalReportsPreview"}
+{button _text="Save" _id="universalReportsSave"}
 
 <form id="universalReportsDebug">
 
