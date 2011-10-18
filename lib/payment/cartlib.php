@@ -658,7 +658,7 @@ class CartLib
 			} else {
 				$description = tra('Registration Check-Out') . " ($user)";
 			}	
-			$invoice = $paymentlib->request_payment( $description, $total, 1440 * $prefs['payment_default_delay'], $this->get_description() );
+			$invoice = $paymentlib->request_payment( $description, $total, $prefs['payment_default_delay'], $this->get_description() );
 			foreach( $this->get_behaviors() as $behavior ) {
 				$paymentlib->register_behavior( $invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments'] );
 			}
