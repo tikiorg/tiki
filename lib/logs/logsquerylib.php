@@ -104,6 +104,11 @@ class LogsQueryLib
 			->id($id);
 	}
 	
+	static function listTypes() {
+		global $tikilib;
+		return $tikilib->fetchAll("SELECT objectType FROM tiki_actionlog GROUP By objectType");
+	}
+	
 	static function url($id = "") {
 		return LogsQueryLib::type("url")
 			->id($id);
