@@ -5,11 +5,9 @@ global $headerlib, $smarty;
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
 if (!empty($_REQUEST['preview'])) {
-	print_r(
-		UniversalReports_Builder::load($_REQUEST['preview'])
+	echo UniversalReports_Builder::load($_REQUEST['preview'])
 			->setValuesFromRequest($_REQUEST['values'])
-			->outputSheet()
-	);
+			->outputSheet();
 	die;
 }
 
@@ -40,13 +38,17 @@ $headerlib->add_jq_onready("
 			values: $('#universalReportsEditor').serializeArray(),
 			preview: $('#universalReportsType').val()
 		}, function(o) {
-			
-			$('#universalReportsDebug')
-				.html(o)
-				.sheet({
-					buildSheet: true,
-					editable: false
-				});
+			var jS = $('#universalReportsDebug').getSheet();
+			if (jS) {
+				jS.openSheet(o);
+			} else {
+				$('#universalReportsDebug')
+					.html(o)
+					.sheet({
+						buildSheet: true,
+						editable: false
+					});
+			}
 		});
 		
 		return false;
