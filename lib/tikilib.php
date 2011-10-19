@@ -242,6 +242,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'scorm':
 			require_once 'lib/filegals/scormlib.php';
 			return self::$libraries[$name] = new ScormLib;
+		case 'mod':
+			global $modlib; require_once 'lib/modules/modlib.php';
+			return self::$libraries[$name] = $modlib;
 		}
 	}
 

@@ -63,7 +63,9 @@ $('#appframe .tab').parent().each(function () {
 	});
 	tabs.parent().tabs();
 });
-$('#appframe .accordion').parent().accordion();
+$('#appframe .accordion').wrapAll('<div/>').parent().accordion({
+	autoHeight: false
+});
 
 $(window).resize();
 JS
@@ -126,10 +128,36 @@ function wikiplugin_appframe_page($data, $params, $start)
 
 function wikiplugin_appframe_module($data, $params, $start)
 {
+	$modlib = TikiLib::lib('mod');
+	$moduleName = $params->name->word();
+	$label = $params->label->text();
+
+	if (! $label) {
+		$info = $modlib->get_module_info($moduleName);
+
+		if (! $info ) {
+			return null;
+		}
+
+		$label = $info['name'];
+	}
+
+	$data = $modlib->execute_module(array(
+		'name' => $moduleName,
+		'params' => array(
+			'nobox' => 'y',
+			'notitle' => 'y',
+		),
+	));
+
+	if (! $data) {
+		return null;
+	}
+
 	return <<<MODULE
-<h4 class="accordion">{$params->name->word()}</h4>
-<div>
-	Work in progress
+<h4 class="accordion">{$label}</h4>
+<div class="accordion">
+	$data
 </div>
 MODULE;
 }
