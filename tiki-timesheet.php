@@ -99,7 +99,7 @@ $headerlib->add_jq_onready("
 	});
 	
 	$('#timeSheetCommit').click(function() {
-		$('#timeSheetUnsaved').modal(tr('Committing...'));
+		$('#timeSheetTabs').modal(tr('Committing...'));
 		var stack = [];
 		for (var namespace in $.DOMCached.getStorage()) {
 			stack.push(namespace);
@@ -112,7 +112,7 @@ $headerlib->add_jq_onready("
 				stack.pop();
 				
 				if (stack.length == 0) {
-					$('#timeSheetUnsaved').modal();
+					$('#timeSheetTabs').modal();
 					document.location = document.location + '';
 				}
 			});
