@@ -15,6 +15,7 @@ function wikiplugin_appframe_info()
 		'introduced' => 9,
 		'documentation' => 'PluginAppFrame',
 		'filter' => 'wikicontent',
+		'body' => tr('Application layout'),
 		'params' => array(
 			'min' => array(
 				'required' => false,
@@ -22,6 +23,26 @@ function wikiplugin_appframe_info()
 				'description' => tr('Prevent the frame from becoming any shorter than the specified size.'),
 				'default' => 300,
 				'filter' => 'int',
+			),
+			'hideleft' => array(
+				'requred' => false,
+				'name' => tr('Hide left column'),
+				'description' => tr('Hide the left column when the application frame is in use to provide more space to the application.'),
+				'default' => 'n',
+				'options' => array(
+					array('value' => 'n', 'text' => tr('No')),
+					array('value' => 'y', 'text' => tr('Yes')),
+				),
+			),
+			'hideright' => array(
+				'requred' => false,
+				'name' => tr('Hide right column'),
+				'description' => tr('Hide the right column when the application frame is in use to provide more space to the application.'),
+				'default' => 'n',
+				'options' => array(
+					array('value' => 'n', 'text' => tr('No')),
+					array('value' => 'y', 'text' => tr('Yes')),
+				),
 			),
 		),
 	);
@@ -32,6 +53,20 @@ function wikiplugin_appframe($data, $params)
 	$minHeight = isset($params['min']) ? (int) $params['min'] : 300;
 
 	$headerlib = TikiLib::lib('header');
+
+	if (isset($params['hideleft']) && $params['hideleft'] == 'y') {
+		$headerlib->add_js(<<<JS
+hideCol('col2','left', 'col1');
+JS
+);
+	}
+
+	if (isset($params['hideright']) && $params['hideright'] == 'y') {
+		$headerlib->add_js(<<<JS
+hideCol('col3','right', 'col1');
+JS
+);
+	}
 
 	$headerlib->add_js(<<<JS
 $(window).resize(function () {
