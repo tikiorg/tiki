@@ -16,6 +16,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class SheetLib extends TikiLib
 {
+	private $setup_jQuery_sheet_files;
+
 	function get_sheet_info( $sheetId ) // {{{2
 	{
 		$result = $this->query( "SELECT * FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
