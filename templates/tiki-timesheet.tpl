@@ -1,3 +1,8 @@
+{if $timeSheetProfileLoaded neq true}
+{tr}Apply the following profile for enhancements: {/tr}
+{button href="tiki-admin.php" profile="time_sheet" page="profiles" list="List" _text="Time_Sheet"}
+{/if}
+
 <div id="timeSheetTabs">
 	<ul>
 		<li><a href="#tab1">{tr}Time Tracker{/tr}</a></li>
