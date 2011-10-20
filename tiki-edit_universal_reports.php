@@ -23,7 +23,7 @@ if (!empty($_REQUEST['exportcsv'])) {
 	die;
 }
 
-$headerlib->add_jsfile( 'lib/core/UniversalReports/Builder.js', 'external' );
+$headerlib->add_jsfile( 'lib/core/UniversalReports/Builder.js' );
 
 $headerlib->add_jq_onready("
 	$('#universalReportsType')
