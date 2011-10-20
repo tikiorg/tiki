@@ -6,7 +6,7 @@
 			{toolbars area_id=$textarea_id|default:editwiki comments=$comments switcheditor=$switcheditor section=$toolbar_section}
 		</div>
 	{/if}
-	<textarea {$textarea_attributes}>{$pagedata}</textarea>
+	<textarea {$textarea_attributes}>{$textareadata}</textarea>
 </div>
 
 {if isset($diff_style) and $diff_style}
