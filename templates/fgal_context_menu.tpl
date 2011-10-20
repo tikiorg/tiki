@@ -62,7 +62,7 @@
 		<a href="tiki-view_sheets.php?fileId={$files[$changes].id}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
-	{elseif $files[$changes].type eq 'application/vnd.oasis.opendocument.text' and $prefs.feature_docs eq 'y'}
+	{elseif ($files[$changes].type eq 'application/vnd.oasis.opendocument.text' or $files[$changes].type eq 'application/octet-stream') and $prefs.feature_docs eq 'y'}
 		<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
