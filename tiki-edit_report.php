@@ -4,43 +4,43 @@ global $headerlib, $smarty;
 
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
-$uB = new UniversalReports_Builder();
+$uB = new Report_Builder();
 
 if (isset($_REQUEST['preview'])) {
-	echo UniversalReports_Builder::load($_REQUEST['preview'])
+	echo Report_Builder::load($_REQUEST['preview'])
 		->setValuesFromRequest($_REQUEST['values'])
 		->outputSheet();
 	die;
 }
 
 if (isset($_REQUEST['load'])) {
-	echo json_encode(UniversalReports_Builder::load($_REQUEST['load'])->input);
+	echo json_encode(Report_Builder::load($_REQUEST['load'])->input);
 	die;
 }
 
 if (isset($_REQUEST['exportcsv'])) {
-	echo UniversalReports_Builder::load($_REQUEST['exportcsv'])
+	echo Report_Builder::load($_REQUEST['exportcsv'])
 		->setValuesFromRequest(json_decode(urldecode($_REQUEST['values'])))
 		->outputCSV(true);
 	die;
 }
 
 if (isset($_REQUEST['wikisyntax'])) {
-	echo UniversalReports_Builder::load($_REQUEST['wikisyntax'])
+	echo Report_Builder::load($_REQUEST['wikisyntax'])
 		->setValuesFromRequest($_REQUEST['values'])
 		->outputWiki();
 	die;
 }
 
-$headerlib->add_jsfile( 'lib/core/UniversalReports/Builder.js');
+$headerlib->add_jsfile( 'lib/core/Report/Builder.js');
 
 $headerlib->add_jq_onready("
-	$('#universalReportsType')
+	$('#ReportType')
 		.change(function() {
-			$('#universalReportsEditor').html('');
+			$('#ReportEditor').html('');
 			if ($(this).val()) {
 				$.getJSON('tiki-edit_universal_reports.php?',{load: $(this).val()}, function(data) {
-					$('#universalReportsEditor').universalReportsBuilder({
+					$('#ReportEditor').ReportBuilder({
 						definition: data
 					});
 				});
@@ -48,16 +48,16 @@ $headerlib->add_jq_onready("
 		})
 		.change();
 	
-	$('#universalReportsPreview').click(function() {
+	$('#ReportPreview').click(function() {
 		$.post('tiki-edit_universal_reports.php', {
-			values: $('#universalReportsEditor').serializeArray(),
-			preview: $('#universalReportsType').val()
+			values: $('#ReportEditor').serializeArray(),
+			preview: $('#ReportType').val()
 		}, function(o) {
-			var jS = $('#universalReportsDebug').getSheet();
+			var jS = $('#ReportDebug').getSheet();
 			if (jS) {
 				jS.openSheet(o);
 			} else {
-				$('#universalReportsDebug')
+				$('#ReportDebug')
 					.html($(o).attr('title', tr('Preview')))
 					.sheet({
 						buildSheet: true,
@@ -69,27 +69,27 @@ $headerlib->add_jq_onready("
 		return false;
 	});
 	
-	$('#universalReportsExportCSV').click(function() {
+	$('#ReportExportCSV').click(function() {
 		$.download('tiki-edit_universal_reports.php', { 
-			values: JSON.stringify($('#universalReportsEditor').serializeArray()),
-			exportcsv: $('#universalReportsType').val()
+			values: JSON.stringify($('#ReportEditor').serializeArray()),
+			exportcsv: $('#ReportType').val()
 		}, 'post');
 		
 		return false;
 	});
 	
-	$('#universalReportsWikiSyntax').click(function() {
+	$('#ReportWikiSyntax').click(function() {
 		$.post('tiki-edit_universal_reports.php', {
-			values: $('#universalReportsEditor').serializeArray(),
-			'wikisyntax': $('#universalReportsType').val()
+			values: $('#ReportEditor').serializeArray(),
+			'wikisyntax': $('#ReportType').val()
 		}, function(o) {
-			$('#universalReportsWikiSyntaxOutput').html(o);
+			$('#ReportWikiSyntaxOutput').html(o);
 		});
 		
 		return false;
 	});
 ");
 
-$smarty->assign('definitions', UniversalReports_Builder::listDefinitions());
-$smarty->assign('mid', 'tiki-edit_universal_reports.tpl');
+$smarty->assign('definitions', Report_Builder::listDefinitions());
+$smarty->assign('mid', 'tiki-edit_report.tpl');
 $smarty->display("tiki.tpl");
