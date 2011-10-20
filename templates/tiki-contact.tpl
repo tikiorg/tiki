@@ -26,7 +26,7 @@
 			
 			{if $user eq ''}
 			<tr>
-				<td>{tr}From:{/tr}</td>
+				<td>{tr}Your email{/tr}:</td>
 				<td>
 					<input type="text" name="from" value="{$from}" maxlength="255" style="width:25%" />
 				</td>
