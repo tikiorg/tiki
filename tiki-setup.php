@@ -214,7 +214,7 @@ if ( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'rand
 	$ratinglib->attempt_refresh();
 }
 
-$headerlib->add_jsfile( 'lib/tiki-js.js' );
+$headerlib->add_jsfile_dependancy( 'lib/tiki-js.js' );
 
 if ( $prefs['feature_cssmenus'] == 'y' ) {
 	$headerlib->add_cssfile( 'css/cssmenus.css' );
@@ -226,17 +226,17 @@ if ( $prefs['feature_bidi'] == 'y' ) {
 if ($prefs['javascript_enabled'] != 'n') {
 
 	if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js', 'external' );
+		$headerlib->add_jsfile_dependancy( 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' );
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-			$headerlib->add_jsfile( 'lib/jquery/jquery.min.js' );
+			$headerlib->add_jsfile_dependancy( 'lib/jquery/jquery.min.js' );
 		} else {
-			$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+			$headerlib->add_jsfile_dependancy( 'lib/jquery/jquery.js' );
 		}
 	}
 
-	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
-	$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');	
+	$headerlib->add_jsfile_dependancy( 'lib/jquery_tiki/tiki-jquery.js' );
+	$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js' );	
 
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
 		//add codemirror stuff
@@ -277,12 +277,12 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 		if ( $prefs['feature_jquery_ui'] == 'y' ) {
 			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-				$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js', 'external' );
+				$headerlib->add_jsfile_dependancy( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js' );
 			} else {
 				if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-					$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
+					$headerlib->add_jsfile_dependancy( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
 				} else {
-					$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+					$headerlib->add_jsfile_dependancy( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
 				}
 			}
 			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js' );
@@ -426,3 +426,4 @@ if ( isset($token_error) ) {
 
 require_once( 'lib/setup/plugins_actions.php' );
 
+$headerlib->lockMinifiedJs();

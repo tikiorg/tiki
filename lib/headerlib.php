@@ -23,6 +23,7 @@ class HeaderLib
 	var $metatags;
 	var $minified;
 	var $wysiwyg_parsing;
+	var $lockMinifiedJs;
 
 	function __construct() {
 		$this->title = '';
@@ -36,6 +37,7 @@ class HeaderLib
 		$this->metatags = array();
 		$this->minified = array();
 		$this->wysiwyg_parsing = false;
+		$this->lockMinifiedJs = false;
 	}
 
 	function convert_cdn( $file, $type = null ) {
@@ -56,7 +58,15 @@ class HeaderLib
 		$this->title = urlencode($string);
 	}
 
+	function add_jsfile_dependancy($file) {
+		$this->add_jsfile($file, -1);
+	}
+	
 	function add_jsfile($file,$rank=0,$minified=false) {
+		if ($this->lockMinifiedJs == true) {
+			$rank = 'external';
+		}
+		
 		if (!$this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or !in_array($file,$this->jsfiles[$rank]))) {
 			$this->jsfiles[$rank][] = $file;
 			if ($minified) {
@@ -225,9 +235,19 @@ class HeaderLib
 		}
 		return $back;
 	}
-
+	
+	public function lockMinifiedJs() {
+		$this->lockMinifiedJs = true; 
+	}
+	
 	public function getMinifiedJs() {
 		global $tikidomainslash;
+		
+		$dependancy = array();
+		if ( isset( $this->jsfiles[-1] ) ) {
+			$dependancy = $this->jsfiles[-1];
+			unset( $this->jsfiles[-1] );
+		}
 		
 		$dynamic = array();
 		if ( isset( $this->jsfiles['dynamic'] ) ) {
@@ -266,6 +286,7 @@ class HeaderLib
 
 		$minified_files[] = $file;
 		return array(
+			'dependancy'=> $dependancy,
 			'external' => $external,
 			'dynamic' => $dynamic,
 			$minified_files,
