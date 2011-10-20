@@ -1142,7 +1142,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 	// name {{{2
 	function name()
 	{
-		return $this->info['name'];
+		return $this->name;
 	}
 
 	// supports {{{2

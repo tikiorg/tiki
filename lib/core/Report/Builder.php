@@ -1,6 +1,6 @@
 <?php
 
-class UniversalReports_Builder
+class Report_Builder
 {
 	var $type = '';
 	var $id = null;
@@ -14,7 +14,7 @@ class UniversalReports_Builder
 		$me = new self();
 		$me->type = ucwords($type);
 		
-		$class = "UniversalReports_Definition_{$me->type}";
+		$class = "Report_Definition_{$me->type}";
 		$definition = new $class;
 		$me->input = $definition->input();
 		
@@ -32,7 +32,7 @@ class UniversalReports_Builder
 	{
 		$files = array();
 		
-		foreach(scandir('lib/core/UniversalReports/Definition') as $fileName) {
+		foreach(scandir('lib/core/Report/Definition') as $fileName) {
 			if (preg_match('/[.]php/', $fileName)) {
 				$files[] = str_replace('.php', '', $fileName);
 			}
@@ -92,7 +92,7 @@ class UniversalReports_Builder
 	
 	function outputArray()
 	{
-		$class = "UniversalReports_Definition_{$this->type}";
+		$class = "Report_Definition_{$this->type}";
 		$definition = new $class;
 		return $definition->output($this->values);
 	}
@@ -137,7 +137,7 @@ class UniversalReports_Builder
 		
 		if ($auto == true) {
 			header("Content-type: application/csv");
-			header("Content-Disposition: attachment; filename=" . $this->name . ".csv");
+			header("Content-Disposition: attachment; filename=export.csv");
 			header("Pragma: no-cache");
 			header("Expires: 0");
 			echo $output;

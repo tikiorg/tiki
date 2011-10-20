@@ -4,26 +4,35 @@ global $headerlib, $smarty;
 
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
-if (!empty($_REQUEST['preview'])) {
+$uB = new UniversalReports_Builder();
+
+if (isset($_REQUEST['preview'])) {
 	echo UniversalReports_Builder::load($_REQUEST['preview'])
 		->setValuesFromRequest($_REQUEST['values'])
 		->outputSheet();
 	die;
 }
 
-if (!empty($_REQUEST['load'])) {
+if (isset($_REQUEST['load'])) {
 	echo json_encode(UniversalReports_Builder::load($_REQUEST['load'])->input);
 	die;
 }
 
-if (!empty($_REQUEST['exportcsv'])) {
+if (isset($_REQUEST['exportcsv'])) {
 	echo UniversalReports_Builder::load($_REQUEST['exportcsv'])
 		->setValuesFromRequest(json_decode(urldecode($_REQUEST['values'])))
 		->outputCSV(true);
 	die;
 }
 
-$headerlib->add_jsfile( 'lib/core/UniversalReports/Builder.js' , 'urb');
+if (isset($_REQUEST['wikisyntax'])) {
+	echo UniversalReports_Builder::load($_REQUEST['wikisyntax'])
+		->setValuesFromRequest($_REQUEST['values'])
+		->outputWiki();
+	die;
+}
+
+$headerlib->add_jsfile( 'lib/core/UniversalReports/Builder.js');
 
 $headerlib->add_jq_onready("
 	$('#universalReportsType')
@@ -65,6 +74,17 @@ $headerlib->add_jq_onready("
 			values: JSON.stringify($('#universalReportsEditor').serializeArray()),
 			exportcsv: $('#universalReportsType').val()
 		}, 'post');
+		
+		return false;
+	});
+	
+	$('#universalReportsWikiSyntax').click(function() {
+		$.post('tiki-edit_universal_reports.php', {
+			values: $('#universalReportsEditor').serializeArray(),
+			'wikisyntax': $('#universalReportsType').val()
+		}, function(o) {
+			$('#universalReportsWikiSyntaxOutput').html(o);
+		});
 		
 		return false;
 	});

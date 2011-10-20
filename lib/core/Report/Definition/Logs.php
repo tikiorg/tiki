@@ -1,5 +1,5 @@
 <?php
-class UniversalReports_Definition_Logs
+class Report_Definition_Logs
 {
 	function input()
 	{

@@ -1,5 +1,5 @@
 <?php
-class UniversalReports_Definition_Tracker
+class Report_Definition_Tracker
 {	
 	function input() {
 		global $tikilib;
