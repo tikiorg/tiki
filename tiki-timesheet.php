@@ -66,7 +66,7 @@ $headerlib->add_jq_onready("
 			
 			row.append('<td>' + namespace + '</td>');
 			row.append('<td>' + $.DOMCached.get('estimate', namespace) + '</td>');
-			row.append('<td formula=\'ROUND(' + ($.DOMCached.get('timer', namespace) / 60) + ', 2)\' />');
+			row.append('<td formula=\'ROUND(' + ($.DOMCached.get('timer', namespace) / 60) + ', 2)\'></td>');
 			rowI++;
 		}
 		var row = $('<tr />').appendTo(table);

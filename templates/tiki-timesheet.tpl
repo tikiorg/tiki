@@ -106,8 +106,7 @@
 						<td></td>
 					</tr>
 					{foreach from=$timeSheet item=item}
-						{$timeSheetI++}
-						<tr>
+						<tr i="{$timeSheetI++}">
 							<td>{$item.Summary}</td>
 							<td>{$item.$amountOfTimeSpent}</td>
 							<td>{$item.Description}</td>
@@ -117,7 +116,28 @@
 					{/foreach}
 					<tr>
 						<td></td>
-						<td formula="=SUM(B2:B{$timeSheetI})"></td>
+						<td formula="SUM(B2:B{$timeSheetI})"></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
