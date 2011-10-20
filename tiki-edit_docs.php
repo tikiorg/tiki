@@ -36,7 +36,7 @@ include_once ('tiki-section_options.php');
 
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
-if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes["odt"] ) {
+if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes["odt"] || end(explode(".", $fileInfo['filename'])) != 'odt') {
 	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["odt"]));
 	$smarty->display("error.tpl");
 	die;
