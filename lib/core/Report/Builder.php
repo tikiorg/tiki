@@ -7,11 +7,7 @@ class UniversalReports_Builder
 	var $input = array();
 	var $name = '';
 	var $description = '';
-	
-	function __construct() {
-		$this->name = 'report';
-		$this->description = '';
-	}
+	var $values = array();
 	
 	static function load($type)
 	{
@@ -28,16 +24,7 @@ class UniversalReports_Builder
 	static function open($id)
 	{
 		$me = new self();
-		$me->id = $id;
-		
-		$object = TikiLib::lib('object')->get_object_via_objectid($me->id);
-		$me->name = $object['name'];
-		$me->description = $object['description'];
-		
-		$attributes = TikiLib::lib('attribute')->get_attributes('universal_reports', $me->id); 
-		print_r($object);
-		print_r($attributes);
-		die;
+		//to come
 		return $me;
 	}
 	
@@ -54,31 +41,32 @@ class UniversalReports_Builder
 		return $files;
 	}
 	
-	static function listType($type)
+	function replace($page, $index)
 	{
-		
-	}
-	
-	static function listTypes($type)
-	{
-		
-	}
-	
-	function replace($name = '', $description = '')
-	{
-		$this->name = $name;
-		$this->description = $description;
-		
-		$this->id = TikiLib::lib('object')->add_object('universal_reports', $this->id, TRUE, $this->description, $this->name);
-		TikiLib::lib('attribute')->set_attribute('universal_reports', $id, 'type', $this->type);
-		TikiLib::lib('attribute')->set_attribute('universal_reports', $id, 'values', $this->values);
-		return $this->id;
+		//to come
 	}
 	
 	function setValues($values = array())
 	{
 		$this->values = $values;
 		return $this;
+	}
+	
+	static function loadFromWikiSyntax($lines = "")
+	{
+		$parsedValues = array();
+		
+		foreach(explode("\n", $lines) as $values) {
+			$values = trim($values);
+			if (!empty($values)) {
+				$value = explode(":", $values);
+				$parsedValues[trim($value[0])] = trim($value[1]);
+			}
+		}
+		$me = new self();
+		$me->type = $parsedValues['type'];
+		unset($parsedValues['type']);
+		return $me->setValues(TikiFilter_PrepareInput::delimiter('_')->prepare($parsedValues));
 	}
 	
 	function setValuesFromRequest($values)
@@ -109,13 +97,17 @@ class UniversalReports_Builder
 		return $definition->output($this->values);
 	}
 	
-	function outputSheet()
+	function outputSheet($name = "")
 	{
 		$sheetlib = TikiLib::lib("sheet");
 		
+		if (empty($name)) {
+			$name = $this->type;
+		}
+		
 		$handler = new TikiSheetSimpleArrayHandler(array(
 			"values"=>$this->outputArray(),
-			"name"=>$this->name
+			"name"=>$name
 		));
 		
 		$grid = new TikiSheet();
@@ -158,5 +150,14 @@ class UniversalReports_Builder
 	function outputChart()
 	{
 		$output = $this->outputArray();
+	}
+	
+	function outputWiki()
+	{
+		$result = 'type : ' . $this->type . "\n";
+		foreach(TikiFilter_PrepareInput::delimiter('_')->flatten($this->values) as $key => $value) {
+			$result .= $key .' : '. $value . "\n";
+		}
+		return $result; 
 	}
 }
