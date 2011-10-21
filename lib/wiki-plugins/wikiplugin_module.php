@@ -81,12 +81,12 @@ function wikiplugin_module_info() {
 			'np' => array(
 				'required' => false,
 				'name' => tra('Parse'),
-				'description' => tra('Parse wiki syntax (default is to parse)'),
+				'description' => tra('Parse wiki syntax.') . ' ' . tra('Default:') . ' ' . tra('No'),
 				'default' => '1',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => '1'), 
-					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => tra('Yes'), 'value' => '0'), 
+					array('text' => tra('No'), 'value' => '1'), 
 				),
 				'advanced' => true,
 			),
