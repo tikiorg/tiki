@@ -1,46 +1,45 @@
 <div>&nbsp;</div>
 {tabset}
 	{tab name="{tr}Tiki Connect{/tr}"}
-		{remarksbox type="tip" title="{tr}About Tiki{/tr}" icon="favicon.png"}
-			{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}
-		{/remarksbox}
-
 		<fieldset>
 			<legend><strong>{tr}Join the community!{/tr}</strong></legend>
-			<p>
-				<a href="http://info.tiki.org/Join+the+community">{tr}Click here to join in!{/tr}</a>
+			<p>{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}</p>
+			<p>{button href="http://info.tiki.org/Join+the+community" _text="{tr}Join the Community{/tr}"}
 			</p>
 		</fieldset>
 		<fieldset>
-			<legend><strong>{tr}Tiki News{/tr}</strong></legend>
+			<legend><strong>{tr}Tiki news{/tr}</strong></legend>
 			<p>
 				{tr}Embedded RSS feed from info.tiki.org TODO, meanwhile{/tr}
-				<a href="http://info.tiki.org/tiki-articles_rss.php?ver=2">{tr}click here{/tr}</a>
+				{button href="http://info.tiki.org/tiki-articles_rss.php?ver=2" _text="Add RSS"}
+			</p>
+			<p>
+				{tr}Tiki Newsletter{/tr} {button _text="{tr}Subscribe{/tr}" href="http://tiki.org/tiki-newsletters.php?nlId=6&info=1"}
 			</p>
 		</fieldset>
 		<fieldset>
 			<legend><strong>{tr}Promote your site{/tr}</strong></legend>
 			<p>
-				{tr}To submit your site to Tiki.org:{/tr}
-				<a href="tiki-register_site.php">{tr}Submit site{/tr}</a>
+				{tr}Add your site to the Tiki diretory.{/tr}
+				{button href="tiki-register_site.php" _text="{tr}Submit your site{/tr}"}
 			</p>
 		</fieldset>
 		<fieldset>
-			<legend><strong>{tr}Help Tiki spread{/tr}</strong></legend>
+			<legend><strong>{tr}Spread the word{/tr}</strong></legend>
 			<p>
-				{tr}Add the "Powered by" module to your site: {/tr}
-				<a href="tiki-admin_modules.php?textFilter=powered&cookietab=3">{tr}Click here to manage modules{/tr}</a>
+				{tr}Add the "Powered by" module to your site. {/tr}
+				{button href="tiki-admin_modules.php?textFilter=powered&cookietab=3" _text="{tr}Manage Modules{/tr}"}</a>
 			</p>
 		</fieldset>
 		<fieldset>
 			<legend><strong>{tr}Help improve Tiki{/tr}</strong></legend>
 			<p>
-				{tr}To submit a feature request or to report a bug:{/tr}
+				{tr}Submit a feature request or bug report.{/tr}
 				<a href="http://dev.tiki.org/Report+a+Bug">{tr}Click here to go to our development site{/tr}</a>
 			</p>
 		</fieldset>
 		<fieldset>
-			<legend><strong>{tr}Contribute financially to Tiki{/tr}</strong></legend>
+			<legend><strong>{tr}Make a financial contribution to the Tiki Association{/tr}</strong></legend>
 			<p>
 				<a href="http://tiki.org/Donation">
 					<img src="img/tiki/Tiki_Contribute_Button.png" alt="{tr}Contribute to Tiki{/tr}" />
