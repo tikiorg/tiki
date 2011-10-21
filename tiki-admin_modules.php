@@ -244,8 +244,8 @@ if (isset($_REQUEST["preview"])) {
 }
 if (isset($_REQUEST["assign"])) {
     check_ticket('admin-modules');
-    $_REQUEST["assign"] = urldecode($_REQUEST["assign"]);
-    $smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
+    $assign_name = urldecode($_REQUEST["assign_name"]);
+    $smarty->assign_by_ref('assign_name', $assign_name);
     $smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);
     $smarty->assign_by_ref('assign_params', $_REQUEST["assign_params"]);
     $smarty->assign_by_ref('assign_order', $_REQUEST["assign_order"]);
@@ -267,8 +267,8 @@ if (isset($_REQUEST["assign"])) {
     }
     $smarty->assign('module_groups', $grps);
 	if (empty($missing_params)) {
-		$modlib->assign_module(isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0, $_REQUEST["assign_name"], '', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $module_rows, serialize($module_groups) , $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
-		$logslib->add_log('adminmodules', 'assigned module ' . $_REQUEST["assign_name"]);
+		$modlib->assign_module(isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0, $assign_name, '', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $module_rows, serialize($module_groups) , $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
+		$logslib->add_log('adminmodules', 'assigned module ' . $assign_name);
 		$modlib->reorder_modules();
 		header("location: tiki-admin_modules.php");
 	} else {
