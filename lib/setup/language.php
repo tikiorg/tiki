@@ -48,11 +48,11 @@ if ( $prefs['change_language'] == 'y') {
 			$prefs['language'] = $browser_language;
 		}
 	}
-} else {
-	if (!isValidLocale($prefs['language'])) {
-		// Override broken user locales
-		setLanguage($prefs['site_language']);
-	}
+}
+
+if (!isValidLocale($prefs['language'])) {
+	// Override broken user locales
+	setLanguage($prefs['site_language']);
 }
 
 // Some languages need BiDi support. Add their code names here ...
