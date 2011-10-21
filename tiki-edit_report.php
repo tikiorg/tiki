@@ -39,16 +39,20 @@ $headerlib->add_jq_onready("
 		.change(function() {
 			$('#reportEditor').html('');
 			if ($(this).val()) {
+				$('#reportButtons').show();
 				$.getJSON('tiki-edit_report.php?',{load: $(this).val()}, function(data) {
 					$('#reportEditor').reportBuilder({
 						definition: data
 					});
 				});
+			} else {
+				$('#reportButtons').hide();
 			}
 		})
 		.change();
 	
 	$('#reportPreview').click(function() {
+		$('#report').modal(tr('Loading...'));
 		$.post('tiki-edit_report.php', {
 			values: $('#reportEditor').serializeArray(),
 			preview: $('#reportType').val()
@@ -64,6 +68,8 @@ $headerlib->add_jq_onready("
 						editable: false
 					});
 			}
+			
+			$('#report').modal();
 		});
 		
 		return false;

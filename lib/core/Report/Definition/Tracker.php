@@ -6,7 +6,7 @@ class Report_Definition_Tracker
 		$trackers = array();
 		foreach($tikilib->table('tiki_trackers')->fetchAll(array('trackerId','name')) as $column) {
 			$trackers[] = array(
-				"name"=> $column['name'] . ' - ' . $column['trackerId'],
+				"label"=> $column['name'] . ' - ' . $column['trackerId'],
 				"value"=> $column['trackerId'],
 			);
 		}
@@ -14,7 +14,7 @@ class Report_Definition_Tracker
 		$trackerFields = array();
 		foreach($tikilib->table('tiki_tracker_fields')->fetchAll(array('trackerId', 'fieldId', 'name')) as $column) {
 			$trackerFields[] = array(
-				"name"=> $column['name'] . ' - ' . $column['fieldId'],
+				"label"=> $column['name'] . ' - ' . $column['fieldId'],
 				"value"=> $column['fieldId'],
 				"dependancy"=> $column['trackerId'],
 			);
@@ -37,7 +37,7 @@ class Report_Definition_Tracker
 			"options"=> array(
 				array(
 					"label"=> 		tr("Tracker"),
-					"name"=> 		"tracker",
+					"key"=> 		"tracker",
 					"type"=> 		"single",
 					"values"=> 		"trackers",
 					"repeats"=>		false,
@@ -45,28 +45,28 @@ class Report_Definition_Tracker
 					"options" =>	array(
 						array(
 							"label"=> 		tr("Start"),
-							"name"=> 		"start",
+							"key"=> 		"start",
 							"type"=> 		"date",
 							"repeats"=>		false,
 							"required"=>	false,
 						),
 						array(
 							"label"=> 		tr("End"),
-							"name"=> 		"end",
+							"key"=> 		"end",
 							"type"=> 		"date",
 							"repeats"=>		false,
 							"required"=>	false,
 						),
 						array(
 							"label"=> 		tr("Item Id"),
-							"name"=> 		"itemId",
+							"key"=> 		"itemId",
 							"type"=> 		"single",
 							"repeats"=>		false,
 							"required"=>	false,
 						),
 						array(
 							"label"=> 		tr("Status"),
-							"name"=> 		"status",
+							"key"=> 		"status",
 							"type"=> 		"multi",
 							"values"=> 		"trackerItemStatus",
 							"repeats"=>		false,
@@ -75,7 +75,7 @@ class Report_Definition_Tracker
 						array(
 							"label"=> 		tr("Search"),
 							"relationLabel"=>tr(" for "),
-							"name"=> 		"search",
+							"key"=> 		"search",
 							"type"=> 		"singleOneToOne",
 							"dependancy"=>	array("tracker"),
 							"values"=> 		array("trackerFields"),
@@ -84,7 +84,7 @@ class Report_Definition_Tracker
 						),
 						array(
 							"label"=> 		tr("Fields"),
-							"name"=> 		"fields",
+							"key"=> 		"fields",
 							"type"=> 		"multi",
 							"dependancy"=>	"tracker",
 							"values"=> 		"trackerFields",

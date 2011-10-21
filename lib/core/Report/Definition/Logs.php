@@ -6,21 +6,21 @@ class Report_Definition_Logs
 		$logs = array();
 		foreach(TikiLib::lib('logsqry')->listTypes() as $type) {
 			$logs[] = array(
-				"name"=> tr(ucwords($type)),
+				"label"=> tr(ucwords($type)),
 				"value"=> $type,
 			);
 		}
 		
 		$actions = array(
 			array(
-				"name"=> tr("All"),
+				"label"=> tr("All"),
 				"value"=> ""
 			)
 		);
 		
 		foreach(TikiLib::lib('logsqry')->listActions() as $action) {
 			$actions[] = array(
-				"name"=> tr(ucwords($action)),
+				"label"=> tr(ucwords($action)),
 				"value"=> $action,
 			);
 		}
@@ -28,7 +28,7 @@ class Report_Definition_Logs
 		$fields = array();
 		foreach(TikiLib::fetchAll("SHOW COLUMNS FROM tiki_actionlog") as $column) {
 			$fields[] = array(
-				"name"=> tr(ucwords($column['Field'])),
+				"label"=> tr(ucwords($column['Field'])),
 				"value"=> $column['Field'],
 			);
 		}
@@ -40,41 +40,41 @@ class Report_Definition_Logs
 				"fields"=> $fields,
 				"grouping"=> array(
 					array(
-						"name"=> tr("None"),
+						"label"=> tr("None"),
 						"value"=> ""
 					),
 					array(
-						"name"=> tr("Count"),
+						"label"=> tr("Count"),
 						"value"=> "count"
 					),
 					array(
-						"name"=> tr("Count By Date"),
+						"label"=> tr("Count By Date"),
 						"value"=> "countByDate"
 					),
 					array(
-						"name"=> tr("Count By Date Filter Id"),
+						"label"=> tr("Count By Date Filter Id"),
 						"value"=> "countByDateFilterId"
 					),
 					array(
-						"name"=> tr("Count Users Filter Id"),
+						"label"=> tr("Count Users Filter Id"),
 						"value"=> "countUsersFilterId"
 					),
 					array(
-						"name"=> tr("Count Users IP Filter Id"),
+						"label"=> tr("Count Users IP Filter Id"),
 						"value"=> "countUsersIPFilterId"
 					),
 				),
 				"sort"=> array(
 					array(
-						"name"=> tr("None"),
+						"label"=> tr("None"),
 						"value"=> ""
 					),
 					array(
-						"name"=> tr("Ascending By Date"),
+						"label"=> tr("Ascending By Date"),
 						"value"=> "asc"
 					),
 					array(
-						"name"=> tr("Descending By Date"),
+						"label"=> tr("Descending By Date"),
 						"value"=> "desc"
 					)
 				)
@@ -82,52 +82,52 @@ class Report_Definition_Logs
 			"options"=> array(
 				array(
 					"label"=> 		tr("Logs"),
-					"name"=> 		"logs",
+					"key"=> 		"logs",
 					"type"=> 		"single",
 					"values"=> 		"logs",
 					"repeats"=>		false,
 					"options" =>	array(
 						array(
 							"label"=>		tr("Action"),
-							"name"=>		"action",
+							"key"=>			"action",
 							"type"=>		"single",
 							"values"=> 		"actions",
 							"repeats"=>		false,
 						),
 						array(
 							"label"=> 		tr("Start"),
-							"name"=> 		"start",
+							"key"=> 		"start",
 							"type"=> 		"date",
 							"repeats"=>		false,
 						),
 						array(
 							"label"=> 		tr("End"),
-							"name"=> 		"end",
+							"key"=> 		"end",
 							"type"=> 		"date",
 							"repeats"=>		false,
 						),
 						array(
 							"label"=>		tr("Fields"),
-							"name"=>		"fields",
+							"key"=>			"fields",
 							"type"=>		"multi",
 							"values"=> 		"fields",
 							"repeats"=>		false,
 						),
 						array(
 							"label"=>		tr("Grouping"),
-							"name"=>		"grouping",
+							"key"=>			"grouping",
 							"type"=>		"single",
 							"values"=>		"grouping"
 						),
 						array(
 							"label"=>		tr("Sort"),
-							"name"=>		"sort",
+							"key"=>			"sort",
 							"type"=>		"single",
 							"values"=>		"sort"
 						),
 						array(
 							"label"=>		tr("Limit"),
-							"name"=>		"limit",
+							"key"=>			"limit",
 							"type"=>		"single",
 						)
 					),
