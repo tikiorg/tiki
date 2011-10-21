@@ -1108,10 +1108,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 
 	// _load {{{2
 	function _load( &$sheet ) {
-		global $tikilib;
-		TikiLib::lib("trkqry");
 		$i = 0;
-		$trackerName = $this->name;
 
 		foreach($this->values as $row) {
 			$j = 0;	

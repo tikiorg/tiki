@@ -89,6 +89,13 @@ $headerlib->add_jq_onready("
 			values: $('#reportEditor').serializeArray(),
 			'wikidata': $('#reportType').val()
 		}, function(o) {
+			$('<pre />')
+				.html(o)
+				.dialog({
+					modal: true,
+					title: tr('Wiki Data Output For REPORT Plugin') 
+				});
+			return;
 			$('#reportWikiDataOutput').html(o);
 		});
 		
