@@ -11,10 +11,10 @@
 </form>
 
 {button _text="{tr}Preview{/tr}" _id="reportPreview"}
-{button _text="{tr}Wiki Markup{/tr}" _id="reportWikiSyntax"}
+{button _text="{tr}Wiki Data{/tr}" _id="reportWikiData"}
 {button _text="{tr}Export As CSV{/tr}" _id="reportExportCSV"}
 
-<pre id="reportWikiSyntaxOutput"></pre>
+<pre id="reportWikiDataOutput"></pre>
 
 <form id="reportDebug">
 

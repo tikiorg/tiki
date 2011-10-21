@@ -25,10 +25,10 @@ if (isset($_REQUEST['exportcsv'])) {
 	die;
 }
 
-if (isset($_REQUEST['wikisyntax'])) {
-	echo Report_Builder::load($_REQUEST['wikisyntax'])
+if (isset($_REQUEST['wikidata'])) {
+	echo Report_Builder::load($_REQUEST['wikidata'])
 		->setValuesFromRequest($_REQUEST['values'])
-		->outputWiki();
+		->outputWikiData();
 	die;
 }
 
@@ -78,12 +78,12 @@ $headerlib->add_jq_onready("
 		return false;
 	});
 	
-	$('#reportWikiSyntax').click(function() {
+	$('#reportWikiData').click(function() {
 		$.post('tiki-edit_report.php', {
 			values: $('#reportEditor').serializeArray(),
-			'wikisyntax': $('#reportType').val()
+			'wikidata': $('#reportType').val()
 		}, function(o) {
-			$('#reportWikiSyntaxOutput').html(o);
+			$('#reportWikiDataOutput').html(o);
 		});
 		
 		return false;

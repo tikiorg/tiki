@@ -152,11 +152,13 @@ class Report_Builder
 		$output = $this->outputArray();
 	}
 	
-	function outputWiki()
+	function outputWikiData()
 	{
-		$result = 'type : ' . $this->type . "\n";
+		$result = "type : " . $this->type . "\n";
 		foreach(TikiFilter_PrepareInput::delimiter('_')->flatten($this->values) as $key => $value) {
-			$result .= $key .' : '. $value . "\n";
+			if (!empty($value)) {
+				$result .= $key .' : '. $value . "\n";
+			}
 		}
 		return $result; 
 	}
