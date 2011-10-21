@@ -86,6 +86,8 @@ function prefs_metatag_list() {
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
+			//'warning' => tra('This feature uses non-standard HTML.'),
+			'tags' => array('experimental'),
 		),
 	);
 }
