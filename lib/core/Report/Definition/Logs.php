@@ -190,6 +190,13 @@ class Report_Definition_Logs
 			$result = $newResult;
 		}
 		
+		
+		//date correction/format
+		foreach($result as $key => $row) {
+			if (isset($result[$key]['lastModif']))
+				$result[$key]['lastModif'] = $tikilib->get_short_datetime($result[$key]['lastModif']); 
+		}
+		
 		return $result;
 	}
 }
