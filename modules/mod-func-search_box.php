@@ -19,7 +19,7 @@ function module_search_box_info() {
 		'params' => array(
 			'tiki' => array(
 				'name' => tra('Tiki'),
-				'description' => tra('If set to "y", the search performed is a "Tiki search".') . " " . tra('Default:') . ' "n"' . tra(' (full text search)')
+				'description' => tr('If set to "y", the search performed is a "Tiki search". Default: "n" (full text search)')
 			)
 		)
 	);
