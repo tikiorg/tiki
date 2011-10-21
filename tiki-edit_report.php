@@ -35,12 +35,12 @@ if (isset($_REQUEST['wikisyntax'])) {
 $headerlib->add_jsfile( 'lib/core/Report/Builder.js');
 
 $headerlib->add_jq_onready("
-	$('#ReportType')
+	$('#reportType')
 		.change(function() {
-			$('#ReportEditor').html('');
+			$('#reportEditor').html('');
 			if ($(this).val()) {
-				$.getJSON('tiki-edit_universal_reports.php?',{load: $(this).val()}, function(data) {
-					$('#ReportEditor').ReportBuilder({
+				$.getJSON('tiki-edit_report.php?',{load: $(this).val()}, function(data) {
+					$('#reportEditor').reportBuilder({
 						definition: data
 					});
 				});
@@ -48,16 +48,16 @@ $headerlib->add_jq_onready("
 		})
 		.change();
 	
-	$('#ReportPreview').click(function() {
-		$.post('tiki-edit_universal_reports.php', {
-			values: $('#ReportEditor').serializeArray(),
-			preview: $('#ReportType').val()
+	$('#reportPreview').click(function() {
+		$.post('tiki-edit_report.php', {
+			values: $('#reportEditor').serializeArray(),
+			preview: $('#reportType').val()
 		}, function(o) {
-			var jS = $('#ReportDebug').getSheet();
+			var jS = $('#reportDebug').getSheet();
 			if (jS) {
 				jS.openSheet(o);
 			} else {
-				$('#ReportDebug')
+				$('#reportDebug')
 					.html($(o).attr('title', tr('Preview')))
 					.sheet({
 						buildSheet: true,
@@ -69,21 +69,21 @@ $headerlib->add_jq_onready("
 		return false;
 	});
 	
-	$('#ReportExportCSV').click(function() {
-		$.download('tiki-edit_universal_reports.php', { 
-			values: JSON.stringify($('#ReportEditor').serializeArray()),
-			exportcsv: $('#ReportType').val()
+	$('#reportExportCSV').click(function() {
+		$.download('tiki-edit_report.php', { 
+			values: JSON.stringify($('#reportEditor').serializeArray()),
+			exportcsv: $('#reportType').val()
 		}, 'post');
 		
 		return false;
 	});
 	
-	$('#ReportWikiSyntax').click(function() {
-		$.post('tiki-edit_universal_reports.php', {
-			values: $('#ReportEditor').serializeArray(),
-			'wikisyntax': $('#ReportType').val()
+	$('#reportWikiSyntax').click(function() {
+		$.post('tiki-edit_report.php', {
+			values: $('#reportEditor').serializeArray(),
+			'wikisyntax': $('#reportType').val()
 		}, function(o) {
-			$('#ReportWikiSyntaxOutput').html(o);
+			$('#reportWikiSyntaxOutput').html(o);
 		});
 		
 		return false;

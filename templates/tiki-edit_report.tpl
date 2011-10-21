@@ -1,4 +1,4 @@
-<select id="universalReportsType">
+<select id="reportType">
 	<option value="">{tr}Report Type{/tr}</option>
 	
 	{foreach from=$definitions item=definition}
@@ -6,16 +6,16 @@
 	{/foreach}
 </select>
 
-<form id="universalReportsEditor">
+<form id="reportEditor">
 
 </form>
 
-{button _text="{tr}Preview{/tr}" _id="universalReportsPreview"}
-{button _text="{tr}Wiki Markup{/tr}" _id="universalReportsWikiSyntax"}
-{button _text="{tr}Export As CSV{/tr}" _id="universalReportsExportCSV"}
+{button _text="{tr}Preview{/tr}" _id="reportPreview"}
+{button _text="{tr}Wiki Markup{/tr}" _id="reportWikiSyntax"}
+{button _text="{tr}Export As CSV{/tr}" _id="reportExportCSV"}
 
-<pre id="universalReportsWikiSyntaxOutput"></pre>
+<pre id="reportWikiSyntaxOutput"></pre>
 
-<form id="universalReportsDebug">
+<form id="reportDebug">
 
 </form>
