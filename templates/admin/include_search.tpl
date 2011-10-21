@@ -40,14 +40,6 @@
 
 					{preference name=unified_cached_formatters}
 
-					{preference name=search_refresh_index_mode}
-					{preference name=search_refresh_rate}
-					{preference name=search_min_wordlength}
-					{preference name=search_max_syllwords}
-					{preference name=search_syll_age}
-					{preference name=search_lru_purge_rate}
-					{preference name=search_lru_length}
-
 					<h4>{tr}Index maintenance{/tr}</h4>
 					<ul>
 						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a></li>
