@@ -216,11 +216,21 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		if ($item && $context['list_mode'] !== 'csv' && $this->getOption(2)) {
 			$smarty->loadPlugin('smarty_function_object_link');
 
-			return smarty_function_object_link(array(
-				'type' => 'trackeritem',
-				'id' => $item,
-				'title' => $label,
-			), $smarty);
+			if ( $this->getOption(5) ) {
+				$link = smarty_function_object_link(array(
+					'type' => 'wiki page',
+					'id' => $this->getOption(5) . '&itemId=' . $item,	// add itemId param TODO properly
+					'title' => $label,
+				), $smarty);
+				// decode & and = chars
+				return str_replace(array('%26','%3D'), array('&','='), $link);
+			} else {
+				return smarty_function_object_link(array(
+					'type' => 'trackeritem',
+					'id' => $item,
+					'title' => $label,
+				), $smarty);
+			}
 		} elseif ($label) {
 			return $label;
 		}
