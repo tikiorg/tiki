@@ -113,6 +113,15 @@ class LogsQueryLib
 		return $result;
 	}
 	
+	static function listActions() {
+		global $tikilib;
+		$result = array();
+		foreach($tikilib->fetchAll("SELECT action FROM tiki_actionlog GROUP By action") as $row) {
+			$result[] = $row['action'];
+		}
+		return $result;
+	}
+	
 	static function url($id = "") {
 		return LogsQueryLib::type("url")
 			->id($id);
