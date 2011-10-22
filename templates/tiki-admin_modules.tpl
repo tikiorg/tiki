@@ -123,7 +123,7 @@
 				<input type="hidden" name="moduleId" value="{$moduleId}" />
 			{/if}
 			<fieldset>
-					{* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
+					{* because changing the module name will auto-submit the form, no reason to display these fields until a module is selected *}
 					{include file='admin_modules_form.tpl'}
 				{if empty($assign_name)}
 					<div class="input_submit_container">
@@ -410,7 +410,7 @@
 						<div class="q1 tips"
 								title="{$info.name} &lt;em&gt;({$name})&lt;/em&gt;|{$info.description}
 								{if not $info.enabled}&lt;br /&gt;&lt;small&gt;&lt;em&gt;({tr}Requires{/tr} {' &amp; '|implode:$info.prefs})&lt;/em&gt;&lt;/small&gt;{/if}">
-							{icon _id="module"} <strong>{$info.name}</strong>
+							{icon _id="module"} <strong>{$info.name}</strong> <em>{$name}</em>
 						</div>
 						<div class="description q23">
 							{$info.description}
