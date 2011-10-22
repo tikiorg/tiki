@@ -62,7 +62,11 @@
 			{preference name=category_i18n_synced}
 		</div>
 
-		{preference name=feature_wiki_mandatory_category}
+		<fieldset>
+		<legend>{tr}Wiki{/tr}</legend>
+			{preference name=feature_wiki_mandatory_category}
+			{preference name=category_pattern_pagename}
+		</fieldset>
 		{preference name=feature_blog_mandatory_category}
 		{preference name=feature_image_gallery_mandatory_category}
 

@@ -17,10 +17,10 @@ function prefs_category_list() {
 		),
 		'category_defaults' => array(
 			'name' => tra('Category Defaults'),
-			'description' => tra('Force certain categories to be present. If none of the categories in a given set are provided, assign a category by default.'),
+			'description' => tra('Force certain categories to be present. If none of the categories in a given set are provided, assign a category by default.').' '.tra('Use *7 to specify all the categories in the subtree of 7 + category 7.').' '.tra('Can do only this for objectname matching the regex (Example: /^RND_/ = name beginning by RND_)'),
 			'type' => 'textarea',
 			'filter' => 'striptags',
-			'hint' => tra('One per line. ex:1,4,6,7/4'),
+			'hint' => tra('One per line. ex:1,4,6,*7/4:/^RND_/'),
 			'size' => 5,
 			'serialize' => 'prefs_category_serialize_defaults',
 			'unserialize' => 'prefs_category_unserialize_defaults',
@@ -123,7 +123,7 @@ function prefs_category_serialize_defaults( $data ) {
 	$out = '';
 	if ( is_array( $data ) ) {
 		foreach( $data as $row ) {
-			$out .= implode( ',', $row['categories'] ) . '/' . $row['default'] . "\n";
+			$out .= implode( ',', $row['categories'] ) . '/' . $row['default'] . ':' . $row['filter'] . "\n";
 		}
 	}
 
@@ -134,15 +134,17 @@ function prefs_category_unserialize_defaults( $string ) {
 	$data = array();
 	
 	foreach( explode( "\n", $string ) as $row ) {
-		if ( preg_match('/^\s*(\d+\s*(,\s*\d+\s*)*)\/\s*(\d+)\s*$/', $row, $parts ) ) {
+		if ( preg_match('/^\s*(\*?\d+\s*(,\s*\*?\d+\s*)*)\/\s*(\d+)\s*:?(.*)$/', $row, $parts ) ) {
 			$categories = explode( ',', $parts[1] );
 			$categories = array_map( 'trim', $categories );
 			$categories = array_filter( $categories );
 			$default = $parts[3];
+			$filter = $parts[4];
 
 			$data[] = array(
 				'categories' => $categories,
 				'default' => $default,
+				'filter' => $filter,
 			);
 		}
 	}

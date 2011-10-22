@@ -1,4 +1,4 @@
-<?php
+s<?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1273,7 +1273,7 @@ class CategLib extends ObjectLib
 
 		if ( $default = unserialize( $prefs['category_defaults'] ) ) {
 			foreach( $default as $constraint ) {
-				$manip->addRequiredSet( $constraint['categories'], $constraint['default'] );
+				$manip->addRequiredSet( $this->extentCategories( $constraint['categories'] ), $constraint['default'], $constraint['filter'] );
 			}
 		}
 
@@ -1514,6 +1514,22 @@ class CategLib extends ObjectLib
 		$a = strtoupper(TikiLib::take_away_accent($a));
 		$b = strtoupper(TikiLib::take_away_accent($b));
 		return strcmp($a, $b);
+	}
+
+	/* replace each *i in the categories array with the categories of the sudtree i + i */
+	function extentCategories($categories) {
+		$ret = array();
+		foreach ($categories as $cat) {
+			if (is_numeric($cat)) {
+				$ret[] = $cat;
+			} else {
+				$cats = $this->get_category_descendants(substr($cat, 1));
+				$ret[] = substr($cat, 1);
+				$ret = array_merge($ret, $cats);
+			}
+		}
+		$ret = array_unique($ret);
+		return $ret;
 	}
 }
 $categlib = new CategLib;

@@ -27,10 +27,12 @@ class Category_Manipulator
 		$this->objectId = $objectId;
 	}
 
-	function addRequiredSet( array $categories, $default ) {
+	function addRequiredSet( array $categories, $default, $filter=null ) {
+		$categories = array_unique($categories);
 		$this->constraints['required'][] = array(
 			'set' => $categories,
 			'default' => $default,
+			'filter' => $filter
 		);
 	}
 
@@ -118,8 +120,17 @@ class Category_Manipulator
 		foreach( $this->constraints['required'] as $constraint ) {
 			$set = $constraint['set'];
 			$default = $constraint['default'];
+			$filter = $constraint['filter'];
 
 			$interim = array_intersect( $this->new, $set );
+
+			if (!empty($filter)) {
+				global $objectlib; require_once('lib/objectlib.php');
+				$info = $objectlib->get_info($this->objectType, $this->objectId);
+				if (!preg_match($filter, $info['title'])) {
+					return;
+				}
+			}
 
 			if ( count( $interim ) == 0 && ! in_array( $default, $this->new ) ) {
 				$this->new[] = $default;
