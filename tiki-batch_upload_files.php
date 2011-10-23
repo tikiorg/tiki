@@ -13,6 +13,8 @@ $access->check_feature(array('feature_file_galleries', 'feature_file_galleries_b
 // Now check permissions to access this page
 $access->check_permission('tiki_p_batch_upload_file_dir');
 
+$auto_query_args = array( 'galleryId' );
+
 // check directory path
 if (!isset($prefs['fgal_batch_dir']) or !is_dir($prefs['fgal_batch_dir'])) {
 	$msg = tra("Incorrect directory chosen for batch upload of files.") . "<br />";
@@ -190,10 +192,11 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			$fileId = $filegallib->insert_file($tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type, $user, $result['fhash']);
 			if ($fileId) {
 				$feedback[] = tra('Upload was successful') . ': ' . $name;
-				if (@unlink($filepath)) {
-					$feedback[] = sprintf(tra('File %s removed from Batch directory.') , $name);
+				@unlink($filepath);	// seems to return false sometimes even if the file was deleted
+				if (!file_exists($filepath)) {
+					$feedback[] = sprintf(tra('File %s removed from Batch directory.') , $file);
 				} else {
-					$feedback[] = "!!! " . sprintf(tra('Impossible to remove file %s from Batch directory.') , $name);
+					$feedback[] = "!!! " . sprintf(tra('Impossible to remove file %s from Batch directory.') , $file);
 				}
 			}
 		}
