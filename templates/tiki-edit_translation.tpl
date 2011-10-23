@@ -81,7 +81,7 @@
 </form>
 {/if}
 {if !isset($articles)}
-{jq}
+{jq notonready=true}
 {literal}
 // Make the translation name have the focus.
 window.onload = function()
