@@ -1278,6 +1278,10 @@ class ArtLib extends TikiLib
 			$categlib->getSqlJoin($jail, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
 		}
 
+		if (empty($sort_mode)) {
+			$sort_mode = 'publishDate_desc';
+		}
+
 		if ( $prefs['rating_advanced'] == 'y' ) {
 			global $ratinglib; require_once 'lib/rating/ratinglib.php';
 			$fromSql .= $ratinglib->convert_rating_sort($sort_mode, 'article', '`articleId`');
