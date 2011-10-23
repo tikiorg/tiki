@@ -125,7 +125,7 @@ class Category_Manipulator
 			$interim = array_intersect( $this->new, $set );
 
 			if (!empty($filter)) {
-				global $objectlib; require_once('lib/objectlib.php');
+				$objectlib = TikiLib::lib('object');
 				$info = $objectlib->get_info($this->objectType, $this->objectId);
 				if (!preg_match($filter, $info['title'])) {
 					return;
