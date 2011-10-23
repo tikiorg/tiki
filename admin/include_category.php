@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 if (isset($_REQUEST["categorysetup"])) {
 	ask_ticket('admin-inc-category');
 }
-if (!empty($_REQUEST['assignWikiCategories']) && ($default = unserialize($prefs['category_defaults']))) {
+if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults']) {
 	check_ticket('admin-inc-category');
 	$categlib = TikiLib::lib('categ');
 	$maxRecords = 100;
