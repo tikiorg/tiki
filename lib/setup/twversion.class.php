@@ -150,6 +150,7 @@ class TWVersion
 				'7.1',
 				'7.2',
 				'8.0beta',
+				'8.0RC1',
 			);
 	}
 

@@ -9,14 +9,14 @@
 <div id="{$rootid}browse_image">
 {else}
 
-  {title}{tr}Browsing Image:{/tr}&nbsp;{$name}{/title}
+	{title}{tr}Browsing Image:{/tr} {$name}{/title}
 <div id="{$rootid}browse_image">
-  <div class="navbar">
+	<div class="navbar">
 		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" _text="{tr}Return to Gallery{/tr}"}
-    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 			{button href="tiki-edit_image.php?galleryId=$galleryId&amp;edit=$imageId&amp;sort_mode=$sort_mode" _text="{tr}Edit Image{/tr}"}
-    {/if}
-  </div>
+		{/if}
+	</div>
 {/if}
 
 {capture name=buttons}

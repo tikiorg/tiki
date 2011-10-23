@@ -26,6 +26,7 @@ if ($_REQUEST['fileId'] > 0) {
 	$fileInfo = array();
 }
 
+//This allows the document to be edited, but only the most recent of that group if it is an archive
 if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$_REQUEST['fileId'] = $fileInfo['archiveId'];
 	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );

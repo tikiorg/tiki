@@ -28,6 +28,12 @@ if ($fileId > 0) {
 	$fileInfo = array();
 }
 
+//This allows the document to be edited, but only the most recent of that group if it is an archive
+if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
+	$fileId  = $fileInfo['archiveId'];
+	$fileInfo = $filegallib->get_file_info( $fileId );
+}
+
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
 $cat_object_exists = ! empty($fileInfo);
