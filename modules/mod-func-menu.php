@@ -80,5 +80,13 @@ function module_menu( $mod_reference, $module_params ) {
 	if (empty($module_params['id']) && empty($module_params['structureId'])) {
 		$smarty->assign('module_error', tr('One of these parameters has to be set:') . ' ' . tr('Menu') . ', ' . tr('Structure') . '.');
 	}
+	if (!empty($module_params['structureId'])) {
+		global $structlib; include_once('lib/structures/structlib.php');
+
+		if (empty($mod_reference['title'])) {
+			$smarty->assign('tpl_module_title', $module_params['structureId']);
+		}
+		$module_params['structureId'] = $structlib->get_struct_ref_id($module_params['structureId']);
+	}
 	$smarty->assign('module_type', empty($module_params['css']) || $module_params['css'] === 'y' ? 'cssmenu' : 'menu');
 }
