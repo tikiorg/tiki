@@ -68,7 +68,7 @@ function module_categories( $mod_reference, &$module_params ) {
 	$categories = $categlib->getCategories();
 
 	if ( empty($categories) ) {
-		$module_params['error'] = tra("You do not have permission to use this feature");
+		return;
 	}
 	if (isset($module_params['categId'])) {
 		$categId = $module_params['categId'];
