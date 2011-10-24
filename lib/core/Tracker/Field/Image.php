@@ -194,7 +194,7 @@ class Tracker_field_Image extends Tracker_Field_File
 			if ($this->isImageType($type)) {
 				if ($maxSize = $this->getOption(4)) {
 					$imagegallib = TikiLib::lib('imagegal');
-					$imagegallib->image = $array['value'];
+					$imagegallib->image = $value;
 					$imagegallib->readimagefromstring();
 					$imagegallib->getimageinfo();
 					if ($imagegallib->xsize > $maxSize || $imagegallib->xsize > $maxSize) {
