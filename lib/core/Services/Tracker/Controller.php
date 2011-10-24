@@ -886,7 +886,8 @@ class Services_Tracker_Controller
 				$input->dateFormat->text(),
 				$input->encoding->text(),
 				$input->separator->text(),
-				$input->updateLastModif->int()
+				$input->updateLastModif->int(),
+				$input->convertItemLinkValues->int()
 			);
 
 			fclose($fp);

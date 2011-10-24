@@ -1539,7 +1539,7 @@ class TrackerLib extends TikiLib
 	 * @param string	$csvDelimiter 	defaults to ","
 	 * @return number	items imported
 	 */
-	function import_csv($trackerId, $csvHandle, $replace_rows = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',', $updateLastModif = true) {
+	function import_csv($trackerId, $csvHandle, $replace_rows = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',', $updateLastModif = true, $convertItemLinkValues = false) {
 		$tikilib = TikiLib::lib('tiki');
 		$items = $this->items();
 		$itemFields = $this->itemFields();
@@ -1567,6 +1567,17 @@ class TrackerLib extends TikiLib
 		$total = 0;
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+
+		// prepare ItemLink fields
+		if ($convertItemLinkValues) {
+			$itemlink_options = array();
+			foreach($fields['data'] as & $field) {
+				if ($field['type'] === 'r') {
+					$itemlink_options[(int) $field['fieldId']] = $field['options_array'];
+				}
+			}
+		}
+
 		while (($data = fgetcsv($csvHandle,100000,  $csvDelimiter)) !== FALSE) {
 			$status = 'o';
 			$itemId = 0;
@@ -1692,6 +1703,20 @@ class TrackerLib extends TikiLib
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							} else if (!is_numeric($data[$i])) {	// timestamp but not numeric
 								$data[$i] = '';
+							}
+							break;
+						case 'r':
+							if ($convertItemLinkValues) {
+								$val = $this->get_item_id(
+									$itemlink_options[$field['fieldId']][0],	// other trackerId (option 0)
+									$itemlink_options[$field['fieldId']][1],	// other fieldId (option 1)
+									$data[$i]									// value
+								);
+								if ($val !== null) {
+									$data[$i] = $val;
+								} else {
+									TikiLib::lib('errorreport')->report(tr('Problem converting tracker item link field: trackerId=%0, fieldId=%1, itemId=%2', $trackerId, $field['fieldId'], $itemId));
+								}
 							}
 							break;
 						}
