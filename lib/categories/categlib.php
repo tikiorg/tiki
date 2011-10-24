@@ -1273,7 +1273,7 @@ class CategLib extends ObjectLib
 
 		if ( $default = unserialize( $prefs['category_defaults'] ) ) {
 			foreach( $default as $constraint ) {
-				$manip->addRequiredSet( $this->extentCategories( $constraint['categories'] ), $constraint['default'], $constraint['filter'] );
+				$manip->addRequiredSet( $this->extentCategories( $constraint['categories'] ), $constraint['default'], $constraint['filter'], $constraint['type'] );
 			}
 		}
 

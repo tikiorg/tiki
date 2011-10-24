@@ -287,6 +287,12 @@ class WikiLib extends TikiLib
 
 		$this->rename_object( 'wiki page', $oldName, $newName );
 
+		// update categories if new name has a category default
+		$categlib = TikiLib::lib('categ');
+		$categories = $categlib->get_object_categories('wiki page', $newName);
+		$info = $this->get_page_info($newName);
+		$categlib->update_object_categories($categories, $newName, 'wiki page', $info['description'], $newName, $newcathref);
+
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
 		$this->query($query, array( $newName, $oldName ) );
 

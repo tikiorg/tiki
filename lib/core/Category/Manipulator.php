@@ -27,12 +27,13 @@ class Category_Manipulator
 		$this->objectId = $objectId;
 	}
 
-	function addRequiredSet( array $categories, $default, $filter=null ) {
+	function addRequiredSet( array $categories, $default, $filter=null, $type=null ) {
 		$categories = array_unique($categories);
 		$this->constraints['required'][] = array(
 			'set' => $categories,
 			'default' => $default,
-			'filter' => $filter
+			'filter' => $filter,
+			'type' => $type
 		);
 	}
 
@@ -121,9 +122,14 @@ class Category_Manipulator
 			$set = $constraint['set'];
 			$default = $constraint['default'];
 			$filter = $constraint['filter'];
+			$type = $constraint['type'];
 
 			$interim = array_intersect( $this->new, $set );
 
+			if (!empty($type) && $type != $this->objectType) {
+				return;
+			}
+				
 			if (!empty($filter)) {
 				$objectlib = TikiLib::lib('object');
 				$info = $objectlib->get_info($this->objectType, $this->objectId);
