@@ -316,13 +316,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 	}
 }
 
-if (isset($_REQUEST['import'])) {
-	if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_name'])) {
-		$fp = fopen($_FILES['importfile']['tmp_name'], "rb");
-		$trklib->import_items($_REQUEST["trackerId"], $_REQUEST["indexfield"], $fp);
-		fclose($fp);
-	}
-} elseif (isset($_REQUEST["save"])) {
+if (isset($_REQUEST["save"])) {
 	if ($itemObject->canModify()) {
 		global $captchalib; include_once 'lib/captcha/captchalib.php';
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {

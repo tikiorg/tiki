@@ -1528,56 +1528,6 @@ class TrackerLib extends TikiLib
 		return $data;
 	}
 
-	/* Experimental feature.
-	 * PHP's execution time limit of 30 seconds may have to be extended when
-	 * importing large files ( > 1000 items).
-	 */
-	function import_items($trackerId, $indexField, $csvHandle, $csvDelimiter = "," , $replace = true) {
-
-		// Read the first line.  It contains the names of the fields to import
-		if (($data = fgetcsv($csvHandle, 4096, $csvDelimiter)) === FALSE) return -1;
-		$nColumns = count($data);
-		for ($i = 0; $i < $nColumns; $i++) {
-			$data[$i] = trim($data[$i]);
-		}
-		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
-		$temp_max = count($fields["data"]);
-		$indexId = -1;
-		for ($i = 0; $i < $temp_max; $i++) {
-			$column[$i] = -1;
-			for ($j = 0; $j < $nColumns; $j++) {
-				if ($fields["data"][$i]['name'] == $data[$j]) {
-					$column[$i] = $j;
-				}
-				if ($indexField == $data[$j]) {
-					$indexId = $j;
-				}
-			}
-		}
-
-		// If a primary key was specified, check that it was found among the columns of the file
-		if ($indexField && $indexId == -1) return -1;
-
-		$total = 0;
-		while (($data = fgetcsv($csvHandle, 4096, $csvDelimiter)) !== FALSE) {
-			$status = array_shift($data);
-			$itemId = array_shift($data);
-			for ($i = 0; $i < $temp_max-2; $i++) {
-				if (isset($data[$i])) {
-					$fields["data"][$i]['value'] = $data[$i];
-				} else {
-					$fields["data"][$i]['value'] = "";
-				}
-			}
-			$this->replace_item($trackerId, $itemId, $fields, $status, array(), true);
-			$total++;
-		}
-
-		// TODO: Send a notification indicating that an import has been done on this tracker
-
-		return $total;
-	}
-
 	/**
 	 * Called from tiki-admin_trackers.php import button
 	 * 
