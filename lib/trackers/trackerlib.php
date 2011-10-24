@@ -1570,7 +1570,7 @@ class TrackerLib extends TikiLib
 
 		// prepare autoincrement fields
 		$auto_fields = array();
-		foreach($fields['data'] as & $field) {
+		foreach($fields['data'] as $field) {
 			if ($field['type'] === 'q') {
 				$auto_fields[(int) $field['fieldId']] = $field;
 			}
@@ -1579,7 +1579,7 @@ class TrackerLib extends TikiLib
 		// prepare ItemLink fields
 		if ($convertItemLinkValues) {
 			$itemlink_options = array();
-			foreach($fields['data'] as & $field) {
+			foreach($fields['data'] as $field) {
 				if ($field['type'] === 'r') {
 					$itemlink_options[(int) $field['fieldId']] = $field['options_array'];
 				}
