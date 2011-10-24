@@ -1,4 +1,7 @@
 {if $return}
+	<div class="navbar">
+		{include file="tracker_actions.tpl"}
+	</div>
 	{remarksbox type="note" title="{tr}Confirmation{/tr}"}
 		<p>{tr _0=$return}Import completed with '%0'{/tr}</p>
 	{/remarksbox}
