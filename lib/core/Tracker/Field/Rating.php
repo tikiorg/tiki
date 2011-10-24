@@ -87,6 +87,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		if (isset($requestData['vote']) && isset($requestData['itemId'])) {
 			$trklib = TikiLib::lib('trk');
 			$data = $this->getBaseFieldData();
+			global $user;
 			$trklib->replace_star($requestData[$ins_id], $this->getConfiguration('trackerId'), $requestData['itemId'], $data, $user, true);
 		} else {
 			$data = $this->gatherVoteData();
