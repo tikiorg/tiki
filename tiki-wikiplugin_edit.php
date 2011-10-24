@@ -45,6 +45,8 @@ foreach ( $matches as $match )
 	++$count;
 
 	if ( $_POST['index'] == $count ) {
+		//by using content of "~same~", it will not replace the body that is there
+		$content = ($content == "~same~" ? $match->getBody() : $content);
 		$hasBody = !empty($content) && !ctype_space( $content );
 		$params = $match->getArguments();
 
