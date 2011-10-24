@@ -52,6 +52,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
 						'filter' => 'text',
 					),
+					'deepGallerySearch' => array(
+						'name' => tr('Include Child Galleries'),
+						'description' => tr('Use files from child galleries as well.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -61,6 +70,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 	{
 		$galleryId = (int) $this->getOption(0);
 		$count = (int) $this->getOption(2);
+		$deepGallerySearch = (boolean) $this->getOption(6);
 
 		$value = '';
 		$ins_id = $this->getInsertId();
@@ -103,6 +113,14 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$fileInfo = $this->getFileInfo($fileIds);
 		}
 
+		if ($deepGallerySearch) {
+			$gallery_list = null;
+			TikiLib::lib('filegal')->getGalleryIds($gallery_list, $galleryId, 'list');
+			$gallery_list = implode( ' or ', $gallery_list );
+		} else {
+			$gallery_list = $galleryId;
+		}
+
 		$perms = Perms::get('file gallery', $galleryId);
 
 		return array(
@@ -112,6 +130,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			'files' => $fileInfo,
 			'value' => $value,
 			'filter' => $this->getOption(1),
+			'gallerySearch' => $gallery_list,
 		);
 	}
 

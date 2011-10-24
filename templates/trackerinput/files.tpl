@@ -206,7 +206,7 @@ $search.keypress(function (e) {
 			"filter~type": "file",
 			"filter~content": $(this).val(),
 			"filter~filetype": "{{$field.filter|escape}}",
-			"filter~gallery_id": "{{$field.galleryId|escape}}"
+			"filter~gallery_id": "{{$field.gallerySearch|escape}}"
 		}, function (data) {
 			$search.removeAttr('disabled').clearError();
 			$.each(data, function () {
