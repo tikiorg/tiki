@@ -122,6 +122,9 @@ function buildFileList() {
 }
 
 if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array($_REQUEST['files'])) {
+
+	@ini_set('max_execution_time', 0); // will not work if safe_mode is on
+
 	// default is: file names from request
 	$fileArray = $_REQUEST['files'];
 	$totfiles = count($fileArray);
