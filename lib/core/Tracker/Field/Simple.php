@@ -93,9 +93,9 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 	{
 		switch ($type) {
 			case 'm':
-				return new Tracker_Field_Simple($field_info, $itemData, $trackerDefinition, 'email');
+				return new Tracker_Field_Simple($fieldInfo, $itemData, $trackerDefinition, 'email');
 			case 'I':
-				return new Tracker_Field_Simple($field_info, $itemData, $trackerDefinition, 'ip');
+				return new Tracker_Field_Simple($fieldInfo, $itemData, $trackerDefinition, 'ip');
 		}
 	}
 	
