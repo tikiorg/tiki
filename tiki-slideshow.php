@@ -33,7 +33,7 @@ if (!isset($_SESSION["thedate"])) {
 if (!isset($_REQUEST["page"])) {
 	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
-$page = $_REQUEST['page'];
+$page = htmlspecialchars($_REQUEST['page']);
 $smarty->assign('page', $page);
 
 // If the page doesn't exist then display an error
@@ -139,8 +139,10 @@ $headerlib->add_jq_onready( '
 	$.fn.extend({
 		s5ThemeHandler: function(s) {
 			return this
-				.val(window.s5Settings.themeName)
 				.change(function() {
+					if (window.s5Busy) return;
+					window.s5Busy = true;
+					
 					var theme = $(this).val();
 					theme = (theme ? theme : "default");
 					
@@ -161,25 +163,27 @@ $headerlib->add_jq_onready( '
 								params: (window.slideshowSettings ? window.slideshowSettings : {})
 							}, function() {
 								$.modal();
+								window.s5Busy = false;
 							});
 						} else {
 							$.modal();
+							window.s5Busy = false;
 						}
 					}); 
-				});
+				})
+				.val(window.s5Settings.themeName);
 		}
 	});
 	
 	$(".tiki-slideshow-theme")
-		.val(window.s5Settings.themeName ? window.s5Settings.themeName : "default")
 		.s5ThemeHandler()
-		.change()
 		.change(function() {
 			if (!$.s5.note) return;
 			if (!$.s5.note.document) return;
 			
 			$($.s5.note.document).find(".tiki-slideshow-theme").val($(this).val());
-		});
+		})
+		.change();
 ');
 
 ask_ticket('index-raw');
