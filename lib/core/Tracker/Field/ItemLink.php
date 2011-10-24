@@ -204,10 +204,9 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 	{
 		$smarty = TikiLib::lib('smarty');
 
-		$value = $this->getConfiguration('value');
+		$item = $this->getConfiguration('value');
 		$dlist = $this->getConfiguration('listdisplay');
 		$list = $this->getConfiguration('list');
-		$item = array_search($value, (array) $list);
 		if (!empty($dlist)) {
 			$label = isset($dlist[$item]) ? $dlist[$item] : '';
 		} else {
