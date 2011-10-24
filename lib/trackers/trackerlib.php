@@ -1568,6 +1568,14 @@ class TrackerLib extends TikiLib
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 
+		// prepare autoincrement fields
+		$auto_fields = array();
+		foreach($fields['data'] as & $field) {
+			if ($field['type'] === 'q') {
+				$auto_fields[(int) $field['fieldId']] = $field;
+			}
+		}
+
 		// prepare ItemLink fields
 		if ($convertItemLinkValues) {
 			$itemlink_options = array();
@@ -1624,17 +1632,12 @@ class TrackerLib extends TikiLib
 					TikiLib::lib('errorreport')->report(tr('Problem inserting tracker item: trackerId=%0, created=%1, lastModif=%2, status=%3', $trackerId, $created, $lastModif, $status));
 				} else {
 					// deal with autoincrement fields
-					$auto_fid = $this->get_field_id_from_type($trackerId, 'q');
-					if (!is_array($auto_fid)) {
-						$auto_fid = array($auto_fid);
-					}
-					foreach($auto_fid as $fid) {
-						$auto_finfo = $this->get_tracker_field($fid);
-						$auto_handler = $this->get_field_handler($auto_finfo, $this->get_item_info($itemId));
+					foreach($auto_fields as $afield) {
+						$auto_handler = $this->get_field_handler($afield, $this->get_item_info($itemId));
 						$auto_val = $auto_handler->handleSave(null, null);
 						$itemFields->insert(array(
 							'itemId' => (int) $itemId,
-							'fieldId' => (int) $fid,
+							'fieldId' => (int) $afield['fieldId'],
 							'value' => $auto_val['value'],
 						));
 					}
