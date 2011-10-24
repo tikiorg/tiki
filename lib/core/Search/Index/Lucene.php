@@ -41,7 +41,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		}
 
 		$this->lucene->setMaxBufferedDocs(100);
-		$this->lucene->setMaxMergeDocs(200);
+		$this->lucene->setMaxMergeDocs(5000);
 		$this->lucene->setMergeFactor(50);
 
 		return $this->lucene;
