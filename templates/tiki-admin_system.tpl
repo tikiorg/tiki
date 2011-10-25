@@ -5,11 +5,11 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}If your Tiki is acting weird, first thing to try is to clear your cache below. Also very important is to clear your cache after an upgrade (by FTP/SSH when needed).{/tr} {tr}Also see "Rebuild Index" in the <a href="tiki-admin.php?page=search">Search Admin Panel</a>{/tr}
 {/remarksbox}
 
-<h2>{tr}Exterminator of cached content{/tr}</h2>
+<h2>{tr}Clear cached content{/tr}</h2>
 {cycle values="even,odd" print=false}
 <table class="normal">
 	<tr>
-		<th>{tr}Directory to exterminate{/tr}</th>
+		<th>{tr}Directory to clear{/tr}</th>
 		<th>{tr}Files{/tr}/{tr}Size{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
