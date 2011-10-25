@@ -17,6 +17,7 @@ if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults']) {
 	check_ticket('admin-inc-category');
 	$categlib = TikiLib::lib('categ');
 	$maxRecords = 100;
+	// The outer loop attemps to limit memory usage by fetching pages gradually
 	for ($offset = 0; $pages = $tikilib->list_pages($offset, $maxRecords), !empty($pages['data']); $offset += $maxRecords) {
 		foreach ($pages['data'] as $page) {
 			$categories = $categlib->get_object_categories('wiki page', $page['pageName']);
