@@ -267,7 +267,7 @@ class TrackerLib extends TikiLib
 
 			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_action', 'New File Atttached to Item:' . $itemId . ' at tracker ' . $trackerName);
+			$smarty->assign('mail_action', 'New File Attached to Item:' . $itemId . ' at tracker ' . $trackerName);
 			$smarty->assign('mail_itemId', $itemId);
 			$smarty->assign('mail_trackerId', $trackerId);
 			$smarty->assign('mail_trackerName', $trackerName);
