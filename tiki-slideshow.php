@@ -7,7 +7,7 @@
 
 $section = 'wiki page';
 require_once ('tiki-setup.php');
-
+global $tikilib;
 include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/wiki-plugins/wikiplugin_slideshow.php');
@@ -33,7 +33,7 @@ if (!isset($_SESSION["thedate"])) {
 if (!isset($_REQUEST["page"])) {
 	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
-$page = $_REQUEST['page'];
+$page = htmlspecialchars($_REQUEST['page']);
 $smarty->assign('page', $page);
 
 // If the page doesn't exist then display an error
@@ -43,7 +43,7 @@ if (!($info = $tikilib->page_exists($page))) {
 }
 
 if (isset($_REQUEST['theme'])) {
-	print_r(getSlideshowTheme($_REQUEST['theme'], true));
+	echo json_encode($tikilib->getSlideshowTheme($_REQUEST['theme'])); 
 	die; 
 }
 
@@ -131,7 +131,7 @@ $headerlib->add_jq_onready( '
 			
 			return menu;
 		},
-		themeName: "default"
+		themeName: (window.s5Settings.themeName ? window.s5Settings.themeName : "default")
 	}));
 	
 	$("#main").hide();
@@ -139,17 +139,39 @@ $headerlib->add_jq_onready( '
 	$.fn.extend({
 		s5ThemeHandler: function(s) {
 			return this
-				.val(window.s5Settings.themeName)
 				.change(function() {
+					if (window.s5Busy) return;
+					window.s5Busy = true;
+					
 					var theme = $(this).val();
 					theme = (theme ? theme : "default");
 					
 					window.s5Settings.themeName = theme;
+					$.modal(tr("Updating Theme..."));
 					$.get("tiki-slideshow.php", {theme: theme}, function(o) {
-						theme = $.parseJSON(o);
-						$.s5.makeTheme(theme);
+						$.s5.makeTheme($.parseJSON(o));
+						
+						if (window.slideshowSettings) {
+							window.slideshowSettings.theme = theme;
+							
+							$.post("tiki-wikiplugin_edit.php", {
+								index: 1,
+								page: "'.$page.'",
+								type: "slideshow",
+								label: tr("Update slideshow theme"),
+								content: "~same~",
+								params: (window.slideshowSettings ? window.slideshowSettings : {})
+							}, function() {
+								$.modal();
+								window.s5Busy = false;
+							});
+						} else {
+							$.modal();
+							window.s5Busy = false;
+						}
 					}); 
-				});
+				})
+				.val(window.s5Settings.themeName);
 		}
 	});
 	
@@ -160,11 +182,8 @@ $headerlib->add_jq_onready( '
 			if (!$.s5.note.document) return;
 			
 			$($.s5.note.document).find(".tiki-slideshow-theme").val($(this).val());
-		});
-	
-	if (window.s5Settings.themeName == "default") {
-		$(".tiki-slideshow-theme").change();
-	}
+		})
+		.change();
 ');
 
 ask_ticket('index-raw');

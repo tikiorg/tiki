@@ -95,10 +95,13 @@ function wikiplugin_list($data, $params)
 	if (count($result)) {
 		if (!empty($output)) {
 			$arguments = $argumentParser->parse($output->getArguments());
-	
+
 			if (isset($arguments['template'])) {
 				if ($arguments['template'] == 'table') {
 					$arguments['template'] = dirname(__FILE__) . '/../../templates/table.tpl';
+				} else if (!file_exists($arguments['template'])) {
+					TikiLib::lib('errorreport')->report(tr('Missing template "%0"', $arguments['template']));
+					return '';
 				}
 				$builder = new Search_Formatter_ArrayBuilder;
 				$templateData = $builder->getData($output->getBody());
