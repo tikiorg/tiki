@@ -58,7 +58,7 @@
 		</div>
 		{preference name=category_jail}
 		{preference name=category_defaults}
-		{button href="tiki-admin.php?page=category&amp;assignWikiCategories=y" _text="{tr}Re-apply the category defaults to the wiki pages{/tr}"}
+		{if !empty($prefs.category_defaults)}{button href="tiki-admin.php?page=category&amp;assignWikiCategories=y" _text="{tr}Re-apply the category defaults to the wiki pages{/tr}"}{/if}
 		{preference name=category_autogeocode_within}
 		{preference name=category_autogeocode_replace}
 		{preference name=category_autogeocode_fudge}
