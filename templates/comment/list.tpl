@@ -27,14 +27,19 @@
 						{self_link controller=comment action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class="confirm-prompt" _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
 					{/if}
 				</div>
-				<h6>{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
+				{if $prefs.comments_notitle eq 'y'}
+					<h6>{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
+				{else}
+					<h6 class="title">{$comment.title}</h6>
+					<span class="author_info">{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</span>
+				{/if}
 				<div class="body">
 					<span class="avatar">{$comment.userName|avatarize}</span>
 					{$comment.parsed}
 				</div>
 
 				{if $allow_post && $comment.locked neq 'y'}
-					<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Post new comment{/tr}{/self_link}</div>
+					<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}</div>
 				{/if}
 
 				{if $comment.replies_info.numReplies gt 0}
