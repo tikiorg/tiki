@@ -173,29 +173,31 @@ EOF;
 		}
 	}
 	
-	$info;
-	if (!empty($id)) {
-		$info = $sheetlib->get_sheet_info($id);
-	}
-
-	if (empty($info)) {
-		return tra("Error loading spreadsheet");
-	}
-	
-	$objectperms = Perms::get('sheet', $id);
-	if (!$objectperms->view_sheet  && !($user && $info['author'] == $user)) {
-		return (tra('Permission denied'));
-	}
-
-	// Build required objects
 	$sheet = new TikiSheet();
-	$db = new TikiSheetDatabaseHandler( $id );
-	$out = new TikiSheetOutputHandler( $data );
-
-	// Fetch sheet from database
-	$sheet->import( $db );
 	
-	if (!empty($range)) {
+	if (empty($url)) {
+		$info;
+		if (!empty($id)) {
+			$info = $sheetlib->get_sheet_info($id);
+		}
+	
+		if (empty($info)) {
+			return tra("Error loading spreadsheet");
+		}
+		
+		$objectperms = Perms::get('sheet', $id);
+		if (!$objectperms->view_sheet  && !($user && $info['author'] == $user)) {
+			return (tra('Permission denied'));
+		}
+	
+		// Build required objects
+		$db = new TikiSheetDatabaseHandler( $id );
+		$out = new TikiSheetOutputHandler( $data );
+	
+		// Fetch sheet from database
+		$sheet->import( $db );
+	
+	} else {
 		$r = $sheet->setRange($range);
 		if (!isset($simple)) {
 			$simple = 'y';
