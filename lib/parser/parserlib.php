@@ -1865,11 +1865,7 @@ if ( \$('#$id') ) {
 			if ($prefs['popupLinks'] == 'y') {
 				$target = 'target="_blank"';
 			}
-
-			if (!isset($_SERVER['SERVER_NAME']) && isset($_SERVER['HTTP_HOST'])) {
-				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
-			}
-			if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://')) {
+			if (!strstr($link, '://')) {
 				$target = '';
 			} else {
 				$class = 'class="wiki external"';
