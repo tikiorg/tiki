@@ -67,6 +67,13 @@ function wikiplugin_memberpayment_info() {
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'freeperiods' => array(
+				'required' => false,
+				'name' => tra('Give specified numbers of free periods'),
+				'description' => tra('Give specified numbers of free periods, the first one could be prorated, in addition to those bought'),
+				'filter' => 'int',
+				'default' => 0,
+			),
 		),
 	);
 }
@@ -91,6 +98,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 		}
 		$smarty->assign( 'wp_member_group', $info );
 		$smarty->assign( 'wp_member_currentuser', $params['currentuser'] );
+		$smarty->assign( 'wp_member_prorated', 0); // default
 		
 		if ($info['anniversary'] > '') {
 			if (strlen($info['anniversary']) == 4) {
@@ -107,7 +115,19 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 				$smarty->assign( 'wp_member_prorated', round($extend_until_info['ratio_prorated_first_period'] * $params['price'], 2) );	
 			}
 		}
-
+		
+		// setup free period display
+		if (!empty($params['freeperiods'])) {
+			if (isset($extend_until_info['ratio_prorated_first_period']) && $extend_until_info['ratio_prorated_first_period'] < 1) {
+				$smarty->assign('wp_member_freeperiods', $params['freeperiods']);
+				$smarty->assign('wp_member_freeprorated', 1);
+			} else {
+				$smarty->assign('wp_member_freeperiods', $params['freeperiods'] - 1);
+			}
+		} else {
+			$smarty->assign('wp_member_freeperiods', 0);
+		}
+		
 		$smarty->assign('wp_member_requestpending', 'n');
         $smarty->assign('wp_member_paymentid', 0);
 		if (isset($params['currentuser']) && $params['currentuser'] == 'y' && !empty($params['preventdoublerequest']) && $params['preventdoublerequest'] == 'y') {
@@ -151,6 +171,9 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 					$cost = $cost - (1 - $extend_until_info['ratio_prorated_first_period']) * $params['price'];
 				}
 				$cost = round( $cost, 2 );
+			} elseif ($periods && !empty($params['freeperiods'])) { 
+				// give free periods (purchase of at least 1 full real period required)
+				$periods += $params['freeperiods'];
 			}
 
 			$id = $paymentlib->request_payment( $desc, $cost, $prefs['payment_default_delay'] );
