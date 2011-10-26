@@ -119,10 +119,10 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 		// setup free period display
 		if (!empty($params['freeperiods'])) {
 			if (isset($extend_until_info['ratio_prorated_first_period']) && $extend_until_info['ratio_prorated_first_period'] < 1) {
-				$smarty->assign('wp_member_freeperiods', $params['freeperiods']);
+				$smarty->assign('wp_member_freeperiods', $params['freeperiods'] - 1);
 				$smarty->assign('wp_member_freeprorated', 1);
 			} else {
-				$smarty->assign('wp_member_freeperiods', $params['freeperiods'] - 1);
+				$smarty->assign('wp_member_freeperiods', $params['freeperiods']);
 			}
 		} else {
 			$smarty->assign('wp_member_freeperiods', 0);
