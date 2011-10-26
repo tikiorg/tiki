@@ -3907,6 +3907,7 @@ $lang = array(
 "Item" => "Fiche",
 "Subject" => "Sujet",
 "Tracker was modified at " => "Le formulaire a été modifié à ",
+"Tracker was modified at %0 by %1" => "Le formulaire a été modifié à %0 par %1",
 "View the tracker item at" => "Voir la fiche du formulaire à",
 "Message" => "Message",
 "No extra information for that attached file. " => "Aucune information supplémentaire pour ce fichier joint. ",
