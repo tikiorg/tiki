@@ -114,6 +114,9 @@ include_once ('tiki-section_options.php');
 $headerlib->add_cssfile( 'lib/jquery.s5/jquery.s5.css' );
 $headerlib->add_jsfile( 'lib/jquery.s5/jquery.s5.js' );
 $headerlib->add_jq_onready( '
+	//slideshow corrupts s5 and is not needed in s5 at all
+	$("#toc").remove();
+	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
 	
 	$.s5.start($.extend(window.s5Settings, {
