@@ -405,7 +405,7 @@ function initialize_prefs() {
     $prefs['favicon_debug'] = array();
     $prefs['favicon_debug'][] = 'This is my temporary debug log/scratchpad';
     $prefs['favicon_debug'][] = 'There is prolly a smarter way to do this.';
-	$prefs['favicon_debug'][] = 'HTTP_USER_AGENT == ' . $_SERVER['HTTP_USER_AGENT'];
+	$prefs['favicon_debug'][] = 'HTTP_USER_AGENT == ' . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
 	$prefs['favicon_debug'][] = 'Using Internet Exploder == ' . boolean_to_string( isInternetExploder());
 	
 	// For standards compliant browsers, we want a favicon link like...
