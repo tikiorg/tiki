@@ -3593,7 +3593,7 @@ class TrackerLib extends TikiLib
 
 	function send_replace_item_notifications($args)
 	{
-		global $prefs;
+		global $prefs, $user;
 
 		// Don't send a notification if this operation is part of a bulk import
 		if ($args['bulk_import']) {
