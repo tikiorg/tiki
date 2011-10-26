@@ -165,7 +165,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 
 			$cost = round( count($users) * $periods * $params['price'], 2 );
 			// reduce cost due to prorated amount if applicable
-			if ($info['anniversary'] > '') {
+			if (empty($params['freeperiods']) && $info['anniversary'] > '') {
 				foreach ($users as $u) {
 					$extend_until_info = $userlib->get_extend_until_info($u, $params['group'], $periods);
 					$cost = $cost - (1 - $extend_until_info['ratio_prorated_first_period']) * $params['price'];
