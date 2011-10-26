@@ -3,7 +3,7 @@
 {elseif $objecttype eq 'article'}
 {tr}The article {$mail_objectname} was commented on by{/tr} {if $mail_user}{$mail_user|username}{else}{tr}an anonymous user{/tr}{/if}.
 {elseif $objecttype eq 'trackeritem'}
-{tr}The tracker item {$mail_objectid} of tracker {$mail_objectname} was commented on by{/tr} {if $mail_user}{$mail_user|username}{else}{tr}an anonymous user{/tr}{/if}.
+{tr}The tracker item {$mail_item_title} of tracker {$mail_objectname} was commented on by{/tr} {if $mail_user}{$mail_user|username}{else}{tr}an anonymous user{/tr}{/if}.
 {/if}
 
 {tr}You can view the comment by following this link:{/tr}
