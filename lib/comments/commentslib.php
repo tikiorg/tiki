@@ -1967,6 +1967,9 @@ class Comments extends TikiLib
 			case 'poll':
 				$href = 'tiki-poll_results.php?pollId=';
 				break;
+			case 'trackeritem':
+				$href = 'tiki-view_tracker_item.php?itemId=';
+				break;
 			default:
 				break;
 		}

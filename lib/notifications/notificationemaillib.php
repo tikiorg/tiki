@@ -624,6 +624,7 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null) 
 			$tracker = $trklib->get_tracker($trackerId);
 			$smarty->assign('mail_objectid', $id);	
 			$smarty->assign('mail_objectname', $tracker['name']);
+			$smarty->assign('mail_item_title', $trklib->get_isMain_value($trackerId, $id)); 
 		}
 		$smarty->assign('objecttype', $type);		
 		$smarty->assign('mail_user', $user);
