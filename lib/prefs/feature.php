@@ -1826,7 +1826,7 @@ function prefs_feature_list($partial = false) {
 				'feature_wiki_1like_redirection',
 				'feature_semantic', // this is needed at point of creation of semantic link otherwise link will not register
 			),
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_wiki_templates' => array(
 			'name' => tra('Wiki content templates'),
