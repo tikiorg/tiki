@@ -152,16 +152,18 @@
 				{if $files[$changes].lockedby}
 					{self_link _icon='lock_delete' _menu_text=$menu_text _menu_icon=$menu_icon lock='n' fileId=$files[$changes].fileId galleryId=$files[$changes].galleryId}{tr}Unlock{/tr}{/self_link}
 				{else}
-					{if $prefs.javascript_enabled eq 'y'}
+					{if (isset($files[$changes].p_download_files) and  $files[$changes].p_download_files eq 'y')
+	 or (!isset($files[$changes].p_download_files) and $files[$changes].perms.tiki_p_download_files eq 'y')}
+						{if $prefs.javascript_enabled eq 'y'}
 
-					{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
-					<a href="#" onclick="window.open('{$files[$changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[$changes].fileId lock=y galleryId=$files[$changes].galleryId}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
+						{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
+						<a href="#" onclick="window.open('{$files[$changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[$changes].fileId lock=y galleryId=$files[$changes].galleryId}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
 
-					{else}
+						{else}
 
-					{* without javascript, the lockedby informations won't be refreshed until the user do it itself *}
-					<a href="{$files[$changes].fileId|sefurl:file}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
-
+						{* without javascript, the lockedby informations won't be refreshed until the user do it itself *}
+						<a href="{$files[$changes].fileId|sefurl:file}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
+						{/if}
 					{/if}
 					{self_link _icon='lock_add' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[$changes].fileId galleryId=$files[$changes].galleryId}{tr}Lock{/tr}{/self_link}
 				{/if}
