@@ -17,12 +17,28 @@ function wikiplugin_list_info()
 		'icon' => 'pics/icons/text_list_bullets.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
+			'maxRecords' => array(
+				'required' => false,
+				'name' => tra('Max Records'),
+				'description' => tra('Number of items displayed in the list. Default is set in admin/look/pagination.'),
+				'filter' => 'digits',
+				'default' => 0,
+			),
+			'offset' => array(
+				'required' => false,
+				'name' => tra('Result Offset'),
+				'description' => tra('Result number at which the listing should start.'),
+				'filter' => 'digits',
+				'default' => 0,
+			),
 		),
 	);
 }
 
 function wikiplugin_list($data, $params)
 {
+	global $prefs;
+	
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$alternate = null;
@@ -32,13 +48,22 @@ function wikiplugin_list($data, $params)
 	$query = new Search_Query;
 	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
 
-	if (isset($_REQUEST['offset'])) {
-		if (isset($_REQUEST['maxRecords'])) {
-			$query->setRange($_REQUEST['offset'], $_REQUEST['maxRecords']);
-		} else {
-			$query->setRange($_REQUEST['offset']);
-		}
+	if (!empty($_REQUEST['offset'])) {
+		$offset = $_REQUEST['offset'];
+	} else if (!empty($params['offset'])) {
+		$offset = $params['offset'];
+	} else {
+		$offset = 0;
 	}
+	if (!empty($_REQUEST['maxRecords'])) {
+		$maxRecords = $_REQUEST['maxRecords'];
+	} else if (!empty($params['maxRecords'])) {
+		$maxRecords = $params['maxRecords'];
+	} else {
+		$maxRecords = $prefs['maxRecords'];
+	}
+
+	$query->setRange($offset, $maxRecords);
 
 	$matches = WikiParser_PluginMatcher::match($data);
 	$argumentParser = new WikiParser_PluginArgumentParser;
