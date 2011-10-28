@@ -60,7 +60,7 @@ function smarty_function_object_link( $params, $smarty ) {
 	return $function( $smarty, $object, $title, $type, $url );
 }
 
-function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki', $url = null ) {
+function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null ) {
 	require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
 	if (! function_exists('smarty_modifier_escape')) {
@@ -85,7 +85,9 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	}
 
 	$class = '';
-	$metadata = '';
+	$escapedType = smarty_modifier_escape($type);
+	$escapedObject = smarty_modifier_escape($object);
+	$metadata = ' data-type="' . $escapedType . '" data-object="' . $escapedObject . '"';
 
 	if ($coordinates = TikiLib::lib('geo')->get_coordinates($type, $object)) {
 		$class = ' class="geolocated"';

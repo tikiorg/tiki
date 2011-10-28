@@ -27,6 +27,7 @@ $controllerMap = array(
 	'category' => 'Services_Category_Controller',
 	'connect' => 'Services_Connect_Client',
 	'connect_server' => 'Services_Connect_Server',
+	'object' => 'Services_Object_Controller',
 );
 
 $inputConfiguration = array(array(
