@@ -236,6 +236,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	}
 
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
+	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-maps.js' );
 	$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js' );	
 
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
