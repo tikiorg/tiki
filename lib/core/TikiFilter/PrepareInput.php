@@ -47,11 +47,11 @@ class TikiFilter_PrepareInput
 		return $output;
 	}
 	
-	function flatten($values, &$newValues = array(), $prefix = '', $delimiter = '_') {
+	function flatten($values, &$newValues = array(), $prefix = '') {
 		foreach ($values as $key => $value) {
 			if (is_array($value)) {
-				$newPrefix = $prefix.$key.$delimiter;
-				$newValues =& $this->flatten($value, $newValues ,$newPrefix, $delimiter);
+				$newPrefix = $prefix.$key.$this->delimiter;
+				$newValues =& $this->flatten($value, $newValues ,$newPrefix, $this->delimiter);
 			} else {
 				$newValues[$prefix.$key] = $value;
 			}
