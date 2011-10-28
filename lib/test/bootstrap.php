@@ -28,7 +28,7 @@ function __autoload_tikitest( $name ) {
 spl_autoload_register('__autoload_tikitest');
 
 if (!is_file(dirname(__FILE__) . '/local.php')) {
-	die("\nYou need setup a new database, install Tiki on it and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
+	die("\nYou need to setup a new database and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
 }
 
 require_once(dirname(__FILE__) . '/local.php');
