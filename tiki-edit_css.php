@@ -42,6 +42,7 @@ if (!empty($_REQUEST['edit'])) {
 	} else {
 		$mod = NULL;
 	}
+	$style = $csslib->get_nickname_path($editstyle, $styledir, true);
 	$fp = fopen($style, "w");
 	if (!$fp) {
 		$smarty->assign('msg', tra("You do not have permission to write the style sheet")." $style");
@@ -72,7 +73,8 @@ $smarty->assign('action', $action);
 $smarty->assign('data', $data);
 
 if (!empty($editstyle)) {
-	$smarty->assign('writable', is_writable($style));
+	$dest = $csslib->get_nickname_path($editstyle, $styledir, true);
+	$smarty->assign('writable', file_exists($dest)? is_writable($dest): is_writable(dirname($dest)));
 	$cssdata = $csslib->browse_css($style);
 	if ((!$cssdata["error"]) and is_array($cssdata["content"])) {
 		$parsedcss = $csslib->parse_css($cssdata["content"]);
