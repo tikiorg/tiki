@@ -13,24 +13,41 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class cssLib extends TikiLib
 {
+	function list_css($path, $recursive=false) {
+		$files = $this->list_files($path, '.css', $recursive);
+		foreach ($files as $i=>$file) {
+			$files[$i] = preg_replace("|^$path/(.*)\.css$|", '$1', $file);
+		}
+		return $files;
+	}
 
-	function list_css($path) {
+	function list_files($path, $extension, $recursive) {
 		$back = array();
 
-		$oldir = getcwd();
-		chdir ($path);
-		$handle = opendir('.');
+		$handle = opendir($path);
 
-		while ($file = basename(readdir($handle))) {
-			if ((substr($file, -4, 4) == ".css") and (preg_match('/^[-_a-zA-Z0-9\.]*$/', $file))) {
-				$back[] = substr($file, 0, -4);
+		while ($file = readdir($handle)) {
+			if ((substr($file, -4, 4) == $extension) and (preg_match('/^[-_a-zA-Z0-9\.]*$/', $file))) {
+				$back[] = "$path/$file";
+			} elseif ($recursive && $file != '.svn' && $file != '.' && $file != '..' && is_dir("$path/$file") && !file_exists("db/$file/local.php")) {
+				$back = array_merge($back, $this->list_files("$path/$file", $extension, $recursive));
 			}
 		}
-
-		chdir ($oldir);
+		closedir($handle);
 		sort($back);
 		return $back;
 	}
+
+	/* nickname = fivealive or Bidi/Bidi */
+	function get_nickname_path($nickname, $styledir) {
+		global $tikidomain;
+		if (!strstr($nickname, '\/') && !empty($tikidomain) && is_dir("$styledir/$tikidomain")) {
+			$style = "$styledir/$tikidomain/$nickname.css";
+		} else {
+			$style = "$styledir/$nickname.css";
+		}
+		return $style;
+}		
 
 	function browse_css($path) {
 		if (!is_file($path)) {
