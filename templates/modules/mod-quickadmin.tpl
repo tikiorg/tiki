@@ -13,6 +13,10 @@
 			{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
 				{icon _id="palette" title="{tr}Theme Generator Editor{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
 			{/if}
+			{if $prefs.feature_comments_moderation eq "y"}
+				{icon _id=comments title="{tr}Comments Moderation{/tr}" href="tiki-list_comments.php"}
+			{/if}
+			{icon _id=plugin title="{tr}Plugin Approval{/tr}" href="tiki-plugins.php"}
 		</div>  
 	{/if}
 {/tikimodule}
