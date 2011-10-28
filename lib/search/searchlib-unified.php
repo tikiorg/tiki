@@ -240,6 +240,8 @@ class UnifiedSearchLib
 			$aggregator->addGlobalSource(new Search_GlobalSource_AdvancedRatingSource);
 		}
 
+		$aggregator->addGlobalSource(new Search_GlobalSource_Geolocation);
+
 		if ($mode == 'indexing') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
 			$aggregator->addGlobalSource(new Search_GlobalSource_RelationSource);
