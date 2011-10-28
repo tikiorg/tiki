@@ -105,7 +105,7 @@ function wikiplugin_countdown_info() {
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Comma'), 'value' => 'c'), 
-					array('text' => tra('Decimal'), 'value' => 'd'),
+					array('text' => tra('Period'), 'value' => 'p'),
 					array('text' => tra('Space'), 'value' => 's'),
 				),
 			),
@@ -153,7 +153,7 @@ function wikiplugin_countdown($data, $params) {
 			case 'c':
 				$thousands = ',';
 				break;
-			case 'd':
+			case 'p':
 				$thousands = '.';
 				break;
 			case 's':
