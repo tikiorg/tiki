@@ -7,6 +7,11 @@
 
 class TikiFilter_PrepareInputTest extends PHPUnit_Framework_TestCase
 {
+	function setUp()
+	{
+		$this->obj = new TikiFilter_PrepareInput('.');
+	}
+	
 	function testNormalInput()
 	{
 		$input = array(
@@ -14,9 +19,7 @@ class TikiFilter_PrepareInputTest extends PHPUnit_Framework_TestCase
 			'hello' => 'world',
 		);
 
-		$prepareInput = new TikiFilter_PrepareInput('.');
-
-		$this->assertEquals($input, $prepareInput->prepare($input));
+		$this->assertEquals($input, $this->obj->prepare($input));
 	}
 
 	function testConvertArray()
@@ -43,9 +46,7 @@ class TikiFilter_PrepareInputTest extends PHPUnit_Framework_TestCase
 			),
 		);
 
-		$prepareInput = new TikiFilter_PrepareInput('.');
-
-		$this->assertEquals($expect, $prepareInput->prepare($input));
+		$this->assertEquals($expect, $this->obj->prepare($input));
 	}
 	
 	function testNormalFlatten()
@@ -55,7 +56,7 @@ class TikiFilter_PrepareInputTest extends PHPUnit_Framework_TestCase
 			'hello' => 'world',
 		);
 		
-		$this->assertEquals($input, TikiFilter_PrepareInput::delimiter('.')->flatten($input));
+		$this->assertEquals($input, $this->obj->flatten($input));
 	}
 	
 	function testConvertArrayFlatten()
@@ -82,7 +83,7 @@ class TikiFilter_PrepareInputTest extends PHPUnit_Framework_TestCase
 			'a.b.d' => '2',
 		);
 		
-		$this->assertEquals($expect, TikiFilter_PrepareInput::delimiter('.')->flatten($input));
+		$this->assertEquals($expect, $this->obj->flatten($input));
 	}
 }
 
