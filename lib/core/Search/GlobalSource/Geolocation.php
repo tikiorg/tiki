@@ -10,19 +10,12 @@ class Search_GlobalSource_Geolocation implements Search_GlobalSource_Interface
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$geolib = TikiLib::lib('geo');
-		$coordinates = $geolib->get_coordinates($objectType, $objectId);
+		$coordinates = $geolib->get_coordinates_string($objectType, $objectId);
 
-		if ($coordinates) {
-			return array(
-				'geo_located' => $typeFactory->identifier('y'),
-				'geo_location' => $typeFactory->identifier(implode(',', $coordinates)),
-			);
-		} else {
-			return array(
-				'geo_located' => $typeFactory->identifier('n'),
-				'geo_location' => $typeFactory->identifier(''),
-			);
-		}
+		return array(
+			'geo_located' => $typeFactory->identifier($coordinates ? 'y' : 'n'),
+			'geo_location' => $typeFactory->identifier($coordinates),
+		);
 	}
 
 	function getProvidedFields()
