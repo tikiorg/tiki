@@ -725,7 +725,7 @@ a.toolbar {			/* each tool button */
 	font-family: sans-serif; 
 }
 
-#site_report {
+.box-share > div {
 	text-align: center;
 }
 

@@ -346,12 +346,12 @@ a.flip:hover,
 	background: #eee;
 	color: #000;
 }
-	
-#site_report {
+
+.box-share > div {
 	text-align: center;
 }
 
-#site_report a {
+.site_report a {
 	border-left: 1px solid #696969;
 	border-right: 1px solid #696969;
 	padding: 0 5px;
