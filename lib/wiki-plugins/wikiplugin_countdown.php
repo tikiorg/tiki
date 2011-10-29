@@ -127,6 +127,7 @@ function wikiplugin_countdown($data, $params) {
 	//set now date & time
 	$nowobj = $tikidate->date;
 	$now = $tikidate->getTime();
+	$nowstring = $nowobj->format('Y-m-d H:i:s');
 	//can replace the above line with the below when 5.3 becomes a minimum requirement
 //	$now = $nowobj->getTimestamp();
 	
@@ -148,7 +149,7 @@ function wikiplugin_countdown($data, $params) {
 	$timediff = $thentime - $now;
 	
 	//Set thousands separator
-	if (isset($thousands)) {
+	if (!empty($thousands)) {
 		switch ($thousands) {
 			case 'c':
 				$thousands = ',';
@@ -254,7 +255,7 @@ function wikiplugin_countdown($data, $params) {
 		);
 	}
 	
-	if (!isset($show)){
+	if (empty($show)){
 		// Set default. If no explicit SHOW, then show everything.
 		$show_years = true;
 		$show_months =  true;
@@ -314,17 +315,17 @@ function wikiplugin_countdown($data, $params) {
 						$sep = '';
 					}
 					$o_label = $diff['o'] == 1 ? tra('month') : tra('months');
-					$ret .= $sep . $diff['o'];
+					$ret .= $sep . $diff['o'] . ' ' . $o_label;
 				}
 			} else {
 				//use months as largest unit if years not shown
 				$o_label = $diff['months'] == 1 ? tra('month') : tra('months');
-				$ret = number_format($diff['months'], 0, '', $thousands);
+				$ret = number_format($diff['months'], 0, '', $thousands) . ' ' . $o_label;
 			}
-			$ret .= ' ' . $o_label;
 		}
 		//days
 		if ($show_days && $diff['caldays']) {
+			$d_label = $diff['caldays'] == 1 ? tra('day') : tra('days');
 			if ($show_months) {
 				if ($diff['caldays']) {
 					if (!empty($ret)) {
@@ -334,13 +335,11 @@ function wikiplugin_countdown($data, $params) {
 					} else {
 						$sep = '';
 					}
-					$ret .= $sep . $diff['caldays'];
+					$ret .= $sep . $diff['caldays'] . ' ' . $d_label;
 				}
 			} else {
-				$ret = number_format($diff['caldays'], 0, '', $thousands);
+				$ret = number_format($diff['caldays'], 0, '', $thousands) . ' ' . $d_label;
 			}
-			$d_label = $diff['caldays'] == 1 ? tra('day') : tra('days');
-			$ret .= ' ' . $d_label;
 		}
 		//hours
 		if ($show_hours && ($diff['h'] || $diff['hours'])) {
@@ -353,13 +352,12 @@ function wikiplugin_countdown($data, $params) {
 						$sep = '';
 					}
 					$h_label = $diff['h'] == 1 ? tra('hour') : tra('hours');
-					$ret .= $sep . $diff['h'];
+					$ret .= $sep . $diff['h'] . ' ' . $h_label;
 				}
 			} else {
 				$h_label = $diff['hours'] == 1 ? tra('hour') : tra('hours');
-				$ret = number_format($diff['hours'], 0, '', $thousands);
+				$ret = number_format($diff['hours'], 0, '', $thousands)  . ' ' . $h_label;
 			}
-			$ret .= ' ' . $h_label;
 		}
 		//minutes
 		if ($show_minutes && ($diff['m'] || $diff['minutes'])) {
@@ -372,13 +370,12 @@ function wikiplugin_countdown($data, $params) {
 						$sep = '';
 					}
 					$m_label = $diff['m'] == 1 ? tra('minute') : tra('minutes');
-					$ret .= $sep . $diff['m'];
+					$ret .= $sep . $diff['m'] . ' ' . $m_label;
 				}
 			} else {
 				$m_label = $diff['minutes'] == 1 ? tra('minute') : tra('minutes');
-				$ret = number_format($diff['minutes'], 0, '', $thousands);
+				$ret = number_format($diff['minutes'], 0, '', $thousands) . ' ' . $m_label;
 			}
-			$ret .= ' ' . $m_label;
 		}
 		//seconds
 		if ($show_seconds && ($diff['s'] || $diff['seconds'])) {
@@ -390,13 +387,12 @@ function wikiplugin_countdown($data, $params) {
 						$sep = '';
 					}
 					$s_label = $diff['s'] == 1 ? tra('second') : tra('seconds');
-					$ret .= $sep . $diff['s'];
+					$ret .= $sep . $diff['s'] . ' ' . $s_label;
 				}
 			} else {
 				$s_label = $diff['seconds'] == 1 ? tra('second') : tra('seconds');
-				$ret = number_format($diff['seconds'], 0, '', $thousands);
+				$ret = number_format($diff['seconds'], 0, '', $thousands) . ' ' . $s_label;
 			}
-			$ret .= ' ' . $s_label;
 		}
 		//add text
 		if (!isset($text) || ($text && $text != 'silent')) {
