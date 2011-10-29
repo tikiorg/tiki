@@ -3877,12 +3877,12 @@ class TikiLib extends TikiDb_Bridge
 		);
 
 		// Update HTML wanted links when wysiwyg is in use - this is not an elegant fix
-		// but will do for now until the "use wiki syntax in WYSIWYG" feature is ready 
+		// but will do for now until the "use wiki syntax in WYSIWYG" feature is ready
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
 			$wikilib = TikiLib::lib('wiki');
 			$temppage = md5($this->now . $name);
-			$wikilib->wiki_rename_page($name, $temppage);
-			$wikilib->wiki_rename_page($temppage, $name);
+			$wikilib->wiki_rename_page($name, $temppage, false);
+			$wikilib->wiki_rename_page($temppage, $name, false);
 		}
 		
 		return true;
