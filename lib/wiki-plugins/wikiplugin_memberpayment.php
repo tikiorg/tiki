@@ -91,6 +91,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 		}
 		$smarty->assign( 'wp_member_group', $info );
 		$smarty->assign( 'wp_member_currentuser', $params['currentuser'] );
+		$smarty->assign( 'wp_member_prorated', 0); // default
 		
 		if ($info['anniversary'] > '') {
 			if (strlen($info['anniversary']) == 4) {
