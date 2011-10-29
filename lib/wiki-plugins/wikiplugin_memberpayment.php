@@ -123,9 +123,11 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 				$smarty->assign('wp_member_freeprorated', 1);
 			} else {
 				$smarty->assign('wp_member_freeperiods', $params['freeperiods']);
+				$smarty->assign('wp_member_freeprorated', 0);
 			}
 		} else {
 			$smarty->assign('wp_member_freeperiods', 0);
+			$smarty->assign('wp_member_freeprorated', 0);
 		}
 		
 		$smarty->assign('wp_member_requestpending', 'n');
