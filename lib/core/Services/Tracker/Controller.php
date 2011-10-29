@@ -560,7 +560,7 @@ class Services_Tracker_Controller
 				'showLastModifBy' => $input->showLastModifBy->int() ? 'y' : 'n',
 				'showLastModifFormat' => $input->showLastModifFormat->text(),
 				'defaultOrderKey' => $input->defaultOrderKey->int(),
-				'defaultOrderDir' => $input->defaultOrderKey->word(),
+				'defaultOrderDir' => $input->defaultOrderDir->word(),
 				'doNotShowEmptyField' => $input->doNotShowEmptyField->int() ? 'y' : 'n',
 				'showPopup' => $input->showPopup->text(),
 				'defaultStatus' => implode('', (array) $input->defaultStatus->word()),
