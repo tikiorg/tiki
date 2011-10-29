@@ -808,6 +808,34 @@ class Services_Tracker_Controller
 		exit;
 	}
 
+	function action_export_profile($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trackerId = $input->trackerId->int();
+
+		include_once('lib/profilelib/installlib.php');
+		include_once('lib/profilelib/profilelib.php');
+
+		$profile = Tiki_Profile::fromString('dummy', '');
+		$data = array();
+		$profileObject = new Tiki_Profile_Object($data, $profile);
+		$profileTrackerInstallHandler = new Tiki_Profile_InstallHandler_Tracker($profileObject, array());
+
+		$export_yaml = $profileTrackerInstallHandler->_export($trackerId, $profileObject);
+
+		include_once 'lib/wiki-plugins/wikiplugin_code.php';
+		$export_yaml =  wikiplugin_code( $export_yaml, array('caption' => 'YAML', 'colors' => 'yaml' ));
+		$export_yaml = preg_replace( '/~[\/]?np~/', '', $export_yaml);
+
+		return array(
+			'trackerId' => $trackerId,
+			'yaml' => $export_yaml,
+		);
+	}
+
 	private function writeCsv($fields, $separator, $delimitorL, $delimitorR, $encoding, $cr = '%%%')
 	{
 		$values = array();

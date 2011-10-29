@@ -19,18 +19,6 @@ if (!$objectperms->admin_trackers) {
 }
 $smarty->assign('permsType', $objectperms->from());
 
-if (!empty($_REQUEST['exportTrackerProfile']) && !empty($_REQUEST['trackerId'])) {
-	include_once('lib/profilelib/installlib.php');
-	$prof = new Tiki_Profile_InstallHandler_Tracker();
-	$res = $prof->_export($_REQUEST['trackerId']);
-	header("Content-type: text/yaml");
-	header('Content-Disposition: attachment; filename=tracker_'.$_REQUEST['trackerId'].'.yaml');
-	header('Expires: 0');
-	header('Pragma: public');
-	echo $res;
-	die;
-}
-
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $info = array();
 

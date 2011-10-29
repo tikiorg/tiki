@@ -86,6 +86,13 @@
 			<input type="submit" value="{tr}Export{/tr}" />
 		</div>
 	</form>
+	<h4>{tr}Profile Export{/tr}</h4>
+	<form method="post" class="simple no-ajax" action="{service controller=tracker action=export_profile trackerId=$trackerId}">
+		<p>{tr}Produce YAML for a profile.{/tr}</p>
+		<div class="submit">
+			<input type="submit" value="{tr}Export Profile{/tr}"/>
+		</div>
+	</form>
 </div>
 {jq}
 $('.accordion').removeClass('accordion').accordion({

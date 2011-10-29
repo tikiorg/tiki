@@ -530,7 +530,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		return $trklib->replace_tracker($trackerId, $name, $description, $options, 'y');
 	} // }}}
 
-	function _export($trackerId) // {{{
+	function _export($trackerId, $profileObject) // {{{
 	{
 		global $trklib; require_once 'lib/trackers/trackerlib.php';
 		$info = $trklib->get_tracker($trackerId);
@@ -562,8 +562,10 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 					$allow[] = str_replace('allow_', '', $optionMap[$key]);
 				} elseif (strstr($optionMap[$key], 'show_')) {
 					$show[] = str_replace('show_', '', $optionMap[$key]);
-				} else {
+				} else if (isset($conversions[$optionMap[$key]]) && method_exists($conversions[$optionMap[$key]], 'reverse')) {
 					$res[] = $tab.$optionMap[$key].': '.$conversions[$optionMap[$key]]->reverse($value);
+				} else {
+					$res[] = $tab.$optionMap[$key] . ': ' . $value;
 				}
 			}
 		}
@@ -575,9 +577,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		}
 
 		$fields = $trklib->list_tracker_fields($trackerId);
-		$prof = new Tiki_Profile_InstallHandler_TrackerField();
+		$prof = new Tiki_Profile_InstallHandler_TrackerField( $profileObject, array());
 		foreach ($fields['data'] as $field) {
-			$res = array_merge($res, $prof->_export($field));
+			$res = array_merge($res, $prof->_export($field, $profileObject));
 		}
 		return implode("\n", $res);
 	} // }}}
@@ -765,7 +767,9 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		foreach ($info as $key => $value) {
 			if (!empty($optionMap[$key]) && (!isset($defaults[$optionMap[$key]]) || $value != $defaults[$optionMap[$key]])) {
 				if (in_array($optionMap[$key], array('list', 'link', 'searchable', 'public', 'mandatory', 'multilingual'))) {
-					$flag[] = $optionMap[$key];
+					if (!empty($value)) {
+						$flag[] = $optionMap[$key];
+					}
 				} elseif (!empty($conversions[$optionMap[$key]])) {
 					$reverseVal = $conversions[$optionMap[$key]]->reverse($value);
 					$res[] = $tab.$optionMap[$key].': '.(empty($reverseVal)? $value: $reverseVal);
