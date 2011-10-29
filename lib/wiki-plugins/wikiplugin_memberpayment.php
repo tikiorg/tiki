@@ -139,7 +139,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			}
 		}
 		
-		if ( isset($_POST['wp_member_offset']) && $_POST['wp_member_offset'] == $offset ) {
+		if ( isset($_POST['wp_member_offset']) && $_POST['wp_member_offset'] == $offset && !empty($_POST['wp_member_periods'])) {
 			$users = $params['currentuser'] == 'y'? array($user): explode( '|', $_POST['wp_member_users'] );
 			$users = array_map( 'trim', $users );
 			$users = array_filter( $users, array( $userlib, 'user_exists' ) );
@@ -155,7 +155,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 					}
 				}
 			}
-			$periods = max( 1, (int) $_POST['wp_member_periods'] );
+			$periods = (int) $_POST['wp_member_periods'];
 
 			if ( count($users) == 1 ) {
 				$desc = tr('Membership to %0 for %1 (x%2)', $params['group'], reset( $users ), $periods );
