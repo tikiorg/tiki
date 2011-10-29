@@ -29,7 +29,7 @@ function smarty_function_rss($params, $smarty)
 	}
 
 	global $tikilib;
-	return $tikilib->plugin_execute( 'rss', '', array(
+	return TikiLib::lib('parser')->plugin_execute( 'rss', '', array(
 		'id' => $id,
 		'max' => $max,
 	), 0, false, array( 'context_format' => 'html' ) );
