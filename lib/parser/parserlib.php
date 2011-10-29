@@ -2626,17 +2626,18 @@ if ( \$('#$id') ) {
 										}
 									}
 									
-									if ($in_paragraph && ((empty($tline) && $in_empty_paragraph === 0) || $contains_block)) {
+									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-									} elseif (!$in_paragraph && !$contains_block && !$contains_br && !empty($tline)) {
+									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y')) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										$in_paragraph = 1;
+										$in_empty_paragraph = empty($tline) && $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y';
 									} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
 										// A normal in-paragraph line if not close of div created by plugins
 										if (!empty($tline)) {
-											$in_empty_paragraph = 0;
+											$in_empty_paragraph = false;
 										}
 										$line = "<br />" . $line;
 									} // else {
