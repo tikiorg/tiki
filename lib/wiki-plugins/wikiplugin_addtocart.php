@@ -265,7 +265,7 @@ function wikiplugin_addtocart( $data, $params ) {
 
 			$behaviors = array();
 
-			if ((!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
+			if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
 				$access->redirect( $_SERVER['REQUEST_URI'], tr('Please enter your shopper information first') );   
 			} // There needs to be a shopperinfo plugin on the page
 

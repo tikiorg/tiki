@@ -638,16 +638,16 @@ class CartLib
 		global $prefs, $user, $tikilib;
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
-		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
-			$access = TikiLib::lib('access');				
-			$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
-		}
+//		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
+//			$access = TikiLib::lib('access');
+//			$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
+//		}
 				
 		$total = $this->get_total();
 
 		if ( $total > 0 || $this->total_no_discount ) {
 			// if anonymous shopping to set pref as to which shopperinfo to show in description
-			if (empty($user)) {
+			if (empty($user) && $prefs['payment_cart_anonymous'] === 'y') {
 				$shopperinfo_descvar = 'email'; // TODO: make this a pref
 				if (!empty($_SESSION['shopperinfo'][$shopperinfo_descvar])) {
 					$shopperinfo_desc = $_SESSION['shopperinfo'][$shopperinfo_descvar];
