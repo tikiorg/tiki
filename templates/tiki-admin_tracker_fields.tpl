@@ -126,7 +126,7 @@
 		<form class="simple import-fields" action="{service controller=tracker action=import_fields}" method="post">
 			<label>
 				{tr}Raw Fields{/tr}
-				<textarea name="raw"></textarea>
+				<textarea name="raw" rows="30"></textarea>
 			</label>
 			
 			<label>

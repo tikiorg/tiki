@@ -256,6 +256,16 @@ class Services_Tracker_Utilities
 			'errorMsg' => $field->errorMsg->text(),
 		);
 
+		// enable prefs for imported fields if required
+		$factory = new Tracker_Field_Factory(false);
+		$completeList = $factory->getFieldTypes();
+
+		if (! $this->isEnabled($completeList[$data['type']])) {
+			foreach ($completeList[$data['type']]['prefs'] as $pref) {
+				TikiLib::lib('tiki')->set_preference( $pref, 'y');
+			}
+		}
+
 		$this->updateField($trackerId, $fieldId, $data);
 	}
 
