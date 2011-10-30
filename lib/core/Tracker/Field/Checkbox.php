@@ -82,7 +82,13 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 	function renderOutput($context = array())
 	{
 		$fieldData = $this->getFieldData();
-		return $fieldData['value']; 
+		if ($fieldData['value'] == 'y') {
+			return tra('Yes');
+		} elseif ($fieldData['value'] == 'n') {
+			return tra('No');
+		} else {
+			return $fieldData['value']; 
+		}
 	}
 
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
