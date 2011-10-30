@@ -1,1 +1,3 @@
-{tr}New tracker created.{/tr} <a href="tiki-admin_trackers.php?find={$name|escape:'url'}">{tr}Return to tracker admin{/tr}</a>
+<h3>{tr}New tracker created.{/tr}</h3>
+<p><a href="tiki-admin_trackers.php?cookietab=1&find={$name|escape:'url'}">{tr}Return to tracker admin{/tr}</a></p>
+<p><a href="tiki-admin_tracker_fields.php?cookietab=2&trackerId={$trackerId|escape:'url'}">{tr}Import fields for this tracker{/tr}</a></p>
