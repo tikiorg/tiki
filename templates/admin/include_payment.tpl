@@ -148,6 +148,7 @@
 				{preference name=shipping_ups_username}
 				{preference name=shipping_ups_password}
 			</div>
+				{preference name=shipping_custom_provider}
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
