@@ -25,7 +25,7 @@ if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_t
 	$smarty->assign_by_ref('group_style', $group_style);
 }
 if (empty($prefs['style']) || $tikilib->get_style_path('', '', $prefs['style']) == '') {
-	$prefs['style'] = 'thenews.css';
+	$prefs['style'] = 'fivealive.css';
 }
 		
 $headerlib->add_cssfile($tikilib->get_style_path('', '', $prefs['style']), 51);
