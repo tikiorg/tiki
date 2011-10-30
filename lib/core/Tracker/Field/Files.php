@@ -255,6 +255,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 	private function handleUpload($galleryId, $file)
 	{
 		if (! is_uploaded_file($file['tmp_name'])) {
+			TikiLib::lib('errorreport')->report(tr('Problem with uploaded file: "%0"', $file['name']));
 			return false;
 		}
 
@@ -262,11 +263,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$gal_info = $filegallib->get_file_gallery_info($galleryId);
 
 		if (! $gal_info) {
+			TikiLib::lib('errorreport')->report(tr('No gallery for uploaded file, galleryId=%0', $galleryId));
 			return false;
 		}
 
 		$perms = Perms::get('file gallery', $galleryId);
 		if (! $perms->upload_files) {
+			TikiLib::lib('errorreport')->report(tr('No permissions to upload file to gallery "%0"', $gal_info['name']));
 			return false;
 		}
 
