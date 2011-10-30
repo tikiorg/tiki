@@ -122,7 +122,9 @@ class Services_Tracker_Controller
 				$missing[] = $field['type'];
 			}
 		}
-		TikiLib::lib('errorreport')->report(tr('Warning: Required field types not enabled: %0', implode(', ', $missing)));
+		if (!empty($missing)) {
+			TikiLib::lib('errorreport')->report(tr('Warning: Required field types not enabled: %0', implode(', ', $missing)));
+		}
 
 		return array(
 			'fields' => $fields,
