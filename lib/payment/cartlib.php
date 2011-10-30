@@ -370,7 +370,7 @@ class CartLib
 		unset ($_SESSION['cart']['tiki-gc']);
 	}
 	
-	function add_gift_certificate( $code ) {	
+	function add_gift_certificate( $code = null ) {
 		$this->get_gift_certificate( $code );
 		
 		if ( $this->gift_certificate_amount > 0 ) {
