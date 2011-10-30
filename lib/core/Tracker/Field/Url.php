@@ -28,8 +28,10 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 						'description' => tr('How the URL should be rendered'),
                                                 'filter' => 'int',	
 						'options' => array(
-							0 => tr('Link'),
-							1 => tr('Plain'),
+							0 => tr('Url as link'),
+							1 => tr('Plain text'),
+							2 => tr('Site title as link'),
+							3 => tr('Url as link plus site title'),
 						),
 					),
 				),
@@ -54,14 +56,29 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 
 		$url = $this->getConfiguration('value');
 		
-		if (empty($url) || $context['list_mode'] == 'csv' || $this->getOption(0)) {
+		if (empty($url) || $context['list_mode'] == 'csv' ) {
 			return $url;
-		} else {
+		} elseif ($this->getOption(0) == 2) {
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(array(
 				'type' => 'external',
 				'id' => $url,
 			), $smarty);
+		} elseif (!$this->getOption(0)) {
+			$smarty->loadPlugin('smarty_function_object_link');
+			return smarty_function_object_link(array(
+				'type' => 'external',
+				'id' => $url,
+				'title' => $url,
+			), $smarty);
+		} elseif ($this->getOption(0) == 3) {
+			$smarty->loadPlugin('smarty_function_object_link');
+			return smarty_function_object_link(array(
+				'type' => 'external_extended',
+				'id' => $url,
+			), $smarty);
+		} else {
+			return $url;
 		}
 	}
 

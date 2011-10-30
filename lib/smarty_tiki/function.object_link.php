@@ -41,6 +41,7 @@ function smarty_function_object_link( $params, $smarty ) {
 		$function = 'smarty_function_object_link_user';
 		break;
 	case 'external':
+	case 'external_extended':
 		$function = 'smarty_function_object_link_external';
 		break;
 	case 'relation_source':
@@ -134,12 +135,14 @@ function smarty_function_object_link_user( $smarty, $user, $title = null ) {
 	return smarty_modifier_userlink( $user, 'link', 'not_set', $title ? $title : '' );
 }
 
-function smarty_function_object_link_external( $smarty, $link, $title = null ) {
+function smarty_function_object_link_external( $smarty, $link_orig, $title = null, $type = null ) {
 	global $cachelib; require_once 'lib/cache/cachelib.php';
 	global $tikilib;
 
-	if (substr($link, 0, 4) === 'www.') {
-		$link = 'http://' . $link;
+	if (substr($link_orig, 0, 4) === 'www.') {
+		$link = 'http://' . $link_orig;
+	} else {
+		$link = $link_orig;
 	}
 
 	if ( ! $title ) {
@@ -148,7 +151,7 @@ function smarty_function_object_link_external( $smarty, $link, $title = null ) {
 			if ( preg_match( '|<title>(.+)</title>|', $body, $parts ) ) {
 				$title = TikiFilter::get('text')->filter($parts[1]);
 			} else {
-				$title = $link;
+				$title = $link_orig;
 			}
 
 			$cachelib->cacheItem( $link, $title, 'object_link_ext_title' );
@@ -157,8 +160,14 @@ function smarty_function_object_link_external( $smarty, $link, $title = null ) {
 
 	require_once 'lib/smarty_tiki/modifier.escape.php';
 	$escapedHref = smarty_modifier_escape( $link );
+	$escapedLink = smarty_modifier_escape( $link_orig );
 	$escapedTitle = smarty_modifier_escape( $title );
-	$data = '<a href="' . $escapedHref . '">' . $escapedTitle . '</a>';
+	if ( $type == 'external_extended' && "$link_orig" != "$title") {
+		$data = '<a href="' . $escapedHref . '">' . $escapedLink . '</a>'
+					. "<div class='link_extend_title'><em>" . $escapedTitle . "</em></div>";
+	} else {
+		$data = '<a href="' . $escapedHref . '">' . $escapedTitle . '</a>';
+	}
 
 	return $data;
 }
