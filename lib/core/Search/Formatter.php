@@ -32,7 +32,7 @@ class Search_Formatter
 		$defaultValues = $this->plugin->getFields();
 
 		$fields = array_keys($defaultValues);
-		$subDefaults = array();
+		$subDefault = array();
 		foreach ($this->subFormatters as $key => $plugin) {
 			$subDefault[$key] = $plugin->getFields();
 			$fields = array_merge($fields, array_keys($subDefault[$key]));
