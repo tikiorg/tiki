@@ -28,10 +28,10 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 						'description' => tr('How the URL should be rendered'),
                                                 'filter' => 'int',	
 						'options' => array(
-							0 => tr('Url as link'),
+							0 => tr('URL as link'),
 							1 => tr('Plain text'),
 							2 => tr('Site title as link'),
-							3 => tr('Url as link plus site title'),
+							3 => tr('URL as link plus site title'),
 						),
 					),
 				),
