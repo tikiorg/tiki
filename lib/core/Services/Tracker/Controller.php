@@ -112,9 +112,21 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
+		$fields = $definition->getFields();
+		$types = $this->utilities->getFieldTypes();
+
+		$missing = array();
+
+		foreach ($fields as $field) {
+			if (! array_key_exists($field['type'], $types) && ! in_array($field['type'], $missing)) {
+				$missing[] = $field['type'];
+			}
+		}
+		TikiLib::lib('errorreport')->report(tr('Warning: Required field types not enabled: %0', implode(', ', $missing)));
+
 		return array(
-			'fields' => $definition->getFields(),
-			'types' => $this->utilities->getFieldTypes(),
+			'fields' => $fields,
+			'types' => $types,
 		);
 	}
 
