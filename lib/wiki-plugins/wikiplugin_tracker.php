@@ -1269,18 +1269,18 @@ function wikiplugin_tracker($data, $params)
 }
 
 function wikiplugin_tracker_render_input($f, $item) {
-	$trklib = TikiLib::lib('trk');
+	$definition = Tracker_Definition::get($f['trackerId']);
+	
+	if (! $definition) return '';
+	
+	$handler  = $definition->getFieldFactory()->getHandler($f, $item);
 
-	$handler = $trklib->get_field_handler($f, $item);
-
-	if (!$handler) {
-		return '';
-	}
+	if (! $handler) return '';
 
 	if (! $item['itemId']) {
 		// Non-selected items have not been processed
 		$f = array_merge($f, $handler->getFieldData());
-		$handler = $trklib->get_field_handler($f, $item);
+		$handler = TikiLib::lib("trk")->get_field_handler($f, $item);
 	}
 
 	return $handler->renderInput(array(
