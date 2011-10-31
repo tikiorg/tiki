@@ -47,7 +47,7 @@ function wikiplugin_webservice_info() {
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Parameters'),
-				'description' => tra('Parameters formated like an query : param1=value1&param2=value2.'),
+				'description' => tra('Parameters formatted like a query : param1=value1&amp;param2=value2.'),
 				'default' => '',
 			),
 
