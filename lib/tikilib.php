@@ -1493,12 +1493,11 @@ class TikiLib extends TikiDb_Bridge
 			$style = "style='float:right;margin-left:5px;'";
 		}
 		switch ($type)	{
-			case 'n':
-				$ret = '';
-       break;
 			case 'l':
-				$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
-       break;
+				if ($libname) {
+					$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
+				}
+				break;
 			case 'u':
 				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
 
@@ -1512,7 +1511,11 @@ class TikiLib extends TikiDb_Bridge
 				}
 
 				$ret = "<img border='0' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
-       break;
+				break;
+			case 'n':
+			default:
+				$ret = '';
+				break;
 		}
 		return $ret;
 	}
