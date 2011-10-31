@@ -29,17 +29,24 @@ class HtmlFeed_Remote
 		$this->feedName = $feedName."_remote_htmlfeed";
 	}
 	
-	private function replaceRevision()
+	private function replace()
 	{
-		$vcs = SimpleVCS::fileName($this->feedName);
+		$file = FileGallery_File::filename($this->feedName);
 		
-		$old = json_decode($vcs->getData());
 		$new = $this->contents;
+		$old = json_decode($file->data());
+		
+		if (!$file->exists()) {
+			$file
+				->setParam("filename", $this->feedName)
+				->setParam("description", tr("An html feed from ") . $this->feedUrl)
+				->create(json_encode($this->contents));
+				
+			return;
+		}
 		
 		if ($old->feed->date < $new->feed->date) {
-			$vcs->addRevision(json_encode($this->contents));
-		} else if (!$vcs->exists()) {
-			$vcs->addRevision(json_encode($this->contents));
+			$file->replace(json_encode($this->contents));	
 		}
 	}
 	
@@ -55,7 +62,7 @@ class HtmlFeed_Remote
 		{
 			$this->contents = $contents;
 			$this->links = $contents->feed->entry;
-			$this->replaceRevision();
+			$this->replace();
 		}
 		
 		return $this->links;
