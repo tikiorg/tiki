@@ -606,6 +606,11 @@ p.editdate {
 	font-style: italic;
 }
 
+/* wikiplugin_code */
+.codelisting {
+	overflow: auto;
+}
+
 /* wikiplugin_fade */
 .wpfade-hidden {
 	background-repeat: no-repeat;
