@@ -45,9 +45,15 @@ class Services_Object_Controller
 			throw new Services_Exception_NotFound;
 		}
 
+		$itemObject = Tracker_Item::fromInfo($item);
+
+		if (! $itemObject->canView()) {
+			throw new Services_Exception('Permission denied', 403);
+		}
+
 		$fields = array();
 		foreach ($definition->getPopupFields() as $fieldId) {
-			if ($field = $definition->getField($fieldId)) {
+			if ($itemObject->canViewField($fieldId) && $field = $definition->getField($fieldId)) {
 				$fields[] = $field;
 			}
 		}
