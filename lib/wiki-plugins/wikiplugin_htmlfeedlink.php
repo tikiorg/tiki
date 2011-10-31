@@ -16,9 +16,9 @@ function wikiplugin_htmlfeedlink_info() {
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
 		'params' => array(
-			'url' => array(
+			'feed' => array(
 				'required' => false,
-				'name' => tra('Url of content'),
+				'name' => tra('Feed location'),
 				'description' => tra(''),
 			),
 			'name' => array(
@@ -67,20 +67,19 @@ function wikiplugin_htmlfeedlink($data, $params) {
 	$i = $htmlFeedLinkI;
 	
 	$params = array_merge(array(
-		"url" => "",
+		"feed" => "",
 		"name" => "",
 		"type" => "replace",
 		"moderate" => "y",
 		"style" => "",
-		"name" => ""
 	), $params);
 	
 	extract ($params,EXTR_SKIP);
 	
-	if (empty($url)) return $data;
+	if (empty($feed)) return $data;
 	if (isset($cachebuild)) return $data;
 	
-	$htmlFeed = new HtmlFeed_Remote($url);
+	$htmlFeed = new HtmlFeed_Remote($feed);
 	
 	$headerlib->add_jq_onready("
 		if (!$.fn.htmlFeedPopup) {
@@ -127,6 +126,26 @@ function wikiplugin_htmlfeedlink($data, $params) {
 						.appendTo(nameSelect);
 				}
 			});
+			
+		$('.revision').click(function() {
+			$.getJSON('tiki-html_feed.php', {
+				feed: $(this).data('feed'),
+				name: $(this).data('name')
+			}, function(link) {
+				$('<div />')
+					.html(link.description)
+					.dialog({
+						title: link.name,
+						buttons: [{
+							text: 'Accept Update',
+							click: function () {
+								$('#form$htmlFeedLinkI [name=\'content\']').val('~np~' + link.description + '~/np~')
+								$('#form$htmlFeedLinkI').submit();
+							}
+						}]
+					});
+			});
+		});
 	");
 	
 	$link = $htmlFeed->getLink($name);
@@ -135,7 +154,29 @@ function wikiplugin_htmlfeedlink($data, $params) {
 		$name = $link->name;
 		switch($type) {
 			case "replace":
-				$data = $link->description;
+				$same = levenshtein($data, $link->description) < 4 ? true : false;
+
+				if (!$same)
+					$data .= "~np~<img
+						src='pics/icons/flag_blue.png'
+						class='revision'
+						title='Revision Available, click to see'
+						style='cursor: pointer;'
+						data-feed='".urlencode($feed)."'
+						data-name='".urlencode($name)."'
+						/>
+						<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php'>
+							<input type='hidden' name='page' value='$page'/>
+							<input type='hidden' name='index' value='$htmlFeedLinkI'/>
+							<input type='hidden' name='type' value='htmlfeedlink'/>
+							<input type='hidden' name='params[name]' value='$name'/>
+							<input type='hidden' name='params[feed]' value='$feed'/>
+							<input type='hidden' name='params[type]' value='$type'/>
+							<input type='hidden' name='params[style]' value='$style'/>
+							<input type='hidden' name='content' value='$data'/>
+						</form>
+						~/np~";
+						
 				break;
 			case "backlink":
 				$data = "<a href='$link->url'>" . $data . "</a>";

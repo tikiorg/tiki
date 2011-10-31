@@ -31,11 +31,11 @@ function wikiplugin_htmlfeed($data, $params)
 	
 	$name = (!empty($name) ? $name : $page . $feedhtmlFeedI);
 	
-	$tbl = new HtmlFeed();
-	
-	$data = TikiLib::lib("parser")->parse_data($data);
-	
-	$tbl->addSimpleLink($page, $name, $data, $lastModif, $user, $htmlFeedUrl);
+	if ($cachebuild) {
+		$htmlFeed = new HtmlFeed();
+		$data = TikiLib::lib("parser")->parse_data($data);
+		$htmlFeed->addSimpleLink($name, $data, $lastModif, $user, $htmlFeedUrl);
+	}
 	
     return $data;
 }

@@ -12,43 +12,29 @@ class HtmlFeed
 {
 	var $lastModif = 0;
 	
-	public function getLinks()
+	public function updateCache()
 	{
 		global $tikilib,$page,$cachebuild, $htmlFeedUrl, $lastModif;
-		
 		$cachebuild = true;
 		
 		$links = array();
 		$this->clearCache();
 		$site = $this->siteName();
-		$htmlFeedUrl = $site . "/tiki-index.php?page=" . urlencode($page);
-		
 		$parserlib = TikiLib::lib("parser");
 		foreach(TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
 			foreach($pagesInfo as $pageInfo) {
+				
 				$lastModif = $pageInfo['lastModif'];
-				$this->updateLastModif($lastModif);
 				
 				$page = $pageInfo['pageName'];
-				$parserlib->parse_data($pageInfo['data']);
 				
-				$cache = $this->getCache($page);
-				if (!empty($cache)) {
-					$cache = json_decode($cache);
-					foreach($cache as $item) {
-						$links[] = $item;
-					}
-				}
+				$htmlFeedUrl = $site . "/tiki-index.php?page=" . urlencode($page);
+				
+				$parserlib->parse_data($pageInfo['data']);
 			}
 		}
 		
 		$cachebuild = false;
-		return $links;
-	}
-	
-	private function updateLastModif($lastModif = 0)
-	{
-		if ($lastModif > $this->lastModif) $this->lastModif = $lastModif;
 	}
 	
 	private function siteName()
@@ -58,6 +44,12 @@ class HtmlFeed
 		array_pop($site);
 		$site = implode($site, '/');
 		return $site;
+	}
+	
+	public function getLinks()
+	{
+		$cache = $this->getCache();
+		return $cache->entry;
 	}
 	
 	public function listLinkNames()
@@ -81,10 +73,14 @@ class HtmlFeed
 		return array();
 	}
 	
-	private function getCache($parentName)
+	private function getCache()
 	{
 		global $tikilib;
-		return TikiLib::lib("cache")->getCached($parentName, "htmlfeed");
+		$cache = TikiLib::lib("cache")->getCached($this->siteName(), "htmlfeed");
+		
+		if ($cache) return $cache;
+		
+		return $this->updateCache();
 	}
 	
 	private function clearCache()
@@ -93,32 +89,37 @@ class HtmlFeed
 		TikiLib::lib("cache")->empty_type_cache("htmlfeed");
 	}
 	
-	private function appendToCache($parentName, $link)
+	private function appendToCache($link)
 	{
 		global $tikilib;
-		$cache = TikiLib::lib("cache")->getCached($parentName, "htmlfeed");
+		$cache = TikiLib::lib("cache")->getCached($this->siteName(), "htmlfeed");
 		
 		if (empty($cache)) {
-			$cache = array();
+			$cache = (object)array(
+				'date' => 0,
+				'type' => 'htmlfeed',
+				'entry' => array()
+			);
 		} else {
 			$cache = json_decode($cache);
 		}
 		
-		$cache[] = $link;
+		$cache->date = ($cache->date > $link['date'] ? $cache->date : $link['date']);
 		
-		TikiLib::lib("cache")->cacheItem($parentName, json_encode($cache), "htmlfeed");
+		$cache->entry[] = $link;
+		
+		TikiLib::lib("cache")->cacheItem($this->siteName(), json_encode($cache), "htmlfeed");
 	}
 	
-	public function addSimpleLink($parentName, $name, $description, $lastModif, $author, $url)
+	public function addSimpleLink($name, $description, $lastModif, $author, $url)
 	{
 		$this->appendToCache(
-			$parentName,
 			HtmlFeed_Item::simplePage(array(
 				"origin" 		=> "",
 				"name" 			=> $name,
 				"title" 		=> "",
 				"description" 	=> $description,
-				"date" 			=> $lastModif,
+				"date" 			=> (int)$lastModif,
 				"author" 		=> $author,
 				"hits"			=> "",
 				"unusual"		=> "",
@@ -132,16 +133,12 @@ class HtmlFeed
 	
 	public function feed()
 	{
-		$links = $this->getLinks();
+		$feed = json_decode( $this->getCache() );
 		
 		return array(
 			'version' => '1.0',
 			'encoding' => 'UTF-8',
-			'feed' => array (
-				'date' => $this->lastModif,
-				'type' => 'htmlfeed',
-				'entry' => $links,
-			)
+			'feed' => $feed,
 		);
 	}
 }

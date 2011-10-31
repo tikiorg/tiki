@@ -7,10 +7,17 @@
 
 
 $_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
- 
 require_once ('tiki-setup.php');
-$tbp = new HtmlFeed();
-print_r(json_encode(
-	$tbp->feed()
-));
-die;
+
+if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
+	//here we try to view the results of an external feed, admin only
+	$access->check_permission('tiki_p_admin');
+	$htmlFeed = new HtmlFeed_Remote(urldecode($_REQUEST['feed']));
+	$link = $htmlFeed->getLink(urldecode($_REQUEST['name']));
+	print_r(json_encode($link));
+} else {
+	$htmlFeed = new HtmlFeed();
+	print_r(json_encode(
+		$htmlFeed->feed()
+	));
+}
