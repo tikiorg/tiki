@@ -182,6 +182,8 @@ class Tracker_Item
 
 	function canViewField($fieldId)
 	{
+		$fieldId = $this->prepareFieldId($fieldId);
+
 		// Nothing stops the tracker administrator from doing anything
 		if ($this->perms->admin_trackers) {
 			return true;
@@ -215,6 +217,8 @@ class Tracker_Item
 
 	function canModifyField($fieldId)
 	{
+		$fieldId = $this->prepareFieldId($fieldId);
+
 		// Nothing stops the tracker administrator from doing anything
 		if ($this->perms->admin_trackers) {
 			return true;
@@ -273,6 +277,38 @@ class Tracker_Item
 	private function isNew()
 	{
 		return empty($this->info);
+	}
+
+	public function prepareInput($input)
+	{
+		$input = $input->none();
+		$fields = $this->definition->getFields();
+		$output = array();
+
+		$factory = $this->definition->getFieldFactory();
+		foreach ($fields as $field) {
+			$fid = $field['fieldId'];
+
+			if ($this->canModifyField($fid)) {
+				$field['ins_id'] = "ins_$fid";
+
+				$handler = $factory->getHandler($field);
+				$output[] = array_merge($field, $handler->getFieldData($input));
+			}
+		}
+		
+		return $output;
+	}
+
+	private function prepareFieldId($fieldId)
+	{
+		if (! is_numeric($fieldId)) {
+			if ($field = $this->definition->getFieldFromPermName($fieldId)) {
+				$fieldId = $field['fieldId'];
+			}
+		}
+
+		return $fieldId;
 	}
 }
 

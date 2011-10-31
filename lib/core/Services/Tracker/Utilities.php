@@ -33,8 +33,33 @@ class Services_Tracker_Utilities
 		}
 
 		$trklib = TikiLib::lib('trk');
-		$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
-		return $newItem;
+		$categorizedFields = $definition->getCategorizedFields();
+		$errors = $trklib->check_field_values(array('data' => $fields), $categorizedFields, $trackerId, $itemId ? $itemId : '');
+
+		if (count($errors['err_mandatory']) == 0 && count($errors['err_value']) == 0) {
+			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
+			return $newItem;
+		}
+
+		$errorreportlib = TikiLib::lib('errorreport');
+		if ($errors['err_mandatory'] > 0) {
+			$names = array();
+			foreach ($errors['err_mandatory'] as $f) {
+				$names[] = $f['name'];
+			}
+
+			$errorreportlib->report(tr('Following mandatory fields are missing: %0', implode(', ', $names)));
+		}
+
+		foreach ($errors['err_value'] as $f) {
+			if (! empty($f['errorMsg'])) {
+				$errorreportlib->report(tr('Invalid value in %0: %1', $f['name'], $f['errorMsg']));
+			} else {
+				$errorreportlib->report(tr('Invalid value in %0', $f['name']));
+			}
+		}
+
+		return false;
 	}
 
 	function createField(array $data)

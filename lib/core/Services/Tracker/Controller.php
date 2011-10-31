@@ -419,20 +419,46 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
-		// TODO : Eventually, this method should check the track permissions
-		if (! Perms::get()->admin_trackers) {
-			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		$itemObject = Tracker_Item::newItem($trackerId);
+
+		if (! $itemObject->canModify()) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
 
-		$itemId = $this->utilities->insertItem($definition, array(
-			'status' => $input->status->word(),
-			'fields' => $input->fields->none(),
-		));
-		TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		$fields = $input->fields->none();
+
+		if (empty($fields)) {
+			$processedFields = $itemObject->prepareInput($input);
+			$fields = array();
+			foreach ($processedFields as $f) {
+				$fields[$f['permName']] = $f['value'];
+			}
+		} else {
+			$out = array();
+			foreach ($fields as $key => $value) {
+				if ($itemObject->canModifyField($key)) {
+					$out[$key] = $value;
+				}
+			}
+			$fields = $out;
+		}
+
+		$itemId = 0;
+		if (! empty($fields)) {
+			$itemId = $this->utilities->insertItem($definition, array(
+				'status' => $input->status->word(),
+				'fields' => $fields,
+			));
+
+			if ($itemId) {
+				TikiLib::lib('unifiedsearch')->processUpdateQueue();
+			}
+		}
 
 		return array(
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
+			'fields' => $processedFields,
 		);
 	}
 
