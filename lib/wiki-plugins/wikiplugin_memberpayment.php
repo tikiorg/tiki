@@ -112,7 +112,9 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			$smarty->assign( 'wp_member_anniversary_day', $ann_day );
 			if ($params['currentuser'] == 'y') {
 				$extend_until_info = $userlib->get_extend_until_info($user, $params['group']);
-				$smarty->assign( 'wp_member_prorated', round($extend_until_info['ratio_prorated_first_period'] * $params['price'], 2) );	
+				if (!empty($extend_until_info['ratio_prorated_first_period']) && $extend_until_info['ratio_prorated_first_period'] < 1) {
+					$smarty->assign( 'wp_member_prorated', round($extend_until_info['ratio_prorated_first_period'] * $params['price'], 2) );
+				}	
 			}
 		}
 		
