@@ -127,7 +127,7 @@
 				{tr}Default sort order{/tr}
 				<select name="defaultOrderKey">
 					{foreach from=$sortFields key=k item=label}
-						<option value="{$k|escape}" {if $k eq $info.defaultSortOrder} selected="selected"{/if}>{$label|truncate:42:'...'|escape}</option>
+						<option value="{$k|escape}" {if $k eq $info.defaultOrderKey} selected="selected"{/if}>{$label|truncate:42:'...'|escape}</option>
 					{/foreach}
 				</select>
 			</label>
