@@ -108,4 +108,5 @@ Zend_Loader_Autoloader::getInstance()
 	->registerNamespace('Services_')
 	->registerNamespace('TikiDb')
 	->registerNamespace('Report')
-	->registerNamespace('HtmlFeed');
+	->registerNamespace('HtmlFeed')
+	->registerNamespace('SimpleVCS');
