@@ -214,7 +214,7 @@
 	<form class="simple" method="post" action="{service controller=tracker action=import}">
 		<label>
 			{tr}Raw data{/tr}
-			<textarea name="raw" rows="20""></textarea>
+			<textarea name="raw" rows="20"></textarea>
 		</label>
 		<label>
 			<input type="checkbox" name="preserve" value="1"/>
