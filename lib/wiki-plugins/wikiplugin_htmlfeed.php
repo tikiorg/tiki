@@ -25,7 +25,7 @@ function wikiplugin_htmlfeed_info()
 
 function wikiplugin_htmlfeed($data, $params)
 {
-    global $tikilib, $headerlib, $page, $cachebuild, $user;
+    global $tikilib, $headerlib, $page, $cachebuild, $user, $htmlFeedUrl, $lastModif;
     static $feedhtmlFeedI = 0;
 	++$feedhtmlFeedI;
 	
@@ -35,7 +35,7 @@ function wikiplugin_htmlfeed($data, $params)
 	
 	$data = TikiLib::lib("parser")->parse_data($data);
 	
-	$tbl->addSimpleLink($page, $name, $data, strtotime("now"), $user);
+	$tbl->addSimpleLink($page, $name, $data, $lastModif, $user, $htmlFeedUrl);
 	
     return $data;
 }

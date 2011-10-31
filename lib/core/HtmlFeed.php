@@ -9,19 +9,26 @@
  * For htmlFeed Protocol
  */
 class HtmlFeed
-{		
+{
+	var $lastModif = 0;
+	
 	public function getLinks()
 	{
-		global $tikilib,$page,$cachebuild;
+		global $tikilib,$page,$cachebuild, $htmlFeedUrl, $lastModif;
 		
 		$cachebuild = true;
 		
 		$links = array();
 		$this->clearCache();
+		$site = $this->siteName();
+		$htmlFeedUrl = $site . "/tiki-index.php?page=" . urlencode($page);
 		
 		$parserlib = TikiLib::lib("parser");
 		foreach(TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
 			foreach($pagesInfo as $pageInfo) {
+				$lastModif = $pageInfo['lastModif'];
+				$this->updateLastModif($lastModif);
+				
 				$page = $pageInfo['pageName'];
 				$parserlib->parse_data($pageInfo['data']);
 				
@@ -37,6 +44,20 @@ class HtmlFeed
 		
 		$cachebuild = false;
 		return $links;
+	}
+	
+	private function updateLastModif($lastModif = 0)
+	{
+		if ($lastModif > $this->lastModif) $this->lastModif = $lastModif;
+	}
+	
+	private function siteName()
+	{
+		$site = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+		$site = explode('/', $site);
+		array_pop($site);
+		$site = implode($site, '/');
+		return $site;
 	}
 	
 	public function listLinkNames()
@@ -88,7 +109,7 @@ class HtmlFeed
 		TikiLib::lib("cache")->cacheItem($parentName, json_encode($cache), "htmlfeed");
 	}
 	
-	public function addSimpleLink($parentName, $name, $description, $lastModif, $author)
+	public function addSimpleLink($parentName, $name, $description, $lastModif, $author, $url)
 	{
 		$this->appendToCache(
 			$parentName,
@@ -97,25 +118,29 @@ class HtmlFeed
 				"name" 			=> $name,
 				"title" 		=> "",
 				"description" 	=> $description,
-				"lastModif" 	=> $lastModif,
+				"date" 			=> $lastModif,
 				"author" 		=> $author,
 				"hits"			=> "",
 				"unusual"		=> "",
 				"importance" 	=> "",
 				"keywords"		=> "",
-				"type" 			=> "simple"
+				"type" 			=> "simple",
+				"url"			=> $url
 			)
 		));
 	}
 	
 	public function feed()
 	{
+		$links = $this->getLinks();
+		
 		return array(
 			'version' => '1.0',
 			'encoding' => 'UTF-8',
 			'feed' => array (
+				'date' => $this->lastModif,
 				'type' => 'htmlfeed',
-				'entry' => $this->getLinks(),
+				'entry' => $links,
 			)
 		);
 	}

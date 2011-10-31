@@ -11,7 +11,7 @@ function wikiplugin_htmlfeedlink_info() {
 		'documentation' => 'PluginHtmlFeedLink',
 		'description' => tra('Display remote content'),
 		'prefs' => array('wikiplugin_htmlfeedlink'),
-		'body' => tra('Initial text'),
+		'body' => tra('Initial Value'),
 		'icon' => 'pics/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
@@ -35,18 +35,26 @@ function wikiplugin_htmlfeedlink_info() {
 					array('text' => tra('Asterisk'), 'value' => 'asterisk'),
 				),
 			),
-			'clickinfo' => array(
+			'type' => array(
 				'required' => false,
-				'name' => tra('Click Info'),
-				'description' => tra('y/n. Show info when clicked "y"'),
-				'filter' => 'alpha',
-				'accepted' => 'y or n',
-				'default' => 'y',
+				'name' => tra('Html Feed Link Type'),
+				'default' => 'replace',
+				'options' => array(
+					array('text' => tra('Replace'), 'value' => 'replace'),
+					array('text' => tra('Backlink'), 'value' => 'backlink'),
+					array('text' => tra('Popup'), 'value' => 'popup'),
+					array('text' => tra('Hover'), 'value' => 'hover'),
+				),
+			),
+			'moderate' => array(
+				'required' => false,
+				'name' => tra('Is the html feed moderated'),
+				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
-				)
+				),
 			),
 		),
 	);
@@ -61,35 +69,22 @@ function wikiplugin_htmlfeedlink($data, $params) {
 	$params = array_merge(array(
 		"url" => "",
 		"name" => "",
+		"type" => "replace",
+		"moderate" => "y",
 		"style" => "",
-		"name" => "",
-		"clickinfo" => "y"
-		
+		"name" => ""
 	), $params);
 	
 	extract ($params,EXTR_SKIP);
 	
-	$link = "{}";
-	$links = "[]";
-	
-	if (empty($url) || empty($name)) return $data;
+	if (empty($url)) return $data;
 	if (isset($cachebuild)) return $data;
 	
-	$tbl = new HtmlFeed_Remote($url, $name);
-	$links = $tbl->listLinkNames();
-	$link = $tbl->getLink($name);
+	$htmlFeed = new HtmlFeed_Remote($url);
 	
-	$link->clickinfo = $clickinfo;
-	
-	if (!empty($link->name)) {
-		$name = $link->name;
-		$data = $link->description;
-		$link = json_encode($link);
-	}
-	
-	$headerlib->add_js("
-		if (!$.fn.makeBacklink) {
-			$.fn.makeBacklink = function(s) {
+	$headerlib->add_jq_onready("
+		if (!$.fn.htmlFeedPopup) {
+			$.fn.htmlFeedPopup = function(s) {
 				$(this).each(function() {
 					$(this)
 						.css('cursor', 'pointer')
@@ -97,9 +92,8 @@ function wikiplugin_htmlfeedlink($data, $params) {
 							$(this).css('background-color', 'yellow');
 						},function(){
 							$(this).css('background-color', '');
-						});
-					if (s.clickinfo) {
-						$(this).click(function() {
+						})
+						.click(function() {
 							$('<div>' +
 								s.description +
 							'</div>')
@@ -107,7 +101,6 @@ function wikiplugin_htmlfeedlink($data, $params) {
 									title: s.name
 								});
 						});
-					}
 				});
 				return this;
 			};
@@ -125,7 +118,7 @@ function wikiplugin_htmlfeedlink($data, $params) {
 					})
 					.change();
 				
-				var links = " . json_encode($links) . ";
+				var links = " . json_encode($htmlFeed->listLinkNames()) . ";
 				
 				for(var i = 0; i < links.length; i++) {
 					$('<option />')
@@ -136,10 +129,28 @@ function wikiplugin_htmlfeedlink($data, $params) {
 			});
 	");
 	
-	$headerlib->add_jq_onready("
-		$('#backlink$i')
-			.makeBacklink(" . $link . ");
-	");
+	$link = $htmlFeed->getLink($name);
+	
+	if (!empty($link->name)) {
+		$name = $link->name;
+		switch($type) {
+			case "replace":
+				$data = $link->description;
+				break;
+			case "backlink":
+				$data = "<a href='$link->url'>" . $data . "</a>";
+				break;
+			case "popup":
+				$headerlib->add_jq_onready("
+					$('#backlink$i')
+						.htmlFeedPopup(" . $link . ");
+				");
+				break;
+			case "hover": break;
+		}
+		
+		$link = json_encode($link);
+	}
 	
 	$result = "<span id='backlink$i' title='$name'>". $data ."</span>";
 	

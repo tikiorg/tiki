@@ -18,7 +18,8 @@ Class HtmlFeed_Item
 		"unusual"		=> "",
 		"importance" 	=> "",
 		"keywords"		=> "",
-		"type" 			=> "simple"
+		"type" 			=> "simple",
+		"url"			=> ""
 	);
 	
 	var $params = array();

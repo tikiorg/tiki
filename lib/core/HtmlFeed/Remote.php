@@ -11,28 +11,52 @@
 class HtmlFeed_Remote
 {
 	var $feedUrl = "";
+	var $feedName = "";
 	var $name = "";
+	var $links = array();
+	var $link = array();
+	var $contents = array();
+	var $lastModif = 0;
 	
-	public function __construct($feedUrl = "", $name = "")
+	public function __construct($feedUrl = "")
 	{
 		$this->feedUrl = $feedUrl;
-		$this->name = $name;
+		
+		$feedName = str_replace("http://", "", $feedUrl);
+		$feedName = str_replace("https://", "", $feedName);
+		$feedName = array_shift(explode('/', $feedName));
+		
+		$this->feedName = $feedName."_remote_htmlfeed";
+	}
+	
+	private function replaceRevision()
+	{
+		$vcs = SimpleVCS::fileName($this->feedName);
+		
+		$old = json_decode($vcs->getData());
+		$new = $this->contents;
+		
+		if ($old->entry->date < $new->entry->date || !$vcs->exists()) {
+			$vcs->addRevision(json_encode($this->contents));
+		}
 	}
 	
 	public function getLinks()
 	{
 		global $tikilib;
+		if (!empty($this->links)) return $this->links;
 		
 		$contents = file_get_contents($this->feedUrl);
 		$contents = json_decode($contents);
 		
 		if (!empty($contents->feed->entry) && $contents->feed->type == "htmlfeed")
 		{
-			return $contents->feed->entry;
+			$this->contents = $contents;
+			$this->links = $contents->feed->entry;
+			$this->replaceRevision();
 		}
 		
-		//empty or wrong, return nothing
-		return array();
+		return $this->links;
 	}
 	
 	public function listLinkNames()
@@ -46,14 +70,13 @@ class HtmlFeed_Remote
 		return $result;
 	}
 	
-	public function getLink()
-	
+	public function getLink($name)
 	{
 		foreach($this->getLinks() as $item) {
-			if ($this->name == $item->name) {
-				return $item;
+			if ($name == $item->name) {
+				$this->link = $item;
 			}
 		}
-		return array();
+		return $this->link;
 	}
 }
