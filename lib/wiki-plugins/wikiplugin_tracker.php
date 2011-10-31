@@ -119,7 +119,7 @@ function wikiplugin_tracker_info()
 			'target' => array(
 				'required' => false,
 				'name' => tra('URL Target'),
-				'description' => tra('Set the target parameter for the url (determines whether target will open in a new page, etc.'),
+				'description' => tra('Set the target parameter for the url (determines whether target will open in a new page, etc.)'),
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
