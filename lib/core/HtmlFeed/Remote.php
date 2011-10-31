@@ -36,7 +36,9 @@ class HtmlFeed_Remote
 		$old = json_decode($vcs->getData());
 		$new = $this->contents;
 		
-		if ($old->entry->date < $new->entry->date || !$vcs->exists()) {
+		if ($old->feed->date < $new->feed->date) {
+			$vcs->addRevision(json_encode($this->contents));
+		} else if (!$vcs->exists()) {
 			$vcs->addRevision(json_encode($this->contents));
 		}
 	}
