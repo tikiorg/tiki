@@ -179,10 +179,10 @@ function wikiplugin_appframe_module($data, $params, $start)
 
 	$data = $modlib->execute_module(array(
 		'name' => $moduleName,
-		'params' => array(
+		'params' => array_merge($params->none(), array(
 			'nobox' => 'y',
 			'notitle' => 'y',
-		),
+		)),
 	));
 
 	if (! $data) {

@@ -412,6 +412,8 @@ class Services_Tracker_Controller
 
 	function action_insert_item($input)
 	{
+		$processedFields = array();
+
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -426,12 +428,25 @@ class Services_Tracker_Controller
 		}
 
 		$fields = $input->fields->none();
+		$forced = $input->forced->none();
 
 		if (empty($fields)) {
+			$toRemove = array();
 			$processedFields = $itemObject->prepareInput($input);
+
 			$fields = array();
-			foreach ($processedFields as $f) {
-				$fields[$f['permName']] = $f['value'];
+			foreach ($processedFields as $k => $f) {
+				$permName = $f['permName'];
+				$fields[$permName] = $f['value'];
+				
+				if (isset($forced[$permName])) {
+					$toRemove[$permName] = $k;
+				}
+			}
+
+			foreach ($toRemove as $permName => $key) {
+				unset($fields[$permName]);
+				unset($processedFields[$key]);
 			}
 		} else {
 			$out = array();
@@ -444,7 +459,13 @@ class Services_Tracker_Controller
 		}
 
 		$itemId = 0;
-		if (! empty($fields)) {
+		if (! empty($fields) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+			foreach ($forced as $key => $value) {
+				if ($itemObject->canModifyField($key)) {
+					$fields[$key] = $value;
+				}
+			}
+
 			$itemId = $this->utilities->insertItem($definition, array(
 				'status' => $input->status->word(),
 				'fields' => $fields,
@@ -452,6 +473,8 @@ class Services_Tracker_Controller
 
 			if ($itemId) {
 				TikiLib::lib('unifiedsearch')->processUpdateQueue();
+			} else {
+				throw new Services_Exception(tr('Item could not be created.'), 400);
 			}
 		}
 
@@ -459,6 +482,7 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
 			'fields' => $processedFields,
+			'forced' => $forced,
 		);
 	}
 
