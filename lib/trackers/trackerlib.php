@@ -2252,8 +2252,6 @@ class TrackerLib extends TikiLib
 			$ratingoptions = isset($options['ratingOptions']) ? $options['ratingOptions'] : '';
 			$showratings = isset($options['showRatings']) ? $options['showRatings'] : 'n';
 			$this->replace_tracker_field($trackerId,$ratingId,'Rating','s','-','-',$showratings,'y','n','-',0,$ratingoptions);
-		} else {
-			$this->fields()->delete(array('fieldId' => (int) $ratingId));
 		}
 		$this->clear_tracker_cache($trackerId);
 
