@@ -17,6 +17,14 @@ class HtmlFeed_Remote
 	var $item = array();
 	var $contents = array();
 	var $lastModif = 0;
+	var $date = 0;
+	
+	static function url($feedUrl)
+	{
+		$me = new self($feedUrl);
+		
+		return $me;
+	}
 	
 	public function __construct($feedUrl = "")
 	{
@@ -50,6 +58,51 @@ class HtmlFeed_Remote
 		}
 	}
 	
+	public function listArchives()
+	{
+		$archives = array();
+		$file = FileGallery_File::filename($this->feedName);
+		
+		foreach($file->listArchives() as $archive) {
+			$archive = json_decode( FileGallery_File::id($archive['id'])->data() );
+			$archives[$archive->feed->date] = $archive->feed->entry;
+		}
+		
+		return $archives;
+	}
+	
+	public function getItemsFromDate($date)
+	{
+		$archives = $this->listArchives();
+		$archive = $archives[$date];
+		return $archive;
+	}
+	
+	public function getItemFromDate($name, $date)
+	{
+		$archive = $this->getItemsFromDate($date);
+		foreach($archive as $item) {
+			if ($name == $item->name) {
+				return $item;
+			}
+		}
+	}
+	
+	public function getItemFromDates($name)
+	{
+		$archives = array();
+
+		foreach($this->listArchives() as $archive) {
+			foreach($archive as $item) {
+				if ($name == $item->name) {
+					$archives[] = $item;
+				}
+			}
+		}
+		
+		return $archives;
+	}
+	
 	public function getItems()
 	{
 		global $tikilib;
@@ -80,7 +133,7 @@ class HtmlFeed_Remote
 	}
 	
 	public function getItem($name)
-	{
+	{	
 		foreach($this->getItems() as $item) {
 			if ($name == $item->name) {
 				$this->item = $item;

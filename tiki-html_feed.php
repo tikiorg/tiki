@@ -7,17 +7,29 @@
 
 
 $_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+
 require_once ('tiki-setup.php');
 
 if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
+
 	//here we try to view the results of an external feed, admin only
 	$access->check_permission('tiki_p_admin');
-	$htmlFeed = new HtmlFeed_Remote(urldecode($_REQUEST['feed']));
-	$item = $htmlFeed->getItem(urldecode($_REQUEST['name']));
+	
+	
+	if (isset($_REQUEST['date'])) {
+		$item = HtmlFeed_Remote::url(urldecode($_REQUEST['feed']))
+			->getItemFromDate(urldecode($_REQUEST['name']), urldecode($_REQUEST['date']));
+	} else {
+		$item = HtmlFeed_Remote::url(urldecode($_REQUEST['feed']))->getItem(urldecode($_REQUEST['name']));
+	}
+	
 	print_r(json_encode($item));
+	
 } else {
+	
 	$htmlFeed = new HtmlFeed();
 	print_r(json_encode(
 		$htmlFeed->feed()
 	));
+	
 }

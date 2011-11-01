@@ -56,6 +56,12 @@ function wikiplugin_htmlfeedlink_info() {
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
+			'date' => array(
+				'required' => false,
+				'name' => tra('Date'),
+				'description' => tr('Date of last accepted html item, not used if not moderated'),
+				'default' => '',
+			),
 		),
 	);
 }
@@ -72,6 +78,7 @@ function wikiplugin_htmlfeedlink($data, $params) {
 		"type" => "replace",
 		"moderate" => "y",
 		"style" => "",
+		"date" => ""
 	), $params);
 	
 	extract ($params,EXTR_SKIP);
@@ -149,13 +156,13 @@ function wikiplugin_htmlfeedlink($data, $params) {
 	");
 	
 	$item = $htmlFeed->getItem($name);
+	$same = $date == $item->date;
 	
 	if (!empty($item->name)) {
 		$name = $item->name;
+		$date = $item->date;
 		switch($type) {
 			case "replace":
-				$same = levenshtein($data, $item->description) < 4 ? true : false;
-
 				if (!$same)
 					$data .= "~np~<img
 						src='pics/icons/flag_blue.png'
@@ -165,15 +172,16 @@ function wikiplugin_htmlfeedlink($data, $params) {
 						data-feed='".urlencode($feed)."'
 						data-name='".urlencode($name)."'
 						/>
-						<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php'>
+						<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php' style='display: none;'>
 							<input type='hidden' name='page' value='$page'/>
 							<input type='hidden' name='index' value='$htmlFeedLinkI'/>
 							<input type='hidden' name='type' value='htmlfeedlink'/>
-							<input type='hidden' name='params[name]' value='$name'/>
-							<input type='hidden' name='params[feed]' value='$feed'/>
-							<input type='hidden' name='params[type]' value='$type'/>
-							<input type='hidden' name='params[style]' value='$style'/>
-							<input type='hidden' name='content' value='$data'/>
+							<input type='hidden' name='params[name]' value='".htmlspecialchars($name)."'/>
+							<input type='hidden' name='params[feed]' value='".htmlspecialchars($feed)."'/>
+							<input type='hidden' name='params[type]' value='".htmlspecialchars($type)."'/>
+							<input type='hidden' name='params[style]' value='".htmlspecialchars($style)."'/>
+							<input type='hidden' name='params[date]' value='".htmlspecialchars($date)."'/>
+							<input type='hidden' name='content' value='".htmlspecialchars($data)."'/>
 						</form>
 						~/np~";
 						
@@ -205,6 +213,34 @@ function wikiplugin_htmlfeedlink($data, $params) {
 		case "asterisk":
 			$result = "<sup>*</sup>" . $result;
 			break;
+	}
+	
+	$archives = "";
+	foreach($htmlFeed->getItemFromDates($item->name) as $archive) {
+		
+		$archives .= "<a href='tiki-html_feed.php?feed=".$feed.
+			"&name=".urlencode($archive->name).
+			"&date=".urlencode($archive->date)."'>". htmlspecialchars($archive->name) ." ". htmlspecialchars($archive->date) . "</a><br />";
+	}
+	
+	if (strlen($archives) > 0) {
+		$result .= "~np~<img src='pics/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
+		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>~/np~";
+		$headerlib->add_jq_onready(<<<JQ
+			$('#viewArchives$htmlFeedLinkI').click(function() {
+				$('#archives$htmlFeedLinkI')
+					.dialog({title: "Revisions for " + $(this).attr('name')})
+					.find('a').click(function() {
+						$.getJSON($(this).attr('href'), function(item) {
+							$('<div>')
+								.html(item.description)
+								.dialog();
+						});
+						return false;
+					});
+			});
+JQ
+		);
 	}
 	
 	return  $result;
