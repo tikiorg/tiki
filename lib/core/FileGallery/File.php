@@ -11,6 +11,8 @@ class FileGallery_File
 		'filename' => 'New File',
 	);
 	
+	var $dataIncluded = false;
+	
 	static function filename($filename = "")
 	{
 		$me = new self();
@@ -25,7 +27,8 @@ class FileGallery_File
 	{
 		$me = new self();
 		
-		$me->param = TikiLib::lib("filegal")->get_file($id);
+		$me->param = TikiLib::lib("filegal")->get_file((int)$id);
+		$me->dataIncluded = true;
 		
 		return $me;
 	}
@@ -66,9 +69,20 @@ class FileGallery_File
 		return FileGallery_File::id($archives[$archive]['id']);
 	}
 	
+	function archiveFromLastModif($lastModif)
+	{
+		foreach($this->listArchives() as $archive) {
+			if ($archive['lastModif'] == $lastModif) {
+				return $archive;
+			}
+		}
+	}
+	
 	function data()
 	{
-		$fileInfo = TikiLib::lib("filegal")->get_file_info($this->param['id']);
+		if ($this->dataIncluded) return $this->param['data'];
+		
+		$fileInfo = TikiLib::lib("filegal")->get_file_info((int)$this->param['id']);
 		return $fileInfo['data'];
 	}
 	
@@ -79,7 +93,7 @@ class FileGallery_File
 	
 	function listArchives()
 	{
-		$archives = TikiLib::lib("filegal")->get_archives($this->param['id']);
+		$archives = TikiLib::lib("filegal")->get_archives((int)$this->param['id']);
 		$archives = array_reverse( $archives['data'] );
 		return $archives;
 	}
