@@ -24,10 +24,22 @@ Class HtmlFeed_Item
 	
 	var $params = array();
 	
-	static function simplePage($params)
+	static function simple($params)
 	{
 		$me = new self();
-		$me->defaults['type'] = "simplePage";
+		
+		$me->defaults['type'] = "simple";
+		
+		$me->params = array_merge($params, $me->defaults);
+		return $params;
+	}
+	
+	static function article($article)
+	{
+		$me = new self();
+		
+		$me->defaults['type'] = "article";
+		
 		$me->params = array_merge($params, $me->defaults);
 		return $params;
 	}

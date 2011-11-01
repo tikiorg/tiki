@@ -14,27 +14,38 @@ class HtmlFeed
 	
 	public function updateCache()
 	{
-		global $tikilib,$page,$cachebuild, $htmlFeedUrl, $lastModif;
-		$cachebuild = true;
+		global $htmlFeedItem, $caching, $page;
 		
-		$links = array();
 		$this->clearCache();
 		$site = $this->siteName();
-		$parserlib = TikiLib::lib("parser");
+		
+		$caching = true; //this variable is used to block recursive parse_data below
+		
 		foreach(TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
 			foreach($pagesInfo as $pageInfo) {
-				
-				$lastModif = $pageInfo['lastModif'];
+				$htmlFeedItem = HtmlFeed_Item::simple(array(
+					"origin" 		=> $site,
+					"name" 			=> $pageInfo['pageName'],
+					"title" 		=> $pageInfo['pageName'],
+					"description" 	=> $description,
+					"date" 			=> (int)$pageInfo['lastModif'],
+					"author" 		=> $pageInfo['user'],
+					"hits"			=> $pageInfo['hits'],
+					"unusual"		=> "",
+					"importance" 	=> $pageInfo['pageRank'],
+					"keywords"		=> $pageInfo['keywords'],
+					"url"			=> $site . "/tiki-index.php?page=" . urlencode($page)
+				));
 				
 				$page = $pageInfo['pageName'];
 				
-				$htmlFeedUrl = $site . "/tiki-index.php?page=" . urlencode($page);
+				TikiLib::lib("parser")->parse_data($pageInfo['data']);
 				
-				$parserlib->parse_data($pageInfo['data']);
+				unset($htmlFeedItem);
 			}
 		}
 		
-		$cachebuild = false;
+		$caching = false;
 	}
 	
 	private function siteName()
@@ -46,26 +57,26 @@ class HtmlFeed
 		return $site;
 	}
 	
-	public function getLinks()
+	public function getItems()
 	{
 		$cache = $this->getCache();
 		return $cache->entry;
 	}
 	
-	public function listLinkNames()
+	public function listItemNames()
 	{
 		$result = array();
-		foreach($this->getLinks() as $link) {
-			if (!empty($link->name)) {
-				$result[] = htmlspecialchars($link->name);
+		foreach($this->getItems() as $item) {
+			if (!empty($item->name)) {
+				$result[] = htmlspecialchars($item->name);
 			}
 		}
 		return $result;
 	}
 	
-	public function getLink($name)
+	public function getItem($name)
 	{
-		foreach($this->getLinks() as $item) {
+		foreach($this->getItems() as $item) {
 			if ($name == $item->name) {
 				return $item;
 			}
@@ -77,10 +88,12 @@ class HtmlFeed
 	{
 		global $tikilib;
 		$cache = TikiLib::lib("cache")->getCached($this->siteName(), "htmlfeed");
+
+		//if ($cache) return $cache;
 		
-		if ($cache) return $cache;
+		$this->updateCache();
 		
-		return $this->updateCache();
+		return TikiLib::lib("cache")->getCached($this->siteName(), "htmlfeed");
 	}
 	
 	private function clearCache()
@@ -89,7 +102,7 @@ class HtmlFeed
 		TikiLib::lib("cache")->empty_type_cache("htmlfeed");
 	}
 	
-	private function appendToCache($link)
+	private function appendToCache($item)
 	{
 		global $tikilib;
 		$cache = TikiLib::lib("cache")->getCached($this->siteName(), "htmlfeed");
@@ -104,31 +117,16 @@ class HtmlFeed
 			$cache = json_decode($cache);
 		}
 		
-		$cache->date = ($cache->date > $link['date'] ? $cache->date : $link['date']);
+		$cache->date = ($cache->date > $item['date'] ? $cache->date : $item['date']);
 		
-		$cache->entry[] = $link;
+		$cache->entry[] = $item;
 		
 		TikiLib::lib("cache")->cacheItem($this->siteName(), json_encode($cache), "htmlfeed");
 	}
 	
-	public function addSimpleLink($name, $description, $lastModif, $author, $url)
+	public function addSimpleItem($htmlFeedItem)
 	{
-		$this->appendToCache(
-			HtmlFeed_Item::simplePage(array(
-				"origin" 		=> "",
-				"name" 			=> $name,
-				"title" 		=> "",
-				"description" 	=> $description,
-				"date" 			=> (int)$lastModif,
-				"author" 		=> $author,
-				"hits"			=> "",
-				"unusual"		=> "",
-				"importance" 	=> "",
-				"keywords"		=> "",
-				"type" 			=> "simple",
-				"url"			=> $url
-			)
-		));
+		$this->appendToCache($htmlFeedItem);
 	}
 	
 	public function feed()

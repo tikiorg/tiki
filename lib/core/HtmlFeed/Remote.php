@@ -6,15 +6,15 @@
 // $Id$
 
 /**
- * For TextBacklink Protocol
+ * For HtmlFeed_Remote Protocol
  */
 class HtmlFeed_Remote
 {
 	var $feedUrl = "";
 	var $feedName = "";
 	var $name = "";
-	var $links = array();
-	var $link = array();
+	var $items = array();
+	var $item = array();
 	var $contents = array();
 	var $lastModif = 0;
 	
@@ -50,10 +50,10 @@ class HtmlFeed_Remote
 		}
 	}
 	
-	public function getLinks()
+	public function getItems()
 	{
 		global $tikilib;
-		if (!empty($this->links)) return $this->links;
+		if (!empty($this->items)) return $this->items;
 		
 		$contents = file_get_contents($this->feedUrl);
 		$contents = json_decode($contents);
@@ -61,31 +61,31 @@ class HtmlFeed_Remote
 		if (!empty($contents->feed->entry) && $contents->feed->type == "htmlfeed")
 		{
 			$this->contents = $contents;
-			$this->links = $contents->feed->entry;
+			$this->items = $contents->feed->entry;
 			$this->replace();
 		}
 		
-		return $this->links;
+		return $this->items;
 	}
 	
-	public function listLinkNames()
+	public function listItemNames()
 	{
 		$result = array();
-		foreach($this->getLinks() as $link) {
-			if (!empty($link->name)) {
-				$result[] = htmlspecialchars($link->name);
+		foreach($this->getItems() as $item) {
+			if (!empty($item->name)) {
+				$result[] = htmlspecialchars($item->name);
 			}
 		}
 		return $result;
 	}
 	
-	public function getLink($name)
+	public function getItem($name)
 	{
-		foreach($this->getLinks() as $item) {
+		foreach($this->getItems() as $item) {
 			if ($name == $item->name) {
-				$this->link = $item;
+				$this->item = $item;
 			}
 		}
-		return $this->link;
+		return $this->item;
 	}
 }

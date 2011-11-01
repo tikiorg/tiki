@@ -61,7 +61,7 @@ function wikiplugin_htmlfeedlink_info() {
 }
 
 function wikiplugin_htmlfeedlink($data, $params) {
-	global $tikilib, $headerlib, $page, $cachebuild;
+	global $tikilib, $headerlib, $page, $caching;
 	static $htmlFeedLinkI = 0;
 	++$htmlFeedLinkI;
 	$i = $htmlFeedLinkI;
@@ -77,7 +77,7 @@ function wikiplugin_htmlfeedlink($data, $params) {
 	extract ($params,EXTR_SKIP);
 	
 	if (empty($feed)) return $data;
-	if (isset($cachebuild)) return $data;
+	if (isset($caching)) return $data; //caching is running, if no return, causes recursive parsing
 	
 	$htmlFeed = new HtmlFeed_Remote($feed);
 	
@@ -117,12 +117,12 @@ function wikiplugin_htmlfeedlink($data, $params) {
 					})
 					.change();
 				
-				var links = " . json_encode($htmlFeed->listLinkNames()) . ";
+				var items = " . json_encode($htmlFeed->listItemNames()) . ";
 				
-				for(var i = 0; i < links.length; i++) {
+				for(var i = 0; i < items.length; i++) {
 					$('<option />')
-						.val(links[i])
-						.text(links[i])
+						.val(items[i])
+						.text(items[i])
 						.appendTo(nameSelect);
 				}
 			});
@@ -148,13 +148,13 @@ function wikiplugin_htmlfeedlink($data, $params) {
 		});
 	");
 	
-	$link = $htmlFeed->getLink($name);
+	$item = $htmlFeed->getItem($name);
 	
-	if (!empty($link->name)) {
-		$name = $link->name;
+	if (!empty($item->name)) {
+		$name = $item->name;
 		switch($type) {
 			case "replace":
-				$same = levenshtein($data, $link->description) < 4 ? true : false;
+				$same = levenshtein($data, $item->description) < 4 ? true : false;
 
 				if (!$same)
 					$data .= "~np~<img
@@ -179,7 +179,7 @@ function wikiplugin_htmlfeedlink($data, $params) {
 						
 				break;
 			case "backlink":
-				$data = "<a href='$link->url'>" . $data . "</a>";
+				$data = "<a href='$item->url'>" . $data . "</a>";
 				break;
 			case "popup":
 				$headerlib->add_jq_onready("
@@ -193,12 +193,12 @@ function wikiplugin_htmlfeedlink($data, $params) {
 		$link = json_encode($link);
 	}
 	
-	$result = "<span id='backlink$i' title='$name'>". $data ."</span>";
+	$result = "<span id='htmlFeedLink$i' title='$name'>". $data ."</span>";
 	
 	switch ($style) {
 		case "highlight":
 			$headerlib->add_jq_onready("
-				$('#backlink$i')
+				$('#htmlFeedLink$i')
 					.css('border', '1px solid red');
 			");
 			break;

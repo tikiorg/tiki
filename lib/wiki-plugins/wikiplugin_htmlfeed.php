@@ -25,16 +25,20 @@ function wikiplugin_htmlfeed_info()
 
 function wikiplugin_htmlfeed($data, $params)
 {
-    global $tikilib, $headerlib, $page, $cachebuild, $user, $htmlFeedUrl, $lastModif;
+    global $tikilib, $headerlib, $htmlFeedItem, $caching, $page;
     static $feedhtmlFeedI = 0;
 	++$feedhtmlFeedI;
 	
 	$name = (!empty($name) ? $name : $page . $feedhtmlFeedI);
 	
-	if ($cachebuild) {
+	if ($caching == true) {
 		$htmlFeed = new HtmlFeed();
 		$data = TikiLib::lib("parser")->parse_data($data);
-		$htmlFeed->addSimpleLink($name, $data, $lastModif, $user, $htmlFeedUrl);
+		
+		$htmlFeedItem['description'] = $data;
+		$htmlFeedItem['name'] = $name;
+		
+		$htmlFeed->addSimpleItem($htmlFeedItem);
 	}
 	
     return $data;

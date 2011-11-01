@@ -13,8 +13,8 @@ if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
 	//here we try to view the results of an external feed, admin only
 	$access->check_permission('tiki_p_admin');
 	$htmlFeed = new HtmlFeed_Remote(urldecode($_REQUEST['feed']));
-	$link = $htmlFeed->getLink(urldecode($_REQUEST['name']));
-	print_r(json_encode($link));
+	$item = $htmlFeed->getItem(urldecode($_REQUEST['name']));
+	print_r(json_encode($item));
 } else {
 	$htmlFeed = new HtmlFeed();
 	print_r(json_encode(
