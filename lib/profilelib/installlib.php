@@ -798,6 +798,8 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandler // {{{
 {
+	private $mode = 'create';
+	
 	private function getData() // {{{
 	{
 		if ( $this->data )
@@ -838,9 +840,21 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 			if ( ! is_array($row) || count($row) != 2 )
 				return false;
 
-		return true;
+		return $this->convertMode($data);
 	}
 
+	function convertMode( $data )
+	{
+		if (isset($data['mode']) && $data['mode'] == 'update') {
+			if (empty($data['itemId'])) {
+				throw new Exception("itemId is mandatory to update tracker");
+			} else {
+				$this->mode = 'update';	
+			}
+		} 
+		return true;
+	}
+ 	
 	function _install()
 	{
 		$data = $this->getData();
@@ -866,7 +880,11 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 					$fields['data'][$key]['value'] = $v;
 		}
 
-		return $trklib->replace_item($data['tracker'], 0, $fields, $data['status']);
+		if ($this->mode == 'update') {
+			return $trklib->replace_item($data['tracker'], $data['itemId'], $fields, $data['status']);
+		} else {
+			return $trklib->replace_item($data['tracker'], 0, $fields, $data['status']);
+		}
 	}
 } // }}}
 
