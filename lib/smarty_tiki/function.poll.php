@@ -6,12 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function smarty_function_poll($params, $smarty) {
+function smarty_function_poll($params, $smarty)
+{
 	global $polllib, $dbTiki, $commentslib, $prefs;
 	global $tiki_p_view_poll_results, $tiki_p_vote_poll;
     extract($params);
@@ -46,8 +47,8 @@ function smarty_function_poll($params, $smarty) {
       $smarty->assign('comments_cant', $comments_count);
       if ($tiki_p_view_poll_results == 'y')
 		  $smarty->assign('ownurl','tiki-poll_results.php?pollId='.$id);
-      $smarty->assign('menu_info',$menu_info);
-      $smarty->assign('channels',$channels);
+      $smarty->assign('menu_info', $menu_info);
+      $smarty->assign('channels', $channels);
       $smarty->display('tiki-poll.tpl');
 	}
     }

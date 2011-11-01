@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -22,6 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           _user: if specified, use this user timezone instead of the current user
  * -------------------------------------------------------------
  */
-function smarty_modifier_tiki_date_format($string, $format, $_user = false) {
-	return TikiLib::date_format(tra($format),$string, $_user);
+function smarty_modifier_tiki_date_format($string, $format, $_user = false)
+{
+	return TikiLib::date_format(tra($format), $string, $_user);
 }

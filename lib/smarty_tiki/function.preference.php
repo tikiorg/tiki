@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_function_preference( $params, $smarty ) {
+function smarty_function_preference( $params, $smarty )
+{
 	global $prefslib, $prefs, $user_overrider_prefs; require_once 'lib/prefslib.php';
 	if ( ! isset( $params['name'] ) ) {
 		return 'Preference name not specified.';

@@ -12,7 +12,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -53,7 +53,7 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
             return rawurlencode($string);
 
         case 'urlpathinfo':
-            return str_replace('%2F','/',rawurlencode($string));
+            return str_replace('%2F', '/', rawurlencode($string));
             
         case 'quotes':
             // escape unescaped single quotes
@@ -83,11 +83,11 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
 
         case 'javascript':
             // escape quotes and backslashes, newlines, etc.
-            return strtr($string, array('\\'=>'\\\\',"'"=>"\\'",'"'=>'\\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
+            return strtr($string, array('\\'=>'\\\\', "'"=>"\\'", '"'=>'\\"', "\r"=>'\\r', "\n"=>'\\n', '</'=>'<\/'));
             
         case 'mail':
             // safe way to display e-mail address on a web page
-            return str_replace(array('@', '.'),array(' [AT] ', ' [DOT] '), $string);
+            return str_replace(array('@', '.'), array(' [AT] ', ' [DOT] '), $string);
             
         case 'nonstd':
            // escape non-standard chars, such as ms document quotes

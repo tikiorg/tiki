@@ -6,12 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function smarty_function_query($params, $smarty) {
+function smarty_function_query($params, $smarty)
+{
 	global $auto_query_args, $prefs;
 	static $request = NULL;
 
@@ -52,14 +53,14 @@ function smarty_function_query($params, $smarty) {
 				// Arguments starting with an underscore are special and must not be included in URL
 				if ( $param_name[0] == '_' ) continue;
 
-				$list = explode(",",$param_value);
-				if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name],$list) ) {
-					$query[$param_name] = $list[(array_search($_REQUEST[$param_name],$list)+1)%count($list)];
+				$list = explode(", ", $param_value);
+				if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name], $list) ) {
+					$query[$param_name] = $list[(array_search($_REQUEST[$param_name], $list)+1)%count($list)];
 					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
 						unset($query[$param_name]);
 					}
-				} elseif ( isset($query[$param_name]) and in_array($query[$param_name],$list) ) {
-					$query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%count($list)];
+				} elseif ( isset($query[$param_name]) and in_array($query[$param_name], $list) ) {
+					$query[$param_name] = $list[(array_search($query[$param_name], $list)+1)%count($list)];
 					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
 						unset($query[$param_name]);
 					}
@@ -119,7 +120,7 @@ function smarty_function_query($params, $smarty) {
 		// Check for anchor used as script
 		if ( !empty($params['_script']) && $params['_script'][0] == '#' ) {
 			if ( empty($params['_anchor']) ) {
-				$params['_anchor'] = substr($params['_script'],1);
+				$params['_anchor'] = substr($params['_script'], 1);
 			}
 			if ( empty($params['_anchor']) ) {
 				$params['_type'] = 'anchor';
@@ -134,7 +135,7 @@ function smarty_function_query($params, $smarty) {
 
 			// If _script does not already specifies the directory and if there is one in PHP_SELF server var, use it
 			if ( $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' && stripos($params['_script'], 'mailto:') !== 0) {
-				$php_self = str_replace('\\','/',dirname($_SERVER['PHP_SELF'])).'/'.$php_self;
+				$php_self = str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])) . '/' . $php_self;
 			}
 
 		} elseif ( empty($params['_anchor']) || ! empty($ret) ) {

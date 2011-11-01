@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -30,6 +30,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Example: {$country|stringfix:"_":" "}
  */
 
-function smarty_modifier_stringfix($string, $what = '_', $by = ' ') { 
-	return str_replace($what,$by,$string);
+function smarty_modifier_stringfix($string, $what = '_', $by = ' ')
+{ 
+	return str_replace($what, $by, $string);
 }

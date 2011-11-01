@@ -5,12 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function smarty_function_debugger($params, $smarty) {
+function smarty_function_debugger($params, $smarty)
+{
 	
 	global $prefs;
 	if ($prefs['feature_debug_console'] == 'y') {

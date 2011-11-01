@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -20,7 +20,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _maxRecords
  *  - _find
  */
-function smarty_function_fgal_browse($params, $smarty) {
+function smarty_function_fgal_browse($params, $smarty)
+{
 	if ( ! is_array($params) || ! isset($params['_id']) ) return;
 	global $tikilib, $userlib, $tiki_p_view_file_gallery, $prefs;
 

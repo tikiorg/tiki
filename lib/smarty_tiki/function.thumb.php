@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -18,7 +18,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _id: ID of the file
  *  - _max: Reduce image height and width to be less or equal the value of '_max' in pixels (keep ratio)
  */
-function smarty_function_thumb($params, $smarty) {
+function smarty_function_thumb($params, $smarty)
+{
 	global $prefs;
 	
 	if ( ! is_array($params) || ! isset($params['_id']) ) return;

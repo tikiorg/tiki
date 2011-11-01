@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -19,7 +19,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _field: Return the value of the specified field/property
  *  - _link: Return the result inside an A tag that links to the image. The value of _link will be used to match the 'name' attribute of images to use for shadowbox (if feature shadowbox is enabled)
  */
-function smarty_function_fileinfo($params, $smarty) {
+function smarty_function_fileinfo($params, $smarty)
+{
 	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_field']) ) return;
 	$filegallib = TikiLib::lib('filegal');
 	$params['_id'] = (int)$params['_id'];

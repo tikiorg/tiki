@@ -6,13 +6,14 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 // Param: 'id' or 'label'
-function smarty_function_interactivetranslation($params, $smarty) {
+function smarty_function_interactivetranslation($params, $smarty)
+{
 	global $headerlib, $smarty;
 
 	$strings = get_collected_strings();
@@ -42,7 +43,8 @@ JS;
 	return $smarty->fetch('interactive_translation_box.tpl');
 }
 
-function sort_strings_by_length( $a, $b ) {
+function sort_strings_by_length( $a, $b )
+{
 	$a = strlen( $a[1] );
 	$b = strlen( $b[1] );
 

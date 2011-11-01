@@ -6,13 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;         
 }  
 
-function smarty_function_object_link( $params, $smarty ) {
-
+function smarty_function_object_link( $params, $smarty )
+{
 	if ( ! isset( $params['type'], $params['id'] ) && ! isset( $params['identifier'] ) ) {
 		return tra('No object information provided.');
 	}
@@ -61,7 +61,8 @@ function smarty_function_object_link( $params, $smarty ) {
 	return $function( $smarty, $object, $title, $type, $url );
 }
 
-function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null ) {
+function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null )
+{
 	require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
 	if (! function_exists('smarty_modifier_escape')) {
@@ -131,13 +132,15 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	return $html;
 }
 
-function smarty_function_object_link_user( $smarty, $user, $title = null ) {
+function smarty_function_object_link_user( $smarty, $user, $title = null )
+{
 	require_once 'lib/smarty_tiki/modifier.userlink.php';
 
 	return smarty_modifier_userlink( $user, 'link', 'not_set', $title ? $title : '' );
 }
 
-function smarty_function_object_link_external( $smarty, $link_orig, $title = null, $type = null ) {
+function smarty_function_object_link_external( $smarty, $link_orig, $title = null, $type = null )
+{
 	global $cachelib; require_once 'lib/cache/cachelib.php';
 	global $tikilib;
 
@@ -174,15 +177,18 @@ function smarty_function_object_link_external( $smarty, $link_orig, $title = nul
 	return $data;
 }
 
-function smarty_function_object_link_relation_source( $smarty, $relationId, $title = null ) {
+function smarty_function_object_link_relation_source( $smarty, $relationId, $title = null )
+{
 	return smarty_function_object_link_relation_end( $smarty, 'source', $relationId, $title );
 }
 
-function smarty_function_object_link_relation_target( $smarty, $relationId, $title = null ) {
+function smarty_function_object_link_relation_target( $smarty, $relationId, $title = null )
+{
 	return smarty_function_object_link_relation_end( $smarty, 'target', $relationId, $title );
 }
 
-function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $title = null ) {
+function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $title = null )
+{
 	global $relationlib; require_once 'lib/attributes/relationlib.php';
 	global $attributelib; require_once 'lib/attributes/attributelib.php';
 	global $cachelib; require_once 'lib/cache/cachelib.php';
@@ -220,7 +226,8 @@ function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $
 	return $out;
 }
 
-function smarty_function_object_link_freetag( $smarty, $tag, $title = null ) {
+function smarty_function_object_link_freetag( $smarty, $tag, $title = null )
+{
 	global $prefs;
 	if ($prefs['feature_freetags'] != 'y') {
 		return tr('freetags disabled');

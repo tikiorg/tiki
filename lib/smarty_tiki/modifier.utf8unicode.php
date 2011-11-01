@@ -6,14 +6,14 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 // convert utf-8 to unicode
-function smarty_modifier_utf8unicode($utf8_text) {
-
+function smarty_modifier_utf8unicode($utf8_text)
+{
     $output = array( );
 
     for ( $pos = 0, $pos_strlen_utf8_text = strlen( $utf8_text ); $pos < $pos_strlen_utf8_text; $pos++ ) {
@@ -25,7 +25,7 @@ function smarty_modifier_utf8unicode($utf8_text) {
             $outputval = $chval;    // Since 7-bit ASCII is unaffected, the output equals the input
         } else {
             for($i=5; $i>0; $i--) {
-                if ( ($chval >> $i) == ( (pow(2,(8-$i))) -2) ) {
+                if ( ($chval >> $i) == ( (pow(2 , (8-$i))) -2) ) {
                     $bytes = 7-$i;
                     $outputval = $chval & ((2^$i)-1);
                 }

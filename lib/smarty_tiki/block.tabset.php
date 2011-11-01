@@ -26,7 +26,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -90,7 +90,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 				}
 				$button_params['_auto_args']='*';
 				$button_params['_onclick'] = "setCookie('$smarty_tabset_name','".($cookietab == 'n' ? 1 : 'n' )."', 'tabs') ;";
-				$notabs = smarty_function_button($button_params,$smarty);
+				$notabs = smarty_function_button($button_params, $smarty);
 				$notabs = "<div class='tabstoggle floatright'>$notabs</div>";
 				$content_class = '';
 			} else {

@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -64,7 +64,9 @@ function smarty_function_html_select_duration($params, $smarty)
 	$html_result .= '</select>';
     return $html_result;
 }
-function compute_select_duration($params, $prefix='Duration') {
+
+function compute_select_duration($params, $prefix='Duration')
+{
 	return $_REQUEST[$prefix] * $_REQUEST[$prefix.'_unit'];
 }
 

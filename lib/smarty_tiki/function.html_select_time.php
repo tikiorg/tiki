@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -73,7 +73,7 @@ function smarty_function_html_select_time($params, $smarty)
 		$e = explode(':', $time, 3);
 		$time = $tikilib->make_time(isset($e[0])?$e[0]:0, isset($e[1])?$e[1]:0, isset($e[2])?$e[2]:0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y'));
 	}
-	if (empty($hour_minmax) || !preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/',$hour_minmax)) {
+	if (empty($hour_minmax) || !preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/', $hour_minmax)) {
 		$hour_minmax = '0-23';
 	}
 	//only needed for end_ and the static variable in the date_format functions seem to cause problems without the if
@@ -85,7 +85,7 @@ function smarty_function_html_select_time($params, $smarty)
 
 	if ($display_hours) {
 		if ($use_24_hours) {
-			list($hour_min,$hour_max) = explode('-',$hour_minmax);
+			list($hour_min, $hour_max) = explode('-', $hour_minmax);
 			$hours = range(($hour_min == 24 ? 0 : $hour_min), ($hour_max == 0 || $hour_max == 24 ? 23 : $hour_max));
 			$hour_fmt = '%H';
 			$latest = 23;

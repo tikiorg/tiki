@@ -6,12 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
 if (!function_exists('smarty_function_sefurl')) {
-	function smarty_function_sefurl($params, $smarty) {
+	function smarty_function_sefurl($params, $smarty)
+	{
 		global $prefs;
 		global $wikilib; include_once('lib/wiki/wikilib.php');
 	

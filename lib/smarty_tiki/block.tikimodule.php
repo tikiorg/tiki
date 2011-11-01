@@ -36,7 +36,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -47,7 +47,7 @@ function smarty_block_tikimodule($params, $content, $smarty)
 	if (!isset($content))   return "";
 	if (!isset($error))  $error = '';
 	if (!isset($overflow))  $overflow = false;
-	if (!isset($title))     $title = substr(strip_tags($content),0,12). (strlen(strip_tags($content)) > 12 ? "..." : "");
+	if (!isset($title))     $title = substr(strip_tags($content), 0, 12). (strlen(strip_tags($content)) > 12 ? "..." : "");
 	if (!isset($name))		$name  = $title; else $name  = $name;
 	$name = urlencode($name);
 	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';

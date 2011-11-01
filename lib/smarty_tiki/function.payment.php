@@ -7,7 +7,8 @@
 
 // @param numeric $id: id of the payment
 // @params url $returnurl: optional return url
-function smarty_function_payment( $params, $smarty ) {
+function smarty_function_payment( $params, $smarty )
+{
 	global $tikilib, $prefs, $userlib, $user, $globalperms;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	$invoice = (int) $params['id'];
@@ -54,7 +55,7 @@ function smarty_function_payment( $params, $smarty ) {
 			require_once 'lib/payment/creditspaylib.php';
 			$userpaycredits = new UserPayCredits;
 			$userpaycredits->setPrice($info['amount_remaining']);
-			$smarty->assign('userpaycredits',$userpaycredits->credits);
+			$smarty->assign('userpaycredits', $userpaycredits->credits);
 		}
 
 		

@@ -26,13 +26,15 @@
  * @param thousands: thousands separator
  * @return number
  */
-function smarty_modifier_number_format($number, $decimals = 2, $dec_point = '.', $thousands = ',') {
+function smarty_modifier_number_format($number, $decimals = 2, $dec_point = '.', $thousands = ',')
+{
 	$dec_point = separator($dec_point);
 	$thousands = separator($thousands);
 	return number_format($number, $decimals, $dec_point, $thousands);
 }
 
-function separator($sep) {
+function separator($sep)
+{
 	switch ($sep) {
 		case 'c':
 		case ',':

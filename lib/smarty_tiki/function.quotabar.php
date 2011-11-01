@@ -8,7 +8,8 @@
 /* length: length in pixels of the bar (default 50)
 	value: length in pixels to display at the left in red (if not set all length is display in red)
 */
-function smarty_function_quotabar( $params, $smarty ) {
+function smarty_function_quotabar( $params, $smarty )
+{
 	extract($params, EXTR_SKIP);
 	if (!isset($length)) {
 		$length = 100;

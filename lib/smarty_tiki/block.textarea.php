@@ -21,7 +21,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -103,7 +103,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			$_REQUEST['autosave'] = 'n';
 		}
 		if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?  
-			$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
+			$auto_saved = str_replace("\n", "\r\n", get_autosave($as_id, $auto_save_referrer));
 			if ( strcmp($auto_saved, $content) === 0 ) {
 				$auto_saved = '';
 			}
@@ -154,7 +154,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 		//// note, this breaks ajax page load via wikitopline edit icon
 		//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js',0 , true);
+		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 0 , true);
 		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true);
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 	

@@ -6,7 +6,7 @@
 // $Id$
 
 // this script may only be included - so it's better to die if called directly
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   die;
 }
@@ -36,7 +36,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 
-function smarty_function_listfilter($params, $smarty) {
+function smarty_function_listfilter($params, $smarty)
+{
 	global $headerlib, $prefs, $listfilter_id;
 	if ($prefs['feature_jquery'] != 'y' || $prefs['javascript_enabled'] != 'y') {
 		return '';

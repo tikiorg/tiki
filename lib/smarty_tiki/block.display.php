@@ -16,7 +16,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -27,10 +27,10 @@ function smarty_block_display($params, $content, $smarty)
 	
 	$ok = true;
 	if (!empty($params['groups'])) {
-		$groups = explode(',',$params['groups']);
+		$groups = explode(',', $params['groups']);
 		$userGroups = $userlib->get_user_groups($user);
 	}
-	#$users = explode(',',$params['users']); // TODO users param support
+	#$users = explode(',', $params['users']); // TODO users param support
 	if (!empty($params['friends']) && $prefs['feature_friends'] == 'y') {
 		$friends = explode(',', $params['friends']);
 	}
@@ -52,14 +52,14 @@ function smarty_block_display($params, $content, $smarty)
 	foreach ($groups as $gr) {
 		$gr = trim($gr);
 		if ($gr == 'Anonymous') $anon = true;
-		if (substr($gr,0,1) == '-') {
-			$nogr = substr($gr,1);
-			if ((in_array($nogr,$userGroups) && $nogr != 'Registered') or (in_array($nogr,$userGroups) && $nogr == 'Registered' && $anon == true)) {
+		if (substr($gr, 0, 1) == '-') {
+			$nogr = substr($gr, 1);
+			if ((in_array($nogr, $userGroups) && $nogr != 'Registered') or (in_array($nogr, $userGroups) && $nogr == 'Registered' && $anon == true)) {
 				// workaround to display to Anonymous only if Registered excluded (because Registered includes Anonymous always)
 				$ok = false;
 				$anon = false;
 			}
-		} elseif (!in_array($gr,$userGroups) && $anon == false) {
+		} elseif (!in_array($gr, $userGroups) && $anon == false) {
 			$ok = false;
 		} else {
 			$ok = true;

@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -19,6 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Purpose:  to use with the tracker field type "User inscription"
  * -------------------------------------------------------------
  */
-function smarty_modifier_max_user_inscriptions( $text ) { 
-  return substr($text,0,strpos($text,'#'));
+function smarty_modifier_max_user_inscriptions( $text )
+{
+  return substr($text, 0, strpos($text, '#'));
 }

@@ -48,7 +48,7 @@ function smarty_function_popup($params, $smarty)
             case 'caption':
             case 'closetext':
             case 'status':
-                $append .= ',\'' . strtoupper($_key) . "=" . str_replace("'","\'",$_value) . "'";
+                $append .= ',\'' . strtoupper($_key) . "=" . str_replace("'", "\'", $_value) . "'";
                 break;
 
             case 'fgcolor':

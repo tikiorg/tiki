@@ -14,7 +14,7 @@
  * _data	:	array of data rows	 - 	e.g . with perms for now
  * 
  * 	array(
- * 		array('permName'=>'tiki_p_admin_newsletters', 'permDesc' => 'Can admin newsletters','level' => 'admin', 'type' => 'newsletters' etc...),
+ * 		array('permName'=>'tiki_p_admin_newsletters', 'permDesc' => 'Can admin newsletters', 'level' => 'admin', 'type' => 'newsletters' etc...),
  * 		array('permName'=>'tiki_p_blahblah', etc...),
  * 	...)
  * 
@@ -27,14 +27,14 @@
  * _sortColumn = ''			:	column to organise tree by (actually row key = e.g. 'type')
  * 
  * _sortColumnDelimiter = '':	if set (e.g. to ',') sorting will be nested accoding to this delimiter
- * 								e.g. if the _sortColumn value is 'gran-parent,parent,child' the 'child' section will be nested 3 levels deep
+ * 								e.g. if the _sortColumn value is 'gran-parent, parent, child' the 'child' section will be nested 3 levels deep
  * 
  * _checkbox = ''			: 	name of checkbox (auto-incrementing) - no checkboxes if not set
  * 								if comma delimited list (or array) then makes multiple checkboxes
  * 
  * _checkboxColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the checkbox value
  * 								comma delimeted list (or array - of ints) for multiple checkboxes as set above
- * 								if set needs to match number of checkboxes defines in _checkbox (or if not set uses 0,1,2 etc)
+ * 								if set needs to match number of checkboxes defines in _checkbox (or if not set uses 0, 1, 2 etc)
  * 
  * _checkboxTitles = ''		:	Comma delimited list (or array) of header titles for checkboxes (optional, but needs to match number of checkboxes above)
  * 
@@ -61,12 +61,13 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function smarty_function_treetable($params, $smarty) {
+function smarty_function_treetable($params, $smarty)
+{
 	global $headerlib, $tree_table_id, $prefs;
 	
 	extract($params);
@@ -122,7 +123,7 @@ function smarty_function_treetable($params, $smarty) {
 	$_filterMinRows = empty($_filterMinRows) ? 12 : $_filterMinRows;
 	$_collapseMaxSections = empty($_collapseMaxSections) ? 4 : $_collapseMaxSections;
 	
-	$_rowClasses = !isset($_rowClasses) ? array('odd','even') : 
+	$_rowClasses = !isset($_rowClasses) ? array('odd', 'even') : 
 		(is_array($_rowClasses) ? $_rowClasses : array($_rowClasses));
 	
 	if (!empty($_rowClasses)) {
@@ -156,7 +157,7 @@ function smarty_function_treetable($params, $smarty) {
 		$_columns = array();
 		foreach ($ar as $str) {
 			$ar2 = preg_split('/=/', trim($str));
-			$_columns[trim($ar2[0],' "')] = trim($ar2[1],' "');
+			$_columns[trim($ar2[0], ' "')] = trim($ar2[1], ' "');
 		}
 		unset($ar, $ar2);
 	}
@@ -193,7 +194,7 @@ function smarty_function_treetable($params, $smarty) {
 		$html .= '&nbsp;' . smarty_function_icon(
 			array('_id' => 'folder',
 				'id' => $id.'_openall',
-				'title' => tra('Toggle sections')),	$smarty) .
+				'title' => tra('Toggle sections')), $smarty) .
 			' ' . tra('Toggle sections');
 		
 		$headerlib->add_jq_onready('
@@ -277,7 +278,7 @@ $("#'.$id.'_showSelected").click( function () {
 					$part = preg_replace('/\s+/', '_', $parts[$i]);
 					if (in_array($part, $treeSectionsAdded) && $i > 0) {
 						$treeParentId = preg_replace('/\s+/', '_', $parts[$i]);
-						$childRowClass = ' child-of-'.$id.'_'.$treeParentId;
+						$childRowClass = ' child-of-' . $id . '_' . $treeParentId;
 						$treeTypeId = preg_replace('/\s+/', '_', $parts[$i - 1]);
 						$treeType = $parts[$i - 1];
 						break;
@@ -287,27 +288,27 @@ $("#'.$id.'_showSelected").click( function () {
 					$treeTypeId = preg_replace('/\s+/', '_', $part);
 				}
 				$treeSectionsAdded[] = $treeTypeId;
-				$rowId = ' id="'.$id.'_'.$treeTypeId.'"';
+				$rowId = ' id="' . $id . '_' . $treeTypeId . '"';
 				
 				//$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
 			} else {
 				$treeTypeId = preg_replace('/\s+/', '_', $treeType);
-				$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
+				$childRowClass = ' child-of-' . $id . '_' . $treeTypeId;
 				$rowId = '';
 				
 				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
-					$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
+					$html .= '<tr id="' . $id . '_' . $treeTypeId . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
 					$html .= $treeType.'</td></tr>'.$nl;
 					
 					// Courtesy message to help category perms configurators
 					if ($treeType == 'category') {
-						$html .= '<tr class="subHeader'.$childRowClass.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
-						$html .= tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</td></tr>'.$nl;
+						$html .= '<tr class="subHeader' . $childRowClass . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
+						$html .= tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</td></tr>' . $nl;
 					}
 					$treeSectionsAdded[] = $treeTypeId;
 					
 					// write a sub-header
-					$html .= '<tr class="subHeader'.$childRowClass.'">';
+					$html .= '<tr class="subHeader' . $childRowClass . '">';
 					if (!empty($_checkbox)) {
 						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 							$html .= '<td class="checkBoxHeader">';
@@ -320,7 +321,7 @@ $("#'.$id.'_showSelected").click( function () {
 						$html .= htmlspecialchars($columnName);
 						$html .= '</td>';
 					}
-					$html .= '</tr>'.$nl;
+					$html .= '</tr>' . $nl;
 				}
 			}
 		} else {
@@ -337,7 +338,7 @@ $("#'.$id.'_showSelected").click( function () {
 			$rowClass = $childRowClass;
 		}
 		
-		$html .= '<tr class="'.$rowClass.'"'.$rowId.'>';
+		$html .= '<tr class="' . $rowClass . '"' . $rowId.'>';
 		// add the checkbox
 		if (!empty($_checkbox)) {
 			for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
@@ -346,9 +347,10 @@ $("#'.$id.'_showSelected").click( function () {
 				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);
 				$cbxTit = empty($_checkboxTitles) ? $cbxVal : htmlspecialchars($_checkboxTitles[$i]);
 				$html .= '<td class="checkBoxCell">';
-				$html .= '<input type="checkbox" name="'.htmlspecialchars($_checkbox[$i]).'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked="checked"' : '').' title="'.$cbxTit.'" />';
+				$html .= '<input type="checkbox" name="' . htmlspecialchars($_checkbox[$i]) . '[]" value="' . $rowVal . '"' .
+									($cbxVal=='y' ? ' checked="checked"' : '') . ' title="' . $cbxTit . '" />';
 				if ($cbxVal == 'y') {
-					$html .= '<input type="hidden" name="old_'.htmlspecialchars($_checkbox[$i]).'[]" value="'.$rowVal.'" />';
+					$html .= '<input type="hidden" name="old_' . htmlspecialchars($_checkbox[$i]) . '[]" value="' . $rowVal . '" />';
 				}
 				$html .= '</td>';
 			}
@@ -361,18 +363,18 @@ $("#'.$id.'_showSelected").click( function () {
 			} else {
 				$html .= $row[$column];
 			}
-			$html .= '</td>'.$nl;
+			$html .= '</td>' . $nl;
 		}
-		$html .= '</tr>'.$nl;					
+		$html .= '</tr>' . $nl;					
 	}
-	$html .= '</tbody></table>'.$nl;
+	$html .= '</tbody></table>' . $nl;
 	
 	// add jq code to initial treeetable
 	$expanable = empty($_sortColumnDelimiter) ? 'true' : 'false';	// when nested, clickableNodeNames is really annoying
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
-		$headerlib->add_jq_onready('$("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "expanded"});');
+		$headerlib->add_jq_onready('$("#' . $id . '").treeTable({clickableNodeNames:' . $expanable . ',initialState: "expanded"});');
 	} else {
-		$headerlib->add_jq_onready('$("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "collapsed"});');
+		$headerlib->add_jq_onready('$("#' . $id . '").treeTable({clickableNodeNames:' . $expanable . ',initialState: "collapsed"});');
 	}
 	// TODO refilter when .parent is opened - seems to prevent the click propagating
 //		$headerlib->add_jq_onready('$("tr.parent").click(function(event) {
@@ -394,7 +396,8 @@ $("#'.$id.'_showSelected").click( function () {
 
 // $sort used as variable function--can be natcasesort, for example
 // WARNING: $sort must be associative
-function sort2d( &$arrIn, $index = null, $sort = 'asort') {
+function sort2d( &$arrIn, $index = null, $sort = 'asort')
+{
 	// pseudo-secure--never allow user input into $sort
 	$arrTemp = Array();
 	$arrOut = Array();

@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
@@ -23,7 +23,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           to provide highlighted search terms.
  * -------------------------------------------------------------
  */
-function smarty_outputfilter_highlight($source, $smarty) {
+function smarty_outputfilter_highlight($source, $smarty)
+{
 	global $prefs;
 
 	if (empty($_REQUEST['highlight'])) {
@@ -35,7 +36,7 @@ function smarty_outputfilter_highlight($source, $smarty) {
 	$highlight = $_REQUEST['highlight'];
 
 	if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['boolean'] == 'y')) {
-		$highlight = str_replace(array('(', ')', '*', '-', '"', '~','<', '>'), ' ', $highlight);
+		$highlight = str_replace(array('(', ')', '*', '-', '"', '~', '<', '>'), ' ', $highlight);
 	}
 
 	if (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') {
@@ -101,7 +102,8 @@ function smarty_outputfilter_highlight($source, $smarty) {
 	return $matches[1].$source.$matches[3];
 }
 
-function _enlightColor($matches) {
+function _enlightColor($matches)
+{
 	static $colword = array();
 	if (is_string($matches)) { // just to set the color array
 		// Wrap all the highlight words with tags bolding them and changing
@@ -128,12 +130,13 @@ function _enlightColor($matches) {
 
 // helper function
 // q= for Google, p= for Yahoo
-function _refererhi() {
+function _refererhi()
+{
 	$referer = parse_url($_SERVER['HTTP_REFERER']);
 	if (empty($referer['query'])) {
 		return '';
 	}
-	TikiLib::parse_str($referer['query'],$vars);
+	TikiLib::parse_str($referer['query'], $vars);
 	if (isset($vars['q'])) {
 		return $vars['q'];
 	} else if (isset($vars['p'])) {

@@ -6,13 +6,14 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 // Handle special actions of the smarty_function_attachments smarty plugin
-function s_f_attachments_actionshandler( $params ) {
+function s_f_attachments_actionshandler( $params )
+{
 	global $prefs, $user, $tikilib;
 	if ( $prefs['feature_wiki_attachments'] != 'y' ) return false;
 
@@ -78,7 +79,8 @@ function s_f_attachments_actionshandler( $params ) {
  *   _id : id of the object (for a wiki page, use it's name)
  *   _type : type of the object ( e.g. "wiki page" - see objectTypes in lib/setup/sections.php )
  */
-function smarty_function_attachments($params, $template) {
+function smarty_function_attachments($params, $template)
+{
 	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_type']) ) return;
 
 	global $smarty, $prefs, $tikilib, $userlib;

@@ -10,7 +10,8 @@
  * eromneg adding additional File Gallery popup body class
  */
 
-function smarty_function_html_body_attributes($params, $smarty) {
+function smarty_function_html_body_attributes($params, $smarty)
+{
 	global $section, $prefs, $cookietab, $page, $smarty, $tiki_p_edit, $section_class, $user;
 	
 	$back = '';

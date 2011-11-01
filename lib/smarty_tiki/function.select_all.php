@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -18,7 +18,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - checkbox_names: Values of the 'name' HTML attribute of the checkboxes to check/uncheck, either as an array or as a comma-separated list 
  *	- label: text to display on the right side of the checkbox. If empty, no default text is displayed
  */
-function smarty_function_select_all($params, $smarty) {
+function smarty_function_select_all($params, $smarty)
+{
 	global $prefs;
 	static $checkbox_count = -1;
 	

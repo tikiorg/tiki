@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -22,10 +22,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *			 using $pad as filler.
  * -------------------------------------------------------------
  */
-function smarty_modifier_adjust($string, $length = 80, 
-                                  $pad = '&nbsp;', 
-							      $etc = '...',
-                                  $break_words = false)
+function smarty_modifier_adjust($string,
+																$length = 80, 
+																$pad = '&nbsp;', 
+																$etc = '...',
+                                $break_words = false
+																)
 {
     if ($length == 0)
         return '';
@@ -37,9 +39,9 @@ function smarty_modifier_adjust($string, $length = 80,
             $fragment = substr($fragment, 0, -1);
         else
             $fragment = preg_replace('/\s+(\S+)?$/', '', $fragment);
-        return $fragment.$etc;
+        return $fragment . $etc;
     } elseif (strlen($string)<$length) {
-        return $string.str_repeat($pad,$length-strlen($string));
+        return $string . str_repeat($pad, $length - strlen($string));
     } else {
     	return $string;
     }

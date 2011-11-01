@@ -25,7 +25,8 @@
  * @param length: length of substring (default=to end of string; negative=left N from end)
  * @return string
  */
-function smarty_modifier_substring($string, $position = 0, $length = null) {
+function smarty_modifier_substring($string, $position = 0, $length = null)
+{
 
 	if ($length == null) {
 		return substr($string, $position);

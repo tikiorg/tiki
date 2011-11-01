@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           http://openacs.org/forums/message-view?message_id=32884
  *           for details about that security issue
  * Install:  Drop into the plugin directory, call 
- *           $smarty->load_filter('post','ticket');
+ *           $smarty->load_filter('post', 'ticket');
  *           from application.
  *           Create a table in your db (or hack any other way) for example
  *           create table tickets ( user varchar(32), ticket varchar(16));
@@ -32,7 +32,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           mose@tikiwiki.org for coding
  * -------------------------------------------------------------
  */
- function smarty_outputfilter_ticket($source, $smarty) {
+ function smarty_outputfilter_ticket($source, $smarty)
+ {
 		global $ticket;
     $source = preg_replace("~((<form[^>]*action=(\"|')[^\"']*tiki-[^\"']*(\"|')[^>]*>(\s*))<)~si",
                             '$2<input type="hidden" name="ticket" value="'.$ticket.'" /><', $source);
