@@ -34,10 +34,11 @@ class HtmlFeed
 					"unusual"		=> "",
 					"importance" 	=> $pageInfo['pageRank'],
 					"keywords"		=> $pageInfo['keywords'],
-					"url"			=> $site . "/tiki-index.php?page=" . urlencode($page)
+					"url"			=> $site . "/tiki-pagehistory.php?" .
+						"page=" . urlencode($page) .'&'. 
+						"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
+						"nohistory"
 				));
-				
-				$page = $pageInfo['pageName'];
 				
 				TikiLib::lib("parser")->parse_data($pageInfo['data']);
 				

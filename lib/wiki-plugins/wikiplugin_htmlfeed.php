@@ -29,14 +29,18 @@ function wikiplugin_htmlfeed($data, $params)
     static $feedhtmlFeedI = 0;
 	++$feedhtmlFeedI;
 	
-	$name = (!empty($name) ? $name : $page . $feedhtmlFeedI);
+	$params = array_merge(array(
+		"name" => "",
+	), $params);
+	
+	extract ($params,EXTR_SKIP);
 	
 	if ($caching == true) {
 		$htmlFeed = new HtmlFeed();
 		$data = TikiLib::lib("parser")->parse_data($data);
 		
 		$htmlFeedItem['description'] = $data;
-		$htmlFeedItem['name'] = $name;
+		$htmlFeedItem['name'] = (!empty($name) ? $name : $htmlFeedItem['name'] . ' ' . $feedhtmlFeedI);;
 		
 		$htmlFeed->addSimpleItem($htmlFeedItem);
 	}

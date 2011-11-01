@@ -114,8 +114,7 @@ function wikiplugin_htmlfeedlink($data, $params) {
 					.insertAfter(name)
 					.change(function() {
 						name.val($(this).val());
-					})
-					.change();
+					});
 				
 				var items = " . json_encode($htmlFeed->listItemNames()) . ";
 				
@@ -125,6 +124,7 @@ function wikiplugin_htmlfeedlink($data, $params) {
 						.text(items[i])
 						.appendTo(nameSelect);
 				}
+				nameSelect.val(name.val());
 			});
 			
 		$('.revision').click(function() {
