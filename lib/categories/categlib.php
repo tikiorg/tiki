@@ -529,6 +529,15 @@ class CategLib extends ObjectLib
 	function categorize_any( $type, $identifier, $categIds )
 	{
 		$catObjectId = $this->add_categorized_object($type, $identifier, NULL, NULL, NULL, TRUE);
+		
+		if ($type == 'trackeritem') {
+			// trackeritem categorization is more complicated than other objects
+			$ins_categs = (array) $categIds;
+			$trackerId = $this->items()->fetchOne('trackerId', array('itemId' => $identifier));
+			TikiLib::lib('trk')->categorized_item($trackerId, $itemId, "item $itemId", $ins_categs, array(), true);
+			return $catObjectId;
+		}
+		
 		if ($catObjectId === FALSE) {
 			return FALSE;
 		}

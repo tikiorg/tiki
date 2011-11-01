@@ -46,6 +46,7 @@ class Tiki_Profile_Installer
 	private static $typeMap = array(
 		'wiki_page' => 'wiki page',
 		'file_gallery' => 'fgal',
+		'tracker_item' => 'trackeritem',
 	);
 
 	private $userData = false;
