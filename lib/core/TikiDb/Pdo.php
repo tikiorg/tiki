@@ -100,7 +100,7 @@ class TikiDb_Pdo extends TikiDb
 
 	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
 	{
-		$result = $this->_query($query,$values, $numrows, $offset);
+		$result = $this->_query(&$query, $values, $numrows, $offset);
 		if (! is_array( $result ) ) {
 			if ($reporterrors) {
 				$this->handleQueryError($query, $values, $result);
