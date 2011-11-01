@@ -267,6 +267,10 @@ if (isset($_REQUEST['source_idx'])) {
 if (isset($_REQUEST['preview_idx'])) {
 	$preview = $history_versions[$_REQUEST['preview_idx']];
 } else {
+	if (isset($_REQUEST['preview_date'])) {
+		$_REQUEST['preview'] = (int)$histlib->get_version_by_time($page, $_REQUEST["preview_date"]);
+	}
+	
 	if (isset($_REQUEST['preview'])) {
 		$preview = (int)$_REQUEST["preview"];
 		if ($_REQUEST['preview'] > 0) {
@@ -428,6 +432,10 @@ if ($info["flag"] == 'L') {
 	$smarty->assign('lock', true);
 } else {
 	$smarty->assign('lock', false);
+}
+
+if (isset($_REQUEST['nohistory'])) {
+	$smarty->assign('noHistory', true);
 }
 
 ask_ticket('page-history');
