@@ -63,7 +63,7 @@ $needed_prefs = array(
 	'smarty_compilation' => 'modified',
 );
 // check that tiki_preferences is there
-if (empty($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numrows)) {
+if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	// smarty not initialised at this point to do a polite message, sadly
 	header('location: tiki-install.php');
 	exit;
