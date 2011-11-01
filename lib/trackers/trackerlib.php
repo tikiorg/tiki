@@ -985,6 +985,7 @@ class TrackerLib extends TikiLib
 				$nb_filtered_fields = count($filterfield);
 			}
 
+			$last = 0;
 			for ( $i = 0 ; $i < $nb_filtered_fields ; $i++ ) {
 				if ( is_array($filterfield) ) { //multiple filter on an exact value or a like value - each value can be simple or an array
 					$ff = $filterfield[$i];
@@ -998,8 +999,9 @@ class TrackerLib extends TikiLib
 					$linkfilter[] = array('filterfield' => $ff, 'exactvalue' => $ev, 'filtervalue' => $fv);
 					continue;
 				}
-				$j = ( $i > 0 ) ? '0' : '';
+				$j = ( $last > 0 ) ? '0' : '';
 				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
+				$last++;
 
 				if (is_array($ff['sqlsearch'])) {
 					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0,count($ff['sqlsearch']),'?')).')';
