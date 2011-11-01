@@ -89,7 +89,7 @@ class HtmlFeed
 		global $tikilib;
 		$cache = TikiLib::lib("cache")->getCached($this->siteName(), "htmlfeed");
 
-		//if ($cache) return $cache;
+		if ($cache) return $cache;
 		
 		$this->updateCache();
 		
