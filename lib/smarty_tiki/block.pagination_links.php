@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -36,7 +36,7 @@
  *      1 2 3 ... k-2 k-1 k k+1 k+2 ...  n-2 n-1 n
  *  - offset_arg: Name of the URL argument that contains the offset. Defaults to 'offset'.
  *	- zero_based_offset: Items addressed as zero-based (defaults to 'y'). If 'n' then "one based" offset used (1 to cant + 1)
- *		(jb tiki5: only fully tested without reloffset and step=1) 
+ *		(jb tiki5: only fully tested without reloffset and step=1)
  *	- show_numbers: Show/hide direct_pagination links, current and total numbers (Defaults to 'y')
  *  - _ajax : if set to 'n', will force disabling AJAX even if the ajax xajax feature is enabled (defaults to 'y')	AJAX_TODO
  *  - _onclick : to allow for custom onclick for link
@@ -205,7 +205,7 @@ function smarty_block_pagination_links($params, $url, $smarty, $repeat)
 				
 				$link = '<a class="'.$class.'" ';
 				if ($params['_ajax'] == 'y') {
-					// setting javascript offset variable if requested 
+					// setting javascript offset variable if requested
 					if (!empty($params['offset_jsvar'])) {
 						$params['_onclick'] = $params['offset_jsvar'] . "=$linkoffset;" . $params['_onclick'];
 					}
@@ -213,7 +213,7 @@ function smarty_block_pagination_links($params, $url, $smarty, $repeat)
 					$link .= smarty_block_ajax_href(
 						array('template' => $params['template'],
 							'htmlelement' => $params['htmlelement'],
-							'_ajax' => $params['_ajax'], 
+							'_ajax' => $params['_ajax'],
 							'_onclick' => $params['_onclick'],
 						),
 						$url,

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -34,7 +34,7 @@ function smarty_function_jscalendar($params, $smarty)
 		}
 		$datepicker_options = '{ altField: "#' . $params['id'] . '"';
 		if (!empty($params['goto'])) {
-			$datepicker_options .= ', onSelect: function(dateText, inst) { window.location="' . 
+			$datepicker_options .= ', onSelect: function(dateText, inst) { window.location="' .
 															$params['goto'] . '".replace("%s",$("#' . $params['id'] . '").val()/1000); }';
 		}
 		static $datepicker_options_common;

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -52,7 +52,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 define('COLUMN_MAXLEN', 64);
 /**
  * Smarty function for getting a metric. Syntax:
- * {metric 
+ * {metric
  * [sparkline|trend|table|toggle][=true]
  * [name="name from metrics_metric"
  * id="id from metrics_metric"] (one of name and id required)
@@ -73,13 +73,13 @@ define('COLUMN_MAXLEN', 64);
  * @param string html_before (optional) HTMl before table
  * @param string html_after (optional) HTML after table
  *
- * @param boolean sparkline defaults to false, specify "sparkline" 
+ * @param boolean sparkline defaults to false, specify "sparkline"
  * 		or "sparkline=true" to enable
- * @param boolean trend defaults to true, specify "sparkline" 
+ * @param boolean trend defaults to true, specify "sparkline"
  * 		or "sparkline=false" to disable
- * @param boolean table defaults to true, specify "table" 
+ * @param boolean table defaults to true, specify "table"
  * 		or "table=false" to disable
- * @param boolean toggle defaults to false, specify "toggle" 
+ * @param boolean toggle defaults to false, specify "toggle"
  * 		or "toggle=true" to enable
  * @return HTML formatted for metric
  */
@@ -98,7 +98,7 @@ function smarty_function_metric($params, $smarty)
     if (empty($id)) {
     	$id = $m[$name]['metric_id'];
     }
-    if (!isset($m[$name])) { 
+    if (!isset($m[$name])) {
     	return;
 	}
     if (empty($value)) {
@@ -116,8 +116,8 @@ function smarty_function_metric($params, $smarty)
     	$title = $name;
     }
     else {
-    	/** 
-    	 * inspired by drupal 6 check_plain 
+    	/**
+    	 * inspired by drupal 6 check_plain
     	 * at http://api.drupal.org/api/function/check_plain/6
     	 */
 		if (preg_match('/^./us', $title) == 1) {
@@ -131,7 +131,7 @@ function smarty_function_metric($params, $smarty)
 		$date_field = 'date_field';
 	}
 	else {
-    	/** 
+    	/**
     	 * strip ` and limit column length
     	 */
 		$date_field = preg_replace('/[`\/\\\<>"\']/','', $date_field);
@@ -162,7 +162,7 @@ function smarty_function_metric($params, $smarty)
     	$html_after = '';
     }
     // end of validate input
-    
+
     $out = ' <div class="metricbox"><div class="title">' . "\n";
     if ($sparkline == TRUE) {
     	$out .= ' <span class="inlinesparkline">' . "\n";

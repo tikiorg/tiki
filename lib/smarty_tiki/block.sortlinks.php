@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,13 +10,13 @@
  * @package Smarty
  * @subpackage plugins
  *
- * ------------------------------------------------------------- 
- * File: block.sortlinks.php 
+ * -------------------------------------------------------------
+ * File: block.sortlinks.php
  * Type: block
  * Name: sortlinks
  * Purpose: sort a list of options or links lines on the value of the line. Each line has the form <..>value</...>
- * inspiration : block repeat - Scott Matthewman <scott@matthewman.net> 
- * ------------------------------------------------------------- 
+ * inspiration : block repeat - Scott Matthewman <scott@matthewman.net>
+ * -------------------------------------------------------------
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -26,9 +26,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 
-function smarty_block_sortlinks($params, $content, $smarty) 
-{ 
-	if ($content) { 
+function smarty_block_sortlinks($params, $content, $smarty)
+{
+	if ($content) {
 		$links=preg_split("/\n/",$content);
 		$links2=array();
 		foreach ($links as $value) {
@@ -49,4 +49,4 @@ function smarty_block_sortlinks($params, $content, $smarty)
     	echo $value;
 		}
 	}
-} 
+}

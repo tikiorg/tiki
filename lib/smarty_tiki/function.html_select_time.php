@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -114,10 +114,10 @@ function smarty_function_html_select_time($params, $smarty)
 		} else {
 			$html_result .= '"' . $prefix . 'Hour"';
 		}
-		if (null !== $hour_extra){
+		if (null !== $hour_extra) {
 			$html_result .= ' ' . $hour_extra;
 		}
-		if (null !== $all_extra){
+		if (null !== $all_extra) {
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
@@ -151,10 +151,10 @@ function smarty_function_html_select_time($params, $smarty)
 		} else {
 			$html_result .= '"' . $prefix . 'Minute"';
 		}
-		if (null !== $minute_extra){
+		if (null !== $minute_extra) {
 			$html_result .= ' ' . $minute_extra;
 		}
-		if (null !== $all_extra){
+		if (null !== $all_extra) {
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
@@ -189,10 +189,10 @@ function smarty_function_html_select_time($params, $smarty)
 			$html_result .= '"' . $prefix . 'Second"';
 		}
 		
-		if (null !== $second_extra){
+		if (null !== $second_extra) {
 			$html_result .= ' ' . $second_extra;
 		}
-		if (null !== $all_extra){
+		if (null !== $all_extra) {
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
@@ -215,10 +215,10 @@ function smarty_function_html_select_time($params, $smarty)
 			$html_result .= '"' . $prefix . 'Meridian"';
 		}
 		
-		if (null !== $meridian_extra){
+		if (null !== $meridian_extra) {
 			$html_result .= ' ' . $meridian_extra;
 		}
-		if (null !== $all_extra){
+		if (null !== $all_extra) {
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";

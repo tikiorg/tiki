@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,55 +8,55 @@
 /**
  * Tree Table Smarty func - smarty_function_treetable()
  * Renders a tree table (for use with http://plugins.jquery.com/project/treeTable)
- * 
+ *
  * Params
- * 
+ *
  * _data	:	array of data rows	 - 	e.g . with perms for now
- * 
+ *
  * 	array(
  * 		array('permName'=>'tiki_p_admin_newsletters', 'permDesc' => 'Can admin newsletters', 'level' => 'admin', 'type' => 'newsletters' etc...),
  * 		array('permName'=>'tiki_p_blahblah', etc...),
  * 	...)
- * 
+ *
  * _columns	: array of columns and headers array('permName' => tra('Permission Name'), 'permDesc' => tra('Permission Description'), etc
  * 				or a string like: '"permName"="Permission Name", "permDesc"="Description", etc'
  * 				if undefined it tries to guess (?)
- * 
+ *
  * _valueColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the unique index
- * 
+ *
  * _sortColumn = ''			:	column to organise tree by (actually row key = e.g. 'type')
- * 
+ *
  * _sortColumnDelimiter = '':	if set (e.g. to ',') sorting will be nested accoding to this delimiter
  * 								e.g. if the _sortColumn value is 'gran-parent, parent, child' the 'child' section will be nested 3 levels deep
- * 
+ *
  * _checkbox = ''			: 	name of checkbox (auto-incrementing) - no checkboxes if not set
  * 								if comma delimited list (or array) then makes multiple checkboxes
- * 
+ *
  * _checkboxColumnIndex = 0	:	index (or name) of the col in the _data array above to use as the checkbox value
  * 								comma delimeted list (or array - of ints) for multiple checkboxes as set above
  * 								if set needs to match number of checkboxes defines in _checkbox (or if not set uses 0, 1, 2 etc)
- * 
+ *
  * _checkboxTitles = ''		:	Comma delimited list (or array) of header titles for checkboxes (optional, but needs to match number of checkboxes above)
- * 
+ *
  * _listFilter = 'y'		:	include dynamic text filter
- * 
+ *
  * _filterMinRows = 12		:	don't show filter box if less than this number of rows
- * 
+ *
  * _collapseMaxSections = 4 :	collapse tree sections of more than this number of sections showing on page load
- * 
+ *
  * class = 'treeTable'		:	class of the table - will add 'sortable' if feature_jquery_sortable = y
  * id = 'treetable1'		:	id of the table (auto-incrementing)
- * 
+ *
  * _rowClasses = array('odd','even')	:	classes to cycle through for rows (tr's and td's)
  * 											can be a string for same class on each row
  * 											or empty string for not
- * 
+ *
  * _columnsContainHtml = 'n':	Column data gets html encoded (by default)
- * 
+ *
  * _emptyDataMessage = tra('No rows found')	: message if there are no rows
- * 
+ *
  * _openall					: show folder button to open all areas (y/n default=n)
- * 
+ *
  * _showSelected			: checkbox to show only selected (y/n default=n)
  */
 
@@ -123,7 +123,7 @@ function smarty_function_treetable($params, $smarty)
 	$_filterMinRows = empty($_filterMinRows) ? 12 : $_filterMinRows;
 	$_collapseMaxSections = empty($_collapseMaxSections) ? 4 : $_collapseMaxSections;
 	
-	$_rowClasses = !isset($_rowClasses) ? array('odd', 'even') : 
+	$_rowClasses = !isset($_rowClasses) ? array('odd', 'even') :
 		(is_array($_rowClasses) ? $_rowClasses : array($_rowClasses));
 	
 	if (!empty($_rowClasses)) {
@@ -333,7 +333,9 @@ $("#'.$id.'_showSelected").click( function () {
 		if ($rowCounter > -1) {
 			$rowClass = $_rowClasses[$rowCounter].$childRowClass;
 			$rowCounter++;
-			if ($rowCounter >= count($_rowClasses)) { $rowCounter = 0; }
+			if ($rowCounter >= count($_rowClasses)) {
+				$rowCounter = 0;
+			}
 		} else {
 			$rowClass = $childRowClass;
 		}

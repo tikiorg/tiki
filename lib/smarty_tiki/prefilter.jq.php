@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Prefilter {jq} contents - replace {{ with {literal} etc
  * @param $source from smarty (raw)
  * @return unknown_type
- * 
+ *
  * Doesn't check $prefs['feature_jquery'] here as prefilter only loaded if enabled (in lib/setup/javascript.php)
  */
 

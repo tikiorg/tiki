@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@
  * params: name (optional but unique per page if set)
  * params: toggle=y on n default
  *
- * usage: 
+ * usage:
  * \code
  *	{tabset name='tabs}
  * 		{tab name='tab1'}tab content{/tab}
@@ -39,7 +39,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		$params['toggle'] = 'n';
 	}
 	if ( $repeat ) {
-		// opening 
+		// opening
 		if (!is_array($smarty_tabset)) {
 			$smarty_tabset = array();
 		}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -207,18 +207,18 @@ function smarty_function_html_select_date($params, $smarty)
         }
 
         $month_result .= '<select name=';
-        if (null !== $field_array){
+        if (null !== $field_array) {
             $month_result .= '"' . $field_array . '[' . $prefix . 'Month]"';
         } else {
             $month_result .= '"' . $prefix . 'Month"';
         }
-        if (null !== $month_size){
+        if (null !== $month_size) {
             $month_result .= ' size="' . $month_size . '"';
         }
-        if (null !== $month_extra){
+        if (null !== $month_extra) {
             $month_result .= ' ' . $month_extra;
         }
-        if (null !== $all_extra){
+        if (null !== $all_extra) {
             $month_result .= ' ' . $all_extra;
         }
         $month_result .= $extra_attrs . '>'."\n";
@@ -244,18 +244,18 @@ function smarty_function_html_select_date($params, $smarty)
         }
 
         $day_result .= '<select name=';
-        if (null !== $field_array){
+        if (null !== $field_array) {
             $day_result .= '"' . $field_array . '[' . $prefix . 'Day]"';
         } else {
             $day_result .= '"' . $prefix . 'Day"';
         }
-        if (null !== $day_size){
+        if (null !== $day_size) {
             $day_result .= ' size="' . $day_size . '"';
         }
-        if (null !== $all_extra){
+        if (null !== $all_extra) {
             $day_result .= ' ' . $all_extra;
         }
-        if (null !== $day_extra){
+        if (null !== $day_extra) {
             $day_result .= ' ' . $day_extra;
         }
         $day_result .= $extra_attrs . '>'."\n";
@@ -269,17 +269,17 @@ function smarty_function_html_select_date($params, $smarty)
 
     if ($display_years) {
     	$field_separator_count++;
-        if (null !== $field_array){
+        if (null !== $field_array) {
             $year_name = $field_array . '[' . $prefix . 'Year]';
         } else {
             $year_name = $prefix . 'Year';
         }
         if ($year_as_text) {
             $year_result .= '<input type="text" name="' . $year_name . '" value="' . $time[0] . '" size="4" maxlength="4"';
-            if (null !== $all_extra){
+            if (null !== $all_extra) {
                 $year_result .= ' ' . $all_extra;
             }
-            if (null !== $year_extra){
+            if (null !== $year_extra) {
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= ' />';
@@ -296,13 +296,13 @@ function smarty_function_html_select_date($params, $smarty)
                 array_unshift($yearvals, '');
             }
             $year_result .= '<select name="' . $year_name . '"';
-            if (null !== $year_size){
+            if (null !== $year_size) {
                 $year_result .= ' size="' . $year_size . '"';
             }
-            if (null !== $all_extra){
+            if (null !== $all_extra) {
                 $year_result .= ' ' . $all_extra;
             }
-            if (null !== $year_extra){
+            if (null !== $year_extra) {
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= $extra_attrs . '>'."\n";

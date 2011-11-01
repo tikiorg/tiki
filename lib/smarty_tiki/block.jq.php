@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,20 +16,20 @@
  * Defaults to execute on DOM ready
  * The content script is automatically escaped with {literal}{/literal} unless the tag is already in there.
  * To "unescape" back to smarty synax use {{ to start, and }} to stop. See examples below.
- * 
+ *
  * Usage:
  *    {jq [notonready=false|true], [nojquery='Optional markup for when feature_jquery is off']}
  *        $("#exampleId").hide()
  *    {/jq}
- * 
+ *
  * Examples:
- * 
+ *
  *  Simple, no escaping - result wrapped in {literal}{/literal}
  *    {jq}$(#exampleId").click(function() { alert("Clicked!"); });{/jq}
- * 
+ *
  *  Smarty markup between {{ and }} - result parsed and wrapped in literals
  *    {jq}$(#exampleId").show({{if $animation_fast eq 'y'}"fast"{else}"slow"{/if}}){/jq}
- * 
+ *
  *  Escaped already - not re-parsed, not wrapped in literals
  *    {jq}{literal}$(#exampleId").show({/literal}{if $animation_fast eq 'y'}"fast"{else}"slow"{/if}){/jq}
  */

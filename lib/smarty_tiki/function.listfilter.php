@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,9 +13,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 /**
  * \brief JQuery Smarty function to filter list of results (by default table)
- * 
+ *
  * Params
- * 
+ *
  * @id				id of the input field
  * @size			size of the input field
  * @maxlength		max length of the input field in characters
@@ -26,7 +26,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * @query			key/field name for presetting filter box value from the URL
  * 						e.g. tiki-admin.php?page=textarea&filter=blog
  * 						(default="textFilter" - set to an empty string to disable)
- * 
+ *
  * Mainly for treetable lists...
  * @parentSelector	CSS (jQuery) selector(s) for parent nodes of what to filter
  * @childPrefix = 'child-of-'	prefix for child class (to hide parent if all children are hidden by the filter)

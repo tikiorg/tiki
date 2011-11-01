@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -33,11 +33,11 @@ function smarty_function_gallery($params, $smarty)
     if (!isset($hidelink) || $hidelink !=1) {
         print('</a>');
     }
-    if (!isset($hideimgname) || $hideimgname !=1)  {  
+    if (!isset($hideimgname) || $hideimgname !=1)  {
     	  print('<br /><b>'.$img['name'].'</b>');
     }
     if (isset($showgalleryname) && $showgalleryname == 1) {
         print('<br /><small>'.tra("Gallery").': <a href="tiki-browse_gallery.php?galleryId='.$img['galleryId'].'">'.$img['gallery'].'</a></small>');
-    } 
+    }
     print('</div>');
-}    
+}

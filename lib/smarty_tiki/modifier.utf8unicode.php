@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -25,7 +25,7 @@ function smarty_modifier_utf8unicode($utf8_text)
             $outputval = $chval;    // Since 7-bit ASCII is unaffected, the output equals the input
         } else {
             for($i=5; $i>0; $i--) {
-                if ( ($chval >> $i) == ( (pow(2 , (8-$i))) -2) ) {
+                if ( ($chval >> $i) == ( (pow(2, (8-$i))) -2) ) {
                     $bytes = 7-$i;
                     $outputval = $chval & ((2^$i)-1);
                 }
@@ -46,13 +46,13 @@ function smarty_modifier_utf8unicode($utf8_text)
     }
 
     $htmloutput = "";
- 
+
     foreach( $output as  $unistr ) {
         if ($bytes < 3) {
-            $htmloutput .=  "&#". str_pad($unistr, 3, "0", STR_PAD_LEFT) . ';'; 
+            $htmloutput .=  "&#". str_pad($unistr, 3, "0", STR_PAD_LEFT) . ';';
         } else {
-            $htmloutput .=  "&#". $unistr . ';'; 
+            $htmloutput .=  "&#". $unistr . ';';
         }
     }
-    return $htmloutput; 
+    return $htmloutput;
 }

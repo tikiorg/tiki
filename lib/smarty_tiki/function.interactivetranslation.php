@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -21,9 +21,9 @@ function smarty_function_interactivetranslation($params, $smarty)
 		return;
 	}
 
-	usort( $strings, 'sort_strings_by_length' );
+	usort($strings, 'sort_strings_by_length');
 
-	$strings = json_encode( $strings );
+	$strings = json_encode($strings);
 	
 	// add wrench icon link
 	$smarty->loadPlugin('smarty_block_self_link');
@@ -45,8 +45,8 @@ JS;
 
 function sort_strings_by_length( $a, $b )
 {
-	$a = strlen( $a[1] );
-	$b = strlen( $b[1] );
+	$a = strlen($a[1]);
+	$b = strlen($b[1]);
 
 	if ( $a == $b ) {
 		return 0;

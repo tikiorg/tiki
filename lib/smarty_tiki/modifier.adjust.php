@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,14 +17,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Type:     modifier
  * Name:     adjust
  * Purpose:  Adjust a string to a certain length if necessary,
- *           optionally splitting in the middle of a word, and 
+ *           optionally splitting in the middle of a word, and
  *           appending the $etc string or padding the string
  *			 using $pad as filler.
  * -------------------------------------------------------------
  */
 function smarty_modifier_adjust($string,
-																$length = 80, 
-																$pad = '&nbsp;', 
+																$length = 80,
+																$pad = '&nbsp;',
 																$etc = '...',
                                 $break_words = false
 																)
@@ -45,5 +45,5 @@ function smarty_modifier_adjust($string,
     } else {
     	return $string;
     }
-     
+
 }
