@@ -245,12 +245,13 @@ class CategLib extends ObjectLib
 
 		global $cachelib;
 		$cachelib->empty_type_cache("allcategs");
+		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			global $objectlib; include_once('lib/objectlib.php');
-			$info = $objectlib->get_object_via_objectid($catObjectId);
 			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId");
 		}
+		require_once 'lib/search/refresh-functions.php';
+		refresh_index($info['type'], $info['itemId']);
 	}
 
 	function uncategorize($catObjectId, $categId) {
@@ -260,12 +261,13 @@ class CategLib extends ObjectLib
 
 		global $cachelib;
 		$cachelib->empty_type_cache("allcategs");
+		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			global $objectlib; include_once('lib/objectlib/php');
-			$info = $objectlib->get_object_via_objectid($catObjectId);
 			$logslib->add_action('Uncategorized', $info['itemId'], $info['type'], "categId=$categId");
 		}
+		require_once 'lib/search/refresh-functions.php';
+		refresh_index($info['type'], $info['itemId']);
 	}
 
 	// WARNING: This may not do what you would think from the name.
