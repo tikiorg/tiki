@@ -1,6 +1,6 @@
 {if $tracker_input.trackerId}
 {tikimodule error=$module_params.error title=$tpl_module_title name="tracker_input" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}">
+	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}">
 		{foreach from=$tracker_input.textInput key=token item=label}
 			<label>
 				{$label|escape}
@@ -19,20 +19,64 @@
 	</form>
 
 	{jq}
+	function hasEmptyField(form, scope) {
+		var hasEmpty = false;
+		$(scope, form).each(function () {
+			if ($(this).val() === '') {
+				hasEmpty = true;
+			}
+		});
+
+		return hasEmpty;
+	}
 	$('.mod-tracker-input').removeClass('mod-tracker-input').submit(function () {
 		var form = this;
+		if (hasEmptyField(form, ':text, :hidden')) {
+			return false;
+		}
+
 		$(this).serviceDialog({
 			title: $(':submit', form).val(),
-			data: $(form).serialize()
+			data: $(form).serialize(),
+			success: function () {
+				$(form).trigger('insert');
+			}
 		});
 		return false;
 	}).each(function () {
-		var form = this, location = '{{$tracker_input.location}}';
+		var form = this, location = $(this).data('location');
 
 		if (location ) {
+			$(':submit', form).hide();
 			setTimeout(function () {
-				$(form).closest('.tab, #appframe, body').find('.map-container').setupMapSelection({
-					field: $('#' + location)
+				var control, button;
+				control = $(form).closest('.tab, #appframe, body').find('.map-container').setupMapSelection({
+					field: $('#' + location),
+					click: function () {
+						$(form).submit();
+					}
+				});
+				control.deactivate();
+
+				button = $('<input type="submit"/>')
+					.val('{tr}Add Marker{/tr}')
+					.button()
+					.click(function () {
+						control.activate();
+						return false;
+					})
+					.appendTo(form);
+
+				$(':text', form).keyup(function (e) {
+					button.button(hasEmptyField(form, ':text') ? 'disable' : 'enable');
+
+					if (e.which === 13) {
+						button.click();
+					}
+				}).keyup();
+
+				$(form).bind('insert', function () {
+					control.deactivate();
 				});
 			}, 500);
 		}
