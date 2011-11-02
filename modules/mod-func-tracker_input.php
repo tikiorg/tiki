@@ -42,10 +42,17 @@ function module_tracker_input_info()
 
 function module_tracker_input( $mod_reference, $module_params )
 {
+	$smarty = TikiLib::lib('smarty');
 	$trackerId = $module_params['trackerId'];
 	$itemObject = Tracker_Item::newItem($trackerId);
 
 	if (! $itemObject->canModify()) {
+		$smarty->assign('tracker_input', array(
+			'trackerId' => 0,
+			'textInput' => array(),
+			'hiddenInput' => array(),
+			'location' => null,
+		));
 		return;
 	}
 
@@ -70,7 +77,6 @@ function module_tracker_input( $mod_reference, $module_params )
 		$hidden[$p[1]] = $p[2];
 	}
 
-	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('tracker_input', array(
 		'trackerId' => $trackerId,
 		'textInput' => $text,

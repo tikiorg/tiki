@@ -125,8 +125,14 @@ class Tracker_Item
 
 	private function getTrackerPermissions()
 	{
-		$trackerId = $this->definition->getConfiguration('trackerId');
-		return Perms::get('tracker', $trackerId);
+		if ($this->definition) {
+			$trackerId = $this->definition->getConfiguration('trackerId');
+			return Perms::get('tracker', $trackerId);
+		}
+
+		$accessor = new Perms_Accessor;
+		$accessor->setResolver(new Perms_Resolver_Default(false));
+		return $accessor;
 	}
 
 	private function getItemPermissions()
