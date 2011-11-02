@@ -407,7 +407,7 @@ class EditLib
 			}
 				
 			// process the tag and update the output
-			$this->processWikiTag('a', &$src, &$p, $link_open, $link_close, true); 				
+			$this->processWikiTag('a', $src, $p, $link_open, $link_close, true); 				
 			$src .= $link;
 		}
 	}
