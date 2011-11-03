@@ -1460,7 +1460,7 @@ class TrackerLib extends TikiLib
 						if (!empty($opts[2])) {
 							$IP = $this->get_ip_address();
 							$info = $this->get_page_info($opts[2]);
-							$this->create_page($array['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+							$this->create_page($array['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyg'], $info['wiki_authors_style']);
 						}
 					}
 				}
@@ -4136,7 +4136,7 @@ class TrackerLib extends TikiLib
 				if (!$this->page_exists($value)) {
 					$IP = $this->get_ip_address();
 					$info = $this->get_page_info($field['options'][2]);
-					$tikilib->create_page($value, 0, $info['data'], $tikilib->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+					$tikilib->create_page($value, 0, $info['data'], $tikilib->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyg'], $info['wiki_authors_style']);
 				}
 			}
 		}

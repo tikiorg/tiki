@@ -56,7 +56,7 @@ function smarty_block_title($params, $content, $template, $repeat)
 	}
 
 	$html = '<h1>';
-	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . htmlspecialchars($content) . "</a>\n";
+	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . htmlspecialchars($params['url'], ENT_QUOTES) . '">' . htmlspecialchars($content) . "</a>\n";
 
 	if ($template->getTemplateVars('print_page') != 'y') {
 		if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {

@@ -63,7 +63,7 @@ $needed_prefs = array(
 	'smarty_compilation' => 'modified',
 );
 // check that tiki_preferences is there
-if (empty($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numrows)) {
+if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	// smarty not initialised at this point to do a polite message, sadly
 	header('location: tiki-install.php');
 	exit;
@@ -548,17 +548,19 @@ if ($tiki_p_trust_input != 'y') {
 }
 
 if ( isset($prefs['tiki_check_file_content']) && $prefs['tiki_check_file_content'] == 'y' && count($_FILES)) {
-	if ($finfo = new finfo(FILEINFO_MIME_TYPE)) {
-
+	$php53 = defined('FILEINFO_MIME_TYPE');
+	if ($finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME)) {
 		foreach ($_FILES as $key => & $upload_file_info) {
 			if (is_array($upload_file_info['tmp_name'])) {
 				foreach ($upload_file_info['tmp_name'] as $k => $tmp_name) {
 					if ($tmp_name) {
-						$upload_file_info['type'][$k] = $finfo->file($tmp_name);
+						$type = $finfo->file($tmp_name);
+						$upload_file_info['type'][$k] = $php53 ? $type : reset(explode(';', $type));
 					}
 				}
 			} elseif ($upload_file_info['tmp_name']) {
-				$upload_file_info['type'] = $finfo->file($upload_file_info['tmp_name']);
+				$type = $finfo->file($upload_file_info['tmp_name']);
+				$upload_file_info['type'] = $php53 ? $type : reset(explode(';', $type));
 			}
 		}
 	}

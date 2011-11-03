@@ -16,15 +16,20 @@ include_once('lib/mime/mimetypes.php');
 // returns mimetypes of files
 function tiki_get_mime($filename, $fallback = '', $fileRealPath = '') {
 	// Check if extension pecl/fileinfo is usable.
-	if ( class_exists('fInfo') )	{
-		$fInfo = new fInfo( FILEINFO_MIME_TYPE );
+	if ( class_exists('finfo') )	{
+		$php53 = defined('FILEINFO_MIME_TYPE');
+		$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
 		$mime = null;
 
 		if ( ! empty( $fileRealPath ) ) {
-                        $mime = $fInfo->file( $fileRealPath );
-                } elseif ( file_exists( $filename ) ) {
-                        $mime = $fInfo->file( $filename );
-                }
+			$mime = $finfo->file( $fileRealPath );
+		} elseif ( file_exists( $filename ) ) {
+			$mime = $finfo->file( $filename );
+		}
+
+		if (! $php53) {
+			$mime = reset(explode(';', $mime));
+		}
 
 		// The documentation tells to do this, but it does not work with a
 		// current version of pecl/fileinfo
@@ -32,18 +37,18 @@ function tiki_get_mime($filename, $fallback = '', $fileRealPath = '') {
 		return $mime;
 	}
 
-        if ( function_exists('mime_content_type') ) {
-                // notice: this is the better way.
-                // Compile php with  --enable-mime-magic  to be able to use this.
+	if ( function_exists('mime_content_type') ) {
+		// notice: this is the better way.
+		// Compile php with  --enable-mime-magic  to be able to use this.
 
-                if ( ! empty( $fileRealPath ) ) {
-                        return mime_content_type( $fileRealPath );
-                } elseif ( file_exists( $filename ) ) {
-                        return mime_content_type( $filename );
-                }
-        }
+		if ( ! empty( $fileRealPath ) ) {
+				return mime_content_type( $fileRealPath );
+		} elseif ( file_exists( $filename ) ) {
+				return mime_content_type( $filename );
+		}
+	}
 
-        return tiki_get_mime_from_extension($filename, $fallback);
+	return tiki_get_mime_from_extension($filename, $fallback);
 }
 
 function tiki_get_mime_from_extension($filename, $fallback = '') {
@@ -80,9 +85,15 @@ function tiki_get_mime_from_extension($filename, $fallback = '') {
 // try to get mime type from data
 function tiki_get_mime_from_content($content, $fallback = '', $filename = '') {
 	// Check if extension pecl/fileinfo is usable.
-	if ( class_exists('fInfo') )	{
-		$fInfo = new fInfo( FILEINFO_MIME_TYPE );
-		$mime = $fInfo->buffer( $content );
+	if ( class_exists('finfo') )	{
+		$php53 = defined('FILEINFO_MIME_TYPE');
+		$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
+		$mime = $finfo->buffer( $content );
+
+		if (! $php53) {
+			$mime = reset(explode(';', $mime));
+		}
+
 		// The documentation tells to do this, but it does not work with a
 		// current version of pecl/fileinfo
 		//$fInfo->close();
