@@ -4882,7 +4882,11 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $tikiroot;
 
-		$base = $this->httpPrefix() . $tikiroot . $relative;
+		if (preg_match('/^http(s?):/', $relative)) {
+			$base = $relative;
+		} else {
+			$base = $this->httpPrefix() . $tikiroot . $relative;
+		}
 
 		if ( count($args) ) {
 			$base .= '?';

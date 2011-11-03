@@ -191,6 +191,15 @@ class Tracker_Definition
 		}
 	}
 
+	function getIconField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'icon') {
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getWriterGroupField()
 	{
 		foreach ($this->getFields() as $field) {

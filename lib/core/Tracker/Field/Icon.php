@@ -102,5 +102,22 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 	function watchCompare($old, $new)
 	{
 	}
+
+	public static function updateIcon($args)
+	{
+		$definition = Tracker_Definition::get($args['trackerId']);
+
+		if ($fieldId = $definition->getIconField()) {
+			$value = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
+
+			if (! empty($value)) {
+				$tikilib = TikiLib::lib('tiki');
+				$value = $tikilib->tikiUrl($value);
+			}
+
+			$attributelib = TikiLib::lib('attribute');
+			$attributelib->set_attribute($args['type'], $args['object'], 'tiki.icon.src', $value);
+		}
+	}
 }
 

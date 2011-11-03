@@ -369,6 +369,34 @@ class ObjectLib extends TikiLib
 			// 'events' => ?,
 		);
 	}
+
+	function get_metadata($type, $object, & $classList)
+	{
+		require_once 'lib/smarty_tiki/modifier.escape.php';
+
+		$escapedType = smarty_modifier_escape($type);
+		$escapedObject = smarty_modifier_escape($object);
+		$metadata = ' data-type="' . $escapedType . '" data-object="' . $escapedObject . '"';
+
+		if ($coordinates = TikiLib::lib('geo')->get_coordinates($type, $object)) {
+			$classList[] = 'geolocated';
+			$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
+			
+			if (isset($coordinates['zoom'])) {
+				$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";
+			}
+		}
+
+		$attributelib = TikiLib::lib('attribute');
+		$attributes = $attributelib->get_attributes($type, $object);
+
+		if (isset($attributes['tiki.icon.src'])) {
+			$escapedIcon = smarty_modifier_escape($attributes['tiki.icon.src']);
+			$metadata .= " data-icon-src=\"$escapedIcon\"";
+		}
+
+		return $metadata;
+	}
 }
 global $objectlib;
 $objectlib = new ObjectLib;

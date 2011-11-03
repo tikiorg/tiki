@@ -52,6 +52,10 @@ if ($prefs['feature_trackers'] == 'y') {
 		$events->bind('tiki.trackeritem.save', array('Tracker_Field_Language', 'update_language'));
 	}
 
+	if ($prefs['trackerfield_icon'] == 'y') {
+		$events->bind('tiki.trackeritem.save', array('Tracker_Field_Icon', 'updateIcon'));
+	}
+
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'update_tracker_summary'));
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'invalidate_item_cache'));
 }

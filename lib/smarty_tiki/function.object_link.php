@@ -86,30 +86,22 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $object, $type ) );
 	}
 
-	$class = '';
-	$escapedType = smarty_modifier_escape($type);
-	$escapedObject = smarty_modifier_escape($object);
-	$metadata = ' data-type="' . $escapedType . '" data-object="' . $escapedObject . '"';
-
-	if ($coordinates = TikiLib::lib('geo')->get_coordinates($type, $object)) {
-		$class = ' class="geolocated"';
-		$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
-		
-		if (isset($coordinates['zoom'])) {
-			$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";
-		}
-	}
+	$classList = array();
 	
 	if ( $type == "blog post" ) {
-		$class = ' class="link"';
+		$classList[] = "link";
 	} elseif ( $type == "freetag" ) {
-		$class = ' class="freetag"';
+		$classList[] = 'freetag';
 	}
+
+	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList)
+	$class = ' class="' . implode(' ', $classList) . '"';
 
 	$html = '<a href="' . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
 
 	$attributelib = TikiLib::lib('attribute');
 	$attributes = $attributelib->get_attributes($type, $object);
+
 	global $prefs;
 	if (isset($attributes['tiki.content.source']) && $prefs['fgal_source_show_refresh'] == 'y') {
 		require_once 'lib/smarty_tiki/function.icon.php';
