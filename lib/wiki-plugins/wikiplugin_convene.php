@@ -10,7 +10,7 @@ function wikiplugin_convene_info() {
 		'name' => tra('Convene'),
 		'documentation' => 'PluginConvene',
 		'description' => tra('Convene an event with schedule and members'),
-		'prefs' => array('wikiplugin_convene'),
+		'prefs' => array('wikiplugin_convene','feature_calendar'),
 		'body' => tra('Convene Data'),
 		'icon' => 'pics/icons/arrow_in.png',
 		'filter' => 'rawhtml_unsafe',
@@ -26,7 +26,8 @@ function wikiplugin_convene_info() {
 }
 
 function wikiplugin_convene($data, $params) {
-	global $tikilib, $headerlib, $page, $caching;
+	global $tikilib, $headerlib, $page, $caching, $tiki_p_edit;
+
 	static $htmlFeedLinkI = 0;
 	++$conveneI;
 	$i = $conveneI;
@@ -94,7 +95,9 @@ function wikiplugin_convene($data, $params) {
 	//start date header
 	$dateHeader = "";
 	foreach($votes as $stamp => $totals) {
-		$dateHeader .= "<td>". $tikilib->get_short_datetime($stamp) ." <img src='pics/icons/delete.png' class='conveneDeleteDate$i' data-date='$stamp' /></td>";
+		$dateHeader .= "<td>". $tikilib->get_long_datetime($stamp) .
+			($tiki_p_edit == 'y' ? " <img src='pics/icons/delete.png' class='conveneDeleteDate$i icon' data-date='$stamp' />" : "").
+		"</td>";
 	}
 	$result .= <<<JQ
 		<tr>
@@ -109,7 +112,7 @@ JQ;
 	$userList = "";
 	foreach($rows as $user => $row) {
 		$userList .= "<tr class='conveneUserVotes$i'>";
-		$userList .= "<td><img src='pics/icons/pencil.png' class='conveneUpdateUser$i' />" . $user . "</td>";
+		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<img src='pics/icons/pencil.png' class='conveneUpdateUser$i icon' />" : "") . $user . "</td>";
 		foreach($row as $stamp => $vote) {
 			$class = 	($vote == 1 ? 'ui-state-highlight' : 'ui-state-error');
 			$text = 	($vote  == 1 ? tr("OK") : "" );
@@ -120,33 +123,34 @@ JQ;
 		}
 		$userList .= "</tr>";
 	}
-	$result .= <<<JQ
-		$userList
-JQ;
+	$result .= $userList;
 	//end user list and votes
 	
 	
 	//start add new user and votes
-	$result .= <<<JQ
+	$result .= "
 		<tr>
-			<td>
-				<img src='pics/icons/user.png' id='conveneAddUser$i' title='Add User' />
-				<img src='pics/icons/calendar_add.png' id='conveneAddDate$i' title='Add Date' />
-			</td>
-JQ;
+			<td>".
+				($tiki_p_edit == 'y' ? "<img src='pics/icons/user.png' id='conveneAddUser$i' class='icon' title='Add User' />" : "") .
+				($tiki_p_edit == 'y' ? "<img src='pics/icons/calendar_add.png' id='conveneAddDate$i' class='icon' title='Add Date' />" : "") .
+			"</td>";
 	//end add new user and votes
 	
 	
 	//start last row with auto selected date(s)
 	$lastRow = "";
 	foreach($votes as $stamp => $total) {
-		$pic = ($total == $votes[$topVoteStamp] ? "<a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=1'><img src='pics/icons/tick.png' /><img src='pics/icons/calendar_add.png' /></a>" : '');
+		$pic = "";
+		if ($total == $votes[$topVoteStamp]) {
+			$pic .= "<img src='pics/icons/tick.png' class='icon' />";
+			if ($tiki_p_edit == 'y') {
+				$pic .= "<a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=1'><img src='pics/icons/calendar_add.png' class='icon' /></a>";
+			}
+		}
+		
 		$lastRow .= "<td>". $total ."&nbsp;$pic</td>";
 	}
-	$result .= <<<JQ
-			$lastRow
-		</tr>
-JQ;
+	$result .= $lastRow . "</tr>";
 	//end last row with auto selected date(s)
 	
 	
@@ -267,7 +271,7 @@ FORM;
 						'Date/Time: <input style="width: 100px;" class="conveneNewDatetime" />' +
 					'</td>' +
 					'<td style="vertical-align: middle;">' +
-						'<img src="pics/icons/add.png" />' +
+						'<img src="pics/icons/add.png" class="icon" />' +
 					'</td>' +
 				'</tr>' +
 			'</table>').appendTo(this);
@@ -335,6 +339,8 @@ FORM;
 					}
 				})
 		});
+		
+		$('#pluginConvene$i .icon').css('cursor', 'pointer');
 JQ
 );
 	
