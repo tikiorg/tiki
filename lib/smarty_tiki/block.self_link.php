@@ -111,7 +111,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 							false
 						);
 				} else {
-					$ret = 'href="'.$ret.'"';
+					$ret = 'href="' . htmlspecialchars($ret, ENT_QUOTES) . '"';
 				}
 			}
 
