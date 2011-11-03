@@ -29,7 +29,7 @@ function smarty_modifier_avatarize($user)
 	include_once('tiki-sefurl.php');
 	$url = "tiki-user_information.php?userId=$id";
 	$url = filter_out_sefurl($url);	
-  	$avatar = "<a title=\"" . htmlspecialchars($user, ENT_NOQUOTES) . "\" href=\"$url\">".$avatar.'</a>';
+  	$avatar = "<a title=\"" . htmlspecialchars($user, ENT_QUOTES) . "\" href=\"$url\">".$avatar.'</a>';
   } 
   return $avatar;	
 }
