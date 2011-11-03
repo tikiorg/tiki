@@ -742,7 +742,7 @@ function parse_copyrights() {
 	return $return;
 }
 
-function get_contributors_data($path, &$contributors, $minRevision, $maxRevision, $step = 5000) {
+function get_contributors_data($path, &$contributors, $minRevision, $maxRevision, $step = 15000) {
 	global $nbCommiters;
 
 	if ( empty($contributors) ) {
