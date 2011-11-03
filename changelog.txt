@@ -25,6 +25,68 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 7.3
+<http://tiki.org/ReleaseNotes73>
+------------------
+
+----------------------------------------------
+r38640 | chealer | 2011-11-03 07:21:10 +0100 (Thu, 03 Nov 2011) | 1 line
+
+[bp/r38639][FIX] HTML special characters encoding
+----------------------------------------------
+r38591 | xavidp | 2011-10-31 13:21:37 +0100 (Mon, 31 Oct 2011) | 1 line
+
+[bp/r38590][FIX]Allow showing scroll bars automagically when plugin code with no line wrapping and restricted width applied (by a higher level div plugin call limiting that width).
+----------------------------------------------
+r38532 | xavidp | 2011-10-28 17:31:19 +0200 (Fri, 28 Oct 2011) | 1 line
+
+[bp/r38531][FIX]Usability fix for common tasks by an admin.
+----------------------------------------------
+r38427 | sampaioprimo | 2011-10-21 20:48:08 +0200 (Fri, 21 Oct 2011) | 2 lines
+
+backporting pt-br translations from trunk
+
+----------------------------------------------
+r38381 | sylvieg | 2011-10-19 13:24:41 +0200 (Wed, 19 Oct 2011) | 1 line
+
+[bp/r38380][FIX]fgal: typo in perm name
+----------------------------------------------
+r38332 | sampaioprimo | 2011-10-17 18:42:23 +0200 (Mon, 17 Oct 2011) | 2 lines
+
+[bp/r38331][FIX] wrong if condition to generate canonial url was always evaluating to true
+
+----------------------------------------------
+r38281 | xavidp | 2011-10-14 17:56:48 +0200 (Fri, 14 Oct 2011) | 1 line
+
+[bp/r38279][FIX]Fix the sorting to avoid separating upper case from lower case in the first letter
+----------------------------------------------
+r38143 | xavidp | 2011-10-10 23:24:03 +0200 (Mon, 10 Oct 2011) | 1 line
+
+a few js strings translated (and probably used also in tiki7, even if it was difficult to know for sure, since they were not in the corresponding ./lang/en/language.js)
+----------------------------------------------
+r38139 | xavidp | 2011-10-10 23:05:33 +0200 (Mon, 10 Oct 2011) | 1 line
+
+Daily reports and a few other strings translated
+----------------------------------------------
+r37908 | sampaioprimo | 2011-10-03 16:39:06 +0200 (Mon, 03 Oct 2011) | 2 lines
+
+merging translations from 6.x
+
+----------------------------------------------
+r37907 | sampaioprimo | 2011-10-03 16:37:27 +0200 (Mon, 03 Oct 2011) | 2 lines
+
+updating with get_strings.php
+
+----------------------------------------------
+r37890 | nkoth | 2011-10-02 23:25:46 +0200 (Sun, 02 Oct 2011) | 1 line
+
+[bp/r37889][FIX] When archive comments feature is on, comments and forum replies not appearing because erroneously considered archived from the start
+----------------------------------------------
+r37832 | sampaioprimo | 2011-09-30 22:05:27 +0200 (Fri, 30 Sep 2011) | 2 lines
+
+[bp/37828][ENH] new preference to make daily reports the default option for new users (at Xavi's request)
+
+----------------------------------------------
 Version 7.2
 <http://tiki.org/ReleaseNotes72>
 ------------------
