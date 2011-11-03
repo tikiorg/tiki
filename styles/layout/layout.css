@@ -1118,6 +1118,11 @@ ul.floatleft li {
 	cursor: pointer;
 }
 
+/* timesheet plugin */
+#jtrack-holder {
+    width: auto;
+}
+
 /** Wiki tocs **/
 .tocnav {
 	margin-bottom: 4px;
