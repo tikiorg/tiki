@@ -23,6 +23,11 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 						'description' => tr('File gallery to upload new files into.'),
 						'filter' => 'int',
 					),
+					'default' => array(
+						'name' => tr('Default image'),
+						'description' => tr('Path to the default icon used.'),
+						'filter' => 'url',
+					),
 				),
 			),
 		);
@@ -36,6 +41,10 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			$value = $requestData[$insertId];
 		} else {
 			$value = $this->getValue();
+		}
+
+		if (! $value) {
+			$value = $this->getOption('default');
 		}
 
 		return array(
