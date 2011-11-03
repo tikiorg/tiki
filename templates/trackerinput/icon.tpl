@@ -16,9 +16,8 @@
 
 {jq}
 $('.icon-selector-container').removeClass('icon-selector-container').each(function () {
-	var container;
 	var icon = $('.icon', this).button();
-	var field = icon.closest('form')[0].{{$field.ins_id}};
+	var field = $(':input', this);
 	var jqxhr;
 	var selector = $('.selector', this)
 		.dialog({
@@ -41,7 +40,7 @@ $('.icon-selector-container').removeClass('icon-selector-container').each(functi
 						var link = $(v.link);
 						link.empty().append($('<img/>').attr('src', link.attr('href')));
 						link.click(function () {
-							$(field).val($(this).attr('href'));
+							field.val($(this).attr('href'));
 							icon.attr('src', $(this).attr('href'));
 							selector.dialog('close');
 							return false;
