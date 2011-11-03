@@ -83,15 +83,8 @@
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
 {/strip}</title>
 
-{foreach $prefs.favicon_debug as $debug_line}
-  <!-- Favicon debug: {$debug_line} -->
-{/foreach}
 {if $prefs.site_favicon}
-  {if !empty($prefs.actual_site_favicon_type)}
-      <link rel="{$prefs.actual_site_favicon_rel}" type="{$prefs.actual_site_favicon_type}" href="{$prefs.actual_site_favicon|escape}">
-	{else}
-      <link rel="{$prefs.actual_site_favicon_rel}" href="{$prefs.actual_site_favicon|escape}">
-  {/if}
+	<link rel="icon" href="{$prefs.site_favicon|escape}" />
 {/if}
 
 {* --- universaleditbutton.org --- *}
