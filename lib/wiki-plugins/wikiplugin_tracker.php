@@ -1006,7 +1006,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
 					$customvalidation_m .= 'name: { required: "' . tra("This field is required") . '"}, ';
-					if ($prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
+					if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox') && $prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
 						// antibot validation   
 						$customvalidation .= '"captcha[input]": { ';
 						$customvalidation .= 'required: true, ';
