@@ -30,12 +30,13 @@ $('.icon-selector-container').removeClass('icon-selector-container').each(functi
 			var contents = $('.contents', this);
 			$('.buttons', this).buttonset();
 			$('.sections a', this).css('display', 'block').click(function () {
-				contents.empty();
+				contents.empty().append($('<img/>').attr('src', 'img/spinner.gif'));
 				if (jqxhr) {
 					jqxhr.abort();
 				}
 				jqxhr = $.getJSON($(this).attr('href'), function (data) {
 					jqxhr = null;
+					contents.empty();
 					$.each(data, function (k, v) {
 						var link = $(v.link);
 						link.empty().append($('<img/>').attr('src', link.attr('href')));
