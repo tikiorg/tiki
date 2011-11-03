@@ -3,7 +3,7 @@
 {title help="$helpUrl"}{$admintitle}{/title}
 
 {if $prefs.sender_email eq ''}
-{tr _0="tiki-admin.php?lm_criteria=sender_email&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0">here<a/>{/tr}
+{tr _0="tiki-admin.php?lm_criteria=sender_email&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0">here</a>{/tr}
 {/if}
 
 <form method="post" action="">
