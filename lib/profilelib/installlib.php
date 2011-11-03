@@ -652,6 +652,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 					'freetags' => 'F',
 					'group' => 'g',
 					'header' => 'h',
+					'icon' => 'icon',
 					'image' => 'i',
 					'in_group' => 'N',
 					'ip_address' => 'I',
