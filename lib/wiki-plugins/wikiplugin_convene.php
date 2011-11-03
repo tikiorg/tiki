@@ -188,7 +188,7 @@ JQ;
 		
 		convene$i.addDate = function(date) {
 			if (!date) return;
-			date = unixDate(date);
+			date = Date.parseUnix(date);
 			var addedData = '';
 			
 			for(user in convene$i.users) {
