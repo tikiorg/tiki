@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_addfreetag.php 36968 2011-09-05 22:51:47Z nkoth $
+// $Id$
 
 function wikiplugin_appframe_info()
 {

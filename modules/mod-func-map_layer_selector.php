@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: mod-func-locator.php 33195 2011-03-02 17:43:40Z changi67 $
+// $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");

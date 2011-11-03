@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_timesheet.php 36213 2011-08-16 00:55:32Z marclaporte $
+// $Id$
 
 function wikiplugin_timesheet_info() {
 	return array(
