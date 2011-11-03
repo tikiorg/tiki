@@ -36,7 +36,7 @@ FileETag none
 #<IfModule mod_expires.c>
 #	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
 #		ExpiresActive on
-#		ExpiresDefault "access plus 10 years"
+#		ExpiresDefault "access plus 6 months"
 #	</FilesMatch>
 #</IfModule>
 
