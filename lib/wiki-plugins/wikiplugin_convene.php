@@ -16,14 +16,10 @@ function wikiplugin_convene_info() {
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
 		'params' => array(
-			'style' => array(
+			'title' => array(
 				'required' => false,
-				'name' => tra('Style of content'),
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''),
-					array('text' => tra('Highlight'), 'value' => 'highlight'),
-					array('text' => tra('Asterisk'), 'value' => 'asterisk'),
-				),
+				'name' => tra('Title of event'),
+				'default' => tra("Convene")
 			),
 		),
 	);
@@ -36,12 +32,11 @@ function wikiplugin_convene($data, $params) {
 	$i = $conveneI;
 	
 	$params = array_merge(array(
-		"type" => "replace",
+		"title" => "Convene",
 	), $params);
 	
 	extract ($params,EXTR_SKIP);
 	$dates = array();
-	
 	
 	//start flat static text to prepared array
 	$lines = explode("\n", trim($data));
@@ -105,7 +100,6 @@ function wikiplugin_convene($data, $params) {
 		<tr>
 			<td />
 			$dateHeader
-			<td style='vertical-align: middle;'><img src='pics/icons/add.png' id='conveneAddDate$i' /></td>
 		</tr>
 JQ;
 	//end date header
@@ -114,14 +108,14 @@ JQ;
 	//start user list and votes 
 	$userList = "";
 	foreach($rows as $user => $row) {
-		$userList .= "<tr class='conveneUserList$i'>";
-		$userList .= "<td>" . $user . "</td>";
+		$userList .= "<tr class='conveneUserVotes$i'>";
+		$userList .= "<td><img src='pics/icons/pencil.png' class='conveneUpdateUser$i' />" . $user . "</td>";
 		foreach($row as $stamp => $vote) {
 			$class = 	($vote == 1 ? 'ui-state-highlight' : 'ui-state-error');
 			$text = 	($vote  == 1 ? tr("OK") : "" );
 			
 			$userList .= "<td class='$class'>". ($vote  == 1 ? tr("OK") : "" )
-				."<input type='hidden' name='dates_" . $stamp . "_" . $user . "' value='$vote' />"
+				."<input type='hidden' name='dates_" . $stamp . "_" . $user . "' value='$vote' class='conveneUserVote$i' />"
 				."</td>";
 		}
 		$userList .= "</tr>";
@@ -133,16 +127,12 @@ JQ;
 	
 	
 	//start add new user and votes
-	$newVotes .= "";
-	foreach(end($rows) as $stamp => $vote) {
-		$newVotes .= "<td><input type='checkbox' name='dates_" . $stamp . "_new' /></td>";
-	}
 	$result .= <<<JQ
 		<tr>
-			<td><input name='user' type='text' style='width: 50px;' /></td>
-			$newVotes
-			<td><img src='pics/icons/accept.png' /></td>
-		</tr>
+			<td>
+				<img src='pics/icons/user.png' id='conveneAddUser$i' title='Add User' />
+				<img src='pics/icons/calendar_add.png' id='conveneAddDate$i' title='Add Date' />
+			</td>
 JQ;
 	//end add new user and votes
 	
@@ -154,22 +144,17 @@ JQ;
 		$lastRow .= "<td>". $total ."&nbsp;$pic</td>";
 	}
 	$result .= <<<JQ
-		<tr id='pluginConveneLastRow$i'>
-			<td />
 			$lastRow
 		</tr>
 JQ;
 	//end last row with auto selected date(s)
 	
 	
-	$result = <<<JQ
-		~np~
+	$result = <<<FORM
 			<form id='pluginConvene$i'>
-				<table cellpadding="0" cellspacing="0" border="0"> $result </table>
+				<table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">$result</table>
 			</form>
-		~/np~
-JQ;
-	;
+FORM;
 	
 	$conveneData = json_encode(array(
 		"dates" => $dates,
@@ -184,79 +169,188 @@ JQ;
 	
 	$headerlib->add_jsfile("lib/jquery/jquery-ui-timepicker-addon.js");
 	$headerlib->add_jq_onready(<<<JQ
-		var convene$i = $conveneData;
 		
-		convene$i.addDate = function(date) {
-			if (!date) return;
-			date = Date.parseUnix(date);
-			var addedData = '';
-			
-			for(user in convene$i.users) {
-				addedData += 'dates_' + date + '_' + convene$i.users[user] + ' : 0$n';
-			}
-			
-			convene$i.data = (convene$i.data + '$n' + addedData).split(/$n/).sort().join('$n');
-			
-			$.modal(tr("Loading..."));
-			$(document)
-				.unbind('plugin_convene_ready')
-				.one('plugin_convene_ready', function(e) {
-					var content = $(e.container).find('[name="content"]');
-					content.val(convene$i.data);
-					e.btns.Submit();
-				});
-			
-			$('#plugin-edit-convene1').click();
-		};
-		
-		convene$i.deleteDate = function(date) {
-			if (!date) return;
-			var addedData = '';
-			
-			for(user in convene$i.users) {
-				addedData += 'dates_' + date + '_' + convene$i.users[user] + ' : 0$n';
-			}
-			
-			var lines = convene$i.data.split(/$n/);
-			var newData = [];
-			for(line in lines) {
-				if (!(lines[line] + '' ).match(date)) {
-					 newData.push(lines[line]);
-				}
-			}
-			
-			convene$i.data = newData.join('$n');
-			
-			$.modal(tr("Loading..."));
-			$(document)
-				.unbind('plugin_convene_ready')
-				.one('plugin_convene_ready', function(e) {
-					var content = $(e.container).find('[name="content"]');
-					content.val(convene$i.data);
-					e.btns.Submit();
-				});
-			
-			$('#plugin-edit-convene1').click();
-		};
-			
-		$('#conveneAddDate$i')
-			.click(function() {
-				var picker = $('<input name="date" style="width: 50px;" />')
-					.datetimepicker({
-						onClose: function() {
-							convene$i.addDate($(this).val());
-						}
+		var convene$i = $.extend({
+			fromBlank: function(user, date) {
+				this.data = "dates_" + Date.parseUnix(date) + "_" + user;
+				this.save();
+			},
+			updateUsersVotes: function() {
+				var dates = [];
+				$('.conveneUserVotes$i').each(function() {
+					$('.conveneUserVote$i').each(function() {
+						dates.push($(this).attr('name') + ' : ' + $(this).val());
 					});
-					
-				$(this).replaceWith(picker);
-			});
+				});
+				
+				this.data = dates.join('$n');
+				
+				this.save();
+			},
+			addUser: function(user) {
+				if (!user) return;
+				
+				var dates = [];
+				
+				for(date in this.dates.dates) {
+					dates.push("dates_" + date + "_" + user);
+				}
+				
+				this.data += '$n' + dates.join('$n');
+				
+				this.save();
+			},
+			addDate: function(date) {
+				if (!date) return;
+				date = Date.parseUnix(date);
+				var addedData = '';
+				
+				for(user in this.users) {
+					addedData += 'dates_' + date + '_' + this.users[user] + ' : 0$n';
+				}
+				
+				this.data = (this.data + '$n' + addedData).split(/$n/).sort();
+				
+				//remove empty lines
+				for(line in this.data) {
+					if (!this.data[line]) this.data.splice(line, 1);
+				}
+				
+				this.data = this.data.join('$n');
+				
+				this.save();
+			},
+			deleteDate: function(date) {
+				if (!date) return;
+				var addedData = '';
+				
+				for(user in this.users) {
+					addedData += 'dates_' + date + '_' + this.users[user] + ' : 0$n';
+				}
+				
+				var lines = convene$i.data.split(/$n/);
+				var newData = [];
+				for(line in lines) {
+					if (!(lines[line] + '').match(date)) {
+						 newData.push(lines[line]);
+					}
+				}
+				
+				this.data = newData.join('$n');
+				
+				this.save();
+			},
+			save: function() {
+				var data = this.data;
+				$.modal(tr("Loading..."));
+				$(document)
+					.unbind('plugin_convene_ready')
+					.one('plugin_convene_ready', function(e) {
+						var content = $(e.container).find('[name="content"]');
+						content.val($.trim(data));
+						e.btns.Submit();
+					});
+				
+				$('#plugin-edit-convene1').click();
+			}
+		}, $conveneData);
+		
+		
+		//handle a blank convene
+		$('#conveneBlank$i').each(function() {
+			var table = $('<table>' +
+				'<tr>' +
+					'<td>' +
+						'User: <input style="width: 100px;" class="conveneNewUser" />' +
+					'</td>' +
+					'<td>' +
+						'Date/Time: <input style="width: 100px;" class="conveneNewDatetime" />' +
+					'</td>' +
+					'<td style="vertical-align: middle;">' +
+						'<img src="pics/icons/add.png" />' +
+					'</td>' +
+				'</tr>' +
+			'</table>').appendTo(this);
 			
+			table.find('.conveneNewUser');
+			
+			table.find('.conveneNewDatetime').datetimepicker({
+				onClose: function() {
+					convene$i.fromBlank(table.find('.conveneNewUser').val(), $(this).val());
+				}
+			});
+		});
+			
+		
+		$('#conveneAddDate$i').click(function() {
+			var o = $('<div><input type="text" style="width: 100%;" /></div>')
+				.dialog({
+					modal: true,
+					title: "Add Date",
+					buttons: {
+						"Add" : function(){
+							convene$i.addDate(o.find('input:first').val());
+						}
+					}
+				});
+			
+			o.find('input:first')
+				.datetimepicker()
+				.focus();
+		});
+		
 		$('.conveneDeleteDate$i')
 			.click(function() {
 				convene$i.deleteDate($(this).data("date"));
 			});
+		
+		$('.conveneUpdateUser$i').toggle(function() {
+			$(this).attr('src', 'pics/icons/accept.png');
+			$(this).parent().parent().find('input').each(function() {
+				$('<input type="checkbox" value="1"/>')
+					.attr('checked', ($(this).val() == 1 ? true : false))
+					.insertAfter(this);
+			});
+		}, function () {
+			$(this).attr('src', 'pics/icons/pencil.png');
+			var parent = $(this).parent().parent();
+			parent.find('input:checkbox').each(function(i) {
+				parent.find('input.conveneUserVote$i').eq(i).val( $(this).is(':checked') ? 1 : 0);
+				
+				$(this).remove();
+			});
+			
+			convene$i.updateUsersVotes();
+		});
+		
+		$('#conveneAddUser$i').click(function() {
+			var o = $('<div><input type="text" style="width: 100%;" /></div>')
+				.dialog({
+					title: "User Name",
+					modal: true,
+					buttons: {
+						"Add": function() {
+							convene$i.addUser(o.find('input:first').val());
+						}
+					}
+				})
+		});
 JQ
 );
 	
-	return $result;
+	if (empty($data)) {
+		$result = "<div id='conveneBlank$i'></div>";
+	}
+	
+	return
+<<<RETURN
+~np~
+	<div class="ui-widget-content ui-corner-all">
+		<div class="ui-widget-header ui-corner-top">
+			<h5 style="margin: 5px;">$title</h5>
+		</div>
+			$result
+	</div>
+~/np~
+RETURN;
 }
