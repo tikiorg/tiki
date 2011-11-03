@@ -21,7 +21,7 @@
 		{/if}
 
 {if $mapview}
-{wikiplugin _name="map" width="400" height="400"}{/wikiplugin}
+{wikiplugin _name="googlemap" type="objectlist" width="400" height="400"}{/wikiplugin}
 {/if}
 
 <div id="tiki-listpages-content">
