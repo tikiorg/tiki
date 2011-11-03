@@ -40,7 +40,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	$smarty->assign( 'headtitle', $content );
   
   $html = '<h1>';
-  $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";
+  $html .= '<a class="pagetitle" href="' . htmlspecialchars($params['url'], ENT_QUOTES) . '">' . $content . "</a>\n";
   
   if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
     $html .= '<a href="' . $prefs['helpurl'] . $params['help'] . '" class="titletips" title="' . tra('Help page:') . ' ' . $content . '">'
