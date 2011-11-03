@@ -94,7 +94,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		$classList[] = 'freetag';
 	}
 
-	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList)
+	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList);
 	$class = ' class="' . implode(' ', $classList) . '"';
 
 	$html = '<a href="' . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
