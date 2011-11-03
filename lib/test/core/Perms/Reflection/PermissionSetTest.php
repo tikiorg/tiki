@@ -12,58 +12,64 @@
 
 class Perms_Reflection_PermissionSetTest extends TikiTestCase
 {
-	function testEmptySet() {
+	function testEmptySet()
+	{
 		$set = new Perms_Reflection_PermissionSet;
 
-		$this->assertEquals( array(
-		), $set->getPermissionArray() );
+		$this->assertEquals(array(
+		), $set->getPermissionArray());
 	}
 
-	function testBasicSet() {
+	function testBasicSet()
+	{
 		$set = new Perms_Reflection_PermissionSet;
-		$set->add( 'Registered', 'view' );
-		$set->add( 'Registered', 'edit' );
-		$set->add( 'Anonymous', 'view' );
+		$set->add('Registered', 'view');
+		$set->add('Registered', 'edit');
+		$set->add('Anonymous', 'view');
 
-		$this->assertEquals( array(
-			'Registered' => array( 'view', 'edit' ),
-			'Anonymous' => array( 'view' ),
-		), $set->getPermissionArray() );
+		$this->assertEquals(array(
+			'Registered' => array('view', 'edit'),
+			'Anonymous' => array('view'),
+		), $set->getPermissionArray());
 	}
 
-	function testDuplicateEntry() {
+	function testDuplicateEntry()
+	{
 		$set = new Perms_Reflection_PermissionSet;
-		$set->add( 'Registered', 'view' );
-		$set->add( 'Registered', 'edit' );
-		$set->add( 'Registered', 'view' );
+		$set->add('Registered', 'view');
+		$set->add('Registered', 'edit');
+		$set->add('Registered', 'view');
 
-		$this->assertEquals( array(
-			'Registered' => array( 'view', 'edit' ),
-		), $set->getPermissionArray() );
+		$this->assertEquals(array(
+			'Registered' => array('view', 'edit'),
+		), $set->getPermissionArray());
 	}
 
-	function testPositiveHas() {
+	function testPositiveHas()
+	{
 		$set = new Perms_Reflection_PermissionSet;
-		$set->add( 'Anonymous', 'view' );
+		$set->add('Anonymous', 'view');
 
-		$this->assertTrue( $set->has( 'Anonymous', 'view' ) );
+		$this->assertTrue($set->has('Anonymous', 'view'));
 	}
 
-	function testNegativeHas() {
+	function testNegativeHas()
+	{
 		$set = new Perms_Reflection_PermissionSet;
 
-		$this->assertFalse( $set->has( 'Anonymous', 'view' ) );
+		$this->assertFalse($set->has('Anonymous', 'view'));
 	}
 
-	function testAddMultiple() {
+	function testAddMultiple()
+	{
 		$equivalent = new Perms_Reflection_PermissionSet;
-		$equivalent->add( 'Anonymous', 'a' );
-		$equivalent->add( 'Anonymous', 'b' );
-		$equivalent->add( 'Anonymous', 'c' );
+		$equivalent->add('Anonymous', 'a');
+		$equivalent->add('Anonymous', 'b');
+		$equivalent->add('Anonymous', 'c');
 
 		$multi = new Perms_Reflection_PermissionSet;
-		$multi->add( 'Anonymous', array( 'a', 'b', 'c' ) );
+		$multi->add('Anonymous', array('a', 'b', 'c'));
 
-		$this->assertEquals( $equivalent, $multi );
+		$this->assertEquals($equivalent, $multi);
 	}
 }
