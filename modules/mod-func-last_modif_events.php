@@ -1,17 +1,18 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_last_modif_events_info() {
+function module_last_modif_events_info()
+{
 	return array(
 		'name' => tra('Last-modified Events'),
 		'description' => tra('Displays the specified number of calendar events, starting from the most recently modified.'),
@@ -35,7 +36,8 @@ function module_last_modif_events_info() {
 	);
 }
 
-function module_last_modif_events( $mod_reference, $module_params ) {
+function module_last_modif_events($mod_reference, $module_params)
+{
 	global $smarty;
 	global $calendarlib; include_once ('lib/calendar/calendarlib.php');
 	

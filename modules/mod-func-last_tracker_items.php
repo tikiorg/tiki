@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
 
-function module_last_tracker_items_info() {
+function module_last_tracker_items_info()
+{
 	return array(
 		'name' => tra('Newest Tracker Items'),
 		'description' => tra('Displays the value of a field of the specified number of tracker items. If the specified tracker has no main field, either Field name or Field identifier is required.'),
-		'prefs' => array( 'feature_trackers' ),
+		'prefs' => array('feature_trackers'),
 		'params' => array(
 			'trackerId' => array(
 				'name' => tra('Tracker identifier'),
@@ -48,7 +49,8 @@ function module_last_tracker_items_info() {
 	);
 }
 
-function module_last_tracker_items( $mod_reference, $module_params ) {
+function module_last_tracker_items($mod_reference, $module_params)
+{
 	global $prefs, $tikilib, $smarty, $user;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	
@@ -72,7 +74,7 @@ function module_last_tracker_items( $mod_reference, $module_params ) {
 			}
 			$modLastItems = array();
 			//list_items filters the fieldId if hidden...
-			$tmp = $trklib->list_items($module_params['trackerId'], 0, $mod_reference["rows"], $module_params['sort_mode'], array($module_params['fieldId']=>$field_info),'','', $module_params['status']);
+			$tmp = $trklib->list_items($module_params['trackerId'], 0, $mod_reference["rows"], $module_params['sort_mode'], array($module_params['fieldId']=>$field_info), '', '', $module_params['status']);
 			foreach ($tmp['data'] as $data) {
 				if (!empty($data['field_values'][0]['value'])) {
 					$data['subject'] = $data['field_values'][0]['value'];

@@ -1,17 +1,18 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_last_visitors_info() {
+function module_last_visitors_info()
+{
 	return array(
 		'name' => tra('Last Visitors'),
 		'description' => tra('Displays information about the specified number of users in decreasing order of last login time.'),
@@ -34,7 +35,8 @@ function module_last_visitors_info() {
 	);
 }
 
-function module_last_visitors( $mod_reference, $module_params ) {
+function module_last_visitors($mod_reference, $module_params)
+{
 	global $smarty;
 	global $userlib; include_once('lib/userslib.php');
 

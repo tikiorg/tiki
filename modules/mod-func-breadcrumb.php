@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_breadcrumb_info() {
+function module_breadcrumb_info()
+{
 	return array(
 		'name' => tra('Last-Visited Pages'),
 		'description' => tra('Displays the last Wiki pages visited by the user.'),
-		'prefs' => array( 'feature_wiki' ),
+		'prefs' => array('feature_wiki'),
 		'documentation' => 'Module breadcrumb',
 		'params' => array(
 			'maxlen' => array(
@@ -28,7 +29,8 @@ function module_breadcrumb_info() {
 	);
 }
 
-function module_breadcrumb( $mod_reference, $module_params ) {
+function module_breadcrumb($mod_reference, $module_params)
+{
 	global $smarty, $prefs;
 	global $categlib; include_once ('lib/categories/categlib.php');
 	if (!isset($_SESSION["breadCrumb"])) {
@@ -40,7 +42,7 @@ function module_breadcrumb( $mod_reference, $module_params ) {
 		$objectIds=$objectlib->get_object_ids("wiki page", $_SESSION["breadCrumb"]);
 	
 		$breadIds=array();
-		foreach($_SESSION["breadCrumb"] as $step) {
+		foreach ($_SESSION["breadCrumb"] as $step) {
 			if (isset($objectIds[$step])) $breadIds[$objectIds[$step]]=$step;
 		}
 		if ($breadIds) { // If we have visited pages and we're in a perspective

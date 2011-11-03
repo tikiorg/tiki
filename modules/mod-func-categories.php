@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_categories_info() {
+function module_categories_info()
+{
 	return array(
 		'name' => tra('Categories'),
 		'description' => tra('Displays links to categories as a tree.'),
-		'prefs' => array( 'feature_categories' ),
+		'prefs' => array('feature_categories'),
 		'documentation' => 'Module categories',
 		'params' => array(
 			'type' => array(
@@ -47,7 +48,8 @@ function module_categories_info() {
 	);
 }
 
-function module_categories( $mod_reference, &$module_params ) {
+function module_categories($mod_reference, &$module_params)
+{
 	global $smarty, $prefs;
 	global $user;
 	global $categlib; include_once ('lib/categories/categlib.php');
@@ -67,7 +69,7 @@ function module_categories( $mod_reference, &$module_params ) {
 
 	$categories = $categlib->getCategories();
 
-	if ( empty($categories) ) {
+	if (empty($categories)) {
 		return;
 	}
 	if (isset($module_params['categId'])) {
@@ -84,7 +86,7 @@ function module_categories( $mod_reference, &$module_params ) {
 		$filtered_categories = array();
 		foreach ($categParentIds as $c) {
 			foreach ($categories as $cat) {
-				if ( $cat['categId'] == $c || $cat['parentId'] == $c ) {
+				if ($cat['categId'] == $c || $cat['parentId'] == $c) {
 					$filtered_categories[] = $cat;
 				}
 			}

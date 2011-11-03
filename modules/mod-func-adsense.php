@@ -1,12 +1,12 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -25,11 +25,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Usage example :
 // {MODULE(module=>adsense,client=pub-xxxxxxxxxxxxxxxx,display=468*60_as,color_border=edeed5,color_bg=edeed5,color_link=0000CC,color_url=008000,color_text=000000)}{MODULE}
 
-function module_adsense_info() {
+function module_adsense_info()
+{
 	return array(
 		'name' => tra('Google AdSense'),
 		'description' => tra('Displays a text/image Google AdSense advertisement. This module should be updated to support new Google code.'),
-		'prefs' => array( ),
+		'prefs' => array(),
 		'params' => array(
 			'ad_channel' => array(
 				'name' => tra('ad_channel'),
@@ -76,7 +77,8 @@ function module_adsense_info() {
 	);
 }
 
-function module_adsense( $mod_reference, $module_params ) {
+function module_adsense($mod_reference, $module_params)
+{
 	global $smarty;
 
 	$smarty->assign(array('ad_channel' => $module_params['ad_channel'],

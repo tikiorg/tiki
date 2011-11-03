@@ -1,17 +1,18 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_user_tasks_public_info() {
+function module_user_tasks_public_info()
+{
 	return array(
 		'name' => tra('Public Tasks'),
 		'description' => tra('Lists the public user tasks of a chosen group, with links to tasks.'),
@@ -20,7 +21,8 @@ function module_user_tasks_public_info() {
 	);
 }
 
-function module_user_tasks_public( $mod_reference, $module_params ) {
+function module_user_tasks_public($mod_reference, $module_params)
+{
 	global $user, $tikilib, $smarty, $tiki_p_tasks, $prefs;
 	
 	if ($user && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
@@ -41,12 +43,12 @@ function module_user_tasks_public( $mod_reference, $module_params ) {
 		$smarty->assign('user_group', $user_group);
 		
 		if ($user_group == '') {
-			$public_tasks =  array('data'=>''); 
+			$public_tasks =  array('data'=>'');
 		} else {
-			$public_tasks =  $tasklib->list_tasks($user, '0', '10',NULL, 'priority_asc', false,false,false,false,true,$user_group); 
+			$public_tasks =  $tasklib->list_tasks($user, '0', '10', NULL, 'priority_asc', false, false, false, false, true, $user_group);
 		}
 		$smarty->assign('public_tasks', $public_tasks['data']);
-		$smarty->assign('user_groups', $user_groups );
+		$smarty->assign('user_groups', $user_groups);
 		$smarty->clear_assign('tpl_module_title');
 	}
 }

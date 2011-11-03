@@ -1,18 +1,19 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 
-function module_last_validated_faq_questions_info() {
+function module_last_validated_faq_questions_info()
+{
 	return array(
 		'name' => tra('Newest Validated FAQ Questions'),
 		'description' => tra('Displays the specified number of validated questions FAQs from newest to oldest.'),
@@ -33,7 +34,8 @@ function module_last_validated_faq_questions_info() {
 	);
 }
 
-function module_last_validated_faq_questions( $mod_reference, $module_params ) {
+function module_last_validated_faq_questions($mod_reference, $module_params)
+{
 	global $tikilib, $smarty;
 	global $faqlib; include_once('lib/faqs/faqlib.php');
 	$def = array('faqId'=>0, 'truncate'=>20);

@@ -1,26 +1,28 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_freetag_info() {
+function module_freetag_info()
+{
 	return array(
 		'name' => tra('Tags Editor'),
 		'description' => tra('Shows current freetags and enables to add and remove some if permissions allow.'),
-		'prefs' => array( 'feature_freetags' ),
+		'prefs' => array('feature_freetags'),
 		'params' => array()
 	);
 }
 
-function module_freetag( $mod_reference, $module_params ) {
+function module_freetag($mod_reference, $module_params)
+{
 	global $sections, $section, $modlib;
 	global $smarty;
 	

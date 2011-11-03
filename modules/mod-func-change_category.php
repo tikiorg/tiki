@@ -1,17 +1,18 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_change_category_info() {
+function module_change_category_info()
+{
 	return array(
 		'name' => tra('Change Category'),
 		'description' => tra('Enables to categorize an object.') . " " . tra('This module currently only supports Wiki pages. Some combinations of Multiple categories, Detailed, Unassign and Assign may challenge intuition or be simply broken.'),
@@ -72,7 +73,8 @@ function module_change_category_info() {
 	);
 }
 
-function module_change_category( $mod_reference, $module_params ) {
+function module_change_category($mod_reference, $module_params)
+{
 	global $prefs, $tikilib, $smarty, $modlib;
 	
 	$smarty->assign('showmodule', false);
@@ -161,7 +163,7 @@ function module_change_category( $mod_reference, $module_params ) {
 		}
 
 		if (isset($selectedCategories)) {
-			$objectperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
+			$objectperms = Perms::get(array('type' => $cat_type, 'object' => $cat_objid));
 			if ($objectperms->modify_object_categories) {
 				$categlib->update_object_categories($selectedCategories, $cat_objid, $cat_type, NULL, NULL, NULL, $managedCategories);
 			}
@@ -189,9 +191,9 @@ function module_change_category( $mod_reference, $module_params ) {
 		$smarty->assign('isInAllManagedCategories', $isInAllManagedCategories);
 		$smarty->assign('showmodule', !$shy);
 		if (empty($cat_parent)) {
-			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s'), htmlspecialchars($_REQUEST['page'])));
+			$smarty->assign('tpl_module_title', sprintf(tra('Categorize %s'), htmlspecialchars($_REQUEST['page'])));
 		} else {
-			$smarty->assign('tpl_module_title',sprintf(tra('Categorize %s in %s'), htmlspecialchars($_REQUEST['page']), htmlspecialchars($cat_parent)));
+			$smarty->assign('tpl_module_title', sprintf(tra('Categorize %s in %s'), htmlspecialchars($_REQUEST['page']), htmlspecialchars($cat_parent)));
 		}
 		$smarty->assign('modcatlist', $categories);
 		$smarty->assign('modcatid', $id);

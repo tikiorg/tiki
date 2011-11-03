@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_articles_info() {
+function module_articles_info()
+{
 	return array(
 		'name' => tra('Articles'),
 		'description' => tra('Lists the specified number of published articles in the specified order.'),
-		'prefs' => array( 'feature_articles' ),
+		'prefs' => array('feature_articles'),
 		'documentation' => 'Module articles',
 		'params' => array(
 			'showpubl' => array(
@@ -83,7 +84,8 @@ function module_articles_info() {
 	);
 }
 
-function module_articles( $mod_reference, $module_params ) {
+function module_articles($mod_reference, $module_params)
+{
 	global $smarty, $tikilib, $user;
 	global $artlib; require_once 'lib/articles/artlib.php';
 	
@@ -100,12 +102,12 @@ function module_articles( $mod_reference, $module_params ) {
 		$topicId = $smarty->getTemplateVars('topicId');
 	}
 	
-	foreach ( $urlParams as $p => $v ) {
-		if ( isset($$p) ) continue;
+	foreach ($urlParams as $p => $v) {
+		if (isset($$p)) continue;
 		$$p = isset($module_params[$p]) ? $module_params[$p] : '';
 	}
-	if ( $start == '' ) $start = 0;
-	if ( $sort == '' ) $sort = 'publishDate_desc';
+	if ($start == '') $start = 0;
+	if ($sort == '') $sort = 'publishDate_desc';
 
 	$min_rating = isset($_REQUEST['min_rating']) ? $_REQUEST['min_rating'] : 0;
 	$max_rating = isset($_REQUEST['max_rating']) ? $_REQUEST['max_rating'] : 10;

@@ -5,16 +5,17 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_menustructure_info() {
+function module_menustructure_info()
+{
 	return array(
 		'name' => tra('Wiki Structure Menu'),
 		'description' => tra('Displays a structure.') . ' ' . tra('N.B. Deprecated, use the Menu module instead'),
-		'prefs' => array( 'feature_wiki_structure' ),
+		'prefs' => array('feature_wiki_structure'),
 		'params' => array(
 			'structure' => array(
 				'name' => tra('Structure'),
@@ -25,7 +26,8 @@ function module_menustructure_info() {
 	);
 }
 
-function module_menustructure( $mod_reference, $module_params ) {
+function module_menustructure($mod_reference, $module_params)
+{
 	global $smarty;
 	$structure = $module_params['structure'];
 

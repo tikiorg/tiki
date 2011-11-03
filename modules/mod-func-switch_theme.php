@@ -1,26 +1,28 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_switch_theme_info() {
+function module_switch_theme_info()
+{
 	return array(
 		'name' => tra('Switch Theme'),
 		'description' => tra('Enables to quickly change the theme.'),
-		'prefs' => array( 'change_theme' ),
+		'prefs' => array('change_theme'),
 		'params' => array()
 	);
 }
 
-function module_switch_theme( $mod_reference, $module_params ) {
+function module_switch_theme($mod_reference, $module_params)
+{
 	global $prefs, $user, $tikilib, $smarty, $tc_theme, $tc_theme_option;
 	
 	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
@@ -31,7 +33,7 @@ function module_switch_theme( $mod_reference, $module_params ) {
 	$smarty->assign('style_option',$current_style_option);
 
 	$smarty->assign('styleslist',$tikilib->list_styles());
-	$smarty->assign( "style_options", $tikilib->list_style_options($current_style));
+	$smarty->assign("style_options", $tikilib->list_style_options($current_style));
 
 	if ($prefs['themegenerator_feature'] === 'y') {
 		include_once 'lib/prefs/themegenerator.php';

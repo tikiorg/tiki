@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
 
-function module_calendar_new_info() {
+function module_calendar_new_info()
+{
 	return array(
 		'name' => tra('Calendar'),
 		'description' => tra('Includes a calendar or a list of calendar events.'),
-		'prefs' => array( 'feature_calendar' ),
+		'prefs' => array('feature_calendar'),
 		'documentation' => 'Module calendar_new',
 		'params' => array(
 			'calIds' => array(
@@ -69,11 +70,12 @@ function module_calendar_new_info() {
 	);
 }
 
-function module_calendar_new( $mod_reference, $module_params ) {
+function module_calendar_new($mod_reference, $module_params)
+{
 	global $prefs, $user, $tiki_p_admin_calendars, $tikilib, $smarty;
 	global $calendarlib; include_once('lib/calendar/calendarlib.php');
 	global $userlib; include_once('lib/userslib.php');
-	global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
+	global $headerlib; $headerlib->add_cssfile('css/calendar.css', 20);
 	global $calendarViewMode, $focusdate;
 	$default = array('viewnavbar' => 'y', 'viewmodelink' => 'week', 'showaction' => 'y', 'linkall' => 'n');
 	$module_params = array_merge($default, $module_params);
@@ -91,7 +93,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 			TikiLib::date_format("%m", $focusdate),
 			TikiLib::date_format("%Y", $focusdate)
 		);
-		$_REQUEST['todate'] = $tikilib->make_time(0,0,0,$focus_month+$module_params['month_delta'],1,$focus_year);
+		$_REQUEST['todate'] = $tikilib->make_time(0, 0, 0, $focus_month + $module_params['month_delta'], 1, $focus_year);
 	}
 
 	if (!empty($module_params['calIds'])) {
@@ -101,10 +103,10 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		}
 	} elseif (!empty($_SESSION['CalendarViewGroups'])) {
 		$calIds = $_SESSION['CalendarViewGroups'];
-	} elseif ( $prefs['feature_default_calendars'] == 'n' ) {
+	} elseif ($prefs['feature_default_calendars'] == 'n') {
 		$calendars = $calendarlib->list_calendars();
 		$calIds = array_keys($calendars['data']);
-	} elseif ( ! empty($prefs['default_calendars']) ) {
+	} elseif (! empty($prefs['default_calendars'])) {
 		$calIds = $_SESSION['CalendarViewGroups'] = is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']);
 	} else {
 		$calIds = array();
@@ -112,7 +114,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 
 
 	$_REQUEST['gbi'] = 'y';
-	if ( !empty($module_params['viewlist']) ) {
+	if (!empty($module_params['viewlist'])) {
 		$_REQUEST['viewlistmodule'] = $module_params['viewlist'];
 	} else {
 		$_REQUEST['viewlistmodule'] = 'table';
@@ -124,7 +126,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		}
 	}
 
-	if ( !empty($calIds) ) {
+	if (!empty($calIds)) {
 		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day', 'events', true);
 		if ($_REQUEST['viewlistmodule'] == 'list') {
 			foreach ($tc_infos['listevents'] as $i=>$e) {
@@ -133,7 +135,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 			}
 		}
 
-		foreach ( $tc_infos as $tc_key => $tc_val ) {
+		foreach ($tc_infos as $tc_key => $tc_val) {
 			$smarty->assign($tc_key, $tc_val);
 		}
 
@@ -147,7 +149,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$smarty->assign_by_ref('linkall', $module_params['linkall']);
 		$smarty->assign('calendarViewMode', $calendarViewMode['casedefault']);
 
-		if ( isset($save_todate) ) {
+		if (isset($save_todate)) {
 			$_REQUEST['todate'] = $save_todate;
 		} else {
 			unset($_REQUEST['todate']);

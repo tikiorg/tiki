@@ -1,17 +1,18 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_share_info() {
+function module_share_info()
+{
 	return array(
 		'name' => tra('Share'),
 		'description' => tra('Links for sharing, reporting etc.'),
@@ -145,7 +146,8 @@ function module_share_info() {
 	);
 }
 
-function module_share( $mod_reference, $module_params ) {
+function module_share($mod_reference, $module_params)
+{
 	static $share_mod_usage_counter = 0;
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('share_mod_usage_counter', ++$share_mod_usage_counter);
@@ -155,36 +157,36 @@ function module_share( $mod_reference, $module_params ) {
 	$fbData = '';
 	$fbDivAttr = '';
 
-	if (!empty($module_params['facebook_height'])){
+	if (!empty($module_params['facebook_height'])) {
 		$fbDivAttr .= ' height:' . $module_params['facebook_height'] . ';';
 	}
-	if (empty($module_params['facebook_send']) || $module_params['facebook_send'] === 'y'){
+	if (empty($module_params['facebook_send']) || $module_params['facebook_send'] === 'y') {
 		$fbData .= ' data-send="true"';
 	} else {
 		$fbData .= ' data-send="false"';
 	}
-	if (!empty($module_params['facebook_layout']) && $module_params['facebook_layout'] !== 'standard'){
+	if (!empty($module_params['facebook_layout']) && $module_params['facebook_layout'] !== 'standard') {
 		$fbData .= ' data-layout="' . $module_params['facebook_layout'] . '"';
 	}
-	if (!empty($module_params['facebook_width'])){
+	if (!empty($module_params['facebook_width'])) {
 		$fbData .= ' data-width="' . $module_params['facebook_width'] . '"';
 		$fbDivAttr .= ' width:' . $module_params['facebook_width'] . 'px;';
 	}
-	if (empty($module_params['facebook_show_faces']) || $module_params['facebook_layout'] === 'y'){
+	if (empty($module_params['facebook_show_faces']) || $module_params['facebook_layout'] === 'y') {
 		$fbData .= ' data-show-faces="true"';
 	} else {
 		$fbData .= ' data-show-faces="false"';
 	}
-	if (!empty($module_params['facebook_verb']) && $module_params['facebook_verb'] !== 'like'){
+	if (!empty($module_params['facebook_verb']) && $module_params['facebook_verb'] !== 'like') {
 		$fbData .= ' data-action="recommend"';
 	}
-	if (!empty($module_params['facebook_colorscheme']) && $module_params['facebook_colorscheme'] !== 'light'){
+	if (!empty($module_params['facebook_colorscheme']) && $module_params['facebook_colorscheme'] !== 'light') {
 		$fbData .= ' data-colorscheme="dark"';
 	}
-	if (!empty($module_params['facebook_font']) & $module_params['facebook_font'] !== 'lucida grande'){
+	if (!empty($module_params['facebook_font']) & $module_params['facebook_font'] !== 'lucida grande') {
 		$fbData .= ' data-font="' . $module_params['facebook_font'] . '"';
 	}
-	if (empty($module_params['facebook_ref']) || $module_params['facebook_ref'] === 'y'){
+	if (empty($module_params['facebook_ref']) || $module_params['facebook_ref'] === 'y') {
 		$fbData .= ' data-ref="' . htmlspecialchars($module_params['facebook_ref']) . '"';
 	}
 	$smarty->assign('fb_data_attributes', $fbData);
@@ -212,24 +214,24 @@ function module_share( $mod_reference, $module_params ) {
 	$twData = '';
 	$twDivAttr = '';
 
-	if (!empty($module_params['twitter_height'])){
+	if (!empty($module_params['twitter_height'])) {
 		$twDivAttr .= ' height:' . $module_params['twitter_height'] . ';';
 	}
-	if (!empty($module_params['twitter_width'])){
+	if (!empty($module_params['twitter_width'])) {
 		$twDivAttr .= ' width:' . $module_params['twitter_width'] . ';';
 	}
-	if (empty($module_params['twitter_show_count']) || $module_params['twitter_show_count'] === 'horizontal'){
+	if (empty($module_params['twitter_show_count']) || $module_params['twitter_show_count'] === 'horizontal') {
 		$twData .= ' data-count="horizontal"';
 	} else {
 		$twData .= ' data-count="' . $module_params['twitter_show_count'] . '"';
 	}
-	if (!empty($module_params['twitter_username'])){
+	if (!empty($module_params['twitter_username'])) {
 		$twData .= ' data-via="' . $module_params['twitter_username'] . '"';
 	}
-	if (!empty($module_params['twitter_language'])){
+	if (!empty($module_params['twitter_language'])) {
 		$twData .= ' data-lang="' . $module_params['twitter_language'] . '"';
 	}
-	if (!empty($module_params['twitter_text'])){
+	if (!empty($module_params['twitter_text'])) {
 		$twData .= ' data-text="' . htmlspecialchars($module_params['twitter_text']) . '"';
 	}
 

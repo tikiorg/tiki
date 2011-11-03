@@ -1,17 +1,18 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
 
-function module_months_links_info() {
+function module_months_links_info()
+{
 	return array(
 		'name' => tra('Months links'),
 		'description' => tra('Links to the objects of a given type for the current month and those preceding it.'),
@@ -31,18 +32,19 @@ function module_months_links_info() {
 	);
 }
 
-function module_months_links( $mod_reference, $module_params ) {
+function module_months_links($mod_reference, $module_params)
+{
 	global $prefs, $sections, $smarty;
 
-	if ( isset($module_params['feature'])
+	if (isset($module_params['feature'])
 		&& isset($sections[$module_params['feature']])
 		&& isset($sections[$module_params['feature']]['feature'])
 		&& $prefs[$sections[$module_params['feature']]['feature']] == 'y'
 	) {
 		$default_date_args = 'date_min=%d&amp;date_max=%d';
-		switch ( $module_params['feature'] ) {
+		switch ($module_params['feature']) {
 			case 'blogs':
-				if ($prefs['feature_blogs'] == 'y' && isset($module_params['id']) ) {
+				if ($prefs['feature_blogs'] == 'y' && isset($module_params['id'])) {
 					$link = 'tiki-view_blog.php?blogId='.$module_params['id'].'&amp;'.$default_date_args;
 					$object_key = 'itemObjectType';
 				}
@@ -56,12 +58,12 @@ function module_months_links( $mod_reference, $module_params ) {
 		}
 	}
 	
-	if ( isset($link)) {
+	if (isset($link)) {
 		global $tikilib;
-		if ( $module_params['feature'] == 'blogs' ) {
+		if ($module_params['feature'] == 'blogs') {
 			global $bloglib;
 			include_once ('lib/blogs/bloglib.php');
-		} elseif ( $module_params['feature'] == 'cms' ) {
+		} elseif ($module_params['feature'] == 'cms') {
 			global $artlib;
 			include_once ('lib/articles/artlib.php');
 		}
@@ -71,34 +73,34 @@ function module_months_links( $mod_reference, $module_params ) {
 		$timestamp_month_start = 0;
 
 		$months = array();
-		for ( $i = 0 ; $i < ($mod_reference['rows'] > 0 ? $mod_reference['rows'] : 12) ; $i++, $current_month_num-- ) {
-			if ( $current_month_num == 0 ) {
+		for ($i = 0 ; $i < ($mod_reference['rows'] > 0 ? $mod_reference['rows'] : 12) ; $i++, $current_month_num--) {
+			if ($current_month_num == 0) {
 				$current_month_num = 12;
 				$current_year--;
 			}
 	
-			$month_name = ucfirst(tra($month_names[$current_month_num - 1])).' '.$current_year;
-			if ( $timestamp_month_start > 0 ) {
+			$month_name = ucfirst(tra($month_names[$current_month_num - 1])) . ' ' . $current_year;
+			if ($timestamp_month_start > 0) {
 				$timestamp_month_end = $timestamp_month_start - 1; // Optimisation to save one make_time() call per iteration
 			} else {
 				$timestamp_month_end = $tikilib->make_time(0, 0, 0, $current_month_num + 1, 1, $current_year) - 1;
 			}
 			$timestamp_month_start = $tikilib->make_time(0, 0, 0, $current_month_num, 1, $current_year);
-			if ( $module_params['feature'] == 'blogs' ) {
+			if ($module_params['feature'] == 'blogs') {
 				$posts_of_month = $bloglib->list_blog_posts($module_params['id'],true,0,-1,'created_desc','',$timestamp_month_start,$timestamp_month_end);
-				if( $posts_of_month["cant"] > 0 ) {
+				if ($posts_of_month["cant"] > 0) {
 					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 				}
-			} elseif ( $module_params['feature'] == 'cms' ) {
-				$posts_of_month = $artlib->list_articles(0,-1,'publishDate_desc','',$timestamp_month_start,$timestamp_month_end,false,'','','y','','','','','','','',false,'','');
-				if( $posts_of_month["cant"] > 0 ) {
+			} elseif ($module_params['feature'] == 'cms') {
+				$posts_of_month = $artlib->list_articles(0, -1, 'publishDate_desc', '', $timestamp_month_start, $timestamp_month_end, false, '', '', 'y', '', '', '', '', '', '', '', false, '', '');
+				if ($posts_of_month["cant"] > 0) {
 					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 				}
 			} else {
 					$months[$month_name] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 			}
 		}
-		$title = ucwords($sections[$module_params['feature']][$object_key]).' - '.tra('List by month');
+		$title = ucwords($sections[$module_params['feature']][$object_key]) . ' - ' . tra('List by month');
 		$smarty->assign('months', $months);
 		$smarty->assign('tpl_module_title', $title);
 	}

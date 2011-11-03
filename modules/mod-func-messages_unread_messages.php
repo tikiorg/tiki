@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_messages_unread_messages_info() {
+function module_messages_unread_messages_info()
+{
 	return array(
 		'name' => tra('Unread Inter-user Messages'),
 		'description' => tra('Displays to users their number of new inter-user messages and a link to their message box.'),
-		'prefs' => array( 'feature_messages' ),
+		'prefs' => array('feature_messages'),
 		'params' => array(
 			'showempty' => array(
 				'name' => tra('Show If Empty'),
@@ -26,7 +27,8 @@ function module_messages_unread_messages_info() {
 	);
 }
 
-function module_messages_unread_messages( $mod_reference, $module_params ) {
+function module_messages_unread_messages($mod_reference, $module_params)
+{
 	global $user, $tikilib, $smarty;
 	$globalperms = Perms::get();
 

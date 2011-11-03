@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
 
-function module_action_calendar_info() {
+function module_action_calendar_info()
+{
 	return array(
 		'name' => tra('Action Calendar'),
 		'description' => tra('Displays a calendar of system events, such as wiki page modifications, forum posts and article publications. Days with events show links to the action calendar page.'),
-		'prefs' => array( 'feature_action_calendar' ),
+		'prefs' => array('feature_action_calendar'),
 		'params' => array(
 			'items' => array(
 				'name' => tra('Item types filter'),
@@ -25,10 +26,11 @@ function module_action_calendar_info() {
 	);
 }
 
-function module_action_calendar( $mod_reference, &$module_params ) {
+function module_action_calendar($mod_reference, &$module_params)
+{
 	global $prefs, $tiki_p_view_tiki_calendar, $tikilib, $smarty;
 	$smarty->assign('show_calendar_module', 'n');
-	if ( $tiki_p_view_tiki_calendar == 'y' ) {
+	if ($tiki_p_view_tiki_calendar == 'y') {
 		$smarty->assign('show_calendar_module', 'y');	
 		global $tikicalendarlib; include_once('lib/calendar/tikicalendarlib.php');
 		global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
@@ -40,7 +42,7 @@ function module_action_calendar( $mod_reference, &$module_params ) {
 		include('tiki-calendar_setup.php');
 	
 		$viewTikiCals = $tikicalendarlib->getTikiItems(false);
-		if ( isset($module_params['items']) ) {
+		if (isset($module_params['items'])) {
 			$viewTikiCals = array_intersect(explode(',', strtolower(str_replace(' ', '', $module_params['items']))), $viewTikiCals);
 		}
 
@@ -48,7 +50,7 @@ function module_action_calendar( $mod_reference, &$module_params ) {
 		$module_params['showaction'] = 'n';
 
 		$tc_infos = $tikicalendarlib->getCalendar($viewTikiCals, $viewstart, $viewend, $group_by);
-		foreach ( $tc_infos as $tc_key => $tc_val ) {
+		foreach ($tc_infos as $tc_key => $tc_val) {
 				$smarty->assign($tc_key, $tc_val);
 		}
 	

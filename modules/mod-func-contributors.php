@@ -1,31 +1,33 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
 
-function module_contributors_info() {
+function module_contributors_info()
+{
 	return array(
 		'name' => tra('Contributors'),
 		'description' => tra('Lists the contributors to the wiki page being viewed and some information on them.'),
-		'prefs' => array( 'feature_wiki' ),
+		'prefs' => array('feature_wiki'),
 		'params' => array()
 	);
 }
 
 // Hides contributors past the fifth until a link is clicked
-function module_contributors( $mod_reference, $module_params ) {
+function module_contributors($mod_reference, $module_params)
+{
 	global $smarty, $userlib, $wikilib, $tikilib, $headerlib;
 	$currentObject = current_object();
 	if ($currentObject['type'] == 'wiki page') {
-		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $currentObject['object'] ) );
+		$objectperms = Perms::get(array('type' => 'wiki page', 'object' => $currentObject['object']));
 		if ($objectperms->view) {
 			$contributors = $wikilib->get_contributors($currentObject['object']);
 			$contributors_details = array();

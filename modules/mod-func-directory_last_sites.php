@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_directory_last_sites_info() {
+function module_directory_last_sites_info()
+{
 	return array(
 		'name' => tra('Newest Directory Sites'),
 		'description' => tra('Displays the specified number of the directory sites most recently added.'),
-		'prefs' => array( 'feature_directory' ),
+		'prefs' => array('feature_directory'),
 		'params' => array(
 			'absurl' => array(
 				'name' => tra('Absolute URL'),
@@ -45,7 +46,8 @@ function module_directory_last_sites_info() {
 	);
 }
 
-function module_directory_last_sites( $mod_reference, $module_params ) {
+function module_directory_last_sites($mod_reference, $module_params)
+{
 	global $prefs, $tikilib, $smarty;
 	
 	if (isset($module_params['categoryId'])) {
@@ -53,16 +55,16 @@ function module_directory_last_sites( $mod_reference, $module_params ) {
 		$ranking = $dirlib->dir_list_sites($module_params['categoryId'], 0, $mod_reference["rows"]);
 	} else
 		$ranking = $tikilib->dir_list_all_valid_sites2(0, $mod_reference["rows"], 'created_desc', '');
+
 	$smarty->assign('modLastdirSites', $ranking["data"]);
 	$smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
 	
-		$smarty->assign('desc', isset($module_params['desc']) ? $module_params['desc'] : 'n');	
+	$smarty->assign('desc', isset($module_params['desc']) ? $module_params['desc'] : 'n');	
 
 	// only allow truncation if showing description
-	if ($module_params['desc'] != 'n'){
-		if ($module_params['maxdesc'] >= 1){
+	if ($module_params['desc'] != 'n') {
+		if ($module_params['maxdesc'] >= 1) {
 			$smarty->assign('maxdesc', $module_params['maxdesc']);	
 		}
 	}
-
 }

@@ -1,21 +1,22 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
 
-function module_wiki_last_comments_info() {
+function module_wiki_last_comments_info()
+{
 	return array(
 		'name' => tra('Newest Comments'),
 		'description' => tra('Lists the specified number of comments starting from the most recently posted.'),
-		'prefs' => array( ),
+		'prefs' => array(),
 		'params' => array(
 			'moretooltips' => array(
 				'name' => tra('More in tooltips'),
@@ -31,9 +32,11 @@ function module_wiki_last_comments_info() {
 	);
 }
 
-function module_wiki_last_comments( $mod_reference, $module_params ) {
+function module_wiki_last_comments($mod_reference, $module_params)
+{
 	if (!function_exists('module_last_comments')) {
-		function module_last_comments($limit, $type='wiki page') {
+		function module_last_comments($limit, $type='wiki page')
+		{
 			global $tikilib, $user;
 			$bindvars = array($type);
 			$where = '';
@@ -70,7 +73,7 @@ function module_wiki_last_comments( $mod_reference, $module_params ) {
 					case 'article':
 						$perm = 'tiki_p_read_article';
 						break;
-					default: 
+					default:
 						return null;
 					}
 				if ($tikilib->user_has_perm_on_object($user, $res['object'], $res['type'], $perm)) {
