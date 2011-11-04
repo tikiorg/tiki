@@ -5,15 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function upgrade_20110902_revert_rootCategId_addition_tiki( $installer )
+function upgrade_20110902_revert_rootCategId_addition_tiki($installer)
 {
-	$result = $installer->fetchAll( "SHOW COLUMNS FROM `tiki_categories` WHERE `Field`='rootCategId'");
+	$result = $installer->fetchAll("SHOW COLUMNS FROM `tiki_categories` WHERE `Field`='rootCategId'");
 	if ($result) {
-		$result = $installer->query( "ALTER TABLE `tiki_categories` DROP COLUMN `rootCategId`;" );
+		$result = $installer->query("ALTER TABLE `tiki_categories` DROP COLUMN `rootCategId`;");
 	}
 }

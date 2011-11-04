@@ -5,17 +5,17 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function upgrade_20110610_readd_sefurl_index_left_tiki( $installer )
+function upgrade_20110610_readd_sefurl_index_left_tiki($installer)
 {
-	$result = $installer->fetchAll( "SHOW INDEX FROM `tiki_sefurl_regex_out` WHERE `Key_name`='left'");
+	$result = $installer->fetchAll("SHOW INDEX FROM `tiki_sefurl_regex_out` WHERE `Key_name`='left'");
 
 	if ($result) {
-		$result = $installer->query( "DROP INDEX `left` ON `tiki_sefurl_regex_out`" );
+		$result = $installer->query("DROP INDEX `left` ON `tiki_sefurl_regex_out`");
 	}
-	$installer->query( "ALTER TABLE `tiki_sefurl_regex_out` ADD UNIQUE `left` (`left`(128))" );
+	$installer->query("ALTER TABLE `tiki_sefurl_regex_out` ADD UNIQUE `left` (`left`(128))");
 }

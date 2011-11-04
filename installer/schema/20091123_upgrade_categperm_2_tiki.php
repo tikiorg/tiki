@@ -5,12 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
+function upgrade_20091123_upgrade_categperm_2_tiki($installer)
+{
 /* second pass at upgrading version 3 category perms to v4 (for 4.1)
  * jonnyb 23 nov 2009
  * 
@@ -28,9 +29,9 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 	@$result = $installer->query($query);
 
 	$feature_cats = false;
-	if ( $result ) {
-		while ( $res = $result->fetchRow() ) {
-			if ( isset($res['value']) && $res['value'] == 'y' ) {
+	if ($result) {
+		while ($res = $result->fetchRow()) {
+			if (isset($res['value']) && $res['value'] == 'y') {
 				$feature_cats = true;
 			}
 		}
@@ -69,11 +70,11 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 		// first for group perms
 		$query = 'SELECT * FROM `users_grouppermissions` WHERE `permName` IN (\'' . $editString . '\')';
 		$test = 'SELECT COUNT(*) FROM `users_grouppermissions` WHERE `permName` = \'tiki_p_modify_object_categories\' AND `groupName`=?';
-		$insert = 'INSERT IGNORE into `users_grouppermissions` (`permName`, `groupName`) values ( \'tiki_p_modify_object_categories\',?)';
+		$insert = 'INSERT IGNORE into `users_grouppermissions` (`permName`, `groupName`) values (\'tiki_p_modify_object_categories\',?)';
 		
 		// add the perm tiki_p_modify_object_categories where  
 		$result = $installer->query($query);
-		while ($res = $result->fetchRow() ) {
+		while ($res = $result->fetchRow()) {
 			if (!$installer->getOne($test, array($res['groupName']))) {
 				$installer->query($insert, array($res['groupName']));
 			}
@@ -82,11 +83,11 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 		// then for object perms
 		$query = 'SELECT * FROM `users_objectpermissions` WHERE `permName` IN (\'' . $editString . '\')';
 		$test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = \'tiki_p_modify_object_categories\' AND `groupName`=? AND `objectType`=? AND `objectId`=?';
-		$insert = 'INSERT IGNORE into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values ( \'tiki_p_modify_object_categories\',?,?,?)';
+		$insert = 'INSERT IGNORE into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values (\'tiki_p_modify_object_categories\',?,?,?)';
 		
 		// add the perm tiki_p_modify_object_categories where  
 		$result = $installer->query($query);
-		while ($res = $result->fetchRow() ) {
+		while ($res = $result->fetchRow()) {
 			if (!$installer->getOne($test, array($res['groupName'], $res['objectType'], $res['objectId']))) {
 				$installer->query($insert, array($res['groupName'], $res['objectType'], $res['objectId']));
 			}
@@ -126,7 +127,7 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 		
 		// replace the perm tiki_p_search_categorized with the adequate set of perms for the objects
 		$result = $installer->query($query, array('tiki_p_search_categorized'));
-		while ($res = $result->fetchRow() ) {
+		while ($res = $result->fetchRow()) {
 			foreach ($view as $perm) {
 				if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
 					$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));

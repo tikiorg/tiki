@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -21,7 +21,8 @@ include_once('tiki-setup_base.php');
 // tiki-setup_base.php does.
 
 
-function upgrade_99999999_image_plugins_kill_tiki( $installer ) {
+function upgrade_99999999_image_plugins_kill_tiki($installer)
+{
 	global $tikilib, $installer;
 
 	include_once ('lib/profilelib/profilelib.php');

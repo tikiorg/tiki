@@ -5,12 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function upgrade_20100207_repair_file_galleries_tiki( $installer ) {
+function upgrade_20100207_repair_file_galleries_tiki($installer)
+{
 
 	$cant = $installer->getOne('SELECT COUNT(*) FROM `tiki_file_galleries` WHERE `parentId` = -1 and `type` <> \'system\'');
 	

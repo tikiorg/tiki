@@ -5,12 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function upgrade_20091103_upgrade_categperm_tiki( $installer) {
+function upgrade_20091103_upgrade_categperm_tiki($installer)
+{
 // $view describes what was supposed to be given by tiki_p_view_categorized
 // $edit describes what was supposed to be given by tiki_p_edit_categorized
 // these lists are probably incomplete
@@ -76,7 +77,7 @@ $test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND
 
 // replace the perm tiki_p_view_categorized with the adequate set of perms for the objects
 $result = $installer->query($query, array('tiki_p_view_categorized'));
-while ($res = $result->fetchRow() ) {
+while ($res = $result->fetchRow()) {
 	foreach ($view as $perm) {
 		if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
 			$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));
@@ -86,7 +87,7 @@ while ($res = $result->fetchRow() ) {
 
 // replace the perm tiki_p_edit_categorized with the adequate set of perms for the objects 
 $result = $installer->query($query, array('tiki_p_edit_categorized'));
-while ($res = $result->fetchRow() ) {
+while ($res = $result->fetchRow()) {
 	foreach ($edit as $perm) {
 		if (!$installer->getOne($test, array($perm, $res['groupName'], $res['objectType'], $res['objectId']))) {
 			$installer->query($insert, array($perm, $res['groupName'], $res['objectType'], $res['objectId']));
