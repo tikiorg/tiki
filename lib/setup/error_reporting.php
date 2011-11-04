@@ -16,7 +16,7 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 } elseif ($prefs['error_reporting_level'] == 2039) {
 	$errorReportingLevel = E_ALL & ~E_NOTICE;
 } elseif ($prefs['error_reporting_level'] == -1) {
-	$errorReportingLevel = E_ALL;
+	$errorReportingLevel = E_ALL | E_STRICT; // Play safe, as E_ALL did not include E_STRICT before PHP 5.4...
 } elseif ($prefs['error_reporting_level'] == 1) {
 	$errorReportingLevel = error_reporting();
 } else {
