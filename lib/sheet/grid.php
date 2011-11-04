@@ -1119,6 +1119,15 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 					$sheet->setCalculation( substr($col, 1) );
 				}
 				
+				if (is_array($col)) {
+					foreach($col as $colKey => $val) {
+						if (empty($val)) {
+							array_splice($col, $colKey, 1);
+						}
+					}
+					$col = implode(",", $col);
+				}
+				
 				$sheet->setValue( $i == 0 ? $key : $col );
 				
 				$sheet->setSize( 1, 1 );

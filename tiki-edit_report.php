@@ -63,11 +63,11 @@ $headerlib->add_jq_onready("
 			values: $('#reportEditor').serializeArray(),
 			preview: $('#reportType').val()
 		}, function(o) {
-			var jS = $('#reportDebug').getSheet();
+			var jS = $('#reportSheetPreview').getSheet();
 			if (jS) {
 				jS.openSheet(o);
 			} else {
-				$('#reportDebug')
+				$('#reportSheetPreview')
 					.html($(o).attr('title', tr('Preview')))
 					.sheet({
 						buildSheet: true,
@@ -107,6 +107,7 @@ $headerlib->add_jq_onready("
 		
 		return false;
 	});
+	
 ");
 
 $smarty->assign('definitions', Report_Builder::listDefinitions());

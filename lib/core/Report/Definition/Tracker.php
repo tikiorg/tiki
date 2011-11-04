@@ -46,8 +46,19 @@ class Report_Definition_Tracker
 					"key"=> 		"tracker",
 					"type"=> 		"single",
 					"values"=> 		"trackers",
-					"repeats"=>		false,
 					"required"=>	true,
+					"join"=>	array(
+						"label" =>	tr("Join"),
+						"type"	=>	"inner",
+						"relationLabel"=>tr(" on "),
+						"on" => 	array(
+							"dependancyLabel" => tr("Field"),
+							"keyDependancy" => "tracker_fields",
+							"dependancyValues" => "trackerFields",
+							"values" => "trackers",
+							"label" => "Tracker",
+						),
+					),
 					"options" =>	array(
 						array(
 							"label"=> 		tr("Start"),
@@ -71,14 +82,6 @@ class Report_Definition_Tracker
 							"required"=>	false,
 						),
 						array(
-							"label"=> 		tr("Status"),
-							"key"=> 		"status",
-							"type"=> 		"multi",
-							"values"=> 		"trackerItemStatus",
-							"repeats"=>		false,
-							"required"=>	false,
-						),
-						array(
 							"label"=> 		tr("Search"),
 							"relationLabel"=>tr(" for "),
 							"key"=> 		"search",
@@ -86,6 +89,14 @@ class Report_Definition_Tracker
 							"dependancy"=>	array("tracker"),
 							"values"=> 		array("trackerFields"),
 							"repeats"=>		true,
+							"required"=>	false,
+						),
+						array(
+							"label"=> 		tr("Status"),
+							"key"=> 		"status",
+							"type"=> 		"multi",
+							"values"=> 		"trackerItemStatus",
+							"repeats"=>		false,
 							"required"=>	false,
 						),
 						array(
