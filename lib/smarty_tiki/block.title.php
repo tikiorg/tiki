@@ -33,7 +33,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	if ( ! isset($params['admpage']) ) $params['admpage'] = '';
 	if ( ! isset($params['url']) ) {
 		require_once $smarty->_get_plugin_filepath('function', 'query');
-		$params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
+		$params['url'] = htmlspecialchars(smarty_function_query(array('_type' => 'absolute_path'), $smarty));
 	}
 
 	// Set the variable for the HTML title tag
@@ -53,7 +53,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	}
 
 	$html = '<h1>';
-	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . htmlspecialchars($params['url'], ENT_QUOTES) . '">' . $content . "</a>\n";
+	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . $content . "</a>\n";
   
   if ($smarty->get_template_vars('print_page') != 'y') {
 	  if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
