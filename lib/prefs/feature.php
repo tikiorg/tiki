@@ -2178,7 +2178,18 @@ function prefs_feature_list($partial = false) {
 		'feature_hotwords_nw' => array(
 			'name' => tra('Open Hotwords in new window'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_hotwords',
+			),
 			'default' => 'n',
+		),
+		'feature_hotwords_sep' => array(
+			'name' => tra('Characters that limit a hotword'),
+			'type' => 'text',
+			'dependencies' => array(
+				'feature_hotwords',
+			),
+			'default' => ' \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"',
 		),
 		'feature_use_quoteplugin' => array(
 			'name' => tra('Use Quote plugin rather than ">" for quoting'),

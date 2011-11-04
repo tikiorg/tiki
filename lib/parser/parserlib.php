@@ -1382,7 +1382,8 @@ if ( \$('#$id') ) {
 
 		// Replace Hotwords
 		if ($prefs['feature_hotwords'] == 'y') {
-			$sep =  " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"";
+			$sep =  $prefs['feature_hotwords_sep'];
+			$sep = empty($sep)? " \n\t\r\,\;\(\)\.\:\[\]\{\}\!\?\"":"$sep";
 			foreach ($words as $word => $url) {
 				// \b is a word boundary, \s is a space char
 				$pregword = preg_replace("/\//", "\/", $word);

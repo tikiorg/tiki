@@ -80,6 +80,7 @@
 				{preference name=feature_hotwords}
 				<div class="adminoptionboxchild" id="feature_hotwords_childcontainer">
 					{preference name=feature_hotwords_nw}
+					{preference name=feature_hotwords_sep}
 				</div>
 				{preference name=feature_use_quoteplugin}
 				{preference name=feature_use_three_colon_centertag}
