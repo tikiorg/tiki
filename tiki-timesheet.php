@@ -84,13 +84,19 @@ $headerlib->add_jq_onready("
 		
 		var jS = $('#timesheetSpreadsheet').getSheet();
 		if (jS) {
-			jS.openSheet(table);
+			$('#timesheetSpreadsheet')
+				.unbind('visible')
+				.visible(function() {
+					jS.openSheet(table);
+				});
 		} else {		
 			$('#timesheetSpreadsheet')
-				.sheet({
-					buildSheet: table,
-					editable: false,
-					height: $('#jtrack-holder').height()
+				.visible(function() {
+					$(this).sheet({
+						buildSheet: table,
+						editable: false,
+						height: $('#jtrack-holder').height()
+					});
 				});
 		}
 	};
