@@ -12,7 +12,7 @@
 		{/if}
 	</ul>
 	<div id="tab1">
-		<div id="jtrack-holder">
+		<div id="jtrack-holder" style="margin: 0px;">
 			<div id="jtrack-bar">
 				<a href="#" class="jtrack-create">New task</a> |
 				<a href="#" class="jtrack-remove-all">Delete all</a> |
@@ -76,7 +76,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="tab2">
+	<div id="tab2" style="padding: 0px;">
 		{if $timeSheetProfileLoaded eq true}
 			{button _text="{tr}Commit Time Sheet Items{/tr}" _id="timeSheetCommit"}
 		{/if}
@@ -85,7 +85,7 @@
 		</div>
 	</div>
 	{if $timeSheetProfileLoaded eq true}
-		<div id="tab3">
+		<div id="tab3" style="padding: 0px;">
 			{if $all eq false}
 				{button _text="{tr}View All{/tr}" href="tiki-timesheet.php" all="true"}
 			{else}

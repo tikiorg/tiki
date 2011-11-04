@@ -20,7 +20,10 @@ function wikiplugin_timesheet_info() {
 }
 
 function wikiplugin_timesheet($data, $params) {
+	global $tikilib, $tiki_p_view_trackers, $tiki_p_create_tracker_items;
 	extract ($params,EXTR_SKIP);
+	
+	if ( $tiki_p_view_trackers != "y" || $tiki_p_create_tracker_items != "y") return "";
 	
 	TikiLib::lib("header")->add_cssfile("lib/jquery/jtrack/css/jtrack.css");
 	TikiLib::lib("header")->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js");

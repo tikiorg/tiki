@@ -1,5 +1,5 @@
 {* $Id: wikiplugin_sheet.tpl 35178 2011-07-02 11:44:28Z gta74 $ *}
-<div id="timesheet" class="ui-widget-content ui-corner-all" style="width: auto; display: table; text-align: center; padding-bottom: 15px;">
+<div id="timesheet" class="ui-widget-content ui-corner-all" style="display: table; text-align: center; padding-bottom: 15px;">
 	<div class="ui-widget-header ui-corner-top">{tr}Mini TimeSheet{/tr} {button href="tiki-timesheet.php" _text="{tr}Full View{/tr}"}</div>
 	<div id="jtrack-holder" style="margin: 5px;text-align: left;">
 		<div id="jtrack-bar">

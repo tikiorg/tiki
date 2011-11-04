@@ -7,6 +7,8 @@
 
 require_once('tiki-setup.php');
 $access->check_feature(array('feature_time_sheet','feature_trackers'));
+$access->check_permission_either( array('tiki_p_view_trackers', 'tiki_p_create_tracker_items') );
+
 global $user;
 $auto_query_args = array(
 	'all',
@@ -107,10 +109,12 @@ $headerlib->add_jq_onready("
 	
 	$.timesheetSpreadsheet();
 	
-	$('#timeSheetSaved').sheet({
-		buildSheet: true,
-		editable: false,
-		height: $('#jtrack-holder').height()
+	$('#timeSheetSaved').visible(function() {
+		$(this).sheet({
+			buildSheet: true,
+			editable: false,
+			height: $('#jtrack-holder').height()
+		});
 	});
 	
 	$('#timeSheetCommit').click(function() {
@@ -134,7 +138,9 @@ $headerlib->add_jq_onready("
 		}
 	});
 	
-	$('#timeSheetTabs').tabs();
+	$('#timeSheetTabs')
+		.width($('#timeSheetTabs').parent().width())
+		.tabs();
 ");
 $smarty->assign('mid', 'tiki-timesheet.tpl');
 // use tiki_full to include include CSS and JavaScript
