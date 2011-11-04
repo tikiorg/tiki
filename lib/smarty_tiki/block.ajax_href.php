@@ -10,14 +10,10 @@
  * @package Smarty
  * @subpackage plugins
  *
- * smarty_block_ajax_href creates the href for a link in Smarty accoring to AJAX prefs
+ * smarty_block_ajax_href creates the href for a link in Smarty according to AJAX prefs
  *
  * Params:
  *
- * 	template	-	template to load (e.g. tiki-admin.tpl)
- * 	htmlelement	-	destination div (usually) to load request into
- * 	function	-	xajax registered function to call - default: loadComponent	// AJAX_TODO?
- * 	scrollTo	-	x,y coords to scroll to on click (e.g. "0,0")
  * 	_onclick	-	extra JS to run first onclick
  *
  */
@@ -29,8 +25,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 {
-	global $prefs, $user;
-
 	if ( $repeat ) return;
 
 	if ( !empty($params['_onclick']) ) {
@@ -41,17 +35,8 @@ function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 	} else {
 		$onclick = '';
 	}
-	$url = $content;
-	$template = $params['template'];
-	if ( !empty($params['htmlelement']) ) {
-		$htmlelement = $params['htmlelement'];
-	} else {
-		$htmlelement = 'role_main';
-	}
-	$def_func = (isset($params['scrollTo']) ? 'window.scrollTo('.$params['scrollTo'].');' : '') . 'loadComponent';
-	$func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
-	$last_user = htmlspecialchars($user);
-	$attributes = " href=\"" . htmlspecialchars($url, ENT_QUOTES) . '" ';
+
+	$attributes = " href=\"" . htmlspecialchars($content, ENT_QUOTES) . '" ';
 	if ($onclick) {
 		$attributes .= "onclick=\"$onclick\" ";
 	}
