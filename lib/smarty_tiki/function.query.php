@@ -149,7 +149,7 @@ function smarty_function_query($params, $smarty) {
 					'action' => $params['action'],
 				), $smarty);
 			} else {
-				$php_self = $_SERVER['PHP_SELF'];
+				$php_self = htmlspecialchars($_SERVER['PHP_SELF']);
 			}
 
 		} else {
