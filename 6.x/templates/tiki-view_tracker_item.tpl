@@ -18,6 +18,9 @@
     {/if}
   {/if}
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
+  {if $item_info.logs.cant}
+      <a class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon _id='database' align='right' alt="{tr}History{/tr}"}</a>
+  {/if}
 
   {if $tiki_p_list_trackers eq 'y' or $tiki_p_admin_trackers eq 'y'}
 		{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
