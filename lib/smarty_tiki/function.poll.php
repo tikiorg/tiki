@@ -48,7 +48,8 @@ function smarty_function_poll($params, $smarty) {
 		  $smarty->assign('ownurl','tiki-poll_results.php?pollId='.$id);
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels);
-      $smarty->display('tiki-poll.tpl');
+      $ret = $smarty->fetch('tiki-poll.tpl');
+      return $ret;
 	}
     }
 }
