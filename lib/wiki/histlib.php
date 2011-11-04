@@ -298,7 +298,6 @@ class HistLib extends TikiLib
 
 	// This function get the last changes from pages from the last $days days
 	// if days is 0 this gets all the registers
-	// function parameters modified by ramiro_v on 11/03/2002
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
 	        global $user;
 
@@ -325,23 +324,21 @@ class HistLib extends TikiLib
 			$bindvars[] = $toTime;
 		}
 
-		$query = "select distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`, thf.`comment`, thf.`version`, thf.`versionlast` from `tiki_actionlog` ta 
-			inner join (select NULL as version, `comment`, `pageName`, `lastModif`, '1' as versionlast from tiki_pages union select `version`, `comment`, `pageName`, `lastModif`, '0' as versionlast from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where . " order by ta.".$this->convertSortMode($sort_mode);
-
-		$query_cant = "select count(distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`object`, thf.`versionlast`) from `tiki_actionlog` ta 
-			inner join (select `pageName`, `lastModif`, '1' as versionlast from tiki_pages union select `pageName`, `lastModif`, '0' as versionlast from `tiki_history`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where;
+		// WARNING: This assumes the current version of each page will be found in tiki_history
+		$query = "select distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`, thf.`comment`, thf.`version`, thf.`page_id` from `tiki_actionlog` ta 
+			inner join (select th.`version`, th.`comment`, th.`pageName`, th.`lastModif`, tp.`page_id` from `tiki_history` as th LEFT OUTER JOIN `tiki_pages` tp ON tp.`pageName` = th.`pageName` AND tp.`version` = th.`version`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where . " order by ta.".$this->convertSortMode($sort_mode);
 
 		$result = $this->fetchAll($query,$bindvars,$limit,$offset);
 		$result = Perms::filter( array( 'type' => 'wiki page' ), 'object', $result, array( 'object' => 'object' ), 'view' );
-		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		$retval = array();
 		foreach( $result as $res ) {
+			$res['current'] = isset($res['page_id']);
 			$res['pageName'] = $res['object'];
 			$ret[] = $res;
 		}
 		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval["cant"] = count($ret);
 		return $retval;
 	}
 	function get_nb_history($page) {
