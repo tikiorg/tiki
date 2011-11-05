@@ -33,14 +33,14 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
   if ( ! isset($params['admpage']) ) $params['admpage'] = '';
   if ( ! isset($params['url']) ) {
 	  require_once $smarty->_get_plugin_filepath('function', 'query');
-	  $params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
+	  $params['url'] = htmlspecialchars(smarty_function_query(array('_type' => 'absolute_path'), $smarty));
   }
 
 	// Set the variable for the HTML title tag
 	$smarty->assign( 'headtitle', $content );
   
   $html = '<h1>';
-  $html .= '<a class="pagetitle" href="' . htmlspecialchars($params['url'], ENT_QUOTES) . '">' . $content . "</a>\n";
+  $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";
   
   if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
     $html .= '<a href="' . $prefs['helpurl'] . $params['help'] . '" class="titletips" title="' . tra('Help page:') . ' ' . $content . '">'
