@@ -26,6 +26,12 @@ class ScoreLib extends TikiLib
 		return $this->getOne("select count(*)+1 from `users_users` where `score` > ? and `login` <> ?",array((int)$score,'admin'));
 	}
 
+	// User's score on site
+	// allows getting score of a single user
+	function get_user_score($user) {
+		$score = $this->getOne("select `score` from `users_users` where `login`=?",array($user));
+		return $score;
+	}
 
 	// Number of users that go on ranking
 	function count_users() {
