@@ -9,10 +9,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_users_own_rank_info() {
 	return array(
 		'name' => tra('My Score'),
-		'description' => tra('AAAAAAA.'),
+		'description' => tra('Displays the loggued user\'s rank and score.'),
 		'prefs' => array( 'feature_score' ),
-		'params' => array(),
-		'common_params' => array('nonums')
+		'params' => array()
 	);
 }
 
