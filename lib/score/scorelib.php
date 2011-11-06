@@ -13,8 +13,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 class ScoreLib extends TikiLib
@@ -46,7 +46,7 @@ class ScoreLib extends TikiLib
 		$result = $this->query($query,array());
 		$index = array();
 		while ($res = $result->fetchRow()) {
-		    $index[$res['event']] = $res;
+			$index[$res['event']] = $res;
 		}
 
 		// load $events
@@ -54,30 +54,32 @@ class ScoreLib extends TikiLib
 
 		$event_list = array();
 		foreach ($events as $event_data) {
-		    $features = preg_split('/(\s|,)+/',$event_data[0]);
-		    $show = true;
-		    foreach ($features as $feature) {
-			if (!empty($feature)) {
-			    if ($prefs[$feature] != 'y') {
-				$show = false;
-			    }
+			$features = preg_split('/(\s|,)+/',$event_data[0]);
+			$show = true;
+			foreach ($features as $feature) {
+				if (!empty($feature)) {
+					if ($prefs[$feature] != 'y') {
+						$show = false;
+					}
+				}
 			}
-		    }
-		    if ($show) {
-			$event = array('category'    => $event_data[1],
-				       'event'       => $event_data[2],
-				       'description' => $event_data[3],
-				       'score'       => $event_data[4],
-				       'expiration'  => $event_data[5]);
+			if ($show) {
+				$event = array(
+					'category'    => $event_data[1],
+					'event'       => $event_data[2],
+					'description' => $event_data[3],
+					'score'       => $event_data[4],
+					'expiration'  => $event_data[5]
+				);
 
-			$event_name = $event_data[2];
-			if (isset($index[$event_name])) {
-			    $event['score']       = $index[$event_name]['score'];
-			    $event['expiration']  = $index[$event_name]['expiration'];
+				$event_name = $event_data[2];
+				if (isset($index[$event_name])) {
+					$event['score']      = $index[$event_name]['score'];
+					$event['expiration'] = $index[$event_name]['expiration'];
+				}
+
+				$event_list[] = $event;
 			}
-
-			$event_list[] = $event;
-		    }
 		}
 
 		return $event_list;
@@ -85,13 +87,13 @@ class ScoreLib extends TikiLib
 
 	// Read information from admin and updates event's punctuation
 	function update_events($events) {
-	    foreach ($events as $event_name => $event) {
-		$query = "delete from `tiki_score` where `event`=?";
-		$this->query($query, array($event_name));
+		foreach ($events as $event_name => $event) {
+			$query = "delete from `tiki_score` where `event`=?";
+			$this->query($query, array($event_name));
 
-		$query = "insert into `tiki_score` (`event`,`score`,`expiration`) values (?,?,?)";
-		$this->query($query,array($event_name, (int) $event['score'], $event['expiration']));
-	    }
+			$query = "insert into `tiki_score` (`event`,`score`,`expiration`) values (?,?,?)";
+			$this->query($query,array($event_name, (int) $event['score'], $event['expiration']));
+		}
 	}
 
 }
