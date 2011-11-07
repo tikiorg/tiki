@@ -99,7 +99,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 			}
 		}
 	}
-	if ($type == 'category' && !empty($title)) {
+	if ($type == 'category' && !empty($title) && $with_title == 'y') {
 		$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
 		$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
 		$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);	
@@ -114,7 +114,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 			$tpl_output = preg_replace('/' . $regex['left'] . '/', $regex['right'], $tpl_output);
 		}
 	}
-	if (!empty($title)) {
+	if (!empty($title) && $with_title == 'y') {
 		$tpl_output.= TITLE_SEPARATOR . $title;
 	}
 	if (is_array($prefs['feature_sefurl_paths'])) {
