@@ -1,4 +1,4 @@
-<form method="post" action="">
+<form target="_blank" method="post" action="">
 	<div style="overflow: hidden; width: 90px; float: left;">
 		<input type="hidden" name="bbb" value="{$bbb_meeting|escape}"/>
 		<input type="image" name="join" src="{$bbb_image|escape}" title="{tr}Join{/tr}"/>
