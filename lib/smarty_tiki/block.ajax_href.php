@@ -47,5 +47,5 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     $func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
     $last_user = htmlspecialchars($user);
 
-	return " href=\"" . htmlspecialchars($url, ENT_QUOTES) . '" ';
+	return " href=\"" . $url . '" ';
 }
