@@ -51,7 +51,7 @@ function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 	$def_func = (isset($params['scrollTo']) ? 'window.scrollTo('.$params['scrollTo'].');' : '') . 'loadComponent';
 	$func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
 	$last_user = htmlspecialchars($user);
-	$attributes = " href=\"" . htmlspecialchars($url, ENT_QUOTES) . '" ';
+	$attributes = " href=\"" . $url . '" ';
 	if ($onclick) {
 		$attributes .= "onclick=\"$onclick\" ";
 	}
