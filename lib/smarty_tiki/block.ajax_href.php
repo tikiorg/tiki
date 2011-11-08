@@ -35,17 +35,8 @@ function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 	} else {
 		$onclick = '';
 	}
-	$url = htmlspecialchars($content, ENT_QUOTES);
-	$template = $params['template'];
-	if ( !empty($params['htmlelement']) ) {
-		$htmlelement = $params['htmlelement'];
-	} else {
-		$htmlelement = 'role_main';
-	}
-	$def_func = (isset($params['scrollTo']) ? 'window.scrollTo('.$params['scrollTo'].');' : '') . 'loadComponent';
-	$func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
-	$last_user = htmlspecialchars($user);
-	$attributes = " href=\"" . $url . '" ';
+
+	$attributes = " href=\"" . $content . '" ';
 	if ($onclick) {
 		$attributes .= "onclick=\"$onclick\" ";
 	}
