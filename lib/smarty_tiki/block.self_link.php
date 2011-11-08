@@ -158,5 +158,7 @@ function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 		$ret = smarty_function_query($params, $smarty);
 	}
 
+	$ret = str_replace('&amp;amp;', '&amp;', $ret);
+
 	return $ret;
 }
