@@ -8,8 +8,8 @@
 function wikiplugin_dialog_info() {
 	return array(
 		'name' => tra('Dialog'),
-		//'documentation' => 'PluginDialog',
-		//'validate' => 'all',	TODO uncomment before release!
+		'documentation' => 'PluginDialog',
+		'validate' => 'all',
 		'description' => tra('Create a jQuery-UI dialog'),
 		'prefs' => array( 'wikiplugin_dialog', 'feature_jquery_ui' ),
 		'body' => tra('text'),
@@ -24,10 +24,10 @@ function wikiplugin_dialog_info() {
 			'buttons' => array(
 				'required' => false,
 				'name' => tra('Buttons'),
-				'description' => tra('Button labels separated by colons.'),
+				'description' => tra('Button labels separated by commas.'),
 				'filter' => 'text',
 				'separator' => ',',
-				'default' => tra('Ok') . ':' . tra('Cancel'),
+				'default' => tra('Ok') . ',' . tra('Cancel'),
 			),
 			'actions' => array(
 				'required' => false,
@@ -89,7 +89,7 @@ function wikiplugin_dialog_info() {
 			'openAction' => array(
 				'required' => false,
 				'name' => tra('Open Action'),
-				'description' => tra('JS to exectute when dialog opens.'),
+				'description' => tra('JS to execute when dialog opens.'),
 				'filter' => 'rawhtml_unsafe',
 				'default' => '',
 			),
@@ -162,7 +162,7 @@ function wikiplugin_dialog($data, $params) {
 	if (empty($params['title'])) {
 		$titlestr = '';
 	} else {
-		$titlestr = ' ' . $params['title'];
+		$titlestr = ' title="' . $params['title'] . '"';
 	}
 	$html = '<div id="'.$params['id'].'"'.$titlestr.' style="display:none">'.$data.'</div>';
 
