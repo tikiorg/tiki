@@ -2781,18 +2781,18 @@ class TrackerLib extends TikiLib
 	/* tests if a value exists in a field
 	 */
 	function check_field_value_exists($value, $fieldId, $exceptItemId = 0) {
-		$fields = $this->fields();
-
+		$itemFields = $this->itemFields();
+		
 		$conditions = array(
 			'fieldId' => (int) $fieldId,
 			'value' => $value,
 		);
 		
 		if ($exceptItemId > 0) {
-			$conditions['itemId'] = $fields->not((int) $exceptItemId);
+			$conditions['itemId'] = $itemFields->not((int) $exceptItemId);
 		}
 
-		return $fields->fetchCount($conditions) > 0;
+		return $itemFields->fetchCount($conditions) > 0;
 	}
 
 	function is_multilingual($fieldId){
