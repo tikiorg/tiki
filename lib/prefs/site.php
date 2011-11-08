@@ -92,14 +92,6 @@ function prefs_site_list() {
 			'default' => 'image/png',
 			'tags' => array('basic'),
 		),
-		'site_favicon_msie' => array(
-			'name' => tra('MS Internet Exploder Favicon .ico file name'),
-			'type' => 'text',
-			'size' => '50',
-			'hint' => 'IE can only use .ico type favicons. This setting, if not empty, will override the regular favicon when the users browser is IE.',
-			'default' => '',
-			'tags' => array('experimental'),
-		),
 		'site_terminal_active' => array(
 			'name' => tra('Site Terminal'),
 			'description' => tra('Allows to direct users to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),

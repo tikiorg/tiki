@@ -59,7 +59,9 @@ foreach ( $matches as $match )
 
 			$parts = array();
 			foreach ( $values as $key => $value ) {
-				$parts[] = "$key=\"" . str_replace( '"', "\\\"", $value ) . '"';
+				if ($value) {
+					$parts[] = "$key=\"" . str_replace( '"', "\\\"", $value ) . '"';
+				}
 			}
 
 			$params = implode( ' ', $parts );

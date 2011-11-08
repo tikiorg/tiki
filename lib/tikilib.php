@@ -4869,7 +4869,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $url_scheme, $url_host, $url_port, $prefs;
 
-		if ( $isUserSpecific && $prefs['https_external_links_for_users'] == 'y' ) {
+		if ( $isUserSpecific && $prefs['https_login'] != 'disabled' && $prefs['https_external_links_for_users'] == 'y' ) {
 			$scheme = 'https';
 		} else {
 			$scheme = $url_scheme;

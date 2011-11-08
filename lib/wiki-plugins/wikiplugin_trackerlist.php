@@ -674,6 +674,7 @@ function wikiplugin_trackerlist_info() {
 				'description' => tr('Time unit used with "Period quantity"'),
 				'filter' => 'word',
 				'options' => array(
+					array('text' => tr('Hour'), 'value' => 'hour'),
 					array('text' => tr('Day'), 'value' => 'day'),
 					array('text' => tr('Week'), 'value' => 'week'),
 					array('text' => tr('Month'), 'value' => 'month'),
@@ -806,6 +807,9 @@ function wikiplugin_trackerlist($data, $params) {
 		
 		if (isset($periodQuantity)) {
 			switch ($periodUnit) {
+				case 'hour':
+					$periodUnit = 3600;
+					break;
 				case 'day':
 					$periodUnit = 86400;
 					break;

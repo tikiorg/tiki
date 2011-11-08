@@ -67,6 +67,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 	if ($check && !$tikilib->page_exists($_REQUEST['page'])) {
 
 		$homePageLang = $prefs['language'];
+		$profilesLink = 'tiki-admin.php?profile=&categories%5B%5D=8.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2';
 
 		// Default HomePage content
 		$homePageContent = "{GROUP(groups=Admins)}\n";
@@ -85,31 +86,31 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 		$homePageContent .= '*' . tr('You already know Tiki') . "\n\n";
 		$homePageContent .= "{DIV}{DIV(width=\"48%\",float=\"left\")}\n";
 		$homePageContent .= '-=' . tr('Easy Setup using Profiles') . "=-\n";
-		$homePageContent .= '!![tiki-admin.php?profile=&categories%5B%5D=7.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2|' . tr('Get Started using Profiles') . "]\n";
+		$homePageContent .= '!![' . $profilesLink . '|' . tr('Get Started using Profiles') . "]\n";
 		$homePageContent .= '__' . tr('Who Should Use This') . "__\n";
 		$homePageContent .= '*' . tr('You want to get started quickly') . "\n";
 		$homePageContent .= '*' . tr("You don't feel like learning the Admin Panel right away") . "\n";
 		$homePageContent .= '*' . tr("You want to quickly test out some of Tiki's Features") . "\n\n";
 		$homePageContent .= '!!' . tr('Featured Profiles') . "\n\n";
-		$homePageContent .= tr('__Collaborative Community__ ([%0|apply profile now])', 'tiki-admin.php?profile=&categories%5B%5D=7.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2') . "\n";
+		$homePageContent .= tr('__Collaborative Community__ ([%0|apply profile now])', $profilesLink) . "\n";
 		$homePageContent .= tr('Setup to help subject experts and enthusiasts work together to build a Knowledge Base') . "\n";
 		$homePageContent .= '*' . tr('Wiki Editing') . "\n";
 		$homePageContent .= '*' . tr('Personal Member Spaces'). "\n";
 		$homePageContent .= '*' . tr('Forums') . "\n";
 		$homePageContent .= '*'. tr('Blogs') . "\n\n";
-		$homePageContent .= tr('__Personal Blog and Profile__ ([%0|apply profile now])', 'tiki-admin.php?profile=&categories%5B%5D=7.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2') . "\n";
+		$homePageContent .= tr('__Personal Blog and Profile__ ([%0|apply profile now])', $profilesLink) . "\n";
 		$homePageContent .= tr('Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere') . "\n";
 		$homePageContent .= '*' . tr('Blog (Full set of blog related features)') . "\n";
 		$homePageContent .= '*' . tr('Image Gallery') . "\n";
 		$homePageContent .= '*' . tr('RSS Integration') . "\n";
 		$homePageContent .= '*' . tr('Video Log') . "\n\n";
-		$homePageContent .= tr('__Company Intranet__ ([%0|apply profile now])', 'tiki-admin.php?profile=&categories%5B%5D=7.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2') . "\n";
+		$homePageContent .= tr('__Company Intranet__ ([%0|apply profile now])', $profilesLink) . "\n";
 		$homePageContent .= tr('Setup for a Corporate Intranet of a typical medium-sized business.') . "\n";
 		$homePageContent .= '*' . tr('Company News Articles') . "\n";
 		$homePageContent .= '*' . tr('Executive Blog') . "\n";
 		$homePageContent .= '*' . tr('File Repository & Management') . "\n";
 		$homePageContent .= '*' . tr('Collaborative Wiki') . "\n\n";
-		$homePageContent .= tr('__Small Organization Web Presence__ ([%0|apply profile now])', 'tiki-admin.php?profile=&categories%5B%5D=7.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2') . "\n";
+		$homePageContent .= tr('__Small Organization Web Presence__ ([%0|apply profile now])', $profilesLink) . "\n";
 		$homePageContent .= tr('Setup for a Web Presence of a typical small business or non-profit.') . "\n";
 		$homePageContent .= '*' . tr('Company News & Updates') . "\n";
 		$homePageContent .= '*' . tr("Highlight Company's Products and Services") . "\n";

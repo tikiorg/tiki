@@ -519,10 +519,12 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($autosavefields)) {
 					$auto_fieldId = array_merge($auto_fieldId, $autosavefields);
 				}
-				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '1%');	// user owner
-				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '2%');	// user modifier
-				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '1%');	// owner group
-				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '2%');	// owner modifier
+				if ($user) {
+					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '1%');	// user owner
+					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '2%');	// user modifier
+					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '1%');	// owner group
+					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '2%');	// owner modifier
+				}
 				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'I', '1%');	// IP auto-assign
 				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'k', '1%');	// page creator
 				$auto_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'q');	// auto-increment	
@@ -1006,7 +1008,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
 					$customvalidation_m .= 'name: { required: "' . tra("This field is required") . '"}, ';
-					if ($prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
+					if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox') && $prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
 						// antibot validation   
 						$customvalidation .= '"captcha[input]": { ';
 						$customvalidation .= 'required: true, ';
