@@ -7627,7 +7627,7 @@ if( \$('#$id') ) {
 	function httpPrefix( $isUserSpecific = false ) {
 		global $url_scheme, $url_host, $url_port, $prefs;
 
-		if( $isUserSpecific && $prefs['https_external_links_for_users'] == 'y' ) {
+		if( $isUserSpecific && $prefs['https_login'] != 'disabled' && $prefs['https_external_links_for_users'] == 'y' ) {
 			$scheme = 'https';
 		} else {
 			$scheme = $url_scheme;
