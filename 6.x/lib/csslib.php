@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,24 +13,42 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class cssLib extends TikiLib
 {
+	function list_css($path, $recursive=false) {
+		$files = $this->list_files($path, '.css', $recursive);
+		foreach ($files as $i=>$file) {
+			$files[$i] = preg_replace("|^$path/(.*)\.css$|", '$1', $file);
+		}
+		return $files;
+	}
 
-	function list_css($path) {
+	function list_files($path, $extension, $recursive) {
 		$back = array();
 
-		$oldir = getcwd();
-		chdir ($path);
-		$handle = opendir('.');
+		$handle = opendir($path);
 
-		while ($file = basename(readdir($handle))) {
-			if ((substr($file, -4, 4) == ".css") and (preg_match('/^[-_a-zA-Z0-9\.]*$/', $file))) {
-				$back[] = substr($file, 0, -4);
+		while ($file = readdir($handle)) {
+			if ((substr($file, -4, 4) == $extension) and (preg_match('/^[-_a-zA-Z0-9\.]*$/', $file))) {
+				$back[] = "$path/$file";
+			} elseif ($recursive && $file != '.svn' && $file != '.' && $file != '..' && is_dir("$path/$file") && !file_exists("db/$file/local.php")) {
+				$back = array_merge($back, $this->list_files("$path/$file", $extension, $recursive));
 			}
 		}
-
-		chdir ($oldir);
+		closedir($handle);
 		sort($back);
 		return $back;
 	}
+
+	/* nickname = fivealive or Bidi/Bidi */
+	/* write = in multidomain we always write in subdir domain but we read domain/file if exists or file */
+	function get_nickname_path($nickname, $styledir, $write=false) {
+		global $tikidomain;
+		if (!strstr($nickname, '\/') && !empty($tikidomain) && (is_file("$styledir/$tikidomain/$nickname.css") || $write)) {
+			$style = "$styledir/$tikidomain/$nickname.css";
+		} else {
+			$style = "$styledir/$nickname.css";
+		}
+		return $style;
+}		
 
 	function browse_css($path) {
 		if (!is_file($path)) {
@@ -145,7 +163,7 @@ class cssLib extends TikiLib
 			return false;
 		$data = implode("", file($path));
 		$pos = strpos($data, "@version");
-		if( $pos === false ) { return false; }
+		if ( $pos === false ) { return false; }
 		// get version
 		preg_match("/(@[V|v]ersion):?\s?([\d]+)\.([\d]+)/i",
 		$data, $matches);
