@@ -37,7 +37,7 @@
 	<input type="submit" name="edit" value="{tr}Edit{/tr}" />
 
 	{section name=l loop=$css}
-	<div style="padding:4px;">
+	<div style="padding:4px;text-align:left">
 		<div style="float:right;">{$css[l].id|escape}</div>
 		<div class="comment"><pre><em>{$css[l].comment|escape}</em></pre></div>
 		{section name=i loop=$css[l].items}
