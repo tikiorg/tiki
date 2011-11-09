@@ -1,13 +1,13 @@
 {if $ratings|@count and $tiki_p_wiki_view_ratings eq 'y'}
 	<div style="display:inline;float:right;padding: 1px 3px; border:1px solid #666666; -moz-border-radius : 10px;font-size:.8em;">
 		<div id="pollopen">
-			{button href="#" _onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link" _text="{tr}Rating{/tr}"}
+			{button href="#" _onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');return false;" class="link" _text="{tr}Rating{/tr}"}
 		</div>
 		{if $tiki_p_wiki_vote_ratings eq 'y'}
 			<div id="polledit">
 				<div class="pollnav">
-					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" _text="{tr}[-]{/tr}"}
-					{button href="#" _onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link" _text="{tr}View{/tr}"}
+					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');return false;" _text="{tr}[-]{/tr}"}
+					{button href="#" _onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');return false;" class="link" _text="{tr}View{/tr}"}
 				</div>
 				
 				{foreach from=$ratings item=r}
@@ -43,8 +43,8 @@
 			</div>
 			<div id="pollzone">
 				<div class="pollnav">
-					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" _text="[-]"}
-					{button href="#" _onclick="javascript:hide('pollzone');show('polledit');hide('pollopen');" _text="{tr}Vote{/tr}"}
+					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');return false;" _text="[-]"}
+					{button href="#" _onclick="javascript:hide('pollzone');show('polledit');hide('pollopen');return false;" _text="{tr}Vote{/tr}"}
 				</div>
 				{foreach from=$ratings item=r}
 					<div>
@@ -60,7 +60,7 @@
 		{else}
 			<div id="pollzone">
 				<div class="pollnav">
-					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" _text="[-]"}
+					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');return false;" _text="[-]"}
 				</div>
 				{foreach from=$ratings item=r}
 					<div>
