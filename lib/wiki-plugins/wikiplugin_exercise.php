@@ -118,7 +118,10 @@ $.each(exercises, function (k, options) {
 			options = shuffle(options);
 
 			$.each(options, function (k, o) {
-				input.append($('<option/>').val(o.option).text(o.option));
+				input.append($('<option/>')
+					.val(o.option)
+					.text(o.option)
+					.data('justification', o.justification ? o.justification : ''));
 			});
 		} else {
 			input = $('<input type="text"/>');
@@ -136,8 +139,19 @@ JS;
 
 function wikiplugin_exercise_finalize()
 {
+	$smarty = TikiLib::lib('smarty');
+	$smarty->loadPlugin('smarty_function_icon');
+
 	$checkYourScore = smarty_modifier_escape(tr('Check your score'));
 	$yourScoreIs = tr('You scored %0 out of %1', '~SCORE~', '~TOTAL~');
+	$checkIcon = smarty_function_icon(array(
+		'_id' => 'tick',
+		'title' => tr('Good!'),
+	), $smarty);
+	$crossIcon = smarty_function_icon(array(
+		'_id' => 'cross',
+		'title' => tr('Oops!'),
+	), $smarty);
 
 	$js = <<<JS
 $('.exercise-form').filter(':first').removeClass('exercise-form').each(function (k, form) {
@@ -145,14 +159,27 @@ $('.exercise-form').filter(':first').removeClass('exercise-form').each(function 
 	$(form).submit(function () {
 		var score = 0, total = 0;
 
+		elements.find('.mark').remove();
+
 		elements.each(function (k, container) {
-			var correct, input;
+			var correct, input, image;
 			total += 1;
 			correct = $(container).data('answer');
 			input = $(':input', container).val();
 
+			image = $('<span class="mark"/>')
+				.appendTo(container);
+
 			if (correct === input) {
 				score += 1;
+				image.append('$checkIcon');
+			} else {
+				image.append('$crossIcon');
+
+				var just = $('option:selected', container).data('justification');
+				if (just) {
+					image.find('img').attr('title', just);
+				}
 			}
 		});
 
