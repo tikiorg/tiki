@@ -276,7 +276,7 @@
 
 		{if $tiki_p_use_HTML eq 'y'}
 			<tr>
-				<td>{tr}Allow full HTML{/tr} <em>({tr}for this edit session{/tr})</em></td>
+				<td>{tr}Allow full HTML (for this edit session){/tr}</td>
 				<td>
 					<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
 				</td>
