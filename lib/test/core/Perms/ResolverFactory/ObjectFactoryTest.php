@@ -19,7 +19,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		$db = TikiDb::get();
 
 		$result = $db->query('SELECT groupName, permName, objectType, objectId FROM users_objectpermissions');
-		while($row = $result->fetchRow()) {
+		while ($row = $result->fetchRow()) {
 			$this->tableData[] = $row;
 		}
 
@@ -32,7 +32,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 
 		$db->query('DELETE FROM users_objectpermissions');
 		
-		foreach($this->tableData as $row) {
+		foreach ($this->tableData as $row) {
 			$db->query('INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,?,?)', array_values($row));
 		}
 	}
@@ -67,7 +67,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$db = TikiDb::get();
-		foreach($data as $row) {
+		foreach ($data as $row) {
 			$db->query('INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,?,?)', array_values($row));
 		}
 
@@ -92,7 +92,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$db = TikiDb::get();
-		foreach($data as $row) {
+		foreach ($data as $row) {
 			$db->query('INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,?,?)', array_values($row));
 		}
 
@@ -121,7 +121,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$db = TikiDb::get();
-		foreach($data as $row) {
+		foreach ($data as $row) {
 			$db->query('INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,?,?)', array_values($row));
 		}
 

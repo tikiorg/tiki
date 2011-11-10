@@ -7,7 +7,7 @@
 
 class Math_Formula_DummyFunction_FortyTwo extends Math_Formula_Function
 {
-	function evaluate( $element )
+	function evaluate($element)
 	{
 		return 42;
 	}

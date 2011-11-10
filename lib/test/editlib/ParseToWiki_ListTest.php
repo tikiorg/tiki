@@ -11,34 +11,38 @@
  */
 class EditLib_ParseToWiki_ListTest extends TikiTestCase
 {
-	
+
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
-	
-	
-	function __construct() {
+
+
+	function __construct()
+	{
 		$this->dir = getcwd();
 	}
-		
-	
-	function setUp() {
+
+
+	function setUp()
+	{
 		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
 	}
-	
-		
-	function tearDown() {
+
+
+	function tearDown()
+	{
 		chdir($this->dir);
 	}
 
-	
+
 	/**
 	 * Test bullet lists
 	 * 
 	 * Test single lines with different numbers of <ul> 
 	 */			
-	function testBulletList() {
+	function testBulletList()
+	{
 
 		/*
 		 * *Item 1
@@ -51,8 +55,8 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * *Item 1
 		 * **Item 1a
@@ -67,14 +71,15 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
 	}
-	
+
 
 	/**
 	 * Test the continuation of bullet lists
 	 * 
 	 * Test level one and two
 	 */	
-	function testBulletListContinuation()  {
+	function testBulletListContinuation()
+	{
 
 		/*
 		 * *Item 1
@@ -89,8 +94,8 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * *Item A
 		 * **Item 1
@@ -107,15 +112,16 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);				
 	}
-	
-	
+
+
 	/**
 	 * Test numbered lists
 	 * 
 	 * Test single lines with different numbers of <ol> 
 	 */			
-	function testNumberedList() {
-		
+	function testNumberedList()
+	{
+
 		/*
 		 * #Item 1
 		 * #Item 2 
@@ -128,7 +134,7 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
 
-		
+
 		/*
 		 * #Item 1
 		 * ##Item 1a
@@ -143,15 +149,16 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);							
 	}
-	
-	
+
+
 	/**
 	 * Test the continuation of numbered lists
 	 * 
 	 * Test level one and two
 	 */
-	function testNumberedListContinuation() {
-		
+	function testNumberedListContinuation()
+	{
+
 		/*
 		 * #Item 1
 		 * +Continuation
@@ -166,7 +173,7 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 
-		
+
 		/*
 		 * #Item A
 		 * ##Item 1
@@ -183,5 +190,5 @@ class EditLib_ParseToWiki_ListTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
-		
+
 }

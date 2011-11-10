@@ -18,7 +18,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    //    These tests illustrate how to use this class.
    ////////////////////////////////////////////////////////////////
 
-   protected function setUp()  {
+   protected function setUp()
+	 {
       $distances_matrix[0][1] = 11;
       $distances_matrix[0][2] = 23;
       $distances_matrix[1][2] = 5;
@@ -33,7 +34,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-   public function test_This_is_how_you_create_a_ShortestPathFinder() {
+   public function test_This_is_how_you_create_a_ShortestPathFinder()
+	 {
    
       // First, generate a distance matrix.
       $distances_matrix[0][1] = 11;
@@ -52,7 +54,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-   public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node() {   
+   public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node()
+	 {
       $origin_node_num = 0;
       $destination_node_num = 2;
       $this->pfinder->computeShortestPathes($origin_node_num);
@@ -64,7 +67,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-   public function test_node_names_do_not_have_to_be_numbers() {
+   public function test_node_names_do_not_have_to_be_numbers()
+	 {
       $distances_matrix['paris']['lyon'] = 11;
       $distances_matrix['paris']['marseilles'] = 23;
      $distances_matrix['lyon']['marseilles'] = 5;
@@ -85,7 +89,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-   public function test__nodesInMatrix() {
+   public function test__nodesInMatrix()
+	 {
    
       $distances_matrix = array();
       $distances_matrix['paris']['london'] = 300;
@@ -101,7 +106,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-   public function test_path_finder_SMALL_example() {
+   public function test_path_finder_SMALL_example()
+	 {
       $start_node_num = 0;
       $this->pfinder->computeShortestPathes($start_node_num); 
 
@@ -112,7 +118,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-   public function test_path_finder_LARGER_example() {
+   public function test_path_finder_LARGER_example()
+	 {
       $start_node_num = 'ottawa';
       $cost_matrix['ottawa']['montreal'] = 50;
       $cost_matrix['ottawa']['chicago'] = 100;
@@ -141,7 +148,8 @@ class Multilingual_Aligner_ShortestPathFinderTest extends TikiTestCase
    // Helper methods
    ////////////////////////////////////////////////////////////////
    
-   function assertShortestPathIs($destination, $exp_path, $exp_dist, $message) {
+   function assertShortestPathIs($destination, $exp_path, $exp_dist, $message)
+	 {
       $got_dist = $distance = $this->pfinder->shortestDistanceTo($destination);
       $this->assertEquals($exp_dist, $got_dist, "Shortest distance to node $destination was wrong.");
       $got_path = $this->pfinder->shortestPathTo($destination);

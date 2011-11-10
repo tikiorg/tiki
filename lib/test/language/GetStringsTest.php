@@ -35,7 +35,8 @@ class Language_GetStringsTest extends TikiTestCase
 		$this->obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => 'invalidDir'));
 	}
 	
-	public function testAddFileType() {
+	public function testAddFileType()
+	{
 		$php = $this->getMock('Language_FileType_Php');
 		$php->expects($this->once())->method('getExtensions')->will($this->returnValue(array('.php')));
 		

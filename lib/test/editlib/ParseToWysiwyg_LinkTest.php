@@ -18,44 +18,47 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
 	private $ext1 = 'test_ext1'; // name of the external Wiki 1
-	
-	
-	function __construct() {
+
+
+	function __construct()
+	{
 		$this->dir = getcwd();
-		
+
 		// we must set the page regex, otherwise the links get not parsed
 		// taken from: 'lib/setup/wiki.php' with  $prefs['wiki_page_regex'] == 'full'
 		global $page_regex;
 		$page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
 	}
-		
-	
-	function setUp() {
+
+
+	function setUp()
+	{
 		$_SERVER['HTTP_HOST'] = ''; // editlib expects that HTTP_HOST is defined	
 		$_SERVER['SERVER_NAME'] = 'myserver'; // the ParserLib expects the servername to be set	
 
 		global $prefs;
 		$prefs['feature_sefurl'] = 'n'; // default
-		
+
 		$this->el = new EditLib();
-		
+
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
 	}
-	
-		
-	function tearDown() {
+
+
+	function tearDown()
+	{
 		chdir($this->dir);
 
 		/*
 		 * remove the external Wikis defined in the tests 
 		 */
 		global $tikilib;
-		
+
 		$query = 'SELECT `name`, `extwikiId` FROM `tiki_extwiki`';
 		$wikis = $tikilib->fetchMap($query);
 		$tmp_wikis = array($this->ext1);
-		
+
 		foreach ($tmp_wikis as $w) {
 			if (isset($wikis[$w])) {
 				$id = $wikis[$w];
@@ -63,7 +66,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 			}
 		}
 	}	
-		
+
 
 	/**
 	 * Test links to pages of an external Wiki
@@ -72,7 +75,8 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 	 * 
 	 * Note: Links with an invalid wiki identifier are parsed as regular Wiki page links.
 	 */
-	function testExternalWiki() {
+	function testExternalWiki()
+	{
 
 		/*
 		 * setup the external wikis and the parser
@@ -90,8 +94,8 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download" class="wiki ext_page test_ext1">Download</a>';
 		$out = trim($p->parse_data($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -101,8 +105,8 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a href="http://tikiwiki.org/tiki-index.php?page=Download#LTS_-_the_Long_Term_Support_release" class="wiki ext_page test_ext1">Download</a>';
 		$out = trim($p->parse_data($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -114,40 +118,41 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$out = trim($p->parse_data($inData));
 		$this->assertEquals($ex, $out);	
 	}
-	
-	
+
+
 	/**
 	 * Test link to anchor within a page
 	 */
-	function testInPage() {
-		
+	function testInPage()
+	{
+
 		/*
 		 * with description
 		 */
 		$inData = '[#A_Heading|Link to heading]';		
 		$ex = '<a class="wiki" href="#A_Heading" rel="">Link to heading</a>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$out = preg_replace('/  /', ' ', $out); // the parser writes to many spaces
 		$this->assertEquals($ex, $out);
 
-		
+
 		/*
 		 * no description
 		 */
 		$inData = '[#A_Heading]';		
 		$ex = '<a class="wiki" href="#A_Heading" rel="">#A_Heading</a>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$out = preg_replace('/  /', ' ', $out); // the parser writes to many spaces
 		$this->assertEquals($ex, $out);				
 	}
-	
-	
+
+
 	/**
 	 * Test link for creating e-mail
 	 */
-	function testMailTo() {
+	function testMailTo()
+	{
 
-		
 		/*
 		 * e-mail
 		 */
@@ -155,8 +160,8 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a class="wiki"  href="mailto:sombody@nowhere.xyz" rel="">mailto:sombody@nowhere.xyz</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);				
-		
-				
+
+
 		/*
 		 * e-mail with description
 		 */
@@ -165,12 +170,13 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);				
 	}
-	
-	
+
+
 	/**
 	 * Test links to articles, blogs, ...
 	 */
-	function testOtherTikiPages() {
+	function testOtherTikiPages()
+	{
 
 		/*
 		 * article
@@ -179,13 +185,13 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a class="wiki"  href="article1" rel="">article1</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
-				
+
 		$inData = '[article1|An Article]';
 		$ex = '<a class="wiki"  href="article1" rel="">An Article</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
-		
-		
+
+
 		/*
 		 * blog
 		 */
@@ -193,13 +199,13 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a class="wiki"  href="blog1" rel="">blog1</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '[blog1|A Blog]';
 		$ex = '<a class="wiki"  href="blog1" rel="">A Blog</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
-		
-		
+
+
 		/*
 		 * forum
 		 */
@@ -207,42 +213,43 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a class="wiki"  href="forum1" rel="">forum1</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '[forum1|A Forum]';
 		$ex = '<a class="wiki"  href="forum1" rel="">A Forum</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Test links to web pages
 	 */
-	function testWebResource() {
-			
-		
+	function testWebResource()
+	{
+
+
 		/*
 		 * Web Page:
 		 * - link
 		 */
 		$inData = '[http://www.tiki.org]';		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org" rel="external nofollow">http://www.tiki.org</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org" rel="external nofollow">http://www.tiki.org</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
 		 * - description
 		 */
 		$inData = '[http://www.tiki.org|Tiki Wiki CMS Groupware]';		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org" rel="external nofollow">Tiki Wiki CMS Groupware</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org" rel="external nofollow">Tiki Wiki CMS Groupware</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
@@ -250,11 +257,11 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - anchor
 		 */
 		$inData = '[http://www.tiki.org#Tiki_News_|News of the Tiki Wiki CMS Groupware]';		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org#Tiki_News_" rel="external nofollow">News of the Tiki Wiki CMS Groupware</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org#Tiki_News_" rel="external nofollow">News of the Tiki Wiki CMS Groupware</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
@@ -263,33 +270,33 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - box
 		 */
 		$inData = '[http://www.tiki.org#Tiki_News_|News of the Tiki Wiki CMS Groupware|box]';		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org#Tiki_News_" rel="box external nofollow">News of the Tiki Wiki CMS Groupware</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.tiki.org#Tiki_News_" rel="box external nofollow">News of the Tiki Wiki CMS Groupware</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
 
-		
+
 		/*
 		 * Link to video
 		 * - link
 		 * 
 		 */
 		$inData = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|nocache]';		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="external nofollow">http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="external nofollow">http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
 		 * - description
 		 */
 		$inData = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player|nocache]';		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="external nofollow">You Tube video in their flash player</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="external nofollow">You Tube video in their flash player</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
@@ -297,11 +304,11 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - box
 		 */
 		$inData = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player|box]'; // additional nocache does not work		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="box external nofollow">You Tube video in their flash player</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="box external nofollow">You Tube video in their flash player</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
@@ -309,45 +316,46 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		 * - box with dimensions
 		 */
 		$inData = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player|box;width=405;height=340;]'; // additional nocache does not work		
-		$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="box;width=405;height=340; external nofollow">You Tube video in their flash player</a>';
+			$ex = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="box;width=405;height=340; external nofollow">You Tube video in their flash player</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
 	}
-	
-	
+
+
 	/**
 	 * Test links to internal wiki pages
 	 */
-	function testWikiPage() {
+	function testWikiPage()
+	{
 
 		global $tikilib;
-		
-		
+
+
 		/*
 		 * 'HomePage' must exists
 		 */
 		$homePage = 'HomePage';
 		$info = $tikilib->get_page_info($homePage, false);
 		$this->assertTrue($info != null);
-		
-		
+
+
 		/*
 		 * 'Page does not exist not exist' must not exist
 		 */
 		$noPage = 'Page does not exist not exist';
 		$info = $tikilib->get_page_info($noPage, false);
 		$this->assertFalse($info);
-		
-		
+
+
 		/*
 		 * - existing page
 		 */
 		$inData = "(($homePage))";		
 		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">HomePage</a>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * - existing page
 		 * - description
@@ -356,89 +364,89 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$ex = '<a href="tiki-index.php?page=HomePage" title="HomePage" class="wiki wiki_page">The Home Page</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * - existing name
 		 * - link to an anchor
 		 * - description
- 		 */
+		 */
 		$inData = "(($homePage|#Get_Started_using_Admin_Panel|Home Page, Heading \"Admin Panel\"))";		
 		$ex = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki wiki_page">Home Page, Heading &quot;Admin Panel&quot;</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);	
-		
+
 
 		/*
 		 * Default behavior -> class="wiki wikinew"
 		 * 
 		 * - inexistent page
- 		 */
+		 */
 		$inData = "(($noPage))";
 		$ex = 'Page does not exist not exist<a href="tiki-editpage.php?page=Page+does+not+exist+not+exist" title="Create page: Page does not exist not exist" class="wiki wikinew">?</a>';
 		$out = trim($tikilib->lib('parser')->parse_Data($inData));
 		$this->assertEquals($ex, $out);			
-		
+
 		/*
 		 * Default behavior -> class="wiki wikinew"
 		 * 
 		 * - inexistent page
 		 * - description
- 		 */
+		 */
 		$inData = "(($noPage|Page does not exist))";
 		$ex = 'Page does not exist<a href="tiki-editpage.php?page=Page+does+not+exist+not+exist" title="Create page: Page does not exist not exist" class="wiki wikinew">?</a>';
 		$out = trim($tikilib->lib('parser')->parse_Data($inData));
 		$this->assertEquals($ex, $out);		
-		
-		
+
+
 		/*
 		 * Default behavior -> class="wiki wikinew"
 		 * 
 		 * - inexistent page
 		 * - link to an anchor
 		 * - description
- 		 */
+		 */
 		$inData = "(($noPage|#anchor|Page does not exist))";
 		$ex = 'Page does not exist<a href="tiki-editpage.php?page=Page+does+not+exist+not+exist" title="Create page: Page does not exist not exist" class="wiki wikinew">?</a>';
 		$out = trim($tikilib->lib('parser')->parse_Data($inData));
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * CKE behavior -> class="wiki page"
 		 * - inexistent page
- 		 */
+		 */
 		$inData = "(($noPage))";
 		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist" title="Page does not exist not exist" class="wiki wiki_page">Page does not exist not exist</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);			
-		
+
 
 		/*
 		 * CKE behavior -> class="wiki page"
 		 * 
 		 * - inexistent page
 		 * - description
- 		 */
+		 */
 		$inData = "(($noPage|Page does not exist))";
 		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist" title="Page does not exist not exist" class="wiki wiki_page">Page does not exist</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
-		
-		
+
+
 		/*
 		 * CKE behavior -> class="wiki page"
 		 * 
 		 * - inexistent page
 		 * - link to an anchor
 		 * - description
- 		 */
+		 */
 		$inData = "(($noPage|#anchor|Page does not exist))";
 		$ex = '<a href="tiki-index.php?page=Page+does+not+exist+not+exist#anchor" title="Page does not exist not exist" class="wiki wiki_page">Page does not exist</a>';
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
 
-		
+
 		/*
 		 * Internation characters
 		 */	
@@ -447,15 +455,15 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
 	}
-	
-	
+
+
 	/*
 	 * Test anchors generated by {ANAME}
 	 */
-	function testPluginAname() {
-		
+	function testPluginAname()
+	{
 		$this->markTestIncomplete('Work in progress.');		
-		
+
 		$inData = "{ANAME()}anchor{ANAME}";
 		$ex = '<a id="anchor"></a>';
 		$out = trim($this->el->parseToWysiwyg($inData));		

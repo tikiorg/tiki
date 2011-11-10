@@ -19,7 +19,7 @@ function simple_set_toggle($feature)
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
 			if ($tikilib->set_preference($feature, 'y')) {
-				add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
+				add_feedback($feature, tr('%0 enabled', $feature), 1, 1);
 				$logslib->add_action('feature', $feature, 'system', 'enabled');
 			}
 		}
@@ -36,6 +36,7 @@ function simple_set_toggle($feature)
 	require_once ('lib/cache/cachelib.php');
 	$cachelib->invalidate('allperms');
 }
+
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
 	if ($adminPage == 'features') {
@@ -66,7 +67,7 @@ if (isset($_REQUEST['page'])) {
 		$helpUrl = ucfirst($adminPage) . '+Config';
 	}
 	$helpDescription = "Help on $admintitle Config"; //get_strings tra("Help on $admintitle Config")
-	
+
 } else {
 	$smarty->assign('admintitle', 'Admin Home');
 	$smarty->assign('description', 'Home Page for Administrators');

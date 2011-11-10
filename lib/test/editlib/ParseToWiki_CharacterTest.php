@@ -14,28 +14,31 @@ require_once 'lib/wiki/editlib.php';
 
 class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 {
-	
+
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
-	
-	
-	function __construct() {
+
+
+	function __construct()
+	{
 		$this->dir = getcwd();
 	}
-		
-	
-	function setUp() {
+
+
+	function setUp()
+	{
 		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
 	}
-	
-		
-	function tearDown() {
+
+
+	function tearDown()
+	{
 		chdir($this->dir);
 	}
-	
-	
+
+
 	/**
 	 * Font Family and Font Size
 	 * 
@@ -43,9 +46,10 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 * - 'font-family'
 	 * - 'font-size'
 	 */
-	function testFontFamily() {
+	function testFontFamily()
+	{
 		$this->markTestIncomplete('Work in progress.');
-		
+
 		/*
 		 * family
 		 */
@@ -53,8 +57,8 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$inData = '<span style="font-family:tahoma;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
-		
+
+
 		/*
 		 * size
 		 */
@@ -67,13 +71,13 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$inData = '<span style="font-size:12pt;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$ex = '{FONT(size="1.2em")}text{FONT}';
 		$inData = '<span style="font-size:1.2em;">text<span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
-		
+
+
 		/*
 		 * family and size
 		 */
@@ -82,8 +86,8 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 	}
-	
-	
+
+
 	/**
 	 * Bold
 	 * 
@@ -92,43 +96,44 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 * - <strong>
 	 * - 'font-weight:bold'
 	 */
-	function testBold() {
-		
+	function testBold()
+	{
+
 		// simple
 		$ex = '__bold__';
 
 		$inData = '<b>bold</b>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<strong>bold</strong>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<span style="font-weight:bold;">bold</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		// line break
 		$ex = '__bold__\n__BOLD__regular';
-		
+
 		$inData = '<b>bold<br />BOLD</b>regular';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<strong>bold<br />BOLD</strong>regular';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<span style="font-weight:bold;">bold<br />BOLD</span>regular';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);				
 	}
-		
-	
+
+
 	/**
 	 * Italic
 	 * 
@@ -137,22 +142,23 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 * - <i>
 	 * - 'font-style:italic'
 	 */
-	function testItalic() {
-		
+	function testItalic()
+	{
+
 		$ex = '\'\'italic\'\'';
-		
+
 		$inData = '<em>italic</em>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<i>italic</i>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<span style="font-style:italic;">italic</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
-		
+
 		// line break
 		$ex = '\'\'italic\'\'\n\'\'ITALIC\'\'regular';
 
@@ -160,7 +166,7 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<i>italic<br />ITALIC</i>regular';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
@@ -171,8 +177,8 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
-	
-	
+
+
 	/**
 	 * Underlined
 	 * 
@@ -180,14 +186,15 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 * - <u>
 	 * - 'text-decoration:underline'
 	 */
-	function testUnderlined() {
-		
+	function testUnderlined()
+	{
+
 		$ex = '===underlined===';
-		
+
 		$inData = '<u>underlined</u>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<span style="text-decoration:underline;">underlined</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
@@ -205,8 +212,8 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
-	
-	
+
+
 	/**
 	 * Strikethrough
 	 * 
@@ -216,10 +223,11 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 * - <s>
 	 * - 'text-decoration:line-through'
 	 */
-	function testStrikethrough() {
-		
+	function testStrikethrough()
+	{
+
 		$ex = '--strikethrough--';
-		
+
 		$inData = '<strike>strikethrough</strike>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
@@ -227,11 +235,11 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$inData = '<del>strikethrough</del>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<s>strikethrough</s>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
-		
+
 		$inData = '<span style="text-decoration:line-through;">strikethrough</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
@@ -243,67 +251,70 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<del>strikethrough<br />STRIKETHROUGH</del>';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<s>strikethrough<br />STRIKETHROUGH</s>';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<strike>strikethrough<br />STRIKETHROUGH</strike>';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Subscript
 	 * 
 	 * => {SUB()}
 	 * - <sub>
 	 */
-	function testSubscript() {
-		
+	function testSubscript()
+	{
+
 		$ex = '{SUB()}subscript{SUB}';
-		
+
 		$inData = '<sub>subscript</sub>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
 	}
 
-	
+
 	/**
 	 * Superscript
 	 * 
 	 * => {SUP()}
 	 * - <sup>
 	 */
-	function testSuperscript() {
-		
+	function testSuperscript()
+	{
+
 		$ex = '{SUP()}subscript{SUP}';
-		
+
 		$inData = '<sup>subscript</sup>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
 	}	
-	
-	
+
+
 	/**
 	 * Monospaced
 	 * 
 	 * => -+
 	 * - <code>
 	 */
-	function testMonospace() {
+	function testMonospace()
+	{
 
 		$ex = '-+monospaced+-';
-		
+
 		$inData = '<code>monospaced</code>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);	
@@ -316,23 +327,24 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$this->assertEquals($ex, $out);	
 	}
 
-		
+
 	/**
 	 * Teletype
 	 * 
 	 * => {DIV(type="tt")}
 	 * - <tt>
 	 */
-	function testTeletype() {
-		
+	function testTeletype()
+	{
+
 		$ex = '{DIV(type="tt")}typewriter{DIV}';
-		
+
 		$inData = '<tt>typewriter</tt>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);	
 	}
-	
-	
+
+
 	/**
 	 * Text and background color
 	 * 
@@ -340,32 +352,33 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 	 * - 'background'
 	 * - 'background-color' 
 	 */
-	function testColor() {
-		
+	function testColor()
+	{
+
 		/*
 		 * text only
 		 */
 		$ex = '~~#FF0000:color~~';
-		
+
 		$inData = '<span style="color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
 
-		
+
 		/*
 		 * background only
 		 */
 		$ex = '~~ ,#FFFF00:color~~';
-		
+
 		$inData = '<span style="background:#FFFF00;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
+
 		$inData = '<span style="background-color:#FFFF00;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
 
-		
+
 		/*
 		 * text and background
 		 */
@@ -374,24 +387,24 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$inData = '<span style="color:rgb(255, 0, 0);background-color:rgb(0, 0, 255);">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-				
+
 		$inData = '<span style="color:#FF0000;background-color:#0000FF;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
+
 		$inData = '<span style="color:#FF0000;background:#0000FF;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
+
 		$inData = '<span style="background-color:#0000FF;color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
+
 		$inData = '<span style="background:#0000FF;color:#FF0000;">color</span>';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
 
-		
+
 		/*
 		 * line break
 		 */
@@ -402,5 +415,5 @@ class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison
 		$this->assertEquals($ex, $out);			
 	}
-	
+
 }

@@ -17,32 +17,35 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
 	private $ext1 = 'test_ext1'; // name of the external Wiki 1
-	
-	
-	function __construct() {
+
+
+	function __construct()
+	{
 		$this->dir = getcwd();
 	}
-		
-	
-	function setUp() {
+
+
+	function setUp()
+	{
 		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
 	}
-	
-		
-	function tearDown() {
+
+
+	function tearDown()
+	{
 		chdir($this->dir);
-		
+
 		/*
 		 * remove the external Wikis defined in the tests 
 		 */
 		global $tikilib;
-		
+
 		$query = 'SELECT `name`, `extwikiId` FROM `tiki_extwiki`';
 		$wikis = $tikilib->fetchMap($query);
 		$tmp_wikis = array($this->ext1);
-		
+
 		foreach ($tmp_wikis as $w) {
 			if (isset($wikis[$w])) {
 				$id = $wikis[$w];
@@ -50,22 +53,23 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 			}
 		}		
 	}
-		
+
 
 	/**
 	 * Test links to pages of an external Wiki
 	 * 
 	 * Note: Links with an invalid wiki identifier are parsed as regular Wiki page links.
 	 */
-	function testExternalWiki() {
-		
+	function testExternalWiki()
+	{
+
 		/*
 		 * setup the external wikis and the parser
 		 */
 		global $tikilib;
 		$tikilib->lib('admin')->replace_extwiki(0, 'http://tikiwiki.org/tiki-index.php?page=$page', $this->ext1);
 
-		
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -74,8 +78,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = "(($this->ext1:Download))";
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -85,8 +89,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = "(($this->ext1:Download|#LTS_-_the_Long_Term_Support_release))";
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -98,7 +102,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 
-		
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -108,8 +112,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = "(($this->ext1:Download))";
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * External Wiki
 		 * - page name
@@ -119,8 +123,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://tikiwiki.org/tiki-index.php?page=Download|Download]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * External Wiki
 		 * - line breaks
@@ -131,22 +135,23 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);				
 	}
-		
-	
+
+
 	/**
 	 * Test link to anchor within a page
 	 */	
-	function testInPage() {
-		
+	function testInPage()
+	{
+
 		/*
 		 * no description
 		 */
 		$inData = '<a class="wiki" href="#A_Heading" rel="">#A_Heading</a>';
 		$ex = '[#A_Heading]';
-		$out = trim( $this->el->parseToWiki($inData) );
+		$out = trim($this->el->parseToWiki($inData));
 		$this->assertEquals($ex, $out);				
-		
-		
+
+
 		/*
 		 * with description
 		 */
@@ -155,7 +160,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);
 
-		
+
 		/*
 		 * line breaks
 		 */
@@ -165,14 +170,15 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
 	}
-	
-	
+
+
 	/**
 	 * Test link for creating e-mail
 	 */	
-	function testMailTo() {
-		
-		
+	function testMailTo()
+	{
+
+
 		/*
 		 * e-mail
 		 */
@@ -180,8 +186,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[mailto:sombody@nowhere.xyz]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);				
-		
-				
+
+
 		/*
 		 * e-mail with description
 		 */
@@ -190,7 +196,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
 
-		
+
 		/*
 		 * line breaks
 		 */
@@ -200,14 +206,15 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
 	}
-	
-	
+
+
 	/**
 	 * Test links to articles, blogs, ...
 	 */	
-	function testOtherTikiPages() {
-		
-		
+	function testOtherTikiPages()
+	{
+
+
 		/*
 		 * article
 		 */
@@ -215,19 +222,19 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[article1]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
-				
+
 		$inData = '<a class="wiki"  href="article1" rel="">An Article</a>';
 		$ex = '[article1|An Article]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<a class="wiki"  href="article1" rel="">An<br />Article</a><br />Text';
 		$ex = '[article1|An %%% Article]\nText';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
-		
-		
+
+
 		/*
 		 * blog
 		 */
@@ -235,19 +242,19 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[blog1]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<a class="wiki"  href="blog1" rel="">A Blog</a>';
 		$ex = '[blog1|A Blog]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<a class="wiki"  href="blog1" rel="">A<br />Blog</a><br />Text';
 		$ex = '[blog1|A %%% Blog]\nText';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);				
-		
-		
+
+
 		/*
 		 * forum
 		 */
@@ -255,25 +262,26 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[forum1]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);		
-		
+
 		$inData = '<a class="wiki"  href="forum1" rel="">A Forum</a>';
 		$ex = '[forum1|A Forum]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);				
-		
+
 		$inData = '<a class="wiki"  href="forum1" rel="">A<br />Forum</a><br />Text';
 		$ex = '[forum1|A %%% Forum]\nText';
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);				
 	}
-	
-	
+
+
 	/**
 	 * Test links to web pages
 	 */	
-	function testWebResource() {
-		
+	function testWebResource()
+	{
+
 		/*
 		 * Web Page:
 		 * - link
@@ -282,8 +290,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://www.tiki.org]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
@@ -293,8 +301,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://www.tiki.org|Tiki Wiki CMS Groupware]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
@@ -305,8 +313,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://www.tiki.org#Tiki_News_|News of the Tiki Wiki CMS Groupware]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
@@ -318,8 +326,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://www.tiki.org#Tiki_News_|News of the Tiki Wiki CMS Groupware|box]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Web Page:
 		 * - link
@@ -330,8 +338,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = $this->el->parseToWiki($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
@@ -341,8 +349,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
@@ -352,8 +360,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player]';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
@@ -362,10 +370,10 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		 */
 		$inData = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="box external nofollow">You Tube video in their flash player</a>';
 		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player|box]'; // additional nocache does not work
-		$out = $this->el->parseToWiki($inData);
+			$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * Link to video
 		 * - link
@@ -374,16 +382,17 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		 */
 		$inData = '<a class="wiki external" target="_blank" href="http://www.youtube.com/v/KBewVCducWw&amp;autoplay=1" rel="box;width=405;height=340; external nofollow">You Tube video in their flash player</a>';
 		$ex = '[http://www.youtube.com/v/KBewVCducWw&autoplay=1|You Tube video in their flash player|box;width=405;height=340;]'; // additional nocache does not work
-		$out = $this->el->parseToWiki($inData);
+			$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
 	}
-	
-	
+
+
 	/**
 	 * Test links to internal wiki pages
 	 */	
-	function testWikiPage() {
-		
+	function testWikiPage()
+	{
+
 
 		/*
 		 * - page name = description
@@ -392,7 +401,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '((HomePage))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
+
 
 		/*
 		 * - page
@@ -402,8 +411,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '((HomePage|The Home Page))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-		
-		
+
+
 		/*
 		 * - page
 		 * - link to an anchor
@@ -412,19 +421,19 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '((HomePage|#Get_Started_using_Admin_Panel))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);			
-				
-		
+
+
 		/*
 		 * - page
 		 * - link to an anchor
 		 * - description
- 		 */
+		 */
 		$inData = '<a href="tiki-index.php?page=HomePage#Get_Started_using_Admin_Panel" title="HomePage" class="wiki wiki_page">Home Page, Heading &quot;Admin Panel&quot;</a>';		
 		$ex = '((HomePage|#Get_Started_using_Admin_Panel|Home Page, Heading "Admin Panel"))';
 		$out = $this->el->parseToWiki($inData);
 		$this->assertEquals($ex, $out);	
 
-		
+
 		/*
 		 * Internation characters
 		 */	
@@ -432,8 +441,8 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$ex = '((äöü€ Page))';
 		$out = $this->el->parseToWiki($inData);		
 		$this->assertEquals($ex, $out);		
-		
-		
+
+
 		/*
 		 * Line breaks
 		 */
@@ -443,17 +452,18 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
 	}
-	
-	
+
+
 	/*
 	 * Test anchors conversion to {ANAME}
 	 */
-	function testPluginAname() {
-		
+	function testPluginAname()
+	{
+
 		$ex = "{ANAME()}anchor{ANAME}";
 		$inData = '<a id="anchor"></a>';
 		$out = $this->el->parseToWiki($inData);		
 		$this->assertEquals($ex, $out);				
 	}	
-	
+
 }

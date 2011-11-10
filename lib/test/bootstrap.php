@@ -5,25 +5,26 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-define( 'CUSTOM_ERROR_LEVEL', defined( 'E_DEPRECATED' ) ? E_ALL ^ E_DEPRECATED : E_ALL );
+define('CUSTOM_ERROR_LEVEL', defined('E_DEPRECATED') ? E_ALL ^ E_DEPRECATED : E_ALL);
 
-ini_set( 'display_errors', 'on' );
-error_reporting( CUSTOM_ERROR_LEVEL );
+ini_set('display_errors', 'on');
+error_reporting(CUSTOM_ERROR_LEVEL);
 
 $paths = array(
-	ini_get('include_path'),
-	realpath('.'),
-	realpath('../core'),
-	realpath('../..'),
-	realpath('core'),
-	realpath('../pear'),
-);
+		ini_get('include_path'),
+		realpath('.'),
+		realpath('../core'),
+		realpath('../..'),
+		realpath('core'),
+		realpath('../pear'),
+		);
 
-ini_set( 'include_path', implode( PATH_SEPARATOR, $paths ) );
+ini_set('include_path', implode(PATH_SEPARATOR, $paths));
 
-function __autoload_tikitest( $name ) {
-	$path = str_replace( '_', '/', $name ) . '.php';
-	@ include_once( $path );
+function __autoload_tikitest($name)
+{
+	$path = str_replace('_', '/', $name) . '.php';
+	@ include_once($path);
 }
 spl_autoload_register('__autoload_tikitest');
 
@@ -62,7 +63,7 @@ if (!$installer->tableExists('tiki_preferences')) {
 }
 
 $pwd = getcwd();
-chdir( dirname(__FILE__) . '/../..' );
+chdir(dirname(__FILE__) . '/../..');
 require_once 'lib/init/smarty.php';
 $smarty->addPluginsDir('../smarty_tiki/');
 require_once 'lib/cache/cachelib.php';
@@ -76,10 +77,10 @@ global $tikilib;
 $tikilib = new TikiLib;
 $userlib = new UsersLib;
 $_SESSION = array(
-	'u_info' => array(
-		'login' => null
-	)
-);
+		'u_info' => array(
+			'login' => null
+			)
+		);
 chdir($pwd);
 
 require_once(dirname(__FILE__) . '/TikiTestCase.php');
@@ -87,16 +88,16 @@ require_once(dirname(__FILE__) . '/TestableTikiLib.php');
 
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
-	array(
-		'preference' => array(),
-		'rules' => array(),
-	),
-	array('readOnly' => false)
-);
+		array(
+			'preference' => array(),
+			'rules' => array(),
+			),
+		array('readOnly' => false)
+		);
 
 global $user_overrider_prefs;
 $user_overrider_prefs = array();
 require_once 'lib/setup/prefs.php';
 
-ini_set( 'display_errors', 'on' );
-error_reporting( CUSTOM_ERROR_LEVEL );
+ini_set('display_errors', 'on');
+error_reporting(CUSTOM_ERROR_LEVEL);

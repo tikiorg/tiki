@@ -12,70 +12,78 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 	private $to;
 	private $packages;
 
-	function setUp() {
+	function setUp()
+	{
 		$this->from = null;
 		$this->to = null;
 		$this->packages = null;
 	}
 
-	function testWithoutProvider() {
+	function testWithoutProvider()
+	{
 		$lib = new ShippingLib;
 
-		$this->assertEquals( array(), $lib->getRates( array( 'zip' => '12345' ), array( 'zip' => '23456' ), array( array( 'weight' => 5 ) ) ) );
+		$this->assertEquals(array(), $lib->getRates(array('zip' => '12345'), array('zip' => '23456'), array(array('weight' => 5))));
 	}
 
-	function testCountryPreserved() {
+	function testCountryPreserved()
+	{
 		$lib = new ShippingLib;
-		$lib->addProvider( $this );
+		$lib->addProvider($this);
 
-		$lib->getRates( array( 'zip' => '12345', 'country' => 'FR' ), array( 'zip' => '23456' ), array( array( 'weight' => 5 ) ) );
+		$lib->getRates(array('zip' => '12345', 'country' => 'FR'), array('zip' => '23456'), array(array('weight' => 5)));
 
-		$this->assertEquals( 'FR', $this->from['country'] );
+		$this->assertEquals('FR', $this->from['country']);
 	}
 
-	function testCountryCompleted() {
+	function testCountryCompleted()
+	{
 		$lib = new ShippingLib;
-		$lib->addProvider( $this );
+		$lib->addProvider($this);
 
-		$lib->getRates( array( 'zip' => '12345' ), array( 'zip' => 'A1B 2C3' ), array( array( 'weight' => 5 ) ) );
+		$lib->getRates(array('zip' => '12345'), array('zip' => 'A1B 2C3'), array(array('weight' => 5)));
 
-		$this->assertEquals( 'US', $this->from['country'] );
-		$this->assertEquals( 'CA', $this->to['country'] );
+		$this->assertEquals('US', $this->from['country']);
+		$this->assertEquals('CA', $this->to['country']);
 	}
 
-	function testZipUpperCased() {
+	function testZipUpperCased()
+	{
 		$lib = new ShippingLib;
-		$lib->addProvider( $this );
+		$lib->addProvider($this);
 
-		$lib->getRates( array( 'zip' => '12345' ), array( 'zip' => 'a1b 2c3' ), array( array( 'weight' => 5 ) ) );
+		$lib->getRates(array('zip' => '12345'), array('zip' => 'a1b 2c3'), array(array('weight' => 5)));
 
-		$this->assertEquals( 'A1B 2C3', $this->to['zip'] );
-		$this->assertEquals( 'CA', $this->to['country'] );
+		$this->assertEquals('A1B 2C3', $this->to['zip']);
+		$this->assertEquals('CA', $this->to['country']);
 	}
 
-	function testUnknownFormat() {
+	function testUnknownFormat()
+	{
 		$lib = new ShippingLib;
-		$lib->addProvider( $this );
+		$lib->addProvider($this);
 
-		$lib->getRates( array( 'zip' => '12345678900X' ), array( 'zip' => 'A1B 2C3' ), array( array( 'weight' => 5 ) ) );
+		$lib->getRates(array('zip' => '12345678900X'), array('zip' => 'A1B 2C3'), array(array('weight' => 5)));
 
-		$this->assertArrayNotHasKey( 'country', $this->from );
+		$this->assertArrayNotHasKey('country', $this->from);
 	}
 
-	function testPackageExpansion() {
+	function testPackageExpansion()
+	{
 		$lib = new ShippingLib;
-		$lib->addProvider( $this );
+		$lib->addProvider($this);
 
-		$lib->getRates( array( 'zip' => '12345678900X' ), array( 'zip' => 'A1B 2C3' ), array( array( 'weight' => 5, 'count' => 2 ), array( 'weight' => 10 ) ) );
+		$lib->getRates(array('zip' => '12345678900X'), array('zip' => 'A1B 2C3'), array(array('weight' => 5, 'count' => 2), array('weight' => 10)));
 
-		$this->assertEquals( array(
-			array( 'weight' => 5 ),
-			array( 'weight' => 5 ),
-			array( 'weight' => 10 ),
-		), $this->packages );
+		$this->assertEquals(array(
+					array('weight' => 5),
+					array('weight' => 5),
+					array('weight' => 10),
+					), $this->packages);
 	}
 
-	function getRates( array $from, array $to, array $packages ) {
+	function getRates(array $from, array $to, array $packages)
+	{
 		$this->from = $from;
 		$this->to = $to;
 		$this->packages = $packages;

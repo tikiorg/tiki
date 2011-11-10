@@ -25,7 +25,7 @@ class JitFilter_AccessTest extends TikiTestCase
 			),
 		);
 
-		$this->array = new JitFilter( $this->array );
+		$this->array = new JitFilter($this->array);
 	}
 
 	function tearDown()
@@ -35,91 +35,91 @@ class JitFilter_AccessTest extends TikiTestCase
 
 	function testBasicAccess()
 	{
-		$this->assertEquals( 'bar', $this->array['foo'] );
-		$this->assertEquals( 10, $this->array['bar'] );
-		$this->assertEquals( 'world', $this->array['baz'][1] );
+		$this->assertEquals('bar', $this->array['foo']);
+		$this->assertEquals(10, $this->array['bar']);
+		$this->assertEquals('world', $this->array['baz'][1]);
 	}
 
 	function testRecursiveness()
 	{
-		$this->assertTrue( $this->array['baz'] instanceof JitFilter );
+		$this->assertTrue($this->array['baz'] instanceof JitFilter);
 	}
 
 	function testDefinition()
 	{
-		$this->assertTrue( isset( $this->array['baz'] ) );
-		$this->assertFalse( isset( $this->array['hello'] ) );
+		$this->assertTrue(isset($this->array['baz']));
+		$this->assertFalse(isset($this->array['hello']));
 	}
 
 	function testDirectArray()
 	{
-		$this->assertEquals( array(), array_diff( array( 'hello', 'world' ), $this->array['baz']->asArray() ) );
+		$this->assertEquals(array(), array_diff(array('hello', 'world'), $this->array['baz']->asArray()));
 	}
 
 	function testKeys()
 	{
-		$this->assertEquals( array( 'foo', 'bar', 'baz' ), $this->array->keys() );
+		$this->assertEquals(array('foo', 'bar', 'baz'), $this->array->keys());
 	}
 
 	function testIsArray()
 	{
-		$this->assertTrue( $this->array->isArray('baz') );
+		$this->assertTrue($this->array->isArray('baz'));
 	}
 
 	function testAsArray()
 	{
-		$this->assertEquals( array( 'bar' ), $this->array->asArray('foo') );
-		$this->assertEquals( array(), $this->array->asArray('not_exists') );
+		$this->assertEquals(array('bar'), $this->array->asArray('foo'));
+		$this->assertEquals(array(), $this->array->asArray('not_exists'));
 	}
 
 	function testAsArraySplit()
 	{
-		$test = new JitFilter( array( 'foo' => '1|2a|3' ) );
-		$test->setDefaultFilter( new Zend_Filter_Digits );
+		$test = new JitFilter(array('foo' => '1|2a|3'));
+		$test->setDefaultFilter(new Zend_Filter_Digits);
 
-		$this->assertEquals( array( '1', '2', '3' ), $test->asArray( 'foo', '|' ) );
+		$this->assertEquals(array('1', '2', '3'), $test->asArray('foo', '|'));
 	}
 
 	function testSubset()
 	{
-		$this->assertEquals( 
-			array( 'foo' => $this->array['foo'], 'baz' => $this->array->asArray('baz') ), 
-			$this->array->subset( array('foo', 'baz') )->asArray() );
+		$this->assertEquals(
+			array('foo' => $this->array['foo'], 'baz' => $this->array->asArray('baz')), 
+			$this->array->subset(array('foo', 'baz'))->asArray());
 	}
 
 	function testUnset()
 	{
 		unset($this->array['baz']);
 
-		$this->assertFalse( isset($this->array['baz']) );
+		$this->assertFalse(isset($this->array['baz']));
 	}
 
 	function testSet()
 	{
 		$this->array['new'] = 'foo';
 
-		$this->assertEquals( $this->array['new'], 'foo' );
+		$this->assertEquals($this->array['new'], 'foo');
 	}
 
 	function testGetSingleWithoutPresetGeneric()
 	{
-		$this->assertEquals( $this->array->foo->filter( new Zend_Filter_StringToUpper ), 'BAR' );
+		$this->assertEquals($this->array->foo->filter(new Zend_Filter_StringToUpper), 'BAR');
 	}
 
 	function testGetSinfleWithoutPresetNamed()
 	{
-		$this->assertEquals( $this->array->bar->digits(), '10' );
+		$this->assertEquals($this->array->bar->digits(), '10');
 	}
 
 	function testGetStructuredWithoutPresetGeneric()
 	{
-		$filtered = $this->array->baz->filter( new Zend_Filter_StringToUpper );
-		$this->assertEquals( $filtered, array( 'HELLO', 'WORLD' ) );
+		$filtered = $this->array->baz->filter(new Zend_Filter_StringToUpper);
+		$this->assertEquals($filtered, array('HELLO', 'WORLD'));
 	}
 
 	function testGetStructuredWithoutPresetNamed()
 	{
 		$filtered = $this->array->baz->alpha();
-		$this->assertEquals( $filtered, array( 'hello', 'world' ) );
+		$this->assertEquals($filtered, array('hello', 'world'));
 	}
 }

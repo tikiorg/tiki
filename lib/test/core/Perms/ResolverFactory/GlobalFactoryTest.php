@@ -19,7 +19,7 @@ class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 		$db = TikiDb::get();
 
 		$result = $db->query('SELECT groupName, permName FROM users_grouppermissions');
-		while($row = $result->fetchRow()) {
+		while ($row = $result->fetchRow()) {
 			$this->tableData[] = $row;
 		}
 
@@ -32,7 +32,7 @@ class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 
 		$db->query('DELETE FROM users_grouppermissions');
 		
-		foreach($this->tableData as $row) {
+		foreach ($this->tableData as $row) {
 			$db->query('INSERT INTO users_grouppermissions (groupName, permName) VALUES(?,?)', array_values($row));
 		}
 	}

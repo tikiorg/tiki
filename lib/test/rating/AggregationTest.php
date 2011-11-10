@@ -9,7 +9,8 @@ require_once 'lib/rating/ratinglib.php';
 
 class Rating_AggregationTest extends TikiTestCase
 {
-	function setUp() {
+	function setUp()
+	{
 		global $user; $user = null;
 		
 		$tikilib = $this->getMock('TikiLib', array('get_ip_address'));
@@ -19,143 +20,154 @@ class Rating_AggregationTest extends TikiTestCase
 		$testableTikiLib->overrideLibs(array('tiki' => $tikilib));
 		
 		parent::setUp();
-		TikiDb::get()->query( 'DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array( 'test.%' ) );
+		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
 	}
 	
-	function tearDown() {
+	function tearDown()
+	{
 		global $user; $user = null;
 		parent::tearDown();
-		TikiDb::get()->query( 'DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array( 'test.%' ) );
+		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
 	}
 
-	function testGetGlobalSum() {
+	function testGetGlobalSum()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 4, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 112, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 4, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals( 9.0, $lib->collect( 'test', 111, 'sum' ) );
+		$this->assertEquals(9.0, $lib->collect('test', 111, 'sum'));
 	}
 
-	function testSumWithNoData() {
+	function testSumWithNoData()
+	{
 		$lib = new RatingLib;
 
-		$this->assertEquals( 0.0, $lib->collect( 'test', 111, 'sum' ) );
+		$this->assertEquals(0.0, $lib->collect('test', 111, 'sum'));
 	}
 
-	function testAverageWithNoData() {
+	function testAverageWithNoData()
+	{
 		$lib = new RatingLib;
 
-		$this->assertEquals( 0.0, $lib->collect( 'test', 111, 'avg' ) );
+		$this->assertEquals(0.0, $lib->collect('test', 111, 'avg'));
 	}
 
-	function testGetGlobalAverage() {
+	function testGetGlobalAverage()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 112, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals( 10 / 3, $lib->collect( 'test', 111, 'avg' ), '', 1/1000 );
+		$this->assertEquals(10 / 3, $lib->collect('test', 111, 'avg'), '', 1/1000);
 	}
 
-	function testBadAggregateFunction() {
+	function testBadAggregateFunction()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 112, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertFalse( $lib->collect( 'test', 111, 'foobar' ) );
+		$this->assertFalse($lib->collect('test', 111, 'foobar'));
 	}
 
-	function testTimeRangeLimiter() {
+	function testTimeRangeLimiter()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 112, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals( 5.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum', array(
 			'range' => 2500,
-		) ) );
+		)));
 	}
 
-	function testIgnoreAnonymous() {
+	function testIgnoreAnonymous()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals( 10.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array(
 			'ignore' => 'anonymous',
-		) ) );
+		)));
 	}
 
-	function testKeepLatest() {
+	function testKeepLatest()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 3, time() - 1500 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1500);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals( 6.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(6.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'latest',
-		) ) );
+		)));
 
-		$this->assertEquals( 3.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(3.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'latest',
 			'range' => 1200,
-		) ) );
+		)));
 
-		$this->assertEquals( 0.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(0.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'latest',
 			'range' => 1200,
 			'ignore' => 'anonymous',
-		) ) );
+		)));
 	}
 
-	function testKeepOldest() {
+	function testKeepOldest()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 );
-		$lib->record_user_vote( 'abc', 'test', 111, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 );
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000);
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000);
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals( 8.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(8.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'oldest',
-		) ) );
+		)));
 
-		$this->assertEquals( 5.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'oldest',
 			'range' => 2500,
-		) ) );
+		)));
 
-		$this->assertEquals( 2.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(2.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'oldest',
 			'range' => 2500,
 			'ignore' => 'anonymous',
-		) ) );
+		)));
 	}
 
-	function testConsiderPerPeriod() {
+	function testConsiderPerPeriod()
+	{
 		$lib = new RatingLib;
-		$lib->record_user_vote( 'abc', 'test', 111, 5, time() - 3000 ); // kept
-		$lib->record_user_vote( 'abc', 'test', 111, 2, time() - 2000 ); // kept
-		$lib->record_user_vote( 'abc', 'test', 111, 3, time() - 1000 );
-		$lib->record_anonymous_vote( 'deadbeef01234567', 'test', 111, 3, time() - 1000 ); // kept
+		$lib->record_user_vote('abc', 'test', 111, 5, time() - 3000); // kept
+		$lib->record_user_vote('abc', 'test', 111, 2, time() - 2000); // kept
+		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
+		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000); // kept
 
-		$this->assertEquals( 10.0, $lib->collect( 'test', 111, 'sum', array(
+		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array(
 			'keep' => 'oldest',
 			'revote' => 2500,
-		) ) );
+		)));
 
-		$this->assertEquals( 10 / 3, $lib->collect( 'test', 111, 'avg', array(
+		$this->assertEquals(10 / 3, $lib->collect('test', 111, 'avg', array(
 			'keep' => 'oldest',
 			'revote' => 2500,
-		) ), '', 1 / 1000 );
+		)), '', 1 / 1000);
 	}
 }
 

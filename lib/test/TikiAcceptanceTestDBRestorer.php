@@ -44,7 +44,8 @@ abstract class TikiAcceptanceTestDBRestorer
 	protected $tiki_bare_bones_db_dump = "bareBonesDBDump.sql"; 
 
 
-	function __construct() {
+	function __construct()
+	{
 		$this->current_dir = getcwd();
 		$this->mysql_data_dir = $this->set_mysql_data_dir();
 	}
@@ -52,11 +53,12 @@ abstract class TikiAcceptanceTestDBRestorer
 	//This method can be called to create any dump file from a db.
 	//Useful for creating dumps for diffent test db configurations
 	abstract function create_dump_file($dump_file);
-	
-	function set_mysql_data_dir() {
+
+	function set_mysql_data_dir()
+	{
 		mysql_connect($this->host, $this->tiki_test_db_user, $this->tiki_test_db_pwd) or die(mysql_error());
 		$result = mysql_query("select @@datadir;");
-		while($array = mysql_fetch_array($result)) {
+		while ($array = mysql_fetch_array($result)) {
 			$datadir = $array[0];
 		}
 		return $datadir; 
@@ -64,7 +66,8 @@ abstract class TikiAcceptanceTestDBRestorer
 
 	abstract function check_if_dump_exists($dump_file);
 
-	function restoreDB($tiki_test_db_dump, $save_schema = false) {
+	function restoreDB($tiki_test_db_dump, $save_schema = false)
+	{
 		$begTime = microtime(true);
 		$this->restoreDBDump($tiki_test_db_dump, $save_schema);
 		$this->reinitialize_internal_values_and_clear_caches();
@@ -72,16 +75,18 @@ abstract class TikiAcceptanceTestDBRestorer
 	}
 
 	abstract function restoreDBDump($tiki_test_db_dump, $save_schema = false);
-	
-	function reinitialize_internal_values_and_clear_caches() {
+
+	function reinitialize_internal_values_and_clear_caches()
+	{
 		global $cachelib, $prefs, $tikilib;
 		initialize_prefs();			
 		$tikilib->cache_page_info = array();	
 		$cachelib->empty_cache();
 	}
-	
-	
-	function printCallStack() {
+
+
+	function printCallStack()
+	{
 		// Can't believe this is not standard in PHP!
 		$backtrace = debug_backtrace();
 
@@ -107,18 +112,21 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 	 * the snapshot was restored.
 	 */
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct();
 	}
 
-	function check_if_dump_and_schema_start_files_exist($dump_file) {
+	function check_if_dump_and_schema_start_files_exist($dump_file)
+	{
 		if (check_if_dump_exists($dump_file) && 
 				check_if_dump_exists($dump_file."_".$this->tiki_schema_file_start)) {
 			return true;
 		}
 	}
 
-	function check_if_dump_exists($dump_file){
+	function check_if_dump_exists($dump_file)
+	{
 		chdir($this->mysql_data_dir);
 		if (file_exists($dump_file)) {
 			return true;
@@ -127,7 +135,8 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 
 	//This method can be called to create any dump file from a db.
 	//Useful for creating dumps for diffent test db configurations
-	function create_dump_file($dump_file) {
+	function create_dump_file($dump_file)
+	{
 		chdir($this->mysql_data_dir);
 		// 			echo "\nDumping the whole tiki database: ";
 		//			$begTime = microtime(true);
@@ -140,7 +149,8 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 	}
 
 	//Creates start schema files from the test db
-	function create_start_schema_files() {
+	function create_start_schema_files()
+	{
 		chdir($this->mysql_data_dir);
 		// 			echo "\n\rDumping start tables and times from information_schema: ";
 		//			$begTime = microtime(true);
@@ -151,21 +161,23 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 		return true;  			
 	}
 
-	function create_testdb_dump_and_start_schema_files() {
+	function create_testdb_dump_and_start_schema_files()
+	{
 		$this->create_dump_file($this->tiki_test_db_dump);
 		$this->create_start_schema_files();
 	}
 
-	function restoreDBDump($tiki_test_db_dump, $save_schema = false) {
+	function restoreDBDump($tiki_test_db_dump, $save_schema = false)
+	{
 		$begTime = microtime(true);
-		
+
 		global $last_restored;
 		$error_msg = null;
 		chdir($this->mysql_data_dir);
 		if (!file_exists($tiki_test_db_dump)) {
 			$error_msg =
 				"\nTried to run an acceptance test without an initial database dump. ".
-			    "Run script lib/core/test/create_dump_db_file.php to create it.\n";		
+				"Run script lib/core/test/create_dump_db_file.php to create it.\n";		
 			return $error_msg;
 		}
 
@@ -218,11 +230,11 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 
 			//RESTORE THE ORIGINAL DATABASE
 			$installer = new Installer();
-			$installer->runFile( $this->tiki_restore_db_file_name );	
-			
+			$installer->runFile($this->tiki_restore_db_file_name);	
+
 			//		    	echo (microtime(true) -$begTime)." sec"; 
 			$last_restored = $tiki_test_db_dump;
-//			$this->reinitialize_internal_values_and_clear_caches();
+			//			$this->reinitialize_internal_values_and_clear_caches();
 		} else {
 			//restore the whole database	
 			$this->restoreDBDumpFromScratch($tiki_test_db_dump);	
@@ -230,26 +242,29 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 			$this->create_start_schema_files();
 		}
 		chdir($this->current_dir);
-		
+
 		return null;
 	}
 
-	function get_table_name(&$table_name_date_time) {
+	function get_table_name(&$table_name_date_time)
+	{
 		preg_match('/([a-zA-Z-_]+)(\s+)/', $table_name_date_time, $matches);
 		$table_name_date_time = $matches[1]; 
 	}
 
-	function restoreBareBonesDB() {
+	function restoreBareBonesDB()
+	{
 		chdir($this->mysql_data_dir);
 		$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_bare_bones_db_dump";
 		shell_exec($mysql_restore_db_command);
 		chdir($this->current_dir);
 	}
 
-	function restoreDBDumpFromScratch($dump_file) {
+	function restoreDBDumpFromScratch($dump_file)
+	{
 		$dump_file_with_path = $this->mysql_data_dir . $dump_file;
 		$installer = new Installer();
-		$installer->runFile( $dump_file_with_path );	
+		$installer->runFile($dump_file_with_path);	
 	}
 }
 
@@ -262,57 +277,62 @@ class TikiAcceptanceTestDBRestorerBinaryDumps extends TikiAcceptanceTestDBRestor
 	 * We keep both approaches for now, until we decide which of the
 	 * two makes most sense.
 	 */
-	
+
 	private $dump_file_extension = 'binary';
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct();
 	}
 
-	function create_dump_file($dump_name) {
+	function create_dump_file($dump_name)
+	{
 		$tiki_test_db_data_directory = 
 			$this->mysql_data_dir . DIRECTORY_SEPARATOR . 
 			$this->tiki_test_db;
 		$this->copy_dir($tiki_test_db_data_directory, $this->dump_file_path($dump_name));
 	}
-	
-	private function dump_file_path($dump_name) {
+
+	private function dump_file_path($dump_name)
+	{
 		$dump_fpath = 
 			$this->mysql_data_dir . DIRECTORY_SEPARATOR . 
-			$dump_name.
-			".".$this->dump_file_extension;
+			$dump_name .
+			"." . $this->dump_file_extension;
 		return $dump_fpath;
 	}
-	
-	function check_if_dump_exists($dump_file) {
-		
+
+	function check_if_dump_exists($dump_file)
+	{
+
 	}
 
-	function restoreDBDump($tiki_test_db_dump, $save_schema = false) {
-		
+	function restoreDBDump($tiki_test_db_dump, $save_schema = false)
+	{
+
 	}
 
-	private function copy_dir( $source, $target ) {
-		if ( is_dir( $source ) ) {
-			@mkdir( $target );
-			$d = dir( $source );
-			while ( FALSE !== ( $entry = $d->read() ) ) {
-				if ( $entry == '.' || $entry == '..' ) {
+	private function copy_dir($source, $target)
+	{
+		if (is_dir($source)) {
+			@mkdir($target);
+			$d = dir($source);
+			while (FALSE !== ($entry = $d->read())) {
+				if ($entry == '.' || $entry == '..') {
 					continue;
 				}
 				$Entry = $source . '/' . $entry;
-				if ( is_dir( $Entry ) ) {
-					full_copy( $Entry, $target . '/' . $entry );
+				if (is_dir($Entry)) {
+					full_copy($Entry, $target . '/' . $entry);
 					continue;
 				}
-				copy( $Entry, $target . '/' . $entry );
+				copy($Entry, $target . '/' . $entry);
 			}
 
 			$d->close();
-		}else {
-			copy( $source, $target );
+		} else {
+			copy($source, $target);
 		}
 	}
-	
-	
+
 }

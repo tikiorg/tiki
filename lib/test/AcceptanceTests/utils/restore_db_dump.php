@@ -6,9 +6,9 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 
-set_include_path( get_include_path() .PATH_SEPARATOR . "../.." );
-set_include_path( get_include_path() .PATH_SEPARATOR . "../../.." );
-set_include_path( get_include_path() .PATH_SEPARATOR . "../../../.." );
+set_include_path(get_include_path() . PATH_SEPARATOR . "../..");
+set_include_path(get_include_path() . PATH_SEPARATOR . "../../..");
+set_include_path(get_include_path() . PATH_SEPARATOR . "../../../..");
 
 require_once ('tiki-setup.php');
 require_once('lib/test/TikiAcceptanceTestDBRestorer.php');

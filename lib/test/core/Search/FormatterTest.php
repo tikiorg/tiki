@@ -254,7 +254,8 @@ OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
 	
-	function testHighlightRequested() {
+	function testHighlightRequested()
+	{
 		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
 
 		$resultSet = new Search_ResultSet(array(

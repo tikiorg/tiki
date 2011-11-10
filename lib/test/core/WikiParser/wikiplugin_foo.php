@@ -7,11 +7,12 @@
 
 /* Tiki-Wiki plugin example 
  */
-function wikiplugin_foo_info() {
+function wikiplugin_foo_info()
+{
 	return array(
 		'name' => tra('Foo'),
 		'description' => tra('Sample plugin.'),
-		'prefs' => array( 'wikiplugin_example' ),
+		'prefs' => array('wikiplugin_example'),
 		'body' => tra('text'),
 		'params' => array(
 			'face' => array(
@@ -27,7 +28,9 @@ function wikiplugin_foo_info() {
 		),
 	);
 }
-function wikiplugin_foo($data, $params) {
+
+function wikiplugin_foo($data, $params)
+{
 	extract ($params,EXTR_SKIP);
 
 	$ret = "foo face=$face size=$size :: $data";

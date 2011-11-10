@@ -16,7 +16,7 @@ class DeclFilter_CatchAllUnsetTest extends TikiTestCase
 	{
 		$rule = new DeclFilter_CatchAllUnsetRule();
 
-		$this->assertTrue( $rule->match( 'hello' ) );
+		$this->assertTrue($rule->match('hello'));
 	}
 
 	function testApply()
@@ -27,8 +27,8 @@ class DeclFilter_CatchAllUnsetTest extends TikiTestCase
 			'hello' => '123abc',
 		);
 
-		$rule->apply( $data, 'hello' );
+		$rule->apply($data, 'hello');
 
-		$this->assertFalse( isset( $data['hello'] ) ); 
+		$this->assertFalse(isset($data['hello'])); 
 	}
 }

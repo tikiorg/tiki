@@ -36,7 +36,8 @@ class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCorrect(30, 10, 10, 11, 20);
 	}
 
-	private function assertResultCorrect($count, $from, $perPage, $first, $last) {
+	private function assertResultCorrect($count, $from, $perPage, $first, $last)
+	{
 		$this->addDocuments($count);
 
 		$query = new Search_Query;
@@ -64,9 +65,9 @@ class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 
 		for ($i = 0; $count > $i; ++$i) {
 			$index->addDocument(array(
-				'object_type' => $typeFactory->identifier('article'),
-				'object_id' => $typeFactory->identifier($i + 1),
-			));
+						'object_type' => $typeFactory->identifier('article'),
+						'object_id' => $typeFactory->identifier($i + 1),
+						));
 		}
 	}
 }

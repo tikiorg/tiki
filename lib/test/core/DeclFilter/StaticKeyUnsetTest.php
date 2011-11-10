@@ -14,16 +14,16 @@ class DeclFilter_StaticKeyUnsetTest extends TikiTestCase
 {
 	function testMatch()
 	{
-		$rule = new DeclFilter_StaticKeyUnsetRule( array( 'hello', 'world' ) );
+		$rule = new DeclFilter_StaticKeyUnsetRule(array('hello', 'world'));
 
-		$this->assertTrue( $rule->match( 'hello' ) );
-		$this->assertTrue( $rule->match( 'world' ) );
-		$this->assertFalse( $rule->match( 'baz' ) );
+		$this->assertTrue($rule->match('hello'));
+		$this->assertTrue($rule->match('world'));
+		$this->assertFalse($rule->match('baz'));
 	}
 
 	function testApply()
 	{
-		$rule = new DeclFilter_StaticKeyUnsetRule( array( 'hello', 'world' ) );
+		$rule = new DeclFilter_StaticKeyUnsetRule(array('hello', 'world'));
 
 		$data = array(
 			'hello' => '123abc',
@@ -31,11 +31,11 @@ class DeclFilter_StaticKeyUnsetTest extends TikiTestCase
 			'foo' => '123abc',
 		);
 
-		$rule->apply( $data, 'hello' );
-		$rule->apply( $data, 'world' );
+		$rule->apply($data, 'hello');
+		$rule->apply($data, 'world');
 
-		$this->assertFalse( isset( $data['hello'] ) );
-		$this->assertFalse( isset( $data['world'] ) );
-		$this->assertEquals( $data['foo'], '123abc' );
+		$this->assertFalse(isset($data['hello']));
+		$this->assertFalse(isset($data['world']));
+		$this->assertEquals($data['foo'], '123abc');
 	}
 }

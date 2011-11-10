@@ -17,19 +17,22 @@ private $dir = '';  // the unmodifed directory
 private $el = null; // the EditLib
 	
 	
-	function __construct() {
+	function __construct()
+	{
 		$this->dir = getcwd();
 	}
 		
 	
-	function setUp() {
+	function setUp()
+	{
 		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
 	}
 	
 		
-	function tearDown() {
+	function tearDown()
+	{
 		global $prefs;
 		// restore preference default state
 		$prefs['feature_use_three_colon_centertag'] = 'n';
@@ -40,7 +43,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align divs 'left'
 	 */
-	function testBlockAlignLeft() {
+	function testBlockAlignLeft()
+	{
 		global $prefs;
 		
 		$this->markTestIncomplete('Work in progress.');
@@ -69,7 +73,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align divs 'center'
 	 */
-	function testBlockAlignCentered() {
+	function testBlockAlignCentered()
+	{
 		global $prefs;
 		
 		$this->markTestIncomplete('Work in progress.');
@@ -99,7 +104,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align divs 'right'
 	 */
-	function testBlockAlignRight() {
+	function testBlockAlignRight()
+	{
 		global $prefs;
 		
 		$this->markTestIncomplete('Work in progress.');
@@ -114,7 +120,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align divs 'justify'
 	 */
-	function testBlockAlignJustified() {
+	function testBlockAlignJustified()
+	{
 		global $prefs;
 		
 		$this->markTestIncomplete('Work in progress.');
@@ -129,8 +136,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align paragraphs 'left'
 	 */	
-	function testParagraphAlignLeft() {
-		
+	function testParagraphAlignLeft()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '<p style="text-align: left;">This text is aligned</p>';
@@ -143,7 +150,8 @@ private $el = null; // the EditLib
 	/** 
 	 * Centered headings must use style attribute
 	 */
-	function testCenterdHeadings() {
+	function testCenterdHeadings()
+	{
 		global $prefs;
 		
 		#
@@ -152,13 +160,13 @@ private $el = null; // the EditLib
 		$prefs['feature_use_three_colon_centertag'] = 'n';		
 		$inData = '!::Heading::';
 		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$prefs['feature_use_three_colon_centertag'] = 'y';		
 		$inData = '!:::Heading:::';
 		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">Heading</h1>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		
@@ -168,13 +176,13 @@ private $el = null; // the EditLib
 		$prefs['feature_use_three_colon_centertag'] = 'n';		
 		$inData = '!#::Heading::';
 		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$prefs['feature_use_three_colon_centertag'] = 'y';		
 		$inData = '!#:::Heading:::';
 		$ex = '<h1 style="text-align: center;" class="showhide_heading" id="Heading">1. Heading</h1>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 	}
 	
@@ -182,46 +190,46 @@ private $el = null; // the EditLib
 	/**
 	 * Headings 1-6
 	 */
-	function testNumberedHeadings() {
-		
+	function testNumberedHeadings()
+	{
 		$inData = '!#Heading Level 1';
 		$ex = '<h1 class="showhide_heading" id="Heading_Level_1">1. Heading Level 1</h1>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData .= "\n"; // must keep lover level headings, otherwise we will get an error (undefined number)
 		$inData .= '!!#Heading Level 2';
 		$ex .= "\n";
 		$ex .= '<h2 class="showhide_heading" id="Heading_Level_2">1.1. Heading Level 2</h2>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData .= "\n";
 		$inData .= '!!!#Heading Level 3';
 		$ex .= "\n";
 		$ex .= '<h3 class="showhide_heading" id="Heading_Level_3">1.1.1. Heading Level 3</h3>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData .= "\n";
 		$inData .= '!!!!#Heading Level 4';
 		$ex .= "\n";
 		$ex .= '<h4 class="showhide_heading" id="Heading_Level_4">1.1.1.1. Heading Level 4</h4>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData .= "\n";
 		$inData .= '!!!!!#Heading Level 5';
 		$ex .= "\n";
 		$ex .= '<h5 class="showhide_heading" id="Heading_Level_5">1.1.1.1.1. Heading Level 5</h5>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData .= "\n";
 		$inData .= '!!!!!!#Heading Level 6';
 		$ex .= "\n";
 		$ex .= '<h6 class="showhide_heading" id="Heading_Level_6">1.1.1.1.1.1. Heading Level 6</h6>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);				
 	}
 	
@@ -229,8 +237,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align paragraphs 'center'
 	 */	
-	function testParagraphAlignCentered() {
-		
+	function testParagraphAlignCentered()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '<p style="text-align: center;">This text is aligned</p>';
@@ -243,8 +251,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align paragraphs 'right'
 	 */	
-	function testParagraphAlignRight() {
-		
+	function testParagraphAlignRight()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '<p style="text-align: right;">This text is aligned</p>';
@@ -257,8 +265,8 @@ private $el = null; // the EditLib
 	/**
 	 * Align paragraphs 'justify'
 	 */	
-	function testParagraphAlignJustified() {
-		
+	function testParagraphAlignJustified()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$ex = '<p style="text-align: justify;">This text is aligned</p>';
@@ -271,36 +279,36 @@ private $el = null; // the EditLib
 	/**
 	 * Headings 1-6
 	 */
-	function testUnnumberedHeadings() {	
-			
+	function testUnnumberedHeadings()
+	{
 		$inData = '!Heading Level 1';
 		$ex = '<h1 class="showhide_heading" id="Heading_Level_1">Heading Level 1</h1>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData = '!!Heading Level 2';
 		$ex = '<h2 class="showhide_heading" id="Heading_Level_2">Heading Level 2</h2>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData = '!!!Heading Level 3';
 		$ex = '<h3 class="showhide_heading" id="Heading_Level_3">Heading Level 3</h3>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData = '!!!!Heading Level 4';
 		$ex = '<h4 class="showhide_heading" id="Heading_Level_4">Heading Level 4</h4>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData = '!!!!!Heading Level 5';
 		$ex = '<h5 class="showhide_heading" id="Heading_Level_5">Heading Level 5</h5>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);
 		
 		$inData = '!!!!!!Heading Level 6';
 		$ex = '<h6 class="showhide_heading" id="Heading_Level_6">Heading Level 6</h6>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($ex, $out);		
 	}
 }

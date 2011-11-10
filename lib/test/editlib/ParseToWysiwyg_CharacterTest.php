@@ -17,13 +17,13 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	private $el = null; // the EditLib
 	private $dir = '';  // the unmodifed directory
 	
-	function __construct() {
+	function __construct()
+	{
 		$this->dir = getcwd();
 	}
 		
-	
-	function setUp() {
-		
+	function setUp()
+	{
 		$_SERVER['HTTP_HOST'] = ''; // editlib expects that HTTP_HOST is defined
 
 		$this->el = new EditLib();
@@ -32,12 +32,14 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}
 	
 		
-	function tearDown() {
+	function tearDown()
+	{
 		chdir($this->dir);
 	}	
 
 
-	function testFontFamily() {
+	function testFontFamily()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new Editlib();
@@ -49,7 +51,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}
 
 	
-	function testFontSize() {
+	function testFontSize()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new Editlib();
@@ -61,39 +64,44 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}
 	
 	
-	function testBold() {
+	function testBold()
+	{
 		$inData = '__bold__';
 		$exp = '<strong>bold</strong>'; // like CKE
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);		
 	}
 	
 	
-	function testItalic() {
+	function testItalic()
+	{
 		$inData = '\'\'italic\'\'';
 		$exp = '<em>italic</em>'; // like CKE
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);
 	}
 	
 	
-	function testUnderlined() {
+	function testUnderlined()
+	{
 		$inData = '===underlined===';
 		$exp = '<u>underlined</u>'; // like CKE
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);
 	}
 	
 	
-	function testStrike() {
+	function testStrike()
+	{
 		$inData = '--strike through--';
 		$exp = '<strike>strike through</strike>'; // like CKE
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);
 	}
 	
 	
-	function testSubscript() {
+	function testSubscript()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		$inData = '{SUB()}subscript{SUB}';
 		$exp = '<sub>subscript</sub>';
@@ -102,7 +110,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}	
 
 	
-	function testSuperscript() {
+	function testSuperscript()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new EditLib();
@@ -114,7 +123,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}		
 	
 	
-	function testMonospaced() {
+	function testMonospaced()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new EditLib();
@@ -126,7 +136,8 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}
 
 	
-	function testTeletype() {
+	function testTeletype()
+	{
 		$this->markTestIncomplete('Work in progress.');
 		
 		$el = new EditLib();
@@ -138,21 +149,21 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 	}
 	
 	
-	function testColor() {
-
+	function testColor()
+	{
 		$inData = '~~#112233:text~~';
 		$exp = '<span style="color:#112233; background-color:">text</span>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~ ,#112233:text~~';
 		$exp = '<span style="color: ; background-color:#112233">text</span>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);			
 				
 		$inData = '~~#AABBCC,#112233:text~~';
 		$exp = '<span style="color:#AABBCC; background-color:#112233">text</span>';
-		$out = trim( $this->el->parseToWysiwyg($inData) );
+		$out = trim($this->el->parseToWysiwyg($inData));
 		$this->assertEquals($exp, $out);			
 	}
 }

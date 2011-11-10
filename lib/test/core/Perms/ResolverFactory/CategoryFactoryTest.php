@@ -21,7 +21,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db = TikiDb::get();
 
 		$result = $db->query('SELECT * FROM ' . $name);
-		while($row = $result->fetchRow()) {
+		while ($row = $result->fetchRow()) {
 			$this->tableData[$name][] = $row;
 		}
 
@@ -34,7 +34,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 
 		$db->query('DELETE FROM ' . $name);
 		
-		foreach($this->tableData[$name] as $row) {
+		foreach ($this->tableData[$name] as $row) {
 			$db->query('INSERT INTO ' . $name . ' VALUES(?' . str_repeat(',?',count($row)-1) . ')', array_values($row));
 		}
 	}
