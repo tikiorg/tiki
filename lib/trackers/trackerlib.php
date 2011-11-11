@@ -3279,6 +3279,13 @@ class TrackerLib extends TikiLib
 		if (!count($items)) {
 			return;
 		}
+		foreach ($items as &$i) {
+			if (isset($i['itemId'])) {
+				// support old behavior that was in Tiki 6
+				$i = $i['itemId'];
+			}
+		}
+		unset($i);
 		$table = $this->items();
 		$table->updateMultiple(array('status' => $status), array(
 			'itemId' => $table->in($items),
