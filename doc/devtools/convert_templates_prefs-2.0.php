@@ -15,55 +15,58 @@ require_once('tiki-setup.php');
  */
 
 /* customize this to the directory you want to convert */
-$dirtoscan='templates';
+$dirtoscan = 'templates';
 
 /*****************/
 
 /* defines functions scandir and file_out_contents if running PHP<5 */
 if (!function_exists('scandir')) {
-    function scandir($dir) {
-	$dh  = opendir($dir);
-	while (false !== ($filename = readdir($dh))) {
-	    $files[] = $filename;
+	function scandir($dir)
+	{
+		$dh = opendir($dir);
+		while (false !== ($filename = readdir($dh))) {
+			$files[] = $filename;
+		}
+		sort($files);
+
+		return $files;
 	}
-	sort($files);
-
-	return $files;
-    }
 }
+
 if (!function_exists('file_put_contents')) {
-    function file_put_contents($filename, $data) {
-        $f = @fopen($filename, 'w');
-        if (!$f) {
-            return false;
-        } else {
-            $bytes = fwrite($f, $data);
-            fclose($f);
-            return $bytes;
-        }
-    }
+	function file_put_contents($filename, $data)
+	{
+		$f = @fopen($filename, 'w');
+		if (!$f) {
+			return false;
+		} else {
+			$bytes = fwrite($f, $data);
+			fclose($f);
+			return $bytes;
+		}
+	}
 }
 
-$src=array();
-$dst=array();
+$src = array();
+$dst = array();
 
 foreach(array_keys($prefs) as $k => $v) {
-    $src[$k]='$'.$v;
-    $dst[$k]='$prefs.'.$v;
+	$src[$k] = '$'.$v;
+	$dst[$k] = '$prefs.'.$v;
 }
 
-$elems=scandir($dirtoscan);
+$elems = scandir($dirtoscan);
 
-foreach($elems as $filename) {
-    if (preg_match('/.tpl$/', $filename)) {
-	echo "$filename... ";
-	$content_src=file_get_contents($dirtoscan.'/'.$filename);
-	$content_dst=str_replace($src, $dst, $content_src);
-	if ($content_dst != $content_src) {
-	    file_put_contents($dirtoscan.'/'.$filename, $content_dst);
-	    echo " modified\n";
-	} else {
-	    echo " no\n";
-	}
-    }
+foreach ($elems as $filename) {
+  if (preg_match('/.tpl$/', $filename)) {
+		echo "$filename... ";
+		$content_src = file_get_contents($dirtoscan.'/'.$filename);
+		$content_dst = str_replace($src, $dst, $content_src);
+		if ($content_dst != $content_src) {
+			file_put_contents($dirtoscan.'/'.$filename, $content_dst);
+			echo " modified\n";
+		} else {
+			echo " no\n";
+		}
+  }
 }

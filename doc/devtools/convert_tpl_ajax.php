@@ -61,12 +61,12 @@ function replace_with_self_links($original, $template_base)
 				}
 				$vars = explode('&', $query['query']);
 				foreach($vars as &$var) {
-					$ar = explode( '=', $var);
-					$var = $ar[0] . '=' . process_value( $ar[1] );
+					$ar = explode('=', $var);
+					$var = $ar[0] . '=' . process_value($ar[1]);
 				}
 				$str .= implode(' ', $vars) . ' ';
 			} else {
-				$str .= '_' . $attrs[1][$i] . '=' . process_value( $attrs[2][$i] ) . ' ';
+				$str .= '_' . $attrs[1][$i] . '=' . process_value($attrs[2][$i]) . ' ';
 			}
 		}
 		$str = trim($str) . '}' . $phplinks[1][$j] . '{/self_link}';	
@@ -79,8 +79,8 @@ function replace_with_self_links($original, $template_base)
 
 function process_value ($var)
 {
-	if (strpos( $var, '{$' ) === 0) {
-		$var =  trim( $var, '{}');
+	if (strpos($var, '{$') === 0) {
+		$var =  trim($var, '{}');
 		$q = '';
 	} else {
 		$q = '"';
@@ -113,7 +113,7 @@ $tpl_sel .= '</select>';
 
 // cheating - lazy ;)
 $form = str_replace("\n", '', "<form action='#'>
-<label for='toggle'>" . (empty($_REQUEST['toggle']) ? 'Show replacements' : "Showing $count_r replacements" ) . ":</label>
+<label for='toggle'>" . (empty($_REQUEST['toggle']) ? 'Show replacements' : "Showing $count_r replacements") . ":</label>
 <input type='checkbox' id='toggle' name='toggle' onclick='this.form.submit();'$checked />
 $tpl_sel
 </form>");

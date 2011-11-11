@@ -18,18 +18,18 @@ $mid = "mif_$pre.mid";
 if (file_exists("maps/$mif")) @ unlink("maps/$mif");
 if (file_exists("maps/$mid")) @ unlink("maps/$mid");
 
-$fmif = fopen("maps/$mif","w");
-$fmid = fopen("maps/$mid","w");
+$fmif = fopen("maps/$mif", "w");
+$fmid = fopen("maps/$mid", "w");
 
-fputs($fmif,"Version 300\n");
-fputs($fmif,"Charset \"WindowsLatin1\"\n");
-fputs($fmif,"Delimiter \",\"\n");
-fputs($fmif,"CoordSys Earth Projection 1, 104\n");
-fputs($fmif,"Columns 3\n");
-fputs($fmif,"  user Char(40)\n");
-fputs($fmif,"  Lon float\n");
-fputs($fmif,"  Lat float\n");
-fputs($fmif,"Data\n");
+fputs($fmif, "Version 300\n");
+fputs($fmif, "Charset \"WindowsLatin1\"\n");
+fputs($fmif, "Delimiter \",\"\n");
+fputs($fmif, "CoordSys Earth Projection 1, 104\n");
+fputs($fmif, "Columns 3\n");
+fputs($fmif, "  user Char(40)\n");
+fputs($fmif, "  Lon float\n");
+fputs($fmif, "  Lat float\n");
+fputs($fmif, "Data\n");
 
 $query = "select login from users_users";
 $results = mysql_query($query);
@@ -39,9 +39,9 @@ while ($r = mysql_fetch_row($results)) {
 	$retlon = mysql_query("select value from tiki_user_preferences where prefName='lon' and user='". addslashes($r[0]) ."'");
 	$lon = number_format(@ mysql_result($retlon,0),5);
 	if ($lon != 0 and $lat != 0 and !strpos($lon.$lat,',')) {
-		fputs($fmif,"Point ".$lon." ".$lat."\n");
-		fputs($fmif,"   Symbol (34,16711680,9)\n");
-		fputs($fmid,"\"".$r[0]."\",$lon,$lat\n");
+		fputs($fmif, "Point " . $lon . " " . $lat . "\n");
+		fputs($fmif, "   Symbol (34,16711680,9)\n");
+		fputs($fmid, "\"" . $r[0] . "\",$lon,$lat\n");
 	}
 }
 fclose($fmif);

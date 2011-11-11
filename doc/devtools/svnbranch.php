@@ -8,27 +8,27 @@
 require dirname(__FILE__) . '/svntools.php';
 
 // Perform basic checks
-info( "Verifying..." );
+info("Verifying...");
 
-if( ! isset( $_SERVER['argc'] ) || $_SERVER['argc'] != 2 )
-	error( "Missing argument. Expecting branch to create from trunk as argument.\n\nExamples:\n\tbranches/5.x\n\tbranches/experimental/foobar" );
+if (! isset($_SERVER['argc']) || $_SERVER['argc'] != 2)
+	error("Missing argument. Expecting branch to create from trunk as argument.\n\nExamples:\n\tbranches/5.x\n\tbranches/experimental/foobar");
 
-$source = full( 'trunk' );
-$branch = full( $_SERVER['argv'][1] );
+$source = full('trunk');
+$branch = full($_SERVER['argv'][1]);
 
-$repo = get_info( $source );
-$target = get_info( $branch );
+$repo = get_info($source);
+$target = get_info($branch);
 
-if( isset( $target->entry ) )
-	error( "The branch already exists." );
+if (isset($target->entry))
+	error("The branch already exists.");
 
-if( ! is_valid_branch( $branch ) )
-	error( "The provided branch is not an acceptable branch location." );
+if (! is_valid_branch($branch))
+	error("The provided branch is not an acceptable branch location.");
 
 $revision = (int) $repo->entry->commit['revision'];
 
 // Execute
-info( "Branching..." );
+info("Branching...");
 
-if( ! branch( $source, $branch, $revision ) )
-	error( "Branch could not be created." );
+if (! branch($source, $branch, $revision))
+	error("Branch could not be created.");
