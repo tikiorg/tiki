@@ -3280,7 +3280,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		foreach ($items as &$i) {
-			if (isset($i['itemId'])) {
+			if (is_array($i) && isset($i['itemId'])) {
 				// support old behavior that was in Tiki 6
 				$i = $i['itemId'];
 			}
