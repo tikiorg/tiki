@@ -11,28 +11,26 @@ class TikiWebdav_PathFactories_Wiki implements ezcWebdavPathFactory
 	protected $baseUriLength = 0;
 	protected $collectionPathes = array();
 
-	public function parseUriToPath( $uri )
+	public function parseUriToPath($uri)
 	{
-		$requestPath = rawurldecode( trim( $uri ) ) ;
+		$requestPath = rawurldecode(trim($uri));
 
-		if ( empty($requestPath) ) {
+		if (empty($requestPath)) {
 			$requestPath = '/';
-		}
-		elseif ( substr( $requestPath, -1, 1 ) === '/' ) {
-			$this->collectionPathes[substr( $requestPath, 0, -1 )] = true;
+		} elseif (substr($requestPath, -1, 1) === '/') {
+			$this->collectionPathes[substr($requestPath, 0, -1)] = true;
 		}
 
 		return $requestPath;
 	}
 
-	public function generateUriFromPath( $path )
+	public function generateUriFromPath($path)
 	{
 		global $base_url;
 
-		$result = $base_url . 'tiki-webdav.php/Wiki%20Pages' . implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) );
+		$result = $base_url . 'tiki-webdav.php/Wiki%20Pages' . implode('/', array_map('rawurlencode', explode('/', $path)));
 
 		print_debug("generateUriFromPath($path): $result\n");
 		return $result;
-
 	}
 }

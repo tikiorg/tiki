@@ -12,9 +12,9 @@ require_once 'lib/ezcomponents/Base/src/base.php';
  * 
  * @param string $className 
  */
-function webdav_autoload( $className )
+function webdav_autoload($className)
 {
-    ezcBase::autoload( $className );
+    ezcBase::autoload($className);
 }
 
 spl_autoload_register('webdav_autoload');
