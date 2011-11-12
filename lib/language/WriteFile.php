@@ -132,8 +132,8 @@ TXT;
 				$string['translation'] = $translations[$string['name']];
 			} else {
 				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
-				// For example, if $string->name == 'Login:', we don't keep it if we also have a string 'Log In'
-				// (except if we already have an explicit translation for 'Log In:')
+				// For example, if the string is 'Login:', we put 'Login' for translation instead
+				// (except if we already have an explicit translation for 'Login:', in which case we don't reach this else)
 				$stringLength = strlen($string['name']);
 				$stringLastChar = $string['name'][$stringLength - 1];
 				
