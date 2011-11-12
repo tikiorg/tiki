@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -43,19 +43,21 @@ class CalRecurrence extends TikiLib
 	private $created;
 	private $lastModif;
 
-	public function CalRecurrence($param = -1) {
+	public function CalRecurrence($param = -1)
+	{
 		parent::__construct();
 		if ($param > 0)
 			$this->setId($param);
 		$this->load();
 	}
 
-	public function load() {
+	public function load()
+	{
 		if ($this->getId() > 0) {
 			$query = "SELECT calendarId, start, end, allday, locationId, categoryId, nlId, priority, status, url, lang, name, description, weekly, weekday, monthly, dayOfMonth,"
 				   . "yearly, dateOfYear, nbRecurrences, startPeriod, endPeriod, user, created, lastModif FROM tiki_calendar_recurrence "
 				   . "WHERE recurrenceId = ?";
-			$result = $this->query($query,array((int)$this->getId()));
+			$result = $this->query($query, array((int)$this->getId()));
 			if ($row = $result->fetchRow()) {
 				$this->setCalendarId($row['calendarId']);
 				$this->setStart($row['start']);
@@ -81,7 +83,7 @@ class CalRecurrence extends TikiLib
 				$this->setEndPeriod($row['endPeriod']);
 				$this->setUser($row['user']);
 				$this->setCreated($row['created']);
-				$this->setLastModif ($row['lastModif']);
+				$this->setLastModif($row['lastModif']);
 			}
 		}
 	}
@@ -93,7 +95,8 @@ class CalRecurrence extends TikiLib
 	 * have no incidence on the changes done manually (i.e. fields changed in the rule are not the fields changed
 	 * in the event)
 	 */
-	public function save($updateManuallyChangedEvents = false) {
+	public function save($updateManuallyChangedEvents = false)
+	{
 		if (!$this->isValid())
 			return false;
 		if ($this->getId() > 0)
@@ -105,7 +108,8 @@ class CalRecurrence extends TikiLib
 	 * Validation before storing (or updating) to the database.
 	 * returns true if succeeds, false otherwise
 	 */
-	public function isValid() {
+	public function isValid()
+	{
 		// should be related to a calendar
 		if (!($this->getCalendarId() > 0))
 			return false;
@@ -139,21 +143,23 @@ class CalRecurrence extends TikiLib
 		return true;
 	}
 
-	public function delete($fromTime=null) {
+	public function delete($fromTime=null)
+	{
 		if (is_null($fromTime))
 			$fromTime = time();
 		$query = "DELETE FROM tiki_calendar_items WHERE recurrenceId = ? AND start > ?";
 		$bindvars = array((int)$this->getId(),$fromTime);
-		$this->query($query,$bindvars);
+		$this->query($query, $bindvars);
 		$query = "UPDATE tiki_calendar_items SET recurrenceId = NULL WHERE recurrenceId = ?";
 		$bindvars = array((int)$this->getId());
-		$this->query($query,$bindvars);
+		$this->query($query, $bindvars);
 		$query = "DELETE FROM tiki_calendar_recurrence WHERE recurrenceId = ?";
 		$bindvars = array((int)$this->getId());
-		return $this->query($query,$bindvars);
+		return $this->query($query, $bindvars);
 	}
 
-	private function create() {
+	private function create()
+	{
 		$query = "INSERT INTO tiki_calendar_recurrence (calendarId, start, end, allday, locationId, categoryId, nlId, priority, status, url, lang, name, description, "
 			   . "weekly, weekday, monthly, dayOfMonth,yearly, dateOfYear, nbRecurrences, startPeriod, endPeriod, user, created, lastModif) "
 			   . "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -185,9 +191,9 @@ class CalRecurrence extends TikiLib
 						$now,
 						$now
 					 );
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars);
 		if ($result) {
-			$this->setId($this->GetOne("SELECT `recurrenceId` FROM `tiki_calendar_recurrence` WHERE `created`=?",array($now)));
+			$this->setId($this->GetOne("SELECT `recurrenceId` FROM `tiki_calendar_recurrence` WHERE `created`=?", array($now)));
 			if ($this->getId() > 0) {
 				// create the recurrent events
 				$this->createEvents();
@@ -197,7 +203,8 @@ class CalRecurrence extends TikiLib
 		return false;
 	}
 
-	private function update($updateManuallyChangedEvents = false) {
+	private function update($updateManuallyChangedEvents = false)
+	{
 		$query = "UPDATE tiki_calendar_recurrence SET calendarId = ?, start = ?, end = ?, allday = ?, locationId = ?, categoryId = ?, nlId = ?, priority = ?, status = ?, "
 			   . "url = ?, lang = ?, name = ?, description = ?, weekly = ?, weekday = ?, monthly = ?, dayOfMonth = ?, yearly = ?, dateOfYear = ?, nbRecurrences = ?, "
 			   . "startPeriod = ?, endPeriod = ?, user = ?, lastModif = ? WHERE recurrenceId = ?";
@@ -230,7 +237,7 @@ class CalRecurrence extends TikiLib
 						$this->getId()
 					 );
 		$oldRec = new CalRecurrence($this->getId()); // we'll need old version to compare fields.
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars);
 		if ($result) {
 			// update the recurrent events, according to the way to handle the already changed events
 			$this->updateEvents($updateManuallyChangedEvents, $oldRec);
@@ -239,45 +246,46 @@ class CalRecurrence extends TikiLib
 		return false;
 	}
 
-	public function createEvents() {
+	public function createEvents()
+	{
 		// calculate the date of every events to create
 		$dates = array();
-		$start = TikiLib::date_format2('Y/m/d',$this->getStartPeriod());
-		$start = explode("/",$start);
+		$start = TikiLib::date_format2('Y/m/d', $this->getStartPeriod());
+		$start = explode("/", $start);
 		if ($this->getNbRecurrences() > 0) {
 			$nbRec = $this->getNbRecurrences();
 			if ($this->isWeekly()) {
-				$startWeekday = TikiLib::date_format2('w',$this->getStartPeriod()); // 0->Sunday, 6->Saturday
+				$startWeekday = TikiLib::date_format2('w', $this->getStartPeriod()); // 0->Sunday, 6->Saturday
 				$firstEventDate = $this->getWeekday() - $startWeekday;
 				if ($firstEventDate < 0)
 					$firstEventDate += 7;
 				for ($i=0 ; $i < $nbRec ; $i++) {
-					$dates[] = TikiLib::make_time(0,0,0,$start[1],$start[2] + $firstEventDate + ($i * 7),$start[0]);
+					$dates[] = TikiLib::make_time(0, 0, 0, $start[1], $start[2] + $firstEventDate + ($i * 7), $start[0]);
 				}
 			} elseif ($this->isMonthly()) {
 				$firstIsNextMonth = ($this->getDayOfMonth() < $start[2]);
 				$startMonth = $firstIsNextMonth ? $start[1] + 1 : $start[1];
 				$occurrences = 0;
 				for ($i=0 ; $occurrences < $nbRec ; $i++) {
-					$nbDaysInMonth = date('t',TikiLib::make_time(0,0,0,$startMonth + $i,1,$start[0]));
+					$nbDaysInMonth = date('t', TikiLib::make_time(0, 0, 0, $startMonth + $i, 1, $start[0]));
 					if ($this->getDayOfMonth() > $nbDaysInMonth)
 						continue;
-					$dates[] = TikiLib::make_time(0,0,0,$startMonth + $i,$this->getDayOfMonth(),$start[0]);
+					$dates[] = TikiLib::make_time(0, 0, 0, $startMonth + $i, $this->getDayOfMonth(), $start[0]);
 					$occurrences++;
 				}
 			} elseif ($this->isYearly()) {
-				$yymm = TikiLib::date_format2('md',$this->getStartPeriod());
+				$yymm = TikiLib::date_format2('md', $this->getStartPeriod());
 				$isLeapDay = ($this->getDateOfYear() == 229); // Feb 29th case.
 				$offset = ($this->getDateOfYear() < $yymm) ? 1 : 0;
-				$dt = str_pad($this->getDateOfYear(),4,"0",STR_PAD_LEFT);
+				$dt = str_pad($this->getDateOfYear(), 4, "0", STR_PAD_LEFT);
 				$occurrences = 0;
 				for ($i=0 ; $occurrences < $nbRec ; $i++) {
 					if ($isLeapDay) {
-						if ( TikiLib::date_format2('L', TikiLib::make_time(0,0,0,1,1,$start[0] + $offset + $i)) == 0 ) {
+						if ( TikiLib::date_format2('L', TikiLib::make_time(0, 0, 0, 1, 1, $start[0] + $offset + $i)) == 0 ) {
 							continue;
 						}
 					}
-					$dates[] = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset + $i);
+					$dates[] = TikiLib::make_time(0, 0, 0, substr($dt, 0, 2), substr($dt, -2), $start[0] + $offset + $i);
 					$occurrences++;
 				}
 			} else {
@@ -286,11 +294,11 @@ class CalRecurrence extends TikiLib
 			}
 		} elseif ($this->getEndPeriod() > 0) {
 			if ($this->isWeekly()) {
-				$startWeekday = TikiLib::date_format2('w',$this->getStartPeriod()); // 0->Sunday, 6->Saturday
+				$startWeekday = TikiLib::date_format2('w', $this->getStartPeriod()); // 0->Sunday, 6->Saturday
 				$firstEventDate = $this->getWeekday() - $startWeekday;
 				if ($firstEventDate < 0)
 					$firstEventDate += 7;
-				$currDate = TikiLib::make_time(0,0,0,$start[1],$start[2] + $firstEventDate,$start[0]);
+				$currDate = TikiLib::make_time(0, 0, 0, $start[1], $start[2] + $firstEventDate, $start[0]);
 				while ($currDate < $this->getEndPeriod()) {
 					$dates[] = $currDate;
 					$currDate += weekInSeconds;
@@ -298,37 +306,37 @@ class CalRecurrence extends TikiLib
 			} elseif ($this->isMonthly()) {
 				$firstIsNextMonth = ($this->getDayOfMonth() < $start[2]);
 				$startMonth = $firstIsNextMonth ? $start[1] + 1 : $start[1];
-				$currDate = TikiLib::make_time(0,0,0,$startMonth,$this->getDayOfMonth(),$start[0]);
+				$currDate = TikiLib::make_time(0, 0, 0, $startMonth, $this->getDayOfMonth(), $start[0]);
 				$i = 0;
 				while ($currDate < $this->getEndPeriod()) {
-					$nbDaysInMonth = TikiLib::date_format2('t',TikiLib::make_time(0,0,0,$startMonth + $i,1,$start[0]));
+					$nbDaysInMonth = TikiLib::date_format2('t', TikiLib::make_time(0, 0, 0, $startMonth + $i, 1, $start[0]));
 					if ($this->getDayOfMonth() > $nbDaysInMonth) {
 						$i++;
-						$currDate = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset + $i);
+						$currDate = TikiLib::make_time(0, 0, 0, substr($dt, 0, 2), substr($dt, -2), $start[0] + $offset + $i);
 						continue;
 					}
 					$dates[] = $currDate;
 					$i++;
-					$currDate = TikiLib::make_time(0,0,0,$startMonth + $i,$this->getDayOfMonth(),$start[0]);
+					$currDate = TikiLib::make_time(0, 0, 0, $startMonth + $i, $this->getDayOfMonth(), $start[0]);
 				}
 			} elseif ($this->isYearly()) {
-				$yymm = TikiLib::date_format2('md',$this->getStartPeriod());
+				$yymm = TikiLib::date_format2('md', $this->getStartPeriod());
 				$isLeapDay = ($this->getDateOfYear() == 229); // Feb 29th case.
 				$offset = ($this->getDateOfYear() < $yymm) ? 1 : 0;
-				$dt = str_pad($this->getDateOfYear(),4,"0",STR_PAD_LEFT);
-				$currDate = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset);
+				$dt = str_pad($this->getDateOfYear(), 4, "0", STR_PAD_LEFT);
+				$currDate = TikiLib::make_time(0, 0, 0, substr($dt, 0, 2), substr($dt, -2), $start[0] + $offset);
 				$i = 0;
 				while ($currDate < $this->getEndPeriod()) {
 					if ($isLeapDay) {
-						if (TikiLib::date_format2('L',TikiLib::make_time(0,0,0,1,1,$start[0] + $offset + $i)) == 0) {
+						if (TikiLib::date_format2('L', TikiLib::make_time(0, 0, 0, 1, 1, $start[0] + $offset + $i)) == 0) {
 							$i++;
-							$currDate = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset + $i);
+							$currDate = TikiLib::make_time(0, 0, 0, substr($dt, 0, 2), substr($dt, -2), $start[0] + $offset + $i);
 							continue;
 						}
 					}
 					$dates[] = $currDate;
 					$i++;
-					$currDate = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset + $i);
+					$currDate = TikiLib::make_time(0, 0, 0, substr($dt, 0, 2), substr($dt, -2), $start[0] + $offset + $i);
 				}
 			} else {
 				// there should be no other case
@@ -343,13 +351,13 @@ class CalRecurrence extends TikiLib
 		$startOffset = 0;
 		$endOffset = dayInSeconds - 1;
 		if (!$this->isAllday()) {
-			$tmp = str_pad($this->getStart(),4,'0',STR_PAD_LEFT);
-			$startOffset = substr($tmp,0,2) * 60 * 60 + substr($tmp,-2) * 60;
-			$tmp = str_pad($this->getEnd(),4,'0',STR_PAD_LEFT);
-			$endOffset = substr($tmp,0,2) * 60 * 60 + substr($tmp,-2) * 60;
+			$tmp = str_pad($this->getStart(), 4, '0', STR_PAD_LEFT);
+			$startOffset = substr($tmp, 0, 2) * 60 * 60 + substr($tmp, -2) * 60;
+			$tmp = str_pad($this->getEnd(), 4, '0', STR_PAD_LEFT);
+			$endOffset = substr($tmp, 0, 2) * 60 * 60 + substr($tmp, -2) * 60;
 		}
 
-		foreach($dates as $aDate) {
+		foreach ($dates as $aDate) {
 			$data = array(
 							'calendarId'=>$this->getCalendarId(),
 							'start'=>($aDate + $startOffset),
@@ -373,26 +381,27 @@ class CalRecurrence extends TikiLib
 
 			$calendarlib = new calendarlib($this->db);
 			global $user;
-			$calendarlib->set_item($user,null,$data);
+			$calendarlib->set_item($user, null, $data);
 		}
 	}
 
-		public function updateEvents($updateManuallyChangedEvents = false, $oldRec) {
+	public function updateEvents($updateManuallyChangedEvents = false, $oldRec)
+	{
 			// retrieve the yet-to-happen events of the recurrence rule (only the relevant fields)
 			$query = "SELECT calitemId,calendarId, start, end, allday, locationId, categoryId, nlId, priority, status, url, lang, name, description, "
 				   . "user, created, lastModif, changed "
 				   . "FROM tiki_calendar_items WHERE recurrenceId = ? ORDER BY start";
 			$bindvars = array((int)$this->getId());
-			$result = $this->query($query,$bindvars);
+			$result = $this->query($query, $bindvars);
 			$theEvents = array();
 			$theEventsToBeChanged = array();
 			if ($updateManuallyChangedEvents) {
-				while($row = $result->fetchRow()) {
+				while ($row = $result->fetchRow()) {
 					$theEvents[$row['calitemId']] = $row;
 					$theEventsToBeChanged[] = $row['calitemId'];
 				}
 			} else {
-				while($row = $result->fetchRow()) {
+				while ($row = $result->fetchRow()) {
 					$theEvents[$row['calitemId']] = $row;
 					if ($row['changed'] == 0)
 						$theEventsToBeChanged[] = $row['calitemId'];
@@ -402,12 +411,12 @@ class CalRecurrence extends TikiLib
 			// we'll check only the new fields; so we should retrieve the list of changed fields first.
 			$changedFields = $this->compareFields($oldRec);
 			if ($updateManuallyChangedEvents == false) {
-				foreach($theEvents as $evtId => $anEvent) {
+				foreach ($theEvents as $evtId => $anEvent) {
 					if ($anEvent['changed'] == 1)
 						continue;
-					foreach($changedFields as $aField) {
-						$changedFieldsOfEvent = $this->compareFieldsOfEvent($anEvent,$oldRec);
-						$inters = array_intersect($changedFields,$changedFieldsOfEvent);
+					foreach ($changedFields as $aField) {
+						$changedFieldsOfEvent = $this->compareFieldsOfEvent($anEvent, $oldRec);
+						$inters = array_intersect($changedFields, $changedFieldsOfEvent);
 						if (count($inters) == 0)
 							$theEventsToBeChanged[] = $anEvent['calitemId'];
 					}
@@ -420,12 +429,12 @@ class CalRecurrence extends TikiLib
 				$anEvt = $theEvents[$anEvtId];
 				$tmp = array();
 				$doWeChangeTimeIfNeeded = true;
-				foreach($changedFields as $aField) {
-					if (substr($aField,0,1) != "_")
+				foreach ($changedFields as $aField) {
+					if (substr($aField, 0, 1) != "_")
 						$tmp[] = $aField . " = '" . $this->$aField . "'";
 					else {
-						$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
-						$anEvtStart = explode('/',$anEvtStart);
+						$anEvtStart = TikiLib::date_format2('Y/m/d', $anEvt['start']);
+						$anEvtStart = explode('/', $anEvtStart);
 						$newStartHour = floor($this->getStart()/100);
 						$newStartMin = $this->getStart() - 100*$newStartHour;
 						$newEndHour = floor($this->getEnd()/100);
@@ -442,9 +451,9 @@ class CalRecurrence extends TikiLib
 							$doWeChangeTimeIfNeeded = false;
 							if (is_null($advanced)) {
 								if ($this->getWeekday() < $oldRec->getWeekday()) {
-									if (TikiLib::date_format2('w',TikiLib::make_time()) <= $this->getWeekday()) {
-										$offsetInSeconds = ($this->getWeekday() - TikiLib::date_format2('w',TikiLib::make_time())) * dayInSeconds;
-										$couldBeDay = TikiLib::make_time($newStartHour,$newStartMin,0,TikiLib::date_format2('m'),TikiLib::date_format2('d'),TikiLib::date_format2('Y')) + $offsetInSeconds;
+									if (TikiLib::date_format2('w', TikiLib::make_time()) <= $this->getWeekday()) {
+										$offsetInSeconds = ($this->getWeekday() - TikiLib::date_format2('w', TikiLib::make_time())) * dayInSeconds;
+										$couldBeDay = TikiLib::make_time($newStartHour, $newStartMin, 0, TikiLib::date_format2('m'), TikiLib::date_format2('d'), TikiLib::date_format2('Y')) + $offsetInSeconds;
 										if ($couldBeDay >= $this->getStartPeriod()) {
 											$advanced = true;
 										}
@@ -455,24 +464,23 @@ class CalRecurrence extends TikiLib
 								$advanced = false;
 							}
 							if (!is_null($advanced)) {
-								$daysOffsetEvent = $this->getWeekday() - TikiLib::date_format2('w',TikiLib::make_time(0,0,0,$anEvtStart[1],$anEvtStart[2],$anEvtStart[0]));
-								$tmp[] = "start='" . TikiLib::make_time($newStartHour,$newStartMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]) . "'";
-								$tmp[] = "end='" . TikiLib::make_time($newEndHour,$newEndMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]) . "'";
+								$daysOffsetEvent = $this->getWeekday() - TikiLib::date_format2('w', TikiLib::make_time(0, 0, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]));
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $anEvtStart[2] + $daysOffsetEvent, $anEvtStart[0]) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1], $anEvtStart[2] + $daysOffsetEvent, $anEvtStart[0]) . "'";
 							}
-						}
 						// - for monthly events :
 						// if the new day of month is before (less than) the old day of month
 						//		if this month's new day is after (greater than) now and after the startperiod
 						//			then dates will be advanced
 						// else
 						//		then dates will be postponed
-						elseif ($aField == "_dayOfMonth") {
+						} elseif ($aField == "_dayOfMonth") {
 							$doWeChangeTimeIfNeeded = false;
 							if (is_null($advanced)) {
 								if ($this->getDayOfMonth() < $oldRec->getDayOfMonth()) {
-									if (TikiLib::date_format2('d',TikiLib::make_time()) <= $this->getDayOfMonth()) {
-										$offsetInSeconds = ($this->getDayOfMonth() - TikiLib::date_format2('d',TikiLib::make_time())) * dayInSeconds;
-										$couldBeDay = TikiLib::make_time(0,0,0,TikiLib::date_format2('m',TikiLib::make_time()),TikiLib::date_format2('d',TikiLib::make_time()),TikiLib::date_format2('Y',TikiLib::make_time())) + $offsetInSeconds;
+									if (TikiLib::date_format2('d', TikiLib::make_time()) <= $this->getDayOfMonth()) {
+										$offsetInSeconds = ($this->getDayOfMonth() - TikiLib::date_format2('d', TikiLib::make_time())) * dayInSeconds;
+										$couldBeDay = TikiLib::make_time(0, 0, 0, TikiLib::date_format2('m', TikiLib::make_time()), TikiLib::date_format2('d', TikiLib::make_time()), TikiLib::date_format2('Y', TikiLib::make_time())) + $offsetInSeconds;
 										if ($couldBeDay >= $this->getStartPeriod()) {
 											$advanced = true;
 										}
@@ -494,22 +502,21 @@ class CalRecurrence extends TikiLib
 								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1] + $offsetMonth, $this->getDayOfMonth(), $anEvtStart[0]) . "'";
 								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1] + $offsetMonth, $this->getDayOfMonth(), $anEvtStart[0]) . "'";
 							}
-						}
 						// - for yearly events :
 						// if the new day of year is before (less than) the old day of year
 						//		if this year's new day is after (greater than) now and after the startperiod
 						//			then dates will be advanced
 						// else
 						//		then dates will be postponed
-						elseif ($aField == "_dateOfYear") {
+						} elseif ($aField == "_dateOfYear") {
 							$doWeChangeTimeIfNeeded = false;
 							if (is_null($advanced)) {
-								$thisdate = str_pad($this->getDateOfYear(),4,'0',STR_PAD_LEFT);
-								$olddate = str_pad($oldRec->getDateOfYear(),4,'0',STR_PAD_LEFT);
+								$thisdate = str_pad($this->getDateOfYear(), 4, '0', STR_PAD_LEFT);
+								$olddate = str_pad($oldRec->getDateOfYear(), 4, '0', STR_PAD_LEFT);
 
 								if ($this->getDateOfYear() < $oldRec->getDateOfYear()) {
-									if (time() <= TikiLib::make_time($newStartHour,$newStartMin,0,substr($thisdate,0,2),substr($thisdate,-2),TikiLib::date_format2('Y'))) {
-										$offsetInSeconds = TikiLib::make_time($newStartHour,$newStartMin,0,substr($thisdate,0,2),substr($thisdate,-2),TikiLib::date_format2('Y')) - $this->getStartPeriod();
+									if (time() <= TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate, 0, 2), substr($thisdate, -2), TikiLib::date_format2('Y'))) {
+										$offsetInSeconds = TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate, 0, 2), substr($thisdate, -2), TikiLib::date_format2('Y')) - $this->getStartPeriod();
 										if ($offsetInSeconds > 0) {
 											$advanced = true;
 										}
@@ -520,14 +527,14 @@ class CalRecurrence extends TikiLib
 								$advanced = false;
 							}
 							if ($advanced) {
-								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0,substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0]) . "'";
-								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0]) . "'";
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate, 0, 2), substr($thisdate, -2), $anEvtStart[0]) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate, 0, 2), substr($thisdate, -2), $anEvtStart[0]) . "'";
 							} else {
 								$offsetYear = 0;
 								if ($this->getDateOfYear() < $oldRec->getDateOfYear())
 									$offsetYear = 1;
-								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear) . "'";
-								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear) . "'";
+								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate, 0, 2), substr($thisdate, -2), $anEvtStart[0] + $offsetYear) . "'";
+								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate, 0, 2), substr($thisdate, -2), $anEvtStart[0] + $offsetYear) . "'";
 							}
 						}
 						
@@ -539,30 +546,30 @@ class CalRecurrence extends TikiLib
 */
 					}
 				}
-				if (in_array("_start",$changedFields) && $doWeChangeTimeIfNeeded) {
-					$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
-					$anEvtStart = explode('/',$anEvtStart);
+				if (in_array("_start", $changedFields) && $doWeChangeTimeIfNeeded) {
+					$anEvtStart = TikiLib::date_format2('Y/m/d', $anEvt['start']);
+					$anEvtStart = explode('/', $anEvtStart);
 					$newStartHour = floor($this->getStart()/100);
 					$newStartMin = $this->getStart() - 100*$newStartHour;
 					$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]) . "'";
 				}
-				if (in_array("_end",$changedFields) && $doWeChangeTimeIfNeeded) {
-					$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
-					$anEvtStart = explode('/',$anEvtStart);
+				if (in_array("_end", $changedFields) && $doWeChangeTimeIfNeeded) {
+					$anEvtStart = TikiLib::date_format2('Y/m/d', $anEvt['start']);
+					$anEvtStart = explode('/', $anEvtStart);
 					$newEndHour = floor($this->getEnd()/100);
 					$newEndMin = $this->getEnd() - 100*$newEndHour;
 					$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]) . "'";
 				}
 				if (count($tmp) > 0) {
-					$query = "UPDATE tiki_calendar_items SET " . implode(',',$tmp) . " WHERE calitemId = ?";
+					$query = "UPDATE tiki_calendar_items SET " . implode(',', $tmp) . " WHERE calitemId = ?";
 					$bindvars = array((int)$anEvt['calitemId']);
-					$this->query($query,$bindvars);
+					$this->query($query, $bindvars);
 				}
-
 			}
-		}
+	}
 
-	public function compareFields($oldRec) {
+	public function compareFields($oldRec)
+	{
 		$result = array();
 		if ($this->getCalendarId() != $oldRec->getCalendarId())
 			$result[] = "calendarId";
@@ -599,14 +606,15 @@ class CalRecurrence extends TikiLib
 		return $result;
 	}
 
-	public function compareFieldsOfEvent($evt,$oldRec) {
+	public function compareFieldsOfEvent($evt,$oldRec)
+	{
 		$result = array();
 		if ($evt['calendarId'] != $oldRec->getCalendarId())
 			$result[] = "calendarId";
-		if (TikiLib::date_format2('Hi',$evt['start']) != $oldRec->getStart())
+		if (TikiLib::date_format2('Hi', $evt['start']) != $oldRec->getStart())
 			$result[] = "start";
 		// checking the end is double check : is it the right hour ? is it the same day ?
-		if ((TikiLib::date_format2('Hi',$evt['end']) != $oldRec->getEnd()) || (TikiLib::date_format2('Ymd',$evt['start']) != TikiLib::date_format2('Ymd',$evt['end'])))
+		if ((TikiLib::date_format2('Hi', $evt['end']) != $oldRec->getEnd()) || (TikiLib::date_format2('Ymd', $evt['start']) != TikiLib::date_format2('Ymd', $evt['end'])))
 			$result[] = "end";
 		if ($evt['allday'] != $oldRec->isAllday())
 			$result[] = "allday";
@@ -628,24 +636,25 @@ class CalRecurrence extends TikiLib
 			$result[] = "name";
 		if ($evt['description'] != $oldRec->getDescription())
 			$result[] = "description";
-		if (TikiLib::date_format2('Hi',$evt['start']) != str_pad($oldRec->getStart(),4,"0",STR_PAD_LEFT))
+		if (TikiLib::date_format2('Hi', $evt['start']) != str_pad($oldRec->getStart(), 4, "0", STR_PAD_LEFT))
 			$result[] = "_start";
-		if (TikiLib::date_format2('Hi',$evt['end']) != str_pad($oldRec->getEnd(),4,"0",STR_PAD_LEFT))
+		if (TikiLib::date_format2('Hi', $evt['end']) != str_pad($oldRec->getEnd(), 4, "0", STR_PAD_LEFT))
 			$result[] = "_end";
 		if ($oldRec->isWeekly()) {
-			if (TikiLib::date_format2('w',$evt['start']) != $oldRec->getWeekday())
+			if (TikiLib::date_format2('w', $evt['start']) != $oldRec->getWeekday())
 				$result[] = "_weekday";
 		} elseif ($oldRec->isMonthly()) {
-			if (TikiLib::date_format2('d',$evt['start']) != $oldRec->getDayOfMonth())
+			if (TikiLib::date_format2('d', $evt['start']) != $oldRec->getDayOfMonth())
 				$result[] = "_dayOfMonth";
 		} elseif ($oldRec->isYearly()) {
-			if (TikiLib::date_format2('md',$evt['start']) != $oldRec->getDateOfYear())
+			if (TikiLib::date_format2('md', $evt['start']) != $oldRec->getDateOfYear())
 				$result[] = "_dateOfYear";
 		}
 		return $result;
 	}
 
-	public function toArray() {
+	public function toArray()
+	{
 		return array(
 		'id' => $this->getId(),
 		'weekly' => $this->isWeekly(),
@@ -661,85 +670,241 @@ class CalRecurrence extends TikiLib
 		'endPeriod' => $this->getEndPeriod(),
 		'user' => $this->getUser(),
 		'created' => $this->getCreated(),
-		'lastModif' => $this->getLastModif ()
+		'lastModif' => $this->getLastModif()
 		);
 	}
 
-	public function getId() { return $this->id; }
-	public function setId($value) { $this->id = $value; }
+	public function getId()
+	{
+		return $this->id;
+	}
+	public function setId($value)
+	{
+		$this->id = $value;
+	}
 
-	public function getCalendarId() { return $this->calendarId; }
-	public function setCalendarId($value) { $this->calendarId = $value; }
+	public function getCalendarId()
+	{
+		return $this->calendarId;
+	}
+	public function setCalendarId($value)
+	{
+		$this->calendarId = $value;
+	}
 
-	public function getStart() { return $this->start; }
-	public function setStart($value) { $this->start = $value; }
+	public function getStart()
+	{
+		return $this->start;
+	}
+	public function setStart($value)
+	{
+		$this->start = $value;
+	}
 
-	public function getEnd() { return $this->end; }
-	public function setEnd($value) { $this->end = $value; }
+	public function getEnd()
+	{
+		return $this->end;
+	}
+	public function setEnd($value)
+	{
+		$this->end = $value;
+	}
 
-	public function isAllday() { return $this->allday; }
-	public function setAllday($value) { $this->allday = $value; }
+	public function isAllday()
+	{
+		return $this->allday;
+	}
+	public function setAllday($value)
+	{
+		$this->allday = $value;
+	}
 
-	public function getLocationId() { return $this->locationId; }
-	public function setLocationId($value) { $this->locationId = $value; }
+	public function getLocationId()
+	{
+		return $this->locationId;
+	}
+	public function setLocationId($value)
+	{
+		$this->locationId = $value;
+	}
 
-	public function getCategoryId() { return $this->categoryId; }
-	public function setCategoryId($value) { $this->categoryId = $value; }
+	public function getCategoryId()
+	{
+		return $this->categoryId;
+	}
+	public function setCategoryId($value) 
+	{
+		$this->categoryId = $value;
+	}
 
-	public function getNlId() { return $this->nlId; }
-	public function setNlId($value) { $this->nlId = $value; }
+	public function getNlId()
+	{
+		return $this->nlId;
+	}
+	public function setNlId($value)
+	{
+		$this->nlId = $value;
+	}
 
-	public function getPriority() { return $this->priority; }
-	public function setPriority($value) { $this->priority = $value; }
+	public function getPriority()
+	{
+		return $this->priority;
+	}
+	public function setPriority($value)
+	{
+		$this->priority = $value;
+	}
 
-	public function getStatus() { return $this->status; }
-	public function setStatus($value) { $this->status = $value; }
+	public function getStatus()
+	{
+		return $this->status;
+	}
+	public function setStatus($value)
+	{
+		$this->status = $value;
+	}
 
-	public function getUrl() { return $this->url; }
-	public function setUrl($value) { $this->url = $value; }
+	public function getUrl()
+	{
+		return $this->url;
+	}
+	public function setUrl($value)
+	{
+		$this->url = $value;
+	}
 
-	public function getLang() { return $this->lang; }
-	public function setLang($value) { $this->lang = $value; }
+	public function getLang()
+	{
+		return $this->lang;
+	}
+	public function setLang($value)
+	{
+		$this->lang = $value;
+	}
 
-	public function getName() { return $this->name; }
-	public function setName($value) { $this->name = $value; }
+	public function getName()
+	{
+		return $this->name;
+	}
+	public function setName($value)
+	{
+		$this->name = $value;
+	}
 
-	public function getDescription() { return $this->description; }
-	public function setDescription($value) { $this->description = $value; }
+	public function getDescription()
+	{
+		return $this->description;
+	}
+	public function setDescription($value)
+	{
+		$this->description = $value;
+	}
 
-	public function isWeekly() { return $this->weekly; }
-	public function setWeekly($value) { $this->weekly = $value; }
+	public function isWeekly()
+	{
+		return $this->weekly;
+	}
+	public function setWeekly($value)
+	{
+		$this->weekly = $value;
+	}
 
-	public function getWeekday() { return $this->weekday; }
-	public function setWeekday($value) { $this->weekday = $value; }
+	public function getWeekday()
+	{
+		return $this->weekday;
+	}
+	public function setWeekday($value)
+	{
+		$this->weekday = $value;
+	}
 
-	public function isMonthly() { return $this->monthly; }
-	public function setMonthly($value) { $this->monthly = $value; }
+	public function isMonthly()
+	{
+		return $this->monthly;
+	}
+	public function setMonthly($value)
+	{
+		$this->monthly = $value;
+	}
 
-	public function getDayOfMonth() { return $this->dayOfMonth; }
-	public function setDayOfMonth($value) { $this->dayOfMonth = $value; }
+	public function getDayOfMonth()
+	{
+		return $this->dayOfMonth;
+	}
+	public function setDayOfMonth($value)
+	{
+		$this->dayOfMonth = $value;
+	}
 
-	public function isYearly() { return $this->yearly; }
-	public function setYearly($value) { $this->yearly = $value; }
+	public function isYearly()
+	{
+		return $this->yearly;
+	}
+	public function setYearly($value)
+	{
+		$this->yearly = $value;
+	}
 
-	public function getDateOfYear() { return $this->dateOfYear; }
-	public function setDateOfYear($value) { $this->dateOfYear = $value; }
+	public function getDateOfYear()
+	{
+		return $this->dateOfYear;
+	}
+	public function setDateOfYear($value)
+	{
+		$this->dateOfYear = $value;
+	}
 
-	public function getNbRecurrences() { return $this->nbRecurrences; }
-	public function setNbRecurrences($value) { $this->nbRecurrences = $value; }
+	public function getNbRecurrences()
+	{
+		return $this->nbRecurrences;
+	}
+	public function setNbRecurrences($value)
+	{
+		$this->nbRecurrences = $value;
+	}
 
-	public function getStartPeriod() { return $this->startPeriod; }
-	public function setStartPeriod($value) { $this->startPeriod = $value; }
+	public function getStartPeriod()
+	{
+		return $this->startPeriod;
+	}
+	public function setStartPeriod($value)
+	{
+		$this->startPeriod = $value;
+	}
 
-	public function getEndPeriod() { return $this->endPeriod; }
-	public function setEndPeriod($value) { $this->endPeriod = $value; }
+	public function getEndPeriod()
+	{
+		return $this->endPeriod;
+	}
+	public function setEndPeriod($value)
+	{
+		$this->endPeriod = $value;
+	}
 
-	public function getUser() { return $this->user; }
-	public function setUser($value) { $this->user = $value; }
+	public function getUser()
+	{
+		return $this->user;
+	}
+	public function setUser($value)
+	{
+		$this->user = $value;
+	}
 
-	public function getCreated() { return $this->created; }
-	public function setCreated($value) { $this->created = $value; }
+	public function getCreated()
+	{
+		return $this->created;
+	}
+	public function setCreated($value)
+	{
+		$this->created = $value;
+	}
 
-	public function getLastModif () { return $this->lastModif; }
-	public function setLastModif ($value) { $this->lastModif = $value; }
+	public function getLastModif ()
+	{
+		return $this->lastModif;
+	}
+	public function setLastModif ($value)
+	{
+		$this->lastModif = $value;
+	}
 }
