@@ -16,16 +16,18 @@ class PreferencesLib
 	// prefs with system info etc
 	private $system_info = array( 'fgal_use_dir', 'sender_email' );
 	
-	function PreferencesLib() {
+	function PreferencesLib()
+	{
 		global $prefs;
 		
 		$this->file = 'temp/preference-index-' . $prefs['language'];
 	}
 
-	function getPreference( $name, $deps = true, $source = null, $get_pages = false ) {
+	function getPreference( $name, $deps = true, $source = null, $get_pages = false )
+	{
 		global $prefs, $systemConfiguration;
 		static $id = 0;
-		$data = $this->loadData( $name );
+		$data = $this->loadData($name);
 
 		if ( isset( $data[$name] ) ) {
 			$defaults = array(
@@ -61,14 +63,14 @@ class PreferencesLib
 			}
 		
 			$value = $source[$name];
-			if ( !empty($value) && is_string( $value ) && ($value{0} == ':' || (strlen($value) > 1 && $value{1} == ':')) && false !== $unserialized = unserialize( $value ) ) {
+			if ( !empty($value) && is_string($value) && ($value{0} == ':' || (strlen($value) > 1 && $value{1} == ':')) && false !== $unserialized = unserialize($value) ) {
 				$value = $unserialized;
 			}
 
 			$info['preference'] = $name;
 			if ( isset( $info['serialize'] ) ) {
 				$fnc = $info['serialize'];
-				$info['value'] = $fnc( $value );
+				$info['value'] = $fnc($value);
 			} else {
 				$info['value'] = $value;
 			}
@@ -94,7 +96,7 @@ class PreferencesLib
 			}
 
 			if ( $deps && isset( $info['dependencies'] ) ) {
-				$info['dependencies'] = $this->getDependencies( $info['dependencies'] );
+				$info['dependencies'] = $this->getDependencies($info['dependencies']);
 			}
 
 			$info['params'] = '';
@@ -106,12 +108,12 @@ class PreferencesLib
 
 			$info['available'] = true;
 
-			if  (! $this->checkExtensions( $info['extensions'] ) ) {
+			if (! $this->checkExtensions($info['extensions']) ) {
 				$info['available'] = false;
 				$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
 			}
 
-			if (! $this->checkDatabaseFeatures( $info['dbfeatures'] ) ) {
+			if (! $this->checkDatabaseFeatures($info['dbfeatures']) ) {
 				$info['available'] = false;
 				$info['notes'][] = tr('Unmatched system requirement. The database you are using does not support this feature.');
 			}
@@ -124,7 +126,7 @@ class PreferencesLib
 			}
 			
 			if ($get_pages) {
-				$info['pages'] = $this->getPreferenceLocations( $name );
+				$info['pages'] = $this->getPreferenceLocations($name);
 			}
 
 			if ( isset( $systemConfiguration->preference->$name ) ) {
@@ -132,7 +134,7 @@ class PreferencesLib
 				$info['notes'][] = tr('Configuration forced by host.');
 			}
 
-			if ( $this->preferenceDisabled( $info['tags'] ) ) {
+			if ( $this->preferenceDisabled($info['tags']) ) {
 				$info['available'] = false;
 				$info['notes'][] = tr('Disabled by host.');
 			}
@@ -203,19 +205,19 @@ class PreferencesLib
 				$info['voting_html'] = '';
 
 				if (!in_array('like', $currentVote)) {
-					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'like', tra('Like')), $smarty);
+					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'like', tra('Like')), $smarty);
 				} else {
-					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'unlike', tra("Don't like")), $smarty);
+					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unlike', tra("Don't like")), $smarty);
 				}
 				if (!in_array('fix', $currentVote)) {
-					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'fix', tra('Fix me')), $smarty);
+					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'fix', tra('Fix me')), $smarty);
 				} else {
-					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'unfix', tra("Don't fix me")), $smarty);
+					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unfix', tra("Don't fix me")), $smarty);
 				}
 				if (!in_array('wtf', $currentVote)) {
-					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'wtf', tra("What's this for?")), $smarty);
+					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'wtf', tra("What's this for?")), $smarty);
 				} else {
-					$info['voting_html'] .= smarty_function_icon( $this->getVoteIconParams( $info['preference'], 'unwtf', tra("What's this for?")), $smarty);
+					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unwtf', tra("What's this for?")), $smarty);
 				}
 			}
 
@@ -225,7 +227,8 @@ class PreferencesLib
 		return false;
 	}
 
-	private function getVoteIconParams( $pref, $vote, $label ) {
+	private function getVoteIconParams( $pref, $vote, $label )
+	{
 		return array(
 			'_id' => 'connect_' . $vote,
 			'title' => $label,
@@ -235,7 +238,8 @@ class PreferencesLib
 		);
 	}
 
-	private function preferenceDisabled($tags) {
+	private function preferenceDisabled($tags)
+	{
 		static $rules = null;
 
 		if (is_null($rules)) {
@@ -262,15 +266,16 @@ class PreferencesLib
 		return false;
 	}
 
-	private function checkExtensions( $extensions ) {
+	private function checkExtensions( $extensions )
+	{
 		if (count($extensions) == 0) {
 			return true;
 		}
 
 		$installed = get_loaded_extensions();
 
-		foreach( $extensions as $ext ) {
-			if ( ! in_array( $ext, $installed ) ) {
+		foreach ( $extensions as $ext ) {
+			if ( ! in_array($ext, $installed) ) {
 				return false;
 			}
 		}
@@ -278,7 +283,8 @@ class PreferencesLib
 		return true;
 	}
 
-	private function checkDatabaseFeatures($features) {
+	private function checkDatabaseFeatures($features)
+	{
 		if (in_array('mysql_fulltext', $features)) {
 			return TikiDb::get()->isMySQLFulltextSearchSupported();
 		}
@@ -286,44 +292,46 @@ class PreferencesLib
 		return true;
 	}
 
-	function getMatchingPreferences( $criteria, $filters = null ) {
+	function getMatchingPreferences( $criteria, $filters = null )
+	{
 		$index = $this->getIndex();
 
 		// No input means it was a likely a query from a dependency, meaning every result should show
 		if ($filters) {
 			$criteria = $this->buildPreferenceFilter($criteria, $filters);
 		}
-		$results = $index->find( $criteria );
+		$results = $index->find($criteria);
 
 		$prefs = array();
-		foreach( $results as $hit ) {
+		foreach ( $results as $hit ) {
 			$prefs[] = $hit->preference;
 		}
 
 		return $prefs;
 	}
 
-	function applyChanges( $handled, $data, $limitation = null ) {
+	function applyChanges( $handled, $data, $limitation = null )
+	{
 		global $tikilib, $user_overrider_prefs;
 
-		if ( is_array( $limitation ) ) {
-			$handled = array_intersect( $handled, $limitation );
+		if ( is_array($limitation) ) {
+			$handled = array_intersect($handled, $limitation);
 		}
 
 		$resets = isset( $data['lm_reset'] ) ? (array) $data['lm_reset'] : array();
 
 		$changes = array();
-		foreach( $handled as $pref ) {
-			if ( in_array( $pref, $resets ) ) {
+		foreach ( $handled as $pref ) {
+			if ( in_array($pref, $resets) ) {
 				$defaults = get_default_prefs();
 				$value = $defaults[$pref];
 			} else {
-				$value = $this->formatPreference( $pref, $data );
+				$value = $this->formatPreference($pref, $data);
 			}
 			$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
 
-			if ( ($old = $tikilib->get_preference( $realPref ) ) != $value ) {
-				if ($tikilib->set_preference( $pref, $value )) {
+			if ( ($old = $tikilib->get_preference($realPref) ) != $value ) {
+				if ($tikilib->set_preference($pref, $value)) {
 					$changes[$pref] = array('new'=> $value, 'old' => $old);
 				}
 			}
@@ -332,32 +340,34 @@ class PreferencesLib
 		return $changes;
 	}
 
-	function formatPreference( $pref, $data ) {
-		if ( false !== $info = $this->getPreference( $pref ) ) {
-			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
-			$value = $this->$function( $info, $data );
+	function formatPreference( $pref, $data )
+	{
+		if ( false !== $info = $this->getPreference($pref) ) {
+			$function = '_get' . ucfirst($info['type']) . 'Value';
+			$value = $this->$function($info, $data);
 			return $value;
 		} else {
 			return $data[$pref];
 		}
 	}
 	
-	function getInput( JitFilter $filter, $preferences = array(), $environment = '' ) {
+	function getInput( JitFilter $filter, $preferences = array(), $environment = '' )
+	{
 		$out = array();
 
-		foreach( $preferences as $name ) {
-			$info = $this->getPreference( $name );
+		foreach ( $preferences as $name ) {
+			$info = $this->getPreference($name);
 
 			if ( $environment == 'perspective' && isset( $info['perspective'] ) && $info['perspective'] === false ) {
 				continue;
 			}
 			
 			if ( isset( $info['filter'] ) ) {
-				$filter->replaceFilter( $name, $info['filter'] );
+				$filter->replaceFilter($name, $info['filter']);
 			}
 
 			if ( isset( $info['separator'] ) ) {
-				$out[ $name ] = $filter->asArray( $name, $info['separator'] );
+				$out[ $name ] = $filter->asArray($name, $info['separator']);
 			} else {
 				$out[ $name ] = $filter[$name];
 			}
@@ -366,33 +376,36 @@ class PreferencesLib
 		return $out;
 	}
 
-	function getExtraSortColumns() {
+	function getExtraSortColumns()
+	{
 		global $prefs;
 		if ( isset($prefs['rating_advanced']) && $prefs['rating_advanced'] == 'y' ) {
-			return TikiDb::get()->fetchMap( "SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs" );
+			return TikiDb::get()->fetchMap("SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs");
 		} else {
 			return array();
 		}
 	}
 
-	private function loadData( $name ) {
-		if (in_array( $name , $this->system_modified)) return null;
-		if ( false !== $pos = strpos( $name, '_' ) ) {
-			$file = substr( $name, 0, $pos );
+	private function loadData( $name )
+	{
+		if (in_array($name, $this->system_modified)) return null;
+		if ( false !== $pos = strpos($name, '_') ) {
+			$file = substr($name, 0, $pos);
 		} else {
 			$file = 'global';
 		}
 
-		return $this->getFileData( $file );
+		return $this->getFileData($file);
 	}
 
-	private function getFileData( $file, $partial = false ) {
+	private function getFileData( $file, $partial = false )
+	{
 		if ( ! isset( $this->files[$file] ) ) {
-            $inc_file = "lib/prefs/{$file}.php";
-            if (file_exists( $inc_file )) {
-                require_once $inc_file;
+   		$inc_file = "lib/prefs/{$file}.php";
+			if (file_exists($inc_file)) {
+				require_once $inc_file;
 				$function = "prefs_{$file}_list";
-				if ( function_exists( $function ) ) {
+				if ( function_exists($function) ) {
 					$this->files[$file] = $function($partial);
 				} else {
 					$this->files[$file] = array();
@@ -409,11 +422,12 @@ class PreferencesLib
 		return $ret;
 	}
 
-	private function getDependencies( $dependencies ) {
+	private function getDependencies( $dependencies )
+	{
 		$out = array();
 
-		foreach( (array) $dependencies as $dep ) {
-			$info = $this->getPreference( $dep, false );
+		foreach ( (array) $dependencies as $dep ) {
+			$info = $this->getPreference($dep, false);
 			if ( $info ) {
 				$out[] = array(
 					'name' => $dep,
@@ -430,23 +444,23 @@ class PreferencesLib
 		return $out;
 	}
 
-	private function getIndex() {
+	private function getIndex()
+	{
 		global $prefs;
 		if ( $prefs['language'] == 'en' ) {
-			Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-				new StandardAnalyzer_Analyzer_Standard_English() );
+			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 		}
 
 		if ( $this->indexNeedsRebuilding() ) {
-			$index = Zend_Search_Lucene::create( $this->file );
+			$index = Zend_Search_Lucene::create($this->file);
 
 			foreach ($this->getAvailableFiles() as $file) {
-				$data = $this->getFileData( $file );
+				$data = $this->getFileData($file);
 
-				foreach( $data as $pref => $info ) {
+				foreach ( $data as $pref => $info ) {
 					$info = $this->getPreference($pref);
-					$doc = $this->indexPreference( $pref, $info );
-					$index->addDocument( $doc );
+					$doc = $this->indexPreference($pref, $info);
+					$index->addDocument($doc);
 				}
 			}
 
@@ -454,20 +468,22 @@ class PreferencesLib
 			return $index;
 		}
 
-		return Zend_Search_Lucene::open( $this->file );
+		return Zend_Search_Lucene::open($this->file);
 	}
 	
-	public function indexNeedsRebuilding() {
-		return !file_exists( $this->file );
+	public function indexNeedsRebuilding()
+	{
+		return !file_exists($this->file);
 	}
 
-	public function getPreferenceLocations( $name ) {
+	public function getPreferenceLocations( $name )
+	{
 		if ( ! $this->usageArray ) {
 			$this->loadPreferenceLocations();
 		}
 
 		$pages = array();
-		foreach($this->usageArray as $pg => $pfs) {
+		foreach ($this->usageArray as $pg => $pfs) {
 			foreach ($pfs as $pf) {
 				if ($pf[0] == $name) {
 					$pages[] = array($pg, $pf[1]);
@@ -485,14 +501,15 @@ class PreferencesLib
 		return $pages;
 	}
 
-	private function loadPreferenceLocations() {
+	private function loadPreferenceLocations() 
+	{
 		// check for or create array of where each pref is used
 		$file = 'temp/cache/preference-usage-index';
-		if ( !file_exists( $file ) ) {
+		if ( !file_exists($file) ) {
 			$prefs_usage_array = array();
 			$fp = opendir('templates/admin/');
 			
-			while(false !== ($f = readdir($fp))) {
+			while (false !== ($f = readdir($fp))) {
 				preg_match('/^include_(.*)\.tpl$/', $f, $m);
 				if (count($m) > 0) {
 					$page = $m[1];
@@ -500,7 +517,7 @@ class PreferencesLib
 					preg_match_all('/{preference.*name=[\'"]?(\w*)[\'"]?.*}/i', $c, $m2, PREG_OFFSET_CAPTURE);
 					if (count($m2[1]) > 0) {
 						// count number of tabs in front of each found pref
-						foreach( $m2[1] as & $found) {
+						foreach ( $m2[1] as & $found) {
 							$tabs = preg_match_all('/{\/tab}/i', substr($c, 0, $found[1]), $m3);
 							if ($tabs === false) {
 								$tabs = 0;
@@ -522,67 +539,72 @@ class PreferencesLib
 		$this->usageArray = $prefs_usage_array;
 	}
 
-	private function indexPreference( $pref, $info ) {
+	private function indexPreference( $pref, $info )
+	{
 		$doc = new Zend_Search_Lucene_Document();
-		$doc->addField( Zend_Search_Lucene_Field::UnIndexed('preference', $pref) );
-		$doc->addField( Zend_Search_Lucene_Field::Text('name', $info['name']) );
+		$doc->addField(Zend_Search_Lucene_Field::UnIndexed('preference', $pref));
+		$doc->addField(Zend_Search_Lucene_Field::Text('name', $info['name']));
 		if (!empty($info['description'])) {
-			$doc->addField( Zend_Search_Lucene_Field::Text('description', $info['description']) );
+			$doc->addField(Zend_Search_Lucene_Field::Text('description', $info['description']));
 		}
 		if (!empty($info['keywords'])) {
-			$doc->addField( Zend_Search_Lucene_Field::Text('keywords', $info['keywords']) );
+			$doc->addField(Zend_Search_Lucene_Field::Text('keywords', $info['keywords']));
 		}
 
 		if ( isset( $info['options'] ) ) {
-			$doc->addField( Zend_Search_Lucene_Field::Text('options', implode( ' ', $info['options'] ) ) );
+			$doc->addField(Zend_Search_Lucene_Field::Text('options', implode(' ', $info['options'])));
 		}
 
-		$doc->addField( Zend_Search_Lucene_Field::Text('tags', implode( ' ', $info['tags'] ) ) );
+		$doc->addField(Zend_Search_Lucene_Field::Text('tags', implode(' ', $info['tags'])));
 
 		return $doc;
 	}
 
-	private function _getFlagValue( $info, $data ) {
+	private function _getFlagValue( $info, $data )
+	{
 		$name = $info['preference'];
 
 		return isset( $data[$name] ) ? 'y' : 'n';
 	}
 
-	private function _getTextValue( $info, $data ) {
+	private function _getTextValue( $info, $data )
+	{
 		$name = $info['preference'];
 
-		if ( isset($info['separator']) && is_string( $data[$name] )) {
-			$value = explode( $info['separator'], $data[$name] );
+		if ( isset($info['separator']) && is_string($data[$name])) {
+			$value = explode($info['separator'], $data[$name]);
 		} else {
 			$value = $data[$name];
 		}
 
-		if ( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
-			if ( is_array( $value ) ) {
-				return array_map( array( $filter, 'filter' ), $value );
+		if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+			if ( is_array($value) ) {
+				return array_map(array( $filter, 'filter' ), $value);
 			} else {
-				return $filter->filter( $value );
+				return $filter->filter($value);
 			}
 		} else {
 			return $value;
 		}
 	}
 
-	private function _getPasswordValue( $info, $data ) {
+	private function _getPasswordValue( $info, $data )
+	{
 		$name = $info['preference'];
 
-		if ( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
-			return $filter->filter( $data[$name] );
+		if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+			return $filter->filter($data[$name]);
 		} else {
 			return $data[$name];
 		}
 	}
 
-	private function _getTextareaValue( $info, $data ) {
+	private function _getTextareaValue( $info, $data )
+	{
 		$name = $info['preference'];
 
-		if ( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
-			$value = $filter->filter( $data[$name] );
+		if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+			$value = $filter->filter($data[$name]);
 		} else {
 			$value = $data[$name];
 		}
@@ -590,13 +612,14 @@ class PreferencesLib
 		if ( isset( $info['unserialize'] ) ) {
 			$fnc = $info['unserialize'];
 
-			return $fnc( $value );
+			return $fnc($value);
 		} else {
 			return $value;
 		}
 	}
 
-	private function _getListValue( $info, $data ) {
+	private function _getListValue( $info, $data )
+	{
 		$name = $info['preference'];
 		$value = $data[$name];
 
@@ -605,26 +628,28 @@ class PreferencesLib
 		if ( isset( $options[$value] ) ) {
 			return $value;
 		} else {
-			return reset( array_keys( $options ) );
+			return reset(array_keys($options));
 		}
 	}
 
-	private function _getMultilistValue( $info, $data ) {
+	private function _getMultilistValue( $info, $data )
+	{
 		$name = $info['preference'];
 		$value = (array) $data[$name];
 
 		$options = $info['options'];
-		$options = array_keys( $options );
+		$options = array_keys($options);
 
-		return array_intersect( $value, $options );
+		return array_intersect($value, $options);
 	}
 
-	private function _getRadioValue( $info, $data ) {
+	private function _getRadioValue( $info, $data )
+	{
 		$name = $info['preference'];
 		$value = isset($data[$name]) ? $data[$name]: null;
 
 		$options = $info['options'];
-		$options = array_keys( $options );
+		$options = array_keys($options);
 
 		if (in_array($value, $options)) {
 			return $value;
@@ -633,8 +658,9 @@ class PreferencesLib
 		}
 	}
 
-	private function _getMulticheckboxValue( $info, $data ) {
-		return $this->_getMultilistValue( $info, $data );
+	private function _getMulticheckboxValue( $info, $data )
+	{
+		return $this->_getMultilistValue($info, $data);
 	}
 
 	// for export as yaml for tiki 7
@@ -645,7 +671,8 @@ class PreferencesLib
 	 * @return array (prefname => array( 'cur' => current value, 'def' => default value ))
 	 */
 	// NOTE: tikilib contains a similar method called getModifiedPreferences
-	function getModifiedPrefsForExport( $added = false ) {
+	function getModifiedPrefsForExport( $added = false )
+	{
 		global $tikilib;
 
 
@@ -654,9 +681,9 @@ class PreferencesLib
 		$defaults = get_default_prefs();
 		$modified = array();
 
-		foreach($prefs as $pref => $val) {
+		foreach ($prefs as $pref => $val) {
 			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $val !== $defaults[$pref] )) {
-				if (!in_array($pref, $this->system_modified )) {	// prefs modified by the system etc
+				if (!in_array($pref, $this->system_modified)) {	// prefs modified by the system etc
 					
 					if (!in_array($pref, $this->system_info)) {	// prefs with system info etc
 						$modified[$pref] = array(
@@ -696,8 +723,8 @@ class PreferencesLib
 	private function getAvailableFiles()
 	{
 		$files = array();
-		foreach( glob( 'lib/prefs/*.php' ) as $file ) {
-			$files[] = substr( basename( $file ), 0, -4 );
+		foreach ( glob('lib/prefs/*.php') as $file ) {
+			$files[] = substr(basename($file), 0, -4);
 		}
 
 		return $files;
