@@ -17,13 +17,16 @@ class Math_Formula_ElementTest extends TikiTestCase
 
 	function testGetKey()
 	{
-		$element = new Math_Formula_Element('test', array(
-					1,
-					$target = new Math_Formula_Element('object', array('type', 'id')),
-					2,
-					new Math_Formula_Element('object', array('foobar', 'baz')),
-					3,
-					));
+		$element = new Math_Formula_Element(
+						'test',
+						array(
+							1,
+							$target = new Math_Formula_Element('object', array('type', 'id')),
+							2,
+							new Math_Formula_Element('object', array('foobar', 'baz')),
+							3,
+						)
+		);
 
 		$this->assertSame($target, $element->object);
 		$this->assertNull($element->foobar);

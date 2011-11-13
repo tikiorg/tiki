@@ -27,7 +27,7 @@ class  AcceptanceTests_CollaborativeMultilingualTerminologyTest extends TikiSele
 		$this->restoreDBforThisTest();
 		#        $this->applyProfile('Collaborative_Multilingual_Terminology',
 		#                            'http://profiles.tiki.org/');
-  }
+	}
 
 	public function applyProfile($profileName, $profileRepositoryUrl)
 	{
@@ -39,5 +39,5 @@ class  AcceptanceTests_CollaborativeMultilingualTerminologyTest extends TikiSele
 	public function ___testRememberToReactivateAllTestsInCollaborativeMultilingualTerminologyTest()
 	{
     	$this->fail("Don't forget to do this");
-  }
+	}
 }

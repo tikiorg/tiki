@@ -17,10 +17,10 @@ if ($prefs['feature_directory'] != 'y') {
 	require_once ('tiki-rss_error.php');
 }
 $res = $access->authorize_rss(
-	array(
-		'tiki_p_view_directory',
-		'tiki_p_admin_directory'
-	)
+				array(
+					'tiki_p_view_directory',
+					'tiki_p_admin_directory'
+				)
 );
 if ($res) {
 	if ($res['header'] == 'y') {

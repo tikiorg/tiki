@@ -51,7 +51,7 @@ if (!empty($_REQUEST['edit'])) {
 	}
 
 	fwrite($fp, $_REQUEST['data']);
-	fclose ($fp);
+	fclose($fp);
 	if ($mod !== NULL) {
 		chmod($style, $mod);
 	}
@@ -95,7 +95,7 @@ if (!empty($_REQUEST['try'])) {
 
 $list = $csslib->list_css($styledir, true);
 if ($tikidomain and is_dir("$styledir/$tikidomain")) {
-	$list = array_unique(array_merge($list,$csslib->list_css("$styledir/$tikidomain")));
+	$list = array_unique(array_merge($list, $csslib->list_css("$styledir/$tikidomain")));
 }
 $smarty->assign('list', $list);
 

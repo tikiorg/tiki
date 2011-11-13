@@ -94,7 +94,7 @@ class Search_Indexer
 						$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
 					} catch(Exception $e) {
 						 TikiLib::lib('errorreport')->report(
-							 tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage())
+										 tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage())
 						 );
 					}
 				}

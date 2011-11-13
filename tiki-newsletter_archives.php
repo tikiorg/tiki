@@ -20,7 +20,7 @@ if (!empty($_REQUEST['nlId'])) {
 }
 
 $access->check_feature('feature_newsletters');
-$access->check_permission_either( array('tiki_p_view_newsletter') );
+$access->check_permission_either(array('tiki_p_view_newsletter'));
 
 if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {
 	if (!$tikilib->user_has_perm_on_object($user, $_REQUEST['nlId'], 'newsletter', 'tiki_p_admin_newsletters')) {

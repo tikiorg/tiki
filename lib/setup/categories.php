@@ -6,12 +6,12 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 	// pick up the objectType from cat_type is set or from section
-    if (!empty($section) && !empty($sections) && !empty($sections[$section])) {
+	if (!empty($section) && !empty($sections) && !empty($sections[$section])) {
 		$here = $sections[$section];
 		if (isset($_REQUEST[$here['key']])) {
 			if (is_array($_REQUEST[$here['key']])) { // tiki-upload_file uses galleryId[]

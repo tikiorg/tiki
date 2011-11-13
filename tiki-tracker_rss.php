@@ -107,11 +107,11 @@ if ($output["data"] == "EMPTY") {
 		foreach ($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
 				$data2['value'] = $trklib->field_render_value(
-					array(
-						'field' => $data2,
-						'item' => $data,
-						'process' => 'y',
-					)
+								array(
+									'field' => $data2,
+									'item' => $data,
+									'process' => 'y',
+								)
 				);
 				if ($data2['value'] == '') {
 					$data2['value'] = '(' . tra('empty') . ')';

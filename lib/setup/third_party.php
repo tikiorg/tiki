@@ -12,7 +12,7 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
 }
 
 // The following constant is at least used in the release.php script and in the error handling functions
-define( 'THIRD_PARTY_LIBS_PATTERN', '#lib/(pear|ajax|adodb)#' );
+define('THIRD_PARTY_LIBS_PATTERN', '#lib/(pear|ajax|adodb)#');
 
 define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
 // add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'

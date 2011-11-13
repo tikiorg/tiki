@@ -42,7 +42,7 @@ function smarty_block_modules_list($params, $content, $smarty, &$repeat)
 		} else {
 			$ret = '<ol>' . $content . '</ol>';
 		}
-	}else{
+	} else {
 		if (empty($params['none']))
 			$params['none'] = 'No records to display'; //get_strings tra('No records to display');
 		$ret = '<em>'.tra($params['none']).'</em>';

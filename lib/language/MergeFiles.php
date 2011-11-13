@@ -39,8 +39,7 @@ class Language_MergeFiles
 		
 		foreach ($targetStrings as $key => $string) {
 			if (isset($sourceStrings[$key]) && $sourceStrings[$key]['translated'] === true
-				&& (!isset($string['translation']) || $sourceStrings[$key]['translation'] != $string['translation']))
-			{
+				&& (!isset($string['translation']) || $sourceStrings[$key]['translation'] != $string['translation'])) {
 				$toUpdate[$key] = $sourceStrings[$key]['translation'];
 			}
 		}
@@ -58,8 +57,7 @@ class Language_MergeFiles
 				$matches = array();
 				
 				if (preg_match('|^/?/?\s*\"(.*)\"\s*\=\>\s*\"(.*)\"\s*\,\s*$|', $line, $matches)
-					&& isset($toUpdate[$matches[1]]))
-				{
+					&& isset($toUpdate[$matches[1]])) {
 					fwrite($handle, "\"{$matches[1]}\" => \"{$toUpdate[$matches[1]]}\",\n");
 				} else {
 					fwrite($handle, $line);

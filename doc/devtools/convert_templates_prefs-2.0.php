@@ -50,7 +50,7 @@ if (!function_exists('file_put_contents')) {
 $src = array();
 $dst = array();
 
-foreach(array_keys($prefs) as $k => $v) {
+foreach (array_keys($prefs) as $k => $v) {
 	$src[$k] = '$'.$v;
 	$dst[$k] = '$prefs.'.$v;
 }

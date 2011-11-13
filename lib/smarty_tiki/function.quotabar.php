@@ -26,4 +26,4 @@ function smarty_function_quotabar( $params, $smarty )
 		$ret = "<img src='img/leftbar.gif' alt='&lt;' /><img alt='-' src='img/mainbar.gif' height='14' width='$value' /><img alt='-' src='img/mainbarlight.gif' height='14' width='$left' /><img src='img/rightbarlight.gif' alt='&gt;' />";
 	}
 	return $ret;
-  }
+}

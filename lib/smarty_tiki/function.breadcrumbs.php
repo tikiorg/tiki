@@ -31,7 +31,7 @@ function smarty_function_breadcrumbs($params, $smarty)
     switch ($type) {
 		case 'invertfull':
 			$text_to_display = breadcrumb_buildHeadTitle(array_reverse($crumbs));
-            break;
+      break;
         case 'fulltrail':
 			$text_to_display = breadcrumb_buildHeadTitle($crumbs);
             break;

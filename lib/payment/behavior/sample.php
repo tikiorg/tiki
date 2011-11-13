@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function payment_behavior_sample( $exitMessage ) {
-	die( $exitMessage );
+function payment_behavior_sample( $exitMessage )
+{
+	die($exitMessage);
 }
 

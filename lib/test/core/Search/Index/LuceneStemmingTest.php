@@ -20,12 +20,14 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 
 		$index = new Search_Index_Lucene($this->dir, 'en');
 		$typeFactory = $index->getTypeFactory();
-		$index->addDocument(array(
-			'object_type' => $typeFactory->identifier('wikipage?!'),
-			'object_id' => $typeFactory->identifier('Comité Wiki'),
-			'description' => $typeFactory->plaintext('a description for the pages éducation Case'),
-			'contents' => $typeFactory->plaintext('a description for the pages éducation Case'),
-		));
+		$index->addDocument(
+						array(
+							'object_type' => $typeFactory->identifier('wikipage?!'),
+							'object_id' => $typeFactory->identifier('Comité Wiki'),
+							'description' => $typeFactory->plaintext('a description for the pages éducation Case'),
+							'contents' => $typeFactory->plaintext('a description for the pages éducation Case'),
+						)
+		);
 
 		$this->index = $index;
 	}

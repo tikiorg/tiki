@@ -67,12 +67,14 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 	{
 		$typeFactory = $index->getTypeFactory();
 
-		$index->addDocument(array(
-			'object_type' => $typeFactory->identifier($type),
-			'object_id' => $typeFactory->identifier($id),
-			'wiki_content' => $typeFactory->wikitext($data),
-			'contents' => $typeFactory->wikitext($data),
-		));
+		$index->addDocument(
+						array(
+							'object_type' => $typeFactory->identifier($type),
+							'object_id' => $typeFactory->identifier($id),
+							'wiki_content' => $typeFactory->wikitext($data),
+							'contents' => $typeFactory->wikitext($data),
+						)
+		);
 	}
 }
 

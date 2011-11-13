@@ -44,7 +44,7 @@ foreach ($text_fields as $field) {
 
 		$output = trim(`enca -L none /tmp/data`);
 
-		if (0 === strpos($output,'Universal transformation format 8 bits; UTF-8')) {
+		if (0 === strpos($output, 'Universal transformation format 8 bits; UTF-8')) {
 			$db->query("UPDATE `$table_name` SET `$column_name`=CONVERT(CONVERT(CONVERT(CONVERT(`$column_name` USING binary) USING utf8) USING latin1) USING binary) WHERE `$column_name` = ?", array($value['value']));
 		}
 	}

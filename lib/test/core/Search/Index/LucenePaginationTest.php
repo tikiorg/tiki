@@ -64,10 +64,12 @@ class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 		$typeFactory = $index->getTypeFactory();
 
 		for ($i = 0; $count > $i; ++$i) {
-			$index->addDocument(array(
-						'object_type' => $typeFactory->identifier('article'),
-						'object_id' => $typeFactory->identifier($i + 1),
-						));
+			$index->addDocument(
+							array(
+								'object_type' => $typeFactory->identifier('article'),
+								'object_id' => $typeFactory->identifier($i + 1),
+							)
+			);
 		}
 	}
 }

@@ -44,7 +44,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 
 require_once 'lib/wiki/renderlib.php';
-$pageRenderer = new WikiRenderer( $info, $user );
+$pageRenderer = new WikiRenderer($info, $user);
 $objectperms = $pageRenderer->applyPermissions();
 
 if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objectperms->wiki_view_latest) {

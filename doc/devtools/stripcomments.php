@@ -6,7 +6,7 @@
 // $Id$
 
 $file = $_SERVER['argv'][1];
-$tokens = token_get_all(file_get_contents($file ));
+$tokens = token_get_all(file_get_contents($file));
 
 $out = array();
 

@@ -54,11 +54,13 @@ class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 		$db->query($query, array('Registered', 'tiki_p_remove'));
 		$db->query($query, array('Admins', 'tiki_p_admin'));
 
-		$expect = new Perms_Resolver_Static(array(
-			'Anonymous' => array('view', 'edit'),
-			'Registered' => array('remove'),
-			'Admins' => array('admin'),
-		));
+		$expect = new Perms_Resolver_Static(
+						array(
+							'Anonymous' => array('view', 'edit'),
+							'Registered' => array('remove'),
+							'Admins' => array('admin'),
+						)
+		);
 
 		$factory = new Perms_ResolverFactory_GlobalFactory;
 		$this->assertEquals($expect, $factory->getResolver(array()));

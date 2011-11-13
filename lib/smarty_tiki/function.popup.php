@@ -115,7 +115,7 @@ function smarty_function_popup($params, $smarty)
         return false;
     }
 
-    if (empty($trigger)) {
+	if (empty($trigger)) {
     	$trigger = "onmouseover";
 	} else {
 		$append .= ',\'' . $trigger . '\'';

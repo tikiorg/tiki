@@ -57,8 +57,7 @@ function smarty_block_tikimodule($params, $content, $smarty)
 		// can be switched but initially closed
 		$flip = 'y';
 		$dstate = 'c';
-	}
-	else {
+	} else {
 		$dstate = 'o';
 	}
 	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';

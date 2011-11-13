@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 	$ok = true;
@@ -32,7 +32,7 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 				$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 			} else {
 				$previous_vote = $polllib->get_user_vote('poll' . $_REQUEST['polls_pollId'], $user);
-				if ( $tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], array(), $prefs['feature_poll_revote'] == 'y' )) {
+				if ( $tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], array(), $prefs['feature_poll_revote'] == 'y')) {
 					$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], $previous_vote);
 				}
 			}

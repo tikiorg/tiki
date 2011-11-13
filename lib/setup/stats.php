@@ -6,13 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 if ( $prefs['feature_referer_stats'] == 'y' ) {
     if ( isset($_SERVER['HTTP_REFERER']) ) {
         $pref = parse_url($_SERVER['HTTP_REFERER']);
         if ( isset($pref['host']) && !strstr($_SERVER['SERVER_NAME'], $pref['host']) ) {
-            $tikilib->register_referer($pref['host'],$_SERVER['HTTP_REFERER']);
+            $tikilib->register_referer($pref['host'], $_SERVER['HTTP_REFERER']);
         }
     }
 }

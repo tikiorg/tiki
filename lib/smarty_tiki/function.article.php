@@ -40,7 +40,7 @@ function smarty_function_article($params, $smarty)
 
 	$x = "";
 
-	foreach($list_articles['data'] as $article_data) {
+	foreach ($list_articles['data'] as $article_data) {
 		$x.= "<div class=\"articles\">";
 		$x.= "<a href=\"tiki-read_article.php?articleId=" . $article_data['articleId'] . "\" class=\"article\">";
 		$x.= $article_data['title'] . " - " . $tikilib->date_format('%d/%m/%Y', $article_data['publishDate']) . "</a></div>\n";

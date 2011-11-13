@@ -354,12 +354,15 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		}
 
 		$this->assertEquals('012', $matches->getText());
-		$this->assertEquals(array(
-			'a=1{a a=2}{A(a=3)/}',
-			'a=2',
-			'a=3',
-			'a=4Hello World',
-		), $obtained);
+		$this->assertEquals(
+						array(
+							'a=1{a a=2}{A(a=3)/}',
+							'a=2',
+							'a=3',
+							'a=4Hello World',
+						),
+						$obtained
+		);
 	}
 
 	function testWithPrettyVariablePrior()

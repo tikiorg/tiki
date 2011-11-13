@@ -29,7 +29,7 @@ function smarty_modifier_how_many_user_inscriptions( $text )
 
   $nb=0;
 
-  foreach($match[1] as $n){
+  foreach ($match[1] as $n){
     $nb += ($n+1);
   }
 

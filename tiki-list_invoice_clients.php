@@ -20,13 +20,13 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 }
 
 $headerlib->add_jq_onready(
-	"$('.ClientName').each(function(i) {
-		$(this)
-			.click(function() {
-				$('.ClientDetails').eq(i).toggle('fast');
-			})
-			.css('cursor', 'pointer');
-	});"
+				"$('.ClientName').each(function(i) {
+					$(this)
+						.click(function() {
+							$('.ClientDetails').eq(i).toggle('fast');
+						})
+						.css('cursor', 'pointer');
+				});"
 );
 
 $smarty->assign("Clients", TrackerQueryLib::tracker("Invoice Clients")->byName()->query());

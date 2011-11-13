@@ -29,7 +29,7 @@ for ($i=0, $icount_kprefs = count($kprefs); $i < $icount_kprefs; $i+=500) {
 
 $elems = scandir($dirtoscan);
 
-foreach($elems as $filename) {
+foreach ($elems as $filename) {
 	if (preg_match('/.php$/', $filename)) {
 		$content_src = file_get_contents($dirtoscan.'/'.$filename);
 		$gmatchs = array();
