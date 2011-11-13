@@ -29,17 +29,16 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		$this->styles = array();
 		$this->font = null;
 
-		if ( !is_null( $format ) )
-		{
-			$size = $this->_getFormat( $format, $orientation );
+		if ( !is_null($format) ) {
+			$size = $this->_getFormat($format, $orientation);
 			$this->width = $size[0];
 			$this->height = $size[1];
 			
 			$this->pdf = pdf_new();
-			pdf_open_file( $this->pdf, '' );
-			pdf_begin_page( $this->pdf, $this->width, $this->height );
+			pdf_open_file($this->pdf, '');
+			pdf_begin_page($this->pdf, $this->width, $this->height);
 
-			$this->font = pdf_findfont( $this->pdf, 'Helvetica', 'builtin', 0 );
+			$this->font = pdf_findfont($this->pdf, 'Helvetica', 'builtin', 0);
 		}
 	}
 	
@@ -49,8 +48,8 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
-		$this->_convertPosition( $x1, $y1 );
-		$this->_convertPosition( $x2, $y2 );
+		$this->_convertPosition($x1, $y1);
+		$this->_convertPosition($x2, $y2);
 
 		pdf_setcolor( $this->pdf,
 			'stroke',
