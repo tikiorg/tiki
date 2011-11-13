@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_direct_list() {
+function prefs_direct_list()
+{
 	return array(
 		'direct_pagination' => array(
 			'name' => tra('Use direct pagination links'),

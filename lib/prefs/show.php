@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_show_list() {
+function prefs_show_list()
+{
 	return array(
 		'show_available_translations' => array(
 			'name' => tra('Display available translations'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_recaptcha_list() {
+function prefs_recaptcha_list()
+{
     return array (
 		'recaptcha_enabled' => array(
             'name' => tra('Use ReCaptcha'),

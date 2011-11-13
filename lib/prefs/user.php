@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_user_list($partial = false) {
+function prefs_user_list($partial = false)
+{
 	
 	global $prefs;
 	

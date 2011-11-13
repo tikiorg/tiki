@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_sender_list() {
+function prefs_sender_list()
+{
 	return array(
 		'sender_email' => array(
 			'name' => tra('Sender email'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_quantify_list() {
+function prefs_quantify_list()
+{
 	return array(
 		'quantify_changes' => array(
 			'name' => tra('Quantify change size'),

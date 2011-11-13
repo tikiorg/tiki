@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_faq_list() {
+function prefs_faq_list()
+{
 	return array(
 		'faq_comments_per_page' => array(
 			'name' => tra('Default number of comments per page'),

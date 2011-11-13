@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_file_list() {
+function prefs_file_list()
+{
 	return array(
 		'file_galleries_comments_per_page' => array(
 			'name' => tra('Default number per page'),

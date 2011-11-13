@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_webmail_list() {
+function prefs_webmail_list()
+{
 	return array(
 		'webmail_view_html' => array(
 			'name' => tra('Allow viewing HTML mails?'),

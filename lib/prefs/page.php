@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_page_list() {
+function prefs_page_list()
+{
 	return array(
 		'page_bar_position' => array(
 			'name' => tra('Wiki buttons'),

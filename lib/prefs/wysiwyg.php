@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_wysiwyg_list() {
+function prefs_wysiwyg_list()
+{
 	
 	return array(
 		'wysiwyg_optional' => array(

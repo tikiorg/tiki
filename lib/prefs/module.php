@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_module_list() {
+function prefs_module_list()
+{
 	return array(
 		'module_zones_top' => array(
 			'name' => tra('Top module zone'),

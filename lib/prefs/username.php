@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_username_list() {
+function prefs_username_list()
+{
 	return array(
 		'username_pattern' => array(
 			'name' => tra('Username pattern'),

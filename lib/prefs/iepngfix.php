@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_iepngfix_list() {
+function prefs_iepngfix_list()
+{
 	return array(
 		'iepngfix_selectors' => array(
 			'name' => tra('CSS selectors to be fixed'),

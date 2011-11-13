@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_article_list() {
+function prefs_article_list()
+{
 	$comment_sort_orders = array(
 		'commentDate_desc' => tra('Newest first'),
 		'commentDate_asc' => tra('Oldest first'),
@@ -15,7 +16,7 @@ function prefs_article_list() {
 	global $prefslib;
 	$advanced_columns = $prefslib->getExtraSortColumns();
 
-	foreach( $advanced_columns as $key => $label ) {
+	foreach ( $advanced_columns as $key => $label ) {
 		$comment_sort_orders[ $key . '_asc' ] = $label . ' ' . tr('ascending');
 		$comment_sort_orders[ $key . '_desc' ] = $label . ' ' . tr('descending');
 	}
@@ -52,7 +53,7 @@ function prefs_article_list() {
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
-			'default' => range( 1, 5 ),
+			'default' => range(1, 5),
 		),
 		'article_image_size_x' => array(
 			'name' => tra('Default article image width'),

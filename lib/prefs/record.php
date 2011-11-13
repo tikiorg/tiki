@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_record_list() {
+function prefs_record_list()
+{
 	return array(
 		'record_untranslated' => array(
 			'name' => tra('Record untranslated strings'),

@@ -5,15 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_wiki_list($partial = false) {
+function prefs_wiki_list($partial = false)
+{
 
 	global $prefs;
 	$wiki_forums = array();
 
 	if (! $partial && $prefs['feature_forums'] == 'y') {
-		$all_forums = TikiDb::get()->fetchMap( 'SELECT `forumId`, `name` FROM `tiki_forums` ORDER BY `name` ASC' );
+		$all_forums = TikiDb::get()->fetchMap('SELECT `forumId`, `name` FROM `tiki_forums` ORDER BY `name` ASC');
 
-		if ( count( $all_forums ) ) {
+		if ( count($all_forums) ) {
 			$wiki_forums = $all_forums;
 		} else {
 			$wiki_forums[''] = tra('None');
@@ -23,15 +24,18 @@ function prefs_wiki_list($partial = false) {
 	global $prefslib;
 	$advanced_columns = $prefslib->getExtraSortColumns();
 
-	$wiki_sort_columns = array_merge( array(
-		'pageName' => tra('Name'),
-		'lastModif' => tra('LastModif'),
-		'created' => tra('Created'),
-		'creator' => tra('Creator'),
-		'hits' => tra('Hits'),
-		'user' => tra('Last editor'),
-		'page_size' => tra('Size'),
-	), $advanced_columns );
+	$wiki_sort_columns = array_merge(
+					array(
+						'pageName' => tra('Name'),
+						'lastModif' => tra('LastModif'),
+						'created' => tra('Created'),
+						'creator' => tra('Creator'),
+						'hits' => tra('Hits'),
+						'user' => tra('Last editor'),
+						'page_size' => tra('Size'),
+					),
+					$advanced_columns
+	);
 
 	$comment_sort_orders = array(
 		'commentDate_desc' => tra('Newest first'),
@@ -39,7 +43,7 @@ function prefs_wiki_list($partial = false) {
 		'points_desc' => tra('Points'),
 	);
 
-	foreach( $advanced_columns as $key => $label ) {
+	foreach ( $advanced_columns as $key => $label ) {
 		$comment_sort_orders[ $key . '_asc' ] = $label . ' ' . tr('ascending');
 		$comment_sort_orders[ $key . '_desc' ] = $label . ' ' . tr('descending');
 	}
@@ -632,7 +636,7 @@ function prefs_wiki_list($partial = false) {
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
-			'default' => range( 1, 5 ),
+			'default' => range(1, 5),
 		),
 		'wiki_pagealias_tokens' => array(
 			'name' => tra('Semantic link types to use as page alias markers'),

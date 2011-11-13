@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_use_list() {
+function prefs_use_list() 
+{
 	return array (
 		'use_load_threshold' => array(
 			'name' => tra('Close site when server load is above the threshold  (except for those with permission)'),

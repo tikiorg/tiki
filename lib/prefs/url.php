@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_url_list() {
+function prefs_url_list()
+{
 	return array(
 		'url_after_validation' => array(
 			'name' => tra('URL a user is redirected to after account validation'),

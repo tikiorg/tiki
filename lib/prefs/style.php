@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_style_list($partial = false) {
+function prefs_style_list($partial = false)
+{
 	global $tikilib, $prefs;
 
 	$style_options = array(
@@ -20,9 +21,9 @@ function prefs_style_list($partial = false) {
 		}
 	}
 
-	$all = glob( 'styles/*/options/*.css' );
-	foreach( $all as $location ) {
-		$option = basename( $location );
+	$all = glob('styles/*/options/*.css');
+	foreach ( $all as $location ) {
+		$option = basename($location);
 
 		if ( ! isset( $style_options[$option] ) ) {
 			$style_options[$option] = "X - $option";

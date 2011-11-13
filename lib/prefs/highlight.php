@@ -6,7 +6,8 @@
 // $Id$
 
 
-function prefs_highlight_list($partial = false) {
+function prefs_highlight_list($partial = false)
+{
 	return array(
 		'highlight_group' => array(
 			'name' => tra('Highlight group'),
@@ -38,7 +39,7 @@ function highlight_group_values($partial)
 	$dropdown_listgroups['0'] = tra('None');
 
 	foreach ($listgroups['data'] as $onegroup) {
-		$dropdown_listgroups[$onegroup['groupName']] =substr($onegroup['groupName'], 0, 50) ;
+		$dropdown_listgroups[$onegroup['groupName']] =substr($onegroup['groupName'], 0, 50);
 	}
 
 	return $dropdown_listgroups;

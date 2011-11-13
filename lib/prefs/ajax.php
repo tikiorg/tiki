@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_ajax_list() {
+function prefs_ajax_list()
+{
 
 	return array(
 

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_permission_list() {
+function prefs_permission_list()
+{
 	return array(
 		'permission_denied_url' => array(
 			'name' => tra('Send to URL'),

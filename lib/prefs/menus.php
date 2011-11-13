@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_menus_list() {
+function prefs_menus_list()
+{
 	return array(
 		'menus_items_icons' => array(
 			'name' => tra('Menu icons'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_tiki_list() {
+function prefs_tiki_list()
+{
 	return array(
 		'tiki_version_check_frequency' => array(
 			'name' => tra('Check frequency'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_print_list() {
+function prefs_print_list()
+{
 	return array(
 		'print_pdf_from_url' => array(
 			'name' => tra('PDF from URL'),

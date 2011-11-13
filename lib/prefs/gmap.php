@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_gmap_list() {
+function prefs_gmap_list()
+{
 	return array(
 		'gmap_key' => array(
 			'name' => tra('Google Maps API Key'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_map_list() {
+function prefs_map_list()
+{
 	return array(
 		'map_path' => array(
 			'name' => tra('full path to mapfiles'),

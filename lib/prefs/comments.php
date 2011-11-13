@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_comments_list() {
+function prefs_comments_list()
+{
 	return array(
 		'comments_notitle' => array(
 			'name' => tra('Disable title for comments'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_home_list($partial = false) {
+function prefs_home_list($partial = false)
+{
 
 	return array(
 		'home_blog' => array(

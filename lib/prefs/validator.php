@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_validator_list() {
+function prefs_validator_list()
+{
 	return array(
 		'validator_emails' => array(
 			'name' => tra('Validator emails (separated by comma) if different than the sender email'),

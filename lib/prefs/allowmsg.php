@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_allowmsg_list() {
+function prefs_allowmsg_list()
+{
 	return array(
 		'allowmsg_by_default' => array(
 			'name' => tra('Users accept internal messages by default'),

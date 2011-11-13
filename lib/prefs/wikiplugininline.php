@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_wikiplugininline_list($partial = false) {
+function prefs_wikiplugininline_list($partial = false) 
+{
 	global $tikilib;
 	$parserlib = TikiLib::lib('parser');
 	
@@ -27,10 +28,9 @@ function prefs_wikiplugininline_list($partial = false) {
 		$out = array();
 		$list = array();
 		$alias = array();
-		foreach( glob( 'lib/wiki-plugins/wikiplugin_*.php' ) as $file )
-		{
-			$base = basename( $file );
-			$plugin = substr( $base, 11, -4 );
+		foreach ( glob('lib/wiki-plugins/wikiplugin_*.php') as $file ) {
+			$base = basename($file);
+			$plugin = substr($base, 11, -4);
 
 			$list[] = $plugin;
 		}
@@ -40,10 +40,10 @@ function prefs_wikiplugininline_list($partial = false) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
 			$alias = array_filter($alias);
 		}
-		$list = array_filter( array_merge( $list, $alias ) );
-		sort( $list );
+		$list = array_filter(array_merge($list, $alias));
+		sort($list);
 
-		foreach( $list as $plugin ) {
+		foreach ( $list as $plugin ) {
 			$preference = 'wikiplugininline_' . $plugin;
 			$out[$preference] = array(
 				'default' => isset($defaultInline[$plugin]) ? 'y' : 'n',
@@ -55,11 +55,11 @@ function prefs_wikiplugininline_list($partial = false) {
 
 	$prefs = array();
 
-	foreach( $parserlib->plugin_get_list() as $plugin ) {
-		$info = $parserlib->plugin_info( $plugin );
+	foreach ( $parserlib->plugin_get_list() as $plugin ) {
+		$info = $parserlib->plugin_info($plugin);
 
 		$prefs['wikiplugininline_' . $plugin] = array(
-			'name' => tr('Inline plugin %0', $info['name'] ),
+			'name' => tr('Inline plugin %0', $info['name']),
 			'description' => '',
 			'type' => 'flag',
 			'default' => isset($defaultInline[$plugin]) ? 'y' : 'n',

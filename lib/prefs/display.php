@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_display_list() {
+function prefs_display_list()
+{
 	return array(
 		'display_field_order' => array(
 			'name' => tra('Fields display order'),

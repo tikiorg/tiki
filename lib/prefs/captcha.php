@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_captcha_list() {
+function prefs_captcha_list()
+{
     return array (
 		'captcha_wordLen' => array(
 			'name' => tra('Word length of the captcha image'),

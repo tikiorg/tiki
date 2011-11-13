@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_proxy_list() {
+function prefs_proxy_list()
+{
 	return array (
 		'proxy_host' => array(
 			'name' => tra('Proxy host name'),

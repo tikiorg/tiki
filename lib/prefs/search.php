@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_search_list() {
+function prefs_search_list()
+{
 	global $prefs;
 	return array (
 		'search_parsed_snippet' => array(

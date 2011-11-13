@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_lang_list() {
+function prefs_lang_list()
+{
 	return array(
 		'lang_use_db' => array(
 			'name' => tra('Use database for translation'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_language_list() {
+function prefs_language_list()
+{
 	return array(
 		'language_inclusion_threshold' => array(
 			'name' => tra('Language inclusion threshold'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_section_list() {
+function prefs_section_list()
+{
 	return array(
 		'section_comments_parse' => array(
 			'name' => tra('Parse wiki syntax in comments in all sections apart from Forums'),

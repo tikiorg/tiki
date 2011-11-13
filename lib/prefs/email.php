@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_email_list() {
+function prefs_email_list()
+{
 	return array(
 		'email_due' => array(
 			'name' => tra('Re-validate user by email after'),

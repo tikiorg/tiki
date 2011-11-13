@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_pass_list() {
+function prefs_pass_list()
+{
 	return array(
 		'pass_chr_num' => array(
 			'name' => tra('Require characters and numerals'),

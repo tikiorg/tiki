@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_error_list() {
+function prefs_error_list()
+{
 	return array(
 		'error_reporting_adminonly' => array(
 			'name' => tra('PHP errors visible to admin only'),

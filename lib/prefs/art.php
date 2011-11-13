@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_art_list() {
+function prefs_art_list()
+{
 	$article_sort_orders = array(
 		'publishDate_desc' => tra('Newest first'),
 	);
@@ -13,7 +14,7 @@ function prefs_art_list() {
 	global $prefslib;
 	$advanced_columns = $prefslib->getExtraSortColumns();
 
-	foreach( $advanced_columns as $key => $label ) {
+	foreach ( $advanced_columns as $key => $label ) {
 		$article_sort_orders[ $key . '_asc' ] = $label . ' ' . tr('ascending');
 		$article_sort_orders[ $key . '_desc' ] = $label . ' ' . tr('descending');
 	}

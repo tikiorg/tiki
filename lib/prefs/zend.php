@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_zend_list() {
+function prefs_zend_list()
+{
 	return array(
 		'zend_mail_smtp_server' => array(
 			'name' => tra('SMTP Server'),

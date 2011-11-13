@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_w_list() {
+function prefs_w_list()
+{
 	return array(
 		'w_displayed_default' => array(
 			'name' => tra('Display by default'),

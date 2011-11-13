@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_warn_list() {
+function prefs_warn_list()
+{
 	return array(
 		'warn_on_edit_time' => array(
 			'name' => tra('Edit idle timeout'),
@@ -22,5 +23,4 @@ function prefs_warn_list() {
 			'default' => 2,
 		),
 	);
-	
 }

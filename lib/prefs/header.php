@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_header_list() {
+function prefs_header_list()
+{
 	return array(
 		'header_shadow_start' => array(
 			'name' => tra('Header shadow start'),

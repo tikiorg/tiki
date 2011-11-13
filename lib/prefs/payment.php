@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_payment_list() {
+function prefs_payment_list()
+{
 	return array(
 		'payment_feature' => array(
 			'name' => tra('Payment'),

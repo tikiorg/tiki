@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_metrics_list() {
+function prefs_metrics_list()
+{
 	return array(
 		'metrics_pastresults' => array(
 			'name' => tra('Show past metrics results'),

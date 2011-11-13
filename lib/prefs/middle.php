@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_middle_list() {
+function prefs_middle_list()
+{
 	return array(
 		'middle_shadow_start' => array(
 			'name' => tra('Middle shadow start'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_login_list() {
+function prefs_login_list() 
+{
 	return array(
 		'login_is_email' => array(
 			'name' => tra('Use email as username'),

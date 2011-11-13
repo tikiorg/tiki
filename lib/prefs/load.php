@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_load_list() {
+function prefs_load_list()
+{
 	return array (
 		'load_threshold' => array(
 			'name' => tra('Maximum average server load threshold in the last minute'),

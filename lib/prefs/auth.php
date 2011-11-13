@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_auth_list() {
+function prefs_auth_list()
+{
 	return array(
 		'auth_method' => array(
 			'name' => tra('Authentication method'),

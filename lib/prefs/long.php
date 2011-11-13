@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_long_list() {
+function prefs_long_list()
+{
 	return array(
 		'long_date_format' => array(
 			'name' => tra('Long date format'),

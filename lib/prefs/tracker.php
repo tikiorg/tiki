@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_tracker_list() {
+function prefs_tracker_list()
+{
 	return array(
 		'tracker_remote_sync' => array(
 			'name' => tr('Synchronize Remote Tracker'),

@@ -8,12 +8,12 @@
 function prefs_shipping_list()
 {
 	require_once 'lib/shipping/shippinglib.php';
-	$all = glob( 'lib/shipping/custom/*.php' );
+	$all = glob('lib/shipping/custom/*.php');
 	
 	$custom_providers = array( '' => tra('None'));
 
-	foreach( $all as $file ) {
-		$name = basename( $file, '.php' );
+	foreach ( $all as $file ) {
+		$name = basename($file, '.php');
 		$provider = ShippingLib::getCustomShippingProvider($name);
 		$custom_providers[$name] = $provider->getName();
 	}

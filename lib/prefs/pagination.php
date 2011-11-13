@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_pagination_list() {
+function prefs_pagination_list()
+{
 	return array(
 		'pagination_firstlast' => array(
 			'name' => tra("Display 'First' and 'Last' links"),

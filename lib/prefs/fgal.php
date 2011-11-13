@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_fgal_list() {
+function prefs_fgal_list()
+{
 	return array(
 		'fgal_podcast_dir' => array(
 			'name' => tra('Podcast directory'),

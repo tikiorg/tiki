@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_dailyreports_list() {
+function prefs_dailyreports_list()
+{
 	return array(
 		'dailyreports_enabled_for_new_users' => array(
 			'name' => tr('Enable daily reports for new users'),

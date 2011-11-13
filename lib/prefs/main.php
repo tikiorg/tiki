@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_main_list() {
+function prefs_main_list()
+{
 	return array(
 		'main_shadow_start' => array(
 			'name' => tra('Main shadow start'),

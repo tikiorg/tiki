@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_desactive_list() {
+function prefs_desactive_list()
+{
 	return array(
 		'desactive_login_autocomplete' => array(
 			'name' => tra("Disable browser's autocomplete feature for username and password fields"),

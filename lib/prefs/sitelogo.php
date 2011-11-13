@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_sitelogo_list() {
+function prefs_sitelogo_list()
+{
 	return array(
 		'sitelogo_src' => array(
 			'name' => tra('Logo source (image path)'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_lowercase_list() {
+function prefs_lowercase_list()
+{
 	return array(
 		'lowercase_username' => array(
 			'name' => tra('Force lowercase'),

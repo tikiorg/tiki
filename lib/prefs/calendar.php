@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_calendar_list() {
+function prefs_calendar_list()
+{
 	return array(
 		'calendar_view_days' => array(
 			'name' => tra('Days to display in the Calendar'),

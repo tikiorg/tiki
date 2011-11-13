@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_category_list() {
+function prefs_category_list()
+{
 	return array(
 		'category_jail' => array(
 			'name' => tra('Category Jail'),
@@ -115,15 +116,16 @@ function prefs_category_list() {
 	);
 }
 
-function prefs_category_serialize_defaults( $data ) {
-	if ( ! is_array( $data ) ) {
-		$data = unserialize( $data );
+function prefs_category_serialize_defaults( $data )
+{
+	if ( ! is_array($data) ) {
+		$data = unserialize($data);
 	}
 
 	$out = '';
-	if ( is_array( $data ) ) {
-		foreach( $data as $row ) {
-			$out .= implode( ',', $row['categories'] ) . '/' . $row['default'];
+	if ( is_array($data) ) {
+		foreach ( $data as $row ) {
+			$out .= implode(',', $row['categories']) . '/' . $row['default'];
 			if (!empty($row['filter'])) {
 				$out .= ':' . $row['filter'];
 			}
@@ -137,17 +139,18 @@ function prefs_category_serialize_defaults( $data ) {
 		}
 	}
 
-	return trim( $out );
+	return trim($out);
 }
 
-function prefs_category_unserialize_defaults( $string ) {
+function prefs_category_unserialize_defaults( $string )
+{
 	$data = array();
 	
-	foreach( explode( "\n", $string ) as $row ) {
-		if ( preg_match('/^\s*(\*?\d+\s*(,\s*\*?\d+\s*)*)\/\s*(\d+)\s*(:(.*)(:(wiki page))?)?$/U', $row, $parts ) ) {
-			$categories = explode( ',', $parts[1] );
-			$categories = array_map( 'trim', $categories );
-			$categories = array_filter( $categories );
+	foreach ( explode("\n", $string) as $row ) {
+		if ( preg_match('/^\s*(\*?\d+\s*(,\s*\*?\d+\s*)*)\/\s*(\d+)\s*(:(.*)(:(wiki page))?)?$/U', $row, $parts) ) {
+			$categories = explode(',', $parts[1]);
+			$categories = array_map('trim', $categories);
+			$categories = array_filter($categories);
 			$default = $parts[3];
 			$filter = empty($parts[5])? '': $parts[5];
 			$type = empty($parts[7])? '':'wiki page';
@@ -161,7 +164,7 @@ function prefs_category_unserialize_defaults( $string ) {
 		}
 	}
 
-	if ( count( $data ) ) {
+	if ( count($data) ) {
 		return $data;
 	} else {
 		return false;

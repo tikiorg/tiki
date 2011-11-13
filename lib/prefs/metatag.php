@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_metatag_list() {
+function prefs_metatag_list()
+{
 	return array(
 		'metatag_keywords' => array(
 			'name' => tra('Keywords'),

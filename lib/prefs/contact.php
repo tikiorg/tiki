@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_contact_list() {
+function prefs_contact_list()
+{
 	return array (
 		'contact_anon' => array(
 			'name' => tra('Allow anonymous visitors to use the "Contact Us" feature.'),

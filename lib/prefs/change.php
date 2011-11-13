@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_change_list() {
+function prefs_change_list()
+{
 	return array(
 		'change_language' => array(
 			'name' => tra('Users can change site language'),

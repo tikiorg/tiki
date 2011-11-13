@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_morelikethis_list() {
+function prefs_morelikethis_list()
+{
 	return array(
 
 		// Used in templates/tiki-admin-include-freetags.tpl

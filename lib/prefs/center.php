@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_center_list() {
+function prefs_center_list() 
+{
 	return array(
 		'center_shadow_start' => array(
 			'name' => tra('Center shadow start'),

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_mobile_list() {
+function prefs_mobile_list()
+{
 
 	$mobile_themes = array(
 		'' => tra('Default'),

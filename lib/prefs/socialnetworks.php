@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_socialnetworks_list() {
+function prefs_socialnetworks_list()
+{
 	return array(
 		'socialnetworks_twitter_consumer_key' => array(
 			'name' => tra('Consumer key'),

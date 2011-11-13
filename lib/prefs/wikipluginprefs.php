@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_wikipluginprefs_list() {
+function prefs_wikipluginprefs_list()
+{
 	return array(
 		'wikipluginprefs_pending_notification' => array(
 			'name' => tra('Plugin pending approval notification'),

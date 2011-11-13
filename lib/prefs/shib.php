@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_shib_list() {
+function prefs_shib_list()
+{
 	return array(
 		'shib_group' => array(
 			'name' => tra('Default group'),

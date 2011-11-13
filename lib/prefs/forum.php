@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_forum_list() {
+function prefs_forum_list()
+{
 	return array(
 		'forum_comments_no_title_prefix' => array(
 			'name' => tra("Do not prefix messages titles by 'Re: '"),

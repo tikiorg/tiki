@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_smarty_list() {
+function prefs_smarty_list()
+{
 	return array(
 		'smarty_notice_reporting' => array(
 			'name' => tra('Include smarty notices in PHP error report'),

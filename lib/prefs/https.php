@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_https_list() {
+function prefs_https_list()
+{
 	return array(
 		'https_external_links_for_users' => array(
 			'name' => tra('Use HTTPS when building user-specific links'),

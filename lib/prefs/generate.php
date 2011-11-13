@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_generate_list() {
+function prefs_generate_list()
+{
 	return array(
 		'generate_password' => array(
 			'name' => tra('Include "Generate Password" option on registration form'),

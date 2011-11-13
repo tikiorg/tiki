@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_sitead_list() {
+function prefs_sitead_list()
+{
 	return array(
 		'sitead_publish' => array(
 			'name' => tra('Publish'),

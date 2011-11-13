@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_cas_list() {
+function prefs_cas_list()
+{
 	return array(
 		'cas_create_user_tiki' => array(
 			'name' => tra('Create user if not in Tiki'),

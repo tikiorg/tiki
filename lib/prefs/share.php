@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_share_list() {
+function prefs_share_list()
+{
 	return array(
 		'share_display_links' => array(
 			'name' => tra('Display links in the share page'),

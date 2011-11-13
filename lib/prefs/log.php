@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_log_list() {
+function prefs_log_list()
+{
 	return array(
 		'log_mail' => array(
 			'name' => tra('Log mail in Tiki logs'),

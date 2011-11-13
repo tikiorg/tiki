@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_feed_list() {
+function prefs_feed_list()
+{
 	return array(
 		'feed_default_version' => array(
 			'name' => tra('Default feed format'),

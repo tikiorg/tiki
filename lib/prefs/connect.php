@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_connect_list() {
+function prefs_connect_list()
+{
     return array (
 		'connect_feature' => array(
 			'name' => tra('Tiki Connect'),

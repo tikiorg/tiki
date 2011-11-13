@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_rating_list() {
+function prefs_rating_list()
+{
 	return array(
 		'rating_advanced' => array(
 			'name' => tra('Advanced Rating'),

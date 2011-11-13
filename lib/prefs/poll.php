@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_poll_list() {
+function prefs_poll_list()
+{
 	return array(
 		'poll_comments_per_page' => array(
 			'name' => tra('Default number per page'),
