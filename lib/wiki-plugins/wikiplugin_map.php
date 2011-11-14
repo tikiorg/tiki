@@ -22,6 +22,14 @@ function wikiplugin_map_info() {
 				'filter' => 'striptags',
 				'default' => 'center',
 			),
+			'controls' => array(
+				'required' => false,
+				'name' => tr('Controls'),
+				'description' => tr('Allows to specify which map controls will be displayed on the map and around it.'),
+				'filter' => 'word',
+				'separator' => ',',
+				'default' => wp_map_default_controls(),
+			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
@@ -66,7 +74,8 @@ function wikiplugin_map($data, $params) {
 		return wp_map_mapserver($params);
 	}
 
-	require_once 'lib/smarty_tiki/modifier.escape.php';
+	$smarty = TikiLib::lib('smarty');
+	$smarty->loadPlugin('smarty_modifier_escape');
 
 	$width = '100%';
 	if (isset($params['width'])) {
@@ -78,9 +87,20 @@ function wikiplugin_map($data, $params) {
 		$height = intval($params['height']) . 'px';
 	}
 
+	if (! isset($params['controls'])) {
+		$params['controls'] = wp_map_default_controls();
+	}
+
+	if (! is_array($params['controls'])) {
+		$params['controls'] = explode(',', $params['controls']);
+	}
+
+	$controls = array_intersect($params['controls'], wp_map_available_controls());
+	$controls = implode(',', $controls);
+
 	TikiLib::lib('header')->add_map();
 	$scope = smarty_modifier_escape(wp_map_getscope($params));
-	return "<div class=\"map-container\" data-marker-filter=\"$scope\" style=\"width: {$width}; height: {$height};\"></div>";
+	return "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" style=\"width: {$width}; height: {$height};\"></div>";
 }
 
 function wp_map_getscope($params)
@@ -146,3 +166,20 @@ function wp_map_mapserver($params)
 	}
 	return $map;
 }
+
+function wp_map_default_controls()
+{
+	return 'controls,layers,search_location,current_location,streetview';
+}
+
+function wp_map_available_controls()
+{
+	return array(
+		'controls',
+		'layers',
+		'search_location',
+		'current_location',
+		'streetview',
+	);
+}
+
