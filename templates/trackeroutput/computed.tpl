@@ -1,4 +1,4 @@
-{if $prefs.tracker_field_computed eq 'y'}
+{if $prefs.trackerfield_computed eq 'y'}
 	{if isset($field.computedtype) and $field.computedtype eq 'duration'}
 		{if $field.value}
 			{if isset($field.operator) and $field.operator eq 'sum'}
