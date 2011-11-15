@@ -14,7 +14,8 @@
 }
 
 .CodeMirror-fullscreen  .CodeMirror-scroll{
-	height: inherit;
+	height: inherit ! important;
+	width: inherit ! important;
 }
 
 .CodeMirror-scroll{

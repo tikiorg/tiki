@@ -30,6 +30,7 @@ function wikiplugin_code_info() {
 					array('text' => tra('Yes'), 'value' => '1'),
 					array('text' => tra('No'), 'value' => '0'),
 				),
+				'default' => 'y'
 			),
 			'colors' => array(
 				'required' => false,
@@ -66,6 +67,13 @@ function wikiplugin_code_info() {
 function wikiplugin_code($data, $params) {
 	global $prefs;
 	static $code_count;
+	
+	$defaults = array(
+		'wrap' => 'y'
+	);
+	
+	$params = array_merge($defaults, $params);
+	
 	extract($params, EXTR_SKIP);
 
 	$code = trim($data);
@@ -82,21 +90,11 @@ function wikiplugin_code($data, $params) {
 		unset( $colors );
 	}
 
-	if ( isset($wrap) && $wrap == 1 ) {
-		// Force wrapping in <pre> tag through a CSS hack
-		$pre_style = 'white-space:pre-wrap;'
-			.' white-space:-moz-pre-wrap !important;'
-			.' white-space:-pre-wrap;'
-			.' white-space:-o-pre-wrap;'
-			.' word-wrap:break-word;';
-	} else {
-		// If there is no wrapping, display a scrollbar (only if needed) to avoid truncating the text
-		$pre_style = 'overflow:auto;';
-	}
-
 	$out = (isset($caption) ? '<div class="codecaption">'.$caption.'</div>' : "" ) 
-		. '<pre class="codelisting" ' . (isset($colors) ? ' data-syntax="' . $colors . '" ' : '')
+		. '<pre class="codelisting" '
+		. (isset($colors) ? ' data-syntax="' . $colors . '" ' : '')
 		. (isset($ln) ? ' data-line-numbers="' . $ln . '" ' : '')
+		. (isset($wrap) ? ' data-wrap="' . $wrap . '" ' : '')
 		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'"'.$boxid.'>'
 		. '~np~'
 		. $out

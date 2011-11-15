@@ -131,7 +131,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		}
 
 		return array(
-			'value' => '',
+			'value' => $value,
 		);
 	}
 

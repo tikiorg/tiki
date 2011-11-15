@@ -160,7 +160,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 									for (var i = 0; i < data.data.length; i++) {
 										var a = data.data[i];
 										if ( a && a["fieldId"] == '.$this->getOption(1).' ) {
-											$o = $("<option value=\'" + a["fileId"] + "\'>" + a["value"] + "</option>");
+											$o = $("<option value=\'" + data["itemId"] + "\'>" + a["value"] + "</option>");
 											$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
 											$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 1;
 										}

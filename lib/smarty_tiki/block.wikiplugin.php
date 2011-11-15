@@ -35,6 +35,7 @@ function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false )
 	return $parserlib->plugin_execute( $name, $content, $params, 0, false, array(
 		'context_format' => 'html',
 		'ck_editor' => false,
+		'is_html' => 'y'
 	) );
 }
 

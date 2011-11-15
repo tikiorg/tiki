@@ -2780,18 +2780,18 @@ class TrackerLib extends TikiLib
 	 */
 	function check_field_value_exists($value, $fieldId, $exceptItemId = 0)
 	{
-		$fields = $this->fields();
-
+		$itemFields = $this->itemFields();
+		
 		$conditions = array(
 			'fieldId' => (int) $fieldId,
 			'value' => $value,
 		);
 
 		if ($exceptItemId > 0) {
-			$conditions['itemId'] = $fields->not((int) $exceptItemId);
+			$conditions['itemId'] = $itemFields->not((int) $exceptItemId);
 		}
 
-		return $fields->fetchCount($conditions) > 0;
+		return $itemFields->fetchCount($conditions) > 0;
 	}
 
 	function is_multilingual($fieldId)
@@ -3312,6 +3312,13 @@ class TrackerLib extends TikiLib
 		if (!count($items)) {
 			return;
 		}
+		foreach ($items as &$i) {
+			if (is_array($i) && isset($i['itemId'])) {
+				// support old behavior that was in Tiki 6
+				$i = $i['itemId'];
+			}
+		}
+		unset($i);
 		$table = $this->items();
 		$table->updateMultiple(array('status' => $status), array('itemId' => $table->in($items)));
 	}

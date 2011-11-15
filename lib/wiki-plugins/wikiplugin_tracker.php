@@ -807,6 +807,8 @@ function wikiplugin_tracker($data, $params)
 							} else {
 								ob_start();
 							}
+							// Need to add newly created itemId for item link selector
+							$ins_fields['itemId'] = $rid;
 							$access->output_serialized($ins_fields);
 							ob_end_flush();
 							die;

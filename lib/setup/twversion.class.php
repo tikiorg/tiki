@@ -153,6 +153,7 @@ class TWVersion
 				'8.0beta',
 				'8.0RC1',
 				'8.0',
+				'8.1',
 			);
 	}
 

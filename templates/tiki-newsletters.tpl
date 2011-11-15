@@ -87,11 +87,11 @@
 	<table class="normal">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Newsletter{/tr}{/self_link}</th>
-			<th style="width:80px">{tr}Action{/tr}</th>
+			<th style="width:100px">{tr}Action{/tr}</th>
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
-			{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
+			{if $channels[user].tiki_p_subscribe_newsletters eq 'y' or $channels[user].tiki_p_list_newsletters eq 'y'}
 				<tr class="{cycle}">
 					<td class="text">
 						<a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name|escape}</a>
@@ -103,6 +103,9 @@
 						{/if}
 						{if $channels[user].tiki_p_send_newsletters eq 'y'}
 							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
+						{/if}
+						{if $tiki_p_view_newsletter eq 'y'}
+							<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
 						{/if}
 						{if $channels[user].tiki_p_admin_newsletters eq 'y'}
 							<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2"

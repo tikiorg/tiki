@@ -81,19 +81,19 @@ class WikiParser_PluginOutput
 		}
 	}
 
-	function toHtml() {
+	function toHtml($parseOptions = array()) {
 		switch( $this->format ) {
 		case 'wiki':
-			return $this->parse( $this->data );
+			return $this->parse( $this->data,  $parseOptions);
 		case 'html':
 			return $this->data;
 		}
 	}
 
-	private function parse( $data ) {
+	private function parse( $data, $parseOptions = array() ) {
 		global $tikilib;
 
-		return $tikilib->parse_data( $data );
+		return $tikilib->parse_data( $data, $parseOptions );
 	}
 }
 
