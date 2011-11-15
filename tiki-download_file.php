@@ -69,33 +69,6 @@ if ( ! ini_get('safe_mode') ) {
 	@set_time_limit(0);
 }
 
-/*
-	 Borrowed from http://php.net/manual/en/function.readfile.php#54295 to come
-	 over the 2MB readfile() limitation
- */
-function readfile_chunked($filename,$retbytes=true) {
-	$chunksize = 1*(1024*1024); // how many bytes per chunk
-	$buffer = '';
-	$cnt =0;
-	$handle = fopen($filename, 'rb');
-	if ($handle === false) {
-		return false;
-	}
-	while (!feof($handle)) {
-		$buffer = fread($handle, $chunksize);
-		echo $buffer;
-		@ob_flush();
-		flush();
-		if ($retbytes) {
-			$cnt += strlen($buffer);
-		}
-	}
-	$status = fclose($handle);
-	if ($retbytes && $status) {
-		return $cnt; // return num. bytes delivered like readfile() does.
-	}
-	return $status;
-}
 $zip = false;
 $error = '';
 
@@ -398,7 +371,7 @@ if ( ! $content_changed and !isset($_GET['display']) ) {
 
 if ( !empty($filepath) and !$content_changed ) {
 	header('Content-Length: '.filesize($filepath));
-	readfile_chunked($filepath);
+	readfile($filepath);
 } else {
 	if ( function_exists('mb_strlen') ) {
 		header('Content-Length: '.mb_strlen($content, '8bit'));
