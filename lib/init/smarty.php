@@ -86,7 +86,7 @@ class Smarty_Tiki extends Smarty
 		$smarty_orig_values = array();
 		if ( is_array( $override_vars ) ) {
 			foreach ( $override_vars as $k => $v ) {
-				$smarty_orig_values[ $k ] =& $this->getTemplateVars( $k );
+				$smarty_orig_values[ $k ] = $this->getTemplateVars( $k );
 				$this->assignByRef($k, $override_vars[ $k ]);
 			}
 		}
