@@ -31,7 +31,7 @@
 		<br />
 		<label>
 			{tr}Other:{/tr}
-			<input type="text" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$value])}{$value|escape}{/if}" />
+			<input type="text" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}" />
 		</label>
 	{/if}
 
