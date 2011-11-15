@@ -44,6 +44,16 @@ function wikiplugin_appframe_info()
 					array('value' => 'y', 'text' => tr('Yes')),
 				),
 			),
+			'fullpage' => array(
+				'required' => false,
+				'name' => tr('Full page'),
+				'description' => tr('Occupy the complete content area of the page.'),
+				'default' => 'n',
+				'options' => array(
+					array('value' => 'n', 'text' => tr('No')),
+					array('value' => 'y', 'text' => tr('Yes')),
+				),
+			),
 		),
 	);
 }
@@ -51,6 +61,10 @@ function wikiplugin_appframe_info()
 function wikiplugin_appframe($data, $params)
 {
 	$minHeight = isset($params['min']) ? (int) $params['min'] : 300;
+	$fullPage = 0;
+	if (isset($params['fullpage']) && $params['fullpage'] == 'y') {
+		$fullPage = 1;
+	}
 
 	$headerlib = TikiLib::lib('header');
 
@@ -101,6 +115,11 @@ $('#appframe .tab').parent().each(function () {
 $('#appframe .accordion').wrapAll('<div/>').parent().accordion({
 	autoHeight: false
 });
+
+if ($fullPage) {
+	$('#role_main').append($('#appframe'));
+	$('#role_main').children().not($('#appframe')).remove();
+}
 
 $(window).resize();
 JS
