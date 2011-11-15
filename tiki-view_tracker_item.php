@@ -300,6 +300,15 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 		die;
 	}
 }
+if (isset($_REQUEST["removeattach"])) {
+	check_ticket('view-trackers-items');
+	$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
+	if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
+		$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
+		$trklib->remove_item_attachment($_REQUEST["removeattach"]);
+	}
+}
+
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
@@ -571,14 +580,6 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 			}
 			$smarty->assign('watching_categories', $watching_categories);
 		}
-	}
-}
-if (isset($_REQUEST["removeattach"])) {
-	check_ticket('view-trackers-items');
-	$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
-	if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
-		$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
-		$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 	}
 }
 if ($tracker_info["useAttachments"] == 'y') {
