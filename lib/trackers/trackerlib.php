@@ -1664,18 +1664,20 @@ class TrackerLib extends TikiLib
 				} else {
 					// deal with autoincrement fields
 					$auto_fid = $this->get_field_id_from_type($trackerId, 'q');
-					if (!is_array($auto_fid)) {
-						$auto_fid = array($auto_fid);
-					}
-					foreach($auto_fid as $fid) {
-						$auto_finfo = $this->get_tracker_field($fid);
-						$auto_handler = $this->get_field_handler($auto_finfo, $this->get_item_info($itemId));
-						$auto_val = $auto_handler->handleSave(null, null);
-						$itemFields->insert(array(
-							'itemId' => (int) $itemId,
-							'fieldId' => (int) $fid,
-							'value' => $auto_val['value'],
-						));
+					if (!empty($auto_fid)) {
+						if (!is_array($auto_fid)) {
+							$auto_fid = array($auto_fid);
+						}
+						foreach($auto_fid as $fid) {
+							$auto_finfo = $this->get_tracker_field($fid);
+							$auto_handler = $this->get_field_handler($auto_finfo, $this->get_item_info($itemId));
+							$auto_val = $auto_handler->handleSave(null, null);
+							$itemFields->insert(array(
+								'itemId' => (int) $itemId,
+								'fieldId' => (int) $fid,
+								'value' => $auto_val['value'],
+							));
+						}
 					}
 				}
 			}
