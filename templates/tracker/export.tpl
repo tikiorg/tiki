@@ -9,7 +9,7 @@
 	<h4>{tr}Quick Export{/tr}</h4>
 	<form method="post" class="simple no-ajax" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
 		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
-		<div class="submit">
+		<div {*class="submit"*}>
 			<input type="submit" value="{tr}Export{/tr}"/>
 		</div>
 	</form>
@@ -82,7 +82,7 @@
 			{tr}First record{/tr}
 			<input type="number" name="recordsOffset" value="1" />
 		</label>
-		<div class="submit">
+		<div{* class="submit"*}>
 			<input type="submit" value="{tr}Export{/tr}" />
 		</div>
 	</form>
