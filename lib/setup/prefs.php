@@ -14,6 +14,9 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   exit;
 }
 
+// 
+// This section is being phased out. Please use the instructions at http://dev.tiki.org/Creating+New+Preferences instead.
+// 
 
 // Prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
