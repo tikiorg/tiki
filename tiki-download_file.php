@@ -18,29 +18,12 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ sess
 	session_start();
 
 	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
-		require_once 'tiki-filter-base.php';
-		include('db/tiki-db.php');
-		$db = TikiDb::get();
+		require_once 'tiki-setup_base.php';
 
 		$query = "select * from `tiki_files` where `fileId`=?";
-		$result = $db->query($query, array((int)$_GET['fileId']));
+		$result = $tikilib->query($query, array((int)$_GET['fileId']));
 		if ( $result ) {
 			$info = $result->fetchRow();
-
-			if ( isset($_SESSION['s_prefs']) ) {
-				$prefs = $_SESSION['s_prefs'];
-			} else {
-				$query = "select `value` from `tiki_preferences` where `name` = 'fgal_use_dir';";
-				$result = $db->query($query);
-				if ( $result ) {
-					$tmp = $result->fetchRow();
-					$prefs['fgal_use_dir'] = $tmp['value'];
-				}
-			}
-			if ( !isset($prefs['fgal_use_dir']) ) {
-				$prefs['fgal_use_dir'] = '';
-			}
-
 			$skip = true;
 		} else {
 			$info = array();
