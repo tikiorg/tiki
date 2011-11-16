@@ -268,7 +268,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 					$le['nbDaysLeftThisWeek'] = $nbDaysLeftThisWeek;
 				}
 				$le['modifiable'] = in_array($le['calendarId'], $modifiable)? "y": "n";
-				$le['visible'] = in_array($le['calendarId'],	 $visible)? "y": "n";
+				$le['visible'] = in_array($le['calendarId'], $visible)? "y": "n";
 				$lec = $infocals['data']["{$le['calendarId']}"];
 				$leday["{$le['time']}$e"] = $le;
 				$smarty->assign('allday', $le["result"]["allday"]);
@@ -291,17 +291,17 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
 				$organizers = $le['result']['organizers'];
 				$cellorganizers = '';
-				foreach ( $organizers as $org ) {
-					if ( $org == '' ) continue;
-					if ( $cellorganizers != '' ) $cellorganizers .= ', ';
+				foreach ($organizers as $org) {
+					if ($org == '') continue;
+					if ($cellorganizers != '') $cellorganizers .= ', ';
 					$cellorganizers .= smarty_modifier_userlink(trim($org), 'link', 'not_set', '', 0, 'n');
 				}
 				$smarty->assign('cellorganizers', $cellorganizers);
 
 				$cellparticipants = '';
-				foreach ( $le['result']['participants'] as $parti ) {
-					if ( empty($parti) || $parti['name'] == '' ) continue;
-					if ( $cellparticipants != '' ) $cellparticipants .= ', ';
+				foreach ($le['result']['participants'] as $parti) {
+					if (empty($parti) || $parti['name'] == '') continue;
+					if ($cellparticipants != '') $cellparticipants .= ', ';
 					$cellparticipants .= smarty_modifier_userlink(trim($parti['name']), 'link', 'not_set', '', 0, 'n');
 				}
 				$smarty->assign('cellparticipants', $cellparticipants);
@@ -387,7 +387,7 @@ foreach ($cell as $w=>$weeks) {
 					if ($alreadyExists == 0)
 						$verticalOffset[$w][$d][$cpt] = $item['calitemId'];
 					if ($item['nbDaysLeftThisWeek'] > 1) {
-						if (!array_key_exists($d+1,$verticalOffset[$w]) || !is_array($verticalOffset[$w][$d+1]))
+						if (!array_key_exists($d+1, $verticalOffset[$w]) || !is_array($verticalOffset[$w][$d+1]))
 							$verticalOffset[$w][$d+1] = array();
 						$tmp = array_flip($verticalOffset[$w][$d]);
 						$verticalOffset[$w][$d+1][$tmp[$item['calitemId']]] = $item['calitemId'];
@@ -450,7 +450,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 			$eventHoraires[$currIndex]['id'] = $dayitems['calitemId'];
 			$eventHoraires[$currIndex]['start'] = $dayitems['time'];
 			$eventHoraires[$currIndex]['end'] =	$dayitems['end'];
-			$eventHoraires[$currIndex]['duree'] = max(1, number_format(($tikilib->make_time(substr($dayitems['end'], 0, 2), substr($dayitems['end'], 2) + 1, 0, 1, 1, 2000) - $tikilib->make_time(substr($dayitems['time'], 0, 2),substr($dayitems['time'], 2), 0, 1, 1, 2000)) / 3600, 2));
+			$eventHoraires[$currIndex]['duree'] = max(1, number_format(($tikilib->make_time(substr($dayitems['end'], 0, 2), substr($dayitems['end'], 2) + 1, 0, 1, 1, 2000) - $tikilib->make_time(substr($dayitems['time'], 0, 2), substr($dayitems['time'], 2), 0, 1, 1, 2000)) / 3600, 2));
 		}
 	}
 	$orderedEventHoraires = array();
@@ -481,14 +481,14 @@ if ($calendarViewMode['casedefault'] == 'day') {
 					$tmp[] = $event['id'];
 				}
 			}
-			if (!in_array($tmp,$tmpRes) && count($tmp) > 0)
+			if (!in_array($tmp, $tmpRes) && count($tmp) > 0)
 				$tmpRes[] = $tmp;
 		}
 	}
 	$tmp2 = array();
 	foreach ($tmpRes as $val) {
 		foreach ($val as $index=>$evtId) {
-			if (array_key_exists($evtId,$tmp2)) {
+			if (array_key_exists($evtId, $tmp2)) {
 				if (count($val) > count($tmp2[$evtId])) {
 					$tmp2[$evtId] = $val;
 				}
@@ -507,14 +507,14 @@ if ($calendarViewMode['casedefault'] == 'day') {
 					$offset = 0;
 					$width = 100 / count($tmp2[$elt]);
 				} else {
-					for($i=0 ; $i < $index ; $i++) {
+					for ($i=0; $i < $index; $i++) {
 						$offset = max($offset, $tmpVals[$tmp2[$elt][$i]]['offset'] + $tmpVals[$tmp2[$elt][$i]]['width']);
 						$width  += $tmpVals[$tmp2[$elt][$i]]['width'];
 					}
 					$width = (100 - $width) / (count($tmp2[$elt]) - $index);
 				}
 				$tmpVals[$evtId]['offset'] = $offset;
-				$tmpVals[$evtId]['width'] = round($width,1);
+				$tmpVals[$evtId]['width'] = round($width, 1);
 			}
 		}
 	}
@@ -525,13 +525,15 @@ if ($calendarViewMode['casedefault'] == 'day') {
 	if ($max > 100) {
 		foreach (array_keys($tmpVals) as $evtId) {
 			$tmpVals[$evtId]['offset'] = round(100 * $tmpVals[$evtId]['offset'] / $max + .5);
-			$tmpVals[$evtId]['width'] = round(100 * $tmpVals[$evtId]['width'] / $max - 2,5);
+			$tmpVals[$evtId]['width'] = round(100 * $tmpVals[$evtId]['width'] / $max - 2, 5);
 		}
 	}
+
 	foreach ($concurrencies as $key=>$value)
 		$concurrencies[$key]['offset'] = $value['offset'] * 100 / $value['value'];
+
 	foreach (array_keys($hrows) as $anHour) {
-		for($i=0, $tmp_count = count($hrows[$anHour]) ; $i < $tmp_count ; $i++) {
+		for ($i=0, $tmp_count = count($hrows[$anHour]); $i < $tmp_count; $i++) {
 			// setting number of simulaneous events foreach event, so that we can figure out its width without overwriting
 			$hrows[$anHour][$i]['concurrences'] = $concurrencies[$hrows[$anHour][$i]['calitemId']]['value'];
 			// setting duration of the event within the day
@@ -543,9 +545,9 @@ if ($calendarViewMode['casedefault'] == 'day') {
 
 } else if ($calendarViewMode['casedefault'] == 'week') {
 	$viewWeekDays = array();
-	for ($i=0 ; $i < 7 ; $i++)
+	for ($i=0; $i < 7; $i++)
 		$viewWeekDays[$i] = $viewstart + 86400*$i;
-	$hours = range($minHourOfDay,$maxHourOfDay);
+	$hours = range($minHourOfDay, $maxHourOfDay);
 	$hr_display = $hours;
 	if ($user_24hr_clock) {
 		for ($i = 0, $for_max = count($hr_display); $i < $for_max; $i++) {
@@ -565,32 +567,33 @@ if ($calendarViewMode['casedefault'] == 'day') {
 	$zoom = 100 / ( 9 + 13 * count($viewdays2) );
 	foreach ($weekdays as $wd) {
 		// If the day is not shown skip it
-		if ( !in_array($wd,$viewdays) ) {
+		if ( !in_array($wd, $viewdays) ) {
 			continue;
 		}
 		if ( isset($cell[0][$wd]['items']) && is_array($cell[0][$wd]['items']) ) {
 			foreach ($cell[0][$wd]['items'] as $dayitems) {
 				$dayitems['time'] = ($dayitems['startTimeStamp'] >= $cell[0][$wd]['day'])
 					? $dayitems['time']
-					: str_pad($minHourOfDay,2,'0',STR_PAD_LEFT) . "01";
+					: str_pad($minHourOfDay, 2, '0', STR_PAD_LEFT) . "01";
 				$dayitems['end'] = ($dayitems['endTimeStamp'] < ($cell[0][$wd]['day'] + 86400))
 					? $dayitems['end']
-					: str_pad($maxHourOfDay,2,'0',STR_PAD_LEFT) . "59";
-				$rawhour =intval(substr($dayitems['time'],0,2));
+					: str_pad($maxHourOfDay, 2, '0', STR_PAD_LEFT) . "59";
+				$rawhour =intval(substr($dayitems['time'], 0, 2));
 				if ($rawhour < $minHourOfDay)
 					$rawhour = $minHourOfDay;
-				$dayitems['mins'] = substr($dayitems['time'],2);
-				$dayitems['top'] = 24 * (($rawhour - $minHourOfDay) + $dayitems['mins']/60) + 35;
-				$dayitems['left'] = $zoom * ( 9 + 13 * array_search($wd,$viewdays2) );
+
+				$dayitems['mins'] = substr($dayitems['time'], 2);
+				$dayitems['top'] = 24 * (($rawhour - $minHourOfDay) + $dayitems['mins'] / 60) + 35;
+				$dayitems['left'] = $zoom * ( 9 + 13 * array_search($wd, $viewdays2) );
 				$dayitems['width'] = 12 * $zoom;
 				$hrows[$wd]["$rawhour"][] = $dayitems;
-				$eventHoraires[$wd][$dayitems['calitemId']]['start'] = ($dayitems['time'] < $minHourOfDay."00") ? str_pad($minHourOfDay."00",4,'0',STR_PAD_LEFT) : $dayitems['time'];
-				$eventHoraires[$wd][$dayitems['calitemId']]['end'] = ($dayitems['end'] > ($maxHourOfDay + 1)."00") ? str_pad(($maxHourOfDay + 1)."00",4,'0',STR_PAD_LEFT) : $dayitems['end'];
-				$eventHoraires[$wd][$dayitems['calitemId']]['duree'] = max(1,($tikilib->make_time(substr($eventHoraires[$wd][$dayitems['calitemId']]['end'],0,2),substr($eventHoraires[$wd][$dayitems['calitemId']]['end'],2),0,1,1,2000) - $tikilib->make_time(substr($eventHoraires[$wd][$dayitems['calitemId']]['start'],0,2),substr($eventHoraires[$wd][$dayitems['calitemId']]['start'],2),0,1,1,2000)) / 3600);
+				$eventHoraires[$wd][$dayitems['calitemId']]['start'] = ($dayitems['time'] < $minHourOfDay . "00") ? str_pad($minHourOfDay . "00", 4, '0', STR_PAD_LEFT) : $dayitems['time'];
+				$eventHoraires[$wd][$dayitems['calitemId']]['end'] = ($dayitems['end'] > ($maxHourOfDay + 1)."00") ? str_pad(($maxHourOfDay + 1)."00", 4, '0', STR_PAD_LEFT) : $dayitems['end'];
+				$eventHoraires[$wd][$dayitems['calitemId']]['duree'] = max(1, ($tikilib->make_time(substr($eventHoraires[$wd][$dayitems['calitemId']]['end'], 0, 2), substr($eventHoraires[$wd][$dayitems['calitemId']]['end'], 2), 0, 1, 1, 2000) - $tikilib->make_time(substr($eventHoraires[$wd][$dayitems['calitemId']]['start'], 0, 2), substr($eventHoraires[$wd][$dayitems['calitemId']]['start'], 2), 0, 1, 1, 2000)) / 3600);
 
 				$tmpRes = array();
-				for ($h=0 ; $h<24 ; $h++) {
-					for ($m=0 ; $m<60 ; $m+=5) {
+				for ($h=0; $h<24; $h++) {
+					for ($m=0; $m<60; $m+=5) {
 						$tmp = array();
 						foreach (array_keys($eventHoraires[$wd]) as $evtId) {
 							$currTime = 100*$h + $m;
@@ -598,7 +601,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 								if ($eventHoraires[$wd][$evtId]['end'] - $eventHoraires[$wd][$evtId]['start'] >= 0)
 									$tmp[] = $evtId;
 						}
-						if ( !in_array($tmp,$tmpRes))
+						if ( !in_array($tmp, $tmpRes))
 							$tmpRes[] = $tmp;
 					}
 				}
@@ -607,9 +610,9 @@ if ($calendarViewMode['casedefault'] == 'day') {
 		$slots = array();
 		$maxConcurrency = 0;
 		foreach ($tmpRes as $val) {
-			$maxConcurrency = max($maxConcurrency,count($val));
+			$maxConcurrency = max($maxConcurrency, count($val));
 		}
-		$slots = array_fill(0,max(1,min($maxSimultaneousWeekViewEvents,$maxConcurrency)), -1);
+		$slots = array_fill(0, max(1, min($maxSimultaneousWeekViewEvents, $maxConcurrency)), -1);
 		foreach ($tmpRes as $val) {
 			foreach ($val as $index=>$evtId) {
 				$concurrencies[$wd][$evtId]['value'] = $maxConcurrency;
@@ -623,7 +626,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 					}
 				}
 				foreach ($slots as $index=>$oldEvtId) {
-					if (in_array($evtId,$slots))
+					if (in_array($evtId, $slots))
 						break;
 					if ($oldEvtId == -1) {
 						$slots[$index] = $evtId;
@@ -640,7 +643,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 	}
 	foreach (array_keys($hrows) as $aDay) {
 		foreach (array_keys($hrows[$aDay]) as $anHour) {
-			for($i=0, $tmp_count = count($hrows[$aDay][$anHour]) ; $i < $tmp_count ; $i++) {
+			for ($i=0, $tmp_count = count($hrows[$aDay][$anHour]); $i < $tmp_count; $i++) {
 				if (!$manyEvents[$aDay]['tooMany'] && $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] <= $maxSimultaneousWeekViewEvents) {
 					$hrows[$aDay][$anHour][$i]['concurrences'] = $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
 					$hrows[$aDay][$anHour][$i]['duree'] = $eventHoraires[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['duree'] * 24;
@@ -662,16 +665,16 @@ if ($calendarViewMode['casedefault'] == 'day') {
 					$tmpBottom = 0;
 					foreach ($hrows[$aDay] as $hour=>$events) {
 						foreach ($hrows[$aDay][$hour] as $event) {
-							$tmpTop = min($tmpTop,$event['time']);
-							$tmpBottom = max($tmpBottom,$event['end']);
+							$tmpTop = min($tmpTop, $event['time']);
+							$tmpBottom = max($tmpBottom, $event['end']);
 						}
 					}
-					if ($tmpTop < 100*$minHourOfDay)
-						$tmpTop = str_pad(100*$minHourOfDay,4,'0',STR_PAD_LEFT);
-					if ($tmpBottom > 100*(1 + $maxHourOfDay))
-						$tmpBottom = str_pad(100*(1 + $maxHourOfDay),4,'0',STR_PAD_LEFT);
-					$top = 36 + 24*((intval(substr($tmpTop,0,2)) + intval(substr($tmpTop,2))/60) - $minHourOfDay);
-					$duree = max(23.9,23.9 * (($tikilib->make_time(substr($tmpBottom,0,2),substr($tmpBottom,2),0,1,1,2000) - $tikilib->make_time(substr($tmpTop,0,2),substr($tmpTop,2),0,1,1,2000)) / 3600));
+					if ($tmpTop < 100 * $minHourOfDay)
+						$tmpTop = str_pad(100 * $minHourOfDay, 4, '0', STR_PAD_LEFT);
+					if ($tmpBottom > 100 * (1 + $maxHourOfDay))
+						$tmpBottom = str_pad(100 * (1 + $maxHourOfDay), 4, '0', STR_PAD_LEFT);
+					$top = 36 + 24 * ((intval(substr($tmpTop, 0, 2)) + intval(substr($tmpTop, 2)) / 60) - $minHourOfDay);
+					$duree = max(23.9, 23.9 * (($tikilib->make_time(substr($tmpBottom, 0, 2), substr($tmpBottom, 2), 0, 1, 1, 2000) - $tikilib->make_time(substr($tmpTop, 0, 2), substr($tmpTop, 2), 0, 1, 1, 2000)) / 3600));
 					$manyEvents[$aDay]['top'] = $top;
 					$manyEvents[$aDay]['left'] = $zoom * ( 9 + ($aDay * 13) );
 					$manyEvents[$aDay]['width'] = $zoom * 12.8;
@@ -701,8 +704,8 @@ if ($calendarViewMode['casedefault'] == 'day') {
 				$theEvents[] = $tmp[$indexEarlierEvent];
 				unset($tmp[$indexEarlierEvent]);
 			}
-			$smarty->assign('currDay',$manyEvents[$aDay]);
-			$smarty->assign('currHrows',$theEvents);
+			$smarty->assign('currDay', $manyEvents[$aDay]);
+			$smarty->assign('currHrows', $theEvents);
 			$manyEvents[$aDay]['overMany'] = $smarty->fetch("tiki-calendar_box_multiple.tpl");
 		}
 	}
@@ -730,7 +733,7 @@ $smarty->assign('daysnames', $daysnames);
 $smarty->assign('daysnames_abr', $daysnames_abr);
 foreach ($cell as $a=>$x) {
 	foreach ($x as $b=>$y) {
-		if (!array_key_exists('items',$y) || !is_array($y['items']))
+		if (!array_key_exists('items', $y) || !is_array($y['items']))
 			$cell[$a][$b]['items'] = array();
 	}
 }
@@ -745,12 +748,12 @@ if ($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarV
 	if (isset($_REQUEST['watch_event']) && isset($_REQUEST['watch_action'])) {
 		check_ticket('calendar');
 		if ($_REQUEST['watch_action'] == 'add') {
-			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar', $infocals['data'][$calId]['name'],"tiki-calendar.php?calIds[]=$calId");
+			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar', $infocals['data'][$calId]['name'], "tiki-calendar.php?calIds[]=$calId");
 		} else {
 			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar');
 		}
 	}
-	if ($tikilib->user_watches($user,'calendar_changed', $calId, 'calendar')) {
+	if ($tikilib->user_watches($user, 'calendar_changed', $calId, 'calendar')) {
 		$smarty->assign('user_watching', 'y');	
 	} else {
 		$smarty->assign('user_watching', 'n');
@@ -758,13 +761,13 @@ if ($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarV
 
 	// Check, if a user is watching this calendar.
 	if ($prefs['feature_categories'] == 'y') {    			
-		$watching_categories_temp=$categlib->get_watching_categories($calId,'calendar',$user);	    
-		$smarty->assign('category_watched','n');
+		$watching_categories_temp = $categlib->get_watching_categories($calId, 'calendar', $user);	    
+		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
-			$smarty->assign('category_watched','y');
+			$smarty->assign('category_watched', 'y');
 			$watching_categories=array();	 			 	
 			foreach ($watching_categories_temp as $wct ) {
-				$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+				$watching_categories[] = array("categId"=>$wct, "name"=>$categlib->get_category_name($wct));
 			}		 		 	
 			$smarty->assign('watching_categories', $watching_categories);
 		}    
@@ -778,25 +781,24 @@ if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 }
 include_once ('tiki-section_options.php');
 
-setcookie('tab',$cookietab);
-$smarty->assign('cookietab',$cookietab);
+setcookie('tab', $cookietab);
+$smarty->assign('cookietab', $cookietab);
 
 ask_ticket('calendar');
 
 include_once('tiki-jscalendar.php');
 
-if ( !empty($prefs['calendar_fullcalendar']) && $prefs['calendar_fullcalendar'] === 'y' ) {
+if (!empty($prefs['calendar_fullcalendar']) && $prefs['calendar_fullcalendar'] === 'y') {
 	$headerlib->add_cssfile('lib/fullcalendar/fullcalendar.css');
 	$headerlib->add_jsfile('lib/fullcalendar/fullcalendar.min.js');
-	$smarty->assign('minHourOfDay',$minHourOfDay);
-	$smarty->assign('maxHourOfDay',$maxHourOfDay);
+	$smarty->assign('minHourOfDay', $minHourOfDay);
+	$smarty->assign('maxHourOfDay', $maxHourOfDay);
 }
 
 $smarty->assign('uses_tabs', 'y');
 if (isset($_REQUEST['editmode']) && ($_REQUEST['editmode'] == 'add' || $_REQUEST['editmode'] == 'edit')) {
 	$smarty->assign('mid', 'tiki-calendar_add_event.tpl');
-}
-else {
+} else {
 	$smarty->assign('mid', 'tiki-calendar.tpl');
 }
 
