@@ -117,6 +117,7 @@ class Report_Definition_Tracker
 	function output($values = array())
 	{
 		global $tikilib;
+		print_r($values);die;
 		$tracker = $values['tracker'];
 		
 		$qry = TikiLib::lib('trkqry')->tracker($tracker['value'])
