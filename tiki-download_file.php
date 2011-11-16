@@ -73,7 +73,7 @@ if (!$skip) {
 		$access->display_error('', tra('Incorrect param'), 400);
 	}
 	if ( ! is_array($info) ) {
-		$access->display_error('', tra('File has been deleted'), 404);
+		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
 
 	if ( $prefs['auth_tokens'] == 'n' || !$is_token_access ) {
