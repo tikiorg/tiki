@@ -16,6 +16,20 @@ abstract class Connect_Abstract
 		'recaptcha_pubkey',
 		'recaptcha_privkey',
 		'registerPasscode',
+		'secret',
+		'adminSecret',
+		'socialnetworks_twitter_consumer_secret',
+		'zotero_client_secret',
+		'socialnetworks_facebook_application_secr',
+		'watershed_fme_key',
+		'shipping_fedex_password',
+		'shipping_ups_password',
+		'zend_mail_smtp_pass',
+		'proxy_pass',
+		'auth_ldap_adminpass',
+		'auth_ldap_group_adminpass',
+		'cas_extra_param',
+		'auth_phpbb_dbpasswd',
 	);
 
 	// preferences that we should ask to collect
