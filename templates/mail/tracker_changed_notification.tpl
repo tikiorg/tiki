@@ -3,7 +3,7 @@
 {else}{$mail_action}
 
 {tr}View the tracker item at:{/tr}
-	{$mail_machine_raw}/tiki-view_tracker_item.php?trackerId={$mail_trackerId}&offset=0&sort_mode=lastModif_desc&itemId={$mail_itemId}
+	{$mail_machine_raw}/tiki-view_tracker_item.php?itemId={$mail_itemId}
 {/if}
 
 {tr}Author:{/tr} {$mail_user|username}
