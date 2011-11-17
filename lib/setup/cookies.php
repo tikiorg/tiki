@@ -13,8 +13,9 @@ $headerlib->add_js("var tiki_cookie_jar=new Array();");
 if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	$cookielist = array();
 
+	require_once('lib/smarty_tiki/modifier.escape.php');
 	foreach ( $_SESSION['tiki_cookie_jar'] as $nn => $vv ) {
-		$cookielist[] = "$nn: '". addslashes($vv)."'";
+		$cookielist[] = "'" . smarty_modifier_escape($nn, 'javascript') . "': '". smarty_modifier_escape($vv, 'javascript')."'";
 	}
 
 	if ( count($cookielist) ) {		
