@@ -2022,8 +2022,8 @@ ul.freetagged li {
 	z-index: 1024;
 }
 
-.ui-accordion-header {
-	padding-left: 28px;
+h4.ui-accordion-header {
+	padding-left: 2.2em;
 }
 
 /* Preferences        */
