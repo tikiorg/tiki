@@ -59,5 +59,5 @@
 {/if}
 
 {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}
-	<a id="note-editor-comment" href="" style="display:none;">{tr}Add Comment{/tr}</a>
+	<a id="note-editor-comment" href="#" style="display:none;">{tr}Add Comment{/tr}</a>
 {/if}

@@ -1,6 +1,6 @@
 <span class="tips"{if !empty($category_data.description)} title="{$category_data.description|escape}"{/if}>
 	{if $category_data.children gt 0}
-		<a href=""#">{$category_data.name|escape}</a>
+		<a href="#">{$category_data.name|escape}</a>
 	{/if}
 	{if $category_data.canchange}
 		<input id="categ-{$category_data.categId|escape}" type="checkbox" name="cat_categories[]" value="{$category_data.categId|escape}" 
