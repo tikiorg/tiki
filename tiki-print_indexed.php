@@ -216,11 +216,11 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		$info = $tikilib->get_page_info($objectId);
 
 		$info['parsed'] = $tikilib->parse_data(
-				$info['data'], 
-				array(
-					'is_html' => $info['is_html'],
-					'print' => 'y',
-				)
+						$info['data'], 
+						array(
+							'is_html' => $info['is_html'],
+							'print' => 'y',
+						)
 		);
 
 		$this->info = $info;
@@ -329,7 +329,7 @@ switch ($_GET['list']) {
 				$objectList->add($type, $item, array());
 			}
 		}
-		  break;
+					break;
 
 	case 'glossary':
 		if ( isset( $_REQUEST['languages'] ) ) {
@@ -372,7 +372,7 @@ switch ($_GET['list']) {
 			$objectList->add('wiki page', $info['pageName'], array('languages' => $languages));
 		}
 
-		  break;
+					break;
 }
 
 $objectList->finalize();
@@ -389,13 +389,13 @@ foreach ($indexPages as $page) {
 
 // Display all data
 $objectList->render(
-		$smarty, 
-		null, 
-		array(
-			'decorator' => 'indexed',
-			'display' => 'object',
-			'comments' => $_REQUEST['comments'] == 'y',
-		) 
+				$smarty, 
+				null, 
+				array(
+					'decorator' => 'indexed',
+					'display' => 'object',
+					'comments' => $_REQUEST['comments'] == 'y',
+				) 
 );
  
 $smarty->display('print/print-page_footer.tpl');

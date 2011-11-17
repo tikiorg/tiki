@@ -222,14 +222,14 @@ if ($tiki_p_admin == 'y') {
 	$groups = $userlib->list_all_groups();
 } else {
 	$users = array(
-			$userlib->get_user_id($user) => $user
-			);
+					$userlib->get_user_id($user) => $user
+	);
 	$groups = $tikilib->get_user_groups($user);
 	$groups = array_diff(
-			$groups,
-			array(
-				'Anonymous'
-			)
+					$groups,
+					array(
+						'Anonymous'
+					)
 	);
 	$_REQUEST['selectedUsers'] = array($user);
 }
@@ -366,7 +366,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		header('Content-Disposition: attachment; filename="tiki-actionlogs_stats.csv"');
 		if (function_exists('mb_strlen')) {
   	  header('Content-Length: ' . mb_strlen($csv, '8bit'));
-	  } else {
+		} else {
     	header('Content-Length: ' . strlen($csv));
 		}
 		echo $csv;
@@ -698,15 +698,15 @@ if (isset($_REQUEST['graph'])) {
 			die;
 } elseif ($prefs['feature_jpgraph'] == 'y') {
 	$smarty->assign(
-			'bgcolors',
-			array(
-					'white',
-					'gray',
-					'silver',
-					'ivory',
-					'whitesmoke',
-					'beige',
-					'darkgrey'
+					'bgcolors',
+					array(
+							'white',
+							'gray',
+							'silver',
+							'ivory',
+							'whitesmoke',
+							'beige',
+							'darkgrey'
 			)
 	);
 	//get_strings tra('white'), tra('gray'), tra('silver'), tra('ivory'), tra('whitesmoke'), tra('beige'),tra('darkgrey')

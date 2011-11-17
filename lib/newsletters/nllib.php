@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -47,22 +47,22 @@ class NlLib extends TikiLib
 								`articleClipTypes`=?																
 								where `nlId`=?";
 			$result = $this->query(
-					$query, 
-					array(
-							$name, 
-							$description, 
-							$allowUserSub, 
-							$allowTxt, 
-							$allowAnySub, 
-							$unsubMsg, 
-							$validateAddr, 
-							$frequency,
-							$allowArticleClip,
-							$autoArticleClip,
-							$articleClipRange,
-							$articleClipTypes,
-							(int)$nlId
-					)
+							$query, 
+							array(
+									$name, 
+									$description, 
+									$allowUserSub, 
+									$allowTxt, 
+									$allowAnySub, 
+									$unsubMsg, 
+									$validateAddr, 
+									$frequency,
+									$allowArticleClip,
+									$autoArticleClip,
+									$articleClipRange,
+									$articleClipTypes,
+									(int)$nlId
+							)
 			);
 		} else {
 			$query = "insert into `tiki_newsletters`(
@@ -86,26 +86,26 @@ class NlLib extends TikiLib
 								) ";
       $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query(
-					$query,
-					array(
-							$name,
-							$description,
-							(int)$this->now,
-							0,
-							0,
-							0,
-							$allowUserSub,
-							$allowTxt,
-							$allowAnySub,
-							$unsubMsg,
-							$validateAddr,
-							NULL,
-							$author,
-							$allowArticleClip,
-							$autoArticleClip,
-							$articleClipRange,
-							$articleClipTypes
-					)
+							$query,
+							array(
+									$name,
+									$description,
+									(int)$this->now,
+									0,
+									0,
+									0,
+									$allowUserSub,
+									$allowTxt,
+									$allowAnySub,
+									$unsubMsg,
+									$validateAddr,
+									NULL,
+									$author,
+									$allowArticleClip,
+									$autoArticleClip,
+									$articleClipRange,
+									$articleClipTypes
+							)
 			);
 			$queryid = "select max(`nlId`) from `tiki_newsletters` where `created`=?";
 			$nlId = $this->getOne($queryid, array((int)$this->now));
@@ -311,16 +311,16 @@ class NlLib extends TikiLib
 			$query = "INSERT INTO `tiki_newsletter_subscriptions` (`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) VALUES (?,?,?,?,?,?,?)";
 			foreach ( $all_users as $res ) {
 				$this->query(
-						$query, 
-						array(
-							(int)$nlId,
-							$res['db_email'],
-							$res['code'],
-							$res['valid'],
-							$res['subscribed'],
-							$res['isUser'],
-							$res['included']
-						)
+								$query, 
+								array(
+									(int)$nlId,
+									$res['db_email'],
+									$res['code'],
+									$res['valid'],
+									$res['subscribed'],
+									$res['isUser'],
+									$res['included']
+								)
 				);
 			}
 		}
@@ -675,7 +675,7 @@ class NlLib extends TikiLib
 				$hasPerm = false;
 				if (is_array($perms)) {
 					foreach ($perms as $perm) {
-			 			if ($res[$perm] == 'y') {
+						if ($res[$perm] == 'y') {
 							$hasPerm = true;
 							break;
 						}
@@ -905,13 +905,13 @@ class NlLib extends TikiLib
 		$tpls = array();
 		if (is_dir("templates/$tikidomain/newsletters/")) {
 			$h = opendir("templates/$tikidomain/newsletters/");
- 			while ($file = readdir($h)) {
+			while ($file = readdir($h)) {
 				if (preg_match('/\.tpl$/', $file))
 					$tpls[] = $file;
 			}
 		} elseif (is_dir("templates/newsletters/")) {
 			$h = opendir("templates/newsletters/");
- 			while ($file = readdir($h)) {
+			while ($file = readdir($h)) {
 				if (preg_match('/\.tpl$/', $file))
 					$tpls[] = $file;
 			}
@@ -1201,10 +1201,10 @@ class NlLib extends TikiLib
 		}
 
 		$remaining = $this->table('tiki_sent_newsletters_errors')->fetchColumn(
-				'email', 
-				array(
-					'editionId' => $info['editionId'],
-				)
+						'email', 
+						array(
+							'editionId' => $info['editionId'],
+						)
 		);
 
 		$sent = array();
@@ -1300,15 +1300,15 @@ class NlLib extends TikiLib
 			}
 		}
 		$info['editionId'] = $this->replace_edition(
-				$nl_info['nlId'], 
-				$info['subject'], 
-				$info['data'], 
-				count($sent), 
-				$info['editionId'], 
-				false, 
-				$info['datatxt'], 
-				$info['files'], 
-				$info['wysiwyg']
+						$nl_info['nlId'], 
+						$info['subject'], 
+						$info['data'], 
+						count($sent), 
+						$info['editionId'], 
+						false, 
+						$info['datatxt'], 
+						$info['files'], 
+						$info['wysiwyg']
 		);
 		foreach ($info['files'] as $k => $f) {
 			if ($f['savestate'] == 'tikitemp') {

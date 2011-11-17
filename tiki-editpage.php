@@ -785,16 +785,16 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 			}
 		} else {
 		 	$parsed = $tikilib->parse_data(
-					$edit_data, 
-					array(
-							'absolute_links'=>true, 
-							'noheaderinc'=>true, 
-							'suppress_icons' => true, 
-							'ck_editor' => true, 
-							'is_html' => true, 
-							'process_wiki_paragraphs' => false
-					)
-			);
+								$edit_data, 
+								array(
+									'absolute_links'=>true, 
+									'noheaderinc'=>true, 
+									'suppress_icons' => true, 
+									'ck_editor' => true, 
+									'is_html' => true, 
+									'process_wiki_paragraphs' => false
+							)
+				);
 		}
 	}
 }
@@ -830,7 +830,7 @@ if (isset($_REQUEST["preview"])) {
 
 $smarty->assign_by_ref('parsed', $parsed);
 
-function parse_output(&$obj, &$parts,$i)
+function parse_output(&$obj, &$parts, $i)
 {
 	if (!empty($obj['parts'])) {
 		foreach ( $obj['parts'] as $index => $part ) {
@@ -964,19 +964,19 @@ if (
 		   $tikilib->cache_links($cachedlinks);
 		 */
 		$tikilib->create_page(
-				$_REQUEST["page"], 
-				0, 
-				$edit, 
-				$tikilib->now, 
-				$_REQUEST["comment"],
-				$user,
-				$tikilib->get_ip_address(),
-				$description, 
-				$pageLang, 
-				$is_html, 
-				$hash, 
-				$_REQUEST['wysiwyg'], 
-				$wiki_authors_style
+						$_REQUEST["page"], 
+						0, 
+						$edit, 
+						$tikilib->now, 
+						$_REQUEST["comment"],
+						$user,
+						$tikilib->get_ip_address(),
+						$description, 
+						$pageLang, 
+						$is_html, 
+						$hash, 
+						$_REQUEST['wysiwyg'], 
+						$wiki_authors_style
 		);
 
 		$info_new = $tikilib->get_page_info($page);
@@ -1036,19 +1036,19 @@ if (
 			$edit = $editlib->partialParseWysiwygToWiki($edit);
 		}
 		$tikilib->update_page(
-				$_REQUEST["page"], 
-				$edit,
-				$_REQUEST["comment"],
-				$user,
-				$tikilib->get_ip_address(),
-				$description,
-				$minor,
-				$pageLang, 
-				$is_html, 
-				$hash, 
-				null, 
-				$_REQUEST['wysiwyg'], 
-				$wiki_authors_style
+						$_REQUEST["page"], 
+						$edit,
+						$_REQUEST["comment"],
+						$user,
+						$tikilib->get_ip_address(),
+						$description,
+						$minor,
+						$pageLang, 
+						$is_html, 
+						$hash, 
+						null, 
+						$_REQUEST['wysiwyg'], 
+						$wiki_authors_style
 		);
 		$info_new = $tikilib->get_page_info($page);
 
@@ -1173,8 +1173,8 @@ if ($prefs['feature_multilingual'] === 'y') {
 		if ($tikilib->page_exists($page)) {
 			// Display an error if the page already exists
 			$smarty->assign(
-					'msg',
-					tra("Page already exists. Go back and choose a different name.") . "<P>" . tra("Page name is") . ": '$page'"
+							'msg',
+							tra("Page already exists. Go back and choose a different name.") . "<P>" . tra("Page name is") . ": '$page'"
 			);
 			$smarty->display("error.tpl");
 			die;
