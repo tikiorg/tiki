@@ -110,6 +110,8 @@ if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] 
 if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 
+	@ini_set('max_execution_time', 0);
+	@ini_set('memory_limit', -1);
 	$stat = $unifiedsearchlib->getIndex()->optimize();
 }
 
