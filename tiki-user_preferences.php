@@ -299,7 +299,7 @@ if (isset($_REQUEST['chgadmin'])) {
 if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
    check_ticket('user-prefs');
    if (!isset($_REQUEST['deleteaccountconfirm']) || $_REQUEST['deleteaccountconfirm'] != '1') {
-      $smarty->assign('msg', tra("If you really want to delete you're account, you must check the checkbox"));
+      $smarty->assign('msg', tra("If you really want to delete your account, you must check the checkbox"));
       $smarty->display("error.tpl");
       die;
    }
