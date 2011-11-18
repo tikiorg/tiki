@@ -348,18 +348,22 @@ function initialize_prefs() {
 		$modified = $_SESSION['s_prefs'];
 	} else { // Generate or re-generate a session cache of modified preferences.
 		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
-		if ( ! isset($_SESSION['serialized_prefs']) ) {
-			$_SESSION['serialized_prefs'] = array();
-			foreach ( $defaults as $p => $v ) {
-				if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
+		$cachelib = TikiLib::lib('cache');
+		if ( !$cachelib->isCached('serialized_preferences')) {
+			$serializedPreferences = array();
+			foreach ( $defaults as $preference => $value ) {
+				if ( is_array($value) ) {
+					$serializedPreferences[] = $preference;
+				}
 			}
+			$cachelib->cacheItem('serialized_preferences', serialize($serializedPreferences));
 		}
 
 		$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
 
 		// Unserialize serialized preferences
-		foreach ( $_SESSION['serialized_prefs'] as $p ) {
-			if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = @unserialize($modified[$p]);
+		foreach ( $cachelib->getSerialized('serialized_preferences') as $serializedPreference ) {
+			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
 		}
 
 		// Keep some useful sites values available before overriding with user prefs
