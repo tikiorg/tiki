@@ -3468,7 +3468,8 @@ class TikiLib extends TikiDb_Bridge
 	function delete_preference($name)
 	{
 		$this->table('tiki_preferences')->delete(array('name' => $name));
-		$this->invalidateModifiedPreferencesCaches();
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->invalidate('modified_preferences');
 	}
 
 	function set_preference($name, $value)
@@ -3486,7 +3487,8 @@ class TikiLib extends TikiDb_Bridge
 		$menulib = TikiLib::lib('menu');
 		$menulib->empty_menu_cache();
 
-		$this->invalidateModifiedPreferencesCaches();
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->invalidate('modified_preferences');
 
 		$preferences = $this->table('tiki_preferences');
 		$preferences->insertOrUpdate(array('value' => is_array($value) ? serialize($value) : $value), array('name' => $name));
@@ -3494,28 +3496,13 @@ class TikiLib extends TikiDb_Bridge
 		if ( isset($prefs) ) {
 			if ( in_array($name, $user_overrider_prefs) ) {
 				$prefs['site_'.$name] = $value;
-				$_SESSION['s_prefs']['site_'.$name] = $value;
 			} elseif ( isset($user_preferences[$user][$name] ) ) {
 				$prefs[$name] = $user_preferences[$user][$name];
-				$_SESSION['s_prefs'][$name] = $user_preferences[$user][$name];
 			} else {
 				$prefs[$name] = $value;
-				$_SESSION['s_prefs'][$name] = $value;
 			}
 		}
 		return true;
-	}
-
-	// Invalidate the first-level "Cachelib" modified preferences cache as well as the session preferences caches 
-	function invalidateModifiedPreferencesCaches()
-	{
-		global $prefs;
-		$preferences = $this->table('tiki_preferences');
-		$preferences->update(array('value' => $preferences->increment(1)), array('name' => 'versionOfPreferencesCache'));
-		++$prefs['versionOfPreferencesCache'];
-		
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('modified_preferences');
 	}
 
 	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null)

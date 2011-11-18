@@ -41,7 +41,6 @@ function get_default_prefs() {
 		'tiki_release' => '0',
 		'tiki_needs_upgrade' => 'n',
 		'tiki_version_last_check' => 0,
-		'versionOfPreferencesCache' => 1, // Fake preference to manage caches of modified preferences
 
 
 		'groups_are_emulated' => 'n',
@@ -326,59 +325,39 @@ function get_default_prefs() {
 
 
 function initialize_prefs() {
-	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs, $in_installer, $section;
-
-	// Determine whether we already have a valid session cache of modified preferences.
-	if (isset($_SESSION['s_prefs'])) {
-		// Compare the session's version of the cache of preferences with the latest. The versionOfPreferencesCache pseudo-preference is basic and retrieved in tiki-setup_base.
-		// Reload if the session cache of modified preferences is older than the first-level cache of modified preferences.
-		$_SESSION['need_reload_prefs'] = empty($_SESSION['s_prefs']['versionOfPreferencesCache']) || $prefs['versionOfPreferencesCache'] > $_SESSION['s_prefs']['versionOfPreferencesCache'];
-
-		// Reload if the virtual host or tikiroot has changed (this is needed when using the same PHP sessions for more than one site)
-		if ( !isset($_SESSION['lastPrefsSite']) || $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
-			$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
-			$_SESSION['need_reload_prefs'] = true;
-		}
-	} else {
-		$_SESSION['need_reload_prefs'] = true;
-	}
+	global $prefs, $tikilib, $user_overrider_prefs, $in_installer, $section;
 
 	$defaults = get_default_prefs();
-	if ( ! $_SESSION['need_reload_prefs'] ) {
-		$modified = $_SESSION['s_prefs'];
-	} else { // Generate or re-generate a session cache of modified preferences.
-		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
-		$cachelib = TikiLib::lib('cache');
-		if ( !$cachelib->isCached('serialized_preferences')) {
-			$serializedPreferences = array();
-			foreach ( $defaults as $preference => $value ) {
-				if ( is_array($value) ) {
-					$serializedPreferences[] = $preference;
-				}
-			}
-			$cachelib->cacheItem('serialized_preferences', serialize($serializedPreferences));
-		}
 
-		$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
-
-		// Unserialize serialized preferences
-		foreach ( $cachelib->getSerialized('serialized_preferences') as $serializedPreference ) {
-			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
-		}
-
-		// Keep some useful sites values available before overriding with user prefs
-		// (they could be used in templates, so we need to set them even for Anonymous)
-		foreach ( $user_overrider_prefs as $uop ) {
-			if (isset($modified[$uop])) {
-				$modified['site_'.$uop] = $modified[$uop];
-			} elseif (isset($defaults[$uop])) {
-				$modified['site_'.$uop] = $defaults[$uop];
+	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+	$cachelib = TikiLib::lib('cache');
+	if ( !$cachelib->isCached('serialized_preferences')) {
+		$serializedPreferences = array();
+		foreach ( $defaults as $preference => $value ) {
+			if ( is_array($value) ) {
+				$serializedPreferences[] = $preference;
 			}
 		}
-
-		// Assign prefs to the session
-		$_SESSION['s_prefs'] = $modified;
+		$cachelib->cacheItem('serialized_preferences', serialize($serializedPreferences));
 	}
+
+	$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
+
+	// Unserialize serialized preferences
+	foreach ( $cachelib->getSerialized('serialized_preferences') as $serializedPreference ) {
+		if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
+	}
+
+	// Keep some useful sites values available before overriding with user prefs
+	// (they could be used in templates, so we need to set them even for Anonymous)
+	foreach ( $user_overrider_prefs as $uop ) {
+		if (isset($modified[$uop])) {
+			$modified['site_'.$uop] = $modified[$uop];
+		} elseif (isset($defaults[$uop])) {
+			$modified['site_'.$uop] = $defaults[$uop];
+		}
+	}
+
 
 	// Perspectives are disabled by default so the preference has to be modified
 	if ( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y') {
