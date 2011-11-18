@@ -29,6 +29,32 @@ if (!isset($_SESSION["thedate"])) {
 	$thedate = $_SESSION["thedate"];
 }
 
+if (isset($_REQUEST['pdf'])) {
+
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', 1);
+	
+	set_time_limit(777);
+	
+	$_POST["html"] = urldecode($_POST["html"]);
+	
+	define("DOMPDF_ENABLE_REMOTE", true);
+	
+	require_once("lib/jquery.s5/lib/dompdf/dompdf_config.inc.php");
+	
+	if ( isset( $_POST["html"] ) ) {
+		$dompdf = new DOMPDF();
+		$dompdf->load_html($_POST["html"]);
+		$dompdf->set_paper("letter", "portrait");
+		$dompdf->render();
+		
+		$dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
+		
+		exit(0);
+	}
+	die;
+}
+
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
 	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
@@ -118,6 +144,8 @@ $headerlib->add_jq_onready( '
 	$("#toc").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
+	
+	window.s5Settings.basePath = "lib/jquery.s5/";
 	
 	$.s5.start($.extend(window.s5Settings, {
 		menu: function() {

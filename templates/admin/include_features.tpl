@@ -59,6 +59,7 @@
 				{preference name=feature_draw}
 				{preference name=feature_docs}
 				{preference name=feature_slideshow}
+				{preference name=feature_slideshow_pdfexport}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_perspective}
 				{preference name=feature_areas}

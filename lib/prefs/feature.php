@@ -633,6 +633,15 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),			
 		),
+		'feature_slideshow_pdfexport' => array(
+			'name' => tra('Slideshow (jQuery.s5) PDF Export'),
+			'description' => tra('Web based slideshow to pdf export'),
+			'help' => 'Slideshow',
+			'type' => 'flag',
+			'keywords' => 'slide slides presentation pdf',
+			'default' => 'n',
+			'tags' => array('experimental'),			
+		),
 		'feature_invoice' => array(
 			'name' => tra('Invoice'),
 			'description' => tra('Invoice system'),

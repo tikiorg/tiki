@@ -1,5 +1,5 @@
 <style>
-	#reports .reportOption {
+	#reports .reportOptionLabel {
 		font-weight: bold;
 		width: 90px ! important;
 		display: inline-block;
@@ -15,7 +15,7 @@
 </h5>
 <div id="reports" class="ui-widget-content">
 	<div id="report">
-		<div class="reportOption">{tr}Report Type{/tr}</div>
+		<div class="reportOptionLabel">{tr}Report Type{/tr}</div>
 		<select id="reportType">
 			<option value="">{tr}Select Report Type{/tr}</option>
 			

@@ -194,7 +194,8 @@ function wikiplugin_slideshow($data, $params) {
 			slideDuration: $slideduration,
 			listItemHighlightColor: '$listitemhighlightcolor',
 			textSide: '$textside',
-			themeName: '$themeName'
+			themeName: '$themeName',
+			basePath: 'lib/jquery.s5/'
 		};
 	");
 	

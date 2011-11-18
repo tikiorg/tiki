@@ -64,6 +64,10 @@
 			<img src="lib/jquery.s5/images/note.png" alt="{tr}Notes{/tr}" /></a>
 		<a href="#" onclick="$.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">
 			<img src="lib/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
+		{if $prefs.feature_slideshow_pdfexport eq 'y'}
+			<a href="#" onclick="$.s5.exportPDF('tiki-slideshow.php?page={$page}&pdf');" title="{tr}Export to PDF{/tr}">
+				<img alt="{tr}Export to PDF{/tr}" src="lib/jquery.s5/images/page_go.png" /></a>
+		{/if}
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
 			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
 		<select class="tiki-slideshow-theme">
@@ -120,6 +124,10 @@
 			<img src="lib/jquery.s5/images/note.png" alt="{tr}Notes{/tr}" /></a>
 		<a href="#" onclick="window.opener.$.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">
 			<img src="lib/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
+		{if $prefs.feature_slideshow_pdfexport eq 'y'}
+			<a href="#" onclick="window.opener.$.s5.exportPDF('tiki-slideshow.php?page={$page}&pdf');" title="{tr}Export to PDF{/tr}">
+				<img alt="{tr}Export to PDF{/tr}" src="lib/jquery.s5/images/page_go.png" /></a>
+		{/if}
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
 			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
 		<select class="tiki-slideshow-theme">
