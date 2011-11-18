@@ -4317,7 +4317,6 @@ class TikiLib extends TikiDb_Bridge
 
 				// when plugin status is pending, $status equals plugin fingerprint
 				if ($prefs['wikipluginprefs_pending_notification'] == 'y' && $status !== true && $status != 'rejected') {
-					//TODO: create preference to enable and disable notifications
 					$this->plugin_pending_notification($plugin_name, $context);
 				}
 				
