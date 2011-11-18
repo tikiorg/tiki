@@ -114,10 +114,18 @@ class Report_Definition_Tracker
 		);
 	}
 	
+	private function join($leftTracker, $rightTracker, $leftOn)
+	{
+		foreach($leftTracker as $key => $leftItem) {
+			$leftTracker[$key] += $rightTracker[$leftTracker[$key][$leftOn]];
+		}
+		return $leftTracker;
+	}
+	
 	function output($values = array())
 	{
 		global $tikilib;
-		print_r($values);die;
+		
 		$tracker = $values['tracker'];
 		
 		$qry = TikiLib::lib('trkqry')->tracker($tracker['value'])
@@ -167,6 +175,10 @@ class Report_Definition_Tracker
 			
 			$result = $newResult;
 			unset($newResult);
+		}
+		
+		foreach($tracker['join'] as $joinedTracker) {
+			$result = $this->join($result, $this->output($joinedTracker), $joinedTracker['on']['value']);
 		}
 		
 		return $result;
