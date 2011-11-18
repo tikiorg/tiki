@@ -334,10 +334,8 @@ function initialize_prefs() {
 		// Reload if the session cache of modified preferences is older than the first-level cache of modified preferences.
 		$_SESSION['need_reload_prefs'] = empty($_SESSION['s_prefs']['versionOfPreferencesCache']) || $prefs['versionOfPreferencesCache'] > $_SESSION['s_prefs']['versionOfPreferencesCache'];
 
-		// Reload if the virtual host or tikiroot has changed
-		if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
-		//   (this is needed when using the same php sessions for more than one tiki)
-		if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
+		// Reload if the virtual host or tikiroot has changed (this is needed when using the same PHP sessions for more than one site)
+		if ( !isset($_SESSION['lastPrefsSite']) || $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
 			$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
 			$_SESSION['need_reload_prefs'] = true;
 		}
@@ -352,8 +350,9 @@ function initialize_prefs() {
 		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 		if ( ! isset($_SESSION['serialized_prefs']) ) {
 			$_SESSION['serialized_prefs'] = array();
-			foreach ( $defaults as $p => $v )
-			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
+			foreach ( $defaults as $p => $v ) {
+				if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
+			}
 		}
 
 		$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
@@ -378,7 +377,7 @@ function initialize_prefs() {
 	}
 
 	// Perspectives are disabled by default so the preference has to be modified
-	if ( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' && empty($in_installer) ) {
+	if ( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y') {
 		if ( ! isset( $section ) || $section != 'admin' ) {
 			require_once 'lib/perspectivelib.php';
 			if ( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
@@ -388,9 +387,9 @@ function initialize_prefs() {
 		}
 	}
 
-	$prefs = array_merge( $defaults, $modified ); // Preferences are the sum of modified preferences and those with the default value.
 	global $systemConfiguration;
-	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
+	// Override default values with modified preferences, and override the result with system-configured preferences.
+	$prefs = $systemConfiguration->preference->toArray() + $modified + $defaults;
 }
 
 /**
