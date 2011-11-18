@@ -294,13 +294,7 @@ class CategLib extends ObjectLib
 			if($category == false) return false;
 			return array_merge(array($categId), $category['descendants']);
 		} else {
-			$categories = $this->getCategories(NULL, false, false);
-			$roots = TikiLib::lib('cache')->getSerialized('roots', 'allcategs');
-			$allCategories = array($roots); 
-			foreach ($roots as $root) {
-				$allCategories = array_merge($allCategories, $categories[$root]['descendants']);
-			}
-			return $allCategories;
+			return $this->getCategories(NULL, false, false);
 		}
 	}
 
