@@ -20,10 +20,7 @@ if (version_compare(PHP_VERSION, '5.2.0', '<')) {
 unset($user);
 
 require_once 'lib/setup/third_party.php';
-require_once 'tiki-filter-base.php';
 // Enable Versioning
-// Please update the specified class below at release time, as well as
-// adding new release to http://tiki.org/{$branch}.version file
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $num_queries = 0;

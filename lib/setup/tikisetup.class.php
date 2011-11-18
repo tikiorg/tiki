@@ -5,8 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-
+require_once('lib/init/initlib.php');
 class TikiSetup extends TikiInit
 {
 
