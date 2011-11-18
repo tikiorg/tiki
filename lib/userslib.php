@@ -1803,8 +1803,7 @@ class UsersLib extends TikiLib
 		}
 		if ($userChoice) {
 			$mid .= $mid? ' and ': ' where ';
-			$mid .= '`userChoice` = ?';
-			$bindvars[] = 'y';
+			$mid .= "`userChoice` = 'y'";
 		}
 
 		$query = "select * from `users_groups` $mid order by ".$this->convertSortMode($sort_mode);
