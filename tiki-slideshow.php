@@ -30,10 +30,6 @@ if (!isset($_SESSION["thedate"])) {
 }
 
 if (isset($_REQUEST['pdf'])) {
-
-	ini_set('error_reporting', E_ALL);
-	ini_set('display_errors', 1);
-	
 	set_time_limit(777);
 	
 	$_POST["html"] = urldecode($_POST["html"]);
