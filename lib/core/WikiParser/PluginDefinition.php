@@ -18,7 +18,7 @@ class WikiParser_PluginDefinition implements ArrayAccess, Countable
 	
 	function offsetExists( $offset )
 	{
-		return isset( $this->data[$offset] );
+		return isset($this->data[$offset]);
 	}
 
 	function offsetGet( $offset )
@@ -29,7 +29,7 @@ class WikiParser_PluginDefinition implements ArrayAccess, Countable
 	function offsetSet( $offset, $value )
 	{
 		// Immutable
-		return $this->offsetGet( $offset );
+		return $this->offsetGet($offset);
 	}
 
 	function offsetUnset( $offset )
@@ -39,6 +39,6 @@ class WikiParser_PluginDefinition implements ArrayAccess, Countable
 
 	function count()
 	{
-		return count( $this->data );
+		return count($this->data);
 	}
 }
