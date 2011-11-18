@@ -21,24 +21,26 @@ class HtmlFeed
 		
 		$caching = true; //this variable is used to block recursive parse_data below
 		
-		foreach(TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
-			foreach($pagesInfo as $pageInfo) {
-				$htmlFeedItem = HtmlFeed_Item::simple(array(
-					"origin" 		=> $site,
-					"name" 			=> $pageInfo['pageName'],
-					"title" 		=> $pageInfo['pageName'],
-					"description" 	=> $description,
-					"date" 			=> (int)$pageInfo['lastModif'],
-					"author" 		=> $pageInfo['user'],
-					"hits"			=> $pageInfo['hits'],
-					"unusual"		=> "",
-					"importance" 	=> $pageInfo['pageRank'],
-					"keywords"		=> $pageInfo['keywords'],
-					"url"			=> $site . "/tiki-pagehistory.php?" .
-						"page=" . urlencode($page) .'&'. 
-						"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
-						"nohistory"
-				));
+		foreach (TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
+			foreach ($pagesInfo as $pageInfo) {
+				$htmlFeedItem = HtmlFeed_Item::simple(
+								array(
+									"origin" 		=> $site,
+									"name" 			=> $pageInfo['pageName'],
+									"title" 		=> $pageInfo['pageName'],
+									"description" 	=> $description,
+									"date" 			=> (int)$pageInfo['lastModif'],
+									"author" 		=> $pageInfo['user'],
+									"hits"			=> $pageInfo['hits'],
+									"unusual"		=> "",
+									"importance" 	=> $pageInfo['pageRank'],
+									"keywords"		=> $pageInfo['keywords'],
+									"url"			=> $site . "/tiki-pagehistory.php?" .
+											"page=" . urlencode($page) .'&'. 
+											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
+											"nohistory"
+								)
+				);
 				
 				TikiLib::lib("parser")->parse_data($pageInfo['data']);
 				
@@ -67,7 +69,7 @@ class HtmlFeed
 	public function listItemNames()
 	{
 		$result = array();
-		foreach($this->getItems() as $item) {
+		foreach ($this->getItems() as $item) {
 			if (!empty($item->name)) {
 				$result[] = htmlspecialchars($item->name);
 			}
@@ -77,7 +79,7 @@ class HtmlFeed
 	
 	public function getItem($name)
 	{
-		foreach($this->getItems() as $item) {
+		foreach ($this->getItems() as $item) {
 			if ($name == $item->name) {
 				return $item;
 			}
@@ -132,7 +134,7 @@ class HtmlFeed
 	
 	public function feed()
 	{
-		$feed = json_decode( $this->getCache() );
+		$feed = json_decode($this->getCache());
 		
 		return array(
 			'version' => '1.0',

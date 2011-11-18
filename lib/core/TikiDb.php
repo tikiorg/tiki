@@ -23,7 +23,7 @@ abstract class TikiDb
 		return self::$instance;
 	} // }}}
 
-	public static function set( TikiDb $instance ) // {{{
+	public static function set(TikiDb $instance) // {{{
 	{
 		return self::$instance = $instance;
 	} // }}}
@@ -38,86 +38,86 @@ abstract class TikiDb
 	{
 		global $elapsed_in_db;
 		list($micro, $sec) = explode(' ', microtime());
-		$now=$micro + $sec;
-		$elapsed_in_db+=$now - $starttime;
+		$now = $micro + $sec;
+		$elapsed_in_db += $now - $starttime;
 	} // }}}
 
-	abstract function qstr( $str );
+	abstract function qstr($str);
 
-	abstract function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true );
+	abstract function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true);
 
 	function lastInsertId() // {{{
 	{
-		return $this->getOne( 'SELECT LAST_INSERT_ID()' );
+		return $this->getOne('SELECT LAST_INSERT_ID()');
 	} // }}}
 
-	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
+	function queryError($query, &$error, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
 		$this->errorMessage = '';
-		$result = $this->query( $query, $values, $numrows, $offset, false );
+		$result = $this->query($query, $values, $numrows, $offset, false);
 		$error = $this->errorMessage;
 
 		return $result;
 	} // }}}
 
-	function getOne( $query, $values = null, $reporterrors = true, $offset = 0 ) // {{{
+	function getOne($query, $values = null, $reporterrors = true, $offset = 0) // {{{
 	{
-		$result = $this->query( $query, $values, 1, $offset, $reporterrors );
+		$result = $this->query($query, $values, 1, $offset, $reporterrors);
 
-		if ( $result ) {
+		if ($result) {
 			$res = $result->fetchRow();
 
-			if ( empty( $res ) ) {
+			if (empty($res)) {
 				return $res;
 			}
 		
-			return reset( $res );
+			return reset($res);
 		}
 
 		return false;
 	} // }}}
 
-	function fetchAll( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
 	{
-		$result = $this->query( $query, $values, $numrows, $offset, $reporterrors );
+		$result = $this->query($query, $values, $numrows, $offset, $reporterrors);
 
 		$rows = array();
 		
 		if ($result) {
-			while( $row = $result->fetchRow() ) {
+			while ($row = $result->fetchRow()) {
 				$rows[] = $row;
 			}
 		}
 		return $rows;
 	} // }}}
 
-	function fetchMap( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function fetchMap($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
 	{
-		$result = $this->fetchAll( $query, $values, $numrows, $offset, $reporterrors );
+		$result = $this->fetchAll($query, $values, $numrows, $offset, $reporterrors);
 
 		$map = array();
 
-		foreach( $result as $row ) {
-			$key = array_shift( $row );
-			$value = array_shift( $row );
+		foreach ($result as $row) {
+			$key = array_shift($row);
+			$value = array_shift($row);
 
-			$map[ $key ] = $value;
+			$map[$key] = $value;
 		}
 
 		return $map;
 	} // }}}
 
-	function setErrorHandler( TikiDb_ErrorHandler $handler ) // {{{
+	function setErrorHandler(TikiDb_ErrorHandler $handler) // {{{
 	{
 		$this->errorHandler = $handler;
 	} // }}}
 
-	function setTablePrefix( $prefix ) // {{{
+	function setTablePrefix($prefix) // {{{
 	{
 		$this->tablePrefix = $prefix;
 	} // }}}
 
-	function setUsersTablePrefix( $prefix ) // {{{
+	function setUsersTablePrefix($prefix) // {{{
 	{
 		$this->usersTablePrefix = $prefix;
 	} // }}}
@@ -127,7 +127,7 @@ abstract class TikiDb
 		return $this->serverType;
 	} // }}}
 
-	function setServerType( $type ) // {{{
+	function setServerType($type) // {{{
 	{
 		$this->serverType = $type;
 	} // }}}
@@ -137,17 +137,17 @@ abstract class TikiDb
 		return $this->errorMessage;
 	} // }}}
 
-	protected function setErrorMessage( $message ) // {{{
+	protected function setErrorMessage($message) // {{{
 	{
 		$this->errorMessage = $message;
 	} // }}}
 
-	protected function handleQueryError( $query, $values, $result ) // {{{
+	protected function handleQueryError($query, $values, $result) // {{{
 	{
 		if ( $this->errorHandler )
-			$this->errorHandler->handle( $this, $query, $values, $result );
+			$this->errorHandler->handle($this, $query, $values, $result);
 		else {
-			throw new TikiDb_Exception( $this->getErrorMessage() );
+			throw new TikiDb_Exception($this->getErrorMessage());
 		}
 	} // }}}
 
@@ -176,7 +176,7 @@ abstract class TikiDb
 			return '';
 		}
 		// parse $sort_mode for evil stuff
-		$sort_mode = str_replace('pref:','',$sort_mode);
+		$sort_mode = str_replace('pref:', '', $sort_mode);
 		$sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
 		if ($sort_mode == 'random') {
@@ -184,7 +184,7 @@ abstract class TikiDb
 		}
 
 		$sorts=explode(',', $sort_mode);
-		foreach($sorts as $k => $sort) {
+		foreach ($sorts as $k => $sort) {
 
 			// force ending to either _asc or _desc unless it's "random"
 			$sep = strrpos($sort, '_');
@@ -222,16 +222,16 @@ abstract class TikiDb
 		return " COALESCE($field, $ifNull) ";
 	} // }}}
 
-	function in( $field, $values, &$bindvars ) // {{{
+	function in($field, $values, &$bindvars) // {{{
 	{
 		$parts = explode('.', $field);
 		foreach($parts as &$part)
 			$part = '`' . $part . '`';
 		$field = implode('.', $parts);
-		$bindvars = array_merge( $bindvars, $values );
+		$bindvars = array_merge($bindvars, $values);
 
-		if ( count( $values ) > 0 ) {
-			$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
+		if (count($values) > 0 ) {
+			$values = rtrim(str_repeat('?,', count($values)), ',');
 			return " $field IN( $values ) ";
 		} else {
 			return " 0 ";
@@ -240,7 +240,7 @@ abstract class TikiDb
 
 	function parentObjects(&$objects, $table, $childKey, $parentKey) // {{{
 	{
-		$query = "select `$childKey`, `$parentKey` from `$table` where `$childKey` in (".implode(',',array_fill(0, count($objects),'?')).')';
+		$query = "select `$childKey`, `$parentKey` from `$table` where `$childKey` in (".implode(',', array_fill(0, count($objects), '?')) .')';
 		foreach ($objects as $object) {
 			$bindvars[] = $object['itemId'];
 		}
@@ -258,7 +258,7 @@ abstract class TikiDb
 		$arr = func_get_args();
 
 		// suggestion by andrew005@mnogo.ru
-		$s = implode(',',$arr);
+		$s = implode(',', $arr);
 		if (strlen($s) > 0) return "CONCAT($s)";
 		else return '';
 	} // }}}
@@ -277,11 +277,12 @@ abstract class TikiDb
 	* Get a list of installed engines in the MySQL instance
 	* $return array of engine names
 	*/
-	function getEngines() {
+	function getEngines()
+	{
 		$engines = array();
 		$result = $this->query('show engines');
-		if ( $result ) {
-			while ( $res = $result->fetchRow() ) {
+		if ($result) {
+			while ($res = $result->fetchRow()) {
 				$engines[] = $res['Engine'];
 			}		
 		}		
@@ -292,9 +293,10 @@ abstract class TikiDb
 	 * Check if InnoDB is an avaible engine
 	 * @return true if the InnoDB engine is available
 	 */ 
-	function hasInnoDB() {
+	function hasInnoDB()
+	{
 		$engines = $this->getEngines();
-		foreach($engines as $engine) {
+		foreach ($engines as $engine) {
 			if (strcmp(strtoupper($engine), 'INNODB') == 0) {
 				return true;
 			}
@@ -307,10 +309,11 @@ abstract class TikiDb
 	 * Assumes that all tables use the same table engine
 	 * @return string identifying the current engine, or an empty string if not installed
 	 */ 
-	function getCurrentEngine() {
+	function getCurrentEngine()
+	{
 		$engine = '';
 		$result = $this->query('SHOW TABLE STATUS LIKE ?', 'tiki_schema');
-		if ( $result ) {
+		if ($result) {
 			$res = $result->fetchRow();
 			$engine  = $res['Engine'];
 		}
@@ -322,9 +325,10 @@ abstract class TikiDb
 	 * Assumes that all tables use the same table engine
 	 * @return true if it is supported, otherwise false
 	 */ 
-	function isMySQLFulltextSearchSupported() {
+	function isMySQLFulltextSearchSupported()
+	{
 		$currentEngine = $this->getCurrentEngine();
-		if (strcasecmp($currentEngine,"MyISAM") == 0) {
+		if (strcasecmp($currentEngine, "MyISAM") == 0) {
 			return true;
 		}
 		return false;

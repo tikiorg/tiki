@@ -49,19 +49,19 @@ class TikiFilter
 		case 'xss':
 			return new TikiFilter_PreventXss;
 		case 'purifier':
-			return new TikiFilter_HtmlPurifier( 'temp/cache' );
+			return new TikiFilter_HtmlPurifier('temp/cache');
 		case 'wikicontent':
 		case 'rawhtml_unsafe':
 		case 'none':
 			return new TikiFilter_RawUnsafe;
 		case 'lang':
-			return new Zend_Filter_PregReplace( '/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2' );
+			return new Zend_Filter_PregReplace('/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2');
 		case 'imgsize':
-			return new Zend_Filter_PregReplace( '/^.*(\d+)\s*(%?).*$/', '$1$2' );
+			return new Zend_Filter_PregReplace('/^.*(\d+)\s*(%?).*$/', '$1$2');
 		case 'attribute_type':
 			return new TikiFilter_AttributeType;
 		default:
-			trigger_error( 'Filter not found: ' . $filter, E_USER_WARNING );
+			trigger_error('Filter not found: ' . $filter, E_USER_WARNING);
 			return new TikiFilter_PreventXss;
 		}
 	}

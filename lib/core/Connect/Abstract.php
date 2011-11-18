@@ -92,7 +92,8 @@ abstract class Connect_Abstract
 
 	protected $connectTable = null;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->connectTable = TikiDb::get()->table('tiki_connect');
 	}
 
@@ -106,17 +107,20 @@ abstract class Connect_Abstract
 	 * @return datetime $created
 	 */
 
-	function recordConnection($status, $guid, $data = '', $server = false) {
+	function recordConnection($status, $guid, $data = '', $server = false)
+	{
 
 		if (is_array($data) || is_object($data)) {
-			$data = serialize( $data );
+			$data = serialize($data);
 		}
-		$insertId = $this->connectTable->insert(array(
-				'type' => $status,
-				'data' => $data,
-				'guid' => $guid,
-				'server' => $server ? 1 : 0,
-		));
+		$insertId = $this->connectTable->insert(
+						array(
+							'type' => $status,
+							'data' => $data,
+							'guid' => $guid,
+							'server' => $server ? 1 : 0,
+						)
+		);
 
 		$created = $this->connectTable->fetchOne('created', array( 'id' => $insertId ));
 		if (!$server) {
@@ -135,19 +139,19 @@ abstract class Connect_Abstract
 	 * @return array
 	 */
 
-	function getVotesForGuid( $guid, $server = false ) {
+	function getVotesForGuid( $guid, $server = false )
+	{
 		if (!empty($guid)) {
 			$res = $this->connectTable->fetchAll(
-				array('data'),
-				array(
-					 'type' => 'votes',
-					 'guid' => $guid,
-					 'server' => $server ? 1 : 0
-				),
-				1,
-				-1,
-				array( 'created' => 'DESC')
-
+							array('data'),
+							array(
+								'type' => 'votes',
+								'guid' => $guid,
+								'server' => $server ? 1 : 0
+							),
+							1,
+							-1,
+							array('created' => 'DESC')
 			);
 		} else {
 			$res = array();
@@ -168,26 +172,28 @@ abstract class Connect_Abstract
 	 * @return void
 	 */
 
-	function removeGuid( $guid, $server = false ) {
+	function removeGuid( $guid, $server = false )
+	{
 		$this->connectTable->update(
-			array(
-				'type' => 'deleted_pending'
-			),
-			array(
-				'server' => $server ? 1 : 0,
-				'guid' => $guid,
-				'type' => 'pending',
-			)
+						array(
+							'type' => 'deleted_pending'
+						),
+						array(
+							'server' => $server ? 1 : 0,
+							'guid' => $guid,
+							'type' => 'pending',
+						)
 		);
+
 		$this->connectTable->update(
-			array(
-				'type' => 'deleted_confirmed'
-			),
-			array(
-				'server' => $server ? 1 : 0,
-				'guid' => $guid,
-				'type' => 'confirmed',
-			)
+						array(
+							'type' => 'deleted_confirmed'
+						),
+						array(
+							'server' => $server ? 1 : 0,
+							'guid' => $guid,
+							'type' => 'confirmed',
+						)
 		);
 	}
 

@@ -51,15 +51,15 @@ class FileGallery_File
 		include_once ('lib/mime/mimetypes.php');
 
 		return TikiLib::lib("filegal")->insert_file(
-			1, //zero makes it not show by default
-			$this->param['filename'],
-			$this->param['description'],
-			$this->param['filename'],
-			$data,
-			strlen($data),
-			$mimetypes["txt"],
-			$user,
-			date()
+						1, //zero makes it not show by default
+						$this->param['filename'],
+						$this->param['description'],
+						$this->param['filename'],
+						$data,
+						strlen($data),
+						$mimetypes["txt"],
+						$user,
+						date()
 		);
 	}
 	
@@ -71,7 +71,7 @@ class FileGallery_File
 	
 	function archiveFromLastModif($lastModif)
 	{
-		foreach($this->listArchives() as $archive) {
+		foreach ($this->listArchives() as $archive) {
 			if ($archive['lastModif'] == $lastModif) {
 				return $archive;
 			}
@@ -94,7 +94,7 @@ class FileGallery_File
 	function listArchives()
 	{
 		$archives = TikiLib::lib("filegal")->get_archives((int)$this->param['id']);
-		$archives = array_reverse( $archives['data'] );
+		$archives = array_reverse($archives['data']);
 		return $archives;
 	}
 	
@@ -106,17 +106,17 @@ class FileGallery_File
 		if (!$this->exists()) return $this->create($data);
 
 		return TikiLib::lib("filegal")->save_archive(
-			$this->param['id'],
-			$this->param['galleryId'],
-			0,
-			$this->param['filename'],
-			$this->param['description'],
-			$this->param['filename'],
-			$data,
-			strlen($data),
-			$mimetypes["txt"],
-			$user,
-			date()
+						$this->param['id'],
+						$this->param['galleryId'],
+						0,
+						$this->param['filename'],
+						$this->param['description'],
+						$this->param['filename'],
+						$data,
+						strlen($data),
+						$mimetypes["txt"],
+						$user,
+						date()
 		);
 	}
 	
@@ -125,11 +125,10 @@ class FileGallery_File
 		include_once ( "lib/diff/Diff.php" );
 		
 		$textDiff =  new Text_Diff(
-			FileGallery_File::filename($this->param['filename'])
-				->archive($archive)
-				->data(),
-				
-			$this->data()
+						FileGallery_File::filename($this->param['filename'])
+						->archive($archive)
+						->data(),
+						$this->data()
 		);
 		
 		return $textDiff->getDiff();

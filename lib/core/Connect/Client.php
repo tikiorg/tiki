@@ -19,9 +19,10 @@ class Connect_Client extends Connect_Abstract
 	 * 						depending on connect prefs
 	 */
 
-	function buildConnectData() {
+	function buildConnectData()
+	{
 		global $prefs;
-		$info = array( 'version' => $prefs['tiki_release'] );
+		$info = array('version' => $prefs['tiki_release']);
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
 			$tikilib = TikiLib::lib('tiki');
@@ -29,11 +30,11 @@ class Connect_Client extends Connect_Abstract
 			$modifiedPrefs = $tikilib->getModifiedPreferences();
 
 			// remove the non-anonymous values
-			foreach ( $this->privatePrefs as $p ) {
+			foreach ($this->privatePrefs as $p) {
 				unset($modifiedPrefs[$p]);
 			}
 			// remove the protected values
-			foreach ( $this->protectedPrefs as $p ) {
+			foreach ($this->protectedPrefs as $p) {
 				unset($modifiedPrefs[$p]);
 			}
 			$info['prefs'] = $modifiedPrefs;
@@ -42,7 +43,7 @@ class Connect_Client extends Connect_Abstract
 			$res = $tikilib->fetchAll('SHOW TABLES;');
 			if (!empty($res)) {
 				$info['tables'] = array();
-				foreach( $res as $r ) {
+				foreach ($res as $r) {
 					foreach ($r as $table) {
 						$info['tables'][$table] = $tikilib->getOne('SELECT COUNT(*) FROM `' . $table . '`');
 					}
@@ -58,7 +59,7 @@ class Connect_Client extends Connect_Abstract
 		if ($prefs['connect_send_info'] === 'y') {
 			// restore the protected values
 			$site_prefs = array();
-			foreach( $this->protectedPrefs as $p) {
+			foreach ($this->protectedPrefs as $p) {
 				if (isset($prefs[$p])) {			// some protected prefs are legacy ones from previous versions
 					$site_prefs[$p] = $prefs[$p];
 				}
@@ -69,39 +70,39 @@ class Connect_Client extends Connect_Abstract
 		return $info;
 	}
 
-	function getLastDataSent() {
-
+	function getLastDataSent()
+	{
 		$res = $this->connectTable->fetchAll(
-			array('created', 'data'),
-			array(
-				'type' => 'sent',
-				'server' => 0,
-			),
-			1,
-			-1,
-			array( 'created' => 'DESC')
+						array('created', 'data'),
+						array(
+							'type' => 'sent',
+							'server' => 0,
+						),
+						1,
+						-1,
+						array('created' => 'DESC')
 		);
 
 		if (!empty($res[0]) && !empty($res[0]['data'])) {
-			return unserialize( $res[0]['data'] );
+			return unserialize($res[0]['data']);
 		} else {
 			return array();
 		}
-
 	}
 
-	function diffDataWithLastSent( $data ) {
+	function diffDataWithLastSent($data)
+	{
 		$lastData = $this->getLastDataSent();
 
 		if (!empty($lastData)) {
-			foreach( $data as $key => $val) {
+			foreach ($data as $key => $val) {
 				if (is_array($val)) {
-					foreach( $val as $ikey => $ival) {
-						if (isset( $lastData[$key][$ikey] ) && $lastData[$key][$ikey] === $ival) {
+					foreach ($val as $ikey => $ival) {
+						if (isset($lastData[$key][$ikey]) && $lastData[$key][$ikey] === $ival) {
 							unset($data[$key][$ikey]);
 						}
 					}
-				} else if (!in_array( $key, array('version', 'guid'))) {
+				} else if (!in_array($key, array('version', 'guid'))) {
 					if (isset( $lastData[$key] ) && $lastData[$key] === $val) {
 						unset($data[$key]);
 					}
@@ -120,9 +121,12 @@ class Connect_Client extends Connect_Abstract
 	 * @return string guid
 	 */
 
-	function getPendingGuid() {
-		$res = TikiDb::get()->getOne("SELECT `guid` FROM `tiki_connect` WHERE `type` = 'pending' AND " .
-									"`created` > NOW() - INTERVAL 1 MINUTE ORDER BY `created` DESC LIMIT 1;");
+	function getPendingGuid()
+	{
+		$res = TikiDb::get()->getOne(
+						"SELECT `guid` FROM `tiki_connect` WHERE `type` = 'pending' AND " .
+						"`created` > NOW() - INTERVAL 1 MINUTE ORDER BY `created` DESC LIMIT 1;"
+		);
 		return empty($res) ? '' : $res;
 	}
 
@@ -133,14 +137,14 @@ class Connect_Client extends Connect_Abstract
 	 * @return string guid
 	 */
 	
-	function getConfirmedGuid() {
+	function getConfirmedGuid()
+	{
 		$res = $this->connectTable->fetchAll(
-			array('created', 'guid'),
-			array('type' => 'confirmed', 'server' => 0),
-			1,
-			-1,
-			array( 'created' => 'DESC')
-
+						array('created', 'guid'),
+						array('type' => 'confirmed', 'server' => 0),
+						1,
+						-1,
+						array('created' => 'DESC')
 		);
 
 		if (!empty($res[0])) {
@@ -158,9 +162,10 @@ class Connect_Client extends Connect_Abstract
 	 * @return array of votes
 	 */
 
-	function getVote($pref) {
+	function getVote($pref)
+	{
 		$votes = $this->getVotes();
-		if (isset( $votes[$pref] )) {
+		if (isset($votes[$pref])) {
 			return $votes[$pref];
 		} else {
 			return array();
@@ -175,7 +180,8 @@ class Connect_Client extends Connect_Abstract
 	 * @return array
 	 */
 
-	function getVotes( $reload = false ) {
+	function getVotes($reload = false)
+	{
 		global $prefs;
 
 		if (empty($this->votes) || $reload ) {
@@ -193,37 +199,41 @@ class Connect_Client extends Connect_Abstract
 	 * @return void
 	 */
 
-	function saveVotesForGuid( $guid, $votes ) {
+	function saveVotesForGuid($guid, $votes)
+	{
 
 		if (is_array($votes) || is_object($votes)) {
-			$votes = serialize( $votes );
+			$votes = serialize($votes);
 		}
-		$count = $this->connectTable->fetchCount(array(
-			'server' => 0,
-			'guid' => $guid,
-			'type' => 'votes',
-		));
+
+		$count = $this->connectTable->fetchCount(
+						array(
+							'server' => 0,
+							'guid' => $guid,
+							'type' => 'votes',
+						)
+		);
 
 		if ($count) {
 			$this->connectTable->update(
-				array(
-					'type' => 'votes',
-					'data' => $votes,
-				),
-				array(
-					'server' => 0,
-					'guid' => $guid,
-					'type' => 'votes',
-				)
+							array(
+								'type' => 'votes',
+								'data' => $votes,
+							),
+							array(
+								'server' => 0,
+								'guid' => $guid,
+								'type' => 'votes',
+							)
 			);
 		} else {
 			$this->connectTable->insert(
-				array(
-					'type' => 'votes',
-					'data' => $votes,
-					'server' => 0,
-					'guid' => $guid,
-				)
+							array(
+								'type' => 'votes',
+								'data' => $votes,
+								'server' => 0,
+								'guid' => $guid,
+							)
 			);
 		}
 	}

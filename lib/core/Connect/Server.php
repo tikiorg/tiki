@@ -11,22 +11,24 @@ class Connect_Server extends Connect_Abstract
 {
 	private $indexFile;
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->indexFile = 'temp/connect_server-index';
 
 	}
 
-	function getMatchingConnections( $criteria ) {
+	function getMatchingConnections( $criteria )
+	{
 		$index = $this->getIndex();
 
-		Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength( 0 );
+		Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength(0);
 		Zend_Search_Lucene::setResultSetLimit(25);	// TODO during dev
 
-		$results = $index->find( $criteria );
+		$results = $index->find($criteria);
 
 		$ret = array();
-		foreach( $results as $hit ) {
+		foreach ($results as $hit) {
 			$res = array();
 			$res['created'] = $hit->created;
 			try {
@@ -84,21 +86,23 @@ class Connect_Server extends Connect_Abstract
 		return $ret;
 	}
 
-	function rebuildIndex() {
-		$this->getIndex( true );
+	function rebuildIndex()
+	{
+		$this->getIndex(true);
 	}
 
-	private function getIndex( $rebuld = false ) {
+	private function getIndex($rebuld = false)
+	{
 
-		if ( $rebuld || $this->indexNeedsRebuilding() ) {
-			$index = Zend_Search_Lucene::create( $this->indexFile );
+		if ($rebuld || $this->indexNeedsRebuilding()) {
+			$index = Zend_Search_Lucene::create($this->indexFile);
 
 			foreach ($this->getReceivedDataLatest() as $connection) {
 				$data = unserialize($connection['data']);
 
 				if ($data) {
-					$doc = $this->indexConnection( $connection['created'], $data );
-					$index->addDocument( $doc );
+					$doc = $this->indexConnection($connection['created'], $data);
+					$index->addDocument($doc);
 				}
 			}
 
@@ -106,66 +110,69 @@ class Connect_Server extends Connect_Abstract
 			return $index;
 		}
 
-		return Zend_Search_Lucene::open( $this->indexFile );
+		return Zend_Search_Lucene::open($this->indexFile);
 	}
 
-	public function indexNeedsRebuilding() {
-		return !file_exists( $this->indexFile );
+	public function indexNeedsRebuilding()
+	{
+		return !file_exists($this->indexFile);
 	}
 
-	private function indexConnection( $created, $data ) {
+	private function indexConnection($created, $data)
+	{
 		$doc = new Zend_Search_Lucene_Document();
-		$doc->addField( Zend_Search_Lucene_Field::Keyword('created', $created) );
-		$doc->addField( Zend_Search_Lucene_Field::Text('version', $data['version']) );
+		$doc->addField(Zend_Search_Lucene_Field::Keyword('created', $created));
+		$doc->addField(Zend_Search_Lucene_Field::Text('version', $data['version']));
 
 		if (!empty($data['site'])) {
 			if (!empty($data['site']['connect_site_title'])) {
-				$doc->addField( Zend_Search_Lucene_Field::Text('title', $data['site']['connect_site_title']));
+				$doc->addField(Zend_Search_Lucene_Field::Text('title', $data['site']['connect_site_title']));
 			}
 			if (!empty($data['site']['connect_site_url'])) {
-				$doc->addField( Zend_Search_Lucene_Field::Keyword('url', $data['site']['connect_site_url']));
+				$doc->addField(Zend_Search_Lucene_Field::Keyword('url', $data['site']['connect_site_url']));
 			}
 			if (!empty($data['site']['connect_site_email'])) {
-				$doc->addField( Zend_Search_Lucene_Field::Keyword('email', $data['site']['connect_site_email']));	// hmm
+				$doc->addField(Zend_Search_Lucene_Field::Keyword('email', $data['site']['connect_site_email']));	// hmm
 			}
 			if (!empty($data['site']['connect_site_keywords'])) {
-				$doc->addField( Zend_Search_Lucene_Field::Text('keywords', $data['site']['connect_site_keywords'] ));
+				$doc->addField(Zend_Search_Lucene_Field::Text('keywords', $data['site']['connect_site_keywords']));
 			}
 			if (!empty($data['site']['connect_site_location'])) {
 				$loc = TikiLib::lib('geo')->parse_coordinates($data['site']['connect_site_location']);
 				if (count($loc) > 1) {
-					$doc->addField( Zend_Search_Lucene_Field::Keyword('geo_lat', $loc['lat']) );
-					$doc->addField( Zend_Search_Lucene_Field::Keyword('geo_lon', $loc['lon']) );
+					$doc->addField(Zend_Search_Lucene_Field::Keyword('geo_lat', $loc['lat']));
+					$doc->addField(Zend_Search_Lucene_Field::Keyword('geo_lon', $loc['lon']));
 					if (count($loc) > 2) {
-						$doc->addField( Zend_Search_Lucene_Field::Keyword('geo_zoom', $loc['zoom']) );
+						$doc->addField(Zend_Search_Lucene_Field::Keyword('geo_zoom', $loc['zoom']));
 					}
 				}
 			}
 		} else {
-			$doc->addField( Zend_Search_Lucene_Field::Text('title', tra('Anonymous')));
+			$doc->addField(Zend_Search_Lucene_Field::Text('title', tra('Anonymous')));
 		}
 		if (!empty($data['tables'])) {
-			$doc->addField( Zend_Search_Lucene_Field::UnIndexed('tables', serialize($data['tables'])));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('tables', serialize($data['tables'])));
 		}
 		if (!empty($data['prefs'])) {
-			$doc->addField( Zend_Search_Lucene_Field::UnIndexed('prefs', serialize($data['prefs'])));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('prefs', serialize($data['prefs'])));
 			if (!empty($data['prefs']['language'])) {
 				$languages = TikiLib::get_language_map();
-				$doc->addField( Zend_Search_Lucene_Field::Text('language', $languages[$data['prefs']['language']]));
+				$doc->addField(Zend_Search_Lucene_Field::Text('language', $languages[$data['prefs']['language']]));
 			}
 		}
 		if (!empty($data['server'])) {
-			$doc->addField( Zend_Search_Lucene_Field::UnIndexed('server', serialize($data['server'])));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('server', serialize($data['server'])));
 		}
 		if (!empty($data['votes'])) {
-			$doc->addField( Zend_Search_Lucene_Field::UnIndexed('votes', serialize($data['votes'])));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('votes', serialize($data['votes'])));
 		}
 
 
 		return $doc;
 	}
 
-	function recordConnection($status, $guid, $data = '', $server = false) {
+	function recordConnection($status, $guid, $data = '', $server = false)
+	{
 		$created = parent::recordConnection($status, $guid, $data, $server);
 
 		$this->indexConnection($created, $data);
@@ -178,16 +185,17 @@ class Connect_Server extends Connect_Abstract
 	 * @return array
 	 */
 
-	function getReceivedDataStats() {
+	function getReceivedDataStats()
+	{
 		global $prefs;
 
 		$ret = array();
 
 		$ret['received'] = $this->connectTable->fetchCount(
-			array(
-				'type' => 'received',
-				'server' => 1,
-			)
+						array(
+							'type' => 'received',
+							'server' => 1,
+						)
 		);
 
 		// select distinct guid from tiki_connect where server=1;
@@ -198,7 +206,8 @@ class Connect_Server extends Connect_Abstract
 		return $ret;
 	}
 
-	function getReceivedDataLatest() {
+	function getReceivedDataLatest()
+	{
 
 		// select distinct guid from tiki_connect where server=1;
 		$res = TikiLib::lib('tiki')->fetchAll('SELECT * FROM (SELECT * FROM `tiki_connect` WHERE `server` = 1 AND `type` = \'received\' ORDER BY `created` DESC) as `tc` GROUP BY `guid` ORDER BY `created` DESC;');
@@ -214,14 +223,15 @@ class Connect_Server extends Connect_Abstract
 	 * @return string
 	 */
 
-	function isPendingGuid( $guid ) {
+	function isPendingGuid( $guid )
+	{
 		$res = $this->connectTable->fetchOne(
-			'data',
-			array(
-				'type' => 'pending',
-				'server' => 1,
-				'guid' => $guid,
-			)
+						'data',
+						array(
+							'type' => 'pending',
+							'server' => 1,
+							'guid' => $guid,
+						)
 		);
 		return $res;
 	}
@@ -234,13 +244,14 @@ class Connect_Server extends Connect_Abstract
 	 * @return bool
 	 */
 
-	function isConfirmedGuid( $guid ) {
+	function isConfirmedGuid( $guid )
+	{
 		$res = $this->connectTable->fetchCount(
-			array(
-				'type' => 'confirmed',
-				'server' => 1,
-				'guid' => $guid,
-			)
+						array(
+							'type' => 'confirmed',
+							'server' => 1,
+							'guid' => $guid,
+						)
 		);
 		return $res > 0;
 	}
