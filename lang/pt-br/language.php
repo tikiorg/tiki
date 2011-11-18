@@ -22,7 +22,7 @@
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
 $lang = array(
-// "You must specify a directory" => "You must specify a directory",
+"You must specify a directory" => "Você deve especificar um diretório",
 "Creation Date" => "Data de criação",
 "Name" => "Nome",
 "Last modification date" => "Data da última modificação",
@@ -10047,7 +10047,7 @@ $lang = array(
 // "Generate a zip of those directories" => "Generate a zip of those directories",
 // "A zip has been written to {\$zipPath}" => "A zip has been written to {\$zipPath}",
 // "Directory is not writeable" => "Directory is not writeable",
-"View mode" => "Mode de visualização",
+"View mode" => "Modo de visualização",
 // "Wiki and WYSIWYG" => "Wiki and WYSIWYG",
 // "Wiki only" => "Wiki only",
 // "WYSIWYG only" => "WYSIWYG only",
@@ -13800,7 +13800,7 @@ $lang = array(
 // "Tracker Removed From Spreadsheet" => "Tracker Removed From Spreadsheet",
 // "Spreadsheet added" => "Spreadsheet added",
 // "Spreadsheet removed" => "Spreadsheet removed",
-// "File removed" => "File removed",
+"File removed" => "Arquivo removido",
 // "Create tracker item" => "Create tracker item",
 // "Are you sure you want to remove this attachment" => "Are you sure you want to remove this attachment",
 "Edit/Delete" => "Editar/Deletar",
@@ -13815,7 +13815,7 @@ $lang = array(
 // "Mail ID" => "Mail ID",
 // "There was a problem while trying to delete these mails" => "There was a problem while trying to delete these mails",
 // "There was a problem while trying to delete that mail" => "There was a problem while trying to delete that mail",
-// "Are you sure you want to delete this account" => "Are you sure you want to delete this account",
+"Are you sure you want to delete this account" => "Você tem certeza de que deseja deletar essa conta",
 // "Taking" => "Taking",
 // "Putting back" => "Putting back",
 // "Checking" => "Checking",
