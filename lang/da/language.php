@@ -12620,6 +12620,7 @@ $lang = array(
 // "Will become the creator's default group" => "Will become the creator's default group",
 // "Will become the new item's group creator" => "Will become the new item's group creator",
 // "Copy the default group in the field ID before updating the group" => "Copy the default group in the field ID before updating the group",
+// "Edit This Tracker" => "Edit This Tracker",
 // "Edit Fields" => "Edit Fields",
 "List Trackers" => "Agent Oversigt",
 // "View Items" => "View Items",

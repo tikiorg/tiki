@@ -12656,6 +12656,7 @@ $lang = array(
 "Will become the creator's default group" => "Wird die Standardgruppe des Erstellers",
 "Will become the new item's group creator" => "Wird der Ersteller der Gruppe für neue Einträge",
 "Copy the default group in the field ID before updating the group" => "Kopiere die Standardgruppe in die Feld-ID vor der Aktualisierung der Gruppe",
+// "Edit This Tracker" => "Edit This Tracker",
 "Edit Fields" => "Felder bearbeiten",
 "List Trackers" => "Tracker auflisten",
 "View Items" => "Objekte ansehen",

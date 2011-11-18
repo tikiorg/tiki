@@ -12609,6 +12609,7 @@ $lang = array(
 // "Will become the creator's default group" => "Will become the creator's default group",
 // "Will become the new item's group creator" => "Will become the new item's group creator",
 // "Copy the default group in the field ID before updating the group" => "Copy the default group in the field ID before updating the group",
+// "Edit This Tracker" => "Edit This Tracker",
 "Edit Fields" => "Golygu Meysyd",
 "List Trackers" => "Rhrestru Tracwyr",
 // "View Items" => "View Items",
