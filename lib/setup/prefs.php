@@ -221,8 +221,6 @@ function get_default_prefs() {
 
 		// categories
 		'category_i18n_unsynced' => array(),
-		'expanded_category_jail' => '',
-		'expanded_category_jail_key' => '',
 
 		// look and feel
 

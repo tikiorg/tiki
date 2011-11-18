@@ -5326,28 +5326,14 @@ JS;
 	function get_jail()
 	{
 		global $prefs;
+		// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 		if ( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
-			// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 			$categlib = TikiLib::lib('categ');
-			$key = $prefs['category_jail'];
-			$categories = $prefs['category_jail'];
-			if ( $prefs['expanded_category_jail_key'] != $key ) {
-				$additional = array();
-
-				if (!empty($categories)) {
-					foreach ( $categories as $categId ) {
-						$desc = $categlib->get_category_descendants($categId);
-						$additional = array_merge($additional, $desc);
-					}
-				}
-
-				$prefs['expanded_category_jail'] = $_SESSION['s_prefs']['expanded_category_jail'] = implode(',', $additional);
-				$_SESSION['s_prefs']['expanded_category_jail_key'] = $key;
-
-				return $additional;
+			$expanded = array();
+			foreach ( $prefs['category_jail'] as $categId ) {
+				$expanded = array_merge($expanded, $categlib->get_category_descendants($categId));
 			}
-
-			return explode(',', $prefs['expanded_category_jail']);
+			return $expanded;
 		} else {
 			return array();
 		}
