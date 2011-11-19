@@ -18,9 +18,17 @@
 {if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}" />
 {/if}
-{if $prefs.metatag_pagedesc eq 'y' and $description neq ''}
+{if $section eq "blogs"}
+	{if $blog_data.title eq ''}
+	<meta name="description" content="Blog listing" />
+	{elseif $postId eq ''}
+	<meta name="description" content="{$blog_data.title|escape}" />
+	{else} 
+	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" />
+	{/if}
+{elseif $prefs.metatag_pagedesc eq 'y' and $description ne ''}
 	<meta name="description" content="{$description|escape}" />
-{elseif $prefs.metatag_description neq '' or (isset($description) and $description eq '')}
+{elseif $prefs.metatag_description ne '' or (isset($description) and $description eq '')}
 	<meta name="description" content="{$prefs.metatag_description|escape}" />
 {/if}
 {if $prefs.metatag_geoposition neq ''}
