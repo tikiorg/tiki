@@ -5,15 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if ( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
+if ( isset($_SERVER['REQUEST_METHOD']) ) die;
 
 if ( ! isset( $_SERVER['argc'] ) )
 	die( "Usage: php installer/shell.php <domain>\n" );
-if ( ! file_exists( 'db/local.php' ) )
+if ( ! file_exists('db/local.php') )
 	die( "Tiki is not installed yet.\n" );
 
 if ( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' && $_SERVER['argv'][1] != 'skiperrors' ) {
-	$_SERVER['TIKI_VIRTUAL'] = basename( $_SERVER['argv'][1] );
+	$_SERVER['TIKI_VIRTUAL'] = basename($_SERVER['argv'][1]);
 }
 
 require_once('lib/init/initlib.php');
@@ -37,11 +37,13 @@ unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
 
 class IgnoreErrorHandler implements TikiDb_ErrorHandler
 {
-	function handle( TikiDb $db, $query, $values, $result ) {
+	function handle( TikiDb $db, $query, $values, $result )
+	{
+
 	}
 }
 
-TikiDb::get()->setErrorHandler( new IgnoreErrorHandler );
+TikiDb::get()->setErrorHandler(new IgnoreErrorHandler);
 
 echo "Running installer for: $local_php\n";
 
@@ -51,22 +53,22 @@ if ( $_SERVER['argc'] == 2 && $_SERVER['argv'][1] == 'install' )
 else {
 	$installer->update();
 
-	if ( count( $installer->installed ) ) {
+	if (count($installer->installed)) {
 		echo "\tPatches installed:\n";
-		foreach( $installer->installed as $patch )
+		foreach ($installer->installed as $patch)
 			echo "\t\t$patch\n";
 	}
 
-	if ( count( $installer->executed ) ) {
+	if ( count($installer->executed) ) {
 		echo "\tScripts executed:\n";
 		foreach( $installer->executed as $script )
 			echo "\t\t$script\n";
 	}
 	
 	echo "\tQueries executed successfully: " . count($installer->success) . "\n";
-	if ( count( $installer->failures ) ) {
+	if ( count($installer->failures) ) {
 		echo "\tErrors:\n";
-		foreach( $installer->failures as $key => $error ) {
+		foreach ( $installer->failures as $key => $error ) {
 			list( $query, $message, $patch ) = $error;
 
 			if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] == 'skiperrors') {

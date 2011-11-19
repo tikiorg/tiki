@@ -6,7 +6,7 @@
 // $Id$
 
 // this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
@@ -64,19 +64,19 @@ class AccountingLib extends LogsLib
 	 * @return	int/string					bookId on success, error message otherwise
 	 */
 	function createBook($bookName
-										, $bookStartDate
-										, $bookEndDate
-										, $bookCurrency
-										, $bookCurrencyPos = -1
-										, $bookDecimals
-										, $bookDecPoint
-										, $bookThousand
-										, $exportSeparator
-										, $exportEOL
-										, $exportQuote
-										, $bookAutoTax = 'y'
-										, $bookClosed = 'n'
-										)
+			, $bookStartDate
+			, $bookEndDate
+			, $bookCurrency
+			, $bookCurrencyPos = -1
+			, $bookDecimals
+			, $bookDecPoint
+			, $bookThousand
+			, $exportSeparator
+			, $exportEOL
+			, $exportQuote
+			, $bookAutoTax = 'y'
+			, $bookClosed = 'n'
+			)
 	{
 		global $userlib, $user;
 		if (strlen($bookName) == 0) {
@@ -88,26 +88,30 @@ class AccountingLib extends LogsLib
 		if (strtotime($bookEndDate) === false) {
 			return "Invalid end date";
 		}
-		$query = "INSERT INTO `tiki_acct_book` (`bookName`, `bookClosed`, `bookStartDate`, `bookEndDate`,
-							`bookCurrency`, `bookCurrencyPos`, `bookDecimals`, `bookDecPoint`, `bookThousand`,
-							`exportSeparator`, `exportEOL`, `exportQuote`, `bookAutoTax`)
-				      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		$query = "INSERT INTO `tiki_acct_book`" .
+				" (`bookName`, `bookClosed`, `bookStartDate`, `bookEndDate`," .
+				"	`bookCurrency`, `bookCurrencyPos`, `bookDecimals`, `bookDecPoint`, `bookThousand`," .
+				" `exportSeparator`, `exportEOL`, `exportQuote`, `bookAutoTax`)" .
+				" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-		$res = $this->query($query, array($bookName
-																		, $bookClosed
-																		, $bookStartDate
-																		, $bookEndDate
-																		, $bookCurrency
-																		, $bookCurrencyPos
-																		, $bookDecimals
-																		, $bookDecPoint
-																		, $bookThousand
-																		, $exportSeparator
-																		, $exportEOL
-																		, $exportQuote
-																		, $bookAutoTax
-																		)
-												);
+		$res = $this->query(
+						$query, 
+						array(
+							$bookName,
+							$bookClosed,
+							$bookStartDate,
+							$bookEndDate,
+							$bookCurrency,
+							$bookCurrencyPos,
+							$bookDecimals,
+							$bookDecPoint,
+							$bookThousand,
+							$exportSeparator,
+							$exportEOL,
+							$exportQuote,
+							$bookAutoTax
+						)
+		);
 		$bookId = $this->lastInsertId();
 		$this->createTax($bookId, tra('No automated tax'), 0, 'n');
 		$groupId = $bookId;
@@ -137,7 +141,7 @@ class AccountingLib extends LogsLib
 		$userlib->assign_object_permission($groupname, $bookId, 'accounting book', 'tiki_p_acct_manage_template');
 		return $bookId;
 	}
-	
+
 	/**
 	 *
 	 * Returns the details for a book with a given bookId
@@ -169,7 +173,7 @@ class AccountingLib extends LogsLib
 		if ($res === false) return false;
 		return true;
 	}
-	
+
 	/**
 	 * Returns the complete journal for a given account, if none is provided, the whole journal will be fetched
 	 *
@@ -190,20 +194,21 @@ class AccountingLib extends LogsLib
 		}
 
 		if ($accountId == '%') {
-			$query = "SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`
-				FROM `tiki_acct_journal`
-				WHERE `journalBookId`=?
-				ORDER BY $order";
+			$query = "SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`" .
+								" FROM `tiki_acct_journal`" .
+								" WHERE `journalBookId`=?" .
+								" ORDER BY $order";
 
 			$res = $this->query($query, array($bookId));
 		} else {
-			$query = "SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`
-				FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item` 
-				ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId` AND
-				`tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)
-				WHERE `journalBookId`=? AND `itemAccountId` LIKE ?
-				GROUP BY `journalId`, `journalDate`, `journalDescription`, `journalCancelled`
-				ORDER BY $order";
+			$query = "SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`" .
+							" FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item`" .
+							" ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId` AND" .
+							" `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)" .
+							" WHERE `journalBookId`=? AND `itemAccountId` LIKE ?" .
+							" GROUP BY `journalId`, `journalDate`, `journalDescription`, `journalCancelled`" .
+							" ORDER BY $order";
+
 			$res = $this->query($query, array($bookId, $accountId));
 		}
 		if ($res===false) return false;
@@ -218,7 +223,7 @@ class AccountingLib extends LogsLib
 		}
 		return $journal;
 	}
-	
+
 	/**
 	 * Returns the totals for a given book and account
 	 *
@@ -230,17 +235,19 @@ class AccountingLib extends LogsLib
 	{
 		$journal = array();
 
-		$query = "SELECT `itemAccountId`, SUM(`itemAmount`*IF(`itemType`<0,1,0)) AS debit, sum(`itemAmount`*IF(`itemType`>0,1,0)) AS credit
-	          FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item`
-	          ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId` AND 
-	          `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)
-	          WHERE `journalBookId`=? AND `itemAccountId` LIKE ?";
-		$res = $this->query($query,array($bookId, $accountId));
+		$query = "SELECT `itemAccountId`, SUM(`itemAmount`*IF(`itemType`<0,1,0)) AS debit," .
+						" sum(`itemAmount`*IF(`itemType`>0,1,0)) AS credit" .
+						" FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item`" .
+						" ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId`" .
+						" AND `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)" .
+						" WHERE `journalBookId`=? AND `itemAccountId` LIKE ?";
+
+		$res = $this->query($query, array($bookId, $accountId));
 		$totals = $res->fetchRow();
-		$totals['total'] = $totals['credit']-$totals['debit'];
+		$totals['total'] = $totals['credit'] - $totals['debit'];
 		return $totals;
 	}
-	
+
 	/**
 	 * Returns a list of accounts as defined in table tiki_acct_account
 	 *
@@ -251,10 +258,13 @@ class AccountingLib extends LogsLib
 	 */
 	function getAccounts($bookId, $order = "`accountId` ASC", $all = false)
 	{
-		$query = 'SELECT * FROM `tiki_acct_account` WHERE `accountBookId`=? '. ($all?'':'AND `accountLocked`=0 '). "ORDER BY $order";
+		$query = 'SELECT * FROM `tiki_acct_account` WHERE `accountBookId`=? ' .
+						($all ? '' : 'AND `accountLocked`=0 ') .
+						" ORDER BY $order";
+
 		return $this->fetchAll($query, array($bookId));
 	} //getAccounts
-	
+
 	/**
 	 * Returns an extended list of accounts with totals
 	 *
@@ -264,18 +274,19 @@ class AccountingLib extends LogsLib
 	 */
 	function getExtendedAccounts($bookId, $all = false)
 	{
-		$allcond = $all? '':' AND accountLocked=0';
-		$query = "SELECT accountBookId, accountId, accountName, accountNotes, accountBudget, accountLocked, 
-	          SUM(itemAmount*IF(itemType<0,1,0)) AS debit, SUM(itemAmount*IF(itemType>0,1,0)) AS credit
-	          FROM tiki_acct_account
-	          LEFT JOIN tiki_acct_journal ON tiki_acct_account.accountBookId=tiki_acct_journal.journalBookId
-	          LEFT JOIN tiki_acct_item ON tiki_acct_journal.journalId=tiki_acct_item.itemJournalId
-	          	AND tiki_acct_account.accountId=tiki_acct_item.itemAccountId 
-	          WHERE tiki_acct_account.accountBookId=? $allcond
-	          GROUP BY accountId, accountName, accountNotes, accountBudget, accountLocked";
+		$allcond = $all ? '': ' AND accountLocked=0';
+		$query = "SELECT accountBookId, accountId, accountName, accountNotes, accountBudget, accountLocked, " .
+							" SUM(itemAmount*IF(itemType<0,1,0)) AS debit, SUM(itemAmount*IF(itemType>0,1,0)) AS credit" .
+							"	FROM tiki_acct_account" .
+							" LEFT JOIN tiki_acct_journal ON tiki_acct_account.accountBookId=tiki_acct_journal.journalBookId" .
+							" LEFT JOIN tiki_acct_item ON tiki_acct_journal.journalId=tiki_acct_item.itemJournalId" .
+							" AND tiki_acct_account.accountId=tiki_acct_item.itemAccountId" .
+							" WHERE tiki_acct_account.accountBookId=? $allcond" .
+							" GROUP BY accountId, accountName, accountNotes, accountBudget, accountLocked";
+
 		return $this->fetchAll($query, array($bookId));
 	}//getExtendedAccounts
-	
+
 	/**
 	 * Returns an array with all data from the account
 	 *
@@ -292,7 +303,7 @@ class AccountingLib extends LogsLib
 		if ($checkChangeable) $account['changeable'] = $this->accountChangeable($bookId, $accountId);
 		return $account;
 	} //getAccount
-	
+
 	/**
 	 * Checks if this accountId can be changed or the account can be deleted.
 	 * This can only be done, if the account has not been used -> no posts exist for the account
@@ -307,16 +318,16 @@ class AccountingLib extends LogsLib
 		if ($book['bookClosed'] == 'y') {
 			return false;
 		}
-		$query = "SELECT Count(`itemAccountId`) AS posts
-              FROM `tiki_acct_journal`
-              INNER JOIN `tiki_acct_item` ON `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`
-              WHERE `journalBookId`=? and `itemAccountId`=?";
+		$query = "SELECT Count(`itemAccountId`) AS posts" .
+							" FROM `tiki_acct_journal`" .
+							" INNER JOIN `tiki_acct_item` ON `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`" .
+							"	WHERE `journalBookId`=? and `itemAccountId`=?";
 
 		$res = $this->query($query, array($bookId, $accountId));
 		$posts = $res->fetchRow();
 		return ($posts['posts'] == 0);
 	} //accountChangeable
-	
+
 	/**
 	 * Creates an account with the given information
 	 *
@@ -326,18 +337,19 @@ class AccountingLib extends LogsLib
 	 * @param	string	$accountNotes	notes for this account
 	 * @param	float	$accountBudget	planned budget for the account
 	 * @param	boolean	$accountLocked	can this account be used, 0=unlocked, 1=locked
- 	 * @param	int		$accountTax		taxId for tax automation
+	 * @param	int		$accountTax		taxId for tax automation
 	 * @return	array/boolean			list of errors or true on success
 	 */
-	function createAccount( $bookId
-												, $accountId
-												, $accountName
-												, $accountNotes
-												, $accountBudget
-												, $accountLocked
-												, $accountTax = 0
-												)
-		{
+	function createAccount(
+				$bookId,
+				$accountId,
+				$accountName,
+				$accountNotes,
+				$accountBudget,
+				$accountLocked,
+				$accountTax = 0
+			)
+	{
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
 			$errors = array(tra("This book has been closed. You can't create new accounts."));
@@ -362,17 +374,22 @@ class AccountingLib extends LogsLib
 
 		if (count($errors) != 0) return $errors;
 
-		$query = 'INSERT INTO tiki_acct_account SET accountBookId=?, accountId=?, accountName=?,
-				accountNotes=?, accountBudget=?, accountLocked=?, accountTax=?';
+		$query = 'INSERT INTO tiki_acct_accounti' . 
+						' SET accountBookId=?, accountId=?, accountName=?,' . 
+						' accountNotes=?, accountBudget=?, accountLocked=?, accountTax=?';
 
-		$res = $this->query($query, array($bookId
-																		, $accountId
-																		, $accountName
-																		, $accountNotes
-																		, $cleanbudget
-																		, $accountLocked
-																		, $accountTax)
-												);
+		$res = $this->query(
+						$query, 
+						array(
+							$bookId,
+							$accountId,
+							$accountName,
+							$accountNotes,
+							$cleanbudget,
+							$accountLocked,
+							$accountTax
+					)
+		);
 		if ($res === false) {
 			$errors[] = tra('Error creating account') & " $accountId: " . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			return $errors;
@@ -394,12 +411,12 @@ class AccountingLib extends LogsLib
 			return false;
 		}
 		$query = "UPDATE `tiki_acct_account` SET `accountLocked` = NOT `accountLocked` 
-				WHERE `accountBookId`=? AND `accountId`=?";
+			WHERE `accountBookId`=? AND `accountId`=?";
 		$res = $this->query($query, array($bookId, $accountId));
 		if ($res === false) return false;
 		return true;
 	} //changeAccountLock
-	
+
 	/**
 	 * Updates an account with the given information
 	 *
@@ -410,18 +427,19 @@ class AccountingLib extends LogsLib
 	 * @param	string	$accountNotes	notes for the account
 	 * @param	float	$accountBudget	planned yearly budget for the account
 	 * @param	boolean	$accountLocked	can this account be used 0=unlocked, 1=locked
- 	 * @param	int		$accountTax		id of the auto tax type, defaults to 0
+	 * @param	int		$accountTax		id of the auto tax type, defaults to 0
 	 * @return	array/boolean			list of errors, true on success
 	 */
-	function updateAccount($bookId
-												, $accountId
-												, $newAccountId
-												, $accountName
-												, $accountNotes
-												, $accountBudget
-												, $accountLocked
-												, $accountTax = 0
-												)
+	function updateAccount(
+				$bookId,
+				$accountId,
+				$newAccountId,
+				$accountName,
+				$accountNotes,
+				$accountBudget,
+				$accountLocked,
+				$accountTax = 0
+			)
 	{
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
@@ -452,30 +470,33 @@ class AccountingLib extends LogsLib
 
 		if (count($errors) != 0)
 			return $errors;
-		
-		$query = "UPDATE tiki_acct_account SET accountId=?, accountName=?, 
-				accountNotes=?, accountBudget=?, accountLocked=?, accountTax=?
-				WHERE accountBookId=? AND accountId=?";
 
-		$res = $this->query($query, array($newAccountId
-																		, $accountName
-																		, $accountNotes
-																		, $cleanbudget
-																		, $accountLocked
-																		, $accountTax
-																		, $bookId
-																		, $accountId
-																		)
-												);
+		$query = "UPDATE tiki_acct_account SET accountId=?, accountName=?, 
+			accountNotes=?, accountBudget=?, accountLocked=?, accountTax=?
+			WHERE accountBookId=? AND accountId=?";
+
+		$res = $this->query(
+						$query, 
+						array(
+							$newAccountId,
+							$accountName,
+							$accountNotes,
+							$cleanbudget,
+							$accountLocked,
+							$accountTax,
+							$bookId,
+							$accountId
+						)
+		);
 
 		if ($res === false) {
 			$errors[] = tra('Error updating account') & " $accountId: " . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			return $errors;
 		}
-		
+
 		return true;
 	} //updateAccount
-	
+
 	/**
 	 * Delete an account (if deleteable)
 	 *
@@ -545,7 +566,7 @@ class AccountingLib extends LogsLib
 
 		return true;
 	}
-	
+
 	/**
 	 * books a simple transaction
 	 *
@@ -559,17 +580,18 @@ class AccountingLib extends LogsLib
 	 * @param	string	$creditText			text for the credit post, defaults to an empty string
 	 * @return	int/array					list of errors or journalId on success
 	 */
-	function simpleBook($bookId
-										, $journalDate
-										, $journalDescription
-										, $debitAccount
-										, $creditAccount
-										, $amount
-										, $debitText = ''
-										, $creditText = ''
-										)
+	function simpleBook(
+				$bookId,
+				$journalDate,
+				$journalDescription,
+				$debitAccount,
+				$creditAccount,
+				$amount,
+				$debitText = '',
+				$creditText = ''
+			)
 	{
-		
+
 		$book = $this->getBook($bookId);
 
 		if ($book['bookClosed'] == 'y') {
@@ -587,9 +609,9 @@ class AccountingLib extends LogsLib
 		}
 
 		$errors = array();
-		
+
 		$query = "INSERT INTO `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
-				`journalCancelled`, `journalTs`)
+			`journalCancelled`, `journalTs`)
 				VALUES (?,?,?,0,NOW())";
 		$res = $this->query($query, array($bookId, $date->toString('Y-M-d'), $journalDescription));
 
@@ -600,9 +622,9 @@ class AccountingLib extends LogsLib
 		}
 
 		$journalId = $this->lastInsertId();
-	
+
 		$query = "INSERT INTO `tiki_acct_item` (`itemBookId`, `itemJournalId`, `itemAccountId`, `itemType`,
-				`itemAmount`, `itemText`, `itemTs`)
+			`itemAmount`, `itemText`, `itemTs`)
 				VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
 		$res = $this->query($query, array($bookId, $journalId, $debitAccount, -1, $amount, $debitText));
@@ -623,7 +645,7 @@ class AccountingLib extends LogsLib
 		// everything ok
 		return $journalId;
 	}// simplebook
-	
+
 	/**
 	 * books a complex transaction with multiple accounts on one side
 	 *
@@ -639,16 +661,17 @@ class AccountingLib extends LogsLib
 	 *
 	 * @return	int/array					journalID or list of errors
 	 */
-	function book($bookId
-							, $journalDate
-							, $journalDescription
-							, $debitAccount
-							, $creditAccount
-							, $debitAmount
-							, $creditAmount
-							, $debitText = array()
-							, $creditText = array()
-							)
+	function book(
+				$bookId,
+				$journalDate,
+				$journalDescription,
+				$debitAccount,
+				$creditAccount,
+				$debitAmount,
+				$creditAmount,
+				$debitText = array(),
+				$creditText = array()
+			)
 	{
 
 		$book = $this->getBook($bookId);
@@ -675,7 +698,7 @@ class AccountingLib extends LogsLib
 		if (!is_array($creditAmount)) $creditAmount = array($creditAmount);
 		if (!is_array($debitText)) $debitText = array($debitText);
 		if (!is_array($creditText)) $creditText = array($creditText);
-	
+
 		if (count($debitAccount) != count($debitAmount) or count($debitAccount) != count($debitText)) {
 			$errors[] = tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
 		}
@@ -721,7 +744,7 @@ class AccountingLib extends LogsLib
 		if (count($errors) > 0) return $errors;
 
 		$query = "INSERT INTO `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
-				`journalCancelled`, `journalTs`)
+			`journalCancelled`, `journalTs`)
 				VALUES (?,?,?,0,NOW())";
 		$res = $this->query($query, array($bookId, $date->toString('Y-M-d'), $journalDescription));
 
@@ -729,11 +752,11 @@ class AccountingLib extends LogsLib
 			$errors[] = tra('Booking error creating journal entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			return $errors;
 		}
-		
+
 		$journalId = $this->lastInsertId();
 
 		$query="INSERT INTO `tiki_acct_item` (`itemBookId`, `itemJournalId`, `itemAccountId`, `itemType`,
-				`itemAmount`, `itemText`, `itemTs`)
+			`itemAmount`, `itemText`, `itemTs`)
 				VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
 		for ($i=0, $icount_debitAccount = count($debitAccount); $i < $icount_debitAccount; $i++) {
@@ -757,7 +780,7 @@ class AccountingLib extends LogsLib
 		}
 		return $journalId;
 	}// book
-	
+
 	/**
 	 *
 	 * Retrieves one entry from the journal
@@ -768,10 +791,10 @@ class AccountingLib extends LogsLib
 	 */
 	function getTransaction($bookId, $journalId)
 	{
-		$query = 'SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`'
-						. ' FROM `tiki_acct_journal`'
-						. ' WHERE `journalBookId`=? AND `journalId`=?'
-						;
+		$query = 'SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`' . 
+					' FROM `tiki_acct_journal`' . 
+					' WHERE `journalBookId`=? AND `journalId`=?'
+			;
 		$res = $this->query($query, array($bookId, $journalId));
 		if ($res === false) return false;
 		$entry = $res->fetchRow();
@@ -783,7 +806,7 @@ class AccountingLib extends LogsLib
 		$entry['maxcount'] = max($entry['creditcount'], $entry['debitcount']);
 		return $entry;		
 	} //getTransaction
-	
+
 	/**
 	 * Declares a statement in the journal as cancelled.
 	 * @param	int		$bookId		id of the current book
@@ -824,7 +847,7 @@ class AccountingLib extends LogsLib
 		}
 		return $stack;
 	}
-	
+
 	/**
 	 *
 	 * Do a manual rollback, if the creation of a complete booking fails.
@@ -848,7 +871,7 @@ class AccountingLib extends LogsLib
 			return tra('successfully rolled back #') . " $stackId";
 		}
 	} //stackManualRollback
-		
+
 	/**
 	 * books a complex transaction with multiple accounts on one side into the stack
 	 *
@@ -864,16 +887,17 @@ class AccountingLib extends LogsLib
 	 *
 	 * @return	int/array					stackID or list of errors
 	 */
-	function stackBook($bookId
-										, $stackDate
-										, $stackDescription
-										, $debitAccount
-										, $creditAccount
-										, $debitAmount
-										, $creditAmount
-										, $debitText = array()
-										, $creditText = array()
-										)
+	function stackBook(
+				$bookId,
+				$stackDate,
+				$stackDescription,
+				$debitAccount,
+				$creditAccount,
+				$debitAmount,
+				$creditAmount,
+				$debitText = array(),
+				$creditText = array()
+			)
 	{
 
 		$book = $this->getBook($bookId);
@@ -896,7 +920,7 @@ class AccountingLib extends LogsLib
 		if (!is_array($creditAmount)) $creditAmount = array($creditAmount);
 		if (!is_array($debitText)) $debitText = array($debitText);
 		if (!is_array($creditText)) $creditText = array($creditText);
-	
+
 		if (count($debitAccount) != count($debitAmount) or count($debitAccount) != count($debitText)) {
 			$errors[] = tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
 		}
@@ -923,9 +947,9 @@ class AccountingLib extends LogsLib
 		}
 
 		for ($i=0, $icount_creditAmount = count($creditAmount); $i < $icount_creditAmount; $i++) {
-			$a = $this->cleanupAmount($bookId,$creditAmount[$i]);
+			$a = $this->cleanupAmount($bookId, $creditAmount[$i]);
 			if (!is_numeric($a) or $a<=0) {
-				$errors[] = tra('Invalid credit amount ').$creditAmount[$i];
+				$errors[] = tra('Invalid credit amount ') . $creditAmount[$i];
 			} else {
 				$checkamount += $a;
 			}
@@ -947,22 +971,22 @@ class AccountingLib extends LogsLib
 			$errors[] = tra('Booking error creating stack entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			return $errors;
 		}
-		
+
 		$stackId = $this->lastInsertId();
 
 		$query = "INSERT INTO `tiki_acct_stackitem` (`stackBookId`, `stackItemStackId`, `stackItemAccountId`, `stackItemType`,
-				`stackItemAmount`, `stackItemText`)
+			`stackItemAmount`, `stackItemText`)
 				VALUES (?, ?, ?, ?, ?, ?)";	
 
-		for ($i=0, $icount_debitAccount = count($debitAccount); $i < $icount_debitAccount; $i++) {
-			$a = $this->cleanupAmount($bookId, $debitAmount[$i]);
-			$res = $this->query($query, array($bookId, $stackId, $debitAccount[$i], -1, $a, $debitText[$i]));
-			if ($res === false) {
-				$errors[] = tra('Booking error creating stack debit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
-				$errors[] = $this->stackManualRollback($bookId, $stackId);
-				return $errors;
-			}
-		}
+				for ($i=0, $icount_debitAccount = count($debitAccount); $i < $icount_debitAccount; $i++) {
+					$a = $this->cleanupAmount($bookId, $debitAmount[$i]);
+					$res = $this->query($query, array($bookId, $stackId, $debitAccount[$i], -1, $a, $debitText[$i]));
+					if ($res === false) {
+						$errors[] = tra('Booking error creating stack debit entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
+						$errors[] = $this->stackManualRollback($bookId, $stackId);
+						return $errors;
+					}
+				}
 
 		for ($i=0, $icount_creditAccount = count($creditAccount); $i < $icount_creditAccount; $i++) {
 			$a = $this->cleanupAmount($bookId, $creditAmount[$i]);
@@ -977,18 +1001,19 @@ class AccountingLib extends LogsLib
 		return $stackId;
 	}// stackBook
 
-	function stackUpdate($bookId
-											, $stackId
-											, $stackDate
-											, $stackDescription
-											, $debitAccount
-											, $creditAccount
-											, $debitAmount
-											, $creditAmount
-											, $debitText = array()
-											, $creditText = array()
-											)
-		{
+	function stackUpdate(
+				$bookId,
+				$stackId,
+				$stackDate,
+				$stackDescription,
+				$debitAccount,
+				$creditAccount,
+				$debitAmount,
+				$creditAmount,
+				$debitText = array(),
+				$creditText = array()
+			)
+	{
 
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
@@ -1010,7 +1035,7 @@ class AccountingLib extends LogsLib
 		if (!is_array($creditAmount)) $creditAmount = array($creditAmount);
 		if (!is_array($debitText)) $debitText = array($debitText);
 		if (!is_array($creditText)) $creditText = array($creditText);
-	
+
 		if (count($debitAccount) != count($debitAmount) or count($debitAccount) != count($debitText)) {
 			$errors[] = tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
 		}
@@ -1035,7 +1060,7 @@ class AccountingLib extends LogsLib
 				$errors[] = tra('Invalid debit account number ') . $debitAccount[$i];
 			}
 		}
-		
+
 		for ($i=0, $icount_creditAmount = count($creditAmount); $i<$icount_creditAmount; $i++) {
 			$a = $this->cleanupAmount($bookId, $creditAmount[$i]);
 			if (!is_numeric($a) or $a<=0) {
@@ -1068,9 +1093,9 @@ class AccountingLib extends LogsLib
 			$errors[] = $this->stackManualRollback($bookId, $stackId);
 			return $errors;
 		}
-		
+
 		$query = "INSERT INTO `tiki_acct_stackitem` (`stackBookId`, `stackItemStackId`, `stackItemAccountId`, `stackItemType`,
-				`stackItemAmount`, `stackItemText`)
+			`stackItemAmount`, `stackItemText`)
 				VALUES (?, ?, ?, ?, ?, ?)";
 
 		for ($i=0, $icount_debitAccount = count($debitAccount); $i < $icount_debitAccount; $i++) {
@@ -1095,7 +1120,7 @@ class AccountingLib extends LogsLib
 		// everything ok
 		return $stackId;
 	}
-	
+
 	/**
 	 * deletes an entry from the stack
 	 * @param	int		$bookId		id of the current book
@@ -1120,7 +1145,7 @@ class AccountingLib extends LogsLib
 		}
 		return true;
 	}
-	
+
 	/**
 	 *
 	 * Confirm a transaction and transfer it to the journal
@@ -1130,7 +1155,7 @@ class AccountingLib extends LogsLib
 	function stackConfirm($bookId, $stackId)
 	{
 		$query = "INSERT into `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
-				`journalCancelled`, `journalTs`)
+			`journalCancelled`, `journalTs`)
 				SELECT ?, `stackDate`, `stackDescription` , 0, NOW() FROM `tiki_acct_stack` WHERE `stackBookId`=? AND `stackId`=?";
 		$res = $this->query($query, array($bookId, $bookId, $stackId));
 		if ($res === false) {
@@ -1139,7 +1164,7 @@ class AccountingLib extends LogsLib
 		}		
 		$journalId = $this->lastInsertId();
 		$query = "INSERT INTO `tiki_acct_item` (`itemBookId`, `itemJournalId`, `itemAccountId`, `itemType`,
-				`itemAmount`, `itemText`, `itemTs`)
+			`itemAmount`, `itemText`, `itemTs`)
 				SELECT ?, ?, `stackItemAccountId`, `stackItemType`, `stackItemAmount`, `stackItemText`, NOW()
 				FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=?";
 		$res = $this->query($query, array($bookId, $journalId, $bookId, $stackId));
@@ -1153,7 +1178,7 @@ class AccountingLib extends LogsLib
 		$res = $this->query($query, array($journalId, $bookId, $stackId));
 		return true;		
 	}
-	
+
 	/**
 	 *
 	 * Retrieves one entry from the stack
@@ -1176,7 +1201,7 @@ class AccountingLib extends LogsLib
 		$entry['maxcount'] = max($entry['creditcount'], $entry['debitcount']);
 		return $entry;		
 	} //getTransaction
-	
+
 	/**
 	 * Returns a list of bankaccounts which are related to internal accounts
 	 * @param	int		$bookId		id if the current book
@@ -1186,12 +1211,12 @@ class AccountingLib extends LogsLib
 	function getBankAccounts($bookId)
 	{
 		$query = "SELECT * FROM `tiki_acct_bankaccount` INNER JOIN `tiki_acct_account` 
-				ON `tiki_acct_bankaccount`.`bankBookId` = `tiki_acct_account`.`accountBookId` AND
-				`tiki_acct_bankaccount`.`bankAccountId`=`tiki_acct_account`.`accountId`
-				WHERE `tiki_acct_bankaccount`.`bankBookId`=?";
+			ON `tiki_acct_bankaccount`.`bankBookId` = `tiki_acct_account`.`accountBookId` AND
+			`tiki_acct_bankaccount`.`bankAccountId`=`tiki_acct_account`.`accountId`
+			WHERE `tiki_acct_bankaccount`.`bankBookId`=?";
 		return $this->fetchAll($query, array($bookId));
 	}//getBankAccounts
-	
+
 	/**
 	 * Returns a list of bank statements which have been uploaded but not yet been processed
 	 *
@@ -1206,7 +1231,7 @@ class AccountingLib extends LogsLib
 			AND `statementBookId`=? AND `statementAccountId`=?";
 		return $this->fetchAll($query, array($bookId, $accountId));
 	}//getOpenStatements
-	
+
 	/**
 	 * Returns the statement with the given Id from the list of statements
 	 *
@@ -1220,7 +1245,7 @@ class AccountingLib extends LogsLib
 		if ($res === false) return $res;
 		return $res->fetchRow();
 	}//getStatement
-	
+
 	/**
 	 * Returns the import specification for a given accountId
 	 * @param	int		$bookId		id of the current book
@@ -1234,7 +1259,7 @@ class AccountingLib extends LogsLib
 		if ($res === false) return $res;
 		return $res->fetchRow();
 	}//getBankAccount
-	
+
 	/**
 	 * Splits a header line into a matching array according to the specifications
 	 *
@@ -1250,30 +1275,30 @@ class AccountingLib extends LogsLib
 		for ($i=0, $isizeof_cols = count($cols); $i < $isizeof_cols; $i++) {
 			switch($cols[$i]) {
 				case $defs['fieldNameAccount'] : $columns['accountId'] = $i;
-													break;
+								break;
 				case $defs['fieldNameBookingDate'] : $columns['bookingDate'] = $i;
-													break;
+								break;
 				case $defs['fieldNameValueDate'] : $columns['valueDate'] = $i;
-													break;
+								break;
 				case $defs['fieldNameBookingText'] : $columns['bookingText'] = $i;
-													break;
+								break;
 				case $defs['fieldNameReason'] : $columns['reason'] = $i;
-													break;
+								break;
 				case $defs['fieldNameCounterpartName'] : $columns['counterpartName'] = $i;
-													break;
+								break;
 				case $defs['fieldNameCounterpartAccount'] : $columns['counterpartAccount'] = $i;
-													break;
+								break;
 				case $defs['fieldNameCounterpartBankcode'] : $columns['counterpartBankcode'] = $i;
-													break;
+								break;
 				case $defs['fieldNameAmount'] : $columns['amount'] = $i;
-													break;
+								break;
 				case $defs['fieldNameAmountSign'] : $columns['amountSign'] = $i;
-													break;
+								break;
 			}
 		}
 		return $columns;
 	}//analyzeHeader
-	
+
 	/**
 	 * updates journalId in the given statement
 	 *
@@ -1313,7 +1338,7 @@ class AccountingLib extends LogsLib
 		}
 		return true;
 	}//updateStatementStack
-	
+
 	/**
 	 *
 	 * Creates a tax setting for automated tax deduction/splitting
@@ -1329,7 +1354,7 @@ class AccountingLib extends LogsLib
 		$res = $this->query($query, array($bookId, $taxText, $taxAmount, $taxIsFix));
 		return $this->lastInsertId();
 	}
-	
+
 	/**
 	 * removes all unnecessary thousand markers and replaces local decimal characters with "." to enable handling as numbers.
 	 *
@@ -1340,11 +1365,11 @@ class AccountingLib extends LogsLib
 	function cleanupAmount($bookId, $amount)
 	{
 		$book = $this->getBook($bookId);
-		$a = str_replace($book['bookDecPoint'], '.' , str_replace($book['bookThousand'], '', $amount));
+		$a = str_replace($book['bookDecPoint'], '.', str_replace($book['bookThousand'], '', $amount));
 		if (!is_numeric($a)) return '';
 		return floatval($a);
 	}//cleanupAmount
-	
+
 	/**
 	 * Checks the existence/non-existence of a numerical id in the given table
 	 *
@@ -1368,7 +1393,7 @@ class AccountingLib extends LogsLib
 				if ($bookIdName != '') {
 					$query .= " AND $bookIdName=$bookId";
 				}
-				
+
 				$res = $this->query($query);
 				if ($res === false) {
 					$errors[] = tra('Error checking') & " $idname: " . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";

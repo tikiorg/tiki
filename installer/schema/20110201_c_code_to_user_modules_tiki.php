@@ -36,21 +36,26 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 
 	$prefs = array();
 	$result = $installer->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+
 	foreach ($result as $res) {
 		$prefs[$res['name']] = $res['value'];
 	}
 
-	$prefs = array_merge(array(	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
-		'feature_sitemycode' => 'y',
-		'sitemycode' => $defaultsitemycode,
-		'sitemycode_publish' => 'n',
-		'feature_secondary_sitemenu_custom_code' => '',
-		'feature_sitemenu_custom_code' => '',
-		'feature_topbar_custom_code' => '',
-		'feature_custom_center_column_header' => '',
-		'bot_logo_code' => '',
-		'feature_bot_logo' => 'n',
-	), $prefs);
+	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
+	$prefs = array_merge(
+					array(
+						'feature_sitemycode' => 'y',
+						'sitemycode' => $defaultsitemycode,
+						'sitemycode_publish' => 'n',
+						'feature_secondary_sitemenu_custom_code' => '',
+						'feature_sitemenu_custom_code' => '',
+						'feature_topbar_custom_code' => '',
+						'feature_custom_center_column_header' => '',
+						'bot_logo_code' => '',
+						'feature_bot_logo' => 'n',
+					), 
+					$prefs
+	);
 
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
 	if ($prefs['feature_sitemycode'] === 'y') {
@@ -58,12 +63,21 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 		
 		if (preg_replace('/\s/', '', $custom_code) != preg_replace('/\s/', '', $defaultsitemycode)) {	// line ends seem to differ
 			
-			$installer->query("INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-					array('sitemycode', '', $custom_code, NULL));
+			$installer->query(
+							"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
+							array(
+								'sitemycode', 
+								'', 
+								$custom_code, 
+								NULL
+							)
+			);
 
 			if ($prefs['sitemycode_publish'] === 'y') {
-				$installer->query("INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-										"('sitemycode','t',1,7200,'nobox=y','a:0:{}');");
+				$installer->query(
+								"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
+								"('sitemycode','t',1,7200,'nobox=y','a:0:{}');"
+				);
 			}
 		}
 	}
@@ -71,52 +85,95 @@ function upgrade_20110201_c_code_to_user_modules_tiki($installer)
 	if (!empty($prefs['feature_secondary_sitemenu_custom_code'])) {
 		$custom_code = $prefs['feature_secondary_sitemenu_custom_code'];
 		
-		$installer->query("INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-					array('secondary_sitemenu_custom_code', '', $custom_code, NULL));
+		$installer->query(
+						"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
+						array(
+							'secondary_sitemenu_custom_code', 
+							'', 
+							$custom_code, 
+							NULL
+						)
+		);
 
-		$installer->query("INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('secondary_sitemenu_custom_code','t',1,7200,'nobox=y','a:0:{}');");
+		$installer->query(
+						"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
+						"('secondary_sitemenu_custom_code','t',1,7200,'nobox=y','a:0:{}');"
+		);
 	}
 	
 	if (!empty($prefs['feature_sitemenu_custom_code'])) {
 		$custom_code = $prefs['feature_sitemenu_custom_code'];
 		
-		$installer->query("INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-					array('sitemenu_custom_code', '', $custom_code, NULL));
+		$installer->query(
+						"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
+						array(
+							'sitemenu_custom_code', 
+							'', 
+							$custom_code, 
+							NULL
+						)
+		);
 
-		$installer->query("INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('sitemenu_custom_code','o',1,7200,'nobox=y','a:0:{}');");
+		$installer->query(
+						"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
+						"('sitemenu_custom_code','o',1,7200,'nobox=y','a:0:{}');"
+		);
 	}
 	
 	if (!empty($prefs['feature_topbar_custom_code'])) {
 		$custom_code = $prefs['feature_topbar_custom_code'];
 		
-		$installer->query("INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-					array('topbar_custom_code', '', $custom_code, NULL));
+		$installer->query(
+						"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
+						array(
+							'topbar_custom_code', 
+							'', 
+							$custom_code, 
+							NULL
+						)
+		);
 
-		$installer->query("INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('topbar_custom_code','o',1,7200,'nobox=y','a:0:{}');");
+		$installer->query(
+						"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
+						"('topbar_custom_code','o',1,7200,'nobox=y','a:0:{}');"
+		);
 	}
 	
 	if (!empty($prefs['feature_custom_center_column_header'])) {
 		$custom_code = $prefs['feature_custom_center_column_header'];
 		
-		$installer->query("INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-					array('custom_center_column_header', '', $custom_code, NULL));
+		$installer->query(
+						"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
+						array(
+							'custom_center_column_header', 
+							'', 
+							$custom_code, NULL
+						)
+		);
 
-		$installer->query("INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('custom_center_column_header','p',1,7200,'nobox=y','a:0:{}');");
+		$installer->query(
+						"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
+						"('custom_center_column_header','p',1,7200,'nobox=y','a:0:{}');"
+		);
 	}
 	
 	if (!empty($prefs['bot_logo_code'])) {
 		$custom_code = $prefs['bot_logo_code'];
 		
-		$installer->query("INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
-					array('bot_logo_code', '', $custom_code, NULL));
+		$installer->query(
+						"INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
+						array(
+							'bot_logo_code', '', 
+							$custom_code, 
+							NULL
+						)
+		);
 
 		if ($prefs['feature_bot_logo'] === 'y') {
-			$installer->query("INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-										"('bot_logo_code','b',1,7200,'nobox=y','a:0:{}');");
+			$installer->query(
+							"INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES " .
+							"('bot_logo_code','b',1,7200,'nobox=y','a:0:{}');"
+			);
 		}
 	}
 	
