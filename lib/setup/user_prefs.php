@@ -56,7 +56,7 @@ if ( $user ) {
 	$smarty->assign("userPage_exists", $exist);
 
 } else {
-	$prefs = array_merge($prefs, $_SESSION['preferences']);
+if ( ! is_null($_SESSION['preferences'])) $prefs = array_merge($prefs, $_SESSION['preferences']);
 	$allowMsgs = 'n';
 }
 
