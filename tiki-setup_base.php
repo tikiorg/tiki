@@ -49,7 +49,6 @@ $needed_prefs = array(
 	'tiki_cdn_ssl' => '',
 	'language' => 'en',
 	'lang_use_db' => 'n',
-	'versionOfPreferencesCache' => - 1,
 	'feature_fullscreen' => 'n',
 	'error_reporting_level' => 0,
 	'smarty_notice_reporting' => 'n',
@@ -69,10 +68,6 @@ if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	exit;
 }
 $tikilib->get_preferences($needed_prefs, true, true);
-if (!isset($prefs['versionOfPreferencesCache']) || $prefs['versionOfPreferencesCache'] == - 1) {
-	$tikilib->query('delete from `tiki_preferences` where `name`=?', array('versionOfPreferencesCache'));
-	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('versionOfPreferencesCache', 1));
-}
 
 if ($prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS'])) {
 	header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
