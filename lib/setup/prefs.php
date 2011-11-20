@@ -326,8 +326,8 @@ function initialize_prefs() {
 	global $prefs, $tikilib, $user_overrider_prefs, $in_installer, $section, $systemConfiguration;
 
 	if (!empty($in_installer)) {
-			$prefs = get_default_prefs();
-			return;
+		$prefs = get_default_prefs();
+		return;
 	}
 	$cachelib = TikiLib::lib('cache');
 
@@ -365,8 +365,7 @@ function initialize_prefs() {
 		$cachelib->cacheItem('global_preferences', serialize($prefs));
 	}
 
-	// Perspectives are disabled by default so the preference has to be modified
-	if ( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y') {
+	if ( $prefs['feature_perspective'] == 'y') {
 		if ( ! isset( $section ) || $section != 'admin' ) {
 			require_once 'lib/perspectivelib.php';
 			if ( $persp = $perspectivelib->get_current_perspective( $modified ) ) {

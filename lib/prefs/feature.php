@@ -1212,7 +1212,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Perspectives',
 			'type' => 'flag',
 			'perspective' => false,
-			'default' => 'n', // If enabling by default, lib/setup/prefs.php needs updating
+			'default' => 'n',
 			'view' => 'tiki-edit_perspective.php',
 		),
 		'feature_wiki_replace' => array(
