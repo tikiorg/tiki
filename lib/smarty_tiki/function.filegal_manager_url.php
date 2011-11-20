@@ -16,9 +16,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_filegal_manager_url($params, $smarty)
 {
-	global $tikilib, $tikiroot_relative, $prefs;
+	global $tikilib, $prefs;
 
-	$return = $tikiroot_relative . 'tiki-upload_file.php?galleryId='.$prefs['home_file_gallery'].'&view=browse';
+	$return =  'tiki-upload_file.php?galleryId='.$prefs['home_file_gallery'].'&view=browse';
 
 	if ( ! empty($params['area_id']) ) {
 		$return .= '&filegals_manager=' . $params['area_id'];
