@@ -275,8 +275,6 @@ function get_default_prefs() {
 		'show_comzone' => 'n',
 		'use_proxy' => 'n',
 		'webserverauth' => 'n',
-	
-		'case_patched' => 'n',
 
 		'feature_intertiki_imported_groups' => '',
 		'feature_contributor_wiki' => '',

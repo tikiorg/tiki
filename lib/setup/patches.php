@@ -8,12 +8,6 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-// patch for Case-sensitivity perm issue
-if ( $prefs['case_patched'] == 'n' ) {
-	include_once 'db/case_patch.php';
-	$tikilib->set_preference('case_patched','y');
-}
-
 // UPGRADE temporary for wysiwyg prefs. TODO REMOVE from release
 if ($prefs['feature_wysiwyg'] == 'no' or $prefs['feature_wysiwyg'] == 'optional' or $prefs['feature_wysiwyg'] == 'default') {
 	$par = $prefs['wiki_wikisyntax_in_html'];
