@@ -131,7 +131,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 
 function create_dirs($domain='')
 {
-	global $docroot;
+	global $tikipath;
 	$dirs=array(
 		'db',
 		'dump',
@@ -153,12 +153,12 @@ function create_dirs($domain='')
 		if (!is_dir($dir)) {
 			$created = @mkdir($dir, 02775); // Try creating the directory			
 			if (!$created) {
-				$ret .= "The directory '$docroot/$dir' could not be created.\n";
+				$ret .= "The directory '$tikipath$dir' could not be created.\n";
 			}
 		} else if (!TikiInit::is_writeable($dir)) {
 			@chmod($dir, 02775);
 			if (!TikiInit::is_writeable($dir)) {
-				$ret .= "The directory '$docroot/$dir' is not writeable.\n";
+				$ret .= "The directory '$tikipath$dir' is not writeable.\n";
 			}
 		}
 	}
@@ -236,7 +236,7 @@ function get_webserver_uid()
 
 function error_and_exit()
 {
-	global $errors, $docroot;
+	global $errors, $tikipath;
 
         $PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
 
@@ -269,7 +269,7 @@ or
 2- With shell (SSH) access, you can run the command below.
 
 	a) To run setup.sh, follow the instructions:
-		\$ cd $docroot
+		\$ cd $tikipath
 		\$ sh setup.sh
 
 		The script will offer you options depending on your server configuration.
@@ -590,17 +590,6 @@ if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (
 $smarty->assignByRef('dbservers', $dbservers);
 
 $errors = '';
-
-// changed to path_translated 28/4/04 by damian
-// for IIS compatibilty
-if (empty($_SERVER['PATH_TRANSLATED'])) {
-	// in PHP5, $_SERVER['PATH_TRANSLATED'] is no longer set
-	// the following is hopefully a good workaround
-	// nope, it wasn't - PHP5 doesn't allow pass-by-reference
-	$includedFiles = get_included_files();
-	$_SERVER['PATH_TRANSLATED'] = array_shift($includedFiles);
-}
-$docroot = dirname($_SERVER['PATH_TRANSLATED']);
 
 check_session_save_path();
 
