@@ -325,54 +325,61 @@ function get_default_prefs() {
 
 
 function initialize_prefs() {
-	global $prefs, $tikilib, $user_overrider_prefs, $in_installer, $section;
+	global $prefs, $tikilib, $user_overrider_prefs, $in_installer, $section, $systemConfiguration;
 
-	$defaults = get_default_prefs();
-
-	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+	if (!empty($in_installer)) {
+			$prefs = get_default_prefs();
+			return;
+	}
 	$cachelib = TikiLib::lib('cache');
-	if ( !$cachelib->isCached('serialized_preferences')) {
+
+	if ($cachelib->isCached('global_preferences')) {
+		$prefs = $cachelib->getSerialized('global_preferences');
+	} else {
+		$defaults = get_default_prefs();
+	
+		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 		$serializedPreferences = array();
 		foreach ( $defaults as $preference => $value ) {
 			if ( is_array($value) ) {
 				$serializedPreferences[] = $preference;
 			}
 		}
-		$cachelib->cacheItem('serialized_preferences', serialize($serializedPreferences));
-	}
-
-	$modified = empty($in_installer) ? $tikilib->getModifiedPreferences() : array();
-
-	// Unserialize serialized preferences
-	foreach ( $cachelib->getSerialized('serialized_preferences') as $serializedPreference ) {
-		if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
-	}
-
-	// Keep some useful sites values available before overriding with user prefs
-	// (they could be used in templates, so we need to set them even for Anonymous)
-	foreach ( $user_overrider_prefs as $uop ) {
-		if (isset($modified[$uop])) {
-			$modified['site_'.$uop] = $modified[$uop];
-		} elseif (isset($defaults[$uop])) {
-			$modified['site_'.$uop] = $defaults[$uop];
+	
+		$modified = $tikilib->getModifiedPreferences();
+	
+		// Unserialize serialized preferences
+		foreach ( $cachelib->getSerialized('serialized_preferences') as $serializedPreference ) {
+			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
 		}
+	
+		// Keep some useful sites values available before overriding with user prefs
+		// (they could be used in templates, so we need to set them even for Anonymous)
+		foreach ( $user_overrider_prefs as $uop ) {
+			if (isset($modified[$uop])) {
+				$modified['site_'.$uop] = $modified[$uop];
+			} elseif (isset($defaults[$uop])) {
+				$modified['site_'.$uop] = $defaults[$uop];
+			}
+		}
+	
+		$prefs = $modified + $defaults;
+		$cachelib->cacheItem('global_preferences', serialize($prefs));
 	}
-
 
 	// Perspectives are disabled by default so the preference has to be modified
 	if ( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y') {
 		if ( ! isset( $section ) || $section != 'admin' ) {
 			require_once 'lib/perspectivelib.php';
 			if ( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
-				$changes = $perspectivelib->get_preferences( $persp );
-				$modified = array_merge( $modified, $changes );
+				$perspectivePreferences = $perspectivelib->get_preferences( $persp );
+				$prefs = $perspectivePreferences + $prefs;
 			}
 		}
 	}
 
-	global $systemConfiguration;
-	// Override default values with modified preferences, and override the result with system-configured preferences.
-	$prefs = $systemConfiguration->preference->toArray() + $modified + $defaults;
+	// Override preferences with system-configured preferences.
+	$prefs = $systemConfiguration->preference->toArray() + $prefs;
 }
 
 /**

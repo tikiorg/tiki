@@ -26,7 +26,7 @@ class Connect_Client extends Connect_Abstract
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
 			$cachelib = TikiLib::lib('cache');
-			$cachelib->invalidate('modified_preferences');
+			$cachelib->invalidate('global_preferences');
 			
 			$tikilib = TikiLib::lib('tiki');
 			$modifiedPrefs = $tikilib->getModifiedPreferences();

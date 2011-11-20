@@ -3405,11 +3405,6 @@ class TikiLib extends TikiDb_Bridge
 	// NOTE: prefslib contains a similar method now called getModifiedPrefsForExport
 	function getModifiedPreferences()
 	{
-		$cachelib = TikiLib::lib('cache');
-		if ( $data = $cachelib->getSerialized('modified_preferences')) {
-			return $data;
-		}
-
 		$defaults = get_default_prefs();
 		$modified = array();
 
@@ -3422,9 +3417,6 @@ class TikiLib extends TikiDb_Bridge
 			if ( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
 				$modified[$name] = $value;
 		}
-
-		$cachelib->cacheItem('modified_preferences', serialize($modified));
-
 		return $modified;
 	}
 
@@ -3469,7 +3461,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		$this->table('tiki_preferences')->delete(array('name' => $name));
 		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('modified_preferences');
+		$cachelib->invalidate('global_preferences');
 	}
 
 	function set_preference($name, $value)
@@ -3488,7 +3480,7 @@ class TikiLib extends TikiDb_Bridge
 		$menulib->empty_menu_cache();
 
 		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('modified_preferences');
+		$cachelib->invalidate('global_preferences');
 
 		$preferences = $this->table('tiki_preferences');
 		$preferences->insertOrUpdate(array('value' => is_array($value) ? serialize($value) : $value), array('name' => $name));
