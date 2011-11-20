@@ -51,7 +51,6 @@ $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
 if ($prefs['site_closed'] == 'y') require_once ('lib/setup/site_closed.php');
 require_once ('lib/setup/error_reporting.php');
 if ($prefs['use_load_threshold'] == 'y') require_once ('lib/setup/load_threshold.php');
-if ($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') require_once ('lib/setup/patches.php');
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
 
