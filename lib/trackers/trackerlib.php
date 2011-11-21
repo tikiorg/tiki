@@ -1759,15 +1759,15 @@ class TrackerLib extends TikiLib
 			$total++;
 		}
 
+		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
+		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array('trackerId' => (int) $trackerId));
+
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 		foreach ( $need_reindex as $id ) {
 			$unifiedsearchlib->invalidateObject('trackeritem', $id);
 		}
 		$unifiedsearchlib->processUpdateQueue();
-
-		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
-		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array('trackerId' => (int) $trackerId));
 
 		return $total;
 	}
@@ -2224,6 +2224,7 @@ class TrackerLib extends TikiLib
 		if ($trackerId) {
 			$conditions = array('trackerId' => (int) $trackerId);
 			if ($trackers->fetchCount($conditions)) {
+				$conditions['items'] = 0;
 				$trackers->update($data, $conditions);
 			} else {
 				$data['trackerId'] = (int) $trackerId;
@@ -2255,6 +2256,7 @@ class TrackerLib extends TikiLib
 			$this->replace_tracker_field($trackerId, $ratingId, 'Rating', 's', '-', '-', $showratings, 'y', 'n', '-', 0, $ratingoptions);
 		}
 		$this->clear_tracker_cache($trackerId);
+		$this->update_tracker_summary(array('trackerId' => $trackerId));
 
 		global $prefs;
 		require_once('lib/search/refresh-functions.php');
