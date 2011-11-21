@@ -42,8 +42,8 @@
 						optionalLayers.append($('<label/>').text(layer.name).prepend(
 							$('<input type="checkbox"/>')
 								.attr('checked', layer.getVisibility())))
-								.change(function () {
-									layer.setVisibility($(this).is(':checked'));
+								.change(function (e) {
+									layer.setVisibility($(e.target).is(':checked'));
 								});
 					}
 				});
