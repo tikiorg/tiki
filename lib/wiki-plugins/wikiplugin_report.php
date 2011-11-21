@@ -57,13 +57,16 @@ function wikiplugin_report( $data, $params ) {
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
 				$headerlib->add_jq_onready("
-					var width = $('#reportPlugin$i').parent().width(); 
-					$('#reportPlugin$i')
-						.width(width)
+					var me = $('#reportPlugin$i');
+					me
 						.show()
-						.sheet({
-							editable: false,
-							buildSheet: true
+						.visible(function() {
+							me
+								
+								.sheet({
+									editable: false,
+									buildSheet: true
+								});
 						});
 					
 				");
