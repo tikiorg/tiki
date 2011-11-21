@@ -77,7 +77,6 @@ function inArray(item, array) {
     return false;
 }
 var allTimeZoneCodes = ' . json_encode(array_map("strtoupper", $tz)) . ';
-var local_tz = "";
 var now = new Date();
 var now_string = now.toString();
 var m = now_string.match(/[ \(]([A-Z]{3,6})[ \)]?[ \d]*$/);	// try three or more char tz first at the end or just before the year
@@ -99,11 +98,8 @@ if (m.substring(0,4) == "GMT-") {
 	m = "Etc/GMT+" + m.substring(4);
 } 
 if (inArray(m, allTimeZoneCodes)) {
-	local_tz = m;
-} else {
-	local_tz = "UTC";
+	setCookie("local_tz", m);
 }
-setCookie("local_tz", local_tz);
 ');
 
 	$js = '
