@@ -1128,6 +1128,8 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 					$col = implode(",", $col);
 				}
 				
+				$col = htmlspecialchars($col);
+				
 				$sheet->setValue( $i == 0 ? $key : $col );
 				
 				$sheet->setSize( 1, 1 );

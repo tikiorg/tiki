@@ -6,26 +6,32 @@
 // $Id$
 
 class Report_Definition_Tracker
-{	
-	function input() {
+{
+	var $trackers = array();
+	var $trackerFields = array();
+	
+	function __construct()
+	{
 		global $tikilib;
-		$trackers = array();
 		foreach($tikilib->table('tiki_trackers')->fetchAll(array('trackerId','name')) as $column) {
-			$trackers[] = array(
+			$this->trackers[$column['trackerId']] = array(
 				"label"=> $column['name'] . ' - ' . $column['trackerId'],
+				"name"=> $column['name'],
 				"value"=> $column['trackerId'],
 			);
 		}
 		
-		$trackerFields = array();
 		foreach($tikilib->table('tiki_tracker_fields')->fetchAll(array('trackerId', 'fieldId', 'name')) as $column) {
-			$trackerFields[] = array(
+			$this->trackerFields[$column['fieldId']] = array(
 				"label"=> $column['name'] . ' - ' . $column['fieldId'],
+				"name"=> $column['name'],
 				"value"=> $column['fieldId'],
 				"dependancy"=> $column['trackerId'],
 			);
 		}
-
+	}
+	
+	function input() {
 		/*
 			type:
 				single (if value, turns into list, if no value, is textbox)
@@ -36,9 +42,8 @@ class Report_Definition_Tracker
 		*/
 		return array(
 			"values"=> array(
-				"trackers"=>		$trackers,
-				"trackerFields"=>	$trackerFields,
-				"trackerItemStatus"=>array("o", "p", "c"),
+				"trackers"=>			$this->trackers,
+				"trackerFields"=>		$this->trackerFields,
 			),
 			"options"=> array(
 				array(
@@ -47,85 +52,77 @@ class Report_Definition_Tracker
 					"type"=> 		"single",
 					"values"=> 		"trackers",
 					"required"=>	true,
-					"join"=>	array(
-						"label" =>	tr("Join"),
-						"type"	=>	"inner",
-						"relationLabel"=>tr(" on "),
-						"on" => 	array(
-							"dependancyLabel" => tr("Field"),
-							"keyDependancy" => "tracker_fields",
-							"dependancyValues" => "trackerFields",
-							"values" => "trackers",
-							"label" => "Tracker",
-						),
+					"join"=>		array(
+										"label" =>	tr(" Join Tracker "),
+										"type"	=>	"joinInner",
+										"relationLabel"=>tr(" on "),
+										"settingsLabel"=>tr(" equals "),
+										"values" => "trackers",
+										"right" => array(
+											"values" => "trackerFields",
+											"keyDependancy" => "tracker_fields",
+										),
+										"left" => array(
+											"values" => array(array(
+												"label"=>"Item Id",
+												"value"=>"item_id"
+											)),
+										),
 					),
 					"options" =>	array(
-						array(
-							"label"=> 		tr("Start"),
-							"key"=> 		"start",
-							"type"=> 		"date",
-							"repeats"=>		false,
-							"required"=>	false,
-						),
-						array(
-							"label"=> 		tr("End"),
-							"key"=> 		"end",
-							"type"=> 		"date",
-							"repeats"=>		false,
-							"required"=>	false,
-						),
-						array(
-							"label"=> 		tr("Item Id"),
-							"key"=> 		"itemId",
-							"type"=> 		"single",
-							"repeats"=>		false,
-							"required"=>	false,
-						),
-						array(
-							"label"=> 		tr("Search"),
-							"relationLabel"=>tr(" for "),
-							"key"=> 		"search",
-							"type"=> 		"singleOneToOne",
-							"dependancy"=>	"tracker",
-							"values"=> 		"trackerFields",
-							"repeats"=>		true,
-							"required"=>	false,
-						),
-						array(
-							"label"=> 		tr("Status"),
-							"key"=> 		"status",
-							"type"=> 		"multi",
-							"values"=> 		"trackerItemStatus",
-							"repeats"=>		false,
-							"required"=>	false,
-						),
-						array(
-							"label"=> 		tr("Fields"),
-							"key"=> 		"fields",
-							"type"=> 		"multi",
-							"dependancy"=>	"tracker",
-							"values"=> 		"trackerFields",
-							"repeats"=>		false,
-							"required"=>	false,
-						),
+										array(
+											"label"=> 		tr("Start"),
+											"key"=> 		"start",
+											"type"=> 		"date",
+										),
+										array(
+											"label"=> 		tr("End"),
+											"key"=> 		"end",
+											"type"=> 		"date",
+										),
+										array(
+											"label"=> 		tr("Item Id"),
+											"key"=> 		"itemId",
+											"type"=> 		"single",
+										),
+										array(
+											"label"=> 		tr("Search"),
+											"relationLabel"=>tr(" for "),
+											"key"=> 		"search",
+											"type"=> 		"singleOneToOne",
+											"dependancy"=>	"tracker",
+											"values"=> 		"trackerFields",
+											"repeats"=>		true,
+										),
+										array(
+											"label"=> 		tr("Status"),
+											"key"=> 		"status",
+											"type"=> 		"multi",
+											"values"=> 		array("o", "p", "c"),
+										),
+										array(
+											"label"=> 		tr("Fields"),
+											"key"=> 		"fields",
+											"type"=> 		"multi",
+											"dependancy"=>	"tracker",
+											"values"=> 		"trackerFields",
+										),
 					),
 				),
 			),
 		);
 	}
 	
-	private function join($leftTracker, $rightTracker, $leftOn)
+	private function innerJoin($leftTracker, $rightTracker, $leftSetting, $rightSetting)
 	{
 		foreach($leftTracker as $key => $leftItem) {
-			$leftTracker[$key] += $rightTracker[$leftTracker[$key][$leftOn]];
+			$leftTracker[$key] = $leftTracker[$key] + $rightTracker[$leftTracker[$key][$rightSetting]];
 		}
 		return $leftTracker;
 	}
 	
-	function output($values = array())
+	private function query($values = array())
 	{
-		global $tikilib;
-		
 		$tracker = $values['tracker'];
 		
 		$qry = TikiLib::lib('trkqry')->tracker($tracker['value'])
@@ -177,8 +174,22 @@ class Report_Definition_Tracker
 			unset($newResult);
 		}
 		
-		foreach($tracker['join'] as $joinedTracker) {
-			$result = $this->join($result, $this->output($joinedTracker), $joinedTracker['on']['value']);
+		foreach($tracker['join'] as $join) {
+			$result = $this->innerJoin($result, $this->query($join), $join['left']['value'], $join['right']['value']);
+		}
+		
+		return $result;
+	}
+
+	function output($values = array())
+	{
+		$result = $this->query($values);
+		
+		foreach($result as $itemKey => $item) {
+			foreach($item as $fieldKey => $field) {
+				$result[$itemKey][$this->trackerFields[$fieldKey]['name'] . " - " . $fieldKey] = $field;
+				unset($result[$itemKey][$fieldKey]);
+			}
 		}
 		
 		return $result;

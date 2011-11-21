@@ -8,6 +8,9 @@
 	.joinedReport {
 		padding-left: 4em;
 	}
+	.joinHeader {
+		padding: 3px;
+	}
 </style>
 
 <h5 style="margin: 0px; padding: 3px;" class="ui-widget-header ui-corner-top">
