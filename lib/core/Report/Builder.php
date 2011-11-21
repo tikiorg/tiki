@@ -59,7 +59,7 @@ class Report_Builder
 	
 	static function loadFromWikiSyntax($lines = "")
 	{
-		$parsedValues = array();
+		if (empty($lines)) throw new Exception("Failed to get body", 1);
 		
 		foreach(explode("\n", $lines) as $values) {
 			$values = trim($values);
@@ -68,9 +68,8 @@ class Report_Builder
 				$parsedValues[trim($value[0])] = trim($value[1]);
 			}
 		}
-		$me = new self();
-		$me->type = $parsedValues['type'];
-		unset($parsedValues['type']);
+		
+		$me = Report_Builder::load($parsedValues['type']);
 		return $me->setValues(TikiFilter_PrepareInput::delimiter('_')->prepare($parsedValues));
 	}
 	

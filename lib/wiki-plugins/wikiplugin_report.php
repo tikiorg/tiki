@@ -37,31 +37,52 @@ function wikiplugin_report_info() {
 
 function wikiplugin_report( $data, $params ) {
 	global $tikilib,$headerlib;
-	extract ($params,EXTR_SKIP);
 	static $report = 0;
 	++$report;
 	$i = $report;
 	
-	$report = Report_Builder::loadFromWikiSyntax($data);
+	$params = array_merge(array(
+		"view"=> "sheet",
+		"name"=> ""
+	), $params);
 	
-	$view = (!empty($view) ? $view : 'sheet');
-	$name = (!empty($name) ? $name : '');
+	extract ($params,EXTR_SKIP);
 	
-	switch($view) {
-		case 'sheet':
-			TikiLib::lib("sheet")->setup_jquery_sheet();
-			
-			$headerlib->add_jq_onready("
-			
-				$('#reportPlugin$i')
-					.sheet({
-						editable: false,
-						buildSheet: true
-					});
+	if (!empty($data)) {
+		$result = "";
+		$report = Report_Builder::loadFromWikiSyntax($data);
+		
+		switch($view) {
+			case 'sheet':
+				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
-			");
-			
-			return "~np~<div id='reportPlugin$i'>" . $report->outputSheet($name) . "</div>~/np~";
-			break;
+				$headerlib->add_jq_onready("
+					var width = $('#reportPlugin$i').parent().width(); 
+					$('#reportPlugin$i')
+						.width(width)
+						.show()
+						.sheet({
+							editable: false,
+							buildSheet: true
+						});
+					
+				");
+				
+				$result .= "
+					<style>
+						#reportPlugin$i {
+							display: none;
+							width: inherit ! important;
+						}
+					</style>
+					
+					<div id='reportPlugin$i'>" 
+						. $report->outputSheet($name) . 
+					"</div>";
+				break;
+				
+		}
 	}
+	
+	return "~np~" . $result . "~/np~"; 
 }
