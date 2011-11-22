@@ -115,4 +115,21 @@ class Language_ParseFile
 		
 		return $stats;
 	}
+	
+	/**
+	 * Return an array with translations extracted from
+	 * language file.
+	 * 
+	 * @return array translations
+	 */
+	public function getTranslations()
+	{
+		require($this->filePath);
+
+		if (isset($lang) && !empty($lang)) {
+			return $lang;
+		} else {
+			return array();
+		}
+	}
 }

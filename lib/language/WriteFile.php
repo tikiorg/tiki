@@ -17,10 +17,22 @@ require_once('Language.php');
 class Language_WriteFile
 {
 	/**
+	 * Representation of the language file.
+	 * @var Language_ParseFile
+	 */
+	protected $parseFile;
+	
+	/**
 	 * Path to a language.php file
 	 * @var string
 	 */
 	protected $filePath;
+	
+	/**
+	 * Path to temporary language file.
+	 * @var string
+	 */
+	protected $tmpFilePath;
 	
 	/**
 	 * Current language translations.
@@ -28,38 +40,37 @@ class Language_WriteFile
 	 */
 	protected $translations;
 	
+	public function __construct(Language_ParseFile $parseFile)
+	{
+		$this->parseFile = $parseFile;
+		$this->filePath = $parseFile->filePath;
+		$this->tmpFilePath = $this->filePath . '.tmp';
+		
+		if (!is_writable($this->filePath)) {
+			throw new Language_Exception("Can't write to file $this->filePath.");
+		}
+	}
+	
 	/**
 	 * Update language.php file with new strings.
 	 * 
 	 * @param array $strings English strings collected from source files
-	 * @param string path to language.php file
 	 * @param bool $outputFiles whether file paths were string was found should be included or not in the output
 	 * @return null
 	 */
-	public function writeStringsToFile(array $strings, $filePath, $outputFiles = false)
+	public function writeStringsToFile(array $strings, $outputFiles = false)
 	{
 		if (empty($strings)) {
 			return false;
 		}
 		
-		if (!file_exists($filePath)) {
-			throw new Language_Exception("File $filePath does not exist.");
-		}
-		
-		if (!is_writable($filePath)) {
-			throw new Language_Exception("Can't write to file $filePath.");
-		}
-		
-		$this->filePath = $filePath;
-		$tmpFilePath = $this->filePath . '.tmp';
-		
 		// backup original language file
-		copy($filePath, $filePath . '.old');
+		copy($this->filePath, $this->filePath . '.old');
 		
-		$this->translations = $this->getCurrentTranslations();
+		$this->translations = $this->parseFile->getTranslations();
 		$entries = $this->mergeStringsWithTranslations($strings, $this->translations);
 		
-		$handle = fopen($tmpFilePath, 'w');
+		$handle = fopen($this->tmpFilePath, 'w');
 		
 		if ($handle) {
 			fwrite($handle, "<?php\n");
@@ -74,7 +85,7 @@ class Language_WriteFile
 			fclose($handle);
 		}
 		
-		rename($tmpFilePath, $this->filePath);	
+		rename($this->tmpFilePath, $this->filePath);	
 	}
 
 	/**
@@ -179,22 +190,5 @@ TXT;
 		}
 		
 		return $string;
-	}
-	
-	/**
-	 * Return an array with available translations for
-	 * current language.
-	 * 
-	 * @return array language translations
-	 */
-	protected function getCurrentTranslations()
-	{
-		require($this->filePath);
-
-		if (isset($lang) && !empty($lang)) {
-			return $lang;
-		} else {
-			return array();
-		}
 	}
 }

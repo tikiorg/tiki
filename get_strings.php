@@ -38,7 +38,7 @@ require_once('lib/language/FileType.php');
 require_once('lib/language/FileType/Php.php');
 require_once('lib/language/FileType/Tpl.php');
 require_once('lib/language/GetStrings.php');
-require_once('lib/language/WriteFile.php');
+require_once('lib/language/WriteFile/Factory.php');
 
 require_once('lib/setup/timer.class.php');
 
@@ -92,7 +92,7 @@ if (php_sapi_name() == 'cli') {
 	}
 }
 
-$getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile, $options);
+$getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile_Factory, $options);
 
 $getStrings->addFileType(new Language_FileType_Php);
 $getStrings->addFileType(new Language_FileType_Tpl);

@@ -117,4 +117,23 @@ class Language_ParseFileTest extends TikiTestCase
 		
 		$this->assertEquals($expectedResult, $obj->getStats());
 	}
+	
+	public function testGetTranslations_shouldReturnEmptyArray()
+	{
+		$root = vfsStream::setup('root');
+		$root->addChild(new vfsStreamFile('language.php'));
+		$obj = new Language_ParseFile(vfsStream::url('root/language.php'));
+		$this->assertEquals(array(), $obj->getTranslations());
+	}
+	
+	public function testGetTranslations_shouldReturnTranslations()
+	{
+		$expectedResult = array(
+			"Used" => "Usado",
+			"%0 enabled" => "%0 habilitado",
+			"Features" => "Recursos",
+		);
+		
+		$this->assertEquals($expectedResult, $this->obj->getTranslations());
+	}
 }

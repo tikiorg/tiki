@@ -49,9 +49,9 @@ class Language_GetStrings
 	public $collectFiles;
 	
 	/**
-	 * @var Language_WriteFile
+	 * @var Language_WriteFile_Factory
 	 */
-	public $writeFile;
+	public $writeFileFactory;
 	
 	/**
 	 * Whether file paths where the string was found
@@ -80,14 +80,14 @@ class Language_GetStrings
 	 *     updated. If empty, all language.php files are updated.
 	 * 
 	 * @param Language_CollectFiles $collectFiles
-	 * @param Language_WriteFile $writeFile
+	 * @param Language_WriteFile_Factory $writeFileFactory factory to create Language_WriteFile objects
 	 * @param array $options list of options to control object behavior (see above)
 	 * @return null
 	 */
-	public function __construct(Language_CollectFiles $collectFiles, Language_WriteFile $writeFile, array $options = null)
+	public function __construct(Language_CollectFiles $collectFiles, Language_WriteFile_Factory $writeFileFactory, array $options = null)
 	{
 		$this->collectFiles = $collectFiles;
-		$this->writeFile = $writeFile;
+		$this->writeFileFactory = $writeFileFactory;
 		
 		if (isset($options['outputFiles'])) {
 			$this->outputFiles = true;
@@ -284,8 +284,9 @@ class Language_GetStrings
 	public function writeToFiles($strings)
 	{
 		foreach ($this->languages as $lang) {
-			$langPath = $this->baseDir . '/lang/' . $lang . '/' . $this->fileName;
-			$this->writeFile->writeStringsToFile($strings, $langPath, $this->outputFiles);
+			$filePath = $this->baseDir . '/lang/' . $lang . '/' . $this->fileName;
+			$writeFile = $this->writeFileFactory->factory($filePath);
+			$writeFile->writeStringsToFile($strings, $this->outputFiles);
 		}
 	}
 	
