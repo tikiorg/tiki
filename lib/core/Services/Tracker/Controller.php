@@ -974,7 +974,7 @@ class Services_Tracker_Controller
 			$count = $trklib->import_csv(
 				$trackerId,
 				$fp,
-				$input->add_items->int(),
+				($input->add_items->int() !== 1),	// checkbox is "Create as new items" - param is replace_rows
 				$input->dateFormat->text(),
 				$input->encoding->text(),
 				$input->separator->text(),
