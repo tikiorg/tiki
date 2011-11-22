@@ -63,7 +63,7 @@ class UnifiedSearchLib
 		return file_exists($tempName);
 	}
 
-	function rebuild()
+	function rebuild($loggit = false)
 	{
 		global $prefs;
 		$tempName = $prefs['unified_lucene_location'] . '-new';
@@ -80,7 +80,7 @@ class UnifiedSearchLib
 
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
-		$indexer = $this->buildIndexer($index);
+		$indexer = $this->buildIndexer($index, $loggit);
 		$stat = $indexer->rebuild();
 
 		// Force destruction to clear locks
@@ -156,10 +156,10 @@ class UnifiedSearchLib
 		return $types;
 	}
 
-	private function buildIndexer($index)
+	private function buildIndexer($index, $loggit = false)
 	{
 		global $prefs;
-		$indexer = new Search_Indexer($index);
+		$indexer = new Search_Indexer($index, $loggit);
 		$this->addSources($indexer);
 		
 		if ($prefs['unified_tokenize_version_numbers'] == 'y') {

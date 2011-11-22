@@ -101,7 +101,7 @@ global $tiki_p_admin;
 if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] == 'now') {
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 
-	$stat = $unifiedsearchlib->rebuild();
+	$stat = $unifiedsearchlib->rebuild(isset($_REQUEST['loggit']));
 	$smarty->assign_by_ref('stat', $stat);
 
 	TikiLib::lib('cache')->empty_type_cache("search_valueformatter");

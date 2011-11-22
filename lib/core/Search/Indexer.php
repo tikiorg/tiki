@@ -16,8 +16,19 @@ class Search_Indexer
 
 	private $contentFilters = array();
 
-	function __construct(Search_Index_Interface $searchIndex)
+	public $log = null;
+
+	function __construct(Search_Index_Interface $searchIndex, $loggit = false)
 	{
+		if ($loggit) {	// unused externally, set this to true here to enable logging
+			include_once 'lib/core/Zend/Log/Writer/Syslog.php';
+			global $prefs;
+			$writer = new Zend_Log_Writer_Stream( $prefs['tmpDir'] . '/Search_Indexer.log', 'w');
+		} else {
+			$writer = new Zend_Log_Writer_Null();
+		}
+		$this->log = new Zend_Log($writer);
+
 		$this->searchIndex = $searchIndex;
 	}
 
@@ -42,6 +53,7 @@ class Search_Indexer
 	 */
 	function rebuild()
 	{
+		$this->log->info('Starting rebuild');
 		$stat = array_fill_keys(array_keys($this->contentSources), 0);
 
 		foreach ($this->contentSources as $objectType => $contentSource) {
@@ -50,7 +62,10 @@ class Search_Indexer
 			}
 		}
 		
+		$this->log->info('Starting optimization');
 		$this->searchIndex->optimize();
+		$this->log->info('Finished optimization');
+		$this->log->info('Finished rebuild');
 		return $stat;
 	}
 
@@ -77,6 +92,8 @@ class Search_Indexer
 
 	private function addDocument($objectType, $objectId)
 	{
+		$this->log->info("addDocument $objectType $objectId");
+
 		$typeFactory = $this->searchIndex->getTypeFactory();
 
 		if (isset($this->contentSources[$objectType])) {
@@ -93,9 +110,9 @@ class Search_Indexer
 					try {
 						$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
 					} catch(Exception $e) {
-						 TikiLib::lib('errorreport')->report(
-										 tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage())
-						 );
+						$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
+						TikiLib::lib('errorreport')->report($msg);
+						$this->log->err($msg);
 					}
 				}
 
