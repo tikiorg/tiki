@@ -28,6 +28,7 @@
 						{preference name="unified_lucene_location"}
 						{preference name="unified_lucene_highlight"}
 						{preference name="unified_lucene_max_result"}
+						{preference name="unified_lucene_max_resultset_limit"}
 					</div>
 
 					{preference name=unified_forum_deepindexing}

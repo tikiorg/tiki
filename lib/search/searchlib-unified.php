@@ -256,6 +256,7 @@ class UnifiedSearchLib
 			$index = new Search_Index_Lucene($prefs['unified_lucene_location'], $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
 			$index->setMaxResults($prefs['unified_lucene_max_result']);
+			$index->setResultSetLimit($prefs['unified_lucene_max_resultset_limit']);
 
 			return $index;
 		}

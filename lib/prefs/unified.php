@@ -38,6 +38,15 @@ function prefs_unified_list()
 			'default' => 200,
 			'size' => 6,
 		),
+		'unified_lucene_max_resultset_limit' => array(
+			'name' => tra('Lucene Maximum Result Set Limit'),
+			'description' => tra('Maximum size of result set to consider. Default 1000, 0 = unlimited.'),
+			'hint' => tra('This is used when calculating result scores and sort order which can lead to out of memory errors on large data sets. The default of 1000 is safe with the PHP memory_limit set to 128M'),
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 1000,
+			'size' => 6,
+		),
 		'unified_incremental_update' => array(
 			'name' => tra('Incremental Index Update'),
 			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),

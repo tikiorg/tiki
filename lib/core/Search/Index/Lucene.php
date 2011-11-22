@@ -13,6 +13,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private $lastModif;
 	private $directory;
 	private $maxResults = 0;
+	private $resultSetLimit = 0;
 
 	function __construct($directory, $lang = 'en', $highlight = true)
 	{
@@ -43,6 +44,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->lucene->setMaxBufferedDocs(100);
 		$this->lucene->setMaxMergeDocs(5000);
 		$this->lucene->setMergeFactor(50);
+		$this->lucene->setResultSetLimit($this->resultSetLimit);
 
 		return $this->lucene;
 	}
@@ -105,6 +107,14 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->maxResults = (int) $max;
 	}
 
+	public function setResultSetLimit($resultSetLimit) {
+		$this->resultSetLimit = $resultSetLimit;
+	}
+
+	public function getResultSetLimit() {
+		return $this->resultSetLimit;
+	}
+	
 	private function internalFind(& $query, $sortOrder)
 	{
 		if ($this->cache) {
