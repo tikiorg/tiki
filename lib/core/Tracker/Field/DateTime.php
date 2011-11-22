@@ -132,5 +132,13 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	{
 		return $info;
 	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		return array(
+			$baseKey => $typeFactory->timestamp($this->getValue()),
+		);
+	}
+
 }
 
