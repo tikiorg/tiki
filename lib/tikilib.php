@@ -2798,6 +2798,7 @@ class TikiLib extends TikiDb_Bridge
 		$this->table('users_groups')->updateMultiple(array('groupHome' => null), array('groupHome' => $page));
 
 		$this->table('tiki_theme_control_objects')->deleteMultiple(array('name' => $page,'type' => 'wiki page'));
+		$this->table('tiki_copyrights')->deleteMultiple(array('page' => $page));
 
 		$this->remove_object('wiki page', $page);
 
