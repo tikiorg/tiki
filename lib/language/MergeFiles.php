@@ -14,18 +14,18 @@ class Language_MergeFiles
 {
 	/**
 	 * File used to collect new translations.
-	 * @var Language_ParseFile
+	 * @var Language_File
 	 */
 	private $sourceFile;
 	
 	/**
 	 * File that will be updated with new translations
 	 * done on $this->sourceFile.
-	 * @var Language_ParseFile
+	 * @var Language_File
 	 */
 	private $targetFile;
 	
-	public function __construct(Language_ParseFile $sourceFile, Language_ParseFile $targetFile)
+	public function __construct(Language_File $sourceFile, Language_File $targetFile)
 	{
 		$this->sourceFile = $sourceFile;
 		$this->targetFile = $targetFile;

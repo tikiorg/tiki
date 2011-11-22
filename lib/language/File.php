@@ -8,10 +8,9 @@
 require_once('Exception.php');
 
 /**
- * Parse a Tiki language file and create
- * a data structure that represents it.
+ * Represents the data of a Tiki language file.
  */
-class Language_ParseFile
+class Language_File
 {
 	public $filePath;
 	

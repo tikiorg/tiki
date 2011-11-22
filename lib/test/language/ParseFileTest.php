@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once('lib/language/ParseFile.php');
+require_once('lib/language/File.php');
 
-class Language_ParseFileTest extends TikiTestCase
+class Language_FileTest extends TikiTestCase
 {
 	protected $obj;
 
@@ -16,7 +16,7 @@ class Language_ParseFileTest extends TikiTestCase
 	protected function setUp()
 	{
 		$this->filePath = __DIR__ . '/fixtures/language_to_parse_file.php';
-		$this->obj = new Language_ParseFile($this->filePath);
+		$this->obj = new Language_File($this->filePath);
 	}
 
 	public function provider()
@@ -35,12 +35,12 @@ class Language_ParseFileTest extends TikiTestCase
 	public function testConstruct_shouldThrowExceptionForInvalidFile()
 	{
 		$this->setExpectedException('Language_Exception', 'Path invalidFile does not exist.');
-		$obj = new Language_ParseFile('invalidFile');
+		$obj = new Language_File('invalidFile');
 	}
 	
 	public function testConstruct_shouldSetFilePath()
 	{
-		$obj = new Language_ParseFile($this->filePath);
+		$obj = new Language_File($this->filePath);
 		$this->assertEquals($this->filePath, $obj->filePath);
 	}
 	
@@ -75,7 +75,7 @@ class Language_ParseFileTest extends TikiTestCase
 		$file = new vfsStreamFile('language.php');
 		$root->addChild($file);
 		
-		$obj = new Language_ParseFile(vfsStream::url('root/language.php'));
+		$obj = new Language_File(vfsStream::url('root/language.php'));
 		
 		$this->assertEquals($expectedResult, $obj->getStats());
 	}
@@ -104,7 +104,7 @@ class Language_ParseFileTest extends TikiTestCase
 			'percentage' =>  42.86,
 		);
 		
-		$obj = $this->getMock('Language_ParseFile', array('parse'), array($this->filePath));
+		$obj = $this->getMock('Language_File', array('parse'), array($this->filePath));
 		$obj->expects($this->never())->method('parse');
 		
 		$reflectionClass = new ReflectionClass($obj);
@@ -122,7 +122,7 @@ class Language_ParseFileTest extends TikiTestCase
 	{
 		$root = vfsStream::setup('root');
 		$root->addChild(new vfsStreamFile('language.php'));
-		$obj = new Language_ParseFile(vfsStream::url('root/language.php'));
+		$obj = new Language_File(vfsStream::url('root/language.php'));
 		$this->assertEquals(array(), $obj->getTranslations());
 	}
 	

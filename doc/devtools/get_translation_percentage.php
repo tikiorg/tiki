@@ -43,7 +43,7 @@ if (!file_exists($tikiPath)) {
 chdir($tikiPath);
 require_once('tiki-setup.php');
 require_once('lang/langmapping.php');
-require_once('lib/language/ParseFile.php');
+require_once('lib/language/File.php');
 
 if (isset($wikiPage) && !$tikilib->page_exists($wikiPage)) {
 	die("\nERROR: $wikiPage doesn't exist\n\n");
@@ -67,7 +67,7 @@ $globalStats = array();
 foreach ($langmapping as $lang => $null) {
 	$filePath = "lang/$lang/language.php";
 	if (file_exists($filePath) && $lang != 'en') {
-		$parseFile = new Language_ParseFile($filePath);
+		$parseFile = new Language_File($filePath);
 		$stats = $parseFile->getStats();
 		
 		$outputData[$lang] = array(

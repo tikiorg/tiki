@@ -20,7 +20,7 @@ if ($argc < 3) {
 }
 
 require_once('lib/language/Language.php');
-require_once('lib/language/ParseFile.php');
+require_once('lib/language/File.php');
 require_once('lib/language/MergeFiles.php');
 
 $sourcePath = $argv[1];
@@ -47,8 +47,8 @@ foreach ($languages as $language) {
 	$tmpTargetLangFile = "$targetPath/lang/$language/language.php.tmp";
 
 	try {
-		$sourceObj = new Language_ParseFile($sourceLangFile);	
-		$targetObj = new Language_ParseFile($targetLangFile);
+		$sourceObj = new Language_File($sourceLangFile);	
+		$targetObj = new Language_File($targetLangFile);
 		
 		$mergeFiles = new Language_MergeFiles($sourceObj, $targetObj);
 		$mergeFiles->merge();

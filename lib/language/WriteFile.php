@@ -18,7 +18,7 @@ class Language_WriteFile
 {
 	/**
 	 * Representation of the language file.
-	 * @var Language_ParseFile
+	 * @var Language_File
 	 */
 	protected $parseFile;
 	
@@ -40,7 +40,7 @@ class Language_WriteFile
 	 */
 	protected $translations;
 	
-	public function __construct(Language_ParseFile $parseFile)
+	public function __construct(Language_File $parseFile)
 	{
 		$this->parseFile = $parseFile;
 		$this->filePath = $parseFile->filePath;

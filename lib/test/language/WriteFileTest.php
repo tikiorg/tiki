@@ -20,7 +20,7 @@ class Language_WriteFileTest extends TikiTestCase
 		$this->langFile = new vfsStreamFile('language.php');
 		$lang->addChild($this->langFile);
 
-		$this->parseFile = $this->getMock('Language_ParseFile', array('getTranslations'), array(vfsStream::url('lang/language.php')));
+		$this->parseFile = $this->getMock('Language_File', array('getTranslations'), array(vfsStream::url('lang/language.php')));
 		
 		$this->filePath = vfsStream::url('lang/language.php');
 		

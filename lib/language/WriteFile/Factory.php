@@ -6,7 +6,7 @@
 // $Id$
 
 require_once('lib/language/WriteFile.php');
-require_once('lib/language/ParseFile.php');
+require_once('lib/language/File.php');
 
 /**
  * Create WriteFile objects
@@ -21,6 +21,6 @@ class Language_WriteFile_Factory
 	 */
 	public function factory($filePath)
 	{
-		return new Language_WriteFile(new Language_ParseFile($filePath));
+		return new Language_WriteFile(new Language_File($filePath));
 	}
 }
