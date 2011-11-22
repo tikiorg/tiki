@@ -87,8 +87,35 @@ class Search_Query
 		$this->addPart($or, 'multivalue', 'allowed_groups');
 	}
 
+	/**
+	 * Sets up Zend search term for a date range
+	 *
+	 * @param string	$from date - a unix timestamp or most date strings such as 'now', '2011-11-21', 'last week' etc
+	 * @param string	$to date as with $from (other examples: '-42 days', 'last tuesday')
+	 * @param string	$field to search in such as 'tracker_field_42'. default: modification_date
+	 * @link			http://www.php.net/manual/en/datetime.formats.php
+	 * @return void
+	 */
+
 	function filterRange($from, $to, $field = 'modification_date')
 	{
+		if (!is_numeric($from)) {
+			$from2 = strtotime($from);
+			if ($from2) {
+				$from = $from2;
+			} else {
+				TikiLib::lib('errorreport')->report(tra('filterRange: "from" value not parsed'));
+			}
+		}
+		if (!is_numeric($to)) {
+			$to2 = strtotime($to);
+			if ($to2) {
+				$to = $to2;
+			} else {
+				TikiLib::lib('errorreport')->report(tra('filterRange: "to" value not parsed'));
+			}
+		}
+
 		$this->expr->addPart(new Search_Expr_Range($from, $to, 'timestamp', $field));
 	}
 
