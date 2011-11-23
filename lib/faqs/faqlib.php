@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /* Task properties:
@@ -18,42 +18,44 @@ class FaqLib extends TikiLib
 {
 	function list_faqs($offset, $maxRecords, $sort_mode, $find)
 	{
-	  $mid = '';
-	  if ( $find ) {
-		$findesc = '%' . $find . '%';
-		$mid = ' where (`title` like ? or `description` like ?)';
-		$bindvars = array($findesc, $findesc);
-	  } else $bindvars = array();
+		$mid = '';
+		if ( $find ) {
+			$findesc = '%' . $find . '%';
+			$mid = ' where (`title` like ? or `description` like ?)';
+			$bindvars = array($findesc, $findesc);
+		} else {
+			 $bindvars = array();
+		}
 
-	  $query = "select `faqId` from `tiki_faqs` $mid";
-	  $result = $this->fetchAll($query, $bindvars);
-	  $res = $ret = $retids = array();
-	  $n=0;
+		$query = "select `faqId` from `tiki_faqs` $mid";
+		$result = $this->fetchAll($query, $bindvars);
+		$res = $ret = $retids = array();
+		$n=0;
 
 		//FIXME Perm:filter ?
-	  foreach ( $result as $res ) {
-		$objperm = $this->get_perm_object($res['faqId'], 'faq', '', false);
-		if ($objperm['tiki_p_view_faqs'] == 'y') {
-		  if (($maxRecords == -1) || (($n>=$offset) && ($n < ($offset + $maxRecords)))) {
-			$retids[] = $res['faqId'];
-			$n++;
-		  }
-		}
-	  }
-
-	  if ($n > 0) {
-		$query = "select  * from `tiki_faqs` where faqId in (" . implode(',', $retids) . ") order by " . $this->convertSortMode($sort_mode);
-		$result = $this->fetchAll($query);
 		foreach ( $result as $res ) {
-		  $res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-		  $res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-		  $ret[] = $res;
+			$objperm = $this->get_perm_object($res['faqId'], 'faq', '', false);
+			if ($objperm['tiki_p_view_faqs'] == 'y') {
+				if (($maxRecords == -1) || (($n>=$offset) && ($n < ($offset + $maxRecords)))) {
+					$retids[] = $res['faqId'];
+					$n++;
+				}
+			}
 		}
-	  }
 
-	  $retval['data'] = $ret;
-	  $retval['cant'] = $n;
-	  return $retval;
+		if ($n > 0) {
+			$query = "select * from `tiki_faqs` where faqId in (" . implode(',', $retids) . ") order by " . $this->convertSortMode($sort_mode);
+			$result = $this->fetchAll($query);
+			foreach ( $result as $res ) {
+				$res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
+				$res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
+				$ret[] = $res;
+			}
+		}
+
+		$retval['data'] = $ret;
+		$retval['cant'] = $n;
+		return $retval;
 	}
 
 	function get_faq($faqId)
@@ -71,7 +73,7 @@ class FaqLib extends TikiLib
 
 		$answer = strip_tags($answer, '<a>');
 		$query = "insert into `tiki_suggested_faq_questions`(`faqId`,`question`,`answer`,`user`,`created`)
-    values(?,?,?,?,?)";
+			values(?,?,?,?,?)";
 		$result = $this->query($query, array($faqId, $question, $answer, ($user===null) ? '' : $user, $this->now));
 	}
 
