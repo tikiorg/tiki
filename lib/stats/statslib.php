@@ -52,7 +52,8 @@ class StatsLib extends TikiLib
 	}
 
 	function quiz_stats() {
-		$this->compute_quiz_stats();
+		TikiLib::lib('quiz')->compute_quiz_stats();
+		
 		$stats = array();
 		$stats["quizzes"] = $this->getOne("select count(*) from `tiki_quizzes`",array());
 		$stats["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions`",array());

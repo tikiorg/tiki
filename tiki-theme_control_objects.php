@@ -87,7 +87,7 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'quiz':
-		$objects = $tikilib->list_quizzes(0, -1, 'name_asc', $find_objects);
+		$objects = TikiLib::lib('quiz')->list_quizzes(0, -1, 'name_asc', $find_objects);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];
 		correct_array($objects, 'quizId', 'name');

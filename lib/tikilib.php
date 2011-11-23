@@ -243,6 +243,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'faq':
 			global $faqlib; require_once 'lib/faqs/faqlib.php';
 			return self::$libraries[$name] = $faqlib;
+		case 'quiz':
+			global $quizlib; require_once 'lib/quizzes/quizlib.php';
+			return self::$libraries[$name] = $quizlib;
 		}
 	}
 
@@ -1183,120 +1186,6 @@ class TikiLib extends TikiDb_Bridge
 		return(isset($this->online_users_cache[$whichuser]));
 	}
 
-	/*shared*/
-	function get_quiz($quizId)
-	{
-		$query = "select * from `tiki_quizzes` where `quizId`=?";
-
-		$result = $this->query($query, array((int) $quizId));
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow();
-		return $res;
-	}
-
-	function compute_quiz_stats()
-	{
-		$query = "select `quizId`  from `tiki_user_quizzes`";
-
-		$result = $this->fetchAll($query, array());
-
-		$quizStatsSum = $this->table('tiki_quiz_stats_sum');
-
-		foreach ( $result as $res ) {
-			$quizId = $res["quizId"];
-
-			$quizName = $this->getOne("select `name`  from `tiki_quizzes` where `quizId`=?", array((int)$quizId));
-			$timesTaken = $this->getOne("select count(*) from `tiki_user_quizzes` where `quizId`=?", array((int)$quizId));
-			$avgpoints = $this->getOne("select avg(`points`) from `tiki_user_quizzes` where `quizId`=?", array((int)$quizId));
-			$maxPoints = $this->getOne("select max(`maxPoints`) from `tiki_user_quizzes` where `quizId`=?", array((int)$quizId));
-			$avgavg = ($maxPoints != 0) ? $avgpoints / $maxPoints * 100 : 0.0;
-			$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=?", array((int)$quizId));
-
-			$quizStatsSum->delete(array('quizId' => (int) $quizId,));
-			$quizStatsSum->insert(
-							array(
-								'quizId' => (int) $quizId,
-								'quizName' => $quizName,
-								'timesTaken' => (int) $timesTaken,
-								'avgpoints' => (float) $avgpoints,
-								'avgtime' => $avgtime,
-								'avgavg' => $avgavg,
-							)
-			);
-		}
-	}
-
-	function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find = null)
-	{
-		
-		$quizzes = $this->table('tiki_quizzes');
-		$conditions = array();
-
-		if ( ! empty($find) ) {
-			$findesc = '%' . $find . '%';
-			$conditions['search'] = $quizzes->expr('(`name` like ? or `description` like ?)', array($findesc, $findesc));
-		}
-
-		$result = $quizzes->fetchColumn('quizId', $conditions);
-		$res = $ret = $retids = array();
-		$n = 0;
-
-		//FIXME Perm:filter ?
-		foreach ( $result as $res ) {
-			$objperm = Perms::get('quizzes', $res);
-
-			if ( $objperm->take_quiz ) {
-				if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
-					$retids[] = $res;
-				}
-				$n++;
-			}
-		}
-
-		if ($n > 0) {
-			$result = $quizzes->fetchAll(
-							$quizzes->all(),
-							array('quizId' => $quizzes->in($retids)),
-							-1, -1, $quizzes->expr($this->convertSortMode($sort_mode))
-			);
-
-			$questions = $this->table('tiki_quiz_questions');
-			$results = $this->table('tiki_quiz_results');
-
-			foreach ( $result as $res ) {
-				$res['questions'] = $questions->fetchCount(array('quizId' => (int) $res['quizId']));
-				$res['results'] = $results->fetchCount(array('quizId' => (int) $res['quizId']));
-				$ret[] = $res;
-			}
-		}
-
-		return array(
-			'data' => $ret,
-			'cant' => $n,
-		);
-	}
-
-	/*shared*/
-	function list_quiz_sum_stats($offset, $maxRecords, $sort_mode, $find)
-	{
-		$this->compute_quiz_stats();
-
-		$stats = $this->table('tiki_quiz_stats_sum');
-		$conditions = array();
-
-		if ($find) {
-			$conditions['quizName'] = $stats->like("%$find%");
-		}
-
-		return array(
-			'data' => $stats->fetchAll($stats->all(), $conditions, $maxRecords, $offset, $stats->expr($this->convertSortMode($sort_mode))),
-			'cant' => $stats->fetchCount($conditions),
-		);
-	}
-
 	function list_surveys($offset, $maxRecords, $sort_mode, $find)
 	{
 		if ($find) {
@@ -1630,7 +1519,8 @@ class TikiLib extends TikiDb_Bridge
 
 	function get_usage_chart_data()
 	{
-		$this->compute_quiz_stats();
+		TikiLib::lib('quiz')->compute_quiz_stats();
+		
 		$data['xdata'][] = tra('wiki');
 		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_pages`', array());
 		$data['xdata'][] = tra('img-g');

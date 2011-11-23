@@ -110,7 +110,7 @@ class ObjectLib extends TikiLib
 					$href = 'tiki-poll_form.php?pollId=' . $itemId;
 					break;
 				case 'quiz':
-					$info = $this->get_quiz($itemId);
+					$info = TikiLib::lib('quiz')->get_quiz($itemId);
 		
 					$description = $info["description"];
 					$name = $info["name"];

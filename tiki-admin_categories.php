@@ -412,7 +412,7 @@ if ( $prefs['feature_faqs'] == 'y' ) {
 }
 
 if ( $prefs['feature_quizzes'] == 'y' ) {
-	$quizzes = $tikilib->list_quizzes($offset, -1, 'name_asc', $find_objects);
+	$quizzes = TikiLib::lib('quiz')->list_quizzes($offset, -1, 'name_asc', $find_objects);
 }
 
 if ( $prefs['feature_trackers'] == 'y' ) {
