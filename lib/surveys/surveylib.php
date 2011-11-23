@@ -13,6 +13,47 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class SurveyLib extends TikiLib
 {
+	function list_surveys($offset, $maxRecords, $sort_mode, $find)
+	{
+		if ($find) {
+		  $findesc = '%' . $find . '%';
+		  $mid = " where (`name` like ? or `description` like ?)";
+		  $bindvars=array($findesc, $findesc);
+		} else {
+		  $mid = '';
+		  $bindvars=array();
+		}
+
+		$query = "select `surveyId` from `tiki_surveys` $mid";
+		$result = $this->fetchAll($query, $bindvars);
+		$res = $ret = $retids = array();
+		$n = 0;
+
+		//FIXME Perm:filter ?
+		foreach ( $result as $res ) {
+		  $objperm = $this->get_perm_object($res['surveyId'], 'survey', '', false);
+		  if ( $objperm['tiki_p_take_survey'] ) {
+			if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
+			  $retids[] = $res['surveyId'];
+			}
+			$n++;
+		  }
+		}
+		if ( $n > 0 ) {
+		  $query = 'select * from `tiki_surveys` where `surveyId` in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
+		  $result = $this->fetchAll($query);
+		  foreach ( $result as $res ) {
+			$res["questions"] = $this->getOne('select count(*) from `tiki_survey_questions` where `surveyId`=?', array( (int) $res['surveyId']));
+			$ret[] = $res;
+		  }
+		} 
+		
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $n;
+		return $retval;
+	}
+	
 	function add_survey_hit($surveyId)
 	{
 		global $prefs, $user;
