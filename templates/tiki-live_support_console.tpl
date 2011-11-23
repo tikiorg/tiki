@@ -15,6 +15,7 @@
   {literal}
   <body style="background-color: white">
   {/literal}
+  	{if $isOperator}
 	<table class="normal" >
 		<tr>
 			<th>{tr}Operator:{/tr} {$user}</th>
@@ -28,6 +29,9 @@
 		</th>
 		</tr>
 	</table>
+	{else}
+		{tr}You are not an operator.{/tr} <a href="tiki-live_support_admin.php">{tr}Live support system{/tr}</a>
+	{/if}
 
     {if count($requests) > 0}
     <h3>{tr}Support requests{/tr}</h3>
