@@ -4271,7 +4271,7 @@ class TikiLib extends TikiDb_Bridge
 			if (isset($context['data'])) {
 				$content[] = $context['data'];
 			}
-			$data = implode(' ', $content);
+			$data['content'] = implode(' ', $content);
 		}
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
