@@ -27,7 +27,8 @@ class EditLib
 	
 	// general
 		
-	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info) {
+	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info)
+	{
 		global $_REQUEST, $semanticlib, $access, $wikilib, $tikilib;
 		require_once 'lib/wiki/semanticlib.php';
 		$aliases = $semanticlib->getAliasContaining($page, true);
@@ -47,7 +48,8 @@ class EditLib
 		}	
 	}	
 	
-	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes = null) {
+	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes = null)
+	{
 		global $_REQUEST, $multilinguallib, $prefs, $tikilib;
 		if (isset($_REQUEST['need_lang']) && $_REQUEST['need_lang'] == 'n') {
 			return false;
@@ -72,11 +74,13 @@ class EditLib
 	
 	// translation functions
 	
-	function isTranslationMode() {
+	function isTranslationMode()
+	{
 		return $this->isUpdateTranslationMode() || $this->isNewTranslationMode();
 	}
 	
-	function isNewTranslationMode() {
+	function isNewTranslationMode()
+	{
 		global $prefs;
 	
 		if ($prefs['feature_multilingual'] != 'y') {
@@ -94,20 +98,23 @@ class EditLib
 		return false;		
 	}
 
-	function isUpdateTranslationMode() {
+	function isUpdateTranslationMode()
+	{
 		return isset( $_REQUEST['source_page'] )
 			&& isset( $_REQUEST['oldver'] )
 			&& (!isset($_REQUEST['is_new_translation']) || $_REQUEST['is_new_translation'] == 'n')
 			&& isset( $_REQUEST['newver'] );
 	}
 	
-	function prepareTranslationData() {
+	function prepareTranslationData()
+	{
 		global $_REQUEST, $tikilib, $smarty;
 		$this->setTranslationSourceAndTargetPageNames();		
 		$this->setTranslationSourceAndTargetVersions();
 	}
 	
-	private function setTranslationSourceAndTargetPageNames() {
+	private function setTranslationSourceAndTargetPageNames()
+	{
 		global $_REQUEST, $smarty;
 		
 		if (!$this->isTranslationMode()) {
@@ -138,7 +145,8 @@ class EditLib
 		}
 	}
 	
-	private function setTranslationSourceAndTargetVersions() {
+	private function setTranslationSourceAndTargetVersions()
+	{
 		global $_REQUEST, $tikilib;
 		
 		if (isset($_REQUEST['oldver'])) {
@@ -156,7 +164,8 @@ class EditLib
 		}
 	}	
 
-	function aTranslationWasSavedAs($complete_or_partial) {	
+	function aTranslationWasSavedAs($complete_or_partial) 
+	{	
 		if (!$this->isTranslationMode() ||
 			!isset($_REQUEST['save'])) {
 			return false;
@@ -178,12 +187,13 @@ class EditLib
 	 * @param unknown_type $col
 	 * @return The hex representation
 	 */
-	function parseColor(&$col) {
+	function parseColor(&$col)
+	{
 		
-		if (preg_match( "/^rgb\( *(\d+) *, *(\d+) *, *(\d+) *\)$/", $col, $parts ) ) {
-			$hex = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
-			     . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-				 . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
+		if (preg_match("/^rgb\( *(\d+) *, *(\d+) *, *(\d+) *\)$/", $col, $parts) ) {
+			$hex = str_pad(dechex($parts[1]), 2, '0', STR_PAD_LEFT)
+			     . str_pad(dechex($parts[2]), 2, '0', STR_PAD_LEFT)
+				 . str_pad(dechex($parts[3]), 2, '0', STR_PAD_LEFT);
 			$hex = '#' . strtoupper($hex);
 		} else {
 			$hex = $col;
@@ -201,7 +211,8 @@ class EditLib
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
-	private function parseLinkTag(&$args, &$text, &$src, &$p) {
+	private function parseLinkTag(&$args, &$text, &$src, &$p)
+	{
 		
 		$link = '';
 		$link_open = '';
@@ -221,14 +232,18 @@ class EditLib
 			preg_match_all('/([^ ]+)/', $args['class']['value'], $matches);
 			$classes = $matches[0];
 			
-			for ($i=0; $i< count($classes); $i++) {				
+			for ($i=0, $count_classes = count($classes); $i< $count_classes; $i++) {				
 				$cl = $classes[$i];
 							
 				switch ($cl) {
-					case 'wiki': $cl_wiki = true; break;
-					case 'wiki_page': $cl_wiki_page = true; break;
-					case 'ext_page': $cl_ext_page = true; break;
-					case 'external': $cl_external = true; break;
+					case 'wiki': $cl_wiki = true;
+     				break;
+ 					case 'wiki_page': $cl_wiki_page = true;
+  	    			break;
+  					case 'ext_page': $cl_ext_page = true;
+         		break;
+ 					case 'external': $cl_external = true;
+   		    	break;
 					default:
 						// if the preceding class was 'ext_page', then we have the name of the external Wiki 
 						if ($i > 0 && $classes[$i-1] == 'ext_page') {
@@ -244,7 +259,7 @@ class EditLib
 		 */
 		if ( isset($args['href']) ) {
 			$href = urldecode($args['href']['value']);
-			$matches = explode( '#', $href);
+			$matches = explode('#', $href);
 			if ( count($matches) == 2) {
 				$target = $matches[0];
 				$anchor = '#' . $matches[1];
@@ -369,7 +384,7 @@ class EditLib
 				preg_match_all('/([^ ]+)/', $args['rel']['value'], $matches);
 				$rels = $matches[0];
 				
-				for ($i=0; $i< count($rels); $i++) {				
+				for ($i=0, $count_rels = count($rels); $i< $count_rels; $i++) {				
 					$r = $rels[$i];
 					
 					if (preg_match('/^box/', $r) ) {
@@ -421,7 +436,8 @@ class EditLib
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
-	private function parseParDivTag($isPar, &$args, &$src, &$p) {
+	private function parseParDivTag($isPar, &$args, &$src, &$p)
+	{
 
 		global $prefs;
 		
@@ -460,7 +476,7 @@ class EditLib
 							$src .= "{DIV(${type}align=\"justify\")}";
 							$p['stack'][] = array('tag' => $tag_name, 'string' => '{DIV}');
 						}
-						break;
+    					break;
 				} // switch format
 			} // foreach style
 		}
@@ -474,7 +490,8 @@ class EditLib
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
-	private function parseSpanTag(&$args, &$src, &$p) {
+	private function parseSpanTag(&$args, &$src, &$p)
+	{
 		
 		if (isset($args['style'])) {
 			$style = array();
@@ -518,7 +535,7 @@ class EditLib
 						if ($style[$format] == 'bold') {
 							$this->processWikiTag('span', $src, $p, '__', '__', true, true); 
 						}
-						break;
+    					break;
 					case 'font-style': 
 						if ($style[$format] == 'italic') {
 							$this->processWikiTag('span', $src, $p, '\'\'', '\'\'', true, true);
@@ -544,7 +561,8 @@ class EditLib
 	 * @param string $style The value of the style attribute
 	 * @param array $parsed key/value pairs
 	 */	
-	function parseStyleAttribute(&$style, &$parsed) {
+	function parseStyleAttribute(&$style, &$parsed)
+	{
 		
 		$matches = array();
 		preg_match_all('/ *([^ :]+) *: *([^;]+) *;?/', $style, $matches);
@@ -567,9 +585,11 @@ class EditLib
 
 					switch ($s) {
 						case preg_match('/^#(\w{3,6})$/', $s) > 0:
-							$parsed['background-color'] = $s; break;
+							$parsed['background-color'] = $s;
+    	 				break;
 						case preg_match('/^rgb\(.*\)$/', $s) > 0:
-							$parsed['background-color'] = $s; break;
+							$parsed['background-color'] = $s;
+    	 				break;
 						default:
 							$unprocessed .= ' ' . $s;
 					}
@@ -596,7 +616,8 @@ class EditLib
 	 * @param string $list List of styles
 	 * @param array $parsed The parsed list
 	 */
-	function parseStyleList(&$list, &$parsed) {
+	function parseStyleList(&$list, &$parsed)
+	{
 		
 		$matches = array();
 		preg_match_all('/(?:[[:graph:]]+\([^\)]*\))|(?:[^ ]+)/', $list, $matches);
@@ -624,7 +645,8 @@ class EditLib
 	 * @param bool $is_inline True if the tag is inline, false if the tag must span exacly one line.
 	 * @param bool $append True = append to the topmost element on the stack, false = create a new element on the stack
 	 */
-	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false) {
+	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false)
+	{
 
 		// append=false, create new entries on the stack		
 		if (!$append) {
@@ -636,7 +658,7 @@ class EditLib
 		$key = end(array_keys($p['wikistack']));
 		$wiki = &$p['wikistack'][$key]; 
 		
-		$key = end(array_keys( $p['stack'] ) );
+		$key = end(array_keys($p['stack']));
 		$stack = &$p['stack'][$key];
 		$string = &$stack['string'];
 		
@@ -654,26 +676,29 @@ class EditLib
 	}
 	
 	
-	function saveCompleteTranslation() {
+	function saveCompleteTranslation()
+	{
 		global $multilinguallib, $tikilib;
 		
-		$sourceInfo = $tikilib->get_page_info( $this->sourcePageName );
-		$targetInfo = $tikilib->get_page_info( $this->targetPageName );
+		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
+		$targetInfo = $tikilib->get_page_info($this->targetPageName);
 				
-		$multilinguallib->propagateTranslationBits( 
-			'wiki page',
-			$sourceInfo['page_id'],
-			$targetInfo['page_id'],
-			$sourceInfo['version'],
-			$targetInfo['version'] );
+		$multilinguallib->propagateTranslationBits(
+						'wiki page',
+						$sourceInfo['page_id'],
+						$targetInfo['page_id'],
+						$sourceInfo['version'],
+						$targetInfo['version']
+		);
 		$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);		
 	}
 	
-	function savePartialTranslation() {
+	function savePartialTranslation()
+	{
 		global $multilinguallib, $tikilib;
 
-		$sourceInfo = $tikilib->get_page_info( $this->sourcePageName );
-		$targetInfo = $tikilib->get_page_info( $this->targetPageName );
+		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
+		$targetInfo = $tikilib->get_page_info($this->targetPageName);
 		
 		$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
 		
@@ -688,7 +713,8 @@ class EditLib
 	 * @return string		wiki markup
 	 */
 
-	function parseToWiki( $inData ) {
+	function parseToWiki( $inData )
+	{
 		
 		global $prefs;
 
@@ -698,8 +724,8 @@ class EditLib
 		$parsed = preg_replace('/\t/', '', $parsed); // remove all tabs inserted by the CKE
 		
 		$parsed = $this->parse_html($parsed);
-		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
-		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
+		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im', '(:$1:)', $parsed);	// "unfix" smilies
+		$parsed = preg_replace('/&nbsp;/m', ' ', $parsed);												// spaces
 		$parsed = preg_replace('/!(?:\d\.)+/', '!#', $parsed); // numbered headings
 		if ($prefs['feature_use_three_colon_centertag'] == 'y') { // numbered and centerd headings
 			$parsed = preg_replace('/!:::(?:\d\.)+ *(.*):::/', '!#:::\1:::', $parsed); 
@@ -715,7 +741,7 @@ class EditLib
 		}
 				
 		// Put back htmlentities as normal char
-		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
+		$parsed = htmlspecialchars_decode($parsed, ENT_QUOTES);
 		return $parsed;
 	}
 
@@ -729,24 +755,33 @@ class EditLib
 	 * @return string			html to send to ckeditor
 	 */
 
-	function parseToWysiwyg( $inData, $fromWiki = false, $isHtml = false ) {
+	function parseToWysiwyg( $inData, $fromWiki = false, $isHtml = false )
+	{
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
-		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
+		$parsed = preg_replace('/(!!*)[\+\-]/m', '$1', $inData);		// remove show/hide headings
 		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
 		
-		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => ($isHtml && !$fromWiki),
-														'process_wiki_paragraphs' => (!$isHtml || $fromWiki),
-															'process_double_brackets' => 'n'));
+		$parsed = $tikilib->parse_data(
+						$parsed, 
+						array(
+							'absolute_links'=>true,
+							'noheaderinc'=>true,
+							'suppress_icons' => true,
+							'ck_editor' => true,
+							'is_html' => ($isHtml && !$fromWiki),
+							'process_wiki_paragraphs' => (!$isHtml || $fromWiki),
+							'process_double_brackets' => 'n'
+						)
+		);
 		
 		if ($fromWiki) {
-			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
+			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu', '', $parsed);						// remove added empty <p>
 		}
-		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
+		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im', '$1', $parsed);					// remove spans round img's
 		// Workaround Wysiwyg Image Plugin Editor in IE7 erases image on insert http://dev.tiki.org/item3615 
-		$parsed2 = preg_replace('/(<span class=\"tiki_plugin\".*?plugin=\"img\".*?><\/span>)<\/p>/is','$1<span>&nbsp;</span></p>', $parsed);
+		$parsed2 = preg_replace('/(<span class=\"tiki_plugin\".*?plugin=\"img\".*?><\/span>)<\/p>/is', '$1<span>&nbsp;</span></p>', $parsed);
 		if ($parsed2 !== null) {
 			$parsed = $parsed2;
 		}
@@ -766,14 +801,17 @@ class EditLib
 	 * @return string			html with wiki plugins
 	 */
 
-	function partialParseWysiwygToWiki( $inData ) {
+	function partialParseWysiwygToWiki( $inData )
+	{
 
 		// de-protect ck_protected comments
 		$ret = preg_replace('/<!--{cke_protected}{C}%3C!%2D%2D%20end%20tiki_plugin%20%2D%2D%3E-->/i', '<!-- end tiki_plugin -->', $inData);
 		// remove the wysiwyg plugin elements leaving the syntax only remaining
 		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end tiki_plugin --><\/(?:div|span)>/Umis', "$1", $ret);
 		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
-		if (!$ret) { $ret = $inData; }
+		if (!$ret) {
+			$ret = $inData;
+		}
 		
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
 		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
@@ -799,22 +837,25 @@ class EditLib
 	                       ['first_td'] = flag: 'is <tr> was just before this <td>'
 	                       ['first_tr'] = flag: 'is <table> was just before this <tr>'
 	 */
-	function walk_and_parse(&$c, &$src, &$p, $head_url ) {
+	function walk_and_parse(&$c, &$src, &$p, $head_url )
+	{
 		global $prefs;
 		// If no string
-		if(!$c) { return; }
+		if (!$c) {
+			return;
+		}
 		
 		for ($i=0; $i <= $c["contentpos"]; $i++) {
 			// If content type 'text' output it to destination...
 			if ($c[$i]["type"] == "text") {
-				if( ! ctype_space( $c[$i]["data"] ) ) {
+				if ( ! ctype_space($c[$i]["data"]) ) {
 					$add = $c[$i]["data"];
-					$add = str_replace( array("\r","\n"), '', $add );
-					$add = str_replace( '&nbsp;', ' ', $add );
+					$add = str_replace(array("\r","\n"), '', $add);
+					$add = str_replace('&nbsp;', ' ', $add);
 					$src .= $add;
 				}
 			} elseif ($c[$i]["type"] == "comment") {
-				$src .= preg_replace( '/<!--/', "\n~hc~", preg_replace( '/-->/', "~/hc~\n", $c[$i]["data"] ));
+				$src .= preg_replace('/<!--/', "\n~hc~", preg_replace('/-->/', "~/hc~\n", $c[$i]["data"]));
 			} elseif ($c[$i]["type"] == "tag") {
 				if ($c[$i]["data"]["type"] == "open") {
 					// Open tag type
@@ -850,7 +891,8 @@ class EditLib
 
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
-						case "meta": $c[$i]["content"] = ''; break;
+						case "meta": $c[$i]["content"] = '';
+     					break;
 						
 						// others we do want
 						case "br":
@@ -867,7 +909,7 @@ class EditLib
 								
 								// for lists, we must prepend '+' to keep the indentation
 								if ($p['listack']) {
-									$src .= str_repeat( '+', count($p['listack']));
+									$src .= str_repeat('+', count($p['listack']));
 								}
 								
 								// reopen all wikitags
@@ -877,30 +919,43 @@ class EditLib
 									}
 								}
 							}
-							break;
-						case "hr": $src .= $this->startNewLine($src) . '---'; break;
-						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
-						case "p": $isPar = true; if($src) {$src.="\n";}
+    						break;
+						case "hr": $src .= $this->startNewLine($src) . '---';
+     					break;
+						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n");
+     					break;
+						case "p":
+							$isPar = true;
+							if ($src) {
+								$src.="\n";
+							}
 						case "div": // Wiki parsing creates divs for center
-							if(isset($c[$i]['pars'])) {
+							if (isset($c[$i]['pars'])) {
 								$this->parseParDivTag($isPar, $c[$i]['pars'], $src, $p);
 							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
 							}
-							break;
+    						break;
 						case "span":
-							if( isset($c[$i]['pars'])) {
+							if ( isset($c[$i]['pars'])) {
 								$this->parseSpanTag($c[$i]['pars'], $src, $p);
 							}
-							break;
-						case "b": $this->processWikiTag('b', $src, $p, '__', '__', true); break;
-						case "i": $this->processWikiTag('i', $src, $p, '\'\'', '\'\'', true); break;
-						case "em": $this->processWikiTag('em', $src, $p, '\'\'', '\'\'', true); break;
-						case "strong": $this->processWikiTag('strong', $src, $p, '__', '__', true); break;
-						case "u":  $this->processWikiTag('u', $src, $p, '===', '===', true); break;
-						case "strike": $this->processWikiTag('strike', $src, $p, '--', '--', true); break;
-						case "del": $this->processWikiTag('del', $src, $p, '--', '--', true); break;
+    						break;
+						case "b": $this->processWikiTag('b', $src, $p, '__', '__', true);
+    						break;
+						case "i": $this->processWikiTag('i', $src, $p, '\'\'', '\'\'', true);
+    						break;
+						case "em": $this->processWikiTag('em', $src, $p, '\'\'', '\'\'', true);
+    						break;
+						case "strong": $this->processWikiTag('strong', $src, $p, '__', '__', true);
+    						break;
+						case "u":  $this->processWikiTag('u', $src, $p, '===', '===', true);
+    						break;
+						case "strike": $this->processWikiTag('strike', $src, $p, '--', '--', true);
+    						break;
+						case "del": $this->processWikiTag('del', $src, $p, '--', '--', true);
+    						break;
 						case "center":
 							if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 								$src .= ':::';
@@ -909,10 +964,13 @@ class EditLib
 								$src .= '::';
 								$p['stack'][] = array('tag' => 'center', 'string' => '::');
 							}
-							break;
-						case "code": $src .= '-+'; $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
-						case "dd": $src .= ':'; $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
-						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
+    						break;
+						case "code": $src .= '-+'; $p['stack'][] = array('tag' => 'code', 'string' => '+-');
+    						break;
+						case "dd": $src .= ':'; $p['stack'][] = array('tag' => 'dd', 'string' => "\n");
+    						break;
+						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => '');
+    						break;
 						
 						case "h1":
 						case "h2":
@@ -922,7 +980,7 @@ class EditLib
 						case "h6":
 							$p['wiki_lbr']++; // force wiki line break mode
 							$hlevel = (int) $c[$i]["data"]["name"]{1};
-							if (isset($c[$i]['pars']['style']['value']) && strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
+							if (isset($c[$i]['pars']['style']['value']) && strpos($c[$i]['pars']['style']['value'], 'text-align: center;') !== false ) {
 								if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 									$src .= $this->startNewLine($src) . str_repeat('!', $hlevel) . ':::';
 									$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n");
@@ -934,48 +992,57 @@ class EditLib
 								$src .= $this->startNewLine($src) . str_repeat('!', $hlevel);
 								$p['stack'][] = array('tag' => $c[$i]["data"]["name"], 'string' => "\n");
 							}
-							break;
-						case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
-						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
-						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
-						case "tt" : $src .= '{DIV(type="tt")}'; $p['stack'][] = array('tag' => 'tt', 'string' => "{DIV}"); break;
-						case "s"  : $src .= $this->processWikiTag('s', $src, $p, '--', '--', true); break;
+    						break;
+						case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n");
+    						break;
+						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}");
+    						break;
+						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}");
+    						break;
+						case "tt" : $src .= '{DIV(type="tt")}'; $p['stack'][] = array('tag' => 'tt', 'string' => "{DIV}");
+    						break;
+						case "s"  : $src .= $this->processWikiTag('s', $src, $p, '--', '--', true);
+    						break;
 						// Table parser
-						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
-						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true; break;
-						case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
+						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true;
+    						break;
+						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true;
+    						break;
+						case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false;
+    						break;
 						// Lists parser
-						case "ul": $p['listack'][] = '*'; break;
-						case "ol": $p['listack'][] = '#'; break;
+						case "ul": $p['listack'][] = '*';
+    						break;
+						case "ol": $p['listack'][] = '#';
+    						break;
 						case "li":
 							// Generate wiki list item according to current list depth.
-							$src .=  $this->startNewLine($src) . str_repeat( end($p['listack']), count($p['listack']));
-							break;
+							$src .=  $this->startNewLine($src) . str_repeat(end($p['listack']), count($p['listack']));
+    						break;
 						case "font":
 							// If color attribute present in <font> tag
 							if (isset($c[$i]["pars"]["color"]["value"])) {
 								$src .= '~~'.$c[$i]["pars"]["color"]["value"].':';
 								$p['stack'][] = array('tag' => 'font', 'string' => '~~');
 							}
-							break;
+    						break;
 						case "img":
 							// If src attribute present in <img> tag
 							if (isset($c[$i]["pars"]["src"]["value"]))
 								// Note what it produce (img) not {img}! Will fix this below...
-								if( strstr( $c[$i]["pars"]["src"]["value"], "http:" ) ) {
+								if ( strstr($c[$i]["pars"]["src"]["value"], "http:") ) {
 									$src .= '{img src="'.$c[$i]["pars"]["src"]["value"].'"}';
 								} else {
 									$src .= '{img src="'.$head_url.$c[$i]["pars"]["src"]["value"].'"}';
 								}
-							break;
+    						break;
 						case "a":
 							if (isset($c[$i]['pars'])) {
 								// get the link text
 								$text = '';
 								if ( $i < count($c) ) {
 									$next_token = &$c[$i+1];
-									if (isset($next_token['type']) && $next_token['type'] == 'text' && isset($next_token['data']) )
-									{
+									if (isset($next_token['type']) && $next_token['type'] == 'text' && isset($next_token['data']) ) {
 										$text = &$next_token['data'];
 									}
 								}
@@ -1000,7 +1067,7 @@ class EditLib
 							*/
 							
 							
-							break;
+    						break;
 					}	// end switch on tag name
 				} else {
 					// This is close tag type. Is that smth we r waiting for?
@@ -1009,26 +1076,25 @@ class EditLib
 							if (end($p['listack']) == '*') array_pop($p['listack']);
 							if( empty($p['listack']) )
 								$src .= "\n";
-							break;
+    						break;
 						case "ol":
 							if (end($p['listack']) == '#') array_pop($p['listack']);
 							if( empty($p['listack']) )
 								$src .= "\n";
-							break;
+     					break;
 						default:
 							$e = end($p['stack']);
-							if ($c[$i]["data"]["name"] == $e['tag'])
-							{
+							if ($c[$i]["data"]["name"] == $e['tag']) {
 								$src .= $e['string'];
 								array_pop($p['stack']);
 							}
-							break;
+    						break;
 					}
 					
 					// update the wiki stack
 					if (isset($e['wikitags']) && $e['wikitags']) {
 						for ( $i_wiki = 0; $i_wiki < $e['wikitags']; $i_wiki++ ) {
-							array_pop( $p['wikistack'] );
+							array_pop($p['wikistack']);
 						}
 					}
 					
@@ -1040,14 +1106,15 @@ class EditLib
 						case "h3":
 						case "h4":
 						case "h5":
-						case "h6": $p['wiki_lbr']--; break; 
+						case "h6": $p['wiki_lbr']--;
+     					break; 
 					}
 				}
 			}
 			// Recursive call on tags with content...
 			if (isset($c[$i]["content"])) {
 				if (substr($src, -1) != " ") $src .= " ";
-				$this->walk_and_parse($c[$i]["content"], $src, $p, $head_url );
+				$this->walk_and_parse($c[$i]["content"], $src, $p, $head_url);
 			}
 		}
 		if (substr($src, -2) == "\n\n") {	// seem to always get too many line ends
@@ -1055,7 +1122,8 @@ class EditLib
 		}
 	}	// end walk_and_parse
 	
-	function startNewLine(&$str) {
+	function startNewLine(&$str)
+	{
 		if (strlen($str) && substr($str, -1) != "\n") {
 			$str .=  "\n"; 
 		}
@@ -1068,15 +1136,15 @@ class EditLib
 	 */
 	
 	
-	function parse_html(&$inHtml) {
+	function parse_html(&$inHtml)
+	{
 		global $smarty;
 
 		include ('lib/htmlparser/htmlparser.inc');
 	
 		// Read compiled (serialized) grammar
 		$grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
-		if (!$fp = @fopen($grammarfile,'r'))
-		{
+		if (!$fp = @fopen($grammarfile, 'r')) {
 			$smarty->assign('msg', tra("Can't parse HTML data - no grammar file"));
 			$smarty->display("error.tpl");
 			die;
@@ -1106,11 +1174,10 @@ class EditLib
 		 */
 		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(),  
 			'wiki_lbr' => 0, 'first_td' => false, 'first_tr' => false);
-		$this->walk_and_parse( $htmlparser->content, $out_data, $p, '' );
+		$this->walk_and_parse($htmlparser->content, $out_data, $p, '');
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 		// to produce invalid wiki :)
-		while (count($p['stack']))
-		{
+		while (count($p['stack'])) {
 			$e = end($p['stack']);
 			$out_data .= $e['string'];
 			array_pop($p['stack']);
@@ -1118,19 +1185,20 @@ class EditLib
 		// Unclosed lists r ignored... wiki have no special start/end lists syntax....
 		// OK. Things remains to do:
 		// 1) fix linked images
-		$out_data = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $out_data);
+		$out_data = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU', '{img src=$2 link=$1}', $out_data);
 		// 2) fix remains images (not in links)
-		$out_data = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $out_data);
+		$out_data = preg_replace(',\(img src=(.*)\),mU', '{img src=$1}', $out_data);
 		// 3) remove empty lines
-		$out_data = preg_replace(",[\n]+,mU","\n", $out_data);
+		$out_data = preg_replace(",[\n]+,mU", "\n", $out_data);
 		// 4) remove nbsp's
-		$out_data = preg_replace(",&#160;,mU"," ", $out_data);
+		$out_data = preg_replace(",&#160;,mU", " ", $out_data);
 		
 		return $out_data;
 	}	// end parse_html
 	
 	
-	function get_new_page_attributes_from_parent_pages($page, $page_info) {
+	function get_new_page_attributes_from_parent_pages($page, $page_info)
+	{
 		global $wikilib, $tikilib;
 		$new_page_attrs = array();
 		$parent_pages = $wikilib->get_parent_pages($page);
@@ -1146,7 +1214,8 @@ class EditLib
 		return $new_page_attrs;
 	}
 
-	function get_newpage_language_from_parent_page($page, $page_info, $parent_pages_info, $new_page_attrs) {
+	function get_newpage_language_from_parent_page($page, $page_info, $parent_pages_info, $new_page_attrs)
+	{
 		if (!isset($page_info['lang'])) {
 			$lang = null;
 			foreach ($parent_pages_info as $this_parent_page_info) {

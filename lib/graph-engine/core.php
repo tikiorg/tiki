@@ -124,85 +124,85 @@ class Fake_GRenderer extends GRenderer // {{{1
 	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
 	{
 		$this->renderer->addLink(
-			$target,
-			$left * $this->width + $this->left,
-			$top * $this->height + $this->top,
-			$right * $this->width + $this->left,
-			$bottom * $this->height + $this->top,
-			$title
+						$target,
+						$left * $this->width + $this->left,
+						$top * $this->height + $this->top,
+						$right * $this->width + $this->left,
+						$bottom * $this->height + $this->top,
+						$title
 		);
 	}
 
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		$this->renderer->drawLine(
-			$x1 * $this->width + $this->left,
-			$y1 * $this->height + $this->top,
-			$x2 * $this->width + $this->left,
-			$y2 * $this->height + $this->top,
-			$style
+						$x1 * $this->width + $this->left,
+						$y1 * $this->height + $this->top,
+						$x2 * $this->width + $this->left,
+						$y2 * $this->height + $this->top,
+						$style
 		);
 	}
 
 	function drawRectangle( $left, $top, $right, $bottom, $style ) // {{{2
 	{
 		$this->renderer->drawRectangle(
-			$left * $this->width + $this->left,
-			$top * $this->height + $this->top,
-			$right * $this->width + $this->left,
-			$bottom * $this->height + $this->top,
-			$style
+						$left * $this->width + $this->left,
+						$top * $this->height + $this->top,
+						$right * $this->width + $this->left,
+						$bottom * $this->height + $this->top,
+						$style
 		);
 	}
 
 	function drawPie( $centerX, $centerY, $radius, $begin, $end, $style ) // {{{2
 	{
 		$this->renderer->drawPie(
-			$centerX * $this->width + $this->left,
-			$centerY * $this->height + $this->top,
-			$radius * $this->width,
-			$begin,
-			$end,
-			$style
+						$centerX * $this->width + $this->left,
+						$centerY * $this->height + $this->top,
+						$radius * $this->width,
+						$begin,
+						$end,
+						$style
 		);
 	}
 
 	function drawText( $text, $left, $right, $height, $style ) // {{{2
 	{
 		$this->renderer->drawText(
-			$text,
-			$left * $this->width + $this->left,
-			$right * $this->width + $this->left,
-			$height * $this->height + $this->top,
-			$style
+						$text,
+						$left * $this->width + $this->left,
+						$right * $this->width + $this->left,
+						$height * $this->height + $this->top,
+						$style
 		);
 	}
 
 	function getTextWidth( $text, $style ) // {{{2
 	{
 		// Make sure the font size does not get smaller with scale
-		return $this->renderer->getTextWidth( $text, $style ) / $this->width;
+		return $this->renderer->getTextWidth($text, $style) / $this->width;
 	}
 
 	function getTextHeight( $style ) // {{{2
 	{
 		// Make sure the font size does not get smaller with scale
-		return $this->renderer->getTextHeight( $style ) / $this->height;
+		return $this->renderer->getTextHeight($style) / $this->height;
 	}
 
 	function getStyle( $name ) // {{{2
 	{
-		return $this->renderer->getStyle( $name );
+		return $this->renderer->getStyle($name);
 	}
 
 	function httpOutput( $filename ) // {{{2
 	{
-		$this->renderer->httpOutput( $filename );
+		$this->renderer->httpOutput($filename);
 	}
 
 	function writeToStream( $stream ) // {{{2
 	{
-		$this->renderer->writeToStream( $stream );
+		$this->renderer->writeToStream($stream);
 	}
 } // }}}1
 
@@ -227,7 +227,7 @@ class DataHandler // {{{
 	 */
 	function handle( $renderer, $positionData, $series, $entryIndex )
 	{
-		die( "Abstract Function Call" );
+		die("Abstract Function Call");
 	}
 } // }}}
 
@@ -279,43 +279,41 @@ class Graphic // {{{1
 
 		$layout = $this->_layout();
 
-		if ( $layout['title-active'] || empty( $this->title ) )
-		{
+		if ( $layout['title-active'] || empty( $this->title ) ) {
 			$top += 0.1;
-			$renderer->drawText( $this->title, 0, 1, 0.04, $renderer->getStyle( $layout['title-font'] ) );
+			$renderer->drawText($this->title, 0, 1, 0.04, $renderer->getStyle($layout['title-font']));
 		}
 
-		if ( $layout['legend-active'] && count( $this->legend ) > 0 && $layout['legend-location'] != 'static' )
-			$this->_drawLegend( $renderer, $left, $top, $right, $bottom, $layout );
+		if ( $layout['legend-active'] && count($this->legend) > 0 && $layout['legend-location'] != 'static' )
+			$this->_drawLegend($renderer, $left, $top, $right, $bottom, $layout);
 
 		$left += $layout['content-margin'];
 		$right -= $layout['content-margin'];
 		$top += $layout['content-margin'];
 		$bottom -= $layout['content-margin'];
-		$this->_drawContent( new Fake_GRenderer( $renderer, $left, $top, $right, $bottom ) );
+		$this->_drawContent(new Fake_GRenderer($renderer, $left, $top, $right, $bottom));
 
-		if ( $layout['legend-active'] && count( $this->legend ) > 0 && $layout['legend-location'] == 'static' )
-			$this->_drawLegend( $renderer, $left, $top, $right, $bottom, $layout );
+		if ( $layout['legend-active'] && count($this->legend) > 0 && $layout['legend-location'] == 'static' )
+			$this->_drawLegend($renderer, $left, $top, $right, $bottom, $layout);
 	}
 
 	function setData( $data ) // {{{2
 	{
-		if ( !is_array( $data ) )
+		if ( !is_array($data) )
 			return false;
 
-		foreach( $this->getRequiredSeries() as $key => $value )
-			if ( $value && ( !array_key_exists( $key, $data ) || !is_array( $data[$key] ) ) )
+		foreach ( $this->getRequiredSeries() as $key => $value )
+			if ( $value && ( !array_key_exists($key, $data) || !is_array($data[$key]) ) )
 				return false;
 
-		foreach( $data as $key => $values )
-		{
-			if ( !is_array( $values ) )
+		foreach ( $data as $key => $values ) {
+			if ( !is_array($values) )
 				return false;
 
-			$data[$key] = array_values( $values );
+			$data[$key] = array_values($values);
 		}
 
-		return $this->_handleData( $data );
+		return $this->_handleData($data);
 	}
 
 	function setParam( $name, $value ) // {{{2
@@ -345,30 +343,29 @@ class Graphic // {{{1
 		$padding = $layout['legend-padding'];
 		$margin = $layout['legend-margin'];
 
-		$legend_font = $renderer->getStyle( $layout['legend-font'] );
-		$font_height = $renderer->getTextHeight( $legend_font );
+		$legend_font = $renderer->getStyle($layout['legend-font']);
+		$font_height = $renderer->getTextHeight($legend_font);
 
 		// Calculate size {{{3
 		$item_size = array();
 		foreach( $this->legend as $key => $value )
-			$item_size[$key] = $renderer->getTextWidth( $value[1], $legend_font );
+			$item_size[$key] = $renderer->getTextWidth($value[1], $legend_font);
 
 		$width = 0;
 		$height = 0;
-		$single_height = max( $font_height, $box_size );
-		switch( $layout['legend-orientation'] )
-		{
+		$single_height = max($font_height, $box_size);
+		switch( $layout['legend-orientation'] ) {
 		case 'horizontal':
 			$height = $single_height + 2 * $padding;
 			$width = 
-				array_sum( $item_size ) // text width
-				+ (1 + count( $item_size ) ) * $padding // padding between items 
-				+ ( $box_size + $padding ) * count( $item_size ); // box and box padding
-			break;
+				array_sum($item_size) // text width
+				+ (1 + count($item_size) ) * $padding // padding between items 
+				+ ( $box_size + $padding ) * count($item_size); // box and box padding
+    		break;
 		case 'vertical':
-			$height = $single_height * count( $item_size ) + (1 + count( $item_size ) ) * $padding;
-			$width = max( $item_size ) + 3 * $padding + $box_size;
-			break;
+			$height = $single_height * count($item_size) + (1 + count($item_size) ) * $padding;
+			$width = max($item_size) + 3 * $padding + $box_size;
+    		break;
 		}
 
 		// Calculate position {{{3
@@ -380,51 +377,51 @@ class Graphic // {{{1
 			$y = $top + ( $bottom - $top ) / 2 - $height / 2;
 			$x = $left + $margin;
 			$left += 2 * $margin + $width;
-			break;
+    		break;
 		case 'right':
 			$y = $top + ( $bottom - $top ) / 2 - $height / 2;
 			$x = $right - $margin - $width;
 			$right -= 2 * $margin + $width;
-			break;
+    		break;
 		case 'bottom':
 			$x = $left + ( $right - $left ) / 2 - $width / 2;
 			$y = $bottom - $margin - $height;
 			$bottom -= 2 * $margin + $height;
-			break;
+    		break;
 		case 'top':
 			$x = $left + ( $right - $left ) / 2 - $width / 2;
 			$y = $top + $margin;
 			$top += 2 * $margin + $height;
-			break;
+    		break;
 		case 'static':
 			switch( $layout['legend-location-rel'] )
 			{
 			case 'top-left':
 				$x = $layout['legend-location-x'] + $margin;
 				$y = $layout['legend-location-y'] + $margin;
-				break;
+    			break;
 			case 'top-right':
 				$x = $layout['legend-location-x'] - $width - $margin;
 				$y = $layout['legend-location-y'] + $margin;
-				break;
+    			break;
 			case 'bottom-left':
 				$x = $layout['legend-location-x'] + $margin;
 				$y = $layout['legend-location-y'] - $height - $margin;
-				break;
+    			break;
 			case 'bottom-right':
 				$x = $layout['legend-location-x'] - $width - $margin;
 				$y = $layout['legend-location-y'] - $height - $margin;
-				break;
+    			break;
 			case 'center':
 				$x = $layout['legend-location-x'] - $width / 2;
 				$y = $layout['legend-location-y'] - $height / 2;
-				break;
+    			break;
 			}
-			break;
+    		break;
 		}
 
 		// Draw the thing {{{3
-		$renderer->drawRectangle( $x, $y, $x + $width, $y + $height, $renderer->getStyle( $layout['legend-style'] ) );
+		$renderer->drawRectangle($x, $y, $x + $width, $y + $height, $renderer->getStyle($layout['legend-style']));
 		$box_offset = 0;
 		$text_offset = 0;
 		if ( $box_size > $font_height )
@@ -435,59 +432,64 @@ class Graphic // {{{1
 		$x += $padding;
 		$y += $padding;
 
-		foreach( $this->legend as $key => $info )
-		{
+		foreach ( $this->legend as $key => $info ) {
 			list( $color, $value, $url ) = $info;
-			$this->_drawLegendBox( 
-				new Fake_GRenderer( 
-					$renderer, 
-					$x, 
-					$y + $box_offset, 
-					$x + $box_size, 
-					$y + $box_size + $box_offset ), 
-				$color );
+			$this->_drawLegendBox(
+							new Fake_GRenderer(
+											$renderer, 
+											$x, 
+											$y + $box_offset, 
+											$x + $box_size, 
+											$y + $box_size + $box_offset
+							), 
+							$color
+			);
 
 			switch( $layout['legend-orientation'] )
 			{
 			case 'horizontal':
-				$renderer->drawText( 
-					$value, 
-					$x + $box_size + $padding, 
-					$x + $box_size + $padding + $item_size[$key],
-					$y + $text_offset, 
-					$legend_font );
+				$renderer->drawText(
+								$value, 
+								$x + $box_size + $padding, 
+								$x + $box_size + $padding + $item_size[$key],
+								$y + $text_offset, 
+								$legend_font
+				);
 				
 				if ( ! empty( $url ) )
 					$renderer->addLink(
-						$url,
-						$x + $padding,
-						$y + $box_offset,
-						$x + $box_size + $padding + $item_size[$key],
-						$y + $box_offset + $box_size,
-						$value );
+									$url,
+									$x + $padding,
+									$y + $box_offset,
+									$x + $box_size + $padding + $item_size[$key],
+									$y + $box_offset + $box_size,
+									$value
+					);
 
 				$x += $box_size + $padding * 2 + $item_size[$key];
 
-				break;
+    			break;
 			case 'vertical':
-				$renderer->drawText( 
-					$value, 
-					$x + $box_size + $padding, 
-					$x - $padding + $width, 
-					$y + $text_offset, 
-					$legend_font );
+				$renderer->drawText(
+								$value, 
+								$x + $box_size + $padding, 
+								$x - $padding + $width, 
+								$y + $text_offset, 
+								$legend_font 
+				);
 				
 				if ( ! empty( $url ) )
 					$renderer->addLink(
-						$url,
-						$x,
-						$y + $box_offset,
-						$x + $width,
-						$y + $box_offset + $box_size,
-						$value);
+									$url,
+									$x,
+									$y + $box_offset,
+									$x + $width,
+									$y + $box_offset + $box_size,
+									$value
+					);
 
 				$y += $padding + $single_height;
-				break;
+    			break;
 			}
 		}
 		// }}}3
@@ -528,15 +530,15 @@ class Graphic // {{{1
 		);
 	}
 
-	function _layout() // {{{2
+	function _layout()
 	{
 		// Planning some user-preferences, until then, defaults.
-		return array_merge( $this->_default(), $this->parameters );
+		return array_merge($this->_default(), $this->parameters);
 	}
 
-	function _notify( $renderer, $positionData, $series, $index ) // {{{2
+	function _notify( $renderer, $positionData, $series, $index )
 	{
 		foreach( $this->dataHandlers as $handler )
-			$handler->handle( $renderer, $positionData, $series, $index );
+			$handler->handle($renderer, $positionData, $series, $index);
 	}
 } // }}}1
