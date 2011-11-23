@@ -11,7 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// this is an abstract class
 class ObjectLib extends TikiLib
 {
 	/* Create an object record for the given Tiki object if one doesn't already exist.
