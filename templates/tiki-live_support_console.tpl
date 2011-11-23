@@ -13,7 +13,7 @@
 	{$trl}
   </head>
   {literal}
-  <body>
+  <body style="background-color: white">
   {/literal}
    	<input type="hidden" id="user" value="{$user|escape}" />
   	<input type="hidden" id="status" value="online" />

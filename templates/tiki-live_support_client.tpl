@@ -11,7 +11,7 @@
 	{/literal}
 	{$headerlib->output_headers()}
   </head>
-  <body onunload="client_close();">
+  <body onunload="client_close();" style="background-color: white">
   	<div id='request_chat' align="center">
   		<input type="hidden" id="reqId" />
 		<input type="hidden" id="tiki_user" value="{$user|escape}" />

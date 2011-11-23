@@ -11,7 +11,7 @@
 	{/literal}
 	{$headerlib->output_headers()}
   </head>
-  <body onunload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);">
+  <body onunload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);" style="background-color: white">
   	<input type="hidden" id="reqId" value="{$reqId|escape}" />
   	<input type="hidden" id="senderId" value="{$senderId|escape}" />
   	<input type="hidden" id="role" value="{$role|escape}" />
