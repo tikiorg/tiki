@@ -15,8 +15,6 @@
   {literal}
   <body style="background-color: white">
   {/literal}
-   	<input type="hidden" id="user" value="{$user|escape}" />
-  	<input type="hidden" id="status" value="online" />
 	<table class="normal" >
 		<tr>
 			<th>{tr}Operator:{/tr} {$user}</th>
