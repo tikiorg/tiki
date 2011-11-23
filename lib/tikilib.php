@@ -1789,27 +1789,6 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	// function enhancing php in_array() function
-	function in_multi_array($needle, $haystack)
-	{
-		$in_multi_array = false;
-
-		if (in_array($needle, $haystack)) {
-			$in_multi_array = true;
-		} else {
-			while (list($tmpkey, $tmpval) = each($haystack)) {
-				if (is_array($haystack[$tmpkey])) {
-					if ($this->in_multi_array($needle, $haystack[$tmpkey])) {
-						$in_multi_array = true;
-						break;
-					}
-				}
-			}
-		}
-		return $in_multi_array;
-	}
-
-	/*shared*/
 	function list_received_pages($offset, $maxRecords, $sort_mode, $find='', $type='', $structureName='')
 	{
 		$bindvars = array();
@@ -4288,17 +4267,6 @@ class TikiLib extends TikiDb_Bridge
 		return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
 	}
 	
-	function format_sql_date($sqlstamp)
-	{
-		global $user;
-		$tikilib = TikiLib::lib('tiki');
-		$tz = $tikilib->get_display_timezone($user);
-		$unixstamp = strtotime($sqlstamp . $tz);
-		$format = $tikilib->get_short_date_format();
-		$date = strftime($format, $unixstamp);
-		return $date;
-	}
-
 	/**
 		Per http://www.w3.org/TR/NOTE-datetime
 	 */
@@ -5059,22 +5027,6 @@ JS;
 		// parse_str's behavior also depends on magic_quotes_gpc...
 		global $magic_quotes_gpc;
 		if ( $magic_quotes_gpc ) remove_gpc($arr);
-	}
-
-	function bindvars_to_sql_in(&$bindvars, $remove_duplicates = false, $cast_to_int = false)
-	{
-		if ( ! is_array($bindvars) ) return false;
-		$query = ' IN (';
-		$bindvars2 = array();
-		foreach ( $bindvars as $id ) {
-			if ( $cast_to_int ) $id = (int)$id;
-			if ( $remove_duplicates && in_array($id, $bindvars2) ) continue;
-			$bindvars2[] = $id;
-			if ( $query == '' ) $query .= ',';
-			$query .= '?';
-		}
-		if ( $remove_duplicates ) $bindvars = $bindvars2;
-		return ' IN (' . $query . ')';
 	}
 
 	function get_jail()
