@@ -14,10 +14,12 @@ class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 {
 	function testMatch()
 	{
-		$rule = new DeclFilter_KeyPatternFilterRule(array(
-			'/^foo_\d+$/' => 'digits',
-			'/^bar_[a-z]+$/' => 'digits',
-		));
+		$rule = new DeclFilter_KeyPatternFilterRule(
+						array(
+							'/^foo_\d+$/' => 'digits',
+							'/^bar_[a-z]+$/' => 'digits',
+						)
+		);
 
 		$this->assertTrue($rule->match('foo_123'));
 		$this->assertTrue($rule->match('bar_abc'));
@@ -27,10 +29,12 @@ class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 
 	function testApply()
 	{
-		$rule = new DeclFilter_KeyPatternFilterRule(array(
-			'/^foo_\d+$/' => 'digits',
-			'/^bar_[a-z]+$/' => 'alpha',
-		));
+		$rule = new DeclFilter_KeyPatternFilterRule(
+						array(
+							'/^foo_\d+$/' => 'digits',
+							'/^bar_[a-z]+$/' => 'alpha',
+						)
+		);
 
 		$data = array(
 			'foo_123' => '123abc',
@@ -48,9 +52,11 @@ class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 
 	function testApplyOnElements()
 	{
-		$rule = new DeclFilter_KeyPatternFilterRule(array(
-			'/^foo_\d+$/' => 'digits',
-		));
+		$rule = new DeclFilter_KeyPatternFilterRule(
+						array(
+							'/^foo_\d+$/' => 'digits',
+						)
+		);
 		$rule->applyOnElements();
 
 		$data = array(

@@ -16,8 +16,7 @@ class Perms_Reflection_PermissionSetTest extends TikiTestCase
 	{
 		$set = new Perms_Reflection_PermissionSet;
 
-		$this->assertEquals(array(
-		), $set->getPermissionArray());
+		$this->assertEquals(array(), $set->getPermissionArray());
 	}
 
 	function testBasicSet()
@@ -27,10 +26,13 @@ class Perms_Reflection_PermissionSetTest extends TikiTestCase
 		$set->add('Registered', 'edit');
 		$set->add('Anonymous', 'view');
 
-		$this->assertEquals(array(
-			'Registered' => array('view', 'edit'),
-			'Anonymous' => array('view'),
-		), $set->getPermissionArray());
+		$this->assertEquals(
+						array(
+							'Registered' => array('view', 'edit'),
+							'Anonymous' => array('view'),
+						), 
+						$set->getPermissionArray()
+		);
 	}
 
 	function testDuplicateEntry()
@@ -40,9 +42,10 @@ class Perms_Reflection_PermissionSetTest extends TikiTestCase
 		$set->add('Registered', 'edit');
 		$set->add('Registered', 'view');
 
-		$this->assertEquals(array(
-			'Registered' => array('view', 'edit'),
-		), $set->getPermissionArray());
+		$this->assertEquals(
+						array('Registered' => array('view', 'edit'),), 
+						$set->getPermissionArray()
+		);
 	}
 
 	function testPositiveHas()

@@ -36,18 +36,20 @@ class Perms_ResolverFactory_TestFactoryTest extends TikiTestCase
 	
 	function testFetchKnown()
 	{
-		$factory = new Perms_ResolverFactory_TestFactory(array('a'), array(
-			'1' => $a = new Perms_Resolver_Default(true)
-		));
+		$factory = new Perms_ResolverFactory_TestFactory(
+						array('a'), 
+						array('1' => $a = new Perms_Resolver_Default(true))
+		);
 		
 		$this->assertSame($a, $factory->getResolver(array('a' => 1)));
 	}
 	
 	function testFetchUnknown()
 	{
-		$factory = new Perms_ResolverFactory_TestFactory(array('a'), array(
-			'1' => $a = new Perms_Resolver_Default(true)
-		));
+		$factory = new Perms_ResolverFactory_TestFactory(
+						array('a'), 
+						array('1' => $a = new Perms_Resolver_Default(true))
+		);
 		
 		$this->assertNull($factory->getResolver(array('a' => 2)));
 	}

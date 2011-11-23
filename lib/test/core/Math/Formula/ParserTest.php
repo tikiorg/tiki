@@ -28,8 +28,10 @@ class Math_Formula_ParserTest extends TikiTestCase
 	{
 		$parser = new Math_Formula_Parser;
 
-		$element = new Math_Formula_Element('score', array(
-			new Math_Formula_Element('object', array('type', 'object'))));
+		$element = new Math_Formula_Element(
+						'score', 
+						array(new Math_Formula_Element('object', array('type', 'object')))
+		);
 
 		$this->assertEquals($element, $parser->parse('(score (object type object))'));
 	}
@@ -38,10 +40,13 @@ class Math_Formula_ParserTest extends TikiTestCase
 	{
 		$parser = new Math_Formula_Parser;
 
-		$element = new Math_Formula_Element('score', array(
-			new Math_Formula_Element('object', array('type', 'object')),
-			new Math_Formula_Element('range', array(3600)),
-		));
+		$element = new Math_Formula_Element(
+						'score', 
+						array(
+							new Math_Formula_Element('object', array('type', 'object')),
+							new Math_Formula_Element('range', array(3600)),
+						)
+		);
 
 		$this->assertEquals($element, $parser->parse('(score (object type object) (range 3600))'));
 	}
@@ -50,12 +55,16 @@ class Math_Formula_ParserTest extends TikiTestCase
 	{
 		$parser = new Math_Formula_Parser;
 
-		$element = new Math_Formula_Element('score', array(
-			new Math_Formula_Element('object', array('type', 'object')),
-			new Math_Formula_Element('range', array(
-				new Math_Formula_Element('mul', array(3600, 60)),
-			)),
-		));
+		$element = new Math_Formula_Element(
+						'score', 
+						array(
+							new Math_Formula_Element('object', array('type', 'object')),
+							new Math_Formula_Element(
+											'range', 
+											array(new Math_Formula_Element('mul', array(3600, 60)),)
+							),
+						)
+		);
 
 		$this->assertEquals($element, $parser->parse('(score (object type object) (range (mul 3600 60)))'));
 	}
@@ -80,16 +89,20 @@ DOC;
 	function testWithZero()
 	{
 		$parser = new Math_Formula_Parser;
-		$element = new Math_Formula_Element('add', array(
-			new Math_Formula_Element('default', array(0)),
-			new Math_Formula_Element('attribute'),
-		));
+		$element = new Math_Formula_Element(
+						'add', 
+						array(
+							new Math_Formula_Element('default', array(0)),
+							new Math_Formula_Element('attribute'),
+						)
+		);
 
 		$this->assertEquals($element, $parser->parse('
 		(add
 			(default 0)
 			(attribute)
-		)'));
+		)')
+		);
 	}
 
 	function badStrings()

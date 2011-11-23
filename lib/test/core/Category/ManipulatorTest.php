@@ -15,9 +15,11 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testSimpleManipulation()
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -33,9 +35,11 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testManipulationWithoutSpecifyingManaged() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -50,9 +54,11 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testLimitationOnRange() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -68,12 +74,15 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testNotAllowedToModifyObject() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_TestFactory(array('type', 'object'), array(
-				'wiki page:Hello World' => new Perms_Resolver_Default(false),
-			)),
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_TestFactory(
+											array('type', 'object'), 
+											array('wiki page:Hello World' => new Perms_Resolver_Default(false),)
+							),
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -89,12 +98,15 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testCannotAddAny() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_TestFactory(array('type', 'object'), array(
-				'category:4' => new Perms_Resolver_Default(false),
-			)),
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_TestFactory(
+											array('type', 'object'), 
+											array('category:4' => new Perms_Resolver_Default(false),)
+							),
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -110,12 +122,15 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testCannotRemoveAny() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_TestFactory(array('type', 'object'), array(
-				'category:3' => new Perms_Resolver_Default(false),
-			)),
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_TestFactory(
+											array('type', 'object'), 
+											array('category:3' => new Perms_Resolver_Default(false),)
+							),
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -131,9 +146,11 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testDefaultSet() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -152,12 +169,17 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testConstraintAppliesBeyondPermissions() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_TestFactory(array('type', 'object'), array(
-				'category:10' => new Perms_Resolver_Default(false),
-			)),
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_TestFactory(
+											array('type', 'object'), 
+											array(
+												'category:10' => new Perms_Resolver_Default(false),
+											)
+							),
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -176,9 +198,11 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testUnmanagedFilter() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');
@@ -194,9 +218,11 @@ class Category_ManipulatorTest extends TikiTestCase
 	function testSkipPermissionChecks() 
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(false)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(false)),
+						)
+		);
 		Perms::set($perms);
 
 		$manip = new Category_Manipulator('wiki page', 'Hello World');

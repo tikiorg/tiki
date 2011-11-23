@@ -44,8 +44,9 @@ class Perms_Reflection_FactoryTest extends TikiTestCase
 		$factory->registerFallback('Perms_Reflection_Object');
 
 		$this->assertEquals(
-			new Perms_Reflection_Object($factory, 'wiki page', 'HomePage'),
-			$factory->get('wiki page', 'HomePage'));
+						new Perms_Reflection_Object($factory, 'wiki page', 'HomePage'),
+						$factory->get('wiki page', 'HomePage')
+		);
 	}
 
 	function testFallbackPrevented()

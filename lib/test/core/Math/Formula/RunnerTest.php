@@ -11,10 +11,12 @@ class Math_Formula_RunnerTest extends TikiTestCase
 
 	function setUp()
 	{
-		$this->runner = new Math_Formula_Runner(array(
-					'Math_Formula_Function_' => realpath(dirname(__FILE__) . '/../../../../core/Math/Formula/Function'),
-					'Math_Formula_DummyFunction_' => realpath(dirname(__FILE__) . '/DummyFunction'),
-					));
+		$this->runner = new Math_Formula_Runner(
+						array(
+							'Math_Formula_Function_' => realpath(dirname(__FILE__) . '/../../../../core/Math/Formula/Function'),
+							'Math_Formula_DummyFunction_' => realpath(dirname(__FILE__) . '/DummyFunction'),
+						)
+		);
 	}
 
 	function testSimpleOperations()
@@ -62,9 +64,7 @@ class Math_Formula_RunnerTest extends TikiTestCase
 	function testWithVariables()
 	{
 		$this->runner->setFormula('(mul foobar 2)');
-		$this->runner->setVariables(array(
-					'foobar' => 2.5,
-					));
+		$this->runner->setVariables(array('foobar' => 2.5,));
 		$this->assertEquals(5, $this->runner->evaluate());
 	}
 

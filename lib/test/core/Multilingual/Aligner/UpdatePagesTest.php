@@ -42,9 +42,11 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$this->updater->translator=new Multilingual_Aligner_MockMTWrapper();
 
 		$this->updater->translator->SetMT(
-				$this->extra_source_sentence."<br/>".$this->mt_extra_target_sentence, 
-				$this->mt_extra_source_sentence."<br/>".$this->extra_target_sentence,
-				'en', 'fr');
+						$this->extra_source_sentence . "<br/>" . $this->mt_extra_target_sentence, 
+						$this->mt_extra_source_sentence . "<br/>" . $this->extra_target_sentence,
+						'en', 
+						'fr'
+		);
 	} 
 
 
@@ -84,10 +86,15 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->mt_extra_source_sentence, $target_modified_array);
 
 		$this->do_test_basic_updating(
-				$source_lng,$target_lng,
-				$source_original_array,$source_modified_array,
-				$target_original_array, $target_modified_array, 
-				$expected_content, "");
+						$source_lng,
+						$target_lng,
+						$source_original_array,
+						$source_modified_array,
+						$target_original_array, 
+						$target_modified_array, 
+						$expected_content, 
+						""
+		);
 	}
 
 
@@ -106,10 +113,15 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content = $target_modified_array;
 
 		$this->do_test_basic_updating(
-				$source_lng,$target_lng,
-				$source_original_array,$source_modified_array,
-				$target_original_array, $target_modified_array, 
-				$expected_content, "");		
+						$source_lng,
+						$target_lng,
+						$source_original_array,
+						$source_modified_array,
+						$target_original_array, 
+						$target_modified_array, 
+						$expected_content, 
+						""
+		);		
 	}
 
 
@@ -129,10 +141,15 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content [1] = "Deleted_Source ".$expected_content [1]; 
 
 		$this->do_test_basic_updating(
-				$source_lng,$target_lng,
-				$source_original_array,$source_modified_array,
-				$target_original_array, $target_modified_array, 
-				$expected_content, "");
+						$source_lng, 
+						$target_lng,
+						$source_original_array, 
+						$source_modified_array,
+						$target_original_array, 
+						$target_modified_array, 
+						$expected_content, 
+						""
+		);
 	}
 
 	public function test_sentence_deleted_on_target_side_only()
@@ -151,10 +168,15 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content [1] = "Deleted_Target ".$expected_content [1]; 
 
 		$this->do_test_basic_updating(
-				$source_lng,$target_lng,
-				$source_original_array,$source_modified_array,
-				$target_original_array, $target_modified_array, 
-				$expected_content, "");
+						$source_lng,
+						$target_lng,
+						$source_original_array,
+						$source_modified_array,
+						$target_original_array, 
+						$target_modified_array, 
+						$expected_content, 
+						""
+		);
 	}
 
 	public function test_sentence_inserted_in_both_source_and_target_sides ()
@@ -172,13 +194,18 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_modified_array = $this->orig_target_sentences;
 		$target_modified_array = $this->insertSentenceAtIndex(2, $this->extra_target_sentence, $target_modified_array);
 
-		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->mt_extra_source_sentence, $target_modified_array);
+		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source " . $this->mt_extra_source_sentence, $target_modified_array);
 
 		$this->do_test_basic_updating(
-				$source_lng,$target_lng,
-				$source_original_array,$source_modified_array,
-				$target_original_array, $target_modified_array, 
-				$expected_content, "");
+						$source_lng,
+						$target_lng,
+						$source_original_array,
+						$source_modified_array,
+						$target_original_array, 
+						$target_modified_array, 
+						$expected_content, 
+						""
+		);
 
 	}
 
@@ -198,21 +225,26 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_modified_array = $this->removeSentenceAtIndex(2, $target_modified_array);
 
 		$expected_content = $target_original_array;
-		$expected_content [1] = "Deleted_Source ".$expected_content [1]; 
-		$expected_content [2] = "Deleted_Target ".$expected_content [2]; 
+		$expected_content [1] = "Deleted_Source " . $expected_content [1]; 
+		$expected_content [2] = "Deleted_Target " . $expected_content [2]; 
 
 		$this->do_test_basic_updating(
-				$source_lng,$target_lng,
-				$source_original_array,$source_modified_array,
-				$target_original_array, $target_modified_array, 
-				$expected_content, "");
+						$source_lng, 
+						$target_lng,
+						$source_original_array, 
+						$source_modified_array,
+						$target_original_array, 
+						$target_modified_array, 
+						$expected_content, 
+						""
+		);
 	}
 
 
 	public function do_test_basic_updating(
-			$source_lng,$target_lng,
-			$orig_source_array,$modified_source_array,
-			$orig_target_array,$modified_target_array,
+			$source_lng, $target_lng,
+			$orig_source_array, $modified_source_array,
+			$orig_target_array, $modified_target_array,
 			$expected_updated_target_array, $message)
 	{
 
@@ -228,8 +260,15 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$modified_target = join(' ', $modified_target_array);
 
 
-		$this->updater->SetAlignment($this->source_alignment,$this->target_alignment,$source_lng,$target_lng);
-		$final=$this->updater->UpdatingTargetPage($orig_source,$modified_source,$orig_target,$modified_target,$source_lng,$target_lng);
+		$this->updater->SetAlignment($this->source_alignment, $this->target_alignment, $source_lng, $target_lng);
+		$final = $this->updater->UpdatingTargetPage(
+						$orig_source,
+						$modified_source,
+						$orig_target,
+						$modified_target,
+						$source_lng,
+						$target_lng
+		);
 
 		//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$final="; var_dump($final); echo "</pre>\n";
 

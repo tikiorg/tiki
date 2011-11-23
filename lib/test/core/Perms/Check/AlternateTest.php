@@ -23,9 +23,9 @@ class Perms_Check_AlternateTest extends PHPUnit_Framework_TestCase
 	function testWithReplacementResolver()
 	{
 		$resolver = new Perms_Resolver_Default(false);
-		$replacement = new Perms_Resolver_Static(array(
-			'Registered' => array('admin'),
-		));
+		$replacement = new Perms_Resolver_Static(
+						array('Registered' => array('admin'),)
+		);
 
 		$check = new Perms_Check_Alternate('admin');
 		$check->setResolver($replacement);
@@ -35,9 +35,9 @@ class Perms_Check_AlternateTest extends PHPUnit_Framework_TestCase
 	function testWithReplacementNotAllowing()
 	{
 		$resolver = new Perms_Resolver_Default(false);
-		$replacement = new Perms_Resolver_Static(array(
-			'Registered' => array('view', 'edit'),
-		));
+		$replacement = new Perms_Resolver_Static(
+						array('Registered' => array('view', 'edit'),)
+		);
 
 		$check = new Perms_Check_Alternate('admin');
 		$check->setResolver($replacement);

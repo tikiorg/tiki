@@ -14,10 +14,12 @@ class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 {
 	function testMatch()
 	{
-		$rule = new DeclFilter_KeyPatternUnsetRule(array(
-			'/^foo_\d+$/',
-			'/^bar_[a-z]+$/',
-		));
+		$rule = new DeclFilter_KeyPatternUnsetRule(
+						array(
+							'/^foo_\d+$/',
+							'/^bar_[a-z]+$/',
+						)
+		);
 
 		$this->assertTrue($rule->match('foo_123'));
 		$this->assertTrue($rule->match('bar_abc'));
@@ -27,10 +29,12 @@ class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 
 	function testApply()
 	{
-		$rule = new DeclFilter_KeyPatternUnsetRule(array(
-			'/^foo_\d+$/',
-			'/^bar_[a-z]+$/',
-		));
+		$rule = new DeclFilter_KeyPatternUnsetRule(
+						array(
+							'/^foo_\d+$/',
+							'/^bar_[a-z]+$/',
+						)
+		);
 
 		$data = array(
 			'foo_123' => '123abc',

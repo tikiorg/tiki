@@ -18,9 +18,10 @@ class Transition_AtMostTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atMost', 2, array('C', 'D', 'E', 'F', 'G'));
 
-		$this->assertEquals(array(
-					array('class' => 'extra', 'count' => 1, 'set' => array('C', 'D', 'F')),
-					), $transition->explain());
+		$this->assertEquals(
+						array(array('class' => 'extra', 'count' => 1, 'set' => array('C', 'D', 'F')),), 
+						$transition->explain()
+		);
 	}
 
 	function testRightOn()
@@ -29,8 +30,7 @@ class Transition_AtMostTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atMost', 3, array('C', 'D', 'E', 'F', 'G'));
 
-		$this->assertEquals(array(
-					), $transition->explain());
+		$this->assertEquals(array(), $transition->explain());
 	}
 
 	function testUnder()
@@ -39,7 +39,6 @@ class Transition_AtMostTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atMost', 4, array('C', 'D', 'E', 'F', 'G'));
 
-		$this->assertEquals(array(
-					), $transition->explain());
+		$this->assertEquals(array(), $transition->explain());
 	}
 }

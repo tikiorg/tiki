@@ -35,10 +35,13 @@ STR;
 {test foo=bar}
 STR;
 		
-		$this->assertEquals(array(
-			'hello' => array('foo' => 'bar', 'bar' => 'test'),
-			'test' => array('foo' => 'bar'),
-		), $this->builder->getData($string));
+		$this->assertEquals(
+						array(
+							'hello' => array('foo' => 'bar', 'bar' => 'test'),
+							'test' => array('foo' => 'bar'),
+						),
+						$this->builder->getData($string)
+		);
 	}
 
 	function testGenerateList()
@@ -48,12 +51,15 @@ STR;
 {test bar=baz}
 STR;
 		
-		$this->assertEquals(array(
-			'test' => array(
-				array('foo' => 'bar'),
-				array('bar' => 'baz'),
-			),
-		), $this->builder->getData($string));
+		$this->assertEquals(
+						array(
+							'test' => array(
+								array('foo' => 'bar'),
+								array('bar' => 'baz'),
+							),
+						), 
+						$this->builder->getData($string)
+		);
 	}
 }
 

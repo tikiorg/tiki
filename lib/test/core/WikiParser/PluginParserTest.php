@@ -52,9 +52,9 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->expects($this->once())
 			->method('run')
 			->with(
-				$this->equalTo('test'),
-				$this->equalTo('Hello'),
-				$this->equalTo(array('hello' => 'world'))
+							$this->equalTo('test'),
+							$this->equalTo('Hello'),
+							$this->equalTo(array('hello' => 'world'))
 			)
 			->will($this->returnValue('test'));
 
@@ -72,9 +72,9 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->expects($this->once())
 			->method('run')
 			->with(
-				$this->equalTo('test'),
-				$this->equalTo(null),
-				$this->equalTo(array('hello' => 'world'))
+							$this->equalTo('test'),
+							$this->equalTo(null),
+							$this->equalTo(array('hello' => 'world'))
 			)
 			->will($this->returnValue('test'));
 
@@ -92,9 +92,9 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->expects($this->once())
 			->method('run')
 			->with(
-				$this->equalTo('test'),
-				$this->equalTo(null),
-				$this->equalTo(array())
+							$this->equalTo('test'),
+							$this->equalTo(null),
+							$this->equalTo(array())
 			)
 			->will($this->returnValue('test'));
 

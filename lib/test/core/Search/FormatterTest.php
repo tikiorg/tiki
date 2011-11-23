@@ -13,10 +13,12 @@ class Search_FormatterTest extends PHPUnit_Framework_TestCase
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		));
+		$output = $formatter->format(
+						array(
+							array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+						)
+		);
 
 		$expect = <<<OUT
 * HomePage (wiki page)
@@ -35,10 +37,20 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'modification_date' => strtotime('2010-10-10 10:10:10')),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'modification_date' => strtotime('2011-11-11 11:11:11')),
-		));
+		$output = $formatter->format(
+						array(
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'HomePage', 
+								'modification_date' => strtotime('2010-10-10 10:10:10')
+							),
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'SomePage', 
+								'modification_date' => strtotime('2011-11-11 11:11:11')
+							),
+						)
+		);
 
 		$expect = <<<OUT
 * HomePage (Oct 10, 2010)
@@ -54,10 +66,12 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		));
+		$output = $formatter->format(
+						array(
+							array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+						)
+		);
 
 		$expect = <<<OUT
 * HomePage (Unknown formatting rule 'doesnotexist' for 'object_type')
@@ -73,9 +87,7 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-		));
+		$output = $formatter->format(array(array('object_type' => 'wiki page', 'object_id' => 'HomePage'),));
 
 		$expect = <<<OUT
 * No value for 'doesnotexist' (Test)
@@ -87,16 +99,16 @@ OUT;
 	function testBasicSmartyFormatter()
 	{
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
-		$plugin->setData(array(
-			'foo' => array('bar' => 'baz'),
-		));
+		$plugin->setData(array('foo' => array('bar' => 'baz'),));
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		));
+		$output = $formatter->format(
+						array(
+							array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+						)
+		);
 
 		$expect = <<<OUT
 <div>~np~<table>
@@ -116,10 +128,12 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		));
+		$output = $formatter->format(
+						array(
+							array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+						)
+		);
 
 		$expect = <<<OUT
 <div>~np~<table>
@@ -140,10 +154,12 @@ OUT;
 		$formatter = new Search_Formatter($plugin);
 		$formatter->addSubFormatter('object_id', new Search_Formatter_Plugin_WikiTemplate("{display name=object_id}\n{display name=description default=None}"));
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
-		));
+		$output = $formatter->format(
+						array(
+							array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
+						)
+		);
 
 		$expect = <<<OUT
 <div>~np~<table>
@@ -164,10 +180,17 @@ OUT;
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/paginate.tpl');
 
 		$formatter = new Search_Formatter($plugin);
-		$output = $formatter->format(new Search_ResultSet(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
-		), 22, 20, 10));
+		$output = $formatter->format(
+						new Search_ResultSet(
+										array(
+											array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+											array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
+										), 
+										22, 
+										20, 
+										10
+						)
+		);
 
 		$this->assertContains('>1<', $output);
 		$this->assertContains('>2<', $output);
@@ -216,10 +239,20 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'title' => 'Home'),
-			array('object_type' => 'wiki page', 'object_id' => 'Some Page', 'title' => 'Test'),
-		));
+		$output = $formatter->format(
+						array(
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'HomePage', 
+								'title' => 'Home'
+							),
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'Some Page', 
+								'title' => 'Test'
+							),
+						)
+		);
 
 		$expect = <<<OUT
 * ~np~<a href="HomePage">Home</a>~/np~
@@ -239,9 +272,14 @@ OUT;
 		$formatter = new Search_Formatter($plugin);
 		$formatter->addSubFormatter('object_id', new Search_Formatter_Plugin_WikiTemplate("{display name=object_id format=objectlink}"));
 
-		$output = $formatter->format(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-		));
+		$output = $formatter->format(
+						array(
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'HomePage'
+							),
+						)
+		);
 
 		$expect = <<<OUT
 <div>~np~<table>
@@ -258,10 +296,23 @@ OUT;
 	{
 		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
 
-		$resultSet = new Search_ResultSet(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'content' => 'Hello World'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'content' => 'Test'),
-		), 22, 20, 10);
+		$resultSet = new Search_ResultSet(
+						array(
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'HomePage', 
+								'content' => 'Hello World'
+							),
+							array(
+								'object_type' => 'wiki page', 
+								'object_id' => 'SomePage', 
+								'content' => 'Test'
+							),
+						), 
+						22, 
+						20, 
+						10
+		);
 		$resultSet->setHighlightHelper(new Search_FormatterTest_HighlightHelper);
 
 		$formatter = new Search_Formatter($plugin);

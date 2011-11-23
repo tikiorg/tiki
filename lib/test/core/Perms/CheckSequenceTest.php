@@ -18,20 +18,25 @@ class Perms_CheckSequenceTest extends TikiTestCase
 	function setUp()
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory(
-				'static',
-				new Perms_Resolver_Static(array(
-					'Admins' => array('admin_wiki'),
-				))
-			)
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory(
+											'static',
+											new Perms_Resolver_Static(
+															array('Admins' => array('admin_wiki'),)
+											)
+							)
+						)
+		);
+
 		$perms->setGroups(array('Admins'));
-		$perms->setCheckSequence(array(
-			new Perms_Check_Direct,
-			$this->mockA = $this->getMock('Perms_Check'),
-			$this->mockB = $this->getMock('Perms_Check'),
-		));
+		$perms->setCheckSequence(
+						array(
+							new Perms_Check_Direct,
+							$this->mockA = $this->getMock('Perms_Check'),
+							$this->mockB = $this->getMock('Perms_Check'),
+						)
+		);
 		Perms::set($perms);
 	}
 

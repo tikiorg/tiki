@@ -31,7 +31,19 @@ class Search_Expr_TokenizerTest extends PHPUnit_Framework_TestCase
 
 	function testWithParenthesis()
 	{
-		$this->assertEquals(array('hello world (who?)', '(', 'who', ')', '(', 'test', 'listens', ')'), $this->tokenizer->tokenize('"hello world (who?)" (who) (test listens)'));
+		$this->assertEquals(
+						array(
+							'hello world (who?)', 
+							'(', 
+							'who', 
+							')', 
+							'(', 
+							'test', 
+							'listens', 
+							')'
+						), 
+						$this->tokenizer->tokenize('"hello world (who?)" (who) (test listens)')
+		);
 	}
 }
 

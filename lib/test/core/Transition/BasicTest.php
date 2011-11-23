@@ -48,9 +48,10 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 	{
 		$transition = new Transition('A', 'B');
 
-		$this->assertEquals(array(
-					array('class' => 'missing', 'count' => 1, 'set' => array('A')),
-					), $transition->explain());
+		$this->assertEquals(
+						array(array('class' => 'missing', 'count' => 1, 'set' => array('A')),), 
+						$transition->explain()
+		);
 	}
 
 	function testExplainWhenInTarget()
@@ -58,9 +59,10 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition = new Transition('A', 'B');
 		$transition->setStates(array('A', 'B'));
 
-		$this->assertEquals(array(
-					array('class' => 'extra', 'count' => 1, 'set' => array('B')),
-					), $transition->explain());
+		$this->assertEquals(
+						array(array('class' => 'extra', 'count' => 1, 'set' => array('B')),), 
+						$transition->explain()
+		);
 	}
 
 	function testAddUnknownGuardType()
@@ -69,9 +71,10 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A'));
 		$transition->addGuard('foobar', 5, array('D', 'E', 'F'));
 
-		$this->assertEquals(array(
-					array('class' => 'unknown', 'count' => 1, 'set' => array('foobar')),
-					), $transition->explain());
+		$this->assertEquals(
+						array(array('class' => 'unknown', 'count' => 1, 'set' => array('foobar')),), 
+						$transition->explain()
+		);
 	}
 
 	function testAddPassingCustomGuard()
@@ -89,9 +92,10 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A', 'C', 'F'));
 		$transition->addGuard('exactly', 4, array('C', 'D', 'E', 'F', 'G'));
 
-		$this->assertEquals(array(
-					array('class' => 'missing', 'count' => 2, 'set' => array('D', 'E', 'G')),
-					), $transition->explain());
+		$this->assertEquals(
+						array(array('class' => 'missing', 'count' => 2, 'set' => array('D', 'E', 'G')),), 
+						$transition->explain()
+		);
 	}
 
 	function testImpossibleCondition()
@@ -100,8 +104,9 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('exactly', 4, array('C', 'D', 'E'));
 
-		$this->assertEquals(array(
-					array('class' => 'invalid', 'count' => 4, 'set' => array('C', 'D', 'E')),
-					), $transition->explain());
+		$this->assertEquals(
+						array(array('class' => 'invalid', 'count' => 4, 'set' => array('C', 'D', 'E')),), 
+						$transition->explain()
+		);
 	}
 }

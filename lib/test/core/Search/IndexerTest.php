@@ -89,17 +89,23 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 	function testGlobalCollection()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array(),
-			'OtherPage' => array(),
-			'Foobar' => array(),
-		), array());
+		$contentSource = new Search_ContentSource_Static(
+						array(
+							'HomePage' => array(),
+							'OtherPage' => array(),
+							'Foobar' => array(),
+						), 
+						array()
+		);
 
-		$globalSource = new Search_GlobalSource_Static(array(
-			'wiki page:HomePage' => array('categories' => array(1, 2, 3)),
-			'wiki page:OtherPage' => array('categories' => array(0)),
-			'wiki page:Foobar' => array('categories' => array(2)),
-		), array('categories' => 'multivalue'));
+		$globalSource = new Search_GlobalSource_Static(
+						array(
+							'wiki page:HomePage' => array('categories' => array(1, 2, 3)),
+							'wiki page:OtherPage' => array('categories' => array(0)),
+							'wiki page:Foobar' => array('categories' => array(2)),
+						), 
+						array('categories' => 'multivalue')
+		);
 
 		$index = new Search_Index_Memory;
 		$indexer = new Search_Indexer($index);
@@ -115,17 +121,23 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 	function testPartialUpdate()
 	{
-		$initialSource = new Search_ContentSource_Static(array(
-			'HomePage' => array('data' => 'initial'),
-			'SomePage' => array('data' => 'initial'),
-			'Untouchable' => array('data' => 'initial'),
-		), array('data' => 'sortable'));
+		$initialSource = new Search_ContentSource_Static(
+						array(
+							'HomePage' => array('data' => 'initial'),
+							'SomePage' => array('data' => 'initial'),
+							'Untouchable' => array('data' => 'initial'),
+						), 
+						array('data' => 'sortable')
+		);
 
-		$finalSource = new Search_ContentSource_Static(array(
-			'SomePage' => array('data' => 'final'),
-			'OtherPage' => array('data' => 'final'),
-			'Untouchable' => array('data' => 'final'),
-		), array('data' => 'sortable'));
+		$finalSource = new Search_ContentSource_Static(
+						array(
+							'SomePage' => array('data' => 'final'),
+							'OtherPage' => array('data' => 'final'),
+							'Untouchable' => array('data' => 'final'),
+						), 
+						array('data' => 'sortable')
+		);
 
 		$dir = dirname(__FILE__) . '/test_index';
 		$edir = escapeshellarg($dir);
@@ -137,11 +149,13 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		
 		$indexer = new Search_Indexer($index);
 		$indexer->addContentSource('wiki page', $finalSource);
-		$indexer->update(array(
-			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-			array('object_type' => 'wiki page', 'object_id' => 'OtherPage'),
-		));
+		$indexer->update(
+						array(
+							array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+							array('object_type' => 'wiki page', 'object_id' => 'OtherPage'),
+						)
+		);
 
 		$query = new Search_Query;
 		$query->filterType('wiki page');
@@ -163,13 +177,15 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 	function testGlobalAssembly()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array('title' => 'Hello'),
-		), array('title' => 'plaintext'));
+		$contentSource = new Search_ContentSource_Static(
+						array('HomePage' => array('title' => 'Hello'),), 
+						array('title' => 'plaintext')
+		);
 
-		$globalSource = new Search_GlobalSource_Static(array(
-			'wiki page:HomePage' => array('freetags_text' => 'foobar baz'),
-		), array('freetags_text' => 'plaintext'));
+		$globalSource = new Search_GlobalSource_Static(
+						array('wiki page:HomePage' => array('freetags_text' => 'foobar baz'),), 
+						array('freetags_text' => 'plaintext')
+		);
 
 		$index = new Search_Index_Memory;
 		$indexer = new Search_Indexer($index);
@@ -186,12 +202,15 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 	function testContentSourceWithMultipleResults()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array(
-				array('title' => 'Hello'),
-				array('title' => 'Hello (latest)'),
-			),
-		), array('title' => 'plaintext'));
+		$contentSource = new Search_ContentSource_Static(
+						array(
+							'HomePage' => array(
+								array('title' => 'Hello'),
+								array('title' => 'Hello (latest)'),
+							),
+						), 
+						array('title' => 'plaintext')
+		);
 
 		$index = new Search_Index_Memory;
 		$indexer = new Search_Indexer($index);

@@ -30,48 +30,51 @@ class Perms_BuilderTest extends PHPUnit_Framework_TestCase
 	function testAdminIndirects()
 	{
 		$builder = new Perms_Builder;
-		$perms = $builder
-			->withDefinitions(array(
-				array(
-					'name' => 'tiki_p_admin_wiki',
-					'type' => 'wiki',
-					'scope' => 'object',
-					'admin' => true,
-				),
-				array(
-					'name' => 'tiki_p_edit',
-					'type' => 'wiki',
-					'scope' => 'object',
-					'admin' => false,
-				),
-			))
-			->build();
+		$perms = $builder->withDefinitions(
+						array(
+							array(
+								'name' => 'tiki_p_admin_wiki',
+								'type' => 'wiki',
+								'scope' => 'object',
+								'admin' => true,
+							),
+							array(
+								'name' => 'tiki_p_edit',
+								'type' => 'wiki',
+								'scope' => 'object',
+								'admin' => false,
+							),
+						)
+		)->build();
 
-		$expect = $this->getExpect(false, array(
-			'edit' => 'admin_wiki',
-		));
+		$expect = $this->getExpect(
+						false, 
+						array('edit' => 'admin_wiki',)
+		);
+
 		$this->assertEquals($expect, $perms);
 	}
 
 	function testGlobalChecksOnly()
 	{
 		$builder = new Perms_Builder;
-		$perms = $builder
-			->withDefinitions(array(
-				array(
-					'name' => 'tiki_p_search',
-					'type' => 'tiki',
-					'scope' => 'global',
-					'admin' => false,
-				),
-				array(
-					'name' => 'tiki_p_edit',
-					'type' => 'wiki',
-					'scope' => 'object',
-					'admin' => false,
-				),
-			))
-			->build();
+
+		$perms = $builder->withDefinitions(
+						array(
+							array(
+								'name' => 'tiki_p_search',
+								'type' => 'tiki',
+								'scope' => 'global',
+								'admin' => false,
+							),
+							array(
+								'name' => 'tiki_p_edit',
+								'type' => 'wiki',
+								'scope' => 'object',
+								'admin' => false,
+							),
+						)
+		)->build();
 
 		$expect = $this->getExpect(false, array(), array('search'));
 		$this->assertEquals($expect, $perms);
@@ -81,17 +84,27 @@ class Perms_BuilderTest extends PHPUnit_Framework_TestCase
 	{
 		$expect = new Perms;
 		$expect->setPrefix('tiki_p_');
-		$expect->setCheckSequence(array(
-			$globalAdminCheck = new Perms_Check_Alternate('admin'),
-			$fixedResolverCheck = new Perms_Check_Fixed($globals),
-			new Perms_Check_Direct,
-			new Perms_Check_Indirect($indirectMap),
-		));
-		$expect->setResolverFactories(array_values(array_filter(array(
-			new Perms_ResolverFactory_ObjectFactory,
-			$categories ? new Perms_ResolverFactory_CategoryFactory : null,
-			new Perms_ResolverFactory_GlobalFactory,
-		))));
+
+		$expect->setCheckSequence(
+						array(
+							$globalAdminCheck = new Perms_Check_Alternate('admin'),
+							$fixedResolverCheck = new Perms_Check_Fixed($globals),
+							new Perms_Check_Direct,
+							new Perms_Check_Indirect($indirectMap),
+						)
+		);
+
+		$expect->setResolverFactories(
+						array_values(
+										array_filter(
+														array(
+															new Perms_ResolverFactory_ObjectFactory,
+															$categories ? new Perms_ResolverFactory_CategoryFactory : null,
+															new Perms_ResolverFactory_GlobalFactory,
+														)
+										)
+						)
+		);
 
 		$resolver = $expect->getAccessor()->getResolver();
 		$globalAdminCheck->setResolver($resolver);

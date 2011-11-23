@@ -15,16 +15,25 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 	function setUp()
 	{
 		$perms = new Perms;
-		$perms->setCheckSequence(array(
-			$this->globalAlternate = new Perms_Check_Alternate('admin'),
-			new Perms_Check_Direct,
-		));
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_StaticFactory('global', new Perms_Resolver_Static(array(
-				'Anonymous' => array('tiki_p_view'),
-				'Registered' => array('tiki_p_view', 'tiki_p_topic_read'),
-			))),
-		));
+		$perms->setCheckSequence(
+						array(
+							$this->globalAlternate = new Perms_Check_Alternate('admin'),
+							new Perms_Check_Direct,
+						)
+		);
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_StaticFactory(
+											'global', 
+											new Perms_Resolver_Static(
+															array(
+																'Anonymous' => array('tiki_p_view'),
+																'Registered' => array('tiki_p_view', 'tiki_p_topic_read'),
+															)
+											)
+							),
+						)
+		);
 
 		$index = new Search_Index_Memory;
 		$indexer = new Search_Indexer($index);
@@ -36,9 +45,12 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 
 	function testSingleGroup()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array('view_permission' => 'tiki_p_topic_read'),
-		), array('view_permission' => 'identifier'));
+		$contentSource = new Search_ContentSource_Static(
+						array(
+							'HomePage' => array('view_permission' => 'tiki_p_topic_read'),
+						), 
+						array('view_permission' => 'identifier')
+		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
 		$this->indexer->addContentSource('wiki page', $contentSource);
@@ -52,9 +64,10 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 
 	function testMultipleGroup()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array('view_permission' => 'tiki_p_view'),
-		), array('view_permission' => 'identifier'));
+		$contentSource = new Search_ContentSource_Static(
+						array('HomePage' => array('view_permission' => 'tiki_p_view'),), 
+						array('view_permission' => 'identifier')
+		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
 		$this->indexer->addContentSource('wiki page', $contentSource);
@@ -68,9 +81,10 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 
 	function testNoMatches()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array('view_permission' => 'tiki_p_do_stuff'),
-		), array('view_permission' => 'identifier'));
+		$contentSource = new Search_ContentSource_Static(
+						array('HomePage' => array('view_permission' => 'tiki_p_do_stuff'),), 
+						array('view_permission' => 'identifier')
+		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
 		$this->indexer->addContentSource('wiki page', $contentSource);
@@ -84,9 +98,12 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 
 	function testUndeclaredPermission()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'HomePage' => array(),
-		), array('view_permission' => 'identifier'));
+		$contentSource = new Search_ContentSource_Static(
+						array(
+							'HomePage' => array(),
+						), 
+						array('view_permission' => 'identifier')
+		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
 		$this->indexer->addContentSource('wiki page', $contentSource);
@@ -100,9 +117,20 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 
 	function testWithParentPermissionSpecified()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'10' => array('parent_view_permission' => 'tiki_p_topic_read', 'parent_object_id' => '1', 'parent_object_type' => 'forum'),
-		), array('parent_view_permission' => 'identifier', 'parent_object_id' => 'identifier', 'parent_object_type' => 'identifier'));
+		$contentSource = new Search_ContentSource_Static(
+						array(
+							'10' => array(
+								'parent_view_permission' => 'tiki_p_topic_read', 
+								'parent_object_id' => '1', 
+								'parent_object_type' => 'forum'
+							),
+						), 
+						array(
+							'parent_view_permission' => 'identifier', 
+							'parent_object_id' => 'identifier', 
+							'parent_object_type' => 'identifier'
+						)
+		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
 		$this->indexer->addContentSource('forum post', $contentSource);
@@ -116,9 +144,22 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 
 	function testWithBothSpecified()
 	{
-		$contentSource = new Search_ContentSource_Static(array(
-			'10' => array('parent_view_permission' => 'tiki_p_topic_read', 'parent_object_id' => '1', 'parent_object_type' => 'forum', 'view_permission' => 'tiki_p_article_read'),
-		), array('parent_view_permission' => 'identifier', 'parent_object_id' => 'identifier', 'parent_object_type' => 'identifier', 'view_permission' => 'identifier'));
+		$contentSource = new Search_ContentSource_Static(
+						array(
+							'10' => array(
+								'parent_view_permission' => 'tiki_p_topic_read', 
+								'parent_object_id' => '1', 
+								'parent_object_type' => 'forum', 
+								'view_permission' => 'tiki_p_article_read'
+							),
+						), 
+						array(
+							'parent_view_permission' => 'identifier', 
+							'parent_object_id' => 'identifier', 
+							'parent_object_type' => 'identifier', 
+							'view_permission' => 'identifier'
+						)
+		);
 
 		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
 		$this->indexer->addContentSource('forum post', $contentSource);

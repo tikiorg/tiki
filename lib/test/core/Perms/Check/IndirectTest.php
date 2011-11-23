@@ -14,9 +14,7 @@ class Perms_Check_IndirectTest extends TikiTestCase
 {
 	function testUnknownIndirectionIsFalse()
 	{
-		$indirect = new Perms_Check_Indirect(array(
-			'view' => 'admin_wiki',
-		));
+		$indirect = new Perms_Check_Indirect(array('view' => 'admin_wiki',));
 
 		$mock = $this->getMock('Perms_Resolver');
 		$mock->expects($this->never())
@@ -27,9 +25,7 @@ class Perms_Check_IndirectTest extends TikiTestCase
 
 	function testCallForwarded()
 	{
-		$indirect = new Perms_Check_Indirect(array(
-			'view' => 'admin_wiki',
-		));
+		$indirect = new Perms_Check_Indirect(array('view' => 'admin_wiki',));
 
 		$mock = $this->getMock('Perms_Resolver');
 		$mock->expects($this->once())
@@ -42,9 +38,7 @@ class Perms_Check_IndirectTest extends TikiTestCase
 
 	function testCallForwardedWhenFalseToo()
 	{
-		$indirect = new Perms_Check_Indirect(array(
-			'view' => 'admin_wiki',
-		));
+		$indirect = new Perms_Check_Indirect(array('view' => 'admin_wiki',));
 
 		$mock = $this->getMock('Perms_Resolver');
 		$mock->expects($this->once())

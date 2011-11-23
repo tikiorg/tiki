@@ -73,10 +73,13 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 		
-		$expect = new Perms_Resolver_Static(array(
-			'Admins' => array('admin'),
-			'Anonymous' => array('edit', 'view'),
-		) , 'object');
+		$expect = new Perms_Resolver_Static(
+						array(
+							'Admins' => array('admin'),
+							'Anonymous' => array('edit', 'view'),
+						), 
+						'object'
+		);
 
 		$this->assertEquals($expect, $factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
 	}

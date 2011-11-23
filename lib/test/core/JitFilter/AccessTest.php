@@ -83,8 +83,12 @@ class JitFilter_AccessTest extends TikiTestCase
 	function testSubset()
 	{
 		$this->assertEquals(
-			array('foo' => $this->array['foo'], 'baz' => $this->array->asArray('baz')), 
-			$this->array->subset(array('foo', 'baz'))->asArray());
+						array(
+							'foo' => $this->array['foo'], 
+							'baz' => $this->array->asArray('baz')
+						), 
+						$this->array->subset(array('foo', 'baz'))->asArray()
+		);
 	}
 
 	function testUnset()

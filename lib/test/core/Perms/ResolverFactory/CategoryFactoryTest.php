@@ -35,7 +35,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db->query('DELETE FROM ' . $name);
 		
 		foreach ($this->tableData[$name] as $row) {
-			$db->query('INSERT INTO ' . $name . ' VALUES(?' . str_repeat(',?',count($row)-1) . ')', array_values($row));
+			$db->query('INSERT INTO ' . $name . ' VALUES(?' . str_repeat(',?', count($row)-1) . ')', array_values($row));
 		}
 	}
 
@@ -145,16 +145,20 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 		
-		$expect = new Perms_Resolver_Static(array(
-			'Anonymous' => array('admin'),
-			'Registered' => array('edit', 'view'),
-		) , 'category');
+		$expect = new Perms_Resolver_Static(
+						array(
+							'Anonymous' => array('admin'),
+							'Registered' => array('edit', 'view'),
+						), 
+						'category'
+		);
 
 		$this->assertEquals($expect, $factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
 
-		$expect = new Perms_Resolver_Static(array(
-			'Hello' => array('view'),
-		), 'category');
+		$expect = new Perms_Resolver_Static(
+						array('Hello' => array('view'),), 
+						'category'
+		);
 
 		$this->assertEquals($expect, $factory->getResolver(array('type' => 'blog', 'object' => 4)));
 	}

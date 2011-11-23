@@ -55,19 +55,29 @@ class Perms_BaseTest extends TikiTestCase
 	function testResolverFactoryChaining($context, $expectedResolver)
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_TestFactory(array('object'), array(
-				'a' => $rA = new Perms_Resolver_Default(true),
-				'b' => $rB = new Perms_Resolver_Default(true),
-			)),
-			new Perms_ResolverFactory_TestFactory(array('category'), array(
-				'1' => $r1 = new Perms_Resolver_Default(true),
-				'2' => $r2 = new Perms_Resolver_Default(true),
-			)),
-			new Perms_ResolverFactory_TestFactory(array(), array(
-				'' => $rG = new Perms_Resolver_Default(true),
-			)),
-		));
+
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_TestFactory(
+											array('object'), 
+											array(
+												'a' => $rA = new Perms_Resolver_Default(true),
+												'b' => $rB = new Perms_Resolver_Default(true),
+											)
+							),
+							new Perms_ResolverFactory_TestFactory(
+											array('category'), 
+											array(
+												'1' => $r1 = new Perms_Resolver_Default(true),
+												'2' => $r2 = new Perms_Resolver_Default(true),
+											)
+							),
+							new Perms_ResolverFactory_TestFactory(
+											array(), 
+											array('' => $rG = new Perms_Resolver_Default(true),)
+							),
+						)
+		);
 		Perms::set($perms);
 
 		$this->assertSame($$expectedResolver, Perms::get($context)->getResolver());
@@ -89,17 +99,17 @@ class Perms_BaseTest extends TikiTestCase
 	function testResolverNotCalledTwiceWhenFound()
 	{
 		$mock = $this->getMock('Perms_ResolverFactory');
+
 		$mock->expects($this->exactly(2))
 			->method('getHash')
 			->will($this->returnValue('123'));
+
 		$mock->expects($this->once())
 			->method('getResolver')
 			->will($this->returnValue(new Perms_Resolver_Default(true)));
 
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			$mock,
-		));
+		$perms->setResolverFactories(array($mock,));
 		Perms::set($perms);
 		
 		Perms::get();
@@ -109,17 +119,17 @@ class Perms_BaseTest extends TikiTestCase
 	function testResolverNotCalledTwiceWhenNotFound()
 	{
 		$mock = $this->getMock('Perms_ResolverFactory');
+
 		$mock->expects($this->exactly(2))
 			->method('getHash')
 			->will($this->returnValue('123'));
+
 		$mock->expects($this->once())
 			->method('getResolver')
 			->will($this->returnValue(null));
 
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			$mock,
-		));
+		$perms->setResolverFactories(array($mock,));
 		Perms::set($perms);
 		
 		Perms::get();
@@ -168,15 +178,20 @@ class Perms_BaseTest extends TikiTestCase
 	function testFiltering()
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			new Perms_ResolverFactory_TestFactory(array('object'), array(
-				'A' => new Perms_Resolver_Default(true),
-				'B' => new Perms_Resolver_Default(true),
-				'C' => new Perms_Resolver_Default(false),
-				'D' => new Perms_Resolver_Default(false),
-				'E' => new Perms_Resolver_Default(true),
-			)),
-		));
+		$perms->setResolverFactories(
+						array(
+							new Perms_ResolverFactory_TestFactory(
+											array('object'), 
+											array(
+												'A' => new Perms_Resolver_Default(true),
+												'B' => new Perms_Resolver_Default(true),
+												'C' => new Perms_Resolver_Default(false),
+												'D' => new Perms_Resolver_Default(false),
+												'E' => new Perms_Resolver_Default(true),
+											)
+							),
+						)
+		);
 		Perms::set($perms);
 
 		$data = array(
@@ -187,7 +202,13 @@ class Perms_BaseTest extends TikiTestCase
 			array('pageId' => 5, 'pageName' => 'E', 'content' => 'Hello World', 'creator' => 'admin'),
 		);
 
-		$out = Perms::filter(array('type' => 'wiki page'), 'object', $data, array('object' => 'pageName', 'creator' => 'creator'), 'view');
+		$out = Perms::filter(
+						array('type' => 'wiki page'), 
+						'object', 
+						$data, 
+						array('object' => 'pageName', 'creator' => 'creator'), 
+						'view'
+		);
 
 		$expect = array(
 			array('pageId' => 1, 'pageName' => 'A', 'content' => 'Hello World', 'creator' => 'admin'),
@@ -201,9 +222,9 @@ class Perms_BaseTest extends TikiTestCase
 	function testContextBuilding()
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			$mock = $this->getMock('Perms_ResolverFactory')
-		));
+		$perms->setResolverFactories(
+						array($mock = $this->getMock('Perms_ResolverFactory'))
+		);
 		Perms::set($perms);
 
 		$mock->expects($this->once())
@@ -223,9 +244,9 @@ class Perms_BaseTest extends TikiTestCase
 	function testSkipBulkOnEmptySet()
 	{
 		$perms = new Perms;
-		$perms->setResolverFactories(array(
-			$mock = $this->getMock('Perms_ResolverFactory')
-		));
+		$perms->setResolverFactories(
+						array($mock = $this->getMock('Perms_ResolverFactory'))
+		);
 		Perms::set($perms);
 
 		$mock->expects($this->never())
