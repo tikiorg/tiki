@@ -4050,7 +4050,7 @@ class TikiLib extends TikiDb_Bridge
 
 				// when plugin status is pending, $status equals plugin fingerprint
 				if ($prefs['wikipluginprefs_pending_notification'] == 'y' && $status !== true && $status != 'rejected') {
-					$this->plugin_pending_notification($plugin_name, $context);
+					$this->plugin_pending_notification($plugin_name, $body, $arguments, $context);
 				}
 				
 				$parserlib->plugin_find_implementation($plugin_name, $body, $arguments);
@@ -4069,21 +4069,45 @@ class TikiLib extends TikiDb_Bridge
 	 * approved to everyone with permission to approve it.
 	 * 
 	 * @param string $plugin_name
+	 * @param string $body plugin body
+	 * @param array $arguments plugin arguments
 	 * @param array $context object type and id
 	 * @return void
 	 */
-	private function plugin_pending_notification($plugin_name, $context)
+	private function plugin_pending_notification($plugin_name, $body, $arguments, $context)
 	{
 		require_once('lib/webmail/tikimaillib.php');
-		global $prefs, $base_url;
+		global $prefs, $base_url, $smarty;
 		$objectlib = TikiLib::lib('object');
-		$userlib = TikiLib::lib('user');
 		
 		$object = $objectlib->get_object($context['type'], $context['object']);
 		
 		$mail = new TikiMail(null, $prefs['sender_email']);
 		$mail->setSubject(tr("Plugin %0 pending approval", $plugin_name));
-		$mail->setHtml(tr("Plugin %0 is pending approval on %1", $plugin_name, "<a href='$base_url{$object['href']}'>{$object['name']}</a>"));
+		
+		$smarty->assign('plugin_name', $plugin_name);
+		$smarty->assign('object', $object);
+		$smarty->assign('arguments', $arguments);
+		$smarty->assign('body', $body);
+		
+		$mail->setHtml(nl2br($smarty->fetch('mail/plugin_pending_notification.tpl')));
+		
+		$recipients = $this->plugin_get_email_users_with_perm();
+		
+		$mail->setBcc(join(', ', $recipients));
+		
+		$mail->send(array($prefs['sender_email']));
+	}
+	
+	/**
+	 * Return a list of e-mails from the users with permission
+	 * to approve a plugin.
+	 * 
+	 * @return array
+	 */
+	private function plugin_get_email_users_with_perm()
+	{
+		$userlib = TikiLib::lib('user');
 		
 		$allGroups = $userlib->get_groups();
 		$accessor = Perms::get($context);
@@ -4106,10 +4130,8 @@ class TikiLib extends TikiDb_Bridge
 		
 		$recipients = array_filter($recipients);
 		$recipients = array_unique($recipients);
-
-		$mail->setBcc(join(', ', $recipients));
 		
-		$mail->send(array($prefs['sender_email']));
+		return $recipients;
 	}
 	
 	function get_display_timezone($_user = false)
