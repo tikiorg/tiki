@@ -20,138 +20,138 @@ class ObjectLib extends TikiLib
 	Otherwise retrieve it from the object (if $checkHandled is FALSE, fill with empty strings if the object type is not handled).
 	Handled object types: "article", "blog", "calendar", "directory", "faq", "file", "file gallery", "forum", "image gallery", "poll", "quiz", "tracker", "trackeritem" and "wiki page". */
     function add_object($type, $itemId, $checkHandled = TRUE, $description = NULL, $name = NULL, $href = NULL) {
-
-	$objectId = $this->get_object_id($type, $itemId);
-
-	if ($objectId) {
-		if (!empty($description) || !empty($name) || !empty($href)) {
-			$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
-			$this->query($query,array($description,$name,$href,$objectId));
-	    }
-	} else {
-		if (is_null($description)) {
-			switch ($type) {
-				case 'article':
-					global $artlib; require_once 'lib/articles/artlib.php';
-					$info = $artlib->get_article($itemId);
-		
-					$description = $info["heading"];
-					$name = $info["title"];
-					$href = 'tiki-read_article.php?articleId=' . $itemId;
-					break;
-				case 'blog':
-					global $bloglib; require_once('lib/blogs/bloglib.php');
-					$info = $bloglib->get_blog($itemId);
-		
-					$description = $info["description"];
-					$name = $info["title"];
-					$href = 'tiki-view_blog.php?blogId=' . $itemId;
-					break;
-				case 'calendar':
-					require_once('lib/calendar/calendarlib.php');
-					$info = $calendarlib->get_calendar($itemId);
-		
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-calendar.php?calId=' . $itemId;
-					break;
-				case 'directory':
-					$info = $this->get_directory($itemId);
-
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-directory_browse.php?parent=' . $itemId;
-					break;
-				case 'faq':
-					$info = $this->get_faq($itemId);
-
-					$description = $info["description"];
-					$name = $info["title"];
-					$href = 'tiki-view_faq.php?faqId=' . $itemId;
-					break;
-				case 'file':
-					$filegallib = TikiLib::lib('filegal');
-					$info = $filegallib->get_file_info($itemId, false, false, false);
-		
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-upload_file.php?fileId=' . $itemId;
-					break;
-				case 'file gallery':
-					$filegallib = TikiLib::lib('filegal');
-					$info = $filegallib->get_file_gallery($itemId);
-		
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-list_file_gallery.php?galleryId=' . $itemId;
-					break;
-				case 'forum':
-					$commentslib = TikiLib::lib('comments');
-					$info = $commentslib->get_forum($itemId);
-		
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-view_forum.php?forumId=' . $itemId;
-					break;
-				case 'image gallery':
-					$info = $this->get_gallery($itemId);
-
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-browse_gallery.php?galleryId=' . $itemId;
-					break;
-				case 'poll':
-					require_once('lib/polls/polllib_shared.php');
-					$info = $polllib->get_poll($itemId);
-		
-					$description = $info["title"];
-					$name = $info["title"];
-					$href = 'tiki-poll_form.php?pollId=' . $itemId;
-					break;
-				case 'quiz':
-					$info = TikiLib::lib('quiz')->get_quiz($itemId);
-		
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-take_quiz.php?quizId=' . $itemId;
-					break;
-				case 'tracker':
-					global $trklib; include_once('lib/trackers/trackerlib.php');
-					$info = $trklib->get_tracker($itemId);
-
-					$description = $info["description"];
-					$name = $info["name"];
-					$href = 'tiki-view_tracker.php?trackerId=' . $itemIdId;
-					break;
-				case 'trackeritem':
-					global $trklib; include_once('lib/trackers/trackerlib.php');
-					$info = $trklib->get_tracker_item($itemId);
-					
-					$description = '';
-					$name = $trklib->get_isMain_value($info['trackerId'], $itemId);
-					$href = "tiki-view_tracker_item.php?itemId=$itemId&trackerId=".$info['trackerId'];
-					break;
-				case 'wiki page':
-					if (!($info = $this->get_page_info($itemId))) {
-						return;
-					}
-					$description = $info["description"];
-					$name = $itemId;
-					$href = 'tiki-index.php?page=' . urlencode($itemId);
-					break;
-				default:
-					if ($checkHandled) {
-						return FALSE;
-					} else {
+		$objectId = $this->get_object_id($type, $itemId);
+	
+		if ($objectId) {
+			if (!empty($description) || !empty($name) || !empty($href)) {
+				$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
+				$this->query($query,array($description,$name,$href,$objectId));
+		    }
+		} else {
+			if (is_null($description)) {
+				switch ($type) {
+					case 'article':
+						global $artlib; require_once 'lib/articles/artlib.php';
+						$info = $artlib->get_article($itemId);
+			
+						$description = $info["heading"];
+						$name = $info["title"];
+						$href = 'tiki-read_article.php?articleId=' . $itemId;
+						break;
+					case 'blog':
+						global $bloglib; require_once('lib/blogs/bloglib.php');
+						$info = $bloglib->get_blog($itemId);
+			
+						$description = $info["description"];
+						$name = $info["title"];
+						$href = 'tiki-view_blog.php?blogId=' . $itemId;
+						break;
+					case 'calendar':
+						require_once('lib/calendar/calendarlib.php');
+						$info = $calendarlib->get_calendar($itemId);
+			
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-calendar.php?calId=' . $itemId;
+						break;
+					case 'directory':
+						$info = $this->get_directory($itemId);
+	
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-directory_browse.php?parent=' . $itemId;
+						break;
+					case 'faq':
+						$info = $this->get_faq($itemId);
+	
+						$description = $info["description"];
+						$name = $info["title"];
+						$href = 'tiki-view_faq.php?faqId=' . $itemId;
+						break;
+					case 'file':
+						$filegallib = TikiLib::lib('filegal');
+						$info = $filegallib->get_file_info($itemId, false, false, false);
+			
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-upload_file.php?fileId=' . $itemId;
+						break;
+					case 'file gallery':
+						$filegallib = TikiLib::lib('filegal');
+						$info = $filegallib->get_file_gallery($itemId);
+			
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-list_file_gallery.php?galleryId=' . $itemId;
+						break;
+					case 'forum':
+						$commentslib = TikiLib::lib('comments');
+						$info = $commentslib->get_forum($itemId);
+			
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-view_forum.php?forumId=' . $itemId;
+						break;
+					case 'image gallery':
+						$info = $this->get_gallery($itemId);
+	
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-browse_gallery.php?galleryId=' . $itemId;
+						break;
+					case 'poll':
+						require_once('lib/polls/polllib_shared.php');
+						$info = $polllib->get_poll($itemId);
+			
+						$description = $info["title"];
+						$name = $info["title"];
+						$href = 'tiki-poll_form.php?pollId=' . $itemId;
+						break;
+					case 'quiz':
+						$info = TikiLib::lib('quiz')->get_quiz($itemId);
+			
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-take_quiz.php?quizId=' . $itemId;
+						break;
+					case 'tracker':
+						global $trklib; include_once('lib/trackers/trackerlib.php');
+						$info = $trklib->get_tracker($itemId);
+	
+						$description = $info["description"];
+						$name = $info["name"];
+						$href = 'tiki-view_tracker.php?trackerId=' . $itemIdId;
+						break;
+					case 'trackeritem':
+						global $trklib; include_once('lib/trackers/trackerlib.php');
+						$info = $trklib->get_tracker_item($itemId);
+						
 						$description = '';
-						$name = '';
-						$href = '';						
-					}
+						$name = $trklib->get_isMain_value($info['trackerId'], $itemId);
+						$href = "tiki-view_tracker_item.php?itemId=$itemId&trackerId=".$info['trackerId'];
+						break;
+					case 'wiki page':
+						if (!($info = $this->get_page_info($itemId))) {
+							return;
+						}
+						$description = $info["description"];
+						$name = $itemId;
+						$href = 'tiki-index.php?page=' . urlencode($itemId);
+						break;
+					default:
+						if ($checkHandled) {
+							return FALSE;
+						} else {
+							$description = '';
+							$name = '';
+							$href = '';						
+						}
+				}
 			}
+		    $objectId = $this->insert_object($type, $itemId, $description, $name, $href);
 		}
-	    $objectId = $this->insert_object($type, $itemId, $description, $name, $href);
-	}
-    return $objectId;
+		
+	    return $objectId;
     }
 
     function insert_object($type, $itemId, $description = '', $name = '', $href = '') {
