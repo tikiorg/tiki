@@ -5045,27 +5045,6 @@ JS;
 		}
 	}
 
-	// Determine if the provided IP address is valid or not.
-	// Currently only supports IPV4.
-	function isValidIP($ip, $ver = 4)
-	{
-		$result = false;
-	
-		$octets = explode('.', $ip);
-		if (count($octets) == 4) {
-			for ($c = 0; $c < 4; $c++) {
-				if ($octets[$c] < 0 || $octets[$c] > 255) {
-					$result = false;
-					break;
-				} else {
-					$result = true;
-				}
-			}
-		}
-
-		return $result;
-	}
-
 	protected function rename_object( $type, $old, $new )
 	{
 		global $prefs;

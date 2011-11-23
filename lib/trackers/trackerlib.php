@@ -1953,10 +1953,11 @@ class TrackerLib extends TikiLib
 				switch ($f['type']) {
 				// IP address (only for IPv4)
 				case 'I':
-					if (!$this->isValidIP($f['value'])) {
+					$validator = new Zend_Validate_Ip;
+					if (!$validator->isValid($f['value'])) {
 						$erroneous_values[] = $f;
 					}
-								break;
+					break;
 				// numeric
 				case 'n':
 					if (!is_numeric($f['value'])) {
