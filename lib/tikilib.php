@@ -549,19 +549,6 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 
-	/* convert data to iso-8601 format */
-	// used for atom export. date() use is okay, as we use server timezone in such case
-	function iso_8601 ($timestamp)
-	{
-		$main_date = $this->date_format("%Y-%m-%d\T%H:%M:%S", $timestamp);
-
-		$tz = $this->date("%O", $timestamp);
-
-		$return = $main_date . $tz;
-
-		return $return;
-	}
-
 	/*shared*/
 	// Returns IP address or IP address forwarded by the proxy if feature load balancer is set
 	function get_ip_address()
