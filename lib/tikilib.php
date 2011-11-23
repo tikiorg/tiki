@@ -11,11 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-//if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
-
-// performance collecting:
-//require_once ('lib/tikidblib-debug.php');
-
 // This class is included by all the Tiki php scripts, so it's important
 // to keep the class as small as possible to improve performance.
 // What goes in this class:
@@ -245,6 +240,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'mod':
 			global $modlib; require_once 'lib/modules/modlib.php';
 			return self::$libraries[$name] = $modlib;
+		case 'faq':
+			global $faqlib; require_once 'lib/faqs/faqlib.php';
+			return self::$libraries[$name] = $faqlib;
 		}
 	}
 
@@ -1765,58 +1763,6 @@ class TikiLib extends TikiDb_Bridge
 		}
 		return $cacheId;
 	}
-
-	// Functions for FAQs ////
-	function list_faqs($offset, $maxRecords, $sort_mode, $find)
-	{
-	  $mid = '';
-	  if ( $find ) {
-		$findesc = '%' . $find . '%';
-		$mid = ' where (`title` like ? or `description` like ?)';
-		$bindvars = array($findesc, $findesc);
-	  } else $bindvars = array();
-
-	  $query = "select `faqId` from `tiki_faqs` $mid";
-	  $result = $this->fetchAll($query, $bindvars);
-	  $res = $ret = $retids = array();
-	  $n=0;
-
-		//FIXME Perm:filter ?
-	  foreach ( $result as $res ) {
-		$objperm = $this->get_perm_object($res['faqId'], 'faq', '', false);
-		if ($objperm['tiki_p_view_faqs'] == 'y') {
-		  if (($maxRecords == -1) || (($n>=$offset) && ($n < ($offset + $maxRecords)))) {
-			$retids[] = $res['faqId'];
-			$n++;
-		  }
-		}
-	  }
-
-	  if ($n > 0) {
-		$query = "select  * from `tiki_faqs` where faqId in (" . implode(',', $retids) . ") order by " . $this->convertSortMode($sort_mode);
-		$result = $this->fetchAll($query);
-		foreach ( $result as $res ) {
-		  $res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-		  $res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-		  $ret[] = $res;
-		}
-	  }
-
-	  $retval['data'] = $ret;
-	  $retval['cant'] = $n;
-	  return $retval;
-	}
-
-	/*shared */
-	function get_faq($faqId)
-	{
-		$query = "select * from `tiki_faqs` where `faqId`=?";
-		$result = $this->query($query, array((int)$faqId));
-		if (!$result->numRows()) return false;
-		$res = $result->fetchRow();
-		return $res;
-	}
-	// End Faqs ////
 
 	/*shared*/
 	function genPass()

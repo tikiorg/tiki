@@ -79,7 +79,8 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'faq':
-		$objects = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);
+		$faqlib = TikiLib::lib('faq');
+		$objects = $faqlib->list_faqs(0, -1, 'title_asc', $find_objects);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];
 		correct_array($objects, 'faqId', 'title');

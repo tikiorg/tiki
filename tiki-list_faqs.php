@@ -73,7 +73,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $tikilib->list_faqs($offset, $maxRecords, $sort_mode, $find);
+$channels = $faqlib->list_faqs($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);
 $cat_type = 'faq';

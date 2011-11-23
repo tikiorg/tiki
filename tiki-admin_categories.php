@@ -407,7 +407,8 @@ if ( $prefs['feature_wiki'] == 'y' ) {
 }
 
 if ( $prefs['feature_faqs'] == 'y' ) {
-	$faqs = $tikilib->list_faqs($offset, -1, 'title_asc', $find_objects);
+	$faqlib = TikiLib::lib('faq');
+	$faqs = $faqlib->list_faqs($offset, -1, 'title_asc', $find_objects);
 }
 
 if ( $prefs['feature_quizzes'] == 'y' ) {
