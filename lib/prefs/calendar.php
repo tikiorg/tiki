@@ -99,6 +99,11 @@ function prefs_calendar_list()
 			),
 			'default' => 'n',
 		),
+		'calendar_export' => array(
+			'name' => tra('Show Export Calendars button'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'calendar_fullcalendar' => array(
 			'name' => tra('Use FullCalendar to display Calendars'),
 			'type' => 'flag',
