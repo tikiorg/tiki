@@ -347,7 +347,7 @@ function initialize_prefs() {
 		$modified = $tikilib->getModifiedPreferences();
 	
 		// Unserialize serialized preferences
-		foreach ( $cachelib->getSerialized('serialized_preferences') as $serializedPreference ) {
+		foreach ( $serializedPreferences as $serializedPreference ) {
 			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
 		}
 	
