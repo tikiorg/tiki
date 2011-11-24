@@ -95,11 +95,14 @@ function wikiplugin_code($data, $params) {
 		. (isset($colors) ? ' data-syntax="' . $colors . '" ' : '')
 		. (isset($ln) ? ' data-line-numbers="' . $ln . '" ' : '')
 		. (isset($wrap) ? ' data-wrap="' . $wrap . '" ' : '')
-		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'"'.$boxid.'>'
+		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr') . '" '
+		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
+		. $boxid.'>'
 		. '~np~'
 		. $out
 		. '~/np~'
 		. '</pre>';
+
 	return $out;
 }
 
