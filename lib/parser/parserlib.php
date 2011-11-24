@@ -742,6 +742,7 @@ if ( \$('#$id') ) {
 
 			return $this->plugin_exists($info['implementation'], $include);
 		}
+		return false;
 	}
 	
 	//*
@@ -772,6 +773,8 @@ if ( \$('#$id') ) {
 	function plugin_alias_info( $name )
 	{
 		global $prefs;
+		if (empty($name))
+			return false;
 		$name = strtolower($name);
 		$prefName = "pluginalias_$name";
 
