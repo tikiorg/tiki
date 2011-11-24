@@ -13,8 +13,8 @@ function smarty_function_payment( $params, $smarty )
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	$invoice = (int) $params['id'];
 
-	$objectperms = Perms::get( 'payment', $invoice );
-	$info = $paymentlib->get_payment( $invoice );
+	$objectperms = Perms::get('payment', $invoice);
+	$info = $paymentlib->get_payment($invoice);
 	if ($user && $info['userId'] == $userlib->get_user_id($user)) {
 		$theguy = true;
 	} else {
@@ -33,12 +33,19 @@ function smarty_function_payment( $params, $smarty )
 			//$access->check_authenticity( tr('Transfer currency? %0 %1?', $info['amount'], $info['currency'] ));
 			
 			// check currency matches
-			if (empty($params['registry'])) { $params['registry'] = $cclitelib->get_registry(); }
+			if (empty($params['registry'])) { 
+				$params['registry'] = $cclitelib->get_registry(); 
+			}
+
 			if (empty($info['currency'])) {
 				$info['currency'] = $cclitelib->get_currency($params['registry']);
 			} else {
 				if ($info['currency'] != substr($cclitelib->get_currency($params['registry']), 0, 3)) {
-					return tr('Currency in payment (%0) does not match the currency for that registry (%1).', $info['currency'], $cclitelib->get_currency($params['registry']) );
+					return tr(
+									'Currency in payment (%0) does not match the currency for that registry (%1).', 
+									$info['currency'], 
+									$cclitelib->get_currency($params['registry'])
+					);
 				}
 			}
 			
@@ -61,12 +68,12 @@ function smarty_function_payment( $params, $smarty )
 		
 		$info['fullview'] = $objectperms->payment_view || $theguy;
 		if (!empty($params['returnurl']) && empty($result)) {
-			$info['url'] = preg_match('|^https?://|', $params['returnurl'])? $params['returnurl']: $tikilib->tikiUrl($params['returnurl']);
-			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'],'.php')? '&':'?')."invoice=$invoice";
+			$info['url'] = preg_match('|^https?://|', $params['returnurl']) ? $params['returnurl'] : $tikilib->tikiUrl($params['returnurl']);
+			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'], '.php')? '&':'?') . "invoice=$invoice";
 		}
-		$smarty->assign( 'payment_info', $info );
-		$smarty->assign( 'payment_detail', $tikilib->parse_data( htmlspecialchars($info['detail']) ) );
-		return $smarty->fetch( 'tiki-payment-single.tpl' );
+		$smarty->assign('payment_info', $info);
+		$smarty->assign('payment_detail', $tikilib->parse_data(htmlspecialchars($info['detail'])));
+		return $smarty->fetch('tiki-payment-single.tpl');
 	} else {
 		return tra('This invoice does not exist or is in limited access.');
 	}

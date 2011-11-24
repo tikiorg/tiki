@@ -52,7 +52,7 @@ function smarty_function_debugger($params, $smarty)
 		$tabs_list = $debugger->background_tabs_draw();
 		// Add results tab which is always exists...
 		$tabs_list["console"] = $smarty->fetch("debug/tiki-debug_console_tab.tpl");
-		ksort ($tabs_list);
+		ksort($tabs_list);
 		$tabs = array();
 		
 		// TODO: Use stupid dbl loop to generate links code and divs,

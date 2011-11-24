@@ -46,13 +46,16 @@ function smarty_function_object_selector( $params, $smarty )
 		$params = array_merge($filter, $params);
 	}
 
-	$smarty->assign('object_selector', array(
-		'filter' => json_encode($params),
-		'id' => $id,
-		'name' => $name,
-		'class' => $class,
-		'value' => $value,
-	));
+	$smarty->assign(
+					'object_selector', 
+					array(
+						'filter' => json_encode($params),
+						'id' => $id,
+						'name' => $name,
+						'class' => $class,
+						'value' => $value,
+					)
+	);
 
 	return $smarty->fetch('object_selector.tpl');
 }

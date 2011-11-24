@@ -18,7 +18,7 @@ function smarty_function_preference( $params, $smarty )
 	}
 	$get_pages = isset( $params['get_pages']) && $params['get_pages'] != 'n' ? true : false;
 
-	if ( $info = $prefslib->getPreference( $params['name'], true, $source, $get_pages ) ) {
+	if ( $info = $prefslib->getPreference($params['name'], true, $source, $get_pages) ) {
 		if ( isset($params['label']) ) {
 			$info['name'] = $params['label'];
 		}
@@ -35,9 +35,9 @@ function smarty_function_preference( $params, $smarty )
 		if ($get_pages) {
 			if (count($info['pages']) > 0) {
 			$pages_string = tra(' (found in ');
-			foreach($info['pages'] as $pg) {
+			foreach ($info['pages'] as $pg) {
 				$ct_string = $pg[1] > 1 ? '&amp;cookietab=' . $pg[1] : '';
-				$pages_string .= '<a class="lm_result" href="tiki-admin.php?page='.$pg[0].$ct_string.'&amp;highlight='.$info['preference'].'">' . $pg[0] . '</a>, ';
+				$pages_string .= '<a class="lm_result" href="tiki-admin.php?page=' . $pg[0] . $ct_string . '&amp;highlight=' . $info['preference'] . '">' . $pg[0] . '</a>, ';
 			}
 			$pages_string = substr($pages_string, 0, strlen($pages_string) - 2);
 			$pages_string .= ')';
@@ -49,36 +49,36 @@ function smarty_function_preference( $params, $smarty )
 		}
 		$info['pages'] = $pages_string;
 
-		$smarty->assign( 'p', $info );
+		$smarty->assign('p', $info);
 
-		if ( isset( $params['mode'] ) && $params['mode'] == 'invert' ) {
-			$smarty->assign( 'mode', 'invert' );
+		if ( isset($params['mode']) && $params['mode'] == 'invert' ) {
+			$smarty->assign('mode', 'invert');
 		} else {
-			$smarty->assign( 'mode', 'normal' );
+			$smarty->assign('mode', 'normal');
 		}
 		
 		//we reset the codemirror/syntax vars so that they are blank because they are reused for other params
-		$smarty->assign( 'codemirror' );
-		$smarty->assign( 'syntax' );
+		$smarty->assign('codemirror');
+		$smarty->assign('syntax');
 		
-		if ( !empty( $params['syntax'] ) ) {
-			$smarty->assign( 'codemirror', 'true' );
-			$smarty->assign( 'syntax', $params['syntax'] );
+		if ( !empty($params['syntax']) ) {
+			$smarty->assign('codemirror', 'true');
+			$smarty->assign('syntax', $params['syntax']);
 		}
 		
-		return $smarty->fetch( 'prefs/' . $info['type'] . '.tpl' );
+		return $smarty->fetch('prefs/' . $info['type'] . '.tpl');
 	} else {
 		$info = array(
 			'value' => tra('Error'),
 			'default_val' => tra('Error'),
-			'name' => tr( 'Preference %0 is not defined', $params['name'] ),
+			'name' => tr('Preference %0 is not defined', $params['name']),
 			'tags' => array('modified', 'basic', 'all'),
 			'tagstring' => 'modified basic all',
 		);
 		if (strpos($_SERVER["SCRIPT_NAME"], 'tiki-edit_perspective.php') !== false) {
 			$info['hint'] = tra('Drag this out of the perspective and resave it.');
 		}
-		$smarty->assign( 'p', $info );
-		return $smarty->fetch( 'prefs/text.tpl' );
+		$smarty->assign('p', $info);
+		return $smarty->fetch('prefs/text.tpl');
 	}
 }

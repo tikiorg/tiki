@@ -57,12 +57,18 @@ function smarty_function_html_select_duration($params, $smarty)
 		$prefix = $params['prefix'].'_unit';
 	}
 	$html_result .= '<select name="'.$prefix.'">';
-	$html_result .= smarty_function_html_options(array(
-		'values' => $values,
-		'output' => $output,
-		'selected' => $selected), $smarty);
+
+	$html_result .= smarty_function_html_options(
+					array(
+						'values' => $values,
+						'output' => $output,
+						'selected' => $selected
+					), 
+					$smarty
+	);
+
 	$html_result .= '</select>';
-    return $html_result;
+	return $html_result;
 }
 
 function compute_select_duration($params, $prefix='Duration')

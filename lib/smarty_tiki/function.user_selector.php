@@ -32,7 +32,8 @@ function smarty_function_user_selector($params, $smarty)
 	static $iUserSelector = 0;
 	$iUserSelector++;
 	
-	$defaults = array( 'user' => $user,
+	$defaults = array( 
+			'user' => $user,
 			'group' => 'all',
 			'groupIds' => '',
 			'contact'=> 'false',
@@ -100,14 +101,14 @@ function smarty_function_user_selector($params, $smarty)
 		}
 		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'">';
 		if ($params['allowNone'] === 'y') {
-			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra( 'None' ) .'</option>';
+			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra('None') .'</option>';
 		}
-		foreach($users as $usr) {
+		foreach ($users as $usr) {
 			if ($params['editable'] == 'y' || $usr == $params['user']) {
-			    if (isset($params['select'])) {
-					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
+				if (isset($params['select'])) {
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username($usr) .'</option>';
 				} else {
-					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username($usr) .'</option>';
 				}
 			}
 		}

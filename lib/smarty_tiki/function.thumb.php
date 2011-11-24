@@ -37,9 +37,9 @@ function smarty_function_thumb($params, $smarty)
 	$html = '<img ';
 	foreach ( $params as $k => $v ) {
 		if ( $k == '' || $k[0] == '_' || $k == 'src' ) continue;
-		$html .= ' '.htmlentities($k).'="'.htmlentities($v).'"';
+		$html .= ' ' . htmlentities($k) . '="' . htmlentities($v) . '"';
 	}
-	$html .= ' src="tiki-download_file.php?fileId='.((int)$params['_id']).'&amp;thumbnail&amp;max='.((int)$params['_max']).'" />';
+	$html .= ' src="tiki-download_file.php?fileId=' . ((int)$params['_id']) . '&amp;thumbnail&amp;max=' . ((int)$params['_max']) . '" />';
 
 	return $html;
 }

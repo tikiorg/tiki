@@ -33,10 +33,16 @@ function smarty_function_error_report($params, $smarty)
 	if (count($errors)) {
 		require_once 'lib/smarty_tiki/block.remarksbox.php';
 
-		return $pre . smarty_block_remarksbox(array(
-			'type' => 'errors',
-			'title' => tra('Error(s)'),
-		), '<a class="clear" style="float: right;" href="#">' . tr('Clear errors') . '</a><ul><li>' . implode('</li><li>', $errors) . '</li></ul>', $smarty) . $post;
+		return $pre . smarty_block_remarksbox(
+						array(
+							'type' => 'errors',
+							'title' => tra('Error(s)'),
+						), 
+						'<a class="clear" style="float: right;" href="#">' . 
+						tr('Clear errors') . '</a><ul><li>' . 
+						implode('</li><li>', $errors) . '</li></ul>', 
+						$smarty
+		) . $post;
 	} else {
 		return $pre . $post;
 	}

@@ -7,37 +7,43 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_gallery($params, $smarty)
 {
-    global $tikilib;
-    global $dbTiki;
-    global $imagegallib;
-    include_once('lib/imagegals/imagegallib.php');
-    extract($params);
-    // Param = id
+	global $tikilib;
+	global $dbTiki;
+	global $imagegallib;
+	include_once('lib/imagegals/imagegallib.php');
+	extract($params);
+	// Param = id
 
-    if (empty($id)) {
-        $smarty->trigger_error("assign: missing 'id' parameter");
-        return;
-    }
-    $img = $imagegallib->get_random_image($id);
-    print('<div style="text-align: center">');
-    if (!isset($hidelink) || $hidelink != 1) {
-        print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'">');
-     }
-    print ('<img alt="thumbnail" class="athumb" src="show_image.php?id='.$img['imageId'].'&amp;thumb=1" />');
-    if (!isset($hidelink) || $hidelink !=1) {
-        print('</a>');
-    }
-    if (!isset($hideimgname) || $hideimgname !=1)  {
-    	  print('<br /><b>'.$img['name'].'</b>');
-    }
-    if (isset($showgalleryname) && $showgalleryname == 1) {
-        print('<br /><small>'.tra("Gallery").': <a href="tiki-browse_gallery.php?galleryId='.$img['galleryId'].'">'.$img['gallery'].'</a></small>');
-    }
-    print('</div>');
+	if (empty($id)) {
+		$smarty->trigger_error("assign: missing 'id' parameter");
+		return;
+	}
+	$img = $imagegallib->get_random_image($id);
+	print('<div style="text-align: center">');
+	if (!isset($hidelink) || $hidelink != 1) {
+		print('<a href="tiki-browse_image.php?galleryId=' . $img['galleryId'] . '&amp;imageId=' . $img['imageId'] . '">');
+	}
+	print ('<img alt="thumbnail" class="athumb" src="show_image.php?id=' . $img['imageId'] . '&amp;thumb=1" />');
+	if (!isset($hidelink) || $hidelink !=1) {
+		print('</a>');
+	}
+	if (!isset($hideimgname) || $hideimgname !=1) {
+		print('<br /><b>'.$img['name'].'</b>');
+	}
+	if (isset($showgalleryname) && $showgalleryname == 1) {
+		print(
+						'<br /><small>' . 
+						tra("Gallery") . 
+						': <a href="tiki-browse_gallery.php?galleryId=' . $img['galleryId'] . '">' .
+						$img['gallery'] . 
+						'</a></small>'
+		);
+	}
+	print('</div>');
 }

@@ -44,8 +44,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /** Constants used in function metric */
@@ -85,165 +85,178 @@ define('COLUMN_MAXLEN', 64);
  */
 function smarty_function_metric($params, $smarty)
 {
-    global $m, $m_id, $prefs;
-    extract($params);
-    // Validate input first
-    if (empty($name) && empty($id)) {
-    	print '<div class="metricbox">ERROR: Metric name or id required, but not specified.</div>';
-    	return;
-    }
-    if (empty($name)) {
-    	$name = $m_id[$id]['metric_name'];
-    }
-    if (empty($id)) {
-    	$id = $m[$name]['metric_id'];
-    }
-    if (!isset($m[$name])) {
-    	return;
+	global $m, $m_id, $prefs;
+	extract($params);
+	// Validate input first
+
+	if (empty($name) && empty($id)) {
+		print '<div class="metricbox">ERROR: Metric name or id required, but not specified.</div>';
+		return;
 	}
-    if (empty($value)) {
-    	print '<div class="metricbox">ERROR: Value column required, but not specified.</div>';
-    	return;
-    }
-    if (empty($numrows) || !is_numeric($numrows)) {
-    	$numrows = count($m[$name]['result']);
-    	if ($numrows <= 0) {
-    		print '<div class="metricbox">Metric ' . $name . ' has no results to show.</div>';
-    		return;
-    	}
-    }
-    if (empty($title)) {
-    	$title = $name;
-    }
-    else {
-    	/**
-    	 * inspired by drupal 6 check_plain
-    	 * at http://api.drupal.org/api/function/check_plain/6
-    	 */
+
+	if (empty($name)) {
+		$name = $m_id[$id]['metric_name'];
+	}
+
+	if (empty($id)) {
+		$id = $m[$name]['metric_id'];
+	}
+
+	if (!isset($m[$name])) {
+		return;
+	}
+
+	if (empty($value)) {
+		print '<div class="metricbox">ERROR: Value column required, but not specified.</div>';
+		return;
+	}
+
+	if (empty($numrows) || !is_numeric($numrows)) {
+		$numrows = count($m[$name]['result']);
+		if ($numrows <= 0) {
+			print '<div class="metricbox">Metric ' . $name . ' has no results to show.</div>';
+			return;
+		}
+	}
+
+	if (empty($title)) {
+		$title = $name;
+	} else {
+		/**
+		 * inspired by drupal 6 check_plain
+		 * at http://api.drupal.org/api/function/check_plain/6
+		 */
 		if (preg_match('/^./us', $title) == 1) {
-    		$title = htmlspecialchars($title, ENT_QUOTES);
-    	}
-    	else {
-    		$title = $name;
-    	}
-    }
+			$title = htmlspecialchars($title, ENT_QUOTES);
+		} else {
+			$title = $name;
+		}
+	}
 	if (empty($date_field)) {
 		$date_field = 'date_field';
-	}
-	else {
-    	/**
-    	 * strip ` and limit column length
-    	 */
-		$date_field = preg_replace('/[`\/\\\<>"\']/','', $date_field);
+	} else {
+		/**
+		 * strip ` and limit column length
+		 */
+		$date_field = preg_replace('/[`\/\\\<>"\']/', '', $date_field);
 		$date_field = substr($date_field, 0, COLUMN_MAXLEN);
 	}
-    if ($sparkline !== TRUE) {
-    	$sparkline = FALSE;
-    }
-    if ($trend !== TRUE) {
-    	$trend = FALSE;
-    }
-    if ($table !== TRUE) {
-    	$table = FALSE;
-    }
-    if ($toggle !== TRUE) {
-    	$toggle = FALSE;
-    }
-    if (!empty($html_before)) {
-    	$html_before = htmlentities($html_before, ENT_NOQUOTES, 'UTF-8', FALSE);
-    }
-    else {
-    	$html_before = '';
-    }
-    if (!empty($html_after)) {
-    	$html_after = htmlentities($html_after, ENT_NOQUOTES, 'UTF-8', FALSE);
-    }
-    else {
-    	$html_after = '';
-    }
-    // end of validate input
 
-    $out = ' <div class="metricbox"><div class="title">' . "\n";
-    if ($sparkline == TRUE) {
-    	$out .= ' <span class="inlinesparkline">' . "\n";
-    	$first = TRUE;
-    	for ($i = $numrows; $i--; $i > 0) {
-    		if (!$first) $out .= ',';
-    		$first = FALSE;
-    		$out .= $m[$name]['result'][$i][$value];
-    	}
-    	$out .= '</span> ';
-    }
-    if ($toggle == TRUE) {
-    	$out .= ' <a class="toggle-button">Toggle</a> ' . "\n";
-    }
-    $out .= ' <span class="metrictitle">' . $title . "</span> ";
-    $out .= metric_helper_number_format($m[$name]['result'][0][$value], $m[$name]['datatype_id']) . "\n";
-    if ($trend == TRUE) {
-    	if (count($m[$name]['result']) < 2) {
-    		$out .= ' <span class="trend">' . $prefs['metrics_trend_novalue'] . '</span> ';
-    	}
-    	else {
+	if ($sparkline !== TRUE) {
+		$sparkline = FALSE;
+	}
+
+	if ($trend !== TRUE) {
+		$trend = FALSE;
+	}
+
+	if ($table !== TRUE) {
+		$table = FALSE;
+	}
+
+	if ($toggle !== TRUE) {
+		$toggle = FALSE;
+	}
+
+	if (!empty($html_before)) {
+		$html_before = htmlentities($html_before, ENT_NOQUOTES, 'UTF-8', FALSE);
+	} else {
+		$html_before = '';
+	}
+
+	if (!empty($html_after)) {
+		$html_after = htmlentities($html_after, ENT_NOQUOTES, 'UTF-8', FALSE);
+	} else {
+		$html_after = '';
+	}
+	// end of validate input
+
+	$out = ' <div class="metricbox"><div class="title">' . "\n";
+	if ($sparkline == TRUE) {
+		$out .= ' <span class="inlinesparkline">' . "\n";
+		$first = TRUE;
+		for ($i = $numrows; $i--; $i > 0) {
+			if (!$first) $out .= ',';
+			$first = FALSE;
+			$out .= $m[$name]['result'][$i][$value];
+		}
+		$out .= '</span> ';
+	}
+	if ($toggle == TRUE) {
+		$out .= ' <a class="toggle-button">Toggle</a> ' . "\n";
+	}
+	$out .= ' <span class="metrictitle">' . $title . "</span> ";
+	$out .= metric_helper_number_format($m[$name]['result'][0][$value], $m[$name]['datatype_id']) . "\n";
+
+	if ($trend == TRUE) {
+		if (count($m[$name]['result']) < 2) {
+			$out .= ' <span class="trend">' . $prefs['metrics_trend_novalue'] . '</span> ';
+		} else {
 			$trend_val = $m[$name]['result'][0][$value] / $m[$name]['result'][1][$value] * 100 - 100;
 			if ($trend_val > 0) {
 				$class = "green";
-			}
-			elseif ($trend_val == 0) {
+			} elseif ($trend_val == 0) {
 				$class = "gray";
-			}
-			else {
+			} else {
 				$class = "red";
 			}
-			$out .= ' <span class="trend trend-' . $class . '">' . $prefs['metrics_trend_prefix'] . number_format(round($trend_val, 2), 2) . $prefs['metrics_trend_suffix'] . '</span> ';
+			$out .= ' <span class="trend trend-' . $class . '">' . 
+							$prefs['metrics_trend_prefix'] . number_format(round($trend_val, 2), 2) . $prefs['metrics_trend_suffix'] . 
+							'</span> ';
 		}
-    }
-    $out .= '</div> ' . "\n"; //end of metric title
-    if ($toggle == TRUE) {
-    	$out .= ' <div class="toggle">' . "\n";
-    }
-    $out .= $html_before;
-    if ($table == TRUE) {
-    	$out .= ' <table class="trend-table">' . "\n";
-    	$out .= ' <tr><th>';
-    	switch($_REQUEST['range']) {
-    		case 'monthof':
-    			$out .= tra('Month beginning');
-    			break;
+	}
+
+	$out .= '</div> ' . "\n"; //end of metric title
+	if ($toggle == TRUE) {
+		$out .= ' <div class="toggle">' . "\n";
+	}
+	$out .= $html_before;
+	if ($table == TRUE) {
+		$out .= ' <table class="trend-table">' . "\n";
+		$out .= ' <tr><th>';
+
+		switch($_REQUEST['range']) {
+			case 'monthof':
+				$out .= tra('Month beginning');
+							break;
 			case 'weekof':
 			case 'lastweek':
 				$out .= tra('Week beginning');
-				break;
+							break;
 			case 'custom':
 			default:
 				$out .= tra('Day');
-    	}
-    	$out .= '</th><th>' . tra('Data (change %)') . '</th></tr> ' . "\n";
-    	for ($i = 0; $i < $numrows; $i++) {
-    		if ($i == $numrows-1) {
-    			$trend_val = ' ' . $prefs['metrics_trend_novalue'];
-    		}
-    		else {
-    			$trend_val = $m[$name]['result'][$i][$value] / $m[$name]['result'][$i+1][$value] * 100 - 100;
+		}
+
+		$out .= '</th><th>' . tra('Data (change %)') . '</th></tr> ' . "\n";
+
+		for ($i = 0; $i < $numrows; $i++) {
+			if ($i == $numrows-1) {
+				$trend_val = ' ' . $prefs['metrics_trend_novalue'];
+			} else {
+				$trend_val = $m[$name]['result'][$i][$value] / $m[$name]['result'][$i+1][$value] * 100 - 100;
 				if ($trend_val > 0) {
 					$class = "green";
-				}
-				elseif ($trend_val == 0) {
+				} elseif ($trend_val == 0) {
 					$class = "gray";
-				}
-				else {
+				} else {
 					$class = "red";
 				}
+
 				$trend_val = ' <span class="trend trend-' . $class . '">' . $prefs['metrics_trend_prefix']
-					 . number_format(round($trend_val, 2), 2) . $prefs['metrics_trend_suffix'] . '</span> ';
+					. number_format(round($trend_val, 2), 2) . $prefs['metrics_trend_suffix'] . '</span> ';
 			}
-    		$out .= ' <tr><td>' . $m[$name]['result'][$i][$date_field] . '</td><td>' . metric_helper_number_format($m[$name]['result'][$i][$value], $m[$name]['datatype_id']) . $trend_val . '</td></tr> ';
-    	}
-    	$out .= '</table> ';
-    }
-    $out .= $html_after;
-    if ($toggle == TRUE) {
-    	$out .= '</div> ' . "\n"; //end of <div class="toggle">
-    }
+
+			$out .= ' <tr><td>' . $m[$name]['result'][$i][$date_field] . '</td>' .
+							'<td>' . metric_helper_number_format($m[$name]['result'][$i][$value], $m[$name]['datatype_id']) . $trend_val . 
+							'</td></tr> ';
+		}
+		$out .= '</table> ';
+	}
+	$out .= $html_after;
+	if ($toggle == TRUE) {
+		$out .= '</div> ' . "\n"; //end of <div class="toggle">
+	}
 	$out .= '</div> ' . "\n"; //end of <div class="metricbox">
 	print $out;
 }

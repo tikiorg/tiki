@@ -114,17 +114,24 @@ function smarty_function_jscalendar($params, $smarty)
 
 			$command = 'datepicker';
 			$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
-			$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val('.$js_val.').tiki("'.$command.'", "jscalendar", {altField: "#' . $params['id'] . '"});');
+			$headerlib->add_jq_onready(
+							'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
+							$command . '", "jscalendar", {altField: "#' . $params['id'] . '"});'
+			);
 
 		} else {		// datetime picker
 
 			$command = 'datetimepicker';
-			$headerlib->add_css('/* css for timepicker */
+
+			/* css for timepicker */
+			$headerlib->add_css('
 .ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
 .ui-timepicker-div dl{ text-align: left; }
 .ui-timepicker-div dl dt{ height: 25px; }
 .ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
-.ui-timepicker-div td { font-size: 90%; }');
+.ui-timepicker-div td { font-size: 90%; }'
+			);
+
 			$headerlib->add_jsfile('lib/jquery/jquery-ui-timepicker-addon.js');
 
 			$js_val1 = empty($params['date']) ? '' : '
@@ -132,7 +139,10 @@ var dt = new Date('.$params['date'].'* 1000);
 var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds() };
 ';
 			$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", dt) + " " + $.timepicker._formatTime(tm)';
-			$headerlib->add_jq_onready( $js_val1 . '$("#'.$params['id'].'_dptxt").val('.$js_val2.').tiki("'.$command.'", "jscalendar", {altField: "#' . $params['id'] . '",altFieldTimeOnly:false});');
+			$headerlib->add_jq_onready(
+							$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' . 
+							$command . '", "jscalendar", {altField: "#' . $params['id'] . '",altFieldTimeOnly:false});'
+			);
 		}
 		return $html;
 		
@@ -162,7 +172,7 @@ function smarty_function_jscalendar_body($params, $smarty)
 	$headerlib->add_jsfile('lib/jscalendar/calendar-setup_stripped.js');
 
 	if (isset($params['date'])) {
-		$date = preg_replace('/[^0-9]/','', $params['date']);
+		$date = preg_replace('/[^0-9]/', '', $params['date']);
 	} else {
 		$date = $tikilib->now;
 	}
@@ -170,7 +180,7 @@ function smarty_function_jscalendar_body($params, $smarty)
 	if (isset($params['showtime']) and $params['showtime'] == 'y') {
 		$showtime = true;
 		if (isset($params['minutes_interval'])) {
-			$minutes_interval = preg_replace('/[^0-9]/','', $params['minutes_interval']);
+			$minutes_interval = preg_replace('/[^0-9]/', '', $params['minutes_interval']);
 		} else {
 			$minutes_interval = 5;
 		}
@@ -183,7 +193,7 @@ function smarty_function_jscalendar_body($params, $smarty)
 	}
 
 	if (isset($params['format'])) {
-		$format = preg_replace('/"/','\"', $params['format']);
+		$format = preg_replace('/"/', '\"', $params['format']);
 	} else {
 		$format = tra($prefs['long_date_format']);
 		if ($showtime) {
@@ -198,25 +208,25 @@ function smarty_function_jscalendar_body($params, $smarty)
 	}
 	
 	if (isset($params['id'])) {
-		$id =  preg_replace('/"/','\"', $params['id']);
+		$id =  preg_replace('/"/', '\"', $params['id']);
 	} else {
 		$id = $tikilib->now;
 	}
 
 	if (isset($params['ifFormat'])) {
-		$ifFormat =  preg_replace('/"/','\"', $params['ifFormat']);
+		$ifFormat =  preg_replace('/"/', '\"', $params['ifFormat']);
 	} else {
 	        $ifFormat = '%s';
 	}
 
 	if (isset($params['align'])) {
-		$align = substr(preg_replace('/[^bBrRtTlLc]/','', $params['align']), 0, 2);
+		$align = substr(preg_replace('/[^bBrRtTlLc]/', '', $params['align']), 0, 2);
 	} else {
 		$align = "bR";
 	}
 
 	if (isset($params['fieldname'])) {
-		$fieldname = preg_replace('/[^-_a-zA-Z0-9\[\]]/','', $params['fieldname']);
+		$fieldname = preg_replace('/[^-_a-zA-Z0-9\[\]]/', '', $params['fieldname']);
 	} else {
 		$fieldname = false;
 	}

@@ -21,17 +21,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_norecords($params, $smarty)
 {
-	$html='<tr class="even">';
+	$html = '<tr class="even">';
 	if (is_int($params["_colspan"])) {
-		$html.='<td colspan="'.$params["_colspan"].'" class="norecords">';
+		$html .= '<td colspan="'.$params["_colspan"].'" class="norecords">';
 	} else {
-		$html.='<td class="norecords">';
+		$html .= '<td class="norecords">';
 	}
 	if (isset($params["_text"])) {
-		$html.=tra($params["_text"]);
+		$html .= tra($params["_text"]);
 	} else {
-		$html.=tra("No records found.");
+		$html .= tra("No records found.");
 	}
-	$html.="</td></tr>";
+	$html .= "</td></tr>";
 	return $html;
 }

@@ -17,7 +17,7 @@ function smarty_function_interactivetranslation($params, $smarty)
 	global $headerlib, $smarty;
 
 	$strings = get_collected_strings();
-	if ( count( $strings ) == 0 ) {
+	if ( count($strings) == 0 ) {
 		return;
 	}
 
@@ -28,10 +28,14 @@ function smarty_function_interactivetranslation($params, $smarty)
 	// add wrench icon link
 	$smarty->loadPlugin('smarty_block_self_link');
 	$help .= smarty_block_self_link(
-		array( '_icon'=>'wrench',
-			   '_script'=>'tiki-edit_languages.php',
-			   '_title'=>tra('Click here to go to Edit Languages')),
-		'', $smarty);
+					array( 
+						'_icon'=>'wrench',
+						'_script'=>'tiki-edit_languages.php',
+						'_title'=>tra('Click here to go to Edit Languages')
+					),
+					'', 
+					$smarty
+	);
 	
 	$jq = <<<JS
 	var data = $strings;

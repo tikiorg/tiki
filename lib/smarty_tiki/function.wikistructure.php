@@ -26,7 +26,7 @@ function smarty_function_wikistructure($params, $smarty)
 	if (!empty($params['id'])) {
 		$params['structId'] = $params['id'];
 	}
-	$html =  wikiplugin_toc('', $params);
+	$html = wikiplugin_toc('', $params);
 	$html = str_replace(array('~np~', '~/np~'), '', $html);
 	return $html;
 }

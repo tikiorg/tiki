@@ -147,7 +147,7 @@ function smarty_function_treetable($params, $smarty)
 	if (empty($_columns)) {
 		$keys =  array_keys($_data[0]);
 		$_columns = array();
-		foreach($keys as $key) {
+		foreach ($keys as $key) {
 			if (!is_numeric($key)) {
 				$_columns[$key] = htmlspecialchars($key);
 			}
@@ -183,19 +183,26 @@ function smarty_function_treetable($params, $smarty)
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
 		$smarty->loadPlugin('smarty_function_listfilter');
 		$html .= smarty_function_listfilter(
-			array('id' => $id.'_filter',
-				  'selectors' => "#$id tbody tr:not(.parent)",
-				  'parentSelector' => "#$id tbody .parent",
-				  'exclude' => ".subHeader"),  $smarty);
+						array(
+							'id' => $id.'_filter',
+							'selectors' => "#$id tbody tr:not(.parent)",
+							'parentSelector' => "#$id tbody .parent",
+							'exclude' => ".subHeader"
+						), 
+						$smarty
+		);
 	}
 
 	if ($_openall == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
 		$html .= '&nbsp;' . smarty_function_icon(
-			array('_id' => 'folder',
-				'id' => $id.'_openall',
-				'title' => tra('Toggle sections')), $smarty) .
-			' ' . tra('Toggle sections');
+						array(
+							'_id' => 'folder',
+							'id' => $id.'_openall',
+							'title' => tra('Toggle sections')
+						), 
+						$smarty
+		) . ' ' . tra('Toggle sections');
 		
 		$headerlib->add_jq_onready('
 $("#'.$id.'_openall").click( function () {
@@ -240,7 +247,7 @@ $("#'.$id.'_showSelected").click( function () {
 	}
 	
 	// start writing the table
-	$html .= $nl.'<table id="'.$id.'" class="'.$class.'">'.$nl;
+	$html .= $nl . '<table id="' . $id . '" class="' . $class . '">' . $nl;
 	
 	// write the table header
 	$html .= '<thead><tr>';
@@ -249,8 +256,12 @@ $("#'.$id.'_showSelected").click( function () {
 		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
-						array('checkbox_names'=>array($_checkbox[$i].'[]'),
-							  'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])), $smarty);
+							array(
+								'checkbox_names'=>array($_checkbox[$i] . '[]'),
+								'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])
+							), 
+							$smarty
+			);
 			$html .= '</th>';
 		}
 	}
@@ -272,8 +283,10 @@ $("#'.$id.'_showSelected").click( function () {
 			$treeType = htmlspecialchars(trim($row[$_sortColumn]));
 			$treeTypeId = '';
 			$childRowClass = '';
+
 			if (!empty($_sortColumnDelimiter)) {	// nested
 				$parts = array_reverse(explode($_sortColumnDelimiter, $treeType));
+
 				for ($i = 0, $icount_parts = count($parts); $i < $icount_parts; $i++) {
 					$part = preg_replace('/\s+/', '_', $parts[$i]);
 					if (in_array($part, $treeSectionsAdded) && $i > 0) {
@@ -284,6 +297,7 @@ $("#'.$id.'_showSelected").click( function () {
 						break;
 					}
 				}
+
 				if (empty($treeTypeId)) {
 					$treeTypeId = preg_replace('/\s+/', '_', $part);
 				}
@@ -408,7 +422,9 @@ function sort2d( &$arrIn, $index = null, $sort = 'asort')
 	}
 
 	if ($sort) {
-		if (strpos($sort, 'sort') === false) {$sort = 'asort';}
+		if (strpos($sort, 'sort') === false) {
+			$sort = 'asort';
+		}
 		$sort($arrTemp);
 	}
 

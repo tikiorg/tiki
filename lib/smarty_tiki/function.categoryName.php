@@ -19,5 +19,5 @@ function smarty_function_categoryName($params, $smarty)
     }
 
 	global $categlib; require_once 'lib/categories/categlib.php';
-	return $categlib->get_category_name( $params['id'] );
+	return $categlib->get_category_name($params['id']);
 }

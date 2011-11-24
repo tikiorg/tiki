@@ -21,7 +21,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 	$dblclickedit = $smarty->getTemplateVars('dblclickedit');
 	
 	if (isset($section) && $section == 'wiki page' && $prefs['user_dbl'] == 'y' and $dblclickedit == 'y' and $tiki_p_edit == 'y') {
-		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page='.rawurlencode($page).'\';"';
+		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page=' . rawurlencode($page) . '\';"';
 	}
 	
 	if (isset($section_class)) {
@@ -53,11 +53,11 @@ function smarty_function_html_body_attributes($params, $smarty)
 	}
 	
 	if (!empty($onload)) {
-		$back .= ' onload="'.$onload.'"';
+		$back .= ' onload="' . $onload . '"';
 	}
 	
 	if (!empty($class)) {
-		$back .= ' class="'.$class.'"';
+		$back .= ' class="' . $class . '"';
 	}
 	
 	return $back;

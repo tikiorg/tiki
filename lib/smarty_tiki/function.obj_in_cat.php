@@ -28,16 +28,16 @@ function smarty_function_obj_in_cat($params, $smarty)
 {					
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
-	extract ($params, EXTR_SKIP);
-	if	( !isset($object) ) {
+	extract($params, EXTR_SKIP);
+	if ( !isset($object) ) {
 		return ('<b>missing object parameter for Smarty function testing whether object is in a category</b><br/>');
 	}
 	
-	if	( !isset($type) ) {
+	if ( !isset($type) ) {
 		return ('<b>missing type parameter for Smarty function testing whether object is in a category</b><br/>');
 	}	
 	
-	if	( !isset($catnumber) ) {
+	if ( !isset($catnumber) ) {
 		return ('<b>missing catnumber parameter for Smarty function testing whether object is in a category</b><br/>');
 	}
 

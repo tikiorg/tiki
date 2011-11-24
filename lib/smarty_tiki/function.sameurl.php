@@ -19,7 +19,8 @@ function smarty_function_sameurl($params, $smarty)
 	$data = $_SERVER['SCRIPT_NAME'];
 	$first = true;
 	$sets = Array();
-	foreach($params as $name=>$val) {
+
+	foreach ($params as $name=>$val) {
 		if (isset($_REQUEST[$name])) {
 			$_REQUEST[$name] = $val;
 		} else {
@@ -38,7 +39,7 @@ function smarty_function_sameurl($params, $smarty)
 		}
 	}
 
-	foreach($_REQUEST as $name=>$val) {
+	foreach ($_REQUEST as $name=>$val) {
 		if (isset($$name)) {
 			$val = $$name;
 		}

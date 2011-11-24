@@ -27,7 +27,7 @@ function smarty_function_select_all($params, $smarty)
 
 	$checkbox_count++;
 	if ($checkbox_count > 0) {
-		$id = '_'.$checkbox_count;
+		$id = '_' . $checkbox_count;
 	} else {
 		$id = '';
 	}
@@ -37,16 +37,17 @@ function smarty_function_select_all($params, $smarty)
 		$checkbox_names = explode(',', $checkbox_names);
 	}
 
-   if (! function_exists('smarty_modifier_escape')) {
-      require_once 'lib/smarty_tiki/modifier.escape.php';
-   }
+	if (! function_exists('smarty_modifier_escape')) {
+		require_once 'lib/smarty_tiki/modifier.escape.php';
+	}
 
-	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked);";
+	foreach ( $checkbox_names as $cn ) 
+		$onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked);";
 
-	return "<div>\n"
-		. '<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"'
-		. ( empty($params['label']) ? ' title="' . tra('Select All') . '"' : '' )
-		.'/>' . "\n"
-		. ( ! empty($params['label']) ? '<label for="clickall'.$id.'">' . $params['label'] . "</label>\n" : '' )
-		. "</div>\n";
+	return "<div>\n" . 
+			'<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"' . 
+			( empty($params['label']) ? ' title="' . tra('Select All') . '"' : '' ) .
+			'/>' . "\n" .
+			( ! empty($params['label']) ? '<label for="clickall'.$id.'">' . $params['label'] . "</label>\n" : '' ) . 
+			"</div>\n";
 }

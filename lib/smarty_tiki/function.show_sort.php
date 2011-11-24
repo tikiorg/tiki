@@ -16,7 +16,7 @@ function smarty_function_show_sort($params, $smarty)
 	global $url_path;
 
 	if ( isset($_REQUEST[$params['sort']]) ) {
-		$p =  $_REQUEST[$params['sort']];
+		$p = $_REQUEST[$params['sort']];
 	} elseif ( $s = $smarty->getTemplateVars($params['sort']) ) {
 		$p = $s;
 	}
@@ -34,12 +34,12 @@ function smarty_function_show_sort($params, $smarty)
 				case 'nasc':
 					$icon_params['_id'] = 'resultset_up';
 					return smarty_function_icon($icon_params, $smarty);
-					break;
+								break;
 				case 'desc':
 				case 'ndesc':
 					$icon_params['_id'] = 'resultset_down';
 					return smarty_function_icon($icon_params, $smarty);
-					break;
+								break;
 			}
 		}
 	}
