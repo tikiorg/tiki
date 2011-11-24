@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trackertimeline_info() {
+function wikiplugin_trackertimeline_info()
+{
 	return array(
-		'name' => tra( 'Tracker Timeline' ),
+		'name' => tra('Tracker Timeline'),
 		'documentation' => 'PluginTrackerTimeline',
 		'description' => tra('Show a timeline view of a tracker'),
 		'prefs' => array( 'wikiplugin_trackertimeline', 'feature_trackers' ),
@@ -146,7 +147,8 @@ function wikiplugin_trackertimeline_info() {
 	);
 }
 
-function wikiplugin_trackertimeline( $data, $params ) {
+function wikiplugin_trackertimeline( $data, $params )
+{
 	global $trklib, $smarty, $tikilib;
 	require_once 'lib/trackers/trackerlib.php';
 
@@ -157,8 +159,8 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	$params = array_merge($default, $params);
 	$formats = array('hour'=>'H:i', 'day'=>'jS', 'week' => 'jS', 'month'=>'m', 'year'=>'y');
 
-	$start = strtotime( $params['lower'] );
-	$end = strtotime( $params['upper'] );
+	$start = strtotime($params['lower']);
+	$end = strtotime($params['upper']);
 	$size = $end - $start;
 
 	if ( $size <= 0 )
@@ -181,16 +183,16 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	}
 
 	$fields = array();
-	foreach( $fieldIds as $id => $label )
-		$fields[$id] = $trklib->get_tracker_field( $id );
+	foreach ( $fieldIds as $id => $label )
+		$fields[$id] = $trklib->get_tracker_field($id);
 
-	$items = $trklib->list_items( $params['tracker'], 0, -1, '', $fields );
+	$items = $trklib->list_items($params['tracker'], 0, -1, '', $fields);
 
 	$data = array();
-	foreach( $items['data'] as $item ) {
+	foreach ( $items['data'] as $item ) {
 		// Collect data
 		$detail = array( 'item' => $item['itemId'] );
-		foreach( $item['field_values'] as $field ) {
+		foreach ( $item['field_values'] as $field ) {
 			$detail[ $fieldIds[$field['fieldId']] ] = $field['value'];
 		}
 
@@ -209,38 +211,38 @@ function wikiplugin_trackertimeline( $data, $params ) {
 			}
 		}
 
-		$detail['lstart'] = max( $start, $detail['start'] );
-		$detail['lend'] = min( $end, $detail['end'] );
-		$detail['lsize'] = round( ( $detail['lend'] - $detail['lstart'] ) / $size * 80 );
+		$detail['lstart'] = max($start, $detail['start']);
+		$detail['lend'] = min($end, $detail['end']);
+		$detail['lsize'] = round(( $detail['lend'] - $detail['lstart'] ) / $size * 80);
 
-		$detail['fstart'] = date( $formats[$params['scale1']], $detail['start'] );
-		$detail['fend'] = date( $formats[$params['scale1']], $detail['end'] );
-		$detail['psummary'] = $tikilib->parse_data( $detail['summary'] );
+		$detail['fstart'] = date($formats[$params['scale1']], $detail['start']);
+		$detail['fend'] = date($formats[$params['scale1']], $detail['end']);
+		$detail['psummary'] = $tikilib->parse_data($detail['summary']);
 
-		$detail['encoded'] = json_encode( $detail );
+		$detail['encoded'] = json_encode($detail);
 
 		// Add to data list
-		if ( ! array_key_exists( $detail['group'], $data ) )
+		if ( ! array_key_exists($detail['group'], $data) )
 			$data[$detail['group']] = array();
 		$data[ $detail['group'] ][] = $detail;
 	}
 
 	if ($params['simile_timeline'] !== 'y') {
 		$new = array();
-		foreach( $data as $group => &$list ) {
-			wp_ttl_organize( $group, $start, $size, $list, $new );
+		foreach ( $data as $group => &$list ) {
+			wp_ttl_organize($group, $start, $size, $list, $new);
 		}
-		$data = array_merge( $data, $new );
+		$data = array_merge($data, $new);
 		ksort($data);
 
-		$smarty->assign( 'wp_ttl_data', $data );
+		$smarty->assign('wp_ttl_data', $data);
 		$layouts = array();
-		if ( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) ) {
+		if ( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout($start, $end, $size, $params['scale2']) ) {
 			$layouts[] = $layout;
 		}
-		$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
-		$smarty->assign( 'layouts', $layouts );
-		$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
+		$layouts[] = wp_ttl_genlayout($start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour');
+		$smarty->assign('layouts', $layouts);
+		$smarty->assign('link_group_names', isset($params['link_group']) && $params['link_group'] == 'y');
 		return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
 
 	} else {	// SIMILE Timeline Widget setup
@@ -253,8 +255,8 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		// prepare the data for SIMILE widget - to be included in the page for now (ajax feed to come)
 		$ttl_data = array();
 		$events = array();
-		foreach( $data as $group => $list ) {	// ignoring group for now
-			foreach( $list as $item) {
+		foreach ( $data as $group => $list ) {	// ignoring group for now
+			foreach ( $list as $item) {
 				$event = array(
 					'title' => $item['title'],
 					'start' => date('r', $item['start']),
@@ -285,39 +287,41 @@ function wikiplugin_trackertimeline( $data, $params ) {
 setTimeout( function(){ ttlInit("ttl_timeline",ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '"); }, 1000);
 ';
 
-		$headerlib->add_jq_onready( $js, 10);
+		$headerlib->add_jq_onready($js, 10);
 		$out = '<div id="ttl_timeline" style="height: 250px; border: 1px solid #aaa"></div>';
 		return $out;
 	}
 }
 
-function wp_ttl_organize( $name, $base, $size, &$list, &$new ) {
-	usort( $list, 'wp_ttl_sort_cb' );
+function wp_ttl_organize( $name, $base, $size, &$list, &$new )
+{
+	usort($list, 'wp_ttl_sort_cb');
 
 	$first = $list;
 	$list = array();
 	$remaining = array();
 
 	$pos = $base;
-	foreach( $first as $item ) {
+	foreach ( $first as $item ) {
 		if ( $item['lstart'] < $pos ) {
 			$remaining[] = $item;
 			continue;
 		}
 
-		$item['lpad'] = round( ( $item['lstart'] - $pos ) / $size * 80 );
+		$item['lpad'] = round(($item['lstart'] - $pos ) / $size * 80);
 		$pos = $item['lend'];
 
 		$list[] = $item;
 	}
 
-	if ( count( $remaining ) ) {
-		wp_ttl_organize( "$name ", $base, $size, $remaining, $new );
+	if ( count($remaining) ) {
+		wp_ttl_organize("$name ", $base, $size, $remaining, $new);
 		$new["$name "] = $remaining;
 	}
 }
 
-function wp_ttl_sort_cb( $a, $b ) {
+function wp_ttl_sort_cb( $a, $b )
+{
 	if ( $a['start'] == $b['start'] )
 		return 0;
 	if ( $a['start'] < $b['start'] )
@@ -326,7 +330,8 @@ function wp_ttl_sort_cb( $a, $b ) {
 		return 1;
 }
 
-function wp_ttl_genlayout( $start, $end, $full, $type ) {
+function wp_ttl_genlayout( $start, $end, $full, $type )
+{
 	switch( $type ) {
 	case 'empty': 
 	case '':
@@ -334,74 +339,79 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 	case 'hour': 
 		$size = 3600;
 		$pos = $start - ( $start + $size ) % $size;
-		break;
+    	break;
 	case 'day': 
 		$size = 86400;
 
-		if ( date( 'H:i:s', $start ) == '00:00:00' ) {
+		if ( date('H:i:s', $start) == '00:00:00' ) {
 			$pos = $start;
 		} else {
-			$pos = strtotime( date( 'Y-m-d 00:00:00', $start + $size ) );
+			$pos = strtotime(date('Y-m-d 00:00:00', $start + $size));
 		}
-		break;
+    	break;
 	case 'week':
 		$size = 604800;
 
-		if ( date( 'H:i:sw', $start ) == '00:00:000' ) {
+		if ( date('H:i:sw', $start) == '00:00:000' ) {
 			$pos = $start;
 		} else {
-			$pos = strtotime( date( 'Y-m-d 00:00:00', $start + $size ) );
+			$pos = strtotime(date('Y-m-d 00:00:00', $start + $size));
 		}
 
 		$pos += 86400 * ( 6 - date('w', $start) );
 
-		break;
+    	break;
 	case 'month':
-		if ( date( 'd H:i:s', $start ) == '01 00:00:00' ) {
+		if ( date('d H:i:s', $start) == '01 00:00:00' ) {
 			$pos = $start;
 		} else {
-			$pos = strtotime( date( 'Y-m-01 00:00:00', strtotime( 'next month', $start ) ) );
+			$pos = strtotime(date('Y-m-01 00:00:00', strtotime('next month', $start)));
 		}
 
-		$size = date( 't', $pos ) * 86400;
+		$size = date('t', $pos) * 86400;
 
-		break;
+    	break;
 	case 'year':
 	default:
-		if ( date( 'm-d H:i:s', $start ) == '01-01 00:00:00' ) {
+		if ( date('m-d H:i:s', $start) == '01-01 00:00:00' ) {
 			$pos = $start;
 		} else {
-			$pos = strtotime( date( 'Y-01-01 00:00:00', strtotime( 'next year', $start ) ) );
+			$pos = strtotime(date('Y-01-01 00:00:00', strtotime('next year', $start)));
 		}
 
-		$size = date( 'L', $pos ) * 86400 + 86400*365;
-		break;
+		$size = date('L', $pos) * 86400 + 86400*365;
+    	break;
 	}
 
 	$layout = array(
-		'size' => round( $size / $full * 80 ),
+		'size' => round($size / $full * 80),
 		'blocks' => array(
 		),
 	);
 
-	$layout['pad'] = round( ($pos - $start) / $full * 80 );
+	$layout['pad'] = round(($pos - $start) / $full * 80);
 
-	for( $i = $pos; $end > $i + $size; $i += $size ) {
+	for ( $i = $pos; $end > $i + $size; $i += $size ) {
 		switch( $type ) {
-		case 'hour': $layout['blocks'][] = date( 'H:i', $i ); break;
-		case 'day': $layout['blocks'][] = date( 'j', $i ); break;
-		case 'week': $layout['blocks'][] = date( 'j', $i ); break;
-		case 'month': $layout['blocks'][] = date( 'M', $i ); break;
-		case 'year': $layout['blocks'][] = date( 'Y', $i ); break;
+			case 'hour': $layout['blocks'][] = date('H:i', $i);
+     		break;
+			case 'day': $layout['blocks'][] = date('j', $i);
+     		break;
+			case 'week': $layout['blocks'][] = date('j', $i);
+     		break;
+			case 'month': $layout['blocks'][] = date('M', $i);
+     		break;
+			case 'year': $layout['blocks'][] = date('Y', $i);
+     		break;
 		}
 
 		switch( $type ) {
 		case 'month':
-			$size = date( 't', $i ) * 86400;
-			break;
+			$size = date('t', $i) * 86400;
+    		break;
 		case 'year':
-			$size = date( 'L', $i ) * 86400 + 86400*365;
-			break;
+			$size = date('L', $i) * 86400 + 86400*365;
+    		break;
 		}
 	}
 

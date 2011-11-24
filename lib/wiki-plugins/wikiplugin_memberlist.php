@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_memberlist_info() {
+function wikiplugin_memberlist_info()
+{
 	return array(
 		'name' => tra('Member List'),
 		'documentation' => 'PluginMemberList',
@@ -89,12 +90,13 @@ function wikiplugin_memberlist_info() {
 	);
 }
 
-function wikiplugin_memberlist( $data, $params ) {
+function wikiplugin_memberlist( $data, $params )
+{
 	global $prefs, $userlib, $user;
 	static $execution = 0;
 	$exec_key = 'memberlist-execution-' . ++ $execution;
 
-	if( ! isset( $params['groups'] ) ) {
+	if ( ! isset( $params['groups'] ) ) {
 		return "^Missing group list^";
 	}
 
@@ -108,12 +110,12 @@ function wikiplugin_memberlist( $data, $params ) {
 	$params = array_merge($defaults, $params);
 
 	if ($prefs['feature_user_watches'] == 'y') {
-		if(!empty($user)) {
+		if (!empty($user)) {
 			$tikilib = TikiLib::lib('tiki');
-			if( isset($_REQUEST['watch'] ) ) {
-				$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'],'group');
-			} else if( isset($_REQUEST['unwatch'] ) ) {
-				$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'],'group');
+			if ( isset($_REQUEST['watch'] ) ) {
+				$tikilib->add_user_watch($user, 'user_joins_group', $_REQUEST['watch'], 'group');
+			} else if ( isset($_REQUEST['unwatch'] ) ) {
+				$tikilib->remove_user_watch($user, 'user_joins_group', $_REQUEST['unwatch'], 'group');
 			}
 		}
 	}
@@ -149,64 +151,64 @@ function wikiplugin_memberlist( $data, $params ) {
 		unset($in_group);
 	}
 
-	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
+	Perms::bulk(array( 'type' => 'group' ), 'object', $groups);
 
 	if ($params['readOnly'] == 'y') {
 		$readOnly = true;
 	} else {
 		$readOnly = false;
 	}
-	$validGroups = wikiplugin_memberlist_get_group_details( $groups, $params['max'], $params['sort_mode'], $readOnly );
+	$validGroups = wikiplugin_memberlist_get_group_details($groups, $params['max'], $params['sort_mode'], $readOnly);
 
-	if( isset($_POST[$exec_key]) ) {
-		if( isset( $_POST['join'] ) ) {
-			wikiplugin_memberlist_join( $validGroups, $_POST['join'] );
+	if ( isset($_POST[$exec_key]) ) {
+		if ( isset( $_POST['join'] ) ) {
+			wikiplugin_memberlist_join($validGroups, $_POST['join']);
 		}
-		if( isset( $_POST['leave'] ) ) {
-			wikiplugin_memberlist_leave( $validGroups, $_POST['leave'] );
+		if ( isset( $_POST['leave'] ) ) {
+			wikiplugin_memberlist_leave($validGroups, $_POST['leave']);
 		}
-		if( isset( $_POST['remove'] ) ) {
-			wikiplugin_memberlist_remove( $validGroups, $_POST['remove'] );
+		if ( isset( $_POST['remove'] ) ) {
+			wikiplugin_memberlist_remove($validGroups, $_POST['remove']);
 		}
-		if( isset( $_POST['add'] ) ) {
-			wikiplugin_memberlist_add( $validGroups, $_POST['add'] );
+		if ( isset( $_POST['add'] ) ) {
+			wikiplugin_memberlist_add($validGroups, $_POST['add']);
 		}
-		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
+		header('Location: ' . $_SERVER['REQUEST_URI']);
 		exit;
 	}
 
-	if( isset( $_REQUEST['transition'], $_REQUEST['member'] ) ) {
-		if( $prefs['feature_group_transition'] == 'y' ) {
+	if ( isset( $_REQUEST['transition'], $_REQUEST['member'] ) ) {
+		if ( $prefs['feature_group_transition'] == 'y' ) {
 			require_once 'lib/transitionlib.php';
-			$transitionlib = new TransitionLib( 'group' );
-			$transitionlib->triggerTransition( $_REQUEST['transition'], $_REQUEST['member'] );
+			$transitionlib = new TransitionLib('group');
+			$transitionlib->triggerTransition($_REQUEST['transition'], $_REQUEST['member']);
 
 			$url = $_SERVER['REQUEST_URI'];
-			$url = str_replace( 'transition=', 'x=', $url );
-			$url = str_replace( 'member=', 'x=', $url );
-			header( 'Location: ' . $url );
+			$url = str_replace('transition=', 'x=', $url);
+			$url = str_replace('member=', 'x=', $url);
+			header('Location: ' . $url);
 			exit;
 		}
 	}
 
 	$canApply = false;
-	foreach( $validGroups as $group ) {
-		if( $group['can_add'] || $group['can_remove'] || $group['can_join'] || $group['can_leave'] ) {
+	foreach ( $validGroups as $group ) {
+		if ( $group['can_add'] || $group['can_remove'] || $group['can_join'] || $group['can_leave'] ) {
 			$canApply = true;
 			break;
 		}
 	}
 
 	if ($params['showDescriptions'] === 'y') {
-		foreach( $validGroups as $name => &$group ) {
+		foreach ( $validGroups as $name => &$group ) {
 			$group['info'] = $userlib->get_group_info($name);
 		}
 	}
 
 	global $smarty;
-	$smarty->assign( 'execution_key', $exec_key );
-	$smarty->assign( 'can_apply', $canApply );
-	$smarty->assign( 'memberlist_groups', $validGroups );
+	$smarty->assign('execution_key', $exec_key);
+	$smarty->assign('can_apply', $canApply);
+	$smarty->assign('memberlist_groups', $validGroups);
 	$smarty->assign('displayMode', $params['displayMode']);
 
 	// seems conditonally adding tabs in the tpl doesn't work (unclosed {tabset} errors etc) - a Smarty 3 change?
@@ -214,10 +216,12 @@ function wikiplugin_memberlist( $data, $params ) {
 		$oldTabs = $prefs['feature_tabs'];
 		$prefs['feature_tabs'] = 'n';
 		// css workarounds for when in non tabs mode
-		TikiLib::lib('header')->add_css('.memberlist > fieldset { border: none; margin:  0; padding:  0; }
-.memberlist > fieldset > legend { display: none; }');
+		TikiLib::lib('header')->add_css(
+						'.memberlist > fieldset { border: none; margin:  0; padding:  0; }
+						.memberlist > fieldset > legend { display: none; }'
+		);
 	}
-	$out = '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberlist.tpl' ) . '~/np~';
+	$out = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_memberlist.tpl') . '~/np~';
 
 	if (empty($params['displayMode']) && !empty($oldTabs)) {
 		$prefs['feature_tabs'] = $oldTabs;
@@ -225,14 +229,15 @@ function wikiplugin_memberlist( $data, $params ) {
 	return $out;
 }
 
-function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_mode = 'login_asc') {
+function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_mode = 'login_asc')
+{
 	global $userlib;
 
-	$raw = $userlib->get_users( 0, $maxRecords, $sort_mode, '', '', false, $groupName );
+	$raw = $userlib->get_users(0, $maxRecords, $sort_mode, '', '', false, $groupName);
 	$users = array();
 
 	if (isset($raw['data'])) {
-		foreach( $raw['data'] as $user ) {
+		foreach ( $raw['data'] as $user ) {
 			$users[] = $user['login'];
 		}
 	}
@@ -240,18 +245,19 @@ function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_
 	return $users;
 }
 
-function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $sort_mode = 'login_asc', $readOnly = false ) {
+function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $sort_mode = 'login_asc', $readOnly = false )
+{
 	global $user, $prefs, $userlib;
 	$validGroups = array();
-	foreach( $groups as $groupName ) {
-		if( ! $userlib->group_exists( $groupName ) ) {
+	foreach ( $groups as $groupName ) {
+		if ( ! $userlib->group_exists($groupName) ) {
 			continue;
 		}
 		
-		$perms = Perms::get( array( 'type' => 'group', 'object' => $groupName ) );
+		$perms = Perms::get(array( 'type' => 'group', 'object' => $groupName ));
 
-		if( $perms->group_view ) {
-			$isMember = in_array( $groupName, $perms->getGroups() );
+		if ( $perms->group_view ) {
+			$isMember = in_array($groupName, $perms->getGroups());
 
 			$validGroups[$groupName] = array(
 				'can_join' => $perms->group_join && ! $isMember && $user && ! $readOnly,
@@ -261,15 +267,15 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $so
 				'is_member' => $isMember,
 			);
 
-			if( $perms->group_view_members ) {
-				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName, $maxRecords, $sort_mode );
+			if ( $perms->group_view_members ) {
+				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members($groupName, $maxRecords, $sort_mode);
 
-				if( $prefs['feature_group_transition'] == 'y' ) {
+				if ( $prefs['feature_group_transition'] == 'y' ) {
 					require_once 'lib/transitionlib.php';
-					$transitionlib = new TransitionLib( 'group' );
+					$transitionlib = new TransitionLib('group');
 					$validGroups[$groupName]['transitions'] = array();
-					foreach( $validGroups[$groupName]['members'] as $username ) {
-						$validGroups[$groupName]['transitions'][$username] = $transitionlib->getAvailableTransitionsFromState( $groupName, $username );
+					foreach ( $validGroups[$groupName]['members'] as $username ) {
+						$validGroups[$groupName]['transitions'][$username] = $transitionlib->getAvailableTransitionsFromState($groupName, $username);
 					}
 				}
 
@@ -285,41 +291,44 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $so
 	return $validGroups;
 }
 
-function wikiplugin_memberlist_join( $groups, $joins ) {
+function wikiplugin_memberlist_join( $groups, $joins )
+{
 	global $user, $userlib;
-	foreach( $joins as $group ) {
-		if( isset( $groups[$group] ) ) {
-			if( $groups[$group]['can_join'] ) {
-				$userlib->assign_user_to_group( $user, $group );
+	foreach ( $joins as $group ) {
+		if ( isset( $groups[$group] ) ) {
+			if ( $groups[$group]['can_join'] ) {
+				$userlib->assign_user_to_group($user, $group);
 			}
 		}
 	}
 }
 
-function wikiplugin_memberlist_leave( $groups, $leaves ) {
+function wikiplugin_memberlist_leave( $groups, $leaves )
+{
 	global $user, $userlib;
-	foreach( $leaves as $group ) {
-		if( isset( $groups[$group] ) ) {
-			if( $groups[$group]['can_leave'] ) {
-				$userlib->remove_user_from_group( $user, $group );
+	foreach ( $leaves as $group ) {
+		if ( isset( $groups[$group] ) ) {
+			if ( $groups[$group]['can_leave'] ) {
+				$userlib->remove_user_from_group($user, $group);
 			}
 		}
 	}
 }
 
-function wikiplugin_memberlist_add( $groups, $adds ) {
+function wikiplugin_memberlist_add( $groups, $adds )
+{
 	global $userlib;
 
-	foreach( $adds as $group => $members ) {
-		if( isset( $groups[$group] ) ) {
-			if( $groups[$group]['can_add'] ) {
-				$members = explode( ',', $members );
-				$members = array_map( 'trim', $members );
-				$members = array_filter( $members );
+	foreach ( $adds as $group => $members ) {
+		if ( isset( $groups[$group] ) ) {
+			if ( $groups[$group]['can_add'] ) {
+				$members = explode(',', $members);
+				$members = array_map('trim', $members);
+				$members = array_filter($members);
 
-				foreach( $members as $name ) {
-					if( $userlib->user_exists( $name ) ) {
-						$userlib->assign_user_to_group( $name, $group );
+				foreach ( $members as $name ) {
+					if ( $userlib->user_exists($name) ) {
+						$userlib->assign_user_to_group($name, $group);
 					}
 				}
 			}
@@ -327,14 +336,15 @@ function wikiplugin_memberlist_add( $groups, $adds ) {
 	}
 }
 
-function wikiplugin_memberlist_remove( $groups, $removes ) {
+function wikiplugin_memberlist_remove( $groups, $removes )
+{
 	global $userlib;
 
-	foreach( $removes as $group=> $members ) {
-		if( isset( $groups[$group] ) ) {
-			if( $groups[$group]['can_remove'] ) {
-				foreach( $members as $name ) {
-					$userlib->remove_user_from_group( $name, $group );
+	foreach ( $removes as $group=> $members ) {
+		if ( isset( $groups[$group] ) ) {
+			if ( $groups[$group]['can_remove'] ) {
+				foreach ( $members as $name ) {
+					$userlib->remove_user_from_group($name, $group);
 				}
 			}
 		}

@@ -59,15 +59,15 @@ class WikiRenderer
 	{
 		global $userlib;
 		$permNames = $userlib->get_permission_names_for('wiki');
-		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $this->page ) );
+		$objectperms = Perms::get(array( 'type' => 'wiki page', 'object' => $this->page ));
 
-		foreach( $permNames as $name ) {
-			$this->setGlobal( $name, $objectperms->$name ? 'y' : 'n' );
+		foreach ( $permNames as $name ) {
+			$this->setGlobal($name, $objectperms->$name ? 'y' : 'n');
 		}
 
 		$this->canView = $objectperms->view;
 
-		$this->smartyassign('page_user',$this->info['user']);
+		$this->smartyassign('page_user', $this->info['user']);
 
 		return $objectperms;
 	} // }}}
@@ -75,21 +75,20 @@ class WikiRenderer
 	function restoreAll() // {{{
 	{
 		global $smarty, $prefs;
-		foreach( $this->toRestore as $name => $value )
-		{
+		foreach ( $this->toRestore as $name => $value ) {
 			$GLOBALS[$name] = $value;
 		}
 
-		foreach( $this->prefRestore as $name => $value )
+		foreach ( $this->prefRestore as $name => $value )
 			$prefs[$name] = $value;
 
-		foreach( $this->smartyRestore as $name => $value )
-			$smarty->assign( $name, $value );
+		foreach ( $this->smartyRestore as $name => $value )
+			$smarty->assign($name, $value);
 	} // }}}
 
 	function runSetups() // {{{
 	{
-		foreach( $this->prep as $method )
+		foreach ( $this->prep as $method )
 			$this->$method();
 	} // }}}
 
@@ -115,13 +114,13 @@ class WikiRenderer
 
 	private function setupStructure() // {{{
 	{
-		if( ! $this->structureInfo )
+		if ( ! $this->structureInfo )
 			return;
 
 		global $structlib, $tikilib;
 
 		$structure = 'y';
-		$this->smartyassign('structure',$structure);
+		$this->smartyassign('structure', $structure);
 		$this->smartyassign('page_info', $this->structureInfo);
 		$navigation_info = $structlib->get_navigation_info($this->structureInfo['page_ref_id']);
 		$this->smartyassign('next_info', $navigation_info['next']);
@@ -134,11 +133,11 @@ class WikiRenderer
 		$structs = $structlib->get_page_structures($this->page);
 		$structs_with_perm = array(); 
 		foreach ($structs as $t_structs) {
-			if ($tikilib->user_has_perm_on_object($this->user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+			if ($tikilib->user_has_perm_on_object($this->user, $t_structs['pageName'], 'wiki page', 'tiki_p_view')) {
 				$structs_with_perm[] = $t_structs;
 			}
 		}    	
-		if ($tikilib->user_has_perm_on_object($this->user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_structures'))
+		if ($tikilib->user_has_perm_on_object($this->user, $navigation_info['home']['pageName'], 'wiki page', 'tiki_p_edit', 'tiki_p_edit_structures'))
 			$this->smartyassign('struct_editable', 'y');
 		else
 			$this->smartyassign('struct_editable', 'n');	
@@ -162,9 +161,9 @@ class WikiRenderer
 	{
 		global $prefs, $wikilib;
 
-		if( $prefs['wiki_authors_style'] != 'classic' ) {
+		if ( $prefs['wiki_authors_style'] != 'classic' ) {
 			$contributors = $wikilib->get_contributors($this->page, $this->info['user']);
-			$this->smartyassign('contributors',$contributors);
+			$this->smartyassign('contributors', $contributors);
 		}
 	} // }}}
 
@@ -178,7 +177,7 @@ class WikiRenderer
 			$creator = $wikilib->get_creator($this->page);
 		}
 
-		$this->smartyassign('creator',$creator);
+		$this->smartyassign('creator', $creator);
 	} // }}}
 
 	private function setupMultilingual() // {{{
@@ -191,7 +190,7 @@ class WikiRenderer
 		$tikilib = TikiLib::lib('tiki');
 		$multilinguallib = TikiLib::lib('multilingual');
 		
-		if( !empty($this->info['lang'])) { 
+		if ( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
 			$this->smartyassign('translationsCount', count($this->trads));
@@ -206,14 +205,14 @@ class WikiRenderer
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
 				
-		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $this->info['page_id'], 'critical', true );
+		$bits = $multilinguallib->getMissingTranslationBits('wiki page', $this->info['page_id'], 'critical', true);
 		
 		$alertData = array();
-		foreach( $bits as $translationBit ) {
-			$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit, $this->info['page_id'] );
+		foreach ( $bits as $translationBit ) {
+			$alertData[] = $multilinguallib->getTranslationsWithBit($translationBit, $this->info['page_id']);
 		}
 
-		$this->smartyassign( 'translation_alert', $alertData );
+		$this->smartyassign('translation_alert', $alertData);
 	} // }}}
 
 	private function setupBacklinks() // {{{
@@ -244,7 +243,7 @@ class WikiRenderer
 		// If not locked and last version is user version then can undo
 		$this->smartyassign('canundo', $this->canUndo() ? 'y' : 'n');
 
-		if(!isset($this->info['is_html'])) {
+		if (!isset($this->info['is_html'])) {
 			$this->info['is_html'] = false;
 		}
 	} // }}}
@@ -254,19 +253,19 @@ class WikiRenderer
 		global $prefs;
 
 		if ($prefs['wiki_uses_slides'] != 'y') {
-			$this->smartyassign('show_slideshow','n');
+			$this->smartyassign('show_slideshow', 'n');
 			return;
 		}
 
 		//Let us check if slides exist in the wiki page
-		$slides = preg_split('/-=[^=]+=-|![^=]+|!![^=]+!!![^=]+/',$this->info['data']);
+		$slides = preg_split('/-=[^=]+=-|![^=]+|!![^=]+!!![^=]+/', $this->info['data']);
 		
-		if(count($slides)>1) {
-			$this->smartyassign('show_slideshow','y');
+		if (count($slides)>1) {
+			$this->smartyassign('show_slideshow', 'y');
 		} else {
-			$slides = explode('...page...',$this->info['data']);
+			$slides = explode('...page...', $this->info['data']);
 
-			$this->smartyassign('show_slideshow', ( count($slides) > 1 ) ? 'y' : 'n' );
+			$this->smartyassign('show_slideshow', ( count($slides) > 1 ) ? 'y' : 'n');
 		}
 	} // }}}
 
@@ -274,22 +273,22 @@ class WikiRenderer
 	{
 		global $prefs, $tikilib, $wikilib, $user;
 
-		$this->smartyassign( 'page', $this->page );
-		$this->smartyassign('show_page','y');
+		$this->smartyassign('page', $this->page);
+		$this->smartyassign('show_page', 'y');
 
-		$this->smartyassign('dblclickedit','y');
-		$this->smartyassign('print_page','n');
-		$this->smartyassign('beingEdited','n');
-		$this->smartyassign('categorypath',$prefs['feature_categorypath']);
-		$this->smartyassign('categoryobjects',$prefs['feature_categoryobjects']);
+		$this->smartyassign('dblclickedit', 'y');
+		$this->smartyassign('print_page', 'n');
+		$this->smartyassign('beingEdited', 'n');
+		$this->smartyassign('categorypath', $prefs['feature_categorypath']);
+		$this->smartyassign('categoryobjects', $prefs['feature_categoryobjects']);
 		$this->smartyassign('feature_wiki_pageid', $prefs['feature_wiki_pageid']);
-		$this->smartyassign('page_id',$this->info['page_id']);
+		$this->smartyassign('page_id', $this->info['page_id']);
 
 		// Get the authors style for this page
 		$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $this->info['wiki_authors_style'] != '' ) ? $this->info['wiki_authors_style'] : $prefs['wiki_authors_style'];
 		$this->smartyassign('wiki_authors_style', $wiki_authors_style);
 
-		$this->smartyassign('cached_page','n');
+		$this->smartyassign('cached_page', 'n');
 
 		if ($prefs['flaggedrev_approval'] == 'y') {
 			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
@@ -321,7 +320,7 @@ class WikiRenderer
 			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
 
 			if ($canBeRefreshed) {
-				$this->smartyassign('cached_page','y');
+				$this->smartyassign('cached_page', 'y');
 			}
 		} else {
 			$parse_options = array(
@@ -338,37 +337,37 @@ class WikiRenderer
 		}
 
 		$pages = $wikilib->get_number_of_pages($pdata);
-		$pdata = $wikilib->get_page($pdata,$this->pageNumber);
-		$this->smartyassign('pages',$pages);
+		$pdata = $wikilib->get_page($pdata, $this->pageNumber);
+		$this->smartyassign('pages', $pages);
 
-		if($pages>$this->pageNumber) {
-			$this->smartyassign('next_page',$this->pageNumber+1);
+		if ($pages>$this->pageNumber) {
+			$this->smartyassign('next_page', $this->pageNumber+1);
 		} else {
-			$this->smartyassign('next_page',$this->pageNumber);
+			$this->smartyassign('next_page', $this->pageNumber);
 		}
-		if($this->pageNumber>1) {
-			$this->smartyassign('prev_page',$this->pageNumber-1);
+		if ($this->pageNumber>1) {
+			$this->smartyassign('prev_page', $this->pageNumber-1);
 		} else {
-			$this->smartyassign('prev_page',1);
+			$this->smartyassign('prev_page', 1);
 		}
 
-		$this->smartyassign('first_page',1);
-		$this->smartyassign('last_page',$pages);
-		$this->smartyassign('pagenum',$this->pageNumber);
+		$this->smartyassign('first_page', 1);
+		$this->smartyassign('last_page', $pages);
+		$this->smartyassign('pagenum', $this->pageNumber);
 
-		$this->smartyassign('lastVersion',$this->info["version"]);
+		$this->smartyassign('lastVersion', $this->info["version"]);
 		if (isset($this->info['last_version'])) {
 			$this->smartyassign('versioned', true);
 		}
 
-		$this->smartyassign('lastModif',$this->info["lastModif"]);
-		if(empty($this->info['user'])) {
+		$this->smartyassign('lastModif', $this->info["lastModif"]);
+		if (empty($this->info['user'])) {
 			$this->info['user']=tra('Anonymous');  
 		}
-		$this->smartyassign('lastUser',$this->info['user']);
-		$this->smartyassign('description',$this->info['description']);
+		$this->smartyassign('lastUser', $this->info['user']);
+		$this->smartyassign('description', $this->info['description']);
 
-		$this->smartyassign('parsed',$pdata);
+		$this->smartyassign('parsed', $pdata);
 		if (!empty($this->info['keywords'])) {
 			$this->smartyassign('metatag_local_keywords', $this->info['keywords']);
 		}
@@ -381,33 +380,33 @@ class WikiRenderer
 			return;
 
 		// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
-		$this->smartyassign('sort_mode', $this->sortMode );
-		if( $this->showAttachments !== false )
+		$this->smartyassign('sort_mode', $this->sortMode);
+		if ( $this->showAttachments !== false )
 			$this->smartyassign('atts_show', $this->showAttachments);
 
-		$atts = $wikilib->list_wiki_attachments($this->page,0,-1, $this->sortMode,'');
-		$this->smartyassign('atts',$atts["data"]);
-		$this->smartyassign('atts_count',count($atts['data']));
+		$atts = $wikilib->list_wiki_attachments($this->page, 0, -1, $this->sortMode, '');
+		$this->smartyassign('atts', $atts["data"]);
+		$this->smartyassign('atts_count', count($atts['data']));
 	} // }}}
 
 	private function setupFootnotes() // {{{
 	{
 		global $prefs, $wikilib, $tikilib;
 
-		$this->smartyassign('footnote','');
-		$this->smartyassign('has_footnote','n');
+		$this->smartyassign('footnote', '');
+		$this->smartyassign('has_footnote', 'n');
 
-		if($prefs['feature_wiki_footnotes'] == 'y') {
-			if($this->user) {
-				$footnote = $wikilib->get_footnote($this->user,$this->page);
-				$this->smartyassign('footnote',$tikilib->parse_data($footnote));
+		if ($prefs['feature_wiki_footnotes'] == 'y') {
+			if ($this->user) {
+				$footnote = $wikilib->get_footnote($this->user, $this->page);
+				$this->smartyassign('footnote', $tikilib->parse_data($footnote));
 
-				if($footnote)
-					$this->smartyassign('has_footnote','y');
+				if ($footnote)
+					$this->smartyassign('has_footnote', 'y');
 			}
 		}
 
-		$this->smartyassign('wiki_extras','y');
+		$this->smartyassign('wiki_extras', 'y');
 	} // }}}
 
 	private function setupWatch() // {{{
@@ -417,8 +416,8 @@ class WikiRenderer
 		if ($prefs['feature_user_watches'] != 'y')
 			return;
 
-		$this->smartyassign('user_watching_page','n');
-		$this->smartyassign('user_watching_structure','n');
+		$this->smartyassign('user_watching_page', 'n');
+		$this->smartyassign('user_watching_structure', 'n');
 		if ($this->user) {
 			if ($tikilib->user_watches($this->user, 'wiki_page_changed', $this->page, 'wiki page')) {
 				$this->smartyassign('user_watching_page', 'y');
@@ -429,10 +428,10 @@ class WikiRenderer
 		}
 		// Check, if the user is watching this page by a category.    
 		if ($prefs['feature_categories'] == 'y') {    
-			$watching_categories_temp=$categlib->get_watching_categories($this->page,"wiki page",$this->user);	    
-			$this->smartyassign('category_watched','n');
+			$watching_categories_temp=$categlib->get_watching_categories($this->page, "wiki page", $this->user);	    
+			$this->smartyassign('category_watched', 'n');
 			if (count($watching_categories_temp) > 0) {
-				$this->smartyassign('category_watched','y');
+				$this->smartyassign('category_watched', 'y');
 				$watching_categories=array();	 			 	
 				foreach ($watching_categories_temp as $wct ) {
 					$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
@@ -449,10 +448,10 @@ class WikiRenderer
 		require_once 'lib/categories/categlib.php';
 
 		$cats = array();
-		if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('wiki page',$this->page)) {
-			$this->smartyassign('is_categorized','y');
+		if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('wiki page', $this->page)) {
+			$this->smartyassign('is_categorized', 'y');
 			if ($prefs['feature_categoryobjects'] == 'y' || $prefs['feature_categorypath'] == 'y') {
-				$cats = $categlib->get_object_categories('wiki page',$this->page);
+				$cats = $categlib->get_object_categories('wiki page', $this->page);
 			}
 			if ($prefs['category_morelikethis_algorithm'] != '') {
 				global $freetaglib; include_once('lib/freetag/freetaglib.php');
@@ -461,15 +460,15 @@ class WikiRenderer
 			}
 			if ($prefs['feature_categorypath'] == 'y') {	
 				$display_catpath = $categlib->get_categorypath($cats);
-				$this->smartyassign('display_catpath',$display_catpath);
+				$this->smartyassign('display_catpath', $display_catpath);
 			}    
 			// Display current category objects or not (like {category()})    
 			if ($prefs['feature_categoryobjects'] == 'y') {	    
 				$display_catobjects = $categlib->get_categoryobjects($cats);
-				$this->smartyassign('display_catobjects',$display_catobjects);
+				$this->smartyassign('display_catobjects', $display_catobjects);
 			}
 		} else {
-			$this->smartyassign('is_categorized','n');
+			$this->smartyassign('is_categorized', 'n');
 		}
 	} // }}}
 
@@ -481,8 +480,8 @@ class WikiRenderer
 			return;
 
 		if (!isset($polllib) || !is_object($polllib)) include("lib/polls/polllib_shared.php");
-		$ratings = $polllib->get_ratings('wiki page',$this->page, $this->user );
-		$this->smartyassign('ratings',$ratings);
+		$ratings = $polllib->get_ratings('wiki page', $this->page, $this->user);
+		$this->smartyassign('ratings', $ratings);
 	} // }}}
 
 	private function setupBreadcrumbs() // {{{
@@ -495,11 +494,13 @@ class WikiRenderer
 			$crumbpage = $this->page;
 		}
 		//global $description;
-		$crumbsLocal[] = new Breadcrumb($crumbpage,
-				$this->info['description'],
-				'tiki-index.php?page='.urlencode($this->page),
-				'',
-				'');
+		$crumbsLocal[] = new Breadcrumb(
+						$crumbpage,
+						$this->info['description'],
+						'tiki-index.php?page='.urlencode($this->page),
+						'',
+						''
+		);
 		$crumbs = array_merge($crumbs, $crumbsLocal);
 
 		$headtitle = breadcrumb_buildHeadTitle($prefs['site_title_breadcrumb'] == 'invertfull'? array_reverse($crumbsLocal): $crumbsLocal);
@@ -509,17 +510,17 @@ class WikiRenderer
 
 	private function setGlobal( $name, $value ) // {{{
 	{
-		if( (empty($GLOBALS[$name]) || $GLOBALS[$name] != $value) && ! array_key_exists( $name, $this->toRestore ) )
+		if ( (empty($GLOBALS[$name]) || $GLOBALS[$name] != $value) && ! array_key_exists($name, $this->toRestore) )
 			$this->toRestore[$name] = $value;
 
 		$GLOBALS[$name] = $value;
-		$this->smartyassign( $name, $value );
+		$this->smartyassign($name, $value);
 	} // }}}
 
 	private function setPref( $name, $value ) // {{{
 	{
 		global $prefs;
-		if( $value != $prefs[$name] && ! array_key_exists( $name, $this->prefRestore ) )
+		if ( $value != $prefs[$name] && ! array_key_exists($name, $this->prefRestore) )
 			$this->prefRestore[$name] = $value;
 
 		$prefs[$name] = $value;
@@ -528,10 +529,10 @@ class WikiRenderer
 	private function smartyassign( $name, $value ) // {{{
 	{
 		global $smarty;
-		if( ! array_key_exists( $name, $this->smartyRestore ) )
+		if ( ! array_key_exists($name, $this->smartyRestore) )
 			$this->smartyRestore[$name] = $smarty->getTemplateVars($name);
 
-		$smarty->assign( $name, $value );
+		$smarty->assign($name, $value);
 	} // }}}
 
 	function canUndo() // {{{
@@ -540,10 +541,7 @@ class WikiRenderer
 
 		global $tiki_p_admin_wiki, $tiki_p_remove, $tiki_p_edit;
 
-		if ( $this->info['flag'] != 'L'
-			&& (
-				( $tiki_p_edit == 'y' && $this->info['user'] == $this->user ) || $tiki_p_remove == 'y'
-			) )  {
+		if ( $this->info['flag'] != 'L' 	&& (( $tiki_p_edit == 'y' && $this->info['user'] == $this->user ) || $tiki_p_remove == 'y')) {
 			$this->canUndo = true;
 		}
 		if ( $tiki_p_admin_wiki == 'y' ) {
