@@ -5028,6 +5028,7 @@ class TikiLib extends TikiDb_Bridge
 
 			return $this->plugin_exists( $info['implementation'], $include );
 		}
+		return false;
 	}
 
 	function plugin_info( $name ) {
@@ -5054,6 +5055,8 @@ class TikiLib extends TikiDb_Bridge
 
 	function plugin_alias_info( $name ) {
 		global $prefs;
+		if (empty($name))
+			return false;
 		$name = strtolower($name);
 		$prefName = "pluginalias_$name";
 
