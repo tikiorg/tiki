@@ -29,9 +29,12 @@ class MembershipTest extends TikiTestCase
 
 		$this->userlib->add_group( 'MembershipTest', '', '', 0, 0, '', '', 0, '', 0, 0, 'n', 45 );
 
-		$this->userlib->add_user( 'membershiptest_a', 'abc', 'a@example.com' );
-		$this->userlib->add_user( 'membershiptest_b', 'abc', 'a@example.com' );
-		$this->userlib->add_user( 'membershiptest_c', 'abc', 'a@example.com' );
+		global $user_preferences;
+		$user_preferences = array();
+		
+		$this->userlib->add_user('membershiptest_a', 'abc', 'a@example.com');
+		$this->userlib->add_user('membershiptest_b', 'abc', 'a@example.com');
+		$this->userlib->add_user('membershiptest_c', 'abc', 'a@example.com');
 
 		$this->userlib->assign_user_to_group( 'membershiptest_a', 'MembershipTest' );
 		$this->userlib->assign_user_to_group( 'membershiptest_b', 'MembershipTest' );

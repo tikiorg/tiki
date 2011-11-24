@@ -38,7 +38,15 @@ function smarty_function_query($params, $smarty) {
 	} else {
 		// Not using _REQUEST here, because it is sometimes directly modified in scripts
 		if ( $request === NULL ) {
-			$request = array_merge($_GET, $_POST);
+			if (!empty($_GET) && !empty($_POST)) {
+				$request = array_merge($_GET, $_POST);
+			} else if (!empty($_GET)) {
+				$request = $_GET;
+			} else if (!empty($_POST)) {
+				$request = $_POST;
+			} else {
+				$request = array();
+			}
 
 			// Remove Xajax special arguments
 			foreach ( array('xjxargs', 'xjxr', 'xjx', 'xjxfun', 'xjxr') as $k ) {
