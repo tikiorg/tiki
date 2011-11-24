@@ -44,7 +44,9 @@ function smarty_block_jq($params, $content, $smarty)
 {
 	global $headerlib, $prefs;
 	
-	if (empty($content)) { return ''; }
+	if (empty($content)) {
+		return '';
+	}
 	
 	extract($params);
 	if ($prefs['feature_jquery'] != 'y') {

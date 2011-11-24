@@ -29,7 +29,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_block_sortlinks($params, $content, $smarty)
 {
 	if ($content) {
-		$links=preg_split("/\n/",$content);
+		$links=preg_split("/\n/", $content);
 		$links2=array();
 		foreach ($links as $value) {
 			preg_match('/.*(<[^>]*>)(.*)(<\/[^¨>]*>)/U', $value, $splitted);
@@ -45,7 +45,7 @@ function smarty_block_sortlinks($params, $content, $smarty)
 		} else {
 			ksort($links2);
 		}
-		foreach($links2 as $value) {
+		foreach ($links2 as $value) {
     	echo $value;
 		}
 	}

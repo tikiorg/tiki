@@ -56,9 +56,13 @@ function smarty_outputfilter_highlight($source, $smarty)
 	$matches = array();
 
 	$end = 0;
-	if ( $end = strrpos($source, 'id="col2"') ) $stop_pattern = '(<div[^>]*\s+id="col2".*)';
-	elseif ( $end = strrpos($source, 'id="col3"') ) $stop_pattern = '(<div[^>]*\s+id="col3".*)';
-	else $stop_pattern = '';
+
+	if ( $end = strrpos($source, 'id="col2"') ) 
+		$stop_pattern = '(<div[^>]*\s+id="col2".*)';
+	elseif ( $end = strrpos($source, 'id="col3"') ) 
+		$stop_pattern = '(<div[^>]*\s+id="col3".*)';
+	else 
+		$stop_pattern = '';
 
 	$result = false;
 
@@ -72,9 +76,9 @@ function smarty_outputfilter_highlight($source, $smarty)
 		if ( ( $start = strpos($source, 'id="tiki-center"') ) > 0 ) {
 			$matches = array(
 				$source,
-				substr( $source, 0, $start ),
-				( $end > $start ? substr( $source, $start, $end - $start ) : substr( $source, $start ) ),
-				( $end > $start ? substr( $source, $end ) : '' )
+				substr($source, 0, $start),
+				( $end > $start ? substr($source, $start, $end - $start) : substr($source, $start) ),
+				( $end > $start ? substr($source, $end) : '' )
 			);
 			$result = true;
 		}
@@ -90,14 +94,17 @@ function smarty_outputfilter_highlight($source, $smarty)
 		$matches[3] = '';
 
 	// Avoid highlight parsing in unknown cases where $matches[2] is empty, which will result in an empty page.
-	if ( $matches[2] != '' ) $source = preg_replace_callback(
+	if ( $matches[2] != '' ) 
+		$source = preg_replace_callback(
 		'~(?:<head>.*</head>                            # head blocks
 		|<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
 		|<script[^>]+>.*</script>                       # script blocks
 		|<a[^>]*onmouseover.*onmouseout[^>]*>           # onmouseover (user popup)
 		|<[^>]*>                                        # all html tags
 		|(' . _enlightColor($highlight) . '))~xsiU',
-		'_enlightColor',  $matches[2]);
+		'_enlightColor',
+		$matches[2]
+		);
 
 	return $matches[1].$source.$matches[3];
 }
@@ -111,7 +118,7 @@ function _enlightColor($matches)
 		$i = 0;
 		$seaword = $seasep = '';
 		$wordArr = preg_split('~%20|\+|\s+~', $matches);
-		foreach($wordArr as $word) {
+		foreach ($wordArr as $word) {
 			if ($word == '')
 				continue;
 			$seaword .= $seasep.preg_quote($word, '~');

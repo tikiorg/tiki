@@ -35,9 +35,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  function smarty_outputfilter_ticket($source, $smarty)
  {
 		global $ticket;
-    $source = preg_replace("~((<form[^>]*action=(\"|')[^\"']*tiki-[^\"']*(\"|')[^>]*>(\s*))<)~si",
-                            '$2<input type="hidden" name="ticket" value="'.$ticket.'" /><', $source);
-		$source = preg_replace("~((href=(\"|')[^\"']*tiki-[^\?\"']*)\?(ticket=[0-9a-z]*&)?([^\"']*(\"|')))~si",
-                           '$2?ticket='.$ticket.'&$5', $source);
-    return $source;
+		$source = preg_replace(
+						"~((<form[^>]*action=(\"|')[^\"']*tiki-[^\"']*(\"|')[^>]*>(\s*))<)~si",
+						'$2<input type="hidden" name="ticket" value="' . $ticket . '" /><', 
+						$source
+		);
+
+		$source = preg_replace(
+						"~((href=(\"|')[^\"']*tiki-[^\?\"']*)\?(ticket=[0-9a-z]*&)?([^\"']*(\"|')))~si",
+						'$2?ticket=' . $ticket . '&$5',
+						$source
+		);
+		return $source;
  }

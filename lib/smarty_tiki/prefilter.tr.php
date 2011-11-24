@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 // Smarty translation prefilter. This prefilter tries to offload the tr block from as much work as possible to keep
@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_prefilter_tr($source)
 {
 	// The preg_replace() takes away the Smarty comments ({* *}) in case they have tr tags
-	$return = preg_replace_callback('/(?s)\{tr\}(.+?)\{\/tr\}/', '_translate_lang', preg_replace ('/(?s)\{\*.*?\*\}/', '', $source));
+	$return = preg_replace_callback('/(?s)\{tr\}(.+?)\{\/tr\}/', '_translate_lang', preg_replace('/(?s)\{\*.*?\*\}/', '', $source));
 	return $return;
 }
 
@@ -32,5 +32,5 @@ function _translate_lang($matches)
 		return $matches[0];
 	} else {
 		return $s;
-  }
+	}
 }

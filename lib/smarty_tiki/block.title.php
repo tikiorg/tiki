@@ -40,7 +40,7 @@ function smarty_block_title($params, $content, $template, $repeat)
 	}
 
 	// Set the variable for the HTML title tag
-	$template->smarty->assign( 'headtitle', $content );
+	$template->smarty->assign('headtitle', $content);
 
 	$class = 'pagetitle';
 	$current = current_object();
@@ -61,7 +61,7 @@ function smarty_block_title($params, $content, $template, $repeat)
 	if ($template->getTemplateVars('print_page') != 'y') {
 		if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
 			$html .= '<a href="' . $prefs['helpurl'] . rawurlencode($params['help']) . '" class="titletips" title="' . tra('Help page:') . ' ' . htmlspecialchars($content) . '">'
-			. smarty_function_icon(array('_id' => 'help') , $template)
+			. smarty_function_icon(array('_id' => 'help'), $template)
 			. "</a>\n";
 		}
 

@@ -54,7 +54,7 @@ function smarty_block_filter($params, $content, $smarty, $repeat)
 		$ctall = $categlib->getCategories();
 
 		$tree_nodes = array();
-		foreach($ctall as $c) {
+		foreach ($ctall as $c) {
 			$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
 
 			$body = <<<BODY
@@ -82,7 +82,7 @@ BODY;
 		
 		$smarty->assign('filter_tags', isset($filter['tags']) ? $filter['tags'] : '');
 		$smarty->assign('filter_tagmap', json_encode(TikiDb::get()->fetchMap('SELECT tagId, tag FROM tiki_freetags')));
-		$smarty->assign('filter_tags_picker', (string) $freetaglib->get_cloud() );
+		$smarty->assign('filter_tags_picker', (string) $freetaglib->get_cloud());
 	}
 
 	// Language

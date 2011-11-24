@@ -63,7 +63,7 @@ function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 			// Complete _script path if needed (not empty, not an anchor, ...)
 			if ( !empty($params['_script']) && $params['_script'][0] != '#' && $params['_script'] != 'javascript:void(0)' && stripos($params['_script'], 'mailto:') !== 0) {
 				if ( $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
-					$self_dir = str_replace('\\','/', dirname($_SERVER['PHP_SELF']));
+					$self_dir = str_replace('\\', '/', dirname($_SERVER['PHP_SELF']));
 					$params['_script'] = ( $self_dir == '/' ? '' : $self_dir ).'/'.$params['_script'];
 				}
 				if ( $params['_script'] == $_SERVER['PHP_SELF'] ) {
@@ -91,11 +91,16 @@ function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 						$params['_template'] = '';
 					}
 					$ret = smarty_block_ajax_href(
-							array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement'], '_onclick' => $params['_onclick'], '_anchor'=> $anchor),
-							$ret,
-							$smarty,
-							false
-						);
+									array(
+										'template' => $params['_template'], 
+										'htmlelement' => $params['_htmlelement'], 
+										'_onclick' => $params['_onclick'], 
+										'_anchor'=> $anchor
+									),
+									$ret,
+									$smarty,
+									false
+					);
 				} else {
 					$ret = 'href="' . $ret . '"';
 				}
@@ -130,7 +135,7 @@ function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 			$link = ( !empty($params['_class']) ? 'class="'.$params['_class'].'" ' : '' )
 				. ( !empty($params['_style']) ? 'style="' . $params['_style'] . '" ' : '' )
 				. ( !empty($params['_title']) ? 'title="' . str_replace('"', '\"', $params['_title']) . '" ' : '' )
-				. ( !empty($params['_rel']) ? 'rel="' . str_replace('"','\"', $params['_rel']) . '" ' : '' );
+				. ( !empty($params['_rel']) ? 'rel="' . str_replace('"', '\"', $params['_rel']) . '" ' : '' );
 			foreach ( $params as $k => $v ) {
 				if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {
 					$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
@@ -147,10 +152,11 @@ function smarty_block_self_link($params, $content, $smarty, $repeat = false)
 
 			if ( !empty($params['_sort_field']) ) {
 				$smarty->loadPlugin('smarty_function_show_sort');
-				$ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
-						array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
-						$smarty
-						).'</a>';
+				$ret .= "<a $link style='text-decoration:none;'>" . 
+								smarty_function_show_sort(
+												array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
+												$smarty
+								) . '</a>';
 			}
 		}
 	} else {

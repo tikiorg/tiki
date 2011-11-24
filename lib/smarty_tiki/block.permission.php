@@ -27,7 +27,7 @@ function smarty_block_permission($params, $content, $smarty, $repeat)
 		$context['object'] = $params['object'];
 	}
 
-	$perms = Perms::get( $context );
+	$perms = Perms::get($context);
 	$name = $params['name'];
 
 	if ( $perms->$name ) {

@@ -38,8 +38,8 @@ function smarty_block_tr($params, $content, $smarty)
 	}
 
 	$args = array();
-	foreach( $params as $key => $value ) {
-		if ( preg_match( '/_([[:digit:]])+/', $key, $matches ) )
+	foreach ( $params as $key => $value ) {
+		if ( preg_match('/_([[:digit:]])+/', $key, $matches) )
 			$args[$matches[1]] = $value;
 	}
 
