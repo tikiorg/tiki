@@ -255,8 +255,8 @@ OUT;
 		);
 
 		$expect = <<<OUT
-* ~np~<a href="HomePage">Home</a>~/np~
-* ~np~<a href="Some+Page">Test</a>~/np~
+* ~np~<a href="HomePage" class="" data-type="wiki page" data-object="HomePage">Home</a>~/np~
+* ~np~<a href="Some+Page" class="" data-type="wiki page" data-object="Some Page">Test</a>~/np~
 
 OUT;
 		$this->assertEquals($expect, $output);
@@ -285,7 +285,7 @@ OUT;
 <div>~np~<table>
 	<caption>Count: 1</caption>
 	<tr><th>Object</th><th>Type</th></tr>
-	<tr><td><a href="HomePage">HomePage</a></td><td>wiki page</td></tr>
+	<tr><td><a href="HomePage" class="" data-type="wiki page" data-object="HomePage">HomePage</a></td><td>wiki page</td></tr>
 </table>
 ~/np~</div>
 OUT;
