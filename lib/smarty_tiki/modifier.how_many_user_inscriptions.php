@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -24,14 +24,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_modifier_how_many_user_inscriptions( $text )
 {
 
-  $pattern="/\d+\[(\d+)\]/";
-  $out = preg_match_all($pattern, $text, $match);
+	$pattern = "/\d+\[(\d+)\]/";
+	$out = preg_match_all($pattern, $text, $match);
 
-  $nb=0;
+	$nb = 0;
 
-  foreach ($match[1] as $n){
-    $nb += ($n+1);
-  }
+	foreach ($match[1] as $n) {
+		$nb += ($n+1);
+	}
 
-  return $nb;
+	return $nb;
 }

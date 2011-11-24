@@ -21,5 +21,5 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_modifier_lcfirst( $s )
 {
-	return strtolower( $s{0} ). substr( $s, 1 );
+	return strtolower($s{0}) . substr($s, 1);
 }

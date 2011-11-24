@@ -50,7 +50,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 	}
 	
 	//regex for format string
-	$regex  = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?'.
+	$regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?'.
 				'(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/';
 	preg_match_all($regex, $format, $matches, PREG_SET_ORDER);
 	foreach ($matches as $fmatch) {
@@ -72,32 +72,33 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 		$positive = true;
 		if ($value < 0) {
 			$positive = false;
-			$value  *= -1;
+			$value *= -1;
 		}
 		$letter = $positive ? 'p' : 'n';
 	
 		$prefix = $suffix = $cprefix = $csuffix = $signal = '';
 		$signal = $positive ? $locale['positive_sign'] : $locale['negative_sign'];
+
 		switch (true) {
 			case $locale["{$letter}_sign_posn"] == 1 && $flags['usesignal'] == '+':
 				$prefix = $signal;
-				break;
+							break;
 			case $locale["{$letter}_sign_posn"] == 2 && $flags['usesignal'] == '+':
 				$suffix = $signal;
-				break;
+							break;
 			case $locale["{$letter}_sign_posn"] == 3 && $flags['usesignal'] == '+':
 				$cprefix = $signal;
-				break;
+							break;
 			case $locale["{$letter}_sign_posn"] == 4 && $flags['usesignal'] == '+':
 				$csuffix = $signal;
-				break;
+							break;
 			case $flags['usesignal'] == '(':
 			case $locale["{$letter}_sign_posn"] == 0:
 				if ($positive == false) {
 					$prefix = '(';
 					$suffix = ')';
 				}
-				break;
+							break;
 		}
 	
 		if (!$flags['nosimbol']) {
@@ -110,10 +111,14 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 			$currency = '<span style="visibility:hidden">' . $currency .  '</span>';
 		}
 	
-		$space  = $locale["{$letter}_sep_by_space"] && !empty($currency) && $display == 1 ? ' ' : '';
+		$space = $locale["{$letter}_sep_by_space"] && !empty($currency) && $display == 1 ? ' ' : '';
 	
-		$value = number_format($value, $right, $locale['mon_decimal_point'],
-								$flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
+		$value = number_format(
+						$value, 
+						$right, 
+						$locale['mon_decimal_point'],
+						$flags['nogroup'] ? '' : $locale['mon_thousands_sep']
+		);
 		$value = @explode($locale['mon_decimal_point'], $value);
 	
 		$n = strlen($prefix) + strlen($currency) + strlen($value[0]);
@@ -136,7 +141,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 		}
 	
 		$format = str_replace($fmatch[0], $value, $format);
-		$format = !empty($rightpad) ? $format .= '<span style="visibility:hidden">' . $rightpad .  '</span>' : $format;
+		$format = !empty($rightpad) ? $format .= '<span style="visibility:hidden">' . $rightpad . '</span>' : $format;
 	}
 	return $format;
 }

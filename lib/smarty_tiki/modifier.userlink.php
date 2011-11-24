@@ -34,16 +34,19 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 {
 	global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib, $smarty;
 
-	$show_mouseover = $popup != 'n' && $prefs['feature_community_mouseover'] == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y';
+	$show_mouseover = $popup != 'n' && 
+										$prefs['feature_community_mouseover'] == 'y' && 
+										$userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y';
+
 	$show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
 
 	if ( $show_mouseover || $show_friends ) {
-		$cacheItem = 'userlink.'.$user.'.'.$other_user.$fullname.$max_length;
+		$cacheItem = 'userlink.' . $user . '.' . $other_user . $fullname . $max_length;
 	} else {
-		$cacheItem = 'userlink.'.$other_user.$fullname.$max_length;
+		$cacheItem = 'userlink.' . $other_user . $fullname . $max_length;
 	}
 
-	if ( $cached = $cachelib->getCached( $cacheItem ) ) {
+	if ( $cached = $cachelib->getCached($cacheItem) ) {
 		return $cached;
 	}
 
@@ -93,14 +96,14 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 			if ($prefs['feature_community_mouseover_name'] == 'y') {
 				$line = $userlib->get_user_preference($other_user, 'realName');
 				if ($line) {
-					$content .= $line.'<br />';
+					$content .= $line . '<br />';
 				}
 			}
 			if ($prefs['feature_community_mouseover_gender'] == 'y' && $prefs['feature_community_gender'] == 'y') {
 				$gender = $userlib->get_user_preference($other_user, 'gender');
 				if (!empty($gender) && $gender != 'Hidden') {
-					$content .= tra('Gender:').'&nbsp;';
-					$content .= tra($gender).'<br />';
+					$content .= tra('Gender:') . '&nbsp;';
+					$content .= tra($gender) . '<br />';
 				}
 			}
 			if ($prefs['feature_community_mouseover_friends'] == 'y' && $prefs['feature_friends'] == 'y') {
@@ -146,7 +149,7 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 			}
 
 			if ($prefs['feature_community_mouseover_picture'] == 'y') {
-				$img = $tikilib->get_user_avatar( $info );
+				$img = $tikilib->get_user_avatar($info);
 
 				if (empty($content)) {
 					$content = $img;
@@ -157,10 +160,9 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 
 			if (!empty($content) && $prefs['feature_jquery_tooltips'] == 'y') {
 				// not really mouseover, this goes in title for JQ
-				$mouseover = tra('User information - Click for more info').'|'.htmlspecialchars($content);
+				$mouseover = tra('User information - Click for more info') . '|' . htmlspecialchars($content);
 			}
 		}
-
 
 		if (empty($prefs['urlOnUsername'])) {
 			$url = 'tiki-user_information.php?userId='.urlencode($info['userId']);
@@ -169,7 +171,11 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 				$url = filter_out_sefurl($url);
 			}
 		} else {
-			$url = preg_replace(array('/%userId%/', '/%user%/'), array($info['userId'], $info['login']),  $prefs['urlOnUsername']);
+			$url = preg_replace(
+							array('/%userId%/', '/%user%/'), 
+							array($info['userId'], $info['login']), 
+							$prefs['urlOnUsername']
+			);
 		}
 
 		$lat = $userlib->get_user_preference($other_user, 'lat');

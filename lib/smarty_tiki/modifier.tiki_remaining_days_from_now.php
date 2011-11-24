@@ -15,9 +15,13 @@ function smarty_modifier_tiki_remaining_days_from_now($time, $format)
 {
 	global $prefs, $tikilib;
 	
-	$iNbDayBetween = round( ( $time - $tikilib->now ) / ( 60 * 60 * 24 ) );
+	$iNbDayBetween = round(( $time - $tikilib->now ) / ( 60 * 60 * 24 ));
 	if ( $iNbDayBetween > 0 ) {
-		return sprintf( ( $iNbDayBetween > 1 ? tra('in %s days, the %s') : tra('in %s day, the %s') ), '<b>' . $iNbDayBetween . '</b>', $tikilib->date_format($format, $time) );
+		return sprintf(
+						( $iNbDayBetween > 1 ? tra('in %s days, the %s') : tra('in %s day, the %s') ), 
+						'<b>' . $iNbDayBetween . '</b>', 
+						$tikilib->date_format($format, $time) 
+		);
 	} else {
 		return '-';
 	}

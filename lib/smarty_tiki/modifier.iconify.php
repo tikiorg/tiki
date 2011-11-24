@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -22,16 +22,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_iconify($string, $filetype = null)
 {
-  global $smarty;
+	global $smarty;
 
-  $smarty->loadPlugin('smarty_function_icon');
-  $ext = strtolower(substr($string, strrpos($string, '.') + 1));
-  $icon = file_exists("pics/icons/mime/$ext.png") ? $ext : 'default';
+	$smarty->loadPlugin('smarty_function_icon');
+	$ext = strtolower(substr($string, strrpos($string, '.') + 1));
+	$icon = file_exists("pics/icons/mime/$ext.png") ? $ext : 'default';
 
-  return smarty_function_icon(array(
-    '_id' => 'pics/icons/mime/'.$icon.'.png',
-    'alt' => ( $filetype === null ? $icon : $filetype ),
-    'class' => ''
-  ), $smarty);
-
+	return smarty_function_icon(
+					array(
+						'_id' => 'pics/icons/mime/'.$icon.'.png',
+						'alt' => ( $filetype === null ? $icon : $filetype ),
+						'class' => ''
+					), 
+					$smarty
+	);
 }

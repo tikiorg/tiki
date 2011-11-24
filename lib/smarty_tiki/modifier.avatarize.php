@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -21,15 +21,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_modifier_avatarize($user)
 {
-  global $tikilib;
-  global $userlib;
-  $avatar = $tikilib->get_user_avatar($user);
-  if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' ) {
-	$id = $userlib->get_user_id($user);
-	include_once('tiki-sefurl.php');
-	$url = "tiki-user_information.php?userId=$id";
-	$url = filter_out_sefurl($url);	
-  	$avatar = "<a title=\"" . htmlspecialchars($user, ENT_QUOTES) . "\" href=\"$url\">".$avatar.'</a>';
-  }
-  return $avatar;	
+	global $tikilib;
+	global $userlib;
+	$avatar = $tikilib->get_user_avatar($user);
+	if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' ) {
+		$id = $userlib->get_user_id($user);
+		include_once('tiki-sefurl.php');
+		$url = "tiki-user_information.php?userId=$id";
+		$url = filter_out_sefurl($url);	
+		$avatar = "<a title=\"" . htmlspecialchars($user, ENT_QUOTES) . "\" href=\"$url\">".$avatar.'</a>';
+	}
+	return $avatar;	
 }

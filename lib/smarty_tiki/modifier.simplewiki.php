@@ -27,6 +27,6 @@ function smarty_modifier_simplewiki($string)
 	global $tikilib;
 	$parserlib = TikiLib::lib('parser');
 	
-	$string = htmlentities( $string, ENT_QUOTES, 'UTF-8' );
-	return $parserlib->parse_data_simple( $string );
+	$string = htmlentities($string, ENT_QUOTES, 'UTF-8');
+	return $parserlib->parse_data_simple($string);
 }
