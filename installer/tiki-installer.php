@@ -897,7 +897,7 @@ if ($install_step == '2') {
 			$email_test_headers .= 'Reply-to: '. $email_test_to . "\n";
 			$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
 			$email_test_headers .= 'X-Mailer: Tiki/'.$TWV->version.' - PHP/' . phpversion() . "\n";
-			$email_test_subject = tra('Test mail from Tiki installer ').$TWV->version;
+			$email_test_subject = tr('Test mail from Tiki installer %0', $TWV->version);
 			$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
 			$email_test_body .= "\t".tra('Tiki version:').' '.$TWV->version . "\n";
 			$email_test_body .= "\t".tra('PHP version:').' '.phpversion() . "\n";
