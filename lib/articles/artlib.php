@@ -153,7 +153,7 @@ class ArtLib extends TikiLib
 				$smarty->assign('mail_title', 'articleId=' . $articleId);
 				$smarty->assign('mail_postid', $articleId);
 				$smarty->assign('mail_user', $user);
-				$smarty->assign('mail_data', $article_data['heading'] . "\n----------------------\n");
+				$smarty->assign('mail_data', $article_data['heading'] . "\n----------------------\n" . $article_data['body']);
 				$smarty->assign('mail_heading', $heading);
 				$smarty->assign('mail_body', $body);
 				
