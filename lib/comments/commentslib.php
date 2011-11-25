@@ -2026,7 +2026,7 @@ class Comments extends TikiLib
 
 		global $categlib; require_once 'lib/categories/categlib.php';
 		if ($jail = $categlib->get_jail()) {
-			$categlib->getSqlJoin($jail, '`objectType`', '`object`', $jail_join, $jail_where, $jail_bind, '`objectType`');
+			$categlib->getSqlJoin($jail, '`objectType`', 'tc.`object`', $jail_join, $jail_where, $jail_bind, 'tc.`objectType`');
 		} else {
 			$jail_join = '';
 			$jail_where = '';
