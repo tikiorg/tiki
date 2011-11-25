@@ -1093,7 +1093,7 @@ class NlLib extends TikiLib
 
 
 			// build the html
-			$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
+			$beginHtml = '<body style="background-color: white"><div id="tiki-center" class="clearfix content"><div class="wikitext">';
 			$endHtml = '</div></div></body>';
 			if (stristr($info['data'], '<body') === false) {
 				$html = "<html>$beginHtml" . $tikilib->parse_data($info['data'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
