@@ -348,7 +348,9 @@ function initialize_prefs() {
 	
 		// Unserialize serialized preferences
 		foreach ( $serializedPreferences as $serializedPreference ) {
-			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) $modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
+			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) {
+				$modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
+			}
 		}
 	
 		// Keep some useful sites values available before overriding with user prefs
