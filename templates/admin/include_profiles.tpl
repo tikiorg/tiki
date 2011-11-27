@@ -417,17 +417,19 @@ $("#repository, #categories").change(function(){
 					{cycle values="odd,even" print=false}
 					{foreach from=$modified_list  key="name" item="data"}
 						<li class="{cycle}">
-							<input type="checkbox" name="prefs_to_export[{$name}]" value="{$data.cur|escape}"
+							<input type="checkbox" name="prefs_to_export[{$name}]" value="{$data.current.serial|escape}"
 									 id="checkbox_{$name}"{if isset($prefs_to_export[$name])} checked="checked"{/if} />
 							<label for="checkbox_{$name}">
-								{$name} = <strong>{$data.cur|truncate:40:"...":true|escape}</strong>
+								{if is_array($data.current.expanded)}{assign var=current value=$data.current.expanded|implode:", "}{else}{assign var=current value=$data.current.expanded}{/if} 
+								{$name} = '<strong>{$current|truncate:40:"...":true|escape}</strong>'{* FIXME: This one line per preference display format is ugly and doesn't work for multiline values *}
 								<em>
 									&nbsp;&nbsp;
-									{if isset($data.def)}
-										{if empty($data.def)}
+									{if isset($data.default)}
+										{if empty($data.default)}
 											('')
 										{else}
-											({$data.def|truncate:20:"...":true|escape})
+											{if is_array($data.default)}{assign var=default value=$data.default|implode:", "}{else}{assign var=default value=$data.default}{/if}
+											('{$default|truncate:20:"...":true|escape}')
 										{/if}
 									{else}
 										({tr}no default{/tr})

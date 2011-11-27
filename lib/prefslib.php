@@ -663,12 +663,12 @@ class PreferencesLib
 		return $this->_getMultilistValue($info, $data);
 	}
 
-	// for export as yaml for tiki 7
+	// for export as yaml
 
 	/**
 	 * @global TikiLib $tikilib
 	 * @param bool $added shows current prefs not in defaults
-	 * @return array (prefname => array( 'cur' => current value, 'def' => default value ))
+	 * @return array (prefname => array( 'current' => current value, 'default' => default value ))
 	 */
 	// NOTE: tikilib contains a similar method called getModifiedPreferences
 	function getModifiedPrefsForExport( $added = false )
@@ -681,17 +681,15 @@ class PreferencesLib
 		$defaults = get_default_prefs();
 		$modified = array();
 
-		foreach ($prefs as $pref => $val) {
-			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $val !== $defaults[$pref] )) {
-				if (!in_array($pref, $this->system_modified)) {	// prefs modified by the system etc
-					
-					if (!in_array($pref, $this->system_info)) {	// prefs with system info etc
-						$modified[$pref] = array(
-							'cur' => $prefs[$pref],
-						);
-						if (isset($defaults[$pref])) {
-							$modified[$pref]['def'] = $defaults[$pref];
-						}
+		foreach ($prefs as $pref => $value) {
+			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $value !== $defaults[$pref] )) {
+				if (!in_array($pref, $this->system_modified) && !in_array($pref, $this->system_info)) {	// prefs modified by the system and with system info etc
+					$preferenceInformation = $this->getPreference($pref);
+					$modified[$pref] = array(
+						'current' => array('serial' => $value, 'expanded' => $preferenceInformation['value']),
+					);
+					if (isset($defaults[$pref])) {
+						$modified[$pref]['default'] = $defaults[$pref];
 					}
 				}
 			}
