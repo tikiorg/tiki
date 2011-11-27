@@ -3220,9 +3220,24 @@ class TikiLib extends TikiDb_Bridge
 
 	function delete_preference($name)
 	{
+		global $user_overrider_prefs, $user_preferences, $user, $prefs;
+		$prefslib = TikiLib::lib('prefs');
+		
 		$this->table('tiki_preferences')->delete(array('name' => $name));
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('global_preferences');
+
+		$definition = $prefslib->getPreference($name);
+		$value = $definition['default'];
+		if (isset($prefs)) {
+			if ( in_array($name, $user_overrider_prefs) ) {
+				$prefs['site_'.$name] = $value;
+			} elseif ( isset($user_preferences[$user][$name] ) ) {
+				$prefs[$name] = $user_preferences[$user][$name];
+			} else {
+				$prefs[$name] = $value;
+			}
+		}
 	}
 
 	function set_preference($name, $value)
