@@ -27,11 +27,11 @@ $arrayStatus = explode(',', $_GET["status"]);
 $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
 header('content-type: application/x-javascript');
-Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
+Perms::bulk(array( 'type' => 'tracker' ), 'object', $arrayTrackerId);
 
 
 for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count_arrayTrackerId; $index++) {
-	$tikilib->get_perm_object( $arrayTrackerId[$index], 'tracker' );
+	$tikilib->get_perm_object($arrayTrackerId[$index], 'tracker');
 
 	if (!isset($_GET['selected'])) {
 		$selected = '';

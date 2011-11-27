@@ -82,16 +82,16 @@ if (isset($_REQUEST["add"])) {
 				$watch_type = 'wiki page';
 				$watch_label = tra('Language watch') . ": {$lang['name']}";
 				$watch_url = "tiki-user_watches.php";
-				break;
+    			break;
 
 			case 'category_changed_in_lang':
 				if ( $selected_categ && $langwatch ) {
 					$watch_object = $selected_categ['categId'];
 					$watch_type = $langwatch['value'];
-					$watch_label = tr('Category watch: %0, Language: %1', $selected_categ['name'], $langwatch['name'] );
+					$watch_label = tr('Category watch: %0, Language: %1', $selected_categ['name'], $langwatch['name']);
 					$watch_url = "tiki-browse_categories.php?lang={$lang['value']}&parentId={$selected_categ['categId']}";
 				}
-				break;
+    			break;
 
 			default:
 				if (!isset($notification_types[$_REQUEST['event']])) {

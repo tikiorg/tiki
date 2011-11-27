@@ -9,7 +9,7 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 require_once ('lib/socialnetworkslib.php');
 $access->check_feature('feature_socialnetworks');
-$access->check_permission('tiki_p_socialnetworks',tra('Social networks'));
+$access->check_permission('tiki_p_socialnetworks', tra('Social networks'));
 
 if (isset($_REQUEST['request_twitter'])) {
 	$access->check_user($user);
@@ -27,8 +27,8 @@ if (isset($_REQUEST['request_twitter'])) {
 if (isset($_REQUEST['remove_twitter'])) {
 	$access->check_user($user);
 	// remove user token from tiki
-	$tikilib->set_user_preference($user, 'twitter_token','');
-	$smarty->assign('show_removal',true);
+	$tikilib->set_user_preference($user, 'twitter_token', '');
+	$smarty->assign('show_removal', true);
 }
 if ($user) {
 	$token=$tikilib->get_user_preference($user, 'twitter_token', '');
@@ -58,26 +58,26 @@ if (isset($_REQUEST['request_facebook'])) {
 if (isset($_REQUEST['remove_facebook'])) {
 	$access->check_user($user);
 	// remove user token from tiki
-	$tikilib->set_user_preference($user, 'facebook_token','');
-	$smarty->assign('show_removal',true);
+	$tikilib->set_user_preference($user, 'facebook_token', '');
+	$smarty->assign('show_removal', true);
 }
 
 if (isset($_REQUEST['accounts'])) {
 	$access->check_user($user);
 	$tikilib->set_user_preference($user, 'bitly_login', $_REQUEST['bitly_login']);
-	$smarty->assign('bitly_login',$_REQUEST['bitly_login']);		
+	$smarty->assign('bitly_login', $_REQUEST['bitly_login']);		
 	$tikilib->set_user_preference($user, 'bitly_key', $_REQUEST['bitly_key']);
-	$smarty->assign('bitly_key',$_REQUEST['bitly_key']);		
+	$smarty->assign('bitly_key', $_REQUEST['bitly_key']);		
 } else {
-	$smarty->assign('bitly_login',$tikilib->get_user_preference($user, 'bitly_login',''));
-	$smarty->assign('bitly_key',$tikilib->get_user_preference($user, 'bitly_key',''));
+	$smarty->assign('bitly_login', $tikilib->get_user_preference($user, 'bitly_login', ''));
+	$smarty->assign('bitly_key', $tikilib->get_user_preference($user, 'bitly_key', ''));
 }
 if ($user) {
 	$token=$tikilib->get_user_preference($user, 'facebook_token', '');
 	$smarty->assign('facebook', ($token!=''));
 }
-$smarty->assign('twitterRegistered',$socialnetworkslib->twitterRegistered());
-$smarty->assign('facebookRegistered',$socialnetworkslib->facebookRegistered());
+$smarty->assign('twitterRegistered', $socialnetworkslib->twitterRegistered());
+$smarty->assign('facebookRegistered', $socialnetworkslib->facebookRegistered());
 
 ask_ticket('socialnetworks');
 $smarty->assign('mid', 'tiki-socialnetworks.tpl');

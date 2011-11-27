@@ -22,7 +22,7 @@ if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'n' && !isset($_REQUE
 	$smarty->assign('mapview', false);
 }
 if (isset($_REQUEST["remove"])) {
-	$artperms = Perms::get( array( 'type' => 'article', 'object' => $_REQUEST['remove'] ) );
+	$artperms = Perms::get(array( 'type' => 'article', 'object' => $_REQUEST['remove'] ));
 
 	if ($artperms->remove_article != 'y') {
 		$smarty->assign('errortype', 401);
@@ -36,7 +36,7 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST['submit_mult'])) {
 	if ($_REQUEST['submit_mult'] === 'remove_articles' && count($_REQUEST["checked"]) > 0) {
 		foreach ($_REQUEST["checked"] as $aId) {
-			$artperms = Perms::get( array( 'type' => 'article', 'object' => $aId ) );
+			$artperms = Perms::get(array( 'type' => 'article', 'object' => $aId ));
 
 			if ($artperms->remove_article != 'y') {
 				$smarty->assign('errortype', 401);

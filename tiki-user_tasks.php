@@ -520,23 +520,23 @@ if (isset($_REQUEST['save'])) {
 		switch ($info['priority']) {
 			case 1:
 				$mail_data.= tra("very low");
-				break;
+    			break;
 
 			case 2:
 				$mail_data.= tra("low");
-				break;
+    			break;
 
 			case 3:
 				$mail_data.= tra("normal");
-				break;
+    			break;
 
 			case 4:
 				$mail_data.= tra("high");
-				break;
+    			break;
 
 			case 5:
 				$mail_data.= tra("very high");
-				break;
+    			break;
 		}
 		$mail_data.= ".\n\n";
 		if ($info['start'] !== NULL) {
@@ -561,13 +561,15 @@ if (isset($_REQUEST['save'])) {
 		$msg_body = "__" . tra('Task') . ":__";
 		$msg_body.= '^[tiki-user_tasks.php?taskId=' . $info['taskId'] . "|" . $info['title'] . "]^\n";
 		$msg_body.= $task_info_message . $msg_changes_head . '^' . $msg_changes . '^';
-		$messulib->post_message($msg_to, //user
-		$msg_from, //from
-		$msg_to, //to
-		'', //cc
-		$msg_title, //title
-		$msg_body, //body
-		$info['priority']); //priority
+		$messulib->post_message(
+						$msg_to, //user
+						$msg_from, //from
+						$msg_to, //to
+						'', //cc
+						$msg_title, //title
+						$msg_body, //body
+						$info['priority'] //priority
+		);
 		
 	}
 	if ($show_admin) $user_for_group_list = $info['creator'];

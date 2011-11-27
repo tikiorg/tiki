@@ -8,8 +8,8 @@
 global $headerlib, $access;
 require_once ('tiki-setup.php');
 
-$access->check_feature( array('feature_webmail', 'feature_ajax' ) );	// AJAX_TODO
-$access->check_permission_either( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') );
+$access->check_feature(array('feature_webmail', 'feature_ajax' ));	// AJAX_TODO
+$access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_webmail'));
 
 if (!isset($_REQUEST['callback'])) {	// "normal" (non-AJAX) page load
 
@@ -21,8 +21,8 @@ if (!isset($_REQUEST['callback'])) {	// "normal" (non-AJAX) page load
 	$_SESSION['webmailinbox'][$divId]['module_params'] = $module_params;
 	
 	// set up xajax javascript
-	$headerlib->add_js( "
-
+	$headerlib->add_js(
+					"
 function doTakeWebmail(messageID) {
 	
 	showWebmailMessage('".tra('Taking')."...');
@@ -128,7 +128,8 @@ function showWebmailMessage(inMsg) {
 	// doesn't seem to help - gets processed after doRefreshWebmail anyway
 	cancelRefreshWebmail();
 });
-");
+"
+);
 	
 }
 if (!empty($_REQUEST['action'])) {
@@ -140,7 +141,8 @@ if (!empty($_REQUEST['action'])) {
 }
 
 
-function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false) {
+function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false)
+{
 	global $user, $smarty, $prefs, $module_params;
 	
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
@@ -169,7 +171,8 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
 //	return $objResponse;
 }
 
-function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
+function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
+{
 	global $prefs, $trklib, $user, $webmaillib, $contactlib, $dbTiki, $tikilib, $categlib, $module_params;
 	
 	include_once ('lib/webmail/webmaillib.php');
@@ -198,7 +201,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
 	$objResponse = new xajaxResponse();
 	
 	// check if already taken
-	$itemid = $trklib->get_item_id( $module_params['trackerId'], $module_params['messageFId'], $realmsgid);
+	$itemid = $trklib->get_item_id($module_params['trackerId'], $module_params['messageFId'], $realmsgid);
 	if ($itemid > 0) {
 		$objResponse->script('doRefreshWebmail();alert("Sorry, that mail has been taken by another operator. Refreshing list...");');
 		
@@ -265,7 +268,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
 					'showstatus="n" showcreated="n" showlastmodif="n" filterfield="'.$module_params['fromFId'].'" filtervalue="'.$m['sender']['email'].'"}';
 		$data .= "\n\n";
 				
-		$tikilib->create_page($pageName, 0, $data, $tikilib->now, $comment, $user, $tikilib->get_ip_address(),$description);
+		$tikilib->create_page($pageName, 0, $data, $tikilib->now, $comment, $user, $tikilib->get_ip_address(), $description);
 		$categlib->update_object_categories(array($categlib->get_category_id('Help Team Pages')), $pageName, 'wiki page');		// TODO remove hard-coded cat name
 	}
 	
@@ -274,11 +277,16 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
 	return $objResponse;
 }
 
-function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
+function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
+{
 	global $prefs, $trklib, $user, $webmaillib, $dbTiki, $module_params;
 	
-	if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
-	if (!isset($trklib)) { include_once('lib/trackers/trackerlib.php'); }
+	if (!isset($webmaillib)) {
+		include_once ('lib/webmail/webmaillib.php');
+	}
+	if (!isset($trklib)) {
+		include_once('lib/trackers/trackerlib.php');
+	}
 
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
 		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
@@ -290,7 +298,7 @@ function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
 	
 	$m = $ls[$msgId - 1];
 	
-	$itemid = $trklib->get_item_id( $module_params['trackerId'], $module_params['messageFId'], $m['realmsgid']);
+	$itemid = $trklib->get_item_id($module_params['trackerId'], $module_params['messageFId'], $m['realmsgid']);
 	if ($itemid > 0 && $user == $trklib->get_item_value($module_params['trackerId'], $itemid, $module_params['operatorFId'])) {	// simple security check
 		$trklib->remove_tracker_item($itemid);
 	}

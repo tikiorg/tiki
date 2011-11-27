@@ -17,12 +17,12 @@ if (!empty($_POST['importerClassName'])) {
     switch ($importerClassName) {
     	case 'TikiImporter_Wiki_Mediawiki':
     		require_once('lib/importer/tikiimporter_wiki_mediawiki.php');
-    		break;
+         break;
     	case 'TikiImporter_Blog_Wordpress':
     		require_once('lib/importer/tikiimporter_blog_wordpress.php');
-    		break;
+         break;
     	case 'default':
-    		break;
+         break;
     }
     
     $importer = new $importerClassName();

@@ -55,7 +55,9 @@ if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 } elseif (empty($_REQUEST['cookietab'])) {
 	if (isset($tracker_info['writerCanModify']) && $tracker_info['writerCanModify'] == 'y' && $user) $cookietab = '1';
 	elseif (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items == 'y') $cookietab = "2";
-	else if (!isset($cookietab)) { $cookietab = '1'; }
+	else if (!isset($cookietab)) {
+		$cookietab = '1';
+	}
 } else {
 	$cookietab = $_REQUEST['cookietab'];
 }
@@ -95,7 +97,7 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 	}
 }
 
-$access->check_permission_either( array('tiki_p_view_trackers', 'tiki_p_create_tracker_items') );
+$access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'));
 
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
@@ -274,9 +276,7 @@ if (!empty($_REQUEST['remove'])) {
 		$item_info = $trklib->get_item_info($batchid);
 		$actionObject = Tracker_Item::fromInfo($item_info);
 		if ($actionObject->canModify()) {
-			$trklib->replace_item($_REQUEST['trackerId'], $batchid, array(
-				'data' => ''
-			) , $_REQUEST['batchaction']);
+			$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data' => ''), $_REQUEST['batchaction']);
 		}
 	}
 
@@ -439,7 +439,7 @@ if (isset($_REQUEST["trackerId"])) {
 if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $user and $tiki_p_tracker_vote_ratings == 'y' and !empty($_REQUEST['trackerId']) and !empty($ratedItemId) and isset($newItemRate) and ($newItemRate == 'NULL' || in_array($newItemRate, explode(',', $tracker_info['ratingOptions'])))) {
 	$trklib->replace_rating($_REQUEST['trackerId'], $ratedItemId, $newItemRateField, $user, $newItemRate);
 }
-$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue,'', $xfields);
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"], $initial, $exactvalue, '', $xfields);
 $urlquery['status'] = $_REQUEST['status'];
 $urlquery['initial'] = $initial;
 $urlquery['trackerId'] = $_REQUEST["trackerId"];
@@ -460,7 +460,7 @@ if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y'
 			$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
 		}
 		if (isset($tracker_info['showLastComment']) && $tracker_info['showLastComment'] == 'y') {
-			$l = $trklib->list_last_comments( $items['data'][$itkey]['trackerId'], $items['data'][$itkey]['itemId'], 0, 1);
+			$l = $trklib->list_last_comments($items['data'][$itkey]['trackerId'], $items['data'][$itkey]['itemId'], 0, 1);
 			$items['data'][$itkey]['lastComment'] = !empty($l['cant']) ? $l['data'][0] : '';
 		}
 	}
@@ -540,7 +540,7 @@ ask_ticket('view-trackers');
 if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
 	global $validatorslib;
 	include_once('lib/validatorslib.php');
-	$validationjs = $validatorslib->generateTrackerValidateJS( $fields['data'] );
+	$validationjs = $validatorslib->generateTrackerValidateJS($fields['data']);
 	$smarty->assign('validationjs', $validationjs);
 }
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences

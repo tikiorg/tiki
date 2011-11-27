@@ -12,14 +12,14 @@ if ( ! isset( $_POST['page'], $_POST['content'], $_POST['index'], $_POST['type']
 
 $page = $_POST['page'];
 
-$plugin = strtolower( basename( $_POST['type'] ) );
-$type = strtoupper( $plugin );
+$plugin = strtolower(basename($_POST['type']));
+$type = strtoupper($plugin);
 
 if (empty($parserlib)) {
 	$parserlib = TikiLib::lib('parser');
 }
 
-if ( ! $meta = $parserlib->plugin_info( $plugin ) )
+if ( ! $meta = $parserlib->plugin_info($plugin) )
 	exit;
 
 if ( ! isset( $_POST['message'] ) )
@@ -28,7 +28,7 @@ if ( ! isset( $_POST['message'] ) )
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 if ($tiki_p_edit != 'y') {
-	header( "Location: {$_SERVER['HTTP_REFERER']}" );
+	header("Location: {$_SERVER['HTTP_REFERER']}");
 	exit;
 }
 $content = $_POST['content'];
@@ -36,8 +36,7 @@ $current = $info['data'];
 
 $matches = WikiParser_PluginMatcher::match($current);
 $count = 0;
-foreach ( $matches as $match )
-{
+foreach ( $matches as $match ) {
 	if ( $match->getName() !== $plugin ) {
 		continue;
 	}
@@ -47,12 +46,11 @@ foreach ( $matches as $match )
 	if ( $_POST['index'] == $count ) {
 		//by using content of "~same~", it will not replace the body that is there
 		$content = ($content == "~same~" ? $match->getBody() : $content);
-		$hasBody = !empty($content) && !ctype_space( $content );
+		$hasBody = !empty($content) && !ctype_space($content);
 		$params = $match->getArguments();
 
 		// If parameters are provided, rebuild the parameter line
-		if ( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
-		{
+		if ( isset( $_POST['params'] ) && is_array($_POST['params']) ) {
 			// $values was relaxed to accept any argument rather than those defined up front 
 			// in the plugin's parameter list. This facilitates the use of modules as plugins.
 			$values = $_POST['params'];
@@ -60,11 +58,11 @@ foreach ( $matches as $match )
 			$parts = array();
 			foreach ( $values as $key => $value ) {
 				if ($value) {
-					$parts[] = "$key=\"" . str_replace( '"', "\\\"", $value ) . '"';
+					$parts[] = "$key=\"" . str_replace('"', "\\\"", $value) . '"';
 				}
 			}
 
-			$params = implode( ' ', $parts );
+			$params = implode(' ', $parts);
 		}
 
 		// Replace the content
@@ -76,10 +74,10 @@ foreach ( $matches as $match )
 
 		$match->replaceWith($content);
 
-		$tikilib->update_page( $page, $matches->getText(), $_POST['message'], $user, $tikilib->get_ip_address() );
+		$tikilib->update_page($page, $matches->getText(), $_POST['message'], $user, $tikilib->get_ip_address());
 		break;
 	}
 }
 
-header( "Location: {$_SERVER['HTTP_REFERER']}" );
+header("Location: {$_SERVER['HTTP_REFERER']}");
 exit;

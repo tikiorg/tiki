@@ -28,8 +28,6 @@ if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
 } else {
 	
 	$htmlFeed = new HtmlFeed();
-	print_r(json_encode(
-		$htmlFeed->feed()
-	));
+	print_r(json_encode($htmlFeed->feed()));
 	
 }

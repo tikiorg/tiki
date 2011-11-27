@@ -30,7 +30,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 // Now check permissions to rename this page
 $tikilib->get_perm_object($page, 'wiki page', $info);
-$access->check_permission( array('tiki_p_view', 'tiki_p_rename') );
+$access->check_permission(array('tiki_p_view', 'tiki_p_rename'));
 
 if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 	check_ticket('rename-page');
@@ -53,10 +53,10 @@ if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 			switch($e->getCode()) {
 			case 1:
 				$smarty->assign('page_badchars_display', $wikilib->get_badchars());
-				break;
+    			break;
 			case 2:
 				$smarty->assign('msg', tra("Page already exists"));
-				break;
+    			break;
 			default:
 				throw $e;
 			}
@@ -65,7 +65,7 @@ if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 
 	if ($result) {
 		global $perspectivelib; require_once 'lib/perspectivelib.php';
-		$perspectivelib->replace_preference ('wsHomepage', $page, $newName ) ;
+		$perspectivelib->replace_preference('wsHomepage', $page, $newName);
 		if ($prefs['feature_sefurl'] == 'y') {
 			include_once('tiki-sefurl.php');
 			header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", 'wiki')));

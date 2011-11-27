@@ -60,7 +60,7 @@ if (isset($_REQUEST['register'])) {
 	$smarty->assign('errortype', 'no_redirect_login');
 
 	$result=$registrationlib->register_new_user($_REQUEST);
-	if (is_a($result,"RegistrationError")) {
+	if (is_a($result, "RegistrationError")) {
 		if ($result->field == 'email') // i'm not sure why email is a special case..
 			$email_valid='n';
 		else
@@ -76,7 +76,7 @@ if (isset($_REQUEST['register'])) {
 }
 $outputtowiki='';
 $outputwiki='';
-if($prefs['user_register_prettytracker_output'] == 'y'){
+if ($prefs['user_register_prettytracker_output'] == 'y') {
 	$outputtowiki=$prefs["user_register_prettytracker_outputtowiki"];	
 	$outputwiki=$prefs["user_register_prettytracker_outputwiki"];
 }
@@ -129,7 +129,8 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 //	$ajaxlib->registerTemplate('tiki-register.tpl');
 //}
 
-function register_error($msg) {
+function register_error($msg)
+{
 	global $smarty;
 	$smarty->assign('msg', $msg);
 	$smarty->assign('errortype', 0);

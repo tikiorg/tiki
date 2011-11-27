@@ -11,13 +11,16 @@ require_once 'lib/videogals/watershedlib.php';
 
 $access->check_feature('feature_watershed');
 	
-$server = new SoapServer ( "http://watershed-user.ustream.tv/webservice/watershed_user.php?wsdl", array( 
-	'classmap' => Watershed_SoapServer::getClassMap(),
-	'soap_version' => SOAP_1_2,
-) );
+$server = new SoapServer(
+				"http://watershed-user.ustream.tv/webservice/watershed_user.php?wsdl",
+				array( 
+					'classmap' => Watershed_SoapServer::getClassMap(),
+					'soap_version' => SOAP_1_2,
+				)
+);
 
-$server->setClass( 'Watershed_SoapServer' );
-$input = file_get_contents( 'php://input' );
+$server->setClass('Watershed_SoapServer');
+$input = file_get_contents('php://input');
 
 // Debugging SOAP request
 //$myFile = "soaplog.txt";
@@ -26,6 +29,6 @@ $input = file_get_contents( 'php://input' );
 //fclose($fh);
 
 if ( $input ) {
-	$server->handle( $input );
+	$server->handle($input);
 }
 

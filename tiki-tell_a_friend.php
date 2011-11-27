@@ -38,9 +38,9 @@ if (strstr($_REQUEST['url'], 'tiki-tell_a_friend.php')) {
 	$_REQUEST['url'] = preg_replace('/.*tiki-tell_a_friend.php\?url=/', '', $_REQUEST['url']);
 	header('location: tiki-tell_a_friend.php?url=' . $_REQUEST['url']);
 }
-$url_for_friend = $tikilib->httpPrefix( true ) . $_REQUEST['url'];
+$url_for_friend = $tikilib->httpPrefix(true) . $_REQUEST['url'];
 $smarty->assign('url', $_REQUEST['url']);
-$smarty->assign('prefix', $tikilib->httpPrefix( true ));
+$smarty->assign('prefix', $tikilib->httpPrefix(true));
 $errors = array();
 if (isset($_REQUEST['send'])) {
 	check_ticket('tell-a-friend');
@@ -98,9 +98,9 @@ if (isset($_REQUEST['send'])) {
 
 		if ( $prefs['auth_token_tellafriend'] == 'y' && $prefs['auth_token_access'] == 'y' && isset($_POST['share_access']) ) {
 			require_once 'lib/auth/tokens.php';
-			$tokenlib = AuthTokens::build( $prefs );
+			$tokenlib = AuthTokens::build($prefs);
 
-			$url_for_friend = $tokenlib->includeToken( $url_for_friend, $globalperms->getGroups() );
+			$url_for_friend = $tokenlib->includeToken($url_for_friend, $globalperms->getGroups());
 		}
 
 		$smarty->assign('url_for_friend', $url_for_friend);
@@ -113,7 +113,7 @@ if (isset($_REQUEST['send'])) {
 			$ok = $ok && $mail->send(array($email));
 		}
 		if ($ok) {
-			$access->redirect( $_REQUEST['url'], tra('Your link was sent.') );
+			$access->redirect($_REQUEST['url'], tra('Your link was sent.'));
 		} else {
 			$errors = tra("The mail can't be sent. Contact the administrator");
 		}

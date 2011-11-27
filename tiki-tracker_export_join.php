@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 if (isset($_REQUEST['time']) == true) {
 	$starttime = microtime();
@@ -16,7 +21,8 @@ $trklib = TikiLib::lib("trk");
 $trkqrylib = TikiLib::lib("trkqry");
 
 //TODO: This needs rewritten to match tiki
-function dateFormat($fieldIds, $tracker) {
+function dateFormat($fieldIds, $tracker)
+{
 	foreach ($tracker as $key => $item) {
 		foreach ($fieldIds as $fieldId) {
 			if (isset($item[$fieldId]) == true && is_numeric($item[$fieldId])) {
@@ -28,7 +34,8 @@ function dateFormat($fieldIds, $tracker) {
 }
 
 //TODO: Find alternative for obtaining querystring/form data
-function defVal($name, $default = null) {		
+function defVal($name, $default = null)
+{		
 	if (isset($_GET[$name]) == true) {
 		$_REQUEST[$name] = $_GET[$name];
 	}
@@ -60,7 +67,8 @@ defVal('start');
 defVal('end');
 
 //TODO: integrate into tracker query lib
-function splitToTracker($param) {
+function splitToTracker($param)
+{
 	if (isset($_REQUEST[$param])) {
 		$_REQUEST[$param] = explode("|", $_REQUEST[$param]);
 		foreach ($_REQUEST[$param] as $key => $field) {
@@ -103,17 +111,17 @@ if (isset($_REQUEST['trackerIds']) == true) {
 			$joinVars = explode('|', $joinVars);
 			
 			$trackerPrimary = $trkqrylib->join_trackers(
-				$trackerPrimary, 
-				TrackerQueryLib::tracker($trackerId)
-					->start($_REQUEST['start'][$key])
-					->end($_REQUEST['end'][$key])
-					 ->equals($_REQUEST['q'][$key])
-					->search($_REQUEST['search'][$key])
-					->fields($_REQUEST['fields'][$key])
-					->status($_REQUEST['status'][$key])
-					->query(),
-				$joinVars[0],
-				$joinVars[1]
+							$trackerPrimary, 
+							TrackerQueryLib::tracker($trackerId)
+							->start($_REQUEST['start'][$key])
+							->end($_REQUEST['end'][$key])
+							->equals($_REQUEST['q'][$key])
+							->search($_REQUEST['search'][$key])
+							->fields($_REQUEST['fields'][$key])
+							->status($_REQUEST['status'][$key])
+							->query(),
+							$joinVars[0],
+							$joinVars[1]
 			);
 		}
 		$i++;
@@ -142,7 +150,7 @@ if (isset($_REQUEST['time']) == true) {
 	$endarray = explode(" ", $endtime);
 	$endtime = $endarray[1] + $endarray[0];
 	$totaltime = $endtime - $starttime; 
-	$totaltime = round($totaltime,5);
+	$totaltime = round($totaltime, 5);
 	echo "This page loaded in $totaltime seconds.\n\n\n";
 }
 

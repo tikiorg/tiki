@@ -102,13 +102,13 @@ if (isset($_REQUEST['search']) && $searchtext) {
 			
 			$beforeSnippet = substr($r["data"], $snippetStart, $leftpartLength) . $lefthash . $foundtext . $righthash . substr($r["data"], $rightpartStart, $rightpartLength);
 			$beforeSnippet = htmlentities($beforeSnippet);
-			$beforeSnippet = str_replace($lefthash,'<strong>',$beforeSnippet);
-			$beforeSnippet = str_replace($righthash,'</strong>',$beforeSnippet);
+			$beforeSnippet = str_replace($lefthash, '<strong>', $beforeSnippet);
+			$beforeSnippet = str_replace($righthash, '</strong>', $beforeSnippet);
 			
 			$afterSnippet = substr($r["data"], $snippetStart, $leftpartLength) . $lefthash . $replacetext . $righthash . substr($r["data"], $rightpartStart, $rightpartLength);
 			$afterSnippet = htmlentities($afterSnippet);
-			$afterSnippet = str_replace($lefthash,'<strong>',$afterSnippet);
-			$afterSnippet = str_replace($righthash,'</strong>',$afterSnippet);
+			$afterSnippet = str_replace($lefthash, '<strong>', $afterSnippet);
+			$afterSnippet = str_replace($righthash, '</strong>', $afterSnippet);
 			
 			$r["beforeSnippet"][] = $beforeSnippet;
 			$r["afterSnippet"][] = $afterSnippet;

@@ -47,7 +47,7 @@ $smarty->assign('nlId', $_REQUEST["nlId"]);
 $smarty->assign('subscribe', 'n');
 $smarty->assign('subscribed', 'n');
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$smarty->assign('url_subscribe', $tikilib->httpPrefix( true ) . $foo["path"]);
+$smarty->assign('url_subscribe', $tikilib->httpPrefix(true) . $foo["path"]);
 if (isset($_REQUEST["nlId"])) {
 	$tikilib->get_perm_object($_REQUEST["nlId"], 'newsletter');
 }
@@ -71,7 +71,7 @@ if ($tiki_p_subscribe_newsletters == 'y') {
 		}
 		// Save the ip at the log for email subscriptions from anonymous
 		if (empty($user)) { 
-			$logslib->add_log('newsletter','subscribed email '.$_REQUEST["email"].' to newsletter '.$_REQUEST["nlId"]);
+			$logslib->add_log('newsletter', 'subscribed email '.$_REQUEST["email"].' to newsletter '.$_REQUEST["nlId"]);
 			$smarty->assign('subscribed', 'y'); // will receive en email
 		}
 		// Now subscribe the email address to the newsletter

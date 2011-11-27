@@ -38,22 +38,25 @@ if (is_array($invoice["Item Amounts"])) {
 
 $smarty->assign("invoice", $invoice);
 $smarty->assign("amount", $amount);
-$smarty->assign("client",
-	TrackerQueryLib::tracker("Invoice Clients")
-		->fields(array("Client Id"))->equals(array($invoice['Client Id']))
-		->byName()
-		->getOne()
+$smarty->assign(
+				"client",
+				TrackerQueryLib::tracker("Invoice Clients")
+				->fields(array("Client Id"))->equals(array($invoice['Client Id']))
+				->byName()
+				->getOne()
 );
-$smarty->assign("setting", 
-	TrackerQueryLib::tracker("Invoice Settings")
-		->byName()
-		->query()
+$smarty->assign(
+				"setting", 
+				TrackerQueryLib::tracker("Invoice Settings")
+				->byName()
+				->query()
 );
-$smarty->assign("invoiceItems", 
-	TrackerQueryLib::tracker("Invoice Items")
-		->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
-		->byName()
-		->query()
+$smarty->assign(
+				"invoiceItems", 
+				TrackerQueryLib::tracker("Invoice Items")
+				->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
+				->byName()
+				->query()
 );
 
 // Display the template

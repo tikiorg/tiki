@@ -7,7 +7,7 @@
 
 require_once('tiki-setup.php');
 $access->check_feature(array('feature_time_sheet','feature_trackers'));
-$access->check_permission_either( array('tiki_p_view_trackers', 'tiki_p_create_tracker_items') );
+$access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'));
 
 global $user;
 $auto_query_args = array(
@@ -36,16 +36,20 @@ if (isset($_REQUEST['all'])) { //all views all sheet items
 		->query();
 }
 
-if(isset($projectList)) {
+if (isset($projectList)) {
 	if (isset($_REQUEST['save'])) {
 		$_REQUEST['Done_by'] = $user;
-		TikiLib::lib("trk")->replaceItemFromRequestValuesByName("Time sheet", array(
-			"Summary",
-            "Associated project",
-            "Description",
-            "Amount of time spent",
-            "Done by"
-		), $_REQUEST); 
+		TikiLib::lib("trk")->replaceItemFromRequestValuesByName(
+						"Time sheet",
+						array(
+							"Summary",
+   			         "Associated project",
+   			         "Description",
+   			         "Amount of time spent",
+   			         "Done by"
+						),
+						$_REQUEST
+		); 
 		die;
 	}
 
@@ -61,7 +65,8 @@ $headerlib = TikiLib::lib("header");
 $headerlib->add_cssfile("lib/jquery/jtrack/css/jtrack.css");
 $headerlib->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js");
 $headerlib->add_jsfile("lib/jquery/jtrack/js/jtrack.js");
-$headerlib->add_jq_onready("
+$headerlib->add_jq_onready(
+				"
 	jTask.init();
 	
 	$.timesheetSpreadsheet = function() {
@@ -141,7 +146,8 @@ $headerlib->add_jq_onready("
 	$('#timeSheetTabs')
 		.width($('#timeSheetTabs').parent().width())
 		.tabs();
-");
+"
+);
 $smarty->assign('mid', 'tiki-timesheet.tpl');
 // use tiki_full to include include CSS and JavaScript
 $smarty->display("tiki.tpl");

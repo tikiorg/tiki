@@ -57,7 +57,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 			$page_info = $tikilib->get_page_print_info($struct_page['pageName']);
 			
 			// Use the alias as the display name, if an alias is defined
-			if( isset($struct_page['page_alias']) ) {
+			if ( isset($struct_page['page_alias']) ) {
 				$page_info['pageName'] = $struct_page['page_alias'];
 			}
 			
@@ -97,11 +97,11 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	$pdf = $pdfname = '';
 
 	if (!empty($printpages)) {
-		$pdf = $generator->getPdf( 'tiki-print_multi_pages.php', array('print' => 'print', 'printpages' => $_REQUEST['printpages'] ) );
+		$pdf = $generator->getPdf('tiki-print_multi_pages.php', array('print' => 'print', 'printpages' => $_REQUEST['printpages'] ));
 		$pdfname = implode(', ', $printpages);
 
 	} else if (!empty($printstructures)) {
-		$pdf = $generator->getPdf( 'tiki-print_multi_pages.php', array('print' => 'print', 'printstructures' => $_REQUEST['printstructures'] ) );
+		$pdf = $generator->getPdf('tiki-print_multi_pages.php', array('print' => 'print', 'printstructures' => $_REQUEST['printstructures'] ));
 		$pdfname = implode(', ', $printstructures);
 
 	} else {

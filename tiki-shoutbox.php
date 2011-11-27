@@ -74,10 +74,11 @@ if (isset($_REQUEST["get"])) {
 	$get=0;
 }
 /* additions for ajax (formerly shoutjax) */
-function processShout($formValues, $destDiv = 'mod-shoutbox') {	// AJAX_TODO
+function processShout($formValues, $destDiv = 'mod-shoutbox')
+{	// AJAX_TODO
 	global $shoutboxlib, $user, $smarty, $prefs, $tiki_p_admin_shoutbox;
-	$smarty->assign('tweet',$formValues['tweet']);
-	$smarty->assign('facebook',$formValues['facebook']);
+	$smarty->assign('tweet', $formValues['tweet']);
+	$smarty->assign('facebook', $formValues['facebook']);
 	if (array_key_exists('shout_msg', $formValues) && strlen($formValues['shout_msg']) > 2) {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('shout_error', $captchalib->getErrors());

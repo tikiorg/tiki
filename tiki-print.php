@@ -9,7 +9,7 @@ $section_class="tiki_wiki_page print";
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 
-$access->check_feature( array('feature_wiki', 'feature_wiki_print') );
+$access->check_feature(array('feature_wiki', 'feature_wiki_print'));
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
@@ -81,7 +81,7 @@ $smarty->assign('display', isset($_REQUEST['display']) ? $_REQUEST['display'] : 
 if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator();
-	$pdf = $generator->getPdf( 'tiki-print.php', array('page' => $page) );
+	$pdf = $generator->getPdf('tiki-print.php', array('page' => $page));
 
 	header('Cache-Control: private, must-revalidate');
 	header('Pragma: private');

@@ -65,14 +65,14 @@ if ($prefs['feature_theme_control'] == 'y') {
 	if ($tc_theme) {
 		if ($old_tc_theme) {
 			$headerlib->drop_cssfile($tikilib->get_style_path('', '', $old_tc_theme));
-			$headerlib->drop_cssfile($tikilib->get_style_path( $old_tc_theme, $old_tc_theme_option, $old_tc_theme_option));
+			$headerlib->drop_cssfile($tikilib->get_style_path($old_tc_theme, $old_tc_theme_option, $old_tc_theme_option));
 		}
 		$headerlib->drop_cssfile($tikilib->get_style_path('', '', $prefs['style']));
 		$headerlib->add_cssfile($tikilib->get_style_path('', '', $tc_theme), 51);
 
-		$headerlib->drop_cssfile($tikilib->get_style_path( $prefs['style'], $prefs['style_option'], $prefs['style_option']));
+		$headerlib->drop_cssfile($tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
 		if (!empty($tc_theme_option)) { // special handling for 'None' case
-			$headerlib->add_cssfile($tikilib->get_style_path( $tc_theme, $tc_theme_option, $tc_theme_option), 52);
+			$headerlib->add_cssfile($tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option), 52);
 		}
 		// Reset IE specific CSS
 		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $style_base;
