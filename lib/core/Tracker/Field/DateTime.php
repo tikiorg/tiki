@@ -67,8 +67,11 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			'value' => $this->getValue($this->getOption(3) == 'blank' ? '' : TikiLib::lib('tiki')->now),
 		);
 
-		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Hour'])) {
+		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Day']) || isset($requestData[$ins_id.'Year']) || isset($requestData[$ins_id.'Hour']) || isset($requestData[$ins_id.'Minute'])) {
 			$data['value'] = TikiLib::lib('trk')->build_date($requestData, $this->getOption(0), $ins_id);
+			if (empty($data['value']) && (!empty($requestData[$ins_id.'Month']) || !empty($requestData[$ins_id.'Day']) || !empty($requestData[$ins_id.'Year']) || !empty($requestData[$ins_id.'Hour']) || !empty($requestData[$ins_id.'Minute']))) {
+				$data['error'] = 'y';
+			}
 		}
 
 		return $data;

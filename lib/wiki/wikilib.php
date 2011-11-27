@@ -311,6 +311,10 @@ class WikiLib extends TikiLib
 			$this->query($query, array( $newName, $oldName ));
 		}
 		
+		// copyright
+		$query = "update tiki_copyrights set `page`=? where `page`=?";
+		$this->query($query, array( $newName, $oldName ) );
+
 		//breadcrumb
 		if (isset($_SESSION["breadCrumb"]) && in_array($oldName, $_SESSION["breadCrumb"])) {
 			$pos = array_search($oldName, $_SESSION["breadCrumb"]);

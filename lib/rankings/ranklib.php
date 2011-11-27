@@ -50,7 +50,7 @@ class RankLib extends TikiLib
 						}
 					}
 				}		
-				if ($prefs['feature_best_language'] != 'y' || !$res['lang'] || !in_array($res['pageName'], $pagesAdded)) {
+				if ($prefs['feature_best_language'] != 'y' || !$res['lang'] || empty($pagesAdded) || !in_array($res['pageName'], $pagesAdded)) {
 					$aux['name'] = $res['pageName'];
 					$aux['hits'] = $res['hits'];
 					$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);

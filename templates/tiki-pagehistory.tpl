@@ -26,9 +26,9 @@
 	<div>
 		{if !isset($noHistory)}
 		  	{if isset($show_all_versions) and $show_all_versions eq "n"}
-				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
 			{else}
-				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
 			{/if}
 		{/if}
 	</div>

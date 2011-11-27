@@ -13,7 +13,7 @@
 	</div>
 	{/foreach}
 	{if isset($hiddenContributors)}
-	<a href="">{if $hiddenContributors eq 1}{tr}1 more contributor{/tr}{else}{tr}{$hiddenContributors} more contributors{/tr}{/if}</a>
+	<a href="#">{if $hiddenContributors eq 1}{tr}1 more contributor{/tr}{else}{tr}{$hiddenContributors} more contributors{/tr}{/if}</a>
 	{jq}
 	$('div.contributors').each(function() {
 		$(this).children('div:gt(4)').hide();

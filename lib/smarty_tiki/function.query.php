@@ -55,10 +55,13 @@ function smarty_function_query($params, $smarty)
 			foreach ( $params as $param_name => $param_value ) {
 				// Arguments starting with an underscore are special and must not be included in URL
 				if ( $param_name[0] == '_' ) continue;
-
-				$list = explode(", ", $param_value);
-				if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name], $list) ) {
-					$query[$param_name] = $list[(array_search($_REQUEST[$param_name], $list)+1)%count($list)];
+				if ($param_name == 'page') {
+					$list = array($param_value);
+				} else {
+					$list = explode(",",$param_value);
+				}
+				if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name],$list) ) {
+					$query[$param_name] = $list[(array_search($_REQUEST[$param_name],$list)+1)%count($list)];
 					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
 						unset($query[$param_name]);
 					}

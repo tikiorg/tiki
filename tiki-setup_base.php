@@ -142,17 +142,12 @@ if ( $cdn_pref ) {
 		exit;
 	}
 }
-$cookie_path = '';
 if (isset($_SERVER["REQUEST_URI"])) {
-	$cookie_path = str_replace("\\", "/", dirname($_SERVER["REQUEST_URI"]));
-	if ($cookie_path != '/') {
-		$cookie_path .= '/';
-	}
-	ini_set('session.cookie_path', str_replace("\\", "/", $cookie_path));
+	ini_set('session.cookie_path', str_replace("\\", "/", $tikiroot));
 	if ( $start_session ) {
 		// enabing silent sessions mean a session is only started when a cookie is presented
 		$session_params = session_get_cookie_params();
-		session_set_cookie_params($session_params['lifetime'], $cookie_path);
+		session_set_cookie_params($session_params['lifetime'], $tikiroot);
 		unset($session_params);
 	
 		try {
