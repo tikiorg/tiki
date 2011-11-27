@@ -45,13 +45,10 @@ class Debugger extends ResultType
   function rescan_for_commands()
   {
     $files = array();
-    if (is_dir(DBG_PLUGINS_DIR))
-    {
-      if ($dh = opendir(DBG_PLUGINS_DIR))
-      {
-        while (($file = readdir($dh)) !== false)
-        {
-          if (preg_match("/^debug-command_.*\.php$/",$file))
+    if (is_dir(DBG_PLUGINS_DIR)) {
+      if ($dh = opendir(DBG_PLUGINS_DIR)) {
+        while (($file = readdir($dh)) !== false) {
+          if (preg_match("/^debug-command_.*\.php$/", $file))
             array_push($files, $file);
         }
         closedir($dh);
@@ -59,15 +56,12 @@ class Debugger extends ResultType
     }
     // Refresh object in commands array
     $this->commands = array();
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
       include_once(DBG_PLUGINS_DIR.'/'.$file);
-      $func_name = preg_replace(",debug-command_([A-Za-z0-9]+)\.php,","dbg_command_factory_\\1", $file);
-      if (function_exists($func_name))
-      {
+      $func_name = preg_replace(",debug-command_([A-Za-z0-9]+)\.php,", "dbg_command_factory_\\1", $file);
+      if (function_exists($func_name)) {
 	      $obj = $func_name();
-        if (is_subclass_of($obj, "DebuggerCommand"))
-        {
+        if (is_subclass_of($obj, "DebuggerCommand")) {
           // If command have name, insert in by name, else assume that
           // it is interface only extension
 	        if (strlen($obj->name()) > 0)
@@ -89,37 +83,29 @@ class Debugger extends ResultType
     $rawcmd = trim($rawcmd);
     $result = '';
     // Is smth else in command line 'cept spaces?
-    if (strlen($rawcmd))
-    {
+    if (strlen($rawcmd)) {
       // Extract first word (possible the only) from command line...
       $cmd = substr($rawcmd, 0, (($pos = strpos($rawcmd, ' ')) == false ? strlen($rawcmd) : $pos));
       // Check for the only internal command: help :)
-      if (strcmp($cmd, 'help') !== 0)
-      {
+      if (strcmp($cmd, 'help') !== 0) {
         // No this is smth other... Is assiciated handler present?
-        if (isset($this->commands[$cmd]))
-      	{
+			if (isset($this->commands[$cmd])) {
       	  // OK. May call external command...
-      	  $result = $this->commands[$cmd]->execute(str_replace($cmd, '', $rawcmd));
-      	  $this->set_result_type($this->commands[$cmd]->result_type());
-          if ($this->result_type() == TPL_RESULT)
-      	    $this->set_result_tpl($this->commands[$cmd]->result_tpl());
-      	}
-      	else
-      	{
+				$result = $this->commands[$cmd]->execute(str_replace($cmd, '', $rawcmd));
+				$this->set_result_type($this->commands[$cmd]->result_type());
+				if ($this->result_type() == TPL_RESULT)
+					$this->set_result_tpl($this->commands[$cmd]->result_tpl());
+			} else {
           // Command not found... Issue a spam!
           $result = '<span class="dbgerror">No such command "'.$cmd.'"</span>';
           $this->set_result_type(HTML_RESULT);
-        }
-      }
-      else
-      {
+			}
+      } else {
         // Handle help command. Is help for some command needed?
         $rawcmd = trim(str_replace($cmd, "", $rawcmd));
         $result = array();
         $result["action"] = 'none';
-        if (strlen($rawcmd) == 0)
-        {
+			if (strlen($rawcmd) == 0) {
           $result["action"] = 'list';
           // No. This is along help on command line. Append my help...
           $result[0][] = array('cmd' => 'help', 
@@ -127,25 +113,20 @@ class Debugger extends ResultType
           foreach ($this->commands as $cmdobj)
             if (strlen(trim($cmdobj->name())) > 0)
               $result[0][] = array('cmd' => $cmdobj->name(), 'description' => $cmdobj->description());
-        }
-        else
-        {
+			} else {
           // What command help requested for??
-          if (isset($this->commands[$rawcmd]))
-          {
-              $result["action"] = 'one';
-              $cmdobj = $this->commands[$rawcmd];
-              $result['name'] = $cmdobj->name();
-              $result['description'] = $cmdobj->description();
-              $result['syntax'] = $cmdobj->syntax();
-              $result['example'] = $cmdobj->example();
-          }
-          else
-          {
-             $this->set_result_type(HTML_RESULT);
-             return '<tr><td><span class="dbgerror">No such command "'.$rawcmd.'"</span></td></tr>';
-          }
-    	  }
+				if (isset($this->commands[$rawcmd])) {
+				    $result["action"] = 'one';
+				    $cmdobj = $this->commands[$rawcmd];
+				    $result['name'] = $cmdobj->name();
+				    $result['description'] = $cmdobj->description();
+				    $result['syntax'] = $cmdobj->syntax();
+				    $result['example'] = $cmdobj->example();
+				} else {
+				   $this->set_result_type(HTML_RESULT);
+				   return '<tr><td><span class="dbgerror">No such command "'.$rawcmd.'"</span></td></tr>';
+				}
+			}
         $this->set_result_type(TPL_RESULT);
         $this->set_result_tpl('debug/tiki-debug_console_help.tpl');
       }
@@ -176,8 +157,7 @@ class Debugger extends ResultType
   {
     $result = '';
     $v = trim($v);
-    if (strlen(str_replace("$", "", $v)) > 0)
-    {
+    if (strlen(str_replace("$", "", $v)) > 0) {
       // Need to make var global... strip [] if needed
       $global = (($pos = strpos($v, '[')) == false) ? $v : substr($v, 0, $pos);
       //

@@ -8,7 +8,7 @@
 // For documentation how to use this file please see the comment at the end of this file
 
 //this script may only be included - so its better to die if called  directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -20,31 +20,32 @@ require_once('lib/categories/categlib.php');
 class AreasLib extends CategLib
 {
 
-	function HandleObjectCategories($objectCategoryIds){
+	function HandleObjectCategories($objectCategoryIds)
+	{
     	global $prefs, $perspectivelib, $_SESSION;  
     
-   	if (!empty($objectCategoryIds)){
-		if(!isset($_SESSION['current_perspective'])) $_SESSION['current_perspective'] = 0; 
-	        foreach($objectCategoryIds as $categId){
-			// If parent category has ID equal to value of $prefs['areas_root']
-			$foundPerspective = NULL;
-			if ($this->get_category_parent($categId) == $prefs['areas_root']){
-				$foundPerspective = $this->get_perspective_by_categid($categId); 
-				// If the found perspective is different than the current perspective, update it.
-		                if ($foundPerspective != $_SESSION['current_perspective']) {
-					$perspectivelib->set_perspective($foundPerspective);
-					//Reroute browser back to calling script after we have applied our hack.
-					header("Location: ". $_SERVER['REQUEST_URI']);	
-				}
-			}else{ // If parent category id does not equal $prefs['areas_root'] set the default perspective (0)
-				if ($foundPerspective != $_SESSION['current_perspective']) {
-				$perspectivelib->set_perspective(0);
-				//Reroute browser back to calling script after we have applied our hack.
-				header("Location: ". $_SERVER['REQUEST_URI']);	
+		if (!empty($objectCategoryIds)) {
+			if (!isset($_SESSION['current_perspective'])) $_SESSION['current_perspective'] = 0; 
+			foreach ($objectCategoryIds as $categId) {
+				// If parent category has ID equal to value of $prefs['areas_root']
+				$foundPerspective = NULL;
+				if ($this->get_category_parent($categId) == $prefs['areas_root']) {
+					$foundPerspective = $this->get_perspective_by_categid($categId); 
+					// If the found perspective is different than the current perspective, update it.
+					if ($foundPerspective != $_SESSION['current_perspective']) {
+						$perspectivelib->set_perspective($foundPerspective);
+						//Reroute browser back to calling script after we have applied our hack.
+						header("Location: ". $_SERVER['REQUEST_URI']);	
+					}
+				} else { // If parent category id does not equal $prefs['areas_root'] set the default perspective (0)
+					if ($foundPerspective != $_SESSION['current_perspective']) {
+						$perspectivelib->set_perspective(0);
+						//Reroute browser back to calling script after we have applied our hack.
+						header("Location: ". $_SERVER['REQUEST_URI']);	
+					}
 				}
 			}
-       		}
-	}
+		}
 /*    else if ($_SESSION['current_perspective'] !== 0)     // decomment this violates the category jail 
     {
         $perspectivelib->set_perspective(0);
@@ -56,8 +57,9 @@ class AreasLib extends CategLib
  for the difference between should and is, first retrieve all perspectives given for any reason
  and then choose one in the function below, namely the first.
 */
-	function get_perspectives_by_categid($categId){
-		$result = $this->query( "SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ?", array($categId));
+	function get_perspectives_by_categid($categId)
+	{
+		$result = $this->query("SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ?", array($categId));
 		while($row = $result->fetchRow()) return unserialize($row['perspectives']);
 		return false;
 	}
@@ -65,36 +67,38 @@ class AreasLib extends CategLib
  pick up the first or only perspective assigned to category with id categId
  returns false if there is no entry for this category and returns 0 if it has no perspective
 */
-	function get_perspective_by_categid($categId){
+	function get_perspective_by_categid($categId)
+	{
 		$persp = $this->get_perspectives_by_categid($categId);
-		if($persp===false) return false;
-		if(count($persp)==0) return 0;
+		if ($persp===false) return false;
+		if (count($persp)==0) return 0;
 		return $persp[0];
 	}
 
-	function update_areas(){
+	function update_areas()
+	{
 		global $prefs;
 		$areas = array();
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
-		if( is_array($descendants) ){
-		foreach($descendants as $item)
+		if ( is_array($descendants) ) {
+		foreach ($descendants as $item)
 			$areas[$item] = array();	// it only should be just one perspective assigned
-		$result = $this->fetchAll( "SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
-	        if(count($result)!=0){
-			foreach( $result as $row ) {
-				$categs = unserialize( $row['value'] );			
-				foreach($categs as $item) if(array_key_exists($item, $areas)) $areas[$item][] = $row['perspectiveId'];
-	 		}
-
-		// to get rid off probably old data
-		$this->query("DELETE FROM tiki_areas");
-
-		foreach($areas as $key=>$item){
-			$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));
+		$result = $this->fetchAll("SELECT `perspectiveId`, `pref`, `value` FROM tiki_perspective_preferences WHERE pref = 'category_jail'", array());
+		if (count($result)!=0) {
+			foreach ( $result as $row ) {
+				$categs = unserialize($row['value']);
+				foreach ($categs as $item) if (array_key_exists($item, $areas)) $areas[$item][] = $row['perspectiveId'];
 			}
-		}else return tra("No category jail set in any perspective.");
+
+			// to get rid off probably old data
+			$this->query("DELETE FROM tiki_areas");
+
+			foreach ($areas as $key=>$item) {
+				$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));
+			}
+		} else return tra("No category jail set in any perspective.");
 		return true;
-		}else return tra("Areas root category id")." ".tra("is invalid.");
+		} else return tra("Areas root category id")." ".tra("is invalid.");
 	}
 } // class end
 $areaslib = new AreasLib();

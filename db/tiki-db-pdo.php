@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
@@ -43,7 +43,7 @@ try {
 	if ( isset( $client_charset ) ) {
 		$charset_query = "SET NAMES $client_charset";
 
-		if ( defined('PDO::MYSQL_ATTR_INIT_COMMAND' ) ) {
+		if ( defined('PDO::MYSQL_ATTR_INIT_COMMAND') ) {
 			$pdo_options[ PDO::MYSQL_ATTR_INIT_COMMAND ] = $charset_query;
 		} else {
 			$pdo_post_queries[] = $charset_query;
@@ -52,11 +52,11 @@ try {
 		unset( $charset_query );
 	}
 
-	$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $pdo_options );
-	$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
-	$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
-	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
-	TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
+	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $pdo_options);
+	$dbTiki->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+	$dbTiki->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+	TikiDb::set(new TikiDb_Pdo($dbTiki));
 
 	$tempDb = TikiDb::get();
 	if ( $api_tiki_forced || ( isset( $dbversion_tiki ) && $dbversion_tiki[0] >= 4 ) ) {
@@ -65,23 +65,24 @@ try {
 		$previousApi = 'adodb';
 	}
 
-	foreach( $pdo_post_queries as $query ) {
-		$tempDb->query( $query );
+	foreach ( $pdo_post_queries as $query ) {
+		$tempDb->query($query);
 	}
 
-	unset( $tempDb, $pdo_options, $pdo_post_queries );
+	unset($tempDb, $pdo_options, $pdo_post_queries);
 
 } catch( PDOException $e ) {
 	require_once 'lib/init/smarty.php';
 
-	$smarty->assign( 'msg', $e->getMessage() );
-	$smarty->assign( 'where', 'connection');
-	echo $smarty->fetch( 'database-connection-error.tpl' );
+	$smarty->assign('msg', $e->getMessage());
+	$smarty->assign('where', 'connection');
+	echo $smarty->fetch('database-connection-error.tpl');
 	exit;
 }
 
-if ( ! function_exists( 'close_connection' ) ) {
-	function close_connection() {
+if ( ! function_exists('close_connection') ) {
+	function close_connection()
+	{
 		global $dbTiki;
 		$dbTiki= NULL;
 	}
