@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_lastmod_info() {
+function wikiplugin_lastmod_info()
+{
 	return array(
 		'name' => tra('Last Modification'),
 		'documentation' => 'PluginLastMod',
@@ -22,16 +23,16 @@ function wikiplugin_lastmod_info() {
 	);
 }
 
-function wikiplugin_lastmod($data, $params) {
-
+function wikiplugin_lastmod($data, $params)
+{
 	global $tikilib;
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if (!isset($page)) {
 		# See if we're being called from a wiki page; stolen from wikiplugin_attach
 		if (isset($_REQUEST['SCRIPT_NAME']) && isset($_REQUEST['page'])) {
-			if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], 'tiki-pagehistory.php') ) {
+			if ( strstr($_REQUEST["SCRIPT_NAME"], "tiki-index.php") || strstr($_REQUEST["SCRIPT_NAME"], "tiki-editpage.php") || strstr($_REQUEST["SCRIPT_NAME"], 'tiki-pagehistory.php')) {
 				$page = $_REQUEST["page"];
 			}
 		} else {
@@ -40,7 +41,7 @@ function wikiplugin_lastmod($data, $params) {
 
 	}
 
-	$lastmod = $tikilib->date_format( "%a, %e %b %Y %H:%M:%S %Z", $tikilib->page_exists_modtime($page) );
+	$lastmod = $tikilib->date_format("%a, %e %b %Y %H:%M:%S %Z", $tikilib->page_exists_modtime($page));
 
 	return $lastmod;
 

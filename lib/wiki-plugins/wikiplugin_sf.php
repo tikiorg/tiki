@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-define('SF_CACHE',48); # in hours
+define('SF_CACHE', 48); # in hours
 
-function wikiplugin_sf_info() {
+function wikiplugin_sf_info()
+{
 	return array(
 		'name' => tra('SourceForge'),
 		'documentation' => 'PluginSF',
@@ -49,7 +50,8 @@ function wikiplugin_sf_info() {
 	);
 }
 
-function get_artifact_label($gid, $atid, $aid, $reload=false) {
+function get_artifact_label($gid, $atid, $aid, $reload=false)
+{
 	$agent = $_SERVER['HTTP_USER_AGENT'];
 	$cachefile = "temp/sftrackers.cache.$gid.$atid.$aid";
 	$cachelimit = time() - 60*60*SF_CACHE;
@@ -61,26 +63,27 @@ function get_artifact_label($gid, $atid, $aid, $reload=false) {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, $agent);
 		curl_setopt($ch, CURLOPT_REFERER, $url);
-		$buffer = curl_exec ($ch);
-		curl_close ($ch);
-		if (preg_match("/<title>[^-]*-([^<]*)<\/title>/i",$buffer,$match)) {
-			$fp = fopen($cachefile,"wb");
-			fputs($fp,$match[1]);
+		$buffer = curl_exec($ch);
+		curl_close($ch);
+		if (preg_match("/<title>[^-]*-([^<]*)<\/title>/i", $buffer, $match)) {
+			$fp = fopen($cachefile, "wb");
+			fputs($fp, $match[1]);
 			fclose($fp);
 		} elseif (is_file($cachefile)) {
-			$fp = fopen($cachefile,"rb");
+			$fp = fopen($cachefile, "rb");
 			$back = fgets($fp);
 			fclose($fp);
 		}
 	} else {
-		$fp = fopen($cachefile,"rb");
-		$back = fgets($fp,4096);
+		$fp = fopen($cachefile, "rb");
+		$back = fgets($fp, 4096);
 		fclose($fp);
 	}
 	return $back;
 }
 
-function wikiplugin_sf($data, $params) {	
+function wikiplugin_sf($data, $params)
+{	
 	if (function_exists('curl_init')) {
 		if (empty($params['itemid']) || empty($params['groupid']) || empty($params['trackerid'])) {
 			return 'Plugin SF failed. One or more of the following parameters are missing: groupid, trackerid or itemid.';

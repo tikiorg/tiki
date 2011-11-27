@@ -42,10 +42,7 @@ function wikiplugin_zoterolist($data, $params)
 	$zoterolib = TikiLib::lib('zotero');
 	$html = $zoterolib->get_formatted_references($params['tag']);
 
-	$cachelib->cacheItem($cacheKey, serialize(array(
-		'created' => $tikilib->now,
-		'data' => $html,
-	)), 'zotero');
+	$cachelib->cacheItem($cacheKey, serialize(array('created' => $tikilib->now, 'data' => $html)), 'zotero');
 
 	if ($html) {
 		return WikiParser_PluginOutput::html($html);
@@ -53,4 +50,3 @@ function wikiplugin_zoterolist($data, $params)
 		return WikiParser_PluginOutput::error(tra('Error'), tra('No results obtained. The Zotero citation server may be down.'));
 	}
 }
-

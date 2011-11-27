@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_addtogooglecal_info() {
+function wikiplugin_addtogooglecal_info()
+{
 	return array(
 		'name' => tra('Add to Google Calendar'),
 		'documentation' => 'PluginAddToGoogleCal',
@@ -43,7 +44,8 @@ function wikiplugin_addtogooglecal_info() {
 	);
 }
 
-function wikiplugin_addtogooglecal($data, $params) {
+function wikiplugin_addtogooglecal($data, $params)
+{
 	global $access, $calendarlib;
 	$access->check_feature('feature_calendar');
 	if (!is_object($calendarlib)) {
@@ -52,7 +54,7 @@ function wikiplugin_addtogooglecal($data, $params) {
 	
 	$cal_item_id = $params['calitemid'];
 	$cal_id = $calendarlib->get_calendarid($cal_item_id);
-	$calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
+	$calperms = Perms::get(array( 'type' => 'calendar', 'object' => $cal_id ));
 	if (!$calperms->view_events) {
 		return '';
 	}
@@ -61,9 +63,9 @@ function wikiplugin_addtogooglecal($data, $params) {
 		return '';
 	}
 	$gcal_action = 'TEMPLATE';
-	$gcal_text = urlencode(str_replace(array("\n","\r"),array('',''), strip_tags($calitem['parsedName'])));
-	$gcal_details = urlencode(str_replace(array("\n","\r"),array('',''),$calitem['parsed']));
-	$gcal_location = urlencode(str_replace(array("\n","\r"),array('',''), strip_tags($calitem['locationName'])));
+	$gcal_text = urlencode(str_replace(array("\n","\r"), array('',''), strip_tags($calitem['parsedName'])));
+	$gcal_details = urlencode(str_replace(array("\n","\r"), array('',''), $calitem['parsed']));
+	$gcal_location = urlencode(str_replace(array("\n","\r"), array('',''), strip_tags($calitem['locationName'])));
 	$curtikidate = new TikiDate();
 	// Google requires date to be formatted in UTC
 	$old_tz = date_default_timezone_get();

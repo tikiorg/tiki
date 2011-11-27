@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_footnotearea_info() {
+function wikiplugin_footnotearea_info()
+{
 	return array(
-		'name' => tra( 'Footnote Area' ),
+		'name' => tra('Footnote Area'),
 		'documentation' => 'PluginFootnoteArea',
 		'description' => tra('Create automatically numbered footnotes (together with PluginFootnote)'),
 		'prefs' => array('wikiplugin_footnotearea'),
@@ -17,12 +18,13 @@ function wikiplugin_footnotearea_info() {
 	);
 }
 
-function wikiplugin_footnotearea($data, $params) {
+function wikiplugin_footnotearea($data, $params)
+{
 
 	$html = '<div class="footnotearea">';
 	$html .= '<hr />';
 
-	foreach($GLOBALS["footnotesData"] as $data => $number){
+	foreach ($GLOBALS["footnotesData"] as $data => $number) {
 		$html .= '<div class="onefootnote" id="footnote' . $number . '">';
 		$html .= '<a href="#ref_footnote' . $number . '">'. $number . '.</a> ';
 		$html .= '~/np~' . $data . '~np~';

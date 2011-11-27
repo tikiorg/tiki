@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_slider_info() {
+function wikiplugin_slider_info()
+{
 	return array(
 		'name' => tra('Slider'),
 		'documentation' => 'PluginSlider',
@@ -304,20 +305,21 @@ function wikiplugin_slider_info() {
 	);
 }
 
-function wikiplugin_slider($data, $params) {
+function wikiplugin_slider($data, $params)
+{
 	global $tikilib, $headerlib;
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
-	$headerlib->add_jsfile( 'lib/jquery/anythingslider/js/swfobject.js' );
-	$headerlib->add_jsfile( 'lib/jquery/anythingslider/js/jquery.anythingslider.js' );
-	$headerlib->add_jsfile( 'lib/jquery/anythingslider/js/jquery.anythingslider.fx.js' );
-	$headerlib->add_jsfile( 'lib/jquery/anythingslider/js/jquery.anythingslider.video.js' );
-	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/anythingslider.css' );
-	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-construction.css' );
-	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-cs-portfolio.css' );
-	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-metallic.css' );
-	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-minimalist-round.css' );
-	$headerlib->add_cssfile( 'lib/jquery/anythingslider/css/theme-minimalist-square.css' );
+	$headerlib->add_jsfile('lib/jquery/anythingslider/js/swfobject.js');
+	$headerlib->add_jsfile('lib/jquery/anythingslider/js/jquery.anythingslider.js');
+	$headerlib->add_jsfile('lib/jquery/anythingslider/js/jquery.anythingslider.fx.js');
+	$headerlib->add_jsfile('lib/jquery/anythingslider/js/jquery.anythingslider.video.js');
+	$headerlib->add_cssfile('lib/jquery/anythingslider/css/anythingslider.css');
+	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-construction.css');
+	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-cs-portfolio.css');
+	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-metallic.css');
+	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-minimalist-round.css');
+	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-minimalist-square.css');
 	
 	if (isset($theme) && !empty($theme)) {
 		switch (strtolower($theme)) {
@@ -327,7 +329,7 @@ function wikiplugin_slider($data, $params) {
 			case 'minimalist-round':
 			case 'minimalist-square':
 				$theme = $theme;
-				break;
+    			break;
 			default:
 				$theme = 'default';
 		}
@@ -335,8 +337,8 @@ function wikiplugin_slider($data, $params) {
 		$theme = 'default';
 	}
 	
-	$headerlib->add_jq_onready("
-		function formatText(i, p) {
+	$headerlib->add_jq_onready(
+					"function formatText(i, p) {
 			var possibleText = $('.tiki-slider-title').eq(i - 1).text();
 			return (possibleText ? possibleText : i);
 		}
@@ -389,8 +391,8 @@ function wikiplugin_slider($data, $params) {
 			addWmodeToObject    : 'opaque',
 			
 			navigationFormatter: formatText
-		});
-	");
+		});"
+	);
 	
 	$titles = array();
 	if (!empty($titles)) {
@@ -405,7 +407,7 @@ function wikiplugin_slider($data, $params) {
 	}
 	
 	$ret = '';
-	foreach($sliderData as $i => $slide) {
+	foreach ($sliderData as $i => $slide) {
 		$ret .= "<div>
 			".(isset($titles[$i]) ? "<span class='tiki-slider-title' style='display: none;'>".$titles[$i]."</span>" : "")."
 			$slide

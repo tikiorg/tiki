@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trackeritemfield_info() {
+function wikiplugin_trackeritemfield_info()
+{
 	return array(
 		'name' => tra('Tracker Item Field'),
 		'documentation' => 'PluginTrackerItemField',
@@ -83,7 +84,8 @@ function wikiplugin_trackeritemfield_info() {
 	);
 }
 
-function wikiplugin_trackeritemfield($data, $params) {
+function wikiplugin_trackeritemfield($data, $params)
+{
 	global $userTracker, $group, $user, $userlib, $tiki_p_admin_trackers, $prefs, $smarty, $tikilib;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	static $memoItemId = 0;
@@ -92,7 +94,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 	static $memoUserTracker = false;
 	static $memoItemObject = null;
 
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if (empty($itemId) && !empty($_REQUEST['itemId'])) {
 		if (!empty($trackerId)) {
@@ -161,8 +163,8 @@ function wikiplugin_trackeritemfield($data, $params) {
 	if (!isset($data)) {
 		$data = $dataelse = '';
 	} elseif (!empty($data) && strpos($data, '{ELSE}')) {
-		$dataelse = substr($data, strpos($data,'{ELSE}')+6);
-		$data = substr($data, 0, strpos($data,'{ELSE}'));
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	} else {
 			$dataelse = '';
 	}

@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_invite_info() {
+function wikiplugin_invite_info()
+{
 	return array(
-		'name' => tra( 'Invite' ),
+		'name' => tra('Invite'),
 		'documentation' => 'PluginInvite',
 		'description' => tra('Invite a user to join your groups'),
 		'prefs' => array( 'wikiplugin_invite' ),
@@ -32,7 +33,8 @@ function wikiplugin_invite_info() {
 		)
 	);
 }
-function wikiplugin_invite( $data, $params) {
+function wikiplugin_invite( $data, $params)
+{
 	global $prefs, $tikilib, $userlib, $user, $smarty, $tiki_p_invite_to_my_groups;
 
 	if ($tiki_p_invite_to_my_groups != 'y') {
@@ -86,7 +88,7 @@ function wikiplugin_invite( $data, $params) {
 			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$machine = parse_url($_SERVER['REQUEST_URI']);
-			$machine = $tikilib->httpPrefix( true ).dirname($machine['path']);
+			$machine = $tikilib->httpPrefix(true).dirname($machine['path']);
 			$smarty->assign_by_ref('machine', $machine);
 			$subject = sprintf($smarty->fetch('mail/mail_invite_subject.tpl'), $_SERVER['SERVER_NAME']);
 			$mail->setSubject($subject);

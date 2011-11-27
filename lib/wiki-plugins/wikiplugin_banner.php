@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_banner_info() {
+function wikiplugin_banner_info()
+{
 	return array(
 		'name' => tra('Banner'),
 		'documentation' => 'PluginBanner',
@@ -43,7 +44,7 @@ function wikiplugin_banner($data, $params)
 	}
     global $bannerlib;include_once('lib/banners/bannerlib.php');
 
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 		
     if (empty($zone)) {
         return tra('missing parameter');

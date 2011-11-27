@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_catorphans_info() {
+function wikiplugin_catorphans_info()
+{
 	return array(
 		'name' => tra('Category Orphans'),
 		'documentation' => 'PluginCatOrphans',
@@ -39,14 +40,15 @@ function wikiplugin_catorphans_info() {
 	);
 }
 
-function wikiplugin_catorphans($data, $params) {
+function wikiplugin_catorphans($data, $params)
+{
 	global $dbTiki, $smarty, $tikilib, $prefs, $access;
 	$access->check_feature('feature_categories');
 	global $categlib; require_once ('lib/categories/categlib.php');
 
 	$default = array('offset'=>0, 'max'=>$prefs['maxRecords'], 'objects'=>'wiki');
 	$params = array_merge($default, $params);
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	// array for converting long type names (as in database) to short names (as used in plugin)
 	$typetokens = array(

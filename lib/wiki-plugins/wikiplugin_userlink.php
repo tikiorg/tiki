@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_userlink_info() {
+function wikiplugin_userlink_info()
+{
 	return array(
 		'name' => tra('User Link'),
 		'documentation' => 'PluginUserlink',
@@ -24,7 +25,8 @@ function wikiplugin_userlink_info() {
 	);
 }
 
-function wikiplugin_userlink($data, $params) {
+function wikiplugin_userlink($data, $params)
+{
 	global $smarty;
 	$path = 'lib/smarty_tiki/modifier.userlink.php';
 	include_once($path);

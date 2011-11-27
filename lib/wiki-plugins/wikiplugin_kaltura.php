@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_kaltura_info() {
+function wikiplugin_kaltura_info()
+{
 	return array(
 		'name' => tra('Kaltura Video'),
 		'documentation' => 'PluginKaltura',
@@ -23,9 +24,10 @@ function wikiplugin_kaltura_info() {
 	);
 }
 
-function wikiplugin_kaltura($data, $params) {
+function wikiplugin_kaltura($data, $params)
+{
 	global $prefs;
-     extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
      
      $code ='<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" allowScriptAccess="always" allowNetworking="all" allowFullScreen="true" height="365" width="400" data="'.$prefs['kServiceUrl'].'index.php/kwidget/wid/'.$prefs['kdpWidget'].'/uiconf_id/'.$prefs['kdpUIConf'].'/entry_id/'.urlencode($id).'">
 			 <param name="allowScriptAccess" value="always" />

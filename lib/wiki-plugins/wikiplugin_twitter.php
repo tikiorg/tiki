@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_twitter_info() {
+function wikiplugin_twitter_info()
+{
 	return array(
 		'name' => tra('Twitter'),
 		'documentation' => 'PluginTwitter',
@@ -60,7 +61,8 @@ function wikiplugin_twitter_info() {
 	);
 }
 
-function wikiplugin_twitter($data, $params) {
+function wikiplugin_twitter($data, $params)
+{
 	$default = array('shellbg' => '#f15a2b', 'shellcolor' => '#ffffff', 'tweetbg' => 'white', 'tweetcolor' => 'black', 'width' => 'auto', 'height' => 300);
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);

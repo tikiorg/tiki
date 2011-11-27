@@ -53,12 +53,12 @@ function wikiplugin_addfreetag($data, $params)
 	}
 	if (!empty($_POST[$identifier])) {
 		$_POST[$identifier] = '"' . str_replace('"', '', $_POST[$identifier]) . '"';
-		TikiLib::lib('freetag')->tag_object( $user, $object['object'], $object['type'], $_POST[$identifier]);
+		TikiLib::lib('freetag')->tag_object($user, $object['object'], $object['type'], $_POST[$identifier]);
 		if ($object['type'] == 'trackeritem') {
 			// need to update tracker field as well
 			$definition = Tracker_Definition::get($permobject);
 			if ($field = $definition->getFreetagField()) {
-				$currenttags = TikiLib::lib('freetag')->get_tags_on_object( $object['object'], 'trackeritem' );
+				$currenttags = TikiLib::lib('freetag')->get_tags_on_object($object['object'], 'trackeritem');
 				$taglist = '';	
 				foreach ($currenttags['data'] as $tag) {
 					if (strstr($tag['tag'], ' ')) {
@@ -66,7 +66,7 @@ function wikiplugin_addfreetag($data, $params)
 					} else {
 						$taglist .= $tag['tag'] . ' ';
 					}
-      				}
+				}
 				// taglist will have slashes
 				TikiLib::lib('trk')->modify_field($object['object'], $field, stripslashes($taglist));
 			}

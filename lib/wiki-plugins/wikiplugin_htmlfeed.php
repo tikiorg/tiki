@@ -29,11 +29,9 @@ function wikiplugin_htmlfeed($data, $params)
     static $feedhtmlFeedI = 0;
 	++$feedhtmlFeedI;
 	
-	$params = array_merge(array(
-		"name" => "",
-	), $params);
+	$params = array_merge(array("name" => ""), $params);
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
 	if ($caching == true) {
 		$htmlFeed = new HtmlFeed();

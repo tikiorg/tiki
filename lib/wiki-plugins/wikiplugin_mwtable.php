@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_mwtable_info() {
+function wikiplugin_mwtable_info()
+{
 	return array(
 		'name' => tra('MediaWiki Table'),
 		'documentation' => 'PluginMWTable',
@@ -43,79 +44,79 @@ function wikiplugin_mwtable_info() {
 	);
 }
 
-function wikiplugin_mwtable($data, $params) {
+function wikiplugin_mwtable($data, $params)
+{
 	global $tikilib;
 
 	// Parse the parameters
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	if (isset($fancy) and $fancy=="true") {
-            $fancy = true;
-        } else {
-            $fancy = false;
-        }
+		$fancy = true;
+	} else {
+		$fancy = false;
+	}
 	if (isset($wiki_classes) and $wiki_classes=="false") {
-            $wiki_classes = false;
-        } else {
-            $wiki_classes = true;
-        }
+		$wiki_classes = false;
+	} else {
+		$wiki_classes = true;
+	}
 
-        // set class constants
-        $default_class_table = "normal";
-        $default_class_heading = "";
-        $default_class_td_odd = "";
-        $default_class_td_odd = "";
-        if ($fancy) {
-            $default_class_table = "normal";
-            $default_class_heading = "heading";
-            $default_class_td_odd = "odd";
-            $default_class_td_even = "even";
-        } else if ($wiki_classes) {
-            $default_class_table = "wikitable";
-            $default_class_td_odd = "wikicell";
-            $default_class_td_even = "wikicell";
-        }
-
-        // soe = start-of-element; eoe = end-of-element
-        // set the start position
-        $soe = 0;
-
-        // <table>: prefix = start-of-string, suffix = "\n"
-        $suffix = "\n";
-        $eoe = strpos($data, $suffix);
-
-        // we only have attributes
-        $element = substr($data, $soe, $eoe - strlen($suffix));
-        $attributes = _get_attributes($element);
-
-        _check_class_attribute($attributes,$default_class_table);
-
-        $wret .= _output_tag_with_attributes("table",$attributes,true);
-
-        // move soe - skip terminating suffix
-        $soe = $eoe + strlen($suffix);
-        // <table>: end (of start tag)
-
-        // <caption>: prefix = "|+",  suffix = "\n"
-        $prefix = "|+";
-        $suffix = "\n";
-        if (substr($data, $soe, strlen($prefix))==$prefix) {
-            $eoe = strpos($data, $suffix, $soe);
-            $element = substr($data, $soe + strlen($prefix), 
-                              $eoe - $soe - strlen($prefix) - strlen($suffix));
-            if (strpos($element, "|")) {
-                // attributes present
-                list($attribs, $text) = explode("|", $element, 2);
-                $attributes = _get_attributes($attribs);
-                $wret .= _output_tag_with_attributes("caption",$attributes,true);
-                $wret .= trim($text);
-            } else {
-                $wret .= "<caption>".trim($element);
-            }
-            $wret .= "</caption>\n";
-            // move soe - skip terminating suffix
-            $soe = $eoe + strlen($suffix);
-        }
-        // <caption>: end
+	// set class constants
+	$default_class_table = "normal";
+	$default_class_heading = "";
+	$default_class_td_odd = "";
+	$default_class_td_odd = "";
+	if ($fancy) {
+	    $default_class_table = "normal";
+	    $default_class_heading = "heading";
+	    $default_class_td_odd = "odd";
+	    $default_class_td_even = "even";
+	} else if ($wiki_classes) {
+	    $default_class_table = "wikitable";
+	    $default_class_td_odd = "wikicell";
+	    $default_class_td_even = "wikicell";
+	}
+	
+	// soe = start-of-element; eoe = end-of-element
+	// set the start position
+	$soe = 0;
+	
+	// <table>: prefix = start-of-string, suffix = "\n"
+	$suffix = "\n";
+	$eoe = strpos($data, $suffix);
+	
+	// we only have attributes
+	$element = substr($data, $soe, $eoe - strlen($suffix));
+	$attributes = _get_attributes($element);
+	
+	_check_class_attribute($attributes, $default_class_table);
+	
+	$wret .= _output_tag_with_attributes("table", $attributes, true);
+	
+	// move soe - skip terminating suffix
+	$soe = $eoe + strlen($suffix);
+	// <table>: end (of start tag)
+	
+	// <caption>: prefix = "|+",  suffix = "\n"
+	$prefix = "|+";
+	$suffix = "\n";
+	if (substr($data, $soe, strlen($prefix))==$prefix) {
+	    $eoe = strpos($data, $suffix, $soe);
+	    $element = substr($data, $soe + strlen($prefix), $eoe - $soe - strlen($prefix) - strlen($suffix));
+	    if (strpos($element, "|")) {
+	        // attributes present
+	        list($attribs, $text) = explode("|", $element, 2);
+	        $attributes = _get_attributes($attribs);
+	        $wret .= _output_tag_with_attributes("caption", $attributes, true);
+	        $wret .= trim($text);
+	    } else {
+	        $wret .= "<caption>".trim($element);
+	    }
+	    $wret .= "</caption>\n";
+	    // move soe - skip terminating suffix
+	    $soe = $eoe + strlen($suffix);
+	}
+// <caption>: end
 
 	// <col>: prefix = "?", suffix = "!" or "|-"
         $prefix = "?";
@@ -133,8 +134,7 @@ function wikiplugin_mwtable($data, $params) {
                 $suffix = "|-";
                 $eoe = $pos_rows;
             }
-            $element = substr($data, $soe + strlen($prefix),
-                              $eoe - $soe - strlen($prefix) - strlen($suffix));
+            $element = substr($data, $soe + strlen($prefix), $eoe - $soe - strlen($prefix) - strlen($suffix));
 
             // convert "??" to "\n?" to simplify splitting
             $element = str_replace("??", "\n?", $element);
@@ -143,7 +143,7 @@ function wikiplugin_mwtable($data, $params) {
             foreach ($columns as $column) {
                 // we only have attributes
                 $attributes = _get_attributes($column);
-                $wret .= _output_tag_with_attributes("col",$attributes,true,true);
+                $wret .= _output_tag_with_attributes("col", $attributes, true, true);
             }
             
             // move soe - keep terminating string
@@ -157,8 +157,7 @@ function wikiplugin_mwtable($data, $params) {
         if (substr($data, $soe, strlen($prefix))==$prefix) {
             // the end of the heading data is the start of the first row
             $eoe = strpos($data, "|-", $soe);
-            $element = substr($data, $soe + strlen($prefix),
-                              $eoe - $soe - strlen($prefix) - strlen($suffix));
+            $element = substr($data, $soe + strlen($prefix), $eoe - $soe - strlen($prefix) - strlen($suffix));
 
             // convert "!!" to "\n!" to simplify splitting
             $element = str_replace("!!", "\n!", $element);
@@ -170,8 +169,8 @@ function wikiplugin_mwtable($data, $params) {
                 if (strpos($column, "|")) {
                     list($attribs, $text) = explode("|", $column, 2);
                     $attributes = _get_attributes($attribs);
-                    _check_class_attribute($attributes,$default_class_headings);        
-                    $wret .= _output_tag_with_attributes("th",$attributes);
+                    _check_class_attribute($attributes, $default_class_headings);        
+                    $wret .= _output_tag_with_attributes("th", $attributes);
                     $wret .= trim($text);
                 } else {
                     // only one part so use as heading
@@ -206,7 +205,7 @@ function wikiplugin_mwtable($data, $params) {
             $eoe = strpos($row, $suffix);
             $attribs = substr($row, 0, $eoe - strlen($suffix));
             $attributes = _get_attributes($attribs);
-            $wret .= _output_tag_with_attributes("tr",$attributes,true);
+            $wret .= _output_tag_with_attributes("tr", $attributes, true);
 
             // extract just the data for the cells - skip prefix of first cell
             $soe = $eoe + strlen($suffix);
@@ -229,8 +228,8 @@ function wikiplugin_mwtable($data, $params) {
                     $attributes = array();
                     $text = $cell;
                 }
-                _check_class_attribute($attributes,$default_class_td);        
-                $wret .= _output_tag_with_attributes("td",$attributes);
+                _check_class_attribute($attributes, $default_class_td);        
+                $wret .= _output_tag_with_attributes("td", $attributes);
                 $wret .= trim($text);
 
                 // end of cell
@@ -253,25 +252,26 @@ function wikiplugin_mwtable($data, $params) {
 //
 // Return an associative array where value has had any delimiters removed.
 
-function _get_attributes($string) {
+function _get_attributes($string)
+{
         $attributes = array();
         $cur_pos = 0;
 
         while ($cur_pos < strlen($string)) {
           // identify key
-          if (preg_match("/\s*(\w+)=/",$string,$matches,PREG_OFFSET_CAPTURE,$cur_pos)) {
+          if (preg_match("/\s*(\w+)=/", $string, $matches, PREG_OFFSET_CAPTURE, $cur_pos)) {
             $cur_pos += strlen($matches[0][0]);   // skip whole pattern
             $key = $matches[1][0];                // just store key
             // identify value:  
             // use # as start/end character inclusion of / in value
-            if (preg_match("#([(&quot;)\"'\w:;%-/\.]+)(?=\s|\Z)#",$string,$matches,PREG_OFFSET_CAPTURE,$cur_pos)) {
+            if (preg_match("#([(&quot;)\"'\w:;%-/\.]+)(?=\s|\Z)#", $string, $matches, PREG_OFFSET_CAPTURE, $cur_pos)) {
               $cur_pos += strlen($matches[0][0]); // skip whole pattern
               $value = $matches[1][0];            // just store value
               // remove delimiters (quote or double-quote if present)
               $value = str_replace("'", "", $value);
               $value = str_replace("&quot;", "", $value);
             } else {
-              $value = substr($string,$cur_pos);
+              $value = substr($string, $cur_pos);
               $cur_pos = strlen($string);
             }
             $attributes[$key] = $value;
@@ -285,11 +285,11 @@ function _get_attributes($string) {
 // If terminate_tag==False return in the form <tag attribute="value">
 // If terminate_tag==True return in the form <tag attribute="value"/>
 // The latter is only applicable to a few tags like <col>.
-function _output_tag_with_attributes($tag,$attributes,$newline = False,
-                                     $terminate_tag = False) {
+function _output_tag_with_attributes($tag,$attributes,$newline = False, $terminate_tag = False)
+{
         $output = "<".$tag;
         if (count($attributes)) {
-            foreach($attributes as $key=>$value) {
+            foreach ($attributes as $key=>$value) {
               $output .= " ".$key."=\"".$value."\"";
             }
         }
@@ -301,12 +301,13 @@ function _output_tag_with_attributes($tag,$attributes,$newline = False,
 
 // Check the class element.
 // if $add==True add default class to any existing class else replace
-function _check_class_attribute(&$attributes,$default_class = "",$add = True) {
+function _check_class_attribute(&$attributes,$default_class = "",$add = True)
+{
         // if no default class then nothing to do
         if (strlen($default_class) == 0) 
             return;
         $class = $default_class;
-        if ($add and (array_key_exists("class",$attributes))) 
+        if ($add and (array_key_exists("class", $attributes))) 
             $class .= " ".$attributes["class"];
         $attributes["class"] = $class;
 }

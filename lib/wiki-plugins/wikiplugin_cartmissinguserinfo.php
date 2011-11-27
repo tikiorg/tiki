@@ -6,7 +6,8 @@
 // $Id$
 
 
-function wikiplugin_cartmissinguserinfo_info() {
+function wikiplugin_cartmissinguserinfo_info()
+{
 	return array(
 		'name' => tra('Cart Missing User Info'),
 		'documentation' => tra('PluginCartMissingUserInfo'),		
@@ -34,17 +35,18 @@ function wikiplugin_cartmissinguserinfo_info() {
 	);
 }
 
-function wikiplugin_cartmissinguserinfo($data, $params) {
+function wikiplugin_cartmissinguserinfo($data, $params)
+{
 	global $smarty;
 	global $cartlib; require_once 'lib/payment/cartlib.php';	
 	if (empty($params['product_class_id']) || empty($params['info_type'])) {
 		return tra('Missing parameters');
 	}
-	$missinginfo = $cartlib->get_missing_user_information_fields( $params['product_class_id'], $params['info_type'] );
+	$missinginfo = $cartlib->get_missing_user_information_fields($params['product_class_id'], $params['info_type']);
 
 
 	//print_r($missinginfo);
-	$formpage = $cartlib->get_missing_user_information_form( $params['product_class_id'], $params['info_type'] );
+	$formpage = $cartlib->get_missing_user_information_form($params['product_class_id'], $params['info_type']);
 	$smarty->assign('cartmissinguserinfoform', $formpage);
 	if (empty($missinginfo)) {
 		$smarty->assign('cartmissinguserinfo', 'n');

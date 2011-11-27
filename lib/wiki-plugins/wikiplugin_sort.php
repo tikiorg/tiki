@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_sort_info() {
+function wikiplugin_sort_info()
+{
 	return array(
 		'name' => tra('Sort'),
 		'documentation' => 'PluginSort',
@@ -34,16 +35,17 @@ function wikiplugin_sort_info() {
 	);
 }
 
-function wikiplugin_sort($data, $params) {
+function wikiplugin_sort($data, $params)
+{
 	global $tikilib;
 
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	$sort = (isset($sort)) ? $sort : "asc";
 
 	$lines = preg_split("/\n+/", $data, -1, PREG_SPLIT_NO_EMPTY); // separate lines into array
 	// $lines = array_filter( $lines, "chop" ); // remove \n  
-	srand ((float)microtime() * 1000000); // needed for shuffle;
+	srand((float)microtime() * 1000000); // needed for shuffle;
 
 	if ($sort == "asc") {
 		natcasesort($lines);
@@ -53,10 +55,10 @@ function wikiplugin_sort($data, $params) {
 	} else if ($sort == "reverse") {
 		$lines = array_reverse($lines);
 	} else if ($sort == "shuffle") {
-		shuffle ($lines);
+		shuffle($lines);
 	}
 
-	reset ($lines);
+	reset($lines);
 
 	if (is_array($lines)) {
 		$data = implode("\n", $lines);

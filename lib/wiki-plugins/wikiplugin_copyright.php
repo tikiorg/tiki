@@ -7,7 +7,8 @@
 
 require_once ("lib/copyrights/copyrightslib.php");
 
-function wikiplugin_copyright_info() {
+function wikiplugin_copyright_info()
+{
 	return array(
 		'name' => tra('Copyright'),
 		'documentation' => 'PluginCopyright',
@@ -20,7 +21,8 @@ function wikiplugin_copyright_info() {
 	);
 }
 
-function wikiplugin_copyright($data, $params) {
+function wikiplugin_copyright($data, $params)
+{
 	global $dbTiki;
 
 	$copyrightslib = new CopyrightsLib;

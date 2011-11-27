@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_stat_info() {
+function wikiplugin_stat_info()
+{
 	return array(
 		'name' => tra('Stat'),
 		'documentation' => 'PluginStat',
@@ -167,7 +168,8 @@ function wikiplugin_stat_info() {
 	);
 }
 
-function wikiplugin_stat($data, $params) {
+function wikiplugin_stat($data, $params) 
+{
 	global $smarty;
 	global $statslib; include_once('lib/stats/statslib.php');
 	$stat = array();
@@ -192,16 +194,16 @@ function wikiplugin_stat($data, $params) {
 					}
 					//for tracker items, only added items can be shown, so eith a or v will result in added items being displayed
 					$stat[$when][$type]['Added tracker items'] = $statslib->count_this_period('tiki_tracker_items', 'created', $when, 'trackerId', $params['parentId']);
-					break;
+    				break;
 				case 'wiki':
 					if ($what == 'v') {
 						$stat[$when][$type]['Viewed wiki pages'] = $statslib->hit_this_period('wiki', $when);
-					} elseif ($what == 'a'){
+					} elseif ($what == 'a') {
 						$stat[$when][$type]['Added wiki pages'] = $statslib->count_this_period('tiki_pages', 'created', $when);
 					} else {
 						return tra('Incorrect parameter: ') . $what;
 					}
-					break;
+    				break;
 				case 'article':
 					if ($what == 'v') {
 						$stat[$when][$type]['Viewed articles'] = $statslib->hit_this_period('article', $when);
@@ -210,7 +212,7 @@ function wikiplugin_stat($data, $params) {
 					} else {
 						return tra('Incorrect parameter: ') . $what;
 					}
-					break;
+    				break;
 				default:
 					return tra('Incorrect parameter: ').$type;
 				}

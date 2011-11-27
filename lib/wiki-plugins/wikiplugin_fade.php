@@ -93,7 +93,7 @@ function wikiplugin_fade( $body, $params )
 	}
 		
 	$body = trim($body);
-	$body = $tikilib->parse_data( $body );
+	$body = $tikilib->parse_data($body);
 	$jq = '
 				$(document).ready(function(){
 					$(\'#' . $unique_link . '\').toggle(
@@ -117,7 +117,8 @@ function wikiplugin_fade( $body, $params )
 		. $body . "\r\t" . '</div>' . "\r" . '</div>' . "\r" . '~/np~';
 }
 
-function validate_speed($speed_param) {
+function validate_speed($speed_param)
+{
 	if (!(($speed_param > 0 && $speed_param <= 1000)
 		|| $speed_param == 'fast' || $speed_param == 'slow')) {
 			$speed_param = 400;

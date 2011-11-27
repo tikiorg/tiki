@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_sharethis_info() {
+function wikiplugin_sharethis_info()
+{
 	return array(
 		'name' => tra('ShareThis'),
 		'documentation' => 'PluginSharethis',
@@ -124,9 +125,10 @@ function wikiplugin_sharethis_info() {
 		)
 	);
 }
-function wikiplugin_sharethis($data, $params) {
+function wikiplugin_sharethis($data, $params)
+{
 	global $headerlib; include_once('lib/headerlib.php');
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$sharethis_options = array();
 	$iconcode = '';
 	$sep = '&amp;';
@@ -150,14 +152,12 @@ function wikiplugin_sharethis($data, $params) {
 	// load setting options from $params
 
 	// set post services that appear upon widget opening
-	if (!empty($postfirst))
-	{
-		$sharethis_options['postfirst'] = str_replace('|',$comma,$postfirst);
+	if (!empty($postfirst)) {
+		$sharethis_options['postfirst'] = str_replace('|', $comma, $postfirst);
 	}
 	// limit send services that will appear
-	if (!empty($sendsvcs))
-	{
-		$sharethis_options['sendsvcs'] = str_replace('|',$comma,$sendsvcs);
+	if (!empty($sendsvcs)) {
+		$sharethis_options['sendsvcs'] = str_replace('|', $comma, $sendsvcs);
 	}
 	// set icon style
 	if (!empty($rotateimage) || !empty($style)) {
@@ -173,7 +173,7 @@ function wikiplugin_sharethis($data, $params) {
 		$headerlib->add_css('body {font-family:helvetica,sans-serif;font-size:12px;}');
 		$headerlib->add_css('a.stbar.chicklet img {border:0;height:16px;width:16px;margin-right:3px;vertical-align:middle;}');
 		$headerlib->add_css('a.stbar.chicklet {height:16px;line-height:16px;}');
-		$icons = explode('|',$multiple);
+		$icons = explode('|', $multiple);
 		foreach ($icons as $icon) {
 			$iconcode .= '<a id="ck_' . $icon . '" class="stbar chicklet" href="javascript:void(0);">' 
 							. '<img src="http://w.sharethis.com/chicklets/' . $icon . '.gif" style="margin-right:3px;" />';
@@ -182,7 +182,8 @@ function wikiplugin_sharethis($data, $params) {
 			}
 			$iconcode .= '</a>'; 
 		}
-		$headerlib->add_js('	var shared_object = SHARETHIS.addEntry({
+		$headerlib->add_js(
+						'	var shared_object = SHARETHIS.addEntry({
 						title: document.title,
 						url: document.location.href
 					});
@@ -190,42 +191,37 @@ function wikiplugin_sharethis($data, $params) {
 					shared_object.attachButton(document.getElementById("ck_sharethis"));
 					shared_object.attachChicklet("email", document.getElementById("ck_email"));
 					shared_object.attachChicklet("facebook", document.getElementById("ck_facebook"));
-					shared_object.attachChicklet("twitter", document.getElementById("ck_twitter"));
-					');
+					shared_object.attachChicklet("twitter", document.getElementById("ck_twitter"));'
+		);
 	}
 	
 	// set button text
-	if (!empty($buttontext))
-	{
+	if (!empty($buttontext)) {
 		$sharethis_options['buttontext'] = $buttontext;
 	}
 	// set header title text. If header title is set by user, then set background color and text color
-	if (!empty($headertitle))
-	{
-		$sharethis_options['headertitle'] = str_replace(' ',$sp,$headertitle);
+	if (!empty($headertitle)) {
+		$sharethis_options['headertitle'] = str_replace(' ', $sp, $headertitle);
 			if (!empty($headerbg)) {
 			$sharethis_options['headerbg'] = $headerbg;
 			}
 			if (!empty($headertxtcolor)) {
 			$sharethis_options['headertxtcolor'] = $headertxtcolor;
 			}
-		} else {
+	} else {
 			$sharethis_options['headerbg'] = '';
 			$sharethis_options['headertxtcolor'] = '';
-		}
+	}
 	// set link text color for services shown in popup
-	if (!empty($linkfg))
-	{
+	if (!empty($linkfg)) {
 		$sharethis_options['linkfg'] = $linkfg;
 	}
 	// set popup
-	if (!empty($popup))
-	{
+	if (!empty($popup)) {
 		$sharethis_options['popup'] = $popup;
 	}
 	// set embed
-	if (!empty($embed))
-	{
+	if (!empty($embed)) {
 		$sharethis_options['embed'] = $embed;
 	}
 
@@ -250,8 +246,8 @@ function wikiplugin_sharethis($data, $params) {
 	if (!empty($iconcode)) $sharethiscode .= $iconcode;	
 	$sharethiscode .= "~hc~ ))ShareThis(( Bookmark Button END ~/hc~";
 
-$result = $sharethiscode;
-
-return $result;
+	$result = $sharethiscode;
+	
+	return $result;
 
 }

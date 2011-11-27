@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_contributionsdashboard_info() {
+function wikiplugin_contributionsdashboard_info()
+{
 	return array(
 		'name' => tra('Contributions Dashboard'),
 		'documentation' => '',
@@ -42,7 +43,8 @@ function wikiplugin_contributionsdashboard_info() {
 	);
 }
 
-function wikiplugin_contributionsdashboard($data, $params) {
+function wikiplugin_contributionsdashboard($data, $params)
+{
 	global $tikilib, $headerlib, $user;
 	$trklib = TikiLib::lib("trk");
 	$trkqrylib = TikiLib::lib("trkqry");
@@ -72,19 +74,15 @@ function wikiplugin_contributionsdashboard($data, $params) {
 	
 	$headerlib->add_jsfile("lib/jquery.sheet/plugins/raphael-min.js", "external");
 	$headerlib->add_jsfile("lib/jquery.sheet/plugins/g.raphael-min.js", "external");
-	$headerlib->add_jq_onready("
-		$('.cDashDate').datepicker();
-	");
+	$headerlib->add_jq_onready("$('.cDashDate').datepicker();");
 	
 	$usersTrackerItems = array();
-	foreach($tikilib->fetchAll("
-		SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?
-	", array("simon")) as $item) {
+	foreach ($tikilib->fetchAll("SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?", array("simon")) as $item) {
 		$usersTrackerItems[] = $item['itemId'];
 	}
 	
-	$headerlib->add_jq_onready("
-		$.fn.chart = function(s) {
+	$headerlib->add_jq_onready(
+					"$.fn.chart = function(s) {
 			s = $.extend({
 				labels: [],
 				data: []
@@ -111,26 +109,26 @@ function wikiplugin_contributionsdashboard($data, $params) {
 				});
 		
 			if (s.label) r.g.label($(this).width() / 2,30, s.label);
-		};
-	");
+		};"
+	);
 			
-	foreach($types as $type) {
+	foreach ($types as $type) {
 		if ($type == "trackeritems") {
 			$data = array();
 			$dates = array();
 			
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countByDateFilterId($usersTrackerItems) as $date => $count) {
+			foreach (LogsQueryLib::trackerItem()->start($start)->end($end)->countByDateFilterId($usersTrackerItems) as $date => $count) {
 				$data[] = $count * 1;
 				$dates[] = $date;
 			}
 
-			$headerlib->add_jq_onready("				
-				$('#raphaelTrackeritems$i').chart({
-					labels: 	".json_encode($dates).",
-					data:		".json_encode($data).",
-					label:		'Tracker Item Activity Grouped By Date'
-				});
-			");
+			$headerlib->add_jq_onready(
+							"$('#raphaelTrackeritems$i').chart({
+								labels: 	".json_encode($dates).",
+								data:		".json_encode($data).",
+								label:		'Tracker Item Activity Grouped By Date'
+							});"
+			);
 			
 			$result .= "<div id='raphaelTrackeritems$i' style='width: 100%; height: 400px; display: block;'></div>";
 		}
@@ -139,18 +137,18 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			$hits = array();
 			$users = array();
 			
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersFilterId($usersTrackerItems) as $user => $count) {
+			foreach (LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersFilterId($usersTrackerItems) as $user => $count) {
 				$hits[] = $count;
 				$users[] = $user;
 			}
 
-			$headerlib->add_jq_onready("				
-				$('#raphaelTrackeritemsUsers$i').chart({
-					labels: 	".json_encode($users).",
-					data:		".json_encode($hits).",
-					label:		'Tracker Item Activity Grouped By Users'
-				});
-			");
+			$headerlib->add_jq_onready(
+							"$('#raphaelTrackeritemsUsers$i').chart({
+								labels: 	".json_encode($users).",
+								data:		".json_encode($hits).",
+								label:		'Tracker Item Activity Grouped By Users'
+							});"
+			);
 			
 			$result .= "<div id='raphaelTrackeritemsUsers$i' style='width: 100%; height: 400px; display: block;'></div>";
 		}
@@ -159,20 +157,20 @@ function wikiplugin_contributionsdashboard($data, $params) {
 			$hits = array();
 			$users = array();
 			
-			foreach(LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersIPFilterId($usersTrackerItems) as $data => $count) {
+			foreach (LogsQueryLib::trackerItem()->start($start)->end($end)->countUsersIPFilterId($usersTrackerItems) as $data => $count) {
 				$data = json_decode($data);
 				
 				$hits[] = $count;
 				$users[] = $data->user . ' ' . $data->ip;
 			}
 
-			$headerlib->add_jq_onready("				
-				$('#raphaelTrackeritemsUsersIP$i').chart({
-					labels: 	".json_encode($users).",
-					data:		".json_encode($hits).",
-					label:		'Tracker Item Activity Grouped By Users & IP Address'
-				});
-			");
+			$headerlib->add_jq_onready(
+							"$('#raphaelTrackeritemsUsersIP$i').chart({
+								labels: 	".json_encode($users).",
+								data:		".json_encode($hits).",
+								label:		'Tracker Item Activity Grouped By Users & IP Address'
+							});"
+			);
 			
 			$result .= "<div id='raphaelTrackeritemsUsersIP$i' style='width: 100%; height: 400px; display: block;'></div>";
 		}

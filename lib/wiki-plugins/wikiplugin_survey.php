@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_survey_info() {
+function wikiplugin_survey_info()
+{
 	return array(
 		'name' => tra('Survey'),
 		'documentation' => 'PluginSurvey',
@@ -38,7 +39,8 @@ function wikiplugin_survey_info() {
 	);
 }
 
-function wikiplugin_survey($data, $params) {
+function wikiplugin_survey($data, $params)
+{
 	global $tiki_p_take_survey;
 	if ( $tiki_p_take_survey != 'y' ) return '';
 
@@ -51,8 +53,8 @@ function wikiplugin_survey($data, $params) {
 		if ( $tikilib->user_has_voted($user, 'survey'.$params['id']) ) {
 			include_once('lib/wiki-plugins/wikiplugin_remarksbox.php');
 			return wikiplugin_remarksbox(
-				'You cannot take this survey twice',
-				array('type' => 'comment')
+							'You cannot take this survey twice',
+							array('type' => 'comment')
 			);
 		}
 	}

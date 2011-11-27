@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_timeline_info() {
+function wikiplugin_timeline_info()
+{
 	return array(
 		'name' => tra('Timeline'),
 		'format' => 'html',
@@ -88,7 +89,8 @@ function wikiplugin_timeline_info() {
 	);
 }
 
-function wikiplugin_timeline($data, $params) {
+function wikiplugin_timeline($data, $params)
+{
 
 	require_once 'lib/smarty_tiki/modifier.escape.php';
 
@@ -102,13 +104,14 @@ function wikiplugin_timeline($data, $params) {
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jsfile('lib/simile_tiki/tiki-timeline.js');
 	
-	$headerlib->add_jq_onready('
-// TODO set up datasource - get data from {list} output or calendar events
-var ttl_eventData = { events: [], dateTimeFormat: ""};
-setTimeout( function(){
-	ttlInit("ttl_timeline", ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '");
-}, 1000);
-');
+	$headerlib->add_jq_onready(
+					'// TODO set up datasource - get data from {list} output or calendar events
+					var ttl_eventData = { events: [], dateTimeFormat: ""};
+					setTimeout( function(){
+						ttlInit("ttl_timeline", ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '");
+					}, 1000);
+					'
+	);
 	return '<div class="timeline-container" data-marker-filter="' . $scope . '" style="width: ' . $width . '; height: ' . $height . ';"></div>';
 }
 
@@ -128,4 +131,3 @@ function wp_timeline_getscope($params)
 			return $scope;
 	}
 }
-

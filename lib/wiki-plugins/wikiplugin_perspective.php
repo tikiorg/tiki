@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_perspective_info() {
+function wikiplugin_perspective_info()
+{
 	return array(
 		'name' => tra('Perspective'),
 		'documentation' => 'PluginPerspective',
@@ -37,9 +38,9 @@ function wikiplugin_perspective($data, $params)
 	global $prefs, $perspectivelib;
 
 	$dataelse = '';
-	if (strpos($data,'{ELSE}')) {
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
+	if (strpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 
 	if (!empty($params['perspectives'])) {
@@ -53,7 +54,7 @@ function wikiplugin_perspective($data, $params)
 	}
 
 	require_once 'lib/perspectivelib.php';
-	$currentPerspective = $perspectivelib->get_current_perspective( $prefs );
+	$currentPerspective = $perspectivelib->get_current_perspective($prefs);
 
 	// if the current perspective is not an allowed perspective, return the content after the "{ELSE}"
 	if (!empty($perspectives) && !in_array($currentPerspective, $perspectives)) {

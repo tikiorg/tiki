@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_scroll_info() {
+function wikiplugin_scroll_info()
+{
 	return array(
 		'name' => tra('Scroll'),
 		'documentation' => 'PluginScroll',
@@ -42,8 +43,9 @@ function wikiplugin_scroll_info() {
 	);
 }
 
-function wikiplugin_scroll($data, $params) {
-	extract ($params, EXTR_SKIP);
+function wikiplugin_scroll($data, $params)
+{
+	extract($params, EXTR_SKIP);
 //minimum parameters
 	if (!isset($width)) {
 		return ('<b>missing width parameter for plugin</b><br/>');
@@ -61,21 +63,21 @@ function wikiplugin_scroll($data, $params) {
 
 // margin requierd for ilayer scrolling on mozilla
    $margin=40;
-	 if (substr($width,-1) == "x") {
-	 $width_w=substr($width,0,-2);
-	 $height_h=substr($height,0,-2); 
-	 } else if (substr($width,-1) == "%") {
-	 return ("<b>Warning the value of the height parameters must be set using px  (ex: 600px ) for plugin</b><br/>");
-	 } else {
-   return ("<b>Warning the value of the width parameters must be set using px  (ex: 600px ) for plugin</b><br/>");  
+	if (substr($width, -1) == "x") {
+		$width_w=substr($width, 0, -2);
+		$height_h=substr($height, 0, -2); 
+	} else if (substr($width, -1) == "%") {
+		return ("<b>Warning the value of the height parameters must be set using px  (ex: 600px ) for plugin</b><br/>");
+	} else {
+	   return ("<b>Warning the value of the width parameters must be set using px  (ex: 600px ) for plugin</b><br/>");  
 	}
    $margin =20;
    $i_width=$width_w - $margin;
-	 $c_width=$width_w - 10;
-	 $cx_width=$i_width."px";
-	 $z_width_w=$width_w+10;
-	 $z_width=$z_width_w."px";
-	 $ret= "~np~<div style=\"background-color:#FFFFDD;width:$width\"><center><a href=\"javascript:movedown()\">Down</a>  <a href=\"javascript:moveup()\">Up</a> 
+	$c_width=$width_w - 10;
+	$cx_width=$i_width."px";
+	$z_width_w=$width_w+10;
+	$z_width=$z_width_w."px";
+	$ret= "~np~<div style=\"background-color:#FFFFDD;width:$width\"><center><a href=\"javascript:movedown()\">Down</a>  <a href=\"javascript:moveup()\">Up</a> 
 	 <a href=\"javascript:stopscroll()\">Stop</a>  <a href=\"javascript:movetop()\">Top</a></center>
 	 </div>
 	 

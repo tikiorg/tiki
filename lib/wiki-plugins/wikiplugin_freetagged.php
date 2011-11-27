@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_freetagged_info() {
+function wikiplugin_freetagged_info()
+{
 	return array(
 		'name' => tra('Freetagged'),
 		'documentation' => 'PluginFreetagged',
@@ -132,7 +133,8 @@ function wikiplugin_freetagged_info() {
 	);
 }
 
-function wikiplugin_freetagged($data, $params) {
+function wikiplugin_freetagged($data, $params)
+{
 	global $freetaglib, $smarty, $tikilib, $headerlib;
 	include_once('lib/freetag/freetaglib.php');
 
@@ -150,22 +152,26 @@ function wikiplugin_freetagged($data, $params) {
 	);
 	
 	$params = array_merge($defaults, $params);
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
-	if ($type == tra('all')) { $type = null; }
+	if ($type == tra('all')) {
+		$type = null;
+	}
 	
 	$sort_mode = str_replace('created', 'o.`created`', $sort_mode);
 	
 	if ( !$tags && $object = current_object() ) {
 		$tagArray = array();
 		$ta = $freetaglib->get_tags_on_object($object['object'], $object['type']);
-		foreach($ta['data'] as $tag) {
+		foreach ($ta['data'] as $tag) {
 			$tagArray[] = $tag['tag'];
 		}
 		
-		if (!$type) { $type = $object['type']; }
+		if (!$type) {
+			$type = $object['type'];
+		}
 		
-		$objects = $freetaglib->get_similar( $object['type'], $object['object'], $maxRecords , $type );
+		$objects = $freetaglib->get_similar($object['type'], $object['object'], $maxRecords, $type);
 		
 	} else {
 		$tagArray = $freetaglib->_parse_tag($tags);
@@ -173,14 +179,14 @@ function wikiplugin_freetagged($data, $params) {
 		$objects = $objects['data'];
 	}
 	
-	foreach($objects as &$obj) {
+	foreach ($objects as &$obj) {
 		if ($titles_only == 'n') {
 			switch ($obj['type']) {
 				case  'article':
 					global $artlib; include_once('lib/articles/artlib.php');
 					$info = $artlib->get_article($obj['itemId']);
 					$obj['date'] = $info['publishDate'];
-					$obj['description'] = $tikilib->parse_data( $info['heading']);
+					$obj['description'] = $tikilib->parse_data($info['heading']);
 					if ($info['useImage'] == 'y') {
 						$obj['image'] = 'article_image.php?id='.$obj['itemId'];
 					} else if (!empty($info['topicId'])) {
@@ -209,7 +215,7 @@ function wikiplugin_freetagged($data, $params) {
 						}
 						$obj['img'] = '<img  src="'.$obj['image'] . ($w ? ' width="'.$w.'"' : '') . ($h ? ' height="'.$h.'"' : '') .'"/>';
 					}
-					break;
+    				break;
 				case 'file':
 					global $filegallib; include_once('lib/filegals/filegallib.php');
 					$info = $filegallib->get_file($obj['itemId']);
@@ -222,16 +228,16 @@ function wikiplugin_freetagged($data, $params) {
 						$imgparams['max'] = $max_image_size;
 					}
 					
-					$obj['img'] = wikiplugin_img( '', $imgparams, 0 );
+					$obj['img'] = wikiplugin_img('', $imgparams, 0);
 					$obj['img'] = str_replace('~np~', '', $obj['img']);	// don't nest ~np~
 					$obj['img'] = str_replace('~/np~', '', $obj['img']);
-					break;
+    				break;
 				case 'wiki page':
 					$info = $tikilib->get_page_info($obj['name'], false);
 					$obj['description'] = $info['description'];
 					$obj['date'] = $info['lastModif'];
 					$obj['image'] = '';
-					break;
+    				break;
 				default:
 					$obj['description'] = '';
 					$obj['image'] = '';
@@ -251,5 +257,3 @@ function wikiplugin_freetagged($data, $params) {
 	return '~np~'.$ret.'~/np~';
 	
 }
-
-

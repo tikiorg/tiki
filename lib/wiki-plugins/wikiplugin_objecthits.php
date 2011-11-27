@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_objecthits_info() {
+function wikiplugin_objecthits_info()
+{
 	return array(
 		'name' => tra('Object Hits'),
 		'documentation' => 'PluginObjectHits',
@@ -15,8 +16,8 @@ function wikiplugin_objecthits_info() {
 		'params' => array(
 			'object' => array(
 				'required' => false,
-				'name' => tra( 'Object' ),
-				'description' => tra( 'For a wiki page, the page name, for other object types: ID number + ? + object title' ),
+				'name' => tra('Object'),
+				'description' => tra('For a wiki page, the page name, for other object types: ID number + ? + object title'),
 				'default' => '',
 			),
 			'type' => array(
@@ -36,7 +37,8 @@ function wikiplugin_objecthits_info() {
 	);
 }
 
-function wikiplugin_objecthits($data, $params) {
+function wikiplugin_objecthits($data, $params)
+{
 	global $tikilib;
 
 	global $statslib;
@@ -45,7 +47,7 @@ function wikiplugin_objecthits($data, $params) {
 		include "lib/stats/statslib.php";
 	}
  
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if (!isset($object)) {
 	  global $page;
@@ -61,5 +63,5 @@ function wikiplugin_objecthits($data, $params) {
 		$type="wiki";
 	}
 	
-  return $statslib->object_hits($object,$type,$days);
+  return $statslib->object_hits($object, $type, $days);
 }

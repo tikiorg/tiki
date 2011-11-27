@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_watershed_info() {
+function wikiplugin_watershed_info()
+{
 	return array(
 		'name' => tra('Watershed'),
 		'documentation' => 'PluginWatershed',
@@ -68,7 +69,8 @@ function wikiplugin_watershed_info() {
 	);
 }
 
-function wikiplugin_watershed( $data, $params ) {
+function wikiplugin_watershed( $data, $params )
+{
 	global $smarty, $prefs, $user, $tikilib;
 	global $watershedlib; require_once 'lib/videogals/watershedlib.php';
 	
@@ -82,12 +84,12 @@ function wikiplugin_watershed( $data, $params ) {
 	} else {
 		$brandId = '';
 	}
-	$channels = $watershedlib->getAllViewableChannels( $params['channelCode'], $brandId );
+	$channels = $watershedlib->getAllViewableChannels($params['channelCode'], $brandId);
 	if ($channels) {
 		if ($params['type'] == 'broadcaster') {
-			$channels = $watershedlib->filterChannels( $channels, 'broadcaster' );
+			$channels = $watershedlib->filterChannels($channels, 'broadcaster');
 		} else {
-			$channels = $watershedlib->filterChannels( $channels, 'viewer' );
+			$channels = $watershedlib->filterChannels($channels, 'viewer');
 		}
 	}
 	if (!$channels) {
@@ -108,7 +110,7 @@ function wikiplugin_watershed( $data, $params ) {
 	}
 	
 	if (!$user) {
-		$sessionId = md5('watershedpublicsession' . $tikilib->now . rand(100000,999999));
+		$sessionId = md5('watershedpublicsession' . $tikilib->now . rand(100000, 999999));
 	} else {
 		$sessionId = $watershedlib->getSessionId($user);
 		if (!$sessionId) {
@@ -123,11 +125,11 @@ function wikiplugin_watershed( $data, $params ) {
 	}
 	// generate random embed ids and names
 	if ($params['type'] == 'chat') {
-		$objectId = 'chat_' . rand(100000,999999);
-		$embedName =  'chat_' . rand(100000,999999);
+		$objectId = 'chat_' . rand(100000, 999999);
+		$embedName =  'chat_' . rand(100000, 999999);
 	} else {
-		$objectId = 'utv' . rand(100000,999999);
-		$embedName =  'utv_n_' . rand(100000,999999);
+		$objectId = 'utv' . rand(100000, 999999);
+		$embedName =  'utv_n_' . rand(100000, 999999);
 	}
 	
 	$smarty->assign('wsd_objectId', $objectId);
@@ -136,14 +138,13 @@ function wikiplugin_watershed( $data, $params ) {
 	$smarty->assign('wsd_brandId', $channels[0]["brandId"]);
 	$smarty->assign('wsd_channelCode', $channels[0]["channelCode"]);
 	if ($params['type'] == 'broadcaster') {
-		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedbroadcaster.tpl' );		
+		return $smarty->fetch('wiki-plugins/wikiplugin_watershedbroadcaster.tpl');
 	} else if ($params['type'] == 'chat') {
-		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedchat.tpl' );
+		return $smarty->fetch('wiki-plugins/wikiplugin_watershedchat.tpl');
 	} else if ($params['type'] == 'archive') {
 		$smarty->assign('wsd_videoId', $params["videoId"]);
-		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedarchive.tpl' );
+		return $smarty->fetch('wiki-plugins/wikiplugin_watershedarchive.tpl');
 	} else {
-		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedviewer.tpl' );
+		return $smarty->fetch('wiki-plugins/wikiplugin_watershedviewer.tpl');
 	}
 }
-

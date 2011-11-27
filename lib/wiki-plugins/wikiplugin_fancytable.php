@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_fancytable_info() {
+function wikiplugin_fancytable_info()
+{
 	return array(
 		'name' => tra('Fancy Table'),
 		'documentation' => 'PluginFancyTable',
@@ -78,11 +79,12 @@ function wikiplugin_fancytable_info() {
 	);
 }
 
-function wikiplugin_fancytable($data, $params) {
+function wikiplugin_fancytable($data, $params)
+{
 	global $tikilib, $prefs;
 	static $iFancytable = 0;
 	++$iFancytable;
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	if (empty($sortable)) $sortable = 'n';
 
 	// Start the table
@@ -104,8 +106,7 @@ function wikiplugin_fancytable($data, $params) {
 		//replace all tiki tags in the header with numbered strings while being processed
 		$head = preg_replace_callback($pattern, 'replace_head', $head);
 		//process header rows
-		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', 
-					isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
 		//bring the tiki tags back into the header. static veriable needed in case of multiple tables
 		static $hh = 0;
 		foreach ($head_matches[0] as $head_match) {
@@ -124,8 +125,7 @@ function wikiplugin_fancytable($data, $params) {
 		$type = 'r';	//plain rows
 	}
 	//process table body rows
-	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
-				isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
 	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
 	static $bb = 0;
 	foreach ($body_matches[0] as $body_match) {
@@ -156,21 +156,24 @@ function wikiplugin_fancytable($data, $params) {
 
 //preg_replace_callback functions to number replacements so they can be identified and undone later
 //for the header
-function replace_head($matches) {
+function replace_head($matches)
+{
 	static $h = 0;
 	$ret = '~~~head' . $h . '~~~';
 	$h++;
 	return $ret;
 }
 //for the body
-function replace_body($matches) {
+function replace_body($matches)
+{
 	static $b = 0;
 	$ret = '~~~body' . $b . '~~~';
 	$b++;
 	return $ret;
 }
 //function to process header and body
-function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns) {
+function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns)
+{
 	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
 	$lines = explode($line_sep, $data);
 	$widths = !empty($widths) ?  explode('|', $widths) : '';
@@ -211,9 +214,11 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 				$colnum = 'col' . $c;				
 				$colspan = '';
 				$rowspan = '';
-				/*Match / (colspan) or \ (rowspan) characters in whichever order at the beginning of the cell
-				$matches[0][0] shows entire match. There are 3 strings being matched in the preg_match_all, so $matches[1][0] shows the character
-				matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\) */
+				/*
+				 * Match / (colspan) or \ (rowspan) characters in whichever order at the beginning of the cell
+				 * $matches[0][0] shows entire match. There are 3 strings being matched in the preg_match_all, so $matches[1][0] shows the character
+				 * matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\) 
+				*/
 				if (preg_match_all("/^(\\\\)*(\/)*(\\\\)*/", $column, $matches)) {
 					$column = substr($column, strlen($matches[0][0]));
 					//create colspan if there are / characters at beginning of cell
@@ -234,8 +239,8 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 						${$colnum}['col'] = $c;
 						${$colnum}['line'] = $l;
 						${$colnum}['span'] = $rnum;
+						}
 					}
-				}
 				$colstyle = '';
 				if (!empty($widths) || !empty($aligns) || !empty($valigns)) {
 					//If there's another rowspan still in force, bump up the column number
@@ -247,13 +252,13 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					$colstyle .= !empty($aligns[$c]) ? ' text-align: ' . $aligns[$c] . ';' : '';
 					$colstyle .= !empty($valigns[$c]) ? ' vertical-align: ' . $valigns[$c] : '';
 					$colstyle .= '"';
-					$c++;   //increment column number
+					$c++;//increment column number
 				}
 				$row .= $cellbeg . $colspan . $rowspan . $colstyle . '>' . $column . $cellend;
-			}
+				}
 			$wret .= $trbeg . $row . $trend;
+			}
+		$l++;//increment row number
 		}
-		$l++;   //increment row number
-	}
 	return $wret;
-}
+	}

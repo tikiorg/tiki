@@ -220,10 +220,7 @@ function wpquery_filter_relation($query, $value, $arguments)
 
 function wpquery_filter_favorite($query, $value)
 {
-	wpquery_filter_relation($query, $value, array(
-		'qualifier' => 'tiki.user.favorite.invert',
-		'objecttype' => 'user',
-	));
+	wpquery_filter_relation($query, $value, array('qualifier' => 'tiki.user.favorite.invert', 'objecttype' => 'user'));
 }
 
 function wpquery_filter_range($query, $value, array $arguments)

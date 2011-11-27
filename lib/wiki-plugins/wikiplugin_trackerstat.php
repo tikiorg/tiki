@@ -97,7 +97,7 @@ function wikiplugin_trackerstat($data, $params)
 {
 	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib, $tikilib;
 	include_once('lib/trackers/trackerlib.php');
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -107,7 +107,7 @@ function wikiplugin_trackerstat($data, $params)
 		return tra('Permission denied');
 	}
 	if (!empty($show_lastmodif)) {
-		$date = $trklib->lastModif ($trackerId);
+		$date = $trklib->lastModif($trackerId);
 		if (!function_exists('smarty_modifier_tiki_date_format')) {
 			include('lib/smarty_tiki/modifier.tiki_date_format.php');
 		}
@@ -155,9 +155,9 @@ function wikiplugin_trackerstat($data, $params)
 		}
 	}
 	if (!empty($fields)) {
-		$listFields = explode(':',$fields);
+		$listFields = explode(':', $fields);
 	} else {
-		foreach($allFields['data'] as $f) {
+		foreach ($allFields['data'] as $f) {
 			$listFields[] = $f['fieldId'];
 		}
 	}
@@ -210,7 +210,7 @@ function wikiplugin_trackerstat($data, $params)
 				}
 				$v[$j]['value'] = $category['name'];
 				if ($tracker_info['oneUserItem'] == 'y') {
-					foreach($objects as $o) {
+					foreach ($objects as $o) {
 						if ($o['itemId'] == $itemId) {
 							$v[$j]['me'] = 'y';
 							break;
@@ -220,7 +220,7 @@ function wikiplugin_trackerstat($data, $params)
 				$v[$j]['href'] = "trackerId=$trackerId&amp;filterfield=$fieldId&amp;filtervalue[$fieldId][]=".$category['categId'];
 				$j++;
 			}
-		} else	if ($allFields['data'][$i]['type'] == 'h') {//header
+		} elseif ($allFields['data'][$i]['type'] == 'h') {//header
 			$stat['name'] = $allFields["data"][$i]['name'];
 			$stat['values'] = array();
 			$stats[] = $stat;
@@ -230,7 +230,7 @@ function wikiplugin_trackerstat($data, $params)
 				global $user;
 				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iUser]['fieldId'], $user, $allFields['data'][$i]['fieldId']);
 			} else if ($iIp >= 0) {
-				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iIp]['fieldId'],  $tikilib->get_ip_address(), $allFields['data'][$i]['fieldId']);
+				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iIp]['fieldId'], $tikilib->get_ip_address(), $allFields['data'][$i]['fieldId']);
 			}
 			
 			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status, $allFields);

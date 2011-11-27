@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_gauge_info() {
+function wikiplugin_gauge_info()
+{
 	return array(
 		'name' => tra('Gauge'),
 		'documentation' => 'PluginGauge',
@@ -92,8 +93,9 @@ function wikiplugin_gauge_info() {
 	);
 }
 
-function wikiplugin_gauge($data, $params) {
-	extract ($params,EXTR_SKIP);
+function wikiplugin_gauge($data, $params)
+{
+	extract($params, EXTR_SKIP);
 
 	if (!isset($value)) {
 		return ("<b>missing value parameter for plugin</b><br />");
@@ -145,33 +147,33 @@ function wikiplugin_gauge($data, $params) {
 		$label_td = '';
 	} else {
         $label_td = '<td width="' . $labelsize . '">' . $label . '&nbsp;</td>'; 
-    }
+	}
 
-    if ($maxexceeded) {
+	if ($maxexceeded) {
 		$perc_td = '<td align="right" width="55">*******</td>';
-    } else {	
-	    if ($perc) {
-	    	$perc = number_format($value / $max * 100, 2);
-            $perc_td ='<td align="right" width="55">&nbsp;' . $perc . '%</td>';
-    	} else {
-    		$perc = number_format($value, 2);
-            $perc_td ='<td align="right" width="55">&nbsp;' . $perc . '</td>';
-	    }
+	} else {	
+		if ($perc) {
+			$perc = number_format($value / $max * 100, 2);
+			$perc_td ='<td align="right" width="55">&nbsp;' . $perc . '%</td>';
+		} else {
+			$perc = number_format($value, 2);
+			$perc_td ='<td align="right" width="55">&nbsp;' . $perc . '</td>';
+		}
 	}	
 
 	$h_size = floor($value / $max * 100);
-    $h_size_rest = 100-$h_size;
+	$h_size_rest = 100-$h_size;
 
-    if ($h_size == 100) {
+	if ($h_size == 100) {
         $h_td = '<td style="background:' . $color . ';">&nbsp;</td>';
-        } else {
-            if ($h_size_rest == 100) {
-                $h_td = '<td style="background:' . $bgcolor . ';">&nbsp;</td>';
-            } else {
-                $h_td = '<td style="background:' . $color . ';" width="' . $h_size . '%' .'">&nbsp;</td>';
-                $h_td .= '<td style="background:' . $bgcolor . ';" width="' . $h_size_rest .  '%' . '">&nbsp;</td>';
-            }
-        }
+	} else {
+		if ($h_size_rest == 100) {
+			$h_td = '<td style="background:' . $bgcolor . ';">&nbsp;</td>';
+		} else {
+			$h_td = '<td style="background:' . $color . ';" width="' . $h_size . '%' .'">&nbsp;</td>';
+			$h_td .= '<td style="background:' . $bgcolor . ';" width="' . $h_size_rest .  '%' . '">&nbsp;</td>';
+		}
+	}
 
 
 	$html  ='<table class="plugin_gauge" border="0" width="100%"><tr>' . $label_td . '<td width="' . $size . '" height="' . $height . '">';

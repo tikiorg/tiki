@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_map_info() {
+function wikiplugin_map_info()
+{
 	return array(
 		'name' => tra('Map'),
 		'format' => 'html',
@@ -67,7 +68,8 @@ function wikiplugin_map_info() {
 	);
 }
 
-function wikiplugin_map($data, $params) {
+function wikiplugin_map($data, $params)
+{
 	global $tikilib, $prefs;
 
 	if (isset($params['mapfile'])) {
@@ -128,7 +130,7 @@ function wp_map_mapserver($params)
 		return WikiParser_PluginOutput::disabled('map', array('feature_maps'));
 	}
 
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$mapdata="";
 	if (isset($mapfile)) {
 		$mapdata='mapfile='.$mapfile.'&';
@@ -136,7 +138,7 @@ function wp_map_mapserver($params)
 
 	$extdata="";
 	if (isset($extents)) {
-		$dataext=explode("|",$extents);
+		$dataext=explode("|", $extents);
 		if (count($dataext)==4) {
 			$minx=floatval($dataext[0]);
 			$maxx=floatval($dataext[1]);

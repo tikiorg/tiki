@@ -5,11 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_agentinfo_info() {
+function wikiplugin_agentinfo_info()
+{
 	return array(
-		'name' => tra( 'User Agent Info' ),
+		'name' => tra('User Agent Info'),
 		'documentation' => 'PluginAgentinfo',
-		'description' => tra( 'Show user\'s browser and server information' ),
+		'description' => tra('Show user\'s browser and server information'),
 		'prefs' => array('wikiplugin_agentinfo'),
 		'icon' => 'pics/icons/computer.png',
 		'params' => array(
@@ -31,10 +32,11 @@ function wikiplugin_agentinfo_info() {
 	);
 }
 
-function wikiplugin_agentinfo($data, $params) {
+function wikiplugin_agentinfo($data, $params)
+{
 	global $tikilib;
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	$asetup = '';
 

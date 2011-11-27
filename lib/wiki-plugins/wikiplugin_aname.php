@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_aname_info() {
+function wikiplugin_aname_info()
+{
 	return array(
 		'name' => tra('Anchor Name'),
 		'documentation' => 'PluginAname',
@@ -20,8 +21,8 @@ function wikiplugin_aname_info() {
 
 function wikiplugin_aname($data, $params)
 {
-        global $tikilib;
-        extract ($params, EXTR_SKIP);
+   global $tikilib;
+   extract($params, EXTR_SKIP);
         
     // the following replace is necessary to maintain compliance with XHTML 1.0 Transitional
 	// and the same behavior as tikilib.php and ALINK. This will change when the world arrives at XHTML 1.0 Strict.

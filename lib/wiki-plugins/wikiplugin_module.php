@@ -5,18 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_module_info() {
+function wikiplugin_module_info()
+{
 	global $modlib, $smarty;
 	require_once ('lib/modules/modlib.php');
 
 	$all_modules = $modlib->get_all_modules();
-	$all_modules_info = array_combine( 
-		$all_modules, 
-		array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
-	);
+	$all_modules_info = array_combine($all_modules, array_map(array( $modlib, 'get_module_info' ), $all_modules));
 	uasort($all_modules_info, 'compare_names');
 	$modules_options = array();
-	foreach($all_modules_info as $module => $module_info) {
+	foreach ($all_modules_info as $module => $module_info) {
 		$modules_options[] = array('text' => $module_info['name'] . ' (' . $module . ')', 'value' => $module);
 	}
 
@@ -104,12 +102,13 @@ function wikiplugin_module_info() {
 	);
 }
 
-function wikiplugin_module($data, $params) {
+function wikiplugin_module($data, $params)
+{
 	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $module_params;
 
 	$out = '';
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if (!isset($float)) {
 		$float = 'nofloat';
@@ -159,7 +158,7 @@ function wikiplugin_module($data, $params) {
 		);
 
 		global $modlib; require_once 'lib/modules/modlib.php';
-		$out = $modlib->execute_module( $module_reference );
+		$out = $modlib->execute_module($module_reference);
 	}
 
 	if ($out) {

@@ -1,6 +1,12 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
-function wikiplugin_trackeritemcopy_info() {
+function wikiplugin_trackeritemcopy_info()
+{
 	return array(
 		'name' => tra('Copy Tracker Item'),
 		'documentation' => tra('PluginTrackerItemCopy'),
@@ -76,7 +82,8 @@ function wikiplugin_trackeritemcopy_info() {
 	);
 }
 
-function wikiplugin_trackeritemcopy( $data, $params ) {
+function wikiplugin_trackeritemcopy( $data, $params )
+{
 	global $smarty;
 	$trklib = TikiLib::lib("trk");
 	TikiLib::lib("trkqry");
@@ -101,7 +108,8 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
-		function items_copy($trackerId, $updateFieldIds, $updateFieldValues, $copyFieldIds, $itemIds, $linkFieldId, $itemLinkId, $copies) {
+		function items_copy($trackerId, $updateFieldIds, $updateFieldValues, $copyFieldIds, $itemIds, $linkFieldId, $itemLinkId, $copies)
+		{
 			global $trklib, $_POST;
 			
 			if(is_array($itemIds) == false) $itemIds = array($itemIds);
@@ -112,7 +120,7 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 				$fieldTypes = array();
 				$fieldOptionsArray = array();
 				
-				foreach($tracker_fields_info['data'] as $t) {
+				foreach ($tracker_fields_info['data'] as $t) {
 					$fieldTypes[$t['fieldId']] = $t['type'];
 					$fieldOptionsArray[$t['fieldId']] = $t['options_array'];
 				}
@@ -126,7 +134,7 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 				
 				//print_r(array($trackerId, $updateFieldIds, $updateFieldValues, $copyFieldIds, $itemIds, $linkFieldId, $itemLinkId, $copies));
 				
-				for($i = 0; $i < count($updateFieldIds); $i++) {
+				for ($i = 0, $count_updateFieldIds = count($updateFieldIds); $i < $count_updateFieldIds; $i++) {
 					$ins_fields["data"][] = array(
 						'options_array' => $fieldOptionsArray[$updateFieldIds[$i]], 
 						'type' => $fieldTypes[$updateFieldIds[$i]], 
@@ -149,7 +157,7 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 				for ($i = 0; $i < $copies; $i++) {
 					// Check for -randomstring- and f_xx
 					$ins_fields_final["data"] = array();
-					foreach($ins_fields["data"] as $h) {
+					foreach ($ins_fields["data"] as $h) {
 						if ($h["value"] == '-randomstring-') {
 							$h["value"] = $trklib->genPass();
 						} else if (substr($h["value"], 0, 2) == 'f_') {
@@ -178,13 +186,13 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 		$return_array = array();
 		$itemIds = array();
 		
-		foreach($trackerId as $key => $trackerIdLeft) {
+		foreach ($trackerId as $key => $trackerIdLeft) {
 			//ensure that the fields are set and usable
 			if (isset($params["updateFieldIds"]) || isset($params["updateFieldValues"])) {
 				$updateFieldIds = $params["updateFieldIds"];
 				$updateFieldValues = $params["updateFieldValues"];
 				
-				foreach($updateFieldIds as $key => $updateFieldId) {
+				foreach ($updateFieldIds as $key => $updateFieldId) {
 					if (count($updateFieldIds[$key]) != count($updateFieldValues[$key])) {
 						return tra('Number of update fields do not match new values');
 					}
@@ -209,26 +217,26 @@ function wikiplugin_trackeritemcopy( $data, $params ) {
 						->equals(array($itemId));
 						
 					$itemIds = array();
-					foreach($qry as $linkedItemIds => $item) {
+					foreach ($qry as $linkedItemIds => $item) {
 						$itemIds[] = $linkedItemIds;
 					}
 				}
 				
 				$return_array[] = items_copy(
-					$trackerId[$key], 
-					$updateFieldIds[$key], 
-					$updateFieldValues[$key], 
-					$copyFieldIds[$key], 
-					(
-						$key == 0 ? $itemId : $itemIds
-					),
-					(
-						$key == 0 ? null : $params["linkFieldIds"][$key - 1]
-					),
-					(
-						$key == 0 ? null : $return_array[0]['items'][0]
-					),
-					$copies
+								$trackerId[$key], 
+								$updateFieldIds[$key], 
+								$updateFieldValues[$key], 
+								$copyFieldIds[$key], 
+								(
+									$key == 0 ? $itemId : $itemIds
+								),
+								(
+									$key == 0 ? null : $params["linkFieldIds"][$key - 1]
+								),
+								(
+									$key == 0 ? null : $return_array[0]['items'][0]
+								),
+								$copies
 				);
 			}
 

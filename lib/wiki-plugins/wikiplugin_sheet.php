@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_sheet_info() {
+function wikiplugin_sheet_info()
+{
 	return array(
 		'name' => tra('Sheet'),
 		'documentation' => 'PluginSheet',
@@ -115,9 +116,10 @@ function wikiplugin_sheet_info() {
 	);
 }
 
-function wikiplugin_sheet($data, $params) {
+function wikiplugin_sheet($data, $params)
+{
 	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib, $smarty;
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$style = (isset($height)) ? "height: $height !important;" : '';
 	$style .= (isset($width)) ? "width: $width;" : '';
 	$urlHeight = (isset($height)) ? "&height=$height" : '';
@@ -132,12 +134,12 @@ function wikiplugin_sheet($data, $params) {
 	++$index;
 
 	if (empty($id) && empty($url)) {
-		if( $tiki_p_edit_sheet != 'y' || $tiki_p_edit != 'y' ) {
+		if ( $tiki_p_edit_sheet != 'y' || $tiki_p_edit != 'y' ) {
 			return ("<b>missing id parameter for plugin</b><br />");
 		} else {
-			if( isset( $_POST['create_sheet'], $_POST['index'] ) && $index == $_POST['index'] ) {
+			if ( isset( $_POST['create_sheet'], $_POST['index'] ) && $index == $_POST['index'] ) {
 				// Create a new sheet and rewrite page
-				$sheetId = $sheetlib->replace_sheet( null, tra('New sheet in page: ') . $page, '', $user );
+				$sheetId = $sheetlib->replace_sheet(null, tra('New sheet in page: ') . $page, '', $user);
 				$page = htmlentities($page);
 				$content = htmlentities($data);
 				$formId = "form$index";
@@ -191,11 +193,11 @@ EOF;
 		}
 	
 		// Build required objects
-		$db = new TikiSheetDatabaseHandler( $id );
-		$out = new TikiSheetOutputHandler( $data );
+		$db = new TikiSheetDatabaseHandler($id);
+		$out = new TikiSheetOutputHandler($data);
 	
 		// Fetch sheet from database
-		$sheet->import( $db );
+		$sheet->import($db);
 	
 	} else {
 		$r = $sheet->setRange($range);
@@ -209,16 +211,16 @@ EOF;
 		$file = file_get_contents($url);
 		$pathInfo = pathinfo($url);
 		if ($pathInfo['extension'] == 'csv') {
-			$handler = new TikiSheetCSVHandler( $url );
+			$handler = new TikiSheetCSVHandler($url);
 			$grid = new TikiSheet();
-			$grid->import( $handler );
-			$ret = $grid->getTableHtml( true , null, false );
+			$grid->import($handler);
+			$ret = $grid->getTableHtml(true, null, false);
 
 		} else {
-			$ret = file_get_contents( $url );
+			$ret = file_get_contents($url);
 		}
 	} else {
-		$ret = ($sheet->getTableHtml( $subsheets ));
+		$ret = ($sheet->getTableHtml($subsheets));
 	}
 	
 	
@@ -226,13 +228,13 @@ EOF;
 	if (!isset($simple) || $simple != 'y') {
 		global $headerlib;
 		$sheetlib->setup_jquery_sheet();
-		$headerlib->add_jq_onready('
-			$("div.tiki_sheet").each(function() {
-				$(this).sheet($.extend($.sheet.tikiOptions,{
-					editable:false
-				}));
-			});
-		');
+		$headerlib->add_jq_onready(
+						'$("div.tiki_sheet").each(function() {
+							$(this).sheet($.extend($.sheet.tikiOptions,{
+							editable:false
+							}));
+						});'
+		);
 
 	} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
 		return $ret;	// return a single cell raw
@@ -240,7 +242,7 @@ EOF;
 
 	$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
 	
-	if( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
+	if ( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
 		$smarty->loadPlugin('smarty_function_button');
 		
 		//If you've given the sheet a url, you can't edit it, disable if not possible
@@ -248,7 +250,7 @@ EOF;
 			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight&page=$page");
 		}
 		
-		$ret .= smarty_function_button( $button_params, $smarty);
+		$ret .= smarty_function_button($button_params, $smarty);
 	}
 	return '~np~' . $ret . '~/np~';
 }

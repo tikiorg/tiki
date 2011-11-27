@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_box_info() {
+function wikiplugin_box_info()
+{
 	return array(
 		'name' => tra('Box'),
 		'documentation' => 'PluginBox',
@@ -46,8 +47,10 @@ function wikiplugin_box_info() {
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
-				'description' => tra('Set the alignment for the entire box. For elements with a width of less than 100%, other elements will wrap around it 
-										unless the clear parameter is appropriately set.)'),
+				'description' => tra(
+								'Set the alignment for the entire box. For elements with a width of less than 100%, other elements will wrap around it 
+								unless the clear parameter is appropriately set.)'
+				),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -82,13 +85,14 @@ function wikiplugin_box_info() {
 	);
 }
 
-function wikiplugin_box($data, $params) {
+function wikiplugin_box($data, $params)
+{
 	global $tikilib;
 	
 	// Remove first <ENTER> if exists...
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
     
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$bg   = (isset($bg))    ? " background:$bg" : "";
 	$id = (isset($id)) ? " id=\"$id\" ":'';
 	$class = (isset($class))? ' '.$class: ' ';

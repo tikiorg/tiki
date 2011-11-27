@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_back_info() {
+function wikiplugin_back_info()
+{
 	return array(
 		'name' => tra('Back'),
 		'documentation' => 'PluginBack',
@@ -17,13 +18,14 @@ function wikiplugin_back_info() {
 		);
 }
 
-function wikiplugin_back($data, $params) {
+function wikiplugin_back($data, $params)
+{
 	global $tikilib;
 	
 	// Remove first <ENTER> if exists...
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	$begin = "<a href=\"javascript:history.go(-1)\">";
 

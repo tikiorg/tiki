@@ -247,8 +247,7 @@ function wikiplugin_articles($data, $params)
 	}
 
 	$urlnext = '';
-	if ($usePagination == 'y')
-	{
+	if ($usePagination == 'y') {
 		//Set offset when pagniation is used
 		if (!isset($_REQUEST["offset"])) {
 			$start = 0;
@@ -257,7 +256,7 @@ function wikiplugin_articles($data, $params)
 		}
 		
 		//Default to 10 when pagination is used
-		if (($max == -1)){
+		if (($max == -1)) {
 			$countPagination = 10;
 		}
 		foreach ($auto_args as $arg) {
@@ -273,7 +272,9 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign_by_ref('urlparam', $urlparam);
 	$smarty->assign_by_ref('urlnext', $urlnext);
 	
-	if (!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
+	if (!isset($containerClass)) {
+		$containerClass = 'wikiplugin_articles';
+	}
 	$smarty->assign('container_class', $containerClass);
 
 	$dateStartTS = 0;
@@ -284,18 +285,18 @@ function wikiplugin_articles($data, $params)
 		switch ($periodUnit) {
 			case 'hour':
 				$periodUnit = 3600;
-				break;
+    			break;
 			case 'day':
 				$periodUnit = 86400;
-				break;
+    			break;
 			case 'week':
 				$periodUnit = 604800;
-				break;
+    			break;
 			case 'month':
 				$periodUnit = 2628000;
-				break;
+    			break;
 			default:
-				break;
+    			break;
 		}
 		
 		if (is_int($periodUnit)) {
@@ -335,7 +336,7 @@ function wikiplugin_articles($data, $params)
 	$commentslib = new Comments($dbTiki);
 	
 	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y', $filter);
- 	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
+	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
@@ -372,7 +373,7 @@ function wikiplugin_articles($data, $params)
 		$smarty->assign_by_ref('type', $type);
 	}
 	
-	if ($usePagination == 'y'){
+	if ($usePagination == 'y') {
 		$smarty->assign('maxArticles', $max);
 		$smarty->assign_by_ref('offset', $start);
 		$smarty->assign_by_ref('cant', $listpages['cant']);

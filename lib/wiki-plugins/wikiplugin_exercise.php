@@ -144,14 +144,8 @@ function wikiplugin_exercise_finalize()
 
 	$checkYourScore = smarty_modifier_escape(tr('Check your score'));
 	$yourScoreIs = tr('You scored %0 out of %1', '~SCORE~', '~TOTAL~');
-	$checkIcon = smarty_function_icon(array(
-		'_id' => 'tick',
-		'title' => tr('Good!'),
-	), $smarty);
-	$crossIcon = smarty_function_icon(array(
-		'_id' => 'cross',
-		'title' => tr('Oops!'),
-	), $smarty);
+	$checkIcon = smarty_function_icon(array('_id' => 'tick',	'title' => tr('Good!')), $smarty);
+	$crossIcon = smarty_function_icon(array('_id' => 'cross', 'title' => tr('Oops!')), $smarty);
 
 	$js = <<<JS
 $('.exercise-form').filter(':first').removeClass('exercise-form').each(function (k, form) {

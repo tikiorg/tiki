@@ -102,7 +102,7 @@ function wikiplugin_customsearch($data, $params)
 	} 
 	if (isset($_REQUEST['maxRecords'])) {
 		$maxRecords = $_REQUEST['maxRecords'];
-        } elseif ($recalllastsearch && !empty($_SESSION["customsearch_$id"]['maxRecords'])) {
+	} elseif ($recalllastsearch && !empty($_SESSION["customsearch_$id"]['maxRecords'])) {
 		$maxRecords = $_SESSION["customsearch_$id"]['maxRecords'];
 	} else {
 		$maxRecords = $prefs['maxRecords']; 
@@ -171,8 +171,8 @@ function wikiplugin_customsearch($data, $params)
 			$filter = '';
 		}
 		if ( $filter && !empty($_REQUEST['default'][$filter]) ) {
-                        $default = $_REQUEST['default'][$filter];
-                } elseif ($recalllastsearch && isset($_SESSION["customsearch_$id"][$fieldid])) { 
+			$default = $_REQUEST['default'][$filter];
+		} elseif ($recalllastsearch && isset($_SESSION["customsearch_$id"][$fieldid])) { 
 			$default = $_SESSION["customsearch_$id"][$fieldid]; 
 		} elseif (!empty($arguments['_default'])) {
 			if (strpos($arguments['_default'], ',') !== false) {
@@ -265,21 +265,23 @@ function wikiplugin_customsearch($data, $params)
 	return $out;
 }
 
-function cs_design_setbasic(&$element, $fieldid, $fieldname, $arguments) {
+function cs_design_setbasic(&$element, $fieldid, $fieldname, $arguments)
+{
 	$element->setAttribute('id', $fieldid);
 	$element->setAttribute('name', $fieldname);
-	foreach($arguments as $k => $v) {
-		if (substr($k,0,1) != '_') {
+	foreach ($arguments as $k => $v) {
+		if (substr($k, 0, 1) != '_') {
 			$element->setAttribute($k, $v);
 		}
 	}		
 }
 
-function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
+function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0)
+{
 	$document = new DOMDocument;
 	$element = $document->createElement('input');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments); 
-	extract ($arguments, EXTR_SKIP);
+	extract($arguments, EXTR_SKIP);
 	
 	if ($type == 'checkbox' || $type == 'radio') {
 		$val_selector = "$(this).is(':checked')";
@@ -335,9 +337,10 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 	return $document->saveHTML();
 }
 
-function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
+function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0)
+{
 	$document = new DOMDocument;
-	extract ($arguments, EXTR_SKIP);
+	extract($arguments, EXTR_SKIP);
 	if (empty($_group) && ($_style == 'checkbox' || $_style == 'radio')) {
 		return tr("_group is needed to be set if _style is checkbox or radio");
 	}
@@ -462,7 +465,8 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 	return $document->saveHTML();
 }
 
-function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
+function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0)
+{
 	$document = new DOMDocument;
 	$element = $document->createElement('select');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);

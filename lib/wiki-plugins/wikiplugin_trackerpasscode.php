@@ -1,6 +1,12 @@
 <?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
-function wikiplugin_trackerpasscode_info() {
+function wikiplugin_trackerpasscode_info()
+{
 	return array(
 		'name' => tra('Check Tracker Passcodes'),
 		'documentation' => tra('PluginTrackerpasscode'),
@@ -47,26 +53,27 @@ function wikiplugin_trackerpasscode_info() {
 	);
 }
 
-function wikiplugin_trackerpasscode( $data, $params ) {
+function wikiplugin_trackerpasscode( $data, $params )
+{
 	global $smarty, $user, $access;
 	if (empty($params['key']) || empty($params['trackerId']) || empty($params['itemId']) || empty($params['fieldId'])) {
 		return '';
 	}
 	$key = $params['key'];
-	if( $_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['trackerpasscode'])) {
+	if ( $_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['trackerpasscode'])) {
 		global $access;
 
 		// Check all filled in
 		if (empty($_POST['trackerpasscode'])) {
-			$access->redirect( $_SERVER['REQUEST_URI'], tr('Please fill in all fields') ); 
+			$access->redirect($_SERVER['REQUEST_URI'], tr('Please fill in all fields')); 
 			die;
 		}
 		$_SESSION['wikiplugin_trackerpasscode'][$key] = $_POST['trackerpasscode']; 
 	}
 	$dataelse = '';
-	if (strpos($data,'{ELSE}')) {
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
+	if (strpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 	// check code
 	global $trklib; require_once("lib/trackers/trackerlib.php");
@@ -83,4 +90,3 @@ function wikiplugin_trackerpasscode( $data, $params ) {
 		}
 	}
 } 
-			

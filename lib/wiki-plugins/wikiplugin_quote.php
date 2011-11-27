@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_quote_info() {
+function wikiplugin_quote_info()
+{
 	return array(
 		'name' => tra('Quote'),
 		'documentation' => 'PluginQuote',
@@ -27,7 +28,8 @@ function wikiplugin_quote_info() {
 	);
 }
 
-function wikiplugin_quote($data, $params) {
+function wikiplugin_quote($data, $params)
+{
 	/* set default values for some args */
 	
 	// Remove first <ENTER> if exists...
@@ -35,7 +37,7 @@ function wikiplugin_quote($data, $params) {
 	// trim space/returns from beginning and end
 	$data = trim($data);
     
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	if (!empty($replyto)) {
 		$caption = $replyto .' '.tra('wrote:');
 	} else {

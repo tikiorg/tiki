@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_subscribenewsletter_info() {
+function wikiplugin_subscribenewsletter_info()
+{
 	return array(
 		'name' => tra('Subscribe newsletter'),
 		'documentation' => 'PluginSubscribeNewsletter',
@@ -51,7 +52,8 @@ function wikiplugin_subscribenewsletter_info() {
 		),
 	);
 }
-function wikiplugin_subscribenewsletter($data, $params) {
+function wikiplugin_subscribenewsletter($data, $params)
+{
 	global $prefs, $user, $userlib, $smarty, $tikilib;
 	global $nllib; include_once('lib/newsletters/nllib.php');
 	extract($params, EXTR_SKIP);
@@ -103,7 +105,7 @@ function wikiplugin_subscribenewsletter($data, $params) {
 	$res = $smarty->fetch('wiki-plugins/wikiplugin_subscribenewsletter.tpl');
 	if (isset($params["wikisyntax"]) && $params["wikisyntax"]==1) {
 		return $res;
-	}else{ 		// if wikisyntax != 1 : no parsing of any wiki syntax
+	} else { 		// if wikisyntax != 1 : no parsing of any wiki syntax
 		return '~np~'.$res.'~/np~';
 	}
 }

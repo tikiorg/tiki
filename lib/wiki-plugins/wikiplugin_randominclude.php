@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_randominclude_info() {
+function wikiplugin_randominclude_info()
+{
 	return array(
 		'name' => tra('Random Include'),
 		'documentation' => 'PluginRandomInclude',
@@ -16,18 +17,19 @@ function wikiplugin_randominclude_info() {
 	);
 }
 
-function wikiplugin_randominclude($data, $params) {
+function wikiplugin_randominclude($data, $params)
+{
 	global $tikilib,$userlib,$user,$page;
 	static $included_pages, $data;
 
 	$params=array($page);
 	$query='SELECT count(*) AS `max` FROM `tiki_pages` WHERE `pageName`!=?';
-	$cant = $tikilib->getOne($query,$params);
+	$cant = $tikilib->getOne($query, $params);
 	if ($cant) {
 		$pick = rand(0, $cant - 1);
 			
 		$query = 'select `pageName` from `tiki_pages` WHERE `pageName`!=?';
-		$incpage = $tikilib->getOne($query,$params,1,$pick);
+		$incpage = $tikilib->getOne($query, $params, 1, $pick);
 		if (isset($included_pages[$incpage])) return ''; //don't include random pages into random pages
 	} else {
 		return '';

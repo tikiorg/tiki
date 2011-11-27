@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_htmlfeedlink_info() {
+function wikiplugin_htmlfeedlink_info()
+{
 	return array(
 		'name' => tra('Html Feed Link'),
 		'documentation' => 'PluginHtmlFeedLink',
@@ -66,30 +67,34 @@ function wikiplugin_htmlfeedlink_info() {
 	);
 }
 
-function wikiplugin_htmlfeedlink($data, $params) {
+function wikiplugin_htmlfeedlink($data, $params)
+{
 	global $tikilib, $headerlib, $page, $caching;
 	static $htmlFeedLinkI = 0;
 	++$htmlFeedLinkI;
 	$i = $htmlFeedLinkI;
 	
-	$params = array_merge(array(
-		"feed" => "",
-		"name" => "",
-		"type" => "replace",
-		"moderate" => "y",
-		"style" => "",
-		"date" => ""
-	), $params);
+	$params = array_merge(
+					array(
+						"feed" => "",
+						"name" => "",
+						"type" => "replace",
+						"moderate" => "y",
+						"style" => "",
+						"date" => ""
+					),
+					$params
+	);
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
 	if (empty($feed)) return $data;
 	if (isset($caching)) return $data; //caching is running, if no return, causes recursive parsing
 	
 	$htmlFeed = new HtmlFeed_Remote($feed);
 	
-	$headerlib->add_jq_onready("
-		if (!$.fn.htmlFeedPopup) {
+	$headerlib->add_jq_onready(
+    	"if (!$.fn.htmlFeedPopup) {
 			$.fn.htmlFeedPopup = function(s) {
 				$(this).each(function() {
 					$(this)
@@ -152,8 +157,8 @@ function wikiplugin_htmlfeedlink($data, $params) {
 						}]
 					});
 			});
-		});
-	");
+		});"
+	);
 	
 	$item = $htmlFeed->getItem($name);
 	$same = $date == $item->date;
@@ -185,17 +190,18 @@ function wikiplugin_htmlfeedlink($data, $params) {
 						</form>
 						~/np~";
 						
-				break;
+    			break;
 			case "backlink":
 				$data = "<a href='$item->url'>" . $data . "</a>";
-				break;
+    			break;
 			case "popup":
-				$headerlib->add_jq_onready("
-					$('#backlink$i')
-						.htmlFeedPopup(" . $link . ");
-				");
-				break;
-			case "hover": break;
+				$headerlib->add_jq_onready(
+    				"$('#backlink$i')
+						.htmlFeedPopup(" . $link . ");"
+				);
+    			break;
+			case "hover":
+    			break;
 		}
 		
 		$link = json_encode($link);
@@ -205,19 +211,18 @@ function wikiplugin_htmlfeedlink($data, $params) {
 	
 	switch ($style) {
 		case "highlight":
-			$headerlib->add_jq_onready("
-				$('#htmlFeedLink$i')
-					.css('border', '1px solid red');
-			");
-			break;
+			$headerlib->add_jq_onready(
+    			"$('#htmlFeedLink$i')
+					.css('border', '1px solid red');"
+			);
+    		break;
 		case "asterisk":
 			$result = "<sup>*</sup>" . $result;
-			break;
+    		break;
 	}
 	
 	$archives = "";
-	foreach($htmlFeed->getItemFromDates($item->name) as $archive) {
-		
+	foreach ($htmlFeed->getItemFromDates($item->name) as $archive) {
 		$archives .= "<a href='tiki-html_feed.php?feed=".$feed.
 			"&name=".urlencode($archive->name).
 			"&date=".urlencode($archive->date)."'>". htmlspecialchars($archive->name) ." ". htmlspecialchars($archive->date) . "</a><br />";
@@ -226,7 +231,8 @@ function wikiplugin_htmlfeedlink($data, $params) {
 	if (strlen($archives) > 0) {
 		$result .= "~np~<img src='pics/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
 		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>~/np~";
-		$headerlib->add_jq_onready(<<<JQ
+		$headerlib->add_jq_onready(
+<<<JQ
 			$('#viewArchives$htmlFeedLinkI').click(function() {
 				$('#archives$htmlFeedLinkI')
 					.dialog({title: "Revisions for " + $(this).attr('name')})

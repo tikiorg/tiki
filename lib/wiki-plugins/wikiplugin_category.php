@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_category_info() {
+function wikiplugin_category_info()
+{
 	return array(
 		'name' => tra('Category'),
 		'documentation' => 'PluginCategory',
@@ -187,7 +188,8 @@ function wikiplugin_category_info() {
 	);
 }
 
-function wikiplugin_category($data, $params) {
+function wikiplugin_category($data, $params)
+{
 	global $prefs, $categlib;
 
 	if ($prefs['feature_categories'] != 'y') {
@@ -198,15 +200,15 @@ function wikiplugin_category($data, $params) {
 
 	$default = array('maxRecords' => 50);
 	$params = array_merge($default, $params);
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	// TODO: use categ name instead of id (alternative)
-	if (isset($split) and substr(strtolower($split),0,1) == 'n') {
+	if (isset($split) and substr(strtolower($split), 0, 1) == 'n') {
 		$split = false;
 	} else {
 		$split = true;
 	}
-	if (isset($sub) and substr(strtolower($sub),0,1) == 'n') {
+	if (isset($sub) and substr(strtolower($sub), 0, 1) == 'n') {
 		$sub = false;
 	} else {
 		$sub = true;
@@ -218,7 +220,7 @@ function wikiplugin_category($data, $params) {
 	} else {
 		$filter = null;
 	}
-	if (isset($and) and substr(strtolower($and),0,1) == 'y') {
+	if (isset($and) and substr(strtolower($and), 0, 1) == 'y') {
 		$and = true;
 	} else {
 		$and = false;
@@ -248,5 +250,5 @@ function wikiplugin_category($data, $params) {
 	}
 	
 	$displayParameters = array_intersect_key($params, array_flip(array('showTitle', 'categoryshowlink', 'showtype', 'one', 'showlinks', 'showname', 'showdescription')));
-	return "~np~". $categlib->get_categoryobjects($id,$types,$sort,$split,$sub,$and, $maxRecords, $filter, $displayParameters)."~/np~";
+	return "~np~". $categlib->get_categoryobjects($id, $types, $sort, $split, $sub, $and, $maxRecords, $filter, $displayParameters)."~/np~";
 }

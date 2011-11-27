@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_groupmailcore_info() {
+function wikiplugin_groupmailcore_info()
+{
 	return array(
 		'name' => tra('GroupMail Core'),
 		'documentation' => 'PluginGroupMailCore',
@@ -81,7 +82,8 @@ function wikiplugin_groupmailcore_info() {
 	);
 }
 
-function wikiplugin_groupmailcore($data, $params) {
+function wikiplugin_groupmailcore($data, $params)
+{
 	global $tikilib;
 	require_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 	

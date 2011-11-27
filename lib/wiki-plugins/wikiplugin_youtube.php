@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_youtube_info() {
+function wikiplugin_youtube_info()
+{
 	return array(
 		'name' => tra('YouTube'),
 		'documentation' => 'PluginYouTube',
@@ -100,7 +101,8 @@ function wikiplugin_youtube_info() {
 	);
 }
 
-function wikiplugin_youtube($data, $params) {
+function wikiplugin_youtube($data, $params)
+{
 	global $tikilib;
 	
  	$plugininfo = wikiplugin_youtube_info();

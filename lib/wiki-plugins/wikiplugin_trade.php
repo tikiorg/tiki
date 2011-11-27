@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trade_info() {
+function wikiplugin_trade_info()
+{
 	global $prefs;
 
 	return array(
@@ -76,14 +77,15 @@ function wikiplugin_trade_info() {
 	);
 }
 
-function wikiplugin_trade( $data, $params, $offset ) {
+function wikiplugin_trade( $data, $params, $offset )
+{
 	global $smarty, $userlib, $prefs, $user, $headerlib;
 	global $cclitelib; require_once 'lib/payment/cclitelib.php';
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	static $iPluginTrade = 0;
 
 	$default = array( 'inputtitle'=>'', 'wanted' => 'n', 'action' => tra('Continue'), 'registry' => '', 'currency' => '' );
-	$params = array_merge( $default, $params );
+	$params = array_merge($default, $params);
 	
 	if (empty($params['registry'])) {
 		$params['registry'] = $cclitelib->get_registry();
@@ -95,33 +97,33 @@ function wikiplugin_trade( $data, $params, $offset ) {
 	$iPluginTrade++;
 	$smarty->assign('iPluginTrade', $iPluginTrade);
 	
-	$params['price'] = floatval( preg_replace('/^\D*([\d\.]*)/', '$1', $params['price'] ));
-	$smarty->assign( 'wp_trade_other_user_set', empty($params['other_user']) ? 'n' : 'y' );
-	$smarty->assign( 'wp_trade_action', $params['action']);
+	$params['price'] = floatval(preg_replace('/^\D*([\d\.]*)/', '$1', $params['price']));
+	$smarty->assign('wp_trade_other_user_set', empty($params['other_user']) ? 'n' : 'y');
+	$smarty->assign('wp_trade_action', $params['action']);
 	
 //	$smarty->assign( 'wp_trade_quantity_edit', $params['quantity'] <= 0 ? 'y' : 'n');	// TODO
 //	$smarty->assign( 'wp_trade_quantity', abs($params['quantity']));
 	
-	if( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset && !empty($_POST['wp_trade_other_user']) ) {
+	if ( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset && !empty($_POST['wp_trade_other_user']) ) {
 		$params['other_user'] = $_POST['wp_trade_other_user'];
 	}
 	$params['other_user'] = trim($params['other_user'], '|');
-	$other_users = explode( '|', $params['other_user'] );
-	$other_users = array_map( 'trim', $other_users );
-	$other_users = array_filter( $other_users, array( $userlib, 'user_exists' ) );
-	$other_users = array_filter( $other_users );
+	$other_users = explode('|', $params['other_user']);
+	$other_users = array_map('trim', $other_users);
+	$other_users = array_filter($other_users, array( $userlib, 'user_exists' ));
+	$other_users = array_filter($other_users);
 	
 	if (!empty($other_users)) {
-		$info = $userlib->get_user_info( $other_users[0] );
+		$info = $userlib->get_user_info($other_users[0]);
 	} else {
 		$info = array();
 	}
-	$smarty->assign( 'wp_trade_offset', $offset );
-	$smarty->assign( 'wp_trade_price', $params['price'] );
-	$smarty->assign( 'wp_trade_other_user', $info );
-	$smarty->assign( 'wp_trade_currentuser', $params['currentuser'] );
+	$smarty->assign('wp_trade_offset', $offset);
+	$smarty->assign('wp_trade_price', $params['price']);
+	$smarty->assign('wp_trade_other_user', $info);
+	$smarty->assign('wp_trade_currentuser', $params['currentuser']);
 	
-	if( $params['wanted'] == 'n' ) {
+	if ( $params['wanted'] == 'n' ) {
 		if (empty($params['inputtitle'])) {
 			$params['inputtitle'] = 'Payment of %0 %1 from user %2 to %3';
 		}
@@ -130,14 +132,14 @@ function wikiplugin_trade( $data, $params, $offset ) {
 			$params['inputtitle'] = 'Request payment of %0 %1 to user %2 from %3';
 		}
 	}
-	$desc = tr($params['inputtitle'], number_format($params['price'], 2), $params['currency'], $user, $params['other_user'] );
+	$desc = tr($params['inputtitle'], number_format($params['price'], 2), $params['currency'], $user, $params['other_user']);
 	
-	if( ( !empty($info) && $info['waiting'] == null )) {
+	if ( ( !empty($info) && $info['waiting'] == null )) {
 
 		// user clicked "continue" (probably)
-		if( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset ) {
+		if ( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset ) {
 
-			$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'], null, $params['currency'] );
+			$id = $paymentlib->request_payment($desc, $params['price'], $prefs['payment_default_delay'], null, $params['currency']);
 
 			if (empty($user)) {
 				return '{REMARKSBOX(type=warning, title=Plugin Trade Error)}' .
@@ -146,15 +148,15 @@ function wikiplugin_trade( $data, $params, $offset ) {
 				$params['main_user'] = $user;
 			}
 			$params['invoice'] = $id;
-			$paymentlib->register_behavior( $id, 'complete', 'perform_trade', array($params) );
+			$paymentlib->register_behavior($id, 'complete', 'perform_trade', array($params));
 
 			//$smarty->assign( 'wp_trade_title', $desc );
 			require_once 'lib/smarty_tiki/function.payment.php';
-			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
+			return '^~np~' . smarty_function_payment(array( 'id' => $id ), $smarty) . '~/np~^';
 		} else if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && isset($_POST['invoice'])) {
 			require_once 'lib/smarty_tiki/function.payment.php';
 			$params['id'] = $_POST['invoice'];
-			return '^~np~' . smarty_function_payment( $params, $smarty ) . '~/np~^';
+			return '^~np~' . smarty_function_payment($params, $smarty) . '~/np~^';
 		}
 
 	} else if ($info['waiting'] != null) {
@@ -163,7 +165,6 @@ function wikiplugin_trade( $data, $params, $offset ) {
 				. '{REMARKSBOX}';
 	}
 	
-	$smarty->assign( 'wp_trade_title', $desc );
-	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_trade.tpl' ) . '~/np~';
+	$smarty->assign('wp_trade_title', $desc);
+	return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_trade.tpl') . '~/np~';
 }
-

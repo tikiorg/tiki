@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_iframe_info() {
+function wikiplugin_iframe_info()
+{
 	return array(
 		'name' => tra('Iframe'),
 		'documentation' => 'PluginIframe',
@@ -109,9 +110,10 @@ function wikiplugin_iframe_info() {
 	);
 }
 
-function wikiplugin_iframe($data, $params) {
+function wikiplugin_iframe($data, $params)
+{
 
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$ret = '<iframe ';
 
 	if (isset($name)) {

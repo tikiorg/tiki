@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_galleriffic_info() {
+function wikiplugin_galleriffic_info()
+{
 	return array(
 		'name' => tra('Galleriffic'),
 		'documentation' => 'PluginGalleriffic',
@@ -66,7 +67,7 @@ function wikiplugin_galleriffic($data, $params)
 		$default["$key"] = $param['default'];
 	}
 	$params = array_merge($default, $params);
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
     $filegallib = TikiLib::lib('filegal');
 	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);

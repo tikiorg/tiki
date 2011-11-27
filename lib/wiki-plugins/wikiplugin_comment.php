@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_comment_info() {
+function wikiplugin_comment_info()
+{
 	return array(
 		'name' => tra('Comment'),
 		'documentation' => 'PluginComment',
@@ -31,7 +32,8 @@ function wikiplugin_comment_info() {
 		)
 	);
 }
-function wikiplugin_comment($data, $params) {
+function wikiplugin_comment($data, $params)
+{
 	global $smarty;
 	$smarty->assign('wikiplugin_comment_objectId', $params['objectId']);
 	$smarty->assign('wikiplugin_comment_objectType', $params['objectType']);	

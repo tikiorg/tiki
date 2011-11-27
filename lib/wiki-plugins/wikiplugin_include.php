@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_include_info() {
+function wikiplugin_include_info() 
+{
 	return array(
 		'name' => tra('Include'),
 		'documentation' => 'PluginInclude',
@@ -49,13 +50,14 @@ function wikiplugin_include_info() {
 	);
 }
 
-function wikiplugin_include($data, $params, $offset) {
+function wikiplugin_include($data, $params, $offset)
+{
 	global $tikilib,$userlib,$user;
-    static $included_pages, $data;
+   static $included_pages, $data;
 
 	$max_times = 5;
-	$params = array_merge( array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params );
-	extract ($params,EXTR_SKIP);
+	$params = array_merge(array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params);
+	extract($params, EXTR_SKIP);
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}
@@ -148,7 +150,7 @@ function wikiplugin_include($data, $params, $offset) {
 		$smarty->loadPlugin('smarty_function_icon');
 		$tip = tra('Include Plugin'). ' | ' . tra('Edit the included page:').' &quot;' . $page . '&quot;';
 		$text .= '<a class="editplugin tips" '.	// ironically smarty_block_self_link doesn't work for this! ;)
-				smarty_block_ajax_href( array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']),$smarty, false) .
+				smarty_block_ajax_href(array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']), $smarty, false) .
 				smarty_function_icon(array( '_id' => 'page_edit', 'title' => $tip, 'class' => 'icon tips'), $smarty) . '</a>';
 	}
 	return $text;

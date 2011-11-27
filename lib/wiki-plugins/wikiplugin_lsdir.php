@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_lsdir_info() {
+function wikiplugin_lsdir_info()
+{
 	return array(
 		'name' => tra('List Directory'),
 		'documentation' => 'PluginLsDir',
@@ -56,7 +57,8 @@ function wikiplugin_lsdir_info() {
 	);
 }
 
-function wikiplugin_lsdir($data, $params) {
+function wikiplugin_lsdir($data, $params)
+{
 	global $tikilib;
 //	$dir = '';
 	$dir = $params['dir'];
@@ -125,7 +127,7 @@ function wikiplugin_lsdir($data, $params) {
 	}
 	
 	while ($file = readdir($dh)) {
-		if (empty($filter) || stristr($file,$filter)) {
+		if (empty($filter) || stristr($file, $filter)) {
 			//Don't list subdirectories
 			if (!is_dir("$dir/$file")) {
 				if ($sort == 'name') {
@@ -145,7 +147,7 @@ function wikiplugin_lsdir($data, $params) {
 		krsort($tmp_array);
 	}
 	
-	foreach($tmp_array as $filename) {
+	foreach ($tmp_array as $filename) {
 		if ($count >= $limit) {
 			break 1;
 		}

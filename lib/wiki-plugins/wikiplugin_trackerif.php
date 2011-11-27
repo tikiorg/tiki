@@ -39,15 +39,15 @@ function wikiplugin_trackerif($data, $params)
 	$values = array();
 	$dataelse = '';
 
-	if (strpos($data,'{ELSE}')) {
+	if (strpos($data, '{ELSE}')) {
 		// Else bloc when test does not pass
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 
 	if (empty($_REQUEST["trackerId"])) {
                 $trackerId = $trklib->get_tracker_for_item($_REQUEST['itemId']);
-        } else {
+	} else {
 		$trackerId = $_REQUEST["trackerId"];
 	}
 
@@ -85,7 +85,8 @@ function wikiplugin_trackerif($data, $params)
 	return $data;
 }
 
-function wikiplugin_trackerif_test(LDAPFilter $test, array $values) {
+function wikiplugin_trackerif_test(LDAPFilter $test, array $values)
+{
 	$return = true;
 
 	if ($test->_subfilters != null) {
@@ -95,11 +96,11 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values) {
 				case '&':
 					// And
 					$return &= wikiplugin_trackerif_test($subfilter, $values);
-					break;
+    				break;
 				case '|':
 					// Or
 					$return |= wikiplugin_trackerif_test($subfilter, $values);
-					break;
+    				break;
 			}
 		}
 
@@ -155,7 +156,8 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values) {
 	return $return;
 }
 
-function wikiplugin_trackerif_starts_with($haystack, $needle, $case=true) {
+function wikiplugin_trackerif_starts_with($haystack, $needle, $case=true)
+{
 	if ($case) {
 		return strcmp(substr($haystack, 0, strlen($needle)), $needle) === 0;
 	}
@@ -163,7 +165,8 @@ function wikiplugin_trackerif_starts_with($haystack, $needle, $case=true) {
 	return strcasecmp(substr($haystack, 0, strlen($needle)), $needle) === 0;
 }
 
-function wikiplugin_trackerif_ends_with($haystack, $needle, $case=true) {
+function wikiplugin_trackerif_ends_with($haystack, $needle, $case=true)
+{
 	if ($case) {
 		return strcmp(substr($haystack, strlen($haystack) - strlen($needle)), $needle) === 0;
 	}

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_redirect_info() {
+function wikiplugin_redirect_info()
+{
 	return array(
 		'name' => tra('Redirect'),
 		'documentation' => 'PluginRedirect',
@@ -40,13 +41,18 @@ function wikiplugin_redirect_info() {
 	);
 }
 
-function wikiplugin_redirect($data, $params, $offset, $options) {
+function wikiplugin_redirect($data, $params, $offset, $options)
+{
 	global $tikilib, $just_saved;
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$areturn = '';
 
-	if (!isset($page)) {$areturn = "REDIRECT plugin: No page specified!";}
-	if (!isset($url)) {$areturn .= "REDIRECT plugin: No url specified!";}
+	if (!isset($page)) {
+		$areturn = "REDIRECT plugin: No page specified!";
+	}
+	if (!isset($url)) {
+		$areturn .= "REDIRECT plugin: No url specified!";
+	}
 	$location = isset($page) ? $page : isset($url) ? $url : isset($perspective) ? tra('perspective ') . $perspective : tra('nowhere');
 	if ($just_saved) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled just after saving the page."), $location);
@@ -57,18 +63,18 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 	} else if ((isset($_REQUEST['redirectpage']))) {
 		$areturn = tra("REDIRECT plugin: redirect loop detected!");
 	} else if (isset($options['print']) && $options['print'] == 'y') {
-		$info = $tikilib->get_page_info( $location );
+		$info = $tikilib->get_page_info($location);
 		return $tikilib->parse_data($info['data'], $options);
 	} else {
 
 		if (isset($perspective)) {
 			global $access, $perspectivelib, $base_host;
 			require_once 'lib/perspectivelib.php';
-			$access->check_feature( 'feature_perspective' );
+			$access->check_feature('feature_perspective');
 
 			if ($_SESSION['current_perspective'] !== $perspective) {
 		
-				if ( $perspectivelib->perspective_exists( $perspective ) ) {
+				if ( $perspectivelib->perspective_exists($perspective) ) {
 					$_SESSION['current_perspective'] = $perspective;
 				}
 				if (empty($page) && empty($url)) {
@@ -87,6 +93,5 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 			exit;
 		}
 	}
-
 	return $areturn;
 }

@@ -121,16 +121,16 @@ function wikiplugin_addrelation($data, $params)
 
 	if (isset($_POST[$id])) {
 		if ($_POST[$id] == 'y') {
-			$relationlib->add_relation( $qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object'] );	
+			$relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);	
 		} elseif ($_POST[$id] == 'n') {
-			$relation_id = $relationlib->add_relation( $qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object'] );
-			$relationlib->remove_relation( $relation_id );
+			$relation_id = $relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);
+			$relationlib->remove_relation($relation_id);
 		}
 		require_once 'lib/search/refresh-functions.php';
 		refresh_index($source_object['type'], $source_object['object']);
 		refresh_index($target_object['type'], $target_object['object']);
 	}
-	$relationsfromsource = $relationlib->get_relations_from( $source_object['type'], $source_object['object'], $qualifier );
+	$relationsfromsource = $relationlib->get_relations_from($source_object['type'], $source_object['object'], $qualifier);
 	$relationexists = false;
 	foreach ($relationsfromsource as $r) {
 		if ($r['itemId'] == $target_object['object'] && $r['type'] == $target_object['type']) {
@@ -147,4 +147,3 @@ function wikiplugin_addrelation($data, $params)
 	$smarty->assign('label_remove', $labelremove);
 	return $smarty->fetch('wiki-plugins/wikiplugin_addrelation.tpl');
 }
-

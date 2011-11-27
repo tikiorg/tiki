@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_extendcarthold_info() {
+function wikiplugin_extendcarthold_info()
+{
 	return array(
 		'name' => tra('Extend Cart Inventory Hold'),
 		'documentation' => tra('PluginExtendCartHold'),
@@ -19,7 +20,8 @@ function wikiplugin_extendcarthold_info() {
 	);
 }
 
-function wikiplugin_extendcarthold( $data, $params ) {
+function wikiplugin_extendcarthold( $data, $params )
+{
 	global $cartlib; require_once 'lib/payment/cartlib.php';
 	$cartlib->extend_onhold_list(); 
 } 

@@ -7,7 +7,8 @@
 
 require_once('lib/wiki-plugins/wikiplugin_flash.php');
 
-function wikiplugin_vimeo_info() {
+function wikiplugin_vimeo_info()
+{
 	return array(
 		'name' => tra('Vimeo'),
 		'documentation' => 'PluginVimeo',
@@ -68,7 +69,8 @@ function wikiplugin_vimeo_info() {
 	);
 }
 
-function wikiplugin_vimeo($data, $params) {
+function wikiplugin_vimeo($data, $params)
+{
 	if (isset($params['url'])) {
 		$params['vimeo'] = $params['url'];
 		unset($params['url']);

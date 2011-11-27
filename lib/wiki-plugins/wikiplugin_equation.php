@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_equation_info() {
+function wikiplugin_equation_info()
+{
 	return array(
 		'name' => tra('Equation'),
 		'documentation' => 'PluginEquation',
@@ -25,18 +26,19 @@ function wikiplugin_equation_info() {
 	);
 }
 
-function wikiplugin_equation($data, $params) {
+function wikiplugin_equation($data, $params)
+{
 	if (empty($data)) return '';
-    extract ($params, EXTR_SKIP);
+    extract($params, EXTR_SKIP);
     if (empty($size)) $size = 100;
 
     $latexrender_path = getcwd() . "/lib/equation"; 
     include_once($latexrender_path . "/class.latexrender.php");
     $latexrender_path_http = "lib/equation";
-    $latex = new LatexRender($latexrender_path."/pictures",$latexrender_path_http."/pictures",$latexrender_path."/tmp");
+    $latex = new LatexRender($latexrender_path."/pictures", $latexrender_path_http."/pictures", $latexrender_path."/tmp");
     $latex->_formula_density = 120 * $size / 100;
 
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	$data=html_entity_decode(trim($data), ENT_QUOTES);
 

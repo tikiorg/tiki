@@ -5,12 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_content_info() {
+function wikiplugin_content_info()
+{
 	return array(
-		'name' => tra( 'Dynamic Content' ),
+		'name' => tra('Dynamic Content'),
 		'documentation' => 'PluginContent',
-		'description' => tra( 'Display content from dynamic content repository' ),
-		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_content' ),
+		'description' => tra('Display content from dynamic content repository'),
+		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_content'),
 		'filter' => 'text',
 		'icon' => 'pics/icons/database_table.png',
 		'tags' => array( 'basic' ),		
@@ -33,18 +34,19 @@ function wikiplugin_content_info() {
 	);
 }
 
-function wikiplugin_content( $data, $params, $offset, $parseOptions) {
+function wikiplugin_content( $data, $params, $offset, $parseOptions)
+{
 
 	global $dcslib; require_once 'lib/dcs/dcslib.php';
 
 	$lang = null;
-	if( isset( $parseOptions['language'] ) ) {
+	if ( isset( $parseOptions['language'] ) ) {
 		$lang = $parseOptions['language'];
 	}
 
-	if( isset($params['id']) &&  $params['id'] ) {
+	if ( isset($params['id']) &&  $params['id'] ) {
 		return $dcslib->get_actual_content((int) $params['id'], $lang);
-	} elseif( isset($params['label']) && $params['label'] ) {
-		return $dcslib->get_actual_content_by_label( $params['label'], $lang);
+	} elseif ( isset($params['label']) && $params['label'] ) {
+		return $dcslib->get_actual_content_by_label($params['label'], $lang);
 	}
 }

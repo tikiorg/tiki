@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_groupexpiry_info() {
+function wikiplugin_groupexpiry_info()
+{
 	return array(
 		'name' => tra('Group Expiry'),
 		'documentation' => 'PluginGroupExpiry',
@@ -21,15 +22,16 @@ function wikiplugin_groupexpiry_info() {
 	);
 }
 
-function wikiplugin_groupexpiry($data, $params) {
+function wikiplugin_groupexpiry($data, $params)
+{
 	global $tikilib, $userlib, $user;
-	extract ($params,EXTR_SKIP);	
+	extract($params, EXTR_SKIP);	
 	$groups = $userlib->get_user_groups($user);
 	if (!in_array($group, $groups)) {
 		return tra("not in group");
 	}
-	$userId = $tikilib->get_user_id( $user );
-	$date = $tikilib->getOne( 'SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?', array($userId, $group));
+	$userId = $tikilib->get_user_id($user);
+	$date = $tikilib->getOne('SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?', array($userId, $group));
 	if (!$date) {
 		return tra("never expires");
 	} else {

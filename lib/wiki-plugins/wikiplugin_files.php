@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_files_info() {
+function wikiplugin_files_info()
+{
 	return array(
 		'name' => tra('Files'),
 		'documentation' => 'PluginFiles',
@@ -359,7 +360,8 @@ function wikiplugin_files_info() {
 			),	 	)
 	 );
 }
-function wikiplugin_files($data, $params) {
+function wikiplugin_files($data, $params)
+{
 	global $prefs, $tikilib, $smarty, $tiki_p_admin, $tiki_p_admin_files_galleries, $user;
 	if ($prefs['feature_file_galleries'] != 'y') {
 		return('');
@@ -429,11 +431,11 @@ function wikiplugin_files($data, $params) {
 		if (isset($categId)) {
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 			$objects_in_categs = array();
-			foreach($objects['data'] as $o) {
+			foreach ($objects['data'] as $o) {
 				$objects_in_categs[] = $o['itemId'];
 			}
 		}
-		for ($i = 0; $i < count($fs['data']); ++$i) {
+		for ($i = 0, $count_fs_data = count($fs['data']); $i < $count_fs_data; ++$i) {
 			if (isset($categId)) { // filter the files
 				if (!in_array($fs['data'][$i]['fileId'], $objects_in_categs)) {
 					continue;
@@ -469,7 +471,7 @@ function wikiplugin_files($data, $params) {
 
 			$fs = $filegallib->get_files(0, $max, $sort, '', $og['itemId'], false, $withsubgals=='y', false, true, false, $show_parentName=='y', true, $recursive, '', false, false, false, $filter);			                                                      
 			if ($fs['cant']) {
-				for ($i = 0; $i < count($fs['data']); ++$i) {
+				for ($i = 0, $count_fs_data = count($fs['data']); $i < $count_fs_data; ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];
 					$fs['data'][$i]['galleryId'] = $gal_info['galleryId'];
 					$fs['data'][$i]['p_download_files'] = $p_download_files;
@@ -512,7 +514,9 @@ function wikiplugin_files($data, $params) {
 	if (!empty($showcreated)) $gal_info['show_created'] = $showcreated;
 	if (!empty($showcreator)) $gal_info['show_creator'] = $showcreator;
 	if (!empty($showauthor)) $gal_info['show_author'] = $showauthor;
-	if (!empty($showmodified)) {$gal_info['show_lastmodif'] = $gal_info['show_modified'] = $showmodified;}
+	if (!empty($showmodified)) {
+		$gal_info['show_lastmodif'] = $gal_info['show_modified'] = $showmodified;
+	}
 	if (!empty($showlockedby)) $gal_info['show_lockedby'] = $showlockedby;
 	if (!empty($showhits)) $gal_info['show_hits'] = $showhits;
 	if (!empty($showfiles)) $gal_info['show_files'] = $showfiles;
@@ -543,7 +547,8 @@ function wikiplugin_files($data, $params) {
 	$smarty->assign('sort_arg', "wp_files_sort_mode$iplugin");
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_files.tpl').'~/np~';
 }
-	function  wikiplugin_files_check_perm_file($fileId) {
+function  wikiplugin_files_check_perm_file($fileId)
+{
 		global $filegallib, $tikilib, $tiki_p_admin, $user, $tiki_p_admin_files_galleries;
 		$info = $filegallib->get_file_info($fileId);
 		$gal_info = $filegallib->get_file_gallery($info['galleryId']);
@@ -568,4 +573,4 @@ function wikiplugin_files($data, $params) {
 		$info['parentName'] = $gal_info['name'];
 		$info['size'] = $info['filesize'];
 		return $info;
-	}
+}

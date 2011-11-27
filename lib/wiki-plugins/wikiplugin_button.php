@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_button_info() {
+function wikiplugin_button_info()
+{
 	return array(
 		'name' => tra('Button'),
 		'documentation' => 'PluginButton',
@@ -41,7 +42,8 @@ function wikiplugin_button_info() {
 	);
 }
 
-function wikiplugin_button($data, $params) {
+function wikiplugin_button($data, $params)
+{
 	global $tikilib,$smarty;
 	$parserlib = TikiLib::lib('parser');
 	

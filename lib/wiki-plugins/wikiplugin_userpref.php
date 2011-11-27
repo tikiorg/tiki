@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_userpref_info() {
+function wikiplugin_userpref_info()
+{
 	return array(
 		'name' => tra('User Preference'),
 		'documentation' => 'PluginUserpref',
@@ -20,12 +21,13 @@ function wikiplugin_userpref_info() {
 	);
 }
 
-function wikiplugin_userpref($data, $params) {
+function wikiplugin_userpref($data, $params)
+{
 	global $user, $prefs, $tikilib;
 	$dataelse = '';
-	if (strpos($data,'{ELSE}')) {
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
+	if (strpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 
 	$else = false;

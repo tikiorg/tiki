@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_realnamelist_info() {
+function wikiplugin_realnamelist_info()
+{
 	return array(
 		'name' => tra('User List with Real Names'),
 		'documentation' => 'PluginRealNameList',
@@ -76,13 +77,19 @@ function wikiplugin_realnamelist_info() {
 	);
 }
 
-function wikiplugin_realnamelist($data, $params) {
+function wikiplugin_realnamelist($data, $params)
+{
 	global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users;
 
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
-	if (!isset($sep)) $sep=', ';
-	if (!isset($max)) { $numRows = -1; } else { $numRows = (int) $max; }
+	if (!isset($sep))
+		$sep=', ';
+	if (!isset($max)) {
+		$numRows = -1;
+	} else {
+		$numRows = (int) $max;
+	}
 
 	if ($data) {
 		$mid = 'g.`groupName` like ?';
@@ -156,7 +163,7 @@ function wikiplugin_realnamelist($data, $params) {
 				}
 			}
 		}
-		if( $row['value'] != '' ) {
+		if ( $row['value'] != '' ) {
 			$row['login'] = $row['value'];
 		} else {
 			$temp = $row['login'];
@@ -164,5 +171,5 @@ function wikiplugin_realnamelist($data, $params) {
 		}
 		$ret[] = $res.$row['login'].($res?'</a>':'');
 	}
-	return $pre.implode ( $sep, $ret ).$post;
+	return $pre.implode($sep, $ret).$post;
 }

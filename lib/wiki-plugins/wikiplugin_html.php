@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_html_info() {
+function wikiplugin_html_info()
+{
 	return array(
 		'name' => tra('HTML'),
 		'documentation' => 'PluginHTML',
@@ -33,7 +34,8 @@ function wikiplugin_html_info() {
 	);
 }
 
-function wikiplugin_html($data, $params) {
+function wikiplugin_html($data, $params)
+{
 	global $tikilib;
 
 	// strip out sanitisation which may have occurred when using nested plugins
@@ -41,9 +43,9 @@ function wikiplugin_html($data, $params) {
 	
 	// parse using is_html if wiki param set, or just decode html entities
 	if ( isset($params['wiki']) && $params['wiki'] === 1 ) {
-		$html = $tikilib->parse_data( $html, array('is_html' => true));
+		$html = $tikilib->parse_data($html, array('is_html' => true));
 	} else {
-		$html  = html_entity_decode( $html, ENT_NOQUOTES, 'UTF-8' );
+		$html  = html_entity_decode($html, ENT_NOQUOTES, 'UTF-8');
 	}
 
 	return '~np~' . $html . '~/np~';

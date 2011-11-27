@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_translated_info() {
+function wikiplugin_translated_info()
+{
 	return array(
 		'name' => tra('Translated'),
 		'documentation' => 'PluginTranslated',
@@ -30,18 +31,19 @@ function wikiplugin_translated_info() {
 	);
 }
 
-function wikiplugin_translated($data, $params) {
-	extract ($params,EXTR_SKIP);
+function wikiplugin_translated($data, $params)
+{
+	extract($params, EXTR_SKIP);
 	$img = '';
 
 	$h = opendir("img/flags/");
 	while ($file = readdir($h)) {
-		if (substr($file,0,1) != '.' and substr($file,-4,4) == '.gif') {
-			$avflags[] = substr($file,0,strlen($file)-4);
+		if (substr($file, 0, 1) != '.' and substr($file, -4, 4) == '.gif') {
+			$avflags[] = substr($file, 0, strlen($file)-4);
 		}
 	}
 	if (isset($flag)) {
-		if (in_array($flag,$avflags)) { 
+		if (in_array($flag, $avflags)) { 
 			$img = "<img src='img/flags/$flag.gif' width='18' height='13' vspace='0' hspace='3' alt='$lang' align='baseline' /> "; 
 		}
 	}

@@ -12,7 +12,7 @@ function wikiplugin_file_info()
 {
 	global $prefs;
 	$info = array(
-		'name' => tra( 'File' ),
+		'name' => tra('File'),
 		'documentation' => 'PluginFile',
 		'description' => tra('Link to a file that\'s attached or in a file gallery or archive. See PluginFiles for more functionality.'),
 		'prefs' => array( 'wikiplugin_file' ),
@@ -34,8 +34,10 @@ function wikiplugin_file_info()
 			'name' => array(
 				'required' => true,
 				'name' => tra('Name'),
-				'description' => tra('Identify an attachment by entering its file name, which will show as a link to the file.
-										 If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'),
+				'description' => tra(
+								'Identify an attachment by entering its file name, which will show as a link to the file.
+								 If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'
+				),
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
@@ -185,7 +187,7 @@ function wikiplugin_file( $data, $params )
 	$filedata["page"] = '';
 	$filedata["image"] = '';
 
-	$filedata = array_merge( $filedata, $params );
+	$filedata = array_merge($filedata, $params);
 
 	if ( ! $filedata["name"] ) {
 		return;
@@ -201,5 +203,5 @@ function wikiplugin_file( $data, $params )
 		$forward['image'] = 1;
 	$middle = $filedata["desc"];
 
-	return TikiLib::lib('parser')->plugin_execute( 'attach', $middle, $forward );
+	return TikiLib::lib('parser')->plugin_execute('attach', $middle, $forward);
 }

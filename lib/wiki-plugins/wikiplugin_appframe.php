@@ -69,20 +69,23 @@ function wikiplugin_appframe($data, $params)
 	$headerlib = TikiLib::lib('header');
 
 	if (isset($params['hideleft']) && $params['hideleft'] == 'y') {
-		$headerlib->add_js(<<<JS
+		$headerlib->add_js(
+<<<JS
 hideCol('col2','left', 'col1');
 JS
 );
 	}
 
 	if (isset($params['hideright']) && $params['hideright'] == 'y') {
-		$headerlib->add_js(<<<JS
+		$headerlib->add_js(
+<<<JS
 hideCol('col3','right', 'col1');
 JS
 );
 	}
 
-	$headerlib->add_js(<<<JS
+	$headerlib->add_js(
+<<<JS
 $(window).resize(function () {
 	var viewportHeight = $(window).height(), appframe = $('#appframe'), footerSize, centerHeader, surplus, target;
 	appframe.height(0);
@@ -196,13 +199,9 @@ function wikiplugin_appframe_module($data, $params, $start)
 		$label = $info['name'];
 	}
 
-	$data = $modlib->execute_module(array(
-		'name' => $moduleName,
-		'params' => array_merge($params->none(), array(
-			'nobox' => 'y',
-			'notitle' => 'y',
-		)),
-	));
+	$data = $modlib->execute_module(
+					array('name' => $moduleName, 'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')))
+	);
 
 	if (! $data) {
 		return null;

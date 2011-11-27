@@ -7,7 +7,8 @@
 
 require_once('lib/wiki-plugins/wikiplugin_flash.php');
 
-function wikiplugin_bliptv_info() {
+function wikiplugin_bliptv_info()
+{
 	return array(
 		'name' => tra('Bliptv'),
 		'documentation' => 'PluginBlipTV',
@@ -40,7 +41,8 @@ function wikiplugin_bliptv_info() {
 	);
 }
 
-function wikiplugin_bliptv($data, $params) {
+function wikiplugin_bliptv($data, $params)
+{
 	if (isset($params['url'])) {
 		$params['bliptv'] = $params['url'];
 		unset($params['movie']);

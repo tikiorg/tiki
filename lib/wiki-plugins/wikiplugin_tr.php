@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_tr_info() {
+function wikiplugin_tr_info()
+{
 	return array(
 		'name' => tra('Translate'),
 		'documentation' => 'PluginTR',
@@ -18,6 +19,7 @@ function wikiplugin_tr_info() {
 	);
 }
 
-function wikiplugin_tr($data) {
+function wikiplugin_tr($data)
+{
 	return tra($data);
 }

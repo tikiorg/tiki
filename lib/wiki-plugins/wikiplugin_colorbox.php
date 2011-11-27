@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_colorbox_info() {
+function wikiplugin_colorbox_info()
+{
 	return array(
 		'name' => tra('Colorbox'),
 		'documentation' => 'PluginColorBox',
@@ -125,7 +126,8 @@ function wikiplugin_colorbox_info() {
 		),
 	);
 }
-function wikiplugin_colorbox($data, $params) {
+function wikiplugin_colorbox($data, $params)
+{
 	global $tikilib, $smarty, $user, $prefs;
 	static $iColorbox = 0;
 	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n', 'parsedescriptions'=>'n');

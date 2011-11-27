@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_timesheet_info() {
+function wikiplugin_timesheet_info()
+{
 	return array(
 		'name' => tra('TimeSheet'),
 		'documentation' => 'Timesheet',
@@ -19,17 +20,18 @@ function wikiplugin_timesheet_info() {
 	);
 }
 
-function wikiplugin_timesheet($data, $params) {
+function wikiplugin_timesheet($data, $params)
+{
 	global $tikilib, $tiki_p_view_trackers, $tiki_p_create_tracker_items;
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
 	if ( $tiki_p_view_trackers != "y" || $tiki_p_create_tracker_items != "y") return "";
 	
 	TikiLib::lib("header")->add_cssfile("lib/jquery/jtrack/css/jtrack.css");
 	TikiLib::lib("header")->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js");
 	TikiLib::lib("header")->add_jsfile("lib/jquery/jtrack/js/jtrack.js");
-	TikiLib::lib("header")->add_jq_onready("
-		jTask.init();
-	");
-	return "~np~" . TikiLib::lib("smarty")->fetch( 'wiki-plugins/wikiplugin_timesheet.tpl' ) . '~/np~';
+	TikiLib::lib("header")->add_jq_onready(
+					"jTask.init();"
+	);
+	return "~np~" . TikiLib::lib("smarty")->fetch('wiki-plugins/wikiplugin_timesheet.tpl') . '~/np~';
 }

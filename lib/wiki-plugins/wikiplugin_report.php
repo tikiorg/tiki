@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_report_info() {
+function wikiplugin_report_info()
+{
 	return array(
 		'name' => tra('Report'),
 		'documentation' => 'Report',
@@ -35,18 +36,16 @@ function wikiplugin_report_info() {
 	);
 }
 
-function wikiplugin_report( $data, $params ) {
+function wikiplugin_report( $data, $params )
+{
 	global $tikilib,$headerlib;
 	static $report = 0;
 	++$report;
 	$i = $report;
 	
-	$params = array_merge(array(
-		"view"=> "sheet",
-		"name"=> ""
-	), $params);
+	$params = array_merge(array("view"=> "sheet","name"=> ""), $params);
 	
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
 	if (!empty($data)) {
 		$result = "";
@@ -56,20 +55,19 @@ function wikiplugin_report( $data, $params ) {
 			case 'sheet':
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
-				$headerlib->add_jq_onready("
-					var me = $('#reportPlugin$i');
-					me
-						.show()
-						.visible(function() {
-							me
-								
-								.sheet({
-									editable: false,
-									buildSheet: true
-								});
-						});
-					
-				");
+				$headerlib->add_jq_onready(
+								"var me = $('#reportPlugin$i');
+								me
+									.show()
+									.visible(function() {
+										me
+											
+											.sheet({
+												editable: false,
+												buildSheet: true
+											});
+									});"
+				);
 				
 				$result .= "
 					<style>
@@ -82,7 +80,7 @@ function wikiplugin_report( $data, $params ) {
 					<div id='reportPlugin$i'>" 
 						. $report->outputSheet($name) . 
 					"</div>";
-				break;
+    			break;
 				
 		}
 	}

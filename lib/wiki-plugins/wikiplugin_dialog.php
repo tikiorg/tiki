@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_dialog_info() {
+function wikiplugin_dialog_info()
+{
 	return array(
 		'name' => tra('Dialog'),
 		'documentation' => 'PluginDialog',
@@ -97,7 +98,8 @@ function wikiplugin_dialog_info() {
 	);
 }
 
-function wikiplugin_dialog($data, $params) {
+function wikiplugin_dialog($data, $params)
+{
 
 	static $id = 0;
 	$unique = 'wpdialog_' . ++$id;
@@ -123,8 +125,12 @@ function wikiplugin_dialog($data, $params) {
 	$options = array('width' => $params['width']);
 	$options['autoOpen'] = ($params['autoOpen'] === 'y');
 	$options['modal'] = ($params['modal'] === 'y');
-	if (!empty($params['showAnim'])) { $options['show'] = $params['showAnim']; }
-	if (!empty($params['hideAnim'])) { $options['hide'] = $params['hideAnim']; }
+	if (!empty($params['showAnim'])) {
+		$options['show'] = $params['showAnim'];
+	}
+	if (!empty($params['hideAnim'])) {
+		$options['hide'] = $params['hideAnim'];
+	}
 
 	$buttons = '';	// buttons need functions attached and json_encode cannot deal with them ;(
 
@@ -132,7 +138,9 @@ function wikiplugin_dialog($data, $params) {
 	if ($nbuts > 0) {
 		$buttons = '{';
 		for ($i = 0; $i < $nbuts; $i++) {
-			if (!isset($params['actions'][$i])) { $params['actions'][$i] = '$(this).dialog("close");'; }
+			if (!isset($params['actions'][$i])) {
+				$params['actions'][$i] = '$(this).dialog("close");';
+			}
 			if (strpos($params['actions'][$i], '$(this).dialog("close");') === false) {
 				$params['actions'][$i] .= ';$(this).dialog("close");';
 			}

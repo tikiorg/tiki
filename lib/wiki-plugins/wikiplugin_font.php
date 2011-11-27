@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_font_getfontoptions() {
+function wikiplugin_font_getfontoptions()
+{
 	global $prefs;
 	
 	$names = preg_split('/;/', $prefs['wysiwyg_fonts']);
@@ -26,7 +27,8 @@ function wikiplugin_font_getfontoptions() {
  * - size unit is 'px' (compatible with the CKE)
  * - fonts are embedded in <span> (compatible with the CKE)
   */
-function wikiplugin_font_info() {
+function wikiplugin_font_info()
+{
 	return array(
 		'name' => tra('FONT'),
 		'format' => 'wiki',
@@ -55,7 +57,8 @@ function wikiplugin_font_info() {
 } // wikiplugin_font_info()
 
 
-function wikiplugin_font($data, $params) {
+function wikiplugin_font($data, $params)
+{
 	global $prefs;
 	
 	$tag = 'span'; // fonts defined in divs are not shown in the CKE UI
@@ -78,4 +81,4 @@ function wikiplugin_font($data, $params) {
 		return $data;
 	}
 
-} // wikiplugin_font()
+}

@@ -147,7 +147,7 @@ function wikiplugin_carousel( $body, $params )
 	$params['displayThumbnails'] = ($params['displayThumbnails'] == 1);
 	$params['displayThumbnailNumbers'] = ($params['displayThumbnailNumbers'] == 1);
 	$params['displayThumbnailBackground'] = ($params['displayThumbnailBackground'] == 1);
-	foreach( $params as &$param) {
+	foreach ( $params as &$param) {
 		if (is_numeric($param)) {
 			$param = (float) $param;	// seems to leave ints as ints
 		}

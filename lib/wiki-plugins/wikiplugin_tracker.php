@@ -321,11 +321,11 @@ function wikiplugin_tracker_info()
 
 function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 {
-	foreach($field_errors['err_mandatory'] as $f) {
+	foreach ($field_errors['err_mandatory'] as $f) {
 		if ($fieldId == $f['fieldId'])
 			return '<span class="highlight">'.$name.'</span>';
 	}
-	foreach($field_errors['err_value'] as $f) {
+	foreach ($field_errors['err_value'] as $f) {
 		if ($fieldId == $f['fieldId'])
 			return '<span class="highlight">'.$name.'</span>';
 	}
@@ -346,7 +346,7 @@ function wikiplugin_tracker($data, $params)
 	$params = array_merge($default, $params);
 	$item = array();
 	
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -407,7 +407,7 @@ function wikiplugin_tracker($data, $params)
 	} else {
 		unset($_REQUEST['tr_reset']);
 	}
-	$smarty->assign('showmandatory',  empty($wiki) && empty($tpl)? 'n': $showmandatory); 
+	$smarty->assign('showmandatory', empty($wiki) && empty($tpl)? 'n': $showmandatory); 
 	if (!empty($wiki)) {
 		if (preg_match('/^wiki:(.+)$/', $wiki, $wiki_matches)) {
 			$wiki = $wiki_matches[1];
@@ -528,14 +528,14 @@ function wikiplugin_tracker($data, $params)
 				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'I', '1%');	// IP auto-assign
 				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'k', '1%');	// page creator
 				$auto_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'q');	// auto-increment	
-				foreach($auto_fieldId as $k => $v) {
+				foreach ($auto_fieldId as $k => $v) {
 					if (empty($v) || in_array($v, $outf)) {
 						unset($auto_fieldId[$k]);
 					} else {
 						$outf[] = $v;
 					}
 				}
-				foreach($hidden_fieldId as $k => $v) {
+				foreach ($hidden_fieldId as $k => $v) {
 					if (empty($v) || in_array($v, $outf)) {
 						unset($hidden_fieldId[$k]);
 					} else {
@@ -711,13 +711,13 @@ function wikiplugin_tracker($data, $params)
 						$newpageinfo = $tikilib->get_page_info($outputwiki);
 						$wikioutput = $newpageinfo["data"];
 						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $outputPretty);
-						foreach($newpagefields as $lf) {
+						foreach ($newpagefields as $lf) {
 							$wikioutput = str_replace('{$f_' . $lf . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
 						}
-                                                 if(isset($registration)) {
-	 	                                                         $wikioutput = str_replace('{$register_login}', $user, $wikioutput);
-	 	                                                         $wikioutput = str_replace('{$register_email}', $_REQUEST['email'], $wikioutput);
-	 	                                                 }
+						if (isset($registration)) {
+							 $wikioutput = str_replace('{$register_login}', $user, $wikioutput);
+							 $wikioutput = str_replace('{$register_email}', $_REQUEST['email'], $wikioutput);
+						}
 						$tikilib->create_page($newpagename, 0, $wikioutput, $tikilib->now, '', $user, $tikilib->get_ip_address());
 						$cat_desc = '';
 						$cat_type = 'wiki page';
@@ -836,7 +836,7 @@ function wikiplugin_tracker($data, $params)
 						if ($itemIdPos !== false) {
 							if (strstr($url[$key], '#itemId')) {
 								$url[$key] = str_replace('#itemId', $rid, $url[$key]);
-							} else if (($itemIdPos+strlen('itemId') >= strlen($url[$key])-1) || (substr($url[$key],$itemIdPos+strlen('itemId'),1) == "&")) {
+							} else if (($itemIdPos+strlen('itemId') >= strlen($url[$key])-1) || (substr($url[$key], $itemIdPos+strlen('itemId'), 1) == "&")) {
 								// replace by the itemId if in the end (or -1: for backward compatibility so that "&itemId=" also works) or if it is followed by an '&'
 								$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
 							}
@@ -929,7 +929,7 @@ function wikiplugin_tracker($data, $params)
 				foreach ($flds['data'] as $f) {
 					$outf[] = $f['fieldId'];
 				}
- 			}
+			}
 
 			// Display warnings when needed
 			
@@ -1045,7 +1045,7 @@ function wikiplugin_tracker($data, $params)
 						$customvalidation_m .= 'passcode: { required: "' . tra("This field is required") . '"}, ';
 					} 
 				}
-				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], $fields_prefix, $customvalidation, $customvalidation_m );
+				$validationjs = $validatorslib->generateTrackerValidateJS($flds['data'], $fields_prefix, $customvalidation, $customvalidation_m);
 
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('tracker_validator.tpl');
@@ -1142,9 +1142,10 @@ function wikiplugin_tracker($data, $params)
 
 			foreach ($flds['data'] as $f) {
 
-				if (in_array($f['fieldId'], $auto_fieldId)) {
-					// Do not show at all
-				} elseif (in_array($f['fieldId'], $hidden_fieldId)) {
+	//			if (in_array($f['fieldId'], $auto_fieldId)) {
+	//				// Do not show at all
+	//			} elseif (in_array($f['fieldId'], $hidden_fieldId)) {
+				if (in_array($f['fieldId'], $hidden_fieldId)) {
 					// Show in hidden form
 					$back.= '<span style="display:none;">' . wikiplugin_tracker_render_input($f, $item)  . '</span>';
 				} elseif (in_array($f['fieldId'], $outf)) {
@@ -1163,7 +1164,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					} else {
 						$back.= "<tr><td";
-						if (!empty($colwidth)){
+						if (!empty($colwidth)) {
 							$back .= " width='".$colwidth."'";
 						}
 						$back .= '><label for="' . $f['ins_id'] . '">' 
@@ -1247,15 +1248,14 @@ function wikiplugin_tracker($data, $params)
 			}
 
 			if (!empty($js)) {
-				$headerlib->add_js( $js, 10 );
+				$headerlib->add_js($js, 10);
 			}
 
 			if (!empty($page))
 				$back .= '~/np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		return $back;
-	}
-	else {
+	} else {
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId)
 			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 		$id = ' id="wikiplugin_tracker'.$iTRACKER.'"';
@@ -1272,7 +1272,8 @@ function wikiplugin_tracker($data, $params)
 	}
 }
 
-function wikiplugin_tracker_render_input($f, $item) {
+function wikiplugin_tracker_render_input($f, $item)
+{
 	$definition = Tracker_Definition::get($f['trackerId']);
 	
 	if (! $definition) return '';
@@ -1287,17 +1288,14 @@ function wikiplugin_tracker_render_input($f, $item) {
 		$handler = TikiLib::lib("trk")->get_field_handler($f, $item);
 	}
 
-	return $handler->renderInput(array(
-		'inTable' => 'y',
-	));
+	return $handler->renderInput(array('inTable' => 'y'));
 }
 
-function wikiplugin_tracker_render_value($f, $item) {
+function wikiplugin_tracker_render_value($f, $item)
+{
 	$trklib = TikiLib::lib('trk');
 
 	$handler = $trklib->get_field_handler($f, $item);
-	return $handler->renderOutput(array(
-		'inTable' => 'y',
-	));
+	return $handler->renderOutput(array('inTable' => 'y'));
 }
 

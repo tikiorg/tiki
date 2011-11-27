@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_annotation_info() {
+function wikiplugin_annotation_info()
+{
 	return array(
 		'name' => tra('Image Annotation'),
 		'documentation' => 'PluginAnnotation',
@@ -55,22 +56,21 @@ function wikiplugin_annotation_info() {
 	);
 }
 
-function wikiplugin_annotation($data, $params) {
+function wikiplugin_annotation($data, $params)
+{
 	static $first = true;
 	global $page, $tiki_p_edit, $headerlib;
 
-	$params = array_merge( array( 'align' => 'left' ), $params );
+	$params = array_merge(array( 'align' => 'left' ), $params);
 
 	$annotations = array();
-	foreach( explode( "\n", $data ) as $line )
-	{
+	foreach ( explode("\n", $data) as $line ) {
 		$line = trim($line);
 		if( empty( $line ) )
 			continue;
 
-		if( preg_match( "/^\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*,\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)(.*)\[(.*)\]$/", $line, $parts ) )
-		{
-			$parts = array_map( 'trim', $parts );
+		if ( preg_match("/^\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*,\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)(.*)\[(.*)\]$/", $line, $parts) ) {
+			$parts = array_map('trim', $parts);
 			list( $full, $x1, $y1, $x2, $y2, $label, $target ) = $parts;
 
 			$annotations[] = array(
@@ -84,10 +84,9 @@ function wikiplugin_annotation($data, $params) {
 		}
 	}
 
-	$annotations = json_encode( $annotations );
+	$annotations = json_encode($annotations);
 
-	if( $first ) // {{{
-	{
+	if ( $first ) {
 		$first = false;
 		$script = <<<SCRIPT
 var active = null;
@@ -393,8 +392,8 @@ function serializeAnnotations( data, cid ) // {{{
 
 SCRIPT;
 		
-		$headerlib->add_js( $script );
-	} // }}}
+		$headerlib->add_js($script);
+	}
 
 	static $uid = 0;
 	$uid++;
@@ -431,7 +430,7 @@ FORM;
 JS;
 	
 	global $headerlib;
-	$headerlib->add_js( $js );
+	$headerlib->add_js($js);
 
 	return <<<ANNOTATION
 ~np~

@@ -7,7 +7,8 @@
 
 require_once 'lib/wiki/pluginslib.php';
 
-function wikiplugin_wantedpages_info() {
+function wikiplugin_wantedpages_info()
+{
 	return array(
 		'name' => tra('Wanted Pages'),
 		'documentation' => 'PluginWantedPages',
@@ -104,7 +105,8 @@ function wikiplugin_wantedpages_info() {
 class WikiPluginWantedPages extends PluginsLib
 {
 
-	function getDefaultArguments() {
+	function getDefaultArguments()
+	{
 		return array(	'ignore' => '', // originating pages to be ignored
 						'splitby' => '+', // split ignored pages by this character
 						'skipext' => 0, // false, display external wiki links
@@ -116,31 +118,48 @@ class WikiPluginWantedPages extends PluginsLib
 						    // tries to allocate as little memory as possible.
 	}
 	
-	function getName () {
+	function getName ()
+	{
 		return 'WantedPages';
 	}
 	
-	function getDescription () {
+	function getDescription ()
+	{
 		return wikiplugin_wantedpages_help();
 	}
 	
-	function getVersion () {
-		return preg_replace("/[Revision: $]/", '',
-	                "\$Revision: 1.7 $");
+	function getVersion ()
+	{
+		return preg_replace("/[Revision: $]/", '', "\$Revision: 1.7 $");
 	}
 	
-	function run($data, $params) {
+	function run($data, $params)
+	{
 		global $prefs, $page_regex;
 	
 		// Grab and handle our Tiki parameters...
 		extract($params, EXTR_SKIP);
-		if (!isset($ignore))  {$ignore = ''; }
-		if (!isset($splitby)) {	$splitby = '+';	}
-		if (!isset($skipext)) {	$skipext = false; }
-		if (!isset($debug))   {$debug = false; }
-		if (!isset($collect)) {	$collect = 'from'; }
-		if (!isset($table))   {	$table = 'sep'; }
-		if (!isset($level))   {	$level = ''; }
+		if (!isset($ignore)) {
+			$ignore = '';
+		}
+		if (!isset($splitby)) {
+			$splitby = '+';
+		}
+		if (!isset($skipext)) {
+			$skipext = false;
+		}
+		if (!isset($debug)) {
+			$debug = false;
+		}
+		if (!isset($collect)) {
+			$collect = 'from';
+		}
+		if (!isset($table)) {
+			$table = 'sep';
+		}
+		if (!isset($level)) {
+			$level = '';
+		}
 	
 		// for regexes and external wiki details, see tikilib.php
 		if ($level == 'strict') {
@@ -169,7 +188,7 @@ class WikiPluginWantedPages extends PluginsLib
 		}
 	
 		// get array of fromPages to be ignored
-		$ignorepages = explode($splitby,$ignore);
+		$ignorepages = explode($splitby, $ignore);
 	
 		// Currently we only look in wiki pages.
 		// Wiki links in articles, blogs, etc are ignored.
@@ -184,7 +203,7 @@ class WikiPluginWantedPages extends PluginsLib
 		$tmp = array();
 	
 		while ($row = $result->fetchRow()) {
-			foreach($ignorepages as $ipage) {
+			foreach ($ignorepages as $ipage) {
 				// test whether a substring ignores this page, ignore case
 				if (fnmatch(TikiLib::strtolower($ipage), TikiLib::strtolower($row['fromPage'])) === true) {
 					if ($debug == 2) { // the "hardcore case"
@@ -217,7 +236,7 @@ class WikiPluginWantedPages extends PluginsLib
 					$tmp = debug_print($row, $debug, tra('dash-WikiWord'));
 					continue;
 				}
-			} elseif ($WikiWord){ // a WikiWord, can we allow this?
+			} elseif ($WikiWord) { // a WikiWord, can we allow this?
 				if ($prefs['feature_wikiwords'] != 'y') {
 					$tmp = debug_print($row, $debug, tra('WikiWord'));
 					continue;
@@ -244,7 +263,7 @@ class WikiPluginWantedPages extends PluginsLib
 		$out = array();
 		$linkin  = (!$debug) ? '((' : '~np~'; // this is how toPages are handled
 		$linkout = (!$debug) ? '))' : '~/np~';
-		foreach($tmp as $row) { // row[toPage, fromPage, reason]
+		foreach ($tmp as $row) { // row[toPage, fromPage, reason]
 			if ($debug) { // modified rejected toPages with reason
 				$row[0] = '<em>' . tra($row[2]) . '</em>: ' . $row[0];
 			}
@@ -324,7 +343,8 @@ class WikiPluginWantedPages extends PluginsLib
 	} // run()
 } // class WikiPluginWantedPages
 
-function wikiplugin_wantedpages($data, $params) {
+function wikiplugin_wantedpages($data, $params)
+{
   $plugin = new WikiPluginWantedPages();
   return $plugin->run($data, $params);
 }
@@ -333,18 +353,19 @@ function wikiplugin_wantedpages($data, $params) {
 // From php help "fnmatch", http://www.php.net/manual/de/function.fnmatch.php
 // comment by "soywiz at gmail dot com 26-Jul-2005 07:07" (as of Jan. 21 2006)
 if (!function_exists('fnmatch')) {
-	function fnmatch($pattern, $string) {
+	function fnmatch($pattern, $string) 
+	{
 	   for ($op = 0, $npattern = '', $n = 0, $l = strlen($pattern); $n < $l; $n++) {
 	       switch ($c = $pattern[$n]) {
 	           case '\\':
 	               $npattern .= '\\' . @$pattern[++$n];
-	           break;
+                break;
 	           case '.': case '+': case '^': case '$': case '(': case ')': case '{': case '}': case '=': case '!': case '<': case '>': case '|':
 	               $npattern .= '\\' . $c;
-	           break;
+                break;
 	           case '?': case '*':
 	               $npattern .= '.' . $c;
-	           break;
+  	             break;
 	           case '[': case ']': default:
 	               $npattern .= $c;
 	               if ($c == '[') {
@@ -353,7 +374,7 @@ if (!function_exists('fnmatch')) {
 	                   if ($op == 0) return false;
 	                   $op--;
 	               }
-	           break;
+  	             break;
 	       }
 	   }
 	   if ($op != 0) return false;
@@ -365,7 +386,8 @@ if (!function_exists('fnmatch')) {
 // From php help "Regular Expression Functions (Perl-Compatible)", http://www.php.net/pcre/
 // comment by "alexbodn at 012 dot n@t dot il 09-Jan-2006 11:45" (as of Jan. 21 2006)
 if (!function_exists('preg_ispreg')) {
-	function preg_ispreg($str) {
+	function preg_ispreg($str)
+	{
 		$prefix = '';
 		$sufix = '';
 	    if ($str[0] != '^')
@@ -380,7 +402,8 @@ if (!function_exists('preg_ispreg')) {
 } //!exists(preg_ispreg)
 
 if (!function_exists('debug_print')) {
-	function debug_print($row, $debug, $message) {
+	function debug_print($row, $debug, $message)
+	{
 		if ($debug == 2) {
 			echo $row['toPage'] . ' [from: ' . $row['fromPage'] . ']: ' . $message . '<br />';
 			return;

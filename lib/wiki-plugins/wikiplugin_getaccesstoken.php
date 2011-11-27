@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_getaccesstoken_info() {
+function wikiplugin_getaccesstoken_info()
+{
 	return array(
 		'name' => tra('Get Security Token'),
 		'documentation' => tra('PluginGetAccessToken'),
@@ -42,7 +43,8 @@ function wikiplugin_getaccesstoken_info() {
 	);
 }
 
-function wikiplugin_getaccesstoken( $data, $params ) {
+function wikiplugin_getaccesstoken( $data, $params )
+{
 	global $tikilib;
 	if (!isset($params['entry'])) {
 		return '';
@@ -61,7 +63,7 @@ function wikiplugin_getaccesstoken( $data, $params ) {
 	}
 	$bindvars = array();
 	$querystringvars = array();
-	for ($i = 0; $i < count($keys); $i++) {
+	for ($i = 0, $count_keys = count($keys); $i < $count_keys; $i++) {
 		$querystringvars[$keys[$i]] = $values[$i];
 	}
 	if (!empty($querystringvars)) {
@@ -76,4 +78,3 @@ function wikiplugin_getaccesstoken( $data, $params ) {
 		return '';
 	}
 } 
-			

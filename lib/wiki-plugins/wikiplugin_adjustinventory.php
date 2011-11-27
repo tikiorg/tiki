@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_adjustinventory_info() {
+function wikiplugin_adjustinventory_info()
+{
 	return array(
 		'name' => tra('Adjust Inventory'),
 		'documentation' => tra('PluginAdjustInventory'),
@@ -40,7 +41,8 @@ function wikiplugin_adjustinventory_info() {
 	);
 }
 
-function wikiplugin_adjustinventory( $data, $params ) {
+function wikiplugin_adjustinventory( $data, $params )
+{
 	if (!isset($params['add'])) {
 		$params['add'] = 'y';
 	}
@@ -53,16 +55,16 @@ function wikiplugin_adjustinventory( $data, $params ) {
 	$smarty->assign('subtract', $params['subtract']);
 	$form = $smarty->fetch('wiki-plugins/wikiplugin_adjustinventory.tpl');
 
-	if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		global $jitPost, $access;
 		$add_quantity = $jitPost->add_quantity->int();
 		$subtract_quantity = $jitPost->subtract_quantity->int();
 		$quantity = $add_quantity - $subtract_quantity;
-		if( $jitPost->code->text() == $params['code'] && $quantity != 0 ) {
+		if ( $jitPost->code->text() == $params['code'] && $quantity != 0 ) {
 			global $cartlib; require_once 'lib/payment/cartlib.php';
-			$cartlib->change_inventory( $params['code'], $quantity );
+			$cartlib->change_inventory($params['code'], $quantity);
 		}
-		$access->redirect( $_SERVER['REQUEST_URI'], tr('Inventory was adjusted by %0', $quantity ) );	
+		$access->redirect($_SERVER['REQUEST_URI'], tr('Inventory was adjusted by %0', $quantity));	
 	}
 	return $form;	
 } 

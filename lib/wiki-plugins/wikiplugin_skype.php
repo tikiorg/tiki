@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_skype_info() {
+function wikiplugin_skype_info()
+{
 	return array(
 		'name' => tra('Skype'),
 		'documentation' => 'PluginSkype',
@@ -38,7 +39,8 @@ function wikiplugin_skype_info() {
 	);
 }
 
-function wikiplugin_skype($data, $params) {
+function wikiplugin_skype($data, $params)
+{
 
 	extract($params, EXTR_SKIP);
 	

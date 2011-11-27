@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_topfriends_info() {
+function wikiplugin_topfriends_info()
+{
 	return array(
 		'name' => tra('Top Friends'),
 		'documentation' => 'PluginTopFriends',
@@ -35,25 +36,26 @@ function wikiplugin_topfriends_info() {
 	);
 }
 
-function wikiplugin_topfriends($data, $params) {
+function wikiplugin_topfriends($data, $params)
+{
 	global $smarty, $prefs, $tiki_p_list_users, $tikilib;
 	
 	/* Check we can be called */
-	if($prefs['feature_friends'] != 'y') {
+	if ($prefs['feature_friends'] != 'y') {
 		return ' ';  
 	}
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
-	if(!(isset($limit) && $limit <> '')) {
+	if (!(isset($limit) && $limit <> '')) {
 		$limit = 5;
 	}
 
-	if((isset($public) && $public != 'y') && ($tiki_p_list_users != 'y')) {
+	if ((isset($public) && $public != 'y') && ($tiki_p_list_users != 'y')) {
 		// Access denied
 		return ' ';
 	}
 
-	$listusers = $tikilib->list_users(0 , $limit, 'score_desc', '', false);
+	$listusers = $tikilib->list_users(0, $limit, 'score_desc', '', false);
 	$smarty->assign_by_ref('listusers', $listusers["data"]);
 
 	return $smarty->fetch('plugins/plugin-topfriends.tpl');

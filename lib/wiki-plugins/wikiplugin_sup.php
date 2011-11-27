@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_sup_info() {
+function wikiplugin_sup_info()
+{
 	return array(
-		'name' => tra( 'Superscript' ),
+		'name' => tra('Superscript'),
 		'documentation' => 'PluginSup',
 		'description' => tra('Apply superscript font to text'),
 		'prefs' => array( 'wikiplugin_sup' ),
@@ -22,8 +23,8 @@ function wikiplugin_sup_info() {
 
 function wikiplugin_sup($data, $params)
 {
-        global $tikilib;
+	global $tikilib;
 
-        extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	return "<sup>$data</sup>";
 }

@@ -46,7 +46,7 @@ function wikiplugin_zotero($data, $params)
 	if (isset($params['key'])) {
 		$key = $params['key'];
 		$cacheKey = "key_$key";
-	} elseif(isset($params['tag'])) {
+	} elseif (isset($params['tag'])) {
 		$tag = $params['tag'];
 		$cacheKey = "tag_$tag";
 	} else {

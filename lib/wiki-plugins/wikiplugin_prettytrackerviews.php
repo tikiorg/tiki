@@ -6,7 +6,8 @@
 // $Id$
 
 
-function wikiplugin_prettytrackerviews_info() {
+function wikiplugin_prettytrackerviews_info()
+{
 	return array(
 		'name' => tra('Pretty Tracker View Tracking'),
 		'documentation' => tra('PluginPrettyTrackerViews'),			
@@ -47,23 +48,24 @@ function wikiplugin_prettytrackerviews_info() {
 	);
 }
 
-function wikiplugin_prettytrackerviews( $data, $params ) {
+function wikiplugin_prettytrackerviews( $data, $params )
+{
 	global $attributelib; require_once 'lib/attributes/attributelib.php'; 
 	if (empty($params['itemId']) && !is_int($params['itemId'])) {
 		return '';
 	}
 	if (isset($params['record']) && $params['record'] == 'y') {
-		$attributes = $attributelib->get_attributes( 'trackeritem', $params['itemId'] );
+		$attributes = $attributelib->get_attributes('trackeritem', $params['itemId']);
 		if (isset($attributes['tiki.tracker.pretty.views'])) {
 			$value = $attributes['tiki.tracker.pretty.views'] + 1;
 		} else {
 			$value = 1;
 		}	
-		$attributelib->set_attribute( 'trackeritem', $params['itemId'], 'tiki.tracker.pretty.views', $value );
+		$attributelib->set_attribute('trackeritem', $params['itemId'], 'tiki.tracker.pretty.views', $value);
 	}
 	if (empty($params['show']) || $params['show'] == 'y') {
 		if (!isset($value)) {
-			$attributes = $attributelib->get_attributes( 'trackeritem', $params['itemId'] );
+			$attributes = $attributelib->get_attributes('trackeritem', $params['itemId']);
 			if (isset($attributes['tiki.tracker.pretty.views'])) {
 				$value = $attributes['tiki.tracker.pretty.views'];
 			} else {
@@ -74,4 +76,3 @@ function wikiplugin_prettytrackerviews( $data, $params ) {
 	}
 	return '';
 }
-

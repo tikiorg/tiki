@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_grouplist_info() {
+function wikiplugin_grouplist_info()
+{
 	return array(
 		'name' => tra('Group List'),
 		'documentation' => 'PluginGroupList',
@@ -46,7 +47,8 @@ function wikiplugin_grouplist_info() {
 	);
 }
 
-function wikiplugin_grouplist( $data, $params ) {
+function wikiplugin_grouplist( $data, $params )
+{
 	global $smarty, $userlib, $access;
 	$default = array('recur' => 'n', 'linkhome' => 'n');
 	$params = array_merge($default, $params);
@@ -61,5 +63,5 @@ function wikiplugin_grouplist( $data, $params ) {
 	$groups = $userlib->get_group_info($groups);
 	$smarty->assign_by_ref('groups', $groups);
 	$smarty->assign_by_ref('params', $params);
-	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_grouplist.tpl' ) . '~/np~';
+	return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_grouplist.tpl') . '~/np~';
 }

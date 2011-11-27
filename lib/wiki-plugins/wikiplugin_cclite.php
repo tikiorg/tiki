@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_cclite_info() {
+function wikiplugin_cclite_info()
+{
 	global $prefs;
 
 	return array(
@@ -40,7 +41,8 @@ function wikiplugin_cclite_info() {
 	);
 }
 
-function wikiplugin_cclite( $data, $params, $offset ) {
+function wikiplugin_cclite( $data, $params, $offset )
+{
 	global $smarty, $userlib, $prefs, $user, $headerlib;
 	//global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	global $cclitelib;  require_once 'lib/payment/cclitelib.php';
@@ -54,21 +56,20 @@ function wikiplugin_cclite( $data, $params, $offset ) {
 	if (is_array($default['registry']) && !empty($default['registry'])) {
 		$default['registry'] = $default['registry'][0];
 	}
-	$params = array_merge( $default, $params );
+	$params = array_merge($default, $params);
 	
 	switch ($params['mode']) {
 		case 'recent':
 			$result = $cclitelib->cclite_send_request('recent');
-			break;
+    		break;
 		case 'summary':
 		default:
 			$result = $cclitelib->cclite_send_request('summary');
-			break;
-			
+    		break;
 	}
 	//$r = $cclitelib->cclite_send_request('logoff');
 	$result = '<em>In development...</em><br />' . $result;
-	$smarty->assign( 'wp_cclite_result', $result );
-	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_cclite.tpl' ) . '~/np~';
+	$smarty->assign('wp_cclite_result', $result);
+	return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_cclite.tpl') . '~/np~';
 }
 

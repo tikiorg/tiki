@@ -5,11 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_rcontent_info() {
+function wikiplugin_rcontent_info()
+{
 	return array(
-		'name' => tra( 'Random Dynamic Content' ),
+		'name' => tra('Random Dynamic Content'),
 		'documentation' => 'PluginRcontent',
-		'description' => tra( 'Display pre-programmed changing content' ),
+		'description' => tra('Display pre-programmed changing content'),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_rcontent' ),
 		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
@@ -23,12 +24,13 @@ function wikiplugin_rcontent_info() {
 	);
 }
 
-function wikiplugin_rcontent( $data, $params, $offset, $parseOptions) {
+function wikiplugin_rcontent( $data, $params, $offset, $parseOptions)
+{
 
 	global $dcslib; include_once('lib/dcs/dcslib.php');
 
 	$lang = null;
-	if( isset( $parseOptions['language'] ) ) {
+	if ( isset( $parseOptions['language'] ) ) {
 		$lang = $parseOptions['language'];
 	}
 

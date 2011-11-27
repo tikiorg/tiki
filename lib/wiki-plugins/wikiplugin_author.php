@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_author_info() {
+function wikiplugin_author_info()
+{
 	return array(
 		'name' => tra('Author'),
 		'documentation' => 'PluginAuthor',
@@ -56,7 +57,8 @@ function wikiplugin_author_info() {
 	);
 }
 
-function wikiplugin_author($data, $params) {
+function wikiplugin_author($data, $params)
+{
 	global $smarty, $tikilib, $headerlib;
 	global $authors;
 	
@@ -66,7 +68,7 @@ function wikiplugin_author($data, $params) {
 	$blocktags='/(<+\/?address.*?>|<+\/?blockcode.*?>|<+\/?blockquote.*?>|<+\/?div.*?>|<+\/?h1.*?>|<+\/?h2.*?>|<+\/?h3.*?>|<+\/?h4.*?>|<+\/?h5.*?>|<+\/?h6.*?>|<+\/?hr.*?>|<+\/?h.*?>|<+\/?li.*?>|<+\/?ol.*?>|<+\/?pre.*?>|<+\/?p.*?>|<+\/?section.*?>|<+\/?table.*?>|<+\/?td.*?>|<+\/?th.*?>|<+\/?tr.*?>|<+\/?ul.*?>)/';
 	$default = array('popup' => 0);
 	$params = array_merge($default, $params);
-	if(!is_array($authors)) $authors=array();
+	if (!is_array($authors)) $authors=array();
 	
 	$author=$params['author'];
 	if (!isset($authors[$author])) {
@@ -75,14 +77,14 @@ function wikiplugin_author($data, $params) {
 	if (!isset($authors[$author]['style'])) {
 		$authors[$author]['style'] = "author$style";
 		$style++;
-		if($style>15) $style=0; // so far only 16 colors defined
+		if ($style>15) $style=0; // so far only 16 colors defined
 	}
 	
 	$content=preg_split($blocktags, $data, -1, PREG_SPLIT_DELIM_CAPTURE);
 	$html='';
 	foreach ($content as $data) {
 		if ($data!='') {
-			if (preg_match($blocktags,$data)>0) {
+			if (preg_match($blocktags, $data)>0) {
 				$html.=$data;
 
 			} else {
@@ -96,7 +98,7 @@ function wikiplugin_author($data, $params) {
 					}
 					$html.='"';
 				}
-				if($params['popup']==1) {
+				if ($params['popup']==1) {
 					$html.=' onclick="javascript:void()"';
 				}
 				if ($params['visible']==1 or $params['popup']==1) {
@@ -105,7 +107,7 @@ function wikiplugin_author($data, $params) {
 					$html.=$data;
 				}
 				
-				if($params['popup']==1) {
+				if ($params['popup']==1) {
 					//Mouseover for detailed info
 					$js = "\$('#author$id-link').mouseover(function(event) {
 						\$('#author$id').css('left', event.pageX).css('top', event.pageY);

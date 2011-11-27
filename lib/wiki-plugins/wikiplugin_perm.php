@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_perm_info() {
+function wikiplugin_perm_info()
+{
 	return array(
 		'name' => tra('Permissions'),
 		'documentation' => 'PluginPerm',
@@ -32,16 +33,17 @@ function wikiplugin_perm_info() {
 	);
 }
 
-function wikiplugin_perm($data, $params) {
+function wikiplugin_perm($data, $params)
+{
 	global $user, $userlib;
 	if (!empty($params['perms']))
-		$perms = explode('|',$params['perms']);
+		$perms = explode('|', $params['perms']);
 	if (!empty($params['notperms']))
 		$notperms = explode('|', $params['notperms']);
 
-	if (strpos($data,'{ELSE}')) {
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
+	if (strpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	} else {
 		$dataelse = '';
 	}
@@ -56,7 +58,7 @@ function wikiplugin_perm($data, $params) {
 				}
 			} else {
 	    		global $$perm;
-	    		if ($$perm == 'y') {
+				if ($$perm == 'y') {
 					$ok = true;
 					break;
 				}

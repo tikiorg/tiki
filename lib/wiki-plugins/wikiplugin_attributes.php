@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_attributes_info() {
+function wikiplugin_attributes_info()
+{
 	return array(
 		'name' => tra('Attributes'),
 		'documentation' => 'PluginAttributes',
@@ -19,16 +20,18 @@ function wikiplugin_attributes_info() {
 	);
 }
 
-function wikiplugin_attributes_save( $context, $data, $params ) {
+function wikiplugin_attributes_save( $context, $data, $params ) 
+{
 	global $attributelib; require_once 'lib/attributes/attributelib.php';
 
-	foreach( $params as $key => $value ) {
-		$key = str_replace( '_', '.', $key );
-		$attributelib->set_attribute( $context['type'], $context['object'], $key, $value );
+	foreach ( $params as $key => $value ) {
+		$key = str_replace('_', '.', $key);
+		$attributelib->set_attribute($context['type'], $context['object'], $key, $value);
 	}
 }
 
-function wikiplugin_attributes($data, $params) {
+function wikiplugin_attributes($data, $params)
+{
 	return '';
 }
 

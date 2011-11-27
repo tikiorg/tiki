@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.  
 // $Id$
 
-function wikiplugin_convene_info() {
+function wikiplugin_convene_info()
+{
 	return array(
 		'name' => tra('Convene'),
 		'documentation' => 'PluginConvene',
@@ -25,24 +26,22 @@ function wikiplugin_convene_info() {
 	);
 }
 
-function wikiplugin_convene($data, $params) {
+function wikiplugin_convene($data, $params)
+{
 	global $tikilib, $headerlib, $page, $caching, $tiki_p_edit;
 
 	static $htmlFeedLinkI = 0;
 	++$conveneI;
 	$i = $conveneI;
 	
-	$params = array_merge(array(
-		"title" => "Convene",
-	), $params);
-	
-	extract ($params,EXTR_SKIP);
+	$params = array_merge(array("title" => "Convene"), $params);	
+	extract($params, EXTR_SKIP);
 	$dates = array();
 	
 	//start flat static text to prepared array
 	$lines = explode("\n", trim($data));
 	sort($lines);
-	foreach($lines as $line) {
+	foreach ($lines as $line) {
 		$line = trim($line);
 		
 		$parts = explode(':', $line);
@@ -55,7 +54,7 @@ function wikiplugin_convene($data, $params) {
 	
 	//start get users from array
 	$users = array();
-	foreach(end($dates['dates']) as $user => $vote) {
+	foreach (end($dates['dates']) as $user => $vote) {
 		$users[] = $user;
 	}
 	//end get users from array
@@ -63,8 +62,8 @@ function wikiplugin_convene($data, $params) {
 	
 	//start votes summed together
 	$votes = array();
-	foreach($dates['dates'] as $stamp => $date) {
-		foreach($date as $vote) {
+	foreach ($dates['dates'] as $stamp => $date) {
+		foreach ($date as $vote) {
 			$votes[$stamp] += $vote;
 		}
 	}
@@ -73,7 +72,7 @@ function wikiplugin_convene($data, $params) {
 	
 	//start find top vote stamp
 	$topVoteStamp = 0;
-	foreach($votes as $stamp => $vote) {
+	foreach ($votes as $stamp => $vote) {
 		$topVoteStamp = ($vote > $votes[$topVoteStamp] ? $stamp : $topVoteStamp);
 	}
 	//end find top vote stamp
@@ -81,8 +80,8 @@ function wikiplugin_convene($data, $params) {
 	
 	//start reverse array for easy listing as table
 	$rows = array();
-	foreach($dates['dates'] as $stamp => $date) {
-		foreach($date as $user => $vote) {
+	foreach ($dates['dates'] as $stamp => $date) {
+		foreach ($date as $user => $vote) {
 			if (isset($rows[$user][$stamp])) $rows[$user][$stamp] = array();
 			 
 			$rows[$user][$stamp] = $vote;
@@ -94,7 +93,7 @@ function wikiplugin_convene($data, $params) {
 	
 	//start date header
 	$dateHeader = "";
-	foreach($votes as $stamp => $totals) {
+	foreach ($votes as $stamp => $totals) {
 		$dateHeader .= "<td>". $tikilib->get_long_datetime($stamp) .
 			($tiki_p_edit == 'y' ? " <img src='pics/icons/delete.png' class='conveneDeleteDate$i icon' data-date='$stamp' title='" . tr("Delete Date") . "'/>" : "").
 		"</td>";
@@ -119,10 +118,10 @@ function wikiplugin_convene($data, $params) {
 	
 	//start user list and votes 
 	$userList = "";
-	foreach($rows as $user => $row) {
+	foreach ($rows as $user => $row) {
 		$userList .= "<tr class='conveneUserVotes$i'>";
 		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<img src='pics/icons/pencil.png' class='conveneUpdateUser$i icon' title='" . tr("Edit User") . "' />" : "") . $user . "</td>";
-		foreach($row as $stamp => $vote) {
+		foreach ($row as $stamp => $vote) {
 			$class = 	'ui-state-default ui-state-active';
 			$text = 	($vote  == 1 ? "<img src='pics/icons/tick.png' alt='OK' class='vote' />" : "<img src='pics/icons/cross.png' class='vote' />" );
 			
@@ -143,7 +142,7 @@ function wikiplugin_convene($data, $params) {
 	
 	//start last row with auto selected date(s)
 	$lastRow = "";
-	foreach($votes as $stamp => $total) {
+	foreach ($votes as $stamp => $total) {
 		$pic = "";
 		if ($total == $votes[$topVoteStamp]) {
 			$pic .= ($tiki_p_edit != "y" ? "<img src='pics/icons/tick.png' class='icon' title='" . tr("Selected Date") . "' />" : "");
@@ -164,19 +163,22 @@ function wikiplugin_convene($data, $params) {
 			</form>
 FORM;
 	
-	$conveneData = json_encode(array(
-		"dates" => $dates,
-		"users" => $users,
-		"votes" => $votes,
-		"topVote" => $votes[$topVoteStamp],
-		"rows" =>	$rows,
-		"data" => $data,
-	));
+	$conveneData = json_encode(
+					array(
+						"dates" => $dates,
+						"users" => $users,
+						"votes" => $votes,
+						"topVote" => $votes[$topVoteStamp],
+						"rows" =>	$rows,
+						"data" => $data,
+					)
+	);
 	
 	$n = '\n\r';
 	
 	$headerlib->add_jsfile("lib/jquery/jquery-ui-timepicker-addon.js");
-	$headerlib->add_jq_onready(<<<JQ
+	$headerlib->add_jq_onready(
+<<<JQ
 		
 		var convene$i = $.extend({
 			fromBlank: function(user, date) {

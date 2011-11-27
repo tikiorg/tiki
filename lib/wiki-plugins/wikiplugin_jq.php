@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_jq_info() {
+function wikiplugin_jq_info()
+{
 	return array(
 		'name' => tra('jQuery'),
 		'documentation' => 'PluginJQ',
@@ -30,12 +31,15 @@ function wikiplugin_jq_info() {
 	);
 }
 	
-function wikiplugin_jq($data, $params) {
+function wikiplugin_jq($data, $params)
+{
 	global $headerlib, $prefs;
 	extract($params, EXTR_SKIP);
 	
 	$nojquery = isset($nojquery) ? $nojquery : tr('<!-- jq plugin inactive: JavaScript off -->');
-	if ($prefs['javascript_enabled'] != 'y') { return $nojquery; }
+	if ($prefs['javascript_enabled'] != 'y') { 
+		return $nojquery;
+	}
 	$notonready = isset($notonready) ? $notonready : false;
 
 	// Need to manually decode greater than and less than (not sure if we want to decode all HTML entities

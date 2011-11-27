@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_webservice_info() {
+function wikiplugin_webservice_info()
+{
 	return array(
 		'name' => tra('Web Service'),
 		'documentation' => 'PluginWebservice',
@@ -55,10 +56,11 @@ function wikiplugin_webservice_info() {
 	);
 }
 
-function wikiplugin_webservice( $data, $params ) {
+function wikiplugin_webservice( $data, $params )
+{
 	require_once 'lib/ointegratelib.php';
 
-	if( isset( $params['bodyname'] ) && ! empty($params['bodyname']) ) {
+	if ( isset( $params['bodyname'] ) && ! empty($params['bodyname']) ) {
 		$params[ $params['bodyname'] ] = $data;
 		unset($params['bodyname']);
 		$data = '';
@@ -69,35 +71,35 @@ function wikiplugin_webservice( $data, $params ) {
 		$params = array_merge($params, $request_params);
 	}
 
-	if( ! empty( $data ) ) {
+	if ( ! empty( $data ) ) {
 		$templateFile = $GLOBALS['tikipath'] . 'temp/cache/' . md5($data); 
 
-		if( ! file_exists( $templateFile ) )
-			file_put_contents( $templateFile, $data );
+		if ( ! file_exists($templateFile) )
+			file_put_contents($templateFile, $data);
 	} else {
 		$templateFile = '';
 	}
 
-	if( isset( $params['url'] ) ) {
+	if ( isset( $params['url'] ) ) {
 		// When URL is specified, always use the body as template
 		$request = new OIntegrate;
-		$response = $request->performRequest( $params['url'] );
+		$response = $request->performRequest($params['url']);
 
-		if( ! empty( $templateFile ) )
-			return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
-	} elseif( isset($params['service']) && (isset($params['template']) || !empty( $templateFile ) )) {
+		if ( ! empty( $templateFile ) )
+			return $response->render('smarty', 'tikiwiki', 'tikiwiki', $templateFile);
+	} elseif ( isset($params['service']) && (isset($params['template']) || !empty( $templateFile ) )) {
 		require_once 'lib/webservicelib.php';
 
-		if( $service = Tiki_Webservice::getService( $params['service'] ) ) {
-			if( ! empty( $templateFile ) ) {
+		if ( $service = Tiki_Webservice::getService($params['service']) ) {
+			if ( ! empty( $templateFile ) ) {
 				// Render using function body
-				$response = $service->performRequest( $params );
+				$response = $service->performRequest($params);
 
-				return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
-			} elseif( $template = $service->getTemplate( $params['template'] ) ) {
-				$response = $service->performRequest( $params );
+				return $response->render('smarty', 'tikiwiki', 'tikiwiki', $templateFile);
+			} elseif ( $template = $service->getTemplate($params['template']) ) {
+				$response = $service->performRequest($params);
 
-				return $template->render( $response, 'tikiwiki' );
+				return $template->render($response, 'tikiwiki');
 			} else {
 				return '^' . tra('Unknown Template') . '^';
 			}

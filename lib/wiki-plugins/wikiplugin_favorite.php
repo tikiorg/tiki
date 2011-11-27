@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_favorite_info() {
+function wikiplugin_favorite_info()
+{
 	return array(
 		'name' => tra('Favorite'),
 		'documentation' => 'PluginFavorite',
@@ -30,7 +31,8 @@ function wikiplugin_favorite_info() {
 		)
 	);
 }
-function wikiplugin_favorite($data, $params) {
+function wikiplugin_favorite($data, $params)
+{
 	global $smarty;
 	if ($params['objectType'] == 'usertracker') {
 		$objectType = 'trackeritem';
@@ -38,7 +40,7 @@ function wikiplugin_favorite($data, $params) {
 		if ($userid = Tikilib::lib('tiki')->get_user_id($params['objectId'])) {
 			$tracker = TikiLib::lib('user')->get_usertracker($userid);
 			if ( $tracker && $tracker['usersTrackerId'] ) {
-				$objectId = TikiLib::lib('trk')->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $params['objectId'] );
+				$objectId = TikiLib::lib('trk')->get_item_id($tracker['usersTrackerId'], $tracker['usersFieldId'], $params['objectId']);
 			}
 		}
 	} else {

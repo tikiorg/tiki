@@ -19,7 +19,7 @@ function wikiplugin_split_info()
 			'joincols' => array(
 				'required' => false,
 				'name' => tra('Join Columns'),
-				'description' => tra('Generate the colspan attribute if columns are missing' ),
+				'description' => tra('Generate the colspan attribute if columns are missing'),
 				'filter' => 'striptags',
 				'default' => 'y',
 				'options' => array(
@@ -79,8 +79,9 @@ function wikiplugin_split_info()
 		),
 	);
 }
-function wikiplugin_split_rollback($data, $hashes) {
-	foreach($hashes as $hash=>$match) {
+function wikiplugin_split_rollback($data, $hashes)
+{
+	foreach ($hashes as $hash=>$match) {
 		$data = str_replace($hash, $match, $data);
 	}
 	return $data;
@@ -115,7 +116,7 @@ function wikiplugin_split($data, $params, $pos)
 	else
 		$data2 = $data;
 	
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	$fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
 	$joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
 	// Split data by rows and cells
@@ -274,7 +275,7 @@ function  wikiplugin_split_cell($data, $pos, $cell)
 			} elseif ($matches[1] == '{SPLIT}') {
 				if (!$cell)
 					break;
-			} elseif ($matches[1] == '{SPLIT(')  {
+			} elseif ($matches[1] == '{SPLIT(') {
 				$match = '{SPLIT}';
 			} elseif ($matches[1] == '~np~') {
 				$match = '~/np~';

@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_slideshow_info() {
+function wikiplugin_slideshow_info()
+{
 	return array(
 		'name' => tra('Slideshow'),
 		'documentation' => 'Slideshow',
@@ -134,9 +135,10 @@ function wikiplugin_slideshow_info() {
 	);
 }
 
-function wikiplugin_slideshow($data, $params) {
+function wikiplugin_slideshow($data, $params)
+{
 	global $dbTiki, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty;
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	$theme = (isset($theme) ? $theme : 'default');
 	$themeName = '';
@@ -170,8 +172,8 @@ function wikiplugin_slideshow($data, $params) {
 	
 	global $headerlib;
 	
-	$headerlib->add_js("
-		window.slideshowSettings = {
+	$headerlib->add_js(
+					"window.slideshowSettings = {
 			class: '$class',
 			backgroundurl: '$backgroundurl',
 			backgroundcolor: '$backgroundcolor',
@@ -196,8 +198,8 @@ function wikiplugin_slideshow($data, $params) {
 			textSide: '$textside',
 			themeName: '$themeName',
 			basePath: 'lib/jquery.s5/'
-		};
-	");
+		};"
+	);
 	
 	return "~np~<div id='' class='tiki_slideshow'>$notesHtml</div>~/np~";
 }

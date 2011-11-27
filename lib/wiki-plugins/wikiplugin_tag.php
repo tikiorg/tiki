@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_tag_info() {
+function wikiplugin_tag_info()
+{
 	return array(
 		'name' => tra('Tag'),
 		'documentation' => 'PluginTag',
@@ -32,8 +33,9 @@ function wikiplugin_tag_info() {
 	);
 }
 
-function wikiplugin_tag($data, $params) {
-	extract ($params,EXTR_SKIP);
+function wikiplugin_tag($data, $params)
+{
+	extract($params, EXTR_SKIP);
 	if (!isset($tag)) {
 		$tag = 'span';
 	} else {
@@ -43,7 +45,7 @@ function wikiplugin_tag($data, $params) {
 	
 	if (isset($style)) {
 		// trim quotes from the begin and end of style
-		$style = ' style="'.trim($style,"\'\"").'"';
+		$style = ' style="'.trim($style, "\'\"").'"';
 	} else {
 		$style = '';
 	}

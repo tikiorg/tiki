@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_lang_info() {
+function wikiplugin_lang_info()
+{
 	return array(
 		'name' => tra('Language'),
 		'documentation' => 'PluginLang',
@@ -30,11 +31,12 @@ function wikiplugin_lang_info() {
 	);
 }
 
-function wikiplugin_lang($data, $params) {
+function wikiplugin_lang($data, $params)
+{
 	global $prefs;
 
 	$reqlang = isset($_REQUEST['lang']) ? $_REQUEST['lang'] : $prefs['language'];
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	if (isset($lang)) {
 		return in_array($reqlang, explode('+', $lang)) ? $data : '';
 	}

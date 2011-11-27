@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trackerprefill_info() {
+function wikiplugin_trackerprefill_info()
+{
 	return array(
 		'name' => tra('Tracker Prefill'),
 		'documentation' => 'PluginTrackerPrefill',
@@ -100,7 +101,8 @@ function wikiplugin_trackerprefill_info() {
 	);
 }
 
-function wikiplugin_trackerprefill($data, $params) {
+function wikiplugin_trackerprefill($data, $params)
+{
 	global $smarty;
 	$prefills = array();
 	foreach ($params as $param=>$value) {

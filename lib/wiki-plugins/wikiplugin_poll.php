@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_poll_info() {
+function wikiplugin_poll_info()
+{
 	return array(
 		'name' => tra('Poll'),
 		'documentation' => 'PluginPoll',
@@ -50,12 +51,13 @@ function wikiplugin_poll_info() {
 	);
 }
 
-function wikiplugin_poll($data, $params) {
+function wikiplugin_poll($data, $params)
+{
 	global $smarty, $polllib, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $prefs, $_REQUEST, $user;
 	$default = array('showtitle' => 'y', 'showresult' => 'link', 'showtotal' => 'y');
 	$params = array_merge($default, $params);
 
-	extract ($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 
 	if (!isset($pollId)) {
 	    return WikiParser_PluginOutput::argumentError(array('pollId'));
@@ -72,7 +74,7 @@ function wikiplugin_poll($data, $params) {
 	$smarty->assign_by_ref('showtotal', $showtotal);
 	$smarty->assign_by_ref('hasVoted', $hasVoted);
 	$smarty->assign_by_ref('showtitle', $showtitle);
-    if (!$hasVoted || $prefs['feature_poll_revote'] == 'y') {
+	if (!$hasVoted || $prefs['feature_poll_revote'] == 'y') {
 		$smarty->assign_by_ref('menu_info', $poll_info);
 		$smarty->assign_by_ref('channels', $options);
 		$smarty->assign_by_ref('poll_title', $data);

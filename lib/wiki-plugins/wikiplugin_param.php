@@ -7,7 +7,8 @@
 
 define('WIKIPLUGIN_PARAM_REQUEST', 'request');
 
-function wikiplugin_param_info() {
+function wikiplugin_param_info()
+{
 	return array(
 		'name' => tra('Param'),
 		'documentation' => 'PluginParam',
@@ -31,14 +32,15 @@ function wikiplugin_param_info() {
 	);
 }
 
-function wikiplugin_param($data, $params) {
+function wikiplugin_param($data, $params)
+{
 	$dataelse = '';
-        $names = array();
+   $names = array();
 	$test = true;
 
-	if (strpos($data,'{ELSE}')) {
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
+	if (strpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 
 	if (!empty($params['name'])) {
@@ -53,7 +55,7 @@ function wikiplugin_param($data, $params) {
 		switch ($params['source']) {
 			case WIKIPLUGIN_PARAM_REQUEST:
 				$test &= (isset($_REQUEST[$name]) && !empty($_REQUEST[$name]));
-				break;
+    			break;
 		}
         }
 
