@@ -22,12 +22,12 @@ function smarty_resource_wiki_source($page, &$tpl_source, $smarty)
 {
 	global $tikilib, $user;
 
-	$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $page ) );
+	$perms = Perms::get(array( 'type' => 'wiki page', 'object' => $page ));
 	if ( ! $perms->use_as_template ) {
 		$tpl_source= tra('Permission denied: the specified wiki page cannot be used as Smarty template resource').'<br />';
 		// TODO: do not cache ! and return the message only once should be enough...
 		return true;
-	 }
+	}
 
 	$info = $tikilib->get_page_info($page);
 	if (empty($info)) {

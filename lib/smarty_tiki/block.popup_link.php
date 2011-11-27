@@ -28,7 +28,8 @@ function smarty_block_popup_link($params, $content, $smarty, $repeat)
 
 	if ( $repeat === false ) {
 		if ($prefs['feature_jquery'] == 'y') {
-			$headerlib->add_js(<<<JS
+			$headerlib->add_js(
+<<<JS
 \$(document).ready( function() {
 
 	\$('#$block').hide();

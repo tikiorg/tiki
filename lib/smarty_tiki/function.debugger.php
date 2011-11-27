@@ -84,7 +84,8 @@ function smarty_function_debugger($params, $smarty)
 		if ($prefs['feature_jquery_ui'] == 'y') {
 			global $headerlib;
 			require_once('lib/headerlib.php');
-			$headerlib->add_jq_onready( "
+			$headerlib->add_jq_onready(
+							"
 \$('#debugconsole').draggable({
 	stop: function(event, ui) {
 		var off = \$('#debugconsole').offset();
@@ -96,7 +97,8 @@ if (debugconsole_pos) {debugconsole_pos = debugconsole_pos.split(',');}
 if (debugconsole_pos) {
 	\$('#debugconsole').css({'left': debugconsole_pos[0] + 'px', 'top': debugconsole_pos[1] + 'px'});
 }
-" );
+" 
+			);
 		}
 		$ret = $smarty->fetch('debug/function.debugger.tpl');
 		return $ret;

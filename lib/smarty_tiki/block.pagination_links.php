@@ -283,7 +283,7 @@ function smarty_block_pagination_links($params, $url, $smarty, $repeat)
 
 					if ( $prefs['pagination_firstlast'] != 'n'  && $params['offset'] + 2*$params['step'] < $params['cant'] + $zero_based_min ) {
 						$i = ( $nb_pages - $zero_based_maxminus ) * $params['step'] ;
-						$html .= make_prevnext_link( 
+						$html .= make_prevnext_link(
 										$url . (isset(
 															$params['reloff']) ?
 															$params['offset_arg'].'=' . $params['offset'] . '&amp;reloff=' . ($i - $params['offset']) : 

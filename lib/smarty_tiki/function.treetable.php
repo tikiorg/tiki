@@ -204,7 +204,8 @@ function smarty_function_treetable($params, $smarty)
 						$smarty
 		) . ' ' . tra('Toggle sections');
 		
-		$headerlib->add_jq_onready('
+		$headerlib->add_jq_onready(
+						'
 $("#'.$id.'_openall").click( function () {
 	if (this.src.indexOf("ofolder.png") > -1) {
 		
@@ -227,7 +228,8 @@ $("#'.$id.'_openall").click( function () {
 		this.src = this.src.replace("folder", "ofolder");
 	}
 	return false;
-});');
+});'
+		);
 	}
 	
 	if ($_showSelected == 'y') {
@@ -235,7 +237,8 @@ $("#'.$id.'_openall").click( function () {
 		$html .= ' <input type="checkbox" id="'.$id.'_showSelected" title="'.tra('Show only selected').'" />';
 		$html .= ' ' . tra('Show only selected');
 				
-		$headerlib->add_jq_onready('
+		$headerlib->add_jq_onready(
+						'
 $("#'.$id.'_showSelected").click( function () {
 	if (!$(this).attr("checked")) {
 		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().show()
@@ -243,7 +246,8 @@ $("#'.$id.'_showSelected").click( function () {
 		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().hide()
 		$("#treetable_1 tr td.checkBoxCell input:checked").parent().parent().show()
 	}
-});');
+});'
+		);
 	}
 	
 	// start writing the table

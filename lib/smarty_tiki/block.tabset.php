@@ -132,11 +132,13 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 
 		// add some jq to initialize the tab, needed when page is cached
 		if ($tabset_index === 1) {		// override cookie with query cookietab
-			$headerlib->add_jq_onready('
+			$headerlib->add_jq_onready(
+							'
 var ctab = location.search.match(/cookietab=(\d+)/);
 if (ctab) {
 	setCookie("'.$smarty_tabset_name.'", ctab[1],"tabs");
-}');
+}'
+			);
 		}
 		if ($cookietab != getCookie($smarty_tabset_name, 'tabs', 1)) {	// has been changed by code but now too late to reset
 			$headerlib->add_jq_onready('setCookie("'.$smarty_tabset_name.'","tabs",'.$cookietab.');');

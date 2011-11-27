@@ -124,7 +124,8 @@ function smarty_function_jscalendar($params, $smarty)
 			$command = 'datetimepicker';
 
 			/* css for timepicker */
-			$headerlib->add_css('
+			$headerlib->add_css(
+							'
 .ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
 .ui-timepicker-div dl{ text-align: left; }
 .ui-timepicker-div dl dt{ height: 25px; }

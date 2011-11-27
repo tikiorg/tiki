@@ -57,7 +57,7 @@ function s_f_attachments_actionshandler( $params )
 									'uploadFile', array(
 										'galleryId' => array($galleryId),
 										'comment' => $params['comment'],
-										'returnUrl' => smarty_function_query( 
+										'returnUrl' => smarty_function_query(
 														array(
 															'_type' => 'absolute_path',
 															's_f_attachments-upload' => 'NULL',

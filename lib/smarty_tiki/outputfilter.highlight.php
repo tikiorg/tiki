@@ -96,14 +96,14 @@ function smarty_outputfilter_highlight($source, $smarty)
 	// Avoid highlight parsing in unknown cases where $matches[2] is empty, which will result in an empty page.
 	if ( $matches[2] != '' ) 
 		$source = preg_replace_callback(
-		'~(?:<head>.*</head>                            # head blocks
+						'~(?:<head>.*</head>                            # head blocks
 		|<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
 		|<script[^>]+>.*</script>                       # script blocks
 		|<a[^>]*onmouseover.*onmouseout[^>]*>           # onmouseover (user popup)
 		|<[^>]*>                                        # all html tags
 		|(' . _enlightColor($highlight) . '))~xsiU',
-		'_enlightColor',
-		$matches[2]
+						'_enlightColor',
+						$matches[2]
 		);
 
 	return $matches[1].$source.$matches[3];

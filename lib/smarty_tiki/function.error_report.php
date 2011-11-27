@@ -13,7 +13,8 @@ function smarty_function_error_report($params, $smarty)
 	$pre = '<div id="error_report">';
 	$post = '</div>';
 
-	TikiLib::lib('header')->add_js('
+	TikiLib::lib('header')->add_js(
+					'
 	$("#error_report").ajaxComplete(function (e, jqxhr) {
 		var error = jqxhr.getResponseHeader("X-Tiki-Error");
 		if (error) {
@@ -28,7 +29,8 @@ function smarty_function_error_report($params, $smarty)
 		$("#error_report").empty();
 		return false;
 	});
-	');
+	'
+	);
 	
 	if (count($errors)) {
 		require_once 'lib/smarty_tiki/block.remarksbox.php';
