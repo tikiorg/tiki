@@ -2201,4 +2201,9 @@ div.aclabel, span.aclabel, label.aclabel {
 .backlinks_button .clearfix:after {
 	display: inline-block;
 }
+
+/* for autocomplete menus to appear infront of ckeditor 3.6 dialogs this needs to be !important sadly */
+.ui-menu {
+	z-index: 10100 !important;
+}
 /* End of File */
