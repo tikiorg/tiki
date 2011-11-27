@@ -336,10 +336,11 @@ function initialize_prefs() {
 	} else {
 		$defaults = get_default_prefs();
 	
-		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values) and preferences with special serializations
 		$serializedPreferences = array();
+		global $prefslib; require_once 'lib/prefslib.php';
 		foreach ( $defaults as $preference => $value ) {
-			if ( is_array($value) ) {
+			if ( is_array($value) || in_array($preference, array('category_defaults', 'memcache_servers'))) {
 				$serializedPreferences[] = $preference;
 			}
 		}
@@ -349,7 +350,7 @@ function initialize_prefs() {
 		// Unserialize serialized preferences
 		foreach ( $serializedPreferences as $serializedPreference ) {
 			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) {
-				$modified[$serializedPreference] = @unserialize($modified[$serializedPreference]);
+				$modified[$serializedPreference] = unserialize($modified[$serializedPreference]);
 			}
 		}
 	
