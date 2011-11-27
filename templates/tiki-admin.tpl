@@ -146,6 +146,8 @@ Add a value in first check when you create a new admin page. *}
 				{icon _id=accept alt="{tr}Enabled{/tr}" style="vertical-align: middle"}
 			{elseif $tikifeedback[n].st eq 2}
 				{icon _id=accept alt="{tr}Changed{/tr}" style="vertical-align: middle"}
+			{elseif $tikifeedback[n].st eq 4}
+				{icon _id=arrow_undo alt="{tr}Reset{/tr}" style="vertical-align: middle"}
 			{else}
 				{icon _id=information alt="{tr}Information{/tr}" style="vertical-align: middle"}
 			{/if}

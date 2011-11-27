@@ -323,16 +323,16 @@ class PreferencesLib
 		$changes = array();
 		foreach ( $handled as $pref ) {
 			if ( in_array($pref, $resets) ) {
-				$defaults = get_default_prefs();
-				$value = $defaults[$pref];
+				$tikilib->delete_preference($pref);
+				$changes[$pref] = array('type'=> 'reset');
 			} else {
 				$value = $this->formatPreference($pref, $data);
-			}
-			$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
-
-			if ( ($old = $tikilib->get_preference($realPref) ) != $value ) {
-				if ($tikilib->set_preference($pref, $value)) {
-					$changes[$pref] = array('new'=> $value, 'old' => $old);
+				$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
+	
+				if ( ($old = $tikilib->get_preference($realPref) ) != $value ) {
+					if ($tikilib->set_preference($pref, $value)) {
+						$changes[$pref] = array('type'=> 'changed', 'new'=> $value, 'old' => $old);
+					}
 				}
 			}
 		}

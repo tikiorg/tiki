@@ -21,7 +21,7 @@ global $logslib; include_once('lib/logs/logslib.php');
  * 
  * @param $name		Name of feature
  * @param $message	Other message
- * @param $st		Type of change (0=disabled, 1=enabled, 2=changed, 3=info)
+ * @param $st		Type of change (0=disabled, 1=enabled, 2=changed, 3=info, 4=reset)
  * @param $num		unknown
  * @return void
  */
@@ -164,16 +164,21 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 	
 	$changes = $prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
 	foreach ( $changes as $pref => $val ) {
-		$value = $val['new'];
-		if ( $value == 'y' ) {
-			add_feedback( $pref, tr('%0 enabled', $pref), 1, 1 );
-			$logslib->add_action('feature', $pref, 'system', 'enabled');
-		} elseif ( $value == 'n' ) {
-			add_feedback( $pref, tr('%0 disabled', $pref), 0, 1 );
-			$logslib->add_action('feature', $pref, 'system', 'disabled');
+		if ($val['type'] == 'reset') {
+			add_feedback( $pref, tr('%0 reset', $pref), 4);
+			$logslib->add_action('feature', $pref, 'system', 'reset');
 		} else {
-			add_feedback( $pref, tr('%0 set', $pref), 1, 1 );
-			$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
+			$value = $val['new'];
+			if ( $value == 'y' ) {
+				add_feedback( $pref, tr('%0 enabled', $pref), 1, 1 );
+				$logslib->add_action('feature', $pref, 'system', 'enabled');
+			} elseif ( $value == 'n' ) {
+				add_feedback( $pref, tr('%0 disabled', $pref), 0, 1 );
+				$logslib->add_action('feature', $pref, 'system', 'disabled');
+			} else {
+				add_feedback( $pref, tr('%0 set', $pref), 1, 1 );
+				$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
+			}
 		}
 	}
 }
