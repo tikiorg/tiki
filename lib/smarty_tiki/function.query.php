@@ -48,11 +48,6 @@ function smarty_function_query($params, $smarty)
 			} else {
 				$request = array();
 			}
-
-			// Remove Xajax special arguments
-			foreach ( array('xjxargs', 'xjxr', 'xjx', 'xjxfun', 'xjxr') as $k ) {
-				unset($request[$k]);
-			}
 		}
 		$query = $request;
 

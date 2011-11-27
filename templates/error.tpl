@@ -109,9 +109,5 @@ close();
 	{/if}
 {/capture}
 
-{if isset($smarty.request.xjxfun) && $smarty.request.xjxfun eq 'loadComponent'}
-{$mid_data}
-{else}
 {include file='tiki.tpl'}
-{/if}
 {/strip}

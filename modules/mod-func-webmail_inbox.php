@@ -120,7 +120,7 @@ function module_webmail_inbox($mod_reference, $module_params)
 	$webmail_reload = (isset($module_params['reload']) && $module_params['reload'] == 'y');
 	$webmail_start = isset($_SESSION['webmailinbox'][$mod_reference['moduleId']]['start']) ? $_SESSION['webmailinbox'][$mod_reference['moduleId']]['start'] : 0;
 	
-	if (isset($_REQUEST['refresh_mail']) || (isset($_REQUEST['xjxfun']) && $_REQUEST['xjxfun'] == 'refreshWebmail')) {	// YUK!
+	if (isset($_REQUEST['refresh_mail'])) {
 		webmail_refresh();
 	}
 	
