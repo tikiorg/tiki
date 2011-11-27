@@ -51,8 +51,8 @@ if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
 	$type = $data["imageType"];
 	$data = $data["imageData"];
 	if ($data) {
-		$fp = fopen($bannercachefile,"wb");
-		fputs($fp,$data);
+		$fp = fopen($bannercachefile, "wb");
+		fputs($fp, $data);
 		fclose($fp);
 	}
 }

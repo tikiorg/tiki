@@ -55,19 +55,18 @@ $date_field = $_REQUEST['date_field'];
 
 require_once 'lib/cache/pagecache.php';
 $pageCache = Tiki_PageCache::create()
-	->requiresPreference( 'metrics_cache_output' )
-	->addKeys( $_REQUEST, array( 'tab_id', 'range', 'date_from', 'date_to', 'date_field' ) )
+	->requiresPreference('metrics_cache_output')
+	->addKeys($_REQUEST, array( 'tab_id', 'range', 'date_from', 'date_to', 'date_field' ))
 	->applyCache();
 
 $metrics_notify = '';
 if (empty($date_field)) {
 	$date_field = 'date_field';
-}
-else {
+} else {
 	/** 
 	 * strip ` and limit column length
 	 */
-	$date_field = preg_replace('/[`\/\\\<>"\']/','', $date_field);
+	$date_field = preg_replace('/[`\/\\\<>"\']/', '', $date_field);
 	$date_field = substr($date_field, 0, COLUMN_MAXLEN);
 }
 if (!is_numeric($tab_id)) {
@@ -82,7 +81,7 @@ if (!empty($converted_range['msg'])) {
 }
 
 $tab_info = $metricslib->getTabById($tab_id);
-$ret = $metricslib->getMetricsData( $tab_info, $range, $converted_range, $date_field );
+$ret = $metricslib->getMetricsData($tab_info, $range, $converted_range, $date_field);
 $tab_content = $tab_info['tab_content'];
 $m = $ret['data'];
 $m_id = $ret['ids'];

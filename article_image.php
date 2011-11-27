@@ -37,16 +37,16 @@ if (!isset($_REQUEST["image_type"])) {
 switch ($_REQUEST["image_type"]) {
 	case "article":
 		$image_cache_prefix="article";
-		break;
+    	break;
 	case "submission":
 		$image_cache_prefix="article_submission";
-		break;
+    	break;
 	case "topic":
 		$image_cache_prefix="article_topic";
-		break;
+    	break;
 	case "preview":
 		$image_cache_prefix="article_preview";
-		break;
+    	break;
 	default:
 		die;
 }
@@ -62,17 +62,17 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 	switch ($_REQUEST["image_type"]) {
 		case "article":
 			$storedData = $artlib->get_article_image($_REQUEST["id"]);
-			break;
+    		break;
 		case "submission":
 			$storedData = $artlib->get_submission($_REQUEST["id"]);
-			break;
+    		break;
 		case "topic":
 			$storedData = $artlib->get_topic_image($_REQUEST["id"]);
-			break;
+    		break;
 		case "preview":
 			// We can't get the data from the database. No fallback solution.
 			// No image displayed
-			break;
+    		break;
 		default:
 			// Invalid value
 			die;
@@ -93,8 +93,8 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 		if (empty($data)) die;
 	}
 	if ($useCache && $data) {
-		$fp = fopen($cachefile,"wb");
-		fputs($fp,$data);
+		$fp = fopen($cachefile, "wb");
+		fputs($fp, $data);
 		fclose($fp);
 	}
 	echo $data;

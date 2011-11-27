@@ -41,33 +41,36 @@ $commands=array('help' => array(),
 // 		'republish' => array(),
 		);
 
-function tikimods_feedback_listener($num, $err) {
+function tikimods_feedback_listener($num, $err)
+{
 	switch($num) {
 	case -1:
 		echo $err."\n";
-		break;
+    	break;
 	case 0:
 		echo "! ".$err."\n";
-		break;
+    	break;
 	case 1:
 		echo "*** ".$err."\n";
-		break;
+    	break;
 	}
 }
 $modslib->add_feedback_listener('tikimods_feedback_listener');
 
-
-function ask($str) {
+function ask($str)
+{
 	echo $str;
 	$res=fgets(STDIN, 1024);
 	return trim($res);
 }
 
-function command_help($goption, $coption, $cparams) {
+function command_help($goption, $coption, $cparams)
+{
 	usage(0);
 }
 
-function command_install($goption, $coption, $cparams) {
+function command_install($goption, $coption, $cparams)
+{
 	global $modslib;
 	global $prefs;
 	global $mods_server;
@@ -122,7 +125,8 @@ function command_install($goption, $coption, $cparams) {
 	$modslib->install_with_deps($prefs['mods_dir'], $mods_server, $deps);
 }
 
-function command_remove($goption, $coption, $cparams) {
+function command_remove($goption, $coption, $cparams)
+{
 	global $modslib;
 	global $prefs;
 	global $mods_server;
@@ -153,7 +157,8 @@ function command_remove($goption, $coption, $cparams) {
 	$modslib->remove_with_deps($prefs['mods_dir'], $mods_server, $deps);	
 }
 
-function command_list($goption, $coption, $cparams) {
+function command_list($goption, $coption, $cparams)
+{
 	global $repos;
 	global $modslib;
 	$merged=array();
@@ -190,7 +195,8 @@ function command_list($goption, $coption, $cparams) {
 	}
 }
 
-function command_show($goption, $coption, $cparams) {
+function command_show($goption, $coption, $cparams)
+{
 	global $repos;
 	global $modslib;
 
@@ -340,12 +346,14 @@ function command_show($goption, $coption, $cparams) {
 
 }
 
-function failure($errstr) {
+function failure($errstr)
+{
 	fprintf(STDERR, "%s\n", $errstr);
 	exit(1);
 }
 
-function usage($err) {
+function usage($err)
+{
 	global $goptions;
 	global $commands;
 
@@ -368,7 +376,8 @@ function usage($err) {
 	exit($err);
 }
 
-function readargs($argv) {
+function readargs($argv)
+{
 	global $goptions;
 	global $commands;
 

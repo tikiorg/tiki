@@ -36,6 +36,6 @@ if (!in_array($_REQUEST['validator'], $validatorslib->available)) {
 $validatorslib->setInput($_REQUEST["input"]);
 $result = $validatorslib->validateInput($_REQUEST["validator"], $_REQUEST["parameter"], $_REQUEST["message"]);
 
-header( 'Content-Type: application/json' );
-echo json_encode( $result );
+header('Content-Type: application/json');
+echo json_encode($result);
 

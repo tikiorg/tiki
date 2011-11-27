@@ -6,7 +6,7 @@
 // $Id$
   
 if (!isset($_REQUEST["nocache"]))
-	session_cache_limiter ('private_no_expire');
+	session_cache_limiter('private_no_expire');
 
 //include_once ("tiki-setup_base.php");
 include_once ("tiki-setup.php");
@@ -32,7 +32,7 @@ if (isset($_REQUEST["name"])) {
 } elseif (isset($_REQUEST["id"])) {
 	$id=$_REQUEST["id"];
 } elseif (isset($_REQUEST["galleryId"])) {
-	$id=$imagegallib->get_gallery_image($_REQUEST["galleryId"],'default');
+	$id=$imagegallib->get_gallery_image($_REQUEST["galleryId"], 'default');
 }
 
 if (!$id) {
@@ -41,7 +41,7 @@ if (!$id) {
 }
 
 $galleryId = $imagegallib->get_gallery_from_image($id);
-$galperms = Perms::get( array( 'type' => 'image gallery', 'object' => $galleryId ) );
+$galperms = Perms::get(array( 'type' => 'image gallery', 'object' => $galleryId ));
 
 if ( ! $galperms->view_image_gallery ) {
     header("HTTP/1.0 404 Not Found");
@@ -66,7 +66,7 @@ if (isset($_REQUEST["thumb"])) {
 	} else {
     	$itype = 's';
     	$scalesize = $galdef;
-    }
+	}
 }
 
 if ($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
@@ -75,7 +75,7 @@ if ($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
 # Etag value is based on the md5 hash of the image. It should change everytime the image changes. See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
 
 #if the client sends the HTTP_IF_NONE_MATCH header(because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header(304)
-  if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $imagegallib->etag){
+  if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $imagegallib->etag) {
            header("HTTP/1.0 304 Not Modified");
 	   exit();
   }

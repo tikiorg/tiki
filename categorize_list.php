@@ -7,14 +7,14 @@
 
 require_once('tiki-setup.php');
 $access = TikiLib::lib('access');
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 $userlib = TikiLib::lib('user');
 $smarty = TikiLib::lib('smarty');
 
 global $prefs;
 
-$catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
+$catobjperms = Perms::get(array( 'type' => $cat_type, 'object' => $cat_objid ));
 
 $smarty->assign('mandatory_category', '-1');
 if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)) {
@@ -46,7 +46,7 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
  	$can = $catobjperms->modify_object_categories;
 
 	foreach ($categories as &$category) {
-		$catperms = Perms::get( array( 'type' => 'category', 'object' => $category['categId'] ) );
+		$catperms = Perms::get(array( 'type' => 'category', 'object' => $category['categId'] ));
 
 		if (in_array($category["categId"], $cats)) {
 			$category["incat"] = 'y';

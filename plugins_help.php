@@ -8,9 +8,9 @@
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');  
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 global $wikilib; include_once('lib/wiki/wikilib.php');
-$plugins = $wikilib->list_plugins( true );
+$plugins = $wikilib->list_plugins(true);
 
 $smarty->assign_by_ref('plugins', $plugins);

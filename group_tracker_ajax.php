@@ -18,6 +18,6 @@ if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 	$json_data['debug'] = $re;
 }
 	
-header( 'Content-Type: application/json' );
+header('Content-Type: application/json');
 
 $access->output_serialized($json_data);

@@ -7,18 +7,18 @@
 
 require_once('tiki-setup.php');
 $access = TikiLib::lib('access');
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 $smarty = TikiLib::lib('smarty');
 
 global $prefs;
 
-$catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
+$catobjperms = Perms::get(array( 'type' => $cat_type, 'object' => $cat_objid ));
 
 if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categories ) {
 	$categlib = TikiLib::lib('categ');
 
 	if (isset($_REQUEST['import']) and isset($_REQUEST['categories'])) {
-		$_REQUEST["cat_categories"] = explode(',',$_REQUEST['categories']);
+		$_REQUEST["cat_categories"] = explode(',', $_REQUEST['categories']);
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 

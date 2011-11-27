@@ -8,7 +8,7 @@
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');  
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 global $prefs;
 global $tiki_p_view_freetags;
@@ -32,7 +32,7 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 			}
 		}
 
-		$smarty->assign('taglist',$taglist);
+		$smarty->assign('taglist', $taglist);
     } else {
 	$taglist = '';
     }
@@ -40,7 +40,7 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 	if ( !isset($cat_lang))
 		$cat_lang = null;
 
-    $suggestion = $freetaglib->get_tag_suggestion($taglist,$prefs['freetags_browse_amount_tags_suggestion'],$cat_lang);
+    $suggestion = $freetaglib->get_tag_suggestion($taglist, $prefs['freetags_browse_amount_tags_suggestion'], $cat_lang);
 
-    $smarty->assign('tag_suggestion',$suggestion);
+    $smarty->assign('tag_suggestion', $suggestion);
 }

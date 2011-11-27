@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/rankings/ranklib.php');
 
-$access->check_feature( array('feature_wiki', 'feature_wiki_rankings') );
+$access->check_feature(array('feature_wiki', 'feature_wiki_rankings'));
 $access->check_permission('tiki_p_view');
 
 if (!isset($_REQUEST["limit"])) {
@@ -22,11 +22,11 @@ if (!isset($_REQUEST["limit"])) {
 
 if (isset($_REQUEST["categId"]) && $_REQUEST["categId"] > 0) {
 	$smarty->assign('categIdstr', $_REQUEST["categId"]);
-	$categs = explode(",",$_REQUEST["categId"]);
+	$categs = explode(",", $_REQUEST["categId"]);
 } else {
 	$categs = array();	
 }
-$smarty->assign('categId',$categs);
+$smarty->assign('categId', $categs);
 
 $allrankings = array(
 	array(
