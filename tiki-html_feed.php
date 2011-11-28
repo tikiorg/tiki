@@ -17,17 +17,17 @@ if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
 	
 	
 	if (isset($_REQUEST['date'])) {
-		$item = HtmlFeed_Remote::url(urldecode($_REQUEST['feed']))
+		$item = Feed_Html_Remote::url(urldecode($_REQUEST['feed']))
 			->getItemFromDate(urldecode($_REQUEST['name']), urldecode($_REQUEST['date']));
 	} else {
-		$item = HtmlFeed_Remote::url(urldecode($_REQUEST['feed']))->getItem(urldecode($_REQUEST['name']));
+		$item = Feed_Html_Remote::url(urldecode($_REQUEST['feed']))->getItem(urldecode($_REQUEST['name']));
 	}
 	
 	print_r(json_encode($item));
 	
 } else {
 	
-	$htmlFeed = new HtmlFeed();
+	$htmlFeed = new Feed_Html();
 	print_r(json_encode($htmlFeed->feed()));
 	
 }

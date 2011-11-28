@@ -8,13 +8,13 @@
 /**
  * For htmlFeed Protocol
  */
-class HtmlFeed
+class Feed_Html
 {
 	var $lastModif = 0;
 	
 	public function updateCache()
 	{
-		global $htmlFeedItem, $caching, $page;
+		global $feedItem, $caching, $page;
 		
 		$this->clearCache();
 		$site = $this->siteName();
@@ -23,7 +23,7 @@ class HtmlFeed
 		
 		foreach (TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
 			foreach ($pagesInfo as $pageInfo) {
-				$htmlFeedItem = HtmlFeed_Item::simple(
+				$feedItem = Feed_Html_Item::simple(
 								array(
 									"origin" 		=> $site,
 									"name" 			=> $pageInfo['pageName'],
@@ -44,7 +44,7 @@ class HtmlFeed
 				
 				TikiLib::lib("parser")->parse_data($pageInfo['data']);
 				
-				unset($htmlFeedItem);
+				unset($feedItem);
 			}
 		}
 		
@@ -127,9 +127,9 @@ class HtmlFeed
 		TikiLib::lib("cache")->cacheItem($this->siteName(), json_encode($cache), "htmlfeed");
 	}
 	
-	public function addSimpleItem($htmlFeedItem)
+	public function addSimpleItem($feedItem)
 	{
-		$this->appendToCache($htmlFeedItem);
+		$this->appendToCache($feedItem);
 	}
 	
 	public function feed()
