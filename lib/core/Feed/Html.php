@@ -11,6 +11,7 @@
 class Feed_Html extends Feed_Abstract
 {
 	var $lastModif = 0;
+	var $type = "html";
 	
 	public function updateCache()
 	{

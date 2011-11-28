@@ -7,7 +7,7 @@
  
 abstract class Feed_Abstract
 {	
-	private function siteName()
+	public function siteName()
 	{
 		$site = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 		$site = explode('/', $site);
@@ -43,7 +43,7 @@ abstract class Feed_Abstract
 		return array();
 	}
 	
-	private function getCache()
+	public function getCache()
 	{
 		global $tikilib;
 		$cache = TikiLib::lib("cache")->getCached($this->siteName(), $this->type);
@@ -55,13 +55,13 @@ abstract class Feed_Abstract
 		return TikiLib::lib("cache")->getCached($this->siteName(), $this->type);
 	}
 	
-	private function clearCache()
+	public function clearCache()
 	{
 		global $tikilib;
 		TikiLib::lib("cache")->empty_type_cache($this->type);
 	}
 	
-	private function appendToCache($item)
+	public function appendToCache($item)
 	{
 		global $tikilib;
 		$cache = TikiLib::lib("cache")->getCached($this->siteName(), $this->type);
