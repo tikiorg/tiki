@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -20,38 +20,44 @@ class Cachelib
 {
 	public $implementation;
 
-	function __construct() {
+	function __construct()
+	{
 		global $prefs;
 
-		if( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
+		if ( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
 			$this->implementation = new CacheLibMemcache;
 		} else {
 			$this->implementation = new CacheLibFileSystem;
 		}
 	}
 
-	function cacheItem($key, $data, $type='') {
-		return $this->implementation->cacheItem( $key, $data, $type );
+	function cacheItem($key, $data, $type='')
+	{
+		return $this->implementation->cacheItem($key, $data, $type);
 	}
 
-	function isCached($key, $type='') {
-		return $this->implementation->isCached( $key, $type );
+	function isCached($key, $type='')
+	{
+		return $this->implementation->isCached($key, $type);
 	}
 
-	function getCached($key, $type='', $lastModif = false) {
-		return $this->implementation->getCached( $key, $type, $lastModif );
+	function getCached($key, $type='', $lastModif = false)
+	{
+		return $this->implementation->getCached($key, $type, $lastModif);
 	}
 
-	function getSerialized($key, $type = '', $lastModif = false) {
-		$data = $this->getCached( $key, $type, $lastModif );
+	function getSerialized($key, $type = '', $lastModif = false)
+	{
+		$data = $this->getCached($key, $type, $lastModif);
 		
-		if( $data ) {
-			return unserialize( $data );
+		if ( $data ) {
+			return unserialize($data);
 		}
 	}
 
-	function invalidate($key, $type='') {
-		return $this->implementation->invalidate( $key, $type );
+	function invalidate($key, $type='')
+	{
+		return $this->implementation->invalidate($key, $type);
 	}
 
 	/**
@@ -62,13 +68,14 @@ class Cachelib
 	 * @param mixed $dir_names		all|templates_c|temp_cache|temp_public|modules_cache|prefs (default all)
 	 * @param string $log_section	Type of log message. Default 'system'
 	 */
-	function empty_cache( $dir_names = array('all'), $log_section = 'system' ) {
+	function empty_cache( $dir_names = array('all'), $log_section = 'system' )
+	{
 		global $tikidomain, $logslib, $tikilib;
 		
 		if (!is_array($dir_names)) {
 			$dir_names = array($dir_names);
 		}
-		if (in_array( 'all', $dir_names )) {
+		if (in_array('all', $dir_names)) {
 			$this->erase_dir_content("templates_c/$tikidomain");
 			$this->erase_dir_content("temp/public/$tikidomain");
 			$this->erase_dir_content("temp/cache/$tikidomain");
@@ -76,47 +83,51 @@ class Cachelib
 			$this->flush_opcode_cache();
 			$this->invalidate('global_preferences');
 			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased all cache content');
+				$logslib->add_log($log_section, 'erased all cache content');
 			}
 		}
-		if (in_array( 'templates_c', $dir_names )) {
+		if (in_array('templates_c', $dir_names)) {
 			$this->erase_dir_content("templates_c/$tikidomain");
 			$this->flush_opcode_cache();
 			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased templates_c content' );
+				$logslib->add_log($log_section, 'erased templates_c content');
 			}
 		}
-		if (in_array( 'temp_cache', $dir_names)) {
+		if (in_array('temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased temp/cache content' );
+				$logslib->add_log($log_section, 'erased temp/cache content');
 			}
 		}
-		if (in_array( 'temp_public', $dir_names)) {
+		if (in_array('temp_public', $dir_names)) {
 			$this->erase_dir_content("temp/public/$tikidomain");
 			if (is_object($logslib)) { 
-				$logslib->add_log( $log_section, 'erased temp/public content' );
+				$logslib->add_log($log_section, 'erased temp/public content');
 			}
 		}
-		if (in_array( 'modules_cache', $dir_names)) {
+		if (in_array('modules_cache', $dir_names)) {
 			$this->erase_dir_content("modules/cache/$tikidomain");
 			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased modules/cache content' );
+				$logslib->add_log($log_section, 'erased modules/cache content');
 			}
 		}
-		if (in_array( 'prefs', $dir_names)) {
+		if (in_array('prefs', $dir_names)) {
 			$this->invalidate('global_preferences');
 		}
 	}
 
-	function empty_type_cache($type) {
-		return $this->implementation->empty_type_cache( $type );
+	function empty_type_cache($type)
+	{
+		return $this->implementation->empty_type_cache($type);
 	}
 
-	function count_cache_files($path, $begin=null) {
+	function count_cache_files($path, $begin=null)
+	{
 		global $tikidomain;
 		
-		if (!$path or !is_dir($path)) return (array('total' => 0,'cant' =>0));
+		if (!$path or !is_dir($path)) 
+			return (array('total' => 0,'cant' =>0));
+
 		$total = 0; 
 		$cant = 0;
 		$back = array();
@@ -130,16 +141,26 @@ class Cachelib
 		}
 
 		while ($file = readdir($all)) {
-			if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" or $file == "web.config" or ($virtuals && in_array($file, $virtuals)) ) continue;
-			if (is_dir($path.'/'.$file) and $file <> ".." and $file <> "." and $file <> "CVS" and $file <> ".svn" ) {
-				$du = $this->count_cache_files($path.'/'.$file);
-				$total+= $du['total'];
-				$cant+= $du['cant'];
+			if (
+					substr($file, 0, 1) == "." or 
+					$file == 'CVS' or 
+					$file == '.svn' or 
+					$file == "index.php" or 
+					$file == "README" or 
+					$file == "web.config" or 
+					($virtuals && in_array($file, $virtuals)) 
+			) 
+				continue;
+
+			if (is_dir($path . '/' . $file) and $file <> ".." and $file <> "." and $file <> "CVS" and $file <> ".svn" ) {
+				$du = $this->count_cache_files($path . '/' . $file);
+				$total += $du['total'];
+				$cant += $du['cant'];
 				unset($file);
-			} elseif (!is_dir($path.'/'.$file)) { 
+			} elseif (!is_dir($path . '/' . $file)) { 
 				if (isset($begin) && substr($file, 0, strlen($begin)) != $begin)
 					continue; // the file name doesn't begin with the good beginning
-				$stats = @stat($path.'/'.$file); // avoid the warning if safe mode on
+				$stats = @stat($path . '/' . $file); // avoid the warning if safe mode on
 				$total += $stats['size'];
 				$cant++;
 				unset($file);
@@ -152,19 +173,21 @@ class Cachelib
 		return $back;
 	}
 
-	function flush_opcode_cache() {
-		if( function_exists( 'apc_clear_cache' ) ) {
+	function flush_opcode_cache()
+	{
+		if ( function_exists('apc_clear_cache') ) {
 			apc_clear_cache();
 		}
 
-		if( function_exists( 'xcache_clear_cache' ) && ! ini_get( 'xcache.admin.enable_auth' ) ) {
-			foreach( range( 0, xcache_count( XC_TYPE_PHP ) - 1 ) as $index ) {
-				xcache_clear_cache( XC_TYPE_PHP, $index );
+		if ( function_exists('xcache_clear_cache') && ! ini_get('xcache.admin.enable_auth') ) {
+			foreach ( range(0, xcache_count(XC_TYPE_PHP) - 1) as $index ) {
+				xcache_clear_cache(XC_TYPE_PHP, $index);
 			}
 		}
 	}
 
-	function erase_dir_content($path) {
+	function erase_dir_content($path)
+	{
 		global $tikidomain;
 
 		if (!$path or !is_dir($path)) return 0;
@@ -177,45 +200,56 @@ class Cachelib
 			}
 
 			while (false !== ($file = readdir($dir))) {
-				if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" or $file == "web.config" or ($virtuals && in_array($file, $virtuals)) ) continue;
-				if (is_dir($path."/".$file)) {
-					$this->erase_dir_content($path."/".$file);
-					rmdir($path."/".$file);
+				if (
+							substr($file, 0, 1) == "." or 
+							$file == 'CVS' or 
+							$file == '.svn' or 
+							$file == "index.php" or 
+							$file == "README" or 
+							$file == "web.config" or 
+							($virtuals && in_array($file, $virtuals)) 
+				)
+					continue;
+
+				if (is_dir($path . "/" . $file)) {
+					$this->erase_dir_content($path . "/" . $file);
+					rmdir($path . "/" . $file);
 				} else {
-					unlink($path."/".$file);
+					unlink($path . "/" . $file);
 				}
 			}
 			closedir($dir);
 		}
 	}
 
-	function cache_templates($path,$newlang) {
+	function cache_templates($path,$newlang)
+	{
 		global $prefs, $smarty, $tikidomain;
 
-		$oldlang=$prefs['language'];
-		$prefs['language']=$newlang;
+		$oldlang = $prefs['language'];
+		$prefs['language'] = $newlang;
 		if (!$path or !is_dir($path)) return 0;
 		if ($dir = opendir($path)) {
 			while (false !== ($file = readdir($dir))) {
-				$a=explode(".",$file);
+				$a=explode(".", $file);
 				$ext=strtolower(end($a));
-				if (substr($file,0,1) == "." or $file == 'CVS') continue;
-				if (is_dir($path."/".$file)) {
-					$prefs['language']=$oldlang;
-					$this->cache_templates($path."/".$file,$newlang);
-					$prefs['language']=$newlang;
+				if (substr($file, 0, 1) == "." or $file == 'CVS') continue;
+				if (is_dir($path . "/" . $file)) {
+					$prefs['language'] = $oldlang;
+					$this->cache_templates($path . "/" . $file, $newlang);
+					$prefs['language'] = $newlang;
 				} else {
 					if ($ext=="tpl") {
-						$file=substr($path."/".$file,10);
+						$file=substr($path . "/" . $file, 10);
 						$comppath=$smarty->_get_compile_path($file);
 						//rewrite the language thing, see lib/init/smarty.php
 						if ($smarty->use_sub_dirs) {
-							$comppath=preg_replace("#/".$oldlang."/#","/".$newlang."/",$comppath,1);
+							$comppath = preg_replace("#/" . $oldlang . "/#", "/" . $newlang . "/", $comppath, 1);
 						} else {
-							$comppath=preg_replace("#/".$tikidomain.$oldlang."#","/".$tikidomain.$newlang,$comppath,1);
+							$comppath = preg_replace("#/" . $tikidomain . $oldlang . "#", "/" . $tikidomain . $newlang, $comppath, 1);
 						}
-						if(!$smarty->_is_compiled($file,$comppath)) {
-							$smarty->_compile_resource($file,$comppath);
+						if (!$smarty->_is_compiled($file, $comppath)) {
+							$smarty->_compile_resource($file, $comppath);
 						}
 					}
 				}
@@ -231,30 +265,34 @@ class CacheLibFileSystem
 {
 	var $folder;
 
-	function __construct() {
+	function __construct()
+	{
 		global $tikidomain;
-		$this->folder = realpath( "temp/cache" );
+		$this->folder = realpath("temp/cache");
 		if ($tikidomain) { 
-			$this->folder.= "/$tikidomain"; 
+			$this->folder .= "/$tikidomain"; 
 		}
-		if(!is_dir($this->folder)) {
+		if (!is_dir($this->folder)) {
 			mkdir($this->folder);
-			chmod($this->folder,0777);
+			chmod($this->folder, 0777);
 		}
 	}
 
-	function cacheItem($key, $data, $type='') {
+	function cacheItem($key, $data, $type='')
+	{
 		$key = $type.md5($key);
-		@file_put_contents($this->folder."/$key",$data);
+		@file_put_contents($this->folder . "/$key", $data);
 		return true;
 	}
 
-	function isCached($key, $type='') {
+	function isCached($key, $type='')
+	{
 		$key = $type.md5($key);
 		return is_file($this->folder."/$key");
 	}
 
-	function getCached($key, $type='', $lastModif = false) {
+	function getCached($key, $type='', $lastModif = false)
+	{
 		$key = $type.md5($key);
 		$file = $this->folder."/$key";
 		if (is_readable($file)) {
@@ -270,14 +308,16 @@ class CacheLibFileSystem
 		}
 	}
 
-	function invalidate($key, $type='') {
+	function invalidate($key, $type='')
+	{
 		$key = $type.md5($key);
-		if (is_file($this->folder."/$key")) {
-			unlink($this->folder."/$key");
+		if (is_file($this->folder . "/$key")) {
+			unlink($this->folder . "/$key");
 		}
 	}
 
-	function empty_type_cache($type) {
+	function empty_type_cache($type)
+	{
 		$path = $this->folder;
 		$all = opendir($path);
 		while ($file = readdir($all)) {
@@ -290,31 +330,37 @@ class CacheLibFileSystem
 
 class CacheLibMemcache
 {
-	private function getKey( $key, $type ) {
+	private function getKey( $key, $type )
+	{
 		return $type.md5($key);
 	}
 
-	function cacheItem($key, $data, $type='') {
+	function cacheItem($key, $data, $type='')
+	{
 		global $memcachelib;
-		$memcachelib->set( $this->getKey( $key, $type ), $data );
+		$memcachelib->set($this->getKey($key, $type), $data);
 		return true;
 	}
 
-	function isCached($key, $type='') {
+	function isCached($key, $type='')
+	{
 		return false;
 	}
 
-	function getCached($key, $type='', $lastModif = false) {
+	function getCached($key, $type='', $lastModif = false)
+	{
 		global $memcachelib;
-		return $memcachelib->get( $this->getKey( $key, $type ) );
+		return $memcachelib->get($this->getKey($key, $type));
 	}
 
-	function invalidate($key, $type='') {
+	function invalidate($key, $type='')
+	{
 		global $memcachelib;
-		return $memcachelib->delete( $this->getKey( $key, $type ) );
+		return $memcachelib->delete($this->getKey($key, $type));
 	}
 
-	function empty_type_cache( $type ) {
+	function empty_type_cache( $type )
+	{
 		global $memcachelib;
 		return $memcachelib->flush();
 	}

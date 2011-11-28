@@ -11,91 +11,102 @@ class Tiki_PageCache
 	private $key;
 	private $meta = null;
 
-	public static function create() {
+	public static function create()
+	{
 		return new self;
 	}
 
-	function disableForRegistered() {
+	function disableForRegistered()
+	{
 		global $user;
 
-		if( $user ) {
+		if ( $user ) {
 			$this->cacheData = null;
 		}
 
 		return $this;
 	}
 
-	function onlyForGet() {
-		if( $_SERVER['REQUEST_METHOD'] != 'GET' ) {
+	function onlyForGet()
+	{
+		if ( $_SERVER['REQUEST_METHOD'] != 'GET' ) {
 			$this->cacheData = null;
 		}
 
 		return $this;
 	}
 
-	function requiresPreference( $preference ) {
+	function requiresPreference( $preference )
+	{
 		global $prefs;
 
-		if( $prefs[$preference] != 'y' ) {
+		if ( $prefs[$preference] != 'y' ) {
 			$this->cacheData = null;
 		}
 
 		return $this;
 	}
 
-	function addKeys( $array, $keys ) {
-		if( is_array( $this->cacheData ) ) {
-			foreach( $keys as $k ) {
-				$this->cacheData[$k] = isset( $array[$k] ) ? $array[$k] : null;
+	function addKeys( $array, $keys )
+	{
+		if ( is_array($this->cacheData) ) {
+			foreach ( $keys as $k ) {
+				$this->cacheData[$k] = isset($array[$k]) ? $array[$k] : null;
 			}
 		}
 
 		return $this;
 	}
 
-	function addArray( $array ) {
-		if( is_array( $this->cacheData ) ) {
-			$this->cacheData = array_merge( $this->cacheData, $array );
+	function addArray( $array )
+	{
+		if ( is_array($this->cacheData) ) {
+			$this->cacheData = array_merge($this->cacheData, $array);
 		}
 
 		return $this;
 	}
 
-	function addValue( $key, $value ) {
-		if( is_array( $this->cacheData ) ) {
+	function addValue( $key, $value )
+	{
+		if ( is_array($this->cacheData) ) {
 			$this->cacheData[$key] = $value;
 		}
 		
 		return $this;
 	}
 
-	function checkMeta( $role, $data ) {
-		$this->meta = array_merge( array( 'role' => $role ), $data );
+	function checkMeta( $role, $data )
+	{
+		$this->meta = array_merge(array( 'role' => $role ), $data);
 		
 		return $this;
 	}
 
-	function applyCache() {
-		if( is_array( $this->cacheData ) ) {
+	function applyCache()
+	{
+		if ( is_array($this->cacheData) ) {
 			global $memcachelib;
 
-			if( $memcachelib && $memcachelib->isEnabled() ) {
-				$this->key = $memcachelib->buildKey( $this->cacheData );
+			if ( $memcachelib && $memcachelib->isEnabled() ) {
+				$this->key = $memcachelib->buildKey($this->cacheData);
 
-				if( $this->meta ) {
-					list($cachedOutput, $metaTime) = $memcachelib->getMulti(array(
-						$this->key,
-						$this->meta,
-					));
+				if ( $this->meta ) {
+					list($cachedOutput, $metaTime) = $memcachelib->getMulti(
+									array(
+										$this->key,
+										$this->meta,
+									)
+					);
 
-					if( $cachedOutput && $metaTime && $metaTime > $cachedOutput['timestamp'] ) {
+					if ( $cachedOutput && $metaTime && $metaTime > $cachedOutput['timestamp'] ) {
 						$cachedOutput = null;
 					}
 				} else {
-					$cachedOutput = $memcachelib->get( $this->key );
+					$cachedOutput = $memcachelib->get($this->key);
 				}
 
-				if( $cachedOutput && $cachedOutput['output'] ) {
+				if ( $cachedOutput && $cachedOutput['output'] ) {
 					echo $cachedOutput['output']; 
 					echo "\n<!-- memcache ".htmlspecialchars($this->key)."-->";
 					exit;
@@ -109,17 +120,18 @@ class Tiki_PageCache
 		return $this;
 	}
 
-	function cleanUp() {
+	function cleanUp()
+	{
 		global $memcachelib;
 
-		if( $this->key && $memcachelib ) {
+		if ( $this->key && $memcachelib ) {
 			$cachedOutput = array(
 				'timestamp' => time(),
 				'output'    => ob_get_contents()
 			);
 
-			if( $cachedOutput['output'] ) {
-				$memcachelib->set( $this->key, $cachedOutput );
+			if ( $cachedOutput['output'] ) {
+				$memcachelib->set($this->key, $cachedOutput);
 			}
 
 			ob_end_flush();
@@ -130,15 +142,17 @@ class Tiki_PageCache
 		$this->meta = null;
 	}
 
-	function invalidate() {
+	function invalidate()
+	{
 		global $memcachelib;
 
-		if( $this->meta && $memcachelib ) {
-			$memcachelib->set( $this->meta, time() );
+		if ( $this->meta && $memcachelib ) {
+			$memcachelib->set($this->meta, time());
 		}
 	}
 
-	function __destruct() {
+	function __destruct()
+	{
 		$this->cleanUp();
 	}
 }
