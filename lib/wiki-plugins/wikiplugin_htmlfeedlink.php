@@ -91,7 +91,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 	if (empty($feed)) return $data;
 	if (isset($caching)) return $data; //caching is running, if no return, causes recursive parsing
 	
-	$htmlFeed = new HtmlFeed_Remote($feed);
+	$htmlFeed = new Feed_Html_Remote($feed);
 	
 	$headerlib->add_jq_onready(
     	"if (!$.fn.htmlFeedPopup) {

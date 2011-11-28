@@ -34,7 +34,7 @@ function wikiplugin_htmlfeed($data, $params)
 	extract($params, EXTR_SKIP);
 	
 	if ($caching == true) {
-		$htmlFeed = new HtmlFeed();
+		$htmlFeed = new Feed_Html();
 		$data = TikiLib::lib("parser")->parse_data($data);
 		
 		$htmlFeedItem['description'] = $data;
