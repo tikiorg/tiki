@@ -2,7 +2,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -95,7 +95,8 @@ class htmlMimeMail
 	* Constructor function. Sets the headers
 	* if supplied.
 	*/
-	function htmlMimeMail() {
+	function htmlMimeMail()
+	{
 		/**
 		* Initialise some variables.
 		*/
@@ -162,7 +163,8 @@ class htmlMimeMail
 	* argument of the the functions
 	* add_html_image() or add_attachment().
 	*/
-	function getFile($filename) {
+	function getFile($filename)
+	{
 		$return = '';
 
 		if ($fp = fopen($filename, 'rb')) {
@@ -170,7 +172,7 @@ class htmlMimeMail
 				$return .= fread($fp, 1024);
 			}
 
-			fclose ($fp);
+			fclose($fp);
 			return $return;
 		} else {
 			return false;
@@ -180,7 +182,8 @@ class htmlMimeMail
 	/**
 	* Accessor to set the CRLF style
 	*/
-	function setCrlf($crlf = "\n") {
+	function setCrlf($crlf = "\n")
+	{
 		if (!defined('CRLF')) {
 			define('CRLF', $crlf, true);
 		}
@@ -193,7 +196,8 @@ class htmlMimeMail
 	/**
 	* Accessor to set the SMTP parameters
 	*/
-	function setSMTPParams($host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null, $security = '') {
+	function setSMTPParams($host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null, $security = '')
+	{
 		if (!is_null($host))
 			$this->smtp_params['host'] = $host;
 
@@ -218,84 +222,96 @@ class htmlMimeMail
 	/**
 	* Accessor function to set the text encoding
 	*/
-	function setTextEncoding($encoding = '7bit') {
+	function setTextEncoding($encoding = '7bit')
+	{
 		$this->build_params['text_encoding'] = $encoding;
 	}
 
 	/**
 	* Accessor function to set the HTML encoding
 	*/
-	function setHtmlEncoding($encoding = 'quoted-printable') {
+	function setHtmlEncoding($encoding = 'quoted-printable')
+	{
 		$this->build_params['html_encoding'] = $encoding;
 	}
 
 	/**
 	* Accessor function to set the text charset
 	*/
-	function setTextCharset($charset = 'ISO-8859-1') {
+	function setTextCharset($charset = 'ISO-8859-1')
+	{
 		$this->build_params['text_charset'] = $charset;
 	}
 
 	/**
 	* Accessor function to set the HTML charset
 	*/
-	function setHtmlCharset($charset = 'ISO-8859-1') {
+	function setHtmlCharset($charset = 'ISO-8859-1')
+	{
 		$this->build_params['html_charset'] = $charset;
 	}
 
 	/**
 	* Accessor function to set the header encoding charset
 	*/
-	function setHeadCharset($charset = 'ISO-8859-1') {
+	function setHeadCharset($charset = 'ISO-8859-1')
+	{
 		$this->build_params['head_charset'] = $charset;
 	}
 
 	/**
 	* Accessor function to set the text wrap count
 	*/
-	function setTextWrap($count = 998) {
+	function setTextWrap($count = 998)
+	{
 		$this->build_params['text_wrap'] = $count;
 	}
 
 	/**
 	* Accessor to set a header
 	*/
-	function setHeader($name, $value) {
+	function setHeader($name, $value)
+	{
 		$this->headers[$name] = $value;
 	}
 
 	/**
 	* Accessor to add a Subject: header
 	*/
-	function setSubject($subject) {
+	function setSubject($subject)
+	{
 		$this->headers['Subject'] = $subject;
 	}
 
 	/**
 	* Accessor to add a From: header
 	*/
-	function setFrom($from) {
+	function setFrom($from)
+	{
 		$this->headers['From'] = $from;
 	}
 
 	/**
 	* Accessor to set the return path
 	*/
-	function setReturnPath($return_path) {
+	function setReturnPath($return_path)
+	{
 		$this->return_path = $return_path;
 	}
 
 	/**
 	* Accessor to add a Cc: header
 	*/
-	function setCc($cc) {
+	function setCc($cc)
+	{
 		$this->headers['Cc'] = $cc;
 	}
 
 	/**
 	* Accessor to add a Bcc: header
 	*/
-	function setBcc($bcc) {
+	function setBcc($bcc)
+	{
 		$this->headers['Bcc'] = $bcc;
 	}
 
@@ -303,7 +319,8 @@ class htmlMimeMail
 	* Adds plain text. Use this function
 	* when NOT sending html email
 	*/
-	function setText($text = '') {
+	function setText($text = '')
+	{
 		$this->text = $text;
 	}
 
@@ -312,7 +329,8 @@ class htmlMimeMail
 	* Also replaces image names with
 	* content-id's.
 	*/
-	function setHtml($html, $text = null, $images_dir = null) {
+	function setHtml($html, $text = null, $images_dir = null)
+	{
 		$this->html = $html;
 
 		$this->html_text = $text;
@@ -333,7 +351,8 @@ class htmlMimeMail
 	*
 	* @author Dan Allen
 	*/
-	function _findHtmlImages($images_dir) {
+	function _findHtmlImages($images_dir)
+	{
 		// Build the list of image extensions
 		while (list($key) = each($this->image_types)) {
 			$extensions[] = $key;
@@ -354,7 +373,7 @@ class htmlMimeMail
 			// If duplicate images are embedded, they may show up as attachments, so remove them.
 			$html_images = array_unique($html_images);
 
-			sort ($html_images);
+			sort($html_images);
 
 			for ($i = 0; $i < count($html_images); $i++) {
 				if ($image = $this->getFile($images_dir . $html_images[$i])) {
@@ -371,7 +390,8 @@ class htmlMimeMail
 	* Adds an image to the list of embedded
 	* images.
 	*/
-	function addHtmlImage($file, $name = '', $c_type = 'application/octet-stream') {
+	function addHtmlImage($file, $name = '', $c_type = 'application/octet-stream')
+	{
 		$this->html_images[] = array(
 			'body' => $file,
 			'name' => $name,
@@ -383,7 +403,8 @@ class htmlMimeMail
 	/**
 	* Adds a file to the list of attachments.
 	*/
-	function addAttachment($file, $name = '', $c_type = 'application/octet-stream', $encoding = 'base64') {
+	function addAttachment($file, $name = '', $c_type = 'application/octet-stream', $encoding = 'base64')
+	{
 		$this->attachments[] = array(
 			'body' => $file,
 			'name' => $name,
@@ -395,7 +416,8 @@ class htmlMimeMail
 	/**
 	* Adds a text subpart to a mime_part object
 	*/
-	function &_addTextPart(&$obj, $text) {
+	function &_addTextPart(&$obj, $text)
+	{
 		$params['content_type'] = 'text/plain';
 
 		$params['encoding'] = $this->build_params['text_encoding'];
@@ -412,7 +434,8 @@ class htmlMimeMail
 	/**
 	* Adds a html subpart to a mime_part object
 	*/
-	function &_addHtmlPart(&$obj) {
+	function &_addHtmlPart(&$obj)
+	{
 		$params['content_type'] = 'text/html';
 
 		$params['encoding'] = $this->build_params['html_encoding'];
@@ -429,7 +452,8 @@ class htmlMimeMail
 	/**
 	* Starts a message with a mixed part
 	*/
-	function &_addMixedPart() {
+	function &_addMixedPart()
+	{
 		$params['content_type'] = 'multipart/mixed';
 		$n = new Mail_mimePart('', $params);
 		return $n;
@@ -438,7 +462,8 @@ class htmlMimeMail
 	/**
 	* Adds an alternative part to a mime_part object
 	*/
-	function &_addAlternativePart(&$obj) {
+	function &_addAlternativePart(&$obj)
+	{
 		$params['content_type'] = 'multipart/alternative';
 
 		if (is_object($obj)) {
@@ -452,7 +477,8 @@ class htmlMimeMail
 	/**
 	* Adds a html subpart to a mime_part object
 	*/
-	function &_addRelatedPart(&$obj) {
+	function &_addRelatedPart(&$obj)
+	{
 		$params['content_type'] = 'multipart/related';
 
 		if (is_object($obj)) {
@@ -466,7 +492,8 @@ class htmlMimeMail
 	/**
 	* Adds an html image subpart to a mime_part object
 	*/
-	function &_addHtmlImagePart(&$obj, $value) {
+	function &_addHtmlImagePart(&$obj, $value)
+	{
 		$params['content_type'] = $value['c_type'];
 
 		$params['encoding'] = 'base64';
@@ -479,7 +506,8 @@ class htmlMimeMail
 	/**
 	* Adds an attachment subpart to a mime_part object
 	*/
-	function &_addAttachmentPart(&$obj, $value) {
+	function &_addAttachmentPart(&$obj, $value)
+	{
 		$params['content_type'] = $value['c_type'];
 
 		$params['encoding'] = $value['encoding'];
@@ -510,7 +538,8 @@ class htmlMimeMail
 	* $params['head_charset']  - The character set to use for header encoding should it be needed.
 	*                          - Default is ISO-8859-1
 	*/
-	function buildMessage($params = array()) {
+	function buildMessage($params = array())
+	{
 		if (!empty($params)) {
 			while (list($key, $value) = each($params)) {
 				$this->build_params[$key] = $value;
@@ -530,104 +559,96 @@ class htmlMimeMail
 		$text = isset($this->text) ? true : false;
 
 		switch (true) {
-		case $text AND !$attachments:
-			$message = &$this->_addTextPart($null, $this->text);
+			case $text AND !$attachments:
+				$message = &$this->_addTextPart($null, $this->text);
+							break;
 
-			break;
+			case !$text AND $attachments AND !$html:
+				$message = &$this->_addMixedPart();
+				for ($i = 0; $i < count($this->attachments); $i++) {
+					$this->_addAttachmentPart($message, $this->attachments[$i]);
+				}
+							break;
 
-		case !$text AND $attachments AND !$html:
-			$message = &$this->_addMixedPart();
+			case $text AND $attachments:
+				$message = &$this->_addMixedPart();
 
-			for ($i = 0; $i < count($this->attachments); $i++) {
-				$this->_addAttachmentPart($message, $this->attachments[$i]);
-			}
+				$this->_addTextPart($message, $this->text);
 
-			break;
+				for ($i = 0; $i < count($this->attachments); $i++) {
+					$this->_addAttachmentPart($message, $this->attachments[$i]);
+				}
+							break;
 
-		case $text AND $attachments:
-			$message = &$this->_addMixedPart();
+			case $html AND !$attachments AND !$html_images:
+				if (!is_null($this->html_text)) {
+					$message = &$this->_addAlternativePart($null);
 
-			$this->_addTextPart($message, $this->text);
+					$this->_addTextPart($message, $this->html_text);
+					$this->_addHtmlPart($message);
+				} else {
+					$message = &$this->_addHtmlPart($null);
+				}
+							break;
 
-			for ($i = 0; $i < count($this->attachments); $i++) {
-				$this->_addAttachmentPart($message, $this->attachments[$i]);
-			}
+			case $html AND !$attachments AND $html_images:
+				if (!is_null($this->html_text)) {
+					$message = &$this->_addAlternativePart($null);
 
-			break;
+					$this->_addTextPart($message, $this->html_text);
+					$related = &$this->_addRelatedPart($message);
+				} else {
+					$message = &$this->_addRelatedPart($null);
 
-		case $html AND !$attachments AND !$html_images:
-			if (!is_null($this->html_text)) {
-				$message = &$this->_addAlternativePart($null);
+					$related = &$message;
+				}
 
-				$this->_addTextPart($message, $this->html_text);
-				$this->_addHtmlPart($message);
-			} else {
-				$message = &$this->_addHtmlPart($null);
-			}
+				$this->_addHtmlPart($related);
 
-			break;
+				for ($i = 0; $i < count($this->html_images); $i++) {
+					$this->_addHtmlImagePart($related, $this->html_images[$i]);
+				}
+							break;
 
-		case $html AND !$attachments AND $html_images:
-			if (!is_null($this->html_text)) {
-				$message = &$this->_addAlternativePart($null);
+			case $html AND $attachments AND !$html_images:
+				$message = &$this->_addMixedPart();
 
-				$this->_addTextPart($message, $this->html_text);
-				$related = &$this->_addRelatedPart($message);
-			} else {
-				$message = &$this->_addRelatedPart($null);
+				if (!is_null($this->html_text)) {
+					$alt = &$this->_addAlternativePart($message);
 
-				$related = &$message;
-			}
+					$this->_addTextPart($alt, $this->html_text);
+					$this->_addHtmlPart($alt);
+				} else {
+					$this->_addHtmlPart($message);
+				}
 
-			$this->_addHtmlPart($related);
+				for ($i = 0; $i < count($this->attachments); $i++) {
+					$this->_addAttachmentPart($message, $this->attachments[$i]);
+				}
+							break;
 
-			for ($i = 0; $i < count($this->html_images); $i++) {
-				$this->_addHtmlImagePart($related, $this->html_images[$i]);
-			}
+			case $html AND $attachments AND $html_images:
+				$message = &$this->_addMixedPart();
 
-			break;
+				if (!is_null($this->html_text)) {
+					$alt = &$this->_addAlternativePart($message);
 
-		case $html AND $attachments AND !$html_images:
-			$message = &$this->_addMixedPart();
+					$this->_addTextPart($alt, $this->html_text);
+					$rel = &$this->_addRelatedPart($alt);
+				} else {
+					$rel = &$this->_addRelatedPart($message);
+				}
 
-			if (!is_null($this->html_text)) {
-				$alt = &$this->_addAlternativePart($message);
+				$this->_addHtmlPart($rel);
 
-				$this->_addTextPart($alt, $this->html_text);
-				$this->_addHtmlPart($alt);
-			} else {
-				$this->_addHtmlPart($message);
-			}
+				for ($i = 0; $i < count($this->html_images); $i++) {
+					$this->_addHtmlImagePart($rel, $this->html_images[$i]);
+				}
 
-			for ($i = 0; $i < count($this->attachments); $i++) {
-				$this->_addAttachmentPart($message, $this->attachments[$i]);
-			}
-
-			break;
-
-		case $html AND $attachments AND $html_images:
-			$message = &$this->_addMixedPart();
-
-			if (!is_null($this->html_text)) {
-				$alt = &$this->_addAlternativePart($message);
-
-				$this->_addTextPart($alt, $this->html_text);
-				$rel = &$this->_addRelatedPart($alt);
-			} else {
-				$rel = &$this->_addRelatedPart($message);
-			}
-
-			$this->_addHtmlPart($rel);
-
-			for ($i = 0; $i < count($this->html_images); $i++) {
-				$this->_addHtmlImagePart($rel, $this->html_images[$i]);
-			}
-
-			for ($i = 0; $i < count($this->attachments); $i++) {
-				$this->_addAttachmentPart($message, $this->attachments[$i]);
-			}
-
-			break;
+				for ($i = 0; $i < count($this->attachments); $i++) {
+					$this->_addAttachmentPart($message, $this->attachments[$i]);
+				}
+							break;
 		}
 
 		if (isset($message)) {
@@ -637,8 +658,13 @@ class htmlMimeMail
 			$this->headers = array_merge($this->headers, $output['headers']);
 
 			// Add message ID header
-			srand ((double)microtime() * 10000000);
-			$message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
+			srand((double)microtime() * 10000000);
+			$message_id = sprintf(
+							'<%s.%s@%s>', 
+							base_convert(time(), 10, 36), 
+							base_convert(rand(), 10, 36), 
+							isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']
+			);
 			$this->headers['Message-ID'] = $message_id;
 
 			$this->is_built = true;
@@ -649,10 +675,11 @@ class htmlMimeMail
 	}
 
 	/**
-* Function to encode a header if necessary
-* according to RFC2047
-*/
-	function _encodeHeader($input, $charset = 'ISO-8859-1') {
+	 * Function to encode a header if necessary
+	 * according to RFC2047
+	 */
+	function _encodeHeader($input, $charset = 'ISO-8859-1')
+	{
 		preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $input, $matches);
 
 		foreach ($matches[1] as $value) {
@@ -665,13 +692,14 @@ class htmlMimeMail
 	}
 
 	/**
-* Sends the mail.
-*
-* @param  array  $recipients
-* @param  string $type OPTIONAL
-* @return mixed
-*/
-	function send($recipients, $type = 'mail') {
+	 * Sends the mail.
+	 *
+	 * @param  array  $recipients
+	 * @param  string $type OPTIONAL
+	 * @return mixed
+	 */
+	function send($recipients, $type = 'mail')
+	{
 		if ( ! empty($recipients) && is_string($recipients) ) {
 			$recipients = array($recipients);
 		}
@@ -684,123 +712,124 @@ class htmlMimeMail
 		}
 
 		switch ($type) {
-		case 'mail':
-			$subject = '';
+			case 'mail':
+				$subject = '';
 
-			if (!empty($this->headers['Subject'])) {
-				$subject = $this->_encodeHeader($this->headers['Subject'], $this->build_params['head_charset']);
+				if (!empty($this->headers['Subject'])) {
+					$subject = $this->_encodeHeader($this->headers['Subject'], $this->build_params['head_charset']);
 
-				unset ($this->headers['Subject']);
-			}
-
-			// Get flat representation of headers
-			foreach ($this->headers as $name => $value) {
-				$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
-			}
-
-			$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
-
-			if (!empty($this->return_path)) {
-				// Set the sender for sendmail and use only the email address when the syntax of return_path is like 'Name <email>'
-				$additional_parameters = '-f' . preg_replace('/^.*<(.*?)>.*$/', '$1', $this->return_path);
-				$result = mail($to, $subject, $this->output, implode(CRLF, $headers), $additional_parameters);
-			} else {
-				$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
-			}
-
-			// Reset the subject in case mail is resent
-			if ($subject !== '') {
-				$this->headers['Subject'] = $subject;
-			}
-
-			// Return
-			return $result;
-			break;
-
-		case 'smtp':
-			//require_once(dirname(__FILE__) . '/smtp.php');
-			//require_once(dirname(__FILE__) . '/RFC822.php');
-			//:TODO: This may not work (A fix)
-			if (isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])) {
-				$helo = $_SERVER['HTTP_HOST'];
-			} elseif (isset($_SERVER['SERVER_NAME']) && !empty($_SERVER['SERVER_NAME'])) {
-				$helo = $_SERVER['SERVER_NAME'];
-			} else {
-				$helo = 'localhost';
-			}
-
-			$this->smtp_params['helo'] = $helo;
-			$smtp = &smtp::connect($this->smtp_params);
-
-			// Parse recipients argument for internet addresses
-			foreach ($recipients as $recipient) {
-				$addresses = Mail_RFC822::parseAddressList($recipient, $this->smtp_params['helo'], null, false);
-
-				foreach ($addresses as $address) {
-					$smtp_recipients[] = sprintf('%s@%s', $address->mailbox, $address->host);
+					unset ($this->headers['Subject']);
 				}
-			}
 
-			unset ($addresses); // These are reused
-			unset ($address); // These are reused
+				// Get flat representation of headers
+				foreach ($this->headers as $name => $value) {
+					$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+				}
 
-			// Get flat representation of headers, parsing
-			// Cc and Bcc as we go
-			foreach ($this->headers as $name => $value) {
-				if ($name == 'Cc' OR $name == 'Bcc') {
-					$addresses = Mail_RFC822::parseAddressList($value, $this->smtp_params['helo'], null, false);
+				$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
+
+				if (!empty($this->return_path)) {
+					// Set the sender for sendmail and use only the email address when the syntax of return_path is like 'Name <email>'
+					$additional_parameters = '-f' . preg_replace('/^.*<(.*?)>.*$/', '$1', $this->return_path);
+					$result = mail($to, $subject, $this->output, implode(CRLF, $headers), $additional_parameters);
+				} else {
+					$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
+				}
+
+				// Reset the subject in case mail is resent
+				if ($subject !== '') {
+					$this->headers['Subject'] = $subject;
+				}
+
+				// Return
+				return $result;
+							break;
+
+			case 'smtp':
+				//require_once(dirname(__FILE__) . '/smtp.php');
+				//require_once(dirname(__FILE__) . '/RFC822.php');
+				//:TODO: This may not work (A fix)
+				if (isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])) {
+					$helo = $_SERVER['HTTP_HOST'];
+				} elseif (isset($_SERVER['SERVER_NAME']) && !empty($_SERVER['SERVER_NAME'])) {
+					$helo = $_SERVER['SERVER_NAME'];
+				} else {
+					$helo = 'localhost';
+				}
+
+				$this->smtp_params['helo'] = $helo;
+				$smtp = &smtp::connect($this->smtp_params);
+
+				// Parse recipients argument for internet addresses
+				foreach ($recipients as $recipient) {
+					$addresses = Mail_RFC822::parseAddressList($recipient, $this->smtp_params['helo'], null, false);
 
 					foreach ($addresses as $address) {
 						$smtp_recipients[] = sprintf('%s@%s', $address->mailbox, $address->host);
 					}
 				}
 
-				if ($name == 'Bcc') {
-					continue;
+				unset ($addresses); // These are reused
+				unset ($address); // These are reused
+
+				// Get flat representation of headers, parsing
+				// Cc and Bcc as we go
+				foreach ($this->headers as $name => $value) {
+					if ($name == 'Cc' OR $name == 'Bcc') {
+						$addresses = Mail_RFC822::parseAddressList($value, $this->smtp_params['helo'], null, false);
+
+						foreach ($addresses as $address) {
+							$smtp_recipients[] = sprintf('%s@%s', $address->mailbox, $address->host);
+						}
+					}
+
+					if ($name == 'Bcc') {
+						continue;
+					}
+
+					$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
 				}
 
-				$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
-			}
+				// Add To header based on $recipients argument
+				$headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
-			// Add To header based on $recipients argument
-			$headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
+				// Add headers to send_params
+				$send_params['headers'] = $headers;
+				$send_params['recipients'] = array_values(array_unique($smtp_recipients));
+				$send_params['body'] = $this->output;
 
-			// Add headers to send_params
-			$send_params['headers'] = $headers;
-			$send_params['recipients'] = array_values(array_unique($smtp_recipients));
-			$send_params['body'] = $this->output;
+				// Setup return path
+				if (isset($this->return_path)) {
+					$send_params['from'] = $this->return_path;
+				} elseif (!empty($this->headers['From'])) {
+					$from = Mail_RFC822::parseAddressList($this->headers['From']);
 
-			// Setup return path
-			if (isset($this->return_path)) {
-				$send_params['from'] = $this->return_path;
-			} elseif (!empty($this->headers['From'])) {
-				$from = Mail_RFC822::parseAddressList($this->headers['From']);
+					$send_params['from'] = sprintf('%s@%s', $from[0]->mailbox, $from[0]->host);
+				} else {
+					$send_params['from'] = 'postmaster@' . $this->smtp_params['helo'];
+				}
 
-				$send_params['from'] = sprintf('%s@%s', $from[0]->mailbox, $from[0]->host);
-			} else {
-				$send_params['from'] = 'postmaster@' . $this->smtp_params['helo'];
-			}
+				// Send it
+				if (!$smtp->send($send_params)) {
+					$this->errors = $smtp->errors;
 
-			// Send it
-			if (!$smtp->send($send_params)) {
-				$this->errors = $smtp->errors;
+					return false;
+				}
 
-				return false;
-			}
-
-			return true;
-			break;
+				return true;
+							break;
 		}
 	}
 
 	/**
-* Use this method to return the email
-* in message/rfc822 format. Useful for
-* adding an email to another email as
-* an attachment. there's a commented
-* out example in example.php.
-*/
-	function getRFC822($recipients) {
+	 * Use this method to return the email
+	 * in message/rfc822 format. Useful for
+	 * adding an email to another email as
+	 * an attachment. there's a commented
+	 * out example in example.php.
+	 */
+	function getRFC822($recipients)
+	{
 		// Make up the date header as according to RFC822
 		// TODO Change to user or system defined timezone
 		$this->setHeader('Date', date('D, d M y H:i:s O'));
@@ -937,71 +966,65 @@ class Mail_mimePart
 	var $_body;
 
 	/**
- * Constructor.
- *
- * Sets up the object.
- *
- * @param $body   - The body of the mime part if any.
- * @param $params - An associative array of parameters:
- *                  content_type - The content type for this part eg multipart/mixed
- *                  encoding     - The encoding to use, 7bit, 8bit, base64, or quoted-printable
- *                  cid          - Content ID to apply
- *                  disposition  - Content disposition, inline or attachment
- *                  dfilename    - Optional filename parameter for content disposition
- *                  description  - Content description
- *                  charset      - Character set to use
- * @access public
- */
-	function Mail_mimePart($body = '', $params = array()) {
+	 * Constructor.
+	 *
+	 * Sets up the object.
+	 *
+	 * @param $body   - The body of the mime part if any.
+	 * @param $params - An associative array of parameters:
+	 *                  content_type - The content type for this part eg multipart/mixed
+	 *                  encoding     - The encoding to use, 7bit, 8bit, base64, or quoted-printable
+	 *                  cid          - Content ID to apply
+	 *                  disposition  - Content disposition, inline or attachment
+	 *                  dfilename    - Optional filename parameter for content disposition
+	 *                  description  - Content description
+	 *                  charset      - Character set to use
+	 * @access public
+	 */
+	function Mail_mimePart($body = '', $params = array())
+	{
 		if (!defined('MAIL_MIMEPART_CRLF')) {
 			define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", TRUE);
 		}
 
 		foreach ($params as $key => $value) {
 			switch ($key) {
-			case 'content_type':
-				$headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
+				case 'content_type':
+					$headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
+								break;
 
-				break;
+				case 'encoding':
+					$this->_encoding = $value;
+					$headers['Content-Transfer-Encoding'] = $value;
+								break;
 
-			case 'encoding':
-				$this->_encoding = $value;
+				case 'cid':
+					$headers['Content-ID'] = '<' . $value . '>';
+								break;
 
-				$headers['Content-Transfer-Encoding'] = $value;
-				break;
+				case 'disposition':
+					$headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
+								break;
 
-			case 'cid':
-				$headers['Content-ID'] = '<' . $value . '>';
+				case 'dfilename':
+					if (isset($headers['Content-Disposition'])) {
+						$headers['Content-Disposition'] .= '; filename="' . $value . '"';
+					} else {
+						$dfilename = $value;
+					}
+								break;
 
-				break;
+				case 'description':
+					$headers['Content-Description'] = $value;
+								break;
 
-			case 'disposition':
-				$headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
-
-				break;
-
-			case 'dfilename':
-				if (isset($headers['Content-Disposition'])) {
-					$headers['Content-Disposition'] .= '; filename="' . $value . '"';
-				} else {
-					$dfilename = $value;
-				}
-
-				break;
-
-			case 'description':
-				$headers['Content-Description'] = $value;
-
-				break;
-
-			case 'charset':
-				if (isset($headers['Content-Type'])) {
-					$headers['Content-Type'] .= '; charset="' . $value . '"';
-				} else {
-					$charset = $value;
-				}
-
-				break;
+				case 'charset':
+					if (isset($headers['Content-Type'])) {
+						$headers['Content-Type'] .= '; charset="' . $value . '"';
+					} else {
+						$charset = $value;
+					}
+								break;
 			}
 		}
 
@@ -1022,21 +1045,22 @@ class Mail_mimePart
 	}
 
 	/**
- * encode()
- *
- * Encodes and returns the email. Also stores
- * it in the encoded member variable
- *
- * @return An associative array containing two elements,
- *         body and headers. The headers element is itself
- *         an indexed array.
- * @access public
- */
-	function encode() {
+	 * encode()
+	 *
+	 * Encodes and returns the email. Also stores
+	 * it in the encoded member variable
+	 *
+	 * @return An associative array containing two elements,
+	 *         body and headers. The headers element is itself
+	 *         an indexed array.
+	 * @access public
+	 */
+	function encode()
+	{
 		$encoded = &$this->_encoded;
 
 		if (!empty($this->_subparts)) {
-			srand ((double)microtime() * 1000000);
+			srand((double)microtime() * 1000000);
 
 			$boundary = '=_' . md5(uniqid(rand()). microtime());
 			$this->_headers['Content-Type'] .= ';' . MAIL_MIMEPART_CRLF . "\t" . 'boundary="' . $boundary . '"';
@@ -1066,71 +1090,71 @@ class Mail_mimePart
 	}
 
 	/**
- * &addSubPart()
- *
- * Adds a subpart to current mime part and returns
- * a reference to it
- *
- * @param $body   The body of the subpart, if any.
- * @param $params The parameters for the subpart, same
- *                as the $params argument for constructor.
- * @return A reference to the part you just added. It is
- *         crucial if using multipart/* in your subparts that
- *         you use =& in your script when calling this function,
- *         otherwise you will not be able to add further subparts.
- * @access public
- */
-	function &addSubPart($body, $params) {
+	 * &addSubPart()
+	 *
+	 * Adds a subpart to current mime part and returns
+	 * a reference to it
+	 *
+	 * @param $body   The body of the subpart, if any.
+	 * @param $params The parameters for the subpart, same
+	 *                as the $params argument for constructor.
+	 * @return A reference to the part you just added. It is
+	 *         crucial if using multipart/* in your subparts that
+	 *         you use =& in your script when calling this function,
+	 *         otherwise you will not be able to add further subparts.
+	 * @access public
+	 */
+	function &addSubPart($body, $params)
+	{
 		$this->_subparts[] = new Mail_mimePart($body, $params);
 
 		return $this->_subparts[count($this->_subparts) - 1];
 	}
 
 	/**
- * _getEncodedData()
- *
- * Returns encoded data based upon encoding passed to it
- *
- * @param $data     The data to encode.
- * @param $encoding The encoding type to use, 7bit, base64,
- *                  or quoted-printable.
- * @access private
- */
-	function _getEncodedData($data, $encoding) {
+	 * _getEncodedData()
+	 *
+	 * Returns encoded data based upon encoding passed to it
+	 *
+	 * @param $data     The data to encode.
+	 * @param $encoding The encoding type to use, 7bit, base64,
+	 *                  or quoted-printable.
+	 * @access private
+	 */
+	function _getEncodedData($data, $encoding)
+	{
 		switch ($encoding) {
-		case '8bit':
-		case '7bit':
-			return $data;
+			case '8bit':
+			case '7bit':
+				return $data;
+							break;
 
-			break;
+			case 'quoted-printable':
+				return $this->_quotedPrintableEncode($data);
+							break;
 
-		case 'quoted-printable':
-			return $this->_quotedPrintableEncode($data);
+			case 'base64':
+				return rtrim(chunk_split(base64_encode($data), 76, MAIL_MIMEPART_CRLF));
+							break;
 
-			break;
-
-		case 'base64':
-			return rtrim(chunk_split(base64_encode($data), 76, MAIL_MIMEPART_CRLF));
-
-			break;
-
-		default:
-			return $data;
+			default:
+				return $data;
 		}
 	}
 
 	/**
- * quoteadPrintableEncode()
- *
- * Encodes data to quoted-printable standard.
- *
- * @param $input    The data to encode
- * @param $line_max Optional max line length. Should
- *                  not be more than 76 chars
- *
- * @access private
- */
-	function _quotedPrintableEncode($input, $line_max = 76) {
+	 * quoteadPrintableEncode()
+	 *
+	 * Encodes data to quoted-printable standard.
+	 *
+	 * @param $input    The data to encode
+	 * @param $line_max Optional max line length. Should
+	 *                  not be more than 76 chars
+	 *
+	 * @access private
+	 */
+	function _quotedPrintableEncode($input, $line_max = 76)
+	{
 		$lines = preg_split("/\r?\n/", $input);
 
 		$eol = MAIL_MIMEPART_CRLF;
@@ -1265,18 +1289,20 @@ class Mail_RFC822
 	var $limit = null;
 
 	/**
- * Sets up the object. The address must either be set here or when
- * calling parseAddressList(). One or the other.
- *
- * @access public
- * @param string  $address         The address(es) to validate.
- * @param string  $default_domain  Default domain/host etc. If not supplied, will be set to localhost.
- * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
- * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
- * 
- * @return object Mail_RFC822 A new Mail_RFC822 object.
- */
-	function Mail_RFC822($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null) {
+	 * Sets up the object. The address must either be set here or when
+	 * calling parseAddressList(). One or the other.
+	 *
+	 * @access public
+	 * @param string  $address         The address(es) to validate.
+	 * @param string  $default_domain  Default domain/host etc. If not supplied, will be set to localhost.
+	 * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
+	 * @param boolean $validate        Whether to validate atoms. Turn this off if you 
+	 *			need to run addresses through before encoding the personal names, for instance.
+	 * 
+	 * @return object Mail_RFC822 A new Mail_RFC822 object.
+	 */
+	function Mail_RFC822($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
+	{
 		if (isset($address))
 			$this->address = $address;
 
@@ -1294,18 +1320,20 @@ class Mail_RFC822
 	}
 
 	/**
- * Starts the whole process. The address must either be set here
- * or when creating the object. One or the other.
- *
- * @access public
- * @param string  $address         The address(es) to validate.
- * @param string  $default_domain  Default domain/host etc.
- * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
- * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
- * 
- * @return array A structured array of addresses.
- */
-	function parseAddressList($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null) {
+	 * Starts the whole process. The address must either be set here
+	 * or when creating the object. One or the other.
+	 *
+	 * @access public
+	 * @param string  $address         The address(es) to validate.
+	 * @param string  $default_domain  Default domain/host etc.
+	 * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
+	 * @param boolean $validate        Whether to validate atoms. Turn this off if you 
+	 *				need to run addresses through before encoding the personal names, for instance.
+	 * 
+	 * @return array A structured array of addresses.
+	 */
+	function parseAddressList($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
+	{
 		if (!isset($this->mailRFC822)) {
 			$obj = new Mail_RFC822($address, $default_domain, $nest_groups, $validate, $limit);
 
@@ -1342,7 +1370,7 @@ class Mail_RFC822
 
 		// Reset timer since large amounts of addresses can take a long time to
 		// get here
-		set_time_limit (30);
+		set_time_limit(30);
 
 		// Loop through all the addresses
 		for ($i = 0; $i < count($this->addresses); $i++) {
@@ -1361,13 +1389,14 @@ class Mail_RFC822
 	}
 
 	/**
- * Splits an address into seperate addresses.
- * 
- * @access private
- * @param string $address The addresses to split.
- * @return boolean Success or failure.
- */
-	function _splitAddresses($address) {
+	 * Splits an address into seperate addresses.
+	 * 
+	 * @access private
+	 * @param string $address The addresses to split.
+	 * @return boolean Success or failure.
+	 */
+	function _splitAddresses($address)
+	{
 		if (!empty($this->limit)AND count($this->addresses) == $this->limit) {
 			return '';
 		}
@@ -1437,13 +1466,14 @@ class Mail_RFC822
 	}
 
 	/**
- * Checks for a group at the start of the string.
- * 
- * @access private
- * @param string $address The address to check.
- * @return boolean Whether or not there is a group at the start of the string.
- */
-	function _isGroup($address) {
+	 * Checks for a group at the start of the string.
+	 * 
+	 * @access private
+	 * @param string $address The address to check.
+	 * @return boolean Whether or not there is a group at the start of the string.
+	 */
+	function _isGroup($address)
+	{
 		// First comma not in quotes, angles or escaped:
 		$parts = explode(',', $address);
 
@@ -1462,18 +1492,25 @@ class Mail_RFC822
 	}
 
 	/**
- * A common function that will check an exploded string.
- * 
- * @access private
- * @param array $parts The exloded string.
- * @param string $char  The char that was exploded on.
- * @return mixed False if the string contains unclosed quotes/brackets, or the string on success.
- */
-	function _splitCheck($parts, $char) {
+	 * A common function that will check an exploded string.
+	 * 
+	 * @access private
+	 * @param array $parts The exloded string.
+	 * @param string $char  The char that was exploded on.
+	 * @return mixed False if the string contains unclosed quotes/brackets, or the string on success.
+	 */
+	function _splitCheck($parts, $char)
+	{
 		$string = $parts[0];
 
 		for ($i = 0; $i < count($parts); $i++) {
-			if ($this->_hasUnclosedQuotes($string) || $this->_hasUnclosedBrackets($string, '<>') || $this->_hasUnclosedBrackets($string, '[]') || $this->_hasUnclosedBrackets($string, '()') || substr($string, -1) == '\\') {
+			if (
+						$this->_hasUnclosedQuotes($string) || 
+						$this->_hasUnclosedBrackets($string, '<>') || 
+						$this->_hasUnclosedBrackets($string, '[]') || 
+						$this->_hasUnclosedBrackets($string, '()') || 
+						substr($string, -1) == '\\'
+					) {
 				if (isset($parts[$i + 1])) {
 					$string = $string . $char . $parts[$i + 1];
 				} else {
@@ -1492,13 +1529,14 @@ class Mail_RFC822
 	}
 
 	/**
- * Checks if a string has an unclosed quotes or not.
- * 
- * @access private
- * @param string $string The string to check.
- * @return boolean True if there are unclosed quotes inside the string, false otherwise.
- */
-	function _hasUnclosedQuotes($string) {
+	 * Checks if a string has an unclosed quotes or not.
+	 * 
+	 * @access private
+	 * @param string $string The string to check.
+	 * @return boolean True if there are unclosed quotes inside the string, false otherwise.
+	 */
+	function _hasUnclosedQuotes($string)
+	{
 		$string = explode('"', $string);
 
 		$string_cnt = count($string);
@@ -1511,15 +1549,16 @@ class Mail_RFC822
 	}
 
 	/**
- * Checks if a string has an unclosed brackets or not. IMPORTANT:
- * This function handles both angle brackets and square brackets;
- * 
- * @access private
- * @param string $string The string to check.
- * @param string $chars  The characters to check for.
- * @return boolean True if there are unclosed brackets inside the string, false otherwise.
- */
-	function _hasUnclosedBrackets($string, $chars) {
+	 * Checks if a string has an unclosed brackets or not. IMPORTANT:
+	 * This function handles both angle brackets and square brackets;
+	 * 
+	 * @access private
+	 * @param string $string The string to check.
+	 * @param string $chars  The characters to check for.
+	 * @return boolean True if there are unclosed brackets inside the string, false otherwise.
+	 */
+	function _hasUnclosedBrackets($string, $chars)
+	{
 		$num_angle_start = substr_count($string, $chars[0]);
 
 		$num_angle_end = substr_count($string, $chars[1]);
@@ -1537,15 +1576,16 @@ class Mail_RFC822
 	}
 
 	/**
- * Sub function that is used only by hasUnclosedBrackets().
- * 
- * @access private
- * @param string $string The string to check.
- * @param integer &$num    The number of occurences.
- * @param string $char   The character to count.
- * @return integer The number of occurences of $char in $string, adjusted for backslashes.
- */
-	function _hasUnclosedBracketsSub($string, &$num, $char) {
+	 * Sub function that is used only by hasUnclosedBrackets().
+	 * 
+	 * @access private
+	 * @param string $string The string to check.
+	 * @param integer &$num    The number of occurences.
+	 * @param string $char   The character to count.
+	 * @return integer The number of occurences of $char in $string, adjusted for backslashes.
+	 */
+	function _hasUnclosedBracketsSub($string, &$num, $char)
+	{
 		$parts = explode($char, $string);
 
 		for ($i = 0; $i < count($parts); $i++) {
@@ -1560,13 +1600,14 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to begin checking the address.
- *
- * @access private
- * @param string $address The address to validate.
- * @return mixed False on failure, or a structured array of address information on success.
- */
-	function _validateAddress($address) {
+	 * Function to begin checking the address.
+	 *
+	 * @access private
+	 * @param string $address The address to validate.
+	 * @return mixed False on failure, or a structured array of address information on success.
+	 */
+	function _validateAddress($address)
+	{
 		$is_group = false;
 
 		if ($address['group']) {
@@ -1626,10 +1667,10 @@ class Mail_RFC822
 		//                         geezer@domain.com
 		//                         geezer
 		// ... or any other format valid by RFC 822.
-		array_walk($addresses, array(
-			$this,
-			'validateMailbox'
-		));
+		array_walk(
+						$addresses, 
+						array($this, 'validateMailbox')
+		);
 
 		// Nested format
 		if ($this->nestGroups) {
@@ -1652,13 +1693,14 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate a phrase.
- *
- * @access private
- * @param string $phrase The phrase to check.
- * @return boolean Success or failure.
- */
-	function _validatePhrase($phrase) {
+	 * Function to validate a phrase.
+	 *
+	 * @access private
+	 * @param string $phrase The phrase to check.
+	 * @return boolean Success or failure.
+	 */
+	function _validatePhrase($phrase)
+	{
 		// Splits on one or more Tab or space.
 		$parts = preg_split('/[ \\x09]+/', $phrase, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -1668,7 +1710,7 @@ class Mail_RFC822
 			$phrase_parts[] = $this->_splitCheck($parts, ' ');
 
 			for ($i = 0; $i < $this->index + 1; $i++)
-				array_shift ($parts);
+				array_shift($parts);
 		}
 
 		for ($i = 0; $i < count($phrase_parts); $i++) {
@@ -1689,19 +1731,20 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate an atom which from rfc822 is:
- * atom = 1*<any CHAR except specials, SPACE and CTLs>
- * 
- * If validation ($this->validate) has been turned off, then
- * validateAtom() doesn't actually check anything. This is so that you
- * can split a list of addresses up before encoding personal names
- * (umlauts, etc.), for example.
- * 
- * @access private
- * @param string $atom The string to check.
- * @return boolean Success or failure.
- */
-	function _validateAtom($atom) {
+	 * Function to validate an atom which from rfc822 is:
+	 * atom = 1*<any CHAR except specials, SPACE and CTLs>
+	 * 
+	 * If validation ($this->validate) has been turned off, then
+	 * validateAtom() doesn't actually check anything. This is so that you
+	 * can split a list of addresses up before encoding personal names
+	 * (umlauts, etc.), for example.
+	 * 
+	 * @access private
+	 * @param string $atom The string to check.
+	 * @return boolean Success or failure.
+	 */
+	function _validateAtom($atom)
+	{
 		if (!$this->validate) {
 			// Validation has been turned off; assume the atom is okay.
 			return true;
@@ -1726,14 +1769,15 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate quoted string, which is:
- * quoted-string = <"> *(qtext/quoted-pair) <">
- * 
- * @access private
- * @param string $qstring The string to check
- * @return boolean Success or failure.
- */
-	function _validateQuotedString($qstring) {
+	 * Function to validate quoted string, which is:
+	 * quoted-string = <"> *(qtext/quoted-pair) <">
+	 * 
+	 * @access private
+	 * @param string $qstring The string to check
+	 * @return boolean Success or failure.
+	 */
+	function _validateQuotedString($qstring)
+	{
 		// Leading and trailing "
 		$qstring = substr($qstring, 1, -1);
 
@@ -1742,15 +1786,16 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate a mailbox, which is:
- * mailbox =   addr-spec         ; simple address
- *           / phrase route-addr ; name and route-addr
- * 
- * @access public
- * @param string &$mailbox The string to check.
- * @return boolean Success or failure.
- */
-	function validateMailbox(&$mailbox) {
+	 * Function to validate a mailbox, which is:
+	 * mailbox =   addr-spec         ; simple address
+	 *           / phrase route-addr ; name and route-addr
+	 * 
+	 * @access public
+	 * @param string &$mailbox The string to check.
+	 * @return boolean Success or failure.
+	 */
+	function validateMailbox(&$mailbox)
+	{
 		// A couple of defaults.
 		$phrase = '';
 
@@ -1831,18 +1876,19 @@ class Mail_RFC822
 		return true;
 	}
 
-	/**
- * This function validates a route-addr which is:
- * route-addr = "<" [route] addr-spec ">"
- *
- * Angle brackets have already been removed at the point of
- * getting to this function.
- * 
- * @access private
- * @param string $route_addr The string to check.
- * @return mixed False on failure, or an array containing validated address/route information on success.
- */
-	function _validateRouteAddr($route_addr) {
+	/*
+	 * This function validates a route-addr which is:
+	 * route-addr = "<" [route] addr-spec ">"
+	 *
+	 * Angle brackets have already been removed at the point of
+	 * getting to this function.
+	 * 
+	 * @access private
+	 * @param string $route_addr The string to check.
+	 * @return mixed False on failure, or an array containing validated address/route information on success.
+	 */
+	function _validateRouteAddr($route_addr)
+	{
 		// Check for colon.
 		if (strpos($route_addr, ':') !== false) {
 			$parts = explode(':', $route_addr);
@@ -1887,14 +1933,15 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate a route, which is:
- * route = 1#("@" domain) ":"
- * 
- * @access private
- * @param string $route The string to check.
- * @return mixed False on failure, or the validated $route on success.
- */
-	function _validateRoute($route) {
+	 * Function to validate a route, which is:
+	 * route = 1#("@" domain) ":"
+	 * 
+	 * @access private
+	 * @param string $route The string to check.
+	 * @return mixed False on failure, or the validated $route on success.
+	 */
+	function _validateRoute($route)
+	{
 		// Split on comma.
 		$domains = explode(',', trim($route));
 
@@ -1909,16 +1956,17 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate a domain, though this is not quite what
- * you expect of a strict internet domain.
- *
- * domain = sub-domain *("." sub-domain)
- * 
- * @access private
- * @param string $domain The string to check.
- * @return mixed False on failure, or the validated domain on success.
- */
-	function _validateDomain($domain) {
+	 * Function to validate a domain, though this is not quite what
+	 * you expect of a strict internet domain.
+	 *
+	 * domain = sub-domain *("." sub-domain)
+	 * 
+	 * @access private
+	 * @param string $domain The string to check.
+	 * @return mixed False on failure, or the validated domain on success.
+	 */
+	function _validateDomain($domain)
+	{
 		// Note the different use of $subdomains and $sub_domains                        
 		$subdomains = explode('.', $domain);
 
@@ -1926,7 +1974,7 @@ class Mail_RFC822
 			$sub_domains[] = $this->_splitCheck($subdomains, '.');
 
 			for ($i = 0; $i < $this->index + 1; $i++)
-				array_shift ($subdomains);
+				array_shift($subdomains);
 		}
 
 		for ($i = 0; $i < count($sub_domains); $i++) {
@@ -1939,14 +1987,15 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate a subdomain:
- *   subdomain = domain-ref / domain-literal
- * 
- * @access private
- * @param string $subdomain The string to check.
- * @return boolean Success or failure.
- */
-	function _validateSubdomain($subdomain) {
+	 * Function to validate a subdomain:
+	 *   subdomain = domain-ref / domain-literal
+	 * 
+	 * @access private
+	 * @param string $subdomain The string to check.
+	 * @return boolean Success or failure.
+	 */
+	function _validateSubdomain($subdomain)
+	{
 		if (preg_match('|^\[(.*)]$|', $subdomain, $arr)) {
 			if (!$this->_validateDliteral($arr[1]))
 				return false;
@@ -1960,27 +2009,29 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate a domain literal:
- *   domain-literal =  "[" *(dtext / quoted-pair) "]"
- * 
- * @access private
- * @param string $dliteral The string to check.
- * @return boolean Success or failure.
- */
-	function _validateDliteral($dliteral) {
+	 * Function to validate a domain literal:
+	 *   domain-literal =  "[" *(dtext / quoted-pair) "]"
+	 * 
+	 * @access private
+	 * @param string $dliteral The string to check.
+	 * @return boolean Success or failure.
+	 */
+	function _validateDliteral($dliteral)
+	{
 		return !preg_match('/(.)[][\x0D\\\\]/', $dliteral, $matches) && $matches[1] != '\\';
 	}
 
 	/**
- * Function to validate an addr-spec.
- *
- * addr-spec = local-part "@" domain
- * 
- * @access private
- * @param string $addr_spec The string to check.
- * @return mixed False on failure, or the validated addr-spec on success.
- */
-	function _validateAddrSpec($addr_spec) {
+	 * Function to validate an addr-spec.
+	 *
+	 * addr-spec = local-part "@" domain
+	 * 
+	 * @access private
+	 * @param string $addr_spec The string to check.
+	 * @return mixed False on failure, or the validated addr-spec on success.
+	 */
+	function _validateAddrSpec($addr_spec)
+	{
 		$addr_spec = trim($addr_spec);
 
 		// Split on @ sign if there is one.
@@ -2011,14 +2062,15 @@ class Mail_RFC822
 	}
 
 	/**
- * Function to validate the local part of an address:
- *   local-part = word *("." word)
- * 
- * @access private
- * @param string $local_part
- * @return mixed False on failure, or the validated local part on success.
- */
-	function _validateLocalPart($local_part) {
+	 * Function to validate the local part of an address:
+	 *   local-part = word *("." word)
+	 * 
+	 * @access private
+	 * @param string $local_part
+	 * @return mixed False on failure, or the validated local part on success.
+	 */
+	function _validateLocalPart($local_part)
+	{
 		$parts = explode('.', $local_part);
 
 		// Split the local_part into words.
@@ -2026,7 +2078,7 @@ class Mail_RFC822
 			$words[] = $this->_splitCheck($parts, '.');
 
 			for ($i = 0; $i < $this->index + 1; $i++) {
-				array_shift ($parts);
+				array_shift($parts);
 			}
 		}
 
@@ -2041,33 +2093,35 @@ class Mail_RFC822
 	}
 
 	/**
-* Returns an approximate count of how many addresses are
-* in the given string. This is APPROXIMATE as it only splits
-* based on a comma which has no preceding backslash. Could be
-* useful as large amounts of addresses will end up producing
-* *large* structures when used with parseAddressList().
-*
-* @param  string $data Addresses to count
-* @return int          Approximate count
-*/
-	function approximateCount($data) {
+	 * Returns an approximate count of how many addresses are
+	 * in the given string. This is APPROXIMATE as it only splits
+	 * based on a comma which has no preceding backslash. Could be
+	 * useful as large amounts of addresses will end up producing
+	 * *large* structures when used with parseAddressList().
+	 *
+	 * @param  string $data Addresses to count
+	 * @return int          Approximate count
+	 */
+	function approximateCount($data)
+	{
 		return count(preg_split('/(?<!\\\\),/', $data));
 	}
 
 	/**
-* This is a email validating function seperate to the rest
-* of the class. It simply validates whether an email is of
-* the common internet form: <user>@<domain>. This can be
-* sufficient for most people. Optional stricter mode can
-* be utilised which restricts mailbox characters allowed
-* to alphanumeric, full stop, hyphen and underscore.
-*
-* @param  string  $data   Address to check
-* @param  boolean $strict Optional stricter mode
-* @return mixed           False if it fails, an indexed array
-*                         username/domain if it matches
-*/
-	function isValidInetAddress($data, $strict = false) {
+	 * This is a email validating function seperate to the rest
+	 * of the class. It simply validates whether an email is of
+	 * the common internet form: <user>@<domain>. This can be
+	 * sufficient for most people. Optional stricter mode can
+	 * be utilised which restricts mailbox characters allowed
+	 * to alphanumeric, full stop, hyphen and underscore.
+	 *
+	 * @param  string  $data   Address to check
+	 * @param  boolean $strict Optional stricter mode
+	 * @return mixed           False if it fails, an indexed array
+	 *                         username/domain if it matches
+	 */
+	function isValidInetAddress($data, $strict = false)
+	{
 		$regex = $strict ? '/^([.0-9a-z_-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i' : '/^([*+!.&#$|\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i';
 
 		if (preg_match($regex, trim($data), $matches)) {
@@ -2082,11 +2136,11 @@ class Mail_RFC822
 } // class Mail_RFC822
 
 /**
-* Filename.......: class.smtp.inc
-* Project........: SMTP Class
-* Version........: 1.0.5
-* Last Modified..: 21 December 2001
-*/
+ * Filename.......: class.smtp.inc
+ * Project........: SMTP Class
+ * Version........: 1.0.5
+ * Last Modified..: 21 December 2001
+ */
 define('SMTP_STATUS_NOT_CONNECTED', 1, TRUE);
 define('SMTP_STATUS_CONNECTED', 2, TRUE);
 
@@ -2110,21 +2164,22 @@ class smtp
 	var $pass;
 
 	/**
-* Constructor function. Arguments:
-* $params - An assoc array of parameters:
-*
-*   host    - The hostname of the smtp server		Default: localhost
-*   port    - The port the smtp server runs on		Default: 25
-*   helo    - What to send as the HELO command		Default: localhost
-*             (typically the hostname of the
-*             machine this script runs on)
-*   auth    - Whether to use basic authentication	Default: FALSE
-*   user    - Username for authentication			Default: <blank>
-*   pass    - Password for authentication			Default: <blank>
-*   timeout - The timeout in seconds for the call	Default: 5
-*             to fsockopen()
-*/
-	function smtp($params = array()) {
+	 * Constructor function. Arguments:
+	 * $params - An assoc array of parameters:
+	 *
+	 *   host    - The hostname of the smtp server		Default: localhost
+	 *   port    - The port the smtp server runs on		Default: 25
+	 *   helo    - What to send as the HELO command		Default: localhost
+	 *             (typically the hostname of the
+	 *             machine this script runs on)
+	 *   auth    - Whether to use basic authentication	Default: FALSE
+	 *   user    - Username for authentication			Default: <blank>
+	 *   pass    - Password for authentication			Default: <blank>
+	 *   timeout - The timeout in seconds for the call	Default: 5
+	 *             to fsockopen()
+	 */
+	function smtp($params = array())
+	{
 		if (!defined('CRLF'))
 			define('CRLF', "\r\n", TRUE);
 
@@ -2145,14 +2200,15 @@ class smtp
 	}
 
 	/**
-* Connect function. This will, when called
-* statically, create a new smtp object, 
-* call the connect function (ie this function)
-* and return it. When not called statically,
-* it will connect to the server and send
-* the HELO command.
-*/
-	function &connect($params = array()) {
+	 * Connect function. This will, when called
+	 * statically, create a new smtp object, 
+	 * call the connect function (ie this function)
+	 * and return it. When not called statically,
+	 * it will connect to the server and send
+	 * the HELO command.
+	 */
+	function &connect($params = array())
+	{
 		if (!isset($this->status)) {
 			$obj = new smtp($params);
 
@@ -2186,19 +2242,20 @@ class smtp
 	}
 
 	/**
-* Function which handles sending the mail.
-* Arguments:
-* $params	- Optional assoc array of parameters.
-*            Can contain:
-*              recipients - Indexed array of recipients
-*              from       - The from address. (used in MAIL FROM:),
-*                           this will be the return path
-*              headers    - Indexed array of headers, one header per array entry
-*              body       - The body of the email
-*            It can also contain any of the parameters from the connect()
-*            function
-*/
-	function send($params = array()) {
+	 * Function which handles sending the mail.
+	 * Arguments:
+	 * $params	- Optional assoc array of parameters.
+	 *            Can contain:
+	 *              recipients - Indexed array of recipients
+	 *              from       - The from address. (used in MAIL FROM:),
+	 *                           this will be the return path
+	 *              headers    - Indexed array of headers, one header per array entry
+	 *              body       - The body of the email
+	 *            It can also contain any of the parameters from the connect()
+	 *            function
+	 */
+	function send($params = array())
+	{
 		foreach ($params as $key => $value) {
 			$this->set($key, $value);
 		}
@@ -2243,9 +2300,10 @@ class smtp
 	}
 
 	/**
-* Function to implement HELO cmd
-*/
-	function helo() {
+	 * Function to implement HELO cmd
+	 */
+	function helo()
+	{
 		if (is_resource($this->connection)AND $this->send_data('HELO ' . $this->helo)AND substr(trim($error = $this->get_data()), 0, 3) === '250') {
 			return TRUE;
 		} else {
@@ -2256,9 +2314,10 @@ class smtp
 	}
 
 	/**
-* Function to implement EHLO cmd
-*/
-	function ehlo() {
+	 * Function to implement EHLO cmd
+	 */
+	function ehlo()
+	{
 		if (is_resource($this->connection)AND $this->send_data('EHLO ' . $this->helo)AND substr(trim($error = $this->get_data()), 0, 3) === '250') {
 			return TRUE;
 		} else {
@@ -2269,11 +2328,12 @@ class smtp
 	}
 
 	/**
-* Function to implement STARTTLS cmd
-*/
-	function starttls() {
+	 * Function to implement STARTTLS cmd
+	 */
+	function starttls()
+	{
 		if (is_resource($this->connection)AND $this->send_data('STARTTLS')AND strpos($this->get_data(), 'Ready to start TLS') !== false) {
-			stream_socket_enable_crypto( $this->connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT );
+			stream_socket_enable_crypto($this->connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 			
 			return TRUE;
 		} else {
@@ -2284,9 +2344,10 @@ class smtp
 	}
 
 	/**
-* Function to implement RSET cmd
-*/
-	function rset() {
+	 * Function to implement RSET cmd
+	 */
+	function rset()
+	{
 		if (is_resource($this->connection)AND $this->send_data('RSET')AND substr(trim($error = $this->get_data()), 0, 3) === '250') {
 			return TRUE;
 		} else {
@@ -2297,11 +2358,12 @@ class smtp
 	}
 
 	/**
-* Function to implement QUIT cmd
-*/
-	function quit() {
+	 * Function to implement QUIT cmd
+	 */
+	function quit()
+	{
 		if (is_resource($this->connection)AND $this->send_data('QUIT')AND substr(trim($error = $this->get_data()), 0, 3) === '221') {
-			fclose ($this->connection);
+			fclose($this->connection);
 
 			$this->status = SMTP_STATUS_NOT_CONNECTED;
 			return TRUE;
@@ -2313,12 +2375,19 @@ class smtp
 	}
 
 	/**
-* Function to implement AUTH cmd
-*/
-	function auth() {
-		if (is_resource($this->connection)AND $this->send_data('AUTH LOGIN')AND substr(trim($error = $this->get_data()), 0, 3) === '334' AND $this->send_data(base64_encode($this->user)) // Send username
-		AND substr(trim($error = $this->get_data()), 0, 3) === '334' AND $this->send_data(base64_encode($this->pass)) // Send password
-		AND substr(trim($error = $this->get_data()), 0, 3) === '235') {
+	 * Function to implement AUTH cmd
+	 */
+	function auth()
+	{
+		if (
+				is_resource($this->connection) AND 
+				$this->send_data('AUTH LOGIN') AND 
+				substr(trim($error = $this->get_data()), 0, 3) === '334' AND 
+				$this->send_data(base64_encode($this->user)) AND // Send username 
+				substr(trim($error = $this->get_data()), 0, 3) === '334' AND 
+				$this->send_data(base64_encode($this->pass)) AND // Send password
+				substr(trim($error = $this->get_data()), 0, 3) === '235'
+			) {
 			$this->authenticated = TRUE;
 
 			return TRUE;
@@ -2330,9 +2399,10 @@ class smtp
 	}
 
 	/**
-* Function that handles the MAIL FROM: cmd
-*/
-	function mail($from) {
+	 * Function that handles the MAIL FROM: cmd
+	 */
+	function mail($from)
+	{
 		if ($this->is_connected()AND $this->send_data('MAIL FROM:<' . $from . '>')AND substr(trim($this->get_data()), 0, 2) === '250') {
 			return TRUE;
 		} else
@@ -2340,9 +2410,10 @@ class smtp
 	}
 
 	/**
-* Function that handles the RCPT TO: cmd
-*/
-	function rcpt($to) {
+	 * Function that handles the RCPT TO: cmd
+	 */
+	function rcpt($to)
+	{
 		if ($this->is_connected()AND $this->send_data('RCPT TO:<' . $to . '>')AND substr(trim($error = $this->get_data()), 0, 2) === '25') {
 			return TRUE;
 		} else {
@@ -2353,9 +2424,10 @@ class smtp
 	}
 
 	/**
-* Function that sends the DATA cmd
-*/
-	function data() {
+	 * Function that sends the DATA cmd
+	 */
+	function data()
+	{
 		if ($this->is_connected()AND $this->send_data('DATA')AND substr(trim($error = $this->get_data()), 0, 3) === '354') {
 			return TRUE;
 		} else {
@@ -2366,17 +2438,19 @@ class smtp
 	}
 
 	/**
-* Function to determine if this object
-* is connected to the server or not.
-*/
-	function is_connected() {
+	 * Function to determine if this object
+	 * is connected to the server or not.
+	 */
+	function is_connected()
+	{
 		return (is_resource($this->connection)AND ($this->status === SMTP_STATUS_CONNECTED));
 	}
 
 	/**
-* Function to send a bit of data
-*/
-	function send_data($data) {
+	 * Function to send a bit of data
+	 */
+	function send_data($data)
+	{
 		if (is_resource($this->connection)) {
 			return fwrite($this->connection, $data . CRLF, strlen($data) + 2);
 		} else
@@ -2384,9 +2458,10 @@ class smtp
 	}
 
 	/**
-* Function to get data.
-*/
-	function &get_data() {
+	 * Function to get data.
+	 */
+	function &get_data()
+	{
 		$return = '';
 
 		$line = '';
@@ -2406,9 +2481,10 @@ class smtp
 	}
 
 	/**
-* Sets a variable
-*/
-	function set($var, $value) {
+	 * Sets a variable
+	 */
+	function set($var, $value)
+	{
 		$this->$var = $value;
 
 		return TRUE;
