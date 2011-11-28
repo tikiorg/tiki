@@ -9,7 +9,7 @@ function wikiplugin_htmlfeedlink_info()
 {
 	return array(
 		'name' => tra('Html Feed Link'),
-		'documentation' => 'PluginHtmlFeedLink',
+		'documentation' => 'PluginHtmlFeedlink',
 		'description' => tra('Display remote content'),
 		'prefs' => array('wikiplugin_htmlfeedlink'),
 		'body' => tra('Initial Value'),

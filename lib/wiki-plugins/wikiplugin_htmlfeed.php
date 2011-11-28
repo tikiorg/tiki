@@ -9,8 +9,8 @@ function wikiplugin_htmlfeed_info()
 {
 	return array(
 		'name' => tra('Textlink'),
-		'documentation' => 'PluginTextlink',
-		'description' => tra('Creates a linkable part of a page using textbacklink protocol'),
+		'documentation' => 'PluginHtmlFeed',
+		'description' => tra('Adds an item to html feed'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeed' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
@@ -25,7 +25,7 @@ function wikiplugin_htmlfeed_info()
 
 function wikiplugin_htmlfeed($data, $params)
 {
-    global $tikilib, $headerlib, $htmlFeedItem, $caching, $page;
+    global $tikilib, $headerlib, $feedItem, $caching, $page;
     static $feedhtmlFeedI = 0;
 	++$feedhtmlFeedI;
 	
@@ -37,10 +37,10 @@ function wikiplugin_htmlfeed($data, $params)
 		$htmlFeed = new Feed_Html();
 		$data = TikiLib::lib("parser")->parse_data($data);
 		
-		$htmlFeedItem['description'] = $data;
-		$htmlFeedItem['name'] = (!empty($name) ? $name : $htmlFeedItem['name'] . ' ' . $feedhtmlFeedI);;
+		$feedItem['description'] = $data;
+		$feedItem['name'] = (!empty($name) ? $name : $feedItem['name'] . ' ' . $feedhtmlFeedI);;
 		
-		$htmlFeed->addItem($htmlFeedItem);
+		$htmlFeed->addItem($feedItem);
 	}
 	
     return $data;

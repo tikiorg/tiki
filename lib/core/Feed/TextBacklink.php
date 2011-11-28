@@ -13,16 +13,16 @@ Class Feed_TextBacklink extends Feed_Abstract
 	
 	public function updateCache()
 	{
-		global $feedItem, $caching, $page;
+		global $feedItem, $caching;
 		
 		$this->clearCache();
 		$site = $this->siteName();
 		
 		$caching = true; //this variable is used to block recursive parse_data below
 		
-		foreach (TikiLib::lib("wiki")->get_pages_contains("{textlink") as $pagesInfo) {
+		foreach (TikiLib::lib("wiki")->get_pages_contains("{textbacklink") as $pagesInfo) {
 			foreach ($pagesInfo as $pageInfo) {
-				$feedItem = Feed_Tbp_Item::simple(
+				$feedItem = Feed_Html_Item::simple(
 								array(
 									"origin" 		=> $site,
 									"name" 			=> $pageInfo['pageName'],
@@ -35,7 +35,7 @@ Class Feed_TextBacklink extends Feed_Abstract
 									"importance" 	=> $pageInfo['pageRank'],
 									"keywords"		=> $pageInfo['keywords'],
 									"url"			=> $site . "/tiki-pagehistory.php?" .
-											"page=" . urlencode($page) .'&'. 
+											"page=" . urlencode($pageInfo['pageName']) .'&'. 
 											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
 											"nohistory"
 								)

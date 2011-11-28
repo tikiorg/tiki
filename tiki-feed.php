@@ -34,7 +34,7 @@ if ($_REQUEST['type'] == 'html') {
 		print_r(json_encode($htmlFeed->feed()));
 		
 	}
-} else if ($_REQUEST['type'] == "tbp") {
-	$htmlFeed = new Feed_Tbp();
+} else if ($_REQUEST['type'] == "textbacklink") {
+	$htmlFeed = new Feed_TextBacklink();
 	print_r(json_encode($htmlFeed->feed()));
 }

@@ -5,9 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * For htmlFeed Protocol
- */
 class Feed_Html extends Feed_Abstract
 {
 	var $lastModif = 0;
@@ -37,7 +34,7 @@ class Feed_Html extends Feed_Abstract
 									"importance" 	=> $pageInfo['pageRank'],
 									"keywords"		=> $pageInfo['keywords'],
 									"url"			=> $site . "/tiki-pagehistory.php?" .
-											"page=" . urlencode($page) .'&'. 
+											"page=" . urlencode($pageInfo['pageName']) .'&'. 
 											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
 											"nohistory"
 								)

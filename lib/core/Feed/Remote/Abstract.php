@@ -113,6 +113,7 @@ class Feed_Remote_Abstract
 	public function getItems()
 	{
 		global $tikilib;
+		
 		if (!empty($this->items)) return $this->items;
 		
 		$contents = file_get_contents($this->feedUrl);
