@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-Class HtmlFeed_Item
+Class Feed_Html_Item
 {
 	var $defaults = array(
 		"origin" 		=> "",

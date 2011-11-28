@@ -8,7 +8,7 @@
 /**
  * For HtmlFeed_Remote Protocol
  */
-class HtmlFeed_Remote
+class Feed_Html_Remote
 {
 	var $feedUrl = "";
 	var $feedName = "";
