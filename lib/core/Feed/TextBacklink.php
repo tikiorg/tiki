@@ -7,9 +7,9 @@
 
 //TextBack-Link Protocol Feed
 
-Class Feed_Tbp extends Feed_Abstract
+Class Feed_TextBacklink extends Feed_Abstract
 {
-	var $type = "tbpfeed";
+	var $type = "textbacklink";
 	
 	public function updateCache()
 	{
@@ -20,7 +20,7 @@ Class Feed_Tbp extends Feed_Abstract
 		
 		$caching = true; //this variable is used to block recursive parse_data below
 		
-		foreach (TikiLib::lib("wiki")->get_pages_contains("{tbpfeed") as $pagesInfo) {
+		foreach (TikiLib::lib("wiki")->get_pages_contains("{textlink") as $pagesInfo) {
 			foreach ($pagesInfo as $pageInfo) {
 				$feedItem = Feed_Tbp_Item::simple(
 								array(

@@ -8,7 +8,7 @@
 /**
  * For HtmlFeed_Remote Protocol
  */
-class Feed_Remote_Tbp extends Feed_Remote_Abstract
+class Feed_Remote_TextBacklink extends Feed_Remote_Abstract
 {
-	var $type = "tbp";
+	var $type = "textbacklink";
 }
