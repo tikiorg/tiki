@@ -91,7 +91,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 	if (empty($feed)) return $data;
 	if (isset($caching)) return $data; //caching is running, if no return, causes recursive parsing
 	
-	$htmlFeed = new Feed_Html_Remote($feed);
+	$htmlFeed = new Feed_Remote_Html($feed);
 	
 	$headerlib->add_jq_onready(
     	"if (!$.fn.htmlFeedPopup) {
@@ -167,29 +167,39 @@ function wikiplugin_htmlfeedlink($data, $params)
 		$name = $item->name;
 		$date = $item->date;
 		switch($type) {
+			case "":
 			case "replace":
-				if (!$same)
-					$data .= "~np~<img
-						src='pics/icons/flag_blue.png'
-						class='revision'
-						title='Revision Available, click to see'
-						style='cursor: pointer;'
-						data-feed='".urlencode($feed)."'
-						data-name='".urlencode($name)."'
-						/>
-						<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php' style='display: none;'>
-							<input type='hidden' name='page' value='$page'/>
-							<input type='hidden' name='index' value='$htmlFeedLinkI'/>
-							<input type='hidden' name='type' value='htmlfeedlink'/>
-							<input type='hidden' name='params[name]' value='".htmlspecialchars($name)."'/>
-							<input type='hidden' name='params[feed]' value='".htmlspecialchars($feed)."'/>
-							<input type='hidden' name='params[type]' value='".htmlspecialchars($type)."'/>
-							<input type='hidden' name='params[style]' value='".htmlspecialchars($style)."'/>
-							<input type='hidden' name='params[date]' value='".htmlspecialchars($date)."'/>
-							<input type='hidden' name='content' value='".htmlspecialchars($data)."'/>
-						</form>
-						~/np~";
-						
+				$data = "~np~" . $item->description . "~/np~";
+				break;
+				//moderate isn't yet working
+				if ($moderate == 'y') {
+					if ($same == false) {
+						$data .= "~np~<img
+							src='pics/icons/flag_blue.png'
+							class='revision'
+							title='Revision Available, click to see'
+							style='cursor: pointer;'
+							data-feed='".urlencode($feed)."'
+							data-name='".urlencode($name)."'
+							/>
+							<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php' style='display: none;'>
+								<input type='hidden' name='page' value='$page'/>
+								<input type='hidden' name='index' value='$htmlFeedLinkI'/>
+								<input type='hidden' name='type' value='htmlfeedlink'/>
+								<input type='hidden' name='params[name]' value='".htmlspecialchars($name)."'/>
+								<input type='hidden' name='params[feed]' value='".htmlspecialchars($feed)."'/>
+								<input type='hidden' name='params[type]' value='".htmlspecialchars($type)."'/>
+								<input type='hidden' name='params[style]' value='".htmlspecialchars($style)."'/>
+								<input type='hidden' name='params[date]' value='".htmlspecialchars($date)."'/>
+								<input type='hidden' name='content' value='".htmlspecialchars($data)."'/>
+							</form>
+							~/np~";
+						} else {
+							$data = "~np~" . $item->description . "~/np~";
+						}
+					} else {
+						$data = $item->description;
+					}	
     			break;
 			case "backlink":
 				$data = "<a href='$item->url'>" . $data . "</a>";
