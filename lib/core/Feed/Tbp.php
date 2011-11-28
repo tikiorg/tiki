@@ -3,14 +3,13 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: Item.php 39018 2011-11-28 15:48:42Z robertplummer $
 
-/**
- * For htmlFeed Protocol
- */
-class Feed_Html extends Feed_Abstract
+//TextBack-Link Protocol Feed
+
+Class Feed_Tbp extends Feed_Abstract
 {
-	var $lastModif = 0;
+	var $type = "tbpfeed";
 	
 	public function updateCache()
 	{
@@ -21,9 +20,9 @@ class Feed_Html extends Feed_Abstract
 		
 		$caching = true; //this variable is used to block recursive parse_data below
 		
-		foreach (TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
+		foreach (TikiLib::lib("wiki")->get_pages_contains("{tbpfeed") as $pagesInfo) {
 			foreach ($pagesInfo as $pageInfo) {
-				$feedItem = Feed_Html_Item::simple(
+				$feedItem = Feed_Tbp_Item::simple(
 								array(
 									"origin" 		=> $site,
 									"name" 			=> $pageInfo['pageName'],

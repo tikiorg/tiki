@@ -40,7 +40,7 @@ function wikiplugin_htmlfeed($data, $params)
 		$htmlFeedItem['description'] = $data;
 		$htmlFeedItem['name'] = (!empty($name) ? $name : $htmlFeedItem['name'] . ' ' . $feedhtmlFeedI);;
 		
-		$htmlFeed->addSimpleItem($htmlFeedItem);
+		$htmlFeed->addItem($htmlFeedItem);
 	}
 	
     return $data;
