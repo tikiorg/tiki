@@ -4094,15 +4094,13 @@ class TikiLib extends TikiDb_Bridge
 	{
 		require_once('lib/webmail/tikimaillib.php');
 		global $prefs, $base_url, $smarty;
-		$objectlib = TikiLib::lib('object');
-		
-		$object = $objectlib->get_object($context['type'], $context['object']);
 		
 		$mail = new TikiMail(null, $prefs['sender_email']);
 		$mail->setSubject(tr("Plugin %0 pending approval", $plugin_name));
 		
 		$smarty->assign('plugin_name', $plugin_name);
-		$smarty->assign('object', $object);
+		$smarty->assign('type', $context['type']);
+		$smarty->assign('objectId', $context['object']);
 		$smarty->assign('arguments', $arguments);
 		$smarty->assign('body', $body);
 		
