@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -23,173 +23,192 @@ class LogsQueryLib
 	var $limit = null;
 	var $desc = true;
 	
-	static function type($type = "") {
+	static function type($type = "")
+	{
 		$me = new self();
 		$me->type = $type;
 		return $me;
 	}
 	
-	static function wikiPage($id = "") {
-		return LogsQueryLib::type("wiki page")
-			->id($id);
+	static function wikiPage($id = "")
+	{
+		return LogsQueryLib::type("wiki page")->id($id);
 	}
 	
-	static function wikiPagesFrom($user= "") {
-		return LogsQueryLib::type("wiki page")
-			->id($id);
+	static function wikiPagesFrom($user= "")
+	{
+		return LogsQueryLib::type("wiki page")->id($id);
 	}
 	
-	static function forum($id = "") {
-		return LogsQueryLib::type("forum")
-			->id($id);
+	static function forum($id = "")
+	{
+		return LogsQueryLib::type("forum")->id($id);
 	}
 	
-	static function fileGallery($id = "") {
-		return LogsQueryLib::type("file gallery")
-			->id($id);
+	static function fileGallery($id = "")
+	{
+		return LogsQueryLib::type("file gallery")->id($id);
 	}
 	
-	static function imageGallery($id = "") {
-		return LogsQueryLib::type("image gallery")
-			->id($id);
+	static function imageGallery($id = "")
+	{
+		return LogsQueryLib::type("image gallery")->id($id);
 	}
 	
-	static function category($id = "") {
-		return LogsQueryLib::type("category")
-			->id($id);
+	static function category($id = "")
+	{
+		return LogsQueryLib::type("category")->id($id);
 	}
 	
-	static function system($id = "") {
-		return LogsQueryLib::type("system")
-			->id($id);
+	static function system($id = "")
+	{
+		return LogsQueryLib::type("system")->id($id);
 	}
 	
-	static function message($id = "") {
-		return LogsQueryLib::type("message")
-			->id($id);
+	static function message($id = "")
+	{
+		return LogsQueryLib::type("message")->id($id);
 	}
 	
-	static function comment($id = "") {
-		return LogsQueryLib::type("comment")
-			->id($id);
+	static function comment($id = "")
+	{
+		return LogsQueryLib::type("comment")->id($id);
 	}
 	
-	static function sheet($id = "") {
-		return LogsQueryLib::type("sheet")
-			->id($id);
+	static function sheet($id = "")
+	{
+		return LogsQueryLib::type("sheet")->id($id);
 	}
 	
-	static function blog($id = "") {
-		return LogsQueryLib::type("blog")
-			->id($id);
+	static function blog($id = "")
+	{
+		return LogsQueryLib::type("blog")->id($id);
 	}
 	
-	static function file($id = "") {
-		return LogsQueryLib::type("file")
-			->id($id);
+	static function file($id = "")
+	{
+		return LogsQueryLib::type("file")->id($id);
 	}
 	
-	static function article($id = "") {
-		return LogsQueryLib::type("article")
-			->id($id);
+	static function article($id = "")
+	{
+		return LogsQueryLib::type("article")->id($id);
 	}
 	
-	static function trackerItem($id = "") {
-		return LogsQueryLib::type("trackeritem")
-			->id($id);
+	static function trackerItem($id = "")
+	{
+		return LogsQueryLib::type("trackeritem")->id($id);
 	}
 	
-	static function wikiPageAttachment($id = "") {
-		return LogsQueryLib::type("wiki page attachment")
-			->id($id);
+	static function wikiPageAttachment($id = "")
+	{
+		return LogsQueryLib::type("wiki page attachment")->id($id);
 	}
 	
-	static function listTypes() {
+	static function listTypes()
+	{
 		global $tikilib;
 		$result = array();
-		foreach($tikilib->fetchAll("SELECT objectType FROM tiki_actionlog GROUP By objectType") as $row) {
+
+		foreach ($tikilib->fetchAll("SELECT objectType FROM tiki_actionlog GROUP By objectType") as $row) {
 			$result[] = $row['objectType'];
 		}
+
 		return $result;
 	}
 	
-	static function listActions() {
+	static function listActions()
+	{
 		global $tikilib;
 		$result = array();
-		foreach($tikilib->fetchAll("SELECT action FROM tiki_actionlog GROUP By action") as $row) {
+
+		foreach ($tikilib->fetchAll("SELECT action FROM tiki_actionlog GROUP By action") as $row) {
 			$result[] = $row['action'];
 		}
+
 		return $result;
 	}
 	
-	static function url($id = "") {
-		return LogsQueryLib::type("url")
-			->id($id);
+	static function url($id = "")
+	{
+		return LogsQueryLib::type("url")->id($id);
 	}
 	
-	function id($id = "") {
+	function id($id = "")
+	{
 		$this->id = $id;
 		return $this;
 	}
 	
-	function viewed() {
+	function viewed()
+	{
 		return $this->action("viewed");
 	}
 	
-	function action($action) {
+	function action($action)
+	{
 		$this->action = $action;
 		return $this;
 	}
 	
-	function start($start) {
+	function start($start)
+	{
 		$this->start = $start;
 		return $this;
 	}
 	
-	function end($end) {
+	function end($end)
+	{
 		$this->end = $end;
 		return $this;
 	}
 	
-	function client($client) {
+	function client($client)
+	{
 		$this->client = $client;
 		return $this;
 	}
 	
-	function count() {
+	function count()
+	{
 		$this->groupType = "count";
 		return $this->fetchAll();
 	}
 	
-	function countByDate() {
+	function countByDate()
+	{
 		$this->groupType = "countByDate";
 		return $this->fetchAll();
 	}
 	
-	function limit($limit) {
+	function limit($limit)
+	{
 		$this->limit = $limit;
 		return $this;
 	}
 	
-	function desc() {
+	function desc()
+	{
 		$this->desc = true;
 		return $this;
 	}
 	
-	function asc() {
+	function asc()
+	{
 		$this->desc = false;
 		return $this;
 	}
 	
-	function countByDateFilterId($ids = array()) {
+	function countByDateFilterId($ids = array())
+	{
 		global $tikilib;
 		
 		$this->countByDate();
 
 		$result = array();
 		
-		foreach($ids as $id) {
-			foreach($this->id($id)->fetchAll() as $log) {
+		foreach ($ids as $id) {
+			foreach ($this->id($id)->fetchAll() as $log) {
 				if (empty($result[$log['date']])) $result[$log['date']] = 0;
 				$result[$log['date']] += $log['count'];
 			}
@@ -198,15 +217,16 @@ class LogsQueryLib
 		return $result;
 	}
 	
-	function countUsersFilterId($ids = array()) {
+	function countUsersFilterId($ids = array())
+	{
 		global $tikilib;
 		
 		$this->groupType = "";
 
 		$result = array();
 		
-		foreach($ids as $id) {
-			foreach($this->id($id)->fetchAll() as $log) {
+		foreach ($ids as $id) {
+			foreach ($this->id($id)->fetchAll() as $log) {
 				if (empty($result[$log['user']])) $result[$log['user']] = 0;
 				
 				$result[$log['user']]++;
@@ -216,15 +236,16 @@ class LogsQueryLib
 		return $result;
 	}
 	
-	function countUsersIPFilterId($ids = array()) {
+	function countUsersIPFilterId($ids = array())
+	{
 		global $tikilib;
 		
 		$this->groupType = "";
 
 		$result = array();
 		
-		foreach($ids as $id) {
-			foreach($this->id($id)->fetchAll() as $log) {
+		foreach ($ids as $id) {
+			foreach ($this->id($id)->fetchAll() as $log) {
 				$result[json_encode(array("ip"=>$log['ip'],"user"=>$log['user']))]++;
 			}
 		}
@@ -232,10 +253,12 @@ class LogsQueryLib
 		return $result;
 	}
 	
-	function fetchAll() {
+	function fetchAll()
+	{
 		global $tikilib;
 		
-		if (empty($this->type)) return array();
+		if (empty($this->type)) 
+			return array();
 		
 		
 		$query = "
