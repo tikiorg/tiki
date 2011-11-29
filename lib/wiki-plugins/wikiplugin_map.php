@@ -43,6 +43,12 @@ function wikiplugin_map_info()
 				'description' => tra('Height of the map in pixels'),
 				'filter' => 'int',
 			),
+			'center' => array(
+				'requied' => false,
+				'name' => tr('Center'),
+				'description' => tr('Center and zoom level of the map display.'),
+				'filter' => 'text',
+			),
 			'mapfile' => array(
 				'required' => false,
 				'name' => tra('MapServer File'),
@@ -100,9 +106,18 @@ function wikiplugin_map($data, $params)
 	$controls = array_intersect($params['controls'], wp_map_available_controls());
 	$controls = implode(',', $controls);
 
+	$center = null;
+	if (isset($params['center'])) {
+		$geolib = TikiLib::lib('geo');
+		if ($coords = $geolib->parse_coordinates($params['center'])) {
+			$center = ' data-geo-center="' . smarty_modifier_escape($geolib->build_location_string($coords)) . '" ';
+		}
+	}
+
 	TikiLib::lib('header')->add_map();
 	$scope = smarty_modifier_escape(wp_map_getscope($params));
-	return "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" style=\"width: {$width}; height: {$height};\"></div>";
+
+	return "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" style=\"width: {$width}; height: {$height};\" $center></div>";
 }
 
 function wp_map_getscope($params)

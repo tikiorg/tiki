@@ -180,6 +180,14 @@ function wikiplugin_appframe_page($data, $params, $start)
 		return null;
 	}
 
+	$keys = array();
+	$replacements = array();
+	foreach ($params as $key => $value) {
+		$keys[] = "{{{$key}}}";
+		$replacements = $value;
+	}
+	$info['data'] = str_replace($keys, $replacements, $info['data']);
+
 	return "~/np~{$info['data']}~np~";
 }
 
