@@ -1191,7 +1191,6 @@ class TrackerLib extends TikiLib
 		if ($numsort) {
 			$query .= ','.$this->convertSortMode($csort_mode);
 		}
-		echo $query;
 		//echo htmlentities($query); print_r($bindvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
