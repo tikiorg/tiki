@@ -5,9 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * For HtmlFeed_Remote Protocol
- */
 class Feed_Remote_Abstract
 {
 	var $feedUrl = "";
@@ -20,7 +17,7 @@ class Feed_Remote_Abstract
 	var $date = 0;
 	var $type = "";
 	
-	static function url($feedUrl)
+	static function url($feedUrl = "http://localhost/")
 	{
 		$me = new self($feedUrl);
 		
@@ -44,7 +41,7 @@ class Feed_Remote_Abstract
 		$this->feedName = $this->siteName()."_feed_remote_" . $this->type;
 	}
 	
-	private function replace()
+	public function replace()
 	{
 		$file = FileGallery_File::filename($this->feedName);
 		
@@ -110,13 +107,22 @@ class Feed_Remote_Abstract
 		return $archives;
 	}
 	
+	private function getContents()
+	{
+		if (!empty($this->contents)) {
+			return $this->contents;
+		} else {
+			return file_get_contents($this->feedUrl);
+		}
+	}
+	
 	public function getItems()
 	{
 		global $tikilib;
 		
 		if (!empty($this->items)) return $this->items;
 		
-		$contents = file_get_contents($this->feedUrl);
+		$contents = $this->getContents();
 		$contents = json_decode($contents);
 		
 		if (!empty($contents->feed->entry) && $contents->feed->type == $this->type)

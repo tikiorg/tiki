@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: Item.php 39018 2011-11-28 15:48:42Z robertplummer $
 
-//TextBack-Link Protocol Feed
-
 Class Feed_TextBacklink extends Feed_Abstract
 {
 	var $type = "textbacklink";
@@ -34,8 +32,7 @@ Class Feed_TextBacklink extends Feed_Abstract
 									"unusual"		=> "",
 									"importance" 	=> $pageInfo['pageRank'],
 									"keywords"		=> $pageInfo['keywords'],
-									"url"			=> $site . "/tiki-pagehistory.php?" .
-											"page=" . urlencode($pageInfo['pageName']) .'&'. 
+									"url"			=> dirname($_SERVER["REQUEST_URI"]) . '/' . TikiLib::lib("wiki")->url_for_operation_on_a_page("tiki-pagehistory.php", $pageInfo['pageName']) .'&'. 
 											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
 											"nohistory"
 								)
