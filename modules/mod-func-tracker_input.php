@@ -24,17 +24,18 @@ function module_tracker_input_info()
 			),
 			'textinput' => array(
 				'name' => tr('Text Input'),
-				'description' => tr('Multiple text fields to display as part of the main form along with the label. Field names map to the permanent names in the tracker field definitions. ex: groupName(Group Name) relatedTask(Task)')
+				'description' => tr('Multiple text fields to display as part of the main form along with the label. Field names map to the permanent names in the tracker field definitions. ex: groupName(Group Name) relatedTask(Task)'),
+				'filter' => 'text',
 			),
 			'hiddeninput' => array(
 				'name' => tr('Hidden Input'),
 				'description' => tr('Hidden values to be sent over to the dialog. fieldName(value)'),
+				'filter' => 'text',
 			),
 			'location' => array(
-				'name' => array(
-					'name' => tr('Location Field'),
-					'description' => tr('Obtain the coordinates from a nearby map and send them to the location field.'),
-				),
+				'name' => tr('Location Field'),
+				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field.'),
+				'filter' => 'text',
 			),
 		),
 	);

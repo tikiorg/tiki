@@ -31,7 +31,7 @@
 	}
 	$('.mod-tracker-input').removeClass('mod-tracker-input').submit(function () {
 		var form = this;
-		if (hasEmptyField(form, ':text, :hidden')) {
+		if (hasEmptyField(form, ':input:not(:submit)')) {
 			return false;
 		}
 
@@ -49,8 +49,10 @@
 		if (location ) {
 			$(':submit', form).hide();
 			setTimeout(function () {
-				var control, button;
-				control = $(form).closest('.tab, #appframe, body').find('.map-container').setupMapSelection({
+				var control, button, map, modeManager, newMode, oldMode;
+				map = $(form).closest('.tab, #appframe, body').find('.map-container');
+				modeManager = map[0].modeManager;
+				control = map.setupMapSelection({
 					field: $('#' + location),
 					click: function () {
 						$(form).submit();
@@ -58,11 +60,14 @@
 				});
 				control.deactivate();
 
+				oldMode = modeManager.activeMode.name;
+				modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control]});
+
 				button = $('<input type="submit"/>')
 					.val('{tr}Add Marker{/tr}')
 					.button()
 					.click(function () {
-						control.activate();
+						modeManager.switchTo(newMode);
 						return false;
 					})
 					.appendTo(form);
@@ -76,7 +81,7 @@
 				}).keyup();
 
 				$(form).bind('insert', function () {
-					control.deactivate();
+					modeManager.switchTo(oldMode);
 				});
 			}, 500);
 		}
