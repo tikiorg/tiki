@@ -179,6 +179,7 @@ function wp_map_available_controls()
 	return array(
 		'controls',
 		'layers',
+		'levels',
 		'search_location',
 		'current_location',
 		'streetview',
