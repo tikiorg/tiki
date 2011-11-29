@@ -1183,7 +1183,7 @@ class TrackerLib extends TikiLib
 		}
 
 		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
-				.', '.( ($numsort) ? "right(lpad($csort_mode,40,'0'),40)" : $csort_mode).' as `sortvalue`'
+				.', '.( ($numsort) ? "cast($csort_mode as signed)" : $csort_mode).' as `sortvalue`'
 			.' FROM '.$base_tables.$sort_tables.$cat_table
 			.$mid
 			.' GROUP BY tti.`itemId`'
