@@ -171,7 +171,7 @@ function wp_map_mapserver($params)
 
 function wp_map_default_controls()
 {
-	return 'controls,layers,search_location,current_location,streetview';
+	return 'controls,layers,search_location';
 }
 
 function wp_map_available_controls()
