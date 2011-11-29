@@ -63,6 +63,8 @@ function smarty_function_object_link( $params, $smarty )
 
 function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null )
 {
+	global $base_url;
+	
 	require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
 	if (! function_exists('smarty_modifier_escape')) {
@@ -97,7 +99,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList);
 	$class = ' class="' . implode(' ', $classList) . '"';
 
-	$html = '<a href="' . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
+	$html = '<a href="' . $base_url . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
 
 	$attributelib = TikiLib::lib('attribute');
 	$attributes = $attributelib->get_attributes($type, $object);
