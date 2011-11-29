@@ -330,23 +330,9 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 
 		global $tikilib;
 
-
-		/*
-		 * 'HomePage' must exists
-		 */
 		$homePage = 'HomePage';
-		$info = $tikilib->get_page_info($homePage, false);
-		$this->assertTrue($info != null);
-
-
-		/*
-		 * 'Page does not exist not exist' must not exist
-		 */
 		$noPage = 'Page does not exist not exist';
-		$info = $tikilib->get_page_info($noPage, false);
-		$this->assertFalse($info);
-
-
+		
 		/*
 		 * - existing page
 		 */
