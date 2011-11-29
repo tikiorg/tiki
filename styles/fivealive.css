@@ -330,6 +330,10 @@ legend,
 label {
 	color: #000;
 }
+.ui-dialog-content label,
+.ui-dialog-content legend {
+	 color:#FFF;
+}
 
 .button a,
 .button a:visited,
@@ -1243,7 +1247,6 @@ a.dirsublink {
 	color: #CBF4FA;
 }
   
-
 
 /***** End New (unsorted) *****/
 
