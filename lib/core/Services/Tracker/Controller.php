@@ -853,7 +853,7 @@ class Services_Tracker_Controller
 			$count = $trklib->import_csv(
 				$trackerId,
 				$fp,
-				$input->add_items->int()==1?false:true,
+				! $input->add_items->int(),
 				$input->dateFormat->text(),
 				$input->encoding->text(),
 				$input->separator->text(),
