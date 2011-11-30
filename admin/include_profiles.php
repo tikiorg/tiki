@@ -29,9 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$profile->removeSymbols();
 		$data = array();
 		foreach($_POST as $key => $value) if ($key != 'url' && $key != 'forget') $data[str_replace('_', ' ', $key) ] = $value;
+
+		set_time_limit(0);
+
+		$transaction = $tikilib->begin();
 		$installer = new Tiki_Profile_Installer;
 		$installer->setUserData($data);
 		$installer->install($profile);
+		$transaction->commit();
+
 		if ($target = $profile->getInstructionPage()) {
 			global $wikilib;
 			require_once 'lib/wiki/wikilib.php';
