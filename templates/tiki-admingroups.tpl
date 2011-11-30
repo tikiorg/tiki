@@ -31,9 +31,10 @@
 		{initials_filter_links}
 	{/if}
 
+	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 	<table class="normal">
 		<tr>
-			<th style="width: 20px;">&nbsp;</th>
+			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
 			<th>{tr}ID{/tr}</th>
 			<th>
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a>
@@ -50,8 +51,10 @@
 		{cycle values="even,odd" print=false}
 		{section name=user loop=$users}
 			<tr class="{cycle}">
-				<td class="icon">
-					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+				<td class="checkbox">
+					{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
+						<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}" />
+					{/if}
 				</td>
 				<td class="id">{$users[user].id|escape}</td>
 				<td class="text">
@@ -74,6 +77,7 @@
 					<a class="link" href="tiki-objectpermissions.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>
 				</td>
 				<td class="action">
+					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
 						<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
@@ -81,7 +85,16 @@
 			</tr>
 		{/section}
 	</table>
-
+	<p align="left"> {*on the left to have it close to the checkboxes*}
+		<label>{tr}Perform action with checked:{/tr}
+			<select name="submit_mult">
+				<option value="" selected="selected">-</option>
+				<option value="remove_groups" >{tr}Remove{/tr}</option>
+			</select>
+		</label>
+		<input type="submit" value="{tr}OK{/tr}" />
+	</p>
+	</form>
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/tab}
 

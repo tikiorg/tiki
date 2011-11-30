@@ -152,6 +152,15 @@ if (isset($_REQUEST["action"])) {
 		unset($_REQUEST['group']);
 	}
 }
+if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
+	$access->check_authenticity(tra('Are you sure you want to delete these groups?'));
+	foreach ($_REQUEST['checked'] as $delete) {
+		if ($delete != 'Admins' && $delete != 'Anonymous' && $delete != 'Registered') {
+			$userlib->remove_group($delete);
+			$logslib->add_log('admingroups', 'removed group ' . $delete);
+		}
+	}
+}
 if (isset($_REQUEST['clean'])) {
 	global $cachelib;
 	require_once ("lib/cache/cachelib.php");
