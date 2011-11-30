@@ -15,6 +15,8 @@ function wikiplugin_map_info()
 		'prefs' => array( 'wikiplugin_map' ),
 		'icon' => 'pics/icons/map.png',
 		'tags' => array( 'basic' ),
+		'filter' => 'wikicontent',
+		'body' => tr('Instructions to load content'),
 		'params' => array(
 			'scope' => array(
 				'required' => false,
@@ -117,7 +119,23 @@ function wikiplugin_map($data, $params)
 	TikiLib::lib('header')->add_map();
 	$scope = smarty_modifier_escape(wp_map_getscope($params));
 
-	return "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" style=\"width: {$width}; height: {$height};\" $center></div>";
+	$output = "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" style=\"width: {$width}; height: {$height};\" $center>";
+
+	$argumentParser = new WikiParser_PluginArgumentParser;
+	$matches = WikiParser_PluginMatcher::match($data);
+	foreach ($matches as $match) {
+		$name = $match->getName();
+		$arguments = $argumentParser->parse($match->getArguments());
+
+		$function = 'wp_map_plugin_' . $name;
+		if (function_exists($function)) {
+			$output .= $function($match->getBody(), new JitFilter($arguments));
+		}
+	}
+
+	$output .= "</div>";
+
+	return $output;
 }
 
 function wp_map_getscope($params)
@@ -199,5 +217,29 @@ function wp_map_available_controls()
 		'current_location',
 		'streetview',
 	);
+}
+
+function wp_map_plugin_searchlayer($body, $args)
+{
+	$layer = $args->layer->text();
+	$refresh = $args->refresh->int();
+	unset($args['layer']);
+	unset($args['refresh']);
+
+	$args->setDefaultFilter('text');
+
+	TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
+
+	$filters = '';
+	foreach ($args as $key => $arg) {
+		$filters .= '<input type="hidden" name="filter~' . $key . '" value="' . smarty_modifier_escape($arg) . '"/>';
+	}
+
+	$escapedLayer = smarty_modifier_escape($layer);
+	return <<<OUT
+<form method="post" action="tiki-searchindex.php" class="search-box onload" style="display: none" data-result-refresh="$refresh" data-result-layer="$escapedLayer">
+	<p>$filters<input type="submit"/></p>
+</form>
+OUT;
 }
 

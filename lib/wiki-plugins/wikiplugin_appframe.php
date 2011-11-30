@@ -184,7 +184,7 @@ function wikiplugin_appframe_page($data, $params, $start)
 	$replacements = array();
 	foreach ($params as $key => $value) {
 		$keys[] = "{{{$key}}}";
-		$replacements = $value;
+		$replacements[] = $value;
 	}
 	$info['data'] = str_replace($keys, $replacements, $info['data']);
 

@@ -8,8 +8,11 @@
 	{jq}
 	$('.map-layer-selector').hide();
 	$(function () {
+		var realRefresh, map, refreshLayers = function () {
+			realRefresh();
+		};
 		$('.map-layer-selector').removeClass('map-layer-selector').each(function () {
-			var map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0];
+			map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0];
 			var baseLayers= $(this.baseLayers);
 			var optionalLayers= $('.optionalLayers', this);
 
@@ -25,42 +28,43 @@
 				}
 			});
 
-			var refreshLayers = function () {
+			realRefresh = function () {
 				baseLayers.empty();
 				optionalLayers.empty();
-				$.each(map.map.layers, function (k, layer) {
-					if (! layer.displayInLayerSwitcher) {
+				$.each(map.map.layers, function (k, thisLayer) {
+					if (! thisLayer.displayInLayerSwitcher) {
 						return;
 					}
 
-					if (layer.isBaseLayer) {
+					if (thisLayer.isBaseLayer) {
 						baseLayers.append($('<option/>')
 							.attr('value', k)
-							.text(layer.name)
-							.attr('selected', layer === map.map.baseLayer));
+							.text(thisLayer.name)
+							.attr('selected', thisLayer === map.map.baseLayer));
 					} else {
-						optionalLayers.append($('<label/>').text(layer.name).prepend(
-							$('<input type="checkbox"/>')
-								.attr('checked', layer.getVisibility())))
-								.change(function (e) {
-									layer.setVisibility($(e.target).is(':checked'));
-								});
+						var label, checkbox;
+						optionalLayers.append(label = $('<label/>').text(thisLayer.name).prepend(
+							checkbox = $('<input type="checkbox"/>')
+								.attr('checked', thisLayer.getVisibility())));
+						checkbox.change(function (e) {
+							thisLayer.setVisibility($(this).is(':checked'));
+						});
 					}
 				});
 			};
-
-			setTimeout(function () {
-				// Wait for OpenLayers to initialize
-				refreshLayers();
-				map.map.events.register('addlayer', {}, refreshLayers);
-				map.map.events.register('removelayer', {}, refreshLayers);
-				map.map.events.register('changelayer', {}, refreshLayers);
-				map.map.events.register('changebaselayer', {}, refreshLayers);
-				$.each(map.map.getControlsByClass('OpenLayers.Control.LayerSwitcher'), function (k, c) {
-					map.map.removeControl(c);
-				});
-			}, 500);
 		});
+
+		setTimeout(function () {
+			// Wait for OpenLayers to initialize
+			refreshLayers();
+			map.map.events.register('addlayer', {}, refreshLayers);
+			map.map.events.register('removelayer', {}, refreshLayers);
+			map.map.events.register('changelayer', {}, refreshLayers);
+			map.map.events.register('changebaselayer', {}, refreshLayers);
+			$.each(map.map.getControlsByClass('OpenLayers.Control.LayerSwitcher'), function (k, c) {
+				map.map.removeControl(c);
+			});
+		}, 500);
 	});
 	{/jq}
 {/tikimodule}
