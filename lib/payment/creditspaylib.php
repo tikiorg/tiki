@@ -7,7 +7,8 @@
 
 class UserPayCredits extends CreditsLib
 {
-	function __construct() {
+	function __construct()
+	{
 		global $user, $prefs;
 		$valid_credits = unserialize($prefs['payment_tikicredits_types']);
 		$credits_xcrates = unserialize($prefs['payment_tikicredits_xcrates']);
@@ -35,7 +36,8 @@ class UserPayCredits extends CreditsLib
 		$this->credits = $ret;
 	}
 	
-	function setPrice($price) {
+	function setPrice($price)
+	{
 		$credits = $this->credits;
 		foreach ($credits as $k => $uc) {
 			$credits[$k]['price'] = $price * $credits[$k]['xcrate'];
@@ -48,7 +50,8 @@ class UserPayCredits extends CreditsLib
 		$this->credits = $credits;
 	}
 	
-	function payAmount($creditType, $amount, $invoice) {
+	function payAmount($creditType, $amount, $invoice)
+	{
 		global $user, $tikilib, $paymentlib;
 		require_once 'lib/payment/paymentlib.php';
 		$userId = $this->get_user_id($user);
@@ -59,7 +62,17 @@ class UserPayCredits extends CreditsLib
 		$credits_amount = $amount * $this->credits[$creditType]['xcrate'];
 		if ($this->useCredits($userId, $creditType, $credits_amount)) {
 			$msg = tr("Tiki credits payment done on %0 for %1 (using %2)", $tikilib->get_short_datetime($tikilib->now), $amount, $creditType);
-			$paymentlib->enter_payment( $invoice, $amount, 'tikicredits', array('info' => $msg, 'username' => $user, 'creditType' => $creditType, 'creditAmount' => $credits_amount));
+			$paymentlib->enter_payment(
+							$invoice, 
+							$amount, 
+							'tikicredits', 
+							array(
+								'info' => $msg, 
+								'username' => $user, 
+								'creditType' => $creditType, 
+								'creditAmount' => $credits_amount
+							)
+			);
 			return true;
 		} else {
 			return false;

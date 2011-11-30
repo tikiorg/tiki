@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exchangetoproductid = 0 ) {
+function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exchangetoproductid = 0 )
+{
 	
 	global $prefs;
 	
@@ -18,14 +19,14 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 	
 	$orderitemsTrackerId = $prefs['payment_cart_orderitems_tracker'];
 	
-	$exchangefromrecordFieldId = $trklib->get_field_id($orderitemsTrackerId,'Exchange - Current Order ID');
-	$exchangetorecordFieldId = $trklib->get_field_id($orderitemsTrackerId,'Exchange - Desired Product ID');
-	$realEventFieldId = $trklib->get_field_id($orderitemsTrackerId,'Real Associated Event ID');
-	$eventFieldId = $trklib->get_field_id($orderitemsTrackerId,'Associated Event ID');
-	$associatedproductFieldId = $trklib->get_field_id($orderitemsTrackerId,'Product ID');
-	$amountBoughtFieldId = $trklib->get_field_id($orderitemsTrackerId,'Amount bought');
-	$itemeventStartFieldId = $trklib->get_field_id($orderitemsTrackerId,'Associated Event Start Date');
-	$itemeventEndFieldId = $trklib->get_field_id($orderitemsTrackerId,'Associated Event End Date');
+	$exchangefromrecordFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Exchange - Current Order ID');
+	$exchangetorecordFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Exchange - Desired Product ID');
+	$realEventFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Real Associated Event ID');
+	$eventFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Associated Event ID');
+	$associatedproductFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Product ID');
+	$amountBoughtFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Amount bought');
+	$itemeventStartFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Associated Event Start Date');
+	$itemeventEndFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Associated Event End Date');
 
 	$productsTrackerId = $prefs['payment_cart_product_tracker'];
 	$productclassFieldId = $trklib->get_field_id($productsTrackerId, $prefs['payment_cart_product_classid_fieldname']);
@@ -68,7 +69,7 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 
 	// Replace inventory for original product
 	global $cartlib; require_once 'lib/payment/cartlib.php';
-	$cartlib->change_inventory( $fromproductId, $amountBought );
+	$cartlib->change_inventory($fromproductId, $amountBought);
 
 	return true;	
 }

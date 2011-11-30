@@ -7,24 +7,27 @@
 
 class PaypalLib extends TikiDb_Bridge
 {
-	function get_invoice( $ipn_data ) {
+	function get_invoice( $ipn_data )
+	{
 		global $prefs;
-		return isset( $ipn_data['invoice'] ) ? str_replace( $prefs['payment_invoice_prefix'], '', $ipn_data['invoice'] ) : 0;
+		return isset( $ipn_data['invoice'] ) ? str_replace($prefs['payment_invoice_prefix'], '', $ipn_data['invoice']) : 0;
 	}
 
-	function get_amount( $ipn_data ) {
+	function get_amount( $ipn_data )
+	{
 		return $ipn_data['mc_gross'];
 	}
 
-	function is_valid( $ipn_data, $payment_info ) {
+	function is_valid( $ipn_data, $payment_info )
+	{
 		global $prefs;
 
 		// Make sure this is not a fake, must be verified even if discarded, otherwise will be resent
-		if ( ! $this->confirmed_by_paypal( $ipn_data ) ) {
+		if ( ! $this->confirmed_by_paypal($ipn_data) ) {
 			return false;
 		}
 
-		if ( ! is_array( $payment_info ) ) {
+		if ( ! is_array($payment_info) ) {
 			return false;
 		}
 
@@ -44,7 +47,7 @@ class PaypalLib extends TikiDb_Bridge
 		}
 
 		// Skip duplicate translactions
-		foreach( $payment_info['payments'] as $payment ) {
+		foreach ( $payment_info['payments'] as $payment ) {
 			if ( $payment['type'] == 'paypal' ) {
 				if ( $payment['details']['txn_id'] == $ipn_data['txn_id'] ) {
 					return false;
@@ -55,16 +58,17 @@ class PaypalLib extends TikiDb_Bridge
 		return true;
 	}
 
-	private function confirmed_by_paypal( $ipn_data ) {
+	private function confirmed_by_paypal( $ipn_data )
+	{
 		global $prefs;
 
 		$client = TikiLib::lib('tiki')->get_http_client();
-		$client->setUri( $prefs['payment_paypal_environment'] );
+		$client->setUri($prefs['payment_paypal_environment']);
 
 		$base = array( 'cmd' => '_notify-validate' );  
 
-		$client->setParameterPost( array_merge( $base, $ipn_data ) );
-		$response = $client->request( 'POST' );
+		$client->setParameterPost(array_merge($base, $ipn_data));
+		$response = $client->request('POST');
 
 		$body = $response->getBody();
 

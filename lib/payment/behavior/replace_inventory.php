@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function payment_behavior_replace_inventory( $code, $quantity ) {
+function payment_behavior_replace_inventory( $code, $quantity )
+{
 	global $cartlib; require_once 'lib/payment/cartlib.php';	
-	$cartlib->change_inventory( $code, $quantity );
+	$cartlib->change_inventory($code, $quantity);
 	return true;
 }
 

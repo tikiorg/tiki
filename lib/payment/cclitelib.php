@@ -14,35 +14,40 @@ class CCLiteLib extends TikiDb_Bridge
 	private $currencies;
 	private $merchant_user;
 	
-	function __construct() {
+	function __construct()
+	{
 		global $prefs, $access;
-		// check for essential prefs
 		$access->check_feature('payment_feature');
+
 		// need to add a check for empty, not just y/n - TODO one day
 		//$access->check_feature('payment_cclite_registries');
 		//$access->check_feature('payment_cclite_gateway');
 		//$access->check_feature('payment_cclite_merchant_key');
 		
 		$this->gateway = rtrim($prefs['payment_cclite_gateway'], '/');
-		$this->registries = unserialize( $prefs['payment_cclite_registries'] );
+		$this->registries = unserialize($prefs['payment_cclite_registries']);
 		$this->currencies = unserialize($prefs['payment_cclite_currencies']);
 		$this->merchant_user = $prefs['payment_cclite_merchant_user'];
 				
-		if (($prefs['payment_cclite_mode'] == 'test' && $_SERVER['SERVER_ADDR'] != '127.0.0.1' && $_SERVER['SERVER_ADDR'] != '::1') || empty($prefs['payment_cclite_test_ip'])) {
+		if (($prefs['payment_cclite_mode'] == 'test' && $_SERVER['SERVER_ADDR'] != '127.0.0.1' && $_SERVER['SERVER_ADDR'] != '::1') || 
+					empty($prefs['payment_cclite_test_ip'])
+				) {
 			$ip = $_SERVER['SERVER_ADDR'];
 		} else {
 			// debug SERVER_ADDR for local testing on NAT'ed server
 			$ip = $prefs['payment_cclite_test_ip'];
 		}
-		$api_hash = hash( $prefs['payment_cclite_hashing_algorithm'] , ( $prefs['payment_cclite_merchant_key'] . $ip), 'true');
+		$api_hash = hash($prefs['payment_cclite_hashing_algorithm'], ($prefs['payment_cclite_merchant_key'] . $ip), 'true');
 		$this->key_hash = CCLiteLib::urlsafe_b64encode($api_hash);
 	}
 	
-	public function get_registries() {
+	public function get_registries()
+	{
 		return $this->registries;
 	}
 	
-	public function get_registry() {
+	public function get_registry()
+	{
 		if (!empty($this->registries)) {
 			return $this->registries[0];	// default if not specified in plugins etc
 		} else {
@@ -51,14 +56,16 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 	}
 	
-	public function get_currencies() {
+	public function get_currencies()
+	{
 		return $this->currencies;
 	}
 	
 	/**
 	 * @param string $reg Registry to find currency for (uses registries[0] if not specified)
 	 */
-	public function get_currency($reg = '') {
+	public function get_currency($reg = '')
+	{
 		global $prefs;
 		
 		if (empty($reg)) {
@@ -74,18 +81,21 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 	}
 	
-	public function get_invoice( $ipn_data ) {
+	public function get_invoice( $ipn_data )
+	{
 		return isset( $ipn_data['invoice'] ) ? $ipn_data['invoice'] : 0;
 	}
 
-	public function get_amount( $ipn_data ) {
+	public function get_amount( $ipn_data )
+	{
 		return $ipn_data['mc_gross'];
 	}
 
-	public function is_valid( $ipn_data, $payment_info ) {
+	public function is_valid( $ipn_data, $payment_info )
+	{
 		global $prefs;
 
-		if ( ! is_array( $payment_info ) ) {
+		if ( ! is_array($payment_info) ) {
 			return false;
 		}
 
@@ -105,7 +115,7 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 
 		// Skip duplicate translactions
-		foreach( $payment_info['payments'] as $payment ) {
+		foreach ( $payment_info['payments'] as $payment ) {
 			if ( $payment['type'] == 'cclite' ) {
 				if ( $payment['details']['txn_id'] == $ipn_data['txn_id'] ) {
 					return false;
@@ -128,13 +138,14 @@ class CCLiteLib extends TikiDb_Bridge
 	 * 
 	 * @return string result from cclite
 	 */
-	public function pay_invoice($invoice, $amount, $currency = '', $registry = '', $source_user = '') {
+	public function pay_invoice($invoice, $amount, $currency = '', $registry = '', $source_user = '')
+	{
 		global $user, $prefs, $paymentlib, $tikilib;
 		require_once 'lib/payment/paymentlib.php';
 		
 		$msg = tr('Cclite payment initiated on %0', $tikilib->get_short_datetime($tikilib->now));
 		
-		$paymentlib->enter_payment( $invoice, $amount, 'cclite', array('info' => $msg));
+		$paymentlib->enter_payment($invoice, $amount, 'cclite', array('info' => $msg));
 		
 		return $msg;
 	}
@@ -150,7 +161,8 @@ class CCLiteLib extends TikiDb_Bridge
 	 * 
 	 * @return string result from cclite
 	 */
-	public function pay_user( $amount, $currency = '', $registry = '', $destination_user = '', $source_user = '') {
+	public function pay_user( $amount, $currency = '', $registry = '', $destination_user = '', $source_user = '')
+	{
 		global $user, $prefs, $paymentlib;
 		require_once 'lib/payment/paymentlib.php';
 		if (empty($source_user)) {
@@ -159,9 +171,6 @@ class CCLiteLib extends TikiDb_Bridge
 		
 		$res = $this->cclite_send_request('pay', $destination_user, $registry, $amount, $currency, $source_user);
 		
-//		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
-//			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
-//		}
 		$r = $this->cclite_send_request('logoff');
 		
 		return $res;
@@ -181,13 +190,25 @@ class CCLiteLib extends TikiDb_Bridge
 	 * @return		result from cclite server (html hopefully)
 	 */
 
-	function cclite_send_request( $command, $other_user = '', $registry = '', $amount = 0, $currency = '', $main_user = '') {
+	function cclite_send_request( $command, $other_user = '', $registry = '', $amount = 0, $currency = '', $main_user = '')
+	{
 		global $user, $prefs;
 		
-		if (empty($other_user)) { $other_user = $this->merchant_user; }
-		if (empty($main_user)) { $main_user = $user; }
-		if (empty($registry)) { $registry = $this->get_registry(); }
-		if (empty($currency)) { $currency = $this->get_currency( $registry ); }
+		if (empty($other_user)) {
+			$other_user = $this->merchant_user; 
+		}
+
+		if (empty($main_user)) {
+			$main_user = $user;
+		}
+
+		if (empty($registry)) { 
+			$registry = $this->get_registry(); 
+		}
+
+		if (empty($currency)) {
+			$currency = $this->get_currency($registry);
+		}
 		
 		$result = '';
 
@@ -221,40 +242,41 @@ class CCLiteLib extends TikiDb_Bridge
 		switch ($command) {
 			case 'recent':
 				$REST_url = "$cclite_base_url/recent/transactions";
-				break;
+							break;
+
 			case 'summary':
 				$REST_url = "$cclite_base_url/summary";
-				break;
+							break;
+
 			case 'pay':
-				//if (! user_access('make payments')) {
-				//    return "$username not authorised to make payments" ;
-				//}
-				// pay/test1/dalston/23/hack(s) using the merchant key
 				$REST_url = "$cclite_base_url/pay/$other_user/$registry/$amount/$currency";
-				break;
+							break;
+
 		case 'adduser':
-			// direct/adduser/dalston/test1/email using the merchant key, without using individual logon
-			// email passed in as $amount
 			$REST_url = "$cclite_base_url/direct/adduser/$registry/" . urlencode($other_user . '/' . $amount);
 			curl_setopt($ch, CURLOPT_COOKIE, 'merchant_key_hash=' . $this->key_hash);
-			break;
+						break;
+
 		case 'modifyuser':
-			// direct/modifyuser/dalston/test1/email using the merchant key, without using individual logon
 			// non-working at present...
 			$REST_url = "$cclite_base_url/direct/modifyuser/$registry/" . urlencode($other_user . '/' . $amount);
 			curl_setopt($ch, CURLOPT_COOKIE, 'merchant_key_hash=' . $this->key_hash);
-			break;
+						break;
+
 		case 'debit':
 			// non-working at present...
 			$REST_url = "$cclite_base_url/debit/$other_user/$registry/$amount/$currency";
-			break;
+						break;
+
 		case 'logoff':
 			// non-working at present...
 			$REST_url = "$cclite_base_url/logoff";
-			break;
+						break;
+
 		default:
 			return "No cclite function selected use <a title=\"cclite passthrough help\" href=\"/$cclite_base_url/help\">help</a>" ;
 		}
+
 		curl_setopt($ch, CURLOPT_URL, $REST_url);
 		$result = curl_exec($ch);
 		curl_close($ch);
@@ -266,15 +288,20 @@ class CCLiteLib extends TikiDb_Bridge
 	 *
 	 * @return multitype:mixed string |multitype:string
 	 */
-	private function cclite_remote_logon($username = '', $registry = '') {
+	private function cclite_remote_logon($username = '', $registry = '')
+	{
 		global $user, $prefs, $userlib;
 		
-		if (empty($username)) { $username = $user; }
+		if (empty($username)) {
+			$username = $user;
+		}
 		
 		// not worth trying if no user name
 		if (!empty($username)) {
 			
-			if (empty($registry)) { $registry = $this->get_registry(); }
+			if (empty($registry)) { 
+				$registry = $this->get_registry(); 
+			}
 			$cclite_base_url = $this->gateway;
 			
 			// payment url from configuration information
@@ -314,8 +341,10 @@ class CCLiteLib extends TikiDb_Bridge
 						}
 					}
 				}
+
 				// e.g. test_user at test_reg is not active: confirm or contact the administrator <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
-				if (preg_match('/^(.*?'.$username.'.*'.$registry.'[^<]*)/mi', $logon, $results)) {		// check for other errors & remove cclite link
+				// check for other errors & remove cclite link
+				if (preg_match('/^(.*?' . $username . '.*' . $registry . '[^<]*)/mi', $logon, $results)) {
 					$err_msg = trim($results[0]);
 					$logon = 'failed';	// error in $results[0]
 				} else if (preg_match('/HTTP\/1.1 302/mis', $logon) && preg_match('/<BODY.*?>(.*)<\/BODY>/mis', $logon, $results)) {
@@ -323,6 +352,7 @@ class CCLiteLib extends TikiDb_Bridge
 					//$logon = 'failed';
 				}
 			}
+
 			if ($logon && $logon != 'failed') {
 				preg_match_all('|Set-Cookie: (.*);|U', $logon, $results);
 				$cookies = implode("; ", $results[1]);
@@ -331,21 +361,24 @@ class CCLiteLib extends TikiDb_Bridge
 		} else {
 			$err_msg = 'No result from cclite server.';
 		}
-		// fall through failed
+
 		return array('failed', $err_msg);
 	}
 
 	// used to transport merchant key hash - probably duplicates of tiki fns REFACTOR?
-	static function urlsafe_b64encode($string) {
+	static function urlsafe_b64encode($string)
+	{
 		$data = base64_encode($string);
 		$data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
 		return $data;
 	}
-	static function urlsafe_b64decode($string) {
+
+	static function urlsafe_b64decode($string)
+	{
 		$data = str_replace(array('-', '_'), array('+', '/'), $string);
 		$mod4 = strlen($data) % 4;
 		if ($mod4) {
-			$data.= substr('====', $mod4);
+			$data .= substr('====', $mod4);
 		}
 		return base64_decode($data);
 	}
