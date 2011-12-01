@@ -16,7 +16,7 @@ Class Feed_TextBacklink_Contribution extends Feed_Remote_Abstract
 		return $me;
 	}
 	
-	public function sendData($page, $name, $data)
+	public function sendItem($page, $name, $data)
 	{
 		global $tikilib, $feedItem, $caching;
 
@@ -42,7 +42,6 @@ Class Feed_TextBacklink_Contribution extends Feed_Remote_Abstract
 		
 		$response = $client->request();
 		
-		$this->setContents($response->getBody());
-		print_r($response->getBody());
+		return $response->getBody();
 	}
 }
