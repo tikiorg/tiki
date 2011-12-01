@@ -1217,6 +1217,9 @@ textarea.tshoutbox{
 	padding: 0;
 }
 
+/* Button from 'Show php error messages' hidden box */
+.button[id="show-errors-button"]{font-size:5%;}
+
 /* webmail & groupmail */
 .webmail_item {
 	font-size: .9em;
