@@ -90,12 +90,14 @@ abstract class Feed_Abstract
 	
 	public function feed()
 	{
+		global $tikilib;
 		$feed = json_decode($this->getCache());
 		
 		return array(
 			'version' => '1.0',
 			'encoding' => 'UTF-8',
 			'feed' => $feed,
+			'origin' => $tikilib->tikiUrl() . 'tiki-feed.php'
 		);
 	}
 }

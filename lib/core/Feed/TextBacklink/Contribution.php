@@ -7,41 +7,26 @@
 
 Class Feed_TextBacklink_Contribution extends Feed_Remote_Abstract
 {
-	var $type = "textbacklink_contribution";
+	var $type = "feed_textbacklink_contribution";
 	
-	static function url($feedUrl)
+	static function url($feedUrl = "http://localhost/")
 	{
 		$me = new self($feedUrl);
-		$me->contents = $contents;
 		return $me;
 	}
 	
-	public function sendItem($page, $name, $data)
+	static function local()
 	{
-		global $tikilib, $feedItem, $caching;
-
-		$pageInfo = $tikilib->get_page_info($page);
-		$client = new Zend_Http_Client($this->feedUrl);
-		
-		$client->setParameterGet('type', "textbacklink_contribution");
-		$client->setParameterGet('contribution', json_encode(array(
-			'version' => '1.0',
-			'encoding' => 'UTF-8',
-			'feed' => array(
-				'type' => 'textbacklink_contribution',
-				'date' => $pageInfo['lastModif'],
-				'entry'=> array(
-					'page'=> $page,
-					'name'=> $name,
-					'description'=> $data,
-					'date' => $pageInfo['lastModif'],
-					'href' => "http://localhost" . dirname($_SERVER["REQUEST_URI"]) . '/' . TikiLib::lib("wiki")->url_for_operation_on_a_page("tiki-index.php", $pageInfo['pageName'])
-				)
-			),
-		)));
-		
-		$response = $client->request();
-		
-		return $response->getBody();
+		global $tikilib;
+		$me = self::url($tikilib->tikiUrl());
+		return $me;
+	}
+	
+	static function getContributedItems()
+	{
+		global $tikilib;
+		$me = self::url($tikilib->tikiUrl());
+		$me->getContents(true);
+		return json_decode($me->getContents());
 	}
 }

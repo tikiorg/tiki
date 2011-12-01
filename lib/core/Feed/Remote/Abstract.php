@@ -38,7 +38,7 @@ class Feed_Remote_Abstract
 	public function __construct($feedUrl = "")
 	{
 		$this->feedUrl = $feedUrl;
-		$this->feedName = $this->siteName() . "_remote_" . $this->type;
+		$this->feedName = $this->siteName() . "_" . $this->type;
 	}
 	
 	public function replace()
@@ -52,6 +52,12 @@ class Feed_Remote_Abstract
 				->setParam("description", "A " . $this->type . " feed from " . $this->feedUrl)
 				->replace($this->getContents());
 		}
+	}
+	
+	public function origin()
+	{
+		$contents = json_decode($this->getContents());
+		return $contents->origin;
 	}
 	
 	public function listArchives()
@@ -105,8 +111,12 @@ class Feed_Remote_Abstract
 		return $this;
 	}
 	
-	private function getContents()
+	public function getContents($fromFile = false)
 	{
+		if ($fromFile == true) {
+			$this->contents = FileGallery_File::filename($this->feedName)->data();
+		}
+		
 		if (!empty($this->contents)) {
 			return $this->contents;
 		} else {
@@ -123,11 +133,11 @@ class Feed_Remote_Abstract
 		
 		$contents = json_decode($this->getContents());
 		
-		if (!empty($contents->feed->entry) && $contents->feed->type == $this->type)
-		{
+		//if (!empty($contents->feed->entry) && $contents->feed->type == $this->type)
+		//{
 			$this->items = $contents->feed->entry;
 			$this->replace();
-		}
+		//}
 		
 		return $this->items;
 	}

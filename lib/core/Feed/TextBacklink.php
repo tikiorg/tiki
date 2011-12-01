@@ -7,14 +7,20 @@
 
 Class Feed_TextBacklink extends Feed_Abstract
 {
-	var $type = "textbacklink";
+	var $type = "feed_textbacklink";
+	
+	static function url($feedUrl = "http://localhost/")
+	{
+		$me = new self($feedUrl);
+		return $me;
+	}
 	
 	public function updateCache()
 	{
-		global $feedItem, $caching;
+		global $tikilib, $feedItem, $caching;
 		
 		$this->clearCache();
-		$site = $this->siteName();
+		$site = $tikilib->tikiUrl();
 		
 		$caching = true; //this variable is used to block recursive parse_data below
 		

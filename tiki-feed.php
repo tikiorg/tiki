@@ -38,10 +38,10 @@ if ($_REQUEST['type'] == 'html') {
 	$feed = new Feed_TextBacklink();
 	print_r(json_encode($feed->feed()));
 	
-} else if ($_REQUEST['type'] == "textbacklink_contribution" && !empty($_REQUEST['contribution'])) {
+} else if ($_REQUEST['type'] == "textlink" && !empty($_REQUEST['contribution'])) {
 	
 	$contribution = json_decode($_REQUEST['contribution']);
-	Feed_TextBacklink_Contribution::url($contribution->feed->entry->href)
+	Feed_TextBacklink_Contribution::local()
 		->setContents($_REQUEST['contribution'])
 		->replace();
 		

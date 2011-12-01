@@ -10,5 +10,5 @@
  */
 class Feed_Remote_Html extends Feed_Remote_Abstract
 {
-	var $type = "html";
+	var $type = "feed_remote_html";
 }
