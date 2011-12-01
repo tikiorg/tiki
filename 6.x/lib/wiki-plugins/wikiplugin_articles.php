@@ -312,7 +312,7 @@ function wikiplugin_articles($data, $params)
 	$commentslib = new Comments($dbTiki);
 	
 	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y');
- 	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
+ 	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
