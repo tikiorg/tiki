@@ -7,19 +7,21 @@
 
 class FileGallery_File
 {
-	var $param = array(
-		'filename' => 'New File',
-	);
-	
-	var $dataIncluded = false;
+	var $param = array();
+	var $exists = false;
 	
 	static function filename($filename = "")
 	{
+		global $tikilib;
+		
+		$id = $tikilib->getOne("select fileId from tiki_files where name = ?", array($filename));
+		if (!empty($id)) {
+			return FileGallery_File::id($id);
+		}
+		
+		//always use ->exists() to check if the file was found, if the above is returned, a file was found, if below, there wasent
 		$me = new self();
-		
-		$file = TikiLib::lib("filegal")->get_files(null, 1, null, $filename, null);
-		$me->param = $file['data'][0];
-		
+		$me->setParam('filename', $filename);
 		return $me;
 	}
 	
@@ -28,7 +30,10 @@ class FileGallery_File
 		$me = new self();
 		
 		$me->param = TikiLib::lib("filegal")->get_file((int)$id);
-		$me->dataIncluded = true;
+		
+		if ($me->getParam('created') > 0) {
+			$me->exists = true;
+		}
 		
 		return $me;
 	}
@@ -42,25 +47,6 @@ class FileGallery_File
 	function getParam($param = "")
 	{
 		return $this->param[$param];
-	}
-	
-	function create($data)
-	{
-		global $user;
-		
-		include_once ('lib/mime/mimetypes.php');
-
-		return TikiLib::lib("filegal")->insert_file(
-						1, //zero makes it not show by default
-						$this->param['filename'],
-						$this->param['description'],
-						$this->param['filename'],
-						$data,
-						strlen($data),
-						$mimetypes["txt"],
-						$user,
-						date()
-		);
 	}
 	
 	function archive($archive = 0)
@@ -79,16 +65,14 @@ class FileGallery_File
 	}
 	
 	function data()
-	{
-		if ($this->dataIncluded) return $this->param['data'];
-		
-		$fileInfo = TikiLib::lib("filegal")->get_file_info((int)$this->param['id']);
+	{	
+		$fileInfo = TikiLib::lib("filegal")->get_file_info((int)$this->getParam('id'));	
 		return $fileInfo['data'];
 	}
 	
 	function exists()
 	{
-		return (empty($this->param['id']) ? false : true);
+		return $this->exists;
 	}
 	
 	function listArchives()
@@ -102,22 +86,35 @@ class FileGallery_File
 	{
 		global $user;
 		include_once ('lib/mime/mimetypes.php');
+		if ($this->exists() == false) {
+			$id = TikiLib::lib("filegal")->insert_file(
+				1, //zero makes it not show by default
+				$this->getParam('filename'),
+				$this->getParam('description'),
+				$this->getParam('filename'),
+				$data,
+				strlen($data),
+				$mimetypes["txt"],
+				$user,
+				date()
+			);
+		} else {
+			$id = TikiLib::lib("filegal")->save_archive(
+				$this->getParam('id'),
+				$this->getParam('galleryId'),
+				0,
+				$this->getParam('filename'),
+				$this->getParam('description'),
+				$this->getParam('filename'),
+				$data,
+				strlen($data),
+				$mimetypes["txt"],
+				$user,
+				date()
+			);
+		}
 		
-		if (!$this->exists()) return $this->create($data);
-
-		return TikiLib::lib("filegal")->save_archive(
-						$this->param['id'],
-						$this->param['galleryId'],
-						0,
-						$this->param['filename'],
-						$this->param['description'],
-						$this->param['filename'],
-						$data,
-						strlen($data),
-						$mimetypes["txt"],
-						$user,
-						date()
-		);
+		return $id;
 	}
 	
 	function diffLatestWithArchive($archive = 0)
