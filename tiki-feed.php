@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-
 $_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
 require_once ('tiki-setup.php');
@@ -30,11 +29,20 @@ if ($_REQUEST['type'] == 'html') {
 		
 	} else {
 		
-		$htmlFeed = new Feed_Html();
-		print_r(json_encode($htmlFeed->feed()));
+		$feed = new Feed_Html();
+		print_r(json_encode($feed->feed()));
 		
 	}
 } else if ($_REQUEST['type'] == "textbacklink") {
-	$htmlFeed = new Feed_TextBacklink();
-	print_r(json_encode($htmlFeed->feed()));
+	
+	$feed = new Feed_TextBacklink();
+	print_r(json_encode($feed->feed()));
+	
+} else if ($_REQUEST['type'] == "textbacklink_contribution" && !empty($_REQUEST['contribution'])) {
+	
+	$contribution = json_decode($_REQUEST['contribution']);
+	Feed_TextBacklink_Contribution::url($contribution->feed->entry->href)
+		->setContents($_REQUEST['contribution'])
+		->replace();
+		
 }

@@ -38,27 +38,19 @@ class Feed_Remote_Abstract
 	public function __construct($feedUrl = "")
 	{
 		$this->feedUrl = $feedUrl;
-		$this->feedName = $this->siteName()."_feed_remote_" . $this->type;
+		$this->feedName = $this->siteName() . "_remote_" . $this->type;
 	}
 	
 	public function replace()
 	{
 		$file = FileGallery_File::filename($this->feedName);
+		$new = json_decode($this->getContents());
+		$old = json_decode( $file->data() );
 		
-		$new = $this->contents;
-		$old = json_decode($file->data());
-		
-		if (!$file->exists()) {
-			$file
-				->setParam("filename", $this->feedName)
-				->setParam("description", tr("A remote " . $this->type . " feed from ") . $this->feedUrl)
-				->create(json_encode($this->contents));
-				
-			return;
-		}
-		
-		if ($old->feed->date < $new->feed->date) {
-			$file->replace(json_encode($this->contents));	
+		if ($old->feed->date < $new->feed->date || $file->exists() == false) {
+			return $file
+				->setParam("description", "A " . $this->type . " feed from " . $this->feedUrl)
+				->replace($this->getContents());
 		}
 	}
 	
@@ -107,12 +99,19 @@ class Feed_Remote_Abstract
 		return $archives;
 	}
 	
+	public function setContents($contents)
+	{
+		$this->contents = $contents;
+		return $this;
+	}
+	
 	private function getContents()
 	{
 		if (!empty($this->contents)) {
 			return $this->contents;
 		} else {
-			return file_get_contents($this->feedUrl);
+			$this->contents = file_get_contents($this->feedUrl);
+			return $this->contents;
 		}
 	}
 	
@@ -122,12 +121,10 @@ class Feed_Remote_Abstract
 		
 		if (!empty($this->items)) return $this->items;
 		
-		$contents = $this->getContents();
-		$contents = json_decode($contents);
+		$contents = json_decode($this->getContents());
 		
 		if (!empty($contents->feed->entry) && $contents->feed->type == $this->type)
 		{
-			$this->contents = $contents;
 			$this->items = $contents->feed->entry;
 			$this->replace();
 		}
