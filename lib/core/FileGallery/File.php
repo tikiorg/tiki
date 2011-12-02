@@ -14,7 +14,8 @@ class FileGallery_File
 	{
 		global $tikilib;
 		
-		$id = $tikilib->getOne("select fileId from tiki_files where name = ?", array($filename));
+		$id = $tikilib->getOne("SELECT fileId FROM tiki_files WHERE filename = ? AND archiveId  < 1", array($filename));
+		
 		if (!empty($id)) {
 			return FileGallery_File::id($id);
 		}
@@ -66,8 +67,7 @@ class FileGallery_File
 	
 	function data()
 	{	
-		$fileInfo = TikiLib::lib("filegal")->get_file_info((int)$this->getParam('id'));	
-		return $fileInfo['data'];
+		return $this->getParam('data');	
 	}
 	
 	function exists()
@@ -77,7 +77,7 @@ class FileGallery_File
 	
 	function listArchives()
 	{
-		$archives = TikiLib::lib("filegal")->get_archives((int)$this->param['id']);
+		$archives = TikiLib::lib("filegal")->get_archives((int)$this->getParam('fileId'));
 		$archives = array_reverse($archives['data']);
 		return $archives;
 	}
@@ -99,8 +99,9 @@ class FileGallery_File
 				date()
 			);
 		} else {
+			
 			$id = TikiLib::lib("filegal")->save_archive(
-				$this->getParam('id'),
+				$this->getParam('fileId'),
 				$this->getParam('galleryId'),
 				0,
 				$this->getParam('filename'),
@@ -117,12 +118,19 @@ class FileGallery_File
 		return $id;
 	}
 	
+	function delete()
+	{
+		global $tikilib;
+		$files = $tikilib->table('tiki_files');
+		$files->delete(array('fileId' => $this->getParam('fileId')));
+	}
+	
 	function diffLatestWithArchive($archive = 0)
 	{
 		include_once ( "lib/diff/Diff.php" );
 		
 		$textDiff =  new Text_Diff(
-						FileGallery_File::filename($this->param['filename'])
+						FileGallery_File::id($this->getParam('fileId'))
 						->archive($archive)
 						->data(),
 						$this->data()
