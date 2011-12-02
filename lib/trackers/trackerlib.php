@@ -2098,6 +2098,7 @@ class TrackerLib extends TikiLib
 
 		$options=$this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
+            $categlib = TikiLib::lib('categ');
 			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
 			$categlib->remove_category($currentCategId);
 		}
