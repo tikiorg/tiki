@@ -5,28 +5,21 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-Class Feed_TextBacklink_Contribution extends Feed_Remote_Abstract
+Class Feed_TextBacklink_Contribution extends Feed_Abstract
 {
-	var $type = "feed_textbacklink_contribution";
-	
-	static function url($feedUrl = "http://localhost/")
+	var $type = "local_page";
+	var $name = "";
+	var $fileGalCache = true;
+	 
+	static function textbacklink($name)
 	{
-		$me = new self($feedUrl);
+		$me = new self();
+		$me->name = $name;
 		return $me;
 	}
 	
-	static function local()
+	public function name()
 	{
-		global $tikilib;
-		$me = self::url($tikilib->tikiUrl());
-		return $me;
-	}
-	
-	static function getContributedItems()
-	{
-		global $tikilib;
-		$me = self::url($tikilib->tikiUrl());
-		$me->getContents(true);
-		return json_decode($me->getContents());
+		return $this->type . "_" . $this->name;
 	}
 }

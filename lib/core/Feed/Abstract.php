@@ -6,7 +6,9 @@
 // $Id$
  
 abstract class Feed_Abstract
-{	
+{
+	var $fileGalCache = false;
+		
 	public function siteName()
 	{
 		$site = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
@@ -14,6 +16,11 @@ abstract class Feed_Abstract
 		array_pop($site);
 		$site = implode($site, '/');
 		return $site;
+	}
+	
+	public function name()
+	{
+		return $this->siteName();
 	}
 	
 	public function getItems()
@@ -46,25 +53,42 @@ abstract class Feed_Abstract
 	public function getCache()
 	{
 		global $tikilib;
-		$cache = TikiLib::lib("cache")->getCached($this->siteName(), $this->type);
+		if ($this->fileGalCache == true) {
+			$cache = FileGallery_File::filename($this->name())->data();
+		} else {
+			$cache = TikiLib::lib("cache")->getCached($this->name(), $this->type);
+		}
 
 		if ($cache) return $cache;
 		
-		$this->updateCache();
-		
-		return TikiLib::lib("cache")->getCached($this->siteName(), $this->type);
+		if ($this->fileGalCache == true) {
+			FileGallery_File::filename($this->name())->data();
+		} else {
+			return TikiLib::lib("cache")->getCached($this->name(), $this->type);
+		}
 	}
 	
 	public function clearCache()
 	{
 		global $tikilib;
-		TikiLib::lib("cache")->empty_type_cache($this->type);
+		
+		if ($this->fileGalCache == true) {
+			$cache = FileGallery_File::filename($this->name())->delete();
+		} else {
+			TikiLib::lib("cache")->empty_type_cache($this->type);
+		}
 	}
 	
-	public function appendToCache($item)
+	public function addItem($item)
 	{
 		global $tikilib;
-		$cache = TikiLib::lib("cache")->getCached($this->siteName(), $this->type);
+		$replace = false;
+		
+		if ($this->fileGalCache == true) {
+			$cache = FileGallery_File::filename($this->name())->data();
+		} else {
+			$cache = TikiLib::lib("cache")->getCached($this->name(), $this->type);
+		}		
 		
 		if (empty($cache)) {
 			$cache = (object)array(
@@ -76,16 +100,31 @@ abstract class Feed_Abstract
 			$cache = json_decode($cache);
 		}
 		
-		$cache->date = ($cache->date > $item['date'] ? $cache->date : $item['date']);
+		
+		if (isset($item->date)) {
+			if ($cache->date < $item->date) {
+				$cache->date = $item->date;
+				$replace = true;
+			}
+		} else {
+			if ($cache->date < $item['date']) {
+				$cache->date = $item['date'];
+				$replace = true;
+			}
+		}
 		
 		$cache->entry[] = $item;
 		
-		TikiLib::lib("cache")->cacheItem($this->siteName(), json_encode($cache), $this->type);
-	}
-	
-	public function addItem($feedItem)
-	{
-		$this->appendToCache($feedItem);
+		if ($replace == false) return;
+		
+		if ($this->fileGalCache == true) {
+			
+			$cache = FileGallery_File::filename($this->name())
+				->setParam('description', '')
+				->replace(json_encode($cache));
+		} else {
+			TikiLib::lib("cache")->cacheItem($this->name(), json_encode($cache), $this->type);
+		}
 	}
 	
 	public function feed()

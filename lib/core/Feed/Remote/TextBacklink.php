@@ -9,9 +9,9 @@ class Feed_Remote_TextBacklink extends Feed_Remote_Abstract
 {
 	var $type = "feed_remote_textbacklink";
 	
-	static function url($feedUrl = "http://localhost/")
+	static function href($feedHref = "")
 	{
-		$me = new self($feedUrl);
+		$me = new self($feedHref);
 		return $me;
 	}
 }

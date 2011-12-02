@@ -7,7 +7,7 @@
 
 class Feed_Remote_Abstract
 {
-	var $feedUrl = "";
+	var $feedHref = "";
 	var $feedName = "";
 	var $name = "";
 	var $items = array();
@@ -17,16 +17,9 @@ class Feed_Remote_Abstract
 	var $date = 0;
 	var $type = "";
 	
-	static function url($feedUrl = "http://localhost/")
-	{
-		$me = new self($feedUrl);
-		
-		return $me;
-	}
-	
 	public function siteName()
 	{
-		$siteName = $this->feedUrl;
+		$siteName = $this->feedHref;
 		
 		$siteName = str_replace("http://", "", $siteName);
 		$siteName = str_replace("https://", "", $siteName);
@@ -35,9 +28,9 @@ class Feed_Remote_Abstract
 		return $siteName;
 	}
 	
-	public function __construct($feedUrl = "")
+	public function __construct($feedHref = "")
 	{
-		$this->feedUrl = $feedUrl;
+		$this->feedHref = $feedHref;
 		$this->feedName = $this->siteName() . "_" . $this->type;
 	}
 	
@@ -49,15 +42,9 @@ class Feed_Remote_Abstract
 		
 		if ($old->feed->date < $new->feed->date || $file->exists() == false) {
 			return $file
-				->setParam("description", "A " . $this->type . " feed from " . $this->feedUrl)
+				->setParam("description", "A " . $this->type . " feed from " . $this->feedHref)
 				->replace($this->getContents());
 		}
-	}
-	
-	public function origin()
-	{
-		$contents = json_decode($this->getContents());
-		return $contents->origin;
 	}
 	
 	public function listArchives()
@@ -120,7 +107,7 @@ class Feed_Remote_Abstract
 		if (!empty($this->contents)) {
 			return $this->contents;
 		} else {
-			$this->contents = file_get_contents($this->feedUrl);
+			$this->contents = file_get_contents($this->feedHref);
 			return $this->contents;
 		}
 	}

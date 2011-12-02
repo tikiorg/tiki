@@ -19,7 +19,7 @@ Class Feed_Html_Item
 		"importance" 	=> "",
 		"keywords"		=> "",
 		"type" 			=> "simple",
-		"url"			=> ""
+		"href"			=> ""
 	);
 	
 	var $params = array();

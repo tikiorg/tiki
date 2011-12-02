@@ -9,12 +9,6 @@ Class Feed_TextBacklink extends Feed_Abstract
 {
 	var $type = "feed_textbacklink";
 	
-	static function url($feedUrl = "http://localhost/")
-	{
-		$me = new self($feedUrl);
-		return $me;
-	}
-	
 	public function updateCache()
 	{
 		global $tikilib, $feedItem, $caching;
@@ -38,7 +32,8 @@ Class Feed_TextBacklink extends Feed_Abstract
 									"unusual"		=> "",
 									"importance" 	=> $pageInfo['pageRank'],
 									"keywords"		=> $pageInfo['keywords'],
-									"url"			=> dirname($_SERVER["REQUEST_URI"]) . '/' . TikiLib::lib("wiki")->url_for_operation_on_a_page("tiki-pagehistory.php", $pageInfo['pageName']) .'&'. 
+									"href"			=> $tikilib->tikiUrl() . "tiki-pagehistory.php?" .
+											"page=" . $pageInfo['pageName'] .'&'.
 											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
 											"nohistory"
 								)

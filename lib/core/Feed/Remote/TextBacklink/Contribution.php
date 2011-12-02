@@ -7,12 +7,12 @@
 
 Class Feed_Remote_TextBacklink_Contribution
 {
-	static function sendItem($url, $page, $name, $data)
+	static function sendItem($item = array())
 	{
 		global $tikilib, $feedItem, $caching;
-
-		$pageInfo = $tikilib->get_page_info($page);
-		$client = new Zend_Http_Client($url);
+		
+		$pageInfo = $tikilib->get_page_info($item['pageName']);
+		$client = new Zend_Http_Client($item['href']);
 		
 		$client->setParameterGet('type', "textlink");
 		$client->setParameterGet('contribution', json_encode(array(
@@ -20,13 +20,13 @@ Class Feed_Remote_TextBacklink_Contribution
 			'encoding' => 'UTF-8',
 			'feed' => array(
 				'type' => 'textlink',
-				'date' => $pageInfo['lastModif'],
 				'entry'=> array(array(
-					'page'=> $page,
-					'name'=> $name,
+					'page'=> $pageInfo['pageName'],
+					'name'=> $item['linkName'],
 					'description'=> $data,
-					'date' => $pageInfo['lastModif'],
-					'href' => $tikilib->tikiUrl() . '?page=' . $page
+					'date'=> $pageInfo['lastModif'],
+					'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $pageInfo['pageName'],
+					'originName'=>$item['originName']
 				))
 			),
 		)));

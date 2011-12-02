@@ -33,7 +33,7 @@ class Feed_Html extends Feed_Abstract
 									"unusual"		=> "",
 									"importance" 	=> $pageInfo['pageRank'],
 									"keywords"		=> $pageInfo['keywords'],
-									"url"			=> $site . "/tiki-pagehistory.php?" .
+									"href"			=> $site . "/tiki-pagehistory.php?" .
 											"page=" . urlencode($pageInfo['pageName']) .'&'. 
 											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
 											"nohistory"
