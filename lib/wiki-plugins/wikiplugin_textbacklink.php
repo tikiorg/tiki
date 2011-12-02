@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_htmlfeed.php 39021 2011-11-28 16:34:55Z robertplummer $
+// $Id$
 
 function wikiplugin_textbacklink_info()
 {
