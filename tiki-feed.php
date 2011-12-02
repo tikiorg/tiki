@@ -19,10 +19,10 @@ if ($_REQUEST['type'] == 'html') {
 		
 		
 		if (isset($_REQUEST['date'])) {
-			$item = Feed_Html_Remote::url(urldecode($_REQUEST['feed']))
+			$item = Feed_Html_Remote::href(urldecode($_REQUEST['feed']))
 				->getItemFromDate(urldecode($_REQUEST['name']), urldecode($_REQUEST['date']));
 		} else {
-			$item = Feed_Html_Remote::url(urldecode($_REQUEST['feed']))->getItem(urldecode($_REQUEST['name']));
+			$item = Feed_Html_Remote::href(urldecode($_REQUEST['feed']))->getItem(urldecode($_REQUEST['name']));
 		}
 		
 		print_r(json_encode($item));
@@ -39,10 +39,11 @@ if ($_REQUEST['type'] == 'html') {
 	print_r(json_encode($feed->feed()));
 	
 } else if ($_REQUEST['type'] == "textlink" && !empty($_REQUEST['contribution'])) {
-	
 	$contribution = json_decode($_REQUEST['contribution']);
-	Feed_TextBacklink_Contribution::local()
-		->setContents($_REQUEST['contribution'])
-		->replace();
-		
+	foreach($contribution->feed->entry as $item) {
+		if (!empty($item->originName)) {
+			//print_r($item);
+			Feed_TextBacklink_Contribution::textbacklink($item->originName)->addItem($item);
+		}
+	}
 }
