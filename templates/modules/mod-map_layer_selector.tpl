@@ -54,7 +54,7 @@
 			};
 		});
 
-		setTimeout(function () {
+		$(map).one('initialized', function () {
 			// Wait for OpenLayers to initialize
 			refreshLayers();
 			map.map.events.register('addlayer', {}, refreshLayers);
@@ -64,7 +64,7 @@
 			$.each(map.map.getControlsByClass('OpenLayers.Control.LayerSwitcher'), function (k, c) {
 				map.map.removeControl(c);
 			});
-		}, 500);
+		});
 	});
 	{/jq}
 {/tikimodule}

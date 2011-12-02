@@ -32,12 +32,12 @@
 				});
 			};
 
-			setTimeout(function () {
+			$(map).one('initialized', function () {
 				// Wait for OpenLayers to initialize
 				refreshModes();
 
 				$(map).bind('modechanged', refreshModes);
-			}, 500);
+			});
 		});
 	});
 	{/jq}
