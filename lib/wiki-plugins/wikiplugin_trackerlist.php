@@ -488,8 +488,8 @@ function wikiplugin_trackerlist_info() {
 			),
 			'showpenditem' => array(
 					'required' => false,
-					'name' => tra('Show Pend Item'),
-					'description' => tra('Show a pend item option (not shown by default)'),
+					'name' => tra('Show Pending Item'),
+					'description' => tra('Show a pending item option (not shown by default)'),
 					'filter' => 'alpha',
 					'default' => 'n',
 					'options' => array(
