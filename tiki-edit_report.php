@@ -55,7 +55,7 @@ $headerlib->add_jq_onready("
 					});
 					
 					$.getJSON('tiki-edit_report.php?',{open: 't'}, function(data) {
-						$.reportBuilderImport(data);
+						$('#reportEditor').reportBuilderImport(data);
 					});
 				});
 			} else {
