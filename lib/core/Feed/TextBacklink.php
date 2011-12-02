@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Item.php 39018 2011-11-28 15:48:42Z robertplummer $
+// $Id$
 
 Class Feed_TextBacklink extends Feed_Abstract
 {
