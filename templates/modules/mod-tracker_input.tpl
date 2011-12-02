@@ -47,12 +47,12 @@
 		var form = this, location = $(this).data('location');
 
 		if (location ) {
+			var map = $(form).closest('.tab, #appframe, body').find('.map-container')[0];
 			$(':submit', form).hide();
-			setTimeout(function () {
-				var control, button, map, modeManager, newMode, oldMode;
-				map = $(form).closest('.tab, #appframe, body').find('.map-container');
-				modeManager = map[0].modeManager;
-				control = map.setupMapSelection({
+			$(map).one('initialized', function () {
+				var control, button, modeManager, newMode, oldMode;
+				modeManager = map.modeManager;
+				control = $(map).setupMapSelection({
 					field: $('#' + location),
 					click: function () {
 						$(form).submit();
@@ -82,8 +82,9 @@
 
 				$(form).bind('insert', function () {
 					modeManager.switchTo(oldMode);
+					$(map).trigger('changed');
 				});
-			}, 500);
+			});
 		}
 	});
 	{/jq}
