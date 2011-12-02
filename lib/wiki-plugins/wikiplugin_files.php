@@ -44,6 +44,7 @@ function wikiplugin_files_info()
 				'name' => tra('Sort Order'),
 				'description' => tra('Order ascending or descending based on any field in the file gallery table. Default is name_asc'),
 				'default' => 'name_asc',
+				'filter' => 'text'
 			),
 			'showaction' => array(
 				'required' => false,
@@ -424,7 +425,7 @@ function wikiplugin_files($data, $params)
 		if (!empty($slideshow) && $slideshow == 'y') {
 			if ($prefs['javascript_enabled'] != 'y') return;
 			if (empty($data)) $data = tra('Slideshow');
-			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId[0]&amp;find_creator=" . urlencode($creator) . "&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
+			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId[0]&amp;sort_mode=" . $sort . "&amp;find_creator=" . urlencode($creator) . "&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
 		$fs = $filegallib->get_files(0, $max, $sort, $find, $galleryId, false, $withsubgals=='y', false, true, false, $show_parentName=='y', true, $recursive, '', false, false, false, $filter);
