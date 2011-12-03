@@ -6,20 +6,21 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 class SearchStatsLib extends TikiLib
 {
-	function clear_search_stats() {
+	function clear_search_stats()
+	{
 		$query = "delete from tiki_search_stats";
-		$result = $this->query($query,array());
+		$result = $this->query($query, array());
 	}
 
-	function list_search_stats($offset, $maxRecords, $sort_mode, $find) {
-
+	function list_search_stats($offset, $maxRecords, $sort_mode, $find)
+	{
 		if ($find) {
 			$mid = " where (`term` like ?)";
 			$bindvars = array("%$find%");
@@ -28,10 +29,10 @@ class SearchStatsLib extends TikiLib
 			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_search_stats` $mid order by ".$this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_search_stats` $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_search_stats` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {

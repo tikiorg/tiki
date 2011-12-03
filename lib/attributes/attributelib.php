@@ -5,19 +5,27 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * AttributeLib 
+ * 
+ * @uses TikiDb_Bridge
+ */
 class AttributeLib extends TikiDb_Bridge
 {
 	private $attributes;
 
-	function __construct() {
+	function __construct()
+	{
 		$this->attributes = $this->table('tiki_object_attributes');
 	}
 
-	function get_attributes( $type, $objectId ) {
-		return $this->attributes->fetchMap('attribute', 'value', array(
-			'type' => $type,
-			'itemId' => $objectId,
-		));
+	function get_attributes( $type, $objectId )
+	{
+		return $this->attributes->fetchMap(
+						'attribute', 
+						'value', 
+						array('type' => $type,'itemId' => $objectId,)
+		);
 	}
 	
 	/**
@@ -30,42 +38,48 @@ class AttributeLib extends TikiDb_Bridge
 	 * attribute naming, and document new tiki.*.* names that you add 
 	 * (also grep "set_attribute" just in case there are undocumented names already used)
 	 */
-	function set_attribute( $type, $objectId, $attribute, $value ) {
-		if ( false === $name = $this->get_valid( $attribute ) ) {
+	function set_attribute( $type, $objectId, $attribute, $value )
+	{
+		if ( false === $name = $this->get_valid($attribute) ) {
 			return false;
 		}
 
 		if ( $value == '' ) {
-			$this->attributes->delete(array(
-				'type' => $type,
-				'itemId' => $objectId,
-				'attribute' => $name,
-			));
+			$this->attributes->delete(
+							array(
+								'type' => $type,
+								'itemId' => $objectId,
+								'attribute' => $name,
+							)
+			);
 		} else {
-			$this->attributes->insertOrUpdate(array('value' => $value), array(
-				'type' => $type,
-				'itemId' => $objectId,
-				'attribute' => $name,
-			));
+			$this->attributes->insertOrUpdate(
+							array('value' => $value), 
+							array(
+								'type' => $type,
+								'itemId' => $objectId,
+								'attribute' => $name,
+							)
+			);
 		}
-
 
 		return true;
 	}
 
-	private function get_valid( $name ) {
+	private function get_valid( $name )
+	{
 		$filter = TikiFilter::get('attribute_type');
-		return $filter->filter( $name );
+		return $filter->filter($name);
 	}
 
 	function find_objects_with($attribute, $value)
 	{
 		$attribute = $this->get_valid($attribute);
 
-		return $this->attributes->fetchAll(array('type', 'itemId'), array(
-			'attribute' => $attribute,
-			'value' => $value,
-		));
+		return $this->attributes->fetchAll(
+						array('type', 'itemId'), 
+						array('attribute' => $attribute, 'value' => $value,)
+		);
 	}
 }
 

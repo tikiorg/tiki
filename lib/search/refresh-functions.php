@@ -6,12 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function refresh_index($object_type, $object_id = null, $process = true) {
+function refresh_index($object_type, $object_id = null, $process = true)
+{
 	global $prefs;
 
 	// First process unified search, then process the legacy indexing if required.
@@ -21,7 +22,7 @@ function refresh_index($object_type, $object_id = null, $process = true) {
 
 		try {
 			global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
-			$unifiedsearchlib->invalidateObject( $unified_type, $object_id );
+			$unifiedsearchlib->invalidateObject($unified_type, $object_id);
 
 			if ($process) {
 				$unifiedsearchlib->processUpdateQueue();
@@ -37,58 +38,59 @@ function refresh_index($object_type, $object_id = null, $process = true) {
 	return true;
 }
 
-function refresh_index_convert_type($object_type) {
+function refresh_index_convert_type($object_type)
+{
 	switch ( $object_type ) {
-	case 'articles': //case 'art': case 'article':
-		return 'article';
-
-	case 'blog_posts': //case 'blog': case 'blog_post':
-		return 'blog post'; // FIXME : Unchecked
-
-	case 'blogs':
-		return 'blog'; // FIXME : Unchecked
-
-	case 'directory_categories': //case 'dir_cat':
-		return 'directory'; // FIXME : Unchecked
-
-	case 'directory_sites': //case 'dir': case 'dir_site':
-		return 'directory'; // FIXME : Unchecked
-
-	case 'comments': //case 'wiki comment': case 'comment': 
-		return 'comment'; // FIXME : Unchecked
-
-	case 'faq_questions':
-		return 'faq'; // FIXME : Unchecked
-
-	case 'faqs': //case 'faq': 
-		return 'faq'; // FIXME : Unchecked
-
-	case 'file_galleries';
-		return 'file gallery';
-
-	case 'files': case 'file'; //case 'fgal':
-		return 'file';
-
-	case 'forums': //case 'forum':
-		return 'forum post';
-
-	case 'images': //case 'gal': case 'img': 
-		return 'image';
-
-	case 'pages': //case 'wiki page': case 'wiki': 
-		return 'wiki page';
-
-	case 'tracker_items': //case 'track': case 'trackeritem': 
-		return 'trackeritem';
-
-	case 'trackers': //case 'tracker':
-		return 'tracker'; // FIXME : Unchecked
-
-	case 'galleries': // case 'imggal':
-		return 'image gallery'; // FIXME : Unchecked
+		case 'articles': //case 'art': case 'article':
+			return 'article';
 	
-	default:
-		return $object_type;
+		case 'blog_posts': //case 'blog': case 'blog_post':
+			return 'blog post'; // FIXME : Unchecked
+	
+		case 'blogs':
+			return 'blog'; // FIXME : Unchecked
+	
+		case 'directory_categories': //case 'dir_cat':
+			return 'directory'; // FIXME : Unchecked
+	
+		case 'directory_sites': //case 'dir': case 'dir_site':
+			return 'directory'; // FIXME : Unchecked
+	
+		case 'comments': //case 'wiki comment': case 'comment':
+			return 'comment'; // FIXME : Unchecked
+	
+		case 'faq_questions':
+			return 'faq'; // FIXME : Unchecked
+	
+		case 'faqs': //case 'faq':
+			return 'faq'; // FIXME : Unchecked
+	
+		case 'file_galleries';
+			return 'file gallery';
+	
+		case 'files': case 'file'; //case 'fgal':
+			return 'file';
+	
+		case 'forums': //case 'forum':
+			return 'forum post';
+	
+		case 'images': //case 'gal': case 'img':
+			return 'image';
+	
+		case 'pages': //case 'wiki page': case 'wiki':
+			return 'wiki page';
+	
+		case 'tracker_items': //case 'track': case 'trackeritem':
+			return 'trackeritem';
+	
+		case 'trackers': //case 'tracker':
+			return 'tracker'; // FIXME : Unchecked
+	
+		case 'galleries': // case 'imggal':
+			return 'image gallery'; // FIXME : Unchecked
+		
+		default:
+			return $object_type;
 	}
 }
 
