@@ -11,7 +11,7 @@
 			<input type="hidden" name="trackerId" value="{$tracker_input.trackerId|escape}"/>
 			<input type="hidden" name="controller" value="tracker"/>
 			<input type="hidden" name="action" value="insert_item"/>
-			<input type="submit" value="{tr}Create{/tr}"/>
+			<input type="submit" name="create" value="{tr}Create{/tr}"/>
 			{foreach from=$tracker_input.hiddenInput key=f item=v}
 				<input id="{$f|escape}" type="hidden" name="forced~{$f|escape}" value="{$v|escape}"/>
 			{/foreach}
@@ -32,6 +32,7 @@
 	$('.mod-tracker-input').removeClass('mod-tracker-input').submit(function () {
 		var form = this;
 		if (hasEmptyField(form, ':input:not(:submit)')) {
+			$(':submit', form).showError("{tr}Missing values{/tr}");
 			return false;
 		}
 
@@ -40,6 +41,9 @@
 			data: $(form).serialize(),
 			success: function () {
 				$(form).trigger('insert');
+			},
+			close: function () {
+				$(form).trigger('cancel');
 			}
 		});
 		return false;
@@ -50,7 +54,7 @@
 			var map = $(form).closest('.tab, #appframe, body').find('.map-container')[0];
 			$(':submit', form).hide();
 			$(map).one('initialized', function () {
-				var control, button, modeManager, newMode, oldMode;
+				var control, button, modeManager, newMode;
 				modeManager = map.modeManager;
 				control = $(map).setupMapSelection({
 					field: $('#' + location),
@@ -60,7 +64,6 @@
 				});
 				control.deactivate();
 
-				oldMode = modeManager.activeMode.name;
 				modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control]});
 
 				button = $('<input type="submit"/>')
@@ -81,8 +84,10 @@
 				}).keyup();
 
 				$(form).bind('insert', function () {
-					modeManager.switchTo(oldMode);
 					$(map).trigger('changed');
+				});
+				$(form).bind('cancel', function () {
+					$(map).removeMapSelection();
 				});
 			});
 		}
