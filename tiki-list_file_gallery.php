@@ -787,6 +787,12 @@ if (isset($_GET['slideshow'])) {
 	if (isset($_REQUEST['slideshow_noclose'])) {
 		$smarty->assign('slideshow_noclose', 'y');
 	}
+	if (isset($_REQUEST['caption'])) {
+		$smarty->assign('caption', $_REQUEST['caption']);
+	}
+	if (isset($_REQUEST['windowtitle'])) {
+		$smarty->assign('sswindowtitle', $_REQUEST['windowtitle']);
+	}
 	$smarty->display('file_gallery_slideshow.tpl');
 	die();
 } else {

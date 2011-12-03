@@ -19,7 +19,7 @@ function wikiplugin_files_info()
 			'galleryId' => array(
 				'required' => false,
 				'name' => tra('File Galleries ID'),
-				'description' => tra('To list only files contained in these file galleries'),
+				'description' => tra('To list only files contained in these file galleries (multiple IDs separated by colon)'),
 				'default' => '',
 				'separator' => ':',
 			),
@@ -75,7 +75,7 @@ function wikiplugin_files_info()
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => tra('Show the title of the file gallery (shown by default)'),
+				'description' => tra('Show the title of the file gallery (shown by default). Also shown on slide show pop up window if a single galleryId is used.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -111,7 +111,7 @@ function wikiplugin_files_info()
 			'showname' => array(
 				'required' => false,
 				'name' => tra('Show Name'),
-				'description' => tra('Show the name given to the file upon upload into the file gallery (shown by default)'),
+				'description' => tra('Show the name given to the file upon upload into the file gallery (shown by default). Set to Yes (y) to show as a caption in a slide show.'),
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -123,7 +123,7 @@ function wikiplugin_files_info()
 			'showfilename' => array(
 				'required' => false,
 				'name' => tra('Show Filename'),
-				'description' => tra('Show each file\'s filename (shown by default)'),
+				'description' => tra('Show each file\'s filename (shown by default except in slide show). Set to Yes (y) to show as a caption in a slide show.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'advanced' => true,
@@ -136,7 +136,7 @@ function wikiplugin_files_info()
 			'showsize' => array(
 				'required' => false,
 				'name' => tra('Show Size'),
-				'description' => tra('Show the size of each file in kilobytes (shown by default)'),
+				'description' => tra('Show the size of each file in kilobytes (shown by default except in slide show)'),
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -148,7 +148,7 @@ function wikiplugin_files_info()
 			'showdescription' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => tra('Show the description of the file given upon upload into the file gallery (shown by default)'),
+				'description' => tra('Show the description of the file given upon upload into the file gallery (shown by default except in slide show). Set to Yes (y) to show as a caption in a slide show.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -425,7 +425,23 @@ function wikiplugin_files($data, $params)
 		if (!empty($slideshow) && $slideshow == 'y') {
 			if ($prefs['javascript_enabled'] != 'y') return;
 			if (empty($data)) $data = tra('Slideshow');
-			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId[0]&amp;sort_mode=" . $sort . "&amp;find_creator=" . urlencode($creator) . "&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
+			// set caption field indicator for images in slide show
+			if (isset($showdescription) && $showdescription == 'y') {
+				$caption = 'd';
+			} elseif (isset($showname) && $showname == 'y') {
+				$caption = 'n';
+			} elseif (isset($showfilename) && $showfilename == 'y') {
+				$caption = 'f';
+			} else {
+				$caption = false;
+			}
+			// set title indicator for slideshow popup window
+			// only shows a title if a single galleryId is used
+			$windowtitle = "&amp;windowtitle=";
+			$windowtitle .= $showtitle == 'n' || empty($galleryId) || count($galleryId) > 1 ? 'none': urlencode($gal_info['name']);
+			
+			$creatorparam = empty($creator) ? '': "&amp;find_creator=" . urlencode($creator);
+			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId[0]&amp;sort_mode=" . $sort . "&amp;caption=" . $caption . $creatorparam . $windowtitle . "&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
 		$fs = $filegallib->get_files(0, $max, $sort, $find, $galleryId, false, $withsubgals=='y', false, true, false, $show_parentName=='y', true, $recursive, '', false, false, false, $filter);

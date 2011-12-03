@@ -55,6 +55,13 @@
 
 {* --- tiki block --- *}
 <title>{strip}
+{if !empty($sswindowtitle)}
+	{if $sswindowtitle eq 'none'}
+		&nbsp;
+	{else}
+		{$sswindowtitle|escape}
+	{/if}
+{else}
 	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
 	{capture assign="page_description_title"}{strip}
 		{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
@@ -89,6 +96,7 @@
 		{/if}
 	{/if}
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
+{/if}
 {/strip}</title>
 
 {if $prefs.site_favicon}
