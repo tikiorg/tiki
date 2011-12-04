@@ -7,9 +7,47 @@
 
 class FileGallery_File
 {
-	var $param = array();
+	var $param = array(
+		"fileId" 	=> 0,
+		"galleryId" 	=> 1,
+		"name"		=> "",
+		"description"	=> "",
+		"created" 	=> 0,
+		"filename" 	=> "",
+		"filesize" 	=> 0,
+		"filetype" 	=> "",
+		"data" 		=> "",
+		"user"	 	=> "",
+		"author" 	=> "",
+		"hits" 		=> 0,
+		"maxhits"	=> 0,
+		"lastDownload" 	=> "",
+		"votes" 	=> 0,
+		"points" 	=> 0,
+		"path" 		=> "",
+		"reference_url" => "",
+		"is_reference" 	=> false,
+		"hash" 		=> "",
+		"search_data" 	=> "",
+		"lastModif" 	=> 0,
+		"lastModifUser" => "",
+		"lockedby" 	=> "",
+		"comment"	=> "",
+		"archiveId"	=> 0,
+		"deleteAfter" 	=> 0,
+		"backlinkPerms"	=> "",
+	);
 	var $exists = false;
 	
+	function __construct()
+	{
+		include_once ('lib/mime/mimetypes.php');
+		$this->setParam('filetype', $mimetypes["txt"]);
+		$this->setParam('name', tr("New File"));
+		$this->setParam('description', tr("New File"));
+		$this->setParam('filename', tr("New File"));
+	}
+
 	static function filename($filename = "")
 	{
 		global $tikilib;
@@ -31,7 +69,7 @@ class FileGallery_File
 		$me = new self();
 		
 		$me->param = TikiLib::lib("filegal")->get_file((int)$id);
-		
+
 		if ($me->getParam('created') > 0) {
 			$me->exists = true;
 		}
@@ -85,7 +123,7 @@ class FileGallery_File
 	function replace($data)
 	{
 		global $user;
-		include_once ('lib/mime/mimetypes.php');
+		
 		if ($this->exists() == false) {
 			$id = TikiLib::lib("filegal")->insert_file(
 				1, //zero makes it not show by default
@@ -94,9 +132,9 @@ class FileGallery_File
 				$this->getParam('filename'),
 				$data,
 				strlen($data),
-				$mimetypes["txt"],
+				$this->getParam('filetype'),
 				$user,
-				date()
+				time()
 			);
 		} else {
 			
@@ -109,9 +147,9 @@ class FileGallery_File
 				$this->getParam('filename'),
 				$data,
 				strlen($data),
-				$mimetypes["txt"],
+				$this->getParam('filetype'),
 				$user,
-				date()
+				time()
 			);
 		}
 		
