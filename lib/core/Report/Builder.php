@@ -31,12 +31,11 @@ class Report_Builder
 		$me = new self();
 		$data = "tracker_value : 28
 tracker_join_1_left_value : item_id
-tracker_join_1_right_value : 226
+tracker_join_1_right_value : 231
 tracker_join_1_tracker_value : 27
 tracker_join_1_tracker_search_0_value : 217
-tracker_join_1_tracker_status_0_value : o
-tracker_join_1_tracker_status_1_value : p
-tracker_join_1_tracker_status_2_value : c
+tracker_join_1_tracker_status_0_value : p
+tracker_join_1_tracker_status_1_value : c
 tracker_join_1_tracker_fields_0_value : 217
 tracker_join_1_tracker_fields_1_value : 218
 tracker_join_1_tracker_fields_2_value : 219
@@ -48,8 +47,7 @@ tracker_join_1_tracker_fields_7_value : 224
 tracker_join_1_tracker_fields_8_value : 225
 tracker_search_0_value : 226
 tracker_status_0_value : o
-tracker_status_1_value : p
-tracker_status_2_value : c
+tracker_status_1_value : c
 tracker_fields_0_value : 226
 tracker_fields_1_value : 227
 tracker_fields_2_value : 228
