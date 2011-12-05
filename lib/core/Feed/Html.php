@@ -10,11 +10,11 @@ class Feed_Html extends Feed_Abstract
 	var $lastModif = 0;
 	var $type = "feed_html";
 	
-	public function updateCache()
+	public function replace()
 	{
 		global $feedItem, $caching, $page;
 		
-		$this->clearCache();
+		$this->delete();
 		$site = $this->siteName();
 		
 		$caching = true; //this variable is used to block recursive parse_data below

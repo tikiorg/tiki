@@ -9,7 +9,7 @@ Class Feed_TextBacklink_Contribution extends Feed_Abstract
 {
 	var $type = "local_page";
 	var $name = "";
-	var $fileGalCache = true;
+	var $isFileGal = true;
 	 
 	static function textbacklink($name)
 	{

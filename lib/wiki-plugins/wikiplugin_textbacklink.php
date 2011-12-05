@@ -11,7 +11,7 @@ function wikiplugin_textbacklink_info()
 		'name' => tra('TextBacklink'),
 		'documentation' => 'PluginTextBacklink',
 		'description' => tra('Creates a linkable part of a page using textbacklink protocol'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_textbacklink' ),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_textbacklink', 'feature_textbacklinkprotocol' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
 			'name' => array(
@@ -44,7 +44,7 @@ function wikiplugin_textbacklink($data, $params)
 		$feed->addItem($feedItem);
 	}
 	
-	$contributions = json_decode( Feed_TextBacklink_Contribution::textbacklink($name)->getCache() );
+	$contributions = json_decode( Feed_TextBacklink_Contribution::textbacklink($name)->getContents() );
 	
 	foreach($contributions->entry as $key => $item) {
     	$data = "~np~<a href='$item->href' title='$item->name' class='textlink$textbacklinkI' data-key='$key'>*</a>~/np~" . $data;
@@ -52,7 +52,7 @@ function wikiplugin_textbacklink($data, $params)
 	
 	$headerlib->add_jq_onready("
 		$('#textBacklink$textbacklinkI').click(function() {
-			alert('" . $tikilib->tikiUrl() . "tiki-feed?type=textbacklink" . "');
+			alert('Feed: " . $tikilib->tikiUrl() . "tiki-feed?type=textbacklink        Name: $name');
 		});
 		
 		

@@ -11,7 +11,7 @@ function wikiplugin_htmlfeedlink_info()
 		'name' => tra('Html Feed Link'),
 		'documentation' => 'PluginHtmlFeedlink',
 		'description' => tra('Display remote content'),
-		'prefs' => array('wikiplugin_htmlfeedlink'),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeedlink', 'feature_htmlfeed' ),
 		'body' => tra('Initial Value'),
 		'icon' => 'pics/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',

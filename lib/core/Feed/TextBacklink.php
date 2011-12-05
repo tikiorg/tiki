@@ -9,11 +9,11 @@ Class Feed_TextBacklink extends Feed_Abstract
 {
 	var $type = "feed_textbacklink";
 	
-	public function updateCache()
+	public function replace()
 	{
 		global $tikilib, $feedItem, $caching;
 		
-		$this->clearCache();
+		$this->delete();
 		$site = $tikilib->tikiUrl();
 		
 		$caching = true; //this variable is used to block recursive parse_data below

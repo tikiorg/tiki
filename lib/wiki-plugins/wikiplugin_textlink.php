@@ -11,7 +11,7 @@ function wikiplugin_textlink_info()
 		'name' => tra('TextLink'),
 		'documentation' => 'PluginTextlink',
 		'description' => tra('Links your article to a site using textbacklink protocol'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink' ),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_textbacklinkprotocol' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
 			'name' => array(
@@ -51,7 +51,7 @@ function wikiplugin_textlink($data, $params)
 		'description'=> TikiLib::lib("parser")->parse_data($data),
 		'originName'=> $name
 	));
-	
+
 	$item = $feed->getItem($name);
 	
 	if (!empty($item->href)) {

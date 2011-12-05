@@ -11,7 +11,7 @@ function wikiplugin_htmlfeed_info()
 		'name' => tra('Textlink'),
 		'documentation' => 'PluginHtmlFeed',
 		'description' => tra('Adds an item to html feed'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeed' ),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeed' , 'feature_htmlfeed'),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
 			'name' => array(
