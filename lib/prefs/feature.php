@@ -2468,5 +2468,25 @@ function prefs_feature_list($partial = false)
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
+		'feature_htmlfeed' => array(
+			'name' => tra('Html Feed'),
+			'type' => 'flag',
+			'help' => 'HtmlFeed',
+			'keywords' => 'html feed ads ad share',
+			'description' => tra('A way to push and pull html bits around from one site to another'),
+			'default' => 'n',
+			'warning' => tra('Experimental'),
+			'tags' => array('experimental'),
+		),
+		'feature_textbacklinkprotocol' => array(
+			'name' => tra('TextBacklink-Protocol'),
+			'type' => 'flag',
+			'help' => 'TextBacklinkProtocol',
+			'keywords' => 'textbacklink share feed',
+			'description' => tra('A Dynamic Compendia'),
+			'default' => 'n',
+			'warning' => tra('Experimental'),
+			'tags' => array('experimental'),
+		),
 	);
 }
