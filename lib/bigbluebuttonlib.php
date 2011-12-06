@@ -224,7 +224,12 @@ class BigBlueButtonLib
 
 		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
 
-		return "$base/bigbluebutton/api/$action?" . http_build_query($parameters, '', '&');
+		if (parse_url($base, PHP_URL_PATH)) {
+			$url = "$base/api/$action?" . http_build_query( $parameters, '', '&' );
+		} else {
+			$url = "$base/bigbluebutton/api/$action?" . http_build_query( $parameters, '', '&' );
+		}
+		return $url;
 	}
 
 	private function generateChecksum( $action, array $parameters )

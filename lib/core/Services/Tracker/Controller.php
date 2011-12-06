@@ -438,7 +438,7 @@ class Services_Tracker_Controller
 			foreach ($processedFields as $k => $f) {
 				$permName = $f['permName'];
 				$fields[$permName] = $f['value'];
-				
+
 				if (isset($forced[$permName])) {
 					$toRemove[$permName] = $k;
 				}
