@@ -37,6 +37,7 @@ function smarty_block_title($params, $content, $template, $repeat)
 	if ( ! isset($params['url']) ) {
 		$template->loadPlugin('smarty_function_query');
 		$params['url'] = htmlspecialchars(smarty_function_query(array('_type' => 'absolute_path'), $template));
+		$params['url'] = str_replace('&amp;amp;', '&', $params['url']);
 	}
 
 	// Set the variable for the HTML title tag

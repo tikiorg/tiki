@@ -130,6 +130,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 			$form = preg_replace(array('/<!--.*?-->/', '/\s+/', '/^~np~/', '/~\/np~/'), array('', ' ', '', ''), $form);	// remove comments etc
 
+			if ($this->getOption(3)) {
+				$displayFieldId = $this->getOption(3);
+				if (strpos($displayFieldId, '|') !== false) {
+					$displayFieldId = substr($displayFieldId, 0, strpos($displayFieldId, '|'));
+				}
+			} else {
+				$displayFieldId = $this->getOption(1);
+			}
+
 			TikiLib::lib('header')->add_jq_onready('
 $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 	if ($(this).val() == -1) {
@@ -159,8 +168,8 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 								if (data && data.data) {
 									for (var i = 0; i < data.data.length; i++) {
 										var a = data.data[i];
-										if ( a && a["fieldId"] == '.$this->getOption(1).' ) {
-											$o = $("<option value=\'" + data["itemId"] + "\'>" + a["value"] + "</option>");
+										if ( a && a["fieldId"] == '. $displayFieldId .' ) {
+											var $o = $("<option value=\'" + data["itemId"] + "\'>" + a["value"] + "</option>");
 											$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
 											$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 1;
 										}
@@ -172,9 +181,6 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 								return;
 							}, "json");
 						}
-
-						//.append($("<input type=\'hidden\' name=\'save\' value=\'save\' />"))
-						//.submit();
 					},
 					Cancel: function() {
 						$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 0;

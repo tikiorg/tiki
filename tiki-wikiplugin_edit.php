@@ -57,7 +57,7 @@ foreach ( $matches as $match ) {
 
 			$parts = array();
 			foreach ( $values as $key => $value ) {
-				if ($value) {
+				if ($value || $value === '0') {
 					$parts[] = "$key=\"" . str_replace('"', "\\\"", $value) . '"';
 				}
 			}

@@ -5319,8 +5319,10 @@ class UsersLib extends TikiLib
 	{
 		$ret = array();
 		if (is_array($group)) {
-			$query = 'select * from `users_groups` where `groupName` in ('.implode(',', array_fill(0, count($group), '?')).') order by '.$this->convertSortMode($sort_mode);
-			$ret = $this->fetchAll($query, $group);
+			if(count($group) > 0) {
+				$query = 'select * from `users_groups` where `groupName` in ('.implode(',',array_fill(0,count($group),'?')).') order by '.$this->convertSortMode($sort_mode);
+				$ret = $this->fetchAll($query, $group);
+			}
 		} else {
 			$query = 'select * from `users_groups` where `groupName`=?';
 			$result = $this->query($query, array($group));
