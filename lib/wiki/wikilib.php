@@ -170,7 +170,7 @@ class WikiLib extends TikiLib
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
-	function wiki_rename_page($oldName, $newName, $renameHome = true)
+	function wiki_rename_page($oldName, $newName, $renameHomes = true)
 	{
 		global $prefs, $tikilib;
 		// if page already exists, stop here
@@ -406,7 +406,7 @@ class WikiLib extends TikiLib
 			$parse_options['suppress_icons'] = true;
 		}
 
-		$wiki_cache = ($prefs['feature_wiki_icache'] == 'y' && !is_null($info['wiki_cache'])) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
+		$wiki_cache = ($prefs['feature_wiki_icache'] == 'y' && !is_null($info['wiki_cache'])) ? $info['wiki_cache'] : $prefs['wiki_cache'];
 		if ($wiki_cache > 0 && (empty($user) || $prefs['wiki_cache'] == 0) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $wiki_cache >= $this->now) {
@@ -688,7 +688,7 @@ class WikiLib extends TikiLib
 	// version in the tiki_history then the last version becomes the actual version
 	function remove_last_version($page, $comment = '')
 	{
-
+		global $prefs;
 		$this->invalidate_cache($page);
 		$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convertSortMode("lastModif_desc");
 		$result = $this->query($query, array( $page ));
@@ -705,6 +705,7 @@ class WikiLib extends TikiLib
 			$histlib->use_version($res["pageName"], $res["version"]);
 			if ($prefs['feature_contribution'] == 'y') {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
+				$tikilib = TikiLib::lib('tiki');
 				$info = $tikilib->get_page_info($res['pageName']);
 				$contributionlib->change_assigned_contributions($res['historyId'], 'history', $res['pageName'], 'wiki page', $info['description'], $res['pageName'], "tiki-index.php?page".urlencode($res['pageName']));
 			}
