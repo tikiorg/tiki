@@ -6246,7 +6246,7 @@ class UsersLib extends TikiLib
 					$smarty->assign('msg', tra("The registration mail can't be sent because there is no server email address set, and this feature is disabled").": feature_messages");
 					return false;
 				}
-				include_once('lib/messu/messulib.php');
+				global $messulib; include_once('lib/messu/messulib.php');
 				$messulib->post_message($prefs['contact_user'], $prefs['contact_user'], $prefs['contact_user'], '', $mail_subject, $mail_data, 5);
 				$smarty->assign('msg', $smarty->fetch('mail/user_validation_waiting_msg.tpl'));
 			} else {
