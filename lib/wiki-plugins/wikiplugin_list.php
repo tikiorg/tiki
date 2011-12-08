@@ -143,7 +143,12 @@ function wikiplugin_list($data, $params)
 
 function wpquery_list_max($query, $value)
 {
-	$query->setRange(0, $value);	
+	if (!empty($_REQUEST['offset'])) {
+		$start = $_REQUEST['offset'];
+	} else {
+		$start = 0;
+	}
+	$query->setRange($start, $value);	
 }
 
 function wpquery_filter_type($query, $value)
