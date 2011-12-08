@@ -64,6 +64,7 @@ class HeaderLib
 	function add_jsfile_dependancy($file)
 	{
 		$this->add_jsfile($file, -1);
+		return $this;
 	}
 	
 	function add_jsfile($file,$rank=0,$minified=false)
@@ -78,6 +79,7 @@ class HeaderLib
 				$this->minified[$file] = $minified;
 			}
 		}
+		return $this;
 	}
 
 	function add_js_config($script,$rank=0)
@@ -85,6 +87,7 @@ class HeaderLib
 		if (!$this->wysiwyg_parsing && (empty($this->js_config[$rank]) or !in_array($script, $this->js_config[$rank]))) {
 			$this->js_config[$rank][] = $script;
 		}
+		return $this;
 	}
 
 	function add_js($script,$rank=0)
@@ -92,6 +95,7 @@ class HeaderLib
 		if (!$this->wysiwyg_parsing && (empty($this->js[$rank]) or !in_array($script, $this->js[$rank]))) {
 			$this->js[$rank][] = $script;
 		}
+		return $this;
 	}
 
 	/**
@@ -105,6 +109,7 @@ class HeaderLib
 		if (!$this->wysiwyg_parsing && (empty($this->jq_onready[$rank]) or !in_array($script, $this->jq_onready[$rank]))) {
 			$this->jq_onready[$rank][] = $script;
 		}
+		return $this;
 	}
 
 	function add_cssfile($file,$rank=0)
@@ -112,6 +117,7 @@ class HeaderLib
 		if (empty($this->cssfiles[$rank]) or !in_array($file, $this->cssfiles[$rank])) {
 			$this->cssfiles[$rank][] = $file;
 		}
+		return $this;
 	}
 
 	function replace_cssfile($old, $new, $rank)
@@ -122,6 +128,7 @@ class HeaderLib
 				break;
 			}
 		}
+		return $this;
 	}
 
 	function drop_cssfile($file)
@@ -134,6 +141,7 @@ class HeaderLib
 			}
 		}
 		$this->cssfiles = $out;
+		return $this;
 	}
 
 	function add_css($rules,$rank=0)
@@ -141,6 +149,7 @@ class HeaderLib
 		if (empty($this->css[$rank]) or !in_array($rules, $this->css[$rank])) {
 			$this->css[$rank][] = $rules;
 		}
+		return $this;
 	}
 
 	function add_rssfeed($href,$title,$rank=0)
@@ -148,12 +157,14 @@ class HeaderLib
 		if (empty($this->rssfeeds[$rank]) or !in_array($href, array_keys($this->rssfeeds[$rank]))) {
 			$this->rssfeeds[$rank][$href] = $title;
 		}
+		return $this;
 	}
 
 	function set_metatags($tag,$value,$rank=0)
 	{
 		$tag = addslashes($tag);
 		$this->metatags[$tag] = $value;
+		return $this;
 	}
 
 	function output_headers()
@@ -254,7 +265,8 @@ class HeaderLib
 	
 	public function lockMinifiedJs()
 	{
-		$this->lockMinifiedJs = true; 
+		$this->lockMinifiedJs = true;
+		return $this;
 	}
 	
 	public function getMinifiedJs()
@@ -352,6 +364,7 @@ class HeaderLib
 	{
 		$this->js = array();
 		$this->jq_onready = array();
+		return $this;
 	}
 
 	function output_js($wrap = true)
@@ -737,6 +750,8 @@ class HeaderLib
 
 		$this->add_jsfile('http://openlayers.org/api/2.11/OpenLayers.js', 'external');
 		$this->add_js('$(".map-container:not(.done)").addClass("done").createMap();');
+		
+		return $this;
 	}
 	
 	function add_dracula()
@@ -746,6 +761,8 @@ class HeaderLib
 		$this->add_jsfile('lib/dracula/raphael-min.js', 'external');
 		$this->add_jsfile('lib/dracula/graffle.js', 'external');
 		$this->add_jsfile('lib/dracula/graph.js', 'external');
+		
+		return $this;
 	}
 }
 
