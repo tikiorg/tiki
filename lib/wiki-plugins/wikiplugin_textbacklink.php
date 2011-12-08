@@ -29,6 +29,29 @@ function wikiplugin_textbacklink($data, $params)
     static $textbacklinkI = 0;
 	++$textbacklinkI;
 	
+	$_REQUEST['rangy'] = (isset($_REQUEST['rangy']) ? htmlspecialchars($_REQUEST['rangy']) : "");
+	
+	$headerlib
+			->add_jsfile("lib/rangy/uncompressed/rangy-core.js")
+			->add_jsfile("lib/rangy/rangy-cssclassapplier.js")
+			->add_jsfile("lib/rangy/rangy-selectionsaverestore.js")
+			->add_jsfile("lib/rangy/uncompressed/rangy-serializer.js")
+			->add_jsfile("lib/ZeroClipboard.js");
+			
+	if (!empty($_REQUEST['rangy'])) {
+		$headerlib
+			->add_jq_onready("
+				alert('". $_REQUEST['rangy'] ."');
+				$.rangyRestore('" . $_REQUEST['rangy'] . "');
+			");
+	} else {
+		$headerlib
+			->add_jq_onready("
+				$.rangy(function(val) {
+					alert(val.serial);
+				});
+			");
+	}
 	$params = array_merge(array("name" => ""), $params);
 	
 	extract($params, EXTR_SKIP);
