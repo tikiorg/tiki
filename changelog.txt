@@ -25,6 +25,90 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.5
+<http://tiki.org/ReleaseNotes65>
+------------------
+
+----------------------------------------------
+r38940 | chealer | 2011-11-22 20:39:41 +0100 (Tue, 22 Nov 2011) | 2 lines
+
+[bp/r38937][FIX] HTML special characters encoding
+
+----------------------------------------------
+r38859 | chealer | 2011-11-17 08:17:46 +0100 (Thu, 17 Nov 2011) | 1 line
+
+[bp/r38858][FIX] JavaScript/HTML special characters encoding
+----------------------------------------------
+r38743 | chealer | 2011-11-07 20:36:26 +0100 (Mon, 07 Nov 2011) | 1 line
+
+[bp/r38740][FIX] Broken links from self_link (and button) with double-HTML-encoded ampersands when a script links to itself
+----------------------------------------------
+r38713 | chealer | 2011-11-05 18:49:31 +0100 (Sat, 05 Nov 2011) | 1 line
+
+[bp/r38712][FIX] Broken links from self_link (and button) with double-HTML-encoded ampersands
+----------------------------------------------
+r38642 | chealer | 2011-11-03 07:40:16 +0100 (Thu, 03 Nov 2011) | 1 line
+
+[bp/r38639][FIX] HTML special characters encoding
+----------------------------------------------
+r38013 | jyhem | 2011-10-06 10:04:25 +0200 (Thu, 06 Oct 2011) | 1 line
+
+[FIX] Obvious typo
+----------------------------------------------
+r37997 | jyhem | 2011-10-05 18:22:46 +0200 (Wed, 05 Oct 2011) | 1 line
+
+[FIX] Translations containing '{tr}' break the templates. I commented them
+----------------------------------------------
+r37714 | marclaporte | 2011-09-27 04:56:36 +0200 (Tue, 27 Sep 2011) | 1 line
+
+correct links back to 6.x profiles
+----------------------------------------------
+r37441 | chealer | 2011-09-20 03:52:25 +0200 (Tue, 20 Sep 2011) | 1 line
+
+[bp/r37439][FIX] HTML special characters encoding
+----------------------------------------------
+r36357 | xavidp | 2011-08-20 17:36:35 +0200 (Sat, 20 Aug 2011) | 1 line
+
+set in sync with proposals 6x
+----------------------------------------------
+r36101 | jean-lucnavarro | 2011-08-12 08:00:49 +0200 (Fri, 12 Aug 2011) | 1 line
+
+[FIX] removed useless personal markers // 1D, // 1F etc.
+----------------------------------------------
+r36100 | jean-lucnavarro | 2011-08-12 07:47:31 +0200 (Fri, 12 Aug 2011) | 2 lines
+
+[TRA] more French translations
+
+----------------------------------------------
+r36035 | jyhem | 2011-08-11 02:13:06 +0200 (Thu, 11 Aug 2011) | 1 line
+
+[FIX] This file was syntactically incorrect. Please just test the file before committing in stable branch.
+----------------------------------------------
+r35918 | jyhem | 2011-08-08 19:27:48 +0200 (Mon, 08 Aug 2011) | 1 line
+
+[FIX br/35917]i18n: use utf8 non-breaking space instead of html &nbsp;
+----------------------------------------------
+r35685 | sylvieg | 2011-07-27 19:22:09 +0200 (Wed, 27 Jul 2011) | 1 line
+
+[rollback 35681] wrong branch - sorry
+----------------------------------------------
+r35681 | sylvieg | 2011-07-27 13:58:21 +0200 (Wed, 27 Jul 2011) | 1 line
+
+[bp/r35680][FIX]action calendar: quick fix to see something (action calendar must be merged with calendar or removed?
+----------------------------------------------
+r35591 | marclaporte | 2011-07-22 17:14:11 +0200 (Fri, 22 Jul 2011) | 1 line
+
+cleanup
+----------------------------------------------
+r33940 | chealer | 2011-04-13 05:59:35 +0200 (mer. 13 avril 2011) | 1 ligne
+
+[bp/r33917][FIX] Admin banning: Direct comparisons between UNIX timestamps and TIMESTAMP MySQL type when using "Rule activated by dates". Fixes rules being deleted on creation, not banning correctly and/or wrong saved dates
+----------------------------------------------
+r33962 | sampaioprimo | 2011-04-14 17:22:29 +0200 (jeu. 14 avril 2011) | 2 lignes
+
+[bp/r33946][FIX] blog posts "disappear" for anonymous when upgrading old installations (<=1.9.x)
+
+----------------------------------------------
 Version 6.4
 <http://tiki.org/ReleaseNotes64>
 ------------------
