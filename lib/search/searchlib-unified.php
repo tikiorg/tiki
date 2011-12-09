@@ -56,6 +56,11 @@ class UnifiedSearchLib
 		}
 	}
 
+	function getQueueCount() {
+		$queuelib = TikiLib::lib('queue');
+		return $queuelib->count(self::INCREMENT_QUEUE);
+	}
+
 	private function rebuildInProgress() {
 		global $prefs;
 		$tempName = $prefs['unified_lucene_location'] . '-new';

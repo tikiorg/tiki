@@ -57,6 +57,24 @@
 							{/if}
 						</li>
 					</ul>
+					{if $queue_count > 0}
+						<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
+						{tr}Process:{/tr}
+						<ul>
+							{if $queue_count > 10}
+								<li><a  href="tiki-admin.php?page=search&amp;process=10">10</a></li>
+							{/if}
+							{if $queue_count > 20}
+								<li><a  href="tiki-admin.php?page=search&amp;process=20">20</a></li>
+							{/if}
+							{if !empty($smarty.request.process) and $smarty.request.process eq 'all' and $prefs.javascript_enabled eq "y"}
+								{jq} setTimeout(function() { history.go(0); }, 1000); {/jq}
+								<li><strong><a  href="tiki-admin.php?page=search&amp;process=">{tr}Stop{/tr}</a></strong></li>
+							{else}
+								<li><em><a  href="tiki-admin.php?page=search&amp;process=all">{tr}All{/tr}</a></em> <br /><span class="description">{tr}Uses JavaScript to reload this page until queue is processed{/tr}</span></li>
+							{/if}
+						</ul>
+					{/if}
 				</div>
 			</fieldset>
 			<fieldset>

@@ -30,6 +30,13 @@ class QueueLib extends TikiDb_Bridge
 		));
 	}
 
+	function count($queue)
+	{
+		return $this->queue->fetchCount(array(
+			'queue' => $queue,
+		));
+	}
+
 	function pull($queue, $count = 1)
 	{
 		$handler = uniqid();

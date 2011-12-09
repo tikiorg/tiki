@@ -97,15 +97,37 @@ function activated_features() {
 	}
 	return $activated_features;
 }
-global $tiki_p_admin;
+global $tiki_p_admin, $unifiedsearchlib;
+require_once 'lib/search/searchlib-unified.php';
+
+$queueCount = $unifiedsearchlib->getQueueCount();
+
 if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] == 'now') {
-	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 
 	$stat = $unifiedsearchlib->rebuild(isset($_REQUEST['loggit']));
 	$smarty->assign_by_ref('stat', $stat);
 
 	TikiLib::lib('cache')->empty_type_cache("search_valueformatter");
 }
+
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['process'])) {
+
+	if (is_numeric($_REQUEST['process'])) {
+		$toProcess = (int) $_REQUEST['process'];
+	} else if ($_REQUEST['process'] === 'all') {
+		$toProcess = 10;	// do it in batches
+	} else {
+		$toProcess = 0;
+	}
+	@ini_set('max_execution_time', 0);
+	@ini_set('memory_limit', -1);
+	$stat = $unifiedsearchlib->processUpdateQueue($toProcess);
+	$smarty->assign_by_ref('stat', $stat);
+
+	$queueCount = $unifiedsearchlib->getQueueCount();
+}
+
+$smarty->assign('queue_count', $queueCount);
 
 if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
