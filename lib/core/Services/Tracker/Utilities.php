@@ -129,12 +129,21 @@ class Services_Tracker_Utilities
 		);
 	}
 
-	function getItems(array $conditions, $maxRecords = -1, $offset = -1)
+    /**
+     * @param array $conditions     e.g. array('trackerId' => 42)
+     * @param int $maxRecords       default -1 (all)
+     * @param int $offset           default -1
+     * @param array $fields         array of fields to fetch (by permNames)
+     *
+     * @return mixed
+     */
+
+    function getItems(array $conditions, $maxRecords = -1, $offset = -1, $fields = array())
 	{
 		$keyMap = array();
 		$definition = Tracker_Definition::get($conditions['trackerId']);
 		foreach ($definition->getFields() as $field) {
-			if (! empty($field['permName'])) {
+      		if (! empty($field['permName']) && (empty($fields) || in_array($field['permName'], $fields))) {
 				$keyMap[$field['fieldId']] = $field['permName'];
 			}
 		}
