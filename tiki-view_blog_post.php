@@ -35,8 +35,11 @@ if (!$post_info) {
 	$smarty->assign('msg', tra("Post not found"));
 	$smarty->display("error.tpl");
 	die;
+} else {
+	//$smarty->assign('msg', tra("Post found"));
+	//$smarty->display("error.tpl");
+	$bloglib->add_blog_post_hit($postId);
 }
-
 $blogId = $post_info['blogId'];
 
 $blog_data = $bloglib->get_blog($blogId);
@@ -88,7 +91,7 @@ if ($prefs['feature_categories'] == 'y') {
 	$cat_objid = $postId;
 	require_once('categorize_list.php');	
 }
-
+$bloglib->add_blog_post_hit($postId);
 $smarty->assign('ownsblog', $ownsblog);
 $post_info['data'] = TikiLib::htmldecode($post_info['data']);
 $smarty->assign('postId', $postId);
@@ -96,7 +99,6 @@ $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
 $smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
 $smarty->assign('title', $post_info['title'] . ' : ' . $blog_data['title']);
-
 if (!isset($_REQUEST['offset'])) $_REQUEST['offset'] = 0;
 if (!isset($_REQUEST['sort_mode'])) $_REQUEST['sort_mode'] = 'created_desc';
 if (!isset($_REQUEST['find'])) $_REQUEST['find'] = '';

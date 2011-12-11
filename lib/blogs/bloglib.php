@@ -338,6 +338,28 @@ class BlogLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * add_blog_post_hit Add a hit for the blog post $postId
+	 *
+	 * @param int $postId
+	 * @access public
+	 * @return boolean unconditionnal true
+	 */
+	function add_blog_post_hit($postId) {
+		global $prefs, $user;
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+			$query = "update `tiki_blog_posts` set `hits` = `hits`+1 where `postId`=?";
+			$result = $this->query($query, array((int) $postId));
+			//$smarty->assign('msg', tra("making update $result"));
+			//$smarty->display("error.tpl");
+	
+		}
+		//$smarty->assign('msg', tra("making update"));
+		//$smarty->display("error.tpl");
+		return true;
+	}
+
+
+	/**
 	 * get_post_image Returns the image $imgId
 	 *
 	 * @param mixed $imgId
