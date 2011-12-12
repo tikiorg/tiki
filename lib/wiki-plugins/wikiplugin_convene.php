@@ -252,44 +252,49 @@ FORM;
 				this.save();
 			},
 			save: function() {
-				var data = this.data;
 				$.modal(tr("Loading..."));
-				$(document)
-					.unbind('plugin_convene_ready')
-					.one('plugin_convene_ready', function(e) {
-						var content = $(e.container).find('[name="content"]');
-						content.val($.trim(data));
-						e.btns.Submit();
-					});
 				
-				$('#plugin-edit-convene$i').click();
+				$('<form id="conveneSave$i" method="post" action="tiki-wikiplugin_edit.php">'+
+					'<div>'+
+						'<input type="hidden" name="page" value="$page"/>'+
+						'<input type="hidden" name="content" value="' + $.trim(this.data) + '"/>'+
+						'<input type="hidden" name="index" value="$i"/>'+
+						'<input type="hidden" name="type" value="convene"/>'+
+						'<input type="hidden" name="params[title]" value="$title"/>'+
+					'</div>'+
+				'</form>').submit();
 			}
 		}, $conveneData);
 		
 		
 		//handle a blank convene
-		$('#conveneBlank$i').each(function() {
-			var table = $('<table>' +
-				'<tr>' +
-					'<td>' +
-						'User: <input style="width: 100px;" id="conveneNewUser$i" />' +
-					'</td>' +
-					'<td>' +
-						'Date/Time: <input style="width: 100px;" id="conveneNewDatetime$i" />' +
-					'</td>' +
-					'<td style="vertical-align: middle;">' +
-						'<input type="button" id="conveneNewUserAndDate$i" value="' + tr("Add User & Date") + '" />' +
-					'</td>' +
-				'</tr>' +
-			'</table>').appendTo(this);
-
-			$('#conveneNewDatetime$i').datetimepicker();
-			
-			$('#conveneNewUserAndDate$i').click(function() {
-				convene$i.fromBlank($('#conveneNewUser$i').val(), $('#conveneNewDatetime$i').val());
+		if ("$tiki_p_edit" == 'y') {
+			$('#conveneBlank$i').each(function() {
+				var table = $('<table>' +
+					'<tr>' +
+						'<td>' +
+							'User: <input style="width: 100px;" id="conveneNewUser$i" />' +
+						'</td>' +
+						'<td>' +
+							'Date/Time: <input style="width: 100px;" id="conveneNewDatetime$i" />' +
+						'</td>' +
+						'<td style="vertical-align: middle;">' +
+							'<input type="button" id="conveneNewUserAndDate$i" value="' + tr("Add User & Date") + '" />' +
+						'</td>' +
+					'</tr>' +
+				'</table>').appendTo(this);
+	
+				$('#conveneNewDatetime$i').datetimepicker();
+				
+				$('#conveneNewUserAndDate$i').click(function() {
+					convene$i.fromBlank($('#conveneNewUser$i').val(), $('#conveneNewDatetime$i').val());
+				});
 			});
-		});
-			
+		} else {
+			$('#conveneBlank$i').each(function() {
+				$('<div />').text(tr("Login to edit Convene")).appendTo(this);
+			});
+		}
 		
 		$('#conveneAddDate$i').click(function() {
 			var o = $('<div><input type="text" style="width: 100%;" /></div>')
