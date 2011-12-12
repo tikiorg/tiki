@@ -23,8 +23,8 @@
 <fieldset class="admin">
 <legend>{tr}Kaltura Partner Settings{/tr}</legend>
 	{preference name=partnerId}
-	{preference name=secret}
 	{preference name=adminSecret}
+	{preference name=secret}
 </fieldset>
 
 <br/>
