@@ -138,7 +138,7 @@ if (!isset($_REQUEST['map'])) {
 				fileId: $('#fileId').val(),
 				galleryId: $('#galleryId').val(),
 				name: $('#fileName').val(),
-				data: $('#fileData').html()
+				data: $('#fileData').val()
 			})
 			.bind('renamedDraw', function(e, name) {
 				$('#fileName').val(name);
@@ -155,7 +155,7 @@ if (!isset($_REQUEST['map'])) {
 			fileId: $('#fileId').val(),
 			galleryId: $('#galleryId').val(),
 			name: $('#fileName').val(),
-			data: $('#fileData').html()
+			data: $('#fileData').val()
 		});
 	");
 }

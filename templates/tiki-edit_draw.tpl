@@ -2,7 +2,9 @@
 {title help="Draw"}{$name}{/title}
 
 <div id="tiki_draw" style="text-align: center;">
-	<div id="fileData" style="display: none;">{$data}</div>
+	<span style="display: none;">
+		<textarea id="fileData">{$data}</textarea>
+	</span>
 	
 	<input type="hidden" id="fileId" value="{$fileId}" />
 	<input type="hidden" id="galleryId" value="{$galleryId}" />
