@@ -108,7 +108,6 @@ function doChallengeResponse() {
 		{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
-				<legend>{tr}Log in as{/tr}&hellip;</legend>
 				{capture assign="close_tags"}</fieldset>{$close_tags}{/capture}
 		{/if}
 		{if !empty($error_login)}
