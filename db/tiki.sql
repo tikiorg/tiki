@@ -268,7 +268,7 @@ CREATE TABLE `tiki_blog_posts` (
   `title` varchar(255) default NULL,
   `priv` varchar(1) default 'n',
   `wysiwyg` varchar(1) default NULL,
-  `hist` bigint NULL default '0',
+  `hits` bigint NULL default '0',
   PRIMARY KEY (`postId`),
   KEY `data` (`data`(255)),
   KEY `blogId` (`blogId`),
