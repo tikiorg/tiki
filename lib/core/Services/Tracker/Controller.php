@@ -635,7 +635,8 @@ class Services_Tracker_Controller
 	{
 		$trackerId = $input->trackerId->int();
 
-		if (! Perms::get()->admin_trackers) {
+		$perms = Perms::get('tracker', $trackerId);
+		if (! $perms->export_tracker) {
 			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
 		}
 
