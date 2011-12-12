@@ -200,7 +200,7 @@ class RankLib extends TikiLib
 			$aux['name'] = $forumId? $res['title']: $res['parentTitle'] . ': ' . $res['title'];
 				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['hits'];
-				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
+				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['object'] . '&amp;comments_parentId=' . $res['threadId'];
 				$ret[] = $aux;
 		}
 
