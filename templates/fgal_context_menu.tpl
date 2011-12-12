@@ -53,10 +53,18 @@
 		<a href="{$files[$changes].id|sefurl:display}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
-		{if $files[$changes].type eq 'image/svg+xml' and $files[$changes].perms.tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
-			<a href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}">
-			{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
-			</a>
+		{if $files[$changes].perms.tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
+			{if
+				$files[$changes].type eq 'image/svg+xml' 	or 
+				$files[$changes].type eq 'image/jpeg' 		or
+				$files[$changes].type eq 'image/gif' 		or 
+				$files[$changes].type eq 'image/png' 		or
+				$files[$changes].type eq 'image/tiff'
+			}
+				<a href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}">
+				{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
+				</a>
+			{/if}
 		{/if}
 	{elseif $files[$changes].type eq 'text/csv' and $prefs.feature_sheet eq 'y'}
 		<a href="tiki-view_sheets.php?fileId={$files[$changes].id}">

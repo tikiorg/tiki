@@ -34,7 +34,14 @@ if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
-if ( ($fileInfo['filetype'] != $mimetypes["svg"]) && $_REQUEST['fileId'] > 0 ) {
+if (
+	!(
+		($fileInfo['filetype'] == $mimetypes["svg"]) ||
+		($fileInfo['filetype'] == $mimetypes["gif"]) ||
+		($fileInfo['filetype'] == $mimetypes["jpg"]) ||
+		($fileInfo['filetype'] == $mimetypes["png"]) ||
+		($fileInfo['filetype'] == $mimetypes["tiff"])
+	) && $_REQUEST['fileId'] > 0 ) {
 	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["svg"]));
 	$smarty->display("error.tpl");
 	die;
@@ -78,7 +85,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	die;
 }
 
-$smarty->assign( "data", $fileInfo["data"] );
+if ($fileInfo['filetype'] == $mimetypes["svg"]) { 
+	$data = $fileInfo["data"];
+} else { //we already confirmed that this is an image, here we make it compatible with svg
+	$data = '<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<g>
+		<title>Layer 1</title>
+		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '"/>
+	</g>
+</svg>';
+}
+
+//echo $data;die;
+$smarty->assign( "data", $data );
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
 if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
 if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
