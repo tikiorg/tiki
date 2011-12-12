@@ -64,7 +64,7 @@ function wikiplugin_draw($data, $params)
 {
 	global $dbTiki, $tiki_p_edit, $tiki_p_admin,$tiki_p_upload_files, $prefs, $user, $page, $tikilib, $smarty, $headerlib, $globalperms;
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
-	extract($params, EXTR_SKIP);
+	extract(array_merge($params, array()), EXTR_SKIP);
 	
 	static $drawIndex = 0;
 	++$drawIndex;
@@ -123,7 +123,7 @@ EOF;
 		if ($globalperms->view_file_gallery != 'y') return "";
 		
 		$label = tra('Edit SVG Image');
-		$ret = "<img src='tiki-download_file.php?fileId=$id' style='".
+		$ret = "<embed type='image/svg+xml' src='tiki-download_file.php?fileId=$id&display' style='".
 			(isset($height) ? "height: $height;" : "" ).
 			(isset($width) ? "width: $width;" : "" ).
 		"' />";
