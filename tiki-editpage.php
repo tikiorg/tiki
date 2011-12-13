@@ -800,13 +800,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 }
 
 if (empty($parsed)) {
-	if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
-		// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
-		//   then we need to convert database's HTML entities into their "normal chars" equivalents
-		$parsed = TikiLib::htmldecode($edit_data);
-	} else {
 		$parsed = $edit_data;
-	}
 }
 $smarty->assign('pagedata', $parsed);
 
@@ -924,11 +918,14 @@ if (
 	include_once("poll_categorize.php");
 	include_once("freetag_apply.php");
 	$page = $_REQUEST["page"];
-	if ($is_html) {
-		$edit = $_REQUEST["edit"];
-	} else {
-		$edit = htmlspecialchars($_REQUEST['edit']);
-	}
+	
+	$edit = $_REQUEST["edit"];
+	// Parse $edit and eliminate image references to external URIs (make them internal)
+	$edit = $imagegallib->capture_images($edit);
+	// apply the optional page edit filters before data storage
+	$parserlib = TikiLib::lib('parser');
+	$edit = $parserlib->apply_postedit_handlers($edit);
+
 	// add permisions here otherwise return error!
 	if (
 		isset($prefs['wiki_feature_copyrights']) 
@@ -948,11 +945,6 @@ if (
 		$copyrightslib->add_copyright($page, $copyrightTitle, $copyrightYear, $copyrightAuthors, $user);
 	}
 
-	// Parse $edit and eliminate image references to external URIs (make them internal)
-	$edit = $imagegallib->capture_images($edit);
-	// apply the optional page edit filters before data storage
-	$parserlib = TikiLib::lib('parser');
-	$edit = $parserlib->apply_postedit_handlers($edit);
 	$exist = $tikilib->page_exists($_REQUEST['page']);
 	// If page exists
 	if (!$exist) {
