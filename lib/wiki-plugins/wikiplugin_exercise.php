@@ -32,7 +32,7 @@ function wikiplugin_exercise_info()
 	);
 }
 
-function wikiplugin_exercise($data, $params)
+function wikiplugin_exercise($data, $params, $offset, $options)
 {
 	static $nextId = 1;
 	$smarty = TikiLib::lib('smarty');
@@ -40,6 +40,11 @@ function wikiplugin_exercise($data, $params)
 
 	$params = new JitFilter($params);
 	$answer = $params->answer->text();
+
+	set_time_limit(300);
+	if (isset($options['indexing']) && $options['indexing']) {
+		return "{$params->answer->text()} {$params->incorrect->text()}";
+	}
 
 	if ($answer) {
 		$escapedAnswer = smarty_modifier_escape($answer);
@@ -99,42 +104,44 @@ function wikiplugin_exercise_parse_argument($data)
 
 function wikiplugin_exercise_process_group($exercises, $scope = '.exercise-input')
 {
-	$exercises = json_encode($exercises);
+	$headerlib = TikiLib::lib('header');
 
 	$js = <<<JS
-var exercises = $exercises;
-var shuffle = function(o){
-for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-	return o;
-};
-$.each(exercises, function (k, options) {
-	$('$scope:not(.done)').filter(':first').each(function (k, container) {
-		var answer = $(container).data('answer'), input;
+$.exerciseGroup = function (exercises, scope) {
+	var shuffle = function(o){
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+		return o;
+	};
+	$.each(exercises, function (k, options) {
+		$(scope + ':not(.done)').filter(':first').each(function (k, container) {
+			var answer = $(container).data('answer'), input;
 
-		$(container).addClass('done').empty();
-		if (options.length > 0) {
-			input = $('<select><option/></select>');
-			options.push({option: answer, justification: false});
-			options = shuffle(options);
+			$(container).addClass('done').empty();
+			if (options.length > 0) {
+				input = $('<select><option/></select>');
+				options.push({option: answer, justification: false});
+				options = shuffle(options);
 
-			$.each(options, function (k, o) {
-				input.append($('<option/>')
-					.val(o.option)
-					.text(o.option)
-					.data('justification', o.justification ? o.justification : ''));
-			});
-		} else {
-			input = $('<input type="text"/>');
-			input.attr('size', answer.length);
-		}
+				$.each(options, function (k, o) {
+					input.append($('<option/>')
+						.val(o.option)
+						.text(o.option)
+						.data('justification', o.justification ? o.justification : ''));
+				});
+			} else {
+				input = $('<input type="text"/>');
+				input.attr('size', answer.length);
+			}
 
-		input.appendTo(container);
+			input.appendTo(container);
+		});
 	});
-});
+};
 JS;
-
-	$headerlib = TikiLib::lib('header');
 	$headerlib->add_js($js);
+
+	$exercises = json_encode($exercises);
+	$headerlib->add_js("$.exerciseGroup($exercises, '$scope');");
 }
 
 function wikiplugin_exercise_finalize()
@@ -144,46 +151,52 @@ function wikiplugin_exercise_finalize()
 
 	$checkYourScore = smarty_modifier_escape(tr('Check your score'));
 	$yourScoreIs = tr('You scored %0 out of %1', '~SCORE~', '~TOTAL~');
-	$checkIcon = smarty_function_icon(array('_id' => 'tick',	'title' => tr('Good!')), $smarty);
+	$checkIcon = smarty_function_icon(array('_id' => 'tick', 'title' => tr('Good!')), $smarty);
 	$crossIcon = smarty_function_icon(array('_id' => 'cross', 'title' => tr('Oops!')), $smarty);
 
 	$js = <<<JS
-$('.exercise-form').filter(':first').removeClass('exercise-form').each(function (k, form) {
-	var label = $('p', form).hide().text(), elements = $('.exercise-input.done:not(.complete)').addClass('complete');
-	$(form).submit(function () {
-		var score = 0, total = 0;
+$.exerciseFinalize = function (random) {
+	$('.exercise-form').filter(':first').removeClass('exercise-form').each(function (k, form) {
+		var label = $('p', form).hide().text(), elements = $('.exercise-input.done:not(.complete)').addClass('complete');
+		$(form).submit(function () {
+			var score = 0, total = 0;
 
-		elements.find('.mark').remove();
+			elements.find('.mark').remove();
 
-		elements.each(function (k, container) {
-			var correct, input, image;
-			total += 1;
-			correct = $(container).data('answer');
-			input = $(':input', container).val();
+			elements.each(function (k, container) {
+				var correct, input, image;
+				total += 1;
+				correct = $(container).data('answer');
+				input = $(':input', container).val();
 
-			image = $('<span class="mark"/>')
-				.appendTo(container);
+				image = $('<span class="mark"/>')
+					.appendTo(container);
 
-			if (correct === input) {
-				score += 1;
-				image.append('$checkIcon');
-			} else {
-				image.append('$crossIcon');
+				if (correct === input) {
+					score += 1;
+					image.append('$checkIcon');
+				} else {
+					image.append('$crossIcon');
 
-				var just = $('option:selected', container).data('justification');
-				if (just) {
-					image.find('img').attr('title', just);
+					var just = $('option:selected', container).data('justification');
+					if (just) {
+						image.find('img').attr('title', just);
+					}
 				}
-			}
-		});
+			});
 
-		$('p', form).text(label.replace('~SCORE~', score).replace('~TOTAL~', total)).show();
-		return false;
+			$('p', form).text(label.replace('~SCORE~', score).replace('~TOTAL~', total)).show();
+			return false;
+		});
 	});
-});;
+};
 JS;
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_js($js);
+
+	static $id = 0;
+	++$id;
+	$headerlib->add_js("$.exerciseFinalize($id);");
 
 	return <<<HTML
 <form class="exercise-form" method="get" action="#">
