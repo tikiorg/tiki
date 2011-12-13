@@ -178,7 +178,7 @@ function prefs_fgal_list()
 			'name' => tra('Keep the same fileId for the latest version of a file'),
 			'description' => tra('If checked, the fileId of the latest version of a file stays the same. Link to a file will always give you the latest version. If not checked, the fileId is attached to the file for ever, link to file will give you the precise version of a file'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'fgal_show_thumbactions' => array(
 			'name' => tra('Show thumbnail actions'),
