@@ -63,7 +63,6 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			return;
 		}
 
-
 		$this->findNoParseRanges($start, $end);
 
 		$pos = $start;
@@ -238,8 +237,9 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		$sizeDiff = - ($end - $start - strlen($string));
 		$this->text = substr_replace($this->text, $string, $start, $end - $start); 
 
-		$this->ranges = array();
-		$this->findNoParseRanges(0, strlen($this->text));
+		$this->removeRanges($start, $end);
+		$this->offsetRanges($end, $sizeDiff);
+		$this->findNoParseRanges($start, $start + strlen($string));
 
 		$matches = $this->ends;
 		$toRemove = array($match);
@@ -277,6 +277,30 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 		if ($this->scanPosition == $start) {
 			$this->scanPosition = $start - 1;
+		}
+	}
+
+	private function removeRanges($start, $end)
+	{
+		$toRemove = array();
+		foreach ($this->ranges as $key => $range) {
+			if ($start >= $range[0] && $start <= $range[1]) {
+				$toRemove[] = $key;
+			}
+		}
+
+		foreach ($toRemove as $key) {
+			unset($this->ranges[$key]);
+		}
+	}
+	
+	private function offsetRanges($end, $sizeDiff)
+	{
+		foreach ($this->ranges as & $range) {
+			if ($range[0] >= $end) {
+				$range[0] += $sizeDiff;
+				$range[1] += $sizeDiff;
+			}
 		}
 	}
 }
