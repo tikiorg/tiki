@@ -111,6 +111,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			// Obtain the information from the database for display
 			$fileIds = array_filter(explode(',', $value));
 			$fileInfo = $this->getFileInfo($fileIds);
+			
+			//this should probably be an option, this automatically updates the file to the latest file from a set of archives if there is one found
+			foreach($fileInfo as $key => $file) {
+				if ($file['archiveId'] > 0) {
+					$newFile = $this->getFileInfo(array($file['archiveId']));
+					unset($fileInfo[$key]);
+					$fileInfo[$file['archiveId']] = $newFile[$file['archiveId']];
+				}
+			}
 		}
 
 		if ($deepGallerySearch) {
@@ -254,7 +263,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$db = TikiDb::get();
 		$table = $db->table('tiki_files');
 
-		$data = $table->fetchAll(array('fileId', 'name', 'filetype'), array(
+		$data = $table->fetchAll(array('fileId', 'name', 'filetype', 'archiveId'), array(
 			'fileId' => $table->in($ids),
 		));
 
