@@ -12,17 +12,17 @@
 	{/if}
 	{if isset($user_watching_tracker)}
 		{if $user_watching_tracker eq 'n'}
-			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$listTrackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
 				{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}
 			</a>
 		{elseif $user_watching_tracker eq 'y'}
-			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}" class="trackerlistwatch">
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$listTrackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}" class="trackerlistwatch">
 			   {icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
 			</a>
 		{/if}
 	{/if}
 	{if $showrss eq 'y'}
-			<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
+			<a href="tiki-tracker_rss.php?trackerId={$listTrackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
 	{/if}
 
 {if !empty($sortchoice)}
@@ -178,7 +178,7 @@
 		<td style="text-align:center;">{$items[user].comments}</td>
 			{/if}
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$items[user].itemId}&amp;show=att" 
+		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att" 
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}" 
 /></a>{$items[user].attachments}</td>
 			{/if}
@@ -260,7 +260,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 	{if $more eq 'y'}
 	<div class="more">
 		{capture assign=moreUrl}
-			{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}
+			{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$listTrackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}
 		{/capture}
 		{button class='more' href="$moreUrl" _text="{tr}More...{/tr}"}
 	</div>
