@@ -41,7 +41,6 @@ function wikiplugin_exercise($data, $params, $offset, $options)
 	$params = new JitFilter($params);
 	$answer = $params->answer->text();
 
-	set_time_limit(300);
 	if (isset($options['indexing']) && $options['indexing']) {
 		return "{$params->answer->text()} {$params->incorrect->text()}";
 	}
