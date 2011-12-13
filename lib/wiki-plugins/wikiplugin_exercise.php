@@ -171,7 +171,7 @@ $.exerciseFinalize = function (random) {
 				image = $('<span class="mark"/>')
 					.appendTo(container);
 
-				if (correct === input) {
+				if (correct.toString() === input) {
 					score += 1;
 					image.append('$checkIcon');
 				} else {
