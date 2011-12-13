@@ -141,6 +141,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
+		global $prefs, $mimetypes;
 		if (!isset($context['list_mode'])) {
 			$context['list_mode'] = 'n';
 		}
@@ -176,8 +177,21 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				$smarty->loadPlugin('smarty_function_object_link');
 				$ret = '<ol>';
 				foreach ($this->getConfiguration('files') as $fileId => $file) {
+					include_once ('lib/mime/mimetypes.php');
 					$ret .= '<li>';
-					$ret .= smarty_function_object_link(array('type' => 'file', 'id' => $fileId, 'title' => $file['name']), $smarty);
+					$ret .= smarty_function_object_link(array('type' => 'file', 'id' => $fileId, 'title' => $file['name']), $smarty);	
+					
+					if (
+						$prefs['feature_draw'] == 'y' &&
+						($file['filetype'] == $mimetypes["svg"] ||
+						$file['filetype'] == $mimetypes["gif"] ||
+						$file['filetype'] == $mimetypes["jpg"] ||
+						$file['filetype'] == $mimetypes["png"] ||
+						$file['filetype'] == $mimetypes["tiff"])
+					) {
+						$ret .= " <a href='tiki-edit_draw.php?fileId=" . $file['fileId'] . "'><img width='16' height='16' class='icon' alt='Edit' src='pics/icons/page_edit.png' /></a>";
+					}
+					
 					$ret .= '</li>';
 				}
 				$ret .= '</ol>';
