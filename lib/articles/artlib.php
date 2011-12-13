@@ -419,6 +419,7 @@ class ArtLib extends TikiLib
 		$size = strlen($body);
 
 		if ($articleId) {
+			$oldArticle = $this->get_article($articleId);
 			$query	= 'update `tiki_articles` set `title` = ?, `authorName` = ?, `topicId` = ?, `topicName` = ?, `size` = ?, `useImage` = ?, `image_name` = ?, ';
 			$query .= ' `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `list_image_x` = ?, `heading` = ?, `body` = ?, ';
 			$query .= ' `publishDate` = ?, `expireDate` = ?, `created` = ?, `author` = ?, `type` = ?, `rating` = ?, `topline`=?, `subtitle`=?, `linkto`=?, ';
@@ -465,6 +466,7 @@ class ArtLib extends TikiLib
 			$nots = $tikilib->get_event_watches('article_edited', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_edited', $topicId);
 			$smarty->assign('mail_action', 'Edit');
+			$smarty->assign('mail_old_data', $oldArticle['heading'] . "\n----------------------\n" . $oldArticle['body']);
 			
 		} else {
 			// Insert the article
@@ -563,7 +565,7 @@ class ArtLib extends TikiLib
 			$smarty->assign('mail_title', $title);
 			$smarty->assign('mail_postid', $articleId);
 			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_data', $heading."\n----------------------\n" . $body);
+			$smarty->assign('mail_current_data', $heading."\n----------------------\n" . $body);
 			$smarty->assign('mail_heading', $heading);
 			$smarty->assign('mail_body', $body);
 			sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
