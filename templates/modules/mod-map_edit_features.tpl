@@ -17,11 +17,28 @@
 		});
 
 		$(map).one('initialized', function () {
-			var vlayer = new OpenLayers.Layer.Vector( "Editable" );
+			var vlayer = new OpenLayers.Layer.Vector( "Editable", {
+				onFeatureInsert: function (feature) {
+				}
+			}), toolbar, modify;
 			map.map.addLayer(vlayer);
+			map.vectors = vlayer;
+
+			modify = new OpenLayers.Control.ModifyFeature(vlayer, {
+				mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE,
+			});
+			vlayer.events.on({
+				featureselected: function (event) {
+					var format = new OpenLayers.Format.GeoJSON;
+					format.write(event.feature);
+				}
+			});
+			toolbar = new OpenLayers.Control.EditingToolbar(vlayer);
+			toolbar.addControls([modify]);
+
 			map.modeManager.addMode({
 				name: 'Draw',
-				controls: [ new OpenLayers.Control.EditingToolbar(vlayer) ]
+				controls: [ toolbar ]
 			});
 		});
 	});
