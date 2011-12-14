@@ -69,7 +69,7 @@ Class Feed_TextBacklink extends Feed_Abstract
 			$headerlib
 				->add_jq_onready("
 					$('<div />')
-						.prependTo('body')
+						.appendTo('body')
 						.text(tr('Create TextBacklink'))
 						.css('position', 'fixed')
 						.css('top', '0px')
@@ -93,7 +93,7 @@ Class Feed_TextBacklink extends Feed_Abstract
 							});
 							
 							$('#top').rangy(function(o) {
-								if ($.rangyBusy) return;
+								if ($(this).data('rangyBusy')) return;
 								var tbp_create = $('<div>' + tr('Accept TextBacklink') + '</div>')
 									.button()
 									.addClass('tbp_create')
