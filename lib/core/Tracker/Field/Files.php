@@ -142,7 +142,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
-		global $prefs, $mimetypes;
+		global $prefs, $mimetypes, $tiki_p_upload_files;
 		if (!isset($context['list_mode'])) {
 			$context['list_mode'] = 'n';
 		}
@@ -184,6 +184,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					
 					if (
 						$prefs['feature_draw'] == 'y' &&
+						$tiki_p_upload_files == 'y' &&
 						($file['filetype'] == $mimetypes["svg"] ||
 						$file['filetype'] == $mimetypes["gif"] ||
 						$file['filetype'] == $mimetypes["jpg"] ||
