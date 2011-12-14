@@ -545,6 +545,11 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$smarty->assign('parsed',$page_content);
 } 
 
+TikiLib::events()->trigger('tiki.wiki.view',array(
+	'type' => 'wiki',
+	'object' => $page,
+));
+
 $smarty->assign('info', $info);
 $smarty->assign('mid','tiki-show_page.tpl');
 
