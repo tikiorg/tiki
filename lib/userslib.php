@@ -4875,7 +4875,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array('feature_multilingual'),
+				'prefs' => array(),
 				'scope' => 'global',
 			),
 			array(
