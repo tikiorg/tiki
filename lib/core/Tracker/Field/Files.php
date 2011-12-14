@@ -269,6 +269,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	private function handleUpload($galleryId, $file)
 	{
+		if (empty($file['tmp_name'])) {
+			// Not an actual file upload attempt, just skip
+			return false;
+		}
+
 		if (! is_uploaded_file($file['tmp_name'])) {
 			TikiLib::lib('errorreport')->report(tr('Problem with uploaded file: "%0"', $file['name']));
 			return false;
