@@ -28,7 +28,8 @@ class Services_File_Controller
 		$data = base64_decode($data);
 
 		if (function_exists('finfo_buffer')) {
-			$finfo = new finfo(FILEINFO_MIME);
+			$php53 = defined('FILEINFO_MIME_TYPE');
+			$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
 			$type = $finfo->buffer($data);
 		}
 
