@@ -3955,7 +3955,7 @@ class TrackerLib extends TikiLib
 	function sync_item_auto_categories($args)
 	{
 		$trackerId = $args['trackerId'];
-		$itemId = $args['itemId'];
+		$itemId = $args['object'];
 		$definition = Tracker_Definition::get($trackerId);
 
 		if ($definition->isEnabled('autoCreateCategories')) {
