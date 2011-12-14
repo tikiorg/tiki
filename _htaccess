@@ -168,6 +168,9 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 # increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
 #php_value max_execution_time 90
 
+# some features like assigning perms to a group with a name containing a quote will not work without this
+#php_flag magic_quotes_gpc off
+
 # increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)
 #php_value upload_max_filesize 10M
 #php_value post_max_size 11M
