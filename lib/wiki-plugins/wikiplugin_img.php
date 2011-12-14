@@ -317,7 +317,7 @@ function wikiplugin_img_info()
 
 function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 {
-	 global $tikidomain, $prefs, $section, $smarty, $tikiroot, $tikilib, $userlib, $user;
+	 global $tikidomain, $prefs, $section, $smarty, $tikiroot, $tikilib, $userlib, $user, $tiki_p_upload_files;
 
 	$imgdata = array();
 	
@@ -997,7 +997,15 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
 	$src = filter_out_sefurl(htmlentities($src));
-	$replimg = '<img src="' . $src . '"';
+	
+	include_once ('lib/mime/mimetypes.php');
+	
+	if ($dbinfo['filetype'] == $mimetypes["svg"]) {
+		$replimg = '<embed type="image/svg+xml" src="' . $src . '"'; 
+	} else {
+		$replimg = '<img src="' . $src . '"';
+	}
+
 	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
 	
 	//Create style attribute allowing for shortcut inputs 
@@ -1341,6 +1349,11 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
+	
+	if ($prefs['feature_draw'] == 'y' && $tiki_p_upload_files == 'y') {
+		$repl .= $ret .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "'><img width='16' height='16' class='icon' alt='Edit' src='pics/icons/page_edit.png' /></a>";
+	}
+	
 	return '~np~' . $repl. "\r" . '~/np~';
 //	echo '<pre>' . $imageObj->xmp->saveXML() . '</pre>';
 }
