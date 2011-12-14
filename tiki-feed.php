@@ -12,8 +12,9 @@ require_once ('tiki-setup.php');
 $_REQUEST['type'] = (!empty($_REQUEST['type']) ? $_REQUEST['type'] : 'html');
 
 if ($_REQUEST['type'] == 'html') {
-	if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
+	$access->check_feature('feature_htmlfeed');
 	
+	if (!empty($_REQUEST['feed']) && !empty($_REQUEST['name'])) {
 		//here we try to view the results of an external feed, admin only
 		$access->check_permission('tiki_p_admin');
 		
@@ -34,11 +35,14 @@ if ($_REQUEST['type'] == 'html') {
 		
 	}
 } else if ($_REQUEST['type'] == "textbacklink") {
+	$access->check_feature('feature_textbacklinkprotocol');
 	
 	$feed = new Feed_TextBacklink();
 	print_r(json_encode($feed->feed()));
 	
 } else if ($_REQUEST['type'] == "textlink" && !empty($_REQUEST['contribution'])) {
+	$access->check_feature('feature_textbacklinkprotocol');
+	
 	$contribution = json_decode($_REQUEST['contribution']);
 	foreach($contribution->feed->entry as $item) {
 		if (!empty($item->originName)) {
