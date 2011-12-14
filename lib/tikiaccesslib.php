@@ -114,11 +114,12 @@ class TikiAccessLib extends TikiLib
 		}
 		foreach ($permissions as $permission) {
 			if (false !== $objectType) {
-				$objectPermissions = Perms::get( $objectType, $objectId );
-				if ($objectPermissions->$permission) {
-					continue;
-				}
-			} elseif ($GLOBALS[$permission] == 'y') {
+				$applicable = Perms::get( $objectType, $objectId );
+			} else {
+				$applicable = Perms::get();
+			}
+
+			if ($applicable->$permission) {
 				continue;
 			}
 
