@@ -23,65 +23,12 @@ function wikiplugin_textbacklink_info()
 	);
 }
 
-function test($obj) {
-	print_r($obj);
-}
-
 function wikiplugin_textbacklink($data, $params)
 {
     global $tikilib, $headerlib, $feedItem, $caching, $page;
     static $textbacklinkI = 0;
 	++$textbacklinkI;
 	
-	$_REQUEST['rangy'] = (isset($_REQUEST['rangy']) ? htmlspecialchars($_REQUEST['rangy']) : "");
-	
-	//TikiLib::events()->bind("tiki.wiki.view", "test");
-	
-	$headerlib
-			->add_jsfile("lib/rangy/uncompressed/rangy-core.js")
-			->add_jsfile("lib/rangy/rangy-cssclassapplier.js")
-			->add_jsfile("lib/rangy/rangy-selectionsaverestore.js")
-			->add_jsfile("lib/rangy/uncompressed/rangy-serializer.js")
-			->add_jsfile("lib/ZeroClipboard.js");
-			
-	if (!empty($_REQUEST['rangy'])) {
-		$headerlib
-			->add_jq_onready("
-				$.rangyRestore('" . $_REQUEST['rangy'] . "');
-			");
-	} else {
-		$headerlib
-			->add_jq_onready("
-				var rangyIsBusy = false;
-				$.rangy(function(o) {
-					if (rangyIsBusy) return;
-					
-					$('button.tb_create').remove();
-
-					var tbp_create = $('<div class=\'button\'>' + tr('Create TextBacklink') + '</div>')
-						.button()
-						.addClass('tbp_create')
-						.css('position', 'absolute')
-						.fadeTo(0,0.80)
-						.click(function() {
-							return false;
-						})
-						.insertAfter(o.me.last());
-						
-						var clip = new ZeroClipboard.Client();
-						clip.setHandCursor( true );
-						
-						clip.addEventListener('complete', function(client, text) {
-			                tbp_create.remove();
-							clip.hide();
-			            });
-						
-						clip.glue( tbp_create[0] );
-						
-						clip.setText(o.serial);
-				});
-			");
-	}
 	$params = array_merge(array("name" => ""), $params);
 	
 	extract($params, EXTR_SKIP);
