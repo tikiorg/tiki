@@ -158,9 +158,7 @@ class FileGallery_File
 	
 	function delete()
 	{
-		global $tikilib;
-		$files = $tikilib->table('tiki_files');
-		$files->delete(array('fileId' => $this->getParam('fileId')));
+		TikiLib::lib("filegal")->remove_file($this->params);
 	}
 	
 	function diffLatestWithArchive($archive = 0)
