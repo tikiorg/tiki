@@ -6,6 +6,8 @@
 // $Id$
 $section = "draw";
 require_once ('tiki-setup.php');
+global $prefs;
+
 include_once ('lib/filegals/filegallib.php');
 
 $access->check_feature('feature_draw');
@@ -78,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		//existing file
 		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
 		
-		if ($fileInfo['filetype'] != $mimetypes["svg"]) { // this is a conversion from an image other than svg
+		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') { // this is a conversion from an image other than svg
 			$newFileInfo = $filegallib->get_file_info( $fileId );
 			
 			$archives = $filegallib->get_archives($fileInfo['fileId']);
