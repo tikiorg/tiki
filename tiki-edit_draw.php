@@ -31,7 +31,7 @@ if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$_REQUEST['fileId'] = $fileInfo['archiveId'];
 	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
 }
-
+	
 $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
 if (
@@ -73,9 +73,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	
 	$type = $mimetypes["svg"];
 	$fileId = '';
+	
 	if (empty($_REQUEST["fileId"]) == false) {
 		//existing file
 		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+		
+		if ($fileInfo['filetype'] != $mimetypes["svg"]) { // this is a conversion from an image other than svg
+			$newFileInfo = $filegallib->get_file_info( $fileId );
+			
+			$archives = $filegallib->get_archives($fileInfo['fileId']);
+			$archive = end($archives['data']);
+			
+			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId=' . $archive['fileId'] . '#', $newFileInfo['data']);
+			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0, $newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg", $newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user, date());
+		}
 	} else {
 		//new file
 		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
@@ -91,7 +102,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$data = '<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g>
 		<title>Layer 1</title>
-		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '"/>
+		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '#image"/>
 	</g>
 </svg>';
 }
