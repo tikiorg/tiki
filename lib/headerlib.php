@@ -764,6 +764,11 @@ class HeaderLib
 		
 		return $this;
 	}
+
+	function __toString()
+	{
+		return '';
+	}
 }
 
 $headerlib = new HeaderLib;
