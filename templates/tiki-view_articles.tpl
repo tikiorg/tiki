@@ -78,9 +78,9 @@
 									{if $listpages[ix].hasImage eq 'y'}
 										<a href="{$smarty.capture.href}"
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{else}{tr}Read More{/tr}{/if}">
-											<img  {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
+											<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{/if}"
-													src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}
+													{strip}src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}
 													{if $listpages[ix].list_image_x > 0}
 														{if $largefirstimage eq 'y' and $smarty.section.ix.first}
 															{if $listpages[ix].image_x > 0}&amp;width={$listpages[ix].image_x}{/if}
@@ -92,7 +92,7 @@
 													{else}
 														&amp;cache=y
 													{/if}"
-											/>
+											/>{/strip}
 										</a>
 									{else}
 										{* Intentionally left blank to allow user add an image from somewhere else through the img tag and no other extra image *}
