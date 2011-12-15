@@ -86,7 +86,7 @@ class Image extends ImageAbstract
 
 		$this->_load_data();
 		if ($this->data) {
-			@ob_end_flush();	// ignore E_NOTICE if no buffer
+			//@ob_end_flush();	// ignore E_NOTICE if no buffer
 			ob_start();
 			switch ( strtolower($this->format) ) {
 				case 'jpeg':
