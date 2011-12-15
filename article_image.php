@@ -89,7 +89,7 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 		require_once('lib/images/images.php');
 		$image = new Image($data);
 		$image->resize($_REQUEST['width'], 0);
-		$data =& $image->display();
+		$data = $image->display();
 		if (empty($data)) die;
 	}
 	if ($useCache && $data) {
