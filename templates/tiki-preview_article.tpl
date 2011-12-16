@@ -46,10 +46,6 @@
 		</table>
 	</div>
 
-	<div style="padding:5px;" class="articletrailer">
-		({$size} {tr}bytes{/tr})
-	</div>
-
 	<div class="articlebody">
 		{$parsed_body}
 	</div>
