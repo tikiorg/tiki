@@ -466,6 +466,9 @@ class ArtLib extends TikiLib
 			$nots = $tikilib->get_event_watches('article_edited', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_edited', $topicId);
 			$smarty->assign('mail_action', 'Edit');
+			$smarty->assign('mail_old_title', $oldArticle['title']);
+			$smarty->assign('mail_old_publish_date', $oldArticle['publishDate']);
+			$smarty->assign('mail_old_expiration_date', $oldArticle['expireDate']);
 			$smarty->assign('mail_old_data', $oldArticle['heading'] . "\n----------------------\n" . $oldArticle['body']);
 			
 		} else {
@@ -565,6 +568,8 @@ class ArtLib extends TikiLib
 			$smarty->assign('mail_title', $title);
 			$smarty->assign('mail_postid', $articleId);
 			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_current_publish_date', $publishDate);
+			$smarty->assign('mail_current_expiration_date', $expireDate);
 			$smarty->assign('mail_current_data', $heading."\n----------------------\n" . $body);
 			$smarty->assign('mail_heading', $heading);
 			$smarty->assign('mail_body', $body);
