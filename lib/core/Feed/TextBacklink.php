@@ -53,16 +53,22 @@ Class Feed_TextBacklink extends Feed_Abstract
 		global $headerlib, $_REQUEST;
 		$serial = urldecode(isset($_REQUEST['tbp_serial']) ? htmlspecialchars($_REQUEST['tbp_serial']) : "");
 		
-		$questions = TikiLib::lib("trkqry")
+		$wikiAttributes = TikiLib::lib("trkqry")
 			->tracker("Wiki Attributes")
 			->byName()
 			->excludeDetails()
 			->equals(array("Question", $args['object']))->fields(array("Type", "Page"))
 			->query();
 		
-		print_r($questions);
+		$answers = array();
+		foreach($wikiAttributes as $wikiAttribute) {
+			$answers[] = array(
+				"question"=> strip_tags($wikiAttribute['Value']),
+				"answer"=> '',
+			);
+		}
 		
-		$questions = json_encode($questions);
+		$answers = json_encode($answers);
 		
 		$headerlib
 				->add_jsfile("lib/rangy/rangy-core.js")
@@ -86,7 +92,7 @@ JQ
 );
 		} else {
 			$headerlib->add_jq_onready(<<<JQ
-				var questions = $.parseJSON($questions);
+				var answers = $answers;
 				
 				$('<div />')
 					.appendTo('body')
@@ -115,6 +121,7 @@ JQ
 						
 						var me = $('#top').rangy(function(o) {
 							if (me.data('rangyBusy')) return;
+							
 							var tbp_create = $('<div>' + tr('Accept TextLink & ForwardLink') + '</div>')
 								.button()
 								.addClass('tbp_create')
@@ -125,14 +132,18 @@ JQ
 								.fadeTo(0,0.80)
 								.mousedown(function() {
 									alert(tr('Temporary Message: If multi lines are detected at this point we would ask the user if they would like to add more lines if two or more lines are selected.'));
+
+									$.each(answers, function() {
+										this.answer = prompt(this.question);
+									});
 									
 									var data = {
-										html: o.html,
-										info: {
-											href: escape(document.location),
-											serial: escape(o.serial)
-										}
+										text: o.text,
+										href: escape(document.location),
+										serial: escape(o.serial),
+										answers: answers
 									};
+									
 									me.data('rangyBusy', true);
 									
 									var tbp_copy = $('<div></div>');
