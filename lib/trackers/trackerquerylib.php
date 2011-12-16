@@ -51,7 +51,8 @@ class TrackerQueryLib
 	private $lastModif = true;
 	private $delimiter = "[{|!|}]";
 	private $debug = false;
-
+	private $concat = true;
+	
 	public static function tracker($tracker)
 	{
 		return new self($tracker);
@@ -160,9 +161,10 @@ class TrackerQueryLib
 			->query();
 	}
 
-	public function debug($debug = true)
+	public function debug($debug = true, $concat = true)
 	{
 		$this->debug = $debug;
+		$this->concat = $concat;
 		return $this;
 	}
 
@@ -366,7 +368,15 @@ class TrackerQueryLib
 		}
 		return 0;
 	}
-
+	
+	private function concat_str($field)
+	{
+		if ($this->concat == false) {
+			return $field;
+		} else {
+			return "GROUP_CONCAT(".$field." SEPARATOR '" . $this->delimiter . "')";
+		}
+	}
 	/*Queries & filters trackers from mysql, orders results in a way that is human understandable and can be manipulated easily
 	 * The end result is a very simple array setup as follows:
 	 * array( //tracker(s)
@@ -478,9 +488,9 @@ class TrackerQueryLib
 			tiki_tracker_items.status,
 			tiki_tracker_item_fields.itemId,
 			tiki_tracker_fields.trackerId,
-			GROUP_CONCAT(tiki_tracker_fields.name 			SEPARATOR '" . $this->delimiter . "') AS fieldNames,
-			GROUP_CONCAT(tiki_tracker_item_fields.fieldId	SEPARATOR '" . $this->delimiter . "') AS fieldIds,
-			GROUP_CONCAT(IFNULL(items_right.value, tiki_tracker_item_fields.value) 										SEPARATOR '" . $this->delimiter . "') AS item_values
+			" . $this->concat_str("tiki_tracker_fields.name") ." AS fieldNames,
+			" . $this->concat_str("tiki_tracker_item_fields.fieldId") . " AS fieldIds,
+			" . $this->concat_str("IFNULL(items_right.value, tiki_tracker_item_fields.value)") . " AS item_values
 
 				FROM tiki_tracker_item_fields " . ($isSearch == true ? " AS search_item_fields " : "") . "
 
@@ -526,6 +536,7 @@ class TrackerQueryLib
 
 				GROUP BY
 				tiki_tracker_item_fields.itemId " . ($this->desc == true ? 'DESC' : 'ASC') . "
+				" . ($isSearch == true ? ", search_item_fields.fieldId, search_item_fields.itemId " : "" ) . "
 				ORDER BY 
 				tiki_tracker_items.$dateUnit
 				" . (!empty($this->limit) ? 
@@ -536,6 +547,7 @@ class TrackerQueryLib
 		if ($this->debug == true) {
 			$result = array($query, $params);
 			print_r($result);
+			print_r($tikilib->fetchAll($query, $params));
 			die;
 		} else {
 			$result = $tikilib->fetchAll($query, $params);
