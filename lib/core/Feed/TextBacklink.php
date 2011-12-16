@@ -51,8 +51,19 @@ Class Feed_TextBacklink extends Feed_Abstract
 	function wikiView($args)
 	{
 		global $headerlib, $_REQUEST;
-		$_REQUEST['tbp_serial'] = (isset($_REQUEST['tbp_serial']) ? htmlspecialchars($_REQUEST['tbp_serial']) : "");
-	
+		$serial = urldecode(isset($_REQUEST['tbp_serial']) ? htmlspecialchars($_REQUEST['tbp_serial']) : "");
+		
+		$questions = TikiLib::lib("trkqry")
+			->tracker("Wiki Attributes")
+			->byName()
+			->excludeDetails()
+			->equals(array("Question", $args['object']))->fields(array("Type", "Page"))
+			->query();
+		
+		print_r($questions);
+		
+		$questions = json_encode($questions);
+		
 		$headerlib
 				->add_jsfile("lib/rangy/rangy-core.js")
 				->add_jsfile("lib/rangy/rangy-cssclassapplier.js")
@@ -60,10 +71,10 @@ Class Feed_TextBacklink extends Feed_Abstract
 				->add_jsfile("lib/rangy_tiki/rangy-serializer.js")
 				->add_jsfile("lib/ZeroClipboard.js");
 				
-		if (!empty($_REQUEST['tbp_serial'])) {
-			$headerlib
-				->add_jq_onready("
-					$('#top').rangyRestore('" . $_REQUEST['tbp_serial'] . "', function(o) {
+		if (!empty($serial)) {
+			$headerlib->add_jq_onready(<<<JQ
+				$('#top')
+					.rangyRestore('$serial', function(o) {
 						$('html,body').animate({
 							scrollTop: o.selection
 								.addClass('ui-state-highlight')
@@ -71,59 +82,85 @@ Class Feed_TextBacklink extends Feed_Abstract
 									.top
 						});
 					});
-				");
+JQ
+);
 		} else {
-			$headerlib
-				->add_jq_onready("
-					$('<div />')
-						.appendTo('body')
-						.text(tr('Create TextLink & ForwardLink'))
-						.css('position', 'fixed')
-						.css('top', '0px')
-						.css('right', '0px')
-						.css('font-size', '10px')
-						.fadeTo(0, 0.85)
-						.button()
-						.click(function() {
-							$(this).remove();
-							$('<div />')
-								.text(tr('Highlight some text and click the accept button once finished'))
-								.mousedown(function() {return false;})
-								.dialog({
-									title: tr('Create TextLink & ForwardLink'),
-									modal: true
-								});
-					
-							$(document).bind('mousedown', function() {
-								if (me.data('rangyBusy')) return;
-								$('div.tbp_create').remove();
-								$('embed[id*=\'ZeroClipboard\']').parent().remove();
+			$headerlib->add_jq_onready(<<<JQ
+				var questions = $.parseJSON($questions);
+				
+				$('<div />')
+					.appendTo('body')
+					.text(tr('Create TextLink & ForwardLink'))
+					.css('position', 'fixed')
+					.css('top', '0px')
+					.css('right', '0px')
+					.css('font-size', '10px')
+					.fadeTo(0, 0.85)
+					.button()
+					.click(function() {
+						$(this).remove();
+						$('<div />')
+							.text(tr('Highlight some text and click the accept button once finished'))
+							.mousedown(function() {return false;})
+							.dialog({
+								title: tr('Create TextLink & ForwardLink'),
+								modal: true
 							});
-							
-							var me = $('#top').rangy(function(o) {
-								if (me.data('rangyBusy')) return;
-								var tbp_create = $('<div>' + tr('Accept TextLink & ForwardLink') + '</div>')
-									.button()
-									.addClass('tbp_create')
-									.css('position', 'absolute')
-									.css('top', o.y + 'px')
-									.css('left', o.x + 'px')
-									.css('font-size', '10px')
-									.fadeTo(0,0.80)
-									.click(function() {
-										return false;
-									})
-									.appendTo('body');
+				
+						$(document).bind('mousedown', function() {
+							if (me.data('rangyBusy')) return;
+							$('div.tbp_create').remove();
+							$('embed[id*="ZeroClipboard"]').parent().remove();
+						});
+						
+						var me = $('#top').rangy(function(o) {
+							if (me.data('rangyBusy')) return;
+							var tbp_create = $('<div>' + tr('Accept TextLink & ForwardLink') + '</div>')
+								.button()
+								.addClass('tbp_create')
+								.css('position', 'absolute')
+								.css('top', o.y + 'px')
+								.css('left', o.x + 'px')
+								.css('font-size', '10px')
+								.fadeTo(0,0.80)
+								.mousedown(function() {
+									alert(tr('Temporary Message: If multi lines are detected at this point we would ask the user if they would like to add more lines if two or more lines are selected.'));
+									
+									var data = {
+										html: o.html,
+										info: {
+											href: escape(document.location),
+											serial: escape(o.serial)
+										}
+									};
+									me.data('rangyBusy', true);
+									
+									var tbp_copy = $('<div></div>');
+									var tbp_copy_value = $('<textarea style="width: 100%;"></textarea>')
+										.val(JSON.stringify(data))
+										.appendTo(tbp_copy);
+									var tbp_copy_button = $('<div>' + tr('Copy To Clipboard') + '</div>')
+										.button()
+										.appendTo(tbp_copy);
+									tbp_copy.dialog({
+										title: tr("Copy This"),
+										modal: true,
+										close: function() {
+											me.data('rangyBusy', false);
+											$(document).mousedown();
+										},
+										draggable: false,
+										resizable: false
+									});
+									
+									tbp_copy_value.select().focus();
 									
 									var clip = new ZeroClipboard.Client();
 									clip.setHandCursor( true );
 									
-									clip.addEventListener('mousedown', function() {
-										me.data('rangyBusy', true);
-									});
-									
 									clip.addEventListener('complete', function(client, text) {
 						                tbp_create.remove();
+										tbp_copy.dialog( "close" );
 										clip.hide();
 										me.data('rangyBusy', false);
 										
@@ -139,18 +176,18 @@ Class Feed_TextBacklink extends Feed_Abstract
 										return false;
 						            });
 									
-									clip.glue( tbp_create[0] );
+									clip.glue( tbp_copy_button[0] );
 									
-									clip.setText(o.serial);
+									clip.setText(tbp_copy_value.val());
 									
-									$('embed[id*=\'ZeroClipboard\']')
-										.parent()
-										.one('click', function() {
-											alert('If multi lines are detected at this point we would ask the user if they would like to add more lines if two or more lines are selected.');
-										});
-							});
-					});
-				");
+									
+									$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
+								})
+								.appendTo('body');
+						});
+				});
+JQ
+);
 		}
 	}
 }
