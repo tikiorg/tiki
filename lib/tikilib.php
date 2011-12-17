@@ -4071,7 +4071,7 @@ class TikiLib extends TikiDb_Bridge
 		@param array $hash- lock_it,contributions, contributors
 		@param int $saveLastModif - modification time - pass null for now, unless importing a Wiki page
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=null, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style='')
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description, $edit_minor = 0, $lang='', $is_html=null, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style='')
 	{
 		global $prefs;
 		$histlib = TikiLib::lib('hist');
@@ -4125,6 +4125,10 @@ class TikiLib extends TikiDb_Bridge
 			$saveLastModif = $this->now;
 		}
 
+		if (!isset($edit_description)) {
+			$edit_description = $info['description'];
+		}
+		
 		$queryData = array(
 			'description' => $edit_description,
 			'data' => $edit_data,
