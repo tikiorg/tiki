@@ -3880,6 +3880,10 @@ class TikiLib extends TikiDb_Bridge
 			$edit_description = $info['description'];
 		}
 
+		if (!isset($edit_description)) {
+			$edit_description = $info['description'];
+		}
+		
 		$queryData = array(
 			'description' => $edit_description,
 			'data' => $edit_data,

@@ -325,15 +325,6 @@ hr {
 	height: 2px;
 }
 
-legend,
-label {
-	color: #000;
-}
-.ui-dialog-content label,
-.ui-dialog-content legend {
-	 color:#FFF;
-}
-
 .button a,
 .button a:visited,
 button,

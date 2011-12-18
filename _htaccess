@@ -76,6 +76,9 @@ FileETag none
 # The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
 #php_value include_path "." 
 
+# some features like assigning perms to a group with a name containing a quote will not work without this
+#php_flag magic_quotes_gpc off
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 

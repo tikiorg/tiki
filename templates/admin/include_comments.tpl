@@ -67,7 +67,6 @@
 						{preference name=wiki_comments_per_page}
 						{preference name=wiki_comments_default_ordering}
 						{preference name=wiki_comments_allow_per_page}
-						{preference name=wiki_comments_per_page}
 						{preference name=wiki_watch_comments}
 					</div>
 					{preference name=feature_blogposts_comments}
