@@ -97,6 +97,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'domain' => tr('Match domain, used for URL fields'),	
 						),
 					),
+					'displayOneItem' => array(
+						'name' => tr('One item per value'),
+						'description' => tr('Display only one random item per value'),
+						'filter' => 'alpha',
+						'options' => array(
+							'one' => tr('Only one random item for each value'),
+							'multi' => tr('Displays all the items for a same value with a notation value (itemId)'),
+						),
+					),
 				),
 			),
 		);
@@ -285,7 +294,9 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$this->getOption(4, 'opc'),
 				false
 			);
-			if (array_unique($data['list']) != $data['list']) {
+			if (!$this->getOption(11)) {
+				$data['list'] = array_unique($data['list']);
+			} elseif (array_unique($data['list']) != $data['list']) {
 				$newlist = array();
 				foreach($data['list'] as $k => $dl) {
 					if (in_array($dl, $newlist)) {
@@ -307,7 +318,10 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$this->getOption(3),
 				$this->getOption(4, 'opc')
 			);
-			if (array_unique($data['listdisplay']) != $data['listdisplay']) {
+			if (!$this->getOption(11)) {
+				$data['list'] = array_unique($data['list']);
+				$data['listdisplay'] = array_unique($data['listdisplay']);
+			} elseif (array_unique($data['listdisplay']) != $data['listdisplay']) {
 				$newlist = array();
 				foreach($data['listdisplay'] as $k => $dl) {
 					if (in_array($dl, $newlist)) {
@@ -325,7 +339,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$data['listdisplay']['-1'] = $this->getOption(6);
 			}
 		}
-		
+
 		return $data;
 	}
 
