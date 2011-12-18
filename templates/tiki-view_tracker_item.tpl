@@ -215,7 +215,7 @@
 									{/if}
 								</td>
 								<td>
-									{trackerinput field=$cur_field item=$item_info inTable=formcolor}
+									{trackerinput field=$cur_field item=$item_info inTable=formcolor showDescription=y}
 								</td>
 							</tr>
 						{/foreach}
