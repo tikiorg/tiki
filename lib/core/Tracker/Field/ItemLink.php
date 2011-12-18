@@ -294,7 +294,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$this->getOption(4, 'opc'),
 				false
 			);
-			if (!$this->getOption(11)) {
+			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
 				$data['list'] = array_unique($data['list']);
 			} elseif (array_unique($data['list']) != $data['list']) {
 				$newlist = array();
@@ -318,7 +318,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$this->getOption(3),
 				$this->getOption(4, 'opc')
 			);
-			if (!$this->getOption(11)) {
+			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
 				$data['list'] = array_unique($data['list']);
 				$data['listdisplay'] = array_unique($data['listdisplay']);
 			} elseif (array_unique($data['listdisplay']) != $data['listdisplay']) {
