@@ -211,7 +211,7 @@
 							{/if}
 						</td>
 						<td>
-							{trackerinput field=$field_value inTable=formcolor}
+							{trackerinput field=$field_value inTable=formcolor showDescription=y}
 						</td>
 					</tr>
 				{/if}
