@@ -31,6 +31,6 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 			))
 			->query();
 		
-		print_r($wikiAttributes);
+		//print_r($wikiAttributes);
 	}
 }

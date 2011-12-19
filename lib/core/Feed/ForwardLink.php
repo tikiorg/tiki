@@ -66,7 +66,8 @@ Class Feed_ForwardLink extends Feed_Abstract
 				'value'=> $args['object']
 			))
 			->query();
-		print_r($wikiAttributes);
+		
+		//print_r($wikiAttributes);
 		$answers = array();
 		foreach($wikiAttributes as $wikiAttribute) {
 			$answers[] = array(
