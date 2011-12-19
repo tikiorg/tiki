@@ -41,6 +41,8 @@
 
 					{preference name=unified_cached_formatters}
 
+					{preference name=unified_trackerfield_keys}
+
 					<h4>{tr}Index maintenance{/tr}</h4>
 					<ul>
 						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a></li>

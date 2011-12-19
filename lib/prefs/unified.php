@@ -99,6 +99,16 @@ function prefs_unified_list()
 			'separator' => ',',
 			'default' => array('trackerrender','categorylist'),
 		),
+		'unified_trackerfield_keys' => array(
+			'name' => tra('Format to use for tracker field keys'),
+			'description' => tra('Choose between field ids and permanent names for the tracker indexing'),
+			'type' => 'list',
+			'default' => 'permName',
+			'options' => array(
+				'permName' =>tr('Permanent Name'),
+				'fieldId' => tr('Field ID (Backward compatibility mode with Tiki 7 and 8)'),
+			),
+		),
 	);
 }
 
