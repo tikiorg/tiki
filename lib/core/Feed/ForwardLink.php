@@ -51,6 +51,13 @@ Class Feed_ForwardLink extends Feed_Abstract
 	function wikiView($args)
 	{
 		global $headerlib, $_REQUEST;
+		
+		if (isset($_GET['type']) && isset($_GET['contribution'])) {
+			//here we do the confirmation that another wiki is trying to talk with this one
+			echo "success";
+			die;
+		}
+		
 		$serial = urldecode(isset($_REQUEST['tbp_serial']) ? htmlspecialchars($_REQUEST['tbp_serial']) : "");
 		
 		$wikiAttributes = TikiLib::lib("trkqry")
@@ -65,6 +72,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 				'field'=> 'Page',
 				'value'=> $args['object']
 			))
+			->render(false)
 			->query();
 		
 		//print_r($wikiAttributes);
