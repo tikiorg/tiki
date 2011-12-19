@@ -11,7 +11,7 @@
  * Letter key: ~GF~
  *
  */
-class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Indexable
 {
 	public static function getTypes()
 	{
@@ -63,6 +63,24 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 	function importRemoteField(array $info, array $syncInfo)
 	{
 		return $info;
+	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		return array(
+			'geo_located' => $typeFactory->identifier('y'),
+			'geo_feature' => $typeFactory->identifier($this->getValue()),
+		);
+	}
+
+	function getProvidedFields($baseKey)
+	{
+		return array('geo_located', 'geo_feature');
+	}
+
+	function getGlobalFields($baseKey)
+	{
+		return array();
 	}
 }
 

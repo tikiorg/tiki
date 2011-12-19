@@ -34,7 +34,6 @@
 					data: $(form).serialize(),
 					success: function () {
 						$(form).trigger('insert');
-						activeFeature = null;
 					},
 					close: function () {
 						$(form).trigger('cancel');
@@ -73,13 +72,15 @@
 				featureadded: function (event) {
 					var format = new OpenLayers.Format.GeoJSON;
 					
-					if (activeFeature) {
-						vlayer.removeFeatures([activeFeature]);
-						activeFeature = null;
-					}
+					if (! event.feature.attributes.itemId) {
+						if (activeFeature) {
+							vlayer.removeFeatures([activeFeature]);
+							activeFeature = null;
+						}
 
-					activeFeature = event.feature;
-					saveFeature();
+						activeFeature = event.feature;
+						saveFeature();
+					}
 				},
 				featuremodified: function (event) {
 					if (event.feature === activeFeature) {
@@ -93,6 +94,12 @@
 			map.modeManager.addMode({
 				name: 'Draw',
 				controls: [ toolbar ]
+			});
+
+			form.bind('insert', function () {
+				$(map).trigger('changed');
+				map.vectors.removeFeatures([activeFeature]);
+				activeFeature = null;
 			});
 		});
 	});

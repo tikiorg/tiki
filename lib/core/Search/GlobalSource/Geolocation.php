@@ -11,9 +11,10 @@ class Search_GlobalSource_Geolocation implements Search_GlobalSource_Interface
 	{
 		$geolib = TikiLib::lib('geo');
 		$coordinates = $geolib->get_coordinates_string($objectType, $objectId);
+		$alreadyLocated = isset($data['geo_located']) && $date['geo_located'] == 'y';
 
 		return array(
-			'geo_located' => $typeFactory->identifier($coordinates ? 'y' : 'n'),
+			'geo_located' => $typeFactory->identifier(($coordinates || $alreadyLocated) ? 'y' : 'n'),
 			'geo_location' => $typeFactory->identifier($coordinates),
 		);
 	}
