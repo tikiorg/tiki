@@ -569,6 +569,8 @@ class TrackerQueryLib
 		}
 		
 		foreach ($result as $key => $row) {
+			if (isset($newResult[$row['itemId']])) continue;
+			
 			$newRow = array();
 			$fieldNames = explode($this->delimiter, $row['fieldNames']);
 			$fieldIds = explode($this->delimiter, $row['fieldIds']); 
@@ -581,9 +583,11 @@ class TrackerQueryLib
 				
 				//This script attempts to narrow the results further by using an "AND" style checking of the returned result since it cannot be made at this time in mysql 
 				if ($neededMatches > 0) {
-					$i = array_search($fieldId, $this->fields);
-					if ($this->equals[$i] == $itemValues[$key] && $this->filterType[$i] == 'and') {
-						$matchCount++;
+					$i = array_search($fieldId, $this->fields, true);
+					if ($i !== FALSE) {
+						if ($this->equals[$i] == $itemValues[$key] && $this->filterType[$i] == 'and') {
+							$matchCount++;
+						}
 					}
 				}
 				//End "AND" style checking of results

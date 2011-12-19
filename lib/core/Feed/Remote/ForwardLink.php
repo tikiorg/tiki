@@ -29,8 +29,8 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 				'field'=> 'Page',
 				'value'=> $args['object']
 			))
+			->render(false)
 			->query();
-		
 		//print_r($wikiAttributes);
 	}
 }
