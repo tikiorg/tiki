@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-Class Feed_Remote_TextBacklink_Contribution
+Class Feed_Remote_ForwardLink_Contribution
 {
 	static function sendItem($item = array())
 	{

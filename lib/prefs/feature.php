@@ -2478,11 +2478,11 @@ function prefs_feature_list($partial = false)
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
-		'feature_textbacklinkprotocol' => array(
-			'name' => tra('TextBacklink-Protocol'),
+		'feature_forwardlinkprotocol' => array(
+			'name' => tra('ForwardLink-Protocol'),
 			'type' => 'flag',
-			'help' => 'TextBacklinkProtocol',
-			'keywords' => 'textbacklink share feed',
+			'help' => 'ForwardLinkProtocol',
+			'keywords' => 'forward link forwardlink share feed',
 			'description' => tra('A Dynamic Compendia'),
 			'default' => 'n',
 			'warning' => tra('Experimental'),

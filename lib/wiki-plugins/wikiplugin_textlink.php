@@ -11,7 +11,7 @@ function wikiplugin_textlink_info()
 		'name' => tra('TextLink'),
 		'documentation' => 'PluginTextlink',
 		'description' => tra('Links your article to a site using textbacklink protocol'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_textbacklinkprotocol' ),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
 			'name' => array(

@@ -5,13 +5,21 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Feed_Remote_TextBacklink extends Feed_Remote_Abstract
+Class Feed_ForwardLink_Contribution extends Feed_Abstract
 {
-	var $type = "feed_remote_textbacklink";
-	
-	static function href($feedHref = "")
+	var $type = "local_page";
+	var $name = "";
+	var $isFileGal = true;
+	 
+	static function forwardlink($name)
 	{
-		$me = new self($feedHref);
+		$me = new self();
+		$me->name = $name;
 		return $me;
+	}
+	
+	public function name()
+	{
+		return $this->type . "_" . $this->name;
 	}
 }

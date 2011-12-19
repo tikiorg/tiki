@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-Class Feed_TextBacklink extends Feed_Abstract
+Class Feed_ForwardLink extends Feed_Abstract
 {
-	var $type = "feed_textbacklink";
+	var $type = "Feed_ForwardLink";
 	
 	public function replace()
 	{

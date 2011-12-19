@@ -11,7 +11,7 @@ function wikiplugin_textbacklink_info()
 		'name' => tra('TextBacklink'),
 		'documentation' => 'PluginTextBacklink',
 		'description' => tra('Creates a linkable part of a page using textbacklink protocol'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_textbacklink', 'feature_textbacklinkprotocol' ),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_textbacklink', 'feature_forwardlinkprotocol' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
 			'name' => array(

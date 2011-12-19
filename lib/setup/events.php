@@ -77,9 +77,8 @@ if ($prefs['scorm_enabled'] == 'y') {
 	$events->bind('tiki.file.update', Event_Lib::defer('scorm', 'handle_file_update'));
 }
 
-if ($prefs['feature_textbacklinkprotocol'] == 'y') {
-	$Feed_TextBacklink = "Feed_TextBacklink";
-	$events->bind("tiki.wiki.view", $Feed_TextBacklink.'::wikiView');
+if ($prefs['feature_forwardlinkprotocol'] == 'y') {
+	$events->bind("tiki.wiki.view", 'Feed_ForwardLink::wikiView');
 }
 
 $events->bind('tiki.save', Event_Lib::defer('tiki', 'plugin_post_save_actions'));
