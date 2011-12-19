@@ -14,4 +14,23 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 		$me = new self($feedHref);
 		return $me;
 	}
+	
+	static function wikiView($args)
+	{
+		$wikiAttributes = TikiLib::lib("trkqry")
+			->tracker("Wiki Attributes")
+			->byName()
+			->excludeDetails()
+			->filter(array(
+				'field'=> 'Type',
+				'value'=> 'ForwardLink'
+			))
+			->filter(array(
+				'field'=> 'Page',
+				'value'=> $args['object']
+			))
+			->query();
+		
+		print_r($wikiAttributes);
+	}
 }

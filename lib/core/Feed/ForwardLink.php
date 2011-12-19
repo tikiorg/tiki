@@ -57,9 +57,16 @@ Class Feed_ForwardLink extends Feed_Abstract
 			->tracker("Wiki Attributes")
 			->byName()
 			->excludeDetails()
-			->equals(array("Question", $args['object']))->fields(array("Type", "Page"))
+			->filter(array(
+				'field'=> 'Type',
+				'value'=> 'Question'
+			))
+			->filter(array(
+				'field'=> 'Page',
+				'value'=> $args['object']
+			))
 			->query();
-		
+		print_r($wikiAttributes);
 		$answers = array();
 		foreach($wikiAttributes as $wikiAttribute) {
 			$answers[] = array(
