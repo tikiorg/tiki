@@ -52,6 +52,7 @@ class TrackerQueryLib
 	private $delimiter = "[{|!|}]";
 	private $debug = false;
 	private $concat = true;
+	private $filterType = array();
 	
 	public static function tracker($tracker)
 	{
@@ -75,7 +76,15 @@ class TrackerQueryLib
 		$this->itemId = $itemId;
 		return $this;
 	}
-
+	
+	public function filter($filter = array())
+	{
+		$this->fields[] = $filter['field'];
+		$this->filterType[] = (isset($filter['type']) ? $filter['type'] : 'and'); //really only things that should be accepted are "and" and "or"
+		$this->equals[] = $filter['value'];
+		return $this;
+	}
+	
 	public function equals($equals = array())
 	{
 		$this->equals = $equals;
@@ -554,22 +563,37 @@ class TrackerQueryLib
 		}
 
 		$newResult = array();
+		$neededMatches = count($this->fields);
+		foreach($this->fields as $i=>$field) {
+			if ($this->filterType[$i] != 'and') $neededMatches--;
+		}
+		
 		foreach ($result as $key => $row) {
 			$newRow = array();
 			$fieldNames = explode($this->delimiter, $row['fieldNames']);
 			$fieldIds = explode($this->delimiter, $row['fieldIds']); 
 			$itemValues = explode($this->delimiter, $row['item_values']);
-
+			
+			$matchCount = 0;
 			foreach ($fieldIds as $key => $fieldId) {
 				$field = ($this->byName == true ? $fieldNames[$key] : $fieldId);
 				$value = '';
-
+				
+				//This script attempts to narrow the results further by using an "AND" style checking of the returned result since it cannot be made at this time in mysql 
+				if ($neededMatches > 0) {
+					$i = array_search($fieldId, $this->fields);
+					if ($this->equals[$i] == $itemValues[$key] && $this->filterType[$i] == 'and') {
+						$matchCount++;
+					}
+				}
+				//End "AND" style checking of results
+				
 				if ($this->render == true) {
 					$value = $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]);
 				} else {
 					$value = $itemValues[$key];
 				}
-
+				
 				if (isset($newRow[$field])) {
 					if (is_array($newRow[$field]) == false) {
 						$newRow[$field] = array($newRow[$field]);
@@ -586,7 +610,10 @@ class TrackerQueryLib
 				$newRow['trackerId'] = $row['trackerId'];
 				$newRow['itemId'] = $row['itemId'];
 			}
-			$newResult[$row['itemId']] = $newRow;
+
+			if ($neededMatches == 0 || $neededMatches == $matchCount) {
+				$newResult[$row['itemId']] = $newRow;
+			}
 		}
 		unset($result);
 
