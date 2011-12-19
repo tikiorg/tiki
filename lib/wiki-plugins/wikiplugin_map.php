@@ -215,6 +215,7 @@ function wp_map_available_controls()
 		'levels',
 		'search_location',
 		'current_location',
+		'scale',
 		'streetview',
 	);
 }
