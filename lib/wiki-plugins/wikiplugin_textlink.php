@@ -10,18 +10,13 @@ function wikiplugin_textlink_info()
 	return array(
 		'name' => tra('TextLink'),
 		'documentation' => 'PluginTextlink',
-		'description' => tra('Links your article to a site using textbacklink protocol'),
+		'description' => tra('Links your article to a site using forwardlink protocol'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
-			'name' => array(
+			'forwardlink' => array(
 				'required' => true,
-				'name' => tra('Name'),
-				'default' => false
-			),
-			'href' => array(
-				'required' => true,
-				'name' => tra('Href'),
+				'name' => tra('ForwardLink'),
 				'default' => false
 			),
 		),
@@ -33,29 +28,30 @@ function wikiplugin_textlink($data, $params)
     global $tikilib, $headerlib, $feedItem, $caching, $page;
     static $textlinkI = 0;
 	++$textlinkI;
+	$i = $textlinkI;
 	
-	$params = array_merge(array("href" => ""), $params);
-	
+	$params = array_merge(array("forwardlink" => ""), $params);
 	extract($params, EXTR_SKIP);
 	
-	if (empty($href) || empty($name)) return tr("Ensure name and href are set.");
+	$forwardlink = json_decode(stripslashes(trim(urldecode($forwardlink))));
+	if(empty($forwardlink)) return $data;
 	
-	$feed = Feed_Remote_ForwardLink::href($href);
-	
-	$href = parse_url($href);
-	
-	Feed_Remote_ForwardLink_Contribution::sendItem(array(
-		'href'=> $href['scheme'] . "://" . $href['host'] . $href['path'],
-		'pageName'=> $page,
-		'linkName'=> $page . $textlinkI,
-		'description'=> TikiLib::lib("parser")->parse_data($data),
-		'originName'=> $name
-	));
+	$forwardlink->href = urldecode($forwardlink->href);
+	$forwardlink->serial = urldecode($forwardlink->serial);
 
-	$item = $feed->getItem($name);
+	//$feed = Feed_Remote_ForwardLink::forwardlink($forwardlink);
 	
-	if (!empty($item->href)) {
-    	return "<a href='$item->href'>$data</a>";
+	$result = Feed_Remote_ForwardLink_Contribution::send(array(
+		"page"=> $page,
+		"href"=> $forwardlink->href,
+		"textlinkBody"=> $data,
+		"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $page
+	));
+	
+	//print_r($result);
+	
+	if (!empty($forwardlink->href)) {
+    	return $data."~np~<a href='" .$forwardlink->href ."'>*</a>~/np~";
 	} else {
     	return $data;
     }

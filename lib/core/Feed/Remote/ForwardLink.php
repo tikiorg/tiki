@@ -8,16 +8,18 @@
 class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 {
 	var $type = "Feed_Remote_ForwardLink";
+	var $forwardlink = array();
 	
-	static function href($feedHref = "")
+	static function forwardlink($forwardlink = array())
 	{
-		$me = new self($feedHref);
+		$me = new self($forwardlink->href);
+		$me->forwardlink = $forwardlink;
 		return $me;
 	}
 	
 	static function wikiView($args)
 	{
-		global $headerlib;
+		global $tikilib, $headerlib;
 		
 		 static $Feed_Remote_ForwardLink_I = 0;
 		++$Feed_Remote_ForwardLink_I;
@@ -43,10 +45,11 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 			$forwardLinks[] = $forwardLink = json_decode($wikiAttribute['Value']);
 			
 			if (isset($forwardLink->href)) {
-				$result = Feed_Remote_ForwardLink_Contribution::sendItem(array(
-					"pageName"=> $args['object'],
-					"linkName"=> $args['object'] . " " . $i,
-					"href"=> urldecode($forwardLink->href)
+				$result = Feed_Remote_ForwardLink_Contribution::send(array(
+					"page"=> $args['object'],
+					"href"=> urldecode($forwardLink->href),
+					"textlinkBody"=> $args['data'],
+					"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
 				));
 			
 			

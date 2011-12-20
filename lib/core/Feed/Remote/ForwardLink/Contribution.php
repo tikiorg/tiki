@@ -7,26 +7,23 @@
 
 Class Feed_Remote_ForwardLink_Contribution
 {
-	static function sendItem($item = array())
+	static function send($item = array())
 	{
 		global $tikilib, $feedItem, $caching;
 		
-		$pageInfo = $tikilib->get_page_info($item['pageName']);
+		$info = $tikilib->get_page_info($item['page']);
 		$client = new Zend_Http_Client($item['href']);
 		
-		$client->setParameterGet('type', "textlink");
+		$client->setParameterGet('protocol', 'forwardlink');
 		$client->setParameterGet('contribution', json_encode(array(
 			'version' => '1.0',
 			'encoding' => 'UTF-8',
 			'feed' => array(
 				'type' => 'textlink',
 				'entry'=> array(array(
-					'page'=> $pageInfo['pageName'],
-					'name'=> $item['linkName'],
-					'description'=> $data,
-					'date'=> $pageInfo['lastModif'],
-					'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $pageInfo['pageName'],
-					'originName'=>$item['originName']
+					'date'=> $info['lastModif'],
+					'href'=> $item['textlinkHref'],
+					'body'=> $item['textlinkBody']
 				))
 			),
 		)));
