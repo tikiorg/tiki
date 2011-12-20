@@ -40,11 +40,11 @@ function wikiplugin_textlink($data, $params)
 	
 	if (empty($href) || empty($name)) return tr("Ensure name and href are set.");
 	
-	$feed = Feed_Remote_TextBacklink::href($href);
+	$feed = Feed_Remote_ForwardLink::href($href);
 	
 	$href = parse_url($href);
 	
-	Feed_Remote_TextBacklink_Contribution::sendItem(array(
+	Feed_Remote_ForwardLink_Contribution::sendItem(array(
 		'href'=> $href['scheme'] . "://" . $href['host'] . $href['path'],
 		'pageName'=> $page,
 		'linkName'=> $page . $textlinkI,
