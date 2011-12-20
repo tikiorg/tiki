@@ -11,8 +11,9 @@ Class Feed_Remote_ForwardLink_Contribution
 	{
 		global $tikilib, $feedItem, $caching;
 		
-		$info = $tikilib->get_page_info($item['page']);
-		$client = new Zend_Http_Client($item['href']);
+		if (empty($item['forwardlink']->href)) return false;
+		
+		$client = new Zend_Http_Client($item['forwardLink']->href);
 		
 		$client->setParameterGet('protocol', 'forwardlink');
 		$client->setParameterGet('contribution', json_encode(array(
@@ -23,7 +24,8 @@ Class Feed_Remote_ForwardLink_Contribution
 				'entry'=> array(array(
 					'date'=> $info['lastModif'],
 					'href'=> $item['textlinkHref'],
-					'body'=> $item['textlinkBody']
+					'body'=> $item['textlinkBody'],
+					'forwardlink'=>$item['forwardLink']
 				))
 			),
 		)));

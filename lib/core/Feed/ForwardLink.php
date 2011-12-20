@@ -60,6 +60,8 @@ Class Feed_ForwardLink extends Feed_Abstract
 				"date"=>		$args['lastModif'],
 			);
 			
+			//$_SERVER['REMOTE_ADDR'];
+			
 			echo json_encode($response);
 			die;
 		}

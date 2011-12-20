@@ -33,25 +33,21 @@ function wikiplugin_textlink($data, $params)
 	$params = array_merge(array("forwardlink" => ""), $params);
 	extract($params, EXTR_SKIP);
 	
-	$forwardlink = json_decode(stripslashes(trim(urldecode($forwardlink))));
-	if(empty($forwardlink)) return $data;
+	$forwardLink = json_decode(stripslashes(trim(urldecode($forwardlink))));
+	if(empty($forwardLink)) return $data;
 	
-	$forwardlink->href = urldecode($forwardlink->href);
-	$forwardlink->serial = urldecode($forwardlink->serial);
-
-	//$feed = Feed_Remote_ForwardLink::forwardlink($forwardlink);
+	$forwardLink->href = urldecode($forwardLink->href);
+	$forwardLink->serial = urldecode($forwardLink->serial);
 	
 	$result = Feed_Remote_ForwardLink_Contribution::send(array(
 		"page"=> $page,
-		"href"=> $forwardlink->href,
+		"forwardLink"=> $forwardlink,
 		"textlinkBody"=> $data,
 		"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $page
 	));
 	
-	//print_r($result);
-	
-	if (!empty($forwardlink->href)) {
-    	return $data."~np~<a href='" .$forwardlink->href ."'>*</a>~/np~";
+	if (!empty($forwardLink->href)) {
+    	return $data."~np~<a href='" .$forwardLink->href ."'>*</a>~/np~";
 	} else {
     	return $data;
     }

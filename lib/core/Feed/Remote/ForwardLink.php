@@ -44,23 +44,16 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 		foreach($wikiAttributes as $wikiAttribute) {
 			$forwardLinks[] = $forwardLink = json_decode($wikiAttribute['Value']);
 			
+			$forwardLink->href = urldecode($forwardLink->href);
+			$forwardLink->serial = urldecode($forwardLink->serial);
+			
 			if (isset($forwardLink->href)) {
 				$result = Feed_Remote_ForwardLink_Contribution::send(array(
 					"page"=> $args['object'],
-					"href"=> urldecode($forwardLink->href),
+					"forwardLink"=> $forwardLink,
 					"textlinkBody"=> $args['data'],
 					"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
 				));
-			
-			
-				if (isset($result) && $result == "success") {
-					$headerlib->add_jq_onready(<<<JQ
-						$('<div></div>')
-							.text(tr("Contribution Accepted"))
-							.dialog();
-JQ
-);
-				}
 			}
 		}
 		
@@ -73,7 +66,7 @@ JQ
 				if (this.href) {
 					$('<a>*</a>')
 						.attr('href', unescape(this.href))
-						.appendTo('#top');
+						.appendTo('#page-data');
 				}
 			});
 JQ
