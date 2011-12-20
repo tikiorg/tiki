@@ -50,7 +50,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 	function wikiView($args)
 	{
-		global $headerlib, $_REQUEST;
+		global $tikilib, $headerlib, $_REQUEST;
 		
 		if (isset($_GET['type']) && isset($_GET['contribution'])) {
 			//here we do the confirmation that another wiki is trying to talk with this one
@@ -107,6 +107,8 @@ Class Feed_ForwardLink extends Feed_Abstract
 JQ
 );
 		} else {
+			$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=HomePage&nohistory&preview=' . $args['version'];
+			
 			$headerlib->add_jq_onready(<<<JQ
 				var answers = $answers;
 				
@@ -155,7 +157,7 @@ JQ
 									
 									var data = {
 										text: o.text,
-										href: escape(document.location),
+										href: escape('$href'),
 										serial: escape(o.serial),
 										answers: answers
 									};
@@ -163,11 +165,11 @@ JQ
 									me.data('rangyBusy', true);
 									
 									var tbp_copy = $('<div></div>');
-									var tbp_copy_value = $('<textarea style="width: 100%;"></textarea>')
-										.val(JSON.stringify(data))
-										.appendTo(tbp_copy);
 									var tbp_copy_button = $('<div>' + tr('Copy To Clipboard') + '</div>')
 										.button()
+										.appendTo(tbp_copy);
+									var tbp_copy_value = $('<textarea style="width: 100%; height: 80%;" disabled="true"></textarea>')
+										.val(JSON.stringify(data))
 										.appendTo(tbp_copy);
 									tbp_copy.dialog({
 										title: tr("Copy This"),
@@ -176,8 +178,7 @@ JQ
 											me.data('rangyBusy', false);
 											$(document).mousedown();
 										},
-										draggable: false,
-										resizable: false
+										draggable: false
 									});
 									
 									tbp_copy_value.select().focus();
