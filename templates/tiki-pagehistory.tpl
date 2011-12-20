@@ -51,7 +51,9 @@
 			</form>
 		{/remarksbox}
 	{/if}
-	<div class="wikitext">{$previewd}</div>
+	<div class="wikitext" id="page-data">
+		{$previewd}
+	</div>
 {/if}
 
 {if $source}

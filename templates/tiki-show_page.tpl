@@ -109,15 +109,17 @@
 			{tr}This text was automatically translated by Google Translate from the following page: {/tr}<a href="tiki-index.php?page={$page}">{$page}</a>
 		{/remarksbox}
 	{/if}
-
-	{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
-		<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
+	
+	<div id="page-data">
+		{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
+			<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
+				{$parsed}
+			</div>
+		{else}
 			{$parsed}
-		</div>
-	{else}
-		{$parsed}
-	{/if}
-
+		{/if}
+	</div>
+	
 	{* Information below the wiki content must not overlap the wiki content that could contain floated elements *}
 	<hr class="hrwikibottom" /> 
 
