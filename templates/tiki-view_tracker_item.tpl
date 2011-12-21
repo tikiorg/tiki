@@ -110,7 +110,11 @@
 			</table>
 
 		{else}
-			{include file='tracker_pretty_item.tpl' item=$item_info fields=$fields wiki=$tracker_info.viewItemPretty}
+			{if $canModify}
+				{include file='tracker_pretty_item.tpl' item=$item_info fields=$ins_fields wiki=$tracker_info.viewItemPretty}
+			{elseif $canView}
+				{include file='tracker_pretty_item.tpl' item=$item_info fields=$fields wiki=$tracker_info.viewItemPretty}
+			{/if}
 		{/if}
 
 	{/tab}
