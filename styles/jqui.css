@@ -218,12 +218,12 @@ input[type="submit"]:hover,
 
 #top_modules .siteloginbar_popup {
 	position: absolute;
-	bottom: 1px;
+	bottom: 0;
 	right: 20px;
 }
 
 #tiki-top {
-	padding: .5em .3em .3em 1em;
+	padding: 0 .3em 0 1em;
 	border: 1px solid #aaa;
 	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #363636;
