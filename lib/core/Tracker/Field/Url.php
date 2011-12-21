@@ -56,22 +56,26 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 
 		$url = $this->getConfiguration('value');
 		
-		if (empty($url) || $context['list_mode'] == 'csv' ) {
+		if (empty($url) || $context['list_mode'] == 'csv' || $this->getOption(0) == 1 ) {
 			return $url;
-		} elseif ($this->getOption(0) == 2) {
+		} elseif ($this->getOption(0) == 2) { // Site title as link
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(array(
 				'type' => 'external',
 				'id' => $url,
 			), $smarty);
-		} elseif (!$this->getOption(0)) {
+		} elseif (!$this->getOption(0)) { // URL as link
+			$parsedUrl = trim(str_replace('<br />', '', TikiLib::lib('tiki')->parse_data($url)));
+			if ($parsedUrl != $url) {
+				return $parsedUrl;
+			}
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(array(
 				'type' => 'external',
 				'id' => $url,
 				'title' => $url,
 			), $smarty);
-		} elseif ($this->getOption(0) == 3) {
+		} elseif ($this->getOption(0) == 3) { // URL + site title
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(array(
 				'type' => 'external_extended',
