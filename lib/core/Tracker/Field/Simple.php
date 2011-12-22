@@ -9,7 +9,6 @@
  * Handler class for simple fields:
  * 
  * - email key ~m~
- * - ip key ~I~
  */
 class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
@@ -65,27 +64,6 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 					),
 				),
 			),
-			'I' => array(
-				'name' => tr('IP Selector'),
-				'description' => tr('IP address input field.'),
-				'help' => 'IP selector',
-				'prefs' => array('trackerfield_ipaddress'),
-				'tags' => array('basic'),
-				'default' => 'n',
-				'params' => array(
-					'autoassign' => array(
-						'name' => tr('Auto-assign'),
-						'description' => tr('Automatically assign the value on creation or edit.'),
-						'filter' => 'int',
-						'default' => 0,
-						'options' => array(
-							0 => tr('None'),
-							1 => tr('Creator'),
-							2 => tr('Modifier'),
-						),
-					),
-				),
-			),
 		);
 	}
 	
@@ -94,8 +72,6 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 		switch ($type) {
 			case 'm':
 				return new Tracker_Field_Simple($fieldInfo, $itemData, $trackerDefinition, 'email');
-			case 'I':
-				return new Tracker_Field_Simple($fieldInfo, $itemData, $trackerDefinition, 'ip');
 		}
 	}
 	
