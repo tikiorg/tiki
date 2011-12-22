@@ -2565,6 +2565,17 @@ class TrackerLib extends TikiLib
 		return $this->fields()->fetchOne('fieldId', array('trackerId' => (int) $trackerId, 'name' => $name));
 	}
 
+	/**
+	 * Return a tracker field id from it's type. By default
+	 * it return only the first field of the searched type.
+	 * 
+	 * @param int $trackerId tracker id
+	 * @param string $type field type (in general an one letter code)
+	 * @param string $option a value (or values separated by comma) that a tracker field must have in its options (it will be used inside a LIKE statement so most of the times it is a good idea to use %)
+	 * @param bool $first if true return only the first field of the searched type, if false return all the fields of the searched type 
+	 * @param string $name filter by tracker field name
+	 * @return int|array tracker field id or list of tracker fields ids
+	 */
 	function get_field_id_from_type($trackerId, $type, $option=NULL, $first=true, $name=null)
 	{
 		static $memo;
