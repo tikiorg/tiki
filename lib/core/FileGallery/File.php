@@ -41,7 +41,8 @@ class FileGallery_File
 	
 	function __construct()
 	{
-		include_once ('lib/mime/mimetypes.php');
+		global $mimetypes; include_once ('lib/mime/mimetypes.php');
+		
 		$this->setParam('filetype', $mimetypes["txt"]);
 		$this->setParam('name', tr("New File"));
 		$this->setParam('description', tr("New File"));
@@ -126,7 +127,7 @@ class FileGallery_File
 		
 		if ($this->exists() == false) {
 			$id = TikiLib::lib("filegal")->insert_file(
-				1, //zero makes it not show by default
+				($this->getParam('galleryId') || 1), //zero makes it not show by default
 				$this->getParam('filename'),
 				$this->getParam('description'),
 				$this->getParam('filename'),
