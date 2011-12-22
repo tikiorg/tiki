@@ -2194,6 +2194,11 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'feature_simplebox_delim' => array(
+			'name' => tra('String to use to delimit simplebox'),
+			'type' => 'text',
+			'default' => '^',
+		),
 		'feature_community_gender' => array(
 			'name' => tra('Users can choose to show their gender'),
 			'type' => 'flag',

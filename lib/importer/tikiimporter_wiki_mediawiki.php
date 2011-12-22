@@ -50,6 +50,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     {
     	$options = array(
         	array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and attachments (see documentation for more information)')),
+		array('name' => 'maketoc', 'type' => 'checkbox', 'label' => tra('Add a maketoc at the top of each page')),
         );
         
         return $options;

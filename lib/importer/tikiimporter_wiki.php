@@ -159,6 +159,9 @@ class TikiImporter_Wiki extends TikiImporter
         if (!empty($page)) { 
             $first = true;
             foreach ($page['revisions'] as $rev) {
+		if (isset($_POST['maketoc']) && $_POST['maketoc'] == 'on') {
+			$rev['data'] = "{maketoc}\n".$rev['data'];
+		}
                 if ($first) {
                     $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
 						$rev['comment'], $rev['user'], $rev['ip'], '', '',
