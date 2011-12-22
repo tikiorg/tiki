@@ -37,15 +37,22 @@ function module_tracker_input_info()
 				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field.'),
 				'filter' => 'text',
 			),
+			'streetview' => array(
+				'name' => tr('Capture StreetView'),
+				'description' => tr('Include a button on the StreetView interface to create tracker items from the location. Requires upload image from URL and location parameter.'),
+				'filter' => 'text',
+			),
 		),
 	);
 }
 
 function module_tracker_input($mod_reference, $module_params)
 {
+	global $prefs;
 	$smarty = TikiLib::lib('smarty');
 	$trackerId = $module_params['trackerId'];
 	$itemObject = Tracker_Item::newItem($trackerId);
+	$definition = Tracker_Definition::get($trackerId);
 
 	if (! $itemObject->canModify()) {
 		$smarty->assign('tracker_input', array(
@@ -59,6 +66,12 @@ function module_tracker_input($mod_reference, $module_params)
 
 	$textinput = isset($module_params['textinput']) ? $module_params['textinput'] : '';
 	$hiddeninput = isset($module_params['hiddeninput']) ? $module_params['hiddeninput'] : '';
+	$streetview = isset($module_params['streetview']) ? $module_params['streetview'] : '';
+	$streetViewField = $definition->getFieldFromPermName($streetview);
+
+	if (! $streetview || $prefs['fgal_upload_from_source'] != 'y' || ! $streetViewField) {
+		$streetview = '';
+	}
 
 	$location = null;
 	if (isset($module_params['location'])) {
@@ -78,11 +91,18 @@ function module_tracker_input($mod_reference, $module_params)
 		$hidden[$p[1]] = $p[2];
 	}
 
+	$galleryId = null;
+	if ($streetview) {
+		$galleryId = $streetViewField['options_array'][0];
+	}
+
 	$smarty->assign('tracker_input', array(
 		'trackerId' => $trackerId,
 		'textInput' => $text,
 		'hiddenInput' => $hidden,
 		'location' => $location,
+		'streetview' => $streetview,
+		'galleryId' => $galleryId,
 	));
 }
 

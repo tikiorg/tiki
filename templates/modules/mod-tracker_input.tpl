@@ -1,6 +1,6 @@
 {if $tracker_input.trackerId}
 {tikimodule error=$module_params.error title=$tpl_module_title name="tracker_input" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}">
+	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}" data-streetview="{$tracker_input.streetview|escape}">
 		{foreach from=$tracker_input.textInput key=token item=label}
 			<label>
 				{$label|escape}
@@ -48,7 +48,9 @@
 		});
 		return false;
 	}).each(function () {
-		var form = this, location = $(this).data('location');
+		var form = this
+			, location = $(this).data('location')
+			, streetview = $(this).data('streetview');
 
 		if (location ) {
 			var map = $(form).closest('.tab, #appframe, body').find('.map-container')[0];
@@ -89,6 +91,33 @@
 				$(form).bind('cancel', function () {
 					$(map).removeMapSelection();
 				});
+
+				if (streetview) {
+					map.streetview.addButton('{tr}Add Marker{/tr}', function (canvas) {
+						var url = canvas.getImageUrl(), position = canvas.getPosition();
+						$.ajax({
+							type: 'POST',
+							url: $.service('file', 'remote'),
+							dataType: 'json',
+							data: {
+								galleryId: "{{$tracker_input.galleryId|escape}}",
+								url: url
+							},
+							success: function (data) {
+								var input = $('<input type="hidden" name="forced~' + streetview + '"/>')
+									.val(data.fileId)
+									.appendTo(form);
+								$('#' + location).val(position);
+
+								$(form).submit();
+								input.remove();
+							},
+							complete: function () {
+								$(canvas).dialog('close');
+							}
+						});
+					});
+				}
 			});
 		}
 	});
