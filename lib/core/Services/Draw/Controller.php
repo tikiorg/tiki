@@ -30,5 +30,10 @@ class Services_Draw_Controller
 		
 		include_once 'tiki-edit_draw.php';
 	}
+	
+	function action_replace($input)
+	{
+		//just a dummy for now, filegallery handles it all
+	}
 }
 

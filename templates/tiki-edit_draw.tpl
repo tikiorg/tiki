@@ -3,7 +3,7 @@
 	{title help="Draw"}{$name}{/title}
 {/if}
 
-<form id="tiki_draw" style="text-align: center;" onsubmit="$('#tiki_draw').saveDraw();return false;">
+<form id="tiki_draw" class="submit" style="text-align: center;" onsubmit="$('#tiki_draw').saveDraw();return false;">
 	<span style="display: none;">
 		<textarea id="fileData">{$data}</textarea>
 	</span>
@@ -14,6 +14,7 @@
 	<input type="hidden" id="fileWidth" value="{$width}" />
 	<input type="hidden" id="fileHeight" value="{$hight}" />
 	<input type="hidden" id="archive" value="{$archive}" />
+	<input type="hidden" name="action" value="replace" />
 	
 	<div id="drawEditor">
 		<div id="drawMenu">
@@ -23,7 +24,7 @@
 				<button id="drawBack">{tr}Back{/tr}</button>
 				<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>
 			{else}
-				<input type="submit" value="{tr}Save{/tr}" />
+				<input type="submit" style="display: none;" value="{tr}Save{/tr}" />
 			{/if}
 		</div>
 	</div>

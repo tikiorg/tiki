@@ -221,7 +221,8 @@
 						controller: 'draw',
 						action: 'edit',
 						fileId: me.data('fileid'),
-						galleryId: me.data('galleryid')
+						galleryId: me.data('galleryid'),
+						modal: true
 					},
 					load: function () {
 						var draw = $('#tiki_draw').loadDraw({
@@ -229,17 +230,9 @@
 							galleryId: me.data('galleryid'),
 							name: me.data('name'),
 							data: $('#fileData').val()
+						}).bind('savedDraw', function() {
+							draw.parent().dialog('close');
 						});
-						
-						var drawFrame = draw.find('iframe').andSelf();
-						var drawParent = draw.parent().css('padding', '0px');
-						var drawDialog = draw.parent().parent();
-						
-						drawDialog
-							.resize(function(){
-								drawFrame.height(drawParent.height() - 5);
-							})
-							.resize();
 						
 					}
 				});
