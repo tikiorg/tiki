@@ -741,11 +741,6 @@ class HeaderLib
 		if (count($visual) > 0) {
 			$this->add_jsfile('http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1', 'external');
 		}
-
-		$yahoo = array_intersect(array('yahoo_street', 'yahoo_hybrid', 'yahoo_satellite'), $enabled);
-		if (count($yahoo) > 0) {
-			$this->add_jsfile('http://api.maps.yahoo.com/ajaxymap?v=3.0', 'external');
-		}
 		*/
 
 		$this->add_jsfile('http://openlayers.org/api/2.11/OpenLayers.js', 'external');
