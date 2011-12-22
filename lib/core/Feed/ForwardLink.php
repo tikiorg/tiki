@@ -75,9 +75,22 @@ Class Feed_ForwardLink extends Feed_Abstract
 			die;
 		}
 		
-		/*print_r(Feed_ForwardLink_Contribution::forwardLink($args['object'])
-			->getItems());*/
-			
+		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
+			foreach($item->feed->entry as $entry) {
+				$thisSerial = htmlspecialchars($entry->forwardlink->serial);
+				$thisHref = ($entry->href);
+				$headerlib->add_jq_onready(<<<JQ
+				$('#page-data')
+					.rangyRestore('$thisSerial', function(o) {
+						$('<a>*</a>')
+							.attr('href', '$thisHref')
+							.insertBefore(o.selection.first());
+					});
+JQ
+);
+			}
+		}
+		
 		$serial = urldecode(isset($_REQUEST['serial']) ? htmlspecialchars($_REQUEST['serial']) : "");
 		
 		$wikiAttributes = TikiLib::lib("trkqry")
