@@ -3390,7 +3390,7 @@ class FileGalLib extends TikiLib
 			if (class_exists('finfo')) {
 				$php53 = defined('FILEINFO_MIME_TYPE');
 				$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
-				$type = $finfo->buffer($content);
+				$type = $finfo->buffer($result);
 
 				if (! $php53) {
 					$type = reset(explode(';', $type));
