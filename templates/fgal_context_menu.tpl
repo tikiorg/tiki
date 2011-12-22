@@ -61,7 +61,7 @@
 				$files[$changes].type eq 'image/png' 		or
 				$files[$changes].type eq 'image/tiff'
 			}
-				<a class="draw dialog" data-name="{$files[$changes].filename}" title="Edit: {$files[$changes].filename}" href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}" data-fileid='{$files[$changes].id}' data-galleryid='{$files[$changes].galleryId}'>
+				<a class="draw dialog" data-name="{$files[$changes].filename}" title="Edit: {$files[$changes].filename}" href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}" data-fileid='{$files[$changes].id}' data-galleryid='{$files[$changes].galleryId}' onclick='return $(this).ajaxEditDraw();'>
 					{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 				</a>
 			{/if}
@@ -209,35 +209,3 @@
 {/if}
 
 {/strip}
-
-{jq}
-	$('.fgalname').click(function() {
-		$('.draw.dialog')
-			.click(function() {
-				var me = $(this);
-				me.serviceDialog({
-					title: me.attr('title'),
-					data: {
-						controller: 'draw',
-						action: 'edit',
-						fileId: me.data('fileid'),
-						galleryId: me.data('galleryid'),
-						modal: true
-					},
-					load: function () {
-						var draw = $('#tiki_draw').loadDraw({
-							fileId: me.data('fileid'),
-							galleryId: me.data('galleryid'),
-							name: me.data('name'),
-							data: $('#fileData').val()
-						}).bind('savedDraw', function() {
-							draw.parent().dialog('close');
-						});
-						
-					}
-				});
-				
-				return false;
-			});
-	});
-{/jq}
