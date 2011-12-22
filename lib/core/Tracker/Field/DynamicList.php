@@ -88,7 +88,7 @@ $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 			filterfield: ' . $this->getOption(1) . ',
 			status: "' . $this->getOption(4) . '",
 			mandatory: "' . $this->getConfiguration('isMandatory') . '",
-			filtervalue: $(this).val()
+			item: $(this).val() // We need the field value for the fieldId filterfield for the item $(this).val
 		},
 		function(data, status) {
 			$ddl = $("select[name=' . $this->getInsertId() . ']");
