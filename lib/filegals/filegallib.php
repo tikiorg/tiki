@@ -184,6 +184,9 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
+		$gal_info = $this->get_file_gallery_info((int)$galleryId);
+		$this->transformImage($path, $data, $size, $gal_info, $type);
+
 		$smarty = TikiLib::lib('smarty');
 		$filesTable = $this->table('tiki_files');
 		$galleriesTable = $this->table('tiki_file_galleries');
@@ -853,6 +856,8 @@ class FileGalLib extends TikiLib
 		if (! $this->is_filename_valid($filename)) {
 			return false;
 		}
+
+		$this->transformImage($path, $data, $size, $gal_info, $type);
 
 		$filesTable = $this->table('tiki_files');
 		$fileDraftsTable = $this->table('tiki_file_drafts');
@@ -2909,93 +2914,21 @@ class FileGalLib extends TikiLib
 						$subtype = "jpeg";
 						$type = "image/jpeg";
 					}
-					// If it's an image format we can handle and gallery has limits on image sizes
-					if ( (in_array($subtype, array("jpg","jpeg","gif","png","bmp","wbmp"))) 
-						&& ( ($gal_info["image_max_size_x"]) || ($gal_info["image_max_size_y"]) && (!$podCastGallery) ) ) {
-						$image_size_info = getimagesize($file_tmp_name);
-						$image_x = $image_size_info[0];
-						$image_y = $image_size_info[1];
-						if ($gal_info["image_max_size_x"]) {
-							$rx=$image_x/$gal_info["image_max_size_x"];
-						} else {
-							$rx=0;
-						}
-						if ($gal_info["image_max_size_y"]) {
-							$ry=$image_y/$gal_info["image_max_size_y"];
-						} else {
-							$ry=0;
-						}
-						$ratio=max($rx, $ry);
-						if ($ratio>1) {	// Resizing will occur
-							$image_new_x=$image_x/$ratio;
-							$image_new_y=$image_y/$ratio;
-							$resized_file = $tmp_dest;
-							$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
-							switch($subtype) {
-								case "gif":
-									$image_p = imagecreatefromgif($file_tmp_name);
-    								break;
-								case "png":
-									$image_p = imagecreatefrompng($file_tmp_name);
-    								break;
-								case "bmp":
-								case "wbmp":
-									$image_p = imagecreatefromwbmp($file_tmp_name);
-	    							break;
-								case "jpg":
-								case "jpeg":
-									$image_p = imagecreatefromjpeg($file_tmp_name);
-		    						break;
-							}
-							if (!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
-								$errors[] = tra('Cannot resize the file:') . ' ' . $resized_file;
-							}
-							switch($subtype) {
-								case "gif":
-									if (!imagegif($image_resized_p, $resized_file)) {
-										$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-									}
-    								break;
-								case "png":
-									if (!imagepng($image_resized_p, $resized_file)) {
-										$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-									}
-    								break;
-								case "bmp":
-								case "wbmp":
-									if (!image2wbmp($image_resized_p, $resized_file)) {
-										$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-									}
-    								break;
-								case "jpg":
-								case "jpeg":
-									if (!imagejpeg($image_resized_p, $resized_file)) {
-										$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-									}
-    								break;
-							}
-							unlink($image_p);
-							$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'), $image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
-							$size = filesize($resized_file);
-						}
-					}
 		
-					if ($ratio <=1) {
-						// No resizing
-						if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-							if ($tiki_p_admin == 'y') {
-								$errors[] = tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest;
-								continue;
-							} else {
-								$errors[] = tra('Errors detected');
-								continue;
-							}
-							$logslib->add_log('file_gallery', tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest);
+					// No resizing
+					if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+						if ($tiki_p_admin == 'y') {
+							$errors[] = tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest;
+							continue;
 						} else {
-							$logslib->add_log('file_gallery', tra('File added: ').$tmp_dest.' '.tra('by').' '.$user);
+							$errors[] = tra('Errors detected');
+							continue;
 						}
+						$logslib->add_log('file_gallery', tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest);
+					} else {
+						$logslib->add_log('file_gallery', tra('File added: ').$tmp_dest.' '.tra('by').' '.$user);
 					}
-		
+
 					if (false === $data = @file_get_contents($tmp_dest)) {
 						$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 					}
@@ -3170,6 +3103,103 @@ class FileGalLib extends TikiLib
 
 		// Returns fileInfo of the new file if only one file has been edited / uploaded
 		return $fileInfo;
+	}
+
+	private function transformImage($path, & $data, & $size, $gal_info, $type)
+	{
+		$imageReader = $this->getImageReader($type);
+		$imageWriter = $this->getImageWriter($type);
+
+		if (! $imageReader || ! $imageWriter) {
+			return;
+		}
+
+		// If it's an image format we can handle and gallery has limits on image sizes
+		if (! $gal_info["image_max_size_x"] || ! $gal_info["image_max_size_y"]) {
+			return;
+		}
+
+		if ($data) {
+			$work_file = tempnam('temp/', 'imgresize');
+			file_put_contents($work_file, $data);
+		} else {
+			$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $gal_info);
+			$work_file = $savedir . $path;
+		}
+
+		$image_size_info = getimagesize($work_file);
+		$image_x = $image_size_info[0];
+		$image_y = $image_size_info[1];
+		if ($gal_info["image_max_size_x"]) {
+			$rx=$image_x/$gal_info["image_max_size_x"];
+		} else {
+			$rx=0;
+		}
+		if ($gal_info["image_max_size_y"]) {
+			$ry=$image_y/$gal_info["image_max_size_y"];
+		} else {
+			$ry=0;
+		}
+		$ratio=max($rx, $ry);
+		if ($ratio>1) {	// Resizing will occur
+			$image_new_x=$image_x/$ratio;
+			$image_new_y=$image_y/$ratio;
+			$resized_file = $tmp_dest;
+			$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
+
+			$image_p = $imageReader($work_file);
+
+			if (!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
+				$errors[] = tra('Cannot resize the file:') . ' ' . $work_file;
+			}
+
+			imagedestroy($image_p);
+
+			if (! $imageWriter($image_resized_p, $work_file)) {
+				$errors[] = tra('Cannot write the file:') . ' ' . $work_file;
+			}
+			$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'), $image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
+			$size = filesize($resized_file);
+
+			if ($data) {
+				$data = file_get_contents($work_file);
+				unlink($work_file);
+			}
+		}
+	}
+
+	private function getImageReader($type)
+	{
+		switch($type) {
+			case "image/gif":
+				return 'imagecreatefromgif';
+			case "image/png":
+				return 'imagecreatefrompng';
+			case "image/bmp":
+			case "image/wbmp":
+				return 'imagecreatefromwbmp';
+			case "image/jpg":
+			case "image/jpeg":
+			case "image/pjpeg":
+				return 'imagecreatefromjpeg';
+		}
+	}
+
+	private function getImageWriter($type)
+	{
+		switch($type) {
+			case "image/gif":
+				return 'imagegif';
+			case "image/png":
+				return 'imagepng';
+			case "image/bmp":
+			case "image/wbmp":
+				return 'image2wbmp';
+			case "image/jpg":
+			case "image/jpeg":
+			case "image/pjpeg":
+				return 'imagejpeg';
+		}
 	}
 
 	function handle_file_upload($fileKey, $file)
