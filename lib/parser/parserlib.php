@@ -1703,7 +1703,8 @@ if ( \$('#$id') ) {
 
 		if (!$simple_wiki) {
 			// Replace boxes
-			$data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
+			$delim = preg_quote($prefs['feature_simplebox_delim']);
+			$data = preg_replace("/$delim([^($delim)]+)$delim/", "<div class=\"simplebox\">$1</div>", $data);
 
 			// Underlined text
 			$data = preg_replace("/===(.+?)===/", "<u>$1</u>", $data);

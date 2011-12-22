@@ -84,6 +84,7 @@
 				</div>
 				{preference name=feature_use_quoteplugin}
 				{preference name=feature_use_three_colon_centertag}
+				{preference name=feature_simplebox_delim}
 			</fieldset>
 
 			<fieldset>
