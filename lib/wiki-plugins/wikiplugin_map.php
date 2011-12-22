@@ -217,6 +217,7 @@ function wp_map_available_controls()
 		'current_location',
 		'scale',
 		'streetview',
+		'navigation',
 	);
 }
 
