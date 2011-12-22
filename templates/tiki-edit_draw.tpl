@@ -1,7 +1,9 @@
 {* $Id$ *}
-{title help="Draw"}{$name}{/title}
+{if $drawFullscreen neq 'true'}
+	{title help="Draw"}{$name}{/title}
+{/if}
 
-<div id="tiki_draw" style="text-align: center;">
+<form id="tiki_draw" style="text-align: center;" onsubmit="$('#tiki_draw').saveDraw();return false;">
 	<span style="display: none;">
 		<textarea id="fileData">{$data}</textarea>
 	</span>
@@ -15,10 +17,14 @@
 	
 	<div id="drawEditor">
 		<div id="drawMenu">
-			<button id="drawSave" style="float left;">{tr}Save{/tr}</button>
-			<button id="drawRename">{tr}Rename{/tr}</button>
-			<button id="drawBack">{tr}Back{/tr}</button>
-			<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>
+			{if $drawFullscreen neq 'true'}
+				<button id="drawSave" style="float left;" onclick="$('#tiki_draw').saveDraw();">{tr}Save{/tr}</button>
+				<button id="drawRename" onclick="$('#fileName').val($('#tiki_draw').renameDraw());">{tr}Rename{/tr}</button>
+				<button id="drawBack">{tr}Back{/tr}</button>
+				<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>
+			{else}
+				<input type="submit" value="{tr}Save{/tr}" />
+			{/if}
 		</div>
 	</div>
 	

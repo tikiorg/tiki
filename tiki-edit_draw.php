@@ -6,7 +6,7 @@
 // $Id$
 $section = "draw";
 require_once ('tiki-setup.php');
-global $prefs;
+global $drawFullscreen, $prefs;
 
 include_once ('lib/filegals/filegallib.php');
 
@@ -159,41 +159,23 @@ if (
 	");
 }
 
-if (!isset($_REQUEST['map'])) {
-	$headerlib->add_jq_onready("
-		$('#drawFullscreen').click(function() {
-			$('#tiki_draw').drawFullscreen();
-		});
-		
-		$('#tiki_draw')
-			.loadDraw({
-				fileId: $('#fileId').val(),
-				galleryId: $('#galleryId').val(),
-				name: $('#fileName').val(),
-				data: $('#fileData').val()
-			})
-			.bind('renamedDraw', function(e, name) {
-				$('#fileName').val(name);
-				$('.pagetitle').text(name);
-			});
-	");
-} else {
-	require_once("lib/wiki-plugins/wikiplugin_map.php");
+$headerlib->add_jq_onready("
+	$('#drawFullscreen').click(function() {
+		$('#tiki_draw').drawFullscreen();
+	});
 	
-	$smarty->assign("map", wikiplugin_map());
-	
-	$headerlib->add_jq_onready("
-		$('#map').drawOver({
+	$('#tiki_draw')
+		.loadDraw({
 			fileId: $('#fileId').val(),
 			galleryId: $('#galleryId').val(),
 			name: $('#fileName').val(),
 			data: $('#fileData').val()
+		})
+		.bind('renamedDraw', function(e, name) {
+			$('#fileName').val(name);
+			$('.pagetitle').text(name);
 		});
-	");
-}
 
-$headerlib->add_jq_onready("
-	//prevent user back from messing things up
 	$('#drawRename').click(function() {
 		$('#fileName').val($('#tiki_draw').renameDraw());
 	});
@@ -207,8 +189,12 @@ $headerlib->add_jq_onready("
 	});
 ");
 
-
-// Display the template
-$smarty->assign('mid', 'tiki-edit_draw.tpl');
-// use tiki_full to include include CSS and JavaScript
-$smarty->display("tiki.tpl");
+if ($drawFullscreen == true) {
+	$smarty->assign('drawFullscreen', 'true');
+	$smarty->display('tiki-edit_draw.tpl');
+} else {
+	// Display the template
+	$smarty->assign('mid', 'tiki-edit_draw.tpl');
+	// use tiki_full to include include CSS and JavaScript
+	$smarty->display("tiki.tpl");
+}
