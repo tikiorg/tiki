@@ -41,7 +41,7 @@ function wikiplugin_textlink($data, $params)
 	
 	$result = Feed_Remote_ForwardLink_Contribution::send(array(
 		"page"=> $page,
-		"forwardLink"=> $forwardlink,
+		"forwardLink"=> $forwardLink,
 		"textlinkBody"=> $data,
 		"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $page
 	));

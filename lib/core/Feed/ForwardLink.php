@@ -53,6 +53,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		global $tikilib, $headerlib, $_REQUEST;
 		
 		if (isset($_GET['protocol'], $_GET['contribution']) && $_GET['protocol'] == 'forwardlink') {
+			
 			//here we do the confirmation that another wiki is trying to talk with this one
 			$response = array(
 				"protocol"=>	"forwardlink",
@@ -60,12 +61,23 @@ Class Feed_ForwardLink extends Feed_Abstract
 				"date"=>		$args['lastModif'],
 			);
 			
-			//$_SERVER['REMOTE_ADDR'];
+			ini_set('error_reporting', E_ALL);
+			ini_set('display_errors', 1);
+
+			$_GET['contribution'] = json_decode($_GET['contribution']);
+			$_GET['contribution']->origin = $_SERVER['REMOTE_ADDR'];
+			print_r($_GET['contribution']);
+			
+			Feed_ForwardLink_Contribution::forwardLink($args['object'])
+				->addItem($_GET['contribution']);
 			
 			echo json_encode($response);
 			die;
 		}
 		
+		/*print_r(Feed_ForwardLink_Contribution::forwardLink($args['object'])
+			->getItems());*/
+			
 		$serial = urldecode(isset($_REQUEST['serial']) ? htmlspecialchars($_REQUEST['serial']) : "");
 		
 		$wikiAttributes = TikiLib::lib("trkqry")

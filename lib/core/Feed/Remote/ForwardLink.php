@@ -8,12 +8,12 @@
 class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 {
 	var $type = "Feed_Remote_ForwardLink";
-	var $forwardlink = array();
+	var $forwardLink = array();
 	
-	static function forwardlink($forwardlink = array())
+	static function forwardLink($forwardLink = array())
 	{
-		$me = new self($forwardlink->href);
-		$me->forwardlink = $forwardlink;
+		$me = new self($forwardLink->href);
+		$me->forwardLink = $forwardLink;
 		return $me;
 	}
 	

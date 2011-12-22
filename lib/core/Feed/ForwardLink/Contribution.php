@@ -11,7 +11,7 @@ Class Feed_ForwardLink_Contribution extends Feed_Abstract
 	var $name = "";
 	var $isFileGal = true;
 	 
-	static function forwardlink($name)
+	static function forwardLink($name)
 	{
 		$me = new self();
 		$me->name = $name;

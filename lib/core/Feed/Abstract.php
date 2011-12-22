@@ -25,7 +25,7 @@ abstract class Feed_Abstract
 	
 	public function getItems()
 	{
-		$contents = $this->getContents();
+		$contents = json_decode($this->getContents());
 		return $contents->entry;
 	}
 	
@@ -114,11 +114,6 @@ abstract class Feed_Abstract
 		if (isset($item->date)) {
 			if ($contents->date < $item->date) {
 				$contents->date = $item->date;
-				$replace = true;
-			}
-		} else {
-			if ($contents->date < $item['date']) {
-				$contents->date = $item['date'];
 				$replace = true;
 			}
 		}
