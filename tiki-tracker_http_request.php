@@ -24,6 +24,7 @@ if (isset($_GET['selected'])) $arraySelected = explode(',', utf8_encode(rawurlde
 $arrayFieldlist = explode(',', $_GET["fieldlist"]);
 $arrayFilterfield = explode(',', $_GET["filterfield"]);
 $arrayStatus = explode(',', $_GET["status"]);
+$arrayItem = explode(',', $_GET['item']);
 $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
 header('content-type: application/x-javascript');
@@ -36,9 +37,12 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 	if (!isset($_GET['selected'])) {
 		$selected = '';
 		$filtervalue = utf8_encode(rawurldecode($_GET["filtervalue"]));
-	} else {
+	} elseif (isset($_GET["filtervalue"])) {
 		$selected = $arraySelected[$index];
 		$filtervalue = $_GET["filtervalue"];
+	}
+	if (!empty($_GET['item'])) { // we want the value of field filterfield for item 
+		$filtervalue = $trklib-> get_item_value($arrayTrackerId[$index], $arrayItem[$index], $arrayFilterfield[$index]);
 	}
 	if ($filtervalue) {
 		$xfields = $trklib->list_tracker_fields($arrayTrackerId[$index], 0, -1, 'name_asc', '');
