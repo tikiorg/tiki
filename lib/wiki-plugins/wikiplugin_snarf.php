@@ -169,8 +169,13 @@ function wikiplugin_snarf($data, $params)
 	}
 
 	// If the user specified a more specialized regex
-	if ( isset($params['regex']) && isset($params['regexres']) && preg_match('/^(.)(.)+\1[^e]*$/', $params['regex']) ) {
-		$snarf = preg_replace($params['regex'], $params['regexres'], $snarf);
+	if (isset($params['regex']) && isset($params['regexres'])) { 
+		// fixes http://dev.tiki.org/item4059
+		$params['regex'] = str_replace("\0", "", $params['regex']);
+		
+		if (preg_match('/^(.)(.)+\1[^e]*$/', $params['regex'])) {
+			$snarf = preg_replace($params['regex'], $params['regexres'], $snarf);
+		}
 	}
 
 	if ( $data == '' ) $data = NULL;
