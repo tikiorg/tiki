@@ -111,20 +111,16 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		}
 
 		$itemId = $this->getItemId();
+		$itemObject = Tracker_Item::fromInfo($this->itemData);
 
-		$perms = Perms::get('trackeritem', $itemId);
 		$status = $this->getData('status');
 
 		if ($this->getConfiguration('isMain', 'n') == 'y' 
-			&& ($perms->view_trackers 
-				|| ($perms->modify_tracker_items && $status != 'p' && $status != 'c')
-				|| ($perms->modify_tracker_items_pending && $status == 'p')
-				|| ($perms->modify_tracker_items_closed && $status == 'c')
-				|| $perms->comment_tracker_items
-				// TODO : Re-introduce conditions, required information not available at this time.
-				// or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user)
-				// or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))
-			)) {
+			&& ($itemObject->canViewField($this->definition['fieldId'])	|| $itemObject->getPerm('comment_tracker_items'))
+			// TODO : Re-introduce conditions, required information not available at this time.
+			// or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user)
+			// or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))
+			) {
 
 			return (bool) $this->getItemId();
 		}
