@@ -134,8 +134,7 @@ class FileGallery_File
 				$data,
 				strlen($data),
 				$this->getParam('filetype'),
-				$user,
-				time()
+				$user
 			);
 		} else {
 			
@@ -149,8 +148,7 @@ class FileGallery_File
 				$data,
 				strlen($data),
 				$this->getParam('filetype'),
-				$user,
-				time()
+				$user
 			);
 		}
 		
