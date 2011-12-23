@@ -39,7 +39,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 			foreach($item->feed->entry as $entry) {
 				$thisSerial = htmlspecialchars($entry->forwardlink->serial);
-				$thisHref = ($entry->textlink->href);
+				$thisHref = htmlspecialchars($entry->textlink->href);
 				$headerlib->add_jq_onready(<<<JQ
 					$('#page-data')
 						.rangyRestore('$thisSerial', function(o) {
@@ -89,15 +89,16 @@ JQ
 				
 		if (!empty($serial)) {
 			$headerlib->add_jq_onready(<<<JQ
-				$('#page-data')
-					.rangyRestore('$serial', function(o) {
+				$('.rangy-selection').each(function() {
+					if ($(this).data('serial') == '$serial') {
 						$('html,body').animate({
-							scrollTop: o.selection
+							scrollTop: $(this)
 								.addClass('ui-state-highlight')
 								.offset()
 									.top
 						});
-					});
+					}
+				});
 JQ
 );
 		} else {
