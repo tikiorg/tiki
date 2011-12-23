@@ -159,7 +159,7 @@ class FileGallery_File
 	
 	function delete()
 	{
-		TikiLib::lib("filegal")->remove_file($this->params);
+		TikiLib::lib("filegal")->remove_file($this->param);
 	}
 	
 	function diffLatestWithArchive($archive = 0)
