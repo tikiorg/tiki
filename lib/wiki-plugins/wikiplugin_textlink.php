@@ -25,7 +25,7 @@ function wikiplugin_textlink_info()
 
 function wikiplugin_textlink($data, $params)
 {
-    global $tikilib, $headerlib, $feedItem, $caching, $page;
+    global $tikilib, $headerlib, $caching, $page;
     static $textlinkI = 0;
 	++$textlinkI;
 	$i = $textlinkI;
@@ -39,11 +39,13 @@ function wikiplugin_textlink($data, $params)
 	$forwardLink->href = urldecode($forwardLink->href);
 	$forwardLink->serial = urldecode($forwardLink->serial);
 	
-	$result = Feed_Remote_ForwardLink_Contribution::send(array(
+	Feed_Remote_ForwardLink_Contribution::add(array(
 		"page"=> $page,
 		"forwardLink"=> $forwardLink,
-		"textlinkBody"=> $data,
-		"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $page
+		"textlink"=> array(
+			"body"=> $data,
+			"href"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $page
+		)
 	));
 	
 	if (!empty($forwardLink->href)) {

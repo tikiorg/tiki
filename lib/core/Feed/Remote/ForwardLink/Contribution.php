@@ -7,32 +7,59 @@
 
 Class Feed_Remote_ForwardLink_Contribution
 {
-	static function send($item = array())
+	static function add($item = array())
 	{
-		global $tikilib, $feedItem, $caching;
+		global $textlinkContribution;
+		if (empty($textlinkContribution)) $textlinkContribution = array();
+		array_push($textlinkContribution, (object)$item);
+	}
+	
+	static function wikiView($args = array())
+	{
+		global $textlinkContribution;
+		$me = new self();
+		if (!empty($textlinkContribution)) {
+			return $me->send($textlinkContribution);
+		}
+	}
+	
+	static function send($items = array())
+	{
+		global $tikilib;
 		
-		if (empty($item['forwardLink']->href)) return false;
+		$entry = array();
+		$lastModif = 0;
 		
-		$client = new Zend_Http_Client($item['forwardLink']->href);
-		$info = $tikilib->get_page_info($item['page']);
-		
-		$client->setParameterGet('protocol', 'forwardlink');
-		$client->setParameterGet('contribution', json_encode(array(
-			'version' => '1.0',
-			'encoding' => 'UTF-8',
-			'date'=> $info['lastModif'],
-			'feed' => array(
-				'type' => 'textlink',
-				'entry'=> array(array(
-					'href'=> $item['textlinkHref'],
-					'body'=> $item['textlinkBody'],
-					'forwardlink'=>$item['forwardLink']
-				))
-			),
-		)));
-		
-		$response = $client->request();
-		
-		return $response->getBody();
+		foreach($items as $item) {
+			if (empty($item->forwardLink->href)) continue;
+			
+			$client = new Zend_Http_Client($item->forwardLink->href);
+			
+			$info = $tikilib->get_page_info($item->page);
+			
+			array_push($entry, array(
+				'textlink'=> $item->textlink,
+				'forwardlink'=>$item->forwardLink
+			));
+			
+			if ($info['lastModif'] > $lastModif) $lastModif = $info['lastModif'];
+		}
+
+		if (!empty($entry)) {
+			$client->setParameterGet('protocol', 'forwardlink');
+			$client->setParameterGet('contribution', json_encode(array(
+				'version' => '1.0',
+				'encoding' => 'UTF-8',
+				'date'=> $lastModif,
+				'feed' => array(
+					'type' => 'textlink',
+					'entry'=> $entry
+				),
+			)));
+			
+			$response = $client->request();
+			
+			return $response->getBody();
+		}
 	}
 }

@@ -9,45 +9,6 @@ Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = "Feed_ForwardLink";
 	
-	public function replace()
-	{
-		global $tikilib, $feedItem, $caching;
-		
-		$this->delete();
-		$site = $tikilib->tikiUrl();
-		
-		$caching = true; //this variable is used to block recursive parse_data below
-		
-		foreach (TikiLib::lib("wiki")->get_pages_contains("{textlink") as $pagesInfo) {
-			foreach ($pagesInfo as $pageInfo) {
-				$feedItem = Feed_Html_Item::simple(
-								array(
-									"origin" 		=> $site,
-									"name" 			=> $pageInfo['pageName'],
-									"title" 		=> $pageInfo['pageName'],
-									"description" 	=> $description,
-									"date" 			=> (int)$pageInfo['lastModif'],
-									"author" 		=> $pageInfo['user'],
-									"hits"			=> $pageInfo['hits'],
-									"unusual"		=> "",
-									"importance" 	=> $pageInfo['pageRank'],
-									"keywords"		=> $pageInfo['keywords'],
-									"href"			=> $tikilib->tikiUrl() . "tiki-pagehistory.php?" .
-											"page=" . $pageInfo['pageName'] .'&'.
-											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
-											"nohistory"
-								)
-				);
-				
-				TikiLib::lib("parser")->parse_data($pageInfo['data']);
-				
-				unset($feedItem);
-			}
-		}
-		
-		$caching = false;
-	}
-
 	function wikiView($args)
 	{
 		global $tikilib, $headerlib, $_REQUEST;
@@ -78,14 +39,14 @@ Class Feed_ForwardLink extends Feed_Abstract
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 			foreach($item->feed->entry as $entry) {
 				$thisSerial = htmlspecialchars($entry->forwardlink->serial);
-				$thisHref = ($entry->href);
+				$thisHref = ($entry->textlink->href);
 				$headerlib->add_jq_onready(<<<JQ
-				$('#page-data')
-					.rangyRestore('$thisSerial', function(o) {
-						$('<a>*</a>')
-							.attr('href', '$thisHref')
-							.insertBefore(o.selection.first());
-					});
+					$('#page-data')
+						.rangyRestore('$thisSerial', function(o) {
+							$('<a>&nbsp;*&nbsp;</a>')
+								.attr('href', '$thisHref')
+								.insertBefore(o.selection.first());
+						});
 JQ
 );
 			}
