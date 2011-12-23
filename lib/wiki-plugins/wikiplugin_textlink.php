@@ -44,12 +44,12 @@ function wikiplugin_textlink($data, $params)
 		"forwardLink"=> $forwardLink,
 		"textlink"=> array(
 			"body"=> $data,
-			"href"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $page
+			"href"=> $tikilib->tikiUrl() . "tiki-index.php?page=$page#textlink$i"
 		)
 	));
 	
 	if (!empty($forwardLink->href)) {
-    	return $data."~np~<a href='" .$forwardLink->href ."'>*</a>~/np~";
+    	return $data."~np~<a href='" .$forwardLink->href ."' id='textlink$i'>*</a>~/np~";
 	} else {
     	return $data;
     }
