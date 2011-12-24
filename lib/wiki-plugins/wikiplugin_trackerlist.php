@@ -330,7 +330,7 @@ function wikiplugin_trackerlist_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Page'), 'value' => 'page'), 
 					array('text' => tra('User'), 'value' => 'user'),
-					array('text' => tr('IP address'), 'value' => 'ip')
+					array('text' => tra('IP address'), 'value' => 'ip')
 				)
 			),
 			'tpl' => array(
