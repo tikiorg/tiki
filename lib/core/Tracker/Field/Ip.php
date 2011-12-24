@@ -27,7 +27,7 @@ class Tracker_Field_Ip extends Tracker_Field_Abstract implements Tracker_Field_S
 						'name' => tr('Auto-assign'),
 						'description' => tr('Automatically assign the value on creation or edit.'),
 						'filter' => 'int',
-						'default' => 0,
+						'default' => 1,
 						'options' => array(
 							0 => tr('None'),
 							1 => tr('Creator'),
