@@ -274,5 +274,17 @@ class Tracker_Item
 	{
 		return empty($this->info);
 	}
+
+	/**
+	 * Getter method for the permissions of this
+	 * item.
+	 * 
+	 * @param string $permName
+	 * @return bool|null
+	 */
+	public function getPerm($permName)
+	{
+		return isset($this->perms->$permName) ? $this->perms->$permName : null;
+	}
 }
 
