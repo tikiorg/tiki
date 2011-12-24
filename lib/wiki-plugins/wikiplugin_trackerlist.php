@@ -322,14 +322,15 @@ function wikiplugin_trackerlist_info() {
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => tra('Display only the items of the current user or the current page name'),
+				'description' => tra('Display only the items of the current user, the current page name or the current IP address'),
 				'filter' => 'alpha',
 				'advanced' => true,
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Page'), 'value' => 'page'), 
-					array('text' => tra('User'), 'value' => 'user')
+					array('text' => tra('User'), 'value' => 'user'),
+					array('text' => tr('IP address'), 'value' => 'ip')
 				)
 			),
 			'tpl' => array(
@@ -1130,6 +1131,15 @@ function wikiplugin_trackerlist($data, $params) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
+			}
+		}
+		
+		if (isset($view) && $view == 'ip') {
+			if ($f = $trklib->get_field_id_from_type($trackerId, 'I', '1%')) {
+				$filterfield[] = $f;
+				$filtervalue[] = '';
+				$ip = $tikilib->get_ip_address();
+				$exactvalue[] = $ip;
 			}
 		}
 			
