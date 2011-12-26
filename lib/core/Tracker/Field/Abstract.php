@@ -115,6 +115,9 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		}
 
 		$itemId = $this->getItemId();
+		if (empty($itemId)) {
+			return false;
+		}
 		$itemObject = Tracker_Item::fromInfo($this->itemData);
 
 		$status = $this->getData('status');
