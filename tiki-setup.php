@@ -331,6 +331,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 		if ( $prefs['feature_jquery_validation'] == 'y' ) {
 			$headerlib->add_jsfile('lib/jquery/jquery-validate/jquery.validate.js');
+			$headerlib->add_jsfile( 'lib/validators/validator_required_in_group.js' );
 		}
 
 		$headerlib->add_jsfile('lib/jquery/jquery-ui/external/jquery.cookie.js');
