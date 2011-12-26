@@ -14,7 +14,7 @@
 		</label>
 	{/foreach}
 {else}
-	<select name="{$field.ins_id|escape}">
+	<select name="{$field.ins_id|escape}"{if $field.type eq 'D'} class="group_{$field.ins_id|escape}"{/if}>
 		{assign var=otherValue value=$field.value}
 		{if $field.isMandatory ne 'y' || empty($field.value)}
 			<option value="">&nbsp;</option>
@@ -31,7 +31,7 @@
 		<br />
 		<label>
 			{tr}Other:{/tr}
-			<input type="text" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}" />
+			<input type="text" class="group_{$field.ins_id|escape}"name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}" />
 		</label>
 	{/if}
 
