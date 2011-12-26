@@ -125,6 +125,8 @@ class Tracker_Item
 
 	private function getTrackerPermissions()
 	{
+		if($this->definition === false)
+			return null;
 		$trackerId = $this->definition->getConfiguration('trackerId');
 		return Perms::get('tracker', $trackerId);
 	}
