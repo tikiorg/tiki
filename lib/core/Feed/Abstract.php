@@ -110,6 +110,7 @@ abstract class Feed_Abstract
 			$contents = json_decode($contents);
 		}
 		
+		$item = (object)$item;
 		
 		if (isset($item->date)) {
 			if ($contents->date < $item->date) {
