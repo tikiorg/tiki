@@ -105,8 +105,8 @@ function wikiplugin_convene($data, $params)
 				$tiki_p_edit == 'y'
 					? 
 					"<div class='ui-widget-header ui-corner-all'>
-						<img src='pics/icons/user.png' id='conveneAddUser$i' class='icon' title='Add User' />
-						<img src='pics/icons/calendar_add.png' id='conveneAddDate$i' class='icon' title='Add Date' />
+						<img src='pics/icons/user.png' id='conveneAddUser$i' class='icon' title='".tr('Add User')."' />
+						<img src='pics/icons/calendar_add.png' id='conveneAddDate$i' class='icon' title='".tr('Add Date')."' />
 					</div>"
 					: ""
 				).
@@ -262,7 +262,9 @@ FORM;
 						'<input type="hidden" name="type" value="convene"/>'+
 						'<input type="hidden" name="params[title]" value="$title"/>'+
 					'</div>'+
-				'</form>').submit();
+				'</form>')
+				.appendTo('body')
+				.submit();
 			}
 		}, $conveneData);
 		
@@ -297,16 +299,19 @@ FORM;
 		}
 		
 		$('#conveneAddDate$i').click(function() {
+			var dialogOptions = {
+				modal: true,
+				title: "Add Date",
+				buttons: {}
+			};
+			
+			dialogOptions.buttons[tr("Add")] = function() {
+				convene$i.addDate(o.find('input:first').val());
+				o.dialog('close');
+			}
+			
 			var o = $('<div><input type="text" style="width: 100%;" /></div>')
-				.dialog({
-					modal: true,
-					title: "Add Date",
-					buttons: {
-						"Add" : function(){
-							convene$i.addDate(o.find('input:first').val());
-						}
-					}
-				});
+				.dialog(dialogOptions);
 			
 			o.find('input:first')
 				.datetimepicker()
@@ -348,16 +353,19 @@ FORM;
 		});
 		
 		$('#conveneAddUser$i').click(function() {
+			var dialogOptions = {
+				title: "User Name",
+				modal: true,
+				buttons: {}
+			};
+			
+			dialogOptions.buttons[tr("Add")] = function() {
+				convene$i.addUser(o.find('input:first').val());
+				o.dialog('close');
+			};
+			
 			var o = $('<div><input type="text" style="width: 100%;" /></div>')
-				.dialog({
-					title: "User Name",
-					modal: true,
-					buttons: {
-						"Add": function() {
-							convene$i.addUser(o.find('input:first').val());
-						}
-					}
-				})
+				.dialog(dialogOptions)
 		});
 		
 		$('#pluginConvene$i .icon').css('cursor', 'pointer');
