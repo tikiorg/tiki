@@ -120,7 +120,7 @@ function wikiplugin_convene($data, $params)
 	$userList = "";
 	foreach ($rows as $user => $row) {
 		$userList .= "<tr class='conveneUserVotes$i'>";
-		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<img src='pics/icons/pencil.png' class='conveneUpdateUser$i icon' title='" . tr("Edit User") . "' />" : "") . $user . "</td>";
+		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<img src='pics/icons/pencil.png' class='conveneUpdateUser$i icon' title='" . tr("Edit User") . "' /><img src='pics/icons/delete.png' class='conveneDeleteUser$i icon' data-user='$user' title='" . tr("Delete User") . "'/>" : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
 			$class = 	'ui-state-default ui-state-active';
 			$text = 	($vote  == 1 ? "<img src='pics/icons/tick.png' alt='OK' class='vote' />" : "<img src='pics/icons/cross.png' class='vote' />" );
@@ -208,6 +208,22 @@ FORM;
 				}
 				
 				this.data += '$n' + dates.join('$n');
+				
+				this.save();
+			},
+			deleteUser: function(userToDelete) {
+				if (!userToDelete) return;
+				var data = '';
+				
+				for(date in this.dates.dates) {
+					for(user in this.users) {
+						if (this.users[user] != userToDelete) {
+							data += 'dates_' + date + '_' + this.users[user] + ' : ' + this.dates.dates[date][this.users[user]] + '$n';
+						}
+					}
+				}
+				
+				this.data = data;
 				
 				this.save();
 			},
@@ -321,6 +337,11 @@ FORM;
 		$('.conveneDeleteDate$i')
 			.click(function() {
 				convene$i.deleteDate($(this).data("date"));
+			});
+		
+		$('.conveneDeleteUser$i')
+			.click(function() {
+				convene$i.deleteUser($(this).data("user"));
 			});
 		
 		$('.conveneUpdateUser$i').toggle(function() {
