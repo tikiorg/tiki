@@ -324,7 +324,7 @@ FORM;
 		$('#conveneAddDate$i').click(function() {
 			var dialogOptions = {
 				modal: true,
-				title: "Add Date",
+				title: tr("Add Date"),
 				buttons: {}
 			};
 			
@@ -401,7 +401,7 @@ FORM;
 		
 		$('#conveneAddUser$i').click(function() {
 			var dialogOptions = {
-				title: "User Name",
+				title: tr("User Name"),
 				modal: true,
 				buttons: {}
 			};
