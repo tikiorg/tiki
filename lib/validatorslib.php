@@ -53,7 +53,11 @@ class Validators
 			if ($field_value['validation'] || $field_value['isMandatory'] == 'y') {				
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
 				if ($field_value['isMandatory'] == 'y') {
-					$validationjs .= 'required: true, ';		
+					if ($field_value['type'] == 'D') {
+						$validationjs .= 'required_in_group: [1, ".group_'.$prefix.$field_value['fieldId'].'"], ';
+					} else {
+						$validationjs .= 'required: true, ';		
+					}
 				}
 				if ($field_value['validation']) {
 					$validationjs .= 'remote: { ';
@@ -105,7 +109,7 @@ class Validators
 		$validationjs .= $custom_messages;
 		// remove last comma (not supported in IE7)
                 $validationjs = rtrim($validationjs, " ,");
-		$validationjs .= '} ';		
+		$validationjs .= '} ';
 		return $validationjs;
 	}
 }
