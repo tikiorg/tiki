@@ -108,6 +108,7 @@ EOF;
 	
 	$fileInfo = $filegallib->get_file_info($id);
 
+	//this sets the image to latest in a group of archives
 	if ($archive != 'y') {
 		if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 			$id = $fileInfo['archiveId'];
@@ -129,7 +130,7 @@ EOF;
 		"' />";
 	
 		if ($globalperms->upload_files == 'y') {
-			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height'>
+			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height' onclick='return $(this).ajaxEditDraw();'  title='Edit: ".$fileInfo['filename']."' data-fileid='".$fileInfo['fileId']."' data-galleryid='".$fileInfo['galleryId']."'>
 					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 				</a>";
 		}
