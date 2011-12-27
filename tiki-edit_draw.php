@@ -175,14 +175,6 @@ $headerlib->add_jq_onready("
 			$('#fileName').val(name);
 			$('.pagetitle').text(name);
 		});
-
-	$('#drawRename').click(function() {
-		$('#fileName').val($('#tiki_draw').renameDraw());
-	});
-	
-	$('#drawSave').click(function() {
-		$('#tiki_draw').saveDraw();
-	});
 	
 	$('#drawBack').click(function() {
 		window.history.back();
