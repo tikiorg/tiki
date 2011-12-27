@@ -47,18 +47,13 @@ class Report_Builder
 		return $files;
 	}
 	
-	function replace($page, $index)
-	{
-		//to come
-	}
-	
 	function setValues($values = array())
 	{
 		$this->values = $values;
 		return $this;
 	}
 	
-	static function fromWikiSyntax($data)
+	static function fromWikiSyntax($data = "")
 	{
 		if (empty($data)) throw new Exception("Failed to get body", 1);
 		$parsedValues = array();
@@ -76,8 +71,9 @@ class Report_Builder
 	
 	static function loadFromWikiSyntax($data = "")
 	{
-		$me = Report_Builder::load(Report_Builder::fromWikiSyntax($data));
-		return $me->setValues(TikiFilter_PrepareInput::delimiter('_')->prepare($parsedValues));
+		$values = Report_Builder::fromWikiSyntax($data);
+		$me = Report_Builder::load($values['type']);
+		return $me->setValues($values);
 	}
 	
 	function setValuesFromRequest($values)
