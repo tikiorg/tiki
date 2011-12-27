@@ -149,8 +149,8 @@ class Report_Definition_Tracker
 			for($i = 0; $i < count($tracker['search']); $i++) {
 				if (!empty($tracker['search'][$i]['value']) && !empty($tracker['search'][$i + 1]['value'])) {
 					$qry->filter(array(
-						"field"=> $tracker['search'][$i]['value'],
-						"value"=> $tracker['search'][$i + 1]['value']
+						"field"=> trim($tracker['search'][$i]['value']),
+						"value"=> trim($tracker['search'][$i + 1]['value'])
 					));
 				}
 				$i++; //searches are in groups of 2

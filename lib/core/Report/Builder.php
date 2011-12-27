@@ -85,11 +85,11 @@ class Report_Builder
 			if (preg_match('/\[\]/', $value['name'])) {
 				$value['name'] = str_replace('[]', '', $value['name']);
 				$parsedValues[$value['name']][] = array(
-					"value" => $value['value']
+					"value" => trim($value['value'])
 				);
 			} else {
 				$parsedValues[$value['name']] = array(
-					"value" => $value['value']
+					"value" => trim($value['value'])
 				);
 			}
 		}
