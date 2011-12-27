@@ -107,6 +107,11 @@ class Report_Definition_Tracker
 											"dependancy"=>	"tracker",
 											"values"=> 		"trackerFields",
 										),
+										array(
+											"label"=> 		tr("Limit"),
+											"key"=> 		"limit",
+											"type"=> 		"single",
+										),
 					),
 				),
 			),
@@ -150,6 +155,10 @@ class Report_Definition_Tracker
 				}
 				$i++; //searches are in groups of 2
 			}
+		}
+		
+		if (!empty($tracker['limit']['value'])) {
+			$qry->limit($tracker['limit']['value']);
 		}
 		
 		$result = $qry->query(); 
