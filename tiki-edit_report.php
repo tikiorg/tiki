@@ -10,11 +10,6 @@ global $headerlib, $smarty;
 
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
-if (isset($_REQUEST['open'])) {
-	echo Report_Builder::open();
-	die;
-}
-
 if (isset($_REQUEST['preview'])) {
 	echo Report_Builder::load($_REQUEST['preview'])
 		->setValuesFromRequest($_REQUEST['values'])
@@ -52,10 +47,6 @@ $headerlib->add_jq_onready("
 				$.getJSON('tiki-edit_report.php?',{load: $(this).val()}, function(data) {
 					$('#reportEditor').reportBuilder({
 						definition: data
-					});
-					
-					$.getJSON('tiki-edit_report.php?',{open: 't'}, function(data) {
-						$('#reportEditor').reportBuilderImport(data);
 					});
 				});
 			} else {
