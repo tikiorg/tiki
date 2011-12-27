@@ -1500,6 +1500,10 @@ class TikiLib extends TikiDb_Bridge
 				break;
 			case 'u':
 				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
+				$foo = parse_url($_SERVER['REQUEST_URI']);
+				$content = file_get_contents($this->httpPrefix( true ) . dirname( $foo['path']) . '/' . $path);
+				if (empty($content)) 
+					break;
 
 				if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 					global $tikidomain;
