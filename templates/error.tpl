@@ -19,7 +19,7 @@ close();
 		{redirect url=$prefs.permission_denied_url}
 	{else}
 
-		{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+		{if ($errortype eq 401 || $errortype eq 403) && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 			{assign var='errortitle' value="{tr}Please log in{/tr}"}
 		{else}
 			{assign var='errortitle' value="{tr}Error{/tr}"}
@@ -62,7 +62,7 @@ close();
 				{remarksbox type='errors' title="{tr}Token Error{/tr}"}
 					{$token_error}
 				{/remarksbox}
-			{elseif $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+			{elseif ($errortype eq 401 || $errortype eq 403) && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 				{remarksbox type='errors' title=$errortitle}
 					{tr}Permission denied{/tr}
 				{/remarksbox}
