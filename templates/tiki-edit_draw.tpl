@@ -3,7 +3,7 @@
 	{title help="Draw"}{$name}{/title}
 {/if}
 
-<form id="tiki_draw" class="submit" style="text-align: center;" onsubmit="$('#tiki_draw').saveDraw();return false;">
+<form id="tiki_draw" class="submit no-ajax" style="text-align: center;" onsubmit="return false;">
 	<span style="display: none;">
 		<textarea id="fileData">{$data}</textarea>
 	</span>
@@ -19,8 +19,8 @@
 	<div id="drawEditor">
 		<div id="drawMenu">
 			{if $drawFullscreen neq 'true'}
-				<button id="drawSave" style="float left;" onclick="$('#tiki_draw').saveDraw();">{tr}Save{/tr}</button>
-				<button id="drawRename" onclick="$('#fileName').val($('#tiki_draw').renameDraw());">{tr}Rename{/tr}</button>
+				<button id="drawSave" style="float left;" onclick="$('#tiki_draw').saveDraw();return false;">{tr}Save{/tr}</button>
+				<button id="drawRename" onclick="$('#fileName').val($('#tiki_draw').renameDraw());return false;">{tr}Rename{/tr}</button>
 				<button id="drawBack">{tr}Back{/tr}</button>
 				<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>
 			{else}
