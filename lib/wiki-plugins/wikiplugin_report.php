@@ -38,7 +38,7 @@ function wikiplugin_report_info()
 
 function wikiplugin_report( $data, $params )
 {
-	global $tikilib,$headerlib;
+	global $tikilib,$headerlib,$prefs,$page,$tiki_p_edit;
 	static $report = 0;
 	++$report;
 	$i = $report;
@@ -50,23 +50,26 @@ function wikiplugin_report( $data, $params )
 	if (!empty($data)) {
 		$result = "";
 		$report = Report_Builder::loadFromWikiSyntax($data);
+		$values = Report_Builder::fromWikiSyntax($data);
+		$values = json_encode($values);
+		$type = $report->type;
 		
 		switch($view) {
 			case 'sheet':
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
 				$headerlib->add_jq_onready(
-								"var me = $('#reportPlugin$i');
-								me
-									.show()
-									.visible(function() {
-										me
-											
-											.sheet({
-												editable: false,
-												buildSheet: true
-											});
-									});"
+					"var me = $('#reportPlugin$i');
+					me
+						.show()
+						.visible(function() {
+							me
+								
+								.sheet({
+									editable: false,
+									buildSheet: true
+								});
+						});"
 				);
 				
 				$result .= "
@@ -85,5 +88,51 @@ function wikiplugin_report( $data, $params )
 		}
 	}
 	
+	if ($tiki_p_edit == 'y') {
+		$headerlib
+			->add_jsfile("lib/core/Report/Builder.js")
+			->add_jq_onready("
+			$('#editReport$i').click(function() {
+				$(this).serviceDialog({
+					title: me.attr('title'),
+					data: {
+						controller: 'report',
+						action: 'edit',
+						index: $i
+					},
+					load: function() {
+						$.reportInit();
+						var values = $values;
+						
+						if (values) {
+							$('#reportType')
+								.val('$type')
+								.change();
+							
+							values['type'] = null;
+							
+							$('#reportEditor').one('reportReady', function(){
+								$('#reportEditor').reportBuilderImport(values);
+							});
+						}
+					}
+				});
+				return false;
+			});
+		");
+		
+		$result .= "
+			<form class='reportWikiPlugin' data-index='$i' method='post' action='tiki-wikiplugin_edit.php'>
+				<input type='hidden' name='page' value='$page'/>
+				<input type='hidden' name='content' value=''/>
+				<input type='hidden' name='index' value='$i'/>
+				<input type='hidden' name='type' value='report' />
+				<input type='hidden' name='params[name]' value='$name' />
+				<input type='hidden' name='params[view]' value='$view' />
+			</form>
+			<a href='#' title='".tr('Edit Report')."' id='editReport$i'>
+				<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
+			</a>";
+	}
 	return "~np~" . $result . "~/np~"; 
 }
