@@ -22,23 +22,9 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 (int)$_REQUEST['InvoiceId'] = $_REQUEST['InvoiceId'];
 
 //handle saving data (edit or update)
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	//form to tracker item transformation
-	function processItem($trackerName, $fieldNames, $fieldValues, $itemId, $i) {
-		global $trklib;
-		
-		$fields = $trklib->list_tracker_fields($trklib->get_tracker_by_name($trackerName));
-		foreach ($fields['data'] as $key => $field) {
-			$fieldName = $field['name'];	
-			$fieldValue = (isset($i) ? $fieldValues[str_replace(" ", "", $fieldName)][$i] : $fieldValues[str_replace(" ", "", $fieldName)]);
-			$fields['data'][$key]['value'] = (empty($fieldValue) ? '' : $fieldValue);
-		}
-		
-		return $trklib->replace_item($trklib->get_tracker_by_name($trackerName), $itemId, $fields, 'o');
-	}
-	
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {	
 	//start invoice
-	$_REQUEST['InvoiceId'] = processItem("Invoices", array(
+	$_REQUEST['InvoiceId'] = $trklib->replaceItemFromRequestValues($trklib->get_tracker_by_name("Invoices"), array(
 		"Client Id",
 		"Invoice Number",
 		"Date Issued",
@@ -65,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	for($i = 0, $count_InvoiceItemId = count($_REQUEST['InvoiceItemId']); $i < $count_InvoiceItemId; $i++) {
 		$_TEMP['InvoiceId'][$i] = $_REQUEST['InvoiceId'];
 		
-		$invoiceItem = processItem("Invoice Items", array(
+		$invoiceItem = $trklib->replaceItemFromRequestValues($trklib->get_tracker_by_name("Invoice Items"), array(
 			"Invoice Id",
 			"Amount",
 			"Quantity",
