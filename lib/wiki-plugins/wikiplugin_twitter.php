@@ -10,50 +10,62 @@ function wikiplugin_twitter_info()
 	return array(
 		'name' => tra('Twitter'),
 		'documentation' => 'PluginTwitter',
-		'description' => tra('Include a tweet'),
+		'description' => tra('Display the activity for a twitter account'),
 		'prefs' => array('wikiplugin_twitter'),
 		'body' => '',
 		'icon' => 'pics/icons/twitter.png',
 		'params' => array(
 			'tweet' => array(
 				'required' => true,
-				'name' => tra('Tweet name'),
+				'name' => tra('Account Name'),
+				'description' => tra('Name of the twitter account'),
 				'filter' => 'text',
 				'default' => ''
 			),
 			'shellbg' => array(
 				'required' => false,
-				'name' => tra('Shell background color'),
+				'name' => tra('Shell Background Color'),
+				'description' => tra('Background color for the overall widget, i.e., header, footer and outside border. Default is red (color code #15a2b)'),
+				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
 				'filter' => 'text',
 				'default' => '#f15a2b'
 			),
 			'shellcolor' => array(
 				'required' => false,
-				'name' => tra('Shell text color'),
+				'name' => tra('Shell Text Color'),
+				'description' => tra('Text color for the widget header and footer. Default is white (color code #ffffff)'),
+				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
 				'filter' => 'text',
 				'default' => '#ffffff'
 			),
 			'tweetbg' => array(
 				'required' => false,
-				'name' => tra('Tweet background color'),
+				'name' => tra('Tweet Background Color'),
+				'description' => tra('Background color for individual tweets. Default is white.'),
+				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
 				'filter' => 'text',
 				'default' => 'white'
 			),
 			'tweetcolor' => array(
 				'required' => false,
-				'name' => tra('Tweet text color'),
+				'name' => tra('Tweet Text Color'),
+				'description' => tra('Text color for individual tweets. Default is black.'),
+				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
 				'filter' => 'text',
 				'default' => 'black'
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'filter' => 'text',
+				'description' => tra('Height of widget in pixels. Default is 300.'),
+				'filter' => 'digits',
 				'default' => 300
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
+				'description' => tra('Width of widget in pixels or \'auto\' to fit to width of page. Default is auto.'),
+				'accepted' => tra('Number of pixels or the word \'auto\'.'),
 				'filter' => 'text',
 				'default' => 'auto'
 			),
