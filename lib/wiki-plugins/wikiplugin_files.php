@@ -10,9 +10,9 @@ function wikiplugin_files_info()
 	return array(
 		'name' => tra('Files'),
 		'documentation' => 'PluginFiles',
-		'description' => tra('List files in a gallery or category'),
+		'description' => tra('List files by ID, gallery or category, or show a slideshow of image files'),
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
-		'body' => tra('Title'),
+		'body' => tra('Title for the file listing, or the link text when slideshow = y'),
 		'icon' => 'pics/large/file-manager.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
