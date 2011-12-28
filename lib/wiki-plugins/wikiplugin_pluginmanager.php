@@ -57,6 +57,7 @@ class WikiPluginPluginManager extends PluginsLib
 			include_once 'lib/modules/modlib.php';
 			$aPlugins = $modlib->list_module_files();
 			$mod = true;
+			$type = ' module';
 			$plugin = $module;
 		} else {
 			$aPrincipalField = array('field' => 'plugin', 'name' => 'Plugin');
@@ -64,16 +65,24 @@ class WikiPluginPluginManager extends PluginsLib
 			$filepath = 'wikiplugin_';
 			$aPlugins = $wikilib->list_plugins();
 			$mod = false;
+			$type = ' plugin';
 		}
+		$all = $aPlugins;
 		//if the user set $module, that setting has now been moved to $plugin so that one code set is used
-		//$aPlugins now has the complete list of plugin or module file names - code below modifies $aPlugins
+		//$aPlugins and $all now has the complete list of plugin or module file names - the code below modifies $aPlugins
 		//if necessary based on user settings
 		if (!empty($plugin)) {
 			if (strpos($plugin, '|') !== false) {
 				$aPlugins = array();
 				$userlist = explode('|', $plugin);
 				foreach ($userlist as $useritem) {
-					$aPlugins[] = $filepath . $useritem . '.php';
+					$file = $filepath . $useritem . '.php';
+					$confirm = in_array($file, $all);
+					if ($confirm === false) {
+						return '^' . tr('Plugin Manager error: %0%1 not found', $useritem, $type) . '^';
+					} else {
+						$aPlugins[] = $file;
+					}
 				}
 			} elseif (strpos($plugin, '-') !== false) {
 				$userrange = explode('-', $plugin);
@@ -81,15 +90,21 @@ class WikiPluginPluginManager extends PluginsLib
 				$end = array_search($filepath . $userrange[1] . '.php', $aPlugins);
 				$beginerror = '';
 				$enderror = '';
+				$type2 = $type;
 				if ($begin === false || $end === false) {
 					if ($begin === false) {
 						$beginerror = $userrange[0];
 					} 
 					if ($end === false) {
 						$enderror = $userrange[1];
-						!empty($beginerror) ? $and = ' and ' : $and = '';
+						if (!empty($beginerror)) {
+							$and = ' and ';
+						} else {
+							$and = '';
+							$type = '';
+						}
 					}
-					return '^' . tra('^Plugin Manager error: ') . $beginerror . $and . $enderror . tra(' not found') . '^';
+					return '^' . tr('Plugin Manager error: %0%1%2%3%4 not found', $beginerror, $type, $and, $enderror, $type2) . '^';
 				} elseif ($end > $begin) {
 					$aPlugins = array_slice($aPlugins, $begin, $end-$begin+1);
 				} else {
@@ -98,13 +113,19 @@ class WikiPluginPluginManager extends PluginsLib
 			} elseif (!empty($limit)) { 
 				$begin = array_search($filepath . $plugin . '.php', $aPlugins); 
 				if ($begin === false) {
-					return '^' . tra('Plugin manager error: ') . $begin . tra(' not found') . '^';
+					return '^' . tr('Plugin Manager error: %0%1 not found', $begin, $type) . '^';
 				} else {
 					$aPlugins = array_slice($aPlugins, $begin, $limit);
 				}
 			} elseif ($plugin != 'all') {
-				$aPlugins = array();
-				$aPlugins[] = $filepath . $plugin . '.php';
+				$file = $filepath . $plugin . '.php';
+				$confirm = in_array($file, $aPlugins);
+				if ($confirm === false) {
+					return '^' . tr('Plugin Manager error:  %0%1 not found', $plugin, $type) . '^';
+				} else {
+					$aPlugins = array();
+					$aPlugins[] = $file;
+				}
 			}
 		} else {
 			if (!empty($start) || !empty($limit)) {
@@ -195,7 +216,7 @@ class WikiPluginPluginManager extends PluginsLib
 					. '|' . ucfirst($sPlugin) . ']</' . $titletag . '>';
 				$title .= $infoPlugin['description'] . '<br />';
 				if (isset($infoPlugin['introduced'])) {
-					$title .= '<em>' . tra('Introduced in Tiki version') . ' ' . $infoPlugin['introduced'] . '</em><br />';
+					$title .= '<em>' . tr('Introduced in Tiki version %0', $infoPlugin['introduced']) . '</em><br />';
 				}
 				$title .= '<br />';
 			} else {
@@ -219,10 +240,10 @@ class WikiPluginPluginManager extends PluginsLib
 					//Parameters column
 					if (isset($paraminfo['required']) && $paraminfo['required'] == true) {
 						$rows .= '<b><em>' . $paramname . '</em></b>';
-					} elseif ($paramname != '(body of plugin)') {
-						$rows .= '<em>' . $paramname . '</em>' ;
+					} elseif ($paramname == '(body of plugin)') {
+						$rows .= tra('(body of plugin)');
 					} else {
-						$rows .= $paramname;
+						$rows .= '<em>' . $paramname . '</em>' ;
 					}
 					$rows .= '</td>';
 					$rows .= $cellbegin;
@@ -288,7 +309,7 @@ class WikiPluginPluginManager extends PluginsLib
 			} else {
 				$pluginprefs = '';
 			}
-			$sOutput = $title . '<em>' . tra('Required parameters are in</em> <b>bold</b>') . '<br />' . 
+			$sOutput = $title . '<em>' . tr('Required parameters are in%0 %1bold%2', '</em>', '<b>', '</b>') . '<br />' . 
 						$pluginprefs . '<table class="normal">' . $header . $rows . '</table>' . "\n";
 			return $sOutput;
 		}
