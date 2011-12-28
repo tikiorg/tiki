@@ -58,8 +58,8 @@ function wikiplugin_report( $data, $params )
 			case 'sheet':
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
-				$headerlib->add_jq_onready(
-					"var me = $('#reportPlugin$i');
+				$headerlib->add_jq_onready("
+					var me = $('#reportPlugin$i');
 					me
 						.show()
 						.visible(function() {
@@ -93,7 +93,8 @@ function wikiplugin_report( $data, $params )
 			->add_jsfile("lib/core/Report/Builder.js")
 			->add_jq_onready("
 			$('#editReport$i').click(function() {
-				$(this).serviceDialog({
+				var me = $(this);
+				me.serviceDialog({
 					title: me.attr('title'),
 					data: {
 						controller: 'report',
@@ -102,7 +103,7 @@ function wikiplugin_report( $data, $params )
 					},
 					load: function() {
 						$.reportInit();
-						var values = $values;
+						var values = $.parseJSON('$values');
 						
 						if (values) {
 							$('#reportType')
