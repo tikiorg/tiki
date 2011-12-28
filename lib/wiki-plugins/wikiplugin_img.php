@@ -1351,7 +1351,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	}
 	
 	if ($prefs['feature_draw'] == 'y' && $tiki_p_upload_files == 'y') {
-		$repl .= $ret .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "'><img width='16' height='16' class='icon' alt='Edit' src='pics/icons/page_edit.png' /></a>";
+		$repl .= $ret .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='".tr("Edit: Image")."' data-fileid='".$imgdata['fileId']."' data-galleryid='".$imgdata['galleryId']."'><img width='16' height='16' class='icon' alt='Edit' src='pics/icons/page_edit.png' /></a>";
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';
