@@ -209,14 +209,20 @@ class WikiPluginPluginManager extends PluginsLib
 				$header .= $headbegin . tra('Accepted Values') . '</td>';
  			   	$header .= $headbegin . tra('Description') . '</td>';
 				$rowCounter = 1;
+				if (!empty($infoPlugin['body'])) {
+					$body = array('(body of plugin)' => array('description' => $infoPlugin['body']));
+					$infoPlugin['params'] = array_merge($body, $infoPlugin['params']);
+				}
 				foreach ($infoPlugin['params'] as $paramname => $paraminfo) {
 					$class = ($rowCounter%2) ? 'odd' : 'even';
 					$rows .= "\n\t" . '<tr class="' . $class . '">' . $cellbegin;
 					//Parameters column
 					if (isset($paraminfo['required']) && $paraminfo['required'] == true) {
 						$rows .= '<b><em>' . $paramname . '</em></b>';
-					} else {
+					} elseif ($paramname != '(body of plugin)') {
 						$rows .= '<em>' . $paramname . '</em>' ;
+					} else {
+						$rows .= $paramname;
 					}
 					$rows .= '</td>';
 					$rows .= $cellbegin;
