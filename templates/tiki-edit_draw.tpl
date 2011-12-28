@@ -19,7 +19,8 @@
 	<div id="drawEditor">
 		<div id="drawMenu">
 			{if $drawFullscreen neq 'true'}
-				<button id="drawSave" style="float left;" onclick="$('#tiki_draw').saveDraw();return false;">{tr}Save{/tr}</button>
+				<button id="drawSave" onclick="$('#tiki_draw').saveDraw();return false;">{tr}Save{/tr}</button>
+				<button id="drawSaveBack" onclick="$('#tiki_draw').saveAndBackDraw();return false;">{tr}Save and Back{/tr}</button>
 				<button id="drawRename" onclick="$('#fileName').val($('#tiki_draw').renameDraw());return false;">{tr}Rename{/tr}</button>
 				<button id="drawBack">{tr}Back{/tr}</button>
 				<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>

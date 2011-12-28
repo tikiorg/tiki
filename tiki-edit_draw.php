@@ -160,9 +160,11 @@ if (
 }
 
 $headerlib->add_jq_onready("
-	$('#drawFullscreen').click(function() {
-		$('#tiki_draw').drawFullscreen();
-	});
+	$('#drawFullscreen')
+		.click(function() {
+			$('#tiki_draw').drawFullscreen();
+		})
+		.click();
 	
 	$('#tiki_draw')
 		.loadDraw({
