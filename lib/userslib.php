@@ -6487,9 +6487,15 @@ class UsersLib extends TikiLib
 					$p = $periods - 1;
 					$extend_until->modify("+$p month");
 				}
+			} elseif (strlen($info['anniversary']) == 3) {
+				// Case not handled, and variables used below is not set
+				// Not sure what to do here?
 			}
-			$ratio_prorated_first_period = ($extend_until->format('U') - $payable_from->format('U')) / ($extend_until->format('U') - $prev_ann->format('U'));
-			$timestamp = $extend_until->format('U');
+			$timestamp = null;
+			if($extend_until != null && $payable_from != null && $prev_ann != null) {
+				$ratio_prorated_first_period = ($extend_until->format('U') - $payable_from->format('U')) / ($extend_until->format('U') - $prev_ann->format('U'));
+				$timestamp = $extend_until->format('U');
+			}
 		} else {
 			$timestamp = $date + $periods * $info['expireAfter'] * 24 * 3600;
 		}
