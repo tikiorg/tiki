@@ -336,10 +336,16 @@ class Tiki_Profile
 		$content = str_replace("\r", '', $content);
 		$begin = strpos($content, "\n\n");
 
-		if ( $begin !== false )
-			return substr($content, $begin + 2);
-		else
+		if ( $begin !== false ) {
+			$content = substr($content, $begin + 2);
+			
+			// This allows compatibility with Tiki 8 and below, which export page content HTML-escaped. This should not be done for Tiki 9 and above and should be removed once only these are supported (after Tiki 6 reaches EOL).
+			$content = htmlspecialchars_decode($content);
+			 
+			return $content;
+		} else {
 			return null;
+		}
 	} // }}}
 
 	public function getPageParsed( $pageName ) // {{{
