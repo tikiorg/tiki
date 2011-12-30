@@ -1253,6 +1253,10 @@ if ( \$('#$id') ) {
 			$noparsed = array('data' => array(), 'key' => array());
 			$this->strip_unparsed_block($data, $noparsed);
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+			foreach ($noparsed['data'] as &$instance) {
+				$instance = '~np~' . $instance . '~/np~';
+			}
+			unset($instance);
 			$data = str_replace($noparsed['key'], $noparsed['data'], $data);
 		}
 
