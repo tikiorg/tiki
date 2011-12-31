@@ -215,12 +215,12 @@ class ImageAbstract
 		return $this->width;
 	}
 
-	function set_img_info($image, $isfile = true, $xmp = false) {
+/*	function set_img_info($image, $isfile = true, $xmp = false) {
 		$tempfile = '';
-		$cwd = '';
+		$cwd = '';*/
 		/*getimagesize requires a filename so create a temporary one
 		if the image is in the database*/
-		if (!$isfile) {
+/*		if (!$isfile) {
 			$cwd = getcwd(); 								//get current working directory
 			$tempfile = tempnam("$cwd/tmp", 'temp_image_');	//create tempfile and return the path/name
 			$temphandle = fopen($tempfile, 'w');			//open for writing
@@ -265,5 +265,5 @@ class ImageAbstract
 			}
 		}
 		return $iptc_raw;
-	}
+	}*/
 }

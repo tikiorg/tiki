@@ -749,24 +749,22 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 				}
 			}
 		} //finished getting info from db for images in image or file galleries or attachments
-		
+
+		include_once ('lib/metadata/metadata.php');
 		$xmpview = !empty($imgdata['metadata']) ? true : false;
 		//get image to get height and width and iptc data
 		if (!empty($dbinfo['data'])) {
-			$imageObj = new Image($dbinfo['data'], false);
-			$imageObj->set_img_info($imageObj->data, false, $xmpview);
+			$imageObj = new FileMetadata($dbinfo['data'], false, $xmpview);
 			if (isset($imageObj->exif['FILE']['FileName'])) {
 				$imageObj->exif['FILE']['FileName'] = $dbinfo['filename'];
 			}
 		} elseif (!empty($dbinfo['path'])) {
-			$imageObj = new Image($basepath . $dbinfo['path'], true);	
-			$imageObj->set_img_info($basepath . $dbinfo['path'], true, $xmpview);
+			$imageObj = new FileMetadata($basepath . $dbinfo['path'], true, $xmpview);	
 			if (isset($imageObj->exif['FILE']['FileName'])) {
 				$imageObj->exif['FILE']['FileName'] = $dbinfo['filename'];
 			}
 		} else {
-			$imageObj = new Image($src, true);
-			$imageObj->set_img_info($src, true, $xmpview);
+			$imageObj = new FileMetadata($src, true, $xmpview);
 		}
 		if (isset($imageObj->exif['FILE']['FileDateTime'])) {
 			$imageObj->exif['FILE']['FileDateTime'] = $tikilib->get_long_datetime($imageObj->exif['FILE']['FileDateTime'], $user) .
@@ -779,6 +777,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 			//title from image iptc	
 			$ititle = isset($imageObj->iptc_raw['2#005'][0]) ? $imageObj->iptc_raw['2#005'][0] : '';
 		}
+				
 		$fwidth = '';
 		$fheight = '';
 		if (isset($parseOptions['indexing']) && $parseOptions['indexing']) {
@@ -791,11 +790,9 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		//get image gal thumbnail image for height and width
 		if (!empty($dbinfot['data']) || !empty($dbinfot['path'])) {
 			if (!empty($dbinfot['data'])) {
-				$imageObjt = new Image($dbinfot['data'], false);
-				$imageObjt->set_img_info($imageObjt->data, false);
+				$imageObjt = new FileMetadata($dbinfot['data'], false, false, false);
 			} elseif (!empty($dbinfot['path'])) {
-				$imageObjt = new Image($basepath . $dbinfot['path'] . '.thumb', true);	
-				$imageObjt->set_img_info($basepath . $dbinfot['path'] . '.thumb', true);
+				$imageObjt = new FileMetadata($basepath . $dbinfot['path'] . '.thumb', true, false, false);	
 			}
 			$fwidtht = $imageObjt->width;
 			$fheightt = $imageObjt->height;
@@ -1187,7 +1184,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		static $lastval = 0;
 		$id = 'imgdialog-' . ++$lastval;
 		$id_link = $id . '-link';
-		$dialog = metaview_dialog($imageObj, $id, $dbinfo['filename']);
+		$dialog = $imageObj->dialogMetadata($imageObj, $id, $dbinfo['filename']);
 		$repl .= $dialog;
 		$jq = '$(document).ready(function() {
 					$("#' . $id . '").css(\'z-index\', \'1005\').dialog({
@@ -1355,5 +1352,4 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';
-//	echo '<pre>' . $imageObj->xmp->saveXML() . '</pre>';
 }
