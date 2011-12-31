@@ -156,7 +156,7 @@ function wikiplugin_carousel( $body, $params )
 	
 	TikiLib::lib('header')->add_jq_onready('setTimeout( function() { $("#' . $unique . '").tiki("carousel", "", '. json_encode($params).'); }, 1000);');
 	
-	$html = '<div id="'.$unique.'" class="clearfix carousel"><ul>';
+	$html = '<div id="'.$unique.'" class="clearfix carousel" style="width: 1px; height: 1px; overflow: hidden"><ul>';
 	foreach ($files['data'] as $file) {
 		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display" alt="'.htmlentities($file['description']).'" />';
 		$caption = '';
