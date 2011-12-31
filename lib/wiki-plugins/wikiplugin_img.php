@@ -766,6 +766,10 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		} else {
 			$imageObj = new FileMetadata($src, true, $xmpview);
 		}
+		if (isset($imageObj->error)) {
+			return '<em>' . tra('Plugin Img error: ') . $imageObj->error . '</em>';
+		}
+		
 		if (isset($imageObj->exif['FILE']['FileDateTime'])) {
 			$imageObj->exif['FILE']['FileDateTime'] = $tikilib->get_long_datetime($imageObj->exif['FILE']['FileDateTime'], $user) .
 				' (Unixtime: ' . $imageObj->exif['FILE']['FileDateTime'] . ')';
