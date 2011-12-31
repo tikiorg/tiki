@@ -10,7 +10,8 @@ function wikiplugin_carousel_info()
 	return array(
 		'name' => tra('Carousel'),
 		'documentation' => 'PluginCarousel',
-		'description' => tra('Carousel on a file gallery'),
+		'description' => tra('Display images in a self-advancing carousel'),
+		'introduced' => 8.0,
 		'prefs' => array('wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'),
 		'icon' => 'pics/icons/wand.png',
 		'tags' => array( 'basic' ),		

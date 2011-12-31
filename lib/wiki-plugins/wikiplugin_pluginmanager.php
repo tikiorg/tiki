@@ -254,19 +254,12 @@ class WikiPluginPluginManager extends PluginsLib
 						$optcounter = 1;
 						$numoptions = count($paraminfo['options']);
 						foreach ($paraminfo['options'] as $oplist => $opitem) {
-							if ((isset($opitem['value']) && !empty($opitem['value'])) &&
-									(isset($opitem['text']) && !empty($opitem['text']))) {
-								if (isset($opitem['value']) && !empty($opitem['value'])) {
-									$rows .= $opitem['value'];
+							$rows .= strlen($opitem['value']) == 0 ? tra('(blank)') : $opitem['value'];
+							if ($optcounter < $numoptions) {
+								if ($numoptions > 10) {
+									$rows .= ' | ';
 								} else {
-									$rows .=  $opitem['text'];
-								}
-								if ($optcounter < $numoptions) {	
-									if ($numoptions > 10) {
-										$rows .= ' | ';
-									} else {
-										$rows .= '<br />';
-									}
+									$rows .= '<br />';
 								}
 							}
 							$optcounter++;

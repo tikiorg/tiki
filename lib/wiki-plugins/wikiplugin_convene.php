@@ -11,16 +11,17 @@ function wikiplugin_convene_info()
 		'name' => tra('Convene'),
 		'documentation' => 'PluginConvene',
 		'description' => tra('Convene an event with schedule and members'),
+		'introduced' => 9.0,
 		'prefs' => array('wikiplugin_convene','feature_calendar'),
-		'body' => tra('Convene Data'),
+		'body' => tra('Convene data generated from user input'),
 		'icon' => 'pics/icons/arrow_in.png',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
 		'params' => array(
 			'title' => array(
 				'required' => false,
-				'name' => tra('Title of event'),
-				'default' => tra("Convene")
+				'name' => tra('Title of Event'),
+				'default' => tra('Convene')
 			),
 		),
 	);
