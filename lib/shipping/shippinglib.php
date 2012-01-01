@@ -97,7 +97,7 @@ class ShippingLib
 global $shippinglib, $prefs;
 $shippinglib = new ShippingLib;
 
-if( $prefs['shipping_fedex_enable'] == 'y' ) {
+if( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_fedex.php';
 	$shippinglib->addProvider( new ShippingProvider_FedEx( array(
 		'key' => $prefs['shipping_fedex_key'],
@@ -106,7 +106,7 @@ if( $prefs['shipping_fedex_enable'] == 'y' ) {
 	) ) );
 }
 
-if( $prefs['shipping_ups_enable'] == 'y' ) {
+if( !empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_ups.php';
 	$shippinglib->addProvider( new ShippingProvider_Ups( array(
 		'username' => $prefs['shipping_ups_username'],
