@@ -43,7 +43,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 				$thisHref = htmlspecialchars($entry->textlink->href);
 				$headerlib->add_jq_onready(<<<JQ
 					$('#page-data')
-						.rangyRestore('$thisText', function(o) {
+						.rangyRestorePhrase('$thisText', function(o) {
 							$('<a>&nbsp;*&nbsp;</a>')
 								.attr('href', '$thisHref')
 								.insertBefore(o.selection.first());
@@ -104,7 +104,7 @@ JQ
 JQ
 );
 		} else {
-			$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=' . $args['object'] . '&nohistory&preview=' . $args['version'] . '&serial=';
+			$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=' . urlencode($args['object']) . '&nohistory&preview=' . $args['version'];
 			$version = $args['version'];
 			$date = $args['lastModif'];
 			
@@ -156,7 +156,7 @@ JQ
 									
 									var data = {
 										text: o.text,
-										href: escape('$href' + escape(o.serial)),
+										href: '$href',
 										serial: escape(o.serial),
 										answers: answers,
 										version: $version,

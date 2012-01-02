@@ -32,6 +32,7 @@ Class Feed_Remote_ForwardLink_Contribution
 		
 		foreach($items as $item) {
 			if (empty($item->forwardLink->href)) continue;
+			$item->forwardLink->href = str_replace(' ', '+', $item->forwardLink->href);
 			
 			$client = new Zend_Http_Client($item->forwardLink->href);
 			
