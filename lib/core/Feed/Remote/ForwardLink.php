@@ -45,14 +45,15 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 			$forwardLinks[] = $forwardLink = json_decode($wikiAttribute['Value']);
 			
 			$forwardLink->href = urldecode($forwardLink->href);
-			$forwardLink->serial = urldecode($forwardLink->serial);
 			
 			if (isset($forwardLink->href)) {
 				$result = Feed_Remote_ForwardLink_Contribution::send(array(
 					"page"=> $args['object'],
 					"forwardLink"=> $forwardLink,
-					"textlinkBody"=> $args['data'],
-					"textlinkHref"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
+					"textlink"=> array(
+						"body"=> $args['data'],
+						"href"=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
+					)
 				));
 			}
 		}

@@ -37,7 +37,6 @@ function wikiplugin_textlink($data, $params)
 	if(empty($clipboarddata)) return $data;
 	
 	$clipboarddata->href = urldecode($clipboarddata->href);
-	$clipboarddata->serial = urldecode($clipboarddata->serial);
 	
 	Feed_Remote_ForwardLink_Contribution::add(array(
 		"page"=> $page,
