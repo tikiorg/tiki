@@ -183,7 +183,7 @@ function module_share($mod_reference, $module_params)
 	if (!empty($module_params['facebook_colorscheme']) && $module_params['facebook_colorscheme'] !== 'light') {
 		$fbData .= ' data-colorscheme="dark"';
 	}
-	if (!empty($module_params['facebook_font']) & $module_params['facebook_font'] !== 'lucida grande') {
+	if (!empty($module_params['facebook_font']) && $module_params['facebook_font'] !== 'lucida grande') {
 		$fbData .= ' data-font="' . $module_params['facebook_font'] . '"';
 	}
 	if (empty($module_params['facebook_ref']) || $module_params['facebook_ref'] === 'y') {
