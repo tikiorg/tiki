@@ -14,9 +14,9 @@ function wikiplugin_textlink_info()
 		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
 		'icon' => 'pics/icons/link.png',
 		'params' => array(			
-			'forwardlink' => array(
+			'clipboarddata' => array(
 				'required' => true,
-				'name' => tra('ForwardLink'),
+				'name' => tra('ClipboardData'),
 				'default' => false
 			),
 		),
@@ -30,26 +30,26 @@ function wikiplugin_textlink($data, $params)
 	++$textlinkI;
 	$i = $textlinkI;
 	
-	$params = array_merge(array("forwardlink" => ""), $params);
+	$params = array_merge(array("clipboarddata" => ""), $params);
 	extract($params, EXTR_SKIP);
 	
-	$forwardLink = json_decode(stripslashes(trim(urldecode($forwardlink))));
-	if(empty($forwardLink)) return $data;
+	$clipboarddata = json_decode(stripslashes(trim(urldecode($clipboarddata))));
+	if(empty($clipboarddata)) return $data;
 	
-	$forwardLink->href = urldecode($forwardLink->href);
-	$forwardLink->serial = urldecode($forwardLink->serial);
+	$clipboarddata->href = urldecode($clipboarddata->href);
+	$clipboarddata->serial = urldecode($clipboarddata->serial);
 	
 	Feed_Remote_ForwardLink_Contribution::add(array(
 		"page"=> $page,
-		"forwardLink"=> $forwardLink,
+		"forwardLink"=> $clipboarddata,
 		"textlink"=> array(
 			"body"=> $data,
 			"href"=> $tikilib->tikiUrl() . "tiki-index.php?page=$page#textlink$i"
 		)
 	));
 	
-	if (!empty($forwardLink->href)) {
-    	return $data."~np~<a href='" .$forwardLink->href ."' id='textlink$i'>*</a>~/np~";
+	if (!empty($clipboarddata->href)) {
+    	return $data."~np~<a href='" .$clipboarddata->href ."' id='textlink$i'>*</a>~/np~";
 	} else {
     	return $data;
     }

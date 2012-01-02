@@ -38,11 +38,12 @@ Class Feed_ForwardLink extends Feed_Abstract
 		
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 			foreach($item->feed->entry as $entry) {
+				$thisText = htmlspecialchars($entry->forwardlink->text);
 				$thisSerial = htmlspecialchars($entry->forwardlink->serial);
 				$thisHref = htmlspecialchars($entry->textlink->href);
 				$headerlib->add_jq_onready(<<<JQ
 					$('#page-data')
-						.rangyRestore('$thisSerial', function(o) {
+						.rangyRestore('$thisText', function(o) {
 							$('<a>&nbsp;*&nbsp;</a>')
 								.attr('href', '$thisHref')
 								.insertBefore(o.selection.first());
@@ -81,10 +82,11 @@ JQ
 		$answers = json_encode($answers);
 		
 		$headerlib
-				->add_jsfile("lib/rangy/rangy-core.js")
-				->add_jsfile("lib/rangy/rangy-cssclassapplier.js")
-				->add_jsfile("lib/rangy/rangy-selectionsaverestore.js")
+				->add_jsfile("lib/rangy/uncompressed/rangy-core.js")
+				->add_jsfile("lib/rangy/uncompressed/rangy-cssclassapplier.js")
+				->add_jsfile("lib/rangy/uncompressed/rangy-selectionsaverestore.js")
 				->add_jsfile("lib/rangy_tiki/rangy-serializer.js")
+				->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
 				->add_jsfile("lib/ZeroClipboard.js");
 				
 		if (!empty($serial)) {
@@ -167,7 +169,7 @@ JQ
 									var forwardLinkCopyButton = $('<div>' + tr('Copy To Clipboard') + '</div>')
 										.button()
 										.appendTo(forwardLinkCopy);
-									var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;" disabled="true"></textarea>')
+									var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
 										.val(encodeURI(JSON.stringify(data)))
 										.appendTo(forwardLinkCopy);
 									forwardLinkCopy.dialog({
