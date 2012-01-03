@@ -124,7 +124,7 @@ function wikiplugin_convene($data, $params)
 	$userList = "";
 	foreach ($rows as $user => $row) {
 		$userList .= "<tr class='conveneUserVotes$i'>";
-		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<img src='pics/icons/pencil.png' class='conveneUpdateUser$i icon' title='" . tr("Edit User") . "' /><img src='pics/icons/delete.png' class='conveneDeleteUser$i icon' data-user='$user' title='" . tr("Delete User") . "'/>" : "") . $user . "</td>";
+		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<img src='pics/icons/pencil.png' class='conveneUpdateUser$i icon' title='" . tr("Edit User/Save changes") . "' /><img src='pics/icons/delete.png' class='conveneDeleteUser$i icon' data-user='$user' title='" . tr("Delete User") . "'/>" : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
 			$class = 	"ui-state-default ui-state-active";
 			$text = 	($vote  == 1 ? "<img src='pics/icons/tick.png' alt='OK' class='vote' />" : "<img src='pics/icons/cross.png' class='vote' />" );
