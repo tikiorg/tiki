@@ -893,7 +893,7 @@ if ($install_step == '2') {
 		$smarty->assign('email_test_to', $email_test_to);
 		
 		if ($email_test_ready) {	// so send the mail
-			$email_test_headers .= 'From: noreply@tikiwiki.org' . "\n";	// needs a valid sender
+			$email_test_headers .= 'From: noreply@tiki.org' . "\n";	// needs a valid sender
 			$email_test_headers .= 'Reply-to: '. $email_test_to . "\n";
 			$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
 			$email_test_headers .= 'X-Mailer: Tiki/'.$TWV->version.' - PHP/' . phpversion() . "\n";
