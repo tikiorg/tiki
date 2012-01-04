@@ -17,6 +17,9 @@ class Tracker_Item
 	public static function fromInfo($info)
 	{
 		$obj = new self;
+		if (empty($info['trackerId']) && !empty($info['itemId'])) {
+			$info['trackerId'] = TikiLib::lib('trk')->get_tracker_for_item($info['itemId']);
+		}
 		$obj->info = $info;
 		$obj->definition = Tracker_Definition::get($info['trackerId']);
 		$obj->initialize();
