@@ -249,7 +249,7 @@
 			{$field_value.value|truncate:$field_value.options_array[4]:"...":true}
 		{/if}
 	{else}
-		{if $parse ne 'n'} {* the field is not necessary parsed if you come from a itm list field *}
+		{if $parse ne 'n' and $list_mode ne 'csv'} {* the field is not necessary parsed if you come from a itm list field *}
 			{if $field_value.pvalue}{$field_value.pvalue}{else}{wiki}{$field_value.value}{/wiki}{/if}
 		{elseif $list_mode eq 'csv'}
 			{$field_value.value}
