@@ -86,10 +86,10 @@ function wikiplugin_code($data, $params) {
 	$params = array_merge($defaults, $params);
 	
 	extract($params, EXTR_SKIP);
+	$code = trim($data);
         if ($mediawiki =='y')
                 return "<code>$code</code>";
 
-	$code = trim($data);
 	$code = str_replace('&lt;x&gt;', '', $code);
 	$code = str_replace('<x>', '', $code);
 	$code = str_replace('<', '&lt;', $code);
