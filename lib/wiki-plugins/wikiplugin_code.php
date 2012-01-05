@@ -60,6 +60,16 @@ function wikiplugin_code_info() {
 				),
 				'advanced' => true,
 			),
+                       'mediawiki' => array(
+                                'required' => false,
+                                'name' => tra('Generates a <code>'),
+                                'options' => array(
+                                        array('text' => '', 'value' => ''),
+                                        array('text' => tra('Yes'), 'value' => '1'),
+                                        array('text' => tra('No'), 'value' => '0'),
+                                ),
+                                'advanced' => true,
+                        ),
 		),
 	);
 }
@@ -69,16 +79,20 @@ function wikiplugin_code($data, $params) {
 	static $code_count;
 	
 	$defaults = array(
-		'wrap' => 'y'
+		'wrap' => 'y',
+		'mediawiki' => 'n'
 	);
 	
 	$params = array_merge($defaults, $params);
 	
 	extract($params, EXTR_SKIP);
+        if ($mediawiki =='y')
+                return "<code>$code</code>";
 
 	$code = trim($data);
 	$code = str_replace('&lt;x&gt;', '', $code);
 	$code = str_replace('<x>', '', $code);
+	$code = str_replace('<', '&lt;', $code);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
 	$id = 'codebox'.++$code_count;
