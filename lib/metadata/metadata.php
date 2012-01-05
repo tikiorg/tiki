@@ -20,6 +20,8 @@ class FileMetadata
 	var $currname = null;		//working file path used to access file, may not be the same as embedded in file metadata
 	var $content = null;		//file content
 	var $size = null;			//size of file
+	var $width = null;			//width of image
+	var $height = null;			//size of image
 	var $type = null;			//file type - important for accessing all metadata
 	var $charset = null;		//character set of file content
 	var $devices = null;		//finfo devices
@@ -79,6 +81,13 @@ class FileMetadata
 		}
 		
 		//set other general metadata properties
+		// TODO getimagesize only works for images
+		$this->header = getimagesize($temppath, $otherinfo);
+		$this->width = $this->header[0];
+		$this->height = $this->header[1];
+		$this->otherinfo = $otherinfo;
+		
+		
 		$this->size = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
 		$finfo = new finfo(FILEINFO_MIME);
 		$type_charset = $finfo->file($temppath);
@@ -97,20 +106,26 @@ class FileMetadata
 				break;
 			default:
 				$this->error = tra('File type not handled by Tiki - only basic metadata available');
-				return $this;
+//				return $this;
 		}
-		//file must be named based on $type
-		include_once($type . '.php');
-		$type = ucfirst($type);
-		//class name is same as file name except first letter is capitalized
-		$typeObj = new $type;
-		$dataObj = $typeObj->getBasicData($this, $temppath);
-		// get extended metada
-		if ($extended) {
-			$dataObj = $typeObj->getExtendedData($dataObj, $temppath);
+		
+		if (!isset($this->error)) {
+			//file must be named based on $type
+			include_once($type . '.php');
+			$type = ucfirst($type);
+			//class name is same as file name except first letter is capitalized
+			$typeObj = new $type;
+			$dataObj = $typeObj->getBasicData($this, $temppath);
+			// get extended metada
+			if ($extended) {
+				$dataObj = $typeObj->getExtendedData($dataObj, $temppath);
+			}
+			unlink($temppath);
+			return $dataObj;
+		} else {
+			unlink($temppath);
+			return $this;
 		}
-		unlink($temppath);
-		return $dataObj;
 	}
 
 	/*
@@ -146,76 +161,81 @@ class FileMetadata
 	 * @return		string									Tables ready for an Jquery accordion dialog box
 	 */
 	function dialogMetadata($metaObj, $id, $filename) {
-		$beg_table = "\r\t" . '<div><table>';
-		$end_table = "\r\t" . '</table></div>'; 
-		$col1_begin = "\r\t\t" . '<tr>' . "\r\t\t\t" . '<td>' . '<div class="wpimg-meta-col1">';
-		$betw_col = '</div>' . '</td>' . "\r\t\t\t" . '<td>' . '<div class="wpimg-meta-col2">';
-		$col2_end = '</div>' . '</td>' . "\r\t\t" . '</tr>';
-		$beg_header = "\r\t" . '<h3><a href="#">';
-		$end_header = '</a></h3>';
-		$beg_section = "\r\t\t" . '<tr><td colspan="2"><div class="wpimg-meta-section"><em>';
-		$end_section = '</em></div></td></tr>';
-		$beg_false = "\r\t" . '<div>';
-		$end_false = '</div>';
-		//start the dialog box
-		$dialog = "\r" . '<div id="' . $id . '" title="Image Metadata for ' . $filename . '" style="display:none">';
-		//iptc section
-		$dialog .= $beg_header . tra('Photographer Data (IPTC)') . $end_header;
-		if ($metaObj->iptc === false) {
-			$dialog .= $beg_false . tra('No IPTC data') . $end_false;
-		} else {
-			$dialog .= $beg_table;
-			foreach (array_keys($metaObj->iptc) as $key => $s) {
-				$dialog .= $col1_begin . $metaObj->iptc[$s][1] . $betw_col . htmlspecialchars($metaObj->iptc[$s][0]) . $col2_end;
+		if ($metaObj->type == 'image/jpeg') {
+			$beg_table = "\r\t" . '<div><table>';
+			$end_table = "\r\t" . '</table></div>'; 
+			$col1_begin = "\r\t\t" . '<tr>' . "\r\t\t\t" . '<td>' . '<div class="wpimg-meta-col1">';
+			$betw_col = '</div>' . '</td>' . "\r\t\t\t" . '<td>' . '<div class="wpimg-meta-col2">';
+			$col2_end = '</div>' . '</td>' . "\r\t\t" . '</tr>';
+			$beg_header = "\r\t" . '<h3><a href="#">';
+			$end_header = '</a></h3>';
+			$beg_section = "\r\t\t" . '<tr><td colspan="2"><div class="wpimg-meta-section"><em>';
+			$end_section = '</em></div></td></tr>';
+			$beg_false = "\r\t" . '<div>';
+			$end_false = '</div>';
+			//start the dialog box
+			$dialog = "\r" . '<div id="' . $id . '" title="Image Metadata for ' . $filename . '" style="display:none">';
+			//iptc section
+			$dialog .= $beg_header . tra('Photographer Data (IPTC)') . $end_header;
+			if ($metaObj->iptc === false) {
+				$dialog .= $beg_false . tra('No IPTC data') . $end_false;
+			} else {
+				$dialog .= $beg_table;
+				foreach (array_keys($metaObj->iptc) as $key => $s) {
+					$dialog .= $col1_begin . $metaObj->iptc[$s][1] . $betw_col . htmlspecialchars($metaObj->iptc[$s][0]) . $col2_end;
+				}
+				$dialog .= $end_table; 
 			}
-			$dialog .= $end_table; 
-		}
-		//exif section
-		$dialog .= $beg_header . tra('File Data (EXIF)') . $end_header;
-		if ($metaObj->exif === false) {
-			$dialog .= $beg_false . tra('No EXIF data') . $end_false;
-		} else {
-			//No processing of maker notes yet as specific code is needed for each manufacturer
-			//Blank out field since it is very long and will distort the dialog box
-			if (!empty($metaObj->exif['EXIF']['MakerNote'])) {
-				$metaObj->exif['EXIF']['MakerNote'] = '(' . tra('Not processed') . ')';
-			}
-			$name_array = array('ComponentsConfiguration', 'FileSource', 'SceneType', 'CFAPattern', 'GPSVersion');
-			$dialog .= $beg_table;
-			foreach ($metaObj->exif as $cat => $fields) {
-				$dialog .= $beg_section . ucfirst(strtolower($cat)) . $end_section;
-				foreach ($fields as $name => $val) {
-					$clean_val = trim($val);
-					if (in_array($name, $name_array)) {
-						$clean_val = hexdec($clean_val);
-					}
-					if (strlen($clean_val) > 0) {
-						$dialog .= $col1_begin . $name . $betw_col . htmlspecialchars($clean_val) . $col2_end;
+			//exif section
+			$dialog .= $beg_header . tra('File Data (EXIF)') . $end_header;
+			if ($metaObj->exif === false) {
+				$dialog .= $beg_false . tra('No EXIF data') . $end_false;
+			} else {
+				//No processing of maker notes yet as specific code is needed for each manufacturer
+				//Blank out field since it is very long and will distort the dialog box
+				if (!empty($metaObj->exif['EXIF']['MakerNote'])) {
+					$metaObj->exif['EXIF']['MakerNote'] = '(' . tra('Not processed') . ')';
+				}
+				$name_array = array('ComponentsConfiguration', 'FileSource', 'SceneType', 'CFAPattern', 'GPSVersion');
+				$dialog .= $beg_table;
+				foreach ($metaObj->exif as $cat => $fields) {
+					$dialog .= $beg_section . ucfirst(strtolower($cat)) . $end_section;
+					foreach ($fields as $name => $val) {
+						$clean_val = trim($val);
+						if (in_array($name, $name_array)) {
+							$clean_val = hexdec($clean_val);
+						}
+						if (strlen($clean_val) > 0) {
+							$dialog .= $col1_begin . $name . $betw_col . htmlspecialchars($clean_val) . $col2_end;
+						}
 					}
 				}
+				$dialog .= $end_table; 
 			}
-			$dialog .= $end_table; 
-		}
-		//xmp section
-		$dialog .= $beg_header . tra('XMP Data') . $end_header;
-		if ($metaObj->xmp === false) {
-			$dialog .= $beg_false . tra('No XMP data') . $end_false;
-		} else {	
-			$dialog .= $beg_table;
-			$parent = $metaObj->xmp->getElementsByTagName('Description');
-			$len = $parent->length;
-			for($i = 0; $i < $len; $i++) {
-				$dialog .= $beg_section . ucfirst($parent->item($i)->childNodes->item(1)->prefix) . $end_section;
-				$len2 = $parent->item($i)->childNodes->length;
-				for($j = 1; $j < $len2; $j++) {
-					$dialog .= $col1_begin . $parent->item($i)->childNodes->item($j)->localName . $betw_col
-							. htmlspecialchars($parent->item($i)->childNodes->item($j)->nodeValue) . $col2_end;
+			//xmp section
+			$dialog .= $beg_header . tra('XMP Data') . $end_header;
+			if ($metaObj->xmp === false) {
+				$dialog .= $beg_false . tra('No XMP data') . $end_false;
+			} else {	
+				$dialog .= $beg_table;
+				$parent = $metaObj->xmp->getElementsByTagName('Description');
+				$len = $parent->length;
+				for($i = 0; $i < $len; $i++) {
+					$dialog .= $beg_section . ucfirst($parent->item($i)->childNodes->item(1)->prefix) . $end_section;
+					$len2 = $parent->item($i)->childNodes->length;
+					for($j = 1; $j < $len2; $j++) {
+						$dialog .= $col1_begin . $parent->item($i)->childNodes->item($j)->localName . $betw_col
+								. htmlspecialchars($parent->item($i)->childNodes->item($j)->nodeValue) . $col2_end;
+					}
 				}
+				$dialog .= $end_table; 
 			}
-			$dialog .= $end_table; 
+			
+			$dialog .= "\r" . '</div>';
+		} else {
+		$dialog = '<div id="' . $id . '" title="Image Metadata for ' . $filename . '" style="display:none">' 
+			. tra('File type not handled by Tiki') . '</div>';
 		}
-		
-		$dialog .= "\r" . '</div>';
 		return $dialog;
 	}
 	
