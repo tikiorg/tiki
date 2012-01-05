@@ -89,14 +89,16 @@ class FileMetadata
 		
 		
 		$this->size = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
-		$finfo = new finfo(FILEINFO_MIME);
-		$type_charset = $finfo->file($temppath);
-		$type_charset = explode(';', $type_charset);
-		//external file tyes may already be set at this point
-		$this->type = empty($this->type) ?  $type_charset[0] : $this->type;
-		$this->charset = trim($type_charset[1]);
-		$finfo = new finfo(FILEINFO_DEVICES);
-		$this->devices = $finfo->file($this->currname);
+		if (class_exists('finfo')) {
+			$finfo = new finfo(FILEINFO_MIME);
+			$type_charset = $finfo->file($temppath);
+			$type_charset = explode(';', $type_charset);
+			//external file tyes may already be set at this point
+			$this->type = empty($this->type) ?  $type_charset[0] : $this->type;
+			$this->charset = trim($type_charset[1]);
+			$finfo = new finfo(FILEINFO_DEVICES);
+			$this->devices = $finfo->file($this->currname);
+		}
 		
 		//from this point, additional metadata is obtained from classes specific to the file type in separate php files
 		switch ($this->type) {
