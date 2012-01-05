@@ -36,6 +36,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 			die;
 		}
 		
+		$phraseI;
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 			foreach($item->feed->entry as $entry) {
 				$thisText = htmlspecialchars($entry->forwardlink->text);
@@ -45,10 +46,13 @@ Class Feed_ForwardLink extends Feed_Abstract
 						.rangyRestore('$thisText', function(o) {
 							$('<a>&nbsp;*&nbsp;</a>')
 								.attr('href', '$thisHref')
-								.insertBefore(o.selection.first());
+								.insertBefore($('.rangyPhraseStart').eq($phraseI));
+							
+							o.selection.addClass('ui-state-highlight');
 						});
 JQ
 );
+			$phraseI++;
 			}
 		}
 		
@@ -83,7 +87,8 @@ JQ
 				->add_jsfile("lib/rangy/uncompressed/rangy-cssclassapplier.js")
 				->add_jsfile("lib/rangy/uncompressed/rangy-selectionsaverestore.js")
 				->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
-				->add_jsfile("lib/ZeroClipboard.js");
+				->add_jsfile("lib/ZeroClipboard.js")
+				->add_jsfile("lib/rangy_tiki/phraser.js");
 			
 		$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=' . urlencode($args['object']) . '&nohistory&preview=' . $args['version'];
 		$version = $args['version'];
