@@ -1763,7 +1763,6 @@ $lang=Array(
 "Add a Category" => "Kategória hozzáadása",
 "in current category" => "jelen kategóriában",
 "Total categories" => "Összes kategória",
-//"For more information, please see <a href=\"{\$prefs.helpurl}Wiki+Page+Editor\" target=\"tikihelp\" class=\"tikihelp\" title=\"{tr}Wiki Page Editor" => "További információkért lásd: <a href=\"{\$prefs.helpurl}Wiki+Page+Editor\" target=\"tikihelp\" class=\"tikihelp\" title=\"{tr}Wiki oldal szerkesztése",
 "Creates an indentation for each plus(useful in list to continue at the same level)" => "Minden + jellel eggyel beljebb húzza (hasznos listázások ugyanazon szinten történő folytatására)",
 "creates the editable drawing foo" => "létrehozza a szerkeszthető 'foo' rajzot",
 "text, bold" => "szöveg, félkövér",

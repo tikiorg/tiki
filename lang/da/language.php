@@ -319,7 +319,6 @@ $lang=Array(
 "by %s" => "af %s",
 "Archived page:" => "Gemte sider:",
 "Diff of %s." => "Forskel på %s.",
-//" tags. Example: {tr}The newsletter was sent to {\$sent} email addresses" => " tags. Eksempel: {tr}Nyhedsbrevet blev afsendt til {\$sent} email addresser",
 "New article submitted at " => "Ny artikel indsendt den ",
 "Welcome to " => "Welkommen til ",
 " at " => " den ",

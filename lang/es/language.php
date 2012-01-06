@@ -72,7 +72,6 @@ $lang=Array(
 // ### Please remove manually!
 // ### N.B. Legitimate strings may be marked// ### as unused!
 // ### Please see http://tiki.org/UnusedWords for further info
-//"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Subida en lote (archivo CSV<a {popup text='usuario,clave,correo'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}ayuda",
 "slideshow_p" => "slideshow_p",
 "slideshow backward" => "presentación atras",
 "slideshow_n" => "slideshow_n",

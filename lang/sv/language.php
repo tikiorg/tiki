@@ -260,7 +260,6 @@ $lang=Array(
 "Control by Object" => "Kontrollera via objekt",
 "messages tpl" => "meddelande tpl",
 "Is this regular expression or simpel search/replacer" => "Är detta ett regulärt uttryck eller en enkel sök/ersättare",
-//"<span title=\"{tr}subset of chars: imsxeADSXUu, which is regex modifiers" => "<span title=\"{tr}delmängd av tecken: imsxeADSXUu, som är regex modifierare",
 "For more information, please see <a\nhref=\"http://www.tiki.org/tiki-index.php?page=WikiSyntax\">WikiSyntax</a>\non <a href=\"http://www.tiki.org\">Tikiwiki.org</a>." => "För mer information se <a\nhref=\"http://www.tiki.org/tiki-index.php?page=WikiSyntax\">WikiSyntax</a>\npå <a href=\"http://www.tiki.org\">Tikiwiki.org</a>.",
 "use square brackets for an" => "använd hakparenteser till",
 "link_description" => "länk text",

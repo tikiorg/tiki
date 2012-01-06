@@ -366,7 +366,6 @@ $lang=Array(
 "by %s" => "由 %s",
 "Archived page:" => "保存的页面:",
 "Diff of %s." => " %s 的差异.",
-//" tags. Example: {tr}The newsletter was sent to {\$sent} email addresses" => " 标签. 范例: {tr}本电子期刊发送到 {\$sent} 电子邮件地址",
 "New article submitted at " => "新文章发表于 ",
 "Welcome to " => "欢迎来到 ",
 " at " => " 在 ",
