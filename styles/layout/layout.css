@@ -2206,4 +2206,31 @@ div.aclabel, span.aclabel, label.aclabel {
 .ui-menu {
 	z-index: 10100 !important;
 }
+/* Structure selection popup on wiki pages */
+.structure_select {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	background: none;
+	width: 20px;
+}
+.structure_select .cssmenu_horiz ul li {
+	border: 1px solid #999;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.structure_select li.tabmark {
+	background: none;
+	border: 0px;
+	top: 0px;
+	padding: 0px;
+}
+.structure_select .clearfix:after {
+	display: inline-block;
+}
+.structure_select .selected {
+	font-weight: bold;
+	font-style: italic;
+}
 /* End of File */
