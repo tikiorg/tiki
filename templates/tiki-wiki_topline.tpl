@@ -107,25 +107,35 @@
 									</ul>
 								</div>		
 							{/if}
+							{if ( $structure eq 'y' and count($showstructs) gt 1 ) or ( $structure eq 'n' and count($showstructs) neq 0 )}
+								<div class="structure_select">
+									<ul class="clearfix cssmenu_horiz">
+										<li class="tabmark">
+											{icon _id=chart_organisation title="{tr}Structures{/tr}" class="icon"}
+											<ul class="structure_poppedup">
+												<li class="tabcontent">
+													{section name=struct loop=$showstructs}
+														<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Show structure: {$showstructs[struct].pageName|escape}"{/if}>
+															{if $showstructs[struct].page_alias}														
+																{$showstructs[struct].page_alias}
+															{else}
+																{$showstructs[struct].pageName}
+															{/if}
+														</a>
+													{/section}
+													{if $showstructs[struct].pageName neq $structure_path[0].pageName}
+														<a href="tiki-index.php?page={$page|escape:url}" title="{tr}Hide structure bar{/tr}">
+															{tr}Hide structure{/tr}
+														</a>
+													{/if}	
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+							{/if}
 						</div><!-- END of icons -->
-			
-						{if ( $structure eq 'y' and count($showstructs) gt 1 ) or ( $structure eq 'n' and count($showstructs) neq 0 )}
-							<form action="tiki-index.php" method="post" style="float: left">
-								<select name="page_ref_id" onchange="this.form.submit()">
-									<option>{tr}Structures{/tr}...</option>
-									{section name=struct loop=$showstructs}
-										<option value="{$showstructs[struct].req_page_ref_id}" {if $showstructs[struct].pageName eq $structure_path[0].pageName}selected="selected"{/if}>
-											{if $showstructs[struct].page_alias}
-												{$showstructs[struct].page_alias}
-											{else}
-												{$showstructs[struct].pageName}
-											{/if}
-										</option>
-									{/section}
-								</select>
-							</form>
-						{/if}
-				
+		
 						{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
 							<div style="float: left">
 								{include file='translated-lang.tpl' td='n'}
