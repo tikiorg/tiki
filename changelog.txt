@@ -25,6 +25,33 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.6
+<http://tiki.org/ReleaseNotes66>
+------------------
+
+----------------------------------------------
+r39400 | sampaioprimo | 2012-01-06 10:27:57 -0200 (Fri, 06 Jan 2012) | 2 lines
+
+[bp/r39390][FIX] object perms: group name encoding
+
+----------------------------------------------
+r39283 | sampaioprimo | 2011-12-23 14:58:49 -0200 (Fri, 23 Dec 2011) | 2 lines
+
+[bp/39280][FIX] null byte injection when plugin snarf is enable and user is admin (http://dev.tiki.org/item4059)
+
+----------------------------------------------
+r39235 | marclaporte | 2011-12-19 23:53:14 -0200 (Mon, 19 Dec 2011) | 1 line
+
+[REVERT] 1- This is not approved by the Quality Team   2- A change to the DB schema is generally not suitable for LTS branch   3- If it is suitable, it should be proven to work in trunk, and currently, there is a reported issue with this code in trunk
+----------------------------------------------
+r39144 | gregmartin | 2011-12-12 00:01:16 -0200 (Mon, 12 Dec 2011) | 1 line
+
+[FIX] cleaning up sql
+----------------------------------------------
+r39118 | pkdille | 2011-12-08 17:54:54 -0200 (Thu, 08 Dec 2011) | 1 line
+
+[bp/r35763 + r35764] [FIX] get_logs return a string with commit that are not sort. Just add a sort on that log
+----------------------------------------------
 Version 6.5
 <http://tiki.org/ReleaseNotes65>
 ------------------
