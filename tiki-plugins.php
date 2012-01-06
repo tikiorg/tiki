@@ -33,7 +33,7 @@ if (isset($_REQUEST['clearone'])) {
 if (isset($_REQUEST['refresh'])) {
 	$pages = $tikilib->list_pages();
 	foreach ($pages['data'] as $page) {
-		$tikilib->parse_first($page['data'], $pre, $no);
+		$parserlib->parse_first($page['data'], $pre, $no);
 	}
 }
 
