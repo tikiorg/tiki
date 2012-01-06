@@ -395,10 +395,17 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		}
 
 		// Attempt to create database. This might work if the $user has create database permissions.
-		if ( ! $dbcon ) {
+		// First check that suggested database name will not cause issues
+		$dbname_clean = preg_replace('/[^a-z0-9$_-]/', "", $dbname);
+		if ($dbname_clean != $dbname) {
+			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, array($dbname_clean)) );
+			$attempt_creation=false;
+		} else {
+			$attempt_creation=true;
+		}
+		if ( (! $dbcon) && ($attempt_creation == true) ) {
 			$dbh = ADONewConnection($driver);
 			if ( @$dbh->Connect($host, $user, $pass) ) {
-				$dbname_clean = preg_replace('/[^a-z0-9$_]/', "", $dbname);
 				$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 				$dbcon=$dbh->Execute($sql);
 				if ( $dbcon ) {
@@ -440,10 +447,18 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 			$tikifeedback[] = array( 'num' => 1, 'mes'=> $e->getMessage() );
 		}
 
-		if ( ! $dbcon ) {
+		// Attempt to create database. This might work if the $user has create database permissions.
+		// First check that suggested database name will not cause issues
+		$dbname_clean = preg_replace('/[^a-z0-9$_-]/', "", $dbname);
+		if ($dbname_clean != $dbname) {
+			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, array($dbname_clean)) );
+			$attempt_creation=false;
+		} else {
+			$attempt_creation=true;
+		}
+		if ( (! $dbcon) && ($attempt_creation == true) ) {
 			try {
 				$dbh = new PDO("$driver:$db_hoststring", $user, $pass);
-				$dbname_clean = preg_replace('/[^a-z0-9$_]/', "", $dbname);
 				$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 				$dbcon=$dbh->exec($sql);
 				if ( $dbcon ) {
@@ -873,7 +888,7 @@ if ($install_step == '2') {
 		if (!empty($_REQUEST['email_test_to'])) {
 			$email_test_to =  $_REQUEST['email_test_to'];
 			
-			if ($_REQUEST['email_test_cc'] == '1') {
+			if (isset($_REQUEST['email_test_cc']) && $_REQUEST['email_test_cc'] == '1') {
 				$email_test_headers .= "Cc: $email_test_tw\n";
 			}
 
@@ -885,7 +900,7 @@ if ($install_step == '2') {
 				$email_test_ready = false;
 			}
 		} else {	// no email supplied, check copy checkbox
-			if ($_REQUEST['email_test_cc'] != '1') {
+			if (!isset($_REQUEST['email_test_cc']) || $_REQUEST['email_test_cc'] != '1') {
 				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
 				$email_test_ready = false;
 			}
