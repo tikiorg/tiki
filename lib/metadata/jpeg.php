@@ -18,30 +18,17 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 class Jpeg
 {	
 	/*
-	 * Get basic JPEG metadata
-	 * @param		FileMetadata object		$metaObj		Object from the FileMetadata class which calls this function as part of its __constructor
-	 * @param		string					$temppath		Path to file necessary for some of the functions used to read metadata
-	 * @return		FileMetadata object						Returns a FileMetadata object with additional properties set
-	 */
-	function getBasicData($metaObj, $temppath) {
-		$metaObj->header = getimagesize($temppath, $otherinfo);
-		$metaObj->width = $metaObj->header[0];
-		$metaObj->height = $metaObj->header[1];
-		$metaObj->otherinfo = $otherinfo;
-		$metaObj->exif = function_exists('exif_read_data') ? exif_read_data($temppath, 0, true) : false;
-		return $metaObj;
-	}
-
-	/*
 	 * Get extended JPEG metadata
 	 * @param		FileMetadata object		$metaObj		Object from the FileMetadata class which calls this function as part of its __constructor
 	 * @param		string					$temppath		Path to file potentially necessary for some of the functions used to read metadata
 	 * @return		FileMetadata object						Returns a FileMetadata object with additional properties set
 	 */
-	function getExtendedData($metaObj, $temppath = null) {
-		$metaObj->iptc_raw = $this->getIptcRaw($metaObj->otherinfo);
-		$metaObj->iptc = $metaObj->addIptcTags($metaObj->iptc_raw);
-		$metaObj->xmp = $this->getXmp($metaObj->content);
+	function getExtendedData($metaObj, $filepath = null) {
+		$metaObj->typemeta['exif'] = function_exists('exif_read_data') ? exif_read_data($filepath, 0, true) : false;
+		$metaObj->typemeta['iptc_raw'] = isset($metaObj->otherinfo) ? $this->getIptcRaw($metaObj->otherinfo) : false;
+		$metaObj->typemeta['iptc'] = $metaObj->typemeta['iptc_raw'] ? $metaObj->addIptcTags($metaObj->typemeta['iptc_raw']) : false;
+		$metaObj->typemeta['xmp'] = isset($metaObj->content) ? $this->getXmp($metaObj->content) : false;
+		return $metaObj;
 	}
 	
 	/*

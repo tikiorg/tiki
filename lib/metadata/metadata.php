@@ -25,9 +25,9 @@ class FileMetadata
 	var $type = null;			//file type - important for accessing all metadata
 	var $charset = null;		//character set of file content
 	var $devices = null;		//finfo devices
+	var $typemeta = array();	//used to store metadata beyond generic file data
 	var $header = null;			//header information
 	var $otherinfo = null;		//specific to jpegs TODO move to JPEG class if possible
-	var $iptc_raw = null;		//result from iptcparse function TODO move to type classes if possible
 	var $error = null;			//error messages stored here
 	
 	/*
@@ -42,8 +42,9 @@ class FileMetadata
 	function __construct($file, $ispath = true, $extended = true, $mwg_compliant = true) {
 		//set contents and current name as well as type in some situations
 		if (!$ispath) {
-			//create a temporary file name if $file is the actual file contents rather than a path
+			//when $file is actual file contents rather than a path - create a temporary file name needed for some php functions
 			$temppath = $this->temppathFromContent($file);
+			$leavelink = false;
 			if (!$temppath) {
 				$this->error = tra('The file is empty');
 			} else {
@@ -55,19 +56,18 @@ class FileMetadata
 				$this->currname = $file;
 				$this->content = file_get_contents($file);
 				$temppath = $file;
+				$leavelink = true;
 				if (empty($this->content)) {
 					$this->error = tra('The file is empty');
-					unlink($temppath);
-					return $this;
 				}
 			//if not readable, see if it's an external file
 			} elseif (strpos($file, 'http') !== false) {
 				$filegallib = TikiLib::lib('filegal');
 				$externalinfo = $filegallib->get_info_from_url($file);
 				$temppath = $this->temppathFromContent($externalinfo['data']);
+				$leavelink = false;
 				if (!$temppath) {
 					$this->error = tra('The file is not readable');
-					return $this;
 				} else {
 					$this->currname = $file;
 					$this->content = $externalinfo['data'];
@@ -76,20 +76,12 @@ class FileMetadata
 				}
 			} else {
 				$this->error = tra('The file is not readable');
-				return $this;
+				$leavelink = true;
 			}
 		}
 		
-		//set other general metadata properties
-		// TODO getimagesize only works for images
-		$this->header = getimagesize($temppath, $otherinfo);
-		$this->width = $this->header[0];
-		$this->height = $this->header[1];
-		$this->otherinfo = $otherinfo;
-		
-		
 		$this->size = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
-		if (class_exists('finfo')) {
+		if (class_exists('finfo') && is_readable($temppath)) {
 			$finfo = new finfo(FILEINFO_MIME);
 			$type_charset = $finfo->file($temppath);
 			$type_charset = explode(';', $type_charset);
@@ -97,35 +89,47 @@ class FileMetadata
 			$this->type = empty($this->type) ?  $type_charset[0] : $this->type;
 			$this->charset = trim($type_charset[1]);
 			$finfo = new finfo(FILEINFO_DEVICES);
-			$this->devices = $finfo->file($this->currname);
+			$this->devices = $finfo->file($temppath);
+		}
+		
+		//get basic info common to all image types
+		if (strpos($this->type, 'image') === 0) {
+			$this->header = getimagesize($temppath, $otherinfo);
+			$this->width = $this->header[0];
+			$this->height = $this->header[1];
+			$this->otherinfo = $otherinfo;
 		}
 		
 		//from this point, additional metadata is obtained from classes specific to the file type in separate php files
-		switch ($this->type) {
-			case 'image/jpeg':
-				//used for name of class and the file the class is in
-				$type = 'jpeg';
-				break;
-			default:
-				$this->error = tra('File type not handled by Tiki - only basic metadata available');
-//				return $this;
-		}
-		
-		if (!isset($this->error)) {
+		//all results for this additional metadata go into the $this->typemeta array
+		if ($extended && !empty($this->type)) {
+			switch ($this->type) {
+				case 'image/jpeg':
+					//used for name of class and the file the class is in
+					$type = 'jpeg';
+					break;
+				default:
+					$this->typemeta['error'] = tra('File type not handled by Tiki - only basic metadata available');
+					if (!$leavelink) {
+						unlink($temppath);
+					}
+					return $this;
+			}
+			$dataObj = '';
 			//file must be named based on $type
 			include_once($type . '.php');
-			$type = ucfirst($type);
 			//class name is same as file name except first letter is capitalized
-			$typeObj = new $type;
-			$dataObj = $typeObj->getBasicData($this, $temppath);
-			// get extended metada
-			if ($extended) {
-				$dataObj = $typeObj->getExtendedData($dataObj, $temppath);
+			$type = ucfirst($type);
+			$typeObj = new $type($temppath, true);
+				$dataObj = $typeObj->getExtendedData($this, $temppath);
+			if (!$leavelink) {
+				unlink($temppath);
 			}
-			unlink($temppath);
 			return $dataObj;
 		} else {
-			unlink($temppath);
+			if (!$leavelink) {
+				unlink($temppath);
+			}
 			return $this;
 		}
 	}
@@ -179,31 +183,44 @@ class FileMetadata
 			$dialog = "\r" . '<div id="' . $id . '" title="Image Metadata for ' . $filename . '" style="display:none">';
 			//iptc section
 			$dialog .= $beg_header . tra('Photographer Data (IPTC)') . $end_header;
-			if ($metaObj->iptc === false) {
+			if ($metaObj->typemeta['iptc'] === false) {
 				$dialog .= $beg_false . tra('No IPTC data') . $end_false;
 			} else {
 				$dialog .= $beg_table;
-				foreach (array_keys($metaObj->iptc) as $key => $s) {
-					$dialog .= $col1_begin . $metaObj->iptc[$s][1] . $betw_col . htmlspecialchars($metaObj->iptc[$s][0]) . $col2_end;
+				foreach (array_keys($metaObj->typemeta['iptc']) as $key => $s) {
+					$dialog .= $col1_begin . $metaObj->typemeta['iptc'][$s][1] . $betw_col 
+						. htmlspecialchars($metaObj->typemeta['iptc'][$s][0]) . $col2_end;
 				}
 				$dialog .= $end_table; 
 			}
 			//exif section
 			$dialog .= $beg_header . tra('File Data (EXIF)') . $end_header;
-			if ($metaObj->exif === false) {
+			if ($metaObj->typemeta['exif'] === false) {
 				$dialog .= $beg_false . tra('No EXIF data') . $end_false;
 			} else {
+				global $tikilib, $user;
 				//No processing of maker notes yet as specific code is needed for each manufacturer
 				//Blank out field since it is very long and will distort the dialog box
-				if (!empty($metaObj->exif['EXIF']['MakerNote'])) {
+				if (!empty($metaObj->typemeta['exif']['EXIF']['MakerNote'])) {
 					$metaObj->exif['EXIF']['MakerNote'] = '(' . tra('Not processed') . ')';
+				}
+				//avoid using temporary file names
+				if (!empty($metaObj->typemeta['exif']['FILE']['FileName'])) {
+					$metaObj->typemeta['exif']['FILE']['FileName'] = $filename;
+				}
+				//convert unix time for display
+				if (!empty($metaObj->typemeta['exif']['FILE']['FileDateTime'])) {
+					$metaObj->typemeta['exif']['FILE']['FileDateTime'] = $tikilib->get_long_datetime($metaObj->typemeta['exif']['FILE']['FileDateTime'], $user) .
+						'(' . tra('Unixtime:') . ' ' . $metaObj->typemeta['exif']['FILE']['FileDateTime'] . ')';
 				}
 				$name_array = array('ComponentsConfiguration', 'FileSource', 'SceneType', 'CFAPattern', 'GPSVersion');
 				$dialog .= $beg_table;
-				foreach ($metaObj->exif as $cat => $fields) {
+				foreach ($metaObj->typemeta['exif'] as $cat => $fields) {
 					$dialog .= $beg_section . ucfirst(strtolower($cat)) . $end_section;
+					$clean_val = '';
 					foreach ($fields as $name => $val) {
-						$clean_val = trim($val);
+						//avoid notice as some values interpreted as arrays
+						$clean_val = !is_array($val) ? trim($val) : '';
 						if (in_array($name, $name_array)) {
 							$clean_val = hexdec($clean_val);
 						}
@@ -216,11 +233,11 @@ class FileMetadata
 			}
 			//xmp section
 			$dialog .= $beg_header . tra('XMP Data') . $end_header;
-			if ($metaObj->xmp === false) {
+			if ($metaObj->typemeta['xmp'] === false) {
 				$dialog .= $beg_false . tra('No XMP data') . $end_false;
 			} else {	
 				$dialog .= $beg_table;
-				$parent = $metaObj->xmp->getElementsByTagName('Description');
+				$parent = $metaObj->typemeta['xmp']->getElementsByTagName('Description');
 				$len = $parent->length;
 				for($i = 0; $i < $len; $i++) {
 					$dialog .= $beg_section . ucfirst($parent->item($i)->childNodes->item(1)->prefix) . $end_section;

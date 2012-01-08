@@ -15,13 +15,8 @@ class ImageAbstract
 	var $filename = null;
 	var $thumb = null;
 	var $loaded = false;
-	var $header = null;
-	var $otherinfo = null;
-	var $exif = null;
-	var $iptc_raw = null;
-	var $iptc = null;
-	var $xmp = null;
-
+	var $metadata = array();		//to hold metadata from the FileMetadata class
+	
 	function __construct($image, $isfile = false) {
 		if ( ! empty($image) || $this->filename !== null ) {
 			if ( is_readable( $this->filename ) && function_exists('exif_thumbnail') && in_array(image_type_to_mime_type(exif_imagetype($this->filename)), array('image/jpeg', 'image/tiff'))) {
@@ -140,7 +135,7 @@ class ImageAbstract
 		}
 	}
 
-	function rotate() { }
+	function rotate($angle) { }
 
 	function is_supported($format) {
 		return false;
@@ -214,56 +209,4 @@ class ImageAbstract
 		}
 		return $this->width;
 	}
-
-/*	function set_img_info($image, $isfile = true, $xmp = false) {
-		$tempfile = '';
-		$cwd = '';*/
-		/*getimagesize requires a filename so create a temporary one
-		if the image is in the database*/
-/*		if (!$isfile) {
-			$cwd = getcwd(); 								//get current working directory
-			$tempfile = tempnam("$cwd/tmp", 'temp_image_');	//create tempfile and return the path/name
-			$temphandle = fopen($tempfile, 'w');			//open for writing
-			fwrite($temphandle, $image); 					//write image to tempfile
-			fclose($temphandle);
-			$image = $tempfile;
-		}
-		$this->header = getimagesize($image, $otherinfo);
-		$this->width = $this->header[0];
-		$this->height = $this->header[1];
-		$this->otherinfo = $otherinfo;
-		//TODO write function to cover all supported image types
-		if ($this->header['mime'] == 'image/jpeg' && function_exists('exif_read_data')) {
-			$this->exif = exif_read_data($image, 0, true);
-		} else {
-			$this->exif = false;
-		}
-		//TODO write function to cover all supported image types
-		$this->iptc_raw = !empty($otherinfo['APP13']) ? iptcparse($otherinfo['APP13']) : false;
-		//Adds labels to iptc fields
-		$this->iptc = $this->iptc_raw !== false ? $this->get_iptc($this->iptc_raw) : false;
-		if ($xmp) {
-			$content = file_get_contents($image);
-			//$otherinfo doesn't have xmp data in it so extract in a separate function
-			include_once ('lib/metadata/metadata.php');
-			$this->xmp = get_xmp($content, $this->header['mime']);
-		}
-		if (!empty($tempfile)) {
-			unlink($tempfile);
-		}
-	}
-	//Adds labels to iptc fields
-	function get_iptc($iptc_raw) {
-		include_once ('lib/metadata/metadata.php');
-		$tags = get_iptc_tags();
-		foreach ($iptc_raw as $key => $value) {
-			if (array_key_exists($key, $tags)) {
-				trim($iptc_raw[$key][0]);
-				$iptc_raw[$key][1] = trim($tags[$key]);
-			} else {
-				$iptc_raw[$key][1] = '';
-			}
-		}
-		return $iptc_raw;
-	}*/
 }
