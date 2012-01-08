@@ -15,12 +15,12 @@ class ImageAbstract
 	var $filename = null;
 	var $thumb = null;
 	var $loaded = false;
-	var $metadata = array();		//to hold metadata from the FileMetadata class
+	var $metadata = null;			//to hold metadata from the FileMetadata class
 	
 	function __construct($image, $isfile = false) {
 		if ( ! empty($image) || $this->filename !== null ) {
 			if ( is_readable( $this->filename ) && function_exists('exif_thumbnail') && in_array(image_type_to_mime_type(exif_imagetype($this->filename)), array('image/jpeg', 'image/tiff'))) {
-				$this->thumb = @exif_thumbnail($this->filename, $this->width, $this->height);
+				$this->thumb = @exif_thumbnail($this->filename);
 				if (trim($this->thumb) == "") $this->thumb = NULL;
 			}
 			$this->classname = get_class($this);
@@ -208,5 +208,22 @@ class ImageAbstract
 			$this->width = $this->_get_width();
 		}
 		return $this->width;
+	}
+	
+	function getMetadata($filename = null, $ispath = true, $extended = true, $mwg_compliant = true) {
+		include_once('lib/metadata/metadata.php');
+		if ($filename === null) {
+			if (!empty($this->filename)) {
+				$filename = $this->filename;
+				$ispath = true;
+			} elseif (!empty($this->data)) {
+				$filename = $this->data;
+				$ispath = false;
+			}
+		}
+		if (!is_object($this->metadata) || get_class($this->metadata) != 'FileMetadata') {
+			$this->metadata = new FileMetadata($filename, $ispath, $extended, $mwg_compliant);
+		}
+		return $this->metadata;
 	}
 }

@@ -750,30 +750,26 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 			}
 		} //finished getting info from db for images in image or file galleries or attachments
 
-		include_once ('lib/metadata/metadata.php');
-		$xmpview = !empty($imgdata['metadata']) ? true : false;
 		//get image to get height and width and iptc data
 		if (!empty($dbinfo['data'])) {
 			$imageObj = new Image($dbinfo['data'], false);
-			$imageObj->metadata = new FileMetadata($dbinfo['data'], false, $xmpview);
 			$filename = $dbinfo['filename'];
 		} elseif (!empty($dbinfo['path'])) {
 			$imageObj = new Image($basepath . $dbinfo['path'], true);	
-			$imageObj->metadata = new FileMetadata($basepath . $dbinfo['path'], true, $xmpview);	
 			$filename = $dbinfo['filename'];
 		} else {
 			$imageObj = new Image($src, true);
-			$imageObj->metadata = new FileMetadata($src, true, $xmpview);
 			$filename = $src;
 		}
-		
 
 		//if we need iptc data
+		$xmpview = !empty($imgdata['metadata']) ? true : false;
 		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || $xmpview) {
+			$metadata = $imageObj->getMetadata(null, null, $xmpview)->typemeta;
 			//description from image iptc
-			$idesc = isset($imageObj->metadata->typemeta['iptc_raw']['2#120'][0]) ? $imageObj->metadata->typemeta['iptc_raw']['2#120'][0] : '';	
+			$idesc = isset($metadata['iptc_raw']['2#120'][0]) ? $metadata['iptc_raw']['2#120'][0] : '';	
 			//title from image iptc	
-			$ititle = isset($imageObj->metadata->typemeta['iptc_raw']['2#005'][0]) ? $imageObj->metadata->typemeta['iptc_raw']['2#005'][0] : '';
+			$ititle = isset($metadata['iptc_raw']['2#005'][0]) ? $metadata['iptc_raw']['2#005'][0] : '';
 		}
 				
 		$fwidth = '';

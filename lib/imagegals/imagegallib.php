@@ -1339,7 +1339,7 @@ class ImageGalsLib extends TikiLib
 		return ($ret);
 	}
 
-	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find=false)
+	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user = '', $find = null)
 	{
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
 		global $tiki_p_admin_galleries, $tiki_p_admin;
