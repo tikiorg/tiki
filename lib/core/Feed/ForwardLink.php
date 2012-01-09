@@ -39,22 +39,52 @@ Class Feed_ForwardLink extends Feed_Abstract
 		$phraseI;
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 			foreach($item->feed->entry as $entry) {
-				$thisText = htmlspecialchars($entry->forwardlink->text);
-				$thisHref = htmlspecialchars($entry->textlink->href);
-				$headerlib->add_jq_onready(<<<JQ
-					$('#page-data')
-						.rangyRestore('$thisText', function(o) {
-							$('<a>&nbsp;*&nbsp;</a>')
-								.attr('href', '$thisHref')
-								.insertBefore($('.rangyPhraseStart').eq($phraseI));
-							
-							o.selection.addClass('ui-state-highlight');
-						});
+				if (
+					$args['lastModif'] == $entry->forwardlink->date || 
+					$_REQUEST['preview_date'] == $entry->forwardlink->date ||
+					$_REQUEST['preview'] == $entry->forwardlink->version ||
+					$args['version'] == $entry->forwardlink->version
+				) {
+					$thisText = htmlspecialchars($entry->forwardlink->text);
+					$thisHref = htmlspecialchars($entry->textlink->href);
+					$headerlib->add_jq_onready(<<<JQ
+						$('#page-data')
+							.rangyRestore('$thisText', function(o) {
+								$('<a>*</a>')
+									.attr('href', '$thisHref')
+									.insertBefore(o.start);
+								
+								if (window['phrase']) {
+									if (window['phraseWords'] == o.phraseWords.join('')) {
+										$('body,html').animate({
+											scrollTop: o.start.offset().top
+										});
+									}
+								}
+								o.selection.addClass('ui-state-highlight');
+							});
 JQ
-);
-			$phraseI++;
+					);
+					$phraseI++;
+				}
 			}
 		}
+		
+		if (!empty($_REQUEST['phrase'])) {
+			$phrase = htmlspecialchars($_REQUEST['phrase']);
+			$headerlib->add_jq_onready(<<<JQ
+				$('#page-data').rangyRestoreSelection('$phrase', function(o) {
+					$('body,html').animate({
+						scrollTop: o.start.offset().top
+					});
+				});
+JQ
+			);
+		}
+		
+		$headerlib->add_jq_onready("
+			$('#page-data').trigger('rangyDone');
+		");
 		
 		$wikiAttributes = TikiLib::lib("trkqry")
 			->tracker("Wiki Attributes")
@@ -141,7 +171,7 @@ JQ
 								});
 								
 								var data = {
-									text: o.text,
+									text: (o.text + '').replace(/[\\n'"]/g,' '),
 									href: '$href',
 									answers: answers,
 									version: $version,

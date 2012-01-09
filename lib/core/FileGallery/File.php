@@ -125,6 +125,8 @@ class FileGallery_File
 	{
 		global $user;
 		
+		$user = (!empty($user) ? $user : 'Anonymous'); 
+		
 		if ($this->exists() == false) {
 			$id = TikiLib::lib("filegal")->insert_file(
 				($this->getParam('galleryId') || 1), //zero makes it not show by default
@@ -137,7 +139,6 @@ class FileGallery_File
 				$user
 			);
 		} else {
-			
 			$id = TikiLib::lib("filegal")->save_archive(
 				$this->getParam('fileId'),
 				$this->getParam('galleryId'),
