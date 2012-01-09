@@ -132,7 +132,7 @@ class CreditsLib extends TikiLib
 			}
 			
 			$data['discreet_total'] = $this->scale( $data['total'], $factor );
-			$data['discreet_used'] = $data['used'] / ($data['total'] / $data['discreet_total']);
+			$data['discreet_used'] = empty($data['discreet_total'])? 0:$data['used'] / ($data['total'] / $data['discreet_total']);
 			$data['discreet_remain'] = $data['discreet_total'] - $data['discreet_used'];
 			$data['empty'] = $data['remain'] <= 0;
 			$data['low'] = $data['remain'] <= $data['total']*.15;
