@@ -35,7 +35,22 @@ Class Feed_ForwardLink extends Feed_Abstract
 			echo json_encode($response);
 			die;
 		}
-		
+		$headerlib->add_js(<<<JS
+			window.flGo = function(me) {
+				me = $(me);
+				var href = me.attr('href');
+				var text = me.attr('text');
+				
+				$('<form action="' + href + '" method="post">' + 
+					'<input type="hidden" name="phrase" value="' + text + '" />' +
+				'</form>')
+					.appendTo('body')
+					.submit();
+				
+				return false;
+			};
+JS
+);
 		$phraseI;
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 			foreach($item->feed->entry as $entry) {
@@ -47,11 +62,15 @@ Class Feed_ForwardLink extends Feed_Abstract
 				) {
 					$thisText = htmlspecialchars($entry->forwardlink->text);
 					$thisHref = htmlspecialchars($entry->textlink->href);
+					$linkedText = htmlspecialchars($entry->textlink->body);
+					
 					$headerlib->add_jq_onready(<<<JQ
 						$('#page-data')
 							.rangyRestore('$thisText', function(o) {
 								$('<a>*</a>')
 									.attr('href', '$thisHref')
+									.attr('text', '$linkedText')
+									.attr('onclick', 'return flGo(this);')
 									.insertBefore(o.start);
 								
 								if (window['phrase']) {
