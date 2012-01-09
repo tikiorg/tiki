@@ -13,8 +13,8 @@ function wikiplugin_timeline_info()
 		'documentation' => 'PluginTimeline',
 		'description' => tra('Display a timeline'),
 		'prefs' => array( 'wikiplugin_timeline' ),
-		'icon' => 'pics/icons/timeline.png',
-		'tags' => array( 'basic' ),
+		'icon' => 'pics/icons/chart_line.png',
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'scope' => array(
 				'required' => false,
