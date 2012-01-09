@@ -205,7 +205,7 @@ function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $gro
 
 function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text') {
 	foreach ($to_reconstruct as $group_id => $recon) {
-		sort($recon['query_vals'], SORT_STRING); // Lucene is a string only engine
+		sort($recon['query_vals'], SORT_NUMERIC); // Lucene is a string only engine but date ranges are converted from timestamp ints
 		$from = $recon['query_vals'][0];
 		$to = $recon['query_vals'][1];
 		if (!empty($recon['args']['field'])) {
