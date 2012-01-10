@@ -144,13 +144,7 @@ JQ
 				.button()
 				.click(function() {
 					$(this).remove();
-					$('<div />')
-						.text(tr('Highlight some text and click the accept button once finished'))
-						.mousedown(function() {return false;})
-						.dialog({
-							title: tr('Create TextLink & ForwardLink'),
-							modal: true
-						});
+					$.notify(tr('Highlight some text and click the accept button once finished'));
 			
 					$(document).bind('mousedown', function() {
 						if (me.data('rangyBusy')) return;
