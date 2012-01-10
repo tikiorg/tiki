@@ -173,33 +173,37 @@ JQ
 								var suggestion = rangy.expandPhrase(o.text, '\\n', me[0]);
 								var buttons = {};
 								
-								buttons[tr('Ok')] = function() {
-									o.text = suggestion;
+								if (suggestion == o.text) {
 									accept();
-								};
-								
-								buttons[tr('Cancel')] = function() {
-									accept();
-								};
-								
-								me.box = $('<div>' +
-									'<table>' +
-										'<tr>' +
-											'<td>' + tr('You selected:') + '</td>' +
-											'<td><b>"</b>' + o.text + '<b>"</b></td>' +
-										'</tr>' +
-										'<tr>' +
-											'<td>' + tr('Suggested selection:') + '</td>' +
-											'<td class="ui-state-highlight"><b>"</b>' + suggestion + '<b>"</b></td>' +
-										'</tr>' +  
-									'</tabl>' + 
-								'</div>')
-									.dialog({
-										title: tr("Suggestion"),
-										buttons: buttons,
-										width: $(window).width() / 2,
-										modal: true
-									})
+								} else {
+									buttons[tr('Ok')] = function() {
+										o.text = suggestion;
+										accept();
+									};
+									
+									buttons[tr('Cancel')] = function() {
+										accept();
+									};
+									
+									me.box = $('<div>' +
+										'<table>' +
+											'<tr>' +
+												'<td>' + tr('You selected:') + '</td>' +
+												'<td><b>"</b>' + o.text + '<b>"</b></td>' +
+											'</tr>' +
+											'<tr>' +
+												'<td>' + tr('Suggested selection:') + '</td>' +
+												'<td class="ui-state-highlight"><b>"</b>' + suggestion + '<b>"</b></td>' +
+											'</tr>' +  
+										'</tabl>' + 
+									'</div>')
+										.dialog({
+											title: tr("Suggestion"),
+											buttons: buttons,
+											width: $(window).width() / 2,
+											modal: true
+										})
+								}
 								
 								function accept() {
 									$.each(answers, function() {
@@ -262,8 +266,9 @@ JQ
 									
 									
 									$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
-								
-									me.box.dialog('close');
+									
+									if (me.box)
+										me.box.dialog('close');
 								}
 							})
 							.appendTo('body');
