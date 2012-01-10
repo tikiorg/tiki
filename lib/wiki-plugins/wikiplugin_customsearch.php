@@ -239,7 +239,7 @@ $('#customsearch_$id').submit(function() {
 	}
 	$.ajax({
 		type: 'POST',
-		url: 'customsearch_ajax.php',
+		url: $.service('tracker_search', 'customsearch'),
 		data: datamap,
 		dataType: 'html',
 		success: function(data){
