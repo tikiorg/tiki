@@ -174,7 +174,7 @@ JQ
 								var buttons = {};
 								
 								buttons[tr('Ok')] = function() {
-									text = suggestion;
+									o.text = suggestion;
 									accept();
 								};
 								
