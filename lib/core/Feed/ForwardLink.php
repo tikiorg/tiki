@@ -169,69 +169,102 @@ JQ
 							.css('left', o.x + 'px')
 							.css('font-size', '10px')
 							.fadeTo(0,0.80)
-							.mousedown(function() {
-								alert(tr('Temporary Message: If multi lines are detected at this point we would ask the user if they would like to add more lines if two or more lines are selected.'));
-
-								$.each(answers, function() {
-									this.answer = prompt(this.question);
-								});
+							.mousedown(function() {									
+								var suggestion = rangy.expandPhrase(o.text, '\\n', me[0]);
+								var buttons = {};
 								
-								var data = {
-									text: (o.text + '').replace(/[\\n'"]/g,' '),
-									href: '$href',
-									answers: answers,
-									version: $version,
-									date: $date
+								buttons[tr('Ok')] = function() {
+									text = suggestion;
+									accept();
 								};
 								
-								me.data('rangyBusy', true);
+								buttons[tr('Cancel')] = function() {
+									accept();
+								};
 								
-								var forwardLinkCopy = $('<div></div>');
-								var forwardLinkCopyButton = $('<div>' + tr('Copy To Clipboard') + '</div>')
-									.button()
-									.appendTo(forwardLinkCopy);
-								var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
-									.val(encodeURI(JSON.stringify(data)))
-									.appendTo(forwardLinkCopy);
-								forwardLinkCopy.dialog({
-									title: tr("Copy This"),
-									modal: true,
-									close: function() {
+								me.box = $('<div>' +
+									'<table>' +
+										'<tr>' +
+											'<td>' + tr('You selected:') + '</td>' +
+											'<td><b>"</b>' + o.text + '<b>"</b></td>' +
+										'</tr>' +
+										'<tr>' +
+											'<td>' + tr('Suggested selection:') + '</td>' +
+											'<td class="ui-state-highlight"><b>"</b>' + suggestion + '<b>"</b></td>' +
+										'</tr>' +  
+									'</tabl>' + 
+								'</div>')
+									.dialog({
+										title: tr("Suggestion"),
+										buttons: buttons,
+										width: $(window).width() / 2,
+										modal: true
+									})
+								
+								function accept() {
+									$.each(answers, function() {
+										this.answer = prompt(this.question);
+									});
+									
+									var data = {
+										text: (o.text + '').replace(/[\\n'"]/g,' '),
+										href: '$href',
+										answers: answers,
+										version: $version,
+										date: $date
+									};
+									
+									me.data('rangyBusy', true);
+									
+									var forwardLinkCopy = $('<div></div>');
+									var forwardLinkCopyButton = $('<div>' + tr('Copy To Clipboard') + '</div>')
+										.button()
+										.appendTo(forwardLinkCopy);
+									var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
+										.val(encodeURI(JSON.stringify(data)))
+										.appendTo(forwardLinkCopy);
+									forwardLinkCopy.dialog({
+										title: tr("Copy This"),
+										modal: true,
+										close: function() {
+											me.data('rangyBusy', false);
+											$(document).mousedown();
+										},
+										draggable: false
+									});
+									
+									forwardLinkCopyValue.select().focus();
+									
+									var clip = new ZeroClipboard.Client();
+									clip.setHandCursor( true );
+									
+									clip.addEventListener('complete', function(client, text) {
+						                forwardLinkCreate.remove();
+										forwardLinkCopy.dialog( "close" );
+										clip.hide();
 										me.data('rangyBusy', false);
-										$(document).mousedown();
-									},
-									draggable: false
-								});
-								
-								forwardLinkCopyValue.select().focus();
-								
-								var clip = new ZeroClipboard.Client();
-								clip.setHandCursor( true );
-								
-								clip.addEventListener('complete', function(client, text) {
-					                forwardLinkCreate.remove();
-									forwardLinkCopy.dialog( "close" );
-									clip.hide();
-									me.data('rangyBusy', false);
-									
-									
-									$('<div />')
-										.text(tr('TextLink & ForwardLink data copied to your clipboard'))
-										.mousedown(function() {return false;})
-										.dialog({
-											title: tr('TextLink & ForwardLink Copied'),
-											modal: true
-										});
 										
-									return false;
-					            });
+										
+										$('<div />')
+											.text(tr('TextLink & ForwardLink data copied to your clipboard'))
+											.mousedown(function() {return false;})
+											.dialog({
+												title: tr('TextLink & ForwardLink Copied'),
+												modal: true
+											});
+											
+										return false;
+						            });
+									
+									clip.glue( forwardLinkCopyButton[0] );
+									
+									clip.setText(forwardLinkCopyValue.val());
+									
+									
+									$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
 								
-								clip.glue( forwardLinkCopyButton[0] );
-								
-								clip.setText(forwardLinkCopyValue.val());
-								
-								
-								$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
+									me.box.dialog('close');
+								}
 							})
 							.appendTo('body');
 					});
