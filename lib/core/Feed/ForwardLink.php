@@ -13,7 +13,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	{
 		global $tikilib, $headerlib, $_REQUEST;
 		
-		if (isset($_GET['protocol'], $_GET['contribution']) && $_GET['protocol'] == 'forwardlink') {
+		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
 			
 			//here we do the confirmation that another wiki is trying to talk with this one
 			$response = array(
@@ -21,48 +21,23 @@ Class Feed_ForwardLink extends Feed_Abstract
 				"response"=>	"success",
 				"date"=>		$args['lastModif'],
 			);
-			
-			ini_set('error_reporting', E_ALL);
-			ini_set('display_errors', 1);
 
-			$_GET['contribution'] = json_decode($_GET['contribution']);
-			$_GET['contribution']->origin = $_SERVER['REMOTE_ADDR'];
-			print_r($_GET['contribution']);
+			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
+			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
 			
 			Feed_ForwardLink_Contribution::forwardLink($args['object'])
-				->addItem($_GET['contribution']);
+				->addItem($_REQUEST['contribution']);
 			
 			echo json_encode($response);
 			die;
 		}
-		$headerlib->add_js(<<<JS
-			window.flGo = function(me) {
-				me = $(me);
-				var href = me.attr('href');
-				var text = me.attr('text');
-				
-				$('<form action="' + href + '" method="post">' + 
-					'<input type="hidden" name="phrase" value="' + text + '" />' +
-				'</form>')
-					.appendTo('body')
-					.submit();
-				
-				return false;
-			};
-JS
-);
+		
 		$phraseI;
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
-			foreach($item->feed->entry as $entry) {
-				if (
-					$args['lastModif'] == $entry->forwardlink->date || 
-					$_REQUEST['preview_date'] == $entry->forwardlink->date ||
-					$_REQUEST['preview'] == $entry->forwardlink->version ||
-					$args['version'] == $entry->forwardlink->version
-				) {
-					$thisText = htmlspecialchars($entry->forwardlink->text);
-					$thisHref = htmlspecialchars($entry->textlink->href);
-					$linkedText = htmlspecialchars($entry->textlink->body);
+				if ($_REQUEST['preview'] == $item->forwardlink->version) {
+					$thisText = htmlspecialchars($item->forwardlink->text);
+					$thisHref = htmlspecialchars($item->textlink->href);
+					$linkedText = htmlspecialchars($item->textlink->text);
 					
 					$headerlib->add_jq_onready(<<<JQ
 						$('#page-data')
@@ -70,23 +45,15 @@ JS
 								$('<a>*</a>')
 									.attr('href', '$thisHref')
 									.attr('text', '$linkedText')
-									.attr('onclick', 'return flGo(this);')
+									.addClass('forwardlink')
 									.insertBefore(o.start);
 								
-								if (window['phrase']) {
-									if (window['phraseWords'] == o.phraseWords.join('')) {
-										$('body,html').animate({
-											scrollTop: o.start.offset().top
-										});
-									}
-								}
 								o.selection.addClass('ui-state-highlight');
 							});
 JQ
 					);
 					$phraseI++;
 				}
-			}
 		}
 		
 		if (!empty($_REQUEST['phrase'])) {
@@ -96,10 +63,30 @@ JQ
 					$('body,html').animate({
 						scrollTop: o.start.offset().top
 					});
+					
+					o.selection.addClass('ui-state-highlight');
 				});
 JQ
 			);
 		}
+		
+		$headerlib->add_jq_onready(<<<JQ
+			$('.forwardlink')
+				.click(function() {
+					me = $(this);
+					var href = me.attr('href');
+					var text = me.attr('text');
+					
+					$('<form action="' + href + '" method="post">' + 
+						'<input type="hidden" name="phrase" value="' + text + '" />' +
+					'</form>')
+						.appendTo('body')
+						.submit();
+					
+					return false;
+				});
+JQ
+		);
 		
 		$headerlib->add_jq_onready("
 			$('#page-data').trigger('rangyDone');

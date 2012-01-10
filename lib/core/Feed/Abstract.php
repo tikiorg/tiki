@@ -89,6 +89,12 @@ abstract class Feed_Abstract
 		}
 	}
 	
+	function appendToContents($contents, $items)
+	{
+		$contents->entry[] = $item->feed->entry;
+		return $contents;
+	}
+	
 	public function addItem($item)
 	{
 		global $tikilib;
@@ -119,7 +125,7 @@ abstract class Feed_Abstract
 			}
 		}
 		
-		$contents->entry[] = $item;
+		$contents = $this->appendToContents($contents, $item);
 		
 		if ($replace == false) return;
 		

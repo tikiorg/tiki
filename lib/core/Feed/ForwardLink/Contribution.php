@@ -22,4 +22,25 @@ Class Feed_ForwardLink_Contribution extends Feed_Abstract
 	{
 		return $this->type . "_" . $this->name;
 	}
+	
+	function appendToContents($contents, $item)
+	{
+		foreach($contents->entry as $existingEntry) {
+			foreach($item->feed->entry as $newEntry) {
+				if (
+					$existingEntry->textlink->date == $newEntry->textlink->date &&
+					$existingEntry->textlink->text == $newEntry->textlink->text &&
+					$existingEntry->textlink->href == $newEntry->textlink->href
+				) {
+					return $contents;
+				}
+			}
+		}
+		
+		foreach($item->feed->entry as $newEntry) {
+			$contents->entry[] = $newEntry;
+		}
+		
+		return $contents;
+	}
 }
