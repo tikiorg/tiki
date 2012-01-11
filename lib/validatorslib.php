@@ -55,6 +55,8 @@ class Validators
 				if ($field_value['isMandatory'] == 'y') {
 					if ($field_value['type'] == 'D') {
 						$validationjs .= 'required_in_group: [1, ".group_'.$prefix.$field_value['fieldId'].'"], ';
+					} else if ($field_value['type'] == 'A') {
+						$validationjs .= 'required_tracker_file: [1, ".file_'.$prefix.$field_value['fieldId'].'"], ';
 					} else {
 						$validationjs .= 'required: true, ';		
 					}
@@ -85,7 +87,7 @@ class Validators
 					$validationjs .= '} } } ';
 				} else {
 					// remove last comma (not supported in IE7)
-                			$validationjs = rtrim($validationjs, " ,");
+                	$validationjs = rtrim($validationjs, " ,");
 				}
 				$validationjs .= '}, ';
 			}
@@ -99,7 +101,7 @@ class Validators
 			if ($field_value['validationMessage'] && $field_value['isMandatory'] == 'y') {
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
 				$validationjs .= 'required: "' .tra($field_value['validationMessage']).'" ';
-				$validationjs .= '}, ';	
+				$validationjs .= '}, ';
 			} elseif ($field_value['isMandatory'] == 'y') {
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
 				$validationjs .= 'required: "' .tra('This field is required').'" ';
@@ -108,7 +110,7 @@ class Validators
 		}
 		$validationjs .= $custom_messages;
 		// remove last comma (not supported in IE7)
-                $validationjs = rtrim($validationjs, " ,");
+        $validationjs = rtrim($validationjs, " ,");
 		$validationjs .= '} ';
 		return $validationjs;
 	}
