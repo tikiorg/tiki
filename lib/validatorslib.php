@@ -85,7 +85,7 @@ class Validators
 					$validationjs .= '} } } ';
 				} else {
 					// remove last comma (not supported in IE7)
-                			$validationjs = rtrim($validationjs, " ,");
+                	$validationjs = rtrim($validationjs, " ,");
 				}
 				$validationjs .= '}, ';
 			}
@@ -108,7 +108,7 @@ class Validators
 		}
 		$validationjs .= $custom_messages;
 		// remove last comma (not supported in IE7)
-                $validationjs = rtrim($validationjs, " ,");
+        $validationjs = rtrim($validationjs, " ,");
 		$validationjs .= '} ';
 		return $validationjs;
 	}
