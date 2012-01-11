@@ -2871,7 +2871,7 @@ class UsersLib extends TikiLib
 				'type' => 'category',
 				'admin' => true,
 				'prefs' => array('feature_categories'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_category',
