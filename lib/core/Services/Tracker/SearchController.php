@@ -81,9 +81,10 @@ class Services_Tracker_SearchController
 				$value = $d['value'];
 
 				// save values entered as defaults while session lasts
-				if (!empty($value)) {
-					$_SESSION["customsearch_$id"][$fieldid] = $value;
+				if (empty($value) && $value != 0) {
+					$value = '';		// remove false or null
 				}
+				$_SESSION["customsearch_$id"][$fieldid] = $value;
 
 				if (empty($config['type'])) {
 					$config['type'] = $name;
