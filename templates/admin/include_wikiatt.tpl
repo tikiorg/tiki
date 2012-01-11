@@ -8,30 +8,14 @@
 			{cycle values="odd,even" print=false}
 			<table class="normal">
 				<tr>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=user_{if $sort_mode eq 'user'}asc{else}desc{/if}">{tr}User{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=page_{if $sort_mode eq 'page'}asc{else}desc{/if}">{tr}Page{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filename_{if $sort_mode eq 'filename'}asc{else}desc{/if}">{tr}Name{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filesize_{if $sort_mode eq 'filesize'}asc{else}desc{/if}">{tr}Size{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filetype_{if $sort_mode eq 'filetype'}asc{else}desc{/if}">{tr}Type{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=path_{if $sort_mode eq 'path'}asc{else}desc{/if}">{tr}Storage{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=created_{if $sort_mode eq 'created'}asc{else}desc{/if}">{tr}Created{/tr}</a>
-					</th>
-					<th>
-						<a href="tiki-admin.php?page=wikiatt&amp;sort_mode=hits_{if $sort_mode eq 'hits'}asc{else}desc{/if}">&gt;</a>
-					</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='page'}{tr}Page{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='filename'}{tr}Name{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='filesize'}{tr}Size{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='filetype'}{tr}Type{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='path'}{tr}Storage{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</th>
 					<th>&nbsp;</th>
 				</tr>
 
