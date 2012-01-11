@@ -117,17 +117,13 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 					$smarty->display("error.tpl");
 					die;
 				}
-				return array(
-					'value' => '',
-				);
+				$value = '';
 			} else {
 				$fhash = 0;
 			}
 
 			$trklib = TikiLib::lib('trk');
-			return array(
-				'value' => $trklib->replace_item_attachment($oldValue, $file_name, $file_type, $file_size, $value, '', $user, $fhash, '', '', $trackerId, $this->getItemId(), '', false),
-			);
+			$value = $trklib->replace_item_attachment($oldValue, $file_name, $file_type, $file_size, $value, '', $user, $fhash, '', '', $trackerId, $this->getItemId(), '', false);
 		}
 
 		return array(
