@@ -568,14 +568,16 @@ $icons = array(
 
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
+	if (file_exists("admin/include_$adminPage.php")) {
+		include_once ("admin/include_$adminPage.php");
+		$url = 'tiki-admin.php' . '?page=' . $adminPage;
+	}
 	if (isset($icons[$adminPage])) {
 		$icon = $icons[$adminPage];
 
 		$admintitle = $icon['title'];
 		$description = isset($icon['description']) ? $icon['description'] : '';
 		$helpUrl = isset($icon['help']) ? $icon['help'] : '';
-		include_once ("admin/include_$adminPage.php");
-		$url = 'tiki-admin.php' . '?page=' . $adminPage;
 	}
 	$helpDescription = tr("Help on %0 Config", $admintitle);
 	
