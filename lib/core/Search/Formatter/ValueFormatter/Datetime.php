@@ -10,7 +10,11 @@ class Search_Formatter_ValueFormatter_Datetime implements Search_Formatter_Value
 	function render($name, $value, array $entry)
 	{
 		global $prefs, $tikilib;
-		return $tikilib->date_format($tikilib->get_short_datetime_format(), $value);
+		if (is_numeric($value)) {	// expects a unix timestamp but might be getting the default value
+			return $tikilib->date_format($tikilib->get_short_datetime_format(), $value);
+		} else {
+			return $value;
+		}
 	}
 }
 
