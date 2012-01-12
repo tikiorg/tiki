@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 $webdav_access = false;
 require_once 'tiki-setup.php';
 
-$debug = true;
+$debug = false;
 $debug_file= '/tmp/tiki4log';
 
 function print_debug($string)
