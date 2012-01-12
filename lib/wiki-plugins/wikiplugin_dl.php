@@ -33,6 +33,8 @@ function wikiplugin_dl($data, $params) {
 
 		if (isset($parts[0]) && isset($parts[1])) {
 			$result .= '<dt>' . $parts[0] . '</dt><dd>' . $parts[1] . '</dd>';
+		} else {
+			$result .= '<dt>'.$line.'</dt>';
 		}
 	}
 
