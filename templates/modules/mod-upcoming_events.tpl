@@ -11,9 +11,9 @@
 			{assign var=calendarId value=$modUpcomingEvents[ix].calendarId}
 			{if !$smarty.section.ix.first}</td></tr>{/if}<tr>
 			{if $nonums != 'y'}
-				<td class="module" valign="top">{$smarty.section.ix.index_next})&nbsp;</td>
+				<td valign="top">{$smarty.section.ix.index_next})&nbsp;</td>
 			{/if}
-			<td class="module vevent"{if $showColor eq 'y' and $infocals.$calendarId.custombgcolor ne ''} style="background-color:#{$infocals.$calendarId.custombgcolor}"{/if}>
+			<td class="vevent"{if $showColor eq 'y' and $infocals.$calendarId.custombgcolor ne ''} style="background-color:#{$infocals.$calendarId.custombgcolor}"{/if}>
 				{if $modUpcomingEvents[ix].allday}
 					<abbr class="dtstart" title="{$modUpcomingEvents[ix].start|isodate}">{$modUpcomingEvents[ix].start|tiki_short_date}</abbr>
 				{else}
