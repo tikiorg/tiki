@@ -25,7 +25,7 @@ abstract class Feed_Abstract
 	
 	public function getItems()
 	{
-		$contents = json_decode($this->getContents());
+		$contents = $this->getContents();
 		return $contents->entry;
 	}
 	
@@ -55,25 +55,44 @@ abstract class Feed_Abstract
 		
 	}
 	
-	public function getContents()
+	private function open()
 	{
-		global $tikilib;
 		if ($this->isFileGal == true) {
 			$contents = FileGallery_File::filename($this->name())->data();
 		} else {
 			$contents = TikiLib::lib("cache")->getCached($this->name(), $this->type);
 		}
+		
+		return json_decode($contents);
+	}
+	
+	private function save($contents)
+	{
+		$contents = json_encode($contents);
+		
+		if ($this->isFileGal == true) {
+			FileGallery_File::filename($this->name())
+				->setParam('description', '')
+				->replace($contents);
+			
+		} else {
+			TikiLib::lib("cache")->cacheItem($this->name(), $contents, $this->type);
+		}
+		
+		return $this;
+	}
+	
+	public function getContents()
+	{
+		global $tikilib;
+		$contents = $this->open();
 
 		if (!empty($contents)) return $contents;
 		
 		//at this point contents is empty, so lets fill it
 		$this->replace();
 		
-		if ($this->isFileGal == true) {
-			$contents = FileGallery_File::filename($this->name())->data();
-		} else {
-			$contents = TikiLib::lib("cache")->getCached($this->name(), $this->type);
-		}
+		$contents = $this->open();
 		
 		return $contents;
 	}
@@ -89,34 +108,9 @@ abstract class Feed_Abstract
 		}
 	}
 	
-	function appendToContents($contents, $items)
+	function appendToContents(&$contents, $items)
 	{
-		$contents->entry[] = $item->feed->entry;
-		return $contents;
-	}
-	
-	public function addItem($item)
-	{
-		global $tikilib;
 		$replace = false;
-		
-		if ($this->isFileGal == true) {
-			$contents = FileGallery_File::filename($this->name())->data();
-		} else {
-			$contents = TikiLib::lib("cache")->getCached($this->name(), $this->type);
-		}		
-		
-		if (empty($contents)) {
-			$contents = (object)array(
-				'date' => 0,
-				'type' => $this->type,
-				'entry' => array()
-			);
-		} else {
-			$contents = json_decode($contents);
-		}
-		
-		$item = (object)$item;
 		
 		if (isset($item->date)) {
 			if ($contents->date < $item->date) {
@@ -125,26 +119,41 @@ abstract class Feed_Abstract
 			}
 		}
 		
-		$contents = $this->appendToContents($contents, $item);
+		$contents->entry[] = $item->feed->entry;
 		
-		if ($replace == false) return;
+		return $replace;
+	}
+	
+	public function addItem($item)
+	{
+		global $tikilib;
+		$replace = false;
 		
-		if ($this->isFileGal == true) {
-			FileGallery_File::filename($this->name())
-				->setParam('description', '')
-				->replace(json_encode($contents));
-			
-		} else {
-			TikiLib::lib("cache")->cacheItem($this->name(), json_encode($contents), $this->type);
+		$contents = $this->open();		
+		
+		if (empty($contents)) {
+			$contents = (object)array(
+				'date' => 0,
+				'type' => $this->type,
+				'entry' => array()
+			);
 		}
+		
+		$item = (object)$item;
+		
+		if ($this->appendToContents($contents, $item) == false) return $this;
+		
+		$this->save($contents);
+		
+		return $this;
 	}
 	
 	public function feed()
 	{
 		global $tikilib;
-		$feed = json_decode($this->getContents());
+		$feed = $this->getContents();
 		
-		return array(
+		return (object)array(
 			'version' => '1.0',
 			'encoding' => 'UTF-8',
 			'feed' => $feed,

@@ -49,28 +49,6 @@ function wikiplugin_textlink($data, $params)
 	
 	$date = $tikilib->get_short_date($clipboarddata->date);
 	if (!empty($clipboarddata->href)) {
-		if (!empty($_REQUEST['phrase']) && $textlinkI == 1) {
-			echo $textlinkI;
-			$headerlib
-				->add_jsfile("lib/rangy/uncompressed/rangy-core.js")
-				->add_jsfile("lib/rangy/uncompressed/rangy-cssclassapplier.js")
-				->add_jsfile("lib/rangy/uncompressed/rangy-selectionsaverestore.js")
-				->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
-				->add_jsfile("lib/rangy_tiki/phraser.js");
-			
-			$phrase = htmlspecialchars($_REQUEST['phrase']);
-			
-			$headerlib->add_jq_onready(<<<JQ
-				$('#page-data').rangyRestoreSelection('$phrase', function(o) {
-					$('body,html').animate({
-						scrollTop: o.start.offset().top
-					});
-					$('#page-data').trigger('rangyDone');
-				});
-JQ
-			);
-		}
-		
 		$headerlib
 			->add_jsfile("lib/jquery/tablesorter/jquery.tablesorter.js")
 			->add_cssfile("lib/jquery/tablesorter/themes/blue/style.css")

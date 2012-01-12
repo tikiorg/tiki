@@ -27,11 +27,13 @@ Class Feed_ForwardLink extends Feed_Abstract
 			
 			Feed_ForwardLink_Contribution::forwardLink($args['object'])
 				->addItem($_REQUEST['contribution']);
+				//->getItems();
 			
 			echo json_encode($response);
 			die;
 		}
 		
+		$_REQUEST['preview'] = (!empty($_REQUEST['preview']) ? $_REQUEST['preview'] : $args['version']);
 		$phraseI;
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
 				if ($_REQUEST['preview'] == $item->forwardlink->version) {
@@ -63,8 +65,7 @@ JQ
 					$('body,html').animate({
 						scrollTop: o.start.offset().top
 					});
-					
-					o.selection.addClass('ui-state-highlight');
+					$('#page-data').trigger('rangyDone');
 				});
 JQ
 			);
@@ -243,14 +244,7 @@ JQ
 										me.data('rangyBusy', false);
 										
 										
-										$('<div />')
-											.text(tr('TextLink & ForwardLink data copied to your clipboard'))
-											.mousedown(function() {return false;})
-											.dialog({
-												title: tr('TextLink & ForwardLink Copied'),
-												modal: true
-											});
-											
+										$.notify(tr('TextLink & ForwardLink data copied to your clipboard'));
 										return false;
 						            });
 									
