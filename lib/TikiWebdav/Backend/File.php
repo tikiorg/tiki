@@ -233,6 +233,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				return false;
 			}
 			$mime = tiki_get_mime($name, 'application/octet-stream', $this->root . '/' . $fhash);
+			$content = '';
 		} else {
 			$fhash = '';
 			$mime = tiki_get_mime_from_content($content,'application/octet-stream', $name);
