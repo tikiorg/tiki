@@ -81,7 +81,7 @@ function module_upcoming_events_info() {
 }
 
 function module_upcoming_events( $mod_reference, $module_params ) {
-	global $calendarlib, $userlib, $globalperms, $smarty;
+	global $calendarlib, $user, $globalperms, $smarty;
 	include_once ('lib/calendar/calendarlib.php');
 	
 	$rawcals = $calendarlib->list_calendars();
