@@ -111,10 +111,14 @@ class Tracker_Definition
 
 	function getField($id)
 	{
-		foreach ($this->getFields() as $f) {
-			if ($f['fieldId'] == $id) {
-				return $f;
+		if (is_numeric($id)) {
+			foreach ($this->getFields() as $f) {
+				if ($f['fieldId'] == $id) {
+					return $f;
+				}
 			}
+		} else {
+			return $this->getFieldFromPermName($id);
 		}
 	}
 
