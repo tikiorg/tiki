@@ -31,6 +31,7 @@ function prefs_print_list()
 			'description' => tra('Full path to the wkhtmltopdf executable to generate the PDF document with.'),
 			'type' => 'text',
 			'size' => 50,
+			'help' => 'wkhtmltopdf',
 			'default' => '',
 		),
 	);
