@@ -218,6 +218,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
+		$filesize = @strlen( $content );
 
 		include_once('lib/mime/mimelib.php');
 		if ( $prefs['fgal_use_db'] === 'n' ) {
@@ -245,7 +246,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				'',
 				$name,
 				$content,
-				@strlen( $content ),
+				$filesize,
 				$mime,
 				$user,
 				$fhash,
