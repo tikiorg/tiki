@@ -1250,7 +1250,7 @@ class TrackerLib extends TikiLib
 	function filter_categ_items($ret) {
 		//this is an approxomation - the perm should be function of the status
 		$categlib = TikiLib::lib('categ');
-		if (empty($ret['itemId']) || $categlib->is_categorized('trackeritem', $ret['itemId'])) {
+		if (!empty($ret[0]['itemId']) && $categlib->is_categorized('trackeritem', $ret[0]['itemId'])) {
 			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
 		} else {
 			return $ret;
