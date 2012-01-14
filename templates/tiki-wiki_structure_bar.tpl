@@ -27,25 +27,27 @@
 		</div>
   		<div style="float: left;">
 {if $struct_editable eq 'y'}
-    <form action="tiki-editpage.php" method="post">
-    	<div class="form">
+	<form action="tiki-editpage.php" method="post">
+		<div class="form">
 			<input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}" />
 			<input type="text" id="structure_add_page" name="page" />
 			{autocomplete element='#structure_add_page' type='pagename'}
 			{* Cannot add peers to head of structure *}
 			{if $page_info and !$parent_info}
-			<input type="hidden" name="add_child" value="checked" /> 
+				<input type="hidden" name="add_child" value="checked" /> 
 			{else}
-			<input type="checkbox" name="add_child" /> {tr}Child{/tr}
+				<input type="checkbox" name="add_child" /> {tr}Child{/tr}
 			{/if}      
 			<input type="submit" name="insert_into_struct" value="{tr}Add Page{/tr}" />
-    	</div>
-    </form>
-{/if}
 		</div>
+	</form>
 	</div>
-  	<div>
-  	{self_link  _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _alt="{tr}Structure{/tr}" _title="{tr}Structure{/tr} ($cur_pos)"}{icon _id='chart_organisation' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr} ($cur_pos)"}{/self_link}&nbsp;&nbsp;
+	</div>
+	<div>
+	{self_link  _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _alt="{tr}Structure{/tr}" _title="{tr}Structure{/tr} ($cur_pos)"}{icon _id='chart_organisation' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr} ($cur_pos)"}{/self_link}&nbsp;&nbsp;
+{else}
+		</div>
+{/if}
     {section loop=$structure_path name=ix}
       {if $structure_path[ix].parent_id}&nbsp;{$prefs.site_crumb_seper}&nbsp;{/if}
 	  <a href="{sefurl page=$structure_path[ix].pageName structure=$home_info.pageName page_ref_id=$structure_path[ix].page_ref_id}">
