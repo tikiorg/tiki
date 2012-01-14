@@ -2468,7 +2468,7 @@ class UsersLib extends TikiLib
 
 			if (! $valid) {
 				foreach ($permission['prefs'] as $name) {
-					if ($prefs[$name] == 'y') {
+					if (isset($prefs[$name]) && $prefs[$name] == 'y') {
 						$valid = true;
 						break;
 					}
