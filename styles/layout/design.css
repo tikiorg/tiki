@@ -609,6 +609,7 @@ p.editdate {
 /* wikiplugin_code */
 .codelisting {
 	overflow: auto;
+	max-width: 990px;
 }
 
 /* wikiplugin_fade */
