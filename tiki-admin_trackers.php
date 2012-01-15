@@ -20,7 +20,9 @@ if (!$objectperms->admin_trackers) {
 $smarty->assign('permsType', $objectperms->from());
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
-$info = array();
+if (!empty($_REQUEST['trackerId'])) {
+	$smarty->assign('trackerInfo', $trklib->get_tracker($_REQUEST['trackerId']));
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
