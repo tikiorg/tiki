@@ -513,13 +513,19 @@ img.icon {
 }
 
 /* odd and even classes for tr, td, and li */
-.odd,
+.odd {
+        background: #f0f0f0;
+        color: #000;
+}
 table.normal tr:nth-child(2n+1) {
 	background: #f0f0f0;
 	color: #000;
 }
 
-.even,
+.even {
+        background: #fff;
+        color: #000;
+}
 table.normal tr:nth-child(2n) {
 	background: #fff;
 	color: #000;
