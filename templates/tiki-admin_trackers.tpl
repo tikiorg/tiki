@@ -73,6 +73,19 @@
 	<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
 		<input type="submit" value="{tr}Create tracker{/tr}"/>
 	</form>
+	{if !empty($trackerId)}
+		<div id="trackeredit"></div>
+		{jq}
+			$("#trackeredit").serviceDialog({
+				title:'{{$trackerInfo.name}}',
+				data: {
+					controller: 'tracker',
+					action: 'replace',
+					trackerId: {{$trackerId}}
+				}
+			});
+		{/jq}
+	{/if}
 	{jq}
 		$('.remove.confirm-prompt').requireConfirm({
 			message: "{tr}Do you really remove this tracker?{/tr}",
