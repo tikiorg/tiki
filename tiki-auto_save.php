@@ -115,6 +115,9 @@ if (isset($_REQUEST['editor_id'])) {
 					}
 				} else {
 					$info = $tikilib->get_page_info( $page, false);
+					if (empty($info)) {
+						$info['is_html'] = isset($_REQUEST['allowHtml'])?$_REQUEST['allowHtml']:0;
+					}
 					$data = $tikilib->parse_data($data, array('is_html' => ($info['is_html'] == 1), 'preview_mode'=>true, 'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2]));
 				}
 				echo $data;
