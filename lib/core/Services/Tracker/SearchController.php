@@ -45,7 +45,7 @@ class Services_Tracker_SearchController
 			}
 			// setup AJAX pagination
 			$offset_jsvar = "customsearch_offset_$id";
-			$onclick = "$('#customsearch_$id" . "').submit();return false;";
+			$onclick = "$('#customsearch_$id').submit();return false;";
 			$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
 
 			if ($input->groups->text()) {
@@ -68,12 +68,15 @@ class Services_Tracker_SearchController
 			}
 			if ($input->maxRecords->int()) {
 				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
+				$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
 			}
 			if ($input->sort_mode->text()) {
 				$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
+				$_REQUEST['sort_mode'] = $input->sort_mode->text();
 			}
 			if ($input->offset->int()) {
 				$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
+				$_REQUEST['offset'] = $input->offset->int();
 			}
 			foreach ($adddata as $fieldid => $d) {
 				$config = $d['config'];
