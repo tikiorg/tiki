@@ -2243,7 +2243,7 @@ div.aclabel, span.aclabel, label.aclabel {
 	display: inline-block;
 	height: 20px;
 	width: 20px;
-	vertical-align: baseline;
+	vertical-align: middle;
 	text-align: left;
 }
 .lang_select .clearfix:after {
