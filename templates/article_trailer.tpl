@@ -5,7 +5,7 @@
 			{/if}
 		</span>
 		<div class="actions">
-		{if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
+		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
 			{include file='translated-lang.tpl' type='article'}
 		{/if}
 		{if $tiki_p_edit_article eq 'y'}

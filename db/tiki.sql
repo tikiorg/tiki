@@ -168,7 +168,6 @@ CREATE TABLE `tiki_article_types` (
   `show_subtitle` varchar(1) default 'n',
   `show_linkto` varchar(1) default 'n',
   `show_image_caption` varchar(1) default 'n',
-  `show_lang` varchar(1) default 'n',
   `creator_edit` varchar(1) default NULL,
   `comment_can_rate_article` char(1) default NULL,
   PRIMARY KEY (`type`),

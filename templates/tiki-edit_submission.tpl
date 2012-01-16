@@ -70,7 +70,7 @@
 			</td>
 		</tr>
 		{if $prefs.feature_multilingual eq 'y'}
-			<tr id='show_lang' {if $types.$type.show_lang eq 'y'}style="display:;"{else}style="display:none;"{/if}>
+			<tr id='show_lang'>
 				<td>{tr}Language{/tr}</td>
 				<td>
 					<select name="lang">

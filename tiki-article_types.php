@@ -39,7 +39,6 @@ elseif (isset($_REQUEST["update_type"])) {
 		if (!isset($_REQUEST["show_subtitle"][$this_type])) {$_REQUEST["show_subtitle"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_image_caption"][$this_type])) {$_REQUEST["show_image_caption"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_linkto"][$this_type])) {$_REQUEST["show_linkto"][$this_type] = 'n';}
-		if (!isset($_REQUEST["show_lang"][$this_type])) {$_REQUEST["show_lang"][$this_type] = 'n';}
 		if (!isset($_REQUEST["creator_edit"][$this_type])) {$_REQUEST["creator_edit"][$this_type] = 'n';}
 		$artlib->edit_type($this_type, 
 				$_REQUEST["use_ratings"][$this_type], 
@@ -59,7 +58,6 @@ elseif (isset($_REQUEST["update_type"])) {
 				$_REQUEST["show_subtitle"][$this_type], 
 				$_REQUEST["show_linkto"][$this_type], 
 				$_REQUEST["show_image_caption"][$this_type], 
-				$_REQUEST["show_lang"][$this_type], 
 				$_REQUEST["creator_edit"][$this_type]);
 				
 		// Add custom attributes

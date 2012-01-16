@@ -2084,7 +2084,6 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 			'show_subtitle' => 'n',
 			'show_link_to' => 'n',
 			'show_image_caption' => 'n',
-			'show_language' => 'n',
 
 			'allow_ratings' => 'n',
 			'allow_comments' => 'n',
@@ -2143,7 +2142,6 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 						$converter->convert($data['show_subtitle']),
 						$converter->convert($data['show_link_to']),
 						$converter->convert($data['show_image_caption']),
-						$converter->convert($data['show_language']),
 						$converter->convert($data['allow_creator_edit'])
 		);
 

@@ -25,7 +25,6 @@
 	<b>{tr}Show subtitle{/tr}</b> - {tr}Show the subtitle{/tr}<br />
 	<b>{tr}Show source{/tr}</b> - {tr}Show link to source after article body{/tr}<br />
 	<b>{tr}Show Image Caption{/tr}</b> - {tr}Show a legend under the image{/tr}<br />
-	<b>{tr}Show Language{/tr}</b> - {tr}Show the language{/tr}<br />
 	<b>{tr}Creator can edit{/tr}</b> - {tr}The person who submits an article of this type can edit it{/tr}<br />
 	<b>{tr}Action{/tr}</b> - {tr}Actions on this article type{/tr}<br />
 </div>
@@ -93,7 +92,6 @@
 					<th>{tr}Show subtitle{/tr}</th>
 					<th>{tr}Show source{/tr}</th>
 					<th>{tr}Show Image Caption{/tr}</th>
-					<th>{tr}Show lang{/tr}</th>
 					<th>{tr}Creator can edit{/tr}</th>
 					<th colspan="2">{tr}Action{/tr}</th>
 				</tr>
@@ -118,9 +116,6 @@
 					</td>
 					<td class="checkbox">
 						<input type="checkbox" name="show_image_caption[{$types[user].type|escape}]" {if $types[user].show_image_caption eq 'y'}checked="checked"{/if} />
-					</td>
-					<td class="checkbox">
-						<input type="checkbox" name="show_lang[{$types[user].type|escape}]" {if $types[user].show_lang eq 'y'}checked="checked"{/if} />
 					</td>
 					<td class="checkbox">
 						<input type="checkbox" name="creator_edit[{$types[user].type|escape}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} />

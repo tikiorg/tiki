@@ -82,7 +82,6 @@ $smarty->assign('show_linkto', $article_data["show_linkto"]);
 $smarty->assign('image_caption', $article_data["image_caption"]);
 $smarty->assign('show_image_caption', $article_data["show_image_caption"]);
 $smarty->assign('lang', $article_data["lang"]);
-$smarty->assign('show_lang', $article_data["show_lang"]);
 $smarty->assign('authorName', $article_data["authorName"]);
 $smarty->assign('show_author', $article_data["show_author"]);
 $smarty->assign('topicId', $article_data["topicId"]);

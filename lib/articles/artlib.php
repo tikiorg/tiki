@@ -737,7 +737,6 @@ class ArtLib extends TikiLib
 										, $show_subtitle
 										, $show_linkto
 										, $show_image_caption
-										, $show_lang
 										, $creator_edit
 										)
 	{
@@ -842,12 +841,6 @@ class ArtLib extends TikiLib
 			$show_image_caption = 'n';
 		}
 		
-		if ($show_lang == 'on') {
-			$show_lang = 'y';
-		} else {
-			$show_lang = 'n';
-		}
-		
 		if ($creator_edit == 'on') {
 			$creator_edit = 'y';
 		} else {
@@ -871,7 +864,6 @@ class ArtLib extends TikiLib
 			`show_subtitle` = ?,
 			`show_linkto` = ?,
 			`show_image_caption` = ?,
-			`show_lang` = ?,
 			`creator_edit` = ?
 			where `type` = ?";
 	
@@ -895,7 +887,6 @@ class ArtLib extends TikiLib
 							$show_subtitle,
 							$show_linkto,
 							$show_image_caption,
-							$show_lang,
 							$creator_edit,
 							$type
 						)
@@ -1341,7 +1332,6 @@ class ArtLib extends TikiLib
 			`tiki_article_types`.`show_subtitle`,
 			`tiki_article_types`.`show_linkto`,
 			`tiki_article_types`.`show_image_caption`,
-			`tiki_article_types`.`show_lang`,
 			`tiki_article_types`.`creator_edit`
 				from `tiki_articles`
 				$fromSql
@@ -1464,7 +1454,6 @@ class ArtLib extends TikiLib
 								`tiki_article_types`.`show_subtitle`,
 								`tiki_article_types`.`show_linkto`,
 								`tiki_article_types`.`show_image_caption`,
-								`tiki_article_types`.`show_lang`,
 								`tiki_article_types`.`creator_edit`
 						from (`tiki_articles`, `tiki_article_types`) 
 						left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` $mid and `tiki_articles`.`articleId`=?"
