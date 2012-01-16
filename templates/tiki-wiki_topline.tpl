@@ -134,13 +134,12 @@
 									</ul>
 								</div>
 							{/if}
+							{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
+								<div class="lang_select">
+									{include file='translated-lang.tpl' object_type='wiki page'}
+								</div>
+							{/if}
 						</div><!-- END of icons -->
-		
-						{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
-							<div style="float: left">
-								{include file='translated-lang.tpl' td='n'}
-							</div>
-						{/if}
 					</div> {* END of wikiactions *}
 				{/if} {* <-- end of if $print_page ne 'y' *}
 			{/if}
