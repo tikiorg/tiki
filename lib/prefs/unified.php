@@ -47,6 +47,14 @@ function prefs_unified_list()
 			'default' => 1000,
 			'size' => 6,
 		),
+		'unified_lucene_terms_limit' => array(
+			'name' => tra('Lucene Terms Per Query Limit'),
+			'description' => tra('Maximum number of terms to be generated. Try increasing this value if you get errors saying "Terms per query limit is reached" espescially with wildcard, range and fuzzy searches.'),
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 1024,
+			'size' => 6,
+		),
 		'unified_incremental_update' => array(
 			'name' => tra('Incremental Index Update'),
 			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
