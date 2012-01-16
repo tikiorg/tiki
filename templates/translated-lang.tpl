@@ -18,13 +18,13 @@
 				{* For wiki pages *}		
 					{if $object_type eq 'wiki page'}
 						<a href="tiki-index.php?page={$trads[i].objName|escape}&no_bl=y" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" {if $trads[i] eq $trads[0]} class="selected" {else} class="linkmodule {$trads[i].class}" {/if}>
-							{$trads[i].langName|escape:url} ({$trads[i].lang|escape}) <br />
+							{$trads[i].langName|escape} ({$trads[i].lang|escape}) <br />
 						</a>
 					{/if}
 				{* For articles *}
 					{if $object_type eq 'article'}
 						<a href="tiki-read_article.php?articleId={$trads[i].objId}" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" {if $trads[i] eq $trads[0]} class="selected" {else} class="linkmodule {$trads[i].class}" {/if}>
-							{$trads[i].langName|escape:url} ({$trads[i].lang|escape}) <br />
+							{$trads[i].langName|escape} ({$trads[i].lang|escape}) <br />
 						</a>
 					{/if}
 				{/section}
