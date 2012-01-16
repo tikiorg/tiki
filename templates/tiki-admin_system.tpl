@@ -59,3 +59,13 @@
 		{/foreach}
 	</ul>
 {/if}
+
+{if !empty($lostGroups)}
+	<h2>{tr}Clean{/tr}</h2>
+	{tr}Groups still used in the database but no more defined.{/tr} {self_link clean="y"}{tr}Click to remove.{/tr}{/self_link}
+	<ul>
+	{foreach item=g from=$lostGroups}
+		<li>{$g|escape}</li>
+	{/foreach}
+	</ul>
+{/if}

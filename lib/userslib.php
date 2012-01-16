@@ -6743,6 +6743,23 @@ class UsersLib extends TikiLib
 		$bindvars = array($userId);
 		$this->query($query, $bindvars);
 	}
+	function get_lost_groups() {
+		$query = 'SELECT ugp.`groupName` FROM `users_grouppermissions` ugp LEFT JOIN `users_groups` ug ON ( ug.`groupName` = ugp.`groupName` ) WHERE ug.`groupName` IS NULL';
+		$groups = $this->fetchAll($query);
+		$ret = array();
+		foreach ($groups as $res) {
+			if (!in_array($res['groupName'], $ret))
+				$ret[] = $res['groupName'];
+		}
+		return $ret;
+	}
+	function remove_lost_groups() {
+		$groups = $this->get_lost_groups();
+		if (empty($groups))
+			return;
+		$query = 'delete FROM `users_grouppermissions` where `groupName` in ('.implode(',',array_fill(0, count($groups),'?')).')';
+		$this->query($query, $groups);
+	}
 
 }
 
