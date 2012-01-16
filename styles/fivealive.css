@@ -798,7 +798,10 @@ li.login_link ul li a {
 .cssmenu_vert li.selected a {
 	color: #c2eef8;
 }
-
+.cssmenu_horiz>li.selected a,
+.cssmenu_vert>li.selected a {
+        color: #153C64;
+}
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {
 	font-style: normal;
