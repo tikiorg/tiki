@@ -25,6 +25,10 @@ if (isset($_GET['compiletemplates'])) {
 	$cachelib->cache_templates($ctempl, $_GET['compiletemplates']);
 	$logslib->add_log('system', 'compiled templates');
 }
+if (!empty($_REQUEST['clean'])) {
+	$userlib->remove_lost_groups();
+}
+$smarty->assign('lostGroups', $userlib->get_lost_groups());
 $languages = array();
 $languages = $tikilib->list_languages();
 $templates_c = $cachelib->count_cache_files("templates_c/$tikidomain");
