@@ -993,6 +993,7 @@
 					{/if}
 				</td>
 			</tr>
+			{if $calendar.customurl ne 'n'}
 			<tr>
 				<td>
 					{tr}URL{/tr}
@@ -1007,6 +1008,7 @@
 					{/if}
 				</td>
 			</tr>
+			{/if}
 			<tr style="display:
 				{if $calendar.customlanguages eq 'y'}
 					tablerow
