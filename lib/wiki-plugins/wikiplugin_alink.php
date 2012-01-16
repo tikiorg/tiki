@@ -65,7 +65,11 @@ function wikiplugin_alink($data, $params)
 			'"  class="wiki wikinew">?</a>';
 	    }
 	} elseif (isset($_REQUEST['page'])) {
-	    return "<a href=\"".$_REQUEST["page"]."#$aname\">$data</a>";
+		$urlPrefix = "tiki-index.php?page=";
+		if($prefs['feature_sefurl'] == 'y') {
+			$urlPrefix = "";
+		}
+		return "<a href=\"".$urlPrefix.$_REQUEST["page"]."#$aname\">$data</a>";
 	} else {
 	    return "<a href=\"#$aname\">$data</a>";
 	}
