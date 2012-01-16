@@ -2237,4 +2237,64 @@ div.aclabel, span.aclabel, label.aclabel {
 	font-weight: bold;
 	font-style: italic;
 }
+/* Generic language selection layout for tiki objects (wiki page, article, blogpost, etc)*/
+.lang_select {
+	position: relative;
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	vertical-align: baseline;
+	text-align: left;
+}
+.lang_select .clearfix:after {
+	display: inline-block;
+}
+.lang_select .selected {
+	font-weight: bold;
+	font-style: italic;
+}
+.lang_select .cssmenu_horiz li {
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	width: auto;
+}
+.lang_select .cssmenu_horiz li.tabmark {
+	background: none;
+	border: 0px;
+	color: inherit;
+	padding: 0px;
+	top:0px;
+}
+.lang_select .cssmenu_horiz .tabmark  span {
+	background: none;
+	position: relative;
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+	top: 0px;
+	bottom:0px;
+	left: 1px;
+	right: 0px;
+}
+.lang_select li.tabmark .popup_base a {
+	color: inherit;
+	background: none;
+}
+.lang_select .tabcontent h1 {
+	font-size: 1.1em;
+	font-style: italic;
+	font-weight: normal;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 1px;
+	padding-left: 0px;
+	padding-bottom: 1px;
+	vertical-align: baseline;
+}
+.lang_select .tabcontent h1 a {
+	padding-left: 2px;
+	margin-left: 0px;
+	font-style: normal;
+}
 /* End of File */
