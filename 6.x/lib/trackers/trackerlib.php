@@ -1001,9 +1001,10 @@ class TrackerLib extends TikiLib
 		return $retval;
 	}
 	function filter_categ_items($ret) {
-		//this is an approxomation - the perm should be function of the status
+		//this is an approximation - the perm should be function of the status
 		global $categlib; include_once('lib/categories/categlib.php');
-		if (empty($ret['itemId']) || $categlib->is_categorized('trackeritem', $ret['itemId'])) {
+//		if (empty($ret['itemId']) || $categlib->is_categorized('trackeritem', $ret['itemId'])) {
+		if (!empty($ret[0]['itemId']) && $categlib->is_categorized('trackeritem', $ret[0]['itemId'])) {
 			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
 		} else {
 			return $ret;
