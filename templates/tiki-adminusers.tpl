@@ -179,7 +179,7 @@
 						</td>
 	
 						<td class="icon">
-							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign{/tr} %0 {tr}to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
+							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
 						</td>
 	
 						<td class="text">
