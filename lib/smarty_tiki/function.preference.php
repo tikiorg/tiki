@@ -26,6 +26,10 @@ function smarty_function_preference( $params, $smarty )
 			$info['value'] = $prefs['site_' . $params['name']];
 		}
 
+		if (isset($info['autocomplete']) ) {
+			$info['params'] .= ' autocomplete="' . $info['autocomplete'] . '" ';
+		}
+
 		if (isset($params['visible']) && $params['visible'] == 'always') {
 			// Modified preferences are never hidden, so pretend it's modified when forcing display
 			$info['tags'][] = 'modified';
