@@ -6516,6 +6516,11 @@ class UsersLib extends TikiLib
 
 		if ( ! $this->user_is_in_group($user, $group) ) {
 			$this->assign_user_to_group($user, $group);
+			if ($periods > 1) {
+				$periods--;
+			} else {
+				return;	
+			}
 		}
 
 		$info = $this->get_group_info($group);
