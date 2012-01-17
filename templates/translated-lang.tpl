@@ -58,7 +58,7 @@
 					</a>
 				{/if}
 				{if $object_type eq 'article'}
-					<a href="tiki-edit_article.php" title="{tr}Translate article{/tr}">
+					<a href="tiki-edit_article.php?translationOf={$articleId}" title="{tr}Translate article{/tr}">
 						{tr}Translate{/tr}
 					</a>
 				{/if}

@@ -6,6 +6,9 @@
 // $Id$
 
 $section = 'cms';
+$inputConfiguration = array(
+    array( 'staticKeyFilters' => array('translationOf' => 'digits') )
+);
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/articles/artlib.php');
@@ -157,6 +160,11 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$heading = $article_data["heading"];
 	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y')));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading));
+} else {
+	if (isset($_REQUEST['translationOf'])) {
+		$translationOf = $_REQUEST['translationOf'];
+		$smarty->assign('translationOf', $translationOf);
+	}
 }
 
 // Now check permissions to access this page
@@ -421,7 +429,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 	if (!isset($_REQUEST["type"])) $_REQUEST['type'] = '';
 
-	if ($prefs['feature_multilingual'] == 'y' && $_REQUEST['lang'] && isset($article_data) && $article_data['lang'] != $_REQUEST["lang"]) {
+	if ($prefs['feature_multilingual'] == 'y' && isset($article_data) && isset($_REQUEST['lang']) && $article_data['lang'] != $_REQUEST["lang"]) {
 		include_once("lib/multilingual/multilinguallib.php");
 		if ($multilinguallib->updateObjectLang('article', $article_data['articleId'], $_REQUEST["lang"], true)) {
 			$_REQUEST['lang'] = $article_data['lang'];
@@ -472,6 +480,16 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
 	include_once("categorize.php");
 	include_once ("freetag_apply.php");
+	
+	if ($prefs['feature_multilingual'] == 'y' && isset($translationOf)) {	
+		$translatedArticle = $artlib->get_article($translationOf);
+		// Quietly fail if translated article does not exist.
+		if (!empty($translatedArticle) && $translatedArticle['lang'] && $_REQUEST["lang"] != $translatedArticle['lang']) {
+			include_once("lib/multilingual/multilinguallib.php");
+			$multilinguallib->insertTranslation('article', $translatedArticle['articleId'], $translatedArticle['lang'], $artid, $_REQUEST["lang"]);
+		}
+	}
+	
 	// Add attributes
 	if ($prefs["article_custom_attributes"] == 'y') {
 		 $valid_att = $artlib->get_article_type_attributes($_REQUEST["type"]);

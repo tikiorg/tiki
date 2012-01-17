@@ -40,6 +40,9 @@
 	<input type="hidden" name="image_type" value="{$image_type|escape}" />
 	<input type="hidden" name="image_name" value="{$image_name|escape}" />
 	<input type="hidden" name="image_size" value="{$image_size|escape}" />
+	{if isset($translationOf)}
+		<input type="hidden" name="translationOf" value="{$translationOf|escape}" />
+	{/if}
 	<table class="formcolor">
 		<tr id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Topline{/tr} *</td>
