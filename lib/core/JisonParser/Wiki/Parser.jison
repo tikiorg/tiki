@@ -157,18 +157,29 @@ wiki_contents
  | contents
 	{$$ = $1;}
  | wiki_contents plugin
-	{$$ = this.join($1, $2);}
+	{
+		$$ = this.join($1, $2);//js
+		//php $$ = $this->join($1, $2);
+	}
  | wiki_contents plugin contents
-	{$$ = this.join($1, $2, $3);}
+	{
+		$$ = this.join($1, $2, $3);//js
+		//php $$ = $this->join($1, $2, $3);
+	}
  ;
 
 plugin
  : INLINE_PLUGIN
-	{$$ = this.plugin($1);}
+	{
+		$$ = this.plugin($1);//js
+		//php $$ = $this->plugin($1);
+	}
  | PLUGIN_START wiki_contents PLUGIN_END
 	{
-		$3.body = $2;
-		$$ = this.plugin($3);
+		$3.body = $2;//js
+		$$ = this.plugin($3);//js
+		//php $3->body = $2;
+		//php $$ = $this->plugin($3);
 	}
  ;
 
@@ -176,52 +187,110 @@ contents
  : content
 	{$$ = $1;}
  | contents content
-	{$$ =  this.join($1, $2);}
+	{
+		$$ =  this.join($1, $2);//js
+		//php $$ = $this->join($1, $2);
+	}
  ;
 
 content
  : CONTENT
 	{$$ = $1;}
  | HTML
-	{$$ = this.html($1);}
+	{
+		$$ = this.html($1);//js
+		//php $$ = $this->html($1);
+	}
  | HORIZONTAL_BAR
 	{$$ = $1;}
  | SMILE
 	{$$ = $1;}
  | BOLD_START wiki_contents BOLD_END
-	{$$ = this.bold($2);}
+	{
+		$$ = this.bold($2);//js
+		//php $$ = $this->bold($2);
+		
+	}
  | BOX_START wiki_contents BOX_END
-	{$$ = this.box($2);}
+	{
+		$$ = this.box($2);//js
+		//php $$ = $this->box($2);
+	}
  | CENTER_START wiki_contents CENTER_END
-	{$$ = this.center($2);}
+	{
+		$$ = this.center($2);//js
+		//php $$ = $this->center($2);
+	}
  | COLORTEXT_START wiki_contents COLORTEXT_END
-	{$$ = this.colortext($2);}
+	{
+		$$ = this.colortext($2);//js
+		//php $$ = $this->colortext($2);
+	}
  | ITALIC_START wiki_contents ITALIC_END
-	{$$ = this.italics($2);}
+	{
+		$$ = this.italics($2);//js
+		//php $$ = $this->italics($2);
+	}
  | HEADER6_START wiki_contents HEADER6_END
-	{$$ = this.header6($2);}
+	{
+		$$ = this.header6($2);//js
+		//php $$ = $this->header6($2);
+	}
  | HEADER5_START wiki_contents HEADER5_END
-	{$$ = this.header5($2);}
+	{
+		$$ = this.header5($2);//js
+		//php $$ = $this->header5($2);
+	}
  | HEADER4_START wiki_contents HEADER4_END
-	{$$ = this.header4($2);}
+	{
+		$$ = this.header4($2);//js
+		//php $$ = $this->header4($2);
+	}
  | HEADER3_START wiki_contents HEADER3_END
-	{$$ = this.header3($2);}
+	{
+		$$ = this.header3($2);//js
+		//php $$ = $this->header3($2);
+	}
  | HEADER2_START wiki_contents HEADER2_END
-	{$$ = this.header2($2);}
+	{
+		$$ = this.header2($2);//js
+		//php $$ = $this->header2($2);
+	}
  | HEADER1_START wiki_contents HEADER1_END
-	{$$ = this.header1($2);}
+	{
+		$$ = this.header1($2);//js
+		//php $$ = $this->header1($2);
+	}
  | LINK_START wiki_contents LINK_END
-	{$$ = this.link($2);}
+	{
+		$$ = this.link($2);//js
+		//php $$ = $this->link($2);
+	}
  | NP_START wiki_contents NP_END
 	{$$ = $2;}
  | STRIKETHROUGH_START wiki_contents STRIKETHROUGH_END
-	{$$ = this.strikethrough($2);}
+	{
+		$$ = this.strikethrough($2);//js
+		//php $$ = $this->strikethrough($2);
+	}
  | TABLE_START wiki_contents TABLE_END
-	{$$ = this.table($2);}
+	{
+		$$ = this.table($2);//js
+		//php $$ = $this->table($2);
+	}
  | TITLEBAR_START wiki_contents TITLEBAR_END
-	{$$ = this.titlebar($2);}
+	{
+		$$ = this.titlebar($2);//js
+		//php $$ = $this->titlebar($2);
+	}
  | UNDERSCORE_START wiki_contents UNDERSCORE_END
-	{$$ = this.underscore($2);}
+	{
+		$$ = parser.underscore($2);//js
+		//php $$ = $this->underscore($2);
+	}
  | WIKILINK_START wiki_contents WIKILINK_END
-	{$$ = this.wikilink($2);}
+	{
+		$$ = parser.wikilink($2);//js
+		//php $$ = $this->wikilink($2);
+	}
  ;

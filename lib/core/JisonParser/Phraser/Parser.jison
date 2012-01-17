@@ -30,17 +30,17 @@ contents
 content
 	: TAG
 		{
-			$$ = parser.tagHandler($1);//js
+			$$ = Parser.tagHandler($1);//js
 			//php $$ = $this->tagHandler($1);
 		}
 	| WORD
 		{
-			$$ = parser.wordHandler($1);//js
+			$$ = Parser.wordHandler($1);//js
 			//php $$ = $this->wordHandler($1);
 		}
 	| CHAR
 		{
-			$$ = parser.charHandler($1);//js
+			$$ = Parser.charHandler($1);//js
 			//php $$ = $this->charHandler($1);
 		}
  ;
