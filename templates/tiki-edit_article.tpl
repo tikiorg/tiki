@@ -78,6 +78,11 @@
 							<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 						{/section}
 					</select>
+					<br />
+					{if $articleId != 0}
+						{tr _0="tiki-edit_article.php?translationOf=$articleId"}To translate, do not change the language and the content.
+						Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
+					{/if}
 				</td>
 			</tr>
 		{/if}
