@@ -531,14 +531,14 @@ class Lexer {
 
 switch($avoiding_name_collisions) {
 case 0:
-		$yy_->yytext = this.inlinePlugin($yy_->yytext);
+		$yy_->yytext = Parser.inlinePlugin($yy_->yytext);
 		return 8;
 	
 break;
 case 1:
-		$yy->pluginStack = this.stackPlugin($yy_->yytext, $yy->pluginStack);
+		$yy->pluginStack = Parser.stackPlugin($yy_->yytext, $yy->pluginStack);
 		
-		if (this.size($yy->pluginStack) == 1) {
+		if (Parser.size($yy->pluginStack) == 1) {
 			return 9;
 		} else {
 			return 'CONTENT';
@@ -548,15 +548,15 @@ break;
 case 2:
 		if ($yy->pluginStack) {
 			if (
-				this.size($yy->pluginStack) > 0 &&
-				this.substring($yy_->yytext, 1, -1) == $yy->pluginStack[this.size($yy->pluginStack) - 1]->name
+				Parser.size($yy->pluginStack) > 0 &&
+				Parser.substring($yy_->yytext, 1, -1) == $yy->pluginStack[Parser.size($yy->pluginStack) - 1]->name
 			) {
-				if (this.size($yy->pluginStack) == 1) {
-					$yy_->yytext = $yy->pluginStack[this.size($yy->pluginStack) - 1];
-					$yy->pluginStack = this.pop($yy->pluginStack);
+				if (Parser.size($yy->pluginStack) == 1) {
+					$yy_->yytext = $yy->pluginStack[Parser.size($yy->pluginStack) - 1];
+					$yy->pluginStack = Parser.pop($yy->pluginStack);
 					return 10;
 				} else {
-					$yy->pluginStack = this.pop($yy->pluginStack);
+					$yy->pluginStack = Parser.pop($yy->pluginStack);
 					return 'CONTENT';
 				}
 			}
@@ -565,109 +565,109 @@ case 2:
 	
 break;
 case 3:
-		$yy->npStack = this.push($yy->npStack, true);
+		$yy->npStack = Parser.push($yy->npStack, true);
 		this.$yy->npOn = true;
 		
 		return 40;
 	
 break;
 case 4:
-		this.$yy->npStack = this.pop($yy->npStack);
-		if (this.size($yy->npStack) < 1) $yy->npOn = false;
+		this.$yy->npStack = Parser.pop($yy->npStack);
+		if (Parser.size($yy->npStack) < 1) $yy->npOn = false;
 		return 41;
 	
 break;
 case 5:
-		$yy_->yytext = this.hr();
+		$yy_->yytext = Parser.hr();
 		return 14;
 	
 break;
 case 6:
-		$yy_->yytext = this.substring($yy_->yytext, 2, -2);
-		$yy_->yytext = this.smile($yy_->yytext);
+		$yy_->yytext = Parser.substring($yy_->yytext, 2, -2);
+		$yy_->yytext = Parser.smile($yy_->yytext);
 		return 15;
 	
 break;
 case 7:
-		$yy_->yytext = this.substring($yy_->yytext, 2, -1);
+		$yy_->yytext = Parser.substring($yy_->yytext, 2, -1);
 		return 12;
 	
 break;
-case 8: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'BOLD_END'); 
+case 8: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'BOLD_END'); 
 break;
-case 9: this.begin('bold');			return this.npState(this.$yy->npOn, 'CONTENT', 'BOLD_START'); 
+case 9: this.begin('bold');			return Parser.npState(this.$yy->npOn, 'CONTENT', 'BOLD_START'); 
 break;
-case 10: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'BOX_END'); 
+case 10: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'BOX_END'); 
 break;
-case 11: this.begin('box');			return this.npState(this.$yy->npOn, 'CONTENT', 'BOX_START'); 
+case 11: this.begin('box');			return Parser.npState(this.$yy->npOn, 'CONTENT', 'BOX_START'); 
 break;
-case 12: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'CENTER_END'); 
+case 12: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'CENTER_END'); 
 break;
-case 13: this.begin('center');		return this.npState(this.$yy->npOn, 'CONTENT', 'CENTER_START'); 
+case 13: this.begin('center');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'CENTER_START'); 
 break;
-case 14: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'COLORTEXT_END'); 
+case 14: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'COLORTEXT_END'); 
 break;
-case 15: this.begin('colortext');		return this.npState(this.$yy->npOn, 'CONTENT', 'COLORTEXT_START'); 
+case 15: this.begin('colortext');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'COLORTEXT_START'); 
 break;
-case 16: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER6_END'); 
+case 16: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER6_END'); 
 break;
-case 17: this.begin('header6');		return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER6_START'); 
+case 17: this.begin('header6');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER6_START'); 
 break;
-case 18: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER5_END'); 
+case 18: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER5_END'); 
 break;
-case 19: this.begin('header5');		return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER5_START'); 
+case 19: this.begin('header5');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER5_START'); 
 break;
-case 20: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER4_END'); 
+case 20: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER4_END'); 
 break;
-case 21: this.begin('header4');		return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER4_START'); 
+case 21: this.begin('header4');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER4_START'); 
 break;
-case 22: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER3_END'); 
+case 22: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER3_END'); 
 break;
-case 23: this.begin('header3');		return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER3_START'); 
+case 23: this.begin('header3');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER3_START'); 
 break;
-case 24: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER2_END'); 
+case 24: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER2_END'); 
 break;
-case 25: this.begin('header2');		return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER2_START'); 
+case 25: this.begin('header2');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER2_START'); 
 break;
-case 26: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER1_END'); 
+case 26: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER1_END'); 
 break;
-case 27: this.begin('header1');		return this.npState(this.$yy->npOn, 'CONTENT', 'HEADER1_START'); 
+case 27: this.begin('header1');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'HEADER1_START'); 
 break;
-case 28: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'ITALIC_END'); 
+case 28: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'ITALIC_END'); 
 break;
-case 29: this.begin('italic');		return this.npState(this.$yy->npOn, 'CONTENT', 'ITALIC_START'); 
+case 29: this.begin('italic');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'ITALIC_START'); 
 break;
-case 30: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'LINK_END'); 
+case 30: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'LINK_END'); 
 break;
-case 31: this.begin('link');			return this.npState(this.$yy->npOn, 'CONTENT', 'LINK_START'); 
+case 31: this.begin('link');			return Parser.npState(this.$yy->npOn, 'CONTENT', 'LINK_START'); 
 break;
-case 32: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'STRIKETHROUGH_END'); 
+case 32: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'STRIKETHROUGH_END'); 
 break;
-case 33: this.begin('strikethrough');	return this.npState(this.$yy->npOn, 'CONTENT', 'STRIKETHROUGH_START'); 
+case 33: this.begin('strikethrough');	return Parser.npState(this.$yy->npOn, 'CONTENT', 'STRIKETHROUGH_START'); 
 break;
-case 34: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'TABLE_END'); 
+case 34: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'TABLE_END'); 
 break;
-case 35: this.begin('table');			return this.npState(this.$yy->npOn, 'CONTENT', 'TABLE_START'); 
+case 35: this.begin('table');			return Parser.npState(this.$yy->npOn, 'CONTENT', 'TABLE_START'); 
 break;
-case 36: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'TITLEBAR_END'); 
+case 36: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'TITLEBAR_END'); 
 break;
-case 37: this.begin('titlebar');		return this.npState(this.$yy->npOn, 'CONTENT', 'TITLEBAR_START'); 
+case 37: this.begin('titlebar');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'TITLEBAR_START'); 
 break;
-case 38: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'UNDERSCORE_END'); 
+case 38: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'UNDERSCORE_END'); 
 break;
-case 39: this.begin('underscore');	return this.npState(this.$yy->npOn, 'CONTENT', 'UNDERSCORE_START'); 
+case 39: this.begin('underscore');	return Parser.npState(this.$yy->npOn, 'CONTENT', 'UNDERSCORE_START'); 
 break;
-case 40: this.popState();				return this.npState(this.$yy->npOn, 'CONTENT', 'WIKILINK_END'); 
+case 40: this.popState();				return Parser.npState(this.$yy->npOn, 'CONTENT', 'WIKILINK_END'); 
 break;
-case 41: this.begin('wikilink');		return this.npState(this.$yy->npOn, 'CONTENT', 'WIKILINK_START'); 
+case 41: this.begin('wikilink');		return Parser.npState(this.$yy->npOn, 'CONTENT', 'WIKILINK_START'); 
 break;
 case 42:return 13;
 break;
 case 43:return 12;
 break;
 case 44:
-		if (this.npState(this.$yy->npOn, false, true) == true) {
-			$yy_->yytext = this.formatContent($yy_->yytext);
+		if (Parser.npState(this.$yy->npOn, false, true) == true) {
+			$yy_->yytext = Parser.formatContent($yy_->yytext);
 		}
 		
 		return 12;
@@ -681,5 +681,5 @@ break;
 
 	var $rules = array("/^\\{[a-z]+.*?\\}/","/^\\{[A-Z]+\\(.*?\\)\\}/","/^\\{[A-Z]+\\}/","/^(~np~)/","/^(~\\/np~)/","/^---/","/^\\(:[a-z]+:\\)/","/^\\[\\[.*?/","/^[_][_]/","/^[_][_]/","/^[\\^]/","/^[\\^]/","/^[:][:]/","/^[:][:]/","/^[\\~][\\~]/","/^[\\~][\\~][#]/","/^[\\n]/","/^[\\n](!!!!!!)/","/^[\\n]/","/^[\\n](!!!!!)/","/^[\\n]/","/^[\\n](!!!!)/","/^[\\n]/","/^[\\n](!!!)/","/^[\\n]/","/^[\\n](!!)/","/^[\\n]/","/^[\\n](!)/","/^['][']/","/^['][']/","/^(\\])/","/^(\\[)/","/^[-][-]/","/^[-][-]/","/^[|][|]/","/^[|][|]/","/^[=][-]/","/^[-][=]/","/^[=][=][=]/","/^[=][=][=]/","/^[)][)]/","/^[(][(]/","/^<(.|\\n)*?>/","/^(.)/","/^(\\n)/","/^$/");
 	
-	var $conditions = array("bold"=>array("rules"=>array(0,1,2,3,4,5,6,7,8,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45),"inclusive"=>true),"box"=>array("rules"=>array(0,1,2,3,4,5,6,7,9,10,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45),"inclusive"=>true),"INITIAL"=>array("rules"=>array(0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45),"inclusive"=>true),"center"=>array("rules"=>array(12)),"colortext"=>array("rules"=>array(14)),"header6"=>array("rules"=>array(16)),"header5"=>array("rules"=>array(18)),"header4"=>array("rules"=>array(20)),"header3"=>array("rules"=>array(22)),"header2"=>array("rules"=>array(24)),"header1"=>array("rules"=>array(26)),"italic"=>array("rules"=>array(28)),"link"=>array("rules"=>array(30)),"strikethrough"=>array("rules"=>array(32)),"table"=>array("rules"=>array(34)),"titlebar"=>array("rules"=>array(36)),"underscore"=>array("rules"=>array(38)),"wikilink"=>array("rules"=>array(40)));
+	var $conditions = array("bold"=>array("rules"=>array(0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45),"inclusive"=>true),"box"=>array("rules"=>array(0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45),"inclusive"=>true),"INITIAL"=>array("rules"=>array(0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45),"inclusive"=>true));
 }
