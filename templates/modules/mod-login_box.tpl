@@ -181,10 +181,10 @@ function doChallengeResponse() {
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div>
 				{strip}
-				{if $module_params.show_forgot eq 'y'}
+				{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password.{/tr}</a></div>
 				{/if}
-				{if $module_params.show_register eq 'y'}
+				{if $module_params.show_register eq 'y' && $prefs.allowRegister eq 'y'}
 					<div class="register"><a {*class="linkmodule"*} href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
 				{/if}
 				{/strip}
