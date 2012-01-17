@@ -181,7 +181,9 @@ function wikiplugin_mediaplayer($data, $params)
 	if (empty($params['flv']) && !empty($params['mp3'])) 
 		$code .= 'mp3='.$params['mp3'];
 	
-	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']); unset($params['fullscreen']); unset($params['wmode']);
+	// Disabled due to MSIE issue still experienced with version 9: http://flv-player.net/help/#faq2
+	//unset($params['width']); unset($params['height']);
+	unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']); unset($params['fullscreen']); unset($params['wmode']);
 	
 	foreach ($params as $key=>$value) {
 		$code .= '&amp;'.$key.'='.$value;
