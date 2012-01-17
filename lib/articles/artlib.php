@@ -113,6 +113,9 @@ class ArtLib extends TikiLib
 			$result = $this->query($query, array($articleId));
 			$this->remove_object('article', $articleId);
 			
+			$multilinguallib = TikiLib::lib('multilingual');
+			$multilinguallib->detachTranslation('article', $articleId);
+		
 			// TODO refactor
 			$nots = $tikilib->get_event_watches('article_deleted', '*');
 			if (!empty($article_data['topicId']))
