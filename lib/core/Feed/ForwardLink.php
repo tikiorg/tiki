@@ -13,6 +13,11 @@ Class Feed_ForwardLink extends Feed_Abstract
 	{
 		global $tikilib, $headerlib, $_REQUEST;
 		
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 1);
+		
+		$parser = new JisonParser_Phraser_Handler();
+		
 		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
 			
 			//here we do the confirmation that another wiki is trying to talk with this one
@@ -27,51 +32,59 @@ Class Feed_ForwardLink extends Feed_Abstract
 			
 			Feed_ForwardLink_Contribution::forwardLink($args['object'])
 				->addItem($_REQUEST['contribution']);
-				//->getItems();
 			
 			echo json_encode($response);
 			die;
 		}
 		
+		$phrase = (!empty($_REQUEST['phrase']) ? htmlspecialchars($_REQUEST['phrase']) : '');
 		$_REQUEST['preview'] = (!empty($_REQUEST['preview']) ? $_REQUEST['preview'] : $args['version']);
 		$phraseI;
 		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
-				if ($_REQUEST['preview'] == $item->forwardlink->version) {
-					$thisText = htmlspecialchars($item->forwardlink->text);
-					$thisHref = htmlspecialchars($item->textlink->href);
-					$linkedText = htmlspecialchars($item->textlink->text);
-					
-					$headerlib->add_jq_onready(<<<JQ
-						$('#page-data')
-							.rangyRestore('$thisText', function(o) {
-								$('<a>*</a>')
-									.attr('href', '$thisHref')
-									.attr('text', '$linkedText')
-									.addClass('forwardlink')
-									.insertBefore(o.start);
-								
-								o.selection.addClass('ui-state-highlight');
+			$thisText = htmlspecialchars($item->forwardlink->text);
+			$thisHref = htmlspecialchars($item->textlink->href);
+			$linkedText = htmlspecialchars($item->textlink->text);
+			
+			if ($thisText == $phrase) {
+				$headerlib->add_jq_onready(<<<JQ
+					$('#page-data')
+						.rangyRestoreSelection('$thisText', function(r) {
+							$('<a>*</a>')
+								.attr('href', '$thisHref')
+								.attr('text', '$linkedText')
+								.addClass('forwardlink')
+								.insertBefore(r.selection[0]);
+									
+							r.selection.addClass('ui-state-highlight');
+									
+							$('body,html').animate({
+								scrollTop: r.start.offset().top
 							});
+						});
 JQ
-					);
-					$phraseI++;
-				}
-		}
-		
-		if (!empty($_REQUEST['phrase'])) {
-			$phrase = htmlspecialchars($_REQUEST['phrase']);
-			$headerlib->add_jq_onready(<<<JQ
-				$('#page-data').rangyRestoreSelection('$phrase', function(o) {
-					$('body,html').animate({
-						scrollTop: o.start.offset().top
-					});
-					$('#page-data').trigger('rangyDone');
-				});
+				);
+			} else {
+			
+				$headerlib->add_jq_onready(<<<JQ
+					$('#page-data')
+						.rangyRestore('$thisText', function(r) {
+							$('<a>*</a>')
+								.attr('href', '$thisHref')
+								.attr('text', '$linkedText')
+								.addClass('forwardlink')
+								.insertBefore(r.selection[0]);
+							
+							r.selection.addClass('ui-state-highlight');
+						});
 JQ
-			);
+				);
+			}
+			$phraseI++;
 		}
-		
+
 		$headerlib->add_jq_onready(<<<JQ
+			$('#page-data').trigger('rangyDone');
+			
 			$('.forwardlink')
 				.click(function() {
 					me = $(this);
@@ -88,10 +101,6 @@ JQ
 				});
 JQ
 		);
-		
-		$headerlib->add_jq_onready("
-			$('#page-data').trigger('rangyDone');
-		");
 		
 		$wikiAttributes = TikiLib::lib("trkqry")
 			->tracker("Wiki Attributes")
@@ -125,7 +134,7 @@ JQ
 				->add_jsfile("lib/rangy/uncompressed/rangy-selectionsaverestore.js")
 				->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
 				->add_jsfile("lib/ZeroClipboard.js")
-				->add_jsfile("lib/rangy_tiki/phraser.js");
+				->add_jsfile("lib/core/WikiParser/Jison/Phraser/Parser.js");
 			
 		$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=' . urlencode($args['object']) . '&nohistory&preview=' . $args['version'];
 		$version = $args['version'];
