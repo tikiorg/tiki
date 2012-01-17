@@ -6756,6 +6756,12 @@ class UsersLib extends TikiLib
 			if (!in_array($res['groupName'], $ret))
 				$ret[] = $res['groupName'];
 		}
+		$query = 'SELECT ugp.`groupName` FROM `users_objectpermissions` ugp LEFT JOIN `users_groups` ug ON ( ug.`groupName` = ugp.`groupName` ) WHERE ug.`groupName` IS NULL';
+		$groups = $this->fetchAll($query);
+		foreach ($groups as $res) {
+			if (!in_array($res['groupName'], $ret))
+				$ret[] = $res['groupName'];
+		}
 		return $ret;
 	}
 	function remove_lost_groups() {
@@ -6763,6 +6769,8 @@ class UsersLib extends TikiLib
 		if (empty($groups))
 			return;
 		$query = 'delete FROM `users_grouppermissions` where `groupName` in ('.implode(',',array_fill(0, count($groups),'?')).')';
+		$this->query($query, $groups);
+		$query = 'delete FROM `users_objectpermissions` where `groupName` in ('.implode(',',array_fill(0, count($groups),'?')).')';
 		$this->query($query, $groups);
 	}
 
