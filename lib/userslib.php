@@ -4947,8 +4947,8 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array('feature_wiki_allowhtml'),
-				'scope' => 'object',
+				'prefs' => array('feature_wiki_allowhtml', 'feature_articles'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_actionlog',
