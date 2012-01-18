@@ -53,7 +53,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$inData = "*Item 1\n*Item 2\n";		
 		$ex = '<ul><li>Item 1\n';
 		$ex .= '</li><li>Item 2\n';
-		$ex .= '</li></ul>\n';
+		$ex .= '</li></ul><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
@@ -68,7 +68,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$ex = '<ul><li>Item 1\n';
 		$ex .= '<ul><li>Item 1a\n';
 		$ex .= '</li></ul></li><li>Item 2\n';
-		$ex .= '</li></ul>\n';
+		$ex .= '</li></ul><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
@@ -93,7 +93,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$ex = '<ul><li>Item 1\n';
 		$ex .= '<br />Continuation\n';
 		$ex .= '</li><li>Item 2\n';
-		$ex .= '</li></ul>\n';
+		$ex .= '</li></ul><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
@@ -108,7 +108,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$ex = '<ul><ul><li>Item 1\n';
 		$ex .= '<br />Continuation\n';
 		$ex .= '</li><li>Item 2\n';
-		$ex .= '</li></ul></ul>\n';
+		$ex .= '</li></ul></ul><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);					
@@ -130,7 +130,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$inData = "#Item 1\n#Item 2\n";		
 		$ex = '<ol><li>Item 1\n';
 		$ex .= '</li><li>Item 2\n';
-		$ex .= '</li></ol>\n';
+		$ex .= '</li></ol><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);			
@@ -145,7 +145,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$ex = '<ol><li>Item 1\n';
 		$ex .= '<ol><li>Item 1a\n';
 		$ex .= '</li></ol></li><li>Item 2\n';
-		$ex .= '</li></ol>\n';
+		$ex .= '</li></ol><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);					
@@ -170,7 +170,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$ex = '<ol><li>Item 1\n';
 		$ex .= '<br />Continuation\n';
 		$ex .= '</li><li>Item 2\n';
-		$ex .= '</li></ol>\n';
+		$ex .= '</li></ol><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);		
@@ -185,7 +185,7 @@ class EditLib_ParseToWysiwyg_ListTest extends TikiTestCase
 		$ex = '<ol><ol><li>Item 1\n';
 		$ex .= '<br />Continuation\n';
 		$ex .= '</li><li>Item 2\n';
-		$ex .= '</li></ol></ol>\n';
+		$ex .= '</li></ol></ol><br />\n';
 		$out = $this->el->parseToWysiwyg($inData);
 		$out = preg_replace('/\n/', '\n', $out); // fix LF encoding for comparison		
 		$this->assertEquals($ex, $out);					
