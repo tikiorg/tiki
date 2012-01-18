@@ -66,6 +66,18 @@ function wikiplugin_bloglist_info()
 				'filter' => 'striptags',
 				'default' => 'wikiplugin_bloglist'
 			),
+			'isHtml' => array(
+				'required' => false,
+				'name' => tra('Contains Html'),
+				'description' => tra('Body of the blog posts should be parsed as containing HTML (default=n)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+			),
 		),
 	);
 }
@@ -86,7 +98,8 @@ function wikiplugin_bloglist($data, $params)
 	if (!isset($params['find'])) $params['find'] = '';
 	if (!isset($params['author'])) $params['author'] = '';
 	if (!isset($params['simpleList'])) $params['simpleList'] = 'y';
-	
+	if (!isset($params['isHtml'])) $params['isHtml'] = 'n';
+
 	if (isset($params['dateStart'])) {
 		$dateStartTS = strtotime($params['dateStart']);
 	}
@@ -112,7 +125,7 @@ function wikiplugin_bloglist($data, $params)
 		$blogItems = $bloglib->list_blog_posts($params['Id'], false, $params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $dateStartTS, $dateEndTS);
 		$temp_max = count($blogItems["data"]);
 		for ($i = 0; $i < $temp_max; $i++) {
-			$blogItems["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($blogItems["data"][$i]["data"], 1));
+			$blogItems["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($blogItems["data"][$i]["data"], 1), array('is_html' => ($params['isHtml'] === 'y')));
 			if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
 				global $freetaglib; include_once('lib/freetag/freetaglib.php');
 				$blogItems["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($blogItems["data"][$i]["postId"], "blog post");
