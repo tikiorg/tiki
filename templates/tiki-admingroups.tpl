@@ -187,9 +187,9 @@
 					<td>
 						<select name="defcat" id="groups_defcat">
 							<option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
-							{section name=ix loop=$categories}
-								<option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath|escape}</option>
-							{/section}
+							{foreach $categories as $id=>$category} 
+								<option value="{$id|escape}" {if $id eq $groupdefcat}selected="selected"{/if}>{$category.categpath|escape}</option>
+							{/foreach}
 						</select>
 					</td>
 				</tr>
