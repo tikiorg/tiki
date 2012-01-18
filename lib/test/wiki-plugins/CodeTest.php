@@ -21,7 +21,7 @@ class WikiPlugin_CodeTest extends PHPUnit_Framework_TestCase
 	{
 		return array(
 			array('', '<pre class="codelisting"  data-wrap="y"  dir="ltr"  id="codebox1" >~np~~/np~</pre>'),
-			array('<script>alert(document.cookie);</script>', '<pre class="codelisting"  data-wrap="y"  dir="ltr"  id="codebox2" >~np~<script>alert(document.cookie);</script>~/np~</pre>', array('ishtml' => 1)),
+			array('<script>alert(document.cookie);</script>', '<pre class="codelisting"  data-wrap="y"  dir="ltr"  id="codebox2" >~np~&lt;script>alert(document.cookie);&lt;/script>~/np~</pre>', array('ishtml' => 1)),
 		);
 	}
 }
