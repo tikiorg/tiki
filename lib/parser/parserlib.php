@@ -24,6 +24,10 @@
 
 class ParserLib extends TikiDb_Bridge
 {
+	private $pre_handlers = array();
+	private $pos_handlers = array();
+	private $postedit_handlers = array();
+	
 	function html($content)
 	{
 		return $content;
