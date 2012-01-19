@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class JisonParser_Wiki_Handler extends JisonParser_Wiki_Parser
+class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	private $parser;
 	private $pre_handlers = array();

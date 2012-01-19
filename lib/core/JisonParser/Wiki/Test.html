@@ -6,7 +6,7 @@
 			window.jqueryTiki = {};
 		</script>
 		
-		<script src="Parser.js"></script>
+		<script src="../Wiki.js"></script>
 		<script src="Handler.js"></script>
 		<script style="text/javascript">
 			function wikiplugin_nobody() {
@@ -55,14 +55,14 @@
 			$(function(){
 				$('#runParser')
 					.click(function() {
-						$('#output').html(JisonParser_Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
+						$('#output').html(Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
 					});
 				$('#wiki')
 					.change(function() {
-						$('#output').html(JisonParser_Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
+						$('#output').html(Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
 					})
 					.keyup(function() {
-						$('#output').html(JisonParser_Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
+						$('#output').html(Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
 					})
 					.change();
 			});
@@ -70,7 +70,7 @@
 	</head>
 	<body>
 		This is an example plugin parsing syntax for using with Jison's parser for wiki syntax in javascript, this is a temporary file and is only a proof of concept.<br />
-		What does the parser definition look like? <a href="WikiParser.jison">Take a look</a><br />
+		What does the parser definition look like? <a href="../Wiki.jison">Take a look</a><br />
 		Left is updated on keyup, change, and submit.
 		<table style="width: 100%;">
 			<tr>

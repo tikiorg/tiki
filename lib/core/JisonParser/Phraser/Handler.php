@@ -1,5 +1,5 @@
 <?php
-class JisonParser_Phraser_Handler extends JisonParser_Phraser_Parser
+class JisonParser_Phraser_Handler extends JisonParser_Phraser
 {
 	var $chars = array();
 	var $words = array();
