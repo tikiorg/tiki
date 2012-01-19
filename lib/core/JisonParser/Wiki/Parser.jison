@@ -10,72 +10,120 @@ SMILE							[a-z]+
 
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
-		yytext = Parser.inlinePlugin(yytext);
-		return 'INLINE_PLUGIN';
+		yytext = Parser.inlinePlugin(yytext);//js
+		return 'INLINE_PLUGIN';//js
+		
+		//php $yytext = $this->inlinePlugin($yytext);
+		//php return 'INLINE_PLUGIN'
 	%}
 
 "{"{PLUGIN_ID}"(".*?")}"
 	%{
-		yy.pluginStack = Parser.stackPlugin(yytext, yy.pluginStack);
+		yy.pluginStack = Parser.stackPlugin(yytext, yy.pluginStack);//js
 		
-		if (Parser.size(yy.pluginStack) == 1) {
-			return 'PLUGIN_START';
-		} else {
-			return 'CONTENT';
-		}
+		if (Parser.size(yy.pluginStack) == 1) {//js
+			return 'PLUGIN_START';//js
+		} else {//js
+			return 'CONTENT';//js
+		}//js
+		
+		//php $yy->pluginStack = $this->stackPlugin($yytext, $yy->pluginStack);
+		
+		//php if ($this->size($yy.pluginStack) == 1) {
+		//php 	return 'PLUGIN_START';
+		//php } else {
+		//php 	return 'CONTENT';
+		//php }
 	%}
 
 "{"{PLUGIN_ID}"}"
 	%{
-		if (yy.pluginStack) {
-			if (
-				Parser.size(yy.pluginStack) > 0 &&
-				Parser.substring(yytext, 1, -1) == yy.pluginStack[Parser.size(yy.pluginStack) - 1].name
-			) {
-				if (Parser.size(yy.pluginStack) == 1) {
-					yytext = yy.pluginStack[Parser.size(yy.pluginStack) - 1];
-					yy.pluginStack = Parser.pop(yy.pluginStack);
-					return 'PLUGIN_END';
-				} else {
-					yy.pluginStack = Parser.pop(yy.pluginStack);
-					return 'CONTENT';
-				}
-			}
-		}
-		return 'CONTENT';
+		if (yy.pluginStack) { //js
+			if ( //js
+				Parser.size(yy.pluginStack) > 0 && //js
+				Parser.substring(yytext, 1, -1) == yy.pluginStack[Parser.size(yy.pluginStack) - 1].name //js
+			) { //js
+				if (Parser.size(yy.pluginStack) == 1) { //js
+					yytext = yy.pluginStack[Parser.size(yy.pluginStack) - 1]; //js
+					yy.pluginStack = Parser.pop(yy.pluginStack); //js
+					return 'PLUGIN_END'; //js
+				} else { //js
+					yy.pluginStack = Parser.pop(yy.pluginStack); //js
+					return 'CONTENT'; //js
+				} //js
+			} //js
+		} //js
+		return 'CONTENT'; //js
+		
+		//php if ($yy->pluginStack) {
+		//php 	if (
+		//php 		$this->size($yy->pluginStack) > 0 &&
+		//php 		$this->substring($yytext, 1, -1) == $yy->pluginStack[$this->.size($yy->pluginStack) - 1]->name
+		//php 	) {
+		//php 		if ($this->size($yy->pluginStack) == 1) {
+		//php 			$yytext = $yy->pluginStack[$this->size($yy->pluginStack) - 1];
+		//php 			$yy->pluginStack = $this->pop($yy->pluginStack);
+		//php 			return 'PLUGIN_END';
+		//php 		} else {
+		//php 			$yy->pluginStack = $this->pop($yy->pluginStack);
+		//php 			return 'CONTENT';
+		//php 		}
+		//php 	}
+		//php }
+		//php return 'CONTENT';
 	%}
 
 ("~np~")
 	%{
-		yy.npStack = Parser.push(yy.npStack, true);
-		this.yy.npOn = true;
+		yy.npStack = Parser.push(yy.npStack, true);//js
+		this.yy.npOn = true;//js
 		
-		return 'NP_START';
+		return 'NP_START';//js
+		
+		//php $yy->npStack = $this->push($yy->npStack, true);
+		//php $this->yy->npOn = true;
+		
+		//php return 'NP_START';
 	%}
 
 ("~/np~")
 	%{
-		this.yy.npStack = Parser.pop(yy.npStack);
-		if (Parser.size(yy.npStack) < 1) yy.npOn = false;
-		return 'NP_END';
+		this.yy.npStack = Parser.pop(yy.npStack);//js
+		if (Parser.size(yy.npStack) < 1) yy.npOn = false;//js
+		
+		return 'NP_END';//js
+		
+		//php $this->yy->npStack = $this->pop($yy->npStack);
+		//php if ($this->size($yy->npStack) < 1) $yy->npOn = false;
+		
+		//php return 'NP_END';
 	%}
 
 "---" 
 	%{
-		yytext = Parser.hr();
+		yytext = Parser.hr();//js
+		//php yytext = $this->hr();
+		 
 		return 'HORIZONTAL_BAR';
 	%}
 
 "(:"{SMILE}":)"
 	%{
-		yytext = Parser.substring(yytext, 2, -2);
-		yytext = Parser.smile(yytext);
+		yytext = Parser.substring(yytext, 2, -2); //js
+		yytext = Parser.smile(yytext); //js
+		
+		//php $yytext = $this->substring($yytext, 2, -2);
+		//php $yytext = $this->smile($yytext);
+		
 		return 'SMILE';
 	%}
 
 "[[".*?
 	%{
-		yytext = Parser.substring(yytext, 2, -1);
+		yytext = Parser.substring(yytext, 2, -1); //js
+		
+		//php $yytext = $this->substring($yytext, 2, -1);
+		
 		return 'CONTENT';
 	%}
 

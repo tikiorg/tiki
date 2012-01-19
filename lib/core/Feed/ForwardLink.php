@@ -129,12 +129,12 @@ JQ
 		$answers = json_encode($answers);
 		
 		$headerlib
-				->add_jsfile("lib/rangy/uncompressed/rangy-core.js")
-				->add_jsfile("lib/rangy/uncompressed/rangy-cssclassapplier.js")
-				->add_jsfile("lib/rangy/uncompressed/rangy-selectionsaverestore.js")
-				->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
-				->add_jsfile("lib/ZeroClipboard.js")
-				->add_jsfile("lib/core/JisonParser/Phraser/Parser.js");
+			->add_jsfile("lib/rangy/uncompressed/rangy-core.js")
+			->add_jsfile("lib/rangy/uncompressed/rangy-cssclassapplier.js")
+			->add_jsfile("lib/rangy/uncompressed/rangy-selectionsaverestore.js")
+			->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
+			->add_jsfile("lib/ZeroClipboard.js")
+			->add_jsfile("lib/core/JisonParser/Phraser/Parser.js");
 			
 		$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=' . urlencode($args['object']) . '&nohistory&preview=' . $args['version'];
 		$version = $args['version'];

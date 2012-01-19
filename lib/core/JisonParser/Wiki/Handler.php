@@ -48,7 +48,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki_Parser
 	
 	function colortext($content)
 	{
-		$text = ParserLib::split(':', $content);
+		$text = JisonParser_Wiki_Handler::split(':', $content);
 		$color = $text[0];
 		$content = $text[1];
 		return "<span style='color: #" . $color . ";'>" . $content . "</span>";
@@ -96,10 +96,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki_Parser
 	
 	function link($content)
 	{
-		$link = ParserLib::split(':', $content);
+		$link = JisonParser_Wiki_Handler::split(':', $content);
 		$href = $content;
 		
-		if (ParserLib::match('/\|/', $content)) {
+		if (JisonParser_Wiki_Handler::match('/\|/', $content)) {
 			$href = $link[0];
 			$content = $link[1];
 		}
@@ -116,18 +116,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki_Parser
 		return "<span style='text-decoration: line-through;'>" . $content . "</span>";
 	}
 	
-	function table($content)
+	function tableParser($content)
 	{
 		$tableContents = '';
-		$rows = ParserLib::split('<br />', $content);
+		$rows = JisonParser_Wiki_Handler::split('<br />', $content);
 		for ($i = 0, $count_rows = count($rows); $i < $count_rows; $i++) {
 			$row = '';
 			
-			$cells = ParserLib::split('|', $rows[$i]);
+			$cells = JisonParser_Wiki_Handler::split('|', $rows[$i]);
 			for ($j = 0, $count_cells = count($cells); $j < $count_cells; $j++) {
-				$row .= ParserLib::table_td($cells[$j]);
+				$row .= JisonParser_Wiki_Handler::table_td($cells[$j]);
 			}
-			$tableContents .= ParserLib::table_tr($row);
+			$tableContents .= JisonParser_Wiki_Handler::table_tr($row);
 		}
 		return "<table style='width: 100%;'>" . $tableContents . "</table>";
 	}
@@ -154,13 +154,105 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki_Parser
 	
 	function wikilink($content)
 	{
-		$wikilink = ParserLib::split('|', $content);
+		$wikilink = JisonParser_Wiki_Handler::split('|', $content);
 		$href = $content;
 		
-		if (ParserLib::match('/\|/', $content)) {
+		if (JisonParser_Wiki_Handler::match('/\|/', $content)) {
 			$href = $wikilink[0];
 			$content = $wikilink[1];
 		}
 		return "<a href='" . $href . "'>" . $content . "</a>";
 	}
+	
+	function html($content)
+	{
+		return $content;
+	}
+	
+	function formatContent($content)
+	{
+		return nl2br($content);
+	}
+	
+	//unified functions used inside parser
+	function substring($val, $left, $right)
+	{
+		 return substr($val, $left, $right);
+	}
+	
+	function match($pattern, $subject)
+	{
+		preg_match($pattern, $subject, $match);
+		return (!empty($match[1]) ? $match[1] : false);
+	}
+	
+	function replace($search, $replace, $subject)
+	{
+		return str_replace($search, $replace, $subject);
+	}
+	
+	function split($delimiter, $string)
+	{
+		return explode($delimiter, $string);
+	}
+	
+	function join()
+	{
+		$array = func_get_args();
+		return implode($array, '');
+	}
+	
+	function size($array)
+	{
+		if (empty($array)) $array = array();
+		return count($array);
+	}
+	
+	function pop($array)
+	{
+		if (empty($array)) $array = array();
+		array_pop($array);
+		return $array;
+	}
+	
+	function push($array, $val)
+	{
+		if (empty($array)) $array = array();
+		array_push($array, $val);
+		return $array;
+	}
+	
+	function shift($array)
+	{
+		if (empty($array)) $array = array();
+		array_shift($array);
+		return $array;
+	}
+	// start state handlers
+	function stackPlugin($yytext, $pluginStack)
+	{
+		$pluginName = JisonParser_Wiki_Handler::match('/^\{([A-Z]+)/', $yytext);
+		$pluginArgs =  JisonParser_Wiki_Handler::match('/[(].*?[)]/', $yytext);
+		
+		return JisonParser_Wiki_Handler::push($pluginStack, (object)array(name=> $pluginName, args=> $pluginArgs, body=> ''));
+	}
+
+	function inlinePlugin($yytext)
+	{
+		$pluginName = JisonParser_Wiki_Handler::match('/^\{([a-z]+)/', $yytext);
+		$pluginArgs = JisonParser_Wiki_Handler::split(' ', $yytext);
+		$pluginArgs = JisonParser_Wiki_Handler::shift($pluginArgs);
+		
+		return (object)array(
+			name=> $pluginName,
+			args=> implode(' ', $pluginArgs),
+			body=> ''
+		);
+	}
+	
+	function npState($npState, $ifTrue, $ifFalse)
+	{
+		return ($npState == true ? $ifTrue : $ifFalse);
+	}
+	//end state handlers
 }

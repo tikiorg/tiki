@@ -1,9 +1,9 @@
 <?php
 /* Jison generated parser */
-class Parser {
+class JisonParser_Wiki_Parser {
 	function __construct($lexer = null) {
 		
-		$this->lexer = (!empty($lexer) ? $lexer : new Lexer);
+		$this->lexer = (!empty($lexer) ? $lexer : new JisonParser_Wiki_Lexer);
 	}
 	
 	function trace() {}
@@ -373,7 +373,7 @@ break;
 }
 
 /* Jison generated lexer */
-class Lexer {
+class JisonParser_Wiki_Lexer {
 	var $EOF = 1;
 	var $S = "";
 	var $yy = "";
@@ -384,7 +384,7 @@ class Lexer {
 	var $match = "";
 	var $conditionsStack = array();
 	
-	function Lexer() {}
+	function JisonParser_Wiki_Lexer() {}
 	
 	function parseError($str, $hash) {
 		throw new Exception($str);
