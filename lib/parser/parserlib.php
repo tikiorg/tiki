@@ -1544,7 +1544,7 @@ if ( \$('#$id') ) {
 		if (!$simple_wiki) {
 			// Replace boxes
 			$delim = (isset($prefs['feature_simplebox_delim']) && $prefs['feature_simplebox_delim'] !="" )?preg_quote($prefs['feature_simplebox_delim']):preg_quote("^");
-			$data = preg_replace("/${delim}(.*)?${delim}/U", "<div class=\"simplebox\">$1</div>", $data);
+			$data = preg_replace("/${delim}(.+?)${delim}/", "<div class=\"simplebox\">$1</div>", $data);
 
 			// Underlined text
 			$data = preg_replace("/===(.+?)===/", "<u>$1</u>", $data);
