@@ -67,7 +67,7 @@ function wikiplugin_customsearch_info()
 				'required' => false,
 				'name' => tra('Destination Div'),
 				'description' => tra('Id of a pre-existing div to contain the search results'),
-				'filter' => 'alnum',
+				'filter' => 'text',
 				'default' => '',
 			),
 		),
