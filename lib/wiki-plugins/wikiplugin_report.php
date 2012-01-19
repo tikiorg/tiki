@@ -91,9 +91,9 @@ function wikiplugin_report( $data, $params )
 	if ($tiki_p_edit == 'y') {
 		$headerlib
 			->add_jsfile("lib/core/Report/Builder.js")
-			->add_jq_onready("
-			$('#editReport$i').click(function() {
-				var me = $(this);
+			->add_js("
+			function editReport$i(me) {
+				var me = $(me);
 				me.serviceDialog({
 					title: me.attr('title'),
 					data: {
@@ -119,7 +119,7 @@ function wikiplugin_report( $data, $params )
 					}
 				});
 				return false;
-			});
+			}
 		");
 		
 		$result .= "
@@ -131,7 +131,7 @@ function wikiplugin_report( $data, $params )
 				<input type='hidden' name='params[name]' value='$name' />
 				<input type='hidden' name='params[view]' value='$view' />
 			</form>
-			<a href='#' title='".tr('Edit Report')."' id='editReport$i'>
+			<a href='#' title='".tr('Edit Report')."' onclick='return editReport$i(this);'>
 				<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 			</a>";
 	}
