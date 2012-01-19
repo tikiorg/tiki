@@ -1,22 +1,30 @@
 <?php
 /* Jison generated parser */
-class JisonParser_Phraser_Parser {
+class JisonParser_Phraser_Parser
+{
+	var $yy;
+	var $symbols_ = array();
+	var $terminals_ = array();
+	var $productions_ = array();
+	var $table = array();
+	var $defaultActions = array();
+	
+	var $debug = false;
+	
 	function __construct($lexer = null) {
-		
 		$this->lexer = (!empty($lexer) ? $lexer : new JisonParser_Phraser_Lexer);
+		
+		$accept = 'accept';
+		$end = 'end';
+		
+		$this->symbols_ = 		(array)json_decode('{"error":2,"html":3,"contents":4,"EOF":5,"content":6,"TAG":7,"WORD":8,"CHAR":9,"$accept":0,"$end":1}');
+		$this->terminals_ = 	(array)json_decode('{"2":"error","5":"EOF","7":"TAG","8":"WORD","9":"CHAR"}');
+		$this->productions_ = 	(array)json_decode('[0,[3,2],[4,1],[4,2],[6,1],[6,1],[6,1]]');
+		$this->table = 			(array)json_decode('"[{\"3\":1,\"4\":2,\"6\":3,\"7\":[1,4],\"8\":[1,5],\"9\":[1,6]},{\"1\":[3]},{\"5\":[1,7],\"6\":8,\"7\":[1,4],\"8\":[1,5],\"9\":[1,6]},{\"5\":[2,2],\"7\":[2,2],\"8\":[2,2],\"9\":[2,2]},{\"5\":[2,4],\"7\":[2,4],\"8\":[2,4],\"9\":[2,4]},{\"5\":[2,5],\"7\":[2,5],\"8\":[2,5],\"9\":[2,5]},{\"5\":[2,6],\"7\":[2,6],\"8\":[2,6],\"9\":[2,6]},{\"1\":[2,1]},{\"5\":[2,3],\"7\":[2,3],\"8\":[2,3],\"9\":[2,3]}]"');
+		$this->defaultActions = (array)json_decode('"{\"7\":[2,1]}"');
 	}
 	
 	function trace() {}
-	
-	var $yy;
-
-	var $symbols_ = array("error"=>2,"html"=>3,"contents"=>4,"EOF"=>5,"content"=>6,"TAG"=>7,"WORD"=>8,"CHAR"=>9,"accept"=>0,"end"=>1);
-	
-	var $terminals_ = array(2=>"error",5=>"EOF",7=>"TAG",8=>"WORD",9=>"CHAR");
-	
-	var $productions_ = array(0,array(3,2),array(4,1),array(4,2),array(6,1),array(6,1),array(6,1));
-	
-	var $debug = false;
 	
 	function performAction(&$thisS, $yytext, $yyleng, $yylineno, $yy, $yystate, $S, $_S) {
 		$O = count($S) - 1;
@@ -31,27 +39,20 @@ break;
 case 3:$thisS =  $S[$O-1] + $S[$O];
 break;
 case 4:
-
 			$thisS = $this->tagHandler($S[$O]);
 		
 break;
 case 5:
-
 			$thisS = $this->wordHandler($S[$O]);
 		
 break;
 case 6:
-
 			$thisS = $this->charHandler($S[$O]);
 		
 break;
 }
 
 	}
-
-	var $table = array(array("3"=>1,"4"=>2,"6"=>3,"7"=>array(1,4),"8"=>array(1,5),"9"=>array(1,6)),array("1"=>array(3)),array("5"=>array(1,7),"6"=>8,"7"=>array(1,4),"8"=>array(1,5),"9"=>array(1,6)),array("5"=>array(2,2),"7"=>array(2,2),"8"=>array(2,2),"9"=>array(2,2)),array("5"=>array(2,4),"7"=>array(2,4),"8"=>array(2,4),"9"=>array(2,4)),array("5"=>array(2,5),"7"=>array(2,5),"8"=>array(2,5),"9"=>array(2,5)),array("5"=>array(2,6),"7"=>array(2,6),"8"=>array(2,6),"9"=>array(2,6)),array("1"=>array(2,1)),array("5"=>array(2,3),"7"=>array(2,3),"8"=>array(2,3),"9"=>array(2,3)));
-	
-	var $defaultActions = array("7"=>array(2,1));
 	
 	function popStack($n, $stack, $vstack, $lstack) {
 		array_slice($stack, 0, 2 * $n);
@@ -272,8 +273,13 @@ class JisonParser_Phraser_Lexer {
 	var $matched = "";
 	var $match = "";
 	var $conditionsStack = array();
+	var $rules = array();
+	var $conditions = array();
 	
-	function JisonParser_Phraser_Lexer() {}
+	function __construct() {
+		$this->rules = 		(array)array("/^<(.|\\n)*?>/","/^[a-zA-Z0-9]+/","/^(.|\\n)/","/^$/");
+		$this->conditions = (array)json_decode('{"INITIAL":{"rules":[0,1,2,3],"inclusive":true}}');
+	}
 	
 	function parseError($str, $hash) {
 		throw new Exception($str);
@@ -430,8 +436,4 @@ break;
 }
 
 	}
-
-	var $rules = array("/^<(.|\\n)*?>/","/^[a-zA-Z0-9]+/","/^(.|\\n)/","/^$/");
-	
-	var $conditions = array("INITIAL"=>array("rules"=>array(0,1,2,3),"inclusive"=>true));
 }

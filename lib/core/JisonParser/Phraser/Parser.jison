@@ -1,4 +1,7 @@
 /* description: Parses words out of html, ignouring html in the parse, but returning it in the end */
+//phpOption parserClass:JisonParser_Phraser_Parser
+//phpOption lexerClass:JisonParser_Phraser_Lexer
+//phpOption fileName:Parser.php
 
 /* lexical grammar */
 %lex
