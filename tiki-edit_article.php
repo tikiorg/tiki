@@ -155,8 +155,8 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
-	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y')));
-	$smarty->assign('parsed_heading', $tikilib->parse_data($heading));
+	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y')));
+	$smarty->assign('parsed_heading', $tikilib->parse_data($heading), array('is_html' => 'y'));
 }
 
 // Now check permissions to access this page
@@ -321,8 +321,8 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y'));
-	$parsed_heading = $tikilib->parse_data($heading);
+	$parsed_body = $tikilib->parse_data($body, array('is_html' => 'y'));
+	$parsed_heading = $tikilib->parse_data($heading, array('is_html' => 'y'));
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);
