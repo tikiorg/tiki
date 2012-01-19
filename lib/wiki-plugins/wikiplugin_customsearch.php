@@ -63,12 +63,23 @@ function wikiplugin_customsearch_info()
 				'filter' => 'pagename',
 				'default' => '',
 			),
-			'destDiv' => array(
+			'destdiv' => array(
 				'required' => false,
 				'name' => tra('Destination Div'),
 				'description' => tra('Id of a pre-existing div to contain the search results'),
 				'filter' => 'text',
 				'default' => '',
+			),
+			'searchonload' => array(
+				'required' => false,
+				'name' => tra('Search On Load'),
+				'description' => tra('Execute the search when the page loads (default: Yes)'),
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
+				),
+				'filter' => 'digits',
+				'default' => '1',
 			),
 		),
 	);
@@ -120,6 +131,9 @@ function wikiplugin_customsearch($data, $params)
 		$sort_mode = $_SESSION["customsearch_$id"]['sort_mode'];
 	} else {
 		$sort_mode = '';
+	}
+	if (!isset($params['searchonload'])) {
+		$params['searchonload'] = 1;
 	}
 
 	$wikitpl = "tplwiki:" . $params['wiki'];
@@ -258,8 +272,8 @@ $('#customsearch_$id').submit(function() {
 	} else {
 		$script .= "			$('#customsearch_$id').modal();\n";
 	}
-	if (!empty($params['destDiv'])) {
-		$script .= "			$('#{$params['destDiv']}').html(data); customsearch_quiet_$id = false;\n";
+	if (!empty($params['destdiv'])) {
+		$script .= "			$('#{$params['destdiv']}').html(data); customsearch_quiet_$id = false;\n";
 	} else {
 		$script .= "			$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false;\n";
 	}
@@ -273,14 +287,17 @@ $('#customsearch_$id').submit(function() {
 customsearch_sort_mode_$id = '$sort_mode';
 customsearch_offset_$id = $offset;
 customsearch_maxRecords_$id = $maxRecords;
-$('#customsearch_$id').submit();
 ";
-		
+
+	if ($params['searchonload']) {
+		$script .= "$('#customsearch_$id').submit();
+";
+	}
 	TikiLib::lib('header')->add_jq_onready($script);
 
 	$form = '<div id="' . "customsearch_$id" . '_form' . '"><form id="' . "customsearch_$id" . '">' . $matches->getText() . '</form></div>';
 
-	if (empty($params['destDiv'])) {
+	if (empty($params['destdiv'])) {
 		$results = '<div id="' . "customsearch_$id" . '_results"></div>';
 	}
 
