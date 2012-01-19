@@ -61,7 +61,6 @@
 				{preference name=article_custom_attributes}
 
 				{preference name=geo_locate_article}
-				{preference name=article_body_is_html}
 
 				<input type="hidden" name="articlesfeatures" />
 			</fieldset>

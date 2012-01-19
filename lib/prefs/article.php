@@ -83,12 +83,5 @@ function prefs_article_list()
 			'size' => '40',
 			'default' => '',
 		),
-		'article_body_is_html' => array(
-			'name' => tra('Treat article bodies as HTML'),
-			'description' => tra('Use this if you use the WYSIWYG editor for articles. This is to handle legacy data from Tiki pre 7.0.'),
-			'type' => 'flag',
-			'default' => 'y',
-		),
-
 	);
 }
