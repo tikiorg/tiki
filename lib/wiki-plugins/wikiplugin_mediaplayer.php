@@ -50,7 +50,7 @@ function wikiplugin_mediaplayer_info() {
 			'src' => array(
 				'required' => false,
 				'name'=> tra('URL'),
-				'description' => tra('Complete URL to the media to include.'). ' asx, asf, avi, flv, mov, mpg, mpeg, mp4, qt, ra, smil, swf, wmv, 3g2, 3gp,aif, aac, au, gsm, mid, midi, mov, mp3, m4a, snd, ra, ram, rm, wav, wma, bmp, html, pdf, psd, qif, qtif, qti, tif, tiff, xaml',
+				'description' => tra('Complete URL to the media to include.'). ' asx, asf, avi, mov, mpg, mpeg, mp4, qt, ra, smil, swf, wmv, 3g2, 3gp, aif, aac, au, gsm, mid, midi, mov, m4a, snd, ra, ram, rm, wav, wma, bmp, html, pdf, psd, qif, qtif, qti, tif, tiff, xaml',
 				'filter' => 'url',
 				'default' => '',
 			),
