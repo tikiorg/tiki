@@ -145,7 +145,7 @@ JQ
 			
 			$('<div />')
 				.appendTo('body')
-				.text(tr('Create TextLink & ForwardLink'))
+				.text(tr('Create ForwardLink'))
 				.css('position', 'fixed')
 				.css('top', '0px')
 				.css('right', '0px')
@@ -154,7 +154,7 @@ JQ
 				.button()
 				.click(function() {
 					$(this).remove();
-					$.notify(tr('Highlight some text and click the accept button once finished'));
+					$.notify(tr('Highlight text to be linked'));
 			
 					$(document).bind('mousedown', function() {
 						if (me.data('rangyBusy')) return;
