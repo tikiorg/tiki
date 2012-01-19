@@ -1640,6 +1640,7 @@ form.simple select
 }
 
 .boxes .dialog {
+	position:absolute;
 	width: auto;
 	height: auto;
 	font-weight: bold;
