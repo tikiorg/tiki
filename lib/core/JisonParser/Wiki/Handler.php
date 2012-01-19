@@ -14,10 +14,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	
 	function plugin($pluginDetails)
 	{
-		$pluginBodyParser = new WikiParser;
+		$parser = new JisonParser_Wiki_Handler;
 		//nested parsing!
 		$parserlib = new ParserLib;
-		$pluginOutput = $pluginBodyParser->parse(
+		return $parser->parse(
 			$parserlib->plugin_execute(
 				$pluginDetails->name,
 				$pluginDetails->body,
@@ -26,8 +26,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				)
 			)
 		);
-		
-		return $pluginOutput;
 	}
 	
 	//Wiki Syntax Objects Parsing Start
