@@ -5,38 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_users_list($partial = false)
-{
-
-	// retrieve language list for users_prefs_language preference
-	global $tikilib, $prefs;
-
-	$languages = array();
-
-	$list_languages = array('' => tra('Default'));
-
-	if (! $partial) {
-		$languages = $tikilib->list_languages(false, null, true);
-
-		foreach ($languages as $one_lang) {
-			if ( in_array($one_lang['value'], $prefs['available_languages']) ) {
-				// only availables languages are proposed to users
-				$list_languages[ $one_lang['value'] ] = $one_lang['name'];
-			}
-		}
-	}
-	
+function prefs_users_list()
+{	
 	return array(
-		'users_prefs_language' => array(
-			'name' => tra('Language'),
-			'type' => 'list',
-			'options' => $list_languages,
-			'dependencies' => array(
-				'change_language',
-			),
-			'tags' => array('basic'),
-			'default' => 'en',
-		),
 		'users_serve_avatar_static' => array(
 			'name' => tra('Serve avatar images statically'),
 			'description' => tra('When enabled, feature checks and permission checks will be skipped.'),

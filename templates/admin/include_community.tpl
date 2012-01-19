@@ -116,10 +116,6 @@
 					{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
 				</legend>
 				{preference name=users_prefs_mailCharset}
-				{if $prefs.change_language eq 'y'}
-					{preference name=users_prefs_language}
-				{/if}
-
 				{preference name=users_prefs_userbreadCrumb}
 				{preference name=users_prefs_display_timezone}
 				{preference name=users_prefs_user_information}
