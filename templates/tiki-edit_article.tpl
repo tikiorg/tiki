@@ -232,7 +232,11 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
+				{if $types.$type.heading_only eq 'y'}
+					{textarea name="heading" rows="5" cols="80" Height="200px" id="subheading"}{$heading}{/textarea}
+				{else}
+					{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
+				{/if}
 			</td>
 		</tr>
 
