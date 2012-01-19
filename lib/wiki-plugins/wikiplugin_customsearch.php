@@ -63,6 +63,13 @@ function wikiplugin_customsearch_info()
 				'filter' => 'pagename',
 				'default' => '',
 			),
+			'destDiv' => array(
+				'required' => false,
+				'name' => tra('Destination Div'),
+				'description' => tra('Id of a pre-existing div to contain the search results'),
+				'filter' => 'alnum',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -251,7 +258,12 @@ $('#customsearch_$id').submit(function() {
 	} else {
 		$script .= "			$('#customsearch_$id').modal();\n";
 	}
-	$script .= "			$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false;\n";
+	if (!empty($params['destDiv'])) {
+		$script .= "			$('#{$params['destDiv']}').html(data); customsearch_quiet_$id = false;\n";
+	} else {
+		$script .= "			$('#customsearch_{$id}_results').html(data); customsearch_quiet_$id = false;\n";
+	}
+
 	$script .= "			$(document).trigger('pageSearchReady');\n";
 	if (!empty($callbackScript)) $script .= $callbackScript;		
 	$script .= "
@@ -268,7 +280,9 @@ $('#customsearch_$id').submit();
 
 	$form = '<div id="' . "customsearch_$id" . '_form' . '"><form id="' . "customsearch_$id" . '">' . $matches->getText() . '</form></div>';
 
-	$results = '<div id="' . "customsearch_$id" . '_results"></div>';
+	if (empty($params['destDiv'])) {
+		$results = '<div id="' . "customsearch_$id" . '_results"></div>';
+	}
 
 	$out = $form . $results;
 
