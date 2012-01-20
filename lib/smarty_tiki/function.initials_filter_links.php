@@ -36,7 +36,8 @@ function smarty_function_initials_filter_links($params, $smarty) {
 		false
 	).'>';
 
-	foreach ( array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z') as $i ) {
+	$alpha = explode(',', tra('a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'));
+	foreach ( $alpha as $i ) {
 		if ( $current_initial == $i ) {
 			$html .= "\n" . '<span class="highlight">' . strtoupper($i) . '</span>' . $sep;
 		} else {
