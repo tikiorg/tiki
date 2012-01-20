@@ -32,7 +32,7 @@ if ( $prefs['http_port'] == 80 ) $prefs['http_port'] = '';
 $https_mode = false;
 if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
 	 || ( $prefs['https_port'] == '' && isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443 )
-	|| ( $prefs['https_port'] > 0 && $_SERVER['SERVER_PORT'] == $prefs['https_port'] )
+	|| ( $prefs['https_port'] > 0 && isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == $prefs['https_port'] )
 	|| $prefs['https_login'] == 'force_nocheck'
 ) $https_mode = true;
 
