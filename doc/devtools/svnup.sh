@@ -1,5 +1,5 @@
 #!/bin/sh
-# (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+# (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 # 
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,12 +9,6 @@
 # Purpose: Update your Tiki instance to the latest version of SVN.
 # This is useful to have a test/development site always up to date.
 # You should not use this in a production environment.
-#
-# It will also add a line in your footer such as:
-# Last update from SVN(4.1): Monday 21 December, 2009 07:05:20 UTC - REV 23971
-#
-# REV is the revision number from SVN.
-# To activate your bottom bar, Admin > Look & Feel > Bottom bar (feature_bot_bar)
 #
 # This script is intended to be ran on a cron job with the following command:
 # sh doc/devtools/svnup.sh
@@ -35,18 +29,11 @@
 # http://doc.tiki.org/TRIM 
 #
 # TODO:
-# Add option to have this information in html comments instead of visible to the public
-#    <!-- Last update from SVN... -->
 # Add option to run php installer/shell.php as well
-# Make less last.log an option
-# Document how {$svnup} is created and stored (thus, how to remove)
-#
+# Make display of log an option
 
-rm -f .lastup .svnrev
 rm -f last.log
 svn update > last.log
-echo `date +%s` > .lastup
-svn info --xml | grep "revision=" | head -n 1 | awk -F'\"' '{print $2}' > .svnrev
 
 # uncomment the line below to see the list of all files updated. (ex.: if running manually)
 # less last.log
