@@ -8,13 +8,10 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
-/* trick for use with doc/devtools/svnup.sh */
-if ( is_file('.lastup') and is_readable('.lastup') ) {
-	$lastup = file('.lastup');
-	$smarty->assign('lastup', trim($lastup[0]));
+if (is_file('.svn/entries')) {
+	$svn = File('.svn/entries');
+	$smarty->assign('svnrev', $svn[3]);
+	$smarty->assign('lastup', strtotime($svn[9]));
 }
 
-if ( is_file('.svnrev') and is_readable('.svnrev') ) {
-	$svnrev = file('.svnrev');
-	$smarty->assign('svnrev', trim($svnrev[0]));
-}
+
