@@ -4647,7 +4647,7 @@ class TikiLib extends TikiDb_Bridge
 		return $scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
 	}
 
-	function tikiUrl( $relative, $args = array() )
+	function tikiUrl( $relative = "", $args = array() )
 	{
 		global $tikiroot;
 
