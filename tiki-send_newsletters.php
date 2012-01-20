@@ -262,7 +262,6 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('presend', 'y');
 	$subscribers = isset($subscribers) ? $subscribers : $nllib->get_all_subscribers($_REQUEST["nlId"], "");
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
-	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('datatxt', $_REQUEST["datatxt"]);
 	$parsed = '';
 	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') {
@@ -295,6 +294,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('previewdata', $previewdata);
 	$smarty->assign('dataparsed', $parsed);
 	$smarty->assign('subject', $_REQUEST["subject"]);
+	$smarty->assign('data', $_REQUEST["data"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
 	$smarty->assign_by_ref('subscribers_list', $subscribers);
