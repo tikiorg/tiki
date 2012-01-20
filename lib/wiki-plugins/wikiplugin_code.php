@@ -5,13 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_code_info() {
+function wikiplugin_code_info()
+{
 	return array(
 		'name' => tra('Code'),
 		'documentation' => 'PluginCode',
 		'description' => tra('Display code syntax with line numbers and color highlights'),
 		'prefs' => array('wikiplugin_code'),
-		'body' => tra('Code'),
+		'body' => tra('Code to be displayed'),
 		'icon' => 'pics/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
@@ -60,48 +61,60 @@ function wikiplugin_code_info() {
 				),
 				'advanced' => true,
 			),
-                       'mediawiki' => array(
-                                'required' => false,
-                                'name' => tra('Generates a <code>'),
-                                'options' => array(
-                                        array('text' => '', 'value' => ''),
-                                        array('text' => tra('Yes'), 'value' => '1'),
-                                        array('text' => tra('No'), 'value' => '0'),
-                                ),
-                                'advanced' => true,
-                        ),
+			'mediawiki' => array(
+				'required' => false,
+				'name' => tra('Code Tag'),
+				'description' => tra('Encloses the code in an HTML code tag, fo rexample: &lt;code&gt;user input&lt;code&gt;'),
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
+				),
+				'advanced' => true,
+			),
 		),
 	);
 }
 
-function wikiplugin_code($data, $params) {
+function wikiplugin_code($data, $params)
+{
 	global $prefs;
 	static $code_count;
 	
 	$defaults = array(
-		'wrap' => 'y',
-		'mediawiki' => 'n'
+		'wrap' => '1',
+		'mediawiki' => '0'
 	);
 	
 	$params = array_merge($defaults, $params);
 	
 	extract($params, EXTR_SKIP);
 	$code = trim($data);
-        if ($mediawiki =='y')
-                return "<code>$code</code>";
+	if ($mediawiki =='1') {
+		return "<code>$code</code>";
+	}
 
 	$code = str_replace('&lt;x&gt;', '', $code);
 	$code = str_replace('<x>', '', $code);
 	$code = str_replace('<', '&lt;', $code);
 
-	$parse_wiki = ( isset($wiki) && $wiki == 1 );
 	$id = 'codebox'.++$code_count;
 	$boxid = " id=\"$id\" ";
-
+	
 	$out = $code;
-
+	
 	if (isset($colors) && $colors == '1') {	// remove old geshi setting as it upsets codemirror
 		unset( $colors );
+	}
+	
+	//respect wrap setting when Codemirror is off and set to wrap when Codemirror is on to avoid broken view while
+	//javascript loads
+	if ((isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] == 'y') || $wrap == 1) {
+		$pre_style = 'white-space:pre-wrap;'
+		.' white-space:-moz-pre-wrap !important;'
+		.' white-space:-pre-wrap;'
+		.' white-space:-o-pre-wrap;'
+		.' word-wrap:break-word;';
 	}
 
 	$out = (isset($caption) ? '<div class="codecaption">'.$caption.'</div>' : "" ) 
