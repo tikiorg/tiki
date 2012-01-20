@@ -26,7 +26,10 @@ contents
  : content
 	{$$ = $1;}
  | contents content
-	{$$ =  $1 + $2;}
+	{
+		$$ =  $1 + $2; //js
+		//php $$ = $1 . $2;
+	}
  ;
 
 content

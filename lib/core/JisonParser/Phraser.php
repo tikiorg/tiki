@@ -39,7 +39,9 @@ case 1:return $S[$O-1];
 break;
 case 2:$thisS = $S[$O];
 break;
-case 3:$thisS =  $S[$O-1] + $S[$O];
+case 3:
+		$thisS = $S[$O-1] . $S[$O];
+	
 break;
 case 4:
 			$thisS = $this->tagHandler($S[$O]);
