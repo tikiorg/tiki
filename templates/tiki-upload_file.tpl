@@ -528,17 +528,13 @@
 				nb_upload += 1;
 			}
 	
-			function progress(id,msg) {
-				document.getElementById('progress_'+id).innerHTML = msg;
-			}
-	
 			function do_submit(n) {
 				if (document.forms['file_'+n].elements['userfile[]'].value != '') {
-					progress(n,"<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
+					$('#progress_'+n).html("<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
 					document.getElementById('file_'+n).submit();
 					document.getElementById('file_'+n).reset();
 				} else {
-					progress(n,"{tr}No File to Upload...{/tr} <span class='button'><a href='#' onClick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
+					$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onClick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
 				}
 			}
 	

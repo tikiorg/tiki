@@ -2708,7 +2708,7 @@ class FileGalLib extends TikiLib
 				echo '<?xml version="1.0" encoding="UTF-8"?'.'>';
 				ob_flush();
 				echo "<script type='text/javascript'><!--//--><![CDATA[//><!--\n";
-				echo "parent.progress('$id','" . smarty_modifier_escape($msg, 'javascript', 'UTF-8') . "');\n";
+				echo "parent.$('#progress_'+$id).html('" . smarty_modifier_escape($msg, 'javascript', 'UTF-8') . "');\n";
 				echo "//--><!]]></script>\n";
 			}
 			ob_flush();
