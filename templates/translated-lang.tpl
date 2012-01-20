@@ -7,23 +7,27 @@
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 		<ul>
 			<li class="tabcontent">
-			{* First the human translations. Heading is displayed only if machine translation is switched on and object is a wiki page*}
-				{if $prefs.feature_machine_translation eq 'y' and $object_type eq 'wiki page'}
+			{* First the language of the object *}
+				<a href="tiki-index.php?page={$trads[0].objName|escape}&no_bl=y" title="{$trads[0].langName|escape} ({$trads[0].lang|escape}): {$trads[0].objName}" class="selected">
+					{$trads[0].langName|escape} ({$trads[0].lang|escape}) <br />
+					</a>
+			{* Than the header for human translations - shown only if there is a translation availble *}
+				{if isset($trads) and count($trads) > 1}
 					<h1>
-						{icon _id=group title="{tr}Human Translations{/tr}"} {tr}Human Translations{/tr}
+						{icon _id=group title="{tr}Translations{/tr}"} {tr}Translations{/tr}
 					</h1>
 				{/if}
 			{* Show the list of available translations *}
 				{section name=i loop=$trads}
 				{* For wiki pages *}		
-					{if $object_type eq 'wiki page'}
-						<a href="tiki-index.php?page={$trads[i].objName|escape}&no_bl=y" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" {if $trads[i] eq $trads[0]} class="selected" {else} class="linkmodule {$trads[i].class}" {/if}>
+					{if $object_type eq 'wiki page' and $trads[i] neq $trads[0]}
+						<a href="tiki-index.php?page={$trads[i].objName|escape}&no_bl=y" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" class="linkmodule {$trads[i].class}">
 							{$trads[i].langName|escape} ({$trads[i].lang|escape}) <br />
 						</a>
 					{/if}
 				{* For articles *}
-					{if $object_type eq 'article'}
-						<a href="tiki-read_article.php?articleId={$trads[i].objId}" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" {if $trads[i] eq $trads[0]} class="selected" {else} class="linkmodule {$trads[i].class}" {/if}>
+					{if $object_type eq 'article' and $trads[i] neq $trads[0]}
+						<a href="tiki-read_article.php?articleId={$trads[i].objId}" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" class="linkmodule {$trads[i].class}">
 							{$trads[i].langName|escape} ({$trads[i].lang|escape}) <br />
 						</a>
 					{/if}
