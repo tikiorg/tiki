@@ -25,7 +25,8 @@
 			{if $prefs.comments_notitle neq 'y'}
 				<label>{tr}Title:{/tr} <input type="text" name="title" value="{$title|escape}"/></label>
 			{/if}
-			<label class="clearfix">{tr}Comment:{/tr} {textarea name=data comments="y" _wysiwyg="n"}{$data|escape}{/textarea}</label>
+			{capture name=rows}{if $type eq 'forum'}{$prefs.default_rows_textarea_forum}{else}{$prefs.default_rows_textarea_comment}{/if}{/capture}
+			<label class="clearfix">{tr}Comment:{/tr} {textarea name=data comments="y" _wysiwyg="n" rows=$smarty.capture.rows}{$data|escape}{/textarea}</label>
 
 			{if $prefs.feature_antibot eq 'y'}
 				{assign var='showmandatory' value='y'}
