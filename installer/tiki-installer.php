@@ -866,7 +866,7 @@ if ($install_step == '2') {
 		if (!empty($_REQUEST['email_test_to'])) {
 			$email_test_to =  $_REQUEST['email_test_to'];
 			
-			if ($_REQUEST['email_test_cc'] == '1') {
+			if (isset($_REQUEST['email_test_cc']) && $_REQUEST['email_test_cc'] == '1') {
 				$email_test_headers .= "Cc: $email_test_tw\n";
 			}
 
@@ -878,7 +878,7 @@ if ($install_step == '2') {
 				$email_test_ready = false;
 			}
 		} else {	// no email supplied, check copy checkbox
-			if ($_REQUEST['email_test_cc'] != '1') {
+			if (!isset($_REQUEST['email_test_cc']) || $_REQUEST['email_test_cc'] != '1') {
 				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
 				$email_test_ready = false;
 			}
