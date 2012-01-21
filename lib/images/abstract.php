@@ -233,7 +233,11 @@ class ImageAbstract
 		$this->height = $this->header[1];
 		$this->otherinfo = $otherinfo;
 		//TODO write function to cover all supported image types
-		$this->exif = $this->header['mime'] == 'image/jpeg' ? exif_read_data($image, 0, true) : false;
+		if( function_exists( 'exif_read_data' )) {
+			$this->exif = $this->header['mime'] == 'image/jpeg' ? exif_read_data($image, 0, true) : false;
+		} else {
+			$this->exif = false;
+		}		
 		//TODO write function to cover all supported image types
 		$this->iptc_raw = !empty($otherinfo['APP13']) ? iptcparse($otherinfo['APP13']) : false;
 		//Adds labels to iptc fields
