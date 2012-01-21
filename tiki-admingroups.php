@@ -59,7 +59,7 @@ if (!empty($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
 if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
 // Process the form to add a group
 if (isset($_REQUEST["newgroup"])) {
-	check_ticket('admin-groups');
+	$access->check_authenticity(tra('Are you sure you want to create a new group?'));
 	if (!empty($_REQUEST['name'])) $_REQUEST['name'] = trim($_REQUEST['name']);
 	if (empty($_REQUEST['name'])) {
 		$smarty->assign('msg', tra("Group name can not be empty"));
@@ -87,6 +87,7 @@ if (isset($_REQUEST["newgroup"])) {
 	$logslib->add_log('admingroups', 'created group ' . $_REQUEST["group"]);
 }
 if (isset($_REQUEST['adduser'])) {
+	$access->check_authenticity(tra('Are you sure you want to add this user?.'));
 	$user = $_REQUEST['user'];
 	$group = $_REQUEST['group'];
 	if ($user && $group) {
