@@ -50,10 +50,10 @@ function wikiplugin_include_info()
 	);
 }
 
-function wikiplugin_include($data, $params, $offset)
+function wikiplugin_include($dataIn, $params, $offset)
 {
 	global $tikilib,$userlib,$user;
-   static $included_pages, $data;
+    static $included_pages, $data;
 
 	$max_times = 5;
 	$params = array_merge(array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params);
@@ -73,11 +73,11 @@ function wikiplugin_include($data, $params, $offset)
         $included_pages[$memo] = 1;
         // only evaluate permission the first time round
         // evaluate if object or system permissions enables user to see the included page
-    	$data = $tikilib->get_page_info($page);
-    	if (!$data) {
+    	$data[$memo] = $tikilib->get_page_info($page);
+    	if (!$data[$memo]) {
     		$text = $nopage_text;
     	}
-		$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
+		$perms = $tikilib->get_perm_object($page, 'wiki page', $data[$memo], false);
         if ($perms['tiki_p_view'] != 'y') {
             $included_pages[$memo] = $max_times;
             $text = $pagedenied_text;
@@ -85,8 +85,8 @@ function wikiplugin_include($data, $params, $offset)
         }
     }
 
-	if ($data) {
-		$text = $data['data'];
+	if ($data[$memo]) {
+		$text = $data[$memo]['data'];
 		if (isset($start) || isset($stop)) {
 			$explText = explode("\n", $text);
 			if (isset($start) && isset($stop)) {
