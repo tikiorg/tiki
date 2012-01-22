@@ -11,7 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once('lib/mime/mimetypes.php');
 
 // returns mimetypes of files
 function tiki_get_mime($filename, $fallback = '', $fileRealPath = '') {
@@ -53,6 +52,7 @@ function tiki_get_mime($filename, $fallback = '', $fileRealPath = '') {
 
 function tiki_get_mime_from_extension($filename, $fallback = '') {
 	global $mimetypes;
+	include_once('lib/mime/mimetypes.php');
 
 	if (isset($mimetypes)) {
                 $ext = pathinfo($filename);
