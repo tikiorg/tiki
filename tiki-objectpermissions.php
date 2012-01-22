@@ -460,16 +460,16 @@ JS;
 
 			loop: function() { 		// each one of this group
 
-	if (\$(this).attr('checked')) {
+	if (\$(this).is(':checked')) {
 		\$('input[value="'+\$(this).val()+'"]').					// other checkboxes of same value (perm)
 			filter('$beneficiaries').									// which inherit from this
-			attr('checked',\$(this).attr('checked')).					// check and disable
-			attr('disabled',\$(this).attr('checked'));
+			attr('checked',\$(this).is(':checked')).					// check and disable
+			attr('disabled',\$(this).is(':checked'));
 	}
 		
 	\$(this).change( function() {									// bind click event
 	
-		if (\$(this).attr('checked')) {
+		if (\$(this).is(':checked')) {
 			\$('input[value="'+\$(this).val()+'"]').			// same...
 				filter('$beneficiaries').
 				attr('checked',true).							// check?
