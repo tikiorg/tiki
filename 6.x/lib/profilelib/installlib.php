@@ -765,6 +765,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $message;
 	private $structure;
 	private $wysiwyg;
+	private $wiki_authors_style;
 	
 	private $mode = 'create_or_update';
 	private $exists;
@@ -797,6 +798,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->structure = $data['structure'];
 		if( array_key_exists( 'wysiwyg', $data ) )
 			$this->wysiwyg = $data['wysiwyg'];
+		if ( array_key_exists('wiki_authors_style', $data) )
+			$this->wiki_authors_style = $data['wiki_authors_style'];
 	}
 
 	function canInstall()
@@ -851,6 +854,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->message );
 		$this->replaceReferences( $this->structure );
 		$this->replaceReferences( $this->wysiwyg );
+		$this->replaceReferences($this->wiki_authors_style);
 	
 		$this->mode = $this->convertMode();
 
@@ -870,7 +874,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			if( ! $this->message ) {
 				$this->message = tra('Created by profile installer');
 			}
-			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg ) )
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg, $this->wiki_authors_style ) )
 				return null;
 		} else {
 			$info = $tikilib->get_page_info( $this->name, true, true );
@@ -905,7 +909,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 				$this->message = tra('Page updated by profile installer');
 			}
 
-			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg );
+			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg, $this->wiki_authors_style );
 		}
 
 		global $multilinguallib;
