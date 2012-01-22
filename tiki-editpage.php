@@ -208,8 +208,13 @@ function compare_import_versions($a1, $a2)
 
 if (isset($_REQUEST['cancel_edit'])) {
 	$tikilib->semaphore_unset($page, $_SESSION[$editLockPageId]);
-	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
-		$url = "location:".$wikilib->sefurl($_REQUEST['returnto']);
+	if (!empty($_REQUEST['returnto'])) {	
+		if(isURL($_REQUEST['returnto'])) {
+			$url = "location:".$_REQUEST['returnto'];
+		} else {
+			// came from wikiplugin_include.php edit button
+			$url = "location:".$wikilib->sefurl($_REQUEST['returnto']);
+		}
 	} else {
 		$url = "location:".$wikilib->sefurl($page);
 		if (!empty($_REQUEST['page_ref_id'])) {
@@ -1103,7 +1108,11 @@ if (
 	}
 
 	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
-		$url = $wikilib->sefurl($_REQUEST['returnto']);
+		if(isURL($_REQUEST['returnto'])) {
+			$url = $_REQUEST['returnto'];
+		} else {
+			$url = $wikilib->sefurl($_REQUEST['returnto']);
+		}
 	} else if ($page_ref_id) {
 		$url = "tiki-index.php?page_ref_id=$page_ref_id";
 	} else {
@@ -1315,3 +1324,8 @@ $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
 
+function isURL($chkURL)
+{
+	$rc = (false !== parse_url($chkURL));
+	return $rc;	
+}
