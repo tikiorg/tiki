@@ -137,6 +137,7 @@ static $mimetypes = array(
 	"fig" => "application/x-xfig",
 	"flac" => "application/x-flac",
 	"fli" => "video/fli",
+	"flv" => "video/x-flv",
 	"fm" => "application/x-maker",
 	"frame" => "application/x-maker",
 	"frm" => "application/x-maker",

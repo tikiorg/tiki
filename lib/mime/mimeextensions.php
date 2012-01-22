@@ -312,6 +312,7 @@ $mimeextensions=Array(
 "video/vnd.mpegurl" => "mxu",
 "video/x-dv" => "dif",
 "video/x-dv" => "dv",
+"video/x-flv" => "flv",
 "video/x-la-asf" => "lsf",
 "video/x-la-asf" => "lsx",
 "video/x-mng" => "mng",
