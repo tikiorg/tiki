@@ -258,7 +258,8 @@ class CalendarLib extends TikiLib
 					"parsedDescription" => $this->parse_data($res["description"], array('is_html' => $prefs['calendar_description_is_html'] === 'y')),
 					"description" => str_replace("\n|\r", "", $res["description"]),
 					"calendarId" => $res['calendarId'],
-					"status" => $res['status']
+					"status" => $res['status'],
+					'user' => $res['user']
 				);
 			}
 		}

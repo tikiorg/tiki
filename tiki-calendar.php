@@ -279,6 +279,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$smarty->assign('celllocation', $le["location"]);
 				$smarty->assign('cellcategory', $le["category"]);
 				$smarty->assign('cellstatus', $le["status"]);
+				$smarty->assign('celluser', $le['user']);
 				$smarty->assign('cellname', $le["name"]);
 				$smarty->assign('cellurl', $le["web"]);
 				$smarty->assign('cellid', $le["calitemId"]);
