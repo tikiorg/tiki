@@ -11,12 +11,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	
 	function wikiView($args)
 	{
-		global $tikilib, $headerlib, $_REQUEST;
-		
-		ini_set('error_reporting', E_ALL);
-		ini_set('display_errors', 1);
-		
-		$parser = new JisonParser_Phraser_Handler();
+		global $tikilib, $headerlib, $_REQUEST, $smarty;
 		
 		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
 			
@@ -39,8 +34,20 @@ Class Feed_ForwardLink extends Feed_Abstract
 		
 		$phrase = (!empty($_REQUEST['phrase']) ? htmlspecialchars($_REQUEST['phrase']) : '');
 		$_REQUEST['preview'] = (!empty($_REQUEST['preview']) ? $_REQUEST['preview'] : $args['version']);
-		$phraseI;
-		foreach(Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems() as $item) {
+		$phraseI = 0;
+		
+		$feedItems = Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems();
+		$phrases = array();
+		foreach($feedItems as $item) {
+			$phrases[] = $thisText = htmlspecialchars($item->forwardlink->text);
+		}
+		
+		$parser = new JisonParser_Phraser_Handler();
+		
+		//$smarty->assign("parsed", $parser->findPhrases($smarty->getTemplateVars("parsed"), $phrases));
+		
+		
+		foreach($feedItems as $item) {
 			$thisText = htmlspecialchars($item->forwardlink->text);
 			$thisHref = htmlspecialchars($item->textlink->href);
 			$linkedText = htmlspecialchars($item->textlink->text);
