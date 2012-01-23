@@ -94,6 +94,19 @@ if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
 $tikilib->get_perm_object( $calID, 'calendar' );
 $access->check_permission('tiki_p_view_calendar');
 
+$calitemId = !empty($_REQUEST['save']['calitemId'])?$_REQUEST['save']['calitemId']:(!empty($_REQUEST['calitemId'])?$_REQUEST['calitemId']:(!empty($_REQUEST['viewcalitemId'])?$_REQUEST['viewcalitemId']:0));
+if (!empty($calitemId) && !empty($user)) {
+	$calitem = $calendarlib->get_item($calitemId);
+	if ($calitem['user'] == $user) {
+		$smarty->assign('tiki_p_change_events', 'y');
+		$tiki_p_change_events = 'y';
+               	if (!empty($_REQUEST['save']['calendarId'])) {
+			$caladd[$_REQUEST['save']['calendarId']]['tiki_p_change_events'] = $caladd[$_REQUEST['save']['calendarId']]['tiki_p_add_events'];
+		}
+		$caladd[$calitem['calendarId']]['tiki_p_change_events'] = 'y';
+        }
+}
+
 if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST['act'])) {
 	$_REQUEST['changeCal'] = 'y';
 }

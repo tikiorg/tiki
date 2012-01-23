@@ -13,7 +13,7 @@
 {elseif $prefs.calendar_sticky_popup eq "y"}
 	<div style="float:right">
 			{button _noborder='y' _text="{tr}Export event{/tr}" _icon="task_submitted" href="tiki-calendar_export_ical.php" calendarItem=$cellid export='y' _auto_args="calendarItem,export"}
-		{if $tiki_p_change_events eq 'y'}
+		{if $tiki_p_change_events eq 'y' || $celluser eq $user}
 			{button _noborder='y' _text="{tr}Edit event{/tr}" _icon="page_edit" href="tiki-calendar_edit_item.php" calitemId=$cellid _auto_args="calitemId"}
 			{button _noborder='y' _text="{tr}Delete event{/tr}" _icon="cross" href="tiki-calendar_edit_item.php" calitemId=$cellid delete="y" _auto_args="calitemId,delete"}
 		{/if}
