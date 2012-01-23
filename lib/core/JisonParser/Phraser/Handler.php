@@ -8,6 +8,7 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 	var $wordsChars = array();
 	var $indexes;
 	var $parsed = "";
+	var $cache = array();
 	
 	function tagHandler($tag)
 	{
@@ -108,17 +109,26 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
     
     function getParts($val)
     {
+    	global $JisonParser_Phraser_Cache;
+		if (!isset($JisonParser_Phraser_Cache)) $JisonParser_Phraser_Cache = array();
     	$words = array();
     	$chs = array();
     	$i = 0;
 		
+		if (!isset($JisonParser_Phraser_Cache[$val])) {
+			$parser = new JisonParser_Phraser_Handler();
+			$parser->parse($val);
+			
+			$JisonParser_Phraser_Cache[$val] = array(
+	   			'words'=> $parser->words,
+	   			'chs'=> $parser->wordsChars
+	   		);
+		}
+		
 		$parser = new JisonParser_Phraser_Handler();
 		$parser->parse($val);
 		
-   		return array(
-   			'words'=> $parser->words,
-   			'chs'=> $parser->wordsChars
-   		);
+   		return $JisonParser_Phraser_Cache[$val];
     }
 	
 	function phraseIndexes($phraseWords, $parentWords, $allMatches = false)
