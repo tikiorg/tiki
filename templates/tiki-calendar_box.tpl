@@ -10,15 +10,17 @@
 		</span>
 	{/if}
 	</div>
-{elseif $prefs.calendar_sticky_popup eq "y"}
+{else}
 	<div style="float:right">
-			{button _noborder='y' _text="{tr}Export event{/tr}" _icon="task_submitted" href="tiki-calendar_export_ical.php" calendarItem=$cellid export='y' _auto_args="calendarItem,export"}
+	{if $prefs.calendar_sticky_popup eq "y"}
+		{button _noborder='y' _text="{tr}Export event{/tr}" _icon="task_submitted" href="tiki-calendar_export_ical.php" calendarItem=$cellid export='y' _auto_args="calendarItem,export"}
 		{if $tiki_p_change_events eq 'y' || $celluser eq $user}
 			{button _noborder='y' _text="{tr}Edit event{/tr}" _icon="page_edit" href="tiki-calendar_edit_item.php" calitemId=$cellid _auto_args="calitemId"}
 			{button _noborder='y' _text="{tr}Delete event{/tr}" _icon="cross" href="tiki-calendar_edit_item.php" calitemId=$cellid delete="y" _auto_args="calitemId,delete"}
 		{/if}
 		{button _noborder='y' _text="{tr}View event{/tr}" _icon="magnifier" href="tiki-calendar_edit_item.php" viewcalitemId=$cellid _auto_args="viewcalitemId"}
-		{button _noborder='y' _text="{tr}Close{/tr}" _icon="close" href="javascript:void(0)" _onclick="nd();return false;"}
+	{/if}
+	{button _noborder='y' _text="{tr}Close{/tr}" _icon="close" href="javascript:void(0)" _onclick="nd();return false;"}
 	</div>
 {/if}
 {if $group_by_item ne 'y'}
