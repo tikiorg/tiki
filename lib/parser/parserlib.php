@@ -1085,7 +1085,7 @@ if ( \$('#$id') ) {
 		$data = TikiLib::htmldecode($data);
 		$data = $filter->filter($data);
 
-		if (isset($parseOptions) && !$parseOptions['is_html']) {
+		if (isset($parseOptions) && (!empty($parseOptions['is_html']) && (!$parseOptions['is_html']))) {
 			$noparsed = array('data' => array(), 'key' => array());
 			$this->strip_unparsed_block($data, $noparsed);
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
