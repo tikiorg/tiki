@@ -24,15 +24,15 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 				$this->currentWord >= $index['start'] && 
 				$this->currentWord <= $index['end']
 			) {
-				$word = '<span class="phrase ui-state-highlight" style="border: none;">' . $word . '</span>';
+				$word = '<span class="phrase phrase' . $i . '" style="border: none;">' . $word . '</span>';
 			}
 			
 			if ($this->currentWord == $index['start']) {
-				$word = '<span class="phraseStart" style="border: none; font-weight: cold;">' . $word;
+				$word = '<span class="phraseStart phraseStart' . $i . '" style="border: none; font-weight: cold;"></span>' . $word;
 			}
 			
 			if ($this->currentWord == $index['end']) {
-				$word = $word . '<span class="phraseEnd" style="border: none;"/>';	       						
+				$word = $word . '<span class="phraseEnd phraseEnd' . $i . '" style="border: none;"></span>';	       						
 			}
 		}
 		
@@ -45,12 +45,12 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		$this->wordsChars[$this->currentWord] .= $char;
 		$this->chars[] = $char;
 		
-		foreach($this->indexes as $index) {
+		foreach($this->indexes as $i => $index) {
 			if (
 				$this->currentWord > $index['start'] && 
-				$this->currentWord < $index['end']
+				$this->currentWord <= $index['end']
 			) {
-				$char = "<span class='phrase ui-state-highlight' style='border: none;'>" . $char . "</span>";
+				$char = "<span class='phrases phrase' . $i . '' style='border: none;'>" . $char . "</span>";
 			}
 		}
 		

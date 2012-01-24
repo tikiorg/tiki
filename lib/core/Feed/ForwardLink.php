@@ -42,12 +42,14 @@ Class Feed_ForwardLink extends Feed_Abstract
 			$phrases[] = $thisText = htmlspecialchars($item->forwardlink->text);
 		}
 		
-		$parser = new JisonParser_Phraser_Handler();
+		$parsed = $smarty->getTemplateVars("parsed");
+		if (!empty($parsed)) {
+			$phraser = new JisonParser_Phraser_Handler();
+			$smarty->assign("parsed", $phraser->findPhrases($parsed, $phrases));
+		}
 		
-		//$smarty->assign("parsed", $parser->findPhrases($smarty->getTemplateVars("parsed"), $phrases));
 		
-		
-		foreach($feedItems as $item) {
+		foreach($feedItems as $i => $item) {
 			$thisText = htmlspecialchars($item->forwardlink->text);
 			$thisHref = htmlspecialchars($item->textlink->href);
 			$linkedText = htmlspecialchars($item->textlink->text);
@@ -73,16 +75,13 @@ JQ
 			} else {
 			
 				$headerlib->add_jq_onready(<<<JQ
-					$('#page-data')
-						.rangyRestore('$thisText', function(r) {
-							$('<a>*</a>')
-								.attr('href', '$thisHref')
-								.attr('text', '$linkedText')
-								.addClass('forwardlink')
-								.insertBefore(r.selection[0]);
-							
-							r.selection.addClass('ui-state-highlight');
-						});
+					$('<a>*</a>')
+						.attr('href', '$thisHref')
+						.attr('text', '$linkedText')
+						.addClass('forwardlink')
+						.insertBefore('.phraseStart$i');
+					
+					$('.phrase$i').addClass('ui-state-highlight');
 JQ
 				);
 			}
