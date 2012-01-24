@@ -11,23 +11,57 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
+	var $npOn = false;
+	var $pluginStack = array();
 	
+	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
-		$parser = new JisonParser_Wiki_Handler;
 		//nested parsing!
 		$parserlib = new ParserLib;
+		$parser = new JisonParser_Wiki_Handler();
+		
 		return $parser->parse(
 			$parserlib->plugin_execute(
-				$pluginDetails->name,
-				$pluginDetails->body,
+				$pluginDetails['name'],
+				$pluginDetails['body'],
 				$parserlib->plugin_split_args(
-					$pluginDetails->args
+					$pluginDetails['args']
 				)
 			)
 		);
 	}
 	
+	function stackPlugin($yytext)
+	{
+		$pluginName = $this->match('/^\{([A-Z]+)/', $yytext);
+		$pluginArgs =  $this->match('/[(].*?[)]/', $yytext);
+		
+		$this->pluginStack[] = array(
+			"name"=> $pluginName,
+			"args"=> $pluginArgs,
+			"body"=> ''
+		);
+	}
+
+	function inlinePlugin($yytext)
+	{
+		$pluginName = $this->match('/^\{([a-z]+)/', $yytext);
+		$pluginArgs = $this->split(' ', $yytext);
+		$pluginArgs = $this->shift($pluginArgs);
+		
+		return array(
+			"name"=> $pluginName,
+			"args"=> implode(' ', $pluginArgs),
+			"body"=> ''
+		);
+	}
+	
+	function npState($npState, $ifTrue, $ifFalse)
+	{
+		return ($npState == true ? $ifTrue : $ifFalse);
+	}
+	//end state handlers
 	//Wiki Syntax Objects Parsing Start
 	function bold($content)
 	{
@@ -46,7 +80,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	
 	function colortext($content)
 	{
-		$text = JisonParser_Wiki_Handler::split(':', $content);
+		$text = $this->split(':', $content);
 		$color = $text[0];
 		$content = $text[1];
 		return "<span style='color: #" . $color . ";'>" . $content . "</span>";
@@ -94,10 +128,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	
 	function link($content)
 	{
-		$link = JisonParser_Wiki_Handler::split(':', $content);
+		$link = $this->split(':', $content);
 		$href = $content;
 		
-		if (JisonParser_Wiki_Handler::match('/\|/', $content)) {
+		if ($this->match('/\|/', $content)) {
 			$href = $link[0];
 			$content = $link[1];
 		}
@@ -117,15 +151,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function tableParser($content)
 	{
 		$tableContents = '';
-		$rows = JisonParser_Wiki_Handler::split('<br />', $content);
+		$rows = $this->split('<br />', $content);
 		for ($i = 0, $count_rows = count($rows); $i < $count_rows; $i++) {
 			$row = '';
 			
-			$cells = JisonParser_Wiki_Handler::split('|', $rows[$i]);
+			$cells = $this->split('|', $rows[$i]);
 			for ($j = 0, $count_cells = count($cells); $j < $count_cells; $j++) {
-				$row .= JisonParser_Wiki_Handler::table_td($cells[$j]);
+				$row .= $this->table_td($cells[$j]);
 			}
-			$tableContents .= JisonParser_Wiki_Handler::table_tr($row);
+			$tableContents .= $this->table_tr($row);
 		}
 		return "<table style='width: 100%;'>" . $tableContents . "</table>";
 	}
@@ -152,10 +186,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	
 	function wikilink($content)
 	{
-		$wikilink = JisonParser_Wiki_Handler::split('|', $content);
+		$wikilink = $this->split('|', $content);
 		$href = $content;
 		
-		if (JisonParser_Wiki_Handler::match('/\|/', $content)) {
+		if ($this->match('/\|/', $content)) {
 			$href = $wikilink[0];
 			$content = $wikilink[1];
 		}
@@ -169,7 +203,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	
 	function formatContent($content)
 	{
-		return nl2br($content);
+		//return nl2br($content);
+		return $content;
 	}
 	
 	//unified functions used inside parser
@@ -226,31 +261,4 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		array_shift($array);
 		return $array;
 	}
-	// start state handlers
-	function stackPlugin($yytext, $pluginStack)
-	{
-		$pluginName = JisonParser_Wiki_Handler::match('/^\{([A-Z]+)/', $yytext);
-		$pluginArgs =  JisonParser_Wiki_Handler::match('/[(].*?[)]/', $yytext);
-		
-		return JisonParser_Wiki_Handler::push($pluginStack, (object)array(name=> $pluginName, args=> $pluginArgs, body=> ''));
-	}
-
-	function inlinePlugin($yytext)
-	{
-		$pluginName = JisonParser_Wiki_Handler::match('/^\{([a-z]+)/', $yytext);
-		$pluginArgs = JisonParser_Wiki_Handler::split(' ', $yytext);
-		$pluginArgs = JisonParser_Wiki_Handler::shift($pluginArgs);
-		
-		return (object)array(
-			name=> $pluginName,
-			args=> implode(' ', $pluginArgs),
-			body=> ''
-		);
-	}
-	
-	function npState($npState, $ifTrue, $ifFalse)
-	{
-		return ($npState == true ? $ifTrue : $ifFalse);
-	}
-	//end state handlers
 }

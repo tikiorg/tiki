@@ -3,7 +3,6 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 {
 	var $chars = array();
 	var $words = array();
-	var $tags = array();
 	var $currentWord = -1;
 	var $wordsChars = array();
 	var $indexes = array();
@@ -12,7 +11,6 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 	
 	function tagHandler($tag)
 	{
-		$this->tags[] = $tag;
 		return $tag;
 	}
 	
