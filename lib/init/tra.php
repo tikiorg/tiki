@@ -54,9 +54,12 @@ function init_language( $lg ) {
 		include("lang/$lg/language.php");
 		
 		// include mods language files if any
-		foreach (glob("lang/$lg/language_*.php") as $file) {
-			require($file);
-			$lang = array_merge($lang, $lang_mod);
+		$files = glob("lang/$lg/language_*.php");
+		if (is_array($files)) {
+			foreach ($files as $file) {
+				require($file);
+				$lang = array_merge($lang, $lang_mod);
+			}
 		}
 
 		if (is_file("lang/$lg/custom.php")) {
