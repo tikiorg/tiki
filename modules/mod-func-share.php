@@ -197,7 +197,7 @@ function module_share($mod_reference, $module_params)
 		$smarty->assign('fb_app_id_param',  '');
 	};
 	if (!empty($fbDivAttr)) {
-		$fbDivAttr = 'style="' . $fbDivAttr . '"';
+		$fbDivAttr = ' style="' . $fbDivAttr . '"';
 	}
 	$smarty->assign('fb_div_attributes',  $fbDivAttr);
 
