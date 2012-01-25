@@ -1133,10 +1133,6 @@ ul.floatleft li {
 	clear: both;
 }
 
-.fancytoclevel {
-	list-style-image: url(../../img/icons/footprint.gif);
-}
-
 /* TOC */
 .toc * {
 	list-style: none;
