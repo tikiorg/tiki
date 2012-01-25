@@ -418,6 +418,9 @@ li#logout_link a {
 	margin-right: 55px;
 }
 
+.mod-share-item {
+	float: left;
+}
 /* centercolumn */
 .fullscreen .tellafriend,
 .fullscreen .share {
