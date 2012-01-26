@@ -150,7 +150,7 @@ function module_share_info()
 			'linkedin' => array(
 				'name' => tra('LinkedIn'),
 				'description' => tra('Linked in share button') . ' (n/y)',
-				'filter' => 'word',
+				'filter' => 'alpha',
 			),
 			'linkedin_url' => array(
 				'name' => tra('LinkedIn: URL'),
@@ -161,6 +161,31 @@ function module_share_info()
 				'name' => tra('LinkedIn: Count Mode'),
 				'description' => tra('Position of count') . ' (none/top/right)',
 				'filter' => 'word',
+			),
+			'google' => array(
+				'name' => tra('Google +1'),
+				'description' => tra('Google +1 button') . ' (n/y)',
+				'filter' => 'alpha',
+			),
+			'google_size' => array(
+				'name' => tra('Google: Size'),
+				'description' => tra('Google button size') . ' (standard|small|medium|tall)',
+				'filter' => 'word',
+			),
+			'google_annotation' => array(
+				'name' => tra('Google: Annotation'),
+				'description' => tra('Google annotation') . ' (bubble|inline|none)',
+				'filter' => 'word',
+			),
+			'google_language' => array(
+				'name' => tra('Google: Language'),
+				'description' => tra('Google language') . ' (en-US|fr|ca|de|en-UK|...)',
+				'filter' => 'text',
+			),
+			'google_href' => array(
+				'name' => tra('Google: URL'),
+				'description' => tra('URL to share (leave blank for current URL)'),
+				'filter' => 'url',
 			),
 		),
 	);
@@ -281,4 +306,21 @@ function module_share($mod_reference, $module_params)
 	}
 	$smarty->assign('li_data_attributes',  $liData);
 
+	// linkedin
+
+	$glData = '';
+	if (!empty($module_params['google_size']) && $module_params['google_size'] !== 'standard') {
+		$glData .= ' data-size="' . $module_params['google_size'] . '"';
+	}
+	if (!empty($module_params['google_annotation']) && $module_params['google_annotation'] !== 'bubble') {
+		$glData .= ' data-annotation="' . $module_params['google_annotation'] . '"';
+	}
+	if (!empty($module_params['google_href'])) {
+		$glData .= ' data-href="' . $module_params['google_href'] . '"';
+	}
+	$smarty->assign('gl_data_attributes',  $glData);
+
+	if (!empty($module_params['google_language']) && $module_params['google_language'] !== 'en-US') {
+		$smarty->assign('gl_script_addition',  "  window.___gcfg = {lang: '{$module_params['google_language']}'};\n");
+	}
 }
