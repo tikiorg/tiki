@@ -239,14 +239,16 @@ if ( $user && $prefs['feature_user_watches'] === 'y' ) {
 	$isFormSubmit = isset($jitRequest['edit']);
 	if ( $tikilib->page_exists($page) ) {
 		$currentlyWatching = (bool) $tikilib->user_watches($user, 'wiki_page_changed', $page, 'wiki page');
+		$default = $currentlyWatching;
 	} else {
 		// New pages get default watch checked for authors
-		$currentlyWatching = ($prefs['wiki_watch_author'] === 'y');
+		$currentlyWatching = false;
+		$default = ($prefs['wiki_watch_author'] === 'y');
 	}
 
 	$requestedWatch = isset($_REQUEST['watch']) && $isFormSubmit;
 	$smarty->assign('show_watch', 'y');
-	$smarty->assign('watch_checked', ( ($currentlyWatching && !$isFormSubmit) || $requestedWatch) ? 'y' : 'n');
+	$smarty->assign('watch_checked', ( ($default && !$isFormSubmit) || $requestedWatch) ? 'y' : 'n');
 } else {
 	$currentlyWatching = false;
 	$requestedWatch = false;
