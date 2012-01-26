@@ -421,6 +421,11 @@ li#logout_link a {
 .mod-share-item {
 	float: left;
 }
+
+.mod-share-item a img {
+	margin-right: .5em;
+}
+
 /* centercolumn */
 .fullscreen .tellafriend,
 .fullscreen .share {

@@ -32,6 +32,11 @@ function module_share_info()
 				'description' => tra('Email this page') . ' (y/n)',
 				'filter' => 'alpha',
 			),
+			'icons' => array(
+				'name' => tra('Icons'),
+				'description' => tra('Use icons for report, share and email links') . ' (n/y)',
+				'filter' => 'alpha',
+			),
 			'facebook' => array(
 				'name' => tra('Facebook'),
 				'description' => tra('Show Facebook "Like" button on the current page') . ' (n/y)',
@@ -151,6 +156,8 @@ function module_share($mod_reference, $module_params)
 	static $share_mod_usage_counter = 0;
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('share_mod_usage_counter', ++$share_mod_usage_counter);
+
+	$smarty->assign('share_icons', !empty($module_params['icons']) && $module_params['icons'] === 'y');
 
 	// facebook like
 	
