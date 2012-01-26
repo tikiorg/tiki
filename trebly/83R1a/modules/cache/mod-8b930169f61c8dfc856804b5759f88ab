@@ -1,0 +1,22 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-logo.tpl -->
+
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+		<div id="module_20" style="" class="module modlogo box-logo clearfix">
+			<div id="mod-logot1" class="clearfix">
+
+   <div id="sitelogo" style="background-color: transparent;"  class="floatleft">
+      <a href="./" title="Bandeau Teawik (©Trebly)"><img src="img/twk/header-new-twist-2b.jpg" alt="Site Teawik image de bandeau d'accueil" style="border: none" /></a>
+         </div>
+   <div id="sitetitles" class="floatleft">
+      <div id="sitetitle">
+         <a href="./">Savoir et comprendre pour agir</a>
+      </div>
+      <div id="sitesubtitle">Savoir critiquer, pour construire avec ceux qui ne partagent pas toujours votre point de vue</br>Nous sommes tous des cas particuliers, mais de petits groupes héritent des mêmes problèmes dans de grands systèmes, prenons la parole pour construire le changement</div>
+   </div>
+
+
+		</div>
+	</div>
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-logo.tpl -->

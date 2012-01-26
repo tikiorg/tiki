@@ -1,0 +1,17 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/user_module.tpl -->
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+		<div id="module_30" style="" class="module box-secondary_sitemenu_custom_code clearfix">
+			<div id="mod-secondary_sitemenu_custom_codet2" class="clearfix">
+
+
+<div id="secondary_sitemenu_custom_code" style="display:block;">
+<!-- TPL: eval: --><!-- Ceci est la contenu à remplace pour "site menu custom code" -->
+<!-- /* Il n'y a pas de personnalisation secondaire actuellement sur locald8-teawik-53-01.net */ -->
+<!-- /TPL: eval: --></div>
+
+
+		</div>
+	</div>
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/user_module.tpl -->

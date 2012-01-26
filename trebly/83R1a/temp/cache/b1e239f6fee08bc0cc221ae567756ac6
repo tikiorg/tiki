@@ -1,0 +1,13 @@
+a:4:{s:4:"name";s:27:"custom_center_column_header";s:5:"title";N;s:4:"data";s:1178:"<!-- Code personnalisé de colonne centrale -->
+<!-- /* Il y a une personnalisation de la colonne centrale actuellement sur locald8-teawik-53-01.net */ -->
+<!-- /* Le code est passé au template tiki.tpl avec la commande remarksbox  de smarty, par contre la fonction tra ne semble pas supportée, un plugin doit être développé, fait mais ne fonctionne pas, le contenu ici est minimaliste non traduisible. -->
+{* {'Texte à traduire'|tra} *}
+{* {assign(var='tit' value=('Site en développement'|tra))} *}
+{* [ATT: site en cours de développement] *}
+{remarksbox  
+type='note' 
+title={tr}'Warning : this site is being built'{/tr} {* en attente de trad ### *}
+close='y'} 
+{tr}{"This site is under construction at the time around the user interface (that of our TikiWiki CMS itself - version 8.1 - Bty_r001 - help texts, homepages for each category of users, etc. ...) and the content itself. <br> <B> Please understand that state unpolished </B><BR>However, we nevertheless decided to put it into the operational phase by everyone, because all the actors working thought the contents which are already constructed can be useful for many people."}{/tr}
+{/remarksbox}
+";s:5:"parse";N;}

@@ -1,0 +1,16 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/user_module.tpl -->
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+		<div id="module_31" style="" class="module box-topbar_custom_code clearfix">
+			<div id="mod-topbar_custom_codeo2" class="clearfix">
+
+
+<div id="topbar_custom_code" style="display:block;">
+<!-- TPL: eval: --><!-- Code personalisé de barre du haut Ceci est la barre du haut personnalisée -->
+<!-- /* Il n'y a pas de personalisation de la barre du haut actuellement sur locald8-teawik-53-01.net */ --><!-- /TPL: eval: --></div>
+
+
+		</div>
+	</div>
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/user_module.tpl -->

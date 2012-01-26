@@ -1,0 +1,2 @@
+Use the tiki version of jquery
+TO avoid conflict with tiki css, all the css rules must be pre identify with .wp_gallerifficcontent class has been renamed gcontent

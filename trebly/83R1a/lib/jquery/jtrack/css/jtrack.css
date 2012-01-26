@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+body{
+	font-family: Arial, Tahoma, sans-serif;
+	font-size: 11px;
+	margin: 0;
+	padding: 0;
+}
+#jtrack-holder{
+	height: 275px;
+	margin: 30px auto 0;
+	width: 220px;
+}
+#jtrack-holder img{
+	border: none;	
+}
+#jtrack-holder a:link, #jtrack-holder a:visited{
+	color: #0066FF;
+	text-decoration: none;
+	outline: none;	
+}
+#jtrack-holder a:hover{
+	text-decoration: underline;
+}
+#jtrack-bar{
+	background: #1E2625;
+	background: -moz-linear-gradient(top, #1E2625, #333);
+	background: -webkit-gradient(linear, left top, left bottom, from(#1E2625), to(#333));
+	color: #fff;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#jtrack-bar a:link, #jtrack-bar a:visited{
+	color: #fff;
+	text-decoration: none;
+}
+#jtrack-bar a:hover{
+	text-decoration: underline;
+}
+#jtrack-content{
+	border: solid 1px #788F91;
+	height: 245px;
+	overflow: hidden;
+	padding: 5px;
+	margin: 5px 0 0 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#jtrack-form-create,
+#jtrack-form-delete,
+#jtrack-form-update{
+	
+}
+.jtrack-form{
+	background: #C5E7FA;
+	background: -moz-linear-gradient(top, #C5E7FA, #F0F0F2);
+	background: -webkit-gradient(linear, left top, left bottom, from(#C5E7FA), to(#F0F0F2));
+	height: 245px;
+	overflow-y: auto;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#jtrack-content p{
+	margin: 0;
+	padding: 5px 5px 10px;
+}
+.jtrack-form label{
+	display: block;
+	font-weight: bold;
+}
+input.jtrack-text{
+	border: solid 1px #67C0F2;
+	background-color: #F2F2F2;
+	width: 160px;
+}
+input.jtrack-text:focus{
+	border: solid 1px #39ACEE;
+	background-color: #fff;
+}
+.jtrack-archived{
+	background: -moz-linear-gradient(left, #D7D7D7, #F1F1F1);
+	background: -webkit-gradient(linear, 0% 100%, 100% 0%, from(#D7D7D7), to(#F1F1F1));
+}
+.jtrack-completed{
+	background: -moz-linear-gradient(left, #99CC33, #C2E085);
+	background: -webkit-gradient(linear, 0% 100%, 100% 0%, from(#99CC33), to(#C2E085));
+	text-decoration: line-through;
+}
+.jtrack-item{
+	border-bottom: solid 1px #788F91;
+	height: 40px;
+	position: relative;
+}
+.jtrack-item a.jtrack-power{
+	background: url(../img/control_power.png) 0 0 no-repeat;
+	bottom: 10px;
+	display: block;
+	height: 16px;
+	position: absolute;
+	right: 5px;
+	width: 16px;
+}
+.jtrack-item a.jtrack-power-on{
+	background: url(../img/control_power_blue.png) 0 0 no-repeat;
+}
+.jtrack-item span.jtrack-timer{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}

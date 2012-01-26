@@ -1,0 +1,25 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-rsslist.tpl --><!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+			<div id="module_16" class="box box-rsslist module">
+			<h3 class="box-title clearfix" >
+							<span class="moduletitle">Feeds list</span>
+							<span class="moduleflip" id="moduleflip-rsslistl6">
+				<a title="Toggle module contents" class="flipmodtitle" href="javascript:icntoggle('mod-rsslistl6','module.png');">
+					<img src="pics/icons/module.png" alt="[toggle]" width="16" height="16" id="icnmod-rsslistl6" class="flipmodimage" title="[toggle]" />
+				</a>
+			</span>
+							<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
+			<div id="mod-rsslistl6" style="display: block;" class="clearfix box-data">
+
+  <div id="rss">
+                                      </div>
+
+
+		</div>
+		<div class="box-footer">
+
+		</div>
+	</div>
+	<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-rsslist.tpl -->

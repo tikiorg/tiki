@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<link rel="stylesheet" href="jquery.s5.css" />
+	<script type="text/javascript" src="jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="jquery.s5.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("body > div > div > div").s5();
+		});
+	</script>
+	<title>ExampleSlideShow</title>
+</head>
+
+<body class="tiki tiki_wiki_page fixed_width">
+	<div id="main">
+		<div id="tiki-center">
+			<div class="wikitext">
+				<h1 class="showhide_heading" id="An_example_slideshow_for_Tiki_5">An example
+				slideshow for Tiki 5</h1><em>Extending slideshow capabilities in <a title="Tiki5"
+				href="Tiki5?bl=y" class="wiki">Tiki5</a> through JQuery S5</em><br />
+				<div class="note">Here is an example note for slide 1</div>
+				<br />
+
+				<h2 class="showhide_heading" id="Introduction">Introduction</h2><br />
+				<table>
+					<tr>
+						<td>
+							This is a very simple jQuery + Javascript Slide Show engine. It can turn the most
+							basic document, such as this one, into a slideshow.<br />
+							<br />
+							The concept is based on S5 which is a wonderful HTML slideshow engine. S5,
+							however, requires you to add more markup than I care to worry about. JQS5 doesn't
+							require any special markup to your document. Just add in the header and you're
+							set!<br />
+						</td>
+						<td>
+							<img src="images/tw.png" />
+						</td>
+					</tr>
+				</table>
+				<br />
+				<div class="note">Here is an example note for slide 2</div>
+				
+				<h2 class="showhide_heading" id="Simple_HTML_or_wiki_">Simple HTML (or
+				wiki)</h2><br />
+				You then just make your slides like you would a basic HTML page. Each &lt;h2/&gt;
+				(or !!) becomes a slide title and all the things under it are the slide body. The
+				&lt;h1&gt; (or <img alt="(!)" title="exclamation mark !" src=
+				"img/smiles/icon_exclaim.gif" /> is the title of the presentation and things
+				below it are part of the footer.<br />
+				<br />
+				<div class="note">Here is an example note for slide 3</div>
+				
+				<h2 class="showhide_heading" id="The_End">The End</h2>That's all folks!<br />
+				<div class="note">The end.</div>
+				<br />
+			</div>
+		</div>
+	</div>
+</body>
+</html>

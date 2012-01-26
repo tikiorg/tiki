@@ -1,0 +1,19 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-upcoming_events.tpl --><!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+			<div id="module_18" class="box box-upcoming_events module">
+			<h3 class="box-title clearfix" >
+							<span class="moduletitle">Next events </span>
+						<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
+			<div id="mod-upcoming_eventsl3" style="display: block;" class="clearfix box-data">
+
+      <em>No records to display</em>
+
+
+
+		</div>
+		<div class="box-footer">
+
+		</div>
+	</div>
+	<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-upcoming_events.tpl -->

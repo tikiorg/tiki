@@ -1,0 +1,23 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/user_module.tpl -->
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+			<div id="module_34" class="box box-Application+Menu+p1 cssmenubox module">
+			<h3 class="box-title clearfix" >
+							<span class="moduletitle">Menu</span>
+						<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
+			<div id="mod-Application_Menu_p1l4" style="display: block;" class="clearfix box-data">
+
+
+<div id="Application_Menu_p1" style="display:block;">
+<!-- TPL: eval: --><nav class="role_navigation"><!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\tiki-user_cssmenu.tpl -->
+			<ul id="cssmenu0" class="cssmenu_vert menu42"><li class="option383 menuOption menuLevel0"><a href="./"><span class="menuText">Home</span></a></li><li class="option384 menuOption menuLevel0"><a href="tiki-searchresults.php"><span class="menuText">Search</span></a></li><li class="option386 menuOption menuLevel0"><a href="tiki-contact.php"><span class="menuText">Contact Us</span></a></li><li class="option388 menuOption menuLevel0"><a href="tiki-browse_categories.php"><span class="menuText">Categories</span></a></li><li class="option389 menuOption menuLevel0"><a href="tiki-browse_freetags.php"><span class="menuText">Freetags</span></a></li><li class="option391 menuOption menuLevel0"><a href="tiki-gmap_usermap.php"><span class="menuText">Users Map</span></a></li><li class="option411 menuSection menuSection0 menuLevel0"><a href="tiki-index.php"><span class="menuText">Wiki</span></a><ul><li class="option412 menuOption menuLevel1"><a href="tiki-index.php"><span class="menuText">Wiki Home</span></a></li><li class="option413 menuOption menuLevel1"><a href="tiki-lastchanges.php"><span class="menuText">Last Changes</span></a></li><li class="option416 menuOption menuLevel1"><a href="tiki-listpages.php"><span class="menuText">List Pages</span></a></li><li class="option418 menuOption menuLevel1"><a href="tiki-orphan_pages.php"><span class="menuText">Orphan Pages</span></a></li><li class="option419 menuOption menuLevel1"><a href="tiki-editpage.php?page=sandbox"><span class="menuText">Sandbox</span></a></li><li class="option420 menuOption menuLevel1"><a href="tiki-print_pages.php"><span class="menuText">Multiple Print</span></a></li><li class="option423 menuOption menuLevel1"><a href="tiki-admin_structures.php"><span class="menuText">Structures</span></a></li><li class="option424 menuOption menuLevel1"><a href="tiki-mindmap.php"><span class="menuText">Mind Map</span></a></li></ul></li><li class="option432 menuSection menuSection0 menuLevel0"><a href="tiki-view_articles.php"><span class="menuText">Articles</span></a><ul><li class="option434 menuOption menuLevel1"><a href="tiki-view_articles.php"><span class="menuText">Articles Home</span></a></li><li class="option436 menuOption menuLevel1"><a href="tiki-list_articles.php"><span class="menuText">List Articles</span></a></li><li class="option437 menuOption menuLevel1"><a href="tiki-cms_rankings.php"><span class="menuText">Rankings</span></a></li></ul></li><li class="option447 menuSection menuSection0 menuLevel0"><a href="tiki-list_blogs.php"><span class="menuText">Blogs</span></a><ul><li class="option448 menuOption menuLevel1"><a href="tiki-list_blogs.php"><span class="menuText">List Blogs</span></a></li><li class="option449 menuOption menuLevel1"><a href="tiki-blog_rankings.php"><span class="menuText">Rankings</span></a></li></ul></li><li class="option453 menuSection menuSection0 menuLevel0"><a href="tiki-forums.php"><span class="menuText">Forums</span></a><ul><li class="option454 menuOption menuLevel1"><a href="tiki-forums.php"><span class="menuText">List Forums</span></a></li><li class="option455 menuOption menuLevel1"><a href="tiki-forum_rankings.php"><span class="menuText">Rankings</span></a></li></ul></li><li class="option490 menuSection menuSection0 menuLevel0"><a href="tiki-newsletters.php"><span class="menuText">Newsletters</span></a></li></ul>
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\tiki-user_cssmenu.tpl --></nav><!-- /TPL: eval: --></div>
+
+
+		</div>
+		<div class="box-footer">
+
+		</div>
+	</div>
+	<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/user_module.tpl -->

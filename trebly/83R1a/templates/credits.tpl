@@ -1,0 +1,1 @@
+{* $Id: credits.tpl 33949 2011-04-14 05:13:23Z chealer $ *}{tr}Theme:{/tr} {$prefs.style|replace:'.css':''|replace:'None':''|ucwords}{if $prefs.style_option} - {$prefs.style_option|replace:'.css':''|replace:'None':''|ucwords}{/if}

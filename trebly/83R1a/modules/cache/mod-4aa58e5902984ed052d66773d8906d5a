@@ -1,0 +1,11 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-poweredby.tpl -->
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+		<div id="module_26" style="" class="module box-poweredby clearfix">
+			<div id="mod-poweredbyb2" class="clearfix">
+<div class="power">Powered by <a href="http://tiki.org" title="&#169; 2002&#8211;2012 The Tiki Community">Tiki Wiki CMS Groupware</a><span id="credits">&nbsp;| <!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates/styles/twist/credits.tpl -->Theme :<a href="http://themes.tiki.org" title="Designed originally by Gary Griffin (gg)">Twist</a>
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates/styles/twist/credits.tpl --></span></div><div class="power_icons"><a href="http://tiki.org/" title="Tiki"><img alt="Powered by Tiki" src="img/tiki/tikibutton2.png" /></a><a href="http://php.net/" title="PHP"><img alt="Powered by PHP" src="img/php.png" /></a><a href="http://smarty.net/" title="Smarty"><img alt="Powered by Smarty" src="img/smarty.gif"  /></a><a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="Made with CSS" src="img/css1.png" /></a></div>
+
+		</div>
+	</div>
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl --><!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-poweredby.tpl -->

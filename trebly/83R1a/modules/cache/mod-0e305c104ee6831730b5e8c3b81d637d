@@ -1,0 +1,17 @@
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-switch_lang.tpl -->
+<!-- TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+
+			<div id="module_2" class="box box-switch_lang module">
+			<h3 class="box-title clearfix" >
+							<span class="moduletitle">Langues disponibles</span>
+						<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
+			<div id="mod-switch_langr1" style="display: block;" class="clearfix box-data">
+<form method="get" action="tiki-switch_lang.php" target="_self"><select name="language" size="1" onchange="this.form.submit();"><option value="de">Deutsch</option><option value="en" selected="selected">English</option><option value="es">Español</option><option value="fr">Français</option><option value="it">Italiano</option><option value="nl">Nederlands</option><option value="sv">Svenska</option></select></form>
+
+		</div>
+		<div class="box-footer">
+
+		</div>
+	</div>
+	<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\module.tpl -->
+<!-- /TPL: G:\W3ld1\Teawik\teawik-ld1-83x\83R1\templates\modules/mod-switch_lang.tpl -->

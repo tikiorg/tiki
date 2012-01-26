@@ -1,0 +1,44 @@
+<?php
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id: function.error_report.php 36500 2011-08-25 19:50:40Z lphuberdeau $
+
+function smarty_function_error_report($params, $smarty)
+{
+	$errorreportlib = TikiLib::lib('errorreport');
+	$errors = $errorreportlib->get_errors();
+
+	$pre = '<div id="error_report">';
+	$post = '</div>';
+
+	TikiLib::lib('header')->add_js('
+	$("#error_report").ajaxComplete(function (e, jqxhr) {
+		var error = jqxhr.getResponseHeader("X-Tiki-Error");
+		if (error) {
+			if ($("ul", this).length === 0) {
+				$(this).append($(error)[0].childNodes);
+			} else {
+				$("ul", this).append($(error).find("li"));
+			}
+		}
+	});
+	$("#error_report .clear").live("click", function () {
+		$("#error_report").empty();
+		return false;
+	});
+	');
+	
+	if (count($errors)) {
+		require_once 'lib/smarty_tiki/block.remarksbox.php';
+
+		return $pre . smarty_block_remarksbox(array(
+			'type' => 'errors',
+			'title' => tra('Error(s)'),
+		), '<a class="clear" style="float: right;" href="#">' . tr('Clear errors') . '</a><ul><li>' . implode('</li><li>', $errors) . '</li></ul>', $smarty) . $post;
+	} else {
+		return $pre . $post;
+	}
+}
+

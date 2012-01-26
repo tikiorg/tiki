@@ -1,0 +1,170 @@
+body < * {
+	margin: 0;
+	padding: 0;
+}
+
+body * {
+	border: none ! important;
+}
+.s5-slide * {
+	line-height: 1em;
+}
+
+.s5-image {
+	z-index: 4;
+	float: right;
+	position: relative;
+}
+
+.s5-background {
+    position: fixed; 
+    left: 0px; 
+    top: 0px; 
+    z-index: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.s5-header {
+	position: relative;
+	z-index: 5;
+	font-size: 2em;
+	background: none ! important;
+	/* fixes for getting s5 to play nize with outside themes/styles */
+	padding: 0 ! important;
+	margin: 0 ! important;
+	height: auto ! important;
+}
+
+.s5-footer {
+	width: 100%;
+	position: fixed;
+	left: 0;
+	z-index: 103;
+	bottom: -5px;
+	font-size: 0.35em;
+	padding: 2px;
+	background-color: #CCCCCC ! important;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#s5-slide-num {
+	bottom: 0px;
+	font-size: 2em;
+	float: right;
+	margin-right: 1em;
+}
+.s5-slide {
+	width: 100%;
+	height: 90%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	z-index: 5;
+	font-size: 1em;
+	background-color: transparent ! important;
+	background-image: none ! important;
+}
+
+
+.s5-hide {
+	position: absolute;
+	left: -9999999px;
+	top: -9999999px;	
+}
+
+.s5-slide td {
+	padding: 0.5em;
+}
+
+.s5-slide.first {
+	height: 100%;
+}
+
+.s5-outline {
+	position: fixed;
+	bottom: 0px;
+	padding: 0px ! important;
+	margin: 0px ! important;
+	width: 250px;
+	font-size: 12px ! important;
+	background-color: white;
+	z-index: 105;
+	display: none;
+	text-align: left;
+	border: 1px solid black;
+}
+
+.s5-outline .s5-outlook-close {
+	font-weight: bold;
+	font-size: 18px ! important;
+	line-height: 20px ! important;
+	width: 1em;
+	position: absolute;
+	padding: 0px ! important;
+	margin: 0px ! important;
+	text-align: center;
+	background: url("images/back.png") repeat-x scroll 50% 50% #CCCCCC;
+	cursor: pointer;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+.s5-outline .s5-active {
+	font-style: italic;
+	font-weight: bold;
+}
+
+.s5-outline ul {
+	border: 0px;
+	margin: 0px;
+	padding-left: 17px;
+	height: inherit;
+	overflow-y: scroll;
+}
+
+.s5-outline li {
+	border: 0px;
+	margin: 0px;
+	height: 22px;
+	white-space: nowrap;
+	list-style: none;
+	margin-left: 2px;
+}
+.s5-menu {
+	background: url("images/back.png") repeat-x scroll 50% 50% #CCCCCC;
+	position: absolute;
+	text-align: center;
+	z-index: 104;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+}
+
+.s5-menu a, .s5-menu img {
+	border: none;
+}
+
+#s5-size-detector {
+	width: 1em;
+	height: 1em;
+	position: absolute;
+	left: -10000em;
+	top: -10000em;
+}
+/* Added for compatibility with tikiwiki */
+#cboxOverlay {
+	display: none ! important;
+}
+
+#show-errors-button {
+	display: none ! important;
+}
+
+.icon_edit_section {
+	position: relative;
+	float: left ! important;
+	display: none;
+}
