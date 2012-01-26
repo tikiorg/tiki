@@ -42,6 +42,11 @@ function module_share_info()
 				'description' => tra('Show Facebook "Like" button on the current page') . ' (n/y)',
 				'filter' => 'alpha',
 			),
+			'facebook_href' => array(
+				'name' => tra('Facebook: URL'),
+				'description' => tra('URL to "Like" (leave blank for current URL)'),
+				'filter' => 'url',
+			),
 			'facebook_send' => array(
 				'name' => tra('Facebook: Send'),
 				'description' => tra('Show Facebook "Send" button') . ' (y/n)',
@@ -112,6 +117,11 @@ function module_share_info()
 				'description' => tra('Text to display. Default "Tweet"'),
 				'filter' => 'text',
 			),
+			'twitter_url' => array(
+				'name' => tra('Twitter: URL'),
+				'description' => tra('URL to "Tweet" (leave blank for current URL)'),
+				'filter' => 'url',
+			),
 			'twitter_show_count' => array(
 				'name' => tra('Twitter: Show Count'),
 				'description' => tra('Position of Tweet count') . ' (horizontal/vertical/none)',
@@ -141,6 +151,11 @@ function module_share_info()
 				'name' => tra('LinkedIn'),
 				'description' => tra('Linked in share button') . ' (n/y)',
 				'filter' => 'word',
+			),
+			'linkedin_url' => array(
+				'name' => tra('LinkedIn: URL'),
+				'description' => tra('URL to share (leave blank for current URL)'),
+				'filter' => 'url',
 			),
 			'linkedin_mode' => array(
 				'name' => tra('LinkedIn: Count Mode'),
@@ -196,6 +211,9 @@ function module_share($mod_reference, $module_params)
 	if (empty($module_params['facebook_ref']) || $module_params['facebook_ref'] === 'y') {
 		$fbData .= ' data-ref="' . htmlspecialchars($module_params['facebook_ref']) . '"';
 	}
+	if (!empty($module_params['facebook_href'])) {
+		$fbData .= ' data-href="' . $module_params['facebook_href'] . '"';
+	}
 	$smarty->assign('fb_data_attributes', $fbData);
 	
 	if (!empty($module_params['facebook_appId'])) {
@@ -241,6 +259,9 @@ function module_share($mod_reference, $module_params)
 	if (!empty($module_params['twitter_text'])) {
 		$twData .= ' data-text="' . htmlspecialchars($module_params['twitter_text']) . '"';
 	}
+	if (!empty($module_params['twitter_url'])) {
+		$twData .= ' data-url="' . $module_params['twitter_url'] . '"';
+	}
 
 	$smarty->assign('tw_data_attributes', $twData);
 
@@ -248,5 +269,16 @@ function module_share($mod_reference, $module_params)
 		$twDivAttr = 'style="' . $twDivAttr . '"';
 	}
 	$smarty->assign('tw_div_attributes',  $twDivAttr);
+
+	// linkedin
+
+	$liData = '';
+	if (!empty($module_params['linkedin_url'])) {
+		$liData .= ' data-url="' . $module_params['linkedin_url'] . '"';
+	}
+	if (!empty($module_params['linkedin_mode'])) {
+		$liData .= ' data-counter="' . $module_params['linkedin_mode'] . '"';
+	}
+	$smarty->assign('li_data_attributes',  $liData);
 
 }

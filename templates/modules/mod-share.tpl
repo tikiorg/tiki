@@ -58,7 +58,7 @@
 	{if (isset($module_params.linkedin) and $module_params.linkedin neq 'n')}
 		<div class="linkedin-root mod-share-item">
 			<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
-			<script type="IN/Share"{if !empty($module_params.linkedin_mode)} data-counter="{$module_params.linkedin_mode}"{/if}></script>
+			<script type="IN/Share"{$li_data_attributes}></script>
 		</div>
 	{/if}
 {/tikimodule}
