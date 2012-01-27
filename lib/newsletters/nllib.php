@@ -1100,7 +1100,7 @@ class NlLib extends TikiLib
 	// info: subject, data, datatxt, dataparsed, wysiwyg, sendingUniqId, files, errorEditionId, editionId
 	// browser: true if on the browser
 	function send($nl_info, $info, $browser=true, &$sent, &$errors, &$logFileName) {
-		global $prefs, $smarty;
+		global $prefs, $smarty, $section;
 		$headerlib = TikiLib::lib('header');
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
