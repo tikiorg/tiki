@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '8.3';	// needs to have no spaces for releases
+		$this->version 	= 'SVN pre 8.4';	// needs to have no spaces for releases
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -49,13 +49,13 @@ class TWVersion
 	// Returns an array of all used Tiki stars.
 	function tikiStars() {
 		return array(
-				1=>'Spica',			// 0.9
+				1=>'Spica',		// 0.9
 				2=>'Shaula',		// 0.95
 				3=>'Ras Algheti',	// 1.0.x
 				4=>'Capella',		// 1.1.x
 				5=>'Antares',		// 1.2.x
 				6=>'Pollux',		// 1.3.x
-				7=>'Mira',			// 1.4.x
+				7=>'Mira',		// 1.4.x
 				8=>'Regulus',		// 1.5.x
 				9=>'Tau Ceti',		// 1.6.x
 				10=>'Era Carinae',	// 1.7.x
@@ -67,7 +67,7 @@ class TWVersion
 				16=>'Vulpeculae',	// 5.x
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
-				19=>'Acubens',	// 8.x
+				19=>'Acubens',		// 8.x
 		);
 	}
 
