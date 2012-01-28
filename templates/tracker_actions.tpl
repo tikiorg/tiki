@@ -9,7 +9,7 @@
 	{/if}
 {/if}
 
-{if $tiki_p_list_trackers eq 'y' or $tiki_p_view_trackers eq 'y'}
+{if $tiki_p_list_trackers eq 'y'}
 	{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
 {/if}
 
