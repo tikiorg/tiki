@@ -466,7 +466,8 @@ if (isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
 										'_script' => 'tiki-view_tracker.php',
 										'_tag' => 'n',
 										'_urlencode' => 'n',
-										'itemId' => 'NULL'
+										'itemId' => 'NULL',
+										'trackerId' => $_REQUEST['trackerId']
 									),
 									'',
 									$smarty
