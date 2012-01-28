@@ -76,6 +76,11 @@ if (is_array($_REQUEST['parentId'])) {
 		$perms = Perms::get( array( 'type' => 'category', 'object' => $_REQUEST['parentId'] ) );
 
 		$p_info = $categlib->get_category($_REQUEST['parentId']);
+		if (empty($p_info)) {
+			$smarty->assign('msg', tra('Incorrect parameter'));
+			$smarty->display('error.tpl');
+			die;
+		}
 		if ($prefs["feature_multilingual"] === "y")
 			$p_info["name"] = tra($p_info["name"]);
 		$father = $p_info['parentId'];
