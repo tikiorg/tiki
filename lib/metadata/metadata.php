@@ -25,9 +25,7 @@ class FileMetadata
 	var $type = null;			//file type - important for accessing all metadata
 	var $charset = null;		//character set of file content
 	var $devices = null;		//finfo devices
-	var $typemeta = array();	//used to store metadata beyond generic file data
-	var $header = null;			//header information
-	var $otherinfo = null;		//specific to jpegs TODO move to JPEG class if possible
+	var $typemeta = null;		//used to store metadata beyond generic file data
 	var $error = null;			//error messages stored here
 	
 	/*
@@ -39,7 +37,8 @@ class FileMetadata
 	 *  											Metadata Working Group guidelines at http://www.metadataworkinggroup.org/pdf/mwg_guidance.pdf
 	 * @return	object							FileMetadata object with properties for the various types of metadata
 	 */
-	function __construct($file, $ispath = true, $extended = true, $mwg_compliant = true) {
+	function __construct($file, $ispath = true, $extended = true, $mwg_compliant = true)
+	{
 		//set contents and current name as well as type in some situations
 		if (!$ispath) {
 			//when $file is actual file contents rather than a path - create a temporary file name needed for some php functions
@@ -49,6 +48,7 @@ class FileMetadata
 				$this->error = tra('The file is empty');
 			} else {
 				$this->content = $file;
+				$this->currname = $temppath;
 			}
 		} else {
 			//when $file is a path
@@ -92,14 +92,6 @@ class FileMetadata
 			$this->devices = $finfo->file($temppath);
 		}
 		
-		//get basic info common to all image types
-		if (strpos($this->type, 'image') === 0) {
-			$this->header = getimagesize($temppath, $otherinfo);
-			$this->width = $this->header[0];
-			$this->height = $this->header[1];
-			$this->otherinfo = $otherinfo;
-		}
-		
 		//from this point, additional metadata is obtained from classes specific to the file type in separate php files
 		//all results for this additional metadata go into the $this->typemeta array
 		if ($extended && !empty($this->type)) {
@@ -115,13 +107,15 @@ class FileMetadata
 					}
 					return $this;
 			}
-			$dataObj = '';
 			//file must be named based on $type
 			include_once($type . '.php');
 			//class name is same as file name except first letter is capitalized
 			$type = ucfirst($type);
-			$typeObj = new $type($temppath, true);
-				$dataObj = $typeObj->getExtendedData($this, $temppath);
+			$typeObj = new $type($this);
+			$this->typemeta = $typeObj->getExtendedData($this);
+//			if ($mwg_compliant) {
+//				$rec = $this->metaMwgReconciled();
+//			}
 			if (!$leavelink) {
 				unlink($temppath);
 			}
@@ -142,7 +136,8 @@ class FileMetadata
 	 * 												or file is not writeable
 	 */
 	//Remember to unlink $tempfile after using this function
-	function temppathFromContent($content) {
+	function temppathFromContent($content)
+	{
 		if (!empty($content)) {
 			$cwd = getcwd();
 			$temppath = tempnam("$cwd/temp", 'temp_file_');
@@ -158,6 +153,23 @@ class FileMetadata
 		}
 	}
 	
+	function getDataSegment($binarycontent, $marker, $markerlength, $sizelength)
+	{
+		//find position of segment marker
+		$markerpos = strpos($binarycontent, $marker);
+		if ($markerpos === false) {
+			return false;
+		} else {
+			//get the binary value of the size indicator
+			$rawsize = substr($binarycontent, $markerpos + $markerlength, $sizelength);
+			//convert the binary string into the size number
+			$size = unpack('nsize', $rawsize);
+			//extract the desired segment of data
+			$segdata = substr($binarycontent, $markerpos + $markerlength + $sizelength, $size['size']);
+			return $segdata;
+		}
+	}
+	
 	/*
 	 * Creates a table that can be used in a Jquery accordion dialog window
 	 * TODO need to make generic and simplify - specific to JPEGs right now; require a pre-made array as an input
@@ -166,7 +178,8 @@ class FileMetadata
 	 * @filename	string					$filename		Used in the title of the dialog box
 	 * @return		string									Tables ready for an Jquery accordion dialog box
 	 */
-	function dialogMetadata($metaObj, $id, $filename) {
+	function dialogMetadata($metaObj, $id, $filename)
+	{
 		if ($metaObj->type == 'image/jpeg') {
 			$beg_table = "\r\t" . '<div><table>';
 			$end_table = "\r\t" . '</table></div>'; 
@@ -188,8 +201,8 @@ class FileMetadata
 			} else {
 				$dialog .= $beg_table;
 				foreach (array_keys($metaObj->typemeta['iptc']) as $key => $s) {
-					$dialog .= $col1_begin . $metaObj->typemeta['iptc'][$s][1] . $betw_col 
-						. htmlspecialchars($metaObj->typemeta['iptc'][$s][0]) . $col2_end;
+					$dialog .= $col1_begin . tra($metaObj->typemeta['iptc'][$s]['specs']['label']) . $betw_col 
+						. htmlspecialchars($metaObj->typemeta['iptc'][$s]['value']['display']) . $col2_end;
 				}
 				$dialog .= $end_table; 
 			}
@@ -258,79 +271,160 @@ class FileMetadata
 		return $dialog;
 	}
 	
-	/*
-	 * Add labels to iptc array since the raw iptc has only numeric identifiers
-	 * @param		array		$iptc_raw		Raw iptc array: identifier (like 2#000)=>value
-	 * @return		array						Each identifier will be an array with the label and value
-	 */
-	function addIptcTags($iptc_raw) {
-		$tags = $this->getIptcTags();
-		foreach ($iptc_raw as $key => $value) {
-			if (array_key_exists($key, $tags)) {
-				trim($iptc_raw[$key][0]);
-				$iptc_raw[$key][1] = trim($tags[$key]);
-			} else {
-				$iptc_raw[$key][1] = '';
+	function xmpDomToArray($xmpObj)
+	{
+		if (get_class($xmpObj) == 'DOMDocument') {
+			//file metadata is in the Description tag
+			$parent = $xmpObj->getElementsByTagName('Description');
+			$len = $parent->length;
+			for($i = 0; $i < $len; $i++) {
+				//first level of nodes is assumed to have child nodes, so no values sought at this level
+				$children = $parent->item($i)->childNodes;
+				$len2 = $children->length;
+				for($j = 0; $j < $len2; $j++) {
+					//only pick up DOMElements
+					if ($children->item($j)->nodeType == 1) {
+						$child = $children->item($j);
+						if ($child->childNodes->length > 0 && !($child->childNodes->length == 1 && $child->firstChild->nodeType != 1)) {
+							$xmparray[$child->prefix][$child->localName] = $this->xmpDomToArray($child->childNodes);
+						} else {
+							$xmparray[$child->prefix][$child->localName]['key'] = $child->prefix;
+							$xmparray[$child->prefix][$child->localName]['label'] = ucfirst($child->localName);
+							$xmparray[$child->prefix][$child->localName]['value'] = $child->nodeValue;
+							$xmparray[$child->prefix][$child->localName]['locator'] = $child->getNodePath();
+						}
+					}
+				}
+			}
+		} elseif (get_class($xmpObj) == 'DOMNodeList') {
+			$parent = $xmpObj;
+			$len3 = $parent->length;
+			for($i = 0; $i < $len3; $i++) {
+				$item = $parent->item($i);
+				if ($item->nodeType == 1) {
+					if ($item->childNodes->length > 1) {
+						if ($item->prefix == 'rdf' && $item->localName != 'li') {
+							$len4 = $item->childNodes->length;
+							$number = $item->childNodes;
+							for ($z = 0; $z < $len4; $z++) {
+								$list = $number->item($z);
+								if ($list->nodeType == 1) {
+/*									$xlist[$z] = array(
+														'name' => $list->nodeName, 
+														'val' => $list->nodeValue,
+														'parentname' => $list->parentNode->nodeName, 
+														'child' => $list->firstChild->nodeName,
+														'childval' => $list->firstChild->nodeValue,
+														'path' => $list->getNodePath(),
+														'length' => $list->childNodes->length);
+*/									$xmparray['value'][] = array(
+													'key' => $list->prefix,
+													'label' => $list->localName,
+													'value' => $list->nodeValue,
+													'locator' => $list->getNodePath(), 
+												);
+								}
+							}
+							return $xmparray;
+						} else {
+							$xmparray[$item->prefix][$item->localName] = $this->xmpDomToArray($item->childNodes);
+						}
+					} else {
+						$xmparray[$item->localName]['key'] = $item->prefix;
+						$xmparray[$item->localName]['label'] = $item->localName;
+						$xmparray[$item->localName]['value'] = $item->nodeValue;
+						$xmparray[$item->localName]['locator'] = $item->getNodePath();
+					}
+				}
 			}
 		}
-		return $iptc_raw;
+		return $xmparray;
 	}
-	
-	/*
-	 * Maps iptc identifiers to labels
-	 * Used in addIptcTags fucntion
-	 */
-	function getIptcTags() {
-		$tags = array(
-			'2#000' => tra('Application Record Version'),
-			'2#003' => tra('Object Type Reference'),
-			'2#004' => tra('Object Attribute Reference'),
-			'2#005' => tra('Object Name'),
-			'2#007' => tra('Edit Status'),
-			'2#008' => tra('Editorial Update'),
-			'2#010' => tra('Urgency'),
-			'2#012' => tra('Subject Reference'),
-			'2#015' => tra('Category'),
-			'2#020' => tra('Supplemental Categories'),
-			'2#022' => tra('Fixture Identifier'),
-			'2#025' => tra('Keywords'),
-			'2#026' => tra('Content Location Code'),
-			'2#027' => tra('Content Location Name'),
-			'2#030' => tra('Release Date'),
-			'2#035' => tra('Release Time'),
-			'2#037' => tra('Expiration Date'),
-			'2#038' => tra('Expiration Time'),
-			'2#040' => tra('Special Instructions'),
-			'2#042' => tra('Action Advised'),
-			'2#045' => tra('Reference Service'),
-			'2#047' => tra('Reference Date'),
-			'2#050' => tra('Reference Number'),
-			'2#055' => tra('Date Created'),
-			'2#060' => tra('Time Created'),
-			'2#062' => tra('Digital Creation Date'),
-			'2#063' => tra('Digital Creation Time'),
-			'2#065' => tra('Originating Program'),
-			'2#070' => tra('Program Version'),
-			'2#075' => tra('Object Cycle'),
-			'2#080' => tra('Byline'),
-			'2#085' => tra('Byline Title'),
-			'2#090' => tra('City'),
-			'2#095' => tra('Province/State'),
-			'2#100' => tra('Country Code'),
-			'2#101' => tra('Country'),
-			'2#103' => tra('Original Transmission Reference'),
-			'2#105' => tra('Headline'),
-			'2#110' => tra('Credit'),
-			'2#115' => tra('Source'),
-			'2#116' => tra('Copyright String'),
-			'2#120' => tra('Caption'),
-			'2#121' => tra('Local Caption'),
-			'2#122' => tra('Writer-Editor'),
-			'2#125' => tra('Rasterized Caption'),
-			'2#130' => tra('Image Type'),
-		);
-		return $tags;
+	//TODO not complete - do not use yet
+	function metaMwgReconciled()
+	{
+		$exist = 0;
+		//start with exif
+		if ($this->typemeta->exif !== false) {
+			$exist += 1;
+			//see if we need to reconcile exif with xmp data
+			if (get_class($this->typemeta['xmp']) == 'DOMDocument') {
+				$exist += 3;
+				//convert xmp DOM document to an array for comparison
+				$xmparray = $this->xmpDomToArray($this->typemeta['xmp']);
+				//flatten xmp array to ease comparison
+				$xmpflat = array();
+				foreach ($xmparray as $topkey => $topdata) {
+					foreach ($topdata as $field => $val) {
+						$xmpflat[$field] = $val;
+					}
+				}
+				//flatten the exif array too
+				foreach ($this->typemeta['exif'] as $topkey => $topdata) {
+					foreach ($topdata as $field => $val) {
+						$exifflat[$field]['key'] = $topkey;
+						$exifflat[$field]['value'] = $val;
+					}
+				}
+				//compare here and extract duplicate fields between exif and xmp data
+				$match = array_intersect_key($xmpflat, $exifflat);
+				/*
+				 * $exifflat will become the basis for the reconciled metadata since exif is preferred
+				 * over xmp when both are present according to the Metadata Working Group guidelines
+				 */
+				foreach ($match as $key => $val) {
+					//indicate that the exif field should be displayed
+					$exifflat[$key]['read'] = 'exif';
+					//indicate both the exif and xmp field will need to be updated if updating this field 
+					// (in case write capability is added in the future)
+					$exifflat[$key]['write'] = array('exif' => true, 'xmp' => true);
+					//keep the xmp info in case needed for writing data back
+					$exifflat[$key]['xmp'] = $xmpflat[$key];
+					//note whether there is a difference between exif and xmp values
+					if (is_array($xmpflat[$key]['value'])) {
+						$valcheck = $xmpflat[$key]['value'][0]['value'];
+					} else {
+						$valcheck = $val['value'];
+					}
+					$exifflat[$key]['exifxmpok'] = $valcheck == $exifflat[$key]['value'] ? true : false ;
+				}
+				//delete xmp fields that duplicate exif fields
+				$xmpflat = array_diff_key($xmpflat, $match);
+			}
+		}
+		//now reconcile any iptc data
+		if ($this->typemeta->iptc !== false) {
+			include_once('lib/metadata/iptc.php');
+			$exist += 5;
+			if (get_class($this->typemeta['xmp']) == 'DOMDocument') {
+				$match2 = array_intersect_key($iptcToXmp, $this->typemeta['iptc']);
+				if (count($match2) > 0) {
+					if (!empty($exifflat) && !empty($xmpflat)) {
+						$xmpnewflat = $xmpflat;
+					} else {
+						$xmparray = $this->xmpDomToArray($this->typemeta['xmp']);
+						foreach ($xmparray as $topkey => $topdata) {
+							foreach ($topdata as $field => $val) {
+								$xmpnewflat[$field] = $val;
+							}
+						}
+					}
+				}
+				foreach ($match2 as $key => $valarray) {
+					$flipmatch[$valarray['localname']] = $key;
+				}
+				$newmatch = array_intersect_key($xmpnewflat, $flipmatch);
+				if ((strlen($this->typemeta['iptc']['hashstored']['value']['display']) == 16 && $this->typemeta['iptc']['hashstored']['value']['display'] 
+					== $this->typemeta['iptc']['hashcurrent']['value']['display']) || !$this->typemeta['iptc']['hashstored']['value']['display'])
+				{
+					//prefer XMP value but use IPTC where XMP is missing
+				} else {
+					//campare field by field and use IPTC where they don't match
+				}
+			}
+		}
+		
+		return $match;
 	}
-
-	
+		
 } //end of class
