@@ -145,9 +145,19 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		$factory = $this->trackerDefinition->getFieldFactory();
 
 		$popupFields = array();
+
 		foreach ($fields as $id) {
 			$field = $this->trackerDefinition->getField($id);
 			
+			if (!isset($this->itemData[$field['fieldId']])) {
+				foreach($this->itemData['field_values'] as $fieldVal) {
+					if ($fieldVal['fieldId'] == $id) {
+						if (isset($fieldVal['value'])) {
+							$this->itemData[$field['fieldId']] = $fieldVal['value'];
+						}
+					}
+				}
+			}
 			$handler = $factory->getHandler($field, $this->itemData);
 
 			if ($handler) {
