@@ -56,7 +56,7 @@ if ($prefs['feature_trackers'] == 'y') {
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'invalidate_item_cache'));
 }
 
-if ($prefs['unified_incremental_update'] == 'y') {
+if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {
 	$events->bind('tiki.save', 'tiki_save_refresh_index');
 }
 
