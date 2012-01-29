@@ -290,7 +290,8 @@ foreach ($categories as $category) {
 	$data = '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;categId=' . $category['categId'] . '" title="' . tra('Edit') . '">' . smarty_function_icon(array('_id'=>'page_edit'), $smarty) . '</a>';
 	$data .= '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;removeCat=' . $category['categId'] . '" title="' . tra('Delete') . '">' . smarty_function_icon(array('_id'=>'cross'), $smarty) . '</a>';
 
-	if ($tiki_p_admin_categories == 'y') {
+	$perms = Perms::get(array('type' => 'category', 'object' => $category['categId']));
+	if ($perms->admin_categories == 'y') {
 		if ($userlib->object_has_one_permission($category['categId'], 'category')) {
 			$title = tra('Edit permissions for this category');
 			$icon = 'key_active';
