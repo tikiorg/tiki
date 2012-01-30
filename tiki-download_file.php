@@ -80,11 +80,13 @@ if (!$skip) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
+			if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
 			$access->display_error('', tra('Permission denied'), 401);
 		}
 		if ( isset($_GET['thumbnail']) && is_numeric($_GET['thumbnail'])) { //check also perms on thumb 
 			$info_thumb = $filegallib->get_file($_GET['thumbnail']);
 			if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info_thumb['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info_thumb['fileId']))) {
+				if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
 				$access->display_error('', tra('Permission denied'), 401);
 			}
 		}
