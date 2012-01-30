@@ -118,6 +118,11 @@ $smarty->assign('short_format_day', tra('%m/%d'));
 
 $focus_day_limited = min($focus_day, 28); // To make "previous month" work if the current focus is on, for example, the last day of march.
 
+if (!function_exists('cal_days_in_month')) {
+	$smarty->assign('msg', tra('Your PHP installation does not have calendar enabled.'));
+	$smarty->display('error.tpl');
+	die;
+}	
 $focus_prev = $calendarlib->focusPrevious($focus, $calendarViewMode['casedefault']);
 $focus_next = $calendarlib->focusNext($focus, $calendarViewMode['casedefault']);
 
