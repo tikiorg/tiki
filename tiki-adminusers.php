@@ -35,7 +35,7 @@ function batchImportUsers() {
 		die;
 	}
 	if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
-		$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password");
+		$smarty->assign('msg', tra("The file does not have the required header:") . " login, password, email");
 		$smarty->display("error.tpl");
 		die;
 	}
