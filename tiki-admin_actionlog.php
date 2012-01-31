@@ -19,6 +19,20 @@ $commentslib = new Comments($dbTiki);
 $access->check_user($user);
 $access->check_feature('feature_actionlog');
 $access->check_permission_either(array('tiki_p_view_actionlog', 'tiki_p_view_actionlog_owngroups'));
+
+// Handle case when users have checked a number of action logs for global actions
+if (isset($_REQUEST['checked'])) {
+	#check_ticket('list_comments');
+	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
+	// Ban IP adresses of multiple spammers
+	if ( isset($_REQUEST['ban_x']) ) {
+		ask_ticket('admin-banning');
+		$mass_ban_ip = implode('|', $checked);
+		header('Location: tiki-admin_banning.php?mass_ban_ip_actionlog=' . $mass_ban_ip);
+		exit;
+	}
+}
+
 $auto_query_args = array(
 		'actionId',
 		'startDate_Day',

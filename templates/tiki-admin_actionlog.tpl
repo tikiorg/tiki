@@ -184,10 +184,16 @@
 			{else}
 					{self_link max=$prefs.maxRecords}{tr}Pagination{/tr}{/self_link}
 			{/if}
-		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 			{tr}Records:{/tr} {$cant}
+			<form name="checkboxes_on" method="post" action="tiki-admin_actionlog.php">
+			{query _type='form_input'}
 			<table class="normal">
 				<tr>
+					<th>
+						{select_all checkbox_names='checked[]'}
+						{assign var=numbercol value=$numbercol+1}
+					</th>
 					<th>
 						<a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}User{/tr}</a>
 					</th>
@@ -231,6 +237,7 @@
 				{cycle values="even,odd" print=false}
 				{foreach from=$actionlogs item=actionlog}
 					<tr class="{cycle}">
+						<td class="checkbox"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}" /></td>
 						<td class="username">
 							{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}
 						</td>
@@ -293,6 +300,13 @@
 				{/foreach}
 			</table>
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+			<div class="formcolor">
+				{tr}Perform action with checked:{/tr}
+				{if $prefs.feature_banning eq 'y'}
+					{icon _id='lock_red' _tag='input_image' name='ban' value='y' alt="{tr}Ban{/tr}"}
+				{/if}
+			</div>
+			</form>
 		{/if}
 
 		{if $action}

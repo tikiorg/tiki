@@ -43,6 +43,7 @@ if (isset($_REQUEST['save'])) {
 	$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
 	$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
 	$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : array();
+	// Handle case when many IPs are banned
 	if ($_REQUEST['mode'] == 'mass_ban_ip') {
 		foreach ($_REQUEST['multi_banned_ip'] as $ip => $value) {
 			list($ip1,$ip2,$ip3,$ip4) = explode('.', $ip);
@@ -92,6 +93,7 @@ if (!empty($_REQUEST['banId'])) {
 	$info['message'] = '';
 }
 
+// Handle case when coming from tiki-list_comments with a list of IPs to ban
 if (!empty($_REQUEST['mass_ban_ip'])) {
 	check_ticket('admin-banning');
 	include_once ('lib/comments/commentslib.php');
@@ -102,6 +104,7 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 	$info['message'] = tr('Access from your localization was forbidden due to excessive spamming.');
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
 	$banId_list = explode('|', $_REQUEST['mass_ban_ip']);
+	// Handle case when coming from tiki-list_comments with a list of IPs to ban and also delete the related comments
 	if ( !empty($_REQUEST['mass_remove']) ) {
 		$access->check_authenticity(tra('Delete comments then set banning rules'));
 	}
@@ -112,6 +115,24 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 		if ( !empty($_REQUEST['mass_remove']) ) {
 			$commentslib->remove_comment($id);
 		}
+	}
+	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
+}
+
+// Handle case when coming from tiki-admin_actionlog with a list of IPs to ban
+if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
+	check_ticket('admin-banning');
+	include_once ('lib/logs/logslib.php');
+	$actionslib = new LogsLib;
+	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip_actionlog']);
+	$info['mode'] = 'mass_ban_ip';
+	$info['title'] = tr('Multiple IP Banning');
+	$info['message'] = tr('Access from your localization was forbidden due to excessive spamming.');
+	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
+	$banId_list = explode('|', $_REQUEST['mass_ban_ip_actionlog']);
+	foreach ($banId_list as $id) {
+		$ban_actions=$actionslib->get_info_action($id);
+		$ban_comments_list[$ban_actions['ip']][$id]['userName'] = $ban_actions['user'];
 	}
 	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
 }
