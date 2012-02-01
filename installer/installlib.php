@@ -216,9 +216,7 @@ class Installer extends TikiDb_Bridge
 		$installed = array();
 		$results = false;
 		
-		$tableExist = $this->fetchAll("SHOW TABLES LIKE 'tiki_schema'");
-		
-		if (!empty($tableExist)) {
+		if ($this->tableExists('tiki_schema')) {
 			$results = $this->query("SELECT patch_name FROM tiki_schema");
 		}
 		
