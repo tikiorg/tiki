@@ -19,7 +19,7 @@ class TikiMail extends HtmlMimeMail
 
 	/* $user = user you send the mail
 		 $from = email you send from*/
-	function TikiMail($user = null, $from=null)
+	function __construct($user = null, $from=null)
 	{
 		global $prefs, $tikilib;
 
