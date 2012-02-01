@@ -17,20 +17,23 @@ if ($prefs['feature_daily_report_watches'] != 'y') {
 
 include_once ('lib/reportslib.php');
 
-foreach ($reportslib->getUsersForSendingReport() as $key => $user) {
-	$report_preferences = $reportslib->get_report_preferences_by_user($user);
-	$user_data = $userlib->get_user_info($user);
+$reportsUsers = Reports_Factory::build('Reports_Users');
+$reportsCache = Reports_Factory::build('Reports_Cache');
 
-	//If Emailadress isn´t set, do nothing but clear the cache
-	if (!empty($user_data['email'])) {
+foreach ($reportsUsers->getUsersForReport() as $key => $user) {
+	$userReportPreferences = $reportsUsers->get($user);
+	$userData = $userlib->get_user_info($user);
+
+	// if email address isn't set, do nothing but clear the cache
+	if (!empty($userData['email'])) {
 		//Fetch cache
-		$report_cache = $reportslib->get_report_cache_entries_by_user($user, "time ASC");
+		$cache = $reportsCache->get($user);
 		//Send email if there is a cache or if always_email = true
-		if ($report_cache OR (!$report_cache && $report_preferences['always_email']))
-			$reportslib->sendEmail($user_data, $report_preferences, $report_cache);
+		if (!empty($cache) || $userReportPreferences['always_email'])
+			$reportslib->sendEmail($userData, $userReportPreferences, $cache);
 	}
 	//Update Database
-	$reportslib->updateLastSent($user_data['login']);
+	$reportsUsers->updateLastReport($userData['login']);
 	//Empty cache
-	$reportslib->deleteUsersReportCache($user_data['login']);
+	$reportsCache->delete($userData['login']);
 }

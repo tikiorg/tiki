@@ -186,6 +186,7 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 $eok = $userlib->get_user_email($user);
 $smarty->assign('email_ok', empty($eok) ? 'n' : 'y');
 ask_ticket('user-watches');
-$smarty->assign_by_ref('report_preferences', $reportslib->get_report_preferences_by_user($user));
+$reportsUsers = Reports_Factory::build('Reports_Users');
+$smarty->assign_by_ref('report_preferences', $reportsUsers->get($user));
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

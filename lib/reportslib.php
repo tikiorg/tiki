@@ -271,71 +271,6 @@ class reportsLib extends TikiLib
 		}
 	}
 	
-	function add_user_to_daily_reports($context) {
-		$this->add_user_report($context['user'], 'daily', 'detailed', 'html', 1);
-	}
-	
-	function add_user_report($user, $interval, $view, $type, $always_email) {
-		if (!isset($always_email)) {
-			$always_email = 0;
-		}
-		
-		if (!$this->get_report_preferences_by_user($user)) {
-			//Add new report entry	
-			$query = "insert into `tiki_user_reports`(`user`, `interval`, `view`, `type`, `always_email`, `last_report`) ";
-			$query.= "values(?,?,?,?,?,NOW())";
-			$this->query($query,array($user,$interval,$view,$type,$always_email));
-		} else {
-			//Update report entry
-			$query = "update `tiki_user_reports` set `interval`=?, `view`=?, `type`=?, `always_email`=? where `user`=?";
-			$this->query($query,array($interval,$view,$type,$always_email,$user));
-		}
-		return true;
-	}
-	
-	function delete_user_report($user) {
-		$query = "delete from `tiki_user_reports` where `user`=?";
-		$this->query($query,array($user));
-
-		$this->deleteUsersReportCache($user);
-		return true;
-	}
-	
-	function get_report_preferences_by_user($user) {
-		$query = "select `id`, `interval`, `view`, `type`, `always_email`, `last_report` from `tiki_user_reports` where `user` = ?";
-		$result = $this->query($query, array($user));
-		if (!$result->numRows()) {
-			return false;
-		}
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret = $res;
-		}
-		
-		return $ret;
-	}
-	
-	function getUsersForSendingReport() {
-		$query = "select `user`, `interval`, UNIX_TIMESTAMP(`last_report`) as last_report from tiki_user_reports";
-		$result = $this->query($query);
-		if (!$result->numRows()) {
-			return false;
-		}
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			if ($res['interval']=="daily" AND ($res['last_report']+86400)<=time()) {
-				$ret[] = $res['user'];
-			}
-			if ($res['interval']=="weekly" AND ($res['last_report']+604800)<=time()) {
-				$ret[] = $res['user'];
-			}
-			if ($res['interval']=="monthly" AND ($res['last_report']+2419200)<=time()) {
-				$ret[] = $res['user'];
-			}
-		}
-		return $ret;
-	}
-	
 	function makeReportCache(&$nots, $cache_data) {
 		//Get all users that have enabled reports
 		$query = "select `user` from tiki_user_reports";
@@ -357,33 +292,6 @@ class reportsLib extends TikiLib
 				unset($nots[$key]);
 			}
 		}
-	}
-	
-	function get_report_cache_entries_by_user($user, $order_by) {
-		$query = "select `user`, `event`, `data`, `time` from `tiki_user_reports_cache` where `user` = ? ORDER BY $order_by";
-		$result = $this->query($query, array($user));
-		if (!$result->numRows()) {
-			return false;
-		}
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$res['data'] = unserialize($res['data']);
-			$ret[] = $res;
-		}
-		
-		return $ret;
-	}
-	
-	function deleteUsersReportCache($user) {
-		$query = "delete from `tiki_user_reports_cache` where `user`=?";
-		$this->query($query,array($user));
-		return true;
-	}
-	
-	function updateLastSent($user) {
-		$query = "update `tiki_user_reports` set last_report = NOW() where `user`=?";
-		$this->query($query,array($user));
-		return true;
 	}
 }
 

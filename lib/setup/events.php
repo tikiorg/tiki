@@ -69,7 +69,7 @@ if ($prefs['feature_file_galleries'] == 'y') {
 }
 
 if ($prefs['dailyreports_enabled_for_new_users'] == 'y') {
-	$events->bind('tiki.user.create', Event_Lib::defer('reports', 'add_user_to_daily_reports'));
+	$events->bind('tiki.user.create', array(Reports_Factory::build('Reports_Users'), 'addUserToDailyReports'));
 }
 
 if ($prefs['scorm_enabled'] == 'y') {
