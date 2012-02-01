@@ -50,13 +50,11 @@
 <div id='progress'>
 	<div id='progress_0'></div>
 </div>
+{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 <div id="upload_progress">
-	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-		<div id="upload_progress_ajax_0" name="upload_progress_0" height="1" width="1"></div>
-	{/if}
-
-	<iframe id="upload_progress_0" name="upload_progress_0" height="1" width="1" style="display:none;"></iframe>
+	<div id="upload_progress_ajax_0" name="upload_progress_0" height="1" width="1"></div>
 </div>
+{/if}
 {/if}
 
 {if isset($uploads) and count($uploads) > 0}
@@ -310,20 +308,11 @@
 <form method="post"
 	action='tiki-upload_file.php' 
 	enctype='multipart/form-data'
-	{if !$editFileId}
-		{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-			onsubmit="return verifUploadFlash()"
-		{elseif $prefs.javascript_enabled eq 'y'}
-			onsubmit="return false"
-		{/if}
-		target="upload_progress_0"
-	{/if}
-
-	name="file_0"
 	id="file_0"
-	style='margin:0px; padding:0px'>
-
-	<input type="hidden" name="formId" value="0"/>
+	{if !$editFileId and $prefs.fgal_upload_progressbar eq 'ajax_flash'}
+		onsubmit="return verifUploadFlash()"
+	{/if}
+	>
 	<input type="hidden" name="simpleMode" value="{$simpleMode}"/>
 	{if !empty($filegals_manager)}
 		<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
@@ -351,13 +340,11 @@
 	{/if}
 </form>
 
-{if $prefs.javascript_enabled eq 'y' and !$editFileId}
-	<div id="multi_1">
-	</div>
+{if !$editFileId}
 	<div id="page_bar">
 		<input type="submit"
 			{if $prefs.fgal_upload_progressbar eq 'n'}
-				onClick="upload_files('0', 'loader_0'); return false"
+				onClick="upload_files(); return false"
 			{elseif $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 				onClick="return verifUploadFlash()"
 				disabled="disabled"
@@ -393,7 +380,6 @@
 	{if $prefs.feature_jquery_ui eq 'y'}
 		{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
 	{/if}
-
 	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 		{jq notonready=true}
 	
@@ -510,41 +496,26 @@
 		{/jq}
 	{else}
 		{jq notonready=true}
-	
+			$('#file_0').ajaxForm({target: '#progress_0', forceSync: true});	
 			var nb_upload = 1;
 	
 			function add_upload_file() {
-				tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
-				{{if !empty($filegals_manager)}}
-				tmp += '<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>';
-				{{/if}}
-				tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
-				tmp += '{{$upload_str|strip|escape:'javascript'}}';
-				tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
-				//tmp += '<div id="multi_'+(nb_upload+1)+'"></div>';
-				document.getElementById('multi_'+nb_upload).innerHTML = tmp;
+				var clone = $('#form form').eq(0).clone().resetForm().attr('id', 'file_' + nb_upload).ajaxForm({target: '#progress_' + nb_upload, forceSync: true});
+				clone.insertAfter($('#form form').eq(-1));
 				document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
-				document.getElementById('upload_progress').innerHTML += "<iframe id='upload_progress_"+nb_upload+"' name='upload_progress_"+nb_upload+"' height='1' width='1' style='border:0px none'></iframe>";
 				nb_upload += 1;
 			}
-	
-			function do_submit(n) {
-				if (document.forms['file_'+n].elements['userfile[]'].value != '') {
-					$('#progress_'+n).html("<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
-					document.getElementById('file_'+n).submit();
-					document.getElementById('file_'+n).reset();
-				} else {
-					$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onClick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
-				}
-			}
-	
-			function upload_files(form, loader){
-				//only do this if the form exists
-				n=0;
-				while (document.forms['file_'+n]){
-					do_submit(n);
-					n++;
-				}
+
+			function upload_files(){
+				$("#form form").each(function(n) {
+					if ($(this).find('input[name="userfile\\[\\]"]').val() != '') {
+						$('#progress_'+n).html("<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
+						$(this).submit();
+						this.reset();
+					} else {
+						$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onClick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
+					}
+				});
 				hide('form');
 			}
 		{/jq}

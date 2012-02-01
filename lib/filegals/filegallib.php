@@ -2692,7 +2692,7 @@ class FileGalLib extends TikiLib
 		return $syntax;
 	}
 
-	private function print_msg($msg, $id, $htmlEntities = false)
+	private function print_msg($msg, $htmlEntities = false)
 	{
 		global $prefs;
 
@@ -2701,16 +2701,7 @@ class FileGalLib extends TikiLib
 		}
 
 		if ( $prefs['javascript_enabled'] == 'y' ) {
-			if ( $prefs['fgal_upload_progressbar'] == 'ajax_flash' ) {
-				echo $msg;
-			} else {
-				require_once('lib/smarty_tiki/modifier.escape.php');
-				echo '<?xml version="1.0" encoding="UTF-8"?'.'>';
-				ob_flush();
-				echo "<script type='text/javascript'><!--//--><![CDATA[//><!--\n";
-				echo "parent.$('#progress_'+$id).html('" . smarty_modifier_escape($msg, 'javascript', 'UTF-8') . "');\n";
-				echo "//--><!]]></script>\n";
-			}
+			echo $msg;
 			ob_flush();
 		}
 	}
@@ -2849,8 +2840,6 @@ class FileGalLib extends TikiLib
 			$aFiles['userfile'] = $_FILES['userfile'];
 		
 			foreach ( $aFiles["userfile"]["error"] as $key => $error ) {
-				
-				$formId = $params['formId'];
 				if (empty($params['galleryId'][$key])) {
 					continue;
 				}
@@ -2885,7 +2874,7 @@ class FileGalLib extends TikiLib
 							}
 							$batch_job = true;
 							$batch_job_galleryId = $params["galleryId"][$key];
-							$this->print_msg(tra('Batch file processed') . " $name", $formId, true);
+							$this->print_msg(tra('Batch file processed') . " $name", true);
 							continue;
 						} else {
 							$errors[] = tra('No permission to upload zipped file packages');
@@ -2929,7 +2918,7 @@ class FileGalLib extends TikiLib
 						$logslib->add_log('file_gallery', tra('File added: ').$tmp_dest.' '.tra('by').' '.$user);
 					}
 
-					if (false === $data = @file_get_contents($tmp_dest)) {
+					if (false === $data = file_get_contents($tmp_dest)) {
 						$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 					}
 	
@@ -2970,11 +2959,6 @@ class FileGalLib extends TikiLib
 	
 					if (!$size) {
 						$errors[] = tra('Warning: Empty file:') . '  ' . $name . '. ' . tra('Please re-upload your file');
-					}
-					if (false === $savedir) {
-						if (!isset($data) || strlen($data) < 1) {
-							$errors[] = tra('Warning: Empty file:') . ' ' . $name . '. ' . tra('Please re-upload your file');
-						}
 					}
 		
 					if (empty($params['name'][$key])) $params['name'][$key] = $name;
@@ -3038,7 +3022,6 @@ class FileGalLib extends TikiLib
 								$smarty->assign("size", $aux['size']);
 								$smarty->assign("fileId", $aux['fileId']);
 								$smarty->assign("dllink", $aux['dllink']);
-								$smarty->assign("nextFormId", $formId + 1);
 								$smarty->assign("feedback_message", $feedback_message);
 								$syntax = $this->getWikiSyntax($params["galleryId"][$key]);
 								$syntax = $this->process_fgal_syntax($syntax, $aux);
@@ -3046,7 +3029,7 @@ class FileGalLib extends TikiLib
 								if (!empty($_REQUEST['filegals_manager'])) {
 									$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 								}
-								$this->print_msg($smarty->fetch("tiki-upload_file_progress.tpl"), $formId);
+								$this->print_msg($smarty->fetch("tiki-upload_file_progress.tpl"));
 							}
 						}
 					}
@@ -3056,7 +3039,7 @@ class FileGalLib extends TikiLib
 
 		if (empty($params['returnUrl']) && count($errors)) {
 			foreach ($errors as $error) {
-				$this->print_msg($error, $formId, true);
+				$this->print_msg($error, true);
 			}
 		}
 		if ($editFile && !$didFileReplace) {
