@@ -41,7 +41,7 @@ class TikiMail
 	 * $mailbox - optional. Defaults to INBOX.
 	 * $options - optional. Options to give to imap_open()
 	 */
-	function TikiMail($type, $server, $port, $user, $pass, $mailbox = "INBOX", $options = '')
+	function __construct($type, $server, $port, $user, $pass, $mailbox = "INBOX", $options = '')
 	{
 		$this->server = $server;
 		$this->port = $port;
