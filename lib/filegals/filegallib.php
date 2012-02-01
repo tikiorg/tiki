@@ -2702,7 +2702,6 @@ class FileGalLib extends TikiLib
 
 		if ( $prefs['javascript_enabled'] == 'y' ) {
 			echo $msg;
-			ob_flush();
 		}
 	}
 
@@ -3065,10 +3064,6 @@ class FileGalLib extends TikiLib
 				header("location: tiki-list_file_gallery.php?galleryId=" . $params["galleryId"][0]);
 				die;
 			}
-		}
-		if ($batch_job and count($errors) == 0) {
-			header("location: tiki-list_file_gallery.php?galleryId=" . $batch_job_galleryId);
-			die;
 		}
 
 		$smarty->assign('errors', $errors);
