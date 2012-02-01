@@ -3190,7 +3190,6 @@ CREATE TABLE `tiki_user_reports` (
   `interval` varchar(20) NOT NULL,
   `view` varchar(8) NOT NULL,
   `type` varchar(5) NOT NULL,
-  `time_to_send` datetime NULL default 0,
   `always_email` tinyint(1) NOT NULL,
   `last_report` datetime NOT NULL,
   PRIMARY KEY (`id`)
