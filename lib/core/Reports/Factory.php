@@ -6,10 +6,10 @@
 // $Id$
 
 /**
+ * Factory for reports classes
+ * 
  * @package Tiki
  * @subpackage Reports
- * 
- * Factory for reports classes
  */
 class Reports_Factory
 {
@@ -19,9 +19,13 @@ class Reports_Factory
 		
 		switch($className) {
 			case 'Reports_Users':
-				return new Reports_Users($db, new DateTime, new Reports_Cache($db));
+				return new Reports_Users($db, new DateTime);
 			case 'Reports_Cache':
-				return new Reports_Cache($db);
+				return new Reports_Cache($db, new DateTime);
+			case 'Reports_Manager':
+				return new Reports_Manager(Reports_Factory::build('Reports_Users'), Reports_Factory::build('Reports_Cache'));
+			default:
+				break;
 		}		
 	} 
 }

@@ -2959,12 +2959,12 @@ class TrackerLib extends TikiLib
 
 		// use daily reports feature only if tracker item has been added or updated
 		if ($prefs['feature_daily_report_watches'] == 'y' && !empty($status)) {
-			$reportslib = TikiLib::lib('reports');
-			$reportslib->makeReportCache(
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache(
 							$watchers_global,
 							array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
 			);
-			$reportslib->makeReportCache(
+			$reportsManager->addToCache(
 							$watchers_item,
 							array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
 			);

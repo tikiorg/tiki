@@ -7,7 +7,6 @@
 
 $section = 'mytiki';
 include_once ('tiki-setup.php');
-include_once('lib/reportslib.php');
 
 $access->check_user($user);
 $access->check_feature('feature_user_watches');

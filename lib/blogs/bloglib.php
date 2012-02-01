@@ -10,7 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-include_once('lib/reportslib.php');
 
 /**
  * Class that handles all blog operations
@@ -707,7 +706,7 @@ class BlogLib extends TikiDb_Bridge
 	function blog_post($blogId, $data, $excerpt, $user, $title = '', $contributions = '', $priv = 'n', $created = 0, $is_wysiwyg=FALSE)
 	{
 		// update tiki_blogs and call activity functions
-		global $smarty, $tikilib, $prefs, $reportslib;
+		global $smarty, $tikilib, $prefs;
 
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
 		if (!$created) {
@@ -734,7 +733,8 @@ class BlogLib extends TikiDb_Bridge
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
-				$reportslib->makeReportCache($nots, array("event"=>'blog_post', "blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
+				$reportsManager = Reports_Factory::build('Reports_Manager');
+				$reportsManager->addToCache($nots, array("event"=>'blog_post', "blogId"=>$blogId, "blogTitle"=>$blogTitle, "postId"=>$id, "user"=>$user));
 			}
 			
 			if (count($nots)) {

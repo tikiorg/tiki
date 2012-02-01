@@ -6,11 +6,11 @@
 // $Id$
 
 /**
- * @package Tiki
- * @subpackage Reports
- * 
  * Manage users preferences regarding periodic
  * reports of what have changed in Tiki.
+ * 
+ * @package Tiki
+ * @subpackage Reports
  */
 class Reports_Users
 {
@@ -25,23 +25,15 @@ class Reports_Users
 	 * @var DateTime
 	 */
 	protected $dt;
-	
-	/**
-	 * @var Reports_Cache
-	 */
-	protected $reportsCache;
-	
 	/**
 	 * @param TikiDb $db
-	 * @param Reports_Cache $reportsCache
 	 * @return null
 	 */
-	public function __construct(TikiDb $db, DateTime $dt, Reports_Cache $reportsCache)
+	public function __construct(TikiDb $db, DateTime $dt)
 	{
 		$this->db = $db;
 		$this->table = $db->table('tiki_user_reports');
 		$this->dt = $dt;
-		$this->reportsCache = $reportsCache;
 	}
 	
 	/**
@@ -60,16 +52,14 @@ class Reports_Users
 	}
 	
 	/**
-	 * Remove user preferences for reports and
-	 * the changes cache for this user.
+	 * Remove user preferences for reports.
 	 * 
-	 * @param $user
+	 * @param string $user
 	 * @return null
 	 */
 	public function delete($user)
 	{
 		$this->table->deleteMultiple(array('user' => $user));
-		$this->reportsCache->delete($user);
 	}
 	
 	/**
@@ -136,6 +126,15 @@ class Reports_Users
 		return $ret;
 	}
 
+	/**
+	 * Return all users that are using periodic reports.
+	 * @return array a list of users names
+	 */
+	public function getAllUsers()
+	{
+		return $this->table->fetchColumn('user', array());
+	}
+	
 	/**
 	 * Update date and time of last report sent
 	 * to the user.

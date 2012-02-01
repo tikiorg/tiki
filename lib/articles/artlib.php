@@ -11,8 +11,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-include_once('lib/reportslib.php');
-
 class ArtLib extends TikiLib
 {
 	//Special parsing for multipage articles
@@ -104,7 +102,7 @@ class ArtLib extends TikiLib
 
 	function remove_article($articleId, $article_data ='')
 	{
-		global $smarty, $tikilib, $user, $prefs, $reportslib;
+		global $smarty, $tikilib, $user, $prefs;
 		
 		if ($articleId) {
 			if (empty($article_data)) $article_data = $this->get_article($articleId);
@@ -137,7 +135,8 @@ class ArtLib extends TikiLib
 			}
 
 			if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-				$reportslib->makeReportCache(
+				$reportsManager = Reports_Factory::build('Reports_Manager');
+				$reportsManager->addToCache(
 								$nots,
 								array(
 									'event'				=> 'article_deleted',
@@ -407,7 +406,7 @@ class ArtLib extends TikiLib
 												)
 	{
 		
-		global $smarty, $tikilib, $reportslib;
+		global $smarty, $tikilib;
 		
 		if ($expireDate < $publishDate) {
 			$expireDate = $publishDate;
@@ -552,7 +551,8 @@ class ArtLib extends TikiLib
 
 		global $prefs;
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-			$reportslib->makeReportCache(
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache(
 							$nots,
 							array(
 								'event' => $event,
@@ -560,7 +560,7 @@ class ArtLib extends TikiLib
 								'articleTitle' => $title,
 								'authorName' => $authorName,
 								'user' => $user
-						)
+							)
 			);
 		}
 

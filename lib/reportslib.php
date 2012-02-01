@@ -270,29 +270,6 @@ class reportsLib extends TikiLib
 			return $body;
 		}
 	}
-	
-	function makeReportCache(&$nots, $cache_data) {
-		//Get all users that have enabled reports
-		$query = "select `user` from tiki_user_reports";
-		$result = $this->query($query);
-		$report_users = array();
-		while ($res = $result->fetchRow()) {
-			$report_users[] = $res['user'];
-		}
-		
-		foreach ($nots as $key=>$not) {
-			//If user in $nots has enabled reports
-			if (in_array($not['user'], $report_users)) {
-				//dump the report-data to the report cache
-				$query = "insert into `tiki_user_reports_cache`(`user`, `event`, `data`,`time`) ";
-				$query.= "values(?,?,?,NOW())";
-				$this->query($query,array($not['user'], $cache_data['event'], serialize($cache_data)));
-
-				//and reove the user from $nots so that he doesn´t get a notification for the event
-				unset($nots[$key]);
-			}
-		}
-	}
 }
 
 global $reportslib;

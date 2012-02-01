@@ -11,8 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-include_once('lib/reportslib.php');
-
 class ImageGalsLib extends TikiLib
 {
 	function __construct()
@@ -927,8 +925,8 @@ class ImageGalsLib extends TikiLib
 			$nots = $this->get_event_watches($event, $galleryId);
 
 			if ($prefs['feature_daily_report_watches'] == 'y') {
-				global $reportslib; include_once ('lib/reportslib.php');
-				$reportslib->makeReportCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
+				$reportsManager = Reports_Factory::build('Reports_Manager');
+				$reportsManager->addToCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 			}
 
 			include_once('lib/notifications/notificationemaillib.php');

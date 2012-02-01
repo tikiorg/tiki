@@ -527,8 +527,8 @@ class CalendarLib extends TikiLib
 		$nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId']);
 		
 		if ($prefs['feature_daily_report_watches'] == 'y') {
-			$reportslib = TikiLib::lib('reports');
-			$reportslib->makeReportCache($nots, array('event' => 'calendar_changed', 'calitemId' => $calitemId, 'user' => $user));
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache($nots, array('event' => 'calendar_changed', 'calitemId' => $calitemId, 'user' => $user));
 		}
 		
 		if ($nots) {

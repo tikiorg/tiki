@@ -14,8 +14,6 @@
  * \param $topicName name of the parent topic
  */
 
-include_once('lib/reportslib.php');
-
 function sendForumEmailNotification(
 				$event, 
 				$object, 
@@ -128,10 +126,9 @@ function sendForumEmailNotification(
 		$nots[] = $not;
 	}
 
-	global $reportslib;
-
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
-		$reportslib->makeReportCache(
+		$reportsManager = Reports_Factory::build('Reports_Manager');
+		$reportsManager->addToCache(
 						$nots, 
 						array(
 							"event"=>$event, 
@@ -228,7 +225,7 @@ function sendWikiEmailNotification(
 	if ($prefs['feature_user_watches'] == 'y') {
 		$nots = $tikilib->get_event_watches($event, $pageName);
 	}
-
+	
 	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_changed') {
 		global $structlib; include_once('lib/structures/structlib.php');
 		$nots2 = $structlib->get_watches($pageName);
@@ -278,11 +275,10 @@ function sendWikiEmailNotification(
 
 	if ($edit_user=='') $edit_user = tra('Anonymous');
 
-	global $reportslib;
-
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
 		if ($wikiEvent == 'wiki_file_attached') {
-			$reportslib->makeReportCache(
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache(
 							$nots, 
 							array(
 								"event" => $wikiEvent, 
@@ -294,7 +290,8 @@ function sendWikiEmailNotification(
 							)
 			);
 		} else {
-			$reportslib->makeReportCache(
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache(
 							$nots, 
 							array(
 								"event" => $wikiEvent, 
@@ -460,7 +457,7 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 
 function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId)
 {
-	global $tikilib, $prefs, $smarty, $userlib, $reportslib;
+	global $tikilib, $prefs, $smarty, $userlib;
 
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
@@ -473,7 +470,8 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		}
 
 		if ($prefs['feature_daily_report_watches'] == 'y') {
-			$reportslib->makeReportCache(
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache(
 							$nots, 
 							array(
 								"event" => $event, 
@@ -549,7 +547,7 @@ function sendCategoryEmailNotification($values)
 		$objectUrl = $values['objectUrl'];
 	}
 
-	global $tikilib, $prefs, $smarty, $userlib, $user, $reportslib;
+	global $tikilib, $prefs, $smarty, $userlib, $user;
 
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
@@ -573,7 +571,8 @@ function sendCategoryEmailNotification($values)
 			$cache_data = $values;
 			$cache_data['user'] = $user;
 			$cache_data['event'] = $event;
-			$reportslib->makeReportCache($nots, $cache_data);
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache($nots, $cache_data);
 		}
 	}
 
@@ -727,8 +726,8 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 			$smarty->assign('mail_objectid', $id);
 		} elseif ($type == 'trackeritem') {
 			if ($prefs['feature_daily_report_watches'] == 'y') {
-				$reportslib = TikiLib::lib('reports');
-				$reportslib->makeReportCache(
+				$reportsManager = Reports_Factory::build('Reports_Manager');
+				$reportsManager->addToCache(
 								$watches,
 								array(
 									'event' => 'tracker_item_comment', 

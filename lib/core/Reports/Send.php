@@ -6,11 +6,11 @@
 // $Id$
 
 /**
- * @package Tiki
- * @subpackage Reports
- * 
  * Send e-mail reports to users with changes in Tiki
  * in a given period of time.
+ * 
+ * @package Tiki
+ * @subpackage Reports
  */
 class Reports_Send
 {

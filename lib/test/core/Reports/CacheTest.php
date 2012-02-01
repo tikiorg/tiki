@@ -12,7 +12,10 @@ class Reports_CacheTest extends TikiDatabaseTestCase
 	protected function setUp()
 	{
 		$db = TikiDb::get();
-		$this->obj = new Reports_Cache($db);
+		$dt = new DateTime();
+		$dt->setTimezone(new DateTimeZone('UTC'));
+		$dt->setTimestamp('1326990210');
+		$this->obj = new Reports_Cache($db, $dt);
 		
 		parent::setUp();
 	}
@@ -48,5 +51,31 @@ class Reports_CacheTest extends TikiDatabaseTestCase
 		$entries = $this->obj->get('test');
 		
 		$this->assertEquals($expectedResult, $entries);
+	}
+	
+	public function testAdd_shouldAddInformationAboutChangedObjectToCache()
+	{
+		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/reports_cache_dataset_add.xml')
+			->getTable('tiki_user_reports_cache');	
+		
+		$users = array('admin', 'test');			
+			
+		$watches = array(
+			array('user' => 'admin'),
+			array('user' => 'test'),
+			array('user' => 'notUsingPeriodicReports')
+		);
+		
+		$expectedResult = array_slice($watches, 2, 1, true);
+		
+		$cacheData = array('event' => 'wiki_page_changed');
+		
+		$this->obj->add(&$watches, $cacheData, $users);
+		
+		$queryTable = $this->getConnection()->createQueryTable('tiki_user_reports_cache', 'SELECT * FROM tiki_user_reports_cache');
+		
+		$this->assertTablesEqual($expectedTable, $queryTable);
+
+		$this->assertEquals($expectedResult, $watches);
 	}
 }

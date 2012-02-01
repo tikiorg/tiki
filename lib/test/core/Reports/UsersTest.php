@@ -19,13 +19,11 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 	{
 		$this->db = TikiDb::get();
 		
-		$this->reportsCache = $this->getMock('Reports_Cache', array('delete'), array($this->db));
-		
 		$this->dt = new DateTime();
 		$this->dt->setTimezone(new DateTimeZone('UTC'));
 		$this->dt->setTimestamp('1326734528');
 		
-		$this->obj = new Reports_Users($this->db, $this->dt, $this->reportsCache);
+		$this->obj = new Reports_Users($this->db, $this->dt);
 		
 		parent::setUp();
 	}
@@ -35,14 +33,12 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 		return $this->createMySQLXMLDataSet(dirname(__FILE__) . '/fixtures/user_reports_dataset.xml');
 	}
 	
-	public function testDelete_shouldDeleteUserReportsPreferencesAndCacheEntries()
+	public function testDelete_shouldDeleteUserReportsPreferences()
 	{
 		$user = 'admin';
 		
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/user_reports_dataset_delete.xml')
 			->getTable('tiki_user_reports');
-		
-		$this->reportsCache->expects($this->once())->method('delete')->with($user);
 		
 		$this->obj->delete($user);
 		
@@ -115,5 +111,11 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 		$queryTable = $this->getConnection()->createQueryTable('tiki_user_reports', 'SELECT * FROM tiki_user_reports');
 		
 		$this->assertTablesEqual($expectedTable, $queryTable);
+	}
+	
+	public function testGetAllUsers_shouldReturnAllUsers()
+	{
+		$users = $this->obj->getAllUsers();
+		$this->assertEquals(array('admin', 'test'), $users);
 	}
 }
