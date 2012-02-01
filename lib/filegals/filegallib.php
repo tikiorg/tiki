@@ -2772,6 +2772,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
+	// TODO: This does not necessarily handle a file upload. Just edits a file. File replacements are handled somewhere else.
 	private function _actionHandler_uploadFile( $params )
 	{
 		global $user, $prefs, $tikilib, $logslib, $smarty, $tiki_p_admin, $tiki_p_batch_upload_files;
@@ -3060,14 +3061,13 @@ class FileGalLib extends TikiLib
 				$this->set_download_limit($editFileId, $params['hit_limit'][0]);
 			}
 			include_once ('categorize.php');
+			if (count($errors) == 0) {
+				header("location: tiki-list_file_gallery.php?galleryId=" . $params["galleryId"][0]);
+				die;
+			}
 		}
 		if ($batch_job and count($errors) == 0) {
 			header("location: tiki-list_file_gallery.php?galleryId=" . $batch_job_galleryId);
-			die;
-		}
-
-		if (!empty($editFileId) and count($errors) == 0) {
-			header("location: tiki-list_file_gallery.php?galleryId=" . $params["galleryId"][0]);
 			die;
 		}
 
