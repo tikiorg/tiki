@@ -28,7 +28,7 @@ class Installer extends TikiDb_Bridge
 	
 	var $useInnoDB = false;
 
-	function Installer() // {{{
+	function __construct() // {{{
 	{
 		$this->buildPatchList();
 		$this->buildScriptList();
