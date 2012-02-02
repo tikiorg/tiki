@@ -156,7 +156,7 @@ class TikiDb_Table
 		return $map;
 	}
 
-	function fetchAll(array $fields, array $conditions, $numrows = -1, $offset = -1, $orderClause = null)
+	function fetchAll(array $fields = array(), array $conditions = array(), $numrows = -1, $offset = -1, $orderClause = null)
 	{
 		$bindvars = array();
 
@@ -177,7 +177,9 @@ class TikiDb_Table
 			$fieldDescription .= ', ';
 		}
 
-		$query = 'SELECT ' . rtrim($fieldDescription, ', ') . ' FROM ' . $this->escapeIdentifier($this->tableName);
+		$query = 'SELECT ';
+		$query .= (!empty($fieldDescription)) ? rtrim($fieldDescription, ', ') : '*';
+		$query .= ' FROM ' . $this->escapeIdentifier($this->tableName);
 		$query .= $this->buildConditions($conditions, $bindvars);
 		$query .= $this->buildOrderClause($orderClause);
 

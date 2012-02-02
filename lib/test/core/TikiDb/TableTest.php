@@ -7,6 +7,10 @@
 
 class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 {
+	protected $obj;
+	
+	protected $tikiDb;
+	
 	function testInsertOne()
 	{
 		$mock = $this->getMock('TikiDb');
@@ -336,6 +340,45 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(array('hello', 'world'), $table->fetchColumn('group', array('object' => 42, 'event' => 'foobar'), -1, -1, 'ASC'));
 	}
 
+	function testFetchAll_shouldConsiderOnlyProvidedFields()
+	{
+		$expectedResult = array(
+			array('user' => 'admin'),
+			array('user' => 'test')
+		);
+		
+		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1';
+		
+		$tikiDb = $this->getMock('TikiDb');
+		$tikiDb->expects($this->once())->method('fetchAll')
+			->with($query, array(), -1, -1)
+			->will($this->returnValue($expectedResult));
+			
+		$table = new TikiDb_Table($tikiDb, 'users_users');
+		
+		$this->assertEquals($expectedResult, $table->fetchAll(array('user', 'email'), array()));
+	}
+	
+	function testFetchAll_shouldReturnAllFieldsIfFirstParamIsEmpty()
+	{
+		$expectedResult = array(
+			array('user' => 'admin'),
+			array('user' => 'test')
+		);
+		
+		$query = 'SELECT * FROM `users_users` WHERE 1=1';
+		
+		$tikiDb = $this->getMock('TikiDb');
+		$tikiDb->expects($this->exactly(2))->method('fetchAll')
+			->with($query, array(), -1, -1)
+			->will($this->returnValue($expectedResult));
+			
+		$table = new TikiDb_Table($tikiDb, 'users_users');
+		
+		$this->assertEquals($expectedResult, $table->fetchAll(array(), array()));
+		$this->assertEquals($expectedResult, $table->fetchAll());
+	}
+	
 	function testFetchRow()
 	{
 		$mock = $this->getMock('TikiDb');
