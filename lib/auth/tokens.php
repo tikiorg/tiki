@@ -9,6 +9,7 @@ class AuthTokens
 {
 	const SCHEME = 'MD5( CONCAT(tokenId, creation, timeout, entry, parameters, groups) )';
 	private $db;
+	private $table;
 	private $maxTimeout = 3600;
 	private $maxHits = 1;
 	public $ok = false;
@@ -22,6 +23,7 @@ class AuthTokens
 
 	function __construct( $db, $options = array() ) {
 		$this->db = $db;
+		$this->table = $this->db->table('tiki_auth_tokens');
 
 		if( isset( $options['maxTimeout'] ) ) {
 			$this->maxTimeout = (int) $options['maxTimeout'];
@@ -38,6 +40,10 @@ class AuthTokens
 		return $data;
 	}
 	
+	function getTokens()
+	{
+		return $this->table->fetchAll();
+	}
 	
 	function getGroups( $token, $entry, $parameters ) {
 		$this->db->query( 'DELETE FROM tiki_auth_tokens WHERE UNIX_TIMESTAMP(creation) + timeout < UNIX_TIMESTAMP() OR `hits` <= 0' );
@@ -151,5 +157,10 @@ class AuthTokens
 		$token['url'] = "{$data['scheme']}://{$data['host']}{$data['path']}$query$anchor";
 		
 		return $token;
+	}
+	
+	function deleteToken($tokenId)
+	{
+		$this->table->delete(array('tokenId' => $tokenId));
 	}
 }
