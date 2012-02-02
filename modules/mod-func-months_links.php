@@ -57,7 +57,7 @@ function module_months_links($mod_reference, $module_params)
 				break;
 		}
 	}
-	
+
 	if (isset($link)) {
 		global $tikilib;
 		if ($module_params['feature'] == 'blogs') {
@@ -72,14 +72,23 @@ function module_months_links($mod_reference, $module_params)
 		$current_year = TikiLib::date_format("%Y", $tikilib->now);
 		$timestamp_month_start = 0;
 
+		if($_SESSION['cms_last_viewed_month'] && $module_params['feature'] == 'cms') {
+			list($year_expanded,$month_expanded_num) = explode('-',$_SESSION['cms_last_viewed_month']);
+			$month_expanded = $month_names[$month_expanded_num-1];
+		}else{
+			$year_expanded = $current_year;
+			$month_expanded = $month_names[$current_month_num-1];
+		}
 		$months = array();
-		for ($i = 0 ; $i < ($mod_reference['rows'] > 0 ? $mod_reference['rows'] : 12) ; $i++, $current_month_num--) {
+		$numrows=$mod_reference['rows'] > 0 ? $mod_reference['rows'] : 12;
+		for ($i = 0 ; $i < $numrows ; $i++, $current_month_num--) {
 			if ($current_month_num == 0) {
 				$current_month_num = 12;
 				$current_year--;
 			}
 	
 			$month_name = ucfirst(tra($month_names[$current_month_num - 1])) . ' ' . $current_year;
+			$real_month_name = ucfirst(tra($month_names[$current_month_num - 1]));
 			if ($timestamp_month_start > 0) {
 				$timestamp_month_end = $timestamp_month_start - 1; // Optimisation to save one make_time() call per iteration
 			} else {
@@ -94,14 +103,28 @@ function module_months_links($mod_reference, $module_params)
 			} elseif ($module_params['feature'] == 'cms') {
 				$posts_of_month = $artlib->list_articles(0, -1, 'publishDate_desc', '', $timestamp_month_start, $timestamp_month_end, false, '', '', 'y', '', '', '', '', '', '', '', false, '', '');
 				if ($posts_of_month["cant"] > 0) {
-					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+					$archives[$current_year]['monthlist'][$real_month_name]['link'] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+					$archives[$current_year]['monthlist'][$real_month_name]['cant'] = $posts_of_month['cant'];
+					// Clicking on the year number displays the first non-empty month
+					if(!isset($archives[$current_year]['link'])) {
+						$archives[$current_year]['link'] = $archives[$current_year]['monthlist'][$real_month_name]['link'];
+					}
+					$archives[$current_year]['cant'] += $posts_of_month['cant'];
+					for($post=0;$post<$posts_of_month['cant'];$post++) {
+						$archives[$current_year]['monthlist'][$real_month_name]['postlist'][$posts_of_month['data'][$post]['articleId']] = $posts_of_month['data'][$post]['title'];
+					}
 				}
 			} else {
-					$months[$month_name] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+				$months[$month_name] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 			}
 		}
 		$title = ucwords($sections[$module_params['feature']][$object_key]) . ' - ' . tra('List by month');
+		$smarty->assign('feature', $module_params['feature']);
 		$smarty->assign('months', $months);
+		$smarty->assign('archives', $archives);
+		$smarty->assign('year_expanded', $year_expanded);
+		$smarty->assign('month_expanded', $month_expanded);
+		$smarty->assign('module_id', $mod_reference['moduleId']);
 		$smarty->assign('tpl_module_title', $title);
 	}
 }

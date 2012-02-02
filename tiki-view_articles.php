@@ -63,6 +63,8 @@ if (isset($_REQUEST['date_min']) || isset($_REQUEST['date_max'])) {
 	$date_min = 0;
 	$date_max = $tikilib->now;
 }
+//Keep track of month of last viewed article for article months_links module foldable display
+$_SESSION['cms_last_viewed_month'] = TikiLib::date_format("%Y-%m", $date_max);
 $min_rating = isset($_REQUEST['min_rating']) ? $_REQUEST['min_rating'] : '';
 $max_rating = isset($_REQUEST['max_rating']) ? $_REQUEST['max_rating'] : '';
 if (isset($_REQUEST["find"])) {

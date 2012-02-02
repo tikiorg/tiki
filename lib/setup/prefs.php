@@ -144,6 +144,7 @@ function get_default_prefs() {
 		'cms_left_column' => 'y',
 		'cms_right_column' => 'y',
 		'cms_top_bar' => 'n',
+		'cms_last_viewed_month' => '0',
 
 
 		// trackers

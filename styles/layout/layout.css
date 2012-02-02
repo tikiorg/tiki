@@ -810,13 +810,32 @@ h3.box-title {
 	padding-left: 1.3em;
 }
 
+.box-months_links ul {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+.box-months_links ul li {
+	list-style-type: none;
+	padding-left: 0.5em;
+}
+
+.box-months_links ul li li {
+	list-style-type: none;
+	padding-left: 1.3em;
+}
+
+.collapsed ul {
+	display: none;
+}
+
 .modcontrols {
 	display: block;
 	float: right;
 	width: 64px;
 	height: 16px;
 }
-	
+
 /* MiniChat  */
 .box-minichat {
 	width: 100%;

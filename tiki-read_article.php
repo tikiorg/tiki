@@ -216,6 +216,8 @@ if ($prefs['feature_multilingual'] == 'y' && $article_data['lang']) {
 	$trads = $multilinguallib->getTranslations('article', $article_data['articleId'], $article_data["title"], $article_data['lang']);
 	$smarty->assign('trads', $trads);
 }
+//Keep track of month of last viewed article for article months_links module foldable display
+$_SESSION['cms_last_viewed_month'] = TikiLib::date_format("%Y-%m", $article_data["publishDate"]);
 ask_ticket('article-read');
 //add a hit
 $statslib->stats_hit($article_data["title"], "article", $article_data['articleId']);
