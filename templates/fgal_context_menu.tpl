@@ -188,7 +188,7 @@
 
 	{if $files[$changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or (!$files[$changes].lockedby and (($user and $user eq $files[$changes].user) or ($files[$changes].perms.tiki_p_edit_gallery_file eq 'y' and $files[$changes].perms.tiki_p_remove_files eq 'y')))}
-			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon remove=$files[$changes].fileId galleryId=$files[$changes].galleryId}{tr}Delete{/tr}{/self_link}
+			<a href="tiki-list_file_gallery.php?remove={$files[$changes].fileId}&galleryId={$files[$changes].galleryId}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 	{/if}
 
 	{if $prefs.javascript_enabled eq 'y'}
