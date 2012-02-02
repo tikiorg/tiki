@@ -3029,7 +3029,7 @@ class FileGalLib extends TikiLib
 								if (!empty($_REQUEST['filegals_manager'])) {
 									$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 								}
-								$this->print_msg($smarty->fetch("tiki-upload_file_progress.tpl"));
+								$smarty->display("tiki-upload_file_progress.tpl");
 							}
 						}
 					}
