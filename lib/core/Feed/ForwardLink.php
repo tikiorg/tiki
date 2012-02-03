@@ -33,6 +33,17 @@ Class Feed_ForwardLink extends Feed_Abstract
 		}
 		
 		$phrase = (!empty($_REQUEST['phrase']) ? htmlspecialchars($_REQUEST['phrase']) : '');
+		
+		session_start();
+		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
+		
+		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($_REQUEST['preview'], $phrase, $args['object']);
+		
+		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
+			$phrase = $_SESSION['phrase'];
+			unset($_SESSION['phrase']);
+		}
+		
 		$_REQUEST['preview'] = (!empty($_REQUEST['preview']) ? $_REQUEST['preview'] : $args['version']);
 		$phraseI = 0;
 		
@@ -42,12 +53,18 @@ Class Feed_ForwardLink extends Feed_Abstract
 			$phrases[] = $thisText = htmlspecialchars($item->forwardlink->text);
 		}
 		
+		$phraser = new JisonParser_Phraser_Handler();
+		
 		$parsed = $smarty->getTemplateVars("parsed");
 		if (!empty($parsed)) {
-			$phraser = new JisonParser_Phraser_Handler();
 			$smarty->assign("parsed", $phraser->findPhrases($parsed, $phrases));
+		} else {
+			$previewd = $smarty->getTemplateVars("previewd");
+			if (!empty($previewd)) {
+				$previewd = $phraser->findPhrases($previewd, $phrases);
+				$smarty->assign("previewd", $previewd);
+			}
 		}
-		
 		
 		foreach($feedItems as $i => $item) {
 			$thisText = htmlspecialchars($item->forwardlink->text);
