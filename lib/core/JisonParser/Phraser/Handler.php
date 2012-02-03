@@ -47,10 +47,10 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		
 		foreach($this->indexes as $i => $index) {
 			if (
-				$this->currentWord > $index['start'] && 
+				$this->currentWord >= $index['start'] && 
 				$this->currentWord <= $index['end']
 			) {
-				$char = "<span class='phrases phrase' . $i . '' style='border: none;'>" . $char . "</span>";
+				$char = '<span class="phrases phrase' . $i . '" style="border: none;">' . $char . '</span>';
 			}
 		}
 		
@@ -166,5 +166,26 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		preg_match('/' . $pattern . '/', $subject, $match);
 		
 		return (empty($match) ? false : true);
+	}
+	
+	static function hasPhrase($phrase, $parent)
+	{
+		$phrase = self::sanitizeToWords($phrase);
+		$parent = self::sanitizeToWords($parent);
+
+		$phrase = implode('|', $phrase);
+		$parent = implode('|', $parent);
+		
+		return (strpos($parent, $phrase) !== false ? true : false);
+	}
+	
+	static function sanitizeToWords($html)
+	{
+		$sanitized = preg_replace('/<(.|\n)*?>/', " ", $html);
+		$sanitized = preg_replace('/\W/', " ", $sanitized);
+		$sanitized = split(" ", $sanitized);
+		$sanitized = array_filter($sanitized);
+		
+		return $sanitized;
 	}
 }

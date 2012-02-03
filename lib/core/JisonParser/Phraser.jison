@@ -6,8 +6,8 @@
 %lex
 %%
 "<"(.|\n)*?">"						return 'TAG'
-[a-zA-Z0-9]+						return 'WORD'
-(.|\n)								return 'CHAR'
+(\w|\d)+							return 'WORD'
+(.|\n|\s)							return 'CHAR'
 <<EOF>>								return 'EOF'
 
 

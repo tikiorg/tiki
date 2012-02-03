@@ -23,8 +23,8 @@ class JisonParser_Wiki
 		$this->defaultActions = json_decode('{"27":[2,1]}', true);
 		
 		//lexer
-		$this->lexer_rules = 			array("/^\\{[a-z]+.*?\\}/","/^\\{[A-Z]+\\(.*?\\)\\}/","/^\\{[A-Z]+\\}/","/^(~np~)/","/^(~\\/np~)/","/^---/","/^\\(:[a-z]+:\\)/","/^\\[\\[.*?/","/^[_][_]/","/^[_][_]/","/^[\\^]/","/^[\\^]/","/^[:][:]/","/^[:][:]/","/^[\\~][\\~]/","/^[\\~][\\~][#]/","/^[\\n]/","/^[\\n](!!!!!!)/","/^[\\n]/","/^[\\n](!!!!!)/","/^[\\n]/","/^[\\n](!!!!)/","/^[\\n]/","/^[\\n](!!!)/","/^[\\n]/","/^[\\n](!!)/","/^[\\n]/","/^[\\n](!)/","/^['][']/","/^['][']/","/^(\\])/","/^(\\[)/","/^[-][-]/","/^[-][-]/","/^[|][|]/","/^[|][|]/","/^[=][-]/","/^[-][=]/","/^[=][=][=]/","/^[=][=][=]/","/^[)][)]/","/^[(][(]/","/^<(.|\\n)*?>/","/^(.)/","/^(\\n)/","/^$/");
-		$this->lexer_conditions = 	json_decode('{"bold":{"rules":[0,1,2,3,4,5,6,7,8,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"box":{"rules":[0,1,2,3,4,5,6,7,9,10,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"center":{"rules":[0,1,2,3,4,5,6,7,9,11,12,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"colortext":{"rules":[0,1,2,3,4,5,6,7,9,11,13,14,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"italic":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,28,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header6":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,16,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header5":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,18,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header4":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,20,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header3":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,22,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header2":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,24,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header1":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,26,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"link":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,30,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"strikethrough":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,32,33,35,37,39,41,42,43,44,45],"inclusive":true},"table":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,34,35,37,39,41,42,43,44,45],"inclusive":true},"titlebar":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,36,37,39,41,42,43,44,45],"inclusive":true},"underscore":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,38,39,41,42,43,44,45],"inclusive":true},"wikilink":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,40,41,42,43,44,45],"inclusive":true},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true}}', true);
+		$this->rules = 			array("/^\\{[a-z]+.*?\\}/","/^\\{[A-Z]+\\(.*?\\)\\}/","/^\\{[A-Z]+\\}/","/^(~np~)/","/^(~\\/np~)/","/^---/","/^\\(:[a-z]+:\\)/","/^\\[\\[.*?/","/^[_][_]/","/^[_][_]/","/^[\\^]/","/^[\\^]/","/^[:][:]/","/^[:][:]/","/^[\\~][\\~]/","/^[\\~][\\~][#]/","/^[\\n]/","/^[\\n](!!!!!!)/","/^[\\n]/","/^[\\n](!!!!!)/","/^[\\n]/","/^[\\n](!!!!)/","/^[\\n]/","/^[\\n](!!!)/","/^[\\n]/","/^[\\n](!!)/","/^[\\n]/","/^[\\n](!)/","/^['][']/","/^['][']/","/^(\\])/","/^(\\[)/","/^[-][-]/","/^[-][-]/","/^[|][|]/","/^[|][|]/","/^[=][-]/","/^[-][=]/","/^[=][=][=]/","/^[=][=][=]/","/^[)][)]/","/^[(][(]/","/^<(.|\\n)*?>/","/^(.)/","/^(\\n)/","/^$/");
+		$this->conditions = 	json_decode('{"bold":{"rules":[0,1,2,3,4,5,6,7,8,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"box":{"rules":[0,1,2,3,4,5,6,7,9,10,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"center":{"rules":[0,1,2,3,4,5,6,7,9,11,12,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"colortext":{"rules":[0,1,2,3,4,5,6,7,9,11,13,14,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"italic":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,28,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header6":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,16,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header5":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,18,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header4":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,20,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header3":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,22,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header2":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,24,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"header1":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,26,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"link":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,30,31,33,35,37,39,41,42,43,44,45],"inclusive":true},"strikethrough":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,32,33,35,37,39,41,42,43,44,45],"inclusive":true},"table":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,34,35,37,39,41,42,43,44,45],"inclusive":true},"titlebar":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,36,37,39,41,42,43,44,45],"inclusive":true},"underscore":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,38,39,41,42,43,44,45],"inclusive":true},"wikilink":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,40,41,42,43,44,45],"inclusive":true},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,42,43,44,45],"inclusive":true}}', true);
 	}
 	
 	function trace()
@@ -187,9 +187,6 @@ break;
 		// semantic value stack
 		$lstack = array();
 		//location stack
-		$yytext = '';
-		$yylineno = 0;
-		$yyleng = 0;
 		$shifts = 0;
 		$reductions = 0;
 		$recovering = 0;
@@ -197,8 +194,7 @@ break;
 		$EOF = 1;
 		
 		$this->setInput($input);
-		$yyloc = $this->lexer_yylloc;
-		$lstack[] = $yyloc;
+		$lstack[] = $this->yyloc;
 		
 		if (!empty($this->yy->parseError) && function_exists($this->yy->parseError)) $this->parseError = $this->yy->parseError;
 
@@ -234,13 +230,13 @@ break;
 						}
 					}
 					
-					$errStr = 'Parse error on line ' . ($yylineno + 1) . ":\n" . $this->showPosition() . '\nExpecting ' . implode(', ', $expected);
+					$errStr = 'Parse error on line ' . ($this->yylineno + 1) . ":\n" . $this->showPosition() . '\nExpecting ' . implode(', ', $expected);
 			
 					$this->parseError($errStr, array(
-						"text"=> $this->lexer_match,
+						"text"=> $this->match,
 						"token"=> $symbol,
-						"line"=> $this->lexer_yylineno,
-						"loc"=> $yyloc,
+						"line"=> $this->yylineno,
+						"loc"=> $this->yyloc,
 						"expected"=> $expected
 					));
 				}
@@ -252,10 +248,6 @@ break;
 					}
 		
 					// discard current lookahead and grab another
-					$yyleng = $this->lexer_yyleng;
-					$yytext = $this->yytext;
-					$yylineno = $this->lexer_yylineno;
-					$yyloc = $this->lexer_yylloc;
 					$symbol = $this->lex();
 				}
 	
@@ -296,14 +288,10 @@ break;
 					//$this->shiftCount++;
 					$stack[] = $symbol;
 					$vstack[] = $this->yytext;
-					$lstack[] = $this->lexer_yylloc;
+					$lstack[] = $this->yyloc;
 					$stack[] = $action[1]; // push state
 					$symbol = "";
 					if (empty($preErrorSymbol)) { // normal execution/no error
-						$yyleng = $this->lexer_yyleng;
-						$yytext = $this->yytext;
-						$yylineno = $this->lexer_yylineno;
-						$yyloc = $this->lexer_yylloc;
 						if ($recovering > 0) $recovering--;
 					} else { // error just occurred, resume old lookahead f/ before error
 						$symbol = $preErrorSymbol;
@@ -326,7 +314,7 @@ break;
                         "last_column"=> 	$lstack[$lstackCount - 1]['last_column']
                     );
 					
-					$r = $this->performAction($yyval->S, $yytext, $yyleng, $yylineno, $action[1], $vstack, $lstack, $vstackCount - 1);
+					$r = $this->performAction($yyval->S, $this->yytext, $this->yyleng, $this->yylineno, $action[1], $vstack, $lstack, $vstackCount - 1);
 					
 					if (empty($r) == false) {
 						return $r;
@@ -361,30 +349,32 @@ break;
 
 
 	/* Jison generated lexer */
-	var $lexer_EOF = 1;
-	var $lexer_S = "";
-	var $lexer_yy = "";
-	var $lexer_yylineno = "";
-	var $lexer_yyleng = "";
+	var $EOF = 1;
+	var $S = "";
+	var $yy = "";
+	var $yylineno = "";
+	var $yyleng = "";
 	var $yytext = "";
-	var $lexer_matched = "";
-	var $lexer_match = "";
-	var $lexer_yylloc = array();
-	var $lexer_conditionsStack = array();
-	var $lexer_rules = array();
-	var $lexer_conditions = array();
-	var $lexer_done = false;
-	var $lexer_less;
-	var $lexer_more;
+	var $match = "";
+	var $matched = "";
+	var $matches = "";
+	var $yyloc = array();
+	var $conditionsStack = array();
+	var $conditionStackCount = -1;
+	var $rules = array();
+	var $conditions = array();
+	var $done = false;
+	var $less;
+	var $more;
 
 	function setInput($input)
 	{
-		$this->lexer_input = $input;
-		$this->lexer_more = $this->lexer_less = $this->lexer_done = false;
-		$this->lexer_yylineno = $this->lexer_yyleng = 0;
-		$this->yytext = $this->lexer_matched = $this->lexer_match = '';
-		$this->lexer_conditionStack = array('INITIAL');
-		$this->lexer_yylloc = array(
+		$this->input = $input;
+		$this->more = $this->less = $this->done = false;
+		$this->yylineno = $this->yyleng = 0;
+		$this->yytext = $this->matched = $this->match = '';
+		$this->conditionStack = array('INITIAL');
+		$this->yyloc = array(
 			"first_line"=> 1,
 			"first_column"=> 0,
 			"last_line"=> 1,
@@ -394,40 +384,40 @@ break;
 	
 	function input()
 	{
-		$ch = $this->lexer_input[0];
+		$ch = $this->input[0];
 		$this->yytext .= $ch;
-		$this->lexer_yyleng++;
-		$this->lexer_match .= $ch;
-		$this->lexer_matched .= $ch;
+		$this->yyleng++;
+		$this->match .= $ch;
+		$this->matched .= $ch;
 		$lines = preg_match("/\n/", $ch);
-		if (count($lines) > 0) $this->lexer_yylineno++;
-		array_slice($this->lexer_input, 1);
+		if (count($lines) > 0) $this->yylineno++;
+		array_slice($this->input, 1);
 		return $ch;
 	}
 	
 	function unput($ch)
 	{
-		$this->lexer_input = $ch . $this->lexer_input;
+		$this->input = $ch . $this->input;
 		return $this;
 	}
 	
 	function more()
 	{
-		$this->lexer_more = true;
+		$this->more = true;
 		return $this;
 	}
 	
 	function pastInput()
 	{
-		$past = substr($this->lexer_matched, 0, count($this->lexer_matched) - count($this->lexer_match));
+		$past = substr($this->matched, 0, count($this->matched) - count($this->match));
 		return (strlen($past) > 20 ? '...' : '') . preg_replace("/\n/", "", substr($past, -20));
 	}
 	
 	function upcomingInput()
 	{
-		$next = $this->lexer_match;
+		$next = $this->match;
 		if (strlen($next) < 20) {
-			$next .= substr($this->lexer_input, 0, 20 - strlen($next));
+			$next .= substr($this->input, 0, 20 - strlen($next));
 		}
 		return preg_replace("/\n/", "", substr($next, 0, 20) . (strlen($next) > 20 ? '...' : ''));
 	}
@@ -441,38 +431,39 @@ break;
 	
 	function next()
 	{
-		if ($this->lexer_done == true) {
-			return $this->lexer_EOF;
+		if ($this->done == true) {
+			return $this->EOF;
 		}
 		
-		if ($this->lexer_input == false) $this->lexer_input = "";
-		if (empty($this->lexer_input)) $this->lexer_done = true;
+		if ($this->input == false) $this->input = "";
+		if (empty($this->input)) $this->done = true;
 
-		if ($this->lexer_more == false) {
+		if ($this->more == false) {
 			$this->yytext = '';
-			$this->lexer_match = '';
+			$this->match = '';
 		}
 		
 		$rules = $this->currentRules();
 		for ($i = 0; $i < count($rules); $i++) {
-			preg_match($this->lexer_rules[$rules[$i]], $this->lexer_input, $match);
+			preg_match($this->rules[$rules[$i]], $this->input, $match);
 			if ( isset($match[0]) ) {
 				preg_match_all("/\n.*/", $match[0], $lines, PREG_PATTERN_ORDER);
-				if (count($lines) > 1) $this->lexer_yylineno += count($lines);
-				$this->lexer_yylloc = array(
-					"first_line"=> $this->lexer_yylloc['last_line'],
-					"last_line"=> $this->lexer_yylineno + 1,
-					"first_column"=> $this->lexer_yylloc['last_column'],
-					"last_column"=> $lines ? count($lines[count($lines) - 1]) - 1 : $this->lexer_yylloc['last_column'] + count($match[0])
+				$lineCount = count($lines);
+				if (count($lines) > 1) $this->yylineno += $lineCount;
+				$this->yyloc = array(
+					"first_line"=> $this->yyloc['last_line'],
+					"last_line"=> $this->yylineno + 1,
+					"first_column"=> $this->yyloc['last_column'],
+					"last_column"=> $lines ? count($lines[$lineCount - 1]) - 1 : $this->yyloc['last_column'] + count($match[0])
 				);
 				$this->yytext .= $match[0];
-				$this->lexer_match .= $match[0];
-				$this->lexer_matches = $match[0];
-				$this->lexer_yyleng = strlen($this->yytext);
-				$this->lexer_more = false;
-				$this->lexer_input = substr($this->lexer_input, strlen($match[0]), strlen($this->lexer_input));
-				$this->lexer_matched .= $match[0];
-				$token = $this->lexer_performAction($this->lexer_yy, $this, $rules[$i],$this->lexer_conditionStack[count($this->lexer_conditionStack) - 1]);
+				$this->match .= $match[0];
+				$this->matches = $match[0];
+				$this->yyleng = strlen($this->yytext);
+				$this->more = false;
+				$this->input = substr($this->input, strlen($match[0]), strlen($this->input));
+				$this->matched .= $match[0];
+				$token = $this->lexer_performAction($this->yy, $this, $rules[$i], $this->conditionStack[$this->conditionStackCount]);
 				
 				if (empty($token) == false) {
 					return $token;
@@ -482,13 +473,13 @@ break;
 			}
 		}
 		
-		if (empty($this->lexer_input)) {
-			return $this->lexer_EOF;
+		if (empty($this->input)) {
+			return $this->EOF;
 		} else {
-			$this->parseError('Lexical error on line ' . ($this->lexer_yylineno + 1) . '. Unrecognized text.\n' . $this->showPosition(), array(
+			$this->parseError('Lexical error on line ' . ($this->yylineno + 1) . '. Unrecognized text.\n' . $this->showPosition(), array(
 				"text"=> "",
 				"token"=> null,
-				"line"=> $this->lexer_yylineno
+				"line"=> $this->yylineno
 			));
 		}
 	}
@@ -498,26 +489,28 @@ break;
 		$r = $this->next();
 		if (empty($r) == false) {
 			return $r;
-		} else if ($this->lexer_done != true) {
+		} else if ($this->done != true) {
 			return $this->lexer_lex();
 		}
 	}
 	
 	function begin($condition)
 	{
-		$this->lexer_conditionStack[] = $condition;
+		$this->conditionStackCount++;
+		$this->conditionStack[] = $condition;
 	}
 	
 	function popState()
 	{
-		return array_pop($this->lexer_conditionStack);
+		$this->conditionStackCount--;
+		return array_pop($this->conditionStack);
 	}
 	
 	function currentRules()
 	{
-		return $this->lexer_conditions[
-			$this->lexer_conditionStack[
-				count($this->lexer_conditionStack) - 1
+		return $this->conditions[
+			$this->conditionStack[
+				$this->conditionStackCount
 			]
 		]['rules'];
 	}
