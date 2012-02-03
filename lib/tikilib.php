@@ -1334,7 +1334,7 @@ class TikiLib extends TikiDb_Bridge
 			case 'u':
 				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
 				$foo = parse_url($_SERVER['REQUEST_URI']);
-				$content = file_get_contents($this->httpPrefix( true ) . dirname( $foo['path']) . '/' . $path);
+				$content = file_get_contents(self::httpPrefix( true ) . dirname( $foo['path']) . '/' . $path);
 				if (empty($content)) 
 					break;
 
@@ -2533,7 +2533,7 @@ class TikiLib extends TikiDb_Bridge
 		//  Deal with mail notifications.
 		include_once('lib/notifications/notificationemaillib.php');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $this->httpPrefix(true). dirname($foo["path"]);
+		$machine = self::httpPrefix(true). dirname($foo["path"]);
 		$page_info = $this->get_page_info($page);
 		sendWikiEmailNotification('wiki_page_deleted', $page, $user, $comment, 1, $page_info['data'], $machine);
 		
@@ -3599,7 +3599,7 @@ class TikiLib extends TikiDb_Bridge
 			include_once('lib/notifications/notificationemaillib.php');
 
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix(true). dirname($foo["path"]);
+			$machine = self::httpPrefix(true). dirname($foo["path"]);
 			sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $hash['contributions']);
 			if ($prefs['feature_contribution'] == 'y') {
 				$contributionlib = TikiLib::lib('contribution');
@@ -3994,7 +3994,7 @@ class TikiLib extends TikiDb_Bridge
 				$histlib = TikiLib::lib('hist');
 				$old = $histlib->get_version($pageName, $old_version);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $this->httpPrefix(true). dirname($foo["path"]);
+				$machine = self::httpPrefix(true). dirname($foo["path"]);
 				$diff = diff2($old["data"], $edit_data, "unidiff");
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}
@@ -4651,7 +4651,7 @@ class TikiLib extends TikiDb_Bridge
 		if (preg_match('/^http(s?):/', $relative)) {
 			$base = $relative;
 		} else {
-			$base = $this->httpPrefix() . $tikiroot . $relative;
+			$base = self::httpPrefix() . $tikiroot . $relative;
 		}
 
 		if ( count($args) ) {
