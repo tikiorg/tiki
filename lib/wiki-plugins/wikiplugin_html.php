@@ -20,7 +20,7 @@ function wikiplugin_html_info()
 		'params' => array(
 			'wiki' => array(
 				'required' => false,
-				'name' => tra('Wiki syntax'),
+				'name' => tra('Wiki Syntax'),
 				'description' => tra('Parse wiki syntax within the HTML code.'),
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -28,7 +28,7 @@ function wikiplugin_html_info()
 					array('text' => tra('Yes'), 'value' => 1),
 				),
 				'filter' => 'int',
-				'default' => '',
+				'default' => '0',
 			),
 		),
 	);
@@ -36,14 +36,20 @@ function wikiplugin_html_info()
 
 function wikiplugin_html($data, $params)
 {
-	global $tikilib;
+	// TODO refactor: defaults for plugins?
+	$defaults = array();
+	$plugininfo = wikiplugin_html_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$defaults["$key"] = $param['default'];
+	}
+	$params = array_merge($defaults, $params);
 
 	// strip out sanitisation which may have occurred when using nested plugins
 	$html = str_replace('<x>', '', $data);
 	
 	// parse using is_html if wiki param set, or just decode html entities
 	if ( isset($params['wiki']) && $params['wiki'] === 1 ) {
-		$html = $tikilib->parse_data($html, array('is_html' => true));
+		$html = TikiLib::lib('tiki')->parse_data($html, array('is_html' => true));
 	} else {
 		$html  = html_entity_decode($html, ENT_NOQUOTES, 'UTF-8');
 	}
