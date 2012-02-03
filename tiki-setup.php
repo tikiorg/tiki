@@ -231,7 +231,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
 		//add codemirror stuff
 		$headerlib->add_cssfile('lib/codemirror/lib/codemirror.css');
-		$headerlib->add_cssfile('lib/codemirror/theme/default.css');
 		$headerlib->add_jsfile('lib/codemirror/lib/codemirror.js');
 		
 		//add tiki stuff
