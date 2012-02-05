@@ -31,8 +31,8 @@ if ($prefs['feature_wysiwyg'] == 'y' && $prefs['javascript_enabled'] == 'y') {
 		$_SESSION['wysiwyg'] = 'y';
 	} elseif ($prefs['wysiwyg_memo'] == 'y' and !empty($info['wysiwyg'])) {
 		$_SESSION['wysiwyg'] = $info['wysiwyg'];
-	} elseif ($prefs['wysiwyg_default'] == 'y' and !isset($_REQUEST['wysiwyg'])) {
-		$_SESSION['wysiwyg'] = 'y';
+	} elseif (!isset($_REQUEST['wysiwyg'])) {
+		$_SESSION['wysiwyg'] = $prefs['wysiwyg_default'];
 	} elseif ($prefs['wysiwyg_optional'] == 'y' and isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
 		$_SESSION['wysiwyg'] = 'n';
 	}
@@ -42,9 +42,9 @@ if ($prefs['feature_wysiwyg'] == 'y' && $prefs['javascript_enabled'] == 'y') {
 
 
 if ($_SESSION['wysiwyg'] == 'y') {
-//	if ($prefs['wysiwyg_htmltowiki'] !== 'y' && !$info['is_html']) { // use wysiwyg_htmltowiki for wiki pages only
-//		$is_html = true;
-//	}
+	if ($prefs['wysiwyg_htmltowiki'] !== 'y' && !isset($info['is_html'])) { // new pages in wysiwyg mode
+		$is_html = true;
+	}
 } elseif ($prefs['feature_wiki_allowhtml'] == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
 	if (isset($_REQUEST['preview']) || isset($jitRequest['edit'])) {
 		if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
