@@ -265,7 +265,7 @@ $("#allowhtml").change(function() {
 });
 									{/jq}{/if}
 								{elseif $wysiwyg eq 'y'}
-									<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}1{/if}"/>
+									<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}"/>
 								{/if}
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
@@ -481,7 +481,11 @@ $("#allowhtml").change(function() {
 							{if $tiki_p_admin_wiki eq "y"}
 								<a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
 							{/if}
-						{/tab}
+						{/tab}{* end properties tab *}
+					{else}
+						{if $wysiwyg eq 'y'}{* include hidden allowhtml for wysiwyg if the properties tab isn't needed *}
+							<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}"/>
+						{/if}
 					{/if}
 				{/tabset}
 			</td>
