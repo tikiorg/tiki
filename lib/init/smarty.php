@@ -22,6 +22,7 @@ class Tiki_Security_Policy extends Smarty_Security
 			'img/icons',
 			'img/icons2',
 			'img/flags',
+			'img/mytiki',
 			'img/smiles',
 			'img/trackers',
 			'images/',
