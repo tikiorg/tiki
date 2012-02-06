@@ -46,23 +46,23 @@ class Smarty_Tiki extends Smarty
 		}
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->main_template_dir = realpath('templates/');
-		$this->template_dir = array();
+		$this->setTemplateDir(null);
 		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
-			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/';
-			$this->template_dir[] = $this->main_template_dir.'/'.$tikidomain.'/'; 
+			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
+			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/'); 
 		}
-		$this->template_dir[] = $this->main_template_dir.'/styles/'.$style_base.'/'; 
-		$this->template_dir[] = $this->main_template_dir; 
+		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/'); 
+		$this->addTemplateDir($this->main_template_dir); 
 		
-		$this->compile_dir = realpath("templates_c/$tikidomain");
-		$this->config_dir = null;
+		$this->setCompileDir(realpath("templates_c/$tikidomain"));
+		$this->setConfigDir(null);
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
 		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
 		$this->assign('app_name', 'Tiki');
-		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
+		$this->setPluginsDir(array(	// the directory order must be like this to overload a plugin
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
-		);
+		));
 
 		if ( $prefs['smarty_security'] == 'y' ) {
 			$this->enableSecurity('Tiki_Security_Policy');
@@ -106,6 +106,11 @@ class Smarty_Tiki extends Smarty
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false) {
 		global $prefs, $style_base, $tikidomain, $zoom_templates;
+
+    if ( empty($_smarty_cache_id) )
+		    $_smarty_cache_id = $prefs['language'] . $_smarty_cache_id . md5($_smarty_tpl_file);
+    if ( empty($_smarty_compile_id) )
+    		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id . md5($_smarty_tpl_file);
 
 		if ( ($tpl = $this->getTemplateVars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 
@@ -166,9 +171,6 @@ class Smarty_Tiki extends Smarty
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
-
-		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
-		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $parent, $_smarty_display);
 	}
