@@ -169,8 +169,9 @@ class HeaderLib
 
 	function output_headers()
 	{
-		global $style_ie6_css, $style_ie7_css, $style_ie8_css;
-		require_once('lib/smarty_tiki/modifier.escape.php');
+		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $smarty;
+
+    $smarty->loadPlugin('smarty_modifier_escape');
 
 		ksort($this->cssfiles);
 		ksort($this->css);

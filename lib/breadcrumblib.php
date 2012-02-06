@@ -248,10 +248,8 @@ function _breadcrumb_getTitle($crumbs, $loc)
 	$len = count($crumbs);
 
 	if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
-		require_once 'lib/smarty_tiki/modifier.sefurl.php';
-		if (! function_exists('smarty_modifier_escape')) {
-			require_once 'lib/smarty_tiki/modifier.escape.php';
-		}
+    $smarty->loadPlugin('smarty_modifier_sefurl');
+    $smarty->loadPlugin('smarty_modifier_escape');
 
 		$class = "pagetitle";
 		$metadata = '';

@@ -65,11 +65,8 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 {
 	global $base_url;
 	
-	require_once 'lib/smarty_tiki/modifier.sefurl.php';
-
-	if (! function_exists('smarty_modifier_escape')) {
-		require_once 'lib/smarty_tiki/modifier.escape.php';
-	}
+  $smarty->loadPlugin('smarty_modifier_sefurl');
+  $smarty->loadPlugin('smarty_modifier_escape');
 
 	if (empty($title)) {
 		$title = TikiLib::lib('object')->get_title($type, $object);
