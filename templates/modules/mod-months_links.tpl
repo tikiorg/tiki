@@ -1,6 +1,10 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="months_links" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-{if $feature eq 'cms'}
 {assign var=i value=0 }
+{if $feature eq 'cms'}
+	{assign var=itemlink value='tiki-read_article.php?articleId='}
+{else}
+	{assign var=itemlink value='tiki-view_blog_post.php?postId='}
+{/if}
 <script type="text/javascript" >
 <!--
 	function mlchange(id) {
@@ -42,7 +46,7 @@
 								<ul id='ml-sub-{$module_id}-{$i}' >
 									{foreach from=$month_data.postlist key=articleId item=title}
 										<li class='archivedate collapsed' >
-											<a class="linkmodule" href="tiki-read_article.php?articleId={$articleId}">{$title}</a>
+											<a class="linkmodule" href="{$itemlink}{$articleId}">{$title}</a>
 										</li>
 									{/foreach}
 								</ul>
@@ -58,7 +62,7 @@
 								<ul id='ml-sub-{$module_id}-{$i}' >
 									{foreach from=$month_data.postlist key=articleId item=title}
 										<li class='archivedate collapsed' >
-											<a class="linkmodule" href="tiki-read_article.php?articleId={$articleId}">{$title}</a>
+											<a class="linkmodule" href="{$itemlink}{$articleId}">{$title}</a>
 										</li>
 									{/foreach}
 								</ul>
@@ -78,15 +82,12 @@
 			</li>
 		{/if}
 	{foreachelse}
-		{tr}No article found{/tr}
+		{if $feature eq 'cms'}
+			{tr}No article found{/tr}
+		{else}
+			{tr}No blog post found{/tr}
+		{/if}
 	{/foreach}
 {/modules_list}
 
-{elseif $feature eq 'blogs' && isset($months)}
-{modules_list list=$months nonums=$nonums}
-	{foreach key=month item=link from=$months}
-		<li><a href="{$link}">{$month}</a></li>
-	{/foreach}
-{/modules_list}
-{/if}
 {/tikimodule}

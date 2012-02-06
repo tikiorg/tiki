@@ -42,6 +42,9 @@ if (!$post_info) {
 }
 $blogId = $post_info['blogId'];
 
+//Keep track of month of last viewed posts for months_links module foldable display
+$_SESSION['blogs_last_viewed_month'] = TikiLib::date_format("%Y-%m", $post_info['created']);
+
 $blog_data = $bloglib->get_blog($blogId);
 if (!$blog_data) {
 	$smarty->assign('msg', tra("Blog not found"));
