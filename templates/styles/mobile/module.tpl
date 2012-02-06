@@ -1,11 +1,17 @@
 {* $Id$ *}
 {* override for mobile module layoutas a list *}
+{* Module layout with controls *}
+{if !isset($module_position)}{assign var=module_position value=' '}{/if}
+{if !isset($module_ord)}{assign var=module_ord value=' '}{/if}
 {capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 {if 0 and $module_nobox neq 'y'}{* mobile *}
-{if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
+	{if $prefs.feature_layoutshadows eq 'y'}
+		<div class="box-shadow">{$prefs.box_shadow_start}
+	{/if}
+	{if !isset($moduleId)}{assign var=moduleId value=' '}{/if}
 	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
 	{if $module_decorations ne 'n'}
-		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
+		<h3 class="box-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<span class="modcontrols">
 			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
@@ -34,7 +40,7 @@
 			{if $prefs.menus_items_icons eq 'y'}
 			<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('modv-{$smarty.capture.name}','vmodule.png');">
-					{capture name=name}
+						{capture name='name'}
 						icnmodv-{$smarty.capture.name}
 					{/capture}
 					{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
@@ -53,7 +59,7 @@
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span id="moduleflip-{$smarty.capture.name}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-					{assign var=name value="icnmod-"|cat:$smarty.capture.name}
+					{assign var="name" value="icnmod-"|cat:$smarty.capture.name}
 					{capture name=name}
 						icnmod-{$smarty.capture.name}
 					{/capture}

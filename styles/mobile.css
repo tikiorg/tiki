@@ -201,3 +201,25 @@ body {
 	background: #FEEAA1;
 }
 
+/* Generic find.tpl */
+
+.find-div label,
+.find-div span,
+.find-div select,
+.find-div input,
+.find-div div
+{
+	display: block;
+	float: left;
+	margin-right: 1em;
+}
+
+.find-div label,
+.find-div a {
+	line-height: 2em;
+}
+
+.find-div label.findsubmit {
+	line-height: inherit;
+}
+
