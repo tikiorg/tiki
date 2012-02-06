@@ -13,7 +13,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 			'j' => array(
 				'name' => tr('Date and Time (Date Picker)'),
 				'description' => tr('Provides jQuery-UI date picker select a date and optionally time.'),
-				'prefs' => array('trackerfield_jscalendar', 'feature_jquery_ui'),
+				'prefs' => array('trackerfield_jscalendar'),
 				'tags' => array('advanced'),
 				'default' => 'y',
 				'params' => array(
@@ -42,6 +42,11 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 	function getFieldData(array $requestData = array())
 	{
+		global $prefs;
+		if ($prefs['feature_jquery_ui'] !== 'y') {	// fall back to simple date field
+			return parent::getFieldData($requestData);
+		}
+
 		$ins_id = $this->getInsertId();
 
 		return array(
@@ -53,6 +58,11 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 	function renderInput($context = array())
 	{
+		global $prefs;
+		if ($prefs['feature_jquery_ui'] !== 'y') {	// fall back to simple date field
+			return parent::renderInput($context);
+		}
+
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_jscalendar');
 
