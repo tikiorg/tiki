@@ -33,7 +33,7 @@ if (isset($_REQUEST["download"])) {
 	}
 	$smarty->assign_by_ref('items', $items);
 	header("Content-Disposition: attachment; filename=tiki-msg-archive-" . time("U") . ".txt ");
-	$smarty->display('messu-download.tpl', null, null, 'application/download');
+	$smarty->display('messu-download.tpl', null, null, null, 'application/download');
 	die;
 }
 if (isset($_REQUEST['filter'])) {

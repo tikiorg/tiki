@@ -106,7 +106,7 @@ class Smarty_Tiki extends Smarty
 		return $return;
 	}
 
-	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false) {
+	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false) {
 		global $prefs, $style_base, $tikidomain, $zoom_templates;
 
     if ( empty($_smarty_cache_id) )
@@ -210,7 +210,7 @@ class Smarty_Tiki extends Smarty
 		return preg_replace("/^[ \t]*/", '', $res);
 	}
 
-	function display($resource_name, $cache_id=null, $compile_id = null, $content_type = 'text/html; charset=utf-8') {
+	function display($resource_name = null, $cache_id=null, $compile_id = null, $parent = null, $content_type = 'text/html; charset=utf-8') {
 
 		global $prefs;
 
