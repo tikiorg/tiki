@@ -46,14 +46,10 @@ $base_url = $url_scheme.'://'.$url_host.(($url_port!='')?':'.$url_port:'').$url_
 $base_url_http = 'http://'.$url_host.(($prefs['http_port']!='')?':'.$prefs['http_port']:'').$url_path;
 $base_url_https = 'https://'.$url_host.(($prefs['https_port']!='')?':'.$prefs['https_port']:'').$url_path;
 // for <base> tag, which needs the " absolute URI that acts as the base URI for resolving relative URIs", not just the root of the site
-if (!empty($_SERVER['REDIRECT_SCRIPT_URI'])) {
-	$base_uri = $_SERVER['REDIRECT_SCRIPT_URI'];
-} else if (!empty($_SERVER['SCRIPT_URI'])) {
-	$base_uri = $_SERVER['SCRIPT_URI'];
-} else if (!empty($_SERVER['SCRIPT_NAME'])) {
+if (!empty($_SERVER['SCRIPT_NAME'])) {
 	$base_uri = $base_host . $_SERVER['SCRIPT_NAME'];
 	if (!empty($_SERVER['QUERY_STRING'])) {
-		$base_uri .= '?' . $_SERVER['QUERY_STRING'];
+		$base_uri .= '?' . str_replace('?', '&',$_SERVER['QUERY_STRING']);
 	}
 } else if (!empty($_SERVER['REQUEST_URI'])) {
 	$base_uri = $base_host . $_SERVER['REQUEST_URI'];
