@@ -116,9 +116,14 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 	{
 		if ($this->getConfiguration('type') == 's') {
 			return $this->renderTemplate('trackerinput/rating.tpl', $context);
+		} else {
+			$data = $this->gatherVoteData();
+			$str = tra("Number of votes:") . ' ' .$data['numvotes'] . ', ' . tra('Average:') . ' ' . $data['voteavg'];
+			if (!empty($data['my_rate'])) {
+				$str .= ' (' . tra("Your rating:")  . ' ' . $data['my_rate'] . ')';
+			}
+			return $str;
 		}
-
-		return null;
 	}
 
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
