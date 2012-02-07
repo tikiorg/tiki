@@ -30,7 +30,11 @@
 					<td>{$token.hits}</td>
 					<td>{$token.maxhits}</td>
 					<td>{$token.email}</td>
-					<td>{$token.parameters}</td>
+					<td>
+						{foreach $token.parameters as $key => $value}
+							{$key}={$value}<br />
+						{/foreach}
+					</td>
 					<td>{$token.groups}</td>
 					<td>{self_link tokenId=$token.tokenId action='delete' _icon='cross'}{tr}Delete{/tr}{/self_link}</td>
 				</tr>
