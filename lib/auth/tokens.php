@@ -42,7 +42,7 @@ class AuthTokens
 	
 	function getTokens()
 	{
-		return $this->table->fetchAll();
+		return $this->table->fetchAll(array(), array(), -1, -1, array('creation' => 'asc'));
 	}
 	
 	function getGroups( $token, $entry, $parameters ) {
