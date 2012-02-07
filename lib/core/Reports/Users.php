@@ -75,7 +75,6 @@ class Reports_Users
 	 */
 	public function save($user, $interval, $view, $type, $always_email = 0)
 	{
-		$this->db->query("set time_zone='+00:00'");
 		if (!$this->get($user)) {
 			$this->table->insert(array(
 				'user' => $user, 'interval' => $interval, 'view' => $view, 'type' => $type,
