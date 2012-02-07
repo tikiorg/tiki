@@ -93,6 +93,9 @@
 		{/tab}
 
 		{tab name="{tr}Tokens{/tr}"}
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}
+					{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page{/tr}
+				{/remarksbox}
 				{preference name=auth_token_access}
 				{preference name=auth_token_access_maxtimeout}
 				{preference name=auth_token_access_maxhits}
