@@ -10,6 +10,7 @@ class AuthTokens
 	const SCHEME = 'MD5( CONCAT(tokenId, creation, timeout, entry, parameters, groups) )';
 	private $db;
 	private $table;
+	private $dt;
 	private $maxTimeout = 3600;
 	private $maxHits = 1;
 	public $ok = false;
@@ -21,10 +22,16 @@ class AuthTokens
 		) );
 	}
 
-	function __construct( $db, $options = array() ) {
+	function __construct( $db, $options = array(), DateTime $dt = null ) {
 		$this->db = $db;
 		$this->table = $this->db->table('tiki_auth_tokens');
 
+		if (is_null($dt)) {
+			$this->dt = new DateTime; 
+		} else {
+			$this->dt = $dt;
+		}
+		
 		if( isset( $options['maxTimeout'] ) ) {
 			$this->maxTimeout = (int) $options['maxTimeout'];
 		}
@@ -46,7 +53,7 @@ class AuthTokens
 	}
 	
 	function getGroups( $token, $entry, $parameters ) {
-		$this->db->query( 'DELETE FROM tiki_auth_tokens WHERE UNIX_TIMESTAMP(creation) + timeout < UNIX_TIMESTAMP() OR `hits` <= 0' );
+		$this->db->query( 'DELETE FROM tiki_auth_tokens WHERE (timeout != -1 AND UNIX_TIMESTAMP(creation) + timeout < ?) OR `hits` = 0', $this->dt->getTimestamp() );
 		$data = $this->db->query( 'SELECT tokenId, entry, parameters, groups FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME, array( $token ) )
 			->fetchRow();
 
@@ -60,7 +67,7 @@ class AuthTokens
 			return null;
 		}
 
-		$this->db->query( 'UPDATE `tiki_auth_tokens` SET `hits` = `hits` - 1 WHERE `tokenId` = ?', array( $data['tokenId'] ) );
+		$this->db->query( 'UPDATE `tiki_auth_tokens` SET `hits` = `hits` - 1 WHERE `tokenId` = ? AND hits != -1', array( $data['tokenId'] ) );
 		$this->ok = true;
 		return (array) json_decode( $data['groups'], true );
 	}
@@ -94,7 +101,8 @@ class AuthTokens
 			$email = '';
 		}
 		
-		$this->db->query( 'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email ) VALUES( ?, ?, ?, ?, ?, ?, ? )', array(
+		$this->db->query( 'INSERT INTO tiki_auth_tokens ( creation, timeout, maxhits, hits, entry, parameters, groups, email ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )', array(
+			$this->dt->format('Y-m-d H:i:s'),
 			(int) $timeout,
 			(int) $hits,
 			(int) $hits,

@@ -41,19 +41,26 @@
 	{/tab}
 	{tab name="{tr}Add new token{/tr}"}
 		<h2>{tr}Add new token{/tr}</h2>
+		
+		{if $tokenCreated} 
+			{remarksbox type="note" title="{tr}Note{/tr}"}
+				{tr}Token successfully created.{/tr}
+			{/remarksbox}
+		{/if}
+		
 		<form action="tiki-admin_tokens.php" method="post">
 			<input type="hidden" name="action" value="add" />
 			<table class="formcolor">
 				<tr>
-					<td><label for='entry'>{tr}URL{/tr}</label></td>
+					<td><label for='entry'>{tr}Full URL{/tr}</label></td>
 					<td><input type="text" id='entry' name='entry' /></td>
 				</tr>
 				<tr>
-					<td><label for='timeout'>{tr}Timeout (in seconds){/tr}</label></td>
+					<td><label for='timeout'>{tr}Timeout in seconds (-1 for unlimited){/tr}</label></td>
 					<td><input type="text" id='timeout' name='timeout' /></td>
 				</tr>			
 				<tr>
-					<td><label for='maxhits'>{tr}Maximum number of hits{/tr}</label></td>
+					<td><label for='maxhits'>{tr}Maximum number of hits (-1 for unlimited){/tr}</label></td>
 					<td><input type="text" id='maxhits' name='maxhits' /></td>
 				</tr>
 				<tr>

@@ -15,6 +15,7 @@ $tokenlib = AuthTokens::build($prefs);
 
 $action = '';
 $tokenId = 0;
+$smarty->assign('tokenCreated', false);
 
 if (isset($_REQUEST['action'])) {
 	$action = $_REQUEST['action'];
@@ -30,6 +31,7 @@ if ($action == 'delete'	&& $tokenId > 0) {
 
 if ($action == 'add') {
 	$entry = filter_input(INPUT_POST, 'entry', FILTER_SANITIZE_STRING);
+	$entry = parse_url($entry, PHP_URL_PATH);
 	
 	$groups = filter_input(INPUT_POST, 'groups', FILTER_SANITIZE_STRING);
 	$groups = str_replace(' ', '', $groups);
@@ -40,11 +42,20 @@ if ($action == 'add') {
 	$arguments['hits'] = filter_input(INPUT_POST, 'maxhits', FILTER_SANITIZE_NUMBER_INT);
 	
 	if (!empty($entry) && !empty($groups)) {
-		$tokenlib->createToken($entry, array(), $groups, $arguments);
+		$token = $tokenlib->createToken($entry, array(), $groups, $arguments);
+		
+		if (!empty($token)) {
+			$smarty->assign('tokenCreated', true);
+		}
 	}
 }
 
 $tokens = $tokenlib->getTokens();
+
+foreach ($tokens as $key => $token) {
+	$tokens[$key]['groups'] = join(', ', json_decode($token['groups']));
+	$tokens[$key]['parameters'] = join(', ', json_decode($token['parameters']));
+}
 
 $smarty->assign('tokens', $tokens);
 $smarty->assign('mid', 'tiki-admin_tokens.tpl');
