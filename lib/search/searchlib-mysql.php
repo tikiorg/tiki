@@ -45,7 +45,7 @@ class SearchLib extends TikiLib
 			'from': the table or tables to be looked (ex: 'tiki_pages') (ex: 'tiki_comments c, tiki_pages p'
 			'name': the column that contains the name
 			'data': the column that contains the data that will be displayed as description (the first characters only)
-			'hits': the column that contains the number that will be displyed as hits
+			'hits': the column that contains the number that will be displayed as hits
 			'lastModif': the column that contains the date that will be displayed
 			'href': the link that will be displayed (each parameter is in the array id
 			'id': the list of parameters used in href 
