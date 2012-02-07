@@ -33,6 +33,7 @@ function prefs_auth_list()
 			'perspective' => false,
 			'type' => 'flag',
 			'default' => 'n',
+			'view' => 'tiki-admin_tokens.php',
 		),
 		'auth_token_access_maxtimeout' => array(
 			'name' => tra('Token Access Max Timeout'),

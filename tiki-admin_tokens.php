@@ -8,6 +8,7 @@
 require_once('tiki-setup.php');
 require_once('lib/auth/tokens.php');
 
+$access->check_feature('auth_token_access');
 $access->check_permission('tiki_p_admin');
 
 $tokenlib = AuthTokens::build($prefs);
