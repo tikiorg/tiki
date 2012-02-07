@@ -6,7 +6,7 @@
 // $Id$
 require_once('tiki-setup.php');
 
-$access->check_feature('feature_trackers', 'feature_ajax', 'wikiplugin_tracker');
+$access->check_feature(array('feature_trackers', 'feature_ajax', 'wikiplugin_tracker'));
 
 include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 $json_data = array();
