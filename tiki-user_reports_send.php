@@ -7,8 +7,8 @@
 
 include_once ('tiki-setup.php');
 
-if ( '127.0.0.1' != $tikilib->get_ip_address() ) {
-	die(tr('This script can only be called by the server!'));
+if (php_sapi_name() != 'cli') {
+	$access->check_permission('tiki_p_admin');
 }
 
 if ($prefs['feature_daily_report_watches'] != 'y') {

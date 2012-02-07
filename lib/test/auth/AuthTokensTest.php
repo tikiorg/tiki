@@ -203,8 +203,8 @@ class AuthTokensTest extends TikiDatabaseTestCase
 	
 	function testGetTokens_shouldReturnAllTokens()
 	{
-		$token1 = '823bde97a717c55b2cfbf9fbd6c81816';
-		$token2 = '91bba2f998b48fce0146016809886127';
+		$token1 = '91bba2f998b48fce0146016809886127';
+		$token2 = '823bde97a717c55b2cfbf9fbd6c81816';
 		$token3 = 'e2990f7983b7b6c46b3987536aa38d32';
 		
 		$tokens = $this->obj->getTokens();
