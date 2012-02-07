@@ -30,7 +30,7 @@ function smarty_block_title($params, $content, $template, $repeat)
 	global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin;
 
 	if ( $repeat || $content == '' ) return;
-	include_once('lib/smarty_tiki/function.icon.php');
+	$template->loadPlugin('smarty_function_icon');
 
 	if ( ! isset($params['help']) ) $params['help'] = '';
 	if ( ! isset($params['admpage']) ) $params['admpage'] = '';

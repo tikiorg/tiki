@@ -65,8 +65,8 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 {
 	global $base_url;
 	
-  $smarty->loadPlugin('smarty_modifier_sefurl');
-  $smarty->loadPlugin('smarty_modifier_escape');
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$smarty->loadPlugin('smarty_modifier_escape');
 
 	if (empty($title)) {
 		$title = TikiLib::lib('object')->get_title($type, $object);
@@ -103,7 +103,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 
 	global $prefs;
 	if (isset($attributes['tiki.content.source']) && $prefs['fgal_source_show_refresh'] == 'y') {
-		require_once 'lib/smarty_tiki/function.icon.php';
+		$smarty->loadPlugin('smarty_function_icon');
 		$smarty->loadPlugin('smarty_function_service');
 		$html .= '<a class="file-refresh" href="' . 
 						smarty_function_service(
@@ -134,7 +134,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 
 function smarty_function_object_link_user( $smarty, $user, $title = null )
 {
-	require_once 'lib/smarty_tiki/modifier.userlink.php';
+	$smarty->loadPlugin('smarty_modifier_userlink');
 
 	return smarty_modifier_userlink($user, 'link', 'not_set', $title ? $title : '');
 }
@@ -163,7 +163,7 @@ function smarty_function_object_link_external( $smarty, $link_orig, $title = nul
 		}
 	}
 
-	require_once 'lib/smarty_tiki/modifier.escape.php';
+	$smarty->loadPlugin('smarty_modifier_escape');
 	$escapedHref = smarty_modifier_escape($link);
 	$escapedLink = smarty_modifier_escape($link_orig);
 	$escapedTitle = smarty_modifier_escape($title);

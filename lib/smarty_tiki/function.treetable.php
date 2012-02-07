@@ -256,7 +256,7 @@ $("#'.$id.'_showSelected").click( function () {
 	// write the table header
 	$html .= '<thead><tr>';
 	if (!empty($_checkbox)) {
-		include_once('lib/smarty_tiki/function.select_all.php');
+		$smarty->loadPlugin('smarty_function_select_all');
 		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(

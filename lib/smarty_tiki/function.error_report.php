@@ -33,7 +33,7 @@ function smarty_function_error_report($params, $smarty)
 	);
 	
 	if (count($errors)) {
-		require_once 'lib/smarty_tiki/block.remarksbox.php';
+		$smarty->loadPlugin('smarty_block_remarksbox');
 
 		return $pre . smarty_block_remarksbox(
 						array(

@@ -99,7 +99,7 @@ function smarty_function_attachments($params, $template)
 	/*** If anything in this function is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well. ***/
 
 	if ( empty($galleryId) || ! $gal_info = $filegallib->get_file_gallery($galleryId) ) {
-		include_once('lib/smarty_tiki/block.remarksbox.php');
+		$smarty->loadPlugin('smarty_block_remarksbox');
 		return smarty_block_remarksbox(
 						array('type' => 'errors', 'title' => tra('Wrong attachments gallery')),
 						tra('You are attempting to display a gallery that is not a valid attachment gallery') . ' (ID=' . $galleryId . ')',

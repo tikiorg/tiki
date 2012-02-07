@@ -81,7 +81,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	$auto_save_warning = '';
 	$as_id = $params['id'];
 	
-	include_once('lib/smarty_tiki/block.remarksbox.php');
+	$smarty->loadPlugin('smarty_block_remarksbox');
 	$tmp_var = $smarty->getTemplateVars('page');
 	$editWarning = $prefs['wiki_timeout_warning'] === 'y' && isset($tmp_var) && $tmp_var !== 'sandbox';
 	if ($params['_simple'] === 'n' && $editWarning) {
@@ -99,7 +99,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n' && $params['autosave'] == 'y') {	// retrieve autosaved content
 		require_once("lib/ajax/autosave.php");
-		include_once('lib/smarty_tiki/block.self_link.php');
+		$smarty->loadPlugin('smarty_block_self_link');
 		$auto_save_referrer = ensureReferrer();
 		if (empty($_REQUEST['autosave'])) {
 			$_REQUEST['autosave'] = 'n';
@@ -133,9 +133,9 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 				$prefs['wysiwyg_wiki_parsed'] !== 'y') {
 			
 			// show dev notice
-			include_once('lib/smarty_tiki/block.remarksbox.php');
+			$smarty->loadPlugin('smarty_block_remarksbox');
 			$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
-			
+
 			global $tiki_p_admin;
 			if ($tiki_p_admin) {
 				$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
