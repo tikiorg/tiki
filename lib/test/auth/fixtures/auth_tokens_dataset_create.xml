@@ -40,11 +40,11 @@
 	</row>
 	<row>
 		<field name="tokenId">4</field>
-		<field name="creation">2012-02-03 13:25:07</field>
+		<field name="creation">2012-02-03 15:25:07</field>
 		<field name="timeout">5</field>
 		<field name="hits">1</field>
 		<field name="maxhits">1</field>
-		<field name="token">0c0fd7b5883569c144877bd7ed2a23d5</field>
+		<field name="token">0ae3b4b86286ab68f5a66fb8c49da163</field>
 		<field name="entry">tiki-index.php</field>
 		<field name="email"></field>
 		<field name="parameters">{&quot;page&quot;:&quot;HomePage&quot;}</field>

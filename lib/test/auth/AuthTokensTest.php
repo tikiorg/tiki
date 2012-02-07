@@ -31,7 +31,8 @@ class AuthTokensTest extends TikiDatabaseTestCase
 		$this->db = TikiDb::get();
 		
 		$this->dt = new DateTime;
-		// 2012-02-03 13:25:07
+		$this->dt->setTimezone(new DateTimeZone('UTC'));
+		// 2012-02-03 15:25:07
 		$this->dt->setTimestamp('1328282707');
 		
 		$this->table = $this->db->table('tiki_auth_tokens');
@@ -50,23 +51,13 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testCreateToken()
 	{
-		$data = array(
-				'tokenId' => 4,
-				'timeout' => 5,
-				'entry' => 'tiki-index.php',
-				'parameters' => '{"page":"HomePage"}',
-				'groups' => '["Registered"]',
-				);
-
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_create.xml')
 			->getTable('tiki_auth_tokens');		
 				
 		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('timeout' => 5));
-
+		
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
 		
-		$this->assertEquals($data, $this->db->query('SELECT tokenId, timeout, entry, parameters, groups FROM tiki_auth_tokens ORDER BY tokenId desc LIMIT 1')->fetchRow());
-		$this->assertEquals(32, strlen($token['token']));
 		$this->assertTablesEqual($expectedTable, $queryTable);
 	}
 
