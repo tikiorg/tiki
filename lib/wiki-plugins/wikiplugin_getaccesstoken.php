@@ -27,7 +27,7 @@ function wikiplugin_getaccesstoken_info() {
 				'keys' => tra('Query string parameter keys'),
 				'description' => tra('Query string parameter keys for which the token is for, separated by :'),
 				'filter' => 'text',
-				'default' => array(),
+				'default' => '',
 				'separator' => ':'
 			),
 			'values' => array(
@@ -35,7 +35,7 @@ function wikiplugin_getaccesstoken_info() {
 				'name' => tra('Query string parameter Values'),
 				'description' => tra('Query string parameter values for which the token is for, separated by :'),
 				'filter' => 'text',
-				'default' => array(),
+				'default' => '',
 				'separator' => ':'
 			), 
 		),
