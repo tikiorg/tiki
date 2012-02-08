@@ -159,7 +159,7 @@ function smarty_function_button($params, $smarty)
 						$params,
 						$params['_text'],
 						$smarty,
-						false
+						$tmp = false
 		);
 	} else {
 		$params['_disabled'] = 'y';
@@ -167,7 +167,7 @@ function smarty_function_button($params, $smarty)
 						$params,
 						$params['_text'],
 						$smarty,
-						false
+						$tmp = false
 		);
 	}
 

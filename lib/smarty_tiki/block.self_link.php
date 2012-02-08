@@ -99,7 +99,7 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 									),
 									$ret,
 									$smarty,
-									false
+									$tmp = false
 					);
 				} else {
 					$ret = 'href="' . $ret . '"';

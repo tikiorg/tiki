@@ -267,7 +267,7 @@ class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interf
 	{
 		global $smarty;
 		$smarty->loadPlugin('smarty_block_pagination_links');
-		$pagination = smarty_block_pagination_links(array('_onclick' => $this->onclick, 'offset_jsvar' => $this->offset_jsvar, 'resultset' => $entries), '', $smarty, false);
+		$pagination = smarty_block_pagination_links(array('_onclick' => $this->onclick, 'offset_jsvar' => $this->offset_jsvar, 'resultset' => $entries), '', $smarty, $tmp = false);
 
 		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$pagination = "~np~$pagination~/np~";
