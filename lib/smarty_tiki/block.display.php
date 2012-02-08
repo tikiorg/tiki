@@ -21,10 +21,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_display($params, $content, $smarty)
+function smarty_block_display($params, $content, $smarty, &$repeat)
 {
 	global $prefs, $user, $userlib;
 	
+	if ( $repeat ) return;
 	$ok = true;
 	if (!empty($params['groups'])) {
 		$groups = explode(',', $params['groups']);

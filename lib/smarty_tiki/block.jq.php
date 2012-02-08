@@ -40,12 +40,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_jq($params, $content, $smarty)
+function smarty_block_jq($params, $content, $smarty, &$repeat)
 {
 	global $headerlib, $prefs;
 	
-	if (empty($content)) {
-		return '';
+	if ( $repeat || empty($content) ) {
+		return;
 	}
 	
 	extract($params);
@@ -59,5 +59,5 @@ function smarty_block_jq($params, $content, $smarty)
 	} else {
 		$headerlib->add_js($content);
 	}
-	return '';
+	return;
 }

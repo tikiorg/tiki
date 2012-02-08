@@ -22,8 +22,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_compact($params, $content, $smarty)
+function smarty_block_compact($params, $content, $smarty, &$repeat)
 {
+	if ( $repeat ) return;
 	// Tags with uncompactable content...
 	$nct = array('textarea', 'pre');
 	// Replace uncompactable content with unique marks

@@ -26,9 +26,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 
-function smarty_block_sortlinks($params, $content, $smarty)
+function smarty_block_sortlinks($params, $content, $smarty, &$repeat)
 {
-	if ($content) {
+	if ( $repeat || !empty($content) ) {
 		$links=preg_split("/\n/", $content);
 		$links2=array();
 		foreach ($links as $value) {

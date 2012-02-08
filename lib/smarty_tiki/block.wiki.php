@@ -21,8 +21,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_wiki($params, $content, $smarty)
+function smarty_block_wiki($params, $content, $smarty, &$repeat)
 {
+	if ( $repeat ) return;
+
 	global $tikilib;
 	if ( (isset($params['isHtml'])) and ($params['isHtml'] ) ) {
 	  $isHtml = true;

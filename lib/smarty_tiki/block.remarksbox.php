@@ -35,10 +35,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_remarksbox($params, $content, $smarty)
+function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 {
 	global $prefs;
 	
+	if ( $repeat ) return;
+
 	extract($params);
 	if (!isset($type))  $type = 'tip';
 	if (!isset($title)) $title = '';

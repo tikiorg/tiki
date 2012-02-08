@@ -25,9 +25,9 @@
  * @return string string $content re-formatted
  */
 
-function smarty_block_translation($params, $content, $smarty)
+function smarty_block_translation($params, $content, $smarty, &$repeat)
 {
-	if (isset($content)) {
+	if ( !$repeat && !empty($content) ) {
   	$lang = $params['lang'];
 		if ($smarty->getTemplateVars('language') == $lang) {
 			return $content;

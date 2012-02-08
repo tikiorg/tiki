@@ -18,9 +18,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_popup_link($params, $content, $smarty, $repeat)
+function smarty_block_popup_link($params, $content, $smarty, &$repeat)
 {
 	global $headerlib, $prefs;
+
+	if ( $repeat ) return;
+
 	static $counter = 0;
 
 	$linkId = 'block-popup-link' . ++$counter;

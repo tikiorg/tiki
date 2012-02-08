@@ -70,7 +70,7 @@ function smarty_function_preference( $params, $smarty )
 			$smarty->assign('syntax', $params['syntax']);
 		}
 		
-		return $smarty->fetch('prefs/' . $info['type'] . '.tpl');
+		return $smarty->fetch('prefs/' . $info['type'] . '.tpl', $params['name']);
 	} else {
 		$info = array(
 			'value' => tra('Error'),
