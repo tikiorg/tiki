@@ -65,7 +65,7 @@ function prefs_calendar_list()
 				'15' => tra('15 minutes'),
 				'30' => tra('30 minutes'),
 			),
-			'default' => '5',
+			'default' => '30',
 		),
 		'calendar_start_year' => array(
 			'name' => tra('First year in the dropdown'),
