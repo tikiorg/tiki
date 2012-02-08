@@ -136,6 +136,7 @@ class CalendarLib extends TikiLib
 		} else {
 			$cal['viewdays'] = $prefs['calendar_view_days'];
 		}
+		$cal = array_merge(array('allday'=>'n', 'nameoneachday' => 'n'), $cal);
 		return $cal;
 	}
 

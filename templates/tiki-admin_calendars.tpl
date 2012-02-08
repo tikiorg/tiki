@@ -292,6 +292,14 @@
 					</tr>
 				{/if}
 				<tr>
+					<td>{tr}Default event to all day{/tr}</td>
+					<td><input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if} /></td>
+				</tr>
+				<tr>
+					<td>{tr}Event name on each day in calendar view{/tr}</td>
+					<td><input type="checkbox" name="nameoneachday"{if $info.nameoneachday eq 'y'}  checked="checked"{/if} /></td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" name="save" value="{tr}Save{/tr}" />

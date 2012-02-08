@@ -398,6 +398,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 } elseif (isset($_REQUEST['changeCal'])) {
 	$calitem = $save;
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
+	if (empty($save['calitemId']))
+		$calitem['allday'] = $calendar['allday']=='y'?true: false;
 	$smarty->assign('edit',true);
 	$id = isset($save['calitemId'])?$save['calitemId']: 0;
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
@@ -458,6 +460,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'end'=>$now_end,
 		'duration'=>(60*60),
 		'recurrenceId'=>0,
+		'allday'=>$calendar['allday']=='y'?true: false
 		);
 	$hour_minmax = abs(ceil(($calendar['startday']-1)/(60*60))). '-' . ceil(($calendar['endday'])/(60*60));
 	$id = 0;

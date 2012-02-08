@@ -82,6 +82,8 @@ if (isset($_REQUEST["save"])) {
 		}
 	}
 	if (isset($_REQUEST['viewdays'])) $options['viewdays'] = $_REQUEST['viewdays'];
+	$options['allday'] = isset($_REQUEST['allday'])? 'y':'n';
+	$options['nameoneachday'] = isset($_REQUEST['nameoneachday'])? 'y': 'n';
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"], $user, $_REQUEST["name"], $_REQUEST["description"], $customflags, $options);
 	$info = $calendarlib->get_calendar($_REQUEST['calendarId']);
 	if ($prefs['feature_groupalert'] == 'y') {
