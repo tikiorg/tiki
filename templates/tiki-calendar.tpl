@@ -156,7 +156,7 @@ $('#calendar').fullCalendar({
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
-			editable: false,
+			editable: true,
 			events: 'tiki-calendar_json.php',
 			year: {{$viewyear}},
 			month: {{$viewmonth}}-1,
@@ -194,9 +194,9 @@ $('#calendar').fullCalendar({
 				});
 //						$('#calendar_dialog').load(event.url + ' .wikitext');
 //						$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
-            return false;
-        }
-    },
+        return false;
+				}
+			},
 			dayClick: function(date, allDay, jsEvent, view) {
 			$.ajax({
 					dataType: 'html',
@@ -207,9 +207,20 @@ $('#calendar').fullCalendar({
 						$( "#calendar_dialog" ).dialog({ modal: true, title: '{tr}Add Event{/tr}', width: 'auto', height: 'auto', position: 'center' });
 					}
 				});
-            return false;
-    }
-
+        return false;
+    	},
+			eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+				$.ajax({
+						dataType: 'html',
+						url: 'tiki-calendar_action.php?action=resize&calitemId=' + event.id + '&delta=' + (dayDelta*86400+minuteDelta*60)
+				});
+			},
+			eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+				$.ajax({
+						dataType: 'html',
+						url: 'tiki-calendar_action.php?action=move&calitemId=' + event.id + '&delta=' + (dayDelta*86400+minuteDelta*60)
+				});
+			}
 });
 {/jq}
 

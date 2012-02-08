@@ -562,6 +562,22 @@ class CalendarLib extends TikiLib
 		}
 	}
 
+	function move_item($calitemId,$delay = 0)
+	{
+		if ( $delay != 0 ) {
+			$query = 'UPDATE `tiki_calendar_items` set start = start + ?, end = end + ? WHERE `calitemId`=?';
+			$this->query($query, array($delay,$delay,$calitemId));
+		}
+	}
+
+	function resize_item($calitemId,$delay = 0)
+	{
+		if ( $delay != 0 ) {
+			$query = 'UPDATE `tiki_calendar_items` set end = end + ? WHERE `calitemId`=?';
+			$this->query($query, array($delay,$calitemId));
+		}
+	}
+
 	function list_locations($calendarId)
 	{
 		$res = array();
