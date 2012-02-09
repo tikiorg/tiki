@@ -2643,10 +2643,12 @@ if ( \$('#$id') ) {
 							$maketoc = preg_replace("/'link'/", "'$link_class'", $maketoc);
 						}
 					}
-					$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
+					if (!empty($maketoc)) {
+						$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
+					}
 
 					// Add a Show/Hide link
-					if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
+					if ( !empty($maketoc) && isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
 						$maketoc .= "<script type='text/javascript'>\n"
 							. "//<![CDATA[\n"
 							. " if (window.showTocToggle) { var tocShowText = '".tra('Show', '', true)."'; var tocHideText = '".tra('Hide', '', true)."'; showTocToggle(); }\n"
