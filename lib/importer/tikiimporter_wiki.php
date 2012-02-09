@@ -160,7 +160,7 @@ class TikiImporter_Wiki extends TikiImporter
             $first = true;
             foreach ($page['revisions'] as $rev) {
 		if (isset($_POST['maketoc']) && $_POST['maketoc'] == 'on') {
-			$rev['data'] = "{maketoc}\n".$rev['data'];
+			$rev['data'] = "{maketoc showhide=y}\n".$rev['data'];
 		}
                 if ($first) {
                     $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
