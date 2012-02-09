@@ -997,6 +997,23 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_vote($input) {
+		$requestData = array();
+		$requestData['itemId'] = $input->i->int();
+		$requestData['fieldId'] = $input->f->int();
+		$requestData['vote'] = 'y';
+		$requestData['ins_' . $requestData['fieldId']] = $input->v->int();
+
+		$trklib = TikiLib::lib('trk');
+		$field = $trklib->get_tracker_field($requestData['fieldId']);
+
+		$handler = $trklib->get_field_handler($field);
+
+		$result = $handler->getFieldData($requestData);
+
+		return array($result);
+	}
+
 	private function getSortFields($definition)
 	{
 		$sorts = array();

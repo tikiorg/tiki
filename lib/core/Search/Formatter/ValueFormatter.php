@@ -38,7 +38,8 @@ class Search_Formatter_ValueFormatter
 			$cacheName = $format . ':' . $name . ':' . $prefs['language'] . ':' . serialize($this->valueSet[$name]);
 			$cacheType = 'search_valueformatter';
 
-			if (in_array($format, $prefs['unified_cached_formatters']) && $cachelib->isCached($cacheName, $cacheType)) {
+			if (in_array($format, $prefs['unified_cached_formatters']) && $cachelib->isCached($cacheName, $cacheType) &&
+					$name !== 'tracker_field_rating') {		// tracker_field_rating required info per item for the tpl
 				return $cachelib->getCached($cacheName, $cacheType);
 			} else {
 				$formatter = new $class($arguments);
