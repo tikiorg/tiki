@@ -6,6 +6,11 @@
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
         {tr}If you are NOT running a new Tiki installation, make a backup of your database before using this importer!{/tr}
     {/remarksbox}
+    {if $prefs['feature_purifier'] == 'y'}
+    {remarksbox type="warning" title="{tr}Warning:{/tr}"}
+        {tr}If your pages contain xml code, the html purifier will delete it. Desactivate this feature.{/tr}
+    {/remarksbox}
+    {/if}
     {if $safe_mode ne ''}
         {remarksbox type="warning" title="{tr}Warning:{/tr}"}
             {tr}Your PHP is running with safe mode enabled. This might cause problems to the import process as safe mode limits the possibility to change in run time some PHP settings (like max_execution_time). It is recommended to run this script without safe mode.{/tr}
