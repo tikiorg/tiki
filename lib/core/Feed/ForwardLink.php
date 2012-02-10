@@ -11,22 +11,24 @@ Class Feed_ForwardLink extends Feed_Abstract
 	
 	function wikiView($args)
 	{
-		global $tikilib, $headerlib, $_REQUEST, $smarty;
+		global $prefs, $headerlib, $_REQUEST, $smarty;
 		
 		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
 			
 			//here we do the confirmation that another wiki is trying to talk with this one
 			$response = array(
 				"protocol"=>	"forwardlink",
-				"response"=>	"success",
+				"response"=>	"failure",
 				"date"=>		$args['lastModif'],
 			);
 
 			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
 			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
 			
-			Feed_ForwardLink_Contribution::forwardLink($args['object'])
-				->addItem($_REQUEST['contribution']);
+			if ( Feed_ForwardLink_Contribution::forwardLink($args['object'])
+				->addItem($_REQUEST['contribution']) == true ) {
+				$response['response'] = "success";
+			}
 			
 			echo json_encode($response);
 			die;
@@ -37,7 +39,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		session_start();
 		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
 		
-		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($_REQUEST['preview'], $phrase, $args['object']);
+		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($args['version'], $phrase, $args['object']);
 		
 		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
 			$phrase = $_SESSION['phrase'];
@@ -158,11 +160,14 @@ JQ
 			->add_jsfile("lib/rangy_tiki/rangy-phraser.js")
 			->add_jsfile("lib/ZeroClipboard.js")
 			->add_jsfile("lib/core/JisonParser/Phraser.js")
-			->add_jsfile("lib/jquery_tiki/md5.js");
+			->add_jsfile("lib/jquery/md5.js");
 			
-		$href = $tikilib->tikiUrl() . 'tiki-pagehistory.php?page=' . urlencode($args['object']) . '&nohistory&preview=' . $args['version'];
+		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . urlencode($args['object']);
 		$version = $args['version'];
 		$date = $args['lastModif'];
+		//print_r( $prefs );
+		
+		$websiteTitle = htmlspecialchars($prefs['browsertitle']);
 		
 		$headerlib->add_jq_onready(<<<JQ
 			var answers = $answers;
@@ -239,12 +244,21 @@ JQ
 									});
 									
 									var data = {
+										websiteTitle: '$websiteTitle',
+										websiteSubtitle: '',
+										moderator: '',
+										moderatorInfo: '',
+										subtitle: '',
 										text: (o.text + '').replace(/[\\n'"]/g,' '),
+										hash: '',
+										author: '',
 										href: '$href',
 										answers: answers,
 										version: $version,
 										date: $date
 									};
+									
+									data.hash = md5(data.websiteTitle, data.text);
 									
 									me.data('rangyBusy', true);
 									

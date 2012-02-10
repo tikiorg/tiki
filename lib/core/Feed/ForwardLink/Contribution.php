@@ -25,8 +25,10 @@ Class Feed_ForwardLink_Contribution extends Feed_Abstract
 	
 	function appendToContents(&$contents, $item)
 	{
-		$replace = false;
-			
+		global $prefs, $_REQUEST;
+		$replace = false;		
+		
+		//lets remove the newentry if it has already been accepted in the past
 		foreach($contents->entry as $i => $existingEntry) {
 			foreach($item->feed->entry as $j => $newEntry) {
 				if (
@@ -35,6 +37,17 @@ Class Feed_ForwardLink_Contribution extends Feed_Abstract
 				) {
 					unset($item->feed->entry[$j]);
 				}
+			}
+		}
+		
+		//lets check if the hash is correct and that the phrase actually exists within the wiki page
+		foreach($item->feed->entry as $i => $newEntry) {
+			if (
+				$newEntry->forwardlink->hash != hash_hmac("md5", htmlspecialchars($prefs['browsertitle']), $newEntry->forwardlink->text) ||
+				$newEntry->forwardlink->websiteTitle != $prefs['browsertitle'] ||
+				JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), $newEntry->forwardlink->text) != true
+			) {
+				unset($item->feed->entry[$i]);
 			}
 		}
 		

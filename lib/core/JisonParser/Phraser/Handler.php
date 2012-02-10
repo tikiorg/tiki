@@ -168,13 +168,13 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		return (empty($match) ? false : true);
 	}
 	
-	static function hasPhrase($phrase, $parent)
+	static function hasPhrase($parent, $phrase)
 	{
-		$phrase = self::sanitizeToWords($phrase);
 		$parent = self::sanitizeToWords($parent);
+		$phrase = self::sanitizeToWords($phrase);
 
-		$phrase = implode('|', $phrase);
 		$parent = implode('|', $parent);
+		$phrase = implode('|', $phrase);
 		
 		return (strpos($parent, $phrase) !== false ? true : false);
 	}
