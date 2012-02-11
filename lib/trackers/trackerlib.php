@@ -3820,7 +3820,11 @@ class TrackerLib extends TikiLib
 			}
 
 			$handler = $this->get_field_handler($field);
-			$the_data .= $handler->watchCompare($old_value, $new_value);
+			if ($handler) {
+				$the_data .= $handler->watchCompare($old_value, $new_value);
+			} else {
+				$the_data .= tr('Tracker field not enabled: fieldId=%0 type=%1' , $field['fieldId'], $field['type']) . "\n";
+			}
 			$the_data .= "\n----------\n";
 		}
 
