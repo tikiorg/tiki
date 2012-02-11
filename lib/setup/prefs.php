@@ -371,7 +371,7 @@ function initialize_prefs() {
 
 	if ( $prefs['feature_perspective'] == 'y') {
 		if ( ! isset( $section ) || $section != 'admin' ) {
-			require_once 'lib/perspectivelib.php';
+			global $perspectivelib; require_once 'lib/perspectivelib.php';
 			if ( $persp = $perspectivelib->get_current_perspective( $prefs ) ) {
 				$perspectivePreferences = $perspectivelib->get_preferences( $persp );
 				$prefs = $perspectivePreferences + $prefs;
