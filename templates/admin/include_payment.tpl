@@ -43,7 +43,7 @@
 					<div class="admin payment">
 						{remarksbox title="{tr}Experimental{/tr}" type="warning" icon="bricks"}
 							{tr}Cclite is for creating and managing alternative or complementary trading currencies and groups{/tr}
-							{tr}Work in progress for Tiki 6{/tr}
+							{tr}Work in progress since Tiki 6{/tr}
 						{/remarksbox}
 						{preference name=payment_cclite_registries}
 						{preference name=payment_cclite_currencies}
@@ -63,7 +63,7 @@
 					</div>
 				</div>
 				{jq}if ($.ui) {
-	var idx = $("select[name=payment_system]").attr("selectedIndex");
+	var idx = $("select[name=payment_system]").prop("selectedIndex");
 	$("#payment_systems").tiki("accordion", {heading: "h2"});
 	if (idx > 0) { $("#payment_systems").accordion("option", "active", idx); }
 }{/jq}
