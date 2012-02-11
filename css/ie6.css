@@ -123,4 +123,9 @@ img.flipmodimage {
 	width: 97%;
 }
 
+/* For IE 6/7 (trigger hasLayout) */
+.clearfix {
+    zoom: 1;
+}
+
 /* End of file */
