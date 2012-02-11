@@ -274,19 +274,25 @@ class Tiki_Profile_Installer
 
 		$this->installed[$profile->getProfileKey()] = $profile;
 
-		foreach ( $profile->getObjects() as $object ) {
-			$this->getInstallHandler($object)->install();
-			$this->setFeedback(tra('Added (or modified)').': '.$object->getDescription());
-		}
 		$preferences = $profile->getPreferences();
 		$profile->replaceReferences($preferences, $this->userData);
 		foreach ( $preferences as $pref => $value ) {
 			if ($this->allowedGlobalPreferences === false || in_array($pref, $this->allowedGlobalPreferences)) {
+				global $prefslib; include_once('lib/prefslib.php');
+				$pinfo = $prefslib->getPreference($pref);
+				if (!empty($pinfo['separator'])) {
+					$value = explode($pinfo['separator'], $value);
+				}
+
 				if ($prefs[$pref] != $value) {
 					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
 				}
 				$tikilib->set_preference($pref, $value);
 			}
+		}
+		foreach ( $profile->getObjects() as $object ) {
+			$this->getInstallHandler($object)->install();
+			$this->setFeedback(tra('Added (or modified)').': '.$object->getDescription());
 		}
 		$groupMap = $profile->getGroupMap();
 		$profile->replaceReferences($groupMap, $this->userData);
