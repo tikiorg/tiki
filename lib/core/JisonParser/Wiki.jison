@@ -7,7 +7,7 @@ PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SMILE							[a-z]+
 
-%s bold box center colortext italic header6 header5 header4 header3 header2 header1 link strikethrough table titlebar underscore wikilink
+%s bold box center colortext italic header6 header5 header4 header3 header2 header1 ulist1 olist1 link strikethrough table titlebar underscore wikilink
 
 %%
 
@@ -310,6 +310,41 @@ SMILE							[a-z]+
 	%}
 
 
+<ulist1>[\n]
+	%{
+		this.popState(); //js
+		return (this.yy.npOn ? 'CONTENT' : 'ULIST1_END'); //js
+		
+		//php $this->popState();
+		//php return $this->npState($this->npOn, 'CONTENT', 'ULIST1_END');
+	%}
+"\n*"
+	%{
+		this.begin('ulist1'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'ULIST1_START'); //js
+		
+		//php $this->begin('ulist1');
+		//php return $this->npState($this->npOn, 'CONTENT', 'ULIST1_START');
+	%}
+
+<olist1>[\n]
+	%{
+		this.popState(); //js
+		return (this.yy.npOn ? 'CONTENT' : 'OLIST1_END'); //js
+		
+		//php $this->popState();
+		//php return $this->npState($this->npOn, 'CONTENT', 'OLIST1_END');
+	%}
+"\n#"
+	%{
+		this.begin('olist1'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'OLIST1_START'); //js
+		
+		//php $this->begin('olist1');
+		//php return $this->npState($this->npOn, 'CONTENT', 'OLIST1_START');
+	%}
+
+
 <italic>['][']
 	%{
 		this.popState(); //js
@@ -574,6 +609,16 @@ content
 	{
 		$$ = Wiki.header1($2); //js
 		//php $$ = $this->header1($2);
+	}
+ | ULIST1_START wiki_contents ULIST1_END
+	{
+		$$ = Wiki.ulist1($2); //js
+		//php $$ = $this->ulist1($2);
+	}
+ | OLIST1_START wiki_contents OLIST1_END
+	{
+		$$ = Wiki.olist1($2); //js
+		//php $$ = $this->olist1($2);
 	}
  | LINK_START wiki_contents LINK_END
 	{
