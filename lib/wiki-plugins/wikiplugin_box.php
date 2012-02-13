@@ -92,10 +92,10 @@ function wikiplugin_box($data, $params) {
 	$bg   = (isset($bg))    ? " background:$bg" : "";
 	$id = (isset($id)) ? " id=\"$id\" ":'';
 	$class = (isset($class))? ' '.$class: ' ';
-	$w = (isset($width)) ? " width=\"$width\""  : "";
-	$al = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
-	$c = (isset($clear))    ? " style='clear:both;'" : "";
-	$begin  = "<table$al$w$c><tr><td><div class='cbox$class'$id".(strlen($bg) > 0 ? " style='$bg'" : "").">";
+	$w = (isset($width)) ? " width:$width"  : "";
+	$f = ($float == "left" || $float == "right")? " float:$float" : "";
+	$c = (isset($clear))    ? " clear:both" : "";
+	$begin = "<div class='cbox$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c'>";
     
 	if (isset($title)) {
 		$begin .= "<div class='cbox-title'>$title</div>";
