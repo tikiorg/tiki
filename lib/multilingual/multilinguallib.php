@@ -101,17 +101,19 @@ class MultilingualLib extends TikiLib
 	 * @brief gets all the translations of an object
 	 * @param type = (idem tiki_categ) 'wiki page'...
 	 * @param objId = object Id
-	 * @return if long is false: array(objId, objName, lang, langName) with langName=localized language name
-	 * @return if long is true: array(objId, objName, lang, langName) with langName=localized language name
+	 * @param long = Whether the language name returned (langName) should be in long format
+	 * @return: array(objId, objName, lang, langName) with langName=localized language name
 	 */
 	function getTranslations($type, $objId, $objName='', $objLang='', $long=false)
 	{
 		if ($type == 'wiki page') {
 			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`= t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=?";
-		} elseif ($long) {
+		} elseif ($type == 'article') {
 			$query = "select t2.`objId`, t2.`lang`, a.`title` as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=? and a.`articleId`=t2.`objId`";
 		} else {
-			$query = "select t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=?";
+			throw new Exception("Unsupported type");
+			// Generic version, should set objName
+			//$query = "select t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=?";
 		}
 
 		$result = $this->query($query, array($type, $objId));
