@@ -8,8 +8,7 @@
 {/remarksbox}
 
 {if $preview eq 'y'}
-	<div class="simplebox">
-		<h2>{tr}Content for the feed{/tr}</h2>
+	{remarksbox type="info" title="{tr}Content for the feed{/tr}"}
 		{if $feedtitle ne ''}
 			<h3>{$feedtitle.title|escape}</h3>
 		{/if}
@@ -18,7 +17,7 @@
 				<li><a href="{$items[ix].url|escape}" class="link">{$items[ix].title|escape}</a>{if $items[ix].pubDate ne ""}<br /><span class="rssdate">({$items[ix].pubDate|escape})</span>{/if}</li>
 			{/section}
 		</ul>
-	</div>
+	{/remarksbox}
 {/if}
 
 {tabset name="admin_rssmodules"}
@@ -57,7 +56,7 @@
 						<td class="action">
 							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;rssId={$channels[chan].rssId|escape}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
 							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;view={$channels[chan].rssId|escape}" title="{tr}View{/tr}">{icon _id=feed alt="{tr}View feed{/tr}"}</a>
-							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}" title="{tr}Clear{/tr}">{icon _id=basket alt="{tr}Clear{/tr}"}</a>
+							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}" title="{tr}Clear{/tr}">{icon _id=bin alt="{tr}Clear{/tr}"}</a>
 							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;refresh={$channels[chan].rssId|escape}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh alt="{tr}Refresh{/tr}"}</a>
 							{if $prefs.feature_articles eq 'y'}
 								<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;article={$channels[chan].rssId|escape}" title="{tr}Article Generator{/tr}">{icon _id=newspaper_go alt="{tr}Article Generator{/tr}"}</a>
