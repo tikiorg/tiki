@@ -116,22 +116,12 @@ class MultilingualLib extends TikiLib
 
 		$result = $this->query($query, array($type, $objId));
 		$ret = array();
-		if ($long) {
-			$l = $this->format_language_list(array($objLang));
-			$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>$l[0]['name']);
-			while ($res = $result->fetchRow()) {
-				$l = $this->format_language_list(array($res['lang']));
-				$res['langName'] = $l[0]['name'];
-				$ret[] = $res;
-			}
-		} else {
-			$l = $this->format_language_list(array($objLang), 'y');
-			$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>empty($l)?'':$l[0]['name']);
-			while ($res = $result->fetchRow()) {
-				$l = $this->format_language_list(array($res['lang']), 'y');
-				$res['langName'] = $l[0]['name'];
-				$ret[] = $res;
-			}
+		$l = $this->format_language_list(array($objLang), $long ? 'n' : 'y');
+		$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>empty($l)?'':$l[0]['name']);
+		while ($res = $result->fetchRow()) {
+			$l = $this->format_language_list(array($res['lang']), $long ? 'n' : 'y');
+			$res['langName'] = $l[0]['name'];
+			$ret[] = $res;
 		}
 		usort($ret, array('MultilingualLib', 'compare_lang'));
 		array_unshift($ret, $ret0);
