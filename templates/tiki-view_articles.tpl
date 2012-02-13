@@ -164,7 +164,7 @@
 						{/if}
 						{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
 							<div class="lang_select">
-								{include file='translated-lang.tpl'}
+								{include file='translated-lang.tpl' object_type='article' trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
 							</div>
 						{/if}
 						{if $tiki_p_remove_article eq 'y'}

@@ -102,6 +102,9 @@ $listpages = $artlib->list_articles($offset, $prefs['maxArticles'], $sort_mode, 
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once ("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
+	foreach ($listpages['data'] as &$article) {
+		$article['translations'] = $multilinguallib->getTranslations('article', $article['articleId'], $article["title"], $article['lang']);
+	}
 }
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
