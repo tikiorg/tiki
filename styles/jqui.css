@@ -16,7 +16,7 @@ body {
 	background: #fff}
 
 html > body,
-*:first-child+html body {font-size: 74% !important}
+*:first-child+html body {font-size: 74%}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
