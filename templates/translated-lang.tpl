@@ -53,29 +53,27 @@
 					{/section}
 				{/if}
 			{* For all object types: Translation maintenance *}
-				<h1>
-					{icon _id=world_edit title="{tr}Maintenance{/tr}"} {tr}Maintenance{/tr}
-				</h1>
-				{if $object_type eq 'wiki page'}
+				{capture}{if $object_type eq 'wiki page' and $tiki_p_edit eq 'y'}
 					<a href="tiki-edit_translation.php?page={$trads[0].objName|escape:url}&no_bl=y" title="{tr}Translate page{/tr}">
 						{tr}Translate{/tr}
 					</a>
-				{/if}
-				{if $object_type eq 'article'}
-					<a href="tiki-edit_article.php?translationOf={$articleId}" title="{tr}Translate article{/tr}">
-						{tr}Translate{/tr}
-					</a>
-				{/if}
-				{if $object_type eq 'wiki page'}
 					<a href="#" onclick="attach_detach_translation('wiki page', '{$page|escape:"quotes"}')" title="{tr}Manage page translations{/tr}">
 						{tr}Manage translations{/tr}
 					</a>
-				{/if}
-				{if $object_type eq 'article'}
+				{elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
+					<a href="tiki-edit_article.php?translationOf={$articleId}" title="{tr}Translate article{/tr}">
+						{tr}Translate{/tr}
+					</a>
 					<a href="#" onclick="attach_detach_translation('article', '{$articleId|escape:"quotes"}')" title="{tr}Manage article translations{/tr}">
 						{tr}Manage translations{/tr}
 					</a>
-				{/if}
+				{/if}{/capture}
+				{if !empty($smarty.capture.default)}{* Only display the header if there's content *}
+					<h1>
+						{icon _id=world_edit title="{tr}Maintenance{/tr}"} {tr}Maintenance{/tr}
+					</h1>
+					{$smarty.capture.default}
+				{/if}				
 			</li>
 		</ul>
 	</li>
