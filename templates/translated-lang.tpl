@@ -8,9 +8,15 @@
 		<ul>
 			<li class="tabcontent">
 			{* First the language of the object *}
+			{if $object_type eq 'wiki page'}
 				<a href="tiki-index.php?page={$trads[0].objName|escape}&no_bl=y" title="{$trads[0].langName|escape} ({$trads[0].lang|escape}): {$trads[0].objName}" class="selected">
-					{$trads[0].langName|escape} ({$trads[0].lang|escape}) <br />
-					</a>
+					{$trads[0].langName|escape} ({$trads[0].lang|escape})
+				</a>
+			{elseif $object_type eq 'article'}
+				<a href="tiki-read_article.php?articleId={$trads[0].objId}" title="{$trads[0].langName|escape} ({$trads[0].lang|escape}): {$trads[0].objName}" class="selected">
+					{$trads[0].langName|escape} ({$trads[0].lang|escape})
+				</a>
+			{/if}
 			{* Than the header for human translations - shown only if there is a translation availble *}
 				{if isset($trads) and count($trads) > 1}
 					<h1>
