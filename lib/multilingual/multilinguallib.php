@@ -101,8 +101,8 @@ class MultilingualLib extends TikiLib
 	 * @brief gets all the translations of an object
 	 * @param type = (idem tiki_categ) 'wiki page'...
 	 * @param objId = object Id
-	 * @return if long is false: array(objId, lang, langName ) with langName=localized language name
-	 * @return if long id true: array(objId, objName, lang, langLongFormat)
+	 * @return if long is false: array(objId, objName, lang, langName) with langName=localized language name
+	 * @return if long is true: array(objId, objName, lang, langName) with langName=localized language name
 	 */
 	function getTranslations($type, $objId, $objName='', $objLang='', $long=false)
 	{
