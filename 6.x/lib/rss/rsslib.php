@@ -217,10 +217,10 @@ class RSSLib extends TikiDb_Bridge
 			$authors = array();
 
 			if (!empty($prefs['feed_rss_editor_email'])) {
-				$authors[]['name'] = $prefs['feed_rss_editor_email'];
+				$authors['name'] = $prefs['feed_rss_editor_email'];
 			}
 			if (!empty($prefs['feed_rss_webmaster_email'])) {
-				$authors[]['name'] = $prefs['feed_rss_webmaster_email'];
+				$authors['name'] = $prefs['feed_rss_webmaster_email'];
 			}
 			
 			if (!empty($authors)) {
