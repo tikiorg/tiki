@@ -152,7 +152,8 @@ class StructLib extends TikiLib
 			$this->query($query, array((int)$previous['page_ref_id'], (int)$pos, (int)$page_ref_id));
 			//Remove the space created by the demotion			
 			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
-			$this->query($query, array((int)$page_info["pos"], (int)$page_info["parent_id"])); 
+			$this->query($query, array((int)$page_info["pos"], (int)$page_info["parent_id"]));
+			global $prefs;
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'move_down', 'page_ref_id'=>$page_ref_id, 'parent_id'=>$previous['page_ref_id']));
