@@ -111,13 +111,13 @@ class Reports_Users
 		$ret = array();
 		
 		foreach ($users as $user) {
-			if ($user['interval'] == "daily" && ($user['last_report'] + 86400) <= $this->dt->getTimestamp()) {
+			if ($user['interval'] == "daily" && ($user['last_report'] + 86400) <= $this->dt->format('U')) {
 				$ret[] = $user['user'];
 			}
-			if ($user['interval'] == "weekly" && ($user['last_report'] + 604800) <= $this->dt->getTimestamp()) {
+			if ($user['interval'] == "weekly" && ($user['last_report'] + 604800) <= $this->dt->format('U')) {
 				$ret[] = $user['user'];
 			}
-			if ($user['interval'] == "monthly" && ($user['last_report'] + 2419200) <= $this->dt->getTimestamp()) {
+			if ($user['interval'] == "monthly" && ($user['last_report'] + 2419200) <= $this->dt->format('U')) {
 				$ret[] = $user['user'];
 			}
 		}

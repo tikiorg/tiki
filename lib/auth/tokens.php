@@ -53,7 +53,7 @@ class AuthTokens
 	}
 	
 	function getGroups( $token, $entry, $parameters ) {
-		$this->db->query( 'DELETE FROM tiki_auth_tokens WHERE (timeout != -1 AND UNIX_TIMESTAMP(creation) + timeout < ?) OR `hits` = 0', $this->dt->getTimestamp() );
+		$this->db->query( 'DELETE FROM tiki_auth_tokens WHERE (timeout != -1 AND UNIX_TIMESTAMP(creation) + timeout < ?) OR `hits` = 0', $this->dt->format('U') );
 		$data = $this->db->query( 'SELECT tokenId, entry, parameters, groups FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME, array( $token ) )
 			->fetchRow();
 
