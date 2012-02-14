@@ -429,10 +429,6 @@ if ($isvalid) {
 	$smarty->assign('msg', $error);
 	$smarty->display('error.tpl');
 	exit;
-	// on a login error wait this long in seconds. slows down automated login attacks.
-	// regular users mistyping on login will experience the delay, too, but wrong logins
-	// shouldn't occur that often.
-	sleep(5);
 }
 
 if ( isset($user) and $prefs['feature_score'] == 'y' ) {
