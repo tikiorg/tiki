@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -185,8 +185,9 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 } else {
 	// Verify user is valid
 	$ret = $userlib->validate_user($user, $pass, $challenge, $response);
-	if (count($ret) == 3)
+	if (count($ret) == 3) {
 		$ret[] = null;
+	}
 	list($isvalid, $user, $error, $method) = $ret;
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
@@ -220,26 +221,27 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 }
 if ($isvalid) {
 
-    if ($prefs['feature_invite'] == 'y') {
-        // tiki-invite, this part is just here to add groups to users which just registered after received an
-        // invitation via tiki-invite.php and set the redirect to wiki page if required by the invitation
-        $res = $tikilib->query("SELECT `id`,`id_invite` FROM `tiki_invited` WHERE `used_on_user`=? AND used=?", array($user, "registered"));
-        $inviterow=$res->fetchRow();
-        if (is_array($inviterow)) {
-            $id_invited=$inviterow['id'];
-            $id_invite=$inviterow['id_invite'];
-            // set groups
-            
-            $groups = $tikilib->getOne("SELECT `groups` FROM `tiki_invite` WHERE `id` = ?", array((int)$id_invite));
-            $groups = explode(',', $groups);
-            foreach ($groups as $group)
-                $userlib->assign_user_to_group($user, trim($group));
-            $tikilib->query("UPDATE `tiki_invited` SET `used`=? WHERE id_invite=?", array("logged", (int)$id_invited));
-            
-            // set wiki page required by invitation
-            if (!empty($inviterow['wikipageafter'])) $_REQUEST['page']=$inviterow['wikipageafter'];
-        }
-    }
+	if ($prefs['feature_invite'] == 'y') {
+		// tiki-invite, this part is just here to add groups to users which just registered after received an
+		// invitation via tiki-invite.php and set the redirect to wiki page if required by the invitation
+		$res = $tikilib->query("SELECT `id`,`id_invite` FROM `tiki_invited` WHERE `used_on_user`=? AND used=?", array($user, "registered"));
+		$inviterow=$res->fetchRow();
+		if (is_array($inviterow)) {
+			$id_invited=$inviterow['id'];
+			$id_invite=$inviterow['id_invite'];
+			// set groups
+
+			$groups = $tikilib->getOne("SELECT `groups` FROM `tiki_invite` WHERE `id` = ?", array((int)$id_invite));
+			$groups = explode(',', $groups);
+			foreach ($groups as $group) {
+				$userlib->assign_user_to_group($user, trim($group));
+			}
+			$tikilib->query("UPDATE `tiki_invited` SET `used`=? WHERE id_invite=?", array("logged", (int)$id_invited));
+
+			// set wiki page required by invitation
+			if (!empty($inviterow['wikipageafter'])) $_REQUEST['page']=$inviterow['wikipageafter'];
+		}
+	}
 
 	if ($isdue) {
 		// Redirect the user to the screen where he must change his password.
@@ -266,191 +268,190 @@ if ($isvalid) {
 		$logslib->add_log('login', 'logged from ' . $url);
 		// Special '?page=...' case. Accept only some values to avoid security problems
 		if ( isset($_REQUEST['page']) and $_REQUEST['page'] === 'tikiIndex') {
-				$url = ${$_REQUEST['page']};
-		} else {	
-				if (!empty($_REQUEST['url'])) {
-					global $cachelib; include_once('lib/cache/cachelib.php');
-					preg_match('/(.*)\?cache=(.*)/', $_REQUEST['url'], $matches);
-					if (!empty($matches[2]) && $cdata = $cachelib->getCached($matches[2], 'edit')) {
-						if (!empty($matches[1])) {
-							$url = $matches[1].'?'.$cdata;
-						}
-						$cachelib->invalidate($matches[2], 'edit');
+			$url = ${$_REQUEST['page']};
+		} else {
+			if (!empty($_REQUEST['url'])) {
+				global $cachelib; include_once('lib/cache/cachelib.php');
+				preg_match('/(.*)\?cache=(.*)/', $_REQUEST['url'], $matches);
+				if (!empty($matches[2]) && $cdata = $cachelib->getCached($matches[2], 'edit')) {
+					if (!empty($matches[1])) {
+						$url = $matches[1].'?'.$cdata;
 					}
-				} elseif ($prefs['useGroupHome'] == 'y') { // Go to the group page ?
-					if ($prefs['limitedGoGroupHome'] == 'y') {
-						// Handle spaces (that could be written as '%20' in referer, but are generated as '+' with urlencode)
-						$url = str_replace('%20', '+', $url);
-						$url_vars = parse_url($url);
-						$url_path = $url_vars['path'];
-						if ($url_vars['query'] != '') $url_path.= '?' . $url_vars['query'];
-						// Get a valid URL for anonymous group homepage
-						// It has to be rewritten when the following two syntaxes are used :
-						//  - http:tiki-something.php => tiki-something.php
-						//  - pageName => tiki-index.php?page=pageName
-						$anonymous_homepage = $userlib->get_group_home('Anonymous');
-						if (!preg_match('#^https?://#', $anonymous_homepage)) {
-							if (substr($anonymous_homepage, 0, 5) == 'http:') {
-								$anonymous_homepage = substr($anonymous_homepage, 5);
-							} else {
-								$anonymous_homepage = 'tiki-index.php?page=' . urlencode($anonymous_homepage);
-							}
-						}
-						// Determine the complete tikiIndex URL for not logged users
-						// when tikiIndex's page has not been explicitely specified
-						//   (this only handles wiki default page for the moment)
-						if (preg_match('/tiki-index.php$/', $prefs['site_tikiIndex']) || preg_match('/tiki-index.php$/', $anonymous_homepage)) {
-							$tikiIndex_full = 'tiki-index.php?page=' . urlencode($prefs['site_wikiHomePage']);
+					$cachelib->invalidate($matches[2], 'edit');
+				}
+			} elseif ($prefs['useGroupHome'] == 'y') { // Go to the group page ?
+				if ($prefs['limitedGoGroupHome'] == 'y') {
+					// Handle spaces (that could be written as '%20' in referer, but are generated as '+' with urlencode)
+					$url = str_replace('%20', '+', $url);
+					$url_vars = parse_url($url);
+					$url_path = $url_vars['path'];
+					if ($url_vars['query'] != '') $url_path.= '?' . $url_vars['query'];
+					// Get a valid URL for anonymous group homepage
+					// It has to be rewritten when the following two syntaxes are used :
+					//  - http:tiki-something.php => tiki-something.php
+					//  - pageName => tiki-index.php?page=pageName
+					$anonymous_homepage = $userlib->get_group_home('Anonymous');
+					if (!preg_match('#^https?://#', $anonymous_homepage)) {
+						if (substr($anonymous_homepage, 0, 5) == 'http:') {
+							$anonymous_homepage = substr($anonymous_homepage, 5);
 						} else {
-							$tikiIndex_full = '';
+							$anonymous_homepage = 'tiki-index.php?page=' . urlencode($anonymous_homepage);
 						}
 					}
-					// Go to the group page instead of the referer url if we are in one of those cases :
-					//   - pref 'Go to group homepage only if login from default homepage' (limitedGoGroupHome) is disabled,
-					//   - referer url (e.g. http://example.com/tiki/tiki-index.php?page=Homepage ) is the homepage (tikiIndex),
-					//   - referer url complete path ( e.g. /tiki/tiki-index.php?page=Homepage ) is the homepage,
-					//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the homepage
-					//   - one of the three cases listed above, but compared to anonymous page instead of global homepage
-					//
-					//   - last case ($tikiIndex_full != '') :
-					//       wiki homepage could have been saved as 'tiki-index.php' instead of 'tiki-index.php?page=Homepage'.
-					//       ... so we also need to check against : homepage + '?page=' + default wiki pagename
-					//
-					if ($prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex'] || ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage)) || ($tikiIndex_full != '' && basename($url_path) == $tikiIndex_full)) {
-						$groupHome = $userlib->get_user_default_homepage($user);
-						if ($groupHome != '') {
-							include_once('tiki-sefurl.php');
-							$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome));
-						}
+					// Determine the complete tikiIndex URL for not logged users
+					// when tikiIndex's page has not been explicitely specified
+					//   (this only handles wiki default page for the moment)
+					if (preg_match('/tiki-index.php$/', $prefs['site_tikiIndex']) || preg_match('/tiki-index.php$/', $anonymous_homepage)) {
+						$tikiIndex_full = 'tiki-index.php?page=' . urlencode($prefs['site_wikiHomePage']);
+					} else {
+						$tikiIndex_full = '';
 					}
 				}
-				// Unset session variable in case user su's
-				unset($_SESSION['loginfrom']);
-				// No sense in sending user to registration page or no page at all
-				// This happens if the user has just registered and it's first login
-				if ($url == '' || preg_match('/(tiki-register|tiki-login_validate|tiki-login_scr)\.php/', $url)) $url = $prefs['tikiIndex'];
-				// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
-				if ($prefs['rememberme'] != 'disabled' && isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
-						$userInfo = $userlib->get_user_info($user);
-						$userId = $userInfo['userId'];
-						$secret = $userlib->create_user_cookie($userId);
-						setcookie($user_cookie_site, $secret . '.' . $userId, $tikilib->now + $prefs['remembertime'], $prefs['cookie_path'], $prefs['cookie_domain']);
-						$logslib->add_log('login', 'got a cookie for ' . $prefs['remembertime'] . ' seconds');
+				// Go to the group page instead of the referer url if we are in one of those cases :
+				//   - pref 'Go to group homepage only if login from default homepage' (limitedGoGroupHome) is disabled,
+				//   - referer url (e.g. http://example.com/tiki/tiki-index.php?page=Homepage ) is the homepage (tikiIndex),
+				//   - referer url complete path ( e.g. /tiki/tiki-index.php?page=Homepage ) is the homepage,
+				//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the homepage
+				//   - one of the three cases listed above, but compared to anonymous page instead of global homepage
+				//
+				//   - last case ($tikiIndex_full != '') :
+				//       wiki homepage could have been saved as 'tiki-index.php' instead of 'tiki-index.php?page=Homepage'.
+				//       ... so we also need to check against : homepage + '?page=' + default wiki pagename
+				//
+				if ($prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex'] || ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage)) || ($tikiIndex_full != '' && basename($url_path) == $tikiIndex_full)) {
+					$groupHome = $userlib->get_user_default_homepage($user);
+					if ($groupHome != '') {
+						include_once('tiki-sefurl.php');
+						$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome));
+					}
 				}
 			}
+			// Unset session variable in case user su's
+			unset($_SESSION['loginfrom']);
+			// No sense in sending user to registration page or no page at all
+			// This happens if the user has just registered and it's first login
+			if ($url == '' || preg_match('/(tiki-register|tiki-login_validate|tiki-login_scr)\.php/', $url)) $url = $prefs['tikiIndex'];
+			// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
+			if ($prefs['rememberme'] != 'disabled' && isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
+				$userInfo = $userlib->get_user_info($user);
+				$userId = $userInfo['userId'];
+				$secret = $userlib->create_user_cookie($userId);
+				setcookie($user_cookie_site, $secret . '.' . $userId, $tikilib->now + $prefs['remembertime'], $prefs['cookie_path'], $prefs['cookie_domain']);
+				$logslib->add_log('login', 'got a cookie for ' . $prefs['remembertime'] . ' seconds');
+			}
 		}
-	} else {	// if ($isvalid)
-		// not valid - check if site is closed first
-		if ($prefs['site_closed'] === 'y') {
-			unset($bypass_siteclose_check);
-			include 'lib/setup/site_closed.php';
-		}
-		
-		if (isset($_REQUEST['url'])) {
-			$smarty->assign('url', $_REQUEST['url']);
-		}
-		if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
-			$nb_bad_logins = $userlib->unsuccessful_logins($user);
-			if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'] - 1)) {
-				$info = $userlib->get_user_info($user);
-				$userlib->change_user_waiting($user, 'a');
-				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
-				$msg .= ' '.tra('Your account has been suspended.').' '.tra('A site administrator will reactivate it');
-				include_once ('lib/webmail/tikimaillib.php');
-				$mail = new TikiMail();
-				$smarty->assign('msg', $msg);
-				$smarty->assign('mail_user', $user);
-				$foo = parse_url($_SERVER['REQUEST_URI']);
-				$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', '', $foo['path']);
-				$smarty->assign('mail_machine', $mail_machine);
-				$mail->setText($smarty->fetch('mail/unsuccessful_logins_suspend.tpl'));
-				$mail->setSubject($smarty->fetch('mail/unsuccessful_logins_suspend_subject.tpl'));
-				$emails = !empty($prefs['validator_emails'])?preg_split('/,/', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
-				if (!$mail->send(array($info['email'])) || !$mail->send($emails)) {
-					$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
-					$smarty->display("error.tpl");
-					die;
-				}
-				$smarty->assign('user', '');
-				unset($user);
-				$smarty->assign('mid', 'tiki-information.tpl');
-				$smarty->display('tiki.tpl');
-				die;
-			} elseif ($prefs['unsuccessful_logins'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins'] - 1)) {
-				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
-				$smarty->assign('msg', $msg);
-				if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) {
-					$smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
-				}
-				$smarty->assign('user', '');
-				unset($user);
-				$show_history_back_link = 'y';
-				$smarty->assign_by_ref('show_history_back_link', $show_history_back_link);
-				$smarty->assign('mid', 'tiki-information.tpl');
-				$smarty->display("tiki.tpl");
+	}
+} else {	// if ($isvalid)
+	// not valid - check if site is closed first
+	if ($prefs['site_closed'] === 'y') {
+		unset($bypass_siteclose_check);
+		include 'lib/setup/site_closed.php';
+	}
+
+	if (isset($_REQUEST['url'])) {
+		$smarty->assign('url', $_REQUEST['url']);
+	}
+	if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
+		$nb_bad_logins = $userlib->unsuccessful_logins($user);
+		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'] - 1)) {
+			$info = $userlib->get_user_info($user);
+			$userlib->change_user_waiting($user, 'a');
+			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
+			$msg .= ' '.tra('Your account has been suspended.').' '.tra('A site administrator will reactivate it');
+			include_once ('lib/webmail/tikimaillib.php');
+			$mail = new TikiMail();
+			$smarty->assign('msg', $msg);
+			$smarty->assign('mail_user', $user);
+			$foo = parse_url($_SERVER['REQUEST_URI']);
+			$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', '', $foo['path']);
+			$smarty->assign('mail_machine', $mail_machine);
+			$mail->setText($smarty->fetch('mail/unsuccessful_logins_suspend.tpl'));
+			$mail->setSubject($smarty->fetch('mail/unsuccessful_logins_suspend_subject.tpl'));
+			$emails = !empty($prefs['validator_emails'])?preg_split('/,/', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
+			if (!$mail->send(array($info['email'])) || !$mail->send($emails)) {
+				$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
+				$smarty->display("error.tpl");
 				die;
 			}
-			$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
+			$smarty->assign('user', '');
+			unset($user);
+			$smarty->assign('mid', 'tiki-information.tpl');
+			$smarty->display('tiki.tpl');
+			die;
+		} elseif ($prefs['unsuccessful_logins'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins'] - 1)) {
+			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
+			$smarty->assign('msg', $msg);
+			if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) {
+				$smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
+			}
+			$smarty->assign('user', '');
+			unset($user);
+			$show_history_back_link = 'y';
+			$smarty->assign_by_ref('show_history_back_link', $show_history_back_link);
+			$smarty->assign('mid', 'tiki-information.tpl');
+			$smarty->display("tiki.tpl");
+			die;
 		}
-		unset($user); // Important so that modules are showing based on anonymous
-		unset($isvalid);
-		switch ($error) {
-			case PASSWORD_INCORRECT:
-			case USER_NOT_FOUND:
-				$smarty->assign('error_login', $error);
-				$smarty->assign('mid', 'tiki-login.tpl');
-				$smarty->assign('error_user', $_REQUEST["user"]);
-				$smarty->display('tiki.tpl');
-				exit;
-
-			case ACCOUNT_DISABLED:
-				$error = tra('Account disabled');
-				break;
-
-			case ACCOUNT_WAITING_USER:
-				$error = tra('You did not validate your account');
-				$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email')); 
-				break;
-
-			case USER_AMBIGOUS:
-				$error = tra('You must use the right case for your user name');
-				break;
-
-			case USER_NOT_VALIDATED:
-				$error = tra('You are not yet validated');
-				break;
-
-			default:
-				$error = tra('Invalid username or password');
-		}
-		if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
-		$smarty->assign('msg', $error);
-		$smarty->display('error.tpl');
-		exit;
-		// on a login error wait this long in seconds. slows down automated login attacks.
-		// regular users mistyping on login will experience the delay, too, but wrong logins
-		// shouldn't occur that often.
-		sleep(5);
+		$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
 	}
+	unset($user); // Important so that modules are showing based on anonymous
+	unset($isvalid);
+	switch ($error) {
+		case PASSWORD_INCORRECT:
+		case USER_NOT_FOUND:
+			$smarty->assign('error_login', $error);
+			$smarty->assign('mid', 'tiki-login.tpl');
+			$smarty->assign('error_user', $_REQUEST["user"]);
+			$smarty->display('tiki.tpl');
+			exit;
 
-	if ( isset($user) and $prefs['feature_score'] == 'y' ) {
-		$tikilib->score_event($user, 'login');
-	}
-	// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
-	if ( !preg_match('/^https?\:/i', $url) ) {
-		$url = (preg_match('/^\//', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
-	}
-	// Force HTTP mode if needed
-	if ($stay_in_ssl_mode != 'y' || !$https_mode) {
-		$url = str_replace('https://', 'http://', $url);
-	}
-	// Force Redirection to HTTPS mode of original URL if needed
-	if ($stay_in_ssl_mode == 'y' && $https_mode) {
-		$url = str_replace('http://', 'https://', $url);
-	}
-	if (defined('SID') && SID != '')
-		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID; 
+		case ACCOUNT_DISABLED:
+			$error = tra('Account disabled');
+			break;
 
-	header('Location: ' . $url);
+		case ACCOUNT_WAITING_USER:
+			$error = tra('You did not validate your account');
+			$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email'));
+			break;
+
+		case USER_AMBIGOUS:
+			$error = tra('You must use the right case for your user name');
+			break;
+
+		case USER_NOT_VALIDATED:
+			$error = tra('You are not yet validated');
+			break;
+
+		default:
+			$error = tra('Invalid username or password');
+	}
+	if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
+	$smarty->assign('msg', $error);
+	$smarty->display('error.tpl');
 	exit;
-	
+	// on a login error wait this long in seconds. slows down automated login attacks.
+	// regular users mistyping on login will experience the delay, too, but wrong logins
+	// shouldn't occur that often.
+	sleep(5);
+}
+
+if ( isset($user) and $prefs['feature_score'] == 'y' ) {
+	$tikilib->score_event($user, 'login');
+}
+// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
+if ( !preg_match('/^https?\:/i', $url) ) {
+	$url = (preg_match('/^\//', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+}
+// Force HTTP mode if needed
+if ($stay_in_ssl_mode != 'y' || !$https_mode) {
+	$url = str_replace('https://', 'http://', $url);
+}
+// Force Redirection to HTTPS mode of original URL if needed
+if ($stay_in_ssl_mode == 'y' && $https_mode) {
+	$url = str_replace('http://', 'https://', $url);
+}
+if (defined('SID') && SID != '')
+$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
+
+header('Location: ' . $url);
+exit;
