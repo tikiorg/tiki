@@ -207,15 +207,17 @@ JQ
 								var buttons = {};
 								
 								if (suggestion == o.text) {
-									accept();
+									getAnswers();
 								} else {
 									buttons[tr('Ok')] = function() {
 										o.text = suggestion;
-										accept();
+										me.box.dialog('close');
+										getAnswers();
 									};
 									
 									buttons[tr('Cancel')] = function() {
-										accept();
+										me.box.dialog('close');
+										getAnswers();
 									};
 									
 									me.box = $('<div>' +
@@ -238,11 +240,36 @@ JQ
 										})
 								}
 								
-								function accept() {
+								function getAnswers() {
+									if (!answers.length) {
+										return accept();
+									}
+									
+									var answersDialog = $('<div />');
+									
 									$.each(answers, function() {
-										this.answer = prompt(this.question);
+										$('<div style="font-weight: bold;" />')
+											.text(this.question)
+											.appendTo(answersDialog);
+										
+										$('<input />')
+											.appendTo(answersDialog);
 									});
 									
+									var answersDialogButtons = {};
+									answersDialogButtons[tr("Ok")] = function() {
+										answersDialog.dialog('close');
+										accept();
+									};
+									
+									answersDialog.dialog({
+										title: tr("Please fill in the questions below"),
+										buttons: answersDialogButtons,
+										modal: true
+									});
+								}
+								
+								function accept() {
 									var data = {
 										websiteTitle: '$websiteTitle',
 										websiteSubtitle: '',
