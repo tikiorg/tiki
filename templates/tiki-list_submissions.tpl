@@ -46,7 +46,7 @@
 			{/if}
 			{if $prefs.art_list_img eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
-				<th>{tr}Img{/tr}</th>
+				<th>{tr}Image{/tr}</th>
 			{/if}
 			{if $prefs.art_list_author eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
@@ -125,7 +125,7 @@
 									{if $tiki_p_approve_submission eq 'y'}<option value="approve_subs" >{tr}Approve{/tr}</option>{/if}
 								</select>
 							</label>
-							<input type="submit" value="{tr}OK{/tr}" />
+							<input type="submit" value="{tr}Ok{/tr}" />
 						</p>
 					{/if}
 				</td>
