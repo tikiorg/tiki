@@ -21,6 +21,7 @@ class Tiki_Security_Policy extends Smarty_Security
 		public $secure_dir = array(
 			'img/',
 			'img/icons',
+			'styles/strasa/img/icons/',
 			'img/icons2',
 			'img/flags',
 			'img/mytiki',
