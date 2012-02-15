@@ -97,7 +97,7 @@ class Reports_Users
 	 */
 	public function addUserToDailyReports($context)
 	{
-		$this->save($context['user'], 'daily', 'detailed', 'html', 1);
+		$this->save($context['user'], 'daily', 'detailed', 'html', 0);
 	}
 	
 	/**
