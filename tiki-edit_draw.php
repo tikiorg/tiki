@@ -62,11 +62,12 @@ $_REQUEST['name'] = htmlspecialchars(str_replace(".svg", "", $_REQUEST['name']))
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
 	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
+	
 	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
 	
 	$type = $mimetypes["svg"];
 	$fileId = '';
-	if (empty($_REQUEST["fileId"]) == false) {
+	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0) {
 		//existing file
 		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
 	} else {
