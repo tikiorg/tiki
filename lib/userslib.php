@@ -1432,13 +1432,9 @@ class UsersLib extends TikiLib
 	}
 
 	// update the lastlogin status on this user
-	function update_lastlogin($user, $current = null)
+	function update_lastlogin($user)
 	{
-		// Check
-		if (is_null($current)) {
-			$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
-		}
-
+		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
 		if (is_null($current)) {
 			// First time
 			$current = $this->now;
