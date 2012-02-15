@@ -264,7 +264,7 @@ class reportsLib extends TikiLib
 	}
 	
 	function add_user_to_daily_reports($context) {
-		$this->add_user_report($context['user'], 'daily', 'detailed', 'html', 1);
+		$this->add_user_report($context['user'], 'daily', 'detailed', 'html', 0);
 	}
 	
 	function add_user_report($user, $interval, $view, $type, $always_email) {
