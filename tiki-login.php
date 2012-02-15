@@ -79,7 +79,7 @@ if ($tiki_p_admin == 'y') {
 		exit;
 	}
 }
-$user = isset($_REQUEST['user']) ? $_REQUEST['user'] : false;
+$requestedUser = isset($_REQUEST['user']) ? $_REQUEST['user'] : false;
 $pass = isset($_REQUEST['pass']) ? $_REQUEST['pass'] : false;
 $challenge = isset($_REQUEST['challenge']) ? $_REQUEST['challenge'] : false;
 $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
@@ -87,20 +87,21 @@ $isvalid = false;
 $isdue = false;
 $isEmailDue = false;
 // admin is always local
-if ($user == 'admin') $prefs['feature_intertiki'] = 'n';
+if ($requestedUser == 'admin') $prefs['feature_intertiki'] = 'n';
 // Determine the intertiki domain
 if ($prefs['feature_intertiki'] == 'y') {
-	if (!empty($prefs['feature_intertiki_mymaster'])) $_REQUEST['intertiki'] = $prefs['feature_intertiki_mymaster'];
-	elseif (strstr($user, '@')) {
-		list($user, $intertiki_domain) = explode('@', $user);
+	if (!empty($prefs['feature_intertiki_mymaster'])) {
+		$_REQUEST['intertiki'] = $prefs['feature_intertiki_mymaster'];
+	} elseif (strstr($requestedUser, '@')) {
+		list($requestedUser, $intertiki_domain) = explode('@', $requestedUser);
 		$_REQUEST['intertiki'] = $intertiki_domain;
 	}
 } else unset($_REQUEST['intertiki']);
 // Go through the intertiki process
 if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist']))) {
-	$rpcauth = $userlib->intervalidate($prefs['interlist'][$_REQUEST['intertiki']], $user, $pass, !empty($prefs['feature_intertiki_mymaster']) ? true : false);
+	$rpcauth = $userlib->intervalidate($prefs['interlist'][$_REQUEST['intertiki']], $requestedUser, $pass, !empty($prefs['feature_intertiki_mymaster']) ? true : false);
 	if (!$rpcauth) {
-		$logslib->add_log('login', 'intertiki : ' . $user . '@' . $_REQUEST['intertiki'] . ': Failed');
+		$logslib->add_log('login', 'intertiki : ' . $requestedUser . '@' . $_REQUEST['intertiki'] . ': Failed');
 		$smarty->assign('msg', tra('Unable to contact remote server.'));
 		$smarty->display('error.tpl');
 		exit;
@@ -108,11 +109,11 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 		if ($faultCode = $rpcauth->faultCode()) {
 			if ($faultCode == 102) {
 				$faultCode = 101; // disguise inexistent user
-				$userlib->remove_user($user);
+				$userlib->remove_user($requestedUser);
 			}
 			$user_msg = tra('XMLRPC Error: ') . $faultCode . ' - ' . tra($rpcauth->faultString());
 			$log_msg = tra('XMLRPC Error: ') . $rpcauth->faultCode() . ' - ' . tra($rpcauth->faultString());
-			$logslib->add_log('login', 'intertiki : ' . $user . '@' . $_REQUEST['intertiki'] . ': ' . $log_msg);
+			$logslib->add_log('login', 'intertiki : ' . $requestedUser . '@' . $_REQUEST['intertiki'] . ': ' . $log_msg);
 			$smarty->assign('msg', $user_msg);
 			$smarty->display('error.tpl');
 			exit;
@@ -120,7 +121,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 			$isvalid = true;
 			$isdue = false;
 			$isEmailDue = false;
-			$logslib->add_log('login', 'intertiki : ' . $user . '@' . $_REQUEST['intertiki']);
+			$logslib->add_log('login', 'intertiki : ' . $requestedUser . '@' . $_REQUEST['intertiki']);
 			if (!empty($prefs['feature_intertiki_mymaster'])) {
 				// this is slave intertiki site
 				$response_value = $rpcauth->value();
@@ -139,20 +140,19 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 				} else {
 					$user_details = unserialize($response_value->scalarval());
 				}
-				$user = $user_details['info']['login']; // use the correct caps
-				if (!$userlib->user_exists($user)) {
-					if ($userlib->add_user($user, '', $user_details['info']['email'])) {
-						$userlib->set_user_fields($user_details['info']);
-					} else {
+				$requestedUser = $user_details['info']['login']; // use the correct capitalization
+				if (!$userlib->user_exists($requestedUser)) {
+					if (!$userlib->add_user($requestedUser, '', $user_details['info']['email'])) {
 						$logslib->add_log('login', 'intertiki : login creation failed');
 						$smarty->assign('msg', tra('Unable to create login'));
 						$smarty->display('error.tpl');
 						die;
 					}
 				} else {
-					$userlib->set_user_fields($user_details['info']);
-					$userlib->update_lastlogin($user);
+					$userlib->update_lastlogin($requestedUser);
 				}
+				$userlib->set_user_fields($user_details['info']);
+				$user = $requestedUser;
 				if ($prefs['feature_userPreferences'] == 'y' && $prefs['feature_intertiki_import_preferences'] == 'y') {
 					global $userprefslib;
 					include_once ('lib/userprefs/userprefslib.php');
@@ -177,22 +177,23 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 					}
 				}
 			} else {
-				$user = $user . '@' . $_REQUEST['intertiki'];
+				$user = $requestedUser . '@' . $_REQUEST['intertiki'];
 				$prefs['feature_userPreferences'] = 'n';
 			}
 		}
 	}
 } else {
 	// Verify user is valid
-	$ret = $userlib->validate_user($user, $pass, $challenge, $response);
+	$ret = $userlib->validate_user($requestedUser, $pass, $challenge, $response);
 	if (count($ret) == 3) {
 		$ret[] = null;
 	}
-	list($isvalid, $user, $error, $method) = $ret;
+	list($isvalid, $requestedUser, $error, $method) = $ret;
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
 	// The user must re-nter the old password so no security risk here
 	if ($isvalid) {
+		$user = $requestedUser;
 		$isdue = $userlib->is_due($user, $method);
 		if ($user != 'admin') { // admin has not necessarely an email
 			$isEmailDue = $userlib->is_email_due($user, 'email');
@@ -253,8 +254,7 @@ if ($isvalid) {
 		$userlib->change_user_waiting($user, 'u');
 		$msg = $smarty->fetch('tiki-login_confirm_email.tpl');
 		$smarty->assign_by_ref('msg', explode("\n", $msg));
-		$smarty->assign('user', '');
-		unset($user);
+		$user = '';
 		$smarty->assign('mid', 'tiki-information.tpl');
 		$smarty->display("tiki.tpl");
 		die;
@@ -263,7 +263,6 @@ if ($isvalid) {
 		$userlib->update_expired_groups();
 		$_SESSION[$user_cookie_site] = $user;
 		if (isset($_SESSION['openid_url'])) $userlib->assign_openid($user, $_SESSION['openid_url']);
-		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
 		$logslib->add_log('login', 'logged from ' . $url);
 		// Special '?page=...' case. Accept only some values to avoid security problems
@@ -341,8 +340,8 @@ if ($isvalid) {
 			}
 		}
 	}
-} else {	// if ($isvalid)
-	// not valid - check if site is closed first
+} else {	// if ($isvalid) - invalid
+	// check if site is closed
 	if ($prefs['site_closed'] === 'y') {
 		unset($bypass_siteclose_check);
 		include 'lib/setup/site_closed.php';
@@ -352,16 +351,16 @@ if ($isvalid) {
 		$smarty->assign('url', $_REQUEST['url']);
 	}
 	if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
-		$nb_bad_logins = $userlib->unsuccessful_logins($user);
+		$nb_bad_logins = $userlib->unsuccessful_logins($requestedUser);
 		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'] - 1)) {
-			$info = $userlib->get_user_info($user);
-			$userlib->change_user_waiting($user, 'a');
+			$info = $userlib->get_user_info($requestedUser);
+			$userlib->change_user_waiting($requestedUser, 'a');
 			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
 			$msg .= ' '.tra('Your account has been suspended.').' '.tra('A site administrator will reactivate it');
 			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$smarty->assign('msg', $msg);
-			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_user', $requestedUser);
 			$foo = parse_url($_SERVER['REQUEST_URI']);
 			$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', '', $foo['path']);
 			$smarty->assign('mail_machine', $mail_machine);
@@ -373,28 +372,23 @@ if ($isvalid) {
 				$smarty->display("error.tpl");
 				die;
 			}
-			$smarty->assign('user', '');
-			unset($user);
 			$smarty->assign('mid', 'tiki-information.tpl');
 			$smarty->display('tiki.tpl');
 			die;
 		} elseif ($prefs['unsuccessful_logins'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins'] - 1)) {
 			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 			$smarty->assign('msg', $msg);
-			if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) {
+			if ($userlib->send_confirm_email($requestedUser, 'unsuccessful_logins')) {
 				$smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
 			}
-			$smarty->assign('user', '');
-			unset($user);
 			$show_history_back_link = 'y';
 			$smarty->assign_by_ref('show_history_back_link', $show_history_back_link);
 			$smarty->assign('mid', 'tiki-information.tpl');
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
+		$userlib->set_unsuccessful_logins($requestedUser, $nb_bad_logins + 1);
 	}
-	unset($user); // Important so that modules are showing based on anonymous
 	unset($isvalid);
 	switch ($error) {
 		case PASSWORD_INCORRECT:
