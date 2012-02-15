@@ -1431,20 +1431,18 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
-	// update the lastlogin status on this user
+	// Update login fields when user logs in (update lastLogin and currentLogin and reset unsuccessful_logins). Should really be private
 	function update_lastlogin($user)
 	{
-		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
-		if (is_null($current)) {
-			// First time
-			$current = $this->now;
+		$previous = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		if (is_null($previous)) {
+			// First login
+			$previous = $this->now; // TODO: Should we really set lastLogin on the first login?
 		}
 
 		$query = "update `users_users` set `lastLogin`=?, `currentLogin`=?, `unsuccessful_logins`=? where `login`=?";
-		$result = $this->query(
-						$query,
-						array(
-							(int)$current,
+		$this->query($query, array(
+							(int)$previous,
 							(int)$this->now,
 							0,
 							$user
