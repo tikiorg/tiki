@@ -2318,4 +2318,12 @@ div.aclabel, span.aclabel, label.aclabel {
 	margin-left: 0px;
 	font-style: normal;
 }
+
+/* Tweaks to improve spacing of text in jquery.s5 slides */
+.s5-slide * {
+	line-height: 1.3em;
+}
+.s5-slide h1, .s5-slide h2, .s5-slide h3, .s5-slide h4 {
+	line-height: 1em;
+}
 /* End of File */
