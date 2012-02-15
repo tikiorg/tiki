@@ -1416,8 +1416,7 @@ class UsersLib extends TikiLib
 	function sync_and_update_lastlogin($user, $pass)
 	{
 		global $prefs, $tikilib;
-		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
-		$ret = $this->update_lastlogin($user, $current);
+		$ret = $this->update_lastlogin($user);
 
 		if (is_null($current)) {
 			// First time
