@@ -389,7 +389,6 @@ if ($isvalid) {
 		}
 		$userlib->set_unsuccessful_logins($requestedUser, $nb_bad_logins + 1);
 	}
-	unset($isvalid);
 	switch ($error) {
 		case PASSWORD_INCORRECT:
 		case USER_NOT_FOUND:
