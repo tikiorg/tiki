@@ -220,7 +220,7 @@ class reportsLib extends TikiLib
 					}
 					
 					if ($key==0)
-						$body .= "</b>";
+						$body .= "</b><br>";
 						
 					$body .= "<br>";
 					if($report_preferences['type']=='plain')
@@ -240,7 +240,7 @@ class reportsLib extends TikiLib
 	}
 	
 	function add_user_to_daily_reports($user) {
-		$this->add_user_report($user, 'daily', 'detailed', 'html', 1);
+		$this->add_user_report($user, 'daily', 'detailed', 'html', 0);
 	}
 	
 	function add_user_report($user, $interval, $view, $type, $always_email) {
