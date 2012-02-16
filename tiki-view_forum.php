@@ -156,6 +156,14 @@ if ($tiki_p_admin_forum == 'y') {
 			$commentslib->unarchive_thread($_REQUEST['comments_parentId']);
 		}
 	}
+	
+	if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['forumtopic']) && is_array($_REQUEST['forumtopic'])) {
+		foreach ($_REQUEST['forumtopic'] as $topicId) {
+			if (is_numeric($topicId)) {
+				$commentslib->remove_comment($topicId);
+			}
+		}
+	}
 
 }
 
