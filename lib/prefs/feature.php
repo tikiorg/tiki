@@ -468,8 +468,8 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('basic'),
 		),
 		'feature_comments_post_as_anonymous' => array(
-			'name' => tra('Allow posting of comments as Anonymous'),
-			'description' => tra('Permit anonymous visitors to add a comment without needing to create an account'),
+			'name' => tra('Allow logged in users to pretend to be anonymous when posting a commment'),
+			'description' => tra('This can be used to encourage honest feedback with the opportunity to voice an opinion anonymously. Like in a forum where you ask feedback on what is done wrong or should be improved internally.'),
 			'help' => 'Comments',
 			'type' => 'flag',
 			'default' => 'n',
