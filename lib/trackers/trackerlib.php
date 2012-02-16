@@ -2081,6 +2081,10 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		// remove votes/ratings
+		$userVotings = $this->table('tiki_user_votings');
+		$userVotings->delete(array('id' => $userVotings->like("tracker.$trackerId.$itemId.%")));
+
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 		foreach ($fieldList['data'] as $f) {
@@ -2469,6 +2473,10 @@ class TrackerLib extends TikiLib
 		$this->fields()->deleteMultiple($conditions);
 		$this->options()->deleteMultiple($conditions);
 		$this->trackers()->delete($conditions);
+
+		// remove votes/ratings
+		$userVotings = $this->table('tiki_user_votings');
+		$userVotings->delete(array('id' => $userVotings->like("tracker.$trackerId.%")));
 
 		$this->remove_object('tracker', $trackerId);
 
