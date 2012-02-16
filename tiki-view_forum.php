@@ -158,11 +158,13 @@ if ($tiki_p_admin_forum == 'y') {
 	}
 	
 	if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['forumtopic']) && is_array($_REQUEST['forumtopic'])) {
+		$access->check_authenticity();
 		foreach ($_REQUEST['forumtopic'] as $topicId) {
 			if (is_numeric($topicId)) {
 				$commentslib->remove_comment($topicId);
 			}
 		}
+		$commentslib->forum_prune($_REQUEST['forumId']);
 	}
 
 }
