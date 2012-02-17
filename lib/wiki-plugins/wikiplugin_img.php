@@ -1038,6 +1038,10 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	//alt
 	if ( !empty($imgdata['alt']) ) {
 		$replimg .= ' alt="' . $imgdata['alt'] . '"';
+	} elseif ( !empty($imgdata['desc']) ) {		
+		$replimg .= ' alt="' . $imgdata['desc'] . '"';	
+	} elseif (!empty($dbinfo['description'])) {		
+		$replimg .= ' alt="' . $dbinfo['description'] . '"';		
 	} else {
 		$replimg .= ' alt="Image"';
 	}
