@@ -1034,9 +1034,14 @@ function wikiplugin_img_info() {
 		}
 		$replimg .= ' style="' . $imalign . $border . $style . '"';
 	}
+	
 	//alt
 	if ( !empty($imgdata['alt']) ) {
 		$replimg .= ' alt="' . $imgdata['alt'] . '"';
+	} elseif ( !empty($imgdata['desc']) ) {		
+		$replimg .= ' alt="' . $imgdata['desc'] . '"';	
+	} elseif (!empty($dbinfo['description'])) {		
+		$replimg .= ' alt="' . $dbinfo['description'] . '"';		
 	} else {
 		$replimg .= ' alt="Image"';
 	}
