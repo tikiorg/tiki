@@ -68,6 +68,11 @@
 			{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 		{/if}
 	{/strip}{/capture}
+	{if $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
+		{section loop=$structure_path name=ix}
+		{assign var="aliasname" value={$structure_path[ix].page_alias}}
+		{/section} 	
+	{/if}	
 	{if !empty($page_description_title)}
 		{$page_description_title}
 	{else}
@@ -75,6 +80,8 @@
 			{$tracker_item_main_value|truncate:255|escape}
 		{elseif !empty($title) and !is_array($title)}
 			{$title|escape}
+		{elseif !empty($aliasname)}
+			{$aliasname|escape}			
 		{elseif !empty($page)}
 			{$page|escape}
 		{elseif !empty($description)}{$description|escape}
