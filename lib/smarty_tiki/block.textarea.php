@@ -85,12 +85,14 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	$tmp_var = $smarty->getTemplateVars('page');
 	$editWarning = $prefs['wiki_timeout_warning'] === 'y' && isset($tmp_var) && $tmp_var !== 'sandbox';
 	if ($params['_simple'] === 'n' && $editWarning) {
+		$remrepeat = false;
 		$html .= smarty_block_remarksbox(
 						array( 'type'=>'tip', 'title'=>tra('Tip')),
 						tra('This edit session will expire in') .
 						' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
 						tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer'),
-						$smarty
+						$smarty,
+						$remrepeat
 		)."\n";
 		if ($prefs['javascript_enabled'] === 'y') {
 			$html = str_replace('<div class="clearfix rbox tip">', '<div class="clearfix rbox tip" style="display:none;">', $html);	// quickfix to stop this box appearing before doc.ready
@@ -115,7 +117,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 				$msg = '<div class="mandatory_star"><span class="autosave_message">'.tra('There is an autosaved draft of your recent edits, to use it instead of what is current displayed').'</span>&nbsp;' .
 							'<span class="autosave_message_2" style="display:none;">'.tra('If you want the original version instead of the autosaved draft of your edits').'</span>' .
 							smarty_block_self_link(array( '_ajax'=>'n', '_onclick' => 'toggle_autosaved(\''.$as_id.'\',\''.$auto_save_referrer.'\');return false;'), tra('click here'), $smarty)."</div>";
-				$auto_save_warning = smarty_block_remarksbox(array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
+				$remrepeat = false;
+				$auto_save_warning = smarty_block_remarksbox(array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty, $remrepeat)."\n";
 			}
 		}
 		$headerlib->add_jq_onready("register_id('$as_id','" . addcslashes($auto_save_referrer, "'") . "');");
@@ -145,7 +148,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 				$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
 			}
 			
-			$html .= smarty_block_remarksbox(array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty)."\n";
+			$remrepeat = false;
+			$html .= smarty_block_remarksbox(array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty, $remrepeat)."\n";
 		}
 
 		// set up ckeditor
