@@ -12,7 +12,7 @@
 function smarty_function_toolbars($params, $smarty)
 {
 	global $prefs, $is_html;
-	$default = array('comments' => '');
+	$default = array('comments' => '', 'is_html' => $is_html);
 	$params = array_merge($default, $params);
 	
 	if ($prefs['javascript_enabled'] != 'y') {
@@ -50,7 +50,7 @@ function smarty_function_toolbars($params, $smarty)
 	include_once( 'lib/toolbars/toolbarslib.php' );
 	$list = ToolbarsList::fromPreference($params['section'] . ($comments ? '_comments' : ''), $hidden);
 	if ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y') {
-		return $list->getWysiwygArray($params['area_id'], $is_html);
+		return $list->getWysiwygArray($params['area_id'], $params['is_html']);
 	} else {
 		return $list->getWikiHtml($params['area_id'], $params['comments']);
 	}
