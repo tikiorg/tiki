@@ -20,5 +20,8 @@
 	{if $p.hint}
 		<br/><em>{$p.hint|simplewiki}</em>
 	{/if}
+	{if $p.separator}
+		{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>
+	{/if}
 	{include file="prefs/shared-dependencies.tpl"}
 </div>
