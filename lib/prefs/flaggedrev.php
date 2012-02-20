@@ -14,6 +14,7 @@ function prefs_flaggedrev_list()
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'help' => 'Flagged Revisions',
 		),
 		'flaggedrev_approval_categories' => array(
 			'name' => tra('Revision Approval Categories'),
