@@ -192,6 +192,11 @@ class TikiInit
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	global $prefs, $phpErrors;
 
+	// We are in a custom error handler
+	// So we need to chekc if the error is prepended by @
+	// See http://php.net/set_error_handler
+	if ( 0 === error_reporting() ) return;
+
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
 	$err[E_USER_ERROR]      = 'E_USER_ERROR';
