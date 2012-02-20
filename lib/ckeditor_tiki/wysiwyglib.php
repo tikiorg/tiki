@@ -78,6 +78,8 @@ ajaxLoadingShow("'.$dom_id.'");
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 		$smarty->assign('toolbar_section', $params['section']);
 
+		$params['area_id'] = empty($params['area_id']) ? $dom_id : $params['area_id'];
+
 		$smarty->loadPlugin('smarty_function_toolbars');
 		$cktools = smarty_function_toolbars($params, $smarty);
 		$cktools = json_encode($cktools);
