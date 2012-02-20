@@ -200,7 +200,7 @@ $("#' . $as_id . '").ckeditor(function() {
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		$smarty->assignByRef('textareadata', htmlspecialchars($content));
+		$smarty->assignByRef('textareadata', $content);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="wysiwyg" value="n" />';
