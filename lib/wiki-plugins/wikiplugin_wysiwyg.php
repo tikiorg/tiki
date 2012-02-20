@@ -16,6 +16,7 @@ function wikiplugin_wysiwyg_info()
 		'tags' => array( 'experimental' ),	
 		'filter' => 'purifier',			/* N.B. uses htmlpurifier to enure only "clean" html gets in */
 		'body' => tra('Content'),
+		'extraparams' => true,
 		'params' => array(
 			'width' => array(
 				'required' => false,
@@ -56,7 +57,7 @@ function wikiplugin_wysiwyg($data, $params)
 	$exec_key = $class . '_' . ++ $execution;
 	$style = " style='min-width:{$params['width']};min-height:{$params['height']}'";
 
-	$params['section'] = 'wysiwyg_plugin';
+	$params['section'] = empty($params['section']) ? 'wysiwyg_plugin' : $params['section'];
 	$params['_wysiwyg'] = 'y';
 	$params['is_html'] = true;
 	//$params['comments'] = true;
