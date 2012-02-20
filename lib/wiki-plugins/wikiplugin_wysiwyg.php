@@ -109,8 +109,9 @@ $("#' . $exec_key . '").each(function(){
 							index: ' . $execution . ',
 							content: data
 						}, function() {
-							location.replace(location);
+							location.reload();
 						});
+						return false;
 					})
 			);
 		}, ' . $ckoption . '
