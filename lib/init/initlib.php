@@ -192,10 +192,11 @@ class TikiInit
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	global $prefs, $phpErrors;
 
-	// We are in a custom error handler
-	// So we need to chekc if the error is prepended by @
-	// See http://php.net/set_error_handler
-	if ( 0 === error_reporting() ) return;
+	if ( 0 === error_reporting() ) {
+		// This error was triggered when evaluating an expression prepended by the at sign (@) error control operator, but since we are in a custom error handler, we have to ignore it manually.
+		// See http://ca3.php.net/manual/en/language.operators.errorcontrol.php#98895 and http://php.net/set_error_handler
+		return;
+	}
 
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
