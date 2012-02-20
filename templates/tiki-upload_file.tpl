@@ -317,6 +317,9 @@
 	{if !empty($filegals_manager)}
 		<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
 	{/if}
+	{if !empty($insertion_syntax)}
+		<input type="hidden" name="insertion_syntax" value="{$insertion_syntax}"/>
+	{/if}
 	{if isset($token_id) and $token_id neq ''}
 		<input type="hidden" value="{$token_id}" name="TOKEN" />
 	{/if}

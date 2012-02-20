@@ -30,7 +30,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
-$auto_query_args = array('galleryId', 'fileId', 'filegals_manager', 'view', 'simpleMode');
+$auto_query_args = array('galleryId', 'fileId', 'filegals_manager', 'view', 'simpleMode', 'insertion_syntax');
 
 if ( $prefs['auth_token_access'] == 'y' && !empty($token) ) {
 	$smarty->assign('token_id', $token);
@@ -152,7 +152,8 @@ if ( $isUpload ) {
 		'deleteAfter',
 		'deleteAfter_unit',
 		'hit_limit',
-		'listtoalert'
+		'listtoalert',
+		'insertion_syntax'
 	);
 
 	$uploadParams = array(
@@ -213,6 +214,7 @@ if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload ) {
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
 	if ( ! empty( $_REQUEST['filegals_manager'] ) ) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+		$smarty->assign('insertion_syntax', $_REQUEST['insertion_syntax']);
 		$smarty->display("tiki_full.tpl");
 	} else {
 		$smarty->display("tiki.tpl");

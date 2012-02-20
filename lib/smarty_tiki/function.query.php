@@ -36,6 +36,10 @@ function smarty_function_query($params, $smarty)
 		if ( ! isset($params['filegals_manager']) && isset($_REQUEST['filegals_manager']) ) {
 			$query['filegals_manager'] = $_REQUEST['filegals_manager'];
 		}
+		// Even if _noauto is set, 'insertion_syntax' is a special param that has to be kept all the time
+		if ( ! isset($params['insertion_syntax']) && isset($_REQUEST['insertion_syntax']) ) {
+			$query['insertion_syntax'] = $_REQUEST['insertion_syntax'];
+		}
 	} else {
 		// Not using _REQUEST here, because it is sometimes directly modified in scripts
 		if ( $request === NULL ) {

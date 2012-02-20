@@ -2073,6 +2073,9 @@ class FileGalLib extends TikiLib
 	// get the wiki_syntax - use parent's if none
 	function getWikiSyntax($galleryId=0)
 	{
+		if (isset($_REQUEST['insertion_syntax']) && $_REQUEST['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
+			return '{file type="gallery" fileId="%fileId%"}';
+		}
 		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
 			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
 				return '%fileId%';		// for use in plugin edit popup
@@ -2083,7 +2086,7 @@ class FileGalLib extends TikiLib
 				return str_replace('123', '%fileId%', $href);
 			}
 		}
-		
+
 		$syntax = $this->table('tiki_file_galleries')->fetchOne('wiki_syntax', array('galleryId' => $galleryId));
 
 		if (!empty($syntax)) {

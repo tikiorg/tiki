@@ -50,6 +50,8 @@ abstract class Toolbar
 			return new ToolbarFullscreen;
 		elseif ( $tagName == 'tikiimage' )
 			return new ToolbarFileGallery;
+		elseif ( $tagName == 'tikifile' )
+			return new ToolbarFileGalleryFile;
 		elseif ( $tagName == 'help' )
 			return new ToolbarHelptool;
 		elseif ( $tagName == 'switcheditor' )
@@ -133,6 +135,7 @@ abstract class Toolbar
 											'fullscreen',
 											'help',
 											'tikiimage',
+											'tikifile',
 											'switcheditor',
 											'autosave',
 											'nonparsed',
@@ -1387,6 +1390,27 @@ class ToolbarFileGallery extends Toolbar
 	{
 		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
 	} // }}}
+}
+
+class ToolbarFileGalleryFile extends ToolbarFileGallery
+{
+
+	function __construct() // {{{
+	{
+		$this->setLabel(tra('Choose or upload files'))
+			->setIcon(tra('pics/icons/file-manager-add.png'))
+			->setWysiwygToken('tikifile')
+			->setType('FileGallery')
+			->addRequiredPreference('feature_filegals_manager');
+	} // }}}
+
+	function getSyntax( $areaId )
+	{
+		global $smarty;
+		$smarty->loadPlugin('smarty_function_filegal_manager_url');
+		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'&insertion_syntax=file\');';
+	}
+
 }
 
 class ToolbarSwitchEditor extends Toolbar

@@ -238,7 +238,7 @@ function get_default_prefs() {
 		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
 		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
-			bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,wikiplugin_file,tikilink,link, unlink, anchor,-,
+			bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,wikiplugin_file,tikifile,tikilink,link, unlink, anchor,-,
 			undo, redo,-,find,replace,-, removeformat,specialchar,smiley|help,switcheditor,autosave/
 			templates, cut, copy, paste, pastetext, pasteword,-,h1,h2,h3, left,center,-,
 			blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html, outdent, indent,-,

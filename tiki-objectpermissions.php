@@ -27,6 +27,7 @@ $auto_query_args = array(
 	'permType',
 	'objectId',
 	'filegals_manager',
+	'insertion_syntax',
 	//'show_disabled_features',	// this seems to cause issues - the $_GET version overrides the $_POST one...
 );
 $perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);

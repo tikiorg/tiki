@@ -267,6 +267,7 @@ $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 $vartype['filegals_manager'] = 'vars';
+$vartype['filesyntax'] = 'string';
 $vartype['ver'] = 'dotvars'; // filename hash for drawlib + rss type for rsslib
 $vartype['trackerId'] = 'int';
 $vartype['articleId'] = 'int';

@@ -34,6 +34,7 @@ $auto_query_args = array( 'galleryId'
 												, 'edit_mode'
 												, 'page'
 												, 'filegals_manager'
+												, 'insertion_syntax'
 												, 'maxRecords'
 												, 'show_fgalexplorer'
 												, 'dup_mode'
@@ -530,6 +531,7 @@ if (isset($_REQUEST['edit'])) {
 			header(
 							'Location: tiki-list_file_gallery.php?galleryId='. $fgid
 							. (!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:'')
+							. (!empty($_REQUEST['insertion_syntax'])?'&insertion_syntax='.$_REQUEST['insertion_syntax']:'')
 			);
 			die;
 		}
@@ -983,6 +985,7 @@ $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_opt
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
+	$smarty->assign('insertion_syntax', $_REQUEST['insertion_syntax']);
 	$smarty->display('tiki_full.tpl');
 } else {
 	$smarty->display('tiki.tpl');
