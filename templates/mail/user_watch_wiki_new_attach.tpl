@@ -1,5 +1,5 @@
 {tr}A new file have been attached to page{/tr} {$mail_page} {tr}by{/tr} {$mail_user|username}.
-{tr}Date:{/tr} {$mail_date|tiki_short_datetime}
+{tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 
 {tr}File name:{/tr} {$mail_att_name}
 {tr}Type:{/tr} {$mail_att_type}

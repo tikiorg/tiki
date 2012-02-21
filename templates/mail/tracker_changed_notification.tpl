@@ -7,7 +7,7 @@
 {/if}
 
 {tr}Author:{/tr} {$mail_user|username}
-{tr}Date:{/tr} {$mail_date|tiki_short_datetime}
+{tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 
 {$mail_data|replace:'-[':''|replace:']-':''}{* TODO: translate these -[...]- marked strings in $mail_data by watcher language *}
 {* {$mail_data|replace:"\n\n":"\n"|replace:":\n":": "} to reduce the number of line *}

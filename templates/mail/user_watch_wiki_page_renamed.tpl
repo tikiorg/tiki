@@ -1,6 +1,6 @@
 {tr}Wiki page renamed{/tr} {tr}by{/tr} {$mail_user|username}.
 
-{tr}Date:{/tr} {$mail_date|tiki_short_datetime}
+{tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 
 {tr}Old name:{/tr} {$mail_oldname}
 {tr}New name:{/tr} {$mail_newname}

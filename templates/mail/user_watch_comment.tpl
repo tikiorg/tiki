@@ -17,7 +17,7 @@
 
 {tr}Title:{/tr} {$mail_title}
 {tr}Comment:{/tr} {$mail_comment}
-{tr}Date:{/tr} {$mail_date|tiki_short_datetime}
+{tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 
 {if $watchId}
 {tr}If you don't want to receive these notifications follow this link:{/tr}

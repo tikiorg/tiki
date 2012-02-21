@@ -1,5 +1,5 @@
 {* $Id$ *}
-{tr}{$mail_action} article post:{/tr} {tr}{$mail_title} by {$mail_user|username} at{/tr} {$mail_date|tiki_short_datetime}
+{tr}{$mail_action} article post:{/tr} {tr}{$mail_title} by {$mail_user|username} at{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 
 {if $mail_action neq 'Delete'}{tr}View the article at:{/tr}
 {$mail_machine_raw}/{$mail_postid|sefurl:article}
@@ -10,8 +10,8 @@
 
 {tr}Title:{/tr} {$mail_title}
 
-{tr}Publish Date:{/tr} {$mail_current_publish_date|tiki_short_datetime}
-{tr}Expiration Date:{/tr} {$mail_current_expiration_date|tiki_short_datetime}
+{tr}Publish Date:{/tr} {$mail_current_publish_date|tiki_short_datetime:"":"n"}
+{tr}Expiration Date:{/tr} {$mail_current_expiration_date|tiki_short_datetime:"":"n"}
 ***********************************************************
 {tr}Content{/tr}
 ***********************************************************
@@ -23,8 +23,8 @@
 ***********************************************************
 {tr}Title:{/tr} {$mail_old_title}
 
-{tr}Publish Date:{/tr} {$mail_old_publish_date|tiki_short_datetime}
-{tr}Expiration Date:{/tr} {$mail_old_expiration_date|tiki_short_datetime}
+{tr}Publish Date:{/tr} {$mail_old_publish_date|tiki_short_datetime:"":"n"}
+{tr}Expiration Date:{/tr} {$mail_old_expiration_date|tiki_short_datetime:"":"n"}
 ***********************************************************
 {tr}Content{/tr}
 ***********************************************************
