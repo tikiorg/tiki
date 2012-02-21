@@ -762,8 +762,8 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 			
 			if (is_int($periodUnit)) {
-				$filter['createdAfter'] = $tikilib->now - ($periodQuantity * $periodUnit);
-				$filter['createdBefore'] = $tikilib->now;
+				$filter['lastModifAfter'] = $tikilib->now - ($periodQuantity * $periodUnit);
+				$filter['lastModifBefore'] = $tikilib->now;
 			}
 		}
 
