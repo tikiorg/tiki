@@ -158,16 +158,14 @@ function smarty_function_button($params, $smarty)
 		$html = smarty_block_self_link(
 						$params,
 						$params['_text'],
-						$smarty,
-						$tmp = false
+						$smarty
 		);
 	} else {
 		$params['_disabled'] = 'y';
 		$html = smarty_block_self_link(
 						$params,
 						$params['_text'],
-						$smarty,
-						$tmp = false
+						$smarty
 		);
 	}
 
