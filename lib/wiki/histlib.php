@@ -339,18 +339,23 @@ class HistLib extends TikiLib
 		$query = "select distinct ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`, thf.`comment`, thf.`version`, thf.`page_id` from `tiki_actionlog` ta 
 			inner join (select th.`version`, th.`comment`, th.`pageName`, th.`lastModif`, tp.`page_id` from `tiki_history` as th LEFT OUTER JOIN `tiki_pages` tp ON tp.`pageName` = th.`pageName` AND tp.`version` = th.`version`) as thf on ta.`object`=thf.`pageName` and ta.`lastModif`=thf.`lastModif` and ta.`objectType`='wiki page' " . $categjoin . $where . " order by ta.".$this->convertSortMode($sort_mode);
 
-		$result = $this->fetchAll($query, $bindvars, $limit, $offset);
-		$result = Perms::filter(array( 'type' => 'wiki page' ), 'object', $result, array( 'object' => 'object' ), 'view');
+		// TODO: Optimize. This fetches all records just to be able to give a count.
+		$result = Perms::filter(array( 'type' => 'wiki page' ), 'object', $this->fetchAll($query, $bindvars), array( 'object' => 'object' ), 'view');
+		$cant = count($result);
 		$ret = array();
-		$retval = array();
-		foreach ( $result as $res ) {
+		
+		if ($limit == -1) {
+			$result = array_slice($result, $offset);
+		} else {
+			$result = array_slice($result, $offset, $limit);
+		}
+		foreach ($result as $res ) {
 			$res['current'] = isset($res['page_id']);
 			$res['pageName'] = $res['object'];
 			$ret[] = $res;
 		}
-		$retval["data"] = $ret;
-		$retval["cant"] = count($ret);
-		return $retval;
+
+		return array('data' => $ret, 'cant' => $cant);
 	}
 	function get_nb_history($page)
 	{
