@@ -241,7 +241,7 @@ function get_default_prefs() {
 			bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,wikiplugin_file,tikifile,tikilink,link, unlink, anchor,-,
 			undo, redo,-,find,replace,-, removeformat,specialchar,smiley|help,switcheditor,autosave/
 			templates, cut, copy, paste, pastetext, pasteword,-,h1,h2,h3, left,center,-,
-			blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html, outdent, indent,-,
+			blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html,wikiplugin_wysiwyg, outdent, indent,-,
 			pagebreak,rule,-,table,-,wikiplugin_code, source, showblocks,nonparsed|fullscreen/
 			format,style,-,fontname,fontsize/
 		',
