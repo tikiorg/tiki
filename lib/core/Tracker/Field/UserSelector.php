@@ -42,6 +42,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						'options' => array(
 							0 => tr('No'),
 							1 => tr('Yes'),
+							2 => tr('Only when other users modify the item'),
 						),
 					),
 					'groupIds' => array(

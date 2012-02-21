@@ -3058,7 +3058,11 @@ class TrackerLib extends TikiLib
 		$res = $this->get_item_values_by_type($itemId, 'u');
 		if (is_array($res)) {
 			foreach ($res as $f) {
-				if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
+				if (isset($f['options_array'][1]) && $f['options_array'][1] != 0) {
+					if ($f['options_array'][1] == 2 && array_key_exists($f['value'],$user_preferences)) {
+						// Don't send email to oneself
+						continue;
+					}
 					$tikilib->get_user_preferences($f['value'], array('email', 'user', 'language', 'mailCharset'));
 					$emails[] = array('email'=>$userlib->get_user_email($f['value']), 'user'=>$f['value'], 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);
 				}
