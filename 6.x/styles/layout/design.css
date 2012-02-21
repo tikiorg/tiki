@@ -660,6 +660,20 @@ p.editdate {
 	margin-left: -3px;
 }
 
+/* wikiplugin quote */
+.quoteheader {
+	background : url('../../images/quoteleft.gif') no-repeat;
+	padding-left:50px;
+	height:35px;
+}
+
+.quotebody {
+	margin-left:35px;
+	padding-left:10px;
+        font-style: italic;
+        border-left: 2px solid #D3D3D3;
+}
+
 /* wikiplugin remarksbox */
 .wikitext .rbox-data ul {
 	list-style-type: disc;
