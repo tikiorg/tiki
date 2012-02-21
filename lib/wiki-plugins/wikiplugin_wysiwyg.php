@@ -14,7 +14,7 @@ function wikiplugin_wysiwyg_info()
 		'prefs' => array('wikiplugin_wysiwyg'),
 		'params' => array(),
 		'icon' => 'pics/icons/mime/default.png',
-		'tags' => array( 'experimental' ),	
+		'tags' => array( 'experimental' ),
 		'filter' => 'purifier',			/* N.B. uses htmlpurifier to enure only "clean" html gets in */
 		'body' => tra('Content'),
 		'extraparams' => true,
@@ -87,7 +87,13 @@ $("#' . $exec_key . '").each(function(){
 		// TODO set modal somehow?
 		//$("body *:not(#" + $(this).attr("id") + ")").css({backgroundColor: "#ddd"});
 
-		$this.ckeditor(function(){
+		$this.ckeditor(function() {
+			// close others
+			$(".' . $class . ':not(#' . $exec_key . ')").each(function () {
+				if (CKEDITOR.instances[$(this).attr("id")]) {
+					CKEDITOR.instances[$(this).attr("id")].destroy();
+				}
+			});
 			var editor = CKEDITOR.instances[$this.attr("id")];
 
 			var editorSelector = "#cke_" + this.element.getId();
