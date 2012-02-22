@@ -69,6 +69,7 @@
 		{/if}
 
 		<form action="tiki-admin_menus.php?cookietab=1" method="post">
+			{ticket}
 			<input type="hidden" name="menuId" value="{$menuId|escape}" />
 			<table class="formcolor">
 				<tr>
