@@ -18,7 +18,7 @@ function prefs_flaggedrev_list()
 		),
 		'flaggedrev_approval_categories' => array(
 			'name' => tra('Revision Approval Categories'),
-			'description' => tra('List of categories on which revision approval is required.'),
+			'description' => tra('List of category IDs on which revision approval is required.'),
 			'type' => 'text',
 			'filter' => 'int',
 			'separator' => ';',
