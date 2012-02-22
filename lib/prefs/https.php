@@ -20,8 +20,9 @@ function prefs_https_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
-			'default' => '443',
+			'default' => '',
 			'keywords' => 'SSL secure', 
+			'shorthint' => tra('If left empty, port 443 will be used'),
 		),
 		'https_login' => array(
 			'name' => tra('Use HTTPS login'),

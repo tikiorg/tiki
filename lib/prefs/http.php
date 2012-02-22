@@ -13,7 +13,8 @@ function prefs_http_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
-			'default' => '80',
+			'default' => '',
+			'shorthint' => tra('If left empty, port 80 will be used'),
 		),
 		'http_skip_frameset' => array(
 			'name' => tra('HTTP Lookup Skip Framesets'),
