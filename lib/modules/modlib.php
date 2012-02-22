@@ -646,6 +646,20 @@ class ModLib extends TikiLib
 								'filter' => 'alpha',
 								'section' => 'appearance',
 							),
+							'category' => array(
+								'name' => tra('Category'),
+								'description' => tra('Module displayed depending on category. Multiple category ids or names can be separated by semi-colons.'),
+								'section' => 'visibility',
+								'separator' => ';',
+								'filter' => 'alnum',
+							),
+							'nocategory' => array(
+								'name' => tra('No Category'),
+								'description' => tra('Module hidden depending on category. Multiple category ids or names can be separated by semi-colons. This takes precedence over the category parameter above.'),
+								'section' => 'visibility',
+								'separator' => ';',
+								'filter' => 'alnum',
+							),
 							'perspective' => array(
 								'name' => tra('Perspective'),
 								'description' => tra('Only display the module if in one of the listed perspective IDs. Semi-colon separated.'),
@@ -699,20 +713,6 @@ class ModLib extends TikiLib
 								'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
 								'filter' => 'alpha',
 								'section' => 'visibility',
-							),
-							'category' => array(
-								'name' => tra('Category'),
-								'description' => tra('Module displayed depending on category. Multiple category ids or names can be separated by semi-colons.'),
-								'section' => 'visibility',
-								'separator' => ';',
-								'filter' => 'alnum',
-							),
-							'nocategory' => array(
-								'name' => tra('No Category'),
-								'description' => tra('Module hidden depending on category. Multiple category ids or names can be separated by semi-colons. This takes precedence over the category parameter above.'),
-								'section' => 'visibility',
-								'separator' => ';',
-								'filter' => 'alnum',
 							),
 							'flip' => array(
 								'name' => tra('Flip'),
