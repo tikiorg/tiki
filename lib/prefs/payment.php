@@ -77,7 +77,7 @@ function prefs_payment_list()
 		),
 		'payment_cclite_registries' => array(
 			'name' => tra('Cclite Registries'),
-			'description' => tra('Registries in Cclite. Use comma to separate. e.g. "dogtown, chelsea, dalston, etc"'),
+			'description' => tra('Registries in Cclite.'),
 			'hint' => tra('Registry names in Cclite'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature' ),
@@ -87,7 +87,7 @@ function prefs_payment_list()
 		),
 		'payment_cclite_currencies' => array(
 			'name' => tra('Cclite Registry Currencies'),
-			'description' => tra('Currencies in Cclite. Use comma to separate. e.g. "woof, ducket, ducket, etc"'),
+			'description' => tra('Currencies in Cclite.'),
 			'hint' => tra('Each registry in Cclite can have it\'s own currency. Must be one per registry. (case sensitive)'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature' ),
@@ -164,7 +164,7 @@ function prefs_payment_list()
 		),
 		'payment_tikicredits_types' => array(
 			'name' => tra('Types of credit to use'),
-			'description' => tra('This is a list of the types of Tiki user credits to accept to pay with, separated by ,'),
+			'description' => tra('This is a list of the types of Tiki user credits to accept to pay with.'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
@@ -172,7 +172,7 @@ function prefs_payment_list()
 		),
 		'payment_tikicredits_xcrates' => array(
 			'name' => tra('Exchange rate for types of credit to use'),
-			'description' => tra('This is a corresponding list of amount of credits equivalent to 1 of the payment currency, separated by ,'),
+			'description' => tra('This is a corresponding list of amount of credits equivalent to 1 of the payment currency.'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
@@ -277,7 +277,7 @@ function prefs_payment_list()
 		'payment_cart_product_classid_fieldname' => array(
 			'name' => tra('Product Class ID Field Name'),
 			'description' => tra('Field Name in Products tracker of the Product Class ID, needed for the Gift Certificates cart feature.'),
-			'type' => 'text',		
+			'type' => 'text',
 			'default' => '',
 		),
 		'payment_cart_giftcerttemplate_fieldname' => array(

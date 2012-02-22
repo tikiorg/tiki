@@ -44,7 +44,8 @@ $fields = array(
 	'warning' => '',
 	'hint' => '',
 	'shorthint' => '',
-	'perspective' => '',	
+	'perspective' => '',
+	'separator' => '',
 );
 
 $stopWords = array('', 'in', 'and', 'a', 'to', 'be', 'of', 'on', 'the', 'for', 'as', 'it', 'or', 'with', 'by', 'is', 'an');
@@ -103,6 +104,7 @@ function collect_raw_data($fields)
 			$entry['hint'] = isset($raw['hint']) ? $raw['hint'] : '';
 			$entry['shorthint'] = isset($raw['shorthint']) ? $raw['shorthint'] : '';
 			$entry['perspective'] = isset($raw['perspective']) ? $raw['perspective'] ? 'true' : 'false' : '';
+                        $entry['separator'] = isset($raw['separator']) ? $raw['separator'] : '';
 			$data[] = $entry;
 		}
 	}

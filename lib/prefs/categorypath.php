@@ -8,13 +8,13 @@
 function prefs_categorypath_list()
 {
 	return array(
-
 		'categorypath_excluded' => array(
-			'name' => tra('Exclude these categories'),
-			'hint' => tra('Separate category IDs with a comma (,)'),
+			'name' => tra('Exclude these category IDs'),
+			'description' => tra('Category path won\'t appear for these category IDs.'),
+			'separator' => ',',
 			'type' => 'text',
 			'size' => '15',
-			'default' => '',
+			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 	);
 }

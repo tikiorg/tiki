@@ -10,7 +10,7 @@ function prefs_category_list()
 	return array(
 		'category_jail' => array(
 			'name' => tra('Category Jail'),
-			'description' => tra('Limits the visibility of objects to those in these categories. Used mainly for creating workspaces from perspectives.'),
+			'description' => tra('Limits the visibility of objects to those in these category IDs. Used mainly for creating workspaces from perspectives.'),
 			'separator' => ',',
 			'type' => 'text',
 			'filter' => 'int',
@@ -41,7 +41,7 @@ function prefs_category_list()
 		),
 		'category_i18n_synced' => array(
 			'name' => tra('Synchronized categories'),
-			'description' => tra('List of categories affected by the multilingual synchronization. Depending on the parent feature, this list will be used as a white list (only categories allows) or as a black list (all except thoses specified)'),
+			'description' => tra('List of categories affected by the multilingual synchronization. Depending on the parent feature, this list will be used as a white list (only categories allows) or as a black list (all except thoses specified).'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'separator' => ',',

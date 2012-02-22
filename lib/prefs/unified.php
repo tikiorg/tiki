@@ -102,7 +102,7 @@ function prefs_unified_list()
 		),
 		'unified_cached_formatters' => array(
 			'name' => tra('Search formatters to cache'),
-			'description' => tra('Comma separated list of search formatters to cache the output of'),
+			'description' => tra('Search formatters to cache the output of'),
 			'type' => 'text',
 			'separator' => ',',
 			'default' => array('trackerrender','categorylist'),
