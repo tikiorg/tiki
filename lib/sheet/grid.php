@@ -327,10 +327,10 @@ class TikiSheet
 		$fileInfo = $filegallib->get_file_info( $fileId );
 		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
-		ob_start();
+		
 		$this->export($handler);
-		$data = ob_get_contents();
-		ob_end_clean();
+		
+		$data = $handler->output;
 		
 		if ($incsubs == true) {
 			//get sheets from db first
@@ -381,9 +381,9 @@ class TikiSheet
 		$this->finalizeGrid( $this->dataGrid, $maxRow, $maxCol );
 		$this->finalizeGrid( $this->calcGrid, $maxRow, $maxCol );
 		$this->finalizeGrid( $this->cellInfo, $maxRow, $maxCol, true );
-		
-		$this->rowCount = ($maxRow >= INITIAL_ROW_COUNT ? $maxRow : INITIAL_COL_COUNT);
-		$this->columnCount = ($maxCol >= INITIAL_COL_COUNT ? $maxCol : INITIAL_COL_COUNT);
+		 
+		$this->rowCount = ($maxRow >= INITIAL_ROW_COUNT || $maxRow > 0 ? $maxRow : INITIAL_ROW_COUNT);
+		$this->columnCount = ($maxCol >= INITIAL_COL_COUNT || $maxCol > 0 ? $maxCol : INITIAL_COL_COUNT);
 
 		$base = array( 'width' => 1, 'height' => 1, 'format' => null, 'style' => '', 'class' => '' );
 		for( $y = 0; $this->rowCount > $y; $y++ ) {
@@ -471,7 +471,7 @@ class TikiSheet
 	 */
 	function getColumnCount()
 	{
-		return $this->columnCount;
+		return $this->columnCount == 0 ? INITIAL_COL_COUNT : $this->columnCount;
 	}
 
 	/** getRange {{{2
@@ -751,7 +751,8 @@ class TikiSheetDataHandler
 	 */
 	var $maxrows = 300;
     var $maxcols = 26;
-    
+    var $output = "";
+	
 	function _load( &$sheet )
 	{
 		trigger_error( "Abstract method call. _load() not defined in " . get_class( $this ), E_USER_ERROR );
@@ -854,7 +855,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 			header("Pragma: public");
-			echo $data;
+			$this->output = $data;
 			return true;
 		}
 		else
@@ -968,7 +969,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 			header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 			header("Pragma: public");
 			
-			echo $total;
+			$this->output = $total;
 
 			return true;
 		}
@@ -1238,7 +1239,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
             header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
             header("Pragma: public");
             
-            echo $total;
+            $this->output = $total;
 
             return true;
         }
@@ -1835,7 +1836,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 						global $tikilib;
 						$data = $tikilib->parse_data($data, array('suppress_icons' => true));
 					}
-					echo $data;
+					$this->output = $data;
 					return;
 				}
 			}
@@ -1846,37 +1847,37 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		$type = (!empty($sheet->type) ? ' data-type="'.$sheet->type.'" ' : '');
 		
-		echo "<table{$class}{$id}{$sub}{$title}{$type}>\n";
+		$this->output = "<table{$class}{$id}{$sub}{$title}{$type}>\n";
 
 		if ( !is_null( $this->heading ) )
-			echo "	<caption>{$this->heading}</caption>\n";
+			$this->output .= "	<caption>{$this->heading}</caption>\n";
 		
 		if ( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
-			echo "	<thead>\n";
+			$this->output .= "	<thead>\n";
 			$this->drawRows( $sheet, 0, $sheet->headerRow );
-			echo "	</thead>\n";
+			$this->output .= "	</thead>\n";
 		}
 		
-		echo "	<colgroup>\n";
-		$this->drawCols( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
-								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() );
-		echo "	</colgroup>\n";
+		$this->output .= "	<colgroup>\n";
+		$this->drawCols( $sheet, $sheet->getRangeBeginCol() < 0 ? $sheet->headerRow : $sheet->getRangeBeginCol(),
+								 $sheet->getRangeEndCol() < 0 ? $sheet->getColCount() - $sheet->footerRow : $sheet->getRangeEndCol() );
+		$this->output .= "	</colgroup>\n";
 		
-		echo "	<tbody>\n";
+		$this->output .= "	<tbody>\n";
 		$this->drawRows( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
 								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() );
-		echo "	</tbody>\n";
+		$this->output .= "	</tbody>\n";
 		
 		if ( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
-			echo "	<tfoot>\n";
+			$this->output .= "	<tfoot>\n";
 			$this->drawRows( $sheet, $sheet->getRowCount() - $sheet->footerRow, $sheet->getRowCount() );
-			echo "	</tfoot>\n";
+			$this->output .= "	</tfoot>\n";
 		}
 
-		echo "</table>\n";
-
+		$this->output .= "</table>\n";
+		
 		return true;
 	}
 
@@ -1980,9 +1981,9 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			}
 			
 			if (!empty($td)) {
-				echo "		<tr style='height: $trHeight;' height='".str_replace("px", "", $trHeight)."'>\n";
-				echo $td;
-				echo "		</tr>\n";
+				$this->output .= "		<tr style='height: $trHeight;' height='".str_replace("px", "", $trHeight)."'>\n";
+				$this->output .= $td;
+				$this->output .= "		</tr>\n";
 			}
 		}
 	}
@@ -2001,7 +2002,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		{
 			$style = $sheet->cellInfo[$begin][$j]['style'];
 			$width = $sheetlib->get_attr_from_css_string($style, "width", "118px");
-			echo "<col style='width: $width;' width='$width' />\n";
+			$this->output .= "<col style='width: $width;' width='$width' />\n";
 		}
 	}
 	
@@ -2033,26 +2034,26 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		echo "<table class=\"default\">\n";
+		$this->output = "<table class=\"default\">\n";
 
-		echo "	<thead>\n";
-		echo "		<tr><th></th>\n";
+		$this->output .= "	<thead>\n";
+		$this->output .= "		<tr><th></th>\n";
 		
 		$prev = 'A';
 		for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
 		{
-			echo "			<th>$prev</th>\n";
+			$this->output .= "			<th>$prev</th>\n";
 			$prev = $sheet->increment( $prev );
 		}
 			
-		echo "		</tr>\n";
-		echo "	</thead>\n";
+		$this->output .= "		</tr>\n";
+		$this->output .= "	</thead>\n";
 		
-		echo "	<tbody>\n";
+		$this->output .= "	<tbody>\n";
 		$this->drawRows( $sheet, 0, $sheet->getRowCount() );
-		echo "	</tbody>\n";
+		$this->output .= "	</tbody>\n";
 		
-		echo "</table>\n";
+		$this->output .= "</table>\n";
 
 		return true;
 	}
@@ -2112,7 +2113,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 			$tr .= $td;
 			$tr .= "	</tr>\n";
 			
-			echo $tr;
+			$this->output .= $tr;
 		}
 	}
 	
