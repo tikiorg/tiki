@@ -59,7 +59,7 @@ define( 'TIKISHEET_LOAD_FORMAT',	0x00000008 );
 
 // Initial amount of rows and columns at TikiSheet initialisation
 define( 'INITIAL_ROW_COUNT',		15 );
-define( 'INITIAL_COL_COUNT',		2 );
+define( 'INITIAL_COL_COUNT',		5 );
 
 // Map array indexes.
 define( 'TS_THEAD',			0 );
