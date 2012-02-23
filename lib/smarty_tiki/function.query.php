@@ -190,5 +190,10 @@ function smarty_function_query($params, $smarty)
 	if ( isset($params['_anchor']) )
 		$ret .= '#' . $params['_anchor'];
 
+	if ($prefs['feature_sefurl'] == 'y') {
+		include_once('tiki-sefurl.php');
+		$ret = filter_out_sefurl($ret);
+	}
+
 	return $ret;
 }
