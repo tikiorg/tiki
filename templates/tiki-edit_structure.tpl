@@ -66,11 +66,13 @@
 {/if}
 
 <h2>{tr}Structure Layout{/tr}</h2>
+<div class="structure-container">{$nodelist}</div>
+{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
 
-<table>
+<table style="display: none;">
 {section name=ix loop=$subtree}
 	{if $subtree[ix].first or not $subtree[ix].last}
-		<tr {if $page_ref_id eq $subtree[ix].page_ref_id}class="even" {else}class="odd"{/if}>
+		<tr class="node {if $page_ref_id eq $subtree[ix].page_ref_id}even{else}odd{/if}">
 			{if $subtree[ix].pos eq ''}
 				<th><a class='link'
 					   href='{sefurl page=$subtree[ix].pageName structure=$structure_name page_ref_id=$subtree[ix].page_ref_id}'

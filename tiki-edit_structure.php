@@ -6,6 +6,7 @@
 // $Id$
 
 $section = 'wiki page';
+$auto_query_args = array('page_ref_id');
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
@@ -335,6 +336,14 @@ ask_ticket('edit-structure');
 
 include_once ('tiki-section_options.php');
 
+if ($prefs['feature_jquery_ui'] === 'y') {
+	$headerlib->add_jsfile('lib/structures/tiki-edit_structure.js');
+	$headerlib->add_jsfile('lib/jquery/jquery.ui.nestedSortable.js');
+	global $structlib; include_once('lib/structures/structlib.php');
+	$smarty->assign('nodelist', $structlib->get_toc($structure_info['structure_id'], 'asc', false, false, '', 'admin', $page_info['pageName'], 0, ''));
+				// $page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName=''
+	$smarty->assign('structure_id', $structure_info['structure_id']);
+}
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 

@@ -71,7 +71,8 @@ function wikiplugin_toc_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Plain'), 'value' => 'plain'), 
-					array('text' => tra('Fancy'), 'value' => 'fancy')
+					array('text' => tra('Fancy'), 'value' => 'fancy'),
+					array('text' => tra('Admin'), 'value' => 'admin'),
  				)
 			),
 			'pagename' => array(

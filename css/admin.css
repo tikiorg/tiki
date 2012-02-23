@@ -465,6 +465,27 @@ a.admbox.off img {
 	margin-left: 1em;
 }
 
-
 /* end profiles */
 
+/* structures tiki 9 */
+
+.admintoclevel {
+	margin: .2em;
+	padding: .4em 0 .4em .2em;
+}
+
+.admintoclevel .admintoclevel {
+	margin-right: 0;
+	border-right: 0 none;
+}
+
+.admintoclevel .actions {
+	float: right;
+	padding-right: .3em;
+}
+
+.admintoclevel .actions a {
+	padding-right: .2em;
+}
+
+/* end structures tiki 9 */

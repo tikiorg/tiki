@@ -799,7 +799,8 @@ h3.box-title,
 body.tiki_admin .simplebox,
 a.admbox,
 a.admbox.off,
-.forum_actions {
+.forum_actions,
+.admintoclevel {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -826,6 +827,12 @@ a.admbox.off,
 	-webkit-border-bottom-left-radius: 4px;
 	-webkit-border-bottom-right-radius: 4px;
 }
+
+.admintoclevel .admintoclevel {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
 
 /* Quote plugin */
 .quoteheader {

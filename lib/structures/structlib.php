@@ -189,6 +189,50 @@ class StructLib extends TikiLib
 			$this->query($query, array($page_info['pos']-1, (int)$page_info['page_ref_id']));
 		}
 	}
+
+	/**
+	 * @param $data array - from from nestedSortable('toHierarchy')
+	 */
+
+	function reorder_structure($data) {
+
+		global $user;
+
+		if (!empty($data)) {
+			$structure_info = $this->s_get_structure_info($data[count($data)-1]->item_id);
+
+			if (TikiLib::lib('tiki')->user_has_perm_on_object($user,$structure_info['pageName'],'wiki page','tiki_p_edit_structures')) {
+
+				$structure_id = $structure_info['structure_id'];
+				$tiki_structures = TikiDb::get()->table('tiki_structures');
+				$orders = array();
+				$conditions = array('structure_id' => (int) $structure_id);
+
+				foreach($data as $node) {
+					if ($node->item_id != 'root') {
+						if (!isset($orders[$node->depth])) {
+							$orders[$node->depth] = 1;
+						} else {
+							$orders[$node->depth]++;
+						}
+						$node->parent_id = $node->parent_id == 'root' ? $structure_info['page_ref_id'] : $node->parent_id;
+						$conditions['page_ref_id'] = (int) $node->item_id;
+						$tiki_structures->update(
+							array(
+								'parent_id' => $node->parent_id,
+								'pos' => $orders[$node->depth],
+							),
+							$conditions
+						);
+					}
+				}
+
+				return true;
+			}
+		}
+		return false;
+	}
+
   /** \brief Create a structure entry with the given name
       \param parent_id The parent entry to add this to.
            If NULL, create new structure.
@@ -552,17 +596,27 @@ class StructLib extends TikiLib
 	}
 	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName='')
 	{
-		global $smarty;
+		global $user;
+
 		$structure_tree = $this->build_subtree_toc($page_ref_id, false, $order, $numberPrefix);
+
+		if ($type === 'admin') {	// check perms here as we still have $page_ref_id
+			$structure_info = $this->s_get_structure_info($page_ref_id);
+			if (!$this->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')) {
+				$type = 'plain';
+			}
+		}
+
 		return $this->fetch_toc($structure_tree, $showdesc, $numbering, $type, $page, $maxdepth, 0, $structurePageName)."\n";
 	}
 	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName='')
 	{
-		global $smarty;
+		global $smarty, $user;
 		$ret='';
 		if ($structure_tree != '') {
 			if (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
-				
+
+				$smarty->assign('toc_type', $type);
 				$smarty->assign('leafspace', str_repeat("\t", $cur_depth*2));
 				$ret.="<!--depth: $cur_depth-->\n".$smarty->fetch('structures_toc-startul.tpl')."\n";
 				
@@ -574,11 +628,23 @@ class StructLib extends TikiLib
 						$smarty->assign('hilite', false);
 					}
 					
+					if($type === 'admin') {
+						if ($this->user_has_perm_on_object($user, $leaf["pageName"], 'wiki page', 'tiki_p_edit')) {
+							$leaf['editable'] = true;
+						} else {
+							$leaf['editable'] = false;
+						}
+						if (TikiLib::lib('tiki')->user_watches($user, 'structure_changed', $leaf['page_ref_id'], 'structure')) {
+							$leaf['event'] = true;
+						} else {
+							$leaf['event'] = false;
+						}
+					}
+
 					$smarty->assign('structurePageName', $structurePageName);
 					$smarty->assign_by_ref('structure_tree', $leaf);
 					$smarty->assign('showdesc', $showdesc);
 					$smarty->assign('numbering', $numbering);
-					$smarty->assign('toc_type', $type);
 					$smarty->assign('leafspace', str_repeat("\t", $cur_depth*2));
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if (isset($leaf['sub']) && is_array($leaf['sub'])) {
