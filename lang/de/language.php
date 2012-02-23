@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
-//
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-//
+// 
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-//
+// 
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-//
+// 
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -1401,8 +1401,6 @@ $lang = array(
 "Custom attributes for article types" => "Benutzerdefinierte Felder für Artikel",
 "Allow additional custom fields for article types" => "Erlaube zusätzliche, benutzerdefinierte Felder für Artikeltypen",
 "Your ShareThis publisher identifier (optional)" => "Deine \"ShareThis\" Indentifikation (optional)",
-"Treat article bodies as HTML" => "Behandele Artikelhauptteile als HTML",
-"Use this if you use the WYSIWYG editor for articles. This is to handle legacy data from Tiki pre 7.0" => "Benutze dies, wenn Du den WYSIWYG Editor für Artikel benutzt. Dies ist erforderlich um Altdaten von Tikiversionen vor 7.0 zu verwenden",
 "Authentication method" => "Authentifizierungsmethode",
 "Tiki supports several authentication methods. The default value is to use the internal user database" => "Tiki unterstützt verschiedene Authentifizierungsmethoden. Standardmäßig wird die interne Benutzerdatenbank benutzt",
 "Tiki" => "Tiki",
@@ -1780,8 +1778,8 @@ $lang = array(
 "An admin must validate a comment before it is visible" => "Ein Administrator muss einen Kommentar bestätigen, bevor er sichtbar wird",
 "Comments Locking" => "Sperren von Kommentaren",
 "Comments can be closed (no new comments)" => "Kommentare können geschlossen werden (keine neunen Kommentare)",
-"Allow posting of comments as Anonymous" => "Unbekannte Benutzer dürfen kommentieren",
-"Permit anonymous visitors to add a comment without needing to create an account" => "Erlaube es anonymen Benutzern zu kommentieren, ohne ein Benutzerkonto zu erstellen",
+// "Allow logged in users to pretend to be anonymous when posting a commment" => "Allow logged in users to pretend to be anonymous when posting a commment",
+// "This can be used to encourage honest feedback with the opportunity to voice an opinion anonymously. Like in a forum where you ask feedback on what is done wrong or should be improved internally" => "This can be used to encourage honest feedback with the opportunity to voice an opinion anonymously. Like in a forum where you ask feedback on what is done wrong or should be improved internally",
 "Display page description" => "Zeige die Seitenbeschreibung",
 "Display the page description below the heading when viewing the page" => "Zeige die Seitenbeschreibung unter der Überschrift wenn eine Seite angesehen wird",
 "Display page name as page title" => "Zeigen den Seitennamen als Seitentitel",
@@ -3711,6 +3709,7 @@ $lang = array(
 "Toggle Favorite" => "Favoriten umschalten",
 "Hour" => "Stunde",
 "Minute" => "Minute",
+// "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z" => "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z",
 "Click here to go to Edit Languages" => "Klicke hier um die Sprachen zu bearbeiten",
 "The text is" => "Der Text ist",
 "character(s) too long - please edit it." => "Zeichen zu lang. Bitte anpassen.",
@@ -4690,6 +4689,7 @@ $lang = array(
 "Chart as PostScript" => "Diagramm als PostScript",
 "Code" => "Quellcode",
 "Display code syntax with line numbers and color highlights" => "Zeige Codesyntax mit Zeilennummerierung und farblicher Hervorhebung",
+// "Code to be displayed" => "Code to be displayed",
 "Code snippet label" => "Code-Schnippsel Bezeichnung",
 "Word Wrap" => "Wortumbruch",
 "Enable word wrapping on the code to avoid breaking the layout" => "Aktiviere den Wortumbruch innerhalb des Codes um zu verhindern, dass das Layout beschädigt wird",
@@ -4698,7 +4698,8 @@ $lang = array(
 "Show line numbers for each line of code. May not be used with colors unless GeSHI is installed" => "Zeige Zeilennummerierung für jede Codezeile. Sollte nicht mit Farben benutzt werden bis GeSHI installiert wurde",
 "Right to Left" => "Rechts nach links",
 "Switch the text display from left to right to right to left  (left to right by default)" => "Schalte die Textanzeige von links-nach-rechts-Schrift auf rechts-nach-links um (Standard: links-nach-rechts)",
-"Generates a <code>" => "Erstellt ein <code>",
+// "Code Tag" => "Code Tag",
+// "Encloses the code in an HTML code tag, fo rexample: &lt;code&gt;user input&lt;code&gt" => "Encloses the code in an HTML code tag, fo rexample: &lt;code&gt;user input&lt;code&gt",
 "Colorbox" => "Colorbox",
 "Display a gallery of images in a popup slideshow" => "Zeigt eine Galerie von Bildern in einer Popup-Diashow",
 "Image Gallery ID" => "Bildergalerie-ID",
@@ -8630,10 +8631,11 @@ $lang = array(
 "If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences" => "Wenn Du möchtest, dass man Dir antworten kann, musst Du <a href='tiki-user_preferences.php'>Erlaube Nachrichten von anderen Benutzern</a> in Deinen Einstellungen aktivieren",
 "ERROR" => "FEHLER",
 "Invalid" => "Ungültig",
-"Multiple addresses can be separated with semicolons (\\\";\\\")" => "Multiple Adressen können durch Semikolons (\\\";\\\") getrennt werden",
-"or commas (\\\",\\\")" => "ode Kommata (\\\",\\\")",
+// "To: Multiple addresses can be separated with semicolons (\";\") or commas (\",\")" => "To: Multiple addresses can be separated with semicolons (\";\") or commas (\",\")",
 "CC" => "CC",
+// "CC: Multiple addresses can be separated with semicolons (\";\") or commas (\",\")" => "CC: Multiple addresses can be separated with semicolons (\";\") or commas (\",\")",
 "BCC" => "BCC",
+// "BCC: Multiple addresses can be separated with semicolons (\";\") or commas (\",\")" => "BCC: Multiple addresses can be separated with semicolons (\";\") or commas (\",\")",
 "Reply-to my email" => "Antwort auf meine E-Mailadresse",
 "The user will be able to reply to you directly via email" => "Der Benutzer kann Dir direkt via E-Mail antworten",
 "Send me a copy" => "Sende mir eine Kopie",
@@ -9840,6 +9842,9 @@ $lang = array(
 "Generate a zip of those directories" => "Erstellen einer komprimierten (zip) Datei dieser Verzeichnisse",
 "A zip has been written to {\$zipPath}" => "Eine Zip-Datei wurde in {\$zipPath} erstellt",
 "Directory is not writeable" => "Verzeichnis ist nicht beschreibbar",
+"Clean" => "Löschen",
+// "Groups still used in the database but no more defined" => "Groups still used in the database but no more defined",
+// "Click to remove" => "Click to remove",
 "View mode" => "Ansichtsmodus",
 "Wiki and WYSIWYG" => "Wiki und WYSIWYG",
 "Wiki only" => "Nur Wiki",
@@ -9994,7 +9999,7 @@ $lang = array(
 "Registered %0 ago" => "Registriert seit %0",
 "Need to validate email" => "Muss E-Mail validieren",
 "Assign to group" => "Zu einer Gruppe zuweisen",
-"to groups" => "zu Gruppen",
+// "Assign %0 to groups" => "Assign %0 to groups",
 "Remove %0 from %1" => "Entferne %0 von %1",
 "Edit Included Group" => "Bearbeite eingebundene Gruppe",
 "Edit Group" => "Bearbeite Gruppe",
@@ -10431,7 +10436,8 @@ $lang = array(
 "Image caption" => "Bildbeschreibung",
 "If not the topic name" => "Wenn nicht der Themenname",
 "Allow full HTML" => "Erlaube volles HTML",
-"for this edit session" => "für diese Sitzung",
+// "Keep any html tag" => "Keep any html tag",
+// "Keep only some html tags(a,p,pre,img,hr,b,i)" => "Keep only some html tags(a,p,pre,img,hr,b,i)",
 "Emails to be notified (separated with commas)" => "E-Mailbenachrichtigung an (mehrere per Komma getrennt)",
 "Cancel the edit, you will lose your changes" => "Bearbeitung abbrechen, Deine Änderungen werden verworfen",
 "Edit or create banners" => "Banner hinzufügen/bearbeiten",
@@ -10964,6 +10970,7 @@ $lang = array(
 "Name of the zip file on the server" => "Name der ZIP-Datei auf dem Server",
 "Tiki Importer" => "Tiki Importer",
 "If you are NOT running a new Tiki installation, make a backup of your database before using this importer!" => "Wenn Du KEINE neue Tikiinstallation benutzt, mache unbedingt vorher ein Backup Deiner Datenbank bevor Du diesen Importer benutzt.",
+// "If your pages contain xml code, the html purifier will delete it. Desactivate this feature" => "If your pages contain xml code, the html purifier will delete it. Desactivate this feature",
 "Your PHP is running with safe mode enabled. This might cause problems to the import process as safe mode limits the possibility to change in run time some PHP settings (like max_execution_time). It is recommended to run this script without safe mode" => "Dein PHP läuft im Sicherheitsmodus. Dies kann Problem beim Importieren verursachen, da der Sicherheitsmodus die Möglichkeiten einschränkt PHP-Einstellungen vorzunehmen (wie etwa max_execution_time). Es wird empfohlen das Script ohne Sicherheitsmodus laufen zu lassen",
 "Depending on the size of the file from the source software, the import process may take a while to complete. This might be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So, if you are having problems with the script, please try to increase the value of the following PHP settings: max_input_time, max_execution_time (this setting is limited by the web server setting, if you are running Apache also change its Timeout setting), post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script on a server where you can change the values of those settings (if needed)." => "Abhängig von der Größe der Datei der Quellsoftware kann der Importvorgang einer Weile dauern. Dies kann zu einem Problem mit Deinen PHP und Webserver Einstellungen führen. Das Skript versucht daher die relevanten Einstellungen zu ändern. Manche Einstellungen können durch das Skript aber nicht verändert werden. Wenn Du also Problem beim Import hast, versuche die folgenden PHP Einstellungen zu erhöhen: max_input_time, max_execution_time (diese Einstellung ist durch den Webserver begrenzt. Wenn Du einen Apacheserver benutzt musst Du auch dort die Timeouteinstellungen ändern), post_max_size, upload_max_filesize, memory_limit. Es ist daher zu empfehlen, das Skript auf einem Server laufen zu lassen, auf dem man die vorgenannten Werte ändern kann (wenn nötig).",
 "Select the software to import from" => "Wähle die Software von der importiert werden soll",
@@ -11923,7 +11930,6 @@ $lang = array(
 "Do you already have a local account for this site? Login to link to it using the following form instead" => "Hast Du bereits ein lokales Konto für diese Site? Dann melde Dich mit nachfolgendem Formular an um hierauf zu verlinken",
 "Link to Existing Account" => "Link zu bestehendem Konto",
 "You will not see the latest queries" => "Du wirst nicht die letzten Abfragen sehen",
-"Clean" => "Löschen",
 "Params" => "Parameter",
 "Most viewed objects" => "Meist besuchte Objekte (gesamt)",
 "Most viewed objects in the last 7 days" => "Meist besuchte Objekte der letzten 7 Tage",
@@ -12567,6 +12573,8 @@ $lang = array(
 "Page is NOT being monitored. Click icon to START monitoring." => "Diese Seite wird NICHT beobachtet. Klicke auf das Symbol um die Beobachtung zu STARTEN.",
 "Page IS being monitored. Click icon to STOP monitoring." => "Diese Seite WIRD beobachtet. Klicke auf das Symbol um dies zu STOPPEN.",
 "Group Monitor on Structure" => "Mit Gruppe Struktur beobachten",
+// "Hide structure bar" => "Hide structure bar",
+// "Hide structure" => "Hide structure",
 "Permanent Name" => "Permanenter Name",
 "More types available" => "Weitere Typen verfügbar",
 "More field types may be enabled from the <a href=\"%0\">administration panel</a>" => "Weitere Feldtypen können über die <a href=\"%0\">Verwaltungseinstellungen</a> aktiviert werden",
@@ -12953,6 +12961,8 @@ $lang = array(
 "Automatic Mail-in accounts checking disabled" => "Automatische Prüfung der Mail-in-Konten ist deaktiviert",
 "No menu indicated" => "Kein Menü angegeben",
 "Are you sure you want to delete menu id:" => "Bist Du sicher, dass Du das Menü mit folgender ID löschen willst:",
+// "Are you sure you want to modify this menu" => "Are you sure you want to modify this menu",
+// "Are you sure you want to create a new menu" => "Are you sure you want to create a new menu",
 "Are you sure you want to reset the Application Menu to the current system default" => "Bist Du sicher, dass Du das Anwendungsmenü auf die Systemgrundeinstellung zurücksetzen willst",
 "metric_remove must be a numeric value" => "metric_remove muss ein nummerischer Wert sein",
 "tab_remove must be a numeric value" => "tab_remove muss ein nummerischer Wert sein",
@@ -13039,6 +13049,8 @@ $lang = array(
 "Are you sure you want to remove this topic AND all the articles related" => "Bist Du sicher, dass Du dieses Thema und alle dazgehörigen Artikel löschen willst",
 "No tracker indicated" => "Kein Tracker angegeben",
 "You don't have permission to use this feature" => "Keine Berechtigung zur Nutzung dieses Features",
+// "Are you sure you want to create a new group" => "Are you sure you want to create a new group",
+// "Are you sure you want to add this user?" => "Are you sure you want to add this user?",
 "Are you sure you want to ban the user \"%0\" from the group \"%1\"" => "Bist Du sicher, dass Du den Benutzer \"%0\" aus der Gruppe \"%1\" verbannen willst",
 "Are you sure you want to unban the user \"%0\" from the group \"%1\"" => "Bist Du sicher, dass Du die Verbannung des Benutzers \"%0\" aus der Gruppe \"%1\" aufheben willst",
 "Group already exists" => "Gruppe existiert bereits",
@@ -13139,6 +13151,7 @@ $lang = array(
 "There's no such date as" => "Es gibt kein Datum wie",
 "event without name" => "Ereignis ohne Name",
 "You do not have permission to view this page" => "Du hast nicht die notwendigen Rechte um diese Seite anzuzeigen",
+// "Your PHP installation does not have calendar enabled" => "Your PHP installation does not have calendar enabled",
 "%H:%M %Z" => "%H:%M %Z",
 "Invalid username or activation code. Maybe this code has already been used" => "Ungültiger Benutzername oder Aktivierungscode. Möglicherweise wurde dieser Code bereits benutzt",
 "Your email could not be validated; make sure you email is correct" => "Deine E-Mail konnte nicht validiert werden; stelle sicher, dass Deine E-Mail richtig ist",
