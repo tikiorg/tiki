@@ -338,7 +338,7 @@ include_once ('tiki-section_options.php');
 
 if ($prefs['feature_jquery_ui'] === 'y') {
 	$headerlib->add_jsfile('lib/structures/tiki-edit_structure.js');
-	$headerlib->add_jsfile('lib/jquery/jquery.ui.nestedSortable.js');
+	$headerlib->add_jsfile('lib/jquery/jquery.mjs.nestedSortable.js');
 	global $structlib; include_once('lib/structures/structlib.php');
 	$smarty->assign('nodelist', $structlib->get_toc($structure_info['structure_id'], 'asc', false, false, '', 'admin', $page_info['pageName'], 0, ''));
 				// $page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName=''
