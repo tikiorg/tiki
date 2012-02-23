@@ -67,9 +67,7 @@ if ( !isset($_REQUEST['offset']) || !empty($_REQUEST['export']) ) {
 } else {
   $offset = $_REQUEST["offset"];
 }
-if ( !empty($_REQUEST['export']) ) {
-	$maxRecords = -1;
-} elseif (isset($_REQUEST['max'])) {
+if (isset($_REQUEST['max'])) {
 	$maxRecords = $_REQUEST['max'];
 } else {
 	$maxRecords = $prefs['maxRecords'];
@@ -299,14 +297,29 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$endDate = $_REQUEST['endDate'];
 	} else $endDate = $tikilib->make_time(23, 59, 59, $tikilib->date_format('%m') , $tikilib->date_format('%d') , $tikilib->date_format('%Y'));
 	$smarty->assign('endDate', $endDate);
+
+	if (isset($_REQUEST['export'])) {
+		header('Content-type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="tiki-actionlogs_stats.csv"');
+		echo "user,date,time,action,type,object,category,categId,ip, unit,+,-,contribution\r\n";
+		for (;;) {
+			$results = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
+			if (empty($results['data']))
+				break;
+			$csv = $logslib->export($results['data']);
+			echo $csv;
+			$offset += $maxRecords;
+		}
+		die();
+	}
 	$results = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
-	$actions = $results['data'];
+	$actions = &$results['data'];
 	$actions_cant = $results['cant'];
 	$actions = $logslib->get_more_info($actions, $categNames);
 	$contributorActions = $logslib->split_actions_per_contributors($actions, $_REQUEST['selectedUsers']);
 	if (!empty($_REQUEST['selectedUsers'])) {
 		$results = $logslib->list_actions('', '', '', $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
-		$allActions = $results['data'];
+		$allActions = &$results['data'];
 		$allContributorsActions = $logslib->split_actions_per_contributors($actions, '');
 	} else {
 		$allActions = $actions;
@@ -357,18 +370,6 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign_by_ref('actionlogs', $actions);
 	if (isset($_REQUEST['unit'])) $url.= '&amp;unit=' . $_REQUEST['unit'];
 	$smarty->assign('url', "&amp;list=y$url#Report");
-	if (isset($_REQUEST['export'])) {
-		$csv = $logslib->export($actions);
-		header('Content-type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="tiki-actionlogs_stats.csv"');
-		if ( function_exists('mb_strlen') ) {
-  	  header('Content-Length: '.mb_strlen($csv, '8bit'));
-	  } else {
-    	header('Content-Length: '.strlen($csv));
- 	 }
-		echo $csv;
-		die();
-	}
 	if ($prefs['feature_contribution'] == 'y') {
 		if (empty($_REQUEST['contribTime'])) $_REQUEST['contribTime'] = 'w';
 		$contributionStat = $logslib->get_stat_contribution($actions, $startDate, $endDate, $_REQUEST['contribTime']);
