@@ -923,7 +923,6 @@ class LogsLib extends TikiLib
 
 	function export($actionlogs, $unit = 'b')
 	{
-		$csv = "user,date,time,action,type,object,category,categId,ip, unit,+,-,contribution\r\n";
 		foreach ($actionlogs as $action) {
 			if (!isset($action['object'])) {
 				$action['object'] = '';
