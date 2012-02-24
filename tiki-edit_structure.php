@@ -214,9 +214,10 @@ $smarty->assign('find_objects', $find_objects);
 $filter = '';
 if (!empty($_REQUEST['categId'])) {
 	$filter['categId'] = $_REQUEST['categId'];
-	$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
+	$smarty->assign('find_categId', $_REQUEST['categId']);
+} else {
+	$smarty->assign('find_categId', '');
 }
-	
 // Get all wiki pages for the dropdown menu
 $listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects, '', false, true, false, false, $filter);
 $smarty->assign_by_ref('listpages', $listpages["data"]);

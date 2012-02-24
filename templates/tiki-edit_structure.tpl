@@ -66,85 +66,59 @@
 {/if}
 
 <h2>{tr}Structure Layout{/tr}</h2>
-<div class="structure-container">{$nodelist}</div>
+<div class="structure-container">
+	{self_link page_ref_id=$structure_id}
+		{if $structure_id eq $page_ref_id}<strong>{/if}
+		{tr}Top{/tr}
+		{if $structure_id eq $page_ref_id}</strong>{/if}
+	{/self_link}
+	{$nodelist}
+</div>
 {button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
 
-
 {if $editable == 'y'}
+<div id="move_dialog" style="display: none;">
+	<form action="tiki-edit_structure.php" method="post">
+		<input type="hidden" name="page_ref_id" value="{$page_ref_id}"/>
+		<div class="clearfix" style="margin-bottom: 1em;">
+			<label for="structure_id">{tr}Move to another structure:{/tr}</label>
+			<select name="structure_id" id="structure_id"{if $structures|@count eq '1'} disabled="disabled"{/if}>
+				{section name=ix loop=$structures}
+					{if $structures[ix].page_ref_id ne $structure_id}
+						<option value="{$structures[ix].page_ref_id}">{$structures[ix].pageName}</option>
+					{/if}
+					{if $structures|@count eq '1'}
+						<option value="">{tr}None{/tr}</option>
+					{/if}
+				{/section}
+			</select>
+		</div>
+		<label class="floatleft" for="begin1">{tr}at the beginning{/tr}</label>
+		<div class="floatleft"><input type="radio" id="begin1" name="begin" value="1" checked="checked" {if $structures|@count eq '1'} disabled="disabled"{/if} /></div>
+		<label class="floatleft" for="begin2">{tr}at the end{/tr}</label>
+		<div class="floatleft"><input type="radio" id="begin2" name="begin" value="0" {if $structures|@count eq '1'}disabled="disabled"{/if} /></div>
+		<hr />
+		<div class="floatleft input_submit_container">
+			<input type="submit" name="move_to" value="{tr}Move{/tr}" {if $structures|@count eq '1'} disabled="disabled"{/if} />
+		</div>
+	</form>
+</div>
 <form action="tiki-edit_structure.php" method="post">
 	<input type="hidden" name="page_ref_id" value="{$page_ref_id}"/>
+	<h3>{tr}Add pages{/tr}</h3>
 
-	<h2>{tr}Current Node:{/tr} {$pageName}</h2>
-	<table class="formcolor">
-		<tr>
-			<td><label for="pageAlias">{tr}Page alias:{/tr}</label></td>
-			<td>
-				<input type="text" name="pageAlias" id="pageAlias" value="{$pageAlias}"/> <input type="submit"
-																								 name="create"
-																								 value="{tr}Update{/tr}"/>
-			</td>
-		</tr>
-		{autocomplete element='#pageAlias' type='pagename'}
-		<tr>
-			<td>{tr}Move in this structure{/tr}</td>
-			<td>
-				<a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=1'>{icon _id='resultset_previous' alt="{tr}Promote{/tr}"}</a>
-				<a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=4'>{icon _id='resultset_next' alt="{tr}Demote{/tr}"}</a>
-				<a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=2'>{icon _id='resultset_up' alt="{tr}Previous{/tr}"}</a>
-				<a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=3'>{icon _id='resultset_down' style="margin-right:10px;" alt="{tr}Next{/tr}"}</a>
-			</td>
-		</tr>
-		<tr>
-			<td><label for="structure_id">{tr}Move to another structure:{/tr}</label></td>
-			<td>
-				<select name="structure_id" id="structure_id"{if $structures|@count eq '1'} disabled="disabled"{/if}>
-					{section name=ix loop=$structures}
-						{if $structures[ix].page_ref_id ne $page_ref_id}
-							<option value="{$structures[ix].page_ref_id}">{$structures[ix].pageName}</option>
-						{/if}
-						{if $structures|@count eq '1'}
-							<option value="">{tr}None{/tr}</option>
-						{/if}
-					{/section}
-				</select>
-				<label for="begin1">{tr}at the beginning{/tr}</label>
-				<input type="radio" id="begin1" name="begin" value="1" checked="checked"
-					{if $structures|@count eq '1'} disabled="disabled"{/if} />
-				<label for="begin2">{tr}at the end{/tr}</label>
-				<input type="radio" id="begin2" name="begin" value="0"
-					{if $structures|@count eq '1'}disabled="disabled"{/if} />
-				<input type="submit" name="move_to" value="{tr}Move{/tr}"
-					{if $structures|@count eq '1'} disabled="disabled"{/if} />
-			</td>
-		</tr>
-	</table>
-	<h3>{tr}Add pages to current node:{/tr}</h3>
 	<table class="formcolor">
 		<tr>
 			<td>
-				<label for="after_ref_id">{tr}After page:{/tr}</label>
-			</td>
-			<td>
-				<select name="after_ref_id" id="after_ref_id">
-					{section name=ix loop=$subpages}
-						<option value="{$subpages[ix].page_ref_id}"
-								{if $insert_after eq $subpages[ix].page_ref_id}selected="selected"{/if}>{$subpages[ix].pageName}</option>
+				<label for="page_list_container">{tr}Use pre-existing page by dragging into the structure above{/tr}</label>
+				<ul id="page_list_container">
+					{section name=list loop=$listpages}
+						<li class="ui-state-default">
+							{$listpages[list].pageName|truncate:40:"(...)":true}
+						</li>
 					{/section}
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="name">{tr}Create Page:{/tr}</label>
-			</td>
-			<td>
-				<input type="text" name="name" id="name"/>
-				{autocomplete element='#name' type='pagename'}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="name2">{tr}Use pre-existing page:{/tr}</label><br/><br/>
+				</ul>
+				<label for="find_objects" style="display: inline-block;">{tr}Find:{/tr}</label>
 				<input type="text" name="find_objects" id="find_objects" value="{$find_objects|escape}"/>
 				<input type="submit" value="{tr}Filter{/tr}" name="search_objects"/>
 				{autocomplete element='#find_objects' type='pagename'}
@@ -154,39 +128,41 @@
 						<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 						{section name=ix loop=$categories}
 							<option value="{$categories[ix].categId|escape}"
-									{if $find_categId eq $categories[ix].categId}selected="selected"{/if}>{tr}{$categories[ix].categpath}{/tr}</option>
+									{if !empty($find_categId) and $find_categId eq $categories[ix].categId}selected="selected"{/if}>{tr}{$categories[ix].categpath}{/tr}</option>
 						{/section}
 					</select>
 				{/if}
 			</td>
-			<td>
-				<select id="name2" name="name2[]" multiple="multiple" size="8">
-					{section name=list loop=$listpages}
-						<option value="{$listpages[list].pageName|escape}">{$listpages[list].pageName|truncate:40:"(...)":true}</option>
-					{/section}
-				</select>
-			</td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
 			<td>
+				<h3>{tr}Create a new page in current node:{/tr}  {$pageName}</h3>
+				<label for="name">{tr}Create Page:{/tr}</label>
+				<input type="text" name="name" id="name"/>
+				{autocomplete element='#name' type='pagename'}
+				<label for="after_ref_id">{tr}After page:{/tr}</label>
+				<select name="after_ref_id" id="after_ref_id">
+					{section name=ix loop=$subpages}
+						<option value="{$subpages[ix].page_ref_id}"
+								{if $insert_after eq $subpages[ix].page_ref_id}selected="selected"{/if}>{$subpages[ix].pageName}</option>
+					{/section}
+				</select>
 				<input type="submit" name="create" value="{tr}Update{/tr}"/>
 			</td>
 		</tr>
 	</table>
 </form>
 	{if $prefs.feature_wiki_categorize_structure == 'y' && $all_editable == 'y'}
-	<form action="tiki-edit_structure.php" method="post">
-		<input type="hidden" name="page_ref_id" value="{$page_ref_id}"/>
+		<form action="tiki-edit_structure.php" method="post">
+			<input type="hidden" name="page_ref_id" value="{$page_ref_id}"/>
 
-		<h3>{tr}Categorize all pages in structure together:{/tr}</h3>
-		<table class="normal">
-		{include file='categorize.tpl'}
-		</table>
-		<input type="submit" name="recategorize" value="{tr}Update{/tr}"/>
-		&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing:{/tr} <input type="checkbox"
-																									 name="cat_override"/>
-	</form>
+			<h3>{tr}Categorize all pages in structure together:{/tr}</h3>
+			<table class="normal">
+			{include file='categorize.tpl'}
+			</table>
+			<input type="submit" name="recategorize" value="{tr}Update{/tr}"/>
+			&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing:{/tr} <input type="checkbox"
+																										 name="cat_override"/>
+		</form>
 	{/if}
-<br/>
 {/if}{* end of if structure editable *}

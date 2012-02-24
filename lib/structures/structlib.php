@@ -199,7 +199,7 @@ class StructLib extends TikiLib
 		global $user;
 
 		if (!empty($data)) {
-			$structure_info = $this->s_get_structure_info($data[count($data)-1]->item_id);
+			$structure_info = $this->s_get_structure_info($data[1]->item_id);	// not "root"
 
 			if (TikiLib::lib('tiki')->user_has_perm_on_object($user,$structure_info['pageName'],'wiki page','tiki_p_edit_structures')) {
 
@@ -216,14 +216,22 @@ class StructLib extends TikiLib
 							$orders[$node->depth]++;
 						}
 						$node->parent_id = $node->parent_id == 'root' ? $structure_info['page_ref_id'] : $node->parent_id;
-						$conditions['page_ref_id'] = (int) $node->item_id;
-						$tiki_structures->update(
-							array(
-								'parent_id' => $node->parent_id,
-								'pos' => $orders[$node->depth],
-							),
-							$conditions
+						$fields = array(
+							'parent_id' => $node->parent_id,
+							'pos' => $orders[$node->depth],
+							'page_alias' => $node->page_alias,
 						);
+						if ($node->item_id < 1000000) {
+							$conditions['page_ref_id'] = (int) $node->item_id;
+							$tiki_structures->update(
+								$fields,
+								$conditions
+							);
+						} else {		// new nodes with id > 1000000
+							$fields['page_id'] = TikiLib::lib('tiki')->get_page_id_from_name($node->page_name);
+							$fields['structure_id'] = $structure_id;
+							$tiki_structures->insert($fields);
+						}
 					}
 				}
 

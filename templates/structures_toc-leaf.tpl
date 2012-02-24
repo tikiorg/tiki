@@ -4,6 +4,7 @@
 		<div>
 			{if $toc_type eq 'admin'}
 				<div class="actions">
+					<input type="text" class="page-alias-input" value="{$structure_tree.page_alias|escape}" placeholder="{tr}Page alias...{/tr}" />
 					{self_link _script='tiki-index.php' page=$structure_tree.pageName structure=$structure_name _title="{tr}View{/tr}" _noauto="y"}
 						{icon _id='magnifier' alt="{tr}View{/tr}"}
 					{/self_link}
@@ -27,6 +28,9 @@
 								{icon _id='page_edit' alt='{tr}Edit page{/tr}'}
 							{/self_link}
 						{/if}
+						{self_link _onclick="movePageToStructure(this);return false;"}
+							{icon _id='arrow_right' alt='{tr}Move{/tr}'}
+						{/self_link}
 						{self_link page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
 							{icon _id='cross' alt='{tr}Delete{/tr}' page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
 						{/self_link}
@@ -55,7 +59,7 @@
 					{$structure_tree.description|escape}
 				{/if}">
 				{if $hilite}<strong>{/if}
-				{if $structure_tree.page_alias|escape}
+				{if $structure_tree.page_alias|escape and $toc+type neq 'admin'}
 					{$structure_tree.page_alias|escape}
 				{else}
 					{$structure_tree.pageName|escape}
