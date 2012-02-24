@@ -39,19 +39,19 @@ if (!isset($_REQUEST['password'])) {
 if (!isset($_REQUEST['sendpages'])) {
 	$sendpages = array();
 } else {
-	$sendpages = unserialize(urldecode($_REQUEST['sendpages']));
+	$sendpages = TikiLib::tiki_unserialize(urldecode($_REQUEST['sendpages']));
 }
 
 if (!isset($_REQUEST['sendstructures'])) {
 	$sendstructures = array();
 } else {
-	$sendstructures = unserialize(urldecode($_REQUEST['sendstructures']));
+	$sendstructures = TikiLib::tiki_unserialize(urldecode($_REQUEST['sendstructures']));
 }
 
 if (!isset($_REQUEST['sendarticles'])) {
 	$sendarticles = array();
 } else {
-	$sendarticles = unserialize(urldecode($_REQUEST['sendarticles']));
+	$sendarticles = TikiLib::tiki_unserialize(urldecode($_REQUEST['sendarticles']));
 }
 
 $smarty->assign('username', $_REQUEST['username']);
