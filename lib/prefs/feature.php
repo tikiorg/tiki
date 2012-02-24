@@ -1486,7 +1486,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Replies are empty'),
 			'type' => 'flag',
 			'hint' => tra('If disabled, replies will quote the original post'),
-			'default' => 'n',
+			'default' => 'y',
 			'tags' => array('basic'),
 		),
 		'feature_forums_allow_thread_titles' => array(
