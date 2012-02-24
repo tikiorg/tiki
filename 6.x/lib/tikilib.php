@@ -8673,7 +8673,17 @@ JS;
 			return strtolower($string);
 		}
 	}	
-        
+
+	/**
+	 * Test data before unserializing - thanks EgiX
+	 * @param $data	string
+	 * @return bool|mixed
+	 */
+	public static function tiki_unserialize($data)
+	{
+		return (preg_match('/^O:/i', $data)) ? false : unserialize($data);
+	}
+
 }
 // end of class ------------------------------------------------------
 
