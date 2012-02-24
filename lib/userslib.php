@@ -5042,7 +5042,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('tiki_allow_trust_input'),
 				'scope' => 'global',
 			),
 			array(
