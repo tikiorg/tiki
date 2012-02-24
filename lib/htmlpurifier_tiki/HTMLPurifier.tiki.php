@@ -25,8 +25,8 @@ require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
 
 function HTMLPurifier($html, $config = null) {
 	static $purifier = false;
-	if (!$purifier) {
-		if ($config == null) {	// mod for tiki temp files location
+	if (!$purifier || !$config) {
+		if (!$config) {	// mod for tiki temp files location
 			$config = getHTMLPurifierTikiConfig();
     	}
 		$purifier = new HTMLPurifier();
