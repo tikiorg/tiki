@@ -64,8 +64,8 @@
 					{capture name=comments_cant_title}{if $comments_cant == 1}{tr _0=$comments_cant}%0 comment{/tr}{else}{tr _0=$comments_cant}%0 comments{/tr}{/if}{/capture}
 					<h3>{$smarty.capture.comments_cant_title}</h3>
 				{/if}
-				<div class="forum_actions">
-					{if $comments_cant > $prefs.forum_thread_user_settings_threshold}
+				{if $comments_cant > $prefs.forum_thread_user_settings_threshold}
+					<div class="forum_actions">
 						<div class="actions">
 							<span class="action">
 								<label for="comments-maxcomm">{tr}Messages:{/tr}</label>
@@ -114,8 +114,8 @@
 								<input type="submit" name="comments_setOptions" value="{tr}Set{/tr}" />
 							</span>
 						</div>
-					{/if}
-				</div>
+					</div>
+				{/if}
 			{/if}
 
 			{section name=rep loop=$comments_coms}
