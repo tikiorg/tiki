@@ -25,7 +25,7 @@ class BannerLib extends TikiLib
 		$views = array();
 		$bindvars = array('y', $hour, $hour, 'y', (int) $this->now, (int) $this->now, 'n', -1, -1, $zone);
 		if (isset($_COOKIE[$cookieName])) {
-			$views = unserialize($_COOKIE[$cookieName]);
+			$views = TikiLib::tiki_unserialize($_COOKIE[$cookieName]);
 			$mid = 'and (`bannerId` not in ('.implode(',',array_fill(0, count($views),'?')).') or ';
 			foreach ($views as $bId=>$bView) {
 				$bindvars[] = $bId;
@@ -133,7 +133,7 @@ class BannerLib extends TikiLib
 		$cookieName = "banner_$zone";
 		$views = array();
 		if (isset($_COOKIE[$cookieName])) {
-			$views = unserialize($_COOKIE[$cookieName]);
+			$views = TikiLib::tiki_unserialize($_COOKIE[$cookieName]);
 		} 
 		if ($res['maxUserImpressions'] > 0) {
 			$views[$res['bannerId']] = isset($views[$res['bannerId']]) ? $views[$res['bannerId']]+1: 1;
