@@ -756,18 +756,23 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	color: #cd0a0a;
 }
 
-/***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
-/*
-.ui-widget-content {
-	background: ;
-	color: ;
-}
-*/
-
 /***** New (unsorted) *****/
 
+/* Quote plugin */
+.quoteheader {
+	background : url('../images/quoteleft.gif') no-repeat;
+	padding-left:50px;
+	height:35px;
+}
+
+.quotebody {
+	padding-left:46px;
+}
+
 /***** End New (unsorted) *****/
+
+/***** border radius definitions                   *****
+ ***** remove if you require strict css validation *****/
 
 .footerbgtrap,
 .rbox-title,
@@ -782,6 +787,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	-webkit-border-top-right-radius: 4px;
 }
 
+input,
 .button a,
 .button a:visited,
 button,
@@ -832,16 +838,6 @@ a.admbox.off,
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
+/***** end border radius definitions  *****/
 
-
-/* Quote plugin */
-.quoteheader {
-	background : url('../images/quoteleft.gif') no-repeat;
-	padding-left:50px;
-	height:35px;
-}
-
-.quotebody {
-	padding-left:46px;
-}
 /* End of File */
