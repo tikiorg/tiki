@@ -55,6 +55,7 @@ class CalendarLib extends TikiLib
 			while ($r2 = $res2->fetchRow()) {
 				$r[$r2['optionName']] = $r2['value'];
 			}
+			$r['name'] = tra($r['name']);
 			$res["$k"] = $r;
 		}
 		$retval["data"] = $res;
@@ -252,7 +253,7 @@ class CalendarLib extends TikiLib
 				$ret["$i"][] = array(
 					"result" => $res,
 					"calitemId" => $res["calitemId"],
-					"calname" => $res["calname"],
+					"calname" => tra($res['calname']),
 					"time" => $tstart, /* user time */
 					"end" => $tend, /* user time */
 					"type" => $res["status"],
