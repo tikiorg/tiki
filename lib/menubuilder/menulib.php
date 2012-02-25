@@ -522,7 +522,7 @@ class MenuLib extends TikiLib
 			$data .=  $option['optionId']
 							. ',"' . $option['type']
 							. '","' . str_replace('"', '""', $option['name'])
-							. '","' . str_replace('"', '""', $option['url'])
+							. '","' . str_replace('"', '""', $option['canonic'])
 							. '",' . $option['position']
 							. ',"' . $option['section']
 							. '","' . $option['perm']
