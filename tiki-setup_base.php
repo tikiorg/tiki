@@ -474,7 +474,7 @@ if (ini_get('register_globals')) {
 	}
 }
 $serverFilter = new DeclFilter;
-if ($tiki_p_trust_input != 'y' || $prefs['tiki_allow_trust_input'] !== 'y') {
+if ($prefs['tiki_allow_trust_input'] !== 'y' || $tiki_p_trust_input != 'y') {
 	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'xss', 'REQUEST_URI' => 'xss', 'PHP_SELF' => 'xss',));
 }
 $jitServer = new JitFilter($_SERVER);
@@ -514,7 +514,7 @@ array_unshift( $inputConfiguration, array(
 ) );
 
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
-if ($tiki_p_trust_input != 'y' || $prefs['tiki_allow_trust_input'] !== 'y') {
+if ($prefs['tiki_allow_trust_input'] !== 'y' || $tiki_p_trust_input != 'y') {
 	$inputFilter->addCatchAllFilter('xss');
 }
 $cookieFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
@@ -525,7 +525,7 @@ $_POST = $inputFilter->filter($_POST);
 $_COOKIE = $cookieFilter->filter($_COOKIE);
 // Rebuild request with filtered values
 $_REQUEST = array_merge($_GET, $_POST);
-if ($tiki_p_trust_input != 'y' || $prefs['tiki_allow_trust_input'] !== 'y') {
+if ($prefs['tiki_allow_trust_input'] !== 'y' || $tiki_p_trust_input != 'y') {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
 	$varcheck_errors = '';
 	foreach ($varcheck_vars as $var) {
