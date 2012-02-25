@@ -112,6 +112,9 @@
 					controller: 'tracker',
 					action: 'replace',
 					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
+				},
+				load: function() {
+					$(".tree.root:not(.init)", this).browse_tree().addClass("init");
 				}
 			});
 
