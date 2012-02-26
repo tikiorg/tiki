@@ -223,6 +223,7 @@ if (isset($_REQUEST["preview"])) {
 	}
 	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $info['wikiparse'] = 'y';
 	else $info['wikiparse'] = 'n';
+	$info['is_html'] = !empty($_REQUEST['is_html']);
 	if (!empty($_REQUEST["datatxt"])) {
 		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
@@ -239,7 +240,7 @@ if (isset($_REQUEST["preview"])) {
 		}
 		$smarty->assign("usedTpl", $_REQUEST["usedTpl"]);
 	} else {
-		$info["dataparsed"] = "<html><body>" . (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $info['data']) . "</body></html>";
+		$info["dataparsed"] = "<html><body>" . (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html'])) : $info['data']) . "</body></html>";
 	}
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
@@ -271,12 +272,13 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$wikiparse = 'n';
 	}
+	$info['is_html'] = !empty($_REQUEST['is_html']);
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
 		$parsed = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 	} else {
-		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('is_html' => (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg']=='y')? 1: 0, 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
+		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('is_html' => (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg']=='y')||$info['is_html']? 1: 0, 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
 	}
 	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
 		$parsed = $_REQUEST['datatxt'];
