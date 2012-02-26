@@ -32,7 +32,7 @@
 				{/foreach}
 			</div>
 		{/if} 
-		<div class="article{if !empty($container_class)} {$container_class}{/if}">
+		<div class="article{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
 			{if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 			<div class="articletitle">
 				<h2>{object_link type=article id=$listpages[ix].articleId url=$smarty.capture.href title=$listpages[ix].title}</h2>
@@ -43,16 +43,16 @@
 				 or ($listpages[ix].show_reads eq 'y')}	
 					<span class="titleb">
 						{if $listpages[ix].show_author eq 'y'}	
-							{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;
+							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;</span>
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
-							{$listpages[ix].publishDate|tiki_short_datetime:'Published At:'}&nbsp;
+							<span class="pubdate">{$listpages[ix].publishDate|tiki_short_datetime:'Published At:'}&nbsp;</span>
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
-							{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;
+							<span class="expdate">{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;</span>
 						{/if}
 						{if $listpages[ix].show_reads eq 'y'}
-							({$listpages[ix].nbreads} {tr}Reads{/tr})
+							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
 						{/if}
 					</span><br />
 				{/if}
