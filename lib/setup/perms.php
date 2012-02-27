@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$// (c) Copyright 2002-2009 by authors of the Tiki Wiki CMS Groupware Project
+// $Id: perms.php 39469 2012-01-12 21:13:48Z changi67$
 
 //this script may only be included - so its better to die if called directly.
 
