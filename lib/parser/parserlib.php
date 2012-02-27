@@ -2500,6 +2500,11 @@ if ( \$('#$id') ) {
 			}
 			$data .= $line . "\n";
 		}
+		if ($options['is_html']) {
+			$count = 1;
+			while ($count == 1)
+				$data = preg_replace("#<p>([^(</p>)]*)<p>([^(</p>)]*)</p>#uims","<p>$1$2", $data, 1, $count);
+		}
 
 		// Close open paragraph, lists, and div's
 		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
