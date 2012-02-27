@@ -1,12 +1,12 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 		header("location: index.php");
 		exit;
 }
@@ -24,7 +24,8 @@ class MultilingualLib extends TikiLib
 	 * @param: objLang = lang of the translation
 	 * @requirment: no translation of the source in this lang must exist
 	 */
-	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang) {
+	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang)
+	{
 		global $prefs;
 
 		$srcTrads = $this->getTrads($type, $srcId);
@@ -34,7 +35,7 @@ class MultilingualLib extends TikiLib
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`lang`) values (?,?,?)";
 			$this->query($query, array($type, $srcId, $srcLang));
 			$query = "select max(`traId`) from `tiki_translated_objects` where `type`=? and `objId`=?";
-			$tmp_traId = $this->getOne($query, array( $type, $srcId ) );
+			$tmp_traId = $this->getOne($query, array( $type, $srcId ));
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
 			$this->query($query, array($type, $objId, $tmp_traId, $objLang));
 			return null;
@@ -82,18 +83,28 @@ class MultilingualLib extends TikiLib
 	 */
 	function getTranslation($type, $srcId, $objLang)
 	{
-		$query = "select t2.`objId`, t2.`traId` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t1.`type`=? and t1.`objId`=? and t2.`lang`=?";
+		$query =
+						"select t2.`objId`, t2.`traId`" .
+						" from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2" .
+						" where t1.`traId`=t2.`traId` and t1.`type`=? and t1.`objId`=? and t2.`lang`=?";
+
 		return $this->getOne($query, array($type, $srcId, $objLang));
 	}
 
 	function getTrads($type, $objId)
 	{
-		$query = "select t2.`traId`, t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t1.`type`=? and t1.`objId`=?";
+		$query =
+						"select t2.`traId`, t2.`objId`, t2.`lang`" .
+						" from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2" .
+						" where t1.`traId`=t2.`traId` and t1.`type`=? and t1.`objId`=?";
+
 		$result = $this->query($query, array($type, (string) $objId));
 		$ret = array();
+
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
+
 		return $ret;
 	}
 
@@ -107,9 +118,16 @@ class MultilingualLib extends TikiLib
 	function getTranslations($type, $objId, $objName='', $objLang='', $long=false)
 	{
 		if ($type == 'wiki page') {
-			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`= t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=?";
+			$query =
+							"select t2.`objId`, t2.`lang`, p.`pageName`as `objName`" .
+							" from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2" .
+							" LEFT JOIN `tiki_pages` p ON p.`page_id`= t2.`objId`" .
+							" where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=?";
 		} elseif ($type == 'article') {
-			$query = "select t2.`objId`, t2.`lang`, a.`title` as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=? and a.`articleId`=t2.`objId`";
+			$query =
+							"select t2.`objId`, t2.`lang`, a.`title` as `objName`" .
+							" from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a" .
+							" where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and t1.`objId`=? and a.`articleId`=t2.`objId`";
 		} else {
 			throw new Exception("Unsupported type");
 			// Generic version, should set objName
@@ -150,15 +168,15 @@ class MultilingualLib extends TikiLib
 		if (!$optimisation) {
 			if ($type == 'wiki page') {
 				$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
-				$this->query($query,array($lang, $objId));
+				$this->query($query, array($lang, $objId));
 			} elseif ($type == 'article') {
 				$query = "update `tiki_articles` set `lang`=? where `articleId`=?";
-				$this->query($query,array($lang, $objId));
+				$this->query($query, array($lang, $objId));
 			}
 		}
 
 		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=? and `type`=?";
-		$this->query($query,array($lang, $objId, $type));
+		$this->query($query, array($lang, $objId, $type));
 		return null;
 	}
 
@@ -168,7 +186,7 @@ class MultilingualLib extends TikiLib
 	function detachTranslation($type, $objId)
 	{
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
-		$this->query($query,array($type, $objId));
+		$this->query($query, array($type, $objId));
 		//@@TODO: delete the set if only one remaining object - not necesary but will clean the table
 	}
 
@@ -228,7 +246,7 @@ class MultilingualLib extends TikiLib
 		}
 
 		if (($include_browser_lang)&&(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))) {
-			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
+			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
 			foreach ($ls as $l) {
 				if (!in_array($l, $langs)) {
 					$langs[] = $l;
@@ -250,7 +268,7 @@ class MultilingualLib extends TikiLib
 		}
 
 		if ( $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages']) ) {
-			foreach ( array_diff( $prefs['available_languages'], $langs ) as $lang ) {
+			foreach ( array_diff($prefs['available_languages'], $langs) as $lang ) {
 				$langs[] = $lang;
 			}
 		}
@@ -277,6 +295,7 @@ class MultilingualLib extends TikiLib
 
 		$langs = $this->preferredLangs($langContext);
 		$max = count($listObjs);
+
 		for ($i = 0; $i < $max; ++$i) {
 			if (!isset($listObjs[$i]) || !isset($listObjs[$i]['lang'])) {
 				continue; // previously withdrawn or no language
@@ -308,12 +327,12 @@ class MultilingualLib extends TikiLib
 				}
 
 				if ($this->exist($trads, $objId2, 'objId')) {
-					$iord = array_search($listObjs[$i]['lang'] , $langs);
+					$iord = array_search($listObjs[$i]['lang'], $langs);
 					if (!$iord && strchr($listObjs[$i]['lang'], "-")) {
 						$iord = array_search($this->rootLang($listObjs[$i]['lang']), $langs);
 					}
 
-					$jord = array_search($listObjs[$j]['lang'] , $langs);
+					$jord = array_search($listObjs[$j]['lang'], $langs);
 					if (!$jord && strchr($listObjs[$j]['lang'], "-")) {
 						$jord = array_search($this->rootLang($listObjs[$j]['lang']), $langs);
 					}
@@ -386,17 +405,17 @@ class MultilingualLib extends TikiLib
 
 		/*
 		 * Alain Désilets (2010-01-12):
-		 * 
-		 * There is also a bl= argument, but it seems too be used very inconsistenly. 
+		 *
+		 * There is also a bl= argument, but it seems too be used very inconsistenly.
 		 * - Sometimes, the mere presence of bl (no matter its value) s interpreted as meaning
 		 *  that bBest Language should be used.
 		 * - In other cases, we set bl=n, presumably to signifiy that Best Language should not be used.
-		 * - Yet, in in lib/setup/language.php, there is a statement which, if unsets bl, if its value was n, so 
+		 * - Yet, in in lib/setup/language.php, there is a statement which, if unsets bl, if its value was n, so
 		 *  not clear that all the checks for bl=n are doing anything.
 		 * - If the purpose of bl is to indicate that Best Language is to be used (when bl is defined),
 		 *  then it's kind of weird, because Best Language cannot be used when multilingual features
 		 *  or best_languge or detec_language are inactive. Yet, when one of those is active, Best Language
-		 *  is always used, so there is no need to say that with an argument. There may be a need to 
+		 *  is always used, so there is no need to say that with an argument. There may be a need to
 		 *  say that in a particular case, Best Language should NOT be used, but not to say that Best Language
 		 *  SHOULD be used.
 		 * -- extra note by nkoth: I've cleaned this up - so all the checking is done here now.
@@ -427,12 +446,12 @@ class MultilingualLib extends TikiLib
 
 	function normalizeTranslationBitFlags( $flags )
 	{
-		if	( !is_array( $flags ) ) {
-			$flags = explode( ',', $flags );
+		if ( !is_array($flags) ) {
+			$flags = explode(',', $flags);
 		}
 
 		// Add supported flags as they get added
-		return array_intersect( $flags, $this->getSupportedTranslationBitFlags() );
+		return array_intersect($flags, $this->getSupportedTranslationBitFlags());
 	}
 
 	function createTranslationBit($type, $objId, $version = 0, $flags = array())
@@ -441,11 +460,11 @@ class MultilingualLib extends TikiLib
 			die('Translation sync only available for wiki pages.');
 		}
 
-		$flags = $this->normalizeTranslationBitFlags( $flags );
-		$flags = implode( ',', $flags );
+		$flags = $this->normalizeTranslationBitFlags($flags);
+		$flags = implode(',', $flags);
 
 		if ( $version == 0 ) {
-			$info = $this->get_page_info_from_id( $objId );
+			$info = $this->get_page_info_from_id($objId);
 			$version = $info['version'];
 		}
 
@@ -453,7 +472,8 @@ class MultilingualLib extends TikiLib
 						"INSERT
 						INTO tiki_pages_translation_bits (`page_id`, `version`,`flags` )
 						VALUES(?, ?, ?)",
-						array( (int) $objId, (int) $version, $flags ) );
+						array( (int) $objId, (int) $version, $flags )
+		);
 	}
 
 	function propagateTranslationBits( $type, $sourceId, $targetId, $sourceVersion = 0, $targetVersion = 0 )
@@ -470,12 +490,12 @@ class MultilingualLib extends TikiLib
 		$targetVersion = (int) $targetVersion;
 
 		if ( $sourceVersion == 0 ) {
-			$info = $this->get_page_info_from_id( $sourceId );
+			$info = $this->get_page_info_from_id($sourceId);
 			$sourceVersion = (int) $info['version'];
 		}
 
 		if ( $targetVersion == 0 ) {
-			$info = $this->get_page_info_from_id( $targetId );
+			$info = $this->get_page_info_from_id($targetId);
 			$targetVersion = (int) $info['version'];
 		}
 
@@ -484,64 +504,72 @@ class MultilingualLib extends TikiLib
 			 the selected version. From the list, exclude those that originated
 			 from the target or were already incorporated in a previous update.
 		*/
-		$result = $this->query( "
-			SELECT translation_bit_id, original_translation_bit, flags
-			FROM tiki_pages_translation_bits
-			WHERE 
-				page_id = ? 
-				AND version <= ? 
-				AND original_translation_bit IS NULL
-				AND translation_bit_id NOT IN(
-					SELECT original_translation_bit 
-					FROM tiki_pages_translation_bits 
-					WHERE page_id = ? AND original_translation_bit IS NOT NULL
-				)
-				UNION
-					SELECT translation_bit_id, original_translation_bit, flags
-					FROM tiki_pages_translation_bits
-					WHERE 
-					page_id = ? 
-						AND version <= ? 
-						AND original_translation_bit IS NOT NULL 
-						AND original_translation_bit NOT IN(
-							SELECT translation_bit_id
-							FROM tiki_pages_translation_bits 
-							WHERE page_id = ?
-						)
-					AND original_translation_bit NOT IN(
-							SELECT original_translation_bit
-							FROM tiki_pages_translation_bits 
-							WHERE page_id = ? AND original_translation_bit IS NOT NULL
+		$result = $this->query(
+						"SELECT translation_bit_id, original_translation_bit, flags
+						FROM tiki_pages_translation_bits
+						WHERE 
+							page_id = ? 
+							AND version <= ? 
+							AND original_translation_bit IS NULL
+							AND translation_bit_id NOT IN(
+								SELECT original_translation_bit 
+								FROM tiki_pages_translation_bits 
+								WHERE page_id = ? AND original_translation_bit IS NOT NULL
 							)
-					",
-					array( $sourceId, $sourceVersion, $targetId, $sourceId, $sourceVersion, $targetId, $targetId ) );
+							UNION
+								SELECT translation_bit_id, original_translation_bit, flags
+								FROM tiki_pages_translation_bits
+								WHERE 
+									page_id = ? 
+									AND version <= ? 
+									AND original_translation_bit IS NOT NULL 
+									AND original_translation_bit NOT IN(
+										SELECT translation_bit_id
+										FROM tiki_pages_translation_bits 
+										WHERE page_id = ?
+									)
+								AND original_translation_bit NOT IN(
+									SELECT original_translation_bit
+									FROM tiki_pages_translation_bits 
+									WHERE page_id = ? AND original_translation_bit IS NOT NULL
+							)",
+						array( $sourceId, $sourceVersion, $targetId, $sourceId, $sourceVersion, $targetId, $targetId )
+		);
 
-		$query = "
-			INSERT INTO tiki_pages_translation_bits (
+		$query =
+			"INSERT INTO tiki_pages_translation_bits (
 					page_id, 
 					version, 
 					source_translation_bit, 
 					original_translation_bit, 
 					flags)
 			VALUES( ?, ?, ?, ?, ? )";
+
 		while ( $row = $result->fetchRow() ) {
 			if ( empty( $row['original_translation_bit'] ) ) {
 				// The translation bit is the original one
-				$this->query( $query, 
-											array($targetId, 
-														$targetVersion, 
-														$row['translation_bit_id'], 
-														$row['translation_bit_id'], 
-														$row['flags'] ) 
-										);
+				$this->query(
+								$query,
+								array(
+									$targetId,
+									$targetVersion,
+									$row['translation_bit_id'],
+									$row['translation_bit_id'],
+									$row['flags']
+								)
+				);
 			} else {
 				// The transation bit was propagated to the source
-				$this->query( $query, 
-											array($targetId, 
-														$targetVersion, 
-														$row['translation_bit_id'], 
-														$row['original_translation_bit'], 
-														$row['flags'] ) );
+				$this->query(
+								$query,
+								array(
+									$targetId,
+									$targetVersion,
+									$row['translation_bit_id'],
+									$row['original_translation_bit'],
+									$row['flags']
+								)
+				);
 			}
 		}
 	}
@@ -553,32 +581,32 @@ class MultilingualLib extends TikiLib
 		}
 
 		$objId = (int) $objId;
-		$flags = $this->normalizeTranslationBitFlags( $flags );
+		$flags = $this->normalizeTranslationBitFlags($flags);
 
 		$conditions = array( '1 = 1' );
 		foreach ( $flags as $flag ) {
 			$conditions[] = "( FIND_IN_SET('$flag', bits.flags) > 0 )";
 		}
 
-		$conditions = implode( ' AND ', $conditions );
-		$result = $this->query( "
-					SELECT
-					bits.translation_bit_id, bits.page_id
-					FROM
-					tiki_translated_objects a
-					INNER JOIN tiki_translated_objects b ON a.`traId` = b.`traId` AND a.`objId` <> b.`objId`
-					INNER JOIN tiki_pages_translation_bits bits ON b.`objId` = bits.page_id
-					LEFT JOIN tiki_pages_translation_bits self
-					ON bits.`translation_bit_id` = self.`original_translation_bit` AND self.`page_id` = ?
-					WHERE
-					a.`type` = 'wiki page'
-					AND b.`type` = 'wiki page'
-					AND a.`objId` = ?
-					AND bits.`original_translation_bit` IS NULL
-					AND self.`original_translation_bit` IS NULL
-					AND $conditions
-					", 
-					array( $objId, $objId ) );
+		$conditions = implode(' AND ', $conditions);
+		$result = $this->query(
+						"SELECT
+							bits.translation_bit_id, bits.page_id
+						FROM
+							tiki_translated_objects a
+							INNER JOIN tiki_translated_objects b ON a.`traId` = b.`traId` AND a.`objId` <> b.`objId`
+							INNER JOIN tiki_pages_translation_bits bits ON b.`objId` = bits.page_id
+							LEFT JOIN tiki_pages_translation_bits self
+							ON bits.`translation_bit_id` = self.`original_translation_bit` AND self.`page_id` = ?
+						WHERE
+							a.`type` = 'wiki page'
+							AND b.`type` = 'wiki page'
+							AND a.`objId` = ?
+							AND bits.`original_translation_bit` IS NULL
+							AND self.`original_translation_bit` IS NULL
+							AND $conditions",
+						array( $objId, $objId )
+		);
 		
 		$bits = array();
 		while ( $row = $result->fetchRow() ) {
@@ -597,22 +625,23 @@ class MultilingualLib extends TikiLib
 		$pageIdToUpdate = (int) $pageIdToUpdate;
 		$translationBit = (int) $translationBit;
 
-		$result = $this->query( "
-					SELECT
-					`pageName` page,
-					lang,
-					" . $this->subqueryObtainUpdateVersion( 'pages.page_id', '?' ) . " last_update,
-					pages.version current_version
-					FROM
-					tiki_pages_translation_bits bits
-					INNER JOIN tiki_pages pages ON pages.page_id = bits.page_id
-					WHERE
-					translation_bit_id = ?
-					OR original_translation_bit = ?
-					", array( $pageIdToUpdate, $translationBit, $translationBit ) );
+		$result = $this->query(
+						"SELECT
+							`pageName` page,
+							lang,"
+						. $this->subqueryObtainUpdateVersion('pages.page_id', '?') . " last_update,
+								pages.version current_version
+							FROM
+								tiki_pages_translation_bits bits
+								INNER JOIN tiki_pages pages ON pages.page_id = bits.page_id
+							WHERE
+								translation_bit_id = ? OR original_translation_bit = ?",
+						array( $pageIdToUpdate, $translationBit, $translationBit )
+		);
 
 		$pages = array();
 		global $prefs;			
+
 		while ( $row = $result->fetchRow() ) {
 			if ( $row['lang'] == $prefs['site_language'] ) {
 				$pages[] = $row;
@@ -624,27 +653,28 @@ class MultilingualLib extends TikiLib
 
 	function getSourceHistory( $pageId )
 	{
-		$result = $this->query( "
-				SELECT DISTINCT
-					target.version as `group`,
-					page.page_id,
-					page.pageName as page,
-					MAX(source.version) as version
-				FROM
-					tiki_pages_translation_bits source
-					INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
-					INNER JOIN tiki_pages page ON source.page_id = page.page_id
-				WHERE
-					target.page_id = ?
-				GROUP BY target.version, page.page_id",
-				array( $pageId ) );
+		$result = $this->query(
+						"SELECT DISTINCT
+							target.version as `group`,
+							page.page_id,
+							page.pageName as page,
+							MAX(source.version) as version
+						FROM
+							tiki_pages_translation_bits source
+							INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+							INNER JOIN tiki_pages page ON source.page_id = page.page_id
+						WHERE
+							target.page_id = ?
+						GROUP BY target.version, page.page_id",
+						array( $pageId )
+		);
 
 		$list = array();
 
 		while ( $row = $result->fetchRow() ) {
 			$group = $row['group'];
 
-			if ( ! array_key_exists( $group, $list ) ) {
+			if ( ! array_key_exists($group, $list) ) {
 				$list[$group] = array();
 			}
 			$list[$group][] = $row;
@@ -655,27 +685,28 @@ class MultilingualLib extends TikiLib
 
 	function getTargetHistory( $pageId )
 	{
-		$result = $this->query( "
-				SELECT DISTINCT
-					MAX(source.version) as `group`,
-					page.page_id,
-					page.pageName as page,
-					target.version as version
-				FROM
-					tiki_pages_translation_bits source
-					INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
-					INNER JOIN tiki_pages page ON target.page_id = page.page_id
-				WHERE
-					source.page_id = ?
-				GROUP BY page.page_id, target.version",
-				array( $pageId ) );
+		$result = $this->query(
+						"SELECT DISTINCT
+							MAX(source.version) as `group`,
+							page.page_id,
+							page.pageName as page,
+							target.version as version
+						FROM
+							tiki_pages_translation_bits source
+							INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+							INNER JOIN tiki_pages page ON target.page_id = page.page_id
+						WHERE
+							source.page_id = ?
+						GROUP BY page.page_id, target.version",
+						array( $pageId )
+		);
 
 		$list = array();
 
 		while ( $row = $result->fetchRow() ) {
 			$group = $row['group'];
 
-			if ( ! array_key_exists( $group, $list ) ) {
+			if ( ! array_key_exists($group, $list) ) {
 				$list[$group] = array();
 			}
 
@@ -691,7 +722,7 @@ class MultilingualLib extends TikiLib
 
 		/*
 			Fetches the lowest version of source containing a bit not present
-			in target. 
+			in target.
 
 			-1 is made on the version so the diff is made properly.
 			IFNULL defaults to 2 so no result is turned back to 1
@@ -720,7 +751,7 @@ class MultilingualLib extends TikiLib
 			SELECT DISTINCT
 				page.page_id,
 				page.pageName page,
-				" . $this->subqueryObtainUpdateVersion( 'a.objId', 'b.objId' ) . " last_update,
+				" . $this->subqueryObtainUpdateVersion('a.objId', 'b.objId') . " last_update,
 				page.version current_version,
 				page.lang
 					FROM
@@ -736,9 +767,8 @@ class MultilingualLib extends TikiLib
 							SELECT IFNULL( original_translation_bit, translation_bit_id )
 							FROM tiki_pages_translation_bits
 							WHERE page_id = b.objId
-							)
-			";
-		$result = $this->query($query, array( $pageId ) );
+					)";
+		$result = $this->query($query, array( $pageId ));
 
 		$pages = array();
 		while ( $row = $result->fetchRow() ) {
@@ -752,36 +782,37 @@ class MultilingualLib extends TikiLib
 	{
 		$pageId = (int) $pageId;
 
-		$result = $this->query( "
-				SELECT DISTINCT
-					page.page_id,
-					page.pageName page,
-					" . $this->subqueryObtainUpdateVersion( 'b.objId', 'a.objId' ) . " last_update,
-					page.lang
-				FROM
-					tiki_pages page
-					INNER JOIN tiki_translated_objects a ON a.objId = page.page_id
-					INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
-				WHERE
-					a.type = 'wiki page'
-					AND b.type = 'wiki page'
-					AND b.objId = ?
-					AND (
-						SELECT COUNT(*)
-						FROM tiki_pages_translation_bits
-						WHERE page_id = b.objId
-						) > (
-							SELECT COUNT(*)
-							FROM
-							tiki_pages_translation_bits self
-							INNER JOIN tiki_pages_translation_bits candidate
-							ON IFNULL(self.original_translation_bit, self.translation_bit_id)
-							= IFNULL(candidate.original_translation_bit, candidate.translation_bit_id)
-							WHERE
-							self.page_id = b.objId
-							AND candidate.page_id = a.objId
-							)
-					", array( $pageId ) );
+		$result = $this->query(
+						"SELECT DISTINCT
+							page.page_id,
+							page.pageName page,"
+						. $this->subqueryObtainUpdateVersion('b.objId', 'a.objId') 
+						. " last_update,
+							page.lang
+						FROM
+							tiki_pages page
+							INNER JOIN tiki_translated_objects a ON a.objId = page.page_id
+							INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
+						WHERE
+							a.type = 'wiki page'
+							AND b.type = 'wiki page'
+							AND b.objId = ?
+							AND (
+								SELECT COUNT(*)
+									FROM tiki_pages_translation_bits
+									WHERE page_id = b.objId
+							) > (
+								SELECT COUNT(*)
+								FROM
+									tiki_pages_translation_bits self
+								INNER JOIN tiki_pages_translation_bits candidate
+									ON IFNULL(self.original_translation_bit, self.translation_bit_id)
+									= IFNULL(candidate.original_translation_bit, candidate.translation_bit_id)
+								WHERE
+									self.page_id = b.objId AND candidate.page_id = a.objId
+							)",
+						array( $pageId )
+		);
 
 		$pages = array();
 		while ( $row = $result->fetchRow() ) {
@@ -864,7 +895,7 @@ class MultilingualLib extends TikiLib
 		$userLangIDs = $this->preferredLangs();
 
 		// Get information about ALL languages supported by Tiki
-		$allLangsInfo = $tikilib->list_languages(false,'y');
+		$allLangsInfo = $tikilib->list_languages(false, 'y');
 
 		// Create a map of language ID (ex: 'en') to language info
 		$langIDs2Info = array();
@@ -893,8 +924,10 @@ class MultilingualLib extends TikiLib
 
 		$all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
 		$looking_for_templates_named = array("$template_name-$language");
+
 		foreach ($looking_for_templates_named as $looking_for_this_template) {
 			$looking_for_this_template = "$template_name-$language";
+
 			foreach ($all_templates['data'] as $a_template) {
 				$a_template_name = $a_template['name'];
 				if ($a_template_name == $looking_for_this_template) {
@@ -954,6 +987,7 @@ class MultilingualLib extends TikiLib
 	{
 		$join .= " left join `tiki_translated_objects` tro on (tro.`type` = '$objectType' AND tro.`objId` = $sqlObjectId.`$columnObjectId`) ";
 		$translationOrphan_mid = " tro.`traId` IS NULL OR $sqlObjectId.`lang`IS NULL ";
+
 		foreach ($langs as $i=>$lg) {
 			$join .= " left join `tiki_translated_objects` tro_$i on (tro_$i.`traId` = tro.`traId` AND tro_$i.`lang`=?) ";
 			$translationOrphan_mid .= " OR tro_$i.`traId` IS NULL ";
@@ -961,7 +995,9 @@ class MultilingualLib extends TikiLib
 		}
 
 		if (!empty($mid)) $mid .= ' AND ';
+
 		$mid .= "($translationOrphan_mid)";
+
 		if (count($langs) == 1) {
 			$mid .= " AND ($sqlObjectId.`lang` != ? OR $sqlObjectId.`lang` IS NULL) ";
 			$bindvars[] = $langs[0];
