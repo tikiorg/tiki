@@ -912,7 +912,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		if ( ! $skip_status_perm_check && $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
+		if ( ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) && ! $skip_status_perm_check && $status ) {
 			return array('cant' => 0, 'data' => '');
 		}
 		if ( substr($sort_mode, 0, 2) == 'f_' ) {
