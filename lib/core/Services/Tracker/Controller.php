@@ -64,15 +64,17 @@ class Services_Tracker_Controller
 				throw new Services_Exception_DuplicateValue('permName', $permName);
 			}
 
-			$fieldId = $this->utilities->createField(array(
-				'trackerId' => $trackerId,
-				'name' => $name,
-				'permName' => $permName,
-				'type' => $type,
-				'description' => $description,
-				'descriptionIsParsed' => $wikiparse,
-				'isHidden' => $adminOnly ? 'y' : 'n',
-			));
+			$fieldId = $this->utilities->createField(
+							array(
+								'trackerId' => $trackerId,
+								'name' => $name,
+								'permName' => $permName,
+								'type' => $type,
+								'description' => $description,
+								'descriptionIsParsed' => $wikiparse,
+								'isHidden' => $adminOnly ? 'y' : 'n',
+							)
+			);
 
 			if ($input->submit_and_edit->none() || $input->next->word() === 'edit') {
 				return array(
@@ -215,27 +217,33 @@ class Services_Tracker_Controller
 		}
 
 		if ($input->name->text()) {
-			$input->replaceFilters(array(
-				'visible_by' => 'groupname',
-				'editable_by' => 'groupname',
-			));
+			$input->replaceFilters(
+							array(
+								'visible_by' => 'groupname',
+								'editable_by' => 'groupname',
+							)
+			);
 			$visibleBy = $input->asArray('visible_by', ',');
 			$editableBy = $input->asArray('editable_by', ',');
-			$this->utilities->updateField($trackerId, $fieldId, array(
-				'name' => $input->name->text(),
-				'description' => $input->description->text(),
-				'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
-				'options' => $this->utilities->buildOptions($input->option, $typeInfo),
-				'validation' => $input->validation_type->word(),
-				'validationParam' => $input->validation_parameter->none(),
-				'validationMessage' => $input->validation_message->text(),
-				'isMultilingual' => $input->multilingual->int() ? 'y' : 'n',
-				'visibleBy' => array_filter(array_map('trim', $visibleBy)),
-				'editableBy' => array_filter(array_map('trim', $editableBy)),
-				'isHidden' => $input->visibility->alpha(),
-				'errorMsg' => $input->error_message->text(),
-				'permName' => $permName,
-			));
+			$this->utilities->updateField(
+							$trackerId, 
+							$fieldId, 
+							array(
+								'name' => $input->name->text(),
+								'description' => $input->description->text(),
+								'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
+								'options' => $this->utilities->buildOptions($input->option, $typeInfo),
+								'validation' => $input->validation_type->word(),
+								'validationParam' => $input->validation_parameter->none(),
+								'validationMessage' => $input->validation_message->text(),
+								'isMultilingual' => $input->multilingual->int() ? 'y' : 'n',
+								'visibleBy' => array_filter(array_map('trim', $visibleBy)),
+								'editableBy' => array_filter(array_map('trim', $editableBy)),
+								'isHidden' => $input->visibility->alpha(),
+								'errorMsg' => $input->error_message->text(),
+								'permName' => $permName,
+							)
+			);
 		}
 
 		return array(
@@ -390,11 +398,15 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
-		$items = $this->utilities->getItems(array(
-			'trackerId' => $trackerId,
-			'status' => $status,
-			'modifiedSince' => $modifiedSince,
-		), $maxRecords, $offset);
+		$items = $this->utilities->getItems(
+						array(
+							'trackerId' => $trackerId,
+							'status' => $status,
+							'modifiedSince' => $modifiedSince,
+						), 
+						$maxRecords, 
+						$offset
+		);
 
 		if ($format !== 'raw') {
 			foreach ($items as & $item) {
@@ -466,10 +478,13 @@ class Services_Tracker_Controller
 				}
 			}
 
-			$itemId = $this->utilities->insertItem($definition, array(
-				'status' => $input->status->word(),
-				'fields' => $fields,
-			));
+			$itemId = $this->utilities->insertItem(
+							$definition, 
+							array(
+								'status' => $input->status->word(),
+								'fields' => $fields,
+							)
+			);
 
 			if ($itemId) {
 				TikiLib::lib('unifiedsearch')->processUpdateQueue();
@@ -509,11 +524,14 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
 
-		$this->utilities->updateItem($definition, array(
-			'itemId' => $itemId,
-			'status' => $input->status->word(),
-			'fields' => $input->fields->none(),
-		));
+		$this->utilities->updateItem(
+						$definition, 
+						array(
+							'itemId' => $itemId,
+							'status' => $input->status->word(),
+							'fields' => $input->fields->none(),
+						)
+		);
 		TikiLib::lib('unifiedsearch')->processUpdateQueue();
 
 		return array(
@@ -892,8 +910,8 @@ class Services_Tracker_Controller
 		$export_yaml = $profileTrackerInstallHandler->_export($trackerId, $profileObject);
 
 		include_once 'lib/wiki-plugins/wikiplugin_code.php';
-		$export_yaml =  wikiplugin_code( $export_yaml, array('caption' => 'YAML', 'colors' => 'yaml' ));
-		$export_yaml = preg_replace( '/~[\/]?np~/', '', $export_yaml);
+		$export_yaml = wikiplugin_code($export_yaml, array('caption' => 'YAML', 'colors' => 'yaml'));
+		$export_yaml = preg_replace('/~[\/]?np~/', '', $export_yaml);
 
 		return array(
 			'trackerId' => $trackerId,
@@ -973,14 +991,14 @@ class Services_Tracker_Controller
 
 			$trklib = TikiLib::lib('trk');
 			$count = $trklib->import_csv(
-				$trackerId,
-				$fp,
-				($input->add_items->int() !== 1),	// checkbox is "Create as new items" - param is replace_rows
-				$input->dateFormat->text(),
-				$input->encoding->text(),
-				$input->separator->text(),
-				$input->updateLastModif->int(),
-				$input->convertItemLinkValues->int()
+							$trackerId,
+							$fp,
+							($input->add_items->int() !== 1),	// checkbox is "Create as new items" - param is replace_rows
+							$input->dateFormat->text(),
+							$input->encoding->text(),
+							$input->separator->text(),
+							$input->updateLastModif->int(),
+							$input->convertItemLinkValues->int()
 			);
 
 			fclose($fp);
@@ -997,7 +1015,8 @@ class Services_Tracker_Controller
 		);
 	}
 
-	function action_vote($input) {
+	function action_vote($input)
+	{
 		$requestData = array();
 		$requestData['itemId'] = $input->i->int();
 		$requestData['fieldId'] = $input->f->int();
@@ -1073,7 +1092,7 @@ class Services_Tracker_Controller
 		$display_tz = $tikilib->get_display_timezone();
 		if ( $display_tz == '' ) $display_tz = 'UTC';
 		$tikidate->setTZbyID($display_tz);
-		$tikidate->setLocalTime($day,$month,$year,$hour,$minute,$second,0);
+		$tikidate->setLocalTime($day, $month, $year, $hour, $minute, $second, 0);
 		return $tikidate->getTime();
 	}
 

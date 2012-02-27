@@ -37,22 +37,23 @@ class Services_AuthSource_Controller
 			throw new Services_Exception(tr('Invalid data'), 406);
 		}
 
-		return $this->sources()->insertOrUpdate(array(
-			'scheme' => $info['scheme'],
-			'domain' => $info['host'],
-			'path' => $info['path'],
-			'method' => $method,
-			'arguments' => json_encode($arguments),
-		), array(
-			'identifier' => $identifier,
-		));
+		return $this->sources()->insertOrUpdate(
+						array(
+							'scheme' => $info['scheme'],
+							'domain' => $info['host'],
+							'path' => $info['path'],
+							'method' => $method,
+							'arguments' => json_encode($arguments),
+						), 
+						array('identifier' => $identifier,)
+		);
 	}
 
 	function action_fetch($input)
 	{
-		$data = $this->sources()->fetchFullRow(array(
-			'identifier' => $input->identifier->text(),
-		));
+		$data = $this->sources()->fetchFullRow(
+						array('identifier' => $input->identifier->text(),)
+		);
 
 		$data['arguments'] = json_decode($data['arguments'], true);
 		$data['url'] = "{$data['scheme']}://{$data['domain']}{$data['path']}";
@@ -62,9 +63,9 @@ class Services_AuthSource_Controller
 
 	function action_delete($input)
 	{
-		return $this->sources()->delete(array(
-			'identifier' => $input->identifier->text(),
-		));
+		return $this->sources()->delete(
+						array('identifier' => $input->identifier->text(),)
+		);
 	}
 }
 

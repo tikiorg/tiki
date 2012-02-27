@@ -17,9 +17,12 @@ class Services_User_Controller
 
 		if (is_array($groupIds)) {
 			$table = TikiDb::get()->table('users_groups');
-			$groupFilter = $table->fetchColumn('groupName', array(
-				'id' => $table->in($groupIds),
-			));
+			$groupFilter = $table->fetchColumn(
+							'groupName', 
+							array(
+								'id' => $table->in($groupIds),
+							)
+			);
 		}
 
 		$result = TikiLib::lib('user')->get_users($offset, $maxRecords, 'login_asc', '', '', false, $groupFilter);

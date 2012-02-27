@@ -114,11 +114,14 @@ class Services_Comment_Controller
 			if (empty($user) && $prefs['feature_antibot'] == 'y') {
 				$captchalib = TikiLib::lib('captcha');
 
-				if (! $captchalib->validate(array(
-					'recaptcha_challenge_field' => $input->recaptcha_challenge_field->none(),
-					'recaptcha_response_field' => $input->recaptcha_response_field->none(),
-					'captcha' => $input->captcha->none(),
-				))) {
+				if (! $captchalib->validate(
+								array(
+									'recaptcha_challenge_field' => $input->recaptcha_challenge_field->none(),
+									'recaptcha_response_field' => $input->recaptcha_response_field->none(),
+									'captcha' => $input->captcha->none(),
+								)
+				)
+				) {
 					$errors[] = $captchalib->getErrors();
 				}
 			}
@@ -129,7 +132,23 @@ class Services_Comment_Controller
 
 			if (count($errors) === 0) {
 				$message_id = ''; // By ref
-				$threadId = $commentslib->post_new_comment("$type:$objectId", $parentId, $user, $title, $data, $message_id, $parent ? $parent['message_id'] : '', 'n', '', '', $contributions, $anonymous_name, '', $anonymous_email, $anonymous_website);
+				$threadId = $commentslib->post_new_comment(
+								"$type:$objectId", 
+								$parentId, 
+								$user, 
+								$title, 
+								$data, 
+								$message_id, 
+								$parent ? $parent['message_id'] : '', 
+								'n', 
+								'', 
+								'', 
+								$contributions, 
+								$anonymous_name, 
+								'', 
+								$anonymous_email, 
+								$anonymous_website
+				);
 
 				if ($threadId) {
 					if ($prefs['wiki_watch_comments'] == 'y' && $type == 'wiki page') {
@@ -415,7 +434,8 @@ class Services_Comment_Controller
 		}
 	}
 
-	private function canLock($type, $objectId) {
+	private function canLock($type, $objectId)
+	{
 		global $prefs;
 
 		if ($prefs['feature_comments_locking'] != 'y') {
@@ -432,7 +452,8 @@ class Services_Comment_Controller
 		return ! $commentslib->is_object_locked("$type:$objectId");
 	}
 
-	private function canUnlock($type, $objectId) {
+	private function canUnlock($type, $objectId)
+	{
 		global $prefs;
 
 		if ($prefs['feature_comments_locking'] != 'y') {
@@ -449,7 +470,8 @@ class Services_Comment_Controller
 		return $commentslib->is_object_locked("$type:$objectId");
 	}
 
-	private function canArchive($type, $objectId) {
+	private function canArchive($type, $objectId)
+	{
 		global $prefs;
 
 		if ($prefs['comments_archive'] != 'y') {
@@ -461,12 +483,14 @@ class Services_Comment_Controller
 		return $perms->admin_comments;
 	}
 
-	private function canRemove($type, $objectId) {
+	private function canRemove($type, $objectId)
+	{
 		$perms = Perms::get($type, $objectId);
 		return $perms->remove_comments;
 	}
 
-	private function canModerate($type, $objectId) {
+	private function canModerate($type, $objectId)
+	{
 		global $prefs;
 
 		if ($prefs['feature_comments_moderation'] != 'y') {
