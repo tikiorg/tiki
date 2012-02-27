@@ -294,7 +294,7 @@ class TikiDate
 class Date_Calc
 {
 
-	function daysInMonth($month,$year) {
+	static public function daysInMonth($month,$year) {
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
 	
