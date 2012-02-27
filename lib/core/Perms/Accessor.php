@@ -21,112 +21,131 @@ class Perms_Accessor implements ArrayAccess
 	private $groups = array();
 	private $checkSequence = null;
 
-	function setPrefix( $prefix ) {
+	function setPrefix( $prefix )
+	{
 		$this->prefix = $prefix;
 	}
 
-	function getPrefix() {
+	function getPrefix()
+	{
 		return $this->prefix;
 	}
 
-	function setGroups( array $groups ) {
+	function setGroups( array $groups )
+	{
 		$this->groups = $groups;
 	}
 
-	function getGroups() {
+	function getGroups()
+	{
 		return $this->groups;
 	}
 
-	function setResolver( Perms_Resolver $resolver ) {
+	function setResolver( Perms_Resolver $resolver )
+	{
 		$this->resolver = $resolver;
 	}
 
-	function getResolver() {
+	function getResolver()
+	{
 		return $this->resolver;
 	}
 
-	function from() {
+	function from()
+	{
 		return $this->resolver->from();
 	}
 
-	function setContext( array $context ) {
+	function setContext( array $context )
+	{
 		$this->context = $context;
 	}
 
-	function getContext() {
+	function getContext()
+	{
 		return $this->context;
 	}
 
-	function setCheckSequence( array $sequence ) {
+	function setCheckSequence( array $sequence )
+	{
 		$this->checkSequence = $sequence;
 	}
 
-	function __get( $name ) {
+	function __get( $name )
+	{
 
 		if ( $this->resolver ) {
-			$name = $this->sanitize( $name );
+			$name = $this->sanitize($name);
 			
-			return $this->checkPermission( $name );
+			return $this->checkPermission($name);
 		} else {
 			return false;
 		}
 	}
 
-	private function checkPermission( $name ) {
+	private function checkPermission( $name )
+	{
 		if ( $this->checkSequence ) {
-			foreach( $this->checkSequence as $check ) {
-				if ( $check->check( $this->resolver, $this->context, $name, $this->groups ) ) {
+			foreach ( $this->checkSequence as $check ) {
+				if ( $check->check($this->resolver, $this->context, $name, $this->groups) ) {
 					return true;
 				}
 			}
 
 			return false;
 		} else {
-			return $this->resolver->check( $name, $this->groups );
+			return $this->resolver->check($name, $this->groups);
 		}
 	}
 
-	function globalize( $permissions, $smarty = null, $sanitize = true ) {
-		foreach( $permissions as $perm ) {
+	function globalize( $permissions, $smarty = null, $sanitize = true )
+	{
+		foreach ( $permissions as $perm ) {
 			if ( $sanitize ) {
-				$perm = $this->sanitize( $perm );
+				$perm = $this->sanitize($perm);
 			}
-			$val = $this->checkPermission( $perm ) ? 'y' : 'n';
+			$val = $this->checkPermission($perm) ? 'y' : 'n';
 			$GLOBALS[ $this->prefix . $perm ] = $val;
 
 			if ( $smarty ) {
-				$smarty->assign( 'tiki_p_' . $perm, $val );
+				$smarty->assign('tiki_p_' . $perm, $val);
 			}
 		}
 	}
 
-	private function sanitize( $name ) {
-		if ( $this->prefix && $name{0} == $this->prefix{0} && strpos( $name, $this->prefix ) === 0 ) {
-			return substr( $name, strlen( $this->prefix ) );
+	private function sanitize( $name )
+	{
+		if ( $this->prefix && $name{0} == $this->prefix{0} && strpos($name, $this->prefix) === 0 ) {
+			return substr($name, strlen($this->prefix));
 		} else {
 			return $name;
 		}
 	}
 
-	public function offsetGet( $name ) {
-		return $this->__get( $name );
+	public function offsetGet( $name )
+	{
+		return $this->__get($name);
 	}
 
-	public function offsetSet( $name, $value ) {
+	public function offsetSet( $name, $value )
+	{
 	}
 
-	public function offsetUnset( $name ) {
+	public function offsetUnset( $name )
+	{
 	}
 
-	public function offsetExists( $name ) {
+	public function offsetExists( $name )
+	{
 		return true;
 	}
 
-	public function applicableGroups() {
+	public function applicableGroups()
+	{
 		if ( $this->checkSequence ) {
 			$groups = array();
-			foreach( $this->checkSequence as $check ) {
-				$groups = array_merge( $groups, $check->applicableGroups( $this->resolver ) );
+			foreach ( $this->checkSequence as $check ) {
+				$groups = array_merge($groups, $check->applicableGroups($this->resolver));
 			}
 
 			return array_unique($groups);
