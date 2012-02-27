@@ -236,8 +236,9 @@ class HeaderLib
 
 	function output_js_files()
 	{
-		global $prefs;
+		global $prefs, $smarty;
 
+		$smarty->loadPlugin('smarty_modifier_escape');
 		ksort($this->jsfiles);
 
 		$back = "\n";
@@ -455,9 +456,8 @@ class HeaderLib
 	 */
 	function getJsfiles()
 	{
-		if (! function_exists('smarty_modifier_escape')) {
-			require_once 'lib/smarty_tiki/modifier.escape.php';
-		}
+		global $smarty;
+		$smarty->loadPlugin('smarty_modifier_escape');
 		
 		ksort($this->jsfiles);
 		$out = array();
@@ -550,7 +550,8 @@ class HeaderLib
 	
 	private function output_css_files_list( $files, $media )
 	{
-		global $prefs;
+		global $prefs, $smarty;
+		$smarty->loadPlugin('smarty_modifier_escape');
 
 		$back = '';
 

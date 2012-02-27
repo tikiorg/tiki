@@ -54,7 +54,8 @@ class WikiParser_PluginOutput
 	public static function error( $label, $message )
 	{
 		global $smarty;
-		require_once 'lib/smarty_tiki/block.remarksbox.php';
+		$smarty->loadPlugin('smarty_block_remarksbox');
+		$repeat = false;
 		
 		return new self(
 					'html', 
@@ -64,7 +65,8 @@ class WikiParser_PluginOutput
 										'title' => $label,
 									), 
 									$message, 
-									$smarty
+									$smarty,
+									$repeat
 					) 
 		);
 	}
@@ -75,8 +77,8 @@ class WikiParser_PluginOutput
 
 		if ( Perms::get()->admin ) {
 			global $smarty;
-			require_once 'lib/smarty_tiki/function.preference.php';
-			require_once 'lib/smarty_tiki/modifier.escape.php';
+			$smarty->loadPlugin('smarty_function_preference');
+			$smarty->loadPlugin('smarty_modifier_escape');
 			$content .= '<form method="post" action="tiki-admin.php">';
 			foreach ( $preferences as $pref ) {
 				$content .= smarty_function_preference(array('name' => $pref), $smarty);

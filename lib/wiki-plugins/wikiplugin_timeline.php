@@ -91,8 +91,8 @@ function wikiplugin_timeline_info()
 
 function wikiplugin_timeline($data, $params)
 {
-
-	require_once 'lib/smarty_tiki/modifier.escape.php';
+	global $smarty;
+	$smarty->loadPlugin('smarty_modifier_escape');
 
 	$default = array('scale1' => 'month', 'width' => '100%', 'height' => '400px');
 	$params = array_merge($default, $params);

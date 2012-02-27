@@ -371,7 +371,8 @@ class ObjectLib extends TikiLib
 
 	function get_metadata($type, $object, & $classList)
 	{
-		require_once 'lib/smarty_tiki/modifier.escape.php';
+		global $smarty;
+		$smarty->loadPlugin('smarty_modifier_escape');
 
 		$escapedType = smarty_modifier_escape($type);
 		$escapedObject = smarty_modifier_escape($object);
