@@ -924,7 +924,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		$path = $filegallib->getPath($galleryId);
 		$smarty->assign('gallery_path', $path['HTML']);
 	}
-	$smarty->assignByRef('tree', $filegallib->getTreeHTML($galleryId));
+	$smarty->assign('tree', $filegallib->getTreeHTML($galleryId));
 }
 
 ask_ticket('fgal');

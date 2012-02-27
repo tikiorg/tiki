@@ -53,6 +53,10 @@ function smarty_function_preference( $params, $smarty )
 		}
 		$info['pages'] = $pages_string;
 
+		if ( !isset($info['separator']) ) { 
+			$info['separator'] = array();
+		}
+		
 		$smarty->assign('p', $info);
 
 		if ( isset($params['mode']) && $params['mode'] == 'invert' ) {
@@ -69,7 +73,7 @@ function smarty_function_preference( $params, $smarty )
 			$smarty->assign('codemirror', 'true');
 			$smarty->assign('syntax', $params['syntax']);
 		}
-		
+
 		return $smarty->fetch('prefs/' . $info['type'] . '.tpl', $params['name']);
 	} else {
 		$info = array(
@@ -78,10 +82,12 @@ function smarty_function_preference( $params, $smarty )
 			'name' => tr('Preference %0 is not defined', $params['name']),
 			'tags' => array('modified', 'basic', 'all'),
 			'tagstring' => 'modified basic all',
+			'separator' => null,
 		);
 		if (strpos($_SERVER["SCRIPT_NAME"], 'tiki-edit_perspective.php') !== false) {
 			$info['hint'] = tra('Drag this out of the perspective and resave it.');
 		}
+
 		$smarty->assign('p', $info);
 		return $smarty->fetch('prefs/text.tpl');
 	}

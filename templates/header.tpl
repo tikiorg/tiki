@@ -68,7 +68,7 @@
 			{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 		{/if}
 	{/strip}{/capture}
-	{if $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
+	{if isset($structure) and $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
 		{section loop=$structure_path name=ix}
 		{assign var="aliasname" value={$structure_path[ix].page_alias}}
 		{/section} 	
