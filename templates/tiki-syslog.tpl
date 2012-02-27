@@ -27,7 +27,7 @@
 
 <table class="normal">
 <tr>
-<th>{self_link _sort_arg="sort_mode" _sort_field="id"}{tr}Id{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="actionid"}{tr}Id{/tr}{/self_link}</th>
 <th>{self_link _sort_arg="sort_mode" _sort_field="action"}{tr}Type{/tr}{/self_link}</th>
 <th>{self_link _sort_arg="sort_mode" _sort_field="lastModif"}{tr}Time{/tr}{/self_link}</th>
 <th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</th>
