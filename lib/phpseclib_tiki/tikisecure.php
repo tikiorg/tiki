@@ -9,9 +9,12 @@
 class TikiSecure
 {
 	var $certName = "Tiki Secure Certificate";
+	var $bits = 1024;
 	
-	function __construct()
+	function __construct($certName = "", $bits = 0)
 	{
+		if (!empty($certName)) $this->certName = $certName;
+		if ($bits > 0) $this->bits = $bits;
 	}
 	
 	function encrypt($data = "")
@@ -68,7 +71,7 @@ class TikiSecure
 		require_once('Crypt/RSA.php');
 		
 		$rsa = new Crypt_RSA();
-		$keys = $rsa->createKey();
+		$keys = $rsa->createKey($this->bits);
 		
 		set_include_path($path);
 		
@@ -77,5 +80,20 @@ class TikiSecure
 			->replace(json_encode($keys));
 		
 		return $keys;
+	}
+	
+	function timestamp($hash, $otherData = "")
+	{
+		return $this->encrypt(json_encode(array(
+			"hash"=>		$hash,
+			"otherData"=>	$otherData,
+			"date"=>		now(),
+			"signer"=>		TikiLib::tikiUrl()
+		)));
+	}
+	
+	function verifyTimestamp($cipher)
+	{
+		return json_decode($this->decrypt($cipher));
 	}
 }
