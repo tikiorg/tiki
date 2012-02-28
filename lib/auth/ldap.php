@@ -262,8 +262,14 @@ class TikiLdapLib
 		}
 
 		// todo: only fetch needed attributes
-
-		$entry = $this->ldaplink->getEntry($userdn);
+		
+		//A non-existing user may not return ldaplink->getEntry (found bug on windows server), if not found, user input incorrect username/password
+		if (method_exists($this->ldaplink, "getEntry")) {
+			$entry = $this->ldaplink->getEntry($userdn);
+		} else {
+			return false;
+		}
+		
 		if ($force_reload || Net_LDAP2::isError($entry)) { // wrong userdn. So we have to search
 			// prepare Search Filter
 			$filter = Net_LDAP2_Filter::create($this->options['userattr'], 'equals', $this->options['username']);
