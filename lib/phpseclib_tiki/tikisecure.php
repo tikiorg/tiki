@@ -10,11 +10,22 @@ class TikiSecure
 {
 	var $certName = "Tiki Secure Certificate";
 	var $bits = 1024;
+	var $type = "file";
 	
 	function __construct($certName = "", $bits = 0)
 	{
 		if (!empty($certName)) $this->certName = $certName;
 		if ($bits > 0) $this->bits = $bits;
+	}
+	
+	function typeFile()
+	{
+		$this->type = "file";
+	}
+	
+	function typeFileGallery()
+	{
+		$this->type = "filegallery";
 	}
 	
 	function encrypt($data = "")
@@ -44,20 +55,31 @@ class TikiSecure
 		$rsa->loadKey($keys->privatekey);
 		$rsa->loadKey($keys->publickey);
 		
-		echo $rsa->decrypt($cipher);
+		return $rsa->decrypt($cipher);
 	}
 	
 	function hasKeys()
 	{
-		return FileGallery_File::filename($this->certName)->exists();
+		if ($this->type == "filegallery")
+			return FileGallery_File::filename($this->certName)->exists();
+		
+		if ($this->type == "file") {
+			return file_exists("temp/" . $this->certName);
+		}
 	}
 	
 	function getKeys()
 	{
 		//Get existing certificate if it exists
-		$keys = json_decode(FileGallery_File::filename($this->certName)->data());
-		
-		if (empty($keys)) {
+		if ($this->hasKeys()) {
+			if ($this->type == "filegallery") {
+				$keys = json_decode(FileGallery_File::filename($this->certName)->data());
+			}
+			
+			if ($this->type == "file") {
+				$keys = json_decode(file_get_contents("temp/" . $this->certName));
+			}
+		} else {
 			$keys = $this->newKeys();
 		}
 		
@@ -75,25 +97,49 @@ class TikiSecure
 		
 		set_include_path($path);
 		
-		FileGallery_File::filename($this->certName)
-			->setParam("description", $this->certName)
-			->replace(json_encode($keys));
+		if ($this->type == "filegallery") {
+			FileGallery_File::filename($this->certName)
+				->setParam("description", $this->certName)
+				->replace(json_encode($keys));
+		}
+		
+		if ($this->type == "file") {
+			file_put_contents("temp/" . $this->certName, json_encode($keys));
+		}
 		
 		return $keys;
 	}
 	
-	function timestamp($hash, $otherData = "")
+	static function timestamp($hash, $data = "", $requester = "", $type = "file")
 	{
-		return $this->encrypt(json_encode(array(
-			"hash"=>		$hash,
-			"otherData"=>	$otherData,
-			"date"=>		now(),
-			"signer"=>		TikiLib::tikiUrl()
-		)));
+		$me = new self($requester);
+		$me->type = $type;
+		
+		return json_encode(array(
+			"timestamp"=> urlencode($me->encrypt(json_encode(array(
+				"hash"=>		$hash,
+				"data"=>		$data,
+				"date"=>		time(),
+				"authority"=>	urlencode(TikiLib::tikiUrl())
+			)))),
+			"authority"=> TikiLib::tikiUrl(),
+			"requester"=> $requester
+		));
 	}
 	
-	function verifyTimestamp($cipher)
+	static function openTimestamp($timestamp, $requester = "", $type = "file")
 	{
-		return json_decode($this->decrypt($cipher));
+		$me = new self($requester);
+		$me->type = $type;
+		
+		$timestampArray = json_decode($timestamp);
+		
+		if (!empty($timestampArray->timestamp)) {
+			$timestampArray->timestamp = json_decode($me->decrypt(urldecode($timestampArray->timestamp)));
+			$timestampArray->authority = urldecode($timestampArray->authority);
+			return $timestampArray;
+		} else {
+			return $me->decrypt($timestamp);
+		}
 	}
 }
