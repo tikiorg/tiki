@@ -32,7 +32,11 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 			}
 			
 			if ($this->currentWord == $index['end']) {
-				$word = $word . '<span class="phraseEnd phraseEnd' . $i . '" style="border: none;"></span>';	       						
+				if (empty($this->wordsChars[$this->currentWord])) {
+					$word = $word . '<span class="phraseEnd phraseEnd' . $i . '" style="border: none;"></span>';
+				} else {
+					$word = '<span class="phrase phrase' . $i . '" style="border: none;">' . $word . '</span>';
+				}	       						
 			}
 		}
 		
@@ -51,6 +55,12 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 				$this->currentWord <= $index['end']
 			) {
 				$char = '<span class="phrases phrase' . $i . '" style="border: none;">' . $char . '</span>';
+				
+				if ($this->currentWord == $index['end']) {
+					if (!empty($this->wordsChars[$this->currentWord])) {
+						$char = $char . '<span class="phraseEnd phraseEnd' . $i . '" style="border: none;"></span>';
+					}
+				}
 			}
 		}
 		

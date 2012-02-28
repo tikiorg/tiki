@@ -161,7 +161,18 @@ JQ
 			->add_jsfile("lib/ZeroClipboard.js")
 			->add_jsfile("lib/core/JisonParser/Phraser.js")
 			->add_jsfile("lib/jquery/md5.js");
-			
+		
+		$authorDetails = json_encode(end(TikiLib::lib("trkqry")
+			->tracker("ForwardLink Author Details")
+			->byName()
+			->excludeDetails()
+			->filter(array(
+				'field'=> 'User',
+				'value'=> $user
+			))
+			->render(false)
+			->query()));
+		
 		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . urlencode($args['object']);
 		$version = $args['version'];
 		$date = $args['lastModif'];
@@ -252,12 +263,16 @@ JQ
 											.text(this.question)
 											.appendTo(answersDialog);
 										
-										$('<input />')
+										$('<input class="answerValues" />')
 											.appendTo(answersDialog);
 									});
 									
 									var answersDialogButtons = {};
 									answersDialogButtons[tr("Ok")] = function() {
+										$.each(answers, function(i) {
+											answers[i].answer = escape(answersDialog.find('.answerValues').eq(i).val());
+										});
+										
 										answersDialog.dialog('close');
 										accept();
 									};
