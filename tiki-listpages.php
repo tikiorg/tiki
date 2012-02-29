@@ -138,6 +138,17 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 				}
 			}
 			break;
+		case 'title':
+			if ($tiki_p_admin == 'y') {
+				$access->check_authenticity(tr('Are you sure you want to modify the %0 pages?', count($_REQUEST['checked'])).' '.tr('No history will be created.'));
+				foreach($_REQUEST['checked'] as $check) {
+					$info = $tikilib->get_page_info($check);
+					$info['data'] = "!$check\r\n".$info['data'];
+					$table = $tikilib->table('tiki_pages');
+					$table->update(array('data' => $info['data']), array('page_id' => $info['page_id']));
+				}
+			}
+			break;
 		}
 }
 if (!empty($multiprint_pages)) {
