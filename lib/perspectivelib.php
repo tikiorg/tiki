@@ -47,7 +47,7 @@ class PerspectiveLib
 
 		$out = array();
 		
-		if (( !isset($prefs[$active_pref]) || $prefs[$active_pref] != 'n' ) && isset($prefs[$config_pref])) {
+		if (( !empty($prefs[$active_pref]) && $prefs[$active_pref] != 'n' ) && isset($prefs[$config_pref])) {
 			foreach( explode( "\n", $prefs[$config_pref] ) as $config ) {
 				if (substr_count($config, ',') == 1) { // Ignore lines which don't have exactly one comma, such as empty lines. TODO: make sure there are no such lines in the first place
 					list( $domain, $perspective ) = explode( ',', $config );
