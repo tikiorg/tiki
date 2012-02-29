@@ -1,18 +1,19 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-include_once ("tiki-setup.php");
+include_once ('tiki-setup.php');
 if (!empty($_REQUEST['objectType']) && $_REQUEST['objectType'] != 'global') {
 	if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectId'])) {
-		$smarty->assign('msg', tra("Not enough information to display this page"));
-		$smarty->display("error.tpl");
+		$smarty->assign('msg', tra('Not enough information to display this page'));
+		$smarty->display('error.tpl');
 		die;
 	}
 }
+
 if (empty($_REQUEST['objectType'])) {
 	 $_REQUEST['objectType'] = 'global';
 	 $_REQUEST['objectName'] = '';
@@ -30,6 +31,7 @@ $auto_query_args = array(
 	'insertion_syntax',
 	//'show_disabled_features',	// this seems to cause issues - the $_GET version overrides the $_POST one...
 );
+
 $perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
 	if ($tiki_p_admin_wiki == 'y') {
@@ -50,32 +52,35 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 		}
 	}
 }
+
 if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') || (isset($special_perm) && $special_perm == 'y'))) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to assign permissions for this object"));
-	$smarty->display("error.tpl");
+	$smarty->assign('msg', tra('You do not have permission to assign permissions for this object'));
+	$smarty->display('error.tpl');
 	die;
 }
 
-if (!isset($_REQUEST["referer"])) {
+if (!isset($_REQUEST['referer'])) {
 	if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'tiki-objectpermissions.php') === false) {
-		$_REQUEST["referer"] = $_SERVER['HTTP_REFERER'];
+		$_REQUEST['referer'] = $_SERVER['HTTP_REFERER'];
 	} else {
-		unset($_REQUEST["referer"]);
+		unset($_REQUEST['referer']);
 	}
 }
-if (isset($_REQUEST["referer"])) {
-	$smarty->assign('referer', $_REQUEST["referer"]);
+
+if (isset($_REQUEST['referer'])) {
+	$smarty->assign('referer', $_REQUEST['referer']);
 } else {
 	$smarty->assign('referer', '');
 }
-$_REQUEST["objectId"] = urldecode($_REQUEST["objectId"]);
-$_REQUEST["objectType"] = urldecode($_REQUEST["objectType"]);
-$_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["permType"]) : 'global';
-$smarty->assign('objectName', $_REQUEST["objectName"]);
-$smarty->assign('objectId', $_REQUEST["objectId"]);
-$smarty->assign('objectType', $_REQUEST["objectType"]);
-$smarty->assign_by_ref('permType', $_REQUEST["permType"]);
+
+$_REQUEST['objectId'] = urldecode($_REQUEST['objectId']);
+$_REQUEST['objectType'] = urldecode($_REQUEST['objectType']);
+$_REQUEST['permType'] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST['permType']) : 'global';
+$smarty->assign('objectName', $_REQUEST['objectName']);
+$smarty->assign('objectId', $_REQUEST['objectId']);
+$smarty->assign('objectType', $_REQUEST['objectType']);
+$smarty->assign_by_ref('permType', $_REQUEST['permType']);
 
 if ( $_REQUEST['objectType'] == 'wiki' ) {
 	$_REQUEST['objectType'] = 'wiki page';
@@ -85,13 +90,13 @@ require_once 'lib/core/Perms/Applier.php';
 require_once 'lib/core/Perms/Reflection/Factory.php';
 
 $objectFactory = Perms_Reflection_Factory::getDefaultFactory();
-$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+$currentObject = $objectFactory->get($_REQUEST['objectType'], $_REQUEST['objectId']);
 
 $permissionApplier = new Perms_Applier;
-$permissionApplier->addObject( $currentObject );
+$permissionApplier->addObject($currentObject);
 
 if ( $restrictions = perms_get_restrictions() ) {
-	$permissionApplier->restrictPermissions( $restrictions );
+	$permissionApplier->restrictPermissions($restrictions);
 }
 
 if ($_REQUEST['objectType'] == 'wiki page') {
@@ -105,8 +110,8 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 	// If assign to structure is requested, add subelements to the applier
 	if (!empty($_REQUEST['assignstructure']) && $_REQUEST['assignstructure'] == 'on' && !empty($pageInfoTree)) {
 		foreach ( $pageInfoTree as $subPage ) {
-			$sub = $objectFactory->get( $_REQUEST['objectType'], $subPage['pageName'] );
-			$permissionApplier->addObject( $sub );
+			$sub = $objectFactory->get($_REQUEST['objectType'], $subPage['pageName']);
+			$permissionApplier->addObject($sub);
 		}
 	}
 	global $cachelib; include_once('lib/cache/cachelib.php');
@@ -115,11 +120,11 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 
 if ( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category']) ) {
 	global $categlib; require_once 'lib/categories/categlib.php';
-	$descendants = $categlib->get_category_descendants( $_REQUEST['objectId'] );
+	$descendants = $categlib->get_category_descendants($_REQUEST['objectId']);
 
 	foreach ( $descendants as $child ) {
-		$o = $objectFactory->get( $_REQUEST['objectType'], $child );
-		$permissionApplier->addObject( $o );
+		$o = $objectFactory->get($_REQUEST['objectType'], $child);
+		$permissionApplier->addObject($o);
 	}
 }
 
@@ -147,19 +152,19 @@ $group_filter = unserialize($tikilib->get_user_preference($user, 'objectperm_adm
 
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'id_asc', '', '', 'n');
-$smarty->assign_by_ref('groups', $groups["data"]);
+$smarty->assign_by_ref('groups', $groups['data']);
 
 $OBJECTPERM_ADMIN_MAX_GROUPS = 4;
 
 if ($group_filter === false) {
 	$c = 0;
-	foreach ($groups["data"] as $g) {	//	filter out if too many groups and hide Admins by default
+	foreach ($groups['data'] as $g) {	//	filter out if too many groups and hide Admins by default
 		if ($c < $OBJECTPERM_ADMIN_MAX_GROUPS && $g['groupName'] != 'Admins') {
 			$group_filter[] = $g['id'];
 			$c++;
 		}
 	}
-	if (count($groups["data"]) > $OBJECTPERM_ADMIN_MAX_GROUPS) {
+	if (count($groups['data']) > $OBJECTPERM_ADMIN_MAX_GROUPS) {
 		$cookietab = '2';
 		$smarty->assign('groupsFiltered', 'y');
 	}
@@ -171,7 +176,7 @@ if (isset($_REQUEST['group'])) {
 	foreach ($groups['data'] as $grp) {
 		if ($grp['groupName'] == $_REQUEST['group']) {
 			$grp_id = $grp['id'];
-			break; 
+			break;
 		}
 	}
 	if ($grp_id > 0 && !in_array($grp_id, $group_filter)) {
@@ -196,7 +201,7 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	}
 	
 	$newPermissions = get_assign_permissions();
-	$permissionApplier->apply( $newPermissions );
+	$permissionApplier->apply($newPermissions);
 	if (isset($_REQUEST['group'])) {
 		$smarty->assign('groupName', $_REQUEST['group']);
 	}
@@ -205,19 +210,26 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 if (isset($_REQUEST['remove'])) {
 	$access->check_authenticity(tra('Are you sure you want to remove the direct permissions from this object?'));
 	$newPermissions = new Perms_Reflection_PermissionSet;
-	$permissionApplier->apply( $newPermissions );
+	$permissionApplier->apply($newPermissions);
 
 }
 
 if (isset($_REQUEST['copy'])) {
 	$newPermissions = get_assign_permissions();
-	$to_copy = array('perms' => $newPermissions->getPermissionArray(), 'object' => $_REQUEST['objectId'], 'type' => $_REQUEST['objectType']);
+	$to_copy = array(
+					'perms' => $newPermissions->getPermissionArray(), 
+					'object' => $_REQUEST['objectId'], 
+					'type' => $_REQUEST['objectType']
+	);
 	$_SESSION['perms_clipboard'] = serialize($to_copy);
 }
 
 if (!empty($_SESSION['perms_clipboard'])) {
 	$perms_clipboard = unserialize($_SESSION['perms_clipboard']);
-	$smarty->assign('perms_clipboard_source', $perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']);
+	$smarty->assign(
+					'perms_clipboard_source', 
+					$perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']
+	);
 
 	if (isset($_REQUEST['paste'])) {
 		unset($_SESSION['perms_clipboard']);
@@ -227,11 +239,11 @@ if (!empty($_SESSION['perms_clipboard'])) {
 		if ( isset( $perms_clipboard['perms'] ) ) {
 			foreach ( $perms_clipboard['perms'] as $group => $gperms ) {
 				foreach ( $gperms as $perm ) {
-					$set->add( $group, $perm );
+					$set->add($group, $perm);
 				}
 			}
 		}
-		$permissionApplier->apply( $set );
+		$permissionApplier->apply($set);
 		$smarty->assign('perms_clipboard_source', '');
 	}
 
@@ -247,7 +259,7 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 	$quickperms = new Perms_Reflection_Quick;
 
 	foreach ( $qperms as $type => $data ) {
-		$quickperms->configure( $type, $data['data'] );
+		$quickperms->configure($type, $data['data']);
 	}
 
 	if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
@@ -257,17 +269,17 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 	
 		$userInput = array();
 		foreach ($groups['data'] as $group) {
-			if (isset($_REQUEST["perm_".$group['groupName']])) {
+			if (isset($_REQUEST['perm_' . $group['groupName']])) {
 				$group = $group['groupName'];
-				$permission = $_REQUEST["perm_".$group];
+				$permission = $_REQUEST['perm_' . $group];
 
 				$userInput[$group] = $permission;
 			}
 		}
 
 		$current = $currentObject->getDirectPermissions();
-		$newPermissions = $quickperms->getPermissions( $current, $userInput );
-		$permissionApplier->apply( $newPermissions );
+		$newPermissions = $quickperms->getPermissions($current, $userInput);
+		$permissionApplier->apply($newPermissions);
 	}
 }
 // }}}
@@ -293,7 +305,6 @@ if (isset($_REQUEST['used_groups'])) {
 	$cookietab = 1;
 }
 
-
 // Quick perms load {{{
 //Quickperm groups stuff
 if ( $prefs['feature_quick_object_perms'] == 'y' ) {
@@ -307,11 +318,11 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 	$quickperms = new Perms_Reflection_Quick;
 
 	foreach ( $qperms as $type => $data ) {
-		$quickperms->configure( $type, $data['data'] );
+		$quickperms->configure($type, $data['data']);
 	}
 
 	$displayedPermissions = get_displayed_permissions();
-	$map = $quickperms->getAppliedPermissions( $displayedPermissions, $groupNames );
+	$map = $quickperms->getAppliedPermissions($displayedPermissions, $groupNames);
 		
 	foreach ($groups['data'] as $key=>$group) {
 		$groups['data'][$key]['groupSumm'] = $map[ $group['groupName'] ];
@@ -319,7 +330,6 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 }
 
 //Quickperm END }}}
-
 
 // get groupNames etc - TODO: jb will tidy...
 //$checkboxInfo = array();
@@ -371,7 +381,7 @@ if (isset($_REQUEST['show_disabled_features']) && ($_REQUEST['show_disabled_feat
 $smarty->assign('show_disabled_features', $show_disabled_features);
 
 // get "master" list of all perms
-$candidates = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', $show_disabled_features != 'y' ? true : false);
+$candidates = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST['permType'], '', $show_disabled_features != 'y' ? true : false);
 
 // list of all features
 $ftemp = $userlib->get_permission_types();
@@ -388,7 +398,7 @@ foreach ($candidates['data'] as $perm) {
 	$perm['label'] = tra($perm['permDesc']) . ' <em>(' . $perm['permName'] . ')</em>' . '<span style="display:none;">' . tra($perm['level'] . '</span>');
 
 	foreach ( $groupNames as $index => $groupName ) {
-		$p = $displayedPermissions->has( $groupName, $perm['permName'] ) ? 'y' : 'n';
+		$p = $displayedPermissions->has($groupName, $perm['permName']) ? 'y' : 'n';
 		$perm[$groupName . '_hasPerm'] = $p;
 		$perm[$groupIndices[$index]] = $p;
 	}
@@ -406,7 +416,10 @@ foreach ($candidates['data'] as $perm) {
 		$pref_feature = true;
 	}
 
-	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions )) && $pref_feature) {
+	if (($feature_filter === false || in_array($perm['type'], $feature_filter))
+				&& ($restrictions === false || in_array($perm['permName'], $restrictions))
+				&& $pref_feature
+	) {
 		$masterPerms[] = $perm;
 	}
 	if ($show_disabled_features != 'y' && !in_array($perm['type'], $features_enabled)) {
@@ -499,37 +512,39 @@ ask_ticket('object-perms');
 $smarty->assign('mid', 'tiki-objectpermissions.tpl');
 if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '') {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-	$smarty->display("tiki-print.tpl");
+	$smarty->display('tiki-print.tpl');
 } else {
-	$smarty->display("tiki.tpl");
+	$smarty->display('tiki.tpl');
 }
 
 
-function get_assign_permissions() {
+function get_assign_permissions()
+{
 	global $objectFactory;
 
 	// get existing perms
-	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+	$currentObject = $objectFactory->get($_REQUEST['objectType'], $_REQUEST['objectId']);
 	$currentPermissions = $currentObject->getDirectPermissions();
 	if (count($currentPermissions->getPermissionArray()) === 0) {
-		$currentPermissions = $currentObject->getParentPermissions();	// get "default" perms so disabled feature perms don't get removed
+		// get "default" perms so disabled feature perms don't get removed
+		$currentPermissions = $currentObject->getParentPermissions();
 	}
 
 	// set any checked ones
-	if ( isset( $_REQUEST['perm'] ) && !empty($_REQUEST['perm'])) {
+	if ( isset($_REQUEST['perm']) && !empty($_REQUEST['perm'])) {
 		foreach ( $_REQUEST['perm'] as $group => $gperms ) {
 			foreach ( $gperms as $perm ) {
-				$currentPermissions->add( $group, $perm );
+				$currentPermissions->add($group, $perm);
 			}
 		}
 	}
 
 	// unset any old_perms not there now
-	if ( isset( $_REQUEST['old_perm'] ) ) {
+	if ( isset($_REQUEST['old_perm']) ) {
 		foreach ( $_REQUEST['old_perm'] as $group => $gperms ) {
 			foreach ( $gperms as $perm ) {
 				if (!isset($_REQUEST['perm'][$group]) || !in_array($perm, $_REQUEST['perm'][$group])) {
-					$currentPermissions->remove( $group, $perm );
+					$currentPermissions->remove($group, $perm);
 				}
 			}
 		}
@@ -538,15 +553,17 @@ function get_assign_permissions() {
 	return $currentPermissions;
 }
 
-function quickperms_get_data() {
-	if ($_REQUEST["permType"]=="file galleries") {
+function quickperms_get_data()
+{
+	if ($_REQUEST['permType']=='file galleries') {
 		return quickperms_get_filegal();
 	} else {
 		return quickperms_get_generic();
 	}
 }
 
-function quickperms_get_filegal() {
+function quickperms_get_filegal()
+{
 	return array(
 		'admin' => array(
 			'name' => 'admin',
@@ -600,10 +617,11 @@ function quickperms_get_filegal() {
 	);
 }
 
-function quickperms_get_generic() {
+function quickperms_get_generic()
+{
 	global $userlib;
 
-	$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
+	$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST['permType'], '', true);
 	foreach ($databaseperms['data'] as $perm) {
 		if ($perm['level']=='basic')
 			$quickperms_['basic'][$perm['permName']] = $perm['permName'];
@@ -625,21 +643,34 @@ function quickperms_get_generic() {
 	$quickperms_['admin'] = array();
 
 	$perms = array();
-	$perms['basic']['name'] = "basic";
+	$perms['basic']['name'] = 'basic';
 	$perms['basic']['data'] = array_merge($quickperms_['basic']);
-	$perms['registered']['name'] = "registered";
+	$perms['registered']['name'] = 'registered';
 	$perms['registered']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered']);
-	$perms['editors']['name'] = "editors";
-	$perms['editors']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors']);
-	$perms['admin']['name'] = "admin";
-	$perms['admin']['data'] = array_merge($quickperms_['basic'], $quickperms_['registered'], $quickperms_['editors'], $quickperms_['admin']);
-	$perms['none']['name'] = "none";
+	$perms['editors']['name'] = 'editors';
+
+	$perms['editors']['data'] = array_merge(
+					$quickperms_['basic'], 
+					$quickperms_['registered'], 
+					$quickperms_['editors']
+	);
+
+	$perms['admin']['name'] = 'admin';
+
+	$perms['admin']['data'] = array_merge(
+					$quickperms_['basic'], 
+					$quickperms_['registered'], 
+					$quickperms_['editors'], 
+					$quickperms_['admin']
+	);
+	$perms['none']['name'] = 'none';
 	$perms['none']['data'] = array();
 
 	return $perms;
 }
 
-function perms_get_restrictions() {
+function perms_get_restrictions()
+{
 	global $userlib;
 	$perms = Perms::get();
 
@@ -647,7 +678,7 @@ function perms_get_restrictions() {
 		return false;
 	}
 
-	$masterPerms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"] );
+	$masterPerms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST['permType']);
 	$masterPerms = $masterPerms['data'];
 
 	$allowed = array();
@@ -663,19 +694,21 @@ function perms_get_restrictions() {
 	return $allowed;
 }
 
-function get_displayed_permissions() {
+function get_displayed_permissions()
+{
 	global $objectFactory, $smarty;
 
-	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
+	$currentObject = $objectFactory->get($_REQUEST['objectType'], $_REQUEST['objectId']);
 	$displayedPermissions = $currentObject->getDirectPermissions();
-	$globPerms = $objectFactory->get( 'global', null )->getDirectPermissions();	// global perms
+	$globPerms = $objectFactory->get('global', null)->getDirectPermissions();	// global perms
 	
-	$comparator = new Perms_Reflection_PermissionComparator( $displayedPermissions, new Perms_Reflection_PermissionSet );
+	$comparator = new Perms_Reflection_PermissionComparator($displayedPermissions, new Perms_Reflection_PermissionSet);
 
 	$smarty->assign('permissions_displayed', 'direct');
 	if ( $comparator->equal() ) {
 		$parent = $currentObject->getParentPermissions();							// inherited perms (could be category ones)
-		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $parent );
+		$comparator = new Perms_Reflection_PermissionComparator($globPerms, $parent);
+
 		if ( $comparator->equal() ) {												// parent == globals
 			$smarty->assign('permissions_displayed', 'parent');
 		} else {																	// parent not globals, so must be category
@@ -683,7 +716,7 @@ function get_displayed_permissions() {
 		}
 		$displayedPermissions = $parent;
 	} else {																		// direct object perms
-		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $displayedPermissions );
+		$comparator = new Perms_Reflection_PermissionComparator($globPerms, $displayedPermissions);
 		$permissions_added = array(); $permissions_removed = array();
 		foreach ($comparator->getAdditions() as $p) {
 			if (!isset($permissions_added[$p[0]])) {
@@ -706,7 +739,7 @@ function get_displayed_permissions() {
 			$removed .= '<br />';
 			$removed .= '<strong>' . $gp . ':</strong> ' . implode(', ', $pm);
 		}
-		$smarty->assign('permissions_added',   $added);
+		$smarty->assign('permissions_added', $added);
 		$smarty->assign('permissions_removed', $removed);
 	}
 

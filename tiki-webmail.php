@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,13 +11,15 @@ include_once ('lib/webmail/webmaillib.php');
 include_once ('lib/webmail/contactlib.php');
 
 $access->check_feature('feature_webmail');
-$access->check_permission_either( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') );
+$access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_webmail'));
 
 require_once ('lib/webmail/net_pop3.php');
 require_once ('lib/mail/mimelib.php');
 include_once ('lib/webmail/tikimaillib.php');
 
-function handleWebmailRedirect($inUrl) {		// AJAX_TODO
+// AJAX_TODO
+function handleWebmailRedirect($inUrl)
+{
 	header('location: tiki-webmail.php?'.$inUrl);
 	exit;
 }
@@ -35,10 +37,9 @@ if (isset($_REQUEST['locSection']) && $_REQUEST['locSection'] == 'settings') {
 		$id = $_REQUEST['current'];
 	}
 	if ($id) {
-		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $id ) );
+		$objectperms = Perms::get(array( 'type' => 'webmail account', 'object' => $id ));
 		$acct = $webmaillib->get_webmail_account($user, $id);
-		if (!isset($_REQUEST['current']))
-		{
+		if (!isset($_REQUEST['current'])) {
 			if ($acct['flagsPublic'] == 'y' && !$objectperms->admin_group_webmail) {
 				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to admin the requested webmail account.'));
 			}
@@ -48,29 +49,22 @@ if (isset($_REQUEST['locSection']) && $_REQUEST['locSection'] == 'settings') {
 			}
 		}
 	}
-} else
-{
+} else {
 	$acct = $webmaillib->get_current_webmail_account($user);
-	if ($acct)
-	{
-		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
+	if ($acct) {
+		$objectperms = Perms::get(array( 'type' => 'webmail account', 'object' => $acct['accountId'] ));
 		if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
 			handleWebmailRedirect('locSection=settings&msg=' . tra('You no longer have permission to use your active webmail account.'));
 		}
 	}
 }
 
-$auto_query_args = array(
-    'msgid',
-	'locSection',
-	'filter'
-);
-
+$auto_query_args = array('msgid', 'locSection', 'filter');
 
 if (!isset($_REQUEST['locSection'])) {
 	$_REQUEST['locSection'] = 'mailbox';
 }
-$headerlib->add_js('var webmailTimeoutId = null;',0);
+$headerlib->add_js('var webmailTimeoutId = null;', 0);
 
 $smarty->assign('locSection', $_REQUEST['locSection']);
 // Search if we have to add some contacts
@@ -78,8 +72,14 @@ if (isset($_REQUEST['add_contacts'])) {
 	if (isset($_REQUEST['add'])) {
 		check_ticket('webmail');
 		foreach (array_keys($_REQUEST['add'])as $i) {
-			$contactlib->replace_contact(0, $_REQUEST['addFirstName'][$i], $_REQUEST['addLastName'][$i], $_REQUEST['addemail'][$i],
-				$_REQUEST['addNickname'][$i], $user);
+			$contactlib->replace_contact(
+							0,
+							$_REQUEST['addFirstName'][$i],
+							$_REQUEST['addLastName'][$i],
+							$_REQUEST['addemail'][$i],
+							$_REQUEST['addNickname'][$i],
+							$user
+			);
 		}
 	}
 }
@@ -94,7 +94,7 @@ if ($_REQUEST['locSection'] == 'read') {
 	} else {
 		$smarty->assign('fullheaders', 'n');
 	}
-	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}', 0);
 	
 	$current = $webmaillib->get_current_webmail_account($user);
 	
@@ -124,7 +124,7 @@ if ($_REQUEST['locSection'] == 'read') {
 	if (isset($_REQUEST['msgid'])) {
 		$message = $mail->getMessage($_REQUEST['msgid']);
 		$aux = $message->getHeaders();
-		$realmsgid = preg_replace('/[<>]/','',$aux['message-id']);
+		$realmsgid = preg_replace('/[<>]/', '', $aux['message-id']);
 		$smarty->assign('msgid', $_REQUEST['msgid']);
 		$smarty->assign('realmsgid', $realmsgid);
 		$webmaillib->set_mail_flag($current['accountId'], $user, $realmsgid, 'isRead', 'y');
@@ -146,9 +146,9 @@ if ($_REQUEST['locSection'] == 'read') {
 	
 		$attachments = array();
 		
-//		if ($message->isMultipart()) {
-//			TODO	deal with attachments here??	
-//		}
+		//		if ($message->isMultipart()) {
+		//			TODO	deal with attachments here??	
+		//		}
 		
 		$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST['msgid'], true);
 
@@ -166,7 +166,12 @@ if ($_REQUEST['locSection'] == 'read') {
 					// gets positions of the start and end body tags then substr the bit inbetween
 					$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
 				}
-				$bod = strip_tags( $bod, '<a><b><i><strong><em><p><blockquote><table><tbody><tr><td><th><ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
+				$bod = strip_tags(
+								$bod,
+								'<a><b><i><strong><em><p><blockquote><table><tbody><tr><td><th>' .
+								'<ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span>'.
+								'<font><form><input><textarea><checkbox><select><style>'
+				);
 				// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
 				$bod = closetags($bod);
 				$bodies[$i]['body'] = $bod;
@@ -174,7 +179,7 @@ if ($_REQUEST['locSection'] == 'read') {
 			} else if ($bodies[$i]['contentType'] == 'text/plain') {
 				// reply text
 				$smarty->assign('plainbody', format_email_reply($bodies[$i]['body'], $aux['from'], $aux['date']));
-				$bodies[$i]['body'] = nl2br( $bodies[$i]['body'] );
+				$bodies[$i]['body'] = nl2br($bodies[$i]['body']);
 			}// else {
 				// attachments?
 			//}
@@ -251,11 +256,11 @@ if ($_REQUEST['locSection'] == 'read') {
 		$aux['timestamp'] = strtotime($aux['delivery-date']);
 	
 		// the subject needs to be decoded	
-		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : '';
-		$aux['from']    = isset($aux['from'])    ? utf8_encode($aux['from']) : '';
-		$aux['to']      = isset($aux['to'])      ? utf8_encode($aux['to']) : '';
-		$aux['cc']      = isset($aux['cc'])      ? utf8_encode($aux['cc']) : '';
-		$aux['date']    = isset($aux['date'])    ? utf8_encode($aux['date']) : '';
+		$aux['subject'] = isset($aux['subject'])	? mb_decode_mimeheader($aux['subject']) : '';
+		$aux['from']		= isset($aux['from'])			? utf8_encode($aux['from']) : '';
+		$aux['to']			= isset($aux['to'])				? utf8_encode($aux['to']) : '';
+		$aux['cc']			= isset($aux['cc'])				? utf8_encode($aux['cc']) : '';
+		$aux['date']		= isset($aux['date'])			? utf8_encode($aux['date']) : '';
 			
 		$smarty->assign('headers', $aux);
 		
@@ -279,34 +284,34 @@ if ($_REQUEST['locSection'] == 'mailbox') {
 	$js = <<< END
 function submit_form(msgname,flg)
 {
-  document.mailb.elements.quickFlag.value= flg;
-  document.mailb.elements.quickFlagMsg.value= msgname;
-  document.mailb.submit();
+	document.mailb.elements.quickFlag.value= flg;
+	document.mailb.elements.quickFlagMsg.value= msgname;
+	document.mailb.submit();
 }
 END;
 
 	if ($autorefresh > 0) {
 		$js .= 'webmailTimeoutId = window.setTimeout("window.location.reload(true);",$autoRefresh*1000);';
 	}
-	$headerlib->add_js($js,0);
+	$headerlib->add_js($js, 0);
 
 	$h = opendir('temp/mail_attachs/');
 
 	while ($file = readdir($h)) {
 		if (substr($file, 0, strlen($user)) == $user) {
-			@unlink ('temp/mail_attachs/' . $file);
+			@unlink('temp/mail_attachs/' . $file);
 		}
 	}
 
-	closedir ($h);
+	closedir($h);
 
 	$smarty->assign('current', $current);
-	$smarty->assign('autoRefresh',$current['autoRefresh']);
-	$smarty->assign('imap',$current['imap']);
-	$smarty->assign('mbox',$current['mbox']);
-	$smarty->assign('maildir',$current['maildir']);
-	$smarty->assign('useSSL',$current['useSSL']);
-	$smarty->assign('flagsPublic',$current['flagsPublic']);
+	$smarty->assign('autoRefresh', $current['autoRefresh']);
+	$smarty->assign('imap', $current['imap']);
+	$smarty->assign('mbox', $current['mbox']);
+	$smarty->assign('maildir', $current['maildir']);
+	$smarty->assign('useSSL', $current['useSSL']);
+	$smarty->assign('flagsPublic', $current['flagsPublic']);
 	
 	$webmail_reload = isset($_REQUEST['refresh_mail']);
 	
@@ -315,7 +320,7 @@ END;
 	} catch (Exception $e) {
 		$err = $e->getMessage();
 
-		$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
+		$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err), '', '&');
 		handleWebmailRedirect($urlq);
 	}
 
@@ -328,18 +333,18 @@ END;
 	}
 
 	// The user just clicked on one of the flags, so set up for flag change
-	if (isset($_REQUEST['quickFlagMsg'])){
+	if (isset($_REQUEST['quickFlagMsg'])) {
 		$realmsg = $_REQUEST['quickFlagMsg'];
 		switch ($_REQUEST['quickFlag']) {
-		case 'y':
-			$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'y');
+			case 'y':
+				$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'y');
 
-			break;
+							break;
 
-		case 'n':
-			$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'n');
+			case 'n':
+				$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'n');
 
-			break;
+							break;
 		}
 	}
 
@@ -354,7 +359,6 @@ END;
 				try {
 					$mail->removeMessage($msg);
 					$webmaillib->remove_webmail_message($current['accountId'], $user, $realmsgid);
-					//$pop3->deleteMsg($msg);
 				} catch (Exception $e) {
 					$err .= $e->getMessage().' ('.tra('Mail ID').' '.$msg.')<br />';
 				}
@@ -384,7 +388,7 @@ END;
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 	
-			$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
+			$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err), '', '&');
 			handleWebmailRedirect($urlq);
 		}
 
@@ -401,21 +405,21 @@ END;
 				
 				switch ($_REQUEST['action']) {
 					
-				case 'flag':
-					$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'y');
-					break;
+					case 'flag':
+						$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'y');
+									break;
 
-				case 'unflag':
-					$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'n');
-					break;
+					case 'unflag':
+						$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isFlagged', 'n');
+									break;
 
-				case 'read':
-					$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isRead', 'y');
-					break;
+					case 'read':
+						$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isRead', 'y');
+									break;
 
-				case 'unread':
-					$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isRead', 'n');
-					break;
+					case 'unread':
+						$webmaillib->set_mail_flag($current['accountId'], $user, $realmsg, 'isRead', 'n');
+									break;
 				}
 			}
 		}
@@ -441,7 +445,9 @@ END;
 
 		for ($i = 0; $i < $mailsum; $i++) {
 			$aux = $webmail_list[$i];
-			$aux['subject'] = mb_decode_mimeheader($aux['subject']); // Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
+
+			// Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
+			$aux['subject'] = mb_decode_mimeheader($aux['subject']);
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied'])
 				= $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
@@ -470,7 +476,8 @@ END;
 			$aux = $filtered[$i];
 		} else {
 			$aux = $webmail_list[$i-1];
-			$aux['subject'] = mb_decode_mimeheader($aux['subject']); // Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
+			// Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
+			$aux['subject'] = mb_decode_mimeheader($aux['subject']);
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied']) = $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
 		}
@@ -577,7 +584,7 @@ if ($_REQUEST['locSection'] == 'settings') {
 END;
 		$headerlib->add_jq_onready($js);
 	}
-	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}', 0);
 	
 	if (isset($_REQUEST['conmsg'])) {
 		check_ticket('webmail');
@@ -596,11 +603,25 @@ END;
 		
 		if (empty($_REQUEST['accountId'])) {
 			// Add new account
-			$_REQUEST['accountId'] = $webmaillib->new_webmail_account($user,
-					$_REQUEST['account'], $_REQUEST['pop'], $_REQUEST['port'], $_REQUEST['username'],
-					$_REQUEST['pass'], $_REQUEST['msgs'], $_REQUEST['smtp'], $_REQUEST['useAuth'],
-					$_REQUEST['smtpPort'], $_REQUEST['flagsPublic'], $_REQUEST['autoRefresh'],
-					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n', $_REQUEST['fromEmail']);
+			$_REQUEST['accountId'] = $webmaillib->new_webmail_account(
+							$user,
+							$_REQUEST['account'],
+							$_REQUEST['pop'],
+							$_REQUEST['port'],
+							$_REQUEST['username'],
+							$_REQUEST['pass'],
+							$_REQUEST['msgs'],
+							$_REQUEST['smtp'],
+							$_REQUEST['useAuth'],
+							$_REQUEST['smtpPort'],
+							$_REQUEST['flagsPublic'],
+							$_REQUEST['autoRefresh'],
+							$_REQUEST['imap'],
+							$_REQUEST['mbox'],
+							$_REQUEST['maildir'],
+							isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n',
+							$_REQUEST['fromEmail']
+			);
 
 			if ($webmaillib->count_webmail_accounts($user) == 1) {	// first account?
 				$webmaillib->current_webmail_account($user, $_REQUEST['accountId']);
@@ -608,11 +629,26 @@ END;
 			
 		} else {
 			// Update existing account
-			$webmaillib->replace_webmail_account($_REQUEST['accountId'], $user,
-					$_REQUEST['account'], $_REQUEST['pop'], $_REQUEST['port'], $_REQUEST['username'],
-					$_REQUEST['pass'], $_REQUEST['msgs'], $_REQUEST['smtp'], $_REQUEST['useAuth'],
-					$_REQUEST['smtpPort'], $_REQUEST['flagsPublic'], $_REQUEST['autoRefresh'],
-					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n', $_REQUEST['fromEmail']);
+			$webmaillib->replace_webmail_account(
+							$_REQUEST['accountId'],
+							$user,
+							$_REQUEST['account'],
+							$_REQUEST['pop'],
+							$_REQUEST['port'],
+							$_REQUEST['username'],
+							$_REQUEST['pass'],
+							$_REQUEST['msgs'],
+							$_REQUEST['smtp'],
+							$_REQUEST['useAuth'],
+							$_REQUEST['smtpPort'],
+							$_REQUEST['flagsPublic'],
+							$_REQUEST['autoRefresh'],
+							$_REQUEST['imap'],
+							$_REQUEST['mbox'],
+							$_REQUEST['maildir'],
+							isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n',
+							$_REQUEST['fromEmail']
+			);
 		}
 
 		$cat_type = 'webmail account';
@@ -675,7 +711,7 @@ END;
 	$pubAccounts = $webmaillib->list_webmail_group_accounts($user, 0, -1, 'account_asc', '');
 	$accounts = array();
 	foreach ($pubAccounts['data'] as $acct) {
-		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
+		$objectperms = Perms::get(array( 'type' => 'webmail account', 'object' => $acct['accountId'] ));
 		if ($objectperms->use_group_webmail || $objectperms->admin_group_webmail) {
 			$accounts[] = $acct;
 		}
@@ -697,7 +733,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 	if (!$current) {
 		handleWebmailRedirect('locSection=settings');
 	}
-	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}',0);
+	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}', 0);
 	
 	// Send a message
 	if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
@@ -725,7 +761,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 			$a1 = $mail->getFile('temp/mail_attachs/' . $_REQUEST['attach1file']);
 
 			$mail->addAttachment($a1, $_REQUEST['attach1'], $_REQUEST['attach1type']);
-			@unlink ('temp/mail_attachs/' . $_REQUEST['attach1file']);
+			@unlink('temp/mail_attachs/' . $_REQUEST['attach1file']);
 		}
 
 		if ($_REQUEST['attach2']) {
@@ -733,7 +769,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 			$a2 = $mail->getFile('temp/mail_attachs/' . $_REQUEST['attach2file']);
 
 			$mail->addAttachment($a2, $_REQUEST['attach2'], $_REQUEST['attach2type']);
-			@unlink ('temp/mail_attachs/' . $_REQUEST['attach2file']);
+			@unlink('temp/mail_attachs/' . $_REQUEST['attach2file']);
 		}
 
 		if ($_REQUEST['attach3']) {
@@ -741,7 +777,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 			$a3 = $mail->getFile('temp/mail_attachs/' . $_REQUEST['attach3file']);
 
 			$mail->addAttachment($a3, $_REQUEST['attach3'], $_REQUEST['attach3type']);
-			@unlink ('temp/mail_attachs/' . $_REQUEST['attach3file']);
+			@unlink('temp/mail_attachs/' . $_REQUEST['attach3file']);
 		}
 
 		$mail->setSMTPParams($current['smtp'], $current['smtpPort'], '', $current['useAuth'], $current['username'], $current['pass']);
@@ -774,7 +810,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 		$smarty->assign('not_contacts', $not_contacts);
 
-		if ($mail->send($to_array,'smtp')) {
+		if ($mail->send($to_array, 'smtp')) {
 			$msg=tra('Your email was sent');
 		} else {
 			if (is_array($mail->errors)) {
@@ -798,7 +834,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 	if (isset($_REQUEST['remove_attach1'])) {
 		check_ticket('webmail');
-		@unlink ($_REQUEST['attach1file']);
+		@unlink($_REQUEST['attach1file']);
 
 		$_REQUEST['attach1'] = '';
 		$_REQUEST['attach1file'] = '';
@@ -807,7 +843,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 	if (isset($_REQUEST['remove_attach2'])) {
 		check_ticket('webmail');
-		@unlink ($_REQUEST['attach2file']);
+		@unlink($_REQUEST['attach2file']);
 
 		$_REQUEST['attach2'] = '';
 		$_REQUEST['attach2file'] = '';
@@ -816,7 +852,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 	if (isset($_REQUEST['remove_attach3'])) {
 		check_ticket('webmail');
-		@unlink ($_REQUEST['attach3file']);
+		@unlink($_REQUEST['attach3file']);
 
 		$_REQUEST['attach3'] = '';
 		$_REQUEST['attach3file'] = '';
