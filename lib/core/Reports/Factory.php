@@ -23,9 +23,15 @@ class Reports_Factory
 			case 'Reports_Cache':
 				return new Reports_Cache($db, new DateTime);
 			case 'Reports_Manager':
-				return new Reports_Manager(Reports_Factory::build('Reports_Users'), Reports_Factory::build('Reports_Cache'));
+				global $userlib;
+				return new Reports_Manager(Reports_Factory::build('Reports_Users'), Reports_Factory::build('Reports_Cache'),
+					Reports_Factory::build('Reports_Send'), $userlib);
+			case 'Reports_Send':
+				global $prefs;
+				require_once('lib/webmail/tikimaillib.php');
+				return new Reports_Send(new DateTime, new TikiMail);
 			default:
-				break;
+				throw new Exception("Unknown class $className");
 		}		
 	} 
 }

@@ -1,31 +1,42 @@
-<?php 
+<?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class reportsLib extends TikiLib
+/**
+ * Build an periodic report e-mail with the changes
+ * in Tiki for the objects a user is watching. 
+ * 
+ * @package Tiki
+ * @subpackage Reports
+ */
+class Reports_Send_BuildEmail
 {
-
-	//Sends the Email
-	public function sendEmail($user_data, $report_preferences, $report_cache) {
-		global $prefs, $smarty, $tikilib, $base_url;
-
-		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
+	/**
+	 * @param array $tikiPrefs list of Tiki preferences
+	 * @return null
+	 */
+	public function __construct(array $tikiPrefs)
+	{
+		$this->tikiPrefs = $tikiPrefs;
+	}
+	
+	protected function buildEmailBody($user_data, $report_preferences, $report_cache)
+	{
+		global $base_url;
+		
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 		
 		$smarty->assign('report_preferences', $report_preferences);
 		$smarty->assign('report_user', ucfirst($user_data['login']));
 		$smarty->assign('report_interval', ucfirst($report_preferences['interval']));
 		$smarty->assign('report_date', date("l d.m.Y"));
-		$smarty->assign('report_last_report_date', TikiLib::date_format($prefs['long_date_format'], strtotime($report_preferences['last_report'])));
+		$smarty->assign('report_last_report_date', TikiLib::date_format($this->tikiPrefs['long_date_format'], strtotime($report_preferences['last_report'])));
 		$smarty->assign('report_total_changes', count($report_cache));
-		if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
-			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
-		}
-
+		
 		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
 
 		$userWatchesUrl = $base_url . 'tiki-user_watches.php';
@@ -36,45 +47,11 @@ class reportsLib extends TikiLib
 		
 		$smarty->assign('userWatchesUrl', $userWatchesUrl);
 		
-		$mail->setUser($user_data['login']);
-		
-		if (is_array($report_cache)) {
-			if (count($report_cache) == 1) {
-				$subject = tr('Report from %0 (1 change)', TikiLib::date_format($prefs['short_date_format'], time()));
-			} else {
-				$subject = tr('Report from %0 (%1 changes)', TikiLib::date_format($prefs['short_date_format'], time()), count($report_cache));
-			}
-		} else {
-			$subject = tr('Report from %0 (no changes)', TikiLib::date_format($prefs['short_date_format'], time()));
-		}
-
-		$mail->setSubject($subject);
-
-		$userlang = $tikilib->get_user_preference($user_data['login'], "language", $prefs['site_language']);
+		$userlang = $tikilib->get_user_preference($user_data['login'], "language", $this->tikiPrefs['site_language']);
 
 		$mail_data = $smarty->fetchLang($userlang, "mail/report.tpl");
-
-		if ($report_preferences['type']=='plain') {
-			$mail->setText($mail_data);
-		} else {
-			$mail->setHtml(nl2br($mail_data));
-		}
 		
-		$mail->buildMessage();
-		$mail->send(array($user_data['email']));
-
-		return true;
-	}
-	
-	//Makes time short
-	private function makeTime($time) {
-		if (date("d.m.Y", $time)==date("d.m.Y", time()-86400)) {
-			return tr("Yesterday %0", date("H:i", $time));
-		} elseif (date("d.m.Y", $time)==date("d.m.Y", time())) {
-			return tr("Today %0", date("H:i", $time));
-		} else {
-			return date("d.m.", $time)." ".date("H:i", $time);
-		}
+		return $mail_data;	
 	}
 	
 	/**
@@ -270,7 +247,15 @@ class reportsLib extends TikiLib
 			return $body;
 		}
 	}
+	
+	//Makes time short
+	private function makeTime($time) {
+		if (date("d.m.Y", $time)==date("d.m.Y", time()-86400)) {
+			return tr("Yesterday %0", date("H:i", $time));
+		} elseif (date("d.m.Y", $time)==date("d.m.Y", time())) {
+			return tr("Today %0", date("H:i", $time));
+		} else {
+			return date("d.m.", $time)." ".date("H:i", $time);
+		}
+	}
 }
-
-global $reportslib;
-$reportslib = new reportsLib;

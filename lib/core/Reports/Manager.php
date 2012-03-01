@@ -18,10 +18,42 @@ class Reports_Manager
 	
 	protected $reportsCache;
 	
-	public function __construct(Reports_Users $reportsUsers, Reports_Cache $reportsCache)
+	protected $reportsSend;
+	
+	protected $userlib;
+	
+	public function __construct(Reports_Users $reportsUsers, Reports_Cache $reportsCache, Reports_Send $reportsSend, UsersLib $userlib)
 	{
 		$this->reportsUsers = $reportsUsers;
 		$this->reportsCache = $reportsCache;
+		$this->reportsSend = $reportsSend;
+		$this->userlib = $userlib;
+	}
+	
+	/**
+	 * Send report to subscribed users.
+	 * @return null
+	 */
+	public function send()
+	{
+		$users = $this->reportsUsers->getUsersForReport();
+		
+		foreach ($users as $user) {
+			$userReportPreferences = $this->reportsUsers->get($user);
+			$userData = $this->userlib->get_user_info($user);
+		
+			// if email address isn't set, do nothing but clear the cache
+			if (!empty($userData['email'])) {
+				$cache = $this->reportsCache->get($user);
+				
+				if (!empty($cache) || $userReportPreferences['always_email']) {
+					$this->reportsSend->sendEmail($userData, $userReportPreferences, $cache);
+					$this->reportsUsers->updateLastReport($userData['login']);
+				}
+			}
+
+			$this->reportsCache->delete($userData['login']);
+		}
 	}
 	
 	/**
@@ -35,6 +67,20 @@ class Reports_Manager
 	{
 		$this->reportsUsers->delete($user);
 		$this->reportsCache->delete($user);
+	}
+	
+	/**
+	 * @see Reports_Users::save()
+	 * @param string $user
+	 * @param string $interval
+	 * @param string $view
+	 * @param string $type
+	 * @param int $always_email
+	 * @return null
+	 */
+	public function save($user, $interval, $view, $type, $always_email)
+	{
+		$this->reportsUsers->save($user, $interval, $view, $type, $always_email);
 	}
 	
 	/**

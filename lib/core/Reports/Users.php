@@ -85,7 +85,7 @@ class Reports_Users
 				array('interval' => $interval, 'view' => $view, 'type' => $type, 'always_email' => $always_email),
 				array('user' => $user)
 			);
-		}	
+		}
 	}
 	
 	/**

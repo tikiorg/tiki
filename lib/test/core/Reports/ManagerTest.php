@@ -16,10 +16,11 @@ class Reports_ManagerTest extends TikiTestCase
 	protected function setUp()
 	{
 		$this->reportsUsers = $this->getMockBuilder('Reports_Users')->disableOriginalConstructor()->getMock();
-		
 		$this->reportsCache = $this->getMockBuilder('Reports_Cache')->disableOriginalConstructor()->getMock();
+		$this->reportsSend = $this->getMockBuilder('Reports_Send')->disableOriginalConstructor()->getMock();
+		$this->usersLib = $this->getMockBuilder('UsersLib')->disableOriginalConstructor()->getMock();
 		
-		$this->obj = new Reports_Manager($this->reportsUsers, $this->reportsCache);
+		$this->obj = new Reports_Manager($this->reportsUsers, $this->reportsCache, $this->reportsSend, $this->usersLib);
 	}
 	
 	public function testDelete_shouldCallMethodToDeleteUserPreferenceAndMethodToDeleteCache()
@@ -50,5 +51,19 @@ class Reports_ManagerTest extends TikiTestCase
 		$this->reportsCache->expects($this->once())->method('add')->with($watches, $data, $users);
 		
 		$this->obj->addToCache($watches, $data);
+	}
+	
+	public function testSave_shouldCallReportsUsersSave()
+	{
+		$user = 'admin';
+		$interval = 'daily';
+		$view = 'detailed';
+		$type = 'html';
+		$always_email = 1;
+		
+		$this->reportsUsers->expects($this->once())->method('save')
+			->with($this->equalTo($user), $this->equalTo($interval), $this->equalTo($view), $this->equalTo($type), $this->equalTo($always_email));
+		
+		$this->obj->save($user, $interval, $view, $type, $always_email);
 	}
 }

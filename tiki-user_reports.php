@@ -10,17 +10,22 @@ include_once('tiki-setup.php');
 $access->check_user($user);
 $access->check_feature('feature_daily_report_watches');
 
-$reportsUsers = Reports_Factory::build('Reports_Users');
+$reportsManager = Reports_Factory::build('Reports_Manager');
 
 //Enable User Reports
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports'] == "true") {
-	$reportsUsers->save($user, $_POST['interval'], $_POST['view'], $_POST['type'], $_POST['always_email']);
+	$interval = filter_input(INPUT_POST, 'interval', FILTER_SANITIZE_STRING);
+	$view = filter_input(INPUT_POST, 'view', FILTER_SANITIZE_STRING);
+	$type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
+	$always_email = filter_input(INPUT_POST, 'always_email', FILTER_SANITIZE_NUMBER_INT);
+
+	$reportsManager->save($user, $interval, $view, $type, $always_email);
 	header('Location: tiki-user_watches.php');
 	die;
 }
 //Disable User Reports
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports'] != "true") {
-	$reportsUsers->delete($user);
+	$reportsManager->delete($user);
 	header('Location: tiki-user_watches.php');
 	die;
 }

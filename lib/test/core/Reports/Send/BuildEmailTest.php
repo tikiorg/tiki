@@ -5,17 +5,17 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/reportslib.php';
-
-class ReportsLibTest extends TikiTestCase
+class Reports_Send_BuildEmailTest extends TikiTestCase
 {
-	protected function setUp()
-	{	
-		$this->defaultReportPreferences = array('type' => 'plain');
-		
-		$this->obj = new reportsLib;
-	}
+	protected $obj;
 	
+	protected function setUp()
+	{
+		$this->obj = new Reports_Send_BuildEmail(array());
+
+		$this->defaultReportPreferences = array('type' => 'plain');
+	}
+
 	public function testMakeHtmlEmailBody_shouldReturnStringIfNothingHappened()
 	{
 		$this->assertEquals('Nothing has happened.', $this->obj->makeHtmlEmailBody(array(), $this->defaultReportPreferences));
@@ -78,6 +78,5 @@ class ReportsLibTest extends TikiTestCase
 		$output = $this->obj->makeHtmlEmailBody($reportCache, $this->defaultReportPreferences);
 
 		$this->assertContains('12.09. 20:30: admin added a new comment to Tracker item name', $output);
-	}
-
+	}	
 }

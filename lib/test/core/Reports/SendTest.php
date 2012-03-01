@@ -5,7 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Reports_SendTest extends TikiDatabaseTestCase
+require_once('lib/webmail/tikimaillib.php');
+
+class Reports_SendTest extends TikiTestCase
 {
 	protected $obj;
 	
@@ -13,21 +15,17 @@ class Reports_SendTest extends TikiDatabaseTestCase
 	
 	protected function setUp()
 	{
-		$db = TikiDb::get();
-		$this->obj = new Reports_Send($db);
 		$this->dt = new DateTime;
 		$this->dt->setTimestamp('1326909909');
 		
-		parent::setUp();
+		$this->mail = $this->getMock('TikiMail');
+		
+		$this->obj = new Reports_Send($this->dt, $this->mail);
 	}
 	
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet(dirname(__FILE__) . '/fixtures/user_reports_dataset.xml');
-	}
-
 	public function test()
 	{
-		
+		// under construction
 	}
+	
 }

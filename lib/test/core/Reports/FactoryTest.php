@@ -9,10 +9,16 @@ class Reports_FactoryTest extends TikiTestCase
 {
 	public function testBuild_shouldReturnInstances()
 	{
-		$instances = array('Reports_Users', 'Reports_Cache', 'Reports_Manager');
+		$classes = array('Reports_Users', 'Reports_Cache', 'Reports_Manager', 'Reports_Send');
 		
-		foreach ($instances as $instance) {
-			$this->assertInstanceOf($instance, Reports_Factory::build($instance));
+		foreach ($classes as $className) {
+			$this->assertInstanceOf($className, Reports_Factory::build($className));
 		}
+	}
+	
+	public function testBuild_shouldThrowExceptionForUnknownClass()
+	{
+		$this->setExpectedException('Exception', 'Unknown class Unknown_Class');
+		Reports_Factory::build('Unknown_Class');
 	}
 }
