@@ -9,9 +9,13 @@ class Reports_Send_BuildEmailTest extends TikiTestCase
 {
 	protected $obj;
 	
+	protected $tikilib;
+	
 	protected function setUp()
 	{
-		$this->obj = new Reports_Send_BuildEmail(array());
+		$this->tikilib = $this->getMockBuilder('TikiLib')->getMock();
+		
+		$this->obj = new Reports_Send_BuildEmail($this->tikilib);
 
 		$this->defaultReportPreferences = array('type' => 'plain');
 	}
@@ -23,6 +27,9 @@ class Reports_Send_BuildEmailTest extends TikiTestCase
 	
 	public function testMakeHtmlEmailBody_shouldReturnCalendarChangedReportInDetailedViewMode()
 	{
+		$this->tikilib->expects($this->exactly(2))->method('get_short_datetime')
+			->will($this->returnValue('2011-09-13 11:19'));
+		
 		$calendarlib = $this->getMock('MockCalendarLib', array('get_item'));
 		$calendarlib->expects($this->exactly(2))
 			->method('get_item')
@@ -50,11 +57,14 @@ class Reports_Send_BuildEmailTest extends TikiTestCase
 		
 		$output = $this->obj->makeHtmlEmailBody($reportCache, $this->defaultReportPreferences);
 
-		$this->assertContains('12.09. 20:30: admin added or updated event Calendar item name', $output);
+		$this->assertContains('2011-09-13 11:19: admin added or updated event Calendar item name', $output);
 	}
 	
 	public function testMakeHtmlEmailBody_shouldReturnTrackerItemCommentReportInDetailedViewMode()
 	{
+		$this->tikilib->expects($this->once())->method('get_short_datetime')
+			->will($this->returnValue('2011-09-12 20:30'));
+		
 		$trklib = $this->getMock('MockTrackerLib', array('get_tracker', 'get_isMain_value'));
 		$trklib->expects($this->once())->method('get_tracker');
 		$trklib->expects($this->once())
@@ -77,6 +87,6 @@ class Reports_Send_BuildEmailTest extends TikiTestCase
 		
 		$output = $this->obj->makeHtmlEmailBody($reportCache, $this->defaultReportPreferences);
 
-		$this->assertContains('12.09. 20:30: admin added a new comment to Tracker item name', $output);
+		$this->assertContains('2011-09-12 20:30: admin added a new comment to Tracker item name', $output);
 	}	
 }

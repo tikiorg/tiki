@@ -15,12 +15,12 @@
 class Reports_Send_BuildEmail
 {
 	/**
-	 * @param array $tikiPrefs list of Tiki preferences
+	 * @param TikiLib $tikilib
 	 * @return null
 	 */
-	public function __construct(array $tikiPrefs)
+	public function __construct(TikiLib $tikilib)
 	{
-		$this->tikiPrefs = $tikiPrefs;
+		$this->tikilib = $tikilib;
 	}
 	
 	protected function buildEmailBody($user_data, $report_preferences, $report_cache)
@@ -34,7 +34,7 @@ class Reports_Send_BuildEmail
 		$smarty->assign('report_user', ucfirst($user_data['login']));
 		$smarty->assign('report_interval', ucfirst($report_preferences['interval']));
 		$smarty->assign('report_date', date("l d.m.Y"));
-		$smarty->assign('report_last_report_date', TikiLib::date_format($this->tikiPrefs['long_date_format'], strtotime($report_preferences['last_report'])));
+		$smarty->assign('report_last_report_date', TikiLib::date_format($this->tikilib->get_preference('long_date_format'), strtotime($report_preferences['last_report'])));
 		$smarty->assign('report_total_changes', count($report_cache));
 		
 		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
@@ -47,7 +47,7 @@ class Reports_Send_BuildEmail
 		
 		$smarty->assign('userWatchesUrl', $userWatchesUrl);
 		
-		$userlang = $tikilib->get_user_preference($user_data['login'], "language", $this->tikiPrefs['site_language']);
+		$userlang = $tikilib->get_user_preference($user_data['login'], "language", $this->tikilib->get_preference('site_language'));
 
 		$mail_data = $smarty->fetchLang($userlang, "mail/report.tpl");
 		
@@ -121,7 +121,7 @@ class Reports_Send_BuildEmail
 						$body .= "<b>";
 					}
 	
-					$body .= $this->makeTime(strtotime($change['time'])).": ";
+					$body .= $this->tikilib->get_short_datetime(strtotime($change['time'])) . ": ";
 					$change['data']['user'] = $userlib->clean_user($change['data']['user']);
 					
 					if ($change['event']=='image_gallery_changed' && empty($change['data']['action'])) {
@@ -245,17 +245,6 @@ class Reports_Send_BuildEmail
 			return tra("Nothing has happened.");
 		} else {
 			return $body;
-		}
-	}
-	
-	//Makes time short
-	private function makeTime($time) {
-		if (date("d.m.Y", $time)==date("d.m.Y", time()-86400)) {
-			return tr("Yesterday %0", date("H:i", $time));
-		} elseif (date("d.m.Y", $time)==date("d.m.Y", time())) {
-			return tr("Today %0", date("H:i", $time));
-		} else {
-			return date("d.m.", $time)." ".date("H:i", $time);
 		}
 	}
 }
