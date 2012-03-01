@@ -3,6 +3,7 @@
 {if !isset($module_position)}{assign var=module_position value=' '}{/if}
 {if !isset($module_ord)}{assign var=module_ord value=' '}{/if}
 {capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
+{if !empty($module_params.topclass)}<div class="{$module_params.topclass}">{/if}
 {if $module_nobox neq 'y'}
 	{if $prefs.feature_layoutshadows eq 'y'}
 		<div class="box-shadow">{$prefs.box_shadow_start}
@@ -86,3 +87,4 @@
 		</div>
 	</div>
 {/if}
+{if !empty($module_params.topclass)}</div>{/if}

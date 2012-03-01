@@ -730,6 +730,11 @@ class ModLib extends TikiLib
 								'description' => tra('Custom CSS class.'),
 								'section' => 'appearance',
 							),
+							'topclass' => array(
+								'name' => tra('Containing Class'),
+								'description' => tra('Custom CSS class around.'),
+								'section' => 'appearance',
+							),
 						)
 		);
 
