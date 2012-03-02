@@ -29,7 +29,6 @@ class Tiki_Security_Policy extends Smarty_Security
 			'styles/thenews/pics/icons/',
 			'styles/tikinewt/pics/icons/',
 			'styles/twist/pics/icons/',
-			'img/icons2',
 			'img/flags',
 			'img/mytiki',
 			'img/smiles',
