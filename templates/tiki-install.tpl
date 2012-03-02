@@ -348,7 +348,7 @@
 							{tr}Select database engine{/tr}
 							<select name="useInnoDB">
 								<option value="0">{tr}MyISAM{/tr}</option>
-								<option value="1">{tr}InnoDB (experimental){/tr}</option>
+								<option value="1">{tr}InnoDB{/tr}</option>
 							</select>
 						</label>
 					{else}
