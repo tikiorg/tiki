@@ -903,7 +903,7 @@ dl.note-list {
 }
 
 .post-approved-r .content * {
-	background: url(../../img/icons2/dots.gif);
+	background: url(../../img/icons/dots.gif);
 }
 
 
@@ -1656,7 +1656,7 @@ form.simple select
 	border-left: 1px dotted gray;
 }
 .structuremenu .menuSection .option, .structuremenu .menuSection .optionline {
-	background: transparent url(../../img/icons2/h_trenner.gif) center left no-repeat; padding-left: 21px;
+	background: transparent url(../../img/icons/h_trenner.gif) center left no-repeat; padding-left: 21px;
 }
 
 /* End of file */

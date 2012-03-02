@@ -548,7 +548,7 @@ a.flip:hover {
 .option, .optionline,
 #tiki-center .option,
 #tiki-center .optionline {
-	background: transparent url(../img/icons2/corner-dots.gif) center left no-repeat;
+	background: transparent url(../img/icons/corner-dots.gif) center left no-repeat;
 	padding: 0.2em 0 0.2em 1.6em;
 }
 

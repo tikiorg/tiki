@@ -150,10 +150,10 @@
 	  <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		{if $nextx!=0}
-            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons2/nav_dot.gif' width='8' height='11' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}" /></a>
+            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons/nav_dot.gif' width='8' height='11' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}" /></a>
 	    		{/if}
             	{if $imagerotate}
-            		<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' width='11' height='11' alt="{tr}rotate{/tr}" title="{tr}rotate{/tr}" /></a>
+            		<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons/admin_rotate.gif' width='11' height='11' alt="{tr}rotate{/tr}" title="{tr}rotate{/tr}" /></a>
             	{/if}
             	<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
             	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>

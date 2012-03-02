@@ -68,11 +68,11 @@ textarea#metric_query, textarea#tab_content {
 	display: inline-block;
 	width: 11px;
 	height: 11px;
-	background: url('img/icons2/arrow-right.gif') no-repeat top left;
+	background: url('img/icons/arrow-right.gif') no-repeat top left;
 }
 
 .toggle-button-off {
-	background: url('img/icons2/arrow-down.gif') no-repeat top left;
+	background: url('img/icons/arrow-down.gif') no-repeat top left;
 }
 
 .jqtabs #tab-add {

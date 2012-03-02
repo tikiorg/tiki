@@ -59,7 +59,7 @@
 
 {* --- launch slideshow --- *}
 	{if $listImgId}
-	  <a href="javascript:thepix.toggle('start')">{html_image file='img/icons2/cycle_next.gif' border='none' alt="{tr}Slideshow Forward{/tr}" title="{tr}Slideshow Forward{/tr}"}</a>
+	  <a href="javascript:thepix.toggle('start')">{html_image file='img/icons/cycle_next.gif' border='none' alt="{tr}Slideshow Forward{/tr}" title="{tr}Slideshow Forward{/tr}"}</a>
 	{/if}
 
 {* --- last image --- *}
@@ -71,7 +71,7 @@
   <div class="slideshow" style="display: none;" align="center">
 
 {* --- stop --- *}
-	<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons2/admin_delete.gif' border='none' alt="{tr}Stop{/tr}" title="{tr}Stop{/tr}"}</a>
+	<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons/admin_delete.gif' border='none' alt="{tr}Stop{/tr}" title="{tr}Stop{/tr}"}</a>
 {* --- toggle cyclic --- *}
 	<a href="javascript:thepix.toggle('toTheEnd')">{html_image file='img/icons/ico_redo.gif' border='none' alt="{tr}Cyclic{/tr}" title="{tr}Cyclic{/tr}"}</a>
 {* --- toggle back/forward --- *}

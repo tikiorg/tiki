@@ -11,7 +11,7 @@
     		{icon _id='resultset_previous' alt="{tr}Previous page{/tr}" title=$icon_title}
     	</a>
     {else}
-    	<img src="img/icons2/8.gif" alt="" height="1" width="8" />
+    	<img src="img/icons/8.gif" alt="" height="1" width="8" />
     {/if}
 
     {if $parent_info}{if $parent_info.page_alias}{assign var=icon_title value=$parent_info.page_alias}{else}{assign var=icon_title value=$parent_info.pageName}{/if}
@@ -19,10 +19,10 @@
     		{icon _id='resultset_up' alt="{tr}Parent page{/tr}" title=$icon_title}
     	</a>
     {else}
-    	<img src="img/icons2/8.gif" alt="" height="1" width="8" />
+    	<img src="img/icons/8.gif" alt="" height="1" width="8" />
     {/if}
 
-    {if $next_info and $next_info.page_ref_id}{if $next_info.page_alias}{assign var=icon_title value=$next_info.page_alias}{else}{assign var=icon_title value=$next_info.pageName}{/if}<a href="{sefurl page=$next_info.pageName structure=$home_info.pageName page_ref_id=$next_info.page_ref_id}">{icon _id='resultset_next' alt="{tr}Next page{/tr}" title=$icon_title}</a>{else}<img src="img/icons2/8.gif" alt="" height="1" width="8" />{/if}
+    {if $next_info and $next_info.page_ref_id}{if $next_info.page_alias}{assign var=icon_title value=$next_info.page_alias}{else}{assign var=icon_title value=$next_info.pageName}{/if}<a href="{sefurl page=$next_info.pageName structure=$home_info.pageName page_ref_id=$next_info.page_ref_id}">{icon _id='resultset_next' alt="{tr}Next page{/tr}" title=$icon_title}</a>{else}<img src="img/icons/8.gif" alt="" height="1" width="8" />{/if}
 
 		</div>
   		<div style="float: left;">

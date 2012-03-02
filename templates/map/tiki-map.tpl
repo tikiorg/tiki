@@ -86,9 +86,9 @@
 					</div>
 					<img id="queryClose" src="img/icons/close.gif" height="13" width="13" alt="{tr}Scroll Up{/tr}"
 						style="position:absolute; top:0px; left:257px" />
-					<img id="queryUp" src="img/icons2/up.gif" height="8" width="10" alt="{tr}Scroll Up{/tr}"
+					<img id="queryUp" src="img/icons/up.gif" height="8" width="10" alt="{tr}Scroll Up{/tr}"
 						style="position:absolute; top:15px; left:257px" />
-					<img id="queryDown" src="img/icons2/down.gif" height="8" width="10" alt="{tr}Scroll Down{/tr}"
+					<img id="queryDown" src="img/icons/down.gif" height="8" width="10" alt="{tr}Scroll Down{/tr}"
 						style="position:absolute; top:188px; left:257px" />
 				  <script type="text/javascript">
 				  	var scrollActive = false, scrollStop = true, scrollIncrement = 10, scrollInterval = 60;

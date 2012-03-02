@@ -5,7 +5,7 @@ var baseURI = '{$smarty.server.REQUEST_URI}';
 function refreshCache( entry ) { // {{{
 	var status = document.getElementById( 'profile-status-' + entry );
 	var datespan = document.getElementById( 'profile-date-' + entry );
-	var pending = 'img/icons2/status_pending.gif';
+	var pending = 'img/icons/status_pending.gif';
 
 	if( status.src == pending )
 		return;
@@ -17,7 +17,7 @@ function refreshCache( entry ) { // {{{
 		if (req.readyState == 4) {
 			if(req.status == 200) {
 				var data = eval( "(" + req.responseText + ")" );
-				status.src = 'img/icons2/status_' + data.status + '.gif';
+				status.src = 'img/icons/status_' + data.status + '.gif';
 				datespan.innerHTML = data.lastupdate;
 			} else
 				alert("Error loading page\n");
@@ -375,7 +375,7 @@ $("#repository, #categories").change(function(){
 		{foreach key=k item=entry from=$sources}
 			<tr>
 				<td>{$entry.short}</td>
-				<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons2/status_{$entry.status}.gif"/></td>
+				<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons/status_{$entry.status}.gif"/></td>
 				<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
 			</tr>
 		{/foreach}
