@@ -158,7 +158,7 @@
 			</select>
 				<input type="submit" name="Go" value="{tr}Go{/tr}" />&nbsp;
 			{/if}
-			 <input type="image" name="maponly" value="yes" src="img/icn/png.gif" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}" />
+			 <input type="image" name="maponly" value="yes" src="pics/icons/image.png" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}" />
 			{if $tiki_p_map_edit eq 'y'}
 				&nbsp; 
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
