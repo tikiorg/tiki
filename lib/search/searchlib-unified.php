@@ -307,7 +307,15 @@ class UnifiedSearchLib
 		}
 
 		if ($jail = $categlib->get_jail()) {
-			$query->filterCategory($jail, true);
+			$i = 0;
+			foreach ($jail as $cat) {
+				$i++;
+				$jail_query .= $cat;
+				if ($i < count($jail)) {
+					$jail_query .= " or ";
+				}
+			}
+			$query->filterCategory($jail_query, true);
 		}
 
 		if (isset($filter['type']) && $filter['type']) {
