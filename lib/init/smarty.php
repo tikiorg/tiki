@@ -34,10 +34,6 @@ class Tiki_Security_Policy extends Smarty_Security
 			'img/smiles',
 			'img/trackers',
 			'images/',
-			'pics/',
-			'pics/icons',
-			'pics/icons/mime',
-			'pics/large',
 			'lib/ckeditor_tiki/ckeditor-icons',
 		);
 }
