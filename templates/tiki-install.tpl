@@ -176,7 +176,7 @@
 {elseif $install_step eq '3' or ($dbcon eq 'n' or $resetdb eq 'y')}
 {* we do not have a valid db connection or db reset is requested *}
 <h1>{tr}Set the Database Connection{/tr}</h1>
-<div style="float:left; width:60px"><img src="pics/large/stock_line-in48x48.png" alt="{tr}Database{/tr}" /></div>
+<div style="float:left; width:60px"><img src="img/icons/large/stock_line-in48x48.png" alt="{tr}Database{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}Tiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page.{/tr}</p>
 {if $dbcon ne 'y'}
@@ -476,7 +476,7 @@
 {elseif $install_step eq '6'}
 <h1>{tr}Configure General Settings{/tr}</h1>
 <form action="tiki-install.php" method="post">
-<div style="float:left; width:60px"><img src="pics/large/icon-configuration48x48.png" alt="{tr}Configure General Settings{/tr}" /></div>
+<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Configure General Settings{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}Complete these fields to configure common, general settings for your site.{/tr} {tr}The information you enter here can be changed later.{/tr}</p>
 	<p>{tr}Refer to the <a href="http://doc.tiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings.{/tr}</p>
@@ -595,7 +595,7 @@
 
 {elseif $install_step eq '7'}
 <h1>{tr}Enter Your Tiki{/tr}</h1>
-<div style="float:left; width:60px"><img src="pics/large/stock_quit48x48.png" alt="{tr}Log in{/tr}" /></div>
+<div style="float:left; width:60px"><img src="img/icons/large/stock_quit48x48.png" alt="{tr}Log in{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
 	<p>{tr}Tiki is an open source project, <em>you</em> can <a href='http://info.tiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tiki.org/Develop+Tiki' target='_blank'>develop Tiki</a>.{/tr} </p>

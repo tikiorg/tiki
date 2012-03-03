@@ -85,7 +85,7 @@
 	
 			<tr>
 				<td rowspan="2">
-					<img src="pics/large/evolution48x48.png" alt="{tr}e-Mail{/tr}"/>
+					<img src="img/icons/large/evolution48x48.png" alt="{tr}e-Mail{/tr}"/>
 					<br />
 					{tr}Send via e-Mail{/tr}
 				</td>
@@ -262,7 +262,7 @@
 			{if $prefs.feature_messages eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
-						<img src="pics/large/messages48x48.png" alt="{tr}Messages{/tr}" />
+						<img src="img/icons/large/messages48x48.png" alt="{tr}Messages{/tr}" />
 						<br />
 						{tr}Send message{/tr}
 					</td>
@@ -317,7 +317,7 @@
 			{if $prefs.feature_forums eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
-						<img src="pics/large/stock_index48x48.png" alt="{tr}Forums{/tr}" />
+						<img src="img/icons/large/stock_index48x48.png" alt="{tr}Forums{/tr}" />
 						<br />
 						{tr}Post on forum{/tr}
 					</td>

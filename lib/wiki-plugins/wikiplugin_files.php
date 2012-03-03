@@ -14,7 +14,7 @@ function wikiplugin_files_info()
 		'introduced' => 7.0,
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
 		'body' => tra('Title for the file listing, or the link text when slideshow = y'),
-		'icon' => 'pics/large/file-manager.png',
+		'icon' => 'img/icons/large/file-manager.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'galleryId' => array(

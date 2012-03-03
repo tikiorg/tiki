@@ -94,7 +94,7 @@
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
               {if $files[changes].isgal eq 1}
                 <a {$link}>
-                  {icon _id="pics/large/fileopen48x48.png" width="48" height="48"}
+                  {icon _id="img/icons/large/fileopen48x48.png" width="48" height="48"}
                 </a>
               {else}
                 <a {$link}
