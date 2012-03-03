@@ -13,7 +13,7 @@ function wikiplugin_addtogooglecal_info()
 		'description' => tra('Add a calendar item to a Google calendar'),
 		'prefs' => array('wikiplugin_addtogooglecal'),
 		'introduced' => 6,
-		'icon' => 'pics/icons/calendar_add.png',
+		'icon' => 'img/icons/calendar_add.png',
 		'format' => 'html',
 		'params' => array(
 			'calitemid' => array(

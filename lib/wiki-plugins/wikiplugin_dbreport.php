@@ -1512,7 +1512,7 @@ function wikiplugin_dbreport_info()
 		'prefs' => array('wikiplugin_dbreport'),
 		'body' => tra('report definition'),
 		'validate' => 'all',
-		'icon' => 'pics/icons/database_table.png',
+		'icon' => 'img/icons/database_table.png',
 		'params' => array(
 			'dsn' => array(
 				'required' => false,

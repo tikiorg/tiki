@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  * Type:     modifier
  * Name:     iconify
- * Purpose:  Returns a filetype icon if the filetype is known and there's an icon in pics/icons/mime. Returns a default file type icon in any other case
+ * Purpose:  Returns a filetype icon if the filetype is known and there's an icon in img/icons/mime. Returns a default file type icon in any other case
  * -------------------------------------------------------------
  */
 
@@ -26,11 +26,11 @@ function smarty_modifier_iconify($string, $filetype = null)
 
 	$smarty->loadPlugin('smarty_function_icon');
 	$ext = strtolower(substr($string, strrpos($string, '.') + 1));
-	$icon = file_exists("pics/icons/mime/$ext.png") ? $ext : 'default';
+	$icon = file_exists("img/icons/mime/$ext.png") ? $ext : 'default';
 
 	return smarty_function_icon(
 					array(
-						'_id' => 'pics/icons/mime/'.$icon.'.png',
+						'_id' => 'img/icons/mime/'.$icon.'.png',
 						'alt' => ( $filetype === null ? $icon : $filetype ),
 						'class' => ''
 					), 

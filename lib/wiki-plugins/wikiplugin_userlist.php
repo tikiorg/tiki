@@ -13,7 +13,7 @@ function wikiplugin_userlist_info()
 		'description' => tra('Display a list of registered users'),
 		'prefs' => array( 'wikiplugin_userlist' ),
 		'body' => tra('Login Filter'),
-		'icon' => 'pics/icons/group_go.png',
+		'icon' => 'img/icons/group_go.png',
 		'params' => array(
 			'sep' => array(
 				'required' => false,

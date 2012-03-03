@@ -112,7 +112,7 @@ function wikiplugin_backlinks_info()
 		'documentation' => 'PluginBacklinks',
 		'description' => tra('Lists all pages that link to a particular page'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_backlinks' ),
-		'icon' => 'pics/icons/link.png',
+		'icon' => 'img/icons/link.png',
 		'params' => array(
 			'page' => array(
 				'required' => false,

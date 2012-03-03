@@ -13,7 +13,7 @@ function wikiplugin_snarf_info()
 		'description' => tra('Display the contents of another web page'),
 		'prefs' => array( 'wikiplugin_snarf' ),
 		'validate' => 'all',
-		'icon' => 'pics/icons/page_copy.png',
+		'icon' => 'img/icons/page_copy.png',
 		'params' => array(
 			'url' => array(
 				'required' => true,

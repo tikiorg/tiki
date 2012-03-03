@@ -12,7 +12,7 @@ function wikiplugin_userlink_info()
 		'documentation' => 'PluginUserlink',
 		'description' => tra('Display a link to a user\'s information page'),
 		'prefs' => array('wikiplugin_userlink'),
-		'icon' => 'pics/icons/user_go.png',
+		'icon' => 'img/icons/user_go.png',
 		'params' => array( 
 			'user' => array(
 				'required' => false,

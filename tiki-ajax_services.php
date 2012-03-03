@@ -166,7 +166,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$access->output_serialized( $tags );
 	} elseif ( $_REQUEST['listonly'] == 'icons' ) {
 
-		$dir = 'pics/icons';
+		$dir = 'img/icons';
 		$max = isset($_REQUEST['max']) ? $_REQUEST['max'] : 10;
 		$icons = array();
 		$style_dir = $tikilib->get_style_path($prefs['style'], $prefs['style_option']);

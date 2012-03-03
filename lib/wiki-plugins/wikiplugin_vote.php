@@ -13,7 +13,7 @@ function wikiplugin_vote_info()
 		'description' => tra('Create a tracker for voting'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_vote' ),
 		'body' => tra('Title'),
-		'icon' => 'pics/icons/thumb_up.png',
+		'icon' => 'img/icons/thumb_up.png',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,

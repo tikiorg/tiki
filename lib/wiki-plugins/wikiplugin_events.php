@@ -12,7 +12,7 @@ function wikiplugin_events_info()
 		'documentation' => 'PluginEvents',
 		'description' => tra('Display upcoming events from calendars'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_events' ),
-		'icon' => 'pics/icons/calendar_view_day.png',
+		'icon' => 'img/icons/calendar_view_day.png',
 		'tags' => array( 'basic' ),	
 		'params' => array(
 			'calendarid' => array(

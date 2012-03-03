@@ -12,7 +12,7 @@ function wikiplugin_articles_info()
 		'documentation' => 'PluginArticles',
 		'description' => tra('Display multiple articles'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
-		'icon' => 'pics/icons/table_multiple.png',
+		'icon' => 'img/icons/table_multiple.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'usePagination' => array(

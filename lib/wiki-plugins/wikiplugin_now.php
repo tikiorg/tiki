@@ -12,7 +12,7 @@ function wikiplugin_now_info() {
 		'description' => tra('Display the current date or time'),
 		'prefs' => array('wikiplugin_now'),
 		'body' => tra('text'),
-		'icon' => 'pics/icons/layout_header.png',
+		'icon' => 'img/icons/layout_header.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'format' => array(

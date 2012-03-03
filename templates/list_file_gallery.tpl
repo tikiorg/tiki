@@ -100,7 +100,7 @@
 							{/if}
 							
 							{if $prefs.fgal_display_zip_option eq 'y'}
-								{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
+								{icon _id='img/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
 							{/if}
 							
 							{if $tiki_p_assign_perm_file_gallery eq 'y'}

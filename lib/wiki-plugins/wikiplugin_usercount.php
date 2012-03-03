@@ -13,7 +13,7 @@ function wikiplugin_usercount_info()
 		'description' => tra('Display number of users for a site or group'),
 		'prefs' => array( 'wikiplugin_usercount' ),
 		'body' => tra('Group name'),
-		'icon' => 'pics/icons/group_gear.png',
+		'icon' => 'img/icons/group_gear.png',
 		'params' => array(
 		),
 	);

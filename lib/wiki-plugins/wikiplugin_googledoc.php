@@ -14,7 +14,7 @@ function wikiplugin_googledoc_info()
 		'prefs' => array( 'wikiplugin_googledoc' ),
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',
-		'icon' => 'pics/icons/google.png',
+		'icon' => 'img/icons/google.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'type' => array(

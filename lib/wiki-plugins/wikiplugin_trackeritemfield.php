@@ -13,7 +13,7 @@ function wikiplugin_trackeritemfield_info()
 		'description' => tra('Display or test the value of a tracker item field'),
 		'prefs' => array( 'wikiplugin_trackeritemfield', 'feature_trackers' ),
 		'body' => tra('Wiki text containing an {ELSE} marker.'),
-		'icon' => 'pics/icons/database_go.png',
+		'icon' => 'img/icons/database_go.png',
 		'filter' => 'wikicontent',
 		'params' => array(
 			'trackerId' => array(

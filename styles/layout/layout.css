@@ -356,12 +356,12 @@ li#logout_link a {
 
 #col2 .moduleflip-vert .flipmodimage,
 .minimize-modules-right #col3 .moduleflip-vert .flipmodimage {
-	background-image: url(../../pics/icons/resultset_first.png) !important;
+	background-image: url(../../img/icons/resultset_first.png) !important;
 }
 
 #col3 .moduleflip-vert .flipmodimage,
 .minimize-modules-left #col2 .moduleflip-vert .flipmodimage {
-	background-image: url(../../pics/icons/resultset_last.png) !important;
+	background-image: url(../../img/icons/resultset_last.png) !important;
 }
 
 .minimize-modules-left #col2 .separator,

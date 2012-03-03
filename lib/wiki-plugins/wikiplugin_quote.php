@@ -13,7 +13,7 @@ function wikiplugin_quote_info()
 		'description' => tra('Format text as a quote'),
 		'prefs' => array( 'wikiplugin_quote' ),
 		'body' => tra('Quoted text'),
-		'icon' => 'pics/icons/quotes.png',
+		'icon' => 'img/icons/quotes.png',
 		'filter' => 'text',
 		'tags' => array( 'basic' ),
 		'params' => array(

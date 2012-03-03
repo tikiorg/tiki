@@ -12,7 +12,7 @@ function wikiplugin_draw_info()
 		'documentation' => 'PluginDraw',
 		'description' => tra('Display or create an image from TikiDraw that is stored into the File Gallery'),
 		'prefs' => array( 'feature_draw' , 'wikiplugin_draw'),
-		'icon' => 'pics/icons/shape_square_edit.png',
+		'icon' => 'img/icons/shape_square_edit.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'id' => array(
@@ -131,7 +131,7 @@ EOF;
 	
 		if ($globalperms->upload_files == 'y') {
 			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label&width=$width&height=$height' onclick='return $(this).ajaxEditDraw();'  title='Edit: ".$fileInfo['filename']."' data-fileid='".$fileInfo['fileId']."' data-galleryid='".$fileInfo['galleryId']."'>
-					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
+					<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 				</a>";
 		}
 		

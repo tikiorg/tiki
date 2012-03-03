@@ -13,7 +13,7 @@ function wikiplugin_equation_info()
 		'description' => tra('Render an equation written in LaTeX syntax as an image.'),
 		'prefs' => array('wikiplugin_equation'),
 		'body' => tra('equation'),
-		'icon' => 'pics/icons/sum.png',
+		'icon' => 'img/icons/sum.png',
 		'params' => array(
 			'size' => array(
 				'required' => false,

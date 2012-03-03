@@ -13,7 +13,7 @@ function wikiplugin_avatar_info()
 		'description' => tra('Display a user\'s avatar'),
 		'prefs' => array('wikiplugin_avatar'),
 		'body' => tra('username'),
-		'icon' => 'pics/icons/user.png',
+		'icon' => 'img/icons/user.png',
 		'params' => array(
 			'page' => array(
 				'required' => false,

@@ -12,7 +12,7 @@ function wikiplugin_htmlfeed_info()
 		'documentation' => 'PluginHtmlFeed',
 		'description' => tra('Adds an item to html feed'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeed' , 'feature_htmlfeed'),
-		'icon' => 'pics/icons/link.png',
+		'icon' => 'img/icons/link.png',
 		'params' => array(			
 			'name' => array(
 				'required' => true,

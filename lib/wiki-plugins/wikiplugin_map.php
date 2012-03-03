@@ -13,7 +13,7 @@ function wikiplugin_map_info()
 		'documentation' => 'PluginMap',
 		'description' => tra('Display a map'),
 		'prefs' => array( 'wikiplugin_map' ),
-		'icon' => 'pics/icons/map.png',
+		'icon' => 'img/icons/map.png',
 		'tags' => array( 'basic' ),
 		'filter' => 'wikicontent',
 		'body' => tr('Instructions to load content'),

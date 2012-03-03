@@ -12,7 +12,7 @@ function wikiplugin_catorphans_info()
 		'documentation' => 'PluginCatOrphans',
 		'description' => tra('List objects that are not categorized'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catorphans' ),
-		'icon' => 'pics/icons/sitemap_color.png',
+		'icon' => 'img/icons/sitemap_color.png',
 		'params' => array(
 			'objects' => array(
 				'required' => false,
