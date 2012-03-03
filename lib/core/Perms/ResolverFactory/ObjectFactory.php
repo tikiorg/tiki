@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,16 +13,18 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 {
 	private $known = array();
 
-	function getHash( array $context ) {
+	function getHash( array $context )
+	{
 		if ( isset( $context['type'], $context['object'] ) ) {
-			return 'object:' . $context['type'] . ':' . $this->cleanObject( $context['object'] );
+			return 'object:' . $context['type'] . ':' . $this->cleanObject($context['object']);
 		} else {
 			return '';
 		}
 	}
 
-	function bulk( array $baseContext, $bulkKey, array $values ) {
-		if ( $bulkKey != 'object' || ! isset( $baseContext['type'] ) ) {
+	function bulk( array $baseContext, $bulkKey, array $values )
+	{
+		if ( $bulkKey != 'object' || ! isset($baseContext['type']) ) {
 			return $values;
 		}
 		
@@ -34,70 +36,77 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 			$this->known = array();
 		}
 
-		foreach( $values as $v ) {
-			$hash = $this->getHash( array_merge( $baseContext, array( 'object' => $v ) ) );
-			if ( ! isset( $this->known[$hash] ) ) {
+		foreach ( $values as $v ) {
+			$hash = $this->getHash(array_merge($baseContext, array( 'object' => $v )));
+			if ( ! isset($this->known[$hash]) ) {
 				$this->known[$hash] = array();
-				$key = md5( $baseContext['type'] . $this->cleanObject( $v ) );
+				$key = md5($baseContext['type'] . $this->cleanObject($v));
 				$objects[$key] = $v;
 				$hashes[$key] = $hash;
 			}
 		}
 
-		if ( count( $objects ) == 0 ) {
+		if ( count($objects) == 0 ) {
 			return array();
 		}
 
 		$db = TikiDb::get();
 
 		$bindvars = array( $baseContext['type'] );
-		$result = $db->fetchAll( 'SELECT `objectId`, `groupName`, `permName` FROM users_objectpermissions WHERE `objectType` = ? AND ' . $db->in( 'objectId', array_keys( $objects ), $bindvars ), $bindvars );
+		$result = $db->fetchAll(
+						'SELECT `objectId`, `groupName`, `permName` FROM users_objectpermissions WHERE `objectType` = ? AND ' .
+						$db->in('objectId', array_keys($objects), $bindvars),
+						$bindvars
+		);
 		$found = array();
 
-		foreach( $result as $row ) {
+		foreach ( $result as $row ) {
 			$object = $row['objectId'];
 			$group = $row['groupName'];
-			$perm = $this->sanitize( $row['permName'] );
+			$perm = $this->sanitize($row['permName']);
 			$hash = $hashes[$object];
 			$found[] = $objects[$object];
 
-			if ( ! isset( $this->known[$hash][$group] ) ) {
+			if ( ! isset($this->known[$hash][$group] )) {
 				$this->known[$hash][$group] = array();
 			}
 
 			$this->known[$hash][$group][] = $perm;
 		}
 
-		return array_values( array_diff( $values, $found ) );
+		return array_values(array_diff($values, $found));
 	}
 
-	function getResolver( array $context ) {
-		if ( ! isset( $context['type'], $context['object'] ) ) {
+	function getResolver( array $context )
+	{
+		if ( ! isset($context['type'], $context['object'] )) {
 			return null;
 		}
 
-		$hash = $this->getHash( $context );
+		$hash = $this->getHash($context);
 
-		$this->bulk( $context, 'object', array( $context['object'] ) );
+		$this->bulk($context, 'object', array( $context['object'] ));
 
 		$perms = $this->known[$hash];
 
-		if ( count( $perms ) == 0 ) {
+		if ( count($perms) == 0 ) {
 			return null;
 		} else {
-			return new Perms_Resolver_Static( $perms, 'object' );
+			return new Perms_Resolver_Static($perms, 'object');
 		}
 	}
 
-	private function sanitize( $name ) {
-		if ( strpos( $name, 'tiki_p_' ) === 0 ) {
-			return substr( $name, strlen( 'tiki_p_' ) );
+	private function sanitize( $name )
+	{
+		if ( strpos($name, 'tiki_p_') === 0 ) {
+			return substr($name, strlen('tiki_p_'));
 		} else {
 			return $name;
 		}
 	}
 
-	private function cleanObject($name) {
+	private function cleanObject($name)
+	{
 		return TikiLib::strtolower(trim($name));
 	}
 }

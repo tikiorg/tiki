@@ -19,7 +19,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 			'getetag',
 			'getcontenttype',
 			'resourcetype',
-			);
+	);
 
 	protected $propertyStorage = null;
 
@@ -33,24 +33,27 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		global $prefs;
 
 		// avoid not having a deadlock when trying to acquire WebDav lock
-		print_debug("Lock Directory: ". $prefs['fgal_use_dir']."\n" . "\n" );
+		print_debug('Lock Directory: ' . $prefs['fgal_use_dir'] . "\n" . "\n");
 		if (!empty($prefs['fgal_use_dir']) && file_exists($prefs['fgal_use_dir'])) {
 			$this->root = realpath($prefs['fgal_use_dir']);
 		} else {
 			$this->root = realpath('temp/');
 		}
-		$this->options = new ezcWebdavFileBackendOptions(array(
-					'lockFileName' => $this->root . '/.webdav_lock',
-					'waitForLock' => 200000,
-					'propertyStoragePath' => $this->root,
-					'noLock' => false )
-				);
+
+		$this->options = new ezcWebdavFileBackendOptions(
+						array(
+							'lockFileName' => $this->root . '/.webdav_lock',
+							'waitForLock' => 200000,
+							'propertyStoragePath' => $this->root,
+							'noLock' => false )
+		);
+
 		$this->propertyStorage = new ezcWebdavBasicPropertyStorage();
 	}
 
 	public function __get($name)
 	{
-		print_debug("get " .$name . "\n");
+		print_debug('get ' . $name . "\n");
 
 		switch ($name) {
 			case 'options':
@@ -72,7 +75,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 				}
 
 				$this->$name = $value;
-				break;
+							break;
 
 			default:
 				throw new ezcBasePropertyNotFoundException($name);
@@ -114,27 +117,32 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 			return null;
 		}
 
-		return $tikilib->create_page($this->get_page_name_from_virtual_path($path), 0, $content, $tikilib->now, "Created from WebDAV", $user,  $tikilib->get_ip_address());
+		return $tikilib->create_page($this->get_page_name_from_virtual_path($path), 0, $content, $tikilib->now, "Created from WebDAV", $user, $tikilib->get_ip_address());
 	}
 
 	protected function setResourceContents( $path, $content )
 	{
 		global $user, $tikilib, $prefs;
 
-		print_debug("setResourceContents " . $path . "\n");
+		print_debug('setResourceContents ' . $path . "\n");
 
 		if ($this->isCollection($path)) {
 			return null;
 		}
 
-		return $tikilib->update_page($this->get_page_name_from_virtual_path($path), $content, "Edited from WebDAV", $user, $tikilib->get_ip_address());
+		return $tikilib->update_page(
+						$this->get_page_name_from_virtual_path($path),
+						$content,
+						'Edited from WebDAV',
+						$user, $tikilib->get_ip_address()
+		);
 	}
 
 	protected function getResourceContents($path)
 	{
 		global $tikilib, $prefs;
 
-		print_debug("getResourceContents " .$path . "\n");
+		print_debug('getResourceContents ' . $path . "\n");
 
 		if ($this->isCollection($path)) {
 			return null;
@@ -147,19 +155,17 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	protected function getPropertyStorage($path)
 	{
-		print_debug("getPropertyStorage " .$path . "\n");
+		print_debug('getPropertyStorage ' . $path . "\n");
 
-		if ( @file_exists($storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path)) ) {
-			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom( @file_get_contents($storagePath) );
+		if ( @file_exists($storagePath = $this->options->propertyStoragePath . '/properties-' . md5($path)) ) {
+			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom(@file_get_contents($storagePath));
 		} else {
 			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom();
 		}
-		$handler = new ezcWebdavPropertyHandler(
-				new ezcWebdavXmlTool()
-				);
+		$handler = new ezcWebdavPropertyHandler(new ezcWebdavXmlTool());
 
 		try {
-			$handler->extractProperties($xml->getElementsByTagNameNS('DAV:','*'),$this->propertyStorage);
+			$handler->extractProperties($xml->getElementsByTagNameNS('DAV:', '*'), $this->propertyStorage);
 		} catch ( Exception $e ) {
 		}
 
@@ -168,14 +174,12 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	protected function storeProperties($path, ezcWebdavBasicPropertyStorage $storage)
 	{
-		print_debug("storeProperties " .$path . "\n");
+		print_debug('storeProperties ' . $path . "\n");
 
-		$storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path);
+		$storagePath = $this->options->propertyStoragePath . '/properties-' . md5($path);
 
 		// Create handler structure to read properties
-		$handler = new ezcWebdavPropertyHandler(
-				$xml = new ezcWebdavXmlTool()
-				);
+		$handler = new ezcWebdavPropertyHandler($xml = new ezcWebdavXmlTool());
 
 		// Create new dom document with property storage for one namespace
 		$doc = new DOMDocument('1.0');
@@ -187,24 +191,21 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		foreach ($this->handledLiveProperties as $propName) {
 			$storage->detach($propName);
 		}
-		$handler->serializeProperties(
-				$storage,
-				$properties
-				);
+		$handler->serializeProperties($storage, $properties);
 
 		print_debug("storeProperties method end\n");
 
-		return $doc->save( $storagePath );
+		return $doc->save($storagePath);
 	}
 
 	public function setProperty( $path, ezcWebdavProperty $property )
 	{
-		print_debug("setProperty " .$path . "\n");
+		print_debug('setProperty ' . $path . "\n");
 
-		if (($property->namespace === 'DAV:') &&
-				in_array( $property->name, $this->handledLiveProperties, true) &&
-				($property->name !== 'getcontenttype') &&
-				($property->name !== 'lockdiscovery')) {
+		if (($property->namespace === 'DAV:')
+					&& in_array($property->name, $this->handledLiveProperties, true)
+					&& ($property->name !== 'getcontenttype') && ($property->name !== 'lockdiscovery')
+		) {
 			return false;
 		}
 
@@ -222,7 +223,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	public function removeProperty($path, ezcWebdavProperty $property)
 	{
-		print_debug("removeProperty " . $path . "\n");
+		print_debug('removeProperty ' . $path . "\n");
 
 		if ($property instanceof ezcWebdavLiveProperty) {
 			return false;
@@ -242,7 +243,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	public function resetProperties($path, ezcWebdavPropertyStorage $storage)
 	{
-		print_debug("resetProperties " . $path . "\n");
+		print_debug('resetProperties ' . $path . "\n");
 
 		$this->storeProperties($path, $storage);
 		return true;
@@ -252,7 +253,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 	{
 		global $tikilib, $prefs;
 
-		print_debug("getProperty " .$path . " " . $propertyName . " " . $namespace . "\n");
+		print_debug('getProperty ' . $path . ' ' . $propertyName . ' ' . $namespace . "\n");
 
 		if (!$this->nodeExists($path)) {
 			return false;
@@ -277,51 +278,47 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		switch ($propertyName) {
 			case 'getcontentlength':
 				$property = new ezcWebdavGetContentLengthProperty(
-						$isCollection ?
-						ezcWebdavGetContentLengthProperty::COLLECTION :
-						$tikiInfo['page_size']
-						);
+								$isCollection ?
+								ezcWebdavGetContentLengthProperty::COLLECTION :
+								$tikiInfo['page_size']
+				);
 				return $property;
 
 			case 'getlastmodified':
-				$property = new ezcWebdavGetLastModifiedProperty( new ezcWebdavDateTime(
-							'@' . (int)$tikiInfo['lastModif']
-							) );
+				$property = new ezcWebdavGetLastModifiedProperty(
+								new ezcWebdavDateTime('@' . (int)$tikiInfo['lastModif'])
+				);
 				return $property;
 
 			case 'creationdate':
-				$property = new ezcWebdavCreationDateProperty(new ezcWebdavDateTime(
-							'@' . (int)$tikiInfo['created']
-							));
+				$property = new ezcWebdavCreationDateProperty(
+								new ezcWebdavDateTime('@' . (int)$tikiInfo['created'])
+				);
 				return $property;
 
 			case 'displayname':
-				$property = new ezcWebdavDisplayNameProperty(
-						$tikiInfo['pageName']
-						);
+				$property = new ezcWebdavDisplayNameProperty($tikiInfo['pageName']);
 				return $property;
 
 			case 'getcontenttype':
 				$property = new ezcWebdavGetContentTypeProperty(
-						$isCollection ?
-						'httpd/unix-directory' :
-						'application/octet-stream'
-						);
+								$isCollection ?
+								'httpd/unix-directory' :
+								'application/octet-stream'
+				);
 				return $property;
 
 			case 'getetag':
 				$md5 = md5($path);
-				$property = new ezcWebdavGetEtagProperty(
-						'"' . $md5 . '-' . crc32($md5) . '"'
-						);
+				$property = new ezcWebdavGetEtagProperty('"' . $md5 . '-' . crc32($md5) . '"');
 				return $property;
 
 			case 'resourcetype':
 				$property = new ezcWebdavResourceTypeProperty(
-						$isCollection ?
-						ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
-						ezcWebdavResourceTypeProperty::TYPE_RESOURCE
-						);
+								$isCollection ?
+								ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
+								ezcWebdavResourceTypeProperty::TYPE_RESOURCE
+				);
 
 				return $property;
 
@@ -352,17 +349,17 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	private function getContentLength($path)
 	{
-		print_debug("getContentLength " .$path . "\n");
+		print_debug('getContentLength ' . $path . "\n");
 
 		return null;
 	}
 
 	protected function getETag($path)
 	{
-		print_debug("getETag " . $path . "\n");
+		print_debug('getETag ' . $path . "\n");
 
 		if ( $etag = $this->getProperty($path, 'getetag')) {
-			return $this->getProperty($path, 'getetag' )->etag;
+			return $this->getProperty($path, 'getetag')->etag;
 		} else {
 			return md5($path);
 		}
@@ -370,7 +367,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	public function getAllProperties($path)
 	{
-		print_debug("getAllProperties " . $path . "\n");
+		print_debug('getAllProperties ' . $path . "\n");
 
 		$storage = $this->getPropertyStorage($path);
 
@@ -387,7 +384,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		global $tikilib, $wikilib;
 		include_once ('lib/wiki/wikilib.php');
 
-		print_debug("performCopy " . $fromPath . " -> " . $toPath . "\n");
+		print_debug('performCopy ' . $fromPath . " -> " . $toPath . "\n");
 
 		$page = $this->get_page_name_from_virtual_path($fromPath);
 		$info = $tikilib->get_page_info($page);
@@ -413,7 +410,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 	{
 		global $tikilib;
 
-		print_debug("performDelete " . $path . "\n");
+		print_debug('performDelete ' . $path . "\n");
 
 		$page = $this->get_page_name_from_virtual_path($path);
 		$info = $tikilib->get_page_info($page);
@@ -439,7 +436,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 	{
 		global $tikilib;
 
-		print_debug("nodeExists " .$path . "\n");
+		print_debug('nodeExists ' . $path . "\n");
 
 		if (empty($path) || $path[0] != '/') {
 			return false;
@@ -454,7 +451,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	protected function isCollection($path)
 	{
-		print_debug("isCollection " . $path . " -> " . ( $path === '/' ) . "\n");
+		print_debug('isCollection ' . $path . ' -> ' . ( $path === '/' ) . "\n");
 
 		if ($path === '/') {
 			return true;
@@ -467,7 +464,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 	{
 		global $tikilib, $user;
 
-		print_debug("getCollectionMembers " .$path . "\n");
+		print_debug('getCollectionMembers ' . $path . "\n");
 
 		$contents = array();
 		$errors = array();
@@ -478,7 +475,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 		$groups = $tikilib->get_user_groups($user);
 		$perms = Perms::getInstance();
-		$perms->setGroups( $groups );
+		$perms->setGroups($groups);
 		$pages = $tikilib->list_pages();
 
 		foreach ($pages['data'] as $page) {
@@ -493,7 +490,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		print_debug("-- HTTP method: GET --\n");
 		$return = parent::get($request);
 
-		print_debug("get -> " . $return . "\n");
+		print_debug('get -> ' . $return . "\n");
 
 		return $return;
 	}
@@ -511,7 +508,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 	public function propFind(ezcWebdavPropFindRequest $request)
 	{
 		print_debug("-- HTTP method: PROPFIND --\n");
-		$return = parent::propFind( $request );
+		$return = parent::propFind($request);
 
 		print_debug("propFind \n");
 
@@ -522,7 +519,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 	{
 		print_debug("-- HTTP method: PROPPATCH --\n");
 		$this->acquireLock();
-		$return = parent::propPatch( $request );
+		$return = parent::propPatch($request);
 		$this->freeLock();
 
 		print_debug("propPatch \n");
@@ -544,7 +541,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	public function delete(ezcWebdavDeleteRequest $request)
 	{
-		print_debug("-- HTTP method: DELETE --" . print_r($request,true) . "\n");
+		print_debug('-- HTTP method: DELETE --' . print_r($request, true) . "\n");
 		$this->acquireLock();
 		$return = parent::delete($request);
 		$this->freeLock();
