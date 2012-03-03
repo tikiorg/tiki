@@ -21,7 +21,7 @@ $info = $userprefslib->get_user_avatar_img($_REQUEST["user"]);
 $type = $info["avatarFileType"];
 $content = $info["avatarData"];
 if (empty($content) && isset($_REQUEST['always'])) {
-	$content = file_get_contents('pics/noavatar.png');
+	$content = file_get_contents('img/noavatar.png');
 }
 header("Content-type: $type");
 echo $content;

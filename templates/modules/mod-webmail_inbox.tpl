@@ -19,12 +19,12 @@
 			{if isset($prevstart) and $prevstart}
 				<a href="#" onclick="doRefreshWebmail({$prevstart});return false;">{icon _id='resultset_previous' class=''}</a>
 			{else}
-				{icon _id='pics/trans.png' class=''}
+				{icon _id='img/trans.png' class=''}
 			{/if}
 			{if isset($nextstart) and $nextstart}
 				<a href="#" onclick="doRefreshWebmail({$nextstart});return false;">{icon _id='resultset_next' class=''}</a>
 			{else}
-				{icon _id='pics/trans.png' class=''}
+				{icon _id='img/trans.png' class=''}
 			{/if}
 			{*icon _id='resultset_last' class=''*}
 		</div>
