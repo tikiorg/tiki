@@ -68,7 +68,7 @@ function smarty_function_icon($params, $smarty)
 	$html = '';
 
 	if ( empty($params['_id']) ) {
-		if ( isset($params['_defaultdir']) && $params['_defaultdir'] == 'pics/large' ) {
+		if ( isset($params['_defaultdir']) && $params['_defaultdir'] == 'img/icons/large' ) {
 			$params['_id'] = 'green_question48x48';
 		} else {
 			$params['_id'] = 'green_question';
@@ -76,7 +76,7 @@ function smarty_function_icon($params, $smarty)
 	}
 	if ( ! empty($params['_defaultdir']) ) {
 		array_unshift($basedirs, $params['_defaultdir']);
-		if ( $params['_defaultdir'] == 'pics/large' ) {
+		if ( $params['_defaultdir'] == 'img/icons/large' ) {
 			$default_width = $default_height = ( strpos($params['_id'], '48x48') !== false ) ? 48 : 32;
 		}
 	}
