@@ -15,37 +15,39 @@ include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/newsletters/nllib.php');
 
-$smarty->assign('edit',false);
+$smarty->assign('edit', false);
 
 if (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
-	$now = explode("/",date('m/d/Y',$_SESSION['CalendarFocusDate']));
+	$now = explode('/', date('m/d/Y', $_SESSION['CalendarFocusDate']));
 } else {
 	// by default, export will start from yesterday's events.
-	$now = explode("/",date('m/d/Y'));
+	$now = explode('/', date('m/d/Y'));
 }
 
 if (isset($_SESSION['CalendarViewMode'])) {
 	switch ($_SESSION['CalendarViewMode']) {
 		case 'month':
-			$startTime = mktime(0,0,0,$now[0],1,$now[2]);
-			$stopTime = mktime(0,0,0,$now[0]+1,0,$now[2]);
-			break;
+			$startTime = mktime(0, 0, 0, $now[0], 1, $now[2]);
+			$stopTime = mktime(0, 0, 0, $now[0]+1, 0, $now[2]);
+						break;
 		default:
-			$startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]);
-			$stopTime = mktime(0,0,0,$now[0],$now[1]+1,$now[2]);
+			$startTime = mktime(0, 0, 0, $now[0], $now[1]-1, $now[2]);
+			$stopTime = mktime(0, 0, 0, $now[0], $now[1]+1, $now[2]);
 	}
 } else {
-	$startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]);
-	$stopTime = mktime(0,0,0,$now[0],$now[1]+1,$now[2]);
+	$startTime = mktime(0, 0, 0, $now[0], $now[1]-1, $now[2]);
+	$stopTime = mktime(0, 0, 0, $now[0], $now[1]+1, $now[2]);
 }
 
-$smarty->assign('startTime',$startTime);
-$smarty->assign('stopTime',$stopTime);
+$smarty->assign('startTime', $startTime);
+$smarty->assign('stopTime', $stopTime);
 
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
-foreach ($rawcals["data"] as $cal_id=>$cal_data)
+
+foreach ($rawcals['data'] as $cal_id=>$cal_data)
 	$caladd["$cal_id"] = $cal_data;
-$smarty->assign('listcals',$caladd);
+
+$smarty->assign('listcals', $caladd);
 $smarty->assign('mid', 'tiki-calendar_params_ical.tpl');
-$smarty->display("tiki.tpl");
+$smarty->display('tiki.tpl');
