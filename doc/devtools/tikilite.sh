@@ -107,7 +107,7 @@ rm -rf tiki-webmail.php
 rm -rf tiki-webmail_contacts.php
 rm -rf tiki-webmail_download_attachment.php
 rm -rf img/icons/admin_webmail.png
-rm -rf img/mytiki/webmail.gif
+rm -rf img/icons/large/webmail.gif
 rm -rf img/webmail
 rm -rf templates/tiki-admin-include-webmail.tpl
 rm -rf templates/tiki-webmail.tpl

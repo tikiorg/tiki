@@ -562,7 +562,7 @@ $icons = array(
 		'help' => 'Social+Networks',
 	),
 	"share" => array(
-		'icon' => 'img/mytiki/stock_contact.png',
+		'icon' => 'img/icons/large/stock_contact.png',
 		'position' => '-400px -715px;',
 		'title' => tr('Share'),
 		'disabled' => $prefs['feature_share'] != 'y',
