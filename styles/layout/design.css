@@ -682,7 +682,7 @@ p.editdate {
 
 /* wikiplugin quote */
 .quoteheader {
-	background : url('../../images/quoteleft.gif') no-repeat;
+	background : url('../../img/icons/quoteleft.gif') no-repeat;
 	padding-left:50px;
 	height:35px;
 }

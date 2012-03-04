@@ -437,8 +437,8 @@ JS;
 <div>
 <div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;" onclick="handleClick(event,'$cid')" onmousemove="handleMove(event,'$cid')">
 	<div id="$cid-editor" style="display:none;width:250px;height:100px;position:absolute;background:white;border-color:black;border-style:solid;border-width:normal;padding:2px;">
-		<a href="javascript:endEdit('$cid', false);void(0)"><img src="images/fullscreen_minimize.gif" style="position:absolute;top:0px;right:0px;border:none;"/></a>
-		<a href="javascript:handleDelete('$cid');void(0)" style="position:absolute;bottom:0px;right:0px;text-decoration:none;"><img src="images/ed_delete.gif" style="border:none;"/>Delete</a>
+		<a href="javascript:endEdit('$cid', false);void(0)"><img src="img/icons/fullscreen_minimize.gif" style="position:absolute;top:0px;right:0px;border:none;"/></a>
+		<a href="javascript:handleDelete('$cid');void(0)" style="position:absolute;bottom:0px;right:0px;text-decoration:none;"><img src="img/icons/ed_delete.gif" style="border:none;"/>Delete</a>
 		<form method="post" action="" onsubmit="endEdit('$cid',true);return false;">
 			<div>Label</div>
 			<div><input type="text" name="label" id="$cid-label" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
