@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: slide.php 25210 2010-02-14 20:52:22Z changi67 $
+// $Id$
 
 // Since the preference(s) once contained in this file were removed from Tiki, this file 
 // is purposely here and empty to make sure users which upgrade via FTP overwrite the file 
