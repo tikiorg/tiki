@@ -44,6 +44,7 @@ function wikiplugin_trackerfilter_info()
 						'options' => array(
 							array('text' => '', 'value' => ''), 
 							array('text' => tra('Yes'), 'value' => 'y'), 
+							array('text' => tra('Yes with field label in dropdown'), 'value' => 'in'),
 							array('text' => tra('No'), 'value' => 'n')
 						)
 					),
@@ -257,7 +258,8 @@ function wikiplugin_trackerfilter($data, $params)
 	$smarty->assign_by_ref('filters', $filters);
 	//echo '<pre>';print_r($filters); echo '</pre>';
 	$smarty->assign_by_ref('trackerId', $trackerId);
-	$smarty->assign_by_ref('line', $line);
+	$smarty->assign('line', ($line == 'y' || $line == 'in')? 'y': 'n');
+	$smarty->assign('indrop', $line == 'in'? 'y': 'n');
 	$smarty->assign('iTrackerFilter', $iTrackerFilter);
 	if (!empty($export_action)) {
 		$smarty->assign('export_action', $export_action);
