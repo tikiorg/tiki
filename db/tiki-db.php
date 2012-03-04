@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
@@ -72,7 +72,7 @@ or HTTP_HOST
 if (!isset($local_php) or !is_file($local_php)) {
 	$local_php = 'db/local.php';
 } else {
-	$local_php = preg_replace(array('/\.\./','/^db\//'),array('',''),$local_php);
+	$local_php = preg_replace(array('/\.\./', '/^db\//'), array('',''), $local_php);
 }
 $tikidomain = '';
 if (is_file('db/virtuals.inc')) {
@@ -85,8 +85,8 @@ if (is_file('db/virtuals.inc')) {
 	} elseif (isset($_SERVER['HTTP_HOST'])) {
 		if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
 			$tikidomain = $_SERVER['HTTP_HOST'];
-		} else if (is_file('db/'.preg_replace('/^www\./','',$_SERVER['HTTP_HOST']).'/local.php')) {
-			$tikidomain = preg_replace('/^www\./','',$_SERVER['HTTP_HOST']);
+		} else if (is_file('db/'.preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']).'/local.php')) {
+			$tikidomain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
 		}
 	}
 	if (!empty($tikidomain)) {
@@ -103,12 +103,13 @@ if ( file_exists($local_php) ) {
 }
 
 global $systemConfiguration;
-$systemConfiguration = new Zend_Config(array(
-	'preference' => array(),
-	'rules' => array(),
-), array(
-	'readOnly' => false,
-));
+$systemConfiguration = new Zend_Config(
+	array(
+		'preference' => array(),
+		'rules' => array(),
+	),
+	 array('readOnly' => false)
+);
 if (isset ($system_configuration_file)) {
 	if (! is_readable($system_configuration_file)) {
 		die('Configuration file could not be read.');
@@ -146,7 +147,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 		$msg = $db->getErrorMessage();
 		$q=$query;
-		foreach($values as $v) {
+		foreach ($values as $v) {
 			if (is_null($v)) $v='NULL';
 			else $v="'".addslashes($v)."'";
 			$pos=strpos($q, '?');
@@ -155,9 +156,10 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		}
 
 		if (function_exists('xdebug_get_function_stack')) {
-			function mydumpstack($stack) {
+			function mydumpstack($stack)
+			{
 				$o='';
-				foreach($stack as $line) {
+				foreach ($stack as $line) {
 					$o.='* '.$line['file']." : ".$line['line']." -> ".$line['function']."(".var_export($line['params'], true).")<br />";
 				}
 				return $o;
@@ -172,12 +174,12 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 		require_once('tiki-setup.php');
 
-		$smarty->assign( 'msg', $msg );
-		$smarty->assign( 'base_query', $query );
-		$smarty->assign( 'values', $values );
-		$smarty->assign( 'built_query', $q );
-		$smarty->assign( 'stacktrace', $stacktrace );
-		$smarty->assign( 'requires_update', $installer->requiresUpdate() );
+		$smarty->assign('msg', $msg);
+		$smarty->assign('base_query', $query);
+		$smarty->assign('values', $values);
+		$smarty->assign('built_query', $q);
+		$smarty->assign('stacktrace', $stacktrace);
+		$smarty->assign('requires_update', $installer->requiresUpdate());
 
 		header("Cache-Control: no-cache, pre-check=0, post-check=0");
 
@@ -185,10 +187,11 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		$this->log($msg.' - '.$q);
 		die;
 	} // }}}
-	function log($msg) {
+	function log($msg)
+	{
 		global $user, $tikilib;
 		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`, `client`) values (?,?,?,?,?,?,?,?)';
-		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(),  $tikilib->now, $msg, substr($_SERVER['HTTP_USER_AGENT'],0,200)));
+		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(), $tikilib->now, $msg, substr($_SERVER['HTTP_USER_AGENT'], 0, 200)));
 	} // }}}
 }
 
@@ -198,7 +201,7 @@ if ($api_tiki == 'pdo' && extension_loaded("pdo") && in_array('mysql', PDO::getA
 }
 
 require $dbInitializer;
-init_connection( TikiDb::get() );
+init_connection(TikiDb::get());
 
 if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
 	global $dbMaster, $dbSlave;
@@ -211,25 +214,25 @@ if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
 	$dbs_tiki = $shadow_dbs;
 	require $dbInitializer;
 	$dbSlave = TikiDb::get();
-	init_connection( $dbSlave );
+	init_connection($dbSlave);
 
 	require_once 'lib/core/TikiDb/MasterSlaveDispatch.php';
-	$db = new TikiDb_MasterSlaveDispatch( $dbMaster, $dbSlave );
-	TikiDb::set( $db );
+	$db = new TikiDb_MasterSlaveDispatch($dbMaster, $dbSlave);
+	TikiDb::set($db);
 }
 
-unset( $host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs );
+unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
 
-function init_connection( $db ) {
+function init_connection( $db )
+{
 	global $db_table_prefix, $common_users_table_prefix, $db_tiki;
 
-	$db->setServerType( $db_tiki );
-	$db->setErrorHandler( new TikiDb_LegacyErrorHandler );
+	$db->setServerType($db_tiki);
+	$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
 
 	if ( isset( $db_table_prefix ) )
-		$db->setTablePrefix( $db_table_prefix );
+		$db->setTablePrefix($db_table_prefix);
 
 	if ( isset( $common_users_table_prefix ) )
-		$db->setUsersTablePrefix( $common_users_table_prefix );
+		$db->setUsersTablePrefix($common_users_table_prefix);
 }
-

@@ -6,20 +6,22 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 class HtmlPagesLib extends TikiLib
 {
-	function remove_html_page($pageName) {
+	function remove_html_page($pageName)
+	{
 		$query = "delete from `tiki_html_pages` where binary `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		return true;
 	}
 
-	function list_html_pages($offset, $maxRecords, $sort_mode, $find) {
+	function list_html_pages($offset, $maxRecords, $sort_mode, $find)
+	{
 		$bindvars = array();
 		if ($find) {
 			$mid = " where (`pageName` like ? or `content` like ?)";
@@ -42,7 +44,8 @@ class HtmlPagesLib extends TikiLib
 		return $retval;
 	}
 
-	function list_html_page_content($pageName, $offset, $maxRecords, $sort_mode, $find) {
+	function list_html_page_content($pageName, $offset, $maxRecords, $sort_mode, $find)
+	{
 		$bindvars = array($pageName);
 		$mid = " where binary `pageName`=? ";
 		if ($find) {
@@ -64,7 +67,8 @@ class HtmlPagesLib extends TikiLib
 		return $retval;
 	}
 
-	function parse_html_page($pageName, $data) {
+	function parse_html_page($pageName, $data)
+	{
 		global $tikilib; // only required for parsing <wiki>...</wiki> tags
 
 		// match and replace dynamic content
@@ -86,7 +90,8 @@ class HtmlPagesLib extends TikiLib
 		return $data;
 	}
 
-	function replace_html_page($pageName, $type, $content, $refresh) {
+	function replace_html_page($pageName, $type, $content, $refresh)
+	{
 		$query = "delete from `tiki_html_pages` where binary `pageName`=?";
 		$this->query($query,array($pageName),-1,-1,false);
 		$query = "insert into `tiki_html_pages`(`pageName`,`content`,`type`,`created`,`refresh`) values(?,?,?,?,?)";
@@ -124,19 +129,22 @@ class HtmlPagesLib extends TikiLib
 		return $pageName;
 	}
 
-	function replace_html_page_content($pageName, $zone, $content) {
+	function replace_html_page_content($pageName, $zone, $content)
+	{
 		$query = "update `tiki_html_pages_dynamic_zones` set `content`=? where binary `pageName`=? and `zone`=?";
 		$result = $this->query($query,array($content,$pageName,$zone));
 		return $zone;
 	}
 
-	function remove_html_page_content($pageName, $zone) {
+	function remove_html_page_content($pageName, $zone)
+	{
 		$query = "delete from `tiki_html_pages_dynamic_zones` where binary `pageName`=? and `zone`=?";
 		$result = $this->query($query,array($pageName,$zone));
 		return true;
 	}
 
-	function get_html_page($pageName) {
+	function get_html_page($pageName)
+	{
 		$query = "select * from `tiki_html_pages` where binary `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		if (!$result->numRows()) return false;
@@ -144,7 +152,8 @@ class HtmlPagesLib extends TikiLib
 		return $res;
 	}
 
-	function get_html_page_content($pageName, $zone) {
+	function get_html_page_content($pageName, $zone)
+	{
 		$query = "select * from `tiki_html_pages_dynamic_zones` where binary `pageName`=? and `zone`=?";
 		$result = $this->query($query,array($pageName,$zone));
 		if (!$result->numRows()) return false;

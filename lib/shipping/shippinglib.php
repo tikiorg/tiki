@@ -23,32 +23,35 @@ class ShippingLib
 		'/^[0-9]{5}$/' => 'US',
 	);
 
-	function addProvider( ShippingProvider $provider ) {
+	function addProvider( ShippingProvider $provider )
+	{
 		$this->providers[] = $provider;
 	}
 
-	function getRates( array $from, array $to, array $packages ) {
+	function getRates( array $from, array $to, array $packages )
+	{
 		$rates = array();
 
-		$from = $this->completeAddressInformation( $from );
-		$to = $this->completeAddressInformation( $to );
+		$from = $this->completeAddressInformation($from);
+		$to = $this->completeAddressInformation($to);
 
-		$packages = $this->expandPackages( $packages );
+		$packages = $this->expandPackages($packages);
 
-		foreach( $this->providers as $provider ) {
-			$rates = array_merge( $rates, $provider->getRates( $from, $to, $packages ) );
+		foreach ( $this->providers as $provider ) {
+			$rates = array_merge($rates, $provider->getRates($from, $to, $packages));
 		}
 
 		return $rates;
 	}
 
-	private function completeAddressInformation( $address ) {
+	private function completeAddressInformation( $address )
+	{
 		if( isset( $address['zip'] ) ) {
 			$address['zip'] = strtoupper( $address['zip'] );
 		}
 
 		if( ! isset( $address['country'] ) ) {
-			foreach( $this->formats as $pattern => $country ) {
+			foreach ( $this->formats as $pattern => $country ) {
 				if( preg_match( $pattern, $address['zip'] ) ) {
 					$address['country'] = $country;
 					break;
@@ -59,13 +62,14 @@ class ShippingLib
 		return $address;
 	}
 
-	private function expandPackages( $packages ) {
+	private function expandPackages( $packages )
+	{
 		$out = array();
 
-		foreach( $packages as $package ) {
+		foreach ( $packages as $package ) {
 			if( isset( $package['count'] ) ) {
 				$c = $package['count'];
-				unset( $package['count'] );
+				unset($package['count']);
 			} else {
 				$c = 1;
 			}
@@ -78,7 +82,8 @@ class ShippingLib
 		return $out;
 	}
 
-	static function getCustomShippingProvider($name) {
+	static function getCustomShippingProvider($name)
+	{
 
 		$file = dirname(__FILE__) . '/custom/' . $name . '.php';
 		$className = 'CustomShippingProvider_' . ucfirst($name);
@@ -99,22 +104,30 @@ $shippinglib = new ShippingLib;
 
 if( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_fedex.php';
-	$shippinglib->addProvider( new ShippingProvider_FedEx( array(
-		'key' => $prefs['shipping_fedex_key'],
-		'password' => $prefs['shipping_fedex_password'],
-		'meter' => $prefs['shipping_fedex_meter'],
-	) ) );
+	$shippinglib->addProvider(
+			new ShippingProvider_FedEx(
+				array(
+					'key' => $prefs['shipping_fedex_key'],
+					'password' => $prefs['shipping_fedex_password'],
+					'meter' => $prefs['shipping_fedex_meter'],
+				)
+			)
+	);
 }
 
 if( !empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_ups.php';
-	$shippinglib->addProvider( new ShippingProvider_Ups( array(
-		'username' => $prefs['shipping_ups_username'],
-		'password' => $prefs['shipping_ups_password'],
-		'license' => $prefs['shipping_ups_license'],
-	) ) );
+	$shippinglib->addProvider(
+		new ShippingProvider_Ups(
+			array(
+				'username' => $prefs['shipping_ups_username'],
+				'password' => $prefs['shipping_ups_password'],
+				'license' => $prefs['shipping_ups_license'],
+			)
+		)
+	);
 }
 
 if ( !empty($prefs['shipping_custom_provider']) ) {
-	$shippinglib->addProvider( ShippingLib::getCustomShippingProvider( $prefs['shipping_custom_provider'] ));
+	$shippinglib->addProvider(ShippingLib::getCustomShippingProvider($prefs['shipping_custom_provider']));
 }

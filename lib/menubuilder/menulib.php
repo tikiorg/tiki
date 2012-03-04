@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -39,9 +39,9 @@ class MenuLib extends TikiLib
 		}
 
 		$query = "select * from `tiki_menus` $mid order by ".$this->convertSortMode($sort_mode);
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query_cant = "select count(*) from `tiki_menus` $mid";
-		$cant = $this->getOne($query_cant,$bindvars);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ( $res = $result->fetchRow() ) {
@@ -69,19 +69,19 @@ class MenuLib extends TikiLib
 			$bindvars = array($name,$description,$type,$icon,$use_items_icons);
 		}
 
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars);
 		return true;
 	}
 
 	function clone_menu($menuId) {
 		$menus = $this->table('tiki_menus');
-		$row = $menus->fetchFullRow( array( 'menuId' => $menuId ));
+		$row = $menus->fetchFullRow(array(	 'menuId' => $menuId ));
 		$row['menuId'] = null;
 		$row['name'] = $row['name'] . ' ' . tra('(copy)');
 		$newId = $menus->insert( $row );
 
 		$menuoptions = $this->table('tiki_menu_options');
-		$oldoptions = $menuoptions->fetchAll( $menuoptions->all(), array( 'menuId' => $menuId ));
+		$oldoptions = $menuoptions->fetchAll($menuoptions->all(), array( 'menuId' => $menuId ));
 		$row = null;
 
 		foreach( $oldoptions as $row ) {
@@ -100,7 +100,7 @@ class MenuLib extends TikiLib
 
 		if ($matches && count($matches[0])) {
 			$menuoptions = $this->table('tiki_menu_options');
-			$menuoptions->deleteMultiple( array( 'menuId' => 42 ));
+			$menuoptions->deleteMultiple(array( 'menuId' => 42 ));
 			
 			foreach ($matches[0] as $query) {
 				$this->query($query);
@@ -113,7 +113,7 @@ class MenuLib extends TikiLib
 	{
 		$query = "select max(`position`) from `tiki_menu_options` where `menuId`=?";
 
-		$max = $this->getOne($query,array((int)$menuId));
+		$max = $this->getOne($query, array((int)$menuId));
 		return $max;
 	}
 
@@ -135,10 +135,10 @@ class MenuLib extends TikiLib
 	function remove_menu($menuId)
 	{
 		$query = "delete from `tiki_menus` where `menuId`=?";
-		$result = $this->query($query,array((int)$menuId));
+		$result = $this->query($query, array((int)$menuId));
 
 		$query = "delete from `tiki_menu_options` where `menuId`=?";
-		$result = $this->query($query,array((int)$menuId));
+		$result = $this->query($query, array((int)$menuId));
 
 		$this->empty_menu_cache($menuId);
 		return true;
@@ -147,10 +147,10 @@ class MenuLib extends TikiLib
 	function remove_menu_option($optionId)
 	{
 		$query = "select `menuId` from `tiki_menu_options` where `optionId`=?";
-		$menuId = $this->getOne($query,array((int)$optionId));
+		$menuId = $this->getOne($query, array((int)$optionId));
 
 		$query = "delete from `tiki_menu_options` where `optionId`=?";
-		$result = $this->query($query,array((int)$optionId));
+		$result = $this->query($query, array((int)$optionId));
 
 		$this->empty_menu_cache($menuId);
 		return true;
@@ -160,7 +160,7 @@ class MenuLib extends TikiLib
 	{
 		$query = "select * from `tiki_menu_options` where `optionId`=?";
 
-		$result = $this->query($query,array((int)$optionId));
+		$result = $this->query($query, array((int)$optionId));
 
 		if (!$result->numRows())
 			return false;
@@ -181,9 +181,9 @@ class MenuLib extends TikiLib
 		if (!($position = $this->getOne($query, array($menuId, $position1))))
 			return;
 		$query = "update `tiki_menu_options` set `position`=? where `position`=? and `menuId`=? ";
-		$result=$this->query($query,array($position1, $position, $menuId));
+		$result=$this->query($query, array($position1, $position, $menuId));
 		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
-		$result=$this->query($query,array($position, $optionId,));
+		$result=$this->query($query, array($position, $optionId,));
 
 		$this->empty_menu_cache($menuId);
 	}
