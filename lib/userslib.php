@@ -1573,7 +1573,7 @@ class UsersLib extends TikiLib
 			$bindvars[] = array($findesc);
 		}
 
-		$query = 'select uu.`login` from `users_users` uu $mid order by ' . $this->convertSortMode($sort_mode);
+		$query = "select uu.`login` from `users_users` uu $mid order by " . $this->convertSortMode($sort_mode);
 		$result = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 
 		$ret = array();
@@ -1672,7 +1672,7 @@ class UsersLib extends TikiLib
 			$mbindvars = $bindvars;
 		}
 
-		$query = 'select uu.* from `users_users` uu $mid order by ' . $this->convertSortMode($sort_mode);
+		$query = "select uu.* from `users_users` uu $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `users_users` uu $mmid";
 		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $mbindvars);
