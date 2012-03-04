@@ -13,7 +13,7 @@ function wikiplugin_report_info()
 		'description' => tra('Build a report, and store it in a wiki page'),
 		'prefs' => array( 'wikiplugin_report' ),
 		'body' => tra('The wiki syntax report settings'),
-		'icon' => 'pics/icons/mime/zip.png',
+		'icon' => 'img/icons/mime/zip.png',
 		'params' => array(
 			'view' => array(
 				'name' => tra('Report View'),

@@ -55,7 +55,7 @@ function smarty_function_icon($params, $smarty)
 		return $cached;
 	}
 
-	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
+	$basedirs = array('pics/icons', 'images', 'img/icons', 'img/icons/mime');
 	$icons_extension = empty($params['_extension']) ? '.png' : '.' . $params['_extension'];
 	$tag = 'img';
 	$notag = false;
