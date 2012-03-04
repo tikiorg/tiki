@@ -15,7 +15,7 @@ function wikiplugin_userpref_info()
 		'prefs' => array('wikiplugin_userpref'),
 		'filter' => 'wikicontent',
 		'extraparams' => true,
-		'icon' => 'pics/icons/user.png',
+		'icon' => 'img/icons/user.png',
 		'params' => array(
 		),
 	);

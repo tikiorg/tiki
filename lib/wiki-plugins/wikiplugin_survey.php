@@ -13,7 +13,7 @@ function wikiplugin_survey_info()
 		'description' => tra('Display a survey'),
 		'prefs' => array( 'feature_surveys', 'wikiplugin_survey' ),
 		'body' => '',
-		'icon' => 'pics/icons/green_question.png',
+		'icon' => 'img/icons/green_question.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

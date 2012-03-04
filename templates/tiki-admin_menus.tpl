@@ -110,9 +110,9 @@
 							{remarksbox type="tip" title="{tr}Note{/tr}"}
 								{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}
 								<hr />
-								{tr}For example, the default icon is: pics/icons/folder.png{/tr} {icon _id="folder"}
+								{tr}For example, the default icon is: img/icons/folder.png{/tr} {icon _id="folder"}
 								<br />
-								{tr}The name of the "open folder" icon is: pics/icons/ofolder.png{/tr} {icon _id="ofolder"}
+								{tr}The name of the "open folder" icon is: img/icons/ofolder.png{/tr} {icon _id="ofolder"}
 							{/remarksbox}
 						</td>
 					</tr>

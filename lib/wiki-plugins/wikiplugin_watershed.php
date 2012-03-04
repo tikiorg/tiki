@@ -13,7 +13,7 @@ function wikiplugin_watershed_info()
 		'description' => tra('Viewer for UStream Watershed Embed.'),
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_watershed', 'feature_watershed' ),
-		'icon' => 'pics/icons/transmit_blue.png',
+		'icon' => 'img/icons/transmit_blue.png',
 		'params' => array(
 			'type' => array(
 				'required' => false,

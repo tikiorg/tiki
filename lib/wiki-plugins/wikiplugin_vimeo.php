@@ -14,7 +14,7 @@ function wikiplugin_vimeo_info()
 		'documentation' => 'PluginVimeo',
 		'description' => tra('Display a Vimeo video'),
 		'prefs' => array( 'wikiplugin_vimeo' ),
-		'icon' => 'pics/icons/vimeo.png',
+		'icon' => 'img/icons/vimeo.png',
 		'introduced' => 6.1,
 		'params' => array(
 			'url' => array(

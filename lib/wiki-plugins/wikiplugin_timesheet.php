@@ -13,7 +13,7 @@ function wikiplugin_timesheet_info()
 		'description' => tra('A portable timesheet usable in a webpage'),
 		'prefs' => array('wikiplugin_timesheet', 'feature_time_sheet'),
 		'body' => tra('text'),
-		'icon' => 'pics/icons/layout_header.png',
+		'icon' => 'img/icons/layout_header.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 		),

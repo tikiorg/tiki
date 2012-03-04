@@ -14,7 +14,7 @@ function wikiplugin_fade_info()
 		'prefs' => array('wikiplugin_fade'),
 		'body' => tra('Wiki syntax containing the content that can be hidden or shown.'),
 		'filter' => 'wikicontent',
-		'icon' => 'pics/icons/wand.png',
+		'icon' => 'img/icons/wand.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'label' => array(

@@ -12,7 +12,7 @@ function wikiplugin_textlink_info()
 		'documentation' => 'PluginTextlink',
 		'description' => tra('Links your article to a site using forwardlink protocol'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
-		'icon' => 'pics/icons/link.png',
+		'icon' => 'img/icons/link.png',
 		'params' => array(			
 			'clipboarddata' => array(
 				'required' => true,

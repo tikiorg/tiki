@@ -12,7 +12,7 @@ function wikiplugin_sharethis_info()
 		'documentation' => 'PluginSharethis',
 		'description' => tra('Add a ShareThis button'),
 		'prefs' => array( 'wikiplugin_sharethis' ),
-		'icon' => 'pics/icons/sharethis.png',
+		'icon' => 'img/icons/sharethis.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'sendsvcs' => array(

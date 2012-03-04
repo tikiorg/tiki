@@ -18,7 +18,7 @@ function wikiplugin_datachannel_info()
 					tra('Where "fieldid" is the id (important) of the external input to use, and "fieldname" is the name of the parameter in the data-channel') . ' . ' .
 					tra('To use fixed hidden preset values use "fieldname, hidden=value."'),
 		'extraparams' => true,
-		'icon' => 'pics/icons/transmit_blue.png',
+		'icon' => 'img/icons/transmit_blue.png',
 		'params' => array(
 			'channel' => array(
 				'required' => true,

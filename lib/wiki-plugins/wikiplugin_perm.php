@@ -14,8 +14,8 @@ function wikiplugin_perm_info()
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the conditions.'),
 		'prefs' => array('wikiplugin_perm'),
 		'filter' => 'wikicontent',
-		'icon' => 'pics/icons/.png',
-		'icon' => 'pics/icons/page_white_key.png',
+		'icon' => 'img/icons/.png',
+		'icon' => 'img/icons/page_white_key.png',
 		'params' => array(
 			'perms' => array(
 				'required' => false,

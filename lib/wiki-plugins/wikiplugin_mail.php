@@ -15,7 +15,7 @@ function wikiplugin_mail_info()
 		'description' => tra('Directly mail other users or groups'),
 		'validate' => 'all',
 		'prefs' => array('wikiplugin_mail'),
-		'icon' => 'pics/icons/email.png',
+		'icon' => 'img/icons/email.png',
 		'params' => array(
 			'group' => array(
 				'required' => false,

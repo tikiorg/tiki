@@ -31,7 +31,7 @@ function wikiplugin_module_info()
 		'description' => tra('Display a module'),
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
-		'icon' => 'pics/icons/module.png',
+		'icon' => 'img/icons/module.png',
 		'extraparams' =>true,
 		'tags' => array( 'basic' ),
 		'params' => array(

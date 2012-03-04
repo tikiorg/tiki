@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * smarty_function_icon: Display a Tiki icon, using theme icons if they exists
  *
  * params will be used as params for the HTML tag (e.g. border, class, ...), except special params starting with '_' :
- *  - _id: short name (i.e. 'page_edit') or relative file path (i.e. 'pics/icons/page_edit.png'). [required]
+ *  - _id: short name (i.e. 'page_edit') or relative file path (i.e. 'img/icons/page_edit.png'). [required]
  *  - _type: type of URL to use (e.g. 'absolute_uri', 'absolute_path'). Defaults to a relative URL.
  *  - _tag: type of HTML tag to use (e.g. 'img', 'input_image'). Defaults to 'img' tag.
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
@@ -55,7 +55,7 @@ function smarty_function_icon($params, $smarty)
 		return $cached;
 	}
 
-	$basedirs = array('pics/icons', 'images', 'img/icons', 'img/icons/mime');
+	$basedirs = array('img/icons', 'img/icons/mime');
 	$icons_extension = empty($params['_extension']) ? '.png' : '.' . $params['_extension'];
 	$tag = 'img';
 	$notag = false;

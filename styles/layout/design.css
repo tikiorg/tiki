@@ -50,7 +50,7 @@ body.wikitext {
 /* Autosave Preview handle */
 #autosave_preview_grippy {
 	background-color: #ccc;
-	background-image: url("../../pics/icons/shading.png");
+	background-image: url("../../img/icons/shading.png");
 }
 
 /* allow disabled elements to show up - FIXME
@@ -1355,32 +1355,32 @@ textarea.tshoutbox{
 .fancysort th.headerSortUp {
 	background-repeat: no-repeat;
 	background-position: right;
-	background-image: url(../../pics/icons/resultset_up.png) !important;
+	background-image: url(../../img/icons/resultset_up.png) !important;
 }
 
 .fancysort th.headerSortDown {
 	background-repeat: no-repeat;
 	background-position: right;
-	background-image: url(../../pics/icons/resultset_down.png) !important;
+	background-image: url(../../img/icons/resultset_down.png) !important;
 }
 
 .fancysort th.header {
 	background-repeat: no-repeat;
 	background-position: right;
-	background-image: url(../../pics/icons/resultset.png);
+	background-image: url(../../img/icons/resultset.png);
 }
 
 /* jq tracker header */
 .trackerHeaderOpen {
 	background-repeat: no-repeat;
 	background-position: right;
-	background-image: url(../../pics/icons/resultset_down.png);
+	background-image: url(../../img/icons/resultset_down.png);
 }
 
 .trackerHeaderClose {
 	background-repeat: no-repeat;
 	background-position: right;
-	background-image: url(../../pics/icons/resultset_next.png);
+	background-image: url(../../img/icons/resultset_next.png);
 }
 
 /* Perspectives (edit) */
@@ -1513,7 +1513,7 @@ textarea.tshoutbox{
 /* jquery validation */
 
 label.error {
-	background : url('../../pics/icons/error.png') no-repeat;
+	background : url('../../img/icons/error.png') no-repeat;
 	color:red;
 	padding-left:20px;
 	margin-left: 0.5em;

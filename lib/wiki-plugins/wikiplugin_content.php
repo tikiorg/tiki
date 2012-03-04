@@ -13,7 +13,7 @@ function wikiplugin_content_info()
 		'description' => tra('Display content from dynamic content repository'),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_content'),
 		'filter' => 'text',
-		'icon' => 'pics/icons/database_table.png',
+		'icon' => 'img/icons/database_table.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'id' => array(

@@ -132,7 +132,7 @@ function wikiplugin_report( $data, $params )
 				<input type='hidden' name='params[view]' value='$view' />
 			</form>
 			<a href='#' title='".tr('Edit Report')."' onclick='return editReport$i(this);'>
-				<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
+				<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 			</a>";
 	}
 	return "~np~" . $result . "~/np~"; 

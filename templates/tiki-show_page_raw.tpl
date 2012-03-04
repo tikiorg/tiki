@@ -45,9 +45,9 @@
 		<a href="#" onclick="$.s5.prev(); return false;" title="{tr}Previous Slide{/tr}">
 			<img src="lib/jquery.s5/images/resultset_previous.png" alt="{tr}Previous Slide{/tr}" /></a>
 		<a href="#" onclick="$.s5.goLI('prev'); return false;" title="{tr}Previous Point{/tr}">
-			<img src="pics/icons/resultset_up.png" alt="{tr}Previous Point{/tr}" /></a>
+			<img src="img/icons/resultset_up.png" alt="{tr}Previous Point{/tr}" /></a>
 		<a href="#" onclick="$.s5.goLI('next'); return false;" title="{tr}Next Point{/tr}">
-			<img src="pics/icons/resultset_down.png" alt="{tr}Next Point{/tr}" /></a> 
+			<img src="img/icons/resultset_down.png" alt="{tr}Next Point{/tr}" /></a> 
 		<a href="#" onclick="$.s5.next(); return false;" title="{tr}Next Slide{/tr}">
 			<img src="lib/jquery.s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}" /></a> 
 		<a href="#" onclick="$.s5.last(); return false;" title="{tr}Last Slide{/tr}">
@@ -69,7 +69,7 @@
 				<img alt="{tr}Export to PDF{/tr}" src="lib/jquery.s5/images/page_go.png" /></a>
 		{/if}
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
-			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
+			<img src="img/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
 		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
 			<option value="default">default</option>
@@ -105,9 +105,9 @@
 		<a href="#" onclick="window.opener.$.s5.prev(); return false;" title="{tr}Previous Slide{/tr}">
 			<img src="lib/jquery.s5/images/resultset_previous.png" alt="{tr}Previous Slide{/tr}" /></a>
 		<a href="#" onclick="window.opener.$.s5.goLI('prev'); return false;" title="{tr}Previous Point{/tr}">
-			<img src="pics/icons/resultset_up.png" alt="{tr}Previous Point{/tr}" /></a>
+			<img src="img/icons/resultset_up.png" alt="{tr}Previous Point{/tr}" /></a>
 		<a href="#" onclick="window.opener.$.s5.goLI('next'); return false;" title="{tr}Next Point{/tr}">
-			<img src="pics/icons/resultset_down.png" alt="{tr}Next Point{/tr}" /></a> 
+			<img src="img/icons/resultset_down.png" alt="{tr}Next Point{/tr}" /></a> 
 		<a href="#" onclick="window.opener.$.s5.next(); return false;" title="{tr}Next Slide{/tr}">
 			<img src="lib/jquery.s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}" /></a> 
 		<a href="#" onclick="window.opener.$.s5.last(); return false;" title="{tr}Last Slide{/tr}">
@@ -129,7 +129,7 @@
 				<img alt="{tr}Export to PDF{/tr}" src="lib/jquery.s5/images/page_go.png" /></a>
 		{/if}
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
-			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
+			<img src="img/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
 		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
 			<option value="default">default</option>

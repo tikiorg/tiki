@@ -12,7 +12,7 @@ function wikiplugin_objecthits_info()
 		'documentation' => 'PluginObjectHits',
 		'description' => tra('Display the number of hits for certain objects'),
 		'prefs' => array( 'wikiplugin_objecthits' ),
-		'icon' => 'pics/icons/calculator.png',
+		'icon' => 'img/icons/calculator.png',
 		'params' => array(
 			'object' => array(
 				'required' => false,

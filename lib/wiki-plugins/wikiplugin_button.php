@@ -14,7 +14,7 @@ function wikiplugin_button_info()
 		'prefs' => array('wikiplugin_button'),
 		'validate' => 'none',
 		'extraparams' => false,
-		'icon' => 'pics/icons/control_play_blue.png',
+		'icon' => 'img/icons/control_play_blue.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'href' => array(

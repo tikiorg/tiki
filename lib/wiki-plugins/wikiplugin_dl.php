@@ -13,7 +13,7 @@ function wikiplugin_dl_info()
 		'description' => tra('Create a definition list'),
 		'prefs' => array('wikiplugin_dl'),
 		'body' => tra('One entry per line. Each line is in "Term: Definition" format.'),
-		'icon' => 'pics/icons/text_list_bullets.png',
+		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 		),

@@ -15,7 +15,7 @@ function wikiplugin_memberpayment_info()
 		'description' => tra('Receive payments from a member to extend membership to a group.'),
 		'validate' => 'all',
 		'prefs' => array( 'wikiplugin_memberpayment', 'payment_feature' ),
-		'icon' => 'pics/icons/money.png',
+		'icon' => 'img/icons/money.png',
 		'params' => array(
 			'group' => array(
 				'required' => true,

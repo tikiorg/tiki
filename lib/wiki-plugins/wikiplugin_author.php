@@ -13,7 +13,7 @@ function wikiplugin_author_info()
 		'description' => tra('View author contributions to a wiki page'),
 		'prefs' => array('wikiplugin_author'),
 		'body' => tra('text'),
-		'icon' => 'pics/icons/text_signature.png',
+		'icon' => 'img/icons/text_signature.png',
 		'params' => array(
 			'author' => array(
 				'required' => true,
