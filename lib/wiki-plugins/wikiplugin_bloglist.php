@@ -12,7 +12,7 @@ function wikiplugin_bloglist_info()
 		'documentation' => 'PluginBlogList',		
 		'description' => tra('Display posts from a site blog'),
 		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
-		'icon' => 'img/icons/text_list_bullets.png',
+		'icon' => 'pics/icons/text_list_bullets.png',
 		'params' => array(
 			'Id' => array(
 				'required' => true,

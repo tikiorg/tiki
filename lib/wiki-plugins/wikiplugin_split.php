@@ -13,7 +13,7 @@ function wikiplugin_split_info()
 		'description' => tra('Easily arrange content on a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/table.png',
+		'icon' => 'pics/icons/table.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'joincols' => array(
@@ -225,7 +225,7 @@ function wikiplugin_split($data, $params, $pos)
 					$result .= '<div class="split"><div style="float:right">';
 					$result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
 					$result .= '<a href="tiki-editpage.php?page='.$object.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
-						.'<img src="img/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" width="16" height="16" /></a></div><br />';
+						.'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" width="16" height="16" /></a></div><br />';
 					$ind += strlen($i);
 					while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
 						++$ind;

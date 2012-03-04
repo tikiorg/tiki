@@ -12,7 +12,7 @@ function wikiplugin_lastmod_info()
 		'documentation' => 'PluginLastMod',
 		'description' => tra('Show the last modification date for a page'),
 		'prefs' => array('feature_wiki', 'wikiplugin_lastmod'),
-		'icon' => 'img/icons/date_edit.png',
+		'icon' => 'pics/icons/date_edit.png',
 		'params' => array(
 			'page' => array(
 				'required' => false,

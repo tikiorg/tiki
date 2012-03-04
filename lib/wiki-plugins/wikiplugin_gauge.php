@@ -13,7 +13,7 @@ function wikiplugin_gauge_info()
 		'description' => tra('Display a horizontal bar gauge'),
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
-		'icon' => 'img/icons/chart_bar.png',
+		'icon' => 'pics/icons/chart_bar.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'value' => array(

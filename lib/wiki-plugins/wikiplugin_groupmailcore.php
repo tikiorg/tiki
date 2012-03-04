@@ -13,7 +13,7 @@ function wikiplugin_groupmailcore_info()
 		'description' => tra('Displays GroupMail functions on a wiki page. Usually set up using a plugin alias created by the GroupMail profile.'),
 		'prefs' => array('wikiplugin_groupmailcore', 'feature_trackers'),
 		//'extraparams' => true,
-		'icon' => 'img/icons/email.png',
+		'icon' => 'pics/icons/email.png',
 		'tags' => array( 'experimental' ),	
 		'params' => array(
 			'fromEmail' => array(

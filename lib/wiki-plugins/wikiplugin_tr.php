@@ -13,7 +13,7 @@ function wikiplugin_tr_info()
 		'description' => tra('Translate text to the user language'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_tr' ),
 		'body' => tra('string'),
-		'icon' => 'img/icons/page_translate_to.png',
+		'icon' => 'pics/icons/page_translate_to.png',
 		'params' => array(
 		),
 	);

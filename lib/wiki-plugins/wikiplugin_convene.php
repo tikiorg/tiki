@@ -14,7 +14,7 @@ function wikiplugin_convene_info()
 		'introduced' => 9.0,
 		'prefs' => array('wikiplugin_convene','feature_calendar'),
 		'body' => tra('Convene data generated from user input'),
-		'icon' => 'img/icons/arrow_in.png',
+		'icon' => 'pics/icons/arrow_in.png',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
 		'params' => array(
@@ -99,7 +99,7 @@ function wikiplugin_convene($data, $params)
 	$dateHeader = "";
 	foreach ($votes as $stamp => $totals) {
 		$dateHeader .= "<td>". $tikilib->get_long_datetime($stamp) .
-			($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
+			($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='pics/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
 		"</td>";
 	}
 	$result .= "
@@ -109,9 +109,9 @@ function wikiplugin_convene($data, $params)
 				$tiki_p_edit == 'y'
 					? 
 					"<button class='conveneAddUser$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-						<img src='img/icons/user.png' title='".tr('Add User')."' />
+						<img src='pics/icons/user.png' title='".tr('Add User')."' />
 					</button><button class='conveneAddDate$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-						<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' />
+						<img src='pics/icons/calendar_add.png' title='".tr('Add Date')."' />
 					</button>"
 					: ""
 				).
@@ -125,10 +125,10 @@ function wikiplugin_convene($data, $params)
 	$userList = "";
 	foreach ($rows as $user => $row) {
 		$userList .= "<tr class='conveneUserVotes$i'>";
-		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/pencil.png' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/delete.png'/></button> " : "") . $user . "</td>";
+		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon ui-widget-header ui-corner-all'><img src='pics/icons/pencil.png' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon ui-widget-header ui-corner-all'><img src='pics/icons/delete.png'/></button> " : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
 			$class = 	"ui-state-default ui-state-active";
-			$text = 	($vote  == 1 ? "<img src='img/icons/tick.png' alt='OK' class='vote' />" : "<img src='img/icons/cross.png' class='vote' />" );
+			$text = 	($vote  == 1 ? "<img src='pics/icons/tick.png' alt='OK' class='vote' />" : "<img src='pics/icons/cross.png' class='vote' />" );
 			
 			$userList .= "<td class='$class'>". $text
 				."<input type='hidden' name='dates_" . $stamp . "_" . $user . "' value='$vote' class='conveneUserVote$i' />"
@@ -150,9 +150,9 @@ function wikiplugin_convene($data, $params)
 	foreach ($votes as $stamp => $total) {
 		$pic = "";
 		if ($total == $votes[$topVoteStamp]) {
-			$pic .= ($tiki_p_edit != "y" ? "<img src='img/icons/tick.png' class='icon' title='" . tr("Selected Date") . "' />" : "");
+			$pic .= ($tiki_p_edit != "y" ? "<img src='pics/icons/tick.png' class='icon' title='" . tr("Selected Date") . "' />" : "");
 			if ($tiki_p_edit == 'y') {
-				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=1' title='" . tr("Add as Calendar Event") . "'><img src='img/icons/calendar_add.png' class='icon' /></a></button>";
+				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=1' title='" . tr("Add as Calendar Event") . "'><img src='pics/icons/calendar_add.png' class='icon' /></a></button>";
 			}
 		}
 		
@@ -368,7 +368,7 @@ FORM;
 				.removeClass('ui-state-default')
 				.addClass('ui-state-highlight');
 			
-			$(this).find('img').attr('src', 'img/icons/accept.png');
+			$(this).find('img').attr('src', 'pics/icons/accept.png');
 			var parent = $(this).parent().parent();
 			parent.find('.vote').hide();
 			parent.find('input').each(function() {
@@ -390,7 +390,7 @@ FORM;
 				.addClass('ui-state-default');
 			
 			$('.conveneMain$i').show();
-			$(this).find('img').attr('src', 'img/icons/pencil.png');
+			$(this).find('img').attr('src', 'pics/icons/pencil.png');
 			var parent = $(this).parent().parent();
 			parent.find('.vote').show();
 			parent.find('input:checkbox').each(function(i) {

@@ -13,7 +13,7 @@ function wikiplugin_alink_info()
 		'description' => tra('Create a link to an anchor'),
 		'prefs' => array('wikiplugin_alink'),
 		'body' => tra('Anchor link label.'),
-		'icon' => 'img/icons/world_link.png',
+		'icon' => 'pics/icons/world_link.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'aname' => array(

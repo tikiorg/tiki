@@ -13,7 +13,7 @@ function wikiplugin_trackerstat_info()
 		'description' => tra('Display statistics about a tracker.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerstat' ),
 		'body' => tra('Title'),
-		'icon' => 'img/icons/calculator.png',
+		'icon' => 'pics/icons/calculator.png',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,

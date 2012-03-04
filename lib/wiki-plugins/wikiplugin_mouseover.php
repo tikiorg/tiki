@@ -22,7 +22,7 @@ function wikiplugin_mouseover_info()
 		'description' => tra('Display hidden content by mousing over a text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
 		'body' => tra('Hidden content, unless the label parameter is undefined, in which case this is the label.'),
-		'icon' => 'img/icons/comment_add.png',
+		'icon' => 'pics/icons/comment_add.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'label' => array(

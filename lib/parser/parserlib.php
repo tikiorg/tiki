@@ -414,7 +414,7 @@ class ParserLib extends TikiDb_Bridge
 					}
 
 					if ($options['ck_editor']) {
-						$ret = $this->convert_plugin_for_ckeditor($plugin_name, $arguments, tra('Plugin execution pending approval'), $plugin_data, array('icon' => 'img/icons/error.png'));
+						$ret = $this->convert_plugin_for_ckeditor($plugin_name, $arguments, tra('Plugin execution pending approval'), $plugin_data, array('icon' => 'pics/icons/error.png'));
 					} else {
 						$smarty->assign('plugin_name', $plugin_name);
 						$smarty->assign('plugin_index', $current_index);
@@ -1031,7 +1031,7 @@ if ( \$('#$id') ) {
 			}
 		}
 		$arg_str = rtrim($arg_str, '&');
-		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
+		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
 		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged', 'draw'))) {

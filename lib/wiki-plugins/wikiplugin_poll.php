@@ -13,7 +13,7 @@ function wikiplugin_poll_info()
 		'description' => tra('Display a poll'),
 		'prefs' => array( 'feature_polls', 'wikiplugin_poll' ),
 		'body' => tra('Title'),
-		'icon' => 'img/icons/thumb_up.png',
+		'icon' => 'pics/icons/thumb_up.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'pollId' => array(

@@ -120,14 +120,14 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 		$homePageContent .= '!' . tr('Congratulations') . "\n";
 		$homePageContent .= tr('This is the default homepage for your Tiki. If you are seeing this page, your installation was successful.') . "\n\n";
 		$homePageContent .= tr('You can change this page after logging in. Please review the [http://doc.tiki.org/wiki+syntax|wiki syntax] for editing details.') . "\n\n\n";
-		$homePageContent .= '!!'. tr('{img src=img/icons/star.png alt=\"Star\"} Get started.') . "\n";
+		$homePageContent .= '!!'. tr('{img src=pics/icons/star.png alt=\"Star\"} Get started.') . "\n";
 		$homePageContent .= tr('To begin configuring your site:') . "\n";
 		$homePageContent .= "{FANCYLIST()}\n";
 		$homePageContent .= tr('1) Log in with your newly created password.') . "\n";
 		$homePageContent .= tr('2) Manually Enable specific Tiki features.') . "\n";
 		$homePageContent .= tr('3) Run Tiki Profiles to quickly get up and running.') . "\n";
 		$homePageContent .= "{FANCYLIST}\n\n";
-		$homePageContent .= '!!' . tr('{img src=img/icons/help.png alt=\"Help\"} Need help?') . "\n";
+		$homePageContent .= '!!' . tr('{img src=pics/icons/help.png alt=\"Help\"} Need help?') . "\n";
 		$homePageContent .= tr('For more information:') . "\n";
 		$homePageContent .= '*' . tr('[http://info.tiki.org/Learn+More|Learn more about Tiki].') . "\n";
 		$homePageContent .= '*' . tr('[http://info.tiki.org/Help+Others|Get help], including the [http://doc.tiki.org|official documentation] and [http://tiki.org/forums|support forums].') . "\n";

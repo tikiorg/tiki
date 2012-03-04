@@ -14,7 +14,7 @@ function wikiplugin_flash_info()
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
 		'tags' => array( 'basic' ),		
-		'icon' => 'img/icons/mime/swf.png',
+		'icon' => 'pics/icons/mime/swf.png',
 		'params' => array(
 			'type' => array(
 				'required' => true,

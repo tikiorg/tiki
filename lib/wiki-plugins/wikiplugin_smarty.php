@@ -15,7 +15,7 @@ function wikiplugin_smarty_info()
 		'validate' => 'all',
 		'extraparams' => true,
 		'tags' => array( 'experimental' ),
-		'icon' => 'img/icons/task_submitted.png',
+		'icon' => 'pics/icons/task_submitted.png',
 		'params' => array(
 			'name' => array(
 				'required' => true,

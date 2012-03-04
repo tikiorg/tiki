@@ -13,7 +13,7 @@ function wikiplugin_kaltura_info()
 		'description' => tra('Display a video created through the Kaltura feature'),
 		'prefs' => array('wikiplugin_kaltura', 'feature_kaltura'),
 		'extraparams' => true,
-		'icon' => 'img/icons/film_edit.png',
+		'icon' => 'pics/icons/film_edit.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

@@ -13,7 +13,7 @@ function wikiplugin_center_info()
 		'description' => tra('Center text'),
 		'prefs' => array('wikiplugin_center'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/text_align_center.png',
+		'icon' => 'pics/icons/text_align_center.png',
 		'filter' => 'wikicontent',
 		'tags' => array( 'basic' ),		
 		'params' => array(

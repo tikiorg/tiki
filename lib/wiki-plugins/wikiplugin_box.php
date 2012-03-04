@@ -13,7 +13,7 @@ function wikiplugin_box_info()
 		'description' => tra('Creates a formatted box with a title bar'),
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/layout_header.png',
+		'icon' => 'pics/icons/layout_header.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'title' => array(

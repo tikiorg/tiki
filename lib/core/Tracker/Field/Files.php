@@ -194,7 +194,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						$file['filetype'] == $mimetypes["tiff"])
 					) {
 						$ret .= " <a href='tiki-edit_draw.php?fileId=" . $file['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='Edit: ".$file['name']."' data-fileid='".$file['fileId']."' data-galleryid='".$file['galleryId']."'>
-							<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' />
+							<img width='16' height='16' class='icon' alt='Edit' src='pics/icons/page_edit.png' />
 						</a>";
 					}
 					

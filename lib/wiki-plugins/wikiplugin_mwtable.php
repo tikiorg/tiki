@@ -14,7 +14,7 @@ function wikiplugin_mwtable_info()
 		'prefs' => array( 'wikiplugin_mwtable' ),
 		'body' => tra('URL'),
 		'validate' => 'all',
-		'icon' => 'img/icons/table.png',
+		'icon' => 'pics/icons/table.png',
 		'params' => array(
 			'fancy' => array(
 				'safe' => true,

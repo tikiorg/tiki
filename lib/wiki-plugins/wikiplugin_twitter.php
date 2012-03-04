@@ -13,7 +13,7 @@ function wikiplugin_twitter_info()
 		'description' => tra('Display the activity for a twitter account'),
 		'prefs' => array('wikiplugin_twitter'),
 		'body' => '',
-		'icon' => 'img/icons/twitter.png',
+		'icon' => 'pics/icons/twitter.png',
 		'params' => array(
 			'tweet' => array(
 				'required' => true,

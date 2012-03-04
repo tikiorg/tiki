@@ -13,7 +13,7 @@ function wikiplugin_report_info()
 		'description' => tra('Build a report, and store it in a wiki page'),
 		'prefs' => array( 'wikiplugin_report' ),
 		'body' => tra('The wiki syntax report settings'),
-		'icon' => 'img/icons/mime/zip.png',
+		'icon' => 'pics/icons/mime/zip.png',
 		'params' => array(
 			'view' => array(
 				'name' => tra('Report View'),
@@ -132,7 +132,7 @@ function wikiplugin_report( $data, $params )
 				<input type='hidden' name='params[view]' value='$view' />
 			</form>
 			<a href='#' title='".tr('Edit Report')."' onclick='return editReport$i(this);'>
-				<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
+				<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 			</a>";
 	}
 	return "~np~" . $result . "~/np~"; 

@@ -14,7 +14,7 @@ function wikiplugin_addtocart_info()
 		'prefs' => array( 'wikiplugin_addtocart', 'payment_feature' ),
 		'filter' => 'wikicontent',
 		'format' => 'html',
-		'icon' => 'img/icons/cart_add.png',
+		'icon' => 'pics/icons/cart_add.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'code' => array(

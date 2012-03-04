@@ -301,12 +301,12 @@
 			<tr class="odd">	
 				<td class="action" colspan="3">
 					{if $all_forums|@count > 1}
-						<input type="image" name="movesel" src="img/icons/task_submitted.png" alt="{tr}Move{/tr}" title="{tr}Move Selected Topics{/tr}" />
+						<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt="{tr}Move{/tr}" title="{tr}Move Selected Topics{/tr}" />
 					{/if}
-					<input type="image" name="unlocksel" src="img/icons/lock_break.png" alt="{tr}Unlock{/tr}" title="{tr}Unlock Selected Topics{/tr}" />
-					<input type="image" name="locksel" src="img/icons/lock_add.png" alt="{tr}Lock{/tr}" title="{tr}Lock Selected Topics{/tr}" />
-					<input type="image" name="delsel" src="img/icons/cross.png" alt="{tr}Delete{/tr}" title="{tr}Delete Selected Topics{/tr}" />
-					<input type="image" name="splitsel" src="img/icons/arrow_merge.png" alt="{tr}Merge{/tr}" title="{tr}Merge Selected Topics{/tr}" />
+					<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt="{tr}Unlock{/tr}" title="{tr}Unlock Selected Topics{/tr}" />
+					<input type="image" name="locksel" src="pics/icons/lock_add.png" alt="{tr}Lock{/tr}" title="{tr}Lock Selected Topics{/tr}" />
+					<input type="image" name="delsel" src="pics/icons/cross.png" alt="{tr}Delete{/tr}" title="{tr}Delete Selected Topics{/tr}" />
+					<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" alt="{tr}Merge{/tr}" title="{tr}Merge Selected Topics{/tr}" />
 				</td>
 				<td style="text-align:right;" class="odd" colspan="10">
 					{if $reported > 0}

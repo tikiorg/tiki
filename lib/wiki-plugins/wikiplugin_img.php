@@ -12,7 +12,7 @@ function wikiplugin_img_info()
 		'documentation' => 'PluginImg',
 		'description' => tra('Display custom formatted images'),
 		'prefs' => array( 'wikiplugin_img'),
-		'icon' => 'img/icons/picture.png',
+		'icon' => 'pics/icons/picture.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'src' => array(
@@ -1258,11 +1258,11 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 			if (!empty($titleonly)) {
 				$repl .= ' title="' . $titleonly . '"';
 			}
-			$repl .= ">\r\t\t\t\t" . '<img class="magnify" src="./img/icons/magnifier.png" alt="'.tra('Enlarge').'" /></a>' . "\r\t\t\t</div>";
+			$repl .= ">\r\t\t\t\t" . '<img class="magnify" src="./pics/icons/magnifier.png" alt="'.tra('Enlarge').'" /></a>' . "\r\t\t\t</div>";
 		}
 		//Add metadata icon
 		if ($imgdata['metadata'] == 'view') {
-			$repl .= '<div style="float:right; margin-right:2px"><a href="#" id="' . $id_link . '"><img src="./img/icons/tag_blue.png" alt="' . tra('Metadata') . '" title="' . tra('Metadata') . '"/></a></div>';
+			$repl .= '<div style="float:right; margin-right:2px"><a href="#" id="' . $id_link . '"><img src="./pics/icons/tag_blue.png" alt="' . tra('Metadata') . '" title="' . tra('Metadata') . '"/></a></div>';
 		}
 		//Add description based on user setting (use $desconly from above) and close divs
 		isset($desconly) ? $repl .= $desconly : '';
@@ -1346,7 +1346,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	}
 	
 	if ($prefs['feature_draw'] == 'y' && $tiki_p_upload_files == 'y') {
-		$repl .= $ret .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='".tr("Edit: Image")."' data-fileid='".$imgdata['fileId']."' data-galleryid='".$imgdata['galleryId']."'><img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
+		$repl .= $ret .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='".tr("Edit: Image")."' data-fileid='".$imgdata['fileId']."' data-galleryid='".$imgdata['galleryId']."'><img width='16' height='16' class='icon' alt='Edit' src='pics/icons/page_edit.png' /></a>";
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';

@@ -141,7 +141,7 @@ function wikiplugin_mcalendar_info()
 		'documentation' => 'PluginMCalendarInfo',
 		'description' => tra('Convert a Gregorian date to a Mayan calendar date'),
 		'prefs' => array('wikiplugin_mcalendar'),
-		'icon' => 'img/icons/calendar.png',
+		'icon' => 'pics/icons/calendar.png',
 		'params' => array(
 			'template' => array(
 				'required' => false,

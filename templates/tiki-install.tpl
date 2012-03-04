@@ -12,7 +12,7 @@
 								{tr}Tiki installer{/tr}
 							</div>
 							<div id="sitesubtitle" style="font-size: 30px; margin-top: 16px;">
-								{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.png' alt="{tr}Help{/tr}" /></a>
+								{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>
 							</div>
 						</div>
 					</div>
@@ -83,11 +83,11 @@
 	<h2>{tr}Memory{/tr}</h2>
 {if $php_memory_limit <= 0}
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
-		<p align="center"><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has not detected your PHP memory_limit.{/tr} {tr}This probably means you have no set limit (all is well).{/tr} </p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has not detected your PHP memory_limit.{/tr} {tr}This probably means you have no set limit (all is well).{/tr} </p>
 	</div>	
 {elseif $php_memory_limit < 32 * 1024 * 1024}
 	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
-		<p align="center"><img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at:{/tr} {$php_memory_limit|kbsize:true:0}</p>
+		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at:{/tr} {$php_memory_limit|kbsize:true:0}</p>
 	</div>
 	<p>{tr}Tiki requires <strong>at least</strong> 32MB of PHP memory for script execution.{/tr} {tr}Allocating too little memory will cause Tiki to display blank pages.{/tr}</p>
 	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver.{/tr}</p>
@@ -96,7 +96,7 @@
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
 		<p align="center">
 		  <span style="font-size: large; padding: 4px;">
-		  <img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory_limit at:{/tr} {$php_memory_limit|kbsize:true:0}. 
+		  <img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory_limit at:{/tr} {$php_memory_limit|kbsize:true:0}. 
 		  </span>
 		</p>
 	</div>	
@@ -132,12 +132,12 @@
 	
 {if $mail_test eq 'y'}
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
-		<p align="center"><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to{/tr} {$email_test_to}.</p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to{/tr} {$email_test_to}.</p>
 	</div>
 	<p>&nbsp;</p>
 {else}
 	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
-		<p align="center"><img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to send a test message.{/tr} {tr}Review your mail log for details.{/tr}</p>
+		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to send a test message.{/tr} {tr}Review your mail log for details.{/tr}</p>
 	</div>
 	<p>{tr}Review the mail settings in your <strong>php.ini</strong> file (for example: confirm that the <strong>sendmail_path</strong> is correct).{/tr} {tr}If your host requires SMTP authentication, additional configuration may be necessary.{/tr}</p>
 {/if}
@@ -146,18 +146,18 @@
 	<h2>{tr}Image Processing{/tr}</h2>
 {if $gd_test eq 'y'}
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
-		<p align="center"><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki detected:{/tr} <strong>GD {$gd_info}</strong>.</p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki detected:{/tr} <strong>GD {$gd_info}</strong>.</p>
 {if $sample_image eq 'y'}
-		<p align="center"><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki can create images.{/tr}</p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki can create images.{/tr}</p>
 {else}
 	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
-		<p align="center"><img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to create a sample image. Please check your GD library configuration.{/tr}.</p>
+		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to create a sample image. Please check your GD library configuration.{/tr}.</p>
 	</div>
 {/if}
 	</div>
 {else}
 	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
-		<p align="center"><img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to detect the GD library.{/tr}</p>
+		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to detect the GD library.{/tr}</p>
 	</div>
 	<p>&nbsp;</p>
 {/if}
@@ -181,12 +181,12 @@
 	<p>{tr}Tiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page.{/tr}</p>
 {if $dbcon ne 'y'}
 	<div align="center" style="padding:1em">
-		<img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> <span style="font-weight:bold">{tr}Tiki cannot find a database connection.{/tr}</span> {tr}This is normal for a new installation.{/tr}
+		<img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> <span style="font-weight:bold">{tr}Tiki cannot find a database connection.{/tr}</span> {tr}This is normal for a new installation.{/tr}
 	</div>
 {else}
 	<div align="center" style="padding:1em">
 		<p>
-			<img src="img/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;" />
+			<img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;" />
 			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br />
 			<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
 		</p>
@@ -205,12 +205,12 @@
 	<br />
 {section name=n loop=$tikifeedback}
 	<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
-		<img src="img/icons/{if $tikifeedback[n].num > 0}delete.png" alt="{tr}Error{/tr}"{else}accept.png" alt="{tr}Success{/tr}"{/if} style="vertical-align:middle" /> {$tikifeedback[n].mes}
+		<img src="pics/icons/{if $tikifeedback[n].num > 0}delete.png" alt="{tr}Error{/tr}"{else}accept.png" alt="{tr}Success{/tr}"{/if} style="vertical-align:middle" /> {$tikifeedback[n].mes}
 	</div>
 {/section}
 {/if}
   <div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
-	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
+	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
 	<form action="tiki-install.php" method="post">
 		<input type="hidden" name="install_step" value="4" />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
@@ -226,7 +226,7 @@
 				<option value="{$dsn}"{if isset($smarty.request.db) and $smarty.request.db eq $dsn} selected="selected"{/if}>{$dbname}</option>
 	{/if}
 {/foreach}
-			</select> <a href="javascript:void(0)" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			</select> <a href="javascript:void(0)" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<div style="display:none" id="db_help">
 				<p>{tr}Select the type of database to use with Tiki.{/tr}</p>
 				<p>{tr}Only databases supported by your PHP installation are listed here. If your database is not in the list, try to install the appropriate PHP extension.{/tr}</p>
@@ -236,7 +236,7 @@
 		<div style="padding:5px">
 			<label for="host">{tr}Host name:{/tr}</label>
 			<div style="margin-left:1em">
-			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr}</p>
@@ -246,7 +246,7 @@
 		<div style="padding:5px;">
 			<label for="name">{tr}Database name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{/if}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{/if}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 		
 			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
@@ -326,7 +326,7 @@
 	<tr>
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
-				{if $tikidb_created}<p style="text-align:center"><img src="img/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr _0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}</p>{/if}
+				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr _0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}</p>{/if}
 				{if $tikidb_created}
 				<script type='text/javascript'><!--//--><![CDATA[//><!--
 				{literal}
@@ -377,7 +377,7 @@
 		    </form>
  {else}
 			{* we are not logged then no admin account found and user not logged *}
-			<p><img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" />  <span style="font-weight:bold">{tr}This site has an admin account configured.{/tr}</span></p>
+			<p><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" />  <span style="font-weight:bold">{tr}This site has an admin account configured.{/tr}</span></p>
 		   <p>{tr}Please log in with your admin password to continue.{/tr}</p>
 
      <form name="loginbox" action="tiki-install.php" method="post">
@@ -408,7 +408,7 @@
 		</p>
 		</div>
 {if $installer->success|@count gt 0}
-	<p><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> <span style="font-weight:bold">
+	<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> <span style="font-weight:bold">
 	{if isset($smarty.post.update)}
 		{tr}Upgrade operations executed successfully:{/tr}
 	{else}
@@ -417,7 +417,7 @@
 	</span>
 	{$installer->success|@count} {tr}SQL queries.{/tr}</p>
 {else}
-	<p><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> <span style="font-weight: bold">{tr}Database was left unchanged.{/tr}</span></p>
+	<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> <span style="font-weight: bold">{tr}Database was left unchanged.{/tr}</span></p>
 {/if}
 <form action="tiki-install.php" method="post">
 {if $installer->failures|@count > 0}
@@ -429,7 +429,7 @@
 				{/literal}
 	//--><!]]></script>
 
-<p><img src="img/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle" /> <strong>{tr}Operations failed:{/tr}</strong> {$installer->failures|@count} {tr}SQL queries.{/tr}
+<p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle" /> <strong>{tr}Operations failed:{/tr}</strong> {$installer->failures|@count} {tr}SQL queries.{/tr}
 <a href="javascript:sql_failed()">{tr}Display details.{/tr}</a>
 
 
@@ -457,7 +457,7 @@
 {/if}
 
 {if isset($htaccess_error) and $htaccess_error eq 'y'}
-<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.png' alt="{tr}Help{/tr}" /></a></h3>
+<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></h3>
 {tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
 <p>{tr _0="<strong>_htaccess</strong>" _1="<strong>.htaccess</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}</p>
 {/if}
@@ -481,7 +481,7 @@
 	<p>{tr}Complete these fields to configure common, general settings for your site.{/tr} {tr}The information you enter here can be changed later.{/tr}</p>
 	<p>{tr}Refer to the <a href="http://doc.tiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings.{/tr}</p>
 	<br />
-	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 <div style="padding:5px; clear:both"><label for="browsertitle">{tr}Browser title:{/tr}</label>
 		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}" />
 			<br /><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
@@ -495,7 +495,7 @@
 <br />
 <fieldset>
 	<legend>{tr}Secure Log in{/tr} <a href="http://doc.tiki.org/login+config" target="_blank" title="{tr}Help{/tr}">
-		<img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
+		<img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 	</legend>
 	<div style="padding:5px; clear:both"><label for="https_login">{tr}HTTPS login:{/tr}</label>
 		<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
@@ -606,12 +606,12 @@
 	</p>
 
 {if isset($smarty.post.scratch)}
-	<h3><img src="img/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle" /> {tr}Installation{/tr}</h3>
+	<h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle" /> {tr}Installation{/tr}</h3>
 	<p>{tr}If this is a first time installation, go to <strong>tiki-admin.php</strong> after login to start configuring your new Tiki installation.{/tr}</p>
 {/if}
 
 {if isset($smarty.post.update)}
-	<h3><img src="img/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle" /> {tr}Upgrade{/tr}</h3>
+	<h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle" /> {tr}Upgrade{/tr}</h3>
 	<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 {/if}
 
@@ -689,7 +689,7 @@
 {if $virt}
 		<div class="box-shadow">
 			<div class="box">
-				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.png" alt="{tr}Help{/tr}" /></a></h3>
+				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></h3>
 				<div class="clearfix box-data">
 				<div><a href="tiki-install.php">{tr}Default Installation{/tr}</a></div>
 {foreach key=k item=i from=$virt}
@@ -718,13 +718,13 @@
 {if $dbcon eq 'y' and ($install_step eq '0' or !$install_step)}
 		<div class="box-shadow">
 			<div class="box">
-				<h3 class="box-title"><img src="img/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align:middle" /> {tr}Upgrade{/tr}</h3>
+				<h3 class="box-title"><img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align:middle" /> {tr}Upgrade{/tr}</h3>
 				<div class="clearfix box-data">
 				{tr}Are you upgrading an existing Tiki site?{/tr}
 				{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
 				{if $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}
 					<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Install/Upgrade{/tr}">
-							<img src="img/icons/arrow_right.png" alt="{tr}Install/Upgrade{/tr}" height="16" width="16" />
+							<img src="pics/icons/arrow_right.png" alt="{tr}Install/Upgrade{/tr}" height="16" width="16" />
 					</a>
 				{/if}
 				</div>
@@ -758,8 +758,8 @@
 				<h3 class="box-title">{tr}Help{/tr}</h3>
 				<div class="clearfix box-data">
 				<p><img src="favicon.png" alt="{tr}Tiki Icon{/tr}" style="vertical-align:middle" /> <a href="http://tiki.org" target="_blank">{tr}Tiki Project Web Site{/tr}</a></p>
-				<p><img src="img/icons/book_open.png" alt="{tr}Documentation{/tr}" style="vertical-align:middle" /> <a href="http://doc.tiki.org" target="_blank">{tr}Documentation{/tr}</a></p>
-				<p><img src="img/icons/group.png" alt="{tr}Forums{/tr}" style="vertical-align:middle" /> <a href="http://tiki.org/forums" target="_blank">{tr}Support Forums{/tr}</a></p>
+				<p><img src="pics/icons/book_open.png" alt="{tr}Documentation{/tr}" style="vertical-align:middle" /> <a href="http://doc.tiki.org" target="_blank">{tr}Documentation{/tr}</a></p>
+				<p><img src="pics/icons/group.png" alt="{tr}Forums{/tr}" style="vertical-align:middle" /> <a href="http://tiki.org/forums" target="_blank">{tr}Support Forums{/tr}</a></p>
 				</div>
 			</div>
 		</div>

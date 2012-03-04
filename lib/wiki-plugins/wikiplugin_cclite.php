@@ -15,7 +15,7 @@ function wikiplugin_cclite_info()
 		'description' => tra('General purpose cclite utility plugin'),
 //		'validate' => '',
 		'prefs' => array( 'wikiplugin_cclite', 'payment_feature' ),
-		'icon' => 'img/icons/money.png',
+		'icon' => 'pics/icons/money.png',
 		'tags' => array( 'experimental' ),		
 		'params' => array(
 			'mode' => array(

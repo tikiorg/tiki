@@ -14,7 +14,7 @@ function wikiplugin_profile_info()
 		'prefs' => array( 'wikiplugin_profile' ),
 		'validate' => 'all',
 		'inline' => true,
-		'icon' => 'img/icons/database_lightning.png',
+		'icon' => 'pics/icons/database_lightning.png',
 		'tags' => array( 'experimental' ),
 		'params' => array(
 			'domain' => array(

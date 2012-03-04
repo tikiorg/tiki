@@ -12,7 +12,7 @@ function wikiplugin_groupexpiry_info()
 		'documentation' => 'PluginGroupExpiry',
 		'description' => tra('Show the expiry date of a group membership of the current user'),
 		'prefs' => array( 'wikiplugin_groupexpiry' ),
-		'icon' => 'img/icons/group_delete.png',
+		'icon' => 'pics/icons/group_delete.png',
 		'params' => array(
 			'group' => array(
 				'required' => true,

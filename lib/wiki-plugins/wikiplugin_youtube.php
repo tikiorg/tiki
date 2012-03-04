@@ -12,7 +12,7 @@ function wikiplugin_youtube_info()
 		'documentation' => 'PluginYouTube',
 		'description' => tra('Display a YouTube video'),
 		'prefs' => array( 'wikiplugin_youtube' ),
-		'icon' => 'img/icons/youtube.png',
+		'icon' => 'pics/icons/youtube.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'movie' => array(

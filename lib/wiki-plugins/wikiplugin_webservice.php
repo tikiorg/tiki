@@ -14,7 +14,7 @@ function wikiplugin_webservice_info()
 		'prefs' => array( 'wikiplugin_webservice' ),
 		'body' => tra('Template to apply to the data provided. Template format uses smarty templating engine using double brackets as delimiter. Output must provide wiki syntax. Body can be sent to a parameter instead by using the bodyname parameter.'),
 		'validate' => 'all',
-		'icon' => 'img/icons/world_go.png',
+		'icon' => 'pics/icons/world_go.png',
 		'params' => array(
 			'url' => array(
 				'required' => false,

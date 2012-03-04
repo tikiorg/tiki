@@ -15,7 +15,7 @@ function wikiplugin_sf_info()
 		'description' => tra('Creates a link to SourceForge tracker items'),
 		'prefs' => array( 'wikiplugin_sf' ),
 		'body' => tra('text'),
-		'icon' => 'img/icons/world_link.png',
+		'icon' => 'pics/icons/world_link.png',
 		'params' => array(
 			'groupid' => array(
 				'required' => true,

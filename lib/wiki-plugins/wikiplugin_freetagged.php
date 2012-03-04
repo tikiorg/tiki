@@ -12,7 +12,7 @@ function wikiplugin_freetagged_info()
 		'documentation' => 'PluginFreetagged',
 		'description' => tra('List similarly tagged objects'),
 		'prefs' => array('feature_freetags','wikiplugin_freetagged'),
-		'icon' => 'img/icons/tag_blue.png',
+		'icon' => 'pics/icons/tag_blue.png',
 		'params' => array(
 			'tags' => array(
 				'required' => false,

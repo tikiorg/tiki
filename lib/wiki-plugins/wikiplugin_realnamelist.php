@@ -13,7 +13,7 @@ function wikiplugin_realnamelist_info()
 		'description' => tra('Show user real names for members of a group').tra(' (experimental, should be merged with UserList)'),
 		'prefs' => array( 'wikiplugin_realnamelist' ),
 		'body' => tra('Group name - only users belonging to a group or groups with group names containing this text will be included in the list. If empty all site users will be included.'),
-		'icon' => 'img/icons/group.png',
+		'icon' => 'pics/icons/group.png',
 		'params' => array(
 			'sep' => array(
 				'required' => false,

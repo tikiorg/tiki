@@ -13,7 +13,7 @@ function wikiplugin_googlemap_info()
 		'description' => tra('Display a Google map'),
 		'prefs' => array( 'wikiplugin_googlemap' ),
 		'format' => 'html',
-		'icon' => 'img/icons/google.png',
+		'icon' => 'pics/icons/google.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'type' => array(

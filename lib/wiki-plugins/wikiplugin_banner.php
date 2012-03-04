@@ -12,7 +12,7 @@ function wikiplugin_banner_info()
 		'documentation' => 'PluginBanner',
 		'description' => tra('Add a banner'),
 		'prefs' => array('wikiplugin_banner'),
-		'icon' => 'img/icons/page_lightning.png',
+		'icon' => 'pics/icons/page_lightning.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'zone' => array(

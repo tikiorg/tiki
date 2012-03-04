@@ -17,7 +17,7 @@ function prefs_menus_list()
 		'menus_items_icons_path' => array(
 			'name' => tra('Default path for the icons'),
 			'type' => 'text',
-			'default' => 'img/icons/large',
+			'default' => 'pics/large',
 		),
 		'menus_item_names_raw_teaser' => array(
 			'name' => tra('Allow HTML in menu option names and URLs'),

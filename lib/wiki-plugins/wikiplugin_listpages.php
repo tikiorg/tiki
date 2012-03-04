@@ -12,7 +12,7 @@ function wikiplugin_listpages_info()
 		'documentation' => 'PluginListpages',
 		'description' => tra('List pages based on various criteria'),
 		'prefs' => array('wikiplugin_listpages'),
-		'icon' => 'img/icons/page_find.png',
+		'icon' => 'pics/icons/page_find.png',
 		'params' => array(
 			'offset' => array(
 				'required' => false,

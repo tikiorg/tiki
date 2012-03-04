@@ -12,7 +12,7 @@ function wikiplugin_rss_info()
 		'documentation' => 'PluginRSS',
 		'description' => tra('Display items from an RSS feed'),
 		'prefs' => array( 'wikiplugin_rss' ),
-		'icon' => 'img/icons/rss.png',
+		'icon' => 'pics/icons/rss.png',
 		'format' => 'html',
 		'filter' => 'striptags',
 		'tags' => array( 'basic' ),

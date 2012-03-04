@@ -13,7 +13,7 @@ function wikiplugin_mediaplayer_info()
 		'description' => tra('Add a media player to a page'),
 		'extraparams' =>true,
 		'prefs' => array( 'wikiplugin_mediaplayer' ),
-		'icon' => 'img/icons/mime/avi.png',
+		'icon' => 'pics/icons/mime/avi.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'fullscreen' => array(

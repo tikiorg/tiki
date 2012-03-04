@@ -13,7 +13,7 @@ function wikiplugin_code_info()
 		'description' => tra('Display code syntax with line numbers and color highlights'),
 		'prefs' => array('wikiplugin_code'),
 		'body' => tra('Code to be displayed'),
-		'icon' => 'img/icons/page_white_code.png',
+		'icon' => 'pics/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
 		'params' => array(

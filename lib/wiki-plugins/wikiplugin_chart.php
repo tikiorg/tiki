@@ -12,7 +12,7 @@ function wikiplugin_chart_info()
 		'documentation' => 'PluginChart',
 		'description' => tra('Display a chart from TikiSheet'),
 		'prefs' => array( 'feature_sheet', 'wikiplugin_chart' ),
-		'icon' => 'img/icons/chart_curve.png',
+		'icon' => 'pics/icons/chart_curve.png',
 		'body' => tra('Chart caption.'),
 		'params' => array(
 			'id' => array(

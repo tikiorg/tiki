@@ -15,7 +15,7 @@ function wikiplugin_html_info()
 		'body' => tra('HTML code'),
 		'validate' => 'all',
 		'filter' => 'rawhtml_unsafe',
-		'icon' => 'img/icons/mime/html.png',
+		'icon' => 'pics/icons/mime/html.png',
 		'tags' => array( 'basic' ),	
 		'params' => array(
 			'wiki' => array(

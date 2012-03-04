@@ -12,7 +12,7 @@ function wikiplugin_trackertimeline_info()
 		'documentation' => 'PluginTrackerTimeline',
 		'description' => tra('Show a timeline view of a tracker'),
 		'prefs' => array( 'wikiplugin_trackertimeline', 'feature_trackers' ),
-		'icon' => 'img/icons/timeline_marker.png',
+		'icon' => 'pics/icons/timeline_marker.png',
 		'params' => array(
 			'tracker' => array(
 				'required' => true,

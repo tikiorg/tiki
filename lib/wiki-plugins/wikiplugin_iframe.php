@@ -16,7 +16,7 @@ function wikiplugin_iframe_info()
 		'format' => 'html',
 		'validate' => 'all',
 		'tags' => array( 'basic' ),
-		'icon' => 'img/icons/page_copy.png',
+		'icon' => 'pics/icons/page_copy.png',
 		'params' => array(
 			'name' => array(
 				'safe' => true,

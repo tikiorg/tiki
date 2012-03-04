@@ -128,7 +128,7 @@
 	{if $channels}
 		<br />
 		{tr}Perform action with checked:{/tr}
-		<input type="image" name="delsel" src='img/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}" />
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}" />
 	{/if}
 </form>
 

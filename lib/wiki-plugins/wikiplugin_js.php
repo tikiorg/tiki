@@ -15,7 +15,7 @@ function wikiplugin_js_info()
 		'body' => tra('javascript code'),
 		'validate' => 'all',
 		'filter' => 'rawhtml_unsafe',
-		'icon' => 'img/icons/script_code_red.png',
+		'icon' => 'pics/icons/script_code_red.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'file' => array(

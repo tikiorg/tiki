@@ -15,7 +15,7 @@ function wikiplugin_trackerlist_info()
 		'tags' => array( 'basic' ),		
 		'body' => tra('Notice'),
 		'format' => 'html',
-		'icon' => 'img/icons/database_table.png',
+		'icon' => 'pics/icons/database_table.png',
 		'filter' => 'text',
 		'params' => array(
 			'trackerId' => array(

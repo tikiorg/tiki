@@ -13,7 +13,7 @@ function wikiplugin_redirect_info()
 		'description' => tra('Redirect to another page'),
 		'prefs' => array( 'wikiplugin_redirect' ),
 		'validate' => 'arguments',
-		'icon' => 'img/icons/arrow_right.png',
+		'icon' => 'pics/icons/arrow_right.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'page' => array(

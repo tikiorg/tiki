@@ -12,7 +12,7 @@ function wikiplugin_back_info()
 		'documentation' => 'PluginBack',
 		'description' => tra('Displays a link that goes back one page in the browser history'),
 		'prefs' => array( 'wikiplugin_back' ),
-		'icon' => 'img/icons/arrow_left.png',
+		'icon' => 'pics/icons/arrow_left.png',
 		'tags' => array( 'basic' ),
 		'params' => array(),
 		);

@@ -14,7 +14,7 @@ function wikiplugin_transclude_info()
 		'prefs' => array('wikiplugin_transclude', 'feature_wiki'),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
-		'icon' => 'img/icons/page_copy.png',
+		'icon' => 'pics/icons/page_copy.png',
 		'params' => array(
 			'page' => array(
 				'required' => true,

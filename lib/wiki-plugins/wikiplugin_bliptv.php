@@ -14,7 +14,7 @@ function wikiplugin_bliptv_info()
 		'documentation' => 'PluginBlipTV',
 		'description' => tra('Display a Blip.tv video'),
 		'prefs' => array( 'wikiplugin_bliptv' ),
-		'icon' => 'img/icons/bliptv.png',
+		'icon' => 'pics/icons/bliptv.png',
 		'params' => array(
 			'url' => array(
 				'required' => true,

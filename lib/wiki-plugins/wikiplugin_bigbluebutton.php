@@ -13,7 +13,7 @@ function wikiplugin_bigbluebutton_info()
 		'description' => tra('Starts a video/audio/chat/presentation session using BigBlueButton'),
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ),
-		'icon' => 'img/icons/webcam.png',
+		'icon' => 'pics/icons/webcam.png',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'name' => array(

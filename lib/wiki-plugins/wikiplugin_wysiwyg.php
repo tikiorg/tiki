@@ -13,7 +13,7 @@ function wikiplugin_wysiwyg_info()
 		'description' => tra('Permits to have a WYSIWYG section for part of a page.'),
 		'prefs' => array('wikiplugin_wysiwyg'),
 		'params' => array(),
-		'icon' => 'img/icons/mime/default.png',
+		'icon' => 'pics/icons/mime/default.png',
 		'tags' => array( 'experimental' ),
 		'filter' => 'purifier',			/* N.B. uses htmlpurifier to enure only "clean" html gets in */
 		'body' => tra('Content'),

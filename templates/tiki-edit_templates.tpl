@@ -84,7 +84,7 @@
 				<input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}" />
 				{if $style_local eq 'y'}
 					<a href="tiki-edit_templates.php?template={$template|escape}&amp;delete=y">
-						<img src="img/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" 
+						<img src="pics/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" 
 							title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" />
 					</a>
 				{/if}

@@ -12,7 +12,7 @@ function wikiplugin_topfriends_info()
 		'documentation' => 'PluginTopFriends',
 		'description' => tra('List top-scoring users.'),
 		'prefs' => array( 'feature_friends', 'wikiplugin_topfriends' ),
-		'icon' => 'img/icons/star.png',
+		'icon' => 'pics/icons/star.png',
 		'params' => array(
 			'limit' => array(
 				'required' => false,

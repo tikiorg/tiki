@@ -13,7 +13,7 @@ function wikiplugin_proposal_info()
 		'description' => tra('Allow users to vote on a proposal and view the results'),
 		'prefs' => array( 'wikiplugin_proposal' ),
 		'body' => tra('The list of votes cast. One vote per line. Either 0, +1 or -1 followed by a username.'),
-		'icon' => 'img/icons/thumb_up.png',
+		'icon' => 'pics/icons/thumb_up.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'caption' => array(

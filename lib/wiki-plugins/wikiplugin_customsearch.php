@@ -14,7 +14,7 @@ function wikiplugin_customsearch_info()
 		'prefs' => array('wikiplugin_customsearch', 'wikiplugin_list', 'feature_ajax'),
 		'body' => tra('LIST plugin configuration information'),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/text_list_bullets.png',
+		'icon' => 'pics/icons/text_list_bullets.png',
 		'tags' => array('advanced'),		
 		'params' => array(
 			'wiki' => array(

@@ -12,7 +12,7 @@ function wikiplugin_jabber_info()
 		'documentation' => 'PluginJabber',
 		'description' => tra('Chat using Jabber'),
 		'prefs' => array( 'wikiplugin_jabber' ),
-		'icon' => 'img/icons/comments.png',
+		'icon' => 'pics/icons/comments.png',
 		'params' => array(
 			'height' => array(
 				'required' => false,

@@ -12,7 +12,7 @@ function wikiplugin_countdown_info()
 		'documentation' => 'PluginCountdown',
 		'description' => tra('Display a countdown to a specified date.'),
 		'prefs' => array('wikiplugin_countdown'),
-		'icon' => 'img/icons/clock.png',
+		'icon' => 'pics/icons/clock.png',
 		'body' => tra('Text to append to the countdown.'),
 		'tags' => array( 'basic' ),
 		'params' => array(

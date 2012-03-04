@@ -43,7 +43,7 @@ function help_doclink($params) {
     	if (!isset($desc)) $desc = tra('Help link');
         $ret = '<a title="'.htmlentities($desc,ENT_COMPAT,"UTF-8").'" href="'
         .$prefs['helpurl'].$url.'" target="tikihelp" class="tikihelp">'
-        .'<img src="img/icons/help.png"'
+        .'<img src="pics/icons/help.png"'
         .' height="16" width="16" alt="'.tra('Help','',true).'" /></a>';
     }
     return $ret;

@@ -13,7 +13,7 @@ function wikiplugin_comment_info()
 		'description' => tra('Display a comment area for any specified object'),
 		'prefs' => array( 'wikiplugin_comment' ),	
 		'format' => 'html',
-		'icon' => 'img/icons/comments.png',
+		'icon' => 'pics/icons/comments.png',
 		'params' => array(
 			'objectType' => array(
 				'required' => true,

@@ -194,7 +194,7 @@ abstract class Toolbar
 		return isset($prefs["toolbar_tool_$name"]);	
 	}
 
-	public static function saveTool($name, $label, $icon = 'img/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '')
+	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '')
 	{
 		global $tikilib;
 		
@@ -309,7 +309,7 @@ abstract class Toolbar
 
 		$tag->setLabel($data['label'])
 			->setWysiwygToken($data['token'])
-				->setIcon(!empty($data['icon']) ? $data['icon'] : 'img/icons/shading.png')
+				->setIcon(!empty($data['icon']) ? $data['icon'] : 'pics/icons/shading.png')
 						->setType($data['type']);
 		
 		return $tag;
@@ -414,7 +414,7 @@ abstract class Toolbar
 		$content = $title;
 		$params['_icon'] = $this->icon;
 			
-		if (strpos($class, 'qt-plugin') !== false && $this->icon == 'img/icons/plugin.png') {
+		if (strpos($class, 'qt-plugin') !== false && $this->icon == 'pics/icons/plugin.png') {
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
 		}
@@ -479,7 +479,7 @@ class ToolbarCkOnly extends Toolbar
 			if (is_file($img_path)) {
 				$icon = $img_path;
 			} else {
-				$icon = 'img/icons/shading.png';
+				$icon = 'pics/icons/shading.png';
 			}
 		}
 		$this->setWysiwygToken($token)
@@ -599,7 +599,7 @@ class ToolbarCkOnly extends Toolbar
 	{
 		global $headerlib;
 		
-		if ((!empty($this->icon) && $this->icon !== 'img/icons/shading.png') || in_array($this->label, array('Autosave'))) {
+		if ((!empty($this->icon) && $this->icon !== 'pics/icons/shading.png') || in_array($this->label, array('Autosave'))) {
 			return parent::getIconHtml();
 		}
 		
@@ -626,31 +626,31 @@ class ToolbarInline extends Toolbar
 		switch( $tagName ) {
 		case 'bold':
 			$label = tra('Bold');
-			$icon = tra('img/icons/text_bold.png');
+			$icon = tra('pics/icons/text_bold.png');
 			$wysiwyg = 'Bold';
 			$syntax = '__text__';
       break;
 		case 'italic':
 			$label = tra('Italic');
-			$icon = tra('img/icons/text_italic.png');
+			$icon = tra('pics/icons/text_italic.png');
 			$wysiwyg = 'Italic';
 			$syntax = "''text''";
       break;
 		case 'underline':
 			$label = tra('Underline');
-			$icon = tra('img/icons/text_underline.png');
+			$icon = tra('pics/icons/text_underline.png');
 			$wysiwyg = 'Underline';
 			$syntax = "===text===";
       break;
 		case 'strike':
 			$label = tra('Strikethrough');
-			$icon = tra('img/icons/text_strikethrough.png');
+			$icon = tra('pics/icons/text_strikethrough.png');
 			$wysiwyg = 'Strike';
 			$syntax = '--text--';
       break;
 		case 'nonparsed':
 			$label = tra('Non-parsed (Wiki syntax does not apply)');
-			$icon = tra('img/icons/noparse.png');
+			$icon = tra('pics/icons/noparse.png');
 			$wysiwyg = null;
 			$syntax = '~np~text~/np~';
       break;
@@ -661,7 +661,7 @@ class ToolbarInline extends Toolbar
 		$tag = new self;
 		$tag->setLabel($label)
 			->setWysiwygToken($wysiwyg)
-				->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
+				->setIcon(!empty($icon) ? $icon : 'pics/icons/shading.png')
 					->setSyntax($syntax)
 						->setType('Inline');
 		
@@ -715,7 +715,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		switch( $tagName ) {
 		case 'center':
 			$label = tra('Align Center');
-			$icon = tra('img/icons/text_align_center.png');
+			$icon = tra('pics/icons/text_align_center.png');
 			$wysiwyg = 'JustifyCenter';
 			if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 				$syntax = ":::text:::";
@@ -725,25 +725,25 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
       break;
 		case 'rule':
 			$label = tra('Horizontal Bar');
-			$icon = tra('img/icons/page.png');
+			$icon = tra('pics/icons/page.png');
 			$wysiwyg = 'HorizontalRule';
 			$syntax = '---';
       break;
 		case 'pagebreak':
 			$label = tra('Page Break');
-			$icon = tra('img/icons/page_break.png');
+			$icon = tra('pics/icons/page_break.png');
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
       break;
 		case 'box':
 			$label = tra('Box');
-			$icon = tra('img/icons/box.png');
+			$icon = tra('pics/icons/box.png');
 			$wysiwyg = 'Box';
 			$syntax = '^text^';
       break;
 		case 'email':
 			$label = tra('Email');
-			$icon = tra('img/icons/email.png');
+			$icon = tra('pics/icons/email.png');
 			$wysiwyg = null;			
 			$syntax = '[mailto:email@example.com|text]';
       break;				
@@ -751,19 +751,19 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'h2':
 		case 'h3':
 			$label = tra('Heading') . ' ' . $tagName{1};
-			$icon = 'img/icons/text_heading_' . $tagName{1} . '.png';
+			$icon = 'pics/icons/text_heading_' . $tagName{1} . '.png';
 			$wysiwyg = null;
 			$syntax = str_repeat('!', $tagName{1}) . 'text';
       break;
 		case 'titlebar':
 			$label = tra('Title bar');
-			$icon = 'img/icons/text_padding_top.png';
+			$icon = 'pics/icons/text_padding_top.png';
 			$wysiwyg = null;
 			$syntax = '-=text=-';
       break;
 		case 'toc':
 			$label = tra('Table of contents');
-			$icon = tra('img/icons/book.png');
+			$icon = tra('pics/icons/book.png');
 			$wysiwyg = 'TOC';
 			$syntax = '{maketoc}';
       break;
@@ -774,7 +774,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		$tag = new self;
 		$tag->setLabel($label)
 			->setWysiwygToken($wysiwyg)
-			->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
+			->setIcon(!empty($icon) ? $icon : 'pics/icons/shading.png')
 			->setSyntax($syntax)
 			->setType('Block');
 		
@@ -808,13 +808,13 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 		switch( $tagName ) {
 		case 'list':
 			$label = tra('Unordered List');
-			$icon = tra('img/icons/text_list_bullets.png');
+			$icon = tra('pics/icons/text_list_bullets.png');
 			$wysiwyg =  'BulletedList';
 			$syntax = '*text';
       break;
 		case 'numlist':
 			$label = tra('Ordered List');
-			$icon = tra('img/icons/text_list_numbers.png');
+			$icon = tra('pics/icons/text_list_numbers.png');
 			$wysiwyg =  'NumberedList';
 			$syntax = '#text';
       break;
@@ -825,7 +825,7 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 		$tag = new self;
 		$tag->setLabel($label)
 			->setWysiwygToken($wysiwyg)
-			->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
+			->setIcon(!empty($icon) ? $icon : 'pics/icons/shading.png')
 			->setSyntax($syntax)
 			->setType('LineBased');
 		
@@ -880,7 +880,7 @@ class ToolbarPicker extends Toolbar
 		case 'color':
 			$wysiwyg = 'TextColor';
 			$label = tra('Foreground color');
-			$icon = tra('img/icons/palette.png');
+			$icon = tra('pics/icons/palette.png');
 			$rawList = array();
 			$styleType = 'color';
 			
@@ -909,7 +909,7 @@ class ToolbarPicker extends Toolbar
 
 		case 'bgcolor':
 			$label = tra('Background Color');
-			$icon = tra('img/icons/palette_bg.png');
+			$icon = tra('pics/icons/palette_bg.png');
 			$wysiwyg = 'BGColor';
 			$styleType = 'background-color';
 			$rawList = array();
@@ -943,7 +943,7 @@ class ToolbarPicker extends Toolbar
 		$tag = new self;
 		$tag->setWysiwygToken($wysiwyg)
 			->setLabel($label)
-			->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
+			->setIcon(!empty($icon) ? $icon : 'pics/icons/shading.png')
 			->setList($list)
 			->setType('Picker')
 			->setName($tagName)
@@ -1053,7 +1053,7 @@ class ToolbarDialog extends Toolbar
 		switch( $tagName ) {
 		case 'tikilink':
 			$label = tra('Wiki Link');
-			$icon = tra('img/icons/page_link.png');
+			$icon = tra('pics/icons/page_link.png');
 			$wysiwyg = '';	// cke link dialog now adapted for wiki links
 			$list = array('Wiki Link',
 						'<label for="tbWLinkDesc">Show this text</label>',
@@ -1073,7 +1073,7 @@ class ToolbarDialog extends Toolbar
 		case 'link':
 			$wysiwyg = 'Link';
 			$label = tra('External Link');
-			$icon = tra('img/icons/world_link.png');
+			$icon = tra('pics/icons/world_link.png');
 			$list = array('External Link',
 						'<label for="tbLinkDesc">Show this text</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
@@ -1090,7 +1090,7 @@ class ToolbarDialog extends Toolbar
       break;
 
 		case 'table':
-			$icon = tra('img/icons/table.png');
+			$icon = tra('pics/icons/table.png');
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
@@ -1101,7 +1101,7 @@ class ToolbarDialog extends Toolbar
       break;
 
 		case 'find':
-			$icon = tra('img/icons/find.png');
+			$icon = tra('pics/icons/find.png');
 			$wysiwyg = 'Find';
 			$label = tra('Find Text');
 			$list = array('Find Text',
@@ -1118,7 +1118,7 @@ class ToolbarDialog extends Toolbar
       break;
 
 		case 'replace':
-			$icon = tra('img/icons/text_replace.png');
+			$icon = tra('pics/icons/text_replace.png');
 			$wysiwyg = 'Replace';
 			$label = tra('Text Replace');
 			$tool_prefs[] = 'feature_wiki_replace';
@@ -1148,7 +1148,7 @@ class ToolbarDialog extends Toolbar
 		$tag->name = $tagName;
 		$tag->setWysiwygToken($wysiwyg)
 			->setLabel($label)
-			->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
+			->setIcon(!empty($icon) ? $icon : 'pics/icons/shading.png')
 			->setList($list)
 			->setType('Dialog');
 		
@@ -1250,7 +1250,7 @@ class ToolbarFullscreen extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel(tra('Full Screen Edit'))
-			->setIcon('img/icons/application_get.png')
+			->setIcon('pics/icons/application_get.png')
 			->setWysiwygToken('Maximize')
 			->setType('Fullscreen');
 	} // }}}
@@ -1277,7 +1277,7 @@ class ToolbarHelptool extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel(tra('Wiki Help'))
-			->setIcon('img/icons/help.png')
+			->setIcon('pics/icons/help.png')
 			->setType('Helptool');
 	} // }}}
 	
@@ -1357,7 +1357,7 @@ class ToolbarFileGallery extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel(tra('Choose or upload images'))
-			->setIcon(tra('img/icons/pictures.png'))
+			->setIcon(tra('pics/icons/pictures.png'))
 			->setWysiwygToken('tikiimage')
 			->setType('FileGallery')
 			->addRequiredPreference('feature_filegals_manager');
@@ -1398,7 +1398,7 @@ class ToolbarFileGalleryFile extends ToolbarFileGallery
 	function __construct() // {{{
 	{
 		$this->setLabel(tra('Choose or upload files'))
-			->setIcon(tra('img/icons/file-manager-add.png'))
+			->setIcon(tra('pics/icons/file-manager-add.png'))
 			->setWysiwygToken('tikifile')
 			->setType('FileGallery')
 			->addRequiredPreference('feature_filegals_manager');
@@ -1419,7 +1419,7 @@ class ToolbarSwitchEditor extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel(tra('Switch Editor (wiki or WYSIWYG)'))
-			->setIcon(tra('img/icons/pencil_go.png'))
+			->setIcon(tra('pics/icons/pencil_go.png'))
 			->setWysiwygToken('tikiswitch')
 			->setType('SwitchEditor')
 			->addRequiredPreference('feature_wysiwyg');
@@ -1513,7 +1513,7 @@ class ToolbarWikiplugin extends Toolbar
 				if (isset($info['icon']) and $info['icon'] != '') {
 					$icon = $info['icon'];
 				} else {
-					$icon = 'img/icons/plugin.png';
+					$icon = 'pics/icons/plugin.png';
 				}
 
 				$tag = new self;
@@ -1593,7 +1593,7 @@ class ToolbarSheet extends Toolbar
 		switch( $tagName ) {
 			case 'sheetsave':
 				$label = tra('Save Sheet');
-				$icon = tra('img/icons/disk.png');
+				$icon = tra('pics/icons/disk.png');
 				$syntax = '
 					$("#saveState").hide();
 					$.sheet.saveSheet($.sheet.tikiSheet, function() {
@@ -1602,91 +1602,91 @@ class ToolbarSheet extends Toolbar
       	break;
 			case 'addrow':
 				$label = tra('Add Row After Selection Or To End If No Selection');
-				$icon = tra('img/icons/sheet_row_add.png');
+				$icon = tra('pics/icons/sheet_row_add.png');
 				$syntax = 'sheetInstance.controlFactory.addRow();';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 	      break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
 				$label = tra('Add Multiple Rows After Selection Or To End If No Selection');
-				$icon = tra('img/icons/sheet_row_add_multi.png');
+				$icon = tra('pics/icons/sheet_row_add_multi.png');
 				$syntax = 'sheetInstance.controlFactory.addRowMulti();';
 	      break;
 			case 'addrowbefore':
 				$label = tra('Add Row Before Selection Or To End If No Selection');
-				$icon = tra('img/icons/sheet_row_add.png');
+				$icon = tra('pics/icons/sheet_row_add.png');
 				$syntax = 'sheetInstance.controlFactory.addRow(null, true);';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 	      break;	
 			case 'deleterow':
 				$label = tra('Delete Selected Row');
-				$icon = tra('img/icons/sheet_row_delete.png');
+				$icon = tra('pics/icons/sheet_row_delete.png');
 				$syntax = 'sheetInstance.deleteRow();';
 	      break;
 			case 'addcolumn':
 				$label = tra('Add Column After Selection Or To End If No Selection');
-				$icon = tra('img/icons/sheet_col_add.png');
+				$icon = tra('pics/icons/sheet_col_add.png');
 				$syntax = 'sheetInstance.controlFactory.addColumn();';	// add col before current or at end if none selected
 	      break;
 			case 'deletecolumn':
 				$label = tra('Delete Selected Column');
-				$icon = tra('img/icons/sheet_col_delete.png');
+				$icon = tra('pics/icons/sheet_col_delete.png');
 				$syntax = 'sheetInstance.deleteColumn();';
 	      break;
 			case 'addcolumnmulti':
 				$label = tra('Add Multiple Columns After Selection Or To End If No Selection');
-				$icon = tra('img/icons/sheet_col_add_multi.png');
+				$icon = tra('pics/icons/sheet_col_add_multi.png');
 				$syntax = 'sheetInstance.controlFactory.addColumnMulti();';
 	      break;
 			case 'addcolumnbefore':
 				$label = tra('Add Column Before Selection Or To End If No Selection');
-				$icon = tra('img/icons/sheet_col_add.png');
+				$icon = tra('pics/icons/sheet_col_add.png');
 				$syntax = 'sheetInstance.controlFactory.addColumn(null, true);';	// add col before current or at end if none selected
 	      break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
-				$icon = tra('img/icons/sheet_get_range.png');
+				$icon = tra('pics/icons/sheet_get_range.png');
 				$syntax = 'sheetInstance.getTdRange(null, sheetInstance.obj.formula().val()); return false;';
 	      break;
 			case 'sheetfind':
 				$label = tra('Find');
-				$icon = tra('img/icons/find.png');
+				$icon = tra('pics/icons/find.png');
 				$syntax = 'sheetInstance.cellFind();';
 	      break;
 			case 'sheetrefresh':
 				$label = tra('Refresh Calculations');
-				$icon = tra('img/icons/arrow_refresh.png');
+				$icon = tra('pics/icons/arrow_refresh.png');
 				$syntax = 'sheetInstance.calc();';
 	      break;
 			case 'sheetclose':
 				$label = tra('Finish Editing');
-				$icon = tra('img/icons/close.png');
+				$icon = tra('pics/icons/close.png');
 				$syntax = '$.sheet.manageState(sheetInstance.obj.parent(), true);';	// temporary workaround TODO properly
 	      break;
 			case 'bold':
 				$label = tra('Bold');
-				$icon = tra('img/icons/text_bold.png');
+				$icon = tra('pics/icons/text_bold.png');
 				$wysiwyg = 'Bold';
 				$syntax = 'sheetInstance.cellStyleToggle("styleBold");';
 	      break;
 			case 'italic':
 				$label = tra('Italic');
-				$icon = tra('img/icons/text_italic.png');
+				$icon = tra('pics/icons/text_italic.png');
 				$wysiwyg = 'Italic';
 				$syntax = 'sheetInstance.cellStyleToggle("styleItalics");';
 	      break;
 			case 'underline':
 				$label = tra('Underline');
-				$icon = tra('img/icons/text_underline.png');
+				$icon = tra('pics/icons/text_underline.png');
 				$wysiwyg = 'Underline';
 				$syntax = 'sheetInstance.cellStyleToggle("styleUnderline");';
 	      break;
 			case 'strike':
 				$label = tra('Strikethrough');
-				$icon = tra('img/icons/text_strikethrough.png');
+				$icon = tra('pics/icons/text_strikethrough.png');
 				$wysiwyg = 'Strike';
 				$syntax = 'sheetInstance.cellStyleToggle("styleLineThrough");';
 	      break;
 			case 'center':
 				$label = tra('Align Center');
-				$icon = tra('img/icons/text_align_center.png');
+				$icon = tra('pics/icons/text_align_center.png');
 				$syntax = 'sheetInstance.cellStyleToggle("styleCenter");';
 	      break;
 			default:
@@ -1695,7 +1695,7 @@ class ToolbarSheet extends Toolbar
 
 		$tag = new self;
 		$tag->setLabel($label)
-			->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
+			->setIcon(!empty($icon) ? $icon : 'pics/icons/shading.png')
 			->setSyntax($syntax)
 			->setType('Sheet');
 		

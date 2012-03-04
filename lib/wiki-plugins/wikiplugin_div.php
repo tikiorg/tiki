@@ -13,7 +13,7 @@ function wikiplugin_div_info()
 		'description' => tra('Define and format sections of a page or text'),
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/script_code_red.png',
+		'icon' => 'pics/icons/script_code_red.png',
 		'filter' => 'wikicontent',
 		'tags' => array( 'basic' ),		
 		'params' => array(

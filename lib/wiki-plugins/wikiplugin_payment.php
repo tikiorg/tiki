@@ -12,7 +12,7 @@ function wikiplugin_payment_info()
 		'documentaion' => 'PluginPayment',
 		'description' => tra('Show details of a payment request or invoice'),
 		'prefs' => array( 'wikiplugin_payment', 'payment_feature' ),
-		'icon' => 'img/icons/money.png',
+		'icon' => 'pics/icons/money.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

@@ -13,7 +13,7 @@ function wikiplugin_htmlfeedlink_info()
 		'description' => tra('Display remote content'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeedlink', 'feature_htmlfeed' ),
 		'body' => tra('Initial Value'),
-		'icon' => 'img/icons/page_white_code.png',
+		'icon' => 'pics/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),	
 		'params' => array(
@@ -175,7 +175,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 				if ($moderate == 'y') {
 					if ($same == false) {
 						$data .= "~np~<img
-							src='img/icons/flag_blue.png'
+							src='pics/icons/flag_blue.png'
 							class='revision'
 							title='Revision Available, click to see'
 							style='cursor: pointer;'
@@ -239,7 +239,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 	}
 	
 	if (strlen($archives) > 0) {
-		$result .= "~np~<img src='img/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
+		$result .= "~np~<img src='pics/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
 		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>~/np~";
 		$headerlib->add_jq_onready(
 <<<JQ

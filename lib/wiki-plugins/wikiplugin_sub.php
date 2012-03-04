@@ -13,7 +13,7 @@ function wikiplugin_sub_info()
 		'description' => tra('Apply subscript font to text'),
 		'prefs' => array( 'wikiplugin_sub' ),
 		'body' => tra('text'),
-		'icon' => 'img/icons/text_subscript.png',
+		'icon' => 'pics/icons/text_subscript.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
 		),

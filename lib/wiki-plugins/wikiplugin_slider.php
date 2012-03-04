@@ -13,7 +13,7 @@ function wikiplugin_slider_info()
 		'description' => tra('Arrange content in a sliding area'),
 		'prefs' => array( 'wikiplugin_slider' ),
 		'body' => tra('Content separated by /////'),
-		'icon' => 'img/icons/cool.gif',
+		'icon' => 'pics/icons/cool.gif',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'titles' => array(

@@ -77,7 +77,7 @@ function smarty_function_listfilter($params, $smarty)
 		}
 
 		$input .= " class='listfilter' />";
-		$input .= "<img src='img/icons/close.png' onclick=\"\$('#$id').val('').keyup();return false;\" class='closeicon' width='16' height='16' style='visibility:hidden;position:relative;right:20px;top:6px;'/>";
+		$input .= "<img src='pics/icons/close.png' onclick=\"\$('#$id').val('').keyup();return false;\" class='closeicon' width='16' height='16' style='visibility:hidden;position:relative;right:20px;top:6px;'/>";
 		$input .= "</label>";
 
 		if (!isset($selectors)) $selectors = ".$id table tr";

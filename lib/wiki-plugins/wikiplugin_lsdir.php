@@ -13,7 +13,7 @@ function wikiplugin_lsdir_info()
 		'description' => tra('Lists files in a directory'),
 		'prefs' => array( 'wikiplugin_lsdir' ),
 		'validate' => 'all',
-		'icon' => 'img/icons/folder_find.png',
+		'icon' => 'pics/icons/folder_find.png',
 		'params' => array(
 			'dir' => array(
 				'required' => true,
