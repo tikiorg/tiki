@@ -26,7 +26,6 @@ Disallow: /lib/
 Disallow: /maps/
 Disallow: /mods/
 Disallow: /modules/
-Disallow: /pics/
 Disallow: /popups/
 Disallow: /styles/
 Disallow: /temp/
