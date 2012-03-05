@@ -98,8 +98,7 @@ function feature_pattern(&$featureNameIndex) // {{{
 		$featureNameIndex = array(2, 7);
 		$tl = '\\$tikilib->get_preference';
 		return "/(\\\${$featureName}\s*(!=|==)=?\s*$q(y|n)[\"'])|($tl\s*\(\s*$q{$featureName}$q\s*(,\s*{$q}n?$q)?\s*\)\s*(==|!=)=?\s*$q(y|n)$q)/";
-	} elseif (($major == 1 && $minor == 10) || $major >= 2)
-	{
+	} elseif (($major == 1 && $minor == 10) || $major >= 2) {
 		$featureNameIndex = 1;
 		return "/\\\$prefs\s*\[$q(\w+)$q\]\s*(!=|==)=?\s*$q(y|n)$q/";
 	}
@@ -306,11 +305,13 @@ function perform_permission_check(&$file) // {{{
 
 	preg_match_all($permission_pattern, get_content($file['path']), $parts);
 
-	$permissions = array_unique(array_merge(
-		access_check_call($file['path'], 'check_permission'),
-		permission_check_accessors($file['path']),
-		$parts[$index]
-	));
+	$permissions = array_unique(
+					array_merge(
+									access_check_call($file['path'], 'check_permission'),
+									permission_check_accessors($file['path']),
+									$parts[$index]
+					)
+	);
 
 	$file['permissions'] = $permissions;
 } // }}}
@@ -497,7 +498,7 @@ foreach ($files as $key=>$dummy) {
 				if ($file['unsafeextract']) 
 					$unsafe[] = $file;
 
-					break;
+						break;
 		case 'public':
 		case 'include':
 		case 'script':
@@ -513,7 +514,7 @@ foreach ($files as $key=>$dummy) {
 				if (! $file['noweb'] && ! $file['includeonly'] && ! count($file['features']) && ! count($file['permissions'])) 
 					$unsafe[] = $file;
 
-					break;
+						break;
 	}
 }
 
@@ -524,7 +525,6 @@ function sort_cb($a, $b)
 
 usort($files, 'sort_cb');
 usort($unsafe, 'sort_cb');
-
 
 ?>
 <html>
@@ -560,9 +560,8 @@ To be safe, files must have either an include only check, block web access, have
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($files as $file) if (in_array($file['type'], array(
-			'script', 'module', 'include', 'public', 'lib', '3rdparty', 'wikiplugin'
-		))): ?>
+		<?php foreach ($files as $file) 
+			if (in_array($file['type'], array('script', 'module', 'include', 'public', 'lib', '3rdparty', 'wikiplugin'))): ?>
 		<tr>
 			<td><a href="<?php echo htmlentities(substr($file['path'], 2)) ?>"><?php echo htmlentities($file['path']) ?></a></td>
 			<td><?php if (isset($file['includeonly']) && $file['includeonly']) echo 'X' ?></td>
@@ -585,7 +584,7 @@ To be safe, files must have either an include only check, block web access, have
 </table>
 
 	<?php 
-		foreach($features as $featureKey => $featureValue) {
+		foreach ($features as $featureKey => $featureValue) {
 			print "$featureKey :\n";
 			foreach ($featureValue as $file) {
 				print "<li>$file</li>";

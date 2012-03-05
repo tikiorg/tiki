@@ -37,7 +37,7 @@ function md5_check_dir($dir, &$result) // save all files in $result
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			if ($e != '..' && $e != '.' && $e != 'CVS' && $entry != './templates_c') { // do not descend and no CVS files
-				md5_check_dir($entry,$result);
+				md5_check_dir($entry, $result);
 			}
 		} else {
 			if (substr($e, -4, 4) == ".php" && $entry != './tiki-create_md5.php' && $entry != './db/local.php') {
@@ -59,7 +59,7 @@ md5_check_dir($chkdir, $tikimd5);
 if (isset($_REQUEST['secdb']) && $_REQUEST['secdb']='fs') {
 	$s = serialize($tikimd5);
 
-	$fp = fopen('lib/admin/secdb.php.inc','wb');
+	$fp = fopen('lib/admin/secdb.php.inc', 'wb');
 	fwrite($fp, "<?php\n");
 	fwrite($fp, "\$tikimd5=unserialize('");
 	fwrite($fp, $s);

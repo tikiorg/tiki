@@ -47,12 +47,12 @@ function replace_with_self_links($original, $template_base)
 	$replacements = array();
 
 	$count_r = count($phplinks[0]);
-	for($j = 0; $j < $count_r; $j++) {
+	for ($j = 0; $j < $count_r; $j++) {
 		$ahref = $phplinks[0][$j];
 		preg_match_all('/([^=\s]*?)="([^"]*?)"/i', $ahref, $attrs);
 		
 		$str = '{self_link ';
-		for($i = 0, $icount_attrs = count($attrs[1]); $i < $icount_attrs; $i++) {
+		for ($i = 0, $icount_attrs = count($attrs[1]); $i < $icount_attrs; $i++) {
 			
 			if (strtolower($attrs[1][$i]) == 'href') {
 				$query = parse_url(urldecode(str_replace('&amp;', '&', $attrs[2][$i])));
@@ -60,7 +60,7 @@ function replace_with_self_links($original, $template_base)
 					$str .= ' _script="' . $query['path'] . '" ';
 				}
 				$vars = explode('&', $query['query']);
-				foreach($vars as &$var) {
+				foreach ($vars as &$var) {
 					$ar = explode('=', $var);
 					$var = $ar[0] . '=' . process_value($ar[1]);
 				}
@@ -86,8 +86,11 @@ function process_value ($var)
 		$q = '"';
 	}
 	// comment out if's inside attributes for manual processing
-	$var = preg_replace(array('/\{if\s([^\}]*)\}/i', '/\{else\}/i', '/\{\/if\}/i', '/\{elseif\s([^\}]*)\}/i'),
-						array('{*if $1*}',           '{*else*}',    '{*/if*}',     '/{*elseif $1*}/'), $var);
+	$var = preg_replace(
+					array('/\{if\s([^\}]*)\}/i', '/\{else\}/i', '/\{\/if\}/i', '/\{elseif\s([^\}]*)\}/i'),
+					array('{*if $1*}',           '{*else*}',    '{*/if*}',     '/{*elseif $1*}/'), 
+					$var
+	);
 	$var = "$q" . $var . "$q";
 	return $var;
 }
@@ -101,7 +104,7 @@ if (!empty($checked)) {
  $fp = opendir('templates/');
 
 $tpl_sel = '<select name=\'tpl\' id=\'tpl\' onclick=\'this.form.submit();\'><option>Select tpl</option>';
-while(false !== ($f = readdir($fp))) {
+while (false !== ($f = readdir($fp))) {
 	preg_match('/^(.*)\.tpl$/', $f, $m);
 	if (count($m) > 0) {
 		$tpl_sel .= '<option value=\'' . $m[1] . '\'';
@@ -112,11 +115,15 @@ while(false !== ($f = readdir($fp))) {
 $tpl_sel .= '</select>';
 
 // cheating - lazy ;)
-$form = str_replace("\n", '', "<form action='#'>
+$form = str_replace(
+				"\n", 
+				'', 
+				"<form action='#'>
 <label for='toggle'>" . (empty($_REQUEST['toggle']) ? 'Show replacements' : "Showing $count_r replacements") . ":</label>
 <input type='checkbox' id='toggle' name='toggle' onclick='this.form.submit();'$checked />
 $tpl_sel
-</form>");
+</form>"
+);
 
 $headerlib->add_jq_onready(<<<JS
 \$('#page-bar, .navbar, .titletips, h2').hide();

@@ -139,9 +139,10 @@ if (! $options['no-changelog-update'] && important_step("Update '" . CHANGELOG_F
 $nbCommiters = 0;
 if (! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS_FILENAME . "' file (using final version number '$version')")) {
 	if ($ucf = update_copyright_file($mainversion . '.0')) {
-		info("\r>> Copyrights updated: "
-			. ($ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), ")
-			. ($ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)")
+		info(
+						"\r>> Copyrights updated: "
+						. ($ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), ")
+						. ($ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)")
 		);
 		important_step("Commit new " . COPYRIGHTS_FILENAME, true, "[REL] Update " . COPYRIGHTS_FILENAME . " for $secdbVersion");
 	} else error('Copyrights update failed.');
@@ -244,11 +245,12 @@ function md5_check_dir($root, $dir, $version, &$queries)
 					&& (! function_exists('mysql_real_escape_string') || ! ($file = @mysql_real_escape_string($file)))
 				) {
 					global $phpCommand, $phpCommandArguments;
-					error("SecDB step failed because some filenames need escaping but no MySQL connection has been found."
-						. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
-						. "\n\n\t" . $phpCommand
-						. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
-						. $phpCommandArguments . "\n"
+					error(
+									"SecDB step failed because some filenames need escaping but no MySQL connection has been found."
+									. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
+									. "\n\n\t" . $phpCommand
+									. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
+									. $phpCommandArguments . "\n"
 					);
 				}
 
@@ -266,9 +268,9 @@ function build_packages($releaseVersion, $svnRelativePath)
 
 	$script = TOOLS . '/tikirelease.sh';
 	if ($options['debug-packaging']) {
-	   $debugflag = '-x';
+		$debugflag = '-x';
 	} else {
-	   $debugflag = '';
+		$debugflag = '';
 	}
 	$cmd = "/bin/sh ".$debugflag." ".$script." ".$releaseVersion." ".$svnRelativePath;
 	info("Running $cmd:\n"); 
@@ -359,7 +361,7 @@ function check_smarty_syntax2(&$error_msg)
 	for ($i = 0 ; $i < $nbEntries ; $i++) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
-//		try {
+	//		try {
 		if (strpos($entries[$i], 'tiki-mods.tpl') === false) {
 			ob_start();
 			$template_file = substr($entries[$i], $templates_dir_length + 1);
@@ -496,10 +498,14 @@ function get_options()
 				$options[$opt] = true;
 			} elseif (substr($arg, 2, 11) == 'http-proxy=') {
 				if (($proxy = substr($arg, 13)) != '') {
-					$options[substr($arg, 2, 10)] = stream_context_create(array('http' => array(
-						'proxy' => 'tcp://' . $proxy,
-						'request_fulluri' => true
-					)));
+					$options[substr($arg, 2, 10)] = stream_context_create(
+									array(
+										'http' => array(
+											'proxy' => 'tcp://' . $proxy,
+											'request_fulluri' => true
+										)
+									)
+					);
 				} else $options[substr($arg, 2, 10)] = true;
 			} elseif (substr($arg, 2, 15) == 'svn-mirror-uri=') {
 				if (($uri = substr($arg, 17)) != '') {
@@ -839,7 +845,7 @@ function get_contributors_sf_data(&$contributors)
 
 	if (!empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches)) {
 		$usersInfo = array();
-		if (preg_match_all('/<tr[^>]*>'.str_repeat('\s*<td[^>]*>(.*)<\/td>\s*',4).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
+		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 4).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
 			foreach ($usersInfo as $k => $userInfo) {
 				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
 				$user = strtolower($userInfo['2']);

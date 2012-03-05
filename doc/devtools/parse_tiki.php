@@ -57,14 +57,14 @@ function collect($dir)
 	}
 }
 
-function echoline($fd, $fx, $outstring, $style='', $mod='', $br=true)
+function echoline($fd, $fx, $outstring, $style = '', $mod = '', $br = true)
 {
 	if ($br) {
 		$br = "\n";
 	} else {
 		$br = '';
 	}
-	fwrite ($fd, $outstring . $br);
+	fwrite($fd, $outstring . $br);
 	if ($mod == 'd') {
 		$outstring = date('D M d H:m:s Y', trim($outstring));
 	}
@@ -81,7 +81,7 @@ function echoline($fd, $fx, $outstring, $style='', $mod='', $br=true)
 	} else {
 		$htmlstring = htmlspecialchars($outstring);
 	}
-	fwrite ($fx, $htmlstring.$br);
+	fwrite($fx, $htmlstring.$br);
 }
 $display = 'none';
 if (isset($_REQUEST['all'])) $display = 'block';
@@ -110,51 +110,61 @@ pre { padding : 10px; border: 1px solid #666666; background-color: #efefef; }
 if (isset($_POST['action'])) {
 	$files = $dirs = array();
 	collect('.');
-	@unlink ($logfile);
+	@unlink($logfile);
 	$fw = fopen($logfile, 'w');
 	$fx = fopen($logfilehtml, 'w');
+
 	foreach ($dirs as $dir=>$params) {
 		$dirname = basename($dir);
 		$path = dirname($dir);
 		echoline($fw, $fx, $dir, 'dir');
 		echoline($fw, $fx, '');
+
 		if (isset($dirs["$dir"]['FILES'])) {
 			foreach ($dirs["$dir"]['FILES'] as $file=>$params) {
-				$fp = fopen ($file, "r");
-				$data = fread ($fp, filesize ($file));
-				fclose ($fp);
+				$fp = fopen($file, "r");
+				$data = fread($fp, filesize($file));
+				fclose($fp);
 				$requests = array();
 				$urls = array();
+
 				if (preg_match("/\.(tpl|ph(p|tml))$/", $file)) {
 					if (preg_match("/\.ph(p|tml)$/", $file)) {	
 						echoline($fw, $fx, $file, "file php");
-						$data = preg_replace ("/(?s)\/\*.*?\*\//", "", $data);  // C comments
-						$data = preg_replace ("/(?m)^\s*\/\/.*\$/", "", $data); // C++ comments
-						$data = preg_replace ("/(?m)^\s*\#.*\$/", "", $data); // shell comments
+						$data = preg_replace("/(?s)\/\*.*?\*\//", '', $data); // C comments
+						$data = preg_replace("/(?m)^\s*\/\/.*\$/", '', $data); // C++ comments
+						$data = preg_replace("/(?m)^\s*\#.*\$/", '', $data); // shell comments
 						$data = preg_replace('/(\r|\n)/', '', $data); // all one line
 						preg_match_all('/\$_(REQUEST|POST|GET|COOKIE|SESSION)\[([^\]]*)\]/', $data, $requests); // requests uses
 						$max = count($requests[0]);
 						for ($i=0; $i<$max; $i++) {
 							echoline($fw, $fx, $requests[1][$i] . " = " . $requests[2][$i], 'sub var'); 
 						}
-					} elseif (preg_match ("/\.tpl$/", $file)) {
-						echoline($fw,$fx,$file,'file smarty');
+					} elseif (preg_match("/\.tpl$/", $file)) {
+						echoline($fw, $fx, $file, 'file smarty');
 						$data = preg_replace('/(?s)\{\*.*?\*\}/', '', $data); // Smarty comment 
 						$data = preg_replace('/(\r|\n)/', '', $data); // all one line 
 					}
+
 					preg_match_all('/<(a[^>]*)>[^<]*<\/a>/im', $data, $urls); // href links
+
 					foreach ($urls[1] as $u) {
 						echoline($fw, $fx, $u, 'sub url'); 
 					}
+
 					preg_match_all('/<(form[^>]*)>/', $data, $forms); // form uses
+
 					foreach ($forms[1] as $f) {
-						echoline($fw, $fx, $f,'sub action'); 
+						echoline($fw, $fx, $f, 'sub action'); 
 					}
+
 					preg_match_all('/<((input|textarea|select)[^>]*)>/', $data, $elements); // form elements uses
 					$max = count($elements[0]);
+
 					for ($i = 0; $i < $max; $i++) {
 						echoline($fw, $fx, $elements[1][$i], 'sub form'); 
 					}
+
 					echoline($fw, $fx, trim($params['atime']), 'sub atime', 'd');
 					echoline($fw, $fx, trim($params['mtime']), 'sub mtime', 'd');
 					echoline($fw, $fx, trim($params['ctime']), 'sub ctime', 'd');
@@ -162,7 +172,7 @@ if (isset($_POST['action'])) {
 					echoline($fw, $fx, trim($params['size']), 'sub size');
 					echoline($fw, $fx, trim($params['rev']), 'sub rev');
 					echoline($fw, $fx, substr(trim($params['tag']), 1), 'sub tag');
-				} elseif (preg_match ("/\.(gif|jpg|png)$/i", $file)) {
+				} elseif (preg_match('/\.(gif|jpg|png)$/i', $file)) {
 					echoline($fw, $fx, $file, 'file image');
 				} else {
 					echoline($fw, $fx, $file, 'file other');
@@ -171,7 +181,7 @@ if (isset($_POST['action'])) {
 				flush();
 			}
 		}
-		echoline($fw, $fx, 'end of box','eob');
+		echoline($fw, $fx, 'end of box', 'eob');
 	}
 	fclose($fw);
 	fclose($fx);

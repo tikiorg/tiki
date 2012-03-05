@@ -201,7 +201,7 @@ function branch($source, $branch, $revision)
 
 	$file = escapeshellarg("$branch/tiki-index.php");
 	$source = escapeshellarg($source);
-	$branch = escapeshellarg($branch );
+	$branch = escapeshellarg($branch);
 	$message = escapeshellarg("[BRANCH] Creation, $short 0 to $revision");
 	`svn copy $source $branch -m $message`;
 
