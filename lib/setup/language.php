@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 // Indicates whether a locale identifier is valid
 // $localeIdentifier: A locale identifier, such as "en"

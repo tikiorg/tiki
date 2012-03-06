@@ -6,16 +6,13 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 // OpenID support
-if ( isset( $_SESSION['openid_userlist'] ) && isset( $_SESSION['openid_url'] ) )
-{
-	$smarty->assign( 'openid_url', $_SESSION['openid_url'] );
-	$smarty->assign( 'openid_userlist', $_SESSION['openid_userlist'] );
-}
-else
-{
-	$smarty->assign( 'openid_url', '' );
-	$smarty->assign( 'openid_userlist', array() );
+if ( isset($_SESSION['openid_userlist']) && isset($_SESSION['openid_url']) ) {
+	$smarty->assign('openid_url', $_SESSION['openid_url']);
+	$smarty->assign('openid_userlist', $_SESSION['openid_userlist']);
+} else {
+	$smarty->assign('openid_url', '');
+	$smarty->assign('openid_userlist', array());
 }

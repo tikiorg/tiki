@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
@@ -21,7 +21,8 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 			$uagent_info->DetectAndroid() ||
 			$uagent_info->DetectBlackBerry() ||
 			$uagent_info->DetectOperaMobile() ||
-			$uagent_info->DetectPalmWebOS()) {		// supported by jquery.mobile
+			$uagent_info->DetectPalmWebOS()
+	) {		// supported by jquery.mobile
 
 		$prefs['mobile_mode'] = 'y';
 
@@ -49,7 +50,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		if (count($prefs['mobile_perspectives']) > 0) {
 			global $perspectivelib; require_once 'lib/perspectivelib.php';
 
-			if (!in_array($perspectivelib->get_current_perspective( $prefs ), $prefs['mobile_perspectives'])) {
+			if (!in_array($perspectivelib->get_current_perspective($prefs), $prefs['mobile_perspectives'])) {
 				$_SESSION['current_perspective'] = $prefs['mobile_perspectives'][0];
 			}
 		}

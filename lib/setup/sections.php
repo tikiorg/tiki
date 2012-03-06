@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 $sections = array(
 	// tra('Wiki Page') -- tra() comments are there for get_strings.php
@@ -174,7 +174,9 @@ $sections = array(
 	),
 );
 
-if ( ! isset($section) ) $section = '';
+if ( ! isset($section) ) 
+	$section = '';
+
 $sections_enabled = array();
 
 foreach ( $sections as $sec => $dat ) {
@@ -183,17 +185,21 @@ foreach ( $sections as $sec => $dat ) {
 		$sections_enabled[$sec] = $dat;
 	}
 }
+
 ksort($sections_enabled);
 $smarty->assign_by_ref('sections_enabled', $sections_enabled);
-if ( ! empty($section) ) $smarty->assign('section', $section);
+if ( ! empty($section) ) 
+	$smarty->assign('section', $section);
+
 if ( ! empty($section_class) ) {
 	$smarty->assign('section_class', $section_class);
 } elseif ( ! empty($section) ) {
-	$section_class = 'tiki_'.str_replace(' ','_',$section);
+	$section_class = 'tiki_' . str_replace(' ', '_', $section);
 	$smarty->assign('section_class', $section_class);
 }
 
-function current_object() {
+function current_object()
+{
 	global $section, $sections, $cat_type, $cat_objid, $postId;
 
 	if ($section == 'blogs' && !empty($postId)) { // blog post check the category on the blog - but freetags are on blog post
@@ -202,21 +208,21 @@ function current_object() {
 			'object' => $postId,
 		);
 	}
-		
+
 	if ( $cat_type && $cat_objid ) {
 		return array(
 			'type' => $cat_type,
 			'object' => $cat_objid,
 		);
 	}
-	
+
 	if ( isset( $sections[$section] ) ) {
 		$info = $sections[$section];
 
-		if ( isset( $info['itemkey'], $info['itemObjectType'], $_REQUEST[ $info['itemkey'] ] ) ) {
-			$type = isset( $_REQUEST[ $info['key'] ] ) ? $info['key'] : '';
+		if ( isset($info['itemkey'], $info['itemObjectType'], $_REQUEST[ $info['itemkey'] ]) ) {
+			$type = isset($_REQUEST[ $info['key'] ]) ? $info['key'] : '';
 			return array(
-				'type' => sprintf( $info['itemObjectType'], $type ),
+				'type' => sprintf($info['itemObjectType'], $type),
 				'object' => $_REQUEST[ $info['itemkey'] ],
 			);
 		} elseif ( isset( $info['key'], $info['objectType'], $_REQUEST[ $info['key'] ] ) ) {

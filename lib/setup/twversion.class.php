@@ -18,7 +18,8 @@ class TWVersion
 	var $star;			// Star being used for this version tree
 	var $svn;			// Is this a Subversion version or a package?
 
-	function TWVersion() {
+	function TWVersion()
+	{
 		// Set the development branch.  Valid are:
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
@@ -43,11 +44,12 @@ class TWVersion
 
 	function getBaseVersion()
 	{
-		return preg_replace( "/^(\d+\.\d+).*$/", '$1', $this->version );
+		return preg_replace("/^(\d+\.\d+).*$/", '$1', $this->version);
 	}
 
 	// Returns an array of all used Tiki stars.
-	function tikiStars() {
+	function tikiStars()
+	{
 		return array(
 				1=>'Spica',			// 0.9
 				2=>'Shaula',		// 0.95
@@ -72,7 +74,8 @@ class TWVersion
 	}
 
 	// Returns an array of all valid versions of Tikiwiki.
-	function tikiVersions() {
+	function tikiVersions()
+	{
 		// These are all the valid release versions of Tiki.
 		// Newest version goes at the end.
 		// Release Managers should update this array before
@@ -163,7 +166,8 @@ class TWVersion
 	}
 
 	// Gets the latest star used by Tiki.
-	function getStar() {
+	function getStar()
+	{
 		$stars = $this->tikiStars();
 		$star = $stars[count($stars)];
 
@@ -171,13 +175,15 @@ class TWVersion
 	}
 
 	// Determines the currently-running version of Tikiwiki.
-	function getVersion() {
+	function getVersion()
+	{
 		return $this->version;
 	}
 
 	// Pulls the list of releases in the current branch of Tikiwiki from
 	// a central site.
-	private function pollVersion() {
+	private function pollVersion()
+	{
 		static $done = false;
 		if ($done) {
 			return;
@@ -186,9 +192,11 @@ class TWVersion
 		$upgrade = 0;
 		$major = 0;
 		$velements = explode('.', $this->getBaseVersion());
-		$body = $tikilib->httprequest("tiki.org/" . $this->branch . '.version'); // .version contains an ordered list of release numbers, one per line. All minor releases from a same major release are grouped.
+		// .version contains an ordered list of release numbers, one per line. All minor releases from a same major release are grouped.
+		$body = $tikilib->httprequest('tiki.org/' . $this->branch . '.version');
 		$lines = explode("\n", $body);
 		$this->isLatestMajorVersion = true;
+
 		foreach ($lines as $line) {
 			$relements = explode('.', $line);
 			if (isset($relements[0]) && is_numeric($relements[0])) { // Avoid issues with empty lines

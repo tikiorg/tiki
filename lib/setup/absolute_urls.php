@@ -6,10 +6,10 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
+$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 // check if the current port is not 80 or 443
-if (isset($_SERVER["SERVER_PORT"])) {
+if (isset($_SERVER['SERVER_PORT'])) {
 	if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
 		if (( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )) {
 			$prefs['https_port'] = (int) $_SERVER['SERVER_PORT'];
@@ -18,8 +18,12 @@ if (isset($_SERVER["SERVER_PORT"])) {
 		}
 	}
 }
-if ( $prefs['https_port'] == 443 ) $prefs['https_port'] = '';
-if ( $prefs['http_port'] == 80 ) $prefs['http_port'] = '';
+
+if ( $prefs['https_port'] == 443 )
+	$prefs['https_port'] = '';
+
+if ( $prefs['http_port'] == 80 ) 
+	$prefs['http_port'] = '';
 
 // Detect if we are in HTTPS / SSL mode.
 //
@@ -49,7 +53,7 @@ $base_url_https = 'https://'.$url_host.(($prefs['https_port']!='')?':'.$prefs['h
 if (!empty($_SERVER['SCRIPT_NAME'])) {
 	$base_uri = $base_host . $_SERVER['SCRIPT_NAME'];
 	if (!empty($_SERVER['QUERY_STRING'])) {
-		$base_uri .= '?' . str_replace('?', '&',$_SERVER['QUERY_STRING']);
+		$base_uri .= '?' . str_replace('?', '&', $_SERVER['QUERY_STRING']);
 	}
 } else if (!empty($_SERVER['REQUEST_URI'])) {
 	$base_uri = $base_host . $_SERVER['REQUEST_URI'];
@@ -66,7 +70,12 @@ if (!empty($base_uri) && is_object($smarty)) {
 
 if ( isset($_REQUEST['stay_in_ssl_mode_present']) || isset($_REQUEST['stay_in_ssl_mode']) ) {
 	// We stay in HTTPS / SSL mode if 'stay_in_ssl_mode' has an 'y' or 'on' value
-	$stay_in_ssl_mode = ( (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'y') || (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on' ) ) ? 'y' : 'n';
+	$stay_in_ssl_mode = ( 
+			(isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'y') 
+			|| (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on' ) 
+			) 
+			? 'y' 
+			: 'n';
 } else {
 	// Set default value of 'stay_in_ssl_mode' to the current mode state
 	$stay_in_ssl_mode = $https_mode ? 'y' : 'n';
