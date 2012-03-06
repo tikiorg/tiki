@@ -16,10 +16,10 @@ require_once('lib/perspective/binderlib.php');
 global $areaslib;
 
 	// updating table tiki_areas	
-	if(isset($_REQUEST['update_areas'])){
+	if (isset($_REQUEST['update_areas'])){
 		check_ticket('admin-inc-areas');
 		$pass = $areaslib->update_areas();
-		if($pass!==true) $smarty->assign_by_ref('error', $pass);
+		if ($pass!==true) $smarty->assign_by_ref('error', $pass);
 	}
 
 // building overview
@@ -27,17 +27,17 @@ global $areaslib;
 	$conditions = array();
 
 	// if count zero, table probably not up-to-date
-	if($areas_table->fetchCount($conditions)==0) $areaslib->update_areas();
+	if ($areas_table->fetchCount($conditions)==0) $areaslib->update_areas();
 
-	$result = $areas_table->fetchAll(array('categId', 'perspectives'),$conditions);
+	$result = $areas_table->fetchAll(array('categId', 'perspectives'), $conditions);
 	$areas = array();
 	$perspectives = array();
-	foreach($result as $item){
+	foreach ($result as $item){
 		$area = array();
 		$area['categId'] = $item['categId'];
 		$area['perspectives'] = array();
-		foreach(unserialize($item['perspectives']) as $pers){
-			if(!array_key_exists($pers,$perspectives)) $perspectives[$pers] = $perspectivelib->get_perspective($pers);
+		foreach (unserialize($item['perspectives']) as $pers){
+			if (!array_key_exists($pers, $perspectives)) $perspectives[$pers] = $perspectivelib->get_perspective($pers);
 			$area['perspectives'][] = $perspectives[$pers];
 		}	
 		$area['categName'] = $areaslib->get_category_name($item['categId']);	

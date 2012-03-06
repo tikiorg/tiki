@@ -10,7 +10,7 @@ class Math_Formula_Function_Add extends Math_Formula_Function
 	function evaluate( $element ) {
 		$out = 0;
 
-		foreach( $element as $child ) {
+		foreach ( $element as $child ) {
 			$out += $this->evaluateChild( $child );
 		}
 

@@ -15,7 +15,7 @@ if (!isset($_REQUEST['known_hosts'])) $_REQUEST['known_hosts'] = array();
 if (isset($_REQUEST['del'])) {
 	check_ticket('admin-inc-intertiki');
 	$_REQUEST["intertikiclient"] = true;
-	foreach($prefs['interlist'] as $k => $i) {
+	foreach ($prefs['interlist'] as $k => $i) {
 		if ($k != $_REQUEST['del']) {
 			$_REQUEST['interlist'][$k] = $i;
 		}
@@ -23,7 +23,7 @@ if (isset($_REQUEST['del'])) {
 }
 if (isset($_REQUEST['delk'])) {
 	check_ticket('admin-inc-intertiki');
-	foreach($prefs['known_hosts'] as $k => $i) {
+	foreach ($prefs['known_hosts'] as $k => $i) {
 		if ($k != $_REQUEST['delk']) {
 			$_REQUEST['known_hosts'][$k] = $i;
 		}
@@ -55,7 +55,7 @@ if (isset($_REQUEST["intertikiserver"])) {
 		$_REQUEST['known_hosts']+= $newhost;
 	}
 	if (!empty($_REQUEST['known_hosts'])) {
-		foreach($_REQUEST['known_hosts'] as $k => $v) {
+		foreach ($_REQUEST['known_hosts'] as $k => $v) {
 			if (empty($_REQUEST['known_hosts'][$k]['name']) && empty($_REQUEST['known_hosts'][$k]['key']) && empty($_REQUEST['known_hosts'][$k]['ip']) && empty($_REQUEST['known_hosts'][$k]['contact'])) unset($_REQUEST['known_hosts'][$k]);
 		}
 	}

@@ -66,7 +66,7 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 				$mail->setHeader( 'Reply-To', '<' . $prefs['sender_email'] . '>' );
 				$mail->setSubject( $detailtoken['email'] . ' ' . tra(' has accessed your temporary shared content') );
 				
-				foreach($nots as $i=>$not) {
+				foreach ($nots as $i=>$not) {
 					$notificationPage = $not['url'];
 
 				 	// Delete token from url

@@ -209,7 +209,7 @@ function compare_import_versions($a1, $a2)
 if (isset($_REQUEST['cancel_edit'])) {
 	$tikilib->semaphore_unset($page, $_SESSION[$editLockPageId]);
 	if (!empty($_REQUEST['returnto'])) {	
-		if(isURL($_REQUEST['returnto'])) {
+		if (isURL($_REQUEST['returnto'])) {
 			$url = "location:".$_REQUEST['returnto'];
 		} else {
 			// came from wikiplugin_include.php edit button
@@ -1110,7 +1110,7 @@ if (
 	}
 
 	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
-		if(isURL($_REQUEST['returnto'])) {
+		if (isURL($_REQUEST['returnto'])) {
 			$url = $_REQUEST['returnto'];
 		} else {
 			$url = $wikilib->sefurl($_REQUEST['returnto']);

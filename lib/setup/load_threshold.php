@@ -9,7 +9,7 @@
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 // get average server load in the last minute
-if(function_exists('sys_getloadavg')) {
+if (function_exists('sys_getloadavg')) {
 	$load = sys_getloadavg();
 	$server_load = $load[0];
 

@@ -30,7 +30,7 @@ Class Feed_Remote_ForwardLink_Contribution
 		$entry = array();
 		$lastModif = 0;
 		
-		foreach($items as $item) {
+		foreach ($items as $item) {
 			if (empty($item->forwardLink->href)) continue;
 			$item->forwardLink->href = str_replace(' ', '+', $item->forwardLink->href);
 			

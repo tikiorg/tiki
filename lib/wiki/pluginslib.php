@@ -78,7 +78,7 @@ class PluginsLib extends TikiLib
 	    foreach ($defaults as $arg => $default_val) {
 	        if (isset($params[$arg])) {
 	            $args[$arg] = $params[$arg];
-	        } elseif(isset($_REQUEST[$arg])) {
+	        } elseif (isset($_REQUEST[$arg])) {
 	            $args[$arg] = $_REQUEST[$arg];
 	        } elseif (isset($_REQUEST['page'])) {
 	            // maybe this kind of transformation can be grouped on a external function
@@ -90,7 +90,7 @@ class PluginsLib extends TikiLib
 	        if (in_array($arg, $this->expanded_params)) {
 	            if (isset($args[$arg]) && $args[$arg]) {
 	            $args[$arg] = explode($this->separator, $args[$arg]);
-	            foreach($args[$arg] as $id=>$value) {
+	            foreach ($args[$arg] as $id=>$value) {
 	                $args[$arg][$id]=trim($value);
 	            }
 	            } else {
@@ -192,7 +192,7 @@ class PluginsLibUtil
 	        // Header for info
 	        $sOutput  .= '<table class="normal">' . "\n\t" . '<tr>' . "\n\t\t" . '<td class="heading"' . $sStyle. '>' 
 	        	. tra($aPrincipalField['name']) . '</td>';
-	        foreach($aInfo as $iInfo => $sHeader) {
+	        foreach ($aInfo as $iInfo => $sHeader) {
 	        	if ($sHeader == 'paraminfo') {
 	        		$sHeader = tra('Parameter Info');
 	        	}
@@ -202,7 +202,7 @@ class PluginsLibUtil
 	    }
 	    $iCounter=1;
 	    //Primary row
-	    foreach($aData as $aPage) {
+	    foreach ($aData as $aPage) {
 	    	$rowspan = '';
 	    	if ($aPrincipalField['field'] == 'plugin') {
 	    		$openlink = '';
@@ -231,7 +231,7 @@ class PluginsLibUtil
 	            			. $openlink . $fieldval . $closelink . '</td>';
 	            $colcounter = 2;
 	            //Subsequent columns
-	            foreach($aInfo as $sInfo) {
+	            foreach ($aInfo as $sInfo) {
 	                if (isset($aPage[$sInfo])) {
 	                	if (is_array($aPage[$sInfo])) {
 	                		$rowspan2 = '';
@@ -303,7 +303,7 @@ class PluginsLibUtil
 	    $sOutput = '<table class="normal"><tr><td class="heading">' . tra($aPrincipalField['name']) . '</td></tr><tr><td class="even">';
 	    $iCounter=0;		
 	    // create a comma separated list of entries
-	    foreach($aData as $aPage) {
+	    foreach ($aData as $aPage) {
 	      if ($iCounter>0) $sOutput .= ', ';
 	      $sOutput  .= '((' . $aPage[$aPrincipalField['field']] . '))';
 	      $iCounter++;

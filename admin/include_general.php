@@ -13,7 +13,7 @@ if (isset($_REQUEST['new_prefs'])) {
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$in = array();
 	$out = array();
-	foreach($listgroups['data'] as $gr) {
+	foreach ($listgroups['data'] as $gr) {
 		if ($gr['groupName'] == 'Anonymous') continue;
 		if ($gr['registrationChoice'] == 'y' && isset($_REQUEST['registration_choices']) && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
 		$out[] = $gr['groupName'];
@@ -24,13 +24,13 @@ if (isset($_REQUEST['new_prefs'])) {
 	$pref_toggles = array(
 		'feature_wiki_1like_redirection',
 	);
-	foreach($pref_toggles as $toggle) {
+	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
 	$pref_byref_values = array(
 		'server_timezone',
 	);
-	foreach($pref_byref_values as $britem) {
+	foreach ($pref_byref_values as $britem) {
 		byref_set_value($britem);
 	}
 	$tikilib->set_preference('display_timezone', $tikilib->get_preference('server_timezone'));

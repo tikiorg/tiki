@@ -104,8 +104,8 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		}
 
 		if (isset($this->tags)) {
-			foreach($this->tags as $v) {
-				foreach($v as $tag) {
+			foreach ($this->tags as $v) {
+				foreach ($v as $tag) {
 					if ($tag != 0) {
 						return false;
 					}
@@ -121,7 +121,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 
 		switch($type) {
 			case 'context':
-				foreach($lines as $line) {
+				foreach ($lines as $line) {
 					if ($context == 0 and $this->_can_break($line)) {
 						$context = 1;
 						$this->n++;
@@ -145,7 +145,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 				break;
 			case 'change-added':
 			case 'added':
-				foreach($lines as $line) {
+				foreach ($lines as $line) {
 					if ($line != '') {
 						$this->_count_tags($line, 'final');
 						$this->final[$this->n] .= $this->_insert_tag($line, 'diffadded', $this->rspan);
@@ -155,7 +155,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 				break;
 			case 'deleted':
 			case 'change-deleted':
-				foreach($lines as $line) {
+				foreach ($lines as $line) {
 					if ($line != '') {
 						$this->_count_tags($line, 'original');
 						$this->original[$this->n] .= $this->_insert_tag($line, 'diffdeleted', $this->lspan);

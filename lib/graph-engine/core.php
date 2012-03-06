@@ -348,7 +348,7 @@ class Graphic // {{{1
 
 		// Calculate size {{{3
 		$item_size = array();
-		foreach( $this->legend as $key => $value )
+		foreach ( $this->legend as $key => $value )
 			$item_size[$key] = $renderer->getTextWidth($value[1], $legend_font);
 
 		$width = 0;
@@ -538,7 +538,7 @@ class Graphic // {{{1
 
 	function _notify( $renderer, $positionData, $series, $index )
 	{
-		foreach( $this->dataHandlers as $handler )
+		foreach ( $this->dataHandlers as $handler )
 			$handler->handle($renderer, $positionData, $series, $index);
 	}
 } // }}}1

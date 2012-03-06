@@ -225,7 +225,7 @@ abstract class TikiDb
 	function in($field, $values, &$bindvars) // {{{
 	{
 		$parts = explode('.', $field);
-		foreach($parts as &$part)
+		foreach ($parts as &$part)
 			$part = '`' . $part . '`';
 		$field = implode('.', $parts);
 		$bindvars = array_merge($bindvars, $values);

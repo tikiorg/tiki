@@ -102,7 +102,7 @@ function wikiplugin_chart($data, $params)
 	$params = array( "sheetId" => $id, "graphic" => $type, "title" => $data );
 	switch( $type ) {
 		case 'PieChartGraphic':
-			if( !isset( $value ) )
+			if ( !isset( $value ) )
 				return "<b>missing value parameter for plugin</b><br />";
 
 			$params['series[value]'] = $value;
@@ -113,7 +113,7 @@ function wikiplugin_chart($data, $params)
 		$params['horizontal'] = isset( $horizontal ) ? $horizontal : 'bottom';
 		$params['vertical'] = isset( $vertical ) ? $vertical : 'left';
 
-		if( !isset( $x ) )
+		if ( !isset( $x ) )
 			return "<b>missing x parameter for plugin</b><br />";
 
 		$params['series[x]'] = $x;
@@ -139,9 +139,9 @@ function wikiplugin_chart($data, $params)
 			
 		$disp = '<img src="' . _wikiplugin_chart_uri($params, 'PNG') . '"/>'; 
 	} elseif ( function_exists('image_jpeg') ) {
-		if( !isset( $width ) )
+		if ( !isset( $width ) )
 			return "<b>missing width parameter for plugin</b><br />";
-		if( !isset( $height ) )
+		if ( !isset( $height ) )
 			return "<b>missing height parameter for plugin</b><br />";
 
 		$params['width'] = $width;
@@ -149,9 +149,9 @@ function wikiplugin_chart($data, $params)
 			
 		$disp = '<img src="' . _wikiplugin_chart_uri($params, 'JPEG') . '"/>'; 
 	}
-	elseif( function_exists('pdf_new') )
+	elseif ( function_exists('pdf_new') )
 		$disp = tra("Chart as PDF");
-	elseif( function_exists('ps_new') )
+	elseif ( function_exists('ps_new') )
 		$disp = tra("Chart as PostScript");
 	else
 		return "<b>no valid renderer for plugin</b><br />";
@@ -175,7 +175,7 @@ function _wikiplugin_chart_uri( $params, $renderer )
 {
 	$params['renderer'] = $renderer;
 	$array = array();
-	foreach( $params as $key => $value )
+	foreach ( $params as $key => $value )
 		$array[] = rawurlencode($key) . '=' . rawurlencode($value);
 	
 	return 'tiki-graph_sheet.php?' . implode('&', $array);

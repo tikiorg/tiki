@@ -66,7 +66,7 @@ function wikiplugin_annotation($data, $params)
 	$annotations = array();
 	foreach ( explode("\n", $data) as $line ) {
 		$line = trim($line);
-		if( empty( $line ) )
+		if ( empty( $line ) )
 			continue;
 
 		if ( preg_match("/^\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*,\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)(.*)\[(.*)\]$/", $line, $parts) ) {
@@ -98,7 +98,7 @@ var nextid = 0;
 
 function getc(cid) // {{{
 {
-	if( containers[cid] == null )
+	if ( containers[cid] == null )
 		containers[cid] = document.getElementById(cid);
 	
 	return containers[cid];
@@ -106,7 +106,7 @@ function getc(cid) // {{{
 
 function gete(cid) // {{{
 {
-	if( editors[cid] == null )
+	if ( editors[cid] == null )
 	{
 		var eid = cid + '-editor';
 		editors[cid] = document.getElementById(eid);
@@ -139,7 +139,7 @@ function getFullOffset( node ) // {{{
 
 function getx( event ) // {{{
 {
-	if( !event.pageX ) {
+	if ( !event.pageX ) {
 		var e = document.documentElement||{}, b = document.body||{};
 		event.pageX = event.clientX + (e.scrollLeft || b.scrollLeft || 0) - (e.clientLeft || 0);
 	}
@@ -149,7 +149,7 @@ function getx( event ) // {{{
 
 function gety( event ) // {{{
 {
-	if( ! event.pageY ) {
+	if ( ! event.pageY ) {
 		var e = document.documentElement||{}, b = document.body||{};
 		event.pageY = event.clientY + (e.scrollTop || b.scrollTop || 0) - (e.clientTop || 0);
 	}
@@ -191,10 +191,10 @@ function activateAnnotation( o, cid ) // {{{
 	a.href="javascript:void(0)";
 	a.onclick = function(e) { beginEdit(e, o, cid); };
 	a.onmouseover = function(e) { highlight(o.id, cid) };
-	a.onmouseout = function(e) { if( ! selected[cid] || selected[cid].obj.id != o.id ) unhighlight(o.id, cid) };
+	a.onmouseout = function(e) { if ( ! selected[cid] || selected[cid].obj.id != o.id ) unhighlight(o.id, cid) };
 	o.obj.onmouseover = function(e) { highlight(o.id, cid) };
-	o.obj.onmouseout = function(e) { if( ! selected[cid] || selected[cid].obj.id != o.id ) unhighlight(o.id, cid) };
-	o.obj.onclick = function(e) { if( !active ) beginEdit(e, o, cid); };
+	o.obj.onmouseout = function(e) { if ( ! selected[cid] || selected[cid].obj.id != o.id ) unhighlight(o.id, cid) };
+	o.obj.onclick = function(e) { if ( !active ) beginEdit(e, o, cid); };
 
 	o.link = a;
 } // }}}
@@ -215,16 +215,16 @@ function createAnnotation( o, cid ) // {{{
 
 function handleClick( event, cid ) // {{{
 {
-	if( selected[cid] )
+	if ( selected[cid] )
 	{
-		if( event.target.id == cid )
+		if ( event.target.id == cid )
 			endEdit( cid, false );
 		return;
 	}
 
-	if( ! active )
+	if ( ! active )
 	{
-		if( !event.pageX )
+		if ( !event.pageX )
 		{
 			x = getx(event);
 			y = gety(event);
@@ -232,10 +232,10 @@ function handleClick( event, cid ) // {{{
 			for( k in annotations )
 			{
 				var o = annotations[k];
-				if( !o )
+				if ( !o )
 					continue;
 
-				if( x>o.x1 && x<o.x2 && y>o.y1 && y<o.y2 ) {
+				if ( x>o.x1 && x<o.x2 && y>o.y1 && y<o.y2 ) {
 					o.obj.onclick(event);
 					return;
 				}
@@ -272,7 +272,7 @@ function handleClick( event, cid ) // {{{
 
 function handleMove( event, cid ) // {{{
 {
-	if( active == null )
+	if ( active == null )
 		return;
 
 	active.y2 = gety(event);
@@ -305,10 +305,10 @@ function beginEdit( event, o, cid ) // {{{
 	var editor = gete(cid);
 
 	var left = event.pageX;
-	if( left + 300 > window.innerWidth )
+	if ( left + 300 > window.innerWidth )
 		left += window.innerWidth - left - 300;
 	var top = event.pageY;
-	if( event.clientY + 120 > window.innerHeight )
+	if ( event.clientY + 120 > window.innerHeight )
 		top += window.innerHeight - event.clientY - 120;
 
 	editor.style.top = top + "px";
@@ -332,7 +332,7 @@ function endEdit( cid, store ) // {{{
 
 	var editor = gete(cid);
 
-	if( store )
+	if ( store )
 	{
 		o.value = editor.fieldLabel.value;
 		o.target = editor.fieldLink.value;
@@ -352,7 +352,7 @@ function handleCancel( e, cid ) // {{{
 {
 	var editor = gete(cid);
 
-	if( e.keyCode == e.DOM_VK_ESCAPE )
+	if ( e.keyCode == e.DOM_VK_ESCAPE )
 		endEdit( cid, false );
 } // }}}
 
@@ -378,9 +378,9 @@ function serializeAnnotations( data, cid ) // {{{
 	for( k in data )
 	{
 		var row = data[k];
-		if( row == null )
+		if ( row == null )
 			continue;
-		if( row.cid != cid )
+		if ( row.cid != cid )
 			continue;
 
 		str += "(" + (row.x1-offset.left) + "," + (row.y1-offset.top) + "),(" + (row.x2-offset.left) + "," + (row.y2-offset.top) + ") ";
@@ -402,7 +402,7 @@ SCRIPT;
 	$labelSave = tra('Save changes to annotations');
 	$message = tra('Image annotations changed.');
 	
-	if( $tiki_p_edit == 'y' )
+	if ( $tiki_p_edit == 'y' )
 		$form = <<<FORM
 <form method="post" action="tiki-wikiplugin_edit.php">
 	<div style="display:none">

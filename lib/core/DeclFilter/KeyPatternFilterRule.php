@@ -16,7 +16,7 @@ class DeclFilter_KeyPatternFilterRule extends DeclFilter_FilterRule
 
 	private function getMatchingPattern( $key )
 	{
-		foreach( $this->rules as $pattern => $filter ) {
+		foreach ( $this->rules as $pattern => $filter ) {
 			if ( preg_match( $pattern, $key ) ) {
 				return $pattern;
 			}

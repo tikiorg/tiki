@@ -19,7 +19,7 @@ $ok = true;
 if (!empty($_REQUEST['custom_save'])) {
 	ask_ticket('admin-inc-i18n');
 	$ok = false;
-	foreach($languages as $l) {
+	foreach ($languages as $l) {
 		if ($l['value'] == $_REQUEST['custom_lang']) {
 			$ok = true;
 			break;

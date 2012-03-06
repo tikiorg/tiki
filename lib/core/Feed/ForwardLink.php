@@ -51,7 +51,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		
 		$feedItems = Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems();
 		$phrases = array();
-		foreach($feedItems as $item) {
+		foreach ($feedItems as $item) {
 			$phrases[] = $thisText = htmlspecialchars($item->forwardlink->text);
 		}
 		
@@ -68,7 +68,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 			}
 		}
 		
-		foreach($feedItems as $i => $item) {
+		foreach ($feedItems as $i => $item) {
 			$thisText = htmlspecialchars($item->forwardlink->text);
 			$thisHref = htmlspecialchars($item->textlink->href);
 			$linkedText = htmlspecialchars($item->textlink->text);
@@ -144,7 +144,7 @@ JQ
 		
 		//print_r($wikiAttributes);
 		$answers = array();
-		foreach($wikiAttributes as $wikiAttribute) {
+		foreach ($wikiAttributes as $wikiAttribute) {
 			$answers[] = array(
 				"question"=> strip_tags($wikiAttribute['Value']),
 				"answer"=> '',

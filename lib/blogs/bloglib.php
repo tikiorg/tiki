@@ -676,7 +676,7 @@ class BlogLib extends TikiDb_Bridge
 
 		$result = Perms::filter( array( 'type' => 'blog' ), 'object', $result, array( 'object' => 'blogId' ), array('read_blog', 'blog_view_ref') );
 
-		foreach( $result as $res ) {
+		foreach ( $result as $res ) {
 			$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
 			$title = $this->getOne($query2, array($res["blogId"]));
 			$res["blogtitle"] = $title;

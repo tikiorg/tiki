@@ -32,7 +32,7 @@ function wikiplugin_trackerif_info()
 	);
 }
 
-function wikiplugin_trackerif($data, $params)
+function wikiplugin_trackerif ($data, $params)
 {
 	global $trklib;
 	$test = null;

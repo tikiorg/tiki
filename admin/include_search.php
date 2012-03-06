@@ -28,7 +28,7 @@ function activated_features() {
 		'trackers',
 		'galleries'
 	);
-	foreach($features as $feature) {
+	foreach ($features as $feature) {
 		switch ($feature) {
 			case 'blogs':
 				if (isset($prefs['feature_blogs']) and $prefs['feature_blogs'] == 'y') {
@@ -139,7 +139,7 @@ if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'
 
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
 	require_once ('lib/search/refresh-functions.php');
-	foreach(activated_features() as $feature) refresh_index($feature);
+	foreach (activated_features() as $feature) refresh_index($feature);
 	$smarty->assign('refresh_index_all_now', $_REQUEST['refresh_index_all_now']);
 }
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_files_index_now']) && $_REQUEST['refresh_files_index_now'] == 'y') {

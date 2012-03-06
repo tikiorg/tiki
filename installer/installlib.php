@@ -90,7 +90,7 @@ class Installer extends TikiDb_Bridge
 			$this->installPatch($patch);
 		}
 
-		foreach( $this->scripts as $script )
+		foreach ( $this->scripts as $script )
 			$this->runScript($script);
 	} // }}}
 

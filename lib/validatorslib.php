@@ -39,7 +39,7 @@ class Validators
 	
 	private function get_all_validators() {
 		$validators = array();
-		foreach( glob( 'lib/validators/validator_*.php' ) as $file ) {
+		foreach ( glob( 'lib/validators/validator_*.php' ) as $file ) {
 			$base = basename( $file );
 			$validator = substr( $base, 10, -4 );
 			$validators[] = $validator;

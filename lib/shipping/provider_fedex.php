@@ -18,7 +18,7 @@ class ShippingProvider_Fedex implements ShippingProvider
 	}
 
 	function getRates( array $from, array $to, array $packages ) {
-		if( ! class_exists( 'SoapClient' ) ) {
+		if ( ! class_exists( 'SoapClient' ) ) {
 			return array();
 		}
 
@@ -43,8 +43,8 @@ class ShippingProvider_Fedex implements ShippingProvider
 	private function extractRates( $options ) {
 		$out = array();
 
-		foreach( $options as $option ) {
-			if( $detail = reset( $option->RatedShipmentDetails ) ) {
+		foreach ( $options as $option ) {
+			if ( $detail = reset( $option->RatedShipmentDetails ) ) {
 				$charge = $detail->ShipmentRateDetail->TotalNetCharge;
 				$out[] = array(
 					'provider' => 'FedEx',

@@ -28,7 +28,7 @@ function get_from_dom($element) {
 	if ($element === NULL) return NULL;
 	$es = $element->getElementsByTagName("*");
 	$a = array();
-	foreach($es as $e) {
+	foreach ($es as $e) {
 		$a[$e->tagName] = $e->nodeValue;
 	}
 	return $a;
@@ -73,18 +73,18 @@ function save_test($urls,$file,$options) {
 	$dom->appendChild($element_test);
 	$opt = $dom->createElement('options');
 	$element_test->appendChild($opt);
-	foreach($options as $o => $v) {
+	foreach ($options as $o => $v) {
 		$opt->appendChild($dom->createElement($o,$v? 'y' : 'n'));
 	}
 
-	foreach($urls as $url) {
+	foreach ($urls as $url) {
 		$u = $dom->createElement('url');
 		$u->setAttribute('src',$url['url']);
 		$u->setAttribute('method',$url['method']);
 		$u->setAttribute('referer',$url['referer']);
 		$get = $dom->createElement('get');
 		if (is_array($url['get'])) {
-			foreach($url['get'] as $var => $value) {
+			foreach ($url['get'] as $var => $value) {
 				$v = $dom->createElement($var,$value);
 				$get->appendChild($v);
 			}
@@ -93,7 +93,7 @@ function save_test($urls,$file,$options) {
 
 		if (is_array($url['post'])) {
 			$post = $dom->createElement('post');
-			foreach($url['post'] as $var => $value) {
+			foreach ($url['post'] as $var => $value) {
 				$v = $dom->createElement($var,$value);
 				$post->appendChild($v);
 			}
@@ -140,9 +140,9 @@ if ($xml == '' or $xml == false) {
 $result = array();
 $urls = $dom->getElementsByTagName('url');
 $options = array();
-foreach($dom->getElementsByTagName('options') as $o) {
+foreach ($dom->getElementsByTagName('options') as $o) {
 	$es = $o->getElementsByTagName("*");
-	foreach($es as $e) {
+	foreach ($es as $e) {
 		$options[$e->tagName] = $e->nodeValue ;
 	}
 }
@@ -162,7 +162,7 @@ if (isset($_REQUEST['action'])) {
 }
 
 $count = 0;
-foreach($urls as $url) {
+foreach ($urls as $url) {
 	if (!(isset($_REQUEST['delete'][$count]) and $_REQUEST['delete'][$count] == 'delete')) {
 		$result[$count] = get_url($url,$options['use_tidy'] == 'y');
 		if ($edit and is_string($_REQUEST['xpath'][$count]) and trim($_REQUEST['xpath'][$count]) != '') {

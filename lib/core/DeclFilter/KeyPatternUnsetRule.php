@@ -16,7 +16,7 @@ class DeclFilter_KeyPatternUnsetRule extends DeclFilter_UnsetRule
 
 	function match( $key )
 	{
-		foreach( $this->keys as $pattern ) {
+		foreach ( $this->keys as $pattern ) {
 			if ( preg_match( $pattern, $key ) ) {
 				return true;
 			}

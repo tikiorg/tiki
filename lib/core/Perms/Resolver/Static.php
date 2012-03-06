@@ -16,14 +16,14 @@ class Perms_Resolver_Static implements Perms_Resolver
 	private $from = '';
 
 	function __construct( array $known, $from = '' ) {
-		foreach( $known as $group => $perms ) {
+		foreach ( $known as $group => $perms ) {
 			$this->known[$group] = array_fill_keys( $perms, true );
 		}
 		$this->from = $from;
 	}
 
 	function check( $name, array $groups ) {
-		foreach( $groups as $groupName ) {
+		foreach ( $groups as $groupName ) {
 			if ( isset( $this->known[$groupName] ) ) {
 				if ( isset( $this->known[$groupName][$name] ) ) {
 					return true;

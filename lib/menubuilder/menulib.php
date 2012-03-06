@@ -84,7 +84,7 @@ class MenuLib extends TikiLib
 		$oldoptions = $menuoptions->fetchAll($menuoptions->all(), array( 'menuId' => $menuId ));
 		$row = null;
 
-		foreach( $oldoptions as $row ) {
+		foreach ( $oldoptions as $row ) {
 			$row['optionId'] = null;
 			$row['menuId'] = $newId;
 			$menuoptions->insert( $row );
@@ -225,7 +225,7 @@ class MenuLib extends TikiLib
 				'3' => 'section level 3',
 			   "-" => "separator");
 
-		foreach($channels as &$channel) {
+		foreach ($channels as &$channel) {
 			$channel["type_description"] = tra($types[$channel["type"]]);
 	  }
 

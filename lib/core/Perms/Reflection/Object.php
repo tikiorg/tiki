@@ -32,7 +32,7 @@ class Perms_Reflection_Object implements Perms_Reflection_Container
 		$set = new Perms_Reflection_PermissionSet;
 
 		$permissions = $userlib->get_object_permissions( $this->object, $this->type );
-		foreach( $permissions as $row ) {
+		foreach ( $permissions as $row ) {
 			$set->add( $row['groupName'], $row['permName'] );
 		}
 
@@ -52,10 +52,10 @@ class Perms_Reflection_Object implements Perms_Reflection_Container
 
 		$set = new Perms_Reflection_PermissionSet;
 		$count = 0;
-		foreach( $categories as $category ) {
+		foreach ( $categories as $category ) {
 			$category = $this->factory->get( 'category', $category );
-			foreach( $category->getDirectPermissions()->getPermissionArray() as $group => $perms ) {
-				foreach( $perms as $perm ) {
+			foreach ( $category->getDirectPermissions()->getPermissionArray() as $group => $perms ) {
+				foreach ( $perms as $perm ) {
 					$set->add( $group, $perm );
 					++$count;
 				}

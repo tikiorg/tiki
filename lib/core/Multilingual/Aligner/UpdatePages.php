@@ -127,7 +127,7 @@ class Multilingual_Aligner_UpdatePages
 		$final_updated = $update->FinalUpdatedFileinTagetLanguage($source_diff, $target_diff);
 			/*
 				 echo "final_updated_sentences<br/>";
-				 foreach($final_updated as $item)
+				 foreach ($final_updated as $item)
 				 echo "sentence-> ".$item."<br/>";
 				 $content = implode(' ', $final_updated);
 				 echo "$content<br/>";

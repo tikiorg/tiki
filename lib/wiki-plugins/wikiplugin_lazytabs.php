@@ -30,7 +30,7 @@ function wikiplugin_lazytabs($data, $params) {
 	global $tikilib, $smarty, $headerlib, $user;
 	$lazyTabs = true;
 	
-	foreach($tikilib->get_user_groups($user) as $group) {
+	foreach ($tikilib->get_user_groups($user) as $group) {
 		if ($group == "NoLazyTabs") {
 			$lazyTabs = false;
 		}

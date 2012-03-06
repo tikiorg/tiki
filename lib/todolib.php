@@ -39,7 +39,7 @@ class TodoLib
 		if (!empty($where)) $query .= ' WHERE ' . implode(' AND ', $where);
 		$query .= ' ORDER BY `todoId` asc';// so that actions arrive before notification
 		$todos = $db->fetchAll($query, $bindvars);
-		foreach( $todos as $i=>$todo ) {
+		foreach ( $todos as $i=>$todo ) {
 			$todos[$i]['from'] = json_decode($todo['from'], true);
 			$todos[$i]['to'] = json_decode($todo['to'], true);
 			if ($objectType == null)  {

@@ -1054,14 +1054,14 @@ class EditLib
 							// If href attribute present in <a> tag
 							/* 
 							if (isset($c[$i]["pars"]["href"]["value"])) {
-								if( strstr( $c[$i]["pars"]["href"]["value"], "http:" )) {
+								if ( strstr( $c[$i]["pars"]["href"]["value"], "http:" )) {
 									$src .= '['.$c[$i]["pars"]["href"]["value"].'|';
 								} else {
 									$src .= '['.$head_url.$c[$i]["pars"]["href"]["value"].'|';
 								}
 								$p['stack'][] = array('tag' => 'a', 'string' => ']');
 							}
-							if( isset($c[$i]["pars"]["name"]["value"])) {
+							if ( isset($c[$i]["pars"]["name"]["value"])) {
 								$src .= '{ANAME()}'.$c[$i]["pars"]["name"]["value"].'{ANAME}';
 							}
 							*/
@@ -1074,12 +1074,12 @@ class EditLib
 					switch ($c[$i]["data"]["name"]) {
 						case "ul":
 							if (end($p['listack']) == '*') array_pop($p['listack']);
-							if( empty($p['listack']) )
+							if ( empty($p['listack']) )
 								$src .= "\n";
     						break;
 						case "ol":
 							if (end($p['listack']) == '#') array_pop($p['listack']);
-							if( empty($p['listack']) )
+							if ( empty($p['listack']) )
 								$src .= "\n";
      					break;
 						default:

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
 		$profile->removeSymbols();
 		$data = array();
-		foreach($_POST as $key => $value) if ($key != 'url' && $key != 'forget') $data[str_replace('_', ' ', $key) ] = $value;
+		foreach ($_POST as $key => $value) if ($key != 'url' && $key != 'forget') $data[str_replace('_', ' ', $key) ] = $value;
 
 		set_time_limit(0);
 
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} // }}}
 	if (isset($_POST['install'], $_POST['pd'], $_POST['pp'])) { // {{{
 		$data = array();
-		foreach($_POST as $key => $value) if ($key != 'url' && $key != 'install') $data[str_replace('_', ' ', $key) ] = $value;
+		foreach ($_POST as $key => $value) if ($key != 'url' && $key != 'install') $data[str_replace('_', ' ', $key) ] = $value;
 		$installer = new Tiki_Profile_Installer;
 		$installer->setUserData($data);
 		$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$dependencies = array();
 		$userInput = array();
-		foreach($deps as $d) {
+		foreach ($deps as $d) {
 			$dependencies[] = $d->pageUrl;
 			$userInput = array_merge($userInput, $d->getRequiredInput());
 		}
@@ -167,12 +167,12 @@ if (isset($_GET['list'])) { // {{{
 } // }}}
 $threshhold = time() - 1800;
 $oldSources = array();
-foreach($sources as $key => $source) if ($source['lastupdate'] < $threshhold) $oldSources[] = $key;
+foreach ($sources as $key => $source) if ($source['lastupdate'] < $threshhold) $oldSources[] = $key;
 $smarty->assign('sources', $sources);
 $smarty->assign('oldSources', $oldSources);
 
 $openSources = 0;
-foreach($sources as $key => $source)
+foreach ($sources as $key => $source)
 {
 	if ($source['status'] == 'open')
 		$openSources++;

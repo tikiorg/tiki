@@ -133,7 +133,7 @@ class TrackerQueryLib
 		return $this;
 	}
 
-	public function lastModif()
+	public function lastModif ()
 	{
 		$this->lastModif = true;
 		return $this;
@@ -564,7 +564,7 @@ class TrackerQueryLib
 
 		$newResult = array();
 		$neededMatches = count($this->fields);
-		foreach($this->fields as $i=>$field) {
+		foreach ($this->fields as $i=>$field) {
 			if ($this->filterType[$i] != 'and') $neededMatches--;
 		}
 		

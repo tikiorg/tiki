@@ -48,7 +48,7 @@ class SheetLib extends TikiLib
 	
 	function remove_relate($type, $sheetId, $childId) {
 		global $relationlib; require_once('lib/attributes/relationlib.php');
-		foreach($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
+		foreach ($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
 			if ($result['itemId'] == $childId) {
 				$relationlib->remove_relation($result['relationId']);
 			}
@@ -59,11 +59,11 @@ class SheetLib extends TikiLib
 		global $relationlib; require_once('lib/attributes/relationlib.php');
 		$entityIds = array();
 		if ($inverted == true) {
-			foreach($relationlib->get_relations_to("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
+			foreach ($relationlib->get_relations_to("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
 				$entityIds[] = $result['itemId'];
 			}
 		} else {
-			foreach($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
+			foreach ($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
 				$entityIds[] = $result['itemId'];
 			}
 		}
@@ -71,7 +71,7 @@ class SheetLib extends TikiLib
 	}
 	
 	function remove_relate_all($type, $sheetId) {
-		foreach($this->get_relate_all($type, $sheetId) as $entityId) {
+		foreach ($this->get_relate_all($type, $sheetId) as $entityId) {
 			$this->remove_related_tracker($sheetId, $entityId);
 		}
 	}
@@ -79,7 +79,7 @@ class SheetLib extends TikiLib
 	function update_relate($type, $sheetId, $entityIds) {
 		$this->remove_relate_all($type, $sheetId);
 		
-		foreach($entityIds as $entityId) {
+		foreach ($entityIds as $entityId) {
 			$this->add_relate($type, $sheetId, $entityId);
 		}
 	}
@@ -144,7 +144,7 @@ class SheetLib extends TikiLib
 	}
 	
 	function update_related_sheets($sheetId, $childSheetIds) {
-		foreach($childSheetIds as $childSheetId) {
+		foreach ($childSheetIds as $childSheetId) {
 			$this->remove_related_sheet($sheetId, $childSheetId);
 		}
 		
@@ -154,13 +154,13 @@ class SheetLib extends TikiLib
 	function get_related_sheet_ids( $sheetId, $getParent = false ) // {{{2
 	{
 		$sheetIds = array();
-		foreach($this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array( $sheetId ) ) as $result) {
+		foreach ($this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array( $sheetId ) ) as $result) {
 			$sheetIds[] = $result['sheetId'];
 		}
 		
 		$sheetIds = array_merge($this->get_relate_all("sheet", $sheetId, $getParent), $sheetIds);
 		
-		foreach($sheetIds as $childSheetId) {
+		foreach ($sheetIds as $childSheetId) {
 			$sheetIds = array_merge($this->get_relate_all("sheet", $childSheetId, $getParent), $sheetIds);
 		}
 		
@@ -206,10 +206,10 @@ class SheetLib extends TikiLib
 		$result = $this->fetchAll( "SELECT sheetId FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
 		
 		$sheets = array();
-		foreach($result as $key => $sheet) {
+		foreach ($result as $key => $sheet) {
 			$children = array();
 			
-			foreach($this->get_related_sheet_ids($sheet['sheetId']) as $childSheetId) {
+			foreach ($this->get_related_sheet_ids($sheet['sheetId']) as $childSheetId) {
 				$children[$childSheetId] = $this->get_sheet_info($childSheetId);
 			}
 			
@@ -226,8 +226,8 @@ class SheetLib extends TikiLib
 		
 		$results['data'] = $sheets;		
 		
-		foreach($results['data'] as $key => $sheet) {
-			foreach($sheet['children'] as $key => $childSheetId) {
+		foreach ($results['data'] as $key => $sheet) {
+			foreach ($sheet['children'] as $key => $childSheetId) {
 				if (!empty($results['data'][$key]))
 					unset($results['data'][$key]);
 			}
@@ -372,7 +372,7 @@ class SheetLib extends TikiLib
 		}
 		
 		$children = $this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array($id) );
-		foreach($children as $child) {
+		foreach ($children as $child) {
 			$this->rollback_sheet( $child['sheetId'], $readdate );
 		}
 		
@@ -525,7 +525,7 @@ class SheetLib extends TikiLib
 		$attr = strtolower($attr);
 		
 		$cssAttrs = explode(';', $style);
-		foreach($cssAttrs as &$v) {
+		foreach ($cssAttrs as &$v) {
 			$v = explode(':', $v);
 		}
 		
@@ -549,7 +549,7 @@ class SheetLib extends TikiLib
 	        return false;
 	    }
 	 
-	    foreach( $haystack as $key => $val ) {
+	    foreach ( $haystack as $key => $val ) {
 	        if ( is_array($val) && $subPath = $sheetlib->array_searchRecursive($needle, $val, $strict, $path) ) {
 	            $path = array_merge($path, array($key), $subPath);
 	            return $path;

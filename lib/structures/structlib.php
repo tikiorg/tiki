@@ -208,7 +208,7 @@ class StructLib extends TikiLib
 				$orders = array();
 				$conditions = array('structure_id' => (int) $structure_id);
 
-				foreach($data as $node) {
+				foreach ($data as $node) {
 					if ($node->item_id != 'root') {
 						if (!isset($orders[$node->depth])) {
 							$orders[$node->depth] = 1;
@@ -636,7 +636,7 @@ class StructLib extends TikiLib
 						$smarty->assign('hilite', false);
 					}
 					
-					if($type === 'admin') {
+					if ($type === 'admin') {
 						if ($this->user_has_perm_on_object($user, $leaf["pageName"], 'wiki page', 'tiki_p_edit')) {
 							$leaf['editable'] = true;
 						} else {

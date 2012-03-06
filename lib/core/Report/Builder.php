@@ -38,7 +38,7 @@ class Report_Builder
 	{
 		$files = array();
 		
-		foreach(scandir('lib/core/Report/Definition') as $fileName) {
+		foreach (scandir('lib/core/Report/Definition') as $fileName) {
 			if (preg_match('/[.]php/', $fileName)) {
 				$files[] = str_replace('.php', '', $fileName);
 			}
@@ -58,7 +58,7 @@ class Report_Builder
 		if (empty($data)) throw new Exception("Failed to get body", 1);
 		$parsedValues = array();
 		
-		foreach(explode("\n", $data) as $values) {
+		foreach (explode("\n", $data) as $values) {
 			$values = trim($values);
 			if (!empty($values)) {
 				$value = explode(":", $values);
@@ -79,7 +79,7 @@ class Report_Builder
 	function setValuesFromRequest($values)
 	{
 		$parsedValues = array();
-		foreach($values as $value) {
+		foreach ($values as $value) {
 			$value = (array)$value; //was having trouble with downloading csv
 			
 			if (preg_match('/\[\]/', $value['name'])) {
@@ -129,11 +129,11 @@ class Report_Builder
 		
 		$header = false;
 		
-		foreach($this->outputArray() as $row) {
+		foreach ($this->outputArray() as $row) {
 			if ($header == false) {
 				$header = true;
 				$headerNames = array();
-				foreach($row as $headerName=>$col) {
+				foreach ($row as $headerName=>$col) {
 					$headerNames[] = tr(ucwords($headerName));
 				}
 				
@@ -162,7 +162,7 @@ class Report_Builder
 	function outputWikiData()
 	{
 		$result = "type : " . $this->type . "\n";
-		foreach(TikiFilter_PrepareInput::delimiter('_')->flatten($this->values) as $key => $value) {
+		foreach (TikiFilter_PrepareInput::delimiter('_')->flatten($this->values) as $key => $value) {
 			if (!empty($value)) {
 				$result .= $key .' : '. $value . "\n";
 			}

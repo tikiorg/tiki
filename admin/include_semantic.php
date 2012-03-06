@@ -24,17 +24,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['remove'])) {
 		$list = array();
 		if (isset($_POST['select'])) $list = (array)$_POST['select'];
-		foreach($list as $token) $semanticlib->removeToken($token);
+		foreach ($list as $token) $semanticlib->removeToken($token);
 	}
 	if (isset($_POST['removeclean'])) {
 		$list = array();
 		if (isset($_POST['select'])) $list = (array)$_POST['select'];
-		foreach($list as $token) $semanticlib->removeToken($token, true);
+		foreach ($list as $token) $semanticlib->removeToken($token, true);
 	}
 	if (isset($_POST['clean'])) {
 		$list = array();
 		if (isset($_POST['select'])) $list = (array)$_POST['select'];
-		foreach($list as $token) $semanticlib->cleanToken($token);
+		foreach ($list as $token) $semanticlib->cleanToken($token);
 	}
 	if (isset($_POST['oldName'])) {
 		$semanticlib->renameToken($_POST['oldName'], $_POST['token']);

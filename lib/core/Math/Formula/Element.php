@@ -36,7 +36,7 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 	}
 
 	function __get( $name ) {
-		foreach( $this->children as $child ) {
+		foreach ( $this->children as $child ) {
 			if ( $child instanceof Math_Formula_Element && $child->type == $name ) {
 				return $child;
 			}
@@ -75,7 +75,7 @@ class Math_Formula_Element implements ArrayAccess, Iterator, Countable
 	function getExtraValues( array $allowedKeys ) {
 		$extra = array();
 
-		foreach( $this->children as $child ) {
+		foreach ( $this->children as $child ) {
 			if ( $child instanceof self ) {
 				if ( ! in_array( $child->type, $allowedKeys ) ) {
 					$extra[] = "({$child->type} ...)";

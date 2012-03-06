@@ -85,7 +85,7 @@ function test_callback($buffer) {
 	$url->setAttribute('referer',$_SERVER['HTTP_REFERER']);
   $get = $dom->createElement('get');
 	if (is_array($test_get)) {
-		foreach($test_get as $var => $value) {
+		foreach ($test_get as $var => $value) {
   		$v = $dom->createElement($var,$value);
 			$get->appendChild($v);
 		}
@@ -94,7 +94,7 @@ function test_callback($buffer) {
 
 	if (is_array($test_post)) {
 	  $post = $dom->createElement('post');
-		foreach($test_post as $var => $value) {
+		foreach ($test_post as $var => $value) {
   		$v = $dom->createElement($var,$value);
 			$post->appendChild($v);
 		}

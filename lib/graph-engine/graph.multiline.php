@@ -46,7 +46,7 @@ class MultilineGraphic extends GridBasedGraphic
 
 		case 'independant':
 			$extremes = array();
-			foreach( $this->lines as $line )
+			foreach ( $this->lines as $line )
 				$extremes[] = min(array_keys($line));
 
 			$min = min($extremes);

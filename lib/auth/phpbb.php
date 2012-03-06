@@ -34,12 +34,12 @@ class TikiPhpBBLib
 	{
 
 	// no need to progress further if the user doesn't even exist
-		if(!$this->userExists($user)) {
+		if (!$this->userExists($user)) {
 			return PHPBB_NO_SUCH_USER;
 		}
 
 		// if the user does exist, authenticate
-		if($this->authenticate($user, $pass)) {
+		if ($this->authenticate($user, $pass)) {
 			return PHPBB_SUCCESS;
 		} else {
 			return PHPBB_INVALID_CREDENTIALS;
@@ -61,7 +61,7 @@ class TikiPhpBBLib
 		$dbconnection = NewADOConnection($dbtype);
 		$dbconnection->Connect($dbhost, $dbuser, $dbpasswd, $dbname);
 
-		if($dbconnection) {
+		if ($dbconnection) {
 			return $dbconnection;
 		}
 		return false;

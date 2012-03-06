@@ -52,7 +52,7 @@ class Feed_Remote_Abstract
 		$archives = array();
 		$file = FileGallery_File::filename($this->feedName);
 		
-		foreach($file->listArchives() as $archive) {
+		foreach ($file->listArchives() as $archive) {
 			$archive = json_decode( FileGallery_File::id($archive['id'])->data() );
 			$archives[$archive->feed->date] = $archive->feed->entry;
 		}
@@ -70,7 +70,7 @@ class Feed_Remote_Abstract
 	public function getItemFromDate($name, $date)
 	{
 		$archive = $this->getItemsFromDate($date);
-		foreach($archive as $item) {
+		foreach ($archive as $item) {
 			if ($name == $item->name) {
 				return $item;
 			}
@@ -81,8 +81,8 @@ class Feed_Remote_Abstract
 	{
 		$archives = array();
 
-		foreach($this->listArchives() as $archive) {
-			foreach($archive as $item) {
+		foreach ($this->listArchives() as $archive) {
+			foreach ($archive as $item) {
 				if ($name == $item->name) {
 					$archives[] = $item;
 				}
@@ -132,7 +132,7 @@ class Feed_Remote_Abstract
 	public function listItemNames()
 	{
 		$result = array();
-		foreach($this->getItems() as $item) {
+		foreach ($this->getItems() as $item) {
 			if (!empty($item->name)) {
 				$result[] = htmlspecialchars($item->name);
 			}
@@ -142,7 +142,7 @@ class Feed_Remote_Abstract
 	
 	public function getItem($name)
 	{	
-		foreach($this->getItems() as $item) {
+		foreach ($this->getItems() as $item) {
 			if ($name == $item->name) {
 				$this->item = $item;
 			}

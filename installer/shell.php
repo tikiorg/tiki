@@ -61,7 +61,7 @@ else {
 
 	if ( count($installer->executed) ) {
 		echo "\tScripts executed:\n";
-		foreach( $installer->executed as $script )
+		foreach ( $installer->executed as $script )
 			echo "\t\t$script\n";
 	}
 	

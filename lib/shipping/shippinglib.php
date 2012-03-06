@@ -46,13 +46,13 @@ class ShippingLib
 
 	private function completeAddressInformation( $address )
 	{
-		if( isset( $address['zip'] ) ) {
+		if ( isset( $address['zip'] ) ) {
 			$address['zip'] = strtoupper( $address['zip'] );
 		}
 
-		if( ! isset( $address['country'] ) ) {
+		if ( ! isset( $address['country'] ) ) {
 			foreach ( $this->formats as $pattern => $country ) {
-				if( preg_match( $pattern, $address['zip'] ) ) {
+				if ( preg_match( $pattern, $address['zip'] ) ) {
 					$address['country'] = $country;
 					break;
 				}
@@ -67,7 +67,7 @@ class ShippingLib
 		$out = array();
 
 		foreach ( $packages as $package ) {
-			if( isset( $package['count'] ) ) {
+			if ( isset( $package['count'] ) ) {
 				$c = $package['count'];
 				unset($package['count']);
 			} else {
@@ -102,7 +102,7 @@ class ShippingLib
 global $shippinglib, $prefs;
 $shippinglib = new ShippingLib;
 
-if( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y' ) {
+if ( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_fedex.php';
 	$shippinglib->addProvider(
 			new ShippingProvider_FedEx(
@@ -115,7 +115,7 @@ if( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] =
 	);
 }
 
-if( !empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y' ) {
+if ( !empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_ups.php';
 	$shippinglib->addProvider(
 		new ShippingProvider_Ups(

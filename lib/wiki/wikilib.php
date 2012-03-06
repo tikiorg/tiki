@@ -906,7 +906,7 @@ class WikiLib extends TikiLib
 					$pinfo["help"] = $this->get_plugin_description($name, $enabled, $area_id);
 					$pinfo["name"] = strtoupper($name);
 
-					if( $enabled )
+					if ( $enabled )
 						$plugins[] = $pinfo;
 				}
 				$cachelib->cacheItem($cachetag, serialize($plugins));
@@ -943,7 +943,7 @@ class WikiLib extends TikiLib
 			$enabled = true;
 
 			$func_name = "wikiplugin_{$name}_help";
-			if( ! function_exists($func_name) )
+			if ( ! function_exists($func_name) )
 				return false;
 
 			$ret = $func_name();

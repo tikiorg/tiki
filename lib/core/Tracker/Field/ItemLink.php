@@ -298,7 +298,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$data['list'] = array_unique($data['list']);
 			} elseif (array_unique($data['list']) != $data['list']) {
 				$newlist = array();
-				foreach($data['list'] as $k => $dl) {
+				foreach ($data['list'] as $k => $dl) {
 					if (in_array($dl, $newlist)) {
 						$dl = $dl . " ($k)";
 					}
@@ -325,7 +325,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 				$data['listdisplay'] = array_unique($data['listdisplay']);
 			} elseif (array_unique($data['listdisplay']) != $data['listdisplay']) {
 				$newlist = array();
-				foreach($data['listdisplay'] as $k => $dl) {
+				foreach ($data['listdisplay'] as $k => $dl) {
 					if (in_array($dl, $newlist)) {
 						$dl = $dl . " ($k)";
 					}

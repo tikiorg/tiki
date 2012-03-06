@@ -34,7 +34,7 @@ function wikiplugin_textlink($data, $params)
 	extract($params, EXTR_SKIP);
 	
 	$clipboarddata = json_decode(stripslashes(trim(urldecode($clipboarddata))));
-	if(empty($clipboarddata)) return $data;
+	if (empty($clipboarddata)) return $data;
 	
 	$clipboarddata->href = urldecode($clipboarddata->href);
 	

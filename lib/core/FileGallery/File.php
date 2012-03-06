@@ -95,7 +95,7 @@ class FileGallery_File
 		return FileGallery_File::id($archives[$archive]['id']);
 	}
 	
-	function archiveFromLastModif($lastModif)
+	function archiveFromLastModif ($lastModif)
 	{
 		foreach ($this->listArchives() as $archive) {
 			if ($archive['lastModif'] == $lastModif) {

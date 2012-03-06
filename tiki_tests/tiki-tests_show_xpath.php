@@ -28,7 +28,7 @@ function get_from_dom($element) {
 	if ($element === NULL) return NULL;
 	$es = $element->getElementsByTagName("*");
 	$a = array();
-	foreach($es as $e) {
+	foreach ($es as $e) {
 		$a[$e->tagName] = $e->nodeValue;
 	}
 	return $a;
@@ -69,7 +69,7 @@ function enlight_xpath($url, $xpath) {
 	$base->setAttribute('href',$base_url);
 	$res_ref->item(0)->insertBefore($base,$res_ref->item(0)->firstChild);
 	$res_ref = $xp_ref->query($xpath);
-	foreach($res_ref as $ref) {
+	foreach ($res_ref as $ref) {
 		$ref->setAttribute('style',"background-color: red;");
 	}
 
@@ -96,7 +96,7 @@ $result = array();
 $urls = $dom->getElementsByTagName('url');
 
 $count=0;
-foreach($urls as $url) {
+foreach ($urls as $url) {
 	if ($count == $_REQUEST['index']) {
 		echo enlight_xpath($url,$_REQUEST['xpath']);
 	}

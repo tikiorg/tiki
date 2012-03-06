@@ -17,7 +17,7 @@ class Perms_Reflection_Global implements Perms_Reflection_Container
 		$this->permissions = new Perms_Reflection_PermissionSet;
 
 		$all = $db->fetchAll( 'SELECT `groupName`, `permName` FROM `users_grouppermissions`' );
-		foreach( $all as $row ) {
+		foreach ( $all as $row ) {
 			$this->permissions->add( $row['groupName'], $row['permName'] );
 		}
 	}

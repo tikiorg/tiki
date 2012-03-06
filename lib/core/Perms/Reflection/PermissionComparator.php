@@ -31,8 +31,8 @@ class Perms_Reflection_PermissionComparator
 		$out = array();
 
 		$all = $left->getPermissionArray();
-		foreach( $all as $group => $permissions ) {
-			foreach( $permissions as $perm ) {
+		foreach ( $all as $group => $permissions ) {
+			foreach ( $permissions as $perm ) {
 				if ( ! $right->has( $group, $perm ) ) {
 					$out[] = array( $group, $perm );
 				}

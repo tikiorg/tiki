@@ -10,7 +10,7 @@ class Report_Definition_Logs
 	function input()
 	{
 		$logs = array();
-		foreach(TikiLib::lib('logsqry')->listTypes() as $type) {
+		foreach (TikiLib::lib('logsqry')->listTypes() as $type) {
 			$logs[] = array(
 				"label"=> tr(ucwords($type)),
 				"value"=> $type,
@@ -24,7 +24,7 @@ class Report_Definition_Logs
 			)
 		);
 		
-		foreach(TikiLib::lib('logsqry')->listActions() as $action) {
+		foreach (TikiLib::lib('logsqry')->listActions() as $action) {
 			$actions[] = array(
 				"label"=> tr(ucwords($action)),
 				"value"=> $action,
@@ -32,7 +32,7 @@ class Report_Definition_Logs
 		}
 		
 		$fields = array();
-		foreach(TikiLib::fetchAll("SHOW COLUMNS FROM tiki_actionlog") as $column) {
+		foreach (TikiLib::fetchAll("SHOW COLUMNS FROM tiki_actionlog") as $column) {
 			$fields[] = array(
 				"label"=> tr(ucwords($column['Field'])),
 				"value"=> $column['Field'],
@@ -153,7 +153,7 @@ class Report_Definition_Logs
 			->end(strtotime($values['logs']['end']['value']));
 		
 		$usersItems = array();//user items need to be choosable as to what type
-		foreach($tikilib->fetchAll("
+		foreach ($tikilib->fetchAll("
 			SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?
 		", array($user)) as $item) {
 			$usersItems[] = $item['itemId'];
@@ -185,9 +185,9 @@ class Report_Definition_Logs
 		if (!empty($values['logs']['fields'])) {
 			$newResult = array();
 			
-			foreach($result as $row) {
+			foreach ($result as $row) {
 				$newRow = array();
-				foreach($values['logs']['fields'] as $field) {
+				foreach ($values['logs']['fields'] as $field) {
 					$newRow[$field['value']] = $row[$field['value']];
 				}
 				$newResult[] = $newRow;
@@ -198,7 +198,7 @@ class Report_Definition_Logs
 		
 		
 		//date correction/format
-		foreach($result as $key => $row) {
+		foreach ($result as $key => $row) {
 			if (isset($result[$key]['lastModif']))
 				$result[$key]['lastModif'] = $tikilib->get_short_datetime($result[$key]['lastModif']); 
 		}

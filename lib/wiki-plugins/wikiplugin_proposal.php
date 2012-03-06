@@ -93,7 +93,7 @@ function wikiplugin_proposal_get_counts( $data )
 		'-1' => array(),
 	);
 
-	foreach( $votes as $voter => $vote )
+	foreach ( $votes as $voter => $vote )
 		$counts[$vote][] = $voter;
 	
 	return $counts;

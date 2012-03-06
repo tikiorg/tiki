@@ -43,7 +43,7 @@ if ( isset($section) and isset($sections[$section])) {
 		$ft_lang = null;
 		$ft_multi = false;
 		if (!empty($tags['data'])) {
-			foreach( $tags['data'] as $row ) {
+			foreach ( $tags['data'] as $row ) {
 				$l = $row['lang'];
 	
 				if ( ! $l )

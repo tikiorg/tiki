@@ -25,7 +25,7 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 	function getHash( array $context ) {
 		$parts = array();
 		
-		foreach( $this->known as $key ) {
+		foreach ( $this->known as $key ) {
 			if ( isset( $context[$key] ) ) {
 				$parts[] = $context[$key];
 			}

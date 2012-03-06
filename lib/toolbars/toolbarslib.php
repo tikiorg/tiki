@@ -321,7 +321,7 @@ abstract class Toolbar
 	{
 		global $prefs;
 
-		foreach( $this->requiredPrefs as $prefName )
+		foreach ( $this->requiredPrefs as $prefName )
 			if ( ! isset($prefs[$prefName]) || $prefs[$prefName] != 'y' )
 				return false;
 

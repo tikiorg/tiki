@@ -103,7 +103,7 @@ function module_months_links($mod_reference, $module_params)
 					$archives[$current_year]['monthlist'][$real_month_name]['link'] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 					$archives[$current_year]['monthlist'][$real_month_name]['cant'] = $posts_of_month['cant'];
 					// Clicking on the year number displays the first non-empty month
-					if(!isset($archives[$current_year]['link'])) {
+					if (!isset($archives[$current_year]['link'])) {
 						$archives[$current_year]['link'] = $archives[$current_year]['monthlist'][$real_month_name]['link'];
 					}
 					$archives[$current_year]['cant'] += $posts_of_month['cant'];
@@ -117,7 +117,7 @@ function module_months_links($mod_reference, $module_params)
 					$archives[$current_year]['monthlist'][$real_month_name]['link'] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 					$archives[$current_year]['monthlist'][$real_month_name]['cant'] = $posts_of_month['cant'];
 					// Clicking on the year number displays the first non-empty month
-					if(!isset($archives[$current_year]['link'])) {
+					if (!isset($archives[$current_year]['link'])) {
 						$archives[$current_year]['link'] = $archives[$current_year]['monthlist'][$real_month_name]['link'];
 					}
 					$archives[$current_year]['cant'] += $posts_of_month['cant'];

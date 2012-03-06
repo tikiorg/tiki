@@ -112,7 +112,7 @@ function wikiplugin_trackeritemcopy( $data, $params )
 		{
 			global $trklib, $_POST;
 			
-			if(is_array($itemIds) == false) $itemIds = array($itemIds);
+			if (is_array($itemIds) == false) $itemIds = array($itemIds);
 			
 			foreach ($itemIds as $itemId) {
 				$tracker_fields_info = $trklib->list_tracker_fields($trackerId);

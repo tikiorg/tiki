@@ -41,7 +41,7 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 			->query();
 		
 		$forwardLinks = array();
-		foreach($wikiAttributes as $wikiAttribute) {
+		foreach ($wikiAttributes as $wikiAttribute) {
 			$forwardLinks[] = $forwardLink = json_decode($wikiAttribute['Value']);
 			
 			$forwardLink->href = urldecode($forwardLink->href);

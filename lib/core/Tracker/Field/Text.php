@@ -141,7 +141,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		);
 
 		if ($multilingual) {
-			foreach($prefs['available_languages'] as $num => $lang) { // TODO add a limit on number of langs - 40+ makes this blow up
+			foreach ($prefs['available_languages'] as $num => $lang) { // TODO add a limit on number of langs - 40+ makes this blow up
 				if (!isset($data['raw'][$lang])) {
 					$data['raw'][$lang] = $thisVal;
 				}

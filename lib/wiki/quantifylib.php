@@ -14,7 +14,7 @@ class QuantifyLib extends TikiLib
 	{
 		global $prefs;
 
-		if( $prefs['quantify_changes'] != 'y' || $prefs['feature_multilingual'] != 'y' )
+		if ( $prefs['quantify_changes'] != 'y' || $prefs['feature_multilingual'] != 'y' )
 			return;
 
 		list( $added, $removed, $complete ) = $this->calculateChangeSize( $oldData, $newData );
@@ -33,11 +33,11 @@ class QuantifyLib extends TikiLib
 		$added = 0;
 		$removed = 0;
 
-		foreach( $engine->edits as $key => $modif )
+		foreach ( $engine->edits as $key => $modif )
 		{
-			if( is_array( $modif ) )
+			if ( is_array( $modif ) )
 				$added += count( $modif );
-			elseif( is_int( $modif ) && $modif < 0 )
+			elseif ( is_int( $modif ) && $modif < 0 )
 				$removed -= $modif;
 		}
 
@@ -51,8 +51,8 @@ class QuantifyLib extends TikiLib
 		$segments = array_map( 'trim', $segments );
 
 		$final = array();
-		foreach( $segments as $seg )
-			if( ! empty( $seg ) )
+		foreach ( $segments as $seg )
+			if ( ! empty( $seg ) )
 				$final[] = $seg;
 
 		return $final;

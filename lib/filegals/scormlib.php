@@ -179,7 +179,7 @@ class ScormLib
 			if ($field = $definition->getFieldFromPermName($key)) {
 				if ($field['type'] === 'F') {
 					$fields[$key] = $this->getTagString($values);
-				} elseif($field['isMultilingual'] == 'y') {
+				} elseif ($field['isMultilingual'] == 'y') {
 					$fields[$key] = reset($values);
 				} else {
 					$fields[$key] = $this->getForDefaultLanguage($values);

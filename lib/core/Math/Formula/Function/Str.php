@@ -10,7 +10,7 @@ class Math_Formula_Function_Str extends Math_Formula_Function
 	function evaluate( $element ) {
 		$out = array();
 
-		foreach( $element as $child ) {
+		foreach ( $element as $child ) {
 			$out[] = $child;
 		}
 

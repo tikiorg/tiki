@@ -42,7 +42,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 
 		$arr = TikiLib::lib('categ')->getCategories();
 
-		foreach($arr as $arx) {
+		foreach ($arr as $arx) {
 			$myArr[$arx['categId']] = Array('parentId' => $arx['parentId'],'name' => $arx['name']);
 		}
 
@@ -95,7 +95,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 			foreach ($parent as $k=>$v) {
 				if (empty($this->separator)) {
 					$list .= "<h5>{$myArr[$k]['name']}</h5><ul class=\"categoryLinks\">";
-					foreach($v as $t) {
+					foreach ($v as $t) {
 						$params = array('type' => 'category', 'id' => $t);
 						$link = smarty_function_object_link($params, $smarty);
 						$list .= "<li>".$link."</li>";
@@ -103,7 +103,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 					$list .= "</ul>";
 				} else {
 					$list .= "{$myArr[$k]['name']}: ";
-					foreach($v as $t) {
+					foreach ($v as $t) {
 						$params = array('type' => 'category', 'id' => $t);
 						$link = smarty_function_object_link($params, $smarty);
 						$list .= $link.$this->separator;

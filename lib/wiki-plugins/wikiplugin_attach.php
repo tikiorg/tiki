@@ -162,7 +162,7 @@ function wikiplugin_attach($data, $params)
 		}
 
 		// See if we're being called from a wiki page.
-		if(strstr($section_class, 'wiki_page')) {
+		if (strstr($section_class, 'wiki_page')) {
 			$atts_item_name = $_REQUEST["page"];
 			$atts = $wikilib->list_wiki_attachments($atts_item_name, 0, -1, 'created_desc', '');
 		}

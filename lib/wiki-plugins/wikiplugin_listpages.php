@@ -252,7 +252,7 @@ function wikiplugin_listpages($data, $params)
 			$pages = $multilinguallib->getTranslations('wiki page', $page['page_id']);
 
 			$page['translations'] = array();
-			foreach( $pages as $trad )
+			foreach ( $pages as $trad )
 				if ( $trad['lang'] != $lang && in_array($trad['lang'], $translations) ) {
 					$page['translations'][ $trad['lang'] ] = $trad['objName'];
 					$used[$trad['lang']] = $trad['langName'];

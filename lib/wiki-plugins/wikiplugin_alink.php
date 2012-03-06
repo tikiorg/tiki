@@ -66,7 +66,7 @@ function wikiplugin_alink($data, $params)
 	    }
 	} elseif (isset($_REQUEST['page'])) {
 		$urlPrefix = "tiki-index.php?page=";
-		if($prefs['feature_sefurl'] == 'y') {
+		if ($prefs['feature_sefurl'] == 'y') {
 			$urlPrefix = "";
 		}
 		return "<a href=\"".$urlPrefix.$_REQUEST["page"]."#$aname\">$data</a>";

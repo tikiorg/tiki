@@ -181,7 +181,7 @@ class ContactLib extends TikiLib
 
 		}
 
-		foreach($exts as $fieldId => $ext) if ($fieldId > 0 && $ext != '') {
+		foreach ($exts as $fieldId => $ext) if ($fieldId > 0 && $ext != '') {
 			if ($dontDeleteExts && $this->getOne('select count(*) from `tiki_webmail_contacts_ext` where `contactId`=? and `fieldId`=?', array((int)$contactId, (int)$fieldId))) {
 				$this->query(
 								'update `tiki_webmail_contacts_ext` set `value`=? where `contactId`=? and `fieldId`=?',
@@ -313,7 +313,7 @@ class ContactLib extends TikiLib
 					'Work Fax', 'Company', 'Organization', 'Department', 'Division', 'Job Title',
 					'Street Address', 'City', 'State', 'Zip Code', 'Country');
 			if (($user == NULL) || (empty($user))) return $exts;
-			foreach($exts as $ext) $this->add_ext($user, $ext);
+			foreach ($exts as $ext) $this->add_ext($user, $ext);
 			$res = $this->query($query, $bindvars);
 		}
 		while ($row = $res->fetchRow()) $ret[] = $row;

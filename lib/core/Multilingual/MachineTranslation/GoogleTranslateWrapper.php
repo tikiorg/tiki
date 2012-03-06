@@ -104,7 +104,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
    	function getLangsCandidatesForMachineTranslation($trads) {
    		global $langmapping, $prefs;
 		$usedLangs = array();
-		foreach( $trads as $trad )
+		foreach ( $trads as $trad )
 			$usedLangs[] = $trad['lang'];
 				
 		$langsCandidatesForMachineTranslation = array();

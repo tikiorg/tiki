@@ -55,11 +55,11 @@ if (!empty($thumbfile)) {
 if ($prefs['feature_jquery'] == 'y') {
 	// hash of themes and their options and their thumbnail images
 	$js = 'var style_options = {';
-	foreach($styles as $s) {
+	foreach ($styles as $s) {
 		$js.= "\n'$s':['" . get_thumbnail_file($s, '') . '\',{';
 		$options = $tikilib->list_style_options($s);
 		if ($options) {
-			foreach($options as $o) {
+			foreach ($options as $o) {
 				$js.= "'$o':'" . get_thumbnail_file($s, $o) . '\',';
 			}
 			$js = substr($js, 0, strlen($js) - 1) . '}';

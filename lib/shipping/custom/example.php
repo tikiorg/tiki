@@ -62,10 +62,10 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 	}
 
 	function getRates( array $from, array $to, array $packages ) {
-		if( !empty($to) && !empty($packages) ) {
+		if ( !empty($to) && !empty($packages) ) {
 			$rates = array();
 
-			foreach( $this->services as $service => $info ) {
+			foreach ( $this->services as $service => $info ) {
 				$rates[] = $this->getRate( $info, $from, $to, $packages );
 			}
 
@@ -85,7 +85,7 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 		);
 
 		$itemCount = 0;
-		foreach($packages as $item) {
+		foreach ($packages as $item) {
 			if (!empty($item['count'])) {
 				$itemCount += (int) $item['count'];
 			} else {

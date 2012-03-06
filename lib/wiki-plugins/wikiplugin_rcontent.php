@@ -34,6 +34,6 @@ function wikiplugin_rcontent( $data, $params, $offset, $parseOptions)
 		$lang = $parseOptions['language'];
 	}
 
-	if( $params['id'] )
+	if ( $params['id'] )
 		return $dcslib->get_random_content((int) $params['id'], $lang);
 }

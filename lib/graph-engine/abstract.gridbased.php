@@ -634,7 +634,7 @@ class StaticGridScale extends GridScale // {{{1
 
 		$max = 0;
 		if ( $param !== false )
-			foreach( $this->labels as $label )
+			foreach ( $this->labels as $label )
 				$max = max($max, $renderer->getTextWidth($label, $font));
 
 		switch( $this->orientation )

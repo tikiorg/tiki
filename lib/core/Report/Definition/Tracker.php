@@ -13,7 +13,7 @@ class Report_Definition_Tracker
 	function __construct()
 	{
 		global $tikilib;
-		foreach($tikilib->table('tiki_trackers')->fetchAll(array('trackerId','name')) as $column) {
+		foreach ($tikilib->table('tiki_trackers')->fetchAll(array('trackerId','name')) as $column) {
 			$this->trackers[$column['trackerId']] = array(
 				"label"=> $column['name'] . ' - ' . $column['trackerId'],
 				"name"=> $column['name'],
@@ -21,7 +21,7 @@ class Report_Definition_Tracker
 			);
 		}
 		
-		foreach($tikilib->table('tiki_tracker_fields')->fetchAll(array('trackerId', 'fieldId', 'name')) as $column) {
+		foreach ($tikilib->table('tiki_tracker_fields')->fetchAll(array('trackerId', 'fieldId', 'name')) as $column) {
 			$this->trackerFields[$column['fieldId']] = array(
 				"label"=> $column['name'] . ' - ' . $column['fieldId'],
 				"name"=> $column['name'],
@@ -120,7 +120,7 @@ class Report_Definition_Tracker
 	
 	private function innerJoin($leftTracker, $rightTracker, $leftSetting, $rightSetting)
 	{
-		foreach($leftTracker as $key => $leftItem) {
+		foreach ($leftTracker as $key => $leftItem) {
 			$leftTracker[$key] = $leftTracker[$key] + $rightTracker[$leftTracker[$key][$rightSetting]];
 		}
 		return $leftTracker;
@@ -138,7 +138,7 @@ class Report_Definition_Tracker
 		
 		if (!empty($tracker['status'])) {
 			$allStatus = '';
-			foreach($tracker['status'] as $status) {
+			foreach ($tracker['status'] as $status) {
 				if (!empty($status['value'])) $allStatus .= $status['value'];
 			}
 			
@@ -165,9 +165,9 @@ class Report_Definition_Tracker
 		
 		if (!empty($tracker['fields'])) {
 			$newResult = array();
-			foreach($result as $itemKey => $item) {
+			foreach ($result as $itemKey => $item) {
 				$newResult[$itemKey] = array();
-				foreach($tracker['fields'] as $field) {
+				foreach ($tracker['fields'] as $field) {
 					$newResult[$itemKey][$field['value']] = $result[$itemKey][$field['value']]; 
 				}
 			}
@@ -176,7 +176,7 @@ class Report_Definition_Tracker
 			unset($newResult);
 		}
 		
-		foreach($tracker['join'] as $join) {
+		foreach ($tracker['join'] as $join) {
 			$result = $this->innerJoin($result, $this->query($join), $join['left']['value'], $join['right']['value']);
 		}
 		
@@ -187,8 +187,8 @@ class Report_Definition_Tracker
 	{
 		$result = $this->query($values);
 		
-		foreach($result as $itemKey => $item) {
-			foreach($item as $fieldKey => $field) {
+		foreach ($result as $itemKey => $item) {
+			foreach ($item as $fieldKey => $field) {
 				$result[$itemKey][$this->trackerFields[$fieldKey]['name'] . " - " . $fieldKey] = $field;
 				unset($result[$itemKey][$fieldKey]);
 			}

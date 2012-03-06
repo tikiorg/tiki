@@ -29,8 +29,8 @@ Class Feed_ForwardLink_Contribution extends Feed_Abstract
 		$replace = false;		
 		
 		//lets remove the newentry if it has already been accepted in the past
-		foreach($contents->entry as $i => $existingEntry) {
-			foreach($item->feed->entry as $j => $newEntry) {
+		foreach ($contents->entry as $i => $existingEntry) {
+			foreach ($item->feed->entry as $j => $newEntry) {
 				if (
 					$existingEntry->textlink->text == $newEntry->textlink->text &&
 					$existingEntry->textlink->href == $newEntry->textlink->href
@@ -41,7 +41,7 @@ Class Feed_ForwardLink_Contribution extends Feed_Abstract
 		}
 		
 		//lets check if the hash is correct and that the phrase actually exists within the wiki page
-		foreach($item->feed->entry as $i => $newEntry) {
+		foreach ($item->feed->entry as $i => $newEntry) {
 			if (
 				$newEntry->forwardlink->hash != hash_hmac("md5", htmlspecialchars($prefs['browsertitle']), $newEntry->forwardlink->text) ||
 				$newEntry->forwardlink->websiteTitle != $prefs['browsertitle'] ||

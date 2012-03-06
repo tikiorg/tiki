@@ -57,7 +57,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 		switch ( $type ) {
 			case 'dependant':
 				$extremes = array();
-				foreach( $this->columns as $line )
+				foreach ( $this->columns as $line )
 					$extremes[] = max($line);
 
 				return max($extremes);

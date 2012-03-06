@@ -91,7 +91,7 @@ class TikiLdapLib
 		$this->options['port'] = NULL; // its save to set port in URI
 
 		$this->options['host'] = array();
-		foreach($t as $h) {
+		foreach ($t as $h) {
 			if (preg_match('#^ldaps?://#',$h)) { // entry is already URI
 				$this->options['host'][] = $h;
 			} else {
@@ -112,7 +112,7 @@ class TikiLdapLib
 		}
 
 		// only string checking fo these ones
-		foreach(array('basedn', 'username', 'password', 'userdn', 'useroc', 'userattr',
+		foreach (array('basedn', 'username', 'password', 'userdn', 'useroc', 'userattr',
 				'fullnameattr', 'emailattr', 'groupdn', 'groupattr', 'groupoc', 'groupnameattr',
 				'groupdescattr', 'groupmemberattr', 'usergroupattr', 'groupgroupattr', 'binddn', 'bindpw') as $n) {
 			if (isset($options[$n]) && !empty($options[$n])) {
@@ -182,7 +182,7 @@ class TikiLdapLib
 				preg_match_all('/\s*,?dc=\s*([^,]+)/i',$this->options['basedn'], $t);
 				$this->options['binddn'] = $user.'@';
 				if (isset($t[1]) && is_array($t[1])) {
-					foreach($t[1] as $domainpart) {
+					foreach ($t[1] as $domainpart) {
 						$this->options['binddn'] .= $domainpart.'.';
 					}
 					// cut trailing dot
@@ -224,7 +224,7 @@ class TikiLdapLib
 		$this->add_log('ldap', 'Connect Host: '.implode($this->options['host']).'. Binddn: '.
 					$this->options['binddn'].' at line '.__LINE__.' in '.__FILE__);
 		//create options array to handle it to Net_LDAP2
-		foreach(array('host', 'port', 'version', 'starttls', 'basedn', 'filter', 'scope', 'binddn', 'bindpw', 'options')
+		foreach (array('host', 'port', 'version', 'starttls', 'basedn', 'filter', 'scope', 'binddn', 'bindpw', 'options')
 				as $o) {
 			if (isset($this->options[$o])) {
 				$options[$o] = $this->options[$o];

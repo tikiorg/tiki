@@ -284,7 +284,7 @@ class ThemeGenLib
 		// shame - doesn't work on @imported files, might be a way with minified on...
 		//		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $css, $parts );
 		//		$imports = array_reverse(array_unique( $parts[1] ));
-		//		foreach( $imports as $import) {
+		//		foreach ( $imports as $import) {
 		//			$css_files[$tikilib->get_style_path() . $import] = $import;
 		//		}
 

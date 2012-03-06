@@ -30,7 +30,7 @@ class Search_Formatter_ValueFormatter_Wikiplugin implements Search_Formatter_Val
 		}
 
 		$params = array();
-		foreach($this->arguments as $key => $val) {
+		foreach ($this->arguments as $key => $val) {
 			$params[$key] = $entry[$val];
 		}
 

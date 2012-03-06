@@ -39,7 +39,7 @@ if (isset($_REQUEST["galfeatures"])) {
 		'feature_image_gallery_mandatory_category',
 		'gal_image_mouseover',
 	);
-	foreach($pref_simple_values as $svitem) {
+	foreach ($pref_simple_values as $svitem) {
 		simple_set_value($svitem);
 	}
 }
@@ -70,7 +70,7 @@ if (isset($_REQUEST['imagegallistprefs'])) {
 		"gal_list_imgs",
 		"gal_list_visits",
 	);
-	foreach($pref_toggles as $toggle) {
+	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
 }

@@ -296,7 +296,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 	{
 		$c = array( 'rgb' );
 		$color = $this->_getRawColor(strtolower($name));
-		foreach( $color as $col )
+		foreach ( $color as $col )
 			$c[] = $col / 255;
 
 		$c[] = null;

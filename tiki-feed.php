@@ -44,7 +44,7 @@ if ($_REQUEST['type'] == 'html') {
 	$access->check_feature('feature_forwardlinkprotocol');
 	
 	$contribution = json_decode($_REQUEST['contribution']);
-	foreach($contribution->feed->entry as $item) {
+	foreach ($contribution->feed->entry as $item) {
 		if (!empty($item->originName)) {
 			//print_r($item);
 			Feed_ForwardLink_Contribution::forwardlink($item->originName)->addItem($item);

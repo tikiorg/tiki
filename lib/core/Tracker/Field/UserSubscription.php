@@ -112,7 +112,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 		$current_field_ins['user_subscription'] = false; // user is subscribed with firnd or not
 		$current_field_ins['user_nb_users'] = 0; // total number of user attending
 		$current_field_ins['user_nb_friends'] = 0; // total of friends for this user
-		foreach($match[1] as $j => $id_user) {
+		foreach ($match[1] as $j => $id_user) {
 			$temp = $userlib->get_userId_info($id_user);
 			array_push($users_array, array(
 					'id' => $id_user,

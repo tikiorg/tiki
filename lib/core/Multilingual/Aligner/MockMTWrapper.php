@@ -16,7 +16,7 @@ class Multilingual_Aligner_MockMTWrapper extends Multilingual_Aligner_SentenceAl
 			$k=1;
 		else if ($source_lng=="fr")
 			$k=0;
-		foreach($this->alignment_table as $key=>$val)
+		foreach ($this->alignment_table as $key=>$val)
 		{
 			if ($k==1)
 			{
