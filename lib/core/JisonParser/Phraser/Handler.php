@@ -46,6 +46,10 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 	function charHandler($char)
 	{
 		if (empty($this->wordsChars[$this->currentWord])) $this->wordsChars[$this->currentWord] = "";
+		
+		//this line attempts to solve some character translation problems
+		$char = iconv("UTF-8", "ISO-8859-1", $char);
+		
 		$this->wordsChars[$this->currentWord] .= $char;
 		$this->chars[] = $char;
 		
@@ -68,14 +72,14 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		return $char;
 	}
 	
-	function isUnique($html, $phrase)
+	function isUnique($parent, $phrase)
 	{
-		$htmlParts = $this->getParts($html);
-        $phraseParts = $this->getParts($phrase);
+		$parentWords = $this->sanitizeToWords($parent);
+        $phraseWords = $this->sanitizeToWords($phrase);
    		
 		$this->clearIndexes();
 		
-   		$this->addIndexes($phraseParts['words'], $htmlParts['words'], true);
+   		$this->addIndexes($parentWords, $phraseWords, true);
         
         if (count($this->indexes) > 1) {
         	return false;
@@ -86,16 +90,16 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 	
 	function findPhrases($parent, $phrases)
 	{
-       	$parentParts = $this->getParts($parent);
-       	$phrasesParts = array();
+       	$parentWords = $this->sanitizeToWords($parent);
+       	$phrasesWords = array();
 		
 		$this->clearIndexes();
 		
        	foreach($phrases as $phrase) {
-       		$phraseParts = $this->getParts($phrase);
+       		$phraseWords = $this->sanitizeToWords($phrase);
 			
-			$this->addIndexes($phraseParts['words'], $parentParts['words']);
-			$phrasesParts[] = $phraseParts;
+			$this->addIndexes($parentWords, $phraseWords);
+			$phrasesWords[] = $phraseWords;
        	}
 		
 		if (!empty($this->indexes)) {
@@ -105,54 +109,12 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		return $parent;
 	}
 	
-	function matchLength($array1, $i, $array2, $j)
-	{
-    	$matchLength = 0;
-    	$stop = false;
-    	for(; $i < count($array1) && $stop == false; $i++){
-			for(; $j < count($array2) && $stop == false; $j++){
-				if ($array1[$i] == $array2[$j] || $this->match($array1[$i],$array2[$j]) == true) {
-					$matchLength++;
-					$i++;
-				} else {
-					$stop = true;
-				}
-			}
-    	}
-    	
-    	return $matchLength;
-    }
-    
-    function getParts($val)
-    {
-    	global $JisonParser_Phraser_Cache;
-		if (!isset($JisonParser_Phraser_Cache)) $JisonParser_Phraser_Cache = array();
-    	$words = array();
-    	$chs = array();
-    	$i = 0;
-		
-		if (!isset($JisonParser_Phraser_Cache[$val])) {
-			$parser = new JisonParser_Phraser_Handler();
-			$parser->parse($val);
-			
-			$JisonParser_Phraser_Cache[$val] = array(
-	   			'words'=> $parser->words,
-	   			'chs'=> $parser->wordsChars
-	   		);
-		}
-		
-		$parser = new JisonParser_Phraser_Handler();
-		$parser->parse($val);
-		
-   		return $JisonParser_Phraser_Cache[$val];
-    }
-	
 	function clearIndexes()
 	{
 		$this->indexes = array();
 	}
 	
-	function addIndexes($phraseWords, $parentWords, $allMatches = false)
+	function addIndexes($parentWords, $phraseWords, $allMatches = false)
 	{
         $phraseLength = count($phraseWords) - 1;
 		$phraseConcat = implode($phraseWords, "|");
@@ -162,6 +124,7 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		
 		for($i = 0, $j = count($boundaries);$i < $j; $i++) {
 			$boundaryLength = substr_count($boundaries[$i], "|");
+			
 			$this->indexes[] = array(
 				"start"=> $boundaryLength,
 				"end"=> $boundaryLength + $phraseLength
@@ -194,7 +157,7 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		$sanitized = preg_replace('/<(.|\n)*?>/', " ", $html);
 		$sanitized = preg_replace('/\W/', " ", $sanitized);
 		$sanitized = split(" ", $sanitized);
-		$sanitized = array_filter($sanitized);
+		$sanitized = array_values(array_filter($sanitized, 'strlen'));
 		
 		return $sanitized;
 	}
