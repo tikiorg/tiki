@@ -173,6 +173,9 @@
 				},
 				success: function () {
 					document.location.reload();
+				},
+				load: function() {
+					$(".tree.root:not(.init)", this).browse_tree().addClass("init");
 				}
 			});
 
