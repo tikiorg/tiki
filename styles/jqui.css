@@ -787,7 +787,14 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	-webkit-border-top-right-radius: 4px;
 }
 
-input,
+input {
+	border-radius: 1em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	padding: 0.1em 0.5em 0.2em;
+}
+
+textarea,
 .button a,
 .button a:visited,
 button,
