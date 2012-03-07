@@ -8,11 +8,13 @@
 require_once 'tiki-setup.php';
 require_once 'lib/ointegratelib.php';
 require_once 'lib/webservicelib.php';
+
 //this script may only be included - so its better to die if called directly.
 if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
-	header("Location: index.php");
+	header('Location: index.php');
 	exit;
 }
+
 if (isset($_REQUEST['name']) && $webservice = Tiki_Webservice::getService($_REQUEST['name'])) {
 	if (isset($_REQUEST['delete']) && empty($_REQUEST['delete'])) {
 		$webservice->delete();
@@ -47,18 +49,24 @@ if (isset($_REQUEST['name']) && $webservice = Tiki_Webservice::getService($_REQU
 	$webservice->operation = $operation;
 	$storedTemplates = array();
 }
-if (!isset($_REQUEST['params'])) $_REQUEST['params'] = array();
+
+if (!isset($_REQUEST['params']))
+	$_REQUEST['params'] = array();
+
 if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQUEST['params'])) {
 	$data = $response->data;
 	if (is_array($data)) {
 		unset($data['_template']);
 		unset($data['_version']);
 	}
-	$templates = $response->getTemplates(array(
-		'smarty/tikiwiki',
-		'smarty/html',
-		'javascript/html',
-	));
+	$templates = $response->getTemplates(
+					array(
+						'smarty/tikiwiki',
+						'smarty/html',
+						'javascript/html',
+					)
+	);
+
 	$smarty->assign('data', print_r($data, true));
 	$smarty->assign('templates', $templates);
 	$smarty->assign('response', $response);
@@ -66,6 +74,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 		$webservice->removeTemplate($_REQUEST['delete']);
 		unset($storedTemplates[$_REQUEST['delete']]);
 	}
+
 	// Load template data in the form for modification
 	if (isset($_REQUEST['loadtemplate'])) {
 		$template = $webservice->getTemplate($_REQUEST['loadtemplate']);
@@ -74,6 +83,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 		$smarty->assign('nt_output', $template->output);
 		$smarty->assign('nt_content', $template->content);
 	}
+
 	if (isset($_REQUEST['add'])) {
 		$pos = key($_REQUEST['add']);
 		if (isset($templates[$pos])) {
@@ -83,6 +93,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 			$smarty->assign('nt_content', $template['content']);
 		}
 	}
+
 	// Create new registered service
 	if (isset($_REQUEST['new_name'])) {
 		$name = $_REQUEST['new_name'];
@@ -99,6 +110,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 			}
 		}
 	}
+
 	// Save template modification
 	if (isset($_REQUEST['nt_name'])) {
 		$name = $_REQUEST['nt_name'];
@@ -110,6 +122,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 			$storedTemplates = $webservice->getTemplates();
 		}
 	}
+
 	if (isset($_REQUEST['preview']) && $template = $webservice->getTemplate($_REQUEST['preview'])) {
 		$output = $template->render($response, 'html');
 		$smarty->assign('preview', $_REQUEST['preview']);
@@ -117,7 +130,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 	}
 }
 
-$headerlib->add_jsfile( 'lib/soap/tiki-admin_webservices.js' );
+$headerlib->add_jsfile('lib/soap/tiki-admin_webservices.js');
 
 $smarty->assign('webservicesTypes', Tiki_Webservice::getTypes());
 $smarty->assign('webservices', Tiki_Webservice::getList());

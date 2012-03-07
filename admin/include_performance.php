@@ -6,11 +6,11 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
-if (isset($_REQUEST["performance"])) {
+if (isset($_REQUEST['performance'])) {
 	check_ticket('admin-inc-performance');
 }
 
@@ -27,13 +27,13 @@ $opcode_stats = array(
 	'warning_xcache_blocked' => false,
 );
 
-if ( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
+if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 	$opcode_cache = 'APC';
-	
+
 	$sma = apc_sma_info();
 	$mem_total = $sma['num_seg'] * $sma['seg_size'];
 
-	$cache = apc_cache_info( null, true );
+	$cache = apc_cache_info(null, true);
 	$hit_total = $cache['num_hits'] + $cache['num_misses'];
 
 	$stat_flag = 'apc.stat';
@@ -45,10 +45,10 @@ if ( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
 		'hit_miss' => $cache['num_misses'] / $hit_total,
 		'hit_total' => $hit_total,
 	);
-} elseif ( function_exists( 'xcache_info' ) ) {
+} elseif ( function_exists('xcache_info') ) {
 	$opcode_cache = 'XCache';
 
-	if ( ini_get( 'xcache.admin.enable_auth' ) ) {
+	if ( ini_get('xcache.admin.enable_auth') ) {
 		$opcode_stats['warning_xcache_blocked'] = true;
 	} else {
 		$stat_flag = 'xcache.stat';
@@ -61,8 +61,8 @@ if ( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
 			'hit_total' => 0,
 		);
 
-		foreach ( range( 0, xcache_count( XC_TYPE_PHP ) - 1 ) as $index ) {
-			$info = xcache_info( XC_TYPE_PHP, $index );
+		foreach ( range(0, xcache_count(XC_TYPE_PHP) - 1) as $index ) {
+			$info = xcache_info(XC_TYPE_PHP, $index);
 
 			$opcode_stats['hit_hit'] += $info['hits'];
 			$opcode_stats['hit_miss'] += $info['misses'];
@@ -81,23 +81,29 @@ if ( function_exists( 'apc_sma_info' ) && ini_get('apc.enabled') ) {
 }
 
 if ( $stat_flag ) {
-	$opcode_stats['warning_check'] = (bool) ini_get( $stat_flag );
-	$smarty->assign( 'stat_flag', $stat_flag );
+	$opcode_stats['warning_check'] = (bool) ini_get($stat_flag);
+	$smarty->assign('stat_flag', $stat_flag);
 }
 
-if ( isset( $opcode_stats['hit_total'] ) ) {
-	$opcode_stats = array_merge( $opcode_stats, array(
-		'warning_fresh' => $opcode_stats['hit_total'] < 10000,
-		'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
-	) );
+if ( isset($opcode_stats['hit_total']) ) {
+	$opcode_stats = array_merge(
+					$opcode_stats, 
+					array(
+						'warning_fresh' => $opcode_stats['hit_total'] < 10000,
+						'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
+					) 
+	);
 }
 
-if ( isset( $opcode_stats['memory_total'] ) ) {
-	$opcode_stats = array_merge( $opcode_stats, array(
-		'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
-		'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,
-	) );
+if ( isset($opcode_stats['memory_total']) ) {
+	$opcode_stats = array_merge(
+					$opcode_stats, 
+					array(
+						'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
+						'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,
+					) 
+	);
 }
 
-$smarty->assign( 'opcode_cache', $opcode_cache );
-$smarty->assign( 'opcode_stats', $opcode_stats );
+$smarty->assign('opcode_cache', $opcode_cache);
+$smarty->assign('opcode_stats', $opcode_stats);
