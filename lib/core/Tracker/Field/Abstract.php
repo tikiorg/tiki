@@ -187,6 +187,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		}
 	}
 
+	/**
+	 * Return the HTML id of input tag for this
+	 * field in the item form
+	 * 
+	 * @return string
+	 */
 	protected function getInsertId()
 	{
 		return 'ins_' . $this->definition['fieldId'];
@@ -202,6 +208,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return isset($this->definition[$key]) ? $this->definition[$key] : $default;
 	}
 
+	/**
+	 * Return the value for this item field
+	 * 
+	 * @param mixed $default the field value used if none is set
+	 * @return mixed field value
+	 */
 	protected function getValue($default = '')
 	{
 		$key = $this->getConfiguration('fieldId');
@@ -229,6 +241,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 	/**
 	 * Returns an option from the options array based on the numeric position.
+	 * For the list of options for a particular field check its getTypes() method. 
+	 * 
+	 * @param int $number
+	 * @param bool $default
+	 * @return mixed
 	 */
 	protected function getOption($number, $default = false)
 	{
