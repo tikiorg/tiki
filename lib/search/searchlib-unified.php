@@ -305,6 +305,7 @@ class UnifiedSearchLib
 		if (! Perms::get()->admin) {
 			$query->filterPermissions(Perms::get()->getGroups());
 		}
+		$jail_query = '';
 
 		if ($jail = $categlib->get_jail()) {
 			$i = 0;
