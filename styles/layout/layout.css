@@ -2326,4 +2326,50 @@ div.aclabel, span.aclabel, label.aclabel {
 .s5-slide h1, .s5-slide h2, .s5-slide h3, .s5-slide h4 {
 	line-height: 1em;
 }
+
+/* structures tiki 9 */
+
+.admintoclevel {
+	margin: .2em;
+	padding: .4em 0 .4em .2em;
+}
+
+.admintoclevel .admintoclevel {
+	margin-right: 0;
+	border-right: 0 none;
+}
+
+.admintoclevel .actions {
+	float: right;
+	padding-right: .3em;
+}
+
+.admintoclevel .actions a {
+	padding-right: .2em;
+}
+
+.admintoclevel .actions input {
+	margin-right: 2em;
+	font-style: italic;
+	background-color: #f8f8f8;
+	color: #666;
+	border: solid 1px #ddd;
+	width: 15em;
+}
+
+#page_list_container {
+	list-style: none;
+	max-height: 20em;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0;
+}
+
+#page_list_container li {
+	list-style: none;
+	margin: .2em;
+	padding: .2em;
+}
+/* end structures tiki 9 */
+
 /* End of File */
