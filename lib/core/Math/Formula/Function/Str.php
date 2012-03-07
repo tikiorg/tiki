@@ -7,14 +7,15 @@
 
 class Math_Formula_Function_Str extends Math_Formula_Function
 {
-	function evaluate( $element ) {
+	function evaluate( $element )
+	{
 		$out = array();
 
 		foreach ( $element as $child ) {
 			$out[] = $child;
 		}
 
-		return implode( ' ', $out );
+		return implode(' ', $out);
 	}
 }
 

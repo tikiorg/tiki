@@ -7,11 +7,12 @@
 
 class Math_Formula_Function_Mul extends Math_Formula_Function
 {
-	function evaluate( $element ) {
+	function evaluate( $element )
+	{
 		$out = 1;
 
 		foreach ( $element as $child ) {
-			$out *= $this->evaluateChild( $child );
+			$out *= $this->evaluateChild($child);
 		}
 
 		return $out;

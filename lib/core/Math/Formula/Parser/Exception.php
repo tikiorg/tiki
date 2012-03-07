@@ -7,9 +7,10 @@
 
 class Math_Formula_Parser_Exception extends Math_Formula_Exception
 {
-	function __construct( $message, array $tokens, $code = null ) {
-		$message = tr( '%0 near "%1"', $message, implode(' ', $tokens ) );
-		parent::__construct( $message, $code );
+	function __construct( $message, array $tokens, $code = null )
+	{
+		$message = tr('%0 near "%1"', $message, implode(' ', $tokens));
+		parent::__construct($message, $code);
 	}
 }
 
