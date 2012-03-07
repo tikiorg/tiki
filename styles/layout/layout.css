@@ -31,9 +31,7 @@ header, nav, article, footer, address {
 /* general #fixedwidth wrapper when fixed width is off */
 .fixedwidth {
 	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
+	margin: 0 auto;
 	width: 100%;
 }
 
@@ -190,8 +188,7 @@ img {
 }
 
 .siteloginbar_popup .tabcontent fieldset {
-	margin: 0;
-	margin-left: -4px;
+	margin: 0 0 0 -4px;
 	border: none;
 }
 
@@ -977,8 +974,7 @@ tr.diffheader {
 
 .tabmark {
 	display: inline;
-	margin: 0;
-	margin-right: 5px;
+	margin: 0 5px 0 0;
 	padding: 1px 0;
 	white-space: nowrap;
 }
@@ -1313,8 +1309,7 @@ body.tiki_forums .normal {
 
 .post .postbody {
 	clear: both;
-	margin: 0;
-	margin-top: 5px;
+	margin: 5px 0 0;
 	padding: 0;
 }
 	
@@ -1652,9 +1647,7 @@ body.filegal_popup #tiki-center {
 }
 
 .multiselect ul {
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
+	list-style: none outside none;
 	text-align: left;
 	margin: 0;
 	padding: 0;
@@ -1865,9 +1858,7 @@ ul.freetagged li {
 /***** TikiSheets *****/
 .tiki_sheet table td { /* override .tabcontent table td */
 	padding: 0;
-	border-color: #909090;
-	border-width: 1px;
-	border-style: solid;
+	border: 1px solid #909090;
 }
 
 .plugin-desc {
