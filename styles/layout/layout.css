@@ -2351,8 +2351,7 @@ div.aclabel, span.aclabel, label.aclabel {
 .admintoclevel .actions input {
 	margin-right: 2em;
 	font-style: italic;
-	background-color: #f8f8f8;
-	color: #666;
+	opacity: 0.5;
 	border: solid 1px #ddd;
 	width: 15em;
 }
