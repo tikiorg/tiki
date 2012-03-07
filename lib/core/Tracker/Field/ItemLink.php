@@ -250,7 +250,7 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		}
 	}
 
-		function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
 		$data = $this->getLinkData(array(), 0);
 		$item = $data['value']; 
