@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -23,7 +23,8 @@ class Babelfish
 
 		\static
 	*/
-	function host() {
+	function host()
+	{
 		if (isset($_SERVER['HTTP_HOST'])) {
 			// HTTP_HOST already includes a ':port' if it is used
 			return $_SERVER['HTTP_HOST'];
@@ -57,9 +58,10 @@ class Babelfish
 
 		\static
 	*/
-	function url($lang_from, $lang_to) {
- 	        $lang_from = substr($lang_from,0,2);
-		$lang_to = substr($lang_to,0,2);
+	function url($lang_from, $lang_to)
+	{
+		$lang_from = substr($lang_from, 0, 2);
+		$lang_to = substr($lang_to, 0, 2);
 
 		static $url_map = array(
 			'en'	=> 'english',
@@ -96,8 +98,9 @@ class Babelfish
 
 		\static
 	*/
-	function links($lang_from = 'en') {
- 	        $lang_from = substr($lang_from,0,2);
+	function links($lang_from = 'en')
+	{
+		$lang_from = substr($lang_from, 0, 2);
 
 		static $fishes = array(
 			'en' => array(	# English
@@ -160,10 +163,11 @@ class Babelfish
 		
 		\static
 	*/
-	function logo($lang = 'en') {
- 	    $lang = substr($lang,0,2);
+	function logo($lang = 'en')
+	{
+ 		$lang = substr($lang, 0, 2);
 
-	static $s = "<script type=\"text/javascript\" charset=\"UTF-8\" language=\"JavaScript1.2\" src=\"http://uk.babelfish.yahoo.com/free_trans_service/babelfish2.js\"></script> ";
+		static $s = "<script type=\"text/javascript\" charset=\"UTF-8\" language=\"JavaScript1.2\" src=\"http://uk.babelfish.yahoo.com/free_trans_service/babelfish2.js\"></script> ";
 
 		$lang = strtolower($lang);
 

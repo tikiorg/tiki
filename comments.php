@@ -20,7 +20,7 @@
 //smarty is not there - we need setup
 require_once('tiki-setup.php');  
 global $access, $tikilib, $headerlib;
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 /* 
  * Determine the settings used to display the thread

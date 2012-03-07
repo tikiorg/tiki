@@ -85,9 +85,7 @@ class Rating_AggregationTest extends TikiTestCase
 		$lib->record_user_vote('abc', 'test', 112, 3, time() - 1000);
 		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum', array(
-			'range' => 2500,
-		)));
+		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum', array('range' => 2500)));
 	}
 
 	function testIgnoreAnonymous()
@@ -98,9 +96,7 @@ class Rating_AggregationTest extends TikiTestCase
 		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
 		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array(
-			'ignore' => 'anonymous',
-		)));
+		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array('ignore' => 'anonymous')));
 	}
 
 	function testKeepLatest()
@@ -111,20 +107,11 @@ class Rating_AggregationTest extends TikiTestCase
 		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1500);
 		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals(6.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'latest',
-		)));
+		$this->assertEquals(6.0, $lib->collect('test', 111, 'sum', array('keep' => 'latest')));
 
-		$this->assertEquals(3.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'latest',
-			'range' => 1200,
-		)));
+		$this->assertEquals(3.0, $lib->collect('test', 111, 'sum', array('keep' => 'latest', 'range' => 1200)));
 
-		$this->assertEquals(0.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'latest',
-			'range' => 1200,
-			'ignore' => 'anonymous',
-		)));
+		$this->assertEquals(0.0, $lib->collect('test', 111, 'sum', array('keep' => 'latest', 'range' => 1200,	'ignore' => 'anonymous')));
 	}
 
 	function testKeepOldest()
@@ -135,20 +122,11 @@ class Rating_AggregationTest extends TikiTestCase
 		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
 		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000);
 
-		$this->assertEquals(8.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'oldest',
-		)));
+		$this->assertEquals(8.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest')));
 
-		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'oldest',
-			'range' => 2500,
-		)));
+		$this->assertEquals(5.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'range' => 2500)));
 
-		$this->assertEquals(2.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'oldest',
-			'range' => 2500,
-			'ignore' => 'anonymous',
-		)));
+		$this->assertEquals(2.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'range' => 2500,	'ignore' => 'anonymous')));
 	}
 
 	function testConsiderPerPeriod()
@@ -159,15 +137,14 @@ class Rating_AggregationTest extends TikiTestCase
 		$lib->record_user_vote('abc', 'test', 111, 3, time() - 1000);
 		$lib->record_anonymous_vote('deadbeef01234567', 'test', 111, 3, time() - 1000); // kept
 
-		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array(
-			'keep' => 'oldest',
-			'revote' => 2500,
-		)));
+		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'revote' => 2500)));
 
-		$this->assertEquals(10 / 3, $lib->collect('test', 111, 'avg', array(
-			'keep' => 'oldest',
-			'revote' => 2500,
-		)), '', 1 / 1000);
+		$this->assertEquals(
+						10 / 3,
+						$lib->collect('test', 111, 'avg', array('keep' => 'oldest', 'revote' => 2500)),
+						'',
+						1 / 1000
+		);
 	}
 }
 

@@ -46,7 +46,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: /index.php");
   exit;
 }
@@ -75,10 +75,10 @@ class MetricsLib extends TikiDb_Bridge
 	 * @return associated array $key => $value
 	 * 		metric_id => associative array of SQL table representing metric
 	 */
-	function getAllMetrics() {
-		$query = "SELECT *
-					FROM metrics_metric";
-		$result = $this->query($query,array());
+	function getAllMetrics()
+	{
+		$query = 'SELECT * FROM metrics_metric';
+		$result = $this->query($query, array());
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$res = $this->_metricConvertValues($res);
@@ -95,10 +95,10 @@ class MetricsLib extends TikiDb_Bridge
 	 * 		assigned_id => associative array of SQL table representing 
 	 * 		assigned metric
 	 */
-	function getAllMetricsAssigned() {
-		$query = "SELECT *
-					FROM metrics_assigned";
-		$result = $this->query($query,array());
+	function getAllMetricsAssigned()
+	{
+		$query = 'SELECT * FROM metrics_assigned';
+		$result = $this->query($query, array());
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[$res['assigned_id']] = $res;
@@ -113,10 +113,11 @@ class MetricsLib extends TikiDb_Bridge
 	 * @return associated array $key => $value
 	 * 		tab_id => associative array of SQL table representing tab
 	 */
-	function getAllTabs() {
+	function getAllTabs()
+	{
 		$query = "SELECT *
 					FROM metrics_tab ORDER BY tab_order";
-		$result = $this->query($query,array());
+		$result = $this->query($query, array());
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[$res['tab_id']] = $res;
@@ -129,7 +130,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * Get range array.
 	 * @return global $AR_RANGE
 	 */
-	function getMetricsRangeAll() {
+	function getMetricsRangeAll()
+	{
 		global $AR_RANGE;
 		return $AR_RANGE;
 	}
@@ -138,7 +140,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * Get datatype array.
 	 * @return global $AR_DATATYPE
 	 */
-	function getMetricsDatatypeAll() {
+	function getMetricsDatatypeAll()
+	{
 		global $AR_DATATYPE;
 		return $AR_DATATYPE;
 	}
@@ -156,14 +159,14 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param string $metric_query SQL query string
 	 * @return query result
 	 */
-	function createUpdateMetric($metric_id, $metric_name, $metric_range, $metric_datatype, $metric_query, $metric_dsn = 'local') {
+	function createUpdateMetric($metric_id, $metric_name, $metric_range, $metric_datatype, $metric_query, $metric_dsn = 'local')
+	{
 		$values = array($metric_name, $metric_range, $metric_datatype, $metric_query, $metric_dsn);
 		
 		if (empty($metric_id) || (!is_numeric($metric_id))) {
 			$query = "INSERT INTO `metrics_metric` (`metric_id`, `metric_name`, `metric_range`, `metric_datatype`, `metric_lastupdate`, `metric_query`, `metric_dsn`)
 					VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
-		}
-		else {
+		} else {
 			$query = "UPDATE `metrics_metric` SET `metric_name` = ?, `metric_range` = ?, `metric_datatype` = ?, `metric_lastupdate` = CURRENT_TIMESTAMP, `metric_query` = ?, `metric_dsn` = ? WHERE `metric_id` = ?";
 			$values[] = $metric_id;
 		}
@@ -177,7 +180,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $metric_id id of metric to remove
 	 * @return query result
 	 */
-	function removeMetricById($metric_id) {
+	function removeMetricById($metric_id)
+	{
 		$query = "DELETE FROM `metrics_metric` WHERE `metric_id` = ?";
 		return $this->query($query, array($metric_id), 1);
 	}
@@ -187,7 +191,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $assigned_id id of assigned metric to remove
 	 * @return query result
 	 */
-	function removeMetricAssignedById($assigned_id) {
+	function removeMetricAssignedById($assigned_id)
+	{
 		$query = "DELETE FROM `metrics_assigned` WHERE `assigned_id` = ?";
 		return $this->query($query, array($assigned_id), 1);
 	}
@@ -203,14 +208,14 @@ class MetricsLib extends TikiDb_Bridge
 	 * 		smarty parsed
 	 * @return query result
 	 */
-	function createUpdateTab($tab_id, $tab_name, $tab_order, $tab_content) {
+	function createUpdateTab($tab_id, $tab_name, $tab_order, $tab_content)
+	{
 		$values = array($tab_name, $tab_order, $tab_content);
 		
 		if (empty($tab_id) || (!is_numeric($tab_id))) {
 			$query = "INSERT INTO `metrics_tab` (`tab_id`, `tab_name`, `tab_order`, `tab_content`)
 					VALUES (NULL, ?, ?, ?)";
-		}
-		else {
+		} else {
 			$query = "UPDATE `metrics_tab` SET `tab_name` = ?, `tab_order` = ?, `tab_content` = ? WHERE `tab_id` = ?";
 			$values[] = $tab_id;
 		}
@@ -227,14 +232,14 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $tab_id id of tab
 	 * @return query result
 	 */
-	function createUpdateMetricAssigned($metric_assigned_id, $metric_id, $tab_id) {
+	function createUpdateMetricAssigned($metric_assigned_id, $metric_id, $tab_id)
+	{
 		$values = array($metric_id, $tab_id);
 		
 		if (empty($metric_assigned_id) || (!is_numeric($metric_assigned_id))) {
 			$query = "INSERT INTO `metrics_assigned` (`assigned_id`, `metric_id`, `tab_id`)
 					VALUES (NULL, ?, ?)";
-		}
-		else {
+		} else {
 			$query = "UPDATE `metrics_assigned` SET `metric_id` = ?, `tab_id` = ? WHERE `assigned_id` = ?";
 			$values[] = $metric_assigned_id;
 		}
@@ -247,7 +252,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $tab_id id of tab to remove
 	 * @return query result
 	 */
-	function removeTabById($tab_id) {
+	function removeTabById($tab_id)
+	{
 		$query = "DELETE FROM metrics_tab WHERE `tab_id` = ?";
 		return $this->query($query, array($tab_id), 1);
 	}
@@ -257,7 +263,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $metric_id id of metric
 	 * @return associative array representing SQL row in table.
 	 */
-	function getMetricById($metric_id) {
+	function getMetricById($metric_id)
+	{
 		$query = "SELECT *
 				FROM metrics_metric
 				WHERE metric_id = ?";
@@ -273,7 +280,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $metric_name name of metric
 	 * @return associative array representing SQL row in table.
 	 */
-	function getMetricByName($metric_name) {
+	function getMetricByName($metric_name)
+	{
 		$query = "SELECT *
 				FROM metrics_metric
 				WHERE metric_name = ?";
@@ -289,7 +297,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $tab_id id of tab
 	 * @return associative array representing SQL row in table.
 	 */
-	function getTabById($tab_id) {
+	function getTabById($tab_id)
+	{
 		$query = "SELECT *
 				FROM metrics_tab
 				WHERE tab_id = ?";
@@ -303,7 +312,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $tab_name name of tab
 	 * @return associative array representing SQL row in table.
 	 */
-	function getTabByName($tab_name) {
+	function getTabByName($tab_name)
+	{
 		$query = "SELECT *
 				FROM metrics_tab
 				WHERE tab_name = ?";
@@ -317,7 +327,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $assigned_id id of assigned metric
 	 * @return associative array representing SQL row in table.
 	 */
-	function getMetricAssignedById($assigned_id) {
+	function getMetricAssignedById($assigned_id)
+	{
 		$query = "SELECT *
 				FROM metrics_assigned
 				WHERE assigned_id = ?";
@@ -331,11 +342,12 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param integer $tab_id id of tab
 	 * @return associative array representing SQL row in table.
 	 */
-	function getAssignedMetricsByTabId($tab_id) {
+	function getAssignedMetricsByTabId($tab_id) 
+	{
 		$query = "SELECT *
 				FROM metrics_assigned NATURAL JOIN metrics_metric
 				WHERE tab_id = ?";
-		$result = $this->query($query,array($tab_id));
+		$result = $this->query($query, array($tab_id));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$res = $this->_metricConvertValues($res);
@@ -351,7 +363,8 @@ class MetricsLib extends TikiDb_Bridge
 	 * @param array $res associative array of row
 	 * @return same associative array, modified
 	 */
-	function _metricConvertValues($res) {
+	function _metricConvertValues($res)
+	{
 		global $AR_DATATYPE, $AR_RANGE;
 		$res['metric_range_id'] = $res['metric_range'];
 		$res['metric_datatype_id'] = $res['metric_datatype'];
@@ -360,7 +373,8 @@ class MetricsLib extends TikiDb_Bridge
 		return $res;
 	}
 	
-	function getMetricsData( $tab_info, $range_type, $converted_range, $date_field = 'date_field' ) {
+	function getMetricsData( $tab_info, $range_type, $converted_range, $date_field = 'date_field' )
+	{
 		global $prefs, $tikilib;
 
 		$date_from = $converted_range['date_from'];
@@ -371,15 +385,17 @@ class MetricsLib extends TikiDb_Bridge
 		//build the date range
 		//handle pastresults
 		if ($prefs['metrics_pastresults'] == 'y') {
-			$date_from_past = date(DEFAULT_DATE_FORMAT, strtotime("-" . $prefs['metrics_pastresults_count'] . ' '
-					. $timeperiod, strtotime($date_from)));
+			$date_from_past = date(
+							DEFAULT_DATE_FORMAT,
+							strtotime("-" . $prefs['metrics_pastresults_count'] . ' '. $timeperiod, strtotime($date_from))
+			);
 			$date_range = "(`$date_field` >= '$date_from_past' AND `$date_field` <= '$date_to')";
 		} else {
 			$date_range = "(`$date_field` <= '$date_to')";
 		}
 
 		//get assigned metrics
-		$metrics = $this->getAssignedMetricsByTabId( $tab_info['tab_id'] );
+		$metrics = $this->getAssignedMetricsByTabId($tab_info['tab_id']);
 
 		$m = array();
 		$m_id = array();
@@ -399,8 +415,8 @@ class MetricsLib extends TikiDb_Bridge
 				$q = str_replace('$range_groupby$', $range_groupby, $q);
 			}
 			
-			if( $db = $tikilib->get_db_by_name( $metric['metric_dsn'] ) ) {
-				$temp_result = $db->fetchAll( $q );
+			if ( $db = $tikilib->get_db_by_name($metric['metric_dsn']) ) {
+				$temp_result = $db->fetchAll($q);
 				$m[$n]['result'] = $temp_result;
 				$m[$n]['range'] = $metric['metric_range'];
 				$m[$n]['range_id'] = $metric['metric_range_id'];

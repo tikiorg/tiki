@@ -1330,13 +1330,13 @@ class TikiLib extends TikiDb_Bridge
 				if ($libname) {
 					$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
 				}
-				break;
+    			break;
 			case 'u':
 				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
 				$foo = parse_url($_SERVER['REQUEST_URI']);
-				$content = file_get_contents(self::httpPrefix( true ) . dirname( $foo['path']) . '/' . $path);
+				$content = file_get_contents(self::httpPrefix(true) . dirname($foo['path']) . '/' . $path);
 				if (empty($content)) 
-					break;
+   				break;
 
 				if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 					global $tikidomain;
@@ -1352,7 +1352,7 @@ class TikiLib extends TikiDb_Bridge
 			case 'n':
 			default:
 				$ret = '';
-				break;
+    			break;
 		}
 		return $ret;
 	}
@@ -5232,7 +5232,8 @@ JS;
 		return $out;
 	}
 	
-	public function getSlideshowTheme($theme) {
+	public function getSlideshowTheme($theme)
+	{
 		global $prefs;
 	
 		$result = array();
@@ -5252,7 +5253,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#333';
 				$result['listItemHighlightColor'] = '#363636';
-				break;
+    			break;
 			case "uidarkness":
 				$result['backgroundColor'] = '#333';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5260,7 +5261,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
 				$result['listItemHighlightColor'] = '#1C94C4';
-				break;
+    			break;
 			case "smoothness": 
 				$result['backgroundColor'] = '#E6E6E6';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5268,7 +5269,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#222';
 				$result['listItemHighlightColor'] = '';
-				break;
+    			break;
 			case "start":
 				$result['backgroundColor'] = '#2191c0';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5276,7 +5277,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
 				$result['listItemHighlightColor'] = '#77D5F7';
-				break;
+    			break;
 			case "redmond": 
 				$result['backgroundColor'] = '#C5DBEC';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5284,7 +5285,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#222';
 				$result['listItemHighlightColor'] = '#E17009';
-				break;
+    			break;
 			case "sunny": 
 				$result['backgroundColor'] = '#FEEEBD';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5292,7 +5293,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#383838';
 				$result['listItemHighlightColor'] = '#4C3000';
-				break;
+    			break;
 			case "overcast": 
 				$result['backgroundColor'] = '#C9C9C9';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5300,7 +5301,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#333';
 				$result['listItemHighlightColor'] = '#599FCF';
-				break;
+    			break;
 			case "lefrog": 
 				$result['backgroundColor'] = '#285C00';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5308,7 +5309,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
 				$result['listItemHighlightColor'] = '#F9DD34';
-				break;
+    			break;
 			case "flick": 
 				$result['backgroundColor'] = '#DDD';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5316,7 +5317,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#444';
 				$result['listItemHighlightColor'] = '#FF0084';
-				break;
+    			break;
 			case "peppergrinder": 
 				$result['backgroundColor'] = '#ECEADF';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5324,7 +5325,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#1F1F1F';
 				$result['listItemHighlightColor'] = '#B83400';
-				break;
+    			break;
 			case "eggplant": 
 				$result['backgroundColor'] = '#3D3644';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5332,7 +5333,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
 				$result['listItemHighlightColor'] = '#FFDB1F';
-				break;
+    			break;
 			case "darkhive": 
 				$result['backgroundColor'] = '#444';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5340,7 +5341,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
 				$result['listItemHighlightColor'] = '#2E7DB2';
-				break;
+    			break;
 			case "cupertino": 
 				$result['backgroundColor'] = '#D7EBF9';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5348,7 +5349,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#362B36';
 				$result['listItemHighlightColor'] = '#2694E8';
-				break;
+    			break;
 			case "southstreet": 
 				$result['backgroundColor'] = '#F5F3E5';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5356,7 +5357,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#312E25';
 				$result['listItemHighlightColor'] = '#459E00';
-				break;
+    			break;
 			case "blitzer": 
 				$result['backgroundColor'] = '#EEE';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5364,7 +5365,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#333';
 				$result['listItemHighlightColor'] = '#004276';
-				break;
+    			break;
 			case "humanity": 
 				$result['backgroundColor'] = '#EDE4D4';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5372,7 +5373,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#1E1B1D';
 				$result['listItemHighlightColor'] = '#592003';
-				break;
+    			break;
 			case "hotsneaks": 
 				$result['backgroundColor'] = '#35414F';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5380,7 +5381,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#93C3CD';
 				$result['listItemHighlightColor'] = '#DB4865';
-				break;
+    			break;
 			case "excitebike": 
 				$result['backgroundColor'] = '#EEE';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5388,7 +5389,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#1484E6';
 				$result['listItemHighlightColor'] = '#2293F7';
-				break;
+    			break;
 			case "vader": 
 				$result['backgroundColor'] = '#121212';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5396,7 +5397,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#EEE';
 				$result['listItemHighlightColor'] = '#ADADAD';
-				break;
+    			break;
 			case "dotluv": 
 				$result['backgroundColor'] = '#111';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5404,7 +5405,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#D9D9D9';
 				$result['listItemHighlightColor'] = '#0b58a2';
-				break;
+    			break;
 			case "mintchoc": 
 				$result['backgroundColor'] = '#453326';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5412,7 +5413,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#ffffff';
 				$result['listItemHighlightColor'] = '#619226';
-				break;
+    			break;
 			case "blacktie": 
 				$result['backgroundColor'] = '#333333';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5420,7 +5421,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#eeeeee';
 				$result['listItemHighlightColor'] = '#ffeb80';
-				break;
+    			break;
 			case "trontastic": 
 				$result['backgroundColor'] = '#222222';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5428,7 +5429,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#ffffff';
 				$result['listItemHighlightColor'] = '#f1fbe5';
-				break;
+    			break;
 			case "swankypurse": 
 				$result['backgroundColor'] = '#261803';
 				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
@@ -5436,7 +5437,7 @@ JS;
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#efec9f';
 				$result['listItemHighlightColor'] = '#d5ac5d';
-				break;
+    			break;
 		}
 		
 		return $result;
@@ -5585,7 +5586,8 @@ function validate_email($email)
 	return $validate->isValid($email);
 }
 
-function makeBool($val, $default) {
+function makeBool($val, $default)
+{
 	if (isset($val) && !empty($val)) {
 		$val = ($val == 'y' ? 'true' : 'false');
 	} else {

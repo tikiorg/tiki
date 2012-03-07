@@ -9,7 +9,7 @@
 require_once('tiki-setup.php');
 global $modlib; include_once('lib/modules/modlib.php');
 global $access;
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+$access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');

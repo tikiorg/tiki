@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
@@ -28,9 +28,9 @@ $dbTiki = ADONewConnection($db_tiki);
 if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	require_once 'lib/init/smarty.php';
 
-	$smarty->assign( 'msg', $dbTiki->ErrorMsg() );
-	$smarty->assign( 'where', 'connection');
-	echo $smarty->fetch( 'database-connection-error.tpl' );
+	$smarty->assign('msg', $dbTiki->ErrorMsg());
+	$smarty->assign('where', 'connection');
+	echo $smarty->fetch('database-connection-error.tpl');
 	exit;
 }
 
@@ -57,12 +57,13 @@ if (!@$dbTiki->Execute('select login from users_users limit 1')) {
 	include_once('tiki-install.php');
 }
 
-if( ! function_exists( 'close_connection' ) ) {
-	function close_connection() {
+if ( ! function_exists('close_connection') ) {
+	function close_connection()
+	{
 		global $dbTiki;
 		$dbTiki->Close();
 	}
 }
 
 require_once 'lib/core/TikiDb/Adodb.php';
-TikiDb::set( new TikiDb_Adodb( $dbTiki ) );
+TikiDb::set(new TikiDb_Adodb($dbTiki));

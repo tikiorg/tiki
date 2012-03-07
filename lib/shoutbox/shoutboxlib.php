@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -15,7 +15,8 @@ require_once 'lib/socialnetworkslib.php';
 
 class ShoutboxLib extends TikiLib
 {
-	function list_shoutbox($offset, $maxRecords, $sort_mode, $find) {
+	function list_shoutbox($offset, $maxRecords, $sort_mode, $find)
+	{
 		global $prefs;
 		$parserlib = TikiLib::lib('parser');
 		
@@ -29,8 +30,8 @@ class ShoutboxLib extends TikiLib
 
 		$query = "select * from `tiki_shoutbox` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_shoutbox` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -44,7 +45,7 @@ class ShoutboxLib extends TikiLib
 				// we replace urls starting with http(s)|ftp(s) to active links
 				$res["message"] = preg_replace("/((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "<a href=\"\\0\">\\0</a>", $res["message"]);
 				// we replace also urls starting with www. only to active links
-				$res["message"] = preg_replace("/(?<!http|ftp)(?<!s)(?<!:\/\/)(www\.[^ )\s\r\n]+)/i","<a href=\"http://\\0\">\\0</a>",$res["message"]);
+				$res["message"] = preg_replace("/(?<!http|ftp)(?<!s)(?<!:\/\/)(www\.[^ )\s\r\n]+)/i", "<a href=\"http://\\0\">\\0</a>", $res["message"]);
 				// we replace also urls longer than 30 chars with translantable string as link description instead the URL itself to prevent breaking the layout in some browsers (e.g. Konqueror)
 				$res["message"] = preg_replace("/(<a href=\")((http|ftp)+(s)?:\/\/[^\"]+)(\">)([^<]){30,}<\/a>/i", "<a href=\"\\2\">[".tra('Link')."]</a>", $res["message"]);        
       }
@@ -64,19 +65,21 @@ class ShoutboxLib extends TikiLib
 		return $retval;
 	}
 
-	function tweet($message, $user, $msgId) {
+	function tweet($message, $user, $msgId)
+	{
 		global $prefs, $socialnetworkslib;
 		
-		$id=$socialnetworkslib->tweet($message,$user);
+		$id=$socialnetworkslib->tweet($message, $user);
 		if ($id>0) {
 		    $query="update `tiki_shoutbox` set `tweetId`=? where `user`=? and `msgId`=?";
 		    $bindvars=array($id,$user,$msgId);
-		    $this->query($query,$bindvars);
+		    $this->query($query, $bindvars);
 		}
 		return $id;
 	}
 
-	function replace_shoutbox($msgId, $user, $message, $tweet=false, $facebook=false) {
+	function replace_shoutbox($msgId, $user, $message, $tweet=false, $facebook=false)
+	{
 		$message = strip_tags($message);
 
 		// Check Message for containing bad/banned words
@@ -108,37 +111,39 @@ class ShoutboxLib extends TikiLib
 		} else {
 			$query = "delete from `tiki_shoutbox` where `user`=? and `timestamp`=? and `hash`=?";
 			$bindvars = array($user,(int)$this->now,$hash);
-			$this->query($query,$bindvars);
+			$this->query($query, $bindvars);
 			$query = "insert into `tiki_shoutbox`(`message`,`user`,`timestamp`,`hash`) values(?,?,?,?)";
 			$bindvars = array($message,$user,(int)$this->now,$hash);
 		}
 
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars);
 		if ($tweet) {
 			$msgId=$this->lastInsertId();
-			$this->tweet($message,$user, $msgId);
+			$this->tweet($message, $user, $msgId);
 		}
 		if ($facebook) {
 			global $socialnetworkslib; require_once('lib/socialnetworkslib.php');
-			$fbreply=$socialnetworkslib->facebookWallPublish($user,$message);
+			$fbreply=$socialnetworkslib->facebookWallPublish($user, $message);
 		}
 		return true;
 	}
 
-	function remove_shoutbox($msgId) {
+	function remove_shoutbox($msgId)
+	{
 		global $socialnetworkslib, $user;
-		$tweetId=$this->getOne("select `tweetId` from `tiki_shoutbox` where `msgId`=?",array($msgId));
+		$tweetId=$this->getOne("select `tweetId` from `tiki_shoutbox` where `msgId`=?", array($msgId));
 		if ($tweetId>0) {
-			$socialnetworkslib->destroyTweet($tweetId,$user);
+			$socialnetworkslib->destroyTweet($tweetId, $user);
 		}
 		$query = "delete from `tiki_shoutbox` where `msgId`=?";
-		$result = $this->query($query,array((int)$msgId));
+		$result = $this->query($query, array((int)$msgId));
 		return true;
 	}
 
-	function get_shoutbox($msgId) {
+	function get_shoutbox($msgId)
+	{
 		$query = "select * from `tiki_shoutbox` where `msgId`=?";
-		$result = $this->query($query,array((int)$msgId));
+		$result = $this->query($query, array((int)$msgId));
 		if (!$result->numRows()) {
 			return false;
 		}
@@ -146,48 +151,48 @@ class ShoutboxLib extends TikiLib
 		return $res;
 	}
 
-        function get_bad_words($offset = 0, $maxRecords = -1, $sort_mode = 'word_asc', $find = '') {
-
-                if ($find) {
-                        $findesc = "%$find%";
+	function get_bad_words($offset = 0, $maxRecords = -1, $sort_mode = 'word_asc', $find = '')
+	{
+		if ($find) {
+			$findesc = "%$find%";
 			$mid = " where `word` like ?";
-                        $bindvars = array($findesc);
-                } else {
-                        $mid = '';
-                        $bindvars = array();
-                }
+			$bindvars = array($findesc);
+		} else {
+			$mid = '';
+			$bindvars = array();
+		}
 
-                $query = "select * from `tiki_shoutbox_words` $mid order by ".$this->convertSortMode($sort_mode);
-                $query_cant = "select count(*) from `tiki_shoutbox_words` $mid";
-                $result = $this->query($query,$bindvars,$maxRecords,$offset);
-                $cant = $this->getOne($query_cant,$bindvars);
-                $ret = array();
+		$query = "select * from `tiki_shoutbox_words` $mid order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_shoutbox_words` $mid";
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
+		$ret = array();
+		
+		while ($res = $result->fetchRow()) {
+		        $ret[] = $res;
+		}
+		
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
 
-                while ($res = $result->fetchRow()) {
-                        $ret[] = $res;
-                }
+	function add_bad_word($word)
+	{
+		$word = addslashes($word);
+		
+		$query = "delete from `tiki_shoutbox_words` where `word`=?";
+		$result = $this->query($query, array($word));
+		$query = "insert into `tiki_shoutbox_words` (`word`) values(?)";
+		$result = $this->query($query, array($word));
+		return true;
+	}
 
-                $retval = array();
-                $retval["data"] = $ret;
-                $retval["cant"] = $cant;
-                return $retval;
-        }
-
-        function add_bad_word($word) {
-                $word = addslashes($word);
-
-                $query = "delete from `tiki_shoutbox_words` where `word`=?";
-                $result = $this->query($query,array($word));
-                $query = "insert into `tiki_shoutbox_words` (`word`) values(?)";
-                $result = $this->query($query,array($word));
-                return true;
-        }
-
-        function remove_bad_word($word) {
-                $query = "delete from `tiki_shoutbox_words` where `word`=?";
-                $result = $this->query($query,array($word));
-        }
-
-
+	function remove_bad_word($word)
+	{
+		$query = "delete from `tiki_shoutbox_words` where `word`=?";
+		$result = $this->query($query, array($word));
+	}
 }
 $shoutboxlib = new ShoutboxLib;

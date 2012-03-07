@@ -225,7 +225,7 @@ class TikiAccessLib extends TikiLib
 	/**
 	 *  Check whether script was called directly or included
 	 *  err and die if called directly
-	 *  Typical usage: $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+	 *  Typical usage: $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 	 * 
 	 *  if feature_redirect_on_error is active, then just goto the Tiki HomePage as configured
 	 *  in Admin->General. -- Damian

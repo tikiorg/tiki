@@ -11,7 +11,8 @@
 
 class WYSIWYGLib
 {
-	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true) {
+	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true) 
+	{
 
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');

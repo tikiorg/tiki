@@ -7,8 +7,8 @@
 
 require_once ('tiki-setup.php');
 
-$access->check_permission( 'tiki_p_admin' );
-$access->check_feature( 'feature_metrics_dashboard' );
+$access->check_permission('tiki_p_admin');
+$access->check_feature('feature_metrics_dashboard');
 
 require_once 'lib/admin/adminlib.php';
 require_once("lib/metrics/metricslib.php");
@@ -19,33 +19,33 @@ $metric_datatype_all = $metricslib->getMetricsDatatypeAll();
 $smarty->assign('metric_datatype_all', $metric_datatype_all);
 $headerlib->add_cssfile("css/metrics.css");
 
-$dsn_list = $adminlib->list_dsn( 0, -1, 'name_asc', '' );
+$dsn_list = $adminlib->list_dsn(0, -1, 'name_asc', '');
 $smarty->assign('dsn_list', $dsn_list['data']);
 
 /* Edit or delete a metric */
 if (isset($_REQUEST["metric_submit"])) {
 	if (empty($_REQUEST["metric_name"])) {
-	    $smarty->assign('msg',tra("Cannot create or update metric: You need to specify a name for the metric."));
+	    $smarty->assign('msg', tra("Cannot create or update metric: You need to specify a name for the metric."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	if (strlen($_REQUEST["metric_name"]) > $prefs['metrics_metric_name_length']) {
-	    $smarty->assign('msg',tr("Cannot create or update metric: Metric name must be under %0 characters in length.", $prefs['metrics_metric_name_length']));
+	    $smarty->assign('msg', tr("Cannot create or update metric: Metric name must be under %0 characters in length.", $prefs['metrics_metric_name_length']));
 	    $smarty->display("error.tpl");
 	    die;	
 	}
 	if (empty($_REQUEST["metric_range"])) {
-	    $smarty->assign('msg',tra("Cannot create or update metric: You need to specify a range for the metric."));
+	    $smarty->assign('msg', tra("Cannot create or update metric: You need to specify a range for the metric."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	if (empty($_REQUEST["metric_datatype"])) {
-	    $smarty->assign('msg',tra("Cannot create or update metric: You need to specify a data type for the metric."));
+	    $smarty->assign('msg', tra("Cannot create or update metric: You need to specify a data type for the metric."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	if (empty($_REQUEST["metric_query"])) {
-	    $smarty->assign('msg',tra("Cannot create or update metric: You need to specify a query for the metric."));
+	    $smarty->assign('msg', tra("Cannot create or update metric: You need to specify a query for the metric."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
@@ -60,12 +60,11 @@ if (isset($_REQUEST["metric_submit"])) {
 	if (empty($_POST['metric_id']) || (!is_numeric($_POST['metric_id']))) {
 		//create
 		$metric_id = NULL;
-		$logslib->add_log('adminmetrics','created metric '.$_REQUEST["metric_name"]);
-	}
-	else {
+		$logslib->add_log('adminmetrics', 'created metric '.$_REQUEST["metric_name"]);
+	} else {
 		//update
 		$metric_id = $_POST['metric_id'];
-		$logslib->add_log('adminmetrics','updated metric '.$_REQUEST["metric_name"]);
+		$logslib->add_log('adminmetrics', 'updated metric '.$_REQUEST["metric_name"]);
 	}
 	$smarty->assign('metric_id', $metric_id);
 	$metricslib->createUpdateMetric($metric_id, $_REQUEST["metric_name"], $_REQUEST["metric_range"], $_REQUEST["metric_datatype"], $_REQUEST["metric_query"], $_REQUEST['metric_dsn']);
@@ -74,23 +73,23 @@ if (isset($_REQUEST["metric_submit"])) {
 /* Edit or delete a tab */
 if (isset($_REQUEST["tab_submit"])) {
 	if (empty($_REQUEST["tab_name"])) {
-	    $smarty->assign('msg',tra("Cannot create or update tab: You need to specify a name for the tab."));
+	    $smarty->assign('msg', tra("Cannot create or update tab: You need to specify a name for the tab."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	if (strlen($_REQUEST["tab_name"]) > $prefs['metrics_tab_name_length']) {
-	    $smarty->assign('msg',tr("Cannot create or update tab: Tab name must be under %0 characters in length.", $prefs['metrics_tab_name_length']));
+	    $smarty->assign('msg', tr("Cannot create or update tab: Tab name must be under %0 characters in length.", $prefs['metrics_tab_name_length']));
 	    $smarty->display("error.tpl");
 	    die;	
 	}
 	if (empty($_REQUEST["tab_order"]) || (!is_numeric($_REQUEST['tab_order']))) {
-	    $smarty->assign('msg',tra("Cannot create or update tab: You need to specify an integer range for the tab order."));
+	    $smarty->assign('msg', tra("Cannot create or update tab: You need to specify an integer range for the tab order."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	
 	if (empty($_REQUEST["tab_content"])) {
-	    $smarty->assign('msg',tra("Cannot create or update tab: Tab content cannot be empty."));
+	    $smarty->assign('msg', tra("Cannot create or update tab: Tab content cannot be empty."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
@@ -102,12 +101,11 @@ if (isset($_REQUEST["tab_submit"])) {
 	if (empty($_POST['tab_id']) || (!is_numeric($_POST['tab_id']))) {
 		//create
 		$tab_id = NULL;
-		$logslib->add_log('adminmetrics','created tab '.$_REQUEST["tab_name"]);
-	}
-	else {
+		$logslib->add_log('adminmetrics', 'created tab '.$_REQUEST["tab_name"]);
+	} else {
 		//update
 		$tab_id = $_POST['tab_id'];
-		$logslib->add_log('adminmetrics','updated tab '.$_REQUEST["tab_name"]);
+		$logslib->add_log('adminmetrics', 'updated tab '.$_REQUEST["tab_name"]);
 	}
 	$smarty->assign('tab_id', $tab_id);
 	$metricslib->createUpdateTab($tab_id, $_REQUEST["tab_name"], $_REQUEST["tab_order"], $_REQUEST["tab_content"]);
@@ -122,7 +120,7 @@ if (isset($_REQUEST["metric_remove"])) {
 		die;
 	}
 	$metricslib->removeMetricById($_REQUEST["metric_remove"]);
-	$logslib->add_log('adminmetrics','removed metric '.$_REQUEST["metric_remove"]);
+	$logslib->add_log('adminmetrics', 'removed metric '.$_REQUEST["metric_remove"]);
 }
 
 /* Remove a tab */
@@ -134,7 +132,7 @@ if (isset($_REQUEST["tab_remove"])) {
 		die;
 	}
 	$metricslib->removeTabById($_REQUEST["tab_remove"]);
-	$logslib->add_log('adminmetrics','removed tab '.$_REQUEST["tab_remove"]);
+	$logslib->add_log('adminmetrics', 'removed tab '.$_REQUEST["tab_remove"]);
 }
 
 /* Remove an assignment */
@@ -146,7 +144,7 @@ if (isset($_REQUEST["assign_remove"])) {
 		die;
 	}
 	$metricslib->removeMetricAssignedById($_REQUEST["assign_remove"]);
-	$logslib->add_log('adminmetrics','unassigned '.$_REQUEST["tab_remove"]);
+	$logslib->add_log('adminmetrics', 'unassigned '.$_REQUEST["tab_remove"]);
 }
 
 /* Edit a metric */
@@ -194,22 +192,21 @@ $use_memcache = $memcachelib && $memcachelib->isEnabled()
     && $memcachelib->getOption('cache_metrics_output');
 $smarty->assign('use_memcache', $use_memcache);
 if (isset($_REQUEST["tab_clearcache"])) {
-    if (!$use_memcache) {
-        $smarty->assign('msg', tra('Memcache is disabled for metrics.'));
-        $smarty->display('error.tpl');
-        die;
-    }
-    check_ticket('admin-metrics');
-    if (!is_numeric($_REQUEST["tab_clearcache"])) {
-        $smarty->assign('msg', tra('tab_clearcache must be a numeric value'));
-        $smarty->display('error.tpl');
-        die;
-    }
-    $memcachelib->delete($memcachelib->buildKey(array(
-        'role'       => 'metrics-tab-output',
-        'tab_id'     => $_REQUEST["tab_clearcache"]
-    )));
-    $logslib->add_log('adminmetrics','cleared cache for tab '.$_REQUEST["tab_clearcache"]);
+	if (!$use_memcache) {
+		$smarty->assign('msg', tra('Memcache is disabled for metrics.'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	check_ticket('admin-metrics');
+	if (!is_numeric($_REQUEST["tab_clearcache"])) {
+		$smarty->assign('msg', tra('tab_clearcache must be a numeric value'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$memcachelib->delete(
+					$memcachelib->buildKey(array('role' => 'metrics-tab-output', 'tab_id' => $_REQUEST["tab_clearcache"]))
+	);
+	$logslib->add_log('adminmetrics', 'cleared cache for tab '.$_REQUEST["tab_clearcache"]);
 }
 
 /* Assign a metric to a tab */
@@ -260,12 +257,11 @@ if (isset($_REQUEST["assign"])) {
 	if (empty($_POST['assigned_id']) || (!is_numeric($_POST['assigned_id']))) {
 		//create
 		$assigned_id = NULL;
-		$logslib->add_log('adminmodules','assigned new metric '.$_REQUEST["assign_metric"]);
-	}
-	else {
+		$logslib->add_log('adminmodules', 'assigned new metric '.$_REQUEST["assign_metric"]);
+	} else {
 		//update
 		$assigned_id = $_POST['assigned_id'];
-		$logslib->add_log('adminmodules','reassigned metric '.$_REQUEST["assign_metric"] . ' (assigned_id = ' .$assigned_id .')');
+		$logslib->add_log('adminmodules', 'reassigned metric '.$_REQUEST["assign_metric"] . ' (assigned_id = ' .$assigned_id .')');
 	}
 	$smarty->assign('assigned_id', $assigned_id);
 

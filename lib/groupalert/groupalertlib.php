@@ -9,7 +9,7 @@
  groupalert is used to select user of groups to send alert email (groupware notification)
 */
 
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
