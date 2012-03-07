@@ -679,8 +679,8 @@ a.toolbar {			/* each tool button */
 }
 
 .toolbars-picker a {
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 	display: inline-block;
 	border: #fff 1px solid;
 	overflow: hidden;
@@ -805,7 +805,7 @@ h3.box-title {
 
 .box-months_links ul {
 	list-style-type: none;
-	padding-left: 0px;
+	padding-left: 0;
 }
 
 .box-months_links ul li {
@@ -1008,7 +1008,7 @@ tr.diffheader {
 	padding: 4px;
 	top: 0;
 	border-top: none;
-	margin: 0px;
+	margin: 0;
 }
 
 .tabcontent table {
@@ -1056,7 +1056,7 @@ tr.diffheader {
 		content that could contain floated elements */
 .hrwikibottom {
 	clear: both;
-	height: 0px;
+	height: 0;
 	visibility: hidden;
 }
 
@@ -1622,7 +1622,7 @@ body.filegal_popup #tiki-center {
 /***** Trackers (etc.) *****/
 .statuson,
 .statusoff {
-	padding: 3px 2px 0px 2px;
+	padding: 3px 2px 0 2px;
 	vertical-align: middle;
 	height: 15px;
 }
@@ -1699,7 +1699,7 @@ body.filegal_popup #tiki-center {
 }
 
 .catlists_title {
-	padding: 10px 5px 5px 0px;
+	padding: 10px 5px 5px 0;
 	display: block;
 }
 
@@ -2218,9 +2218,9 @@ div.aclabel, span.aclabel, label.aclabel {
 }
 .backlinks_button li.tabmark {
 	background: none;
-	border: 0px;
-	top: 0px;
-	padding: 0px;
+	border: 0;
+	top: 0;
+	padding: 0;
 }
 .backlinks_button .clearfix:after {
 	display: inline-block;
@@ -2247,9 +2247,9 @@ div.aclabel, span.aclabel, label.aclabel {
 }
 .structure_select li.tabmark {
 	background: none;
-	border: 0px;
-	top: 0px;
-	padding: 0px;
+	border: 0;
+	top: 0;
+	padding: 0;
 }
 .structure_select .clearfix:after {
 	display: inline-block;
@@ -2282,21 +2282,21 @@ div.aclabel, span.aclabel, label.aclabel {
 }
 .lang_select .cssmenu_horiz li.tabmark {
 	background: none;
-	border: 0px;
+	border: 0;
 	color: inherit;
-	padding: 0px;
-	top:0px;
+	padding: 0;
+	top:0;
 }
 .lang_select .cssmenu_horiz .tabmark  span {
 	background: none;
 	position: relative;
 	display: inline-block;
-	margin: 0px;
-	padding: 0px;
-	top: 0px;
-	bottom:0px;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	bottom:0;
 	left: 1px;
-	right: 0px;
+	right: 0;
 }
 .lang_select li.tabmark .popup_base a {
 	color: inherit;
@@ -2306,16 +2306,16 @@ div.aclabel, span.aclabel, label.aclabel {
 	font-size: 1.1em;
 	font-style: italic;
 	font-weight: normal;
-	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
 	padding-top: 1px;
-	padding-left: 0px;
+	padding-left: 0;
 	padding-bottom: 1px;
 	vertical-align: baseline;
 }
 .lang_select .tabcontent h1 a {
 	padding-left: 2px;
-	margin-left: 0px;
+	margin-left: 0;
 	font-style: normal;
 }
 
