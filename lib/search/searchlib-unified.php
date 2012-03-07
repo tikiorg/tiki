@@ -63,7 +63,7 @@ class UnifiedSearchLib
 
 	private function rebuildInProgress() {
 		global $prefs;
-		$tempName = $prefs['unified_lucene_location'] . '-new';
+		$tempName = $this->getIndexLocation() . '-new';
 
 		return file_exists($tempName);
 	}
@@ -71,8 +71,9 @@ class UnifiedSearchLib
 	function rebuild($loggit = false)
 	{
 		global $prefs;
-		$tempName = $prefs['unified_lucene_location'] . '-new';
-		$swapName = $prefs['unified_lucene_location'] . '-old';
+		$index_location = $this->getIndexLocation();
+		$tempName = $index_location . '-new';
+		$swapName = $index_location . '-old';
 
 		if ($prefs['unified_engine'] == 'lucene') {
 			$index = new Search_Index_Lucene($tempName);
@@ -94,11 +95,11 @@ class UnifiedSearchLib
 
 		if ($prefs['unified_engine'] == 'lucene') {
 			// Current to -old
-			if (file_exists($prefs['unified_lucene_location'])) {
-				rename($prefs['unified_lucene_location'], $swapName);
+			if (file_exists($index_location)) {
+				rename($index_location, $swapName);
 			}
 			// -new to current
-			rename($tempName, $prefs['unified_lucene_location']);
+			rename($tempName, $index_location);
 
 			// Destroy old
 			$this->destroyDirectory($swapName);
@@ -108,6 +109,22 @@ class UnifiedSearchLib
 		$this->processUpdateQueue(1000);
 
 		return $stat;
+	}
+
+	/**
+	 * Get the index location depending on $tikidomain for multi-tiki
+	 *
+	 * @return string	path to index directory
+	 */
+
+	private function getIndexLocation() {
+		global $prefs, $tikidomain;
+		$loc = $prefs['unified_lucene_location'];
+		$temp = $prefs['tmpDir'];
+		if (!empty($tikidomain) && strpos($loc, $tikidomain) === false && strpos($loc, "$temp/") === 0) {
+			$loc = str_replace("$temp/", "$temp/$tikidomain/", $loc);
+		}
+		return $loc;
 	}
 
 	function invalidateObject($type, $objectId)
@@ -259,7 +276,7 @@ class UnifiedSearchLib
 
 		if ($prefs['unified_engine'] == 'lucene') {
 			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
-			$index = new Search_Index_Lucene($prefs['unified_lucene_location'], $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
+			$index = new Search_Index_Lucene($this->getIndexLocation(), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
 			$index->setMaxResults($prefs['unified_lucene_max_result']);
 			$index->setResultSetLimit($prefs['unified_lucene_max_resultset_limit']);
