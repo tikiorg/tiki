@@ -844,7 +844,8 @@ class ModLib extends TikiLib
 				}
 				$smarty->assign('tpl_module_name', $mod_reference['name']);
 				
-				$tpl_module_style = '';
+				$tpl_module_style = empty($mod_reference['module_style']) ? '' : $mod_reference['module_style'];
+
 				if ($tiki_p_admin == 'y' && $this->is_admin_mode() && (!$this->filter_active_module($mod_reference) ||
 							$prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))))) {
 					$tpl_module_style .= 'opacity: 0.5;';

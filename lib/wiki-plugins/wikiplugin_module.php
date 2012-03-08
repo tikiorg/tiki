@@ -103,7 +103,14 @@ function wikiplugin_module_info()
 					array('text' => tra('Show title'), 'value' => 'n'), 
 					array('text' => tra('Hide title'), 'value' => 'y')
 				)
-			)
+			),
+			'module_style' => array(
+				'required' => false,
+				'name' => tra('Module Style'),
+				'description' => tra('Inline CSS for the containing DIV element, e.g. "max-width:80%"'),
+				'default' => '',
+				'advanced' => true,
+			),
 		)
 	);
 }
@@ -164,6 +171,10 @@ function wikiplugin_module($data, $params)
 			'ord' => null,
 			'cache_time'=> 0,
 		);
+
+		if (!empty($module_style)) {
+			$module_reference['module_style'] = $module_style;
+		}
 
 		global $modlib; require_once 'lib/modules/modlib.php';
 		$out = $modlib->execute_module($module_reference);
