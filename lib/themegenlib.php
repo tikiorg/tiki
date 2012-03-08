@@ -242,7 +242,8 @@ class ThemeGenLib
 
 		$smarty->assign_by_ref('tg_data', $this->tg_data);
 
-		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
+		$tg_css_files = $this->setupCSSFiles();
+		$smarty->assign_by_ref('tg_css_files', $tg_css_files);
 		$smarty->assign_by_ref('tg_css_file', $css_file);
 
 		if (($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_REQUEST['tg_open_dialog']))) {
@@ -268,18 +269,15 @@ class ThemeGenLib
 
 	public function setupCSSFiles ()
 	{
-		global $tikilib, $prefs, $tikipath, $style_base;
+		global $tikilib, $prefs, $style_base;
 
 		$css_files = array('' => tra('Select...'));
-		$css = '';
 
 		if (!empty($prefs['style_option']) && $prefs['style_option'] !== tra('None')) {
 			$css_files[$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])] = $style_base . '/' . $prefs['style_option'];
-			$css .= file_get_contents($tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
 		}
 
-		$css_files[$tikilib->get_style_path() . $prefs['style']] = $prefs['style'];
-		$css .= file_get_contents($tikilib->get_style_path() . $prefs['style']);
+		$css_files[$tikilib->get_style_path('', '', $prefs['style'])] = $prefs['style'];
 
 		// shame - doesn't work on @imported files, might be a way with minified on...
 		//		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $css, $parts );
