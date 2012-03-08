@@ -88,6 +88,7 @@ class TikiSecure
 	
 	private function newKeys()
 	{
+		set_time_limit(30000);
 		$path = get_include_path();
 		set_include_path("lib/phpseclib/");
 		require_once('Crypt/RSA.php');
@@ -110,36 +111,24 @@ class TikiSecure
 		return $keys;
 	}
 	
-	static function timestamp($hash, $data = "", $requester = "", $type = "file")
+	static function timestamp($hash, $clientTime = "", $requester = "")
 	{
-		$me = new self($requester);
-		$me->type = $type;
+		$me = new self($requester, 2048);
+		$keys = $me->getKeys();
 		
-		return json_encode(array(
-			"timestamp"=> urlencode($me->encrypt(json_encode(array(
-				"hash"=>		$hash,
-				"data"=>		$data,
-				"date"=>		time(),
-				"authority"=>	urlencode(TikiLib::tikiUrl())
-			)))),
-			"authority"=> TikiLib::tikiUrl(),
-			"requester"=> $requester
-		));
+		return (object)array(
+			"timestamp"=> 	urlencode($me->encrypt($hash . $clientTime . time())),
+			"authority"=> 	TikiLib::tikiUrl(),
+			"requester"=> 	$requester,
+			"publickey"=> 	$keys->publickey,
+			"href"=>		TikiLib::tikiUrl() . "tiki-tskeys.php"
+		);
 	}
 	
-	static function openTimestamp($timestamp, $requester = "", $type = "file")
+	static function openTimestamp($timestamp = array(), $requester)
 	{
-		$me = new self($requester);
-		$me->type = $type;
-		
-		$timestampArray = json_decode($timestamp);
-		
-		if (!empty($timestampArray->timestamp)) {
-			$timestampArray->timestamp = json_decode($me->decrypt(urldecode($timestampArray->timestamp)));
-			$timestampArray->authority = urldecode($timestampArray->authority);
-			return $timestampArray;
-		} else {
-			return $me->decrypt($timestamp);
-		}
+		$me = new self($requester, 2048);
+		$timestamp->timestamp = $me->decrypt($timestamp->timestamp);
+		return $timestamp;
 	}
 }
