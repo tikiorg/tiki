@@ -212,8 +212,8 @@ foreach ( $qtlist as $name ) {
 }
 
 $headerlib->add_js(
-				"var toolbarsadmin_rowStr = '" . substr(implode(",#row-", range(0, $rowCount)), 2) .
-				"'var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';" .
+				"var toolbarsadmin_rowStr = '" . substr(implode(",#row-", range(0, $rowCount)), 2) . "';" .
+				"var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';" .
 				"var toolbarsadmin_delete_text = '" . tra('Are you sure you want to delete this custom tool?') . "'\n"
 );
 
