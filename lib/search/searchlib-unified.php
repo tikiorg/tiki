@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -50,18 +50,22 @@ class UnifiedSearchLib
 					$queuelib->push(self::INCREMENT_QUEUE, $message);
 				}
 
-				$errlib->report(tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
-								'<br />' . $e->getMessage());
+				$errlib->report(
+								tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
+								'<br />' . $e->getMessage()
+				);
 			}
 		}
 	}
 
-	function getQueueCount() {
+	function getQueueCount()
+	{
 		$queuelib = TikiLib::lib('queue');
 		return $queuelib->count(self::INCREMENT_QUEUE);
 	}
 
-	private function rebuildInProgress() {
+	private function rebuildInProgress()
+	{
 		global $prefs;
 		$tempName = $this->getIndexLocation() . '-new';
 
@@ -116,23 +120,27 @@ class UnifiedSearchLib
 	 *
 	 * @return string	path to index directory
 	 */
-
-	private function getIndexLocation() {
+	private function getIndexLocation()
+	{
 		global $prefs, $tikidomain;
 		$loc = $prefs['unified_lucene_location'];
 		$temp = $prefs['tmpDir'];
 		if (!empty($tikidomain) && strpos($loc, $tikidomain) === false && strpos($loc, "$temp/") === 0) {
 			$loc = str_replace("$temp/", "$temp/$tikidomain/", $loc);
 		}
+
 		return $loc;
 	}
 
 	function invalidateObject($type, $objectId)
 	{
-		TikiLib::lib('queue')->push(self::INCREMENT_QUEUE, array(
-			'object_type' => $type,
-			'object_id' => $objectId
-		));
+		TikiLib::lib('queue')->push(
+						self::INCREMENT_QUEUE,
+						array(
+							'object_type' => $type,
+							'object_id' => $objectId
+						)
+		);
 	}
 
 	public function getSupportedTypes()
@@ -147,7 +155,7 @@ class UnifiedSearchLib
 		if ($prefs['feature_blogs'] == 'y') {
 			$types['blog post'] = tra('blog post');
 		}
-		
+
 		if ($prefs['feature_articles'] == 'y') {
 			$types['article'] = tra('article');
 		}
@@ -171,7 +179,8 @@ class UnifiedSearchLib
 		if ($prefs['feature_wiki_comments'] == 'y'
 			|| $prefs['feature_article_comments'] == 'y'
 			|| $prefs['feature_poll_comments'] == 'y'
-			|| $prefs['feature_file_galleries_comments'] == 'y') {
+			|| $prefs['feature_file_galleries_comments'] == 'y'
+		) {
 			$types['comment'] = tra('comment');
 		}
 
@@ -183,7 +192,7 @@ class UnifiedSearchLib
 		global $prefs;
 		$indexer = new Search_Indexer($index, $loggit);
 		$this->addSources($indexer);
-		
+
 		if ($prefs['unified_tokenize_version_numbers'] == 'y') {
 			$indexer->addContentFilter(new Search_ContentFilter_VersionNumber);
 		}
@@ -330,7 +339,7 @@ class UnifiedSearchLib
 				$i++;
 				$jail_query .= $cat;
 				if ($i < count($jail)) {
-					$jail_query .= " or ";
+					$jail_query .= ' or ';
 				}
 			}
 			$query->filterCategory($jail_query, true);
@@ -358,7 +367,7 @@ class UnifiedSearchLib
 
 		if (isset($filter['language']) && $filter['language']) {
 			$q = $filter['language'];
-			if (preg_match("/^\w+\-\w+$/", $q)) {
+			if (preg_match('/^\w+\-\w+$/', $q)) {
 				$q = "\"$q\"";
 			}
 
@@ -396,10 +405,10 @@ class UnifiedSearchLib
 					continue;
 				}
 
-				if (is_dir($path . "/" . $file)) {
-					$this->destroyDirectory($path . "/" . $file);
+				if (is_dir($path . '/' . $file)) {
+					$this->destroyDirectory($path . '/' . $file);
 				} else {
-					unlink($path . "/" . $file);
+					unlink($path . '/' . $file);
 				}
 			}
 			closedir($dir);
