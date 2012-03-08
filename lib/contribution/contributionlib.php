@@ -91,7 +91,7 @@ class ContributionLib extends TikiLib
 
 	function get_assigned_contributions($itemId, $objectType)
 	{
-		$query = 'select tc.* from `tiki_contributions` tc, `tiki_contributions_assigned` tca, `tiki_objects` tobi' .
+		$query = 'select tc.* from `tiki_contributions` tc, `tiki_contributions_assigned` tca, `tiki_objects` tob' .
 						' where tob.`itemId`=? and tob.`type`=? and tca.`objectId`=tob.`objectId` and tca.`contributionId`= tc.`contributionId`' .
 						' order by tob.`type`desc, tc.`name` asc';
 
