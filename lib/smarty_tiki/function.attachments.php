@@ -100,10 +100,12 @@ function smarty_function_attachments($params, $template)
 
 	if ( empty($galleryId) || ! $gal_info = $filegallib->get_file_gallery($galleryId) ) {
 		$smarty->loadPlugin('smarty_block_remarksbox');
+		$repeat = false;
 		return smarty_block_remarksbox(
-						array('type' => 'errors', 'title' => tra('Wrong attachments gallery')),
-						tra('You are attempting to display a gallery that is not a valid attachment gallery') . ' (ID=' . $galleryId . ')',
-						$smarty
+			array('type' => 'errors', 'title' => tra('Wrong attachments gallery')),
+			tra('You are attempting to display a gallery that is not a valid attachment gallery') . ' (ID=' . $galleryId . ')',
+			$smarty,
+			$repeat
 		) . "\n";
 	}
 

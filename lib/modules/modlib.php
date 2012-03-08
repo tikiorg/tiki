@@ -886,12 +886,15 @@ class ModLib extends TikiLib
 			} else {
 				$message = tr('Contact the system administrator');
 			}
+			$repeat = false;
 			return smarty_block_remarksbox(
-							array(
-								'type' => 'warning',
-								'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
-							),
-							$message, $smarty
+				array(
+					'type' => 'warning',
+					'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
+				),
+				$message,
+				$smarty,
+				$repeat
 			);
 		}
 	}
