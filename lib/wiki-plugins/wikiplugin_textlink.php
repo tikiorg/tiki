@@ -13,6 +13,7 @@ function wikiplugin_textlink_info()
 		'description' => tra('Links your article to a site using forwardlink protocol'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
 		'icon' => 'img/icons/link.png',
+		'body' => tra('Text to link to forwardlink'),
 		'params' => array(			
 			'clipboarddata' => array(
 				'required' => true,
@@ -38,24 +39,27 @@ function wikiplugin_textlink($data, $params)
 	
 	$clipboarddata->href = urldecode($clipboarddata->href);
 	
+	$phraser = new JisonParser_Phraser_Handler();
+	$id = implode("", $phraser->sanitizeToWords($data));
+	
 	Feed_Remote_ForwardLink_Contribution::add(array(
 		"page"=> $page,
 		"forwardLink"=> $clipboarddata,
 		"textlink"=> array(
 			"text"=> $data,
-			"href"=> $tikilib->tikiUrl() . "tiki-index.php?page=$page#textlink$i"
+			"href"=> $tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id
 		)
 	));
-	
+	$data = htmlspecialchars($data);
 	$date = $tikilib->get_short_date($clipboarddata->date);
 	if (!empty($clipboarddata->href)) {
 		$headerlib
 			->add_jsfile("lib/jquery/tablesorter/jquery.tablesorter.js")
-			->add_cssfile("lib/jquery/tablesorter/themes/blue/style.css")
+			->add_cssfile("lib/jquery_tiki/tablesorter/themes/tiki/style.css")
 			->add_jq_onready(<<<JQ
 				$('#page-data').bind('rangyDone', function() {
-					$('#textlink$i').click(function() {
-						var forwardLinkTable = $('<table class="tablesorter">' +
+					$('#$id').click(function() {
+						var forwardLinkTable = $('<div><table class="tablesorter">' +
 							'<thead>' + 
 								'<tr>' +
 									'<th>' + tr('Date') + '</th>' +
@@ -68,8 +72,10 @@ function wikiplugin_textlink($data, $params)
 									'<td><a href="$clipboarddata->href" class="forwardLinkRead">Read</a></td>' + 
 								'</tr>' +
 							'</tbody>' +
-						'</table>')
-							.dialog()
+						'</table></div>')
+							.dialog({
+								title: tr("ForwardLinks To: ") + "$data"
+							})
 							.tablesorter();
 						
 						forwardLinkTable.find('.forwardLinkRead').click(function() {
@@ -86,7 +92,7 @@ function wikiplugin_textlink($data, $params)
 JQ
 		);
 		
-    	return "~np~<span class='textlink'>~/np~".$data."~np~</span><a href='" .$clipboarddata->href ."' id='textlink$i'>*</a>~/np~";
+    	return "~np~<span class='textlink'>~/np~".$data."~np~</span><a href='" .$clipboarddata->href ."' id='" . $id . "'>*</a>~/np~";
 	} else {
     	return $data;
     }

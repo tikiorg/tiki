@@ -31,7 +31,16 @@ Class Feed_ForwardLink extends Feed_Abstract
 			}
 			
 			echo json_encode($response);
-			die;
+			exit();
+		}
+		
+		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == "timestamp") {
+			$client = new Zend_Http_Client("http://localhost/tiki/trunk/tiki-timestamp.php", array('timeout' => 60));
+			$client->setParameterGet("hash", $_REQUEST['hash']);
+			$client->setParameterGet("clienttime", time());
+			$response = $client->request();
+			echo $response->getBody();
+			exit();
 		}
 		
 		$phrase = (!empty($_REQUEST['phrase']) ? htmlspecialchars($_REQUEST['phrase']) : '');
@@ -130,7 +139,6 @@ JQ
 		$wikiAttributes = TikiLib::lib("trkqry")
 			->tracker("Wiki Attributes")
 			->byName()
-			->excludeDetails()
 			->filter(array(
 				'field'=> 'Type',
 				'value'=> 'Question'
@@ -173,7 +181,8 @@ JQ
 			->render(false)
 			->query()));
 		
-		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . urlencode($args['object']);
+		$page = urlencode($args['object']);
+		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 		$version = $args['version'];
 		$date = $args['lastModif'];
 		//print_r( $prefs );
@@ -190,6 +199,7 @@ JQ
 				.css('top', '0px')
 				.css('right', '0px')
 				.css('font-size', '10px')
+				.css('z-index', 99999)
 				.fadeTo(0, 0.85)
 				.button()
 				.click(function() {
@@ -253,7 +263,7 @@ JQ
 								
 								function getAnswers() {
 									if (!answers.length) {
-										return accept();
+										return acceptPhrase();
 									}
 									
 									var answersDialog = $('<div />');
@@ -274,7 +284,8 @@ JQ
 										});
 										
 										answersDialog.dialog('close');
-										accept();
+										
+										acceptPhrase();
 									};
 									
 									answersDialog.dialog({
@@ -284,7 +295,25 @@ JQ
 									});
 								}
 								
-								function accept() {
+								//var timestamp = '';
+								
+								function acceptPhrase() {
+									/* Will integrate when timestamping works
+									$.modal(tr("Please wait while we process your request..."));
+									$.getJSON("tiki-index.php", {
+										action: "timestamp",
+										hash: hash,
+										page: '$page'
+									}, function(json) {
+										timestamp = json;
+										$.modal();
+										makeClipboardData();
+									});
+									*/
+									makeClipboardData();
+								}
+								
+								function makeClipboardData() {
 									var data = {
 										websiteTitle: '$websiteTitle',
 										websiteSubtitle: '',
@@ -311,6 +340,7 @@ JQ
 									var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
 										.val(encodeURI(JSON.stringify(data)))
 										.appendTo(forwardLinkCopy);
+									
 									forwardLinkCopy.dialog({
 										title: tr("Copy This"),
 										modal: true,
@@ -343,9 +373,6 @@ JQ
 									
 									
 									$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
-									
-									if (me.box)
-										me.box.dialog('close');
 								}
 							})
 							.appendTo('body');
@@ -353,5 +380,52 @@ JQ
 			});
 JQ
 );
+		//check if profile is created
+		$trackerId = TikiLib::lib("trk")->get_tracker_by_name("Wiki Attributes");
+		if ($trackerId < 1) {
+			$headerlib->add_jq_onready(<<<JQ
+				var addQuestionsButton = $('<span class="button"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add ForwardLink Questions') + '</a></span>')
+					.appendTo('#page-bar');
+JQ
+			);
+		} else {
+		
+			$wikiPerms = Perms::get( array( 'type' => 'wiki page', 'object' => $args['object'] ) );
+			$trackerPerms = Perms::get( array( 'type' => 'tracker', 'object' => $args['object'] ) );
+			$questions = json_encode($wikiAttributes);
+			$questionsCount = count($wikiAttributes);
+			
+			if( $wikiPerms->edit ) {
+				$headerlib->add_jq_onready(<<<JQ
+					var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink Questions") + '</a></span>')
+						.click(function() {
+							if (!$questionsCount) {
+								return true;
+							}
+							
+							var questionBox = $('<table style="width: 100%;" />');
+							var questions = $questions;
+							$.each(questions, function() {
+								$('<tr>')
+									.append('<td>' + this.Value + '</td>')
+									.append('<td title="' + tr("Edit") + '"><a href="tiki-view_tracker_item.php?itemId=' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
+									.appendTo(questionBox);
+							});
+							var questionBoxOptions = {
+								title: "Edit ForwardLink Questions",
+									modal: true,
+									buttons: {}
+							};
+							questionBoxOptions.buttons[tr("New")] = function () {
+								document.location = 'tiki-view_tracker.php?cookietab=2&trackerId=' + $trackerId;
+							};
+							questionBox.dialog(questionBoxOptions);
+							return false;
+						})
+						.appendTo('#page-bar');
+JQ
+				);
+			}
+		}
 	}
 }
