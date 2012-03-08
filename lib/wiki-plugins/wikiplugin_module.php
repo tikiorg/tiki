@@ -9,7 +9,6 @@ function wikiplugin_module_info()
 {
 	global $lang;
 
-	$smarty = TikiLib::lib('smarty');
 	$modlib = TikiLib::lib('mod');
 	$cachelib = TikiLib::lib('cache');
 
@@ -111,7 +110,7 @@ function wikiplugin_module_info()
 
 function wikiplugin_module($data, $params)
 {
-	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $module_params;
+	static $instance = 0;
 
 	$out = '';
 	
@@ -150,12 +149,14 @@ function wikiplugin_module($data, $params)
 
 		$out .= '</select></form>';
 	} else {
-		if (!isset($args)) {
-			$args = '';
+
+		$instance++;
+		if (empty($moduleId)) {
+			$moduleId = 'wikiplugin_' . $instance;
 		}
 
 		$module_reference = array(
-			'moduleId' => null,
+			'moduleId' => $moduleId,
 			'name' => $module,
 			'params' => $params,
 			'rows' => $max,
