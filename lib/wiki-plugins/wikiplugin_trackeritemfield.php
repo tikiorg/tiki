@@ -217,6 +217,9 @@ function wikiplugin_trackeritemfield($data, $params) {
 
 		if (($val = $trklib->get_item_value($trackerId, $itemId, $fieldId)) !== false) {
 			if ($test) { 
+				if (!empty($value) && $val != $value) {
+					return $dataelse;
+				}
 				return $data;
 			} else {
 				$field['value'] = $val;
