@@ -1,6 +1,6 @@
-<?php 
+<?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,25 +9,29 @@ class Validators
 {
 	private $input;
 
-	function __construct() {
+	function __construct()
+	{
 		global $prefs;
 		$this->available = $this->get_all_validators();
 	}
-	
-	function setInput($input) {
+
+	function setInput($input)
+	{
 		$this->input = $input;
 		return true;
 	}
-	
-	function getInput() {
+
+	function getInput()
+	{
 		if (isset($this->input)) {
-			return $this->input;		
+			return $this->input;
 		} else {
 			return false;
 		}
 	}
-	
-	function validateInput( $validator, $parameter = '', $message = '' ) {
+
+	function validateInput( $validator, $parameter = '', $message = '' )
+	{
 		include_once('lib/validators/validator_' . $validator . '.php');
 		if (!function_exists("validator_$validator") || !isset($this->input)) {
 			return false;
@@ -36,21 +40,23 @@ class Validators
 		$result = $func_name($this->input, $parameter, $message);
 		return $result;
 	}
-	
-	private function get_all_validators() {
+
+	private function get_all_validators()
+	{
 		$validators = array();
-		foreach ( glob( 'lib/validators/validator_*.php' ) as $file ) {
-			$base = basename( $file );
-			$validator = substr( $base, 10, -4 );
+		foreach ( glob('lib/validators/validator_*.php') as $file ) {
+			$base = basename($file);
+			$validator = substr($base, 10, -4);
 			$validators[] = $validator;
 		}
 		return $validators;
 	}
-	
-	function generateTrackerValidateJS( $fields_data, $prefix = "ins_", $custom_rules = '', $custom_messages = '' ) {
+
+	function generateTrackerValidateJS( $fields_data, $prefix = 'ins_', $custom_rules = '', $custom_messages = '' )
+	{
 		$validationjs = 'rules: { ';
 		foreach ($fields_data as $field_value) {
-			if ($field_value['validation'] || $field_value['isMandatory'] == 'y') {				
+			if ($field_value['validation'] || $field_value['isMandatory'] == 'y') {
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
 				if ($field_value['isMandatory'] == 'y') {
 					if ($field_value['type'] == 'D') {
@@ -58,7 +64,7 @@ class Validators
 					} else if ($field_value['type'] == 'A') {
 						$validationjs .= 'required_tracker_file: [1, ".file_'.$prefix.$field_value['fieldId'].'"], ';
 					} else {
-						$validationjs .= 'required: true, ';		
+						$validationjs .= 'required: true, ';
 					}
 				}
 				if ($field_value['validation']) {
@@ -87,14 +93,14 @@ class Validators
 					$validationjs .= '} } } ';
 				} else {
 					// remove last comma (not supported in IE7)
-                	$validationjs = rtrim($validationjs, " ,");
+					$validationjs = rtrim($validationjs, ' ,');
 				}
 				$validationjs .= '}, ';
 			}
 		}
 		$validationjs .= $custom_rules;
 		// remove last comma (not supported in IE7)
-		$validationjs = rtrim($validationjs, " ,"); 
+		$validationjs = rtrim($validationjs, ' ,');
 		$validationjs .= '}, ';
 		$validationjs .= 'messages: { ';
 		foreach ($fields_data as $field_value) {
@@ -110,7 +116,7 @@ class Validators
 		}
 		$validationjs .= $custom_messages;
 		// remove last comma (not supported in IE7)
-        $validationjs = rtrim($validationjs, " ,");
+		$validationjs = rtrim($validationjs, ' ,');
 		$validationjs .= '} ';
 		return $validationjs;
 	}

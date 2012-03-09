@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,13 +10,14 @@ class PdfGenerator
 	private $mode;
 	private $location;
 
-	function __construct() {
+	function __construct()
+	{
 		global $prefs;
 		$this->mode = 'none';
 
 		if ( $prefs['print_pdf_from_url'] == 'webkit' ) {
 			$path = $prefs['print_pdf_webkit_path'];
-			if ( ! empty( $path ) && is_executable( $path ) ) {
+			if ( ! empty($path) && is_executable($path) ) {
 				$this->mode = 'webkit';
 				$this->location = $path;
 			}
@@ -28,39 +29,44 @@ class PdfGenerator
 		}
 	}
 
-	function getPdf( $file, array $params ) {
+	function getPdf( $file, array $params )
+	{
 		global $prefs, $base_url, $tikiroot;
 
 		if ( $prefs['auth_token_access'] == 'y' ) {
 			$perms = Perms::get();
 
 			require_once 'lib/auth/tokens.php';
-			$tokenlib = AuthTokens::build( $prefs );
-			$params['TOKEN'] = $tokenlib->createToken( $tikiroot . $file, $params, $perms->getGroups(), array(
-				'timeout' => 60,
-			) );
+			$tokenlib = AuthTokens::build($prefs);
+			$params['TOKEN'] = $tokenlib->createToken(
+							$tikiroot . $file, $params, $perms->getGroups(),
+							array('timeout' => 60,)
+			);
 		}
 
-		$url = $base_url . $file . '?' . http_build_query( $params, '', '&' );
+		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
 
 		return $this->{$this->mode}( $url );
 	}
 
-	private function none( $url ) {
+	private function none( $url )
+	{
 		return null;
 	}
 
-	private function webkit( $url ) {
-		$arg = escapeshellarg( $url );
+	private function webkit( $url )
+	{
+		$arg = escapeshellarg($url);
 
 		return `{$this->location} $arg -`;
 	}
 
-	private function webservice( $url ) {
+	private function webservice( $url )
+	{
 		global $tikilib;
 
 		$target = $this->location . '?' . $url;
-		return $tikilib->httprequest( $target );
+		return $tikilib->httprequest($target);
 	}
 }
 
