@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,8 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 
 /**
- * TikiAccessLib 
- * 
+ * TikiAccessLib
+ *
  * @uses TikiLib
  *
  */
@@ -67,8 +67,8 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
-	 * check_feature: Checks if a feature or a list of features are activated 
-	 * 
+	 * check_feature: Checks if a feature or a list of features are activated
+	 *
 	 * @param string or array $features If just a string, this method will only test that one. If an array, all features will be tested
 	 * @param string $feature_name Name that will be printed on the error screen
 	 * @param string $relevant_admin_panel Admin panel where the feature can be set to 'Y'. This link is provided on the error screen
@@ -90,7 +90,7 @@ class TikiAccessLib extends TikiLib
 		}
 
 		if ( ! is_array($features) ) {
-			$features = array($features); 
+			$features = array($features);
 		}
 
 		if ( $either ) {
@@ -104,7 +104,7 @@ class TikiAccessLib extends TikiLib
 		foreach ($features as $feature) {
 			if ($prefs[$feature] != 'y') {
 				if ($feature_name != '') {
-					$feature = $feature_name; 
+					$feature = $feature_name;
 				}
 				$allowed = false;
 				break;
@@ -115,7 +115,7 @@ class TikiAccessLib extends TikiLib
 			}
 		}
 
-		if ( !$allowed ) {		
+		if ( !$allowed ) {
 			global $smarty;
 
 			if ( $perms->admin ) {
@@ -123,12 +123,12 @@ class TikiAccessLib extends TikiLib
 			}
 
 			$msg = tr(
-							'Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.', 
-							implode(', ', $features) 
+							'Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.',
+							implode(', ', $features)
 			);
 
 			$this->display_error('', $msg, 'no_redirect_login');
-		}		
+		}
 	}
 
 	function check_permission($permissions, $permission_name = '', $objectType = false, $objectId = false)
@@ -141,7 +141,7 @@ class TikiAccessLib extends TikiLib
 
 		foreach ($permissions as $permission) {
 			if (false !== $objectType) {
-				$applicable = Perms::get( $objectType, $objectId );
+				$applicable = Perms::get($objectType, $objectId);
 			} else {
 				$applicable = Perms::get();
 			}
@@ -162,7 +162,7 @@ class TikiAccessLib extends TikiLib
 
 	/**
 	 * check for any one of the permission will be enough
-	 * NOTE that you do NOT have to use this to include admin perms, as admin perms automatically inherit the perms they are admin of 
+	 * NOTE that you do NOT have to use this to include admin perms, as admin perms automatically inherit the perms they are admin of
 	 *
 	 */
 	function check_permission_either($permissions, $permission_name = '')
@@ -182,9 +182,9 @@ class TikiAccessLib extends TikiLib
 		}
 
 		if ( !$allowed ) {
-			if ($permission_name) { 
+			if ($permission_name) {
 				$permission = $permission_name;
-			} else 
+			} else
 				$permission = implode(', ', $permissions);
 
 			$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
@@ -226,10 +226,10 @@ class TikiAccessLib extends TikiLib
 	 *  Check whether script was called directly or included
 	 *  err and die if called directly
 	 *  Typical usage: $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
-	 * 
+	 *
 	 *  if feature_redirect_on_error is active, then just goto the Tiki HomePage as configured
 	 *  in Admin->General. -- Damian
-	 * 
+	 *
 	 */
 	function check_script($scriptname, $page)
 	{
@@ -238,7 +238,7 @@ class TikiAccessLib extends TikiLib
 			if ( !isset($prefs['feature_usability']) || $prefs['feature_usability'] == 'n' ) {
 				$msg = tra("This script cannot be called directly");
 				$this->display_error($page, $msg);
-			} else { 
+			} else {
 				$msg = tr("Page '%0' cannot be found", $page);
 				$this->display_error($page, $msg, "404");
 			}
@@ -247,7 +247,7 @@ class TikiAccessLib extends TikiLib
 
 	/**
 	 *  Checks whether the request was willingly submitted by the user, instead of being triggered by Cross-Site Request Forgery.
-	 *  This uses random tokens. The first call brings to a request confirmation screen with 
+	 *  This uses random tokens. The first call brings to a request confirmation screen with
 	 *   a new token in the form. The second call, in the second request, verifies the submitted token matches.
 	 *  Typical usage: $access->check_authenticity();
 	 *  Warning: this mechanism does not allow passing uploaded files ($_FILES). For that, see check_ticket().
@@ -277,7 +277,7 @@ class TikiAccessLib extends TikiLib
 				return true;
 			}
 			// TODO: Improve feedback and allow proceeding by confirming the request. $_REQUEST needs to be saved and restored.
-			$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.')); 
+			$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.'));
 			$smarty->display("error.tpl");
 			exit();
 		}
@@ -308,7 +308,7 @@ class TikiAccessLib extends TikiLib
 			$detail['message'] = $detail['errortitle'];
 		}
 
-		// Display the template		
+		// Display the template	
 		switch ( $errortype ) {
 			case '404':
 				header("HTTP/1.0 404 Not Found");
@@ -338,8 +338,8 @@ class TikiAccessLib extends TikiLib
 
 			$this->output_serialized($detail);
 		} else {
-			if (($errortype == 401 || $errortype == 403) && 
-						empty($user) && 
+			if (($errortype == 401 || $errortype == 403) &&
+						empty($user) &&
 						($prefs['permission_denied_login_box'] == 'y' || !empty($prefs['permission_denied_url']))
 			) {
 				$_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
@@ -390,7 +390,7 @@ class TikiAccessLib extends TikiLib
 	{
 		global $prefs;
 
-		if ( $url == '' ) 
+		if ( $url == '' )
 			$url = $prefs['tikiIndex'];
 
 		if (trim($msg)) {
@@ -432,7 +432,7 @@ class TikiAccessLib extends TikiLib
 	 * @param array the permissions that needs to be checked against (e.g. tiki_p_view)
 	 *
 	 * @return null if authorized, otherwise an array(msg,header)
-	 *              where msg can be displayed, and header decides whether to 
+	 *              where msg can be displayed, and header decides whether to
 	 *              send 401 Unauthorized headers.
 	 */
 

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -95,7 +95,7 @@ class BigBlueButtonLib
 		global $tikilib, $cachelib, $prefs;
 
 		$params = array_merge(
-						array('logout' => $tikilib->tikiUrl(''),), 
+						array('logout' => $tikilib->tikiUrl(''),),
 						$params
 		);
 
@@ -103,22 +103,26 @@ class BigBlueButtonLib
 				'name' => $room,
 				'meetingID' => $room,
 				'logoutURL' => $params['logout'],
-				);
+		);
 
 		if ( isset($params['welcome']) ) {
 			$request['welcome'] = $params['welcome'];
 		}
+
 		if ( isset($params['number']) ) {
 			$request['dialNumber'] = $params['number'];
 		}
+
 		if ( isset($params['voicebridge']) ) {
 			$request['voiceBridge'] = $params['voicebridge'];
 		} else {
 			$request['voiceBridge'] = '7' . rand(0, 9999);
 		}
+
 		if ( isset($params['logout']) ) {
 			$request['logoutURL'] = $params['logout'];
 		}
+
 		if ( isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported() ) {
 			$request['record'] = 'true';
 			$request['duration'] = $prefs['bigbluebutton_recording_max_duration'];
@@ -182,7 +186,7 @@ class BigBlueButtonLib
 	public function joinRawMeeting( $room, $name, $password )
 	{
 		$url = $this->buildUrl(
-						'join', 
+						'join',
 						array(
 							'meetingID' => $room,
 							'fullName' => $name,
@@ -225,9 +229,9 @@ class BigBlueButtonLib
 		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
 
 		if (parse_url($base, PHP_URL_PATH)) {
-			$url = "$base/api/$action?" . http_build_query( $parameters, '', '&' );
+			$url = "$base/api/$action?" . http_build_query($parameters, '', '&');
 		} else {
-			$url = "$base/bigbluebutton/api/$action?" . http_build_query( $parameters, '', '&' );
+			$url = "$base/bigbluebutton/api/$action?" . http_build_query($parameters, '', '&');
 		}
 		return $url;
 	}
@@ -262,12 +266,13 @@ class BigBlueButtonLib
 		}
 
 		$result = $this->performRequest(
-						'getRecordings', 
+						'getRecordings',
 						array('meetingID' => $room,)
 		);
 
 		$data = array();
 		$recordings = $result->getElementsByTagName('recording');
+
 		foreach ($recordings as $recording) {
 			$recording = simplexml_import_dom($recording);
 			$info = array(
@@ -275,7 +280,7 @@ class BigBlueButtonLib
 					'startTime' => strtotime((string) $recording->startTime),
 					'endTime' => strtotime((string) $recording->endTime),
 					'playback' => array(),
-					);
+			);
 
 			foreach ($recording->playback as $playback) {
 				$info['playback'][ (string) $playback->format->type ] = (string) $playback->format->url;
