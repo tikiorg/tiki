@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,6 +40,7 @@ class OAuthLib extends TikiDb_Bridge
 				$client->setParameterPost($key, $value);
 			}
 		}
+
 		if (isset($arguments['get'])) {
 			foreach ($arguments['get'] as $key => $value) {
 				$client->setParameterGet($key, $value);
@@ -64,10 +65,10 @@ class OAuthLib extends TikiDb_Bridge
 			}
 		} catch (Zend_Oauth_Exception $e) {
 			$oauth_ex = $e->getPrevious();
-			$prevErr = "";
+			$prevErr = '';
 			if ($oauth_ex != null)
 				$prevErr = $oauth_ex->getMessage();
-			die($e->getMessage().". Origin: ".$prevErr);
+			die($e->getMessage() . '. Origin: ' . $prevErr);
 		}
 	}
 
@@ -85,10 +86,10 @@ class OAuthLib extends TikiDb_Bridge
 				unset($_SESSION[$key]);
 			} catch (Zend_Oauth_Exception $e) {
 				$oauth_ex = $e->getPrevious();
-				$prevErr = "";
+				$prevErr = '';
 				if ($oauth_ex != null)
 					$prevErr = $oauth_ex->getMessage();
-				die($e->getMessage().". Origin: ".$prevErr);
+				die($e->getMessage() . '. Origin: ' . $prevErr);
 			}
 		}
 	}
@@ -96,14 +97,14 @@ class OAuthLib extends TikiDb_Bridge
 	private function store_token($provider_key, $accessToken)
 	{
 		$tikilib = TikiLib::lib('tiki');
-		
+
 		$tikilib->set_preference('oauth_token_' . $provider_key, serialize($accessToken));
 	}
 
 	private function retrieve_token($provider_key)
 	{
 		$tikilib = TikiLib::lib('tiki');
-		
+
 		$token = $tikilib->get_preference('oauth_token_' . $provider_key);
 
 		return $token ? unserialize($token) : null;
@@ -117,9 +118,10 @@ class OAuthLib extends TikiDb_Bridge
 		switch ($provider_key) {
 		case 'zotero':
 			return array(
-				'callbackUrl' => $tikilib->tikiUrl('tiki-ajax_services.php', array(
-					'oauth_callback' => $provider_key,
-				)),
+				'callbackUrl' => $tikilib->tikiUrl(
+								'tiki-ajax_services.php',
+								array('oauth_callback' => $provider_key,)
+				),
 				'siteUrl' => 'https://www.zotero.org/oauth',
 				'requestTokenUrl' => 'https://www.zotero.org/oauth/request',
 				'accessTokenUrl' => 'https://www.zotero.org/oauth/access',
@@ -131,7 +133,8 @@ class OAuthLib extends TikiDb_Bridge
 		}
 	}
 
-	private function get_consumer($provider_key) {
+	private function get_consumer($provider_key)
+	{
 		if ($configuration = $this->get_configuration($provider_key)) {
 			return new Zend_Oauth_Consumer($configuration);
 		}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -32,10 +32,13 @@ class ZoteroLib extends TikiDb_Bridge
 		}
 
 		$oauthlib = TikiLib::lib('oauth');
-		$response = $oauthlib->do_request('zotero', array(
-			'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
-			'get' => $arguments,
-		));
+		$response = $oauthlib->do_request(
+						'zotero',
+						array(
+							'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
+							'get' => $arguments,
+						)
+		);
 
 		if ($response && $response->isSuccessful()) {
 			$feed = Zend_Feed_Reader::importString($response->getBody());
@@ -64,7 +67,7 @@ class ZoteroLib extends TikiDb_Bridge
 
 		return false;
 	}
-	
+
 	function get_entry($itemId)
 	{
 		global $prefs;
@@ -78,10 +81,13 @@ class ZoteroLib extends TikiDb_Bridge
 		}
 
 		$oauthlib = TikiLib::lib('oauth');
-		$response = $oauthlib->do_request('zotero', array(
-			'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}/items/" . urlencode($itemId),
-			'get' => $arguments,
-		));
+		$response = $oauthlib->do_request(
+						'zotero',
+						array(
+							'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}/items/" . urlencode($itemId),
+							'get' => $arguments,
+						)
+		);
 
 		if ($response->isSuccessful()) {
 			$entry = $response->getBody();
@@ -121,10 +127,13 @@ class ZoteroLib extends TikiDb_Bridge
 		}
 
 		$oauthlib = TikiLib::lib('oauth');
-		$response = $oauthlib->do_request('zotero', array(
-			'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
-			'get' => $arguments,
-		));
+		$response = $oauthlib->do_request(
+						'zotero',
+						array(
+							'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
+							'get' => $arguments,
+						)
+		);
 
 		if ($response->isSuccessful()) {
 			$entry = $response->getBody();
