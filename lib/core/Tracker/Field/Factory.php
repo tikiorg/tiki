@@ -61,6 +61,8 @@ class Tracker_Field_Factory
 
 		foreach ($paths as $path => $prefix) {
 			foreach (glob("$path/*.php") as $file) {
+				if ($file === "$path/index.php")
+					continue;
 				$class = $prefix . substr($file, strlen($path) + 1, -4);
 				$reflected = new ReflectionClass($class);
 

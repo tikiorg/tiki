@@ -722,9 +722,10 @@ class PreferencesLib
 	{
 		$files = array();
 		foreach ( glob('lib/prefs/*.php') as $file ) {
+			if ($file === "lib/prefs/index.php")
+				continue;
 			$files[] = substr(basename($file), 0, -4);
 		}
-
 		return $files;
 	}
 

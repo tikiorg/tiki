@@ -13,6 +13,8 @@ function prefs_shipping_list()
 	$custom_providers = array( '' => tra('None'));
 
 	foreach ( $all as $file ) {
+		if ($file === "lib/shipping/custom/index.php")
+			continue;
 		$name = basename($file, '.php');
 		$provider = ShippingLib::getCustomShippingProvider($name);
 		$custom_providers[$name] = $provider->getName();
