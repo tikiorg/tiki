@@ -50,7 +50,7 @@ function simple_set_toggle($feature)
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
 			if ($tikilib->set_preference($feature, 'y')) {
-				add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
+				add_feedback($feature, tr('%0 enabled', $feature), 1, 1);
 				$logslib->add_action('feature', $feature, 'system', 'enabled');
 			}
 		}
@@ -101,7 +101,7 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 		}
 	}
 	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
-		add_feedback( $feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2 );
+		add_feedback($feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2);
 		$logslib->add_action('feature', $feature, 'system', $old .'=>'.isset($_REQUEST['feature'])?$_REQUEST['feature']:'');
 	}
 	global $cachelib;
@@ -123,7 +123,7 @@ function simple_set_int($feature)
 		$old = $prefs[$feature];
 		if ($old != $_REQUEST[$feature]) {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
-			add_feedback( $feature, tr('%0 set', $feature), 2 );
+			add_feedback($feature, tr('%0 set', $feature), 2);
 			$logslib->add_action('feature', $feature, 'system', $old . '=>' . $_REQUEST['feature']);
 		}
 	}
@@ -154,7 +154,7 @@ $adminPage = '';
 global $prefslib; require_once 'lib/prefslib.php';
 
 if ( isset ($_REQUEST['pref_filters']) ) {
-	$prefslib->setFilters( $_REQUEST['pref_filters'] );
+	$prefslib->setFilters($_REQUEST['pref_filters']);
 }
 
 $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters']) : null;
@@ -162,21 +162,21 @@ $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if ( isset( $_REQUEST['lm_preference'] ) ) {
 	
-	$changes = $prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
+	$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 	foreach ( $changes as $pref => $val ) {
 		if ($val['type'] == 'reset') {
-			add_feedback( $pref, tr('%0 reset', $pref), 4);
+			add_feedback($pref, tr('%0 reset', $pref), 4);
 			$logslib->add_action('feature', $pref, 'system', 'reset');
 		} else {
 			$value = $val['new'];
 			if ( $value == 'y' ) {
-				add_feedback( $pref, tr('%0 enabled', $pref), 1, 1 );
+				add_feedback($pref, tr('%0 enabled', $pref), 1, 1);
 				$logslib->add_action('feature', $pref, 'system', 'enabled');
 			} elseif ( $value == 'n' ) {
-				add_feedback( $pref, tr('%0 disabled', $pref), 0, 1 );
+				add_feedback($pref, tr('%0 disabled', $pref), 0, 1);
 				$logslib->add_action('feature', $pref, 'system', 'disabled');
 			} else {
-				add_feedback( $pref, tr('%0 set', $pref), 1, 1 );
+				add_feedback($pref, tr('%0 set', $pref), 1, 1);
 				$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
 			}
 		}
@@ -610,12 +610,12 @@ if (!empty($_GET['forcecheck'])) {
 		$prefs['tiki_needs_upgrade'] = 'y';
 	} else {
 		$prefs['tiki_needs_upgrade'] = 'n';
-		add_feedback( null, tr('Current version is up to date : <b>%0</b>', $TWV->version), 3 );
+		add_feedback(null, tr('Current version is up to date : <b>%0</b>', $TWV->version), 3);
 	}
 	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	// See if a major release is available.
 	if (!$TWV->isLatestMajorVersion()) {
-		add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3 );
+		add_feedback(null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3);
 	}
 	$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
@@ -636,7 +636,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
 			$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
 			if (!$TWV->isLatestMajorVersion()) {
-				add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3, 1);
+				add_feedback(null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3, 1);
 			}
 		} else {
 			$prefs['tiki_needs_upgrade'] = 'n';
@@ -662,7 +662,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 }
 
 foreach ($icons as &$icon) {
-	$icon = array_merge( array( 'disabled' => false, 'description' => '', 'icon' => 'img/icons/large/green_question48x48.png'), $icon);
+	$icon = array_merge(array( 'disabled' => false, 'description' => '', 'icon' => 'img/icons/large/green_question48x48.png'), $icon);
 }
 
 $smarty->assign('icons', $icons);

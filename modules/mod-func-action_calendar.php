@@ -33,7 +33,7 @@ function module_action_calendar($mod_reference, &$module_params)
 	if ($tiki_p_view_tiki_calendar == 'y') {
 		$smarty->assign('show_calendar_module', 'y');	
 		global $tikicalendarlib; include_once('lib/calendar/tikicalendarlib.php');
-		global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
+		global $headerlib; $headerlib->add_cssfile('css/calendar.css', 20);
 		global $calendarViewMode;
 	
 		$calendarViewMode['casedefault'] = 'month';

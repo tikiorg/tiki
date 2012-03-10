@@ -41,5 +41,5 @@ function module_search_box($mod_reference, $module_params)
 	elseif ($prefs['feature_search_fulltext'] == 'n' && $type == 'fulltext')
 		$type = 'tiki';
 
-	$smarty->assign('type', $type) ;
+	$smarty->assign('type', $type);
 }

@@ -64,7 +64,7 @@ if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
 }
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
-	$access->check_feature( 'feature_jquery_autocomplete' );
+	$access->check_feature('feature_jquery_autocomplete');
 
 	$sep = '|';
 	if ( isset( $_REQUEST['separator'] ) ) {
@@ -111,12 +111,14 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 				
 		foreach ($listcontact as $key=>$contact) {
 			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
-				if ($contact['email']<>''){ $contacts[] = $contact['email']; }
+				if ($contact['email']<>'') {
+					 $contacts[] = $contact['email'];
+				}
 			}
 		}
 		foreach ($listusers['data'] as $key=>$contact) {
 			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['login'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
-				if ($prefs['login_is_email'] == 'y'){
+				if ($prefs['login_is_email'] == 'y') {
 					$contacts[] = $contact['login'];
 				} else {
 					$contacts[] = $contact['email'];
@@ -162,8 +164,8 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	} elseif ( $_REQUEST['listonly'] == 'tags' ) {
 		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
 
-		$tags = $freetaglib->get_tags_containing( $_REQUEST['q'] );
-		$access->output_serialized( $tags );
+		$tags = $freetaglib->get_tags_containing($_REQUEST['q']);
+		$access->output_serialized($tags);
 	} elseif ( $_REQUEST['listonly'] == 'icons' ) {
 
 		$dir = 'img/icons';
@@ -178,7 +180,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	} elseif ( $_REQUEST['listonly'] == 'shipping' && $prefs['shipping_service'] == 'y' ) {
 		global $shippinglib; require_once 'lib/shipping/shippinglib.php';
 
-		$access->output_serialized( $shippinglib->getRates( $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages'] ) );
+		$access->output_serialized($shippinglib->getRates($_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages']));
 	} elseif (  $_REQUEST['listonly'] == 'trackername' ) {
 		$trackers = TikiLib::lib('trk')->list_trackers();
 		$ret = array();
@@ -188,21 +190,15 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$access->output_serialized($ret);
 	}
 } elseif ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) { // Handle Zotero Requests
-	$access->check_feature( array( 'zotero_enabled' ) );
+	$access->check_feature(array( 'zotero_enabled' ));
 	$zoterolib = TikiLib::lib('zotero');
 
 	$references = $zoterolib->get_references($_REQUEST['zotero_tags']);
 	
 	if ($references === false) {
-		$access->output_serialized(array(
-			'type' => 'unauthorized',
-			'results' => array(),
-		));
+		$access->output_serialized(array('type' => 'unauthorized', 'results' => array()));
 	} else {
-		$access->output_serialized(array(
-			'type' => 'success',
-			'results' => $references,
-		));
+		$access->output_serialized(array('type' => 'success', 'results' => $references));
 	}
 } elseif (isset($_REQUEST['oauth_request'])) {
 	$oauthlib = TikiLib::lib('oauth');
@@ -220,9 +216,10 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$access->display_error(NULL, 'No AJAX service matches request parameters', 404);
 }
 
-function read_icon_dir($dir, &$icons, $max) {
+function read_icon_dir($dir, &$icons, $max)
+{
 	$fp = opendir($dir);
-	while(false !== ($f = readdir($fp))) {
+	while (false !== ($f = readdir($fp))) {
 		preg_match('/^([^\.].*)\..*$/', $f, $m);
 		if (count($m) > 0 && count($icons) < $max &&
 				stripos($m[1], $_REQUEST['q']) !== false &&

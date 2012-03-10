@@ -7,15 +7,16 @@
 
 require_once ('tiki-setup.php');
 
-$access->check_feature( 'wiki_keywords' );
-$access->check_permission( 'tiki_p_admin_wiki' );
+$access->check_feature('wiki_keywords');
+$access->check_permission('tiki_p_admin_wiki');
 
-function set_keywords( $page, $keywords="" ) {
+function set_keywords( $page, $keywords="" )
+{
 	global $tikilib;
 	
 	$query = "UPDATE `tiki_pages` SET `keywords`=? WHERE `pageName`=? LIMIT 1";
 	$bindvars = array( $keywords, $page );
-	$result = $tikilib->query( $query, $bindvars );
+	$result = $tikilib->query($query, $bindvars);
 	
 	if ( !$result )
 		return false;
@@ -23,12 +24,14 @@ function set_keywords( $page, $keywords="" ) {
 	return true;
 }
 
-function get_keywords( $page ) {
+function get_keywords( $page )
+{
 	global $tikilib;
-	return $tikilib->get_page_info( $page );
+	return $tikilib->get_page_info($page);
 }
 
-function get_all_keywords($limit=0, $offset=0, $page="") {
+function get_all_keywords($limit=0, $offset=0, $page="")
+{
 	global $tikilib;
 	$query = "FROM `tiki_pages` WHERE `keywords` IS NOT NULL and `keywords` <> '' ";	
 	if ( $page ) {
@@ -39,8 +42,8 @@ function get_all_keywords($limit=0, $offset=0, $page="") {
 	}
 	
 	$ret = array(
-		'pages' => $tikilib->fetchAll( "SELECT `keywords`, `pageName` as page " .  $query, $bindvars, $limit, $offset ),
-		'cant' => $tikilib->getOne( 'SELECT COUNT(*) ' . $query, $bindvars ),
+		'pages' => $tikilib->fetchAll("SELECT `keywords`, `pageName` as page " .  $query, $bindvars, $limit, $offset),
+		'cant' => $tikilib->getOne('SELECT COUNT(*) ' . $query, $bindvars),
 	);
 	
 	return $ret;
@@ -70,8 +73,8 @@ if ( ( isset( $_REQUEST['save_keywords'] ) && isset( $_REQUEST['new_keywords'] )
 if ( isset( $_REQUEST['page'] ) && !$_REQUEST['remove_keywords']  ) {
 	$page_keywords = get_keywords($_REQUEST['page']);
 	
-	$smarty->assign('edit_keywords', $page_keywords['keywords'] );
-	$smarty->assign('edit_keywords_page', $page_keywords['pageName'] );
+	$smarty->assign('edit_keywords', $page_keywords['keywords']);
+	$smarty->assign('edit_keywords_page', $page_keywords['pageName']);
 	$smarty->assign('edit_on', 'y');
 }
 
@@ -89,10 +92,10 @@ if ( $existing_keywords['cant'] > 0 ) {
 
 	$smarty->assign('existing_keywords', $existing_keywords['pages']);
 	
-	$pages_cant = ceil( $existing_keywords['cant'] / $limit );
+	$pages_cant = ceil($existing_keywords['cant'] / $limit);
 	$smarty->assign('pages_cant', $pages_cant);
 	$smarty->assign('offset', $offset);
 }	
 
 $smarty->assign('mid', 'tiki-admin_keywords.tpl');
-$smarty->display( 'tiki.tpl' );
+$smarty->display('tiki.tpl');

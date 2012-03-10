@@ -282,7 +282,7 @@ class Net_POP3
 		}
 		$data = preg_split('/\r?\n/', $data, -1, PREG_SPLIT_NO_EMPTY);
 
-		for ($i = 0; $i < count($data); $i++) {
+		for ($i = 0, $count_data = count($data); $i < $count_data; $i++) {
 
 			$capa = '';
 			if (preg_match('/^([a-z,\-]+)( ((.*))|$)$/i', $data[$i], $matches)) {
