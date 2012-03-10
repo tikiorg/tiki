@@ -13,29 +13,33 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 	private $known;
 	private $resolvers;
 
-	function __construct( array $known, array $resolvers ) {
+	function __construct( array $known, array $resolvers )
+	{
 		$this->known = $known;
 		$this->resolvers = $resolvers;
 	}
 
-	function bulk( array $baseContext, $bulkKey, array $values ) {
+	function bulk( array $baseContext, $bulkKey, array $values )
+	{
 		return array();
 	}
 
-	function getHash( array $context ) {
+	function getHash( array $context )
+	{
 		$parts = array();
 		
 		foreach ( $this->known as $key ) {
-			if ( isset( $context[$key] ) ) {
+			if ( isset($context[$key]) ) {
 				$parts[] = $context[$key];
 			}
 		}
 
-		return implode( ':', $parts );
+		return implode(':', $parts);
 	}
 
-	function getResolver( array $context ) {
-		$hash = $this->getHash( $context );
+	function getResolver( array $context )
+	{
+		$hash = $this->getHash($context);
 
 		if ( isset( $this->resolvers[$hash] ) ) {
 			return $this->resolvers[$hash];

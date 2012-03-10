@@ -14,20 +14,24 @@ class Perms_ResolverFactory_StaticFactory implements Perms_ResolverFactory
 	private $key;
 	private $resolver;
 
-	function __construct( $key, $resolver ) {
+	function __construct( $key, $resolver )
+	{
 		$this->key = $key;
 		$this->resolver = $resolver;
 	}
 
-	function bulk( array $baseContext, $bulkKey, array $values ) {
+	function bulk( array $baseContext, $bulkKey, array $values )
+	{
 		return array();
 	}
 
-	function getHash( array $context ) {
+	function getHash( array $context )
+	{
 		return $this->key;
 	}
 
-	function getResolver( array $context ) {
+	function getResolver( array $context )
+	{
 		return $this->resolver;
 	}
 }
