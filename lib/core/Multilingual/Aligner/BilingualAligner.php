@@ -142,7 +142,7 @@ class Multilingual_Aligner_BilingualAligner
 		);
 
 		if (strcmp($node_to_extend, $new_node) != 0
-				&& !in_array($new_node, $this->nodes_at_next_level)i
+				&& !in_array($new_node, $this->nodes_at_next_level)
 		) {
 			array_push($this->nodes_at_next_level, $new_node);
 
