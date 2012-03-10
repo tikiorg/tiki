@@ -9,7 +9,8 @@ include_once ('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
 $all_perms = $userlib->get_permissions();
 
-function is_perm($permName, $objectType) {
+function is_perm($permName, $objectType)
+{
 	global $all_perms, $tikilib;
 	$permGroup = $tikilib->get_permGroup_from_objectType($objectType);
 	foreach ($all_perms['data'] as $perm) {
@@ -19,7 +20,8 @@ function is_perm($permName, $objectType) {
 	}
 	return false;
 }
-function list_perms($objectId, $objectType, $objectName, $filterGroup='') {
+function list_perms($objectId, $objectType, $objectName, $filterGroup='')
+{
 	global $userlib, $prefs;
 	$ret = array();
 	$cats = array();
@@ -112,53 +114,73 @@ foreach ($types as $type) {
 			$objects = $tikilib->list_pageNames();
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['pageName'], $type, $object['pageName'], $filterGroup);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectType' => $type); }
-				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectType' => $type);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']);
+				}
 			}
-			break;
+    		break;
 
 		case 'file galleries':
 		case 'file gallery':
 			$filegallib = TikiLib::lib('filegal');
-			$objects = $filegallib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
+			$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', '', '', $prefs['fgal_root_id']);
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['id'], $type, $object['name'], $filterGroup);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type); }
-				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+				}
 			}
-			break;
+    		break;
 
 		case 'tracker':
 		case 'trackers':
 			$objects = TikiLib::lib('trk')->list_trackers();
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['trackerId'], $type, $object['name'], $filterGroup);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type); }
-				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name'], 'objectType' => $type);
+				}
+				if (count($r['category']) > 0) { 
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+				}
 			}
-			break;
+    		break;
 
 		case 'forum':
 		case 'forums':
 			$objects = $commentslib->list_forums();
 			foreach ($objects['data'] as $object) {
 				$r = list_perms($object['forumId'], $type, $object['name'], $filterGroup);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
-				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
+				if (count($r['special']) > 0) { 
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+				}
 			}
-			break;
+    		break;
 
 		case 'group':
 		case 'groups':
 			foreach ($all_groups as $object) {
 				$r = list_perms($object, $type, '', $filterGroup);
-				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']); }
-				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }
+				if (count($r['special']) > 0) { 
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']);
+				}
 			}
-			break;
+    		break;
 
 			default:
-			break;
+     		break;
 	}
 }
 $smarty->assign_by_ref('res', $res);

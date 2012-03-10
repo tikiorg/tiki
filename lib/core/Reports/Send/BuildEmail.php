@@ -60,7 +60,8 @@ class Reports_Send_BuildEmail
 	 * @param array $report_cache
 	 * @return array new array with events organized by type
 	 */
-	private function makeChangeArray(array $report_cache) {
+	private function makeChangeArray(array $report_cache)
+	{
 		$change_array = array();
 		
 		foreach ($report_cache as $change) {
@@ -84,7 +85,8 @@ class Reports_Send_BuildEmail
 		return $change_array;
 	}
 	
-	public function makeHtmlEmailBody(array $report_cache, array $report_preferences) {
+	public function makeHtmlEmailBody(array $report_cache, array $report_preferences)
+	{
 		global $userlib, $base_url;
 		
 		$tikiUrl = rtrim($base_url, '/');
@@ -143,17 +145,19 @@ class Reports_Send_BuildEmail
 					} elseif ($change['event']=="category_changed") {
 						if ($change['data']['action']=="object entered category") {
 							$body .= "<u>".$change['data']['user']."</u> ".
-								tr("added the %0 %1 to the category %2",
-									$change['data']['objectType'],
-									"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
-									"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>"
+								tr(
+												"added the %0 %1 to the category %2",
+												$change['data']['objectType'],
+												"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
+												"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>"
 								);
 						} elseif ($change['data']['action']=="object leaved category") {
 							$body .= "<u>".$change['data']['user']."</u> ".
-								tr("removed the %0 %1 from the category %2",
-									$change['data']['objectType'],
-									"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
-									"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>."
+								tr(
+												"removed the %0 %1 from the category %2",
+												$change['data']['objectType'],
+												"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
+												"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>."
 								);
 						} elseif ($change['data']['action']=="category created") {
 							$body .= "<u>".$change['data']['user']."</u> ".tra("created the subcategory")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a> ".tra("in")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['parentId']."&deep=off\">".$change['data']['parentName']."</a>.";

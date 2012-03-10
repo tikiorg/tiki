@@ -98,33 +98,122 @@ function refresh_index_convert_type($object_type)
  *  Obsolete functions (you can call directly refresh_index() )
  */
 
-function random_refresh_file() { refresh_index('files', -1); }
-function random_refresh_filegal() { refresh_index('file_galleries', -1); }
-function random_refresh_img() { refresh_index('images', -1); }
-function random_refresh_imggals() { refresh_index('galleries', -1); }
-function random_refresh_index_articles() { refresh_index('articles', -1); }
-function random_refresh_index_blog_posts() { refresh_index('blog_posts', -1); }
-function random_refresh_index_blogs() { refresh_index('blogs', -1); }
-function random_refresh_index_comments( $times = 1 ) { for( $i = 1; $i <= $times; $i ++ ) refresh_index('comments', -1); }
-function random_refresh_index_dir_cats() { refresh_index('directory_categories', -1); }
-function random_refresh_index_dir_sites() { refresh_index('directory_sites', -1); }
-function random_refresh_index_faq_questions() { refresh_index('faq_questions', -1); }
-function random_refresh_index_faqs() { refresh_index('faqs', -1); }
-function random_refresh_index_forum() { refresh_index('forums', -1); }
-function random_refresh_index_tracker_items() { refresh_index('tracker_items', -1); }
-function random_refresh_index_trackers() { refresh_index('trackers', -1); }
-function random_refresh_index_wiki() { refresh_index('pages', -1); }
+function random_refresh_file()
+{
+	refresh_index('files', -1);
+}
+function random_refresh_filegal()
+{
+	refresh_index('file_galleries', -1);
+}
+function random_refresh_img()
+{
+	refresh_index('images', -1);
+}
+function random_refresh_imggals()
+{
+	refresh_index('galleries', -1);
+}
+function random_refresh_index_articles()
+{
+	refresh_index('articles', -1);
+}
+function random_refresh_index_blog_posts()
+{
+	refresh_index('blog_posts', -1);
+}
+function random_refresh_index_blogs()
+{
+	refresh_index('blogs', -1);
+}
+function random_refresh_index_comments( $times = 1 )
+{
+	for( $i = 1; $i <= $times; $i ++ )
+		refresh_index('comments', -1);
+}
+function random_refresh_index_dir_cats()
+{
+	refresh_index('directory_categories', -1);
+}
+function random_refresh_index_dir_sites()
+{
+	refresh_index('directory_sites', -1);
+}
+function random_refresh_index_faq_questions()
+{
+	refresh_index('faq_questions', -1);
+}
+function random_refresh_index_faqs()
+{
+	refresh_index('faqs', -1);
+}
+function random_refresh_index_forum()
+{
+	refresh_index('forums', -1);
+}
+function random_refresh_index_tracker_items()
+{
+	refresh_index('tracker_items', -1);
+}
+function random_refresh_index_trackers()
+{
+	refresh_index('trackers', -1);
+}
+function random_refresh_index_wiki()
+{
+	refresh_index('pages', -1);
+}
 
-function refresh_index_articles() { refresh_index('articles'); }
-function refresh_index_blogs() { refresh_index('blogs'); refresh_index('blog_post'); }
-function refresh_index_directories() { refresh_index('directory_sites'); refresh_index('directory_categories'); }
-function refresh_index_faqs() { refresh_index('faqs'); refresh_index('faq_questions'); }
-function refresh_index_files() { refresh_index('files'); }
-function refresh_index_forums() { refresh_index('forums'); }
-function refresh_index_galleries() { refresh_index('galleries'); refresh_index('images'); }
-function refresh_index_trackers() { refresh_index('tracker_items'); }
-function refresh_index_wiki_all() { refresh_index('pages'); }
+function refresh_index_articles()
+{
+	refresh_index('articles');
+}
+function refresh_index_blogs()
+{
+	refresh_index('blogs');
+	refresh_index('blog_post');
+}
+function refresh_index_directories()
+{
+	refresh_index('directory_sites');
+	refresh_index('directory_categories');
+}
+function refresh_index_faqs()
+{
+	refresh_index('faqs');
+	refresh_index('faq_questions');
+}
+function refresh_index_files()
+{
+	refresh_index('files');
+}
+function refresh_index_forums()
+{
+	refresh_index('forums');
+}
+function refresh_index_galleries()
+{
+	refresh_index('galleries');
+	refresh_index('images');
+}
+function refresh_index_trackers()
+{
+	refresh_index('tracker_items');
+}
+function refresh_index_wiki_all()
+{
+	refresh_index('pages');
+}
 
-function refresh_index_comments($threadId) { refresh_index('comments', $threadId); }
-function refresh_index_forum($page) { refresh_index('forums', $page); }
-function refresh_index_wiki($page) { refresh_index('pages', $page); }
+function refresh_index_comments($threadId)
+{
+	refresh_index('comments', $threadId);
+}
+function refresh_index_forum($page)
+{
+	refresh_index('forums', $page);
+}
+function refresh_index_wiki($page)
+{
+	refresh_index('pages', $page);
+}

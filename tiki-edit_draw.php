@@ -23,7 +23,7 @@ $_REQUEST['fileId'] = (int)$_REQUEST['fileId'];
 $smarty->assign('fileId', $_REQUEST['fileId']);
 
 if ($_REQUEST['fileId'] > 0) {
-	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
 } else {
 	$fileInfo = array();
 }
@@ -31,10 +31,10 @@ if ($_REQUEST['fileId'] > 0) {
 //This allows the document to be edited, but only the most recent of that group if it is an archive
 if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$_REQUEST['fileId'] = $fileInfo['archiveId'];
-	$fileInfo = $filegallib->get_file_info( $_REQUEST['fileId'] );
+	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
 }
 	
-$gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
+$gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
 if (
 	!(
@@ -49,7 +49,7 @@ if (
 	die;
 }
 
-$globalperms = Perms::get( array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ) );
+$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ));
 
 //check permissions
 if (!($globalperms->upload_files == 'y')) {
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
 		
 		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') { // this is a conversion from an image other than svg
-			$newFileInfo = $filegallib->get_file_info( $fileId );
+			$newFileInfo = $filegallib->get_file_info($fileId);
 			
 			$archives = $filegallib->get_archives($fileInfo['fileId']);
 			$archive = end($archives['data']);
@@ -109,7 +109,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 }
 
 //echo $data;die;
-$smarty->assign( "data", $data );
+$smarty->assign("data", $data);
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
 if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
 if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
@@ -125,62 +125,62 @@ $label = htmlspecialchars($_REQUEST['label']);
 $width = htmlspecialchars($_REQUEST['width']);
 $height = htmlspecialchars($_REQUEST['height']);
 
-$smarty->assign( "page", $page );
-$smarty->assign( "isFromPage", isset($page) );
+$smarty->assign("page", $page);
+$smarty->assign("isFromPage", isset($page));
 
 $backLocation = ($page ? "tiki-index.php?page=$page" : "tiki-list_file_gallery.php?galleryId=$galleryId");
 
-$smarty->assign( "fileId", $fileId );
-$smarty->assign( "galleryId", $galleryId );
-$smarty->assign( "width", $width );
-$smarty->assign( "height", $width );
-$smarty->assign( "name", $name);
-$smarty->assign( "archive", $archive);
+$smarty->assign("fileId", $fileId);
+$smarty->assign("galleryId", $galleryId);
+$smarty->assign("width", $width);
+$smarty->assign("height", $width);
+$smarty->assign("name", $name);
+$smarty->assign("archive", $archive);
 
 if (
 	isset($_REQUEST['index']) &&
 	isset($_REQUEST['page']) && 
 	isset($_REQUEST['label'])
 ) {
-	$headerlib->add_jq_onready("	
-		$.wikiTrackingDraw = {
-			index: '$index',
-			page: '$page',
-			label: '$label',
-			type: 'draw',
-			content: '',
-			params: {
-				width: '$width',
-				height: '$height',
-				id: '$fileId'
-			}
-		};
-	");
+	$headerlib->add_jq_onready(
+					"$.wikiTrackingDraw = {
+						index: '$index',
+						page: '$page',
+						label: '$label',
+						type: 'draw',
+						content: '',
+						params: {
+							width: '$width',
+							height: '$height',
+							id: '$fileId'
+						}
+					};"
+	);
 }
 
-$headerlib->add_jq_onready("
-	$('#drawFullscreen')
-		.click(function() {
-			$('#tiki_draw').drawFullscreen();
-		})
-		.click();
-	
-	$('#tiki_draw')
-		.loadDraw({
-			fileId: $('#fileId').val(),
-			galleryId: $('#galleryId').val(),
-			name: $('#fileName').val(),
-			data: $('#fileData').val()
-		})
-		.bind('renamedDraw', function(e, name) {
-			$('#fileName').val(name);
-			$('.pagetitle').text(name);
-		});
-	
-	$('#drawBack').click(function() {
-		window.history.back();
-	});
-");
+$headerlib->add_jq_onready(
+				"$('#drawFullscreen')
+					.click(function() {
+						$('#tiki_draw').drawFullscreen();
+					})
+					.click();
+				
+				$('#tiki_draw')
+					.loadDraw({
+						fileId: $('#fileId').val(),
+						galleryId: $('#galleryId').val(),
+						name: $('#fileName').val(),
+						data: $('#fileData').val()
+					})
+					.bind('renamedDraw', function(e, name) {
+						$('#fileName').val(name);
+						$('.pagetitle').text(name);
+					});
+				
+				$('#drawBack').click(function() {
+					window.history.back();
+				});"
+);
 
 if ($drawFullscreen == true) {
 	$smarty->assign('drawFullscreen', 'true');
