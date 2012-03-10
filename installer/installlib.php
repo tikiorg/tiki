@@ -208,6 +208,8 @@ class Installer extends TikiDb_Bridge
 		// Add standalone PHP scripts
 		$files = glob(dirname(__FILE__) . '/schema/*_*.php');
 		foreach ( $files as $file ) {
+			if ($file === "installer/schema/index.php")
+				continue;
 			$filename = basename($file);
 			$patch = substr($filename, 0, -4);
 			if (!in_array($patch, $this->patches)) $this->patches[] = $patch;
