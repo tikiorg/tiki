@@ -227,7 +227,7 @@ class FileGalLib extends TikiLib
 			'lockedby' => $lockedby,
 			'deleteAfter' => $deleteAfter,
 		);
-		$fileData['filetype'] = $this->fixMime($fileData);
+
 		if (empty($id)) {
 			$fileId = $filesTable->insert($fileData);
 			
@@ -3537,33 +3537,5 @@ class FileGalLib extends TikiLib
 		}
 	}
 	
-	function fixMime($fileData) {
-	global $prefs;
-	if ($prefs['fgal_fix_mime_type'] != 'y') {
-	return $fileData['filetype'];
-			}
-	if ($fileData['filetype'] != "application/octet-stream") {
-				return $fileData['filetype'];
-			}
-			$suffix=strtolower(preg_replace('/.*\./','',$fileData['filename']));
-			switch($suffix) {
-	case 'jpg' :
-		case 'jpeg' :	$filetype = 'image/jpeg';
-								break;
-		case 'gif' :	$filetype = 'image/gif';
-								break;
-								case 'png' :	$filetype = 'image/png';
-								break;
-								case 'tif' :
-				case 'tiff' :	$filetype = 'image/tiff';
-								break;
-								case 'svg' :	$filetype = 'image/svg+xml';
-								break;
-								case 'pdf' :	$filetype = 'application/pdf';
-								break;
-								default :		$filetype = 'application/octet-stream';
-			}
-								return $filetype;
-	}	
 }
 $filegallib = new FileGalLib;
