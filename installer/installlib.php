@@ -242,6 +242,8 @@ class Installer extends TikiDb_Bridge
 		if (empty($files))
 			return;
 		foreach ( $files as $file ) {
+			if (basename($file) === "index.php")
+				continue;
 			$filename = basename($file);
 			$this->scripts[] = substr($filename, 0, -4);
 		}
