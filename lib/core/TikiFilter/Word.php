@@ -9,6 +9,6 @@ class TikiFilter_Word extends Zend_Filter_PregReplace
 {
 	function __construct()
 	{
-		parent::__construct( '/\W+/', '' );
+		parent::__construct('/\W+/', '');
 	}
 }

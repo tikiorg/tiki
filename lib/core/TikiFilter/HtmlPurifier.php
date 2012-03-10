@@ -9,13 +9,15 @@ class TikiFilter_HtmlPurifier implements Zend_Filter_Interface
 {
 	private $cache;
 
-	function __construct( $cacheFolder ) {
+	function __construct( $cacheFolder )
+	{
 		$this->cache = $cacheFolder;
 	}
 
-	function filter( $data ) {
+	function filter( $data )
+	{
 		require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 
-		return HTMLPurifier( $data );
+		return HTMLPurifier($data);
 	}
 }

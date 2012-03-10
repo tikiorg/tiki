@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,17 +10,18 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 	function filter( $value )
 	{
 		// No need to filter really simple values
-		if ( ctype_alnum( $value ) || empty($value) )
+		if ( ctype_alnum($value) || empty($value) )
 			return $value;
 		else
-			return $this->RemoveXSS( $value );
+			return $this->RemoveXSS($value);
 	}
 
 	/* RemoveXSS initially developped by kallahar - quickwired.com, modified for Tiki
 	 * Original code could be found here:
 	 * http://quickwired.com/smallprojects/php_xss_filter_function.php
 	 */
-	function RemoveXSS($val) {
+	function RemoveXSS($val)
+	{
 		static $ra_as_tag_only = NULL;
 		static $ra_as_attribute = NULL;
 		static $ra_as_content = NULL;
@@ -28,8 +29,111 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 
 		// now the only remaining whitespace attacks are \t, \n, and \r
 		if ( $ra_as_tag_only == NULL ) {
-			$ra_as_tag_only = array('style', 'script', 'embed', 'object', 'applet', 'meta', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'base', 'xml', 'import', 'link');
-			$ra_as_attribute = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterchange', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload','ondragdrop', 'dynsrc', 'lowsrc', 'codebase', 'xmlns');
+			$ra_as_tag_only = array(
+					'style',
+					'script',
+					'embed',
+					'object',
+					'applet',
+					'meta',
+					'iframe',
+					'frame',
+					'frameset',
+					'ilayer',
+					'layer',
+					'bgsound',
+					'base',
+					'xml',
+					'import',
+					'link'
+			);
+
+			$ra_as_attribute = array(
+					'onabort',
+					'onactivate',
+					'onafterprint',
+					'onafterupdate',
+					'onbeforeactivate',
+					'onbeforecopy',
+					'onbeforecut',
+					'onbeforedeactivate',
+					'onbeforeeditfocus',
+					'onbeforepaste',
+					'onbeforeprint',
+					'onbeforeunload',
+					'onbeforeupdate',
+					'onblur',
+					'onbounce',
+					'oncellchange',
+					'onchange',
+					'onclick',
+					'oncontextmenu',
+					'oncontrolselect',
+					'oncopy',
+					'oncut',
+					'ondataavailable',
+					'ondatasetchanged',
+					'ondatasetcomplete',
+					'ondblclick',
+					'ondeactivate',
+					'ondrag',
+					'ondragend',
+					'ondragenter',
+					'ondragleave',
+					'ondragover',
+					'ondragstart',
+					'ondrop',
+					'onerror',
+					'onerrorupdate',
+					'onfilterchange',
+					'onfinish',
+					'onfocus',
+					'onfocusin',
+					'onfocusout',
+					'onhelp',
+					'onkeydown',
+					'onkeypress',
+					'onkeyup',
+					'onlayoutcomplete',
+					'onload',
+					'onlosecapture',
+					'onmousedown',
+					'onmouseenter',
+					'onmouseleave',
+					'onmousemove',
+					'onmouseout',
+					'onmouseover',
+					'onmouseup',
+					'onmousewheel',
+					'onmove',
+					'onmoveend',
+					'onmovestart',
+					'onpaste',
+					'onpropertychange',
+					'onreadystatechange',
+					'onreset',
+					'onresize',
+					'onresizeend',
+					'onresizestart',
+					'onrowenter',
+					'onrowexit',
+					'onrowsdelete',
+					'onrowsinserted',
+					'onscroll',
+					'onselect',
+					'onselectionchange',
+					'onselectstart',
+					'onstart',
+					'onstop',
+					'onsubmit',
+					'onunload',
+					'ondragdrop',
+					'dynsrc',
+					'lowsrc',
+					'codebase',
+					'xmlns'
+			);
+
 			$ra_as_content = array('vbscript', 'expression', 'blink', 'mocha', 'livescript', 'url', 'alert');
 			$ra_javascript = array('javascript');
 	///		$ra_style = array('style'); // Commented as it has been considered as a bit too aggressive
@@ -47,7 +151,8 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 		return $val;
 	}
 
-	function RemoveXSSchars(&$val) {
+	function RemoveXSSchars(&$val)
+	{
 		static $patterns = NULL;
 		static $replacements = NULL;
 		$val_before = $val;
@@ -65,7 +170,7 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 			$replacements[] = '';
 
 			// straight replacements, the user should never need these since they're
-			// normal characters this prevents like 
+			// normal characters this prevents like
 			// <IMG SRC=&#X40&#X61&#X76&#X61&#X73&#X63&#X72&#X69&#X70&#X74&#X3A&#X61&#X6C&#X65&#X72&#X74&#X28&#X27&#X58&#X53&#X53&#X27&#X29>
 			// Calculate the search and replace patterns only once
 			$search = 'abcdefghijklmnopqrstuvwxyz';
@@ -89,11 +194,12 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 		if ($val_before == $val) {
 			// no replacements were made, so exit the loop
 			$found = false;
-		}	
+		}
 		return $found;
 	}
 
-	function RemoveXSSregexp(&$ra, &$val, $prefix = '', $suffix = '', $allow_spaces = false) {
+	function RemoveXSSregexp(&$ra, &$val, $prefix = '', $suffix = '', $allow_spaces = false)
+	{
 		$val_before = $val;
 		$found = true;
 		$patterns = array();
@@ -137,7 +243,7 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 			$pattern .= $pattern_end;
 			$replacement = ( $prefix != '' ) ? '\\1' : '';
 			// add in <> to nerf the tag
-			$replacement .= substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2); 
+			$replacement .= substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2);
 			$patterns[] = $pattern;
 			$replacements[] = $replacement.$replacement_end;
 		}
