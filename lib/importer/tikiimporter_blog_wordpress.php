@@ -16,7 +16,7 @@ require_once('tikiimporter_blog.php');
 class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 {
 	public $softwareName = 'Wordpress';
-	
+
 	/**
 	 * The DOM representation of the Wordpress XML dump
 	 * @var DOMDocument object
@@ -45,21 +45,33 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @var array
 	 */
 	public $permalinks = array();
-	
+
 	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
 	static public function importOptions()
 	{
 		$options = array(
-			array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
-			array('name' => 'replaceInternalLinks', 'type' => 'checkbox', 'label' => tra('Update internal links (experimental)')),
-			array('name' => 'htaccessRules', 'type' => 'checkbox', 'label' => tra('Suggest .htaccess rules to redirect from old WP URLs to new Tiki URLs (experimental)'))
+			array(
+					'name' => 'importAttachments', 
+					'type' => 'checkbox', 
+					'label' => tra('Import images and other attachments')
+			),
+			array(
+					'name' => 'replaceInternalLinks', 
+					'type' => 'checkbox', 
+					'label' => tra('Update internal links (experimental)')
+			),
+			array(
+					'name' => 'htaccessRules', 
+					'type' => 'checkbox', 
+					'label' => tra('Suggest .htaccess rules to redirect from old WP URLs to new Tiki URLs (experimental)')
+			)
 		);
-		
+
 		return $options;
 	}
-	
+
 	/**
 	 * Check for DOMDocument.
 	 * 
@@ -91,7 +103,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		parent::setupTiki();
 	}
-	
+
 	/**
 	 * Start the importing process by loading the XML file. And
 	 * calling wordpress specific import functions (like extractBlogInfo()
@@ -114,28 +126,26 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 
 		$this->dom = new DOMDocument;
-		
+
 		if (!$this->dom->load($filePath)) {
 			throw new DOMException(tra('Error while loading XML file. Probably your XML file is malformed. Some versions of Wordpress generate a malformed XML file. See the Tiki Importer documentation for more information.'));
 		}
 
 		$this->validateInput();
-		
+
 		$this->saveAndDisplayLog("Loading and validating the XML file\n");
-		
+
 		$this->extractBlogInfo();
-		
+
 		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->downloadAttachments();
 		}
-		
+
 		$this->permalinks = $this->extractPermalinks();
 
 		parent::import();
-		
-		if (!empty($_POST['htaccessRules']) && $_POST['htaccessRules'] == 'on'
-			&& !empty($this->permalinks))
-		{
+
+		if (!empty($_POST['htaccessRules']) && $_POST['htaccessRules'] == 'on' && !empty($this->permalinks)) {
 			$_SESSION['tiki_importer_wordpress_urls'] = $this->getHtaccessRules();
 		}
 	}
@@ -148,16 +158,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @throws DOMException if not able to validate file
 	 * @return bool true if valid file
 	 */
-	function validateInput() {
+	function validateInput()
+	{
 		$rss = $this->dom->getElementsByTagName('rss');
-		
+
 		if ($rss->length > 0) {
 			$wxrUrl = $rss->item(0)->getAttribute('xmlns:wp');
 			if (preg_match('|http://wordpress\.org/export/\d+\.\d+/|', $wxrUrl)) {
 				return true;
 			}
 		}
-		
+
 		throw new DOMException(tra('Invalid Wordpress XML file'));
 	}
 
@@ -186,14 +197,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function parseData()
 	{
 		$this->saveAndDisplayLog("\n" . tra("Extracting data from XML file:") . "\n");
-		
+
 		// extractItems return array with two keys: 'posts' and 'pages'
 		$this->parsedData = $this->extractItems();
-		
+
 		$this->parsedData['tags'] = $this->extractTags();
 		$this->parsedData['categories'] = $this->extractCategories();
 	}
-	
+
 	/**
 	 * Get all the permalinks to posts and pages from
 	 * the XML document. This is used to give the user
@@ -207,7 +218,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$data = $this->dom->getElementsByTagName('item');
 		$permalinks = array();
-		
+
 		foreach ($data as $item) {
 			$oldLinks = array();
 			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
@@ -219,7 +230,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						switch ($node->tagName) {
 							case 'wp:post_id':
 								$id = $node->textContent;
-								break;
+											break;
 							case 'link':
 							case 'guid':
 								if (!in_array($node->textContent, $oldLinks)) {
@@ -231,22 +242,22 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 										$oldLinks[] = $relativePath;
 									}
 								}
-								break;
+											break;
 							default:
-								break;
+											break;
 						}
 					}
 				}
 			}
-			
+
 			if (!empty($oldLinks)) {
 				$permalinks[$id]['oldLinks'] = $oldLinks;
 			}
 		}
-		
+
 		return $permalinks;
 	}
-	
+
 	/**
 	 * Extract pages, posts and attachments
 	 * 
@@ -260,7 +271,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			'posts' => array(),
 			'pages' => array(),
 		);
-		
+
 		foreach ($data as $item) {
 			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
 			$status = $item->getElementsByTagName('status')->item(0)->nodeValue;
@@ -274,7 +285,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				}
 			}
 		}
-		
+
 		return $items;
 	}
 
@@ -286,7 +297,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function extractTags()
 	{
 		$tags = array();
-		
+
 		$data = $this->dom->getElementsByTagName('tag');
 
 		foreach ($data as $tag) {
@@ -299,7 +310,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		return $tags;
 	}
-	
+
 	/**
 	 * Extract categories information from Wordpress XML.
 	 * Apparently categories on Wordpress XML are always ordered with the parent
@@ -311,48 +322,49 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function extractCategories()
 	{
 		$categories = array();
-		
+
 		$data = $this->dom->getElementsByTagName('category');
-		
+
 		foreach ($data as $category) {
 			$categ = array();
 
 			if ($category->getElementsByTagName('cat_name')->length == 0) {
 				// if category name is not set we don't create it
-				continue;	
+				continue;
 			}
-			
+
 			if ($category->getElementsByTagName('category_parent')->length > 0) {
 				$categ['parent'] = $category->getElementsByTagName('category_parent')->item(0)->nodeValue;
 			} else {
 				$categ['parent'] = '';
 			}
-			
+
 			$categ['name'] = $category->getElementsByTagName('cat_name')->item(0)->nodeValue;
-			
+
 			if ($category->getElementsByTagName('category_description')->length > 0) {
 				$categ['description'] = $category->getElementsByTagName('category_description')->item(0)->nodeValue;
 			} else {
 				$categ['description'] = '';
 			}
-			
+
 			$categories[] = $categ;
 		}
-		
+
 		return $categories;
 	}
-	
+
 	/**
 	 * Searches for the last version of each attachments in the XML file
 	 * and try to download it to a new file gallery
 	 *
 	 * @return void
 	 */
-	function downloadAttachments() {
+	function downloadAttachments()
+	{
 		global $filegallib; require_once('lib/filegals/filegallib.php');
-		
+
 		$attachments = $this->extractAttachmentsInfo();
-		
+
 		if (empty($attachments)) {
 			$this->saveAndDisplayLog("\n\n" . tra('No attachments found to import!') . "\n");
 			return;
@@ -363,44 +375,68 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		if (!empty($attachments)) {
 			$galleryId = $this->createFileGallery();
 		}
-		
+
 		$feedback = array('success' => 0, 'error' => 0);
-		
+
 		$client = $this->getHttpClient();
-		
+
 		foreach ($attachments as $attachment) {
 			$client->setUri($attachment['link']);
-			
+
 			try {
 				$response = $client->request();
 			} catch (Zend_Http_Client_Adapter_Exception $e) {
-				$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $e->getMessage() . "\n", true);
+				$this->saveAndDisplayLog(
+								'Unable to download file ' . $attachment['fileName'] . '. Error message was: ' . $e->getMessage() . "\n",
+								true
+				);
 				$feedback['error']++;
 				continue;
 			}
-			
+
 			$data = $response->getRawBody();
 			$size = $response->getHeader('Content-length');
 			$mimeType = $response->getHeader('Content-type');
 
 			if ($response->isSuccessful()) {
-				$fileId = $filegallib->insert_file($galleryId, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
-				
-				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : '');
-				
-				$this->saveAndDisplayLog(tr("Attachment %0 successfully imported!", $attachment['fileName']) . "\n");
+				$fileId = $filegallib->insert_file(
+								$galleryId, 
+								$attachment['name'], 
+								'', 
+								$attachment['fileName'], 
+								$data, 
+								$size, 
+								$mimeType, 
+								$attachment['author'], 
+								'', 
+								'', 
+								$attachment['author']
+				);
+
+				$this->newFiles[] = array(
+								'fileId' => $fileId, 
+								'oldUrl' => $attachment['link'], 
+								'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : ''
+				);
+
+				$this->saveAndDisplayLog(tr('Attachment %0 successfully imported!', $attachment['fileName']) . "\n");
 				$feedback['success']++;
 			} else {
 				$this->saveAndDisplayLog(
-					tr("Unable to download attachment %0. Error message was: %1 %2", $attachment['fileName'], $response->getStatus(), $response->getMessage()) . "\n",
-					true
+								tr(
+												'Unable to download attachment %0. Error message was: %1 %2', 
+												$attachment['fileName'], 
+												$response->getStatus(), 
+												$response->getMessage()
+								) . "\n",
+								true
 				);
 				$feedback['error']++;
 			}
 		}
-		
-		$this->saveAndDisplayLog(tr("%0 attachments imported and %1 errors.", $feedback['success'], $feedback['error']) . "\n");
-		
+
+		$this->saveAndDisplayLog(tr('%0 attachments imported and %1 errors.', $feedback['success'], $feedback['error']) . "\n");
+
 		// close connection
 		$adapter = $client->getAdapter();
 		$adapter->close();
@@ -427,12 +463,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			'public' => 'y',
 			'visible' => 'y',
 		);
-		
+
 		$id = $filegallib->replace_file_gallery($gal_info);
-		
+
 		return $id;
 	}
-	
+
 	/**
 	 * Extract all the attachments from a XML Wordpress file
 	 * and return them.
@@ -443,27 +479,27 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$attachments = array();
 		$items = $this->dom->getElementsByTagName('item');
-		
+
 		foreach ($items as $item) {
 			if ($item->getElementsByTagName('post_type')->item(0)->textContent == 'attachment') {
 				$attachment = array();
-				
+
 				$attachment['name'] = $item->getElementsByTagName('title')->item(0)->textContent;
 				$attachment['link'] = $item->getElementsByTagName('attachment_url')->item(0)->textContent;
 				$attachment['created'] = strtotime($item->getElementsByTagName('pubDate')->item(0)->textContent);
 				$attachment['author'] = $item->getElementsByTagName('creator')->item(0)->textContent;
-				
+
 				$tags = $item->getElementsByTagName('postmeta');
-				
+
 				foreach ($tags as $tag) {
 					if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attached_file') {
 						$fileName = $tag->getElementsByTagName('meta_value')->item(0)->textContent;
-						
+
 						// remove year and month from file name (e.g. 2009/10/fileName.jpg becomes fileName.jpg)
 						$attachment['fileName'] = preg_replace('|.+/|', '', $fileName);
 					} else if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attachment_metadata') {
 						$metadata = unserialize($tag->getElementsByTagName('meta_value')->item(0)->textContent);
-						
+
 						if (is_array($metadata) && isset($metadata['sizes'])) {
 							$sizes = array();
 							foreach ($metadata['sizes'] as $key => $size) {
@@ -474,17 +510,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 								);
 							}
 							$attachment['sizes'] = $sizes; 
-						}						
+						}
 					}
 				}
-				
+
 				$attachments[] = $attachment;
 			}
 		}
-			
+
 		return $attachments;
 	}
-	
+
 	/**
 	 * Parse an DOM representation of a Wordpress item and return all the values
 	 * that will be imported (title, content, comments etc).
@@ -494,7 +530,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @throws ImporterParserException if fail to parse an item
 	 */
 	function extractInfo(DOMElement $item)
-	{	
+	{
 		$data = array();
 		$data['categories'] = array();
 		$data['tags'] = array();
@@ -506,19 +542,19 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				switch ($node->tagName)	{
 					case 'title':
 						$data['name'] = (string) $node->textContent;
-						break;
+									break;
 					case 'wp:post_id':
 						$data['wp_id'] = (int) $node->textContent;
-						break;
+									break;
 					case 'wp:post_type':
 						$data['type'] = (string) $node->textContent;
-						break;
+									break;
 					case 'wp:post_date':
 						$data['created'] = strtotime($node->textContent);
-						break;
+									break;
 					case 'dc:creator':
 						$data['author'] = (string) $node->textContent;
-						break;
+									break;
 					case 'category':
 						if ($node->hasAttribute('nicename')) {
 							if ($node->getAttribute('domain') == 'tag') {
@@ -527,21 +563,21 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 								$data['categories'][] = $node->textContent;
 							}
 						}
-						break;
+									break;
 					case 'content:encoded':
 						$data['content'] = (string) $this->parseContent($node->textContent);
-						break;
+									break;
 					case 'excerpt:encoded':
 						$data['excerpt'] = (string) $node->textContent;
-						break;
+									break;
 					case 'wp:comment':
 						$comment = $this->extractComment($node);
 						if ($comment) {
 							$data['comments'][] = $comment;
 						} 
-						break;
+									break;
 					default:
-						break;
+									break;
 				}
 			}
 		}
@@ -549,7 +585,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		if (!empty($this->permalinks)) {
 			$data['hasInternalLinks'] = $this->identifyInternalLinks($data);
 		}
-		
+
 		// create revision key to reuse TikiImporter_Wiki::insertPage()
 		if ($data['type'] == 'page') {
 			$revision = array();
@@ -567,7 +603,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		} else if ($data['type'] == 'post') {
 			$msg = tr('Post "%0" successfully extracted.', $data['name']) . "\n";
 		}
-		
+
 		$this->saveAndDisplayLog($msg);
 
 		return $data;
@@ -583,10 +619,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$content = $this->parseContentAttachmentsUrl($content);
 		$content = $this->parseWordpressShortcodes($content);
-		
+
 		return $content;
 	}
-	
+
 	/**
 	 * Parse the content of a page or post replacing old 
 	 * attachments URLs with the new URLs of the attachments
@@ -598,32 +634,32 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function parseContentAttachmentsUrl($content)
 	{
 		global $filegallib;
-		
+
 		if (!empty($this->newFiles)) {
 			foreach ($this->newFiles as $file) {
 				$baseOldUrl = preg_replace('|(.+/).*|', '\\1', $file['oldUrl']);
 				$baseNewUrl = 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display'; 
-				
+
 				$newUrls = array();
 				$oldUrls = array();
-				
+
 				$newUrls[] = $baseNewUrl;
 				$oldUrls[] = $file['oldUrl'];
-				
+
 				if (!empty($file['sizes'])) {
 					foreach ($file['sizes'] as $size) {
 						$newUrls[] = $baseNewUrl . '&x=' . $size['width'] . '&y=' . $size['height'];
 						$oldUrls[] = $baseOldUrl . $size['name']; 
 					}
 				}
-				
+
 				$content = str_replace($oldUrls, $newUrls, $content);
 			}
 		}
-		
+
 		return $content;
 	}
-	
+
 	/**
 	 * Identify in a page or post content Wordpress shortcodes and
 	 * add ~np~ so that Tiki output the shortcode directly without
@@ -646,18 +682,18 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function parseWordpressShortcodes($content)
 	{
 		$sortcodes = $this->matchWordpressShortcodes($content);
-		
+
 		foreach ($sortcodes as $shortcode) {
 			// add ~np~~/np~ between shorcode opening tag and closing tag (if present)
 			$replacement = '~np~[' . $shortcode[1] . $shortcode[2] . ']~/np~';
 			$replacement .= isset($shortcode[3]) ? $shortcode[3] . '~np~[/' . $shortcode[1] . ']~/np~' : '';  
-			
+
 			$content = str_replace($shortcode[0], $replacement, $content);
 		}
 
 		return $content;
 	}
-	
+
 	/**
 	 * Return a list of shortcodes matches from a post or page content
 	 * 
@@ -673,27 +709,27 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function matchWordpressShortcodes($content)
 	{
 		$matches = array();
-		
+
 		// match all forms of wordpress shortcodes
 		$regex = '|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|s';
-		
+
 		preg_match_all($regex, $content, $matches, PREG_SET_ORDER);
-		
+
 		// check for shortcodes inside other shortcodes
 		foreach ($matches as $match) {
 			if (!empty($match[3]) && preg_match($regex, $match[3])) {
 				$matches = array_merge($matches, $this->matchWordpressShortcodes($match[3]));
 			}
 		}
-		
+
 		// order matches array with the biggest shortcode string first
 		// to avoid problems when replacing it (the smallest shortcode string
 		// migth be the same as part of another shortcode string)
 		usort($matches, array($this, 'compareShortcodes'));
-		
+
 		return $matches;
 	}
-	
+
 	/**
 	 * Comparison function to sort shortcodes array
 	 * with the biggest shortcode string first and the
@@ -708,10 +744,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		if ($a[0] == $b[0]) {
 			return 0;
 		}
-		
+
 		return (strlen($a[0]) < strlen($b[0])) ? 1 : -1;
 	}
-	
+
 	/**
 	 * Extract information from a comment node and return it. Comments marked
 	 * as spam, trash or pingback are ignored by the importer. Pingbacks are
@@ -723,7 +759,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function extractComment(DOMElement $commentNode)
 	{
 		$comment = array();
-		
+
 		// if comment is marked as spam, trash or pigback we ignore it
 		if ($commentNode->getElementsByTagName('comment_approved')->item(0)->textContent == 'spam'
 			|| $commentNode->getElementsByTagName('comment_approved')->item(0)->textContent == 'trash'
@@ -731,40 +767,40 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 			return false;
 		}
-		
+
 		foreach ($commentNode->childNodes as $node) {
 			if ($node instanceof DOMElement) {
 				switch ($node->tagName) {
 					case 'wp:comment_author':
 						$comment['author'] = $node->textContent;
-						break;
+									break;
 					case 'wp:comment_author_email':
 						$comment['author_email'] = $node->textContent;
-						break;
+									break;
 					case 'wp:comment_author_url':
 						$comment['author_url'] = ($node->textContent != 'http://') ? $node->textContent : '';
-						break;
+									break;
 					case 'wp:comment_author_IP':
 						$comment['author_ip'] = $node->textContent;
-						break;
+									break;
 					case 'wp:comment_date':
 						$comment['created'] = strtotime($node->textContent);
-						break;
+									break;
 					case 'wp:comment_content':
 						$comment['data'] = $node->textContent;
-						break;
+									break;
 					case 'wp:comment_approved':
 						$comment['approved'] = $node->textContent;
-						break;
+									break;
 					case 'wp:comment_type':
 						$comment['type'] = $node->textContent;
-						break;
+									break;
 					default:
-						break;
+									break;
 				}
 			}
 		}
-		
+
 		return $comment;
 	}
 
@@ -787,10 +823,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Extract blog information (title, description etc) and
 	 * set $this->blogInfo.
@@ -801,14 +837,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$this->blogInfo['link'] = rtrim($this->dom->getElementsByTagName('link')->item(0)->nodeValue, '/');
 		$this->blogInfo['desc'] = $this->dom->getElementsByTagName('description')->item(0)->nodeValue;
 		$this->blogInfo['lastModif'] = strtotime($this->dom->getElementsByTagName('pubDate')->item(0)->nodeValue);
-		
+
 		$created = $this->extractBlogCreatedDate();
 
 		if ($created > 0) { 
 			$this->blogInfo['created'] = $created;
 		}
 	}
-	
+
 	/**
 	 * Calculate blog created date based on the date of
 	 * the oldest post present in the XML file.
@@ -819,22 +855,22 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$dates = array();
 		$created = 0;
-		
+
 		$nodes = $this->dom->getElementsByTagName('post_date');
-		
+
 		foreach ($nodes as $node) {
 			$dates[] = strtotime($node->textContent);
 		}
-		
+
 		sort($dates);
-		
+
 		if (!empty($dates)) { 
 			$created = $dates[0];
 		}
-		
+
 		return $created;
 	}
-	
+
 	//TODO: check if a proxy is configured and than use Zend_Http_Client_Adapter_Proxy
 	/**
 	 * Set $this->httpClient property as an instance of Zend_Http_Client
@@ -845,7 +881,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		return TikiLib::lib('tiki')->get_http_client();
 	}
-	
+
 	/**
 	 * Call $this->storeNewLink and leave the rest
 	 * with the parent method.
@@ -855,12 +891,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function insertItem($item)
 	{
 		$objId = parent::insertItem($item);
-		
+
 		$this->storeNewLink($objId, $item);
-		
+
 		return $objId;
 	}
-	
+
 	/**
 	 * Map the old WP link with the new Tiki link for a
 	 * given item. This information is stored in 
@@ -874,11 +910,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function storeNewLink($objId, $item)
 	{
 		global $prefs, $base_url;
-		
+
 		if (substr($base_url, -1) != '/') {
 			$base_url .= '/';
 		}
-		
+
 		if (isset($this->permalinks[$item['wp_id']])) {
 			if ($item['type'] == 'page') {
 				if ($prefs['feature_sefurl'] == 'y') {
@@ -896,7 +932,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			} 
 		}
 	}
-	
+
 	/**
 	 * Call $this->replaceInternalLinks() and leave the
 	 * rest with the parent method.
@@ -906,15 +942,15 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function insertData()
 	{
 		$countData = parent::insertData();
-		
+
 		if (isset($_POST['replaceInternalLinks']) && $_POST['replaceInternalLinks'] == 'on') {
 			$items = array_merge($this->parsedData['posts'], $this->parsedData['pages']);
 			$this->replaceInternalLinks($items);
 		}
-		
+
 		return $countData;
 	}
-	
+
 	/**
 	 * Replace old WP links with new Tiki links inside
 	 * post or page content directly in the database.
@@ -925,11 +961,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function replaceInternalLinks($items)
 	{
 		global $tikilib, $bloglib;
-		
+
 		foreach ($items as $item) {
 			if ($item['hasInternalLinks']) {
 				$changed = false;
-				
+
 				if ($item['type'] == 'page') {
 					$page = $tikilib->get_page_info($item['objId']);
 					$content = $page['data'];
@@ -938,7 +974,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 					$post = $bloglib->get_post($item['objId']);
 					$content = $post['data'];
 				}
-				
+
 				foreach ($this->permalinks as $key => $links) {
 					foreach ($links['oldLinks'] as $link) {
 						if (strpos($content, $link) !== false) {
@@ -948,7 +984,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						}
 					}
 				}
-				
+
 				if ($changed) {
 					if ($item['type'] == 'page') {
 						TikiDb::get()->query('UPDATE `tiki_pages` SET `data` = ? WHERE `pageName` = ?', array($content, $item['objId']));
@@ -971,7 +1007,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function getHtaccessRules()
 	{
 		$rules = '';
-		
+
 		foreach ($this->permalinks as $link) {
 			foreach ($link['oldLinks'] as $oldLink) {
 				// oldLinks contain both the absolute and relative URLs
@@ -982,7 +1018,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				}
 			}
 		}
-		
+
 		return $rules;
 	}
 }

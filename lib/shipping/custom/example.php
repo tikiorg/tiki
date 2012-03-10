@@ -19,8 +19,8 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 {
 	private $services;
 
-	function __construct() {	// needs to be without params
-
+	function __construct()	// needs to be without params
+	{
 		$this->services = array(
 			'standard' => array(
 				'name' => tra('Standard Shipping'),
@@ -36,7 +36,7 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 					),
 				),
 			),
-			'express'  => array(
+			'express' => array(
 				'name' => tra('Express Shipping'),
 				'description' => tra('Next day delivery'),
 				'zones' => array(
@@ -53,20 +53,23 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 		);
 	}
 
-	function getName() {
+	function getName()
+	{
 		return tra('Custom Shipping Example');
 	}
 
-	function getCurrency() {
+	function getCurrency()
+	{
 		return 'USD';
 	}
 
-	function getRates( array $from, array $to, array $packages ) {
+	function getRates( array $from, array $to, array $packages )
+	{
 		if ( !empty($to) && !empty($packages) ) {
 			$rates = array();
 
 			foreach ( $this->services as $service => $info ) {
-				$rates[] = $this->getRate( $info, $from, $to, $packages );
+				$rates[] = $this->getRate($info, $from, $to, $packages);
 			}
 
 			return $rates;
@@ -75,8 +78,8 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 		}
 	}
 
-	private function getRate( $service, array $from, array $to, array $packages ) {
-
+	private function getRate( $service, array $from, array $to, array $packages )
+	{
 		$ret = array(
 			'provider' => $this->getName(),
 			'currency' => $this->getCurrency(),
@@ -93,13 +96,13 @@ class CustomShippingProvider_Example extends CustomShippingProvider
 			}
 		}
 
-		if (in_array( strtoupper( $to['country']), array( 'AR', 'BO', 'BR', 'CL', 'CO', 'EC', 'FK', 'GF', 'GY', 'PY', 'PE', 'GS', 'SR', 'UY', 'VE' ))) {
+		if (in_array(strtoupper($to['country']), array( 'AR', 'BO', 'BR', 'CL', 'CO', 'EC', 'FK', 'GF', 'GY', 'PY', 'PE', 'GS', 'SR', 'UY', 'VE' ))) {
 			$zone = $service['zones']['zone 2'];	// zone 2 is South America
 		} else {
 			$zone = $service['zones']['zone 1'];
 		}
 
-		$ret['cost'] = min( $itemCount * $zone['cost_per_item'], $zone['max_total']);
+		$ret['cost'] = min($itemCount * $zone['cost_per_item'], $zone['max_total']);
 
 		return $ret;
 	}

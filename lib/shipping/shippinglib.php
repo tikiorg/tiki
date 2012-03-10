@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -28,7 +28,7 @@ class ShippingLib
 		$this->providers[] = $provider;
 	}
 
-	function getRates( array $from, array $to, array $packages )
+	function getRates(array $from, array $to, array $packages)
 	{
 		$rates = array();
 
@@ -44,25 +44,25 @@ class ShippingLib
 		return $rates;
 	}
 
-	private function completeAddressInformation( $address )
+	private function completeAddressInformation($address)
 	{
-		if ( isset( $address['zip'] ) ) {
-			$address['zip'] = strtoupper( $address['zip'] );
+		if ( isset($address['zip']) ) {
+			$address['zip'] = strtoupper($address['zip']);
 		}
 
 		if ( ! isset( $address['country'] ) ) {
 			foreach ( $this->formats as $pattern => $country ) {
-				if ( preg_match( $pattern, $address['zip'] ) ) {
+				if ( preg_match($pattern, $address['zip']) ) {
 					$address['country'] = $country;
 					break;
 				}
 			}
 		}
-		
+
 		return $address;
 	}
 
-	private function expandPackages( $packages )
+	private function expandPackages($packages)
 	{
 		$out = array();
 
@@ -74,7 +74,7 @@ class ShippingLib
 				$c = 1;
 			}
 
-			for( $i = 0; $c > $i; ++$i ) {
+			for ( $i = 0; $c > $i; ++$i ) {
 				$out[] = $package;
 			}
 		}
@@ -105,26 +105,26 @@ $shippinglib = new ShippingLib;
 if ( !empty($prefs['shipping_fedex_enable']) && $prefs['shipping_fedex_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_fedex.php';
 	$shippinglib->addProvider(
-			new ShippingProvider_FedEx(
-				array(
-					'key' => $prefs['shipping_fedex_key'],
-					'password' => $prefs['shipping_fedex_password'],
-					'meter' => $prefs['shipping_fedex_meter'],
-				)
-			)
+					new ShippingProvider_FedEx(
+									array(
+										'key' => $prefs['shipping_fedex_key'],
+										'password' => $prefs['shipping_fedex_password'],
+										'meter' => $prefs['shipping_fedex_meter'],
+									)
+					)
 	);
 }
 
 if ( !empty($prefs['shipping_ups_enable']) && $prefs['shipping_ups_enable'] === 'y' ) {
 	require_once 'lib/shipping/provider_ups.php';
 	$shippinglib->addProvider(
-		new ShippingProvider_Ups(
-			array(
-				'username' => $prefs['shipping_ups_username'],
-				'password' => $prefs['shipping_ups_password'],
-				'license' => $prefs['shipping_ups_license'],
-			)
-		)
+					new ShippingProvider_Ups(
+									array(
+										'username' => $prefs['shipping_ups_username'],
+										'password' => $prefs['shipping_ups_password'],
+										'license' => $prefs['shipping_ups_license'],
+									)
+					)
 	);
 }
 

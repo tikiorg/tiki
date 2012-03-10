@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,28 +11,30 @@ class ShippingProvider_Fedex implements ShippingProvider
 	private $password;
 	private $meter;
 
-	function __construct( array $config ) {
+	function __construct(array $config)
+	{
 		$this->key = $config['key'];
 		$this->password = $config['password'];
 		$this->meter = $config['meter'];
 	}
 
-	function getRates( array $from, array $to, array $packages ) {
-		if ( ! class_exists( 'SoapClient' ) ) {
+	function getRates(array $from, array $to, array $packages)
+	{
+		if ( ! class_exists('SoapClient') ) {
 			return array();
 		}
 
 		$wsdl = dirname(__FILE__) . '/FedEx_v8.wsdl';
 		$args = array();
 
-		$request = $this->getRequest( $from, $to, $packages );
+		$request = $this->getRequest($from, $to, $packages);
 
 		try {
-			$client = new SoapClient( $wsdl, $args );
-			$response = $client->getRates( $request );
+			$client = new SoapClient($wsdl, $args);
+			$response = $client->getRates($request);
 
 			$options = $response->RateReplyDetails;
-			$out = $this->extractRates( $options );
+			$out = $this->extractRates($options);
 
 			return $out;
 		} catch( SoapFault $e ) {
@@ -40,17 +42,18 @@ class ShippingProvider_Fedex implements ShippingProvider
 		}
 	}
 
-	private function extractRates( $options ) {
+	private function extractRates($options)
+	{
 		$out = array();
 
 		foreach ( $options as $option ) {
-			if ( $detail = reset( $option->RatedShipmentDetails ) ) {
+			if ( $detail = reset($option->RatedShipmentDetails) ) {
 				$charge = $detail->ShipmentRateDetail->TotalNetCharge;
 				$out[] = array(
 					'provider' => 'FedEx',
 					'service' => $option->ServiceType,
-					'readable' => tra( $option->ServiceType ),
-					'cost' => number_format( $charge->Amount, 2, '.', '' ),
+					'readable' => tra($option->ServiceType),
+					'cost' => number_format($charge->Amount, 2, '.', ''),
 					'currency' => $charge->Currency,
 				);
 			}
@@ -59,7 +62,8 @@ class ShippingProvider_Fedex implements ShippingProvider
 		return $out;
 	}
 
-	private function getRequest( $from, $to, $packages ) {
+	private function getRequest($from, $to, $packages)
+	{
 		$request = array(
 			'WebAuthenticationDetail' => array(
 				'UserCredential' => array(
@@ -79,18 +83,19 @@ class ShippingProvider_Fedex implements ShippingProvider
 			),
 			'RequestedShipment' => array(
 				'PackagingType' => 'YOUR_PACKAGING',
-				'Shipper' => $this->buildAddress( $from ),
-				'Recipient' => $this->buildAddress( $to ),
+				'Shipper' => $this->buildAddress($from),
+				'Recipient' => $this->buildAddress($to),
 				'RateRequestTypes' => 'LIST',
 				'PackageDetail' => 'INDIVIDUAL_PACKAGES',
-				'RequestedPackageLineItems' => array_map( array( $this, 'buildPackage' ), $packages ),
+				'RequestedPackageLineItems' => array_map(array( $this, 'buildPackage' ), $packages),
 			),
 		);
 
 		return $request;
 	}
 
-	private function buildAddress( $address ) {
+	private function buildAddress($address)
+	{
 		return array(
 			'Address' => array(
 				'PostalCode' => $address['zip'],
@@ -99,7 +104,8 @@ class ShippingProvider_Fedex implements ShippingProvider
 		);
 	}
 
-	private function buildPackage( $package ) {
+	private function buildPackage($package)
+	{
 		return array(
 			'Weight' => array(
 				'Value' => $package['weight'],
