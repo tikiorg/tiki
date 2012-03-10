@@ -124,14 +124,16 @@ function displaySelectionList($data, $messages) // {{{
 	$smarty->display('tiki.tpl');
 	exit;
 } // }}}
-function displayError($message) { // {{{
+function displayError($message)
+{ // {{{
 	global $smarty;
 	$smarty->assign('msg', tra("Failure:") . " " . $message);
 	$smarty->assign('errortype', 'login');
 	$smarty->display("error.tpl");
 	die;
 } // }}}
-function getStore() { // {{{
+function getStore()
+{ // {{{
 	$store_path = "temp/openid_consumer";
 	if (!file_exists($store_path) && !mkdir($store_path)) {
 		print "Could not create the FileStore directory '$store_path'. " . " Please check the effective permissions.";
@@ -139,7 +141,8 @@ function getStore() { // {{{
 	}
 	return new Auth_OpenID_FileStore($store_path);
 } // }}}
-function getConsumer() { // {{{
+function getConsumer()
+{ // {{{
 	
 	/**
 	 * Create a consumer object using the store object created
@@ -148,7 +151,8 @@ function getConsumer() { // {{{
 	$store = getStore();
 	return new Auth_OpenID_Consumer($store);
 } // }}}
-function getOpenIDURL() { // {{{
+function getOpenIDURL()
+{ // {{{
 	// Render a default page if we got a submission without an openid
 	// value.
 	if (empty($_GET['openid_url'])) {
@@ -156,23 +160,27 @@ function getOpenIDURL() { // {{{
 	}
 	return $_GET['openid_url'];
 } // }}}
-function getScheme() { // {{{
+function getScheme()
+{ // {{{
 	$scheme = 'http';
 	if (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on') {
 		$scheme.= 's';
 	}
 	return $scheme;
 } // }}}
-function getReturnTo() { // {{{
-	$path = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
+function getReturnTo()
+{ // {{{
+	$path = str_replace('\\', '/', dirname($_SERVER['PHP_SELF']));
 	$string = sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $path == '/' ? '' : $path);
 	if (isset($_GET['action']) && $_GET['action'] == 'force') $string.= '&force=true';
 	return $string;
 } // }}}
-function getTrustRoot() { // {{{
-	return sprintf("%s://%s:%s%s", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('\\','/',dirname($_SERVER['PHP_SELF'])));
+function getTrustRoot()
+{ // {{{
+	return sprintf("%s://%s:%s%s", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 } // }}}
-function runAuth() { // {{{
+function runAuth()
+{ // {{{
 	setupFromAddress();
 	$openid = getOpenIDURL();
 	$consumer = getConsumer();
@@ -183,10 +191,11 @@ function runAuth() { // {{{
 		displayError(tra("Authentication error; probably not a valid OpenID."));
 	}
 	$sreg_request = Auth_OpenID_SRegRequest::build(
-	// Required
-	array(),
-	// Optional
-	array('nickname', 'email'));
+					// Required
+					array(),
+					// Optional
+					array('nickname', 'email')
+	);
 	if ($sreg_request) {
 		$auth_request->addExtension($sreg_request);
 	}
@@ -218,7 +227,8 @@ function runAuth() { // {{{
 		}
 	}
 } // }}}
-function runFinish() { // {{{
+function runFinish()
+{ // {{{
 	global $smarty;
 	$consumer = getConsumer();
 	// Complete the authentication process using the server's
@@ -252,9 +262,8 @@ function runFinish() { // {{{
 			if (count($list) == 1) {
 				// Login the user
 				loginUser($list[0]);
-			} else
+			} else {
 			// Else Multiple account
-			{
 				// Display user selection list
 				displaySelectionList($list);
 			}

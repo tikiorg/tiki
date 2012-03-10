@@ -129,27 +129,27 @@ class FileGallery_File
 		
 		if ($this->exists() == false) {
 			$id = TikiLib::lib("filegal")->insert_file(
-				($this->getParam('galleryId') || 1), //zero makes it not show by default
-				$this->getParam('filename'),
-				$this->getParam('description'),
-				$this->getParam('filename'),
-				$data,
-				strlen($data),
-				$this->getParam('filetype'),
-				$user
+							($this->getParam('galleryId') || 1), //zero makes it not show by default
+							$this->getParam('filename'),
+							$this->getParam('description'),
+							$this->getParam('filename'),
+							$data,
+							strlen($data),
+							$this->getParam('filetype'),
+							$user
 			);
 		} else {
 			$id = TikiLib::lib("filegal")->save_archive(
-				$this->getParam('fileId'),
-				$this->getParam('galleryId'),
-				0,
-				$this->getParam('filename'),
-				$this->getParam('description'),
-				$this->getParam('filename'),
-				$data,
-				strlen($data),
-				$this->getParam('filetype'),
-				$user
+							$this->getParam('fileId'),
+							$this->getParam('galleryId'),
+							0,
+							$this->getParam('filename'),
+							$this->getParam('description'),
+							$this->getParam('filename'),
+							$data,
+							strlen($data),
+							$this->getParam('filetype'),
+							$user
 			);
 		}
 		

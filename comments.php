@@ -68,10 +68,10 @@ if (isset($_REQUEST['comzone'])) {
 	$comzone_state = $_REQUEST['comzone'];
 	if ($comzone_state=='show'||$comzone_state=='o') {
 		$comments_show = 'y';
-		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone','o');	
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone', 'o');	
 	} 
 	if ($comzone_state=='hide'||$comzone_state=='c') {
-		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='o') setcookie('comzone','c');
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='o') setcookie('comzone', 'c');
 	}
 } else {
 	$comments_show = 'n';
@@ -231,14 +231,14 @@ if ($_REQUEST["comments_threadId"] > 0) {
 		if ( ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') && $prefs['feature_use_quoteplugin'] == 'y' ) {
 			$comment_info["data"] = "\n{QUOTE(replyto=>" . $comment_info["userName"] . ")}" . $comment_info["data"] . '{QUOTE}';
 		} else {
-			$comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;
+			$comment_info["data"] = preg_replace('/\n/', "\n> ", $comment_info["data"]);
 			$comment_info["data"] = "\n> " . $comment_info["data"];
 		}
 	}
 	$smarty->assign('comment_data', $comment_info["data"]);
 
-	if ( ! array_key_exists( "title", $comment_info ) )	{
-		if ( array_key_exists( "comments_title", $_REQUEST ) ) {
+	if ( ! array_key_exists("title", $comment_info) ) {
+		if ( array_key_exists("comments_title", $_REQUEST) ) {
 			$comment_info["title"] = $_REQUEST["comments_title"];
 		} else {
 			$comment_info["title"] = "";
@@ -337,10 +337,12 @@ if (empty($thread_sort_mode)) {
 	}
 }
 
-$comments_coms = $commentslib->get_comments($comments_objectId,
-		$_REQUEST["comments_parentId"],
-		$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
-		$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply);
+$comments_coms = $commentslib->get_comments(
+				$comments_objectId,
+				$_REQUEST["comments_parentId"],
+				$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
+				$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply
+);
 
 if ($comments_prefix_var == 'forum:') {
 	$comments_cant = $commentslib->count_comments('topic:'. $_REQUEST['comments_parentId']); // comments in the topic not in the forum
@@ -360,7 +362,7 @@ if ( $comments_maxRecords != 0 ) {
 	$smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 } else {
 	$comments_cant_pages = 1;
-	$smarty->assign('comments_actual_page', 1 );
+	$smarty->assign('comments_actual_page', 1);
 }
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
 
@@ -377,7 +379,7 @@ if ($comments_offset > 0) {
 	$smarty->assign('comments_prev_offset', -1);
 }
 
-$smarty->assign('comments_coms', $comments_coms["data"] );
+$smarty->assign('comments_coms', $comments_coms["data"]);
 
 // Grab the parent comment to show.  -rlpowell
 if (isset($_REQUEST["comments_parentId"])

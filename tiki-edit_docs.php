@@ -23,7 +23,7 @@ $fileId = (int)$_REQUEST['fileId'];
 $smarty->assign('fileId', $fileId);
 
 if ($fileId > 0) {
-	$fileInfo = $filegallib->get_file_info( $fileId );
+	$fileInfo = $filegallib->get_file_info($fileId);
 } else {
 	$fileInfo = array();
 }
@@ -31,7 +31,7 @@ if ($fileId > 0) {
 //This allows the document to be edited, but only the most recent of that group if it is an archive
 if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$fileId  = $fileInfo['archiveId'];
-	$fileInfo = $filegallib->get_file_info( $fileId );
+	$fileInfo = $filegallib->get_file_info($fileId);
 }
 
 $cat_type = 'file';
@@ -40,7 +40,7 @@ $cat_object_exists = ! empty($fileInfo);
 include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
 
-$gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
+$gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
 if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes["odt"] || end(explode(".", $fileInfo['filename'])) != 'odt') {
 	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["odt"]));
@@ -48,7 +48,7 @@ if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes["
 	die;
 }
 
-$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
+$globalperms = Perms::get(array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ));
 
 //check permissions
 if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
@@ -88,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 }
 
 
-$smarty->assign( "page", $page );
-$smarty->assign( "isFromPage", isset($page) );
-$smarty->assign( "fileId", $fileId);
+$smarty->assign("page", $page);
+$smarty->assign("isFromPage", isset($page));
+$smarty->assign("fileId", $fileId);
 
 $headerlib->add_jsfile("lib/webodf/webodf.js");
 $headerlib->add_cssfile("lib/webodf/webodf.css");

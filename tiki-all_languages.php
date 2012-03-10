@@ -21,7 +21,7 @@ if ( !isset($_REQUEST['page']) ) {
 
 $pages = array();
 
-$requested = $tikilib->get_page_info( $_REQUEST['page'] );
+$requested = $tikilib->get_page_info($_REQUEST['page']);
 $page_id = $requested['page_id'];
 $pages[] = $requested;
 $unordered = array();
@@ -35,11 +35,11 @@ if (empty($requested)) {
 	$likepages = $wikilib->get_like_pages($page);
 	// if we have exactly one match, redirect to it 
 	if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
-		$access->redirect( 'tiki-all_languages.php?page='.urlencode($likepages[0]) );
+		$access->redirect('tiki-all_languages.php?page='.urlencode($likepages[0]));
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
 	$smarty->assign('create', $isUserPage? 'n': 'y');
-	$access->display_error( $page, tra('Page cannot be found'), '404' );
+	$access->display_error($page, tra('Page cannot be found'), '404');
 }
 
 $preferred_langs = $multilinguallib->preferredLangs();
@@ -57,14 +57,14 @@ if (count($preferred_langs) == 1) {
 }
 
 // Sort languages according to user's prefences
-foreach ( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
+foreach ( $multilinguallib->getTrads('wiki page', $page_id) as $row)
 	if ( $row['objId'] != $page_id && in_array($row['lang'], $preferred_langs) )
-		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
+		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id($row['objId']);
 	elseif ( $row['lang'] != $requested['lang'] )
 		$excluded[] = $row['lang'];
 
 foreach ( $preferred_langs as $lang )
-	if ( array_key_exists( $lang, $unordered ) )
+	if ( array_key_exists($lang, $unordered) )
 		$pages[] = $unordered[$lang];
 
 $contents = array();
@@ -80,12 +80,11 @@ if (count($pages) >= 2) {
 }
 
 
-foreach ( array_reverse( $pages ) as $id => $info )
-{
+foreach ( array_reverse($pages) as $id => $info ) {
 	$page = $info['pageName'];
 	$section = 'wiki page';
 
-	$renderer = new WikiRenderer( $info, $user );
+	$renderer = new WikiRenderer($info, $user);
 	$renderer->applyPermissions();
 
 	if ( $tiki_p_view == 'y' ) {
@@ -98,7 +97,7 @@ foreach ( array_reverse( $pages ) as $id => $info )
 	}
 }
 
-$contents = array_reverse( $contents );
+$contents = array_reverse($contents);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('side_by_side', $show_langs_side_by_side);
