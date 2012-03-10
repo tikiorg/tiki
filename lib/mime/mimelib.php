@@ -13,17 +13,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 
 // returns mimetypes of files
-function tiki_get_mime($filename, $fallback = '', $fileRealPath = '') {
+function tiki_get_mime($filename, $fallback = '', $fileRealPath = '')
+{
 	// Check if extension pecl/fileinfo is usable.
-	if ( class_exists('finfo') )	{
+	if ( class_exists('finfo') ) {
 		$php53 = defined('FILEINFO_MIME_TYPE');
 		$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
 		$mime = null;
 
 		if ( ! empty( $fileRealPath ) ) {
-			$mime = $finfo->file( $fileRealPath );
-		} elseif ( file_exists( $filename ) ) {
-			$mime = $finfo->file( $filename );
+			$mime = $finfo->file($fileRealPath);
+		} elseif ( file_exists($filename) ) {
+			$mime = $finfo->file($filename);
 		}
 
 		if (! $php53) {
@@ -40,17 +41,18 @@ function tiki_get_mime($filename, $fallback = '', $fileRealPath = '') {
 		// notice: this is the better way.
 		// Compile php with  --enable-mime-magic  to be able to use this.
 
-		if ( ! empty( $fileRealPath ) ) {
-				return mime_content_type( $fileRealPath );
-		} elseif ( file_exists( $filename ) ) {
-				return mime_content_type( $filename );
+		if ( ! empty($fileRealPath) ) {
+				return mime_content_type($fileRealPath);
+		} elseif ( file_exists($filename) ) {
+				return mime_content_type($filename);
 		}
 	}
 
 	return tiki_get_mime_from_extension($filename, $fallback);
 }
 
-function tiki_get_mime_from_extension($filename, $fallback = '') {
+function tiki_get_mime_from_extension($filename, $fallback = '')
+{
 	global $mimetypes;
 	include_once('lib/mime/mimetypes.php');
 
@@ -62,7 +64,7 @@ function tiki_get_mime_from_extension($filename, $fallback = '') {
                 if (!empty($mimetype)) {
                         return $mimetype;
                 }
-        }
+	}
 
         if ( $fallback != '' ) {
                 return $fallback;
@@ -83,12 +85,13 @@ function tiki_get_mime_from_extension($filename, $fallback = '') {
 }
 
 // try to get mime type from data
-function tiki_get_mime_from_content($content, $fallback = '', $filename = '') {
+function tiki_get_mime_from_content($content, $fallback = '', $filename = '')
+{
 	// Check if extension pecl/fileinfo is usable.
-	if ( class_exists('finfo') )	{
+	if ( class_exists('finfo') ) {
 		$php53 = defined('FILEINFO_MIME_TYPE');
 		$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
-		$mime = $finfo->buffer( $content );
+		$mime = $finfo->buffer($content);
 
 		if (! $php53) {
 			$mime = reset(explode(';', $mime));
@@ -104,14 +107,16 @@ function tiki_get_mime_from_content($content, $fallback = '', $filename = '') {
 }
 
 //returns "image" from image/jpeg
-function tiki_get_mime_main($filename) {
+function tiki_get_mime_main($filename)
+{
 	$filesplit = preg_split("#/+#", tiki_get_mime($filename));
 
 	return $filesplit["0"];
 }
 
 //returns "jpeg" from image/jpeg
-function tiki_get_mime_sub($filename) {
+function tiki_get_mime_sub($filename)
+{
 	$filesplit = preg_split("#/+#", tiki_get_mime($filename));
 
 	return $filesplit["1"];

@@ -263,19 +263,18 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 			$smarty->loadPlugin('smarty_function_object_link');
 
 			if ( $this->getOption(5) ) {
-				$link = smarty_function_object_link(array(
-					'type' => 'wiki page',
-					'id' => $this->getOption(5) . '&itemId=' . $item,	// add itemId param TODO properly
-					'title' => $label,
-				), $smarty);
+				$link = smarty_function_object_link(
+								array(
+									'type' => 'wiki page',
+									'id' => $this->getOption(5) . '&itemId=' . $item,	// add itemId param TODO properly
+									'title' => $label,
+								),
+								$smarty
+				);
 				// decode & and = chars
 				return str_replace(array('%26','%3D'), array('&','='), $link);
 			} else {
-				return smarty_function_object_link(array(
-					'type' => 'trackeritem',
-					'id' => $item,
-					'title' => $label,
-				), $smarty);
+				return smarty_function_object_link(array('type' => 'trackeritem',	'id' => $item,	'title' => $label), $smarty);
 			}
 		} elseif ($label) {
 			return $label;
@@ -301,11 +300,8 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 	}
 
 	function getProvidedFields($baseKey)
-        {
-		return array(
-			$baseKey,
-			"{$baseKey}_text",
-		);
+	{
+		return array($baseKey, "{$baseKey}_text");
 	}
 
 	function getGlobalFields($baseKey)
@@ -331,10 +327,10 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 
 		if (!$this->getOption(3)) {	//no displayedFieldsList
 			$data['list'] = TikiLib::lib('trk')->get_all_items(
-				$this->getOption(0),
-				$this->getOption(1),
-				$this->getOption(4, 'opc'),
-				false
+							$this->getOption(0),
+							$this->getOption(1),
+							$this->getOption(4, 'opc'),
+							false
 			);
 			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
 				$data['list'] = array_unique($data['list']);
@@ -350,17 +346,17 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 			}
 		} else {
 			$data['list'] = TikiLib::lib('trk')->get_all_items(
-				$this->getOption(0),
-				$this->getOption(1),
-				$this->getOption(4, 'opc'),
-				false
+							$this->getOption(0),
+							$this->getOption(1),
+							$this->getOption(4, 'opc'),
+							false
 			);
 			$data['listdisplay'] = array_unique(
-				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
-					$this->getOption(0),
-					$this->getOption(3),
-					$this->getOption(4, 'opc')
-				)
+							TikiLib::lib('trk')->concat_all_items_from_fieldslist(
+											$this->getOption(0),
+											$this->getOption(3),
+											$this->getOption(4, 'opc')
+							)
 			);
 			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
 				$data['list'] = array_unique($data['list']);
@@ -418,14 +414,8 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 	private function getRemoteItemLinks($syncInfo, $trackerId, $fieldId, $status)
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'tracker');
-		$items = $controller->getResultLoader('list_items', array(
-			'trackerId' => $trackerId,
-			'status' => $status,
-		));
-		$result = $controller->edit_field(array(
-			'trackerId' => $trackerId,
-			'fieldId' => $fieldId,
-		));
+		$items = $controller->getResultLoader('list_items', array('trackerId' => $trackerId, 'status' => $status));
+		$result = $controller->edit_field(array('trackerId' => $trackerId, 'fieldId' => $fieldId));
 
 		$permName = $result['field']['permName'];
 		if (empty($permName)) {

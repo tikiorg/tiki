@@ -31,13 +31,11 @@ $all = empty( $_REQUEST['plugin'] );
 
 $files = array();
 
-if ( $all )
-{
+if ( $all ) {
 	$cache = "temp/cache/wikiplugin_ALL_".$_REQUEST['language'];
 
-	if ( file_exists( $cache ) )
-	{
-		readfile( $cache );
+	if ( file_exists($cache) ) {
+		readfile($cache);
 		exit;
 	}
 
@@ -45,16 +43,13 @@ if ( $all )
 	
 	$parserlib = TikiLib::lib('parser');
 	$plugins = $parserlib->plugin_get_list();
-}
-else
-{
-	$plugin = basename( $_REQUEST['plugin'] );
+} else {
+	$plugin = basename($_REQUEST['plugin']);
 
 	$cache = 'temp/cache/wikiplugin_'.$plugin.'_'.$_REQUEST['language'];
 
-	if ( file_exists( $cache ) )
-	{
-		readfile( $cache );
+	if ( file_exists($cache) ) {
+		readfile($cache);
 		exit;
 	}
 
@@ -69,12 +64,12 @@ $parserlib = TikiLib::lib('parser');
 ?>
 if ( typeof tiki_plugins == 'undefined' ) { var tiki_plugins = {}; }
 <?php foreach ( $plugins as $plugin ):
-	if ( ! $info = $parserlib->plugin_info( $plugin ) )
+	if ( ! $info = $parserlib->plugin_info($plugin) )
 		continue;
 ?>
-tiki_plugins.<?php echo $plugin ?> = <?php echo json_encode( $info ) ?>;
+tiki_plugins.<?php echo $plugin ?> = <?php echo json_encode($info) ?>;
 <?php endforeach;
 
 $content = ob_get_contents();
-file_put_contents( $cache, $content );
+file_put_contents($cache, $content);
 ob_end_flush();

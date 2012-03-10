@@ -20,7 +20,7 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $this->obj = new TikiImporter_Blog_Wordpress;
     }
     
-    protected function tearDown()
+	protected function tearDown()
 	{
 		TikiDb::get()->query('DELETE FROM tiki_pages WHERE pageName = "materia"');
 		TikiDb::get()->query('DELETE FROM tiki_blog_posts WHERE postId = 10');
@@ -28,8 +28,8 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 		unset($GLOBALS['base_url']);
 	}
 
-    public function testImport()
-    {
+	public function testImport()
+	{
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'setupTiki', 'extractPermalinks'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
@@ -48,7 +48,7 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 	}
 	
 	public function testImportShouldHandleAttachments()
-    {
+	{
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments', 'setupTiki', 'extractPermalinks'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
@@ -62,10 +62,10 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
         
         unset($_POST['importAttachments']);
-    }
+	}
 
-    public function testParseData()
-    {
+	public function testParseData()
+	{
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractTags', 'extractCategories'));
         $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array('posts' => array(), 'pages' => array())));
 		$this->expectOutputString("\nExtracting data from XML file:\n");
@@ -462,11 +462,11 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$adapter = new Zend_Http_Client_Adapter_Test();
 		
 		$adapter->setResponse(
-			"HTTP/1.1 200 OK"         . "\r\n" .
-			"Content-type: image/jpg" . "\r\n" .
-			"Content-length: 1034"	  . "\r\n" .
-										"\r\n" .
-    		'empty content'
+						"HTTP/1.1 200 OK"         . "\r\n" .
+						"Content-type: image/jpg" . "\r\n" .
+						"Content-length: 1034"	  . "\r\n" .
+						"\r\n" .
+						'empty content'
 		);
 		
 		$client = new Zend_Http_Client();
@@ -569,11 +569,11 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$adapter = new Zend_Http_Client_Adapter_Test();
 		
 		$adapter->setResponse(
-			"HTTP/1.1 404 NOT FOUND"         . "\r\n" .
-			"Content-type: image/jpg" . "\r\n" .
-			"Content-length: 1034"	  . "\r\n" .
-										"\r\n" .
-    		'empty content'
+						"HTTP/1.1 404 NOT FOUND"         . "\r\n" .
+						"Content-type: image/jpg" . "\r\n" .
+						"Content-length: 1034"	  . "\r\n" .
+						"\r\n" .
+						'empty content'
 		);
 		
 		$client = new Zend_Http_Client();
@@ -843,20 +843,22 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		
 		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links.txt');
 		
-		TikiDb::get()->query('INSERT INTO tiki_pages (pageName, data) VALUES (?, ?)',
-			array('materia', $content));
-		TikiDb::get()->query('INSERT INTO tiki_blog_posts (postId, data) VALUES (?, ?)',
-			array(10, $content));
+		TikiDb::get()->query('INSERT INTO tiki_pages (pageName, data) VALUES (?, ?)', array('materia', $content));
+		TikiDb::get()->query('INSERT INTO tiki_blog_posts (postId, data) VALUES (?, ?)', array(10, $content));
 		
 		$this->obj->replaceInternalLinks($items);
         
 		$newPageContent = TikiDb::get()->getOne('SELECT data FROM tiki_pages WHERE pageName = "materia"');
 		$newPostContent = TikiDb::get()->getOne('SELECT data FROM tiki_blog_posts WHERE postId = 10');
 		
-		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
-			$newPageContent);
-		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
-			$newPostContent);
+		$this->assertEquals(
+						file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
+						$newPageContent
+		);
+		$this->assertEquals(
+						file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
+						$newPostContent
+		);
 	}
 	
 	public function testGetHtaccessRules()

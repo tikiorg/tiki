@@ -82,19 +82,21 @@ include_once ('lib/init/tra.php');
 
 if ( $prefs['memcache_enabled'] == 'y' ) {
 	require_once('lib/cache/memcachelib.php');
-	if ( is_array( $prefs['memcache_servers'] ) ) {
+	if ( is_array($prefs['memcache_servers']) ) {
 		$servers = $prefs['memcache_servers'];
 	} else {
-		$servers = unserialize( $prefs['memcache_servers'] );
+		$servers = unserialize($prefs['memcache_servers']);
 	}
 
 	global $memcachelib;
-	$memcachelib = new MemcacheLib( $servers, array(
-		'enabled' => true,
-		'expiration' => (int) $prefs['memcache_expiration'],
-		'key_prefix' => $prefs['memcache_prefix'],
-		'compress' => $prefs['memcache_compress'],
-	) );
+	$memcachelib = new MemcacheLib(
+					$servers, array(
+						'enabled' => true,
+						'expiration' => (int) $prefs['memcache_expiration'],
+						'key_prefix' => $prefs['memcache_prefix'],
+						'compress' => $prefs['memcache_compress'],
+		)
+	);
 }
 
 require_once ('lib/tikidate.php');
@@ -118,7 +120,7 @@ if ( ! isset( $prefs['session_cookie_name'] ) || empty( $prefs['session_cookie_n
 	$prefs['session_cookie_name'] = session_name();
 }
 
-session_name( $prefs['session_cookie_name'] );
+session_name($prefs['session_cookie_name']);
 
 // Only accept PHP's session ID in URL when the request comes from the tiki server itself
 // This is used by features that need to query the server to retrieve tiki's generated html and images (e.g. pdf export)
@@ -135,7 +137,7 @@ if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
 // If called from the CDN, refuse to execute anything
 $cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
 if ( $cdn_pref ) {
-	$host = parse_url( $cdn_pref, PHP_URL_HOST );
+	$host = parse_url($cdn_pref, PHP_URL_HOST);
 	if ( $host == $_SERVER['HTTP_HOST'] ) {
 		header("HTTP/1.0 404 Not Found");
 		echo "File not found.";
@@ -180,7 +182,8 @@ $access = new TikiAccessLib;
 require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
-function remove_gpc(&$var) {
+function remove_gpc(&$var)
+{
 	if (is_array($var)) {
 		foreach ($var as $key => $val) {
 			remove_gpc($var[$key]);
@@ -286,7 +289,8 @@ $vartype['parentId'] = 'int';
 $vartype['bannerId'] = 'int';
 $vartype['rssId'] = 'int';
 $vartype['page_ref_id'] = 'int';
-function varcheck(&$array, $category) {
+function varcheck(&$array, $category)
+{
 	global $patterns, $vartype, $prefs;
 	$return = array();
 	if (is_array($array)) {
@@ -394,7 +398,7 @@ if (($prefs['auth_method'] == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 		$_SESSION["$user_cookie_site"] = $user;
 	} elseif ($prefs['auth_ws_create_tiki'] == 'y') {
 		$user = $_SERVER['REMOTE_USER'];
-		if ($userlib->add_user($_SERVER['REMOTE_USER'],'', '')) {
+		if ($userlib->add_user($_SERVER['REMOTE_USER'], '', '')) {
 			$user = $_SERVER['REMOTE_USER'];
 			$_SESSION["$user_cookie_site"] = $user;
 		}
