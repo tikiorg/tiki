@@ -18,23 +18,25 @@
  * Purify HTML.
  * @param $html String HTML to purify
  * @param $config Configuration to use, can be any value accepted by
- *        HTMLPurifier_Config::create()
+ *       HTMLPurifier_Config::create()
  */
 
 require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
 
-function HTMLPurifier($html, $config = null) {
+function HTMLPurifier($html, $config = null)
+{
 	static $purifier = false;
 	if (!$purifier || !$config) {
 		if (!$config) {	// mod for tiki temp files location
 			$config = getHTMLPurifierTikiConfig();
-    	}
+		}
 		$purifier = new HTMLPurifier();
 	}
 	return $purifier->purify($html, $config);
 }
 
-function getHTMLPurifierTikiConfig() {
+function getHTMLPurifierTikiConfig()
+{
 	global $tikipath, $prefs;
 
 	$d = $tikipath.'temp/cache/HTMLPurifierCache';
@@ -60,41 +62,39 @@ function getHTMLPurifierTikiConfig() {
 
 			// Add map tag
 			$map = $def->addElement(
-					'map',   // name
-					'Block',  // content set
-					'Flow', // allowed children
-					'Common', // attribute collection
-					array( // attributes
-						'name' => 'CDATA',
-						'id' => 'ID',
-						'title' => 'CDATA',
-						)
-					);
+							'map', // name
+							'Block', // content set
+							'Flow', // allowed children
+							'Common', // attribute collection
+							array( // attributes
+								'name' => 'CDATA',
+								'id' => 'ID',
+								'title' => 'CDATA',
+							)
+			);
 			$map->excludes = array('map' => true);
 
 			// Add area tag
 			$area = $def->addElement(
-					'area',   // name
-					'Block',  // content set
-					'Empty', // don't allow children
-					'Common', // attribute collection
-					array( // attributes
-						'name' => 'CDATA',
-						'id' => 'ID',
-						'alt' => 'Text',
-						'coords' => 'CDATA',
-						'accesskey' => 'Character',
-						'nohref' => new HTMLPurifier_AttrDef_Enum(array('nohref')),
-						'href' => 'URI',
-						'shape' => new HTMLPurifier_AttrDef_Enum(array('rect','circle','poly','default')),
-						'tabindex' => 'Number',
-						'target' => new HTMLPurifier_AttrDef_Enum(array('_blank','_self','_target','_top'))
-						)
-					);
+							'area',	// name
+							'Block', // content set
+							'Empty', // don't allow children
+							'Common', // attribute collection
+							array( // attributes
+								'name' => 'CDATA',
+								'id' => 'ID',
+								'alt' => 'Text',
+								'coords' => 'CDATA',
+								'accesskey' => 'Character',
+								'nohref' => new HTMLPurifier_AttrDef_Enum(array('nohref')),
+								'href' => 'URI',
+								'shape' => new HTMLPurifier_AttrDef_Enum(array('rect','circle','poly','default')),
+								'tabindex' => 'Number',
+								'target' => new HTMLPurifier_AttrDef_Enum(array('_blank','_self','_target','_top'))
+							)
+			);
 			$area->excludes = array('area' => true);
 		}
 	}
 	return $conf;
 }
-
-// vim: et sw=4 sts=4
