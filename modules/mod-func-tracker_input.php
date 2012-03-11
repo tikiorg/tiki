@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
+	exit;
 }
 
 function module_tracker_input_info()
@@ -55,12 +55,15 @@ function module_tracker_input($mod_reference, $module_params)
 	$definition = Tracker_Definition::get($trackerId);
 
 	if (! $itemObject->canModify()) {
-		$smarty->assign('tracker_input', array(
-			'trackerId' => 0,
-			'textInput' => array(),
-			'hiddenInput' => array(),
-			'location' => null,
-		));
+		$smarty->assign(
+						'tracker_input',
+						array(
+							'trackerId' => 0,
+							'textInput' => array(),
+							'hiddenInput' => array(),
+							'location' => null,
+						)
+		);
 		return;
 	}
 
@@ -79,13 +82,13 @@ function module_tracker_input($mod_reference, $module_params)
 		$hiddeninput .= " $location()";
 	}
 
-	preg_match_all("/(\w+)\(([^\)]+)\)/", $textinput, $parts, PREG_SET_ORDER);
+	preg_match_all('/(\w+)\(([^\)]+)\)/', $textinput, $parts, PREG_SET_ORDER);
 	$text = array();
 	foreach ($parts as $p) {
 		$text[$p[1]] = tra($p[2]);
 	}
 
-	preg_match_all("/(\w+)\(([^\)]*)\)/", $hiddeninput, $parts, PREG_SET_ORDER);
+	preg_match_all('/(\w+)\(([^\)]*)\)/', $hiddeninput, $parts, PREG_SET_ORDER);
 	$hidden = array();
 	foreach ($parts as $p) {
 		$hidden[$p[1]] = $p[2];
@@ -96,13 +99,16 @@ function module_tracker_input($mod_reference, $module_params)
 		$galleryId = $streetViewField['options_array'][0];
 	}
 
-	$smarty->assign('tracker_input', array(
-		'trackerId' => $trackerId,
-		'textInput' => $text,
-		'hiddenInput' => $hidden,
-		'location' => $location,
-		'streetview' => $streetview,
-		'galleryId' => $galleryId,
-	));
+	$smarty->assign(
+					'tracker_input',
+					array(
+						'trackerId' => $trackerId,
+						'textInput' => $text,
+						'hiddenInput' => $hidden,
+						'location' => $location,
+						'streetview' => $streetview,
+						'galleryId' => $galleryId,
+					)
+	);
 }
 

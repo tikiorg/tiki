@@ -6,9 +6,9 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
+	exit;
 }
 
 function module_switch_theme_info()
@@ -24,16 +24,16 @@ function module_switch_theme_info()
 function module_switch_theme($mod_reference, $module_params)
 {
 	global $prefs, $user, $tikilib, $smarty, $tc_theme, $tc_theme_option;
-	
+
 	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
 	$current_style_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['style_option'] : '' : $tc_theme_option;
-	
-	$smarty->assign('tc_theme',$tc_theme);
-	$smarty->assign('style',$current_style);
-	$smarty->assign('style_option',$current_style_option);
 
-	$smarty->assign('styleslist',$tikilib->list_styles());
-	$smarty->assign("style_options", $tikilib->list_style_options($current_style));
+	$smarty->assign('tc_theme', $tc_theme);
+	$smarty->assign('style', $current_style);
+	$smarty->assign('style_option', $current_style_option);
+
+	$smarty->assign('styleslist', $tikilib->list_styles());
+	$smarty->assign('style_options', $tikilib->list_style_options($current_style));
 
 	if ($prefs['themegenerator_feature'] === 'y') {
 		include_once 'lib/prefs/themegenerator.php';

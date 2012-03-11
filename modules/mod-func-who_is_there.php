@@ -6,9 +6,9 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
+	exit;
 }
 
 function module_who_is_there_info()
@@ -35,29 +35,29 @@ function module_who_is_there($mod_reference, $module_params)
 {
 	global $tikilib, $smarty;
 
-	$count = !isset($module_params["content"]) || $module_params["content"] != "list";
-	$list = !isset($module_params["content"]) || $module_params["content"] != "count";
-	$smarty->assign("count", $count);
-	$smarty->assign("list", $list);
+	$count = !isset($module_params['content']) || $module_params['content'] != 'list';
+	$list = !isset($module_params['content']) || $module_params['content'] != 'count';
+	$smarty->assign('count', $count);
+	$smarty->assign('list', $list);
 
 	if ($count) {
 		$logged_users = $tikilib->count_sessions();
 		$smarty->assign('logged_users', $logged_users);
 	}
-	
+
 	if ($list) {
 		$online_users = $tikilib->get_online_users();
 		$smarty->assign_by_ref('online_users', $online_users);
 	}
 
-	if (isset($module_params["cluster"]) && $module_params["cluster"]==1) {
-		$smarty->assign('cluster',true);
+	if (isset($module_params['cluster']) && $module_params['cluster']==1) {
+		$smarty->assign('cluster', true);
 		if ($count) {
 			$logged_cluster_users = $tikilib->count_cluster_sessions();
 			$smarty->assign('logged_cluster_users', $logged_cluster_users);
 		}
 	} else {
-		$smarty->assign('cluster',false);
+		$smarty->assign('cluster', false);
 	}
-	
+
 }
