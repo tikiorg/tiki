@@ -6,9 +6,9 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
+	exit;
 }
 
 function module_share_info()
@@ -242,21 +242,21 @@ function module_share($mod_reference, $module_params)
 	$smarty->assign('fb_data_attributes', $fbData);
 	
 	if (!empty($module_params['facebook_appId'])) {
-		$smarty->assign('fb_app_id_param',  '&appId=' . $module_params['facebook_appId']);
+		$smarty->assign('fb_app_id_param', '&appId=' . $module_params['facebook_appId']);
 	} else {
-		$smarty->assign('fb_app_id_param',  '');
+		$smarty->assign('fb_app_id_param', '');
 	};
 	if (!empty($fbDivAttr)) {
 		$fbDivAttr = ' style="' . $fbDivAttr . '"';
 	}
-	$smarty->assign('fb_div_attributes',  $fbDivAttr);
+	$smarty->assign('fb_div_attributes', $fbDivAttr);
 
 	// TODO find a way of matching up tiki lang with https://www.facebook.com/translations/FacebookLocales.xml
 
 	if (!empty($module_params['facebook_locale'])) {
 		$smarty->assign('fb_locale', $module_params['facebook_locale']);
 	} else {
-		$smarty->assign('fb_locale',  'en_US');
+		$smarty->assign('fb_locale', 'en_US');
 	};
 
 	// twitter button
@@ -293,7 +293,7 @@ function module_share($mod_reference, $module_params)
 	if (!empty($twDivAttr)) {
 		$twDivAttr = 'style="' . $twDivAttr . '"';
 	}
-	$smarty->assign('tw_div_attributes',  $twDivAttr);
+	$smarty->assign('tw_div_attributes', $twDivAttr);
 
 	// linkedin
 
@@ -304,7 +304,7 @@ function module_share($mod_reference, $module_params)
 	if (!empty($module_params['linkedin_mode'])) {
 		$liData .= ' data-counter="' . $module_params['linkedin_mode'] . '"';
 	}
-	$smarty->assign('li_data_attributes',  $liData);
+	$smarty->assign('li_data_attributes', $liData);
 
 	// linkedin
 
@@ -318,9 +318,9 @@ function module_share($mod_reference, $module_params)
 	if (!empty($module_params['google_href'])) {
 		$glData .= ' data-href="' . $module_params['google_href'] . '"';
 	}
-	$smarty->assign('gl_data_attributes',  $glData);
+	$smarty->assign('gl_data_attributes', $glData);
 
 	if (!empty($module_params['google_language']) && $module_params['google_language'] !== 'en-US') {
-		$smarty->assign('gl_script_addition',  "  window.___gcfg = {lang: '{$module_params['google_language']}'};\n");
+		$smarty->assign('gl_script_addition', "  window.___gcfg = {lang: '{$module_params['google_language']}'};\n");
 	}
 }

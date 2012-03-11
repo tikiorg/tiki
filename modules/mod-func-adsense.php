@@ -6,8 +6,8 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+  header('location: index.php');
   exit;
 }
 
@@ -81,12 +81,16 @@ function module_adsense($mod_reference, $module_params)
 {
 	global $smarty;
 
-	$smarty->assign(array('ad_channel' => $module_params['ad_channel'],
-		'client' => $module_params['client'],
-		'display' => $module_params['display'],
-		'color_bg' => $module_params['color_bg'],
-		'color_border' => $module_params['color_border'],
-		'color_link' => $module_params['color_link'],
-		'color_text' => $module_params['color_text'],
-		'color_url' => $module_params['color_url']));
+	$smarty->assign(
+					array(
+						'ad_channel' => $module_params['ad_channel'],
+						'client' => $module_params['client'],
+						'display' => $module_params['display'],
+						'color_bg' => $module_params['color_bg'],
+						'color_border' => $module_params['color_border'],
+						'color_link' => $module_params['color_link'],
+						'color_text' => $module_params['color_text'],
+						'color_url' => $module_params['color_url']
+					)
+	);
 }

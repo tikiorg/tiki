@@ -23,8 +23,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 function module_shoutbox_info()
@@ -42,11 +42,11 @@ function module_shoutbox_info()
 			),
 			'buttontext' => array(
 				'name' => tra('Button label'),
-				'description' => tra('Label on the button to post a message.') . " " . tra('Default:') . " " . tra("Post")
+				'description' => tra('Label on the button to post a message.') . ' ' . tra('Default:') . ' ' . tra('Post')
 			),
 			'waittext' => array(
 				'name' => tra('Wait label'),
-				'description' => tra('Label on the button to post a message when the message is being posted if AJAX is enabled.') . " " . tra('Default:') . " " . tra("Please wait...")
+				'description' => tra('Label on the button to post a message when the message is being posted if AJAX is enabled.') . ' ' . tra('Default:') . ' ' . tra('Please wait...')
 			),
 			'maxrows' => array(
 				'name' => tra('Maximum messages shown'),
@@ -63,7 +63,7 @@ function module_shoutbox_info()
 				'description' => tra('If set to "1" and the user has authorized us with Facebook, the user can decide, if he wants to add the shout to his Facebook wall.'),
 				'filter' => 'word'
 			)
-			
+
 		)
 	);
 }
@@ -77,7 +77,7 @@ function doProcessShout($inFormValues)
 			$smarty->assign('shout_error', $captchalib->getErrors());
 			$smarty->assign_by_ref('shout_msg', $inFormValues['shout_msg']);
 		} else {
-			
+
 			$shoutboxlib->replace_shoutbox(0, $user, $inFormValues['shout_msg'], ($inFormValues['shout_tweet']==1), ($inFormValues['shout_facebook']==1));
 		}
 	}
@@ -86,21 +86,23 @@ function doProcessShout($inFormValues)
 function module_shoutbox($mod_reference, $module_params)
 {
 	global $tikilib; require_once ('lib/tikilib.php');
-	global $shoutboxlib, $prefs, $user, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty, $access;
+	global $shoutboxlib, $prefs, $user, $tiki_p_view_shoutbox;
+	global $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty, $access;
+
 	include_once ('lib/shoutbox/shoutboxlib.php');
 
 	if ($tiki_p_view_shoutbox == 'y') {
 		if (true || $prefs['feature_ajax'] !== 'y') {
 			$setup_parsed_uri = parse_url($_SERVER['REQUEST_URI']);
-	
+
 			if (isset($setup_parsed_uri['query'])) {
 				TikiLib::parse_str($setup_parsed_uri['query'], $sht_query);
 			} else {
 				$sht_query = array();
 			}
-		
+
 			$shout_father = $setup_parsed_uri['path'];
-		
+
 			if (isset($sht_query) && count($sht_query) > 0) {
 				$sht = array();
 				foreach ($sht_query as $sht_name => $sht_val) {
@@ -113,31 +115,39 @@ function module_shoutbox($mod_reference, $module_params)
 		} else {	// $prefs['feature_ajax'] == 'y'			// AJAX_TODO
 			$shout_father = 'tiki-shoutbox.php?';
 		}
-	
+
 		$smarty->assign('shout_ownurl', $shout_father);
 		if (isset($_REQUEST['shout_remove'])) {
 			$info = $shoutboxlib->get_shoutbox($_REQUEST['shout_remove']);
-			if ($tiki_p_admin_shoutbox == 'y'  || $info['user'] == $user) {
+			if ($tiki_p_admin_shoutbox == 'y' || $info['user'] == $user) {
 				$access->check_authenticity();
 				$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
 			}
 		}
-	
+
 		if ($tiki_p_post_shoutbox == 'y') {
 			if (isset($_REQUEST['shout_send'])) {
 				doProcessShout($_REQUEST);
 			}
 		}
-	
+
 		$maxrows = isset($module_params['maxrows']) ? $module_params['maxrows'] : 5;
 		$shout_msgs = $shoutboxlib->list_shoutbox(0, $maxrows, 'timestamp_desc', '');
 		$smarty->assign('shout_msgs', $shout_msgs['data']);
-	
+
 		// Subst module parameters
 		$smarty->assign('tooltip', isset($module_params['tooltip']) ? $module_params['tooltip'] : 0);
 		$smarty->assign('buttontext', isset($module_params['buttontext']) ? $module_params['buttontext'] : tra('Post'));
 		$smarty->assign('waittext', isset($module_params['waittext']) ? $module_params['waittext'] : tra('Please wait...'));
-		$smarty->assign('tweet', isset($module_params['tweet']) &&($tikilib->get_user_preference($user,'twitter_token')!='') ? $module_params['tweet'] : "0");
-		$smarty->assign('facebook', isset($module_params['facebook']) &&($tikilib->get_user_preference($user,'facebook_token')!='') ? $module_params['facebook'] : "0");
+
+		$smarty->assign(
+						'tweet',
+						isset($module_params['tweet']) &&($tikilib->get_user_preference($user, 'twitter_token')!='') ? $module_params['tweet'] : '0'
+		);
+
+		$smarty->assign(
+						'facebook',
+						isset($module_params['facebook']) && ($tikilib->get_user_preference($user, 'facebook_token')!='') ? $module_params['facebook'] : '0'
+		);
 	}
 }

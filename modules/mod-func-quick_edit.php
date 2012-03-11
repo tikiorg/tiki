@@ -6,9 +6,9 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
+	exit;
 }
 
 function module_quick_edit_info()
@@ -21,19 +21,19 @@ function module_quick_edit_info()
 		'params' => array(
 			'templateId' => array(
 				'name' => tra('Template identifier'),
-				'description' => tra('If set to a template identifier, the specified template is used for creating new Wiki pages.') . " " . tra('Not set by default.')
+				'description' => tra('If set to a template identifier, the specified template is used for creating new Wiki pages.') . ' ' . tra('Not set by default.')
 			),
 			'action' => array(
 				'name' => 'FORM ACTION',
-				'description' => tra('If set, send the form to the given location (relative to Tiki\'s root) for processing.') . " " . tra('Default:') . ' tiki-editpage.php'
+				'description' => tra('If set, send the form to the given location (relative to Tiki\'s root) for processing.') . ' ' . tra('Default:') . ' tiki-editpage.php'
 			),
 			'submit' => array(
 				'name' => tra('SUBMIT label'),
-				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . " " . tra("Create/Edit")
+				'description' => tra('The label on the button to submit the form.') . ' ' . tra('Default:') . ' ' . tra('Create/Edit')
 			),
 			'size' => array(
 				'name' => tra('INPUT SIZE'),
-				'description' => tra('Size attribute (horizontal, in characters) of the text input field for page names.') . " " . tra('Default:') . " 15",
+				'description' => tra('Size attribute (horizontal, in characters) of the text input field for page names.') . ' ' . tra('Default:') . ' 15',
 				'filter' => 'int'
 			),
 			'mod_quickedit_heading' => array(
@@ -42,7 +42,7 @@ function module_quick_edit_info()
 			),
 			'addcategId' => array(
 				'name' => tra('Category to preselect'),
-				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . " " . tra('Not set by default.')
+				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . ' ' . tra('Not set by default.')
 			),
 			'customTip' => array(
 				'name' => tra('Tip to be shown'),
@@ -63,52 +63,56 @@ function module_quick_edit_info()
 function module_quick_edit($mod_reference, $module_params)
 {
 	global $smarty, $prefs;
-	
-	$smarty->assign('tpl_module_title', tra("Quick Edit a Wiki Page"));
-	
-	
-	if (isset($module_params["templateId"])) {
-		$templateId = $module_params["templateId"];
+
+	$smarty->assign('tpl_module_title', tra('Quick Edit a Wiki Page'));
+
+
+	if (isset($module_params['templateId'])) {
+		$templateId = $module_params['templateId'];
 	} else {
 		$templateId = false;
 	}
-	
+
 	if (isset($module_params['action'])) {
 		$qe_action = $module_params['action'];
 	} else {
 		$qe_action = 'tiki-editpage.php';
 	}
-	
-	if (isset($module_params["submit"])) {
-		$submit = $module_params["submit"];
+
+	if (isset($module_params['submit'])) {
+		$submit = $module_params['submit'];
 	} else {
-		$submit = tra('Create/Edit','',true);
+		$submit = tra('Create/Edit', '', true);
 	}
 
-	$size = isset($module_params["size"]) ? $module_params["size"] : 15;
+	$size = isset($module_params['size']) ? $module_params['size'] : 15;
 
-	if (isset($module_params["mod_quickedit_heading"])) {
-		$mod_quickedit_heading = $module_params["mod_quickedit_heading"];
+	if (isset($module_params['mod_quickedit_heading'])) {
+		$mod_quickedit_heading = $module_params['mod_quickedit_heading'];
 	} else {
 		$mod_quickedit_heading = false;
 	}
-	if (isset($module_params["addcategId"])) {
-		$addcategId = $module_params["addcategId"];
+
+	if (isset($module_params['addcategId'])) {
+		$addcategId = $module_params['addcategId'];
 	} else {
 		$addcategId = '';
 	}
-	if (isset($module_params["customTip"])) {
-		$customTip = $module_params["customTip"];
+
+	if (isset($module_params['customTip'])) {
+		$customTip = $module_params['customTip'];
 	} else {
 		$customTip = '';
 	}
-	if (isset($module_params["customTipTitle"])) {
-		$customTipTitle = $module_params["customTipTitle"];
+
+	if (isset($module_params['customTipTitle'])) {
+		$customTipTitle = $module_params['customTipTitle'];
 	} else {
 		$customTipTitle = '';
 	}
-	if (isset($module_params["headerwiki"])) {
-		$wikiHeaderTpl = $module_params["headerwiki"];
+
+	if (isset($module_params['headerwiki'])) {
+		$wikiHeaderTpl = $module_params['headerwiki'];
 	} else {
 		$wikiHeaderTpl = '';
 	}

@@ -5,8 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
 
@@ -15,7 +15,7 @@ function module_map_edit_features_info()
 {
 	return array(
 		'name' => tra('Map Feature Editor'),
-		'description' => tra("Allows to draw shapes over the map."),
+		'description' => tra('Allows to draw shapes over the map.'),
 		'prefs' => array(),
 		'params' => array(
 			'trackerId' => array(
@@ -50,17 +50,20 @@ function module_map_edit_features($mod_reference, $module_params)
 	}
 
 	$hiddeninput = isset($module_params['hiddeninput']) ? $module_params['hiddeninput'] : '';
-	preg_match_all("/(\w+)\(([^\)]*)\)/", $hiddeninput, $parts, PREG_SET_ORDER);
+	preg_match_all('/(\w+)\(([^\)]*)\)/', $hiddeninput, $parts, PREG_SET_ORDER);
 	$hidden = array();
 	foreach ($parts as $p) {
 		$hidden[$p[1]] = $p[2];
 	}
 
-	$smarty->assign('edit_features', array(
-		'trackerId' => $module_params['trackerId'],
-		'definition' => $definition,
-		'field' => $targetField,
-		'hiddenInput' => $hidden,
-	));
+	$smarty->assign(
+					'edit_features', 
+					array(
+						'trackerId' => $module_params['trackerId'],
+						'definition' => $definition,
+						'field' => $targetField,
+						'hiddenInput' => $hidden,
+					)
+	);
 }
 
