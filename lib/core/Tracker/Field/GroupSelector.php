@@ -39,6 +39,16 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 						'description' => tr('Limit listed groups to those including the specified group.'),
 						'filter' => 'int',
 					),
+					'assign' => array(
+						'name' => tr('Assign to the group'),
+						'description' => tr('For no autoaassigned field, the user (user selector if exsits or user) will be assigned to the group and it will be his default group. The group must have the user choice setting on.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('None'),
+							1 => tr('Assign'),
+						),
+						'default' => 0,
+					)
 				),
 			),
 		);
@@ -88,12 +98,21 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 
 	function handleSave($value, $oldValue)
 	{
-		global $prefs;
+		global $prefs, $user;
 
 		if ($this->getOption(0) && is_null($oldValue)) {
 			$definition = $this->getTrackerDefinition();
 			if ($prefs['groupTracker'] == 'y' && $definition->isEnabled('autoCreateGroup')) {
 				$value = TikiLib::lib('trk')->groupName($definition->getInformation(), $this->getItemId());
+			}
+		}
+		if ($this->getOption(2)) {
+			$creator = TikiLib::lib('trk')->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
+			if (empty($creator)) $creator = $user;
+			$ginfo = TikiLib::lib('user')->get_group_info($value);
+			if ($ginfo['userChoice'] == 'y') {
+				TikiLib::lib('user')->assign_user_to_group($creator, $value);
+				TikiLib::lib('user')->set_default_group($creator, $value);
 			}
 		}
 
