@@ -666,6 +666,7 @@ class Services_Tracker_Controller
 
 	function action_export_items($input)
 	{
+		@ini_set('max_execution_time', 0); //will not work in safe_mode is on
 		$trackerId = $input->trackerId->int();
 
 		$definition = Tracker_Definition::get($trackerId);
