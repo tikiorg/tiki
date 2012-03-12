@@ -189,11 +189,13 @@ class Services_Tracker_Controller
 
 	function action_edit_field($input)
 	{
-		if (! Perms::get()->admin_trackers) {
+		$trackerId = $input->trackerId->int();
+		
+		$perms = Perms::get('tracker', $trackerId);
+		if (! $perms->admin_trackers) {
 			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
 		}
 
-		$trackerId = $input->trackerId->int();
 		$fieldId = $input->fieldId->int();
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -603,7 +605,8 @@ class Services_Tracker_Controller
 		$trackerId = $input->trackerId->int();
 		$confirm = $input->confirm->int();
 
-		if (! Perms::get()->admin_trackers) {
+		$perms = Perms::get('tracker', $trackerId);
+		if (! $perms->admin_trackers) {
 			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
 		}
 
