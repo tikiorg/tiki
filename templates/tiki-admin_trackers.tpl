@@ -82,7 +82,7 @@
 		<div id="trackeredit"></div>
 		{jq}
 			$("#trackeredit").serviceDialog({
-				title:'{{$trackerInfo.name}}',
+				title:'{{$trackerInfo.name|escape:javascript}}',
 				data: {
 					controller: 'tracker',
 					action: 'replace',
