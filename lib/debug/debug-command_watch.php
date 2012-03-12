@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,7 +27,7 @@ class DbgCmd_Watch extends DebuggerCommand
 		$this->watches = array();
 
 		if (is_readable($this->watchfile())) {
-			$s = implode("",@file($this->watchfile()));
+			$s = implode('', @file($this->watchfile()));
 
 			$a = unserialize($s);
 
@@ -38,7 +38,7 @@ class DbgCmd_Watch extends DebuggerCommand
 
 	function name()
 	{
-		return "watch";
+		return 'watch';
 	}
 
 	function description()
@@ -63,7 +63,7 @@ class DbgCmd_Watch extends DebuggerCommand
 		// NOTE: Don't forget to set result type! By default it is NO_RESULT.
 		$this->set_result_type(TEXT_RESULT);
 		$result = '';
-		$args = explode(" ", trim($params));
+		$args = explode(' ', trim($params));
 
 		//
 		if (count($args) > 0) {
@@ -72,17 +72,15 @@ class DbgCmd_Watch extends DebuggerCommand
 			if ($cmd == 'add' || $cmd == 'rm') {
 				$a_r = ($cmd == 'add');
 
-				array_shift ($args);
+				array_shift($args);
 
 				if (count($args) > 0) {
 					foreach ($args as $a)
-						if (strlen(trim(str_replace("$", "", $a))) > 0) // Is there smth 'cept '$'??
-							{
+						if (strlen(trim(str_replace('$', '', $a))) > 0) { // Is there smth 'cept '$'??
 							$a = trim($a);
 
 							if ($a_r) {
 								$result .= "add '" . $a . "' to watch list\n";
-
 								$this->watches[md5($a)] = $a;
 							} else {
 								$result .= "remove '" . $a . "' from watch list\n";
@@ -114,7 +112,7 @@ class DbgCmd_Watch extends DebuggerCommand
 	{
 		global $user;
 
-		return "temp/dbg-watch." . $user;
+		return 'temp/dbg-watch.' . $user;
 	}
 
 	/// Save watchlist for given user. If current list is empty --> remove file.
@@ -123,12 +121,12 @@ class DbgCmd_Watch extends DebuggerCommand
 		if (count($this->watches) > 0) {
 			$s = serialize($this->watches);
 
-			$fp = fopen($this->watchfile(), "w");
+			$fp = fopen($this->watchfile(), 'w');
 			fputs($fp, $s);
-			fclose ($fp);
+			fclose($fp);
 		} else {
 			if (is_writable($this->watchfile()))
-				unlink ($this->watchfile());
+				unlink($this->watchfile());
 		}
 	}
 
@@ -141,8 +139,8 @@ class DbgCmd_Watch extends DebuggerCommand
 		foreach ($this->watches as $v)
 			// NOTE: PHP variables must start with '$', else assumed smarty variable
 			$result[] = array(
-				"var" => $v,
-				"value" => ((substr($v, 0, 1) == '$') ? $this->value_of_php_var($v) : $this->value_of_smarty_var($v))
+				'var' => $v,
+				'value' => ((substr($v, 0, 1) == '$') ? $this->value_of_php_var($v) : $this->value_of_smarty_var($v))
 			);
 
 		//
@@ -182,7 +180,7 @@ class DbgCmd_Watch extends DebuggerCommand
 	/// Function to return caption string to draw plugable tab in interface
 	function caption()
 	{
-		return "watches";
+		return 'watches';
 	}
 
 	/// Need to display button if we have smth to show
