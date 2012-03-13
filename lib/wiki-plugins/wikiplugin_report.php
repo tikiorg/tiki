@@ -39,8 +39,8 @@ function wikiplugin_report_info()
 function wikiplugin_report( $data, $params )
 {
 	global $tikilib,$headerlib,$prefs,$page,$tiki_p_edit;
-	static $report = 0;
-	++$report;
+	static $reportI = 0;
+	++$reportI;
 	
 	$params = array_merge(array("view"=> "sheet","name"=> ""), $params);
 	
@@ -58,7 +58,7 @@ function wikiplugin_report( $data, $params )
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
 				$headerlib->add_jq_onready("
-					var me = $('#reportPlugin$report');
+					var me = $('#reportPlugin$reportI');
 					me
 						.show()
 						.visible(function() {
@@ -73,13 +73,13 @@ function wikiplugin_report( $data, $params )
 				
 				$result .= "
 					<style>
-						#reportPlugin$report {
+						#reportPlugin$reportI {
 							display: none;
 							width: inherit ! important;
 						}
 					</style>
 					
-					<div id='reportPlugin$report'>" 
+					<div id='reportPlugin$reportI'>" 
 						. $report->outputSheet($name) . 
 					"</div>";
     			break;
@@ -91,14 +91,14 @@ function wikiplugin_report( $data, $params )
 		$headerlib
 			->add_jsfile("lib/core/Report/Builder.js")
 			->add_js("
-			function editReport$report(me) {
+			function editReport$reportI(me) {
 				var me = $(me);
 				me.serviceDialog({
 					title: me.attr('title'),
 					data: {
 						controller: 'report',
 						action: 'edit',
-						index: $i
+						index: $reportI
 					},
 					load: function() {
 						$.reportInit();
@@ -122,15 +122,15 @@ function wikiplugin_report( $data, $params )
 		");
 		
 		$result .= "
-			<form class='reportWikiPlugin' data-index='$i' method='post' action='tiki-wikiplugin_edit.php'>
+			<form class='reportWikiPlugin' data-index='$reportI' method='post' action='tiki-wikiplugin_edit.php'>
 				<input type='hidden' name='page' value='$page'/>
 				<input type='hidden' name='content' value=''/>
-				<input type='hidden' name='index' value='$i'/>
+				<input type='hidden' name='index' value='$reportI'/>
 				<input type='hidden' name='type' value='report' />
 				<input type='hidden' name='params[name]' value='$name' />
 				<input type='hidden' name='params[view]' value='$view' />
 			</form>
-			<a href='#' title='".tr('Edit Report')."' onclick='return editReport$i(this);'>
+			<a href='#' title='".tr('Edit Report')."' onclick='return editReport$reportI(this);'>
 				<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
 			</a>";
 	}
