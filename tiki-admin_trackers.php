@@ -8,18 +8,16 @@
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 $access->check_feature('feature_trackers');
-$auto_query_args = array('trackerId');
 
+// Only used to call an edit dialog directly from other pages
+$auto_query_args = array('trackerId');
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
-$objectperms = Perms::get('tracker', $_REQUEST['trackerId']);
-$smarty->assign('permsType', $objectperms->from());
-
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 if (!empty($_REQUEST['trackerId'])) {
 	$smarty->assign('trackerInfo', $trklib->get_tracker($_REQUEST['trackerId']));
 }
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
@@ -47,6 +45,10 @@ foreach ($trackers["data"] as &$tracker) {
 	} else {
 		$tracker["individual"] = 'n';
 	}
+	
+	// Could be used with object_perms_summary.tpl instead of the above but may be less performant
+//	$objectperms = Perms::get('tracker', trackerId);
+//	$smarty->assign('permsType', $objectperms->from());
 }
 
 $smarty->assign_by_ref('cant', $trackers['cant']);
