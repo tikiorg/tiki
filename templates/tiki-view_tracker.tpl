@@ -181,11 +181,13 @@
 	{if $tiki_p_create_tracker_items eq 'y'}
 		{* --------------------------------------------------------------------------------- tab with edit --- *}
 		{tab name="{tr}Insert New Item{/tr}"}
-			{jq}
-				$("#newItemForm").validate({
-					{{$validationjs}}
-				});
-			{/jq}
+			{if isset($validationjs)}
+				{jq}
+					$("#newItemForm").validate({
+						{{$validationjs}}
+					});
+				{/jq}
+			{/if}
 			<form enctype="multipart/form-data" action="tiki-view_tracker.php" id="newItemForm" method="post">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 			
