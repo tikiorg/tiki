@@ -43,7 +43,6 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
-$smarty->assign_by_ref('trackers', $channels['data']);
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["trackerId"], 'tracker')) {
@@ -56,7 +55,7 @@ $urlquery['find'] = $find;
 $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $smarty->assign_by_ref('cant', $channels['cant']);
-$smarty->assign_by_ref('channels', $channels["data"]);
+$smarty->assign_by_ref('trackers', $channels["data"]);
 $smarty->assign('uses_tabs', 'y');
 
 ask_ticket('admin-trackers');

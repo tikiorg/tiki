@@ -12,10 +12,10 @@
 {tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
 	<h2>{tr}Trackers{/tr}</h2>
-	{if ($channels) or ($find)}
+	{if ($trackers) or ($find)}
 		{include file='find.tpl' filters=''}
-		{if ($find) and ($channels)}
-			<p>{tr}Found{/tr} {$channels|@count} {tr}trackers:{/tr}</p>
+		{if ($find) and ($trackers)}
+			<p>{tr}Found{/tr} {$trackers|@count} {tr}trackers:{/tr}</p>
 		{/if}
 	{/if}
 
@@ -29,7 +29,7 @@
 			<th>{tr}Action{/tr}</th>
 		</tr>
 		{cycle values="odd,even" print=false}
-		{foreach from=$channels item=tracker}
+		{foreach from=$trackers item=tracker}
 			<tr>
 				<td class="id">
 					{$tracker.trackerId|escape}
