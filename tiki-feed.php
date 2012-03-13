@@ -34,20 +34,4 @@ if ($_REQUEST['type'] == 'html') {
 		print_r(json_encode($feed->feed()));
 		
 	}
-} else if ($_REQUEST['type'] == "forwardlink") {
-	$access->check_feature('feature_forwardlinkprotocol');
-	
-	$feed = new Feed_ForwardLink();
-	print_r(json_encode($feed->feed()));
-	
-} else if ($_REQUEST['type'] == "textlink" && !empty($_REQUEST['contribution'])) {
-	$access->check_feature('feature_forwardlinkprotocol');
-	
-	$contribution = json_decode($_REQUEST['contribution']);
-	foreach ($contribution->feed->entry as $item) {
-		if (!empty($item->originName)) {
-			//print_r($item);
-			Feed_ForwardLink_Contribution::forwardlink($item->originName)->addItem($item);
-		}
-	}
 }
