@@ -41,7 +41,6 @@ function wikiplugin_report( $data, $params )
 	global $tikilib,$headerlib,$prefs,$page,$tiki_p_edit;
 	static $report = 0;
 	++$report;
-	$i = $report;
 	
 	$params = array_merge(array("view"=> "sheet","name"=> ""), $params);
 	
@@ -59,7 +58,7 @@ function wikiplugin_report( $data, $params )
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
 				$headerlib->add_jq_onready("
-					var me = $('#reportPlugin$i');
+					var me = $('#reportPlugin$report');
 					me
 						.show()
 						.visible(function() {
@@ -74,13 +73,13 @@ function wikiplugin_report( $data, $params )
 				
 				$result .= "
 					<style>
-						#reportPlugin$i {
+						#reportPlugin$report {
 							display: none;
 							width: inherit ! important;
 						}
 					</style>
 					
-					<div id='reportPlugin$i'>" 
+					<div id='reportPlugin$report'>" 
 						. $report->outputSheet($name) . 
 					"</div>";
     			break;
@@ -92,7 +91,7 @@ function wikiplugin_report( $data, $params )
 		$headerlib
 			->add_jsfile("lib/core/Report/Builder.js")
 			->add_js("
-			function editReport$i(me) {
+			function editReport$report(me) {
 				var me = $(me);
 				me.serviceDialog({
 					title: me.attr('title'),
