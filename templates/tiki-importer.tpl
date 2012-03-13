@@ -8,7 +8,7 @@
     {/remarksbox}
     {if $prefs['feature_purifier'] == 'y'}
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
-        {tr}If your pages contain xml code, the html purifier will delete it. Desactivate this feature.{/tr}
+        {tr}If your pages contain xml code, the html purifier will delete it. Deactivate this feature.{/tr}
     {/remarksbox}
     {/if}
     {if $safe_mode ne ''}
@@ -24,13 +24,15 @@
     <label for="importerClassName">{tr}Select the software to import from:{/tr}</label>
     <form method="post" name="chooseSoftware" action="tiki-importer.php">
         <select name="importerClassName" id="importerClassName">
-            <option value=""></option>
+            <option value="">{tr}Select...{/tr}</option>
             {foreach from=$availableSoftwares key=softwareClassName item=softwareName}
                 <option value="{$softwareClassName}">{$softwareName}</option>
             {/foreach}
         </select>
         <input type="submit" value="{tr}OK{/tr}"/>
     </form>
+	<br>
+	<a href="tiki-import_xml_zip.php">Import wiki pages in an XML Zip file from another Tiki</a>
 {elseif isset($softwareSpecificOptions)}
     <h2>Options:</h2>
     <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}WARNING: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
