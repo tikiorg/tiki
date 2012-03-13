@@ -2236,7 +2236,6 @@ class TrackerLib extends TikiLib
 		if ($trackerId) {
 			$conditions = array('trackerId' => (int) $trackerId);
 			if ($trackers->fetchCount($conditions)) {
-				$conditions['items'] = 0;
 				$trackers->update($data, $conditions);
 			} else {
 				$data['trackerId'] = (int) $trackerId;
