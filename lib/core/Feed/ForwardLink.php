@@ -8,11 +8,10 @@
 Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = 'Feed_ForwardLink';
-
-	function wikiView($args)
+	
+	static function wikiView($args)
 	{
-		global $prefs, $headerlib, $_REQUEST, $smarty;
-
+		global $prefs, $headerlib, $smarty, $_REQUEST;
 		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
 
 			//here we do the confirmation that another wiki is trying to talk with this one
@@ -24,7 +23,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
 			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
-
+			
 			if ( Feed_ForwardLink_Contribution::forwardLink($args['object'])
 				->addItem($_REQUEST['contribution']) == true ) {
 				$response['response'] = 'success';
@@ -261,15 +260,16 @@ JQ
 										return acceptPhrase();
 									}
 
-									var answersDialog = $('<div />');
+									var answersDialog = $('<table width="100%;" />');
 
 									$.each(answers, function() {
-										$('<div style="font-weight: bold;" />')
+										var tr = $('<tr />').appendTo(answersDialog);
+										$('<td style="font-weight: bold; text-align: left;" />')
 											.text(this.question)
-											.appendTo(answersDialog);
-
-										$('<input class="answerValues" />')
-											.appendTo(answersDialog);
+											.appendTo(tr);
+										
+										$('<td style="text-align: right;"><input class="answerValues" style="width: inherit;"/></td>')
+											.appendTo(tr);
 									});
 
 									var answersDialogButtons = {};
@@ -286,7 +286,8 @@ JQ
 									answersDialog.dialog({
 										title: tr("Please fill in the questions below"),
 										buttons: answersDialogButtons,
-										modal: true
+										modal: true,
+										width: $(window).width() / 2
 									});
 								}
 
@@ -421,5 +422,10 @@ JQ
 				);
 			}
 		}
+	}
+	
+	static function wikiSave($args)
+	{
+		//print_r($args);
 	}
 }

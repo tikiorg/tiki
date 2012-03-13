@@ -19,7 +19,7 @@ Class Feed_Remote_ForwardLink_Contribution
 		global $textlinkContribution;
 		$me = new self();
 		if (!empty($textlinkContribution)) {
-			return $me->send($textlinkContribution);
+			($me->send($textlinkContribution));
 		}
 	}
 
@@ -38,12 +38,9 @@ Class Feed_Remote_ForwardLink_Contribution
 
 			$info = $tikilib->get_page_info($item->page);
 
-			array_push(
-							$entry,
-							array(
-								'textlink'=> $item->textlink,
-								'forwardlink'=>$item->forwardLink
-							)
+			$entry[] = array(
+				'textlink'=> $item->textlink,
+				'forwardlink'=>$item->forwardLink
 			);
 
 			if ($info['lastModif'] > $lastModif)
@@ -51,21 +48,18 @@ Class Feed_Remote_ForwardLink_Contribution
 		}
 
 		if (!empty($entry)) {
-			$client->setParameterGet('protocol', 'forwardlink');
-			$client->setParameterGet(
-							'contribution',
-							json_encode(
-											array(
-												'version' => '1.0',
-												'encoding' => 'UTF-8',
-												'date'=> $lastModif,
-												'feed' => array('type' => 'textlink', 'entry'=> $entry),
-											)
-							)
-			);
+			$client->setParameterGet(array(
+				'protocol'=> 'forwardlink',
+				'contribution'=> json_encode(array(
+					'version' => '1.0',
+					'encoding' => 'UTF-8',
+					'date'=> $lastModif,
+					'feed' => array('type' => 'textlink', 'entry'=> $entry),
+				)
+			)));
 
-			$response = $client->request();
-
+			$response = $client->request(Zend_Http_Client::POST);
+			$request = $client->getLastResponse();
 			return $response->getBody();
 		}
 	}

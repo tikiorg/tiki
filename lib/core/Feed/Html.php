@@ -15,7 +15,6 @@ class Feed_Html extends Feed_Abstract
 		global $feedItem, $caching, $page;
 		
 		$this->delete();
-		$site = $this->siteName();
 		
 		$caching = true; //this variable is used to block recursive parse_data below
 		
@@ -23,7 +22,7 @@ class Feed_Html extends Feed_Abstract
 			foreach ($pagesInfo as $pageInfo) {
 				$feedItem = Feed_Html_Item::simple(
 								array(
-									"origin" 		=> $site,
+									"origin" 		=> $this->name,
 									"name" 			=> $pageInfo['pageName'],
 									"title" 		=> $pageInfo['pageName'],
 									"description" 	=> $description,
@@ -33,10 +32,7 @@ class Feed_Html extends Feed_Abstract
 									"unusual"		=> "",
 									"importance" 	=> $pageInfo['pageRank'],
 									"keywords"		=> $pageInfo['keywords'],
-									"href"			=> $site . "/tiki-pagehistory.php?" .
-											"page=" . urlencode($pageInfo['pageName']) .'&'. 
-											"preview_date=" . (int)$pageInfo['lastModif'] . "&" .
-											"nohistory"
+									"href"			=> $this->name . "/tiki-index.php?page=" . urlencode($pageInfo['pageName'])
 								)
 				);
 				

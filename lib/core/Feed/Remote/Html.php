@@ -8,7 +8,24 @@
 /**
  * For HtmlFeed_Remote Protocol
  */
-class Feed_Remote_Html extends Feed_Remote_Abstract
+class Feed_Remote_Html extends Feed_Abstract
 {
 	var $type = "feed_remote_html";
+	var $href = "";
+	
+	function __construct($href)
+	{
+		$this->href = $href;
+	}
+	
+	public function getContents()
+	{
+		if (!empty($this->contents)) {
+			return $this->contents;
+		} else {
+			$feed = json_decode(file_get_contents($this->href));
+			$this->contents = $feed->feed;
+		}
+		return $this->contents;
+	}
 }

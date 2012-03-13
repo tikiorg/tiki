@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
+class Feed_Remote_ForwardLink extends Feed_Abstract
 {
 	var $type = 'Feed_Remote_ForwardLink';
 	var $forwardLink = array();
@@ -43,14 +43,14 @@ class Feed_Remote_ForwardLink extends Feed_Remote_Abstract
 
 			if (isset($forwardLink->href)) {
 				$result = Feed_Remote_ForwardLink_Contribution::send(
-								array(
-									'page'=> $args['object'],
-									'forwardLink'=> $forwardLink,
-									'textlink'=> array(
-										'body'=> $args['data'],
-										'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
-									)
-								)
+					array(
+						'page'=> $args['object'],
+						'forwardLink'=> $forwardLink,
+						'textlink'=> array(
+							'body'=> $args['data'],
+							'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
+						)
+					)
 				);
 			}
 		}
