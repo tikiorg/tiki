@@ -16,6 +16,24 @@
 	{if $prefs.feed_tracker eq "y"}
 		<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
 	{/if}
+	{if $tiki_p_export_tracker eq "y"}
+		<a title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
+		{jq}
+			$('.export.dialog').click(function () {
+				var link = this;
+				$(this).serviceDialog({
+					title: '{tr}Export{/tr}',
+					data: {
+						controller: 'tracker',
+						action: 'export',
+						trackerId: {{$trackerId}}
+					}
+				});
+	
+				return false;
+			});
+		{/jq}
+	{/if}
 
 	{include file="tracker_actions.tpl"}
 </div>
