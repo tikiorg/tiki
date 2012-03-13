@@ -79,6 +79,7 @@
 			<input type="submit" value="{tr}Export{/tr}" />
 		</div>
 	</form>
+	{if isset($export)}
 	<h4>{tr}Structure{/tr}</h4>
 	<form class="simple" action="" method="post">
 		<label>
@@ -98,6 +99,7 @@
 			<input type="submit" value="{tr}Export Profile{/tr}"/>
 		</div>
 	</form>
+	{/if}
 </div>
 {jq}
 $('.accordion').removeClass('accordion').accordion({

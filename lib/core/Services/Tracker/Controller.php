@@ -769,15 +769,19 @@ class Services_Tracker_Controller
 		if (! $definition) {
 			throw new Services_Exception_NotFound;
 		}
-		
-		$info = $definition->getInformation();
 
-		$out = "[TRACKER]\n";
-
-		foreach ($info as $key => $value) {
-			if ($key && $value) {
-				$out .= "$key = $value\n";
+		if ($perms->admin_trackers) {
+			$info = $definition->getInformation();
+			
+			$out = "[TRACKER]\n";
+	
+			foreach ($info as $key => $value) {
+				if ($key && $value) {
+					$out .= "$key = $value\n";
+				}
 			}
+		} else {
+			$out = null;
 		}
 
 		return array(
