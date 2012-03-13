@@ -55,9 +55,25 @@
 						<a title="{tr _0=$tracker.name|escape}Events{/tr}" class="event dialog" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
 					{/if}
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+
+					{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					 	 <a href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+					{/if}
+					{if $prefs.feature_user_watches eq 'y' and $tracker.permissions->watch_trackers and $user}
+						{if $tracker.watched}
+							<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitor{/tr}"}</a>
+						{else}
+							<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' alt="{tr}Monitor{/tr}"}</a>
+						{/if}
+					{/if}
+				
+					{if $prefs.feed_tracker eq "y"}
+						<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">{icon _id='feed' alt="{tr}Feed{/tr}"}</a>
+					{/if}
+					
 					{if $tracker.permissions->admin_trackers}
 						<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
-						<a title="{tr}Edit{/tr}" class="edit dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+						<a title="{tr}Edit{/tr}" class="edit dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
 						{if $tracker.individual eq 'y'}
 							<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
 						{else}

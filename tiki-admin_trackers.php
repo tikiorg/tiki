@@ -46,6 +46,8 @@ foreach ($trackers["data"] as &$tracker) {
 		$tracker["individual"] = 'n';
 	}
 	
+	$tracker['watched'] = $user && $tikilib->user_watches($user, 'tracker_modified', $tracker["trackerId"], 'tracker');
+	
 	// Could be used with object_perms_summary.tpl instead of the above but may be less performant
 //	$objectperms = Perms::get('tracker', trackerId);
 //	$smarty->assign('permsType', $objectperms->from());
