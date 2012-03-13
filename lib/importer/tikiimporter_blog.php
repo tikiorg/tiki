@@ -377,6 +377,9 @@ class TikiImporter_Blog extends TikiImporter
 	{
 		global $bloglib;
 		global $objectlib; require_once('lib/objectlib.php');
+
+		$post = array_merge(array('content' => '', 'excerpt' => '', 'author' => '', 'name' => '', 'created' => 0), $post);	// set defaults
+
 		$postId = $bloglib->blog_post(
 						$this->blogId,
 						$post['content'],
