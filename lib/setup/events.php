@@ -78,7 +78,8 @@ if ($prefs['scorm_enabled'] == 'y') {
 }
 
 if ($prefs['feature_forwardlinkprotocol'] == 'y') {
-	$events->bind("tiki.wiki.view", 'tiki_view_forwardlink');
+	$events->bind("tiki.wiki.view", 'tiki_wiki_view_forwardlink');
+	$events->bind("tiki.wiki.save", 'tiki_wiki_save_forwardlink');
 }
 
 $events->bind('tiki.save', Event_Lib::defer('tiki', 'plugin_post_save_actions'));
@@ -108,9 +109,14 @@ function tiki_save_refresh_index($args)
 }
 
 
-function tiki_view_forwardlink($args)
+function tiki_wiki_view_forwardlink($args)
 {
 	Feed_ForwardLink::wikiView($args);
 	Feed_Remote_ForwardLink::wikiView($args);
 	Feed_Remote_ForwardLink_Contribution::wikiView($args);
+}
+
+function tiki_wiki_save_forwardlink($args)
+{
+	Feed_ForwardLink::wikiSave($args);
 }
