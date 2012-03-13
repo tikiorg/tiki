@@ -405,7 +405,7 @@ class WikiLib extends TikiLib
 		return $res;
 	}
 
-	function get_parse($page, &$canBeRefreshed, $suppress_icons = false)
+	function get_parse($page, &$canBeRefreshed = false, $suppress_icons = false)
 	{
 		global $prefs, $user, $headerlib;
 		$content = '';
