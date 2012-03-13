@@ -1324,6 +1324,11 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 			'dbfeatures' => array('mysql_fulltext'),
+			'admin' => 'search',
+			'module' => 'search',			
+			'permission' => array(
+				'textFilter' => 'search',
+			),
 		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer Search Highlighting'),
