@@ -229,5 +229,13 @@ function prefs_fgal_list() {
 			'default' => 'y',
 			'dependencies' => array('feature_search'),
 		),
+		'fgal_fix_mime_type' => array(
+			'name' => tra('Fix mime types based on file suffix'),
+			'description' => tra('Fixes mime type of image files based on file suffixes when they are incorrectly detected as application/octet-stream'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+			'help' => 'File+Gallery+config',
+		),
 	);
 }

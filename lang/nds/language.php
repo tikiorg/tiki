@@ -13541,4 +13541,6 @@ $lang = array(
 // "TikiTest Replay" => "TikiTest Replay",
 "The page is empty" => "De Sied is leddig",
 "You do not have permissions to view the maps" => "Du draffs de Kårten nich bekieken",
+//"Fix mime types based on file suffix" => "Fix mime types based on file suffix",
+//"Fixes mime type of image files based on file suffixes when they are incorrectly detected as application/octet-stream" => "Fixes mime type of image files based on file suffixes when they are incorrectly detected as application/octet-stream",
 );

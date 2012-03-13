@@ -13576,4 +13576,6 @@ $lang = array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "You do not have permissions to view the maps" => "Vous n'avez pas les droits pour voir les cartes",
+//"Fix mime types based on file suffix" => "Fix mime types based on file suffix",
+//"Fixes mime type of image files based on file suffixes when they are incorrectly detected as application/octet-stream" => "Fixes mime type of image files based on file suffixes when they are incorrectly detected as application/octet-stream",
 );
