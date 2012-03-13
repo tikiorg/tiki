@@ -1322,6 +1322,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Search',
 			'default' => 'n',
+			'tags' => array('basic'),
 			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_referer_highlight' => array(
