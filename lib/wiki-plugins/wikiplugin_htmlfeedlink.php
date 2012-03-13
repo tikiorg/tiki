@@ -72,7 +72,6 @@ function wikiplugin_htmlfeedlink($data, $params)
 	global $tikilib, $headerlib, $page, $caching;
 	static $htmlFeedLinkI = 0;
 	++$htmlFeedLinkI;
-	$i = $htmlFeedLinkI;
 	
 	$params = array_merge(
 					array(
@@ -125,7 +124,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 				var nameSelect = $('<select>')
 					.insertAfter(name)
 					.change(function() {
-						name.val($(this).val());
+						name.val($(this).val()).change();
 					});
 				
 				var items = " . json_encode($htmlFeed->listItemNames()) . ";
@@ -136,7 +135,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 						.text(items[i])
 						.appendTo(nameSelect);
 				}
-				nameSelect.val(name.val());
+				nameSelect.val(name.val()).change();
 			});
 			
 		$('.revision').click(function() {
@@ -206,7 +205,7 @@ function wikiplugin_htmlfeedlink($data, $params)
     			break;
 			case "popup":
 				$headerlib->add_jq_onready(
-    				"$('#backlink$i')
+    				"$('#backlink')
 						.htmlFeedPopup(" . $link . ");"
 				);
     			break;
@@ -217,12 +216,12 @@ function wikiplugin_htmlfeedlink($data, $params)
 		$link = json_encode($link);
 	}
 	
-	$result = "<span id='htmlFeedLink$i' title='$name'>". $data ."</span>";
+	$result = "<span id='htmlFeedLink' title='$name'>". $data ."</span>";
 	
 	switch ($style) {
 		case "highlight":
 			$headerlib->add_jq_onready(
-    			"$('#htmlFeedLink$i')
+    			"$('#htmlFeedLink$htmlFeedLinkI')
 					.css('border', '1px solid red');"
 			);
     		break;
