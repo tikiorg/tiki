@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -59,11 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['delete'])) {
 		if (!is_array($_POST['enabled'])) $_POST['enabled'] = array();
 		foreach ($pluginsAlias as $name) {
-			$parserlib->plugin_alias_delete( $name );
+			$parserlib->plugin_alias_delete($name);
 		}
 		$pluginsAlias = $parserlib->plugin_get_list(false, true);
 	}
-	if (isset($_POST['textareasetup']) && !in_array($_POST['plugin_alias'], $pluginsReal) && isset($_REQUEST["plugin_alias"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] == 3)) { // tab=3 is plugins alias tab (TODO improve)
+	if (isset($_POST['textareasetup'])
+			&& !in_array($_POST['plugin_alias'], $pluginsReal)
+			&& isset($_REQUEST['plugin_alias'])
+			&& (!isset($_COOKIE['tab']) || $_COOKIE['tab'] == 3)
+	) { // tab=3 is plugins alias tab (TODO improve)
 		$info = array(
 			'implementation' => $_POST['implementation'],
 			'description' => array(
@@ -82,17 +86,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			) ,
 			'params' => array() ,
 		);
+
 		if (!empty($_POST['body'])) {
 			$info['description']['body'] = $_POST['body'];
 		}
+
 		if ($_POST['validate'] == 'none') {
 			unset($info['description']['validate']);
 		}
-		if (empty($_POST['prefs'])) $temp = array(
-			"wikiplugin_{$_POST['plugin_alias']}"
-		);
+
+		if (empty($_POST['prefs']))
+			$temp = array("wikiplugin_{$_POST['plugin_alias']}");
+
 		else $temp = explode(',', $_POST['prefs']);
 		$info['description']['prefs'] = $temp;
+
 		if (isset($_POST['input'])) {
 			foreach ($_POST['input'] as $param) {
 				if (!empty($param['token']) && !empty($param['name'])) {
@@ -106,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 		}
+
 		if (isset($_POST['bodyparam'])) {
 			foreach ($_POST['bodyparam'] as $param) {
 				if (!empty($param['token'])) {
@@ -117,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 		}
+
 		if (isset($_POST['sparams'])) {
 			foreach ($_POST['sparams'] as $detail) {
 				if (!empty($detail['token'])) {
@@ -124,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 		}
+
 		if (isset($_POST['cparams'])) {
 			foreach ($_POST['cparams'] as $detail) {
 				if (!empty($detail['token'])) {
@@ -143,12 +154,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 			}
 		}
+
 		$parserlib->plugin_alias_store($_POST['plugin_alias'], $info);
-		if (!in_array($_POST['plugin_alias'], $pluginsAlias)) $pluginAlias[] = $_POST['plugins'];
-		foreach (glob('temp/cache/wikiplugin_*') as $file) unlink($file);
+
+		if (!in_array($_POST['plugin_alias'], $pluginsAlias))
+			$pluginAlias[] = $_POST['plugins'];
+
+		foreach (glob('temp/cache/wikiplugin_*') as $file)
+			unlink($file);
+
 		$pluginsAlias = $parserlib->plugin_get_list(false, true);
 	}
 }
+
 if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $parserlib->plugin_alias_info($_REQUEST['plugin_alias'])) {
 	// Add an extra empty parameter to create new ones
 	$pluginInfo['description']['params']['__NEW__'] = array(
@@ -157,20 +175,26 @@ if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $parserlib->plugin_alias_i
 		'required' => '',
 		'safe' => '',
 	);
+
 	$pluginInfo['body']['params']['__NEW__'] = array(
 		'encoding' => '',
 		'input' => '',
 		'default' => '',
 	);
+
 	$pluginInfo['params']['__NEW__'] = array(
 		'pattern' => '',
 		'params' => array() ,
 	);
-	foreach ($pluginInfo['params'] as & $p) if (is_array($p)) $p['params']['__NEW__'] = array(
-		'encoding' => '',
-		'input' => '',
-		'default' => '',
-	);
+
+	foreach ($pluginInfo['params'] as & $p)
+		if (is_array($p))
+			$p['params']['__NEW__'] = array(
+				'encoding' => '',
+				'input' => '',
+				'default' => '',
+			);
+
 	$smarty->assign('plugin_admin', $pluginInfo);
 	$cookietab = 3;
 } else {
