@@ -11,7 +11,6 @@
 {* --- tab with list --- *}
 {tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
-	<h2>{tr}Trackers{/tr}</h2>
 	{if ($trackers) or ($find)}
 		{include file='find.tpl' filters=''}
 		{if ($find) and ($trackers)}
@@ -35,7 +34,7 @@
 					{$tracker.trackerId|escape}
 				</td>
 				<td class="text">
-					<a class="tablename dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}" title="{tr}Edit{/tr}">{$tracker.name|escape}</a>
+					<a class="tablename" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}" title="{tr}View{/tr}">{$tracker.name|escape}</a>
 					<div class="description">
 						{if $tracker.descriptionIsParsed eq 'y'}
 							{wiki}{$tracker.description}{/wiki}
@@ -48,22 +47,29 @@
 				<td class="date">{$tracker.lastModif|tiki_short_date}</td>
 				<td class="integer">{$tracker.items|escape}</td>
 				<td class="action">
-					<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
-					<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
-					<a title="{tr _0=$tracker.name|escape}Events{/tr}" class="event dialog" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
+					{if $tracker.permissions->export_tracker}
+						<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+					{/if}
+					{if $tracker.permissions->admin_trackers}
+						<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
+						<a title="{tr _0=$tracker.name|escape}Events{/tr}" class="event dialog" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
+					{/if}
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
-					{if $tracker.individual eq 'y'}
-						<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
-					{else}
-						<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
+					{if $tracker.permissions->admin_trackers}
+						<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
+						<a title="{tr}Edit{/tr}" class="edit dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+						{if $tracker.individual eq 'y'}
+							<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
+						{else}
+							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
+						{/if}
+						{if $tracker.items > 0}
+							<a title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
+						{else}
+							{icon _id='bin_empty' alt="{tr}Clear{/tr}"}
+						{/if}
+						<a title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$tracker.trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					{/if}
-					{if $tracker.items > 0}
-						<a title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
-					{else}
-						{icon _id='bin_empty' alt="{tr}Clear{/tr}"}
-					{/if}
-					<a title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$tracker.trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>
 		{foreachelse}
@@ -75,9 +81,11 @@
 		{/foreach}
 	</table>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-	<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-		<input type="submit" value="{tr}Create tracker{/tr}"/>
-	</form>
+	{if $tiki_p_admin_trackers eq 'y'}
+		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
+			<input type="submit" value="{tr}Create tracker{/tr}"/>
+		</form>
+	{/if}
 	{if !empty($trackerId)}
 		<div id="trackeredit"></div>
 		{jq}
@@ -104,10 +112,10 @@
 				history.go(0);	// reload
 			}
 		});
-		$('.tablename.dialog').click(function () {
+		$('.edit.dialog').click(function () {
 			var link = this;
 			$(this).serviceDialog({
-				title: $(link).text(),
+				title: $(link).closest('tr').find('.text a').text(),
 				data: {
 					controller: 'tracker',
 					action: 'replace',
@@ -183,7 +191,7 @@
 		});
 	{/jq}
 {/tab}
-
+{if $tiki_p_admin_trackers eq 'y'}
 {tab name="{tr}Duplicate/Import Tracker{/tr}"}
 {* --- tab with raw form --- *}
 	<h2>{tr}Duplicate Tracker{/tr}</h2>
@@ -244,5 +252,6 @@
 		</div>
 	</form>
 {/tab}
+{/if}
 
 {/tabset}

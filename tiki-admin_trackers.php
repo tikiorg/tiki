@@ -14,9 +14,6 @@ if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
 $objectperms = Perms::get('tracker', $_REQUEST['trackerId']);
-if (!$objectperms->admin_trackers) {
-	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
-}
 $smarty->assign('permsType', $objectperms->from());
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
@@ -42,7 +39,7 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$trackers = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
+$trackers = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find, true);
 
 foreach ($trackers["data"] as &$tracker) {
 	if ($userlib->object_has_one_permission($tracker["trackerId"], 'tracker')) {

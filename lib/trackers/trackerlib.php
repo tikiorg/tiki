@@ -603,7 +603,8 @@ class TrackerLib extends TikiLib
 		return $this->table('tiki_trackers')->fetchFullRow(array('trackerId' => (int) $trackerId));
 	}
 
-	function list_trackers($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find='')
+	// includePermissions: Include the permissions of each tracker in its element's "permissions" subelement
+	function list_trackers($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find='', $includePermissions = false)
 	{
 		$categlib = TikiLib::lib('categ');
 		$join = '';
@@ -628,6 +629,9 @@ class TrackerLib extends TikiLib
 			global $user;
 			$add=$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers');
 			if ($add) {
+				if ($includePermissions) {
+					$res['permissions'] = Perms::get('tracker', $res['trackerId']);
+				}
 				$ret[] = $res;
 				$list[$res['trackerId']] = $res['name'];
 			}
