@@ -151,7 +151,7 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 	{
 		$sanitized = preg_replace('/<(.|\n)*?>/', ' ', $html);
 		$sanitized = preg_replace('/\W/', ' ', $sanitized);
-		$sanitized = split(" ", $sanitized);
+		$sanitized = explode(" ", $sanitized);
 		$sanitized = array_values(array_filter($sanitized, 'strlen'));
 
 		return $sanitized;
