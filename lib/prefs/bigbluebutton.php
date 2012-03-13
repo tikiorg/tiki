@@ -14,6 +14,7 @@ function prefs_bigbluebutton_list()
 			'type' => 'flag',
 			'keywords' => 'big blue button web conferencing audio video chat screensharing whiteboard',
 			'help' => 'BigBlueButton',
+			'tags' => array('basic'),
 			'default' => 'n',
 			'dependencies' => array(
 				'php_libxml',
@@ -27,6 +28,7 @@ function prefs_bigbluebutton_list()
 			'hint' => tra('http://host.example.com/'),
 			'keywords' => 'big blue button web conferencing audio video chat screensharing whiteboard',
 			'size' => 40,
+			'tags' => array('basic'),
 			'default' => '',
 		),
 		'bigbluebutton_server_salt' => array(
@@ -36,6 +38,7 @@ function prefs_bigbluebutton_list()
 			'type' => 'text',
 			'size' => 40,
 			'filter' => 'text',
+			'tags' => array('basic'),
 			'default' => '',
 		),
 		'bigbluebutton_recording_max_duration' => array(
@@ -47,6 +50,7 @@ function prefs_bigbluebutton_list()
 			'filter' => 'digits',
 			'size' => 6,
 			'default' => 5*60,
+			'tags' => array('basic'),
 		),
 	);
 }
