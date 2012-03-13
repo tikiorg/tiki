@@ -146,7 +146,10 @@ abstract class Feed_Abstract
 		}
 		
 		$item = (object)$item;
-		$contents->entry[] = $item;
+		
+		//this allows us to intercept the contents and do things like check the validity of the content being appended to the contents
+		$item = $this->appendToContents($contents, $item);
+		
 		$this->save($contents);
 		
 		return $this;

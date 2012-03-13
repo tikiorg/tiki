@@ -82,7 +82,8 @@ Class Feed_ForwardLink extends Feed_Abstract
 			$linkedText = htmlspecialchars($item->textlink->text);
 
 			if ($thisText == $phrase) {
-				$headerlib->add_jq_onready(<<<JQ
+				$headerlib->add_js(<<<JQ
+				$(function() {
 					$('#page-data')
 						.rangyRestoreSelection('$thisText', function(r) {
 							$('<a>*</a>')
@@ -97,6 +98,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 								scrollTop: r.start.offset().top
 							});
 						});
+				});
 JQ
 				);
 			} else {
