@@ -1,6 +1,7 @@
 {* $Id$ *}
 
 <strong>{$plugin.name|escape}</strong>
+<em>{$plugin_name|lower}</em>
 
 {if $prefs.javascript_enabled eq 'y' && $area_id}
 	<a href="javascript:void(0);" onclick="needToConfirm=false;$('#help_sections').dialog('close');popup_plugin_form('{$area_id}','{$plugin_name|lower|@addslashes}');return false;">
