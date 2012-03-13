@@ -42,20 +42,22 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
-$temp_max = count($channels["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($channels["data"][$i]["trackerId"], 'tracker')) {
-		$channels["data"][$i]["individual"] = 'y';
+$trackers = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
+
+foreach ($trackers["data"] as &$tracker) {
+	if ($userlib->object_has_one_permission($tracker["trackerId"], 'tracker')) {
+		$tracker["individual"] = 'y';
 	} else {
-		$channels["data"][$i]["individual"] = 'n';
+		$tracker["individual"] = 'n';
 	}
 }
+
+$smarty->assign_by_ref('cant', $trackers['cant']);
+$smarty->assign_by_ref('trackers', $trackers["data"]);
+
 $urlquery['find'] = $find;
 $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
-$smarty->assign_by_ref('cant', $channels['cant']);
-$smarty->assign_by_ref('trackers', $channels["data"]);
 $smarty->assign('uses_tabs', 'y');
 
 ask_ticket('admin-trackers');
