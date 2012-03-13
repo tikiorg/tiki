@@ -1,11 +1,4 @@
 <div class="accordion">
-	<h4>{tr}Structure{/tr}</h4>
-	<form class="simple" action="" method="post">
-		<label>
-			{tr}Tracker Export{/tr}
-			<textarea>{$export|escape}</textarea>
-		</label>
-	</form>
 	<h4>{tr}Quick Export{/tr}</h4>
 	<form method="post" class="simple no-ajax" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
 		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
@@ -85,6 +78,13 @@
 		<div{* class="submit"*}>
 			<input type="submit" value="{tr}Export{/tr}" />
 		</div>
+	</form>
+	<h4>{tr}Structure{/tr}</h4>
+	<form class="simple" action="" method="post">
+		<label>
+			{tr}Tracker Export{/tr}
+			<textarea>{$export|escape}</textarea>
+		</label>
 	</form>
 	<h4>{tr}Profile Export{/tr}</h4>
 	<form method="post" class="simple no-ajax" action="{service controller=tracker action=export_profile trackerId=$trackerId}">
