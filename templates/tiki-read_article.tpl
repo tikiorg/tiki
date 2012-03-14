@@ -67,7 +67,7 @@
 				
 				{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 				{if $topicId}
-					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName}{/tr}{/if}">
+					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
 				{/if}
 				{if $useImage eq 'y' and $hasImage eq 'y'}
 					{* display article image *}
@@ -88,7 +88,7 @@
 						{/if}
 					{/section}
 					{else}
-						{tr}{$topics[$topicId].name}{/tr}
+						{tr}{$topics[$topicId].name|escape}{/tr}
 					{/if}
 				{/if}
 				{if $topicId}</a>{/if}
