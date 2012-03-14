@@ -693,7 +693,7 @@ class ArtLib extends TikiLib
 			$res['subs'] = $this->getOne('select count(*) from `tiki_submissions` where `topicId`=?', array($res['topicId']));
 
 			$res['arts'] = $this->getOne('select count(*) from `tiki_articles` where `topicId`=?', array($res['topicId']));
-			$ret[] = $res;
+			$ret[$res['topicId']] = $res;
 		}
 
 		return $ret;
