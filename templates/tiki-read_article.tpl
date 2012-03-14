@@ -64,21 +64,21 @@
 					{assign var="big_image" value=y}
 					 <div class="imgbox" style="margin:auto; width:{$width}px">
 				{/if}
+				
+				{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 				{if $topicId}
 					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName}{/tr}{/if}">
 				{/if}
-				{if $useImage eq 'y'}
-					{if $hasImage eq 'y'} {* display article image *}
-						<img 
-							 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
-							 alt="{$smarty.capture.imgTitle}" 
-							 src="article_image.php?image_type=article&amp;id={$articleId}"
-							 {if $image_x > 0}width="{$image_x}"{/if}
-							 {if $image_y > 0}height="{$image_y}"{/if} />
-					{elseif $topicId}
-							{tr}{$topics[$topicId].name}{/tr}
-					{/if}
-				{else}
+				{if $useImage eq 'y' and $hasImage eq 'y'}
+					{* display article image *}
+					<img 
+						 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
+						 alt="{$smarty.capture.imgTitle}" 
+						 src="article_image.php?image_type=article&amp;id={$articleId}"
+						 {if $image_x > 0}width="{$image_x}"{/if}
+						 {if $image_y > 0}height="{$image_y}"{/if} />
+				{elseif $topicId}
+					{if $useImage eq 'y'}
 					{section name=it loop=$topics}
 						{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
 							<img 
@@ -87,8 +87,12 @@
 								 src="article_image.php?image_type=topic&amp;id={$topicId}" />
 						{/if}
 					{/section}
+					{else}
+						{tr}{$topics[$topicId].name}{/tr}
+					{/if}
 				{/if}
 				{if $topicId}</a>{/if}
+				
 				{if $big_image eq 'y'}
 					{if $show_image_caption eq 'y' and $image_caption || $image_x > 0}
 						<div class="mini thumbcaption">
