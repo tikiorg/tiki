@@ -253,17 +253,16 @@ select[name="theme-option"] {
 	width: 140px;
 }
 
-/* Needed for Opera (11) 
+
+/* Needed for Opera (11) */
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
-input[type="submit"]:hover,
-button[type="submit"],
-button[type="submit"]:hover {
-	padding: 0 3px;
+input[type="submit"]:hover {
+	padding: .1em .8em;
 }
 
-.button {
+/*.button {
     margin: 2px;
 }*/
 

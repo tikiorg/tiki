@@ -146,7 +146,6 @@ input[type="submit"]:hover,
 	border-color: #1957aa #3676c4 #3676c4 #1957aa;
 	text-decoration: none;
 	font: .8em helvetica, arial, sans-serif;
-
 }
 
 .button a:active,
@@ -163,6 +162,14 @@ input[type="submit"]:active,
 input,
 textarea {
 	background: url(business/input.gif) repeat-x;
+}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+	padding: .1em .8em;
 }
 
 hr {

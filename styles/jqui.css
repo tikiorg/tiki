@@ -153,6 +153,14 @@ input[type="submit"]:hover,
 	color: #363636;
 	outline: none;
 }
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+	padding: .1em .8em;
+}
 	
 .highlight,
 .highlight a {
