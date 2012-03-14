@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -34,8 +34,9 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.test.link', 'test wiki page', 'HomePage', 'test wiki page', 'SomePage');
 
 		$this->assertEquals(
-				array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
-				$this->removeId($lib->get_relations_from('test wiki page', 'HomePage')));
+						array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
+						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
+		);
 	}
 
 	function testDuplicateRelation()
@@ -45,8 +46,9 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.test.link', 'test wiki page', 'HomePage', 'test wiki page', 'SomePage');
 
 		$this->assertEquals(
-				array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
-				$this->removeId($lib->get_relations_from('test wiki page', 'HomePage')));
+						array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
+						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
+		);
 	}
 
 	function testMultipleResults()
@@ -72,9 +74,10 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.test.something', 'test wiki page', 'HomePage', 'test tracker item', '23');
 		$lib->add_relation('tiki.test.link', 'test tracker item', '23', 'test wiki page', 'SomePage');
 
-		$this->assertEquals(array(
-					array('relation' => 'tiki.test.something', 'type' => 'test tracker item', 'itemId' => '23'),
-					), $this->removeId($lib->get_relations_from('test wiki page', 'HomePage', 'tiki.test.something')));
+		$this->assertEquals(
+						array(array('relation' => 'tiki.test.something', 'type' => 'test tracker item', 'itemId' => '23'),),
+						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage', 'tiki.test.something'))
+		);
 	}
 
 	function testRelationNamesChecked()
@@ -83,9 +86,10 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.link', 'test wiki page', 'HomePage', 'test wiki page', 'SomePage');
 		$lib->add_relation('TIKI . test  . link  ', 'test wiki page', 'HomePage', 'test tracker item', '23');
 
-		$this->assertEquals(array(
-					array('relation' => 'tiki.test.link', 'type' => 'test tracker item', 'itemId' => '23'),
-					), $this->removeId($lib->get_relations_from('test wiki page', 'HomePage')));
+		$this->assertEquals(
+						array(array('relation' => 'tiki.test.link', 'type' => 'test tracker item', 'itemId' => '23'),),
+						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
+		);
 	}
 
 	function testLoadGroupOfRelations()
@@ -111,9 +115,10 @@ class RelationTest extends TikiTestCase
 
 		$result = $this->removeId($lib->get_relations_to('test external', 'http://wikipedia.org', 'tiki.test.sem.'));
 
-		$this->assertEquals(array(
-					array('relation' => 'tiki.test.sem.source', 'type' => 'test wiki page', 'itemId' => 'HomePage')
-					), $result);
+		$this->assertEquals(
+						array(array('relation' => 'tiki.test.sem.source', 'type' => 'test wiki page', 'itemId' => 'HomePage')),
+						$result
+		);
 	}
 
 	function testGetSingle()

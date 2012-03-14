@@ -6,8 +6,8 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
 
@@ -28,7 +28,8 @@ class Language extends TikiDb_Bridge
 	 *
 	 * @return array list of languages
 	 */
-	public static function getLanguages() {
+	public static function getLanguages()
+	{
 		require_once('lib/init/tra.php');
 		global $langmapping; require_once('lang/langmapping.php');
 		return array_keys($langmapping);
@@ -40,7 +41,8 @@ class Language extends TikiDb_Bridge
 	 *
 	 * @return array list of languages with at least one string translated
 	 */
-	public static function getDbTranslatedLanguages() {
+	public static function getDbTranslatedLanguages()
+	{
 		$languages = array();
 		$result = self::fetchAll('SELECT DISTINCT `lang` FROM `tiki_language` ORDER BY `lang` asc');
 
@@ -66,7 +68,8 @@ class Language extends TikiDb_Bridge
 	 * @param string $string
 	 * @return string modified string;
 	 */
-	public static function addPhpSlashes($string) {
+	public static function addPhpSlashes($string)
+	{
 		$addPHPslashes = array(
 			"\n" => '\n',
 			"\r" => '\r',
@@ -80,17 +83,18 @@ class Language extends TikiDb_Bridge
 	}
 
 	/**
-	 * $string = str_replace ('\n',   "\n", $string); 
+	 * $string = str_replace ('\n',   "\n", $string);
 	 * $string = str_replace ('\r',   "\r", $string);
 	 * $string = str_replace ('\t',   "\t", $string);
 	 * $string = str_replace ('\\\\', '\\', $string);
 	 * $string = str_replace ('\$',   '$',  $string);
 	 * $string = str_replace ('\"',   '"',  $string);
 	 * We skip the exotic regexps for octal an hexadecimal
-	 * notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} - since they 
+	 * notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} - since they
 	 * should not apper in english strings.
 	 */
-	public static function removePhpSlashes ($string) {
+	public static function removePhpSlashes ($string)
+	{
 		$removePHPslashes = array(
 			'\n'   => "\n",
 			'\r'   => "\r",
@@ -99,11 +103,11 @@ class Language extends TikiDb_Bridge
 			'\$'   => '$',
 			'\"'   => '"'
 		);
-	  
-		if (preg_match ('/\{0-7]{1,3}|\x[0-9A-Fa-f]{1,2}/', $string, $match)) {
-			trigger_error ("Octal or hexadecimal string '".$match[1]."' not supported", E_WARNING);
+
+		if (preg_match('/\{0-7]{1,3}|\x[0-9A-Fa-f]{1,2}/', $string, $match)) {
+			trigger_error("Octal or hexadecimal string '" . $match[1] . "' not supported", E_WARNING);
 		}
 
-		return strtr ($string, $removePHPslashes);
+		return strtr($string, $removePHPslashes);
 	}
 }
