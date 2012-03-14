@@ -451,6 +451,7 @@ h3.box-title,
 
 .rbox-title {
 	border-bottom: none !important;
+	margin-bottom: -.35em;
 }
 	
 .errors .rbox-title,

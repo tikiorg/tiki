@@ -504,7 +504,8 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 	border-color: #ccccff;
 	border-bottom: none;
 	font-size: 1em;
-	line-height: 1.4em}
+	line-height: 1.4em;
+	margin-bottom: -.4em;}
 
 .rbox-data {
 	background: #415d44;
