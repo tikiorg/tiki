@@ -403,9 +403,9 @@ button[type="submit"]:hover {
 	padding: 0 3px;
 }
 
-span.button {
+/*span.button {
 	margin: 2px;
-}
+}*/
 
 select[multiple="multiple"] {
 	height: 120px;
