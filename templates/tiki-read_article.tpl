@@ -79,14 +79,12 @@
 						 {if $image_y > 0}height="{$image_y}"{/if} />
 				{elseif $topicId}
 					{if $useImage eq 'y'}
-					{section name=it loop=$topics}
-						{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
+						{if $topics[$topicId].image_size > 0}
 							<img 
 								 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
 								 alt="{tr}{$topicName}{/tr}"
 								 src="article_image.php?image_type=topic&amp;id={$topicId}" />
 						{/if}
-					{/section}
 					{else}
 						{tr}{$topics[$topicId].name|escape}{/tr}
 					{/if}
