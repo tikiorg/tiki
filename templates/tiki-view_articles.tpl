@@ -85,13 +85,13 @@
 														{if $largefirstimage eq 'y' and $smarty.section.ix.first}
 															{if $listpages[ix].image_x > 0}&amp;width={$listpages[ix].image_x}{/if}
 														{else}
-															&amp;width={$listpages[ix].list_image_x}&amp;cache=y
+															&amp;width={$listpages[ix].list_image_x}
 														{/if}
 													{elseif $listpages[ix].image_x > 0}
-														&amp;width={$listpages[ix].image_x}&amp;cache=y
+														&amp;width={$listpages[ix].image_x}
 													{else}
-														&amp;cache=y
-													{/if}"
+														
+													{/if}&amp;cache=y"
 											/>{/strip}
 										</a>
 									{else}
