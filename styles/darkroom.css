@@ -149,9 +149,9 @@ input.wikiaction,
 	margin-left: 0;
 }
 
-#page-bar .button {
+/*#page-bar .button {
 	margin: 0 2px;
-}
+}*/
 
 /* do not put this rule with button rule for IE6 */
 input[type=submit],
@@ -159,7 +159,7 @@ input[type=reset] {
 	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
 	color: #b2b2b2;
 	font-weight: bold;
-	border: 1px solid transparent;
+	border: 1px solid #474747;
 	border-top: 1px solid #818181;
 	vertical-align: middle;
 	cursor: pointer;
@@ -174,12 +174,10 @@ input[type=submit]:hover,
 	border: 1px solid #b2b2b2;
 }
 
-.button a:hover {
+.button a:hover,
+.button a {
 	text-decoration: none;
 	padding: 0 4px;
-}
-
-.button {
 	font-size: 0.8em;
 }
 
@@ -195,7 +193,7 @@ select {
 	background: #292929;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -207,10 +205,10 @@ button[type="submit"]:hover {
 
 span.button {
 	margin: 2px;
-}
+}*/
 
 option {
-	border: 0;
+	border: none;
 }
 
 select[name="theme"] {
@@ -888,7 +886,7 @@ img.flipmodimage:hover {
 
 .rbox {
 	overflow: hidden;
-	border: 0;
+	border: none;
 	color: #fffff0;
 }
 
@@ -1545,7 +1543,7 @@ body.tiki_blogs .postbody-title {
 	float: none;
 	width: 100%;
 	background: none;
-	border: 0;
+	border: none;
 }*/
 
 
@@ -1621,7 +1619,7 @@ body.tiki_blogs .postfooter .actions {
 }
 
 .post .author_info {
-	border: 0;
+	border: none;
 	background: #575757;
 }
 

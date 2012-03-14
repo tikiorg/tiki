@@ -261,7 +261,7 @@ input[type=submit]:hover,
 	font: bold Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -273,7 +273,7 @@ button[type="submit"]:hover {
 
 span.button {
 	margin: 2px;
-}
+}*/
 
 fieldset {
 	border: solid 1px #c7d0d9;

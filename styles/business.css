@@ -145,6 +145,8 @@ input[type="submit"]:hover,
 	border: 1px solid;
 	border-color: #1957aa #3676c4 #3676c4 #1957aa;
 	text-decoration: none;
+	font: .8em helvetica, arial, sans-serif;
+
 }
 
 .button a:active,

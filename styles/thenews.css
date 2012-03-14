@@ -125,7 +125,7 @@ input[type="submit"]:hover,
 	text-decoration: none;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -137,7 +137,7 @@ button[type="submit"]:hover {
 
 span.button {
 	margin: 2px;
-}
+}*/
 /*
 .button,
 .calbuttonbox {

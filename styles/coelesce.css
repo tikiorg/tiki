@@ -177,9 +177,9 @@ button[type="submit"]:hover {
 	padding: 0 3px;
 }
 
-span.button {
+/*span.button {
 	margin: 2px;
-}
+}*/
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
@@ -1115,8 +1115,6 @@ h1.pagetitle {
 #page-bar {
 	width: 100%;
 	float: none;
-	height: 20px;
-	line-height: 20px;
 }
 
 p.editdate {

@@ -166,7 +166,7 @@ input[type="submit"]:hover,
 	font-weight: bold;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -178,7 +178,7 @@ button[type="submit"]:hover {
 
 span.button {
 	margin: 2px;
-}
+}*/
 
 input[type="checkbox"] {border: 0}
 select[multiple] {height: 10em}

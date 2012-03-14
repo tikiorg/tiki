@@ -172,7 +172,9 @@ input[type="submit"]:hover,
 	margin: 2px;
 	color: #f4f4f4;
 	background: #2f2f2f;
-	text-decoration: none}
+	text-decoration: none;
+	font-size: 11px;
+}
 	
 button:active,
 input[type=submit]:active,
