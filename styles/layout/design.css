@@ -107,6 +107,10 @@ input {
 	padding: 0;
 }
 
+.button a {
+	padding: .1em 1em;
+}
+
 /* highlight on interface text to draw attention; also
 highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
 .highlight,
