@@ -28,7 +28,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 	 	 	 	
 #main {
-	text-align: left
+	text-align: left;
 }
 
 #c1c2 #wrapper #col1.marginleft  {
@@ -432,7 +432,14 @@ h3.box-title,
 .warning .rbox-data {
 	color: #cd0a0a;
 	background: #fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
-	border:1px solid #cd0a0a;
+	border: 1px solid #cd0a0a;
+}
+
+.rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
+	border-bottom: none;
+	margin-bottom: -.4em;
 }
 
 .simplebox {

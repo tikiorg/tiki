@@ -470,18 +470,18 @@ img.icon {
 }
 
 .rbox-title {
-	border-bottom-color: #eee;
 	padding: 0.35em 0.9em 0.1em;
 	font-weight: bold;
+	border-bottom: none;
 }
-	
+
 .error .rbox-title,
 .errors .rbox-title,
 .warning .rbox-title {
 	background: #ffc;
 	color: #000;
 	border-color: #f00;
-	border-bottom-color: #ffc;
+	border-bottom: none;
 }
 
 .error .rbox-data,

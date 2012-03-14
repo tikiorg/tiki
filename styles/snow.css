@@ -477,6 +477,10 @@ h3.box-title {
 .rbox-title,
 .rbox-data {background: #e7f2f4}
 
+.rbox-title {
+	margin-bottom: -.4em;
+}
+
 .simplebox {
 	overflow: hidden;
 	border: 2px solid #a1adc7;

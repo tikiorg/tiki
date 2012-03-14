@@ -692,21 +692,14 @@ img.flipmodimage:hover {
 }
 
 .rbox-title {
-	border: none;
-	float: left;
 	font-size: 1em;
 	padding: 0.2em 0.8em;
 	line-height: 1.4em;
-	position: relative;
-	top: 1px;
-	z-index: 2;
 	background: #f2cd5e;
 }
 
 .rbox-data {
 	border: solid 1px #f2cd5e;
-	clear: left;
-	margin: 0;
 	padding: 6px 2px 2px 2px;
 	background: #fff;
 }

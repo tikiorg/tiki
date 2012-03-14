@@ -653,12 +653,17 @@ ol.module {
 .comment .rbox-title,
 .tip .rbox-title {
 	background: #ECECEF;
-	border: 1px solid #CCCCDD}
+	border: 1px solid #CCCCDD;
+	border-bottom: none;}
 
 .comment .rbox-data,
 .tip .rbox-data {
 	background: #ECEFEC;
 	border: 1px solid #CCDDCC}
+	
+.rbox-title {
+	margin-bottom: -.35em !important;
+}
 
 .simplebox {
 	border: 1px solid #999;

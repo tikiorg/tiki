@@ -595,9 +595,9 @@ h3.box-title a:hover {color: #000}
 
 .rbox-title {
 	border: 2px solid #90140c;
-	border-bottom: 0;
-	bottom: -2px;
+	border-bottom: none;
 	font-weight: bold;
+	margin-bottom: -.55em;
 }
 	
 .rbox-data {

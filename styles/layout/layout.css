@@ -829,7 +829,7 @@ h3.box-title {
 	width: auto;
 	z-index: 1;
 	position: relative;
-	bottom: 0;
+	margin-bottom: -0.33em;
 }
 	
 .rbox-title .icon {
@@ -839,7 +839,6 @@ h3.box-title {
 	
 .rbox-data {
 	position: relative;	
-	top: -.37em;
 	z-index: 0;
 }
 

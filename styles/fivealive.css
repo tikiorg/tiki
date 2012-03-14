@@ -891,6 +891,7 @@ img.icon {
 }
 
 .rbox-title {
+	margin-bottom: -.35em;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	-moz-border-radius-topleft: 3px;

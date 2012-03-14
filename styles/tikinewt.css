@@ -724,6 +724,7 @@ img.flipmodimage {
 	background: #eeee99;
 	border: 1px solid #000;
 	border-bottom: none;
+	margin-bottom: -.5em;
 }
 
 .rbox-data, 
