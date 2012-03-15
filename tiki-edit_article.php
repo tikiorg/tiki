@@ -307,7 +307,7 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 	$smarty->assign('image_size', $_REQUEST['image_size']);
 	$smarty->assign('image_x', $_REQUEST['image_x']);
 	$smarty->assign('image_y', $_REQUEST['image_y']);
-	$smarty->assign('image_x', $_REQUEST['list_image_x']);
+	$smarty->assign('list_image_x', $_REQUEST['list_image_x']);
 	$smarty->assign('useImage', $useImage);
 	$smarty->assign('isfloat', $isfloat);
 	$smarty->assign('type', $_REQUEST['type']);
