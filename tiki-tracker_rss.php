@@ -75,6 +75,9 @@ if ($output["data"] == "EMPTY") {
 		$exactvalue = null;
 		$filtervalue = null;
 	}
+	$doNotShowEmptyField = $trklib->get_trackers_options($_REQUEST[$id], 'doNotShowEmptyField');
+	$doNotShowEmptyField = !empty($doNotShowEmptyField[0]['value']) && $doNotShowEmptyField[0]['value'] === 'y';
+
 	if (isset($_REQUEST['status'])) {
 		if (!$trklib->valid_status($_REQUEST['status'])) {
 			$errmsg = tra("Incorrect parameter");
@@ -105,7 +108,7 @@ if ($output["data"] == "EMPTY") {
 		$first_text_field = null;
 		$aux_subject = null;
 		foreach ($data["field_values"] as $data2) {
-			if (isset($data2["name"])) {
+			if (isset($data2["name"]) && !empty($data2['value']) || !$doNotShowEmptyField) {
 				$data2['value'] = $trklib->field_render_value(
 								array(
 									'field' => $data2,
