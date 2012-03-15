@@ -80,8 +80,8 @@ class Messu extends TikiLib
 			return false;
 		}
 
-		$query = 'insert into `messu_messages' .
-					' `(`user`, `user_from`, `user_to`, `user_cc`, `subject`, `body`, `date`' .
+		$query = 'insert into `messu_messages`' .
+					' (`user`, `user_from`, `user_to`, `user_cc`, `subject`, `body`, `date`' .
 					', `isRead`, `isReplied`, `isFlagged`, `priority`, `hash`, `replyto_hash`)' .
 					' values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
