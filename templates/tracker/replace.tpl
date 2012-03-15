@@ -217,6 +217,20 @@
 					{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}
 				</div>
 			</label>
+			<label>
+				<input type="checkbox" name="publishRSS" value="1"
+					{if $prefs.feed_tracker neq 'y'}disabled="disabled"{/if}
+					{if $info.publishRSS eq 'y'}checked="checked"{/if}/>
+				{tr}Publish RSS feed for this tracker{/tr}
+				<div class="description">
+					{tr}Requires "RSS per tracker" to be set in Admin/RSS{/tr}
+					{if $prefs.feed_tracker eq 'y'}
+						{tr}(Currently set){/tr}
+					{else}
+						{tr}(Currently not set){/tr}
+					{/if}
+				</div>
+			</label>
 
 			{if $prefs.feature_groupalert eq 'y'}
 				<label>
