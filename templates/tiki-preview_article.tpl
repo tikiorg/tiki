@@ -23,19 +23,15 @@
 		<table cellpadding="0" cellspacing="0">
 			<tr>
 				<td valign="top">
-					{if $useImage eq 'y'}
-						{if $hasImage eq 'y'}
-							{if $imageIsChanged eq 'y'}
-								<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=preview&amp;id={$previewId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0}height="{$image_y}"{/if} />
+					{if $useImage eq 'y' and $hasImage eq 'y'}
+						{if $imageIsChanged eq 'y'}
+							<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=preview&amp;id={$previewId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0}height="{$image_y}"{/if} />
+						{else}
+							{if $subId}
+								<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=submission&amp;id={$subId}" />
 							{else}
-								{if $subId}
-									<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=submission&amp;id={$subId}" />
-								{else}
-									<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=article&amp;id={$articleId}" />
-								{/if}
+								<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=article&amp;id={$articleId}" />
 							{/if}
-						{elseif $topicId ne ''}
-							<img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
 						{/if}
 					{elseif $topicId ne ''}
 						<img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
