@@ -148,7 +148,7 @@ input[type=submit]:active,
 	color: #000;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -160,7 +160,7 @@ button[type="submit"]:hover {
 
 .button {
     margin: 2px;
-}
+}*/
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;

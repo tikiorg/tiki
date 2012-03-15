@@ -211,7 +211,7 @@ input[type="submit"]:hover,
 	padding: 2px 4px;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -223,7 +223,7 @@ button[type="submit"]:hover {
 
 span.button {
 	margin: 2px;
-}
+}*/
 
 select[name="theme"] {width: 135px}
 label {cursor: pointer}

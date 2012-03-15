@@ -178,11 +178,14 @@ button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
-.submitbutton:hover {
+.submitbutton:hover,
+.calbuttonoff:hover,
+.calbuttonon:hover {
 	background: #619cc4 url(twist/header.jpg) -400px -40px no-repeat;
 	color: #fff;
 	text-decoration: none;
 	padding: 2px 4px;
+	font-size: 10px;
 }
 
 .button a:active,
@@ -194,7 +197,7 @@ input[type="submit"]:active,
 
 input[type=checkbox] {border: 0}
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -206,7 +209,7 @@ button[type="submit"]:hover {
 
 .button {
     margin: 2px;
-}
+}*/
 
 /***** Site Header & Identity *****/
 .fixed_width .header_fixedwidth {

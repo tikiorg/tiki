@@ -129,34 +129,9 @@ input[type="submit"]:hover,
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
-input[type="submit"]:hover,
-button[type="submit"],
-button[type="submit"]:hover {
-	padding: 0 3px;
+input[type="submit"]:hover {
+	padding: .1em .8em;
 }
-
-span.button {
-	margin: 2px;
-}
-/*
-.button,
-.calbuttonbox {
-	display: inline-block;
-	margin: 1px 2px;
-	padding: 2px;
-}
-
-.button a,
-.calbuttonbox a {
-	color: #000;
-	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-.button a:hover,
-.calbuttonbox a:hover {
-	text-decoration: none;
-}*/
 
 #col2 input[type=text] {
 	width: 95%;

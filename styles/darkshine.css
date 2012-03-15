@@ -170,15 +170,13 @@ input[type="submit"]:hover,
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
-input[type="submit"]:hover,
-button[type="submit"],
-button[type="submit"]:hover {
-	padding: 0 3px;
+input[type="submit"]:hover {
+	padding: .1em .8em;
 }
 
-span.button {
+/*span.button {
 	margin: 2px;
-}
+}*/
 
 input[type="checkbox"] {border: 0}
 select[multiple] {height: 10em}

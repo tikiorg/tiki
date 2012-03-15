@@ -90,14 +90,14 @@ fieldset {
 }
 
 .button,
-.button: hover,
+.button:hover,
 button,
 button:hover,
 input[type=reset],
 input[type=submit],
 input[type=reset]:hover,
 input[type=submit]:hover {
-	margin: 0 2px 2px 0;
+	margin: 2px 4px 4px 2px;
 	font-size: inherit;
 	font-family: inherit;
 	padding: 0;
@@ -105,6 +105,10 @@ input[type=submit]:hover {
 
 input {
 	padding: 0;
+}
+
+.button a {
+	padding: .1em 1em;
 }
 
 /* highlight on interface text to draw attention; also
@@ -748,7 +752,7 @@ p.editdate {
 }
 
 .wpimg-meta-section {
-	border-bottom: solid 1px lightgray;
+	border-bottom: solid 1px #d3d3d3;
 	width: 600px;
 	margin-right: 5px;
 }
