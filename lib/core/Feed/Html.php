@@ -8,7 +8,8 @@
 class Feed_Html extends Feed_Abstract
 {
 	var $lastModif = 0;
-	var $type = "feed_html";
+	var $type = "html_feed";
+	var $version = "0.1";
 	
 	public function replace()
 	{
@@ -17,23 +18,19 @@ class Feed_Html extends Feed_Abstract
 		$this->delete();
 		
 		$caching = true; //this variable is used to block recursive parse_data below
-		
 		foreach (TikiLib::lib("wiki")->get_pages_contains("{htmlfeed") as $pagesInfo) {
 			foreach ($pagesInfo as $pageInfo) {
-				$feedItem = Feed_Html_Item::simple(
-								array(
-									"origin" 		=> $this->name,
-									"name" 			=> $pageInfo['pageName'],
-									"title" 		=> $pageInfo['pageName'],
-									"description" 	=> $description,
-									"date" 			=> (int)$pageInfo['lastModif'],
-									"author" 		=> $pageInfo['user'],
-									"hits"			=> $pageInfo['hits'],
-									"unusual"		=> "",
-									"importance" 	=> $pageInfo['pageRank'],
-									"keywords"		=> $pageInfo['keywords'],
-									"href"			=> $this->name . "/tiki-index.php?page=" . urlencode($pageInfo['pageName'])
-								)
+				$feedItem = (object)array(
+					"origin" 		=> $this->name,
+					"name" 			=> $pageInfo['pageName'],
+					"title" 		=> $pageInfo['pageName'],
+					"data" 			=> "",
+					"date" 			=> (int)$pageInfo['lastModif'],
+					"author" 		=> $pageInfo['user'],
+					"hits"			=> $pageInfo['hits'],
+					"importance" 	=> $pageInfo['pageRank'],
+					"keywords"		=> $pageInfo['keywords'],
+					"href"			=> $this->name . "/tiki-index.php?page=" . urlencode($pageInfo['pageName'])
 				);
 				
 				TikiLib::lib("parser")->parse_data($pageInfo['data']);
@@ -43,5 +40,10 @@ class Feed_Html extends Feed_Abstract
 		}
 		
 		$caching = false;
+	}
+	
+	function appendToContents(&$contents, $item)
+	{	
+		$contents->entry[] = $item;
 	}
 }

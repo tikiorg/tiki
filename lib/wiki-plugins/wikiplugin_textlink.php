@@ -42,7 +42,7 @@ function wikiplugin_textlink($data, $params)
 	$phraser = new JisonParser_Phraser_Handler();
 	$id = implode("", $phraser->sanitizeToWords($data));
 	
-	Feed_Remote_ForwardLink_Contribution::add(array(
+	Feed_ForwardLink_Send::add(array(
 		"page"=> $page,
 		"forwardLink"=> $clipboarddata,
 		"textlink"=> array(

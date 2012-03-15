@@ -37,8 +37,8 @@ function wikiplugin_htmlfeed($data, $params)
 		$htmlFeed = new Feed_Html();
 		$data = TikiLib::lib("parser")->parse_data($data);
 		
-		$feedItem['description'] = $data;
-		$feedItem['name'] = (!empty($name) ? $name : $feedItem['name'] . ' ' . $feedhtmlFeedI);;
+		$feedItem->data = $data;
+		$feedItem->name = (!empty($name) ? $name : $feedItem->name . ' ' . $feedhtmlFeedI);;
 		
 		$htmlFeed->addItem($feedItem);
 	}

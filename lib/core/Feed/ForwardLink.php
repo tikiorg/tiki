@@ -7,7 +7,8 @@
 
 Class Feed_ForwardLink extends Feed_Abstract
 {
-	var $type = 'Feed_ForwardLink';
+	var $type = 'forwardlink';
+	var $version = "0.1";
 	
 	static function wikiView($args)
 	{
@@ -24,7 +25,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
 			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
 			
-			if ( Feed_ForwardLink_Contribution::forwardLink($args['object'])
+			if ( Feed_ForwardLink_Receive::forwardLink($args['object'])
 				->addItem($_REQUEST['contribution']) == true ) {
 				$response['response'] = 'success';
 			}
@@ -57,7 +58,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		$_REQUEST['preview'] = (!empty($_REQUEST['preview']) ? $_REQUEST['preview'] : $args['version']);
 		$phraseI = 0;
 
-		$feedItems = Feed_ForwardLink_Contribution::forwardLink($args['object'])->getItems();
+		$feedItems = Feed_ForwardLink_Receive::forwardLink($args['object'])->getItems();
 		$phrases = array();
 		foreach ($feedItems as $item) {
 			$phrases[] = $thisText = htmlspecialchars($item->forwardlink->text);

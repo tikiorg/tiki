@@ -13,6 +13,7 @@ abstract class Feed_Abstract
 	var $contents = array();
 	var $type = "";
 	var $isFileGal = false;
+	var $version = "0.0";
 	
 	function __construct($name = "")
 	{
@@ -77,7 +78,7 @@ abstract class Feed_Abstract
 		if ($this->isFileGal == true) {
 			$contents = FileGallery_File::filename($this->name)->data();
 		} else {
-			$contents = TikiLib::lib("cache")->getCached($this->name, $this->type);
+			$contents = TikiLib::lib("cache")->getCached($this->name, get_class($this));
 		}
 		
 		$contents = json_decode($contents);
@@ -95,7 +96,7 @@ abstract class Feed_Abstract
 				->replace($contents);
 			
 		} else {
-			TikiLib::lib("cache")->cacheItem($this->name, $contents, $this->type);
+			TikiLib::lib("cache")->cacheItem($this->name, $contents, get_class($this));
 		}
 		
 		return $this;
@@ -105,7 +106,7 @@ abstract class Feed_Abstract
 	{
 		global $tikilib;
 		$contents = $this->open();
-
+		
 		if (!empty($contents)) return $contents;
 		
 		//at this point contents is empty, so lets fill it
@@ -123,7 +124,7 @@ abstract class Feed_Abstract
 		if ($this->isFileGal == true) {
 			FileGallery_File::filename($this->name)->delete();
 		} else {
-			TikiLib::lib("cache")->empty_type_cache($this->type);
+			TikiLib::lib("cache")->empty_type_cache(get_class($this));
 		}
 	}
 	
@@ -147,8 +148,8 @@ abstract class Feed_Abstract
 		
 		$item = (object)$item;
 		
-		//this allows us to intercept the contents and do things like check the validity of the content being appended to the contents
-		$item = $this->appendToContents($contents, $item);
+		//this allows us to intercept the contents and do things like check the validity of the content being appended to the contents	
+		$this->appendToContents($contents, $item);
 		
 		$this->save($contents);
 		
@@ -159,7 +160,7 @@ abstract class Feed_Abstract
 	{
 		global $tikilib;
 		return (object)array(
-			'version' => '1.0',
+			'version' => $this->version,
 			'encoding' => 'UTF-8',
 			'feed' => $this->getContents(),
 			'origin' => $tikilib->tikiUrl() . 'tiki-feed.php'
