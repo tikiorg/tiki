@@ -149,7 +149,7 @@
 
 	{if $show_linkto eq 'y' and $linkto}
 		<div class="articlesource">
-			{tr}Source:{/tr} <a href="{$linkto}"{if $prefs.popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
+			{tr}Source:{/tr} <a href="{$linkto|escape}"{if $prefs.popupLinks eq 'y'} target="_blank"{/if}>{$linkto|escape}</a>
 		</div>
 	{/if}
 
