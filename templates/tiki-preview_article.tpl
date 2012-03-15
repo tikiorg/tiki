@@ -1,4 +1,4 @@
-<h2>{tr}Preview:{/tr}{$page|escape}</h2>
+<h2>{tr}Preview{/tr}</h2>
 
 <div class="article">
 	<div class="articletitle">
