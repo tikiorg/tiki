@@ -122,6 +122,7 @@ CREATE TABLE `tiki_articles` (
   `image_x` int(4) default NULL,
   `image_y` int(4) default NULL,
   `list_image_x` int(4) default NULL,
+  `list_image_y` int(4) default NULL,
   `image_data` longblob,
   `publishDate` int(14) default NULL,
   `expireDate` int(14) default NULL,

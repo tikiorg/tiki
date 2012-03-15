@@ -69,9 +69,19 @@
 				<legend>
 					{tr}Article properties{/tr}
 				</legend>
-
-				{preference name=article_image_size_x}
-				{preference name=article_image_size_y}
+				<fieldset>
+					<legend>{tr}Default maximum dimensions of custom images{/tr}</legend>
+					<fieldset>
+						<legend>{tr}General (view mode){/tr}</legend>
+						{preference name=article_image_size_x}
+						{preference name=article_image_size_y}
+					</fieldset>
+					<fieldset>
+						<legend>{tr}List mode{/tr}</legend>
+						{preference name=article_default_list_image_size_x}
+						{preference name=article_default_list_image_size_y}
+					</fieldset>
+				</fieldset>
 			</fieldset>
 
 			<fieldset>

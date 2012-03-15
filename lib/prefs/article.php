@@ -71,6 +71,22 @@ function prefs_article_list()
 			'hint' => tra('Number of pixels, 0 for no maximum') ,
 			'default' => '0',
 		),
+		'article_default_list_image_size_x' => array(
+			'name' => tra('Default maximum width for custom article images in list mode (on View Articles)'),
+			'type' => 'text',
+			'size' => 3,
+			'filter' => 'int',
+			'hint' => tra('Number of pixels, 0 to fallback to the view mode maximum'),
+			'default' => '0',
+		),
+		'article_default_list_image_size_y' => array(
+			'name' => tra('Default maximum height for custom article images in list mode (on View Articles)'),
+			'type' => 'text',
+			'size' => 3,
+			'filter' => 'int',
+			'hint' => tra('Number of pixels, 0 to fallback to the view mode maximum'),
+			'default' => '0',
+		),
 		'article_custom_attributes' => array(
 			'name' => tra('Custom attributes for article types'),
 			'description' => tra('Allow additional custom fields for article types'),

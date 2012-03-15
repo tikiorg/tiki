@@ -402,6 +402,7 @@ class ArtLib extends TikiLib
 													, $emails = ''
 													, $from = ''
 													, $list_image_x = ''
+													, $list_image_y = ''
 													, $ispublished='y'
 												)
 	{
@@ -423,7 +424,7 @@ class ArtLib extends TikiLib
 		if ($articleId) {
 			$oldArticle = $this->get_article($articleId);
 			$query	= 'update `tiki_articles` set `title` = ?, `authorName` = ?, `topicId` = ?, `topicName` = ?, `size` = ?, `useImage` = ?, `image_name` = ?, ';
-			$query .= ' `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `list_image_x` = ?, `heading` = ?, `body` = ?, ';
+			$query .= ' `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `list_image_x` = ?, `list_image_y` = ?, `heading` = ?, `body` = ?, ';
 			$query .= ' `publishDate` = ?, `expireDate` = ?, `created` = ?, `author` = ?, `type` = ?, `rating` = ?, `topline`=?, `subtitle`=?, `linkto`=?, ';
 			$query .= ' `image_caption`=?, `lang`=?, `ispublished`=? where `articleId` = ?';
 
@@ -444,6 +445,7 @@ class ArtLib extends TikiLib
 								(int) $image_x,
 								(int) $image_y,
 								(int) $list_image_x,
+								(int) $list_image_y,
 								$heading,
 								$body,
 								(int) $publishDate,
@@ -477,8 +479,8 @@ class ArtLib extends TikiLib
 			// Insert the article
 			$query	= 'insert into `tiki_articles` (`title`, `authorName`, `topicId`, `useImage`, `image_name`, `image_size`, `image_type`, `image_data`, ';
 			$query .= ' `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `nbreads`, `votes`, `points`, `size`, `topicName`, ';
-			$query .= ' `image_x`, `image_y`, `list_image_x`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`, `ispublished`) ';
-			$query .= ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+			$query .= ' `image_x`, `image_y`, `list_image_x`, `list_image_y`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`, `ispublished`) ';
+			$query .= ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 	
 			$result = $this->query(
 							$query,
@@ -506,6 +508,7 @@ class ArtLib extends TikiLib
 									(int) $image_x,
 									(int) $image_y,
 									(int) $list_image_x,
+									(int) $list_image_y,
 									$type,
 									(float) $rating,
 									$isfloat,

@@ -206,7 +206,9 @@
 			<td>{tr}Maximum dimensions of custom image in list mode (View Articles){/tr}</td>
 			<td>
 				<label>{tr}Width{/tr}</label> <input type="text" name="list_image_x" value="{$list_image_x|escape}" /> {tr}pixels{/tr}
-				{icon _id='help' alt="{tr}If different than in view mode{/tr}"}
+				{icon _id='help' alt="{tr}If different than in view mode{/tr}"}<br />
+				<label>{tr}Height{/tr}</label> <input type="text" name="list_image_y" value="{$list_image_y|escape}" /> {tr}pixels{/tr}
+				
 			</td>
 		</tr>
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if}>

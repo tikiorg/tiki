@@ -88,7 +88,11 @@
 														&amp;width={$listpages[ix].image_x}
 													{/if}
 													&amp;cache=y"
-													{if $listpages[ix].image_y > 0}{$style=$style|cat:"max-height:"|cat:$listpages[ix].image_y|cat:"px;"}{/if}
+													{if $listpages[ix].list_image_y > 0 and ($largefirstimage neq 'y' or not $smarty.section.ix.first)}
+														{$style=$style|cat:"max-height:"|cat:$listpages[ix].list_image_y|cat:"px;"}
+													{elseif $listpages[ix].image_y > 0}
+														{$style=$style|cat:"max-height:"|cat:$listpages[ix].image_y|cat:"px;"}
+													{/if}
 													style="{$style}"
 											/>{/strip}
 										</a>
