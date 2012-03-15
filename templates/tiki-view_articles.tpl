@@ -78,14 +78,18 @@
 									{if $listpages[ix].hasImage eq 'y'}
 										<a href="{$smarty.capture.href}"
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{else}{tr}Read More{/tr}{/if}">
-											<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
+											{$style=''}
+											<img {if $listpages[ix].isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if} 
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 													{strip}src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}
 													{if $listpages[ix].list_image_x > 0 and ($largefirstimage neq 'y' or not $smarty.section.ix.first)}
 														&amp;width={$listpages[ix].list_image_x}
 													{elseif $listpages[ix].image_x > 0}
 														&amp;width={$listpages[ix].image_x}
-													{/if}&amp;cache=y"
+													{/if}
+													&amp;cache=y"
+													{if $listpages[ix].image_y > 0}{$style=$style|cat:"max-height:"|cat:$listpages[ix].image_y|cat:"px;"}{/if}
+													style="{$style}"
 											/>{/strip}
 										</a>
 									{else}
