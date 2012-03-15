@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Contribution.php 40056 2012-03-06 21:47:20Z changi67 $
+// $Id$
 
 Class Feed_ForwardLink_Receive extends Feed_Abstract
 {

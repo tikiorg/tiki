@@ -7,7 +7,7 @@
 
 class Feed_ForwardLink_Search
 {
-	var $type = "forwardlink_search";
+	var $type = "forwardlink";
 	var $version = "0.1";
 	
 	static function goToNewestWikiRevision($version, $phrase, $page)
