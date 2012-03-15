@@ -22,7 +22,7 @@ if (empty($tracker_info)) {
 	die;
 }
 if ($t = $trklib->get_tracker_options($_REQUEST['trackerId'])) {
-	$tracker_info = array_merge($tracker_info,$t);
+	$tracker_info = array_merge($tracker_info, $t);
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 $access->check_permission('tiki_p_export_tracker');
@@ -145,7 +145,7 @@ if (!empty($_REQUEST['debug'])) {
 	// Compression of the stream may corrupt files on windows
 	if ($prefs['feature_obzip'] != 'y')
 		ob_end_clean();
-	ini_set('zlib.output_compression','Off');
+	ini_set('zlib.output_compression', 'Off');
 
 	$extension = empty($_REQUEST['zip'])?'.csv':'.zip';
 	if (!empty($_REQUEST['file'])) {
@@ -158,9 +158,9 @@ if (!empty($_REQUEST['debug'])) {
 		$file = tra('tracker').'_'.$_REQUEST['trackerId'].$extension;
 	}
 	if (!empty($_REQUEST['zip'])) {
-		$tmpCsv = tempnam( $prefs['tmpDir'], 'tracker_'.$_REQUEST['trackerId'] ) . '.csv';
+		$tmpCsv = tempnam($prefs['tmpDir'], 'tracker_'.$_REQUEST['trackerId']) . '.csv';
 		/*debug*/$tmpCsv = $prefs['tmpDir'].'/'.'tracker_'.$_REQUEST['trackerId']. '.csv';
-		if (!($fp = fopen( $tmpCsv, 'w' ))) {
+		if (!($fp = fopen($tmpCsv, 'w'))) {
 			$smarty->assign('msg', tra('Can not open the file'). ' '.$tmpCsv);
 			$smarty->display('error.tpl');
 			die;
@@ -171,7 +171,7 @@ if (!empty($_REQUEST['debug'])) {
 			die;
 		}
 		$tmpZip = $prefs['tmpDir'].'/'.$file;
-		if ( !($archive->open( $tmpZip, ZIPARCHIVE::OVERWRITE )) ) {
+		if ( !($archive->open($tmpZip, ZIPARCHIVE::OVERWRITE)) ) {
 			$smarty->assign('msg', tra('Can not open the file'). ' '.$prefs['tmpDir'].'/'.$file);
 			$smarty->display('error.tpl');
 			die;
@@ -211,7 +211,7 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 	// still need to filter the fields that are view only by the admin and the item creator
 	if ($tracker_info['useRatings'] == 'y')
 		foreach ($items['data'] as $f=>$v) {
-			$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'],$user);
+			$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'], $user);
 		}
 	$smarty->assign_by_ref('items', $items["data"]);
 
@@ -244,8 +244,8 @@ if (!empty($fp)) {
 if (!empty($_REQUEST['zip'])) {
 	$archive->addFile($tmpCsv, str_replace('.zip', '.csv', $file));
 	$archive->close();
-	readfile( $tmpZip );
-	unlink( $tmpZip );
-	unlink( $tmpCsv );
+	readfile($tmpZip);
+	unlink($tmpZip);
+	unlink($tmpCsv);
 }
 die;

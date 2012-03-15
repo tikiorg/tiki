@@ -23,10 +23,10 @@ if (!isset($_REQUEST['bookId'])) {
 	die;
 }
 $bookId=$_REQUEST['bookId'];
-$smarty->assign('bookId',$bookId);
+$smarty->assign('bookId', $bookId);
 
 $globalperms = Perms::get();
-$objectperms = Perms::get( array( 'type' => 'accounting book', 'object' => $bookId ) );
+$objectperms = Perms::get(array( 'type' => 'accounting book', 'object' => $bookId ));
 if (!($globalperms->acct_view or $objectperms->acct_view)) {
 	$smarty->assign('msg', tra("You do not have the right view this page"));
 	$smarty->display("error.tpl");
@@ -34,29 +34,29 @@ if (!($globalperms->acct_view or $objectperms->acct_view)) {
 }
 
 $book=$accountinglib->getBook($bookId);
-$smarty->assign('book',$book);
+$smarty->assign('book', $book);
 
-$accounts=$accountinglib->getExtendedAccounts($bookId,true);
-$smarty->assign('accounts',$accounts);
+$accounts=$accountinglib->getExtendedAccounts($bookId, true);
+$smarty->assign('accounts', $accounts);
 
 if (!isset($_REQUEST['journalLimit'])) {
 	$_REQUEST['journalLimit']=-25;
 }
-$journal=$accountinglib->getJournal($bookId,'%','`journalId` DESC',$_REQUEST['journalLimit']);
-$smarty->assign('journal',$journal);
+$journal=$accountinglib->getJournal($bookId, '%', '`journalId` DESC', $_REQUEST['journalLimit']);
+$smarty->assign('journal', $journal);
 
 if ($globalperms->acct_book or $objectperms->acct_book) {
-	$smarty->assign('canBook',true);
+	$smarty->assign('canBook', true);
 } else {
-	$smarty->assign('canBook',false);
+	$smarty->assign('canBook', false);
 }
 if ($globalperms->acct_book_stack or $objectperms->acct_book_stack) {
-	$smarty->assign('canStack',true);
+	$smarty->assign('canStack', true);
 } else {
-	$smarty->assign('canStack',false);
+	$smarty->assign('canStack', false);
 }
 ask_ticket('accounting');
 
 
-$smarty->assign('mid','tiki-accounting.tpl');
+$smarty->assign('mid', 'tiki-accounting.tpl');
 $smarty->display("tiki.tpl");

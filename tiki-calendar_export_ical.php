@@ -60,15 +60,15 @@ $endDate = new TikiDate();
 $endDate->setDate($startTime);
 if ($calendarViewMode['casedefault'] == 'month') {
      $stopTime = $endDate->addMonths(1);
-   } elseif ($calendarViewMode['casedefault'] == 'quarter') {
-     $stopTime = $endDate->addMonths(3);
-   } elseif ($calendarViewMode['casedefault'] == 'semester') {
-     $stopTime = $endDate->addMonths(6);
-   } elseif ($calendarViewMode['casedefault'] == 'year') {
-     $stopTime = $endDate->addMonths(12);
-   } else {
-     $stopTime = $endDate->addMonths(1);
-   }
+} elseif ($calendarViewMode['casedefault'] == 'quarter') {
+  $stopTime = $endDate->addMonths(3);
+} elseif ($calendarViewMode['casedefault'] == 'semester') {
+  $stopTime = $endDate->addMonths(6);
+} elseif ($calendarViewMode['casedefault'] == 'year') {
+  $stopTime = $endDate->addMonths(12);
+} else {
+  $stopTime = $endDate->addMonths(1);
+}
 $stopTime = $endDate->getTime();
 
 if (isset($_REQUEST['stop_date_Month'])) {
@@ -97,13 +97,13 @@ $calendars = $calendarlib->list_calendars(0, -1, $sort_mode, $find);
 foreach (array_keys($calendars["data"]) as $i) {
 	$calendars["data"][$i]["individual"] = $userlib->object_has_one_permission($i, 'calendar');
 }
-$smarty->assign('calendars',$calendars["data"]);
+$smarty->assign('calendars', $calendars["data"]);
 
 // export calendar //
 if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["calendarItem"]) ) && $_REQUEST["export"]=='y') {
 	// get calendar events 
 	if ( !isset($_REQUEST["calendarItem"]) ) {
-		$events=$calendarlib->list_raw_items($calendarIds, $user, $startTime, $stopTime, -1, $maxRecords, $sort_mode='start_asc', $find='');
+		$events = $calendarlib->list_raw_items($calendarIds, $user, $startTime, $stopTime, -1, $maxRecords, $sort_mode = 'start_asc', $find = '');
 	} else {
 		$events[] = $calendarlib->get_item($_REQUEST["calendarItem"]);
 	}
@@ -120,16 +120,16 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 					$description .= '"'.$name.'";';
 				}
 				if ( is_array($field) ) {
-					$line .= '"'.str_replace(array("\n","\r",'"'),array('\\n','','""'),join(',',$field)).'";';
+					$line .= '"'.str_replace(array("\n","\r",'"'), array('\\n','','""'), join(',', $field)).'";';
 				} else {
-					$line .= '"'.str_replace(array("\n","\r",'"'),array('\\n','','""'),$field).'";';
+					$line .= '"'.str_replace(array("\n","\r",'"'), array('\\n','','""'), $field).'";';
 				}
 			}
 			if ( $first === true ) {
-				echo (trim($description,';'))."\n";
+				echo (trim($description, ';'))."\n";
 				$first = false;
 			}
-			echo trim($line,';')."\n";
+			echo trim($line, ';')."\n";
 		}
 	} else {
 		// create ical array//
@@ -141,7 +141,7 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 			$ea['Summary']=$event['name'];
 			$ea['dateStart']=$event['start'];
 			$ea['dateEnd']=$event['end'];
-			$ea['Description']=preg_replace('/\n/',"\\n",$event['description']);
+			$ea['Description']=preg_replace('/\n/', "\\n", $event['description']);
 			if ($event['participants']) {
 				$ea['Attendees']=$event['participants'];
 			}
@@ -154,7 +154,7 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 			$ea['DateStamp']=$event['created'];
 			//$ea['RequestStatus']=$event['status'];
 			$ea['UID']='tiki-'.$event['calendarId'].'-'.$event['calitemId'];
-			$c = $iCal->factory('Event',$ea);
+			$c = $iCal->factory('Event', $ea);
 			$cal->addEvent($c);
 		}
 		$iCal->addCalendar($cal);
@@ -170,7 +170,7 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 		header("Content-Transfer-Encoding:quoted-printable");
 		$re_encode = stripos($_SERVER['HTTP_USER_AGENT'], 'windows');	// only re-encode to ISO-8859-15 if client on Windows
 		if (function_exists('recode') && $re_encode !== false) {
-			print(recode('utf-8..iso8859-15',$calendar_str));
+			print(recode('utf-8..iso8859-15', $calendar_str));
 		} elseif (function_exists('iconv') && $re_encode !== false) {
 			print(iconv("UTF-8", "ISO-8859-15", $calendar_str));
 		} else {
@@ -184,5 +184,5 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 $smarty->assign('iCal', $iCal);
 
 // Display the template
-$smarty->assign('mid','tiki-calendar_export_ical.tpl');
+$smarty->assign('mid', 'tiki-calendar_export_ical.tpl');
 $smarty->display("tiki.tpl");

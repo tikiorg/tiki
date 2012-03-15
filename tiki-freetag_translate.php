@@ -27,7 +27,7 @@ include_once "lib/freetag/freetaglib.php";
 include_once "lib/multilingual/multilinguallib.php";
 
 if ( $cat_objId ) {
-	$info = $tikilib->get_page_info( $cat_objId );
+	$info = $tikilib->get_page_info($cat_objId);
 } elseif (false&&$tiki_p_admin_freetags != 'y') {
 	// Global tag edit only available to admins
 	$smarty->assign('errortype', 401);
@@ -36,24 +36,23 @@ if ( $cat_objId ) {
 	die;
 }
 
-$smarty->assign('type', $cat_type );
-$smarty->assign('objId', $cat_objId );
+$smarty->assign('type', $cat_type);
+$smarty->assign('objId', $cat_objId);
 
-$smarty->assign('data', $info );
+$smarty->assign('data', $info);
 
 if ( isset($_REQUEST['save']) ) {
 	// Process save
 	if ( isset($_REQUEST['setlang']) && is_array($_REQUEST['setlang']) ) {
 		foreach ( $_REQUEST['setlang'] as $tagId => $lang )
 			if ( !empty($lang) )
-				$freetaglib->set_tag_language( $tagId, $lang );
+				$freetaglib->set_tag_language($tagId, $lang);
 	}
 
 	if ( isset($_REQUEST['newtag'])
 		&& isset($_REQUEST['rootlang'])
 		&& is_array($_REQUEST['newtag'])
-		&& is_array($_REQUEST['rootlang']) )
-	{
+		&& is_array($_REQUEST['rootlang']) ) {
 		foreach ( $_REQUEST['newtag'] as $tagGroup => $list )
 			if ( is_array($list) && array_key_exists($tagGroup, $_REQUEST['rootlang']) )
 				foreach ( $list as $lang => $tag ) {
@@ -65,7 +64,7 @@ if ( isset($_REQUEST['save']) ) {
 				}
 	}
 
-	if ( isset( $_REQUEST['clear'] ) && is_array( $_REQUEST['clear'] ) ) {
+	if ( isset( $_REQUEST['clear'] ) && is_array($_REQUEST['clear']) ) {
 		foreach ( $_REQUEST['clear'] as $tag )
 			$freetaglib->clear_tag_language_from_id($tag);
 	}
@@ -100,7 +99,7 @@ $allLanguages = $tikilib->list_languages();
 $t_used_languages = array();
 foreach ($allLanguages as $al) {
 	foreach ($used_languages as $ul) {
-		if (substr($al["value"],0,2) == substr($ul,0,2)) {
+		if (substr($al["value"], 0, 2) == substr($ul, 0, 2)) {
 			$t_used_languages[] = $al["value"];
 			break;
 		}
@@ -112,7 +111,7 @@ $tagList = $freetaglib->get_object_tags_multilingual($cat_type, $cat_objId, $use
 
 $rootlangs = array();
 foreach ( $tagList as $tagGroup ) {
-	foreach ( $tagGroup as $k => $tag )	{
+	foreach ( $tagGroup as $k => $tag ) {
 		array_merge($used_languages, array($k));
 		if ( $tag['tagset'] == $tag['tagId'] )
 			$rootlangs[$tag['tagset']] = $tag['lang'];

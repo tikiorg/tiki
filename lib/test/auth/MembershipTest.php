@@ -58,16 +58,20 @@ class MembershipTest extends TikiTestCase
 
 		$expect = $this->userlib->now + 45 * 2 * (3600 * 24);
 
-		$this->assertEquals($expect, 
-				$this->userlib->getOne('SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-					array($this->userlib->get_user_id('membershiptest_a'))
-					)
-				);
-		$this->assertEquals($this->userlib->now, 
-				$this->userlib->getOne('SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-					array($this->userlib->get_user_id('membershiptest_b'))
-					)
-				);
+		$this->assertEquals(
+						$expect, 
+						$this->userlib->getOne(
+										'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+										array($this->userlib->get_user_id('membershiptest_a'))
+						)
+		);
+		$this->assertEquals(
+						$this->userlib->now, 
+						$this->userlib->getOne(
+										'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+										array($this->userlib->get_user_id('membershiptest_b'))
+						)
+		);
 	}
 
 	function testExtendExpiredMembership()
@@ -82,10 +86,12 @@ class MembershipTest extends TikiTestCase
 
 		$expect = $this->userlib->now + 45 * (3600 * 24);
 
-		$this->assertEquals($expect, 
-				$this->userlib->getOne('SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-					array($this->userlib->get_user_id('membershiptest_b'))
-					)
-				);
+		$this->assertEquals(
+						$expect, 
+						$this->userlib->getOne(
+										'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+										array($this->userlib->get_user_id('membershiptest_b'))
+						)
+		);
 	}
 }

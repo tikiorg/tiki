@@ -14,7 +14,8 @@ require_once ('lib/webmail/tikimaillib.php');
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 
 /* csv format: lastname,firstname,mail */
-function parsemails_csv($bloc) {
+function parsemails_csv($bloc)
+{
 	$results=array();
 	$lines = preg_split('/[\n\r]+/', $bloc);
 	foreach ($lines as $line) {
@@ -30,7 +31,8 @@ function parsemails_csv($bloc) {
 }
 
 /* everything format */
-function parsemails_all($bloc) {
+function parsemails_all($bloc)
+{
 	$bloc=str_replace("\r\n", "\n", $bloc);
 	$bloc=str_replace("\n\r", "\n", $bloc);
 	$bloc=str_replace("\r", "\n", $bloc);
@@ -52,9 +54,9 @@ function parsemails_all($bloc) {
 
 $previous=array();
 $res=$tikilib->query("SELECT * FROM `tiki_invite` ORDER by `ts` DESC");
-while(is_array($row=$res->fetchRow())) {
-    $row['datetime']=strftime('%c', $row['ts']);
-    $previous[$row['id']]=$row;
+while (is_array($row = $res->fetchRow())) {
+    $row['datetime'] = strftime('%c', $row['ts']);
+    $previous[$row['id']] = $row;
 }
 $smarty->assign('previous', $previous);
 
@@ -62,7 +64,7 @@ if (isset($_REQUEST['loadprevious']) && !empty($_REQUEST['loadprevious']) && iss
     $prev=$previous[(int)$_REQUEST['loadprevious']];
     $res=$tikilib->query("SELECT * FROM `tiki_invited` WHERE id_invite=?", array((int)$_REQUEST['loadprevious']));
     $prev_invited="";
-    while(is_array($row=$res->fetchRow())) $prev_invited.=$row['lastname'].','.$row['firstname'].','.$row['email']."\n";
+    while(is_array($row = $res->fetchRow())) $prev_invited.=$row['lastname'].','.$row['firstname'].','.$row['email']."\n";
 	
     $_REQUEST['emailslist'] = $prev_invited;
     $_REQUEST['emailslist_format'] = 'csv';
@@ -91,24 +93,37 @@ if (isset($_REQUEST['send'])) {
     
     $mails=$_REQUEST["emailslist"];
     
-    switch($_REQUEST['emailslist_format']) {
-    case 'all': $emails=parsemails_all($mails); break;
-    case 'csv': $emails=parsemails_csv($mails); break;
-    default: $emails=array();
-    }
+	switch($_REQUEST['emailslist_format']) {
+		case 'all': $emails=parsemails_all($mails); 
+    		break;
+   	case 'csv': $emails=parsemails_csv($mails); 
+      		break;
+		default: $emails=array();
+	}
     
     $igroups=$_REQUEST['invitegroups'];
     
-    if (!empty($_REQUEST['confirm'])) {
-        
-        $tikilib->query("INSERT INTO `tiki_invite` (inviter, groups, ts, emailsubject,emailcontent,wikicontent,wikipageafter) VALUES (?,?,?,?,?,?,?)",
-                        array($user, count($igroups) ? implode(',', $igroups) : null, $tikilib->now, $_REQUEST['emailsubject'], $_REQUEST['emailcontent'], $_REQUEST['wikicontent'], empty($_REQUEST['wikipageafter']) ? NULL : $_REQUEST['wikipageafter']));
-        $res=$tikilib->query("SELECT MAX(id) as `id` FROM `tiki_invite` WHERE `inviter`=? AND `ts`=?", array($user, $tikilib->now));
+	if (!empty($_REQUEST['confirm'])) {
+		$tikilib->query(
+						"INSERT INTO `tiki_invite` (inviter, groups, ts, emailsubject,emailcontent,wikicontent,wikipageafter) VALUES (?,?,?,?,?,?,?)",
+						array(
+							$user,
+							count($igroups) ? implode(',', $igroups) : null,
+							$tikilib->now,
+							$_REQUEST['emailsubject'],
+							$_REQUEST['emailcontent'],
+							$_REQUEST['wikicontent'],
+							empty($_REQUEST['wikipageafter']) ? NULL : $_REQUEST['wikipageafter']
+						)
+		);
+      $res=$tikilib->query("SELECT MAX(id) as `id` FROM `tiki_invite` WHERE `inviter`=? AND `ts`=?", array($user, $tikilib->now));
         $row=$res->fetchRow(); $id=$row['id'];
         
-        foreach ($emails as $m)
-            $tikilib->query("INSERT INTO `tiki_invited` (id_invite, email, firstname, lastname, used) VALUES (?,?,?,?,?)",
-                            array($id, $m['email'], $m['firstname'], $m['lastname'], "no"));
+      foreach ($emails as $m)
+						$tikilib->query(
+										"INSERT INTO `tiki_invited` (id_invite, email, firstname, lastname, used) VALUES (?,?,?,?,?)",
+										array($id, $m['email'], $m['firstname'], $m['lastname'], "no")
+						);
 
 		  $_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];			        
         foreach ($emails as $m) {
@@ -128,8 +143,8 @@ if (isset($_REQUEST['send'])) {
         }
 		
         $smarty->assign('sentresult', true);
-    }
-    $smarty->assign('emails', $emails);
+	}
+   $smarty->assign('emails', $emails);
 }
 
 

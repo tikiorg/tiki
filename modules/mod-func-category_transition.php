@@ -46,7 +46,11 @@ function module_category_transition($mod_reference, $module_params)
 
 		$smarty->assign(
 						'mod_transitions',
-						array(array('enabled' => true, 'transitionId' => 0, 'name' => tra('Example Transition'))	)
+						array(array(
+								'enabled' => true,
+								'transitionId' => 0,
+								'name' => tra('Example Transition')
+						))
 		);
 	}
 }

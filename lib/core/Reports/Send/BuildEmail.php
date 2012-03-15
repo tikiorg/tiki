@@ -199,31 +199,35 @@ class Reports_Send_BuildEmail
 						
 						if ($change['event'] == 'tracker_item_modified') {
 							if ($mainFieldValue) {
-								$body .= tr('%0 added or updated tracker item %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								$body .= tr(
+												'%0 added or updated tracker item %1 on tracker %2',
+												"<u>{$change['data']['user']}</u>",
+												"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>",
+												"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
 								);
 							} else {
-								$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								$body .= tr(
+												'%0 added or updated tracker item id %1 on tracker %2',
+												"<u>{$change['data']['user']}</u>",
+												"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>",
+												"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
 								);
 							}
 						} else {
 							// tracker_item_comment event
 							if ($mainFieldValue) {
-								$body .= tr('%0 added a new comment to %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$mainFieldValue</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								$body .= tr(
+												'%0 added a new comment to %1 on tracker %2',
+												"<u>{$change['data']['user']}</u>",
+												"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$mainFieldValue</a>",
+												"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
 								);
 							} else {
-								$body .= tr('%0 added a new comment to item id %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$itemId</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								$body .= tr(
+												'%0 added a new comment to item id %1 on tracker %2',
+												"<u>{$change['data']['user']}</u>",
+												"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$itemId</a>",
+												"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
 								);
 							}
 						}
