@@ -55,8 +55,6 @@ register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Regis
 ajaxLoadingShow("'.$dom_id.'");
 ', 5
 			);	// before dialog tools init (10)
-			$headerlib->add_jq_onready("register_id('$dom_id','" . addcslashes($auto_save_referrer, "'") . "');");
-			$headerlib->add_js("var autoSaveId = '" . addcslashes($auto_save_referrer, "'") . "';");
 		}
 
 		// work out current theme/option

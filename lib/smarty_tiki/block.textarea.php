@@ -121,6 +121,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 				$auto_save_warning = smarty_block_remarksbox(array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty, $remrepeat)."\n";
 			}
 		}
+		$headerlib->add_jq_onready("register_id('$as_id','" . addcslashes($auto_save_referrer, "'") . "');");
+		$headerlib->add_js("var autoSaveId = '" . addcslashes($auto_save_referrer, "'") . "';");
 	}
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {	// TODO cope with wysiwyg and simple
