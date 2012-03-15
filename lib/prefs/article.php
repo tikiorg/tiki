@@ -56,19 +56,19 @@ function prefs_article_list()
 			'default' => range(1, 5),
 		),
 		'article_image_size_x' => array(
-			'name' => tra('Default article image width'),
+			'name' => tra('Default maximum width for custom article images'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
-			'hint' => tra('0 for original image size'),
+			'hint' => tra('Number of pixels, 0 for no maximum'),
 			'default' => '0',
 		),
 		'article_image_size_y' => array(
-			'name' => tra('Default article image height'),
+			'name' => tra('Default maximum height for custom article images'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
-			'hint' => tra('0 for original image size.') ,
+			'hint' => tra('Number of pixels, 0 for no maximum') ,
 			'default' => '0',
 		),
 		'article_custom_attributes' => array(
