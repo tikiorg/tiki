@@ -48,12 +48,21 @@
         </a>
         <br />
     {/if}
-    {if $prefs.feature_calendar eq 'y' and $prefs.feed_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-        <a class="linkmodule" href="tiki-calendars_rss.php?ver={$prefs.feed_default_version}"><img src='img/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt="{tr}Feed{/tr}" title="{tr}Feed{/tr}" width='16' height='16' />
-        {tr}Calendars{/tr}
-        </a>
-        <br />
-    {/if}
+	  {if $prefs.feature_calendar eq 'y' and $prefs.feed_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+       <a class="linkmodule" href="tiki-calendars_rss.php?ver={$prefs.feed_default_version}"><img src='img/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt="{tr}Feed{/tr}" title="{tr}Feed{/tr}" width='16' height='16' />
+       {tr}Calendars{/tr}
+       </a>
+       <br />
+   {/if}
+	{if isset($module_params.show_trackers) and $prefs.feature_trackers eq 'y' and $prefs.feed_tracker eq 'y'}
+		{foreach from=$rsslist_trackers item="tracker"}
+			<a class="linkmodule" href="tiki-tracker_rss.php?ver={$prefs.feed_default_version}&trackerId={$tracker.trackerId}">
+				<img src='img/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt="{tr}Feed{/tr}" title="{tr}Feed{/tr}" width='16' height='16' />
+				{tr}{$tracker.name}{/tr}
+			</a>
+			<br />
+		{/foreach}
+	{/if}
   </div>
 {/tikimodule}
 

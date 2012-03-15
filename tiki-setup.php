@@ -376,6 +376,26 @@ if ( ! empty( $prefs['header_custom_js'] ) ) {
 
 if ($prefs['feature_trackers'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-trackers.js');
+
+	if ($prefs['feed_tracker'] === 'y') {
+		$opts = TikiLib::lib('trk')->get_trackers_options(null, 'publishRSS', 'y');
+		foreach($opts as & $o) {
+			$o = $o['trackerId'];
+		}
+		$trackers = TikiLib::lib('trk')->list_trackers();
+
+		$rss_trackers = array();
+		foreach($trackers['data'] as $trk) {
+			if (in_array($trk['trackerId'], $opts)) {
+				$rss_trackers[] = array(
+					'trackerId' => $trk['trackerId'],
+					'name' => $trk['name'],
+				);
+			}
+		}
+		TikiLib::lib('smarty')->assign('rsslist_trackers', $rss_trackers);
+	}
+
 }
 
 if ($prefs['feature_draw'] == 'y') {
