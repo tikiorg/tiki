@@ -23,7 +23,7 @@ if (!isset($_REQUEST['bookId'])) {
 	die;
 }
 $bookId=$_REQUEST['bookId'];
-$smarty->assign('bookId',$bookId);
+$smarty->assign('bookId', $bookId);
 
 if (!isset($_REQUEST['journalId'])) {
 	$smarty->assign('msg', tra("Missing journal id"));
@@ -31,10 +31,10 @@ if (!isset($_REQUEST['journalId'])) {
 	die;
 }
 $journalId=$_REQUEST['journalId'];
-$smarty->assign('journalId',$journalId);
+$smarty->assign('journalId', $journalId);
 
 $globalperms = Perms::get();
-$objectperms = Perms::get( array( 'type' => 'accounting book', 'object' => $bookId ) );
+$objectperms = Perms::get(array( 'type' => 'accounting book', 'object' => $bookId ));
 if (!($globalperms->acct_view or $objectperms->acct_book)) {
 	$smarty->assign('msg', tra("You do not have the right to cancel transactions"));
 	$smarty->display("error.tpl");
@@ -42,7 +42,7 @@ if (!($globalperms->acct_view or $objectperms->acct_book)) {
 }
 
 $book=$accountinglib->getBook($bookId);
-$smarty->assign('book',$book);
+$smarty->assign('book', $book);
 
 $entry=$accountinglib->getTransaction($bookId, $journalId);
 if ($entry===false) {
@@ -50,9 +50,8 @@ if ($entry===false) {
 	$smarty->display("error.tpl");
 	die;
 }
-$smarty->assign('entry',$entry);
+$smarty->assign('entry', $entry);
 $accountinglib->cancelTransaction($bookId, $journalId);
 
-
-$smarty->assign('mid','tiki-accounting_cancel.tpl');
+$smarty->assign('mid', 'tiki-accounting_cancel.tpl');
 $smarty->display("tiki.tpl");

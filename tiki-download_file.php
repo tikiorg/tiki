@@ -13,7 +13,7 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ sess
 
 	$tikiroot = dirname($_SERVER['PHP_SELF']);
 	$session_params = session_get_cookie_params();
-	session_set_cookie_params($session_params['lifetime'],$tikiroot);
+	session_set_cookie_params($session_params['lifetime'], $tikiroot);
 	unset($session_params);
 	session_start();
 
@@ -40,10 +40,10 @@ if (!$skip) {
 }
 
 if ($prefs["user_store_file_gallery_picture"] == 'y' && isset($_REQUEST["avatar"])) {
-        require_once ('lib/userprefs/userprefslib.php');
-        if ($user_picture_id = $userprefslib->get_user_picture_id($_REQUEST["avatar"])) {
-                $_REQUEST['fileId'] = $user_picture_id;
-        } elseif (!empty($prefs['user_default_picture_id'])) {
+	require_once ('lib/userprefs/userprefslib.php');
+	if ($user_picture_id = $userprefslib->get_user_picture_id($_REQUEST["avatar"])) {
+		$_REQUEST['fileId'] = $user_picture_id;
+	} elseif (!empty($prefs['user_default_picture_id'])) {
 		$_REQUEST['fileId'] = $prefs['user_default_picture_id'];
 	}
 }
@@ -98,7 +98,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	require_once('lib/stats/statslib.php');
 	$filegallib = TikiLib::lib('filegal');
-	if ( ! $filegallib->add_file_hit($info['fileId']) )	{
+	if ( ! $filegallib->add_file_hit($info['fileId']) ) {
 		$access->display_error('', tra('You cannot download this file right now. Your score is low or file limit was reached.'), 401);
 	}
 	$statslib->stats_hit($info['filename'], 'file', $info['fileId']);
@@ -125,7 +125,7 @@ $content = &$info['data'];
 
 $md5 = '';
 $filepath = '';
-if ( ! empty($info['path']) )  {
+if ( ! empty($info['path']) ) {
 	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'])) {
 		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
 	} else {
@@ -160,7 +160,7 @@ if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isse
 	$str .= isset($_GET['scale']) ? $_GET['scale'] . 's' : '';
 	$str .= isset($_GET['max']) ? $_GET['max'] . 'm' : '';
 	$str .= isset($_GET['format']) ? $_GET['format'] . 'f' : '';
-	$etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32( $str ) . '"';
+	$etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32($str) . '"';
 } else {
   $etag = '"' . $md5 . '-' . crc32($md5) . '"';
 }
@@ -273,19 +273,16 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 					if ( isset($_GET['x']) || isset($_GET['y']) ) {
 						$image->resize($_GET['x']+0, $_GET['y']+0);
 						$resize = true;
-					}
-					// We scale if needed
-					elseif ( isset($_GET['scale']) ) {
+					} elseif ( isset($_GET['scale']) ) {
+				 		// We scale if needed
 						$image->scale($_GET['scale']+0);
 						$resize = true;
-					}
+					} elseif ( isset($_GET['max']) ) {
 					// We reduce size if length or width is greater that $_GET['max'] if needed
-					elseif ( isset($_GET['max']) ) {
 						$image->resizemax($_GET['max']+0);
 						$resize = true;
-					}
+					} elseif ( isset($_GET['thumbnail']) ) {
 					// We resize to a thumbnail size if needed
-					elseif ( isset($_GET['thumbnail']) ) {
 						if (is_numeric($_GET['thumbnail'])) {
 							if (empty($info_thumb)) {
 								$info_thumb = $filegallib->get_file($_GET['thumbnail']);
@@ -299,9 +296,8 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 							if ( $image->is_empty() ) die;
 						}
 						$image->resizethumb();
-					}
+					} elseif ( isset($_GET['preview']) ) {
 					// We resize to a preview size if needed
-					elseif ( isset($_GET['preview']) ) {
 						$image->resizemax('800');
 						$resize = true;
 					}
@@ -309,9 +305,8 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 					// We change the image format if needed
 					if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
 						$image->convert($_GET['format']);
-					}
+					} elseif ( isset($_GET['thumbnail']) ) {
 					// Or, if no format is explicitely specified and a thumbnail has to be created, we convert the image to the $thumbnail_format
-					elseif ( isset($_GET['thumbnail']) ) {
 						$image->convert($thumbnail_format);
 					}
 		

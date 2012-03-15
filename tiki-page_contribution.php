@@ -21,7 +21,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $page);
 }
 
-$tikilib->get_perm_object( $page, 'wiki page' );
+$tikilib->get_perm_object($page, 'wiki page');
 $access->check_permission('tiki_p_page_contribution_view');
 
 if (isset($_REQUEST['process'])) {
@@ -76,14 +76,14 @@ $getOptions=array('showpopups' => ($showpopups==1),
 				  'escape' => ($escape==1),
 				 );
 $document = new Document($page, $lastversion, $process);
-$smarty->assign('info',$document->getInfo());
+$smarty->assign('info', $document->getInfo());
 $history=$document->getHistory();
-$smarty->assign('history',$history);	
+$smarty->assign('history', $history);	
 
 if ($showstatistics==1) {
 	$authors=$document->getStatistics();
-	$smarty->assign('authors',$authors);
-	$smarty->assign('total',$document->getTotal());
+	$smarty->assign('authors', $authors);
+	$smarty->assign('total', $document->getTotal());
 }
 if ($showpage==1) {
 	$data=$document->get('wiki', $getOptions);
@@ -91,9 +91,9 @@ if ($showpage==1) {
 	if ($escape==1) { // make breaks visible again
 		$data=preg_replace('/[\n]/', "<br />\n", $data);
 	}
-	$smarty->assign('parsed',$data);
+	$smarty->assign('parsed', $data);
 //	$smarty->assign('colors',array('black', 'blue',  'red',   'green', 'maroon', 'yellow', 'aqua', 'fuchsia', 'teal',  'purple', 'white', 'olive', 'gray',  'navy',  'silver', 'lime'));
 //	$smarty->assign('backgrounds',array('white', 'white', 'white', 'white', 'white',  'gray',   'gray', 'gray',    'white', 'white',  'blue',  'white', 'white', 'white', 'navy',   'gray'));
 }
-$smarty->assign('mid','tiki-page_contribution.tpl');
+$smarty->assign('mid', 'tiki-page_contribution.tpl');
 $smarty->display("tiki.tpl");

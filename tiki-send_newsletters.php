@@ -306,7 +306,9 @@ if (isset($_REQUEST["save"])) {
 	}
 }
 $smarty->assign('emited', 'n');
-if (!empty($_REQUEST['datatxt'])) { $txt = $_REQUEST['datatxt']; }
+if (!empty($_REQUEST['datatxt'])) { 
+	$txt = $_REQUEST['datatxt']; 
+}
 if (empty($txt) && !empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = $_REQUEST["data"];
@@ -362,15 +364,15 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 	$nb_sent = count($sent);
 	$nb_errors = count($errors);
 
-	$msg = '<h4>' . sprintf( tra('Newsletter successfully sent to %s users.'), $nb_sent ) . '</h4>';
+	$msg = '<h4>' . sprintf(tra('Newsletter successfully sent to %s users.'), $nb_sent) . '</h4>';
 	if ( $nb_errors > 0 )
-		$msg .= "\n" . '<font color="red">' . '(' . sprintf( tra('There was %s errors.'), $nb_errors ) . ')' . '</font><br />';
+		$msg .= "\n" . '<font color="red">' . '(' . sprintf(tra('There was %s errors.'), $nb_errors) . ')' . '</font><br />';
 
 	// If logfile exists and if it is reachable from the web browser, add a download link
 	if ( !empty($logFileName) && $logFileName[0] != '/' && $logFileName[0] != '.' )
 		$smarty->assign('downloadLink', $logFileName);
 
-	echo str_replace( "'", "\\'", $msg);
+	echo str_replace("'", "\\'", $msg);
 	echo $smarty->fetch('send_newsletter_footer.tpl');
 
 	$smarty->assign('sent', $nb_sent);

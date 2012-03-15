@@ -7,7 +7,8 @@
 require_once ('tiki-setup.php');
 $access->check_feature('feature_invite');
 
-function tiki_invited() {
+function tiki_invited() 
+{
 	global $smarty, $tikilib, $user, $userlib;
 
 	$invite=(int)isset($_REQUEST['invite']) ? $_REQUEST['invite'] : 0;
@@ -15,8 +16,10 @@ function tiki_invited() {
 
 	if (($invite <= 0) || empty($email)) die("invalid request");
 
-	$res=$tikilib->query("SELECT * FROM tiki_invited WHERE id_invite=? AND email=? AND used=?",
-						 array($invite, $email, "no"));
+	$res=$tikilib->query(
+					"SELECT * FROM tiki_invited WHERE id_invite=? AND email=? AND used=?",
+					array($invite, $email, "no")
+	);
 	$invited=$res->fetchRow();
 
 	if (!is_array($invited)) {
@@ -38,8 +41,10 @@ function tiki_invited() {
 
 	if (isset($_POST['validate-existing-account'])) {
 		
-		$groups = $tikilib->getOne("SELECT `tiki_invite`.`groups` FROM `tiki_invited` LEFT JOIN `tiki_invite` ON `tiki_invite`.`id` = `tiki_invited`.`id_invite` WHERE `tiki_invited`.`id` = ?",
-									   array($invited['id']));
+		$groups = $tikilib->getOne(
+						"SELECT `tiki_invite`.`groups` FROM `tiki_invited` LEFT JOIN `tiki_invite` ON `tiki_invite`.`id` = `tiki_invited`.`id_invite` WHERE `tiki_invited`.`id` = ?",
+						array($invited['id'])
+		);
 		$groups = explode(',', $groups);
 		foreach ($groups as $group)
 			$userlib->assign_user_to_group($user, trim($group));

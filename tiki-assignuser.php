@@ -54,20 +54,20 @@ if (isset($_REQUEST["action"])) {
 		}
 		if ($tiki_p_admin_users == 'y' ||($tiki_p_admin_users == 'y' && array_key_exists($_REQUEST["group"], $groups))) {
 			$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
-			$logslib->add_log('perms',sprintf("Assigned %s in group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
+			$logslib->add_log('perms', sprintf("Assigned %s in group %s", $_REQUEST["assign_user"], $_REQUEST["group"]));
 		}			
 	} elseif ($_REQUEST["action"] == 'removegroup' && ($tiki_p_admin == 'y' || ($tiki_p_admin_users == 'y' && array_key_exists($_REQUEST["group"], $groups)))) {
 		$access->check_authenticity();
 		$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
-		$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
+		$logslib->add_log('perms', sprintf("Removed %s from group %s", $_REQUEST["assign_user"], $_REQUEST["group"]));
 	}
 }
 
 if (isset($_REQUEST['set_default'])) {
-	$userlib->set_default_group($_REQUEST['login'],$_REQUEST['defaultgroup']);
+	$userlib->set_default_group($_REQUEST['login'], $_REQUEST['defaultgroup']);
 }
 
-$user_info = $userlib->get_user_info($assign_user,true);
+$user_info = $userlib->get_user_info($assign_user, true);
 $smarty->assign_by_ref('user_info', $user_info);
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -109,7 +109,7 @@ if ($tiki_p_admin != 'y' && $userChoice != 'y') {
 	}
 } else
 	$ingroups = '';
-$users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find,'','y', $ingroups, $userChoice);
+$users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find, '', 'y', $ingroups, $userChoice);
 
 foreach ($users['data'] as $key=>$gr) {
 	if (isset($user_info['groups'][$gr['groupName']])) {

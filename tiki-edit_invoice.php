@@ -24,18 +24,22 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 //handle saving data (edit or update)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {	
 	//start invoice
-	$_REQUEST['InvoiceId'] = $trklib->replaceItemFromRequestValues($trklib->get_tracker_by_name("Invoices"), array(
-		"Client Id",
-		"Invoice Number",
-		"Date Issued",
-		"Payment Term",
-		"Tax 1 Description",
-		"Tax 1 Rate",
-		"Tax 2 Description",
-		"Tax 2 Rate",
-		"Invoice Note",
-		"Days Payment Due",
-	), $_REQUEST, $_REQUEST['InvoiceId']);
+	$_REQUEST['InvoiceId'] = $trklib->replaceItemFromRequestValues(
+					$trklib->get_tracker_by_name("Invoices"),
+					array(
+						"Client Id",
+						"Invoice Number",
+						"Date Issued",
+						"Payment Term",
+						"Tax 1 Description",
+						"Tax 1 Rate",
+						"Tax 2 Description",
+						"Tax 2 Rate",
+						"Invoice Note",
+						"Days Payment Due",
+					),
+					$_REQUEST, $_REQUEST['InvoiceId']
+	);
 	//end invoice
 	
 	//start invoice items
@@ -48,16 +52,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	
 	$_TEMP['InvoiceId'] = array();
-	for($i = 0, $count_InvoiceItemId = count($_REQUEST['InvoiceItemId']); $i < $count_InvoiceItemId; $i++) {
+	for ($i = 0, $count_InvoiceItemId = count($_REQUEST['InvoiceItemId']); $i < $count_InvoiceItemId; $i++) {
 		$_TEMP['InvoiceId'][$i] = $_REQUEST['InvoiceId'];
 		
-		$invoiceItem = $trklib->replaceItemFromRequestValues($trklib->get_tracker_by_name("Invoice Items"), array(
-			"Invoice Id",
-			"Amount",
-			"Quantity",
-			"Work Description",
-			"Taxable",
-		), $_TEMP, $_REQUEST['InvoiceItemId'][$i], $i);
+		$invoiceItem = $trklib->replaceItemFromRequestValues(
+						$trklib->get_tracker_by_name("Invoice Items"),
+						array(
+							"Invoice Id",
+							"Amount",
+							"Quantity",
+							"Work Description",
+							"Taxable",
+						),
+						$_TEMP,
+						$_REQUEST['InvoiceItemId'][$i],
+						$i
+		);
 		
 		if (isset($itemsToDelete[$_REQUEST['InvoiceItemId'][$i]])) {
 			unset($itemsToDelete[$_REQUEST['InvoiceItemId'][$i]]);
@@ -73,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	//end delete
 	
-	header( 'Location: tiki-view_invoice.php?InvoiceId='.$_REQUEST['InvoiceId'] ) ;
+	header('Location: tiki-view_invoice.php?InvoiceId='.$_REQUEST['InvoiceId']);
 	die;
 }
 
@@ -123,8 +133,8 @@ if (count($invoiceItems) < 1) {
 }
 $smarty->assign("invoiceItems", $invoiceItems);
 
-$headerlib->add_jq_onready("
-	function setupTotal() {
+$headerlib->add_jq_onready(
+    "function setupTotal() {
 		$('#InvoiceForm :input')
 			.unbind('change')
 			.change(function() {
@@ -181,8 +191,8 @@ $headerlib->add_jq_onready("
 		
 		var InvoiceId = $('#InvoiceId');
 		InvoiceId.val(InvoiceId.val() ? InvoiceId.val() : 0);
-	});
-");
+	});"
+);
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_invoice.tpl');

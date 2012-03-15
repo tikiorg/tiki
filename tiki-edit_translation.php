@@ -15,7 +15,7 @@ execute_module_translation();
 $access->check_feature('feature_multilingual');
 
 if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id']) && $_REQUEST['id'])) {
-	$smarty->assign('msg',tra("No object indicated"));
+	$smarty->assign('msg', tra("No object indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -29,7 +29,7 @@ include_once("lang/langmapping.php");
 if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST['type'] == 'wiki') && isset($_REQUEST['page']) && $_REQUEST['page']) {
 	$info = $tikilib->get_page_info($_REQUEST['page']);
 	if (empty($info)) {
-		$smarty->assign('msg',tra("Page cannot be found"));
+		$smarty->assign('msg', tra("Page cannot be found"));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -48,9 +48,8 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	if ($prefs['feature_translation_incomplete_notice'] == 'y') {
 		$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.")."^\n\n");
 	}
-}
-else if ($_REQUEST['id']) {
-	$smarty->assign('msg',tra("Only wiki pages are supported."));
+} else if ($_REQUEST['id']) {
+	$smarty->assign('msg', tra("Only wiki pages are supported."));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -79,7 +78,7 @@ $smarty->assign('langpage', $langpage);
 
 if ($type == "wiki page") {
   $tikilib->get_perm_object($name, 'wiki page', $info, true);	
-  if ( !($tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
+	if ( !($tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
 	  $smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to edit this page."));
 		$smarty->display("error.tpl");
@@ -96,7 +95,7 @@ foreach ( $trads as $trad )
 $rawLangs = $tikilib->list_languages();
 $languages = array();
 foreach ( $rawLangs as $langInfo )
-	if ( ! in_array( $langInfo['value'], $usedLang ) )
+	if ( ! in_array($langInfo['value'], $usedLang) )
 		$languages[] = $langInfo;
 $smarty->assign_by_ref('languages', $languages);
 if (count($languages) == 1) {
@@ -112,7 +111,8 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-edit_translation.tpl');
 $smarty->display("tiki.tpl");
 
-function execute_module_translation() { 
+function execute_module_translation() 
+{ 
 	global $smarty;
 	$module_reference = array(
 		'name' => 'translation',
@@ -124,6 +124,6 @@ function execute_module_translation() {
 
 	global $modlib; require_once 'lib/modules/modlib.php';	
 
-	$out = $modlib->execute_module( $module_reference );
+	$out = $modlib->execute_module($module_reference);
 	$smarty->assign('content_of_update_translation_section', $out);
 }

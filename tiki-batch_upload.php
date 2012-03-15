@@ -38,7 +38,8 @@ $allowed_types = array(
 	'.gif'
 ); // list of filetypes you want to show
 // recursively get all images from all subdirectories
-function getDirContent($sub) {
+function getDirContent($sub) 
+{
 	global $allowed_types;
 	global $a_img;
 	global $a_path;
@@ -64,7 +65,7 @@ function getDirContent($sub) {
 				$sub.= '/';
 			}
 			getDirContent($sub . $imgfile);
-		} elseif (in_array(strtolower(substr($imgfile, -(strlen($imgfile) - strrpos($imgfile, ".")))) , $allowed_types)) {
+		} elseif (in_array(strtolower(substr($imgfile, -(strlen($imgfile) - strrpos($imgfile, ".")))), $allowed_types)) {
 			$a_img[] = $imgfile;
 			$a_path[] = $sub;
 		}
@@ -72,7 +73,8 @@ function getDirContent($sub) {
 	closedir($dimg);
 }
 // build a complete list of all images on filesystem including all necessary image info
-function buildImageList() {
+function buildImageList() 
+{
 	global $a_img;
 	global $a_path;
 	global $imgdir, $smarty;
@@ -145,7 +147,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 		$data = '';
 		$fp = @fopen($filepath, 'r');
 		if (!$fp) {
-			$feedback[] = "!!!" . sprintf(tra('Could not read image %s.') , $filepath);
+			$feedback[] = "!!!" . sprintf(tra('Could not read image %s.'), $filepath);
 		} else {
 			while (!feof($fp)) {
 				$data.= @fread($fp, 1024);
@@ -187,13 +189,13 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 			// add image to gallery
 			$imageId = $imagegallib->insert_image($tmpGalId, $tmpName, $tmpDesc, $imgArray[$x], $type, $data, $filesize, $size[0], $size[1], $user, '', '');
 			if (!$imageId) {
-				$feedback[] = "!!!" . sprintf(tra('Image %s upload failed.') , $imgArray[$x]);
+				$feedback[] = "!!!" . sprintf(tra('Image %s upload failed.'), $imgArray[$x]);
 			} else {
-				$feedback[] = sprintf(tra('Image %s uploaded successfully.') , $imgArray[$x]);
+				$feedback[] = sprintf(tra('Image %s uploaded successfully.'), $imgArray[$x]);
 				if (@unlink($filepath)) {
-					$feedback[] = sprintf(tra('Image %s removed from Batch directory.') , $imgArray[$x]);
+					$feedback[] = sprintf(tra('Image %s removed from Batch directory.'), $imgArray[$x]);
 				} else {
-					$feedback[] = "!!! " . sprintf(tra('Impossible to remove image %s from Batch directory.') , $imgArray[$x]);
+					$feedback[] = "!!! " . sprintf(tra('Impossible to remove image %s from Batch directory.'), $imgArray[$x]);
 				}
 			}
 		}

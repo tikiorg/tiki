@@ -12,7 +12,7 @@ include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/newsletters/nllib.php');
 
-$headerlib->add_cssfile('css/calendar.css',20);
+$headerlib->add_cssfile('css/calendar.css', 20);
 # perms are
 # 	$tiki_p_view_calendar
 # 	$tiki_p_admin_calendar
@@ -28,10 +28,12 @@ $iCalAdvParamsUrl = 'tiki-calendar_params_ical.php';
 $bufid = array();
 $bufdata = array();
 $modifiable = array();
-if (!isset($cookietab)) { $cookietab = '1'; }
+if (!isset($cookietab)) { 
+	$cookietab = '1';
+}
 $rawcals = $calendarlib->list_calendars();
 $cals_info = $rawcals;
-$rawcals['data'] = Perms::filter( array( 'type' => 'calendar' ), 'object', $rawcals['data'], array( 'object' => 'calendarId' ), 'view_calendar' );
+$rawcals['data'] = Perms::filter(array( 'type' => 'calendar' ), 'object', $rawcals['data'], array( 'object' => 'calendarId' ), 'view_calendar');
 $viewOneCal = $tiki_p_view_calendar;
 $modifTab = 0;
 
@@ -41,8 +43,8 @@ $manyEvents = array();
 
 foreach ($rawcals["data"] as $cal_data) {
 	$cal_id = $cal_data['calendarId'];
-	$minHourOfDay = min($minHourOfDay,intval($cal_data['startday']/3600));
-	$maxHourOfDay = max($maxHourOfDay,intval(($cal_data['endday']+1)/3600));
+	$minHourOfDay = min($minHourOfDay, intval($cal_data['startday']/3600));
+	$maxHourOfDay = max($maxHourOfDay, intval(($cal_data['endday']+1)/3600));
 	if ($tiki_p_admin == 'y') {
 		$cal_data["tiki_p_view_calendar"] = 'y';
 		$cal_data["tiki_p_view_events"] = 'y';
@@ -61,7 +63,7 @@ foreach ($rawcals["data"] as $cal_data) {
 			$cal_data["tiki_p_change_events"] = 'n';
 		}
 	} else {		
-		$calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
+		$calperms = Perms::get(array( 'type' => 'calendar', 'object' => $cal_id ));
 		$cal_data["tiki_p_view_calendar"] = $calperms->view_calendar ? 'y' : 'n';
 		$cal_data["tiki_p_view_events"] = $calperms->view_events ? 'y' : 'n';
 		$cal_data["tiki_p_add_events"] = $calperms->add_events ? 'y' : 'n';
@@ -100,12 +102,12 @@ $use_default_calendars = false;
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"], $listcals);
 	if ( !empty($user) ) {
-		$tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
+		$tikilib->set_user_preference($user, 'default_calendars', serialize($_SESSION['CalendarViewGroups']));
 	}
 } elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array_intersect(array($_REQUEST["calIds"]), $listcals);
 	if ( !empty($user) ) {
-		$tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
+		$tikilib->set_user_preference($user, 'default_calendars', serialize($_SESSION['CalendarViewGroups']));
 	}
 } elseif (!empty($_REQUEST['allCals'])) {
 	$_SESSION['CalendarViewGroups'] = $listcals;

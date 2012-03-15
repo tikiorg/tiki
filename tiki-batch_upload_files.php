@@ -52,7 +52,8 @@ $disallowed_types = array(
 	'php~'
 ); // list of filetypes you DO NOT want to show
 // recursively get all files from all subdirectories
-function getDirContent($sub) {
+function getDirContent($sub) 
+{
 	global $disallowed_types;
 	global $a_file;
 	global $a_path;
@@ -77,14 +78,16 @@ function getDirContent($sub) {
 				$sub.= '/';
 			}
 			getDirContent($sub . $filefile);
-		} elseif (!in_array(strtolower(substr($filefile, -(strlen($filefile) - strrpos($filefile, ".")))) , $disallowed_types)) {
+		} elseif (!in_array(strtolower(substr($filefile, -(strlen($filefile) - strrpos($filefile, ".")))), $disallowed_types)) {
 			$a_file[] = $filefile;
 			$a_path[] = $sub;
 		}
 	}
 }
 // build a complete list of all files on filesystem including all necessary file info
-function buildFileList() {
+function buildFileList() 
+{
+
 	global $a_file;
 	global $a_path;
 	global $filedir, $smarty;
@@ -166,12 +169,16 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		include_once ('lib/mime/mimetypes.php');
 		$type = $mimetypes["$ext"];
 
-		$result = $filegallib->handle_batch_upload($_REQUEST['galleryId'], array(
-			'source' => $filepath,
-			'size' => $filesize,
-			'type' => $type,
-			'name' => $path_parts['basename'],
-		), $ext);
+		$result = $filegallib->handle_batch_upload(
+						$_REQUEST['galleryId'],
+						array(
+							'source' => $filepath,
+							'size' => $filesize,
+							'type' => $type,
+							'name' => $path_parts['basename'],
+						),
+						$ext
+		);
 
 		if (isset($result['error'])) {
 			$feedback[] = "!!!" . tr('Upload was not successful for %0 (%1)', $path_parts['basename'], $result['error']);
@@ -197,9 +204,9 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				$feedback[] = tra('Upload was successful') . ': ' . $name;
 				@unlink($filepath);	// seems to return false sometimes even if the file was deleted
 				if (!file_exists($filepath)) {
-					$feedback[] = sprintf(tra('File %s removed from Batch directory.') , $file);
+					$feedback[] = sprintf(tra('File %s removed from Batch directory.'), $file);
 				} else {
-					$feedback[] = "!!! " . sprintf(tra('Impossible to remove file %s from Batch directory.') , $file);
+					$feedback[] = "!!! " . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file);
 				}
 			}
 		}

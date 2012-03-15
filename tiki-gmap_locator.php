@@ -60,25 +60,25 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 			$tikilib->set_user_preference($userwatch, 'zoom', $p['z']);
 		}
 	}
-	$pointx = $tikilib->get_user_preference($userwatch,'lon','');
-	$pointy = $tikilib->get_user_preference($userwatch,'lat','');
-	$pointz = $tikilib->get_user_preference($userwatch,'zoom',$prefs['gmap_defaultz']);
+	$pointx = $tikilib->get_user_preference($userwatch, 'lon', '');
+	$pointy = $tikilib->get_user_preference($userwatch, 'lat', '');
+	$pointz = $tikilib->get_user_preference($userwatch, 'zoom', $prefs['gmap_defaultz']);
 	$smarty->assign('extraquery', '?for=user');
 	$smarty->assign('backurl', 'tiki-user_preferences.php?view_user=' . $userwatch);
 	$smarty->assign('backlink', tra('Back to preferences'));
 } elseif (isset($_REQUEST['for']) && $_REQUEST['for'] == 'item' && !empty($_REQUEST['itemId'])) {
-	if (!empty($_REQUEST['fieldId']) && !empty($_REQUEST['trackerId'])){
+	if (!empty($_REQUEST['fieldId']) && !empty($_REQUEST['trackerId'])) {
 		if (isset($_REQUEST['point']) and is_array($_REQUEST['point'])) {
 			$tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker');
 			if ($tiki_p_modify_tracker_items == 'y') {
 				$p = $_REQUEST['point'];
-				if ( ($p['x'] > -180 and $p['x'] < 180) && ($p['y'] > -180 and $p['y'] < 180) && ($p['z'] >= 0 and $p['z'] < 20)      ){
+				if ( ($p['x'] > -180 and $p['x'] < 180) && ($p['y'] > -180 and $p['y'] < 180) && ($p['z'] >= 0 and $p['z'] < 20)) {
 					$G_query="UPDATE `tiki_tracker_item_fields` SET `value`=? WHERE `itemId`=? AND `fieldId`=?";
-					$trklib->query($G_query,array($p['x'].','.$p['y'].','.$p['z'], (int)$_REQUEST['itemId'], (int)$_REQUEST['fieldId']));
+					$trklib->query($G_query, array($p['x'].','.$p['y'].','.$p['z'], (int)$_REQUEST['itemId'], (int)$_REQUEST['fieldId']));
 				}
 			}
-  		}
-		$xyz = explode(',', $trklib->get_item_value($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId']));
+		}
+		$xyz = explode(',', $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $_REQUEST['fieldId']));
   		$pointx = $xyz['0'];
   		$pointy = $xyz['1'];
   		$pointz = $xyz['2'];
@@ -102,7 +102,9 @@ if (!isset($pointx)) {
 	$pointy = isset($prefs['gmap_defy'])? $prefs['gmap_defy']: $prefs['gmap_defaulty'];
 	$pointz = isset($prefs['gmap_defz'])? $prefs['gmap_defz']: $prefs['gmap_defaultz'];
 }
-if (!isset($pointz)) { $pointz = 11; }	// trackers cope with only x & y
+if (!isset($pointz)) { 
+	$pointz = 11; 
+}	// trackers cope with only x & y
 $smarty->assign_by_ref('pointx', $pointx);
 $smarty->assign_by_ref('pointy', $pointy);
 $smarty->assign_by_ref('pointz', $pointz);

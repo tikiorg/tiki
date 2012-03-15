@@ -88,9 +88,20 @@ if (isset($_REQUEST['qId'])) {
 			$_REQUEST['topic_title'] = $p_info['title'];
 		}
 
-		$commentslib->replace_queue($_REQUEST['qId'], $_REQUEST['forumId'], 'forum' . $_REQUEST['forumId'], $_REQUEST['parentId'],
-			$user, $_REQUEST['title'], $_REQUEST['data'], $_REQUEST['type'], $_REQUEST['topic_smiley'], $_REQUEST['summary'],
-			$_REQUEST['topic_title'], $_REQUEST['in_reply_to']);
+		$commentslib->replace_queue(
+						$_REQUEST['qId'], 
+						$_REQUEST['forumId'], 
+						'forum' . $_REQUEST['forumId'], 
+						$_REQUEST['parentId'],
+						$user, 
+						$_REQUEST['title'], 
+						$_REQUEST['data'], 
+						$_REQUEST['type'], 
+						$_REQUEST['topic_smiley'], 
+						$_REQUEST['summary'],
+						$_REQUEST['topic_title'], 
+						$_REQUEST['in_reply_to']
+		);
 		if ( isset($_REQUEST['saveapp']) ) 
 			$commentslib->approve_queued($_REQUEST['qId']);
 		unset ($_REQUEST['qId']);
@@ -124,9 +135,20 @@ if (isset($_REQUEST['qId'])) {
 
 		$_REQUEST['parentId'] = 0;
 		$_REQUEST['type'] = 'n';
-		$commentslib->replace_queue($_REQUEST['qId'], $_REQUEST['forumId'], 'forum' . $_REQUEST['forumId'], $_REQUEST['parentId'],
-			$user, $_REQUEST['title'], $_REQUEST['data'], $_REQUEST['type'], $_REQUEST['topic_smiley'], $_REQUEST['summary'],
-			$_REQUEST['topic_title'], $_REQUEST['in_reply_to']);
+		$commentslib->replace_queue(
+						$_REQUEST['qId'], 
+						$_REQUEST['forumId'], 
+						'forum' . $_REQUEST['forumId'], 
+						$_REQUEST['parentId'],
+						$user, 
+						$_REQUEST['title'], 
+						$_REQUEST['data'], 
+						$_REQUEST['type'], 
+						$_REQUEST['topic_smiley'], 
+						$_REQUEST['summary'],
+						$_REQUEST['topic_title'], 
+						$_REQUEST['in_reply_to']
+		);
 		unset ($_REQUEST['qId']);
 	}
 }

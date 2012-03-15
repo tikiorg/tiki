@@ -503,19 +503,21 @@ $jitCookie->setDefaultFilter('xss');
 // Apply configured filters to all other input
 if (!isset($inputConfiguration)) $inputConfiguration = array();
 
-array_unshift( $inputConfiguration, array(
-	'staticKeyFilters' => array(
-		'menu' => 'striptags',
-		'cat_categorize' => 'alpha',
-		'tab' => 'digits',
-		'javascript_enabled' => 'alpha',
-		'XDEBUG_PROFILE' => 'int',
-	),
-	'staticKeyFiltersForArrays' => array(
-		'cat_managed' => 'digits',
-		'cat_categories' => 'digits',
-	),
-) );
+array_unshift(
+			 $inputConfiguration, array(
+				'staticKeyFilters' => array(
+					'menu' => 'striptags',
+					'cat_categorize' => 'alpha',
+					'tab' => 'digits',
+					'javascript_enabled' => 'alpha',
+					'XDEBUG_PROFILE' => 'int',
+				),	
+				'staticKeyFiltersForArrays' => array(
+					'cat_managed' => 'digits',
+					'cat_categories' => 'digits',
+				),
+			)
+);
 
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
 if ( ( isset($prefs['tiki_allow_trust_input']) && $prefs['tiki_allow_trust_input'] !== 'y' ) || $tiki_p_trust_input != 'y') {

@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /* Automatically set params used for absolute URLs - BEGIN */
 
 // Note: need to substitute \ for / for windows.
-$tikipath = str_replace('\\','/',realpath(dirname(__FILE__)));
+$tikipath = str_replace('\\', '/', realpath(dirname(__FILE__)));
 
 if (getcwd()) {
 	$scriptDirectory = getcwd();
@@ -49,29 +49,31 @@ $unallowed_uri_chars_encoded = array_merge($unallowed_uri_chars_encoded, array_m
 $_SERVER['SCRIPT_NAME'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['SCRIPT_NAME']);
 
 // Note: need to substitute \ for / for Windows.
-$tikiroot = str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME']));
+$tikiroot = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 
 if ($dir_level > 0) {
-	$tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);
+	$tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#', '', $tikiroot);
 	chdir($tikipath);
 }
 
-if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
-if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
+if ( substr($tikiroot, -1, 1) != '/' ) $tikiroot .= '/';
+if ( substr($tikipath, -1, 1) != '/' ) $tikipath .= '/';
 
 // Add global filter for xajax and cookie	// AJAX_TODO?
 global $inputConfiguration;
 if ( empty($inputConfiguration) ) {
 	$inputConfiguration = array();
 }
-array_unshift($inputConfiguration,array(
-  'staticKeyFilters' => array(
-		'cookietab'	=>	'int',
-		'callback'  => 'word',
-  ),
-	'staticKeyFiltersForArrays' => array(
-	)
-));
+array_unshift(
+				$inputConfiguration, array(
+				  'staticKeyFilters' => array(
+						'cookietab'	=>	'int',
+						'callback'  => 'word',
+					),
+					'staticKeyFiltersForArrays' => array(
+					)
+				)
+);
 
 require_once('lib/init/initlib.php');
 TikiInit::prependIncludePath($tikipath.'lib/pear');

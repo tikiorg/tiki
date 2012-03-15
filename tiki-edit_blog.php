@@ -76,9 +76,9 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('use_breadcrumbs', $data["use_breadcrumbs"]);
 	$smarty->assign('use_author', $data["use_author"]);
 	$smarty->assign('allow_comments', $data["allow_comments"]);
-	$smarty->assign('show_avatar',$data["show_avatar"]);
-	$smarty->assign('show_related',$data["show_related"]);
-	$smarty->assign('related_max',$data["related_max"]);
+	$smarty->assign('show_avatar', $data["show_avatar"]);
+	$smarty->assign('show_related', $data["show_related"]);
+	$smarty->assign('related_max', $data["related_max"]);
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
 	$smarty->assign('use_excerpt', $data["use_excerpt"]);
@@ -143,11 +143,13 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$alwaysOwner = isset($_REQUEST['alwaysOwner']) ? 'y' : 'n';
 
 	if (isset($_REQUEST["save"])) {
-		$bid = $bloglib->replace_blog($_REQUEST["title"],
-			$_REQUEST["description"], $_REQUEST["creator"], $public,
-			$_REQUEST["maxPosts"], $_REQUEST["blogId"],
-			$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find,
-			$allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt);
+		$bid = $bloglib->replace_blog(
+						$_REQUEST["title"],
+						$_REQUEST["description"], $_REQUEST["creator"], $public,
+						$_REQUEST["maxPosts"], $_REQUEST["blogId"],
+						$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find,
+						$allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt
+		);
 
 		$cat_type = 'blog';
 		$cat_objid = $bid;
@@ -182,29 +184,31 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('heading', $heading);
 	$smarty->assign('creator', $_REQUEST["creator"]);
 
-	$smarty->assign('blog_data', array(
-			'title' => $_REQUEST["title"],
-			'description' => $_REQUEST["description"],
-			'creator' => $_REQUEST["creator"],
-			'public' => $public,
-			'maxPosts' => $_REQUEST["maxPosts"],
-			'blogId' => $_REQUEST["blogId"],
-			'heading' => $heading,
-			'use_title' => $use_title,
-			'use_title_in_post' => $use_title_in_post,
-			'use_description' => $use_description,
-			'use_breadcrumbs' => $use_breadcrumbs,
-			'use_author' => $use_author,
-			'add_date' => $add_date,
-			'use_find' => $use_find,
-			'allow_comments' => $allow_comments,
-			'show_avatar' => $show_avatar,
-			'always_owner' => $alwaysOwner,
-			'post_heading' => $post_heading,
-			'show_related' => $show_related,
-			'related_max' => $related_max,
-			'use_excerpt' => $use_excerpt
-	));
+	$smarty->assign(
+					'blog_data', array(
+						'title' => $_REQUEST["title"],
+						'description' => $_REQUEST["description"],
+						'creator' => $_REQUEST["creator"],
+						'public' => $public,
+						'maxPosts' => $_REQUEST["maxPosts"],
+						'blogId' => $_REQUEST["blogId"],
+						'heading' => $heading,
+						'use_title' => $use_title,
+						'use_title_in_post' => $use_title_in_post,
+						'use_description' => $use_description,
+						'use_breadcrumbs' => $use_breadcrumbs,
+						'use_author' => $use_author,
+						'add_date' => $add_date,
+						'use_find' => $use_find,
+						'allow_comments' => $allow_comments,
+						'show_avatar' => $show_avatar,
+						'always_owner' => $alwaysOwner,
+						'post_heading' => $post_heading,
+						'show_related' => $show_related,
+						'related_max' => $related_max,
+						'use_excerpt' => $use_excerpt
+				)
+	);
 
 	// display heading preview
 	$smarty->assign('show_blog_heading_preview', 'y');

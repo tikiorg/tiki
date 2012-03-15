@@ -16,7 +16,7 @@ $access->check_feature('feature_wiki');
 
 //make the other things know we are loading a slideshow
 $tikilib->is_slideshow = true;
-$smarty->assign('is_slideshow' , 'y');
+$smarty->assign('is_slideshow', 'y');
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
@@ -70,7 +70,7 @@ if (isset($_REQUEST['theme'])) {
 }
 
 // Now check permissions to access this page
-$tikilib->get_perm_object( $page, 'wiki page', $info);
+$tikilib->get_perm_object($page, 'wiki page', $info);
 if ($tiki_p_view != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
@@ -88,7 +88,7 @@ if (!isset($_SESSION["breadCrumb"])) {
 
 if (!in_array($page, $_SESSION["breadCrumb"])) {
 	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
-		array_shift ($_SESSION["breadCrumb"]);
+		array_shift($_SESSION["breadCrumb"]);
 	}
 
 	array_push($_SESSION["breadCrumb"], $page);
@@ -118,8 +118,8 @@ $pdata = $wikilib->get_page($pdata, $_REQUEST['pagenum']);
 $smarty->assign('pages', $pages);
 
 // Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$parserlib->replace_preparse( $info["data"], $preparsed, $noparsed );
-$parserlib->replace_preparse( $pdata, $preparsed, $noparsed );
+$parserlib->replace_preparse($info["data"], $preparsed, $noparsed);
+$parserlib->replace_preparse($pdata, $preparsed, $noparsed);
 
 $smarty->assign_by_ref('parsed', $pdata);
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
@@ -133,10 +133,10 @@ $smarty->assign_by_ref('lastUser', $info["user"]);
 
 include_once ('tiki-section_options.php');
 
-$headerlib->add_cssfile( 'lib/jquery.s5/jquery.s5.css' );
-$headerlib->add_jsfile( 'lib/jquery.s5/jquery.s5.js' );
-$headerlib->add_jq_onready( '
-	//slideshow corrupts s5 and is not needed in s5 at all
+$headerlib->add_cssfile('lib/jquery.s5/jquery.s5.css');
+$headerlib->add_jsfile('lib/jquery.s5/jquery.s5.js');
+$headerlib->add_jq_onready(
+    '//slideshow corrupts s5 and is not needed in s5 at all
 	$("#toc").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
@@ -210,14 +210,14 @@ $headerlib->add_jq_onready( '
 			
 			$($.s5.note.document).find(".tiki-slideshow-theme").val($(this).val());
 		})
-		.change();
-');
+		.change();'
+);
 
 ask_ticket('index-raw');
 
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
-$smarty->assign('mid','tiki-show_page_raw.tpl');
+$smarty->assign('mid', 'tiki-show_page_raw.tpl');
 
 // use tiki_full to include include CSS and JavaScript
 $smarty->display("tiki_full.tpl");

@@ -20,7 +20,7 @@ class TikiDb_Adodb extends TikiDb
 
 	function qstr( $str ) // {{{
 	{
-		return $this->db->quote( $str );
+		return $this->db->quote($str);
 	} // }}}
 
 	function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
@@ -33,7 +33,7 @@ class TikiDb_Adodb extends TikiDb
 		if ( $query == null ) {
 			$query = $this->getQuery();
 		}
-		$this->convertQueryTablePrefixes( $query );
+		$this->convertQueryTablePrefixes($query);
 
 		$starttime=$this->startTimer();
 		if ($numrows == -1 && $offset == -1)
@@ -44,16 +44,16 @@ class TikiDb_Adodb extends TikiDb
 		$this->stopTimer($starttime);
 
 		if (!$result ) {
-			$this->setErrorMessage( $this->db->ErrorMsg() );
+			$this->setErrorMessage($this->db->ErrorMsg());
 
 			if ($reporterrors) {
-				$this->handleQueryError( $query, $values, $result );
+				$this->handleQueryError($query, $values, $result);
 			}
 		}
 
 		global $num_queries;
 		$num_queries++;
-		$this->setQuery( null );
+		$this->setQuery(null);
 
 		return $result;
 	} // }}}

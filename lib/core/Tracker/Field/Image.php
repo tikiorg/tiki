@@ -77,7 +77,8 @@ class Tracker_field_Image extends Tracker_Field_File
 		);
 	}
 
-	function __construct($fieldInfo, $itemData, $trackerDefinition) {
+	function __construct($fieldInfo, $itemData, $trackerDefinition)
+	{
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
 		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');
 		$this->imgMaxSize = (1048576 * 4); // 4Mo
@@ -128,13 +129,13 @@ class Tracker_field_Image extends Tracker_Field_File
 				switch ($shadowtype) {
 				case 'item':
 					$rel = '['.$this->getItemId().']';
-					break;
+    				break;
 				case 'individual':
 					$rel = '';
-					break;
+    				break;
 				default:
 					$rel = '['.$this->getConfiguration('fieldId').']';
-					break;
+    				break;
 				}
 				$pre = "<a href=\"$val\" rel=\"shadowbox$rel;type=img\">";
 			}
@@ -143,13 +144,21 @@ class Tracker_field_Image extends Tracker_Field_File
 			}
 			if ($list_mode != 'n') {
 				if ($this->getOption(0) || $this->getOption(1)) {
-					list( $params['width'], $params['height']) = $this->get_resize_dimensions( $image_size_info[0], $image_size_info[1],
-																			$this->getOption(0), $this->getOption(1));
+					list( $params['width'], $params['height']) = $this->get_resize_dimensions(
+									$image_size_info[0],
+									$image_size_info[1],
+									$this->getOption(0),
+									$this->getOption(1)
+					);
 				}
 			} else {
 				if ($this->getOption(2) || $this->getOption(3)) {
-					list( $params['width'], $params['height']) = $this->get_resize_dimensions( $image_size_info[0], $image_size_info[1],
-																			$this->getOption(2), $this->getOption(3));
+					list( $params['width'], $params['height']) = $this->get_resize_dimensions(
+									$image_size_info[0],
+									$image_size_info[1],
+									$this->getOption(2),
+									$this->getOption(3)
+					);
 				}
 			}
 		} else {
@@ -169,9 +178,13 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate('trackerinput/image.tpl', $context, array(
-			'image_tag' => $this->renderInnerOutput($context),
-		));
+		return $this->renderTemplate(
+						'trackerinput/image.tpl',
+						$context,
+						array(
+							'image_tag' => $this->renderInnerOutput($context),
+						)
+		);
 	}
 
 	function handleSave($value, $oldValue)

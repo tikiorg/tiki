@@ -16,14 +16,14 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 	{
 		if (isset($arguments['requiredParents'])) {
 			if (!empty($arguments['requiredParents'])) {
-			$this->requiredParents = explode(',',$arguments['requiredParents']);
+			$this->requiredParents = explode(',', $arguments['requiredParents']);
 			} else {
 			$this->requiredParents = 'all';
 			}
 		}
 
 		if (isset($arguments['excludeParents'])) {
-			$this->excludeParents = explode(',',$arguments['excludeParents']);
+			$this->excludeParents = explode(',', $arguments['excludeParents']);
 		}
 		
 		if (isset($arguments['singleList'])) {
@@ -48,14 +48,13 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 
 		if ($this->singleList == 'y') {
 
-			foreach ($value as $ar)
-			{
+			foreach ($value as $ar) {
 				if ($ar == 'orphan') {
 					break;
 				}
 
 				$p_info = $myArr[$ar];
-				if ( ($this->requiredParents=='all' || in_array( $p_info['parentId'], $this->requiredParents)) && !in_array( $p_info['parentId'], $this->excludeParents)) {
+				if ( ($this->requiredParents=='all' || in_array($p_info['parentId'], $this->requiredParents)) && !in_array($p_info['parentId'], $this->excludeParents)) {
 					$params = array('type' => 'category', 'id' => $ar);
 					$link = smarty_function_object_link($params, $smarty);
 
@@ -72,22 +71,21 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 			}
 			if (!empty($this->separator)) {
 				$g = 0-strlen($this->separator);
-				$list = substr($list,0,$g);
+				$list = substr($list, 0, $g);
 			} else if (!empty($list)) {
 				$list .= "</ul>";
 			}
 		} else {
 			$parent  = array();
 
-			foreach ($value as $ar)
-			{
+			foreach ($value as $ar) {
 				if ($ar == 'orphan') {
 					break;
 				}
 
 				$p_info = $myArr[$ar];
 
-				if ( ($this->requiredParents=='all' || in_array( $p_info['parentId'], $this->requiredParents)) && !in_array( $p_info['parentId'], $this->excludeParents)) {
+				if ( ($this->requiredParents=='all' || in_array($p_info['parentId'], $this->requiredParents)) && !in_array($p_info['parentId'], $this->excludeParents)) {
 					$parent[$p_info['parentId']][] = $ar; 	
 				}
 			}			
@@ -111,7 +109,7 @@ class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_V
 				}
 				if (!empty($this->separator)) {
 					$g = 0-strlen($this->separator);
-					$list = substr($list,0,$g);
+					$list = substr($list, 0, $g);
 					$list .= "<br />";
 				}
 			}

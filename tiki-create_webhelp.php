@@ -21,9 +21,9 @@ function copys($source,$dest)
 	while (@($entry=$h->read()) !== false) {
 		if (($entry != '.') && ($entry != '..')) {
 			if (is_dir("$source/$entry")&&$dest!=="$source/$entry") {
-				copys("$source/$entry","$dest/$entry");
+				copys("$source/$entry", "$dest/$entry");
 			} else {
-				@copy("$source/$entry","$dest/$entry");
+				@copy("$source/$entry", "$dest/$entry");
 			}
 		}
 	}
@@ -48,7 +48,7 @@ $access->check_feature('feature_create_webhelp');
 $access->check_permission('tiki_p_edit_structures');
 
 $struct_info = $structlib->s_get_structure_info($_REQUEST['struct']);
-$smarty->assign_by_ref('struct_info',$struct_info);
+$smarty->assign_by_ref('struct_info', $struct_info);
 
 if (!$tikilib->user_has_perm_on_object($user, $struct_info['pageName'], 'wiki page', 'tiki_p_view')) {
 	$smarty->assign('errortype', 401);
@@ -95,10 +95,10 @@ if (isset($_REQUEST['create'])) {
 	deldirfiles("$base/pages");
 	deldirfiles("$base/pages/img/wiki_up");
 	// Copy base files to the webhelp directory
-	copys('lib/tikihelp',"$base/");
+	copys('lib/tikihelp', "$base/");
 
-	$structlib->structure_to_webhelp($struct,$dir,$top);
-	$smarty->assign('generated','y');
+	$structlib->structure_to_webhelp($struct, $dir, $top);
+	$smarty->assign('generated', 'y');
 }
 
 $smarty->assign('output', $output);

@@ -17,7 +17,7 @@ if (empty($info)) {
 	die;
 }
 
-$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $info['page'] ) );
+$perms = Perms::get(array( 'type' => 'wiki page', 'object' => $info['page'] ));
 if ((!$perms->view || !$perms->wiki_view_attachments) && !$perms->wiki_admin_attachments) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -58,9 +58,9 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: public");
 
 if ($info["path"]) {
-	header("Content-Length: ". filesize( $prefs['w_use_dir'].$info["path"] ) );
-	readfile ($prefs['w_use_dir'] . $info["path"]);
+	header("Content-Length: ". filesize($prefs['w_use_dir'].$info["path"]));
+	readfile($prefs['w_use_dir'] . $info["path"]);
 } else {
-	header("Content-Length: ". $info[ "filesize" ] );
+	header("Content-Length: ". $info[ "filesize" ]);
 	echo "$content";
 }

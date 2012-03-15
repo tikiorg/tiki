@@ -33,19 +33,19 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 				$data = htmlspecialchars_decode($page['data']);
 				if ($data != $page['data']) {
 					$tikilib->update_page(
-								$page['pageName'], 
-								$data,
-								'System upgrade: Converting special HTML characters',
-								'admin',
-								'0.0.0.0',
-								$page['description'],
-								1,
-								$page['lang'], 
-								$page['is_html'],
-								null,
-								null,
-								'',
-								$page['wiki_authors_style']
+									$page['pageName'], 
+									$data,
+									'System upgrade: Converting special HTML characters',
+									'admin',
+									'0.0.0.0',
+									$page['description'],
+									1,
+									$page['lang'], 
+									$page['is_html'],
+									null,
+									null,
+									'',
+									$page['wiki_authors_style']
 					);
 				}
 			}

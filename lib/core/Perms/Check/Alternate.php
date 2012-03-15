@@ -11,25 +11,29 @@ class Perms_Check_Alternate implements Perms_Check
 	private $resolver;
 	private $applicableCache = null;
 
-	function __construct( $permission ) {
+	function __construct( $permission )
+	{
 		$this->permission = $permission;
 	}
 
-	function check( Perms_Resolver $resolver, array $context, $name, array $groups ) {
+	function check( Perms_Resolver $resolver, array $context, $name, array $groups )
+	{
 		if ( $this->resolver ) {
-			return $this->resolver->check( $this->permission, $groups );
+			return $this->resolver->check($this->permission, $groups);
 		} else {
 			return false;
 		}
 	}
 
-	function setResolver( $resolver ) {
+	function setResolver( $resolver ) 
+	{
 		$this->resolver = $resolver;
 		$this->applicableCache = null;
 	}
 
-	function applicableGroups( Perms_Resolver $resolver ) {
-		if ( ! is_null( $this->applicableCache ) ) {
+	function applicableGroups( Perms_Resolver $resolver ) 
+	{
+		if ( ! is_null($this->applicableCache) ) {
 			return $this->applicableCache;
 		}
 
@@ -39,7 +43,7 @@ class Perms_Check_Alternate implements Perms_Check
 			$groups = $this->resolver->applicableGroups();
 
 			foreach ( $groups as $group ) {
-				if ( $this->resolver->check( $this->permission, array($group) ) ) {
+				if ( $this->resolver->check($this->permission, array($group)) ) {
 					$this->applicableCache[] = $group;
 				}
 			}

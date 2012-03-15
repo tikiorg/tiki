@@ -7,7 +7,7 @@
 
 require_once 'tiki-setup.php';
 require_once 'lib/videogals/videogallib.php';
-$access->check_permission( array('tiki_p_list_videos') );
+$access->check_permission(array('tiki_p_list_videos'));
 //get_strings tra('List Entries')
 
 $mediaTypeAsString['2'] = 'Image';
@@ -54,7 +54,7 @@ if (isset($_REQUEST['action'])) {
 	switch ($_REQUEST['action']) {
 
 		case tra('Create Remix'):
-			$access->check_permission( array('tiki_p_remix_videos') );	
+			$access->check_permission(array('tiki_p_remix_videos'));	
 			if ($kentryType == 'media') {
 				$kentry = $kclient->media->get($videoId[0]);
 				$kmixEntry = new KalturaMixEntry();
@@ -67,10 +67,10 @@ if (isset($_REQUEST['action'])) {
 			}
 			header('Location: tiki-kaltura_video.php?action=remix&mixId=' . $kmixEntry->id);
 			die;
-			break;
+    		break;
 
 		case tra('Delete'):
-			$access->check_permission( array('tiki_p_delete_videos') );
+			$access->check_permission(array('tiki_p_delete_videos'));
 			$access->check_authenticity();
 			if ($kentryType == 'media') {
 				foreach ( $videoId as $vi ) {
@@ -87,7 +87,7 @@ if (isset($_REQUEST['action'])) {
 				header('Location: tiki-list_kaltura_entries.php?list=mix');
 				die;
 			}
-			break;
+    		break;
 
 		case 'default':
 			$smarty->assign('msg', tra('Invalid action'));
@@ -148,7 +148,7 @@ if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 		for ($i =0 ; $i < $kmixlist->totalCount; $i++) {
 			$kmixlist->objects[$i]->createdAt = date('d M Y h:i A', $kmixlist->objects[$i]->createdAt);
 			$domdoc = new DOMDocument;
-			$domdoc->loadXML( $kmixlist->objects[$i]->dataContent );
+			$domdoc->loadXML($kmixlist->objects[$i]->dataContent);
 			$xpath = new DOMXpath($domdoc);
 			$elements = $xpath->query('/xml/MetaData/PuserId');
 			foreach ($elements as $element) {
@@ -223,6 +223,6 @@ $smarty->assign_by_ref('maxRecords', $page_size);
 $smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 $smarty->display('tiki.tpl');
 } catch( Exception $e ) {
-	$access->display_error( '', tra('Communication error'), 500, true, tra('Invalid response provided by the Kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
+	$access->display_error('', tra('Communication error'), 500, true, tra('Invalid response provided by the Kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>');
 }
 

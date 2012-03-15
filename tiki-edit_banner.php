@@ -40,7 +40,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	}
 
 	$fromTime = substr($info["hourFrom"], 0, 2).":".substr($info["hourFrom"], 2, 2);
-	$toTime = substr($info["hourTo"], 0 , 2).":".substr($info["hourTo"], 2, 2);
+	$toTime = substr($info["hourTo"], 0, 2).":".substr($info["hourTo"], 2, 2);
 	$smarty->assign('bannerId', $info["bannerId"]);
 	$smarty->assign('client', $info["client"]);
 	$smarty->assign('maxImpressions', $info["maxImpressions"]);
@@ -80,7 +80,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
-			fclose ($fp);
+			fclose($fp);
 			$smarty->assign('tempimg', $tmpfname);
 			$smarty->assign('hasImage', 'y');
 		} else {
@@ -262,7 +262,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 		$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
-		fclose ($fp);
+		fclose($fp);
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
@@ -285,7 +285,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		if ($fp) {
 			fwrite($fp, urldecode($_REQUEST["imageData"]));
 
-			fclose ($fp);
+			fclose($fp);
 			$smarty->assign('tempimg', $tmpfname);
 			$smarty->assign('hasImage', 'y');
 		} else {
@@ -307,10 +307,37 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 			if (!empty($_REQUEST['movieVersion'])) $params['version'] = $_REQUEST['movieVersion'];
 			$_REQUEST['HTMLData'] = serialize($params);
 		}
-		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
-			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
-			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
-			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"], $_REQUEST["maxUserImpressions"], $_REQUEST['onlyInURIs'], $_REQUEST['exceptInURIs']);
+		$bannerId = $bannerlib->replace_banner(
+						$_REQUEST["bannerId"], 
+						$_REQUEST["client"], 
+						$_REQUEST["url"], '',
+						'', 
+						$_REQUEST["use"], 
+						$_REQUEST["imageData"], 
+						$_REQUEST["imageType"], 
+						$_REQUEST["imageName"], 
+						$_REQUEST["HTMLData"],
+						$_REQUEST["fixedURLData"], 
+						$_REQUEST["textData"], 
+						$fromDate, 
+						$toDate, 
+						$useDates, 
+						$Dmon, 
+						$Dtue, 
+						$Dwed, 
+						$Dthu, 
+						$Dfri,
+						$Dsat, 
+						$Dsun, 
+						$fromTime, 
+						$toTime, 
+						$_REQUEST["maxImpressions"], 
+						$_REQUEST["maxClicks"], 
+						$_REQUEST["zone"], 
+						$_REQUEST["maxUserImpressions"],
+						$_REQUEST['onlyInURIs'], 
+						$_REQUEST['exceptInURIs']
+		);
 
 		header("location:tiki-list_banners.php");
 		

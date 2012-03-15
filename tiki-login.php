@@ -38,12 +38,12 @@ if (ini_get('session.use_cookies') == 1 && !isset($_COOKIE[ session_name() ]) &&
 
 // Redirect to HTTPS if we are not in HTTPS but we require HTTPS login
 if (!$https_mode && $prefs['https_login'] == 'required') {
-	header( 'Location: ' . $base_url_https . $prefs['login_url'] . $login_url_params );
+	header('Location: ' . $base_url_https . $prefs['login_url'] . $login_url_params);
 	exit;
 }
 // Redirect to HTTP if we are in HTTPS but we doesn't allow HTTPS login
 if ($https_mode && $prefs['https_login'] == 'disabled') {
-	header( 'Location: ' . $base_url_http . $prefs['login_url'] . $login_url_params );
+	header('Location: ' . $base_url_http . $prefs['login_url'] . $login_url_params);
 	exit;
 }
 
@@ -362,7 +362,7 @@ if ($isvalid) {
 			$smarty->assign('msg', $msg);
 			$smarty->assign('mail_user', $requestedUser);
 			$foo = parse_url($_SERVER['REQUEST_URI']);
-			$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', '', $foo['path']);
+			$mail_machine = $tikilib->httpPrefix(true).str_replace('tiki-login.php', '', $foo['path']);
 			$smarty->assign('mail_machine', $mail_machine);
 			$mail->setText($smarty->fetch('mail/unsuccessful_logins_suspend.tpl'));
 			$mail->setSubject($smarty->fetch('mail/unsuccessful_logins_suspend_subject.tpl'));
@@ -400,20 +400,20 @@ if ($isvalid) {
 
 		case ACCOUNT_DISABLED:
 			$error = tra('Account disabled');
-			break;
+    		break;
 
 		case ACCOUNT_WAITING_USER:
 			$error = tra('You did not validate your account');
 			$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email'));
-			break;
-
+    		break;
+ 
 		case USER_AMBIGOUS:
 			$error = tra('You must use the right case for your user name');
-			break;
+    		break;
 
 		case USER_NOT_VALIDATED:
 			$error = tra('You are not yet validated');
-			break;
+    		break;
 
 		default:
 			$error = tra('Invalid username or password');

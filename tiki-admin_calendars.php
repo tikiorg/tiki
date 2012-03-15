@@ -23,7 +23,7 @@ if (!isset($_REQUEST["calendarId"])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$objectperms = Perms::get( 'calendar', $_REQUEST['calendarId'] );
+	$objectperms = Perms::get('calendar', $_REQUEST['calendarId']);
 	if (!$objectperms->admin_calendar) {
 		$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_calendar', '403');
 	}
@@ -156,7 +156,9 @@ if ($_REQUEST['calendarId'] != 0) {
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = 2;
 	} else {
-		if (!isset($cookietab)) { $cookietab = 1; }
+		if (!isset($cookietab)) {
+			$cookietab = 1; 
+		}
 	}
 }
 if ($prefs['feature_groupalert'] == 'y') {
@@ -204,11 +206,14 @@ include_once ('lib/userprefs/userprefslib.php');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 $smarty->assign('defaulteventstatus', $info['defaulteventstatus']);
-$smarty->assign('eventstatus', array(
-	0 => tra('Tentative') ,
-	1 => tra('Confirmed') ,
-	2 => tra('Cancelled')
-));
+$smarty->assign(
+				'eventstatus', 
+				array(
+					0 => tra('Tentative') ,
+					1 => tra('Confirmed') ,
+					2 => tra('Cancelled')
+				)
+);
 $smarty->assign_by_ref('info', $info);
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
@@ -243,7 +248,7 @@ $days_names = array(
 	tra("Friday"),
 	tra("Saturday")
 );
-$smarty->assign('days_names',$days_names);
+$smarty->assign('days_names', $days_names);
 include_once ('tiki-section_options.php');
 ask_ticket('admin-calendars');
 // disallow robots to index page:

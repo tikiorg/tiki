@@ -23,10 +23,10 @@ if ($tiki_p_admin != 'y') {
 	$user_groups = array();
 }
 
-$modules = $modlib->get_modules_for_user( $user );
+$modules = $modlib->get_modules_for_user($user);
 record_module_loading_errors();
 
-$show_columns = array_fill_keys( array_keys( $modules ), 'n' );
+$show_columns = array_fill_keys(array_keys($modules), 'n');
 
 foreach ( $modules as $zone => & $moduleList ) {
 	if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y' ||
@@ -35,14 +35,14 @@ foreach ( $modules as $zone => & $moduleList ) {
 		foreach ( $moduleList as & $mod_reference ) {
 			$show_columns[$zone] = 'y';
 
-			$mod_reference['data'] = $modlib->execute_module( $mod_reference );
+			$mod_reference['data'] = $modlib->execute_module($mod_reference);
 		}
 
-		$smarty->assign_by_ref( $zone, $moduleList );
+		$smarty->assign_by_ref($zone, $moduleList);
 	}
 }
 
-$smarty->assign_by_ref( 'show_columns', $show_columns );
+$smarty->assign_by_ref('show_columns', $show_columns);
 
 $module_nodecorations = array('decorations' => 'n');
 $module_isflippable = array('flip' => 'y');
@@ -50,7 +50,8 @@ $smarty->assign('module_nodecorations', $module_nodecorations);
 $smarty->assign('module_isflippable', $module_isflippable);
 
 
-function record_module_loading_errors() {
+function record_module_loading_errors()
+{
 	global $user, $modlib, $tikilib, $smarty;
 	$user_groups = $tikilib->get_user_groups($user);
 	if (in_array('Admins', $user_groups)) {

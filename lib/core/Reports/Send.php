@@ -29,7 +29,8 @@ class Reports_Send
 		$this->mail = $mail;
 	}
 	
-	public function sendEmail($userData, $reportPreferences, $reportCache) {
+	public function sendEmail($userData, $reportPreferences, $reportCache) 
+	{
 		$mailData = $this->buildEmailBody($userData, $reportPreferences, $reportCache);
 				
 		$this->mail->setUser($userData['login']);
@@ -50,15 +51,21 @@ class Reports_Send
 	{
 		if (is_array($reportCache)) {
 			if (count($reportCache) == 1) {
-				$subject = tr('Report from %0 (1 change)',
-					TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()));
+				$subject = tr(
+								'Report from %0 (1 change)',
+								TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp())
+				);
 			} else {
-				$subject = tr('Report from %0 (%1 changes)',
-					TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()), count($reportCache));
+				$subject = tr(
+								'Report from %0 (%1 changes)',
+								TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()), count($reportCache)
+				);
 			}
 		} else {
-			$subject = tr('Report from %0 (no changes)',
-				TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()));
+			$subject = tr(
+							'Report from %0 (no changes)',
+							TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp())
+			);
 		}
 
 		$this->mail->setSubject($subject);

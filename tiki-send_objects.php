@@ -11,7 +11,7 @@ include_once ('lib/structures/structlib.php');
 
 //get_strings tra("Send Pages");
 $access->check_feature('feature_comm');
-$access->check_permission_either( array('tiki_p_send_pages', 'tiki_p_send_articles') );
+$access->check_permission_either(array('tiki_p_send_pages', 'tiki_p_send_articles'));
 
 if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
 	$smarty->assign('errortype', 401);
@@ -116,21 +116,22 @@ if (isset($_REQUEST['send'])) {
 			$listPageNames[$spage['page_ref_id']] = $spage['pageName'];
 			$page_info = $tikilib->get_page_info($spage['pageName']);
 			$pos++;
-			$searchMsg = new XML_RPC_Message('sendStructurePage'
-																			, array(
-																							new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string')
-																						, new XML_RPC_Value($_REQUEST['username'], 'string')
-																						, new XML_RPC_Value($_REQUEST['password'], 'string')
-																						, new XML_RPC_Value($spages[0]['pageName'], 'string')
-																						, new XML_RPC_Value($spage['parent_id'] ? $listPageNames[$spage['parent_id']] : $spage['pageName'], 'string')
-																						, new XML_RPC_Value($spage['pageName'], 'string')
-																						, new XML_RPC_Value(base64_encode($page_info['data']), 'string')
-																						, new XML_RPC_Value($page_info['comment'], 'string')
-																						, new XML_RPC_Value($page_info['description'], 'string')
-																						, new XML_RPC_Value($pos, 'string')
-																						, new XML_RPC_Value($spage['page_alias'], 'string')
-																				)
-																		);
+			$searchMsg = new XML_RPC_Message(
+							'sendStructurePage',
+							array(
+								new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
+								new XML_RPC_Value($_REQUEST['username'], 'string'),
+								new XML_RPC_Value($_REQUEST['password'], 'string'),
+								new XML_RPC_Value($spages[0]['pageName'], 'string'),
+								new XML_RPC_Value($spage['parent_id'] ? $listPageNames[$spage['parent_id']] : $spage['pageName'], 'string'),
+								new XML_RPC_Value($spage['pageName'], 'string'),
+								new XML_RPC_Value(base64_encode($page_info['data']), 'string'),
+								new XML_RPC_Value($page_info['comment'], 'string'),
+								new XML_RPC_Value($page_info['description'], 'string'),
+								new XML_RPC_Value($pos, 'string'),
+								new XML_RPC_Value($spage['page_alias'], 'string')
+							)
+			);
 			$result = $client->send($searchMsg);
 			if (!$result) {
 				$errorMsg = tra('Cannot login to server maybe the server is down');
@@ -150,17 +151,18 @@ if (isset($_REQUEST['send'])) {
 	foreach ($sendpages as $page) {
 		$page_info = $tikilib->get_page_info($page);
 		if ($page_info) {
-			$searchMsg = new XML_RPC_Message('sendPage'
-																				, array(
-																							new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string')
-																						, new XML_RPC_Value($_REQUEST['username'], 'string')
-																						, new XML_RPC_Value($_REQUEST['password'], 'string')
-																						, new XML_RPC_Value($page, 'string')
-																						, new XML_RPC_Value(base64_encode($page_info['data']), 'string')
-																						, new XML_RPC_Value($page_info['comment'], 'string')
-																						, new XML_RPC_Value($page_info['description'], 'string')
-																					)
-																			);
+			$searchMsg = new XML_RPC_Message(
+							'sendPage',
+							array(
+								new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
+								new XML_RPC_Value($_REQUEST['username'], 'string'),
+								new XML_RPC_Value($_REQUEST['password'], 'string'),
+								new XML_RPC_Value($page, 'string'),
+								new XML_RPC_Value(base64_encode($page_info['data']), 'string'),
+								new XML_RPC_Value($page_info['comment'], 'string'),
+								new XML_RPC_Value($page_info['description'], 'string'),
+							)
+			);
 			$result = $client->send($searchMsg);
 			if (!$result) {
 				$errorMsg = tra('Cannot login to server maybe the server is down');
@@ -180,32 +182,33 @@ if (isset($_REQUEST['send'])) {
 	foreach ($sendarticles as $article) {
 		$page_info = $artlib->get_article($article);
 		if ($page_info) {
-			$searchMsg = new XML_RPC_Message('sendArticle'
-																				, array(
-																							new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string')
-																						, new XML_RPC_Value($_REQUEST['username'], 'string')
-																						, new XML_RPC_Value($_REQUEST['password'], 'string')
-																						, new XML_RPC_Value(base64_encode($page_info['title']), 'string')
-																						, new XML_RPC_Value(base64_encode($page_info['authorName']), 'string')
-																						, new XML_RPC_Value($page_info['size'], 'int')
-																						, new XML_RPC_Value($page_info['useImage'], 'string')
-																						, new XML_RPC_Value($page_info['image_name'], 'string')
-																						, new XML_RPC_Value($page_info['image_type'], 'string')
-																						, new XML_RPC_Value($page_info['image_size'], 'int')
-																						, new XML_RPC_Value($page_info['image_x'], 'int')
-																						, new XML_RPC_Value($page_info['image_y'], 'int')
-																						, new XML_RPC_Value(base64_encode($page_info['image_data']), 'string')
-																						, new XML_RPC_Value($page_info['publishDate'], 'int')
-																						, new XML_RPC_Value($page_info['expireDate'], 'int')
-																						, new XML_RPC_Value($page_info['created'], 'int')
-																						, new XML_RPC_Value(base64_encode($page_info['heading']), 'string')
-																						, new XML_RPC_Value(base64_encode($page_info['body']), 'string')
-																						, new XML_RPC_Value($page_info['hash'], 'string')
-																						, new XML_RPC_Value($page_info['author'], 'string')
-																						, new XML_RPC_Value($page_info['type'], 'string')
-																						, new XML_RPC_Value($page_info['rating'], 'string')
-																					)
-																			);
+			$searchMsg = new XML_RPC_Message(
+							'sendArticle'
+							array(
+								new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
+								new XML_RPC_Value($_REQUEST['username'], 'string'),
+								new XML_RPC_Value($_REQUEST['password'], 'string'),
+								new XML_RPC_Value(base64_encode($page_info['title']), 'string'),
+								new XML_RPC_Value(base64_encode($page_info['authorName']), 'string'),
+								new XML_RPC_Value($page_info['size'], 'int'),
+								new XML_RPC_Value($page_info['useImage'], 'string'),
+								new XML_RPC_Value($page_info['image_name'], 'string'),
+								new XML_RPC_Value($page_info['image_type'], 'string'),
+								new XML_RPC_Value($page_info['image_size'], 'int'),
+								new XML_RPC_Value($page_info['image_x'], 'int'),
+								new XML_RPC_Value($page_info['image_y'], 'int'),
+								new XML_RPC_Value(base64_encode($page_info['image_data']), 'string'),
+								new XML_RPC_Value($page_info['publishDate'], 'int'),
+								new XML_RPC_Value($page_info['expireDate'], 'int'),
+								new XML_RPC_Value($page_info['created'], 'int'),
+								new XML_RPC_Value(base64_encode($page_info['heading']), 'string'),
+								new XML_RPC_Value(base64_encode($page_info['body']), 'string'),
+								new XML_RPC_Value($page_info['hash'], 'string'),
+								new XML_RPC_Value($page_info['author'], 'string'),
+								new XML_RPC_Value($page_info['type'], 'string'),
+								new XML_RPC_Value($page_info['rating'], 'string')
+							)
+			);
 			$result = $client->send($searchMsg);
 			if (!$result) {
 				$errorMsg = tra('Cannot login to server maybe the server is down');
