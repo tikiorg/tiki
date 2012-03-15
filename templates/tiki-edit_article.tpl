@@ -195,17 +195,17 @@
 			</td>
 		</tr>
 		<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td>{tr}View mode{/tr}</td>
+			<td>{tr}Maximum dimensions of custom image in view mode (Read Article){/tr}</td>
 			<td>
-				<label>{tr}Image width{/tr}</label> <input type="text" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if} /> {tr}pixels{/tr}
+				<label>{tr}Width{/tr}</label> <input type="text" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if} /> {tr}pixels{/tr}
 				{icon _id='help' alt="{tr}If different than the uploaded image{/tr}"}<br />
-				<label>{tr}Image height{/tr} <input type="text" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if} /></label> {tr}pixels{/tr}
+				<label>{tr}Height{/tr} <input type="text" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if} /></label> {tr}pixels{/tr}
 			</td>
 		</tr>
 		<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td>{tr}List mode{/tr}</td>
+			<td>{tr}Maximum dimensions of custom image in list mode (View Articles){/tr}</td>
 			<td>
-				<label>{tr}Image width{/tr}</label> <input type="text" name="list_image_x" value="{$list_image_x|escape}" /> {tr}pixels{/tr}
+				<label>{tr}Width{/tr}</label> <input type="text" name="list_image_x" value="{$list_image_x|escape}" /> {tr}pixels{/tr}
 				{icon _id='help' alt="{tr}If different than in view mode{/tr}"}
 			</td>
 		</tr>

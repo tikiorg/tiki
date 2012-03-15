@@ -70,13 +70,13 @@
 					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
 				{/if}
 				{if $useImage eq 'y' and $hasImage eq 'y'}
-					{* display article image *}
+					{* display article image *}{$style=''}
 					<img 
-						 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
-						 alt="{$smarty.capture.imgTitle}" 
+						 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if}
+						 alt="{$smarty.capture.imgTitle}"
 						 src="article_image.php?image_type=article&amp;id={$articleId}"
-						 {if $image_x > 0}width="{$image_x}"{/if}
-						 {if $image_y > 0}height="{$image_y}"{/if} />
+						 {if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
+						 {if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}" />
 				{elseif $topicId}
 					{if $useImage eq 'y'}
 						{if $topics[$topicId].image_size > 0}

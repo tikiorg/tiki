@@ -88,8 +88,10 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 	if (!empty($_REQUEST['width'])) {
 		require_once('lib/images/images.php');
 		$image = new Image($data);
-		$image->resize($_REQUEST['width'], 0);
-		$data = $image->display();
+		if ($image->get_width() > $_REQUEST['width']) {
+			$image->resize($_REQUEST['width'], 0);
+			$data = $image->display();
+		}
 		if (empty($data)) die;
 	}
 	if ($useCache && $data) {
