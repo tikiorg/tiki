@@ -44,8 +44,8 @@
 			<tr>
 				<td valign="top">
 				{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
-				{if $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
-					{assign var="big_image" value=y}
+				{assign var="big_image" value=$prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
+				{if $big_image}
 					 <div class="imgbox" style="margin:auto; width:{$width}px">
 				{/if}
 				
@@ -56,7 +56,7 @@
 				{if $useImage eq 'y' and $hasImage eq 'y'}
 					{* display article image *}{$style=''}
 					<img 
-						 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if}
+						 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if}
 						 alt="{$smarty.capture.imgTitle}"
 						 src="article_image.php?image_type=article&amp;id={$articleId}"
 						 {if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
@@ -65,7 +65,7 @@
 					{if $useImage eq 'y'}
 						{if $topics[$topicId].image_size > 0}
 							<img 
-								 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
+								 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
 								 alt="{tr}{$topicName}{/tr}"
 								 src="article_image.php?image_type=topic&amp;id={$topicId}" />
 						{/if}
@@ -75,7 +75,7 @@
 				{/if}
 				{if $topicId}</a>{/if}
 				
-				{if $big_image eq 'y'}
+				{if $big_image}
 					{if $show_image_caption eq 'y' and $image_caption || $image_x > 0}
 						<div class="mini thumbcaption">
 						{if $image_x > 0}<div class="magnify"><a class="internal cboxElement" rel="box" href="article_image.php?image_type=article&amp;id={$articleId}">{icon _id='magnifier' title=$smarty.capture.imgTitle}</a></div>{/if}
