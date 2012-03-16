@@ -589,10 +589,10 @@ $smarty->assign_by_ref('topics', $topics);
 $types = $artlib->list_types_byname();
 if (empty($article_data)) {
 	// Select the first type as default selection
-	if (array($types)) {
-		$type = key($types);
-	} else {
+	if (empty($types)) {
 		$type = '';
+	} else {
+		$type = key($types);
 	}
 	$smarty->assign('type', $type);
 }
