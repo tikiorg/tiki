@@ -168,11 +168,8 @@ $smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y
 $smarty->assign('parsed_heading', $tikilib->parse_data($heading, array('is_html' => 'y')));
 
 $topics = $artlib->list_topics();
-foreach ($topics as $topic) {
-	if ($topic['topicId'] == $article_data['topicId']) {
-		$smarty->assign('topicName', $topic['name']);
-		break;
-	}
+if (isset($topics[$article_data['topicId']])) {
+	$smarty->assign('topicName', $topics[$article_data['topicId']]['name']);
 }
 $smarty->assign_by_ref('topics', $topics);
 
