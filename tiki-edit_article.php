@@ -588,10 +588,9 @@ $smarty->assign_by_ref('topics', $topics);
 // get list of valid types
 $types = $artlib->list_types_byname();
 if (empty($article_data)) {
+	// Select the first type as default selection
 	if (array($types)) {
-		foreach ($types as $type=>$val) {
-			break;
-		}
+		$type = key($types);
 	} else {
 		$type = '';
 	}
