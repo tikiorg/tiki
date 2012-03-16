@@ -43,6 +43,8 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 		global $textlinkContribution;
 		
 		if (!empty($textlinkContribution)) {
+			$this->setEncoding(TikiFilter_PrepareInput::delimiter('_')->flatten($textlinkContribution));
+			
 			return $textlinkContribution;
 		}
 	

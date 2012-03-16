@@ -14,6 +14,7 @@ abstract class Feed_Abstract
 	var $type = "";
 	var $isFileGal = false;
 	var $version = "0.0";
+	var $encoding = "";
 	
 	function __construct($name = "")
 	{
@@ -73,6 +74,11 @@ abstract class Feed_Abstract
 		
 	}
 	
+	public function setEncoding($contents)
+	{
+		$this->encoding = mb_detect_encoding($contents, "ASCII, UTF-8, ISO-8859-1");
+	}
+	
 	private function open()
 	{
 		if ($this->isFileGal == true) {
@@ -80,6 +86,8 @@ abstract class Feed_Abstract
 		} else {
 			$contents = TikiLib::lib("cache")->getCached($this->name, get_class($this));
 		}
+		
+		$this->setEncoding($contents); 
 		
 		$contents = json_decode($contents);
 		if (empty($contents)) return array();
@@ -159,12 +167,17 @@ abstract class Feed_Abstract
 	public function feed()
 	{
 		global $tikilib;
-		return (object)array(
-			'version' => $this->version,
-			'encoding' => 'UTF-8',
-			'feed' => $this->getContents(),
-			'origin' => $tikilib->tikiUrl() . 'tiki-feed.php'
+		$contents = $this->getContents();
+		
+		$feed = (object)array(
+			'version'=> 	$this->version,
+			'encoding'=> 	$this->encoding, //we get this from the above call to open
+			'feed'=> 		$contents,
+			'origin'=> 		$tikilib->tikiUrl() . 'tiki-feed.php',
+			'type'=>		$this->type
 		);
+		
+		return $feed;
 	}
 	
 	public function listArchives()
