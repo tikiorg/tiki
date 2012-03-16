@@ -29,7 +29,7 @@ $auto_query_args = array(
 	'filegals_manager',
 	//'show_disabled_features',	// this seems to cause issues - the $_GET version overrides the $_POST one...
 );
-$perm = 'tiki_p_assign_perm_' . str_replace(' ', '_', $_REQUEST['objectType']);
+$perm = 'tiki_p_assign_perm_' . preg_replace('/[ +]/', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
 	if ($tiki_p_admin_wiki == 'y') {
 		$special_perm = 'y';
