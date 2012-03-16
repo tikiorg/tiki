@@ -109,11 +109,23 @@ if (isset($_REQUEST["save"])) {
 	}
 
 	// Pass dummy "n" for immediateFeedback, showAnswers, shuffleQuestions and shuffleAnswers, which are not implemented.
-	$qid = $quizlib->replace_quiz($_REQUEST["quizId"], $_REQUEST["name"],
-																$_REQUEST["description"],	$_REQUEST["canRepeat"],
-																$_REQUEST["storeResults"], 'n', 'n', 'n', 'n', $_REQUEST["questionsPerPage"],
-																$_REQUEST["timeLimited"], $_REQUEST["timeLimit"],
-																$publishDate, $expireDate, $_REQUEST["passingperct"]);
+	$qid = $quizlib->replace_quiz(
+					$_REQUEST["quizId"], 
+					$_REQUEST["name"],
+					$_REQUEST["description"],	
+					$_REQUEST["canRepeat"],
+					$_REQUEST["storeResults"],
+					'n',
+					'n', 
+					'n',
+					'n', 
+					$_REQUEST["questionsPerPage"],
+					$_REQUEST["timeLimited"], 
+					$_REQUEST["timeLimit"],
+					$publishDate, 
+					$expireDate, 
+					$_REQUEST["passingperct"]
+	);
 	$cat_type = 'quiz';
 	$cat_objid = $qid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);

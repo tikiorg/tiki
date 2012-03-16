@@ -30,9 +30,9 @@ class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_L
      *
      * @param array $stopwords array (set) of words that will be filtered out
      */
-    public function __construct() 
+	public function __construct() 
 	{
-    }
+	}
 
     /**
      * Normalize Token or remove it (if null is returned)
@@ -40,16 +40,18 @@ class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_L
      * @param Zend_Search_Lucene_Analysis_Token $srcToken
      * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken) {
+	public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken) 
+	{
 		
 		$newToken = new Zend_Search_Lucene_Analysis_Token(
-                                     PorterStemmer::stem( $srcToken->getTermText() ),
-                                     $srcToken->getStartOffset(),
-                                     $srcToken->getEndOffset());
+						PorterStemmer::stem($srcToken->getTermText()),
+						$srcToken->getStartOffset(),
+						$srcToken->getEndOffset()
+		);
 
-        $newToken->setPositionIncrement($srcToken->getPositionIncrement());
-
-        return $newToken;
-    }
+		$newToken->setPositionIncrement($srcToken->getPositionIncrement());
+	
+		return $newToken;
+	}
 }
 

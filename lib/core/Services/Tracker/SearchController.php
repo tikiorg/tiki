@@ -97,7 +97,7 @@ class Services_Tracker_SearchController
 					$filter = 'language';
 				} elseif ($config['_filter'] == 'type') {
 					$filter = 'type';
-				} elseif ($config['_filter'] == 'categories' || $name == 'categories')  {
+				} elseif ($config['_filter'] == 'categories' || $name == 'categories') {
 					$filter = 'categories';
 				} else {
 					$filter = 'content'; //default
@@ -146,7 +146,8 @@ class Services_Tracker_SearchController
 		return array('html' => $results);
 	}
 
-	private function cs_get_grouped($dataappend, $groups) {
+	private function cs_get_grouped($dataappend, $groups) 
+	{
 		$grouped = array();
 		foreach ($dataappend as $fieldid => $data) {
 			if (isset($groups[$fieldid]) && !isset($groupedids[$groups[$fieldid]])) {
@@ -156,7 +157,8 @@ class Services_Tracker_SearchController
 		return $grouped;
 	}
 
-	private function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false) {
+	private function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false) 
+	{
 		$parser = new WikiParser_PluginArgumentParser;
 		$to_reconstruct = array();
 		foreach ($grouped as $group_id => $grp) {
@@ -205,7 +207,8 @@ class Services_Tracker_SearchController
 		return $to_reconstruct;
 	}
 
-	private function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys) {
+	private function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys) 
+	{
 		foreach ($to_reconstruct as $group_id => $recon) {
 			$new_query_val = implode(' ', $recon['query_vals']);
 			foreach ($grouping_keys as $k) {
@@ -226,7 +229,8 @@ class Services_Tracker_SearchController
 		}
 	}
 
-	private function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text') {
+	private function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text') 
+	{
 		foreach ($to_reconstruct as $group_id => $recon) {
 			sort($recon['query_vals'], SORT_NUMERIC); // Lucene is a string only engine but date ranges are converted from timestamp ints
 			$from = $recon['query_vals'][0];
@@ -249,7 +253,8 @@ class Services_Tracker_SearchController
 		}
 	}
 
-	private function cs_dataappend_language($config, $value) {
+	private function cs_dataappend_language($config, $value) 
+	{
 		if ($config['type'] != 'text') {
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];
@@ -263,7 +268,8 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	private function cs_dataappend_type($config, $value) {
+	private function cs_dataappend_type($config, $value) 
+	{
 		if ($config['type'] != 'text') {
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];
@@ -275,7 +281,8 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	private function cs_dataappend_content($config, $value) {
+	private function cs_dataappend_content($config, $value) 
+	{
 		if ($value) {
 			if ($config['type'] == 'checkbox') {
 				if (empty($config['_field'])) {
@@ -307,7 +314,8 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	private function cs_dataappend_categories($config, $value) {
+	private function cs_dataappend_categories($config, $value) 
+	{
 		if (isset($config['_filter']) && $config['_filter'] == 'categories' && $config['type'] != 'text') {
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];

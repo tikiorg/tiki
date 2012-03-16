@@ -59,7 +59,8 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 	{
 	}
 
-	function _insert_tag($line, $tag, &$span) {
+	function _insert_tag($line, $tag, &$span) 
+	{
 		$string = "";
 		if ($line != '') {
 			if (strstr($line, "<") === FALSE) {
@@ -84,7 +85,9 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		return $string;
 	}
 
-	function _count_tags($line, $version) {
+	function _count_tags($line, $version) 
+	{
+
 		preg_match("#<(/?)([^ >]+)#", $line, $out);
 		if (count($out) > 1 && in_array($out[2], $this->tracked_tags)) {
 			if (isset($this->tags[$version][$out[2]])) {
@@ -97,7 +100,8 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 		}
 	}
 
-	function _can_break($line) {
+	function _can_break($line) 
+	{
 
 		if (preg_match("#<(p|h\d|br)#", $line) == 0) {
 			return false;
@@ -137,12 +141,16 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$this->final[$this->n] .= "</span>";
 						$this->rspan = false;
 					}
-					if (!isset($this->original[$this->n])) { $this->original[$this->n] = ''; }
+					if (!isset($this->original[$this->n])) { 
+						$this->original[$this->n] = '';
+					}
 					$this->original[$this->n] .= "$line";
-					if (!isset($this->final[$this->n])) { $this->final[$this->n] = ''; }
+					if (!isset($this->final[$this->n])) { 
+						$this->final[$this->n] = ''; 
+					}
 					$this->final[$this->n] .= "$line";
 				}
-				break;
+    			break;
 			case 'change-added':
 			case 'added':
 				foreach ($lines as $line) {
@@ -152,7 +160,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$context = 0;
 					}
 				}
-				break;
+    			break;
 			case 'deleted':
 			case 'change-deleted':
 				foreach ($lines as $line) {
@@ -162,7 +170,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$context = 0;
 					}
 				}
-				break;
+    			break;
 		}
 	}
 

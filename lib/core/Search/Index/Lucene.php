@@ -107,11 +107,13 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->maxResults = (int) $max;
 	}
 
-	public function setResultSetLimit($resultSetLimit) {
+	public function setResultSetLimit($resultSetLimit) 
+	{
 		$this->resultSetLimit = $resultSetLimit;
 	}
 
-	public function getResultSetLimit() {
+	public function getResultSetLimit() 
+	{
 		return $this->resultSetLimit;
 	}
 	
@@ -147,10 +149,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 		);
 
 		if ($this->cache) {
-			$this->cache->cacheItem($cacheKey, serialize(array(
-				'query' => $query,
-				'hits' => $return,
-			)), 'searchresult');
+			$this->cache->cacheItem(
+							$cacheKey, 
+							serialize(
+											array(
+												'query' => $query,
+												'hits' => $return,
+											)
+							),
+							'searchresult'
+			);
 		}
 
 		return $return;
@@ -245,9 +253,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 			// Range search not supported for phrases, so revert to normal token matching
 			if (method_exists($from, 'getTerm')) {
 				$range = new Zend_Search_Lucene_Search_Query_Range(
-					$from->getTerm(),
-					$to->getTerm(),
-					true // inclusive
+								$from->getTerm(),
+								$to->getTerm(),
+								true // inclusive
 				);
 
 				$term = $range;

@@ -80,8 +80,8 @@ function wikiplugin_bigbluebutton( $data, $params )
 		$bigbluebuttonlib = TikiLib::lib('bigbluebutton');
 		$meeting = $params['name']; // Meeting is more descriptive than name, but parameter name was already decided.
 
-		$smarty->assign( 'bbb_meeting', $meeting );
-		$smarty->assign( 'bbb_image', parse_url( $prefs['bigbluebutton_server_location'], PHP_URL_SCHEME ) . '://' . parse_url( $prefs['bigbluebutton_server_location'], PHP_URL_HOST ) . '/images/bbb_logo.png' );
+		$smarty->assign('bbb_meeting', $meeting);
+		$smarty->assign('bbb_image', parse_url($prefs['bigbluebutton_server_location'], PHP_URL_SCHEME) . '://' . parse_url($prefs['bigbluebutton_server_location'], PHP_URL_HOST) . '/images/bbb_logo.png');
 
 		$perms = Perms::get('bigbluebutton', $meeting);
 

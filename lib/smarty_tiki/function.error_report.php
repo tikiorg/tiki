@@ -37,15 +37,15 @@ function smarty_function_error_report($params, $smarty)
 
 		$repeat = false;
 		return $pre . smarty_block_remarksbox(
-			array(
-				'type' => 'errors',
-				'title' => tra('Error(s)'),
-			),
-			'<a class="clear" style="float: right;" href="#">' .
-			tr('Clear errors') . '</a><ul><li>' .
-			implode('</li><li>', $errors) . '</li></ul>',
-			$smarty,
-			$repeat
+						array(
+							'type' => 'errors',
+							'title' => tra('Error(s)'),
+						),
+						'<a class="clear" style="float: right;" href="#">' .
+						tr('Clear errors') . '</a><ul><li>' .
+						implode('</li><li>', $errors) . '</li></ul>',
+						$smarty,
+						$repeat
 		) . $post;
 	} else {
 		return $pre . $post;

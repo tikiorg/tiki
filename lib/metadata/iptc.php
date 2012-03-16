@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 /*
  * Manipulates IPTC metadata included within a file
  */
-class Iptc 
+class Iptc
 {
 	function addIptcTags($iptcraw)
 	{
@@ -50,14 +50,14 @@ class Iptc
 				$iptc['2#201']['specs']['options'][$iptc['2#201']['value']['converted']][$iptc['2#200']['value']['converted']];
 		}
 		if (array_key_exists('2#130', $iptc)) {
-			$char1 = substr($iptc[$key]['value']['converted'],0,1);
-			$char2 = substr($iptc[$key]['value']['converted'],1,1);
+			$char1 = substr($iptc[$key]['value']['converted'], 0, 1);
+			$char2 = substr($iptc[$key]['value']['converted'], 1, 1);
 			$iptc['2#130']['value']['display'] = $iptc['2#130']['specs']['options'][0][$char1] . '; ' 
 				. $iptc['2#130']['specs']['options'][0][$char2];
 		}
 		if (array_key_exists('2#150', $iptc)) {
-			$char1 = substr($iptc[$key]['value']['converted'],0,1);
-			$char2 = substr($iptc[$key]['value']['converted'],1,1);
+			$char1 = substr($iptc[$key]['value']['converted'], 0, 1);
+			$char2 = substr($iptc[$key]['value']['converted'], 1, 1);
 			$iptc['2#150']['value']['display'] = $iptc['2#150']['specs']['options'][0][$char1] . '; ' 
 				. $iptc['2#150']['specs']['options'][0][$char2];
 		}

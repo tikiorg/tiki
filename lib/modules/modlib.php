@@ -889,13 +889,13 @@ class ModLib extends TikiLib
 			}
 			$repeat = false;
 			return smarty_block_remarksbox(
-				array(
-					'type' => 'warning',
-					'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
-				),
-				$message,
-				$smarty,
-				$repeat
+							array(
+								'type' => 'warning',
+								'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
+							),
+							$message,
+							$smarty,
+							$repeat
 			);
 		}
 	}

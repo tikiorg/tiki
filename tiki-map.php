@@ -9,7 +9,8 @@ $_SERVER["SCRIPT_NAME"] = basename(__FILE__);
 require_once ('tiki-setup.php');
 
 // was lib/setup/menus.php but only used here
-function setDisplayMenu($name) {
+function setDisplayMenu($name) 
+{
 	global $smarty;
 	if ( getCookie($name, 'menu', isset($_COOKIE['menu']) ? null : 'o') == 'o' ) {
 		$smarty->assign('mnu_'.$name, 'display:block;');
@@ -89,7 +90,8 @@ if (!is_file($map_path . $mapfile) || preg_match("/(\/\.)/", $map_path . $mapfil
 	die;
 }
 // user defined error handling function to handle errors in loading mapfile
-function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
+function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars) 
+{
 	global $smarty;
 	global $style_base;
 	global $map_path;
@@ -401,22 +403,22 @@ for ($i = - 2; $i <= 2; $i++) {
 		case "-2":
 			$zoom_values[] = $i;
 			$zoom_display[] = 'Zoom out';
-			break;
+    		break;
 
 		case "0":
 			$zoom_values[] = $i;
 			$zoom_display[] = 'query';
-			break;
+    		break;
 
 		case "1":
 			$zoom_values[] = $i;
 			$zoom_display[] = 'pan';
-			break;
+    		break;
 
 		case "2":
 			$zoom_values[] = $i;
 			$zoom_display[] = 'Zoom in';
-			break;
+    		break;
 	}
 }
 $smarty->assign('zoom', $zoom);

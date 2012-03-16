@@ -105,17 +105,20 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 			$smarty->loadPlugin('smarty_function_user_selector');
 			return smarty_function_user_selector(
-					array(	'user' => $value,
-							'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
-							'select' => $value,
-							'name' => $this->getConfiguration('ins_id'),
-							'editable' => 'y',
-							'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
-							'groupIds' => $groupIds,
-					), $smarty);
+							array(
+								'user' => $value,
+								'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
+								'select' => $value,
+								'name' => $this->getConfiguration('ins_id'),
+								'editable' => 'y',
+								'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
+								'groupIds' => $groupIds,
+							), 
+							$smarty
+			);
 		} else {
 			$smarty->loadPlugin('smarty_modifier_username');
-			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
+			return smarty_modifier_username($value) . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
 		}
 	}
 
@@ -126,7 +129,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			return '';
 		} else {
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-			return smarty_modifier_username( $value );
+			return smarty_modifier_username($value);
 		}
 	}
 
@@ -147,9 +150,12 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$groupIds = array_map('intval', $groupIds);
 
 		$controller = new Services_RemoteController($syncInfo['provider'], 'user');
-		$users = $controller->getResultLoader('list_users', array(
-			'groupIds' => $groupIds,
-		));
+		$users = $controller->getResultLoader(
+						'list_users', 
+						array(
+							'groupIds' => $groupIds,
+						)
+		);
 
 		$list = array();
 		foreach ($users as $user) {

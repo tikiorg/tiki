@@ -39,7 +39,7 @@ try {
 	$kconf = new KalturaConfiguration($prefs['partnerId']);
 	$kconf->serviceUrl = $prefs['kServiceUrl'];
 	$kclient = new KalturaClient($kconf);
-	$ksession = $kclient->session->start( $prefs['secret'], $kuser, $SESSION_USER,$prefs['partnerId'],86400,'edit:*' );
+	$ksession = $kclient->session->start($prefs['secret'], $kuser, $SESSION_USER, $prefs['partnerId'], 86400, 'edit:*');
 	$kclient->setKs($ksession);
 	
 } catch (Exception $e) {

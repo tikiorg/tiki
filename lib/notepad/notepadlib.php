@@ -16,25 +16,29 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 */
 class NotepadLib extends TikiLib
 {
-	function get_note($user, $noteId) {
+	function get_note($user, $noteId) 
+	{
 		$query = "select * from `tiki_user_notes` where `user`=? and `noteId`=?";
-		$result = $this->query($query,array($user,(int)$noteId));
+		$result = $this->query($query, array($user,(int)$noteId));
 		$res = $result->fetchRow();
 		return $res;
 	}
 
-	function set_note_parsing($user, $noteId, $mode) {
+	function set_note_parsing($user, $noteId, $mode) 
+	{
 		$query = "update `tiki_user_notes` set `parse_mode`=? where `user`=? and `noteId`=?";
 		$this->query($query, array($mode,$user,(int)$noteId));
 		return true;
 	}
 
-	function remove_note($user, $noteId) {
+	function remove_note($user, $noteId) 
+	{
 		$query = "delete from `tiki_user_notes` where `user`=? and `noteId`=?";
 		$this->query($query, array($user,(int)$noteId));
 	}
 
-	function list_notes($user, $offset, $maxRecords, $sort_mode, $find) {
+	function list_notes($user, $offset, $maxRecords, $sort_mode, $find) 
+	{
 
 		$bindvars = array($user);
 		if ($find) {
@@ -48,8 +52,8 @@ class NotepadLib extends TikiLib
 
 		$query = "select * from `tiki_user_notes` where `user`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_notes` where `user`=? $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

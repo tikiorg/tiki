@@ -153,19 +153,30 @@ class Report_Definition_Logs
 			->end(strtotime($values['logs']['end']['value']));
 		
 		$usersItems = array();//user items need to be choosable as to what type
-		foreach ($tikilib->fetchAll("
-			SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?
-		", array($user)) as $item) {
+		foreach ($tikilib->fetchAll(
+						"SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?",
+						array($user)
+		) as $item) {
 			$usersItems[] = $item['itemId'];
 		}
 		
 		if (!empty($values['logs']['grouping'])) {
 			switch($values['logs']['grouping']['value']) {
-				case "count": 					$qry->count(); 								break;
-				case "countByDate": 			$qry->countByDate(); 						break;
-				case "countByDateFilterId": 	$qry->countByDateFilterId($usersItems); 	break;
-				case "countUsersFilterId": 		$qry->countUsersFilterId($usersItems); 		break;
-				case "countUsersIPFilterId": 	$qry->countUsersIPFilterId($usersItems);	break;
+				case "count":
+					$qry->count();
+    				break;
+				case "countByDate":
+					$qry->countByDate();
+    				break;
+				case "countByDateFilterId":
+					$qry->countByDateFilterId($usersItems);
+    				break;
+				case "countUsersFilterId":
+					$qry->countUsersFilterId($usersItems);
+    				break;
+				case "countUsersIPFilterId":
+					$qry->countUsersIPFilterId($usersItems);
+    				break;
 			}
 		}
 		
@@ -175,8 +186,12 @@ class Report_Definition_Logs
 		
 		if (!empty($values['logs']['sort'])) {
 			switch ($values['logs']['sort']['value']) {
-				case "asc": 	$qry->asc(); 	break;
-				case "desc": 	$qry->desc(); 	break;
+				case "asc":
+					$qry->asc();
+    				break;
+				case "desc":
+					$qry->desc();
+    				break;
 			}
 		}
 		

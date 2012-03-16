@@ -83,12 +83,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 			// Add manually uploaded files (non-HTML5 browsers only)
 			foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
-				$fileIds[] = $this->handleUpload($galleryId, array(
-					'name' => $_FILES[$ins_id]['name'][$index],
-					'type' => $_FILES[$ins_id]['type'][$index],
-					'size' => $_FILES[$ins_id]['size'][$index],
-					'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
-				));
+				$fileIds[] = $this->handleUpload(
+								$galleryId, 
+								array(
+									'name' => $_FILES[$ins_id]['name'][$index],
+									'type' => $_FILES[$ins_id]['type'][$index],
+									'size' => $_FILES[$ins_id]['size'][$index],
+									'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
+								)
+				);
 			}
 
 			// Remove missed uploads
@@ -117,7 +120,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		if ($deepGallerySearch) {
 			$gallery_list = null;
 			TikiLib::lib('filegal')->getGalleryIds($gallery_list, $galleryId, 'list');
-			$gallery_list = implode( ' or ', $gallery_list );
+			$gallery_list = implode(' or ', $gallery_list);
 		} else {
 			$gallery_list = $galleryId;
 		}
@@ -260,9 +263,17 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$db = TikiDb::get();
 		$table = $db->table('tiki_files');
 
-		$data = $table->fetchAll(array('fileId', 'name', 'filetype', 'archiveId'), array(
-			'fileId' => $table->in($ids),
-		));
+		$data = $table->fetchAll(
+						array(
+							'fileId', 
+							'name', 
+							'filetype', 
+							'archiveId'
+						), 
+						array(
+							'fileId' => $table->in($ids),
+						)
+		);
 
 		$out = array();
 		foreach ($data as $info) {

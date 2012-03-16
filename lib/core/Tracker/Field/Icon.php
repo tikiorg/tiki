@@ -54,11 +54,15 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 	
 	private function getSearchLink($galleryId)
 	{
-		return 'tiki-searchindex.php?' . http_build_query(array(
-			'filter~type' => 'file',
-			'filter~gallery_id' => $galleryId,
-			'filter~filetype' => 'image',
-		), '', '&');
+		return 'tiki-searchindex.php?' . http_build_query(
+						array(
+							'filter~type' => 'file',
+							'filter~gallery_id' => $galleryId,
+							'filter~filetype' => 'image',
+						),
+						'',
+						'&'
+		);
 	}
 
 	function renderInput($context = array())
@@ -72,9 +76,8 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			array('label' => $info['name'], 'url' => $this->getSearchLink($galleryId)),
 		);
 
-		$children = $filegallib->table('tiki_file_galleries')->fetchMap('galleryId', 'name', array(
-			'parentId' => $galleryId,
-		));
+		$children = $filegallib->table('tiki_file_galleries')
+										->fetchMap('galleryId', 'name', array('parentId' => $galleryId));
 		foreach ($children as $galleryId => $name) {
 			$galleries[] = array(
 				'label' => $name,
@@ -82,9 +85,13 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			);
 		}
 
-		return $this->renderTemplate('trackerinput/icon.tpl', $context, array(
-			'galleries' => $galleries,
-		));
+		return $this->renderTemplate(
+						'trackerinput/icon.tpl', 
+						$context, 
+						array(
+							'galleries' => $galleries,
+						)
+		);
 	}
 
 	function renderInnerOutput($context = array())

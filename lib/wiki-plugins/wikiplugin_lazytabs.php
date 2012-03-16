@@ -10,11 +10,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   die;
 }
 
-function wikiplugin_lazytabs_help() {
+function wikiplugin_lazytabs_help() 
+{
         return "Cutom Tabs Engine";
 }
 
-function wikiplugin_lazytabs_info() {
+function wikiplugin_lazytabs_info() 
+{
 	return array(
 		'name' => tra('Lazy Tabs'),
 		'documentation' => tra('PluginLazyTabs'),			
@@ -26,7 +28,8 @@ function wikiplugin_lazytabs_info() {
 	);
 }
 
-function wikiplugin_lazytabs($data, $params) {
+function wikiplugin_lazytabs($data, $params) 
+{
 	global $tikilib, $smarty, $headerlib, $user;
 	$lazyTabs = true;
 	
@@ -37,8 +40,8 @@ function wikiplugin_lazytabs($data, $params) {
 	}
 	
 	if ($lazyTabs == true) {
-		$headerlib->add_jq_onready('
-			var lazyTabsTable = $("table.lazytabs")
+		$headerlib->add_jq_onready(
+						'var lazyTabsTable = $("table.lazytabs")
 				.hide();
 
 			var tabParent = $("<div id=\'lazyTabContainer\' />")
@@ -125,8 +128,8 @@ function wikiplugin_lazytabs($data, $params) {
 						$("html, body").scrollTop(aTop);
 					});
 				});
-			}
-		');
+			}'
+		);
 		
 		return "<style>
 			#tabMenu {

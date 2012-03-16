@@ -19,32 +19,32 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj = new TikiImporter_Blog();
 	}
 	
-    public function testImportShouldCallMethodsToStartImportProcess()
-    {
-        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'setupTiki'));
-        $obj->expects($this->once())->method('parseData');
-        $obj->expects($this->once())->method('insertData');
-        $obj->expects($this->once())->method('setupTiki');
+	public function testImportShouldCallMethodsToStartImportProcess()
+	{
+		$obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'setupTiki'));
+		$obj->expects($this->once())->method('parseData');
+		$obj->expects($this->once())->method('insertData');
+		$obj->expects($this->once())->method('setupTiki');
+		
+		$this->expectOutputString("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
+		$obj->import();
+	}
 
-        $this->expectOutputString("\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
-        $obj->import();
-   }
-
-    public function testImportShouldSetSessionVariables()
-    {
-        $expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
-        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'saveAndDisplayLog', 'setupTiki')); 
-        $obj->expects($this->once())->method('parseData');
-        $obj->expects($this->once())->method('insertData')->will($this->returnValue($expectedImportFeedback));
-        $obj->expects($this->once())->method('saveAndDisplayLog');
-        $obj->expects($this->once())->method('setupTiki');
-        
-        $obj->log = 'some log string';
-        $obj->import();
-
-        $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
-        $this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
-    }
+	public function testImportShouldSetSessionVariables()
+	{
+		$expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
+		$obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'saveAndDisplayLog', 'setupTiki')); 
+		$obj->expects($this->once())->method('parseData');
+		$obj->expects($this->once())->method('insertData')->will($this->returnValue($expectedImportFeedback));
+		$obj->expects($this->once())->method('saveAndDisplayLog');
+		$obj->expects($this->once())->method('setupTiki');
+		
+		$obj->log = 'some log string';
+		$obj->import();
+		
+		$this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
+		$this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
+	}
 
     public function testInsertData_shouldCallInsertItemSixTimes()
     {
@@ -85,14 +85,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj->insertData();
     }
 
-    public function testInsertData_shouldReturnCountData()
-    {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createBlog'));
-        $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->exactly(6))->method('insertItem')->will($this->onConsecutiveCalls(true, true, true, true, false, true));
+	public function testInsertData_shouldReturnCountData()
+	{
+		$obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createBlog'));
+		$obj->expects($this->once())->method('createBlog');
+		$obj->expects($this->exactly(6))->method('insertItem')->will($this->onConsecutiveCalls(true, true, true, true, false, true));
+		
+		$obj->permalinks = array('not empty');
 
-        $obj->permalinks = array('not empty');
-        
 		$obj->parsedData = array(
 			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
@@ -186,8 +186,9 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		global $commentslib; require_once('lib/comments/commentslib.php');
 		
 		$commentslib = $this->getMock('Comments', array('post_new_comment'));
-		$commentslib->expects($this->exactly(2))->method('post_new_comment')->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '',
-			'', 1234, '', '');
+		$commentslib->expects($this->exactly(2))
+							->method('post_new_comment')
+							->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '', '', 1234, '', '');
 		
 		$comments = array(
 			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
@@ -202,8 +203,9 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		global $commentslib; require_once('lib/comments/commentslib.php');
 		
 		$commentslib = $this->getMock('Comments', array('post_new_comment', 'approve_comment'));
-		$commentslib->expects($this->exactly(2))->method('post_new_comment')->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '',
-			'', 1234, '', '')->will($this->returnValue(22));
+		$commentslib->expects($this->exactly(2))
+						->method('post_new_comment')
+						->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '', '', 1234, '', '')->will($this->returnValue(22));
 		$commentslib->expects($this->once())->method('approve_comment')->with(22, 'n');
 		
 		$comments = array(

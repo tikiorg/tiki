@@ -42,15 +42,17 @@ function wikiplugin_textlink($data, $params)
 	$phraser = new JisonParser_Phraser_Handler();
 	$id = implode("", $phraser->sanitizeToWords($data));
 	
-	Feed_ForwardLink_Send::add(array(
-		"page"=> $page,
-		"forwardlink"=> $clipboarddata,
-		"textlink"=> array(
-			"text"=> 	$data,
-			"href"=> 	$tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id,
-			"id"=>		$clipboarddata->hash. "_" . $page . "_" . $id
-		)
-	));
+	Feed_ForwardLink_Send::add(
+					array(
+						"page"=> $page,
+						"forwardlink"=> $clipboarddata,
+						"textlink"=> array(
+							"text"=> 	$data,
+							"href"=> 	$tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id,
+							"id"=>		$clipboarddata->hash. "_" . $page . "_" . $id
+						)
+					)
+	);
 	$data = htmlspecialchars($data);
 	$date = $tikilib->get_short_date($clipboarddata->date);
 	if (!empty($clipboarddata->href)) {
@@ -92,10 +94,10 @@ function wikiplugin_textlink($data, $params)
 					});
 				});
 JQ
-		);
+			);
 		
     	return "~np~<span class='textlink'>~/np~".$data."~np~</span><a href='" .$clipboarddata->href ."' id='" . $id . "'>*</a>~/np~";
 	} else {
     	return $data;
-    }
+	}
 }

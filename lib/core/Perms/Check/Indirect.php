@@ -9,19 +9,22 @@ class Perms_Check_Indirect implements Perms_Check
 {
 	private $map;
 
-	function __construct( array $map ) {
+	function __construct( array $map ) 
+	{
 		$this->map = $map;
 	}
 
-	function check( Perms_Resolver $resolver, array $context, $name, array $groups ) {
+	function check( Perms_Resolver $resolver, array $context, $name, array $groups ) 
+	{
 		if ( isset( $this->map[$name] ) ) {
-			return $resolver->check( $this->map[$name], $groups );
+			return $resolver->check($this->map[$name], $groups);
 		} else {
 			return false;
 		}
 	}
 
-	function applicableGroups( Perms_Resolver $resolver ) {
+	function applicableGroups( Perms_Resolver $resolver ) 
+	{
 		return $resolver->applicableGroups();
 	}
 }

@@ -56,14 +56,17 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_user_vote('def', 'test', 113, 1));
 		$this->assertTrue($lib->record_user_vote('def', 'test', 112, 5));
 
-		$this->assertEquals(array(
-			array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
-			array('user' => 'abc', 'id' => 'test.111', 'optionId' => 3),
-			array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
-			array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
-			array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
-			array('user' => 'def', 'id' => 'test.113', 'optionId' => 1),
-		), $this->getTestData());
+		$this->assertEquals(
+						array(
+							array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
+							array('user' => 'abc', 'id' => 'test.111', 'optionId' => 3),
+							array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
+							array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
+							array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
+							array('user' => 'def', 'id' => 'test.113', 'optionId' => 1),
+						), 
+						$this->getTestData()
+		);
 	}
 
 	function testAnonymousVotes()
@@ -79,14 +82,17 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_anonymous_vote($key2, 'test', 113, 1));
 		$this->assertTrue($lib->record_anonymous_vote($key2, 'test', 112, 5));
 
-		$this->assertEquals(array(
-			array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
-			array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3),
-			array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
-			array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
-			array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
-			array('user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1),
-		), $this->getTestData());
+		$this->assertEquals(
+						array(
+							array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
+							array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3),
+							array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
+							array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
+							array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
+							array('user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1),
+						),
+						$this->getTestData()
+		);
 	}
 
 	function testDiscardInvalidValue()
@@ -95,8 +101,10 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertFalse($lib->record_user_vote('abc', 'test', '123', 6));
 
 		$this->assertEquals(range(1, 5), $lib->get_options('test'));
-		$this->assertEquals(array(
-		), $this->getTestData());
+		$this->assertEquals(
+						array(),
+						$this->getTestData()
+		);
 	}
 
 	function testGetWikiPageRange()
@@ -153,10 +161,12 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$lib = new RatingLib;
 		$this->assertTrue($lib->record_vote('test', '123', 2));
 
-		$this->assertEquals(array(
-			array('user' => "foobar", 'id' => 'test.123', 'optionId' => 2),
-		), $this->getTestData()
-											);
+		$this->assertEquals(
+						array(
+							array('user' => "foobar", 'id' => 'test.123', 'optionId' => 2),
+						),
+						$this->getTestData()
+		);
 
 		$this->assertEquals(2.0, $lib->get_vote('test', '123'));
 	}
@@ -168,9 +178,12 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$lib = new RatingLib;
 		$this->assertTrue($lib->record_vote('test', '123', 2));
 
-		$this->assertEquals(array(
-			array('user' => "anonymous\0deadbeef01234567", 'id' => 'test.123', 'optionId' => 2),
-		), $this->getTestData());
+		$this->assertEquals(
+						array(
+							array('user' => "anonymous\0deadbeef01234567", 'id' => 'test.123', 'optionId' => 2),
+						),
+						$this->getTestData()
+		);
 
 		$this->assertEquals(2.0, $lib->get_vote('test', '123'));
 	}
@@ -180,8 +193,10 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$lib = new RatingLib;
 		$this->assertFalse($lib->record_user_vote('abc', 'foobar', 111, 4));
 
-		$this->assertEquals(array(
-		), $this->getTestData());
+		$this->assertEquals(
+						array(),
+						$this->getTestData()
+		);
 	}
 
 	private function getTestData()

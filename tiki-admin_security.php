@@ -246,7 +246,8 @@ $secdb_severity = array(
 	4000 => tra('File upload')
 );
 // dir walk & check functions
-function md5_check_dir($dir, &$result) { // save all suspicious files in $result
+function md5_check_dir($dir, &$result) 
+{ // save all suspicious files in $result
 	global $tikilib;
 	global $tiki_versions;
 	$c_tiki_versions = count($tiki_versions);
@@ -263,9 +264,7 @@ function md5_check_dir($dir, &$result) { // save all suspicious files in $result
 				$result[$entry] = tra('File is not readable. Unable to check.');
 			} else {
 				$md5val = md5_file($entry);
-				$dbresult = $tikilib->query($query, array(
-					$entry
-				));
+				$dbresult = $tikilib->query($query, array($entry));
 				$is_tikifile = false;
 				$is_tikiver = array();
 				$valid_tikiver = array();
@@ -339,7 +338,8 @@ define('S_IROTH', '4');
 define('S_IWOTH', '2');
 define('S_IXOTH', '1');
 // Function to check Filesystem permissions
-function check_dir_perms($dir, &$result) {
+function check_dir_perms($dir, &$result) 
+{
 	static $depth = 0;
 	$depth++;
 	$d = dir($dir);

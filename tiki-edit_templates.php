@@ -11,7 +11,7 @@ $access->check_feature('feature_view_tpl');
 
 // you have to have the perm view and edit to continue:
       // if view perm is set: continue
-if  ( ($tiki_p_view_templates != 'y') ||
+if ( ($tiki_p_view_templates != 'y') ||
       // if edit perm is set: continue, else quit if user tries save/delete
       ($tiki_p_edit_templates != 'y' &&
         (isset($_REQUEST["save"]) ||
@@ -19,8 +19,7 @@ if  ( ($tiki_p_view_templates != 'y') ||
          isset($_REQUEST['delete'])
         )
       )
-    )
-{ 
+    ) { 
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
@@ -81,9 +80,9 @@ if ($tiki_p_edit_templates == 'y') {
 			$smarty->display('error.tpl');
 			die;
 		}
-		$_REQUEST["data"] = str_replace("\r\n","\n",$_REQUEST["data"]);
+		$_REQUEST["data"] = str_replace("\r\n", "\n", $_REQUEST["data"]);
 		fwrite($fp, $_REQUEST["data"]);
-		fclose ($fp);
+		fclose($fp);
 	}
 	
 	if (isset($_REQUEST['delete']) && !empty($_REQUEST['template'])) {
@@ -101,7 +100,7 @@ if (isset($_REQUEST["template"])) {
 		$style_local = 'y';
 	else
 		$style_local = 'n';
-	$fp = fopen($file,'r');
+	$fp = fopen($file, 'r');
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to read the template"));
@@ -109,7 +108,7 @@ if (isset($_REQUEST["template"])) {
 		die;
 	}
 	$data = fread($fp, filesize($file));
-	fclose ($fp);
+	fclose($fp);
 	$smarty->assign('data', $data);
 	$smarty->assign('template', $_REQUEST["template"]);
 	$smarty->assign('style_local', $style_local);

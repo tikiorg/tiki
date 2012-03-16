@@ -31,7 +31,8 @@ class Report_Definition_Tracker
 		}
 	}
 	
-	function input() {
+	function input() 
+	{
 		/*
 			type:
 				single (if value, turns into list, if no value, is textbox)
@@ -146,12 +147,14 @@ class Report_Definition_Tracker
 		}
 		
 		if (!empty($tracker['search'])) {
-			for($i = 0; $i < count($tracker['search']); $i++) {
+			for ($i = 0, $count_tracker_search = count($tracker['search']); $i < $count_tracker_search; $i++) {
 				if (!empty($tracker['search'][$i]['value']) && !empty($tracker['search'][$i + 1]['value'])) {
-					$qry->filter(array(
-						"field"=> trim($tracker['search'][$i]['value']),
-						"value"=> trim($tracker['search'][$i + 1]['value'])
-					));
+					$qry->filter(
+									array(
+										"field"=> trim($tracker['search'][$i]['value']),
+										"value"=> trim($tracker['search'][$i + 1]['value'])
+									)
+					);
 				}
 				$i++; //searches are in groups of 2
 			}

@@ -164,7 +164,7 @@ JQ
 						return false;
 					});
 JQ
-		);
+			);
 
 		$wikiAttributes = TikiLib::lib('trkqry')
 			->tracker('Wiki Attributes')

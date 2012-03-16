@@ -24,9 +24,12 @@ class ScormLib
 	function handle_file_creation($args)
 	{
 		if ($metadata = $this->getRequestMetadata($args)) {
-			$this->createItem($metadata, array(
-				'scormPackage' => $args['object'],
-			));
+			$this->createItem(
+							$metadata, 
+							array(
+								'scormPackage' => $args['object'],
+							)
+			);
 		}
 	}
 
@@ -40,9 +43,13 @@ class ScormLib
 
 			foreach ($items as $item ) {
 				if ($item['type'] == 'trackeritem') {
-					$this->updateItem($item['itemId'], $metadata, array(
-						'scormPackage' => $args['object'],
-					));
+					$this->updateItem(
+									$item['itemId'], 
+									$metadata, 
+									array(
+										'scormPackage' => $args['object'],
+									)
+					);
 				}
 			}
 
@@ -145,10 +152,13 @@ class ScormLib
 		$fields = $this->buildFields($definition, $metadata, $additional);
 
 		$utilities = new Services_Tracker_Utilities;
-		$utilities->insertItem($definition, array(
-			'status' => 'o',
-			'fields' => $fields,
-		));
+		$utilities->insertItem(
+						$definition, 
+						array(
+							'status' => 'o',
+							'fields' => $fields,
+						)
+		);
 	}
 
 	private function updateItem($itemId, $metadata, $additional)
@@ -157,11 +167,14 @@ class ScormLib
 		$fields = $this->buildFields($definition, $metadata, $additional);
 
 		$utilities = new Services_Tracker_Utilities;
-		$utilities->updateItem($definition, array(
-			'itemId' => (int) $itemId,
-			'status' => 'o',
-			'fields' => $fields,
-		));
+		$utilities->updateItem(
+						$definition, 
+						array(
+							'itemId' => (int) $itemId,
+							'status' => 'o',
+							'fields' => $fields,
+						)
+		);
 	}
 
 	private function getScormTracker()

@@ -11,7 +11,7 @@ $access->check_feature('feature_action_calendar');
 $access->check_permission('tiki_p_view_tiki_calendar');
 //get_strings tra('Tiki Calendar')
 
-$headerlib->add_cssfile('css/calendar.css',20);
+$headerlib->add_cssfile('css/calendar.css', 20);
 
 $myurl = 'tiki-action_calendar.php';
 include_once("tiki-calendar_setup.php");
@@ -43,8 +43,8 @@ $hours = array();
 if ($calendarViewMode['casedefault'] == 'day') {
 	$hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 	foreach ($tc_infos['cell'][0]["{$tc_infos['weekdays'][0]}"]['items'] as $dayitems) {
-		$rawhour = intval(substr($dayitems['time'],0,2));
-		$dayitems['mins'] = substr($dayitems['time'],2);
+		$rawhour = intval(substr($dayitems['time'], 0, 2));
+		$dayitems['mins'] = substr($dayitems['time'], 2);
 		$hrows["$rawhour"][] = $dayitems;
 	}
 } else {
@@ -61,7 +61,7 @@ $smarty->assign('var', '');
 $smarty->assign('daformat2', $tikilib->get_long_date_format());
 $smarty->assign('myurl', $myurl);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('calendarViewMode',$calendarViewMode['casedefault']);
+$smarty->assign('calendarViewMode', $calendarViewMode['casedefault']);
 $smarty->assign('calendar_type', 'tiki_actions');
 
 $smarty->assign('mid', 'tiki-action_calendar.tpl');

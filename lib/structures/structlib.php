@@ -194,14 +194,14 @@ class StructLib extends TikiLib
 	 * @param $data array - from from nestedSortable('toHierarchy')
 	 */
 
-	function reorder_structure($data) {
-
+	function reorder_structure($data) 
+	{
 		global $user;
 
 		if (!empty($data)) {
 			$structure_info = $this->s_get_structure_info($data[1]->item_id);	// not "root"
 
-			if (TikiLib::lib('tiki')->user_has_perm_on_object($user,$structure_info['pageName'],'wiki page','tiki_p_edit_structures')) {
+			if (TikiLib::lib('tiki')->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit_structures')) {
 
 				$structure_id = $structure_info['structure_id'];
 				$tiki_structures = TikiDb::get()->table('tiki_structures');
@@ -224,8 +224,8 @@ class StructLib extends TikiLib
 						if ($node->item_id < 1000000) {
 							$conditions['page_ref_id'] = (int) $node->item_id;
 							$tiki_structures->update(
-								$fields,
-								$conditions
+											$fields,
+											$conditions
 							);
 						} else {		// new nodes with id > 1000000
 							$fields['page_id'] = TikiLib::lib('tiki')->get_page_id_from_name($node->page_name);

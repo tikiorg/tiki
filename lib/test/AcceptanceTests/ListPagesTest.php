@@ -93,19 +93,27 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 	private function _assertListPagesTableIsWellFormed()
 	{
 
-		$this->assertElementPresent("xpath=//div[@id='tiki-listpages-content']", 
-				"List Pages content was not present");
-		$this->assertElementPresent("xpath=//a[contains(@title,'Last author')]", 
-				"Last Author column was not present");
-		$this->assertElementPresent("xpath=//a[contains(@title,'Versions')]", 
-				"Versions column was not present");
+		$this->assertElementPresent(
+						"xpath=//div[@id='tiki-listpages-content']", 
+						"List Pages content was not present"
+		);
+		$this->assertElementPresent(
+						"xpath=//a[contains(@title,'Last author')]", 
+						"Last Author column was not present"
+		);
+		$this->assertElementPresent(
+						"xpath=//a[contains(@title,'Versions')]", 
+						"Versions column was not present"
+		);
 
 	}
 
 	private function _assertListedPagesWere($listOfPages, $message)
 	{
-		$this->assertElementPresent("xpath=//div[@id='tiki-listpages-content']",
-				"List of pages was absent");
+		$this->assertElementPresent(
+						"xpath=//div[@id='tiki-listpages-content']",
+						"List of pages was absent"
+		);
 		foreach ($listOfPages as $expectedPage) {
 			$this->assertElementPresent("link=$expectedPage", "$message\nLink to expected page '$expectedPage' was missing");
 		} 

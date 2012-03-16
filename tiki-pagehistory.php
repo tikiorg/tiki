@@ -437,10 +437,16 @@ if (isset($_REQUEST['nohistory'])) {
 
 ask_ticket('page-history');
 
-TikiLib::events()->trigger('tiki.wiki.view',array_merge(array(
-	'type' => 'wiki',
-	'object' => $page,
-), $info));
+TikiLib::events()->trigger(
+				'tiki.wiki.view',
+				array_merge(
+								array(
+									'type' => 'wiki',
+									'object' => $page,
+								),
+								$info
+				)
+);
 
 // disallow robots to index page:
 $smarty->assign('page_user', $info['user']);

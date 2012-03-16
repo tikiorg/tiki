@@ -46,8 +46,8 @@ class Reports_Users
 	public function get($user)
 	{
 		return $this->table->fetchRow(
-			array('id', 'interval', 'view', 'type', 'always_email', 'last_report'),
-			array('user' => $user)
+						array('id', 'interval', 'view', 'type', 'always_email', 'last_report'),
+						array('user' => $user)
 		);
 	}
 	
@@ -76,14 +76,25 @@ class Reports_Users
 	public function save($user, $interval, $view, $type, $always_email = 0)
 	{
 		if (!$this->get($user)) {
-			$this->table->insert(array(
-				'user' => $user, 'interval' => $interval, 'view' => $view, 'type' => $type,
-				'always_email' => $always_email, 'last_report' => $this->dt->format('Y-m-d H:i:s')
-			));
+			$this->table->insert(
+							array(
+								'user' => $user, 
+								'interval' => $interval, 
+								'view' => $view, 
+								'type' => $type,
+								'always_email' => $always_email, 
+								'last_report' => $this->dt->format('Y-m-d H:i:s')
+							)
+			);
 		} else {
 			$this->table->update(
-				array('interval' => $interval, 'view' => $view, 'type' => $type, 'always_email' => $always_email),
-				array('user' => $user)
+							array(
+								'interval' => $interval, 
+								'view' => $view, 
+								'type' => $type, 
+								'always_email' => $always_email
+							),
+							array('user' => $user)
 			);
 		}
 	}
@@ -143,8 +154,8 @@ class Reports_Users
 	function updateLastReport($user)
 	{
 		$this->table->update(
-			array('last_report' => $this->dt->format('Y-m-d H:i:s')),
-			array('user' => $user)
+						array('last_report' => $this->dt->format('Y-m-d H:i:s')),
+						array('user' => $user)
 		);
 	}
 }

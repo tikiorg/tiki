@@ -14,13 +14,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class RefererLib extends TikiLib
 {
 
-	function clear_referer_stats() {
+	function clear_referer_stats() 
+	{
 		$query = "delete from tiki_referer_stats";
 
 		$result = $this->query($query);
 	}
 
-	function list_referer_stats($offset, $maxRecords, $sort_mode, $find) {
+	function list_referer_stats($offset, $maxRecords, $sort_mode, $find) 
+	{
 		$bindvars = array();
 		if ($find) {
 			$mid = " where (`referer` like ?)";
@@ -31,8 +33,8 @@ class RefererLib extends TikiLib
 
 		$query = "select * from `tiki_referer_stats` $mid order by ".$this->convertSortMode($sort_mode);;
 		$query_cant = "select count(*) from `tiki_referer_stats` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

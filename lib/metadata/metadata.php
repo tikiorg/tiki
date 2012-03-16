@@ -99,7 +99,7 @@ class FileMetadata
 				case 'image/jpeg':
 					//used for name of class and the file the class is in
 					$type = 'jpeg';
-					break;
+    				break;
 				default:
 					$this->typemeta['error'] = tra('File type not handled by Tiki - only basic metadata available');
 					if (!$leavelink) {
@@ -252,10 +252,10 @@ class FileMetadata
 				$dialog .= $beg_table;
 				$parent = $metaObj->typemeta['xmp']->getElementsByTagName('Description');
 				$len = $parent->length;
-				for($i = 0; $i < $len; $i++) {
+				for ($i = 0; $i < $len; $i++) {
 					$dialog .= $beg_section . ucfirst($parent->item($i)->childNodes->item(1)->prefix) . $end_section;
 					$len2 = $parent->item($i)->childNodes->length;
-					for($j = 1; $j < $len2; $j++) {
+					for ($j = 1; $j < $len2; $j++) {
 						$dialog .= $col1_begin . $parent->item($i)->childNodes->item($j)->localName . $betw_col
 								. htmlspecialchars($parent->item($i)->childNodes->item($j)->nodeValue) . $col2_end;
 					}
@@ -277,11 +277,11 @@ class FileMetadata
 			//file metadata is in the Description tag
 			$parent = $xmpObj->getElementsByTagName('Description');
 			$len = $parent->length;
-			for($i = 0; $i < $len; $i++) {
+			for ($i = 0; $i < $len; $i++) {
 				//first level of nodes is assumed to have child nodes, so no values sought at this level
 				$children = $parent->item($i)->childNodes;
 				$len2 = $children->length;
-				for($j = 0; $j < $len2; $j++) {
+				for ($j = 0; $j < $len2; $j++) {
 					//only pick up DOMElements
 					if ($children->item($j)->nodeType == 1) {
 						$child = $children->item($j);
@@ -299,7 +299,7 @@ class FileMetadata
 		} elseif (get_class($xmpObj) == 'DOMNodeList') {
 			$parent = $xmpObj;
 			$len3 = $parent->length;
-			for($i = 0; $i < $len3; $i++) {
+			for ($i = 0; $i < $len3; $i++) {
 				$item = $parent->item($i);
 				if ($item->nodeType == 1) {
 					if ($item->childNodes->length > 1) {
@@ -415,8 +415,7 @@ class FileMetadata
 				}
 				$newmatch = array_intersect_key($xmpnewflat, $flipmatch);
 				if ((strlen($this->typemeta['iptc']['hashstored']['value']['display']) == 16 && $this->typemeta['iptc']['hashstored']['value']['display'] 
-					== $this->typemeta['iptc']['hashcurrent']['value']['display']) || !$this->typemeta['iptc']['hashstored']['value']['display'])
-				{
+					== $this->typemeta['iptc']['hashcurrent']['value']['display']) || !$this->typemeta['iptc']['hashstored']['value']['display']) {
 					//prefer XMP value but use IPTC where XMP is missing
 				} else {
 					//campare field by field and use IPTC where they don't match
