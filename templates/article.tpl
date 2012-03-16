@@ -116,7 +116,7 @@
 			</div>
 		{/if}
 	
-		{if $pages > 1}
+		{if $prefs.article_paginate eq 'y' and $pages > 1}
 			<div align="center">
 				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='img/icons/resultset_first.png' alt="{tr}First page{/tr}" title="{tr}First page{/tr}" width='16' height='16' /></a>
 
