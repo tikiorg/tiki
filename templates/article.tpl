@@ -43,7 +43,7 @@
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td valign="top">
-				{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif $topicName}{tr}{$topicName}{/tr}{/if}{/capture}
+				{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
 				{if $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 					{assign var="big_image" value=y}
 					 <div class="imgbox" style="margin:auto; width:{$width}px">
