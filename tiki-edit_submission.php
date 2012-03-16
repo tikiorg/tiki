@@ -526,8 +526,8 @@ if ($prefs['feature_freetags'] == 'y') {
 	}
 }
 
-$smarty->assign('publishDateSite', $publishDate);
-$smarty->assign('expireDateSite', $expireDate);
+$smarty->assign('publishDate', $publishDate);
+$smarty->assign('expireDate', $expireDate);
 $smarty->assign('siteTimeZone', $prefs['display_timezone']);
 
 global $wikilib; include_once('lib/wiki/wikilib.php');

@@ -659,9 +659,7 @@ if ($prefs['feature_freetags'] == 'y') {
 }
 
 $smarty->assign('publishDate', $publishDate);
-$smarty->assign('publishDateSite', $publishDate);
 $smarty->assign('expireDate', $expireDate);
-$smarty->assign('expireDateSite', $expireDate);
 $smarty->assign('siteTimeZone', $prefs['display_timezone']);
 
 include_once ('tiki-section_options.php');
