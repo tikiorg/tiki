@@ -8,11 +8,11 @@
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
 
-// This handles three types of images, depending on the image_type parameter: 
+// This handles 4 types of images, depending on the image_type parameter: 
 // "article": Images for articles
 // "submission": Images for article submissions
 // "topic": Images for topics associated to articles
-// "preview": Images for article and article submissions previews
+// "preview": Special case used for article previews. A recently uploaded custom article image. Not cached nor generated here. See tiki-edit_article.php
 // Any other value is invalid
 // If image_type has no value, we default to "article" to preserve previous behaviour
 
@@ -36,29 +36,32 @@ if (!isset($_REQUEST["image_type"])) {
 
 switch ($_REQUEST["image_type"]) {
 	case "article":
-		$image_cache_prefix="article";
+		$imagePrefix="article";
     	break;
 	case "submission":
-		$image_cache_prefix="article_submission";
+		$imagePrefix="article_submission";
     	break;
 	case "topic":
-		$image_cache_prefix="article_topic";
+		$imagePrefix="article_topic";
     	break;
 	case "preview":
-		$image_cache_prefix="article_preview";
+		$imagePrefix="article_preview";
     	break;
 	default:
 		die;
 }
-$cachefile = $prefs['tmpDir'];
+$temporaryFile = $prefs['tmpDir'];
 if ($tikidomain) { 
-	$cachefile .= "/$tikidomain";
+	$temporaryFile .= "/$tikidomain";
 }
-$cachefile.= "/$image_cache_prefix.".$_REQUEST["id"];
+$temporaryFile .= "/$imagePrefix." . $_REQUEST["id"];
 
-// If "reload" parameter is set, recreate the cached image file from database values.
-// This does not make sense if "image_type" is "preview".
-if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
+
+if ($imagePrefix == "article_preview" && !is_file($temporaryFile)) {
+	header("HTTP/1.1 404 Not Found");
+} elseif ( $imagePrefix != "article_preview" && (isset($_REQUEST["reload"]) || !$useCache) || !is_file($temporaryFile) ) {
+	// If "reload" parameter is set, recreate the cached image file from database values.
+	
 	switch ($_REQUEST["image_type"]) {
 		case "article":
 			$storedData = $artlib->get_article_image($_REQUEST["id"]);
@@ -68,10 +71,6 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
     		break;
 		case "topic":
 			$storedData = $artlib->get_topic_image($_REQUEST["id"]);
-    		break;
-		case "preview":
-			// We can't get the data from the database. No fallback solution.
-			// No image displayed
     		break;
 		default:
 			// Invalid value
@@ -95,15 +94,13 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 		if (empty($data)) die;
 	}
 	if ($useCache && $data) {
-		$fp = fopen($cachefile, "wb");
+		$fp = fopen($temporaryFile, "wb");
 		fputs($fp, $data);
 		fclose($fp);
 	}
 	echo $data;
-	die;
+} else {
+	$size = getimagesize($temporaryFile);
+	header("Content-type: ".$size['mime']);
+	readfile($temporaryFile);
 }
-
-$size = getimagesize($cachefile);
-header("Content-type: ".$size['mime']);
-readfile($cachefile);
-
