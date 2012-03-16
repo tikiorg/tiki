@@ -333,7 +333,7 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submit'])) && empty($errors)) 
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
 
-	$publishDate = TikiLib::make_time(
+	$publishDate = $tikilib->make_time(
 					$_REQUEST['publish_Hour'], 
 					$_REQUEST['publish_Minute'], 
 					0, 
@@ -342,7 +342,7 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submit'])) && empty($errors)) 
 					$_REQUEST['publish_Year']
 	);
 
-	$expireDate = TikiLib::make_time(
+	$expireDate = $tikilib->make_time(
 					$_REQUEST['expire_Hour'], 
 					$_REQUEST['expire_Minute'], 
 					0, 
