@@ -104,7 +104,8 @@ $smarty->assign('show_size', $article_data["show_size"]);
 $smarty->assign('use_ratings', $article_data["use_ratings"]);
 if (strlen($article_data["image_data"]) > 0) {
 	$smarty->assign('hasImage', 'y');
-	$hasImage = 'y';
+} else {
+	$smarty->assign('hasImage', 'n');
 }
 if ($article_data['image_x'] > 0) {
 	$smarty->assign('width', $article_data['image_x']);
