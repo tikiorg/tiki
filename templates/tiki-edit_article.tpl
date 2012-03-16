@@ -5,7 +5,7 @@
 
 {title help="Articles" admpage="articles"}
 	{if $articleId}
-		{tr}Edit:{/tr} {$title}
+		{tr}Edit:{/tr} {$arttitle}
 	{else}
 		{tr}Edit article{/tr}
 	{/if}
@@ -17,7 +17,9 @@
 </div>
 
 {if $preview}
-	{include file='tiki-preview_article.tpl'}
+	<h2>{tr}Preview{/tr}</h2>
+	
+	{include file='article.tpl'}
 {/if}
 
 {if !empty($errors)}
@@ -53,7 +55,7 @@
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="60" />
+				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" size="60" />
 			</td>
 		</tr>
 		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>

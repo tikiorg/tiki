@@ -11,11 +11,13 @@
 	{/remarksbox}
 {/if}
 {if $preview}
-	{include file='tiki-preview_article.tpl'}
+	<h2>{tr}Preview{/tr}</h2>
+	
+	{include file='article.tpl'}
 {/if}
 
 {if $subId}
-	{title help="Articles" admpage="articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title}{/title}
+	{title help="Articles" admpage="articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$arttitle}{/title}
 {else}
 	{title help="Articles" admpage="articles"}{tr}Submit article{/tr}{/title}
 {/if}
@@ -54,7 +56,7 @@
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="60" />
+				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" size="60" />
 			</td>
 		</tr>
 		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>

@@ -1,3 +1,4 @@
+{if !isset($preview)}
 	<div class="articletrailer">
 		<span>
 			{if $show_size eq 'y'}
@@ -42,3 +43,4 @@
 		</div>
 	</div>
 	<br class="clear" />
+{/if}

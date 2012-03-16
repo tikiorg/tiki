@@ -94,7 +94,7 @@ $expireDate = $tikilib->make_time(
 include_once ('lib/userprefs/userprefslib.php');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
-$smarty->assign('title', '');
+$smarty->assign('arttitle', '');
 $smarty->assign('topline', '');
 $smarty->assign('subtitle', '');
 $smarty->assign('linkto', '');
@@ -132,7 +132,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$cat_lang = $article_data['lang'];
 	$publishDate = $article_data['publishDate'];
 	$expireDate = $article_data['expireDate'];
-	$smarty->assign('title', $article_data['title']);
+	$smarty->assign('arttitle', $article_data['title']);
 	$smarty->assign('topline', $article_data['topline']);
 	$smarty->assign('subtitle', $article_data['subtitle']);
 	$smarty->assign('linkto', $article_data['linkto']);
@@ -223,6 +223,9 @@ elseif (!empty($_REQUEST['emails'])) {
 	}
 }
 
+$topics = $artlib->list_topics();
+$smarty->assign_by_ref('topics', $topics);
+
 if (isset($_REQUEST['preview']))
 $smarty->assign('preview', 1);
 else
@@ -267,10 +270,11 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 
 	$smarty->assign('reads', '0');
 	$smarty->assign('edit_data', 'y');
-	$smarty->assign('title', strip_tags($_REQUEST['title'], '<a><pre><p><img><hr><b><i>'));
+	$smarty->assign('arttitle', $_REQUEST['title']);
 	$smarty->assign('authorName', $_REQUEST['authorName']);
 	$smarty->assign('topicId', $_REQUEST['topicId']);
-
+	$smarty->assign('topicName', $topics[$_REQUEST['topicId']]['name']);
+	
 	if (isset($_REQUEST['useImage']) && $_REQUEST['useImage'] == 'on') {
 		$useImage = 'y';
 	} else {
@@ -291,6 +295,18 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 		$hasImage = 'y';
 	}
 
+	$type = $artlib->get_type($_REQUEST['type']);
+
+	$smarty->assign('show_topline', $type["show_topline"]);
+	$smarty->assign('show_subtitle', $type["show_subtitle"]);
+	$smarty->assign('show_image_caption', $type["show_image_caption"]);
+	$smarty->assign('show_author', $type["show_author"]);
+	$smarty->assign('show_reads', $type["show_reads"]);
+	$smarty->assign('show_pubdate', $type["show_pubdate"]);
+	$smarty->assign('show_expdate', $type["show_expdate"]);
+	$smarty->assign('show_linkto', $type["show_linkto"]);
+	$smarty->assign('use_ratings', $type["use_ratings"]);
+	
 	if (!isset($_REQUEST['topline'])) $_REQUEST['topline'] = '';
 	if (!isset($_REQUEST['subtitle'])) $_REQUEST['subtitle'] = '';
 	if (!isset($_REQUEST['linkto'])) $_REQUEST['linkto'] = '';
@@ -580,10 +596,6 @@ $smarty->assign_by_ref('errors', $errors);
 
 // Set date to today before it's too late
 $_SESSION['thedate'] = $tikilib->now;
-
-// Armar un select con los topics
-$topics = $artlib->list_topics();
-$smarty->assign_by_ref('topics', $topics);
 
 // get list of valid types
 $types = $artlib->list_types_byname();

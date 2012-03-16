@@ -31,7 +31,7 @@
 			({$rating}/10)
 		</div>
 	{/if}
-	{if $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+	{if !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
 		<form method="post" action="">
 			{rating type=article id=$articleId}
 		</form>
@@ -58,7 +58,7 @@
 					<img 
 						 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if}
 						 alt="{$smarty.capture.imgTitle}"
-						 src="article_image.php?image_type=article&amp;id={$articleId}"
+						 src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{/if}"
 						 {if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
 						 {if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}" />
 				{elseif $topicId}
