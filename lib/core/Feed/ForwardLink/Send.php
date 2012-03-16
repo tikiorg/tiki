@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-Class Feed_ForwardLink_Send
+Class Feed_ForwardLink_Send extends Feed_Abstract
 {
 	var $type = "textlink";
 	var $version = "0.1";
@@ -13,53 +13,66 @@ Class Feed_ForwardLink_Send
 	static function add($item = array())
 	{
 		global $textlinkContribution;
-		if (empty($textlinkContribution)) $textlinkContribution = array();
-		array_push($textlinkContribution, (object)$item);
+		if (empty($textlinkContribution)) {
+			$textlinkContribution = (object)array();
+			$textlinkContribution->entry = array();
+		}
+		
+		$item = (object)$item;
+		$item->forwardlink->href = str_replace(' ', '+', $item->forwardlink->href);
+		$exists = false;
+		
+		foreach($textlinkContribution as $existingItem) {
+			if ($existingItem->textlink['id'] == $item->textlink['id']) {
+				$exists = true;
+				
+			}
+		}
+		
+		if ($exists == false) $textlinkContribution->entry[] = $item;
 	}
 
-	static function wikiView($args = array())
+	static function wikiView()
+	{
+		$me = new self();
+		($me->send());
+	}
+	
+	public function getContents()
 	{
 		global $textlinkContribution;
-		$me = new self();
+		
 		if (!empty($textlinkContribution)) {
-			($me->send($textlinkContribution));
+			return $textlinkContribution;
 		}
+	
+		return array();
 	}
-
-	static function send($items = array())
+	
+	function send()
 	{
 		global $tikilib;
 
 		$entry = array();
 		$lastModif = 0;
+		$feed = $this->feed();
+		
+		foreach ($feed->feed->entry as $item) {
+			if (empty($item->forwardlink->href)) continue;
 
-		foreach ($items as $item) {
-			if (empty($item->forwardLink->href)) continue;
-			$item->forwardLink->href = str_replace(' ', '+', $item->forwardLink->href);
-
-			$client = new Zend_Http_Client($item->forwardLink->href, array('timeout' => 60));
+			$client = new Zend_Http_Client($item->forwardlink->href, array('timeout' => 60));
 
 			$info = $tikilib->get_page_info($item->page);
-
-			$entry[] = array(
-				'textlink'=> $item->textlink,
-				'forwardlink'=>$item->forwardLink
-			);
 
 			if ($info['lastModif'] > $lastModif)
 				$lastModif = $info['lastModif'];
 		}
-
-		if (!empty($entry)) {
+		
+		if (!empty($feed->feed->entry)) {
 			$client->setParameterGet(array(
 				'protocol'=> 'forwardlink',
-				'contribution'=> json_encode(array(
-					'version' => '1.0',
-					'encoding' => 'UTF-8',
-					'date'=> $lastModif,
-					'feed' => array('type' => 'textlink', 'entry'=> $entry),
-				)
-			)));
+				'contribution'=> json_encode($feed)
+			));
 
 			$response = $client->request(Zend_Http_Client::POST);
 			$request = $client->getLastResponse();

@@ -77,21 +77,25 @@ Class Feed_ForwardLink extends Feed_Abstract
 			}
 		}
 
-		foreach ($feedItems as $i => $item) {
+		foreach ($feedItems as $item) {
 			$thisText = htmlspecialchars($item->forwardlink->text);
 			$thisHref = htmlspecialchars($item->textlink->href);
 			$linkedText = htmlspecialchars($item->textlink->text);
 
 			if ($thisText == $phrase) {
 				$headerlib->add_js(<<<JQ
+				window.phraseLinks = (window.phraseLinks ? window.phraseLinks : []);
 				$(function() {
 					$('#page-data')
 						.rangyRestoreSelection('$thisText', function(r) {
-							$('<a>*</a>')
+							var phraseLink = $('<a>*</a>')
 								.attr('href', '$thisHref')
-								.attr('text', '$linkedText')
+								.attr('text', '$thisText')
+								.attr('linkedText', '$linkedText')
 								.addClass('forwardlink')
 								.insertBefore(r.selection[0]);
+							
+							window.phraseLinks.push(phraseLink);
 
 							r.selection.addClass('ui-state-highlight');
 
@@ -105,36 +109,60 @@ JQ
 			} else {
 
 				$headerlib->add_jq_onready(<<<JQ
-					$('<a>*</a>')
+					window.phraseLinks = (window.phraseLinks ? window.phraseLinks : []);
+					var phraseLink = $('<a>*</a>')
 						.attr('href', '$thisHref')
-						.attr('text', '$linkedText')
+						.attr('text', '$thisText')
+						.attr('linkedText', '$linkedText')
 						.addClass('forwardlink')
-						.insertBefore('.phraseStart$i');
-
-					$('.phrase$i').addClass('ui-state-highlight');
+						.insertBefore('.phraseStart$phraseI');
+					
+					window.phraseLinks.push(phraseLink);
+					
+					$('.phrase$phraseI').addClass('ui-state-highlight');
 JQ
 				);
 			}
 			$phraseI++;
 		}
 
-		$headerlib->add_jq_onready(<<<JQ
-			$('#page-data').trigger('rangyDone');
+		$headerlib
+			->add_jsfile("lib/jquery/tablesorter/jquery.tablesorter.js")
+			->add_cssfile("lib/jquery_tiki/tablesorter/themes/tiki/style.css")
+			->add_jq_onready(<<<JQ
+				$('#page-data').trigger('rangyDone');
 
-			$('.forwardlink')
-				.click(function() {
-					me = $(this);
-					var href = me.attr('href');
-					var text = me.attr('text');
-
-					$('<form action="' + href + '" method="post">' + 
-						'<input type="hidden" name="phrase" value="' + text + '" />' +
-					'</form>')
-						.appendTo('body')
-						.submit();
-
-					return false;
-				});
+				$('.forwardlink')
+					.click(function() {
+						me = $(this);
+						var href = me.attr('href');
+						var text = me.attr('text');
+						var linkedText = me.attr('linkedText');
+						
+						var table = $('<div>' +
+							'<table class="tablesorter">' +
+								'<thead>' + 
+									'<tr>' +
+										'<th>' + tr('Date') + '</th>' +
+										'<th>' + tr('Click below to read Citing blocks') + '</th>' +
+									'</tr>' +
+								'</thead>' +
+								'<tbody>' +
+									'<tr>' +
+										'<td>$date</td>' +
+										'<td><a href="' + href + '" class="read">Read</a></td>' + 
+									'</tr>' +
+								'</tbody>' +
+							'</table>' +
+						'</div>')
+							.dialog({
+								title: text,
+								modal: true
+							})
+							.tablesorter();
+					
+						return false;
+					});
 JQ
 		);
 

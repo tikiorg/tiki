@@ -44,10 +44,11 @@ function wikiplugin_textlink($data, $params)
 	
 	Feed_ForwardLink_Send::add(array(
 		"page"=> $page,
-		"forwardLink"=> $clipboarddata,
+		"forwardlink"=> $clipboarddata,
 		"textlink"=> array(
-			"text"=> $data,
-			"href"=> $tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id
+			"text"=> 	$data,
+			"href"=> 	$tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id,
+			"id"=>		$clipboarddata->hash. "_" . $page . "_" . $id
 		)
 	));
 	$data = htmlspecialchars($data);
@@ -59,7 +60,7 @@ function wikiplugin_textlink($data, $params)
 			->add_jq_onready(<<<JQ
 				$('#page-data').bind('rangyDone', function() {
 					$('#$id').click(function() {
-						var forwardLinkTable = $('<div><table class="tablesorter">' +
+						var table = $('<div><table class="tablesorter">' +
 							'<thead>' + 
 								'<tr>' +
 									'<th>' + tr('Date') + '</th>' +
@@ -69,16 +70,17 @@ function wikiplugin_textlink($data, $params)
 							'<tbody>' +
 								'<tr>' +
 									'<td>$date</td>' +
-									'<td><a href="$clipboarddata->href" class="forwardLinkRead">Read</a></td>' + 
+									'<td><a href="$clipboarddata->href" class="read">Read</a></td>' + 
 								'</tr>' +
 							'</tbody>' +
 						'</table></div>')
 							.dialog({
-								title: tr("ForwardLinks To: ") + "$data"
+								title: tr("ForwardLinks To: ") + "$data",
+								modal: true
 							})
 							.tablesorter();
 						
-						forwardLinkTable.find('.forwardLinkRead').click(function() {
+						table.find('.read').click(function() {
 							$('<form action="$clipboarddata->href" method="post">' + 
 								'<input type="hidden" name="phrase" value="$clipboarddata->text" />' +
 							'</form>')
