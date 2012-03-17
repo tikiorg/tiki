@@ -87,9 +87,9 @@
 
     {math equation="x + 6" x=$thumbnail_size assign=thumbnailcontener_size}
 
-    <div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}" style="width:{$thumbnailcontener_size}px">
+    <div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" style="width:{$thumbnailcontener_size}px">
       <div class="thumbnail" style="float:left; width:{$thumbnailcontener_size}px">
-        <div class="thumbimagecontener" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
+        <div class="" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
               {if $files[changes].isgal eq 1}
