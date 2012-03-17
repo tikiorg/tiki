@@ -1,10 +1,11 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-$section = "docs";
+$section = 'docs';
+
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/mime/mimetypes.php');
@@ -30,21 +31,21 @@ if ($fileId > 0) {
 
 //This allows the document to be edited, but only the most recent of that group if it is an archive
 if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
-	$fileId  = $fileInfo['archiveId'];
+	$fileId = $fileInfo['archiveId'];
 	$fileInfo = $filegallib->get_file_info($fileId);
 }
 
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
 $cat_object_exists = ! empty($fileInfo);
-include_once ("categorize_list.php");
+include_once ('categorize_list.php');
 include_once ('tiki-section_options.php');
 
 $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
-if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes["odt"] || end(explode(".", $fileInfo['filename'])) != 'odt') {
-	$smarty->assign('msg', tr("Wrong file type, expected %0", $mimetypes["odt"]));
-	$smarty->display("error.tpl");
+if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes['odt'] || end(explode('.', $fileInfo['filename'])) != 'odt') {
+	$smarty->assign('msg', tr('Wrong file type, expected %0', $mimetypes['odt']));
+	$smarty->display('error.tpl');
 	die;
 }
 
@@ -53,34 +54,59 @@ $globalperms = Perms::get(array( 'type' => 'file galleries', 'object' => $fileIn
 //check permissions
 if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to view/edit this file"));
-	$smarty->display("error.tpl");
+	$smarty->assign('msg', tra('You do not have permission to view/edit this file'));
+	$smarty->display('error.tpl');
 	die;
 }
 
 if (!empty($_REQUEST['name']) || !empty($fileInfo['name'])) {
 	$_REQUEST['name'] = (!empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
 } else {
-	$_REQUEST['name'] = "New Doc";
+	$_REQUEST['name'] = 'New Doc';
 }
 
-$_REQUEST['name'] = htmlspecialchars(str_replace(".odt", "", $_REQUEST['name']));
+$_REQUEST['name'] = htmlspecialchars(str_replace('.odt', '', $_REQUEST['name']));
 
 //Upload to file gallery
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
-	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
+	$_REQUEST['galleryId'] = (int)$_REQUEST['galleryId'];
 	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
 	
 	//webodf has to send an encoded string so that all browsers can handle the post-back
 	$_REQUEST['data'] = base64_decode($_REQUEST['data']);
 	
-	$type = $mimetypes["odt"];
+	$type = $mimetypes['odt'];
 	if (! empty($fileId)) {
 		//existing file
-		$fileId = $filegallib->save_archive($fileId, $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+		$fileId = $filegallib->save_archive(
+						$fileId,
+						$fileInfo['galleryId'],
+						0,
+						$_REQUEST['name'],
+						$fileInfo['description'],
+						$_REQUEST['name'] . '.odt',
+						$_REQUEST['data'],
+						strlen($_REQUEST['data']),
+						$type,
+						$fileInfo['user'],
+						null,
+						null,
+						$user,
+						date()
+		);
 	} else {
 		//new file
-		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".odt", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+		$fileId = $filegallib->insert_file(
+						$_REQUEST['galleryId'],
+						$_REQUEST['name'],
+						$_REQUEST['description'],
+						$_REQUEST['name'] . '.odt',
+						$_REQUEST['data'],
+						strlen($_REQUEST['data']),
+						$type,
+						$user,
+						date()
+		);
 	}
 	
 	echo $fileId;
@@ -88,17 +114,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 }
 
 
-$smarty->assign("page", $page);
-$smarty->assign("isFromPage", isset($page));
-$smarty->assign("fileId", $fileId);
+$smarty->assign('page', $page);
+$smarty->assign('isFromPage', isset($page));
+$smarty->assign('fileId', $fileId);
 
-$headerlib->add_jsfile("lib/webodf/webodf.js");
-$headerlib->add_cssfile("lib/webodf/webodf.css");
+$headerlib->add_jsfile('lib/webodf/webodf.js');
+$headerlib->add_cssfile('lib/webodf/webodf.css');
 
-$savingText = tr("Saving...");
+$savingText = tr('Saving...');
 
-$headerlib->add_jq_onready("
-	window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
+$headerlib->add_jq_onready(
+	"window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
 	odfcanvas.load('tiki-download_file.php?fileId=' + $('#fileId').val());
 	
 	//make editable
@@ -126,20 +152,18 @@ $headerlib->add_jq_onready("
 	$('.saveButton').click(function() {
 		odfcanvas.save();
 		return false;
-	});
-");
+	});"
+);
 
 if (isset($_REQUEST['edit'])) {
-	$smarty->assign("edit", "true");
-	$headerlib->add_jq_onready("
-		odfcanvas.setEditable();
-	");
+	$smarty->assign('edit', 'true');
+	$headerlib->add_jq_onready('odfcanvas.setEditable();');
 } else {
-	$smarty->assign("edit", "false");
+	$smarty->assign('edit', 'false');
 }
 
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_docs.tpl');
 // use tiki_full to include include CSS and JavaScript
-$smarty->display("tiki.tpl");
+$smarty->display('tiki.tpl');
