@@ -174,8 +174,8 @@ foreach ( $qtlist as $name ) {
 		continue;
 	}
 
-	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
-	$wyswik = strlen($tag->getWysiwygWikiToken()) ? 'qt-wyswik' : '';
+	$wys = strlen($tag->getWysiwygToken('dummy')) ? 'qt-wys' : '';
+	$wyswik = strlen($tag->getWysiwygWikiToken('dummy')) ? 'qt-wyswik' : '';
 	$test_html = $tag->getWikiHtml('');
 	$wiki = strlen($test_html) > 0 ? 'qt-wiki' : '';
 	$wiki = strpos($test_html, 'qt-sheet') !== false ? 'qt-sheet' : $wiki;
@@ -196,8 +196,8 @@ foreach ( $qtlist as $name ) {
 	}
 
 	$label = htmlspecialchars($label);
-	$label .= '<input type="hidden" name="token" value="' . $tag->getWysiwygToken() . '" />';
-	$label .= '<input type="hidden" name="syntax" value="' . htmlspecialchars($tag->getSyntax()) . '" />';
+	$label .= '<input type="hidden" name="token" value="' . $tag->getWysiwygToken('dummy') . '" />';
+	$label .= '<input type="hidden" name="syntax" value="' . htmlspecialchars($tag->getSyntax('dummy')) . '" />';
 	$label .= '<input type="hidden" name="type" value="' . $tag->getType() . '" />';
 
 	if ($tag->getType() == 'Wikiplugin') {
