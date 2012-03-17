@@ -141,8 +141,7 @@ class XmlLib extends TikiLib
 			global $tikiroot;
 			foreach ($matches[1] as $match) {
 				$args = $parserlib->plugin_split_args($match);
-				if (empty($args['src'])) {
-				} elseif (preg_match('|img/wiki_up/(.*)|', $args['src'], $m)) {
+				if (preg_match('|img/wiki_up/(.*)|', $args['src'], $m) && ! empty($args['src'])) {
 					$file = empty($tikidomain)?$args['src']: str_replace('img/wiki_up/', "img/wiki_up/$tikidomain/", $args['src']);
 					$image = array('filename' => $m[1], 'where' => 'wiki', 'zip'=>"$dir/images/wiki/".$m[1], 'wiki'=>$args['src']);
 					if (!$this->zip->addFile($file, $image['zip'])) {
@@ -150,7 +149,7 @@ class XmlLib extends TikiLib
 						$this->errorsArgs[] = $file;
 						return false;
 					}
-				} elseif (preg_match('|show_image.php\?(.*)|', $args['src'], $m)) {
+				} elseif (preg_match('|show_image.php\?(.*)|', $args['src'], $m) && ! empty($args['src'])) {
 					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
 					if (($i = strpos($args['src'], 'tiki-download_file.php')) > 0) {
 						$path = $_SERVER['HTTP_HOST'].$tikiroot.substr($args['src'], $i);
@@ -174,7 +173,7 @@ class XmlLib extends TikiLib
 						$this->errorsArgs[] = $m[1];
 						return false;
 					}
-				} elseif (preg_match('|tiki-download_file.php\?(.*)|', $args['src'], $m)) {
+				} elseif (preg_match('|tiki-download_file.php\?(.*)|', $args['src'], $m)  && ! empty($args['src'])) {
 					if (($i = strpos($args['src'], 'tiki-download_file.php')) > 0) {
 						$path = $_SERVER['HTTP_HOST'].$tikiroot.substr($args['src'], $i);
 					} else {
