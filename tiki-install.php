@@ -47,7 +47,7 @@ if (file_exists('db/'.$tikidomainslash.'lock')) {
 	createPage($title, $content);
 }
 
-$tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
+$tikiroot = str_replace('\\', '/', dirname($_SERVER['PHP_SELF']));
 $session_params = session_get_cookie_params();
 session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
@@ -98,7 +98,8 @@ if (isset($_SESSION['accessible'])) {
 
 
 
-function createPage($title, $content){
+function createPage($title, $content)
+{
 	echo <<<END
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

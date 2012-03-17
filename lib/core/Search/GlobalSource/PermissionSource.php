@@ -57,10 +57,12 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 	
 	private function getAllowedGroups($objectType, $objectId, $viewPermission)
 	{
-		$accessor = $this->perms->getAccessor(array(
-			'type' => $objectType,
-			'object' => $objectId,
-		));
+		$accessor = $this->perms->getAccessor(
+						array(
+							'type' => $objectType,
+							'object' => $objectId,
+						)
+		);
 
 		$groups = array();
 		foreach ($this->getCheckList($accessor) as $groupName) {

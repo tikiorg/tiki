@@ -43,14 +43,14 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 
 			if (isset($forwardLink->href)) {
 				$result = Feed_ForwardLink_Send::send(
-					array(
-						'page'=> $args['object'],
-						'forwardLink'=> $forwardLink,
-						'textlink'=> array(
-							'body'=> $args['data'],
-							'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
-						)
-					)
+								array(
+									'page'=> $args['object'],
+									'forwardLink'=> $forwardLink,
+									'textlink'=> array(
+										'body'=> $args['data'],
+										'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
+									)
+								)
 				);
 			}
 		}

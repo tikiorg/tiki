@@ -33,7 +33,7 @@ class ImageGalsLib extends TikiLib
 				//next try
 				ob_start();
 
-				phpinfo (INFO_MODULES);
+				phpinfo(INFO_MODULES);
 
 				if (preg_match('/GD Version.*2.0/', ob_get_contents())) {
 					$this->gdversion = "2.0";

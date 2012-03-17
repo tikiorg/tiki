@@ -114,20 +114,20 @@ if (isset($_REQUEST["action"])) {
 				$smarty->assign('enabled', $rule["enabled"]);
 				$smarty->assign('description', $rule["description"]);
 			}
-			break;
+    		break;
 
 		case 'rm':
 			if ($ruleID != 0) {
 				$access->check_authenticity();
 				$integrator->remove_rule($ruleID);
 			}
-			break;
+    		break;
 
 		default:
 			$smarty->assign('msg', tra("Requested action in not supported on repository"));
 			$smarty->display("error.tpl");
 			die;
-			break;
+    		break;
 	}
 }
 // Get repository name

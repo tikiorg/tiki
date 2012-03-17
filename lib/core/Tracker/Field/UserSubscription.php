@@ -114,11 +114,14 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 		$current_field_ins['user_nb_friends'] = 0; // total of friends for this user
 		foreach ($match[1] as $j => $id_user) {
 			$temp = $userlib->get_userId_info($id_user);
-			array_push($users_array, array(
-					'id' => $id_user,
-					'login' => $temp['login'],
-					'friends' => $match[2][$j]
-			));
+			array_push(
+							$users_array, 
+							array(
+								'id' => $id_user,
+								'login' => $temp['login'],
+								'friends' => $match[2][$j]
+							)
+			);
 			$current_field_ins['user_nb_users'] += $match[2][$j] + 1;
 			if ($id_user == $id_tiki_user) {
 				$current_field_ins['user_subscription'] = true;

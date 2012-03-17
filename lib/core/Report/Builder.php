@@ -112,13 +112,15 @@ class Report_Builder
 			$name = $this->type;
 		}
 		
-		$handler = new TikiSheetSimpleArrayHandler(array(
-			"values"=>$this->outputArray(),
-			"name"=>$name
-		));
+		$handler = new TikiSheetSimpleArrayHandler(
+						array(
+							"values"=>$this->outputArray(),
+							"name"=>$name
+						)
+		);
 		
 		$grid = new TikiSheet();
-		$grid->import( $handler );
+		$grid->import($handler);
 		
 		return $grid->getTableHtml();
 	}

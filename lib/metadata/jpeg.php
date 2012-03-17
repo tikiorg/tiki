@@ -20,14 +20,15 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 require_once('lib/metadata/imagefile.php');
 
 class Jpeg extends ImageFile
-{	
+{
 	
 	/*
 	 * Get extended JPEG metadata
 	 * @param		object		$metaObj		Object from the FileMetadata class which calls this function as part of its __constructor
 	 * @return		array		$metadata		Returns an array of metadata
 	 */
-	function getExtendedData($metaObj) {
+	function getExtendedData($metaObj) 
+	{
 		//these properties can be accessed similarly for all image files and were set in the ImageFile class that this class extends
 		$metadata['header'] = $this->header;
 		$metadata['width'] = $this->width;
@@ -83,7 +84,8 @@ class Jpeg extends ImageFile
 	 * Returns xmp metadata from a JPEG file as a DOMDocument
 	 * @param		string		$filecontent		The file as a string (eg, after applying file_get_contents)
 	 */
-	function getXmp($filecontent) {
+	function getXmp($filecontent) 
+	{
 		$done = false;
 		$start = 0;
 		$i = 0;

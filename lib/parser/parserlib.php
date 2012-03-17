@@ -2503,7 +2503,7 @@ if ( \$('#$id') ) {
 		if ($options['is_html']) {
 			$count = 1;
 			while ($count == 1)
-				$data = preg_replace("#<p>([^(</p>)]*)<p>([^(</p>)]*)</p>#uims","<p>$1$2", $data, 1, $count);
+				$data = preg_replace("#<p>([^(</p>)]*)<p>([^(</p>)]*)</p>#uims", "<p>$1$2", $data, 1, $count);
 		}
 
 		// Close open paragraph, lists, and div's

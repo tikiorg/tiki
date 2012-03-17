@@ -208,10 +208,13 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			$key = "tracker.$trackerId.$itemId.".$field['fieldId']; 
 		}
 
-		$data = $votings->fetchRow(array(
-			'count' => $votings->count(),
-			'total' => $votings->sum('optionId'),
-		), array('id' => $key));
+		$data = $votings->fetchRow(
+						array(
+							'count' => $votings->count(),
+							'total' => $votings->sum('optionId'),
+						), 
+						array('id' => $key)
+		);
 
 		$field['numvotes'] = $data['count'];
 		$field['total'] = $data['total']; 

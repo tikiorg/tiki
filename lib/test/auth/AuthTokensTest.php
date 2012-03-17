@@ -122,9 +122,12 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testMaximumTimeout()
 	{
-		$lib = new AuthTokens($this->db, array(
-					'maxTimeout' => 10,
-					));
+		$lib = new AuthTokens(
+						$this->db, 
+						array(
+							'maxTimeout' => 10,
+						)
+		);
 		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('timeout' => 3600));
 
 		$this->assertEquals(10, $this->db->getOne('SELECT timeout FROM tiki_auth_tokens ORDER BY creation desc'));
@@ -151,9 +154,12 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 	function testLimitOnAccessCount()
 	{
-		$lib = new AuthTokens($this->db, array(
-					'maxHits' => 10,
-					));
+		$lib = new AuthTokens(
+						$this->db, 
+						array(
+							'maxHits' => 10,
+						)
+		);
 		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('hits' => 3600));
 
 		$this->assertEquals(10, $this->db->getOne('SELECT hits FROM tiki_auth_tokens WHERE tokenId = 1'));

@@ -37,7 +37,7 @@ $smarty->assign('bookId', $bookId);
 $book = $accountinglib->getBook($bookId);
 $smarty->assign('book', $book);
 
-$accounts = $accountinglib->getAccounts($bookId, $all=true);
+$accounts = $accountinglib->getAccounts($bookId, $all = true);
 $smarty->assign('accounts', $accounts);
 
 if (isset($_REQUEST['book'])) {

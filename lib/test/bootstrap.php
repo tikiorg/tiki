@@ -88,12 +88,12 @@ require_once(dirname(__FILE__) . '/TestableTikiLib.php');
 
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
-		array(
-			'preference' => array(),
-			'rules' => array(),
-			),
-		array('readOnly' => false)
-		);
+				array(
+					'preference' => array(),
+					'rules' => array(),
+				),
+				array('readOnly' => false)
+);
 
 global $user_overrider_prefs;
 $user_overrider_prefs = array();

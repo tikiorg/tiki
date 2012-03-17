@@ -54,18 +54,21 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			$data = array_merge($data, $handler->getDocumentPart($baseKey, $typeFactory));
 		}
 
-		$data = array_merge($data, array(
-			'title' => $typeFactory->sortable($this->trklib->get_isMain_value($item['trackerId'], $objectId)),
-			'modification_date' => $typeFactory->timestamp($item['lastModif']),
-			'contributors' => $typeFactory->multivalue(array_unique(array($item['createdBy'], $item['lastModifBy']))),
-
-			'tracker_status' => $typeFactory->identifier($item['status']),
-			'tracker_id' => $typeFactory->identifier($item['trackerId']),
-
-			'parent_object_type' => $typeFactory->identifier('tracker'),
-			'parent_object_id' => $typeFactory->identifier($item['trackerId']),
-			'parent_view_permission' => $typeFactory->identifier($permNeeded),
-		));
+		$data = array_merge(
+						$data, 
+						array(
+							'title' => $typeFactory->sortable($this->trklib->get_isMain_value($item['trackerId'], $objectId)),
+							'modification_date' => $typeFactory->timestamp($item['lastModif']),
+							'contributors' => $typeFactory->multivalue(array_unique(array($item['createdBy'], $item['lastModifBy']))),
+				
+							'tracker_status' => $typeFactory->identifier($item['status']),
+							'tracker_id' => $typeFactory->identifier($item['trackerId']),
+			
+							'parent_object_type' => $typeFactory->identifier('tracker'),
+							'parent_object_id' => $typeFactory->identifier($item['trackerId']),
+							'parent_view_permission' => $typeFactory->identifier($permNeeded),
+						)
+		);
 
 		return $data;
 	}

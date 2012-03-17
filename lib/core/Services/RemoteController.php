@@ -30,8 +30,8 @@ class Services_RemoteController
 	{
 		$client = $this->getClient($action, $arguments);
 		return new Services_ResultLoader(
-			array(new Services_ResultLoader_WebService($client, $offsetKey, $maxRecordsKey, $resultKey), '__invoke'),
-			$perPage
+						array(new Services_ResultLoader_WebService($client, $offsetKey, $maxRecordsKey, $resultKey), '__invoke'),
+						$perPage
 		);
 	}
 
@@ -39,10 +39,12 @@ class Services_RemoteController
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client($this->url . '/tiki-ajax_services.php');
-		$client->setParameterGet(array(
-			'controller' => $this->controller,
-			'action' => $action,
-		));
+		$client->setParameterGet(
+						array(
+							'controller' => $this->controller,
+							'action' => $action,
+						)
+		);
 		$client->setParameterPost($postArguments);
 
 		return $client;

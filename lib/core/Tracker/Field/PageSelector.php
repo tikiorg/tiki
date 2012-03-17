@@ -87,10 +87,13 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 			} else {
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_function_object_link');
-				return smarty_function_object_link( array(
-					'type' => 'wikipage',
-					'id' => $value,
-				), $smarty);
+				return smarty_function_object_link(
+								array(
+									'type' => 'wikipage',
+									'id' => $value,
+								),
+								$smarty
+				);
 			}
 		}
 	}

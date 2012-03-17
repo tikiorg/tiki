@@ -27,10 +27,13 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	{
 		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();
-			$query = array_merge($_GET, array(
-				'itemId' => $itemId,
-				'show' => 'view',
-			));
+			$query = array_merge(
+							$_GET, 
+							array(
+								'itemId' => $itemId,
+								'show' => 'view',
+							)
+			);
 
 
 			$classList = array('tablename');

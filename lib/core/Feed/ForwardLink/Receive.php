@@ -46,13 +46,15 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 		foreach ($item->feed->entry as $i => $newEntry) {
 			
 			if ($this->showFailures) {
-				print_r(array(
-					"hashIncluded"=>	$newEntry->forwardlink->hash,
-					"hashCalculated"=> 	hash_hmac("md5", htmlspecialchars($prefs['browsertitle']), $newEntry->forwardlink->text),
-					"metadata"=> 		($newEntry->forwardlink->websiteTitle != $prefs['browsertitle']),
-					"hasPhrase"=> 		(JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), $newEntry->forwardlink->text)),
-					"page"=>			$_REQUEST['page']
-				));
+				print_r(
+								array(
+									"hashIncluded"=>	$newEntry->forwardlink->hash,
+									"hashCalculated"=> 	hash_hmac("md5", htmlspecialchars($prefs['browsertitle']), $newEntry->forwardlink->text),
+									"metadata"=> 		($newEntry->forwardlink->websiteTitle != $prefs['browsertitle']),
+									"hasPhrase"=> 		(JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), $newEntry->forwardlink->text)),
+									"page"=>			$_REQUEST['page']
+					)
+				);
 			}
 			
 			if (

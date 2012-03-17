@@ -25,10 +25,13 @@ class Event_Manager
 	{
 		if (isset ($this->eventRegistry[$eventName])) {
 			foreach ($this->eventRegistry[$eventName] as $callback) {
-				call_user_func($callback['callback'], array_merge(
-					$callback['arguments'],
-					$arguments
-				));
+				call_user_func(
+								$callback['callback'], 
+								array_merge(
+												$callback['arguments'],
+												$arguments
+								)
+				);
 			}
 		}
 	}

@@ -169,7 +169,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 			case "":
 			case "replace":
 				$data = "~np~" . $item->description . "~/np~";
-				break;
+    			break;
 				//moderate isn't yet working
 				if ($moderate == 'y') {
 					if ($same == false) {
@@ -193,12 +193,12 @@ function wikiplugin_htmlfeedlink($data, $params)
 								<input type='hidden' name='content' value='".htmlspecialchars($data)."'/>
 							</form>
 							~/np~";
-						} else {
-							$data = "~np~" . $item->description . "~/np~";
-						}
 					} else {
-						$data = $item->description;
-					}	
+							$data = "~np~" . $item->description . "~/np~";
+					}
+				} else {
+					$data = $item->description;
+				}	
     			break;
 			case "backlink":
 				$data = "<a href='$item->url'>" . $data . "</a>";

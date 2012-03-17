@@ -24,12 +24,15 @@ function upgrade_20110905_multibyte_lc_fix_tiki($installer)
 				$old = md5('wiki page' . $lowercase);
 				$new = md5('wiki page' . $mblowercase);
 
-				$objectperms->updateMultiple(array(
-					'objectId' => $new,
-				), array(
-					'objectType' => 'wiki page',
-					'objectId' => $old,
-				));
+				$objectperms->updateMultiple(
+								array(
+									'objectId' => $new,
+								), 
+								array(
+									'objectType' => 'wiki page',
+									'objectId' => $old,
+								)
+				);
 			}
 		}
 	}

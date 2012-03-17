@@ -82,29 +82,28 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
         return $token;
     }
 	
-	    public function nextToken()
-		{
-			if ($this->_input === null) {
+	public function nextToken()
+	{
+		if ($this->_input === null) {
+			return null;
+		}
+
+		do {
+			if (! preg_match('/[a-zA-Z0-9]+(\.[0-9]+)*/', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_position)) {
+				// It covers both cases a) there are no matches (preg_match(...) === 0)
+				// b) error occured (preg_match(...) === FALSE)
 				return null;
-        }
+			}
 
-        do {
-            if (! preg_match('/[a-zA-Z0-9]+(\.[0-9]+)*/', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_position)) {
-                // It covers both cases a) there are no matches (preg_match(...) === 0)
-                // b) error occured (preg_match(...) === FALSE)
-                return null;
-            }
+			$str = $match[0][0];
+			$pos = $match[0][1];
+			$endpos = $pos + strlen($str);
+	
+			$this->_position = $endpos;
+	
+			$token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($str, $pos, $endpos));
+		} while ($token === null); // try again if token is skipped
 
-            $str = $match[0][0];
-            $pos = $match[0][1];
-            $endpos = $pos + strlen($str);
-
-            $this->_position = $endpos;
-
-            $token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($str, $pos, $endpos));
-        } while ($token === null); // try again if token is skipped
-
-        return $token;
-    }
+		return $token;
+	}
 }
-

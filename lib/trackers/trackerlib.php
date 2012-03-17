@@ -1967,7 +1967,7 @@ class TrackerLib extends TikiLib
 					if (!$validator->isValid($f['value'])) {
 						$erroneous_values[] = $f;
 					}
-					break;
+    				break;
 				// numeric
 				case 'n':
 					if (!is_numeric($f['value'])) {
@@ -3062,7 +3062,7 @@ class TrackerLib extends TikiLib
 		if (is_array($res)) {
 			foreach ($res as $f) {
 				if (isset($f['options_array'][1]) && $f['options_array'][1] != 0) {
-					if ($f['options_array'][1] == 2 && array_key_exists($f['value'],$user_preferences)) {
+					if ($f['options_array'][1] == 2 && array_key_exists($f['value'], $user_preferences)) {
 						// Don't send email to oneself
 						continue;
 					}
@@ -3838,7 +3838,7 @@ class TrackerLib extends TikiLib
 			if ($handler) {
 				$the_data .= $handler->watchCompare($old_value, $new_value);
 			} else {
-				$the_data .= tr('Tracker field not enabled: fieldId=%0 type=%1' , $field['fieldId'], $field['type']) . "\n";
+				$the_data .= tr('Tracker field not enabled: fieldId=%0 type=%1', $field['fieldId'], $field['type']) . "\n";
 			}
 			$the_data .= "\n----------\n";
 		}

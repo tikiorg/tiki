@@ -11,8 +11,8 @@ global $headerlib, $smarty, $reportFullscreen, $index, $values;
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
 $headerlib
-	->add_jsfile( 'lib/core/Report/Builder.js')
-	->add_jq_onready( '$.reportInit();' );
+	->add_jsfile('lib/core/Report/Builder.js')
+	->add_jq_onready('$.reportInit();');
 	
 $smarty->assign('definitions', Report_Builder::listDefinitions());
 

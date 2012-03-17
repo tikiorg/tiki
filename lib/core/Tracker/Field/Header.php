@@ -55,7 +55,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 
 	function renderInput($context = array())
 	{
-		return $this->renderOutput( $context );
+		return $this->renderOutput($context);
 	}
 	
 	function renderOutput($context = array())

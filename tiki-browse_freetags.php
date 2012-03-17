@@ -128,22 +128,23 @@ $smarty->assign('cant', $objects['cant']);
 include_once ('tiki-section_options.php');
 ask_ticket('browse-freetags');
 
-$smarty->assign('objects_with_freetags',
-			array (
-				'wiki page',
-				'blog post',
-				'article',
-				'directory',
-				'faq',
-				'file gallery',
-				'image gallery',
-				'image',
-				'poll',
-				'quiz',
-				'survey',
-				'tracker',
-				'tracker %d'
-			)
-	);
+$smarty->assign(
+				'objects_with_freetags',
+				array (
+					'wiki page',
+					'blog post',
+					'article',
+					'directory',
+					'faq',
+					'file gallery',
+					'image gallery',
+					'image',
+					'poll',
+					'quiz',
+					'survey',
+					'tracker',
+					'tracker %d'
+				)
+);
 $smarty->assign('mid', 'tiki-browse_freetags.tpl');
 $smarty->display("tiki.tpl");

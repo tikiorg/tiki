@@ -3589,7 +3589,8 @@ class FileGalLib extends TikiLib
 		}
 	}
 	
-	function fixMime($fileData) {
+	function fixMime($fileData) 
+	{
 		global $prefs;
 		if ($prefs['fgal_fix_mime_type'] != 'y') {
 			return $fileData['filetype'];
@@ -3597,7 +3598,7 @@ class FileGalLib extends TikiLib
 		if ($fileData['filetype'] != "application/octet-stream") {
 			return $fileData['filetype'];
 		}
-		$suffix=strtolower(preg_replace('/.*\./','',$fileData['filename']));
+		$suffix=strtolower(preg_replace('/.*\./', '', $fileData['filename']));
 		switch($suffix) {
 			case 'jpg' :
 			case 'jpeg' :	$filetype = 'image/jpeg';

@@ -72,20 +72,26 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 			if (! $versionInfo || $versionInfo['version'] != $info['version']) {
 				// No approved version or approved version differs, latest content marked as such
-				$out[] = array_merge($data, array(
-					'title' => $typeFactory->sortable(tr('%0 (latest)', $info['pageName'])),
-					'view_permission' => $typeFactory->identifier('tiki_p_wiki_view_latest'),
-					'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'], true) . 'latest'),
-				));
+				$out[] = array_merge(
+								$data, 
+								array(
+									'title' => $typeFactory->sortable(tr('%0 (latest)', $info['pageName'])),
+									'view_permission' => $typeFactory->identifier('tiki_p_wiki_view_latest'),
+									'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'], true) . 'latest'),
+								)
+				);
 			}
 
 			if ($versionInfo) {
 				// Approved version not latest, include approved version in index
 				// Also applies when versions are equal, data would be the same
-				$out[] = array_merge($data, array(
-					'wiki_content' => $typeFactory->wikitext($versionInfo['data']),
-					'hash' => $typeFactory->identifier($versionInfo['version']),
-				));
+				$out[] = array_merge(
+								$data, 
+								array(
+									'wiki_content' => $typeFactory->wikitext($versionInfo['data']),
+									'hash' => $typeFactory->identifier($versionInfo['version']),
+								)
+				);
 			}
 		}
 

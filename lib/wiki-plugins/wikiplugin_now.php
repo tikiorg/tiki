@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_now_info() {
+function wikiplugin_now_info() 
+{
 	return array(
 		'name' => tra('Now'),
 		'documentation' => 'PluginNow',
@@ -25,7 +26,8 @@ function wikiplugin_now_info() {
 	);
 }
 
-function wikiplugin_now($data, $params) {
-	extract ($params,EXTR_SKIP);
+function wikiplugin_now($data, $params) 
+{
+	extract($params, EXTR_SKIP);
 	return TikiLib::date_format(tra($format));
 }

@@ -52,8 +52,14 @@ if (isset($_REQUEST["save"])) {
 	if (!empty($_REQUEST['Time_Meridian'])) {
 		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
 	}
-	$publishDate = TikiLib::make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
-																   0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
+	$publishDate = TikiLib::make_time(
+					$_REQUEST["Time_Hour"], 
+					$_REQUEST["Time_Minute"],
+					0, 
+					$_REQUEST["Date_Month"], 
+					$_REQUEST["Date_Day"], 
+					$_REQUEST["Date_Year"]
+	);
 
 	$id = $dcslib->replace_programmed_content($_REQUEST["pId"], $_REQUEST["contentId"], $publishDate, $content, $_REQUEST['content_type']);
 	$smarty->assign('data', $_REQUEST["data"]);

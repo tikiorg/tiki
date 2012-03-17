@@ -330,7 +330,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 		if ( $prefs['feature_jquery_validation'] == 'y' ) {
 			$headerlib->add_jsfile('lib/jquery/jquery-validate/jquery.validate.js');
-			$headerlib->add_jsfile( 'lib/validators/validator_required_in_group.js' );
+			$headerlib->add_jsfile('lib/validators/validator_required_in_group.js');
 		}
 
 		$headerlib->add_jsfile('lib/jquery/jquery-ui/external/jquery.cookie.js');
@@ -379,13 +379,13 @@ if ($prefs['feature_trackers'] == 'y') {
 
 	if ($prefs['feed_tracker'] === 'y') {
 		$opts = TikiLib::lib('trk')->get_trackers_options(null, 'publishRSS', 'y');
-		foreach($opts as & $o) {
+		foreach ($opts as & $o) {
 			$o = $o['trackerId'];
 		}
 		$trackers = TikiLib::lib('trk')->list_trackers();
 
 		$rss_trackers = array();
-		foreach($trackers['data'] as $trk) {
+		foreach ($trackers['data'] as $trk) {
 			if (in_array($trk['trackerId'], $opts)) {
 				$rss_trackers[] = array(
 					'trackerId' => $trk['trackerId'],

@@ -907,8 +907,8 @@ function TextToQuestions($text)
 		if ($text[$i] and !ctype_print($text[$i])) {
 			quizlib_error_exit(
 							"lib/quizzes/quizlib.php line "
-						. __LINE__
-						. ": Your text has invalid character(s) near line $i where it says:\n  $text[$i]"
+							. __LINE__
+							. ": Your text has invalid character(s) near line $i where it says:\n  $text[$i]"
 			);
 		}
 	}

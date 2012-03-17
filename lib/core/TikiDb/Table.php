@@ -147,8 +147,8 @@ class TikiDb_Table
 		$map = array();
 
 		foreach ( $result as $row ) {
-			$key = array_shift( $row );
-			$value = array_shift( $row );
+			$key = array_shift($row);
+			$value = array_shift($row);
 
 			$map[ $key ] = $value;
 		}

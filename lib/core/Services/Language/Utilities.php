@@ -54,11 +54,11 @@ class Services_Language_Utilities
 			case 'wiki page':
 				$info = TikiLib::lib('tiki')->get_page_info($object);
 				$lang = $info['lang'];
-				break;
+    			break;
 			case 'article':
 				$info = TikiLib::lib('art')->get_article($object);
 				$lang = $info['lang'];
-				break;
+    			break;
 			case 'trackeritem':
 				$info = TikiLib::lib('trk')->get_tracker_item($object);
 				$definition = Tracker_Definition::get($info['trackerId']);
@@ -66,14 +66,14 @@ class Services_Language_Utilities
 				if ($field = $definition->getLanguageField()) {
 					$lang = $info[$field];
 				}
-				break;
+    			break;
 			case 'forum post':
 				$object = TikiLib::lib('comments')->get_comment_forum_id($object);
 				// no break: drop through to forum
 			case 'forum':
 				$info = TikiLib::lib('comments')->get_forum($object);
 				$lang = $info['forumLanguage'];	
-				break;
+    			break;
 		}
 
 		if (! $lang) {

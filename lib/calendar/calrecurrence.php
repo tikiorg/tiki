@@ -83,7 +83,7 @@ class CalRecurrence extends TikiLib
 				$this->setEndPeriod($row['endPeriod']);
 				$this->setUser($row['user']);
 				$this->setCreated($row['created']);
-				$this->setLastModif ($row['lastModif']);
+				$this->setLastModif($row['lastModif']);
 			}
 		}
 	}
@@ -670,7 +670,7 @@ class CalRecurrence extends TikiLib
 		'endPeriod' => $this->getEndPeriod(),
 		'user' => $this->getUser(),
 		'created' => $this->getCreated(),
-		'lastModif' => $this->getLastModif ()
+		'lastModif' => $this->getLastModif()
 		);
 	}
 

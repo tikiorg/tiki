@@ -62,9 +62,13 @@ class Services_Tracker_TodoController
 			throw new Services_Exception_MissingValue('after');
 		}
 
-		$todoId = $todolib->addTodo($delayAfter, $event, 'tracker', $trackerId, 
-			array('status' => $from),
-			array('status' => $to)
+		$todoId = $todolib->addTodo(
+						$delayAfter, 
+						$event, 
+						'tracker', 
+						$trackerId, 
+						array('status' => $from),
+						array('status' => $to)
 		);
 
 		if ($delayNotif) {

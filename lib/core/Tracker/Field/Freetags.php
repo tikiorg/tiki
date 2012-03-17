@@ -78,9 +78,9 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 			$freetaglib = TikiLib::lib('freetag');
 			$data['freetags'] = $freetaglib->_parse_tag($data['value']);
 			$data['tag_suggestion'] = $freetaglib->get_tag_suggestion(
-				implode(' ', $data['freetags']),
-				$prefs['freetags_browse_amount_tags_suggestion'],
-				$itemLang
+							implode(' ', $data['freetags']),
+							$prefs['freetags_browse_amount_tags_suggestion'],
+							$itemLang
 			);	
 		}
 					

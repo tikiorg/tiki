@@ -75,13 +75,13 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST["email"]) && $_REQUEST["email"] !
 		$emails = explode(',', $_REQUEST["email"]);
 		foreach ($emails as $e) {
 			if ($userlib->user_exists(trim($e))) {
-				$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($e) , "y", $confirmEmail, $addEmail);
+				$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($e), "y", $confirmEmail, $addEmail);
 			} else {
-				$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($e) , "n", $confirmEmail, "");
+				$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($e), "n", $confirmEmail, "");
 			}
 		}
 	} else {
-		$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($_REQUEST["email"]) , "n", $confirmEmail, "");
+		$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($_REQUEST["email"]), "n", $confirmEmail, "");
 	}
 }
 

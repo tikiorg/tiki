@@ -22,7 +22,7 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 		$item->forwardlink->href = str_replace(' ', '+', $item->forwardlink->href);
 		$exists = false;
 		
-		foreach($textlinkContribution as $existingItem) {
+		foreach ($textlinkContribution as $existingItem) {
 			if ($existingItem->textlink['id'] == $item->textlink['id']) {
 				$exists = true;
 				
@@ -71,10 +71,12 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 		}
 		
 		if (!empty($feed->feed->entry)) {
-			$client->setParameterGet(array(
-				'protocol'=> 'forwardlink',
-				'contribution'=> json_encode($feed)
-			));
+			$client->setParameterGet(
+							array(
+								'protocol'=> 'forwardlink',
+								'contribution'=> json_encode($feed)
+							)
+			);
 
 			$response = $client->request(Zend_Http_Client::POST);
 			$request = $client->getLastResponse();

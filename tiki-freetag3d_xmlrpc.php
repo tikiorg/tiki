@@ -15,7 +15,8 @@ $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 
 $server = new XML_RPC_Server($map);
 
-function getSubGraph($params) {
+function getSubGraph($params) 
+{
     global $freetaglib, $dbTiki, $base_url, $prefs;
 
     $nodeName = $params->getParam(0); $nodeName = $nodeName->scalarVal();
@@ -34,7 +35,7 @@ function getSubGraph($params) {
 	$nextQueue = array();
 	foreach ($queue as $nodeName) {
 
-	    $similar = $freetaglib->similar_tags($nodeName,5);
+	    $similar = $freetaglib->similar_tags($nodeName, 5);
 	    $neighbours = array();
 	    foreach ($similar as $tag) {
 		$neighbours[] = $tag['tag'];

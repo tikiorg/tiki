@@ -107,7 +107,8 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		}
 	}
 
-	protected function processMultilingual($requestData, $id_string) {
+	protected function processMultilingual($requestData, $id_string) 
+	{
 		global $prefs;
 		$language = $prefs['language'];
 		$multilingual = $this->getConfiguration('isMultilingual') == 'y';

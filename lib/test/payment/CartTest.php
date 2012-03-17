@@ -248,7 +248,7 @@ T-123|[product123|Hello World]|2|12.50
 T-456|Foobar|1|120.50
 ||
 ", 
-		$this->obj->get_description()
+      $this->obj->get_description()
 		);
 	}
 

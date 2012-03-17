@@ -17,9 +17,11 @@ class Tracker_Field_Factory
 	{
 		$this->trackerDefinition = $trackerDefinition;
 		
-		$fieldMap = $this->buildTypeMap(array(
-			'lib/core/Tracker/Field' => 'Tracker_Field_',
-		));
+		$fieldMap = $this->buildTypeMap(
+					array(
+						'lib/core/Tracker/Field' => 'Tracker_Field_',
+					)
+		);
 	}
 	
 	private function getPreCacheTypeMap()

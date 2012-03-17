@@ -22,10 +22,12 @@ class Services_ResultLoader_WebService
 
 	function __invoke($offset, $count)
 	{
-		$this->client->setParameterPost(array(
-			$this->offsetKey => $offset,
-			$this->countKey => $count,
-		));
+		$this->client->setParameterPost(
+						array(
+							$this->offsetKey => $offset,
+							$this->countKey => $count,
+						)
+		);
 		$this->client->setHeaders('Accept', 'application/json');
 
 		$response = $this->client->request('POST');

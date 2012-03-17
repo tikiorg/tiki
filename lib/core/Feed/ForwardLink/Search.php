@@ -15,7 +15,7 @@ class Feed_ForwardLink_Search
 		$newestRevision = self::newestWikiRevision($phrase, $page);
 		
 		if ($version != $newestRevision) {
-			header( 'Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $page . '&preview=' . $newestRevision . '&nohistory') ;
+			header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $page . '&preview=' . $newestRevision . '&nohistory');
 			exit();
 		}
 	}

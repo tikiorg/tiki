@@ -50,7 +50,7 @@ class Multilingual_Aligner_UpdatePages
 			$target_outofdate_sentences[$a] = trim($target_outofdate_sentences[$a]);
 		}
 
-		for($a=0, $aCountTargetModifiedSentences = count($target_modified_sentences); $a<$aCountTargetModifiedSentences; $a++) {
+		for ($a=0, $aCountTargetModifiedSentences = count($target_modified_sentences); $a<$aCountTargetModifiedSentences; $a++) {
 			$target_modified_sentences[$a] = trim($target_modified_sentences[$a]);
 		}
 
@@ -85,7 +85,7 @@ class Multilingual_Aligner_UpdatePages
 					$index = array_search($source_diff[$a], $source_diff);
 					$index++;
 					$first = 0;
-					while(($c = $this->array_search_function($source_diff[$a], $source_diff, $index)) != -1) {
+					while (($c = $this->array_search_function($source_diff[$a], $source_diff, $index)) != -1) {
 						$first = 1;
 						$source_diff[$c] = '<$i>' . $source_diff[$c];
 						$i++;
@@ -147,7 +147,7 @@ class Multilingual_Aligner_UpdatePages
 //		for ($i=1; $i<count($target_array); $i++) {
 //			$target_array[$i]=utf8_decode($target_array[$i]);
 //		}
-			for ($i=0, $iCountSourceArray = count($source_array); $i<$iCountSourceArray; $i++) {
+		for ($i=0, $iCountSourceArray = count($source_array); $i<$iCountSourceArray; $i++) {
 				$this->alignments->addSentencePair($source_array[$i], $source_lng, $target_array[$i], $target_lng);
 		}
 	}

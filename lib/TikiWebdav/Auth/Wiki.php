@@ -20,7 +20,7 @@ class TikiWebdav_Auth_Wiki extends TikiWebdav_Auth_Default
 
 		$groups = $tikilib->get_user_groups($user);
 		$perms = Perms::getInstance();
-		$perms->setGroups( $groups );
+		$perms->setGroups($groups);
 		$perms = $tikilib->page_exists($page) ? Perms::get(array('type' => 'wiki page', 'object' => substr($path, 1))) : Perms::get();
 
 		return ($access === self::ACCESS_READ && $perms->view) || ($access === self::ACCESS_WRITE && $perms->edit);

@@ -18,11 +18,11 @@ class JitFilter_Element
 	{
 		$filter = TikiFilter::get($filter);
 
-		return $filter->filter( $this->value );
+		return $filter->filter($this->value);
 	}
 
 	function __call( $name, $arguments )
 	{
-		return $this->filter( $name );
+		return $this->filter($name);
 	}
 }

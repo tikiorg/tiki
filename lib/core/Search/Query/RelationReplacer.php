@@ -22,10 +22,12 @@ class Search_Query_RelationReplacer
 			if (in_array($relation->getQualifier(), $this->invertable)) {
 				$invert = $relation->getInvert();
 
-				return new Search_Expr_Or(array(
-					$expr,
-					new Search_Expr_Token($invert->getToken()),
-				));
+				return new Search_Expr_Or(
+								array(
+									$expr,
+									new Search_Expr_Token($invert->getToken()),
+								)
+				);
 			}
 		}
 

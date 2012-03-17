@@ -22,7 +22,8 @@ class Services_Connect_Server
 		$this->connectlib = TikiLib::lib('connect_server');
 	}
 
-	function action_new($input) {
+	function action_new($input) 
+	{
 		$rdata = array();
 
 		$caplib = $this->getCaptcha();
@@ -46,7 +47,8 @@ class Services_Connect_Server
 		return $rdata;
 	}
 
-	function action_confirm($input) {
+	function action_confirm($input) 
+	{
 		$rdata = array();
 
 
@@ -92,7 +94,8 @@ class Services_Connect_Server
 
 	}
 
-	function action_receive($input) {
+	function action_receive($input) 
+	{
 		$rdata = array();
 
 		$connectData = $input->connect_data->filter();
@@ -123,7 +126,8 @@ class Services_Connect_Server
 		return $rdata;
 	}
 
-	function action_cancel($input) {
+	function action_cancel($input) 
+	{
 
 		$connectData = $input->connect_data->filter();
 		$guid = $connectData['guid'];

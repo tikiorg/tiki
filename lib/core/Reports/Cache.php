@@ -83,8 +83,14 @@ class Reports_Cache
 			// if user in the watch has enabled periodic reports
 			if (in_array($watch['user'], $users)) {
 				// add data to report cache
-				$this->table->insert(array('user' => $watch['user'], 'event' => $data['event'],
-					'data' => serialize($data), 'time' => $this->dt->format('Y-m-d H:i:s')));
+				$this->table->insert(
+								array(
+									'user' => $watch['user'],
+									'event' => $data['event'],
+									'data' => serialize($data),
+									'time' => $this->dt->format('Y-m-d H:i:s')
+								)
+				);
 				
 				// remove data from $watches array so that the user doesn't receive a email
 				// notification for the event

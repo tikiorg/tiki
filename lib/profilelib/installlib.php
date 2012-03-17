@@ -584,7 +584,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		}
 
 		$fields = $trklib->list_tracker_fields($trackerId);
-		$prof = new Tiki_Profile_InstallHandler_TrackerField( $profileObject, array());
+		$prof = new Tiki_Profile_InstallHandler_TrackerField($profileObject, array());
 		foreach ($fields['data'] as $field) {
 			$res = array_merge($res, $prof->_export($field, $profileObject));
 		}
@@ -640,62 +640,62 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 	{
 		return array(
 			'type' => new Tiki_Profile_ValueMapConverter(
-				array( // {{{
-					'action' => 'x',
-					'attachment' => 'A',
-					'auto_increment' => 'q',
-					'calendar' => 'j',
-					'category' => 'e',
-					'checkbox' => 'c',
-					'computed' => 'C',
-					'country' => 'y',
-					'currency' => 'b',
-					'datetime' => 'f',
-					'dropdown_other' => 'D',
-					'dropdown' => 'd',
-					'email' => 'm',
-					'files' => 'FG',
-					'freetags' => 'F',
-					'geograpgic_feature' => 'GF',
-					'group' => 'g',
-					'header' => 'h',
-					'icon' => 'icon',
-					'image' => 'i',
-					'in_group' => 'N',
-					'ip_address' => 'I',
-					'item_link' => 'r',
-					'item_list_dynamic' => 'w',
-					'item_list' => 'l',
-					'language' => 'LANG',
-					'ldap' => 'P',
-					'location' => 'G',
-					'map' => 'G',
-					'multiselect' => 'M',
-					'numeric' => 'n',
-					'page' => 'k',
-					'preference' => 'p',
-					'radio' => 'R',
-					'relation' => 'REL',
-					'stars' => 'STARS',
-					'stars_old' => '*',
-					'static' => 'S',
-					'system' => 's',
-					'text_area' => 'a',
-					'text_field' => 't',
-					'url' => 'L',
-					'usergroups' => 'usergroups',
-					'user_subscription' => 'U',
-					'user' => 'u',
-					'webservice' => 'W',
-				)
+							array( // {{{
+								'action' => 'x',
+								'attachment' => 'A',
+								'auto_increment' => 'q',
+								'calendar' => 'j',
+								'category' => 'e',
+								'checkbox' => 'c',
+								'computed' => 'C',
+								'country' => 'y',
+								'currency' => 'b',
+								'datetime' => 'f',
+								'dropdown_other' => 'D',
+								'dropdown' => 'd',
+								'email' => 'm',
+								'files' => 'FG',
+								'freetags' => 'F',
+								'geograpgic_feature' => 'GF',
+								'group' => 'g',
+								'header' => 'h',
+								'icon' => 'icon',
+								'image' => 'i',
+								'in_group' => 'N',
+								'ip_address' => 'I',
+								'item_link' => 'r',
+								'item_list_dynamic' => 'w',
+								'item_list' => 'l',
+								'language' => 'LANG',
+								'ldap' => 'P',
+								'location' => 'G',
+								'map' => 'G',
+								'multiselect' => 'M',
+								'numeric' => 'n',
+								'page' => 'k',
+								'preference' => 'p',
+								'radio' => 'R',
+								'relation' => 'REL',
+								'stars' => 'STARS',
+								'stars_old' => '*',
+								'static' => 'S',
+								'system' => 's',
+								'text_area' => 'a',
+								'text_field' => 't',
+								'url' => 'L',
+								'usergroups' => 'usergroups',
+								'user_subscription' => 'U',
+								'user' => 'u',
+								'webservice' => 'W',
+							)
 			), // }}}
 			'visible' => new Tiki_Profile_ValueMapConverter(
-				array(
-					'public' => 'n',
-					'admin_only' => 'y',
-					'admin_editable' => 'p',
-					'creator_editable' => 'c',
-				)
+							array(
+								'public' => 'n',
+								'admin_only' => 'y',
+								'admin_editable' => 'p',
+								'creator_editable' => 'c',
+							)
 			),
 		);
 	} // }}}

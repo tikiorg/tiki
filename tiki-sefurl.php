@@ -25,9 +25,10 @@ define('TITLE_SEPARATOR', '-');
  */
 
 
-function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = null, $with_title='y') {
+function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = null, $with_title='y') 
+{
 	global $sefurl_regex_out, $tikilib, $prefs, $base_url;
-	if ($prefs['feature_sefurl'] != 'y' or ( preg_match('#^http(|s)://#',$tpl_output) and strpos($tpl_output, $base_url) !== 0 ) ) {
+	if ($prefs['feature_sefurl'] != 'y' or ( preg_match('#^http(|s)://#', $tpl_output) and strpos($tpl_output, $base_url) !== 0 ) ) {
 		return $tpl_output;
 	}
 	global $cachelib;
@@ -94,7 +95,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 	if ($type == 'tracker item' || $type == 'trackeritem') {
 		if (preg_match('/itemId=([0-9]+)/', $tpl_output, $matches)) {
 			$trklib = TikiLib::lib('trk');
-			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $pagealias = $trklib->get_trackeritem_pagealias($matches[1])){
+			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $pagealias = $trklib->get_trackeritem_pagealias($matches[1])) {
 				$tpl_output = "./tiki-index.php?page=" . $pagealias;
 			}
 		}

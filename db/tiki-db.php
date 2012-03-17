@@ -104,11 +104,11 @@ if ( file_exists($local_php) ) {
 
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
-	array(
-		'preference' => array(),
-		'rules' => array(),
-	),
-	 array('readOnly' => false)
+				array(
+					'preference' => array(),
+					'rules' => array(),
+				),
+				array('readOnly' => false)
 );
 if (isset ($system_configuration_file)) {
 	if (! is_readable($system_configuration_file)) {

@@ -75,7 +75,7 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 
 	public function logOutIfNecessary()
 	{
-		if ($this->isElementPresent("link=Logout")){
+		if ($this->isElementPresent("link=Logout")) {
 			$this->clickAndWait("link=Logout");
 		} 
 	}
@@ -117,7 +117,7 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 
 	private function _login_as($user)
 	{
-		if ($this->isElementPresent("sl-login-user")){
+		if ($this->isElementPresent("sl-login-user")) {
 			$password = $this->user_credentials[$user];
 			$this->type("sl-login-user", $user);
 			$this->type("sl-login-pass", $password);
@@ -133,6 +133,6 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 	{
 		$return = null;
 		foreach ($pieces as $tk => $tv) $return .= $glue.$tk.$hifen.$tv;
-		return substr($return,1);
+		return substr($return, 1);
 	}
 } 

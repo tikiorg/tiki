@@ -154,7 +154,8 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return $output;
 	}
 	
-	private function describeCategoryList($categs) {
+	private function describeCategoryList($categs) 
+	{
 	    $categlib = TikiLib::lib('categ');
 	    $res = '';
 	    foreach ($categs as $cid) {
@@ -221,10 +222,12 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	private function getRemoteCategoriesAsOptions($syncInfo, $parentId, $descending)
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'category');
-		$categories = $controller->list_categories(array(
-			'parentId' => $parentId,
-			'descends' => $descending,
-		));
+		$categories = $controller->list_categories(
+						array(
+							'parentId' => $parentId,
+							'descends' => $descending,
+						)
+		);
 
 		$parts = array();
 		foreach ($categories as $categ) {

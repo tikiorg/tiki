@@ -16,7 +16,8 @@ if (php_sapi_name() != 'cli') {
 
 global $nllib; include_once('lib/newsletters/nllib.php');
 
-function display_usage() {
+function display_usage() 
+{
 	$helpMsg = "\nUsage: php tiki-batch_send_newsletter.php editionId=X\n"
 		. "Usage: http://path_to_tiki/tiki-batch_send_newsletter.php?editionId=X\n";
 		
@@ -27,7 +28,7 @@ function display_usage() {
 	}
 	die;
 }
-error_reporting (E_ALL);
+error_reporting(E_ALL);
 
 $request = new Request();
 

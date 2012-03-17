@@ -35,13 +35,15 @@ class Search_Formatter_ValueFormatter_Trackerrender implements Search_Formatter_
 		}
 
 		$trklib = TikiLib::lib('trk');
-		return '~np~' . $trklib->field_render_value(array(
-			'item' => $item,
-			'field' => $field,
-			'process' => 'y',
-			'search_render' => 'y',
-			'list_mode' => $this->list_mode,
-		)) . '~/np~';
+		return '~np~' . $trklib->field_render_value(
+						array(
+							'item' => $item,
+							'field' => $field,
+							'process' => 'y',
+							'search_render' => 'y',
+							'list_mode' => $this->list_mode,
+						)
+		) . '~/np~';
 	}
 }
 

@@ -20,14 +20,14 @@ if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php') && !preg_match
 }
 
 // Handle form processing
-if ( isset($_REQUEST["emulategroups"]) ){
+if ( isset($_REQUEST["emulategroups"]) ) {
 	if ( $_REQUEST["emulategroups"] == "setgroups" ) {
 		// User has selected a list of groups to emulate
 		$_SESSION["groups_are_emulated"]="y";
 		if ( count($_REQUEST["switchgroups"]) ) {
 			$groups_emulated = array();
 			$dont_forget_registered = 0;
-			while( list(,$value)=each($_REQUEST["switchgroups"]) ) {
+			while ( list(,$value)=each($_REQUEST["switchgroups"]) ) {
 				$groups_emulated[]=$value;
 				$included = $tikilib->get_included_groups($value);
 				$groups_emulated = array_merge($groups_emulated, $included);
@@ -50,7 +50,7 @@ if ( isset($_REQUEST["emulategroups"]) ){
 			$_SESSION['groups_emulated'] = serialize($groups_emulated);
 		}
 		$_SESSION['groups_emulated'] = serialize($groups_emulated);
-	}elseif ( $_REQUEST["emulategroups"] == "resetgroups" ) {
+	} elseif ( $_REQUEST["emulategroups"] == "resetgroups" ) {
 		// User stops groups emulation (logging out is an alternate solution for user)
 		$_SESSION["groups_are_emulated"]="n";
 		$groups_emulated = array();

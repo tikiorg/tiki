@@ -32,7 +32,7 @@ if (isset($_REQUEST["calendarIds"])) {
     if (!is_array($calendarIds)) {
 	$calendarIds = array($calendarIds);
     }	
-    $uniqueid = $feed.".".implode(".",$calendarIds);
+    $uniqueid = $feed.".".implode(".", $calendarIds);
 } else {
     $uniqueid = $feed;
     $calendarIds = array();
@@ -56,13 +56,13 @@ if ($output["data"]=="EMPTY") {
 	foreach ($allCalendars['data'] as $cal) {
 
 	    $visible = false;
-	    if (count($calendarIds) == 0 || in_array($cal['calendarId'],$calendarIds)) {
+	    if (count($calendarIds) == 0 || in_array($cal['calendarId'], $calendarIds)) {
 			if ($cal["personal"] == "y") {
 			    if ($user) {
 					$visible = true;
 			    }
 			} else {
-			    if ($userlib->object_has_one_permission($cal['calendarId'],'calendar')) {
+			    if ($userlib->object_has_one_permission($cal['calendarId'], 'calendar')) {
 					if ($userlib->object_has_permission($user, $cal['calendarId'], 'calendar', 'tiki_p_view_calendar')) {
 					    $visible = true;
 					} 

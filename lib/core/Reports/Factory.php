@@ -24,8 +24,12 @@ class Reports_Factory
 				return new Reports_Cache($db, new DateTime);
 			case 'Reports_Manager':
 				global $userlib;
-				return new Reports_Manager(Reports_Factory::build('Reports_Users'), Reports_Factory::build('Reports_Cache'),
-					Reports_Factory::build('Reports_Send'), $userlib);
+				return new Reports_Manager(
+								Reports_Factory::build('Reports_Users'), 
+								Reports_Factory::build('Reports_Cache'),
+								Reports_Factory::build('Reports_Send'), 
+								$userlib
+				);
 			case 'Reports_Send':
 				global $prefs;
 				require_once('lib/webmail/tikimaillib.php');

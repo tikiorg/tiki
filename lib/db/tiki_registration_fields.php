@@ -17,10 +17,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class TikiRegistrationFields extends TikiLib
 {
-    function TikiRegistrationFields() {
-    }
+	function TikiRegistrationFields() 
+	{
+	}
 
-    function getVisibleFields2($user=false) {
+	function getVisibleFields2($user=false) 
+	{
         global $tikilib;
 
 		$query = 'SELECT `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` FROM `tiki_registration_fields` WHERE `show`=?';
@@ -35,9 +37,10 @@ class TikiRegistrationFields extends TikiLib
             $ret[] = $res;
         }
         return $ret;
-    }
+	}
 
-    function getHiddenFields() {
+	function getHiddenFields() 
+	{
         global $tikilib;
 		$query = 'SELECT `field` FROM `tiki_registration_fields` WHERE `show`=?';
 		$result = $tikilib->query($query, array(0));
@@ -48,6 +51,5 @@ class TikiRegistrationFields extends TikiLib
             $ret[] = $res['field'];
         }
         return $ret;
-    }
-
+	}
 }

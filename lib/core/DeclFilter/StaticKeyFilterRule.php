@@ -16,11 +16,11 @@ class DeclFilter_StaticKeyFilterRule extends DeclFilter_FilterRule
 
 	function match( $key )
 	{
-		return array_key_exists( $key, $this->rules );
+		return array_key_exists($key, $this->rules);
 	}
 
 	function getFilter( $key )
 	{
-		return TikiFilter::get( $this->rules[$key] );
+		return TikiFilter::get($this->rules[$key]);
 	}
 }

@@ -16,6 +16,6 @@ class DeclFilter_StaticKeyUnsetRule extends DeclFilter_UnsetRule
 
 	function match( $key )
 	{
-		return in_array( $key, $this->keys );
+		return in_array($key, $this->keys);
 	}
 }

@@ -28,11 +28,13 @@ class Tiki_Wsdl
 
 		if ( $prefs['use_proxy'] == 'y' && !strpos($wsdlUri, 'localhost') ) {
 			// Use proxy
-			$context = stream_context_create(array(
+			$context = stream_context_create(
+							array(
 								'http' => array(
-									'proxy' => $prefs['proxy_host'] .':'. $prefs['proxy_port'], 
-									'request_fulluri' => true)
-							));
+										'proxy' => $prefs['proxy_host'] .':'. $prefs['proxy_port'], 
+										'request_fulluri' => true)
+							)
+			);
 		}
 
 		// Copy content in cache
@@ -44,7 +46,7 @@ class Tiki_Wsdl
 		}
 
 		$wsdlFile = $GLOBALS['tikipath'] . 'temp/cache/' . md5($wsdlUri);
-		file_put_contents( $wsdlFile, $wsdl_data );
+		file_put_contents($wsdlFile, $wsdl_data);
 
 		// Read wsdl from local copy
 		$wsdl = new wsdl('file:' . $wsdlFile);

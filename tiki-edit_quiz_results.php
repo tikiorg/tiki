@@ -54,8 +54,13 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-result');
-	$quizlib->replace_quiz_result($_REQUEST["resultId"], $_REQUEST["quizId"], $_REQUEST["fromPoints"], $_REQUEST["toPoints"],
-		$_REQUEST["answer"]);
+	$quizlib->replace_quiz_result(
+					$_REQUEST["resultId"], 
+					$_REQUEST["quizId"], 
+					$_REQUEST["fromPoints"], 
+					$_REQUEST["toPoints"],
+					$_REQUEST["answer"]
+	);
 
 	$smarty->assign('answer', '');
 	$smarty->assign('resultId', 0);

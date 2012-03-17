@@ -15,11 +15,13 @@ if ($prefs['feed_blogs'] != 'y') {
 	$errmsg = tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
-$res = $access->authorize_rss(array(
-	'tiki_p_read_blog',
-	'tiki_p_blog_admin',
-	'tiki_p_blog_view_ref'
-));
+$res = $access->authorize_rss(
+				array(
+					'tiki_p_read_blog',
+					'tiki_p_blog_admin',
+					'tiki_p_blog_view_ref'
+				)
+);
 if ($res) {
 	if ($res['header'] == 'y') {
 		header('WWW-Authenticate: Basic realm="' . $tikidomain . '"');
@@ -50,9 +52,12 @@ if ($output["data"] == "EMPTY") {
 	include_once ('tiki-sefurl.php');
 	foreach ($changes["data"] as $data) {
 		global $bloglib;
-		$data["$descId"] = $tikilib->parse_data($data[$descId], array(
-			'print' => true
-		));
+		$data["$descId"] = $tikilib->parse_data(
+						$data[$descId], 
+						array(
+							'print' => true
+						)
+		);
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']), 'blogpost', $data['title']);
 		$tmp[] = $data;
 	}

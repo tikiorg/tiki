@@ -57,9 +57,10 @@ function wikiplugin_report( $data, $params )
 			case 'sheet':
 				TikiLib::lib("sheet")->setup_jquery_sheet();
 				
-				$headerlib->add_jq_onready("
+				$headerlib->add_jq_onready(
+								"
 					var me = $('#reportPlugin$reportI');
-					me
+   				me
 						.show()
 						.visible(function() {
 							me
@@ -90,7 +91,8 @@ function wikiplugin_report( $data, $params )
 	if ($tiki_p_edit == 'y') {
 		$headerlib
 			->add_jsfile("lib/core/Report/Builder.js")
-			->add_js("
+			->add_js(
+							"
 			function editReport$reportI(me) {
 				var me = $(me);
 				me.serviceDialog({
@@ -119,7 +121,8 @@ function wikiplugin_report( $data, $params )
 				});
 				return false;
 			}
-		");
+		"
+			);
 		
 		$result .= "
 			<form class='reportWikiPlugin' data-index='$reportI' method='post' action='tiki-wikiplugin_edit.php'>

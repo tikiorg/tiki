@@ -124,7 +124,7 @@ $headerlib->add_cssfile('lib/webodf/webodf.css');
 $savingText = tr('Saving...');
 
 $headerlib->add_jq_onready(
-	"window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
+    "window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
 	odfcanvas.load('tiki-download_file.php?fileId=' + $('#fileId').val());
 	
 	//make editable

@@ -57,9 +57,9 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 				$trklib = TikiLib::lib('trk');
 				
 				$infoComputed = $trklib->get_computed_info(
-					$this->getOption(0),
-					$this->getTrackerDefinition()->getConfiguration('trackerId'),
-					$fields
+								$this->getOption(0),
+								$this->getTrackerDefinition()->getConfiguration('trackerId'),
+								$fields
 				);
 				
 				if ($infoComputed) {

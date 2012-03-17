@@ -35,10 +35,17 @@ class Search_Formatter_ValueFormatter_Wikiplugin implements Search_Formatter_Val
 		}
 
 		$parserlib = TikiLib::lib('parser');
-		$out = $parserlib->plugin_execute( $name, $content, $params, 0, false, array(
-			'context_format' => 'html',
-			'ck_editor' => false,
-		) );
+		$out = $parserlib->plugin_execute(
+						$name,
+						$content, 
+						$params, 
+						0, 
+						false, 
+						array(
+							'context_format' => 'html',
+							'ck_editor' => false,
+						)
+		);
 
 		return '~np~' . $out . '~/np~';
 	}

@@ -85,7 +85,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		return tr('Read Only');
 	}
 
-	function renderOutput( $context = array() ) {
+	function renderOutput( $context = array() ) 
+	{
 		if ($context['list_mode'] === 'csv') {
 			return $this->getConfiguration('value');
 		} else {
@@ -96,13 +97,17 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			}
 
 			$list = $this->getItemLabels($items);
-			return $this->renderTemplate('trackeroutput/itemslist.tpl', $context, array(
-				'links' => (bool) $this->getOption(4),
-				'raw' => (bool) $this->getOption(3),
-				'itemIds' => implode(',', $items),
-				'items' => $list,
-				'num' => count($list),
-			));
+			return $this->renderTemplate(
+							'trackeroutput/itemslist.tpl', 
+							$context, 
+							array(
+								'links' => (bool) $this->getOption(4),
+								'raw' => (bool) $this->getOption(3),
+								'itemIds' => implode(',', $items),
+								'items' => $list,
+								'num' => count($list),
+							)
+			);
 		}
 	}
 

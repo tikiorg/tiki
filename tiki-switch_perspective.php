@@ -20,7 +20,7 @@ if ( isset($_REQUEST['perspective']) ) {
 if ( isset($_REQUEST['back']) && isset($_SERVER['HTTP_REFERER']) ) {
 	header('Location: ' . $_SERVER['HTTP_REFERER']);
 } else {
-	header( 'Location: index.php' );
+	header('Location: index.php');
 }
 
 // EOF

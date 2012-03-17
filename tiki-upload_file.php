@@ -210,7 +210,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload ) {
-	$headerlib->add_jsfile( 'lib/jquery/jquery.form.js' );
+	$headerlib->add_jsfile('lib/jquery/jquery.form.js');
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
 	if ( ! empty( $_REQUEST['filegals_manager'] ) ) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);

@@ -16,7 +16,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * Called by the FileMetadata class at metadata/metadata.php, which handles generic file metadata
  */
 class ImageFile
-{	
+{
 	var $header = null;
 	var $width = null;
 	var $height = null;

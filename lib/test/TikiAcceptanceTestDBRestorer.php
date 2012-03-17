@@ -218,7 +218,7 @@ class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
 				$match_this = "/(LOCK TABLES `".$table_name."`.+UNLOCK TABLES;)/Us";
 				$is_matched = preg_match($match_this, $tiki_test_db_dump_as_string, $matches);
 				fwrite($tiki_restore_db_file, "TRUNCATE TABLE `".$table_name."`;\n\n");
-				fwrite($tiki_restore_db_file,$matches[0]);
+				fwrite($tiki_restore_db_file, $matches[0]);
 				fwrite($tiki_restore_db_file, "\n\n\n");
 			}
 			fclose($tiki_restore_db_file);

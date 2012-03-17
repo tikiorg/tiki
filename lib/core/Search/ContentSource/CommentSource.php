@@ -24,9 +24,12 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 	{
 		$comments = $this->db->table('tiki_comments');
 
-		return $comments->fetchColumn('threadId', array(
-			'objectType' => $comments->in($this->types),
-		));
+		return $comments->fetchColumn(
+						'threadId', 
+						array(
+							'objectType' => $comments->in($this->types),
+						)
+		);
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
