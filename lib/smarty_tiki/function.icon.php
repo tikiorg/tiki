@@ -199,9 +199,16 @@ function smarty_function_icon($params, $smarty)
 			}
 
 			switch ( $tag ) {
-				case 'input_image': $html = '<input type="image"'.$html.' />';
-								break;
-				case 'img': default: $html = smarty_function_html_image($params, $smarty);
+				case 'input_image':
+					$html = '<input type="image"'.$html.' />';
+					break;
+				case 'img':
+				default:
+					try {
+						$html = smarty_function_html_image($params, $smarty);
+					} catch (Exception $e) {
+						$html = '<span>' . $e->getMessage() . '</span>';
+					}
 			}
 
 			if ( $tag != 'img' ) {
