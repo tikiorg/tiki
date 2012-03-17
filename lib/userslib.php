@@ -3059,6 +3059,15 @@ class UsersLib extends TikiLib
 				'prefs' => array('feature_categories'),
 				'scope' => 'object',
 			),
+			array(
+				'name' => 'tiki_p_assign_perm_category',
+				'description' => tra('Can assign perms to category)'),
+				'level' => 'admin',
+				'type' => 'category',
+				'admin' => false,
+				'prefs' => array('feature_categories'),
+				'scope' => 'object',
+			),
 			//array(
 			//	'name' => 'tiki_p_create_category',
 			//	'description' => tra('Can create new categories'),
