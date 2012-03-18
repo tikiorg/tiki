@@ -45,6 +45,10 @@ if ($_SESSION['wysiwyg'] == 'y') {
 	if ($prefs['wysiwyg_htmltowiki'] !== 'y' && !isset($info['is_html'])) { // new pages in wysiwyg mode
 		$is_html = true;
 	}
+	if ($is_html && $prefs['feature_wiki_allowhtml'] !== 'y') {
+		$prefs['feature_wiki_allowhtml'] = 'y';		// is page is html temporarily allow html even if pref says no
+	}
+
 } elseif ($prefs['feature_wiki_allowhtml'] == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
 	if (isset($_REQUEST['preview']) || isset($jitRequest['edit'])) {
 		if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
