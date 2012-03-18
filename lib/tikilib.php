@@ -4403,9 +4403,14 @@ class TikiLib extends TikiDb_Bridge
 		if ($tikidomain) {
 			$sty = array_unique(array_merge($sty, $csslib->list_css('styles')));
 		}
-		foreach ($sty as &$s) {	// add the .css back onto the end of the style names
-			$s .= '.css';		// i started to change this but it hits too many places
-		}						// Another TODO for 4.0 (sorry)
+		foreach ($sty as &$s) {
+			if (in_array($s, array('mobile', '960_gs'))) {
+				$s = '';
+			} else {
+				$s .= '.css';	// add the .css back onto the end of the style names
+			}
+		}
+		$sty = array_filter($sty);
 		sort($sty);
 		return $sty;
 		
