@@ -12,7 +12,7 @@ function wikiplugin_module_info()
 	$modlib = TikiLib::lib('mod');
 	$cachelib = TikiLib::lib('cache');
 
-	if (! $module_options = $cachelib->getSerialized('module_list_for_plugin' . $lang)) {
+	if (! $modules_options = $cachelib->getSerialized('module_list_for_plugin' . $lang)) {
 		$all_modules = $modlib->get_all_modules();
 		$all_modules_info = array_combine($all_modules, array_map(array( $modlib, 'get_module_info' ), $all_modules));
 		uasort($all_modules_info, 'compare_names');
