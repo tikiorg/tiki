@@ -56,6 +56,12 @@
 					<td>{tr}Description:{/tr}</td>
 					<td><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
+				{if $tiki_p_admin_categories == 'y'}
+				<tr>
+					<td>{tr}Apply parent category{/tr}</td>
+					<td><input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if} /></td>
+				</tr>
+				{/if}
 				<tr>
 					<td align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 				</tr>

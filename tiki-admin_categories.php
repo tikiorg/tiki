@@ -196,13 +196,17 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 
 		try {
 			$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
+			if ($tiki_p_admin_categories == 'y' && !empty($_REQUEST['parentPerms'])) {
+				$userlib->remove_object_permission('', $_REQUEST['categId'], 'category', '');
+				$userlib->copy_object_permissions($_REQUEST['parentId'], $_REQUEST['categId'], 'category');
+			}
 		} catch(Exception $e) {
 			$errors[] = $e->getMessage();
 		}
 	} else {
 		try {
 			$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
-			if ($tiki_p_admin_categories != 'y') {
+			if ($tiki_p_admin_categories != 'y' || !empty($_REQUEST['parentPerms'])) {
 				$userlib->copy_object_permissions($_REQUEST['parentId'], $newcategId, 'category');
 			}
 		} catch(Exception $e) {

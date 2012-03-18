@@ -100,9 +100,16 @@ class UsersLib extends TikiLib
 		$objectId = md5($objectType . TikiLib::strtolower($objectId));
 
 		$query = 'delete from `users_objectpermissions`' .
-						' where `groupName` = ? and `objectId` = ? and `objectType` = ? and `permName` = ?';
-
-		$bindvars = array($groupName, $objectId, $objectType,	$permName);
+			' where`objectId` = ? and `objectType` = ?';
+		$bindvars = array($objectId, $objectType);
+		if (!empty($groupName)) {
+			$query .= ' and `groupName` = ? ';
+			$bindvars[] = $groupName;
+		}
+		if (!empty($permName)) {
+			$query .= ' and `permName` = ? ';
+			$bindvars[] = $permName;
+		}
 
 		$result = $this->query($query, $bindvars);
 
