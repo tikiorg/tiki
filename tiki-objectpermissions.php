@@ -190,7 +190,7 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	if (isset($_REQUEST['perm']) && !empty($_REQUEST['perm'])) {
 		foreach ($_REQUEST['perm'] as $group => $gperms) {
 			foreach ($gperms as $perm) {
-				if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+				if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_perm_on_object($user, $_REQUEST['objectId'], $_REQUEST['objectType'], $perm)) {
 					$smarty->assign('errortype', 401);
 					$smarty->assign('msg', tra('Permission denied'));
 					$smarty->display('error.tpl');
