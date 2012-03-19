@@ -140,7 +140,7 @@ class SheetLib extends TikiLib
 
 	function remove_related_sheet($childSheetId) {
 		$this->query( " UPDATE `tiki_sheets` SET `parentSheetId` = 0 WHERE `sheetId` = ? ", array( $childSheetId ) );
-		$this->remove_relate("sheet", $sheetId, $childSheetId);
+		$this->remove_relate("sheet", end($this->get_related_sheet_ids( $childSheetId, true )), $childSheetId);
 	}
 	
 	function update_related_sheets($sheetId, $childSheetIds) {
@@ -264,6 +264,8 @@ class SheetLib extends TikiLib
 		$this->query( "DELETE FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
 		$this->query( "DELETE FROM `tiki_sheet_values` WHERE `sheetId` = ?", array( $sheetId ) );
 		$this->query( "DELETE FROM `tiki_sheet_layout` WHERE `sheetId` = ?", array( $sheetId ) );
+
+		$this->remove_related_sheet( $sheetId );
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
