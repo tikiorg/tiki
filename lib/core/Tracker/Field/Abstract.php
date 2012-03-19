@@ -222,7 +222,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		$key = $this->getConfiguration('fieldId');
 		
 		if (isset($this->itemData[$key])) {
-			$value =$this->itemData[$key];
+			$value = $this->itemData[$key];
 		} else if (isset($this->definition['value'])) {
 			$value = $this->definition['value'];
 		} else {
