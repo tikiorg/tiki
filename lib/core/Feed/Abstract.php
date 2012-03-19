@@ -164,7 +164,7 @@ abstract class Feed_Abstract
 		return $this;
 	}
 	
-	public function feed()
+	public function feed($origin = '')
 	{
 		global $tikilib;
 		$contents = $this->getContents();
@@ -173,7 +173,7 @@ abstract class Feed_Abstract
 			'version'=> 	$this->version,
 			'encoding'=> 	$this->encoding, //we get this from the above call to open
 			'feed'=> 		$contents,
-			'origin'=> 		$tikilib->tikiUrl() . 'tiki-feed.php',
+			'origin'=> 		(!empty($origin) ? $origin : $tikilib->tikiUrl() . 'tiki-feed.php'),
 			'type'=>		$this->type
 		);
 		

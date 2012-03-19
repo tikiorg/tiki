@@ -8,29 +8,30 @@
 Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = 'forwardlink';
-	var $version = "0.1";
+	var $version = '0.1';
+	var $response = 'failure';
+	
+	public function getContents()
+	{
+		$this->setEncoding($this->response); 
+		return $this->response;
+	}
 	
 	static function wikiView($args)
 	{
 		global $prefs, $headerlib, $smarty, $_REQUEST;
 		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
-
+			$me = new self();
 			//here we do the confirmation that another wiki is trying to talk with this one
-			$response = array(
-				'protocol'=>	'forwardlink',
-				'response'=>	'failure',
-				'date'=>		$args['lastModif'],
-			);
-
 			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
 			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
 			
 			if ( Feed_ForwardLink_Receive::forwardLink($args['object'])
 				->addItem($_REQUEST['contribution']) == true ) {
-				$response['response'] = 'success';
+				$me->response = 'success';
 			}
 
-			echo json_encode($response);
+			echo json_encode($me->feed(TikiLib::tikiUrl() . 'tiki-index.php?page=' . $args['object']));
 			exit();
 		}
 
