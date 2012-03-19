@@ -250,7 +250,7 @@ JQ
 							.css('font-size', '10px')
 							.fadeTo(0,0.80)
 							.mousedown(function() {
-								var suggestion = rangy.expandPhrase(o.text, '\\n', me[0]);
+								var suggestion = $.trim(rangy.expandPhrase(o.text, '\\n', me[0]));
 								var buttons = {};
 
 								if (suggestion == o.text) {
