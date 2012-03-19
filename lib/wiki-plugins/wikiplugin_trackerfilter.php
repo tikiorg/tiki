@@ -613,6 +613,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			case 'k': //page selector
 			case 'u': // user
 			case 'g': // group
+			case 'q': // auto increment
 				if (isset($status)) {
 					$res = $trklib->list_tracker_field_values($trackerId, $fieldId, $status);
 				} else {
