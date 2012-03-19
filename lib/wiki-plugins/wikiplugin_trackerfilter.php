@@ -184,6 +184,9 @@ function wikiplugin_trackerfilter($data, $params)
 	if (empty($trackerId) && !empty($_REQUEST['trackerId'])) {
 		 $trackerId = $_REQUEST['trackerId'];
 	}
+	
+	$tracker_definition = Tracker_Definition::get($trackerId);
+	
 	if (empty($_REQUEST['filter']) && empty($export_action)) { // look if not coming from an initial and not exporting
 		foreach ($_REQUEST as $key =>$val) {
 			if (substr($key, 0, 2) == 'f_') {
@@ -219,7 +222,7 @@ function wikiplugin_trackerfilter($data, $params)
 		$ffs = array();
 		$values = array();
 		$exactValues = array();
-		wikiplugin_trackerfilter_build_trackerlist_filter($_REQUEST, $formats, $ffs, $values, $exactValues);
+		wikiplugin_trackerfilter_build_trackerlist_filter($_REQUEST, $formats, $ffs, $values, $exactValues, $tracker_definition);
 		// echo '<pre>BUILD_FILTER'; print_r($ffs); print_r($exactValues); echo '</pre>';
 
 		$params['fields'] = isset($fields) ? $fields : array();
@@ -318,15 +321,18 @@ function wikiplugin_trackerfilter($data, $params)
 	return $data . $dataF;
 }
 
-function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$ffs, &$values, &$exactValues)
+function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$ffs, &$values, &$exactValues, Tracker_Definition $tracker_definition)
 {
 	global $trklib;
+
 	foreach ($input as $key =>$val) {
 		if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
 			if (!is_array($val)) {
 				$val = urldecode($val);
 			}
 			$fieldId = substr($key, 2);
+			$field = $tracker_definition->getField($fieldId);
+			
 			if ($fieldId == 'status')
 				continue;
 			if (preg_match('/([0-9]+)(Month|Day|Year|Hour|Minute|Second)/', $fieldId, $matches)) { // a date
@@ -341,6 +347,15 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 						$exactValues[] = array($formats[$fieldId]=>$date);
 					}
 				}
+			} else if ($field['type'] == 'F') {
+				// if field type is freetag force the use of $values instead of $exactValues
+				$ffs[] = $fieldId;
+				
+				if (is_array($val)) {
+					$val = implode('%', $val);
+				}
+				
+				$values[] = "%$val%";
 			} else {
 				if (!is_numeric($fieldId)) { // composite filter
 					$ffs[] = array('sqlsearch'=>explode(':', str_replace(array('(', ')'), '', $fieldId)));
@@ -637,13 +652,44 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			case 'j':
 				$field['ins_id'] = 'f_'.$field['fieldId'];
     			break;
+			case 'F': // freetags
+				$freetaglib = TikiLib::lib('freetag');
+				$opts = array();
+				$tags = array();
+				$items = $trklib->list_items($field['trackerId'], 0, -1, '', array($field));
+				
+				foreach ($items['data'] as $item) {
+					$tags = array_merge($tags, $item['field_values'][0]['freetags']);
+				}
+				
+				$tags = array_unique($tags);
+				sort($tags);
+				
+				foreach ($tags as $tag) {
+					$selected = false;					
+					
+					if (isset($_REQUEST['f_'.$fieldId])) {
+						$selection = $_REQUEST['f_'.$fieldId]; 
+						
+						if ((is_array($selection) && in_array($tag, $selection)) || $selection == $tag) {
+							$selected = true;
+						}
+					}
+					
+					$opts[] = array(
+						'id' => $tag,
+						'name' => $tag,
+						'selected' => $selected,
+					);
+				}
+				
+				break;
 			default:
 				return tra('tracker field type not processed yet').' '.$field['type'];
 			}
 		}
 		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected, 'field' => $field);
 	}
-	//echo '<pre>FILTERS'; print_r($filters); echo '</pre>';
 	return $filters;
 }
 function wikiplugin_trackerFilter_build_urlquery($params)
