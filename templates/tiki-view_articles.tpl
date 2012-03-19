@@ -46,7 +46,7 @@
 							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;</span>
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
-							<span class="pubdate">{$listpages[ix].publishDate|tiki_short_datetime:'Published At:'}&nbsp;</span>
+							<span class="pubdate">{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;</span>
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
 							<span class="expdate">{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;</span>
