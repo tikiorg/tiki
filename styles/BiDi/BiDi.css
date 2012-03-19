@@ -190,18 +190,3 @@ table.normal th.auto {text-align: right}
 
 /* Toolbars items */
 .toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {padding-right: 0px}
-
-/***** Nature theme specifics *****/
-
-/* Carousel */
-.ic-progress-bar {left: auto !important; right: 0 !important}
-
-/* Specific nature.css picture mask placement */
-#home_pictmask {left:59px !important}
-
-/* Phonebook Trackerpluginfilter */
-.phonebook {padding-left: 0px !important; background: url(../nature/phonebook_rtl.jpg) no-repeat !important}
-.phonebook_listing {padding-right: 22px; padding-left: 0}
-.phonebook_item {margin-bottom: 0.045em !important;margin-top: 0.8em !important;}
-.phonebook_cell, .phonebook_tel, .phonebook_name {float: right !important}
-.business_type {position: relative; top: 14px; right: 15px; color: #bbb}
