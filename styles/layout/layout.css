@@ -1285,11 +1285,11 @@ body.tiki_blogs .post .postfooter {
 }
 
 /* Related content */
-.related_posts {
+.related_posts, .related_articles {
 	margin-top: 3em;
 }
 
-.related_posts h4 {
+.related_posts h4, .related_articles h4 {
 	margin: 0;
 }
 

@@ -1489,10 +1489,10 @@ class ArtLib extends TikiLib
 			$this->score_event($user, 'article_read', $articleId);
 			$this->score_event($res['author'], 'article_is_read', $articleId . '_' . $user);
 		}
-
+		
 		return $res;
 	}
-
+	
 	function get_submission($subId)
 	{
 		$query = 'select * from `tiki_submissions` where `subId`=?';
@@ -1629,6 +1629,34 @@ class ArtLib extends TikiLib
 						'UPDATE `tiki_object_attributes` set `type` = ?, `itemId` = ? where `type` = ? and `itemId` = ?',
 						array( 'article', $articleId, 'submission', $subId )
 		);
+	}
+	
+	/**
+	 * Get related articles using $freetaglib->get_similar()
+	 *
+	 * @param int $articleId
+	 * @param int $maxResults
+	 * @return array
+	 */
+	function get_related_articles($articleId, $maxResults = 5)
+	{
+		global $freetaglib;
+		$relatedArticles = $freetaglib->get_similar('article', $articleId);
+
+		foreach ($relatedArticles as $key => $article) {
+			$relatedArticles[$key]['articleId'] = $relatedId = str_replace('tiki-read_article.php?articleId=', '', $article['href']);
+			
+			$relatedArticle = $this->get_article($relatedId);
+			
+			// exclude articles from the list if they are not published or if no permission to view them
+			if (!$relatedArticle || $relatedArticle['ispublished'] != 'y') {
+				unset($relatedArticles[$key]);
+			}
+		}
+		
+		$relatedArticles = array_splice($relatedArticles, 0, $maxResults);
+				
+		return $relatedArticles;
 	}
 }
 

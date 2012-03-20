@@ -99,5 +99,14 @@ function prefs_article_list()
 			'size' => '40',
 			'default' => '',
 		),
+		'article_related_articles' => array(
+			'name' => tr('Related articles'),
+			'description' => tr('Display a list of related articles at the bottom of the article page'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_freetags',
+			),
+		),
 	);
 }
