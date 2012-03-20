@@ -25,8 +25,7 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 		 static $Feed_ForwardLink_PageLookup = 0;
 		++$Feed_ForwardLink_PageLookup;
 
-		$wikiAttributes = TikiLib::lib('trkqry')
-			->tracker('Wiki Attributes')
+		$wikiAttributes = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
 			->excludeDetails()
 			->filter(array('field'=> 'Type', 'value'=> 'ForwardLink'))

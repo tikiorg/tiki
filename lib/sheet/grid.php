@@ -1036,10 +1036,10 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 	// _load {{{2
 	function _load( &$sheet ) {
 		global $tikilib;
-		TikiLib::lib("trkqry");
+		
 		$i = 0;
 		$trackerName = $this->info['name'];
-		$tracker = TrackerQueryLib::tracker($trackerName)
+		$tracker = Tracker_Query::tracker($trackerName)
 			->byName()
 			->excludeDetails()
 			->render(false)

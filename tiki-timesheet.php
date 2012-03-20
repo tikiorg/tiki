@@ -17,20 +17,18 @@ $auto_query_args = array(
 	'list'
 );
 
-TikiLib::lib("trkqry");
-
-$projectList = TrackerQueryLib::tracker("Project list")->byName()->query();
+$projectList = Tracker_Query::tracker("Project list")->byName()->query();
 
 if (isset($_REQUEST['all'])) { //all views all sheet items
 	$smarty->assign("all", true);
 	
-	$timeSheet = TrackerQueryLib::tracker("Time sheet")
+	$timeSheet = Tracker_Query::tracker("Time sheet")
 		->byName()
 		->query();
 } else {//views only your items
 	$smarty->assign("all", false);
 	
-	$timeSheet = TrackerQueryLib::tracker("Time sheet")
+	$timeSheet = Tracker_Query::tracker("Time sheet")
 		->byName()
 		->search(array($user))->fields(array("Done by"))
 		->query();

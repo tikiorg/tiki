@@ -167,8 +167,7 @@ JQ
 JQ
 			);
 
-		$wikiAttributes = TikiLib::lib('trkqry')
-			->tracker('Wiki Attributes')
+		$wikiAttributes = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
 			->filter(array('field'=> 'Type','value'=> 'Question'))
 			->filter(array('field'=> 'Page','value'=> $args['object']))
@@ -196,15 +195,14 @@ JQ
 			->add_jsfile('lib/jquery/md5.js');
 
 		$authorDetails = json_encode(
-						end(
-										TikiLib::lib('trkqry')
-										->tracker('ForwardLink Author Details')
-										->byName()
-										->excludeDetails()
-										->filter(array('field'=> 'User','value'=> $user))
-										->render(false)
-										->query()
-						)
+			end(
+				Tracker_Query::tracker('ForwardLink Author Details')
+					->byName()
+					->excludeDetails()
+					->filter(array('field'=> 'User','value'=> $user))
+					->render(false)
+					->query()
+			)
 		);
 
 		$page = urlencode($args['object']);

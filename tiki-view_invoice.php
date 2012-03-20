@@ -7,7 +7,6 @@
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
-TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
@@ -21,7 +20,7 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 
 (int)$_REQUEST['InvoiceId'] = $_REQUEST['InvoiceId'];
 $smarty->assign('InvoiceId', $_REQUEST['InvoiceId']);
-$invoice = TrackerQueryLib::tracker("Invoices")
+$invoice = Tracker_Query::tracker("Invoices")
 	->byName()
 	->equals($_REQUEST['InvoiceId'])
 	->getOne();
@@ -40,20 +39,20 @@ $smarty->assign("invoice", $invoice);
 $smarty->assign("amount", $amount);
 $smarty->assign(
 				"client",
-				TrackerQueryLib::tracker("Invoice Clients")
+				Tracker_Query::tracker("Invoice Clients")
 				->fields(array("Client Id"))->equals(array($invoice['Client Id']))
 				->byName()
 				->getOne()
 );
 $smarty->assign(
 				"setting", 
-				TrackerQueryLib::tracker("Invoice Settings")
+				Tracker_Query::tracker("Invoice Settings")
 				->byName()
 				->query()
 );
 $smarty->assign(
 				"invoiceItems", 
-				TrackerQueryLib::tracker("Invoice Items")
+				Tracker_Query::tracker("Invoice Items")
 				->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
 				->byName()
 				->query()

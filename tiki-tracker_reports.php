@@ -6,7 +6,6 @@
 // $Id$
 
 require_once('tiki-setup.php');
-$trkqry = TikiLib::lib("trk");
 
 if ($tiki_p_admin_trackers != 'y') {
 	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');

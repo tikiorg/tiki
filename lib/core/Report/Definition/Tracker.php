@@ -131,7 +131,7 @@ class Report_Definition_Tracker
 	{
 		$tracker = $values['tracker'];
 		
-		$qry = TikiLib::lib('trkqry')->tracker($tracker['value'])
+		$qry = Tracker_Query::tracker($tracker['value'])
 			->start($tracker['start']['value'])
 			->end($tracker['end']['value'])
 			->itemId($tracker['itemId']['value'])

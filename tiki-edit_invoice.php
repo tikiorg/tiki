@@ -7,7 +7,6 @@
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');
-TikiLib::lib('trkqry');
 
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
@@ -89,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $invoiceItems = array();
 if (!empty($_REQUEST['InvoiceId'])) {
-	$invoice = TrackerQueryLib::tracker("Invoices")
+	$invoice = Tracker_Query::tracker("Invoices")
 		->byName()
 		->equals($_REQUEST['InvoiceId'])
 		->getOne();
@@ -97,7 +96,7 @@ if (!empty($_REQUEST['InvoiceId'])) {
 	$invoice['Item Ids'] = implode(',', $invoice['Item Ids']);
 	$smarty->assign("invoice", $invoice);
 	
-	$invoiceItems = TrackerQueryLib::tracker("Invoice Items")
+	$invoiceItems = Tracker_Query::tracker("Invoice Items")
 		->byName()
 		->fields(array("Invoice Id"))
 		->search(array($_REQUEST['InvoiceId']))
@@ -107,7 +106,7 @@ if (!empty($_REQUEST['InvoiceId'])) {
 }
 
 //give the user the last invoice number 
-$LastInvoice = TrackerQueryLib::tracker("Invoices")
+$LastInvoice = Tracker_Query::tracker("Invoices")
 	->byName()
 	->limit(0)
 	->offset(1)
@@ -119,8 +118,8 @@ $NewInvoiceNumber = (isset($LastInvoice["Invoice Number"]) ? $LastInvoice["Invoi
 $smarty->assign("NewInvoiceNumber", $NewInvoiceNumber);
 
 $smarty->assign("InvoiceId", $_REQUEST['InvoiceId']);
-$smarty->assign("clients", TrackerQueryLib::tracker("Invoice Clients")->byName()->query());
-$smarty->assign("setting", TrackerQueryLib::tracker("Invoice Settings")->byName()->getOne());
+$smarty->assign("clients", Tracker_Query::tracker("Invoice Clients")->byName()->query());
+$smarty->assign("setting", Tracker_Query::tracker("Invoice Settings")->byName()->getOne());
 
 //we add an extra item to the end of invoiceItems, so we can duplicate it on the page
 if (count($invoiceItems) < 1) {

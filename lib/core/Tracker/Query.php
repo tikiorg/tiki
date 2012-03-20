@@ -22,15 +22,7 @@
  * @since		TIki 8
  */
 
-/**
- * This script may only be included, so it is better to die if called directly.
- */
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
-	exit;
-}
-
-class TrackerQueryLib
+class Tracker_Query
 {
 	private $tracker;
 	private $start = 0;
@@ -269,7 +261,7 @@ class TrackerQueryLib
 	 * Adds the field names to the beginning of the array of tracker items
 	 *
 	 */
-	function prepend_field_header(&$trackerPrimary = array(), $nameOrder = array())
+	static function prepend_field_header(&$trackerPrimary = array(), $nameOrder = array())
 	{
 		global $tikilib;
 		$result = $tikilib->fetchAll("SELECT fieldId, trackerId, name FROM tiki_tracker_fields");
@@ -312,7 +304,7 @@ class TrackerQueryLib
 	 * Simple direction parsing from string to type
 	 *
 	 */
-	private function sort_direction($dir)
+	static private function sort_direction($dir)
 	{
 		switch ( $dir ) {
 			case "asc":
@@ -342,15 +334,15 @@ class TrackerQueryLib
 		return $dir;
 	}
 
-	function arfsort( &$array, $fieldList )
+	static function arfsort( &$array, $fieldList )
 	{
 		if (!is_array($fieldList)) {
 			$fieldList = explode('|', $fieldList);
-			$fieldList = array(array($fieldList[0], $this->sort_direction($fieldList[1])));
+			$fieldList = array(array($fieldList[0], self::sort_direction($fieldList[1])));
 		} else {
 			for ($i = 0, $count_fieldList = count($fieldList); $i < $count_fieldList; ++$i) {
 				$fieldList[$i] = explode('|', $fieldList[$i]);
-				$fieldList[$i] = array($fieldList[$i][0], $this->sort_direction($fieldList[$i][1]));
+				$fieldList[$i] = array($fieldList[$i][0], self::sort_direction($fieldList[$i][1]));
 			}
 		}
 
@@ -648,7 +640,7 @@ class TrackerQueryLib
 	 * Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
 	 *
 	 */
-	function filter_fields_from_tracker_query($tracker, $fieldIdsToRemove = array(), $fieldIdsToShow = array())
+	static function filter_fields_from_tracker_query($tracker, $fieldIdsToRemove = array(), $fieldIdsToShow = array())
 	{
 		if (empty($fieldIdsToShow) == false) {
 			$newTracker = array();
@@ -677,7 +669,7 @@ class TrackerQueryLib
 	 * Joins tracker arrays together.
 	 *
 	 */
-	function join_trackers($trackerLeft, $trackerRight, $fieldLeftId, $joinType)
+	static function join_trackers($trackerLeft, $trackerRight, $fieldLeftId, $joinType)
 	{
 		$joinedTracker = array();
 
@@ -714,7 +706,7 @@ class TrackerQueryLib
 	}
 
 
-	function to_csv($array, $header = false, $col_sep = ",", $row_sep = "\n", $qut = '"', $fileName = 'file.csv')
+	static function to_csv($array, $header = false, $col_sep = ",", $row_sep = "\n", $qut = '"', $fileName = 'file.csv')
 	{
 
 		header("Content-type: application/csv");
@@ -762,5 +754,3 @@ class TrackerQueryLib
 		return $output;
 	}
 }
-
-$trkqrylib = new TrackerQueryLib();

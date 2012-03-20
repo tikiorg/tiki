@@ -18,7 +18,6 @@ if ($tiki_p_admin_trackers != 'y') {
 }
 
 $trklib = TikiLib::lib("trk");
-$trkqrylib = TikiLib::lib("trkqry");
 
 //TODO: This needs rewritten to match tiki
 function dateFormat($fieldIds, $tracker)
@@ -98,7 +97,7 @@ if (isset($_REQUEST['trackerIds']) == true) {
 	$i = 0;
 	foreach ($_REQUEST['trackerIds'] as $key => $trackerId) {
 		if ($key == 0) {
-			$trackerPrimary = TrackerQueryLib::tracker($trackerId)
+			$trackerPrimary = Tracker_Query::tracker($trackerId)
 				->start($_REQUEST['start'][$key])
 				->end($_REQUEST['end'][$key])
 				->equals($_REQUEST['q'][$key])
@@ -110,9 +109,9 @@ if (isset($_REQUEST['trackerIds']) == true) {
 			$joinVars = $_REQUEST['itemIdFields'][$key - 1];
 			$joinVars = explode('|', $joinVars);
 			
-			$trackerPrimary = $trkqrylib->join_trackers(
+			$trackerPrimary = Tracker_Query::join_trackers(
 							$trackerPrimary, 
-							TrackerQueryLib::tracker($trackerId)
+							Tracker_Query::tracker($trackerId)
 							->start($_REQUEST['start'][$key])
 							->end($_REQUEST['end'][$key])
 							->equals($_REQUEST['q'][$key])
@@ -129,21 +128,21 @@ if (isset($_REQUEST['trackerIds']) == true) {
 }
 
 if (isset($_REQUEST['sortFieldIds']) == true) {
-	$trkqrylib->arfsort($trackerPrimary, $_REQUEST['sortFieldIds']);
+	Tracker_Query::arfsort($trackerPrimary, $_REQUEST['sortFieldIds']);
 }
 
 if (
 		isset($_REQUEST['removeFieldIds']) == true || 
 		isset($_REQUEST['showFieldIds']) == true
 	) {
-	$trackerPrimary = $trkqrylib->filter_fields_from_tracker_query($trackerPrimary, $_REQUEST['removeFieldIds'], $_REQUEST['showFieldIds']);
+	$trackerPrimary = Tracker_Query::filter_fields_from_tracker_query($trackerPrimary, $_REQUEST['removeFieldIds'], $_REQUEST['showFieldIds']);
 }
 
 if (isset($_REQUEST['dateFieldIds'])) {
 	$trackerPrimary = dateFormat($_REQUEST['dateFieldIds'], $trackerPrimary);
 }
 
-$trackerPrimary = $trkqrylib->prepend_field_header($trackerPrimary, $_REQUEST['sortFieldNames']);
+$trackerPrimary = Tracker_Query::prepend_field_header($trackerPrimary, $_REQUEST['sortFieldNames']);
 
 if (isset($_REQUEST['time']) == true) {
 	$endtime = microtime();
@@ -155,5 +154,5 @@ if (isset($_REQUEST['time']) == true) {
 }
 
 if ($_REQUEST['type'] == 'csv' && count($trackerPrimary) > 0) {
-	print_r($trkqrylib->to_csv($trackerPrimary));
+	print_r(Tracker_Query::to_csv($trackerPrimary));
 }

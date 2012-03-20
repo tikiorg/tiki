@@ -86,7 +86,6 @@ function wikiplugin_trackeritemcopy( $data, $params )
 {
 	global $smarty;
 	$trklib = TikiLib::lib("trk");
-	TikiLib::lib("trkqry");
 	
 	if (!isset($params["trackerId"]) || !isset($params["copyFieldIds"])) {
 		return tra('Missing mandatory parameters');
@@ -212,7 +211,7 @@ function wikiplugin_trackeritemcopy( $data, $params )
 			if ($copies > 0) {
 				
 				if ($key > 0) {
-					$qry = TrackerQueryLib::tracker($trackerIdLeft)
+					$qry = Tracker_Query::tracker($trackerIdLeft)
 						->fields($params["linkFieldIds"][0])
 						->equals(array($itemId));
 						
