@@ -770,9 +770,23 @@ class Tracker_Query
 		return $output;
 	}
 	
-	public function replace()
+	public function replaceItem($data = array(), $itemId = 0)
 	{
-		$trackerId = $this->trackerId();
-		$definition = Tracker_Definition::get($trackerId);
+		$itemId = TikiLib::lib("trk")->replace_item($this->trackerId(), $itemId, array("data"=>$data));
+		return $itemId;
+	}
+	
+	public function fieldInputs()
+	{
+		$trackerDefinition = Tracker_Definition::get($this->trackerId());
+		
+		$fields = array();
+		
+		$fieldHandler = new Tracker_Field_Factory();
+		foreach($trackerDefinition->getFields() as $field) {
+			$fields[$this->byName == true ? $field['name']  : $field['fieldId']] = $fieldHandler->getHandler($field)->renderInput();
+		}
+		
+		return $fields;
 	}
 }
