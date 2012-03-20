@@ -5,9 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$section = 'trackers';
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 $access->check_feature('feature_trackers');
+$auto_query_args = array('sort_mode', 'offset', 'find');
 
 // Only used to call an edit dialog directly from other pages
 $auto_query_args = array('trackerId');
@@ -63,6 +65,9 @@ $smarty->assign('uses_tabs', 'y');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+include_once ('tiki-section_options.php');
+
 // Display the template
 $smarty->assign('mid', 'tiki-admin_trackers.tpl');
 $smarty->display("tiki.tpl");
