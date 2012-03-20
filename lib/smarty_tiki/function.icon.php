@@ -207,13 +207,9 @@ function smarty_function_icon($params, $smarty)
 					try {
 						$html = smarty_function_html_image($params, $smarty);
 					} catch (Exception $e) {
-						$html = smarty_function_html_image(array(
-							'title' => $e->getMessage(),
-							'file' => 'img/icons/green_question.png',
-							'width' => 16,
-							'height' => 16,
-							'class' => 'icon',
-						), $smarty);
+						$params['file'] = 'img/icons/green_question.png';
+						$params['title'] = tra('Error:') . ' ' . $e->getMessage();
+						$html = smarty_function_html_image($params, $smarty);
 					}
 			}
 
