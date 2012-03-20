@@ -127,8 +127,13 @@ function wikiplugin_convene($data, $params)
 		$userList .= "<tr class='conveneUserVotes$i'>";
 		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/pencil.png' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/delete.png'/></button> " : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
-			$class = 	"ui-state-default ui-state-active";
-			$text = 	($vote  == 1 ? "<img src='img/icons/tick.png' alt='OK' class='vote' />" : "<img src='img/icons/cross.png' class='vote' />" );
+			if ($vote == 1) {
+				$class = 	"ui-state-default convene-ok";
+				$text = 	"<img src='img/icons/tick.png' alt='" . tr('OK') . "' class='vote' />";
+			} else {
+				$class = 	"ui-state-default convene-no";
+				$text = 	"<img src='img/icons/cross.png' class='vote' />";
+			}
 			
 			$userList .= "<td class='$class'>". $text
 				."<input type='hidden' name='dates_" . $stamp . "_" . $user . "' value='$vote' class='conveneUserVote$i' />"
