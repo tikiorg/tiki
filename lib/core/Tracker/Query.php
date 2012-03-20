@@ -18,7 +18,7 @@
  * @license		LGPL - See license.txt for details.
  * @version		SVN $Rev$
  * @filesource
- * @link		http://dev.tiki.org/Trackers
+ * @link		http://dev.tiki.org/Tracker_Query
  * @since		TIki 8
  */
 
@@ -378,6 +378,24 @@ class Tracker_Query
 			return "GROUP_CONCAT(".$field." SEPARATOR '" . $this->delimiter . "')";
 		}
 	}
+	
+	private function trackerId()
+	{
+		global $trklib;
+		
+		$trackerId;
+		
+		if ($this->byName == true) {
+			$trackerId = $trklib->get_tracker_by_name($this->tracker);
+		} else {
+			$trackerId = $this->tracker;
+		}
+		
+		if (!(is_numeric($trackerId))) 
+			throw new Exception("Opps, looks like you need to call ->byName();");
+		
+		return $trackerId;
+	}
 	/*Queries & filters trackers from mysql, orders results in a way that is human understandable and can be manipulated easily
 	 * The end result is a very simple array setup as follows:
 	 * array( //tracker(s)
@@ -401,13 +419,10 @@ class Tracker_Query
 		$status_safe = "";
 		$isSearch = false;
 
-		$trackerId = ($this->byName == true ? $trklib->get_tracker_by_name($this->tracker) : $this->tracker);
+		$trackerId = $this->trackerId();
 
 		if (empty($trackerId)) //if we can't find a tracker, then return
-			return;
-
-		if (!(is_numeric($trackerId))) 
-			throw new Exception("Opps, looks like you need to call ->byName();");
+			return array();
 
 		$trackerDefinition = Tracker_Definition::get($trackerId);
 
@@ -752,5 +767,11 @@ class Tracker_Query
 		}
 
 		return $output;
+	}
+	
+	public function replace()
+	{
+		$trackerId = $this->trackerId();
+		$definition = Tracker_Definition::get($trackerId);
 	}
 }
