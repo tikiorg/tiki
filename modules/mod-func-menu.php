@@ -24,7 +24,7 @@ function module_menu_info()
 			),
 			'structureId' => array(
 				'name' => tra('Structure'),
-				'description' => tra('Identifier of a structure of wiki pages (from tiki-admin_structures.php)'),
+				'description' => tra('Identifier of a structure of wiki pages (name or number from tiki-admin_structures.php)'),
 				'filter' => 'text',
 			),
 			'type' => array(
@@ -85,10 +85,9 @@ function module_menu($mod_reference, $module_params)
 	if (!empty($module_params['structureId'])) {
 		global $structlib; include_once('lib/structures/structlib.php');
 
-		if (empty($mod_reference['title'])) {
+		if (empty($module_params['title'])) {
 			$smarty->assign('tpl_module_title', $module_params['structureId']);
 		}
-		$module_params['structureId'] = $structlib->get_struct_ref_id($module_params['structureId']);
 	}
 	$smarty->assign('module_type', empty($module_params['css']) || $module_params['css'] === 'y' ? 'cssmenu' : 'menu');
 }

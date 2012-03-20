@@ -77,6 +77,11 @@ function smarty_function_menu($params, $smarty)
 		list($menu_info, $channels) = $cdata;
 	} elseif (!empty($structureId)) {
 		global $structlib; include_once('lib/structures/structlib.php');
+
+		if (!is_numeric($structureId)) {
+			$structureId = $structlib->get_struct_ref_id($structureId);
+		}
+
 		$channels = $structlib->build_subtree_toc($structureId);
 		$structure_info =  $structlib->s_get_page_info($structureId);
 		$channels = $structlib->to_menu($channels, $structure_info['pageName']);
