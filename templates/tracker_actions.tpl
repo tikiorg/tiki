@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {* navbar buttons at the top of the tracker pages *}
 
 {if $tiki_p_admin_trackers eq 'y' and !empty($trackerId)}
