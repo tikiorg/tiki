@@ -1439,7 +1439,7 @@ class ArtLib extends TikiLib
 
 	function get_article($articleId, $checkPerms = true)
 	{
-		global $user, $tiki_p_admin_cms, $prefs, $userlib;
+		global $user, $prefs;
 		$mid = ' where `tiki_articles`.`type` = `tiki_article_types`.`type` ';
 		$query = "select `tiki_articles`.*,
 								`users_users`.`avatarLibName`,
