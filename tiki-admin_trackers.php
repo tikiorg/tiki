@@ -58,11 +58,6 @@ foreach ($trackers["data"] as &$tracker) {
 $smarty->assign_by_ref('cant', $trackers['cant']);
 $smarty->assign_by_ref('trackers', $trackers["data"]);
 
-$urlquery['find'] = $find;
-$urlquery['sort_mode'] = $sort_mode;
-$smarty->assign_by_ref('urlquery', $urlquery);
-$smarty->assign('uses_tabs', 'y');
-
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
