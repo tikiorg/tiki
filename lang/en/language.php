@@ -10726,6 +10726,7 @@ $lang = array(
 // "Allow full HTML" => "Allow full HTML",
 // "Keep any html tag" => "Keep any html tag",
 // "Keep only some html tags(a,p,pre,img,hr,b,i)" => "Keep only some html tags(a,p,pre,img,hr,b,i)",
+// "If uncheck will keep anyway some html tags(a,p,pre,img,hr,b,i)" => "If uncheck will keep anyway some html tags(a,p,pre,img,hr,b,i)",
 // "Emails to be notified (separated with commas)" => "Emails to be notified (separated with commas)",
 // "Edit or create banners" => "Edit or create banners",
 // "List banners" => "List banners",
