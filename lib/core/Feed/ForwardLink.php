@@ -240,7 +240,8 @@ JQ
 
 					var me = $('#page-data').rangy(function(o) {
 						if (me.data('rangyBusy')) return;
-
+						o.text = $.trim(o.text);
+						
 						var forwardLinkCreate = $('<div>' + tr('Accept TextLink & ForwardLink') + '</div>')
 							.button()
 							.addClass('forwardLinkCreate')
