@@ -244,7 +244,7 @@
 						{if $grouptrackerid}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$grouptrackerid" _text="{tr}Admin{/tr} $ggr"}
 						{else}
-							{button href="tiki-admin_trackers.php" _text="{tr}Admin{/tr} $ggr"}
+							{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ggr"}
 						{/if}
 					</td>
 				</tr>
@@ -273,7 +273,7 @@
 						{if $userstrackerid}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$userstrackerid" _text="{tr}Admin{/tr} $ugr"}
 						{else}
-							{button href="tiki-admin_trackers.php" _text="{tr}Admin{/tr} $ugr"}
+							{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ugr"}
 						{/if}
 					</td>
 				</tr>

@@ -4,9 +4,8 @@
 <div data-role="navbar">
 <ul>
 {if $tiki_p_admin_trackers eq 'y'}
-	<li>{button href="tiki-admin_trackers.php?cookietab=1" _text="{tr}Admin Trackers{/tr}"}</li>
 	{if !empty($trackerId)}
-		<li>{button href="tiki-admin_trackers.php?trackerId=$trackerId&show=mod" _text="{tr}Edit This Tracker{/tr}"}</li>
+		<li>{button href="tiki-list_trackers.php?trackerId=$trackerId&show=mod" _text="{tr}Edit This Tracker{/tr}"}</li>
 		<li>{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}</li>
 	{/if}
 {/if}

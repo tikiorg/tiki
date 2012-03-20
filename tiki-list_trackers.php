@@ -8,28 +8,25 @@
 $section = 'trackers';
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
-$auto_query_args = array('sort_mode', 'offset', 'find');
 $access->check_feature('feature_trackers');
-$access->check_permission(array('tiki_p_list_trackers'));
+$auto_query_args = array('sort_mode', 'offset', 'find');
+
+// Only used to call an edit dialog directly from other pages
+$auto_query_args = array('trackerId');
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
-if ($_REQUEST["trackerId"]) {
-	$info = $trklib->get_tracker($_REQUEST["trackerId"]);
-} else {
-	$info = array();
-	$info["name"] = '';
-	$info["description"] = '';
-	$info["descriptionIsParsed"] = '';
+if (!empty($_REQUEST['trackerId'])) {
+	$smarty->assign('trackerInfo', $trklib->get_tracker($_REQUEST['trackerId']));
 }
-$smarty->assign('name', $info["name"]);
-$smarty->assign('description', $info["description"]);
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
+$smarty->assign_by_ref('sort_mode', $sort_mode);
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -42,38 +39,30 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $trklib->list_trackers($offset, $prefs['maxRecords'], $sort_mode, $find);
-$temp_max = count($channels["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($channels["data"][$i]["trackerId"], 'tracker')) {
-		$channels["data"][$i]["individual"] = 'y';
-		$channels["data"][$i]["individual_tiki_p_view_trackers"] = 'y';
-		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $channels["data"][$i]["trackerId"], 'tracker', 'tiki_p_admin_trackers')) {
-			$channels["data"][$i]["individual_tiki_p_view_trackers"] = 'y';
-		}
+$trackers = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find, true);
+
+foreach ($trackers["data"] as &$tracker) {
+	if ($userlib->object_has_one_permission($tracker["trackerId"], 'tracker')) {
+		$tracker["individual"] = 'y';
 	} else {
-		$channels["data"][$i]["individual"] = 'n';
+		$tracker["individual"] = 'n';
 	}
+	
+	$tracker['watched'] = $user && $tikilib->user_watches($user, 'tracker_modified', $tracker["trackerId"], 'tracker');
+	
+	// Could be used with object_perms_summary.tpl instead of the above but may be less performant
+//	$objectperms = Perms::get('tracker', trackerId);
+//	$smarty->assign('permsType', $objectperms->from());
 }
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+
+$smarty->assign_by_ref('cant', $trackers['cant']);
+$smarty->assign_by_ref('trackers', $trackers["data"]);
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 include_once ('tiki-section_options.php');
-$smarty->assign_by_ref('channels', $channels["data"]);
-$smarty->assign('channels_cant', $channels["cant"]);
-ask_ticket('list-trackers');
+
 // Display the template
 $smarty->assign('mid', 'tiki-list_trackers.tpl');
 $smarty->display("tiki.tpl");

@@ -8,5 +8,5 @@
 		</div>
 	</form>
 {else}
-	<a href="tiki-admin_trackers.php">{tr}Back to tracker list{/tr}
+	<a href="tiki-list_trackers.php">{tr}Back to tracker list{/tr}
 {/if}

@@ -1560,7 +1560,7 @@ class TrackerLib extends TikiLib
 	}
 
 	/**
-	 * Called from tiki-admin_trackers.php import button
+	 * Called from tiki-list_trackers.php import button
 	 *
 	 * @param int		$trackerId
 	 * @param resource	$csvHandle 		file handle to import
