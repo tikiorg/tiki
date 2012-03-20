@@ -391,8 +391,9 @@ class Tracker_Query
 			$trackerId = $this->tracker;
 		}
 		
-		if (!(is_numeric($trackerId))) 
+		if (!empty($trackerId) && !is_numeric($trackerId)) { 
 			throw new Exception("Opps, looks like you need to call ->byName();");
+		}
 		
 		return $trackerId;
 	}
