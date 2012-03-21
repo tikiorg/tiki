@@ -2390,7 +2390,13 @@ if ( \$('#$id') ) {
 
 							$smarty = TikiLib::lib('smarty');
 							include_once('lib/smarty_tiki/function.icon.php');
-							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
+
+							if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
+								$iconDisplayStyle = ' style="display:none;"';
+							} else {
+								$iconDisplayStyle = '';
+							}
+							$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
 							if (!empty($options['page'])) {
 								$button .= 'page='.urlencode($options['page']).'&amp;';
 							}
