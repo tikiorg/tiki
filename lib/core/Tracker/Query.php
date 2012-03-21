@@ -776,16 +776,32 @@ class Tracker_Query
 		return $itemId;
 	}
 	
-	public function fieldInputs()
+	public function fieldInputs($includeHeader = false)
 	{
+		global $headerlib;
+		
+		if ($includeHeader == true)
+			$headerlibClone = clone $headerlib;
+		
 		$trackerDefinition = Tracker_Definition::get($this->trackerId());
 		
 		$fields = array();
 		
 		$fieldHandler = new Tracker_Field_Factory();
 		foreach($trackerDefinition->getFields() as $field) {
-			$fields[$this->byName == true ? $field['name']  : $field['fieldId']] = $fieldHandler->getHandler($field)->renderInput();
+			if ($includeHeader == true) 
+				$headerlib->clear_js();
+			
+			$fieldInput = $fieldHandler->getHandler($field)->renderInput();
+			
+			if ($includeHeader == true)
+				$fieldInput = $fieldInput . $headerlib->output_js();
+			
+			$fields[$this->byName == true ? $field['name']  : $field['fieldId']] = $fieldInput;
 		}
+		
+		if ($includeHeader == true) //restore the header to the way it was originally
+			$headerlib = $headerlibClone;
 		
 		return $fields;
 	}
