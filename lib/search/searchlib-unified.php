@@ -64,11 +64,9 @@ class UnifiedSearchLib
 		return $queuelib->count(self::INCREMENT_QUEUE);
 	}
 
-	private function rebuildInProgress()
+	function rebuildInProgress()
 	{
-		global $prefs;
 		$tempName = $this->getIndexLocation() . '-new';
-
 		return file_exists($tempName);
 	}
 
