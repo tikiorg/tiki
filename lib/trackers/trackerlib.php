@@ -1769,12 +1769,15 @@ class TrackerLib extends TikiLib
 		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
 		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array('trackerId' => (int) $trackerId));
 
-		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		global $prefs;
+		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
+			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
-		foreach ( $need_reindex as $id ) {
-			$unifiedsearchlib->invalidateObject('trackeritem', $id);
+			foreach ( $need_reindex as $id ) {
+				$unifiedsearchlib->invalidateObject('trackeritem', $id);
+			}
+			$unifiedsearchlib->processUpdateQueue();
 		}
-		$unifiedsearchlib->processUpdateQueue();
 
 		return $total;
 	}
@@ -2418,7 +2421,7 @@ class TrackerLib extends TikiLib
 
 	function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true)
 	{
-		global $tiki_p_tracker_vote_ratings, $tiki_p_tracker_revote_ratings;
+		global $tiki_p_tracker_vote_ratings, $tiki_p_tracker_revote_ratings, $prefs;
 		if ($field['type'] != '*' && $field['type'] != 'STARS') {
 			return;
 		}
@@ -2444,6 +2447,12 @@ class TrackerLib extends TikiLib
 		$field['numvotes'] = $data['count'];
 		$field['my_rate'] = $userValue;
 		$field['voteavg'] = $field['value'] = $data['total'] / $field['numvotes'];
+
+		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
+			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+			$unifiedsearchlib->invalidateObject('trackeritem', $itemId);
+			$unifiedsearchlib->processUpdateQueue();
+		}
 	}
 
 	function remove_tracker($trackerId)
@@ -2458,7 +2467,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		$options=$this->get_tracker_options($trackerId);
+		$option = $this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
 			$categlib = TikiLib::lib('categ');
 			$currentCategId=$categlib->get_category_id("Tracker $trackerId");
