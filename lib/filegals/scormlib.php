@@ -78,6 +78,8 @@ class ScormLib
 
 	private function getZipFile($fileId)
 	{
+		global $prefs;
+		
 		if (! class_exists('ZipArchive')) {
 			return null;
 		}
@@ -90,15 +92,15 @@ class ScormLib
 
 		$zip = new ZipArchive;
 
-		if ($info['path']) {
-			$filepath = $info['path'];
+		if ($info['path'] && $prefs['fgal_use_db'] == 'n') {
+			$filepath = $prefs['fgal_use_dir'] . $info['path'];
 		} else {
 			$filepath = tempnam('temp/', 'scorm');
 			file_put_contents($filepath, $info['data']);
 			$this->unlinkList[] = $filepath;
 		}
 
-		if ($zip->open($filepath)) {
+		if ($zip->open($filepath) === TRUE) {
 			return $zip;
 		}
 	}
