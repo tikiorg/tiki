@@ -7,7 +7,7 @@
 
 if ( isset($_SERVER['REQUEST_METHOD']) ) die;
 
-if ( ! isset( $_SERVER['argc'] ) || $_SERVER['argc'] === 1 )
+if ( !isset( $_SERVER['argv'][1] ) || !in_array($_SERVER['argv'][1], array('rebuild','process','optimize')))
 	die( 'Usage: php lib/search/shell.php command [option]
 	Where command [option] can be:
 		rebuild [log]
@@ -19,15 +19,25 @@ if ( ! isset( $_SERVER['argc'] ) || $_SERVER['argc'] === 1 )
 if ( ! file_exists('db/local.php') )
 	die( "Tiki is not installed yet.\n" );
 
-
 require_once('tiki-setup.php');
 
-echo "Running search shell utility for: $local_php\n";
+include_once 'lib/core/Zend/Log/Writer/Syslog.php';
+$log_level = Zend_Log::INFO;
+$writer = new Zend_Log_Writer_Stream('php://output');
+$writer->addFilter((int) $log_level);
+$logger = new Zend_Log($writer);
+
+$logger->debug('Running search shell utility');
 
 global $unifiedsearchlib;
 require_once 'lib/search/searchlib-unified.php';
 
-if ( $_SERVER['argc'] >= 2 && $_SERVER['argv'][1] === 'process' ) {
+if ($unifiedsearchlib->rebuildInProgress()) {
+	$logger->info('Rebuild in progress - exiting.');
+	exit;
+}
+
+if ( $_SERVER['argv'][1] === 'process' ) {
 
 	$queueCount = $unifiedsearchlib->getQueueCount();
 
@@ -37,40 +47,47 @@ if ( $_SERVER['argc'] >= 2 && $_SERVER['argv'][1] === 'process' ) {
 		$toProcess = min($queueCount, $toProcess);
 
 		try {
-			echo 'Processing queue...';
+			$logger->debug('Started processing queue...');
 			ob_flush();
 			$unifiedsearchlib->processUpdateQueue($toProcess);
-			echo "done\n";
+			$logger->info('Processed queue');
+			ob_flush();
 
 		} catch (Zend_Search_Lucene_Exception $e) {
 
+			$msg = tr('Search index could not be updated: %0', $e->getMessage());
+
 			$errlib = TikiLib::lib('errorreport');
-			$errlib->report(tr('Search index could not be updated: %0', $e->getMessage()));
+			$errlib->report($msg);
 		}
 
 		$msgs = TikiLib::lib('errorreport')->get_errors();
 		if (count($msgs)) {
-			echo "Problem processing $toProcess items.\n";
-			echo implode("\n", str_replace('<br />', "\n", $msgs));
+			$logger->err("Problem processing $toProcess items.\n");
+			$logger->err(implode("\n", str_replace('<br />', "\n", $msgs)));
+			ob_flush();
 		} else {
-			echo "Processed $toProcess items, {$unifiedsearchlib->getQueueCount()} remaining.\n";
+			$logger->info("Processed $toProcess items, {$unifiedsearchlib->getQueueCount()} remaining.\n");
+			ob_flush();
 		}
 	}
 
-} else if ( $_SERVER['argc'] >= 2 && $_SERVER['argv'][1] === 'rebuild' ) {
+} else if ( $_SERVER['argv'][1] === 'rebuild' ) {
 
 	$loggit = (isset($_SERVER['argv'][2]) && $_SERVER['argv'][2] === 'log');
 
-	echo 'Rebuilding Index...';
+	$logger->debug('Started rebuilding index...');
 	ob_flush();
 	$unifiedsearchlib->rebuild($loggit);
-	echo "done\n";
+	$logger->info('Rebuilding index done');
+	ob_flush();
 
-} else if ( $_SERVER['argc'] === 2 && $_SERVER['argv'][1] === 'optimize' ) {
+} else if ( $_SERVER['argv'][1] === 'optimize' ) {
 
-	echo 'Optimizing Index...';
+	$logger->info('Started optimizing index...');
 	ob_flush();
 	$stat = $unifiedsearchlib->getIndex()->optimize();
-	echo "done\n";
+	$logger->info("Optimizing index done\n");
+	ob_flush();
 
 }
