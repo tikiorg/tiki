@@ -1042,7 +1042,12 @@ class Services_Tracker_Controller
 		$requestData['itemId'] = $input->i->int();
 		$requestData['fieldId'] = $input->f->int();
 		$requestData['vote'] = 'y';
-		$requestData['ins_' . $requestData['fieldId']] = $input->v->int();
+
+		$v = $input->v->text();
+		if ($v !== 'NULL') {
+			$v = $input->v->int();
+		}
+		$requestData['ins_' . $requestData['fieldId']] = $v;
 
 		$trklib = TikiLib::lib('trk');
 		$field = $trklib->get_tracker_field($requestData['fieldId']);

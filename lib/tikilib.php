@@ -1922,7 +1922,7 @@ class TikiLib extends TikiDb_Bridge
 			} else {
 				$userVotings->delete(array('user' => $user,'id' => $id));
 			}
-			if ( $optionId !== false  && $optionId != 'NULL' ) {
+			if ( $optionId !== false  && $optionId !== 'NULL' ) {
 				$userVotings->insert(
 								array(
 									'user' => $user,
