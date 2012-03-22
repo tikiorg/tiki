@@ -63,5 +63,16 @@ class Services_Object_Controller
 		$smarty->assign('item', $item);
 		return $smarty->fetch('object/infobox/trackeritem.tpl');
 	}
+
+	/**
+	 * Generic function to allow consistently formatted errors from javascript using ErrorReportLib
+	 *
+	 * @param $input jit filtered input object
+	 */
+	function action_report_error($input) {
+		TikiLib::lib('errorreport')->report($input->message->text());
+		TikiLib::lib('errorreport')->send_headers();
+	}
+
 }
 
