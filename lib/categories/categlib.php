@@ -814,10 +814,10 @@ class CategLib extends ObjectLib
 		}
 	}
 
-   // Get a string of HTML code representing an object's category paths.
-   // $cats: The OIDs of the categories of the object.
+   	// Get a string of HTML code representing an object's category paths.
+   	// $cats: The OIDs of the categories of the object.
 	function get_categorypath($cats)
-   {
+   	{
 		global $smarty, $prefs;
 
 		$excluded = preg_split('/,/', $prefs['categorypath_excluded']);
@@ -836,8 +836,21 @@ class CategLib extends ObjectLib
 					$catp[$info['categId']] = $info['name'];
 				}
 			}
-			$smarty->assign('catp', array_reverse($catp, true));
-			$catpath .= $smarty->fetch('categpath.tpl');
+
+			// Hard-code a flag to hide the catpath, if no view permission is granted
+			//	If set to false, the hyperlinks will be removed and pure text is displayed, if no view permission is granted
+			$flHideOnNoPerm = true;
+
+			// Check if user has permission to view the page
+			$perms = Perms::get( array( 'type' => 'category', 'object' => $categId ) );
+			$canView = $perms->view_category;
+
+			if($canView || !$flHideOnNoPerm) {
+				$smarty->assign('catpathCanView',$canView);
+				$smarty->assign('catp',array_reverse($catp,true));
+				$catpath .= $smarty->fetch('categpath.tpl');
+			}
+
 		}
 		return $catpath;
 	}
