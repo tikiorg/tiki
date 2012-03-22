@@ -30,7 +30,7 @@
 		  <label>{tr}Title:{/tr} <input type="text" name="name[]" maxlength="250" /></label>
    		  <label>{tr}Description:{/tr} <input type="text" name="description[]" maxlength="250" /></label>
 		  <br />
-		  <input size="16 " name="userfile[]" type="file" />
+		  <input size="16" name="userfile[]" type="file" />
           <input type="submit" name="upload" value="{tr}Upload{/tr}"/>
 	</form>
 {/if}
