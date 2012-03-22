@@ -1890,7 +1890,7 @@ class TikiLib extends TikiDb_Bridge
 		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
 		if (!$user) {
 			if ($prefs['ip_can_be_checked'] == 'y') {
-				$userVotings->delete(array('ip' => $ip, 'id' => $id));
+				$userVotings->delete(array('ip' => $ip, 'id' => $id, 'user' => ''));
 				if ( $optionId !== false && $optionId != 'NULL' ) {
 					$userVotings->insert(
 									array(
