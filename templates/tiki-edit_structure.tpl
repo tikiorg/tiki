@@ -66,6 +66,7 @@
 {/if}
 
 <h2>{tr}Structure Layout{/tr}</h2>
+{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
 <div class="structure-container">
 	{self_link page_ref_id=$structure_id}
 		{if $structure_id eq $page_ref_id}<strong>{/if}

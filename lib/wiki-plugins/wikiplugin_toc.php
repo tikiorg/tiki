@@ -103,6 +103,26 @@ function wikiplugin_toc( $data, $params )
 
 	global $structlib, $page_ref_id;
 	include_once ("lib/structures/structlib.php");
+
+	global $prefs;
+	if ($prefs['feature_jquery_ui'] === 'y' && $type === 'admin') {
+		TikiLib::lib('header')
+				->add_jsfile('lib/structures/tiki-edit_structure.js')
+				->add_jsfile('lib/jquery/jquery.mjs.nestedSortable.js');
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_button');
+		$button = smarty_function_button(array(
+			'_text'		=> tra('Save'),
+			'_style'	=> 'display:none;',
+			'_class'	=> 'save_structure',
+			'_ajax'		=> 'n',
+			'_auto_args'=> 'save_structure,page_ref_id',
+		), $smarty);
+	} else {
+		$button = '';
+	}
+
 	if (empty($structId)) {
 		if (!empty($page_ref_id)) {	//And we are currently viewing a structure
 			$pageName_ref_id = null;
@@ -115,7 +135,7 @@ function wikiplugin_toc( $data, $params )
 			$structure_info = $structlib->s_get_structure_info($pageName_ref_id);
 			if (isset($page_info)) {
 				$html = $structlib->get_toc($pageName_ref_id, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
-				return "~np~$html~/np~";
+				return "~np~$button $html $button~/np~";
 			}
 		}
 			//Dont display the {toc} string for non structure pages
@@ -124,6 +144,6 @@ function wikiplugin_toc( $data, $params )
 		$structure_info = $structlib->s_get_structure_info($structId);
 		$html = $structlib->get_toc($structId, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
 
-		return "~np~$html~/np~";
+		return "~np~$button $html $button~/np~";
 	}
 }

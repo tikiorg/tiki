@@ -25,9 +25,20 @@ class Services_Wiki_Controller
 		$data = json_decode($input->data->text());
 		if ($data) {
 			global $structlib; include_once('lib/structures/structlib.php');
-			$structure_info = $structlib->reorder_structure($data);
+			$structlib->reorder_structure($data);
+			$params = json_decode($input->params->text());
 
-			$html = $structlib->get_toc($structure_info['structure_id'], 'asc', false, false, '', 'admin', '', 0, '');
+			$html = $structlib->get_toc(
+				$params->page_ref_id,
+				$params->order,
+				$params->showdesc,
+				$params->numbering,
+				$params->numberPrefix,
+				$params->type,
+				$params->page,
+				$params->maxdepth,
+				$params->structurePageName
+			);
 		}
 		return array('html' => $html);
 	}
