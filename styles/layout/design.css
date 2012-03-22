@@ -1615,7 +1615,7 @@ label.error {
 
 form.simple label {
 	clear: both;
-	padding-bottom: 1em;
+	padding-top: 1em;
 }
 
 form.simple label.depends {
