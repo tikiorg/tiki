@@ -235,7 +235,7 @@ class StructLib extends TikiLib
 					}
 				}
 
-				return true;
+				return $structure_info;
 			}
 		}
 		return false;
