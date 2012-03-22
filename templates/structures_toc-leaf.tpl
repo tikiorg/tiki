@@ -39,7 +39,7 @@
 			{if $numbering}
 				<span class="prefix">{$structure_tree.prefix}&nbsp;</span>
 			{/if}
-			{if $showdesc and $structure_tree.description}
+			{if $showdesc and $structure_tree.description and $toc_type neq 'admin'}
 				<span class="description">{$structure_tree.description|escape} :&nbsp;</span>
 			{/if}
 			<a href={if $toc_type eq 'admin'}
@@ -65,7 +65,7 @@
 				{/if}
 				{if $hilite}</strong>{/if}
 			</a>
-			{if !$showdesc and $toc_type eq 'fancy'} : <span class="description">{$structure_tree.description|escape}</span>{/if}
+			{if (!$showdesc and $toc_type eq 'fancy') or ($showdesc and $toc_type eq 'admin' and !empty($structure_tree.description))} : <span class="description">{$structure_tree.description|escape}</span>{/if}
 
 		</div>
 	{* no </li> here *}
