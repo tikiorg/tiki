@@ -250,10 +250,19 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 		$isUserPage = true;
 	else
 		$isUserPage = false;
+		
+	$referencedPages = $wikilib->get_pages_by_alias($page);
 	$likepages = $wikilib->get_like_pages($page);
+	
+	if ($prefs['feature_wiki_pagealias'] == 'y' && count($referencedPages) == 1) {
+		$newPage = $referencedPages[0];
+	} else if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1) {
+		$newPage = $likepages[0];
+	}
+	
 	/* if we have exactly one match, redirect to it */
-	if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1 && !$isUserPage) {
-		$url = $wikilib->sefurl($likepages[0]);
+	if (isset($newPage) && !$isUserPage) {
+		$url = $wikilib->sefurl($newPage);
 
 		// Process prefix alias with itemId append for pretty tracker pages
 		$prefixes = explode(',', $prefs['wiki_prefixalias_tokens']);
@@ -268,11 +277,11 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 					if (!is_object($semanticlib)) {
 						require_once 'lib/wiki/semanticlib.php';		
 					}
-					$items = $semanticlib->getItemsFromTracker($likepages[0], $suffix);
+					$items = $semanticlib->getItemsFromTracker($newPage, $suffix);
 					if (count($items) > 1) {
 						$msg = tra('There is more than one item in the tracker with this title');
 						foreach ($items as $i) {
-							$msg .= '<br /><a href="tiki-index.php?page=' . urlencode($likepages[0]) . '&itemId=' . $i . '">' . $i . '</a>';
+							$msg .= '<br /><a href="tiki-index.php?page=' . urlencode($newPage) . '&itemId=' . $i . '">' . $i . '</a>';
 						}
 						$smarty->assign('msg', $msg);
 						$smarty->display('error.tpl');
@@ -296,7 +305,10 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 			}
 		}
 		$access->redirect($url);
+	} else {
+		$likepages = array_unique(array_merge($likepages, $referencedPages));
 	}
+	
 	$smarty->assign_by_ref('likepages', $likepages);
 	$smarty->assign('create', $isUserPage? 'n': 'y');
 	$smarty->assign('filter', array('content' => $page,));

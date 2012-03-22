@@ -749,36 +749,55 @@ class WikiLib extends TikiLib
 		//get_strings tra("Removed last version");
 	}
 
+	/**
+	 * Return the page names for a page alias, if any.
+	 * 
+	 * Unfortunately there is no mechanism to prevent two
+	 * different pages from sharing the same alias and that is 
+	 * why this method return an array of page names instead of a
+	 * page name string.
+	 * 
+	 * @param string $alias
+	 * @return array page names
+	 */
+	function get_pages_by_alias($alias)
+	{
+		require_once 'lib/wiki/semanticlib.php';
+		global $prefs;
+		
+		$pages = array();
+		
+		if ($prefs['feature_wiki_pagealias'] == 'n' && empty($prefs["wiki_prefixalias_tokens"])) {
+			return $pages;
+		}
+		
+		$toPage = $alias;
+		$tokens = explode(',', $prefs['wiki_pagealias_tokens']);
+
+		$prefixes = explode(',', $prefs["wiki_prefixalias_tokens"]);
+		foreach ($prefixes as $p) {
+			$p = trim($p);
+			if (strlen($p) > 0 && TikiLib::strtolower(substr($alias, 0, strlen($p))) == TikiLib::strtolower($p)) {
+				$toPage = $p;
+				$tokens = 'prefixalias';
+			}
+		}
+
+		$links = $semanticlib->getLinksUsing($tokens, array( 'toPage' => $toPage ));
+		
+		if ( count($links) > 0 ) {
+			foreach ( $links as $row ) {
+				$pages[] = $row['fromPage'];
+			}
+		}
+		
+		return $pages;
+	}
+	
 	// Like pages are pages that share a word in common with the current page
 	function get_like_pages($page)
 	{
 		global $user, $tikilib, $prefs, $semanticlib;
-
-		// If pagealias are defined, they should be used instead of generic search
-		if ( $prefs['feature_wiki_pagealias'] == 'y' || !empty($prefs["wiki_prefixalias_tokens"])) {
-			require_once 'lib/wiki/semanticlib.php';
-
-			$toPage = $page;
-			$tokens = explode(',', $prefs['wiki_pagealias_tokens']);
-
-			$prefixes = explode(',', $prefs["wiki_prefixalias_tokens"]);
-			foreach ($prefixes as $p) {
-				$p = trim($p);
-				if (strlen($p) > 0 && TikiLib::strtolower(substr($page, 0, strlen($p))) == TikiLib::strtolower($p)) {
-					$toPage = $p;
-					$tokens = 'prefixalias';
-				}
-			}
-
-			$links = $semanticlib->getLinksUsing($tokens, array( 'toPage' => $toPage ));
-			if ( count($links) > 0 ) {
-				$likepages = array();
-				foreach ( $links as $row )
-					$likepages[] = $row['fromPage'];
-
-				return $likepages;
-			}
-		}
 
 		preg_match_all("/([A-Z])([a-z]+)/", $page, $words);
 
