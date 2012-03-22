@@ -74,7 +74,7 @@
 			</td>
 			<td>
 				{if !empty($filegals_manager)}
-					<a href="#" onClick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					<a href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 				{/if}
@@ -349,7 +349,7 @@
 			{if $prefs.fgal_upload_progressbar eq 'n'}
 				onClick="upload_files(); return false"
 			{elseif $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-				onClick="return verifUploadFlash()"
+				onclick="return verifUploadFlash()"
 				disabled="disabled"
 			{/if}
 			id="btnUpload"
@@ -358,9 +358,9 @@
 		/>
 		<hr class="clear" />
 		{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-			<input type="submit" id="btnCancel" style="display:none" value="{tr}Cancel Upload{/tr}" onClick="return false" />
+			<input type="submit" id="btnCancel" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false" />
 		{elseif $simpleMode neq 'y'}
-			<input type="submit" onClick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}"/>
+			<input type="submit" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}"/>
 		{/if}
 	</div>
 {/if}
@@ -516,7 +516,7 @@
 						$(this).submit();
 						this.reset();
 					} else {
-						$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onClick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
+						$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onclick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
 					}
 				});
 				hide('form');

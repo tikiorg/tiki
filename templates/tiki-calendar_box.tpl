@@ -6,7 +6,7 @@
 	{/if}
 	{if $prefs.calendar_sticky_popup eq "y"}
 		<span style="right:2px; position:absolute">
-			<a href="javascript:void(0)" onClick="nd();return false;">{icon _id="close" alt="{tr}Close{/tr}" width="16" height="16"}</a>
+			<a href="javascript:void(0)" onclick="nd();return false;">{icon _id="close" alt="{tr}Close{/tr}" width="16" height="16"}</a>
 		</span>
 	{/if}
 	</div>
