@@ -46,7 +46,6 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 	function renderEntries(Search_ResultSet $entries)
 	{
 		$smarty = new Smarty;
-		$smarty->security = true;
 		$smarty->compile_dir = dirname(__FILE__) . '/../../../../../templates_c';
 		$smarty->template_dir = dirname($this->templateFile);
 		$smarty->plugins_dir = array(	// the directory order must be like this to overload a plugin
