@@ -629,11 +629,11 @@ class StructLib extends TikiLib
 				$ret.="<!--depth: $cur_depth-->\n".$smarty->fetch('structures_toc-startul.tpl')."\n";
 				
 				foreach ($structure_tree as $leaf) {
-				
-					if ($leaf["pageName"]==$page) {
-						$smarty->assign('hilite', true);
+
+					if (is_numeric($page)) {
+						$smarty->assign('hilite', $leaf["page_ref_id"] == $page);
 					} else {
-						$smarty->assign('hilite', false);
+						$smarty->assign('hilite', $leaf["pageName"] == $page);
 					}
 					
 					if ($type === 'admin') {
