@@ -52,7 +52,7 @@ class Search_Formatter
 
 		foreach ($list as $row) {
 			// Clear blank values so the defaults prevail
-			$row = array_filter($row);
+			$row = array_filter($row, array(self, 'is_empty_string'));
 			$row = array_merge($defaultValues, $row);
 
 			$subEntries = array();
@@ -71,6 +71,10 @@ class Search_Formatter
 		return $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
 	
+	private function is_empty_string($v) {
+		return $v !== '';
+	}
+
 	private function render($plugin, $resultSet, $target)
 	{
 		$pluginFormat = $plugin->getFormat();
