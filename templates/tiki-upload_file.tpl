@@ -76,7 +76,7 @@
 			</td>
 			<td>
 				{if !empty($filegals_manager)}
-					<a href="#" onClick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					<a href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 				{/if}
