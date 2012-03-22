@@ -61,6 +61,16 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							1 => tr('Yes'),
 						),
 					),
+					'replace' => array(
+						'name' => tr('Replace Existing File'),
+						'description' => tr('Replace existing file if any, instead of uploading new one.'),
+						'filter' => 'alpha',
+						'default' => 'n',
+						'options' => array(
+							'n' => tr('No'),
+							'y' => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -125,13 +135,20 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$gallery_list = $galleryId;
 		}
 
+		if ($this->getOption(3) == 'y' && $fileIds) {
+			$firstfile = $fileIds[0];
+		} else {
+			$firstfile = 0;
+		}
+
 		$perms = Perms::get('file gallery', $galleryId);
 
 		return array(
 			'galleryId' => $galleryId,
 			'canUpload' => $perms->upload_files,
 			'limit' => $count,
-			'files' => $fileInfo,
+			'files' => $fileInfo
+			'firstfile' => $firstfile,,
 			'value' => $value,
 			'filter' => $this->getOption(1),
 			'gallerySearch' => $gallery_list,
@@ -309,7 +326,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			return false;
 		}
 
-		return $filegallib->upload_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']));
+		$fileIds = $this->getConfiguration('files');
+
+		if ($this->getOption(3) == 'y' && is_array($fileIds) && count($fileIds) > 0) {
+			return $filegallib->update_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']), $fileIds[0]);
+		} else {
+			return $filegallib->upload_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']));
+		}
 	}
 }
 

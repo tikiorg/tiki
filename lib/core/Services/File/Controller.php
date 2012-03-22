@@ -24,6 +24,7 @@ class Services_File_Controller
 		$name = $input->name->text();
 		$type = $input->type->text();
 		$data = $input->data->none();
+		$fileId = $input->fileId->int();
 
 		$data = base64_decode($data);
 
@@ -33,7 +34,11 @@ class Services_File_Controller
 			$type = $finfo->buffer($data);
 		}
 
-		$fileId = $this->uploadFile($gal_info, $name, $size, $type, $data);
+		if ($fileId) {
+			$this->updateFile($gal_info, $name, $size, $type, $data, $fileId);
+		} else {
+			$fileId = $this->uploadFile($gal_info, $name, $size, $type, $data);
+		}
 
 		if ($fileId === false) {
 			throw new Services_Exception(tr('File could not be uploaded. Restrictions apply.'), 406);
@@ -140,6 +145,12 @@ class Services_File_Controller
 	{
 		$filegallib = TikiLib::lib('filegal');
 		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data);
+	}
+
+	private function updateFile($gal_info, $name, $size, $type, $data, $fileId)
+	{
+		$filegallib = TikiLib::lib('filegal');
+		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId);
 	}
 }
 

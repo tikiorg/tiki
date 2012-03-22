@@ -85,6 +85,10 @@ var handleFiles = function (files) {
 							$field.input_csv('delete', ',', fileId);
 							$(this).closest('li').remove();
 						});
+									
+						if ({{$field.firstfile|escape}} > 0) {
+							li.prev('li').remove();
+						}
 					},
 					error: function (jqxhr) {
 						$fileinput.showError(jqxhr);
@@ -98,6 +102,7 @@ var handleFiles = function (files) {
 						size: file.size,
 						type: file.type,
 						data: data,
+						fileId: {{$field.firstfile|escape}},
 						galleryId: {{$field.galleryId|escape}}
 					}
 				});

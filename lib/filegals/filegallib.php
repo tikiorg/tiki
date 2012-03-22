@@ -3285,6 +3285,18 @@ class FileGalLib extends TikiLib
 		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
 	}
 
+	function update_single_file($gal_info, $name, $size, $type, $data, $id)
+	{
+		global $user;
+		if ($this->convert_from_data($gal_info, $fhash, $data)) {
+			$data = null;
+		}
+
+		$didFileReplace = true;
+
+		return $this->replace_file($id, $name, '', $name, $data, $size, $type, $user, $fhash, '', $gal_info, $didFileReplace);
+	}
+	
 	private function convert_from_data($gal_info, & $fhash, $data)
 	{
 		$savedir = $this->get_gallery_save_dir($gal_info['galleryId']);
