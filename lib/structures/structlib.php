@@ -625,8 +625,7 @@ class StructLib extends TikiLib
 			if (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
 
 				$smarty->assign('toc_type', $type);
-				$smarty->assign('leafspace', str_repeat("\t", $cur_depth*2));
-				$ret.="<!--depth: $cur_depth-->\n".$smarty->fetch('structures_toc-startul.tpl')."\n";
+				$ret.= $smarty->fetch('structures_toc-startul.tpl')."\n";
 				
 				foreach ($structure_tree as $leaf) {
 
@@ -653,7 +652,6 @@ class StructLib extends TikiLib
 					$smarty->assign_by_ref('structure_tree', $leaf);
 					$smarty->assign('showdesc', $showdesc);
 					$smarty->assign('numbering', $numbering);
-					$smarty->assign('leafspace', str_repeat("\t", $cur_depth*2));
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if (isset($leaf['sub']) && is_array($leaf['sub'])) {
 						$ret.=$this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $cur_depth+1, $structurePageName).str_repeat("\t", ($cur_depth*2)+1)."</li>\n";
@@ -661,8 +659,7 @@ class StructLib extends TikiLib
 						$ret.=str_repeat("\t", ($cur_depth*2)+1)."</li>\n";
 					} 					
 				}	
-				$smarty->assign('leafspace', str_repeat("\t", $cur_depth*2));
-				$ret.=$smarty->fetch('structures_toc-endul.tpl')."\n";			
+				$ret.=$smarty->fetch('structures_toc-endul.tpl')."\n";
 			}
 		}
 		return $ret;

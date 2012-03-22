@@ -1,5 +1,4 @@
 {strip}
-	{$leafspace}
 	<li class="{if $toc_type eq 'fancy'}fancy{elseif $toc_type eq 'admin'}ui-state-default admin{/if}toclevel"{if $toc_type eq 'admin'} id="node_{$structure_tree.page_ref_id}"{/if}>
 		<div>
 			{if $toc_type eq 'admin'}
