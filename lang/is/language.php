@@ -989,6 +989,7 @@ $lang = array(
 "Link" => "Tengill",
 // "Multiple Fields" => "Multiple Fields",
 // "Display the values from multiple fields instead of a single one" => "Display the values from multiple fields instead of a single one",
+// "Display the values from multiple fields instead of a single one, separated by |" => "Display the values from multiple fields instead of a single one",
 // "Limit the available items to a selected set" => "Limit the available items to a selected set",
 // "Link Page" => "Link Page",
 // "Link to a wiki page instead of directly to the item" => "Link to a wiki page instead of directly to the item",

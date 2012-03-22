@@ -989,6 +989,7 @@ $lang = array(
 "Link" => "Link",
 "Multiple Fields" => "Multiple Felder",
 "Display the values from multiple fields instead of a single one" => "Zeige die Werte von multiplen Feldern anstelle eines einzelnen",
+"Display the values from multiple fields instead of a single one, separated by |" => "Zeige die Werte von multiplen Feldern anstelle eines einzelnen",
 "Limit the available items to a selected set" => "Beschränke die verfügbaren Einträge nach ihrem Status",
 "Link Page" => "Verlinkte Seite",
 "Link to a wiki page instead of directly to the item" => "Verlinke auf eine Wiki Seite anstelle direkt mit dem Eintrag",
