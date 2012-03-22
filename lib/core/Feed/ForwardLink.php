@@ -195,14 +195,14 @@ JQ
 			->add_jsfile('lib/jquery/md5.js');
 
 		$authorDetails = json_encode(
-			end(
-				Tracker_Query::tracker('ForwardLink Author Details')
-					->byName()
-					->excludeDetails()
-					->filter(array('field'=> 'User','value'=> $user))
-					->render(false)
-					->query()
-			)
+						end(
+										Tracker_Query::tracker('ForwardLink Author Details')
+										->byName()
+										->excludeDetails()
+										->filter(array('field'=> 'User','value'=> $user))
+										->render(false)
+										->query()
+						)
 		);
 
 		$page = urlencode($args['object']);

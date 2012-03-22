@@ -613,18 +613,22 @@ class StructLib extends TikiLib
 			if (!$this->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')) {
 				$type = 'plain';
 			} else {
-				TikiLib::lib('smarty')->assign('json_params', json_encode(array(
-						'page_ref_id' => $page_ref_id,
-						'order' => $order,
-						'showdesc' => $showdesc,
-						'numbering' => $numbering,
-						'numberPrefix' => $numberPrefix,
-						'type' => $type,
-						'page' => $page,
-						'maxdepth' => $maxdepth,
-						'structurePageName' => $structurePageName
-					)
-				));
+				TikiLib::lib('smarty')->assign(
+								'json_params', 
+								json_encode(
+												array(
+													'page_ref_id' => $page_ref_id,
+													'order' => $order,
+													'showdesc' => $showdesc,
+													'numbering' => $numbering,
+													'numberPrefix' => $numberPrefix,
+													'type' => $type,
+													'page' => $page,
+													'maxdepth' => $maxdepth,
+													'structurePageName' => $structurePageName
+												)
+								)
+				);
 
 			}
 		}

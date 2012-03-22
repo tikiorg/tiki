@@ -29,15 +29,15 @@ class Services_Wiki_Controller
 			$params = json_decode($input->params->text());
 
 			$html = $structlib->get_toc(
-				$params->page_ref_id,
-				$params->order,
-				$params->showdesc,
-				$params->numbering,
-				$params->numberPrefix,
-				$params->type,
-				$params->page,
-				$params->maxdepth,
-				$params->structurePageName
+							$params->page_ref_id,
+							$params->order,
+							$params->showdesc,
+							$params->numbering,
+							$params->numberPrefix,
+							$params->type,
+							$params->page,
+							$params->maxdepth,
+							$params->structurePageName
 			);
 		}
 		return array('html' => $html);

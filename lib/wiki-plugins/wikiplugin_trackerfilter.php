@@ -684,7 +684,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 					);
 				}
 				
-				break;
+    			break;
 			default:
 				return tra('tracker field type not processed yet').' '.$field['type'];
 			}

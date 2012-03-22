@@ -788,7 +788,7 @@ class Tracker_Query
 		$fields = array();
 		
 		$fieldHandler = new Tracker_Field_Factory();
-		foreach($trackerDefinition->getFields() as $field) {
+		foreach ($trackerDefinition->getFields() as $field) {
 			if ($includeHeader == true) 
 				$headerlib->clear_js();
 			

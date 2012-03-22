@@ -842,12 +842,12 @@ class CategLib extends ObjectLib
 			$flHideOnNoPerm = true;
 
 			// Check if user has permission to view the page
-			$perms = Perms::get( array( 'type' => 'category', 'object' => $categId ) );
+			$perms = Perms::get(array( 'type' => 'category', 'object' => $categId ));
 			$canView = $perms->view_category;
 
-			if($canView || !$flHideOnNoPerm) {
-				$smarty->assign('catpathCanView',$canView);
-				$smarty->assign('catp',array_reverse($catp,true));
+			if ($canView || !$flHideOnNoPerm) {
+				$smarty->assign('catpathCanView', $canView);
+				$smarty->assign('catp', array_reverse($catp, true));
 				$catpath .= $smarty->fetch('categpath.tpl');
 			}
 
