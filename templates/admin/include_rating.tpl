@@ -14,6 +14,7 @@
 			{preference name=rating_recalculation_odd}
 			{preference name=rating_recalculation_count}
 		</div>
+		{preference name=ip_can_be_checked}
 	</fieldset>
 
 	<fieldset>

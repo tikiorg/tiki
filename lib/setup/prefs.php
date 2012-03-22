@@ -287,7 +287,6 @@ function get_default_prefs()
 		'feature_usability' => 'n',
 		'minical_reminders' => 0,
 		'php_docroot' => 'http://php.net/',
-		'ip_can_be_checked' => 'n',
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
 		'use_proxy' => 'n',
