@@ -2440,7 +2440,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 
-		$this->register_user_vote($user, $key, $userValue, array(), true);
+		$result = $this->register_user_vote($user, $key, $userValue, array(), true);
 
 		$votings = $this->table('tiki_user_votings');
 		$data = $votings->fetchRow(array('count' => $votings->count(), 'total' => $votings->sum('optionId')), array('id' => $key));
@@ -2453,6 +2453,7 @@ class TrackerLib extends TikiLib
 			$unifiedsearchlib->invalidateObject('trackeritem', $itemId);
 			$unifiedsearchlib->processUpdateQueue();
 		}
+		return $result;
 	}
 
 	function remove_tracker($trackerId)

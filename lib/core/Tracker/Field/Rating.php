@@ -88,7 +88,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			$trklib = TikiLib::lib('trk');
 			$data = $this->getBaseFieldData();
 			global $user;
-			$trklib->replace_star($requestData[$ins_id], $this->getConfiguration('trackerId'), $requestData['itemId'], $data, $user, true);
+			$result = $trklib->replace_star($requestData[$ins_id], $this->getConfiguration('trackerId'), $requestData['itemId'], $data, $user, true);
 		} else {
 			$data = $this->gatherVoteData();
 		}
@@ -104,6 +104,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			'mode' => $data['mode'],
 			'labels' => $data['labels_array'],      
 			'rating_options' => $data['rating_options'],
+			'result' => $result,
 		);
 	}
 
@@ -219,7 +220,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		$field['numvotes'] = $data['count'];
 		$field['total'] = $data['total']; 
 		if ($field['numvotes']) {
-			$field['voteavg'] = $field['total'] / $field['numvotes'];
+			$field['voteavg'] = round($field['total'] / $field['numvotes'], 2);
 		} else {
 			$field['voteavg'] = 0;
 		}
