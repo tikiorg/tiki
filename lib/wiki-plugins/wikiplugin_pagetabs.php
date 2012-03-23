@@ -70,7 +70,7 @@ function wikiplugin_pagetabs($data, $params)
 
 				if (tabPages) {
 					$.each(tabPages, function(i) {
-						var a = $("<a href=\'tiki-index_raw.php?page=" + tabPages[i] + "\' />")
+						var a = $("<a href=\'tiki-index_raw.php?full&page=" + tabPages[i] + "\' />")
 							.text(tabPages[i]);
 
 						$("<li />")
