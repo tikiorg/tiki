@@ -20,7 +20,7 @@
 						{/if}
 						<h2>{$groupName|escape}</h2>
 						{if isset($groupData.info) and !empty($groupData.info.groupDesc)}
-							<p class=="description">{$groupData.info.groupDesc}</p>
+							<p class="description">{$groupData.info.groupDesc}</p>
 						{/if}
 						{if $groupData.members}
 							{if $groupData.can_remove}{tr}Check to remove:{/tr}{/if}
