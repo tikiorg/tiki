@@ -10,67 +10,91 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   die;
 }
 
-function wikiplugin_lazytabs_help() 
+function wikiplugin_pagetabs_help()
 {
         return "Cutom Tabs Engine";
 }
 
-function wikiplugin_lazytabs_info() 
+function wikiplugin_pagetabs_info()
 {
 	return array(
-		'name' => tra('Lazy Tabs'),
-		'documentation' => tra('PluginLazyTabs'),			
+		'name' => tra('Url Tabs'),
+		'documentation' => tra('PluginPageTabs'),
 		'description' => tra('Display page content in a set of tabs'),
-		'prefs' => array( 'wikiplugin_tabs' ),
+		'prefs' => array( 'wikiplugin_pagetabs' ),
 		'body' => NULL,
 		'params' => array(
+			'pages' => array(
+				'required' => false,
+				'name' => tra('Wiki page names'),
+				'description' => tra('The wiki pages you would like to use in this plugin, optional, separate with pipe "|".  Or a table with the class of "pagetabs" on the main page. On child pages use as a way to redirect to the parent.'),
+				'default' => '',
+				'filter' => 'striptags',
+			),
 		),
 	);
 }
 
-function wikiplugin_lazytabs($data, $params) 
+function wikiplugin_pagetabs($data, $params)
 {
 	global $tikilib, $smarty, $headerlib, $user;
-	$lazyTabs = true;
+	extract($params, EXTR_SKIP);
+
+	$pages = json_encode($pages);
+
+	$pageTabs = true;
 	
 	foreach ($tikilib->get_user_groups($user) as $group) {
-		if ($group == "NoLazyTabs") {
-			$lazyTabs = false;
+		if ($group == "NoPageTabs") {
+			$pageTabs = false;
 		}
 	}
-	
-	if ($lazyTabs == true) {
-		$headerlib->add_jq_onready(
-						'var lazyTabsTable = $("table.lazytabs")
+
+
+
+	if ($pageTabs == true) {
+		$headerlib->add_jq_onready('
+			var tabPages = $pages;
+
+			var tabsTable = $("table.pagetabs")
 				.hide();
 
-			var tabParent = $("<div id=\'lazyTabContainer\' />")
-				.insertAfter(lazyTabsTable);
+			var tabParent = $("<div id=\'TabContainer\' />")
+				.insertAfter(tabsTable);
 				
 			var tabMenu = $("<ul id=\'tabMenu\' class=\'tabs\' />")
 				.appendTo(tabParent);
 			
-			lazyTabsTable
-				.find("a").each(function() {
-					var a = $(this).clone();
-					
-					a.attr("href", a.attr("href").replace(/tiki-index.php/g, "tiki-index_raw.php"));
-					
+			if (tabPages) {
+				$.each(tabPages, function(i) {
+					var a = $("<a href=\'tiki-index_raw.php?" + tabPages[i] + "\' />");
+
 					$("<li />")
-						.append(a)
-						.appendTo(tabMenu);
-						
-					
+							.append(a)
+							.appendTo(tabMenu);
 				});
-			
-			$("<img id=\'lazyTabSpinner\' src=\'img/spinner.gif\' style=\'position: absolute;z-index: 999999999\' />")
+			} else {
+				tabsTable
+					.find("a").each(function() {
+						var a = $(this).clone();
+						
+						a.attr("href", a.attr("href").replace(/tiki-index.php/g, "tiki-index_raw.php"));
+						
+						$("<li />")
+							.append(a)
+							.appendTo(tabMenu);
+							
+						
+					});
+			}
+			$("<img id=\'tabSpinner\' src=\'img/spinner.gif\' style=\'position: absolute;z-index: 999999999\' />")
 				.insertBefore(tabParent)
 				.hide();
 			
 			tabParent
 				.tabs({
 					load: function(e, ui) {
-						$("#lazyTabSpinner").fadeOut();
+						$("#tabSpinner").fadeOut();
 						//(url|#anchor1,anchor2|text)
 						$(ui.panel)
 							.find(".wikitext a")
@@ -105,7 +129,7 @@ function wikiplugin_lazytabs($data, $params)
 						$("#top").show();
 					},
 					select: function() {
-						$("#lazyTabSpinner").fadeIn();
+						$("#tabSpinner").fadeIn();
 					}
 				});
 			
@@ -138,7 +162,7 @@ function wikiplugin_lazytabs($data, $params)
 			#top {
 				display: none;
 			}
-			.lazytabs {
+			.pagetabs {
 				display: none;
 			}
 			.ui-tabs-panel {
