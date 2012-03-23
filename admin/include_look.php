@@ -52,6 +52,12 @@ function get_thumbnail_file($stl, $opt = '') // find thumbnail if there is one
 
 // find thumbnail if there is one
 $thumbfile = get_thumbnail_file($a_style, $prefs['site_style_option']);
+if (empty($thumbfile)) {
+	$thumbfile = get_thumbnail_file($a_style);
+}
+if (empty($thumbfile)) {
+	$thumbfile = 'img/trans.png';
+}
 if (!empty($thumbfile)) {
 	$smarty->assign('thumbfile', $thumbfile);
 }
@@ -91,7 +97,7 @@ $js
 		optionDropDown.empty().attr('disabled',false)
 			.append(\$('<option/>').attr('value',$none).text($none));
 		\$.each(ops[1], function(i, val) {
-			optionDropDown.append(\$('<option/>').attr('value',i).text(i));
+			optionDropDown.append(\$('<option/>').attr('value',i).text(i.replace(/\.css\$/, '')));
 			none = false;
 		});
 		optionDropDown.val(current);

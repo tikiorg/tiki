@@ -16,7 +16,7 @@ function prefs_style_list($partial = false)
 		$list = $tikilib->list_style_options($prefs['site_style']);
 		if (!empty($list)) {
 			foreach ($list as $opt) {
-				$style_options[$opt] = $opt;
+				$style_options[$opt] = str_replace('.css', '', $opt);
 			}
 		}
 	}

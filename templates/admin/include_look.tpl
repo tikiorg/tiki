@@ -8,16 +8,21 @@
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
 
-			{preference name=style}
-			<div class="adminoptionbox">
-				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-					<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
-				{/if}
+			<div style="position:relative;">
+				<div style="position:absolute;right:.5em;top:0.5em;">
+					<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160" height="120" />
+				</div>
+
+				<div class="adminoptionbox">
+					{preference name=style}
+					{preference name=style_option}
+
+					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
+						<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
+					{/if}
+				</div>
 			</div>
-
 			<div class="adminoptionbox">
-				{preference name=style_option}
-
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
 				{/if}
@@ -30,14 +35,6 @@
 					{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
 				{/if}	
 			</div>
-
-			{if isset($thumbfile)}
-				<div class="adminoptionboxchild">
-					<div id="style_thumb_div">
-						<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" />
-					</div>
-				</div>
-			{/if}							
 
 			{preference name=feature_fixed_width}
 			<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
