@@ -7204,6 +7204,7 @@ $lang = array(
 // "Toggle input modes for the map" => "Toggle input modes for the map",
 "Menu" => "Menü",
 "Horizontal or vertical menu" => "Kimmrecht oder pielrechte Menü",
+"Displays a menu or a structure as a menu" => "Kimmrecht oder pielrechte Menü",
 // "Identifier of a menu (from tiki-admin_menus.php)" => "Identifier of a menu (from tiki-admin_menus.php)",
 "Structure" => "Struktuur",
 // "Identifier of a structure of wiki pages (from tiki-admin_structures.php)" => "Identifier of a structure of wiki pages (from tiki-admin_structures.php)",

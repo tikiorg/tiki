@@ -15,7 +15,7 @@ function module_menu_info()
 {
 	return array(
 		'name' => tra('Menu'),
-		'description' => tra('Horizontal or vertical menu.'),
+		'description' => tra('Displays a menu or a structure as a menu.'),
 		'params' => array(
 			'id' => array(
 				'name' => tra('Menu'),
