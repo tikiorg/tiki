@@ -156,6 +156,11 @@ if (isset($_REQUEST['um_update'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	if (in_array(strtolower($_REQUEST['um_name']), $modlib->get_all_modules())) {
+		$smarty->assign('msg', tra('A module with that "name" already exists, please choose another'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	check_ticket('admin-modules');
 	$_REQUEST['um_update'] = urldecode($_REQUEST['um_update']);
 	$smarty->assign_by_ref('um_name', $_REQUEST['um_name']);
@@ -318,8 +323,7 @@ if (isset($_REQUEST['assign'])) {
 if (isset($_REQUEST['um_remove'])) {
 	$_REQUEST['um_remove'] = urldecode($_REQUEST['um_remove']);
 	$access->check_authenticity(
-					tra('Are you sure you want to delete this Custom Module?') . 
-					'&nbsp;&nbsp;(&quot;' . $_REQUEST['um_remove'] . '&quot;)'
+		tra('Are you sure you want to delete this Custom Module?') . ' ("' . $_REQUEST['um_remove'] . '")'
 	);
 	$modlib->remove_user_module($_REQUEST['um_remove']);
 	$logslib->add_log('adminmodules', 'removed custom module ' . $_REQUEST['um_remove']);
