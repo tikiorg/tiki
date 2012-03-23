@@ -824,6 +824,7 @@ class Services_Tracker_Controller
 		$showStatus = $input->showStatus->int();
 		$showCreated = $input->showCreated->int();
 		$showLastModif = $input->showLastModif->int();
+		$keepItemlinkId = $input->keepItemlinkId->int();
 
 		$encoding = $input->encoding->text();
 		if (! in_array($encoding, array('UTF-8', 'ISO-8859-1'))) {
@@ -881,7 +882,11 @@ class Services_Tracker_Controller
 				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['lastModif'], '', 'n');
 			}
 			foreach ($row['field_values'] as $val) {
-				$toDisplay[] = $trklib->get_field_handler($val)->renderOutput(array('list_mode' => 'csv'));
+				if ( ($keepItemlinkId) && ($val['type'] == 'r') ) {
+					$toDisplay[] = $val['value'];
+				} else {
+					$toDisplay[] = $trklib->get_field_handler($val)->renderOutput(array('list_mode' => 'csv'));
+				}
 			}
 
 			$this->writeCsv($toDisplay, $separator, $delimitorL, $delimitorR, $encoding, $cr);
