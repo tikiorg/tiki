@@ -52,6 +52,7 @@ $safePaths = array(
 	'\./tiki-information.php',
 	'\./tiki-install.php',  // does its own check
 	'\./tiki-jsplugin.php',
+	'\./tiki-jsmodule.php',
 	'\./tiki-live_support_chat_frame.php',
 	'\./tiki-login_scr.php',
 	'\./tiki-channel.php',			// does its own checks
