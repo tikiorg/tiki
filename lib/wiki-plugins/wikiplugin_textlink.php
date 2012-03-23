@@ -11,6 +11,7 @@ function wikiplugin_textlink_info()
 		'name' => tra('TextLink'),
 		'documentation' => 'PluginTextlink',
 		'description' => tra('Links your article to a site using forwardlink protocol'),
+        'keywords' => array('forward', 'forwardlink', 'forwardlink-protocol', 'forwardlinkprotocol', 'protocol'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
 		'icon' => 'img/icons/link.png',
 		'body' => tra('Text to link to forwardlink'),
