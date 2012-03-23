@@ -118,12 +118,14 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Reports Generator'),
 			'help' => 'Trackers',
 			'type' => 'flag',
-			'keywords' => 'CRUD',
+			'keywords' => 'report trackers logs',
 			'default' => 'n',
 			'dependencies' => array('feature_trackers'),
 			'permission' => array(
 				'permType' => 'trackers',
 			),
+			'warning' => tra('Experimental'),
+			'tags' => array('experimental'),
 		),
 		'feature_forums' => array(
 			'name' => tra('Forums'),
