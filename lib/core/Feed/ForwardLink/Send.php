@@ -78,9 +78,13 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 							)
 			);
 
-			$response = $client->request(Zend_Http_Client::POST);
-			$request = $client->getLastResponse();
-			return $response->getBody();
+            try {
+			    $response = $client->request(Zend_Http_Client::POST);
+			    $request = $client->getLastResponse();
+			    return $response->getBody();
+            } catch(Exception $e) {
+                return "";
+            }
 		}
 	}
 }
