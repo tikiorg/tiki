@@ -1069,6 +1069,21 @@ tr.diffheader {
 	width: 95%;
 }
 
+/* wikiplugin_convene */
+.convene-ok {    
+	background-color: #D1F3D1 !important;
+	background-image: none !important;
+	text-align: center; 
+}
+.convene-no {
+	background-color: #FFCCCA !important;
+	background-image: none !important;
+	text-align: center; 
+}
+.convene-no img { 
+	display: none;   
+}
+
 /* wikiplugin_footnotearea */
 .footnotearea {
 	margin-top: 2em;
