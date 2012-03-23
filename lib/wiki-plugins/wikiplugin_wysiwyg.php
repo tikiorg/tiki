@@ -54,19 +54,20 @@ function wikiplugin_wysiwyg($data, $params)
 
 	global $tiki_p_edit, $page, $prefs;
 	static $execution = 0;
-	$class = "wp_wysiwyg";
-	$exec_key = $class . '_' . ++ $execution;
-	$style = " style='min-width:{$params['width']};min-height:{$params['height']}'";
-
-	$params['section'] = empty($params['section']) ? 'wysiwyg_plugin' : $params['section'];
-	$params['_wysiwyg'] = 'y';
-	$params['is_html'] = true;
-	//$params['comments'] = true;
-	$ckoption = $wysiwyglib->setUpEditor(true, $exec_key, $params, '', false);
-
-	$html = "<div id='$exec_key' class='{$class}'$style>" . $html . '</div>';
 
 	if ($tiki_p_edit === 'y') {
+		$class = "wp_wysiwyg";
+		$exec_key = $class . '_' . ++ $execution;
+		$style = " style='min-width:{$params['width']};min-height:{$params['height']}'";
+
+		$params['section'] = empty($params['section']) ? 'wysiwyg_plugin' : $params['section'];
+		$params['_wysiwyg'] = 'y';
+		$params['is_html'] = true;
+		//$params['comments'] = true;
+		$ckoption = $wysiwyglib->setUpEditor(true, $exec_key, $params, '', false);
+
+		$html = "<div id='$exec_key' class='{$class}'$style>" . $html . '</div>';
+
 		$js = '
 
 $("#' . $exec_key . '").each(function(){
