@@ -80,7 +80,7 @@ class ScormLib
 			return false;
 		}
 		
-		return in_array($args['filetype'], array('application/zip', 'application/x-zip'));
+		return in_array($args['filetype'], array('application/zip', 'application/x-zip', 'application/x-zip-compressed'));
 	}
 
 	private function getZipFile($fileId)
