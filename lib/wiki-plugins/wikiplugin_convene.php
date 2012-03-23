@@ -98,7 +98,7 @@ function wikiplugin_convene($data, $params)
 	//start date header
 	$dateHeader = "";
 	foreach ($votes as $stamp => $totals) {
-		$dateHeader .= "<td>". $tikilib->get_long_datetime($stamp) .
+		$dateHeader .= "<td class='conveneHeader'>". $tikilib->get_long_datetime($stamp) .
 			($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
 		"</td>";
 	}
@@ -161,7 +161,7 @@ function wikiplugin_convene($data, $params)
 			}
 		}
 		
-		$lastRow .= "<td>". $total ."&nbsp;$pic</td>";
+		$lastRow .= "<td class='conveneFooter'>". $total ."&nbsp;$pic</td>";
 	}
 	$result .= $lastRow . "</tr>";
 	//end last row with auto selected date(s)
