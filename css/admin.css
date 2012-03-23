@@ -55,7 +55,6 @@ a.admbox.off img {
 	top: 0;
 	left: 0;
 	background-image: url('../img/overlay-disabled_item.png');
-	opacity: .5;
 }
 /* Look & feel thumbnail */
 
