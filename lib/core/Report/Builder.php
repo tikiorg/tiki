@@ -39,8 +39,8 @@ class Report_Builder
 		$files = array();
 		
 		foreach (scandir('lib/core/Report/Definition') as $fileName) {
-			if (preg_match('/[.]php/', $fileName)) {
-				$files[] = str_replace('.php', '', $fileName);
+			if (preg_match('/[.]php/', $fileName) && $fileName != "index.php") {
+                $files[] = str_replace('.php', '', $fileName);
 			}
 		}
 		

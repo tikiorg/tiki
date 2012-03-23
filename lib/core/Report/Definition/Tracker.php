@@ -122,11 +122,18 @@ class Report_Definition_Tracker
 	private function innerJoin($leftTracker, $rightTracker, $leftSetting, $rightSetting)
 	{
 		foreach ($leftTracker as $key => $leftItem) {
-			$leftTracker[$key] = $leftTracker[$key] + $rightTracker[$leftTracker[$key][$rightSetting]];
+            if (
+                isset($leftTracker[$key]) &&
+                isset($rightTracker[$leftTracker[$key][$rightSetting]]) &&
+                is_array($leftTracker[$key]) &&
+                is_array($rightTracker[$leftTracker[$key][$rightSetting]])
+            ) {
+			    $leftTracker[$key] = $leftTracker[$key] + $rightTracker[$leftTracker[$key][$rightSetting]];
+            }
 		}
 		return $leftTracker;
 	}
-	
+
 	private function query($values = array())
 	{
 		$tracker = $values['tracker'];
