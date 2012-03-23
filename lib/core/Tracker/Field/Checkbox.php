@@ -82,9 +82,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 	function renderOutput($context = array())
 	{
 		$fieldData = $this->getFieldData();
-		if ($fieldData['value'] == 'y') {
+		if ($fieldData['value'] == 'y' && $context['list_mode'] !== 'csv') {
 			return tra('Yes');
-		} elseif ($fieldData['value'] == 'n') {
+		} elseif ($fieldData['value'] == 'n' && $context['list_mode'] !== 'csv') {
 			return tra('No');
 		} else {
 			return $fieldData['value']; 
