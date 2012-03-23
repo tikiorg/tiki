@@ -80,6 +80,8 @@
 				
 				{preference name=feature_htmlfeed}
 				{preference name=feature_forwardlinkprotocol}
+
+				{preference name=feature_reports}
 			</div>
 		</fieldset>
 
