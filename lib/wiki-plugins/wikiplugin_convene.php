@@ -21,9 +21,21 @@ function wikiplugin_convene_info()
 			'title' => array(
 				'required' => false,
 				'name' => tra('Title of Event'),
-				'default' => tra('Convene')
+				'default' => tra('Convene'),
 			),
-		),
+			'dateformat' => array(
+				'required' => false,
+				'name' => tra('Date and time format'),
+				'description' => tra('Display date and time in short or long format, according to the site wide setting'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Short'), 'value' => 'short'), 
+					array('text' => tra('Long'), 'value' => 'long')
+				)
+			),
+		)
 	);
 }
 
@@ -35,9 +47,14 @@ function wikiplugin_convene($data, $params)
 	++$conveneI;
 	$i = $conveneI;
 	
+		
 	$params = array_merge(array("title" => "Convene"), $params);	
 	extract($params, EXTR_SKIP);
 	
+	if (!isset($dateformat)) {
+		$dateformat = "short";
+	}
+
 	$dataString = $data . '';
 	$dataArray = array();
 	
@@ -98,9 +115,15 @@ function wikiplugin_convene($data, $params)
 	//start date header
 	$dateHeader = "";
 	foreach ($votes as $stamp => $totals) {
-		$dateHeader .= "<td class='conveneHeader'>". $tikilib->get_long_datetime($stamp) .
-			($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
-		"</td>";
+		if (!empty($dateformat) && $dateformat == "long") {
+			$dateHeader .= "<td class='conveneHeader'>". $tikilib->get_long_datetime($stamp) .
+				($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
+			"</td>";
+		} else {
+			$dateHeader .= "<td class='conveneHeader'>". $tikilib->get_short_datetime($stamp) .
+				($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
+			"</td>";
+		}
 	}
 	$result .= "
 		<tr>
