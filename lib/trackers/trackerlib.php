@@ -1357,7 +1357,8 @@ class TrackerLib extends TikiLib
 				$version = 0;
 			}
 		} else {
-			if (isset($tracker_info['newItemStatus'])) {
+			if (empty($status) && isset($tracker_info['newItemStatus'])) {
+				// set status based on tracker setting of status not explicitly requested
 				$status = $tracker_info['newItemStatus'];
 			}
 			if (empty($status)) {
