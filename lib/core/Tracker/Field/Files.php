@@ -147,8 +147,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			'galleryId' => $galleryId,
 			'canUpload' => $perms->upload_files,
 			'limit' => $count,
-			'files' => $fileInfo
-			'firstfile' => $firstfile,,
+			'files' => $fileInfo,
+			'firstfile' => $firstfile,
 			'value' => $value,
 			'filter' => $this->getOption(1),
 			'gallerySearch' => $gallery_list,
