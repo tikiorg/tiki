@@ -1083,6 +1083,9 @@ tr.diffheader {
 .convene-no img { 
 	display: none;   
 }
+.conveneFooter, .conveneHeader {
+	text-align: center;
+}
 
 /* wikiplugin_footnotearea */
 .footnotearea {
