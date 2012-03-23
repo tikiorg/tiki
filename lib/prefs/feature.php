@@ -113,9 +113,9 @@ function prefs_feature_list($partial = false)
 				'permType' => 'trackers',
 			),
 		),
-		'feature_tracker_reports' => array(
-			'name' => tra('Tracker Reports'),
-			'description' => tra('Tracker Reports Generator'),
+		'feature_reports' => array(
+			'name' => tra('Reports'),
+			'description' => tra('Reports Generator'),
 			'help' => 'Trackers',
 			'type' => 'flag',
 			'keywords' => 'CRUD',

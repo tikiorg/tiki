@@ -6,7 +6,9 @@
 // $Id$
 
 require_once('tiki-setup.php');
-global $headerlib, $smarty, $reportFullscreen, $index, $values;
+global $headerlib, $smarty, $reportFullscreen, $index, $values, $access;
+
+$access->check_feature('feature_reports');
 
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
