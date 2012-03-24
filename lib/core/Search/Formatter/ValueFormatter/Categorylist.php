@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Formatter_ValueFormatter_Categorylist implements Search_Formatter_ValueFormatter_Interface
+class Search_Formatter_ValueFormatter_Categorylist extends Search_Formatter_ValueFormatter_Abstract
 {
 	private $requiredParents = array();
 	private $excludeParents = array();

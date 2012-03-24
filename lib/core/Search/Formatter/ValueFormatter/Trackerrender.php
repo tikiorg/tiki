@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Formatter_ValueFormatter_Trackerrender implements Search_Formatter_ValueFormatter_Interface
+class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_ValueFormatter_Abstract
 {
 	private $list_mode = 'n';
 

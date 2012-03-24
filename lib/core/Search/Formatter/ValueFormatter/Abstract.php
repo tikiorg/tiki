@@ -5,16 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Formatter_ValueFormatter_Date extends Search_Formatter_ValueFormatter_Abstract
+abstract class Search_Formatter_ValueFormatter_Abstract implements Search_Formatter_ValueFormatter_Interface
 {
 	function render($name, $value, array $entry)
 	{
-		global $prefs, $tikilib;
-		if (is_numeric($value)) {	// expects a unix timestamp but might be getting the default value
-			return $tikilib->date_format($prefs['short_date_format'], $value);
-		} else {
-			return $value;
-		}
+		return $value;
 	}
 }
 
