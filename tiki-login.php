@@ -53,8 +53,8 @@ if ( $prefs['session_silent'] == 'y' ) {
 
 // Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 // Note that login from will always be a complete URL (http://...)
-if (!isset($_SESSION['loginfrom'])) {
-	$_SESSION['loginfrom'] = (isset($_SERVER['HTTP_REFERER'])&&!preg_match('|/login|', $_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
+if (!isset($_SESSION['loginfrom']) && isset($_SERVER['HTTP_REFERER']) && !preg_match('|/login|', $_SERVER['HTTP_REFERER']) && & !preg_match('|logout|', $_SERVER['HTTP_REFERER'])) {
+	$_SESSION['loginfrom'] = $_SERVER['HTTP_REFERER'];
 	if (!preg_match('/^http/', $_SESSION['loginfrom'])) {
 		if ($_SESSION['loginfrom'] {
 			0
