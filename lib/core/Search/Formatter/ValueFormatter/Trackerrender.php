@@ -8,6 +8,7 @@
 class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_ValueFormatter_Abstract
 {
 	private $list_mode = 'n';
+	private $cancache = null;
 
 	function __construct($arguments)
 	{
@@ -29,6 +30,8 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		$field = $tracker->getField(substr($name, 14));
 		$field['value'] = $value;
 
+		$this->cancache = ! in_array($field['type'], array('STARS', 's'));	// don't cache ratings fields
+
 		$item = array();
 		if ($entry['object_type'] == 'trackeritem') {
 			$item['itemId'] = $entry['object_id'];
@@ -44,6 +47,14 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 							'list_mode' => $this->list_mode,
 						)
 		) . '~/np~';
+	}
+
+	function canCache() {
+		if ($this->cancache === null) {
+			trigger_error('Search_Formatter_ValueFormatter_Trackerrender->canCache() called before field rendered, assuming "true"');
+			$this->cancache = true;
+		}
+		return $this->cancache;
 	}
 }
 

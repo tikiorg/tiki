@@ -11,5 +11,9 @@ abstract class Search_Formatter_ValueFormatter_Abstract implements Search_Format
 	{
 		return $value;
 	}
+
+	function canCache() {
+		return true;
+	}
 }
 

@@ -43,7 +43,7 @@ class Search_Formatter_ValueFormatter
 			} else {
 				$formatter = new $class($arguments);
 				$ret = $formatter->render($name, $this->valueSet[$name], $this->valueSet);
-				if (in_array($format, $prefs['unified_cached_formatters'])) {
+				if (in_array($format, $prefs['unified_cached_formatters']) && $formatter->canCache()) {
 					$cachelib->cacheItem($cacheName, $ret, $cacheType);
 				}
 				return ($ret);
