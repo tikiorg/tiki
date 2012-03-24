@@ -617,6 +617,7 @@ class FileGalLib extends TikiLib
 			'wiki_syntax' => '',
 			'default_view' => $prefs['fgal_default_view'],
 			'template' => null,
+			'icon_fileId' => $prefs['fgal_icon_fileId'],
 		);
 	}
 	function replace_file_gallery($fgal_info)
@@ -2033,6 +2034,7 @@ class FileGalLib extends TikiLib
 			'show_path' => $prefs['fgal_show_path'],
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
 			'default_view' => $prefs['fgal_default_view'],
+			'icon_fileId' => $prefs['fgal_icon_fileId'],
 		);
 
 		$galleries = $this->table('tiki_file_galleries');
@@ -2317,7 +2319,8 @@ class FileGalLib extends TikiLib
 				'tf.`filesize`' => "0 as `filesize`", /// use 'size' instead
 				'tf.`filetype`' => "tfg.`type` as `filetype`", /// use 'type' instead
 				'tf.`user`' => 'tfg.`user`', /// use 'creator' instead	
-				'tf.`lastModifUser`' => "'' as `lastModifUser`" /// use 'last_user' instead
+				'tf.`lastModifUser`' => "'' as `lastModifUser`", /// use 'last_user' instead
+				'0 as `icon_fileId`' => '`icon_fileId`'			// icon for galleries in browse mode
 		);
 		if ( $with_files_data ) {
 			$f2g_corresp['tf.`data`'] = "'' as `data`";

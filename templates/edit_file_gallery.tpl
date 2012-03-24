@@ -244,7 +244,7 @@ $('#fgal_template').change( function() {
 					<table class="formcolor">
 						<tr>
 							<td><label for="sortorder">{tr}Default sort order:{/tr}</label></td>
-							<td>
+							<td colspan="3">
 								<select name="sortorder" id="sortorder">
 									{foreach from=$options_sortorder key=key item=item}
 										<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
@@ -273,7 +273,7 @@ $('#fgal_template').change( function() {
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">{tr}Select which items to display when listing galleries:{/tr}
+							<td colspan="4">{tr}Select which items to display when listing galleries:{/tr}
 								<table>
 									{include file='fgal_listing_conf.tpl'}
 								</table>

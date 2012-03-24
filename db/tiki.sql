@@ -754,7 +754,8 @@ CREATE TABLE `tiki_file_galleries` (
   `show_share` char(1) default NULL,
   `image_max_size_x` int(8) NOT NULL default '0',
   `image_max_size_y` int(8) NOT NULL default '0',
-  show_source CHAR(1) NOT NULL DEFAULT 'o',
+  `show_source` char(1) NOT NULL DEFAULT 'o',
+  `icon_fileId` int(14) NULL DEFAULT NULL,
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

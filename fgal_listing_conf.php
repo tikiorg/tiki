@@ -76,7 +76,8 @@ $fgal_options = array(
 	'show_explorer' => array('name' => tra('Explorer')),
 	'show_path' => array('name' => tra('Path')),
 	'show_slideshow' => array('name' => tra('Slideshow')),
-	'default_view' => array('name' => tra('Default View'))
+	'default_view' => array('name' => tra('Default View')),
+	'icon_fileId' => array('name' => tra('Gallery Icon')),
 );
 
 if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
@@ -84,6 +85,7 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 	$fgal_options['show_path'] = 'n';
 	$fgal_options['show_slideshow'] = 'n';
 	$fgal_options['default_view'] = 'list';
+	$fgal_options['icon_fileId'] = '';
 } else {
 	foreach ( $fgal_options as $k_gal => $v ) {
 		$k_prefs = 'fgal_'.$k_gal;

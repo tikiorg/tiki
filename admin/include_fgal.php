@@ -84,6 +84,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle('fgal_show_slideshow');
 	simple_set_toggle('fgal_list_ratio_hits');
 	simple_set_value('fgal_default_view');
+	simple_set_value('fgal_icon_fileId');
 	simple_set_value('fgal_list_backlinks');
 	simple_set_value('fgal_list_id_admin');
 	simple_set_value('fgal_list_type_admin');
