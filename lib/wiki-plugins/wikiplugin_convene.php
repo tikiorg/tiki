@@ -48,12 +48,12 @@ function wikiplugin_convene($data, $params)
 	$i = $conveneI;
 	
 		
-	$params = array_merge(array("title" => "Convene"), $params);	
+	$params = array_merge(array(
+		"title" => "Convene",
+		"dateformat" => "short"
+	), $params);
+
 	extract($params, EXTR_SKIP);
-	
-	if (!isset($dateformat)) {
-		$dateformat = "short";
-	}
 
 	$dataString = $data . '';
 	$dataArray = array();
