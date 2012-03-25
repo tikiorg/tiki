@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $ispublished eq 'n' && $tiki_p_edit_article eq 'y'}
-	{remarksbox type='errors' title='Not Published'}
+	{remarksbox type='errors' title='{tr}Not Published{/tr}'}
 	{tr}This Article is currently not published and only visible by Editors{/tr}
 	{/remarksbox}
 {/if}
