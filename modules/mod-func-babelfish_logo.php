@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_babelfish_logo_info()
 {
 	return array(
-		'name' => tra('Babel Fish icon link'),
-		'description' => tra('Offers an icon linked to the Yahoo! Babel Fish translation service'),
+		'name' => tra('Babel Fish Icon Link'),
+		'description' => tra('Display an icon linked to the Yahoo! Babel Fish translation service'),
 		'prefs' => array('feature_babelfish_logo'),
 		'params' => array(),
 	);
