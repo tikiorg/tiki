@@ -49,7 +49,8 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		) . '~/np~';
 	}
 
-	function canCache() {
+	function canCache() 
+	{
 		if ($this->cancache === null) {
 			trigger_error('Search_Formatter_ValueFormatter_Trackerrender->canCache() called before field rendered, assuming "true"');
 			$this->cancache = true;
