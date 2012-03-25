@@ -540,7 +540,7 @@ ul.jumplinks,
 }
 
 /* Clearfix for modern browsers */
-.clearifx:before,
+.clearfix:before,
 .clearfix:after {
     content: "";
     display: table;
