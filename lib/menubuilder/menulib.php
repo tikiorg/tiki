@@ -107,7 +107,7 @@ class MenuLib extends TikiLib
 			foreach ($matches[0] as $query) {
 				$this->query($query);
 			}
-			$this->empty_menu_cache($menuId);
+			$this->empty_menu_cache(42);
 		}
 	}
 
