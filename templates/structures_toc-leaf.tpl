@@ -27,6 +27,9 @@
 								{icon _id='page_edit' alt='{tr}Edit page{/tr}'}
 							{/self_link}
 						{/if}
+						{self_link _onclick="addNewPage(this);return false;"}
+							{icon _id='add' alt='{tr}Add new child page{/tr}'}
+						{/self_link}
 						{self_link _onclick="movePageToStructure(this);return false;"}
 							{icon _id='arrow_right' alt='{tr}Move{/tr}'}
 						{/self_link}
