@@ -44,10 +44,8 @@ foreach ( $mods as $mod ):
 	} else {
 		$info = false;
 	}
-	if (count($info['params']) < 1)
-		continue;
 ?>
-tiki_module_params.<?php echo $mod ?> = <?php echo json_encode($info['params']) ?>;
+tiki_module_params.<?php echo $mod ?> = <?php echo json_encode($info) ?>;
 <?php endforeach;
 $content = ob_get_contents();
 file_put_contents($cache, $content);
