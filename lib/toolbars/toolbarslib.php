@@ -1263,12 +1263,7 @@ class ToolbarFullscreen extends Toolbar
 						htmlentities($this->label, ENT_QUOTES, 'UTF-8'),
 						'qt-fullscreen'
 		);
-		
-		
-//		if ( isset($_REQUEST['zoom']) )
-//			$name = 'preview';
-//		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
-//				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
+
 	} // }}}
 }
 
@@ -1388,7 +1383,7 @@ class ToolbarFileGallery extends Toolbar
 
 	function isAccessible() // {{{
 	{
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+		return parent::isAccessible();
 	} // }}}
 }
 
@@ -1485,7 +1480,6 @@ JS
 		global $tiki_p_edit_switch_mode;
 
 		return parent::isAccessible() &&
-				! isset($_REQUEST['zoom']) &&		// no switch editor if zoom of section edit (dead - remove)
 				! isset($_REQUEST['hdr']) &&		// or in section edit
 				$tiki_p_edit_switch_mode === 'y';	// or no perm (new in 7.1)
 	} // }}}

@@ -95,9 +95,6 @@ function execute_module_translation()
 	$smarty->assign('content_of_update_translation_section', $out);
 }
 
-// Define all templates files that may be used with the 'zoom' feature
-$zoom_templates = array('wiki_edit', 'tiki-editpage');
-
 $access->check_feature('feature_wiki');
 
 if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {

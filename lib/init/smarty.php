@@ -121,7 +121,7 @@ class Smarty_Tiki extends Smarty
 
 	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false)
 	{
-		global $prefs, $style_base, $tikidomain, $zoom_templates;
+		global $prefs, $style_base, $tikidomain;
 
     if ( empty($_smarty_cache_id) )
 		    $_smarty_cache_id = $prefs['language'] . $_smarty_cache_id . md5($_smarty_tpl_file);

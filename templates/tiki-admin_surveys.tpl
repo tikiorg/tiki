@@ -91,7 +91,7 @@
 		</tr>
 		<tr>
 			<td>{tr}Description:{/tr}</td>
-			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _zoom='n' _simple='y' comments='y'}{$info.description}{/textarea}</td>
+			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _simple='y' comments='y'}{$info.description}{/textarea}</td>
 		</tr>
 		{include file='categorize.tpl'}
 		<tr>
