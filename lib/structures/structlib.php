@@ -613,6 +613,7 @@ class StructLib extends TikiLib
 			if (!$this->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')) {
 				$type = 'plain';
 			} else {
+				TikiLib::lib('smarty')->assign('structure_name', $structure_info["pageName"]);
 				TikiLib::lib('smarty')->assign(
 								'json_params', 
 								json_encode(
@@ -672,7 +673,7 @@ class StructLib extends TikiLib
 					$smarty->assign('numbering', $numbering);
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if (isset($leaf['sub']) && is_array($leaf['sub'])) {
-						$ret.=$this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $cur_depth+1, $structurePageName).str_repeat("\t", ($cur_depth*2)+1)."</li>\n";
+						$ret.=$this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $cur_depth+1, $structurePageName)."</li>\n";
 					} else {
 						$ret.=str_repeat("\t", ($cur_depth*2)+1)."</li>\n";
 					} 					
