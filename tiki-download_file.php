@@ -270,7 +270,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		
 					$resize = false;
 					// We resize if needed
-					if ( isset($_GET['x']) || isset($_GET['y']) ) {
+					if ( isset($_GET['x']) && isset($_GET['y']) ) {
 						$image->resize($_GET['x']+0, $_GET['y']+0);
 						$resize = true;
 					} elseif ( isset($_GET['scale']) ) {
@@ -306,7 +306,10 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 					if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
 						$image->convert($_GET['format']);
 					} elseif ( isset($_GET['thumbnail']) ) {
-					// Or, if no format is explicitely specified and a thumbnail has to be created, we convert the image to the $thumbnail_format
+						// Or, if no format is explicitely specified and a thumbnail has to be created, we convert the image to the $thumbnail_format
+						if ($image->format == 'png') {
+							$thumbnail_format = 'png';	// preserves transparency
+						}
 						$image->convert($thumbnail_format);
 					}
 		
