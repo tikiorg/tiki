@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-list_invoices.php 40258 2012-03-20 13:59:58Z robertplummer $
+// $Id$
 
 require_once('tiki-setup.php');
 $trklib = TikiLib::lib('trk');

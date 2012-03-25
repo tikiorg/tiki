@@ -323,7 +323,7 @@ if (isset($_REQUEST['assign'])) {
 if (isset($_REQUEST['um_remove'])) {
 	$_REQUEST['um_remove'] = urldecode($_REQUEST['um_remove']);
 	$access->check_authenticity(
-		tra('Are you sure you want to delete this Custom Module?') . ' ("' . $_REQUEST['um_remove'] . '")'
+					tra('Are you sure you want to delete this Custom Module?') . ' ("' . $_REQUEST['um_remove'] . '")'
 	);
 	$modlib->remove_user_module($_REQUEST['um_remove']);
 	$logslib->add_log('adminmodules', 'removed custom module ' . $_REQUEST['um_remove']);
