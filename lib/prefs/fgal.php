@@ -238,5 +238,13 @@ function prefs_fgal_list()
 			'tags' => array('experimental'),
 			'help' => 'File+Gallery+config',
 		),
+		'fgal_browse_name_max_length' => array(
+			'name' => tra('Max Name Length'),
+			'description' => tra('Length to truncate file names to in brose view.'),
+			'type' => 'text',
+			'filter' => 'int',
+			'size' => 5,
+			'default' => 40,
+		),
 	);
 }
