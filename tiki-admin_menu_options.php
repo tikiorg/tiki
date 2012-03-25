@@ -18,7 +18,9 @@ $auto_query_args = array(
 	'find',
 	'sort_mode',
 	'menuId',
-	'maxRecords'
+	'maxRecords',
+	'preview_css',
+	'preview_type',
 );
 if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
 	$menulib->import_menu_options();
@@ -36,6 +38,7 @@ if (!isset($_REQUEST["optionId"])) {
 $smarty->assign('optionId', $_REQUEST["optionId"]);
 if ($_REQUEST["optionId"]) {
 	$info = $menulib->get_menu_option($_REQUEST["optionId"]);
+	$cookietab = 2;
 } else {
 	$info = array();
 	$info["name"] = '';
@@ -98,6 +101,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('userlevel', 0);
 	$smarty->assign('type', 'o');
 	$smarty->assign('icon', '');
+	$cookietab = 1;
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
@@ -121,6 +125,19 @@ if (isset($_REQUEST['maxRecords'])) {
 } else {
 	$maxRecords = $prefs['maxRecords'];
 }
+
+$smarty->assign('preview_type', isset($_REQUEST['preview_type']) && $_REQUEST['preview_type'] === 'horiz' ? 'horiz' : 'vert');
+$smarty->assign('preview_css', isset($_REQUEST['preview_css']) || $_REQUEST['preview_css'] === 'On' ? 'y' : 'n');
+
+$headerlib->add_js('var permNames = ' . json_encode(TikiLib::lib('user')->get_permission_names_for('all')));
+$feature_prefs = array();
+foreach ($prefs as $k => $v) {	// attempt to filter out non-feature prefs (still finds 133!)
+	if (strpos($k, 'feature') !== false && preg_match_all('/_/m', $k, $m) === 1) {
+		$feature_prefs[] = $k;
+	}
+}
+$headerlib->add_js('var prefNames = ' . json_encode($feature_prefs));
+
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
