@@ -292,8 +292,8 @@
 
 		{if $tiki_p_use_HTML eq 'y'}
 			<tr>
-				<td>{tr}Allow full HTML{/tr} <em>({tr}Keep any html tag.{/tr}</em>
-				<br><em>{tr}If uncheck will keep anyway some html tags(a,p,pre,img,hr,b,i){/tr}.</em></td>
+				<td>{tr}Allow full HTML{/tr} <em>({tr}Keep any html tag.{/tr})</em>
+				<br><em>{tr}If uncheck will keep anyway some html tags (a,p,pre,img,hr,b,i){/tr}.</em></td>
 				<td>
 					<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
 				</td>
