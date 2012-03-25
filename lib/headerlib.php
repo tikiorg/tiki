@@ -305,7 +305,12 @@ class HeaderLib
 					$content = file_get_contents($f);
 					if ( ! preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
 						set_time_limit(600);
-						$minified .= JSMin::minify($content);
+						try {
+							$minified .= JSMin::minify($content);
+						} catch (JSMinException $e) {
+							TikiLib::lib('errorreport')->report($e->getMessage());
+							$minified .= "/* Error: Minify failed for file $f */\ndebugger;";
+						}
 					} else {
 						$minified .= "\n// skipping minification for $f \n" . $content;
 					}
