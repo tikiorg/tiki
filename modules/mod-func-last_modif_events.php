@@ -14,21 +14,21 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_last_modif_events_info()
 {
 	return array(
-		'name' => tra('Last-modified Events'),
-		'description' => tra('Displays the specified number of calendar events, starting from the most recently modified.'),
+		'name' => tra('Last-Modified Events'),
+		'description' => tra('Display the specified number of calendar events, starting from the most recently modified.'),
 		'prefs' => array("feature_calendar"),
 		'params' => array(
 			'calendarId' => array(
-				'name' => tra('Calendar identifier'),
+				'name' => tra('Calendar Identifier'),
 				'description' => tra('If set to a calendar identifier, restricts the events to those in the identified calendar.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.')
 			),
 			'maxlen' => array(
-				'name' => tra('Maximum length'),
+				'name' => tra('Maximum Length'),
 				'description' => tra('Maximum number of characters in event names allowed before truncating.'),
 				'filter' => 'int'
 			),
 			'nodate' => array(
-				'name' => tra("Don't show date"),
+				'name' => tra('Hide Date'),
 				'description' => tra('If set to "y", it will hide date.'),
 			)
 		),
