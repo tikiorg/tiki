@@ -138,7 +138,7 @@ abstract class Feed_Abstract
 	
 	function appendToContents(&$contents, $items)
 	{	
-		$contents->entry[] = $item->feed->entry;
+		$contents->entry[] = $items->feed->entry;
 	}
 	
 	public function addItem($item)
