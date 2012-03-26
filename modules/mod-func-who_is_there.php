@@ -14,17 +14,17 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 function module_who_is_there_info()
 {
 	return array(
-		'name' => tra('Online users'),
-		'description' => tra('Displays information about users currently logged in.'),
+		'name' => tra('Online Users'),
+		'description' => tra('Display information about users currently logged in.'),
 		'prefs' => array(),
 		'documentation' => 'Module who_is_there',
 		'params' => array(
 			'content' => array(
-				'name' => tra('Content to display'),
+				'name' => tra('List Type'),
 				'description' => tra('Display the number of users logged in, the list of users logged in, or both.') . " " . tr('Possible values: "count", "list" or "both". Default value: "both"')
 			),
 			'cluster' => array(
-				'name' => tra('Cluster mode'),
+				'name' => tra('Cluster Mode'),
 				'description' => tra('If set to "1", separate users based on which host/server they logged on.')
 			)
 		)
