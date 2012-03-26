@@ -14,8 +14,8 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 function module_users_own_rank_info()
 {
 	return array(
-		'name' => tra('My score'),
-		'description' => tra('Displays the logged user\'s rank and score.'),
+		'name' => tra('My Score'),
+		'description' => tra('Display the logged user\'s rank and score.'),
 		'prefs' => array( 'feature_score' ),
 		'params' => array()
 	);
