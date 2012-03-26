@@ -840,7 +840,14 @@ if (isset($_GET['slideshow'])) {
 
 // Browse view
 $smarty->assign('thumbnail_size', $prefs['fgal_thumb_max_size']);
-$smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
+
+if (isset($_REQUEST['show_details'])) {
+	$show_details = $_REQUEST['show_details'];
+	setCookieSection('show_details', $show_details);
+} else {
+	$show_details = getCookie('show_details', null, 'n');
+}
+$smarty->assign('show_details', $show_details);
 
 $options_sortorder = array( tra('Creation Date') => 'created'
 													, tra('Name') => 'name'
