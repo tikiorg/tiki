@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_forums_most_visited_forums_info()
 {
 	return array(
-		'name' => tra('Most-Visited Forums'),
-		'description' => tra('Displays the specified number of the forums with the most visits.'),
+		'name' => tra('Top Visited Forums'),
+		'description' => tra('Display the specified number of the forums with the most visits.'),
 		'prefs' => array('feature_forums'),
 		'params' => array(),
 		'common_params' => array('nonums', 'rows')
