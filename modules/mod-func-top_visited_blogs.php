@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_top_visited_blogs_info()
 {
 	return array(
-		'name' => tra('Most visited blogs'),
-		'description' => tra('Displays the specified number of blogs with links to them, from the most visited one to the least.'),
+		'name' => tra('Top Visited Blogs'),
+		'description' => tra('Display the specified number of blogs with links to them, from the most visited one to the least.'),
 		'prefs' => array('feature_blogs'),
 		'params' => array(
 			'showlastpost' => array(
