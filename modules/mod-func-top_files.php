@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_top_files_info()
 {
 	return array(
-		'name' => tra('Top files'),
+		'name' => tra('Top Files'),
 		'description' => tra('Displays the specified number of files with links to them, starting with the one with most hits.'),
 		'prefs' => array('feature_file_galleries'),
 		'params' => array(),
