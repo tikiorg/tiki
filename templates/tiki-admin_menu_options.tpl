@@ -390,7 +390,7 @@
 			<br />
 			<label for="preview_code">Smarty Code</label>
 			<pre id="preview_code">
-{ldelim}menu id=$menuId css=$preview_css type=$preview_type{rdelim}</pre>
+{ldelim}menu id={$menuId} css={$preview_css} type={$preview_type}{rdelim}</pre>
 		</fieldset>
 		<div class="box">
 			<div class="box-title"><strong>{$editable_menu_info.name|escape}</strong></div>
