@@ -231,7 +231,7 @@ function prefs_global_list($partial = false)
 			'name' => tra('Maximum number of records in listings'),
 			'type' => 'text',
 			'size' => '3',
-			'default' => 25,
+			'default' => 24,
 			'tags' => array('basic'),
 		),
 		'maxVersions' => array(
