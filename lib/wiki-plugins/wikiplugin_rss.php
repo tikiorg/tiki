@@ -129,7 +129,7 @@ function wikiplugin_rss($data,$params)
 	}
 
 	global $smarty;
-	$smarty->assign('title', $title);
+	$smarty->assign('rsstitle', $title);
 	$smarty->assign('items', $items);
 	$smarty->assign('showdate', $params['date'] > 0);
 	$smarty->assign('showtitle', $params['showtitle'] > 0);

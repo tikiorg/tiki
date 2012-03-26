@@ -79,7 +79,7 @@ function wikiplugin_ftp($data, $params)
 
 	} else {
 		if (isset($title)) {
-			$smarty->assign_by_ref('title', $title);
+			$smarty->assign('ftptitle', $title);
 		}
 		$smarty->assign_by_ref('file', $data);
 		return $smarty->fetch('wiki-plugins/wikiplugin_ftp.tpl');
