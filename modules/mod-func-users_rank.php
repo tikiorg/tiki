@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_users_rank_info()
 {
 	return array(
-		'name' => tra('Most-active Users'),
-		'description' => tra('Displays the specified number of users and their score, starting from the one with the highest score.'),
+		'name' => tra('Most Active Users'),
+		'description' => tra('Display the specified number of users and their score, starting from the one with the highest score.'),
 		'prefs' => array('feature_score'),
 		'params' => array(),
 		'common_params' => array('nonums', 'rows')
