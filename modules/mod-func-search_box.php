@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_search_box_info()
 {
 	return array(
-		'name' => tra('Search box'),
+		'name' => tra('Search Box'),
 		'description' => tra('Small search form for wiki, articles, blogs, etc.') . ' ' . tra('Deprecated - use the Search module instead.'),
 		'prefs' => array(), // feature_search_fulltext does not depend on feature_search
 		'params' => array(
