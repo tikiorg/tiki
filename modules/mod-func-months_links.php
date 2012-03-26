@@ -14,17 +14,17 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 function module_months_links_info()
 {
 	return array(
-		'name' => tra('Months links'),
-		'description' => tra('Links to the objects of a given type for the current month and those preceding it.'),
+		'name' => tra('Months Links'),
+		'description' => tra('Link to the objects of a given type for the current month and those preceding it.'),
 		'prefs' => array(),
 		'params' => array(
 			'feature' => array(
-				'name' => tra('Object type'),
+				'name' => tra('Object Type'),
 				'description' => tra('Type of objects to link to.') . ' ' . tra('Possible values:') . ' ' . tra('"blogs" for blog posts, "cms" for published articles.'),
 				'required' => true
 			),
 			'id' => array(
-				'name' => tra('Object identifier'),
+				'name' => tra('Object Identifier'),
 				'description' => tra('Identifier of an object with children to link to.') . ' ' .tra('This is required for the blog Object type.') . ' ' . tra('Example values:') . ' 3, 14.' . tra('For example, an identifier of 3 and a blogs Object type will show links to the blog posts in the blog with identifier 3.')
 			)
 		),
