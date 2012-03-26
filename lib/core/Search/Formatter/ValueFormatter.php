@@ -8,6 +8,7 @@
 class Search_Formatter_ValueFormatter
 {
 	private $valueSet;
+	static private $pageTitle = '';
 
 	function __construct($valueSet)
 	{
@@ -24,6 +25,11 @@ class Search_Formatter_ValueFormatter
 		$name = array_shift($arguments);
 		if (! $arguments = array_shift($arguments)) {
 			$arguments = array();
+		}
+
+		if (isset($arguments['pagetitle']) && $arguments['pagetitle'] !== 'n' && empty(self::$pageTitle)) {
+			self::$pageTitle = $this->valueSet[$name];
+			TikiLib::lib('smarty')->assign('title', self::$pageTitle);
 		}
 
 		// ugly exception for wikiplugin - TODO better?
