@@ -270,8 +270,8 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		
 					$resize = false;
 					// We resize if needed
-					if ( isset($_GET['x']) && isset($_GET['y']) ) {
-						$image->resize($_GET['x']+0, $_GET['y']+0);
+					if ( isset($_GET['x']) || isset($_GET['y']) ) {
+						$image->resize(isset($_GET['x']) ? (int) $_GET['x'] : 0, isset($_GET['y']) ? (int) $_GET['y'] : 0);
 						$resize = true;
 					} elseif ( isset($_GET['scale']) ) {
 				 		// We scale if needed
