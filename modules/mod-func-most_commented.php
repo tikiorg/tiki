@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_most_commented_info()
 {
 	return array(
-		'name' => tra('Most-Commented'),
-		'description' => tra('Displays the most commented objects of a certain type.'),
+		'name' => tra('Most Commented'),
+		'description' => tra('Display the most commented objects of a certain type.'),
 		'prefs' => array(),
 		'params' => array(
 			'objectType' => array(
@@ -23,7 +23,7 @@ function module_most_commented_info()
 				'description' => tra('Type of objects to consider.') . ' ' . tra('Possible values: wiki (Wiki pages), blog (blog posts), article (articles).') . ' ' . tra('Default:') . ' wiki'
 			),
 			'objectLanguageFilter' => array(
-				'name' => tra('Object language filter'),
+				'name' => tra('Language Filter'),
 				'description' => tra('If set to a RFC1766 language tag, restricts the objects considered to those in the specified language.')
 			)
 		),
