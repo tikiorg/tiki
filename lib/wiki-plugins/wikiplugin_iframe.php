@@ -50,7 +50,7 @@ function wikiplugin_iframe_info()
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Alignment'),
-				'description' => tra('Align the ifram on the page'),
+				'description' => tra('Align the iframe on the page'),
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
