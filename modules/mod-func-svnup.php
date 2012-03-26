@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_svnup_info()
 {
 	return array(
-		'name' => tra('SVN up info'),
+		'name' => tra('SVN Up Info'),
 		'description' => tra('SVN Version and last update information.'),
 		'params' => array(),
 	);
