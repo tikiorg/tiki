@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_top_image_galleries_info()
 {
 	return array(
-		'name' => tra('Top image galleries'),
+		'name' => tra('Top Image Galleries'),
 		'description' => tra('Displays the specified number of image galleries with links to them, starting with the one with most hits.'),
 		'prefs' => array('feature_galleries'),
 		'params' => array(),
