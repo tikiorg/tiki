@@ -2038,7 +2038,7 @@ class FileGalLib extends TikiLib
 		);
 
 		$galleries = $this->table('tiki_file_galleries');
-		$galleries->update($defaults, array('galleryId' => $galleries->in($fgalIds)));
+		$galleries->updateMultiple($defaults, array('galleryId' => $galleries->in($fgalIds)));
 	}
 	function getGalleryId($name, $parentId)
 	{
