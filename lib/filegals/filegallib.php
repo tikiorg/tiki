@@ -419,9 +419,9 @@ class FileGalLib extends TikiLib
 								array(
 									'type' => 'file',
 									'object' => $fileId,
-									'galleryId' => $gal_info['galleryId'],
+									'galleryId' => $old_file['galleryId'],
 									'initialFileId' => $fileId,
-									'filetype' => $type,
+									'filetype' => $draft['filetype'],
 								)
 				);
 			} else {
@@ -489,7 +489,7 @@ class FileGalLib extends TikiLib
 						array(
 							'type' => 'file',
 							'object' => $idNew,
-							'galleryId' => $gal_info['galleryId'],
+							'galleryId' => $galleryId,
 							'initialFileId' => $initialFileId,
 							'filetype' => $type
 						)
