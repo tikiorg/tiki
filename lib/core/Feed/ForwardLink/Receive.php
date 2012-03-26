@@ -12,14 +12,33 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 	var $isFileGal = true;
 	var $version = "0.1";
 	var $showFailures = false;
-	
+	var $response = 'failure';
+
 	static function forwardLink($name)
 	{
 		$me = new self();
 		$me->name = $name;
 		return $me;
 	}
-	
+
+	static function wikiView($args)
+	{
+		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
+			$me = Feed_ForwardLink_Receive::forwardLink($args['object']);
+
+			//here we do the confirmation that another wiki is trying to talk with this one
+			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
+			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
+
+			if ($me->addItem($_REQUEST['contribution']) == true ) {
+				$me->response = 'success';
+			}
+
+			echo json_encode($me->feed(TikiLib::tikiUrl() . 'tiki-index.php?page=' . $args['object']));
+			exit();
+		}
+	}
+
 	public function name()
 	{
 		return $this->type . "_" . $this->name;

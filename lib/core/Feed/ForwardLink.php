@@ -9,32 +9,28 @@ Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = 'forwardlink';
 	var $version = '0.1';
-	var $response = 'failure';
-	
-	public function getContents()
+
+	public function name()
 	{
-		$this->setEncoding($this->response); 
-		return $this->response;
+		return $this->type . "_" . $this->name;
 	}
-	
+
 	static function wikiView($args)
 	{
 		global $prefs, $headerlib, $smarty, $_REQUEST;
-		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
-			$me = new self();
-			//here we do the confirmation that another wiki is trying to talk with this one
-			$_REQUEST['contribution'] = json_decode($_REQUEST['contribution']);
-			$_REQUEST['contribution']->origin = $_SERVER['REMOTE_ADDR'];
-			
-			if ( Feed_ForwardLink_Receive::forwardLink($args['object'])
-				->addItem($_REQUEST['contribution']) == true ) {
-				$me->response = 'success';
-			}
 
-			echo json_encode($me->feed(TikiLib::tikiUrl() . 'tiki-index.php?page=' . $args['object']));
-			exit();
+		if (isset($_REQUEST['itemId']))
+		{
+			echo json_encode(
+				Tracker_Query::tracker('Wiki Attributes')
+					->byName()
+					->itemId((int)$_REQUEST['itemId'])
+					->queryInput()
+			);
+			exit(0);
 		}
 
+		/* May be used soon for encrypting forwardlinks
 		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
 			$client = new Zend_Http_Client('http://localhost/tiki/trunk/tiki-timestamp.php', array('timeout' => 60));
 			$client->setParameterGet('hash', $_REQUEST['hash']);
@@ -43,6 +39,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 			echo $response->getBody();
 			exit();
 		}
+		*/
 
 		$phrase = (!empty($_REQUEST['phrase']) ? htmlspecialchars($_REQUEST['phrase']) : '');
 
@@ -167,18 +164,16 @@ JQ
 JQ
 			);
 
-		$wikiAttributes = Tracker_Query::tracker('Wiki Attributes')
+		$questions = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
 			->filter(array('field'=> 'Type','value'=> 'Question'))
 			->filter(array('field'=> 'Page','value'=> $args['object']))
-			->render(false)
 			->query();
 
-		//print_r($wikiAttributes);
 		$answers = array();
-		foreach ($wikiAttributes as $wikiAttribute) {
+		foreach ($questions as $question) {
 			$answers[] = array(
-				'question'=> strip_tags($wikiAttribute['Value']),
+				'question'=> strip_tags($question['Value']),
 				'answer'=> '',
 			);
 		}
@@ -418,8 +413,9 @@ JQ
 		} else {
 			$wikiPerms = Perms::get(array( 'type' => 'wiki page', 'object' => $args['object'] ));
 			$trackerPerms = Perms::get(array( 'type' => 'tracker', 'object' => $args['object'] ));
-			$questions = json_encode($wikiAttributes);
-			$questionsCount = count($wikiAttributes);
+
+			$questionsCount = count($questions);
+			$questions = json_encode($questions);
 
 			if ( $wikiPerms->edit ) {
 				$headerlib->add_jq_onready(<<<JQ
@@ -434,9 +430,17 @@ JQ
 							$.each(questions, function() {
 								$('<tr>')
 									.append('<td>' + this.Value + '</td>')
-									.append('<td title="' + tr("Edit") + '"><a href="tiki-view_tracker_item.php?itemId=' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
+									.append('<td title="' + tr("Edit") + '"><a href="tiki-view_tracker_item.php?itemId=' + this.itemId + '" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
 									.appendTo(questionBox);
 							});
+
+							questionBox.find('a').click(function() {
+								var me = $(this);
+								var itemId = me.data('itemid');
+
+								itemId =
+							});
+
 							var questionBoxOptions = {
 								title: "Edit ForwardLink Questions",
 									modal: true,

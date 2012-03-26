@@ -775,11 +775,11 @@ class Tracker_Query
 		$itemId = TikiLib::lib("trk")->replace_item($this->trackerId(), $this->itemId, array("data"=>$data));
 		return $itemId;
 	}
-	
-	public function fieldInputs($includeJs = false)
+
+	private function getInputsForItem($itemId, $includeJs)
 	{
-		global $headerlib;
-		
+		$headerlib = TikiLib::lib("header");
+
 		if ($includeJs == true)
 			$headerlibClone = clone $headerlib;
 
@@ -788,7 +788,7 @@ class Tracker_Query
 		$fields = array();
 
 		$fieldFactory = new Tracker_Field_Factory($trackerDefinition);
-		$itemData = TikiLib::lib("trk")->get_tracker_item($this->itemId);
+		$itemData = TikiLib::lib("trk")->get_tracker_item($itemId);
 
 		foreach ($trackerDefinition->getFields() as $field) {
 			if ($includeJs == true)
@@ -800,13 +800,30 @@ class Tracker_Query
 
 			if ($includeJs == true)
 				$fieldInput = $fieldInput . $headerlib->output_js();
-			
+
 			$fields[$this->byName == true ? $field['name']  : $field['fieldId']] = $fieldInput;
 		}
-		
+
 		if ($includeJs == true) //restore the header to the way it was originally
 			$headerlib = $headerlibClone;
-		
+
 		return $fields;
+	}
+
+	public function queryInputs($includeJs = false)
+	{
+		$query = $this->query();
+
+		$items = array();
+		foreach ($query as $itemId => $item) {
+			$items[] = $this->getInputsForItem($itemId, $includeJs);
+		}
+
+		return $items;
+	}
+
+	public function queryInput($includeJs = false)
+	{
+		return $this->getInputsForItem($this->itemId, $includeJs);
 	}
 }
