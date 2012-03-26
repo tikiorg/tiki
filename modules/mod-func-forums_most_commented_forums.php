@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_forums_most_commented_forums_info()
 {
 	return array(
-		'name' => tra('Most commented forums'),
-		'description' => tra('Displays the specified number of the forums with the most comments.'),
+		'name' => tra('Most Commented Forums'),
+		'description' => tra('Display the specified number of the forums with the most comments.'),
 		'prefs' => array('feature_forums'),
 		'params' => array(),
 		'common_params' => array('nonums', 'rows')
