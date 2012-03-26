@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_register_info()
 {
 	return array(
-		'name' => tra('New user registration'),
-		'description' => tra('Permits anonymous visitors to create an account on the system.'),
+		'name' => tra('New User Registration'),
+		'description' => tra('Permit anonymous visitors to create an account on the site.'),
 		'prefs' => array('allowRegister'),
 		'params' => array(),
 	);
