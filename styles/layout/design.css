@@ -943,6 +943,11 @@ p.norecords {
 	padding: 0 3px 3px 3px;
 }
 
+.thumbinfosothers {
+	color: #888;
+	font-size: 95%;
+}
+
 /***** Trackers (etc.) *****/
 
 .multiselect .odd {
