@@ -89,9 +89,9 @@
 
     <div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" style="width:{$thumbnailcontener_size}px">
       <div class="thumbnail" style="float:left; width:{$thumbnailcontener_size}px">
-        <div class="" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
+        <div class="" style="width:100%;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
           <div class="thumbimage">
-            <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
+            <div class="thumbimagesub">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
               {if $files[changes].isgal eq 1}
                 <a {$link}>
 					{if empty($files[changes].icon_fileId)}
