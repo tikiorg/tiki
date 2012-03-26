@@ -11,7 +11,7 @@ function wikiplugin_report_info()
 		'name' => tra('Report'),
 		'documentation' => 'Report',
 		'description' => tra('Build a report, and store it in a wiki page'),
-		'prefs' => array( 'wikiplugin_report' ),
+		'prefs' => array( 'wikiplugin_report', 'feature_reports' ),
 		'body' => tra('The wiki syntax report settings'),
 		'icon' => 'img/icons/mime/zip.png',
 		'params' => array(
