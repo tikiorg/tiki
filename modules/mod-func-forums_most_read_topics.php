@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_forums_most_read_topics_info()
 {
 	return array(
-		'name' => tra('Most-Read Forum Topics'),
-		'description' => tra('Displays the specified number of the forum topics with the most reads.'),
+		'name' => tra('Top Visited Forum Topics'),
+		'description' => tra('Display the specified number of the forum topics with the most reads.'),
 		'prefs' => array('feature_forums'),
 		'params' => array(),
 		'common_params' => array('nonums', 'rows')
