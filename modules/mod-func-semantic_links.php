@@ -14,8 +14,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
 function module_semantic_links_info()
 {
 	return array(
-		'name' => tra('Semantic links'),
-		'description' => tra('Lists the relationships known for the Wiki page displayed. For each relation type contained in the page, it lists all the pages it links to or gets linked from.'),
+		'name' => tra('Semantic Links'),
+		'description' => tra('List the relationships known for the Wiki page displayed. For each relation type contained in the page, it lists all the pages it links to or gets linked from.'),
 		'prefs' => array('feature_semantic'),
 		'params' => array()
 	);
