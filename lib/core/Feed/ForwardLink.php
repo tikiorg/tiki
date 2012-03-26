@@ -9,15 +9,23 @@ Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = 'forwardlink';
 	var $version = '0.1';
+	var $isFileGal = true;
 
 	public function name()
 	{
 		return $this->type . "_" . $this->name;
 	}
 
+	static function forwardLink($name)
+	{
+		$me = new self();
+		$me->name = $name;
+		return $me;
+	}
+
 	static function wikiView($args)
 	{
-		global $prefs, $headerlib, $smarty, $_REQUEST;
+		global $prefs, $headerlib, $smarty, $_REQUEST, $user;
 
 		if (isset($_REQUEST['itemId']))
 		{
@@ -56,7 +64,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		$_REQUEST['preview'] = (!empty($_REQUEST['preview']) ? $_REQUEST['preview'] : $args['version']);
 		$phraseI = 0;
 
-		$feedItems = Feed_ForwardLink_Receive::forwardLink($args['object'])->getItems();
+		$feedItems = self::forwardLink($args['object'])->getItems();
 		$phrases = array();
 		foreach ($feedItems as $item) {
 			$phrases[] = $thisText = htmlspecialchars($item->forwardlink->text);
@@ -437,8 +445,6 @@ JQ
 							questionBox.find('a').click(function() {
 								var me = $(this);
 								var itemId = me.data('itemid');
-
-								itemId =
 							});
 
 							var questionBoxOptions = {
@@ -462,5 +468,54 @@ JQ
 	static function wikiSave($args)
 	{
 		//print_r($args);
+	}
+
+	function appendToContents(&$contents, $item)
+	{
+		global $prefs, $_REQUEST;
+		$replace = false;
+
+		//lets remove the newentry if it has already been accepted in the past
+		foreach ($contents->entry as $i => $existingEntry) {
+			foreach ($item->feed->entry as $j => $newEntry) {
+				if (
+					$existingEntry->textlink->text == $newEntry->textlink->text &&
+					$existingEntry->textlink->href == $newEntry->textlink->href
+				) {
+					unset($item->feed->entry[$j]);
+				}
+			}
+		}
+
+		//lets check if the hash is correct and that the phrase actually exists within the wiki page
+		foreach ($item->feed->entry as $i => $newEntry) {
+
+			if ($this->showFailures) {
+				print_r(
+					array(
+						"hashIncluded"=>	$newEntry->forwardlink->hash,
+						"hashCalculated"=> 	hash_hmac("md5", htmlspecialchars($prefs['browsertitle']), $newEntry->forwardlink->text),
+						"metadata"=> 		($newEntry->forwardlink->websiteTitle != $prefs['browsertitle']),
+						"hasPhrase"=> 		(JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), $newEntry->forwardlink->text)),
+						"page"=>			$_REQUEST['page']
+					)
+				);
+			}
+
+			if (
+				$newEntry->forwardlink->hash != hash_hmac("md5", htmlspecialchars($prefs['browsertitle']), $newEntry->forwardlink->text) ||
+				$newEntry->forwardlink->websiteTitle != $prefs['browsertitle'] ||
+				JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), $newEntry->forwardlink->text) != true
+			) {
+				unset($item->feed->entry[$i]);
+			}
+		}
+
+		if (count($item->feed->entry) > 0) {
+			$replace = true;
+			$contents->entry += $item->feed->entry;
+		}
+
+		return $replace;
 	}
 }
