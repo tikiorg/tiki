@@ -3128,7 +3128,7 @@ class FileGalLib extends TikiLib
 		if ($ratio>1) {	// Resizing will occur
 			$image_new_x=$image_x/$ratio;
 			$image_new_y=$image_y/$ratio;
-			$resized_file = $tmp_dest;
+			$resized_file = $work_file;
 			$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
 
 			$image_p = $imageReader($work_file);
