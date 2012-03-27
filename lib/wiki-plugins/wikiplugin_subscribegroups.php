@@ -124,11 +124,6 @@ function wikiplugin_subscribegroups_info() {
 	);
 }
 
-function trim_value(&$value)
-{
-	$value = trim($value);
-}
-
 function wikiplugin_subscribegroups($data, $params) {
 	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
 	if ($tiki_p_subscribe_groups != 'y' || empty($user)) {
@@ -150,7 +145,6 @@ function wikiplugin_subscribegroups($data, $params) {
 	if (!empty($including)) {
 		$groups = $userlib->get_including_groups($including);
 	}
-	array_walk($groups, 'trim_value');
 	if (!empty($hidelink_including)) {
 		$privategroups = $userlib->get_including_groups($hidelink_including);
 		$smarty->assign('privategroups', $privategroups);
