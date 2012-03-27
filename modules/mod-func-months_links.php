@@ -15,7 +15,7 @@ function module_months_links_info()
 {
 	return array(
 		'name' => tra('Months Links'),
-		'description' => tra('Link to the objects of a given type for the current month and those preceding it.'),
+		'description' => tra('Link to articles or blog posts for the current month and those preceding it.'),
 		'prefs' => array(),
 		'params' => array(
 			'feature' => array(
