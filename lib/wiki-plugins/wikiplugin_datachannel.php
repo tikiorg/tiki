@@ -133,10 +133,12 @@ function wikiplugin_datachannel( $data, $params )
 	
 	foreach( $lines as $line ) {
 		$parts = explode( ',', $line, 2 );
+		$parts = array_map('trim', $parts);
 
 		if( count($parts) == 2 ) {
 			if (strpos( $parts[1], 'external') === 0) {	// e.g. "fieldid,external=fieldname"
-				$moreparts = explode('=', trim($parts[1]), 2);
+				$moreparts = explode('=', $parts[1], 2);
+				$moreparts = array_map('trim', $moreparts);
 				if (count($moreparts) < 2) {
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
@@ -149,7 +151,8 @@ function wikiplugin_datachannel( $data, $params )
 				}
 				$inputfields[ $parts[0] ] = 'external';
 			} elseif (strpos( $parts[1], 'hidden') === 0) {
-				$moreparts = explode('=', trim($parts[1]), 2);
+				$moreparts = explode('=', $parts[1], 2);
+				$moreparts = array_map('trim', $moreparts);
 				$fields[ $parts[0] ] = $moreparts[1];
 				$inputfields[ $parts[0] ] = 'hidden';
 			} else {
@@ -173,7 +176,7 @@ function wikiplugin_datachannel( $data, $params )
 			&& $_POST['datachannel_execution'] == $executionId
 			&& $config->canExecuteChannels( array( $params['channel'] ), $groups ) ) {
 
-			$input = array_intersect_key( $_POST, $inputfields );
+			$input = array_intersect_key( array_map('trim', $_POST), $inputfields );
 			
 			$itemIds = array();					// process possible arrays in post
 			if ($params['array_values'] === 'y') {
