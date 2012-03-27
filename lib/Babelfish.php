@@ -79,16 +79,13 @@ class Babelfish
 			return '';
 		}
 
-		$url = 'http://jump.altavista.com/translate_' . $url_map[$lang_from] . '.go' .
-			'?http://babelfish.altavista.com/babelfish/tr?doit=done' .
-			'&amp;lp=' . $lang_from . '_' . $lang_to .
-			'&amp;urltext=http';
+		$url = 'http://uk.babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&' . $lang_to .
+			'=bf-home&trurl=http%3A%2F%2F' . Babelfish::host() . urlencode($_SERVER['REQUEST_URI']) . 
+			'&amp;lp=' . $lang_from . '_' . $lang_to . '&amp;btnTrUrl=Translate';
+
 		if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
 			$url .= 's';
 		}
-		$url .= '://' . Babelfish::host() . urlencode($_SERVER['REQUEST_URI']) .
-			(strpos('?', $_SERVER['REQUEST_URI']) ? '&amp;' : '?') .
-			'babelfish=' . $lang_from . '_' . $lang_to;
 
 		return $url;
 	}
