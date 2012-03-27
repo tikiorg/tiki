@@ -350,7 +350,7 @@ class Tracker_Query
 		usort($array, 'arfsort_func');
 	}
 
-	function arfsort_func($a, $bi) 
+	function arfsort_func($a, $b)
 	{
 		foreach ( $GLOBALS['__ARFSORT_LIST__'] as $f ) {
 
@@ -382,8 +382,6 @@ class Tracker_Query
 	private function trackerId()
 	{
 		global $trklib;
-		
-		$trackerId;
 		
 		if ($this->byName == true) {
 			$trackerId = $trklib->get_tracker_by_name($this->tracker);
@@ -732,6 +730,7 @@ class Tracker_Query
 
 		if (!is_array($array)) 
 			return false;
+		$output = '';
 
 		//Header row.
 		if ($header == true) {
@@ -793,6 +792,8 @@ class Tracker_Query
 		foreach ($trackerDefinition->getFields() as $field) {
 			if ($includeJs == true)
 				$headerlib->clear_js();
+
+			$field['ins_id'] = "ins_" . $field['fieldId'];
 
 			$fieldHandler = $fieldFactory->getHandler($field, $itemData);
 

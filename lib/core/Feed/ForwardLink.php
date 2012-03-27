@@ -445,6 +445,39 @@ JQ
 							questionBox.find('a').click(function() {
 								var me = $(this);
 								var itemId = me.data('itemid');
+								$.modal(tr("Loading..."));
+								$.getJSON('?itemId=' + itemId, function(data) {
+									var dialogSettings = {
+										title: tr('Editing: ') + me.parent().parent().text(),
+										modal: true,
+										buttons: {}
+									};
+
+									dialogSettings.buttons[tr('OK')] = function() {
+										trackerForm.submit();
+									};
+
+									dialogSettings.buttons[tr('Cancel')] = function() {
+										questionDialog.dialog("close");
+									};
+
+									var trackerForm = $.trackerEditForm($trackerId, itemId)
+									for( item in data ) {
+										if (item == 'Value') {
+											trackerForm.append(data[item]);
+										} else {
+											trackerForm.append($('<span style="display: none" />').html(data[item]));
+										}
+									}
+
+									var questionDialog = $('<div />')
+										.append(trackerForm)
+										.dialog(dialogSettings);
+
+									$.modal();
+								});
+
+								return false;
 							});
 
 							var questionBoxOptions = {
