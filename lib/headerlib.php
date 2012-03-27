@@ -309,7 +309,7 @@ class HeaderLib
 							$minified .= JSMin::minify($content);
 						} catch (JSMinException $e) {
 							TikiLib::lib('errorreport')->report($e->getMessage());
-							$minified .= "/* Error: Minify failed for file $f */\ndebugger;";
+							$minified .= "/* Error: Minify failed for file $f */\n";
 						}
 					} else {
 						$minified .= "\n// skipping minification for $f \n" . $content;
