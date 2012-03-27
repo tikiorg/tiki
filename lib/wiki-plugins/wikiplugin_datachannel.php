@@ -140,7 +140,7 @@ function wikiplugin_datachannel( $data, $params )
 		if ( count($parts) == 2 ) {
 			if (strpos($parts[1], 'external') === 0) {	// e.g. "fieldid,external=fieldname"
 				$moreparts = explode('=', $parts[1], 2);
-				array_map('trim', $moreparts);
+				$moreparts = array_map('trim', $moreparts);
 				if (count($moreparts) < 2) {
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
@@ -154,7 +154,7 @@ function wikiplugin_datachannel( $data, $params )
 				$inputfields[ $parts[0] ] = 'external';
 			} elseif (strpos($parts[1], 'hidden') === 0) {
 				$moreparts = explode('=', $parts[1], 2);
-				array_map('trim', $moreparts);
+				$moreparts = array_map('trim', $moreparts);
 				$fields[ $parts[0] ] = $moreparts[1];
 				$inputfields[ $parts[0] ] = 'hidden';
 			} else {
