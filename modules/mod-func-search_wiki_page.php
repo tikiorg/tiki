@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_search_wiki_page_info()
 {
 	return array(
-		'name' => tra('Search For A Wiki Page'),
+		'name' => tra('Search For a Wiki Page'),
 		'description' => tra('Search for a wiki page by name.') . ' ' . tra('Deprecated - use the Search module instead'), // Search doesn't support Exact Match
 		'prefs' => array('feature_wiki'),
 		'params' => array(
