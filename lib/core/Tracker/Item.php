@@ -155,16 +155,6 @@ class Tracker_Item
 
 	private function getItemOwner()
 	{
-		global $prefs;
-
-		if ($prefs['userTracker'] != 'y') {
-			return null;
-		}
-
-		if ($this->definition->getConfiguration('writerCanModify') != 'y') {
-			return null;
-		}
-
 		$userField = $this->definition->getUserField();
 		if ($userField) {
 			return $this->getValue($userField);
@@ -173,16 +163,6 @@ class Tracker_Item
 
 	private function getItemGroupOwner()
 	{
-		global $prefs;
-
-		if ($prefs['groupTracker'] != 'y') {
-			return null;
-		}
-
-		if ($this->definition->getConfiguration('writerGroupCanModify') != 'y') {
-			return null;
-		}
-
 		$groupField = $this->definition->getWriterGroupField();
 		if ($groupField) {
 			return $this->getValue($groupField);
