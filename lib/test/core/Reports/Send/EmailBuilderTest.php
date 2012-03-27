@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Reports_Send_BuildEmailTest extends TikiTestCase
+class Reports_Send_EmailBuilderTest extends TikiTestCase
 {
 	protected $obj;
 	
@@ -15,7 +15,7 @@ class Reports_Send_BuildEmailTest extends TikiTestCase
 	{
 		$this->tikilib = $this->getMockBuilder('TikiLib')->getMock();
 		
-		$this->obj = new Reports_Send_BuildEmail($this->tikilib);
+		$this->obj = new Reports_Send_EmailBuilder($this->tikilib);
 
 		$this->defaultReportPreferences = array('type' => 'plain');
 	}

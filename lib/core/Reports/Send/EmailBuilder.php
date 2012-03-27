@@ -12,7 +12,7 @@
  * @package Tiki
  * @subpackage Reports
  */
-class Reports_Send_BuildEmail
+class Reports_Send_EmailBuilder
 {
 	/**
 	 * @param TikiLib $tikilib
@@ -23,12 +23,11 @@ class Reports_Send_BuildEmail
 		$this->tikilib = $tikilib;
 	}
 	
-	protected function buildEmailBody($user_data, $report_preferences, $report_cache)
+	public function emailBody($user_data, $report_preferences, $report_cache)
 	{
 		global $base_url;
 		
 		$smarty = TikiLib::lib('smarty');
-		$tikilib = TikiLib::lib('tiki');
 		
 		$smarty->assign('report_preferences', $report_preferences);
 		$smarty->assign('report_user', ucfirst($user_data['login']));
@@ -37,7 +36,7 @@ class Reports_Send_BuildEmail
 		$smarty->assign('report_last_report_date', TikiLib::date_format($this->tikilib->get_preference('long_date_format'), strtotime($report_preferences['last_report'])));
 		$smarty->assign('report_total_changes', count($report_cache));
 		
-		$smarty->assign('report_body', $this->makeHtmlEmailBody($report_cache, $report_preferences));
+		$smarty->assign('report_body', $this->makeEmailBody($report_cache, $report_preferences));
 
 		$userWatchesUrl = $base_url . 'tiki-user_watches.php';
 		
@@ -46,8 +45,7 @@ class Reports_Send_BuildEmail
 		}
 		
 		$smarty->assign('userWatchesUrl', $userWatchesUrl);
-		
-		$userlang = $tikilib->get_user_preference($user_data['login'], "language", $this->tikilib->get_preference('site_language'));
+		$userlang = $this->tikilib->get_user_preference($user_data['login'], "language");
 
 		$mail_data = $smarty->fetchLang($userlang, "mail/report.tpl");
 		
@@ -85,7 +83,7 @@ class Reports_Send_BuildEmail
 		return $change_array;
 	}
 	
-	public function makeHtmlEmailBody(array $report_cache, array $report_preferences)
+	public function makeEmailBody(array $report_cache, array $report_preferences)
 	{
 		global $userlib, $base_url;
 		
@@ -124,7 +122,10 @@ class Reports_Send_BuildEmail
 					}
 	
 					$body .= $this->tikilib->get_short_datetime(strtotime($change['time'])) . ": ";
-					$change['data']['user'] = $userlib->clean_user($change['data']['user']);
+					
+					if (isset($change['data']['user'])) {
+						$change['data']['user'] = $userlib->clean_user($change['data']['user']);
+					}
 					
 					if ($change['event']=='image_gallery_changed' && empty($change['data']['action'])) {
 						$body .= $change['data']['user']." ".tra("changed the picture gallery")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";

@@ -16,16 +16,61 @@ class Reports_SendTest extends TikiTestCase
 	protected function setUp()
 	{
 		$this->dt = new DateTime;
-		$this->dt->setTimestamp('1326909909');
+		$this->dt->setTimestamp(strtotime('2012-03-27 15:55:16'));
 		
-		$this->mail = $this->getMock('TikiMail');
+		$this->mail = $this->getMock('TikiMail', array('send', 'setSubject', 'setHtml', 'setText', 'setUser'));
+		$this->builder = $this->getMockBuilder('Reports_Send_EmailBuilder')->disableOriginalConstructor()->getMock();
 		
-		$this->obj = new Reports_Send($this->dt, $this->mail);
+		$tikiPrefs = array('short_date_format' => '%Y-%m-%d');
+		
+		$this->obj = new Reports_Send($this->dt, $this->mail, $this->builder, $tikiPrefs);
 	}
 	
-	public function test()
+	public function testEmailSubject_noChanges()
 	{
-		// under construction
+		$this->mail->expects($this->exactly(2))->method('setSubject')->with('Report from 2012-03-27 (no changes)');
+		
+		$userData = array('login' => 'test', 'email' => 'test@test.com');
+		$reportPreferences = array('type' => 'html');
+		
+		$this->obj->sendEmail($userData, $reportPreferences, array());
+		$this->obj->sendEmail($userData, $reportPreferences, '');
 	}
 	
+	public function testEmailSubject_oneChange()
+	{
+		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report from 2012-03-27 (1 change)');
+		
+		$userData = array('login' => 'test', 'email' => 'test@test.com');
+		$reportPreferences = array('type' => 'html');
+		
+		$this->obj->sendEmail($userData, $reportPreferences, array(1));
+	}
+	
+	public function testEmailSubject_multipleChanges()
+	{
+		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report from 2012-03-27 (2 changes)');
+		
+		$userData = array('login' => 'test', 'email' => 'test@test.com');
+		$reportPreferences = array('type' => 'html');
+		
+		$this->obj->sendEmail($userData, $reportPreferences, array(1, 2));
+	}
+	
+	public function testSendEmail()
+	{
+		$userData = array('login' => 'test', 'email' => 'test@test.com');
+		$reportPreferences = array('type' => 'html');
+		$reportCache = array();
+		$emailBody = 'body';
+		
+		$this->builder->expects($this->once())->method('emailBody')
+			->with($userData, $reportPreferences, $reportCache)->will($this->returnValue($emailBody));
+		$this->mail->expects($this->once())->method('setUser')->with('test');
+		$this->mail->expects($this->once())->method('setHtml')->with($emailBody);
+		$this->mail->expects($this->once())->method('setSubject')->with('Report from 2012-03-27 (no changes)');
+		$this->mail->expects($this->once())->method('send')->with(array('test@test.com'));
+		
+		$this->obj->sendEmail($userData, $reportPreferences, $reportCache);
+	}
 }

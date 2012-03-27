@@ -18,20 +18,26 @@ class Reports_Send
 	
 	protected $mail;
 	
+	protected $builder;
+	
 	/**
 	 * @param DateTime $dt
 	 * @param TikiMail $mail
+	 * @param Reports_Send_EmailBuilder $builder
+	 * @param array $tikiPrefs
 	 * @return null
 	 */
-	public function __construct(DateTime $dt, TikiMail $mail)
+	public function __construct(DateTime $dt, TikiMail $mail, Reports_Send_EmailBuilder $builder, array $tikiPrefs)
 	{
 		$this->dt = $dt;
 		$this->mail = $mail;
+		$this->builder = $builder;
+		$this->tikiPrefs = $tikiPrefs;
 	}
 	
 	public function sendEmail($userData, $reportPreferences, $reportCache) 
 	{
-		$mailData = $this->buildEmailBody($userData, $reportPreferences, $reportCache);
+		$mailData = $this->builder->emailBody($userData, $reportPreferences, $reportCache);
 				
 		$this->mail->setUser($userData['login']);
 
@@ -49,25 +55,19 @@ class Reports_Send
 		
 	protected function setSubject($reportCache)
 	{
-		if (is_array($reportCache)) {
+		if (is_array($reportCache) && count($reportCache) >= 1) {
 			if (count($reportCache) == 1) {
-				$subject = tr(
-								'Report from %0 (1 change)',
-								TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp())
-				);
+				$subject = tr('Report from %0 (1 change)',
+					TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()));
 			} else {
-				$subject = tr(
-								'Report from %0 (%1 changes)',
-								TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()), count($reportCache)
-				);
+				$subject = tr('Report from %0 (%1 changes)',
+					TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()), count($reportCache));
 			}
 		} else {
-			$subject = tr(
-							'Report from %0 (no changes)',
-							TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp())
-			);
+			$subject = tr('Report from %0 (no changes)',
+				TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->getTimestamp()));
 		}
 
 		$this->mail->setSubject($subject);
-	}	
+	}
 }

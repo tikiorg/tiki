@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<database name="tiki9">
+		<table_data name="tiki_user_reports">
+			<row>
+				<field name="id">2</field>
+				<field name="user">test</field>
+				<field name="interval">daily</field>
+				<field name="view">detailed</field>
+				<field name="type">html</field>
+				<field name="always_email">1</field>
+				<field name="last_report">2012-01-15 12:22:08</field>
+			</row>
+		</table_data>
+		<table_data name="tiki_user_reports_cache">
+			<row>
+				<field name="id">3</field>
+				<field name="user">test</field>
+				<field name="event">wiki_page_changed</field>
+				<field name="data">a:6:{s:5:&quot;event&quot;;s:17:&quot;wiki_page_changed&quot;;s:8:&quot;pageName&quot;;s:8:&quot;HomePage&quot;;s:6:&quot;object&quot;;s:8:&quot;HomePage&quot;;s:8:&quot;editUser&quot;;s:5:&quot;admin&quot;;s:11:&quot;editComment&quot;;s:0:&quot;&quot;;s:6:&quot;oldVer&quot;;s:1:&quot;5&quot;;}</field>
+				<field name="time">2012-03-26 13:51:28</field>
+			</row>
+			<row>
+				<field name="id">4</field>
+				<field name="user">test</field>
+				<field name="event">wiki_page_changed</field>
+				<field name="data">a:6:{s:5:&quot;event&quot;;s:17:&quot;wiki_page_changed&quot;;s:8:&quot;pageName&quot;;s:8:&quot;HomePage&quot;;s:6:&quot;object&quot;;s:8:&quot;HomePage&quot;;s:8:&quot;editUser&quot;;s:5:&quot;admin&quot;;s:11:&quot;editComment&quot;;s:0:&quot;&quot;;s:6:&quot;oldVer&quot;;s:1:&quot;6&quot;;}</field>
+				<field name="time">2012-03-26 20:52:07</field>
+			</row>
+			<row>
+				<field name="id">5</field>
+				<field name="user">test</field>
+				<field name="event">tracker_item_modified</field>
+				<field name="data">a:4:{s:5:&quot;event&quot;;s:21:&quot;tracker_item_modified&quot;;s:6:&quot;itemId&quot;;s:1:&quot;4&quot;;s:9:&quot;trackerId&quot;;s:1:&quot;1&quot;;s:4:&quot;user&quot;;s:5:&quot;admin&quot;;}</field>
+				<field name="time">2012-03-26 13:54:55</field>
+			</row>
+			<row>
+				<field name="id">6</field>
+				<field name="user">test</field>
+				<field name="event">tracker_item_modified</field>
+				<field name="data">a:4:{s:5:&quot;event&quot;;s:21:&quot;tracker_item_modified&quot;;s:6:&quot;itemId&quot;;s:1:&quot;3&quot;;s:9:&quot;trackerId&quot;;s:1:&quot;1&quot;;s:4:&quot;user&quot;;s:5:&quot;admin&quot;;}</field>
+				<field name="time">2012-03-26 13:55:16</field>
+			</row>
+		</table_data>
+		<table_data name="users_users">
+			<row>
+				<field name="userId">2</field>
+				<field name="email">test@test.com</field>
+				<field name="login">test</field>
+				<field name="password"></field>
+				<field name="provpass"></field>
+				<field name="default_group" xsi:nil="true" />
+				<field name="lastLogin">1332769871</field>
+				<field name="currentLogin">1332770006</field>
+				<field name="registrationDate">1332769843</field>
+				<field name="challenge" xsi:nil="true" />
+				<field name="pass_confirm">1332769843</field>
+				<field name="email_confirm">1332769843</field>
+				<field name="hash">asdf</field>
+				<field name="created">1332769843</field>
+				<field name="avatarName" xsi:nil="true" />
+				<field name="avatarSize" xsi:nil="true" />
+				<field name="avatarFileType" xsi:nil="true" />
+				<field name="avatarData" xsi:nil="true" />
+				<field name="avatarLibName" xsi:nil="true" />
+				<field name="avatarType" xsi:nil="true" />
+				<field name="score">0</field>
+				<field name="valid"></field>
+				<field name="unsuccessful_logins">0</field>
+				<field name="openid_url" xsi:nil="true" />
+				<field name="waiting" xsi:nil="true" />
+			</row>
+		</table_data>
+	</database>
+</mysqldump>
