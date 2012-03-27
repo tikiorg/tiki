@@ -52,7 +52,7 @@ class Search_Formatter
 
 		foreach ($list as $row) {
 			// Clear blank values so the defaults prevail
-			$row = array_filter($row, array(self, 'is_empty_string'));
+			$row = array_filter($row, array($this, 'is_empty_string'));
 			$row = array_merge($defaultValues, $row);
 
 			$subEntries = array();
