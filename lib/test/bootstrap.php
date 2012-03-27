@@ -72,6 +72,7 @@ require_once 'lib/wiki/wikilib.php';
 require_once 'lib/userslib.php';
 require_once 'lib/headerlib.php';
 require_once 'lib/init/tra.php';
+require_once 'lib/tikiaccesslib.php';
 
 global $tikilib;
 $tikilib = new TikiLib;
