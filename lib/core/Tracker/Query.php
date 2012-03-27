@@ -45,7 +45,8 @@ class Tracker_Query
 	private $debug = false;
 	private $concat = true;
 	private $filterType = array();
-	
+	private $inputDefaults = array();
+
 	public static function tracker($tracker)
 	{
 		return new self($tracker);
@@ -775,9 +776,10 @@ class Tracker_Query
 		return $itemId;
 	}
 
-	private function getInputsForItem($itemId, $includeJs)
+	private function getInputsForItem($itemId = 0, $includeJs)
 	{
 		$headerlib = TikiLib::lib("header");
+		$itemId = (int)$itemId;
 
 		if ($includeJs == true)
 			$headerlibClone = clone $headerlib;
@@ -790,10 +792,16 @@ class Tracker_Query
 		$itemData = TikiLib::lib("trk")->get_tracker_item($itemId);
 
 		foreach ($trackerDefinition->getFields() as $field) {
+			$fieldKey = ($this->byName == true ? $field['name']  : $field['fieldId']);
+
 			if ($includeJs == true)
 				$headerlib->clear_js();
 
 			$field['ins_id'] = "ins_" . $field['fieldId'];
+
+			if ($itemId == 0 && isset($this->inputDefaults)) {
+				$field['value'] = $this->inputDefaults[$fieldKey];
+			}
 
 			$fieldHandler = $fieldFactory->getHandler($field, $itemData);
 
@@ -802,13 +810,19 @@ class Tracker_Query
 			if ($includeJs == true)
 				$fieldInput = $fieldInput . $headerlib->output_js();
 
-			$fields[$this->byName == true ? $field['name']  : $field['fieldId']] = $fieldInput;
+			$fields[$fieldKey] = $fieldInput;
 		}
 
 		if ($includeJs == true) //restore the header to the way it was originally
 			$headerlib = $headerlibClone;
 
 		return $fields;
+	}
+
+	public function inputDefaults($defaults = array())
+	{
+		$this->inputDefaults = $defaults;
+		return $this;
 	}
 
 	public function queryInputs($includeJs = false)
