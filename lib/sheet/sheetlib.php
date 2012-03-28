@@ -318,7 +318,7 @@ class SheetLib extends TikiLib
 			$headerlib->add_jsfile( 'lib/sheet/grid.js' );
 			
 			//json support
-			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
+			$headerlib->add_jsfile('lib/jquery/jquery.json-2.3.js');
 			
 			// plugins
 			$headerlib->add_jsfile( 'lib/jquery.sheet/plugins/jquery.scrollTo-min.js' );

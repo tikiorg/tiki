@@ -230,7 +230,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
-	$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
+	$headerlib->add_jsfile('lib/jquery/jquery.json-2.3.js');
 
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
 		//add codemirror stuff
@@ -330,7 +330,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_cssfile('lib/jquery/colorbox/styles/colorbox.css');
 		}
 		if ( $prefs['feature_jquery_carousel'] == 'y' ) {
-			$headerlib->add_jsfile('lib/jquery/infinitecarousel/jquery.infinitecarousel2.js');
+			$headerlib->add_jsfile('lib/jquery/infinitecarousel/jquery.infinitecarousel3.js');
 		}
 
 		if ( $prefs['feature_jquery_validation'] == 'y' ) {
