@@ -271,12 +271,12 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 		if ( $prefs['feature_jquery_ui'] == 'y' ) {
 			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-				$headerlib->add_jsfile_dependancy('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js');
+				$headerlib->add_jsfile_dependancy("http://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
 			} else {
 				if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-					$headerlib->add_jsfile_dependancy('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+					$headerlib->add_jsfile_dependancy("lib/jquery/jquery-ui/ui/minified/jquery-ui-$headerlib->jqueryui_version.min.js");
 				} else {
-					$headerlib->add_jsfile_dependancy('lib/jquery/jquery-ui/ui/jquery-ui.js');
+					$headerlib->add_jsfile_dependancy("lib/jquery/jquery-ui/ui/jquery-ui-$headerlib->jqueryui_version.js");
 				}
 			}
 			$headerlib->add_jsfile('lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js');
