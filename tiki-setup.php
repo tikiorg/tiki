@@ -214,13 +214,17 @@ if ( $prefs['feature_bidi'] == 'y' ) {
 
 if ($prefs['javascript_enabled'] != 'n') {
 
+
 	if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile_dependancy('http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js');
+		// google doesn't keep up to date, so use the most recent minor release they have available
+		$v = explode('.', $headerlib->jquery_version);
+		$v = $v[0] . '.' . $v[1];
+		$headerlib->add_jsfile_dependancy("http://ajax.googleapis.com/ajax/libs/jquery/$v/jquery.min.js");
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-			$headerlib->add_jsfile_dependancy('lib/jquery/jquery.min.js');
+			$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.min.js");
 		} else {
-			$headerlib->add_jsfile_dependancy('lib/jquery/jquery.js');
+			$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.js");
 		}
 	}
 

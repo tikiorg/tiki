@@ -25,6 +25,9 @@ class HeaderLib
 	var $wysiwyg_parsing;
 	var $lockMinifiedJs;
 
+	var $jquery_version = '1.7.2';
+
+
 	function __construct()
 	{
 		$this->title = '';
