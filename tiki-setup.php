@@ -242,8 +242,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js');
 	}
 	
-	global $jquerymobile_version;
-	$jquerymobile_version = '1.1.0-rc.1';
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
@@ -255,8 +253,8 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_jsfile("http://code.jquery.com/mobile/latest/jquery.mobile$jsmin.js");
 			$headerlib->add_cssfile("http://code.jquery.com/mobile/latest/jquery.mobile$cssmin.css");
 		} else {
-			$headerlib->add_jsfile("lib/jquery/jquery.mobile/jquery.mobile-$jquerymobile_version$jsmin.js");
-			$headerlib->add_cssfile("lib/jquery/jquery.mobile/jquery.mobile-$jquerymobile_version$cssmin.css");
+			$headerlib->add_jsfile("lib/jquery/jquery.mobile/jquery.mobile-$headerlib->jquerymobile_version$jsmin.js");
+			$headerlib->add_cssfile("lib/jquery/jquery.mobile/jquery.mobile-$headerlib->jquerymobile_version$cssmin.css");
 		}
 		
 		$headerlib->drop_cssfile('css/cssmenus.css');
