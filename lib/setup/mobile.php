@@ -28,6 +28,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 		// hard-wire a few incompatible prefs shut to speed development
 		$prefs['feature_jquery_ui'] = 'n';
+		$prefs['feature_jquery_reflection'] = 'n';
 		$prefs['feature_fullscreen'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
 		$prefs['feature_layoutshadows'] = 'n';
