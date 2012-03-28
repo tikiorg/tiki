@@ -220,6 +220,8 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$v = explode('.', $headerlib->jquery_version);
 		$v = $v[0] . '.' . $v[1];
 		$headerlib->add_jsfile_dependancy("http://ajax.googleapis.com/ajax/libs/jquery/$v/jquery.min.js");
+	} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
+		$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.min.js");
@@ -253,6 +255,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_jsfile("http://code.jquery.com/mobile/latest/jquery.mobile$jsmin.js");
 			$headerlib->add_cssfile("http://code.jquery.com/mobile/latest/jquery.mobile$cssmin.css");
 		} else {
+			// TODO add jQuery CDN when 1.1 is available there
 			$headerlib->add_jsfile("lib/jquery/jquery.mobile/jquery.mobile-$headerlib->jquerymobile_version$jsmin.js");
 			$headerlib->add_cssfile("lib/jquery/jquery.mobile/jquery.mobile-$headerlib->jquerymobile_version$cssmin.css");
 		}
@@ -272,6 +275,8 @@ if ($prefs['javascript_enabled'] != 'n') {
 		if ( $prefs['feature_jquery_ui'] == 'y' ) {
 			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 				$headerlib->add_jsfile_dependancy("http://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
+			} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
+				$headerlib->add_jsfile_dependancy("http://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 			} else {
 				if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 					$headerlib->add_jsfile_dependancy("lib/jquery/jquery-ui/ui/minified/jquery-ui-$headerlib->jqueryui_version.min.js");
@@ -280,7 +285,12 @@ if ($prefs['javascript_enabled'] != 'n') {
 				}
 			}
 			$headerlib->add_jsfile('lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js');
-			$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+
+			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
+				$headerlib->add_cssfile("http://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
+			} else {
+				$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+			}
 
 			if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
 				$headerlib->add_css(

@@ -15,6 +15,7 @@ function prefs_javascript_list()
 			'options' => array(
 				'none' => tra('None'),
 				'google' => tra('Google'),
+				'jquery' => tra('jQuery'),
 			),
 			'default' => 'none',
 			'tags' => array('basic'),
