@@ -14,16 +14,16 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 	$uagent_info = new uagent_info();
 
-	if ((isset($_REQUEST['mobile_mode']) && $_REQUEST['mobile_mode'] === 'y') ||
-		(isset($_COOKIE['mobile_mode']) && $_COOKIE['mobile_mode'] === 'y') ||
-			$uagent_info->DetectIphoneOrIpod() ||
-			$uagent_info->DetectIpad() ||
-			$uagent_info->DetectAndroid() ||
-			$uagent_info->DetectBlackBerry() ||
-			$uagent_info->DetectOperaMobile() ||
-			$uagent_info->DetectPalmWebOS()
-	) {		// supported by jquery.mobile
+	$supported_device = $uagent_info->DetectIphoneOrIpod() ||
+						$uagent_info->DetectIpad() ||
+						$uagent_info->DetectAndroid() ||
+						$uagent_info->DetectBlackBerry() ||
+						$uagent_info->DetectOperaMobile() ||
+						$uagent_info->DetectPalmWebOS();
 
+	if ((!isset($_COOKIE['mobile_mode']) && $supported_device) || $_COOKIE['mobile_mode'] === 'y') {		// supported by jquery.mobile
+
+		//die(var_dump($prefs['mobile_mode'], $_REQUEST['mobile_mode'], $_COOKIE['mobile_mode']));
 		$prefs['mobile_mode'] = 'y';
 
 		// hard-wire a few incompatible prefs shut to speed development

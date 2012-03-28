@@ -27,7 +27,7 @@ function module_mobile_info()
 				'description' => tra('Switch to mobile site label'),
 			),
 			'switch_perspective' => array(
-				'name' => tra('Switch Prespective'),
+				'name' => tra('Switch Perspective'),
 				'description' => tra('Also switch perspective back to this one when leaving mobile mode.'),
 			),
 			'stay_on_same_page' => array(

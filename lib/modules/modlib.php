@@ -366,13 +366,6 @@ class ModLib extends TikiLib
 
 		// Validate preferences
 		$module_info = $this->get_module_info($module['name']);
-		foreach ( $module_info['prefs'] as $p ) {
-			if ( $prefs[$p] != 'y' ) {
-				$this->add_pref_error($module['name'], $p);
-				return false;
-			}
-		}
-
 		$params = $module['params'];
 
 		if ( $prefs['feature_perspective'] == 'y' ) {
@@ -522,6 +515,13 @@ class ModLib extends TikiLib
 						}
 					}
 				}
+			}
+		}
+
+		foreach ( $module_info['prefs'] as $p ) {
+			if ( $prefs[$p] != 'y' ) {
+				$this->add_pref_error($module['name'], $p);
+				return false;
 			}
 		}
 
