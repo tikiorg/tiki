@@ -114,6 +114,7 @@
 					success: function () {
 						$container.tracker_load_fields(trackerId);
 						$('textarea', form).val('');
+						tikitabs(1);
 					}
 				});
 
