@@ -129,7 +129,7 @@ function wikiplugin_convene($data, $params)
 		}
 	}
 	$result .= "
-		<tr>
+		<tr class='conveneHeaderRow'>
 			<td></td>
 			$dateHeader
 		</tr>";
@@ -139,7 +139,7 @@ function wikiplugin_convene($data, $params)
 	//start user list and votes 
 	$userList = "";
 	foreach ($rows as $user => $row) {
-		$userList .= "<tr class='conveneUserVotes$i'>";
+		$userList .= "<tr class='conveneVotes conveneUserVotes$i'>";
 		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/pencil.png' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/delete.png'/></button> " : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
 			if ($vote == 1) {
@@ -161,7 +161,7 @@ function wikiplugin_convene($data, $params)
 	
 	
 	//start add new user and votes
-	$result .= "<tr>";
+	$result .= "<tr class='conveneFooterRow'>";
 
 
 	$result .= "<td>".(
