@@ -211,7 +211,7 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_ranking_most_read_topics($limit)
+	function forums_ranking_most_read_topics($limit, $forumId='')
 	{
 		global $commentslib;
 		if (! $commentslib) {
@@ -219,11 +219,11 @@ class RankLib extends TikiLib
 			$commentslib = new Comments;
 		}
 
-		$result = $commentslib->get_all_comments('forum', 0, $limit, 'hits_desc', '', '', '', true);
+		$result = $commentslib->get_all_comments('forum', 0, $limit, 'hits_desc', '', '', '', true, $forumId);
 
 		$ret = array();
 		foreach ($result['data'] as $res) {
-				$aux['name'] = $res['name'] . ': ' . $res['title'];
+			$aux['name'] = $forumId? $res['title']: $res['parentTitle'] . ': ' . $res['title'];
 				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['hits'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];

@@ -3813,7 +3813,7 @@ class TrackerLib extends TikiLib
 		return $field;
 	}
 	function get_notification_emails($trackerId, $itemId, $options, $newItemId=0, $status='', $oldStatus='') {
-		global $prefs;
+		global $prefs, $user;
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
 		$watchers_local = $this->get_local_notifications($itemId, $newItemId, $status, $oldStatus);
 		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
