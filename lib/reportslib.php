@@ -110,40 +110,110 @@ class reportsLib extends TikiLib
 					} else {
 						$body .= "&nbsp;&nbsp;&nbsp;";
 					}
-				} else {
-					$body .= "<b>";
-				}
-
-				$body .= $this->makeTime(strtotime($change['time'])).": ";
-				$change['data']['user'] = $userlib->clean_user($change['data']['user']);
-				
-				if ($change['event']=='image_gallery_changed' && empty($change['data']['action'])) {
-					$body .= $change['data']['user']." ".tra("changed the picture gallery")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
-				} elseif ($change['event']=='image_gallery_changed' && $change['data']['action']=="upload image") {
-					$body .= "<u>".$change['data']['user']."</u> ".tra("uploaded the picture")." <a href=\"$tikiUrl/tiki-browse_image.php?imageId=".$change['data']['imageId']."\">".$change['data']['imageName']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
-				} elseif ($change['event']=='image_gallery_changed' && $change['data']['action']=="remove image") {
-					$body .= "<u>".$change['data']['user']."</u> ".tra("removed the picture")." <a href=\"$tikiUrl/tiki-browse_image.php?imageId=".$change['data']['imageId']."\">".$change['data']['imageName']."</a> ".tra("from")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
-				} elseif ($change['event']=="wiki_page_changed") {
-					$body .= "<u>".$change['data']['editUser']."</u> ".tra("edited the wikipage")." <a href=\"$tikiUrl/tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a> (<a href=\"$tikiUrl/tiki-pagehistory.php?page=".$change['data']['pageName']."&diff_style=sidediff&compare=Compare&newver=".($change['data']['oldVer']+1)."&oldver=".$change['data']['oldVer']."\">".tra("this history")."</a>, <a href=\"$tikiUrl/tiki-pagehistory.php?page=".$change['data']['pageName']."&diff_style=sidediff&compare=Compare&newver=0&oldver=".$change['data']['oldVer']."\">".tra("all history")."</a>)";
-
-				} elseif ($change['event']=="file_gallery_changed" && empty($change['data']['action'])) {
-					$body .= "<u>".$change['data']['user']."</u> ".tra("edited the file gallery")." <a href=\"$tikiUrl/tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>";
-				} elseif ($change['event']=="file_gallery_changed" && $change['data']['action']=="upload file") {
-					$body .= "<u>".$change['data']['user']."</u> ".tra("uploaded the file")." <a href=\"$tikiUrl/tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>.";
-				} elseif ($change['event']=="file_gallery_changed" && $change['data']['action']=="remove file") {
-					$body .= "<u>".$change['data']['user']."</u> ".tra("removed the file")." <a href=\"$tikiUrl/tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("from")." <a href=\"$tikiUrl/tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>.";					
-
-				} elseif ($change['event']=="category_changed") {
-					if ($change['data']['action']=="object entered category") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("added the ".$change['data']['objectType'])." <a href=\"$tikiUrl/".$change['data']['objectUrl']."\">".$change['data']['objectName']."</a> ".tra("to the category")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a>.";
-					} elseif ($change['data']['action']=="object leaved category") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("removed the ".$change['data']['objectType'])." <a href=\"$tikiUrl/".$change['data']['objectUrl']."\">".$change['data']['objectName']."</a> ".tra("from the category")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a>.";
-					} elseif ($change['data']['action']=="category created") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("created the subcategory")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a> ".tra("in")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['parentId']."&deep=off\">".$change['data']['parentName']."</a>.";
-					} elseif ($change['data']['action']=="category removed") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("removed the subcategory")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a> ".tra("from")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['parentId']."&deep=off\">".$change['data']['parentName']."</a>.";
-					} elseif ($change['data']['action']=="category updated") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("edited the category")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a>";
+	
+					$body .= $this->makeTime(strtotime($change['time'])).": ";
+					$change['data']['user'] = $userlib->clean_user($change['data']['user']);
+					
+					if ($change['event']=='image_gallery_changed' && empty($change['data']['action'])) {
+						$body .= $change['data']['user']." ".tra("changed the picture gallery")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
+					} elseif ($change['event']=='image_gallery_changed' && $change['data']['action']=="upload image") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("uploaded the picture")." <a href=\"$tikiUrl/tiki-browse_image.php?imageId=".$change['data']['imageId']."\">".$change['data']['imageName']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
+					} elseif ($change['event']=='image_gallery_changed' && $change['data']['action']=="remove image") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("removed the picture")." <a href=\"$tikiUrl/tiki-browse_image.php?imageId=".$change['data']['imageId']."\">".$change['data']['imageName']."</a> ".tra("from")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
+					} elseif ($change['event']=="wiki_page_changed") {
+						$body .= "<u>".$change['data']['editUser']."</u> ".tra("edited the wikipage")." <a href=\"$tikiUrl/tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a> (<a href=\"$tikiUrl/tiki-pagehistory.php?page=".$change['data']['pageName']."&diff_style=sidediff&compare=Compare&newver=".($change['data']['oldVer']+1)."&oldver=".$change['data']['oldVer']."\">".tra("this history")."</a>, <a href=\"$tikiUrl/tiki-pagehistory.php?page=".$change['data']['pageName']."&diff_style=sidediff&compare=Compare&newver=0&oldver=".$change['data']['oldVer']."\">".tra("all history")."</a>)";
+	
+					} elseif ($change['event']=="file_gallery_changed" && empty($change['data']['action'])) {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("edited the file gallery")." <a href=\"$tikiUrl/tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>";
+					} elseif ($change['event']=="file_gallery_changed" && $change['data']['action']=="upload file") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("uploaded the file")." <a href=\"$tikiUrl/tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>.";
+					} elseif ($change['event']=="file_gallery_changed" && $change['data']['action']=="remove file") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("removed the file")." <a href=\"$tikiUrl/tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("from")." <a href=\"$tikiUrl/tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>.";					
+	
+					} elseif ($change['event']=="category_changed") {
+						if ($change['data']['action']=="object entered category") {
+							$body .= "<u>".$change['data']['user']."</u> ".
+								tr("added the %0 %1 to the category %2",
+									$change['data']['objectType'],
+									"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
+									"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>"
+								);
+						} elseif ($change['data']['action']=="object leaved category") {
+							$body .= "<u>".$change['data']['user']."</u> ".
+								tr("removed the %0 %1 from the category %2",
+									$change['data']['objectType'],
+									"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
+									"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>."
+								);
+						} elseif ($change['data']['action']=="category created") {
+							$body .= "<u>".$change['data']['user']."</u> ".tra("created the subcategory")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a> ".tra("in")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['parentId']."&deep=off\">".$change['data']['parentName']."</a>.";
+						} elseif ($change['data']['action']=="category removed") {
+							$body .= "<u>".$change['data']['user']."</u> ".tra("removed the subcategory")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a> ".tra("from")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['parentId']."&deep=off\">".$change['data']['parentName']."</a>.";
+						} elseif ($change['data']['action']=="category updated") {
+							$body .= "<u>".$change['data']['user']."</u> ".tra("edited the category")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a>";
+						}
+					} elseif ($change['event']=="article_deleted") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("removed the article")." <a href=\"$tikiUrl/tiki-read_article.php?articleId=".$change['data']['articleId']."\">".$change['data']['articleTitle']."</a>.";
+					} elseif ($change['event']=="article_submitted") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("created the article")." <a href=\"$tikiUrl/tiki-read_article.php?articleId=".$change['data']['articleId']."\">".$change['data']['articleTitle']."</a>.";
+					} elseif ($change['event']=="article_edited") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("edited the article")." <a href=\"$tikiUrl/tiki-read_article.php?articleId=".$change['data']['articleId']."\">".$change['data']['articleTitle']."</a>.";
+					} elseif ($change['event']=="blog_post") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("replied to the blog")." <a href=\"$tikiUrl/tiki-view_blog.php?blogId=".$change['data']['blogId']."\">".$change['data']['blogTitle']."</a> <a href=\"$tikiUrl/tiki-view_blog_post.php?postId=\"".$change['data']['postId']."></a>.";
+					} elseif ($change['event']=="forum_post_topic") {
+						$body .= "<u>".$change['data']['user']."</u> ".tra("created the topic")." <a href=\"$tikiUrl/tiki-view_forum_thread.php?comments_parentId=".$change['data']['topicId']."&forumId=".$change['data']['forumId']."\">".$change['data']['threadName']."</a> ".tra("at forum")." <a href=\"$tikiUrl/tiki-view_forum.php?forumId=".$change['data']['forumId']."\">".$change['data']['forumName']."</a>.";
+					} elseif ($change['event']=="forum_post_thread") {
+						global $dbTiki;
+						include_once ("lib/comments/commentslib.php");
+						$commentslib = new Comments($dbTiki);
+						$parent_topic = $commentslib->get_comment($change['data']['topicId']);
+						
+						$body .= "<u>".$change['data']['user']."</u> <a href=\"$tikiUrl/tiki-view_forum_thread.php?forumId=".$change['data']['forumId']."&comments_parentId=".$change['data']['topicId']."#threadId".$change['data']['threadId']."\">".tra("replied")."</a> ".tra("to the topic")." <a href=\"$tikiUrl/tiki-view_forum_thread.php?comments_parentId=".$change['data']['topicId']."&forumId=".$change['data']['forumId']."\">".$parent_topic['title']."</a>.";
+					} elseif ($change['event'] == 'wiki_file_attached') {
+						$body .= "<u>".$change['data']['user']."</u> ".tra('uploaded the file') . " <a href=\"$tikiUrl/tiki-download_wiki_attachment.php?attId=".$change['data']['attId']."\">".$change['data']['filename']."</a> ".tra("onto")." <a href=\"$tikiUrl/tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a>.";
+					} elseif ($change['event'] == 'calendar_changed') {
+						global $calendarlib; require_once('lib/calendar/calendarlib.php');
+						$item = $calendarlib->get_item($change['data']['calitemId']);
+						$body .= tr('%0 added or updated event %1', "<u>{$change['data']['user']}</u>", "<a href='$tikiUrl/tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>");
+					} elseif ($change['event'] == 'tracker_item_modified' || $change['event'] == 'tracker_item_comment') {
+						global $trklib; require_once('lib/trackers/trackerlib.php');
+						
+						$trackerId = $change['data']['trackerId'];
+						$itemId = $change['data']['itemId'];
+						
+						$tracker = $trklib->get_tracker($trackerId);
+						$mainFieldValue = $trklib->get_isMain_value($trackerId, $itemId);
+						
+						if ($change['event'] == 'tracker_item_modified') {
+							if ($mainFieldValue) {
+								$body .= tr('%0 added or updated tracker item %1 on tracker %2',
+									"<u>{$change['data']['user']}</u>",
+									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>",
+									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								);
+							} else {
+								$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
+									"<u>{$change['data']['user']}</u>",
+									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>",
+									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								);
+							}
+						} else {
+							// tracker_item_comment event
+							if ($mainFieldValue) {
+								$body .= tr('%0 added a new comment to %1 on tracker %2',
+									"<u>{$change['data']['user']}</u>",
+									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$mainFieldValue</a>",
+									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								);
+							} else {
+								$body .= tr('%0 added a new comment to item id %1 on tracker %2',
+									"<u>{$change['data']['user']}</u>",
+									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$itemId</a>",
+									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+								);
+							}
+						}
 					}
 				} elseif ($change['event']=="article_deleted") {
 					$body .= "<u>".$change['data']['user']."</u> ".tra("removed the article")." <a href=\"$tikiUrl/tiki-read_article.php?articleId=".$change['data']['articleId']."\">".$change['data']['articleTitle']."</a>.";
