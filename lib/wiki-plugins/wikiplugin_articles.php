@@ -144,6 +144,25 @@ function wikiplugin_articles_info()
 				'filter' => 'date',
 				'default' => ''
 			),
+			'periodQuantity' => array(
+				'required' => false,
+				'name' => tr('Period quantity'),
+				'description' => tr('Numeric value to display only last articles published within a user defined time-frame. Used in conjunction with the next parameter "Period unit", this parameter indicates how many of those units are to be considered to define the time frame. If this parameter is set, "Start Date" and "End date" are ignored.'),
+				'filter' => 'int',
+				'default' => '',
+			),
+			'periodUnit' => array(
+				'required' => false,
+				'name' => tr('Period unit'),
+				'description' => tr('Time unit used with "Period quantity"'),
+				'filter' => 'word',
+				'options' => array(
+					array('text' => tr('Hour'), 'value' => 'hour'),
+					array('text' => tr('Day'), 'value' => 'day'),
+					array('text' => tr('Week'), 'value' => 'week'),
+					array('text' => tr('Month'), 'value' => 'month'),
+				),
+			),
 			'overrideDates' => array(
 				'required' => false,
 				'name' => tra('Override Dates'),
@@ -235,10 +254,38 @@ function wikiplugin_articles($data, $params)
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
 	
-	if (isset($dateStart)) 	$dateStartTS = strtotime($dateStart);
-	if (isset($dateEnd))	$dateEndTS = strtotime($dateEnd);
-	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
-	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : 0;
+	// if a period of time is set, date start and end are ignored
+	if (isset($periodQuantity)) {
+		switch ($periodUnit) {
+			case 'hour':
+				$periodUnit = 3600;
+				break;
+			case 'day':
+				$periodUnit = 86400;
+				break;
+			case 'week':
+				$periodUnit = 604800;
+				break;
+			case 'month':
+				$periodUnit = 2628000;
+				break;
+			default:
+				break;
+		}
+		
+		if (is_int($periodUnit)) {
+			$dateStartTS = $tikilib->now - ($periodQuantity * $periodUnit);
+			$dateEndTS = $tikilib->now;
+		}
+	} else {
+		if (isset($dateStart)) {
+			$dateStartTS = strtotime($dateStart);
+		}
+		
+		if (isset($dateEnd)) {
+			$dateEndTS = strtotime($dateEnd);
+		}
+	}
 	
 	if (isset($fullbody) && $fullbody == 'y') {
 		$smarty->assign('fullbody', 'y');
