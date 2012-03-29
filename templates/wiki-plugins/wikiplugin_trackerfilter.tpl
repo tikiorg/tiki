@@ -9,7 +9,7 @@
 <div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y'}block{else}none{/if}">
 {if empty($inForm)}
 	{if empty($export_action)}
-		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
+		<form action="{$smarty.server.PHP_SELF}?{query}#trackerFilter{$iTrackerFilter}-result" method="post">
 	{else}
 		{jq notonready=true}
 function tf_export_submit(fm) {
@@ -108,6 +108,7 @@ function tf_export_submit(fm) {
 {if ($action and $action neq " ") or !empty($export_action)}
 <td>&nbsp;</td>
 <td>
+	<div id="trackerFilter{$iTrackerFilter}-result"><div>
 	{if !empty($export_action)}
 		<input class="button submit" type="submit" name="export_filter" value="{tr}{$export_action}{/tr}" />
 	{elseif $action and $action neq " "}

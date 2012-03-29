@@ -37,7 +37,7 @@ function module_action_similarcontent( $mod_reference, $module_params ) {
 	
 	$broaden = 'n';
 	if(isset($module_params['broaden'])){
-		$filterType = $module_params['broaden'];
+		$broaden = $module_params['broaden'];
 	}
 		
 	$currentContentType = "article";

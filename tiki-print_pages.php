@@ -27,8 +27,8 @@ if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 		$printpages[] = $_REQUEST["page"];
 	}
 } else {
-	$printpages = unserialize(urldecode($_REQUEST["printpages"]));
-	$printstructures = unserialize(urldecode($_REQUEST['printstructures']));
+	$printpages = TikiLib::tiki_unserialize(urldecode($_REQUEST["printpages"]));
+	$printstructures = TikiLib::tiki_unserialize(urldecode($_REQUEST['printstructures']));
 }
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
