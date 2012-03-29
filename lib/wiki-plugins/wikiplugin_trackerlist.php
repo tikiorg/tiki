@@ -1460,7 +1460,7 @@ function wikiplugin_trackerlist($data, $params) {
 							}
 						} 
 					} 
-					if (array_key_exists('not', $exactvalue[$k])) {
+					if (array_key_exists('not', array($exactvalue[$k]))) {
 						$catfilternotfield[0] = $ff;
 						$catfilternotvalue[] = array($exactvalue[$k]);
 					} else {
