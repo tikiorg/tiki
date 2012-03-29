@@ -57,8 +57,9 @@ function module_months_links( $mod_reference, $module_params ) {
 	}
 	
 	if ( isset($link)) {
-		global $tikilib, $bloglib;
+		global $tikilib, $bloglib, $artlib;
 		include_once ('lib/blogs/bloglib.php');
+		include_once ('lib/articles/artlib.php');
 		$month_names = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 		$current_month_num = TikiLib::date_format("%m", $tikilib->now);
 		$current_year = TikiLib::date_format("%Y", $tikilib->now);
@@ -78,9 +79,18 @@ function module_months_links( $mod_reference, $module_params ) {
 				$timestamp_month_end = $tikilib->make_time(0, 0, 0, $current_month_num + 1, 1, $current_year) - 1;
 			}
 			$timestamp_month_start = $tikilib->make_time(0, 0, 0, $current_month_num, 1, $current_year);
-			$posts_of_month = $bloglib->list_blog_posts($module_params['id'],true,0,-1,'created_desc','',$timestamp_month_start,$timestamp_month_end);
-			if( $posts_of_month["cant"] > 0 ) {
-				$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+			if ( $module_params['feature'] == 'blogs' ) {
+				$posts_of_month = $bloglib->list_blog_posts($module_params['id'],true,0,-1,'created_desc','',$timestamp_month_start,$timestamp_month_end);
+				if( $posts_of_month["cant"] > 0 ) {
+					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+				}
+			} elseif ( $module_params['feature'] == 'cms' ) {
+				$posts_of_month = $artlib->list_articles(0,-1,publishDate_desc,'',$timestamp_month_start,$timestamp_month_end,false,'','',y,'','','','','','','',false,'');
+				if( $posts_of_month["cant"] > 0 ) {
+					$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+				}
+			} else {
+					$months[$month_name] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 			}
 		}
 		$title = ucwords($sections[$module_params['feature']][$object_key]).' - '.tra('List by month');
