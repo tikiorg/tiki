@@ -98,7 +98,7 @@ function is_trunk($branch)
 	return $branch == full('trunk');
 }
 
-function update_working_copy($localPath, $ignore_externals)
+function update_working_copy($localPath, $ignore_externals = false)
 {
 	$localPath = escapeshellarg($localPath);
 	$ignoreStr = $ignore_externals ? ' --ignore-externals' : '';
