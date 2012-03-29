@@ -155,8 +155,9 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 
 # Error pages, handled by Apache (not by Tiki)
 # Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass Tiki and must be handled by Apache (ex.: impossiblepagename.php) 
-# To use Apache error handling, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
-# ErrorDocument 404 /tiki-index.php?page=Page+not+found
+# To use Apache error handling, uncomment the following line/s and adapt the page name/s (You must create the page/s before trying to use any of them):
+#ErrorDocument 404 /tiki-index.php?page=Page+not+found
+#ErrorDocument 500 /tiki-index.php?page=Server+Error
 
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
