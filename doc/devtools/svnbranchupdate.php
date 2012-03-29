@@ -10,8 +10,11 @@ require dirname(__FILE__) . '/svntools.php';
 // Perform basic checks
 info("Verifying...");
 
-if (! isset($_SERVER['argc']) || $_SERVER['argc'] != 2)
+if (! isset($_SERVER['argc']) || $_SERVER['argc'] < 2)
 	error("Missing argument. Expecting branch to merge as argument.\n\nExamples:\n\tbranches/7.x\n\ttrunk");
+
+$no_check_svn = in_array('--no-check-svn', $_SERVER['argv']);
+$ignore_externals = in_array('--ignore-externals', $_SERVER['argv']);
 
 $local = get_info('.');
 
@@ -25,12 +28,21 @@ $source = full($_SERVER['argv'][1]);
 if (! is_valid_merge_source($local->entry->url, $source))
 	error("The provided source cannot be used to update this working copy.");
 
-if (has_uncommited_changes('.'))
-	error("Working copy has uncommited changes. Revert or commit them before merging a branch.");
+if ($no_check_svn) {
+	important('Note: Not checking uncommitted changes. Make sure you commit the right files!');
+} else {
+	if (has_uncommited_changes('.')) {
+		error("Working copy has uncommited changes. Revert or commit them before merging a branch.");
+	}
+}
 
 // Proceed to update
-info("Updating...");
-update_working_copy('.');
+if ($ignore_externals) {
+	important('Note: Updating but ignoring external libraries - only use this if you are sure this working copy is up to date.');
+} else {
+	info("Updating...");
+}
+update_working_copy('.', $ignore_externals);
 
 $revision = (int) get_info($source)->entry->commit['revision'];
 

@@ -98,10 +98,11 @@ function is_trunk($branch)
 	return $branch == full('trunk');
 }
 
-function update_working_copy($localPath)
+function update_working_copy($localPath, $ignore_externals)
 {
 	$localPath = escapeshellarg($localPath);
-	`svn up $localPath`;
+	$ignoreStr = $ignore_externals ? ' --ignore-externals' : '';
+	`svn up $localPath$ignoreStr`;
 }
 
 function has_uncommited_changes($localPath)
@@ -142,8 +143,9 @@ function find_last_merge($path, $source)
 
 	$ePath = escapeshellarg($path);
 
-	$process = proc_open("svn log --stop-on-copy $ePath", $descriptorspec, $pipes);
+	$process = proc_open("svn log --stop-on-copy " . TIKISVN, $descriptorspec, $pipes);
 	$rev = 0;
+	$c = 0;
 
 	if (is_resource($process)) {
 		$fp = $pipes[1];
@@ -153,6 +155,11 @@ function find_last_merge($path, $source)
 
 			if (preg_match($pattern, $line, $parts)) {
 				$rev = (int) $parts[2];
+				break;
+			}
+			$c++;
+			if ($c > 100000) {
+				error("[MRG] or [BRANCH] message for '$source' not found in 1000000 lines of logs, something has gone wrong...");
 				break;
 			}
 		}
@@ -197,7 +204,7 @@ function incorporate($working, $source)
 
 function branch($source, $branch, $revision)
 {
-	$short = short($source);
+	$short = short($branch);
 
 	$file = escapeshellarg("$branch/tiki-index.php");
 	$source = escapeshellarg($source);
