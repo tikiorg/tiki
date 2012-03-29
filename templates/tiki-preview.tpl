@@ -13,7 +13,7 @@ $("#preview_diff_style").change(function(){
 	setCookie("preview_diff_style", $(this).val(), "", "session");
 	$.get("tiki-auto_save.php", {
 		editor_id: 'editwiki',
-		autoSaveId: escape(autoSaveId),
+		autoSaveId: autoSaveId,
 		inPage: true,
 		{{if isset($smarty.request.hdr)}hdr: {$smarty.request.hdr},{/if}}
 		diff_style: $(this).val()
