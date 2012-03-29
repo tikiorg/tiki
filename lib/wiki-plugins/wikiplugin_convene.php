@@ -41,9 +41,9 @@ function wikiplugin_convene_info()
 
 function wikiplugin_convene($data, $params)
 {
-	global $tikilib, $headerlib, $page, $caching, $tiki_p_edit;
+	global $tikilib, $headerlib, $page, $tiki_p_edit;
 
-	static $htmlFeedLinkI = 0;
+	static $conveneI = 0;
 	++$conveneI;
 	$i = $conveneI;
 	
@@ -130,18 +130,7 @@ function wikiplugin_convene($data, $params)
 	}
 	$result .= "
 		<tr>
-			<td>".
-				(
-				$tiki_p_edit == 'y'
-					? 
-					"<button class='conveneAddUser$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-						<img src='img/icons/user.png' title='".tr('Add User')."' />
-					</button><button class='conveneAddDate$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-						<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' />
-					</button>"
-					: ""
-				).
-			"</td>
+			<td></td>
 			$dateHeader
 		</tr>";
 	//end date header
@@ -172,7 +161,16 @@ function wikiplugin_convene($data, $params)
 	
 	
 	//start add new user and votes
-	$result .= "<tr><td />";
+	$result .= "<tr>";
+
+
+	$result .= "<td>".(
+		$tiki_p_edit == 'y'
+			?
+				"<input class='conveneAddUser$i' value='" . tr("Add User") . "' />"
+			: ""
+		).
+	"</td>";
 	//end add new user and votes
 	
 	
@@ -189,7 +187,18 @@ function wikiplugin_convene($data, $params)
 		
 		$lastRow .= "<td class='conveneFooter'>". $total ."&nbsp;$pic</td>";
 	}
-	$result .= $lastRow . "</tr>";
+	$result .= $lastRow;
+
+	$result .= "<td style='width: 20px;'>" . (
+		$tiki_p_edit == 'y'
+			?
+				"<button class='conveneAddDate$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
+					<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' />
+				</button>"
+			: ""
+	)."</td>";
+
+	$result .= "</tr>";
 	//end last row with auto selected date(s)
 	
 	
@@ -435,26 +444,34 @@ FORM;
 			}
 		});
 		
-		$('.conveneAddUser$i').click(function() {
-			var dialogOptions = {
-				title: tr("User Name"),
-				modal: true,
-				buttons: {}
-			};
-			
-			dialogOptions.buttons[tr("Add")] = function() {
-				convene$i.addUser($('#conveneNewUser$i').val());
-				o.dialog('close');
-			};
-			
-			var o = $('<div><input type="text" id="conveneNewUser$i" style="width: 100%;" /></div>')
-				.dialog(dialogOptions);
-			
-			$('#conveneNewUser$i').autocomplete({
+		$('.conveneAddUser$i')
+			.click(function() {
+				if (!$(this).data('clicked')) {
+					$(this)
+						.data('initval', $(this).val())
+						.val('')
+						.data('clicked', true);
+				}
+			})
+			.blur(function() {
+				if (!$(this).val()) {
+					$(this)
+						.val($(this).data('initval'))
+						.data('clicked', '');
+
+				}
+			})
+			.keydown(function(e) {
+				var user = $(this).val();
+
+				if (e.which == 13) {//enter
+					convene$i.addUser(user);
+					return false;
+				}
+			})
+			.autocomplete({
 				source: $existingUsers
 			});
-			return false;
-		});
 		
 		$('#pluginConvene$i .icon').css('cursor', 'pointer');
 JQ
