@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= 'SVN pre-9';	// needs to have no spaces for releases
+		$this->version 	= 'SVN pre-10';	// needs to have no spaces for releases
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -69,7 +69,8 @@ class TWVersion
 				16=>'Vulpeculae',	// 5.x
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
-				19=>'Acubens',	// 8.x
+				19=>'Acubens',		// 8.x
+				20=>'Herbig Haro'	// 9.x
 		);
 	}
 
