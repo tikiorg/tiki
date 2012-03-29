@@ -83,6 +83,10 @@
 			{/if}
 		</div>
 	{/if}
+	{if $prefs.feature_sitelogo eq 'n'}
+		{include file='tiki-top_bar.tpl'}
+	{/if}
+
 {/if}
 	
 {* No site logo but custom code *}

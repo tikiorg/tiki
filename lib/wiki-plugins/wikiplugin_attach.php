@@ -171,7 +171,7 @@ function wikiplugin_attach($data, $params) {
 	global $mimeextensions;
 	global $wikilib; include_once('lib/wiki/wikilib.php');
 	global $tikilib;
-	global $user, $section;
+	global $user, $section, $section_class;
 
 	extract ($params,EXTR_SKIP);
 
@@ -201,7 +201,7 @@ function wikiplugin_attach($data, $params) {
 		}
 
 		// See if we're being called from a wiki page.
-		if( $section == 'wiki page' ) {
+		if(strstr($section_class, 'wiki_page')) {
 			$atts_item_name = $_REQUEST["page"];
 			$atts = $wikilib->list_wiki_attachments($atts_item_name,0,-1,'created_desc','');
 		}
