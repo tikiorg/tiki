@@ -29,12 +29,16 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 		if (isset($_REQUEST['itemId']))
 		{
-			echo json_encode(
+			print_r(json_encode(
 				Tracker_Query::tracker('Wiki Attributes')
 					->byName()
 					->itemId((int)$_REQUEST['itemId'])
+					->inputDefaults(array(
+						"Page" => $args['object'],
+						"Type" => "Question"
+					))
 					->queryInput()
-			);
+			));
 			exit(0);
 		}
 
@@ -427,26 +431,56 @@ JQ
 
 			if ( $wikiPerms->edit ) {
 				$headerlib->add_jq_onready(<<<JQ
-					var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink Questions") + '</a></span>')
-						.click(function() {
-							if (!$questionsCount) {
-								return true;
+					function showField(field, obj) {
+						obj = $('<span/>').append(obj);
+						switch (field) {
+							case 'Value':break;
+							default: obj.hide();
+						}
+						return obj;
+					}
+
+					function trackerForm(trackerId, itemId, fn, remove) {
+						$.modal(tr("Loading..."));
+						$.getJSON('?itemId=' + itemId, function(item) {
+							$.modal();
+							var frm = $.trackerForm(trackerId, itemId, remove)
+								.submit(function() {
+									var serialized = frm.serialize();
+									$.modal(tr('Saving...'));
+									$.post(frm.attr('action') + '?' + serialized, function() {
+										document.location = document.location + '';
+									});
+
+									return false;
+								});
+
+							for( field in item ) {
+								showField(field, item[field]).appendTo(frm);
 							}
 
+							fn(frm);
+
+							$.modal();
+						});
+					}
+
+					var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink Questions") + '</a></span>')
+						.click(function() {
 							var questionBox = $('<table style="width: 100%;" />');
 							var questions = $questions;
 							$.each(questions, function() {
 								$('<tr>')
 									.append('<td>' + this.Value + '</td>')
-									.append('<td title="' + tr("Edit") + '"><a href="tiki-view_tracker_item.php?itemId=' + this.itemId + '" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
+									.append('<td title="' + tr("Edit") + '"><a class="edit" href="tiki-view_tracker_item.php?itemId=' + this.itemId + '" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
+									.append('<td title="' + tr("Delete") + '"><a class="delete" href="tiki-view_tracker_item.php?itemId=' + this.itemId + '" data-itemid="' + this.itemId + '"><img src="img/icons/cross.png" /></a></td>')
 									.appendTo(questionBox);
 							});
 
-							questionBox.find('a').click(function() {
+							questionBox.find('a.edit').click(function() {
 								var me = $(this);
 								var itemId = me.data('itemid');
-								$.modal(tr("Loading..."));
-								$.getJSON('?itemId=' + itemId, function(data) {
+								trackerForm($trackerId, itemId, function(frm) {
 									var dialogSettings = {
 										title: tr('Editing: ') + me.parent().parent().text(),
 										modal: true,
@@ -454,27 +488,28 @@ JQ
 									};
 
 									dialogSettings.buttons[tr('OK')] = function() {
-										trackerForm.submit();
+										frm.submit();
 									};
 
 									dialogSettings.buttons[tr('Cancel')] = function() {
-										questionDialog.dialog("close");
+										questionDialog.dialog('close');
 									};
 
-									var trackerForm = $.trackerEditForm($trackerId, itemId)
-									for( item in data ) {
-										if (item == 'Value') {
-											trackerForm.append(data[item]);
-										} else {
-											trackerForm.append($('<span style="display: none" />').html(data[item]));
-										}
-									}
-
 									var questionDialog = $('<div />')
-										.append(trackerForm)
+										.append(frm)
 										.dialog(dialogSettings);
+								});
 
-									$.modal();
+								return false;
+							});
+
+							questionBox.find('a.delete').click(function() {
+								if (!confirm(tr("Are you sure?"))) return false;
+
+								var me = $(this);
+								var itemId = me.data('itemid');
+								trackerForm($trackerId, itemId, function(frm) {
+									frm.submit();
 								});
 
 								return false;
@@ -486,7 +521,25 @@ JQ
 									buttons: {}
 							};
 							questionBoxOptions.buttons[tr("New")] = function () {
-								document.location = 'tiki-view_tracker.php?cookietab=2&trackerId=' + $trackerId;
+								trackerForm($trackerId, 0, function(frm) {
+									var newFrmDialogSettings = {
+										buttons: {},
+										modal: true,
+										title: tr('New')
+									};
+
+									newFrmDialogSettings.buttons[tr('Save')] = function() {
+										frm.submit();
+									};
+
+									newFrmDialogSettings.buttons[tr('Cancel')] = function() {
+										questionDialog.dialog('close');
+									};
+
+									var questionDialog = $('<div />')
+										.append(frm)
+										.dialog(newFrmDialogSettings);
+								});
 							};
 							questionBox.dialog(questionBoxOptions);
 							return false;
