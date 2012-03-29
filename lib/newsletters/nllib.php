@@ -973,8 +973,8 @@ class NlLib extends TikiLib
 	// info: subject, data, datatxt, dataparsed, wysiwyg, sendingUniqId, files, errorEditionId, editionId
 	// browser: true if on the browser
 	function send($nl_info, $info, $browser=true, &$sent, &$errors, &$logFileName) {
-		global $prefs, $smarty, $userlib, $tikilib;
-		global $headerlib; include_once('lib\headerlib.php');
+		global $prefs, $smarty, $userlib, $tikilib, $base_url;
+		global $headerlib; include_once('lib/headerlib.php');
 		if (empty($info['editionId'])) {
 			$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, true, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		}
@@ -990,10 +990,10 @@ class NlLib extends TikiLib
 		// build the html
 		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
 		$endHtml = '</div></div></body>';
-		if (stristr($info['dataparsed'], '<body') === false) {
-			$html = "<html>$beginHtml" . $tikilib->parse_data($info['dataparsed'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
+		if (stristr($info['data'], '<body') === false) {
+			$html = "<html>$beginHtml" . $tikilib->parse_data($info['data'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
 		} else {
-			$html = str_ireplace('<body>', $beginHtml,$info['dataparsed']);
+			$html = str_ireplace('<body>', $beginHtml,$info['data']);
 			$html = str_ireplace('</body>', $endHtml, $html);
 		}
 
