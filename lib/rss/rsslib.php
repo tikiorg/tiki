@@ -187,7 +187,7 @@ class RSSLib extends TikiDb_Bridge
 			$feed->setLanguage($prefs['feed_language']);
 		}
 		
-		$feed->setLink($tikilib->tikiUrl());
+		$feed->setLink($tikilib->tikiUrl(''));
 		$feed->setFeedLink($feedLink, $feed_format_name);
 		$feed->setDateModified($tikilib->now);
 
@@ -217,10 +217,10 @@ class RSSLib extends TikiDb_Bridge
 			$authors = array();
 
 			if (!empty($prefs['feed_rss_editor_email'])) {
-				$authors[]['name'] = $prefs['feed_rss_editor_email'];
+				$authors['name'] = $prefs['feed_rss_editor_email'];
 			}
 			if (!empty($prefs['feed_rss_webmaster_email'])) {
-				$authors[]['name'] = $prefs['feed_rss_webmaster_email'];
+				$authors['name'] = $prefs['feed_rss_webmaster_email'];
 			}
 			
 			if (!empty($authors)) {
@@ -230,9 +230,9 @@ class RSSLib extends TikiDb_Bridge
 
 		if (!empty($prefs['feed_img'])) {
 			$image = array();
-			$image['uri'] = $tikilib->tikiUrl() . $prefs['feed_img'];
+			$image['uri'] = $tikilib->tikiUrl($prefs['feed_img']);
 			$image['title'] = tra('Feed logo');
-			$image['link'] = $tikilib->tikiUrl();
+			$image['link'] = $tikilib->tikiUrl('');
 			$feed->setImage($image);
 		}
 
@@ -579,6 +579,7 @@ class RSSLib extends TikiDb_Bridge
 	
 		$configuration['type'] = 'article';
 		
+		$module = $this->get_rss_module($rssId);
 
 		if( $module['actions'] ) {
 			$actions = json_decode( $module['actions'], true );

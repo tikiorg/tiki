@@ -35,7 +35,11 @@ if (isset($_REQUEST["remove"])) {
 	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 }
 if (isset($_REQUEST["save"])) {
-	check_ticket('admin-menus');
+	if ($_REQUEST['menuId']) {
+		$access->check_authenticity(tra('Are you sure you want to modify this menu?'));
+	} else {
+		$access->check_authenticity(tra('Are you sure you want to create a new menu?'));
+	}
 	if (!isset($_REQUEST['icon'])) $_REQUEST['icon'] = null;
 	$_REQUEST['use_items_icons'] = (isset($_REQUEST['use_items_icons']) && $_REQUEST['use_items_icons'] == 'on') ? 'y' : 'n';
 	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon'], $_REQUEST['use_items_icons']);
