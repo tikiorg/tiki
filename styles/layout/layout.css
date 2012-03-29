@@ -1070,6 +1070,17 @@ tr.diffheader {
 }
 
 /* wikiplugin_convene */
+
+.conveneHeaderRow td {
+	text-align: center; 
+}
+
+.conveneVotes td,
+.conveneFooterRow td,
+.conveneHeaderRow td {
+	vertical-align: middle;
+}
+
 .convene-ok {    
 	background-color: #D1F3D1 !important;
 	background-image: none !important;
