@@ -2583,8 +2583,14 @@ class TrackerLib extends TikiLib
 			} elseif ($type == 'createdBefore') {
 				$mids[] = 'tti.`created` < ?';
 				$bindvars[] = $val;
+			} elseif ($type == 'createdAfter') {
+				$mids[] = 'tti.`created` > ?';
+				$bindvars[] = $val;
 			} elseif ($type == 'lastModifBefore') {
 				$mids[] = 'tti.`lastModif` < ?';
+				$bindvars[] = $val;
+			} elseif ($type == 'lastModifAfter') {
+				$mids[] = 'tti.`lastModif` > ?';
 				$bindvars[] = $val;
 			} elseif ($type == 'notItemId') {
 				$mids[] = 'tti.`itemId` NOT IN('.implode(",",array_fill(0,count($val),'?')).')';
