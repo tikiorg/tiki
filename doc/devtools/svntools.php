@@ -85,7 +85,7 @@ function is_valid_branch($branch)
 function is_stable($branch)
 {
 	return dirname($branch) == full('branches')
-		&& preg_match("/^\d+\.[\dx]+$/", basename($branch));
+		&& (preg_match("/^\d+\.[\dx]+$/", basename($branch)) || preg_match("/test$/", basename($branch)));
 }
 
 function is_experimental($branch)
