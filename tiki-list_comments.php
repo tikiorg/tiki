@@ -88,12 +88,36 @@ if (isset($_REQUEST['checked'])) {
 			$commentslib->remove_comment($id);
 		}
 	}
-	// Approve/Reject comment(s)
-	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['approve']) && in_array($_REQUEST['approve'], array('y', 'n', 'r'))) {
+
+	// Ban IP adresses of multiple spammers
+	if ( isset($_REQUEST['ban_x']) ) {
+		$mass_ban_ip = implode('|',$checked);
+		header('Location: tiki-admin_banning.php?mass_ban_ip=' . $mass_ban_ip);
+		exit;
+	}
+	// Ban IP adresses of multiple spammers and remove comments
+	if ( isset($_REQUEST['ban_remove_x'])) {
+		$mass_ban_ip = implode('|',$checked);
+		header('Location: tiki-admin_banning.php?mass_remove=y&mass_ban_ip=' . $mass_ban_ip);
+		exit;
+	}
+
+	// Approve comment(s)
+	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['approve_x']) ) {
 		foreach($checked as $id) {
-			$commentslib->approve_comment($id, $_REQUEST['approve']);
+			$commentslib->approve_comment($id, 'y');
 		}
 	}
+
+	// Reject comment(s)
+	if ($prefs['feature_comments_moderation'] == 'y' && isset($_REQUEST['reject_x'])) {
+		foreach($checked as $id) {
+			$commentslib->approve_comment($id, 'r');
+			$rejected[$id] = true;
+		}
+		$smarty->assign_by_ref('rejected', $rejected);
+	}
+
 }
 if (isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
