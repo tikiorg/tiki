@@ -56,11 +56,11 @@
 				{foreach key=ip item=comment from=$ban_comments_list}
 					<tr>
 						<td>
-							<input type="checkbox" name="multi_banned_ip[{$ip}]" id="multi-banning-section" checked="checked" /> <label for="multi-banning-section">{$ip}</label>
+							<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked" /> <label for="multi-banning-section">{$ip|escape}</label>
 						</td>
 						<td>
 							{foreach key=id item=user from=$comment}
-								<div>{$user.userName}</div>
+								<div>{$user.userName|escape}</div>
 							{/foreach}
 						</td>
 					</tr>
