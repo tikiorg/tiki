@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Spreadsheet"}{tr}Spreadsheets{/tr}{/title}
 
 {tabset}
@@ -19,10 +17,10 @@
 {cycle values="odd,even" print=false}
 	{section name=changes loop=$sheets}
 		<tr class="{cycle}">
-			<td><a class="galname" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title}</a></td>
-			<td>{$sheets[changes].description}</td>
-			<td>{$sheets[changes].author}</td>
-			<td>
+			<td class="text"><a class="galname sheetLink" sheetId="{$sheets[changes].sheetId}" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title}</a></td>
+			<td class="text">{$sheets[changes].description}</td>
+			<td class="username">{$sheets[changes].author}</td>
+			<td class="action">
 				{if $chart_enabled eq 'y'}
 					<a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}">
 						<img src='pics/icons/chart_curve.png' width='16' height='16' alt="{tr}Graph{/tr}" title="{tr}Graph{/tr}" />
@@ -52,7 +50,7 @@
 				{/if}
 				{if $sheets[changes].tiki_p_edit_sheet eq 'y'}
 					<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">
-						{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+						{icon _id='page_edit' alt="{tr}Configure{/tr}"}
 					</a>
 					<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}">
 						{icon _id='cross' alt="{tr}Delete{/tr}"}
@@ -61,7 +59,7 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr><td colspan="4" class="odd"><b>{tr}No records found{/tr}</b></td></tr>
+		{norecords _colspan=4}
 	{/section}
 </table>
 
@@ -69,12 +67,12 @@
 {/tab}
 
 {if $tiki_p_edit_sheet eq 'y'}
-	{capture name=title}{if $sheetId eq 0}{tr}Create{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
+	{capture name=title}{if $sheetId eq 0}{tr}Create{/tr}{else}{tr}Configure{/tr}{/if}{/capture}
 	{tab name=$smarty.capture.title}
 		{if $sheetId eq 0}
 			<h2>{tr}Create a sheet{/tr}</h2>
 		{else}
-			<h2>{tr}Edit this sheet:{/tr} {$title}</h2>
+			<h2>{tr}Configure this sheet:{/tr} {$title}</h2>
 			{if $tiki_p_edit_sheet eq 'y'}
 				<div class="navbar">
 					{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" _text="{tr}Create New Sheet{/tr}"}
@@ -90,31 +88,33 @@
 		<form action="tiki-sheets.php" method="post">
 			<input type="hidden" name="sheetId" value="{$sheetId|escape}" />
 			<table class="formcolor">
-				<tr><td>{tr}Title{/tr}:</td><td><input type="text" name="title" value="{$title|escape}"/></td></tr>
-				<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-				<tr><td>{tr}Class Name{/tr}:</td><td><input type="text" name="className" value="{$className|escape}"/></td></tr>
-				<tr><td>{tr}Header Rows{/tr}:</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
-				<tr><td>{tr}Footer Rows{/tr}:</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
+				<tr><td>{tr}Title:{/tr}</td><td><input type="text" name="title" value="{$title|escape}"/></td></tr>
+				<tr><td>{tr}Description:{/tr}</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+				<tr><td>{tr}Class Name:{/tr}</td><td><input type="text" name="className" value="{$className|escape}"/></td></tr>
+				<tr><td>{tr}Header Rows:{/tr}</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
+				<tr><td>{tr}Footer Rows:{/tr}</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 				<tr>
-					<td>{tr}Wiki Parse Values{/tr}:</td><td>
+					<td>{tr}Wiki Parse Values:{/tr}</td><td>
 						<input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}/>
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
 				<tr>
-					<td>{tr}Creator{/tr}:</td><td>
+					<td>{tr}Creator:{/tr}</td><td>
 						{user_selector name="creator" editable=$tiki_p_admin_sheet}
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Parent SheetId{/tr}:</td>
+					<td>{tr}Join with Spreadsheet:{/tr}</td>
 					<td>
 						<select name="parentSheetId">
 							<option value="">{tr}None{/tr}</option>
 							{section name=sheet loop=$sheets}
+								{if not $sheets[sheet].parentSheetId}
 								<option value="{$sheets[sheet].sheetId}"{if $parentSheetId eq $sheets[sheet].sheetId} selected="selected"{/if}>
-									{$sheets[sheet].title|escape}
+									{$sheets[sheet].title|escape} - ({$sheets[sheet].sheetId})
 								</option>
+								{/if}
 							{/section}
 						</select>
 						<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}</em>
@@ -126,7 +126,7 @@
 		
 	{if $sheetId > 0}
 		<div class="wikitext">
-			{tr}You can access the sheet using the following URL{/tr}: <a class="gallink" href="{$url}?sheetId={$sheetId}">{$url}?sheetId={$sheetId}</a>
+			{tr}You can access the sheet using the following URL:{/tr} <a class="gallink" href="{$url}?sheetId={$sheetId}">{$url}?sheetId={$sheetId}</a>
 		</div>
 	{/if}
 	{/tab}

@@ -1,10 +1,13 @@
-{if $prefs.art_home_title ne ''}
-	{title help="Articles" admpage="cms"}
-		{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic|escape}{/tr}
-		{elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type|escape}{/tr}
-		{else}{tr}Articles{/tr}{/if}
-	{/title}
+{if !isset($actions) or $actions eq "y"}
+	{if $prefs.art_home_title ne ''}
+		{title help="Articles" admpage="cms"}
+			{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic|escape}{/tr}
+			{elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type|escape}{/tr}
+			{else}{tr}Articles{/tr}{/if}
+		{/title}
+	{/if}
 {/if}
+
 {section name=ix loop=$listpages}
 	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
 	{if $listpages[ix].disp_article eq 'y'}
