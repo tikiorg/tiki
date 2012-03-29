@@ -7331,6 +7331,9 @@ class TikiLib extends TikiDb_Bridge
 
 		$commentslib = new Comments($dbTiki);
 
+		// Make sure $edit_minor is an integer to avoid a db error
+ 		$edit_minor = intval($edit_minor);
+
 		if (!$edit_user) $edit_user = 'anonymous';
 
 		$this->invalidate_cache($pageName);

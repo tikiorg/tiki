@@ -23,7 +23,7 @@ if (isset($_REQUEST['banId'])) {
 	$info['ip4'] = 255;
 	$info['use_dates'] = 'n';
 	$info['date_from'] = $tikilib->now;
-	$info['date_to'] = $tikilib->now + 7 * 24 * 3600;
+	$info['date_to'] = $tikilib->now + 7 * 24 * 3600 * 100;
 	$info['message'] = '';
 }
 $smarty->assign('banId', $_REQUEST['banId']);

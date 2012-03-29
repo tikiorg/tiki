@@ -3,6 +3,7 @@
 
 <div class="navbar">
 	 {button _text="{tr}Log SQL{/tr}" href="tiki-sqllog.php"}
+	 {button _text="{tr}Export through Action Log{/tr}" href="tiki-admin_actionlog.php#Report"}
 </div>
 
 {if $tikifeedback}
