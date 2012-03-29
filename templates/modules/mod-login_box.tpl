@@ -9,6 +9,23 @@ function capLock(e, el){
 		$('.divCapson', $(el).parents('div:first')).hide();
 	}
 }
+
+//We were having problems with the menu disapearing when you selected an input, this prevents the menu from going away once you have put focus on an input
+var hasFocus = false;
+var loginPopup = $('.siteloginbar_popup .cssmenu_horiz')
+
+loginPopup.find('ul')
+	.mouseout(function() {
+		return !hasFocus;
+	});
+
+loginPopup.find(':input')
+	.focus(function() {
+		hasFocus = true;
+	})
+	.blur(function() {
+		hasFocus = false;
+	});
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {if !isset($module_params)}{assign var=module_params value=' '}{/if}
