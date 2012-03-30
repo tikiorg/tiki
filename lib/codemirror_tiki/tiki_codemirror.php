@@ -13,7 +13,7 @@ function codemirrorModes($minify = true)
 	if (TikiLib::lib("cache")->isCached("codemirror_js" . ($minify ? "min" : "")) == false || TikiLib::lib("cache")->isCached("codemirror_css" . ($minify ? "min" : "")) == false) {
 		foreach(glob('lib/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach(glob($dir.'/*.js') as $jsFile) {
-				$js .= @file_get_contents($jsFile);
+				$js .= "try{" . @file_get_contents($jsFile) . "}catch(e){}";
 			}
 			foreach(glob($dir.'/*.css') as $cssFile) {
 				$css .= @file_get_contents($cssFile);
