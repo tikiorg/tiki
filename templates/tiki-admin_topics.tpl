@@ -1,17 +1,17 @@
 {* $Id$ *}
 
-{title admpage="articles" help="Articles"}{tr}Admin Topics{/tr}{/title}
+{title admpage="articles" help="Articles"}{tr}Admin Article Topics{/tr}{/title}
 
-<h2>{tr}Create a new topic{/tr}</h2>
+<h2>{tr}Add topic{/tr}</h2>
 
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Topic Name{/tr}</td>
+			<td>{tr}Name{/tr}</td>
 			<td><input type="text" name="name" /></td>
 		</tr>
 		<tr>
-			<td>{tr}Upload Image{/tr}</td>
+			<td>{tr}Image{/tr}</td>
 			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 				<input name="userfile1" type="file" />
@@ -26,7 +26,7 @@
 	</table>
 </form>
 
-<h2>{tr}List of topics{/tr}</h2>
+<h2>{tr}Topics{/tr}</h2>
 <table class="normal">
 	<tr>
 		<th>{tr}ID{/tr}</th>
@@ -35,7 +35,7 @@
 		<th>{tr}Active{/tr}</th>
 		<th>{tr}Articles{/tr}</th>
 		{if $prefs.feature_submissions eq 'y'}<th>{tr}Submissions{/tr}</th>{/if}
-		<th>{tr}Action{/tr}</th>
+		<th>{tr}Actions{/tr}</th>
 	</tr>
 	{cycle print=false values="even,odd"}
 	{section name=user loop=$topics}
