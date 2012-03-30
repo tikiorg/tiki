@@ -244,7 +244,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js');
 
 		require_once("lib/codemirror_tiki/tiki_codemirror.php");
-		codemirrorModes();
+		codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 	}
 	
 
