@@ -138,7 +138,7 @@ if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
 $cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
 if ( $cdn_pref ) {
 	$host = parse_url($cdn_pref, PHP_URL_HOST);
-	if ( $host == $_SERVER['HTTP_HOST'] ) {
+	if (isset($_SERVER['HTTP_HOST']) && $host == $_SERVER['HTTP_HOST'] ) {
 		header("HTTP/1.0 404 Not Found");
 		echo "File not found.";
 		exit;

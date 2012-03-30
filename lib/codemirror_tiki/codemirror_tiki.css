@@ -39,6 +39,20 @@
 	overflow: hidden ! important;
 }
 
+.CodeMirror pre {
+	font-size: 1em !important;
+}
+
 .preCodeMirror {
 	display: none;
+}
+
+.CodeMirrorHide {
+	z-index: -99999999;
+	opacity:0.01;
+	filter:alpha(opacity=1);
+}
+
+.CodeMirrorPrepSize {
+	position: absolute;
 }
