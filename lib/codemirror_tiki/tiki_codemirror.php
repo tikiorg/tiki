@@ -11,6 +11,11 @@ function codemirrorModes($minify = true)
 	$css = '';
 
 	if (TikiLib::lib("cache")->isCached("codemirror_js" . ($minify ? "min" : "")) == false || TikiLib::lib("cache")->isCached("codemirror_css" . ($minify ? "min" : "")) == false) {
+
+		//tiki first, where are our priorities!
+		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
+		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
+
 		foreach(glob('lib/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach(glob($dir.'/*.js') as $jsFile) {
 				$js .= "try{" . @file_get_contents($jsFile) . "}catch(e){}";
@@ -19,9 +24,6 @@ function codemirrorModes($minify = true)
 				$css .= @file_get_contents($cssFile);
 			}
 		}
-
-		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
-		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
 
 		if ($minify) {
 			require_once("lib/minify/JSMin.php");
