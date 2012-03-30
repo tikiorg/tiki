@@ -2,7 +2,7 @@
 	<input type="text" id="page_selector_{$field.fieldId}" name="{$field.ins_id}"
 			{if $field.options_array[1] gt 0}size="{$field.options_array[1]}"{/if}
 			value="{if $field.value}{$field.value|escape}{/if}" />
-	
+
 	{autocomplete element="#page_selector_`$field.fieldId`" type='pagename'}
 {else}
 	{$field.value|escape}
