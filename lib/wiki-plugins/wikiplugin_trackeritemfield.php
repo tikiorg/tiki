@@ -141,7 +141,7 @@ function wikiplugin_trackeritemfield($data, $params)
 			return tra('Incorrect param').': status';
 		}
 
-		$info = $trklib->get_item_info($itemId);
+		$info = $trklib->get_tracker_item($itemId);
 		if (!empty($info) && empty($trackerId)) {
 			$trackerId = $info['trackerId'];
 		}
