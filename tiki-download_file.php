@@ -184,7 +184,7 @@ header("Pragma: ");
 header('Expires: ');
 header('Cache-Control: '.( !empty($user) ? 'private' : 'public' ).',must-revalidate,post-check=0,pre-check=0');
 
-if ( $use_client_cache && $prefs['mobile_mode'] !== 'y') {
+if ( $use_client_cache && (empty($prefs['mobile_mode']) || $prefs['mobile_mode'] !== 'y')) {
 	header('Status: 304 Not Modified', true, 304);
 	exit;
 } else {
