@@ -18,7 +18,11 @@ class Reports_Send_EmailBuilder_WikiFileAttached extends Reports_Send_EmailBuild
 	{
 		global $base_url;
 
-		$output = "<u>".$change['user']."</u> ".tra('uploaded the file') . " <a href=\"{$base_url}tiki-download_wiki_attachment.php?attId=".$change['data']['attId']."\">".$change['data']['filename']."</a> ".tra("onto")." <a href=\"{$base_url}tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a>.";
+		$output = tr('%0 uploaded the file %1 onto %2',
+			"<u>{$change['user']}</u>",
+			"<a href=\"{$base_url}tiki-download_wiki_attachment.php?attId={$change['data']['attId']}\">{$change['data']['filename']}</a>",
+			"<a href=\"{$base_url}tiki-index.php?page={$change['data']['pageName']}\">{$change['data']['pageName']}</a>."
+		);
 				
 		return $output;
 	}

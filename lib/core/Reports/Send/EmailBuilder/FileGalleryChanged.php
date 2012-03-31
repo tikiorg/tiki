@@ -19,11 +19,21 @@ class Reports_Send_EmailBuilder_FileGalleryChanged extends Reports_Send_EmailBui
 		global $base_url;
 		
 	 	if (empty($change['data']['action'])) {
-			$output = "<u>".$change['data']['user']."</u> ".tra("edited the file gallery")." <a href=\"{$base_url}tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>";
+	 		$output = tr('%0 edited the file gallery %1.',
+	 			"<u>{$change['data']['user']}</u>",
+	 			"<a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
+	 		);
 		} elseif ($change['data']['action'] == "upload file") {
-			$output = "<u>".$change['data']['user']."</u> ".tra("uploaded the file")." <a href=\"{$base_url}tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("onto")." <a href=\"{$base_url}tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>.";
+			$output = tr('%0 uploaded the file %1.',
+				"<u>{$change['data']['user']}</u>",
+				"<a href=\"{$base_url}tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("onto")." <a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
+			);
 		} elseif ($change['data']['action'] == "remove file") {
-			$output = "<u>".$change['data']['user']."</u> ".tra("removed the file")." <a href=\"{$base_url}tiki-download_file.php?fileId=".$change['data']['fileId']."\">".$change['data']['fileName']."</a> ".tra("from")." <a href=\"{$base_url}tiki-list_file_gallery.php?galleryId=".$change['data']['galleryId']."\">".$change['data']['galleryName']."</a>.";
+			$output = tr('%0 removed the file %1 from %2.',
+				"<u>{$change['data']['user']}</u>",
+				"<a href=\"{$base_url}tiki-download_file.php?fileId={$change['data']['fileId']}\">{$change['data']['fileName']}</a>",
+				"<a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
+			);
 		}
 		
 		return $output;

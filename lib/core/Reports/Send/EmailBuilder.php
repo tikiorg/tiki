@@ -104,17 +104,15 @@ class Reports_Send_EmailBuilder
 		foreach ($change_array as $eventName => $changes) {
 			$eventObject = $this->factory->build($changes[0]['event']);
 
-			$body .= '<b>' . $eventObject->getTitle() . '</b><br />';
+			$body .= '<b>' . $eventObject->getTitle() . "</b><br />\n";
 			
 			foreach ($changes as $key => $change) {
 				if ($report_preferences['view']=="short" AND $key>0) {
 					$morechanges++;
 				} elseif ($report_preferences['view']=="detailed" OR $key==0) {
 					if ($morechanges > 0) {
-						$body .= "   ".tra("and")." ".$morechanges." ".tra("more changes of the same type...")."<br>";
+						$body .= "   " . tr('and %0 more changes of the same type.', $morechanges) . "<br>\n";
 						$morechanges = 0;
-						if ($report_preferences['type']=='plain')
-							$body .= "\r\n";
 					}
 	
 					if ($report_preferences['type'] == 'plain') {
@@ -131,10 +129,7 @@ class Reports_Send_EmailBuilder
 					
 					$body .= $eventObject->getOutput($change);
 					
-					$body .= "<br>";
-					if ($report_preferences['type']=='plain') {
-						$body .= "\r\n";
-					}
+					$body .= "<br>\n";
 				}
 			}
 		}

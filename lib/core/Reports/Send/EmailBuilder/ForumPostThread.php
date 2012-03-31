@@ -11,7 +11,7 @@
 class Reports_Send_EmailBuilder_ForumPostThread extends Reports_Send_EmailBuilder_Abstract {
 	public function getTitle()
 	{
-		return tr('New posts in foruns:');
+		return tr('New replies in foruns topics:');
 	}
 	
 	public function getOutput(array $change)
@@ -21,7 +21,11 @@ class Reports_Send_EmailBuilder_ForumPostThread extends Reports_Send_EmailBuilde
 		$commentslib = TikiLib::lib('comments');
 		$parent_topic = $commentslib->get_comment($change['data']['topicId']);
 		
-		$output = "<u>".$change['data']['user']."</u> <a href=\"{$base_url}tiki-view_forum_thread.php?forumId=".$change['data']['forumId']."&comments_parentId=".$change['data']['topicId']."#threadId".$change['data']['threadId']."\">".tra("replied")."</a> ".tra("to the topic")." <a href=\"{$base_url}tiki-view_forum_thread.php?comments_parentId=".$change['data']['topicId']."&forumId=".$change['data']['forumId']."\">".$parent_topic['title']."</a>.";
+		$output = tr('%0 <a href=%1>replied</a> to the topic %2.',
+			"<u>{$change['data']['user']}</u>",
+			"\"{$base_url}tiki-view_forum_thread.php?forumId={$change['data']['forumId']}&comments_parentId={$change['data']['topicId']}#threadId{$change['data']['threadId']}\"",
+			"<a href=\"{$base_url}tiki-view_forum_thread.php?comments_parentId={$change['data']['topicId']}&forumId={$change['data']['forumId']}\">{$parent_topic['title']}</a>"
+		);
 				
 		return $output;
 	}

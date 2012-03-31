@@ -18,7 +18,14 @@ class Reports_Send_EmailBuilder_WikiPageChanged extends Reports_Send_EmailBuilde
 	{
 		global $base_url;
 		
-		$output = "<u>".$change['data']['editUser']."</u> ".tra("edited the wikipage")." <a href=\"{$base_url}tiki-index.php?page=".$change['data']['pageName']."\">".$change['data']['pageName']."</a> (<a href=\"{$base_url}tiki-pagehistory.php?page=".$change['data']['pageName']."&diff_style=sidediff&compare=Compare&newver=".($change['data']['oldVer']+1)."&oldver=".$change['data']['oldVer']."\">".tra("this history")."</a>, <a href=\"{$base_url}tiki-pagehistory.php?page=".$change['data']['pageName']."&diff_style=sidediff&compare=Compare&newver=0&oldver=".$change['data']['oldVer']."\">".tra("all history")."</a>)";
+		$newVersion = $change['data']['oldVer'] + 1;
+		
+		$output = tr("%0 edited the wikipage %1 (<a href=%2>this history</a>, <a href=%3>all history</a>)",
+			"<u>{$change['data']['editUser']}</u>",
+			"<a href=\"{$base_url}tiki-index.php?page={$change['data']['pageName']}\">{$change['data']['pageName']}</a>",
+			"\"{$base_url}tiki-pagehistory.php?page={$change['data']['pageName']}&diff_style=sidediff&compare=Compare&newver=$newVersion&oldver={$change['data']['oldVer']}\"",
+			"\"{$base_url}tiki-pagehistory.php?page={$change['data']['pageName']}&diff_style=sidediff&compare=Compare&newver=0&oldver={$change['data']['oldVer']}\""
+		);
 				
 		return $output;
 	}
