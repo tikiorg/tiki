@@ -280,6 +280,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	position: relative;
 	top: 33px;
 	color: #fff;
+	margin: 0;
 }
 
 #sitetitle,
@@ -289,7 +290,8 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	font-family: georgia, serif;
 	font-size: 320%;
 	font-weight: 100;
-	margin-top: 40px}
+	margin-top: 40px;
+}
 	
 #sitetitle a,
 #sitetitle a:visited {color: #8f8f8f}
