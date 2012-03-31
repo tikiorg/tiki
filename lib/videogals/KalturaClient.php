@@ -1,4 +1,10 @@
 <?php
+//
+// Copyright (C) 2006-2011  Kaltura Inc.
+// This file has been included in the Tiki distribution with special permission
+// from Kaltura Inc. for the convenience of Tiki users. It is not LGPL licensed.
+// Please obtain your own copy from http://kaltura.org if you need it for any other purpose. 
+
 
 require_once("KalturaClientBase.php");
 require_once("KalturaEnums.php");
