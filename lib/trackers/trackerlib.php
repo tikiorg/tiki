@@ -1715,6 +1715,9 @@ class TrackerLib extends TikiLib
 						case 's':
 							$data[$i] = '';
 										break;
+						case 'y':	// Country selector
+							$data[$i] = preg_replace('/ /', "_", $data[$i]);
+										break;
 						case 'a':
 							$data[$i] = preg_replace('/\%\%\%/', "\r\n", $data[$i]);
 										break;
