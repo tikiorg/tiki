@@ -18,6 +18,9 @@ class Reports_EndToEndTest extends TikiDatabaseTestCase
 		
 		$this->tikilib = $this->getMock('TikiLib', array('get_user_preference'));
 		
+		$this->overrideLibs = new TestableTikiLib;
+		$this->overrideLibs->overrideLibs(array('calendar' => $this->getMock('MockCalendarLib', array('get_item'))));
+		
 		$tikiPrefs = array('short_date_format' => '%Y-%m-%d');
 		
 		$this->obj = Reports_Factory::build('Reports_Manager', $this->dt, $this->mail, $this->tikilib, $tikiPrefs);
@@ -55,7 +58,7 @@ class Reports_EndToEndTest extends TikiDatabaseTestCase
 	{
 		$this->mail->expects($this->once())->method('setUser')->with('test');
 		$this->mail->expects($this->once())->method('setHtml')->with(file_get_contents(dirname(__FILE__) . '/fixtures/email_body.txt'));
-		$this->mail->expects($this->once())->method('setSubject')->with('Report from 2012-03-27 (4 changes)');
+		$this->mail->expects($this->once())->method('setSubject')->with('Report from 2012-03-27 (20 changes)');
 		$this->mail->expects($this->once())->method('buildMessage');
 		$this->mail->expects($this->once())->method('send')->with(array('test@test.com'));
 		
