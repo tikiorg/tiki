@@ -272,7 +272,7 @@ tt {font-size: 1.2em}
 
 .floatright img {margin-right: 10px}
 
-#top_modules #sitetitles {
+#sitetitles {
 	margin: 10% 20px;
 	padding-left: 15px;
 }
@@ -334,9 +334,10 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	padding-right: 10px;
 	padding-top: 0;
 	margin-top: 0;
-	margin-right: 30px}
-	
-.box-search {
+	margin-right: 30px
+}
+
+#topbar_modules .box-search {
 	position: absolute;
 	right: 40px;
 	top: 0;
