@@ -974,9 +974,11 @@ class ToolbarPicker extends Toolbar
 		switch ($this->wysiwyg) {
 			case 'BGColor':
 			case 'TextColor':
-				 return $this->wysiwyg;
-	    	 break;
-			default: return null;
+			case 'SpecialChar':
+				return $this->wysiwyg;
+	    		break;
+			default:
+				return null;
 		}
 	} // }}}
 	
@@ -1243,6 +1245,18 @@ JS
 		return $this->wysiwyg;
 	} // }}}
 	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		switch ($this->name) {
+			case 'tikilink':
+				$this->wysiwyg = 'tikilink';
+				break;
+			default:
+		}
+
+		return $this->getWysiwygToken($areaId);
+	} // }}}
+
 }
 
 class ToolbarFullscreen extends Toolbar
@@ -1265,6 +1279,12 @@ class ToolbarFullscreen extends Toolbar
 		);
 
 	} // }}}
+
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		return $this->getWysiwygToken($areaId);
+	} // }}}
+
 }
 
 class ToolbarHelptool extends Toolbar
@@ -1307,12 +1327,20 @@ class ToolbarHelptool extends Toolbar
 		$plugins = $wikilib->list_plugins(true, $areaId);
 		
 		$smarty->assign_by_ref('plugins', $plugins);
-		$exec_js = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') .
-				$smarty->fetch('tiki-edit_help_plugins.tpl');
-		
+
+		global $prefs;
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			$exec_js = $smarty->fetch('tiki-edit_help_wiki_wysiwyg.tpl') .
+					$smarty->fetch('tiki-edit_help_plugins.tpl');
+			$this->setLabel(tra('Wiki Wysiwyg Help'));
+		} else {
+			$exec_js = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') .
+					$smarty->fetch('tiki-edit_help_plugins.tpl');
+			$this->setLabel(tra('Wysiwyg Help'));
+		}
+
 		$name = 'tikihelp';
-		$this->setLabel(tra('Wysiwyg Help'));
-		
+
 		global $headerlib;
 		$label = addcslashes($this->label, "'");
 		$headerlib->add_jq_onready(
@@ -1343,6 +1371,12 @@ JS
 		);
 		return $name;
 	}
+
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		return $this->getWysiwygToken($areaId);
+	} // }}}
+
 }
 
 class ToolbarFileGallery extends Toolbar
@@ -1379,6 +1413,11 @@ class ToolbarFileGallery extends Toolbar
 			$this->setupCKEditorTool($exec_js, $this->name, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
+	} // }}}
+
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		return $this->getWysiwygToken($areaId);
 	} // }}}
 
 	function isAccessible() // {{{
@@ -1576,6 +1615,18 @@ class ToolbarWikiplugin extends Toolbar
 		return $this->wysiwyg;
 	} // }}}
 	
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		switch ($this->pluginName) {
+			case 'img':
+				$this->wysiwyg = '';	// don't use ckeditor's html image dialog
+				break;
+			default:
+		}
+
+		return $this->getWysiwygToken($areaId);
+	} // }}}
+
 }
 
 class ToolbarSheet extends Toolbar
