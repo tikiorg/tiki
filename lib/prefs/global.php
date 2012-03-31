@@ -432,12 +432,14 @@ function prefs_global_list($partial = false)
 			'type' => 'text',
 			'size' => 20,
 			'default' => '2434291',
+			'tags' => array('experimental'),
 		),
 		'kaeUIConf' => array(
 			'name' => tra('Kaltura Advanced Editor UI Configuration ID'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '1000865',
+			'tags' => array('experimental'),
 		),
 		'kuser' => array(
 			'name' => tra('Kaltura "User"'),
