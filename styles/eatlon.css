@@ -964,9 +964,9 @@ div.dirfooter {margin-top: 10px}
 .Calsurv a,
 .Calsurv a:visited {color: #DAA520}
 
-Caltrack,
-Caltrack a,
-Caltrack a:visited {color: #00BD02}
+.Caltrack,
+.Caltrack a,
+.Caltrack a:visited {color: #00BD02}
 
 .Calweb {font-size: 1em}
 .Calweb:hover {color: #996633}
