@@ -7,8 +7,8 @@
    </div>
    <div id="sitetitles" class="floatleft">
       <div id="sitetitle">
-         <a href="./"{if isset($prefs.mobile_mode) && $prefs.mobile_mode eq "y"} rel="external"{/if}>{if !empty($prefs.sitetitle)}{$prefs.sitetitle}{/if}</a>
-      </div>
+		  {if !empty($prefs.sitetitle)}<a href="./"{if isset($prefs.mobile_mode) && $prefs.mobile_mode eq "y"} rel="external"{/if}>{$prefs.sitetitle}</a>{/if}
+	  </div>
       <div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}{$prefs.sitesubtitle}{/if}</div>
    </div>
 {/tikimodule}
