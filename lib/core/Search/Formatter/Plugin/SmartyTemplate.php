@@ -46,14 +46,17 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 	function renderEntries(Search_ResultSet $entries)
 	{
 		$smarty = new Smarty;
-		$smarty->compile_dir = dirname(__FILE__) . '/../../../../../templates_c';
-		$smarty->template_dir = dirname($this->templateFile);
-		$smarty->plugins_dir = array(	// the directory order must be like this to overload a plugin
+		$smarty->setCompileDir(dirname(__FILE__) . '/../../../../../templates_c');
+		$smarty->setTemplateDir(null);
+		$smarty->setTemplateDir(dirname($this->templateFile));
+		$smarty->setPluginsDir(	// the directory order must be like this to overload a plugin
 			dirname(__FILE__) . '/../../../../../' . TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
 		);
 
-		$smarty->enableSecurity('Tiki_Security_Policy');
+		$secpol = new Tiki_Security_Policy($smarty);
+		$secpol->secure_dir[] = dirname($this->templateFile);
+		$smarty->enableSecurity($secpol);
 
 		if ( $this->changeDelimiters ) {
 			$smarty->left_delimiter = '{{';

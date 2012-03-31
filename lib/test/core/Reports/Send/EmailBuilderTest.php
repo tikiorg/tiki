@@ -14,18 +14,19 @@ class Reports_Send_EmailBuilderTest extends TikiTestCase
 	protected function setUp()
 	{
 		$this->tikilib = $this->getMockBuilder('TikiLib')->getMock();
+		$this->factory = $this->getMock('Reports_Send_EmailBuilder_Factory');
 		
-		$this->obj = new Reports_Send_EmailBuilder($this->tikilib);
+		$this->obj = new Reports_Send_EmailBuilder($this->tikilib, new Reports_Send_EmailBuilder_Factory);
 
-		$this->defaultReportPreferences = array('type' => 'plain');
+		$this->defaultReportPreferences = array('type' => 'plain', 'view' => 'detailed');
 	}
 
-	public function testMakeHtmlEmailBody_shouldReturnStringIfNothingHappened()
+	public function testMakeEmailBody_shouldReturnStringIfNothingHappened()
 	{
-		$this->assertEquals('Nothing has happened.', $this->obj->makeHtmlEmailBody(array(), $this->defaultReportPreferences));
+		$this->assertEquals('Nothing has happened.', $this->obj->makeEmailBody(array(), $this->defaultReportPreferences));
 	}
 	
-	public function testMakeHtmlEmailBody_shouldReturnCalendarChangedReportInDetailedViewMode()
+	public function testMakeEmailBody_shouldReturnCalendarChangedReportInDetailedViewMode()
 	{
 		$this->tikilib->expects($this->exactly(2))->method('get_short_datetime')
 			->will($this->returnValue('2011-09-13 11:19'));
@@ -55,12 +56,12 @@ class Reports_Send_EmailBuilderTest extends TikiTestCase
 			),
 		);
 		
-		$output = $this->obj->makeHtmlEmailBody($reportCache, $this->defaultReportPreferences);
+		$output = $this->obj->makeEmailBody($reportCache, $this->defaultReportPreferences);
 
 		$this->assertContains('2011-09-13 11:19: admin added or updated event Calendar item name', $output);
 	}
 	
-	public function testMakeHtmlEmailBody_shouldReturnTrackerItemCommentReportInDetailedViewMode()
+	public function testMakeEmailBody_shouldReturnTrackerItemCommentReportInDetailedViewMode()
 	{
 		$this->tikilib->expects($this->once())->method('get_short_datetime')
 			->will($this->returnValue('2011-09-12 20:30'));
@@ -85,8 +86,32 @@ class Reports_Send_EmailBuilderTest extends TikiTestCase
 			),
 		);
 		
-		$output = $this->obj->makeHtmlEmailBody($reportCache, $this->defaultReportPreferences);
+		$output = $this->obj->makeEmailBody($reportCache, $this->defaultReportPreferences);
 
 		$this->assertContains('2011-09-12 20:30: admin added a new comment to Tracker item name', $output);
-	}	
+	}
+	
+	public function testMakeEmailBody_shouldUseCategoryChangedObject()
+	{
+		$obj = new Reports_Send_EmailBuilder($this->tikilib, $this->factory);
+		
+		$reportCache = array(
+			array(
+				'user' => 'admin',
+				'categoryId' => 1,
+    			'event' => 'category_changed',
+    			'data' => array('action' => 'object entered category', 'user' => 'admin', 'objectType' => '', 'objectUrl' => '', 'objectName' => '', 'categoryId' => '', 'categoryName' => ''),
+    			'time' => '2011-09-12 20:30:31',
+			),
+		);
+		
+		$categoryChanged = $this->getMock('Reports_Send_EmailBuilder_CategoryChanged');
+		$categoryChanged->expects($this->once())->method('getTitle');
+		$categoryChanged->expects($this->once())->method('getOutput');
+		
+		$this->factory->expects($this->once())->method('build')
+			->with('category_changed')->will($this->returnValue($categoryChanged));
+			
+		$obj->makeEmailBody($reportCache, $this->defaultReportPreferences);
+	}
 }

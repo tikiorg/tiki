@@ -53,7 +53,7 @@ class Reports_Factory
 				global $prefs;
 				return new Reports_Send($dt, $tm, Reports_Factory::build('Reports_Send_EmailBuilder', $dt, $tm, $tikilib), $tikiPrefs);
 			case 'Reports_Send_EmailBuilder':
-				return new Reports_Send_EmailBuilder($tikilib);
+				return new Reports_Send_EmailBuilder($tikilib, new Reports_Send_EmailBuilder_Factory);
 			default:
 				throw new Exception("Unknown class $className");
 		}		

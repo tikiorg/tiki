@@ -46,7 +46,7 @@ class Reports_Send
 		if ($reportPreferences['type'] == 'plain') {
 			$this->mail->setText($mailData);
 		} else {
-			$this->mail->setHtml(nl2br($mailData));
+			$this->mail->setHtml($mailData);
 		}
 		
 		$this->mail->buildMessage();
