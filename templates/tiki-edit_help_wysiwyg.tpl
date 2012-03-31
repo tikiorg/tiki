@@ -45,7 +45,7 @@
 <p style="margin-left: 2em;">
 	{icon _id="error"} {tr}<strong>Caution:</strong> This is a new feature and still work in progress.<br />
 	If you intend to use plugins extensively in a page consider editing that page in wiki mode only.<br />
-	Currently (in Tiki 6.0) drag and drop of plugins in WYSIWYG does not work.{/tr}</p>
+	Currently (still in Tiki 9.0) drag and drop of plugins in WYSIWYG does not work.{/tr}</p>
 
 	{if $tiki_p_admin eq "y"}
 		<hr style="border-width: 1px;" />
