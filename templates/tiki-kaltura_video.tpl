@@ -4,7 +4,7 @@
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
 <div class="navbar">
 	{if $tiki_p_list_videos eq 'y'}
-	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php"}
+	{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
 	{/if}
 	{if $kmode ne ''}
 	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y')}

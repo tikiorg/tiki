@@ -5,15 +5,18 @@
 	}
 {/jq}
 
+{if $tiki_p_upload_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}{button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}{/if}
+
 {if $tiki_p_list_videos eq 'y'}
 {if $entryType eq "mix"}
-	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php"}
+	{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
 	{if $prefs.kaltura_legacyremix == 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
 {else}
 	{if $prefs.kaltura_legacyremix == 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
-	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php"}
+	{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
 {/if}
 {/if}
+
 	<div class="center">
 		<object name="mykdp" id="mykdp" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}">
 			<param name="allowScriptAccess" value="always" />
