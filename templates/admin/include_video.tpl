@@ -15,7 +15,6 @@
 
 <fieldset class="admin">
 <legend>{tr}Kaltura / Tiki config{/tr}</legend>
-	{preference name=kaltura_kuser}
 	{preference name=kaltura_kServiceUrl}
 	{preference name=default_kaltura_editor}
 </fieldset>

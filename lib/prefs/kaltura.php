@@ -55,14 +55,6 @@ function prefs_kaltura_list()
 			'default' => '1000865',
 			'tags' => array('experimental'),
 		),
-		'kaltura_kuser' => array(
-			'name' => tra('Kaltura "User"'),
-			'description' => tra('Owner of content shared by all Tiki users on this site. If empty then each Tiki user can only see their own media entries.'),
-			'hint' => tr("You could use your server name for this. e.g. %0", $url_host),
-			'type' => 'text',
-			'size' => 20,
-			'default' => $url_host,
-		),
 		'kaltura_kServiceUrl' => array(
 			'name' => tra('Kaltura Service URL'),
 			'description' => tra('e.g. http://www.kaltura.com/'),
