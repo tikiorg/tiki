@@ -20,6 +20,12 @@ try {
 		$kentryType = 'mix';
 	}
 
+	if ($user) {
+		$kuser = $user;	
+	} else {
+		$kuser = 'Anonymous'; 
+	}
+	
 	if (!empty($_REQUEST['mediaId'])) {	
 		if (is_array($_REQUEST['mediaId'])) {
 			$videoId = $_REQUEST['mediaId'];
