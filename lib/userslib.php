@@ -3811,15 +3811,6 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
-				'name' => 'tiki_p_remix_videos',
-				'description' => tra('Can create kaltura remix video'),
-				'level' => 'editors',
-				'type' => 'kaltura',
-				'admin' => false,
-				'prefs' => array('feature_kaltura'),
-				'scope' => 'global',
-			),
-			array(
 				'name' => 'tiki_p_delete_videos',
 				'description' => tra('Can delete kaltura entry'),
 				'level' => 'editors',
