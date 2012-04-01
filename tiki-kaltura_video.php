@@ -19,12 +19,6 @@ try {
 		}
 		$kentryType = 'mix';
 	}
-
-	if ($user) {
-		$kuser = $user;	
-	} else {
-		$kuser = 'Anonymous'; 
-	}
 	
 	if (!empty($_REQUEST['mediaId'])) {	
 		if (is_array($_REQUEST['mediaId'])) {
@@ -80,7 +74,6 @@ try {
 			case 'edit':
 				$access->check_permission(array('tiki_p_edit_videos'));
 				if ($_REQUEST['update']) {
-					$kalturalib->session = $kalturalib->client->session->start($prefs['kaltura_adminSecret'], $kuser, $SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 					$kalturalib->client->setKs($kalturalib->session);
 				}
 				if ($kentryType == 'mix') {
