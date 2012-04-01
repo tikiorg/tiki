@@ -7,6 +7,7 @@
 
 require_once 'tiki-setup.php';
 require_once 'lib/videogals/kalturalib.php';
+$access->check_feature('feature_kaltura');
 $access->check_permission(array('tiki_p_list_videos'));
 //get_strings tra('List Entries')
 

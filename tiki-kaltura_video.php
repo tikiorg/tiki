@@ -8,6 +8,8 @@
 require_once 'tiki-setup.php';
 require_once 'lib/videogals/kalturalib.php';
 
+$access->check_feature('feature_kaltura');
+
 try {
 	$kentryType = '';
 	$videoId = array();
