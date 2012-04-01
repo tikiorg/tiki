@@ -9,7 +9,7 @@ require_once 'tiki-setup.php';
 require_once 'lib/videogals/kalturalib.php';
 $access->check_feature('feature_kaltura');
 $access->check_permission(array('tiki_p_list_videos'));
-//get_strings tra('List Entries')
+//get_strings tra('List Media')
 
 $mediaTypeAsString['2'] = 'Image';
 $mediaTypeAsString['1'] = 'Video';
