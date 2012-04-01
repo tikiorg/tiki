@@ -128,8 +128,8 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 			$boundaryLength = substr_count($boundaries[$i], '|');
 
 			$this->indexes[] = array(
-					'start' => $boundaryLength,
-					'end' => $boundaryLength + $phraseLength
+					'start' => min(count($parentWords) - count($phraseWords), $boundaryLength),
+					'end' => min(count($parentWords), $boundaryLength + $phraseLength)
 			);
 
 			$i++;
