@@ -178,6 +178,7 @@ class UnifiedSearchLib
 			|| $prefs['feature_article_comments'] == 'y'
 			|| $prefs['feature_poll_comments'] == 'y'
 			|| $prefs['feature_file_galleries_comments'] == 'y'
+			|| $prefs['feature_trackers'] == 'y'
 		) {
 			$types['comment'] = tra('comment');
 		}
