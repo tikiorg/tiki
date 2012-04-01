@@ -26,6 +26,9 @@ $statusAsString  = array(
 	6 => tra('Blocked'),
 );
 
+if (!isset($_REQUEST['list'])) {
+	$_REQUEST['list'] = 'media'; // default media since mix is relegated	
+}
 
 try {
 
