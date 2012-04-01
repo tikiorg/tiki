@@ -76,9 +76,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 #col2 .content {padding: 0 20px}
 
 #col1 #tiki-center {
-	border-left: 1px solid #60bbbb;
-	border-right: 1px solid #60bbbb;
-	padding: 0 30px}
+	border-left: none;
+	border-right: none;
+	padding: 0 30px
+}
 
 #col3 .content {padding: 0 20px}
 #col3 {
