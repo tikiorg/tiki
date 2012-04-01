@@ -81,6 +81,7 @@
           {else}
             href="{if $prefs.javascript_enabled eq 'y' && $files[changes].type|truncate:5:'':true eq 'image'}{$files[changes].id|sefurl:preview}{elseif $files[changes].type|truncate:5:'':true neq 'image'}{$files[changes].id|sefurl:file}{else}{$files[changes].id|sefurl:display}{/if}"
           {/if}
+		  {if $prefs.mobile_mode eq 'y'} rel="external"{/if}
         {/if}
       {/if}
     {/strip}{/capture}
