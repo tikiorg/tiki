@@ -1,7 +1,7 @@
 {title help="Kaltura" admpage="video"}{tr}Upload to Kaltura{/tr}{/title}
 
 <div class="navbar">
-	{if $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
+	{if $tiki_p_list_videos eq 'y'}
 	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php"}
 	{/if}
 </div>
