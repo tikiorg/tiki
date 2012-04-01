@@ -7,7 +7,7 @@
 	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php}
 	{/if}
 	{if $kmode ne ''}
-	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
+	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y')}
 		{if $entryType eq "media"}
 			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=edit"}
 		{else}
