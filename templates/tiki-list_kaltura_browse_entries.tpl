@@ -13,11 +13,11 @@
 	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media"}
 {/if}
 	<div class="center">
-		<object name="mykdp" id="mykdp" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/{$prefs.kaltura_kdpWidget}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}">
+		<object name="mykdp" id="mykdp" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}">
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
-			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/{$prefs.kaltura_kdpWidget}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$klist[0]->id}"/>
+			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$klist[0]->id}"/>
 			<param name="flashVars" value="entry_id={$klist[0]->id}" />
 			<param name="wmode" value="opaque" />
 		</object>

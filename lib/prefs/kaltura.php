@@ -34,14 +34,6 @@ function prefs_kaltura_list()
 			'size' => 20,
 			'default' => '1913592',
 		),
-		'kaltura_kdpWidget' => array(
-			'name' => tra('KDP Widget ID'),
-			'description' => tra('Kaltura Dynamic Player (KDP) Widget ID. This configuration is specific to your account.'),
-			'hint' => tra("If you don't know better, use '_yourPartnerID'"),
-			'type' => 'text',
-			'size' => 20,
-			'default' => '',
-		),
 		'kaltura_kcwUIConf' => array(
 			'name' => tra('KCW UI Configuration ID'),
 			'description' => tra('Kaltura Configuration Wizard (KCW) user interface configuration ID'),

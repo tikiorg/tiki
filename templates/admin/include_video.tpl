@@ -32,7 +32,6 @@
 <fieldset class="admin">
 <legend>{tr}Kaltura Dynamic Player{/tr}</legend>
 	{preference name=kaltura_kdpUIConf}
-	{preference name=kaltura_kdpWidget}
 </fieldset>
 
 <br/>
