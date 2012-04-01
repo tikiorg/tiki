@@ -74,10 +74,10 @@ try {
 			case 'edit':
 				$access->check_permission(array('tiki_p_edit_videos'));
 				if ($_REQUEST['update']) {
-					$kalturalib->client->setKs($kalturalib->session);
+					$kalturaadminlib->client->setKs($kalturaadminlib->session);
 				}
 				if ($kentryType == 'mix') {
-					$kentry = $kalturalib->client->mixing->get($videoId[0]);
+					$kentry = $kalturaadminlib->client->mixing->get($videoId[0]);
 				
 					if ($_REQUEST['update']) {
 						$kentry = new KalturaPlayableEntry();
@@ -86,11 +86,11 @@ try {
 						$kentry->tags = $_REQUEST['tags'];
 						$kentry->editorType = $_REQUEST['editor'] === 'kse' ? 1 : 2;
 						$kentry->adminTags = $_REQUEST['adminTags'];
-						$knewentry = $kalturalib->client->mixing->update($videoId[0], $kentry);
+						$knewentry = $kalturaadminlib->client->mixing->update($videoId[0], $kentry);
 					}
 				}
 				if ($kentryType == 'media') {
-					$kentry = $kalturalib->client->media->get($videoId[0]);
+					$kentry = $kalturaadminlib->client->media->get($videoId[0]);
 				
 					if ($_REQUEST['update']) {
 						$kentry = new KalturaPlayableEntry();
@@ -99,7 +99,7 @@ try {
 						$kentry->tags = $_REQUEST['tags'];
 						$kentry->adminTags = $_REQUEST['adminTags'];
 		
-						$knewentry = $kalturalib->client->media->update($videoId[0], $kentry);
+						$knewentry = $kalturaadminlib->client->media->update($videoId[0], $kentry);
 					}
 				}
 				if ($_REQUEST['update']) {
@@ -108,7 +108,7 @@ try {
 				}
 				$smarty->assign_by_ref('videoId', $videoId[0]);
 				$smarty->assign_by_ref('videoInfo', $kentry);
-				$smarty->assign_by_ref('kalturaSession', $kalturalib->session);
+				$smarty->assign_by_ref('kalturaSession', $kalturaadminlib->session);
 							break;
 
 			case 'default':
@@ -135,6 +135,13 @@ try {
 		$smarty->assign_by_ref('entryType', $kentryType);
 	}
 
+	if ($mode == 'edit' && !empty($prefs['kaltura_kdpEditUIConf'])) {
+		$kaltura_kdpId = $prefs['kaltura_kdpEditUIConf'];
+	} else {
+		$kaltura_kdpId = $prefs['kaltura_kdpUIConf'];
+	}
+	$smarty->assign('kaltura_kdpId', $kaltura_kdpId);
+	
 	// Display the template
 	$smarty->assign('mid', 'tiki-kaltura_video.tpl');
 	$smarty->display('tiki.tpl');

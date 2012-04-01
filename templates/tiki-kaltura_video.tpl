@@ -4,7 +4,7 @@
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
 <div class="navbar">
 	{if $tiki_p_list_videos eq 'y'}
-	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php}
+	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php"}
 	{/if}
 	{if $kmode ne ''}
 	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y')}
@@ -24,11 +24,11 @@
 		<table width="100%">
 		<tr>
 			<td width="50%" align="center">
-			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}">
+			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$kaltura_kdpId}/entry_id/{$videoInfo->id}">
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
-			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}"/>
+			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$kaltura_kdpId}/entry_id/{$videoInfo->id}"/>
 			<param name="flashVars" value="entry_id={$videoInfo->id}&ks={$kalturaSession}"/>
 			<param name="wmode" value="opaque"/>
 			</object>			
