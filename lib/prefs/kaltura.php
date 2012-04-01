@@ -35,8 +35,8 @@ function prefs_kaltura_list()
 			'default' => '',
 		),
 		'kaltura_kdpEditUIConf' => array(
-			'name' => tra('Kaltura Video Player ID (Editor)'),
-			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID for use when editing'),
+			'name' => tra('Kaltura Video Player ID (in entry edit mode)'),
+			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID for use when editing. You can use a player which also has an option to select a frame as video thumbnail'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
@@ -60,6 +60,7 @@ function prefs_kaltura_list()
 			'description' => tra('Show remixes from old versions of Kaltura (remixing is no longer supported)'),
 			'type' => 'flag',
 			'default' => 'n',
+			'view' => 'tiki-list_kaltura_entries.php?list=mix',
 		),
 	);
 }
