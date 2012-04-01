@@ -38,10 +38,16 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['ajax_autosave'] = 'n';
 		$prefs['change_theme'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
-		$prefs['feature_shadowbox'] = 'n';
 		$prefs['jquery_ui_selectmenu'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
+
+		if ($prefs['feature_shadowbox'] === 'y') {
+			$headerlib
+				->add_jsfile('lib/jquery/code.photoswipe/lib/klass.min.js')
+				->add_jsfile("lib/jquery/code.photoswipe/code.photoswipe.jquery-3.0.4.js")
+				->add_cssfile('lib/jquery/code.photoswipe/photoswipe.css');
+		}
 
 		// a few requirements
 		$prefs['feature_html_head_base_tag'] = 'y';
