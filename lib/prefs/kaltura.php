@@ -41,26 +41,18 @@ function prefs_kaltura_list()
 			'size' => 20,
 			'default' => '1913682',
 		),
-		'kaltura_kseUIConf' => array(
-			'name' => tra('Kaltura Simple Editor UI Configuration ID'),
-			'type' => 'text',
-			'size' => 20,
-			'default' => '2434291',
-			'tags' => array('experimental'),
-		),
-		'kaltura_kaeUIConf' => array(
-			'name' => tra('Kaltura Advanced Editor UI Configuration ID'),
-			'type' => 'text',
-			'size' => 20,
-			'default' => '1000865',
-			'tags' => array('experimental'),
-		),
 		'kaltura_kServiceUrl' => array(
 			'name' => tra('Kaltura Service URL'),
 			'description' => tra('e.g. http://www.kaltura.com/'),
 			'type' => 'text',
 			'size' => 40,
 			'default' => 'http://www.kaltura.com/',
+		),
+		'kaltura_legacyremix' => array(
+			'name' => tra('Show no longer supported remixes from old versions of Kaltura'),
+			'description' => tra('Show remixes from old versions of Kaltura (remixing is no longer supported)'),
+			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

@@ -26,13 +26,14 @@
 {if $view ne "browse"}
 <form action='tiki-list_kaltura_entries.php?list={if $entryType eq "mix"}mix{else}media{/if}' method="post"{if $entryType ne "mix"} id="videoAction"{/if}>	
 	{capture assign=btnlink_list}{if $entryType eq "mix"}media{else}mix{/if}{/capture}
+	{if $prefs.kaltura_legacyremix == 'y' || $entryType eq "mix"}
 	{capture assign=btnlink_text}{if $entryType eq "mix"}{tr}List Media Entries{/tr}{else}{tr}List Remixes{/tr}{/if}{/capture}
 	{button _text=$btnlink_text href="tiki-list_kaltura_entries.php?list=$btnlink_list"}
+	{/if}
 	{if $tiki_p_upload_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}{button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}{/if}
-	{capture assign=btnlink_text}{if $entryType ne "mix"}{tr}Browse Media Entries{/tr}{else}{tr}Browse Remixes{/tr}{/if}{/capture}
+	{capture assign=btnlink_text}{if $entryType eq "mix"}{tr}Browse Remixes{/tr}{else}{tr}Browse Media Entries{/tr}{/if}{/capture}
 	{button _text=$btnlink_text href="tiki-list_kaltura_entries.php?list=$entryType&amp;view=browse"}
-	<div class="floatright"> 
-	{if $entryType ne "mix" and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y')}<input type="submit" name="action" value="{tr}Create Remix{/tr}" />{/if} 
+	<div class="floatright">
 	{if $tiki_p_delete_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}<input type="submit" name="action" value="{tr}Delete{/tr}" />{/if}
 	</div>
 	{if $entryType eq "mix"}{include file='tiki-list_kaltura_mix_entries.tpl'}{else}{include file='tiki-list_kaltura_media_entries.tpl'}{/if}

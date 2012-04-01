@@ -41,47 +41,6 @@ try {
 		$smarty->assign('entryType', $kentryType);
 	
 		switch ($mode) {
-	
-			case 'remix':
-				$access->check_permission(array('tiki_p_remix_videos'));
-				$seflashVars = 'uid=' . $user .
-					'&ks=' . $kalturalib->session . 
-					'&partner_id=' . $prefs['kaltura_partnerId'] .
-					'&subp_id=' . $prefs['kaltura_partnerId'] .'00'.
-					'&backF=CloseClick' .
-					'&saveF=SaveClick' .
-					'&jsDelegate=kaeCallbacksObj';
-
-				if (isset($_REQUEST['editor'])) {
-					$editor = $_REQUEST['editor'];
-				} else {
-					$editor = $prefs['default_kaltura_editor'];
-				}
-		
-				if ($kentryType == 'mix') {
-					$seflashVars = $seflashVars .
-						'&kshow_id=entry-' . $videoId[0] .
-						'&ks=' . $kalturalib->session .
-						'&entry_id='. $videoId[0];
-				}
-				if ($kentryType == 'media') {
-					$kentry = $kalturalib->client->media->get($videoId[0]);
-					$knewmixEntry = new KalturaMixEntry();
-					$knewmixEntry->name = "Remix of " . $kentry->name;
-					$knewmixEntry->editorType = 1; //SIMPLE
-					$knewmixEntry = $kalturalib->client->mixing->add($knewmixEntry);
-					$kalturalib->client->mixing->appendMediaEntry($knewmixEntry->id, $videoId[0]);
-	
-					header("Location: tiki-kaltura_video.php?action=remix&mixId=" . $knewmixEntry->id);
-				} else if (!isset($_REQUEST['editor'])) {
-					$kentry = $kalturalib->client->mixing->get($videoId[0]);
-					$editor = $kentry->editorType === 1 ? 'kse' : 'kae';	// not working - editor doesn't save editorType when you publish 
-				}
-				$smarty->assign_by_ref('seflashVars', $seflashVars);
-				$smarty->assign_by_ref('editor', $editor);
-				$smarty->assign_by_ref('videoId', $videoId[0]);
-		
-							break;
 
 			case 'dupl':
 				$access->check_permission(array('tiki_p_upload_videos'));

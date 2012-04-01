@@ -1,6 +1,5 @@
 {title help="Kaltura" admpage="video"}
 	{if $kmode eq 'edit'}{tr}Change Details:{/tr}{$videoInfo->name}
-	{elseif $kmode eq 'remix' || $kmode eq 'dupl'}{tr}Remix{/tr}
 	{elseif $kmode eq 'view'}{tr}View:{/tr}{$videoInfo->name}
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
 <div class="navbar">
@@ -14,19 +13,6 @@
 		{else}
 			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=edit"}		
 		{/if}
-	{/if}
-	{if $kmode ne 'remix' and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
-		{if $entryType eq "media"}
-			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=remix"}
-		{else}
-			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix"}		
-		{/if}
-	{/if}
-	{if $kmode eq 'remix' and $editor eq 'kse'}
-	{button _text="{tr}Advanced Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kae"}
-	{/if}
-	{if $kmode eq 'remix' and $editor eq 'kae'}
-	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kse"}
 	{/if}
 	{/if}
 </div>
@@ -123,16 +109,6 @@
 		</div>
 	{/capture}
 	
-	{capture name=remix_video assign=edit_remix}
-		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" data="{$prefs.kaltura_kServiceUrl}{if $editor eq 'kae'}kae/ui_conf_id/{$prefs.kaltura_kaeUIConf}" height="672" width="825" {else}kse/ui_conf_id/{$prefs.kaltura_kseUIConf}" height="546" width="890"{/if}>
-			<param name="allowScriptAccess" value="always" />
-			<param name="allowNetworking" value="all" />
-			<param name="allowFullScreen" value="true" />
-			<param name="flashVars" value="{$seflashVars}"/>
-			<param name="wmode" value="opaque"/>
-		</object>
-	{/capture}
-	
 	<div>	
 	{if $kmode eq 'edit'}
 	<div id="form">
@@ -146,10 +122,6 @@
 	{elseif $kmode eq 'view'}
 	<div>
 	{$edit_info}
-	</div>
-	{elseif $kmode eq 'remix' || $kmode eq 'dupl'}
-	<div>
-	{$edit_remix}
 	</div>
 	{else}
 		{tr}No action specified{/tr} {$kmode}

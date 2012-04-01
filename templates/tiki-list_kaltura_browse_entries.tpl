@@ -7,9 +7,9 @@
 
 {if $entryType eq "mix"}
 	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media"}
-	{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}
+	{if $prefs.kaltura_legacyremix == 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
 {else}
-	{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}
+	{if $prefs.kaltura_legacyremix == 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
 	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media"}
 {/if}
 	<div class="center">

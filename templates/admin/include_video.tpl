@@ -16,7 +16,6 @@
 <fieldset class="admin">
 <legend>{tr}Kaltura / Tiki config{/tr}</legend>
 	{preference name=kaltura_kServiceUrl}
-	{preference name=default_kaltura_editor}
 </fieldset>
 
 <fieldset class="admin">
@@ -26,29 +25,28 @@
 	{preference name=kaltura_secret}
 </fieldset>
 
-<br/>
+<br />
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Dynamic Player{/tr}</legend>
 	{preference name=kaltura_kdpUIConf}
 </fieldset>
 
-<br/>
+<br />
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Contribution Wizard{/tr}</legend>
 	{preference name=kaltura_kcwUIConf}
 </fieldset>
 
-<br/>
+<br />
 
 <fieldset class="admin">
-<legend>{tr}Kaltura Remix Editors{/tr}</legend>
-	{preference name=kaltura_kseUIConf}
-	{preference name=kaltura_kaeUIConf}
+<legend>{tr}Legacy support{/tr}</legend>
+	{preference name=kaltura_legacyremix}
 </fieldset>
 
-<br/>
+<br />
 
 <div align="center" style="padding:1em;"><input type="submit" name="kaltura" value="{tr}Save{/tr}" /></div>
 </form>
