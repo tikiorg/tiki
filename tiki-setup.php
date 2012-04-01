@@ -84,6 +84,8 @@ elseif (function_exists('session_id')) $tikilib->setSessionId(session_id());
 
 if ($prefs['mobile_feature'] === 'y') {
 	require_once ('lib/setup/mobile.php');	// needs to be before js_detect
+} else {
+	$prefs['mobile_mode'] = '';
 }
 
 require_once ('lib/setup/cookies.php');
