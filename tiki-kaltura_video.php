@@ -6,7 +6,7 @@
 // $Id$
 
 require_once 'tiki-setup.php';
-require_once 'lib/videogals/videogallib.php';
+require_once 'lib/videogals/kalturalib.php';
 
 try {
 	$kentryType = '';
@@ -38,8 +38,8 @@ try {
 	
 			case 'remix':
 				$access->check_permission(array('tiki_p_remix_videos'));
-				$seflashVars = 'uid=' . $kuser .
-					'&ks=' . $ksession . 
+				$seflashVars = 'uid=' . $user .
+					'&ks=' . $kalturalib->session . 
 					'&partner_id=' . $prefs['kaltura_partnerId'] .
 					'&subp_id=' . $prefs['kaltura_partnerId'] .'00'.
 					'&backF=CloseClick' .
@@ -58,16 +58,16 @@ try {
 						'&entry_id='. $videoId[0];	
 				}
 				if ($kentryType == 'media') {
-					$kentry = $kclient->media->get($videoId[0]);
+					$kentry = $kalturalib->client->media->get($videoId[0]);
 					$knewmixEntry = new KalturaMixEntry();
 					$knewmixEntry->name = "Remix of " . $kentry->name;
 					$knewmixEntry->editorType = 1; //SIMPLE
-					$knewmixEntry = $kclient->mixing->add($knewmixEntry);
-					$kclient->mixing->appendMediaEntry($knewmixEntry->id, $videoId[0]);
+					$knewmixEntry = $kalturalib->client->mixing->add($knewmixEntry);
+					$kalturalib->client->mixing->appendMediaEntry($knewmixEntry->id, $videoId[0]);
 	
 					header("Location: tiki-kaltura_video.php?action=remix&mixId=" . $knewmixEntry->id);
 				} else if (!isset($_REQUEST['editor'])) {
-					$kentry = $kclient->mixing->get($videoId[0]);
+					$kentry = $kalturalib->client->mixing->get($videoId[0]);
 					$editor = $kentry->editorType === 1 ? 'kse' : 'kae';	// not working - editor doesn't save editorType when you publish 
 				}
 				$smarty->assign_by_ref('seflashVars', $seflashVars);
@@ -79,7 +79,7 @@ try {
 			case 'dupl':
 				$access->check_permission(array('tiki_p_upload_videos'));
 				if ($kentryType == 'mix') {
-					$knewmixEntry = $kclient->mixing->cloneAction($videoId[0]);
+					$knewmixEntry = $kalturalib->client->mixing->cloneAction($videoId[0]);
 				}
 				header('Location: tiki-list_kaltura_entries.php');
 				die;
@@ -87,7 +87,7 @@ try {
 
 			case 'revert':
 				$access->check_permission(array('tiki_p_admin_kaltura'));
-				$koldentry = $kclient->mixing->get($videoId[0], $_REQUEST['version']);
+				$koldentry = $kalturalib->client->mixing->get($videoId[0], $_REQUEST['version']);
 				$koldentry = new KalturaMixEntry();
 				$knewentry = new KalturaMixEntry();
 				$knewentry->name = $koldentry->name;
@@ -100,7 +100,7 @@ try {
 				$knewentry->licenseType = $koldentry->licenseType;
 				$knewentry->editorType = $koldentry->editorType;
 				$knewentry->dataContent =$koldentry->dataContent;
-				$knewentry = $kclient->mixing->update($koldentry->id, $knewentry);
+				$knewentry = $kalturalib->client->mixing->update($koldentry->id, $knewentry);
 				$smarty->assign_by_ref('videoId', $knewentry->id);
 				$smarty->assign_by_ref('videoInfo', $knewentry);
 							break;
@@ -110,12 +110,12 @@ try {
 				$access->check_authenticity();
 				if ($kentryType == 'media') {
 					foreach ( $videoId as $vi ) {
-						$kclient->media->delete($vi);
+						$kalturalib->client->media->delete($vi);
 					}
 				}
 				if ($kentryType == 'mix') {
 					foreach ( $videoId as $vi ) {
-						$kclient->mixing->delete($vi);
+						$kalturalib->client->mixing->delete($vi);
 					}					
 				}	
 				header('Location: tiki-list_kaltura_entries.php');
@@ -124,7 +124,7 @@ try {
 
 			case 'download':
 				$access->check_permission(array('tiki_p_download_videos'));
-				$kres = $kclient->mixing->requestFlattening($videoId[0], 'flv');
+				$kres = $kalturalib->client->mixing->requestFlattening($videoId[0], 'flv');
 	
 				header('Location: tiki-kaltura_video.php?videoId=' . $videoId[0]);
 				die;
@@ -133,11 +133,11 @@ try {
 			case 'edit':
 				$access->check_permission(array('tiki_p_edit_videos'));
 				if ($_REQUEST['update']) {
-					$ksession = $kclient->session->start($prefs['kaltura_adminSecret'], $kuser, $SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
-					$kclient->setKs($ksession);
+					$kalturalib->session = $kalturalib->client->session->start($prefs['kaltura_adminSecret'], $kuser, $SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
+					$kalturalib->client->setKs($kalturalib->session);
 				}
 				if ($kentryType == 'mix') {
-					$kentry = $kclient->mixing->get($videoId[0]);
+					$kentry = $kalturalib->client->mixing->get($videoId[0]);
 				
 					if ($_REQUEST['update']) {
 						$kentry = new KalturaPlayableEntry();
@@ -146,11 +146,11 @@ try {
 						$kentry->tags = $_REQUEST['tags'];
 						$kentry->editorType = $_REQUEST['editor'] === 'kse' ? 1 : 2;
 						$kentry->adminTags = $_REQUEST['adminTags'];
-						$knewentry = $kclient->mixing->update($videoId[0], $kentry);
+						$knewentry = $kalturalib->client->mixing->update($videoId[0], $kentry);
 					}
 				}
 				if ($kentryType == 'media') {
-					$kentry = $kclient->media->get($videoId[0]);
+					$kentry = $kalturalib->client->media->get($videoId[0]);
 				
 					if ($_REQUEST['update']) {
 						$kentry = new KalturaPlayableEntry();
@@ -159,7 +159,7 @@ try {
 						$kentry->tags = $_REQUEST['tags'];
 						$kentry->adminTags = $_REQUEST['adminTags'];
 		
-						$knewentry = $kclient->media->update($videoId[0], $kentry);
+						$knewentry = $kalturalib->client->media->update($videoId[0], $kentry);
 					}
 				}
 				if ($_REQUEST['update']) {
@@ -181,11 +181,11 @@ try {
 			$access->check_permission(array('tiki_p_view_videos'));
 			$smarty->assign('kmode', 'view');
 			if ($kentryType == 'mix') {
-				$kentry = $kclient->mixing->get($videoId[0]);
+				$kentry = $kalturalib->client->mixing->get($videoId[0]);
 			}
 	
 			if ($kentryType == 'media') {
-				$kentry = $kclient->media->get($videoId[0]);	
+				$kentry = $kalturalib->client->media->get($videoId[0]);	
 			}
 			$smarty->assign_by_ref('videoId', $videoId[0]);
 			$smarty->assign_by_ref('videoInfo', $kentry);
