@@ -38,7 +38,7 @@
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Contribution Wizard{/tr}</legend>
-	{preference name=kaltura_kcwUIConf}
+	{$kcwText}
 </fieldset>
 
 <br />

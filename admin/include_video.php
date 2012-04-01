@@ -12,8 +12,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 require_once 'lib/videogals/kalturalib.php';
-if (is_object($kalturalib) && !empty($kalturalib->session)) {
-	$players = $kalturalib->getPlayersUiConfs();
+if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
+	// contribution wizard
+	$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
+	if ($kcwDefault) {
+		$kcwText = "<div class='adminoptionbox'>KCW Configuraiton ID: $kcwDefault (automatically configured)</div>";
+	} else {
+		$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up other settings</div>";	
+	}
+	// TODO make way to override this for certain sites...
+	$tikilib->set_preference('kaltura_kcwUIConf', $kcwDefault);
+	// players
+	$players = $kalturaadminlib->getPlayersUiConfs();
 	$kplayerlist = '<table>';
 	foreach ($players as $p) {
 		$kplayerlist .= '<tr><td>';
@@ -24,6 +34,8 @@ if (is_object($kalturalib) && !empty($kalturalib->session)) {
 	}
 	$kplayerlist .= '</table>';
 } else {
+	$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up other settings</div>";
 	$kplayerlist = "<div class='adminoptionbox'>Unable to retrieve list of valid player IDs. Please reload page after setting up other settings</div>";
 }
+$smarty->assign('kcwText', $kcwText);
 $smarty->assign('kplayerlist', $kplayerlist); 

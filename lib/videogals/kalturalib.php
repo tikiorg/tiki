@@ -109,6 +109,49 @@ class KalturaLib
 	function getPlayersUiConfsObj() {
 		return $this->_getPlayersUiConfs();		
 	}
+	
+	function updateStandardTikiKcw() {
+		// first check if there is an existing one
+		$pager = null;
+		$filter = new KalturaUiConfFilter();
+		$filter->nameLike = 'Tiki.org Standard';
+		$filter->objTypeEqual = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
+		$existing = $this->client->uiConf->listAction($filter, $pager);
+		if (count($existing->objects) > 0) {
+			$current_obj = array_pop($existing->objects);
+			$current = $current_obj->id;
+		} else {
+			$current = '';
+		}
+		
+		global $tikipath;
+		$uiConf = new KalturaUiConf();
+		$uiConf->name = 'Tiki.org Standard';
+		$uiConf->objType = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
+		$filename = $tikipath . "lib/videogals/standardTikiKcw.xml";
+		$fh = fopen($filename, 'r');
+		$confXML = fread($fh, filesize($filename));
+		$uiConf->confFile = $confXML;
+		
+		// first try to update
+	 	if ($current) {
+			$uiConf = new KalturaUiConf();
+			$uiConf->confFile = $confXML;
+			$results = $this->client->uiConf->update($current, $uiConf);
+			if (isset($results->id)) {
+				return $results->id;	
+			}
+		}
+		// create if updating failed or not updating
+		$uiConf->creationMode = KalturaUiConfCreationMode::WIZARD;
+		$results = $this->client->uiConf->add($uiConf);
+		if (isset($results->id)) {
+			return $results->id;	
+		} else {
+			return '';
+		}
+	}
+	
 }
 
 global $kalturalib, $kalturaadminlib;
