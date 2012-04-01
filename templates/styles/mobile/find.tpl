@@ -42,12 +42,16 @@
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
+
 	</label>
 		<input type="text" name="find" id="find" value="{$find|escape}" data-type="search" />
 		{if isset($autocomplete)}
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
 
+<div data-role="collapsible" data-collapsed="true">
+	<h3>{tr}More search options{/tr}</h3>
+	<div data-role="controlgroup">
 {if isset($exact_match)}
 	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
 			{tr}Exact match{/tr}
@@ -58,7 +62,6 @@
 {if !empty($find_show_sub) and $find_show_sub eq 'y'}
 	<label class="findsub">
 		{tr}and all the sub-objects{/tr}
-		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}/>
 	</label>
 {/if}
 
@@ -223,7 +226,8 @@
 			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
 	</label>
 {/if}
-
+	</div>
+</div>
 <label class="findsubmit">
 	<input type="submit" name="search" value="{tr}Go{/tr}" />
 	{if $find ne ''}

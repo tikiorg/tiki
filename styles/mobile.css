@@ -201,7 +201,7 @@ body {
 	background: #FEEAA1;
 }
 
-/* Generic find.tpl */
+/* Generic find.tpl
 
 .find-div label,
 .find-div span,
@@ -221,5 +221,10 @@ body {
 
 .find-div label.findsubmit {
 	line-height: inherit;
-}
+} */
 
+/* filegals */
+
+.thumbnailcontener {
+	float: left;
+}
