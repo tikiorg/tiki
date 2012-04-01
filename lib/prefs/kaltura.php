@@ -28,8 +28,15 @@ function prefs_kaltura_list()
 			'default' => '',		
 		),
 		'kaltura_kdpUIConf' => array(
-			'name' => tra('KDP UI Configuration ID'),
+			'name' => tra('Kaltura Video Player ID'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID'),
+			'type' => 'text',
+			'size' => 20,
+			'default' => '1913592',
+		),
+		'kaltura_kdpEditUIConf' => array(
+			'name' => tra('Kaltura Video Player ID (Editor)'),
+			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID for use when editing'),
 			'type' => 'text',
 			'size' => 20,
 			'default' => '1913592',
@@ -49,7 +56,7 @@ function prefs_kaltura_list()
 			'default' => 'http://www.kaltura.com/',
 		),
 		'kaltura_legacyremix' => array(
-			'name' => tra('Show no longer supported remixes from old versions of Kaltura'),
+			'name' => tra('Show remixes from old versions of Kaltura'),
 			'description' => tra('Show remixes from old versions of Kaltura (remixing is no longer supported)'),
 			'type' => 'flag',
 			'default' => 'n',

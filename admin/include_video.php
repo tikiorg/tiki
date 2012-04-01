@@ -11,3 +11,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+require_once 'lib/videogals/kalturalib.php';
+if (is_object($kalturalib) && !empty($kalturalib->session)) {
+	$players = $kalturalib->getPlayersUiConfs();
+	$kplayerlist = '<table>';
+	foreach ($players as $p) {
+		$kplayerlist .= '<tr><td>';
+		$kplayerlist .= $p['id'];
+		$kplayerlist .= '</td><td>';
+		$kplayerlist .= $p['name'];
+		$kplayerlist .= '</td></tr>';
+	}
+	$kplayerlist .= '</table>';
+} else {
+	$kplayerlist = "<div class='adminoptionbox'>Unable to retrieve list of valid player IDs. Please reload page after setting up other settings</div>";
+}
+$smarty->assign('kplayerlist', $kplayerlist); 

@@ -19,20 +19,27 @@ class KalturaLib
 	function __construct($session_type)
 	{
 		global $prefs, $smarty;
-		if (empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
-			$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=video">' . tra('here') . '</a>');
-			$smarty->display('error.tpl');
-			die;
+		if (!$this->testSetup()) {
+			return false;
 		}
 		$this->kconfig = new KalturaConfiguration($prefs['kaltura_partnerId']);
 		$this->kconfig->serviceUrl = $prefs['kaltura_kServiceUrl'];
 		$this->client = new KalturaClient($this->kconfig);
 		if ($session_type == SESSION_ADMIN) {
-			$this->startAdminSession();
+			$error = $this->startAdminSession();
 		} else {
-			$this->startUserSession();
+			$error = $this->startUserSession();
 		}
 		$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
+	}
+
+	function testSetup() {
+		global $prefs, $smarty;
+		if (empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	private function startAdminSession() {
@@ -47,11 +54,10 @@ class KalturaLib
 				$this->session = $this->client->session->start($prefs['kaltura_adminSecret'], $kuser, SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');	
 			}
 			$this->client->setKs($this->session);
-		} catch (Exception $e) {
-			$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
-			$smarty->display('error.tpl');
-			die;
-		}	
+		} catch (Exception $e) {	
+			// silent return is important so that it can be handled gracefully above if needed 
+		}
+		return true;
 	}
 	
 	private function startUserSession() {
@@ -66,11 +72,10 @@ class KalturaLib
 				$this->session = $this->client->session->start($prefs['kaltura_secret'], $kuser, SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 			}
 			$this->client->setKs($this->session);
-		} catch (Exception $e) {
-			$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
-			$smarty->display('error.tpl');
-			die;
+		} catch (Exception $e) {	
+			// silent return is important so that it can be handled gracefully above if needed
 		}
+		return true;
 	}
 		
 	private function _getPlayersUiConfs()

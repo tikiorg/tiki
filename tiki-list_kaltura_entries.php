@@ -26,12 +26,20 @@ $statusAsString  = array(
 	6 => tra('Blocked'),
 );
 
+
+
 if (!isset($_REQUEST['list'])) {
 	$_REQUEST['list'] = 'media'; // default media since mix is relegated	
 }
 
 try {
 
+if (!$kalturalib->testSetup()) {
+	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=video">' . tra('here') . '</a>');
+	$smarty->display('error.tpl');
+	die;
+}
+	
 if (isset($_REQUEST['action'])) {
 	$videoId = array();
 
