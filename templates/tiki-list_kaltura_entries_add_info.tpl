@@ -22,10 +22,6 @@
 				<td>{$item->duration}s</td>
 			</tr>
 			<tr>
-				<td><strong>{tr}Version{/tr}</strong>:</td>
-				<td>{$item->version}</td>
-			</tr>
-			<tr>
 				<td><strong>{tr}Views{/tr}</strong>:</td>
 				<td>{$item->views}</td>
 			</tr>
