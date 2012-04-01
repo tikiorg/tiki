@@ -10,8 +10,8 @@
 				</tr>
 			{/if}
 			<tr>
-				<td><strong>{tr}Created by{/tr}</strong>:</td>
-				<td>{$item->userId}</td>
+				<td><strong>{tr}Status{/tr}</strong>:</td>
+				<td>{$item->statusString}</td>
 			</tr>
 			<tr>
 				<td><strong>{tr}Media Id{/tr}</strong>:</td>
