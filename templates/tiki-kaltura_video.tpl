@@ -124,7 +124,7 @@
 	{$edit_info}
 	</div>
 	{else}
-		{tr}No action specified{/tr} {$kmode}
+		{tr}No action specified.{/tr} {tr}This file is not expected to be called directly.{/tr} {$kmode}
 	{/if}
 	</div>
 
