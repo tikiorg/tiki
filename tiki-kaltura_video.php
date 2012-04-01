@@ -43,33 +43,13 @@ try {
 		switch ($mode) {
 
 			case 'dupl':
+				//TODO there must be a way to make this work with non remix type. If not, to remove.
 				$access->check_permission(array('tiki_p_upload_videos'));
 				if ($kentryType == 'mix') {
 					$knewmixEntry = $kalturalib->client->mixing->cloneAction($videoId[0]);
 				}
 				header('Location: tiki-list_kaltura_entries.php');
 				die;
-							break;
-
-			case 'revert':
-				$access->check_permission(array('tiki_p_admin_kaltura'));
-				$koldentry = $kalturalib->client->mixing->get($videoId[0], $_REQUEST['version']);
-				$koldentry = new KalturaMixEntry();
-				$knewentry = new KalturaMixEntry();
-				$knewentry->name = $koldentry->name;
-				$knewentry->description = $koldentry->description;
-				$knewentry->userId = $koldentry->userId;
-				$knewentry->tags = $koldentry->tags;
-				$knewentry->adminTags = $koldentry->adminTags;
-				$knewentry->groupId = $koldentry->groupId;
-				$knewentry->partnerData = $koldentry->partnerData;
-				$knewentry->licenseType = $koldentry->licenseType;
-				$knewentry->editorType = $koldentry->editorType;
-				$knewentry->dataContent =$koldentry->dataContent;
-				$knewentry = $kalturalib->client->mixing->update($koldentry->id, $knewentry);
-				$smarty->assign_by_ref('videoId', $knewentry->id);
-				$smarty->assign_by_ref('videoInfo', $knewentry);
-				$smarty->assign_by_ref('kalturaSession', $kalturalib->session);
 							break;
 
 			case 'delete':

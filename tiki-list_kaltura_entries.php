@@ -53,28 +53,12 @@ if (isset($_REQUEST['action'])) {
 
 	switch ($_REQUEST['action']) {
 
-		case tra('Create Remix'):
-			$access->check_permission(array('tiki_p_remix_videos'));	
-			if ($kentryType == 'media') {
-				$kentry = $kalturaadminlib->client->media->get($videoId[0]);
-				$kmixEntry = new KalturaMixEntry();
-				$kmixEntry->name = 'Remix of ' . $kentry->name;
-				$kmixEntry->editorType = 1;
-				$kmixEntry = $kalturaadminlib->client->mixing->add($kmixEntry);		
-				for ($i=0, $cvideoId = count($videoId); $i < $cvideoId ; $i++) {
-					$kmixEntry = $kalturaadminlib->client->mixing->appendMediaEntry($kmixEntry->id, $videoId[$i]);
-				}
-			}
-			header('Location: tiki-kaltura_video.php?action=remix&mixId=' . $kmixEntry->id);
-			die;
-    		break;
-
 		case tra('Delete'):
 			$access->check_permission(array('tiki_p_delete_videos'));
 			$access->check_authenticity();
 			if ($kentryType == 'media') {
 				foreach ( $videoId as $vi ) {
-					$kalturaadminlib->client->media->delete($vi);
+					$kalturalib->client->media->delete($vi);
 				}
 				header('Location: tiki-list_kaltura_entries.php?list=media');
 				die;
@@ -82,7 +66,7 @@ if (isset($_REQUEST['action'])) {
 				
 			if ($kentryType == 'mix') {
 				foreach ( $videoId as $vi ) {
-					$kalturaadminlib->client->mixing->delete($vi);
+					$kalturalib->client->mixing->delete($vi);
 				}					
 				header('Location: tiki-list_kaltura_entries.php?list=mix');
 				die;
