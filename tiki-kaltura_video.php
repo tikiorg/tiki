@@ -55,7 +55,8 @@ try {
 				if ($kentryType == 'mix') {
 					$seflashVars = $seflashVars .
 						'&kshow_id=entry-' . $videoId[0] .
-						'&entry_id='. $videoId[0];	
+						'&ks=' . $kalturalib->session .
+						'&entry_id='. $videoId[0];
 				}
 				if ($kentryType == 'media') {
 					$kentry = $kalturalib->client->media->get($videoId[0]);
@@ -103,6 +104,7 @@ try {
 				$knewentry = $kalturalib->client->mixing->update($koldentry->id, $knewentry);
 				$smarty->assign_by_ref('videoId', $knewentry->id);
 				$smarty->assign_by_ref('videoInfo', $knewentry);
+				$smarty->assign_by_ref('kalturaSession', $kalturalib->session);
 							break;
 
 			case 'delete':
@@ -168,6 +170,7 @@ try {
 				}
 				$smarty->assign_by_ref('videoId', $videoId[0]);
 				$smarty->assign_by_ref('videoInfo', $kentry);
+				$smarty->assign_by_ref('kalturaSession', $kalturalib->session);
 							break;
 
 			case 'default':
@@ -189,6 +192,7 @@ try {
 			}
 			$smarty->assign_by_ref('videoId', $videoId[0]);
 			$smarty->assign_by_ref('videoInfo', $kentry);
+			$smarty->assign_by_ref('kalturaSession', $kalturalib->session);
 		}
 		$smarty->assign_by_ref('entryType', $kentryType);
 	}
