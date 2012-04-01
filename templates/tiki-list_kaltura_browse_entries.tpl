@@ -7,11 +7,11 @@
 
 {if $tiki_p_list_videos eq 'y'}
 {if $entryType eq "mix"}
-	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media"}
+	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php"}
 	{if $prefs.kaltura_legacyremix == 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
 {else}
 	{if $prefs.kaltura_legacyremix == 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
-	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media"}
+	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php"}
 {/if}
 {/if}
 	<div class="center">
