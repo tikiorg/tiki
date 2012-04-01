@@ -40,8 +40,8 @@ try {
 				$access->check_permission(array('tiki_p_remix_videos'));
 				$seflashVars = 'uid=' . $kuser .
 					'&ks=' . $ksession . 
-					'&partner_id=' . $prefs['partnerId'] .
-					'&subp_id=' . $prefs['partnerId'] .'00'.
+					'&partner_id=' . $prefs['kaltura_partnerId'] .
+					'&subp_id=' . $prefs['kaltura_partnerId'] .'00'.
 					'&backF=CloseClick' .
 					'&saveF=SaveClick' .
 					'&jsDelegate=kaeCallbacksObj';
@@ -133,7 +133,7 @@ try {
 			case 'edit':
 				$access->check_permission(array('tiki_p_edit_videos'));
 				if ($_REQUEST['update']) {
-					$ksession = $kclient->session->start($prefs['adminSecret'], $kuser, $SESSION_ADMIN, $prefs['partnerId'], 86400, 'edit:*');
+					$ksession = $kclient->session->start($prefs['kaltura_adminSecret'], $kuser, $SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 					$kclient->setKs($ksession);
 				}
 				if ($kentryType == 'mix') {

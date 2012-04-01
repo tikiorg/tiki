@@ -19,27 +19,27 @@ $access->check_feature('feature_kaltura');
 
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
-if (!empty($prefs['kuser'])) {
-	$kuser = $prefs['kuser'];
+if (!empty($prefs['kaltura_kuser'])) {
+	$kuser = $prefs['kaltura_kuser'];
 } else {
 	$kuser = $user;
 }
-if (empty($prefs['kServiceUrl'])) {
-	$tikilib->set_preference('kServiceUrl', 'http://www.kaltura.com/');;
+if (empty($prefs['kaltura_kServiceUrl'])) {
+	$tikilib->set_preference('kaltura_kServiceUrl', 'http://www.kaltura.com/');;
 }
-$smarty->assign('kServiceUrl', $prefs['kServiceUrl']);
+$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
 
-if (empty($prefs['partnerId']) || !is_numeric($prefs['partnerId']) || empty($prefs['secret']) || empty($prefs['adminSecret'])) {
+if (empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
 	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=video">' . tra('here') . '</a>');
 	$smarty->display('error.tpl');
 	die;
 }
 	
 try {
-	$kconf = new KalturaConfiguration($prefs['partnerId']);
-	$kconf->serviceUrl = $prefs['kServiceUrl'];
+	$kconf = new KalturaConfiguration($prefs['kaltura_partnerId']);
+	$kconf->serviceUrl = $prefs['kaltura_kServiceUrl'];
 	$kclient = new KalturaClient($kconf);
-	$ksession = $kclient->session->start($prefs['secret'], $kuser, $SESSION_USER, $prefs['partnerId'], 86400, 'edit:*');
+	$ksession = $kclient->session->start($prefs['kaltura_secret'], $kuser, $SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 	$kclient->setKs($ksession);
 	
 } catch (Exception $e) {

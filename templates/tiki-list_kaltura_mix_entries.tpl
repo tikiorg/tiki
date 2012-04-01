@@ -23,7 +23,7 @@
 			<td class="text">{$item->createdAt}</td>
 			<td class="text">{$item->tags}</td>
 			<td class="text">{$modifiedAt[$key]}
-			{if !$prefs.kuser}
+			{if !$prefs.kaltura_kuser}
 			<br/><br/>
 			{tr}Modified By:{/tr} {$modifiedBy[$key]}
 			{/if}

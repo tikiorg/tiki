@@ -13,7 +13,7 @@ $access->check_permission(array('tiki_p_upload_videos'));
 
 $cwflashVars = array();
 $cwflashVars["uid"]               = $kuser;
-$cwflashVars["partnerId"]         = $prefs['partnerId'];
+$cwflashVars["partnerId"]         = $prefs['kaltura_partnerId'];
 $cwflashVars["ks"]                = $ksession;
 $cwflashVars["afterAddEntry"]     = "afterAddEntry";
 $cwflashVars["close"]             = "onContributionWizardClose";

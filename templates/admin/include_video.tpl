@@ -15,39 +15,39 @@
 
 <fieldset class="admin">
 <legend>{tr}Kaltura / Tiki config{/tr}</legend>
-	{preference name=kuser}
-	{preference name=kServiceUrl}
+	{preference name=kaltura_kuser}
+	{preference name=kaltura_kServiceUrl}
 	{preference name=default_kaltura_editor}
 </fieldset>
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Partner Settings{/tr}</legend>
-	{preference name=partnerId}
-	{preference name=adminSecret}
-	{preference name=secret}
+	{preference name=kaltura_partnerId}
+	{preference name=kaltura_adminSecret}
+	{preference name=kaltura_secret}
 </fieldset>
 
 <br/>
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Dynamic Player{/tr}</legend>
-	{preference name=kdpUIConf}
-	{preference name=kdpWidget}
+	{preference name=kaltura_kdpUIConf}
+	{preference name=kaltura_kdpWidget}
 </fieldset>
 
 <br/>
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Contribution Wizard{/tr}</legend>
-	{preference name=kcwUIConf}
+	{preference name=kaltura_kcwUIConf}
 </fieldset>
 
 <br/>
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Remix Editors{/tr}</legend>
-	{preference name=kseUIConf}
-	{preference name=kaeUIConf}
+	{preference name=kaltura_kseUIConf}
+	{preference name=kaltura_kaeUIConf}
 </fieldset>
 
 <br/>

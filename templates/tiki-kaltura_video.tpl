@@ -38,11 +38,11 @@
 		<table width="100%">
 		<tr>
 			<td width="50%" align="center">
-			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kServiceUrl}index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo->id}">
+			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/{$prefs.kaltura_kdpWidget}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}">
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
-			<param name="movie" value="{$prefs.kServiceUrl}index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo->id}"/>
+			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/{$prefs.kaltura_kdpWidget}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}"/>
 			<param name="flashVars" value="entry_id={$videoInfo->id}"/>
 			<param name="wmode" value="opaque"/>
 			</object>			
@@ -124,7 +124,7 @@
 	{/capture}
 	
 	{capture name=remix_video assign=edit_remix}
-		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" data="{$prefs.kServiceUrl}{if $editor eq 'kae'}kae/ui_conf_id/{$prefs.kaeUIConf}" height="672" width="825" {else}kse/ui_conf_id/{$prefs.kseUIConf}" height="546" width="890"{/if}>
+		<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" data="{$prefs.kaltura_kServiceUrl}{if $editor eq 'kae'}kae/ui_conf_id/{$prefs.kaltura_kaeUIConf}" height="672" width="825" {else}kse/ui_conf_id/{$prefs.kaltura_kseUIConf}" height="546" width="890"{/if}>
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
 			<param name="allowFullScreen" value="true" />
