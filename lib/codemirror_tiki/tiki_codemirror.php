@@ -7,10 +7,15 @@
 
 function codemirrorModes($minify = true)
 {
+	global $tikidomainslash;
 	$js = '';
 	$css = '';
 
-	if (TikiLib::lib("cache")->isCached("codemirror_js" . ($minify ? "min" : "")) == false || TikiLib::lib("cache")->isCached("codemirror_css" . ($minify ? "min" : "")) == false) {
+	$target = 'temp/public/'.$tikidomainslash;
+	$jsfile = $target . 'codemirror.js';
+	$cssfile = $target . 'codemirror.css';
+
+	if (!file_exists($jsfile) || !file_exists($cssfile)) {
 
 		//tiki first, where are our priorities!
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
@@ -25,22 +30,14 @@ function codemirrorModes($minify = true)
 			}
 		}
 
-		if ($minify) {
-			require_once("lib/minify/JSMin.php");
-			$js = JSMin::minify($js);
+		file_put_contents($jsfile, $js);
+		chmod($jsfile, 0644);
 
-			require_once('lib/pear/Minify/CSS/Compressor.php');
-			$css = Minify_CSS_Compressor::process($css);
-		}
-
-		TikiLib::lib("cache")->cacheItem("codemirror_js" . ($minify ? "min" : ""), $js);
-		TikiLib::lib("cache")->cacheItem("codemirror_css" . ($minify ? "min" : ""), $css);
-	} else {
-		$js = TikiLib::lib("cache")->getCached("codemirror_js" . ($minify ? "min" : ""));
-		$css = TikiLib::lib("cache")->getCached("codemirror_css" . ($minify ? "min" : ""));
+		file_put_contents($cssfile, $css);
+		chmod($cssfile, 0644);
 	}
 
 	TikiLib::lib("header")
-		->add_js($js)
-		->add_css($css);
+		->add_jsfile_dependancy($jsfile)
+		->add_cssfile($cssfile);
 }

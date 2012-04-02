@@ -238,12 +238,12 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 	if ($prefs['feature_syntax_highlighter'] == 'y') {
 		//add codemirror stuff
-		$headerlib->add_cssfile('lib/codemirror/lib/codemirror.css');
-		$headerlib->add_jsfile('lib/codemirror/lib/codemirror.js');
-		
+		$headerlib
+			->add_cssfile('lib/codemirror/lib/codemirror.css')
+			->add_jsfile_dependancy('lib/codemirror/lib/codemirror.js')
 		//add tiki stuff
-		$headerlib->add_cssfile('lib/codemirror_tiki/codemirror_tiki.css');
-		$headerlib->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js');
+			->add_cssfile('lib/codemirror_tiki/codemirror_tiki.css')
+			->add_jsfile_dependancy('lib/codemirror_tiki/codemirror_tiki.js');
 
 		require_once("lib/codemirror_tiki/tiki_codemirror.php");
 		codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
