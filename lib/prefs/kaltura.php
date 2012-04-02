@@ -10,6 +10,7 @@ function prefs_kaltura_list()
 			'filter' => 'digits',
 			'size' => 10,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'kaltura_secret' => array(
 			'name' => tra('User secret'),
@@ -18,6 +19,7 @@ function prefs_kaltura_list()
 			'size' => 45,
 			'filter' => 'alnum',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'kaltura_adminSecret' => array(
 			'name' => tra('Admin secret'),
@@ -25,7 +27,8 @@ function prefs_kaltura_list()
 			'type' => 'text',
 			'size' => 45,
 			'filter' => 'alnum',
-			'default' => '',		
+			'default' => '',
+			'tags' => array('basic'),	
 		),
 		'kaltura_kdpUIConf' => array(
 			'name' => tra('Kaltura Video Player ID'),
@@ -33,6 +36,7 @@ function prefs_kaltura_list()
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'kaltura_kdpEditUIConf' => array(
 			'name' => tra('Kaltura Video Player ID (in entry edit mode)'),
@@ -40,6 +44,7 @@ function prefs_kaltura_list()
 			'type' => 'text',
 			'size' => 20,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'kaltura_kcwUIConf' => array(
 			'name' => tra('KCW UI Configuration ID'),
