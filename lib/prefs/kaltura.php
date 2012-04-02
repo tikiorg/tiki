@@ -28,7 +28,7 @@ function prefs_kaltura_list()
 			'size' => 45,
 			'filter' => 'alnum',
 			'default' => '',
-			'tags' => array('basic'),	
+			'tags' => array('basic'),
 		),
 		'kaltura_kdpUIConf' => array(
 			'name' => tra('Kaltura Video Player ID'),
@@ -59,6 +59,7 @@ function prefs_kaltura_list()
 			'type' => 'text',
 			'size' => 40,
 			'default' => 'http://www.kaltura.com/',
+			'tags' => array('basic'),
 		),
 		'kaltura_legacyremix' => array(
 			'name' => tra('Show remixes from old versions of Kaltura'),
