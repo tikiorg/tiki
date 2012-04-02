@@ -132,6 +132,7 @@ class KalturaLib
 		$fh = fopen($filename, 'r');
 		$confXML = fread($fh, filesize($filename));
 		$uiConf->confFile = $confXML;
+		$uiConf->useCdn = 1;
 		$uiConf->swfUrl = '/flash/kcw/v2.1.4/ContributionWizard.swf';
 		$uiConf->tags = 'autodeploy, content_v3.2.5, content_upload';
 		
