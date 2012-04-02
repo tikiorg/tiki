@@ -586,6 +586,10 @@ ul.jumplinks,
 	margin-right: auto;
 }
 
+.pagenums input[type="text"] {
+	margin-top: -1px;
+}
+
 a.tikihelp,
 a.tikihelp:visited {
 	border: 0;
