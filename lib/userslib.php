@@ -4915,7 +4915,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('flaggedrev_approval'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_approve',
@@ -4924,7 +4924,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('flaggedrev_approval'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_page_contribution_view',
@@ -5221,7 +5221,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_wiki'),
 				'scope' => 'global',
 			),
 			array(
@@ -5246,7 +5246,7 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_delete_account',
 				'description' => tra('Can delete his/her own account'),
 				'level' => 'admin',
-				'type' => 'tiki',
+				'type' => 'user',
 				'admin' => false,
 				'prefs' => array(),
 				'scope' => 'global',
