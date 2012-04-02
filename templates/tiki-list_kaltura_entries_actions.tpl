@@ -6,7 +6,7 @@
           			{if $tiki_p_view_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
            				 <a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}" title="{tr}View{/tr}" class="iconmenu"><img alt="" src="img/icons/magnifier.png" class="icon" />{tr}View{/tr}</a>
           			{/if}
-          			{if $tiki_p_view_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
+          			{if $tiki_p_download_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
            				 <a href="{$item->downloadUrl}" title="{tr}Download{/tr}" class="iconmenu"><img alt="" src="img/icons/application_put.png" class="icon" />{tr}Download{/tr}</a>
           			{/if}
            			{if $tiki_p_edit_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
