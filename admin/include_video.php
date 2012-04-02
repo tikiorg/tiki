@@ -18,7 +18,7 @@ if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
 	if ($kcwDefault) {
 		$kcwText = "<div class='adminoptionbox'>KCW Configuration ID: $kcwDefault (automatically configured)</div>";
 	} else {
-		$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up other settings</div>";	
+		$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up the Kaltura Partner Settings section</div>";	
 	}
 	// TODO make way to override this for certain sites...
 	$tikilib->set_preference('kaltura_kcwUIConf', $kcwDefault);
@@ -34,8 +34,8 @@ if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
 	}
 	$kplayerlist .= '</table>';
 } else {
-	$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up other settings</div>";
-	$kplayerlist = "<div class='adminoptionbox'>Unable to retrieve list of valid player IDs. Please reload page after setting up other settings</div>";
+	$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up the Kaltura Partner Settings section</div>";
+	$kplayerlist = "<div class='adminoptionbox'>Unable to retrieve list of valid player IDs. Please reload page after setting up the Kaltura Partner Settings section</div>";
 }
 $smarty->assign('kcwText', $kcwText);
 $smarty->assign('kplayerlist', $kplayerlist); 
