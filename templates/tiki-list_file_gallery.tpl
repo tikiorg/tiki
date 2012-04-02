@@ -27,7 +27,7 @@
 	</div>
 {/if}
 
-<div class="navbar">
+<div class="navbar"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}>
 	{if $galleryId gt 0}
 
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}

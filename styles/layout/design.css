@@ -757,6 +757,22 @@ p.editdate {
 	margin-right: 5px;
 }
 
+/* wikiplugin_carousel v3 */
+
+.ic_button {
+    float: left;
+    margin: 0 2px 0  0;
+    border: 2px solid #eee;
+	width: 20px;
+	height: 20px;
+}
+
+.ic_active {
+    border: 2px solid #800;
+}
+
+/* end plugins */
+
 .magnify {
 	float: right;
 	padding-top: 2px;

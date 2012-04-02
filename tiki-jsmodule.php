@@ -18,10 +18,8 @@ header('Expires: ' . gmdate('D, d M Y H:i:s', time()+3600*24*365*10) . ' GMT');
 
 require_once 'tiki-filter-base.php';
 
-$filter = TikiFilter::get('xss');
 $filter = TikiFilter::get('alpha');
 $_REQUEST['language'] = isset($_GET['language']) ? $_GET['language'] = $filter->filter($_GET['language']) : '';
-
 
 $cache = "temp/cache/module_ALL_".$_REQUEST['language'];
 
@@ -45,7 +43,7 @@ foreach ( $mods as $mod ):
 		$info = false;
 	}
 ?>
-tiki_module_params.<?php echo $mod ?> = <?php echo json_encode($info) ?>;
+tiki_module_params.<?php echo TikiLib::remove_non_word_characters_and_accents($mod) ?> = <?php echo json_encode($info) ?>;
 <?php endforeach;
 $content = ob_get_contents();
 file_put_contents($cache, $content);

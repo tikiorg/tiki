@@ -926,7 +926,7 @@ class EditLib
      					break;
 						case "p":
 							$isPar = true;
-							if ($src) {
+							if ($src && $prefs['feature_wiki_paragraph_formatting'] !== 'y') {
 								$src.="\n";
 							}
 						case "div": // Wiki parsing creates divs for center

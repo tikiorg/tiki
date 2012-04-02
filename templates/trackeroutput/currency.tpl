@@ -1,5 +1,5 @@
 {strip}
-{if $field.value}
+{if $field.value != ''}
 	{if $field.options_array[2]}
 		<span class="formunit">{$field.options_array[2]|escape}</span>
 	{/if}

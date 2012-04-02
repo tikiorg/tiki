@@ -16,6 +16,23 @@
 	{if $prefs.feed_tracker eq "y"}
 		<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
 	{/if}
+	{if $tiki_p_admin_trackers}
+		<a title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon _id='upload' align="right" alt="{tr}Import{/tr}"}</a>
+		{jq}
+			$('.import.dialog').click(function () {
+				var link = this;
+				$(this).serviceDialog({
+					title: '{tr}Import{/tr}',
+					data: {
+						controller: 'tracker',
+						action: 'import_items',
+						trackerId: {{$trackerId}}
+					}
+				});
+				return false;
+			});
+		{/jq}
+	{/if}
 	{if $tiki_p_export_tracker eq "y"}
 		<a title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
 		{jq}
@@ -29,7 +46,6 @@
 						trackerId: {{$trackerId}}
 					}
 				});
-	
 				return false;
 			});
 		{/jq}

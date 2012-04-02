@@ -21,7 +21,7 @@ body {
 	background: #9DC4C4 url(teal/body_bg.gif) repeat-x;
 	font-family: arial, sans-serif;
 	color: #8f8f8f;
-	font: 76%/1.4em black Verdana, Geneva, Arial, Helvetica, sans-serif}
+	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif}
 
 html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
@@ -35,8 +35,8 @@ body.fixed_width .fixedwidth {
 body.fixed_width *:first-child+html #c1c2 {
 	margin-left: 0;
 	padding-left: 0}
-	
-body.fixed_width #main[id] {
+
+body.fixed_width #fixedwidth {
 	margin-bottom:0;
 	margin-top: 0;
 }
@@ -55,9 +55,9 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 450px/*;
 	height: auto !important*/}
 
-.header_fixedwidth {
+.header_container .fixedwidth {
 	text-align: left;
-	height: 190px;
+	height: 140px;
 	background: #fff url(teal/head_bg.gif);
 	margin-bottom: 0;
 }
@@ -75,10 +75,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 #col2 .content {padding: 0 20px}
 
-#col1 .content {
-	border-left: 1px solid #60bbbb;
-	border-right: 1px solid #60bbbb;
-	padding: 0 30px}
+#col1 #tiki-center {
+	border-left: none;
+	border-right: none;
+	padding: 0 30px
+}
 
 #col3 .content {padding: 0 20px}
 #col3 {
@@ -245,9 +246,9 @@ tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
 	
-#top_modules {
-	height: 140px;
-	background: url(teal/banner.gif) no-repeat 100% 100%}
+#header {
+	background: none;
+}
 
 
 #sitelogo a,
@@ -280,6 +281,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	position: relative;
 	top: 33px;
 	color: #fff;
+	margin: 0;
 }
 
 #sitetitle,
@@ -289,7 +291,8 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	font-family: georgia, serif;
 	font-size: 320%;
 	font-weight: 100;
-	margin-top: 40px}
+	margin-top: 40px;
+}
 	
 #sitetitle a,
 #sitetitle a:visited {color: #8f8f8f}
@@ -319,13 +322,6 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	margin-top: 0;
 	margin-right: 30px}
 	
-.box-search {
-	position: absolute;
-	right: 40px;
-	top: 0;
-	color: #fff;
-	margin-top: 8px;
-}
 
 input#fuser,
 #search_mod_input_1 {
@@ -423,7 +419,7 @@ input#fuser,
 * html .cssmenu_vert ul .sf-sub-indicator {background: url(teal/arrows-6d819d.png) no-repeat -10px 0}
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png);
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.3em}
@@ -964,9 +960,9 @@ div.dirfooter {margin-top: 10px}
 .Calsurv a,
 .Calsurv a:visited {color: #DAA520}
 
-Caltrack,
-Caltrack a,
-Caltrack a:visited {color: #00BD02}
+.Caltrack,
+.Caltrack a,
+.Caltrack a:visited {color: #00BD02}
 
 .Calweb {font-size: 1em}
 .Calweb:hover {color: #996633}
