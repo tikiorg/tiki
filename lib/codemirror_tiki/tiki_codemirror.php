@@ -12,8 +12,8 @@ function codemirrorModes($minify = true)
 	$css = '';
 
 	$target = 'temp/public/'.$tikidomainslash;
-	$jsfile = $target . 'codemirror.js';
-	$cssfile = $target . 'codemirror.css';
+	$jsfile = $target . 'codemirror_modes.js';
+	$cssfile = $target . 'codemirror_modes.css';
 
 	if (!file_exists($jsfile) || !file_exists($cssfile)) {
 
@@ -23,6 +23,7 @@ function codemirrorModes($minify = true)
 
 		foreach(glob('lib/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach(glob($dir.'/*.js') as $jsFile) {
+				$js .= "//" . $jsFile . "\n";
 				$js .= "try{" . @file_get_contents($jsFile) . "}catch(e){}";
 			}
 			foreach(glob($dir.'/*.css') as $cssFile) {
