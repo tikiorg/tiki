@@ -27,7 +27,7 @@ function codemirrorModes($minify = true)
 				$js .= "try{" . @file_get_contents($jsFile) . "}catch(e){}";
 			}
 			foreach(glob($dir.'/*.css') as $cssFile) {
-				$js .= "/*" . $cssFile . "*/\n";
+				$css .= "/*" . $cssFile . "*/\n";
 				$css .= @file_get_contents($cssFile);
 			}
 		}
