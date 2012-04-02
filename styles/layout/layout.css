@@ -1973,6 +1973,10 @@ ul.freetagged li {
 	padding: 0;
 }
 
+#cluetip {
+	display: none;
+}
+
 /***** New (unsorted) *****/
 
 /* webmail & groupmail */
