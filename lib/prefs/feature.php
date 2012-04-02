@@ -2426,9 +2426,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'CodeMirror',
 			'keywords' => 'Code Mirror',
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
-			'default' => 'n',
-			'warning' => tra('Experimental'),
-			'tags' => array('experimental'),		
+			'default' => 'y',
 		),
 		'feature_jison_wiki_parser' => array(
 			'name' => tra('Jison Wiki Parser'),
