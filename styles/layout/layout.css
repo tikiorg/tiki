@@ -423,6 +423,10 @@ li#logout_link a {
 	margin-right: .5em;
 }
 
+.mod-share-item.google-root {
+	margin-left: .5em;
+}
+
 /* centercolumn */
 .fullscreen .tellafriend,
 .fullscreen .share {

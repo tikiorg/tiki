@@ -69,7 +69,7 @@ function module_share_info()
 			),
 			'facebook_show_faces' => array(
 				'name' => tra('Facebook: Show Faces'),
-				'description' => tra('Button layout') . ' (y/n)',
+				'description' => tra('Show pictures of others who like this') . ' (y/n)',
 				'filter' => 'alpha',
 			),
 			'facebook_verb' => array(
@@ -233,7 +233,7 @@ function module_share($mod_reference, $module_params)
 	if (!empty($module_params['facebook_font']) && $module_params['facebook_font'] !== 'lucida grande') {
 		$fbData .= ' data-font="' . $module_params['facebook_font'] . '"';
 	}
-	if (empty($module_params['facebook_ref']) || $module_params['facebook_ref'] === 'y') {
+	if (!empty($module_params['facebook_ref'])) {
 		$fbData .= ' data-ref="' . htmlspecialchars($module_params['facebook_ref']) . '"';
 	}
 	if (!empty($module_params['facebook_href'])) {

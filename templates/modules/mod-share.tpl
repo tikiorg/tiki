@@ -63,7 +63,7 @@
 	{/if}
 
 	{if (isset($module_params.google) and $module_params.google neq 'n')}
-		<div class="mod-share-item"><div class="g-plusone"{$gl_data_attributes}></div></div>
+		<div class="mod-share-item google-root"><div class="g-plusone"{$gl_data_attributes}></div></div>
 		{jq notonready=true}
 {{$gl_script_addition}}
   (function() {
