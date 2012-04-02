@@ -18,6 +18,10 @@
 				<td><pre style="margin:0">{$item->id}</pre></td>
 			</tr>
 			<tr>
+				<td><strong>{tr}Media Type{/tr}</strong>:</td>
+				<td>{$item->mediaType}</td>
+			</tr>
+			<tr>
 				<td><strong>{tr}Duration{/tr}</strong>:</td>
 				<td>{$item->duration}s</td>
 			</tr>
