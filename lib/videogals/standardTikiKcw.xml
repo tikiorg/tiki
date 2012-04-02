@@ -86,7 +86,7 @@
   <StartupDefaults>
     <SingleContribution>true</SingleContribution>
     <autoTOUConfirmation>false</autoTOUConfirmation>
-	<enableTOU>true</enableTOU>
+	<enableTOU>false</enableTOU>
     <showLogoImage>false</showLogoImage>
     <NavigationProperties>
       <showCloseButton>true</showCloseButton>
