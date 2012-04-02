@@ -16,7 +16,7 @@ if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
 	// contribution wizard
 	$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
 	if ($kcwDefault) {
-		$kcwText = "<div class='adminoptionbox'>KCW Configuraiton ID: $kcwDefault (automatically configured)</div>";
+		$kcwText = "<div class='adminoptionbox'>KCW Configuration ID: $kcwDefault (automatically configured)</div>";
 	} else {
 		$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up other settings</div>";	
 	}
