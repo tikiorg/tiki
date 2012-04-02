@@ -132,18 +132,18 @@ class KalturaLib
 		$fh = fopen($filename, 'r');
 		$confXML = fread($fh, filesize($filename));
 		$uiConf->confFile = $confXML;
+		$uiConf->swfUrl = '/flash/kcw/v2.1.4/ContributionWizard.swf';
+		$uiConf->tags = 'autodeploy, content_v3.2.5, content_upload';
 		
 		// first try to update
 	 	if ($current) {
-			$uiConf = new KalturaUiConf();
-			$uiConf->confFile = $confXML;
 			$results = $this->client->uiConf->update($current, $uiConf);
 			if (isset($results->id)) {
 				return $results->id;	
 			}
 		}
 		// create if updating failed or not updating
-		$uiConf->creationMode = KalturaUiConfCreationMode::WIZARD;
+		$uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
 		$results = $this->client->uiConf->add($uiConf);
 		if (isset($results->id)) {
 			return $results->id;	
