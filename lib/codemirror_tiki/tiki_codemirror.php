@@ -7,16 +7,18 @@
 
 function codemirrorModes($minify = true)
 {
-	global $tikidomainslash;
+	global $prefs, $tikidomainslash;
 	$js = '';
 	$css = '';
 
 	$target = 'temp/public/'.$tikidomainslash;
-	$jsfile = $target . 'codemirror_modes.js';
-	$cssfile = $target . 'codemirror_modes.css';
+	$jsModes = $target . 'codemirror_modes.js';
+	$cssModes = $target . 'codemirror_modes.css';
 
-	if (!file_exists($jsfile) || !file_exists($cssfile)) {
-
+	if (!file_exists($jsModes) || !file_exists($cssModes)) {
+		//codemirror theme
+		$js .= 'window.codeMirrorTheme = "' . $prefs['feature_syntax_highlighter_theme'] .'";';
+		//load modes first
 		//tiki first, where are our priorities!
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
 		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
@@ -32,14 +34,19 @@ function codemirrorModes($minify = true)
 			}
 		}
 
-		file_put_contents($jsfile, $js);
-		chmod($jsfile, 0644);
+		//load themes
+		foreach(glob('lib/codemirror/theme/*.css') as $cssFile) {
+			$css .= @file_get_contents($cssFile);
+		}
 
-		file_put_contents($cssfile, $css);
-		chmod($cssfile, 0644);
+		file_put_contents($jsModes, $js);
+		chmod($jsModes, 0644);
+
+		file_put_contents($cssModes, $css);
+		chmod($cssModes, 0644);
 	}
 
 	TikiLib::lib("header")
-		->add_jsfile_dependancy($jsfile)
-		->add_cssfile($cssfile);
+		->add_jsfile_dependancy($jsModes)
+		->add_cssfile($cssModes);
 }
