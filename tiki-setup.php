@@ -348,16 +348,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_jsfile('lib/jquery/infinitecarousel/jquery.infinitecarousel3.js');
 		}
 
-		if ( $prefs['feature_jquery_validation'] == 'y' ) {
-			$headerlib->add_jsfile('lib/jquery/jquery-validate/jquery.validate.js');
-			$headerlib->add_jsfile('lib/validators/validator_required_in_group.js');
-		}
-
-		$headerlib->add_jsfile('lib/jquery/jquery-ui/external/jquery.cookie.js');
-		$headerlib->add_jsfile('lib/jquery/jquery.async.js', 10);
-		$headerlib->add_jsfile('lib/jquery/treeTable/src/javascripts/jquery.treeTable.js');
-		$headerlib->add_cssfile('lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css');
-
 		if ( ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) && $prefs['javascript_enabled'] == 'y' ) {
 			$headerlib->add_jsfile('lib/tiki-js-sorttable.js');
 		}
@@ -372,10 +362,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_jsfile("lib/metrics.js");
 		}
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y') {
-			$headerlib->add_jsfile('lib/captcha/captchalib.js');
-		}
-
 		// include and setup themegen editor if already open
 		if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
 				(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
@@ -383,6 +369,21 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$themegenlib->setupEditor();
 		}
 	} // end not in $prefs['mobile_mode']
+
+	// libs for both mobile and normal
+	if ( $prefs['feature_jquery_validation'] == 'y' ) {
+		$headerlib->add_jsfile('lib/jquery/jquery-validate/jquery.validate.js');
+		$headerlib->add_jsfile('lib/validators/validator_required_in_group.js');
+	}
+
+	$headerlib->add_jsfile('lib/jquery/jquery-ui/external/jquery.cookie.js');
+	$headerlib->add_jsfile('lib/jquery/jquery.async.js', 10);
+	$headerlib->add_jsfile('lib/jquery/treeTable/src/javascripts/jquery.treeTable.js');
+	$headerlib->add_cssfile('lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css');
+
+	if (empty($user) && $prefs['feature_antibot'] == 'y') {
+		$headerlib->add_jsfile('lib/captcha/captchalib.js');
+	}
 
 }	// end if $prefs['javascript_enabled'] != 'n'
 
