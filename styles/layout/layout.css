@@ -423,6 +423,10 @@ li#logout_link a {
 	margin-right: .5em;
 }
 
+.mod-share-item.google-root {
+	margin-left: .5em;
+}
+
 /* centercolumn */
 .fullscreen .tellafriend,
 .fullscreen .share {
@@ -1967,6 +1971,10 @@ ul.freetagged li {
 .cluetip-fullhtml {
 	margin: 0;
 	padding: 0;
+}
+
+#cluetip {
+	display: none;
 }
 
 /***** New (unsorted) *****/
