@@ -276,7 +276,7 @@ JQ
 								var itemId = me.data('itemid');
 								trackerForm($trackerId, itemId, function(frm) {
 									frm.submit();
-								});
+								}, true);
 
 								return false;
 							});

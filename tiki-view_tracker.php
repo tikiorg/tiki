@@ -1,4 +1,4 @@
-<?php
+ <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -251,7 +251,9 @@ if (!empty($_REQUEST['remove'])) {
 	$item_info = $trklib->get_item_info($_REQUEST['remove']);
 	$actionObject = Tracker_Item::fromInfo($item_info);
 	if ($actionObject->canRemove()) {
-		$access->check_authenticity();
+		//bypass the question to confirm delete or not
+		if (empty($_REQUEST['force']))
+			$access->check_authenticity();
 		$trklib->remove_tracker_item($_REQUEST['remove']);
 	}
 } elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
