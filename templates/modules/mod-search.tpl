@@ -62,7 +62,7 @@
 			{/if}
 			{if $smod_params.compact eq "y"}
 				{icon _id="magnifier" class="search_mod_magnifier icon"}
-				<div class="search_mod_buttons box" style="display:none; position: absolute; right: 0; padding: 0 1em; z-index: 2;">
+				<div class="search_mod_buttons box" style="display:none; position: absolute; right: 0; padding: 0 1em; z-index: 2; white-space: nowrap;">
 			{/if}
 			{if $smod_params.show_search_button eq 'y'}
 					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'search'} button_default{/if}"
