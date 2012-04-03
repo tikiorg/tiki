@@ -603,7 +603,7 @@ JQ
 	{
 		global $prefs, $_REQUEST;
 		$replace = false;
-print_r($item);
+
 		//lets remove the newentry if it has already been accepted in the past
 		foreach ($contents->entry as $i => $existingEntry) {
 			foreach ($item->feed->entry as $j => $newEntry) {
@@ -640,7 +640,12 @@ print_r($item);
 			}
 
 			if (!$checks[$i]["exists"]) {
-				$checks[$i]["reason"] .= "_no_existance_possibly_from_security_";
+				if (empty($checks[$i]["reason"])) {
+					$checks[$i]["reason"] .= "_no_existance_hash_pass_";
+				} else {
+					$checks[$i]["reason"] .= "_no_existance_";
+				}
+
 				unset($item->feed->entry[$i]);
 			}
 		}
