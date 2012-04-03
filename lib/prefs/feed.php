@@ -85,8 +85,8 @@ function prefs_feed_list()
 			'filter' => 'digits',
 			'shorthint' => tra('seconds'),
 			'hint' => tra('Use 0 for no caching'),
-			'default' => '0', // 0 = disabled (default)
-			'detail' => tra('Enabling caching will override existing permissions - all content will be public. Enable this option __only__ if your syndicated content should be public.'),
+			'default' => '300', // 5 minutes
+			'detail' => tra('Feed caching is done for anonymous users only.'),
 		),
 		'feed_articles' => array(
 			'name' => tra('RSS for articles'),

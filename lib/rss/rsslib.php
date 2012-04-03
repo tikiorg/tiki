@@ -104,6 +104,7 @@ class RSSLib extends TikiDb_Bridge
 				$output["data"]="EMPTY";
 			}
 		}
+		$output['content-type'] = 'application/xml';
 		return $output;
 	}
 

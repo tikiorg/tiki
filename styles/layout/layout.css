@@ -586,6 +586,10 @@ ul.jumplinks,
 	margin-right: auto;
 }
 
+.pagenums input[type="text"] {
+	margin-top: -1px;
+}
+
 a.tikihelp,
 a.tikihelp:visited {
 	border: 0;
@@ -2398,4 +2402,33 @@ div.aclabel, span.aclabel, label.aclabel {
 }
 /* end structures tiki 9 */
 
+
+/*from the codemirror website*/
+.TextArea-fullscreen  #editwiki_toolbar {
+	width: 100% ! important;
+}
+
+.TextArea-fullscreen  textarea {
+	width: inherit ! important;
+}
+
+.TextArea-fullscreen {
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0px solid #BBBBBB;
+	opacity: 1;
+	width: 100%;
+	top: 0px ! important;
+	left: 0px ! important;
+	position: fixed;
+	top: expression(eval(document.body.scrollTop + 15) + "px");
+	/*left: expression(eval(document.body.scrollLeft) + "px");*/
+	background-color: gray;
+}
+.TextArea-fullscreen .cm-remove {
+	display: none;
+}
 /* End of File */
