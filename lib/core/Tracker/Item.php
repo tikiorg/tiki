@@ -155,6 +155,10 @@ class Tracker_Item
 
 	private function getItemOwner()
 	{
+		if (!is_object($this->definition)) {
+			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
+		}
+                
 		$userField = $this->definition->getUserField();
 		if ($userField) {
 			return $this->getValue($userField);
@@ -163,6 +167,10 @@ class Tracker_Item
 
 	private function getItemGroupOwner()
 	{
+		if (!is_object($this->definition)) {
+			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
+		}
+		
 		$groupField = $this->definition->getWriterGroupField();
 		if ($groupField) {
 			return $this->getValue($groupField);
