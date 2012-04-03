@@ -137,12 +137,12 @@ $headerlib->add_cssfile('lib/jquery.s5/jquery.s5.css');
 $headerlib->add_jsfile('lib/jquery.s5/jquery.s5.js');
 $headerlib->add_jq_onready(
     '//slideshow corrupts s5 and is not needed in s5 at all
-	$("#toc").remove();
+	$("#toc,.cluetip-title").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
 	
 	window.s5Settings.basePath = "lib/jquery.s5/";
-	
+
 	$.s5.start($.extend(window.s5Settings, {
 		menu: function() {
 			return $("#tiki_slideshow_buttons").show();
