@@ -63,7 +63,16 @@ if ($_SESSION['wysiwyg'] == 'y') {
 if (isset($jitRequest['edit'])) {
 	// Restore the property for the rest of the script
 	if ($is_html) {
-		$_REQUEST['edit'] = $jitRequest->edit->xss();
+		$data = $jitRequest->edit->raw();
+
+		$parserlib = TikiLib::lib('parser');
+		$noparsed = array();
+		$parserlib->plugins_remove($data, $noparsed);
+
+		$data = TikiFilter::get('xss')->filter($data);
+
+		$parserlib->plugins_replace($data, $noparsed);
+		$_REQUEST['edit'] = $data;
 	} else {
 		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();
 	}
