@@ -24,5 +24,6 @@ lang = {
 	"Match" : "Igual",
 	"Do not match" : "Diferent",
 	"Advanced options" : "Opcions avançades",
-	"Pick a file." : "Escull un arxiu",
+	"Pick a file." : "Escull un arxiu"
+	// remember the IE does not support ending comma on last item
 };
