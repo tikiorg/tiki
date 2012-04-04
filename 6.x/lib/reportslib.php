@@ -178,7 +178,7 @@ class reportsLib extends TikiLib
 						global $calendarlib; require_once('lib/calendar/calendarlib.php');
 						$item = $calendarlib->get_item($change['data']['calitemId']);
 						$body .= tr('%0 added or updated event %1', "<u>{$change['data']['user']}</u>", "<a href='$tikiUrl/tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>");
-					} elseif ($change['event'] == 'tracker_item_modified' || $change['event'] == 'tracker_item_comment') {
+					} elseif ($change['event'] == 'tracker_item_modified') {
 						global $trklib; require_once('lib/trackers/trackerlib.php');
 						
 						$trackerId = $change['data']['trackerId'];
@@ -187,35 +187,18 @@ class reportsLib extends TikiLib
 						$tracker = $trklib->get_tracker($trackerId);
 						$mainFieldValue = $trklib->get_isMain_value($trackerId, $itemId);
 						
-						if ($change['event'] == 'tracker_item_modified') {
-							if ($mainFieldValue) {
-								$body .= tr('%0 added or updated tracker item %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
-								);
-							} else {
-								$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
-								);
-							}
+						if ($mainFieldValue) {
+							$body .= tr('%0 added or updated tracker item %1 on tracker %2',
+								"<u>{$change['data']['user']}</u>",
+								"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>",
+								"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+							);
 						} else {
-							// tracker_item_comment event
-							if ($mainFieldValue) {
-								$body .= tr('%0 added a new comment to %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$mainFieldValue</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
-								);
-							} else {
-								$body .= tr('%0 added a new comment to item id %1 on tracker %2',
-									"<u>{$change['data']['user']}</u>",
-									"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$itemId</a>",
-									"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
-								);
-							}
+							$body .= tr('%0 added or updated tracker item id %1 on tracker %2',
+								"<u>{$change['data']['user']}</u>",
+								"<a href='$tikiUrl/tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>",
+								"<a href='$tikiUrl/tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+							);
 						}
 					}
 					
