@@ -135,9 +135,7 @@
 						{tr}{$atts|@count} files attached{/tr}
 					{/if}
 				{/strip}{/capture}
-					{if $atts|@count gt 0 || $editable}
-					{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
-					{/if}
+				{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
 			{/if}{* attachments *}
 
 			{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
