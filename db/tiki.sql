@@ -2272,7 +2272,7 @@ CREATE TABLE `tiki_tracker_item_field_logs` (
   `lang` char(16) default NULL,
   INDEX `version` (`version`),
   INDEX `itemId` (`itemId`),
-  INDEX `fieldId` (`itemId`)
+  INDEX `fieldId` (`fieldId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_tracker_items`;
