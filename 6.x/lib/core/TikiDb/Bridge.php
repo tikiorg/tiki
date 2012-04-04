@@ -119,9 +119,4 @@ class TikiDb_Bridge extends TikiDb
 		$arr = func_get_args();
 		return call_user_func_array( array( self::get(), 'concat' ), $arr );
 	} // }}}
-
-	function table($tableName) // {{{
-	{
-		return self::get()->table($tableName);
-	} // }}}
 }

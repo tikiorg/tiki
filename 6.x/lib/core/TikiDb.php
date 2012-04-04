@@ -265,9 +265,4 @@ abstract class TikiDb
 		if (strlen($s) > 0) return "CONCAT($s)";
 		else return '';
 	} // }}}
-
-	function table($tableName) // {{{
-	{
-		return new TikiDb_Table($this, $tableName);
-	} // }}}
 }
