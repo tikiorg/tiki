@@ -69,19 +69,6 @@
         </fileFilters>
       </provider>
     </media>
-    <media type="image">
-      <provider id="upload" name="upload" code="1">
-        <authMethodList>
-          <authMethod type="1"/>
-        </authMethodList>
-        <moduleUrl>UploadView.swf</moduleUrl>
-        <fileFilters>
-          <filter type="image">
-            <allowedTypes>jpg,bmp,png,gif,tiff</allowedTypes>
-          </filter>
-        </fileFilters>
-      </provider>
-    </media>
   </mediaTypes>
   <StartupDefaults>
     <SingleContribution>true</SingleContribution>
