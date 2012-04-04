@@ -836,7 +836,7 @@ if (
 	//
 	// TODO: Perform up-to-date check as in the SEFURL admin panel
 	// TODO: Equivalent for IIS
-	if ( strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false && !file_exists('.htaccess') && !@symlink('_htaccess', '.htaccess') && ! @copy('_htaccess', '.htaccess')) {
+	if ( strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false && !file_exists('.htaccess') && function_exists('symlink') && !@symlink('_htaccess', '.htaccess') && ! @copy('_htaccess', '.htaccess')) {
 		$smarty->assign('htaccess_error', 'y');
 	}
 }
