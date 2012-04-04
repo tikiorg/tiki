@@ -13,7 +13,24 @@ class Feed_ForwardLink_Search
 	static function goToNewestWikiRevision($version, $phrase, $page)
 	{
 		$newestRevision = self::newestWikiRevision($phrase, $page);
-		
+
+		if ($newestRevision < 1) {
+			TikiLib::lib("header")->add_jq_onready(<<<JQ
+				$('<div />')
+					.html(
+						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the page is not viewable by the public.') +
+						'&nbsp;&nbsp;' +
+						tr('If you are logged in, try loggin out and then recreate the forwardlink.')
+					)
+					.dialog({
+						title: tr('Phrase not found'),
+						modal: true
+					});
+JQ
+			);
+			return;
+		}
+
 		if ($version != $newestRevision) {
 			header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $page . '&preview=' . $newestRevision . '&nohistory');
 			exit();

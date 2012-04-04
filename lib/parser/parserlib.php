@@ -122,6 +122,31 @@ class ParserLib extends TikiDb_Bridge
 		}
 	}
 
+	/**
+	 * Replace plugins with guid keys and store them in an array
+	 *
+	 * @param $data	string		data to be cleaned of plugins
+	 * @param $noparsed array	output array
+	 */
+
+	function plugins_remove(&$data, &$noparsed) {
+		$preparsed = array();
+		$this->parse_first($data, $preparsed, $noparsed, array('is_html' => true, 'noparseplugins' => true, 'suppress_icons' => true));
+	}
+
+	/**
+	 * Restore plugins from array
+	 *
+	 * @param $data	string		data previously processed with plugins_remove()
+	 * @param $noparsed array	input array
+	 */
+
+	function plugins_replace(&$data, $noparsed) {
+		$preparsed = array();	// unused
+		$noparsed['data'] = str_replace('<x>', '', $noparsed['data']);
+		$this->replace_preparse($data, $preparsed, $noparsed);
+	}
+
 	//*
 	function plugin_match(&$data, &$plugins)
 	{
@@ -308,9 +333,11 @@ class ParserLib extends TikiDb_Bridge
 				$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
 				$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
 							
-				if ( $status === true || ($tiki_p_plugin_preview == 'y' && $details && $options['preview_mode'] && $prefs['ajax_autosave'] === 'y') ) {
+				if ( $status === true || ($tiki_p_plugin_preview == 'y' && $details && $options['preview_mode'] && $prefs['ajax_autosave'] === 'y') || (isset($options['noparseplugins']) && $options['noparseplugins']) ) {
 					if (isset($options['stripplugins']) && $options['stripplugins']) {
 						$ret = $plugin_data;
+					} else if (isset($options['noparseplugins']) && $options['noparseplugins']) {
+						$ret = '~np~' . (string) $match . '~/np~';
 					} else {
 						$ret = $this->plugin_execute($plugin_name, $plugin_data, $arguments, $start, false, $options);
 					}
@@ -1326,7 +1353,7 @@ if ( \$('#$id') ) {
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		$options['process_wiki_paragraphs'] = isset($options['process_wiki_paragraphs']) ? $options['process_wiki_paragraphs'] : true;
 		$options['min_one_paragraph'] = isset($options['min_one_paragraph']) ? $options['min_one_paragraph'] : false;
-		
+
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
 		$old_wysiwyg_parsing = null;

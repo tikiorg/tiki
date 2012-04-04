@@ -2432,7 +2432,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Syntax Highlighter (CodeMirror) Theme'),
 			'help' => 'Syntax+Highlighter',
 			'type' => 'list',
-			'description' => tra('Code Mirror Themes'),
+			'description' => tra('Code Mirror Themes (clear cache when you change)'),
 			'dependencies' => array(
 				'feature_syntax_highlighter',
 			),

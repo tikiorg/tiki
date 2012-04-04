@@ -39,6 +39,9 @@ class Services_Tracker_SearchController
 		$adddata = json_decode($input->adddata->text(), true);
 		if ($adddata) {
 			$dataappend = array();
+
+			$record_session = $input->ignoresession->int() ? false : true;
+
 			$id = $input->searchid->text();
 			if (empty($id)) {
 				$id = '0';
@@ -63,19 +66,25 @@ class Services_Tracker_SearchController
 			} else {
 				$datarangegroups = array();
 			}
-			if (isset($_SESSION["customsearch_$id"])) {
+			if ($record_session && isset($_SESSION["customsearch_$id"])) {
 				unset($_SESSION["customsearch_$id"]);
 			}
 			if ($input->maxRecords->int()) {
-				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
+				if ($record_session) {
+					$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
+				}
 				$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
 			}
 			if ($input->sort_mode->text()) {
-				$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
+				if ($record_session) {
+					$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
+				}
 				$_REQUEST['sort_mode'] = $input->sort_mode->text();
 			}
 			if ($input->offset->int()) {
-				$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
+				if ($record_session) {
+					$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
+				}
 				$_REQUEST['offset'] = $input->offset->int();
 			}
 			foreach ($adddata as $fieldid => $d) {
@@ -87,7 +96,9 @@ class Services_Tracker_SearchController
 				if (empty($value) && $value != 0) {
 					$value = '';		// remove false or null
 				}
-				$_SESSION["customsearch_$id"][$fieldid] = $value;
+				if ($record_session) {
+					$_SESSION["customsearch_$id"][$fieldid] = $value;
+				}
 
 				if (empty($config['type'])) {
 					$config['type'] = $name;

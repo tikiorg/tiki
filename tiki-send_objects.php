@@ -183,7 +183,7 @@ if (isset($_REQUEST['send'])) {
 		$page_info = $artlib->get_article($article);
 		if ($page_info) {
 			$searchMsg = new XML_RPC_Message(
-							'sendArticle'
+							'sendArticle',
 							array(
 								new XML_RPC_Value($_SERVER['SERVER_NAME'], 'string'),
 								new XML_RPC_Value($_REQUEST['username'], 'string'),

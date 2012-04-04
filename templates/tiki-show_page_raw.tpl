@@ -65,7 +65,7 @@
 		<a href="#" onclick="$.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">
 			<img src="lib/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
 		{if $prefs.feature_slideshow_pdfexport eq 'y'}
-			<a href="#" onclick="$.s5.exportPDF('tiki-slideshow.php?page={$page}&pdf');" title="{tr}Export to PDF{/tr}">
+			<a href="#" onclick="window.exportPdf(this);"  title="{tr}Export to PDF{/tr}">
 				<img alt="{tr}Export to PDF{/tr}" src="lib/jquery.s5/images/page_go.png" /></a>
 		{/if}
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
@@ -125,7 +125,7 @@
 		<a href="#" onclick="window.opener.$.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">
 			<img src="lib/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
 		{if $prefs.feature_slideshow_pdfexport eq 'y'}
-			<a href="#" onclick="window.opener.$.s5.exportPDF('tiki-slideshow.php?page={$page}&pdf');" title="{tr}Export to PDF{/tr}">
+			<a href="#" onclick="window.exportPdf(this);" title="{tr}Export to PDF{/tr}">
 				<img alt="{tr}Export to PDF{/tr}" src="lib/jquery.s5/images/page_go.png" /></a>
 		{/if}
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
@@ -159,5 +159,61 @@
 			<option value="swanky-purse">swanky-purse</option>
 		</select>
 	</div>
+	  {if $prefs.feature_slideshow_pdfexport eq 'y'}
+		  {jq}
+
+	        window.exportPdf = function() {
+	            var inputs = $('<div />');
+	            var buttons = {};
+
+	            inputs.append(
+		            tr('Layout: ') +
+		            '<select id="layout">' +
+		                '<option value="landscape">' + tr('Landscape') + '</option>' +
+		                '<option value="portrait">' + tr('Portrait') + '</option>' +
+		            '</select>'
+		        );
+
+		        inputs.append('<br />');
+
+		        inputs.append(
+                    tr('Font Size: ') +
+		            '<select id="fontsize">' +
+                        '<option value="small">' + tr('Small') + '</option>' +
+                        '<option value="medium">' + tr('Medium') + '</option>' +
+		                '<option value="large">' + tr('Large') + '</option>' +
+		                '<option value="x-large">' + tr('X-Large') + '</option>' +
+                    '</select>'
+                );
+
+	            buttons[tr("Ok")] = function() {
+		            var s5;
+
+		            if (window.opener) {
+		                s5 = window.opener.$.s5;
+		            } else {
+		                s5 = $.s5;
+		            }
+
+		            $body.prepend('<style id="tempStyle">' +
+		            'body *{' +
+		                'font-size:' + escape($('#fontsize').val()) + ' ! important;' +
+		                '}' +
+		            '</style>');
+
+		            s5.exportPDF('tiki-slideshow.php?page={$page}&pdf&' + $('#layout').val() + '&fontsize=' + $('#fontsize').val(), tr("PDF Loading... This can take a minute or two."));
+		            inputs.dialog('close');
+		            $body.find('#tempStyle').remove();
+	            };
+
+
+	            inputs.dialog({
+	                title: tr("Configure"),
+	                buttons: buttons,
+	                modal: true
+	            });
+	        };
+	      {/jq}
+	{/if}
   {/if}
 {/if}

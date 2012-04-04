@@ -3866,8 +3866,14 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
+			$parserlib = TikiLib::lib('parser');
+			$noparsed = array();
+			$parserlib->plugins_remove($edit_data, $noparsed);
+
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
+
+			$parserlib->plugins_replace($edit_data, $noparsed);
 		}
 
 		if ( is_null($saveLastModif) ) {

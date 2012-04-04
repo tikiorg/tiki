@@ -26,6 +26,15 @@ loginPopup.find(':input')
 	.blur(function() {
 		hasFocus = false;
 	});
+
+$("form[name=loginbox]").submit( function () {
+	if ($("#login-user_{{$module_logo_instance}}").val() && $("#login-pass_{{$module_logo_instance}}").val()) {
+		return true;
+	} else {
+		$("#login-user_{{$module_logo_instance}}").focus();
+		return false;
+	}
+});
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {if !isset($module_params)}{assign var=module_params value=' '}{/if}

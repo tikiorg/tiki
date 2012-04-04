@@ -93,8 +93,6 @@ Class Feed_ForwardLink extends Feed_Abstract
 								.addClass('forwardlink')
 								.insertBefore(r.selection[0]);
 
-							window.phraseLinks.push(phraseLink);
-
 							r.selection.addClass('ui-state-highlight');
 
 							$('body,html').animate({
@@ -338,8 +336,7 @@ JQ
 			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
 			->add_jsfile('lib/ZeroClipboard.js')
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
-			->add_jsfile('lib/jquery/md5.js')
-			->add_jsfile('http://neil.fraser.name/software/diff_match_patch/svn/trunk/javascript/diff_match_patch.js');
+			->add_jsfile('lib/jquery/md5.js');
 
 		$authorDetails = json_encode(
 			end(
@@ -396,10 +393,7 @@ JQ
 							.mousedown(function() {
 								var suggestion = $.trim(rangy.expandPhrase(o.text, '\\n', me[0]));
 								var buttons = {};
-var dmp = new diff_match_patch();
-var d = dmp.diff_main(suggestion, o.text);
-$('body').append(dmp.diff_prettyHtml(d));
-console.log(rangy.sanitizeToWords(o.text).join(''));
+
 								if (suggestion == o.text) {
 									getAnswers();
 								} else {
@@ -603,7 +597,7 @@ JQ
 	{
 		global $prefs, $_REQUEST;
 		$replace = false;
-print_r($item);
+
 		//lets remove the newentry if it has already been accepted in the past
 		foreach ($contents->entry as $i => $existingEntry) {
 			foreach ($item->feed->entry as $j => $newEntry) {
@@ -640,7 +634,12 @@ print_r($item);
 			}
 
 			if (!$checks[$i]["exists"]) {
-				$checks[$i]["reason"] .= "_no_existance_possibly_from_security_";
+				if (empty($checks[$i]["reason"])) {
+					$checks[$i]["reason"] .= "_no_existance_hash_pass_";
+				} else {
+					$checks[$i]["reason"] .= "_no_existance_";
+				}
+
 				unset($item->feed->entry[$i]);
 			}
 		}
