@@ -37,7 +37,7 @@ class TikiSecure
 		require_once('Crypt/RSA.php');
 		$rsa = new Crypt_RSA();
 		
-		$rsa->loadKey($keys->privatekey);
+		$rsa->loadKey($keys->publickey);
 		
 		set_include_path($path);
 		
@@ -51,9 +51,9 @@ class TikiSecure
 		$keys = $this->getKeys();
 
 		$rsa = new Crypt_RSA();
-		
-		$rsa->loadKey($keys->privatekey);
+
 		$rsa->loadKey($keys->publickey);
+		$rsa->loadKey($keys->privatekey);
 		
 		return $rsa->decrypt($cipher);
 	}
