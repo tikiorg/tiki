@@ -13,6 +13,7 @@ include_once ('lib/wiki/wikilib.php');
 include_once ('lib/wiki-plugins/wikiplugin_slideshow.php');
 
 $access->check_feature('feature_wiki');
+$access->check_feature('feature_slideshow');
 
 //make the other things know we are loading a slideshow
 $tikilib->is_slideshow = true;
@@ -30,6 +31,7 @@ if (!isset($_SESSION["thedate"])) {
 }
 
 if (isset($_REQUEST['pdf'])) {
+	$access->check_feature("feature_slideshow_pdfexport");
 	set_time_limit(777);
 	
 	$_POST["html"] = urldecode($_POST["html"]);
@@ -40,8 +42,9 @@ if (isset($_REQUEST['pdf'])) {
 	
 	if ( isset( $_POST["html"] ) ) {
 		$dompdf = new DOMPDF();
-		$dompdf->load_html($_POST["html"]);
-		$dompdf->set_paper("letter", "portrait");
+
+		$dompdf->load_html(urldecode($_REQUEST["html"]));
+		$dompdf->set_paper("letter", (isset($_REQUEST['landscape']) ? "landscape" : "portrait"));
 		$dompdf->render();
 		
 		$dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
