@@ -528,18 +528,8 @@ class CalendarLib extends TikiLib
 	}
 
 	function watch($calitemId, $data) {
-		global $tikilib, $smarty, $prefs, $user;
-		
-		$nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId']);
-		
-		if ($prefs['feature_daily_report_watches'] == 'y') {
-			global $reportslib; require_once('lib/reportslib.php');
-			$reportslib->makeReportCache($nots,
-				array('event' => 'calendar_changed', 'calitemId' => $calitemId, 'user' => $user)
-			);
-		}
-		
-		if ($nots) {
+		global $tikilib, $smarty, $prefs;
+		if ($nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId'])) {
 			include_once('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$smarty->assign('mail_new', $new);
