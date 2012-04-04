@@ -149,7 +149,7 @@ class TodoLib
 		include_once ('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail(empty($to['user'])?null:$to['user']);
 		$mail->setSubject($todo['to']['subject']);
-		$mail->setHtml($todo['to']['body']);
+		$mail->setTextHtml($todo['to']['body']);
 		$mail->send(array($to['email']));
 	}
 	/////////////////////////////////////////////////
