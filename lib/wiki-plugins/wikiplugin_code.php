@@ -64,7 +64,7 @@ function wikiplugin_code_info()
 			'mediawiki' => array(
 				'required' => false,
 				'name' => tra('Code Tag'),
-				'description' => tra('Encloses the code in an HTML code tag, fo rexample: &lt;code&gt;user input&lt;code&gt;'),
+				'description' => tra('Encloses the code in an HTML code tag, for example: &lt;code&gt;user input&lt;code&gt;'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
