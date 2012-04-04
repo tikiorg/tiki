@@ -14,6 +14,10 @@ $inputConfiguration = array(
 );
 
 $bypass_siteclose_check = 'y';
+
+if (empty($_POST['user'])) {
+	unset($_POST['user']);	// $_POST['user'] is not allowed to be empty if set in tiki-setup.php
+}
 require_once ('tiki-setup.php');
 $login_url_params = '';
 
