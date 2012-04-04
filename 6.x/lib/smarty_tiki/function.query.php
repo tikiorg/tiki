@@ -129,8 +129,7 @@ function smarty_function_query($params, &$smarty) {
       // Use current script explicitely, except if there is only an anchor (i.e. no script and no URL argument) which is enough
       // This also implies that if no anchor, every current URL params will be loosed
       //
-      $php_self = $_SERVER['PHP_SELF'];
-
+      $php_self = htmlspecialchars($_SERVER['PHP_SELF']);
     } else {
 
       // If we just have an anchor, return only this anchor, usual types other than 'anchor' are irrelevant
