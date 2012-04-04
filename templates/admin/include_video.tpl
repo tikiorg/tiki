@@ -39,6 +39,7 @@
 <fieldset class="admin">
 <legend>{tr}Kaltura Contribution Wizard{/tr}</legend>
 	{$kcwText}
+{tr}You can manually edit these values in lib/videogals/standardTikiKcw.xml{/tr}
 </fieldset>
 
 <br />
