@@ -30,9 +30,12 @@ if (isset($_REQUEST['clearone'])) {
 	$tikilib->plugin_clear_fingerprint($_REQUEST['clearone']);
 }
 
-
-
-
+if (isset($_REQUEST['refresh'])) {
+	$pages = $tikilib->list_pages();
+	foreach ($pages['data'] as $page) {
+		$tikilib->parse_first($page['data'], $pre, $no);
+	}
+}
 
 if (isset($_POST['approveall'])) {
 	$tikilib->approve_all_pending_plugins();

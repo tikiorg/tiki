@@ -5,6 +5,7 @@
 {/remarksbox}
 		<p>
 		{tr}This page lists the plugins that require validation, the first time they are encountered{/tr}. {tr}Each plugin contains a unique <em>signature</em> that is preserved{/tr}.</p>
+<p>{tr}When you upgrade from an old version, you may need to reparse all the pages.{/tr} {button href="tiki-plugins.php?refresh=y" _text="{tr}Refresh{/tr}"}</p>
 {if $plugin_list}
 		<p>{tr}If a plugin is no longer in use (for example, it has been removed from the wiki page), use <strong>Clear</strong> to remove it from this list{/tr}. {tr}The plugin will automatically be added if it is encountered{/tr}.
 		</p>
