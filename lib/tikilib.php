@@ -4670,6 +4670,25 @@ class TikiLib extends TikiDb_Bridge
 		return $base;
 	}
 
+	static function tikiPage()
+	{
+		$currentFile = $_SERVER["PHP_SELF"];
+		return array_pop(explode('/', $currentFile));
+	}
+
+	static function isClearingCache()
+	{
+		if (
+				self::tikiPage() == "tiki-admin_system.php" &&
+				isset($_REQUEST['do']) &&
+				$_REQUEST['do'] == 'all'
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function distance($lat1,$lon1,$lat2,$lon2)
 	{
 		// This function uses a pure spherical model
