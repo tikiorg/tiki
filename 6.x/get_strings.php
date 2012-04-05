@@ -247,6 +247,11 @@ function formatted_print($string) {
 ////////////////////////////////////////////////////////////////////////////
 
 if ( $script_mode ) {
+	
+	// Needs a fake tra() when called from command line
+	function tra($msg) {
+		return $msg;
+	}
 
 	$_REQUEST = array();
 	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
