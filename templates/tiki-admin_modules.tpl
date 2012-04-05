@@ -445,7 +445,7 @@
 									<td>
 										<select name="cssmenus" id='list_cssmenus'>
 											{section name=ix loop=$menus}
-												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=y type= {literal}}{/literal}">{$menus[ix].name}</option>
+												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=y type= {literal}}{/literal}">{$menus[ix].name|escape}</option>
 											{/section}
 										</select>
 									</td>
@@ -465,7 +465,7 @@
 									<td>
 										<select name="phpmenus" id='list_phpmenus'>
 											{section name=ix loop=$menus}
-												<option value="{literal}{{/literal}phplayers id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
+												<option value="{literal}{{/literal}phplayers id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name|escape}</option>
 											{/section}
 										</select>
 									</td>
