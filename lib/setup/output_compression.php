@@ -22,6 +22,7 @@ if ( ! empty($force_no_compression) && $force_no_compression ) {
 	// if not, check if tiki compression is enabled
 	} elseif ( $prefs['feature_obzip'] == 'y' ) {
 		// tiki compression is enabled, then let activate the handler
+		ob_clean();					// but make sure it's empty first
 		ob_start('ob_gzhandler');
 		$smarty->assign('gzip_handler', 'tiki');
 		$smarty->assign('gzip', 'Enabled');
