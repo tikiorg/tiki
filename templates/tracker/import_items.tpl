@@ -3,6 +3,7 @@
 		{include file="tracker_actions.tpl"}
 	</div>
 	{remarksbox type="note" title="{tr}Confirmation{/tr}"}
+		<p>{tr _0=$importfile}Imported file '%0'{/tr}</p>
 		<p>{tr _0=$return}Import completed with '%0'{/tr}</p>
 	{/remarksbox}
 {/if}

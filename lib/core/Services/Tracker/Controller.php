@@ -1032,6 +1032,7 @@ class Services_Tracker_Controller
 			return array(
 				'trackerId' => $trackerId,
 				'return' => $count,
+				'importfile' => $_FILES['importfile']['name'],
 			);
 		}
 		
