@@ -25,6 +25,713 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.7
+<http://tiki.org/ReleaseNotes67>
+------------------
+
+----------------------------------------------
+r40750 | pkdille | 2012-04-05 10:10:28 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r39860 | sampaioprimo | 2012-02-16 14:41:24 +0100 (Thu, 16 Feb 2012) | 2 lines
+[bp/39858][FIX] multi-delete topics from forums
+
+
+----------------------------------------------
+r40749 | pkdille | 2012-04-05 10:08:38 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r38236 | nkoth | 2011-10-13 18:30:17 +0200 (Thu, 13 Oct 2011) | 1 line
+[bp/r38235][FIX] Pagination on blogs not preserving blogId
+
+
+----------------------------------------------
+r40748 | pkdille | 2012-04-05 10:07:24 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r36606 | sylvieg | 2011-08-29 20:16:46 +0200 (Mon, 29 Aug 2011) | 1 line
+[bp/r36603][FIX]section layout: display the prefs
+
+
+----------------------------------------------
+r40747 | pkdille | 2012-04-05 10:05:42 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r36864 | eromneg | 2011-09-03 18:20:55 +0200 (Sat, 03 Sep 2011) | 1 line
+[ENH] minor cosmetic change to improve text message
+
+
+----------------------------------------------
+r40746 | pkdille | 2012-04-05 09:59:45 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r39030 | sylvieg | 2011-11-29 14:05:53 +0100 (Tue, 29 Nov 2011) | 1 line
+[bp/r39029][FIX]plugins: when upgrade from a tiki version where there was no plugin approval, the pages need to be parsed to update the validation information.
+
+
+----------------------------------------------
+r40743 | pkdille | 2012-04-05 09:42:54 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r39615 | jonnybradley | 2012-01-21 20:56:29 +0100 (Sat, 21 Jan 2012) | 2 lines
+[bp/r39610][FIX] missing escape(s)
+
+
+----------------------------------------------
+r40742 | pkdille | 2012-04-05 09:41:09 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r36979 | eromneg | 2011-09-06 13:52:02 +0200 (Tue, 06 Sep 2011) | 1 line
+[ENH] [bp33329] enhancement to add new Homepage column to the Group table listing - making the table entry a link instead of simple text - thanks luci
+
+
+----------------------------------------------
+r40741 | pkdille | 2012-04-05 09:38:37 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r38910 | eromneg | 2011-11-19 23:33:25 +0100 (Sat, 19 Nov 2011) | 1 line
+[ENH] [bp38905] automatically assign a unique description meta tag for blogs & blog posts to improve SEO performance
+
+
+----------------------------------------------
+r40740 | pkdille | 2012-04-05 09:28:19 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r35677 | xavidp | 2011-07-27 09:04:29 +0200 (Wed, 27 Jul 2011) | 1 line
+[bp/r35676]Adding explicit reference to how to show all values filtered by other criteria (with no implicit limit). Useful for combined usage with periodQuantity and periodUnit
+
+
+----------------------------------------------
+r40738 | pkdille | 2012-04-05 07:24:30 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r35509 | nkoth | 2011-07-20 00:43:10 +0200 (Wed, 20 Jul 2011) | 1 line
+[bp/r35508][FIX] >=, <=, >, <  filters not working for numeric fields in tracker filter. It was only matching exact matches.
+
+
+----------------------------------------------
+r40737 | pkdille | 2012-04-05 07:21:02 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r39070 | xavidp | 2011-12-02 12:28:47 +0100 (Fri, 02 Dec 2011) | 1 line
+[fix]Typo
+
+
+----------------------------------------------
+r40736 | pkdille | 2012-04-05 07:19:28 +0200 (Thu, 05 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r35572 | sylvieg | 2011-07-21 22:01:38 +0200 (Thu, 21 Jul 2011) | 1 line
+[bp/r35571][ENH]FILES: max param
+
+
+----------------------------------------------
+r40735 | pkdille | 2012-04-05 07:17:26 +0200 (Thu, 05 Apr 2012) | 1 line
+
+[QT] finalize rollback of r35675
+----------------------------------------------
+r40734 | pkdille | 2012-04-05 06:46:28 +0200 (Thu, 05 Apr 2012) | 1 line
+
+[QT] finalize rollback of r35878
+----------------------------------------------
+r40728 | pkdille | 2012-04-04 23:10:12 +0200 (Wed, 04 Apr 2012) | 7 lines
+
+[QT] Quality Team Backport
+
+r36674 | robertplummer | 2011-08-30 19:41:43 +0200 (Tue, 30 Aug 2011) | 2 lines
+[FIX] Locations for sheet dependencies.
+[FIX] Brought the external jquery.sheet_tiki for mods from 7 model
+
+
+----------------------------------------------
+r40727 | pkdille | 2012-04-04 23:07:23 +0200 (Wed, 04 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r37605 | sylvieg | 2011-09-23 22:39:59 +0200 (Fri, 23 Sep 2011) | 1 line
+[bp/r37601][FIX]default_group: default_group is used in php code too
+
+
+----------------------------------------------
+r40724 | pkdille | 2012-04-04 22:45:57 +0200 (Wed, 04 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r38724 | xavidp | 2011-11-07 10:39:57 +0100 (Mon, 07 Nov 2011) | 1 line
+removed last comma because it seems that IE does not support ending comma on last item
+
+
+----------------------------------------------
+r40723 | pkdille | 2012-04-04 22:43:30 +0200 (Wed, 04 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r35941 | sylvieg | 2011-08-09 16:12:30 +0200 (Tue, 09 Aug 2011) | 1 line
+[bp/r 35938, 35939, 35940][FIX]tracker: speed up 15 times item history function+incorrect index
+
+
+----------------------------------------------
+r40722 | pkdille | 2012-04-04 22:39:09 +0200 (Wed, 04 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r36108 | jyhem | 2011-08-12 19:30:18 +0200 (Fri, 12 Aug 2011) | 1 line
+[FIX bp/36107] Avoid line breaks in calendar module nav bar when 'View navigation bar' is set to 'partial'
+
+
+----------------------------------------------
+r40721 | pkdille | 2012-04-04 22:34:35 +0200 (Wed, 04 Apr 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r38533 | xavidp | 2011-10-28 17:38:21 +0200 (Fri, 28 Oct 2011) | 1 line
+[bp/r38531][FIX]Usability fix for common tasks by an admin.
+
+
+----------------------------------------------
+r40542 | sept_7 | 2012-03-29 23:41:44 +0200 (Thu, 29 Mar 2012) | 2 lines
+
+[QT] Better fix than 39857... Keep the original behaviour.
+
+----------------------------------------------
+r40538 | pkdille | 2012-03-29 23:19:17 +0200 (Thu, 29 Mar 2012) | 24 lines
+
+[QT] Quality Team Backport
+
+r39860 | sampaioprimo | 2012-02-16 14:41:24 +0100 (Thu, 16 Feb 2012) | 2 lines
+[bp/39858][FIX] multi-delete topics from forums
+r39865 | marclaporte | 2012-02-16 18:40:18 +0100 (Thu, 16 Feb 2012) | 1 line
+[bp/r39863] [FIX] fix label and description feature_comments_post_as_anonymous
+r39892 | xavidp | 2012-02-21 13:30:46 +0100 (Tue, 21 Feb 2012) | 1 line
+[bp/r39890][FIX]Show last created AND modif items in the period, not just the last created
+r39896 | xavidp | 2012-02-21 17:51:46 +0100 (Tue, 21 Feb 2012) | 1 line
+[bp/r39894][FIX]Usability fix. After filtering items, send the user just above the table with the results, not to the top of the page. The div id is placed in purpose aboive the buttons, so that user knows more easily where he is, and where is the section with the fields to keep refining the filter, etc. Div not placed on top of the filtering options since the list of fields can be long, and users expects to see the results after the click on "filter", and not just the top of the field list again. thanks jonnyb and jyhem for feedback and tips
+r39900 | marclaporte | 2012-02-21 19:19:20 +0100 (Tue, 21 Feb 2012) | 1 line
+[bp/r39798 + 38756] [FIX] design: fix url + [FIX] Add missing basic default design for QUOTE plugin
+r39922 | sampaioprimo | 2012-02-23 17:47:53 +0100 (Thu, 23 Feb 2012) | 2 lines
+update language files with get_strings.php
+r39934 | marclaporte | 2012-02-24 07:37:55 +0100 (Fri, 24 Feb 2012) | 1 line
+Tiki 6.7 is next
+r39938 | jonnybradley | 2012-02-24 18:40:39 +0100 (Fri, 24 Feb 2012) | 1 line
+[bp/r39936][FIX] Clean user input before unserializing
+r40117 | lindonb | 2012-03-10 21:42:49 +0100 (Sat, 10 Mar 2012) | 1 line
+[bp/r40116] Broaden parameter wasn't working
+r40165 | sylvieg | 2012-03-13 22:17:20 +0100 (Tue, 13 Mar 2012) | 1 line
+[FIX]tracker: a visible by creator and admin had no input box for new item
+
+
+----------------------------------------------
+r40537 | pkdille | 2012-03-29 23:15:48 +0200 (Thu, 29 Mar 2012) | 22 lines
+
+[QT] Quality Team Backport
+
+r39615 | jonnybradley | 2012-01-21 20:56:29 +0100 (Sat, 21 Jan 2012) | 2 lines
+[bp/r39610][FIX] missing escape(s)
+r39616 | jonnybradley | 2012-01-21 21:02:05 +0100 (Sat, 21 Jan 2012) | 1 line
+[bp/r39611 & 39613][FIX] check confirm on group and menu create (& Different messages for menu create/edit)
+r39627 | eromneg | 2012-01-22 18:56:13 +0100 (Sun, 22 Jan 2012) | 1 line
+[ENH] [bp37243] Add wiki_authors_style handling in wiki handler
+r39684 | sylvieg | 2012-01-26 23:42:56 +0100 (Thu, 26 Jan 2012) | 1 line
+[bp/r39683][FIX]wiki: wiki_watch_author back
+r39707 | sampaioprimo | 2012-01-30 14:34:13 +0100 (Mon, 30 Jan 2012) | 2 lines
+[bp/39705][FIX] default empty value for periodUnit parameter of trackerlist plugin
+r39734 | sylvieg | 2012-02-02 00:26:16 +0100 (Thu, 02 Feb 2012) | 1 line
+[FIX]tracker: no backport as chaged - field simple group on an existing item was not prepopulated
+r39818 | jonnybradley | 2012-02-13 19:01:10 +0100 (Mon, 13 Feb 2012) | 1 line
+[bp/r36723][FIX] rss: Missing required params in $tikilib->tikiUrl() calls
+r39819 | jonnybradley | 2012-02-13 19:28:56 +0100 (Mon, 13 Feb 2012) | 1 line
+[bp/r39358][FIX] rss: typos (cannot use [] for reading)
+r39849 | xavidp | 2012-02-15 13:09:32 +0100 (Wed, 15 Feb 2012) | 1 line
+[MOD][bp/r39848]Change default setting to avoid sending 'no news' emails (for the case when the admin selected that new users are created with daily reports on). Not commited to trunk since behavior changed there.
+
+
+----------------------------------------------
+r40536 | pkdille | 2012-03-29 23:12:47 +0200 (Thu, 29 Mar 2012) | 20 lines
+
+[QT] Quality Team Backport
+
+r39364 | jonnybradley | 2012-01-02 18:45:55 +0100 (Mon, 02 Jan 2012) | 1 line
+[REL] Version number for SVN (thanks Geoff)
+r39365 | jonnybradley | 2012-01-02 18:48:26 +0100 (Mon, 02 Jan 2012) | 1 line
+[REL] Missing releases for this branch
+r39380 | sylvieg | 2012-01-04 13:02:30 +0100 (Wed, 04 Jan 2012) | 1 line
+[FIX]export textarea in tracker must not be parsed
+r39391 | jonnybradley | 2012-01-05 19:49:56 +0100 (Thu, 05 Jan 2012) | 1 line
+[bp/r39390][FIX] object perms: group name encoding
+r39428 | marclaporte | 2012-01-09 04:50:13 +0100 (Mon, 09 Jan 2012) | 1 line
+remove weird 100 which appeared via r34978 which was a commit from i18n.tiki.org
+r39505 | xavidp | 2012-01-16 12:03:14 +0100 (Mon, 16 Jan 2012) | 1 line
+[bp/r39484][FIX]dynamiclist: filter on categ was incorrect because ret is a table of items. Thks sylvie!
+r39590 | sylvieg | 2012-01-20 13:09:41 +0100 (Fri, 20 Jan 2012) | 1 line
+[bp/r39588][FIX]newsletters: the file plugin uses the smarty var data. assign data after any parsing
+r39597 | sylvieg | 2012-01-20 19:13:34 +0100 (Fri, 20 Jan 2012) | 1 line
+[bp/r31731,39596]notice disturbing tiki_batch_todo
+
+
+----------------------------------------------
+r40535 | pkdille | 2012-03-29 23:10:43 +0200 (Thu, 29 Mar 2012) | 12 lines
+
+[QT] Quality Team Backport
+
+r39070 | xavidp | 2011-12-02 12:28:47 +0100 (Fri, 02 Dec 2011) | 1 line
+[fix]Typo
+r39093 | sampaioprimo | 2011-12-06 23:11:18 +0100 (Tue, 06 Dec 2011) | 2 lines
+backporting pt-br translations
+r39127 | sampaioprimo | 2011-12-09 11:37:42 +0100 (Fri, 09 Dec 2011) | 2 lines
+backporting pt-br translations
+r39159 | chealer | 2011-12-12 22:46:37 +0100 (Mon, 12 Dec 2011) | 1 line
+[bp/r39158][FIX] ajax_autosave: blank previews and diffs when changing "diff_style" (using the select dropdown). One would need to click Preview also to get the result.
+
+
+----------------------------------------------
+r40534 | pkdille | 2012-03-29 23:09:51 +0200 (Thu, 29 Mar 2012) | 8 lines
+
+[QT] Quality Team Backport
+
+r39030 | sylvieg | 2011-11-29 14:05:53 +0100 (Tue, 29 Nov 2011) | 1 line
+[bp/r39029][FIX]plugins: when upgrade from a tiki version where there was no plugin approval, the pages need to be parsed to update the validation information.
+r39062 | xavidp | 2011-12-01 12:14:52 +0100 (Thu, 01 Dec 2011) | 1 line
+[bp/r39061][ENH]This button was way too big for anonymous users, and unluckily the errors need to be shown to anonymous users in some sites - servers in order to have their tikis avoid blank pages when some error occurs.
+
+
+----------------------------------------------
+r40533 | pkdille | 2012-03-29 23:09:25 +0200 (Thu, 29 Mar 2012) | 24 lines
+
+[QT] Quality Team Backport
+
+r38910 | eromneg | 2011-11-19 23:33:25 +0100 (Sat, 19 Nov 2011) | 1 line
+[ENH] [bp38905] automatically assign a unique description meta tag for blogs & blog posts to improve SEO performance
+r38939 | chealer | 2011-11-22 20:34:53 +0100 (Tue, 22 Nov 2011) | 2 lines
+[bp/r38937][FIX] HTML special characters encoding
+r38941 | sylvieg | 2011-11-22 22:31:53 +0100 (Tue, 22 Nov 2011) | 1 line
+[FIX]tracker: date time blank mandatory should start as blank and the the empty do the other job now
+r38944 | chealer | 2011-11-23 04:22:47 +0100 (Wed, 23 Nov 2011) | 1 line
+[bp/r38943][FIX] ATTACH and FILE plugins in print mode showing "No such attachment on this page"
+r38969 | sylvieg | 2011-11-24 13:50:13 +0100 (Thu, 24 Nov 2011) | 1 line
+[bp/r 38968][FIX]link: self_link (ex: in page history) with a page name with a comma. Dirty trick: the param page is never multivalued
+r38971 | sylvieg | 2011-11-24 17:25:50 +0100 (Thu, 24 Nov 2011) | 1 line
+[bp/r38970][FIX]calendar: disable background url also to be able to see the color
+r38980 | sylvieg | 2011-11-24 21:47:25 +0100 (Thu, 24 Nov 2011) | 1 line
+[bp/r38979][FIX]parser: some consolidation to avoid maketoc to be considered as a plugin (probably because a previous error put ans empty plugin alias in the database
+r38985 | sylvieg | 2011-11-25 13:36:39 +0100 (Fri, 25 Nov 2011) | 1 line
+[FIX]strasa: if no logo but site menu-> display the menu (has been moved in tiki8)
+r38991 | sampaioprimo | 2011-11-25 19:22:54 +0100 (Fri, 25 Nov 2011) | 2 lines
+pt-br translation
+r38996 | sylvieg | 2011-11-26 01:29:44 +0100 (Sat, 26 Nov 2011) | 1 line
+[bp/r38995][FIX]perms: anonymous has no tiki_p_view, HomePage and homepage have both a category A that has tiki_p_view. Withiout this fix, Anonymous can not see HomePage
+
+
+----------------------------------------------
+r40532 | pkdille | 2012-03-29 23:07:17 +0200 (Thu, 29 Mar 2012) | 20 lines
+
+[QT] Quality Team Backport
+
+r38763 | yonixxx | 2011-11-09 22:12:32 +0100 (Wed, 09 Nov 2011) | 1 line
+[TRA] minor text translation in hebrew
+r38767 | nkoth | 2011-11-09 22:55:30 +0100 (Wed, 09 Nov 2011) | 1 line
+[bp/r38765][bp/r38766][FIX] poll voting not working because clicking on button(s) causes redirect to home page 
+r38775 | sampaioprimo | 2011-11-10 21:33:10 +0100 (Thu, 10 Nov 2011) | 2 lines
+pt-br translation
+r38790 | xavidp | 2011-11-12 19:06:51 +0100 (Sat, 12 Nov 2011) | 1 line
+[bp/r38788][FIX]Show link to newsletter archives for users with the permission to see them.
+r38858 | chealer | 2011-11-17 08:09:53 +0100 (Thu, 17 Nov 2011) | 1 line
+[bp/r38856][FIX] JavaScript/HTML special characters encoding
+r38871 | sampaioprimo | 2011-11-18 18:10:52 +0100 (Fri, 18 Nov 2011) | 2 lines
+backporting pt-br translations from trunk
+r38877 | sampaioprimo | 2011-11-18 19:26:08 +0100 (Fri, 18 Nov 2011) | 2 lines
+backporting pt-br translations from trunk
+r38879 | sampaioprimo | 2011-11-18 19:33:51 +0100 (Fri, 18 Nov 2011) | 2 lines
+typo
+
+
+----------------------------------------------
+r40531 | pkdille | 2012-03-29 23:05:43 +0200 (Thu, 29 Mar 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r38748 | xavidp | 2011-11-08 08:36:32 +0100 (Tue, 08 Nov 2011) | 1 line
+[bp/r38746][FIX]Prevent missconfiguration: don't create https links if the admin has disabled https
+
+
+----------------------------------------------
+r40530 | pkdille | 2012-03-29 23:04:46 +0200 (Thu, 29 Mar 2012) | 12 lines
+
+[QT] Quality Team Backport
+
+r38724 | xavidp | 2011-11-07 10:39:57 +0100 (Mon, 07 Nov 2011) | 1 line
+removed last comma because it seems that IE does not support ending comma on last item
+r38725 | xavidp | 2011-11-07 10:41:35 +0100 (Mon, 07 Nov 2011) | 1 line
+A few more strings translated
+r38726 | xavidp | 2011-11-07 10:42:35 +0100 (Mon, 07 Nov 2011) | 1 line
+A few more strings (related to daily reports)
+r38729 | xavidp | 2011-11-07 10:57:55 +0100 (Mon, 07 Nov 2011) | 1 line
+A few more strings translated
+
+
+----------------------------------------------
+r40529 | pkdille | 2012-03-29 23:03:40 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r38641 | chealer | 2011-11-03 07:33:48 +0100 (Thu, 03 Nov 2011) | 1 line
+[bp/r38639][FIX] HTML special characters encoding
+r38648 | xavidp | 2011-11-03 13:40:06 +0100 (Thu, 03 Nov 2011) | 1 line
+[bp/r38647][FIX]Allow showing events in the last natural day only, by means of allowing to filter by hours also (i.e., last 8-12h of the working day), to prevent showing items from the previous day  that were created less than 24 hours ago.
+r38670 | sampaioprimo | 2011-11-03 20:57:29 +0100 (Thu, 03 Nov 2011) | 2 lines
+updating pt-br language file with get_strings.php
+r38681 | jyhem | 2011-11-03 22:44:48 +0100 (Thu, 03 Nov 2011) | 1 line
+[FIX bp/r38678] Missing CSRF protection ticket
+r38682 | sampaioprimo | 2011-11-03 23:03:02 +0100 (Thu, 03 Nov 2011) | 2 lines
+merging pt-br translations from trunk
+r38699 | xavidp | 2011-11-04 13:14:56 +0100 (Fri, 04 Nov 2011) | 1 line
+[bp/r38697][FIX]Usability fix to show icon and link to tracker item history also in item view in case item has versions for some of its fields.
+
+
+----------------------------------------------
+r40528 | pkdille | 2012-03-29 22:59:13 +0200 (Thu, 29 Mar 2012) | 8 lines
+
+[QT] Quality Team Backport
+
+r38533 | xavidp | 2011-10-28 17:38:21 +0200 (Fri, 28 Oct 2011) | 1 line
+[bp/r38531][FIX]Usability fix for common tasks by an admin.
+r38592 | xavidp | 2011-10-31 13:22:13 +0100 (Mon, 31 Oct 2011) | 1 line
+[bp/r38590][FIX]Allow showing scroll bars automagically when plugin code with no line wrapping and restricted width applied (by a higher level div plugin call limiting that width).
+
+
+----------------------------------------------
+r40527 | pkdille | 2012-03-29 22:58:11 +0200 (Thu, 29 Mar 2012) | 2 lines
+
+[QT] Rollback of 38315 commited by mistake
+
+----------------------------------------------
+r40525 | pkdille | 2012-03-29 22:52:24 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r38236 | nkoth | 2011-10-13 18:30:17 +0200 (Thu, 13 Oct 2011) | 1 line
+[bp/r38235][FIX] Pagination on blogs not preserving blogId
+r38282 | xavidp | 2011-10-14 17:58:39 +0200 (Fri, 14 Oct 2011) | 1 line
+[bp/r38279][FIX]Fix the sorting to avoid separating upper case from lower case in the first letter
+r38313 | yonixxx | 2011-10-17 12:21:38 +0200 (Mon, 17 Oct 2011) | 1 line
+[FIX]Newsletter archives permission
+r38314 | yonixxx | 2011-10-17 12:22:48 +0200 (Mon, 17 Oct 2011) | 1 line
+[FIX]Newsletter archives permission and style tag
+r38315 | yonixxx | 2011-10-17 12:23:29 +0200 (Mon, 17 Oct 2011) | 1 line
+[FIX]Newsletter archives permission and style tag
+r38426 | sampaioprimo | 2011-10-21 20:46:48 +0200 (Fri, 21 Oct 2011) | 2 lines
+backporting pt-br translations from trunk
+
+
+----------------------------------------------
+r40524 | pkdille | 2012-03-29 22:51:24 +0200 (Thu, 29 Mar 2012) | 18 lines
+
+[QT] Quality Team Backport
+
+r37758 | nkoth | 2011-09-28 23:32:22 +0200 (Wed, 28 Sep 2011) | 1 line
+[bp/r37757][FIX] bad translation with tr causing smarty parse error (not in trunk)
+r37762 | nkoth | 2011-09-28 23:58:06 +0200 (Wed, 28 Sep 2011) | 1 line
+[bp/r37760][FIX] Language switching not working when pagename contains characters that need escaping in regex
+r37833 | sampaioprimo | 2011-09-30 22:13:07 +0200 (Fri, 30 Sep 2011) | 2 lines
+[bp/37828][ENH] new preference to make daily reports the default option for new users (at Xavi's request)
+r38017 | nkoth | 2011-10-06 19:01:03 +0200 (Thu, 06 Oct 2011) | 1 line
+[bp/r33040][FIX] Partial backport: Calendar today button not working.
+r38054 | nkoth | 2011-10-07 06:55:20 +0200 (Fri, 07 Oct 2011) | 1 line
+[bp/r38053][FIX] Admin should be able to change own email even if use login as email is on, since admin is exempt from that feature.
+r38138 | xavidp | 2011-10-10 22:57:18 +0200 (Mon, 10 Oct 2011) | 1 line
+Daily reports and a few other strings translated
+r38152 | xavidp | 2011-10-11 15:31:11 +0200 (Tue, 11 Oct 2011) | 1 line
+[bp/r38150][ENH]Added line for custom error 500 page (useful when Tiki installed on a server with mod_security enabled for apache, which might catch some false positives until rules are fine tuned). Commented out by default, like it was for 404 already.
+
+
+----------------------------------------------
+r40523 | pkdille | 2012-03-29 22:50:14 +0200 (Thu, 29 Mar 2012) | 14 lines
+
+[QT] Quality Team Backport
+
+r37605 | sylvieg | 2011-09-23 22:39:59 +0200 (Fri, 23 Sep 2011) | 1 line
+[bp/r37601][FIX]default_group: default_group is used in php code too
+r37671 | sylvieg | 2011-09-26 14:32:52 +0200 (Mon, 26 Sep 2011) | 1 line
+[bp/r 37668][FIX]tracker: fix multivalued drop down filter for text
+r37687 | jyhem | 2011-09-26 17:34:43 +0200 (Mon, 26 Sep 2011) | 1 line
+[FIX bp/37685] Corrects a regression from r37390 (the simple link stopped working)
+r37691 | nkoth | 2011-09-26 17:42:38 +0200 (Mon, 26 Sep 2011) | 1 line
+[bp/r37688][FIX] Prevent broken links when wysiwyg is used and sefurl is on
+r37713 | marclaporte | 2011-09-27 04:51:46 +0200 (Tue, 27 Sep 2011) | 1 line
+correct links back to 6.x profiles
+
+
+----------------------------------------------
+r40522 | pkdille | 2012-03-29 22:49:21 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r37545 | sampaioprimo | 2011-09-22 16:49:54 +0200 (Thu, 22 Sep 2011) | 2 lines
+updating language files
+r37565 | jyhem | 2011-09-22 23:37:06 +0200 (Thu, 22 Sep 2011) | 1 line
+[SEC bp/37564] Complements 37381
+r37566 | sylvieg | 2011-09-22 23:50:45 +0200 (Thu, 22 Sep 2011) | 1 line
+[FIX]dynamic items list for hebrew: encodeURI works better than escape. thx arildb+chealer
+r37567 | sylvieg | 2011-09-23 00:06:48 +0200 (Fri, 23 Sep 2011) | 1 line
+[FIX]37566 encodeURIComponent is better than encodeURI see http://xkr.us/articles/javascript/encode-compare/ thx arildb+chealer
+r37587 | luciash | 2011-09-23 16:12:26 +0200 (Fri, 23 Sep 2011) | 1 line
+[bp/r37584][FIX] tracker regex validator: fix for the ... code which (no wonder) never worked
+r37599 | luciash | 2011-09-23 21:43:36 +0200 (Fri, 23 Sep 2011) | 1 line
+[bp/r37597][FIX] Major speed up: do not load tiki-jsplugin.php (edit plugin helper) when there is no editable plugin on the page (e.g. for Anonymous with no edit perms) -- please note it is different file and slightly different code as in trunk but the same effect
+
+
+----------------------------------------------
+r40520 | pkdille | 2012-03-29 22:32:50 +0200 (Thu, 29 Mar 2012) | 1 line
+
+[QT] Quality Team Rollback due to svn merge issues
+----------------------------------------------
+r40519 | pkdille | 2012-03-29 22:23:14 +0200 (Thu, 29 Mar 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r37479 | sampaioprimo | 2011-09-21 00:23:32 +0200 (Wed, 21 Sep 2011) | 2 lines
+[bp/37470][ENH] add tracker item comments to daily reports (at Xavi's request)
+
+
+----------------------------------------------
+r40518 | pkdille | 2012-03-29 22:19:00 +0200 (Thu, 29 Mar 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r37446 | sampaioprimo | 2011-09-20 15:25:00 +0200 (Tue, 20 Sep 2011) | 2 lines
+[bp/36110]tiki-user_reports_send.php works without previous configuration
+
+
+----------------------------------------------
+r40516 | pkdille | 2012-03-29 21:55:10 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r37341 | sylvieg | 2011-09-16 22:25:15 +0200 (Fri, 16 Sep 2011) | 1 line
+local to 6 - regression from 5: TRACKER for a new item for a field only visible for creator and admin must be visible
+r37381 | jyhem | 2011-09-18 17:56:49 +0200 (Sun, 18 Sep 2011) | 1 line
+[ENH bp/37380] Allow IP banning of multiple spammers in a practical way (no cut-pasting, less clicks and multiple selection) to cope with recent changes in spammer behaviour
+r37386 | jyhem | 2011-09-18 19:08:11 +0200 (Sun, 18 Sep 2011) | 1 line
+[ENH bp/37385] Allow combined delete and IP ban of multiple spam comments (improves on 37381)
+r37388 | jyhem | 2011-09-18 19:37:04 +0200 (Sun, 18 Sep 2011) | 1 line
+[ENH bp/37385] Oup! Should have been part of 37386
+r37390 | jyhem | 2011-09-18 19:47:40 +0200 (Sun, 18 Sep 2011) | 1 line
+[FIX bp/37389] Fix comments moderation buttons which were broken on recent FireFox & IE following change of browser behaviour due to stricter implementation of image input buttons
+r37409 | sylvieg | 2011-09-19 15:32:10 +0200 (Mon, 19 Sep 2011) | 1 line
+[bp/r37408]escape
+
+
+----------------------------------------------
+r40515 | pkdille | 2012-03-29 21:53:24 +0200 (Thu, 29 Mar 2012) | 10 lines
+
+[QT] Quality Team Backport
+
+r37221 | sampaioprimo | 2011-09-13 20:52:32 +0200 (Tue, 13 Sep 2011) | 2 lines
+[bp/37219][ENH] display tracker item isMain field value in daily reports (at Xavi's request)
+r37223 | sampaioprimo | 2011-09-13 20:54:15 +0200 (Tue, 13 Sep 2011) | 2 lines
+[FIX] display user who changed the tracker item in daily reports
+r37250 | sylvieg | 2011-09-14 15:02:44 +0200 (Wed, 14 Sep 2011) | 1 line
+[bp/r 37248][FIX]most read topics: fix title and filter forumId
+
+
+----------------------------------------------
+r40514 | pkdille | 2012-03-29 21:49:57 +0200 (Thu, 29 Mar 2012) | 12 lines
+
+[QT] Quality Team Backport
+
+r36979 | eromneg | 2011-09-06 13:52:02 +0200 (Tue, 06 Sep 2011) | 1 line
+[ENH] [bp33329] enhancement to add new Homepage column to the Group table listing - making the table entry a link instead of simple text - thanks luci
+r36986 | xavidp | 2011-09-06 16:54:15 +0200 (Tue, 06 Sep 2011) | 1 line
+[bp/36936][FIX] Consistency in appearance of input, button and span class="button" a. Thanks to xavi for pointing out the problem. (thks chibaguy for fixing it!)
+r37041 | sylvieg | 2011-09-08 15:15:56 +0200 (Thu, 08 Sep 2011) | 1 line
+[bp/r 3709][FIX]article: author can be null if anonymous submission
+r37092 | sampaioprimo | 2011-09-09 21:58:52 +0200 (Fri, 09 Sep 2011) | 2 lines
+[bp/37091] [FIX] right tracker item id value for daily reports (fixing directly here and on branches/6.x since this fix is not applicable to trunk due to tracker revamp changes)
+
+
+----------------------------------------------
+r40511 | pkdille | 2012-03-29 21:28:41 +0200 (Thu, 29 Mar 2012) | 14 lines
+
+[QT] Quality Team Backport
+
+r36864 | eromneg | 2011-09-03 18:20:55 +0200 (Sat, 03 Sep 2011) | 1 line
+[ENH] minor cosmetic change to improve text message
+r36880 | arildb | 2011-09-04 00:15:59 +0200 (Sun, 04 Sep 2011) | 1 line
+[FIX] Fix wiki staging & approval error: Make sure $edit_minor is an integer to avoid a db error
+r36883 | arildb | 2011-09-04 00:54:51 +0200 (Sun, 04 Sep 2011) | 1 line
+[bp/r36882][FIX] Fix "Permission denied" error when trying to monitor sub structure. Bug# 2985
+r36903 | xavidp | 2011-09-04 15:53:55 +0200 (Sun, 04 Sep 2011) | 1 line
+[bp/r36901][ENH]First step to enhance spam fight a little easier. Added IP info to data exported with csv file. Sencond step (still to come) would be to allow some csv import for admin banning...
+r36906 | xavidp | 2011-09-04 16:16:32 +0200 (Sun, 04 Sep 2011) | 1 line
+[bp/r36904][FIX]Increase maximum time frame for banning from 1 to 100 weeks
+
+
+----------------------------------------------
+r40509 | pkdille | 2012-03-29 21:26:24 +0200 (Thu, 29 Mar 2012) | 12 lines
+
+[QT] Quality Team Backport
+
+r36674 | robertplummer | 2011-08-30 19:41:43 +0200 (Tue, 30 Aug 2011) | 2 lines
+[FIX] Locations for sheet dependencies.
+[FIX] Brought the external jquery.sheet_tiki for mods from 7 model
+r36676 | robertplummer | 2011-08-30 20:19:47 +0200 (Tue, 30 Aug 2011) | 2 lines
+[FIX] Removed slideshow call from tiki-setup.php to make it less invasive
+[ENH] Backported slideshow fixes from 7
+r36683 | sylvieg | 2011-08-30 21:05:01 +0200 (Tue, 30 Aug 2011) | 1 line
+[bp/r36682][FIX]article: switch off need to confirm
+
+
+----------------------------------------------
+r40508 | pkdille | 2012-03-29 21:25:30 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r36606 | sylvieg | 2011-08-29 20:16:46 +0200 (Mon, 29 Aug 2011) | 1 line
+[bp/r36603][FIX]section layout: display the prefs
+r36641 | xavidp | 2011-08-30 12:41:35 +0200 (Tue, 30 Aug 2011) | 1 line
+[bp/r36639][FIX]Hide 'articles' hardcoded title + 2 action buttons next to it when articles are shown through PluginArticles and actions are requested to be hidden, for better customization of articles display within a custom wiki page
+r36651 | sylvieg | 2011-08-30 17:30:10 +0200 (Tue, 30 Aug 2011) | 1 line
+[bp/r 36649][FIX]{{page}}: a page with {include page=included} and the page 'included' is a (trackerlist filtervalue={{page}}), the {{Page}} must be parsed and not keep to {{page}}
+r36660 | robertplummer | 2011-08-30 18:43:46 +0200 (Tue, 30 Aug 2011) | 1 line
+[ENH] Brought sheet to latest that was in 7.x in order to fix many outstanding issues.  More to come.
+r36662 | xavidp | 2011-08-30 18:48:24 +0200 (Tue, 30 Aug 2011) | 1 line
+[bp/r36655][FIX]messu-compose: a user name is not only limitted to alnum. Thanks sylvieg
+r36673 | robertplummer | 2011-08-30 19:35:17 +0200 (Tue, 30 Aug 2011) | 1 line
+[ENH] Added new external locations for sheet and s5
+
+
+----------------------------------------------
+r40507 | pkdille | 2012-03-29 21:24:01 +0200 (Thu, 29 Mar 2012) | 8 lines
+
+[QT] Quality Team Backport
+
+r36374 | jonnybradley | 2011-08-22 13:26:02 +0200 (Mon, 22 Aug 2011) | 4 lines
+[bp from 7.x/r36329][ENH] articles: Collected article and submission admin improvements
+[original bp from trunk/r36318,r36320,r36321] Add multi-select checkboxes and authorName field to article & submission lists.
+Also fixes find not working on submission list.
+
+
+----------------------------------------------
+r40505 | pkdille | 2012-03-29 21:14:44 +0200 (Thu, 29 Mar 2012) | 14 lines
+
+[QT] Quality Team Backport
+
+r36108 | jyhem | 2011-08-12 19:30:18 +0200 (Fri, 12 Aug 2011) | 1 line
+[FIX bp/36107] Avoid line breaks in calendar module nav bar when 'View navigation bar' is set to 'partial'
+r36276 | sylvieg | 2011-08-17 13:13:48 +0200 (Wed, 17 Aug 2011) | 1 line
+[bp/r36275][FIX]SUBSCRIBENEWSLETTER: user and email are in lower case since around 34625
+r36355 | xavidp | 2011-08-20 17:32:11 +0200 (Sat, 20 Aug 2011) | 1 line
+set in sync with branches 6x
+r36358 | xavidp | 2011-08-20 17:54:20 +0200 (Sat, 20 Aug 2011) | 1 line
+updated a bit with help of maryonce and jboleda
+r36371 | changi67 | 2011-08-21 21:54:13 +0200 (Sun, 21 Aug 2011) | 1 line
+[BP/36368][FIX] Wrong variable name
+
+
+----------------------------------------------
+r40504 | pkdille | 2012-03-29 21:06:43 +0200 (Thu, 29 Mar 2012) | 8 lines
+
+[QT] Quality Team Backport
+
+r35941 | sylvieg | 2011-08-09 16:12:30 +0200 (Tue, 09 Aug 2011) | 1 line
+[bp/r 35938, 35939, 35940][FIX]tracker: speed up 15 times item history function+incorrect index
+r35962 | sampaioprimo | 2011-08-09 21:01:57 +0200 (Tue, 09 Aug 2011) | 2 lines
+[bp/35960][FIX] user receive only one notification when monitoring both topic and thread
+
+
+----------------------------------------------
+r40503 | pkdille | 2012-03-29 21:05:12 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r35677 | xavidp | 2011-07-27 09:04:29 +0200 (Wed, 27 Jul 2011) | 1 line
+[bp/r35676]Adding explicit reference to how to show all values filtered by other criteria (with no implicit limit). Useful for combined usage with periodQuantity and periodUnit
+r35686 | sylvieg | 2011-07-27 19:24:58 +0200 (Wed, 27 Jul 2011) | 1 line
+[bp/r35680][FIX]action calendar: quick fix to see something (action calendar must be merged with calendar or removed?
+r35813 | sylvieg | 2011-08-03 21:42:57 +0200 (Wed, 03 Aug 2011) | 1 line
+[bp r/33068][FIX]fgal: if GD and files in memory, set the image format - otherwise a png displayed with dl1&display&x=10&y=10 will be transform into a jpeg and will loose quality
+r35819 | eromneg | 2011-08-04 11:38:41 +0200 (Thu, 04 Aug 2011) | 1 line
+[FIX] [bp - not sure which] fix to correct logout when useGroupHome is 'y'. Was applied to trunk some time ago but wasn't backported to 6.x so missed the recent 6.4 release
+r35824 | sylvieg | 2011-08-04 15:26:03 +0200 (Thu, 04 Aug 2011) | 1 line
+[FIX]bad merge in 35813
+r35828 | nkoth | 2011-08-04 17:47:18 +0200 (Thu, 04 Aug 2011) | 1 line
+[bp/r35827][FIX] If you had "Content", "Content FR" and "Content::Subcontent" you would have gotten "Content::Subcontent" sorted after "Content FR" and therefore appear to be under the wrong parent category. 
+
+
+----------------------------------------------
+r40501 | pkdille | 2012-03-29 20:57:08 +0200 (Thu, 29 Mar 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r35674 | xavidp | 2011-07-27 08:46:05 +0200 (Wed, 27 Jul 2011) | 1 line
+[bp/r34247][ENH]control listing in wikiplugin trackerlist by period of time. Thanks rodrigo_sampaio. Will be backported also to 7.x after release of 7.1
+
+
+----------------------------------------------
+r40499 | pkdille | 2012-03-29 20:52:26 +0200 (Thu, 29 Mar 2012) | 18 lines
+
+[QT] Quality Team Backport
+
+r35572 | sylvieg | 2011-07-21 22:01:38 +0200 (Thu, 21 Jul 2011) | 1 line
+[bp/r35571][ENH]FILES: max param
+r35588 | jyhem | 2011-07-22 16:17:08 +0200 (Fri, 22 Jul 2011) | 1 line
+[bp/r35586] [ENH] Memory savings: Don't load unused libraries
+r35589 | sylvieg | 2011-07-22 16:17:29 +0200 (Fri, 22 Jul 2011) | 1 line
+[bp/r33224 partiel]newsletter: to have have the batch send sending a body
+r35596 | chealer | 2011-07-22 19:24:16 +0200 (Fri, 22 Jul 2011) | 1 line
+[bp/r35595][FIX] Edit Gallery: broken display in Display Properties tab
+r35599 | chealer | 2011-07-22 20:18:01 +0200 (Fri, 22 Jul 2011) | 1 line
+[bp/r35597][FIX] avoid error when cleaning up tiki_sefurl_regex_out UNIQUE INDEX left mess when INDEX doesn't exist
+r35643 | lindonb | 2011-07-25 06:57:37 +0200 (Mon, 25 Jul 2011) | 1 line
+[bp/r35642][FIX] Db errors were missing client information in the tiki-syslog
+r35645 | xavidp | 2011-07-25 10:31:39 +0200 (Mon, 25 Jul 2011) | 1 line
+[bp/r35644][FIX]oups: Adding svn Id keyword
+
+
+----------------------------------------------
+r40498 | pkdille | 2012-03-29 20:50:54 +0200 (Thu, 29 Mar 2012) | 16 lines
+
+[QT] Quality Team Backport
+
+r35509 | nkoth | 2011-07-20 00:43:10 +0200 (Wed, 20 Jul 2011) | 1 line
+[bp/r35508][FIX] >=, <=, >, <  filters not working for numeric fields in tracker filter. It was only matching exact matches.
+r35519 | sylvieg | 2011-07-20 14:56:10 +0200 (Wed, 20 Jul 2011) | 1 line
+[bp/r35518][FIX]FILES: fix showgallery param
+r35522 | sylvieg | 2011-07-20 15:48:22 +0200 (Wed, 20 Jul 2011) | 1 line
+[bp/r35521][FIX]FILES: fix showfilename=n && showname=n
+r35555 | xavidp | 2011-07-21 10:41:22 +0200 (Thu, 21 Jul 2011) | 1 line
+[bp/r35554][FIX]Fix listing also months links for articles. Thanks Jyhem for the pointer about where to fix it.
+r35556 | sylvieg | 2011-07-21 13:17:29 +0200 (Thu, 21 Jul 2011) | 1 line
+[FIX]syntax error in commit  35519
+r35560 | xavidp | 2011-07-21 17:42:10 +0200 (Thu, 21 Jul 2011) | 1 line
+[bp/r35558][FIX]Fix parsing of scripts through PluginR by adding a method to prevent parsing of smarty when using pretty trackers. A new smarty resource and trackerlist param called 'tplwiki' is added which allows using content in a wiki page as if it was a tpl on disk. Almost the same as previous smarty resource and trackerlist param 'wiki', but with no parsing (as trackerlsit param 'tpl' on disk). Thanks heaps sylvieg!
+
+
+----------------------------------------------
+r40497 | pkdille | 2012-03-29 20:48:08 +0200 (Thu, 29 Mar 2012) | 6 lines
+
+[QT] Quality Team Backport
+
+r35505 | sylvieg | 2011-07-19 22:10:47 +0200 (Tue, 19 Jul 2011) | 1 line
+[bp/r35504][FIX]articleclip: sort on publish date desc
+
+
+----------------------------------------------
+r39779 | marclaporte | 2012-02-07 23:11:34 +0100 (Tue, 07 Feb 2012) | 1 line
+
+[bp/r34571] better doc for transitions
+----------------------------------------------
 Version 6.6
 <http://tiki.org/ReleaseNotes66>
 ------------------
