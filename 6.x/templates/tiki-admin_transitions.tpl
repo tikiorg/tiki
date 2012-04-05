@@ -1,4 +1,4 @@
-{title help="Category Transitions"}{tr}Transitions{/tr}{/title}
+{title help="Transitions"}{tr}Transitions{/tr}{/title}
 
 {tabset}
 	{tab name="{tr}Subset Selection{/tr}"}
@@ -38,13 +38,13 @@
 					{/if}
 				</ul>
 				<p>
-					<label for="transition-group-auto">{tr}Group name{/tr}</label>
-					<input type="text" id="transition-group-auto"/>
+					<label for="transition-group-auto">{tr}Type in a group name and click "enter"{/tr}</label>
+					<input type="text" id="transition-group-auto"/> 
 				</p>
 			</fieldset>
 
 			<p>
-				<input type="submit" value="{tr}Select{/tr}"/>
+				{tr}Once you have selected at least two, click:{/tr} <input type="submit" value="{tr}Select{/tr}"/> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
 			</p>
 		</form>
 		{jq}
