@@ -427,7 +427,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 	foreach ($listfields as $fieldId) {
 		if (!is_numeric($fieldId)) { // composite field
 			$filter = array('name'=> 'Text', 'fieldId'=> $fieldId, 'format'=>'sqlsearch');
-			If (!empty($_REQUEST['f_'.$fieldId])) {
+			if (!empty($_REQUEST['f_'.$fieldId])) {
 				$filter['selected'] = $_REQUEST['f_'.$fieldId];
 			}
 			$filters[] = $filter;
