@@ -9,7 +9,8 @@ function capLock(e, el){
 		$('.divCapson', $(el).parents('div:first')).hide();
 	}
 }
-
+{/jq}
+{jq}
 //We were having problems with the menu disapearing when you selected an input, this prevents the menu from going away once you have put focus on an input
 var hasFocus = false;
 var loginPopup = $('.siteloginbar_popup .cssmenu_horiz')
@@ -26,8 +27,9 @@ loginPopup.find(':input')
 	.blur(function() {
 		hasFocus = false;
 	});
-
-$("form[name=loginbox]").submit( function () {
+{/jq}
+{jq}
+$("#loginbox-{{$module_logo_instance}}").submit( function () {
 	if ($("#login-user_{{$module_logo_instance}}").val() && $("#login-pass_{{$module_logo_instance}}").val()) {
 		return true;
 	} else {
@@ -102,7 +104,7 @@ $("form[name=loginbox]").submit( function () {
 		{/if}
 	{else}
 		{assign var='close_tags' value=''}
-		<form name="loginbox" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}"
+		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
 		{if $prefs.feature_challenge eq 'y'}

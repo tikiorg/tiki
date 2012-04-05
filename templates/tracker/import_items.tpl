@@ -3,6 +3,7 @@
 		{include file="tracker_actions.tpl"}
 	</div>
 	{remarksbox type="note" title="{tr}Confirmation{/tr}"}
+		<p>{tr _0=$importfile}Imported file '%0'{/tr}</p>
 		<p>{tr _0=$return}Import completed with '%0'{/tr}</p>
 	{/remarksbox}
 {/if}
@@ -14,11 +15,11 @@
 			<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
 		</ul>
 	{/remarksbox}
-	<label>
+	<label style="display: block">
 		{tr}File{/tr}
 		<input type="file" name="importfile" />
 	</label>
-	<label>
+	<label style="display: block">
 		{tr}Date format{/tr}
 		<select name="dateFormat">
 			<option value="yyyy-mm-dd">{tr}year{/tr}-{tr}month{/tr}-{tr}day{/tr}(2008-01-31)</option>
@@ -27,26 +28,26 @@
 			<option value="">{tr}UNIX Timestamp{/tr}</option>
 		</select>
 	</label>
-	<label>
+	<label style="display: block">
 		{tr}Character encoding{/tr}
 		<select name="encoding">
 			<option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
 			<option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
 		</select>
 	</label>
-	<label>
+	<label style="display: block">
 		{tr}Separator{/tr}
 		<input type="text" name="separator" value="," size="2" />
 	</label>
-	<label>
+	<label style="display: block">
 		<input type="checkbox" name="add_items" value="1" />
 		{tr}Create as new items{/tr}
 	</label>
-	<label>
+	<label style="display: block">
 		<input type="checkbox" name="updateLastModif" checked="checked" value="1" />
 		{tr}Update lastModif date if updating items (status and created are updated only if the fields are specified in the csv){/tr}
 	</label>
-	<label>
+	<label style="display: block">
 		<input type="checkbox" name="convertItemLinkValues" value="1" />
 		{tr}Convert values of ItemLink type fields from the value in the CSV file to the itemId of the linked item. Requires the linked item to be correctly set up in advance.{/tr}
 	</label>

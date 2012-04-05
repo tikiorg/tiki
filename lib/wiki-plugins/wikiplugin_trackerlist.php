@@ -686,6 +686,18 @@ function wikiplugin_trackerlist_info()
 				),
 				'default' => '',
 			),
+			'periodType' => array(
+				'required' => false,
+				'name' => tr('Period type'),
+				'description' => tr('Time period after creattion or after modification'),
+				'filter' => 'word',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tr('Creation'), 'value' => 'c'),
+					array('text' => tr('Modification'), 'value' => 'm'),
+				),
+				'default' => '',
+			),
 		)
 	);
 }
@@ -829,10 +841,17 @@ function wikiplugin_trackerlist($data, $params)
 				default:
     				break;
 			}
-			
-			if (is_int($periodUnit)) {
+
+			if (!isset($periodType)) {
+				$periodType = 'c';
+			}
+
+			if (is_int($periodUnit) && ($periodType == 'm' ) ) {
 				$filter['lastModifAfter'] = $tikilib->now - ($periodQuantity * $periodUnit);
 				$filter['lastModifBefore'] = $tikilib->now;
+			} elseif (is_int($periodUnit)) { # case for periodType beig c or anything else (therefore, set as case for default)
+				$filter['createdAfter'] = $tikilib->now - ($periodQuantity * $periodUnit);
+				$filter['createdBefore'] = $tikilib->now;
 			}
 		}
 
