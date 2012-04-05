@@ -707,7 +707,7 @@ class TrackerLib extends TikiLib
 				$options = preg_split('/,/', $myfield["options"]);
 				foreach ($tmp as $key=>$value) {
 					if ($is_date) $value=$this->date_format("%e/%m/%y", $value);
-					if ($is_trackerlink) {
+					if ($is_trackerlink && $options[3]) {	// If $options[3] is empty, concat_item_from_fieldslist returns nothing
 						$value=$this->concat_item_from_fieldslist($options[0], $value, $options[3]);
 					}
 					if (!empty($res[$key])) {
