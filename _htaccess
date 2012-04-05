@@ -82,6 +82,10 @@ FileETag none
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# Rewrite rules to maintain any hard-coded URLs following http://dev.tiki.org/ImgDirectoryRevamp
+RewriteRule ^pics/(.*)$ img//$1
+RewriteRule ^images/(.*)$ img/icons//$1
+
 # Apache does not pass Authorization header to CGI scripts
 # Rewrite rules for passing authorisation in CGI or FGI mode
 RewriteCond %{HTTP:Authorization} ^(.*)
