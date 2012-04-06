@@ -240,7 +240,7 @@ function prefs_fgal_list()
 		),
 		'fgal_browse_name_max_length' => array(
 			'name' => tra('Max Name Length'),
-			'description' => tra('Length to truncate file names to in brose view.'),
+			'description' => tra('Length to truncate file names to in browse view.'),
 			'type' => 'text',
 			'filter' => 'int',
 			'size' => 5,
