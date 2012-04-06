@@ -1167,7 +1167,7 @@ function prefs_feature_list($partial = false)
 			'admin' => 'sefurl',
 		),
 		'feature_sefurl_filter' => array(
-			'name' => tra('Search engine friendly url Postfilter'),
+			'name' => tra('Search engine friendly URL Postfilter'),
 			'help' => 'Rewrite+Rules',
 			'type' => 'flag',
 			'perspective' => false,

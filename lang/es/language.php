@@ -2016,6 +2016,7 @@ $lang = array(
 // "Search engine friendly URL" => "Search engine friendly URL",
 // "If you are using Apache, you can copy _htaccess to .htaccess to get Short URLs. On IIS, copy web_config to web.config" => "If you are using Apache, you can copy _htaccess to .htaccess to get Short URLs. On IIS, copy web_config to web.config",
 // "Search engine friendly url Postfilter" => "Search engine friendly url Postfilter",
+// "Search engine friendly URL Postfilter" => "Search engine friendly url Postfilter",
 // "Display article title in the sefurl" => "Display article title in the sefurl",
 // "Display blog title in the sefurl" => "Display blog title in the sefurl",
 // "Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page" => "Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page",

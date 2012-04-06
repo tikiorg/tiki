@@ -2016,6 +2016,7 @@ $lang = array(
 "Search engine friendly URL" => "Suchmaschinenfreundliche URL",
 "If you are using Apache, you can copy _htaccess to .htaccess to get Short URLs. On IIS, copy web_config to web.config" => "Wenn Du Apache Webserver benutzt, dann kannst Du die Datei _htaccess in .htaccess umkopieren um kurze URLs zu erhalten. Auf einem IIS musst Du hierfür web_config in web.config umkopieren",
 "Search engine friendly url Postfilter" => "Suchmaschienenfreundliche URL Postfilter",
+"Search engine friendly URL Postfilter" => "Suchmaschienenfreundliche URL Postfilter",
 "Display article title in the sefurl" => "Zeige den Artikeltitel in der suchmaschinenfreundlichen URL",
 "Display blog title in the sefurl" => "Zeige den Blogtitel in der suchmaschinenfreundlichen URL",
 "Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page" => "Schreibe tiki-view_tracker.php?itemId=yyy neu um Seite mit yyy zu präfixen",

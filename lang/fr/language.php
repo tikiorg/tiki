@@ -2016,6 +2016,7 @@ $lang = array(
 "Search engine friendly URL" => "URLs courts (SEFURL)",
 "If you are using Apache, you can copy _htaccess to .htaccess to get Short URLs. On IIS, copy web_config to web.config" => "Si vous utilisez Apache, vous pouvez copier _htaccess en .htaccess pour obtenir des URLs courtes. Sur IIS, copier web_config en web.config",
 "Search engine friendly url Postfilter" => "Post-filtre URLs courts",
+"Search engine friendly URL Postfilter" => "Post-filtre URLs courts",
 "Display article title in the sefurl" => "Afficher le titre de l'article dans l'URL SEF",
 "Display blog title in the sefurl" => "Afficher le titre du blogue dans l'URL SEF",
 // "Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page" => "Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page",
