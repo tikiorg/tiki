@@ -88,10 +88,35 @@ function wikiplugin_draw($data, $params)
 		}
 		
 		$in = tr(" in ");
-		
+
+		$headerlib->add_jq_onready(<<<JQ
+			$('#newDraw$drawIndex').submit(function() {
+				var form = $(this);
+				var fields = form.serializeArray();
+				$.wikiTrackingDraw = {
+					fileId: 0,
+					page: '$page',
+					index: '$drawIndex',
+					label: '$label',
+					type: 'draw',
+					content: '',
+					params: {
+						width: '',
+						height: '',
+						id: 0 //this will be updated
+					}
+				};
+				$.each(fields, function(i, field){
+					form.data(field.name.toLowerCase(), field.value);
+				});
+
+				return form.ajaxEditDraw();
+			});
+JQ
+		);
 		return <<<EOF
 		~np~
-		<form method="get" action="tiki-edit_draw.php">
+		<form id="newDraw$drawIndex" method="get" action="tiki-edit_draw.php">
 			<p>
 				<input type="submit" name="label" value="$label" class="newSvgButton" />$in
 				<select name="galleryId">
