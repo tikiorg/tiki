@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$fileId = '';
 	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0) {
 		//existing file
-		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user);
 		
 		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') { // this is a conversion from an image other than svg
 			$newFileInfo = $filegallib->get_file_info($fileId);
@@ -93,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			$archive = end($archives['data']);
 			
 			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId=' . $archive['fileId'] . '#', $newFileInfo['data']);
-			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0, $newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg", $newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user, date());
+			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0, $newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg", $newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user);
 		}
 	} else {
 		//new file
-		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user);
 	}
 	
 	echo $fileId;
