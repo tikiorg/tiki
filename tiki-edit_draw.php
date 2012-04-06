@@ -110,7 +110,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$data = '<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g>
 		<title>Layer 1</title>
-		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '#image"/>
+		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . (empty($fileInfo['fileId']) ? '' : $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '#image' ) . '"/>
 	</g>
 </svg>';
 }
