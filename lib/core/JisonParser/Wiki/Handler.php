@@ -7,33 +7,26 @@
 
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
-	private $parser;
-	private $pre_handlers = array();
-	private $pos_handlers = array();
-	private $postedit_handlers = array();
 	var $npOn = false;
 	var $pluginStack = array();
 
 	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
-		//nested parsing!
-		$parserlib = new ParserLib;
-		$parser = new JisonParser_Wiki_Handler();
+		$jisonWikiParser = new self();
+		$argParser = new WikiParser_PluginArgumentParser;
 
-		return $parser->parse(
-						$parserlib->plugin_execute(
-										$pluginDetails['name'],
-										$pluginDetails['body'],
-										$parserlib->plugin_split_args($pluginDetails['args'])
-						)
-		);
+		return $jisonWikiParser->parse( $this->pluginExecute(
+			$pluginDetails['name'],
+			$argParser->parse($pluginDetails['args']),
+			$pluginDetails['body']
+		));
 	}
 
 	function stackPlugin($yytext)
 	{
 		$pluginName = $this->match('/^\{([A-Z]+)/', $yytext);
-		$pluginArgs = $this->match('/[(].*?[)]/', $yytext);
+		$pluginArgs = rtrim(str_replace('{' . $pluginName . '(', '', $yytext), ')}');
 
 		$this->pluginStack[] = array(
 			'name' => $pluginName,
@@ -45,14 +38,45 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function inlinePlugin($yytext)
 	{
 		$pluginName = $this->match('/^\{([a-z]+)/', $yytext);
-		$pluginArgs = $this->split(' ', $yytext);
-		$pluginArgs = $this->shift($pluginArgs);
+		$pluginArgs = rtrim(str_replace('{'.$pluginName .' ', '', $yytext), '}');
 
 		return array(
 			'name' => $pluginName,
-			'args' => implode(' ', $pluginArgs),
+			'args' => $pluginArgs,
 			'body' => ''
 		);
+	}
+
+	function pluginExecute($name, $args = array(), $body = "")
+	{
+		$fnName = strtolower('wikiplugin_' .  $name);
+
+		if ( $this->pluginExists($name) && function_exists($fnName) ) {
+
+			$result = $fnName($body, $args);
+
+			return $result;
+		}
+
+		return $body;
+	}
+
+	function pluginExists($name)
+	{
+		$phpName = 'lib/wiki-plugins/wikiplugin_';
+		$phpName .= strtolower($name) . '.php';
+
+		$exists = file_exists($phpName);
+
+		if ( $exists ) {
+			include_once $phpName;
+		}
+
+		if ( $exists ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	function npState($npState, $ifTrue, $ifFalse)
@@ -237,34 +261,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$array = func_get_args();
 
 		return implode($array, '');
-	}
-
-	function size($array)
-	{
-		if (empty($array))
-			$array = array();
-
-		return count($array);
-	}
-
-	function pop($array)
-	{
-		if (empty($array))
-			$array = array();
-
-		array_pop($array);
-
-		return $array;
-	}
-
-	function push($array, $val)
-	{
-		if (empty($array))
-			$array = array();
-
-		array_push($array, $val);
-
-		return $array;
 	}
 
 	function shift($array)
