@@ -7,7 +7,7 @@
 # This file is a replacement for setup.sh
 # in test in 1.9 version
 
-DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
+DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
 
 AUSER=nobody
 AGROUP=nobody
@@ -91,7 +91,7 @@ or
 but it (the script) will still fix what it can according to the permissions
 of your user. This script will now ask you some questions. If you don't know
 what to answer, just press enter to each question (to use default value)"
-			
+
 			read WAIT
 			AUSER=$USER
 		fi
