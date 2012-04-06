@@ -32,7 +32,10 @@ if (!is_file(dirname(__FILE__) . '/local.php')) {
 	die("\nYou need to setup a new database and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
 }
 
-require_once(dirname(__FILE__) . '/local.php');
+global $local_php, $api_tiki;
+$api_tiki = 'adodb';
+$local_php = dirname(__FILE__) . '/local.php';
+require_once($local_php);
 
 require_once ('lib/adodb/adodb.inc.php');
 include_once ('lib/adodb/adodb-pear.inc.php');
@@ -64,6 +67,7 @@ if (!$installer->tableExists('tiki_preferences')) {
 
 $pwd = getcwd();
 chdir(dirname(__FILE__) . '/../..');
+global $smarty;
 require_once 'lib/init/smarty.php';
 $smarty->addPluginsDir('../smarty_tiki/');
 require_once 'lib/cache/cachelib.php';

@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input, $smarty, $access;	// globals are required here for tiki-setup_base.php
+global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input, $smarty, $access, $local_php;	// globals are required here for tiki-setup_base.php
 include_once('tiki-setup_base.php');
 
 // ABOUT THE NUMBERING:
