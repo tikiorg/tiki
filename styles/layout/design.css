@@ -97,7 +97,7 @@ input[type=reset],
 input[type=submit],
 input[type=reset]:hover,
 input[type=submit]:hover {
-	margin: 2px 4px 4px 2px;
+	margin: 0 0 4px 2px;
 	font-size: inherit;
 	font-family: inherit;
 	padding: 0;
