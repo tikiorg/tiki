@@ -432,7 +432,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	function save_archive($id, $galleryId, $count_archives, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby)
+	function save_archive($id, $galleryId, $count_archives, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment = '', $author = null, $created = '', $lockedby = NULL)
 	{
 		global $prefs;
 
