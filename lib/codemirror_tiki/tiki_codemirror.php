@@ -8,12 +8,6 @@
 function codemirrorModes($minify = true)
 {
 	global $prefs, $tikidomainslash;
-
-	//if system is clearing cache, no need to add the js or css, they won't exist
-	if (self::tikiPage() == "tiki-admin_system.php" &&
-		isset($_REQUEST['do']) &&
-		$_REQUEST['do'] == 'all') return;
-
 	$js = '';
 	$css = '';
 

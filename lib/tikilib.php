@@ -4670,12 +4670,6 @@ class TikiLib extends TikiDb_Bridge
 		return $base;
 	}
 
-	static function tikiPage()
-	{
-		$currentFile = $_SERVER["PHP_SELF"];
-		return array_pop(explode('/', $currentFile));
-	}
-
 	function distance($lat1,$lon1,$lat2,$lon2)
 	{
 		// This function uses a pure spherical model
