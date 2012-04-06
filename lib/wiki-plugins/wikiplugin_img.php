@@ -622,10 +622,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		} else { //fgalId parameter - show all images in a file gallery
 			$filegallib = TikiLib::lib('filegal');
 			$galdata = $filegallib->get_files(0, -1, 'created_desc', '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
-			foreach ($galdata as $filedata) {
-				foreach ($filedata as $dbinfo) {
-					$id_list[] = $dbinfo['id'];
-				}
+			foreach ($galdata['data'] as $filedata) {
+				$id_list[] = $filedata['id'];
 			}
 			$id = 'fileId';
 		}
