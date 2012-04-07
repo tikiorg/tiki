@@ -9,14 +9,30 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	var $npOn = false;
 	var $pluginStack = array();
+	var $parseStack = 0;
+
+	function parse($input)
+	{
+		$result = "";
+		$this->parseStack++;
+
+		if ($this->parseStack > 1) {
+			$parser = new JisonParser_Wiki_Handler();
+			$result = $parser->parse($input);
+		} else {
+			$result = parent::parse($input);
+		}
+
+		$this->parseStack--;
+		return $result;
+	}
 
 	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
-		$jisonWikiParser = new self();
 		$argParser = new WikiParser_PluginArgumentParser;
 
-		return $jisonWikiParser->parse( $this->pluginExecute(
+		return $this->parse( $this->pluginExecute(
 			$pluginDetails['name'],
 			$argParser->parse($pluginDetails['args']),
 			$pluginDetails['body']
