@@ -29,7 +29,7 @@ function smarty_function_favorite($params, $smarty)
 										), 
 										$smarty
 						),
-						'_text' => tr('Toggle Favorite'),
+						'_text' => tr('Favorite'),
 					), 
 					$smarty
 	);
