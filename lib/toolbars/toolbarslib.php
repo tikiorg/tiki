@@ -430,7 +430,7 @@ abstract class Toolbar
 		$label = addcslashes($label, "'");
 		$headerlib->add_jq_onready(
 <<< JS
-if (typeof window.CKEDITOR !== "undefined") {
+if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
 	window.CKEDITOR.plugins.add( '{$name}', {
 		init : function( editor ) {
@@ -1217,7 +1217,7 @@ class ToolbarDialog extends Toolbar
 			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(
 <<< JS
-if (typeof window.CKEDITOR !== "undefined") {
+if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
 	window.CKEDITOR.plugins.add( '{$this->name}', {
 		init : function( editor ) {
@@ -1345,7 +1345,7 @@ class ToolbarHelptool extends Toolbar
 		$label = addcslashes($this->label, "'");
 		$headerlib->add_jq_onready(
 <<< JS
-if (typeof window.CKEDITOR !== "undefined") {
+if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
 	window.CKEDITOR.plugins.add( '{$name}', {
 		init : function( editor ) {
@@ -1479,7 +1479,7 @@ class ToolbarSwitchEditor extends Toolbar
 			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(
 <<< JS
-if (typeof window.CKEDITOR !== "undefined") {
+if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
 	window.CKEDITOR.plugins.add( '{$this->name}', {
 		init : function( editor ) {
