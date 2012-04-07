@@ -27,8 +27,8 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '9.0alpha';	// needs to have no spaces for releases
-		$this->star	= '';
+		$this->version 	= 'SVN pre 9.0';	// needs to have no spaces for releases
+		$this->star	= 'Herbig Haro';
 		$this->releases	= array();
 
 		// Check for Subversion or not
@@ -74,7 +74,7 @@ class TWVersion
 		);
 	}
 
-	// Returns an array of all valid versions of Tikiwiki.
+	// Returns an array of all valid versions of Tiki.
 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
@@ -163,6 +163,7 @@ class TWVersion
 				'8.0',
 				'8.1',
 				'8.2',
+				'8.3',
 			);
 	}
 
