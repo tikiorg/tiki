@@ -25,6 +25,7 @@
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... />
 	* find_other : If value != '', show an input box label with find_other
+	* find_in :	 popup to eplain on what is the find
 	*
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
@@ -47,6 +48,7 @@
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
 	</label>
+	{if $find_in}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
 
 {if isset($exact_match)}
 	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
