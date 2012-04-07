@@ -218,10 +218,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 
 	if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		// google doesn't keep up to date, so use the most recent minor release they have available
-		$v = explode('.', $headerlib->jquery_version);
-		$v = $v[0] . '.' . $v[1];
-		$headerlib->add_jsfile_dependancy("http://ajax.googleapis.com/ajax/libs/jquery/$v/jquery.min.js");
+		$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
 	} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 		$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
 	} else {
@@ -279,7 +276,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 
 		if ( $prefs['feature_jquery_ui'] == 'y' ) {
 			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-				$headerlib->add_jsfile_dependancy("http://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
+				$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
 			} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 				$headerlib->add_jsfile_dependancy("http://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 			} else {
