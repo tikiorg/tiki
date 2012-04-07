@@ -37,6 +37,9 @@
 					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
 					{tr}Wiki{/tr}</label>
 					<br />
+					<label style="margin-left: 2em;"><input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if} />
+					{tr}Is HTML{/tr}</label>
+					<br />
 				{/if}
 				{if $prefs.feature_file_galleries_templates eq 'y'}
 					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
@@ -78,6 +81,7 @@
 			<td>{tr}Page Name:{/tr}</td>
 			<td>
 				<input type="text" name="page_name" value="{$info.page_name}"/>
+				{autocomplete element='input[name=page_name]' type='pagename'}
 			</td>
 		</tr>
 
@@ -88,7 +92,15 @@
 		</tr>
 		<tr class="type-cond for-static">
 			<td colspan="2">
-				{textarea id="editwiki" name="content" switcheditor="y"}{$info.content}{/textarea}
+				{if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
+					{$use_wysiwyg='y'}
+					<input type="hidden" id="allowhtml" value="y"/>
+					{if $prefs.wysiwyg_htmltowiki eq 'y'}{$is_html = 'y'}{else}{$is_html = 'n'}{/if}
+				{else}
+					{$use_wysiwyg='n'}
+					{$is_html = 'n'}
+				{/if}
+				{textarea id="editwiki" name="content" switcheditor="y" _wysiwyg=$use_wysiwyg _is_html=$is_html}{$info.content}{/textarea}
 			</td>
 		</tr>
 
