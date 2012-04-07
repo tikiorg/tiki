@@ -99,6 +99,10 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		}
 	}
 
+	$smarty->assign('comments', $params['comments']);	// 3 probably removable assigns
+	$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
+	$smarty->assign('toolbar_section', $params['section']);
+
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n' && $params['autosave'] == 'y') {	// retrieve autosaved content
 		require_once("lib/ajax/autosave.php");
 		$smarty->loadPlugin('smarty_block_self_link');
