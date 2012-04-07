@@ -48,7 +48,6 @@ my $correct_options=GetOptions("help","debug","verbose","ignorecase","caseisenfo
 
 if($opt_debug){
 	print "Number of args: ".$#ARGV."\n";
-	exit 1;
 }
 
 if($opt_help || !$correct_options || ($#ARGV != 1) || ($opt_caseisenforced && (("$ARGV[0]" ne "\L$ARGV[0]") || ( "$ARGV[1]" ne "\u$ARGV[1]" ))) ) {
@@ -123,7 +122,7 @@ while ( my $langfile = <lang/*/language.php> ){
 	close(RESULT);
 	if( $result > 0){
 		if($opt_verbose) {print "Nothing to do: translation of '$word_correct' is there already (lines found: $result). ";}
-		print "Nothing done (already translated).\n\n";
+		print "Nothing done (already translated).\n";
 		next;
 	}
 	if($opt_verbose) {print "Need to add translation of '$word_correct' (lines found: $result)\n";}
@@ -137,7 +136,7 @@ while ( my $langfile = <lang/*/language.php> ){
 	close(RESULT);
 	if( $result == 0){
 		if($opt_verbose) {print STDERR "ERROR: '$word_lowercase' not in translation file (lines found: $result)\n";}
-		print "Nothing done (no previous translation).\n\n";
+		print "Nothing done (no previous translation).\n";
 		next;
 		# last;
 	}
