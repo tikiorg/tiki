@@ -1791,6 +1791,10 @@ class ToolbarsList
 		foreach ($tags_to_hide as $name) {
 			$local = str_replace($name, '', $local);
 		}
+		if ($section === 'wysiwyg_plugin') {	// quick fix to prevent nested wysiwyg plugins (messy)
+			$local = str_replace('wikiplugin_wysiwyg', '', $local);
+		}
+
 		$local = str_replace(array(',,', '|,', ',|', ',/', '/,'), array(',', '|', '|', '/', '/'), $local);
 
 		return self::fromPreferenceString($local);
