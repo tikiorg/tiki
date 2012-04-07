@@ -7,7 +7,7 @@
 # This file is a replacement for setup.sh
 # in test in 1.9 version
 
-DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
+DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
 
 AUSER=nobody
 AGROUP=nobody
@@ -73,8 +73,7 @@ if [ "$COMMAND" = 'fix' ]; then
 		if [ -n "$OPT_AUSER" ]; then
 			AUSER=$OPT_AUSER
 		elif [ -z "$OPT_NOTINTERACTIVE" ]; then
-			echo -n "User [$AUSER]: "
-			read REPLY 
+			read -p "User [$AUSER]: " REPLY
 			if [ -n "$REPLY" ]; then
 				AUSER=$REPLY
 			fi
@@ -91,8 +90,8 @@ or
 but it (the script) will still fix what it can according to the permissions
 of your user. This script will now ask you some questions. If you don't know
 what to answer, just press enter to each question (to use default value)"
-			
-			read WAIT
+
+			read -p "> Press enter to continue: " WAIT
 			AUSER=$USER
 		fi
 	fi
@@ -100,8 +99,7 @@ what to answer, just press enter to each question (to use default value)"
 	if [ -n "$OPT_AGROUP" ]; then
 		AGROUP=$OPT_AGROUP
 	elif [ -z "$OPT_NOTINTERACTIVE" ]; then
-		echo -n "Group [$AGROUP]: "
-		read REPLY
+		read -p "> Group [$AGROUP]: " REPLY
 		if [ -n "$REPLY" ]; then
 			AGROUP=$REPLY
 		fi
@@ -113,8 +111,7 @@ what to answer, just press enter to each question (to use default value)"
 	elif [ -n "$OPT_NOTINTERACTIVE" ]; then
 		VIRTUALS=$(cat db/virtuals.inc)
 	else
-		echo -n "Multi ["$(cat db/virtuals.inc)"]: "
-		read VIRTUALS
+		read -p "> Multi [$(cat -s db/virtuals.inc | tr '\n' ' ')]: " VIRTUALS
 		[ -z "$VIRTUALS" ] && VIRTUALS=$(cat db/virtuals.inc)
 	fi
 
@@ -134,7 +131,7 @@ what to answer, just press enter to each question (to use default value)"
 			mkdir -p $dir
 		fi
 		echo " ok."
-		if [ -n "$VIRTUALS" ]; then
+		if [ -n "$VIRTUALS" ] && [ $dir != "temp/unified-index" ]; then
 			for vdir in $VIRTUALS; do
 				echo -n "  $dir/$vdir ... "
 				if [ ! -d "$dir/$vdir" ]; then
@@ -175,8 +172,7 @@ elif [ "$COMMAND" = 'open' ]; then
 		if [ -n "$OPT_AUSER" ]; then
 			AUSER=$OPT_AUSER
 		elif [ -z "$OPT_NOTINTERACTIVE" ]; then
-			echo -n "User [$AUSER]: "
-			read REPLY 
+			read -p "User [$AUSER]: " REPLY
 			if [ -n "$REPLY" ]; then
 				AUSER=$REPLY
 			fi

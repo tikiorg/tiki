@@ -10,7 +10,7 @@
 // This script is experimental. Always review the changes to language.php file before
 // committing.
 // 
-// Also see: doc/devtools/capitalize_buttons.pl
+// Also see: doc/devtools/mass_wording_corrections.pl
 //
 
 

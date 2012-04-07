@@ -73,6 +73,8 @@
 		});
 
 		var categoryPicker = $('.category-picker', this).dialog({
+			height: $(window).height()-200,
+			width: 'auto',
 			autoOpen: false,
 			modal: true,
 			buttons: {

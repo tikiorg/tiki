@@ -279,7 +279,7 @@
       <td>{tr}Displayed time zone:{/tr}</td>
       <td>
         <select name="display_timezone" id="display_timezone">
-	  <option value="" style="font-style:italic;">{tr}Detect user timezone if browser allows, otherwise site default{/tr}</option>
+	  <option value="" style="font-style:italic;">{tr}Detect user time zone if browser allows, otherwise site default{/tr}</option>
 	  <option value="Site" style="font-style:italic;border-bottom:1px dashed #666;"{if isset($user_prefs.display_timezone) and $user_prefs.display_timezone eq 'Site'} selected="selected"{/if}>{tr}Site default{/tr}</option>
           {foreach key=tz item=tzinfo from=$timezones}
             {math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}

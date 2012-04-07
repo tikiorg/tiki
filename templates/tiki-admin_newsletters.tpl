@@ -109,7 +109,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}Allow customized text message to be sent with the html version{/tr}</td>
+			<td>{tr}Allow customized text message to be sent with the HTML version{/tr}</td>
 			<td>
 				<input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if} />
 			</td>

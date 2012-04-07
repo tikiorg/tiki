@@ -47,7 +47,7 @@
 		{remarksbox type="warning" title="{tr}Important!{/tr}" highlight="y"}
 		<ul>
 			<li>
-				{tr}If you edit this (or any TPL) file via the built-in editor below, any javascript may be sanitized or completely stripped out 
+				{tr}If you edit this (or any TPL) file via the built-in editor below, any JavaScript may be sanitized or completely stripped out 
 					by Tiki security filtering, which would cause certain functions to stop working (e.g. menus no longer collapse or expand){/tr}
 			</li>
 			<li>

@@ -81,7 +81,8 @@ class ParserLib extends TikiDb_Bridge
 	function parse_htmlchar(&$data)
 	{
 		// cleaning some user input
-		$data = preg_replace('/&(?![a-z]+;|#\d+;)/i', '&amp;', $data);
+//		$data = preg_replace('/&(?![a-z]+;|#\d+;)/i', '&amp;', $data);	// pre Tiki 9.x - only "&" chars on their own got replaced
+		$data = str_replace('&', '&amp;', $data);						// Tiki 9.0 -replace all &'s with &amp; so html entities show up on the page in non-html pages
 
 		// oft-used characters (case insensitive)
 		$data = preg_replace("/~bs~/i", "&#92;", $data);
@@ -287,11 +288,12 @@ class ParserLib extends TikiDb_Bridge
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
-		$data = TikiLib::htmldecode($data);
-		if (! $options['is_html']) {
-			// Decode partially, leave the < and > as HTML entities
-			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
-		}
+//		page-wide htmldecode commented out by jb for tiki 9.0 fix for html entitles
+//		$data = TikiLib::htmldecode($data);
+//		if (! $options['is_html']) {
+//			// Decode partially, leave the < and > as HTML entities
+//			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+//		}
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
@@ -1020,7 +1022,7 @@ if ( \$('#$id') ) {
 
 		// Apply filters on the body
 		$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
-		$data = TikiLib::htmldecode($data);
+		//$data = TikiLib::htmldecode($data);		// jb 9.0 commented out in fix for html entitles
 		$data = $filter->filter($data);
 
 		if (isset($parseOptions) && (!empty($parseOptions['is_html']) && (!$parseOptions['is_html']))) {
@@ -1429,7 +1431,8 @@ if ( \$('#$id') ) {
 		//above line changed by mrisch - special functions were not parsing when wysiwyg is set but wysiswyg is not enabled
 		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
 		// must be done before color as we can have ~hs~~hs
-		if (!$simple_wiki) {
+		// jb 9.0 html entity fix - excluded not $options['is_html'] pages
+		if (!$simple_wiki && !$options['is_html']) {
 			$this->parse_htmlchar($data);
 		}
 		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php

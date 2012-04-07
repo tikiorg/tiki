@@ -73,9 +73,6 @@ ajaxLoadingShow("'.$dom_id.'");
 
 		// finally the toolbar
 		$smarty = TikiLib::lib('smarty');
-		$smarty->assign('comments', $params['comments']);	// 3 probably removable assigns
-		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
-		$smarty->assign('toolbar_section', $params['section']);
 
 		$params['area_id'] = empty($params['area_id']) ? $dom_id : $params['area_id'];
 

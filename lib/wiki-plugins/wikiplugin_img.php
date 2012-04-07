@@ -148,7 +148,7 @@ function wikiplugin_img_info()
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
-				'description' => tra('Enter a url to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
+				'description' => tra('Enter a URL to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
 				'filter' => 'url',
 				'default' => '',
 			),
@@ -622,10 +622,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		} else { //fgalId parameter - show all images in a file gallery
 			$filegallib = TikiLib::lib('filegal');
 			$galdata = $filegallib->get_files(0, -1, 'created_desc', '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
-			foreach ($galdata as $filedata) {
-				foreach ($filedata as $dbinfo) {
-					$id_list[] = $dbinfo['id'];
-				}
+			foreach ($galdata['data'] as $filedata) {
+				$id_list[] = $filedata['id'];
 			}
 			$id = 'fileId';
 		}
@@ -1346,7 +1344,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	}
 	
 	if ($prefs['feature_draw'] == 'y' && $tiki_p_upload_files == 'y') {
-		$repl .= $ret .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='".tr("Edit: Image")."' data-fileid='".$imgdata['fileId']."' data-galleryid='".$imgdata['galleryId']."'><img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
+		$repl .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='".tr("Edit: Image")."' data-fileid='".$imgdata['fileId']."' data-galleryid='".$imgdata['galleryId']."'><img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';

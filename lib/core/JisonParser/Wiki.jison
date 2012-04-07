@@ -10,7 +10,7 @@ SMILE							[a-z]+
 %s bold box center colortext italic header6 header5 header4 header3 header2 header1 ulist1 olist1 link strikethrough table titlebar underscore wikilink
 
 %%
-
+"{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
 		yytext = Wiki.inlinePlugin(yytext); //js
@@ -32,7 +32,7 @@ SMILE							[a-z]+
 		
 		//php $this->stackPlugin($yytext);
 		
-		//php if ($this->size($this->pluginStack) == 1) {
+		//php if (count($this->pluginStack) == 1) {
 		//php 	return 'PLUGIN_START';
 		//php } else {
 		//php 	return 'CONTENT';
@@ -60,15 +60,15 @@ SMILE							[a-z]+
 		
 		//php if (!empty($this->pluginStack)) {
 		//php 	if (
-		//php 		$this->size($this->pluginStack) > 0 &&
-		//php 		$this->substring($yytext, 1, -1) == $this->pluginStack[$this->size($this->pluginStack) - 1]['name']
+		//php 		count($this->pluginStack) > 0 &&
+		//php 		$this->substring($yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
 		//php 	) {
-		//php 		if ($this->size($this->pluginStack) == 1) {
-		//php 			$yytext = $this->pluginStack[$this->size($this->pluginStack) - 1];
-		//php 			$this->pluginStack = $this->pop($this->pluginStack);
+		//php 		if (count($this->pluginStack) == 1) {
+		//php 			$yytext = $this->pluginStack[count($this->pluginStack) - 1];
+		//php 			array_pop($this->pluginStack);
 		//php 			return 'PLUGIN_END';
 		//php 		} else {
-		//php 			$this->pluginStack = $this->pop($this->pluginStack);
+		//php 			array_pop($this->pluginStack);
 		//php 			return 'CONTENT';
 		//php 		}
 		//php 	}
@@ -83,7 +83,7 @@ SMILE							[a-z]+
 		
 		return 'NP_START'; //js
 		
-		//php $this->npStack = $this->push($this->npStack, true);
+		//php $this->npStack[] = true;
 		//php $this->npOn = true;
 		
 		//php return 'NP_START';
@@ -96,8 +96,8 @@ SMILE							[a-z]+
 		
 		return 'NP_END'; //js
 		
-		//php $this->npStack = $this->pop($this->npStack);
-		//php if ($this->size($this->npStack) < 1) $this->npOn = false;
+		//php array_pop($this->npStack);
+		//php if (count($this->npStack) < 1) $this->npOn = false;
 		
 		//php return 'NP_END';
 	%}

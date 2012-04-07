@@ -67,7 +67,7 @@
 		<tr>
 			<td>{tr}Template Type:{/tr}</td>
 			<td>
-				<select name="template_type" class="type-selector">
+				<select name="template_type" id="type-selector">
 					<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
 					<option value="page"{if $info.template_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
 				</select>
@@ -101,9 +101,9 @@
 		</tr>
 	</table>
 	{jq}
-		$('.type-selector').change( function( e ) {
+		$('#type-selector').change( function( e ) {
 			$('.type-cond').hide();
-			var val = $('.type-selector').val();
+			var val = $('#type-selector').val();
 			$('.for-' + val).show();
 		} ).trigger('change');
 		window.editorDirty = false;

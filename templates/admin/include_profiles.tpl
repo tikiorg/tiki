@@ -384,7 +384,7 @@ $("#repository, #categories").change(function(){
 </fieldset>
 {else}
 	{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
-		{tr}Javascript must be turned <b>ON</b> in order to apply Profiles. Please enable your javascript and try again.{/tr}
+		{tr}JavaScript must be turned <strong>ON</strong> in order to apply Profiles. Please enable your JavaScript and try again.{/tr}
 	{/remarksbox}
 {/if}
 {/tab}

@@ -170,7 +170,7 @@
 		<h2>{tr}Edit this custom module:{/tr} {$um_name}</h2>
 	{/if}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}
-		{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}
+		{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using HTML, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}
 	{/remarksbox}
 
 	<form name='editusr' method="post" action="tiki-admin_modules.php">

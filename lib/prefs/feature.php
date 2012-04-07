@@ -1180,7 +1180,7 @@ function prefs_feature_list($partial = false)
 			'default' =>'n',
 		),	
 		'feature_sefurl_title_blog' => array(
-			'name' => tra('Display blog title in the sefurl'),
+			'name' => tra('Display blog title in the SEFURL'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' =>'n',

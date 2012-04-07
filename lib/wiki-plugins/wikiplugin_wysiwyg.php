@@ -88,13 +88,26 @@ $("#' . $exec_key . '").each(function(){
 		// TODO set modal somehow?
 		//$("body *:not(#" + $(this).attr("id") + ")").css({backgroundColor: "#ddd"});
 
+		var ok = true;
+		$(".' . $class . ':not(#' . $exec_key . ')").each(function () {
+			if (CKEDITOR.instances[$(this).attr("id")]) {
+				if (CKEDITOR.instances[$(this).attr("id")].mayBeDirty) {
+					if (confirm(tr("You have unsaved changes in this WYSIWYG section.\nDo you want to save your changes?"))) {
+						CKEDITOR.instances[$(this).attr("id")].focus();
+						ok = false;
+						return;
+					}
+				}
+				CKEDITOR.instances[$(this).attr("id")].destroy();
+			}
+			$(".button_" + $(this).attr("id")).remove();
+		});
+		if (!ok) {
+			return;
+		}
+
 		$this.ckeditor(function() {
 			// close others
-			$(".' . $class . ':not(#' . $exec_key . ')").each(function () {
-				if (CKEDITOR.instances[$(this).attr("id")]) {
-					CKEDITOR.instances[$(this).attr("id")].destroy();
-				}
-			});
 			var editor = CKEDITOR.instances[$this.attr("id")];
 
 			var editorSelector = "#cke_" + this.element.getId();

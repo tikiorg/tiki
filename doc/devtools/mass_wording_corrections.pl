@@ -1,53 +1,39 @@
 #!/usr/bin/perl
+# (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+# 
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+# $Id$
+
 ################################################################################
-#    Copyright Council of Europe - Conseil de l'Europe
-#Division  :  DIT / STI
-#Project   :  Espaces Collaboratifs Open-Source
-#Filename  :  capitalize_buttons.pl
-#Author    :  Jean-Marc LIBS
-#Company   :  Council of Europe - Conseil de l'Europe
-#Date      :  2007-07-17
-#Language  :  Perl
-#License   :  Licensed under the GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1
+# Initial version contributed by Council of Europe - Conseil de l'Europe to the 
+# Tiki community under the GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1
+# Initial Author    :  Jean-Marc LIBS
 #
-#Input     :  lowercase word, Uppercase word: "word" "Word"
+#Input     :  previous string, new string "oldstring" "Newstring"
 #
 #Output    :  Edit all language files
 #
-#Abstract  :  Gets a lowercase "word" and the uppercase (correct) version of the
-#             word: "Word"
+#Abstract  :  Gets a lowercase "oldstring" and the uppercase (correct) version of the
+#             word: "Newstring"
 #             In each language file:
-#               If the line with '"Word" => "Truc"' is found. Leave alone
+#               If the line with '"Newstring" => "Foo"' is found. Leave alone
 #               else:
-#                 look for line with '"word" => "truc"' (commented or not)
+#                 look for line with '"oldstring" => "foo"' (commented or not)
 #                   if language is "simple", duplicate line into 
-#                     '"Word" => "Truc"'
+#                     '"Newstring" => "Foo"'
 #                   if language looks complicated, duplicate into 
-#                     '"Word" => "truc"'
+#                     '"Newstring" => "foo"'
 #                   if no line found at all, add line
-#                     '// "Word" => "Word"'
+#                     '// "Newstring" => "Newstring"'
 #
-#Warning: This was written quickly as a use-once script. Use as inspiration,
+#Warning: This was written quickly as a use-once script. Use with care
 #         don't trust blindly
 #
-#Usage     :  perl capitalize_buttons.pl word Word
+#Usage     :  perl mass_wording_corrections.pl oldstring Newstring
 #
 #
 # Also see: doc/devtools/update_english_strings.php
-#
-#Revision history :
-#  Date       Author  Description
-#  2007-07-17  JML    1: First version
-#  2007-07-20  JML    2: words can be expressions
-#  2007-07-23  JML    3: renaming, add license, add TODO, all for publication
-#  2007-11-12  JML    4: remove calls to unused libs, add --ignorecase, handle
-#                        slashes in text
-#  2007-12-29  JML    5: Now handles strings with single quotes (')
-#                        Abstract translated
-#              JML    6: Now handles strings with ()|
-#  2007-12-29  JML    7: Now handles strings with #
-#
-#TODO:
 #
 ################################################################################
 
@@ -56,22 +42,22 @@ use strict;
 ########################################################################
 #   Manage Command Line options
 ####
-use vars qw($opt_help $opt_debug $opt_verbose $opt_ignorecase);
+use vars qw($opt_help $opt_debug $opt_verbose $opt_ignorecase $opt_caseisenforced);
 use Getopt::Long;
-my $correct_options=GetOptions("help","debug","verbose","ignorecase");
+my $correct_options=GetOptions("help","debug","verbose","ignorecase","caseisenforced");
 
 if($opt_debug){
 	print "Number of args: ".$#ARGV."\n";
-	exit 1;
 }
 
-if($opt_help || !$correct_options || ($#ARGV != 1) || (!$opt_ignorecase && (("$ARGV[0]" ne "\L$ARGV[0]") || ( "$ARGV[1]" ne "\u$ARGV[1]" ))) ) {
-die "Usage: $0 [options] word Word
+if($opt_help || !$correct_options || ($#ARGV != 1) || ($opt_caseisenforced && (("$ARGV[0]" ne "\L$ARGV[0]") || ( "$ARGV[1]" ne "\u$ARGV[1]" ))) ) {
+die "Usage: $0 [options] oldstring Newstring
 
 options:
  -h --help               this message
  -d --debug              debugging info
- -i --ignorecase         does not enforce lowercase on first argument and uppercase for second argument
+ -c --caseisenforced     enforces lowercase on first argument and uppercase for second argument
+ -i --ignorecase         deprecated (does not enforce lowercase on first argument and uppercase for second argument)
  -v --verbose            more verbose output
 ";
 }
@@ -91,7 +77,7 @@ $word_lowercase_escaped_perl =~ s/\|/\\|/g;
 $word_correct_escaped =~ s/\//\\\//g;
 $word_correct_escaped =~ s/'/'\\''/g;
 #if($opt_verbose) {print "escaped lowercase: '$word_lowercase_escaped'\n";}
-if($opt_verbose){print "'$word_lowercase' --> '$word_correct' (given) '\u$word_lowercase' (auto)\n";}
+if($opt_debug){print "'$word_lowercase' --> '$word_correct' (given) '\u$word_lowercase' (auto)\n";}
 
 # This is the list of "complicated" looking languages
 my %languages_delicats=qw( 
@@ -109,36 +95,39 @@ uk 1
 
 # We loop on all language files
 while ( my $langfile = <lang/*/language.php> ){
+	print "-- ";
 	my $lang="";
 	my $trycapitalisation=0;
 	if($langfile =~ /lang\/(.*)\/language.php/) {
 		$lang=$1;
-  }else{
+	}else{
 		print "ERROR: could not extract language from $langfile \n";
 		next;
 	}
-	print "$langfile ($lang)";
-	if( $languages_delicats{$lang} != 1 ){
-		print " capitalisation will be attempted";
+	if($opt_verbose){print "$langfile ";}
+	print " ($lang)";
+	if( ($opt_caseisenforced) and ($languages_delicats{$lang} != 1 )){
+		print " capitalisation of translation will be attempted";
 		$trycapitalisation=1;
 	}
 	print "\n";
 	# Looking for '"Word" => "Translation"'
 	my $command="grep '\"$word_correct_escaped\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
-	if($opt_verbose){print "-> $command\n";}
+	if($opt_debug){print "-> $command\n";}
 	if(system($command)) {
 		print STDERR "Ignore system call failure ($!)\n";
 	}
-	open(RESULT,"/tmp/result.txt") or die("Failed to open /tmp/result.txt ($!)\n");
+	open(RESULT,"/tmp/result.txt") or die("Failed to open /tmp/result.txt ($!)\nRemove file /tmp/result.txt and try again.\n");
 	chomp(my $result = <RESULT>);
 	close(RESULT);
 	if( $result > 0){
-		print "Nothing to do: translation of '$word_correct' is there already (lines found: $result)\n\n";
+		if($opt_verbose) {print "Nothing to do: translation of '$word_correct' is there already (lines found: $result). ";}
+		print "Nothing done (already translated).\n";
 		next;
 	}
-	print "Need to add translation of '$word_correct' (lines found: $result)\n";
+	if($opt_verbose) {print "Need to add translation of '$word_correct' (lines found: $result)\n";}
 	$command="grep '\"$word_lowercase_escaped\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
-	if($opt_verbose){print "-> $command\n";}
+	if($opt_debug){print "-> $command\n";}
 	if(system($command)) {
 		print STDERR "Ignore system call failure ($!)\n";
 	}
@@ -146,24 +135,31 @@ while ( my $langfile = <lang/*/language.php> ){
 	chomp(my $result = <RESULT>);
 	close(RESULT);
 	if( $result == 0){
-		print STDERR "ERROR: '$word_lowercase' not in translation file (lines found: $result)\n";
+		if($opt_verbose) {print STDERR "ERROR: '$word_lowercase' not in translation file (lines found: $result)\n";}
+		print "Nothing done (no previous translation).\n";
 		next;
 		# last;
 	}
-	print "Need to edit $langfile (lines found: $result)\n";
+	if($opt_verbose) {print "Need to edit $langfile (lines found: $result)\n";}
 	# here we edit the file
+	my $msg_success = "";
 	if($trycapitalisation==0){
 		$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped_perl)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
+		$msg_success = "Translation added.";
 	}else{
-		if($opt_ignorecase) { # then we assume that no attempt at capitalisation is expected
+		if(!$opt_caseisenforced) { # then we assume that no attempt at capitalisation is expected
 			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped_perl)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
+			$msg_success = "Translation added.";
 		}else{
 			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped_perl)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\\u\$4\",/' $langfile";
+			$msg_success = "Translation added and capitalized.";
 		}
 	}
-	if($opt_verbose){print "-> $command\n";}
+	if($opt_debug){print "-> $command\n";}
 	if(system($command)) {
 		print STDERR "Ignore system call failure ($!)\n";
+	}else{
+		print "$msg_success \n"
 	}
 
 	if($opt_verbose){print "-- file handled --\n\n";}
