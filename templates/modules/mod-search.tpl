@@ -112,6 +112,10 @@ function submitSearch{{$search_mod_usage_counter}}() {
 	} else if ($f.attr('action') == "#") {
 		$f.attr('action', '{{$smod_params.search_action|escape:javascript}}');
 	}
+	$exact = $f.find("input[name=exact_match]");
+	if ($exact.val() != "On") {
+		$exact.remove();		// seems exact_match is true even if empty
+	}
 	return true;
 }
     {/jq}
