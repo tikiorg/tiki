@@ -167,14 +167,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function link($content)
 	{
-		$link = $this->split(':', $content);
-		$href = $content;
+		$link = $this->split('|', $content);
+		$href = (isset($link[0]) ? $link[0] : $content);
+		$text = (isset($link[1]) ? $link[1] : $href);
 
-		if ($this->match('/\|/', $content)) {
-			$href = $link[0];
-			$content = $link[1];
-		}
-		return '<a href="' . $href . '">' . $content . '</a>';
+		return '<a href="' . $href . '">' . $text . '</a>';
 	}
 
 	function smile($smile)
