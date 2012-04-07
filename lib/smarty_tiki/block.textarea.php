@@ -17,6 +17,9 @@
  *    _previewConfirmExit: if set to 'n' doesn't warn about lost edits after preview
  *    _simple: if set to 'y' does no wysiwyg, auto_save, lost edit warning etc
  *
+ *    _wysiwyg: force wysiwyg editor
+ *    _is_html: parse as html
+ *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  */
 
@@ -49,7 +52,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			$params['_wysiwyg'] = 'n';
 		}
 	}
-	
+	$params['_is_html'] = isset($params['_is_html']) ? $params['_is_html'] : $is_html;
+
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
@@ -159,12 +163,12 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		}
 	
 		global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
-		$ckoptions = $wysiwyglib->setUpEditor($is_html, $as_id, $params, $auto_save_referrer);
+		$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
 		
 		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 
-		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;';	// missing closing quotes, closed in condition
+		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;display:none;';	// missing closing quotes, closed in condition
 
 		if (empty($params['cols'])) {
 			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
