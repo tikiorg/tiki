@@ -8,11 +8,11 @@
 function wikiplugin_js_info()
 {
 	return array(
-		'name' => tra('Javascript'),
+		'name' => tra('JavaScript'),
 		'documentation' => 'PluginJS',
 		'description' => tra('Add JavaScript code'),
 		'prefs' => array( 'wikiplugin_js' ),
-		'body' => tra('javascript code'),
+		'body' => tra('JavaScript code'),
 		'validate' => 'all',
 		'filter' => 'rawhtml_unsafe',
 		'icon' => 'img/icons/script_code_red.png',

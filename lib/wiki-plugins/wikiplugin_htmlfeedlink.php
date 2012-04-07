@@ -8,7 +8,7 @@
 function wikiplugin_htmlfeedlink_info()
 {
 	return array(
-		'name' => tra('Html Feed Link'),
+		'name' => tra('HTML Feed Link'),
 		'documentation' => 'PluginHtmlFeedlink',
 		'description' => tra('Display remote content'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeedlink', 'feature_htmlfeed' ),
@@ -38,7 +38,7 @@ function wikiplugin_htmlfeedlink_info()
 			),
 			'type' => array(
 				'required' => false,
-				'name' => tra('Html Feed Link Type'),
+				'name' => tra('HTML Feed Link Type'),
 				'default' => 'replace',
 				'options' => array(
 					array('text' => tra('Replace'), 'value' => 'replace'),
@@ -49,7 +49,7 @@ function wikiplugin_htmlfeedlink_info()
 			),
 			'moderate' => array(
 				'required' => false,
-				'name' => tra('Is the html feed moderated'),
+				'name' => tra('Is the HTML feed moderated'),
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -60,7 +60,7 @@ function wikiplugin_htmlfeedlink_info()
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
-				'description' => tr('Date of last accepted html item, not used if not moderated'),
+				'description' => tr('Date of last accepted HTML item, not used if not moderated'),
 				'default' => '',
 			),
 		),

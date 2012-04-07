@@ -148,7 +148,7 @@ function wikiplugin_img_info()
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
-				'description' => tra('Enter a url to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
+				'description' => tra('Enter a URL to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
 				'filter' => 'url',
 				'default' => '',
 			),

@@ -105,7 +105,7 @@ function wikiplugin_tracker_info()
 			'emailformat' => array(
 				'required' => false,
 				'name' => tra('Email format'),
-				'description' => tra('Text or html setting'),				
+				'description' => tra('Text or HTML setting'),				
 				'default' => 'text',
 			),			
 			'url' => array(

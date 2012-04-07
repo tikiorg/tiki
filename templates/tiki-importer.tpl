@@ -8,7 +8,7 @@
     {/remarksbox}
     {if $prefs['feature_purifier'] == 'y'}
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
-        {tr}If your pages contain xml code, the html purifier will delete it. Deactivate this feature.{/tr}
+        {tr}If your pages contain XML code, the HTML purifier will delete it. Deactivate this feature.{/tr}
     {/remarksbox}
     {/if}
     {if $safe_mode ne ''}

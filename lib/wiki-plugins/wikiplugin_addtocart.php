@@ -110,8 +110,8 @@ function wikiplugin_addtocart_info()
 			),
 			'forwardafterfree' => array(
 				'required' => false,
-				'name' => tra('Forward to this url after free purchase'),
-				'description' => tra('Forward to this url after free purchase'),
+				'name' => tra('Forward to this URL after free purchase'),
+				'description' => tra('Forward to this URL after free purchase'),
 				'filter' => 'url',
 				'default' => ''
 			),

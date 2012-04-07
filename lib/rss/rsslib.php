@@ -229,7 +229,7 @@ class RSSLib extends TikiDb_Bridge
 
 			if (!empty($author)) {
 				if (empty($author['name'])) {
-					$msg = tra('If you set feed author email or url you have to set feed author name.');
+					$msg = tra('If you set feed author email or URL, you must set feed author name.');
 					$smarty->assign('msg', $msg);
 					$smarty->display('error.tpl');
 					die;

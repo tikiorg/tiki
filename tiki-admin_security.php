@@ -137,7 +137,7 @@ if ($prefs['wikiplugin_snarf'] == 'y') {
 	$tikisettings['wikiplugin_snarf'] = array(
 		'risk' => tra('unsafe') ,
 		'setting' => tra('Enabled') ,
-		'message' => tra('The "Snarf Wikiplugin" is activated. It can be used by wiki editors to include pages from the local network and via regex replacement create any html.')
+		'message' => tra('The "Snarf Wikiplugin" is activated. It can be used by wiki editors to include pages from the local network and via regex replacement create any HTML.')
 	);
 }
 if ($prefs['wikiplugin_regex'] == 'y') {

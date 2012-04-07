@@ -25,7 +25,7 @@ function prefs_server_list($partial = false)
 	
 	return array(
 		'server_timezone' => array(
-			'name' => tra('Timezone'),
+			'name' => tra('Time zone'),
 			'description' => tra('Indicates the default time zone to use for the server.'),
 			'type' => 'list',
 			'options' => array_combine($timezones, $timezones),

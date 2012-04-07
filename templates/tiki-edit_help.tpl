@@ -95,7 +95,7 @@
 {literal}~rsq~{/literal} &rsquo;,
 {literal}~--~{/literal} &mdash;,
 {literal}~bs~{/literal} &#92;,
-{tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
+{tr}numeric between ~ for HTML numeric characters entity{/tr}</td></tr>
 </table>
 
 {if $prefs.feature_wiki_paragraph_formatting eq 'y'}
