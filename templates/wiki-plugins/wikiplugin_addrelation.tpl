@@ -3,11 +3,11 @@
 {if $wp_addrelation_action eq 'y'}
 <input type="submit" value="{$label_add|escape}" />
 {elseif $wp_addrelation_action eq 'n'}
-<input id="wp_addrelation_added" type="submit" value="{$label_added|escape}" />
+<input id="wp_addrelation_added_{$wp_addrelation_id|escape}" type="submit" value="{$label_added|escape}" />
 {/if}
 </form>
 {jq}
-$('#wp_addrelation_added').hover(function() {
+$('#wp_addrelation_added_{{$wp_addrelation_id|escape}}').hover(function() {
 	$(this).val('{{$label_remove|escape}}');
 },
 function() {
