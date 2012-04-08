@@ -306,9 +306,10 @@ if ($prefs['javascript_enabled'] != 'n') {
 				// standard css for selectmenu seems way too big for tiki - to be added to layout.css when not so experimental
 				$headerlib->add_css(
 								'.ui-selectmenu-menu ul li a, .ui-selectmenu-status { white-space: nowrap; }
-.ui-selectmenu { height: 1.8em; }
+.ui-selectmenu { height: 1.8em; padding-right: 16px; }
+.ui-selectmenu-menu ul { padding-right: 16px; }
 .ui-selectmenu-menu li a,.ui-selectmenu-status { line-height: 1.0em; padding: .4em 1em; }
-.ui-selectmenu-status { line-height: .8em; }'
+.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
 				);
 			}
 		}
