@@ -17,7 +17,7 @@
 		</strong>
 
 		<blockquote>
-			<p>{$result.highlight|escape}</p>
+			<p>{$result.highlight}</p>
 
 			{if $prefs.feature_search_show_last_modification eq 'y'}
 				<div class="searchdate small">{tr}Last modification:{/tr} {$result.modification_date|tiki_long_datetime}</div>
