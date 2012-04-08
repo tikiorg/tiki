@@ -132,9 +132,13 @@ class TikiInit
 	static function tempdir() {
 		static $tempdir;
 		if (!$tempdir) {
-			$tempfile = tempnam(false,'');
-			$tempdir = dirname($tempfile);
-			@unlink($tempfile);
+			if ( !function_exists('sys_get_temp_dir')) {
+			   $tempfile = tempnam(false,'');
+			   $tempdir = dirname($tempfile);
+			   @unlink($tempfile);
+			} else {
+			   $tempdir = sys_get_temp_dir();
+			}
 		}
 		return $tempdir;
 	}
