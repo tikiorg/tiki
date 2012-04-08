@@ -156,7 +156,7 @@ if (isset($_REQUEST['um_update'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	if (in_array(strtolower($_REQUEST['um_name']), $modlib->get_all_modules())) {
+	if ($_REQUEST['um_update'] == tra('Create') && in_array(strtolower($_REQUEST['um_name']), $modlib->get_all_modules())) {
 		$smarty->assign('msg', tra('A module with that "name" already exists, please choose another'));
 		$smarty->display('error.tpl');
 		die;
