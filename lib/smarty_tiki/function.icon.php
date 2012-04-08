@@ -63,7 +63,7 @@ function smarty_function_icon($params, $smarty)
 	$default_width = 16;
 	$default_height = 16;
 	$menu_text = false;
-	$menu_icon = true;
+	$menu_icon = false;
 	$confirm = '';
 	$html = '';
 
@@ -135,7 +135,7 @@ function smarty_function_icon($params, $smarty)
 
 				case '_menu_text':
 					$menu_text = ($v == 'y');
-					$menu_icon = ( ! isset($params['_menu_icon']) || $params['_menu_icon'] == 'y' );
+					$menu_icon = ( isset($params['_menu_icon']) && $params['_menu_icon'] == 'y' );
 								break;
 
 				case '_tag':
@@ -184,42 +184,43 @@ function smarty_function_icon($params, $smarty)
 			unset($params['title']);
 		}
 
-		if ( $menu_icon ) {
-			if ( $tag != 'img' ) {
-				$params['src'] = $params['file'];
-				unset($params['file']);
-				foreach ( $params as $k => $v ) {
-					$html .= ' ' . htmlspecialchars($k, ENT_QUOTES, 'UTF-8') . '="' . htmlspecialchars($v, ENT_QUOTES, 'UTF-8') . '"';
-				}
-			}
-
-			global $headerlib;
-			if (!empty($params['file'])) {
-				$params['file'] = $headerlib->convert_cdn($params['file']);
-			}
-
-			switch ( $tag ) {
-				case 'input_image':
-					$html = '<input type="image"'.$html.' />';
-					break;
-				case 'img':
-				default:
-					try {
-						$html = smarty_function_html_image($params, $smarty);
-					} catch (Exception $e) {
-						$params['file'] = 'img/icons/green_question.png';
-						$params['title'] = tra('Error:') . ' ' . $e->getMessage();
-						$html = smarty_function_html_image($params, $smarty);
-					}
-			}
-
-			if ( $tag != 'img' ) {
-				// Add a span tag to be able to apply a CSS style on hover for the icon
-				$html = "<span>$html</span>";
+		if ( $tag != 'img' ) {
+			$params['src'] = $params['file'];
+			unset($params['file']);
+			foreach ( $params as $k => $v ) {
+				$html .= ' ' . htmlspecialchars($k, ENT_QUOTES, 'UTF-8') . '="' . htmlspecialchars($v, ENT_QUOTES, 'UTF-8') . '"';
 			}
 		}
-		if ( $menu_text ) 
+
+		global $headerlib;
+		if (!empty($params['file'])) {
+			$params['file'] = $headerlib->convert_cdn($params['file']);
+		}
+
+		switch ( $tag ) {
+			case 'input_image':
+				$html = '<input type="image"'.$html.' />';
+				break;
+			case 'img':
+			default:
+				try {
+					$html = smarty_function_html_image($params, $smarty);
+				} catch (Exception $e) {
+					$params['file'] = 'img/icons/green_question.png';
+					$params['title'] = tra('Error:') . ' ' . $e->getMessage();
+					$html = smarty_function_html_image($params, $smarty);
+				}
+		}
+
+		if ( $tag != 'img' ) {
+			// Add a span tag to be able to apply a CSS style on hover for the icon
+			$html = "<span>$html</span>";
+		}
+
+		if ( $menu_text )  {
+			if ( ! $menu_icon ) $html = '';
 			$html = '<div class="iconmenu">' . $html . '<span class="iconmenutext"> ' . $menu_text_val . '</span></div>';
+		}
 
 	}
 

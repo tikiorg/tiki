@@ -37,7 +37,7 @@ function smarty_block_ajax_href($params, $content, $smarty, $repeat)
 	}
 
 	$attributes = " href=\"" . $content . '" ';
-	if ($onclick) {
+	if ( !empty($onclick) ) {
 		$attributes .= "onclick=\"$onclick\" ";
 	}
 	return $attributes;

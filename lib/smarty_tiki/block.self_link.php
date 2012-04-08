@@ -137,7 +137,7 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				. ( !empty($params['_title']) ? 'title="' . str_replace('"', '\"', $params['_title']) . '" ' : '' )
 				. ( !empty($params['_rel']) ? 'rel="' . str_replace('"', '\"', $params['_rel']) . '" ' : '' );
 			foreach ( $params as $k => $v ) {
-				if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {
+				if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' && !empty($v) ) {
 					$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
 					unset($params[$k]);
 				}
@@ -152,7 +152,7 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 
 			if ( !empty($params['_sort_field']) ) {
 				$smarty->loadPlugin('smarty_function_show_sort');
-				$ret .= "<a $link style='text-decoration:none;'>" . 
+				$ret = "<a $link style='text-decoration:none;'>" . $content . 
 								smarty_function_show_sort(
 												array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
 												$smarty
