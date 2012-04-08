@@ -4,11 +4,17 @@
 		<link rel="canonical" href="{$base_url}{$page|sefurl}" />
 	{elseif $mid eq 'tiki-view_tracker_item.tpl'}
 		<link rel="canonical" href="{$base_url}{$itemId|sefurl:trackeritem}" />
+	{elseif $mid eq 'tiki-view_forum.tpl'}
+		<link rel="canonical" href="{$base_url}{$forumId|sefurl:forum}" />
 	{elseif $mid eq 'tiki-view_forum_thread.tpl'}
-		<link rel="canonical" href="{$base_url}tiki-view_forum_thread.php?comments_parentId={$comments_parentId}" />
+		<link rel="canonical" href="{$base_url}{$comments_parentId|sefurl:forumthread}" />
+	{elseif $mid eq 'tiki-view_blog.tpl'}
+		<link rel="canonical" href="{$base_url}{$blogId|sefurl:blog}" />
 	{elseif $mid eq 'tiki-view_blog_post.tpl'}
 		<link rel="canonical" href="{$base_url}{$postId|sefurl:blogpost}" />
 	{elseif $mid eq 'tiki-read_article.tpl'}
 		<link rel="canonical" href="{$base_url}{$articleId|sefurl:article}" />
+	{elseif $mid eq 'tiki-browse_categories.tpl'}
+		<link rel="canonical" href="{$base_url}{$parentId|sefurl:category}" />
 	{/if}
 {/if}
