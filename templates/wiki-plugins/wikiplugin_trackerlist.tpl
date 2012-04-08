@@ -244,7 +244,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {/if}
 
 		{if $items|@count eq 0}
-			{tr}No records found{/tr}
+			<div class="tracker_error">{tr}No records found{/tr}</div>
 		{elseif $checkbox}
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
 			{if !empty($checkbox.submit) and !empty($checkbox.title)}
