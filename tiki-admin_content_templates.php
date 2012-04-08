@@ -76,7 +76,7 @@ if ($_REQUEST["templateId"]) {
 	$info["section_event"] = 'n';
 }
 
-$smarty->assign('info', $info);
+$smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$templateslib->remove_template($_REQUEST["remove"]);
@@ -219,8 +219,27 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $templateslib->list_all_templates($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
+
 // wysiwyg decision
+$info['is_html'] = $info['section_wiki_html'] === 'y' ? 1 : 0;
+$info['wysiwyg'] = $info['section_wiki_html'];
 include 'lib/setup/editmode.php';
+$info['section_wiki_html'] = $_SESSION['wysiwyg'];	//$info['is_html'] ? 'y' : 'n';
+
+// Handles switching editor modes
+global $editlib; include_once ('lib/wiki/editlib.php');
+if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
+	// Parsing page data as first time seeing html page in normal editor
+	$smarty->assign('msg', "Parsing html to wiki");
+	$info['content'] = $editlib->parseToWiki($_REQUEST["content"]);
+	$smarty->assign('parsed', $parsed);
+} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
+	// Parsing page data as first time seeing wiki page in wysiwyg editor
+	$smarty->assign('msg', "Parsing wiki to html");
+	$info['content'] = $editlib->parseToWysiwyg($_REQUEST["content"]);
+	$smarty->assign('parsed', $parsed);
+}
+
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-content-templates');
 global $wikilib;
