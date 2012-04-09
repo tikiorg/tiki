@@ -7,7 +7,7 @@ PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SMILE							[a-z]+
 
-%s bold box center colortext italic header6 header5 header4 header3 header2 header1 ulist1 olist1 link strikethrough table titlebar underscore wikilink
+%s bold box center colortext italic header6 header5 header4 header3 header2 header1 ulist olist link strikethrough table titlebar underscore wikilink
 
 %%
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
@@ -205,143 +205,159 @@ SMILE							[a-z]+
 <header6>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'HEADER6_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER6_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-[\n]("!!!!!!")
+("!!!!!!")
 	%{
-		this.begin('header6'); //js
+		this.beginBlock('header6'); //js
 		return (this.yy.npOn ? 'CONTENT' : 'HEADER6_START'); //js
-		
-		//php $this->begin('header6');
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER6_START');
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('header6');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'HEADER6_START');
+		//php }
 	%}
 
 
 <header5>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'HEADER5_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER5_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-[\n]("!!!!!")
+("!!!!!")
 	%{
-		this.begin('header5'); //js
+		this.beginBlock('header5'); //js
 		return (this.yy.npOn ? 'CONTENT' : 'HEADER5_START'); //js
-		
-		//php $this->begin('header5');
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER5_START');
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('header5');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'HEADER5_START');
+		//php }
 	%}
 
 
 <header4>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'HEADER4_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER4_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-[\n]("!!!!")
+("!!!!")
 	%{
-		this.begin('header4'); //js
+		this.beginBlock('header4'); //js
 		return (this.yy.npOn ? 'CONTENT' : 'HEADER4_START'); //js
-		
-		//php $this->begin('header4');
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER4_START');
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('header4');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'HEADER4_START');
+		//php }
 	%}
 
 
 <header3>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'HEADER3_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER3_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-[\n]("!!!")
+("!!!")
 	%{
-		this.begin('header3'); //js
+		this.beginBlock('header3'); //js
 		return (this.yy.npOn ? 'CONTENT' : 'HEADER3_START'); //js
-		
-		//php $this->begin('header3');
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER3_START');
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('header3');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'HEADER3_START');
+		//php }
 	%}
 
 
 <header2>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'HEADER2_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER2_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-[\n]("!!")
+("!!")
 	%{
-		this.begin('header2'); //js
+		this.beginBlock('header2'); //js
 		return (this.yy.npOn ? 'CONTENT' : 'HEADER2_START'); //js
-		
-		//php $this->begin('header2');
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER2_START');
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('header2');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'HEADER2_START');
+		//php }
 	%}
 
 
 <header1>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'HEADER1_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER1_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-[\n]("!")
+("!")
 	%{
-		this.begin('header1'); //js
+		this.beginBlock('header1'); //js
 		return (this.yy.npOn ? 'CONTENT' : 'HEADER1_START'); //js
-		
-		//php $this->begin('header1');
-		//php return $this->npState($this->npOn, 'CONTENT', 'HEADER1_START');
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('header1');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'HEADER1_START');
+		//php }
 	%}
 
 
-<ulist1>[\n]
+<ulist>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'ULIST1_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'ULIST1_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-"\n*"
+("*")
 	%{
-		this.begin('ulist1'); //js
-		return (this.yy.npOn ? 'CONTENT' : 'ULIST1_START'); //js
-		
-		//php $this->begin('ulist1');
-		//php return $this->npState($this->npOn, 'CONTENT', 'ULIST1_START');
+		this.beginBlock('ulist'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'ULIST_START'); //js
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('ulist');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'ULIST_START');
+		//php }
 	%}
 
-<olist1>[\n]
+<olist>[\n]
 	%{
 		this.popState(); //js
-		return (this.yy.npOn ? 'CONTENT' : 'OLIST1_END'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'BLOCKEND'); //js
 		
 		//php $this->popState();
-		//php return $this->npState($this->npOn, 'CONTENT', 'OLIST1_END');
+		//php return $this->npState($this->npOn, 'CONTENT', 'BLOCKEND');
 	%}
-"\n#"
+("#")
 	%{
-		this.begin('olist1'); //js
-		return (this.yy.npOn ? 'CONTENT' : 'OLIST1_START'); //js
-		
-		//php $this->begin('olist1');
-		//php return $this->npState($this->npOn, 'CONTENT', 'OLIST1_START');
+		this.beginBlock('olist'); //js
+		return (this.yy.npOn ? 'CONTENT' : 'OLIST_START'); //js
+
+		//php if ($this->SOL()) {
+		//php 	$this->beginBlock('olist');
+		//php 	return $this->npState($this->npOn, 'CONTENT', 'OLIST_START');
+		//php }
 	%}
 
 
@@ -482,7 +498,12 @@ SMILE							[a-z]+
 		//php if ($this->npState($this->npOn, false, true) == true) {
 		//php 	$yytext = $this->formatContent($yytext);
 		//php }
-		
+
+		//php if (!empty($this->blockStack)) {
+		//php	return 'BLOCKEND';
+		//php }
+		//php $this->blockLoc++;
+
 		return 'CONTENT';
 	%}
 
@@ -580,45 +601,45 @@ content
 		$$ = Wiki.italics($2); //js
 		//php $$ = $this->italics($2);
 	}
- | HEADER6_START wiki_contents HEADER6_END
+ | HEADER6_START wiki_contents BLOCKEND
 	{
 		$$ = Wiki.header6($2); //js
 		//php $$ = $this->header6($2);
 	}
- | HEADER5_START wiki_contents HEADER5_END
+ | HEADER5_START wiki_contents BLOCKEND
 	{
 		$$ = Wiki.header5($2); //js
 		//php $$ = $this->header5($2);
 	}
- | HEADER4_START wiki_contents HEADER4_END
+ | HEADER4_START wiki_contents BLOCKEND
 	{
 		$$ = Wiki.header4($2); //js
 		//php $$ = $this->header4($2);
 	}
- | HEADER3_START wiki_contents HEADER3_END
+ | HEADER3_START wiki_contents BLOCKEND
 	{
 		$$ = Wiki.header3($2); //js
 		//php $$ = $this->header3($2);
 	}
- | HEADER2_START wiki_contents HEADER2_END
+ | HEADER2_START wiki_contents BLOCKEND
 	{
 		$$ = Wiki.header2($2); //js
 		//php $$ = $this->header2($2);
 	}
- | HEADER1_START wiki_contents HEADER1_END
+ | HEADER1_START wiki_contents BLOCKEND
 	{
 		$$ = Wiki.header1($2); //js
 		//php $$ = $this->header1($2);
 	}
- | ULIST1_START wiki_contents ULIST1_END
+ | ULIST_START wiki_contents BLOCKEND
 	{
-		$$ = Wiki.ulist1($2); //js
-		//php $$ = $this->ulist1($2);
+		$$ = Wiki.ulist($2); //js
+		//php $$ = $this->ulist($2);
 	}
- | OLIST1_START wiki_contents OLIST1_END
+ | OLIST_START wiki_contents BLOCKEND
 	{
-		$$ = Wiki.olist1($2); //js
-		//php $$ = $this->olist1($2);
+		$$ = Wiki.olist($2); //js
+		//php $$ = $this->olist($2);
 	}
  | LINK_START wiki_contents LINK_END
 	{
