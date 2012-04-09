@@ -1127,7 +1127,8 @@ div#calscreen .calfocuson {
 	background: #9faec2}
 
 /***** Admin *****/
-a.admbox {
+a.admbox,
+a.admbox:visited {
 	border: 1px solid #aaa;
 	background: #506887 center no-repeat}
 
