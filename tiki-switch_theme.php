@@ -24,11 +24,12 @@ if (isset($_REQUEST['theme'])) {
 	$theme = $_REQUEST['theme'];
 
 	if (empty($theme)) {
-		$theme = $prefs['site_style'];
-		$themeOption = $prefs['site_style_option'];
-		$themeGenerator_theme = $prefs['site_themegenerator_theme'];
+		$theme = '';
+		$themeOption = '';
+		$themeGenerator_theme = '';
 	} elseif ($theme != $prefs['style']) { // use default theme option when changing main theme
 		$themeOption = '';
+		$themeGenerator_theme = '';
 	}
 	
 	$tikilib->set_user_preference($user, 'theme', $theme);

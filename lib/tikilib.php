@@ -3426,6 +3426,7 @@ class TikiLib extends TikiDb_Bridge
 				$prefs['style'] = $value;
 				if ( $value == '' ) {
 					$prefs['style'] = $prefs['site_style'];
+					$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 				}
 			} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception as well?
 				$prefs['style_option'] = $value;
@@ -3433,10 +3434,12 @@ class TikiLib extends TikiDb_Bridge
 					$prefs['style_option'] = $prefs['site_style_option'];
 				} else if ( $value == 'None' ) {
 					$prefs['style_option'] = '';
+					$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];
+					$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 				}
 			}
 		}
