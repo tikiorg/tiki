@@ -15,7 +15,7 @@ function wikiplugin_code_info()
 		'body' => tra('Code to be displayed'),
 		'icon' => 'img/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
-		'tags' => array( 'basic' ),	
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'caption' => array(
 				'required' => false,
@@ -126,7 +126,7 @@ function wikiplugin_code($data, $params)
 		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
 		. $boxid.'>'
 		. '~np~'
-		. $out
+		. htmlspecialchars($out)
 		. '~/np~'
 		. '</pre>';
 
