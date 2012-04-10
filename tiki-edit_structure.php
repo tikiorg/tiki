@@ -194,6 +194,7 @@ if ($tiki_p_edit_structures == 'y') {
 $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 $smarty->assign('pageName', $page_info["pageName"]);
 $smarty->assign('pageAlias', $page_info["page_alias"]);
+$smarty->assign('topPageAlias', $structure_info["page_alias"]);
 
 $subpages = $structlib->s_get_pages($_REQUEST["page_ref_id"]);
 $max = count($subpages);
