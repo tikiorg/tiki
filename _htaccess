@@ -83,6 +83,7 @@ FileETag none
 RewriteEngine On
 
 # Rewrite rules to maintain any hard-coded URLs following http://dev.tiki.org/ImgDirectoryRevamp
+RewriteRule ^pics/large/(.*)$ img/icons/large/$1
 RewriteRule ^pics/(.*)$ img//$1
 RewriteRule ^images/(.*)$ img/icons//$1
 
