@@ -67,12 +67,19 @@
 
 <h2>{tr}Structure Layout{/tr}</h2>
 {button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
+{self_link page_ref_id=$structure_id}
+	{if $structure_id eq $page_ref_id}<strong>{/if}
+	<big>{tr}Top{/tr}</big>
+	{if $structure_id eq $page_ref_id}</strong>
+	{/if}
+{/self_link}
+<form action="tiki-edit_structure.php" method="post" style="display: inline-block; margin-left: 1em;">
+	<input type="hidden" name="page_ref_id" value="{$structure_id}" />
+	<label for="pageAlias">{tr}Alias:{/tr}</label></td>
+	<input type="text" name="pageAlias" id="pageAlias" value="{$topPageAlias}" />
+	<small><input type="submit" name="create" value="{tr}Update{/tr}" /></small>
+</form>
 <div class="structure-container">
-	{self_link page_ref_id=$structure_id}
-		{if $structure_id eq $page_ref_id}<strong>{/if}
-		{tr}Top{/tr}
-		{if $structure_id eq $page_ref_id}</strong>{/if}
-	{/self_link}
 	{$nodelist}
 </div>
 {button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}

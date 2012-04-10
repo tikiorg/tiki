@@ -61,7 +61,7 @@
 					{$structure_tree.description|escape}
 				{/if}">
 				{if $hilite}<strong>{/if}
-				{if $structure_tree.page_alias|escape and $toc+type neq 'admin'}
+				{if $structure_tree.page_alias and $toc_type neq 'admin'}
 					{$structure_tree.page_alias|escape}
 				{else}
 					{$structure_tree.pageName|escape}
