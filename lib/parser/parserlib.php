@@ -407,7 +407,7 @@ if ( \$('#$id') ) {
 								. ', ' 
 								. json_encode($arguments) 
 								. ', ' 
-								. json_encode(TikiLib::htmldecode($plugin_data)) 
+								. json_encode($plugin_data)
 								. ", event.target);
 } );
 }
