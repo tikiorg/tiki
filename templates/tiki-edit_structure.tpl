@@ -69,7 +69,7 @@
 {button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
 {self_link page_ref_id=$structure_id}
 	{if $structure_id eq $page_ref_id}<strong>{/if}
-	{tr}Top{/tr}
+	<big>{tr}Top{/tr}</big>
 	{if $structure_id eq $page_ref_id}</strong>
 	{/if}
 {/self_link}
