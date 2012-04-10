@@ -34,9 +34,9 @@ $tikilib->get_perm_object($_REQUEST['page'], 'wiki page');
 
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
-	$access->check_permission('tiki_p_wiki_view_history');
+	$access->check_permission('tiki_p_wiki_view_history', '', 'wiki page', $_REQUEST['page']);
 } else {
-	$access->check_permission('tiki_p_wiki_view_source');
+	$access->check_permission('tiki_p_wiki_view_source', '', 'wiki page', $_REQUEST['page']);
 }
 $info = $tikilib->get_page_info($page);
 if (empty($info)) {
