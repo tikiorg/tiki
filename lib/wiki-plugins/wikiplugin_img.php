@@ -1342,9 +1342,17 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
-	
-	if ($prefs['feature_draw'] == 'y' && $tiki_p_upload_files == 'y') {
-		$repl .= " <a href='tiki-edit_draw.php?fileId=" . $imgdata['fileId'] . "' onclick='return $(this).ajaxEditDraw();'  title='".tr("Edit: Image")."' data-fileid='".$imgdata['fileId']."' data-galleryid='".$imgdata['galleryId']."'><img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
+
+	global $tiki_p_edit;
+	if ($prefs['feature_draw'] === 'y' && $tiki_p_upload_files === 'y' && $tiki_p_edit === 'y') {
+		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
+			$iconDisplayStyle = ' style="display:none;"';
+		} else {
+			$iconDisplayStyle = '';
+		}
+		$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
+					" class='editplugin' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
+					"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';
