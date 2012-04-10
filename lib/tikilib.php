@@ -3416,31 +3416,56 @@ class TikiLib extends TikiDb_Bridge
 			$userPreferences->insert(array('user' => $my_user,	'prefName' => $name,	'value' => $value));
 
 			$user_preferences[$my_user][$name] = $value;
-		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
-			$_SESSION['preferences'][$name] = $value;
-		}
 
-		if ( $my_user == $user ) {
-			$prefs[$name] = $value;
-			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception
+			if ($my_user == $user ) {
+				$prefs[$name] = $value;
+				if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { 				// FIXME: Remove this exception
+					$prefs['style'] = $value;
+					if ( $value == '' ) {
+						$prefs['style'] = $prefs['site_style'];
+						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+					}
+				} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception as well?
+					$prefs['style_option'] = $value;
+					if ( $value == '' ) {
+						$prefs['style_option'] = $prefs['site_style_option'];
+					} else if ( $value == 'None' ) {
+						$prefs['style_option'] = '';
+						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+					}
+				} elseif ( $value == '' ) {
+					if ( in_array($name, $user_overrider_prefs) ) {
+						$prefs[$name] = $prefs['site_'.$name];
+						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+					}
+				}
+			}
+
+		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
+
+			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { 				// FIXME: Remove this exception
 				$prefs['style'] = $value;
+				$_SESSION['preferences']['style'] = $value;
 				if ( $value == '' ) {
 					$prefs['style'] = $prefs['site_style'];
-					$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+					unset($_SESSION['preferences']['style']);
 				}
 			} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception as well?
 				$prefs['style_option'] = $value;
+				$_SESSION['preferences']['style_option'] = $value;
 				if ( $value == '' ) {
 					$prefs['style_option'] = $prefs['site_style_option'];
 				} else if ( $value == 'None' ) {
 					$prefs['style_option'] = '';
-					$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+					unset($_SESSION['preferences']['style_option']);
 				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];
-					$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
+					unset($_SESSION['preferences'][$name]);
 				}
+			} else {
+				$_SESSION['preferences'][$name] = $value;
 			}
 		}
 
