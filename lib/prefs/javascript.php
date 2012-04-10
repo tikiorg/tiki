@@ -14,7 +14,7 @@ function prefs_javascript_list()
 			'type' => 'list',
 			'options' => array(
 				'none' => tra('None'),
-				'google' => tra('Google'),
+				'google' => tra('Google (supports SSL via HTTPS)'),
 				'jquery' => tra('jQuery'),
 			),
 			'default' => 'none',

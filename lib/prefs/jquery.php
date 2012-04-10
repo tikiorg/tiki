@@ -104,6 +104,7 @@ function prefs_jquery_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('experimental'),
+			'warning' => tra('Experimental. This feature is under development.'),
 			'dependencies' => array(
 				'jquery_ui_selectmenu',
 			),

@@ -31,30 +31,39 @@
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
 					{tr}CMS{/tr} ({tr}Articles{/tr})
+					{$toolbar_section='cms'}
 					<br />
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
 					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
 					{tr}Wiki{/tr}</label>
+					{$toolbar_section='wiki page'}
+					<br />
+					<label style="margin-left: 2em;"><input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if} />
+					{tr}Is HTML{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_file_galleries_templates eq 'y'}
 					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
+					{$toolbar_section='admin'}
 					{tr}File Galleries{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_newsletters eq 'y'}
 					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
+					{$toolbar_section='newsletters'}
 					{tr}Newsletters{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_events eq 'y'}
 					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} />
+					{$toolbar_section='calendar'}
 					{tr}Events{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
 					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
+					{$toolbar_section='wiki page'}
 					{tr}HTML Pages{/tr}</label>
 					<br />
 				{/if}
@@ -78,6 +87,7 @@
 			<td>{tr}Page Name:{/tr}</td>
 			<td>
 				<input type="text" name="page_name" value="{$info.page_name}"/>
+				{autocomplete element='input[name=page_name]' type='pagename'}
 			</td>
 		</tr>
 
@@ -88,7 +98,15 @@
 		</tr>
 		<tr class="type-cond for-static">
 			<td colspan="2">
-				{textarea id="editwiki" name="content" switcheditor="y"}{$info.content}{/textarea}
+				{if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
+					{$use_wysiwyg='y'}
+					<input type="hidden" id="allowhtml" value="y"/>
+					{if $prefs.wysiwyg_htmltowiki eq 'y'}{$is_html = 'y'}{else}{$is_html = 'n'}{/if}
+				{else}
+					{$use_wysiwyg='n'}
+					{$is_html = 'n'}
+				{/if}
+				{textarea id="editwiki" name="content" switcheditor="y" _wysiwyg=$use_wysiwyg _is_html=$is_html section=$toolbar_section}{$info.content}{/textarea}
 			</td>
 		</tr>
 

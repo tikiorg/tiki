@@ -1806,6 +1806,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 			'description' => tra('Sort in fancytable plugin'),
+			'warning' => tra('This feature can cause problems with JS minify on some systems.'),
 			'default' => 'n',	// sortable tables ([will] override existing)
 		),
 		'feature_jquery_media' => array(

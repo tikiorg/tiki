@@ -94,8 +94,13 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			$href = 'tiki-list_file_gallery.php?galleryId='.$source;
 						break;
 
-		case 'forum post':
-			$href = 'tiki-view_forum_thread.php?comments_parentId='.$source;
+		case 'forum':
+			$href = $sefurl ? "forum$source" : 'tiki-view_forum.php?forumId='.$source;
+						break;
+
+		case 'forumthread':
+		case 'forum post':	// unused?
+			$href = $sefurl ? "forumthread$source" : 'tiki-view_forum_thread.php?comments_parentId='.$source;
 						break;
 
 		case 'image':

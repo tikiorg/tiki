@@ -34,8 +34,8 @@ class Messu extends TikiLib
 			return false;
 		}
 
-		$query = 'insert into `messu_sent' .
-						' `(`user`, `user_from`, `user_to`, `user_cc`, `subject`, `body`, `date`,' .
+		$query = 'insert into `messu_sent`' .
+						' (`user`, `user_from`, `user_to`, `user_cc`, `subject`, `body`, `date`,' .
 						' `isRead`, `isReplied`, `isFlagged`, `priority`, `hash`, `replyto_hash`)' .
 						' values(?,?,?,?,?,?,?,?,?,?,?,?,?)';
 		$this->query(
@@ -254,7 +254,7 @@ class Messu extends TikiLib
 		if ($dbsource == '')
 			$dbsource = 'messages';
 
-		$query = 'update `messu_' . $dbsource . '` set `$flag`=? where `user`=? and `msgId`=?';
+		$query = 'update `messu_' . $dbsource . "` set `$flag`=? where `user`=? and `msgId`=?";
 		$this->query($query, array($val, $user, (int)$msgId));
 	}
 

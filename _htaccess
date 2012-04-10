@@ -173,6 +173,7 @@ RewriteRule ^thumbnail([0-9]+)(.*) tiki-download_file.php?fileId=$1&thumbnail$2 
 RewriteRule ^display([0-9]+)(.*)   tiki-download_file.php?fileId=$1&display$2 [QSA,L]
 RewriteRule ^preview([0-9]+)(.*)   tiki-download_file.php?fileId=$1&preview$2 [QSA,L]
 RewriteRule ^forum([0-9]+)(.*)     tiki-view_forum.php?forumId=$1$2         [QSA,L]
+RewriteRule ^forumthread([0-9]+)(.*) tiki-view_forum_thread.php?comments_parentId=$1$2 [QSA,L]
 RewriteRule ^gallery([0-9]+)(.*)   tiki-browse_gallery.php?galleryId=$1$2   [QSA,L]
 RewriteRule ^img([0-9]+)(.*)       show_image.php?id=$1$2                   [QSA,L]
 RewriteRule ^image([0-9]+)(.*)     show_image.php?id=$1$2                   [QSA,L]

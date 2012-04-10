@@ -9,7 +9,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	var $npOn = false;
 	var $pluginStack = array();
+	var $blockLoc = array();
+	var $blockLast = '';
+
 	var $parseStack = 0;
+	var $blockStack = array();
+
+	var $olistLen = array();
 
 	function parse($input)
 	{
@@ -95,6 +101,21 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return false;
 	}
 
+	function SOL() //start of line
+	{
+		return ($this->yyloc['first_column'] == 0 ? true : false);
+	}
+
+	function beginBlock($condition)
+	{
+		if ($condition != $this->blockLast)
+			$this->blockLoc[$condition]++;
+
+		$this->blockLast = $condition;
+
+		return parent::begin($condition);
+	}
+
 	function npState($npState, $ifTrue, $ifFalse)
 	{
 		return ($npState == true ? $ifTrue : $ifFalse);
@@ -108,7 +129,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function box($content)
 	{
-		return '<div style="border: solid 1px black;">' . $content . '</div>';
+		return'<div style="border: solid 1px black;">' . $content . '</div>';
 	}
 
 	function center($content)
@@ -123,6 +144,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$content = $text[1];
 
 		return '<span style="color: #' . $color . ';">' . $content . '</span>';
+	}
+
+	function content($content)
+	{
+		return $content;
 	}
 
 	function italics($content)
@@ -215,6 +241,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function titlebar($content)
 	{
 		return '<div class="titlebar">' . $content . '</div>';
+	}
+
+	function olist($content)
+	{
+		$this->olistLen[$this->blockLoc['olist']]++;
+		$start =$this->olistLen[$this->blockLoc['olist']];
+
+		return '<ol class="olgroup' . $this->blockLoc['olist'] . '" start="' . $start . '"><li>' . $content . '</li></ol>';
+	}
+
+	function ulist($content)
+	{
+		return '<ul><li>' . $content . '</li></ul>';
 	}
 
 	function underscore($content)

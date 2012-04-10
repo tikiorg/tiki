@@ -2023,7 +2023,8 @@ td.dirfooter {
 
 /* css/admin.css overrides */
 .admbox a,
-a.admbox {
+a.admbox,
+a.admbox:visited {
 	border: 1px solid #708090;
 	background-color: #dddfdf;
 }

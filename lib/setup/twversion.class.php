@@ -74,7 +74,7 @@ class TWVersion
 		);
 	}
 
-	// Returns an array of all valid versions of Tikiwiki.
+	// Returns an array of all valid versions of Tiki.
 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
@@ -163,6 +163,7 @@ class TWVersion
 				'8.0',
 				'8.1',
 				'8.2',
+				'8.3',
 			);
 	}
 

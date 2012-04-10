@@ -1566,7 +1566,7 @@ class CategLib extends ObjectLib
 	//move all objects from a categ to anotehr one
 	function move_all_objects($from, $to)
 	{
-		$query = 'update `tiki_category_objects` set `categId`=? where `categId`=?';
+		$query = 'update ignore `tiki_category_objects` set `categId`=? where `categId`=?';
 		$this->query($query, array((int)$to, (int)$from));
 	}
 	//assign all objects of a categ to another one
