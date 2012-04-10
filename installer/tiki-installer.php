@@ -1007,7 +1007,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 }
 
 
-include "lib/headerlib.php";
+include_once "lib/headerlib.php";
 $headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('styles/fivealive.css');
 $headerlib->add_jsfile('lib/tiki-js.js');
