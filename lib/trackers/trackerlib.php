@@ -4254,35 +4254,6 @@ class TrackerLib extends TikiLib
 			return $r;
 		}
 	}
-
-	public function replaceItemFromRequestValues($trackerId, $fieldIds, $fieldValues, $itemId = 0, $i = 0)
-	{
-		$trackerDefinition = Tracker_Definition::get($trackerId);
-		$fields = $trackerDefinition->getFields();
-
-		foreach ($fields as $key => $field) {
-			$fieldId = $field['fieldId'];
-			$fieldValue = ($i > 0 ? $fieldValues[$fieldId][$i] : $fieldValues[$fieldId]);
-			$fields[$key]['value'] = (empty($fieldValue) ? '' : $fieldValue);
-		}
-
-		return $this->replace_item($trackerId, $itemId, array("data"=>$fields), 'o');
-	}
-
-	public function replaceItemFromRequestValuesByName($trackerName, $fieldNames, $fieldValues, $itemId = 0, $i = 0)
-	{
-		$trackerId = $this->get_tracker_by_name($trackerName);
-		$trackerDefinition = Tracker_Definition::get($trackerId);
-		$fields = $trackerDefinition->getFields();
-
-		foreach ($fields as $key => $field) {
-			$fieldName = $field['name'];
-			$fieldValue = ($i > 0 ? $fieldValues[str_replace(" ", "_", $fieldName)][$i] : $fieldValues[str_replace(" ", "_", $fieldName)]);
-			$fields[$key]['value'] = (empty($fieldValue) ? '' : $fieldValue);
-		}
-
-		return $this->replace_item($trackerId, $itemId, array("data"=>$fields), 'o');
-	}
 }
 
 global $trklib;
