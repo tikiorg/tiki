@@ -74,10 +74,11 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 		$phraseI = 0;
 		foreach ($items as $item) {
-			$thisText = htmlspecialchars($item->forwardlink->text);
-			$thisDate = htmlspecialchars($item->forwardlink->date);
-			$thisHref = htmlspecialchars($item->textlink->href);
-			$linkedText = htmlspecialchars($item->textlink->text);
+
+			$thisText = addslashes(htmlspecialchars($item->forwardlink->text));
+			$thisDate = addslashes(htmlspecialchars($item->forwardlink->date));
+			$thisHref = addslashes(htmlspecialchars($item->textlink->href));
+			$linkedText = addslashes(htmlspecialchars($item->textlink->text));
 
 			$phrases[] = $thisText;
 
@@ -353,7 +354,7 @@ JQ
 		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 		//print_r( $prefs );
 
-		$websiteTitle = htmlspecialchars($prefs['browsertitle']);
+		$websiteTitle = addslashes(htmlspecialchars($prefs['browsertitle']));
 
 		$headerlib->add_jq_onready(<<<JQ
 			var answers = $answers;
@@ -571,7 +572,7 @@ JQ
 
 		//self::getTimeStamp();
 
-		$phrase = (!empty($_REQUEST['phrase']) ? htmlspecialchars($_REQUEST['phrase']) : '');
+		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
 		self::goToPhraseExistance($phrase, $page, $version);
 
@@ -616,7 +617,7 @@ JQ
 		foreach ($item->feed->entry as $i => $newEntry) {
 			$checks[$i] = array();
 
-			$checks[$i]["titleHere"] = utf8_encode(implode('', JisonParser_Phraser_Handler::sanitizeToWords(htmlspecialchars($prefs['browsertitle']))));
+			$checks[$i]["titleHere"] = utf8_encode(implode('', JisonParser_Phraser_Handler::sanitizeToWords($prefs['browsertitle'])));
 			$checks[$i]["phraseThere"] = utf8_encode (implode('', JisonParser_Phraser_Handler::sanitizeToWords($newEntry->forwardlink->text)));
 			$checks[$i]["hashHere"] = hash_hmac("md5", $checks[$i]["titleHere"], $checks[$i]["phraseThere"]);
 			$checks[$i]["hashThere"] = $newEntry->forwardlink->hash;
