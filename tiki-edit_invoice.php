@@ -23,6 +23,7 @@ if ($trklib->get_tracker_by_name("Invoice Items") < 1) {
 //handle saving data (edit or update)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {	
 	//start invoice
+	/*
 	$_REQUEST['InvoiceId'] = $trklib->replaceItemFromRequestValues(
 					$trklib->get_tracker_by_name("Invoices"),
 					array(
@@ -38,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 						"Days Payment Due",
 					),
 					$_REQUEST, $_REQUEST['InvoiceId']
-	);
+	);*/
+	die;
 	//end invoice
 	
 	//start invoice items
@@ -190,6 +192,8 @@ $headerlib->add_jq_onready(
 		
 		var InvoiceId = $('#InvoiceId');
 		InvoiceId.val(InvoiceId.val() ? InvoiceId.val() : 0);
+
+		return false;
 	});"
 );
 

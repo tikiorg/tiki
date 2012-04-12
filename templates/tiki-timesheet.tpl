@@ -1,4 +1,4 @@
-{if $timeSheetProfileLoaded neq true}
+{if $timeSheetProfileLoaded neq true AND $tiki_p_admin eq 'y'}
 {tr}Apply the following profile for enhancements: {/tr}
 {button href="tiki-admin.php" profile="time_sheet" page="profiles" list="List" _text="Time_Sheet"}
 {/if}
