@@ -923,12 +923,16 @@ a.forumnameread {
 }
 
 .tabmark a {
-	color: #295C83;
+	color: #ccdceb;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 3px 5px;
 }
 
+li.tabmark ul li a {
+	color: #294C83;
+
+}
 .tabmark a:active {
 	background: #fff;
 	color: red;
@@ -967,7 +971,12 @@ a.forumnameread {
 .tabcontent {
 	z-index: 200;
 	border: 1px solid #abcdef;
+	padding: 26px 0 2px 0;
 	background: #fff;
+}
+
+li.tabcontent {
+	padding: 0px 0 2px 0;
 }
 
 .statuson {
