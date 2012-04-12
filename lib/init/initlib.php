@@ -140,7 +140,7 @@ class TikiInit
 	{
 		static $tempdir;
 		if (!$tempdir) {
-			$tempfile = tempnam(false, '');
+			$tempfile = @tempnam(false, '');
 			$tempdir = dirname($tempfile);
 			@unlink($tempfile);
 		}
