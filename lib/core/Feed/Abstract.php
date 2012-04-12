@@ -53,7 +53,7 @@ abstract class Feed_Abstract
 		$result = array();
 		foreach ($this->getItems() as $item) {
 			if (!empty($item->name)) {
-				$result[] = htmlspecialchars($item->name);
+				$result[] = addslashes(htmlspecialchars($item->name));
 			}
 		}
 		return $result;

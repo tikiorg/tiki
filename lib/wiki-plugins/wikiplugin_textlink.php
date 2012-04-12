@@ -54,7 +54,7 @@ function wikiplugin_textlink($data, $params)
 						)
 					)
 	);
-	$data = htmlspecialchars($data);
+	$data = addslashes(htmlspecialchars($data));
 	$date = $tikilib->get_short_date($clipboarddata->date);
 	if (!empty($clipboarddata->href)) {
 		$headerlib
