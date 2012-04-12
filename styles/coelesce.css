@@ -923,7 +923,7 @@ a.forumnameread {
 }
 
 .tabmark a {
-	color: #ccdceb;
+	color: #295C83;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 3px 5px;
@@ -967,7 +967,6 @@ a.forumnameread {
 .tabcontent {
 	z-index: 200;
 	border: 1px solid #abcdef;
-	padding: 26px 0 2px 0;
 	background: #fff;
 }
 
