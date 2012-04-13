@@ -3554,6 +3554,9 @@ class TikiLib extends TikiDb_Bridge
 		if ($html && $prefs['feature_purifier'] != 'n') {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$data = HTMLPurifier($data);
+
+			//rp, 9.0 - html entities may break lt and gt (<, >) because it isn't valid html, out parser takes care of it, so ensureing that it stays as > or < is important
+			$data = preg_replace(array("/&lt;/", "/&gt;/"), array("<", ">"), $data);
 		}
 		
 		$insertData = array(
@@ -3900,6 +3903,9 @@ class TikiLib extends TikiDb_Bridge
 
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
+
+			//rp, 9.0 - html entities may break lt and gt (<, >) because it isn't valid html, out parser takes care of it, so ensureing that it stays as > or < is important
+			$edit_data = preg_replace(array("/&lt;/", "/&gt;/"), array("<", ">"), $edit_data);
 
 			$parserlib->plugins_replace($edit_data, $noparsed);
 		}
