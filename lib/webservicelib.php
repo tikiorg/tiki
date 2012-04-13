@@ -22,6 +22,7 @@ class Tiki_Webservice
 	public $wstype;
 	public $schemaVersion;
 	public $schemaDocumentation;
+	public $allowCookies;
 
 	private $templates = array();
 	private $all = false;
@@ -140,7 +141,12 @@ class Tiki_Webservice
 		return $parameters;
 	}
 
-	function performRequest( $params )
+	/*
+	*	If fullResponse = true, "out" parameters from .NET calls are included in the response. 
+	*	If false, only the <request>Response part of the reply is included.
+	*	fullResponse has no effect for REST calls
+	*/
+	function performRequest( $params, $fullReponse = false )
 	{
 		global $soaplib, $prefs;
 
@@ -161,7 +167,8 @@ class Tiki_Webservice
 						}
 
 						$response = new OIntegrate_Response();
-						$response->data = $soaplib->performRequest($built, $this->operation, $map, $options);
+						$soaplib->allowCookies = $this->allowCookies;
+						$response->data = $soaplib->performRequest( $built, $this->operation, $map, $options, $fullReponse );
 
 						return $response;
 					}

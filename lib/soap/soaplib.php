@@ -16,7 +16,19 @@ require_once('lib/core/Zend/Soap/Wsdl.php');
 
 class Tiki_Soap
 {
-	public function performRequest( $wsdl, $operation, $params, $options = array( 'encoding' => 'UTF-8' ) )
+	private $cookies;
+	public $allowCookies;	// boolean. If true, (session) cookies are handled
+
+	function __construct() {
+		$this->cookies = array();
+		$this->allowCookies = false;
+	}
+
+	/*
+	*	If fullResponse = true, "out" parameters from .NET calls are included in the response. 
+	*	If false, only the <request>Response part of the reply is included.
+	*/	
+	public function performRequest( $wsdl, $operation, $params, $options = array( 'encoding' => 'UTF-8' ), $fullReponse = false )
 	{
 		if (!extension_loaded('soap')) {
 			return 'Extension SOAP not found';
@@ -44,14 +56,32 @@ class Tiki_Soap
 		}
 
 		try {
+			// Set (Session) cookies before the call
+			if($this->allowCookies) {
+				if(is_array($this->cookies)){
+					foreach($this->cookies as $cookieName => $cookieValue) { 
+						$client->setCookie($cookieName, $cookieValue[0]);
+					}
+				}
+			}
+
+			// Perform the SOAP request
 			$result = call_user_func_array(array($client, $operation), $soap_params);
 
+			// Pick up any new cookies from the server
+			if($this->allowCookies) {
+				$last_response = $client->getLastResponseHeaders();
+				$soapClt = $client->getSoapClient();
+				$this->cookies = array_merge($soapClt->_cookies,$this->cookies);
+			}
+			
 		} catch (SoapFault $e) {
 			trigger_error($e->getMessage());
 			return $e->getMessage();
 		}
 
-		if (is_object($result)) {
+		// Unless the full response result is specified, only reply the returned result, and not the "out" parameter results
+		if (is_object($result) && !$fullReponse) {
 			$result_name = $operation . 'Result';
 
 			if (isset($result->$result_name)) {
