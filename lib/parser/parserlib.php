@@ -104,7 +104,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// Reverses parse_first.
 	//*
-	function replace_preparse(&$data, &$preparsed, &$noparsed)
+	function replace_preparse(&$data, &$preparsed, &$noparsed, $editMode = false)
 	{
 		$data1 = $data;
 		$data2 = "";
@@ -120,6 +120,15 @@ class ParserLib extends TikiDb_Bridge
 				$data = str_replace($preparsed["key"], $preparsed["data"], $data);
 			}
 			$data2 = $data;
+		}
+
+		//rp 9.0 html entity fix - END restore html chars that were not distorted by parse_htmlchar replacement of the ampersand
+		$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
+
+		if ($editMode == false) {
+			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~'), array('&amp;lt;', '&amp;gt;'), $data);
+		} else {
+			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~'), array('&lt;', '&gt;'), $data);
 		}
 	}
 
@@ -144,10 +153,10 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	input array
 	 */
 
-	function plugins_replace(&$data, $noparsed) {
+	function plugins_replace(&$data, $noparsed, $editMode = false) {
 		$preparsed = array();	// unused
 		$noparsed['data'] = str_replace('<x>', '', $noparsed['data']);
-		$this->replace_preparse($data, $preparsed, $noparsed);
+		$this->replace_preparse($data, $preparsed, $noparsed, $editMode);
 	}
 
 	//*
@@ -287,6 +296,11 @@ class ParserLib extends TikiDb_Bridge
 	{
 		global $tikilib, $tiki_p_edit, $prefs, $pluginskiplist;
 		$smarty = TikiLib::lib('smarty');
+
+		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
+		$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
+		$data = str_replace(array( '&lt;', '&gt;') , array('~FAKE_LT~', '~FAKE_GT~' ), $data);
+
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
@@ -1335,7 +1349,7 @@ if ( \$('#$id') ) {
 				return;
 			}
 		}
-		
+
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
@@ -1426,10 +1440,6 @@ if ( \$('#$id') ) {
 		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
 
-		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
-		$data = preg_replace("/&lt;/", "~REAL_LT~", $data);
-		$data = preg_replace("/&gt;/", "~REAL_GT~", $data);
-
 		// Replace special characters
 		// done after url catching because otherwise urls of dyn. sites will be modified
 		// not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
@@ -1441,10 +1451,6 @@ if ( \$('#$id') ) {
 		if (!$simple_wiki && !$options['is_html']) {
 			$this->parse_htmlchar($data);
 		}
-
-		//rp 9.0 html entity fix - END restore html chars that were not distorted by parse_htmlchar replacement of the ampersand
-		$data = preg_replace("/~REAL_LT~/", "&lt;", $data);
-		$data = preg_replace("/~REAL_GT~/", "&gt;", $data);
 
 		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
 		$data = $this->parse_data_wikilinks($data, $simple_wiki, $options['ck_editor']);
