@@ -290,12 +290,11 @@ class ParserLib extends TikiDb_Bridge
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
-//		page-wide htmldecode commented out by jb for tiki 9.0 fix for html entitles
-//		$data = TikiLib::htmldecode($data);
-//		if (! $options['is_html']) {
-//			// Decode partially, leave the < and > as HTML entities
-//			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
-//		}
+		$data = TikiLib::htmldecode($data);
+		if (! $options['is_html']) {
+			// Decode partially, leave the < and > as HTML entities
+			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+		}
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
@@ -1426,10 +1425,15 @@ if ( \$('#$id') ) {
 		// Handle comment sections
 		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
+
+		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
+		$data = preg_replace("/&lt;/", "~REAL_LT~", $data);
+		$data = preg_replace("/&gt;/", "~REAL_GT~", $data);
+
 		// Replace special characters
 		// done after url catching because otherwise urls of dyn. sites will be modified
 		// not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
-		//			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n') 
+		//			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n')
 		//above line changed by mrisch - special functions were not parsing when wysiwyg is set but wysiswyg is not enabled
 		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
 		// must be done before color as we can have ~hs~~hs
@@ -1437,9 +1441,14 @@ if ( \$('#$id') ) {
 		if (!$simple_wiki && !$options['is_html']) {
 			$this->parse_htmlchar($data);
 		}
+
+		//rp 9.0 html entity fix - END restore html chars that were not distorted by parse_htmlchar replacement of the ampersand
+		$data = preg_replace("/~REAL_LT~/", "&lt;", $data);
+		$data = preg_replace("/~REAL_GT~/", "&gt;", $data);
+
 		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
 		$data = $this->parse_data_wikilinks($data, $simple_wiki, $options['ck_editor']);
-		
+
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
