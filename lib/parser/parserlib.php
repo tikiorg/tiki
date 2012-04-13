@@ -104,7 +104,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// Reverses parse_first.
 	//*
-	function replace_preparse(&$data, &$preparsed, &$noparsed, $editMode = false)
+	function replace_preparse(&$data, &$preparsed, &$noparsed, $editMode = false, $is_html = true)
 	{
 		$data1 = $data;
 		$data2 = "";
@@ -123,7 +123,12 @@ class ParserLib extends TikiDb_Bridge
 		}
 
 		//rp 9.0 html entity fix - END restore html chars that were not distorted by parse_htmlchar replacement of the ampersand
-		$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
+		if ($is_html == true ) {
+			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
+		} else {
+			// Decode partially, leave the < and > as HTML entities
+			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array('&lt;', '&gt;'), $data);
+		}
 
 		if ($editMode == false) {
 			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~'), array('&amp;lt;', '&amp;gt;'), $data);
@@ -297,18 +302,16 @@ class ParserLib extends TikiDb_Bridge
 		global $tikilib, $tiki_p_edit, $prefs, $pluginskiplist;
 		$smarty = TikiLib::lib('smarty');
 
+		if ( ! is_array($pluginskiplist) )
+			$pluginskiplist = array();
+
+
+
 		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
 		$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
 		$data = str_replace(array( '&lt;', '&gt;') , array('~FAKE_LT~', '~FAKE_GT~' ), $data);
 
-		if ( ! is_array($pluginskiplist) )
-			$pluginskiplist = array();
-
 		$data = TikiLib::htmldecode($data);
-		if (! $options['is_html']) {
-			// Decode partially, leave the < and > as HTML entities
-			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
-		}
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
@@ -1386,7 +1389,7 @@ if ( \$('#$id') ) {
 			$parser = new JisonParser_Wiki_Handler();
 			return $parser->parse($data);
 		}
-		
+
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
@@ -1536,7 +1539,7 @@ if ( \$('#$id') ) {
 		}
 
 		// Put removed strings back.
-		$this->replace_preparse($data, $preparsed, $noparsed);
+		$this->replace_preparse($data, $preparsed, $noparsed, false, $options['is_html']);
 
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {
