@@ -22,14 +22,20 @@
 
 				{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">				
-					{preference name="unified_incremental_update"}
 					{preference name="unified_engine"}
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
-						{preference name="unified_lucene_location"}
+						{preference name="unified_incremental_update"}
 						{preference name="unified_lucene_highlight"}
-						{preference name="unified_lucene_max_result"}
-						{preference name="unified_lucene_max_resultset_limit"}
-						{preference name="unified_lucene_terms_limit"}
+						{preference name="unified_lucene_location"}
+						<fieldset>
+							<legend>{tr}Search Engine Settings{/tr}</legend>
+							{preference name="unified_lucene_max_result"}
+							{preference name="unified_lucene_max_resultset_limit"}
+							{preference name="unified_lucene_terms_limit"}
+							{preference name="unified_lucene_max_buffered_docs"}
+							{preference name="unified_lucene_max_merge_docs"}
+							{preference name="unified_lucene_merge_factor"}
+						</fieldset>
 					</div>
 
 					{preference name=unified_forum_deepindexing}
@@ -48,7 +54,19 @@
 					<ul>
 						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a></li>
 						<li>
-							<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
+							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a><br />
+							<label for="log-rebuild">{tr}Log rebuild?{/tr}</label>
+							<input type="checkbox" id="log-rebuild" />
+							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span>
+							{jq}
+$("#log-rebuild").click(function(){
+	if ($(this).prop("checked")) {
+		$("#rebuild-link").attr("href", $("#rebuild-link").attr("href") + "&loggit");
+	} else {
+		$("#rebuild-link").attr("href", $("#rebuild-link").attr("href").replace("&loggit",""));
+	}
+});
+							{/jq}
 							{if !empty($stat)}
 								{remarksbox type='feedback' title="{tr}Indexation{/tr}"}
 									<ul>

@@ -27,7 +27,10 @@ class ParserLib extends TikiDb_Bridge
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
-	
+
+	var $isHtmlPurifying = false;
+	var $isEditMode = false;
+
 	//NEED MIGRATION
 	//Below here methods that need updating to new WikiParser.php that were integrated from tikilib
 	//*
@@ -104,7 +107,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// Reverses parse_first.
 	//*
-	function replace_preparse(&$data, &$preparsed, &$noparsed)
+	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = true)
 	{
 		$data1 = $data;
 		$data2 = "";
@@ -120,6 +123,20 @@ class ParserLib extends TikiDb_Bridge
 				$data = str_replace($preparsed["key"], $preparsed["data"], $data);
 			}
 			$data2 = $data;
+		}
+
+		//rp 9.0 html entity fix - END restore html chars that were not distorted by parse_htmlchar replacement of the ampersand
+		if ($is_html == true ) {
+			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
+		} else {
+			// Decode partially, leave the < and > as HTML entities
+			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array('&lt;', '&gt;'), $data);
+		}
+
+		if ($this->isEditMode == true) {
+			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), array('&lt;', '&gt;', '&amp;'), $data);
+		} else {
+			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), array('&amp;lt;', '&amp;gt;', '&amp;amp;'), $data);
 		}
 	}
 
@@ -287,15 +304,18 @@ class ParserLib extends TikiDb_Bridge
 	{
 		global $tikilib, $tiki_p_edit, $prefs, $pluginskiplist;
 		$smarty = TikiLib::lib('smarty');
+
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
-//		page-wide htmldecode commented out by jb for tiki 9.0 fix for html entitles
-//		$data = TikiLib::htmldecode($data);
-//		if (! $options['is_html']) {
-//			// Decode partially, leave the < and > as HTML entities
-//			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
-//		}
+		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
+		if ($this->isHtmlPurifying == true || $options['is_html'] != true) {
+			$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
+		}
+
+		$data = str_replace(array( '&lt;', '&gt;', '&amp;') , array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), $data);
+
+		$data = TikiLib::htmldecode($data);
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
@@ -1336,7 +1356,7 @@ if ( \$('#$id') ) {
 				return;
 			}
 		}
-		
+
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
@@ -1373,7 +1393,7 @@ if ( \$('#$id') ) {
 			$parser = new JisonParser_Wiki_Handler();
 			return $parser->parse($data);
 		}
-		
+
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
@@ -1426,10 +1446,11 @@ if ( \$('#$id') ) {
 		// Handle comment sections
 		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
+
 		// Replace special characters
 		// done after url catching because otherwise urls of dyn. sites will be modified
 		// not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
-		//			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n') 
+		//			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n')
 		//above line changed by mrisch - special functions were not parsing when wysiwyg is set but wysiswyg is not enabled
 		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
 		// must be done before color as we can have ~hs~~hs
@@ -1437,9 +1458,10 @@ if ( \$('#$id') ) {
 		if (!$simple_wiki && !$options['is_html']) {
 			$this->parse_htmlchar($data);
 		}
+
 		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
 		$data = $this->parse_data_wikilinks($data, $simple_wiki, $options['ck_editor']);
-		
+
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
@@ -1521,7 +1543,7 @@ if ( \$('#$id') ) {
 		}
 
 		// Put removed strings back.
-		$this->replace_preparse($data, $preparsed, $noparsed);
+		$this->replace_preparse($data, $preparsed, $noparsed, false, $options['is_html']);
 
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {

@@ -9,13 +9,17 @@ require_once('tiki-setup.php');
 $access->check_feature(array('feature_time_sheet','feature_trackers'));
 $access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'));
 
-global $user;
+global $user, $prefs, $tiki_p_admin;
 $auto_query_args = array(
 	'all',
 	'profile',
 	'page',
 	'list'
 );
+
+$trackerId = (int)TikiLib::lib('trk')->get_tracker_by_name('Time sheet');
+$smarty->assign("tiki_p_admin", $tiki_p_admin);
+$smarty->assign("timeSheetProfileLoaded", $trackerId > 0 ? true : false);
 
 $projectList = Tracker_Query::tracker("Project list")->byName()->query();
 
@@ -36,35 +40,25 @@ if (isset($_REQUEST['all'])) { //all views all sheet items
 
 if (isset($projectList)) {
 	if (isset($_REQUEST['save'])) {
-		$_REQUEST['Done_by'] = $user;
-		TikiLib::lib("trk")->replaceItemFromRequestValuesByName(
-						"Time sheet",
-						array(
-							"Summary",
-   			         "Associated project",
-   			         "Description",
-   			         "Amount of time spent",
-   			         "Done by"
-						),
-						$_REQUEST
-		); 
+		echo json_encode(
+			$timeSheetNewInputs = Tracker_Query::tracker("Time sheet")
+				->byName()
+				->queryInput()
+		);
 		die;
 	}
 
-	$timeSheetProfileLoaded = true;
-	$smarty->assign("timeSheetProfileLoaded", $timeSheetProfileLoaded);
 	$smarty->assign("projectList", $projectList);
 	$smarty->assign("timeSheet", $timeSheet);
 }
 
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
-$headerlib = TikiLib::lib("header");
-$headerlib->add_cssfile("lib/jquery/jtrack/css/jtrack.css");
-$headerlib->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js");
-$headerlib->add_jsfile("lib/jquery/jtrack/js/jtrack.js");
-$headerlib->add_jq_onready(
-				"
+$headerlib = TikiLib::lib("header")
+	->add_cssfile("lib/jquery/jtrack/css/jtrack.css")
+	->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js")
+	->add_jsfile("lib/jquery/jtrack/js/jtrack.js")
+	->add_jq_onready("
 	jTask.init();
 	
 	$.timesheetSpreadsheet = function() {
@@ -123,29 +117,49 @@ $headerlib->add_jq_onready(
 	$('#timeSheetCommit').click(function() {
 		$('#timeSheetTabs').modal(tr('Committing...'));
 		var stack = [];
-		for (var namespace in $.DOMCached.getStorage()) {
-			stack.push(namespace);
-			$.post('tiki-timesheet.php?save', {
-				'Summary': namespace,
-				'Description': '',
-				'Amount of time spent': $.DOMCached.get('timer', namespace) / 60
-			}, function(o) {
-				$.DOMCached.deleteNamespace(namespace);
-				stack.pop();
-				
-				if (stack.length == 0) {
-					$('#timeSheetTabs').modal();
-					document.location = document.location + '';
-				}
-			});
-		}
+		$.getJSON('tiki-timesheet.php?save', function(inputs) {
+			for (var namespace in $.DOMCached.getStorage()) {
+				var summary = namespace + '',
+				time =  $.DOMCached.get('timer', summary) / 60;
+				stack.push(summary);
+
+				var form = $.trackerForm($trackerId).submit(function() {
+					$.post(form.attr('action') + '?' + form.serialize(), function() {
+						$.DOMCached.deleteNamespace(namespace);
+
+						stack.pop();
+
+						if (stack.length == 0) {
+							document.location = document.location + '';
+						}
+					});
+					return false;
+				});
+
+				var input = {
+					'Summary': $(inputs['Summary']),
+					'Description': $(inputs['Description']),
+					'Amount of time spent': $(inputs['Amount of time spent'])
+				};
+
+				input['Summary'].val(summary);
+				input['Amount of time spent'].val(time);
+				console.log(input);
+				form.append(input['Summary']);
+				form.append(input['Description']);
+				form.append(input['Amount of time spent']);
+				form.submit();
+			}
+		});
+
+		return false;
 	});
 	
 	$('#timeSheetTabs')
 		.width($('#timeSheetTabs').parent().width())
 		.tabs();
-"
-);
+");
+
 $smarty->assign('mid', 'tiki-timesheet.tpl');
 // use tiki_full to include include CSS and JavaScript
 $smarty->display("tiki.tpl");

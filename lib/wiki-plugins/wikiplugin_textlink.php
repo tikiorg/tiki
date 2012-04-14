@@ -54,8 +54,12 @@ function wikiplugin_textlink($data, $params)
 						)
 					)
 	);
-	$data = htmlspecialchars($data);
+	$data = addslashes(htmlspecialchars($data));
 	$date = $tikilib->get_short_date($clipboarddata->date);
+
+	$clipboarddata->href = addslashes(htmlspecialchars($clipboarddata->href));
+	$clipboarddata->text = addslashes(htmlspecialchars($clipboarddata->text));
+
 	if (!empty($clipboarddata->href)) {
 		$headerlib
 			->add_jsfile("lib/jquery/tablesorter/jquery.tablesorter.js")

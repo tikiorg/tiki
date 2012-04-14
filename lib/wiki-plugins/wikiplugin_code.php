@@ -117,7 +117,7 @@ function wikiplugin_code($data, $params)
 		.' word-wrap:break-word;';
 	}
 
-	$out = (isset($caption) ? '<div class="codecaption">'.$caption.'</div>' : "" ) 
+	$out = (isset($caption) ? '<div class="codecaption">'.$caption.'</div>' : "" )
 		. '<pre class="codelisting" '
 		. (isset($colors) ? ' data-syntax="' . $colors . '" ' : '')
 		. (isset($ln) ? ' data-line-numbers="' . $ln . '" ' : '')
@@ -126,7 +126,7 @@ function wikiplugin_code($data, $params)
 		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
 		. $boxid.'>'
 		. '~np~'
-		. htmlspecialchars($out)
+		. ($out)
 		. '~/np~'
 		. '</pre>';
 

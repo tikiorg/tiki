@@ -831,7 +831,7 @@ class UsersLib extends TikiLib
 		}
 
 		if ( !empty($_SESSION['phpCAS']['user']) ) {
-			$_SESSION[$user_cookie_site] = $_SESSION['phpCAS']['user'];
+			$_SESSION[$user_cookie_site] = strtolower($_SESSION['phpCAS']['user']);
 		}
 
 		if (isset($_REQUEST['ticket']) && empty($_SESSION[$user_cookie_site])) {
@@ -919,7 +919,7 @@ class UsersLib extends TikiLib
 
 		// at this step, the user has been authenticated by the CAS server
 		// and the user's login name can be read with phpCAS::getUser().
-		if ( $auth && ($user = phpCAS::getUser()) ) {
+		if ( $auth && ($user = strtolower(phpCAS::getUser())) ) {
 			return USER_VALID;
 		} else {
 			$user = null;

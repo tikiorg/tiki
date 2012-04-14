@@ -784,7 +784,10 @@ class Tracker_Query
 		if ($includeJs == true)
 			$headerlibClone = clone $headerlib;
 
-		$trackerDefinition = Tracker_Definition::get($this->trackerId());
+		$trackerId = $this->trackerId();
+		if ($trackerId < 1) return array();
+
+		$trackerDefinition = Tracker_Definition::get($trackerId);
 
 		$fields = array();
 

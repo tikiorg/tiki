@@ -40,10 +40,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 		} catch (Zend_Search_Lucene_Exception $e) {
 			$this->lucene = Zend_Search_Lucene::create($this->directory);
 		}
-
-		$this->lucene->setMaxBufferedDocs(100);
-		$this->lucene->setMaxMergeDocs(5000);
-		$this->lucene->setMergeFactor(50);
+		global $prefs;
+		if (!empty($prefs['unified_lucene_max_buffered_docs'])) {							// these break indexing if set empty
+			$this->lucene->setMaxBufferedDocs($prefs['unified_lucene_max_buffered_docs']);	// default is 10
+		}
+		if (!empty($prefs['unified_lucene_max_merge_docs'])) {
+			$this->lucene->setMaxMergeDocs($prefs['unified_lucene_max_merge_docs']);		// default is PHP_INT_MAX (effectively "infinite")
+		}
+		if (!empty($prefs['unified_lucene_merge_factor'])) {
+			$this->lucene->setMergeFactor($prefs['unified_lucene_merge_factor']);			// default is 10
+		}
 		$this->lucene->setResultSetLimit($this->resultSetLimit);
 
 		return $this->lucene;
