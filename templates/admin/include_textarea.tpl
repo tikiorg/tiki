@@ -45,6 +45,7 @@
 				{preference name=wikiplugin_button}
 				{preference name=wikiplugin_center}
 				{preference name=wikiplugin_code}
+                                {preference name=wikiplugin_countdown}
 				{preference name=wikiplugin_div}
 				{preference name=wikiplugin_dl}
 				{preference name=wikiplugin_fade}
@@ -60,6 +61,7 @@
 				{preference name=wikiplugin_mono}
 				{preference name=wikiplugin_mouseover}
 				{preference name=wikiplugin_mwtable}
+				{preference name=wikiplugin_now}
 				{preference name=wikiplugin_quote}
 				{preference name=wikiplugin_remarksbox}
 				{preference name=wikiplugin_scroll}

@@ -284,6 +284,8 @@
 			{preference name=display_field_order}
 			{preference name=users_prefs_display_12hr_clock}
 			{preference name=tiki_same_day_time_only}
+			{preference name=wikiplugin_now}
+			{preference name=wikiplugin_countdown}
 
 			<div class="adminoptionbox">
 				{assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}

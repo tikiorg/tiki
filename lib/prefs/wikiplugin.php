@@ -54,6 +54,7 @@ function prefs_wikiplugin_list($partial = false)
 		'miniquiz' => 'y',
 		'module' => 'y',
 		'mouseover' => 'y',
+		'now' => 'y',
 		'payment' => 'y',
 		'poll' => 'y',
 		'quote' => 'y',
