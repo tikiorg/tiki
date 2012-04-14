@@ -27,7 +27,10 @@ class ParserLib extends TikiDb_Bridge
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
-	
+
+	var $isHtmlPurifying = false;
+	var $isEditMode = false;
+
 	//NEED MIGRATION
 	//Below here methods that need updating to new WikiParser.php that were integrated from tikilib
 	//*
@@ -104,7 +107,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// Reverses parse_first.
 	//*
-	function replace_preparse(&$data, &$preparsed, &$noparsed, $editMode = false, $is_html = true)
+	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = true)
 	{
 		$data1 = $data;
 		$data2 = "";
@@ -130,10 +133,10 @@ class ParserLib extends TikiDb_Bridge
 			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array('&lt;', '&gt;'), $data);
 		}
 
-		if ($editMode == false) {
-			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~'), array('&amp;lt;', '&amp;gt;'), $data);
+		if ($this->isEditMode == true) {
+			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), array('&lt;', '&gt;', '&amp;'), $data);
 		} else {
-			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~'), array('&lt;', '&gt;'), $data);
+			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), array('&amp;lt;', '&amp;gt;', '&amp;amp;'), $data);
 		}
 	}
 
@@ -158,10 +161,10 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	input array
 	 */
 
-	function plugins_replace(&$data, $noparsed, $editMode = false) {
+	function plugins_replace(&$data, $noparsed) {
 		$preparsed = array();	// unused
 		$noparsed['data'] = str_replace('<x>', '', $noparsed['data']);
-		$this->replace_preparse($data, $preparsed, $noparsed, $editMode);
+		$this->replace_preparse($data, $preparsed, $noparsed);
 	}
 
 	//*
@@ -305,11 +308,12 @@ class ParserLib extends TikiDb_Bridge
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
-
-
 		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
-		$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
-		$data = str_replace(array( '&lt;', '&gt;') , array('~FAKE_LT~', '~FAKE_GT~' ), $data);
+		if ($this->isHtmlPurifying == true || $options['is_html'] != true) {
+			$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
+		}
+
+		$data = str_replace(array( '&lt;', '&gt;', '&amp;') , array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), $data);
 
 		$data = TikiLib::htmldecode($data);
 

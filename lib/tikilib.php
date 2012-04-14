@@ -3553,13 +3553,17 @@ class TikiLib extends TikiDb_Bridge
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
 			$parserlib = TikiLib::lib('parser');
+			$parserlib->isHtmlPurifying = true;
+			$parserlib->isEditMode = true;
 			$noparsed = array();
 			$parserlib->plugins_remove($data, $noparsed);
 
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$data = HTMLPurifier($data);
 
-			$parserlib->plugins_replace($data, $noparsed, true);
+			$parserlib->plugins_replace($data, $noparsed);
+			$parserlib->isHtmlPurifying = false;
+			$parserlib->isEditMode = false;
 		}
 		
 		$insertData = array(
@@ -3901,13 +3905,17 @@ class TikiLib extends TikiDb_Bridge
 
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
 			$parserlib = TikiLib::lib('parser');
+			$parserlib->isHtmlPurifying = true;
+			$parserlib->isEditMode = true;
 			$noparsed = array();
 			$parserlib->plugins_remove($edit_data, $noparsed);
 
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 
-			$parserlib->plugins_replace($edit_data, $noparsed, true);
+			$parserlib->plugins_replace($edit_data, $noparsed);
+			$parserlib->isHtmlPurifying = false;
+			$parserlib->isEditMode = false;
 		}
 
 		if ( is_null($saveLastModif) ) {

@@ -71,7 +71,9 @@ if (isset($jitRequest['edit'])) {
 
 		$data = TikiFilter::get('xss')->filter($data);
 
+		$parserlib->isEditMode = true;
 		$parserlib->plugins_replace($data, $noparsed, true);
+		$parserlib->isEditMode = false;
 		$_REQUEST['edit'] = $data;
 	} else {
 		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();
