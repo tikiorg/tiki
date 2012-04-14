@@ -48,10 +48,10 @@
 					{else}
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|escape}"/>
 					{/if}
-					<div class="description">{$def.description|escape}</div>
 					{if $def.count eq '*'}
 						<div class="description">{tr}Separate multiple with commas.{/tr}</div>
 					{/if}
+					<div class="description">{$def.description|escape}</div>
 				</label>
 			{/foreach}
 		</div>
