@@ -83,7 +83,7 @@ if (isset($_REQUEST["edit"])) {
 $actual = $dcslib->get_actual_content_date($_REQUEST["contentId"]);
 $smarty->assign('actual', $actual);
 
-// This script can receive the thresold
+// This script can receive the threshold
 // for the information as the number of
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today

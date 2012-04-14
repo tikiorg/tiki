@@ -22,7 +22,7 @@ if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$bannerlib->remove_banner($_REQUEST["remove"]);
 }
-// This script can receive the thresold
+// This script can receive the threshold
 // for the information as the number of
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today

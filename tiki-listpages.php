@@ -197,7 +197,7 @@ if (!empty($multiprint_pages)) {
 	// Display the template
 	$smarty->display('tiki-print_multi_pages.tpl');
 } else {
-	// This script can receive the thresold
+	// This script can receive the threshold
 	// for the information as the number of
 	// days to get in the log 1,3,4,etc
 	// it will default to 1 recovering information for today
