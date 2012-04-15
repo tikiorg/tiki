@@ -14,6 +14,10 @@ $access->check_permission('tiki_p_admin');
 $auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'categId');
 
 $categories = $categlib->getCategories(NULL, true, false);
+/* To renumber array keys from 0 since smarty 3 doesn't seem to like arrays
+ * that start with other keys in a section loop, which this variable is used in
+ */
+$categories = array_values($categories);
 $smarty->assign('categories', $categories);
 $smarty->assign('categId', isset($_REQUEST['categId']) ? $_REQUEST['categId'] : 0);
 
