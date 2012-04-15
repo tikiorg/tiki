@@ -9,11 +9,10 @@ function wikiplugin_hasbought_info()
 {
 	return array(
 		'name' => tra('Check if user has bought certain item or if it is in cart'),
-		'documentation' => tra('PluginTrackerpasscode'),
-		'description' => tra('Set'),
-		'prefs' => array('wikiplugin_hasticket', 'payment_feature'),
+		'documentation' => tra('PluginHasBought'),
+		'prefs' => array('wikiplugin_hasbought', 'payment_feature'),
 		'filter' => 'wikicontent',
-		'tags' => array( 'experimental' ),		
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'key' => array(
 				'required' => true,
