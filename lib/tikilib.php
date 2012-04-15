@@ -2972,7 +2972,8 @@ class TikiLib extends TikiDb_Bridge
 	// - category permission
 	// if O.K. this function shall replace similar constructs in list_pages and other functions above.
 	// $categperm is the category permission that should grant $perm. if none, pass 0
-	function user_has_perm_on_object($usertocheck,$object,$objtype,$perm1,$perm2,$perm3)
+	// If additional perm arguments are specified, the user must have all the perms to pass the test
+	function user_has_perm_on_object($usertocheck,$object,$objtype,$perm1,$perm2=null,$perm3=null)
 	{
 		global $user;
 		// Do not override perms for current users otherwise security tokens won't work
