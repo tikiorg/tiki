@@ -241,7 +241,6 @@
 							<option value="cc0000-ff9966" style="background-color:#ff9966;color:#cc0000" {if ($customColors) eq 'cc0000-ff9966'}selected{/if}>{tr}Red{/tr}</option>
 							<option value="996600-ffcc66" style="background-color:#ffcc66;color:#996600" {if ($customColors) eq '996600-ffcc66'}selected{/if}>{tr}Orange{/tr}</option>
 							<option value="666600-ffff00" style="background-color:#ffff00;color:#666600" {if ($customColors) eq '666600-ffff00'}selected{/if}>{tr}Yellow{/tr}</option>
-							<option value="0">{tr}Let me select my own colors{/tr}</option>
 						</select>
 					</td>
 				</tr>
