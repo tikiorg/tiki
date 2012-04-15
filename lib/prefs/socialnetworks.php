@@ -45,6 +45,7 @@ function prefs_socialnetworks_list()
 			'description' => tra('Allow users to login using Facebook'),
 			'keywords' => 'social networks',
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'socialnetworks_facebook_autocreateuser' => array(
 			'name' => tra('Auto-create Tiki user'),
