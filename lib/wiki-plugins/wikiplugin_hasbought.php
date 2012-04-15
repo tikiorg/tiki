@@ -8,7 +8,8 @@
 function wikiplugin_hasbought_info()
 {
 	return array(
-		'name' => tra('Check if user has bought certain item or if it is in cart'),
+		'name' => tra('Has Bought'),
+		'description' => tra('Check if user has bought certain item or if it is in cart'),
 		'documentation' => tra('PluginHasBought'),
 		'prefs' => array('wikiplugin_hasbought', 'payment_feature'),
 		'filter' => 'wikicontent',
