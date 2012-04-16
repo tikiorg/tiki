@@ -36,6 +36,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_content' => $typeFactory->wikitext($article['body']),
 			'article_topline' => $typeFactory->wikitext($article['topline']),
 			'article_subtitle' => $typeFactory->wikitext($article['subtitle']),
+			'article_author' => $typeFactory->plaintext($article['authorName']),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_read_article'),
 			'parent_object_type' => $typeFactory->identifier('topic'),
@@ -59,6 +60,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_content',
 			'article_topline',
 			'article_subtitle',
+			'article_author',
 
 			'view_permission',
 			'parent_view_permission',
@@ -76,6 +78,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_content' => false,
 			'article_topline' => false,
 			'article_subtitle' => false,
+			'article_author' => false,
 		);
 	}
 }
