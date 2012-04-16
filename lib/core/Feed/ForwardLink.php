@@ -178,10 +178,11 @@ JQ
 	static function editQuestionsInterface($page, $questions)
 	{
 		global $headerlib;
+		$perms = Perms::get();
 
 		//check if profile is created
 		$trackerId = TikiLib::lib('trk')->get_tracker_by_name('Wiki Attributes');
-		if ($trackerId < 1) {
+		if ($trackerId < 1 && $perms->admin == 'y') {
 			$headerlib->add_jq_onready(<<<JQ
 				var addQuestionsButton = $('<span class="button"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add ForwardLink Questions') + '</a></span>')
 					.appendTo('#page-bar');
