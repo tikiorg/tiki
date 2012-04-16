@@ -40,7 +40,7 @@ class ParserLib extends TikiDb_Bridge
 		$data = str_replace("tiki-index", "tiki-index_raw", $data);
 		return $data;
 	}
-	
+
 	//*
 	function add_pre_handler($name)
 	{
@@ -266,7 +266,7 @@ class ParserLib extends TikiDb_Bridge
 			 print "</pre>";
 		 */
 	}
-	
+
 	//*
 	function plugin_split_args( $params_string )
 	{
@@ -293,7 +293,7 @@ class ParserLib extends TikiDb_Bridge
 		}
 		return $plugins;
 	}
-	
+
 	// This recursive function handles pre- and no-parse sections and plugins
 	//*
 	function parse_first(&$data, &$preparsed, &$noparsed, $options=null, $real_start_diff='0')
@@ -320,14 +320,14 @@ class ParserLib extends TikiDb_Bridge
 			if ($options['parseimgonly'] && $this->getName() != 'img') {
 				continue;
 			}
-			
+
 			//note parent plugin in case of plugins nested in an include - to suppress plugin edit icons below
 			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
 			//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
-			$options['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ? 
+			$options['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ?
 				true : $options['suppress_icons'];
-			
+
 			$plugin_data = $match->getBody();
 			$arguments = $argumentParser->parse($match->getArguments());
 			$start = $match->getStart();
@@ -348,7 +348,7 @@ class ParserLib extends TikiDb_Bridge
 				$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
 				$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
 				$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
-							
+
 				if ( $status === true || ($tiki_p_plugin_preview == 'y' && $details && $options['preview_mode'] && $prefs['ajax_autosave'] === 'y') || (isset($options['noparseplugins']) && $options['noparseplugins']) ) {
 					if (isset($options['stripplugins']) && $options['stripplugins']) {
 						$ret = $plugin_data;
@@ -371,7 +371,7 @@ class ParserLib extends TikiDb_Bridge
 						$smarty->assign('plugin_index', $current_index);
 
 						$smarty->assign('plugin_status', $status);
-						
+
 						if (!$options['inside_pretty']) {
 							$smarty->assign('plugin_details', $details);
 						} else {
@@ -403,7 +403,7 @@ class ParserLib extends TikiDb_Bridge
 				include_once('lib/smarty_tiki/function.icon.php');
 				global $page;
 				$id = 'plugin-edit-' . $plugin_name . $current_index;
-		
+
 				$headerlib->add_js(
 								"\$(document).ready( function() {
 if ( \$('#$id') ) {
@@ -411,15 +411,15 @@ if ( \$('#$id') ) {
 	popup_plugin_form("
 								. json_encode('editwiki')
 								. ', '
-								. json_encode($plugin_name) 
-								. ', ' 
-								. json_encode($current_index) 
-								. ', ' 
-								. json_encode($page) 
-								. ', ' 
-								. json_encode($arguments) 
-								. ', ' 
-								. json_encode($plugin_data)
+								. json_encode($plugin_name)
+								. ', '
+								. json_encode($current_index)
+								. ', '
+								. json_encode($page)
+								. ', '
+								. json_encode($arguments)
+								. ', '
+								. json_encode(str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $plugin_data))
 								. ", event.target);
 } );
 }
@@ -480,7 +480,7 @@ if ( \$('#$id') ) {
 			}
 		}
 	}
-	
+
 	//*
 	function plugin_get_list( $includeReal = true, $includeAlias = true )
 	{
@@ -510,10 +510,10 @@ if ( \$('#$id') ) {
 			$plugins = array();
 
 		sort(array_filter($plugins));
-		
+
 		return $plugins;
 	}
-	
+
 	//*
 	function plugin_exists( $name, $include = false )
 	{
@@ -534,7 +534,7 @@ if ( \$('#$id') ) {
 		}
 		return false;
 	}
-	
+
 	//*
 	function plugin_info( $name )
 	{
@@ -573,13 +573,13 @@ if ( \$('#$id') ) {
 
 		return @unserialize($prefs[$prefName]);
 	}
-	
+
 	//*
 	function plugin_alias_store( $name, $data )
 	{
 		/*
 			Input data structure:
-			
+
 			implementation: other plugin_name
 			description:
 				** Equivalent of plugin info function here **
@@ -614,12 +614,12 @@ if ( \$('#$id') ) {
 		$prefName = "pluginalias_$name";
 		$tikilib = TikiLib::lib('tiki');
 		$tikilib->set_preference($prefName, serialize($data));
-		
+
 		global $prefs;
 		$list = array();
 		if ( isset($prefs['pluginaliaslist']) )
 			$list = unserialize($prefs['pluginaliaslist']);
-		
+
 		if ( ! in_array($name, $list) ) {
 			$list[] = $name;
 			$tikilib->set_preference('pluginaliaslist', serialize($list));
@@ -668,7 +668,7 @@ if ( \$('#$id') ) {
 			foreach ( $meta['prefs'] as $pref )
 				if ( $prefs[$pref] != 'y' )
 					$missing[] = $pref;
-		
+
 		if ( count($missing) > 0 ) {
 			$output = WikiParser_PluginOutput::disabled($name, $missing);
 			return false;
@@ -681,24 +681,24 @@ if ( \$('#$id') ) {
 	function plugin_is_inline( $name )
 	{
 		if ( ! $meta = $this->plugin_info($name) )
-			return true; // Legacy plugins always inline 
+			return true; // Legacy plugins always inline
 
 		global $prefs;
 
 		$inline = false;
-		if ( isset( $meta['inline'] ) && $meta['inline'] ) 
-			return true; 
+		if ( isset( $meta['inline'] ) && $meta['inline'] )
+			return true;
 
 		$inline_pref = 'wikiplugininline_' .  $name;
 		if ( isset( $prefs[ $inline_pref ] ) && $prefs[ $inline_pref ] == 'y' )
-			return true;	
+			return true;
 
 		return false;
 	}
 
 	/**
 	 * Check if possible to execute a plugin
-	 * 
+	 *
 	 * @param string $name
 	 * @param string $data
 	 * @param array $args
@@ -727,10 +727,10 @@ if ( \$('#$id') ) {
 			return 'rejected';
 		else {
 			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $user;
-			if ( 
+			if (
 				isset($_SERVER['REQUEST_METHOD'])
 				&& $_SERVER['REQUEST_METHOD'] == 'POST'
-				&& isset( $_POST['plugin_fingerprint'] ) 
+				&& isset( $_POST['plugin_fingerprint'] )
 				&& $_POST['plugin_fingerprint'] == $fingerprint
 			) {
 				if ( $tiki_p_plugin_approve == 'y' ) {
@@ -747,9 +747,9 @@ if ( \$('#$id') ) {
 						$tikilib->invalidate_cache($page);
 						return 'rejected';
 					}
-				} 
+				}
 
-				if ( $tiki_p_plugin_preview == 'y' 
+				if ( $tiki_p_plugin_preview == 'y'
 					&& isset( $_POST['plugin_preview'] ) ) {
 					return true;
 				}
@@ -871,15 +871,15 @@ if ( \$('#$id') ) {
 
 			// Remove arguments marked as safe from the fingerprint
 			foreach ( $meta['params'] as $key => $info )
-				if ( isset( $validateArgs[$key] ) 
-					&& isset( $info['safe'] ) 
+				if ( isset( $validateArgs[$key] )
+					&& isset( $info['safe'] )
 					&& $info['safe']
 				)
 					unset($validateArgs[$key]);
 
 			// Parameter order needs to be stable
 			ksort($validateArgs);
-			
+
 			if (empty($validateArgs)) {
 				$validateArgs = array( '' => '' );	// maintain compatibility with pre-Tiki 7 fingerprints
 			}
@@ -900,6 +900,9 @@ if ( \$('#$id') ) {
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() )
 	{
 		global $prefs;
+
+		$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
+
 		$outputFormat = 'wiki';
 		if ( isset($parseOptions['context_format']) ) {
 			$outputFormat = $parseOptions['context_format'];
@@ -917,9 +920,9 @@ if ( \$('#$id') ) {
 			$trklib = TikiLib::lib('trk');
 			$trklib->replace_pretty_tracker_refs($args);
 		}
-		
+
 		$func_name = 'wikiplugin_' . $name;
-		
+
 		if ( ! $validationPerformed ) {
 			$this->plugin_apply_filters($name, $data, $args, $parseOptions);
 		}
@@ -943,7 +946,7 @@ if ( \$('#$id') ) {
 			return $this->plugin_execute($name, $data, $args, $offset, $validationPerformed, $parseOptions);
 		}
 	}
-	
+
 	//*
 	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() )
 	{
@@ -953,7 +956,7 @@ if ( \$('#$id') ) {
 			foreach ( $args as $argKey => $argValue ) {
 				if (is_array($argValue)) {
 					if (isset($info['params'][$argKey]['separator'])) {
-						$sep = $info['params'][$argKey]['separator']; 
+						$sep = $info['params'][$argKey]['separator'];
 					} else {
 						 $sep = ',';
 					}
@@ -1004,7 +1007,7 @@ if ( \$('#$id') ) {
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<br />', '<p>', '</p>', "\t"), '', $data);
 		}
-		
+
 		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
 		} else {
@@ -1022,7 +1025,7 @@ if ( \$('#$id') ) {
 				' body="' . htmlentities($data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
 				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
-		
+
 		return 	$ret;
 	}
 
@@ -1030,7 +1033,7 @@ if ( \$('#$id') ) {
 	private function plugin_apply_filters( $name, & $data, & $args, $parseOptions )
 	{
 		global $tikilib;
-		
+
 		$info = $this->plugin_info($name);
 		$default = TikiFilter::get(isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
 
@@ -1069,7 +1072,7 @@ if ( \$('#$id') ) {
 
 				if ( isset($paramInfo['separator']) ) {
 					$vals = array();
-					
+
 					$vals = $tikilib->array_apply_filter($tikilib->multi_explode($paramInfo['separator'], $argValue), $filter);
 
 					$argValue = array_values($vals);
@@ -1079,7 +1082,7 @@ if ( \$('#$id') ) {
 			}
 		}
 	}
-	
+
 	//*
 	private function convert_plugin_output( $output, $from, $to, $parseOptions )
 	{
@@ -1206,7 +1209,7 @@ if ( \$('#$id') ) {
 			$attrib .= 'class="wiki external" ';
 			include_once('lib/smarty_tiki/function.icon.php');
 			$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
-									
+
 		} else {
 			$attrib .= 'class="wiki" ';
 			$ext_icon = "";
@@ -1447,7 +1450,7 @@ if ( \$('#$id') ) {
 		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
 		// must be done before color as we can have ~hs~~hs
 		// jb 9.0 html entity fix - excluded not $options['is_html'] pages
-		if (!$simple_wiki && !$options['is_html']) {
+		if (!$simple_wiki) {
 			$this->parse_htmlchar($data, $options);
 		}
 
