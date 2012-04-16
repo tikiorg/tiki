@@ -78,4 +78,9 @@ if (isset($jitRequest['edit'])) {
 	} else {
 		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();
 	}
+
+	//html is stored encoded in wysiwyg
+	if (isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] == 'y') {
+		$_REQUEST['edit'] = html_entity_decode($_REQUEST['edit'], ENT_QUOTES, 'UTF-8');
+	}
 }

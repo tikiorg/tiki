@@ -81,11 +81,13 @@ class ParserLib extends TikiDb_Bridge
 	// This function handles wiki codes for those special HTML characters
 	// that textarea won't leave alone.
 	//*
-	function parse_htmlchar(&$data)
+	function parse_htmlchar(&$data, $options = array())
 	{
 		// cleaning some user input
-//		$data = preg_replace('/&(?![a-z]+;|#\d+;)/i', '&amp;', $data);	// pre Tiki 9.x - only "&" chars on their own got replaced
-		$data = str_replace('&', '&amp;', $data);						// Tiki 9.0 -replace all &'s with &amp; so html entities show up on the page in non-html pages
+		// ckeditor parses several times and messes things up, we should only let it parse once
+		if ($this->isEditMode != true && !$options['ck_editor']) {
+			$data = str_replace('&', '&amp;', $data);
+		}
 
 		// oft-used characters (case insensitive)
 		$data = preg_replace("/~bs~/i", "&#92;", $data);
@@ -107,7 +109,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// Reverses parse_first.
 	//*
-	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = true)
+	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = true, $options = array())
 	{
 		$data1 = $data;
 		$data2 = "";
@@ -125,18 +127,12 @@ class ParserLib extends TikiDb_Bridge
 			$data2 = $data;
 		}
 
-		//rp 9.0 html entity fix - END restore html chars that were not distorted by parse_htmlchar replacement of the ampersand
-		if ($is_html == true ) {
+		//rp 9.0 html entity
+		if ($is_html == true || $options['ck_editor']) {
 			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
 		} else {
 			// Decode partially, leave the < and > as HTML entities
 			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array('&lt;', '&gt;'), $data);
-		}
-
-		if ($this->isEditMode == true) {
-			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), array('&lt;', '&gt;', '&amp;'), $data);
-		} else {
-			$data = str_replace(array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), array('&amp;lt;', '&amp;gt;', '&amp;amp;'), $data);
 		}
 	}
 
@@ -308,14 +304,10 @@ class ParserLib extends TikiDb_Bridge
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
-		//rp 9.0 html entity fix - START temporarily hide html chars so they don't get messed up with parse_htmlchar replacement of the ampersand
-		if ($this->isHtmlPurifying == true || $options['is_html'] != true) {
+		//rp 9.0 html entity
+		if (($this->isHtmlPurifying == true || $options['is_html'] != true) && !$options['ck_editor']) {
 			$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
 		}
-
-		$data = str_replace(array( '&lt;', '&gt;', '&amp;') , array('~FAKE_LT~', '~FAKE_GT~', '~FAKE_AMP~'), $data);
-
-		$data = TikiLib::htmldecode($data);
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
@@ -1379,14 +1371,14 @@ if ( \$('#$id') ) {
 		$options['min_one_paragraph'] = isset($options['min_one_paragraph']) ? $options['min_one_paragraph'] : false;
 
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
-		
+
 		$old_wysiwyg_parsing = null;
 		if ($options['ck_editor']) {
 			$headerlib = TikiLib::lib('header');
 			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
 		}
-		
+
 		//The following will stop and return based off new parser
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
 			//Testing new parser ;)
@@ -1456,7 +1448,7 @@ if ( \$('#$id') ) {
 		// must be done before color as we can have ~hs~~hs
 		// jb 9.0 html entity fix - excluded not $options['is_html'] pages
 		if (!$simple_wiki && !$options['is_html']) {
-			$this->parse_htmlchar($data);
+			$this->parse_htmlchar($data, $options);
 		}
 
 		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
@@ -1543,7 +1535,7 @@ if ( \$('#$id') ) {
 		}
 
 		// Put removed strings back.
-		$this->replace_preparse($data, $preparsed, $noparsed, false, $options['is_html']);
+		$this->replace_preparse($data, $preparsed, $noparsed, false, $options);
 
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {
