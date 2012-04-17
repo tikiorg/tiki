@@ -2445,8 +2445,8 @@ if ( \$('#$id') ) {
 								&& strpos($line, "-->") !== (strlen($line) - 3)
 								&& $options['process_wiki_paragraphs']) {
 							 	
-							$tline = trim(str_replace('&nbsp;', '', $this->unprotectSpecialChars($line)));
-							
+							$tline = trim(str_replace('&nbsp;', '', $this->unprotectSpecialChars($line, true)));
+
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
 								if (count($lines) > 1 || $options['min_one_paragraph']) {	// don't apply wiki para if only single line so you can have inline includes
 									$contains_block = $this->contains_html_block($tline);
