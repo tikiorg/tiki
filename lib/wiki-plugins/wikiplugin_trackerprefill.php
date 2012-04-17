@@ -97,6 +97,45 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Content that should be used to prefill the field.'),
 				'default' => '',
 			),
+			'field6' => array(
+				'required' => false,
+				'name' => tra('Field 6'),
+				'description' => tra('Field ID for the sixth field'),
+				'filter' => 'digits',
+				'default' => '',
+			),
+			'value6' => array(
+				'required' => false,
+				'name' => tra('Value 6'),
+				'description' => tra('Content that should be used to prefill the field.'),
+				'default' => '',
+			),
+			'field7' => array(
+				'required' => false,
+				'name' => tra('Field 7'),
+				'description' => tra('Field ID for the seventh field'),
+				'filter' => 'digits',
+				'default' => '',
+			),
+			'value7' => array(
+				'required' => false,
+				'name' => tra('Value 7'),
+				'description' => tra('Content that should be used to prefill the field.'),
+				'default' => '',
+			),
+			'field8' => array(
+				'required' => false,
+				'name' => tra('Field 8'),
+				'description' => tra('Field ID for the eighth field'),
+				'filter' => 'digits',
+				'default' => '',
+			),
+			'value8' => array(
+				'required' => false,
+				'name' => tra('Value 8'),
+				'description' => tra('Content that should be used to prefill the field.'),
+				'default' => '',
+			),			
 		),
 	);
 }

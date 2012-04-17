@@ -14,6 +14,7 @@
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_wysiwyg visible="always"}
+		{preference name=wikiplugin_wysiwyg}
 	</fieldset>
 
 	<fieldset class="admin">

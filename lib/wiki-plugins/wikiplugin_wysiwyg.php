@@ -15,7 +15,7 @@ function wikiplugin_wysiwyg_info()
 		'params' => array(),
 		'icon' => 'img/icons/mime/default.png',
 		'tags' => array( 'experimental' ),
-		'filter' => 'purifier',			/* N.B. uses htmlpurifier to enure only "clean" html gets in */
+		'filter' => 'purifier',			/* N.B. uses htmlpurifier to ensure only "clean" html gets in */
 		'body' => tra('Content'),
 		'extraparams' => true,
 		'params' => array(

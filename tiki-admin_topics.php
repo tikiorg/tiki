@@ -47,6 +47,10 @@ if (isset($_REQUEST["deactivate"])) {
 	$artlib->deactivate_topic($_REQUEST["deactivate"]);
 }
 $topics = $artlib->list_topics();
+/* To renumber array keys from 0 since smarty 3 doesn't seem to like arrays
+ * that start with other keys in a section loop, which this variable is used in
+ */
+$topics = array_values($topics);
 $temp_max = count($topics);
 for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($topics[$i]["topicId"], 'topic')) {
