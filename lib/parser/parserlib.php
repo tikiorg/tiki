@@ -2136,7 +2136,7 @@ if ( \$('#$id') ) {
 
 			// check if we are inside a ~hc~ block and, if so, ignore
 			// monospaced and do not insert <br />
-			$lineInLowerCase = $this->unprotectSpecialChars(strtolower($line), true);
+			$lineInLowerCase = strtolower($this->unprotectSpecialChars($line, true));
 
 			$inComment += substr_count($lineInLowerCase, "<!--");
 			$inComment -= substr_count($lineInLowerCase, "-->");
@@ -2148,6 +2148,7 @@ if ( \$('#$id') ) {
 
 			// check if we are inside a table, if so, ignore monospaced and do
 			// not insert <br />
+
 			$inTable += substr_count($lineInLowerCase, "<table");
 			$inTable -= substr_count($lineInLowerCase, "</table");
 
