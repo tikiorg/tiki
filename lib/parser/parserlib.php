@@ -30,6 +30,7 @@ class ParserLib extends TikiDb_Bridge
 
 	var $isHtmlPurifying = false;
 	var $isEditMode = false;
+	var $makeTocDone = false;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -2012,6 +2013,12 @@ if ( \$('#$id') ) {
 
 		global $tikilib, $prefs;
 
+		if ($this->makeTocDone == true) {
+			return;
+		}
+
+		$this->makeTocDone = true;
+
 		if ( $options['ck_editor'] ) {
 			$need_maketoc = false ;
 		} else {
@@ -2077,6 +2084,7 @@ if ( \$('#$id') ) {
 		// loop: process all lines
 		$in_paragraph = 0;
 		$in_empty_paragraph = 0;
+
 		foreach ($lines as $line) {
 			$current_title_num = '';
 			$numbering_remove = 0;
@@ -2501,10 +2509,12 @@ if ( \$('#$id') ) {
 			}
 			$data .= $line . "\n";
 		}
+
 		if ($options['is_html']) {
 			$count = 1;
-			while ($count == 1)
+			while ($count == 1) {
 				$data = preg_replace("#<p>([^(</p>)]*)<p>([^(</p>)]*)</p>#uims", "<p>$1$2", $data, 1, $count);
+			}
 		}
 
 		// Close open paragraph, lists, and div's
