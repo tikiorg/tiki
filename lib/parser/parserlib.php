@@ -2654,7 +2654,7 @@ if ( \$('#$id') ) {
 							}
 						}
 						//echo $maketoc;die;
-						//$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
+						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 							$maketoc .= '<!--toc-->';
