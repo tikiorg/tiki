@@ -933,7 +933,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() )
 	{
-		global $prefs;
+		global $prefs, $killtoc;
 
 		$data = $this->unprotectSpecialChars($data, true);//We want to give plugins original
 
@@ -968,7 +968,19 @@ if ( \$('#$id') ) {
 				$pluginFormat = $info['format'];
 			}
 
+			$killtoc = false;
+
 			$output = $func_name($data, $args, $offset, $parseOptions);
+
+			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
+			if ($killtoc == true) {
+				while ( ($maketoc_start = strpos($output, "{maketoc")) !== false ) {
+					$maketoc_end = strpos($output, "}");
+					$output = substr_replace($output, "", $maketoc_start, $maketoc_end - $maketoc_start + 1);
+				}
+			}
+			
+			$killtoc = false;
 
 			$plugin_result =  $this->convert_plugin_output($output, $pluginFormat, $outputFormat, $parseOptions);
 			if (isset($parseOptions['ck_editor']) && $parseOptions['ck_editor']) {
@@ -1581,6 +1593,7 @@ if ( \$('#$id') ) {
 		if ($old_wysiwyg_parsing !== null) {
 			$headerlib->wysiwyg_parsing = $old_wysiwyg_parsing;
 		}
+
 		return $data;
 	}
 
@@ -2010,6 +2023,8 @@ if ( \$('#$id') ) {
 	{
 
 		global $tikilib, $prefs;
+
+		$this->makeTocCount++;
 
 		if ( $options['ck_editor'] ) {
 			$need_maketoc = false ;
