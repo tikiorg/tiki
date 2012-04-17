@@ -33,6 +33,7 @@ class ParserLib extends TikiDb_Bridge
 	var $makeTocRuns = 0;
 	var $makeTocMaxRuns = 10;
 
+
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
 		'REAL_LT' => array(
@@ -46,7 +47,7 @@ class ParserLib extends TikiDb_Bridge
 		'REAL_NBSP' => array(
 			'html'=>		'&nbsp;',
 			'nonHtml'=>		'&nbsp;'
-		)
+		),
 	);
 
 	//*
@@ -139,7 +140,7 @@ class ParserLib extends TikiDb_Bridge
 	// This function removed the protection of html entities so that they are rendered as expected by the viewer
 	function unprotectSpecialChars($data, $is_html = false, $options = array())
 	{
-		if ($is_html == true || $options['ck_editor']) {
+		if ($is_html == true || (isset($options['ck_editor']) && $options['ck_editor'])) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace("~" . $key . "~", $specialChar['html'], $data);
 			}
