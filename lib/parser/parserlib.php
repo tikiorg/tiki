@@ -30,7 +30,8 @@ class ParserLib extends TikiDb_Bridge
 
 	var $isHtmlPurifying = false;
 	var $isEditMode = false;
-	var $makeTocDone = false;
+	var $makeTocRuns = 0;
+	var $makeTocMaxRuns = 10;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -2013,11 +2014,11 @@ if ( \$('#$id') ) {
 
 		global $tikilib, $prefs;
 
-		if ($this->makeTocDone == true) {
+		if ($this->makeTocRuns >= $this->makeTocMaxRuns) {
 			return;
 		}
 
-		$this->makeTocDone = true;
+		$this->makeTocRuns++;
 
 		if ( $options['ck_editor'] ) {
 			$need_maketoc = false ;
