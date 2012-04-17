@@ -31,8 +31,22 @@ class ParserLib extends TikiDb_Bridge
 	var $isHtmlPurifying = false;
 	var $isEditMode = false;
 
-	//NEED MIGRATION
-	//Below here methods that need updating to new WikiParser.php that were integrated from tikilib
+	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
+	var $specialChars = array(
+		'REAL_LT' => array(
+			'html'=>		'<',
+			'nonHtml'=>		'&lt;'
+		),
+		'REAL_GT' => array(
+			'html'=>		'>',
+			'nonHtml'=>		'&gt;'
+		),
+		'REAL_NBSP' => array(
+			'html'=>		'&nbsp;',
+			'nonHtml'=>		'&nbsp;'
+		)
+	);
+
 	//*
 	function parse_data_raw($data)
 	{
@@ -107,6 +121,35 @@ class ParserLib extends TikiDb_Bridge
 		$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
 	}
 
+	// This function handles the protection of html entities so that they are not mangled when
+	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
+	function protectSpecialChars($data, $is_html = false, $options = array())
+	{
+		if (($this->isHtmlPurifying == true || $options['is_html'] != true) && !$options['ck_editor']) {
+			foreach($this->specialChars as $key => $specialChar) {
+				$data = str_replace($specialChar['html'], "~" . $key . "~", $data);
+			}
+		}
+
+		return $data;
+	}
+
+	// This function removed the protection of html entities so that they are rendered as expected by the viewer
+	function unprotectSpecialChars($data, $is_html = false, $options = array())
+	{
+		if ($is_html == true || $options['ck_editor']) {
+			foreach($this->specialChars as $key => $specialChar) {
+				$data = str_replace("~" . $key . "~", $specialChar['html'], $data);
+			}
+		} else {
+			foreach($this->specialChars as $key => $specialChar) {
+				$data = str_replace("~" . $key . "~", $specialChar['nonHtml'], $data);
+			}
+		}
+
+		return $data;
+	}
+
 	// Reverses parse_first.
 	//*
 	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = true, $options = array())
@@ -127,13 +170,7 @@ class ParserLib extends TikiDb_Bridge
 			$data2 = $data;
 		}
 
-		//rp 9.0 html entity
-		if ($is_html == true || $options['ck_editor']) {
-			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
-		} else {
-			// Decode partially, leave the < and > as HTML entities
-			$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array('&lt;', '&gt;'), $data);
-		}
+		$data = $this->unprotectSpecialChars($data, $is_html, $options);
 	}
 
 	/**
@@ -304,10 +341,8 @@ class ParserLib extends TikiDb_Bridge
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
 
-		//rp 9.0 html entity
-		if (($this->isHtmlPurifying == true || $options['is_html'] != true) && !$options['ck_editor']) {
-			$data = str_replace(array("<", ">"), array("~REAL_LT~", "~REAL_GT~"), $data);
-		}
+		$is_html = (isset($options['is_html']) ? $options['is_html'] : false);
+		$data = $this->protectSpecialChars($data, $is_html, $options);
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
@@ -419,7 +454,7 @@ if ( \$('#$id') ) {
 								. ', '
 								. json_encode($arguments)
 								. ', '
-								. json_encode(str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $plugin_data))
+								. json_encode($this->unprotectSpecialChars($plugin_data, true)) //we restore it back to html here so that it can be edited, we want no modification, ie, it is brought back to html
 								. ", event.target);
 } );
 }
@@ -901,7 +936,7 @@ if ( \$('#$id') ) {
 	{
 		global $prefs;
 
-		$data = str_replace(array("~REAL_LT~", "~REAL_GT~"), array("<", ">"), $data);
+		$data = $this->unprotectSpecialChars($data, true);//We want to give plugins original
 
 		$outputFormat = 'wiki';
 		if ( isset($parseOptions['context_format']) ) {
