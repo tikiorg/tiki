@@ -22,7 +22,7 @@ if ($prefs['ajax_xajax'] == "y") {
 
 $auto_query_args = array('calitemId');
 
-$daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
+$daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
 $daysnames_abr = array("Su","Mo","Tu","We","Th","Fr","Sa");
 $monthnames = array("","January","February","March","April","May","June","July","August","September","October","November","December");
 $smarty->assign('daysnames',$daysnames);
