@@ -45,6 +45,10 @@ class ParserLib extends TikiDb_Bridge
 			'html'=>		'&nbsp;',
 			'nonHtml'=>		'&nbsp;'
 		),
+		'REAL_AMP' => array( //amp is added becuase if we don't add it &amp; becomes &amp;amp;
+			'html'=>		'&amp;',
+			'nonHtml'=>		'&amp;'
+		)
 	);
 
 	//*
