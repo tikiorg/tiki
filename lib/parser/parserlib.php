@@ -2015,6 +2015,7 @@ if ( \$('#$id') ) {
 		global $tikilib, $prefs;
 
 		if ($this->makeTocRuns >= $this->makeTocMaxRuns) {
+			throw new Exception("die");
 			return;
 		}
 
@@ -2145,39 +2146,29 @@ if ( \$('#$id') ) {
 
 			// check if we are inside a ~hc~ block and, if so, ignore
 			// monospaced and do not insert <br />
-			$lineInLowerCase = strtolower($line);
+			$lineInLowerCase = $this->unprotectSpecialChars(strtolower($line), true);
 
 			$inComment += substr_count($lineInLowerCase, "<!--");
 			$inComment -= substr_count($lineInLowerCase, "-->");
-			$inComment += substr_count($lineInLowerCase, "~real_lt~!--");
-			$inComment -= substr_count($lineInLowerCase, "--~real_gt~");
 
 			// check if we are inside a ~pre~ block and, if so, ignore
 			// monospaced and do not insert <br />
 			$inPre += substr_count($lineInLowerCase, "<pre");
 			$inPre -= substr_count($lineInLowerCase, "</pre");
-			$inPre += substr_count($lineInLowerCase, "~real_lt~~pre");
-			$inPre -= substr_count($lineInLowerCase, "~real_lt~/pre");
 
 			// check if we are inside a table, if so, ignore monospaced and do
 			// not insert <br />
 			$inTable += substr_count($lineInLowerCase, "<table");
 			$inTable -= substr_count($lineInLowerCase, "</table");
-			$inTable += substr_count($lineInLowerCase, "~real_lt~table");
-			$inTable -= substr_count($lineInLowerCase, "~real_lt~/table");
 
 			// check if we are inside an ul TOC list, if so, ignore monospaced and do
 			// not insert <br />
 			$inTOC += substr_count($lineInLowerCase, "<ul class=\"toc");
 			$inTOC -= substr_count($lineInLowerCase, "</ul><!--toc-->");
-			$inTOC += substr_count($lineInLowerCase, "~real_lt~ul class=\"toc");
-			$inTOC -= substr_count($lineInLowerCase, "~real_lt~/ul~real_gt~~real_lt~!--toc--~real_gt~");
 
 			// check if we are inside a script not insert <br />
 			$inScript += substr_count($lineInLowerCase, "<script ");
 			$inScript -= substr_count($lineInLowerCase, "</script>");
-			$inScript += substr_count($lineInLowerCase, "~real_lt~script ");
-			$inScript -= substr_count($lineInLowerCase, "~real_lt~/script~real_gt~");
 
 			// If the first character is ' ' and we are not in pre then we are in pre
 			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 && !$options['is_html']) {
@@ -2662,7 +2653,8 @@ if ( \$('#$id') ) {
 									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
-						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
+						//echo $maketoc;die;
+						//$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 							$maketoc .= '<!--toc-->';
