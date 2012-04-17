@@ -551,6 +551,8 @@ class TikiSheet
 		$this->id = $handler->id;
 		$this->type = $handler->type;
 		$this->cssName = $handler->cssName;
+		$this->rowCount = (isset($handler->rowCount) ? $handler->rowCount : $this->rowCount);
+		$this->columnCount = (isset($handler->columnCount) ? $handler->columnCount : $this->columnCount);
 
 		$this->dataGrid = array();
 		$this->calcGrid = array();
@@ -1320,7 +1322,9 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 {
 	var $id;
 	var $readDate;
-	
+	var $rowCount;
+	var $columnCount;
+
 	/** Constructor {{{2
 	 * Assigns a sheet ID to the handler.
 	 * @param $id The ID of the sheet in the database.
