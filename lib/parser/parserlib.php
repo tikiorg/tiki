@@ -30,9 +30,6 @@ class ParserLib extends TikiDb_Bridge
 
 	var $isHtmlPurifying = false;
 	var $isEditMode = false;
-	var $makeTocRuns = 0;
-	var $makeTocMaxRuns = 10;
-
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -2014,13 +2011,6 @@ if ( \$('#$id') ) {
 
 		global $tikilib, $prefs;
 
-		if ($this->makeTocRuns >= $this->makeTocMaxRuns) {
-			throw new Exception("die");
-			return;
-		}
-
-		$this->makeTocRuns++;
-
 		if ( $options['ck_editor'] ) {
 			$need_maketoc = false ;
 		} else {
@@ -2706,14 +2696,14 @@ if ( \$('#$id') ) {
 	{
 		// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
 		$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|noscript|ol|p|pre|table|ul)/i';
-		return  (preg_match($block_detect_regexp, $inHtml) > 0);
+		return  (preg_match($block_detect_regexp, $this->unprotectSpecialChars($inHtml, true)) > 0);
 	}
 
 	//*
 	function contains_html_br($inHtml)
 	{
 		$block_detect_regexp = '/<(?:br)/i';
-		return  (preg_match($block_detect_regexp, $inHtml) > 0);
+		return  (preg_match($block_detect_regexp, $this->unprotectSpecialChars($inHtml, true)) > 0);
 	}
 
 	//*
