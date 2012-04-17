@@ -216,7 +216,7 @@ class ParserLib extends TikiDb_Bridge
 		$plugins = array();
 		preg_match_all($matcher, $data, $tmp, PREG_SET_ORDER);
 		foreach ( $tmp as $p ) {
-			if ( in_array(strtolower($p[0]), $matcher_fake)
+			if ( in_array(TikiLib::strtolower($p[0]), $matcher_fake)
 				|| ( isset($p[1]) && ( in_array($p[1], $matcher_fake) || $this->plugin_exists($p[1]) ) )
 				|| ( isset($p[2]) && ( in_array($p[2], $matcher_fake) || $this->plugin_exists($p[2]) ) )
 			) {
@@ -325,7 +325,7 @@ class ParserLib extends TikiDb_Bridge
 			if (empty($plugin)) {
 				break;
 			}
-			if (empty($only) || in_array($plugin[1], $only) || in_array(strtoupper($plugin[1]), $only) || in_array(strtolower($plugin[1]), $only)) {
+			if (empty($only) || in_array($plugin[1], $only) || in_array(TikiLib::strtoupper($plugin[1]), $only) || in_array(TikiLib::strtolower($plugin[1]), $only)) {
 				$plugins[] = $plugin;
 			}
 			$pos = strpos($data, $plugin[0]);
@@ -556,7 +556,7 @@ if ( \$('#$id') ) {
 	function plugin_exists( $name, $include = false )
 	{
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
-		$php_name .= strtolower($name) . '.php';
+		$php_name .= TikiLib::strtolower($name) . '.php';
 
 		$exists = file_exists($php_name);
 
@@ -603,7 +603,7 @@ if ( \$('#$id') ) {
 		global $prefs;
 		if (empty($name))
 			return false;
-		$name = strtolower($name);
+		$name = TikiLib::strtolower($name);
 		$prefName = "pluginalias_$name";
 
 		if ( ! isset( $prefs[$prefName] ) )
@@ -646,7 +646,7 @@ if ( \$('#$id') ) {
 			return;
 		}
 
-		$name = strtolower($name);
+		$name = TikiLib::strtolower($name);
 		$data['plugin_name'] = $name;
 
 		$prefName = "pluginalias_$name";
@@ -674,7 +674,7 @@ if ( \$('#$id') ) {
 	function plugin_alias_delete( $name )
 	{
 		$tikilib = TikiLib::lib('tiki');
-		$name = strtolower($name);
+		$name = TikiLib::strtolower($name);
 		$prefName = "pluginalias_$name";
 
 		// Remove from list
@@ -1000,7 +1000,7 @@ if ( \$('#$id') ) {
 	//*
 	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() )
 	{
-		$ck_editor_plugin = '{' . (empty($data) ? $name : strtoupper($name) . '(') . ' ';
+		$ck_editor_plugin = '{' . (empty($data) ? $name : TikiLib::strtoupper($name) . '(') . ' ';
 		$arg_str = '';		// not using http_build_query() as it converts spaces into +
 		if (!empty($args)) {
 			foreach ( $args as $argKey => $argValue ) {
@@ -1022,7 +1022,7 @@ if ( \$('#$id') ) {
 			$ck_editor_plugin = substr($ck_editor_plugin, 0, -1);
 		}
 		if (!empty($data)) {
-			$ck_editor_plugin .= ')}' . $data . '{' . strtoupper($name) . '}';
+			$ck_editor_plugin .= ')}' . $data . '{' . TikiLib::strtoupper($name) . '}';
 		} else {
 			$ck_editor_plugin .= '}';
 		}
@@ -2155,7 +2155,7 @@ if ( \$('#$id') ) {
 
 			// check if we are inside a ~hc~ block and, if so, ignore
 			// monospaced and do not insert <br />
-			$lineInLowerCase = strtolower($this->unprotectSpecialChars($line, true));
+			$lineInLowerCase = TikiLib::strtolower($this->unprotectSpecialChars($line, true));
 
 			$inComment += substr_count($lineInLowerCase, "<!--");
 			$inComment -= substr_count($lineInLowerCase, "-->");
@@ -2562,7 +2562,7 @@ if ( \$('#$id') ) {
 				$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
 
 				// Handle old type definition for type "box" (and preserve environment for the title also)
-				if ( $maketoc_length > 12 && strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
+				if ( $maketoc_length > 12 && TikiLib::strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
 					$maketoc_string = "{maketoc type=box showhide=y title='".tra('index', $options['language'], true).'"'.substr($maketoc_string, 12);
 				}
 
@@ -2590,7 +2590,7 @@ if ( \$('#$id') ) {
 					if ( isset($maketoc_regs[1]) ) {
 						$nb_args = count($maketoc_regs[1]);
 						for ( $a = 0; $a < $nb_args ; $a++ ) {
-							$maketoc_args[strtolower($maketoc_regs[1][$a])] = trim($maketoc_regs[2][$a], '"');
+							$maketoc_args[TikiLib::strtolower($maketoc_regs[1][$a])] = trim($maketoc_regs[2][$a], '"');
 						}
 					}
 
@@ -2802,7 +2802,7 @@ if ( \$('#$id') ) {
 			$prefixes = explode(',', $prefs["wiki_prefixalias_tokens"]);
 			foreach ($prefixes as $p) {
 				$p = trim($p);
-				if (strlen($p) > 0 && strtolower(substr($pageName, 0, strlen($p))) == strtolower($p)) {
+				if (strlen($p) > 0 && TikiLib::strtolower(substr($pageName, 0, strlen($p))) == TikiLib::strtolower($p)) {
 					$toPage = $p;
 					$tokens = 'prefixalias';
 				}
