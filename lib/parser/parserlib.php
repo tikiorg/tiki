@@ -128,19 +128,18 @@ class ParserLib extends TikiDb_Bridge
 	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
 	function protectSpecialChars($data, $is_html = false, $options = array())
 	{
-		if (($this->isHtmlPurifying == true || $options['is_html'] != true) && !$options['ck_editor']) {
+		if (($this->isHtmlPurifying == true || $options['is_html'] != true) || !$options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], "~" . $key . "~", $data);
 			}
 		}
-
 		return $data;
 	}
 
 	// This function removed the protection of html entities so that they are rendered as expected by the viewer
 	function unprotectSpecialChars($data, $is_html = false, $options = array())
 	{
-		if ($is_html == true || (isset($options['ck_editor']) && $options['ck_editor'])) {
+		if (($is_html != false || $options['is_html']) || $options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace("~" . $key . "~", $specialChar['html'], $data);
 			}
@@ -2026,7 +2025,7 @@ if ( \$('#$id') ) {
 		} else {
 			$need_maketoc = strpos($data, "{maketoc");
 		}
-		
+
 		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
 		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
@@ -2146,27 +2145,39 @@ if ( \$('#$id') ) {
 
 			// check if we are inside a ~hc~ block and, if so, ignore
 			// monospaced and do not insert <br />
-			$inComment += substr_count(strtolower($line), "<!--");
-			$inComment -= substr_count(strtolower($line), "-->");
+			$lineInLowerCase = strtolower($line);
+
+			$inComment += substr_count($lineInLowerCase, "<!--");
+			$inComment -= substr_count($lineInLowerCase, "-->");
+			$inComment += substr_count($lineInLowerCase, "~real_lt~!--");
+			$inComment -= substr_count($lineInLowerCase, "--~real_gt~");
 
 			// check if we are inside a ~pre~ block and, if so, ignore
 			// monospaced and do not insert <br />
-			$inPre += substr_count(strtolower($line), "<pre");
-			$inPre -= substr_count(strtolower($line), "</pre");
+			$inPre += substr_count($lineInLowerCase, "<pre");
+			$inPre -= substr_count($lineInLowerCase, "</pre");
+			$inPre += substr_count($lineInLowerCase, "~real_lt~~pre");
+			$inPre -= substr_count($lineInLowerCase, "~real_lt~/pre");
 
 			// check if we are inside a table, if so, ignore monospaced and do
 			// not insert <br />
-			$inTable += substr_count(strtolower($line), "<table");
-			$inTable -= substr_count(strtolower($line), "</table");
+			$inTable += substr_count($lineInLowerCase, "<table");
+			$inTable -= substr_count($lineInLowerCase, "</table");
+			$inTable += substr_count($lineInLowerCase, "~real_lt~table");
+			$inTable -= substr_count($lineInLowerCase, "~real_lt~/table");
 
 			// check if we are inside an ul TOC list, if so, ignore monospaced and do
 			// not insert <br />
-			$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
-			$inTOC -= substr_count(strtolower($line), "</ul><!--toc-->");
+			$inTOC += substr_count($lineInLowerCase, "<ul class=\"toc");
+			$inTOC -= substr_count($lineInLowerCase, "</ul><!--toc-->");
+			$inTOC += substr_count($lineInLowerCase, "~real_lt~ul class=\"toc");
+			$inTOC -= substr_count($lineInLowerCase, "~real_lt~/ul~real_gt~~real_lt~!--toc--~real_gt~");
 
 			// check if we are inside a script not insert <br />
-			$inScript += substr_count(strtolower($line), "<script ");
-			$inScript -= substr_count(strtolower($line), "</script>");
+			$inScript += substr_count($lineInLowerCase, "<script ");
+			$inScript -= substr_count($lineInLowerCase, "</script>");
+			$inScript += substr_count($lineInLowerCase, "~real_lt~script ");
+			$inScript -= substr_count($lineInLowerCase, "~real_lt~/script~real_gt~");
 
 			// If the first character is ' ' and we are not in pre then we are in pre
 			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 && !$options['is_html']) {
