@@ -2003,6 +2003,11 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'feature_wiki_no_inherit_perms_structure' => array(
+			'name' => tra('Disable inheritance of direct object permissions when adding pages from a structure'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'feature_create_webhelp' => array(
 			'name' => tra('Create webhelp from structure'),
 			'type' => 'flag',

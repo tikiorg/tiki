@@ -1040,10 +1040,13 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 			//Insert page after current page
 			$page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '', $page_info['structure_id']);
 		}
-		//Criss Holman added the if containing this code of which I don't know the use, but a check before the permissions copy
-		//is definitely needed in case someone has tiki_p_edit/tiki_p_admin_wiki in a page belonging to a structure. chealer
-		if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki', 'tiki_p_admin_categories'))
-			$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
+		// Inherit direct object permissions for pages added to a structure, if the user can edit the structure and the page
+		if(!isset($prefs['feature_wiki_no_inherit_perms_structure']) || $prefs['feature_wiki_no_inherit_perms_structure'] === 'n') {
+			if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_edit_structures', 'tiki_p_edit') ||
+				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki')) {
+				 $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
+			}
+		}
 	} 
 
 	// If the watch state is not the same
