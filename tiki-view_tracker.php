@@ -252,9 +252,10 @@ if (!empty($_REQUEST['remove'])) {
 	$actionObject = Tracker_Item::fromInfo($item_info);
 	if ($actionObject->canRemove()) {
 		//bypass the question to confirm delete or not
-		if (empty($_REQUEST['force']))
+		if (empty($_REQUEST['force'])) {
 			$access->check_authenticity();
 		$trklib->remove_tracker_item($_REQUEST['remove']);
+		}
 	}
 } elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
 	check_ticket('view-trackers');
