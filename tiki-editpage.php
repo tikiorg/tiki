@@ -1089,7 +1089,7 @@ if (
 		// Inherit direct object permissions for pages added to a structure, if the user can edit the structure and the page
 		if(!isset($prefs['feature_wiki_no_inherit_perms_structure']) || $prefs['feature_wiki_no_inherit_perms_structure'] === 'n') {
 			if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_edit_structures', 'tiki_p_edit') ||
-				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki')) {
+				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki'))) {
 				 $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
 			}
 		}
