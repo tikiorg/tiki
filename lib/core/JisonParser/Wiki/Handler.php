@@ -7,20 +7,19 @@
 
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
+	public static $parseStack = 0;
+
 	var $npOn = false;
 	var $pluginStack = array();
 	var $blockLoc = array();
 	var $blockLast = '';
-
-	var $parseStack = 0;
 	var $blockStack = array();
-
 	var $olistLen = array();
 
 	function parse($input)
 	{
 		$result = "";
-		$this->parseStack++;
+		self::$parseStack++;
 
 		if ($this->parseStack > 1) {
 			$parser = new JisonParser_Wiki_Handler();
@@ -29,7 +28,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$result = parent::parse($input);
 		}
 
-		$this->parseStack--;
+		self::$parseStack--;
 		return $result;
 	}
 
