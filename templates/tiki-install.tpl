@@ -248,9 +248,10 @@
 			<div style="margin-left:1em;">
 			<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{/if}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
 		
-			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
+			<br /><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
-				<p>{tr}The database must already exist. You can create the database using mysqladmin, PHPMyAdmin, cPanel, or ask your hosting provider.  Normally Tiki tables won't conflict with other product names.{/tr}</p>
+				<p>{tr}You can create the database using mysqladmin, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, the database will be created.{/tr}</p>
+				<p>{tr}If you are using a database which is already being used for something else (not recommended), check db/tiki.sql to make sure the table names used by Tiki are not already used.{/tr}</p>
 			</div>
 			</div>
 		</div>
