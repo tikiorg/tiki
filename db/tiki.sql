@@ -1024,6 +1024,7 @@ CREATE TABLE `tiki_history` (
   `data` longblob,
   `type` varchar(50) default NULL,
   `is_html` TINYINT(1) NOT NULL DEFAULT 0,
+  `status` varchar(60) default '',
   PRIMARY KEY (`pageName`,`version`),
   KEY `user` (`user`),
   KEY (`historyId`)
@@ -1628,12 +1629,13 @@ CREATE TABLE `tiki_pages` (
   `wysiwyg` char(1) default NULL,
   `wiki_authors_style` varchar(20) default '',
   `comments_enabled` char(1) default NULL,
-  `keywords` TEXT, 
+  `keywords` TEXT,
+  `status` varchar(60) default '',
   PRIMARY KEY (`page_id`),
   UNIQUE KEY `pageName` (`pageName`),
   KEY `data` (`data`(255)),
   KEY `pageRank` (`pageRank`),
-  KEY `lastModif`(`lastModif`)
+  KEY `lastModif`(`lastModif`),
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `tiki_pageviews`;
