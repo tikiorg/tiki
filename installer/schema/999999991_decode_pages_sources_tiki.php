@@ -83,9 +83,9 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 		$parserlib->plugins_replace($data, $replaced);			// put the plugins back into the page
 
 		if (isset($id['page_id'])) {
-			TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($id['page_id']));
+			TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id['page_id']));
 		} else {
-			TikiLib::query("UPDATE tiki_history SET data = ? WHERE historyId = ?", array($id['historyId']));
+			TikiLib::query("UPDATE tiki_history SET data = ? WHERE historyId = ?", array($data, $id['historyId']));
 		}
 	}
 }
