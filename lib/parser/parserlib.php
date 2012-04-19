@@ -199,7 +199,7 @@ class ParserLib extends TikiDb_Bridge
 
 	function plugins_replace(&$data, $noparsed) {
 		$preparsed = array();	// unused
-		$noparsed['data'] = str_replace('<x>', '', $noparsed['data']);
+		$noparsed['data'] = isset($noparsed['data']) ? str_replace('<x>', '', $noparsed['data']) : '';
 		$this->replace_preparse($data, $preparsed, $noparsed);
 	}
 
