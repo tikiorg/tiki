@@ -35,9 +35,9 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 	set_time_limit(60 * 60 * 3); //3 hours
 
 	global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input, $smarty, $access, $local_php, $categlib, $headerlib;	// globals are required here for tiki-setup_base.php
+	include_once('tiki-setup_base.php');
 	$parserlib = TikiLib::lib('parser');
 
-	include_once('tiki-setup_base.php');
 	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
 
 	//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
