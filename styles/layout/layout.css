@@ -1176,10 +1176,10 @@ ul.floatleft li {
 }
 
 .jtrack-item {
-	height:60px;
+	height:auto !important;
 }
 
-#right_modules #jtrack-bar, #left_modules #jtrack-bar {
+#right_modules #jtrack-bar, #left_modules #jtrack-bar, #right_modules .jtrack-item, #left_modules .jtrack-item {
 	font-size:76%;
 }
  
