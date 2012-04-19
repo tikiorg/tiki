@@ -16,7 +16,7 @@ function upgrade_20110830_default_enable_in_use_tiki($installer)
 	$map = array (
 			'x' => 'trackerfield_action',
 			'A' => 'trackerfield_file',
-			'q' => 'trackerfield_autoincement',
+			'q' => 'trackerfield_autoincrement',
 			'e' => 'trackerfield_category',
 			'c' => 'trackerfield_checkbox',
 			'C' => 'trackerfield_computed',
