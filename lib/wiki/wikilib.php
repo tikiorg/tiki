@@ -1213,3 +1213,112 @@ class WikiLib extends TikiLib
 
 global $wikilib;
 $wikilib = new WikiLib;
+
+
+class convertPagesToTiki9
+{
+	var $oldMatches;
+	var $matches;
+	var $replaced;
+	var $fingerPrintsOld;
+	var $fingerPrintsNew;
+	var $parserlib;
+	var $argumentParser;
+
+	function __construct()
+	{
+		$this->parserlib = TikiLib::lib('parser');
+		$this->argumentParser = new WikiParser_PluginArgumentParser();
+	}
+
+	function convertPages() {
+		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
+		$infos = TikiLib::fetchAll('SELECT data, page_id FROM tiki_pages');
+
+		foreach($infos as $info) {
+			$converted = $this->convertData($info['data']);
+			$this->savePage($info['page_id'], $converted);
+		}
+	}
+
+	function convertPageHistories() {
+		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
+		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history');
+
+		foreach($infos as $info) {
+			$converted = $this->convertData($info['data']);
+			$this->savePageHistory($info['page_id'], $converted);
+		}
+	}
+
+	function savePage($id, $converted) {
+		//TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id));
+	}
+
+	function savePageHistory($id, $converted) {
+		//TikiLib::query("UPDATE tiki_history SET data = ? WHERE historyId = ?", array($data, $id));
+	}
+
+	function convertData(&$data) {
+		global $tikilib;
+
+		//we store the original matches because we are about to change and update them
+		$this->oldMatches = WikiParser_PluginMatcher::match($data);
+
+		//We know the page was single encoded, but plugin possibly double?
+		$data =  htmlspecialchars_decode($data);
+
+		// find the plugins
+		$this->matches = WikiParser_PluginMatcher::match($data);
+
+		$this->replaced = array();
+
+		$this->fingerPrintsOld = array();
+		foreach ($this->oldMatches as $match) {
+			$match->name = $match->getName();
+			$match->meta = $this->parserlib->plugin_info($match->name);
+			$match->args = $this->argumentParser->parse($match->getArguments());
+			$match->body = $match->getBody();
+
+			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($match->name, $match->meta, $match->body, $match->args);
+		}
+
+		$fingerPrintsNew = array();
+		foreach ($this->matches as $match) {							// each plugin
+			$match->name = $match->getName();
+			$match->meta = $this->parserlib->plugin_info($match->name);
+			$match->args = $this->argumentParser->parse($match->getArguments());
+			$match->plugin = (string) $match;
+			$match->key = '§'.md5($tikilib->genPass()).'§';					// by replace whole plugin with a guid
+			$data = str_replace($match->plugin, $match->key, $data);
+
+			$match->body = $match->getBody();									// leave the bodies alone
+			$match->key2 = '§'.md5($tikilib->genPass()).'§';					// by replacing it with a guid
+			$match->plugin = str_replace($match->body, $match->key2, $match->plugin);
+
+			//Here we detect if a plugin was double encoded and this is the second decode
+			if (preg_match("/&amp;&/i", $match->plugin) || preg_match("/&quot;/i", $match->plugin)) { //try to detect double encoding
+				$match->plugin = htmlspecialchars_decode($match->plugin);				// decode entities in the plugin args (usually &quot;)
+			}
+
+			$match->plugin = str_replace($match->key2, $match->body, $match->plugin);				// finally put the body back
+
+			$replaced['key'][] = $match->key;
+			$replaced['data'][] = $match->plugin;								// store the decoded-args plugin for replacement later
+
+			$fingerPrintsNew[] = $this->parserlib->plugin_fingerprint($match->name, $match->meta, $match->body, $match->args);
+		}
+
+		$data = $this->parserlib->plugins_replace($data, $this->replaced);					// put the plugins back into the page
+
+		//if (!empty(array_diff($fingerPrintsOld, $fingerPrintsNew))) {
+			//here we find the old fingerprint and replace it with the new one
+		//}
+
+		return array(
+			"data"=>$data,
+			"oldPluginFingerPrints"=>$fingerPrintsOld,
+			"newPluginFingerPrints"=>$fingerPrintsNew
+		);
+	}
+}

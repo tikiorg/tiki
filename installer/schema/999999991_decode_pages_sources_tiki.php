@@ -32,61 +32,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function upgrade_999999991_decode_pages_sources_tiki($installer)
 {
-	set_time_limit(60 * 60 * 3); //3 hours
-
-	global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input, $smarty, $access, $local_php, $categlib, $headerlib;	// globals are required here for tiki-setup_base.php
+	set_time_limit(60 * 60); //1 hours
 	include_once('tiki-setup_base.php');
-	$parserlib = TikiLib::lib('parser');
-
 	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
+	include_once('lib/wiki/wikilib.php');
 
-	//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-	$ids =
-		TikiLib::fetchAll('SELECT page_id FROM tiki_pages') +
-		TikiLib::fetchAll('SELECT historyId FROM tiki_history');
-
-	foreach($ids as $id) {
-		if (isset($id['page_id'])) {
-			$data = TikiLib::getOne("SELECT data FROM tiki_pages WHERE page_id = ?", array($id['page_id']));
-		} else {
-			$data = TikiLib::getOne("SELECT data FROM tiki_history WHERE historyId = ?", array($id['historyId']));
-		}
-
-		//We know the page was single encoded, but plugin possibly double?
-		$data =  htmlspecialchars_decode($data);
-
-		$matches = WikiParser_PluginMatcher::match($data);			// find the plugins
-
-		$replaced = array();
-
-		foreach ($matches as $match) {								// each plugin
-			$plugin = (string) $match;
-			$key = '§'.md5($tikilib->genPass()).'§';				// by replace whole plugin with a guid
-			$data = preg_replace('/' . preg_quote($plugin, '/') . '/', $key, $data);
-
-			$body = $match->getBody();									// leave the bodies alone
-			$key2 = '§'.md5($tikilib->genPass()).'§';					// by replacing it with a guid
-			$plugin = preg_replace('/' . preg_quote($body, '/') . '/', $key2, $plugin);
-
-			//Here we detect if a plugin was double encoded and this is the second decode
-			if (preg_match("/&amp;&/i", $plugin) || preg_match("/&quot;/i", $plugin)) { //try to detect double encoding
-				$plugin = htmlspecialchars_decode($plugin);					// decode entities in the plugin args (usually &quot;)
-			}
-
-			$plugin = str_replace($key2, $body, $plugin);				// finally put the body back
-
-			$replaced['key'][] = $key;
-			$replaced['data'][] = $plugin;						// store the decoded-args plugin for replacement later
-
-		}
-
-		$parserlib->plugins_replace($data, $replaced);			// put the plugins back into the page
-
-		if (isset($id['page_id'])) {
-			TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id['page_id']));
-		} else {
-			TikiLib::query("UPDATE tiki_history SET data = ? WHERE historyId = ?", array($data, $id['historyId']));
-		}
-	}
+	$converter = new convertPagesToTiki9();
+	$converter->convertPages();
 }
 
