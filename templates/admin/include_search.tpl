@@ -26,6 +26,7 @@
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 						{preference name="unified_incremental_update"}
 						{preference name="unified_lucene_highlight"}
+						{preference name=unified_parse_results}
 						{preference name="unified_lucene_location"}
 						<fieldset>
 							<legend>{tr}Search Engine Settings{/tr}</legend>
