@@ -32,17 +32,17 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 					),
 					'fieldIdThere' => array(
 						'name' => tr('Link Field ID'),
-						'description' => tr('Field ID containing an item link pointing to the item in this tracker or some other value to be matched.'),
+						'description' => tr('Field ID from the other tracker containing an item link pointing to the item in this tracker or some other value to be matched.'),
 						'filter' => 'int',
 					),
 					'fieldIdHere' => array(
 						'name' => tr('Value Field ID'),
-						'description' => tr('Field ID matching the value in the link field ID if the field above is not an item link.'),
+						'description' => tr('Field ID from this tracker matching the value in the link field ID from the other tracker if the field above is not an item link.'),
 						'filter' => 'int',
 					),
 					'displayFieldIdThere' => array(
 						'name' => tr('Fields to display'),
-						'description' => tr('Display alternate fields instead of the item title'),
+						'description' => tr('Display alternate fields from the other tracker instead of the item title'),
 						'filter' => 'int',
 						'separator' => '|',
 					),
