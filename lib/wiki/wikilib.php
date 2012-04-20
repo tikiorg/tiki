@@ -1249,7 +1249,7 @@ class convertPagesToTiki9
 	{
 		$this->addStatus();
 		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-		$infos = TikiLib::fetchAll('SELECT data, page_id FROM tiki_pages WHERE status <> "conv9"');
+		$infos = TikiLib::fetchAll('SELECT data, page_id FROM tiki_pages WHERE status <> "conv9" AND status <> "new9+"');
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1264,7 +1264,7 @@ class convertPagesToTiki9
 
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
-		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND pageName = ? AND version = ?', array($page, $version));
+		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND status <> "new9+" AND pageName = ? AND version = ?', array($page, $version));
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1283,7 +1283,7 @@ class convertPagesToTiki9
 		$this->addStatus();
 
 		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9"');
+		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND status <> "new9+"');
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1301,7 +1301,7 @@ class convertPagesToTiki9
 		TikiLib::query("
 			UPDATE tiki_pages
 			SET data = ?, status = 'conv9'
-			WHERE page_id = ? AND status <> 'conv9'
+			WHERE page_id = ? AND status <> 'conv9' AND status <> 'new9+'
 			", array($data, $id));
 	}
 
@@ -1310,7 +1310,7 @@ class convertPagesToTiki9
 		TikiLib::query("
 			UPDATE tiki_history
 			SET data = ?, status = 'conv9'
-			WHERE historyId = ? AND status <> 'conv9'
+			WHERE historyId = ? AND status <> 'conv9' AND status <> 'new9+'
 			", array($data, $id));
 	}
 
