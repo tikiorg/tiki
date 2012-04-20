@@ -407,7 +407,8 @@
 	{/if}
 	
 	{tab name="{tr}Tools{/tr}"}
-		<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a>
+		<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a><br />
+		<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br />
 	{/tab}
 {/tabset}
 
