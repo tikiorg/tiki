@@ -1217,108 +1217,170 @@ $wikilib = new WikiLib;
 
 class convertPagesToTiki9
 {
-	var $oldMatches;
-	var $matches;
-	var $replaced;
-	var $fingerPrintsOld;
-	var $fingerPrintsNew;
 	var $parserlib;
 	var $argumentParser;
 
 	function __construct()
 	{
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 1);
 		$this->parserlib = TikiLib::lib('parser');
 		$this->argumentParser = new WikiParser_PluginArgumentParser();
 	}
 
-	function convertPages() {
-		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-		$infos = TikiLib::fetchAll('SELECT data, page_id FROM tiki_pages');
+	function addStatus()
+	{
+		$dbs_tiki = '';
 
-		foreach($infos as $info) {
-			$converted = $this->convertData($info['data']);
-			$this->savePage($info['page_id'], $converted);
+		require ('db/local.php');
+
+		$statusExists = TikiLib::fetchAll("SELECT * FROM information_schema.COLUMNS WHERE table_schema = ? AND table_name = 'tiki_pages' AND column_name = 'status'", array($dbs_tiki));
+		if (empty($statusExists)) {
+			TikiLib::query("ALTER TABLE tiki_pages ADD status VARCHAR(60) default '' AFTER keywords;");
+		}
+
+		$statusExists = TikiLib::fetchAll("SELECT * FROM information_schema.COLUMNS WHERE table_schema = ? AND table_name = 'tiki_history' AND column_name = 'status'", array($dbs_tiki));
+		if (empty($statusExists)) {
+			TikiLib::query("ALTER TABLE tiki_history ADD status VARCHAR(60) default '' AFTER is_html;");
 		}
 	}
 
-	function convertPageHistories() {
+	function convertPages()
+	{
+		$this->addStatus();
 		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history');
+		$infos = TikiLib::fetchAll('SELECT data, page_id FROM tiki_pages WHERE status <> "conv9"');
 
 		foreach($infos as $info) {
-			$converted = $this->convertData($info['data']);
-			$this->savePageHistory($info['page_id'], $converted);
+			if (!empty($info['data'])) {
+				$converted = $this->convertData($info['data']);
+
+				$this->updatePlugins($converted['fingerPrintsOld'], $converted['fingerPrintsNew']);
+
+				$this->savePage($info['page_id'], $converted['data']);
+			}
 		}
 	}
 
-	function savePage($id, $converted) {
-		//TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id));
+	function convertPageHistoryFromPageAndVersion($page, $version)
+	{
+		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND page = ? AND version = ?', array($page, $version));
+
+		foreach($infos as $info) {
+			if (!empty($info['data'])) {
+				$converted = $this->convertData($info['data']);
+
+				//update plugins first, if it failes, no problems with the page
+				$this->updatePlugins($converted['fingerPrintsOld'], $converted['fingerPrintsNew']);
+
+				$this->savePageHistory($info['historyId'], $converted['data']);
+			}
+		}
 	}
 
-	function savePageHistory($id, $converted) {
-		//TikiLib::query("UPDATE tiki_history SET data = ? WHERE historyId = ?", array($data, $id));
+	function convertPageHistories()
+	{
+		$this->addStatus();
+
+		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
+		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9"');
+
+		foreach($infos as $info) {
+			if (!empty($info['data'])) {
+				$converted = $this->convertData($info['data']);
+
+				$this->updatePlugins($converted['fingerPrintsOld'], $converted['fingerPrintsNew']);
+
+				$this->savePageHistory($info['historyId'], $converted['data']);
+			}
+		}
 	}
 
-	function convertData(&$data) {
-		global $tikilib;
+	function savePage($id, $data)
+	{
+		TikiLib::query("
+			UPDATE tiki_pages
+			SET data = ?, status = 'conv9'
+			WHERE page_id = ? AND status <> 'conv9'
+			", array($data, $id));
+	}
 
-		//we store the original matches because we are about to change and update them
-		$this->oldMatches = WikiParser_PluginMatcher::match($data);
+	function savePageHistory($id, $data)
+	{
+		TikiLib::query("
+			UPDATE tiki_history
+			SET data = ?, status = 'conv9'
+			WHERE historyId = ? AND status <> 'conv9'
+			", array($data, $id));
+	}
+
+	function updatePlugins($fingerPrintsOld, $fingerPrintsNew)
+	{
+		//here we find the old fingerprint and replace it with the new one
+		for($i = 0; $i < count($fingerPrintsOld);$i++) {
+			//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
+			TikiLib::query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
+
+			//Now add in new fingerprints
+			TikiLib::query("UPDATE tiki_plugin_security SET fingerprint = ? WHERE fingerprint = ?", array($fingerPrintsNew[$i], $fingerPrintsOld[$i]));
+		}
+	}
+
+	function convertData($data)
+	{
+		//we store the original matches because we are about to change and update them, we need to get their fingerprint
+		$oldMatches = WikiParser_PluginMatcher::match($data);
 
 		//We know the page was single encoded, but plugin possibly double?
 		$data =  htmlspecialchars_decode($data);
 
 		// find the plugins
-		$this->matches = WikiParser_PluginMatcher::match($data);
+		$matches = WikiParser_PluginMatcher::match($data);
 
-		$this->replaced = array();
+		$replaced = array();
 
-		$this->fingerPrintsOld = array();
-		foreach ($this->oldMatches as $match) {
-			$match->name = $match->getName();
-			$match->meta = $this->parserlib->plugin_info($match->name);
-			$match->args = $this->argumentParser->parse($match->getArguments());
-			$match->body = $match->getBody();
+		$fingerPrintsOld = array();
+		foreach ($oldMatches as $match) {
+			$name = $match->getName();
+			$meta = $this->parserlib->plugin_info($name);
+			$args = $this->argumentParser->parse($match->getArguments());
+			$body = $match->getBody();
 
-			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($match->name, $match->meta, $match->body, $match->args);
+			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 		}
 
 		$fingerPrintsNew = array();
-		foreach ($this->matches as $match) {							// each plugin
-			$match->name = $match->getName();
-			$match->meta = $this->parserlib->plugin_info($match->name);
-			$match->args = $this->argumentParser->parse($match->getArguments());
-			$match->plugin = (string) $match;
-			$match->key = '§'.md5($tikilib->genPass()).'§';					// by replace whole plugin with a guid
-			$data = str_replace($match->plugin, $match->key, $data);
+		foreach ($matches as $match) {							// each plugin
+			$name = $match->getName();
+			$meta = $this->parserlib->plugin_info($name);
+			$args = $this->argumentParser->parse($match->getArguments());
+			$plugin = (string) $match;
+			$key = '§'.md5(TikiLib::genPass()).'§';					// by replace whole plugin with a guid
+			$data = str_replace($plugin, $key, $data);
 
-			$match->body = $match->getBody();									// leave the bodies alone
-			$match->key2 = '§'.md5($tikilib->genPass()).'§';					// by replacing it with a guid
-			$match->plugin = str_replace($match->body, $match->key2, $match->plugin);
+			$body = $match->getBody();									// leave the bodies alone
+			$key2 = '§'.md5(TikiLib::genPass()).'§';					// by replacing it with a guid
+			$plugin = str_replace($body, $key2, $plugin);
 
 			//Here we detect if a plugin was double encoded and this is the second decode
-			if (preg_match("/&amp;&/i", $match->plugin) || preg_match("/&quot;/i", $match->plugin)) { //try to detect double encoding
-				$match->plugin = htmlspecialchars_decode($match->plugin);				// decode entities in the plugin args (usually &quot;)
+			if (preg_match("/&amp;&/i", $plugin) || preg_match("/&quot;/i", $plugin)) { //try to detect double encoding
+				$plugin = htmlspecialchars_decode($plugin);				// decode entities in the plugin args (usually &quot;)
 			}
 
-			$match->plugin = str_replace($match->key2, $match->body, $match->plugin);				// finally put the body back
+			$plugin = str_replace($key2, $body, $plugin);				// finally put the body back
 
-			$replaced['key'][] = $match->key;
-			$replaced['data'][] = $match->plugin;								// store the decoded-args plugin for replacement later
+			$replaced['key'][] = $key;
+			$replaced['data'][] = $plugin;								// store the decoded-args plugin for replacement later
 
-			$fingerPrintsNew[] = $this->parserlib->plugin_fingerprint($match->name, $match->meta, $match->body, $match->args);
+			$fingerPrintsNew[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 		}
 
-		$data = $this->parserlib->plugins_replace($data, $this->replaced);					// put the plugins back into the page
-
-		//if (!empty(array_diff($fingerPrintsOld, $fingerPrintsNew))) {
-			//here we find the old fingerprint and replace it with the new one
-		//}
+		$this->parserlib->plugins_replace($data, $replaced);					// put the plugins back into the page
 
 		return array(
 			"data"=>$data,
-			"oldPluginFingerPrints"=>$fingerPrintsOld,
-			"newPluginFingerPrints"=>$fingerPrintsNew
+			"fingerPrintsOld"=>$fingerPrintsOld,
+			"fingerPrintsNew"=>$fingerPrintsNew
 		);
 	}
 }
