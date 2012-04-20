@@ -1,5 +1,6 @@
 <h1>Wiki pages with direct object permissions</h1>
-<table>
+<a href="tiki-list_object_permissions.php">Click here to access list of permissions for all objects.</a>
+<table class="normal">
 	<tr>
 		<th>Pagename</th>
 	</tr>
