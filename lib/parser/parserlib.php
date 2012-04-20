@@ -898,7 +898,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_fingerprint( $name, $meta, $data, $args )
 	{
-		$validate = $meta['validate'];
+		$validate = (isset($meta['validate']) ? $meta['validate'] : '');
 		if ( $validate == 'all' || $validate == 'body' )
 			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
 		else
