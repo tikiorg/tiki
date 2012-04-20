@@ -1264,7 +1264,7 @@ class convertPagesToTiki9
 
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
-		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND page = ? AND version = ?', array($page, $version));
+		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND pageName = ? AND version = ?', array($page, $version));
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1318,11 +1318,13 @@ class convertPagesToTiki9
 	{
 		//here we find the old fingerprint and replace it with the new one
 		for($i = 0; $i < count($fingerPrintsOld);$i++) {
-			//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
-			TikiLib::query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
+			if ($fingerPrintsOld[$i] != $fingerPrintsNew[$i]) {
+				//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
+				TikiLib::query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
 
-			//Now add in new fingerprints
-			TikiLib::query("UPDATE tiki_plugin_security SET fingerprint = ? WHERE fingerprint = ?", array($fingerPrintsNew[$i], $fingerPrintsOld[$i]));
+				//Now add in new fingerprints
+				TikiLib::query("UPDATE tiki_plugin_security SET fingerprint = ? WHERE fingerprint = ?", array($fingerPrintsNew[$i], $fingerPrintsOld[$i]));
+			}
 		}
 	}
 
