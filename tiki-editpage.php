@@ -623,7 +623,7 @@ if (isset($_REQUEST["edit"])) {
 	} elseif (isset($info["data"])) {
 		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] === 'y') {
 			if (isset($_REQUEST['hdr'])) {
-				if ($_REQUEST['hdr'] === 0) {
+				if ($_REQUEST['hdr'] === "0") {
 					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
 					$real_len = $real_start;
 					$real_start = 0;
