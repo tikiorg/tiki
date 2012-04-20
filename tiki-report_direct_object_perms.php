@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-search_replace.php 37036 2011-09-08 02:40:35Z chealer $
 
 require_once ('tiki-setup.php');
 
