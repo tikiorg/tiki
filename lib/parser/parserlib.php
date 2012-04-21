@@ -127,7 +127,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// This function handles the protection of html entities so that they are not mangled when
 	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
-	function protectSpecialChars(&$data, $is_html = false, $options = array())
+	function protectSpecialChars($data, $is_html = false, $options = array())
 	{
 		if (($this->isHtmlPurifying == true || $options['is_html'] != true) || !$options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
@@ -138,7 +138,7 @@ class ParserLib extends TikiDb_Bridge
 	}
 
 	// This function removed the protection of html entities so that they are rendered as expected by the viewer
-	function unprotectSpecialChars(&$data, $is_html = false, $options = array())
+	function unprotectSpecialChars($data, $is_html = false, $options = array())
 	{
 		if (($is_html != false || $options['is_html']) || $options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
@@ -155,7 +155,7 @@ class ParserLib extends TikiDb_Bridge
 
 	// Reverses parse_first.
 	//*
-	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = true, $options = array())
+	function replace_preparse(&$data, &$preparsed, &$noparsed, $is_html = false, $options = array())
 	{
 		$data1 = $data;
 		$data2 = "";
@@ -1589,7 +1589,7 @@ if ( \$('#$id') ) {
 		}
 
 		// Put removed strings back.
-		$this->replace_preparse($data, $preparsed, $noparsed, false, $options);
+		$this->replace_preparse($data, $preparsed, $noparsed, $is_html, $options);
 
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {
