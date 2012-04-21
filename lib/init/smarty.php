@@ -52,7 +52,10 @@ class Smarty_Tiki extends Smarty
 		global $prefs, $style_base;
 
 		if (empty($style_base) && class_exists('TikiLib')) {	// TikiLib doesn't exist in the installer
-			$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
+			$tikilib = TikiLib::lib('tiki');
+			if (method_exists($tikilib, "get_style_base")) {
+				$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
+			}
 		}
 		if ($tikidomain) {
 			$tikidomain.= '/';

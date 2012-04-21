@@ -341,7 +341,7 @@ function get_default_prefs()
 
 function initialize_prefs()
 {
-	global $prefs, $tikilib, $user_overrider_prefs, $in_installer, $section, $systemConfiguration;
+	global $prefs, $user_overrider_prefs, $in_installer, $section, $systemConfiguration;
 
 	if (!empty($in_installer)) {
 		$prefs = get_default_prefs();
@@ -364,7 +364,12 @@ function initialize_prefs()
 			}
 		}
 
-		$modified = $tikilib->getModifiedPreferences();
+		$tikilib = TikiLib::lib("tiki");
+		if (method_exists($tikilib, "getModifiedPreferences")) {
+			$modified = TikiLib::lib("tiki")->getModifiedPreferences();
+		} else {
+			$modified = array();
+		}
 
 		// Unserialize serialized preferences
 		foreach ( $serializedPreferences as $serializedPreference ) {
@@ -408,8 +413,7 @@ function initialize_prefs()
  */ 
 function getCurrentEngine()
 {
-	global $tikilib;
-	return $tikilib->getCurrentEngine();
+	return TikiLib::lib("tiki")->getCurrentEngine();
 }
 
 /**
@@ -419,6 +423,5 @@ function getCurrentEngine()
  */ 
 function isMySQLFulltextSearchSupported()
 {
-	global $tikilib;
-	return $tikilib->isMySQLFulltextSearchSupported();
+	return TikiLib::lib("tiki")->isMySQLFulltextSearchSupported();
 }

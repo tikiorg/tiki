@@ -79,26 +79,6 @@ require_once ('lib/cache/cachelib.php');
 global $logslib;
 require_once ('lib/logs/logslib.php');
 include_once ('lib/init/tra.php');
-
-if ( $prefs['memcache_enabled'] == 'y' ) {
-	require_once('lib/cache/memcachelib.php');
-	if ( is_array($prefs['memcache_servers']) ) {
-		$servers = $prefs['memcache_servers'];
-	} else {
-		$servers = unserialize($prefs['memcache_servers']);
-	}
-
-	global $memcachelib;
-	$memcachelib = new MemcacheLib(
-					$servers, array(
-						'enabled' => true,
-						'expiration' => (int) $prefs['memcache_expiration'],
-						'key_prefix' => $prefs['memcache_prefix'],
-						'compress' => $prefs['memcache_compress'],
-		)
-	);
-}
-
 require_once ('lib/tikidate.php');
 $tikidate = new TikiDate();
 // set session lifetime
@@ -112,7 +92,7 @@ if ($prefs['session_storage'] == 'db') {
 	} elseif ($api_tiki == 'pdo') {
 		require_once ('lib/tikisession-pdo.php');
 	}
-} elseif ( $prefs['session_storage'] == 'memcache' && isset( $memcachelib ) && $memcachelib->isEnabled() ) {
+} elseif ( $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcach")->isEnabled() ) {
 	require_once ('lib/tikisession-memcache.php');
 }
 
@@ -168,8 +148,7 @@ if ($prefs['feature_fullscreen'] == 'y') {
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
 // Smarty needs session since 2.6.25
-require_once ('lib/init/smarty.php');
-global $smarty;
+global $smarty; require_once ('lib/init/smarty.php');
 
 // Define the special maxRecords global variable
 $maxRecords = $prefs['maxRecords'];
@@ -575,7 +554,9 @@ unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
 // --------------------------------------------------------------
 if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y')) {
-	$smarty->loadFilter('output', 'highlight');
+	if (method_exists($smarty, 'loadFilter')) {
+		$smarty->loadFilter('output', 'highlight');
+	}
 }
 if (function_exists('mb_internal_encoding')) {
 	mb_internal_encoding("UTF-8");

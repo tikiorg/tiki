@@ -188,8 +188,9 @@ if (isset($_REQUEST["tab_edit"]) || $_POST["tab_id"]) {
 }
 
 /* Clear cache for a tab */
-$use_memcache = $memcachelib && $memcachelib->isEnabled()
-    && $memcachelib->getOption('cache_metrics_output');
+$memcachelib = TikiLib::lib("memcache");
+
+$use_memcache = $memcachelib->isEnabled() && $memcachelib->getOption('cache_metrics_output');
 $smarty->assign('use_memcache', $use_memcache);
 if (isset($_REQUEST["tab_clearcache"])) {
 	if (!$use_memcache) {

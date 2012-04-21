@@ -91,7 +91,12 @@ class Memcachelib
 	 */
 	function isEnabled()
 	{
-		return $this->memcache && $this->getOption('enabled', FALSE);
+		global $prefs;
+		if ( $prefs['memcache_enabled'] == 'y' ) {
+			return $this->memcache && $this->getOption('enabled', FALSE);
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -155,7 +160,9 @@ class Memcachelib
 		$expiration = ($expiration) ? 
 			$expiration : $this->getOption('expiration', 0);
 
-		return $this->memcache->set($key, $value, $flags, $expiration);
+		if (isset($this->memcache) && method_exists($this->memcache, "set")) {
+			return $this->memcache->set($key, $value, $flags, $expiration);
+		}
 	}
 
 	/**
@@ -210,3 +217,20 @@ class Memcachelib
 		}
 	} 
 }
+
+global $prefs, $memcachelib;
+
+if ( is_array($prefs['memcache_servers']) ) {
+	$servers = $prefs['memcache_servers'];
+} else {
+	$servers = unserialize($prefs['memcache_servers']);
+}
+
+$memcachelib = new Memcachelib(
+	$servers, array(
+		'enabled' => true,
+		'expiration' => (int) $prefs['memcache_expiration'],
+		'key_prefix' => $prefs['memcache_prefix'],
+		'compress' => $prefs['memcache_compress'],
+	)
+);

@@ -86,9 +86,9 @@ class Tiki_PageCache
 	function applyCache()
 	{
 		if ( is_array($this->cacheData) ) {
-			global $memcachelib;
+			$memcachelib = TikiLib::lib("memcache");
 
-			if ( $memcachelib && $memcachelib->isEnabled() ) {
+			if ( TikiLib::lib("memcache")->isEnabled() ) {
 				$this->key = $memcachelib->buildKey($this->cacheData);
 
 				if ( $this->meta ) {
@@ -122,16 +122,14 @@ class Tiki_PageCache
 
 	function cleanUp()
 	{
-		global $memcachelib;
-
-		if ( $this->key && $memcachelib ) {
+		if ( $this->key ) {
 			$cachedOutput = array(
 				'timestamp' => time(),
 				'output'    => ob_get_contents()
 			);
 
 			if ( $cachedOutput['output'] ) {
-				$memcachelib->set($this->key, $cachedOutput);
+				TikiLib::lib("memcache")->set($this->key, $cachedOutput);
 			}
 
 			ob_end_flush();
@@ -144,10 +142,8 @@ class Tiki_PageCache
 
 	function invalidate()
 	{
-		global $memcachelib;
-
-		if ( $this->meta && $memcachelib ) {
-			$memcachelib->set($this->meta, time());
+		if ( $this->meta ) {
+			TikiLib::lib("memcache")->set($this->meta, time());
 		}
 	}
 
