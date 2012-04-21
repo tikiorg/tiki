@@ -1547,9 +1547,6 @@ if ( \$('#$id') ) {
 		// smileys
 		$data = $this->parse_smileys($data);
 
-		// linebreaks using %%%
-		$data = preg_replace("/\n?%%%/", "\n<br />", $data);
-
 		$data = $this->parse_data_dynamic_variables($data, $options['language']);
 
 		if (!$simple_wiki) {
@@ -1582,6 +1579,9 @@ if ( \$('#$id') ) {
 		} else {
 			$data = $this->parse_data_simple($data);
 		}
+
+		// linebreaks using %%%
+		$data = preg_replace("/\n?%%%/", "<br />", $data);
 
 		// Close BiDi DIVs if any
 		for ($i = 0; $i < $bidiCount; $i++) {
