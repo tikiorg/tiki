@@ -8,7 +8,7 @@
 					<label for="name">{tr}Name:{/tr}</label>
 				</td>
 				<td>
-					<input type="text" size="50" id="name" name="name" value="{$name|escape}" />
+					<input type="text" size="50" id="name" name="name" value="" />
 				</td>
 			</tr>
 			<tr>
@@ -26,7 +26,7 @@
 				<td>
 					<select id="galleryId" name="galleryId"{if $all_galleries|@count eq '0'} disabled="disabled"{/if}>
 						{section name=ix loop=$all_galleries}
-							<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
+							<option value="{$all_galleries[ix].id}"{if $galleryId eq $all_galleries[ix].id} selected="selected"{/if}>{$all_galleries[ix].label|escape}</option>
 						{sectionelse}
 							<option value="">{tr}None{/tr}</option>
 						{/section}
