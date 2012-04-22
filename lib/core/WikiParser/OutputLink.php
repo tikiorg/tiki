@@ -117,10 +117,11 @@ class WikiParser_OutputLink
 
 		$string = '<a';
 		foreach ($attributes as $attr => $val) {
-			$string .= " $attr=\"" . htmlentities($val, ENT_QUOTES, 'UTF-8', false) . '"';
+			$val = TikiLib::lib("parser")->protectSpecialChars($val);
+			$string .= " $attr=\"" . TikiLib::lib("parser")->unprotectSpecialChars($val) . '"'; //val CANNOT be html, so force it to non-html
 		}
-		
-		$string .= '>' . htmlentities($text, ENT_QUOTES, 'UTF-8', false) . '</a>';
+
+		$string .= '>' . $text . '</a>'; //text can return html, so let parser take care of that
 
 		return $string;
 	}

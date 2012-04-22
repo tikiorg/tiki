@@ -2,7 +2,7 @@
 
 {if $user and $tiki_p_create_bookmarks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}
-{tikimodule error=$module_params.error title=$tpl_module_title name="user_bookmarks" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+
 <ul>
     {section name=ix loop=$modb_folders}
 	<li>
@@ -22,9 +22,9 @@
     {/section}
 </ul>
     <form name="bookmarks" action="{$ownurl}" method="post">
-    <input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}Mark{/tr}" />
     <input style="font-size: 9px;" type="text" size="8" name="modb_name" />
-    <input style="font-size: 9px;" type="submit" name="bookmark_create_folder" value="{tr}New{/tr}" />
+    <input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}Create Bookmark{/tr}" />
+    <input style="font-size: 9px;" type="submit" name="bookmark_create_folder" value="{tr}New Folder{/tr}" />
     </form>
     {/tikimodule}
 {/if}

@@ -28,8 +28,10 @@ class PerspectiveLib
 			return (int) $_SESSION['current_perspective'];
 		}
 
-		global $tikilib;
-		$ip = $tikilib->get_ip_address();
+		$tikilib = TikiLib::lib("tiki");
+		if (method_exists($tikilib, "get_ip_address")) {
+			$ip = $tikilib->get_ip_address();
+		}
 
 		foreach ( $this->get_subnet_map($prefs) as $subnet => $perspective ) {
 			if ( $this->is_in_subnet($ip, $subnet) ) {

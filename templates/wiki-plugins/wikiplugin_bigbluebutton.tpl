@@ -1,10 +1,10 @@
 <form target="_blank" method="post" action="">
-	<div style="overflow: hidden; width: 90px; float: left;">
+	<div style="overflow: hidden; width: 78px; float: left;">
 		<input type="hidden" name="bbb" value="{$bbb_meeting|escape}"/>
 		<input type="image" name="join" src="{$bbb_image|escape}" title="{tr}Join{/tr}"/>
 	</div>
 
-	<h2>{$bbb_meeting|escape}</h2>
+	{tr}Meeting ID:{/tr} {$bbb_meeting|escape}
 	
 	{permission type=bigbluebutton object=$bbb_meeting name=tiki_p_assign_perm_bigbluebutton}
 		{button href="tiki-objectpermissions.php?objectId=`$bbb_meeting|escape:'url'`&amp;objectName=`$bbb_meeting|escape:'url'`&amp;objectType=bigbluebutton&amp;permType=bigbluebutton"	_text="{tr}Permissions{/tr}"}
@@ -18,7 +18,7 @@
 		</div>
 	{else}
 		<div>
-			<input type="submit" value="{tr}Join{/tr}"/>
+			<input type="submit" class="button" value="{tr}Join{/tr}"/>
 		</div>
 	{/if}
 

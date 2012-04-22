@@ -19,7 +19,7 @@ function wikiplugin_bigbluebutton_info()
 			'name' => array(
 				'required' => true,
 				'name' => tra('Meeting'),
-				'description' => tra('MeetingID provided by BigBlueButton.'),
+				'description' => tra('MeetingID for BigBlueButton. This is a 5 digit number, starting with a 7. Ex.: 77777 or 71111.'),
 				'filter' => 'text',
 				'default' => ''
 			),
@@ -47,7 +47,7 @@ function wikiplugin_bigbluebutton_info()
 			'voicebridge' => array(
 				'required' => false,
 				'name' => tra('Voice Bridge'),
-				'description' => tra('Code to enter for phone attendees to join the room.'),
+				'description' => tra('Code to enter for phone attendees to join the room. Typically, the same 5 digits of the MeetingID.'),
 				'filter' => 'digits',
 				'default' => ''
 			),

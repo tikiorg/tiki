@@ -490,7 +490,8 @@ a.flip:hover,
 
 .tellafriend,
 .share {
-	padding: 0;
+	float: right;
+	padding-right: 2px;
 }
 
 .actions .share {

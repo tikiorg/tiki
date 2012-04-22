@@ -623,7 +623,7 @@ if (isset($_REQUEST["edit"])) {
 	} elseif (isset($info["data"])) {
 		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] === 'y') {
 			if (isset($_REQUEST['hdr'])) {
-				if ($_REQUEST['hdr'] === 0) {
+				if ($_REQUEST['hdr'] === "0") {
 					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
 					$real_len = $real_start;
 					$real_start = 0;
@@ -1089,7 +1089,7 @@ if (
 		// Inherit direct object permissions for pages added to a structure, if the user can edit the structure and the page
 		if(!isset($prefs['feature_wiki_no_inherit_perms_structure']) || $prefs['feature_wiki_no_inherit_perms_structure'] === 'n') {
 			if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_edit_structures', 'tiki_p_edit') ||
-				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki')) {
+				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki'))) {
 				 $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
 			}
 		}

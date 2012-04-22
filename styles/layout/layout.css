@@ -1172,9 +1172,17 @@ ul.floatleft li {
 
 /* timesheet plugin */
 #jtrack-holder {
-    width: auto;
+    width: auto !important;
 }
 
+.jtrack-item {
+	height:auto !important;
+}
+
+#right_modules #jtrack-bar, #left_modules #jtrack-bar, #right_modules .jtrack-item, #left_modules .jtrack-item {
+	font-size:76%;
+}
+ 
 /** Wiki tocs **/
 .tocnav {
 	margin-bottom: 4px;

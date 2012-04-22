@@ -21,7 +21,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 				'description' => tr('Allows an incrementing value field, or itemId field.'),
 				'readonly' => true,
 				'help' => 'Auto-Increment Field',				
-				'prefs' => array('trackerfield_autoincement'),
+				'prefs' => array('trackerfield_autoincrement'),
 				'tags' => array('advanced'),
 				'default' => 'n',
 				'params' => array(

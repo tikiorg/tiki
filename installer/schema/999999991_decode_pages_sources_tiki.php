@@ -32,63 +32,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function upgrade_999999991_decode_pages_sources_tiki($installer)
 {
-	global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input, $smarty, $access, $local_php, $categlib, $headerlib;	// globals are required here for tiki-setup_base.php
+	set_time_limit(60 * 60); //1 hours
 	include_once('tiki-setup_base.php');
 	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
+	include_once('lib/wiki/wikilib.php');
 
-	$maxRecords = 100;
-	// The outer loop attemps to limit memory usage by fetching pages gradually
-	for ($offset = 0; $pages = $tikilib->list_pages($offset, $maxRecords), !empty($pages['data']); $offset += $maxRecords) {
-		foreach ($pages['data'] as $page) {
-			if (!$page['is_html']) {
-
-				$data = $page['data'];
-				$parserlib = TikiLib::lib('parser');
-
-				$matches = WikiParser_PluginMatcher::match($data);			// find the plugins
-
-				$replaced = array();
-
-				foreach ($matches as $match) {								// each plugin
-					$plugin = (string) $match;
-					$key = '§'.md5($tikilib->genPass()).'§';				// by replace whole plugin with a guid
-					$data = preg_replace('/' . preg_quote($plugin, '/') . '/', $key, $data);
-
-					$body = $match->getBody();									// leave the bodies alone
-					$key2 = '§'.md5($tikilib->genPass()).'§';					// by replacing it with a guid
-					$plugin = preg_replace('/' . preg_quote($body, '/') . '/', $key2, $plugin);
-					$plugin = str_replace('&amp;', '&', $plugin);				// remove &amp; in case of double encoding as seen on info.t.o
-					$plugin = htmlspecialchars_decode($plugin);					// decode entities in the plugin args (usually &quot;)
-
-					$plugin = str_replace($key2, $body, $plugin);				// finally put the body back
-
-					$replaced['key'][] = $key;
-					$replaced['data'][] = $plugin;						// store the decoded-args plugin for replacement later
-
-				}
-
-				$parserlib->plugins_replace($data, $replaced);			// put the plugins back into the page
-
-
-				if ($data != $page['data']) {
-					$tikilib->update_page(
-									$page['pageName'],
-									$data,
-									'System upgrade: Converting HTML characters in plugin args (v3)',
-									'admin',
-									'0.0.0.0',
-									$page['description'],
-									1,
-									$page['lang'],
-									$page['is_html'],
-									null,
-									null,
-									'',
-									$page['wiki_authors_style']
-					);
-				}
-			}
-		}
-	}
+	$converter = new convertPagesToTiki9();
+	$converter->convertPages();
 }
 

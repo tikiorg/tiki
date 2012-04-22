@@ -28,11 +28,8 @@ class MemcacheSession
 						array( $this, 'gc' )
 		);
 
-		global $memcachelib;
-		$this->enabled = isset( $memcachelib ) &&
-			$memcachelib->isEnabled();
-
-		$this->lib = $memcachelib;
+		$this->enabled = TikiLib::lib("memcache")->isEnabled();
+		$this->lib = TikiLib::lib("memcache");
 	}
 
 	/**

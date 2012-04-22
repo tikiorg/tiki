@@ -52,9 +52,10 @@ function wikiplugin_include_info()
 
 function wikiplugin_include($dataIn, $params, $offset)
 {
-	global $tikilib,$userlib,$user;
+	global $tikilib,$userlib,$user, $killtoc;
     static $included_pages, $data;
 
+	$killtoc = true;
 	$max_times = 5;
 	$params = array_merge(array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params);
 	extract($params, EXTR_SKIP);

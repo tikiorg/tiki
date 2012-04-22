@@ -87,6 +87,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'cache':
 			global $cachelib; include_once('lib/cache/cachelib.php');
 			return self::$libraries[$name] = $cachelib;
+		case 'memcache':
+				global $memcachelib; include_once('lib/cache/memcachelib.php');
+				return self::$libraries[$name] = $memcachelib;
 		case 'userprefs':
 			global $userprefslib; include_once('lib/userprefs/userprefslib.php');
 			return self::$libraries[$name] = $userprefslib;
@@ -3592,6 +3595,7 @@ class TikiLib extends TikiDb_Bridge
 			'created' => empty($created) ? $this->now : $created,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
+			'status' => 'new9+'
 		);
 		if ($lang) {
 			$insertData['lang'] = $lang;
@@ -5233,6 +5237,15 @@ JS;
 			return mb_strtolower($string, 'UTF-8');
 		} else {
 			return strtolower($string);
+		}
+	}
+
+	public static function strtoupper($string)
+	{
+		if (function_exists('mb_strtoupper')) {
+			return mb_strtoupper($string, 'UTF-8');
+		} else {
+			return strtoupper($string);
 		}
 	}
 

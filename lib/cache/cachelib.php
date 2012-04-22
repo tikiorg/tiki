@@ -337,8 +337,7 @@ class CacheLibMemcache
 
 	function cacheItem($key, $data, $type='')
 	{
-		global $memcachelib;
-		$memcachelib->set($this->getKey($key, $type), $data);
+		TikiLib::lib("memcache")->set($this->getKey($key, $type), $data);
 		return true;
 	}
 
@@ -349,20 +348,17 @@ class CacheLibMemcache
 
 	function getCached($key, $type='', $lastModif = false)
 	{
-		global $memcachelib;
-		return $memcachelib->get($this->getKey($key, $type));
+		return TikiLib::lib("memcache")->get($this->getKey($key, $type));
 	}
 
 	function invalidate($key, $type='')
 	{
-		global $memcachelib;
-		return $memcachelib->delete($this->getKey($key, $type));
+		return TikiLib::lib("memcache")->delete($this->getKey($key, $type));
 	}
 
 	function empty_type_cache( $type )
 	{
-		global $memcachelib;
-		return $memcachelib->flush();
+		return TikiLib::lib("memcache")->flush();
 	}
 }
 
