@@ -114,7 +114,9 @@
 								{tr}Move to:{/tr}
 								<select name="moveto">
 									{section name=ix loop=$all_galleries}
-										<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
+										{if $all_galleries[ix].id ne $galleryId}
+											<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<input type='submit' name='movesel' value="{tr}Move{/tr}" />
