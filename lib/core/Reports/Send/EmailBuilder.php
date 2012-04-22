@@ -34,7 +34,11 @@ class Reports_Send_EmailBuilder
 		$smarty->assign('report_user', ucfirst($user_data['login']));
 		$smarty->assign('report_interval', ucfirst($report_preferences['interval']));
 		$smarty->assign('report_date', date("l d.m.Y"));
-		$smarty->assign('report_last_report_date', TikiLib::date_format($this->tikilib->get_preference('long_date_format'), strtotime($report_preferences['last_report'])));
+		
+		if ($report_preferences['last_report'] != '0000-00-00 00:00:00') {
+			$smarty->assign('report_last_report_date', TikiLib::date_format($this->tikilib->get_preference('long_date_format'), strtotime($report_preferences['last_report'])));
+		}
+		
 		$smarty->assign('report_total_changes', count($report_cache));
 		
 		$smarty->assign('report_body', $this->makeEmailBody($report_cache, $report_preferences));
