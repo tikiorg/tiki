@@ -1051,14 +1051,18 @@ class FileGalLib extends TikiLib
 
 	function reindex_all_files_for_search_text()
 	{
+		@ini_set('memory_limit', -1);
 		$files = $this->table('tiki_files');
 
-		$rows = $files->fetchAll(array('fileId', 'filename', 'filesize', 'filetype', 'data', 'path', 'galleryId'), array('archiveId' => 0));
-
-		foreach ($rows as $row) {
-			$search_text = $this->get_search_text_for_data($row['data'], $row['path'], $row['filetype'], $row['galleryId']);
-			if ($search_text!==false) {
-				$files->update(array('search_data' => $search_text), array('fileId' => $row['fileId']));
+		for ($offset = 0, $maxRecords = 10; ; $offset += $maxRecords) {
+			$rows = $files->fetchAll(array('fileId', 'filename', 'filesize', 'filetype', 'data', 'path', 'galleryId'), array('archiveId' => 0), $maxRecords, $offset);
+			if (empty($rows))
+				break;
+			foreach ($rows as $row) {
+				$search_text = $this->get_search_text_for_data($row['data'], $row['path'], $row['filetype'], $row['galleryId']);
+				if ($search_text!==false) {
+					$files->update(array('search_data' => $search_text), array('fileId' => $row['fileId']));
+				}
 			}
 		}
 		include_once("lib/search/refresh-functions.php");
