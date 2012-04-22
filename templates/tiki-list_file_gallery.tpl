@@ -180,7 +180,7 @@
 			<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 				<input type="hidden" name="where" value="files" />
 				<input type="hidden" name="galleryId" value="{$galleryId}" />
-				<label>{tr}Search in content{/tr}
+				<label class="find_content">{tr}Search in content{/tr}
 					<input name="highlight" size="30" type="text" />
 				</label>
 				<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
