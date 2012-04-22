@@ -83,7 +83,7 @@ class Reports_Users
 								'view' => $view, 
 								'type' => $type,
 								'always_email' => $always_email, 
-								'last_report' => $this->dt->format('Y-m-d H:i:s')
+								'last_report' => '',
 							)
 			);
 		} else {
