@@ -27,7 +27,7 @@
 				<field name="view">detailed</field>
 				<field name="type">html</field>
 				<field name="always_email">1</field>
-				<field name="last_report">2012-01-16 17:22:08</field>
+				<field name="last_report">0000-00-00 00:00:00</field>
 			</row>
 		</table_data>
 	</database>

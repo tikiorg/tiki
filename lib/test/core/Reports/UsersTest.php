@@ -91,9 +91,19 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 		$obj->addUserToDailyReports(array('user' => 'test'));
 	}
 	
-	public function testGetUsers_shouldReturnArrayWithUsers()
+	public function testGetUsersForReport_shouldReturnArrayWithUsers()
 	{
 		$expectedResult = array('test');
+		$users = $this->obj->getUsersForReport();
+		$this->assertEquals($expectedResult, $users);
+	}
+	
+	public function testGetUsersForReport_shouldIncludeNewlyCreatedUsersWithLastReportFieldEmpty()
+	{
+		$this->db->query("INSERT INTO `tiki_user_reports` (`user`, `interval`, `view`, `type`, `always_email`, `last_report`)
+			VALUES ('newUser', 'weekly', 'detailed', 'html', 1, '')");
+		
+		$expectedResult = array('test', 'newUser');
 		$users = $this->obj->getUsersForReport();
 		$this->assertEquals($expectedResult, $users);
 	}

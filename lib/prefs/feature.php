@@ -116,14 +116,11 @@ function prefs_feature_list($partial = false)
 		'feature_reports' => array(
 			'name' => tra('Reports'),
 			'description' => tra('Reports Generator'),
-			'help' => 'Trackers',
+			'help' => 'Reports',
 			'type' => 'flag',
-			'keywords' => 'report trackers logs',
+			'keywords' => 'report trackers logs builder',
 			'default' => 'n',
-			'dependencies' => array('feature_trackers'),
-			'permission' => array(
-				'permType' => 'trackers',
-			),
+			'view' => 'tiki-edit_report.php',
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),

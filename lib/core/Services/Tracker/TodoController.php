@@ -85,7 +85,7 @@ class Services_Tracker_TodoController
 				$detail['body'] = $body;
 			}
 
-			$todolib->addTodo($delayAfter - $delayNotif, $event, 'todo', $todoId, $detail);
+			$todolib->addTodo($delayAfter - $delayNotif, $event, 'todo', $todoId, "", $detail);
 		}
 
 		return array(
