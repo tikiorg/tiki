@@ -14,7 +14,7 @@
 		<legend>{tr}Tracker settings{/tr}</legend>
 		{preference name=user_selector_threshold}
 		{preference name=user_selector_realnames_tracker}
-		{preference name=feature_tracker_reports}
+		{preference name=feature_reports}
 		{preference name="tracker_remote_sync"}
 	</fieldset>
 
