@@ -39,13 +39,15 @@
 
 			<fieldset class="admin featurelist">
 				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_showreference}
+				{preference name=wikiplugin_addreference}
 				{preference name=wikiplugin_alink}
 				{preference name=wikiplugin_aname}
 				{preference name=wikiplugin_box}
 				{preference name=wikiplugin_button}
 				{preference name=wikiplugin_center}
 				{preference name=wikiplugin_code}
-                                {preference name=wikiplugin_countdown}
+				{preference name=wikiplugin_countdown}
 				{preference name=wikiplugin_div}
 				{preference name=wikiplugin_dl}
 				{preference name=wikiplugin_fade}
