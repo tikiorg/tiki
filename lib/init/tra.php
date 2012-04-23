@@ -48,7 +48,7 @@ function tra($content, $lg = '', $unused = false, $args = array())
 
 function init_language( $lg )
 {
-	global $tikidomain, $prefs, $tikilib;
+	global $tikidomain, $prefs;
 	if (is_file("lang/$lg/language.php")) {
 		global ${"lang_$lg"};
 
@@ -74,6 +74,7 @@ function init_language( $lg )
 
 		if ( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
 
+			$tikilib = TikiLib::lib('tiki');
 			$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
 			$result = $tikilib->fetchAll($query, array($lg));
 
