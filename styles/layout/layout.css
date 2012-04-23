@@ -557,7 +557,7 @@ ul.jumplinks,
 .clearfix:before,
 .clearfix:after {
     content: "";
-    display: table;
+    display: inherit;
 }
 
 .clearfix:after {
