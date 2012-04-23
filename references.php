@@ -73,7 +73,7 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 if (isset($_REQUEST['addlibreference']) && $action='a_lib') {
 
 	$errors = array();
-	if($referenceslib->get_permission('tiki_p_use_referencelib') != 'y'){
+	if($referenceslib->get_permission('tiki_p_use_references') != 'y'){
 		echo json_encode(array('result'=>'failure', 'message'=>'You do not have sufficient permissions to perform this action.'));
 		exit;
 	}
@@ -136,7 +136,7 @@ if (isset($_REQUEST['editreference'])) {
 }
 
 if (isset($_REQUEST['action']) && isset($ref_id)) {
-	if($referenceslib->get_permission('tiki_p_use_referencelib') != 'y'){
+	if($referenceslib->get_permission('tiki_p_use_references') != 'y'){
 		echo json_encode(array('result'=>'failure', 'message'=>'You do not have sufficient permissions to perform this action.'));
 		exit;
 	}

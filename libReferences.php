@@ -7,21 +7,21 @@
 
 require_once ('tiki-setup.php');
 $access->check_feature('feature_references');
-$access->check_permission(array('tiki_p_edit_referencelib'), tra("Edit Library References"));
+$access->check_permission(array('tiki_p_edit_references'), tra("Edit Library References"));
 
 include_once ("lib/references/referenceslib.php");
 global $dbTiki;
 $referenceslib = new referencesLib;
 
-$tiki_p_use_referencelib = $referenceslib->get_permission('tiki_p_use_referencelib');
-$tiki_p_edit_referencelib = $referenceslib->get_permission('tiki_p_edit_referencelib');
-if(isset($tiki_p_edit_referencelib) && $tiki_p_edit_referencelib=='y'){
-	$edit_referencelib = 1;
+$tiki_p_use_references = $referenceslib->get_permission('tiki_p_use_references');
+$tiki_p_edit_references = $referenceslib->get_permission('tiki_p_edit_references');
+if(isset($tiki_p_edit_references) && $tiki_p_edit_references=='y'){
+	$edit_references = 1;
 }else{
-	$edit_referencelib = 0;
+	$edit_references = 0;
 }
 
-if (!$edit_referencelib) {
+if (!$edit_references) {
 	$smarty->assign('msg', tra("You do not have permissions to view this page."));
 	$smarty->display("error.tpl");
 	die;

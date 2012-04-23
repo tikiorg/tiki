@@ -5,9 +5,9 @@
 var ajaxURL = '{$ajaxURL|escape}';
 var dataMain = 'page='+encodeURIComponent('{$page|escape}');
 
-var edit_referencelib = '{$edit_referencelib}';
-var use_referencelib = '{$use_referencelib}';
-//alert(edit_referencelib+','+use_referencelib);
+var edit_references = '{$edit_references}';
+var use_references = '{$use_references}';
+
 </script>
 
 {jq}
@@ -60,7 +60,7 @@ jQuery(document).ready(function(){
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
 				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="pics/icons/pencil.png"></a>';
 				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="pics/icons/cross.png"></a>';
-				if(data['is_library'] < 1 && use_referencelib == '1' && edit_referencelib == '1'){
+				if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
 					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="pics/icons/world_add.png"></a>';
 				}
 				htm += '</li>';
@@ -133,7 +133,7 @@ jQuery(document).ready(function(){
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
 				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="pics/icons/pencil.png"></a>';
 				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="pics/icons/cross.png"></a>';
-				if(data['is_library'] < 1 && use_referencelib == '1' && edit_referencelib == '1'){
+				if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
 					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="pics/icons/world_add.png"></a>';
 				}
 				htm += '</li>';
@@ -338,14 +338,14 @@ function delete_ref(ref_id){
 					{$references[i].biblio_code|escape}&nbsp;&nbsp;
 					<a class="edit_ref" title="{tr}Edit{/tr}" href="javascript:;" onclick="edit_ref('{$references[i].ref_id|escape}','{$references[i].biblio_code|escape}','{$references[i].author|escape}','{$references[i].title|escape}','{$references[i].year|escape}','{$references[i].part|escape}','{$references[i].uri|escape}','{$references[i].code|escape}','{$references[i].style|escape}','{$references[i].template|escape}','{$references[i].publisher|escape}','{$references[i].location|escape}')">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
 					<a title="{tr}Delete{/tr}" onclick="delete_ref('{$references[i].ref_id|escape}')" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-					{if $references[i].is_library lt 1 && $use_referencelib eq 1 && $edit_referencelib eq 1}
+					{if $references[i].is_library lt 1 && $use_references eq 1 && $edit_references eq 1}
 						<a class="add_lib_btn" title="{tr}Add to library{/tr}" onclick="add_lib('{$references[i].ref_id|escape}','{$references[i].biblio_code|escape}','{$references[i].author|escape}','{$references[i].title|escape}','{$references[i].year|escape}','{$references[i].part|escape}','{$references[i].uri|escape}','{$references[i].code|escape}','{$references[i].style|escape}','{$references[i].template|escape}','{$references[i].publisher|escape}','{$references[i].location|escape}')" >{icon _id='world_add' alt="{tr}Add to library{/tr}"}</a>
 					{/if}
 				</li>
 			{/section}
 			</ul>
 			
-			{if $use_referencelib eq 1}
+			{if $use_references eq 1}
 				{if $libReferencesCant gt 0}
 					Library References:<br />
 					<select name="lib_ref" id="lib_ref">
@@ -358,7 +358,7 @@ function delete_ref(ref_id){
 					<br /><span id="u_lib_status"></span>
 				{/if}
 			{/if}
-			{if $edit_referencelib eq 1 && $libReferencesCant gt 0}
+			{if $edit_references eq 1 && $libReferencesCant gt 0}
 				<br /><a href="libReferences.php" target="_blank">Edit Library References</a>
 			{/if}
 

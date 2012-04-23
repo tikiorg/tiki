@@ -5289,7 +5289,7 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
-				'name' => 'tiki_p_use_referencelib',
+				'name' => 'tiki_p_use_references',
 				'description' => tra('Can use reference library items'),
 				'level' => 'editors',
 				'type' => 'wiki',
@@ -5298,7 +5298,7 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
-				'name' => 'tiki_p_edit_referencelib',
+				'name' => 'tiki_p_edit_references',
 				'description' => tra('Can add to, edit and remove reference library items'),
 				'level' => 'editors',
 				'type' => 'wiki',

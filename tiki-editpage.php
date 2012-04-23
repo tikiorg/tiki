@@ -674,18 +674,18 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 			$references = $referencesLib->list_references($page_id);
 			$lib_references = $referencesLib->list_lib_references();
 
-			$tiki_p_use_referencelib = $referencesLib->get_permission('tiki_p_use_referencelib');
-			$tiki_p_edit_referencelib = $referencesLib->get_permission('tiki_p_edit_referencelib');
-			if(isset($tiki_p_use_referencelib) && $tiki_p_use_referencelib=='y'){
-				$use_referencelib = 1;
+			$tiki_p_use_references = $referencesLib->get_permission('tiki_p_use_references');
+			$tiki_p_edit_references = $referencesLib->get_permission('tiki_p_edit_references');
+			if(isset($tiki_p_use_references) && $tiki_p_use_references=='y'){
+				$use_references = 1;
 			}else{
-				$use_referencelib = 0;
+				$use_references = 0;
 			}
 
-			if(isset($tiki_p_edit_referencelib) && $tiki_p_edit_referencelib=='y'){
-				$edit_referencelib = 1;
+			if(isset($tiki_p_edit_references) && $tiki_p_edit_references=='y'){
+				$edit_references = 1;
 			}else{
-				$edit_referencelib = 0;
+				$edit_references = 0;
 			}
 
 			$assoc_references = $referencesLib->list_assoc_references($page_id);
@@ -722,8 +722,8 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 
 			$smarty->assign('libReferencesCant', $lib_references['cant']);
 			$smarty->assign('libReferences', $lib_references['data']);
-			$smarty->assign('use_referencelib', $use_referencelib);
-			$smarty->assign('edit_referencelib', $edit_referencelib);
+			$smarty->assign('use_references', $use_references);
+			$smarty->assign('edit_references', $edit_references);
 
 		}else{
 			$smarty->assign('showTab', '0');
