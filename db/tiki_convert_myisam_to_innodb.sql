@@ -1,5 +1,5 @@
 -- tiki_convert_myisam_to_innodb.sql
--- Script to convert a Tiki 8.0 SVN with InnoDB support from MyISAM to InnoDB
+-- Script to convert a Tiki database from MyISAM to InnoDB
 -- Make sure you take a full backup and disable the MySQL fulltext search option in Tiki before running this script
 --
 
@@ -261,3 +261,4 @@ ALTER TABLE `tiki_cart_inventory_hold` ENGINE=InnoDB;
 ALTER TABLE `tiki_source_auth` ENGINE=InnoDB;
 ALTER TABLE `tiki_connect` ENGINE=InnoDB;
 ALTER TABLE `tiki_areas` ENGINE=InnoDB;
+ALTER TABLE `tiki_page_references` ENGINE=InnoDB;
