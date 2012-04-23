@@ -327,6 +327,12 @@ $("#allowhtml").change(function() {
 										</table>
 									</fieldset>
 								{/if}
+								{if $prefs.wikiplugin_addreference eq 'y'}
+									<fieldset>
+										<legend>{tr}Bibliography{/tr}</legend>
+											{include file='addreference.tpl'}
+									</fieldset>
+								{/if}
 								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 									<fieldset>
 										<legend>{tr}Freetags{/tr}</legend>

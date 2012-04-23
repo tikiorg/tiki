@@ -5288,6 +5288,24 @@ class UsersLib extends TikiLib
 				'prefs' => array('feature_wysiwyg'),
 				'scope' => 'global',
 			),
+			array(
+				'name' => 'tiki_p_use_referencelib',
+				'description' => tra('Can use reference library items'),
+				'level' => 'editors',
+				'type' => 'wiki',
+				'admin' => false,
+				'prefs' => array('feature_references'),
+				'scope' => 'object',
+			),
+			array(
+				'name' => 'tiki_p_edit_referencelib',
+				'description' => tra('Can add to, edit and remove reference library items'),
+				'level' => 'editors',
+				'type' => 'wiki',
+				'admin' => false,
+				'prefs' => array('feature_references'),
+				'scope' => 'object',
+			),
 		);
 
 		$cachelib->cacheItem('rawpermissions' . $prefs['language'], serialize($permissions));

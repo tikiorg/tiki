@@ -364,6 +364,15 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'feature_references' => array(
+			'name' => tra('Wiki References'),
+			'description' => tra('Permits using references and the reference library.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wiki',
+				),
+			'default' => 'n',
+		),
 		'feature_shoutbox' => array(
 			'name' => tra('Shoutbox'),
 			'description' => tra('Quick comment (graffiti) box. Like a group chat, but not in real time.'),
