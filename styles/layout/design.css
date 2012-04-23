@@ -540,7 +540,6 @@ table.normal tr:nth-child(2n) {
 	color: #000;
 }
 
-/***** Tables, Tabs ****/
 /** Tables **/
 
 .normal, 
@@ -597,11 +596,6 @@ caption {
 
 .numeric, td.numeric {
 	text-align: right;
-}
-/** Tabs **/
-
-.tabactive {
-	border: solid 1px;
 }
 
 /***** Wiki *****/

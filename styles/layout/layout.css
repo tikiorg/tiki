@@ -957,16 +957,28 @@ tr.diffheader {
 
 .tabstoggle {
 	font-size: .8em;
-	position: relative;
-	width: 15%;
-	margin-top: 2px;
-	clear: none;
 }
 
 .tabstoggle .button {
-	margin: 0;
+	position: relative;
+	top: 8px;
 	padding: 0;
+}
+.tabstoggle.floatright {
+	float: none;
+	text-align: right;
+	width: auto;
+}
+
+.tabs .tabstoggle.floatright {
+	float: right;
+	width: 15%;
+	position: relative;
+	clear: none;
+}
+.tabs .tabstoggle.floatright .button {
 	position: absolute;
+	top: 0;
 	right: 0;
 }
 
@@ -993,6 +1005,7 @@ tr.diffheader {
 }
 
 .tabactive {
+	border: solid 1px #999;
 	border-bottom: none;
 	border-top-width: 2px;
 	position: relative;
@@ -1010,7 +1023,7 @@ tr.diffheader {
 	position: relative;
 	padding: 4px;
 	top: 0;
-	border-top: none;
+/*	border-top: none;*/
 	margin: 0;
 }
 
