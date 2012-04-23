@@ -1635,7 +1635,7 @@ CREATE TABLE `tiki_pages` (
   UNIQUE KEY `pageName` (`pageName`),
   KEY `data` (`data`(255)),
   KEY `pageRank` (`pageRank`),
-  KEY `lastModif`(`lastModif`),
+  KEY `lastModif`(`lastModif`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `tiki_pageviews`;
