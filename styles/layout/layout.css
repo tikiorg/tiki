@@ -103,7 +103,7 @@ input[type=submit] {
 	padding-left: .5em;
 	text-decoration: none;
 }
-.sf-sub-indicator {
+.cssmenu_vert .sf-sub-indicator {
 	top: 3px; /* the default arrow is 10px high, so 16px-10px/2 */
 }
 
