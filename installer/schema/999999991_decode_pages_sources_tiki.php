@@ -39,5 +39,6 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 
 	$converter = new convertPagesToTiki9();
 	$converter->convertPages();
+	$converter->convertModules();
 }
 

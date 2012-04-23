@@ -1241,6 +1241,11 @@ class convertPagesToTiki9
 		if (empty($statusExists)) {
 			TikiLib::query("ALTER TABLE tiki_history ADD status VARCHAR(60) default '' AFTER is_html;");
 		}
+
+		$statusExists = TikiLib::fetchAll("SELECT * FROM information_schema.COLUMNS WHERE table_schema = ? AND table_name = 'tiki_user_modules' AND column_name = 'status'", array($dbs_tiki));
+		if (empty($statusExists)) {
+			TikiLib::query("ALTER TABLE tiki_user_modules ADD status VARCHAR(60) default '' AFTER parse;");
+		}
 	}
 
 	function convertPages()
@@ -1296,6 +1301,24 @@ class convertPagesToTiki9
 		}
 	}
 
+	function convertModules()
+	{
+		$this->addStatus();
+
+		$infos = TikiLib::fetchAll('SELECT data, name FROM tiki_user_modules WHERE status <> "conv9" AND status <> "new9+"');
+
+		foreach($infos as $info) {
+			if (!empty($info['data'])) {
+				$converted = $this->convertData($info['data']);
+
+				print_r($converted);
+				$this->updatePlugins($converted['fingerPrintsOld'], $converted['fingerPrintsNew']);
+
+				$this->saveModule($info['name'], $converted['data']);
+			}
+		}
+	}
+
 	function savePage($id, $data)
 	{
 		TikiLib::query("
@@ -1312,6 +1335,16 @@ class convertPagesToTiki9
 			SET data = ?, status = 'conv9'
 			WHERE historyId = ? AND status <> 'conv9' AND status <> 'new9+'
 			", array($data, $id));
+	}
+
+	function saveModule($name, $data)
+	{
+		print_r(array($data, $name));
+		TikiLib::query("
+			UPDATE tiki_user_modules
+			SET data = ?, status = 'conv9'
+			WHERE name = ? AND status <> 'conv9' AND status <> 'new9+'
+			", array($data, $name));
 	}
 
 	function updatePlugins($fingerPrintsOld, $fingerPrintsNew)
@@ -1340,7 +1373,8 @@ class convertPagesToTiki9
 		$matches = WikiParser_PluginMatcher::match($data);
 
 		$replaced = array();
-
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 1);
 		$fingerPrintsOld = array();
 		foreach ($oldMatches as $match) {
 			$name = $match->getName();
@@ -1350,7 +1384,7 @@ class convertPagesToTiki9
 
 			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 		}
-
+		echo $data;
 		$fingerPrintsNew = array();
 		foreach ($matches as $match) {							// each plugin
 			$name = $match->getName();
@@ -1358,6 +1392,7 @@ class convertPagesToTiki9
 			$args = $this->argumentParser->parse($match->getArguments());
 			$plugin = (string) $match;
 			$key = '§'.md5(TikiLib::genPass()).'§';					// by replace whole plugin with a guid
+
 			$data = str_replace($plugin, $key, $data);
 
 			$body = $match->getBody();									// leave the bodies alone
