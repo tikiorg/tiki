@@ -97,6 +97,16 @@ input[type=submit] {
 	padding: 1px;
 }
 
+/* Some default values for basic CSS menus layout */
+.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
+	line-height: 16px;
+	padding-left: .5em;
+	text-decoration: none;
+}
+.sf-sub-indicator {
+	top: 3px; /* the default arrow is 10px high, so 16px-10px/2 */
+}
+
 .iconmenu {
 	display: inline;
 }
