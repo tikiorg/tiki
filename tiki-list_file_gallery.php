@@ -923,9 +923,7 @@ $smarty->assign('treeRootId', $subGalleries['parentId']);
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x']) || isset($_REQUEST["edit_mode"])) {
 	$gals = array();
 	foreach ($subGalleries['data'] as $gal) {
-		if ($gal['id'] != $galleryId) {
-			$gals[] = array('label' => $gal['parentName'] . ' > ' . $gal['name'], 'id' => $gal['id']);
-		}
+		$gals[] = array('label' => $gal['parentName'] . ' > ' . $gal['name'], 'id' => $gal['id']);
 	}
 	sort($gals);
 	$smarty->assign_by_ref('all_galleries', $gals);

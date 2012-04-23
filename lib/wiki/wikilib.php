@@ -1262,6 +1262,8 @@ class convertPagesToTiki9
 
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
+		$this->addStatus();
+
 		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND status <> "new9+" AND pageName = ? AND version = ?', array($page, $version));
 
 		foreach($infos as $info) {

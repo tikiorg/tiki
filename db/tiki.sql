@@ -1635,7 +1635,7 @@ CREATE TABLE `tiki_pages` (
   UNIQUE KEY `pageName` (`pageName`),
   KEY `data` (`data`(255)),
   KEY `pageRank` (`pageRank`),
-  KEY `lastModif`(`lastModif`),
+  KEY `lastModif`(`lastModif`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `tiki_pageviews`;
@@ -2812,7 +2812,7 @@ CREATE TABLE `tiki_users_score` (
 
 DROP TABLE IF EXISTS `tiki_file_handlers`;
 CREATE TABLE `tiki_file_handlers` (
-  `mime_type` varchar(64) default NULL,
+  `mime_type` varchar(128) default NULL,
   `cmd` varchar(238) default NULL
 ) ENGINE=MyISAM;
 

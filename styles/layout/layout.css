@@ -97,6 +97,16 @@ input[type=submit] {
 	padding: 1px;
 }
 
+/* Some default values for basic CSS menus layout */
+.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
+	line-height: 16px;
+	padding-left: .5em;
+	text-decoration: none;
+}
+.cssmenu_vert .sf-sub-indicator {
+	top: 3px; /* the default arrow is 10px high, so 16px-10px/2 */
+}
+
 .iconmenu {
 	display: inline;
 }
@@ -547,7 +557,7 @@ ul.jumplinks,
 .clearfix:before,
 .clearfix:after {
     content: "";
-    display: table;
+    display: inherit;
 }
 
 .clearfix:after {
@@ -957,16 +967,28 @@ tr.diffheader {
 
 .tabstoggle {
 	font-size: .8em;
-	position: relative;
-	width: 15%;
-	margin-top: 2px;
-	clear: none;
 }
 
 .tabstoggle .button {
-	margin: 0;
+	position: relative;
+	top: 8px;
 	padding: 0;
+}
+.tabstoggle.floatright {
+	float: none;
+	text-align: right;
+	width: auto;
+}
+
+.tabs .tabstoggle.floatright {
+	float: right;
+	width: 15%;
+	position: relative;
+	clear: none;
+}
+.tabs .tabstoggle.floatright .button {
 	position: absolute;
+	top: 0;
 	right: 0;
 }
 
@@ -993,6 +1015,7 @@ tr.diffheader {
 }
 
 .tabactive {
+	border: solid 1px #999;
 	border-bottom: none;
 	border-top-width: 2px;
 	position: relative;
@@ -1010,7 +1033,7 @@ tr.diffheader {
 	position: relative;
 	padding: 4px;
 	top: 0;
-	border-top: none;
+/*	border-top: none;*/
 	margin: 0;
 }
 
