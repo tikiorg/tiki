@@ -56,4 +56,7 @@
 
 .CodeMirrorPrepSize {
 	position: absolute;
+	z-index: -99999999;
+	opacity:0.01;
+	filter:alpha(opacity=1);
 }
