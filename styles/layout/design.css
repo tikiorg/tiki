@@ -63,6 +63,7 @@ textarea:disabled {
 }
 
 fieldset {
+	border: solid 1px #999;
 	margin-bottom: 2px;
 	padding: 0.3em;
 }
