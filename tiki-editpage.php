@@ -919,9 +919,18 @@ if (
 	$cat_lang = $_REQUEST['lang'];
 	include_once("categorize.php");
 	include_once("poll_categorize.php");
-	include_once("freetag_apply.php");
+
+	/*RP NOTE: freetabs was causing larger site's pages to be lost when editing sections
+	 * this has to do with lucene indexing being refreshed.
+	 * this was traced to lib/core/Search/Index -> getGlobalContent();
+	 * This seems to divert it when sections are being edited, please either fix or leave
+	 * */
+	if(!isset($_REQUEST['hdr'])) {
+		include_once("freetag_apply.php");
+	}
+
 	$page = $_REQUEST["page"];
-	
+
 	$edit = $_REQUEST["edit"];
 	// Parse $edit and eliminate image references to external URIs (make them internal)
 	$edit = $imagegallib->capture_images($edit);
