@@ -18,9 +18,11 @@ function wikiplugin_showreference_info()
 				'name' => tra('Show Title'),
 				'description' => tra('Show bibliography title. Title is shown by default.'),
 				'options' => array(
+					array('text' => tra(''), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'yes'), 
 					array('text' => tra('No'), 'value' => 'no'), 
-				)
+				),
+				'default' => '',
 			),
 			'hlevel' => array(
 				'required' => false,
@@ -57,10 +59,10 @@ function wikiplugin_showreference($data,$params) {
 		$title = $params['title'];
 	}
 
-	if(isset($params['showtitle']) && $params['showtitle']!=''){
+	if(isset($params['showtitle'])){
 		$showtitle = $params['showtitle'];
 	}
-	if($showtitle=='yes'){
+	if($showtitle=='yes' || $showtitle==''){
 		$showtitle = 1;
 	}else{
 		$showtitle = 0;
@@ -106,7 +108,6 @@ function wikiplugin_showreference($data,$params) {
 		$referencesLib = new referencesLib();
 
 		$references = $referencesLib->list_assoc_references($page_id);
-		// echo '<pre>';print_r($references);die;
 
 		$referencesData = array();
 		$is_global = 1;
@@ -119,7 +120,6 @@ function wikiplugin_showreference($data,$params) {
 			}
 			$is_global = 0;
 		}
-		// echo '<pre>';print_r($referencesData);die;
 
 		if(is_array($referencesData)){
 			
@@ -140,8 +140,6 @@ function wikiplugin_showreference($data,$params) {
 			}else{
 				$values = array();
 			}
-			// $values = $references;
-			// echo '<pre>';print_r($values);die;
 
 			if($is_global){
 				$excluded = array();
@@ -155,14 +153,7 @@ function wikiplugin_showreference($data,$params) {
 				}
 			}
 
-			// $referencesData = array_unique($referencesData);
-
 			foreach ($referencesData as $index=>$ref){
-				// echo "<br>index=",$index;
-				// echo ', ',$arr['biblio_code'];
-				// die;
-				// echo '->',$is_global,'<br>';
-				// echo '<pre>';print_r($referencesData);die;
 				
 				$ref_no = $index+1;
 
@@ -174,12 +165,9 @@ function wikiplugin_showreference($data,$params) {
 						$cssClass = $values['data'][$ref]['style'];
 					}
 
-				// echo '<pre>';print_r($values['data']);die;
 					$text = parseTemplate($tags, $ref, $values['data']);
-					// echo '<br>text=',$text;die;
 				}else{
 					if(array_key_exists($ref, $excluded)){
-				// echo '<pre>';print_r($references['data']);die;
 						$text = parseTemplate($tags, $ref, $references['data']);
 					}
 				}
