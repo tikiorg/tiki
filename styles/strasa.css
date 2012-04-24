@@ -452,7 +452,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-right: 10px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
-	min-width:750px;
 }
 
 #topbar_modules .logged-in {
