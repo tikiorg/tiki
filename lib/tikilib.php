@@ -2537,6 +2537,9 @@ class TikiLib extends TikiDb_Bridge
 		$page_info = $this->get_page_info($page);
 		sendWikiEmailNotification('wiki_page_deleted', $page, $user, $comment, 1, $page_info['data'], $machine);
 		
+		//Remove the bibliography references for this page
+		$this->removePageReference($page);
+		
 		$wikilib = TikiLib::lib('wiki');
 		$multilinguallib = TikiLib::lib('multilingual');
 		$multilinguallib->detachTranslation('wiki page', $multilinguallib->get_page_id_from_name($page));
@@ -5512,6 +5515,13 @@ JS;
     			break;
 		}
 		
+		return $result;
+	}
+
+	public function removePageReference($page){
+		$page_id = $this->get_page_id_from_name($page);
+		$query = "DELETE FROM `tiki_page_references` WHERE `page_id`=?";
+		$result = $this->query($query, array($page_id));
 		return $result;
 	}
 }
