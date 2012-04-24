@@ -179,6 +179,13 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				add_feedback($pref, tr('%0 set', $pref), 1, 1);
 				$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
 			}
+			/*
+				Enable/disable addreference/showreference plugins alognwith references feature.
+			*/
+			if($pref == 'feature_references'){
+				$tikilib->set_preference( 'wikiplugin_addreference', $value );
+				$tikilib->set_preference( 'wikiplugin_showreference', $value );
+			}			
 		}
 	}
 }
