@@ -906,6 +906,9 @@ class TikiLib extends TikiDb_Bridge
 				$extraEvents = " or `event`='article_*'";
 			} elseif ($event == 'wiki_comment_changes') {
 				$extraEvents = " or `event`='wiki_page_changed'";
+			// Blog comment mail
+			}elseif($event == 'blog_comment_changes'){ 
+				$extraEvents = " or `event`='blog_page_changed'"; 
 			}
 			$mid = "(`event`=?$extraEvents) and (`object`=? or `object`='*')";
 			$bindvars[] = $event;
@@ -956,6 +959,11 @@ class TikiLib extends TikiDb_Bridge
 					case 'blog_post':
 						$res['perm']=($this->user_has_perm_on_object($res['user'], $object, 'blog', 'tiki_p_read_blog') ||
 								$this->user_has_perm_on_object($res['user'], $object, 'blog', 'tiki_p_admin_blog'));
+									break;
+					// Blog comment mail				
+					case 'blog_comment_changes': 
+						$res['perm']=($this->user_has_perm_on_object($res['user'], $object, 'blog', 'tiki_p_read_blog') || $this->user_has_perm_on_object($res['user'], $object, 'comments', 'tiki_p_read_comments'
+								)); 
 									break;
 					case 'map_changed':
 						$res['perm']=$this->user_has_perm_on_object($res['user'], $object, 'map', 'tiki_p_map_view');
@@ -1033,6 +1041,9 @@ class TikiLib extends TikiDb_Bridge
 					case 'wiki_page_created': $objectType="wiki page";
 									break;
 					case 'blog_post': $objectType="blog";
+									break;
+					// Blog comment mail				
+					case 'blog_page_changed': $objectType="blog page"; 
 									break;
 					case 'map_changed': $objectType="map_changed";
 									break;
