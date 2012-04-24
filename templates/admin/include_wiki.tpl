@@ -122,8 +122,9 @@
 
 		{tab name="{tr}Features{/tr}"}
 			<input type="hidden" name="wikifeatures" />    	
-			{preference name=feature_sandbox}
 
+			{preference name=feature_sandbox}
+			{preference name=feature_references}
 			{preference name=feature_wiki_comments}
 			
 			{preference name=feature_wiki_attachments}

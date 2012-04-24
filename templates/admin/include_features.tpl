@@ -69,7 +69,6 @@
 				{preference name=feature_comm}
 				{preference name=feature_contribution}
 				{preference name=feature_copyright}
-				{preference name=feature_references}
 				{preference name=feature_mailin}				
 					
 				{preference name=feature_custom_home}
