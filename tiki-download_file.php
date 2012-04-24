@@ -278,8 +278,13 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	
 			// Fallback to an icon if the format is not supported
 			if ( ! Image::is_supported($format) ) {
-				$_GET['icon'] = 'y';
-				$_GET['max'] = 32;
+				// Is the filename correct? Maybe it doesn't have an extenstion?
+				// Try to determine the format from the filetype too
+				$format = substr($info['filetype'], strrpos($info['filetype'], '/') + 1);
+				if ( ! Image::is_supported($format) ) {
+					$_GET['icon'] = 'y';
+					$_GET['max'] = 32;
+				}
 			}
 
 			do {
