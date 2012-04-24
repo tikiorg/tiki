@@ -6,7 +6,7 @@ function wikiplugin_addreference_info()
 		'description' => tra('Add bibliography references to wiki pages.'),
 		'format' => 'html',
 		'prefs' => array('wikiplugin_addreference','feature_references'),
-		'icon' => 'pics/icons/text_signature.png',
+		'icon' => 'img/icons/text_signature.png',
 		'params' => array(
 			'biblio_code' => array(
 				'required' => true,
