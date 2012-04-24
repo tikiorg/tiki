@@ -211,7 +211,7 @@
 										<option value="{literal}{{/literal}poll{literal}}{/literal}">--{tr}Random active poll{/tr}--</option>
 										<option value="{literal}{{/literal}poll id=current{literal}}{/literal}">--{tr}Random current poll{/tr}--</option>
 										{section name=ix loop=$polls}
-											<option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title|escape}</option>
+											<option value="{literal}{{/literal}poll pollId={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title|escape}</option>
 										{/section}
 									</select>
 								</td>
