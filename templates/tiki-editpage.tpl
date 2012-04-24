@@ -327,7 +327,7 @@ $("#allowhtml").change(function() {
 										</table>
 									</fieldset>
 								{/if}
-								{if $prefs.wikiplugin_addreference eq 'y'}
+								{if $prefs.wikiplugin_addreference eq 'y' && $showBiblioSection}
 									<fieldset>
 										<legend>{tr}Bibliography{/tr}</legend>
 											{include file='addreference.tpl'}

@@ -669,7 +669,7 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 		$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
 		if($page_id){
 
-			$smarty->assign('showTab', '1');
+			$smarty->assign('showBiblioSection', '1');
 
 			$references = $referencesLib->list_references($page_id);
 			$lib_references = $referencesLib->list_lib_references();
@@ -726,7 +726,7 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 			$smarty->assign('edit_references', $edit_references);
 
 		}else{
-			$smarty->assign('showTab', '0');
+			$smarty->assign('showBiblioSection', '0');
 		}
 	}
 }
