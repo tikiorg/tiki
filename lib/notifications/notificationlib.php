@@ -115,6 +115,13 @@ class NotificationLib extends TikiLib
 				'url' => '',
 				'available' => $prefs['feature_blogs'] == 'y',
 				'object' => '*'
+		);// Blog comment mail
+		$watches['blog_comment_changes'] = array( 
+			'label' => tra('A comment in a blog page is posted or edited') , 
+			'type' => 'blog', 
+			'url' => '', 
+			'available' => $prefs['feature_blogs'] == 'y', 
+			'object' => '*' 
 		);
 
 		$watches['wiki_page_changes'] = array(

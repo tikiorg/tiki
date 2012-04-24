@@ -89,6 +89,41 @@ if ($prefs['feature_freetags'] == 'y') {
 	}
 }
 
+// Blog comment mail 
+  if ($prefs['feature_user_watches'] == 'y') {
+	if ($user && isset($_REQUEST['watch_event'])) {
+		check_ticket('blog');
+		if ($_REQUEST['watch_action'] == 'add') {
+			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog', $blog_data['title'], "tiki-view_blog_post.php?postId=" . $_REQUEST['postId']);
+		} else {
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog');
+		}
+	}
+	$smarty->assign('user_watching_blog', 'n');
+
+	if ($user && $tikilib->user_watches($user, 'blog_comment_changes', $_REQUEST['postId'], 'blog')) {
+		$smarty->assign('user_watching_blog', 'y');
+	}
+	
+	// Check, if the user is watching this blog by a category.
+	if ($prefs['feature_categories'] == 'y') {
+		$watching_categories_temp = $categlib->get_watching_categories($_REQUEST['postId'], 'blog', $user);
+		$smarty->assign('category_watched', 'n');
+		if (count($watching_categories_temp) > 0) {
+			$smarty->assign('category_watched', 'y');
+			$watching_categories = array();
+			foreach ($watching_categories_temp as $wct) {
+				$watching_categories[] = array(
+					"categId" => $wct,
+					"name" => $categlib->get_category_name($wct)
+				);
+			}
+			$smarty->assign('watching_categories', $watching_categories);
+		}
+	}
+}  
+
+
 if ($prefs['feature_categories'] == 'y') {
 	$cat_type = 'blog post';
 	$cat_objid = $postId;
