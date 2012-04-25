@@ -1,35 +1,36 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 require_once ('tiki-setup.php');
 $access->check_feature('feature_references');
-$access->check_permission(array('tiki_p_edit_references'), tra("Edit Library References"));
+$access->check_permission(array('tiki_p_edit_references'), tra('Edit Library References'));
 
-include_once ("lib/references/referenceslib.php");
+include_once ('lib/references/referenceslib.php');
 global $dbTiki;
 $referenceslib = new referencesLib;
 
 $tiki_p_use_references = $referenceslib->get_permission('tiki_p_use_references');
 $tiki_p_edit_references = $referenceslib->get_permission('tiki_p_edit_references');
-if (isset($tiki_p_edit_references) && $tiki_p_edit_references=='y') {
+
+if (isset($tiki_p_edit_references) && $tiki_p_edit_references == 'y') {
 	$edit_references = 1;
 } else {
 	$edit_references = 0;
 }
 
 if (!$edit_references) {
-	$smarty->assign('msg', tra("You do not have permissions to view this page."));
-	$smarty->display("error.tpl");
+	$smarty->assign('msg', tra('You do not have permissions to view this page.'));
+	$smarty->display('error.tpl');
 	die;
 }
 
 
 $smarty->assign('page', $_REQUEST["page"]);
-$page = $_REQUEST["page"];
+$page = $_REQUEST['page'];
 
 $page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 $action = $_REQUEST['action'];
@@ -49,7 +50,7 @@ $ref_template = $_REQUEST['ref_template'];
 if (isset($_REQUEST['addreference'])) {
 	$errors = array();
 	
-	if ($ref_biblio_code=='') {
+	if ($ref_biblio_code == '') {
 		$errors[] = 'Please enter Biblio Code.';
 	}
 
@@ -58,8 +59,20 @@ if (isset($_REQUEST['addreference'])) {
 		$errors[] = 'This reference already exists.';
 	}
 
-	if (count($errors)<1) {
-		$id = $referenceslib->add_lib_reference($ref_biblio_code, $ref_author, $ref_title, $ref_part, $ref_uri, $ref_code, $ref_year, $ref_style, $ref_template, $ref_publisher, $ref_location);
+	if (count($errors) < 1) {
+		$id = $referenceslib->add_lib_reference(
+						$ref_biblio_code,
+						$ref_author,
+						$ref_title,
+						$ref_part,
+						$ref_uri,
+						$ref_code,
+						$ref_year,
+						$ref_style,
+						$ref_template,
+						$ref_publisher,
+						$ref_location
+		);
 	} else {
 		foreach ($errors as $error) {
 			$msg .= tra($error);
@@ -72,15 +85,28 @@ if (isset($_REQUEST['editreference'])) {
 
 	$errors = array();
 
-	if ($ref_id=='') {
+	if ($ref_id == '') {
 		$errors[] = 'Reference not found.';
 	}
-	if ($ref_biblio_code=='') {
+	if ($ref_biblio_code == '') {
 		$errors[] = 'Please enter Biblio Code.';
 	}
 
-	if (count($errors)<1) {
-		$referenceslib->edit_libReference($ref_id, $ref_biblio_code, $ref_author, $ref_title, $ref_part, $ref_uri, $ref_code, $ref_year, $ref_style, $ref_template, $ref_publisher, $ref_location);
+	if (count($errors) < 1) {
+		$referenceslib->edit_libReference(
+						$ref_id,
+						$ref_biblio_code,
+						$ref_author,
+						$ref_title,
+						$ref_part,
+						$ref_uri,
+						$ref_code,
+						$ref_year,
+						$ref_style,
+						$ref_template,
+						$ref_publisher,
+						$ref_location
+		);
 	} else {
 		foreach ($errors as $error) {
 			$msg .= tra($error);
@@ -97,8 +123,8 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 }
 
 $references = $referenceslib->list_lib_references();
-$smarty->assign('references', $references["data"]);
+$smarty->assign('references', $references['data']);
 
 // Display the template
 $smarty->assign('mid', 'references.tpl');
-$smarty->display("tiki.tpl");
+$smarty->display('tiki.tpl');
