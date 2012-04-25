@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $prefs.wikiplugin_addreference eq 'y'}
 
 {jq}
