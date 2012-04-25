@@ -14,12 +14,10 @@ class Search_Formatter_ValueFormatter_Categorylist extends Search_Formatter_Valu
 	
 	function __construct($arguments)
 	{
-		if (isset($arguments['requiredParents'])) {
-			if (!empty($arguments['requiredParents'])) {
+		if (!empty($arguments['requiredParents'])) {
 			$this->requiredParents = explode(',', $arguments['requiredParents']);
-			} else {
+		} else {
 			$this->requiredParents = 'all';
-			}
 		}
 
 		if (isset($arguments['excludeParents'])) {
