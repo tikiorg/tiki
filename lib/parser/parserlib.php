@@ -1068,7 +1068,10 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
 			// pre-parse the output so nested plugins don't fall out all over the place
+			$this->needDecoded = false;
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
+			$this->needDecoded = true;
+
 			// remove hrefs and onclicks
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
@@ -2683,8 +2686,11 @@ if ( \$('#$id') ) {
 									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
-						//echo $maketoc;die;
+
+						$this->needDecoded = false;
 						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
+						$this->needDecoded = true;
+
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 							$maketoc .= '<!--toc-->';
