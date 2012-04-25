@@ -20,7 +20,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function parse($input)
 	{
 		$result = "";
-return $input;
+
 		if ($this->parsing == true) {
 			$parser = end(self::$spareParsers);
 			if (!empty($parser) && $parser->parsing == false) {
@@ -75,6 +75,11 @@ return $input;
 			'args' => $pluginArgs,
 			'body' => ''
 		);
+	}
+
+	function isPlugin()
+	{
+		return (count($this->pluginStack) > 0);
 	}
 
 	function pluginExecute($name, $args = array(), $body = "")
