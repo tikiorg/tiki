@@ -8,7 +8,7 @@ PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SMILE							[a-z]+
 
-%s bold box center colortext italic header ulist olist link strikethrough table titlebar underscore wikilink
+%s plugin bold box center colortext italic header ulist olist link strikethrough table titlebar underscore wikilink
 %options flex
 
 %%
@@ -26,6 +26,7 @@ SMILE							[a-z]+
 
 "{"{PLUGIN_ID}"(".*?")}"
 	%{
+		lexer.begin('plugin');
 		yy.pluginStack = parser.stackPlugin(yytext, yy.pluginStack); //js
 
 		if (parser.size(yy.pluginStack) == 1) {//js
@@ -34,6 +35,7 @@ SMILE							[a-z]+
 			return 'CONTENT'; //js
 		}//js
 
+		//php $this->begin('plugin');
 		//php $this->stackPlugin($yytext);
 
 		//php if (count($this->pluginStack) == 1) {
@@ -42,8 +44,15 @@ SMILE							[a-z]+
 		//php 	return 'CONTENT';
 		//php }
 	%}
-"{"{PLUGIN_ID}"}"
+<plugin><<EOF>>
 	%{
+		lexer.unput("{" + yy.pluginStack[parser.size(yy.pluginStack) - 1].name + "}"); //js
+
+		//php lexer.unput("{" + $this->pluginStack[count($this->pluginStack) - 1]['name'] + "}"); //js
+	%}
+<plugin>"{"{PLUGIN_ID}"}"
+	%{
+		lexer.popState(); //js
 		if (yy.pluginStack) { //js
 			if ( //js
 				parser.size(yy.pluginStack) > 0 && //js
@@ -61,6 +70,7 @@ SMILE							[a-z]+
 		} //js
 		return 'CONTENT'; //js
 
+		//php $this->popState();
 		//php if (!empty($this->pluginStack)) {
 		//php 	if (
 		//php 		count($this->pluginStack) > 0 &&
@@ -78,7 +88,6 @@ SMILE							[a-z]+
 		//php }
 		//php return 'CONTENT';
 	%}
-
 
 
 "---"
@@ -585,29 +594,14 @@ content
 		$$ = parser.header($2); //js
 		//php $$ = $this->header($2);
 	}
- | HEADER_START contents EOF
-	{
-		$$ = parser.header($2); //js
-		//php $$ = $this->header($2);
-	}
  | ULIST_START ULIST_END
  | ULIST_START contents ULIST_END
 	{
 		$$ = parser.ulist($2); //js
 		//php $$ = $this->ulist($2);
 	}
- | ULIST_START contents EOF
-	{
-		$$ = parser.ulist($2); //js
-		//php $$ = $this->ulist($2);
-	}
  | OLIST_START OLIST_END
  | OLIST_START contents OLIST_END
-	{
-		$$ = parser.olist($2); //js
-		//php $$ = $this->olist($2);
-	}
- | OLIST_START contents EOF
 	{
 		$$ = parser.olist($2); //js
 		//php $$ = $this->olist($2);
@@ -624,18 +618,8 @@ content
 		$$ = parser.box($2); //js
 		//php $$ = $this->box($2);
 	}
- | BOX_START contents EOF
-	{
-		$$ = parser.box($2); //js
-		//php $$ = $this->box($2);
-	}
  | CENTER_START CENTER_END
  | CENTER_START contents CENTER_END
-	{
-		$$ = parser.center($2); //js
-		//php $$ = $this->center($2);
-	}
- | CENTER_START contents EOF
 	{
 		$$ = parser.center($2); //js
 		//php $$ = $this->center($2);
@@ -646,29 +630,14 @@ content
 		$$ = parser.colortext($2); //js
 		//php $$ = $this->colortext($2);
 	}
- | COLORTEXT_START contents EOF
-	{
-		$$ = parser.colortext($2); //js
-		//php $$ = $this->colortext($2);
-	}
  | ITALIC_START ITALIC_END
  | ITALIC_START contents ITALIC_END
 	{
 		$$ = parser.italics($2); //js
 		//php $$ = $this->italics($2);
 	}
- | ITALIC_START contents EOF
-	{
-		$$ = parser.italics($2); //js
-		//php $$ = $this->italics($2);
-	}
  | LINK_START LINK_END
  | LINK_START contents LINK_END
-	{
-		$$ = parser.link($2); //js
-		//php $$ = $this->link($2);
-	}
- | LINK_START contents EOF
 	{
 		$$ = parser.link($2); //js
 		//php $$ = $this->link($2);
@@ -685,29 +654,14 @@ content
 		$$ = parser.tableParser($2); //js
 		//php $$ = $this->tableParser($2);
 	}
- | TABLE_START contents EOF
-	{
-		$$ = parser.tableParser($2); //js
-		//php $$ = $this->tableParser($2);
-	}
  | TITLEBAR_START TITLEBAR_END
  | TITLEBAR_START contents TITLEBAR_END
 	{
 		$$ = parser.titlebar($2); //js
 		//php $$ = $this->titlebar($2);
 	}
- | TITLEBAR_START contents EOF
-	{
-		$$ = parser.titlebar($2); //js
-		//php $$ = $this->titlebar($2);
-	}
  | UNDERSCORE_START UNDERSCORE_END
  | UNDERSCORE_START contents UNDERSCORE_END
-	{
-		$$ = parser.underscore($2); //js
-		//php $$ = $this->underscore($2);
-	}
- | UNDERSCORE_START contents EOF
 	{
 		$$ = parser.underscore($2); //js
 		//php $$ = $this->underscore($2);
@@ -740,5 +694,4 @@ content
  		//php $3['body'] = $2;
  		//php $$ = $this->plugin($3);
  	}
- | error
  ;
