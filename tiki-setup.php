@@ -19,17 +19,6 @@ if (version_compare(PHP_VERSION, '5.2.0', '<')) {
 // Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On"
 unset($user);
 
-function jml_debug($debug_txt) {
-$debug_handle = fopen("/tmp/jml_toto2",'a+');
-fwrite($debug_handle,$debug_txt,strlen($debug_txt));
-fclose($debug_handle);
-}
-function jml_backtrace() {
-echo "<pre>";
-print_r(debug_backtrace());
-echo "</pre>";
-}
-
 require_once 'lib/setup/third_party.php';
 // Enable Versioning
 include_once ('lib/setup/twversion.class.php');
