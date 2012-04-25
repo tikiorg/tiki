@@ -166,7 +166,7 @@ function wikiplugin_showreference($data,$params)
 
 				$text = '';
 				$cssClass = '';
-				if array_key_exists($ref, $values['data'])) {
+				if (array_key_exists($ref, $values['data'])) {
 					
 					if ($values['data'][$ref]['style'] != '') {
 						$cssClass = $values['data'][$ref]['style'];
