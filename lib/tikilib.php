@@ -5536,6 +5536,24 @@ JS;
 		$result = $this->query($query, array($page_id));
 		return $result;
 	}
+
+	public function saveEditorToolbars($new_toolbars = array(), $section='global', $action='add')
+	{
+		global $prefs;
+		$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+		$toolbars = explode(',', $prefs[$prefName]);
+		if ($action == 'add') {
+			foreach ($new_toolbars as $key => $value) {
+				if(!in_array($value, $toolbars)){
+					$toolbars[] = $value;
+				}
+			}
+		} else {//remove the toolbars
+			$toolbars = array_diff($toolbars, $new_toolbars);
+		}
+		$toolbars = implode(',', $toolbars);
+		$this->set_preference( $prefName, $toolbars );
+	}
 }
 // end of class ------------------------------------------------------
 
