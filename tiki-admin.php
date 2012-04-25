@@ -182,9 +182,9 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 			/*
 				Enable/disable addreference/showreference plugins alognwith references feature.
 			*/
-			if($pref == 'feature_references'){
-				$tikilib->set_preference( 'wikiplugin_addreference', $value );
-				$tikilib->set_preference( 'wikiplugin_showreference', $value );
+			if ($pref == 'feature_references') {
+				$tikilib->set_preference('wikiplugin_addreference', $value);
+				$tikilib->set_preference('wikiplugin_showreference', $value);
 			}			
 		}
 	}

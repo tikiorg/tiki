@@ -5529,7 +5529,8 @@ JS;
 		return $result;
 	}
 
-	public function removePageReference($page){
+	public function removePageReference($page)
+	{
 		$page_id = $this->get_page_id_from_name($page);
 		$query = "DELETE FROM `tiki_page_references` WHERE `page_id`=?";
 		$result = $this->query($query, array($page_id));

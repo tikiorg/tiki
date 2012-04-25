@@ -19,7 +19,8 @@ class Tiki_Soap
 	private $cookies;
 	public $allowCookies;	// boolean. If true, (session) cookies are handled
 
-	function __construct() {
+	function __construct() 
+	{
 		$this->cookies = array();
 		$this->allowCookies = false;
 	}
@@ -57,9 +58,9 @@ class Tiki_Soap
 
 		try {
 			// Set (Session) cookies before the call
-			if($this->allowCookies) {
-				if(is_array($this->cookies)){
-					foreach($this->cookies as $cookieName => $cookieValue) { 
+			if ($this->allowCookies) {
+				if (is_array($this->cookies)) {
+					foreach ($this->cookies as $cookieName => $cookieValue) { 
 						$client->setCookie($cookieName, $cookieValue[0]);
 					}
 				}
@@ -69,10 +70,10 @@ class Tiki_Soap
 			$result = call_user_func_array(array($client, $operation), $soap_params);
 
 			// Pick up any new cookies from the server
-			if($this->allowCookies) {
+			if ($this->allowCookies) {
 				$last_response = $client->getLastResponseHeaders();
 				$soapClt = $client->getSoapClient();
-				$this->cookies = array_merge($soapClt->_cookies,$this->cookies);
+				$this->cookies = array_merge($soapClt->_cookies, $this->cookies);
 			}
 			
 		} catch (SoapFault $e) {
