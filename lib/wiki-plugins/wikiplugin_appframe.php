@@ -136,6 +136,13 @@ $(window).resize(function () {
 	$('#appframe .tab').each(function () {
 		$(this).data('available-height', $('#appframe').height() - $(this).position().top).addClass('height-size');
 	});
+
+	$('#appframe .anchor-container')
+		.css('z-index', 100000)
+		.css('position', 'absolute')
+		.css('top', 150)
+		.css('right', 0)
+		;
 });
 $('#appframe .tab').parent().each(function () {
 	var tabs = $(this).children('.tab').wrapAll('<div class="tabs" style="height: 100%;"/>');
@@ -149,6 +156,23 @@ $('#appframe .tab').parent().each(function () {
 });
 $('#appframe .accordion').wrapAll('<div/>').parent().accordion({
 	autoHeight: false
+});
+$('#appframe .anchor').wrapAll('<div/>').parent()
+	.addClass('anchor-container')
+	.width(350)
+	;
+
+$('#appframe .anchor').each(function () {
+	var anchor = this;
+	$('.anchor-head, .anchor-content', anchor)
+		.css('text-align', 'right')
+		;
+
+	$('.anchor-toggle', anchor).click(function () {
+		$('.anchor-head .label', anchor).toggle('fast');
+		$('.anchor-content', anchor).toggle('fast');
+		return false;
+	});
 });
 
 if ($fullPage) {
@@ -180,7 +204,7 @@ function wikiplugin_appframe_execute($plugin)
 	$body = $plugin->getBody();
 	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond'))) {
+	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor'))) {
 		return null;
 	}
 
@@ -195,6 +219,20 @@ function wikiplugin_appframe_tab($data, $params, $start)
 TAB;
 }
 
+function wikiplugin_appframe_anchor($data, $params, $start)
+{
+	return <<<TAB
+<div id="appanchor-$start" class="anchor">
+	<h3 class="anchor-head">
+		<a class="anchor-toggle" href="#"><img src="{$params->icon->text()}" alt="{$params->label->text()}"/></a>
+		<span class="label" style="display: none;">{$params->label->text()}</span>
+	</h3>
+	<div class="anchor-content" style="display: none;">
+		<div style="text-align: left;">$data</div>
+	</div>
+</div>
+TAB;
+}
 function wikiplugin_appframe_column($data, $params, $start)
 {
 	$width = $params->width->int() . '%';
