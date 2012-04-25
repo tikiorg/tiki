@@ -3581,7 +3581,7 @@ class TikiLib extends TikiDb_Bridge
 		$insertData = array(
 			'pageName' => $name,
 			'hits' => (int) $hits,
-			'data' => $data,
+			'data' => $parser->prepDataToDb($data),
 			'description' => $description,
 			'lastModif' => (int) $lastModif,
 			'comment' => $comment,
@@ -3595,7 +3595,6 @@ class TikiLib extends TikiDb_Bridge
 			'created' => empty($created) ? $this->now : $created,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
-			'status' => 'new9+'
 		);
 		if ($lang) {
 			$insertData['lang'] = $lang;
@@ -3762,6 +3761,7 @@ class TikiLib extends TikiDb_Bridge
 
 			// Be sure to have the correct character case (because DB is caseinsensitive)
 			$pageNameEncode = urlencode($row['pageName']);
+			$row['data'] = TikiLib::lib("parser")->prepDataFromDb($row['data']);
 
 			// Limit memory usage of the page cache.  No 
 			// intelligence is attempted here whatsoever.  This was 
@@ -3916,8 +3916,8 @@ class TikiLib extends TikiDb_Bridge
 			$edit_data = str_replace('<x>', '', $edit_data);
 		}
 
+		$parserlib = TikiLib::lib('parser');
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
-			$parserlib = TikiLib::lib('parser');
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
 			$noparsed = array();
@@ -3945,7 +3945,7 @@ class TikiLib extends TikiDb_Bridge
 		
 		$queryData = array(
 			'description' => $edit_description,
-			'data' => $edit_data,
+			'data' => $parserlib->prepDataToDb($edit_data),
 			'comment' => $edit_comment,
 			'lastModif' => (int) $saveLastModif,
 			'version' => $version,

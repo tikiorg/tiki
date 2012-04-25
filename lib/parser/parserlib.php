@@ -28,24 +28,25 @@ class ParserLib extends TikiDb_Bridge
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
 
+	var $needDecoded = true;
 	var $isHtmlPurifying = false;
 	var $isEditMode = false;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
-		'REAL_LT' => array(
+		'~REAL_LT~' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
 		),
-		'REAL_GT' => array(
+		'~REAL_GT~' => array(
 			'html'=>		'>',
 			'nonHtml'=>		'&gt;'
 		),
-		'REAL_NBSP' => array(
+		'~REAL_NBSP~' => array(
 			'html'=>		'&nbsp;',
 			'nonHtml'=>		'&nbsp;'
 		),
-		'REAL_AMP' => array(
+		'~REAL_AMP~' => array(
 			'html'=>		'& ',
 			'nonHtml'=>		'& '
 		),
@@ -125,13 +126,31 @@ class ParserLib extends TikiDb_Bridge
 		$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
 	}
 
+	function prepDataFromDb($data)
+	{
+		if ($this->needDecoded == true) {
+			$data = htmlspecialchars_decode($data);
+		}
+		return $data;
+	}
+
+	function prepDataToDb($data)
+	{
+		if ($this->needDecoded == true) {
+			$data = htmlspecialchars($data);
+		}
+		return $data;
+	}
+
 	// This function handles the protection of html entities so that they are not mangled when
 	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
 	function protectSpecialChars($data, $is_html = false, $options = array())
 	{
+		$data = $this->prepDataFromDb($data);
+
 		if (($this->isHtmlPurifying == true || $options['is_html'] != true) || !$options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
-				$data = str_replace($specialChar['html'], "~" . $key . "~", $data);
+				$data = str_replace($specialChar['html'], $key, $data);
 			}
 		}
 		return $data;
@@ -142,11 +161,11 @@ class ParserLib extends TikiDb_Bridge
 	{
 		if (($is_html != false || $options['is_html']) || $options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
-				$data = str_replace("~" . $key . "~", $specialChar['html'], $data);
+				$data = str_replace($key, $specialChar['html'], $data);
 			}
 		} else {
 			foreach($this->specialChars as $key => $specialChar) {
-				$data = str_replace("~" . $key . "~", $specialChar['nonHtml'], $data);
+				$data = str_replace($key, $specialChar['nonHtml'], $data);
 			}
 		}
 

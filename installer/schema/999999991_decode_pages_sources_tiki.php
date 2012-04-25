@@ -32,6 +32,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function upgrade_999999991_decode_pages_sources_tiki($installer)
 {
+	/*
 	set_time_limit(60 * 60); //1 hours
 	include_once('tiki-setup_base.php');
 	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
@@ -39,6 +40,6 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 
 	$converter = new convertPagesToTiki9();
 	$converter->convertPages();
-	$converter->convertModules();
+	$converter->convertModules();*/
 }
 

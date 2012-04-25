@@ -1214,7 +1214,7 @@ class WikiLib extends TikiLib
 global $wikilib;
 $wikilib = new WikiLib;
 
-
+/*
 class convertPagesToTiki9
 {
 	var $parserlib;
@@ -1420,4 +1420,4 @@ class convertPagesToTiki9
 			"fingerPrintsNew"=>$fingerPrintsNew
 		);
 	}
-}
+}*/
