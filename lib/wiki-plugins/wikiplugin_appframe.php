@@ -182,7 +182,7 @@ function wikiplugin_appframe_execute($plugin)
 	$body = $plugin->getBody();
 	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module'))) {
+	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond'))) {
 		return null;
 	}
 
@@ -241,9 +241,10 @@ function wikiplugin_appframe_module($data, $params, $start)
 		$label = $info['name'];
 	}
 
-	$data = $modlib->execute_module(
-					array('name' => $moduleName, 'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')))
-	);
+	$data = $modlib->execute_module(array(
+		'name' => $moduleName,
+		'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')),
+	));
 
 	if (! $data) {
 		return null;
@@ -255,5 +256,14 @@ function wikiplugin_appframe_module($data, $params, $start)
 	$data
 </div>
 MODULE;
+}
+
+function wikiplugin_appframe_cond($data, $params, $start)
+{
+	if (isset($params['notempty']) && $params->notempty->text()) {
+		return $data;
+	}
+
+	return ' ';
 }
 
