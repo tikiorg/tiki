@@ -24,9 +24,8 @@ function wikiplugin_addreference_info()
 	);
 }
 
-function wikiplugin_addreference($data,$params) 
+function wikiplugin_addreference($data,$params)
 {
-
 	global $prefs;
 
 	if ($prefs['wikiplugin_addreference'] == 'y') {
@@ -42,17 +41,13 @@ function wikiplugin_addreference($data,$params)
 		if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')) {
 			
 			$page = urldecode($_REQUEST['page']);
-
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
-
 			$page_info = TikiLib::lib('tiki')->get_page_info($page);
 
 		} else {
 			
 			$object = current_object();
-
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
-		
 			$page_info = TikiLib::lib('tiki')->get_page_info($object['object']);
 
 		}
@@ -68,7 +63,7 @@ function wikiplugin_addreference($data,$params)
 		$temp = array();
 		$curr_matches = array();
 		$temp = array_unique($matches[1]);
-		$i=0;
+		$i = 0;
 		foreach ($temp as $k=>$v) {
 			if (strlen(trim($v)) > 0) {
 				$curr_matches[$i] = $v;
@@ -77,25 +72,26 @@ function wikiplugin_addreference($data,$params)
 		}
 		unset($temp);
 
-		$found_keys  = array();
+		$found_keys = array();
 		
 		foreach ($curr_matches as $key=>$val) {
 			if (strlen(trim($val)) > 0) {
 				if ($val == $params['biblio_code']) {
 					if (!in_array($val, $found_keys)) {
 						$found_keys[] = $val;
-						$index = $key+1;
+						$index = $key + 1;
 						$i++;
 					}
 				}
 			}
 		}
 
-		$GLOBALS['referencesData']  = $curr_matches;
+		$GLOBALS['referencesData'] = $curr_matches;
 		
-		$url = urlencode($page_info['pageName'])."#".$params['biblio_code'];
+		$url = urlencode($page_info['pageName']) . "#" . $params['biblio_code'];
 		
-		return $data."<a href='".$url."' title='".$params['biblio_code']."' nam><sup>".$index."</sup></a>";
+		return $data . "<a href='" . $url . "' title='" . $params['biblio_code'] . 
+							"' nam><sup>" . $index . "</sup></a>";
 
 	}
 }
