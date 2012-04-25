@@ -56,7 +56,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'dec_point' => array(
 						'name' => tr('Decimal separator'),
-						'description' => tr('Single character, conventions depend on the language of the site.'),
+						'description' => tr('Single character, conventions depend on the language of the site. Usual values are c for comma, d for dot and s for space'),
 						'filter' => 'text',
 						'default' => '.',
 					),
