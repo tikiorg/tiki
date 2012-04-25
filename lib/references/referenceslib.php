@@ -103,7 +103,7 @@ class referencesLib extends TikiLib
 	function get_reference_from_code_and_page($codes, $page) 
 	{
 		$biblios = '';
-		foreach($codes as $code){
+		foreach ($codes as $code){
 			if (is_array($code)) {
 				$biblios .= '\'' . $code['biblio_code'] . '\'' . ',';
 			} else {
@@ -207,14 +207,14 @@ class referencesLib extends TikiLib
 	function remove_reference($id) 
 	{
 		$query = "delete from `tiki_page_references` where `ref_id`=?";
-		$this->query($query,array((int)$id));
+		$this->query($query, array((int)$id));
 		return true;
 	}
 
 	function remove_libReference($id) 
 	{
 		$query = "delete from `tiki_page_references` where `ref_id`=?";
-		$this->query($query,array((int)$id));
+		$this->query($query, array((int)$id));
 		return true;
 	}
 

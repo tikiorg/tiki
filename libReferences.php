@@ -54,14 +54,14 @@ if (isset($_REQUEST['addreference'])) {
 	}
 
 	$exists = $referenceslib->check_lib_existence($ref_biblio_code);
-	if($exists > 0) {
+	if ($exists > 0) {
 		$errors[] = 'This reference already exists.';
 	}
 
 	if (count($errors)<1) {
 		$id = $referenceslib->add_lib_reference($ref_biblio_code, $ref_author, $ref_title, $ref_part, $ref_uri, $ref_code, $ref_year, $ref_style, $ref_template, $ref_publisher, $ref_location);
 	} else {
-		foreach($errors as $error) {
+		foreach ($errors as $error) {
 			$msg .= tra($error);
 		}
 		$access->display_error(basename(__FILE__), $msg);
@@ -72,17 +72,17 @@ if (isset($_REQUEST['editreference'])) {
 
 	$errors = array();
 
-	if($ref_id=='') {
+	if ($ref_id=='') {
 		$errors[] = 'Reference not found.';
 	}
-	if($ref_biblio_code=='') {
+	if ($ref_biblio_code=='') {
 		$errors[] = 'Please enter Biblio Code.';
 	}
 
 	if (count($errors)<1) {
 		$referenceslib->edit_libReference($ref_id, $ref_biblio_code, $ref_author, $ref_title, $ref_part, $ref_uri, $ref_code, $ref_year, $ref_style, $ref_template, $ref_publisher, $ref_location);
 	} else {
-		foreach($errors as $error) {
+		foreach ($errors as $error) {
 			$msg .= tra($error);
 		}
 		$access->display_error(basename(__FILE__), $msg);

@@ -64,7 +64,7 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 			}
 			exit;
 		} else {
-			foreach($errors as $error){
+			foreach ($errors as $error){
 				echo json_encode(array('result'=>$error, 'id'=>''));
 				exit;
 			}
@@ -114,7 +114,7 @@ if (isset($_REQUEST['editreference'])) {
 
 	if ($ref_biblio_code=='') {
 		$errors[] = 'Please enter Biblio Code.';
-	} elseif(strlen($ref_biblio_code)>50) {
+	} elseif (strlen($ref_biblio_code)>50) {
 		$errors[] = 'Biblio code must not exceed 50 characters.';
 	} else {
 		$ref_details = $referenceslib->get_reference_from_id($ref_id);
@@ -134,7 +134,7 @@ if (isset($_REQUEST['editreference'])) {
 		echo json_encode(array('result'=>'success', 'message'=>'Bibliography saved.', 'is_library'=>$exists));
 		exit;
 	} else {
-		foreach($errors as $error){
+		foreach ($errors as $error){
 			echo json_encode(array('result'=>'failure', 'message'=>$error));
 		}
 		exit;
@@ -162,7 +162,8 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 				}
 			}
 
-			echo json_encode(array('result'=>'success', 'message'=>'Reference added.', 'id'=>$id,
+			echo json_encode(
+				array('result'=>'success', 'message'=>'Reference added.', 'id'=>$id,
 					'ref_biblio_code'=>$details['data'][0]['biblio_code'],
 					'ref_author'=>$details['data'][0]['author'],
 					'ref_title'=>$details['data'][0]['title'],
@@ -174,7 +175,8 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 					'ref_location'=>$details['data'][0]['location'],
 					'ref_style'=>$details['data'][0]['style'],
 					'ref_template'=>$details['data'][0]['template']
-					));
+					)
+				);
 		}
 		exit;
 	}

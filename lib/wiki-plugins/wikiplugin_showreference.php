@@ -62,7 +62,7 @@ function wikiplugin_showreference($data,$params)
 	$params['hlevel'] = trim($params['hlevel']);
 
 	$title = 'Bibliography';
-	if(isset($params['title']) && $params['title']!=''){
+	if (isset($params['title']) && $params['title']!=''){
 		$title = $params['title'];
 	}
 
@@ -150,12 +150,12 @@ function wikiplugin_showreference($data,$params)
 
 			if ($is_global) {
 				$excluded = array();
-				foreach($references['data'] as $key=>$value) {
-					if(!array_key_exists($key, $values['data'])){
+				foreach ($references['data'] as $key=>$value) {
+					if (!array_key_exists($key, $values['data'])){
 						$excluded[$key] = $references['data'][$key]['biblio_code'];
 					}
 				}
-				foreach($excluded as $ex){
+				foreach ($excluded as $ex){
 					array_push($referencesData, $ex);
 				}
 			}

@@ -24,7 +24,8 @@ function wikiplugin_addreference_info()
 	);
 }
 
-function wikiplugin_addreference($data,$params) {
+function wikiplugin_addreference($data,$params) 
+{
 
 	global $prefs;
 
@@ -69,7 +70,7 @@ function wikiplugin_addreference($data,$params) {
 		$temp = array_unique($matches[1]);
 		$i=0;
 		foreach ($temp as $k=>$v) {
-			if(strlen(trim($v)) > 0){
+			if (strlen(trim($v)) > 0) {
 				$curr_matches[$i] = $v;
 				$i++;
 			}
