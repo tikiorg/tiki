@@ -168,10 +168,10 @@ class Comments extends TikiLib
 			$data = '';
 		}
 
-		return $this->attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $forum_info['att_store_dir'], $forum_info['forumId']);
+		return $this->forum_attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $forum_info['att_store_dir'], $forum_info['forumId']);
 	}
 
-	function attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $dir, $forumId)
+	function forum_attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $dir, $forumId)
 	{
 		if ($fhash) {
 			// Do not store data if we have a file
