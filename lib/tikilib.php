@@ -3563,8 +3563,8 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 
 		$html=$is_html?1:0;
+		$parserlib = TikiLib::lib('parser');
 		if ($html && $prefs['feature_purifier'] != 'n') {
-			$parserlib = TikiLib::lib('parser');
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
 			$noparsed = array();
@@ -3581,7 +3581,7 @@ class TikiLib extends TikiDb_Bridge
 		$insertData = array(
 			'pageName' => $name,
 			'hits' => (int) $hits,
-			'data' => $parser->prepDataToDb($data),
+			'data' => $parserlib->prepDataToDb($data),
 			'description' => $description,
 			'lastModif' => (int) $lastModif,
 			'comment' => $comment,
