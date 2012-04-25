@@ -19,6 +19,17 @@ if (version_compare(PHP_VERSION, '5.2.0', '<')) {
 // Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On"
 unset($user);
 
+function jml_debug($debug_txt) {
+$debug_handle = fopen("/tmp/jml_toto2",'a+');
+fwrite($debug_handle,$debug_txt,strlen($debug_txt));
+fclose($debug_handle);
+}
+function jml_backtrace() {
+echo "<pre>";
+print_r(debug_backtrace());
+echo "</pre>";
+}
+
 require_once 'lib/setup/third_party.php';
 // Enable Versioning
 include_once ('lib/setup/twversion.class.php');
@@ -89,9 +100,9 @@ if ($prefs['mobile_feature'] === 'y') {
 }
 
 require_once ('lib/setup/cookies.php');
-require_once ('lib/setup/javascript.php');
 require_once ('lib/setup/user_prefs.php');
 require_once ('lib/setup/language.php');
+require_once ('lib/setup/javascript.php');
 require_once ('lib/setup/wiki.php');
 if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
 if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');
