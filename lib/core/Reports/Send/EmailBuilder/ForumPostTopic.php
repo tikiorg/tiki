@@ -8,7 +8,8 @@
 /**
  * Class for forum_post_topic events 
  */
-class Reports_Send_EmailBuilder_ForumPostTopic extends Reports_Send_EmailBuilder_Abstract {
+class Reports_Send_EmailBuilder_ForumPostTopic extends Reports_Send_EmailBuilder_Abstract
+{
 	public function getTitle()
 	{
 		return tr('New posts in forums:');
@@ -18,10 +19,12 @@ class Reports_Send_EmailBuilder_ForumPostTopic extends Reports_Send_EmailBuilder
 	{
 		global $base_url;
 		
-		$output = tr('%0 created the topic %1 at forum %2',
-			"<u>" . $change['data']['user'] . "</u>",
-			"<a href=\"{$base_url}tiki-view_forum_thread.php?comments_parentId={$change['data']['topicId']}&forumId={$change['data']['forumId']}\">{$change['data']['threadName']}</a>",
-			"<a href=\"{$base_url}tiki-view_forum.php?forumId={$change['data']['forumId']}\">{$change['data']['forumName']}</a>."); 
+		$output = tr(
+						'%0 created the topic %1 at forum %2',
+						"<u>" . $change['data']['user'] . "</u>",
+						"<a href=\"{$base_url}tiki-view_forum_thread.php?comments_parentId={$change['data']['topicId']}&forumId={$change['data']['forumId']}\">{$change['data']['threadName']}</a>",
+						"<a href=\"{$base_url}tiki-view_forum.php?forumId={$change['data']['forumId']}\">{$change['data']['forumName']}</a>."
+		);
 				
 		return $output;
 	}

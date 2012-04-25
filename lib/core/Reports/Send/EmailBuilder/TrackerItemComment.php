@@ -8,7 +8,8 @@
 /**
  * Class for tracker_item_comment events 
  */
-class Reports_Send_EmailBuilder_TrackerItemComment extends Reports_Send_EmailBuilder_Abstract {
+class Reports_Send_EmailBuilder_TrackerItemComment extends Reports_Send_EmailBuilder_Abstract
+{
 	public function getTitle()
 	{
 		return tr('Comments in tracker items:');
@@ -26,15 +27,19 @@ class Reports_Send_EmailBuilder_TrackerItemComment extends Reports_Send_EmailBui
 		$mainFieldValue = $trklib->get_isMain_value($trackerId, $itemId);
 
 		if ($mainFieldValue) {
-			$output = tr('%0 added a new comment to %1 on tracker %2',
-				"<u>{$change['data']['user']}</u>",
-				"<a href='{$base_url}tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$mainFieldValue</a>",
-				"<a href='{$base_url}tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>");
+			$output = tr(
+							'%0 added a new comment to %1 on tracker %2',
+							"<u>{$change['data']['user']}</u>",
+							"<a href='{$base_url}tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$mainFieldValue</a>",
+							"<a href='{$base_url}tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+			);
 		} else {
-			$output = tr('%0 added a new comment to item id %1 on tracker %2',
-				"<u>{$change['data']['user']}</u>",
-				"<a href='{$base_url}tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$itemId</a>",
-				"<a href='{$base_url}tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>");
+			$output = tr(
+							'%0 added a new comment to item id %1 on tracker %2',
+							"<u>{$change['data']['user']}</u>",
+							"<a href='{$base_url}tiki-view_tracker_item.php?itemId=$itemId&cookietab=2'>$itemId</a>",
+							"<a href='{$base_url}tiki-view_tracker.php?trackerId=$trackerId'>{$tracker['name']}</a>"
+			);
 		}
 		
 		return $output;
