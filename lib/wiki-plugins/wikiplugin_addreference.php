@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 function wikiplugin_addreference_info()
 {
 	return array(
@@ -22,7 +28,7 @@ function wikiplugin_addreference($data,$params) {
 
 	global $prefs;
 
-	if($prefs['wikiplugin_addreference'] == 'y'){
+	if ($prefs['wikiplugin_addreference'] == 'y') {
 
 		include_once ("lib/references/referenceslib.php");
 		
@@ -32,7 +38,7 @@ function wikiplugin_addreference($data,$params) {
 
 		$data = trim($data);
 
-		if(strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')){
+		if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')) {
 			
 			$page = urldecode($_REQUEST['page']);
 
@@ -40,7 +46,7 @@ function wikiplugin_addreference($data,$params) {
 
 			$page_info = TikiLib::lib('tiki')->get_page_info($page);
 
-		}else{
+		} else {
 			
 			$object = current_object();
 
@@ -51,7 +57,7 @@ function wikiplugin_addreference($data,$params) {
 		}
 			
 		extract($params, EXTR_SKIP);
-		if(empty($params['biblio_code'])){
+		if (empty($params['biblio_code'])) {
 			return;
 		}
 
@@ -62,7 +68,7 @@ function wikiplugin_addreference($data,$params) {
 		$curr_matches = array();
 		$temp = array_unique($matches[1]);
 		$i=0;
-		foreach($temp as $k=>$v){
+		foreach ($temp as $k=>$v) {
 			if(strlen(trim($v)) > 0){
 				$curr_matches[$i] = $v;
 				$i++;
@@ -72,10 +78,10 @@ function wikiplugin_addreference($data,$params) {
 
 		$found_keys  = array();
 		
-		foreach($curr_matches as $key=>$val){
-			if(strlen(trim($val)) > 0){
-				if($val == $params['biblio_code']){
-					if(!in_array($val, $found_keys)){
+		foreach ($curr_matches as $key=>$val) {
+			if (strlen(trim($val)) > 0) {
+				if ($val == $params['biblio_code']) {
+					if (!in_array($val, $found_keys)) {
 						$found_keys[] = $val;
 						$index = $key+1;
 						$i++;
@@ -92,4 +98,3 @@ function wikiplugin_addreference($data,$params) {
 
 	}
 }
-?>

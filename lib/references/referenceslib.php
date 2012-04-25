@@ -1,19 +1,20 @@
 <?php
-// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: copyrightslib.php 37848 2011-10-01 18:18:38Z changi67 $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 class referencesLib extends TikiLib
 {
-	function list_references($page) {
+	function list_references($page) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `page_id`=? ORDER BY `biblio_code`";
 		$query_cant = "select count(*) from `tiki_page_references` WHERE `page_id`=?";
 		$result = $this->query($query, array($page));
@@ -33,7 +34,8 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function list_assoc_references($page) {
+	function list_assoc_references($page) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `page_id`=? ORDER BY `biblio_code`";
 		$query_cant = "select count(*) from `tiki_page_references` WHERE `page_id`=?";
 		$result = $this->query($query, array($page));
@@ -50,7 +52,8 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function get_references_from_biblio($code) {
+	function get_references_from_biblio($code) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `biblio_code`=?  ";
 		$query_cant = "select count(*) from `tiki_page_references` WHERE `biblio_code`=?";
 		$result = $this->query($query, array($code));
@@ -67,7 +70,8 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function get_reference_from_code($code) {
+	function get_reference_from_code($code) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `biblio_code`=?  ";
 		$result = $this->query($query, array($code));
 		$ret = array();
@@ -81,7 +85,8 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function get_reference_from_id($ref_id) {
+	function get_reference_from_id($ref_id) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `ref_id`=?  ";
 		$result = $this->query($query, array($ref_id));
 		$ret = array();
@@ -95,12 +100,13 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function get_reference_from_code_and_page($codes, $page) {
+	function get_reference_from_code_and_page($codes, $page) 
+	{
 		$biblios = '';
 		foreach($codes as $code){
-			if(is_array($code)){
+			if (is_array($code)) {
 				$biblios .= '\'' . $code['biblio_code'] . '\'' . ',';
-			}else{
+			} else {
 				$biblios .= '\'' . $code . '\'' . ',';
 			}
 		}
@@ -121,7 +127,8 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function list_lib_references() {
+	function list_lib_references() 
+	{
 		$query = "select * from `tiki_page_references` WHERE `page_id` IS NULL ORDER BY `biblio_code`";
 		$query_cant = "select count(*) from `tiki_page_references` WHERE `page_id` IS NULL";
 		$result = $this->query($query, array($page));
@@ -138,96 +145,108 @@ class referencesLib extends TikiLib
 		return $retval;
 	}
 
-	function add_reference($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) {
+	function add_reference($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) 
+	{
 		$query = "insert `tiki_page_references` (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`, `code`, `year`, `style`, `template`, `publisher`, `location`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
+		$this->query($query, array($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
 		return true;
 	}
 
-	function add_reference_ajax($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) {
+	function add_reference_ajax($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) 
+	{
 		$query = "insert `tiki_page_references` (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`, `code`, `year`, `style`, `template`, `publisher`, `location`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
+		$this->query($query, array($page, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
 		return $this->lastInsertId();
 	}
 
-	function add_lib_reference_ajax($biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) {
+	function add_lib_reference_ajax($biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) 
+	{
 		$query = "insert `tiki_page_references` (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`, `code`, `year`, `style`, `template`, `publisher`, `location`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array(NULL, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
+		$this->query($query, array(NULL, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
 		return $this->lastInsertId();
 	}
 
-	function add_lib_reference($biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) {
+	function add_lib_reference($biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) 
+	{
 		$query = "insert `tiki_page_references` (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`, `code`, `year`, `style`, `template`, `publisher`, `location`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array(NULL, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
+		$this->query($query, array(NULL, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location));
 		return $this->lastInsertId();
 	}
 
-	function add_lib_ref_to_page($ref_id, $page) {
+	function add_lib_ref_to_page($ref_id, $page) 
+	{
 
 		$query = "select * from `tiki_page_references` WHERE `ref_id`=?";
 		$result = $this->query($query, array($ref_id));
 		
 		$exists = $this->check_existence($page, $result->result[0]['biblio_code']);
 
-		if($exists > 0){
+		if ($exists > 0) {
 			return -1;
-		}else{
+		} else {
 			$query = "insert `tiki_page_references` (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`, `code`, `year`, `style`, `template`, `publisher`, `location`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-			$this->query($query,array($page, $result->result[0]['biblio_code'], $result->result[0]['author'], $result->result[0]['title'], $result->result[0]['part'], $result->result[0]['uri'], $result->result[0]['code'], $result->result[0]['year'], $result->result[0]['style'], $result->result[0]['template'], $result->result[0]['publisher'], $result->result[0]['location']));
+			$this->query($query, array($page, $result->result[0]['biblio_code'], $result->result[0]['author'], $result->result[0]['title'], $result->result[0]['part'], $result->result[0]['uri'], $result->result[0]['code'], $result->result[0]['year'], $result->result[0]['style'], $result->result[0]['template'], $result->result[0]['publisher'], $result->result[0]['location']));
 			return $this->lastInsertId();
 		}
 	}
 
-	function edit_reference($ref_id, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) {
+	function edit_reference($ref_id, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) 
+	{
 		$query = "update `tiki_page_references` SET `biblio_code`=?, `author`=?, `title`=?, `part`=?, `uri`=?, `code`=?, `year`=?, `style`=?, `template`=?, `publisher`=?, `location`=? where `ref_id`=?";
 		$this->query($query, array($biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location, (int)$ref_id));
 		return true;
 	}
 
-	function edit_libReference($ref_id, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) {
+	function edit_libReference($ref_id, $biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location) 
+	{
 		$query = "update `tiki_page_references` SET `biblio_code`=?, `author`=?, `title`=?, `part`=?, `uri`=?, `code`=?, `year`=?, `style`=?, `template`=?, `publisher`=?, `location`=? where `ref_id`=?";
 		$this->query($query, array($biblio_code, $author, $title, $part, $uri, $code, $year, $style, $template, $publisher, $location, (int)$ref_id));
 		return true;
 	}
 
-	function remove_reference($id) {
+	function remove_reference($id) 
+	{
 		$query = "delete from `tiki_page_references` where `ref_id`=?";
 		$this->query($query,array((int)$id));
 		return true;
 	}
 
-	function remove_libReference($id) {
+	function remove_libReference($id) 
+	{
 		$query = "delete from `tiki_page_references` where `ref_id`=?";
 		$this->query($query,array((int)$id));
 		return true;
 	}
 
-	function check_existence($page_id, $biblio_code) {
+	function check_existence($page_id, $biblio_code) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `biblio_code`=?  AND `page_id`=?";
 		$result = $this->query($query, array($biblio_code, $page_id));
 		return $result->numrows;
 	}
 
-	function check_lib_existence($biblio_code) {
+	function check_lib_existence($biblio_code) 
+	{
 		$query = "select * from `tiki_page_references` WHERE `biblio_code`=?  AND `page_id` IS NULL";
 		$result = $this->query($query, array($biblio_code));
 		return $result->numrows;
 	}
 
-	function get_permission($perm) {
+	function get_permission($perm) 
+	{
 		global $user, $userlib, $tiki_p_admin;
 
-		if(isset($tiki_p_admin) && $tiki_p_admin == 'y'){
+		if (isset($tiki_p_admin) && $tiki_p_admin == 'y') {
 			return 'y';
 		}
 
 		$all_groups = $userlib->get_user_groups($user);
-		if(count($all_groups)){
-			foreach($all_groups as $k=>$v){
+		if (count($all_groups)) {
+			foreach ($all_groups as $k=>$v) {
 				$all_groups[$k] = "'".$v."'";
 			}
 			$all_groups = implode(',', $all_groups);
-		}else{
+		} else {
 			$all_groups = '';
 		}
 		$all_groups = '('.$all_groups.')';

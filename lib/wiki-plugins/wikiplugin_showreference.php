@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 function wikiplugin_showreference_info()
 {
 	return array(
@@ -46,7 +52,8 @@ function wikiplugin_showreference_info()
 	);
 }
 
-function wikiplugin_showreference($data,$params) {
+function wikiplugin_showreference($data,$params) 
+{
 
 	global $prefs;
 	
@@ -59,39 +66,39 @@ function wikiplugin_showreference($data,$params) {
 		$title = $params['title'];
 	}
 
-	if(isset($params['showtitle'])){
+	if (isset($params['showtitle'])) {
 		$showtitle = $params['showtitle'];
 	}
-	if($showtitle=='yes' || $showtitle==''){
+	if ($showtitle=='yes' || $showtitle=='') {
 		$showtitle = 1;
-	}else{
+	} else {
 		$showtitle = 0;
 	}
 
 	$hlevel_start = '<H1>';
 	$hlevel_end = '</H1>';
-	if(isset($params['hlevel']) && $params['hlevel']!=''){
-		if($params['hlevel']!='0'){
+	if (isset($params['hlevel']) && $params['hlevel']!='') {
+		if ($params['hlevel']!='0') {
 			$hlevel_start = '<H'.$params['hlevel'].'>';
 			$hlevel_end = '</H'.$params['hlevel'].'>';
-		}else{
+		} else {
 			$hlevel_start = '';
 			$hlevel_end = '';
 		}
-	}else{
+	} else {
 		$hlevel_start = '<H1>';
 		$hlevel_end = '</H1>';
 	}
 
-	if($prefs['wikiplugin_showreference'] == 'y'){
+	if ($prefs['wikiplugin_showreference'] == 'y') {
 
-		if(strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')){
+		if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')) {
 			
 			$page = urldecode($_REQUEST['page']);
 
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 
-		}else{
+		} else {
 			
 			$object = current_object();
 
@@ -111,23 +118,23 @@ function wikiplugin_showreference($data,$params) {
 
 		$referencesData = array();
 		$is_global = 1;
-		if(isset($GLOBALS['referencesData']) && is_array($GLOBALS['referencesData'])){
+		if (isset($GLOBALS['referencesData']) && is_array($GLOBALS['referencesData'])) {
 			$referencesData = $GLOBALS['referencesData'];
 			$is_global = 1;
-		}else{
-			foreach($references['data'] as $data){
+		} else {
+			foreach ($references['data'] as $data) {
 				array_push($referencesData, $data['biblio_code']);
 			}
 			$is_global = 0;
 		}
 
-		if(is_array($referencesData)){
+		if (is_array($referencesData)) {
 			
 			$referencesData = array_unique($referencesData);
 			
 			$htm .= '<div class="references">';
 			
-			if($showtitle){
+			if ($showtitle) {
 				$htm .= $hlevel_start.$title.$hlevel_end;
 			}
 
@@ -135,15 +142,15 @@ function wikiplugin_showreference($data,$params) {
 
 			$htm .= '<ul style="list-style: none outside none;">';
 
-			if(count($referencesData)){
+			if (count($referencesData)) {
 				$values = $referencesLib->get_reference_from_code_and_page($referencesData, $page_id);
-			}else{
+			} else {
 				$values = array();
 			}
 
-			if($is_global){
+			if ($is_global) {
 				$excluded = array();
-				foreach($references['data'] as $key=>$value){
+				foreach($references['data'] as $key=>$value) {
 					if(!array_key_exists($key, $values['data'])){
 						$excluded[$key] = $references['data'][$key]['biblio_code'];
 					}
@@ -153,28 +160,28 @@ function wikiplugin_showreference($data,$params) {
 				}
 			}
 
-			foreach ($referencesData as $index=>$ref){
+			foreach ($referencesData as $index=>$ref) {
 				
 				$ref_no = $index+1;
 
 				$text = '';
 				$cssClass = '';
-				if(array_key_exists($ref, $values['data'])){
+				if array_key_exists($ref, $values['data'])) {
 					
-					if($values['data'][$ref]['style'] != ''){
+					if ($values['data'][$ref]['style'] != '') {
 						$cssClass = $values['data'][$ref]['style'];
 					}
 
 					$text = parseTemplate($tags, $ref, $values['data']);
-				}else{
-					if(array_key_exists($ref, $excluded)){
+				} else {
+					if (array_key_exists($ref, $excluded)) {
 						$text = parseTemplate($tags, $ref, $references['data']);
 					}
 				}
 				$anchor = "<a name='".$ref."'>&nbsp;</a>";
-				if(strlen($text)){
+				if (strlen($text)) {
 					$htm .= "<li class='".$cssClass."'>" . $ref_no .". ". $text .$anchor. '</li>';
-				}else{
+				} else {
 					$htm .= "<li class='".$cssClass."' style='font-style:italic'>" . $ref_no .'. missing bibliography definition'.$anchor.'</li>';
 				}
 			}
@@ -191,36 +198,36 @@ function wikiplugin_showreference($data,$params) {
 	}
 }
 
-function parseTemplate($tags, $ref, $values){
+function parseTemplate($tags, $ref, $values)
+{
 
 	$text = $values[$ref]['template'];
-	if($text == ''){
+	if ($text == '') {
 		$text = '~title~, ~part~, ~author~, ~location~, ~year~, ~publisher~, ~code~';
 	}
 
-	if($text != ''){
-		foreach($tags as $tag=>$val){
-			if($values[$ref][$val] == ''){
+	if ($text != '') {
+		foreach ($tags as $tag=>$val) {
+			if ($values[$ref][$val] == '') {
 				$pos = strpos($text, $tag);
 				$len = strlen($tag);
 				$prevWhiteSpace = $text[$pos-1];
 
-				if($prevWhiteSpace != ' ' && $pos){
+				if ($prevWhiteSpace != ' ' && $pos) {
 					$text = str_replace($text[$pos-1], '', $text);
 				}
 
 				$pos = strpos($text, $tag);
 				$len = strlen($tag);
 				$postWhiteSpace = $text[$pos+$len];
-				if($postWhiteSpace != ' ' && $pos){
+				if ($postWhiteSpace != ' ' && $pos) {
 					$text = str_replace($text[$pos+$len], '', $text);
 				}
 				$text = str_replace($tag, $values[$ref][$val], $text);
-			}else{
+			} else {
 				$text = str_replace($tag, $values[$ref][$val], $text);
 			}
 		}
 	}
 	return $text;
 }
-?>
