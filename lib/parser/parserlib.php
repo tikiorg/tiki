@@ -1068,9 +1068,10 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
 			// pre-parse the output so nested plugins don't fall out all over the place
-			$this->needDecoded = false;
+			$tempNeedDecoded = $this->needDecoded;
+			$this->needDecoded = false; //here we are nesting the parser, and we know for sure that we no londer need to decode
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
-			$this->needDecoded = true;
+			$this->needDecoded = $tempNeedDecoded; //here decode may have been set to false, we restore it to what it was.
 
 			// remove hrefs and onclicks
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
@@ -2687,9 +2688,10 @@ if ( \$('#$id') ) {
 							}
 						}
 
-						$this->needDecoded = false;
+						$tempNeedDecoded = $this->needDecoded;
+						$this->needDecoded = false; //here we know we no longer need decoded
 						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
-						$this->needDecoded = true;
+						$this->needDecoded = $tempNeedDecoded;//here we revert it, it may have been false
 
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
