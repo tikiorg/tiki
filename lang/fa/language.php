@@ -6446,6 +6446,7 @@ $lang = array(
 // "Self" => "Self",
 // "Values" => "Values",
 // "Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc" => "Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc",
+// "Colon-separated list of default values for the fields. First value corresponds to first field, second value to second field, etc" => "Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc",
 "Overwrite" => "روي اطلاعات قبلي بنويس",
 // "Overwrite current field values of the item with the input values" => "Overwrite current field values of the item with the input values",
 // "Display columns in the order listed in the fields parameter instead of by field ID (field ID order is used by default" => "Display columns in the order listed in the fields parameter instead of by field ID (field ID order is used by default",

@@ -6451,6 +6451,7 @@ $lang = array(
 "Self" => "selbst",
 "Values" => "Werte",
 "Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc" => "Durch Doppelpunkt getrennt Liste von Standardwerten für die Felder. Der erste Werte entspricht dem ersten Feld, der zweite dem zweiten Feld usw",
+"Colon-separated list of default values for the fields. First value corresponds to first field, second value to second field, etc" => "Durch Doppelpunkt getrennt Liste von Standardwerten für die Felder. Der erste Werte entspricht dem ersten Feld, der zweite dem zweiten Feld usw",
 "Overwrite" => "Überschreiben",
 "Overwrite current field values of the item with the input values" => "Überschreiben gegenwärtige Feldwerte des Eintrages mit den eingegebenen Werten",
 "Display columns in the order listed in the fields parameter instead of by field ID (field ID order is used by default" => "Zeigt Spalten in der Reihenfolge wie in den Feldparametern angegeben anstelle nach FeldID (FeldID Sortierung wird standardmäßig benutzt",

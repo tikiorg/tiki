@@ -132,7 +132,7 @@ function wikiplugin_tracker_info()
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
-				'description' => tra('Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc.'),
+				'description' => tra('Colon-separated list of default values for the fields. First value corresponds to first field, second value to second field, etc.'),
 				'default' => '',
 			),
 			'overwrite' => array(

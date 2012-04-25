@@ -6,6 +6,8 @@
  */
 
 lang = {
+"Which Continent Do You Live In?" : "EN Dans quel continent habitez-vous ?",
+	"Very Secure" : "EN Très sécurisé",
 //	"Very Secure" : "Very Secure",
 //	"Secure" : "Secure",
 //	"Very Strong" : "Very Strong",
