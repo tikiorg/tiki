@@ -290,6 +290,9 @@ class Tiki_Profile_Installer
 				$tikilib->set_preference($pref, $value);
 			}
 		}
+
+		tiki_setup_events();
+
 		foreach ( $profile->getObjects() as $object ) {
 			$this->getInstallHandler($object)->install();
 			$this->setFeedback(tra('Added (or modified)').': '.$object->getDescription());
@@ -303,6 +306,8 @@ class Tiki_Profile_Installer
 			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
 			$this->setupGroup($groupName, $info['general'], $info['permissions'], $info['objects'], $groupMap);
 		}
+
+		tiki_setup_events();
 	} // }}}
 
 	private function setupGroup( $groupName, $info, $permissions, $objects, $groupMap ) // {{{

@@ -9,6 +9,11 @@ class Event_Manager
 {
 	private $eventRegistry = array();
 
+	function reset()
+	{
+		$this->eventRegistry = array();
+	}
+
 	function bind($eventName, $callback, array $arguments = array())
 	{
 		if (! is_callable($callback)) {
