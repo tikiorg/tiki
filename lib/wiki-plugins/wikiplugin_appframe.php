@@ -54,6 +54,23 @@ function wikiplugin_appframe_info()
 					array('value' => 'y', 'text' => tr('Yes')),
 				),
 			),
+			'absolute' => array(
+				'required' => false,
+				'name' => tr('Absolute Position'),
+				'description' => tr('Position the app frame to use absolute position and really use all available space.'),
+				'default' => 'n',
+				'options' => array(
+					array('value' => 'n', 'text' => tr('No')),
+					array('value' => 'y', 'text' => tr('Yes')),
+				),
+			),
+			'top' => array(
+				'required' => false,
+				'name' => tr('Top'),
+				'description' => tr('When using absolute mode, leave some space for the header at the top.'),
+				'default' => 0,
+				'filter' => 'int',
+			),
 		),
 	);
 }
@@ -65,6 +82,9 @@ function wikiplugin_appframe($data, $params)
 	if (isset($params['fullpage']) && $params['fullpage'] == 'y') {
 		$fullPage = 1;
 	}
+
+	$absolute = isset($params['absolute']) ? $params['absolute'] == 'y' : false;
+	$top = isset($params['top']) ? $params['top'] : 0;
 
 	$headerlib = TikiLib::lib('header');
 
@@ -84,7 +104,20 @@ JS
 );
 	}
 
-	$headerlib->add_js(
+	if ($absolute) {
+		$headerlib->add_js(
+<<<JS
+$('#appframe')
+	.css('position', 'absolute')
+	.css('top', $top)
+	.css('left', 0)
+	.css('bottom', 0)
+	.css('right', 0)
+	;
+JS
+);
+	} else {
+		$headerlib->add_js(
 <<<JS
 $(window).resize(function () {
 	var viewportHeight = $(window).height(), appframe = $('#appframe'), footerSize, centerHeader, surplus, target;
@@ -127,6 +160,7 @@ if ($fullPage) {
 $(window).resize();
 JS
 );
+	}
 
 	$matches = WikiParser_PluginMatcher::match($data);
 	foreach ($matches as $plugin) {
