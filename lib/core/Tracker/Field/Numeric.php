@@ -56,7 +56,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'dec_point' => array(
 						'name' => tr('Decimal separator'),
-						'description' => tr('Single character, conventions depend on the language of the site. Usual values are c for comma, d for dot and s for space'),
+						'description' => tr('Single character, conventions depend on the language of the site and on the browser in some cases. Usual values are c for comma, d for dot and s for space, even if Firefox is known to accept only dots and Chrome only commas in some conditions, regardless of this setting at the tracker level'),
 						'filter' => 'text',
 						'default' => '.',
 					),
