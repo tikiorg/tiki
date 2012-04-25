@@ -7,7 +7,8 @@
 
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
-	public static $parseStack = 0;
+	var $parsing = false;
+	public static $spareParsers = array();
 
 	var $npOn = false;
 	var $pluginStack = array();
@@ -19,16 +20,24 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function parse($input)
 	{
 		$result = "";
-		self::$parseStack++;
-
-		if ($this->parseStack > 1) {
-			$parser = new JisonParser_Wiki_Handler();
-			$result = $parser->parse($input);
+return $input;
+		if ($this->parsing == true) {
+			$parser = end(self::$spareParsers);
+			if (!empty($parser) && $parser->parsing == false) {
+				$result = $parser->parse($input);
+			} else {
+				self::$spareParsers[] = $parser = new JisonParser_Wiki_Handler();
+				$result = $parser->parse($input);
+			}
 		} else {
+			$this->parsing = true;
 			$result = parent::parse($input);
+			$this->parsing = false;
 		}
 
-		self::$parseStack--;
+		sleep(10);
+		print_r($this);
+		die;
 		return $result;
 	}
 
@@ -105,6 +114,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return ($this->yyloc['first_column'] == 0 ? true : false);
 	}
 
+	function popAllStates()
+	{
+		$this->conditionStackCount = 0;
+		$this->conditionStack = array();
+	}
+
 	function beginBlock($condition)
 	{
 		if ($condition != $this->blockLast)
@@ -115,9 +130,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return parent::begin($condition);
 	}
 
-	function npState($npState, $ifTrue, $ifFalse)
+	function newLine()
 	{
-		return ($npState == true ? $ifTrue : $ifFalse);
+		return '<br />';
 	}
 	//end state handlers
 	//Wiki Syntax Objects Parsing Start
