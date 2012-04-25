@@ -83,7 +83,7 @@ function wikiplugin_appframe($data, $params)
 		$fullPage = 1;
 	}
 
-	$absolute = isset($params['absolute']) ? $params['absolute'] == 'y' : false;
+	$absolute = intval(isset($params['absolute']) ? $params['absolute'] == 'y' : false);
 	$top = isset($params['top']) ? $params['top'] : 0;
 
 	$headerlib = TikiLib::lib('header');
@@ -104,36 +104,35 @@ JS
 );
 	}
 
-	if ($absolute) {
-		$headerlib->add_js(
-<<<JS
-$('#appframe')
-	.css('position', 'absolute')
-	.css('top', $top)
-	.css('left', 0)
-	.css('bottom', 0)
-	.css('right', 0)
-	;
-JS
-);
-	} else {
-		$headerlib->add_js(
+	$headerlib->add_js(
 <<<JS
 $(window).resize(function () {
 	var viewportHeight = $(window).height(), appframe = $('#appframe'), footerSize, centerHeader, surplus, target;
-	appframe.height(0);
 
-	centerHeader = $('#appframe').position().top - $('#tiki-center').position().top;
-	surplus = $('#show-errors-button').height();
-	footerSize = $('#footer').height() + $('#tiki-center').height() - centerHeader + surplus;
-	target = viewportHeight - appframe.position().top - footerSize;
+	if ($absolute) {
+		$('#appframe')
+			.css('position', 'absolute')
+			.css('top', $top)
+			.css('left', 0)
+			.css('bottom', 0)
+			.css('right', 0)
+			;
+	} else {
+		appframe.height(0);
 
-	var min = $minHeight;
-	if (target < min) {
-		target = min;
+		centerHeader = $('#appframe').position().top - $('#tiki-center').position().top;
+		surplus = $('#show-errors-button').height();
+		footerSize = $('#footer').height() + $('#tiki-center').height() - centerHeader + surplus;
+		target = viewportHeight - appframe.position().top - footerSize;
+
+		var min = $minHeight;
+		if (target < min) {
+			target = min;
+		}
+
+		appframe.height(target);
 	}
 
-	appframe.height(target);
 	$('#appframe .tab').each(function () {
 		$(this).data('available-height', $('#appframe').height() - $(this).position().top).addClass('height-size');
 	});
@@ -160,7 +159,6 @@ if ($fullPage) {
 $(window).resize();
 JS
 );
-	}
 
 	$matches = WikiParser_PluginMatcher::match($data);
 	foreach ($matches as $plugin) {
