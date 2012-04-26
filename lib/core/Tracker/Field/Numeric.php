@@ -62,7 +62,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'thousands' => array(
 						'name' => tr('Thousand separator when displaying data'),
-						'description' => tr('Single character,  Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
+						'description' => tr('Single character,  Use c for comma, d for dot or s for space.  When inserting data no thousands separator is needed.'),
 						'filter' => 'text',
 						'default' => ',',
 					),
