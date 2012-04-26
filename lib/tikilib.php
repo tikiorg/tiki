@@ -3935,12 +3935,12 @@ class TikiLib extends TikiDb_Bridge
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
 			$noparsed = array();
-			$parserlib->plugins_remove($edit_data, $noparsed);
+			// $parserlib->plugins_remove($edit_data, $noparsed);
 
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 
-			$parserlib->plugins_replace($edit_data, $noparsed);
+			// $parserlib->plugins_replace($edit_data, $noparsed);
 			$parserlib->isHtmlPurifying = false;
 			$parserlib->isEditMode = false;
 		}
