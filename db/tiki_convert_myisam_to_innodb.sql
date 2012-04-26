@@ -261,3 +261,4 @@ ALTER TABLE `tiki_cart_inventory_hold` ENGINE=InnoDB;
 ALTER TABLE `tiki_source_auth` ENGINE=InnoDB;
 ALTER TABLE `tiki_connect` ENGINE=InnoDB;
 ALTER TABLE `tiki_areas` ENGINE=InnoDB;
+ALTER TABLE `tiki_db_status` ENGINE=InnoDB;

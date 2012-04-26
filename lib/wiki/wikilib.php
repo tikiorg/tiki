@@ -1229,33 +1229,19 @@ class convertPagesToTiki9
 		$this->argumentParser = new WikiParser_PluginArgumentParser();
 	}
 
-	function addStatus()
-	{
-		$dbs_tiki = '';
 
-		require ('db/local.php');
-
-		$statusExists = TikiLib::fetchAll("SELECT * FROM information_schema.COLUMNS WHERE table_schema = ? AND table_name = 'tiki_pages' AND column_name = 'status'", array($dbs_tiki));
-		if (empty($statusExists)) {
-			TikiLib::query("ALTER TABLE tiki_pages ADD status VARCHAR(60) default '' AFTER keywords;");
-		}
-
-		$statusExists = TikiLib::fetchAll("SELECT * FROM information_schema.COLUMNS WHERE table_schema = ? AND table_name = 'tiki_history' AND column_name = 'status'", array($dbs_tiki));
-		if (empty($statusExists)) {
-			TikiLib::query("ALTER TABLE tiki_history ADD status VARCHAR(60) default '' AFTER is_html;");
-		}
-
-		$statusExists = TikiLib::fetchAll("SELECT * FROM information_schema.COLUMNS WHERE table_schema = ? AND table_name = 'tiki_user_modules' AND column_name = 'status'", array($dbs_tiki));
-		if (empty($statusExists)) {
-			TikiLib::query("ALTER TABLE tiki_user_modules ADD status VARCHAR(60) default '' AFTER parse;");
-		}
-	}
-
+	//<!--below methods are used for converting objects
+		//<!--Start for converting pages
 	function convertPages()
 	{
-		$this->addStatus();
 		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-		$infos = TikiLib::fetchAll('SELECT data, page_id FROM tiki_pages WHERE status <> "conv9" AND status <> "new9+"');
+		$infos = TikiLib::fetchAll('
+			SELECT data, page_id
+			FROM tiki_pages
+			LEFT JOIN tiki_db_status
+				ON tiki_db_status.objectId = tiki_pages.page_id
+			WHERE tiki_db_status.tableName = "tiki_pages" IS NULL
+		');
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1268,11 +1254,32 @@ class convertPagesToTiki9
 		}
 	}
 
+	function savePage($id, $data)
+	{
+		$status = $this->checkObjectStatus($id, 'tiki_pages');
+
+		if (empty($status)) {
+			TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id));
+
+			$this->saveObjectStatus($id, 'tiki_pages');
+		}
+	}
+		//end for converting pages-->
+
+
+
+		//<!--start for converting histories
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
-		$this->addStatus();
-
-		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND status <> "new9+" AND pageName = ? AND version = ?', array($page, $version));
+		$infos = TikiLib::fetchAll('
+			SELECT data, historyId
+			FROM tiki_history
+			LEFT JOIN tiki_db_status
+				ON tiki_db_status.objectId = tiki_history.historyId
+			WHERE tiki_db_status.tableName = "tiki_history" IS NULL
+			AND pageName = ?
+			AND version = ?
+		', array($page, $version));
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1288,10 +1295,14 @@ class convertPagesToTiki9
 
 	function convertPageHistories()
 	{
-		$this->addStatus();
-
 		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
-		$infos = TikiLib::fetchAll('SELECT data, historyId FROM tiki_history WHERE status <> "conv9" AND status <> "new9+"');
+		$infos = TikiLib::fetchAll('
+			SELECT data, historyId
+			FROM tiki_history
+			LEFT JOIN tiki_db_status
+				ON tiki_db_status.objectId = tiki_history.historyId
+			WHERE tiki_db_status.tableName = "tiki_history" IS NULL
+		');
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1304,11 +1315,34 @@ class convertPagesToTiki9
 		}
 	}
 
+	function savePageHistory($id, $data)
+	{
+		$status = $this->checkObjectStatus($id, 'tiki_history');
+
+		if (empty($status)) {
+			TikiLib::query("
+				UPDATE tiki_history
+				SET data = ?, status = 'conv9'
+				WHERE historyId = ?
+				", array($data, $id));
+
+			$this->saveObjectStatus($id, 'tiki_history');
+		}
+	}
+		//end for converting histories-->
+
+
+
+		//<!--start for converting modules
 	function convertModules()
 	{
-		$this->addStatus();
-
-		$infos = TikiLib::fetchAll('SELECT data, name FROM tiki_user_modules WHERE status <> "conv9" AND status <> "new9+"');
+		$infos = TikiLib::fetchAll('
+			SELECT data, name
+			FROM tiki_user_modules
+			LEFT JOIN tiki_db_status
+				ON tiki_db_status.objectId = tiki_user_modules.name
+			WHERE tiki_db_status.tableName = "tiki_user_modules" IS NULL
+		');
 
 		foreach($infos as $info) {
 			if (!empty($info['data'])) {
@@ -1321,33 +1355,45 @@ class convertPagesToTiki9
 		}
 	}
 
-	function savePage($id, $data)
-	{
-		TikiLib::query("
-			UPDATE tiki_pages
-			SET data = ?, status = 'conv9'
-			WHERE page_id = ? AND status <> 'conv9' AND status <> 'new9+'
-			", array($data, $id));
-	}
-
-	function savePageHistory($id, $data)
-	{
-		TikiLib::query("
-			UPDATE tiki_history
-			SET data = ?, status = 'conv9'
-			WHERE historyId = ? AND status <> 'conv9' AND status <> 'new9+'
-			", array($data, $id));
-	}
-
 	function saveModule($name, $data)
 	{
+		$status = $this->checkObjectStatus($name, 'tiki_user_modules');
+
+		if (empty($status)) {
+			TikiLib::query("UPDATE tiki_user_modules SET data = ?, status = 'conv9' WHERE name = ?", array($data, $name));
+
+			$this->saveObjectStatus($name, 'tiki_user_modules');
+		}
+	}
+		//end for converting modules-->
+	//end conversion of objects-->
+
+
+
+	//<!--below methods are used in tracking status of pages
+	function saveObjectStatus($objectId, $tableName, $status = 'new9+')
+	{
 		TikiLib::query("
-			UPDATE tiki_user_modules
-			SET data = ?, status = 'conv9'
-			WHERE name = ? AND status <> 'conv9' AND status <> 'new9+'
-			", array($data, $name));
+			INSERT INTO tiki_db_status
+			 		( objectId,	tableName,	status )
+			 VALUES (?,			?,			?)
+			", array(
+				$objectId, 	$tableName,	$status
+		));
 	}
 
+	function checkObjectStatus($objectId, $tableName)
+	{
+		return TikiLib::getOne("
+			SELECT status
+			FROM tiki_db_status
+			WHERE objectId = ? AND tableName = ?
+		",array($objectId, $tableName));
+	}
+	//end status methods-->
+
+
+	//<!--below methods are used for conversion of plugins and data
 	function updatePlugins($fingerPrintsOld, $fingerPrintsNew)
 	{
 		//here we find the old fingerprint and replace it with the new one
@@ -1420,4 +1466,6 @@ class convertPagesToTiki9
 			"fingerPrintsNew"=>$fingerPrintsNew
 		);
 	}
+
+	//end conversion methods-->
 }
