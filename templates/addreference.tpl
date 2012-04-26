@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $prefs.wikiplugin_addreference eq 'y' && $showTab eq '1'}
+{if $prefs.wikiplugin_addreference eq 'y' && $showBiblioSection eq '1'}
 
 
 <script type="text/javascript">
