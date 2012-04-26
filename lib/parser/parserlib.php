@@ -28,7 +28,6 @@ class ParserLib extends TikiDb_Bridge
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
 
-	var $needDecoded = true;
 	var $isHtmlPurifying = false;
 	var $isEditMode = false;
 
@@ -124,22 +123,6 @@ class ParserLib extends TikiDb_Bridge
 
 		// HTML numeric character entities
 		$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
-	}
-
-	function prepDataFromDb($data)
-	{
-		if ($this->needDecoded == true) {
-			$data = htmlspecialchars_decode($data);
-		}
-		return $data;
-	}
-
-	function prepDataToDb($data)
-	{
-		if ($this->needDecoded == true) {
-			$data = htmlspecialchars($data);
-		}
-		return $data;
 	}
 
 	// This function handles the protection of html entities so that they are not mangled when
@@ -1065,11 +1048,7 @@ if ( \$('#$id') ) {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
-			// pre-parse the output so nested plugins don't fall out all over the place
-			$tempNeedDecoded = $this->needDecoded;
-			$this->needDecoded = false; //here we are nesting the parser, and we know for sure that we no londer need to decode
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
-			$this->needDecoded = $tempNeedDecoded; //here decode may have been set to false, we restore it to what it was.
 
 			// remove hrefs and onclicks
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
@@ -2686,10 +2665,7 @@ if ( \$('#$id') ) {
 							}
 						}
 
-						$tempNeedDecoded = $this->needDecoded;
-						$this->needDecoded = false; //here we know we no longer need decoded
 						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
-						$this->needDecoded = $tempNeedDecoded;//here we revert it, it may have been false
 
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);

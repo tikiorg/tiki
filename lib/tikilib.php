@@ -3581,7 +3581,7 @@ class TikiLib extends TikiDb_Bridge
 		$insertData = array(
 			'pageName' => $name,
 			'hits' => (int) $hits,
-			'data' => $parserlib->prepDataToDb($data),
+			'data' => $data,
 			'description' => $description,
 			'lastModif' => (int) $lastModif,
 			'comment' => $comment,
@@ -3761,7 +3761,6 @@ class TikiLib extends TikiDb_Bridge
 
 			// Be sure to have the correct character case (because DB is caseinsensitive)
 			$pageNameEncode = urlencode($row['pageName']);
-			$row['data'] = TikiLib::lib("parser")->prepDataFromDb($row['data']);
 
 			// Limit memory usage of the page cache.  No 
 			// intelligence is attempted here whatsoever.  This was 
@@ -3945,7 +3944,7 @@ class TikiLib extends TikiDb_Bridge
 		
 		$queryData = array(
 			'description' => $edit_description,
-			'data' => $parserlib->prepDataToDb($edit_data),
+			'data' => $edit_data,
 			'comment' => $edit_comment,
 			'lastModif' => (int) $saveLastModif,
 			'version' => $version,

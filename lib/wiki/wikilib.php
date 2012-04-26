@@ -1214,7 +1214,7 @@ class WikiLib extends TikiLib
 global $wikilib;
 $wikilib = new WikiLib;
 
-/*
+
 class convertPagesToTiki9
 {
 	var $parserlib;
@@ -1222,6 +1222,9 @@ class convertPagesToTiki9
 
 	function __construct()
 	{
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 1);
+
 		$this->parserlib = TikiLib::lib('parser');
 		$this->argumentParser = new WikiParser_PluginArgumentParser();
 	}
@@ -1311,7 +1314,6 @@ class convertPagesToTiki9
 			if (!empty($info['data'])) {
 				$converted = $this->convertData($info['data']);
 
-				print_r($converted);
 				$this->updatePlugins($converted['fingerPrintsOld'], $converted['fingerPrintsNew']);
 
 				$this->saveModule($info['name'], $converted['data']);
@@ -1339,7 +1341,6 @@ class convertPagesToTiki9
 
 	function saveModule($name, $data)
 	{
-		print_r(array($data, $name));
 		TikiLib::query("
 			UPDATE tiki_user_modules
 			SET data = ?, status = 'conv9'
@@ -1373,8 +1374,7 @@ class convertPagesToTiki9
 		$matches = WikiParser_PluginMatcher::match($data);
 
 		$replaced = array();
-		ini_set('error_reporting', E_ALL);
-		ini_set('display_errors', 1);
+
 		$fingerPrintsOld = array();
 		foreach ($oldMatches as $match) {
 			$name = $match->getName();
@@ -1384,7 +1384,7 @@ class convertPagesToTiki9
 
 			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 		}
-		echo $data;
+
 		$fingerPrintsNew = array();
 		foreach ($matches as $match) {							// each plugin
 			$name = $match->getName();
@@ -1420,4 +1420,4 @@ class convertPagesToTiki9
 			"fingerPrintsNew"=>$fingerPrintsNew
 		);
 	}
-}*/
+}
