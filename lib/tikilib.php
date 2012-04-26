@@ -3627,6 +3627,11 @@ class TikiLib extends TikiDb_Bridge
 		$pages = $this->table('tiki_pages');
 		$page_id = $pages->insert($insertData);
 
+		//update status, page storage was updated in tiki 9 to be non html encoded
+		require_once('lib/wiki/wikilib.php');
+		$converter = new convertToTiki9();
+		$converter->saveObjectStatus($page_id, 'tiki_pages');
+
 		$this->replicate_page_to_history($name);
 
 		$this->clear_links($name);
@@ -3988,6 +3993,11 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$this->table('tiki_pages')->update($queryData, array('pageName' => $pageName));
+
+		//update status, page storage was updated in tiki 9 to be non html encoded
+        require_once('lib/wiki/wikilib.php');
+		$converter = new convertToTiki9();
+		$converter->saveObjectStatus($this->getOne("SELECT page_id FROM tiki_pages WHERE pageName = ?", array($pageName)), 'tiki_pages');
 
 		// Parse edit_data updating the list of links from this page
 		$this->clear_links($pageName);

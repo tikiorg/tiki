@@ -1215,16 +1215,13 @@ global $wikilib;
 $wikilib = new WikiLib;
 
 
-class convertPagesToTiki9
+class convertToTiki9
 {
 	var $parserlib;
 	var $argumentParser;
 
 	function __construct()
 	{
-		ini_set('error_reporting', E_ALL);
-		ini_set('display_errors', 1);
-
 		$this->parserlib = TikiLib::lib('parser');
 		$this->argumentParser = new WikiParser_PluginArgumentParser();
 	}
@@ -1261,7 +1258,7 @@ class convertPagesToTiki9
 		if (empty($status)) {
 			TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id));
 
-			$this->saveObjectStatus($id, 'tiki_pages');
+			$this->saveObjectStatus($id, 'tiki_pages', 'conv9.0');
 		}
 	}
 		//end for converting pages-->
@@ -1322,11 +1319,11 @@ class convertPagesToTiki9
 		if (empty($status)) {
 			TikiLib::query("
 				UPDATE tiki_history
-				SET data = ?, status = 'conv9'
+				SET data = ?
 				WHERE historyId = ?
 				", array($data, $id));
 
-			$this->saveObjectStatus($id, 'tiki_history');
+			$this->saveObjectStatus($id, 'tiki_history', 'conv9.0');
 		}
 	}
 		//end for converting histories-->
@@ -1360,9 +1357,9 @@ class convertPagesToTiki9
 		$status = $this->checkObjectStatus($name, 'tiki_user_modules');
 
 		if (empty($status)) {
-			TikiLib::query("UPDATE tiki_user_modules SET data = ?, status = 'conv9' WHERE name = ?", array($data, $name));
+			TikiLib::query('UPDATE tiki_user_modules SET data = ? WHERE name = ?', array($data, $name));
 
-			$this->saveObjectStatus($name, 'tiki_user_modules');
+			$this->saveObjectStatus($name, 'tiki_user_modules', 'conv9.0');
 		}
 	}
 		//end for converting modules-->
@@ -1371,15 +1368,29 @@ class convertPagesToTiki9
 
 
 	//<!--below methods are used in tracking status of pages
-	function saveObjectStatus($objectId, $tableName, $status = 'new9+')
+	function saveObjectStatus($objectId, $tableName, $status = 'new9.0+')
 	{
-		TikiLib::query("
-			INSERT INTO tiki_db_status
-			 		( objectId,	tableName,	status )
-			 VALUES (?,			?,			?)
+		$currentStatus = TikiLib::getOne("SELECT status FROM tiki_db_status WHERE objectId = ? AND tableName = ?", array($objectId, $tableName));
+
+		if (empty($currentStatus)) {
+			//Insert a status record if one doesn't exist
+			TikiLib::query("
+				INSERT INTO tiki_db_status
+				        ( objectId,	tableName,	status )
+				 VALUES (?,			?,			?)
+				", array(
+					$objectId, 	$tableName,	$status
+			));
+		} else {
+			//update a status record, it already exists
+			TikiLib::query("
+				UPDATE tiki_db_status
+				SET status = ?
+				WHERE objectId = ? AND tableName = ?
 			", array(
-				$objectId, 	$tableName,	$status
-		));
+				$status, $objectId, $tableName
+			));
+		}
 	}
 
 	function checkObjectStatus($objectId, $tableName)

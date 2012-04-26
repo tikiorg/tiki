@@ -37,7 +37,7 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
 	include_once('lib/wiki/wikilib.php');
 
-	$converter = new convertPagesToTiki9();
+	$converter = new convertToTiki9();
 	$converter->convertPages();
 	$converter->convertModules();
 }

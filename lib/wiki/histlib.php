@@ -156,7 +156,7 @@ class HistLib extends TikiLib
 	{
 		//fix for encoded slowly without doing it all at once in the installer upgrade script
 		require_once("lib/wiki/wikilib.php");
-		$converter = new convertPagesToTiki9();
+		$converter = new convertToTiki9();
 		$converter->convertPageHistoryFromPageAndVersion($page, $version);
 
 		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
