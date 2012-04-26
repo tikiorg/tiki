@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /**
  * Emulates the new HTML5 <figure> and <figcaption> tags for backwards compatability with HTML4
  * and XML 1.1.
@@ -9,12 +15,12 @@
  *
  */
 
-
-function wikiplugin_figure_help() {
-        return tra("Emulate HTML5's new &#60;figure&#62; and &#60;figcaption&#62; tags");
+function wikiplugin_figure_help()
+{
+	return tra("Emulate HTML5's new &#60;figure&#62; and &#60;figcaption&#62; tags");
 }
 
-/*
+/**
  * the "alt" attribute is required on <img> tags for XHTML compilance,
  * but it is legal for it to be empty
  *
@@ -24,19 +30,20 @@ function wikiplugin_figure_help() {
  *
  * @return $box // the populated container
  */
-function wikiplugin_figure($img,$caption,$txt=null)
+function wikiplugin_figure($img, $caption, $txt = null)
 {
 	$box = '';
-if(isset($txt)) {$alt="\"".$txt."\"";} else {$alt="\"\"";}
-// build the container
+	if (isset($txt)) {
+		$alt = '"' . $txt . '"';
+	} else {
+		$alt = '""';
+	}
+	// build the container
 
-	$box = "<div class=\"figure\">";
-    $box .= "  <img src=\"".$img."\" alt=".$alt." />";
-    $box .= "  <p class=\"figcaption\">" . $caption . "</p>";
-    $box .= "</div>";
-
+	$box = '<div class="figure">';
+  $box .= '  <img src="' . $img . '" alt=' . $alt . ' />';
+  $box .= '  <p class="figcaption">' . $caption . '</p>';
+  $box .= '</div>';
 
 	return $box;
 }
-
-?>
