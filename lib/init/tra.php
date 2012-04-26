@@ -75,11 +75,13 @@ function init_language( $lg )
 		if ( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
 
 			$tikilib = TikiLib::lib('tiki');
-			$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
-			$result = $tikilib->fetchAll($query, array($lg));
+			if (isset($tikilib)) {
+				$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
+				$result = $tikilib->fetchAll($query, array($lg));
 
-			foreach ( $result as $row ) {
-				$lang[ $row['source'] ] = $row['tran'];
+				foreach ( $result as $row ) {
+					$lang[ $row['source'] ] = $row['tran'];
+				}
 			}
 		}
 
