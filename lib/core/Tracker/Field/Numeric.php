@@ -55,14 +55,14 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 						'filter' => 'int',
 					),
 					'dec_point' => array(
-						'name' => tr('Decimal separator'),
-						'description' => tr('Single character, conventions depend on the language of the site and on the browser in some cases. Usual values are c for comma, d for dot and s for space, even if Firefox is known to accept only dots and Chrome only commas in some conditions, regardless of this setting at the tracker level'),
+						'name' => tr('Decimal separator when displaying data'),
+						'description' => tr('Single character. Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
 						'filter' => 'text',
 						'default' => '.',
 					),
 					'thousands' => array(
-						'name' => tr('Thousand separator'),
-						'description' => tr('Single character, conventions depend on the language of the site.'),
+						'name' => tr('Thousand separator when displaying data'),
+						'description' => tr('Single character,  Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
 						'filter' => 'text',
 						'default' => ',',
 					),
