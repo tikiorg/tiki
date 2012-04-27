@@ -762,9 +762,9 @@ class WikiLib extends TikiLib
 	 */
 	function get_pages_by_alias($alias)
 	{
+		global $prefs, $semanticlib;
 		require_once 'lib/wiki/semanticlib.php';
-		global $prefs;
-		
+
 		$pages = array();
 		
 		if ($prefs['feature_wiki_pagealias'] == 'n' && empty($prefs["wiki_prefixalias_tokens"])) {
