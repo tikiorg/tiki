@@ -3930,7 +3930,7 @@ class TikiLib extends TikiDb_Bridge
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 
-			$parserlib->plugins_replace($edit_data, $noparsed);
+			$parserlib->plugins_replace($edit_data, $noparsed, true);
 			$parserlib->isHtmlPurifying = false;
 			$parserlib->isEditMode = false;
 		}
