@@ -197,10 +197,10 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	input array
 	 */
 
-	function plugins_replace(&$data, $noparsed) {
+	function plugins_replace(&$data, $noparsed, $is_html = false) {
 		$preparsed = array();	// unused
 		$noparsed['data'] = isset($noparsed['data']) ? str_replace('<x>', '', $noparsed['data']) : '';
-		$this->replace_preparse($data, $preparsed, $noparsed);
+		$this->replace_preparse($data, $preparsed, $noparsed, $is_html);
 	}
 
 	//*
@@ -940,7 +940,8 @@ if ( \$('#$id') ) {
 	{
 		global $prefs, $killtoc;
 
-		$data = $this->unprotectSpecialChars($data, true);//We want to give plugins original
+		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
+		$args = preg_replace(array('/^&quot;/','/&quot;$/'),'',$args);		// Similarly remove the encoded " chars from the args
 
 		$outputFormat = 'wiki';
 		if ( isset($parseOptions['context_format']) ) {
