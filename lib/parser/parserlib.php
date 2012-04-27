@@ -45,6 +45,9 @@ class ParserLib extends TikiDb_Bridge
 			'html'=>		'&nbsp;',
 			'nonHtml'=>		'&nbsp;'
 		),
+		/*on post back the page is parsed, which turns & into &amp;
+		this is done to prevent that from happening, we are just
+		protecting some chars from letting the parser nab them*/
 		'~REAL_AMP~' => array(
 			'html'=>		'& ',
 			'nonHtml'=>		'& '
