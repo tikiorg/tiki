@@ -3682,7 +3682,7 @@ CREATE TABLE `tiki_areas` (
     KEY `categId` (`categId`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS
+DROP TABLE IF EXISTS `tiki_db_status`;
 CREATE TABLE `tiki_db_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `objectId` varchar(100) NOT NULL,
