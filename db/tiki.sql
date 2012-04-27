@@ -2384,7 +2384,7 @@ CREATE TABLE `tiki_user_modules` (
   `title` varchar(40) default NULL,
   `data` longblob,
   `parse` char(1) default NULL,
-  `status` VARCHAR(60) default ''  
+  `status` VARCHAR(60) default '',  
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
