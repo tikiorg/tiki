@@ -324,11 +324,11 @@ function delete_ref(ref_id){
 
 <table>
 	<tr>
-		<td colspan="2"><a href="javascript:;" id="add_ref" onclick="add_ref()">Add Bibliography</a></td>
+		<td colspan="2"><a href="javascript:;" id="add_ref" onclick="add_ref()">{tr}Add Bibliography{/tr}</a></td>
 	</tr>
 	<tr>
 		<td id="ref_list" style="display:{$display}">
-			References Available:
+			{tr}References Available{/tr}:
 			<ul style="list-style-type:none; padding-left: 0;">
 			{section name=i loop=$references}
 				{if $references[i].is_present eq 1}
@@ -348,7 +348,7 @@ function delete_ref(ref_id){
 			
 			{if $use_references eq 1}
 				{if $libReferencesCant gt 0}
-					Library References:<br />
+					{tr}Library References{/tr}:<br />
 					<select name="lib_ref" id="lib_ref">
 						{section name=i loop=$libReferences}
 							<option value="{$libReferences[i].ref_id|escape}">{$libReferences[i].biblio_code|escape}</option>
@@ -360,7 +360,7 @@ function delete_ref(ref_id){
 				{/if}
 			{/if}
 			{if $edit_references eq 1 && $libReferencesCant gt 0}
-				<br /><a href="libReferences.php" target="_blank">Edit Library References</a>
+				<br /><a href="libReferences.php" target="_blank">{tr}Edit Library References{/tr}</a>
 			{/if}
 
 		</td>
@@ -371,19 +371,19 @@ function delete_ref(ref_id){
 				<input type="hidden" name="page" value="{$page|escape}" />
 				<table class="formcolor">
 					<tr>
-						<td>Biblio Code:</td>
+						<td>{tr}Biblio Code{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_biblio_code" id="e_ref_biblio_code" maxlength="50" value="" /></td>
 					</tr>
 					<tr>
-						<td>Author:</td>
+						<td>{tr}Author{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_author" id="e_ref_author" value="" /></td>
 					</tr>
 					<tr>
-						<td>Title:</td>
+						<td>{tr}Title{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_title" id="e_ref_title" value="" /></td>
 					</tr>
 					<tr>
-						<td>Year:</td>
+						<td>{tr}Year{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_year" id="e_ref_year" value="" /></td>
 					</tr>
 					<tr>
@@ -391,38 +391,38 @@ function delete_ref(ref_id){
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_part" id="e_ref_part" value="" /></td>
 					</tr>
 					<tr>
-						<td>URI:</td>
+						<td>{tr}URI{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_uri" id="e_ref_uri" value="" /></td>
 					</tr>
 					<tr>
-						<td>Code:</td>
+						<td>{tr}Code{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_code" id="e_ref_code" value="" /></td>
 					</tr>
 					<tr>
-						<td>Publisher:</td>
+						<td>{tr}Publisher{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_publisher" id="e_ref_publisher" value="" /></td>
 					</tr>
 					<tr>
-						<td>Location:</td>
+						<td>{tr}Location{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_location" id="e_ref_location" value="" /></td>
 					</tr>
 					<tr>
-						<td>Style:</td>
+						<td>{tr}Style{/tr}:</td>
 						<td>
 							<input type="text" size="30"  class="wikiedit" name="e_ref_style" id="e_ref_style" value="" />
 							<br />
-							<small>Enter the CSS class name to be added in the 'li' tag for listing this reference.</small>
+							<small>{tr}Enter the CSS class name to be added in the 'li' tag for listing this reference.{/tr}</small>
 						</td>
 					</tr>
 					<tr>
-						<td>Template:</td>
+						<td>{tr}Template{/tr}:</td>
 						<td>
 							<input type="text" size="30"  class="wikiedit" name="e_ref_template" id="e_ref_template" value="" />
 							<br />
 							<small>
-								Enter template format in which you want to display the reference details in the bibliograpgy listing. For example: ~title~ (~year~) ~author~
+								{tr}Enter template format in which you want to display the reference details in the bibliography listing. For example{/tr}: ~title~ (~year~) ~author~
 								<br />
-								All the codes must be in lower case letters separated with spaces.
+								{tr}All the codes must be in lower case letters separated with spaces.{/tr}
 							</small>
 						</td>
 					</tr>
@@ -447,5 +447,5 @@ function delete_ref(ref_id){
 </table>
 
 {else}
-Please save the page before creating the bibliography.
+{tr}Please save the page before creating the bibliography.{/tr}
 {/if}
