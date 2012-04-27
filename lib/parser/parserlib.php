@@ -1505,7 +1505,7 @@ if ( \$('#$id') ) {
 		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
 		// must be done before color as we can have ~hs~~hs
 		// jb 9.0 html entity fix - excluded not $options['is_html'] pages
-		if (!$simple_wiki) {
+		if (!$simple_wiki && !$options['is_html']) {
 			$this->parse_htmlchar($data, $options);
 		}
 
