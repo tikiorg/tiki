@@ -38,7 +38,7 @@ jQuery(document).ready(function(){
 		  data: dataString,
 		  dataType: 'json',
 		  beforeSend: function( xhr ) {
-			jQuery('#e_status').html('Saving...');
+			jQuery('#e_status').html('{tr}Saving...{/tr}');
 		  },
 		  success: function( data ) {
 			if('success'==data['result']){
@@ -125,7 +125,7 @@ jQuery(document).ready(function(){
 				jQuery('#e_ref_template').val('');
 				jQuery('#e_ref_publisher').val('');
 				jQuery('#e_ref_location').val('');
-				jQuery('#a_status').html('Bibliography saved.');
+				jQuery('#a_status').html('{tr}Bibliography saved.{/tr}');
 				
 				jQuery('#ref_list').show();
 				
@@ -172,7 +172,7 @@ jQuery(document).ready(function(){
 		  data: dataString,
 		  dataType: 'json',
 		  beforeSend: function( xhr ) {
-			jQuery('#u_lib_status').html('Adding...');
+			jQuery('#u_lib_status').html('{tr}Adding...{/tr}');
 		  },
 		  success: function( data ) {
 			if('success'==data['result']){
@@ -324,7 +324,7 @@ function delete_ref(ref_id){
 
 <table>
 	<tr>
-		<td colspan="2"><a href="javascript:;" id="add_ref" onclick="add_ref()">{tr}Add Bibliography{/tr}</a></td>
+		<td colspan="2"><a href="javascript:;" id="add_ref" onclick="add_ref()">{tr}Add Reference{/tr}</a></td>
 	</tr>
 	<tr>
 		<td id="ref_list" style="display:{$display}">
@@ -355,7 +355,7 @@ function delete_ref(ref_id){
 						{/section}
 					</select>
 					<br />
-					<input class="wikiaction" type="submit" value="Use" id="u_lib" name="u_lib" />
+					<input class="wikiaction" type="submit" value="{tr}Use{/tr}" id="u_lib" name="u_lib" />
 					<br /><span id="u_lib_status"></span>
 				{/if}
 			{/if}
@@ -387,7 +387,7 @@ function delete_ref(ref_id){
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_year" id="e_ref_year" value="" /></td>
 					</tr>
 					<tr>
-						<td>Part:</td>
+						<td>{tr}Part{/tr}:</td>
 						<td><input type="text" size="30"  class="wikiedit" name="e_ref_part" id="e_ref_part" value="" /></td>
 					</tr>
 					<tr>
@@ -434,8 +434,8 @@ function delete_ref(ref_id){
 								<span id="e_status" style="margin: 0 0 0 10px;"></span>
 							</div>
 							<div id="a_btns">
-								<input class="wikiaction" type="submit" value="Add" id="a_submit" name="a_submit" />
-								<input class="wikiaction" type="reset" value="Cancel" id="a_cancel" name="a_cancel" />
+								<input class="wikiaction" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit" />
+								<input class="wikiaction" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel" />
 								<span id="a_status" style="margin: 0 0 0 10px;"></span>
 							</div>
 						</td>

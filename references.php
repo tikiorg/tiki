@@ -47,16 +47,16 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 	
 	if (intval($page_id)) {
 		if ($ref_biblio_code=='') {
-			$errors[] = 'Please enter Biblio Code.';
+			$errors[] = tra('Please enter Biblio Code.');
 		}
 		if (strlen($ref_biblio_code)>50) {
-			$errors[] = 'Biblio code must not exceed 50 characters.';
+			$errors[] = tra('Biblio code must not exceed 50 characters.');
 		}
 			
 		if (count($errors)<1) {
 			$exists = $referenceslib->check_existence($page_id, $ref_biblio_code);
 			if ($exists > 0) {
-				echo json_encode(array('result'=>'failure', 'id'=>-1));
+				echo json_encode(array('result'=>tra('failure'), 'id'=>-1));
 			} else {
 				$is_library = $referenceslib->check_lib_existence($ref_biblio_code);
 				$id = $referenceslib->add_reference_ajax(
@@ -73,7 +73,7 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 								$ref_publisher,
 								$ref_location
 				);
-				echo json_encode(array('result'=>'success', 'id'=>$id, 'is_library'=>$is_library));
+				echo json_encode(array('result'=>tra('success'), 'id'=>$id, 'is_library'=>$is_library));
 			}
 			exit;
 		} else {
@@ -83,7 +83,7 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 			}
 		}
 	} else {
-		$error = 'Page not found. Please save the page first.';
+		$error = tra('Page not found. Please save the page first.');
 		echo json_encode(array('result'=>$error, 'id'=>''));
 		exit;
 	}
@@ -95,18 +95,18 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 	if ($referenceslib->get_permission('tiki_p_use_references') != 'y') {
 		echo json_encode(
 						array(
-							'result'=>'failure',
-							'message'=>'You do not have sufficient permissions to perform this action.'
+							'result'=>tra('failure'),
+							'message'=>tra('You do not have sufficient permissions to perform this action.')
 						)
 		);
 		exit;
 	}
 	
 	if ($ref_biblio_code == '') {
-		$errors[] = 'Please enter Biblio Code.';
+		$errors[] = tra('Please enter Biblio Code.');
 	}
 	if (strlen($ref_biblio_code) > 50) {
-		$errors[] = 'Biblio code must not exceed 50 characters.';
+		$errors[] = tra('Biblio code must not exceed 50 characters.');
 	}
 		
 	if (count($errors) < 1) {
@@ -114,8 +114,8 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 		if ($exists > 0) {
 			echo json_encode(
 							array(
-								'result'=>'failure',
-								'message'=>'This reference already exists in the library.',
+								'result'=>tra('failure'),
+								'message'=>tra('This reference already exists in the library.'),
 								'is_library'=>$exists
 							)
 			);
@@ -135,8 +135,8 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 			);
 			echo json_encode(
 							array(
-								'result'=>'success',
-								'message'=>'Reference added to library.',
+								'result'=>tra('success'),
+								'message'=>tra('Reference added to library.'),
 								'id'=>$id,
 								'is_library'=>$exists
 							)
@@ -156,9 +156,9 @@ if (isset($_REQUEST['editreference'])) {
 	$errors = array();
 
 	if ($ref_biblio_code == '') {
-		$errors[] = 'Please enter Biblio Code.';
+		$errors[] = tra('Please enter Biblio Code.');
 	} elseif (strlen($ref_biblio_code) > 50) {
-		$errors[] = 'Biblio code must not exceed 50 characters.';
+		$errors[] = tra('Biblio code must not exceed 50 characters.');
 	} else {
 		$ref_details = $referenceslib->get_reference_from_id($ref_id);
 		
@@ -166,7 +166,7 @@ if (isset($_REQUEST['editreference'])) {
 		if ($ref_details['data'][0]['biblio_code'] != $ref_biblio_code) {
 			$count = $referenceslib->check_existence($page_id, $ref_biblio_code);
 			if ($count > 0) {
-				$errors[] = 'This biblio code already exists.';
+				$errors[] = tra('This biblio code already exists.');
 			}
 		}
 	}
@@ -189,15 +189,15 @@ if (isset($_REQUEST['editreference'])) {
 		$exists = $referenceslib->check_lib_existence($ref_biblio_code);
 		echo json_encode(
 						array(
-							'result'=>'success',
-							'message'=>'Bibliography saved.',
+							'result'=>tra('success'),
+							'message'=>tra('Bibliography saved.'),
 							'is_library'=>$exists
 						)
 		);
 		exit;
 	} else {
 		foreach ($errors as $error) {
-			echo json_encode(array('result'=>'failure', 'message'=>$error));
+			echo json_encode(array('result'=>tra('failure'), 'message'=>$error));
 		}
 		exit;
 	}
@@ -207,8 +207,8 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 	if ($referenceslib->get_permission('tiki_p_use_references') != 'y') {
 		echo json_encode(
 						array(
-							'result'=>'failure',
-							'message'=>'You do not have sufficient permissions to perform this action.'
+							'result'=>tra('failure'),
+							'message'=>tra('You do not have sufficient permissions to perform this action.')
 						)
 		);
 		exit;
@@ -218,7 +218,7 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 		$exists = $referenceslib->check_existence($page_id, $ref_biblio_code);
 		$id = $referenceslib->add_lib_ref_to_page($ref_id, $page_id);
 		if ($id == -1) {
-			echo json_encode(array('result'=>'failure', 'message'=>'Reference already exists.', 'id'=>$id));
+			echo json_encode(array('result'=>tra('failure'), 'message'=>tra('Reference already exists.'), 'id'=>$id));
 		} else {
 			$details = $referenceslib->get_reference_from_id($id);
 			foreach ($details['data'][0] as $key=>$data) {
@@ -231,8 +231,8 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 
 			echo json_encode(
 							array(
-								'result'=>'success',
-								'message'=>'Reference added.',
+								'result'=>tra('success'),
+								'message'=>tra('Reference added.'),
 								'id'=>$id,
 								'ref_biblio_code'=>$details['data'][0]['biblio_code'],
 								'ref_author'=>$details['data'][0]['author'],
@@ -255,6 +255,6 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 if (isset($_REQUEST['action']) && isset($ref_id)) {
 	if ($_REQUEST['action'] == 'e_del') {
 		$referenceslib->remove_reference($ref_id);
-		echo 'success';
+		echo tra('success');
 	}
 }

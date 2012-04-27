@@ -14,7 +14,7 @@ jQuery(document).ready(function(){
 {/jq}
 
 
-<h2>{tr}Library References:{/tr} <a href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
+<h2>{tr}Library References{/tr}: <a href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
 
 <table class="formcolor" id="main">
 	{section name=i loop=$references}
@@ -24,47 +24,47 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="referenceId" value="{$references[i].ref_id|escape}" />
 					<table class="formcolor">
 						<tr>
-							<td>Biblio Code:</td>
+							<td>{tr}Biblio Code{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_biblio_code" id="ref_biblio_code" value="{$references[i].biblio_code|escape}" maxlength="50" /></td>
 						</tr>
 						<tr>
-							<td>Author:</td>
+							<td>{tr}Author{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_author" id="ref_author" value="{$references[i].author|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Title:</td>
+							<td>{tr}Title{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_title" id="ref_title" value="{$references[i].title|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Year:</td>
+							<td>{tr}Year{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_year" id="ref_year" value="{$references[i].year|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Part:</td>
+							<td>{tr}Part{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_part" id="ref_part" value="{$references[i].part|escape}" /></td>
 						</tr>
 						<tr>
-							<td>URI:</td>
+							<td>{tr}URI{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_uri" id="ref_uri" value="{$references[i].uri|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Code:</td>
+							<td>{tr}Code{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_code" id="ref_code" value="{$references[i].code|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Publisher:</td>
+							<td>{tr}Publisher{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_publisher" id="ref_publisher" value="{$references[i].publisher|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Location:</td>
+							<td>{tr}Location{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_location" id="ref_location" value="{$references[i].location|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Style:</td>
+							<td>{tr}Style{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_style" id="ref_style" value="{$references[i].style|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Template:</td>
+							<td>{tr}Template{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_template" id="ref_style" value="{$references[i].template|escape}" /></td>
 						</tr>
 					</table>
@@ -83,47 +83,47 @@ jQuery(document).ready(function(){
 				<form action="libReferences.php" method="post">
 					<table class="formcolor">
 						<tr>
-							<td>Biblio Code:</td>
+							<td>{tr}Biblio Code{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_biblio_code" id="ref_biblio_code" value="" /></td>
 						</tr>
 						<tr>
-							<td>Author:</td>
+							<td>{tr}Author{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_author" id="ref_author" value="" /></td>
 						</tr>
 						<tr>
-							<td>Title:</td>
+							<td>{tr}Title{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_title" id="ref_title" value="" /></td>
 						</tr>
 						<tr>
-							<td>Year:</td>
+							<td>{tr}Year{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_year" id="ref_year" value="" /></td>
 						</tr>
 						<tr>
-							<td>Part:</td>
+							<td>{tr}Part{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_part" id="ref_part" value="" /></td>
 						</tr>
 						<tr>
-							<td>URI:</td>
+							<td>{tr}URI{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_uri" id="ref_uri" value="" /></td>
 						</tr>
 						<tr>
-							<td>Code:</td>
+							<td>{tr}Code{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_code" id="ref_code" value="" /></td>
 						</tr>
 						<tr>
-							<td>Publisher:</td>
+							<td>{tr}Publisher{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_publisher" id="ref_publisher" value="{$references[i].publisher|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Location:</td>
+							<td>{tr}Location{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_location" id="ref_location" value="{$references[i].location|escape}" /></td>
 						</tr>
 						<tr>
-							<td>Style:</td>
+							<td>{tr}Style{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_style" id="ref_style" value="" /></td>
 						</tr>
 						<tr>
-							<td>Template:</td>
+							<td>{tr}Template{/tr}:</td>
 							<td><input type="text" size="40"  class="wikiedit" name="ref_template" id="ref_template" value="" /></td>
 						</tr>
 						<tr>
