@@ -199,7 +199,7 @@ class StructLib extends TikiLib
 		global $user;
 
 		if (!empty($data)) {
-			$structure_info = $this->s_get_structure_info($data[1]->item_id);	// not "root"
+			$structure_info = $this->s_get_structure_info($data[0]->structure_id);	// "root"
 
 			if (TikiLib::lib('tiki')->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit_structures')) {
 
@@ -215,7 +215,7 @@ class StructLib extends TikiLib
 						} else {
 							$orders[$node->depth]++;
 						}
-						$node->parent_id = $node->parent_id == 'root' ? $structure_info['page_ref_id'] : $node->parent_id;
+						$node->parent_id = $node->parent_id == 'root' || empty($node->parent_id) ? $structure_info['page_ref_id'] : $node->parent_id;
 						$fields = array(
 							'parent_id' => $node->parent_id,
 							'pos' => $orders[$node->depth],
@@ -614,27 +614,29 @@ class StructLib extends TikiLib
 				$type = 'plain';
 			} else {
 				TikiLib::lib('smarty')->assign('structure_name', $structure_info["pageName"]);
-				TikiLib::lib('smarty')->assign(
-								'json_params', 
-								json_encode(
-												array(
-													'page_ref_id' => $page_ref_id,
-													'order' => $order,
-													'showdesc' => $showdesc,
-													'numbering' => $numbering,
-													'numberPrefix' => $numberPrefix,
-													'type' => $type,
-													'page' => $page,
-													'maxdepth' => $maxdepth,
-													'structurePageName' => $structurePageName
-												)
-								)
+				$json_params = json_encode(
+					array(
+						'page_ref_id' => $page_ref_id,
+						'order' => $order,
+						'showdesc' => $showdesc,
+						'numbering' => $numbering,
+						'numberPrefix' => $numberPrefix,
+						'type' => $type,
+						'page' => $page,
+						'maxdepth' => $maxdepth,
+						'structurePageName' => $structurePageName
+					)
 				);
+				TikiLib::lib('smarty')->assign( 'json_params', $json_params);
 
 			}
 		}
 
-		return $this->fetch_toc($structure_tree, $showdesc, $numbering, $type, $page, $maxdepth, 0, $structurePageName)."\n";
+		$nodelist = $this->fetch_toc($structure_tree, $showdesc, $numbering, $type, $page, $maxdepth, 0, $structurePageName);
+		if ($type === 'admin' && empty($nodelist)) {
+			$nodelist = "<ol class='admintoc' style='min-height: 4em;' data-params='$json_params'></ol>";
+		}
+		return $nodelist ."\n";
 	}
 	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName='')
 	{
