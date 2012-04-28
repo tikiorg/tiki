@@ -203,11 +203,6 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		$cacheName = $md5;
 		$cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
 		$use_cache = true;
-
-		if ( isset($_GET['thumbnail']) ) {
-			// For thumbnails, change the filetype to the appropriate one, which is often different from the original filetype...
-			$info['filetype'] = 'image/' . $thumbnail_format;
-		}
 	}
 
 	$build_content = true;
