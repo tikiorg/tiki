@@ -1472,8 +1472,7 @@ class UsersLib extends TikiLib
 			$current = 0;
 		}
 
-		// A LDAP synchronisation is not done in the 1st minute after login
-		if ( $tikilib->now - $current >= 60 && ( $prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y' ) ) {
+		if ( $prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y' ) {
 			$ret &= $this->ldap_sync_user_and_groups($user, $pass);
 		}
 
