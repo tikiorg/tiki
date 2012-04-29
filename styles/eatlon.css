@@ -195,6 +195,10 @@ input[type="submit"],
 	padding: 2px 4px;
 }
 
+input:disabled {
+	color:#DDDDDD !important;
+}
+
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -597,7 +601,10 @@ td.even,
 	background: url(eatlon/menu_bg.png) 1000px 0;
 	color: #ececec}
 
-.tabactive a {color: #d7e5f3}
+.tabactive a {
+	color: #d7e5f3;
+	font-weight: bold;
+}
 
 .statuson {
 	border: 1px solid #8cacbb;
