@@ -1,0 +1,44 @@
+#!/bin/bash
+# (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+# 
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+# $Id$
+
+# TODO: Handle local file gal and wiki_up
+
+#Production 
+DOCROOTOLDVERSION="public_html/8x"
+DOCROOTDOGFOODVERSION="publib_html/9x"
+
+OLDMYSQLDB="changi_8x"
+DOGFOODMYSQLDB="changi_9x"
+#Be carefull, this user need to have the right to drop the database.
+MYSQLUSER="changi"
+MYSQLPASS="changi"
+MYSQLCOMMAND="mysql -u $MYSQLUSER -p $MYSQLPASS"
+MYSQLDUMPCOMMAND="mysqldump -u $MYSQLUSER -p $MYSQLPASS"
+
+pushd $DOCROOTDOGFOODVERSION
+echo "Update checkout"
+rm -rf templates_c/*.tpl.php
+rm -rf temp/cache/*
+rm -rf temp/public/minified*
+
+bash doc/devtools/svnup.sh
+echo "Fix permission"
+bash setup.sh -n
+echo "Drop and recreate database"
+$MYSQLCOMMAND -e "drop database $DOGFOODMYSQLDB;create database $DOGFOODMYSQLDB"
+echo "Populate $DOGFOODMYSQLDB with $OLDMYSQLDB data"
+$MYSQLDUMPCOMMAND --single-transaction $OLDMYSQLDB | $MYSQLCOMMAND $DOGFOODMYSQLDB
+echo "Upgrade schema"
+php installer/shell.php
+echo "Update memcache prefix"
+$MYSQLCOMMAND $DOGFOODMYSQLDB -e "update tiki_preferences set value = \"DOGFOODtiki_\" where name = \"memcache_prefix\";"
+echo "Remove cdn"
+$MYSQLCOMMAND $DOGFOODMYSQLDB -e "update tiki_preferences set value = \"\" where name = \"tiki_cdn\";"
+echo "Upgrading HTACCESS"
+rm .htaccess
+sh htaccess.sh on
+popd
