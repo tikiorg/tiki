@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= 'SVN proposals pre 6.7';
+		$this->version 	= 'SVN proposals pre 6.8';
 		$this->star	= 'Rigel';
 		$this->releases	= array();
 
