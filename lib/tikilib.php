@@ -256,6 +256,21 @@ class TikiLib extends TikiDb_Bridge
 		return $eventManager;
 	}
 
+	public function get_site_hash()
+	{
+		global $prefs;
+
+		if (! isset($prefs['internal_site_hash'])) {
+			require_once 'lib/phpsec/phpsec/phpsec.rand.php';
+
+			$hash = base64_encode(phpsecRand::bytes(100));
+
+			$this->set_preference('internal_site_hash', $hash);
+		}
+
+		return $prefs['internal_site_hash'];
+	}
+
 	// DB param left for interface compatibility, although not considered
 	function __construct( $db = null )
 	{
