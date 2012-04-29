@@ -1,4 +1,4 @@
-{* $Id$ *}
+{* $Id: tiki-references.tpl 41174 2012-04-29 16:05:41Z arildb $ *}
 {if $prefs.wikiplugin_addreference eq 'y'}
 
 {jq}

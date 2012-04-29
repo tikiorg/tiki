@@ -126,5 +126,5 @@ $references = $referenceslib->list_lib_references();
 $smarty->assign('references', $references['data']);
 
 // Display the template
-$smarty->assign('mid', 'references.tpl');
+$smarty->assign('mid', 'tiki-references.tpl');
 $smarty->display('tiki.tpl');
