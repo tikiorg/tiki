@@ -20,7 +20,7 @@ jQuery(document).ready(function(){
 	{section name=i loop=$references}
 		<tr>
 			<td>
-				<form action="libReferences.php" method="post" id="{$references[i].ref_id|escape}">
+				<form action="tiki-references.php" method="post" id="{$references[i].ref_id|escape}">
 					<input type="hidden" name="referenceId" value="{$references[i].ref_id|escape}" />
 					<table class="formcolor">
 						<tr>
@@ -70,7 +70,7 @@ jQuery(document).ready(function(){
 					</table>
 				<td align="right">
 					<input type="submit" name="editreference" value="{tr}Save{/tr}" style="color:#ffffff!important;" id="save_{$references[i].ref_id|escape}" disabled="disabled"/>
-					<a title="{tr}Delete{/tr}" href="libReferences.php?action=delete&amp;referenceId={$references[i].ref_id}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					<a title="{tr}Delete{/tr}" href="tiki-references.php?action=delete&amp;referenceId={$references[i].ref_id}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</form>
 			</td>
 	</tr>
@@ -80,7 +80,7 @@ jQuery(document).ready(function(){
 	{/section}
 		<tr>
 			<td>
-				<form action="libReferences.php" method="post">
+				<form action="tiki-references.php" method="post">
 					<table class="formcolor">
 						<tr>
 							<td>{tr}Biblio Code{/tr}:</td>

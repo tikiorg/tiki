@@ -360,7 +360,7 @@ function delete_ref(ref_id){
 				{/if}
 			{/if}
 			{if $edit_references eq 1 && $libReferencesCant gt 0}
-				<br /><a href="libReferences.php" target="_blank">{tr}Edit Library References{/tr}</a>
+				<br /><a href="tiki-references.php" target="_blank">{tr}Edit Library References{/tr}</a>
 			{/if}
 
 		</td>
