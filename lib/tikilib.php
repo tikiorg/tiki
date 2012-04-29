@@ -264,7 +264,7 @@ class TikiLib extends TikiDb_Bridge
 		if (! isset($prefs['internal_site_hash'])) {
 			require_once 'lib/phpsec/phpsec/phpsec.rand.php';
 
-			$hash = phpsecRand::bytes(100);
+			$hash = base64_encode(phpsecRand::bytes(100));
 
 			$this->set_preference('internal_site_hash', $hash);
 		}
