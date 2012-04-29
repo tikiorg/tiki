@@ -48,7 +48,7 @@ SMILE							[a-z]+
 	%{
 		lexer.unput("{" + yy.pluginStack[parser.size(yy.pluginStack) - 1].name + "}"); //js
 
-		//php lexer.unput("{" + $this->pluginStack[count($this->pluginStack) - 1]['name'] + "}"); //js
+		//php lexer.unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}"); //js
 	%}
 <plugin>"{"{PLUGIN_ID}"}"
 	%{
@@ -558,6 +558,8 @@ SMILE							[a-z]+
 wiki
  : contents EOF
 	{return $1;}
+ | EOF
+    {return " ";}
  ;
 
 contents
