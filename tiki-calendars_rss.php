@@ -49,26 +49,13 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-calendar_edit_item.php?viewcalitemId=%s";
 
-	$allCalendars = $calendarlib->list_calendars();
+	$rawcals = $calendarlib->list_calendars();
+	$rawcals['data'] = Perms::filter(array( 'type' => 'calendar' ), 'object', $rawcals['data'], array( 'object' => 'calendarId' ), 'view_calendar');
 
 	// build a list of viewable calendars
 	$calendars = array();
-	foreach ($allCalendars['data'] as $cal) {
-
-	    $visible = false;
-	    if (count($calendarIds) == 0 || in_array($cal['calendarId'], $calendarIds)) {
-			if ($cal["personal"] == "y") {
-			    if ($user) {
-					$visible = true;
-			    }
-			} else {
-				$perms = Perms::get('calendar', $cal['calendarId']);
-				$visible = $perms->view_calendar;
-			}
-	    }
-	    if ($visible) {
-			$calendars[] = $cal['calendarId'];
-	    }
+	foreach ($rawcals['data'] as $cal) {
+		$calendars[] = $cal['calendarId'];
 	}
 
 	$maxCalEntries = $prefs['feed_calendar_max'];
