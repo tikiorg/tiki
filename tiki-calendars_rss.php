@@ -62,13 +62,8 @@ if ($output["data"]=="EMPTY") {
 					$visible = true;
 			    }
 			} else {
-			    if ($userlib->object_has_one_permission($cal['calendarId'], 'calendar')) {
-					if ($userlib->object_has_permission($user, $cal['calendarId'], 'calendar', 'tiki_p_view_calendar')) {
-					    $visible = true;
-					} 
-			    } else {
-					$visible = ($tiki_p_view_calendar == 'y');
-			    }
+				$perms = Perms::get('calendar', $cal['calendarId']);
+				$visible = $perms->view_calendar;
 			}
 	    }
 	    if ($visible) {
