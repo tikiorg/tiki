@@ -32,8 +32,10 @@ Zend_Loader_Autoloader::getInstance()
 
 include_once('db/tiki-db.php');	// to set up multitiki etc if there
 
+$lockFile = 'db/'.$tikidomainslash.'lock';
+
 // if tiki installer is locked (probably after previous installation) display notice
-if (file_exists('db/'.$tikidomainslash.'lock')) {
+if (file_exists($lockFile)) {
 	$title = 'Tiki Installer Disabled';
 	$td = empty($tikidomain)? '': '/'.$tikidomain;
 	$content = '
@@ -67,6 +69,13 @@ if (file_exists('db/'.$tikidomainslash.'local.php')) {
 	if (isset($_POST['dbuser'], $_POST['dbpass'])) {
 		if (($_POST['dbuser'] == $user_tiki) && ($_POST['dbpass'] == $pass_tiki)) {
 			$_SESSION['accessible'] = true;
+		} else {
+			$_SESSION['installer_auth_failure'] = isset($_SESSION['installer_auth_failure']) ? $_SESSION['installer_auth_failure'] + 1 : 1;
+
+			// If there are too many failures during a single session, lock the installer as a precaution
+			if ($_SESSION['installer_auth_failure'] >= 20) {
+				touch($lockFile);
+			}
 		}
 	}
 } else {
