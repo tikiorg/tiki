@@ -548,6 +548,7 @@ SMILE							[a-z]+
 
 
 "<"(.|\n)*?">"								return 'HTML';
+[A-Za-z0-9]+                                return 'CONTENT';
 (.)											return 'CONTENT';
 (\n)										return 'NEW_LINE';
 <<EOF>>										return 'EOF';
