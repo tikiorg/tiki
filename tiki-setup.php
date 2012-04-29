@@ -89,9 +89,9 @@ if ($prefs['mobile_feature'] === 'y') {
 }
 
 require_once ('lib/setup/cookies.php');
-require_once ('lib/setup/javascript.php');
 require_once ('lib/setup/user_prefs.php');
 require_once ('lib/setup/language.php');
+require_once ('lib/setup/javascript.php');
 require_once ('lib/setup/wiki.php');
 if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
 if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');

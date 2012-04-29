@@ -1441,7 +1441,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Comments',
 			'default' => 'n',
 			'admin' => 'comments',
-			'view' => 'tiki-list_comments.php',			
+			'view' => 'tiki-list_comments.php',
 		),
 		'feature_use_fgal_for_user_files' =>array(
 			'name' => tra('Use file galleries for user files'),
@@ -1452,6 +1452,7 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'n',
 			'tags' => array('experimental'),
+			'warning' => tra('experimental'),
 		),
 		'feature_use_fgal_for_wiki_attachments' =>array(
 			'name' => tra('Use file galleries for wiki attachments'),
@@ -1462,6 +1463,7 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'n',
 			'tags' => array('experimental'),
+			'warning' => tra('experimental'),
 		),
 		'feature_file_galleries_author' => array(
 			'name' => tra("Require file author's name for anonymous uploads"),
@@ -1629,7 +1631,7 @@ function prefs_feature_list($partial = false)
 				'n' => tra('Never'),
 			),
 			'default' => 'y',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_right_column' => array(
 			'name' => tra('Right Column'),
@@ -1644,7 +1646,7 @@ function prefs_feature_list($partial = false)
 				'n' => tra('Never'),
 			),
 			'default' => 'y',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_siteloclabel' => array(
 			'name' => tra('Prefix breadcrumbs with "Location : "'),

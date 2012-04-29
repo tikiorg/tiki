@@ -99,7 +99,7 @@ function listforum_pref()
 	$commentslib = new Comments();
 	$allforums = $commentslib->list_forums(0, -1, 'name_desc', '');
 
-	$listforums = array();
+	$listforums = array('' => 'None');
 
 	if ($allforums['cant'] > 0) {
 		foreach ($allforums['data'] as $oneforum) {
@@ -123,7 +123,7 @@ function listblog_pref()
 	global $bloglib; require_once('lib/blogs/bloglib.php');
 
 	$allblogs = $bloglib->list_blogs(0, -1, 'created_desc', '');
-	$listblogs = array();
+	$listblogs = array('' => 'None');
 
 	if ($allblogs['cant'] > 0) {
 		foreach ($allblogs['data'] as $blog) {

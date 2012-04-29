@@ -55,14 +55,14 @@
 			$(function(){
 				$('#runParser')
 					.click(function() {
-						$('#output').html(Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
+						$('#output').html(Wiki.Parse($('#wiki').val(), $('#errorsOn').is(':checked')));
 					});
 				$('#wiki')
 					.change(function() {
-						$('#output').html(Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
+						$('#output').html(Wiki.Parse($('#wiki').val(), $('#errorsOn').is(':checked')));
 					})
 					.keyup(function() {
-						$('#output').html(Wiki_Handler.parse($('#wiki').val(), $('#errorsOn').is(':checked')));
+						$('#output').html(Wiki.Parse($('#wiki').val(), $('#errorsOn').is(':checked')));
 					})
 					.change();
 			});

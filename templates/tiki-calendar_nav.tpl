@@ -2,6 +2,9 @@
 {if !isset($ajax)}
 	{assign var='ajax' value='y'}
 {/if}
+{if !isset($module)}
+	{assign var='module' value='n'}
+{/if}
 {if empty($module_params.viewnavbar) || $module_params.viewnavbar eq 'y'}
 <div class="clearfix tabrow" {if $module eq 'y'}style="padding: 0pt"{/if}>
 {if $module neq 'y'}

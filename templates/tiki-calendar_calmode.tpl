@@ -11,7 +11,7 @@
 {cycle values="odd,even" print=false}
 {section name=w loop=$cell}
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
-  <td width="1%" class="heading weeks"><a href="{$url}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td>
+  <td width="1%" class="heading weeks"><a href="{$myurl}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td>
   {section name=d loop=$weekdays}
 	{if in_array($smarty.section.d.index,$viewdays)}
 		{if $cell[w][d].focus}

@@ -109,7 +109,7 @@
 						<select name="feature_image_gallery_mandatory_category">
 							<option value="-1" {if $prefs.feature_image_gallery_mandatory_category eq -1 or $prefs.feature_image_gallery_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 							<option value="0" {if $prefs.feature_image_gallery_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-							{section name=ix loop=$catree}
+							{section name=ix loop=$catree start=1}
 								<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $prefs.feature_image_gallery_mandatory_category}selected="selected"{/if}>{$catree[ix].categpath}</option>
 							{/section}
 						</select>
@@ -226,7 +226,7 @@
 				<td>
 				<input type="submit" name="button" value="{tr}Move{/tr}" /></td></tr>
 			{/if}
-			{if $movedimgs}
+			{if isset($movedimgs) and $movedimgs}
 				<tr>
 					<td colspan="3">{tr}Moved{/tr} {$movedimgs} {tr}Images{/tr}</td>
 				</tr>

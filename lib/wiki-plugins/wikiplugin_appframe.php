@@ -54,6 +54,23 @@ function wikiplugin_appframe_info()
 					array('value' => 'y', 'text' => tr('Yes')),
 				),
 			),
+			'absolute' => array(
+				'required' => false,
+				'name' => tr('Absolute Position'),
+				'description' => tr('Position the app frame to use absolute position and really use all available space.'),
+				'default' => 'n',
+				'options' => array(
+					array('value' => 'n', 'text' => tr('No')),
+					array('value' => 'y', 'text' => tr('Yes')),
+				),
+			),
+			'top' => array(
+				'required' => false,
+				'name' => tr('Top'),
+				'description' => tr('When using absolute mode, leave some space for the header at the top.'),
+				'default' => 0,
+				'filter' => 'int',
+			),
 		),
 	);
 }
@@ -65,6 +82,9 @@ function wikiplugin_appframe($data, $params)
 	if (isset($params['fullpage']) && $params['fullpage'] == 'y') {
 		$fullPage = 1;
 	}
+
+	$absolute = intval(isset($params['absolute']) ? $params['absolute'] == 'y' : false);
+	$top = isset($params['top']) ? $params['top'] : 0;
 
 	$headerlib = TikiLib::lib('header');
 
@@ -88,22 +108,41 @@ JS
 <<<JS
 $(window).resize(function () {
 	var viewportHeight = $(window).height(), appframe = $('#appframe'), footerSize, centerHeader, surplus, target;
-	appframe.height(0);
 
-	centerHeader = $('#appframe').position().top - $('#tiki-center').position().top;
-	surplus = $('#show-errors-button').height();
-	footerSize = $('#footer').height() + $('#tiki-center').height() - centerHeader + surplus;
-	target = viewportHeight - appframe.position().top - footerSize;
+	if ($absolute) {
+		$('#appframe')
+			.css('position', 'absolute')
+			.css('top', $top)
+			.css('left', 0)
+			.css('bottom', 0)
+			.css('right', 0)
+			;
+	} else {
+		appframe.height(0);
 
-	var min = $minHeight;
-	if (target < min) {
-		target = min;
+		centerHeader = $('#appframe').position().top - $('#tiki-center').position().top;
+		surplus = $('#show-errors-button').height();
+		footerSize = $('#footer').height() + $('#tiki-center').height() - centerHeader + surplus;
+		target = viewportHeight - appframe.position().top - footerSize;
+
+		var min = $minHeight;
+		if (target < min) {
+			target = min;
+		}
+
+		appframe.height(target);
 	}
 
-	appframe.height(target);
 	$('#appframe .tab').each(function () {
 		$(this).data('available-height', $('#appframe').height() - $(this).position().top).addClass('height-size');
 	});
+
+	$('#appframe .anchor-container')
+		.css('z-index', 100000)
+		.css('position', 'absolute')
+		.css('top', 150)
+		.css('right', 0)
+		;
 });
 $('#appframe .tab').parent().each(function () {
 	var tabs = $(this).children('.tab').wrapAll('<div class="tabs" style="height: 100%;"/>');
@@ -117,6 +156,23 @@ $('#appframe .tab').parent().each(function () {
 });
 $('#appframe .accordion').wrapAll('<div/>').parent().accordion({
 	autoHeight: false
+});
+$('#appframe .anchor').wrapAll('<div/>').parent()
+	.addClass('anchor-container')
+	.width(350)
+	;
+
+$('#appframe .anchor').each(function () {
+	var anchor = this;
+	$('.anchor-head, .anchor-content', anchor)
+		.css('text-align', 'right')
+		;
+
+	$('.anchor-toggle', anchor).click(function () {
+		$('.anchor-head .label', anchor).toggle('fast');
+		$('.anchor-content', anchor).toggle('fast');
+		return false;
+	});
 });
 
 if ($fullPage) {
@@ -148,7 +204,7 @@ function wikiplugin_appframe_execute($plugin)
 	$body = $plugin->getBody();
 	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module'))) {
+	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor'))) {
 		return null;
 	}
 
@@ -163,6 +219,20 @@ function wikiplugin_appframe_tab($data, $params, $start)
 TAB;
 }
 
+function wikiplugin_appframe_anchor($data, $params, $start)
+{
+	return <<<TAB
+<div id="appanchor-$start" class="anchor">
+	<h3 class="anchor-head">
+		<a class="anchor-toggle" href="#"><img src="{$params->icon->text()}" alt="{$params->label->text()}"/></a>
+		<span class="label" style="display: none;">{$params->label->text()}</span>
+	</h3>
+	<div class="anchor-content" style="display: none;">
+		<div style="text-align: left;">$data</div>
+	</div>
+</div>
+TAB;
+}
 function wikiplugin_appframe_column($data, $params, $start)
 {
 	$width = $params->width->int() . '%';
@@ -207,9 +277,10 @@ function wikiplugin_appframe_module($data, $params, $start)
 		$label = $info['name'];
 	}
 
-	$data = $modlib->execute_module(
-					array('name' => $moduleName, 'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')))
-	);
+	$data = $modlib->execute_module(array(
+		'name' => $moduleName,
+		'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')),
+	));
 
 	if (! $data) {
 		return null;
@@ -221,5 +292,14 @@ function wikiplugin_appframe_module($data, $params, $start)
 	$data
 </div>
 MODULE;
+}
+
+function wikiplugin_appframe_cond($data, $params, $start)
+{
+	if (isset($params['notempty']) && $params->notempty->text()) {
+		return $data;
+	}
+
+	return ' ';
 }
 

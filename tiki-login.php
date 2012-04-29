@@ -201,26 +201,6 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 		$isdue = $userlib->is_due($user, $method);
 		if ($user != 'admin') { // admin has not necessarely an email
 			$isEmailDue = $userlib->is_email_due($user, 'email');
-			// Update some user details from LDAP
-			if (is_array($user_ldap_attributes)) {
-				if (count($user_ldap_attributes) > 0) {
-					global $cachelib, $tikidomain;
-					require_once ('lib/cache/cachelib.php');
-					if ($user_ldap_attributes['auth_ldap_nameattr'] != '') {
-						$tikilib->set_user_preference($user, 'realName', $user_ldap_attributes['auth_ldap_nameattr']);
-					}
-					if ($user_ldap_attributes['auth_ldap_countryattr'] != '') {
-						$tikilib->set_user_preference($user, 'country', $user_ldap_attributes['auth_ldap_countryattr']);
-					}
-					if ($user_ldap_attributes['auth_ldap_emailattr'] != '') {
-						$userlib->change_user_email($user, $user_ldap_attributes['auth_ldap_emailattr'], '');
-					}
-					// Erase cache to update displayed user info
-					//   Do not just invalidate cache for 'user_details_'.$user and 'userslist',
-					//   since userlink smarty modifier is also using cache with multiple possibilities of keys.
-					$cachelib->empty_cache('temp_cache', 'login');
-				}
-			}
 		}
 	}
 }

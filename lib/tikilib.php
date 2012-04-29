@@ -3577,8 +3577,8 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 
 		$html=$is_html?1:0;
+		$parserlib = TikiLib::lib('parser');
 		if ($html && $prefs['feature_purifier'] != 'n') {
-			$parserlib = TikiLib::lib('parser');
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
 			$noparsed = array();
@@ -3609,7 +3609,6 @@ class TikiLib extends TikiDb_Bridge
 			'created' => empty($created) ? $this->now : $created,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
-			'status' => 'new9+'
 		);
 		if ($lang) {
 			$insertData['lang'] = $lang;
@@ -3641,6 +3640,11 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$pages = $this->table('tiki_pages');
 		$page_id = $pages->insert($insertData);
+
+		//update status, page storage was updated in tiki 9 to be non html encoded
+		require_once('lib/wiki/wikilib.php');
+		$converter = new convertToTiki9();
+		$converter->saveObjectStatus($page_id, 'tiki_pages');
 
 		$this->replicate_page_to_history($name);
 
@@ -3930,8 +3934,8 @@ class TikiLib extends TikiDb_Bridge
 			$edit_data = str_replace('<x>', '', $edit_data);
 		}
 
+		$parserlib = TikiLib::lib('parser');
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
-			$parserlib = TikiLib::lib('parser');
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
 			$noparsed = array();
@@ -3940,7 +3944,7 @@ class TikiLib extends TikiDb_Bridge
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 
-			// $parserlib->plugins_replace($edit_data, $noparsed);
+			$parserlib->plugins_replace($edit_data, $noparsed, true);
 			$parserlib->isHtmlPurifying = false;
 			$parserlib->isEditMode = false;
 		}
@@ -4003,6 +4007,11 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$this->table('tiki_pages')->update($queryData, array('pageName' => $pageName));
+
+		//update status, page storage was updated in tiki 9 to be non html encoded
+        require_once('lib/wiki/wikilib.php');
+		$converter = new convertToTiki9();
+		$converter->saveObjectStatus($this->getOne("SELECT page_id FROM tiki_pages WHERE pageName = ?", array($pageName)), 'tiki_pages');
 
 		// Parse edit_data updating the list of links from this page
 		$this->clear_links($pageName);

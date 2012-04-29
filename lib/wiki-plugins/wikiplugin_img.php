@@ -1346,7 +1346,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	global $tiki_p_edit;
 	if ($prefs['feature_draw'] === 'y' && $tiki_p_upload_files === 'y' && $tiki_p_edit === 'y') {
 		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
-			$iconDisplayStyle = ' style="display:none;"';
+			$iconDisplayStyle = " style='display:none;'";
 		} else {
 			$iconDisplayStyle = '';
 		}

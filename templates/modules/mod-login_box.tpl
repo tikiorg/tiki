@@ -176,29 +176,28 @@ function doChallengeResponse() {
 					<label for="login-remember-module_{$module_logo_instance}">{tr}Remember me{/tr}
 					({tr}for{/tr}
 					{if $prefs.remembertime eq 300}
-						5 {tr}minutes{/tr}
+						5 {tr}minutes{/tr})
 					{elseif $prefs.remembertime eq 900}
-						15 {tr}minutes{/tr}
+						15 {tr}minutes{/tr})
 					{elseif $prefs.remembertime eq 1800}
-						30 {tr}minutes{/tr}
+						30 {tr}minutes{/tr})
 					{elseif $prefs.remembertime eq 3600}
-						1 {tr}hour{/tr}
+						1 {tr}hour{/tr})
 					{elseif $prefs.remembertime eq 7200}
-						2 {tr}hours{/tr}
+						2 {tr}hours{/tr})
 					{elseif $prefs.remembertime eq 36000}
-						10 {tr}hours{/tr}
+						10 {tr}hours{/tr})
 					{elseif $prefs.remembertime eq 72000}
-						20 {tr}hours{/tr}
+						20 {tr}hours{/tr})
 					{elseif $prefs.remembertime eq 86400}
-						1 {tr}day{/tr}
+						1 {tr}day{/tr})
 					{elseif $prefs.remembertime eq 604800}
-						1 {tr}week{/tr}
+						1 {tr}week{/tr})
 					{elseif $prefs.remembertime eq 2629743}
-						1 {tr}month{/tr}
+						1 {tr}month{/tr})
 					{elseif $prefs.remembertime eq 31556926}
-						1 {tr}year{/tr}
+						1 {tr}year{/tr})
 					{/if}
-					)
 					</label>
 					<input type="checkbox" name="rme" id="login-remember-module_{$module_logo_instance}" value="on" />
 					{capture assign="close_tags"}</div>{$close_tags}{/capture}

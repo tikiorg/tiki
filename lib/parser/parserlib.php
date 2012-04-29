@@ -33,19 +33,22 @@ class ParserLib extends TikiDb_Bridge
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
-		'REAL_LT' => array(
+		'~REAL_LT~' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
 		),
-		'REAL_GT' => array(
+		'~REAL_GT~' => array(
 			'html'=>		'>',
 			'nonHtml'=>		'&gt;'
 		),
-		'REAL_NBSP' => array(
+		'~REAL_NBSP~' => array(
 			'html'=>		'&nbsp;',
 			'nonHtml'=>		'&nbsp;'
 		),
-		'REAL_AMP' => array(
+		/*on post back the page is parsed, which turns & into &amp;
+		this is done to prevent that from happening, we are just
+		protecting some chars from letting the parser nab them*/
+		'~REAL_AMP~' => array(
 			'html'=>		'& ',
 			'nonHtml'=>		'& '
 		),
@@ -131,7 +134,7 @@ class ParserLib extends TikiDb_Bridge
 	{
 		if (($this->isHtmlPurifying == true || $options['is_html'] != true) || !$options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
-				$data = str_replace($specialChar['html'], "~" . $key . "~", $data);
+				$data = str_replace($specialChar['html'], $key, $data);
 			}
 		}
 		return $data;
@@ -142,11 +145,11 @@ class ParserLib extends TikiDb_Bridge
 	{
 		if (($is_html != false || $options['is_html']) || $options['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
-				$data = str_replace("~" . $key . "~", $specialChar['html'], $data);
+				$data = str_replace($key, $specialChar['html'], $data);
 			}
 		} else {
 			foreach($this->specialChars as $key => $specialChar) {
-				$data = str_replace("~" . $key . "~", $specialChar['nonHtml'], $data);
+				$data = str_replace($key, $specialChar['nonHtml'], $data);
 			}
 		}
 
@@ -197,10 +200,10 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	input array
 	 */
 
-	function plugins_replace(&$data, $noparsed) {
+	function plugins_replace(&$data, $noparsed, $is_html = false) {
 		$preparsed = array();	// unused
 		$noparsed['data'] = isset($noparsed['data']) ? str_replace('<x>', '', $noparsed['data']) : '';
-		$this->replace_preparse($data, $preparsed, $noparsed);
+		$this->replace_preparse($data, $preparsed, $noparsed, $is_html);
 	}
 
 	//*
@@ -940,7 +943,8 @@ if ( \$('#$id') ) {
 	{
 		global $prefs, $killtoc;
 
-		$data = $this->unprotectSpecialChars($data, true);//We want to give plugins original
+		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
+		$args = preg_replace(array('/^&quot;/','/&quot;$/'),'',$args);		// Similarly remove the encoded " chars from the args
 
 		$outputFormat = 'wiki';
 		if ( isset($parseOptions['context_format']) ) {
@@ -1048,8 +1052,8 @@ if ( \$('#$id') ) {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
-			// pre-parse the output so nested plugins don't fall out all over the place
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
+
 			// remove hrefs and onclicks
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
@@ -1501,7 +1505,7 @@ if ( \$('#$id') ) {
 		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
 		// must be done before color as we can have ~hs~~hs
 		// jb 9.0 html entity fix - excluded not $options['is_html'] pages
-		if (!$simple_wiki) {
+		if (!$simple_wiki && !$options['is_html']) {
 			$this->parse_htmlchar($data, $options);
 		}
 
@@ -1804,7 +1808,7 @@ if ( \$('#$id') ) {
 		// Replace bold text
 		$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
 		// Replace italic text
-		$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
+		$line = preg_replace_callback("/(=?)\'\'(.*?)\'\'/", array($this, 'callback_parse_italics'), $line);
 		
 		if (!$ck_editor) {
 			// Replace definition lists
@@ -1813,6 +1817,16 @@ if ( \$('#$id') ) {
 		}
 
 		return $line;
+	}
+
+	private function callback_parse_italics( $match )
+	{
+		//if italics is before a '=' it is probably in an html element as an attribute that is empty
+		if (isset($match[1]) && $match[1] == '=') {
+			return $match[0];
+		}
+
+		return "<em>".$match[0]."</em>";
 	}
 
 	//*
@@ -2664,8 +2678,9 @@ if ( \$('#$id') ) {
 									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
-						//echo $maketoc;die;
+
 						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
+
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 							$maketoc .= '<!--toc-->';

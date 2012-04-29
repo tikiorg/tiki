@@ -132,7 +132,7 @@ function wikiplugin_tracker_info()
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
-				'description' => tra('Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc.'),
+				'description' => tra('Colon-separated list of default values for the fields. First value corresponds to first field, second value to second field, etc.'),
 				'default' => '',
 			),
 			'overwrite' => array(
@@ -303,6 +303,24 @@ function wikiplugin_tracker_info()
 				'filter' => 'pagename',
 				'default' => '',
 			),
+			'fieldsfill' => array(
+				'required' => false,
+				'name' => tra('Multiple Fill Fields'),
+				'description' => tra('Colon-separated list of field IDs to be filled with multiple values, to create multiple items in one save. Example: 2:4:5  If empty, only one item will be created. Only for item creation'),
+				'default' => '',
+			),
+			'fieldsfillseparator' => array(
+				'required' => false,
+				'name' => tra('Separator for Multiple Fill Fields'),
+				'description' => tra('Choose separator between fields in each line of the Multiple Fill text area. Default is comma (,).'),
+				'default' => ',',
+			),
+			'fieldsfilldefaults' => array(
+				'required' => false,
+				'name' => tra('Multiple Fill Fields defaults'),
+				'description' => tra('Colon-separated list of default values for Multiple Fill Fields.'),
+				'default' => '',
+			),
 			'formtag' => array(
 				'required' => false,
 				'name' => tra('Embed the tracker in a form tag'),
@@ -345,7 +363,7 @@ function wikiplugin_tracker($data, $params)
 	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
-	
+
 	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y') {
@@ -569,6 +587,25 @@ function wikiplugin_tracker($data, $params)
 					$flds['data'][] = $f;
 				}
 			}
+
+			// If we create multiple items, get field Ids, default values and separator
+			if (!empty($fieldsfill)) {
+				$fill_fields = preg_split('/ *: */', $fieldsfill);
+				$fill_defaults = array();
+				if (trim($fieldsfilldefaults) != '') {
+					$fill_defaults = preg_split('/ *: */', $fieldsfilldefaults);
+				}
+				foreach ($fill_fields as $k=>$fieldId) {
+					$fill_flds['data'][] = $definition->getField($fieldId);
+					if (!isset($fill_defaults[$k])) {
+						$fill_defaults[$k] = '';
+					}
+				}
+				if ($fieldsfillseparator == '') {
+					$fieldsfillseparator = ',';
+				}
+			}
+
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
@@ -693,17 +730,48 @@ function wikiplugin_tracker($data, $params)
 						$status = '';
 					}
 
-					$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
-					if (is_array($ins_categs)) {
-						if ($registration == 'y' && empty($item_info)) {
-							$override_perms = true;
-						} else {
-							$override_perms = false;
+					if (!empty($fieldsfill) && !empty($_REQUEST['ins_fill']) ) {	// We create multiple items
+						$fill_lines = explode("\n", $_REQUEST['ins_fill']);
+						foreach ($fill_lines as $fill_line) {
+							if (trim($fill_line) == '') {	// Ignore blank lines
+								continue;
+							}
+							$fill_line_cant = count($fill_flds['data']);
+							$fill_line_item = explode($fieldsfillseparator,$fill_line,$fill_line_cant);	// Extra fields are merged with the last field. this avoids data loss and permits a last text field with commas
+							$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
+							for ($i=0;$i<$fill_line_cant;$i++) {
+								if ($fill_line_item[$i] != '') {
+									$fill_item = trim($fill_line_item[$i]);
+								} else {
+									$fill_item = $fill_defaults[$i];
+								}
+								$fill_rid = $trklib->modify_field($rid, $fill_flds['data'][$i]['fieldId'], $fill_item);
+							}
+							if (is_array($ins_categs)) {
+								if ($registration == 'y' && empty($item_info)) {
+									$override_perms = true;
+								} else {
+									$override_perms = false;
+								}
+								$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only, $override_perms);	
+							}
+							if (isset($newItemRate)) {
+								$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
+							}
 						}
-						$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only, $override_perms);	
-					}
-					if (isset($newItemRate)) {
-						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
+					} else {
+						$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
+						if (is_array($ins_categs)) {
+							if ($registration == 'y' && empty($item_info)) {
+								$override_perms = true;
+							} else {
+								$override_perms = false;
+							}
+							$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only, $override_perms);	
+						}
+						if (isset($newItemRate)) {
+							$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
+						}
 					}
 					// now for wiki output if desired
 					if (isset($outputtowiki) && !empty($outputwiki)) {
@@ -1191,6 +1259,22 @@ function wikiplugin_tracker($data, $params)
 						$back .= '</div>';
 					}
 				}
+			}
+			if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
+				$back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
+				$back.= <<<FILL
+</td><td>
+<input type="hidden" value="" name="mode_wysiwyg"/>
+<input type="hidden" value="" name="mode_normal"/>
+<div class="edit-zone">
+<textarea id="ins_fill" class="wikiedit" style="width: 99%;" data-syntax="" data-codemirror="" onkeyup="" rows="15" cols="50" name="ins_fill" >
+</textarea >
+</div>
+<input type="hidden" value="n" name="wysiwyg"/>
+<div class="trackerplugindesc" >
+FILL;
+				$back.= tra('Each line is a list of field values (default separator is comma ",")');
+				$back.= '</div></td></tr>';
 			}
 			if (!empty($tpl)) {
 				$smarty->security = true;

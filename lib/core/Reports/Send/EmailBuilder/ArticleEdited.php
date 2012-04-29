@@ -8,7 +8,8 @@
 /**
  * Class for article_edited events 
  */
-class Reports_Send_EmailBuilder_ArticleEdited extends Reports_Send_EmailBuilder_Abstract {
+class Reports_Send_EmailBuilder_ArticleEdited extends Reports_Send_EmailBuilder_Abstract
+{
 	public function getTitle()
 	{
 		return tr('Edited articles:');
@@ -18,7 +19,8 @@ class Reports_Send_EmailBuilder_ArticleEdited extends Reports_Send_EmailBuilder_
 	{
 		global $base_url;
 
-		$output =  "<u>".$change['data']['user']."</u> ".tra("edited the article")." <a href=\"{$base_url}tiki-read_article.php?articleId=".$change['data']['articleId']."\">".$change['data']['articleTitle']."</a>.";
+		$output =  '<u>' . $change['data']['user'] . '</u> ' . tra('edited the article') . 
+							" <a href=\"{$base_url}tiki-read_article.php?articleId=" . $change['data']['articleId'] . "\">" . $change['data']['articleTitle'] . "</a>.";
 		
 		return $output;
 	}
