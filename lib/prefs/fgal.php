@@ -122,12 +122,13 @@ function prefs_fgal_list()
 			'tags' => array('basic'),
 		),
 		'fgal_use_dir' => array(
-			'name' => tra('Path'),
+			'name' => tra('Path to store files in the file gallery'),
 			'type' => 'text',
 			'size' => 50,
 			'perspective' => false,
 			'default' => '',
 			'tags' => array('basic'),
+			'description' => tra("Set a directory on your server. Ex.: /var/www/  It's recommended that this directory not be web accessible. PHP must be able to read/write to the directory."),
 		),
 		'fgal_search_in_content' => array(
 			'name' => tra('Include the search box on the current gallery files just after the find div'),
