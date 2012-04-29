@@ -312,8 +312,8 @@ function wikiplugin_tracker_info()
 			'fieldsfillseparator' => array(
 				'required' => false,
 				'name' => tra('Separator for Multiple Fill Fields'),
-				'description' => tra('Choose separator between fields in each line of the Multiple Fill text area. Default is comma (,).'),
-				'default' => ',',
+				'description' => tra('Choose separator between fields in each line of the Multiple Fill text area. Default is pipe (|).'),
+				'default' => '|',
 			),
 			'fieldsfilldefaults' => array(
 				'required' => false,
@@ -601,8 +601,9 @@ function wikiplugin_tracker($data, $params)
 						$fill_defaults[$k] = '';
 					}
 				}
+				$fill_line_cant = count($fill_flds['data']);
 				if ($fieldsfillseparator == '') {
-					$fieldsfillseparator = ',';
+					$fieldsfillseparator = '|';
 				}
 			}
 
@@ -736,7 +737,6 @@ function wikiplugin_tracker($data, $params)
 							if (trim($fill_line) == '') {	// Ignore blank lines
 								continue;
 							}
-							$fill_line_cant = count($fill_flds['data']);
 							$fill_line_item = explode($fieldsfillseparator,$fill_line,$fill_line_cant);	// Extra fields are merged with the last field. this avoids data loss and permits a last text field with commas
 							$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 							for ($i=0;$i<$fill_line_cant;$i++) {
@@ -1273,7 +1273,7 @@ function wikiplugin_tracker($data, $params)
 <input type="hidden" value="n" name="wysiwyg"/>
 <div class="trackerplugindesc" >
 FILL;
-				$back.= tra('Each line is a list of field values (default separator is comma ",")');
+				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'),$fill_line_cant,htmlspecialchars($fieldsfillseparator));
 				$back.= '</div></td></tr>';
 			}
 			if (!empty($tpl)) {
