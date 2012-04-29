@@ -411,7 +411,7 @@ SMILE							[a-z]+
 
 		//php if ($this->isPlugin()) return 'CONTENT';
 		//php $this->popState();
-		//php 'STRIKETHROUGH_END';
+		//php return 'STRIKETHROUGH_END';
 	%}
 [-][-]
 	%{

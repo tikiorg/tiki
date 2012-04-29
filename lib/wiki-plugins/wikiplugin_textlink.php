@@ -77,7 +77,7 @@ function wikiplugin_textlink($data, $params)
 							'<tbody>' +
 								'<tr>' +
 									'<td>$date</td>' +
-									'<td><a href="$clipboarddata->href" class="read">Read</a></td>' + 
+									'<td><a href="$clipboarddata->href" class="read">Read</a></td>' +
 								'</tr>' +
 							'</tbody>' +
 						'</table></div>')

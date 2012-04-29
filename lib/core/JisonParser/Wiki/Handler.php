@@ -35,9 +35,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->parsing = false;
 		}
 
-		sleep(10);
-		print_r($this);
-		die;
 		return $result;
 	}
 
