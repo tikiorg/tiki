@@ -24,7 +24,7 @@
 	<th>{tr}Wiki Syntax{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
-{if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
+{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr class="{cycle}"><td width="20%"><img src='img/icons/text_bold.png' alt='' /> <strong>{tr}Bold text{/tr}</strong> &nbsp;&nbsp;&nbsp; __{tr}text{/tr}__ </td></tr>
 <tr class="{cycle}"><td width="20%"><img src='img/icons/text_italic.png' alt='' /> <strong>{tr}Italic text{/tr}</strong> &nbsp;&nbsp;&nbsp; 2 {tr}single quotes{/tr} ('). &nbsp;&nbsp;&nbsp; '"{tr}text{/tr}"' </td></tr>
 <tr class="{cycle}"><td><img src='img/icons/text_underline.png' alt='' /> <strong>{tr}Underlined text{/tr}</strong> &nbsp;&nbsp;&nbsp; ==={tr}text{/tr}===</td></tr>
@@ -38,7 +38,7 @@
 
 <tr class="{cycle}"><td><strong>{tr}Table of contents{/tr}</strong> <br/>{tr}{literal}{toc}{/literal}, {literal}{maketoc}{/literal} prints out a table of contents for the current page based on structures (toc) or ! headings (maketoc){/tr}. {tr}Common optional parameters for maketoc are: title|maxdepth|levels|nums, and for toc are: order|showdesc|shownum|structId|maxdepth|pagename.{/tr}</td></tr>
 
-{if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
+{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 
 <tr class="{cycle}"><td><img src='img/icons/page.png' alt='' /> <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>- </td></tr>
 <tr class="{cycle}"><td><img src='img/icons/box.png' alt='' /> <strong>{tr}Text box{/tr}</strong> &nbsp;&nbsp;&nbsp; ^{tr}Box content{/tr}^</td></tr>
@@ -58,7 +58,7 @@
 {if $prefs.feature_wikiwords eq 'y'}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}{/if}
 </td></tr>
 
-{if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
+{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 
 <tr class="{cycle}"><td><img src='img/icons/text_list_bullets.png' alt='' /> <img src='img/icons/text_list_numbers.png' alt='' /> <strong>{tr}Lists{/tr}</strong> <br/> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word:{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr class="{cycle}"><td><strong>{tr}Indentation{/tr}</strong> <br/>+, ++ {tr}Creates an indentation for each plus (useful in list to continue at the same level){/tr}</td></tr>
