@@ -4,7 +4,7 @@
 		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
 		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 		{if $prefs.feature_page_title eq 'y'}
-			{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}
+			{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$info.lang target_lang=$machine_translate_to_lang}
 		{/if}
 	{/if}
 
