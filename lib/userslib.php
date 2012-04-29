@@ -2769,7 +2769,7 @@ class UsersLib extends TikiLib
 	}
 
 	function renew_user_password($user) {
-		$pass = $this->genPass();
+		$pass = $this->generate_provisional_password();
 		// Note that tiki-generated passwords are due inmediatley
 		// Note: ^ not anymore. old pw is usable until the URL in the password reminder mail is clicked
 		$query = "update `users_users` set `provpass` = ? where `login`=?";
@@ -2777,7 +2777,20 @@ class UsersLib extends TikiLib
 		return $pass;
 	}
 
-	function activate_password($user, $actpass) {
+	private function generate_provisional_password()
+	{
+		global $tikilib;
+		require_once 'lib/phpsec/phpsec/phpsec.rand.php';
+
+		$site_hash = $tikilib->get_site_hash();
+
+		$random_value = phpsecRand::bytes(40);
+
+		return base64_encode(sha1($random_value . $site_hash, true));
+	}
+
+	function activate_password($user, $actpass)
+	{
 		// move provpass to password and generate new hash, afterwards clean provpass
 		$query = "select `provpass` from `users_users` where `login`=?";
 		$pass = $this->getOne($query, array($user));
