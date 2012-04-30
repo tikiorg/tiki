@@ -1024,7 +1024,6 @@ CREATE TABLE `tiki_history` (
   `data` longblob,
   `type` varchar(50) default NULL,
   `is_html` TINYINT(1) NOT NULL DEFAULT 0,
-  `status` varchar(60) default '',
   PRIMARY KEY (`pageName`,`version`),
   KEY `user` (`user`),
   KEY (`historyId`)
@@ -1631,7 +1630,6 @@ CREATE TABLE `tiki_pages` (
   `wiki_authors_style` varchar(20) default '',
   `comments_enabled` char(1) default NULL,
   `keywords` TEXT,
-  `status` varchar(60) default '',
   PRIMARY KEY (`page_id`),
   UNIQUE KEY `pageName` (`pageName`),
   KEY `data` (`data`(255)),
