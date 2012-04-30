@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function upgrade_20120429_fix_collation_tiki($installer)
 {
 	global $dbs_tiki;
-	$installer->query("ALTER DATABASE ".$dbs_tiki." CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
+	$installer->query("ALTER DATABASE '" . $dbs_tiki . "' CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
 	if ( $results= $installer->fetchAll('SELECT DISTINCT(TABLE_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ?', $dbs_tiki)
 	) {
 		foreach ( $results as $table ) 
