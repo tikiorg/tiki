@@ -335,8 +335,14 @@ if ($prefs['javascript_enabled'] != 'n') {
 		}
 		if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 			$headerlib->add_cssfile('lib/jquery_tiki/tablesorter/themes/tiki/style.css');
-			$headerlib->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.js');
-			$headerlib->add_jsfile('lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.min.js');
+
+			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
+				//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
+				$headerlib->add_jsfile('lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.min.js', 'external');
+			} else {
+				$headerlib->add_jsfile('lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js');
+			}
 		}
 		if ( $prefs['feature_shadowbox'] == 'y' ) {
 			$headerlib->add_jsfile('lib/jquery/colorbox/jquery.colorbox.js');
