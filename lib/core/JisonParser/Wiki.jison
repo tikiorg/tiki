@@ -16,17 +16,17 @@ SMILE							[a-z]+
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
 		yytext = parser.inlinePlugin(yytext); //js
+		return 'INLINE_PLUGIN'; //js
 
 		//php $yytext = $this->inlinePlugin($yytext);
-
-		return 'INLINE_PLUGIN'
+		//php return 'INLINE_PLUGIN';
 	%}
 
 
 
 "{"{PLUGIN_ID}"(".*?")}"
 	%{
-		lexer.begin('plugin');
+		lexer.begin('plugin'); //js
 		yy.pluginStack = parser.stackPlugin(yytext, yy.pluginStack); //js
 
 		if (parser.size(yy.pluginStack) == 1) {//js
@@ -48,7 +48,7 @@ SMILE							[a-z]+
 	%{
 		lexer.unput("{" + yy.pluginStack[parser.size(yy.pluginStack) - 1].name + "}"); //js
 
-		//php lexer.unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}"); //js
+		//php lexer.unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}");
 	%}
 <plugin>"{"{PLUGIN_ID}"}"
 	%{

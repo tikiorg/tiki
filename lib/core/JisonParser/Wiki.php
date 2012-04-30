@@ -531,12 +531,10 @@ break;
 case 1:
 
 		$yy_->yytext = $this->inlinePlugin($yy_->yytext);
-
-		return 40;
+		return 'INLINE_PLUGIN';
 	
 break;
 case 2:
-		lexer.begin('plugin');
 
 
 		$this->begin('plugin');
@@ -551,7 +549,7 @@ case 2:
 break;
 case 3:
 
-		lexer.unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}"); //js
+		lexer.unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}");
 	
 break;
 case 4:
