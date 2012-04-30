@@ -264,10 +264,8 @@ SMILE							[a-z]+
 		return 'HEADER_START'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-		//php if ($this->SOL()) {
-		//php 	$this->beginBlock('header');
-		//php 	return 'HEADER_START';
-		//php }
+		//php $this->beginBlock('header');
+		//php return 'HEADER_START';
 	%}
 
 
@@ -296,10 +294,8 @@ SMILE							[a-z]+
 		return 'ULIST_START'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-		//php if ($this->SOL()) {
-		//php 	$this->beginBlock('ulist');
-		//php 	return 'ULIST_START';
-		//php }
+		//php $this->beginBlock('ulist');
+		//php return 'ULIST_START';
 	%}
 
 
@@ -328,10 +324,8 @@ SMILE							[a-z]+
 		return 'OLIST_START'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-		//php if ($this->SOL()) {
-		//php 	$this->beginBlock('olist');
-		//php 	return 'OLIST_START';
-		//php }
+		//php $this->beginBlock('olist');
+		//php return 'OLIST_START';
 	%}
 
 

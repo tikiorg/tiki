@@ -690,10 +690,8 @@ break;
 case 22:
 
 		if ($this->isPlugin()) return 'CONTENT';
-		if ($this->SOL()) {
-			$this->beginBlock('header');
-			return 'HEADER_START';
-		}
+		$this->beginBlock('header');
+		return 'HEADER_START';
 	
 break;
 case 23:
@@ -712,10 +710,8 @@ break;
 case 25:
 
 		if ($this->isPlugin()) return 'CONTENT';
-		if ($this->SOL()) {
-			$this->beginBlock('ulist');
-			return 'ULIST_START';
-		}
+		$this->beginBlock('ulist');
+		return 'ULIST_START';
 	
 break;
 case 26:
@@ -734,10 +730,8 @@ break;
 case 28:
 
 		if ($this->isPlugin()) return 'CONTENT';
-		if ($this->SOL()) {
-			$this->beginBlock('olist');
-			return 'OLIST_START';
-		}
+		$this->beginBlock('olist');
+		return 'OLIST_START';
 	
 break;
 case 29:
