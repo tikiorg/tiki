@@ -86,13 +86,13 @@ if ($prefs['session_lifetime'] > 0) {
 	ini_set('session.gc_maxlifetime', $prefs['session_lifetime'] * 60);
 }
 // is session data  stored in DB or in filesystem?
-if ($prefs['session_storage'] == 'db') {
+if (isset($prefs['session_storage']) && $prefs['session_storage'] == 'db') {
 	if ($api_tiki == 'adodb') {
 		require_once ('lib/tikisession-adodb.php');
 	} elseif ($api_tiki == 'pdo') {
 		require_once ('lib/tikisession-pdo.php');
 	}
-} elseif ( $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcach")->isEnabled() ) {
+} elseif ( isset($prefs['session_storage']) && $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcach")->isEnabled() ) {
 	require_once ('lib/tikisession-memcache.php');
 }
 
@@ -110,7 +110,7 @@ if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 }
 
 $start_session = true;
-if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
+if ( isset($prefs['session_silent']) && $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
 	$start_session = false;
 }
 
