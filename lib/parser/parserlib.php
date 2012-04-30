@@ -550,7 +550,8 @@ if ( \$('#$id') ) {
 		else
 			$plugins = array();
 
-		sort(array_filter($plugins));
+		$plugins = array_filter($plugins);
+		sort($plugins);
 
 		return $plugins;
 	}
