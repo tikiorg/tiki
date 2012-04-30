@@ -48,7 +48,7 @@ SMILE							[a-z]+
 	%{
 		lexer.unput("{" + yy.pluginStack[parser.size(yy.pluginStack) - 1].name + "}"); //js
 
-		//php lexer.unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}");
+		//php $this->unput("{" . $this->pluginStack[count($this->pluginStack) - 1]['name'] . "}");
 	%}
 <plugin>"{"{PLUGIN_ID}"}"
 	%{
@@ -242,22 +242,24 @@ SMILE							[a-z]+
 <header><<EOF>>
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.unput('\n'); //js
+		lexer.unput("\r"); //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-        //php $this->unput('\n');
+        //php $this->unput("\r");
 	%}
-<header>[\n]
+<header>[\n\r]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.popState(); //js
+		lexer.unput("\n"); //js
 		return 'HEADER_END'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
 		//php $this->popState();
+		//php $this->unput("\n");
 		//php return 'HEADER_END';
 	%}
-[\n][!]
+[\n\r][!]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		parser.beginBlock('header'); //js
@@ -272,22 +274,24 @@ SMILE							[a-z]+
 <ulist><<EOF>>
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
-        lexer.unput('\n'); //js
+        lexer.unput("\n"); //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-        //php $this->unput('\n');
+        //php $this->unput("\n");
     %}
-<ulist>[\n]
+<ulist>[\n\r]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.popState(); //js
+		lexer.unput("\n"); //js
 		return 'ULIST_END'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
 		//php $this->popState();
+		//php $this->unput("\n");
 		//php return 'ULIST_END';
 	%}
-[\n][*]
+[\n\r][*]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		parser.beginBlock('ulist'); //js
@@ -302,12 +306,12 @@ SMILE							[a-z]+
 <olist><<EOF>>
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.unput('\n'); //js
+		lexer.unput("\n"); //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->unput('\n');
+		//php $this->unput("\n");
 	%}
-<olist>[\n]
+<olist>[\n\r]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.popState(); //js
@@ -317,7 +321,7 @@ SMILE							[a-z]+
 		//php $this->popState();
 		//php return 'OLIST_END';
 	%}
-[\n][#]
+[\n\r][#]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		parser.beginBlock('olist'); //js
@@ -544,7 +548,8 @@ SMILE							[a-z]+
 "<"(.|\n)*?">"								return 'HTML';
 [A-Za-z0-9]+                                return 'CONTENT';
 (.)											return 'CONTENT';
-(\n)										return 'NEW_LINE';
+(\n)										return 'CONTENT';
+(\s)                                        return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex
 
