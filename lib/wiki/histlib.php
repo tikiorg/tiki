@@ -246,6 +246,9 @@ class HistLib extends TikiLib
 	// without the data itself (version = 0 now returns data from current version)
 	function get_page_from_history($page,$version,$fetchdata=false)
 	{
+		require_once("lib/wiki/wikilib.php");
+		$converter = new convertToTiki9();
+		$converter->convertPageHistoryFromPageAndVersion($page, $version);
 
 		if ($fetchdata==true) {
 			if ($version > 0)
