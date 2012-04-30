@@ -635,10 +635,10 @@ class SheetLib extends TikiLib
 				}
 				
 				if ( $vals[0] ) {
-					$result[0] .= "<span class='$class[0]'>".$char[0].$vals[0]."</span><br />";
+					$result[0] .= "<td class='$class[0]'>".$char[0].$vals[0]."</td>";
 				}
 				if ( $vals[1] ) {
-					$result[1] .= "<span class='$class[1]'>".$char[1].$vals[1]."</span><br />";
+					$result[1] .= "<td class='$class[1]'>".$char[1].$vals[1]."</td>";
 				}
 			} 
 			return $result;
@@ -679,8 +679,8 @@ class SheetLib extends TikiLib
 						default:
 							$values = diff_to_html($changes[0]);
 					}
-					$result1 .= "<td class='$class1'>".$values[0]."</td>";
-					$result2 .= "<td class='$class2'>".$values[1]."</td>";
+					$result1 .= (empty($values[0]) ? '<td></td>' : $values[0]);
+					$result2 .= (empty($values[1]) ? '<td></td>' : $values[1]);
 				}
 				$result1 .= "</tr>";
 				$result2 .= "</tr>";
