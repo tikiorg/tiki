@@ -186,11 +186,10 @@ if (isset($_REQUEST['sort_mode'])) $sort_mode = $_REQUEST['sort_mode'];
 
 if ($_SESSION['CalendarViewGroups']) {
 	if (array_key_exists('CalendarViewList', $_SESSION) && $_SESSION['CalendarViewList'] == "list") {
-		if (isset($sort_mode)) {
-			$smarty->assign_by_ref('sort_mode', $sort_mode);
-		} else {
+		if (!isset($sort_mode)) {
 			$sort_mode = "start_asc";
 		}
+		$smarty->assign_by_ref('sort_mode', $sort_mode);
 		$listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, -1, $sort_mode);
 		for ($i = count($listevents) - 1; $i >= 0; --$i) {
 			$listevents[$i]['modifiable'] = in_array($listevents[$i]['calendarId'], $modifiable)? "y": "n";
