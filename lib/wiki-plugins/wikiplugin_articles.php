@@ -146,6 +146,7 @@ function wikiplugin_articles_info()
 				'description' => tr('Time unit used with "Period quantity"'),
 				'filter' => 'word',
 				'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tr('Hour'), 'value' => 'hour'),
 					array('text' => tr('Day'), 'value' => 'day'),
 					array('text' => tr('Week'), 'value' => 'week'),
