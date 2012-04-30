@@ -48,7 +48,7 @@
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
 	</label>
-	{if $find_in}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
+	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
 
 {if isset($exact_match)}
 	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
