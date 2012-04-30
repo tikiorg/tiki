@@ -175,7 +175,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function header($content)
 	{
 		$hNum = 1;
-		$headerLength = str_len($content);
+		$headerLength = strlen($content);
 		for($i = 0; $i < $headerLength; $i++) {
 			if ($content[$i] == '!') {
 				$hNum++;
