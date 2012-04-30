@@ -3610,7 +3610,11 @@ class TikiLib extends TikiDb_Bridge
 		return true;
 	}
 
-
+	function clear_cache_user_preferences()
+	{
+		global $user_preferences;
+		unset($user_preferences);
+	}
 	function get_user_preferences($my_user, $names = null)
 	{
 		global $user_preferences;
