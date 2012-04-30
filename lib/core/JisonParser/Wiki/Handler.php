@@ -172,34 +172,21 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<i>' . $content . '</i>';
 	}
 
-	function header1($content)
+	function header($content)
 	{
-		return '<h1>' . $content . '</h1>';
-	}
+		$hNum = 1;
+		$headerLength = str_len($content);
+		for($i = 0; $i < $headerLength; $i++) {
+			if ($content[$i] == '!') {
+				$hNum++;
+			} else {
+				break;
+			}
+		}
 
-	function header2($content)
-	{
-		return '<h2>' . $content . '</h2>';
-	}
-
-	function header3($content)
-	{
-		return '<h3>' . $content . '</h3>';
-	}
-
-	function header4($content)
-	{
-		return '<h4>' . $content . '</h4>';
-	}
-
-	function header5($content)
-	{
-		return '<h5>' . $content . '</h5>';
-	}
-
-	function header6($content)
-	{
-		return '<h6>' . $content . '</h6>';
+		$content = substr($content, $hNum - 1);
+		
+		return '<h' . $hNum . '>' . $content . '</h1>';
 	}
 
 	function hr()
