@@ -300,6 +300,10 @@ function wikiplugin_appframe_cond($data, $params, $start)
 		return $data;
 	}
 
+	if (isset($params['empty']) && ! $params->{'empty'}->text()) {
+		return $data;
+	}
+
 	return ' ';
 }
 
