@@ -2066,6 +2066,7 @@ if ( \$('#$id') ) {
 		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
 		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
+			$data = $this->unprotectSpecialChars($data, true);
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
 			$data = preg_replace('/^\s+<h([1-6])>/im', "<h\\1>", $data); // headings with leading spaces
 			$data = preg_replace('/\/><h([1-6])>/im', "/>\n<h\\1>", $data); // headings after /> tag
@@ -2080,6 +2081,7 @@ if ( \$('#$id') ) {
 				$htmlheaderreplace .= $htmlheaders[2][$i];
 				$data = str_replace($htmlheaders[0][$i], $htmlheaderreplace, $data);
 			}
+			$data = $this->protectSpecialChars($data, true);
 		}
 
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
