@@ -154,8 +154,10 @@ $('#appframe .tab').parent().each(function () {
 	});
 	tabs.parent().tabs();
 });
-$('#appframe .accordion').wrapAll('<div/>').parent().accordion({
-	autoHeight: false
+$('#appframe *:contains(.accordion)').each(function () {
+	$('.accordion', this).wrapAll('<div/>').parent().accordion({
+		autoHeight: false
+	});
 });
 $('#appframe .anchor').wrapAll('<div/>').parent()
 	.addClass('anchor-container')
