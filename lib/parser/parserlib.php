@@ -904,6 +904,9 @@ if ( \$('#$id') ) {
 	function plugin_fingerprint( $name, $meta, $data, $args )
 	{
 		$validate = (isset($meta['validate']) ? $meta['validate'] : '');
+
+		$data = $this->unprotectSpecialChars($data, true);
+
 		if ( $validate == 'all' || $validate == 'body' )
 			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
 		else
