@@ -1,6 +1,6 @@
 {if $tracker_input.trackerId}
 {tikimodule error=$module_params.error title=$tpl_module_title name="tracker_input" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}" data-location-mode="{$tracker_input.locationMode|escape}" data-streetview="{$tracker_input.streetview|escape}">
+	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}" data-location-mode="{$tracker_input.locationMode|escape}" data-streetview="{$tracker_input.streetview|escape}" data-success="{$tracker_input.success|json_encode|escape}">
 		{foreach from=$tracker_input.textInput key=token item=label}
 			<label>
 				{$label|escape}
@@ -39,8 +39,8 @@
 		$(this).serviceDialog({
 			title: $(':submit', form).val(),
 			data: $(form).serialize(),
-			success: function () {
-				$(form).trigger('insert');
+			success: function (data) {
+				$(form).trigger('insert', [ data ]);
 			},
 			close: function () {
 				$(form).trigger('cancel');
@@ -51,7 +51,23 @@
 		var form = this
 			, location = $(this).data('location')
 			, locationMode = $(this).data('location-mode')
-			, streetview = $(this).data('streetview');
+			, streetview = $(this).data('streetview')
+			, success = $(this).data('success')
+			;
+
+		if (success.operation === 'redirect') {
+			$(form).bind('insert', function (e, data) {
+				var url = success.argument;
+
+				data.fields.itemId = data.itemId;
+				data.fields.status = data.status;
+				$.each(data.fields, function (k, v) {
+					url = url.replace('@' + k + '@', escape(v));
+				});
+
+				document.location.href = url;
+			});
+		}
 
 		if (location ) {
 			var map = $(form).closest('.tab, #appframe, body').find('.map-container')[0];

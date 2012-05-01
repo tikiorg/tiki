@@ -47,6 +47,11 @@ function module_tracker_input_info()
 				'description' => tr('Alter the submit button label.'),
 				'filter' => 'text',
 			),
+			'success' => array(
+				'name' => tr('Operation to perform on success'),
+				'description' => tr('Operation to perform in the following format: operationName(argument). Current operations are redirect with the URL template as the argument. @valueName@ will be replaced by the appropriate value where valueName is itemId, status or a permanent name'),
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -76,6 +81,7 @@ function module_tracker_input($mod_reference, $module_params)
 	$hiddeninput = isset($module_params['hiddeninput']) ? $module_params['hiddeninput'] : '';
 	$streetview = isset($module_params['streetview']) ? $module_params['streetview'] : '';
 	$streetViewField = $definition->getFieldFromPermName($streetview);
+	$success = isset($module_params['success']) ? $module_params['success'] : '';
 
 	if (! $streetview || $prefs['fgal_upload_from_source'] != 'y' || ! $streetViewField) {
 		$streetview = '';
@@ -111,6 +117,13 @@ function module_tracker_input($mod_reference, $module_params)
 		$galleryId = $streetViewField['options_array'][0];
 	}
 
+	$operation = null;
+	$operationArgument = null;
+	if (preg_match("/(\w+)\(([^\)]*)\)/", $success, $parts)) {
+		$operation = $parts[1];
+		$operationArgument = $parts[2];
+	}
+
 	$smarty->assign(
 					'tracker_input',
 					array(
@@ -122,6 +135,10 @@ function module_tracker_input($mod_reference, $module_params)
 						'streetview' => $streetview,
 						'galleryId' => $galleryId,
 						'submit' => isset($module_params['submit']) ? $module_params['submit'] : tr('Create'),
+						'success' => array(
+							'operation' => $operation,
+							'argument' => $operationArgument,
+						),
 					)
 	);
 }
