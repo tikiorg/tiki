@@ -498,6 +498,8 @@ class Services_Tracker_Controller
 
 			if ($itemId) {
 				TikiLib::lib('unifiedsearch')->processUpdateQueue();
+
+				return $this->utilities->getItem($trackerId, $itemId);
 			} else {
 				throw new Services_Exception(tr('Item could not be created.'), 400);
 			}

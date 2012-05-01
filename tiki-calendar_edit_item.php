@@ -27,7 +27,21 @@ $smarty->assign('monthnames', $monthnames);
 
 $smarty->assign('edit', false);
 $smarty->assign('recurrent', '');
-$hours_minmax = '';
+$hour_minmax = '';
+$recurrence = array(
+	'id'				=> '',
+	'weekly'			=> '',
+	'weekday'			=> '',
+	'monthly'			=> '',
+	'dayOfMonth'		=> '',
+	'yearly'			=> '',
+	'dateOfYear_day'	=> '',
+	'dateOfYear_month'	=> '',
+	'startPeriod'		=> '',
+	'nbRecurrences'		=> '',
+	'endPeriod'			=> ''
+);	
+$smarty->assign('recurrence', $recurrence);
 
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
@@ -108,7 +122,7 @@ if (!empty($calitemId) && !empty($user)) {
 }
 
 if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST['act'])) {
-	$_REQUEST['changeCal'] = 'y';
+	$_REQUEST['changeCal'] = true;
 }
 
 if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['changeCal'])) {
@@ -126,7 +140,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 	
 	$save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
 	if (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') {
-		$save['start'] = TikiLib::make_time(
+		$save['start'] = $tikilib->make_time(
 						0,
 						0,
 						0,
@@ -134,12 +148,11 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 						$_REQUEST['start_date_Day'],
 						$_REQUEST['start_date_Year']
 		);
-
 		if ($save['end_or_duration'] == 'duration') {
 			$save['duration'] = 86399;
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
-			$save['end'] = TikiLib::make_time(
+			$save['end'] = $tikilib->make_time(
 							23,
 							59,
 							59,
@@ -154,7 +167,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		if (!empty($_REQUEST['start_Meridian'])) {
 			$_REQUEST['start_Hour'] = date('H', strtotime($_REQUEST['start_Hour'] . ':00 ' . $_REQUEST['start_Meridian']));
 		}
-		$save['start'] = TikiLib::make_time(
+		$save['start'] = $tikilib->make_time(
 						$_REQUEST['start_Hour'],
 						$_REQUEST['start_Minute'],
 						0,
@@ -171,7 +184,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			if (!empty($_REQUEST['end_Meridian'])) {
 				$_REQUEST['end_Hour'] = date('H', strtotime($_REQUEST['end_Hour'] . ':00 ' . $_REQUEST['end_Meridian']));
 			}
-			$save['end'] = TikiLib::make_time(
+			$save['end'] = $tikilib->make_time(
 							$_REQUEST['end_Hour'],
 							$_REQUEST['end_Minute'],
 							0,
@@ -372,15 +385,17 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 } elseif (isset($_REQUEST['preview']) || $impossibleDates) {
 	$save['parsed'] = $tikilib->parse_data($save['description'], array('is_html' => $prefs['calendar_description_is_html'] === 'y'));
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
-	$id = $save['calitemId'];
+	$id = isset($save['calitemId']) ? isset($save['calitemId']) : '';
 	$calitem = $save;
+	$calitem['recurrenceId'] = '';
 
 	$recurrence = array(
-		'weekly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] = 'weekly',
+		'id'	=> '',
+		'weekly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] == 'weekly',
 		'weekday' => isset($_POST['weekday']) ? $_POST['weekday'] : '',
-		'monthly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] = 'monthly',
+		'monthly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] == 'monthly',
 		'dayOfMonth' => isset($_POST['dayOfMonth']) ? $_POST['dayOfMonth'] : '',
-		'yearly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] = 'yearly',
+		'yearly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] == 'yearly',
 		'dateOfYear_day' => isset($_POST['dateOfYear_day']) ? $_POST['dateOfYear_day'] : '',
 		'dateOfYear_month' => isset($_POST['dateOfYear_month']) ? $_POST['dateOfYear_month'] : '',
 		'startPeriod' => isset($_POST['startPeriod']) ? $_POST['startPeriod'] : '',
@@ -394,7 +409,6 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit', true);
-	$smarty->assign('preview', isset($_REQUEST['preview']));
 } elseif (isset($_REQUEST['changeCal'])) {
 	$calitem = $save;
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
@@ -424,7 +438,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		$now = $tikilib->now;
 	}
 	//if current time of day is within the calendar day (between startday and endday), then use now as start, otherwise use beginning of calendar day
-	$now_start = TikiLib::make_time(
+	$now_start = $tikilib->make_time(
 					abs(ceil($calendar['startday']/(60*60))),
 					0,
 					0,
@@ -432,7 +446,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 					TikiLib::date_format('%d', $now),
 					TikiLib::date_format('%Y', $now)
 	);
-	$now_end = TikiLib::make_time(
+	$now_end = $tikilib->make_time(
 					abs(ceil($calendar['endday']/(60*60))),
 					0,
 					0,
@@ -488,6 +502,7 @@ if ($calendar['customlocations'] == 'y') {
 	$listlocs = array();
 }
 $smarty->assign('listlocs', $listlocs);
+$smarty->assign('changeCal', isset($_REQUEST['changeCal']));
 
 include_once ('lib/userprefs/userprefslib.php');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
@@ -530,7 +545,7 @@ $smarty->assign('referer', empty($_SERVER['HTTP_REFERER']) || strpos($_SERVER['H
 $smarty->assign('myurl', 'tiki-calendar_edit_item.php');
 $smarty->assign('id', $id);
 $smarty->assign('hour_minmax', $hour_minmax);
-if ($calitem['recurrenceId'] > 0) {
+if (isset($calitem['recurrenceId']) && $calitem['recurrenceId'] > 0) {
 	$cr = new CalRecurrence($calitem['recurrenceId']);
 	$smarty->assign('recurrence', $cr->toArray());
 }
@@ -554,6 +569,7 @@ $headerlib->add_js(
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $calID);
+$smarty->assign('preview', isset($_REQUEST['preview']));
 if (array_key_exists('CalendarViewGroups', $_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView', $_SESSION['CalendarViewGroups'][0]);
 

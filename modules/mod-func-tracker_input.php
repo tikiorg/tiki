@@ -34,12 +34,22 @@ function module_tracker_input_info()
 			),
 			'location' => array(
 				'name' => tr('Location Field'),
-				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field.'),
+				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field. In addition to the field name, :marker or :viewport can be used as the suffix. Default is :marker.'),
 				'filter' => 'text',
 			),
 			'streetview' => array(
 				'name' => tr('Capture StreetView'),
 				'description' => tr('Include a button on the StreetView interface to create tracker items from the location. Requires upload image from URL and location parameter.'),
+				'filter' => 'text',
+			),
+			'submit' => array(
+				'name' => tr('Button Label'),
+				'description' => tr('Alter the submit button label.'),
+				'filter' => 'text',
+			),
+			'success' => array(
+				'name' => tr('Operation to perform on success'),
+				'description' => tr('Operation to perform in the following format: operationName(argument). Current operations are redirect with the URL template as the argument. @valueName@ will be replaced by the appropriate value where valueName is itemId, status or a permanent name'),
 				'filter' => 'text',
 			),
 		),
@@ -71,14 +81,22 @@ function module_tracker_input($mod_reference, $module_params)
 	$hiddeninput = isset($module_params['hiddeninput']) ? $module_params['hiddeninput'] : '';
 	$streetview = isset($module_params['streetview']) ? $module_params['streetview'] : '';
 	$streetViewField = $definition->getFieldFromPermName($streetview);
+	$success = isset($module_params['success']) ? $module_params['success'] : '';
 
 	if (! $streetview || $prefs['fgal_upload_from_source'] != 'y' || ! $streetViewField) {
 		$streetview = '';
 	}
 
 	$location = null;
+	$locationMode = null;
 	if (isset($module_params['location'])) {
-		$location = $module_params['location'];
+		$parts = explode(':', $module_params['location'], 2);
+		$location = array_shift($parts);
+		$locationMode = array_shift($parts);
+		if (! $locationMode) {
+			$locationMode = 'marker';
+		}
+
 		$hiddeninput .= " $location()";
 	}
 
@@ -99,6 +117,13 @@ function module_tracker_input($mod_reference, $module_params)
 		$galleryId = $streetViewField['options_array'][0];
 	}
 
+	$operation = null;
+	$operationArgument = null;
+	if (preg_match("/(\w+)\(([^\)]*)\)/", $success, $parts)) {
+		$operation = $parts[1];
+		$operationArgument = $parts[2];
+	}
+
 	$smarty->assign(
 					'tracker_input',
 					array(
@@ -106,8 +131,14 @@ function module_tracker_input($mod_reference, $module_params)
 						'textInput' => $text,
 						'hiddenInput' => $hidden,
 						'location' => $location,
+						'locationMode' => $locationMode,
 						'streetview' => $streetview,
 						'galleryId' => $galleryId,
+						'submit' => isset($module_params['submit']) ? $module_params['submit'] : tr('Create'),
+						'success' => array(
+							'operation' => $operation,
+							'argument' => $operationArgument,
+						),
 					)
 	);
 }

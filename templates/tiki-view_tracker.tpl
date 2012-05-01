@@ -16,7 +16,7 @@
 	{if $prefs.feed_tracker eq "y"}
 		<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
 	{/if}
-	{if $tiki_p_admin_trackers}
+	{if $tiki_p_admin_trackers eq "y"}
 		<a title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon _id='upload' align="right" alt="{tr}Import{/tr}"}</a>
 		{jq}
 			$('.import.dialog').click(function () {

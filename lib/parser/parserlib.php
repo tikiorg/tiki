@@ -143,7 +143,8 @@ class ParserLib extends TikiDb_Bridge
 	// This function removed the protection of html entities so that they are rendered as expected by the viewer
 	function unprotectSpecialChars($data, $is_html = false, $options = array())
 	{
-		if (($is_html != false || $options['is_html']) || $options['ck_editor']) {
+		if (( $is_html != false || ( isset($options['is_html']) && $options['is_html'])) 
+			|| (isset($options['ck_editor']) && $options['ck_editor'])) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
 			}
@@ -187,10 +188,17 @@ class ParserLib extends TikiDb_Bridge
 	 */
 
 	function plugins_remove(&$data, &$noparsed) {
-		$preparsed = array();
 
-		// TODO for 9.1 (jb) - rewrite using WikiParser_PluginMatcher which will be much lighter (this way all the plugins get executed)
-		$this->parse_first($data, $preparsed, $noparsed, array('is_html' => true, 'noparseplugins' => true, 'suppress_icons' => true));
+		$matches = WikiParser_PluginMatcher::match($data);		// find the plugins
+
+		foreach ($matches as $match) {							// each plugin
+			$plugin = (string) $match;
+			$key = '§'.md5(TikiLib::genPass()).'§';				// by replace whole plugin with a guid
+
+			$noparsed['key'][] = $key;
+			$noparsed['data'][] = $plugin;
+		}
+		$data = str_replace($noparsed['data'], $noparsed['key'], $data);
 	}
 
 	/**
@@ -550,7 +558,8 @@ if ( \$('#$id') ) {
 		else
 			$plugins = array();
 
-		sort(array_filter($plugins));
+		$plugins = array_filter($plugins);
+		sort($plugins);
 
 		return $plugins;
 	}
@@ -902,6 +911,9 @@ if ( \$('#$id') ) {
 	function plugin_fingerprint( $name, $meta, $data, $args )
 	{
 		$validate = (isset($meta['validate']) ? $meta['validate'] : '');
+
+		$data = $this->unprotectSpecialChars($data, true);
+
 		if ( $validate == 'all' || $validate == 'body' )
 			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
 		else
@@ -1047,7 +1059,7 @@ if ( \$('#$id') ) {
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
 		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged', 'draw'))) {
-			$plugin_result = str_replace(array('{', '}'), array('%7B' , '%7D'), $ck_editor_plugin);
+			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
@@ -1984,7 +1996,7 @@ if ( \$('#$id') ) {
 		// from the page directly, intended for short data, not long text but text
 		// will work too
 		//     Now won't match HTML-style '%nn' letter codes and some special utf8 situations...
-		if (preg_match_all("/$enclose([^% 0-9A-Z][^% 0-9A-Z][^% ]*)$enclose/", $data, $dvars)) {
+		if (preg_match_all("/[^%]$enclose([^% 0-9A-Z][^% 0-9A-Z][^% ]*){$enclose}[^%]/", $data, $dvars)) {
 			// remove repeated elements
 			$dvars = array_unique($dvars[1]);
 			// Now replace each dynamic variable by a pair composed of the
@@ -2054,6 +2066,7 @@ if ( \$('#$id') ) {
 		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
 		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
+			$data = $this->unprotectSpecialChars($data, true);
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
 			$data = preg_replace('/^\s+<h([1-6])>/im', "<h\\1>", $data); // headings with leading spaces
 			$data = preg_replace('/\/><h([1-6])>/im', "/>\n<h\\1>", $data); // headings after /> tag
@@ -2068,6 +2081,7 @@ if ( \$('#$id') ) {
 				$htmlheaderreplace .= $htmlheaders[2][$i];
 				$data = str_replace($htmlheaders[0][$i], $htmlheaderreplace, $data);
 			}
+			$data = $this->protectSpecialChars($data, true);
 		}
 
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );

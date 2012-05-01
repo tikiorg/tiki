@@ -44,7 +44,7 @@ function wikiplugin_archivebuilder( $data, $params )
 		$archive = new ZipArchive;
 		$archive->open($file = tempnam('temp/', 'archive') . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-		foreach ( explode("\n", $data) as $line) {
+		foreach ( array_filter(explode("\n", trim($data))) as $line) {
 			$parts = explode(":", trim($line));
 			$handler = array_shift($parts);
 
@@ -76,7 +76,7 @@ function wikiplugin_archivebuilder( $data, $params )
 		header('Content-Transfer-Encoding: binary'); 
 		readfile($file);
 		unlink($file);
-		die;
+		exit;
 	} else {
 		$label = tra('Download archive');
 		return <<<FORM
@@ -89,7 +89,15 @@ FORM;
 
 function wikiplugin_archivebuilder_trackeratt( $basepath, $trackerItem )
 {
-	global $trklib; require_once 'lib/trackers/trackerlib.php';
+	$trklib = TikiLib::lib('trk');
+	$data = $trklib->get_tracker_item($trackerItem);
+
+	$item = Tracker_Item::fromInfo($data);
+
+	if (! $item->canView()) {
+		return array();
+	}
+
 	$basepath = rtrim($basepath, '/') . '/';
 
 	$attachments = array();
@@ -120,6 +128,10 @@ function wikiplugin_archivebuilder_tracker_get_attbody( $info )
 
 function wikiplugin_archivebuilder_pagetopdf( $file, $pageName )
 {
+	if (! Perms::get('wiki page', $pageName)->view) {
+		return array();
+	}
+
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator;
 	$params = array( 'page' => $pageName );

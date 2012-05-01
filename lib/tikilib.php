@@ -3379,7 +3379,11 @@ class TikiLib extends TikiDb_Bridge
 		return true;
 	}
 
-
+	function clear_cache_user_preferences()
+	{
+		global $user_preferences;
+		unset($user_preferences);
+	}
 	function get_user_preferences($my_user, $names = null)
 	{
 		global $user_preferences;
@@ -3602,7 +3606,7 @@ class TikiLib extends TikiDb_Bridge
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$data = HTMLPurifier($data);
 
-			$parserlib->plugins_replace($data, $noparsed);
+			$parserlib->plugins_replace($data, $noparsed, true);
 			$parserlib->isHtmlPurifying = false;
 			$parserlib->isEditMode = false;
 		}

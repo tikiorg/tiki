@@ -100,7 +100,7 @@
 										{* Intentionally left blank to allow user add an image from somewhere else through the img tag and no other extra image *}
 									{/if}
 								{else}
-									{if $topics[$listpages[ix].topicId].image_size > 0}
+									{if isset($topics[$listpages[ix].topicId].image_size) and $topics[$listpages[ix].topicId].image_size > 0}
 										<a href="{$smarty.capture.href}"
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}">
 											<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
@@ -180,7 +180,7 @@
 		{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
 	{/if}
 {/section}
-{if !empty($listpages) && $usePagination ne 'n'}
-	{pagination_links cant=$cant step=$maxArticles offset=$offset}{$urlnext}{/pagination_links}
+{if !empty($listpages) && (isset($usePagination) and $usePagination ne 'n')}
+	{pagination_links cant=$cant step=$maxArticles offset=$offset}{if isset($urlnext)}{$urlnext}{/if}{/pagination_links}
 {/if}
 

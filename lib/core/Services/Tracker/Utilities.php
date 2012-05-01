@@ -159,6 +159,10 @@ class Services_Tracker_Utilities
 			$conditions['lastModif'] = $table->greaterThan($conditions['modifiedSince']);
 		}
 
+		if (! empty($conditions['itemId'])) {
+			$conditions['itemId'] = $table->in((array) $conditions['itemId']);
+		}
+
 		unset($conditions['modifiedSince']);
 
 		$items = $table->fetchAll(array('itemId', 'status'), $conditions, $maxRecords, $offset);
@@ -168,6 +172,17 @@ class Services_Tracker_Utilities
 		}
 
 		return $items;
+	}
+
+	function getItem($trackerId, $itemId)
+	{
+		$items = $this->getItems(array(
+			'trackerId' => $trackerId,
+			'itemId' => $itemId,
+		), 1, 0);
+		$item = reset($items);
+
+		return $item;
 	}
 
 	function processValues($definition, $item)

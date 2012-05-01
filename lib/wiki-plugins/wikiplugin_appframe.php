@@ -154,8 +154,10 @@ $('#appframe .tab').parent().each(function () {
 	});
 	tabs.parent().tabs();
 });
-$('#appframe .accordion').wrapAll('<div/>').parent().accordion({
-	autoHeight: false
+$('#appframe .accordion').parent().each(function () {
+	$('.accordion', this).wrapAll('<div/>').parent().accordion({
+		autoHeight: false
+	});
 });
 $('#appframe .anchor').wrapAll('<div/>').parent()
 	.addClass('anchor-container')
@@ -297,6 +299,10 @@ MODULE;
 function wikiplugin_appframe_cond($data, $params, $start)
 {
 	if (isset($params['notempty']) && $params->notempty->text()) {
+		return $data;
+	}
+
+	if (isset($params['empty']) && ! $params->{'empty'}->text()) {
 		return $data;
 	}
 

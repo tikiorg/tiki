@@ -156,4 +156,9 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 
 		return $sanitized;
 	}
+
+	static function superSanitize($html)
+	{
+		return utf8_encode(implode('', self::sanitizeToWords($html)));
+	}
 }

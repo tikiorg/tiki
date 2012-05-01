@@ -12,7 +12,7 @@
 	<div class="tabrowLeft"></div>
 {/if}
 	<div class="viewmode">
-	{if $calendar_type neq "tiki_actions"}
+	{if !isset($calendar_type) or $calendar_type neq "tiki_actions"}
 			{if $module neq 'y'}
 				{button _auto_args="viewmode,focus" _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" viewmode='day' focus=$now todate=$now}
 			{else}
@@ -44,7 +44,7 @@
 		</div>
 
 {*viewmodes*}
-		{if $calendar_type neq "tiki_actions"}
+		{if !isset($calendar_type) or $calendar_type neq "tiki_actions"}
 			{if $module neq 'y'}
 				{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}Day{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'day'"}
 			{elseif empty($module_params.viewmode)}

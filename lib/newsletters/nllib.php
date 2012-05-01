@@ -1252,6 +1252,7 @@ class NlLib extends TikiLib
 		$throttleLimit = (int) $prefs['newsletter_batch_size'];
 
 		foreach ($users as $us) {
+			$tikilib->clear_cache_user_preferences();
 			$email = $us['email'];
 			if ($browser) {
 				if (@ob_get_level() == 0)

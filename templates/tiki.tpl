@@ -130,7 +130,7 @@
 								{/if}
 							</div>{* -- END of #c1c2 -- *}
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n') or $module_pref_errors}
+								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n') or (isset($module_pref_errors) and $module_pref_errors)}
 									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										<div id="right_modules" class="content modules">
 											{if $module_pref_errors}

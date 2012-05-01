@@ -18,7 +18,7 @@
 	{tab name="{tr}List of Calendars{/tr}"}
 		<h2>{tr}List of Calendars{/tr}</h2>
 
-			{include file='find.tpl'}
+			{include file='find.tpl' find_in="<ul><li>{tr}Calendar name{/tr}</li></ul>"}
 			<table class="normal">
 				<tr>
 					<th>
