@@ -1,6 +1,6 @@
 {if $tracker_input.trackerId}
 {tikimodule error=$module_params.error title=$tpl_module_title name="tracker_input" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}" data-streetview="{$tracker_input.streetview|escape}">
+	<form class="mod-tracker-input simple" method="get" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}" data-location-mode="{$tracker_input.locationMode|escape}" data-streetview="{$tracker_input.streetview|escape}">
 		{foreach from=$tracker_input.textInput key=token item=label}
 			<label>
 				{$label|escape}
@@ -11,7 +11,7 @@
 			<input type="hidden" name="trackerId" value="{$tracker_input.trackerId|escape}"/>
 			<input type="hidden" name="controller" value="tracker"/>
 			<input type="hidden" name="action" value="insert_item"/>
-			<input type="submit" name="create" value="{tr}Create{/tr}"/>
+			<input type="submit" name="create" value="{$tracker_input.submit|escape}"/>
 			{foreach from=$tracker_input.hiddenInput key=f item=v}
 				<input id="{$f|escape}" type="hidden" name="forced~{$f|escape}" value="{$v|escape}"/>
 			{/foreach}
@@ -50,6 +50,7 @@
 	}).each(function () {
 		var form = this
 			, location = $(this).data('location')
+			, locationMode = $(this).data('location-mode')
 			, streetview = $(this).data('streetview');
 
 		if (location ) {
@@ -58,22 +59,29 @@
 			$(map).one('initialized', function () {
 				var control, button, modeManager, newMode;
 				modeManager = map.modeManager;
-				control = $(map).setupMapSelection({
-					field: $('#' + location),
-					click: function () {
-						$(form).submit();
-					}
-				});
-				control.deactivate();
 
-				modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control]});
+				if (locationMode === 'marker') {
+					control = $(map).setupMapSelection({
+						field: $('#' + location),
+						click: function () {
+							$(form).submit();
+						}
+					});
+					control.deactivate();
+
+					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control]});
+				}
 
 				button = $('<input type="submit"/>')
-					.val('{tr}Add Marker{/tr}')
+					.val($(':submit', form).val())
 					.button()
 					.click(function () {
-						modeManager.switchTo(newMode);
-						return false;
+						if (newMode) {
+							modeManager.switchTo(newMode);
+							return false;
+						}
+
+						$('#' + location).val($(map).getMapCenter())
 					})
 					.appendTo(form);
 

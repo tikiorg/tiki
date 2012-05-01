@@ -34,12 +34,17 @@ function module_tracker_input_info()
 			),
 			'location' => array(
 				'name' => tr('Location Field'),
-				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field.'),
+				'description' => tr('Obtain the coordinates from a nearby map and send them to the location field. In addition to the field name, :marker or :viewport can be used as the suffix. Default is :marker.'),
 				'filter' => 'text',
 			),
 			'streetview' => array(
 				'name' => tr('Capture StreetView'),
 				'description' => tr('Include a button on the StreetView interface to create tracker items from the location. Requires upload image from URL and location parameter.'),
+				'filter' => 'text',
+			),
+			'submit' => array(
+				'name' => tr('Button Label'),
+				'description' => tr('Alter the submit button label.'),
 				'filter' => 'text',
 			),
 		),
@@ -77,8 +82,15 @@ function module_tracker_input($mod_reference, $module_params)
 	}
 
 	$location = null;
+	$locationMode = null;
 	if (isset($module_params['location'])) {
-		$location = $module_params['location'];
+		$parts = explode(':', $module_params['location'], 2);
+		$location = array_shift($parts);
+		$locationMode = array_shift($parts);
+		if (! $locationMode) {
+			$locationMode = 'marker';
+		}
+
 		$hiddeninput .= " $location()";
 	}
 
@@ -106,8 +118,10 @@ function module_tracker_input($mod_reference, $module_params)
 						'textInput' => $text,
 						'hiddenInput' => $hidden,
 						'location' => $location,
+						'locationMode' => $locationMode,
 						'streetview' => $streetview,
 						'galleryId' => $galleryId,
+						'submit' => isset($module_params['submit']) ? $module_params['submit'] : tr('Create'),
 					)
 	);
 }
