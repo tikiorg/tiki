@@ -115,6 +115,12 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							1 => tr('Yes'),
 						)
 					),
+					'indexRemote' => array(
+						'name' => tr('Index remote fields'),
+						'description' => tr('Index one or multiple fields from the master tracker along with the child, separated by |'),
+						'separator' => '|',
+						'filter' => 'int',
+					),
 				),
 			),
 		);
@@ -293,15 +299,48 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		} else {
 			$label = isset($list[$item]) ? $list[$item] : '';
 		}
-		return array(
+
+		$out = array(
 			$baseKey => $typeFactory->sortable($item),
 			"{$baseKey}_text" => $typeFactory->plaintext($label),
 		);
+
+		$indexRemote = array_filter(explode('|', $this->getOption('indexRemote')));
+		if (count($indexRemote) && is_numeric($item)) {
+			$utilities = new Services_Tracker_Utilities;
+			$trackerId = $this->getOption('trackerId');
+			$itemData = $utilities->getItem($trackerId, $item);
+
+			$definition = Tracker_Definition::get($trackerId);
+			foreach ($indexRemote as $fieldId) {
+				$field = $definition->getField($fieldId);
+				$permName = $field['permName'];
+
+				$out["{$baseKey}_{$permName}"] = $typeFactory->plaintext($itemData['fields'][$permName]);
+			}
+		}
+
+		return $out;
 	}
 
 	function getProvidedFields($baseKey)
 	{
-		return array($baseKey, "{$baseKey}_text");
+		$fields = array($baseKey, "{$baseKey}_text");
+
+		$trackerId = $this->getOption('trackerId');
+		$indexRemote = array_filter(explode('|', $this->getOption('indexRemote')));
+
+		if (count($indexRemote)) {
+			$definition = Tracker_Definition::get($trackerId);
+			foreach ($indexRemote as $fieldId) {
+				$field = $definition->getField($fieldId);
+				$permName = $field['permName'];
+
+				$fields[] = "{$baseKey}_{$permName}";
+			}
+		}
+
+		return $fields;
 	}
 
 	function getGlobalFields($baseKey)
