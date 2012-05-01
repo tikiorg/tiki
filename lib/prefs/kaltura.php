@@ -2,6 +2,16 @@
 
 function prefs_kaltura_list()
 {
+	global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
+
+	$players = array();
+	if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
+		$players1 = $kalturaadminlib->getPlayersUiConfs();
+		foreach($players1 as & $pl) {
+			$players[$pl['id']] = tra($pl['name']);
+		}
+		unset($players1)
+;	}
 	return array(
 		'kaltura_partnerId' => array(
 			'name' => tra('Partner ID'),
@@ -33,7 +43,8 @@ function prefs_kaltura_list()
 		'kaltura_kdpUIConf' => array(
 			'name' => tra('Kaltura Video Player ID'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID'),
-			'type' => 'text',
+			'type' => empty($players) ? 'text' : 'list',
+			'options' => $players,
 			'size' => 20,
 			'default' => '',
 			'tags' => array('basic'),
@@ -41,7 +52,8 @@ function prefs_kaltura_list()
 		'kaltura_kdpEditUIConf' => array(
 			'name' => tra('Kaltura Video Player ID (in entry edit mode)'),
 			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration ID for use when editing. You can use a player which also has an option to select a frame as video thumbnail'),
-			'type' => 'text',
+			'type' => empty($players) ? 'text' : 'list',
+			'options' => $players,
 			'size' => 20,
 			'default' => '',
 			'tags' => array('basic'),

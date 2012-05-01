@@ -22,20 +22,9 @@ if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
 	}
 	// TODO make way to override this for certain sites...
 	$tikilib->set_preference('kaltura_kcwUIConf', $kcwDefault);
-	// players
-	$players = $kalturaadminlib->getPlayersUiConfs();
-	$kplayerlist = '<table>';
-	foreach ($players as $p) {
-		$kplayerlist .= '<tr><td>';
-		$kplayerlist .= $p['id'];
-		$kplayerlist .= '</td><td>';
-		$kplayerlist .= $p['name'];
-		$kplayerlist .= '</td></tr>';
-	}
-	$kplayerlist .= '</table>';
 } else {
-	$kcwText = "<div class='adminoptionbox'>Unable to retrieve configuration from Kaltura. Please reload page after setting up the Kaltura Partner Settings section</div>";
-	$kplayerlist = "<div class='adminoptionbox'>Unable to retrieve list of valid player IDs. Please reload page after setting up the Kaltura Partner Settings section</div>";
+	$kcwText = "<div class='adminoptionbox error'>Unable to retrieve configuration from Kaltura. Please reload page after setting up the Kaltura Partner Settings section</div>";
+	$kplayerlist = "<div class='adminoptionbox error'>Unable to retrieve list of valid player IDs. Please reload page after setting up the Kaltura Partner Settings section</div>";
 }
 $smarty->assign('kcwText', $kcwText);
 $smarty->assign('kplayerlist', $kplayerlist); 

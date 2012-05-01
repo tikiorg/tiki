@@ -4,11 +4,15 @@
 {tab name="{tr}Kaltura{/tr}"}
 {remarksbox type="info" title="{tr}Kaltura Registration{/tr}"}{tr}To get a Kaltura Partner ID:{/tr} {tr}Setup your own instance of Kaltura Community Edition (CE){/tr} or <a href="http://corp.kaltura.com/about/signup">{tr}get an account via Kaltura.com{/tr}</a> {/remarksbox}
 
-	{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
-	{if $kaltura_legacyremix eq 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
-	{button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}
+{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
+{if $kaltura_legacyremix eq 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
+{button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}
 
+<div class="heading input_submit_container" style="text-align: right">
+	<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
+</div>
 <fieldset class="admin">
+
 <legend>{tr}Activate the feature{/tr}</legend>
 	{preference name=feature_kaltura visible="always"}
 </fieldset>
@@ -51,7 +55,7 @@
 
 <br />
 
-<div align="center" style="padding:1em;"><input type="submit" name="kaltura" value="{tr}Save{/tr}" /></div>
+<div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Change preferences{/tr}" /></div>
 </form>
 {/tab}
 {tab name="{tr}Ustream Watershed{/tr}"}
@@ -102,6 +106,6 @@
 	{preference name=watershed_fme_key}
 </fieldset>
 
-<div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Save{/tr}" /></div>
+<div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Change preferences{/tr}" /></div>
 {/tab}
 {/tabset}
