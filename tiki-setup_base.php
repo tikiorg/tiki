@@ -150,7 +150,7 @@ require_once ('lib/setup/prefs.php');
 // Smarty needs session since 2.6.25
 global $smarty; require_once ('lib/init/smarty.php');
 
-if ($prefs['ids_enabled'] == 'y') {
+if (isset($prefs['ids_enabled']) && $prefs['ids_enabled'] == 'y') {
 	try {
 		TikiInit::prependIncludePath('lib/phpids/lib');
 		require_once 'IDS/Init.php';
