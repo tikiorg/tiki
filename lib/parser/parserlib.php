@@ -188,10 +188,17 @@ class ParserLib extends TikiDb_Bridge
 	 */
 
 	function plugins_remove(&$data, &$noparsed) {
-		$preparsed = array();
 
-		// TODO for 9.1 (jb) - rewrite using WikiParser_PluginMatcher which will be much lighter (this way all the plugins get executed)
-		$this->parse_first($data, $preparsed, $noparsed, array('is_html' => true, 'noparseplugins' => true, 'suppress_icons' => true));
+		$matches = WikiParser_PluginMatcher::match($data);		// find the plugins
+
+		foreach ($matches as $match) {							// each plugin
+			$plugin = (string) $match;
+			$key = '§'.md5(TikiLib::genPass()).'§';				// by replace whole plugin with a guid
+
+			$noparsed['key'][] = $key;
+			$noparsed['data'][] = $plugin;
+		}
+		$data = str_replace($noparsed['data'], $noparsed['key'], $data);
 	}
 
 	/**
