@@ -200,6 +200,7 @@ if (isset($prefs['ids_enabled']) && $prefs['ids_enabled'] == 'y') {
 
 		if ($impact > $prefs['ids_single_threshold'] || $_SESSION['ids_impact'] > $prefs['ids_session_threshold']) {
 			header('503 Service Unavailable');
+			echo tra('Request prevented');
 			exit;
 		}
 	} catch (Exception $e) {
