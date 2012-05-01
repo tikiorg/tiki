@@ -66,10 +66,19 @@ if (isset($_REQUEST['editor_id'])) {
 	} else if (isset($_REQUEST['autoSaveId'])) {	// wiki page previews
 		
 		$autoSaveIdParts = explode(':', $_REQUEST['autoSaveId']);	// user, section, object id
+		foreach ($autoSaveIdParts as & $part) {
+			$part = urldecode($part);
+		}
 		
+		$page = $autoSaveIdParts[2];	// plugins use global $page for approval
+		$info = $tikilib->get_page_info($page, false);
+		if (empty($info) || isset($_REQUEST['allowHtml'])) {
+			$info['is_html'] = !empty($_REQUEST['allowHtml'])? 1 : 0;
+		}
+		$options = array('is_html' => ($info['is_html'] == 1), 'preview_mode' => true, 'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2]);
+
 		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
 			
-			$page = $autoSaveIdParts[2];	// plugins use global $page for approval
 			$editlib; include_once 'lib/wiki/editlib.php';
 			if (isset($_REQUEST['inPage'])) {
 				if (!isset($_REQUEST['diff_style'])) {	// use previously set diff_style
@@ -110,11 +119,7 @@ if (isset($_REQUEST['editor_id'])) {
 						$data = $smarty->fetch('pagehistory.tpl');
 					}
 				} else {
-					$info = $tikilib->get_page_info($page, false);
-					if (empty($info)) {
-						$info['is_html'] = isset($_REQUEST['allowHtml'])?$_REQUEST['allowHtml']:0;
-					}
-					$data = $tikilib->parse_data($data, array('is_html' => ($info['is_html'] == 1), 'preview_mode'=>true, 'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2]));
+					$data = $tikilib->parse_data($data, $options);
 				}
 				echo $data;
 				
@@ -138,7 +143,7 @@ if (isset($_REQUEST['editor_id'])) {
 				$data = '<div id="c1c2"><div id="wrapper"><div id="col1"><div id="tiki-center" class="wikitext">';
 				if (has_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])) {
 					$parserlib = TikiLib::lib('parser');
-					$data .= $parserlib->parse_data_raw($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])));
+					$data .= $parserlib->parse_data($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])), $options);
 				} else {
 					if ($autoSaveIdParts[1] == 'wiki_page') {
 						global $wikilib; include_once('lib/wiki/wikilib.php');
