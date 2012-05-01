@@ -1446,7 +1446,14 @@ class convertToTiki9
 		foreach ($matches as $match) {							// each plugin
 			$name = $match->getName();
 			$meta = $this->parserlib->plugin_info($name);
-			$args = $this->argumentParser->parse($match->getArguments());
+			$argsRaw = $match->getArguments();
+
+			//Here we detect if a plugin was double encoded and this is the second decode
+			if (preg_match("/&amp;&/i", $argsRaw) || preg_match("/&quot;/i", $argsRaw) || preg_match("/&gt;/i", $argsRaw)) { //try to detect double encoding
+				$argsRaw = html_entity_decode($argsRaw);				// decode entities in the plugin args (usually &quot;)
+			}
+
+			$args = $this->argumentParser->parse($argsRaw);
 			$plugin = (string) $match;
 			$key = '§'.md5(TikiLib::genPass()).'§';					// by replace whole plugin with a guid
 
@@ -1457,7 +1464,7 @@ class convertToTiki9
 			$plugin = str_replace($body, $key2, $plugin);
 
 			//Here we detect if a plugin was double encoded and this is the second decode
-			if (preg_match("/&amp;&/i", $plugin) || preg_match("/&quot;/i", $plugin)) { //try to detect double encoding
+			if (preg_match("/&amp;&/i", $plugin) || preg_match("/&quot;/i", $plugin) || preg_match("/&gt;/i", $plugin)) { //try to detect double encoding
 				$plugin = htmlspecialchars_decode($plugin);				// decode entities in the plugin args (usually &quot;)
 			}
 
