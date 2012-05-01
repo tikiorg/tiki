@@ -622,6 +622,16 @@
 {/if}
 
 </div>
+
+
+<div>
+	<fieldset>
+		<legend>{tr}Stay up-to-date{/tr}</legend>
+		<p>{tr}Subscribe to the <a href="http://tiki.org/Newsletter" title="Subscribe" target="_blank">Tiki newsletter</a> or <a href="http://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank">RSS feed</a> to learn new releases, security updates, and community news.{/tr}</p>
+	</fieldset>
+</div>
+
+
 {if $install_type eq 'update'}
 	{if $double_encode_fix_attempted eq 'y'}
 		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
