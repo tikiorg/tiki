@@ -263,12 +263,12 @@ CREATE TABLE `tiki_blog_posts` (
   `excerpt` text default NULL,
   `created` int(14) default NULL,
   `user` varchar(200) default '',
+  `hits` bigint NULL default '0',
   `trackbacks_to` text,
   `trackbacks_from` text,
   `title` varchar(255) default NULL,
   `priv` varchar(1) default 'n',
   `wysiwyg` varchar(1) default NULL,
-  `hits` bigint NULL default '0',
   PRIMARY KEY (`postId`),
   KEY `data` (`data`(255)),
   KEY `blogId` (`blogId`),
@@ -755,7 +755,7 @@ CREATE TABLE `tiki_file_galleries` (
   `image_max_size_x` int(8) NOT NULL default '0',
   `image_max_size_y` int(8) NOT NULL default '0',
   `show_source` char(1) NOT NULL DEFAULT 'o',
-  `icon_fileId` int(14) NULL DEFAULT NULL,
+  `icon_fileId` int(14) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
