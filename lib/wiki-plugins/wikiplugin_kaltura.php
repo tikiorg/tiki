@@ -81,7 +81,7 @@ function wikiplugin_kaltura($data, $params)
 	foreach ($plugininfo['params'] as $key => $param) {
 		$defaults["$key"] = $param['default'];
 	}
-	if ($kalturaadminlib && (empty($params['width']) || empty($params['height']))) {
+	if ($kalturaadminlib && $kalturaadminlib->session && (empty($params['width']) || empty($params['height']))) {
 		$player = $kalturaadminlib->getPlayersUiConf($playerId);
 		if (!empty($player)) {
 			if (empty($params['width'])) {

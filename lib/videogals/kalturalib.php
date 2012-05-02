@@ -44,6 +44,9 @@ class KalturaLib
 	
 	private function startAdminSession() {
 		global $prefs, $user, $smarty;
+		if (!$this->testSetup()) {
+			return false;
+		}
 		if ($user) {
 			$kuser = $user;
 		} else {
@@ -62,6 +65,9 @@ class KalturaLib
 	
 	private function startUserSession() {
 		global $prefs, $user, $smarty;
+		if (!$this->testSetup()) {
+			return false;
+		}
 		if ($user) {
 			$kuser = $user;
 		} else {
