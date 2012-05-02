@@ -110,6 +110,34 @@ class KalturaLib
 		return $this->_getPlayersUiConfs();		
 	}
 	
+	function getPlayersUiConf($playerId) {
+		$obj = $this->_getPlayersUiConf($playerId)->objects;
+		$arr = array();
+		if (count($obj) === 1) {
+			$arr = get_object_vars($obj[0]);
+		}
+		return $arr;
+	}
+
+	private function _getPlayersUiConf($playerId)
+	{
+		if (!$this->session) {
+			$this->startAdminSession();
+		}
+		$filter = new KalturaUiConfFilter();
+		$filter->objTypeEqual = 1; // 1 denotes Players
+		$filter->idEqual = $playerId;
+		$uiConf = $this->client->uiConf->listAction($filter);
+
+		if (!is_null($this->client->error))
+		{
+			$uiConf = new stdClass();
+			$uiConf->objects = array();
+		}
+
+		return($uiConf);
+	}
+
 	function updateStandardTikiKcw() {
 		// first check if there is an existing one
 		$pager = null;
