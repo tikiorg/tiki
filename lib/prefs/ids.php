@@ -12,7 +12,7 @@ function prefs_ids_list()
 			'name' => tra('Intrusion Detection System'),
 			'description' => tra('Use PHPIDS to check the input to pages to discover malicious requests.'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'ids_single_threshold' => array(
 			'name' => tra('Per-request maximum impact'),
