@@ -127,7 +127,7 @@ try {
 				$kentry = $kalturalib->client->mixing->get($videoId[0]);
 			}
 	
-			if ($kentryType == 'media') {
+			if ($kentryType == 'media' && $kalturalib->client->media) {
 				$kentry = $kalturalib->client->media->get($videoId[0]);	
 			}
 			$smarty->assign_by_ref('videoId', $videoId[0]);
