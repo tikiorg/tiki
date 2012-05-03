@@ -584,3 +584,77 @@ customsearch_quiet_$id = false;
 	return $document->saveHTML(); 
 }
 
+function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups, $autosearchdelay = 0) {
+	extract ($arguments, EXTR_SKIP);
+
+	$smarty = TikiLib::lib('smarty');
+	$smarty->loadPlugin('smarty_function_jscalendar');
+
+	$params_from = array();
+	$params_to = array();
+	if (!empty($_showtime) && $_showtime == 'y') {
+		$params_from['showtime'] = 'y';
+		$params_to['showtime'] = 'y';
+	} else {
+		$params_from['showtime'] = 'n';
+		$params_to['showtime'] = 'n';
+	}
+	$params_from['fieldname'] = $fieldname . '_from';
+	$params_to['fieldname'] = $fieldname . '_to';
+	$params_from['id'] = $fieldid_from = $fieldid . '_from';
+	$params_to['id'] = $fieldid_to = $fieldid . '_to';
+
+	if (!empty($_from)) {
+		if ($_from == 'now') {
+			$params_from['date'] = TikiLib::lib('tiki')->now;
+		} else {
+			$params_from['date'] = $_from;
+		}
+		if (empty($_to)) {
+			if (empty($_gap)) {
+				$_gap = 365 * 24 * 3600;
+			}
+			$params_to['date'] = $params_from['date'] + $_gap;
+		}
+	} else {
+		$params_from['date'] = TikiLib::lib('tiki')->now; 
+	}
+	if (!empty($_to)) {
+		if ($_to == 'now') {
+			$params_to['date'] = TikiLib::lib('tiki')->now;
+		} else {
+			$params_to['date'] = $_to;
+		}
+		if (empty($_from)) {
+			if (empty($_gap)) {
+				$_gap = 365 * 24 * 3600;
+			}
+			$params_from['date'] = $params_to['date'] - $_gap;
+		}
+	} elseif (empty($params_to['date']))  {
+		$params_to['date'] = TikiLib::lib('tiki')->now + 365 * 24 * 3600;
+	}
+
+	$picker = '';
+	$picker .= smarty_function_jscalendar($params_from, $smarty);
+	$picker .= smarty_function_jscalendar($params_to, $smarty);
+	
+	$script .= "$('#{$fieldid_from}_dptxt,#{$fieldid_to}_dptxt').change(function() {";
+	if ($autosearchdelay) {
+		$script .= "if (typeof(customsearch_timeout_$id)!='undefined') clearTimeout(customsearch_timeout_$id);";	
+	}
+	$script .= "var from = $('#$fieldid_from').val();";
+	$script .= "var to = $('#$fieldid_to').val();";
+	$script .= "from = from.substr(0,10);to = to.substr(0,10);"; // prevent trailing 000 from date picker 
+	$script .= "var filter = new Object();
+		filter.config = " . json_encode($arguments) . ";
+		filter.name = 'daterange';
+		filter.value = from + ',' + to;
+		add_customsearch_$id('$fieldid', filter);";
+	if ($autosearchdelay) {
+		$script .= "if (!customsearch_quiet_$id) customsearch_timeout_$id = setTimeout('$(\'#customsearch_$id\').submit()', $autosearchdelay);";
+	}
+	$script .= "});";
+
+	return $picker;
+}
