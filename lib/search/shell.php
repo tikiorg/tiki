@@ -13,6 +13,7 @@ if ( !isset( $_SERVER['argv'][1] ) || !in_array($_SERVER['argv'][1], array('rebu
 		rebuild [log]
 		process [integer (default 10)]
 		optimize
+	Returns an error code (1) if search is already being rebuilt
 	N.B. Needs to be run as the "apache" user, e.g. > "sudo -u www-data php lib/search/shell.php process 20"
 ' );
 
@@ -33,8 +34,8 @@ global $unifiedsearchlib;
 require_once 'lib/search/searchlib-unified.php';
 
 if ($unifiedsearchlib->rebuildInProgress()) {
-	$logger->info('Rebuild in progress - exiting.');
-	exit;
+	$logger->err('Rebuild in progress - exiting.');
+	exit(1);
 }
 
 if ( $_SERVER['argv'][1] === 'process' ) {
