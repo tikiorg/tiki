@@ -205,6 +205,18 @@ function wpquery_filter_favorite($query, $value)
 
 function wpquery_filter_range($query, $value, array $arguments)
 {
+	if ($arguments['from'] == 'now') {
+		$arguments['from'] = TikiLib::lib('tiki')->now;
+	}
+	if ($arguments['to'] == 'now') {
+		$arguments['to'] = TikiLib::lib('tiki')->now;
+	}
+	if (! isset($arguments['from']) && isset($arguments['to'], $arguments['gap'])) {
+		$arguments['from'] = $arguments['to'] - $arguments['gap'];
+	}
+	if (! isset($arguments['to']) && isset($arguments['from'], $arguments['gap'])) {
+		$arguments['to'] = $arguments['from'] + $arguments['gap'];
+	}
 	if (! isset($arguments['from'], $arguments['to'])) {
 		TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
 	} 

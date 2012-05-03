@@ -110,6 +110,8 @@ class Services_Tracker_SearchController
 					$filter = 'type';
 				} elseif ($config['_filter'] == 'categories' || $name == 'categories') {
 					$filter = 'categories';
+				} elseif ($name == 'daterange') {
+					$filter = 'daterange';
 				} else {
 					$filter = 'content'; //default
 				}
