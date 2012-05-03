@@ -23,26 +23,28 @@
 </tr> 
 {cycle values="odd,even" print=false}
 {foreach from=$history item=hist}
-	{assign var='fieldId' value=$hist.fieldId}
-	{assign var='field_value' value=$field_option[$fieldId]}
-	<tr class="{cycle}">
-		<td class="id">{$hist.version|escape}</td>
-		<td class="date">{$hist.lastModif|tiki_short_datetime}</td>
-		<td class="username">{$hist.user|username}</td>
-		<td class="text">
-			{if $fieldId ne -1}{$fieldId}{/if}
-		</td>
-		<td class="text">
-			{if $fieldId eq -1}_{tr}Status{/tr}_{else}{$field_option[$fieldId].name}{/if}
-		</td>
-		{if $field_value.fieldId}
-			<td class="text">{$field_value.value=$hist.value}{trackeroutput field=$field_value list_mode=n item=$item_info history=y process=y}</td>
-			<td class="text">{$field_value.value=$hist.new}{trackeroutput field=$field_value list_mode=n item=$item_info history=y process=y}</td>
-		{else}
-			<td class="text">{$hist.value|escape}</td>
-			<td class="text">{$hist.new|escape}</td>
-		{/if}
-	</tr>
+	{if $hist.value neq $hist.new}
+		{assign var='fieldId' value=$hist.fieldId}
+		{assign var='field_value' value=$field_option[$fieldId]}
+		<tr class="{cycle}">
+			<td class="id">{$hist.version|escape}</td>
+			<td class="date">{$hist.lastModif|tiki_short_datetime}</td>
+			<td class="username">{$hist.user|username}</td>
+			<td class="text">
+				{if $fieldId ne -1}{$fieldId}{/if}
+			</td>
+			<td class="text">
+				{if $fieldId eq -1}_{tr}Status{/tr}_{else}{$field_option[$fieldId].name}{/if}
+			</td>
+				{if $field_value.fieldId}
+					<td class="text">{$field_value.value=$hist.value}{trackeroutput field=$field_value list_mode=n item=$item_info history=y process=y}</td>
+					<td class="text">{$field_value.value=$hist.new}{trackeroutput field=$field_value list_mode=n item=$item_info history=y process=y}</td>
+				{else}
+					<td class="text">{$hist.value|escape}</td>
+					<td class="text">{$hist.new|escape}</td>
+				{/if}
+		</tr>
+	{/if}
 {/foreach}
 </table>
 {pagination_links cant=$cant offset=$offset step=$prefs.maxRecords}
