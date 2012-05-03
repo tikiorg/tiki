@@ -124,7 +124,6 @@ $headerlib = TikiLib::lib("header")
 				stack.push(summary);
 
 				var form = $.trackerForm(".$trackerId.").submit(function() {
-					console.log(form.serializeArray());
 					$.post('tiki-ajax_services.php?controller=tracker&action=insert_item&' + form.serialize(),function() {
 						$.DOMCached.deleteNamespace(namespace);
 
