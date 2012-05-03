@@ -132,6 +132,10 @@ $headerlib = TikiLib::lib("header")
 						if (stack.length == 0) {
 							document.location = document.location + '';
 						}
+					})
+					.error(function() {
+						$('#timeSheetTabs').modal();
+						alert(tr('Could not save'));
 					});
 					return false;
 				});
