@@ -3103,7 +3103,7 @@ class FileGalLib extends TikiLib
 		}
 
 		// If it's an image format we can handle and gallery has limits on image sizes
-		if (! $gal_info["image_max_size_x"] || ! $gal_info["image_max_size_y"]) {
+		if (! $gal_info["image_max_size_x"] && ! $gal_info["image_max_size_y"]) {
 			return;
 		}
 

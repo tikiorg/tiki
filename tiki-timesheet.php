@@ -34,7 +34,7 @@ if (isset($_REQUEST['all'])) { //all views all sheet items
 	
 	$timeSheet = Tracker_Query::tracker("Time sheet")
 		->byName()
-		->search(array($user))->fields(array("Done by"))
+		->filter(array("field" => "Done by", "value" => $user))
 		->query();
 }
 
@@ -123,8 +123,8 @@ $headerlib = TikiLib::lib("header")
 				time =  $.DOMCached.get('timer', summary) / 60;
 				stack.push(summary);
 
-				var form = $.trackerForm($trackerId).submit(function() {
-					$.post(form.attr('action') + '?' + form.serialize(), function() {
+				var form = $.trackerForm(".$trackerId.").submit(function() {
+					$.post('tiki-ajax_services.php?controller=tracker&action=insert_item&' + form.serialize(),function() {
 						$.DOMCached.deleteNamespace(namespace);
 
 						stack.pop();
@@ -132,6 +132,10 @@ $headerlib = TikiLib::lib("header")
 						if (stack.length == 0) {
 							document.location = document.location + '';
 						}
+					})
+					.error(function() {
+						$('#timeSheetTabs').modal();
+						alert(tr('Could not save'));
 					});
 					return false;
 				});
@@ -139,15 +143,17 @@ $headerlib = TikiLib::lib("header")
 				var input = {
 					'Summary': $(inputs['Summary']),
 					'Description': $(inputs['Description']),
-					'Amount of time spent': $(inputs['Amount of time spent'])
+					'Amount of time spent': $(inputs['Amount of time spent']),
+					'Done by': $(inputs['Done by'])
 				};
 
 				input['Summary'].val(summary);
 				input['Amount of time spent'].val(time);
-				console.log(input);
+				input['Done by'].val('" . addslashes($user) . "');
 				form.append(input['Summary']);
 				form.append(input['Description']);
 				form.append(input['Amount of time spent']);
+				form.append(input['Done by']);
 				form.submit();
 			}
 		});

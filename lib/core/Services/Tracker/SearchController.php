@@ -110,6 +110,8 @@ class Services_Tracker_SearchController
 					$filter = 'type';
 				} elseif ($config['_filter'] == 'categories' || $name == 'categories') {
 					$filter = 'categories';
+				} elseif ($name == 'daterange') {
+					$filter = 'daterange';
 				} else {
 					$filter = 'content'; //default
 				}
@@ -339,6 +341,25 @@ class Services_Tracker_SearchController
 				return '{filter deepcategories="' . $value . '"}';
 			} else {
 				return '{filter categories="' . $value . '"}';
+			}
+		}
+		return false;
+	}
+
+	function cs_dataappend_daterange($config, $value) {
+		if ($vals = split(',', $value)) {
+			if (count($vals) == 2) {
+				$from = $vals[0];
+				$to = $vals[1];
+				if (!empty($config['_field'])) {
+					$field = $config['_field'];
+				} else {
+					$field = 'modification_date';
+				}
+				$filter = '{filter range="' . $field . '" from="' . $from . '" to="' . $to . '"}';
+				return $filter;
+			} else {
+				return false;
 			}
 		}
 		return false;

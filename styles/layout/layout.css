@@ -2388,6 +2388,10 @@ div.aclabel, span.aclabel, label.aclabel {
 .s5-slide h1, .s5-slide h2, .s5-slide h3, .s5-slide h4 {
 	line-height: 1em;
 }
+.s5-slide * li {
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
 
 /* structures tiki 9 */
 

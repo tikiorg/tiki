@@ -1231,7 +1231,6 @@ class convertToTiki9
 		//<!--Start for converting pages
 	function convertPages()
 	{
-		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
 		$infos = TikiLib::fetchAll('
 			SELECT data, page_id
 			FROM tiki_pages
@@ -1292,7 +1291,6 @@ class convertToTiki9
 
 	function convertPageHistories()
 	{
-		//we want to limit how much we have in memory, so here we count the pages that have plugins so we have can then offset threw them
 		$infos = TikiLib::fetchAll('
 			SELECT data, historyId
 			FROM tiki_history
@@ -1413,7 +1411,7 @@ class convertToTiki9
 				//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
 				TikiLib::query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
 
-				//Now add in new fingerprints
+				// Now update fingerprint (if it exists)
 				TikiLib::query("UPDATE tiki_plugin_security SET fingerprint = ? WHERE fingerprint = ?", array($fingerPrintsNew[$i], $fingerPrintsOld[$i]));
 			}
 		}
@@ -1424,7 +1422,7 @@ class convertToTiki9
 		//we store the original matches because we are about to change and update them, we need to get their fingerprint
 		$oldMatches = WikiParser_PluginMatcher::match($data);
 
-		//We know the page was single encoded, but plugin possibly double?
+		// HTML-decode pages
 		$data =  htmlspecialchars_decode($data);
 
 		// find the plugins
@@ -1446,7 +1444,14 @@ class convertToTiki9
 		foreach ($matches as $match) {							// each plugin
 			$name = $match->getName();
 			$meta = $this->parserlib->plugin_info($name);
-			$args = $this->argumentParser->parse($match->getArguments());
+			$argsRaw = $match->getArguments();
+
+			//Here we detect if a plugin was double encoded and this is the second decode
+			if (preg_match("/&amp;&/i", $argsRaw) || preg_match("/&quot;/i", $argsRaw) || preg_match("/&gt;/i", $argsRaw)) { //try to detect double encoding
+				$argsRaw = html_entity_decode($argsRaw);				// decode entities in the plugin args (usually &quot;)
+			}
+
+			$args = $this->argumentParser->parse($argsRaw);
 			$plugin = (string) $match;
 			$key = '§'.md5(TikiLib::genPass()).'§';					// by replace whole plugin with a guid
 
@@ -1457,7 +1462,7 @@ class convertToTiki9
 			$plugin = str_replace($body, $key2, $plugin);
 
 			//Here we detect if a plugin was double encoded and this is the second decode
-			if (preg_match("/&amp;&/i", $plugin) || preg_match("/&quot;/i", $plugin)) { //try to detect double encoding
+			if (preg_match("/&amp;&/i", $plugin) || preg_match("/&quot;/i", $plugin) || preg_match("/&gt;/i", $plugin)) { //try to detect double encoding
 				$plugin = htmlspecialchars_decode($plugin);				// decode entities in the plugin args (usually &quot;)
 			}
 

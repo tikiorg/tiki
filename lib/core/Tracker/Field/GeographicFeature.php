@@ -20,7 +20,7 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 				'name' => tr('Geographic Feature'),
 				'description' => tr('Stores a geographic feature on a map.'),
 				'help' => 'Location Tracker Field',
-				'prefs' => array('trackerfield_geograpgicfeature'),
+				'prefs' => array('trackerfield_geographicfeature'),
 				'tags' => array('advanced'),
 				'default' => 'n',
 				'params' => array(

@@ -53,6 +53,8 @@ if ($_SESSION['wysiwyg'] == 'y') {
 	if (isset($_REQUEST['preview']) || isset($jitRequest['edit'])) {
 		if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
 			$is_html = true;
+		} else if ($_SESSION['wysiwyg'] === 'n' || $prefs['wysiwyg_htmltowiki'] === 'y') {	// unchecked
+			$is_html = false;
 		}
 	} else {
 		if (isset($info['is_html']) and $info['is_html']) {

@@ -21,7 +21,7 @@
 		{/if}
 		{foreach from=$field.possibilities key=value item=label}
 			<option value="{$value|escape}" 
-			{if $field.value eq $value}selected="selected"{/if}>
+			{if $field.value === $value}selected="selected"{/if}>
 				{$label|tr_if|escape}
 			</option>
 		{/foreach}

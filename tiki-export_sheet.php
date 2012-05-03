@@ -15,7 +15,7 @@ $auto_query_args = array(
 
 $access->check_feature('feature_sheet');
 
-$info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
+$info = TikiLib::lib("sheet")->get_sheet_info($_REQUEST['sheetId']);
 if (empty($info)) {
 	$smarty->assign('msg', tra('Incorrect parameter'));
 	$smarty->display('error.tpl');
@@ -61,6 +61,7 @@ if ( isset($_REQUEST['encoding']) ) {
 
 	$handler = new $handler("php://stdout" , 'UTF-8', $_REQUEST['encoding']);
 	$grid->export($handler);
+	echo $handler->output;
 	exit;
 } else {
 	$list = array();

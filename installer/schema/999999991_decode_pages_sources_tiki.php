@@ -19,20 +19,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *
  * -----
  *
- * Second attempt at decoding entities but only in plugin args instead of whole pages as in old version of this script (pre r40858)
- * 				(see http://info.tiki.org/HTMLentities for an example)
- *
- * Sometimes entities had been "double" encoded so "&quot;" appeared as "&amp;quot;" - seems mostly in plugin args?
- * 		(leaving others alone so entities that were supposed to appear still do)
- *
- * As seen here: https://trunkinfo.tiki.org/tiki-pagehistory.php?page=ダウンロード&history_offset=1&diff_style=sidediff&show_all_versions=y&compare=Compare&newver=5&oldver=4&bothver_idx=4
+ * 				see http://info.tiki.org/HTMLentities for examples of HTML entities
  */
 
 
 
 function upgrade_999999991_decode_pages_sources_tiki($installer)
 {
-	set_time_limit(60 * 60); //1 hours
+	set_time_limit(60 * 60); // Set maximum execution time to 1 hour since this runs on all pages
 	include_once('tiki-setup_base.php');
 	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
 	include_once('lib/wiki/wikilib.php');

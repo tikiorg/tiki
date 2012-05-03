@@ -2063,8 +2063,8 @@ if ( \$('#$id') ) {
 			$need_maketoc = strpos($data, "{maketoc");
 		}
 
-		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
-		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
+		// Wysiwyg or allowhtml mode {maketoc} handling when not in editor mode (i.e. viewing)
+		if ($need_maketoc && $options['is_html']) {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
 			$data = $this->unprotectSpecialChars($data, true);
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
@@ -2626,7 +2626,12 @@ if ( \$('#$id') ) {
 					if ( $maketoc_args['title'] != '' ) {
 						// Translate maketoc title
 						$maketoc_summary = ' summary="'.tra($maketoc_args['title'], $options['language'], true).'"';
-						$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $options['language']).'</h3></div>';
+						$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $options['language']).'</h3>';
+
+						if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
+						  $maketoc_title .= '<a class="link"  href="javascript:toggleToc()">' . '[' . tra('Show/Hide') . ']' . '</a>';
+						}
+						$maketoc_title .= '</div>';
 					} else {
 						$maketoc_summary = '';
 						$maketoc_title = '';
@@ -2707,16 +2712,6 @@ if ( \$('#$id') ) {
 					if (!empty($maketoc)) {
 						$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
 					}
-
-					// Add a Show/Hide link
-					if ( !empty($maketoc) && isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
-						$maketoc .= "<script type='text/javascript'>\n"
-							. "//<![CDATA[\n"
-							. " if (window.showTocToggle) { var tocShowText = '".tra('Show', '', true)."'; var tocHideText = '".tra('Hide', '', true)."'; showTocToggle(); }\n"
-							. "//]]>;\n"
-							. "</script>\n";
-					}
-
 					$new_data .= $maketoc;
 					$data = substr($data, $maketoc_start + $maketoc_length);
 					$search_start = 0; // Reinitialize search start cursor, since data now begins after the last replaced maketoc

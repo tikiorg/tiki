@@ -899,7 +899,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
  */
 class TikiSheetCSVHandler extends TikiSheetDataHandler
 {
-	var $file;
+	var $file = 'php://stdout';
 	var $lineLen;
 	
 	/** Constructor {{{2
@@ -949,7 +949,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	function _save( &$sheet )
 	{
 		$total = array();
-        
+
         ksort ($sheet->dataGrid);
 		foreach( $sheet->dataGrid as $row )
 			if ( is_array( $row ) )
@@ -960,7 +960,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 
 		if ( is_array( $total ) )
 			$total = implode( "\n", $total );
-            
+
         $total = $this->encoding->convert_encoding ($total);
 
 		if ( $this->file == "php://stdout" )
@@ -970,7 +970,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 			header("Pragma: public");
-			
+
 			$this->output = $total;
 
 			return true;
@@ -1222,15 +1222,16 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     // _save {{{2
     function _save( &$sheet )
     {
-        $total = array(); 
-        foreach( $sheet->data as $row ) 
+        $total = array();
+
+        foreach( $sheet->dataGrid as $row )
         {
-            $total[] = $this->fputcsvexcel( $row ,';','"', $sheet->metadata->columns);
+            $total[] = implode(';', $row);
         }
         
         if ( is_array( $total ) )
             $total = implode( "\n", $total );
-            
+
         $total = $this->encoding->convert_encoding ($total);
 
         if ( $this->file == "php://stdout" )
