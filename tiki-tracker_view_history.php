@@ -49,7 +49,8 @@ if (!empty($_REQUEST['itemId'])) {
 $tiki_actionlog_conf = TikiDb::get()->table('tiki_actionlog_conf');
 $logging = $tiki_actionlog_conf->fetchCount(array(
 	'objectType' => 'trackeritem',
-	'status' => 'y'
+	'action' =>  $tiki_actionlog_conf->in(array('Created','Updated')),
+	'status' =>  $tiki_actionlog_conf->in(array('y','v')),
 ));
 $smarty->assign('logging', $logging);
 

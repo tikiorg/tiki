@@ -5,7 +5,7 @@
 
 {if $logging eq 0}
 	{remarksbox title="{tr}Not logging{/tr}" type="warning"}
-		{tr}Tracker changes are not being logged: Go to <a href="tiki-admin_actionlog.php?action_log_type=trackeritem" >Action log admin</a> to enable{/tr}
+		{tr}Tracker changes are not being logged: Go to <a href="tiki-admin_actionlog.php?action_log_type=trackeritem&cookietab=2" >Action log admin</a> to enable{/tr}
 	{/remarksbox}
 {/if}
 
