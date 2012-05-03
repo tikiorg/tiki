@@ -2063,8 +2063,8 @@ if ( \$('#$id') ) {
 			$need_maketoc = strpos($data, "{maketoc");
 		}
 
-		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
-		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
+		// Wysiwyg or allowhtml mode {maketoc} handling when not in editor mode (i.e. viewing)
+		if ($need_maketoc && $options['is_html']) {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
 			$data = $this->unprotectSpecialChars($data, true);
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
