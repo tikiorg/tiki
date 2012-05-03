@@ -126,12 +126,12 @@ $headerlib = TikiLib::lib("header")
 				var form = $.trackerForm(".$trackerId.").submit(function() {
 					console.log(form.serializeArray());
 					$.post('tiki-ajax_services.php?controller=tracker&action=insert_item&' + form.serialize(),function() {
-						//$.DOMCached.deleteNamespace(namespace);
+						$.DOMCached.deleteNamespace(namespace);
 
 						stack.pop();
 
 						if (stack.length == 0) {
-							//document.location = document.location + '';
+							document.location = document.location + '';
 						}
 					});
 					return false;
