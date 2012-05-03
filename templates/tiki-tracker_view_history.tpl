@@ -3,6 +3,12 @@
 	 {button _keepall='y' href="tiki-view_tracker_item.php" itemId=$item_info.itemId _text="{tr}View Tracker Item{/tr}"}
 </div>
 
+{if $logging eq 0}
+	{remarksbox title="{tr}Not logging{/tr}" type="warning"}
+		{tr}Tracker changes are not being logged: Go to <a href="tiki-admin_actionlog.php?action_log_type=trackeritem" >Action log admin</a> to enable{/tr}
+	{/remarksbox}
+{/if}
+
 <div class="clearfix">
 	 <form method="post">
 	 <label class="findtitle">{tr}Version{/tr}<input type="text" name="version" value="{if !empty($filter.version)}{$filter.version|escape}{/if}" /></label>
