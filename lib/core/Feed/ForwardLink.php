@@ -27,19 +27,16 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 	private static function getQuestionInputs($page, $itemId)
 	{
-		print_r(
-						json_encode(
-										Tracker_Query::tracker('Wiki Attributes')
-										->byName()
-										->itemId((int)$itemId)
-										->inputDefaults(
-														array(
-															'Page' => $page,
-															'Type' => 'Question'
-														)
-										)->queryInput()
-						)
-		);
+		print_r(json_encode(
+			Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->itemId((int)$itemId)
+				->inputDefaults(array(
+				'Page' => $page,
+				'Type' => 'Question'
+			))
+				->queryInput()
+		));
 		exit(0);
 	}
 
@@ -322,8 +319,12 @@ JQ
 
 	static function createForwardLinksInterface($page, $questions, $date)
 	{
-		global $headerlib, $user, $prefs;
+		global $tikilib, $headerlib, $prefs;
 
+		//setup clipboard data
+		$page = urlencode($page);
+		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
+		$websiteTitle = urlencode($prefs['browsertitle']);
 		$answers = array();
 		foreach ($questions as $question) {
 			$answers[] = array(
@@ -331,6 +332,22 @@ JQ
 				'answer'=> '',
 			);
 		}
+
+		$userData = Feed_ForwardLink_Search::findAuthorData($page);
+
+		$clipboarddata = json_encode(array(
+			'websiteTitle'=>    $websiteTitle,
+			'websiteSubtitle'=> $page,
+			'moderator'=>       '',
+			'moderatorInfo'=>   '',
+			'hash'=>            '', //hash isn't yet known
+			'author'=>          $userData['Name'],
+			'institution' =>    $userData['Business Name'],
+			'profesion'=>       $userData['Profession'],
+			'href'=>            $href,
+			'answers'=>         $answers,
+			'date'=>            $date
+		));
 
 		$answers = json_encode($answers);
 
@@ -344,14 +361,14 @@ JQ
 			->add_jsfile('lib/jquery/md5.js');
 
 		$authorDetails = json_encode(
-						end(
-										Tracker_Query::tracker('ForwardLink Author Details')
-										->byName()
-										->excludeDetails()
-										->filter(array('field'=> 'User','value'=> $user))
-										->render(false)
-										->query()
-						)
+			end(
+				Tracker_Query::tracker('ForwardLink Author Details')
+					->byName()
+					->excludeDetails()
+					->filter(array('field'=> 'User','value'=> $user))
+					->render(false)
+					->query()
+			)
 		);
 
 		$page = urlencode($page);
@@ -494,21 +511,12 @@ JQ
 								}
 
 								function makeClipboardData() {
-									var data = {
-										websiteTitle: '$websiteTitle',
-										websiteSubtitle: '',
-										moderator: '',
-										moderatorInfo: '',
-										subtitle: '',
-										hash: '',
-										author: '',
-										href: '$href',
-										answers: answers,
-										date: $date
-									};
-									data.text = encode((o.text + '').replace(/\\n/g, ''));
-									console.log([rangy.sanitizeToWords(data.websiteTitle).join(''), rangy.sanitizeToWords(data.text).join('')]);
-									data.hash = md5(rangy.sanitizeToWords(data.websiteTitle).join(''), rangy.sanitizeToWords(data.text).join(''));
+
+									var clipboarddata = $clipboarddata;
+
+									clipboarddata.text = encode((o.text + '').replace(/\\n/g, ''));
+
+									clipboarddata.hash = md5(rangy.superSanitize(clipboarddata.websiteTitle), rangy.superSanitize(clipboarddata.text));
 
 									me.data('rangyBusy', true);
 
@@ -517,7 +525,7 @@ JQ
 										.button()
 										.appendTo(forwardLinkCopy);
 									var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
-										.val(encodeURI(JSON.stringify(data)))
+										.val(encodeURI(JSON.stringify(clipboarddata)))
 										.appendTo(forwardLinkCopy);
 
 									forwardLinkCopy.dialog({
@@ -563,7 +571,8 @@ JQ
 
 	static function wikiView($args)
 	{
-		global $prefs, $headerlib, $smarty, $_REQUEST, $user;
+		global $prefs, $headerlib, $smarty, $_REQUEST, $user, $tikilib;
+
 		$page = $args['object'];
 		$version = $args['version'];
 		$date = $args['lastModif'];
@@ -571,8 +580,6 @@ JQ
 		if (isset($_REQUEST['itemId'])) {
 			self::getQuestionInputs($page, $_REQUEST['itemId']);
 		}
-
-		//self::getTimeStamp();
 
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
@@ -619,15 +626,12 @@ JQ
 		foreach ($item->feed->entry as $i => $newEntry) {
 			$checks[$i] = array();
 
-			$checks[$i]['titleHere'] = utf8_encode(implode('', JisonParser_Phraser_Handler::sanitizeToWords($prefs['browsertitle'])));
-
-			$checks[$i]['phraseThere'] = utf8_encode(
-							implode('', JisonParser_Phraser_Handler::sanitizeToWords($newEntry->forwardlink->text))
-			);
-
-			$checks[$i]['hashHere'] = hash_hmac('md5', $checks[$i]['titleHere'], $checks[$i]['phraseThere']);
-			$checks[$i]['hashThere'] = $newEntry->forwardlink->hash;
-
+			$checks[$i]["hashableHere"] = JisonParser_Phraser_Handler::superSanitize($prefs['browsertitle']);
+			$checks[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
+			$checks[$i]["hashHere"] = hash_hmac("md5", $checks[$i]["hashableHere"], $checks[$i]["phraseThere"]);
+			$checks[$i]["hashThere"] = $newEntry->forwardlink->hash;
+			$checks[$i]["exists"] = JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), utf8_encode($newEntry->forwardlink->text));
+			$checks[$i]["reason"] = "";
 			$checks[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
 							TikiLib::lib('wiki')->get_parse($_REQUEST['page']),
 							utf8_encode($newEntry->forwardlink->text)
