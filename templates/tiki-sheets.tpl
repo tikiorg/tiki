@@ -19,7 +19,7 @@
 		<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
@@ -29,7 +29,7 @@
 			{include name='child' file='tiki-sheets_listing.tpl' sheet=$childSheet}
 		{/foreach}
 	{foreachelse}
-		{norecords _colspan=4}
+		{norecords _colspan=6}
 	{/foreach}
 </table>
 
