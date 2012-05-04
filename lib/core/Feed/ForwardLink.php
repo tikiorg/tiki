@@ -577,7 +577,7 @@ JQ
 		$page = $args['object'];
 		$version = $args['version'];
 		$date = $args['lastModif'];
-		$language = $args['lang'];
+		$lang = $args['lang'];
 
 		if (isset($_REQUEST['itemId'])) {
 			self::getQuestionInputs($page, $_REQUEST['itemId']);
@@ -596,6 +596,13 @@ JQ
 			->query();
 
 		self::editQuestionsInterface($page, $questions);
+
+		//Get language, which is the description of $lang
+		foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
+			if ($listLanguage['value'] == $lang) {
+				$language = $listLanguage['name'];
+			}
+		}
 
 		self::createForwardLinksInterface($page, $questions, $date, $language);
 	}
