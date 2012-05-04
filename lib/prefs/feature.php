@@ -291,7 +291,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Allows to keep track of what users are doing and produce reports on a per-user or per-category basis.'),
 			'help' => 'Action+Log',
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_contribution' => array(
 			'name' => tra('Contribution'),
@@ -346,6 +346,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Quizzes',
 			'type' => 'flag',
 			'default' => 'n',
+			'keywords' => 'quiz questionnaire e-learning LMS',
 			'tags' => array('experimental'),
 			'view' => 'tiki-list_quizzes.php',
 		),

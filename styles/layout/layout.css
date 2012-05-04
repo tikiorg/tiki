@@ -2392,6 +2392,9 @@ div.aclabel, span.aclabel, label.aclabel {
 	padding-top: 0.3em;
 	padding-bottom: 0.3em;
 }
+.s5-footer {
+  font-size:100%;
+}
 
 /* structures tiki 9 */
 

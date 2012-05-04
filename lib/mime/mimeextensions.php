@@ -41,6 +41,7 @@ $mimeextensions=Array(
 "application/vnd.ms-powerpoint" => "pot",
 "application/vnd.ms-powerpoint" => "pps",
 "application/vnd.ms-powerpoint" => "ppt",
+"application/vnd.openxmlformats-officedocument.wordprocessingml.template" => "dotx",
 "application/vnd.stardivision.calc" => "sdc",
 "application/vnd.stardivision.draw" => "sda",
 "application/vnd.stardivision.impress" => "sdd",

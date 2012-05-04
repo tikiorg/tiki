@@ -45,5 +45,14 @@ if (!empty($_REQUEST['itemId'])) {
 	$smarty->assign_by_ref('item_info', $item_info);
 	$smarty->assign_by_ref('field_option', $field_option);
 }
+
+$tiki_actionlog_conf = TikiDb::get()->table('tiki_actionlog_conf');
+$logging = $tiki_actionlog_conf->fetchCount(array(
+	'objectType' => 'trackeritem',
+	'action' =>  $tiki_actionlog_conf->in(array('Created','Updated')),
+	'status' =>  $tiki_actionlog_conf->in(array('y','v')),
+));
+$smarty->assign('logging', $logging);
+
 $smarty->assign('mid', 'tiki-tracker_view_history.tpl');
 $smarty->display('tiki.tpl');
