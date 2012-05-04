@@ -124,6 +124,11 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 
 		$boundaries = explode($phraseConcat, $parentConcat);
 
+		//We may not have a match
+		if (count($boundaries) == 1 && strlen($boundaries[0]) == strlen($parentConcat)) {
+			return array();
+		}
+
 		for ($i = 0, $j = count($boundaries); $i < $j; $i++) {
 			$boundaryLength = substr_count($boundaries[$i], '|');
 
