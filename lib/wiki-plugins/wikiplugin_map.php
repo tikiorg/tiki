@@ -225,8 +225,11 @@ function wp_map_plugin_searchlayer($body, $args)
 {
 	$layer = $args->layer->text();
 	$refresh = $args->refresh->int();
+	$suffix = $args->suffix->word();
+
 	unset($args['layer']);
 	unset($args['refresh']);
+	unset($args['suffix']);
 
 	$args->setDefaultFilter('text');
 
@@ -238,8 +241,9 @@ function wp_map_plugin_searchlayer($body, $args)
 	}
 
 	$escapedLayer = smarty_modifier_escape($layer);
+	$escapedSuffix = smarty_modifier_escape($suffix);
 	return <<<OUT
-<form method="post" action="tiki-searchindex.php" class="search-box onload" style="display: none" data-result-refresh="$refresh" data-result-layer="$escapedLayer">
+<form method="post" action="tiki-searchindex.php" class="search-box onload" style="display: none" data-result-refresh="$refresh" data-result-layer="$escapedLayer" data-result-suffix="$escapedSuffix">
 	<p>$filters<input type="submit"/></p>
 </form>
 OUT;
