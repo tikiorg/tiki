@@ -4436,7 +4436,7 @@ class TikiLib extends TikiDb_Bridge
 
 		if (! $languages = $cachelib->getSerialized($key)) {
 			$languages = self::list_disk_languages($path);
-			$languages = TikiLib::format_language_list($languages, $short, $all);
+			$languages = self::format_language_list($languages, $short, $all);
 
 			$cachelib->cacheItem($key, serialize($languages));
 		}
