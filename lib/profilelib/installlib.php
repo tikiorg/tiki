@@ -291,6 +291,7 @@ class Tiki_Profile_Installer
 			}
 		}
 
+		require_once 'lib/setup/events.php';
 		tiki_setup_events();
 
 		foreach ( $profile->getObjects() as $object ) {
