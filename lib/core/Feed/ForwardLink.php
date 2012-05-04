@@ -317,7 +317,7 @@ JQ
 		}
 	}
 
-	static function createForwardLinksInterface($page, $questions, $date, $language)
+	static function createForwardLinksInterface($page, $questions, $dateLastUpdated, $language)
 	{
 		global $tikilib, $headerlib, $prefs;
 
@@ -325,6 +325,8 @@ JQ
 		$page = urlencode($page);
 		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 		$websiteTitle = urlencode($prefs['browsertitle']);
+		$dateOriginated = self::findDatePageOriginated($page);
+
 		$answers = array();
 		foreach ($questions as $question) {
 			$answers[] = array(
@@ -333,21 +335,24 @@ JQ
 			);
 		}
 
-		$userData = Feed_ForwardLink_Search::findAuthorData($page);
+		$userData = self::findAuthorData($page);
+		$moderatorData = self::findModeratorData();
 
 		$clipboarddata = json_encode(array(
-			'websiteTitle'=>    $websiteTitle,
-			'websiteSubtitle'=> $page,
-			'moderator'=>       '',
-			'moderatorInfo'=>   '',
-			'hash'=>            '', //hash isn't yet known
-			'author'=>          $userData['Name'],
-			'institution' =>    $userData['Business Name'],
-			'profesion'=>       $userData['Profession'],
-			'href'=>            $href,
-			'answers'=>         $answers,
-			'date'=>            $date,
-			'language'=>        $language
+			'websiteTitle'=>            $websiteTitle,
+			'websiteSubtitle'=>         $page,
+			'moderator'=>               $moderatorData['Name'],
+			'moderatorInstitution'=>    $moderatorData['Business Name'],
+			'moderatorProfession'=>     $moderatorData['Profession'],
+			'hash'=>                    '', //hash isn't yet known
+			'author'=>                  $userData['Name'],
+			'authorInstitution' =>      $userData['Business Name'],
+			'authorProfession'=>        $userData['Profession'],
+			'href'=>                    $href,
+			'answers'=>                 $answers,
+			'dateLastUpdated'=>         $dateLastUpdated,
+			'dateLastUpdated'=>         $dateOriginated,
+			'language'=>                $language
 		));
 
 		$answers = json_encode($answers);
@@ -576,7 +581,7 @@ JQ
 
 		$page = $args['object'];
 		$version = $args['version'];
-		$date = $args['lastModif'];
+		$dateLastUpdated = $args['lastModif'];
 		$lang = $args['lang'];
 
 		if (isset($_REQUEST['itemId'])) {
@@ -604,7 +609,7 @@ JQ
 			}
 		}
 
-		self::createForwardLinksInterface($page, $questions, $date, $language);
+		self::createForwardLinksInterface($page, $questions, $dateLastUpdated, $language);
 	}
 	
 	static function wikiSave($args)
@@ -679,5 +684,56 @@ JQ
 		}
 
 		return $replace;
+	}
+
+	static public function findAuthorData($page, $version = -1)
+	{
+		global $tikilib;
+
+		if ($version < 0) {
+			$user = TikiLib::getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($page));
+		} else {
+			$user = TikiLib::getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($page, $version));
+		}
+
+		if (empty($user))  return array();
+
+		$authorData = end(Tracker_Query::tracker("Users")
+			->byName()
+			->filter(array('field'=> 'login','value'=> $user))
+			->getOne());
+
+		if (empty($authorData['Name'])) {
+			$authorData['Name'] = $tikilib->get_user_preference($user, "realName");
+		}
+
+
+		return $authorData;
+	}
+
+	static public function findModeratorData()
+	{
+		$moderatorData = end(Tracker_Query::tracker("Users")
+			->byName()
+			->filter(array('field'=> 'login','value'=> 'admin')) //admin is un-deletable
+			->getOne());
+
+		if (empty($authorData['Name'])) {
+			$moderatorData['Name'] = TikiLib::get_user_preference('admin', "realName");
+		}
+
+		return $moderatorData;
+	}
+
+	static public function findDatePageOriginated($page)
+	{
+		$date = TikiLib::getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($page));
+
+		if (empty($date)) {
+			//page doesn't yet have history
+			$date = TikiLib::getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($page));
+		}
+
+		return $date;
 	}
 }

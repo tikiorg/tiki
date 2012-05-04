@@ -69,29 +69,4 @@ JQ
 
 		return $pageMatch;
 	}
-
-	static public function findAuthorData($page, $version = -1)
-	{
-		global $tikilib;
-
-		if ($version < 0) {
-			$user = TikiLib::getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($page));
-		} else {
-			$user = TikiLib::getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($page, $version));
-		}
-
-		if (empty($user))  return array();
-
-		$authorData = end(Tracker_Query::tracker("Users")
-			->byName()
-			->filter(array('field'=> 'login','value'=> $user))
-			->getOne());
-
-		if (empty($authorData['Name'])) {
-			$authorData['Name'] = $tikilib->get_user_preference($user, "realName");
-		}
-
-
-		return $authorData;
-	}
 }
