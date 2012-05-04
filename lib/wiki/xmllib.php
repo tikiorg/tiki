@@ -29,7 +29,7 @@ class XmlLib extends TikiLib
 			if (is_array($this->errorsArgs[$i])) {
 				$str .= ': '.implode(', ', $this->errorsArgs[$i]);
 			} else {
-				$str .= $this->errorsArgs[$i];
+				$str .= ': ' . $this->errorsArgs[$i];
 			}
 		}
 		return $str;
@@ -40,7 +40,7 @@ class XmlLib extends TikiLib
 	{
 		if (! class_exists('ZipArchive')) {
 			$this->errors[] = 'Problem zip initialisation';
-			$this->errorsArgs[] = '';
+			$this->errorsArgs[] = 'ZipArchive class not found';
 			return false;
 		}
 
