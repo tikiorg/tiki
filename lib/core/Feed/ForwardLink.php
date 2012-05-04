@@ -32,9 +32,9 @@ Class Feed_ForwardLink extends Feed_Abstract
 				->byName()
 				->itemId((int)$itemId)
 				->inputDefaults(array(
-				'Page' => $page,
-				'Type' => 'Question'
-			))
+					'Page' => $page,
+					'Type' => 'Question'
+				))
 				->queryInput()
 		));
 		exit(0);
@@ -317,7 +317,7 @@ JQ
 		}
 	}
 
-	static function createForwardLinksInterface($page, $questions, $date)
+	static function createForwardLinksInterface($page, $questions, $date, $language)
 	{
 		global $tikilib, $headerlib, $prefs;
 
@@ -346,7 +346,8 @@ JQ
 			'profesion'=>       $userData['Profession'],
 			'href'=>            $href,
 			'answers'=>         $answers,
-			'date'=>            $date
+			'date'=>            $date,
+			'language'=>        $language
 		));
 
 		$answers = json_encode($answers);
@@ -576,6 +577,7 @@ JQ
 		$page = $args['object'];
 		$version = $args['version'];
 		$date = $args['lastModif'];
+		$language = $args['lang'];
 
 		if (isset($_REQUEST['itemId'])) {
 			self::getQuestionInputs($page, $_REQUEST['itemId']);
@@ -595,7 +597,7 @@ JQ
 
 		self::editQuestionsInterface($page, $questions);
 
-		self::createForwardLinksInterface($page, $questions, $date);
+		self::createForwardLinksInterface($page, $questions, $date, $language);
 	}
 	
 	static function wikiSave($args)
