@@ -3578,7 +3578,7 @@ class FileGalLib extends TikiLib
 							continue;
 						}
 						$name = preg_replace('|.*/([^/]*)|', '$1', $val);
-						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), tiki_get_mime($$name, 'application/octet-stream', $val), $user, '', 'wiki_up conversion');
+						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), tiki_get_mime($name, 'application/octet-stream', $val), $user, '', 'wiki_up conversion');
 						if (empty($fileId)) {
 							$errors[] = tra('Cannot upload this file').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
 							continue;
