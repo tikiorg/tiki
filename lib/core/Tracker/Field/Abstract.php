@@ -13,6 +13,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 	function __construct($fieldInfo, $itemData, $trackerDefinition)
 	{
+		if (! isset($fieldInfo['options_array'])) {
+			$fieldInfo['options_array'] = preg_split('/\s*,\s*/', trim($fieldInfo['options']));
+		}
+
 		$this->definition = $fieldInfo;
 		$this->itemData = $itemData;
 		$this->trackerDefinition = $trackerDefinition;

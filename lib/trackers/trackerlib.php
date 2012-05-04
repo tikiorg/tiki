@@ -1318,6 +1318,8 @@ class TrackerLib extends TikiLib
 		global $user, $prefs, $tiki_p_admin_trackers, $tiki_p_admin_users;
 		$final_event = 'tiki.trackeritem.update';
 
+		$transaction = $this->begin();
+
 		$categlib = TikiLib::lib('categ');
 		$cachelib = TikiLib::lib('cache');
 		$smarty = TikiLib::lib('smarty');
@@ -1521,6 +1523,8 @@ class TrackerLib extends TikiLib
 							'bulk_import' => $bulk_import,
 						)
 		);
+
+		$transaction->commit();
 
 		return $currentItemId;
 	}
@@ -4252,6 +4256,45 @@ class TrackerLib extends TikiLib
 			$r = $handler->renderOutput($context);
 			TikiLib::lib('smarty')->assign("f_$fieldId", $r);
 			return $r;
+		}
+	}
+
+	function refresh_index_on_master_update($args)
+	{
+		// Event handler
+		// See pref tracker_refresh_itemlink_detail
+
+		$modifiedFields = array();
+		foreach ($args['old_values'] as $key => $old) {
+			if (! isset($args['values'][$key]) || $args['values'][$key] != $old) {
+				$modifiedFields[] = $key;
+			}
+		}
+
+		$fields = $this->table('tiki_tracker_fields');
+		$list = $fields->fetchAll($fields->all(), array(
+			'type' => 'r',
+		));
+
+		$toConsider = array();
+
+		foreach ($list as $field) {
+			$handler = $this->get_field_handler($field);
+
+			if ($handler->itemsRequireRefresh($args['trackerId'], $modifiedFields)) {
+				$toConsider[] = $field['fieldId'];
+			}
+		}
+
+		$itemFields = $this->table('tiki_tracker_item_fields');
+		$searchlib = TikiLib::lib('unifiedsearch');
+		$items = $itemFields->fetchColumn('itemId', array(
+			'fieldId' => $itemFields->in($toConsider),
+			'value' => $args['object'],
+		));
+
+		foreach (array_unique($items) as $itemId) {
+			$searchlib->invalidateObject('trackeritem', $itemId);
 		}
 	}
 }
