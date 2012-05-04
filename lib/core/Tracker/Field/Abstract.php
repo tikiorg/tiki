@@ -61,6 +61,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 				$popup = $this->renderPopup();
 
 				if ($popup) {
+					$popup = preg_replace('/<\!--.*?-->/', '', $popup);	// remove comments added by log_tpl
+					$popup = preg_replace('/\s+/', ' ', $popup);
 					$pre .= " $popup";
 				}
 			}
