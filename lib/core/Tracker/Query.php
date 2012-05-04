@@ -421,8 +421,9 @@ class Tracker_Query
 
 		$trackerId = $this->trackerId();
 
-		if (empty($trackerId)) //if we can't find a tracker, then return
+		if (empty($trackerId)) {//if we can't find a tracker, then return
 			return array();
+		}
 
 		$trackerDefinition = Tracker_Definition::get($trackerId);
 
@@ -430,9 +431,17 @@ class Tracker_Query
 
 		$params[] = $trackerId;
 
-		if (!empty($this->start) && !$this->search) $this->params[] = $this->start;
-		if (!empty($this->end) && !$this->search) $params[] = $this->end;
-		if (!empty($this->itemId) && !$this->search) $params[] = $this->itemId;
+		if (!empty($this->start) && !$this->search) {
+			$params[] = $this->start;
+		}
+
+		if (!empty($this->end) && !$this->search) {
+			$params[] = $this->end;
+		}
+
+		if (!empty($this->itemId) && !$this->search) {
+			$params[] = $this->itemId;
+		}
 
 		if ($this->byName == true && !empty($this->fields)) {
 			$fieldIds = array();
