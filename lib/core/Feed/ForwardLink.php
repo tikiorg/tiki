@@ -208,16 +208,31 @@ JQ
 
 					function trackerForm(trackerId, itemId, fn, remove) {
 						$.modal(tr("Loading..."));
+						var itemAction = 'insert_item';
+
+						if (itemId) {
+							if (remove) {
+								itemAction = 'remove_item';
+							} else {
+								itemAction = 'update_item';
+							}
+						}
+
 						$.getJSON('?itemId=' + itemId, function(item) {
 							$.modal();
-							var frm = $.trackerForm(trackerId, itemId, remove)
+							var frm = $('<form />')
 								.submit(function() {
 									var serialized = frm.serialize();
 									$.modal(tr('Saving...'));
-									$.post(frm.attr('action') + '?' + serialized, function() {
-										document.location = document.location + '';
+									var fields = '';
+
+									$.each(frm.serializeArray(), function() {
+										fields += 'fields[' + this.name + ']=' + this.value + '&';
 									});
 
+									$.post('tiki-ajax_services.php?controller=tracker&action=' + itemAction + '&' + frm.serialize() + '&itemId=' + itemId + '&trackerId=' + trackerId + '&' + fields, function() {
+										//document.location = document.location + '';
+									});
 									return false;
 								});
 
