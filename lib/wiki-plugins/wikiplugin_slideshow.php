@@ -11,7 +11,7 @@ function wikiplugin_slideshow_info()
 		'name' => tra('Slideshow'),
 		'documentation' => 'Slideshow',
 		'description' => tra('Configure a slideshow. Extends the existing wiki page slideshow with notes & styles.'),
-		'prefs' => array( 'wikiplugin_slideshow', 'feature_slideshow', 'wiki_uses_slides' ),
+		'prefs' => array( 'wikiplugin_slideshow', 'feature_slideshow' ),
 		'body' => tra('Slideshow notes - Separate with "/////"'),
 		'icon' => 'img/icons/images.png',
 		'tags' => array( 'basic' ),
