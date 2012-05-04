@@ -661,7 +661,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 								'email' => 'm',
 								'files' => 'FG',
 								'freetags' => 'F',
-								'geograpgic_feature' => 'GF',
+								'geographic_feature' => 'GF',
 								'group' => 'g',
 								'header' => 'h',
 								'icon' => 'icon',
