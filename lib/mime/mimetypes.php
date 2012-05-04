@@ -116,6 +116,7 @@ static $mimetypes = array(
 	"dms" => "application/x-dms",
 	"doc" => "application/msword",
 	"dot" => "application/msword",
+	"dotx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
 	"d" => "text/x-dsrc",
 	"dvi" => "application/x-dvi",
 	"dv" => "video/dv",
