@@ -19,6 +19,17 @@ function prefs_contact_list()
 			'default' => 'n',
 			'tags' => array('basic'),			
 		),
+			'contact_priority_onoff' => array(
+			'name' => tra('Display Contact Priority'),
+			'description' => tra('Display Contact Priority option'),
+			'type' => 'flag',
+			'help' => 'Contact+us',
+			'dependencies' => array(
+				'feature_contact',
+			),
+			'default' => 'n',
+			'tags' => array('basic'),			
+		),
 		'contact_user' => array(
 			'name' => tra('Contact user'),
 			'description' => tra('Contact user'),

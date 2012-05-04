@@ -11,6 +11,7 @@
 		{ticket}
 		<input type="hidden" name="to" value="{$prefs.contact_user|escape}" />
 		<table class="formcolor">
+		{if $prefs.contact_priority_onoff eq 'y'}
 			<tr>
 				<td>{tr}Priority:{/tr}</td>
 				<td style="width:99%">
@@ -23,7 +24,7 @@
 					</select>
 				</td>
 			</tr>
-			
+		{/if}
 			{if $user eq ''}
 			<tr>
 				<td>{tr}Your email{/tr}:</td>

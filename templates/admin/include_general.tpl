@@ -148,6 +148,7 @@
 				{preference name=feature_contact}
 				<div class="adminoptionboxchild" id="feature_contact_childcontainer">
 					{preference name=contact_anon}
+					{preference name=contact_priority_onoff}
 					{preference name=contact_user}
 				</div>
 			</fieldset>
