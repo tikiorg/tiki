@@ -85,7 +85,7 @@
 					});
 					control.deactivate();
 
-					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control]});
+					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control, new OpenLayers.Control.Navigation()]});
 				}
 
 				button = $('<input type="submit"/>')
