@@ -3725,7 +3725,15 @@ class TikiLib extends TikiDb_Bridge
 			LIMIT 1";
 
 		$this->query($query, array($pageName));
-		return $this->lastInsertId();
+
+		$id = $this->lastInsertId();
+
+		//update status, we don't want the page to be decoded later
+		require_once('lib/wiki/wikilib.php');
+		$converter = new convertToTiki9();
+		$converter->saveObjectStatus($id, 'tiki_history');
+
+		return $id;
 	}
 
 	function get_user_pages($user, $max, $who='user')
