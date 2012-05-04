@@ -26,7 +26,12 @@ class Services_Tracker_Utilities
 
 		$factory = $definition->getFieldFactory();
 		foreach ($fieldMap as $key => $value) {
-			if ($field = $definition->getFieldFromPermName($key)) {
+			if (preg_match('/ins_/',$key)) { //make compatible with the 'ins_' keys
+				$id = (int)str_replace('ins_', '', $key);
+				$field = $definition->getField($id);
+				$field['value'] = $value;
+				$fields[$field['fieldId']] = $field;
+			} else if ($field = $definition->getFieldFromPermName($key)) {
 				$field['value'] = $value;
 				$fields[$field['fieldId']] = $field;
 			}
