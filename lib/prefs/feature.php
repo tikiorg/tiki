@@ -346,6 +346,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Quizzes',
 			'type' => 'flag',
 			'default' => 'n',
+			'keywords' => 'quiz questionnaire e-learning LMS',
 			'tags' => array('experimental'),
 			'view' => 'tiki-list_quizzes.php',
 		),
