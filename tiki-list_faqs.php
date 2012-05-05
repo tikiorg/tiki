@@ -11,6 +11,7 @@ include_once ('lib/faqs/faqlib.php');
 $auto_query_args = array('offset', 'find', 'sort_mode', 'faqId');
 $access->check_feature('feature_faqs');
 $access->check_permission('tiki_p_view_faqs');
+//get_strings tra('Admin FAQs')
 if (!isset($_REQUEST["faqId"])) {
 	$_REQUEST["faqId"] = 0;
 }
