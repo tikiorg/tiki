@@ -14,7 +14,7 @@
 			others follow Layout) *****/
 body {
 	background: #0f1644 url(twist/background.gif);
-	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: 76%/1.4 Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: black;
 }
 
@@ -815,7 +815,9 @@ tr.diffheader a,
 
 .tabmark a:hover {
 	color: black;
-	background: #f0f9ff}
+	background: #f0f9ff;
+	text-decoration: none;
+}
 
 .tabactive {border: solid 1px #225566 !important}
 .tabactive a {background: #eee}

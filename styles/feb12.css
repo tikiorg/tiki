@@ -741,19 +741,6 @@ tr.diffheader {
 	float: left;
 }
 
-/*.tabactive {
-	border: solid 1px #225566 !important;
-	border-bottom-color: #f0f9ff !important;
-}
-
-.tabactive a {
-	background: #f0f9ff;
-}
-
-.tabinactive {
-	border: solid 1px #666 !important;
-}*/
-
 .tabmark,
 #siteloginbar_popup .tabmark {
 	list-style-image: none;
@@ -781,9 +768,12 @@ tr.diffheader {
 	border-bottom-width: 0;
 	padding-bottom: 1px;
 	background: #f0f9ff;
-	font-weight: normal;
-	color: #212121;
 	outline: none;
+}
+
+.tabactive a {
+	font-weight: normal;
+	color: #212121;	
 }
 
 .tabcontent {

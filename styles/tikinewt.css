@@ -999,6 +999,7 @@ td.third {
 
 .tabmark a:hover {
 	color: #000;
+	text-decoration: none;
 }
 
 .tabactive {

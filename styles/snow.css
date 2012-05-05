@@ -585,6 +585,7 @@ td.heading,
 .tabmark a:hover {
 	color: black;
 	background: #b1c1db url(snow/flakesptn3.jpg);
+	text-decoration: none;
 }
 	
 .tabactive {
