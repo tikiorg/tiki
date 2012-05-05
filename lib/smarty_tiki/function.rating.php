@@ -36,7 +36,7 @@ function smarty_function_rating( $params, $smarty )
 				}
 			}
 		} elseif ( $value != $prev ) {
-			return tra('An error occured.');
+			return tra('An error occurred.');
 		}
 	}
 

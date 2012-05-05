@@ -48,7 +48,7 @@ important("After verifications, commit using `svn ci -F svn-commit.tmp`");
 
 $conflicts = get_conflicts('.');
 if ($conflicts->length > 0) {
-	$message = "Conflicts occured during the merge. Fix the conflicts and start again.";
+	$message = "Conflicts occurred during the merge. Fix the conflicts and start again.";
 	foreach ($conflicts as $path) {
 		$path = $path->parentNode->getAttribute('path');
 		$message .= "\n\t$path";

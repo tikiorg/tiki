@@ -86,7 +86,7 @@
 					</ol>
 				</div>
 			{else}
-				<h1>{tr}An error occured while performing the request.{/tr}</h1>
+				<h1>{tr}An error occurred while performing the request.{/tr}</h1>
 				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
 					<p>Things to check:</p>
 					<ol class="fancylist">
