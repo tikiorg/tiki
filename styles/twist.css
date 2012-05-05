@@ -14,7 +14,8 @@
 			others follow Layout) *****/
 body {
 	background: #0f1644 url(twist/background.gif);
-	font: 76%/1.4 Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 1.6;
 	color: black;
 }
 
@@ -639,9 +640,10 @@ ol.module {
 	font-weight: bold}
 
 .rbox-data,
-.warning .rbox-data {
+.warning .rbox-data,
+.warning .rbox-title {
 	background: #eeee99;
-	border: 1px solid #DDDDCC}
+	border: 1px solid #ddddcc}
 	
 .note .rbox-title {background: #CCCCDD}
 

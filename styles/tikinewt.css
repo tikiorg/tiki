@@ -10,7 +10,8 @@
 			others follow Layout) *****/
 body {
 	background: #e9ecef;
-	font: 76%/1.6 Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
+	font-family: 76% Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
+	line-height: 1.6;
 	color: #000;
 }
 
@@ -174,41 +175,14 @@ input,
 textarea,
 select {
 	color: #112233;
-/*	margin: 1px; */
-	font:/* 100%*/ Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
-/*
-button,
-input,
-select {
-	vertical-align: middle;
-}*/
-/*
-button,
-input {
-	margin-right: 1px;
-	padding: 1px;
-}*/
+
 
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
 }
-/*
-button,
-input[type=submit],
-.button input {
-	border: 1px solid #46596f;
-	background: #c7d0d9;
-	font-weight: bold;
-}
-
-button:hover,
-input[type=submit]:hover,
-.button input:hover {
-	background: #ffffff;
-	cursor: pointer;
-}*/
 
 #page-bar table, #page-bar td, #page-bar tr {
 	margin: 0;
@@ -240,13 +214,9 @@ input[type=submit],
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	font: bold Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-weight: bold;
 }
-/*
-.button a,
-.button a:visited {
-	padding: 1px 4px;
-}*/
 	
 .button a:hover,
 button:hover,
@@ -257,8 +227,9 @@ input[type=submit]:hover,
 	background: #dca;
 	padding: 0 4px;
 	margin-right: 1px;
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	text-decoration: none;
-	font: bold Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-weight: bold;
 }
 
 /* Needed for Opera (11) */
@@ -266,12 +237,8 @@ input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-	padding: .1em .8em;
+	padding: 0 4px;
 }
-
-/*span.button {
-	margin: 2px;
-}*/
 
 fieldset {
 	border: solid 1px #c7d0d9;
@@ -710,30 +677,22 @@ img.flipmodimage {
 	text-align: left;
 }
 
-.rbox-data {
-	padding: 2px;
-}
-
-.rbox-title,
-.warning .rbox-title {
+.rbox-title {
 	font-size: .95em;
 	line-height: 1em;
 	font-weight: bold;
-	background: #eeee99;
-	border: 1px solid #000;
-	border-bottom: none;
-	margin-bottom: -.5em;
 }
 
 .rbox-data, 
-.warning .rbox-data {
+.warning .rbox-data,
+.warning .rbox-title {
 	background: #eeee99;
 	border: 1px solid #000;
 }
 
 .rbox-title span {
 	vertical-align: middle;
-	}
+}
 
 .note .rbox-title {
 	background: #ccccdd;
@@ -757,6 +716,16 @@ img.flipmodimage {
 .rbox-data.tip {
 	background: #ecefec;
 	border: 1px solid #ccddcc;
+}
+
+.rbox-title,
+.comment .rbox-title,
+.error .rbox-title,
+.errors .rbox-title,
+.note .rbox-title,
+.warning .rbox-title {
+	border-bottom: none;
+	margin-bottom: -.55em;
 }
 
 /***** Tables, Tabs *****/

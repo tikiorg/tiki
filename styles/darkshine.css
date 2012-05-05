@@ -14,9 +14,10 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
-	background: #90140C url(darkshine/stripes.png) repeat-x;
-	background-position: 50% 0;
-	font: normal 76%/150% arial, verdana, helvetica, sans-serif}
+	background: #90140C url(darkshine/stripes.png) repeat-x 50% 0;
+	font: normal 76% arial, verdana, helvetica, sans-serif;
+	line-height: 1.5;
+}
  
 html>body {font-size: 72% !important}
 	
@@ -82,7 +83,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 .footerbgtrap {
 	text-align: center;
 	background: #000;
-	font: normal 10px/25px arial, verdana, helvetica, sans-serif;
+	font: normal 10px arial, verdana, helvetica, sans-serif;
+	line-height: 2;
 	color: #999;
 	text-align: center;
 	border-left: 15px solid #600000;
@@ -231,7 +233,8 @@ tt {font-size: 110%}
 	background: url(darkshine/stripes_small.gif) repeat-x;
 	color: #fff;
 	min-height: 28px;
-	font: normal 10px/32px arial, verdana, helvetica, sans-serif;
+	font: normal 10px arial, verdana, helvetica, sans-serif;
+	line-height: 2;
 }
 
 #contenttop strong {
@@ -249,7 +252,7 @@ tt {font-size: 110%}
 	text-align: center;
 	text-decoration: none;
 	color: #fff;
-	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
+	font: bold 12px arial, verdana, helvetica, sans-serif;
 	display: block;
 	padding-left: 8px;
 }

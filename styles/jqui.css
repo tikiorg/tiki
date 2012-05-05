@@ -11,7 +11,8 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
-	font: 76%/1.5 Verdana,Arial,sans-serif;
+	font: 76% Verdana,Arial,sans-serif;
+	line-height: 1.5;
 	color: #000;
 	background: #fff}
 
@@ -444,10 +445,11 @@ h3.box-title,
 }
 
 .rbox-title,
+.error .rbox-title,
 .errors .rbox-title,
 .warning .rbox-title {
 	border-bottom: none;
-	margin-bottom: -.4em;
+	margin-bottom: -.5em;
 }
 
 .simplebox {

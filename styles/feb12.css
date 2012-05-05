@@ -8,7 +8,8 @@
 
 /* XHTML Elements */
 body {
-	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
+	font: normal 75% 'Trebuchet MS', sans-serif;
+	line-height: 1.5;
 	color: #333;
 	background: #fff;
 }
