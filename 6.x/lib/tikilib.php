@@ -6954,7 +6954,12 @@ class TikiLib extends TikiDb_Bridge
 					if ( $maketoc_args['title'] != '' ) {
 						// Translate maketoc title
 						$maketoc_summary = ' summary="'.tra($maketoc_args['title'], $options['language'], true).'"';
-						$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $options['language']).'</h3></div>';
+						$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $options['language']).'</h3>';
+
+						if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
+						  $maketoc_title .= '<a class="link"  href="javascript:toggleToc()">' . '[' . tra('Show/Hide') . ']' . '</a>';
+						}
+						$maketoc_title .= '</div>';
 					} else {
 						$maketoc_summary = '';
 						$maketoc_title = '';
@@ -7032,14 +7037,6 @@ class TikiLib extends TikiDb_Bridge
 					}
 					$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
 
-					// Add a Show/Hide link
-					if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
-						$maketoc .= "<script type='text/javascript'>\n"
-							. "//<![CDATA[\n"
-							. " if (window.showTocToggle) { var tocShowText = '".tra('Show','',true)."'; var tocHideText = '".tra('Hide','',true)."'; showTocToggle(); }\n"
-							. "//]]>;\n"
-							. "</script>\n";
-					}
 
 					$new_data .= $maketoc;
 					$data = substr($data, $maketoc_start + $maketoc_length);
