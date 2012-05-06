@@ -35,6 +35,16 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	}
 	simple_set_value('fgal_quota_default');
 }
+if (!empty($_REQUEST['updateMime'])) {
+        $files = $filegallib->table('tiki_files');
+        $rows = $files->fetchAll(array('fileId', 'filename', 'filetype'), array('archiveId' => 0, 'filetype' => 'application/octet-stream'));
+        foreach ($rows as $row) {
+                $t = $filegallib->fixMime($row);
+                if ($t != 'application/octet-stream') {
+                        $files->update(array('filetype' => $t), array('fileId' => $row['fileId']));
+                }
+        }
+}
 
 if (!empty($_REQUEST['move'])) {
 	if ($_REQUEST['move'] == 'to_fs') {

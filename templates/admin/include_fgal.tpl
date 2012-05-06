@@ -103,6 +103,7 @@
 				{preference name='fgal_upload_from_source'}
 				{preference name='fgal_tracker_existing_search'}
 				{preference name='fgal_fix_mime_type'}
+				<input type="submit" name="updateMime" id="updateMime" value="{tr}Update mime of all non archived octet-stream files{/tr}" />
 
 				<div class="adminoptionboxchild" id="fgal_upload_from_source_childcontainer">
 					{preference name='fgal_source_refresh_frequency'}
