@@ -13,6 +13,9 @@ function prefs_ids_list()
 			'description' => tra('Use PHPIDS to check the input to pages to discover malicious requests.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'help' => 'PHPIDS',
+			'tags' => array('experimental'),
+			'keywords' => 'attack security rce csrf lfi exploit sqli phpids header filter security injection xss sql hacking ids directory traversal attacks injections detection intrusion ldap dt',
 		),
 		'ids_single_threshold' => array(
 			'name' => tra('Per-request maximum impact'),
