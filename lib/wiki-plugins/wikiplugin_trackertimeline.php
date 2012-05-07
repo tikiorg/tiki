@@ -299,10 +299,10 @@ function wikiplugin_trackertimeline( $data, $params )
 				'events' => $events,
 			);
 		}
-		$js = 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
+		$js = 'var ttl_eventData_' . $instance . ' = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
-setTimeout( function(){ ttlInit("ttl_timeline_' . $instance . '",ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '","' . $params['band2_height'] . '"); }, 1000);
+setTimeout( function(){ ttlInit("ttl_timeline_' . $instance . '",ttl_eventData_' . $instance . ',"' . $params['scale1'] . '","' . $params['scale2'] . '","' . $params['band2_height'] . '"); }, 1000);
 ';
 
 		$headerlib->add_jq_onready($js, 10);
