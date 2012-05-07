@@ -35,6 +35,10 @@
 			selector.parents('fieldset:not(.tabcontent)').show();
 			selector.closest('fieldset.tabcontent').addClass('filled');
 		};
+		var hide = function (selector) {
+			selector.hide();
+			selector.parents('fieldset:not(.tabcontent)').hide();
+		};
 
 		var filters = [];
 		var prefs = $('.adminoptionbox.preference').hide();
@@ -46,7 +50,7 @@
 				filters.push($(this).val());
 				show(targets);
 			} else if ($(this).is('.negative:not(:checked)')) {
-				targets.hide();
+				hide(targets);
 			}
 		});
 

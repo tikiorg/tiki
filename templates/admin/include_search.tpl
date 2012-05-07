@@ -112,10 +112,6 @@ $("#log-rebuild").click(function(){
 					{preference name=feature_search_show_forbidden_cat}
 				</div>
 			</fieldset>
-			{jq}if ($('.feature_search_fulltext:first').css('display') !== 'block') {
-	$('.feature_search_fulltext:first').parents('fieldset:first').hide();
-}{/jq}{* hide mysql search entirely when not supported *}
-				
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=search_autocomplete}
