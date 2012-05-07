@@ -575,9 +575,7 @@ class ToolbarCkOnly extends Toolbar
 			case 'Copy':
 			case 'Cut':
 			case 'Format':
-			case 'Indent':
 			case 'JustifyLeft':
-			case 'Outdent':
 			case 'Paste':
 			case 'Redo': 
 			case 'RemoveFormat':
