@@ -47,7 +47,7 @@ class WikiRenderer
 	public $canUndo = null;
 	public $trads = null;	// translated pages
 
-	function __construct( $info, $user, $content_to_render='')
+	function __construct( $info, $user, $content_to_render=null)
 	{
 		$this->info = $info;
 		$this->user = $user;
@@ -298,7 +298,7 @@ class WikiRenderer
 
 				if ($version_info = $flaggedrevisionlib->get_version_with($this->page, 'moderation', 'OK')) {
 					$this->smartyassign('revision_approved', $version_info['version']);
-					if (empty($this->content_to_render)) {
+					if ($this->content_to_render === null) {
 						$this->smartyassign('revision_displayed', $version_info['version']);
 						$this->content_to_render = $version_info['data'];
 					} else {
@@ -306,7 +306,7 @@ class WikiRenderer
 					}
 				} else {
 					$this->smartyassign('revision_approved', null);
-					if (empty($this->content_to_render)) {
+					if ($this->content_to_render === null) {
 						$this->smartyassign('revision_displayed', null);
 						$this->content_to_render = '^' . tra('There are no approved versions of this page.', $this->info['lang']) . '^';
 					} else {
@@ -316,7 +316,7 @@ class WikiRenderer
 			}
 		}
 
-		if ($this->content_to_render == '') {
+		if ($this->content_to_render === null) {
 			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
 
 			if ($canBeRefreshed) {

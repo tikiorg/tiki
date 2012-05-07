@@ -55,7 +55,7 @@ try {
 	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $pdo_options);
 	$dbTiki->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
 	$dbTiki->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+//	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
 	TikiDb::set(new TikiDb_Pdo($dbTiki));
 
 	$tempDb = TikiDb::get();
