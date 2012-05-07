@@ -991,6 +991,10 @@ if ( \$('#$id') ) {
 
 			$killtoc = false;
 
+			if ($pluginFormat === 'wiki' && $parseOptions['preview_mode'] && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
+				$data = nl2br($data);
+			}
+
 			$output = $func_name($data, $args, $offset, $parseOptions);
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
@@ -1072,7 +1076,8 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
-			$data = str_replace(array('<br />', '<p>', '</p>', "\t"), '', $data);
+			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
+			$data = str_replace('<br />', "\n", $data);
 		}
 
 		if ($this->contains_html_block($plugin_result)) {

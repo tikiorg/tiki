@@ -72,8 +72,11 @@ if (isset($_REQUEST['editor_id'])) {
 		
 		$page = $autoSaveIdParts[2];	// plugins use global $page for approval
 		$info = $tikilib->get_page_info($page, false);
-		if (empty($info) || isset($_REQUEST['allowHtml'])) {
+		if (isset($_REQUEST['allowHtml']) || empty($info)) {
 			$info['is_html'] = !empty($_REQUEST['allowHtml'])? 1 : 0;
+		}
+		if (!isset($info['wysiwyg'])) {
+			$info['wysiwyg'] = $_SESSION['wysiwyg'];
 		}
 		$options = array('is_html' => ($info['is_html'] == 1), 'preview_mode' => true, 'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2]);
 
