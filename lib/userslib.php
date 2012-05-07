@@ -3500,7 +3500,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'file galleries',
 				'admin' => false,
-				'prefs' => array('feature_file_galleries'),
+				'prefs' => array('fgal_show_explorer'),
 				'scope' => 'object',
 			),
 			array(
@@ -3509,7 +3509,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'file galleries',
 				'admin' => false,
-				'prefs' => array('feature_file_galleries'),
+				'prefs' => array('fgal_show_path'),
 				'scope' => 'object',
 			),
 			array(
