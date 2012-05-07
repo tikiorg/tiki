@@ -291,6 +291,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Allows to keep track of what users are doing and produce reports on a per-user or per-category basis.'),
 			'help' => 'Action+Log',
 			'type' => 'flag',
+			'view' => 'tiki-admin_actionlog.php',
 			'default' => 'y',
 		),
 		'feature_contribution' => array(
