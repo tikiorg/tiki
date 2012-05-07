@@ -392,7 +392,11 @@ class ParserLib extends TikiDb_Bridge
 				$current_index = ++$plugin_indexes[$plugin_name];
 
 				// get info to test for preview with auto_save
-				$status = $this->plugin_can_execute($plugin_name, $plugin_data, $arguments, $options['preview_mode'] || $options['ck_editor']);
+				if (!$options['skipvalidation']) {
+					$status = $this->plugin_can_execute($plugin_name, $plugin_data, $arguments, $options['preview_mode'] || $options['ck_editor']);
+				} else {
+					$status = true;
+				}
 				global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 				$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
 				$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
@@ -1444,6 +1448,7 @@ if ( \$('#$id') ) {
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		$options['process_wiki_paragraphs'] = isset($options['process_wiki_paragraphs']) ? $options['process_wiki_paragraphs'] : true;
 		$options['min_one_paragraph'] = isset($options['min_one_paragraph']) ? $options['min_one_paragraph'] : false;
+		$options['skipvalidation'] = isset($options['skipvalidation']) ? $options['skipvalidation'] : false;
 
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 
