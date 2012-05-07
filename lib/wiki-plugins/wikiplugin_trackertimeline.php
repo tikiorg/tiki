@@ -282,7 +282,7 @@ function wikiplugin_trackertimeline( $data, $params )
 				'events' => $events,
 			);
 		}
-		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
+		$js = 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
 setTimeout( function(){ ttlInit("ttl_timeline",ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '"); }, 1000);
