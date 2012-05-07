@@ -13,9 +13,9 @@
 	{foreach from=$icons key=page item=info}
 		{if $info.position}
 			{if $info.disabled}
-				{assign var=class value="admbox off"}
+				{assign var=class value="admbox off advanced"}
 			{else}
-				{assign var=class value="admbox"}
+				{assign var=class value="admbox basic"}
 			{/if}
 			{self_link page=$page _class=$class _style="background-image: url('img/icons/sprite/admin.fullpanel.png'); background-position: `$info.position`" _title=$info.title}
 				<img src="img/trans.png" alt="{$info.title|escape}" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}" />

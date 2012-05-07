@@ -41,11 +41,11 @@
 		};
 
 		var filters = [];
-		var prefs = $('.adminoptionbox.preference').hide();
+		var prefs = $('.adminoptionbox.preference, .admbox').hide();
 		prefs.parents('fieldset:not(.tabcontent)').hide();
 		prefs.closest('fieldset.tabcontent').removeClass('filled');
 		$('.preffilter').each(function () {
-			var targets = $('.adminoptionbox.preference.' + $(this).val());
+			var targets = $('.adminoptionbox.preference.' + $(this).val() + ',.admbox.' + $(this).val());
 			if ($(this).is(':checked')) {
 				filters.push($(this).val());
 				show(targets);
