@@ -100,7 +100,7 @@
   						<td><input type="checkbox" name=quiz.shuffleAnswers id="shuffle-answers" {if $quiz->shuffleAnswers eq 'y'}checked="checked"{/if} /><label for="shuffle-answers">{tr}Shuffle answers{/tr}</td>
 						</tr>
 						<tr>
-  						<td><input type="checkbox" name=quiz.limitDisplay id="quiz-display-limit" {if $quiz->limitDisplay eq 'y'}checked="checked"{/if} /><label for="quiz-display-limit">{tr}Limit questions displayed per page to {/tr}</label><select name=quiz.questionsPerPage id="quiz-perpage">{html_options values=$tpl.qpp selected=$quiz->questionsPerPage output=$tpl.qpp}</select>{tr}&nbsp question(s).{/tr}</td>
+  						<td><input type="checkbox" name=quiz.limitDisplay id="quiz-display-limit" {if $quiz->limitDisplay eq 'y'}checked="checked"{/if} /><label for="quiz-display-limit">{tr}Limit questions displayed per page to {/tr}</label><select name=quiz.questionsPerPage id="quiz-perpage">{html_options values=$tpl.qpp selected=$quiz->questionsPerPage output=$tpl.qpp}</select>{tr}  question(s).{/tr}</td>
 						</tr>
 						<tr>
   						<td><input type="checkbox" name=quiz.timeLimited id="timelimit" {if $quiz->timeLimited eq 'y'}checked="checked"{/if} /><label for="timelimit">{tr}Impose a time limit of {/tr}</label><select name=quiz.timeLimit id="quiz-maxtime">{html_options values=$tpl.mins selected=$quiz->timeLimit output=$tpl.mins}</select> {tr}minutes{/tr}</td>
