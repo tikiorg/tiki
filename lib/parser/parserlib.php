@@ -1830,7 +1830,7 @@ if ( \$('#$id') ) {
 		// Replace bold text
 		$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
 		// Replace italic text
-		$line = preg_replace_callback("/(=?)\'\'(.*?)\'\'/", array($this, 'callback_parse_italics'), $line);
+		$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
 		
 		if (!$ck_editor) {
 			// Replace definition lists
@@ -1839,16 +1839,6 @@ if ( \$('#$id') ) {
 		}
 
 		return $line;
-	}
-
-	private function callback_parse_italics( $match )
-	{
-		//if italics is before a '=' it is probably in an html element as an attribute that is empty
-		if (isset($match[1]) && $match[1] == '=') {
-			return $match[0];
-		}
-
-		return "<em>".$match[0]."</em>";
 	}
 
 	//*
