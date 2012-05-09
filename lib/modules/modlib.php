@@ -936,7 +936,7 @@ class ModLib extends TikiLib
 			}
 
 			if (isset($info['parse']) && $info['parse'] == 'y') {
-				$info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true));
+				$info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
 				$info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
 			}
 			// re-assign module_params for the custom module in case a module plugin is used inside it
