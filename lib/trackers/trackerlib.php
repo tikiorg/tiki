@@ -777,6 +777,9 @@ class TrackerLib extends TikiLib
 			$ret = $this->filter_categ_items($ret);
 		}
 		$definition = Tracker_Definition::get($trackerId);
+		if (!$definition) {		// could be a deleted field referred to by a list type field
+			return array(tr('*** ERROR: Tracker %0 not found ***', $trackerId));
+		}
 		$field = $definition->getField($fieldId);
 
 		if (!$field) {		// could be a deleted field referred to by a list type field
