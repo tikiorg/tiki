@@ -142,6 +142,8 @@ class PerspectiveLib
 				}
 			}
 			$_SESSION['current_perspective'] = $perspective;
+		} else {
+			$_SESSION['current_perspective'] = 0;	
 		}
 
 	}
