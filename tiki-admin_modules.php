@@ -147,7 +147,7 @@ if (!empty($_REQUEST['module-order'])) {
 /* Edit or delete a user module */
 if (isset($_REQUEST['um_update'])) {
 	if (empty($_REQUEST['um_name'])) {
-		$smarty->assign('msg', tra('Cannot create or update module: You need to specify a name to the module'));
+		$smarty->assign('msg', tra('Cannot create or update module: You need to specify a name for the module'));
 		$smarty->display('error.tpl');
 		die;
 	}
