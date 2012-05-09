@@ -31,8 +31,20 @@
 		<br />
 		<label>
 			{tr}Other:{/tr}
-			<input type="text" class="group_{$field.ins_id|escape}"name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}" />
+			<input type="text" class="group_{$field.ins_id|escape}" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}" />
 		</label>
+		{if !isset($field.possibilities[$field.value]) && $field.value}
+			{jq}
+			if (!$('select[name="{{$field.ins_id|escape}}"] > [selected]').length) {
+				$('select[name="{{$field.ins_id|escape}}"]').val('other');
+			}
+			$('select[name="{{$field.ins_id|escape}}"]').change(function() {
+				if ($('select[name="{{$field.ins_id|escape}}"]').val() != 'other') {
+					$('input[name="other_{{$field.ins_id|escape}}"]').val('');
+				}
+			});
+			{/jq}
+		{/if}
 	{/if}
 
 {/if}
