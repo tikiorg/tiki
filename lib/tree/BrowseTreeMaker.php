@@ -92,9 +92,8 @@ class BrowseTreeMaker extends TreeMaker
 	//
 	function node_child_start_code($nodeinfo)
 	{
-		$style = getCookie($nodeinfo['id'], $this->prefix) !== 'o' ? ' style="display:none"' : '';
 		return '<ul class="tree" data-id="' . $nodeinfo['id'] .
-			   		'" data-prefix="' . $this->prefix . '"' . $style .'>';
+			   		'" data-prefix="' . $this->prefix . '">';
 	}
 
 	//
