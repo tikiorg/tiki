@@ -6729,7 +6729,7 @@ class UsersLib extends TikiLib
 		$smarty->assign('mail_ip', $tikilib->get_ip_address());
 		$smarty->assign('user', $user);
 		$mail = new TikiMail();
-		$mail_data = $smarty->fetchLang($languageEmail, 'mail/$tpl'.'_subject.tpl');
+		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl".'_subject.tpl');
 		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
 		$mail->setSubject($mail_data);
 		$foo = parse_url($_SERVER['REQUEST_URI']);
