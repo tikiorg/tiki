@@ -653,6 +653,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	text-align: left;
 }
 
+.post .author_info,
 .forum_actions {
 	background: #ddd url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 0% 0% repeat-x;
 	border: 1px solid #aaa;
@@ -690,6 +691,10 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 .freetagitemlist {
 	margin-bottom: 30px;
 	padding: 0 0 10px;
+}
+
+.freetaglist a {
+	font-size: 0.9em;
 }
 
 /*****  Polls  *****/
@@ -829,7 +834,9 @@ body.tiki_admin .simplebox,
 a.admbox,
 a.admbox.off,
 .forum_actions,
-.admintoclevel {
+.admintoclevel,
+.post .postbody-title,
+.post .author_info {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
