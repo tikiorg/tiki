@@ -630,7 +630,11 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	font-weight: bold;
 	font-size: 1.1em;
 }
-	
+
+.postbody-title h2 {
+	margin: .2em 0 .3em;
+}
+
 .postbody .actions {
 	text-align: right;
 	margin-bottom: 4px;
