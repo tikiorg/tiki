@@ -226,7 +226,7 @@ if (isset($_REQUEST['copy'])) {
 }
 
 if (!empty($_SESSION['perms_clipboard'])) {
-	$perms_clipboard = unserialize($_SESSION['perms_clipboard']);
+	$perms_clipboard = TikiLib::tiki_unserialize($_SESSION['perms_clipboard']);
 	$smarty->assign(
 					'perms_clipboard_source',
 					$perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']
