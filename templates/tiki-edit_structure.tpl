@@ -108,10 +108,10 @@
 					{if $prefs.feature_categories eq 'y'}
 						<select name="categId">
 							<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
-							{section name=ix loop=$categories}
-								<option value="{$categories[ix].categId|escape}"
-										{if !empty($find_categId) and $find_categId eq $categories[ix].categId}selected="selected"{/if}>{tr}{$categories[ix].categpath}{/tr}</option>
-							{/section}
+							{foreach $categories as $catix}
+								<option value="{$catix.categId|escape}"
+										{if !empty($find_categId) and $find_categId eq $catix.categId}selected="selected"{/if}>{tr}{$catix.categpath}{/tr}</option>
+							{/foreach}
 						</select>
 					{/if}
 				</td>
