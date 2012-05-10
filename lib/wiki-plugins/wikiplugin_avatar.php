@@ -41,9 +41,13 @@ function wikiplugin_avatar_info()
 
 function wikiplugin_avatar($data, $params)
 {
-	global $tikilib, $userlib;
+	global $tikilib, $userlib, $user;
 
 	extract($params, EXTR_SKIP);
+
+	if (!$data) {
+		$data = $user;
+	}
 
 	if (isset($float))
 		$avatar = $tikilib->get_user_avatar($data, $float);
@@ -53,7 +57,7 @@ function wikiplugin_avatar($data, $params)
 	if (isset($page)) {
 		$avatar = "<a href='tiki-index.php?page=$page'>" . $avatar . '</a>';
 	} else if ($userlib->user_exists($data) && $tikilib->get_user_preference($data, 'user_information', 'public') == 'public') {
-		$id = $userlib->get_user_login($data);
+		$id = $userlib->get_user_id($data);
 		$avatar = "<a href=\"tiki-user_information.php?userId=$id\">" . $avatar . '</a>';
 	}
 
