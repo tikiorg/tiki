@@ -23,6 +23,13 @@ function wikiplugin_convene_info()
 				'name' => tra('Title of Event'),
 				'default' => tra('Convene'),
 			),
+			'calendarid' => array(
+				'required' => false,
+				'name' => tra('Calendar ID'),
+				'description' => tra('ID number for the site calendar where to store the date for the events with maximum votes'),
+				'filter' => 'digits',
+				'default' => '',
+			),
 			'dateformat' => array(
 				'required' => false,
 				'name' => tra('Date and time format'),
@@ -51,6 +58,7 @@ function wikiplugin_convene($data, $params)
 	$params = array_merge(
 					array(
 						"title" => "Convene",
+						"calendarid" => "1",
 						"dateformat" => "short"
 					), 
 					$params
@@ -181,7 +189,7 @@ function wikiplugin_convene($data, $params)
 		if ($total == $votes[$topVoteStamp]) {
 			$pic .= ($tiki_p_edit != "y" ? "<img src='img/icons/tick.png' class='icon' title='" . tr("Selected Date") . "' />" : "");
 			if ($tiki_p_edit == 'y') {
-				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=1' title='" . tr("Add as Calendar Event") . "'><img src='img/icons/calendar_add.png' class='icon' /></a></button>";
+				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=$calendarid' title='" . tr("Add as Calendar Event") . "'><img src='img/icons/calendar_add.png' class='icon' /></a></button>";
 			}
 		}
 		
