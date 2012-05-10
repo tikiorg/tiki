@@ -31,27 +31,21 @@ class AreasLib extends CategLib
 				// If category is inside $prefs['areas_root']
 				$foundPerspective = NULL;
 				if (in_array($categId, $descendants)) {
-					$foundPerspective = $this->get_perspective_by_categid($categId); 
-					// If the found perspective is different than the current perspective, update it.
-					if ($foundPerspective != $_SESSION['current_perspective']) {
-						$perspectivelib->set_perspective($foundPerspective);
-						//Reroute browser back to calling script after we have applied our hack.
-						header("Location: ". $_SERVER['REQUEST_URI']);	
-					}
-				} else { // If category id is not inside $prefs['areas_root'] set the default perspective (0)
-					if ($foundPerspective != $_SESSION['current_perspective']) {
-						$perspectivelib->set_perspective(0);
-						//Reroute browser back to calling script after we have applied our hack.
-						header("Location: ". $_SERVER['REQUEST_URI']);	
+					if ($foundPerspective = $this->get_perspective_by_categid($categId)) {
+						break;
 					}
 				}
 			}
+			if ($foundPerspective && $foundPerspective != $_SESSION['current_perspective']) {
+				$perspectivelib->set_perspective($foundPerspective);
+				header("Location: ". $_SERVER['REQUEST_URI']);
+				die;
+			} elseif (!$foundPerspective && $_SESSION['current_perspective']) {
+				$perspectivelib->set_perspective(0);
+				header("Location: ". $_SERVER['REQUEST_URI']);
+				die;			
+			}
 		}
-/*    else if ($_SESSION['current_perspective'] !== 0)     // decomment this violates the category jail 
-    {
-        $perspectivelib->set_perspective(0);
-        
-    }*/
 	}
 
 /*
