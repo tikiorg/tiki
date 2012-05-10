@@ -80,7 +80,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 		if ($prefs['feature_sefurl_title_blog'] == 'y') {
 			global $bloglib;
 			include_once ('lib/blogs/bloglib.php');
-			if (preg_match('/postId=([0-9]+)/', $tpl_output, $matches)) {
+			if (preg_match('/postId=([0-9]+)/', $tpl_output, $matches)|| preg_match('/blogpost([0-9]+)/', $tpl_output, $matches)) {
 				if (empty($title)) {
 					if ($post_info = $bloglib->get_post($matches[1])) $title = $post_info['title'];
 				}
