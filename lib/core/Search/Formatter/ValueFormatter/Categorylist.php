@@ -112,6 +112,6 @@ class Search_Formatter_ValueFormatter_Categorylist extends Search_Formatter_Valu
 				}
 			}
 		}
-		return '~np~' . $list . '~/np~';
+		return '{HTML()}' . $list . '{HTML}';
 	}
 }

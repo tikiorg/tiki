@@ -65,6 +65,10 @@ function tiki_setup_events()
 
 		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'update_tracker_summary'));
 		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'invalidate_item_cache'));
+
+		if ($prefs['tracker_refresh_itemlink_detail'] == 'y') {
+			$events->bind('tiki.trackeritem.update', Event_Lib::defer('trk', 'refresh_index_on_master_update'));
+		}
 	}
 
 	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {

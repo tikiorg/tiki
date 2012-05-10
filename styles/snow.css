@@ -1,4 +1,4 @@
-/* $Id$ The Snow theme for TikiWiki CMS/Groupware is an original
+/* $Id$ The Snow theme for Tiki Wiki CMS Groupware is an original
 	theme released under the LGPL license by author and maintainer
 	Gary Cunningham-Lee (http://zukakakina.com). Visit zukakakina.com or themes.tiki.org for
 	updates and other information about this theme.
@@ -14,7 +14,9 @@
 body {
 	background: #b1c1db url(snow/flakesptn.jpg) repeat;
 	color: #000;
-	font: 76%/1.4em arial, helvetica, verdana, sans-serif !important}
+	font: 76% arial, helvetica, verdana, sans-serif;
+	line-height: 1.4;
+}
 
 *:first-child+html body {font-size: 74% !important}
 
@@ -585,6 +587,7 @@ td.heading,
 .tabmark a:hover {
 	color: black;
 	background: #b1c1db url(snow/flakesptn3.jpg);
+	text-decoration: none;
 }
 	
 .tabactive {

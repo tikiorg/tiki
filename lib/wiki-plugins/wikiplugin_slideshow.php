@@ -11,7 +11,7 @@ function wikiplugin_slideshow_info()
 		'name' => tra('Slideshow'),
 		'documentation' => 'Slideshow',
 		'description' => tra('Configure a slideshow. Extends the existing wiki page slideshow with notes & styles.'),
-		'prefs' => array( 'wikiplugin_slideshow', 'feature_slideshow', 'wiki_uses_slides' ),
+		'prefs' => array( 'wikiplugin_slideshow', 'feature_slideshow' ),
 		'body' => tra('Slideshow notes - Separate with "/////"'),
 		'icon' => 'img/icons/images.png',
 		'tags' => array( 'basic' ),
@@ -113,11 +113,20 @@ function wikiplugin_slideshow_info()
 			'slideseconds' => array(
 				'required' => false,
 				'name' => tra('Slide Seconds'),
-				'description' => tra('How many seconds a slide will be open while playing'),
+				'description' => tra('How many seconds a slide will be open while playing, overridden when slideduration is set.'),
 				'filter' => 'digits',
 				'accepted' => tra('Second count'),
 				'default' => '15',
 				'since' => '7.0'
+			),
+			'slideduration' => array(
+				'required' => false,
+				'name' => tra('Slide Milliseconds'),
+				'description' => tra('How many milliseconds a slide will be open while playing'),
+				'filter' => 'digits',
+				'accepted' => tra('Second count'),
+				'default' => '15000',
+				'since' => '9.0'
 			),
 			'textside' => array(
 				'required' => false,
@@ -150,7 +159,11 @@ function wikiplugin_slideshow($data, $params)
 	$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '');
 	$listitemhighlightcolor = (isset($listitemhighlightcolor) ? $listitemhighlightcolor : '');
 	$class = (isset($class) ? " $class"  : '');
-	$slideduration = (isset($slideseconds) ? $slideseconds : 15) * 1000;
+
+	if (!isset($slideduration)) {
+		$slideduration = (isset($slideseconds) ? $slideseconds : 15) * 1000;
+	}
+
 	$textside = (isset($textside) ? $textside : 'left');
 	
 	if ($theme) {

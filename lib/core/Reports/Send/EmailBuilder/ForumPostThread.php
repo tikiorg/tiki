@@ -12,7 +12,7 @@ class Reports_Send_EmailBuilder_ForumPostThread extends Reports_Send_EmailBuilde
 {
 	public function getTitle()
 	{
-		return tr('New replies in foruns topics:');
+		return tr('New replies in forum topics:');
 	}
 	
 	public function getOutput(array $change)

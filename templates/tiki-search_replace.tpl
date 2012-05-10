@@ -15,11 +15,11 @@
 <br />
 <select name="categId">
 	<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
-	{section name=ix loop=$categories}
-		<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
-		{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
+	{foreach $categories as $catix}
+		<option value="{$catix.categId|escape}" {if $find_categId eq $catix.categId}selected="selected"{/if}>
+		{capture}{tr}{$catix.categpath}{/tr}{/capture}{$smarty.capture.default|escape}
 		</option>
-	{/section}
+	{/foreach}
 </select>
 <input type="submit" name="search" value="{tr}Search{/tr}" />
 </form>

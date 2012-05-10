@@ -392,7 +392,11 @@ class ParserLib extends TikiDb_Bridge
 				$current_index = ++$plugin_indexes[$plugin_name];
 
 				// get info to test for preview with auto_save
-				$status = $this->plugin_can_execute($plugin_name, $plugin_data, $arguments, $options['preview_mode'] || $options['ck_editor']);
+				if (!$options['skipvalidation']) {
+					$status = $this->plugin_can_execute($plugin_name, $plugin_data, $arguments, $options['preview_mode'] || $options['ck_editor']);
+				} else {
+					$status = true;
+				}
 				global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 				$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
 				$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
@@ -991,6 +995,10 @@ if ( \$('#$id') ) {
 
 			$killtoc = false;
 
+			if ($pluginFormat === 'wiki' && $parseOptions['preview_mode'] && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
+				$data = nl2br($data);
+			}
+
 			$output = $func_name($data, $args, $offset, $parseOptions);
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
@@ -1072,7 +1080,8 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
-			$data = str_replace(array('<br />', '<p>', '</p>', "\t"), '', $data);
+			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
+			$data = str_replace('<br />', "\n", $data);
 		}
 
 		if ($this->contains_html_block($plugin_result)) {
@@ -1439,6 +1448,7 @@ if ( \$('#$id') ) {
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		$options['process_wiki_paragraphs'] = isset($options['process_wiki_paragraphs']) ? $options['process_wiki_paragraphs'] : true;
 		$options['min_one_paragraph'] = isset($options['min_one_paragraph']) ? $options['min_one_paragraph'] : false;
+		$options['skipvalidation'] = isset($options['skipvalidation']) ? $options['skipvalidation'] : false;
 
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 
@@ -1820,7 +1830,7 @@ if ( \$('#$id') ) {
 		// Replace bold text
 		$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
 		// Replace italic text
-		$line = preg_replace_callback("/(=?)\'\'(.*?)\'\'/", array($this, 'callback_parse_italics'), $line);
+		$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
 		
 		if (!$ck_editor) {
 			// Replace definition lists
@@ -1829,16 +1839,6 @@ if ( \$('#$id') ) {
 		}
 
 		return $line;
-	}
-
-	private function callback_parse_italics( $match )
-	{
-		//if italics is before a '=' it is probably in an html element as an attribute that is empty
-		if (isset($match[1]) && $match[1] == '=') {
-			return $match[0];
-		}
-
-		return "<em>".$match[0]."</em>";
 	}
 
 	//*

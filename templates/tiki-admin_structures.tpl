@@ -59,6 +59,12 @@
 	{/remarksbox}
 {/if}
 
+{if !empty($error)}
+	{remarksbox type='warning' title="{tr}Error{/tr}"}
+		{$error|escape}
+	{/remarksbox}
+{/if}
+
 {tabset}
 	{tab name="{tr}Structures{/tr}"}
 		{if $channels or ($find ne '')}

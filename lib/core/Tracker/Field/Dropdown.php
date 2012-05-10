@@ -42,7 +42,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label. It is recommended to add an "other" option.'),
 						'filter' => 'text',
 						'count' => '*',
 					),

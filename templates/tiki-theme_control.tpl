@@ -26,11 +26,11 @@
 		<tr>
 			<td>
 				<select name="categId">
-					{section name=ix loop=$categories}
-						<option value="{$categories[ix].categId|escape}" {if $categId eq $categories[ix].categId}selected="selected"{/if}>
-							{$categories[ix].name|escape} ({$categories[ix].categId})
+					{foreach $categories as $catix}
+						<option value="{$catix.categId|escape}" {if $categId eq $catix.categId}selected="selected"{/if}>
+							{$catix.name|escape} ({$catix.categId})
 						</option>
-					{/section}
+					{/foreach}
 				</select>
 			</td>
 			<td>

@@ -142,7 +142,7 @@ require_once('lib/perspective/binderlib.php');
 if ($prefs['feature_categories'] == 'y') { 
 		require_once ('lib/setup/categories.php');
 		if ($prefs['feature_areas'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
-			$areaslib->HandleObjectCategories($objectCategoryIds);
+			$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
 		}
 }
 if ($prefs['feature_userlevels'] == 'y') require_once ('lib/setup/userlevels.php');

@@ -12,11 +12,11 @@
 		{if !empty($wp_member_prorated)}<br />{if $wp_member_freeprorated}{tr}Free for the rest of the current period, a prorated value of:{/tr}{else}{tr}Prorated cost for first period:{/tr}{/if} {$wp_member_prorated|string_format:"%.2f"} {$prefs.payment_currency|escape}{/if}
 		{if $wp_member_freeperiods}<br />{tr}Special offer! Free additional periods:{/tr} {$wp_member_freeperiods|escape}{/if}
 	{elseif isset($wp_member_group.expireAfterYear) and $wp_member_group.expireAfterYear eq 1}
-		{tr _0=$wp_member_group.groupName _1=$wp_member_group.expireAfterYear _2=$wp_member_price _3=$prefs.payment_currency}Membership to %0 for %1 year at %2&nbsp;%3{/tr}
+		{tr _0=$wp_member_group.groupName _1=$wp_member_group.expireAfterYear _2=$wp_member_price _3=$prefs.payment_currency}Membership to %0 for %1 year at %2 %3{/tr}
 	{elseif isset($wp_member_group.expireAfterYear)}
-		{tr _0=$wp_member_group.groupName 1=$wp_member_group.expireAfterYear 2=$wp_member_price 3=$prefs.payment_currency}Membership to %0 for %1 years at %2&nbsp;%3{/tr}
+		{tr _0=$wp_member_group.groupName 1=$wp_member_group.expireAfterYear 2=$wp_member_price 3=$prefs.payment_currency}Membership to %0 for %1 years at %2 %3{/tr}
 	{else}
-		{tr _0=$wp_member_group.groupName _1=$wp_member_group.expireAfter _2=$wp_member_price _3=$prefs.payment_currency}Membership to %0 for %1 days at %2&nbsp;%3{/tr}
+		{tr _0=$wp_member_group.groupName _1=$wp_member_group.expireAfter _2=$wp_member_price _3=$prefs.payment_currency}Membership to %0 for %1 days at %2 %3{/tr}
 	{/if}
 	</p>
 	<p>

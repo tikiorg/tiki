@@ -20,7 +20,8 @@ html {
 }
 
 body {
-	font: 12px/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 1.4;
 	background-color: #fff;
 }
 
@@ -775,7 +776,7 @@ a.flip:hover {
 	padding-right: 2em;
 }
 
-/header .cssmenu_horiz a:hover {
+.header .cssmenu_horiz a:hover {
 	text-decoration: none;
 	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
 	border-color: #336699;

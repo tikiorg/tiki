@@ -3633,6 +3633,14 @@ class FileGalLib extends TikiLib
 							break;
 			case 'pdf' :	$filetype = 'application/pdf';
 							break;
+			case 'doc' :	$filetype = 'application/msword';
+							break;
+			case 'ppt' :	$filetype = 'application/vnd.ms-powerpoint';
+							break;
+			case 'xls' :	$filetype = 'application/vnd.ms-excel';
+							break;
+			case 'docx' :	$filetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+							break;
 			default :		$filetype = 'application/octet-stream';
 		}
 		return $filetype;

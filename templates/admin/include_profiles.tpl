@@ -143,14 +143,14 @@ function showDetails( id, domain, profile ) { // {{{
 				{
 					var p = document.createElement('p');
 					p.style.fontWeight = 'bold';
-					p.innerHTML = "An error occured during the profile validation. This profile cannot be applied. Message: " + data.error;
+					p.innerHTML = "An error occurred during the profile validation. This profile cannot be applied. Message: " + data.error;
 					cell.appendChild(p);
 				}
 				else
 				{
 					var p = document.createElement('p');
 					p.style.fontWeight = 'bold';
-					p.innerHTML = "An error occured during the profile validation. This profile cannot be applied.";
+					p.innerHTML = "An error occurred during the profile validation. This profile cannot be applied.";
 					cell.appendChild(p);
 				}
 

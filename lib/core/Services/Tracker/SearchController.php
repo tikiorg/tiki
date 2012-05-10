@@ -154,7 +154,7 @@ class Services_Tracker_SearchController
 
 		require_once('lib/wiki-plugins/wikiplugin_list.php');
 		$results = wikiplugin_list($data, array());
-		$results = TikiLib::lib('tiki')->parse_data($results, array('is_html' => true));
+		$results = TikiLib::lib('tiki')->parse_data($results, array('is_html' => true, 'skipvalidation' => true));
 
 		return array('html' => $results);
 	}

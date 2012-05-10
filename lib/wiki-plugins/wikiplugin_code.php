@@ -15,6 +15,7 @@ function wikiplugin_code_info()
 		'body' => tra('Code to be displayed'),
 		'icon' => 'img/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
+		'format' => 'html',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'caption' => array(
@@ -124,9 +125,7 @@ function wikiplugin_code($data, $params, $offset, $options)
 		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr') . '" '
 		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
 		. $boxid.'>'
-		. '~np~'
 		. ($options['ck_editor'] ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
-		. '~/np~'
 		. '</pre>';
 
 	return $out;

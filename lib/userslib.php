@@ -3375,7 +3375,7 @@ class UsersLib extends TikiLib
 				'type' => 'faqs',
 				'admin' => true,
 				'prefs' => array('feature_faqs'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_suggest_faq',
@@ -3384,7 +3384,7 @@ class UsersLib extends TikiLib
 				'type' => 'faqs',
 				'admin' => false,
 				'prefs' => array('feature_faqs'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_faqs',
@@ -3393,7 +3393,7 @@ class UsersLib extends TikiLib
 				'type' => 'faqs',
 				'admin' => false,
 				'prefs' => array('feature_faqs'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_download_files',
@@ -3500,7 +3500,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'file galleries',
 				'admin' => false,
-				'prefs' => array('feature_file_galleries'),
+				'prefs' => array('fgal_show_explorer'),
 				'scope' => 'object',
 			),
 			array(
@@ -3509,7 +3509,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'file galleries',
 				'admin' => false,
-				'prefs' => array('feature_file_galleries'),
+				'prefs' => array('fgal_show_path'),
 				'scope' => 'object',
 			),
 			array(

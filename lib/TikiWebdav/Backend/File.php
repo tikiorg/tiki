@@ -1069,7 +1069,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 									$infos['dest']['infos']
 					);
 				} elseif ($doMove) {
-				// Move is not needed if the rename occured, since filegal renaming function handle the move already
+				// Move is not needed if the rename occurred, since filegal renaming function handle the move already
 					$noErrors = (bool) $filegallib->move_file_gallery(
 									$infos['source']['id'],
 									$infos['dest']['parentId']

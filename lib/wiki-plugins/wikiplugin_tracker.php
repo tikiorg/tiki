@@ -493,7 +493,6 @@ function wikiplugin_tracker($data, $params)
 		$trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $img_field);
 	}
 	$back = '';
-	$js = '';
 
 	$thisIsThePlugin = isset($_REQUEST['iTRACKER']) && $_REQUEST['iTRACKER'] == $iTRACKER;
 
@@ -1032,8 +1031,10 @@ function wikiplugin_tracker($data, $params)
 			$smarty->assign('trackerEditFormId', $iTRACKER);
 
 		if (!empty($params['_ajax_form_ins_id'])) {
-			global $headerlib;							// when called via AJAX take a copy of the JS so far to allow collection
-			$old_js = $headerlib->output_js(false);		// of tracker form JS into a function to initialise it when the dialog is created
+			global $headerlib;									// when called via AJAX take a copy of the JS so far to allow collection
+			$old_js['js'] = $headerlib->js;						// of tracker form JS into a function to initialise it when the dialog is created
+			$old_js['jq_onready'] = $headerlib->jq_onready;
+			$headerlib->clear_js();								// so store existing js for later and clear
 		}
 
 			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
@@ -1324,15 +1325,13 @@ FILL;
 				$back.= '</form>';
 			}
 
-			if (!empty($params['_ajax_form_ins_id'])) {
-				$new_js = $headerlib->output_js(false);
-				$new_js = substr($new_js, strlen($old_js) - 5, -5);	// offset for end of doc.ready statemenet TODO better
-				
-				$js .= ' var ajaxTrackerFormInit_' . $params['_ajax_form_ins_id'] . ' = function() {' . $new_js . '}';
-			}
+			if (!empty($params['_ajax_form_ins_id'])) {	// save new js in a function for the form init fn
 
-			if (!empty($js)) {
-				$headerlib->add_js($js, 10);
+				$headerlib->add_js(' var ajaxTrackerFormInit_' . $params['_ajax_form_ins_id'] . ' = function() {' . $headerlib->output_js(false) . '}', 10);
+
+				// put back the pre-existing js
+				$headerlib->js = array_merge( $headerlib->js, $old_js['js']);
+				$headerlib->jq_onready = array_merge( $headerlib->jq_onready, $old_js['jq_onready']);
 			}
 
 			if (!empty($page))

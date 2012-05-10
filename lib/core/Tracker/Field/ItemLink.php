@@ -477,9 +477,9 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		$remoteField = $this->getOption(9);
 		$method = $this->getOption(10);
 		$localTrackerId = $this->getConfiguration('trackerId');
-                $remoteTrackerId = $this->getOption(0);
+		$remoteTrackerId = $this->getOption(0);
 
-            	$localValue = $trklib->get_item_value($localTrackerId, $this->getItemId(), $localField);
+		$localValue = $trklib->get_item_value($localTrackerId, $this->getItemId(), $localField);
 
 		if ($method == 'domain') {
 			if (! preg_match('@^(?:http://)?([^/]+)@i', $localValue, $matches)) {
@@ -516,6 +516,23 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		return array(
 			'value' => $value,
 		);
+	}
+
+	function itemsRequireRefresh($trackerId, $modifiedFields)
+	{
+		if ($this->getOption('trackerId') != $trackerId) {
+			return false;
+		}
+
+		$usedFields = array_merge(
+			array($this->getOption('fieldId')),
+			explode('|', $this->getOption('indexRemote')),
+			explode('|', $this->getOption('displayFieldsList'))
+		);
+
+		$intersect = array_intersect($usedFields, $modifiedFields);
+
+		return count($intersect) > 0;
 	}
 }
 

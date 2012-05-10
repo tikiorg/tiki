@@ -14,7 +14,8 @@ function wikiplugin_gauge_info()
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
 		'icon' => 'img/icons/chart_bar.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
+		'format' => 'html',
 		'params' => array(
 			'value' => array(
 				'required' => true,

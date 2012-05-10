@@ -567,7 +567,7 @@
 				<li>{tr}Add the administrator account to the group, if missing{/tr}</li>
 			</ol>
 			<p><strong>{tr}To do so enter the name of the main admin account in the field below{/tr}</strong></p>
-			<p>Administrator account (optional): <input type="text" name="admin_account"/> <em>The default account is <strong>admin</strong></em></p>
+			<p>{tr}Administrator account (optional): <input type="text" name="admin_account"/> <em>The default account is <strong>admin</strong></em>{/tr}</p>
 			{if !empty($disableAccounts)}
 				<hr />
 				<label for="fix_disable_accounts">{tr}Check this box if you have a lot of disabled accounts after an upgrade to tiki4.{/tr}</label>

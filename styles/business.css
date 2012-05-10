@@ -1,5 +1,5 @@
 /* $Id$
-	Business theme stylesheet (business.css) for Tikiwiki CMS/Groupware,
+	Business theme stylesheet (business.css) for Tiki Wiki CMS Groupware,
 	based on the original by Eatlon.com (http://eatlon.com/work/business/).
 	Visit http://themes.tiki.org for more information.
 
@@ -11,7 +11,8 @@
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
 body {
-	font: 70%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: 70% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 1.4;
 	color: #848484;
 }
 
@@ -364,7 +365,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 10px;
 	font-weight: bold;
 	background: url(business/nav.gif) repeat-x;
-	padding: 15px 12px;
+	padding: 13px 12px;
 	border-left: 1px solid #3676c4;
 	border-right: 1px solid #1957aa;
 	text-transform: uppercase;

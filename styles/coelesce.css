@@ -1,5 +1,5 @@
 /*
- * Coelesce theme (coelesce.css) for TikiWiki CMS/Groupware,
+ * Coelesce theme (coelesce.css) for Tiki Wiki CMS Groupware,
  * original design by Patrick Allard. Distributed under the LGPL license.
  */
 
@@ -15,8 +15,8 @@
 /***** XHTML Elements ******/
 body {
 	text-align: left;
-	font: .7em/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-family: Arial, Helvetica, sans-serif;
+	font: .7em Arial, Helvetica, sans-serif;
+	line-height: 1.4;
 }
 
 a,
@@ -79,8 +79,7 @@ select,
 body.cke_show_borders {
 	background: #ecf5ff;
 	color: #4a6a90;
-/*	margin: 1px;*/
-	font: /*100%*/ Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
 textarea {

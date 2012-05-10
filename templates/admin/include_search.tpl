@@ -113,7 +113,6 @@ $("#log-rebuild").click(function(){
 					{preference name=feature_search_show_forbidden_cat}
 				</div>
 			</fieldset>
-				
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=search_autocomplete}

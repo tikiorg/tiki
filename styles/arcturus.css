@@ -1,5 +1,5 @@
 /* $Id$
-	Arcturus theme (arcturus.css) for Tikiwiki CMS/Groupware.
+	Arcturus theme (arcturus.css) for Tiki Wiki CMS Groupware.
 	Visit http://themes.tiki.org for more information.
 */
  
@@ -11,7 +11,8 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
 body {
-	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 1.4;
 	color: #000;
 	background: #efefe7
 }

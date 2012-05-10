@@ -1,5 +1,5 @@
 /* $Id$
-	Twist for TikiWiki CMS/Broupware 1.9 was created by Gary Griffin and
+	Twist for Tiki Wiki CMS Groupware 1.9 was created by Gary Griffin and
 	contributed for downloading at http://themes.tiki.org.
 	The Twist theme was updated and
 	committed to the Tiki Subversion repository by Gary Cunningham-Lee (chibaguy).
@@ -14,7 +14,8 @@
 			others follow Layout) *****/
 body {
 	background: #0f1644 url(twist/background.gif);
-	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 1.6;
 	color: black;
 }
 
@@ -639,9 +640,10 @@ ol.module {
 	font-weight: bold}
 
 .rbox-data,
-.warning .rbox-data {
+.warning .rbox-data,
+.warning .rbox-title {
 	background: #eeee99;
-	border: 1px solid #DDDDCC}
+	border: 1px solid #ddddcc}
 	
 .note .rbox-title {background: #CCCCDD}
 
@@ -815,7 +817,9 @@ tr.diffheader a,
 
 .tabmark a:hover {
 	color: black;
-	background: #f0f9ff}
+	background: #f0f9ff;
+	text-decoration: none;
+}
 
 .tabactive {border: solid 1px #225566 !important}
 .tabactive a {background: #eee}

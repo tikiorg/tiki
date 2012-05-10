@@ -3,7 +3,7 @@
 {title help="$helpUrl"}{$admintitle}{/title}
 
 {if $prefs.sender_email eq ''}
-{tr _0="tiki-admin.php?lm_criteria=sender_email&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0">here</a>{/tr}
+{tr _0="tiki-admin.php?page=general&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0">here</a>{/tr}
 {/if}
 
 <form method="post" action="">
@@ -35,18 +35,22 @@
 			selector.parents('fieldset:not(.tabcontent)').show();
 			selector.closest('fieldset.tabcontent').addClass('filled');
 		};
+		var hide = function (selector) {
+			selector.hide();
+			selector.parents('fieldset:not(.tabcontent)').hide();
+		};
 
 		var filters = [];
-		var prefs = $('.adminoptionbox.preference').hide();
+		var prefs = $('.adminoptionbox.preference, .admbox').hide();
 		prefs.parents('fieldset:not(.tabcontent)').hide();
 		prefs.closest('fieldset.tabcontent').removeClass('filled');
 		$('.preffilter').each(function () {
-			var targets = $('.adminoptionbox.preference.' + $(this).val());
+			var targets = $('.adminoptionbox.preference.' + $(this).val() + ',.admbox.' + $(this).val());
 			if ($(this).is(':checked')) {
 				filters.push($(this).val());
 				show(targets);
 			} else if ($(this).is('.negative:not(:checked)')) {
-				targets.hide();
+				hide(targets);
 			}
 		});
 

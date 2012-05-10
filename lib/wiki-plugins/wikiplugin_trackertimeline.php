@@ -13,6 +13,7 @@ function wikiplugin_trackertimeline_info()
 		'description' => tra('Show a timeline view of a tracker'),
 		'prefs' => array( 'wikiplugin_trackertimeline', 'feature_trackers' ),
 		'icon' => 'img/icons/timeline_marker.png',
+		'format' => 'html',
 		'params' => array(
 			'tracker' => array(
 				'required' => true,
@@ -75,7 +76,7 @@ function wikiplugin_trackertimeline_info()
 			'scale1' => array(
 				'required' => false,
 				'name' => tra('Primary Scale Unit'),
-				'description' => tra('Unit of time to use for the primary scale (default to hour - * denotes SIMILE only)'),
+				'description' => tra('Unit of time to use for the primary scale (default to hour - * SIMILE only)'),
 				'filter' => 'alpha',
 				'default' => 'hour',
 				'options' => array(
@@ -92,7 +93,7 @@ function wikiplugin_trackertimeline_info()
 			'scale2' => array(
 				'required' => false,
 				'name' => tra('Secondary Scale Unit'),
-				'description' => tra('Unit of time to use for the secondary scale (default to empty - * denotes SIMILE only)'),
+				'description' => tra('Unit of time to use for the secondary scale (default to empty - * SIMILE only)'),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -106,6 +107,20 @@ function wikiplugin_trackertimeline_info()
 					array('text' => tra('Century *'), 'value' => 'century'),
 				)
 			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Timeline height'),
+				'description' => tra('Height of the timeline band as a CSS unit (default: 250px -  - * SIMILE only)'),
+				'filter' => 'text',
+				'default' => '250px',
+			),
+			'band2_height' => array(
+				'required' => false,
+				'name' => tra('Lower band height'),
+				'description' => tra('Height of the lower timeline band as a percentage (default: 30 -  - * SIMILE only)'),
+				'filter' => 'int',
+				'default' => '30',
+			),
 			'link_group' => array(
 				'required' => false,
 				'name' => tra('Link Group Name'),
@@ -113,8 +128,8 @@ function wikiplugin_trackertimeline_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
@@ -152,10 +167,13 @@ function wikiplugin_trackertimeline( $data, $params )
 	global $trklib, $smarty, $tikilib;
 	require_once 'lib/trackers/trackerlib.php';
 
+	static $instance = 0;
+	$instance++;
+
 	if ( ! isset( $params['tracker'] ) )
 		return "^" . tr("Missing parameter: %0", 'tracker') . "^";
 
-	$default = array('scale1' => 'hour', 'simile_timeline' => 'n');
+	$default = array('scale1' => 'hour', 'simile_timeline' => 'n', 'height' => '250px', 'band2_height' => 30);
 	$params = array_merge($default, $params);
 	$formats = array('hour'=>'H:i', 'day'=>'jS', 'week' => 'jS', 'month'=>'m', 'year'=>'y');
 
@@ -281,14 +299,14 @@ function wikiplugin_trackertimeline( $data, $params )
 				'events' => $events,
 			);
 		}
-		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
+		$js = 'var ttl_eventData_' . $instance . ' = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
-setTimeout( function(){ ttlInit("ttl_timeline",ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '"); }, 1000);
+setTimeout( function(){ ttlInit("ttl_timeline_' . $instance . '",ttl_eventData_' . $instance . ',"' . $params['scale1'] . '","' . $params['scale2'] . '","' . $params['band2_height'] . '"); }, 1000);
 ';
 
 		$headerlib->add_jq_onready($js, 10);
-		$out = '<div id="ttl_timeline" style="height: 250px; border: 1px solid #aaa"></div>';
+		$out = '<div id="ttl_timeline_' . $instance . '" style="height: ' . $params['height'] . '; border: 1px solid #aaa"></div>';
 		return $out;
 	}
 }

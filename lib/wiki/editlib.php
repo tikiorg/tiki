@@ -722,7 +722,9 @@ class EditLib
 		
 		$parsed = html_entity_decode($parsed, ENT_QUOTES, 'UTF-8');
 		$parsed = preg_replace('/\t/', '', $parsed); // remove all tabs inserted by the CKE
-		
+
+		$parsed = preg_replace_callback('/<pre class=["\']tiki_plugin["\']>(.*?)<\/pre>/ims', array($this, 'parseToWikiPlugin'), $parsed);	// rempve plugin wrappers
+
 		$parsed = $this->parse_html($parsed);
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im', '(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/&nbsp;/m', ' ', $parsed);												// spaces
@@ -743,6 +745,12 @@ class EditLib
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed, ENT_QUOTES);
 		return $parsed;
+	}
+
+	function parseToWikiPlugin($matches) {
+		if (count($matches) > 1) {
+			return nl2br($matches[1]);
+		}
 	}
 
 	/**

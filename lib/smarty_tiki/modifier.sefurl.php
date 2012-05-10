@@ -24,7 +24,12 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 		case 'wiki page':
 		case 'wikipage':
 			$type = 'wiki';
-
+			break;
+		case 'blog post':
+			$type = 'blogpost';
+			break;
+	}
+	switch ($type) {
 		case 'wiki':
 			return $wikilib->sefurl($source, $with_next, $all_langs);
 
@@ -32,7 +37,6 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			$href = $sefurl ? "blog$source" : "tiki-view_blog.php?blogId=$source";
 						break;
 
-		case 'blog post':
 		case 'blogpost':
 			$href = $sefurl ? "blogpost$source" : "tiki-view_blog_post.php?postId=$source";
 						break;

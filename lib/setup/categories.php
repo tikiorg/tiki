@@ -34,8 +34,10 @@ if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == '
 	if (!empty($objectType)) {
 		if (isset($here['itemkey']) && isset($_REQUEST[$here['itemkey']]) && isset($here['itemObjectType'])) {
 			$objectCategoryIds = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']]);
+			$objectCategoryIdsNoJail = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']], -1, false);
 		} elseif (isset($here['key']) && isset($_REQUEST[$here['key']])) {
 			$objectCategoryIds = $categlib->get_object_categories($objectType, $key);
+			$objectCategoryIdsNoJail = $categlib->get_object_categories($objectType, $key, -1, false);
 		}
 	}
 	$smarty->assign_by_ref('objectCategoryIds', $objectCategoryIds);

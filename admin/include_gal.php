@@ -67,9 +67,9 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 			|| ($_REQUEST['mvimg'] == 'to_db' && $prefs['gal_use_db'] == 'y')
 	) {
 		$mvresult = $imagegallib->move_gallery_store($_REQUEST['move_gallery'], $_REQUEST['mvimg']);
-		$mvmsg = sprintf(tra('moved %d images, %d errors occured.'), $mvresult['moved_images'], $mvresult['errors']);
+		$mvmsg = sprintf(tra('moved %d images, %d errors occurred.'), $mvresult['moved_images'], $mvresult['errors']);
 		if ($mvresult['timeout']) {
-			$mvmsg.= ' ' . tra('a timeout occured. Hit the reload button to move the rest');
+			$mvmsg.= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 		}
 		$tikifeedback[]['mes'] = $mvmsg;
 	}
@@ -105,9 +105,9 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 			|| ($_REQUEST['mvimg'] == 'to_db' && $prefs['gal_use_db'] == 'y')
 	) {
 		$mvresult = $imagegallib->move_gallery_store($_REQUEST['move_gallery'], $_REQUEST['mvimg']);
-		$mvmsg = sprintf(tra('moved %d images, %d errors occured.'), $mvresult['moved_images'], $mvresult['errors']);
+		$mvmsg = sprintf(tra('moved %d images, %d errors occurred.'), $mvresult['moved_images'], $mvresult['errors']);
 		if ($mvresult['timeout']) {
-			$mvmsg .= ' ' . tra('a timeout occured. Hit the reload button to move the rest');
+			$mvmsg .= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 		}
 		$tikifeedback[]['mes'] = $mvmsg;
 	}

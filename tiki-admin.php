@@ -293,6 +293,7 @@ $icons = array(
 		'title' => tr('Maps'),
 		'description' => tr('Settings and features for maps'),
 		'help' => 'Maps',
+		'disabled' => $prefs['feature_maps'] !== 'y',
 	),
 	"performance" => array(
 		'position' => '-400px -115px;',
@@ -334,6 +335,9 @@ $icons = array(
 		'icon' => 'img/icons/large/rating.png',
 		'title' => tr('Rating'),
 		'help' => 'Advanced+Rating',
+		'disabled' => $prefs['wiki_simple_ratings'] !== 'y' &&
+						$prefs['rating_advanced'] !== 'y' &&
+						$prefs['article_user_rating'] !== 'y',
 	),
 	"search" => array(
 		'icon' => 'img/icons/large/xfce4-appfinder.png',
@@ -341,6 +345,8 @@ $icons = array(
 		'title' => tr('Search'),
 		'description' => tr('Search configuration'),
 		'help' => 'Search',
+		'disabled' => $prefs['feature_search'] !== 'y' &&
+							$prefs['feature_search_fulltext'] !== 'y',
 	),
 	"wiki" => array(
 		'position' => '-400px -215px;',
