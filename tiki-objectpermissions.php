@@ -216,10 +216,11 @@ if (isset($_REQUEST['remove'])) {
 
 if (isset($_REQUEST['copy'])) {
 	$newPermissions = get_assign_permissions();
+	$filter = TikiFilter::get('text');
 	$to_copy = array(
-					'perms' => $newPermissions->getPermissionArray(), 
-					'object' => $_REQUEST['objectId'], 
-					'type' => $_REQUEST['objectType']
+					'perms' => $newPermissions->getPermissionArray(),
+					'object' => $filter->filter($_REQUEST['objectId']),
+					'type' => $filter->filter($_REQUEST['objectType'])
 	);
 	$_SESSION['perms_clipboard'] = serialize($to_copy);
 }
@@ -227,11 +228,12 @@ if (isset($_REQUEST['copy'])) {
 if (!empty($_SESSION['perms_clipboard'])) {
 	$perms_clipboard = unserialize($_SESSION['perms_clipboard']);
 	$smarty->assign(
-					'perms_clipboard_source', 
+					'perms_clipboard_source',
 					$perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']
 	);
 
 	if (isset($_REQUEST['paste'])) {
+		$access->check_authenticity(tra('Are you sure you want paste the copied permissions onto this object?'));
 		unset($_SESSION['perms_clipboard']);
 		
 		$set = new Perms_Reflection_PermissionSet;
