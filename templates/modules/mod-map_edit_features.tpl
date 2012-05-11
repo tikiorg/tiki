@@ -52,12 +52,7 @@
 			});
 
 		$(map).one('initialized', function () {
-			var vlayer = new OpenLayers.Layer.Vector( "Editable", {
-				onFeatureInsert: function (feature) {
-				}
-			}), toolbar, modify;
-			map.map.addLayer(vlayer);
-			map.vectors = vlayer;
+			var vlayer = map.vectors, toolbar, modify;
 
 			function saveFeature() {
 				var format = new OpenLayers.Format.GeoJSON;
