@@ -185,7 +185,7 @@ if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 $events = array();
 foreach ($listevents as $event) {
 	if ($event['modifiable'] === 'y') {
-		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&calitemId='.$event['calitemId'];
+		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&viewcalitemId='.$event['calitemId']; // renamed &calitemId with &viewcalitemId to prevent at leat the issue displaying the item in view mode for anons without edit perms
 	} else {
 		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&viewcalitemId='.$event['calitemId'];
 	}
