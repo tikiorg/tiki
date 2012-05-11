@@ -196,7 +196,7 @@ function wikiplugin_trackeritemfield($data, $params)
 			if (($field_value['type'] == 'p' && $field_value['options_array'][0] == 'password') || ($field_value['isHidden'] != 'n' && $field_value['isHidden'] != 'c'))
 				continue;
 
-			if (! $itemObject->getViewField($field_value['fieldId'])) {
+			if (! $itemObject->canViewField($field_value['fieldId'])) {
 				continue;
 			}
 
