@@ -20,6 +20,14 @@ $headerlib->add_cssfile('css/calendar.css', 20);
 # 	$tiki_p_add_events
 $access->check_feature('feature_calendar');
 
+$auto_query_args = array(
+	'viewmode',
+	'calIds',
+	'find',
+	'mode',
+	'sort_mode',
+);
+
 $maxSimultaneousWeekViewEvents = 3;
 
 $myurl = 'tiki-calendar.php';
