@@ -22,3 +22,8 @@
 	</tr><!-- {cycle} -->
 {/foreach}
 </table>
+{*Pagination *}
+{if !empty($events) && $usePagination ne 'n'}
+	{pagination_links cant=$cant step=$maxEvents offset=$offset}{/pagination_links}
+{/if}
+

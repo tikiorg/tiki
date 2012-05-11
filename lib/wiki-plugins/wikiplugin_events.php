@@ -57,6 +57,24 @@ function wikiplugin_events_info()
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
+			// Pagination
+			'timespan' => array(
+				'required' => false,
+				'name' => tra('Timespan'),
+				'description' => tra('all, past, future (default)'),
+			),
+			'usePagination' => array(
+				'required' => false,
+				'name' => tra('Use Pagination'),
+				'description' => tra('Activate pagination when Events listing are long. Default is n'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
+			),
 		),
 	);
 }
@@ -87,6 +105,19 @@ function wikiplugin_events($data,$params)
 	if (!isset($desc)) {
 		$desc=1;
 	}
+	
+	// Pagination 
+	if (!isset($timespan)) { $timespan = "future"; }
+	
+	if ($usePagination == 'y')
+	{
+		if (!isset($_REQUEST["offset"])) {
+			$start = 0;
+		} else {
+			$start = $_REQUEST["offset"];
+		}
+	}
+	
 	
 
 	$rawcals = $calendarlib->list_calendars();
@@ -121,6 +152,26 @@ function wikiplugin_events($data,$params)
 			$viewable[] = $cal_id;
 		}
 	}
+	
+	// Pagination
+    if($timespan == "future") {
+	$events = $calendarlib->upcoming_events($max,
+		array_intersect($calIds, $viewable),
+		$maxdays,'start_asc', 1, 0, $start);
+	}
+	
+    if($timespan == "all") {
+	$events = $calendarlib->all_events($max,
+		array_intersect($calIds, $viewable),
+		$maxdays,'start_asc', 1, 0, $start);
+	}
+	
+    if($timespan == "past"){
+	$events = $calendarlib->past_events($max,
+		array_intersect($calIds, $viewable),
+		$maxdays, 'start_desc', 0, -1, $start);  
+	} 
+
 
 	if (isset($calendarid)) {
 		$calIds=explode("|", $calendarid);
@@ -130,6 +181,21 @@ function wikiplugin_events($data,$params)
 	$smarty->assign_by_ref('datetime', $datetime);
 	$smarty->assign_by_ref('desc', $desc);
 	$smarty->assign_by_ref('events', $events);
+	
+	// Pagination	
+	if ($usePagination == 'y'){
+	
+		$smarty->assign('maxEvents', $max);
+		$smarty->assign_by_ref('offset', $start);
+		$smarty->assign_by_ref('cant', $events['cant']);
+		
+	}
+	
+	$smarty->assign('usePagination', $usePagination);
+	$smarty->assign_by_ref('events', $events['data']);
+	$smarty->assign_by_ref('actions', $actions);
+
+	
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_events.tpl').'~/np~';
 
 	$repl="";		
