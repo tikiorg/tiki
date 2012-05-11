@@ -17,6 +17,12 @@ include_once ('lib/userprefs/userprefslib.php');
 if (!isset($_REQUEST["user"])) {
 	die;
 }
+
+if (isset($_REQUEST['fullsize']) && $_REQUEST['fullsize'] == 'y' && $prefs["user_store_file_gallery_picture"] == 'y' && $user_picture_id = $userprefslib->get_user_picture_id($_REQUEST["user"]) ) {
+	header('Location: tiki-download_file.php?fileId=' . $user_picture_id . '&amp;display=y');
+	die;
+}
+
 $info = $userprefslib->get_user_avatar_img($_REQUEST["user"]);
 $type = $info["avatarFileType"];
 $content = $info["avatarData"];
