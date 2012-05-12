@@ -597,8 +597,10 @@ class BlogLib extends TikiDb_Bridge
 		global $user, $tikilib, $userlib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
 
 		// TODO: use commentslib instead of querying database directly
-		$query = "SELECT b.`title`, b.`postId`, b.`priv`, blog.`user`, blog.`public`, c.`threadId`, c.`title` as commentTitle, c.`website`, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b, `tiki_blogs` blog WHERE `objectType`='post' AND b.`postId`=c.`object` AND blog.`blogId`=b.`blogId`";
-
+		// Blog Recent Comments
+		  $query = "SELECT b.`title`, b.`postId`, b.`priv`, blog.`user`, blog.`public`, c.`threadId`, c.`title` as commentTitle, c.`website`, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b, `tiki_blogs` blog WHERE `objectType`='blog post' AND b.`postId`=c.`object` AND blog.`blogId`=b.`blogId`";
+		
+		
 		$bindvars = array();
 		$globalperms = Perms::get();
 		if ( !$globalperms->admin_comment ) {
