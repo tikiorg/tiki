@@ -277,8 +277,8 @@ class BigBlueButtonLib
 			$recording = simplexml_import_dom($recording);
 			$info = array(
 					'recordID' => (string) $recording->recordID,
-					'startTime' => strtotime((string) $recording->startTime),
-					'endTime' => strtotime((string) $recording->endTime),
+					'startTime' => floor(((string) $recording->startTime)/1000), 
+					'endTime' => ceil(((string) $recording->endTime)/1000), 
 					'playback' => array(),
 			);
 
