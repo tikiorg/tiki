@@ -286,10 +286,18 @@ class BigBlueButtonLib
 				$info['playback'][ (string) $playback->format->type ] = (string) $playback->format->url;
 			}
 
+			usort($data, array("BigBlueButtonLib", "cmpStartTime"));
 			$data[] = $info;
 		}
 
 		return $data;
+	}
+
+	private static function cmpStartTime( $a, $b ) {
+		if ($a['startTime'] == $b['startTime']) {
+			return 0;
+		}
+		return ($a['startTime'] > $b['startTime']) ? -1 : 1;
 	}
 }
 
