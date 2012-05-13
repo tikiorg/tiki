@@ -286,10 +286,10 @@ class BigBlueButtonLib
 				$info['playback'][ (string) $playback->format->type ] = (string) $playback->format->url;
 			}
 
-			usort($data, array("BigBlueButtonLib", "cmpStartTime"));
 			$data[] = $info;
 		}
 
+		usort($data, array("BigBlueButtonLib", "cmpStartTime"));
 		return $data;
 	}
 
