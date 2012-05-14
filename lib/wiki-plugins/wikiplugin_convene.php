@@ -431,6 +431,19 @@ FORM;
 					.val($(this).val())
 					.insertAfter(this)
 					.change(function() {
+						var cl = '';
+
+						switch($(this).val() * 1) {
+							case 1:     cl = 'convene-ok';break;
+							case -1:    cl = 'convene-no';break;
+							default:    cl = 'convene-unconfirmed';
+						}
+
+						$(this)
+							.parent()
+							.removeClass('convene-no convene-ok convene-unconfirmed')
+							.addClass(cl);
+
 						convene$i.updateUsers = true;
 					});
 			});
@@ -447,7 +460,6 @@ FORM;
 			$('.conveneMain$i').show();
 			$(this).find('img').attr('src', 'img/icons/pencil.png');
 			var parent = $(this).parent().parent();
-			parent.find('.vote').show();
 			parent.find('select').each(function(i) {
 				parent.find('input.conveneUserVote$i').eq(i).val( $(this).val() );
 
