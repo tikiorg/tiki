@@ -697,3 +697,23 @@ content
  		//php $$ = $this->plugin($3);
  	}
  ;
+
+%% /* parser extensions */
+
+// additional module code //js
+parser.extend = { //js
+	parser: function(extension) { //js
+        if (extension) { //js
+            for (var attr in extension) { //js
+                parser[attr] = extension[attr]; //js
+            } //js
+        } //js
+    }, //js
+    lexer: function() { //js
+		if (extension) { //js
+			for (var attr in extension) { //js
+				parser[attr] = extension[attr]; //js
+			} //js
+       	} //js
+	} //js
+}; //js

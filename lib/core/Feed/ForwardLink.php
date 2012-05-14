@@ -231,7 +231,7 @@ JQ
 									});
 
 									$.post('tiki-ajax_services.php?controller=tracker&action=' + itemAction + '&' + frm.serialize() + '&itemId=' + itemId + '&trackerId=' + trackerId + '&' + fields, function() {
-										//document.location = document.location + '';
+										document.location = document.location + '';
 									});
 									return false;
 								});
