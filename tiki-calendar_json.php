@@ -184,10 +184,10 @@ if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 
 $events = array();
 foreach ($listevents as $event) {
-	if ($event['modifiable'] === 'y') {
-		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&calitemId='.$event['calitemId'];
+	if ($event['modifiable'] === 'y' and $cal_data["tiki_p_change_events"] == 'y') {
+		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&calitemId='.$event['calitemId']; 
 	} else {
-		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&viewcalitemId='.$event['calitemId'];
+		$url = 'tiki-calendar_edit_item.php?viewcalitemId='.$event['calitemId']; // removed fullcalendar=y param to prevent display without tpl for anons in some setups
 	}
 	$events[] = array ( 'id' => $event['calitemId'],
 											'title' => $event['name'],

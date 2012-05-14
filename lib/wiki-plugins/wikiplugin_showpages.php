@@ -61,7 +61,7 @@ function wikiplugin_showpages($data, $params)
 		$display = 'name|desc';
 	}
 
-	$data = $tikilib->list_pages(0, $max, 'pageName_asc', $find);
+	$data = $tikilib->list_pages(0, $max, 'pageName_asc', $find, null, false);
 
 	$text = '';
 

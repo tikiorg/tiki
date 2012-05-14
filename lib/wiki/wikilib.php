@@ -1435,8 +1435,11 @@ class convertToTiki9
 			$name = $match->getName();
 			$meta = $this->parserlib->plugin_info($name);
 			$args = $this->argumentParser->parse($match->getArguments());
-			$body = $match->getBody();
 
+			//RobertPlummer - pre 9, latest findings from v8 is that the < and > chars are THE ONLY ones converted to &lt; and &gt; everything else seems to be decoded
+			$body = $match->getBody();
+			$body = htmlspecialchars_decode($body);
+			$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $body);
 			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 		}
 
@@ -1448,7 +1451,7 @@ class convertToTiki9
 
 			//Here we detect if a plugin was double encoded and this is the second decode
 			if (preg_match("/&amp;&/i", $argsRaw) || preg_match("/&quot;/i", $argsRaw) || preg_match("/&gt;/i", $argsRaw)) { //try to detect double encoding
-				$argsRaw = html_entity_decode($argsRaw);				// decode entities in the plugin args (usually &quot;)
+				$argsRaw = htmlspecialchars_decode($argsRaw);				// decode entities in the plugin args (usually &quot;)
 			}
 
 			$args = $this->argumentParser->parse($argsRaw);

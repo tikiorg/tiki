@@ -13,7 +13,7 @@
   Note: IE6 works fine without this fix.
 */
 
-body {
+body.tiki {
   min-width: 960px;
 }
 

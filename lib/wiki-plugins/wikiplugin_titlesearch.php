@@ -114,7 +114,7 @@ class WikiPluginTitleSearch extends PluginsLib
 		/////////////////////////////////
 		//
 		$sOutput = "";
-		$aPages = $tikilib->list_pages(0, -1, 'pageName_desc', $search);
+		$aPages = $tikilib->list_pages(0, -1, 'pageName_desc', $search, null, false);
 		foreach ($aPages["data"] as $idPage => $aPage) {
 			if (in_array($aPage["pageName"], $exclude)) {
 				unset($aPages["data"][$idPage]);

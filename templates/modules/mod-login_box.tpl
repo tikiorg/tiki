@@ -207,12 +207,15 @@ function doChallengeResponse() {
 			<input class="button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
 		</div>
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
-			<div>
+			<div {if $mode eq 'header'}style="text-align: right; display:block"{/if}>
 				{strip}
 				{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
-					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password.{/tr}</a></div>
+					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
 				{/if}
 				{if $module_params.show_register eq 'y' && $prefs.allowRegister eq 'y'}
+						{if $mode eq 'header' && $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
+							&nbsp;|&nbsp;
+						{/if}
 					<div class="register"><a {*class="linkmodule"*} href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
 				{/if}
 				{/strip}

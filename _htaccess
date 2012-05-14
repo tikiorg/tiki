@@ -15,6 +15,17 @@
 
 # DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers. See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized
 
+#Redirect bogus directories, which otherwise cause a broken page to upload very slowly
+#e.g., try yourdomain.com/bogus/ or yourdomain.com/tiki/bogus/ and see what happens
+#The below may not work in all configurations depending on redirects already in place
+#If certain directories containing other programs are legitimate (eg when tiki is installed in a subdirectory),
+#then you will first need a condition like the following
+#RewriteCond %{REQUEST_URI} !(^/otherokaydirectory/)
+#Then use something like this if your tiki program is in a subdirectory
+#RewriteRule ^(.+[^/])/$  /tiki/HomePage [R=301,L]
+#Use this if tiki is installed in the root (above condition probably not necessary in this case)
+#RewriteRule ^(.+[^/])/$  /HomePage [R=301,L]
+
 # This prevents reading of files with certain extensions.
 <FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
 	order deny,allow
@@ -197,7 +208,12 @@ RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 # Stop processing filenames here, so that 404 errors are returned (for example if the URL contains a typo like tiki-indexx.php) rather than being interpreted as a match to a broad rule.
 # "Dirty URL"s will stop here.
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [last]
- 
+
+#Redirst addresses with bogus directories: e.g., yourdomain.com/bogus/.*
+#Otherwise causes a broken page to load
+#RewriteRule ^.*/.*$ http://www.yourdomain.com/Page+Not+Found    [L]
+
+
 RewriteRule ^tiki-([a-z_]+)-([a-z_]+) tiki-ajax_services.php?controller=$1&action=$2		[QSA,L]
 RewriteRule ^tiki-([a-z_]+)         tiki-ajax_services.php?controller=$1		[QSA,L] # action may be specified in request body (POST)
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]

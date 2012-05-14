@@ -277,8 +277,8 @@ class BigBlueButtonLib
 			$recording = simplexml_import_dom($recording);
 			$info = array(
 					'recordID' => (string) $recording->recordID,
-					'startTime' => strtotime((string) $recording->startTime),
-					'endTime' => strtotime((string) $recording->endTime),
+					'startTime' => floor(((string) $recording->startTime)/1000), 
+					'endTime' => ceil(((string) $recording->endTime)/1000), 
 					'playback' => array(),
 			);
 
@@ -289,7 +289,15 @@ class BigBlueButtonLib
 			$data[] = $info;
 		}
 
+		usort($data, array("BigBlueButtonLib", "cmpStartTime"));
 		return $data;
+	}
+
+	private static function cmpStartTime( $a, $b ) {
+		if ($a['startTime'] == $b['startTime']) {
+			return 0;
+		}
+		return ($a['startTime'] > $b['startTime']) ? -1 : 1;
 	}
 }
 

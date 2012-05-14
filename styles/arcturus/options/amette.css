@@ -168,6 +168,25 @@ h1 a.pagetitle:hover {
 	text-decoration: none;
 }
 
+div.articletitle h2 a {
+	color: white;
+	background: #24880c url(amette/gradient.png) center center repeat-x;
+	text-decoration: none;
+}
+
+
+div.articletitle h2 a:visited {
+	color: #eef5ee;
+	background: #24880c url(amette/gradient.png) center center repeat-x;
+	text-decoration: none;
+}
+
+div.articletitle h2 a:hover {
+	color: blue;
+	background: #24880c url(amette/gradient.png) center center repeat-x;
+	text-decoration: none;
+}
+
 .box {
 	background-color: #eef5ee;
 	border: none;

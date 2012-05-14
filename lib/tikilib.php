@@ -5736,8 +5736,9 @@ function validate_email($email)
 
 function makeBool($val, $default)
 {
+	// Warning: This function is meant to return a string 'true' or 'false' to be used in JS, not a real boolean value
 	if (isset($val) && !empty($val)) {
-		$val = ($val == 'y' ? 'true' : 'false');
+		$val = ($val == 'y' ? true : false);
 	} else {
 		$val = $default;
 	}
