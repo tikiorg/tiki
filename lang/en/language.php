@@ -9511,7 +9511,7 @@ $lang = array(
 // "Preferences Search Results" => "Preferences Search Results",
 // "No preferences were found for your search query" => "No preferences were found for your search query",
 // "Database Version Problem" => "Database Version Problem",
-// "Your database requires an update to match the current Tiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provokes errors" => "Your database requires an update to match the current Tiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provokes errors",
+"Your database requires an update to match the current Tiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provokes errors" => "Your database requires an update to match the the Tiki version; use <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version will cause errors",
 // "A new version of Tiki, <b>{\$prefs.tiki_release}</b>, is available. You are currently running <b>{\$tiki_version}</b>. Please visit <a href=\"http://tiki.org/Download\">tiki.org/Download</a>" => "A new version of Tiki, <b>{\$prefs.tiki_release}</b>, is available. You are currently running <b>{\$tiki_version}</b>. Please visit <a href=\"http://tiki.org/Download\">tiki.org/Download</a>",
 // "Enabled" => "Enabled",
 // "Changed" => "Changed",
