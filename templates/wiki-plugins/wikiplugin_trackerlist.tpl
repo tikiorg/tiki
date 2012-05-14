@@ -60,7 +60,7 @@
 		{if $showfieldname ne 'n' and empty($tpl)}
 	<tr>
 
-			{if $checkbox}<th>{$checkbox.title}</td>{/if}
+			{if $checkbox}<th>{$checkbox.title}</th>{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 		<th class="auto" style="width:20px;">&nbsp;</th>
 			{/if}
