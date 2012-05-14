@@ -46,9 +46,9 @@ function wikiplugin_group($data, $params)
 {
 	global $user, $prefs, $tikilib, $smarty;
 	$dataelse = '';
-	if (strpos($data, '{ELSE}')) {
-		$dataelse = substr($data, strpos($data, '{ELSE}')+6);
-		$data = substr($data, 0, strpos($data, '{ELSE}'));
+	if (strrpos($data, '{ELSE}')) {
+		$dataelse = substr($data, strrpos($data, '{ELSE}')+6);
+		$data = substr($data, 0, strrpos($data, '{ELSE}'));
 	}
 
 	if (!empty($params['friends']) && $prefs['feature_friends'] == 'y') {
