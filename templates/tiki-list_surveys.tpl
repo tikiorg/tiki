@@ -28,7 +28,7 @@
 					{else}
 						<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name|escape}</a>
 					{/if}
-					<div class="subcomment">{wiki}{$channels[user].description|escape}{/wiki}</div>
+					<div class="subcomment">{wiki}{$channels[user].description}{/wiki}</div>
 				</td>
 				<td class="text">
 					{$channels[user].questions}
