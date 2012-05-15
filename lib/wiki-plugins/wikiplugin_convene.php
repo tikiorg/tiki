@@ -158,7 +158,7 @@ function wikiplugin_convene($data, $params)
 				$text = 	"<img src='img/icons/cross.png' alt='" . tr('Not ok') . "' class='vote' />";
 			} else {
 				$class = 	"ui-state-default convene-unconfirmed";
-				$text = 	"";
+				$text = 	"<img src='img/icons/grey_question.png' alt='" . tr('Unconfirmed') . "' class='vote' />";
 			}
 			
 			$userList .= "<td class='$class'>". $text
