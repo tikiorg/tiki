@@ -155,7 +155,7 @@ function wikiplugin_convene($data, $params)
 				$text = 	"<img src='img/icons/tick.png' alt='" . tr('Ok') . "' class='vote' />";
 			} elseif ($vote == -1) {
 				$class = 	"ui-state-default convene-no";
-				$text = 	"<img src='img/icons/cross.png' alt='" . tr('No') . "' class='vote' />";
+				$text = 	"<img src='img/icons/cross.png' alt='" . tr('Not ok') . "' class='vote' />";
 			} else {
 				$class = 	"ui-state-default convene-unconfirmed";
 				$text = 	"";
@@ -425,7 +425,7 @@ FORM;
 			parent.find('input').each(function() {
 				$('<select>' +
 					'<option value="">' + tr('Unconfirmed') + '</option>' +
-				    '<option value="-1">' + tr('No') + '</option>' +
+				    '<option value="-1">' + tr('Not ok') + '</option>' +
 				    '<option value="1">' + tr('Ok') + '</option>' +
 				'</select>')
 					.val($(this).val())
