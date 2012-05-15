@@ -440,16 +440,16 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	//if current time of day is within the calendar day (between startday and endday), then use now as start, otherwise use beginning of calendar day
 	$now_start = $tikilib->make_time(
 					abs(ceil($calendar['startday']/(60*60))),
-					0,
-					0,
+					TikiLib::date_format('%M', $now),
+					TikiLib::date_format('%S', $now),
 					TikiLib::date_format('%m', $now),
 					TikiLib::date_format('%d', $now),
 					TikiLib::date_format('%Y', $now)
 	);
 	$now_end = $tikilib->make_time(
 					abs(ceil($calendar['endday']/(60*60))),
-					0,
-					0,
+					TikiLib::date_format('%M', $now),
+					TikiLib::date_format('%S', $now),
 					TikiLib::date_format('%m', $now),
 					TikiLib::date_format('%d', $now),
 					TikiLib::date_format('%Y', $now)
