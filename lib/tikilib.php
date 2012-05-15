@@ -2605,6 +2605,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$wikilib->remove_footnote('', $page);
+		$this->refresh_index('wiki page', $page);
 
 		return true;
 	}

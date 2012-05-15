@@ -989,17 +989,6 @@ if (
 	$cat_name = $_REQUEST["page"];
 	$cat_href = "tiki-index.php?page=" . urlencode($cat_objid);
 	$cat_lang = $_REQUEST['lang'];
-	include_once("categorize.php");
-	include_once("poll_categorize.php");
-
-	/*RP NOTE: freetabs was causing larger site's pages to be lost when editing sections
-	 * this has to do with lucene indexing being refreshed.
-	 * this was traced to lib/core/Search/Index -> getGlobalContent();
-	 * This seems to divert it when sections are being edited, please either fix or leave
-	 * */
-	if(!isset($_REQUEST['hdr'])) {
-		include_once("freetag_apply.php");
-	}
 
 	$page = $_REQUEST["page"];
 
@@ -1149,6 +1138,19 @@ if (
 			}
 		}
 	}
+
+	include_once("categorize.php");
+	include_once("poll_categorize.php");
+	
+	/*RP NOTE: freetabs was causing larger site's pages to be lost when editing sections
+	 * this has to do with lucene indexing being refreshed.
+	 * this was traced to lib/core/Search/Index -> getGlobalContent();
+	 * This seems to divert it when sections are being edited, please either fix or leave
+	 * */
+	if(!isset($_REQUEST['hdr'])) {
+		include_once("freetag_apply.php");
+	}
+
 	//Page may have been inserted from a structure page view
 	if (isset($_REQUEST['current_page_id']) ) {
 		$page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);

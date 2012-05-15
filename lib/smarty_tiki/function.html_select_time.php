@@ -88,7 +88,7 @@ function smarty_function_html_select_time($params, $smarty)
 	if ($prefix == 'end_') {
 		$time_hr24 = TikiLib::date_format('%H%M%s', $time);
 	}
-	
+
 	$html_result = '';
 
 	if ($display_hours) {
@@ -154,17 +154,47 @@ function smarty_function_html_select_time($params, $smarty)
 
 	if ($display_minutes) {
 		$all_minutes = range(0, 59);
-		for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval)
+		for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval) {
 			$minutes[] = sprintf('%02d', $all_minutes[$i]);
+		}
 
 		if ($minute_interval > 1) {
 			$minutes[] = 59;
 		}
-		if ($prefix == 'end_' && ($time_hr24 == '000000' || strftime('%M', $time) == 59)) {
+
+		$minute = strftime('%M', $time);
+		if (in_array($minute, $minutes) == false) {
+			for ($i = 0, $for_max = count($minutes); $i < $for_max; $i++ ) {
+				if (
+					(int)$minute > (int)$minutes[$i] &&
+					(
+						(int)$minute < (int)$minutes[$i + 1] ||
+						empty($minutes[$i + 1])
+					)
+				) {
+					array_splice($minutes, $i + 1, 0, $minute);
+					$i = $for_max;
+				}
+			}
+		}
+
+		if ($prefix == 'end_' && ($time_hr24 == '000000' || $minute == 59)) {
 			$selected = 59;
 		} else {
-			$selected = $time == '--' ? $minute_empty : intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
+			if ($time == '--') {
+				$selected = $minute_empty;
+			} else if (in_array($minute, $minutes)) {
+				$selected = $minute;
+			} else {
+				$selected = intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
+			}
 		}
+
+		//minute intervals less than 10 are followed by a '0', here we ensure that they are selectable
+		if (strlen($selected) == 1) {
+			$selected = '0'.$selected;
+		}
+
 		$html_result .= '<select name=';
 		if (null !== $field_array) {
 			$html_result .= '"' . $field_array . '[' . $prefix . 'Minute]"';

@@ -152,10 +152,13 @@ function wikiplugin_convene($data, $params)
 		foreach ($row as $stamp => $vote) {
 			if ($vote == 1) {
 				$class = 	"ui-state-default convene-ok";
-				$text = 	"<img src='img/icons/tick.png' alt='" . tr('OK') . "' class='vote' />";
-			} else {
+				$text = 	"<img src='img/icons/tick.png' alt='" . tr('Ok') . "' class='vote' />";
+			} elseif ($vote == -1) {
 				$class = 	"ui-state-default convene-no";
-				$text = 	"<img src='img/icons/cross.png' class='vote' />";
+				$text = 	"<img src='img/icons/cross.png' alt='" . tr('Not ok') . "' class='vote' />";
+			} else {
+				$class = 	"ui-state-default convene-unconfirmed";
+				$text = 	"<img src='img/icons/grey_question.png' alt='" . tr('Unconfirmed') . "' class='vote' />";
 			}
 			
 			$userList .= "<td class='$class'>". $text
@@ -420,10 +423,27 @@ FORM;
 			var parent = $(this).parent().parent();
 			parent.find('.vote').hide();
 			parent.find('input').each(function() {
-				$('<input type="checkbox" value="1"/>')
-					.attr('checked', ($(this).val() == 1 ? true : false))
+				$('<select>' +
+					'<option value="">' + tr('Unconfirmed') + '</option>' +
+				    '<option value="-1">' + tr('Not ok') + '</option>' +
+				    '<option value="1">' + tr('Ok') + '</option>' +
+				'</select>')
+					.val($(this).val())
 					.insertAfter(this)
-					.click(function() {
+					.change(function() {
+						var cl = '';
+
+						switch($(this).val() * 1) {
+							case 1:     cl = 'convene-ok';break;
+							case -1:    cl = 'convene-no';break;
+							default:    cl = 'convene-unconfirmed';
+						}
+
+						$(this)
+							.parent()
+							.removeClass('convene-no convene-ok convene-unconfirmed')
+							.addClass(cl);
+
 						convene$i.updateUsers = true;
 					});
 			});
@@ -440,10 +460,9 @@ FORM;
 			$('.conveneMain$i').show();
 			$(this).find('img').attr('src', 'img/icons/pencil.png');
 			var parent = $(this).parent().parent();
-			parent.find('.vote').show();
-			parent.find('input:checkbox').each(function(i) {
-				parent.find('input.conveneUserVote$i').eq(i).val( $(this).is(':checked') ? 1 : 0);
-				
+			parent.find('select').each(function(i) {
+				parent.find('input.conveneUserVote$i').eq(i).val( $(this).val() );
+
 				$(this).remove();
 			});
 			

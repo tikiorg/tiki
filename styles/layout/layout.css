@@ -1125,6 +1125,9 @@ tr.diffheader {
 .convene-no img { 
 	display: none;   
 }
+.convene-unconfirmed {
+	text-align: center; 
+}
 .conveneFooter, .conveneHeader {
 	text-align: center;
 }
