@@ -3713,3 +3713,11 @@ CREATE TABLE `tiki_db_status` (
   `other` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `tiki_mail_queue`;
+CREATE TABLE `tiki_mail_queue` (
+  `messageId` INT NOT NULL AUTO_INCREMENT ,
+  `message`   TEXT NULL ,
+  `attempts`  INT NOT NULL DEFAULT 0 ,
+  PRIMARY KEY (`messageId`) 
+);
