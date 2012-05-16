@@ -527,6 +527,14 @@ class CalendarLib extends TikiLib
 		global $tikilib, $smarty, $prefs, $user;
 		
 		$nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId']);
+
+		if ($prefs['calendar_watch_editor'] != "y") {
+			for ($i = count($nots) - 1; $i >=0; --$i)
+				if ($nots[$i]['user'] == $data["user"]) {
+					unset($nots[$i]);
+					break;
+				}
+		}
 		
 		if ($prefs['feature_daily_report_watches'] == 'y') {
 			$reportsManager = Reports_Factory::build('Reports_Manager');
