@@ -269,6 +269,7 @@ class SurveyLib extends TikiLib
 			}
 
 			$ids = array();
+			include_once('lib/smarty_tiki/modifier.escape.php');
 			while ($res2 = $result2->fetchRow()) {
 
 				if ($total_votes) {
@@ -282,6 +283,8 @@ class SurveyLib extends TikiLib
 				$res2["width"] = $average * 2;
 				if ($res['type'] == 'x') {
 					$res2['qoption'] = $tikilib->parse_data($res2['qoption']);
+				} else {
+					$res2['qoption'] = smarty_modifier_escape($res2['qoption']);
 				}
 				
 				// when question with multiple options

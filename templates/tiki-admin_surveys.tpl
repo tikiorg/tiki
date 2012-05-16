@@ -38,7 +38,7 @@
 			<td class="text">
 				<b>{$channels[user].name|escape}</b>
 				<div class="subcomment">
-					{wiki}{$channels[user].description|escape}{/wiki}
+					{wiki}{$channels[user].description}{/wiki}
 				</div>
 			</td>
 			<td class="icon">
