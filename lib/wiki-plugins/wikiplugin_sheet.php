@@ -122,8 +122,10 @@ function wikiplugin_sheet($data, $params)
 	extract($params, EXTR_SKIP);
 	$style = (isset($height)) ? "height: $height !important;" : '';
 	$style .= (isset($width)) ? "width: $width;" : '';
-	$urlHeight = (isset($height)) ? "&height=$height" : '';
-	$urlHeight .= (isset($width)) ? "&width=$width" : '';
+//	$urlHeight = (isset($height)) ? "&height=$height" : ''; 
+//	$urlHeight .= (isset($width)) ? "&width=$width" : '';
+	$urlHeight = (isset($height)) ? "&height=100" : ''; // not setting any height or width in the sheet params created for me the literal '...&height=100%&...' or '...&width=100%&...' in the url with a 400 error (bad request). Hardcoding to 100 (instead of 100%) to avoid this error until a better fix is found
+	$urlHeight .= (isset($width)) ? "&width=100" : ''; // not setting any height or width in the sheet params created for me the literal '...&height=100%&...' or '...&width=100%&...' in the url with a 400 error (bad request). Hardcoding to 100 (instead of 100%) to avoid this error until a better fix is found
 	$editable = isset($editable) && $editable == 'n' ? false : true;
 	$subsheets = isset($subsheets) && $subsheets == 'n' ? false : true;
 	$class = (isset($class)) ? " $class"  : '';
