@@ -1677,8 +1677,10 @@ class TrackerLib extends TikiLib
 					// deal with autoincrement fields
 					foreach ($auto_fields as $afield) {
 						$auto_handler = $this->get_field_handler($afield, $this->get_item_info($itemId));
-						$auto_val = $auto_handler->handleSave(null, null);
-						$itemFields->insert(array('itemId' => (int) $itemId, 'fieldId' => (int) $afield['fieldId'], 'value' => $auto_val['value']));
+						if (!empty($auto_handler)) {
+							$auto_val = $auto_handler->handleSave(null, null);
+							$itemFields->insert(array('itemId' => (int) $itemId, 'fieldId' => (int) $afield['fieldId'], 'value' => $auto_val['value']));
+						}
 					}
 				}
 			}
