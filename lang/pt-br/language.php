@@ -6715,7 +6715,7 @@ $lang = array(
 // "Force Smarty to recompile the templates for each tracker item when using a wiki page as a template. Default=n (best performance)" => "Force Smarty to recompile the templates for each tracker item when using a wiki page as a template. Default=n (best performance)",
 // "Numeric value to display only last tracker items created within a user defined time-frame. Used in conjunction with the next parameter \"Period unit\", this parameter indicates how many of those units are to be considered to define the time frame. Use in conjunction with \"max=-1\" to list all items (by default \"max\" is set to 10)" => "Numeric value to display only last tracker items created within a user defined time-frame. Used in conjunction with the next parameter \"Period unit\", this parameter indicates how many of those units are to be considered to define the time frame. Use in conjunction with \"max=-1\" to list all items (by default \"max\" is set to 10)",
 // "Period type" => "Period type",
-// "Time period after creattion or after modification" => "Time period after creattion or after modification",
+// "Time period after creation or after modification" => "Time period after creation or after modification",
 // "Creation" => "Creation",
 // "Modification" => "Modification",
 // "incorrect filterfield" => "incorrect filterfield",
