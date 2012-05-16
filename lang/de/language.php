@@ -6405,7 +6405,7 @@ $lang = array(
 "Force Smarty to recompile the templates for each tracker item when using a wiki page as a template. Default=n (best performance)" => "Zwinge Smarty die Templates für jedes Tracker-Element neu zu kompilieren, wenn eine Wiki-Seite als Vorlage (template) verwendet wird. Default=n (=nein, für beste Leistung)",
 "Numeric value to display only last tracker items created within a user defined time-frame. Used in conjunction with the next parameter \"Period unit\", this parameter indicates how many of those units are to be considered to define the time frame. Use in conjunction with \"max=-1\" to list all items (by default \"max\" is set to 10)" => "Nummerischer Wert um nur die letzten Trackereinträge anzuzeigen, die innerhalb einer benutzerdefinierten Zeitspanne erstellt wurden. In Zusammenhang mit dem nächsten Parameter \"Periodeneinheit\" zu benutzen. Dieser Parameter legt fest, wieviele dieser Einheiten berücksichtigt werden sollen um den Zeitrahmen festzulegen. Benutze \"max=-1\" um alle Einträge aufzulisten (standardmäßig ist \"max\" auf 10 eingestellt)",
 "Period type" => "Abschnittstyp",
-"Time period after creattion or after modification" => "Zeitabschnitt nach Erstellung oder nach Veränderung",
+"Time period after creation or after modification" => "Zeitabschnitt nach Erstellung oder nach Veränderung",
 "Creation" => "Erstellung",
 "Modification" => "Veränderung",
 "incorrect filterfield" => "falsches Filterfeld",
