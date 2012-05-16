@@ -74,5 +74,23 @@ function prefs_zend_list()
 			),
 			'default' => '',
 		),
+		'zend_mail_smtp_helo' => array(
+			'name' => tra('Local server name'),
+			'description' => tra('Name of the local server. Will be reported to SMTP relay on the HELO/EHLO line.'),
+			'type' => 'text',
+			'size' => '20',
+			'perspective' => false,
+			'default' => 'localhost',
+		),
+		'zend_mail_queue' => array(
+			'name' => tra('Mail Delivery'),
+			'description' => tra('When set to Queue will store messages in the database. Requires a shell script to be run for actual delivery. Only works with SMTP mail.'),
+			'type' => 'list',
+			'options' => array(
+				'' => tra('Send immediately'),
+				'y' => tra('Queue'),
+			),
+			'default' => '',
+		),		
 	);
 }
