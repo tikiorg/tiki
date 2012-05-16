@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS `tiki_mail_queue` (
   `message`   TEXT NULL ,
   `attempts`  INT NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`messageId`) 
-);
+) ENGINE=MyISAM AUTO_INCREMENT=1;
