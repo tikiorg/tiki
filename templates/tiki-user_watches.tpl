@@ -26,6 +26,7 @@
 			<p>
 			{tr}Interval in which you want to get the reports{/tr}
 			<select name="interval">
+					<option value="hourly" {if $report_preferences.interval eq "hourly"}selected{/if}>{tr}Hourly{/tr}</option>
 					<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}Daily{/tr}</option>
 					<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>
 					<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
@@ -34,7 +35,7 @@
 			
 			<div style="float:left; margin-right: 50px;">
 			    <input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if} /> {tr}Short report{/tr}<br />
-		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false}checked="checked"{/if} /> {tr}Detailed report{/tr}<br />
+		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if} /> {tr}Detailed report{/tr}<br />
 			</div>
 			<div style="float:left; margin-right: 50px;">
 			    <input type="radio" name="type" value="html"{if $report_preferences.type eq "html" OR $report_preferences eq false} checked="checked"{/if} /> {tr}HTML-Email{/tr}<br />

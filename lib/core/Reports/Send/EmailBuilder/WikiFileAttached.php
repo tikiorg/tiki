@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_WikiFileAttached extends Reports_Send_EmailBuild
 	
 	public function getOutput(array $change)
 	{
-		global $base_url;
+		$base_url = $change['data']['base_url'];
 
 		$output = tr(
 						'%0 uploaded the file %1 onto %2',

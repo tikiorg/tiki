@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_ForumPostTopic extends Reports_Send_EmailBuilder
 	
 	public function getOutput(array $change)
 	{
-		global $base_url;
+		$base_url = $change['data']['base_url'];
 		
 		$output = tr(
 						'%0 created the topic %1 at forum %2',
