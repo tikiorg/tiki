@@ -689,7 +689,7 @@ function wikiplugin_trackerlist_info()
 			'periodType' => array(
 				'required' => false,
 				'name' => tr('Period type'),
-				'description' => tr('Time period after creattion or after modification'),
+				'description' => tr('Time period after creation or after modification'),
 				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),

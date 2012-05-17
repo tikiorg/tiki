@@ -37,56 +37,57 @@ class Services_Tracker_SearchController
 		}
 
 		$adddata = json_decode($input->adddata->text(), true);
+
+		$dataappend = array();
+
+		$record_session = $input->ignoresession->int() ? false : true;
+
+		$id = $input->searchid->text();
+		if (empty($id)) {
+			$id = '0';
+		}
+		// setup AJAX pagination
+		$offset_jsvar = "customsearch_offset_$id";
+		$onclick = "$('#customsearch_$id').submit();return false;";
+		$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
+
+		if ($input->groups->text()) {
+			$groups = json_decode($input->groups->text(), true);
+		} else {
+			$groups = array();
+		}
+		if ($input->textrangegroups->text()) {
+			$textrangegroups = json_decode($input->textrangegroups->text(), true);
+		} else {
+			$textrangegroups = array();
+		}
+		if ($input->daterangegroups->text()) {
+			$daterangegroups = json_decode($input->daterangegroups->text(), true);
+		} else {
+			$datarangegroups = array();
+		}
+		if ($record_session && isset($_SESSION["customsearch_$id"])) {
+			unset($_SESSION["customsearch_$id"]);
+		}
+		if ($input->maxRecords->int()) {
+			if ($record_session) {
+				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
+			}
+			$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
+		}
+		if ($input->sort_mode->text()) {
+			if ($record_session) {
+				$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
+			}
+			$_REQUEST['sort_mode'] = $input->sort_mode->text();
+		}
+		if ($input->offset->int()) {
+			if ($record_session) {
+				$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
+			}
+			$_REQUEST['offset'] = $input->offset->int();
+		}
 		if ($adddata) {
-			$dataappend = array();
-
-			$record_session = $input->ignoresession->int() ? false : true;
-
-			$id = $input->searchid->text();
-			if (empty($id)) {
-				$id = '0';
-			}
-			// setup AJAX pagination
-			$offset_jsvar = "customsearch_offset_$id";
-			$onclick = "$('#customsearch_$id').submit();return false;";
-			$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
-
-			if ($input->groups->text()) {
-				$groups = json_decode($input->groups->text(), true);
-			} else {
-				$groups = array();
-			}
-			if ($input->textrangegroups->text()) {
-				$textrangegroups = json_decode($input->textrangegroups->text(), true);
-			} else {
-				$textrangegroups = array();
-			}
-			if ($input->daterangegroups->text()) {
-				$daterangegroups = json_decode($input->daterangegroups->text(), true);
-			} else {
-				$datarangegroups = array();
-			}
-			if ($record_session && isset($_SESSION["customsearch_$id"])) {
-				unset($_SESSION["customsearch_$id"]);
-			}
-			if ($input->maxRecords->int()) {
-				if ($record_session) {
-					$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
-				}
-				$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
-			}
-			if ($input->sort_mode->text()) {
-				if ($record_session) {
-					$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
-				}
-				$_REQUEST['sort_mode'] = $input->sort_mode->text();
-			}
-			if ($input->offset->int()) {
-				if ($record_session) {
-					$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
-				}
-				$_REQUEST['offset'] = $input->offset->int();
-			}
 			foreach ($adddata as $fieldid => $d) {
 				$config = $d['config'];
 				$name = $d['name'];
@@ -145,11 +146,11 @@ class Services_Tracker_SearchController
 			$grouping_keys = array('content');
 			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true);
 			$this->cs_reconstruct_rangegroup($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, 'date');
+		}
 
-			// Finally combine base filters with appended filters
-			foreach ($dataappend as $d) {
-				$data .= $d;
-			}
+		// Finally combine base filters with appended filters
+		foreach ($dataappend as $d) {
+			$data .= $d;
 		}
 
 		require_once('lib/wiki-plugins/wikiplugin_list.php');

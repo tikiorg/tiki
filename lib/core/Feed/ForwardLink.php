@@ -53,7 +53,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		}
 	}
 
-	private static function goToPhraseExistance($phrase, $page, $version)
+	private static function goToPhraseExistence($phrase, $page, $version)
 	{
 		session_start();
 		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
@@ -605,7 +605,7 @@ JQ
 
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
-		self::goToPhraseExistance($phrase, $page, $version);
+		self::goToPhraseExistence($phrase, $page, $version);
 
 		self::restorePhrasesInWikiPage($page, $phrase);
 
@@ -680,9 +680,9 @@ JQ
 
 			if (!$checks[$i]['exists']) {
 				if (empty($checks[$i]['reason'])) {
-					$checks[$i]['reason'] .= '_no_existance_hash_pass_';
+					$checks[$i]['reason'] .= '_no_existence_hash_pass_';
 				} else {
-					$checks[$i]['reason'] .= '_no_existance_';
+					$checks[$i]['reason'] .= '_no_existence_';
 				}
 
 				unset($item->feed->entry[$i]);

@@ -6712,7 +6712,7 @@ $lang = array(
 "Force Smarty to recompile the templates for each tracker item when using a wiki page as a template. Default=n (best performance)" => "Forcer Smarty à re-compiler les gabarits pour chaque fiche de formulaire quand une page wiki est utilisée en tant que gabarit. Par défaut = n (meilleure performance)",
 "Numeric value to display only last tracker items created within a user defined time-frame. Used in conjunction with the next parameter \"Period unit\", this parameter indicates how many of those units are to be considered to define the time frame. Use in conjunction with \"max=-1\" to list all items (by default \"max\" is set to 10)" => "Valeur numérique pour afficher seulement les dernières fiches créées dans un intervalle de temps défini par l'utilisateur. Utilisé en conjonction avec le paramètre suivant 'Unité de période', ce paramètre indique combien de ces unités doivent être prises en compte pour définir l'intervalle de temps. Utiliser en conjonction avec 'Nb. max=-1' pour lister toutes les fiches (par défaut, 'Nb. max' est défini à 10)",
 // "Period type" => "Period type",
-// "Time period after creattion or after modification" => "Time period after creattion or after modification",
+// "Time period after creation or after modification" => "Time period after creation or after modification",
 "Creation" => "Création",
 // "Modification" => "Modification",
 "incorrect filterfield" => "filterfield incorrect",

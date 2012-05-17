@@ -24,7 +24,7 @@ $smarty->assign('surveyId', $_REQUEST["surveyId"]);
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info', $survey_info);
 if (isset($_REQUEST["clear"]) && $tiki_p_admin_surveys == 'y') {
-	$access->check_authenticity();
+	$access->check_authenticity(tra('Are you sure you want to clear all statistics and data for this survey?'));
 	$srvlib->clear_survey_stats($_REQUEST["clear"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
