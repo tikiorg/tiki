@@ -48,6 +48,7 @@ body.fixed_width #fixedwidth {
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
+	display: inherit;
 }
 
 #middle {
@@ -369,7 +370,10 @@ input#fuser,
 	left: 10em;
 }
 
-#tiki-top ul.cssmenu_horiz {margin-left: 30px}
+#tiki-top ul.cssmenu_horiz {
+	margin-left: 30px;
+	position: absolute;
+}
 	
 #tiki-top .cssmenu_horiz a {
 	padding: 12px 1em;
