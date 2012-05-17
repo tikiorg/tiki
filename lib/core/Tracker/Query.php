@@ -33,7 +33,7 @@ class Tracker_Query
 	private $fields = array();
 	private $status = "opc";
 	private $sort = null;
-	private $limit = 0;
+	private $limit = 100; //added limit so default wouldn't crash system
 	private $offset = 0;
 	private $byName = false;
 	private $includeTrackerDetails = true;
@@ -66,7 +66,7 @@ class Tracker_Query
 
 	public function itemId($itemId)
 	{
-		$this->itemId = $itemId;
+		$this->itemId = (int)$itemId;
 		return $this;
 	}
 	
@@ -76,6 +76,11 @@ class Tracker_Query
 		$this->filterType[] = (isset($filter['type']) ? $filter['type'] : 'and'); //really only things that should be accepted are "and" and "or"
 		$this->equals[] = $filter['value'];
 		return $this;
+	}
+
+	public function filterFieldByValue($field, $value)
+	{
+		return $this->filter(array('field'=> $field, 'value'=>$value));
 	}
 	
 	public function equals($equals = array())
@@ -163,6 +168,14 @@ class Tracker_Query
 			->query();
 	}
 
+	public function getItemId()
+	{
+		$query = $this->getOne();
+		$key = (int)end(array_keys($query));
+		$key = ($key > 0 ? $key : 0);
+		return $key;
+	}
+
 	public function debug($debug = true, $concat = true)
 	{
 		$this->debug = $debug;
@@ -176,11 +189,9 @@ class Tracker_Query
 	 */
 	function __construct($tracker = '')
 	{
-		global $tikilib, $trklib;
 		$this->tracker = $tracker;
-		$trklib = TikiLib::lib('trk');
 
-		$tikilib->query(
+		TikiLib::query(
 						"DROP TABLE IF EXISTS temp_tracker_field_options;
 						CREATE TEMPORARY TABLE temp_tracker_field_options (
 							trackerIdHere INT,
@@ -234,12 +245,12 @@ class Tracker_Query
 		/*For any fields that have multi items, we use php to parse those out, there shouldn't be too many
 		 */
 
-		foreach ($tikilib->fetchAll("SELECT * FROM temp_tracker_field_options WHERE options LIKE '%|%'") as $row) {
+		foreach (TikiLib::fetchAll("SELECT * FROM temp_tracker_field_options WHERE options LIKE '%|%'") as $row) {
 			$option = explode(",", $row["options"]);
 			$displayFieldIdsThere = explode("|", $option["3"]);
 			foreach ($displayFieldIdsThere as $key => $displayFieldIdThere) {
 				if ($key > 0) {
-					$tikilib->query(
+					TikiLib::query(
 									"INSERT INTO temp_tracker_field_options	VALUES (?,?,?,?,?,?,?,?,?)",
 									array(
 										$row["trackerIdHere"],
@@ -382,10 +393,8 @@ class Tracker_Query
 	
 	private function trackerId()
 	{
-		global $trklib;
-		
 		if ($this->byName == true) {
-			$trackerId = $trklib->get_tracker_by_name($this->tracker);
+			$trackerId = TikiLib::lib('trk')->get_tracker_by_name($this->tracker);
 		} else {
 			$trackerId = $this->tracker;
 		}
@@ -413,7 +422,7 @@ class Tracker_Query
 
 	function query()
 	{
-		global $tikilib, $trklib;
+		global $tikilib;
 		$params = array();
 		$fields_safe = "";
 		$status_safe = "";
@@ -778,10 +787,28 @@ class Tracker_Query
 
 		return $output;
 	}
-	
+
+	/**
+	 * Programmatic and simplified way of replacing or updating a tracker item, meant for api ease and accessibility
+	 * Does not check permissions
+	 *
+	 * @param array $data example array(fieldId=>'value', fieldId=>'value') or array('fieldName'=>'value', 'fieldName'=>'value')
+	 */
 	public function replaceItem($data = array())
 	{
-		$itemId = TikiLib::lib("trk")->replace_item($this->trackerId(), $this->itemId, array("data"=>$data));
+		$itemData = array();
+
+		$fields = TikiLib::lib("trk")->list_tracker_fields($this->trackerId());
+		for($i = 0, $fieldCount = count($fields['data']); $i < $fieldCount; $i++) {
+			if ($this->byName == true) {
+				$fields['data'][$i]['value'] = $data[$fields['data'][$i]['name']];
+			} else {
+				$fields['data'][$i]['value'] = $data[$fields['data'][$i]['fieldId']];
+			}
+		}
+
+		$itemId = TikiLib::lib("trk")->replace_item($this->trackerId(), $this->itemId, $fields);
+
 		return $itemId;
 	}
 
