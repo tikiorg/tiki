@@ -955,7 +955,7 @@ class TrackerLib extends TikiLib
 				$csort_mode = 'sttif.`value` ';
 				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
 					.' ON (tti.`itemId` = sttif.`itemId`'
-					." AND sttif.`fieldId` = $asort_mode"
+					.(!empty($asort_mode) ? " AND sttif.`fieldId` = $asort_mode" : '')
 					.')';
 				// Do we need a numerical sort on the field ?
 				$field = $this->get_tracker_field($asort_mode);
