@@ -51,13 +51,14 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 		return array();
 	}
 	
-	function send()
+	public static function send()
 	{
 		global $tikilib;
-
+		$me = new self();
 		$entry = array();
 		$lastModif = 0;
-		$feed = $this->feed();
+
+		$feed = $me->feed();
 		
 		foreach ($feed->feed->entry as $item) {
 			if (empty($item->forwardlink->href)) continue;
