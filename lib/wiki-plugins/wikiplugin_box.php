@@ -99,7 +99,11 @@ function wikiplugin_box($data, $params)
 	$w = (isset($width)) ? " width:$width"  : "";
 	$f = ($float == "left" || $float == "right")? " float:$float" : "";
 	$c = (isset($clear))    ? " clear:both" : "";
+	if ($float == '' or !isset($float)) {
+	$begin = "<div class='cbox$class' $id style='$bg;$f;margin:0;$w;$c'>";
+    } else {
 	$begin = "<div class='cbox$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c'>";
+	}
     
 	if (isset($title)) {
 		$begin .= "<div class='cbox-title'>$title</div>";
