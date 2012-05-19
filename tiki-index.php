@@ -336,6 +336,12 @@ if ( isset($_REQUEST['switchlang'])
 ) {
 	header('Location: tiki-switch_lang.php?language=' . $info['lang']);
 	die;
+} elseif ( $prefs['feature_multilingual'] == 'y'
+			&& $prefs['feature_sync_language'] == 'y'
+			&& !empty($info['lang'])
+			&& $prefs['language'] != $info['lang']
+) {
+	$prefs['language'] = $info['lang'];
 }
 
 $page = $info['pageName'];
