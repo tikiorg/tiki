@@ -103,6 +103,75 @@
 		{/if}
 	{/if}
 
+
+{* All this that is supposed to be at the end needs to be processed before
+the section loop so that the vars are not replaced by nested pretty tracker execution *}
+{capture name="trackerlist_bottomstuff"}
+	{if empty($tpl)}
+		{if !empty($computedFields) and $items|@count gt 0}
+		{assign var=itemoff value=0}
+		<tr class='compute'>
+			{if $checkbox}<td></td>{/if}
+			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
+			{if $showitemrank eq 'y'}<td></td>{/if}
+			{foreach key=jx item=ix from=$fields}
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' 
+					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) 
+					or $tiki_p_admin_trackers eq 'y')}	
+					{if isset($computedFields[$ix.fieldId])}
+						<td class="numeric" style="padding-right:2px">
+						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
+							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							{trackeroutput field=$computedField item=$items[user] list_mode=$list_mode url=$url}<br/>
+						{/foreach}
+						</td>
+					{else}
+						<td></td>
+					{/if}
+				{/if}
+			{/foreach}
+			{if $showcreated eq 'y'}<td></td>{/if}
+			{if $showlastmodif eq 'y'}<td></td>{/if}
+			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
+			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
+		</tr>
+		{/if}
+</table>
+
+{if $displaysheet eq 'true'}
+</div>
+{/if}
+
+		{if $items|@count eq 0}
+			<div class="tracker_error">{tr}No records found{/tr}</div>
+		{elseif $checkbox}
+			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
+			{if !empty($checkbox.submit) and !empty($checkbox.title)}
+				<br />
+				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" />
+			{/if}
+			</form>
+		{/if}
+	{/if}
+
+
+
+	{if $more eq 'y'}
+	<div class="more">
+		{capture assign=moreUrl}
+			{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$listTrackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}
+		{/capture}
+		{button class='more' href="$moreUrl" _text="{tr}More...{/tr}"}
+	</div>
+	{elseif $showpagination ne 'n'}
+		{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=$offset_arg}
+		{/pagination_links}
+	{/if}
+	{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
+		{button href="$exportUrl" _text="{tr}Export{/tr}"}
+	{/if}
+{/capture}
+
 	{cycle values="odd,even" print=false}
 	{assign var=itemoff value=0}
 	{section name=user loop=$items}
@@ -208,67 +277,5 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		{/if}
 	{/section}
 
-	{if empty($tpl)}
-		{if !empty($computedFields) and $items|@count gt 0}
-		{assign var=itemoff value=0}
-		<tr class='compute'>
-			{if $checkbox}<td></td>{/if}
-			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
-			{if $showitemrank eq 'y'}<td></td>{/if}
-			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' 
-					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) 
-					or $tiki_p_admin_trackers eq 'y')}	
-					{if isset($computedFields[$ix.fieldId])}
-						<td class="numeric" style="padding-right:2px">
-						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
-							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							{trackeroutput field=$computedField item=$items[user] list_mode=$list_mode url=$url}<br/>
-						{/foreach}
-						</td>
-					{else}
-						<td></td>
-					{/if}
-				{/if}
-			{/foreach}
-			{if $showcreated eq 'y'}<td></td>{/if}
-			{if $showlastmodif eq 'y'}<td></td>{/if}
-			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
-			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
-		</tr>
-		{/if}
-</table>
-
-{if $displaysheet eq 'true'}
-</div>
-{/if}
-
-		{if $items|@count eq 0}
-			<div class="tracker_error">{tr}No records found{/tr}</div>
-		{elseif $checkbox}
-			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
-			{if !empty($checkbox.submit) and !empty($checkbox.title)}
-				<br />
-				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" />
-			{/if}
-			</form>
-		{/if}
-	{/if}
-
-
-
-	{if $more eq 'y'}
-	<div class="more">
-		{capture assign=moreUrl}
-			{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$listTrackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}
-		{/capture}
-		{button class='more' href="$moreUrl" _text="{tr}More...{/tr}"}
-	</div>
-	{elseif $showpagination ne 'n'}
-		{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=$offset_arg}
-		{/pagination_links}
-	{/if}
-	{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
-		{button href="$exportUrl" _text="{tr}Export{/tr}"}
-	{/if}
+	{$smarty.capture.trackerlist_bottomstuff}
 {/strip}
