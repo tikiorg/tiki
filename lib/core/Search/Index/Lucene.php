@@ -138,7 +138,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 		}
 
 		$query = $this->buildQuery($query);
-		$hits = $this->getLucene()->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
+		try {
+			$hits = $this->getLucene()->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report($e->getMessage());
+		}
 
 		$result = array();
 		foreach ($hits as $key => $hit) {

@@ -4,7 +4,7 @@
 	{else} 
 		<h2>{$payment_info.description|escape}</h2>
 	{/if}
-	<p>{tr}Status:{/tr} <strong>{$payment_info.state|escape}</strong></p>
+	<p>{tr}Status:{/tr} <strong>{tr}{$payment_info.state|escape}{/tr}</strong></p>
 	{if $payment_info.fullview and !empty($payment_detail)}
 		<div class="clearfix wikitext">
 			{$payment_detail}
@@ -24,6 +24,7 @@
 					<input type="hidden" name="business" value="{$prefs.payment_paypal_business|escape}" />
 					<input type="hidden" name="cmd" value="_xclick" />
 					<input type="hidden" name="item_name" value="{$payment_info.description|escape}" />
+					<input type="hidden" name="charset" value="utf-8">
 					<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}" />
 					<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}" />
 					<input type="hidden" name="invoice" value="{$prefs.payment_invoice_prefix|escape}{$payment_info.paymentRequestId|escape}" />
