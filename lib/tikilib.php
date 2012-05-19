@@ -3497,6 +3497,7 @@ class TikiLib extends TikiDb_Bridge
 					unset($_SESSION['preferences'][$name]);
 				}
 			} else {
+				$prefs[$name] = $value;
 				$_SESSION['preferences'][$name] = $value;
 			}
 		}
