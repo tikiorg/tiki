@@ -75,8 +75,11 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
+		$items = $this->getItemIds();
+		$list = $this->getItemLabels($items);
 		return array(
 			'value' => '',
+			'items' => $list,
 		);
 	}
 	
