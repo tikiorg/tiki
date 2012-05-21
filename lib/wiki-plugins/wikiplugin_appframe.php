@@ -288,9 +288,14 @@ function wikiplugin_appframe_module($data, $params, $start)
 		return null;
 	}
 
+	$class = null;
+	if ($params->accordion->int()) {
+		$class = ' class="accordion"';
+	}
+
 	return <<<MODULE
-<h4 class="accordion">{$label}</h4>
-<div class="accordion">
+<h4$class>{$label}</h4>
+<div$class>
 	$data
 </div>
 MODULE;
