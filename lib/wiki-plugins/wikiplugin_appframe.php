@@ -206,7 +206,7 @@ function wikiplugin_appframe_execute($plugin)
 	$body = $plugin->getBody();
 	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template'))) {
+	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden'))) {
 		return null;
 	}
 
@@ -329,6 +329,15 @@ function wikiplugin_appframe_overlay($data, $params, $start)
 
 	return <<<OVERLAY
 <div class="overlay" style="position: absolute; z-index: 10000; $position">
+	$data
+</div>
+OVERLAY;
+}
+
+function wikiplugin_appframe_hidden($data, $params, $start)
+{
+	return <<<OVERLAY
+<div style="display: none;">
 	$data
 </div>
 OVERLAY;
