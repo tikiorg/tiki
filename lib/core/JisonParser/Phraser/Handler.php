@@ -143,8 +143,8 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 
 	static function hasPhrase($parent, $phrase)
 	{
-		$parent = self::sanitizeToWords($parent);
-		$phrase = self::sanitizeToWords($phrase);
+		$parent = self::sanitizeToWords(utf8_encode($parent));
+		$phrase = self::sanitizeToWords(utf8_encode($phrase));
 
 		$parent = implode('|', $parent);
 		$phrase = implode('|', $phrase);
