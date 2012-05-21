@@ -29,16 +29,24 @@
 				}
 
 				var form = this;
-				$(this).serviceDialog({
-					title: $(':submit', form).val(),
-					data: $(form).serialize(),
-					success: function () {
+				$.post($(form).attr('action'), $(form).serialize())
+					.success(function () {
 						$(form).trigger('insert');
-					},
-					close: function () {
-						$(form).trigger('cancel');
-					}
-				});
+					})
+					.error(function () {
+						$(this).serviceDialog({
+							title: $(':submit', form).val(),
+							data: $(form).serialize(),
+							success: function () {
+								$(form).trigger('insert');
+							},
+							close: function () {
+								$(form).trigger('cancel');
+							}
+						});
+					})
+					;
+
 				return false;
 			})
 			.each(function () {
@@ -75,6 +83,7 @@
 
 						activeFeature = event.feature;
 						saveFeature();
+						form.submit();
 					}
 				},
 				featuremodified: function (event) {

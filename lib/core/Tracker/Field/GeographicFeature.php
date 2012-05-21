@@ -70,12 +70,13 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 		return array(
 			'geo_located' => $typeFactory->identifier('y'),
 			'geo_feature' => $typeFactory->identifier($this->getValue()),
+			'geo_feature_field' => $typeFactory->identifier($this->getConfiguration('permName')),
 		);
 	}
 
 	function getProvidedFields($baseKey)
 	{
-		return array('geo_located', 'geo_feature');
+		return array('geo_located', 'geo_feature', 'geo_feature_field');
 	}
 
 	function getGlobalFields($baseKey)
