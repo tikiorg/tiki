@@ -106,7 +106,7 @@ break;
 		$this->setInput($input);
 		
 		$yyval = (object)array();
-		$yyloc = $this->yylloc;
+		$yyloc = $this->yyloc;
 		$lstack[] = $yyloc;
 
 		while (true) {
@@ -122,26 +122,28 @@ break;
 				// read action for current state and first input
 				if (isset($this->table[$state][$symbol])) {
 					$action = $this->table[$state][$symbol];
+				} else {
+					$action = '';
 				}
 			}
 
 			if (empty($action) == true) {
-				if (empty($recovering) == false) {
+				if (!$recovering) {
 					// Report error
 					$expected = array();
-					foreach($this->table[$state] as $p) {
-						if ($p > 2) {
-							$expected[] = implode($p);
+					foreach($this->table[$state] as $p => $item) {
+						if (!empty($this->terminals_[$p]) && $p > 2) {
+							$expected[] = $this->terminals_[$p];
 						}
 					}
 					
-					$errStr = 'Parse error on line ' . ($this->yylineno + 1) . ":\n" . $this->showPosition() . '\nExpecting ' . implode(', ', $expected);
+					$errStr = "Parse error on line " . ($yylineno + 1) . ":\n" . $this->showPosition() . "\nExpecting " . implode(", ", $expected) . ", got '" . $this->terminals_[$symbol] . "'";
 			
 					$this->parseError($errStr, array(
 						"text"=> $this->match,
 						"token"=> $symbol,
 						"line"=> $this->yylineno,
-						"loc"=> $this->yyloc,
+						"loc"=> $yyloc,
 						"expected"=> $expected
 					));
 				}
@@ -151,8 +153,12 @@ break;
 					if ($symbol == $this->EOF) {
 						$this->parseError(isset($errStr) ? $errStr : 'Parsing halted.');
 					}
-		
+
 					// discard current lookahead and grab another
+					$yyleng = $this->yyleng;
+					$yytext = $this->yytext;
+					$yylineno = $this->yylineno;
+					$yyloc = $this->yyloc;
 					$symbol = $this->parser_lex();
 				}
 	
@@ -185,8 +191,8 @@ break;
 			}
 	
 			// this shouldn't happen, unless resolve defaults are off
-			if (isset($action[2])) {
-				$this->parseError('Parse Error: multiple actions possible at state: ' . $state . ', token: ' . $symbol);
+			if (is_array($action[0])) {
+				$this->parseError("Parse Error: multiple actions possible at state: " . $state . ", token: " . $symbol);
 			}
 			
 			switch ($action[0]) {
@@ -210,7 +216,7 @@ break;
 						$yyleng = $this->yyleng;
 						$yytext = $this->yytext;
 						$yylineno = $this->yylineno;
-						$yyloc = $this->yylloc;
+						$yyloc = $this->yyloc;
 						if ($recovering > 0) $recovering--;
 					} else { // error just occurred, resume old lookahead f/ before error
 						$symbol = $preErrorSymbol;
@@ -339,7 +345,7 @@ break;
 	
 	function pastInput()
 	{
-		$past = substr($this->matched, 0, count($this->matched) - count($this->match));
+		$past = substr($this->matched, 0, strlen($this->matched) - strlen($this->match));
 		return (strlen($past) > 20 ? '...' : '') . preg_replace("/\n/", "", substr($past, -20));
 	}
 	
@@ -355,7 +361,12 @@ break;
 	function showPosition()
 	{
 		$pre = $this->pastInput();
-		$c = implode(array(strlen($pre) + 1), "-");
+
+		$c = '';
+		for($i = 0, $preLength = strlen($pre); $i < $preLength; $i++) {
+			$c .= '-';
+		}
+
 		return $pre . $this->upcomingInput() . "\n" . $c . "^";
 	}
 	
@@ -373,10 +384,10 @@ break;
 		$rules = $this->_currentRules();
 		for ($i = 0, $j = count($rules); $i < $j; $i++) {
 			preg_match($this->rules[$rules[$i]], $this->_input, $tempMatch);
-            if ($tempMatch && (!$match || count($tempMatch[0]) > count($match[0]))) {
+            if ($tempMatch && (empty($match) || count($tempMatch[0]) > count($match[0]))) {
                 $match = $tempMatch;
                 $index = $i;
-                if ($this->options->flex == false) break;
+                if (isset($this->options->flex) && $this->options->flex == false) break;
             }
 		}
 		if ( $match ) {
@@ -410,7 +421,7 @@ break;
 		if (empty($this->_input)) {
 			return $this->EOF;
 		} else {
-			$this->parseError('Lexical error on line ' . ($this->yylineno + 1) . '. Unrecognized text.\n' . $this->showPosition(), array(
+			$this->parseError("Lexical error on line " . ($this->yylineno + 1) . ". Unrecognized text.\n" . $this->showPosition(), array(
 				"text"=> "",
 				"token"=> null,
 				"line"=> $this->yylineno
