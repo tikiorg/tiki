@@ -289,7 +289,7 @@ class Tracker_Item
 			if ($this->canModifyField($fid)) {
 				$field['ins_id'] = "ins_$fid";
 
-				$handler = $factory->getHandler($field);
+				$handler = $factory->getHandler($field, $this->info);
 				$output[] = array_merge($field, $handler->getFieldData($input));
 			}
 		}

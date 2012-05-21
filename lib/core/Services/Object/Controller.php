@@ -61,6 +61,7 @@ class Services_Object_Controller
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('fields', $fields);
 		$smarty->assign('item', $item);
+		$smarty->assign('can_modify', $itemObject->canModify());
 		return $smarty->fetch('object/infobox/trackeritem.tpl');
 	}
 
