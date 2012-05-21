@@ -699,21 +699,15 @@ JQ
 
 			//these are new items, so we want to add them to the list
 			foreach($item->feed->entry as $entry) {
-				$entryHash = md5($entry->forwardlink->text);
-				$itemId = Tracker_Query::tracker('Wiki Attributes')
-					->byName()
-					->filterFieldByValue('Page', $this->name)
-					->filterFieldByValue('Attribute', $entryHash)
-					->filterFieldByValue('Value', $entry->forwardlink->text)
-					->getItemId();
+				$entryText = JisonParser_Phraser_Handler::superSanitize($entry->forwardlink->text);
+				$entryHash = md5($entryText);
 
 				Tracker_Query::tracker('Wiki Attributes')
 					->byName()
-					->itemId($itemId)
 					->replaceItem(array(
 						'Page' => $this->name,
 						'Attribute' => $entryHash,
-						'Value' => $entry->forwardlink->text,
+						'Value' => $entryText,
 						'Type' => 'ForwardLink'
 					));
 			}
@@ -783,6 +777,7 @@ JQ
 			Tracker_Query::tracker('Wiki Attributes')
 				->byName()
 				->filterFieldByValue('Type', 'ForwardLink')
+				->render(false)
 				->query()
 		);
 	}
