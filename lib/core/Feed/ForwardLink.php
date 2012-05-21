@@ -24,7 +24,6 @@ Class Feed_ForwardLink extends Feed_Abstract
 		return $me;
 	}
 
-
 	private static function getQuestionInputs($page, $itemId)
 	{
 		print_r(json_encode(
@@ -130,7 +129,7 @@ JQ
 					.click(function() {
 						me = $(this);
 						var href = me.attr('href');
-						var text = me.attr('text');
+						var text = me.attr('linkedText');
 						var linkedText = me.attr('linkedText');
 
 						var table = $('<div>' +
@@ -367,7 +366,8 @@ JQ
 			'answers'=>                 $answers,
 			'dateLastUpdated'=>         $dateLastUpdated,
 			'dateLastUpdated'=>         $dateOriginated,
-			'language'=>                $language
+			'language'=>                $language,
+			'forwardlinkCount'=>        self::countAll(),
 		));
 
 		$answers = json_encode($answers);
@@ -386,7 +386,7 @@ JQ
 				Tracker_Query::tracker('ForwardLink Author Details')
 					->byName()
 					->excludeDetails()
-					->filter(array('field'=> 'User','value'=> $user))
+					->filterFieldByValue('User', $user)
 					->render(false)
 					->query()
 			)
@@ -611,8 +611,8 @@ JQ
 
 		$questions = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
-			->filter(array('field'=> 'Type','value'=> 'Question'))
-			->filter(array('field'=> 'Page','value'=> $page))
+			->filterFieldByValue('Type', 'Question')
+			->filterFieldByValue('Page', $page)
 			->query();
 
 		self::editQuestionsInterface($page, $questions);
@@ -634,7 +634,8 @@ JQ
 
 	function appendToContents(&$contents, $item)
 	{
-		global $prefs, $_REQUEST;
+		global $prefs, $_REQUEST, $groupPluginReturnAll;
+		$groupPluginReturnAll = true;
 		$replace = false;
 
 		//lets remove the newentry if it has already been accepted in the past
@@ -657,13 +658,13 @@ JQ
 
 			$checks[$i]["hashableHere"] = JisonParser_Phraser_Handler::superSanitize($prefs['browsertitle']);
 			$checks[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
+			$checks[$i]["parentHere"] = JisonParser_Phraser_Handler::superSanitize(TikiLib::lib("wiki")->get_parse($_REQUEST['page']));
 			$checks[$i]["hashHere"] = hash_hmac("md5", $checks[$i]["hashableHere"], $checks[$i]["phraseThere"]);
 			$checks[$i]["hashThere"] = $newEntry->forwardlink->hash;
-			$checks[$i]["exists"] = JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib("wiki")->get_parse($_REQUEST['page']), utf8_encode($newEntry->forwardlink->text));
 			$checks[$i]["reason"] = "";
 			$checks[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
-							TikiLib::lib('wiki')->get_parse($_REQUEST['page']),
-							utf8_encode($newEntry->forwardlink->text)
+				TikiLib::lib('wiki')->get_parse($_REQUEST['page']),
+				$newEntry->forwardlink->text
 			);
 
 			$checks[$i]['reason'] = '';
@@ -695,8 +696,32 @@ JQ
 
 		if (count($item->feed->entry) > 0) {
 			$replace = true;
+
+			//these are new items, so we want to add them to the list
+			foreach($item->feed->entry as $entry) {
+				$entryHash = md5($entry->forwardlink->text);
+				$itemId = Tracker_Query::tracker('Wiki Attributes')
+					->byName()
+					->filterFieldByValue('Page', $this->name)
+					->filterFieldByValue('Attribute', $entryHash)
+					->filterFieldByValue('Value', $entry->forwardlink->text)
+					->getItemId();
+
+				Tracker_Query::tracker('Wiki Attributes')
+					->byName()
+					->itemId($itemId)
+					->replaceItem(array(
+						'Page' => $this->name,
+						'Attribute' => $entryHash,
+						'Value' => $entry->forwardlink->text,
+						'Type' => 'ForwardLink'
+					));
+			}
+
 			$contents->entry += $item->feed->entry;
 		}
+
+		$groupPluginReturnAll = false;
 
 		return $replace;
 	}
@@ -715,7 +740,7 @@ JQ
 
 		$authorData = end(Tracker_Query::tracker("Users")
 			->byName()
-			->filter(array('field'=> 'login','value'=> $user))
+			->filterFieldByValue('login', $user)
 			->getOne());
 
 		if (empty($authorData['Name'])) {
@@ -730,7 +755,7 @@ JQ
 	{
 		$moderatorData = end(Tracker_Query::tracker("Users")
 			->byName()
-			->filter(array('field'=> 'login','value'=> 'admin')) //admin is un-deletable
+			->filterFieldByValue('login', 'admin') //admin is un-deletable
 			->getOne());
 
 		if (empty($authorData['Name'])) {
@@ -750,5 +775,15 @@ JQ
 		}
 
 		return $date;
+	}
+
+	public function countAll()
+	{
+		return count(
+			Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'ForwardLink')
+				->query()
+		);
 	}
 }
