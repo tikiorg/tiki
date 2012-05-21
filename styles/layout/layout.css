@@ -2472,4 +2472,10 @@ div.aclabel, span.aclabel, label.aclabel {
 .TextArea-fullscreen .cm-remove {
 	display: none;
 }
+
+.olLayerGoogleV3.olLayerGooglePoweredBy {
+	bottom: 15px !important;
+	visibility: hidden;
+}
+
 /* End of File */
