@@ -44,11 +44,15 @@ function wikiplugin_group_info()
 
 function wikiplugin_group($data, $params)
 {
-	global $user, $prefs, $tikilib, $smarty;
+	global $user, $prefs, $tikilib, $smarty, $groupPluginReturnAll;
 	$dataelse = '';
 	if (strrpos($data, '{ELSE}')) {
 		$dataelse = substr($data, strrpos($data, '{ELSE}')+6);
 		$data = substr($data, 0, strrpos($data, '{ELSE}'));
+	}
+
+	if (isset($groupPluginReturnAll) && $groupPluginReturnAll == true) {
+		return $data.$dataelse;
 	}
 
 	if (!empty($params['friends']) && $prefs['feature_friends'] == 'y') {
