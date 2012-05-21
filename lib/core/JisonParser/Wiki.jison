@@ -682,10 +682,10 @@ content
  	}
  | PLUGIN_START PLUGIN_END
   	{
-  		$3.body = ''; //js
+  		$2.body = ''; //js
         $$ = parser.plugin($2); //js
 
-        //php $3['body'] = '';
+        //php $2['body'] = '';
         //php $$ = $this->plugin($2);
   	}
  | PLUGIN_START contents PLUGIN_END
