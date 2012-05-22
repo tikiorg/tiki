@@ -299,6 +299,10 @@ class Tracker_Item
 
 	private function prepareFieldId($fieldId)
 	{
+		if (TikiLib::startsWith($fieldId, 'ins_') == true) {
+			$fieldId = str_replace('ins_', '', $fieldId);
+		}
+
 		if (! is_numeric($fieldId)) {
 			if ($field = $this->definition->getFieldFromPermName($fieldId)) {
 				$fieldId = $field['fieldId'];
