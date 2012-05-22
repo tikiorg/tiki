@@ -188,7 +188,7 @@
 </form>
 {/tab}
 {tab name="{tr}Notification Preferences{/tr}"}
-	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use this form to control the notifications about objects you watching.{/tr}{/remarksbox}
+	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use this form to control notifications about objects you are watching.{/tr}{/remarksbox}
 	
 	<form action="tiki-user_notifications.php" method="post">
 		<input type="hidden" name="notification_preferences" value="true"/>
