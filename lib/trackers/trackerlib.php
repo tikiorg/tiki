@@ -276,6 +276,7 @@ class TrackerLib extends TikiLib
 		}
 
 		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
+		
 		if (count($watchers > 0)) {
 			$smarty = TikiLib::lib('smarty');
 			$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
@@ -2053,6 +2054,7 @@ class TrackerLib extends TikiLib
 
 		if (! $bulk_mode) {
 			$watchers = $this->get_notification_emails($trackerId, $itemId, $this->get_tracker_options($trackerId));
+			
 			if (count($watchers > 0)) {
 				$smarty = TikiLib::lib('smarty');
 				$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
@@ -2991,6 +2993,24 @@ class TrackerLib extends TikiLib
 		$watchers_global = $this->get_event_watches('tracker_modified', $trackerId);
 		$watchers_local = $this->get_local_notifications($itemId, $status, $oldStatus);
 		$watchers_item = $itemId ? $this->get_event_watches('tracker_item_modified', $itemId, array('trackerId'=>$trackerId)) : array();
+
+		if ($prefs['user_tracker_watch_editor'] != "y") {
+			for ($i = count($watchers_global) - 1; $i >=0; --$i)
+			if ($watchers_global[$i]['user'] == $user) {
+				unset($watchers_global[$i]);
+				break;
+			}
+			for ($i = count($watchers_local) - 1; $i >=0; --$i)
+			if ($watchers_local[$i]['user'] == $user) {
+				unset($watchers_local[$i]);
+				break;
+			}
+			for ($i = count($watchers_item) - 1; $i >=0; --$i)
+			if ($watchers_item[$i]['user'] == $user) {
+				unset($watchers_item[$i]);
+				break;
+			}
+		}
 
 		// use daily reports feature only if tracker item has been added or updated
 		if ($prefs['feature_daily_report_watches'] == 'y' && !empty($status)) {

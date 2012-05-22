@@ -187,5 +187,14 @@ $smarty->assign('email_ok', empty($eok) ? 'n' : 'y');
 ask_ticket('user-watches');
 $reportsUsers = Reports_Factory::build('Reports_Users');
 $smarty->assign_by_ref('report_preferences', $reportsUsers->get($user));
+
+$smarty->assign('user_calendar_watch_editor', $tikilib->get_user_preference($user, 'user_calendar_watch_editor'));
+$smarty->assign('user_article_watch_editor',  $tikilib->get_user_preference($user, 'user_article_watch_editor'));
+$smarty->assign('user_wiki_watch_editor',     $tikilib->get_user_preference($user, 'user_wiki_watch_editor'));
+$smarty->assign('user_blog_watch_editor',     $tikilib->get_user_preference($user, 'user_blog_watch_editor'));
+$smarty->assign('user_tracker_watch_editor',  $tikilib->get_user_preference($user, 'user_tracker_watch_editor'));
+$smarty->assign('user_comment_watch_editor',  $tikilib->get_user_preference($user, 'user_comment_watch_editor'));
+
+
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

@@ -130,6 +130,15 @@ class ArtLib extends TikiLib
 				if (!in_array($n['email'], $nots3))
 					$nots[] = $n;
 			}
+			
+			if ($prefs['user_article_watch_editor'] != "y") {
+			for ($i = count($nots) - 1; $i >=0; --$i)
+				if ($nots[$i]['user'] == $user) {
+					unset($nots[$i]);
+					break;
+				}
+			}
+			
 			if (!isset($_SERVER['SERVER_NAME'])) {
 				$_SERVER['SERVER_NAME'] = $_SERVER["HTTP_HOST"];
 			}
@@ -336,20 +345,29 @@ class ArtLib extends TikiLib
 		}
 
 		if ($tiki_p_autoapprove_submission != 'y') {
-			$emails = $tikilib->get_event_watches('article_submitted', '*');
-			$emails2 = $tikilib->get_event_watches('topic_article_created', $topicId);
-			$emails3 = array();
-			foreach ($emails as $n) {
-			$emails3[] = $n['email'];
+			$nots = $tikilib->get_event_watches('article_submitted', '*');
+			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
+			$nots3 = array();
+			foreach ($nots as $n) {
+			$nots3[] = $n['email'];
 			}
-			foreach ($emails2 as $n) {
-				if (!in_array($n['emails'], $emails3))
-					$emails[] = $n;
+			foreach ($nots2 as $n) {
+				if (!in_array($n['emails'], $nots3))
+					$nots[] = $n;
 			}
 			if (!isset($_SERVER['SERVER_NAME'])) {
 				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 			}
-			if (count($emails)) {
+			
+			if ($prefs['user_article_watch_editor'] != "y") {
+			for ($i = count($nots) - 1; $i >=0; --$i)
+				if ($nots[$i]['user'] == $user) {
+					unset($nots[$i]);
+					break;
+				}
+			}
+			
+			if (count($nots)) {
 				include_once('lib/notifications/notificationemaillib.php');
 				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 				$smarty->assign('mail_user', $user);
@@ -357,7 +375,7 @@ class ArtLib extends TikiLib
 				$smarty->assign('mail_heading', $heading);
 				$smarty->assign('mail_body', $body);
 				$smarty->assign('mail_subId', $id);
-				sendEmailNotification($emails, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
+				sendEmailNotification($nots, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
 			}
 		}
 		global $tikilib;
@@ -548,11 +566,20 @@ class ArtLib extends TikiLib
 					$nots[] = array('email' => $n, 'language' => $prefs['site_language']);
 			}
 		}
+		global $prefs;
+
+		if ($prefs['user_article_watch_editor'] != "y") {
+			for ($i = count($nots) - 1; $i >=0; --$i)
+				if ($nots[$i]['user'] == $user) {
+					unset($nots[$i]);
+					break;
+				}
+		}
+					
 		if (!isset($_SERVER['SERVER_NAME'])) {
 			$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 		}
 
-		global $prefs;
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
 			$reportsManager = Reports_Factory::build('Reports_Manager');
 			$reportsManager->addToCache(

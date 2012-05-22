@@ -528,7 +528,7 @@ class CalendarLib extends TikiLib
 		
 		$nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId']);
 
-		if ($prefs['calendar_watch_editor'] != "y") {
+		if ($prefs['calendar_watch_editor'] != "y" || $prefs['user_calendar_watch_editor'] != "y") {
 			for ($i = count($nots) - 1; $i >=0; --$i)
 				if ($nots[$i]['user'] == $data["user"]) {
 					unset($nots[$i]);

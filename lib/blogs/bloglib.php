@@ -734,6 +734,14 @@ class BlogLib extends TikiDb_Bridge
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
 
+			if ($prefs['user_blog_watch_editor'] != "y") {
+			for ($i = count($nots) - 1; $i >=0; --$i)
+				if ($nots[$i]['user'] == $user) {
+					unset($nots[$i]);
+					break;
+				}
+			}
+
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
