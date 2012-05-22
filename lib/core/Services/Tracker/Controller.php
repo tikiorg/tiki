@@ -432,6 +432,40 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_get_item_inputs($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$trackerName = $input->trackerName->string();
+		$itemId = $input->itemId->int();
+		$byName = $input->byName->bool();
+		$defaults = $input->defaults->array();
+
+		$this->trackerNameAndId($trackerId, $trackerName);
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$itemObject = Tracker_Item::newItem($trackerId);
+
+		if (! $itemObject->canModify()) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
+		}
+
+		$query = Tracker_Query::tracker($byName ? $trackerName : $trackerId)
+			->itemId($itemId);
+
+		if ($input > 0) $query->byName();
+		if (!empty($defaults)) $query->inputDefaults($defaults);
+
+		$inputs = $query
+			->queryInput();
+
+		return $inputs;
+	}
+
 	function action_insert_item($input)
 	{
 		$processedFields = array();
@@ -481,7 +515,7 @@ class Services_Tracker_Controller
 		}
 
 		$itemId = 0;
-		if (! empty($fields) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+		if ( !empty($fields) ) {
 			foreach ($forced as $key => $value) {
 				if ($itemObject->canModifyField($key)) {
 					$fields[$key] = $value;
@@ -975,6 +1009,25 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'yaml' => $export_yaml,
 		);
+	}
+
+	private function trackerName($trackerId)
+	{
+		return TikiLib::lib('tiki')->table('tiki_trackers')->fetchOne('name', array('trackerId' => $trackerId));
+	}
+
+	private function trackerId($trackerName)
+	{
+		return TikiLib::lib('tiki')->table('tiki_trackers')->fetchOne('trackerId', array('name' => $trackerName));
+	}
+
+	private function trackerNameAndId(&$trackerId, &$trackerName)
+	{
+		if ($trackerId > 0 && empty($trackerName)) {
+			$trackerName = $this->trackerName($trackerId);
+		} elseif ($trackerId < 1 && !empty($trackerName)) {
+			$trackerId = $this->trackerId($trackerName);
+		}
 	}
 
 	private function writeCsv($fields, $separator, $delimitorL, $delimitorR, $encoding, $cr = '%%%')
