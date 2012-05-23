@@ -1407,7 +1407,7 @@ class convertToTiki9
 	{
 		//here we find the old fingerprint and replace it with the new one
 		for($i = 0; $i < count($fingerPrintsOld);$i++) {
-			if ($fingerPrintsOld[$i] != $fingerPrintsNew[$i]) {
+			if (!empty($fingerPrintsOld[$i]) && $fingerPrintsOld[$i] != $fingerPrintsNew[$i]) {
 				//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
 				TikiLib::query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
 
@@ -1434,13 +1434,35 @@ class convertToTiki9
 		foreach ($oldMatches as $match) {
 			$name = $match->getName();
 			$meta = $this->parserlib->plugin_info($name);
-			$args = $this->argumentParser->parse($match->getArguments());
 
-			//RobertPlummer - pre 9, latest findings from v8 is that the < and > chars are THE ONLY ones converted to &lt; and &gt; everything else seems to be decoded
-			$body = $match->getBody();
-			$body = htmlspecialchars_decode($body);
-			$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $body);
-			$fingerPrintsOld[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
+			if (!empty($meta['validate'])) {	// only check fingerprints of plugins requiring validation
+
+				$args = $this->argumentParser->parse($match->getArguments());
+
+				//RobertPlummer - pre 9, latest findings from v8 is that the < and > chars are THE ONLY ones converted to &lt; and &gt; everything else seems to be decoded
+				$body = $match->getBody();
+
+				// jonnyb - pre 9.0, Tiki 6 (?) fingerprints are calculated with the undecoded body
+				$fingerPrint = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
+
+				// so check the db for previously recorded plugins
+				if (!TikiLib::getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
+					// jb but v 7 & 8 fingerprints may be calculated differently, so check both fully decoded and partially
+					$body = htmlspecialchars_decode($body);
+					$fingerPrint = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
+
+					if (!TikiLib::getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
+						$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $body);
+						$fingerPrint = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
+
+						if (!TikiLib::getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
+							// old fingerprint not found - what to do? Might be worth trying &quot; chars too...
+							$fingerPrint = '';
+						}
+					}
+				}
+				$fingerPrintsOld[] = $fingerPrint;
+			}
 		}
 
 		$fingerPrintsNew = array();
@@ -1474,7 +1496,9 @@ class convertToTiki9
 			$replaced['key'][] = $key;
 			$replaced['data'][] = $plugin;								// store the decoded-args plugin for replacement later
 
-			$fingerPrintsNew[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
+			if (!empty($meta['validate'])) {							// only check fingerprints of plugins requiring validation
+				$fingerPrintsNew[] = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
+			}
 		}
 
 		$this->parserlib->plugins_replace($data, $replaced);					// put the plugins back into the page
