@@ -103,13 +103,14 @@ function wikiplugin_trackerfilter($data, $params)
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+	$iTrackerFilter++;
 	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'export_action' => '',
 					 'export_itemid' => 'y', 'export_status' => 'n', 'export_created' => 'n', 'export_modif' => 'n', 'export_charset' => 'UTF-8', 'status' => 'opc');
 
 	if (isset($_REQUEST['reset_filter'])) {
-		wikiplugin_trackerFilter_reset_filters();
+		wikiplugin_trackerFilter_reset_filters($iTrackerFilter);
 	} else if (!isset($_REQUEST['filter']) && isset($_REQUEST['session_filters']) && $_REQUEST['session_filters'] == 'y') {
-		$params = array_merge($params, wikiplugin_trackerFilter_get_session_filters());
+		$params = array_merge($params, wikiplugin_trackerFilter_get_session_filters($iTrackerFilter));
 	}
 	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'y' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"])) {
 		$params["googlemap"] = 'y';
@@ -120,7 +121,6 @@ function wikiplugin_trackerfilter($data, $params)
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
-	$iTrackerFilter++;
 
 	if (isset($_REQUEST['msgTrackerFilter'])) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
@@ -249,7 +249,7 @@ function wikiplugin_trackerfilter($data, $params)
 			$params['max'] = $prefs['maxRecords'];
 		if (!empty($_REQUEST['f_status']))
 			$params['status'] = $_REQUEST['f_status'];
-		wikiplugin_trackerFilter_save_session_filters($params);
+		wikiplugin_trackerFilter_save_session_filters($params, $iTrackerFilter);
 		$smarty->assign('urlquery', wikiplugin_trackerFilter_build_urlquery($params));
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
@@ -378,9 +378,9 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 	}
 }
 
-function wikiplugin_trackerFilter_reset_filters()
+function wikiplugin_trackerFilter_reset_filters($iTrackerFilter=0)
 {
-	unset($_SESSION[wikiplugin_trackerFilter_get_session_filters_key()]);
+	unset($_SESSION[wikiplugin_trackerFilter_get_session_filters_key($iTrackerFilter)]);
 	unset($_REQUEST['tracker_filters']);
 
 	foreach ($_REQUEST as $key => $val) {
@@ -390,20 +390,20 @@ function wikiplugin_trackerFilter_reset_filters()
 	}
 }
 
-function wikiplugin_trackerFilter_get_session_filters_key()
+function wikiplugin_trackerFilter_get_session_filters_key($iTrackerFilter=0)
 {
 	$trackerId = isset($_REQUEST['trackerId']) ? $_REQUEST['trackerId'] : 0;
-	return 'f_' . $_REQUEST['page'] . '_' . $trackerId;
+	return 'f_' . $_REQUEST['page'] . '_' . $iTrackerFilter;
 }
 
-function wikiplugin_trackerFilter_save_session_filters($filters)
+function wikiplugin_trackerFilter_save_session_filters($filters, $iTrackerFilter=0)
 {
-	$_SESSION[wikiplugin_trackerFilter_get_session_filters_key()] = $filters;
+	$_SESSION[wikiplugin_trackerFilter_get_session_filters_key($iTrackerFilter)] = $filters;
 }
 
-function wikiplugin_trackerFilter_get_session_filters()
+function wikiplugin_trackerFilter_get_session_filters($iTrackerFilter=0)
 {
-	$key = wikiplugin_trackerFilter_get_session_filters_key();
+	$key = wikiplugin_trackerFilter_get_session_filters_key($iTrackerFilter);
 
 	if (!isset($_SESSION[$key])) {
 		return array();
