@@ -239,7 +239,7 @@ $patterns['vars'] = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key, but that may contain a dot
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 // needed for the htmlpage inclusion in tiki-editpage
-$patterns['url'] = "/^(https?:\/\/)?[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
+$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/"; // needed for the htmlpage inclusion in tiki-editpage
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
 $vartype['forumId'] = '+int';
@@ -322,7 +322,7 @@ $vartype['surveyId'] = 'int';
 $vartype['nlId'] = 'int';
 $vartype['chartId'] = 'int';
 $vartype['categoryId'] = 'int';
-$vartype['parentId'] = 'int';
+$vartype['parentId'] = 'intSign';
 $vartype['bannerId'] = 'int';
 $vartype['rssId'] = 'int';
 $vartype['page_ref_id'] = 'int';

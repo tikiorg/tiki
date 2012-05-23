@@ -129,6 +129,8 @@ function wikiplugin_flash($data, $params)
 	if ((isset($params['youtube']) || isset($params['vimeo']) || isset($params['bliptv'])) && !isset($params['movie'])) {		
 		return tra('Invalid URL');
 	}
+
+	unset($params['type']);
 	
 	$code = $tikilib->embed_flash($params);
 

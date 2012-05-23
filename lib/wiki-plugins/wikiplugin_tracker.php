@@ -1211,13 +1211,10 @@ function wikiplugin_tracker($data, $params)
 
 			foreach ($flds['data'] as $f) {
 
-	//			if (in_array($f['fieldId'], $auto_fieldId)) {
-	//				// Do not show at all
-	//			} elseif (in_array($f['fieldId'], $hidden_fieldId)) {
-				if (in_array($f['fieldId'], $hidden_fieldId)) {
+				if (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $hidden_fieldId)) {
 					// Show in hidden form
 					$back.= '<span style="display:none;">' . wikiplugin_tracker_render_input($f, $item)  . '</span>';
-				} elseif (in_array($f['fieldId'], $outf)) {
+				} elseif (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $outf)) {
 					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 						$onemandatory = true;
 					}

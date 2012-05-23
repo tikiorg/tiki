@@ -206,7 +206,7 @@ function wikiplugin_appframe_execute($plugin)
 	$body = $plugin->getBody();
 	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor'))) {
+	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden'))) {
 		return null;
 	}
 
@@ -288,9 +288,14 @@ function wikiplugin_appframe_module($data, $params, $start)
 		return null;
 	}
 
+	$class = null;
+	if ($params->accordion->int()) {
+		$class = ' class="accordion"';
+	}
+
 	return <<<MODULE
-<h4 class="accordion">{$label}</h4>
-<div class="accordion">
+<h4$class>{$label}</h4>
+<div$class>
 	$data
 </div>
 MODULE;
@@ -307,5 +312,41 @@ function wikiplugin_appframe_cond($data, $params, $start)
 	}
 
 	return ' ';
+}
+
+function wikiplugin_appframe_overlay($data, $params, $start)
+{
+	$position = array();
+
+	foreach (array('top', 'bottom', 'left', 'right') as $pos) {
+		if (isset($params[$pos])) {
+			$value = $params->$pos->int();
+			$position[] = "$pos: {$value}px;";
+		}
+	}
+
+	$position = implode(' ', $position);
+
+	return <<<OVERLAY
+<div class="overlay" style="position: absolute; z-index: 10000; $position">
+	$data
+</div>
+OVERLAY;
+}
+
+function wikiplugin_appframe_hidden($data, $params, $start)
+{
+	return <<<OVERLAY
+<div style="display: none;">
+	$data
+</div>
+OVERLAY;
+}
+
+function wikiplugin_appframe_template($data, $params, $start)
+{
+	$smarty = TikiLib::lib('smarty');
+	$file = $params->file->url();
+	return $smarty->fetch($file);
 }
 

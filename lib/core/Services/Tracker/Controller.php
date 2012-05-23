@@ -549,6 +549,8 @@ class Services_Tracker_Controller
 
 	function action_update_item($input)
 	{
+		$processedFields = array();
+
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -565,23 +567,45 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
-		$item = Tracker_Item::fromInfo($itemInfo);
-		if (! $item->canModify()) {
+		$itemObject = Tracker_Item::fromInfo($itemInfo);
+		if (! $itemObject->canModify()) {
 			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
-		$this->utilities->updateItem(
-						$definition, 
-						array(
-							'itemId' => $itemId,
-							'status' => $input->status->word(),
-							'fields' => $input->fields->none(),
-						)
-		);
-		TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		$fields = $input->fields->none();
+		if (empty($fields)) {
+			$processedFields = $itemObject->prepareInput($input);
+
+			$fields = array();
+			foreach ($processedFields as $k => $f) {
+				$permName = $f['permName'];
+				$fields[$permName] = $f['value'];
+			}
+		} else {
+			$out = array();
+			foreach ($fields as $key => $value) {
+				if ($itemObject->canModifyField($key)) {
+					$out[$key] = $value;
+				}
+			}
+			$fields = $out;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->utilities->updateItem(
+							$definition, 
+							array(
+								'itemId' => $itemId,
+								'status' => $input->status->word(),
+								'fields' => $fields,
+							)
+			);
+			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		}
 
 		return array(
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
+			'fields' => $processedFields,
 		);
 	}
 
