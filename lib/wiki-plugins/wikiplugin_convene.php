@@ -76,9 +76,11 @@ function wikiplugin_convene($data, $params)
 	sort($lines);
 	foreach ($lines as $line) {
 		$line = trim($line);
-		
-		$parts = explode(':', $line);
-		$dataArray[trim($parts[0])] = trim($parts[1]);
+
+		if (!empty($line)) {
+			$parts = explode(':', $line);
+			$dataArray[trim($parts[0])] = trim($parts[1]);
+		}
 	}
 	
 	$data = TikiFilter_PrepareInput::delimiter('_')->prepare($dataArray);
@@ -105,7 +107,7 @@ function wikiplugin_convene($data, $params)
 	//start find top vote stamp
 	$topVoteStamp = 0;
 	foreach ($votes as $stamp => $vote) {
-		$topVoteStamp = ($vote > $votes[$topVoteStamp] ? $stamp : $topVoteStamp);
+		$topVoteStamp = (!isset($votes[$topVoteStamp]) || $vote > $votes[$topVoteStamp]) ? $stamp : $topVoteStamp;
 	}
 	//end find top vote stamp
 	
