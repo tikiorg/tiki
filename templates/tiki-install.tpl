@@ -624,11 +624,12 @@
 </div>
 
 
-<div>
-	<fieldset>
-		<legend>{tr}Stay up-to-date{/tr}</legend>
-		<p>{tr}Subscribe to the <a href="http://tiki.org/Newsletter" title="Subscribe" target="_blank">Tiki newsletter</a> or <a href="http://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank">RSS feed</a> to learn new releases, security updates, and community news.{/tr}</p>
-	</fieldset>
+<div style="padding: 3em 10em 0 0;">
+	{remarksbox type='tip' title='{tr}Stay up-to-date{/tr}'}
+		<p>
+		{tr}Subscribe to the <a href="http://tiki.org/Newsletter" title="Subscribe" target="_blank">Tiki newsletter</a> or <a href="http://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
+		</p>
+	{/remarksbox}
 </div>
 
 
