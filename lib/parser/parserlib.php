@@ -132,7 +132,7 @@ class ParserLib extends TikiDb_Bridge
 	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
 	function protectSpecialChars($data, $is_html = false, $options = array())
 	{
-		if (($this->isHtmlPurifying == true || $options['is_html'] != true) || !$options['ck_editor']) {
+		if (($this->isHtmlPurifying == true || (isset($options['is_html']) && $options['is_html'] != true)) || !empty($options['ck_editor'])) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], $key, $data);
 			}
