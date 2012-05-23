@@ -353,7 +353,7 @@ class CartLib
 	
 	function get_gift_certificate_code( $code = null )
 	{
-		$code = ( $code ? $code : $_SESSION["cart"]["tiki-gc"]["code"] ); //TODO: needs to be a little less dirty
+		$code = ( $code ? $code : isset($_SESSION['cart']['tiki-gc']['code']) ? $_SESSION['cart']['tiki-gc']['code'] : null ); //TODO: needs to be a little less dirty
 		return $code;
 	}
 	
