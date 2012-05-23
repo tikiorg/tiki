@@ -1394,7 +1394,7 @@ class ToolbarFileGallery extends Toolbar
 	{
 		global $smarty;
 		$smarty->loadPlugin('smarty_function_filegal_manager_url');
-		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\');';
+		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\', true);';
 	}
 
 	function getWikiHtml( $areaId ) // {{{
@@ -1440,7 +1440,7 @@ class ToolbarFileGalleryFile extends ToolbarFileGallery
 	{
 		global $smarty;
 		$smarty->loadPlugin('smarty_function_filegal_manager_url');
-		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'&insertion_syntax=file\');';
+		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'&insertion_syntax=file\', true);';
 	}
 
 }
