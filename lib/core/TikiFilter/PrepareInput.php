@@ -50,15 +50,46 @@ class TikiFilter_PrepareInput
 	function flatten($values, &$newValues = array(), $prefix = '')
 	{
 		foreach ($values as $key => $value) {
-			if (is_array($value)) {
+			if (is_array($value) || is_object($value)) {
 				$newPrefix = $prefix.$key.$this->delimiter;
-				$newValues =& $this->flatten($value, $newValues, $newPrefix, $this->delimiter);
+				$newValue = $this->flatten($value, $newValues, $newPrefix, $this->delimiter);
+				$newValues =& $newValue;
 			} else {
 				$newValues[$prefix.$key] = $value;
 			}
 		}
 
 		return $newValues;
+	}
+
+	function toString($values, &$newValues = array(), $prefex = '')
+	{
+		$flatArray = self::flatten($values, $newValues, $prefex);
+
+		$output = '';
+
+		foreach($flatArray as $key => $value)
+		{
+			$output .= urlencode($key) . ':' . urlencode($value) . "\n";
+		}
+
+		return $output;
+	}
+
+	function prepareFromString($input = '')
+	{
+		$stringArray = explode("\n", $input);
+
+		$flatArray = array();
+
+		foreach($stringArray as $string) {
+			$string = explode(":", $string);
+			if (isset($string[0], $string[1])) {
+				$flatArray[urldecode($string[0])] = urldecode($string[1]);
+			}
+		}
+
+		return self::prepare($flatArray);
 	}
 }
 
