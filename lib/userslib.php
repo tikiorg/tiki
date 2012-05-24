@@ -7020,6 +7020,7 @@ class UsersLib extends TikiLib
 				} elseif ($prorateInterval == 'day') {
 					$payable_from = clone $effective_date;
 				}
+				$extend_until_first_period = clone $extend_until;
 				// add extra full periods
 				if ($periods > 1) {
 					$p = $periods - 1;
@@ -7042,6 +7043,7 @@ class UsersLib extends TikiLib
 				} elseif ($prorateInterval == 'day') {
 					$payable_from = clone $effective_date;
 				}
+				$extend_until_first_period = clone $extend_until;
 				// add extra full periods
 				if ($periods > 1) {
 					$p = $periods - 1;
@@ -7053,7 +7055,7 @@ class UsersLib extends TikiLib
 			}
 			$timestamp = null;
 			if ($extend_until != null && $payable_from != null && $prev_ann != null) {
-				$ratio_prorated_first_period = ($extend_until->format('U') - $payable_from->format('U')) / ($extend_until->format('U') - $prev_ann->format('U'));
+				$ratio_prorated_first_period = ($extend_until_first_period->format('U') - $payable_from->format('U')) / ($extend_until_first_period->format('U') - $prev_ann->format('U'));
 				$timestamp = $extend_until->format('U');
 			}
 		} else {
