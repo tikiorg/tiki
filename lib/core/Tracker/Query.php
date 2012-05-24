@@ -189,9 +189,10 @@ class Tracker_Query
 	 */
 	function __construct($tracker = '')
 	{
+		global $tikilib;
 		$this->tracker = $tracker;
 
-		TikiLib::query(
+		$tikilib->query(
 						"DROP TABLE IF EXISTS temp_tracker_field_options;
 						CREATE TEMPORARY TABLE temp_tracker_field_options (
 							trackerIdHere INT,
@@ -245,12 +246,12 @@ class Tracker_Query
 		/*For any fields that have multi items, we use php to parse those out, there shouldn't be too many
 		 */
 
-		foreach (TikiLib::fetchAll("SELECT * FROM temp_tracker_field_options WHERE options LIKE '%|%'") as $row) {
+		foreach ($tikilib->fetchAll("SELECT * FROM temp_tracker_field_options WHERE options LIKE '%|%'") as $row) {
 			$option = explode(",", $row["options"]);
 			$displayFieldIdsThere = explode("|", $option["3"]);
 			foreach ($displayFieldIdsThere as $key => $displayFieldIdThere) {
 				if ($key > 0) {
-					TikiLib::query(
+					$tikilib->query(
 									"INSERT INTO temp_tracker_field_options	VALUES (?,?,?,?,?,?,?,?,?)",
 									array(
 										$row["trackerIdHere"],
@@ -422,7 +423,7 @@ class Tracker_Query
 
 	function query()
 	{
-		global $tikilib;
+		global $tikilib, $trklib;
 		$params = array();
 		$fields_safe = "";
 		$status_safe = "";
