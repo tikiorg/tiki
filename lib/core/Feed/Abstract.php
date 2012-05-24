@@ -76,6 +76,7 @@ abstract class Feed_Abstract
 	
 	public function setEncoding($contents)
 	{
+		if (is_array($contents)) throw new Exception('die');
 		$this->encoding = mb_detect_encoding($contents, "ASCII, UTF-8, ISO-8859-1");
 	}
 	
@@ -86,7 +87,7 @@ abstract class Feed_Abstract
 		} else {
 			$contents = TikiLib::lib("cache")->getCached($this->name, get_class($this));
 		}
-		
+
 		$this->setEncoding($contents); 
 		
 		$contents = json_decode($contents);

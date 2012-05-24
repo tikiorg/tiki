@@ -12,7 +12,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	var $isFileGal = true;
 	var $debug = false;
 
-	public function name()
+	public function name($name = "") //$name is not used, but is there for compatibility with abstract
 	{
 		return $this->type . '_' . $this->name;
 	}
@@ -22,21 +22,6 @@ Class Feed_ForwardLink extends Feed_Abstract
 		$me = new self();
 		$me->name = $name;
 		return $me;
-	}
-
-	private static function getQuestionInputs($page, $itemId)
-	{
-		print_r(json_encode(
-			Tracker_Query::tracker('Wiki Attributes')
-				->byName()
-				->itemId((int)$itemId)
-				->inputDefaults(array(
-					'Page' => $page,
-					'Type' => 'Question'
-				))
-				->queryInput()
-		));
-		exit(0);
 	}
 
 	private static function getTimeStamp()
@@ -54,7 +39,10 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 	private static function goToPhraseExistence($phrase, $page, $version)
 	{
-		session_start();
+		if (!isset($_SESSION)) {
+			session_start();
+		}
+
 		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
 
 		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $page);
@@ -73,11 +61,22 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 		$phraseI = 0;
 		foreach ($items as $item) {
+			$thisText = "";
+			$thisDate = "";
+			$thisHref = "";
+			$linkedText = "";
 
-			$thisText = addslashes(htmlspecialchars($item->forwardlink->text));
-			$thisDate = addslashes(htmlspecialchars($item->forwardlink->date));
-			$thisHref = addslashes(htmlspecialchars($item->textlink->href));
-			$linkedText = addslashes(htmlspecialchars($item->textlink->text));
+			if (isset($item->forwardlink->text))
+				$thisText = addslashes(htmlspecialchars($item->forwardlink->text));
+
+			if(isset($item->forwardlink->date))
+				$thisDate = addslashes(htmlspecialchars($item->forwardlink->date));
+
+			if(isset($item->textlink->href))
+				$thisHref = addslashes(htmlspecialchars($item->textlink->href));
+
+			if(isset($item->textlink->text))
+				$linkedText = addslashes(htmlspecialchars($item->textlink->text));
 
 			$phrases[] = $thisText;
 
@@ -471,16 +470,21 @@ JQ
 		$userData = self::findAuthorData($page);
 		$moderatorData = self::findModeratorData();
 
+		if (isset($keywords) && is_array($keywords)) {
+			$keywords = end($keywords);
+			$keywords = $keywords['Value'];
+		}
+
 		$clipboarddata = json_encode(array(
 			'websiteTitle'=>            $websiteTitle,
 			'websiteSubtitle'=>         $page,
-			'moderator'=>               $moderatorData['Name'],
-			'moderatorInstitution'=>    $moderatorData['Business Name'],
-			'moderatorProfession'=>     $moderatorData['Profession'],
+			'moderator'=>               (isset($moderatorData['Name']) ? $moderatorData['Name'] : ''),
+			'moderatorInstitution'=>    (isset($moderatorData['Business Name']) ? $moderatorData['Business Name'] : ''),
+			'moderatorProfession'=>     (isset($moderatorData['Profession']) ? $moderatorData['Profession'] : ''),
 			'hash'=>                    '', //hash isn't yet known
-			'author'=>                  $userData['Name'],
-			'authorInstitution' =>      $userData['Business Name'],
-			'authorProfession'=>        $userData['Profession'],
+			'author'=>                  (isset($userData['Name']) ? $userData['Name'] : ''),
+			'authorInstitution' =>      (isset($userData['Business Name']) ? $userData['Business Name'] : ''),
+			'authorProfession'=>        (isset($userData['Profession']) ? $userData['Profession'] : ''),
 			'href'=>                    $href,
 			'answers'=>                 $answers,
 			'dateLastUpdated'=>         $dateLastUpdated,
@@ -501,16 +505,13 @@ JQ
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
 			->add_jsfile('lib/jquery/md5.js');
 
-		$authorDetails = json_encode(
-			end(
-				Tracker_Query::tracker('ForwardLink Author Details')
-					->byName()
-					->excludeDetails()
-					->filterFieldByValue('User', $user)
-					->render(false)
-					->query()
-			)
-		);
+		$authorDetails = Tracker_Query::tracker('ForwardLink Author Details')
+			->byName()
+			->excludeDetails()
+			->filterFieldByValue('User', $user)
+			->render(false)
+			->getOne();
+		$authorDetails = json_encode(end($authorDetails));
 
 		$page = urlencode($page);
 		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
@@ -719,10 +720,6 @@ JQ
 		$dateLastUpdated = $args['lastModif'];
 		$lang = $args['lang'];
 
-		if (isset($_REQUEST['itemId'])) {
-			self::getQuestionInputs($page, $_REQUEST['itemId']);
-		}
-
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
 		self::goToPhraseExistence($phrase, $page, $version);
@@ -869,17 +866,18 @@ JQ
 		global $tikilib;
 
 		if ($version < 0) {
-			$user = TikiLib::getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($page));
+			$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($page));
 		} else {
-			$user = TikiLib::getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($page, $version));
+			$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($page, $version));
 		}
 
 		if (empty($user))  return array();
 
-		$authorData = end(Tracker_Query::tracker("Users")
+		$authorData = Tracker_Query::tracker("Users")
 			->byName()
 			->filterFieldByValue('login', $user)
-			->getOne());
+			->getOne();
+		$authorData = end($authorData);
 
 		if (empty($authorData['Name'])) {
 			$authorData['Name'] = $tikilib->get_user_preference($user, "realName");
@@ -891,13 +889,16 @@ JQ
 
 	static public function findModeratorData()
 	{
-		$moderatorData = end(Tracker_Query::tracker("Users")
+		global $tikilib;
+
+		$moderatorData = Tracker_Query::tracker("Users")
 			->byName()
 			->filterFieldByValue('login', 'admin') //admin is un-deletable
-			->getOne());
+			->getOne();
+		$moderatorData = end($moderatorData);
 
 		if (empty($authorData['Name'])) {
-			$moderatorData['Name'] = TikiLib::get_user_preference('admin', "realName");
+			$moderatorData['Name'] = $tikilib->get_user_preference('admin', "realName");
 		}
 
 		return $moderatorData;
@@ -905,17 +906,17 @@ JQ
 
 	static public function findDatePageOriginated($page)
 	{
-		$date = TikiLib::getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($page));
+		$date = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($page));
 
 		if (empty($date)) {
 			//page doesn't yet have history
-			$date = TikiLib::getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($page));
+			$date = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($page));
 		}
 
 		return $date;
 	}
 
-	public function countAll()
+	static public function countAll()
 	{
 		return count(
 			Tracker_Query::tracker('Wiki Attributes')

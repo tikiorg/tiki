@@ -41,7 +41,7 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 		return $this->response;
 	}
 
-	public function name()
+	public function name($name = "") //$name not used, just there for compatibility with Abstract
 	{
 		return $this->type . "_" . $this->name;
 	}
