@@ -10,6 +10,8 @@
  *
  * \wiki syntax parser for tiki
  *
+ * NB: Needs to be kept in utf-8
+ *
  * @package		Tiki
  * @subpackage		Parser
  * @author		Robert Plummer
@@ -33,22 +35,22 @@ class ParserLib extends TikiDb_Bridge
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
-		'~REAL_LT~' => array(
+		'≤REAL_LT≥' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
 		),
-		'~REAL_GT~' => array(
+		'≤REAL_GT≥' => array(
 			'html'=>		'>',
 			'nonHtml'=>		'&gt;'
 		),
-		'~REAL_NBSP~' => array(
+		'≤REAL_NBSP≥' => array(
 			'html'=>		'&nbsp;',
 			'nonHtml'=>		'&nbsp;'
 		),
 		/*on post back the page is parsed, which turns & into &amp;
 		this is done to prevent that from happening, we are just
 		protecting some chars from letting the parser nab them*/
-		'~REAL_AMP~' => array(
+		'≤REAL_AMP≥' => array(
 			'html'=>		'& ',
 			'nonHtml'=>		'& '
 		),
