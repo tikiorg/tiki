@@ -123,8 +123,14 @@ $headerlib = TikiLib::lib("header")
 				time =  $.DOMCached.get('timer', summary) / 60;
 				stack.push(summary);
 
-				var form = $.trackerForm(".$trackerId.").submit(function() {
-					$.post('tiki-ajax_services.php?controller=tracker&action=insert_item&' + form.serialize(),function() {
+				var form = $('<form />').submit(function() {
+					var fields = '';
+
+					$.each(form.serializeArray(), function() {
+						fields += '&fields[' + this.name + ']=' + this.value;
+					});
+
+					$.post('tiki-ajax_services.php?controller=tracker&trackerId=$trackerId&action=insert_item' + fields,function() {
 						$.DOMCached.deleteNamespace(namespace);
 
 						stack.pop();
